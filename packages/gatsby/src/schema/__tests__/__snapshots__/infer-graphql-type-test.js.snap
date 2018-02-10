@@ -1,11 +1,60 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`GraphQL type inferance Handles dates Infers from Date objects 1`] = `
+Object {
+  "data": Object {
+    "listNode": Array [
+      Object {
+        "dateObject": "2012-11-05T00:00:00.000Z",
+      },
+      Object {
+        "dateObject": "2012-11-05T00:00:00.000Z",
+      },
+    ],
+  },
+}
+`;
+
+exports[`GraphQL type inferance Handles dates Infers from array of Date objects 1`] = `
+Object {
+  "data": Object {
+    "listNode": Array [
+      Object {
+        "dateObject": Array [
+          "2012-11-05T00:00:00.000Z",
+          "2012-11-06T00:00:00.000Z",
+        ],
+      },
+      Object {
+        "dateObject": Array [
+          "2012-11-05T00:00:00.000Z",
+        ],
+      },
+    ],
+  },
+}
+`;
+
 exports[`GraphQL type inferance Infers graphql type from array of nodes 1`] = `
 Object {
   "data": Object {
     "listNode": Array [
       Object {
         "aBoolean": true,
+        "aNestedArray": Array [
+          Array [
+            1,
+            2,
+            3,
+            4,
+          ],
+          Array [
+            5,
+            6,
+            7,
+            8,
+          ],
+        ],
         "anArray": Array [
           1,
           2,
@@ -60,6 +109,14 @@ Object {
       },
       Object {
         "aBoolean": null,
+        "aNestedArray": Array [
+          Array [
+            1,
+            2,
+            3,
+            4,
+          ],
+        ],
         "anArray": Array [
           1,
           2,
@@ -88,21 +145,6 @@ Object {
           "title": "The world of slash and adventure",
         },
         "hair": 2,
-      },
-    ],
-  },
-}
-`;
-
-exports[`GraphQL type inferance handles date objects 1`] = `
-Object {
-  "data": Object {
-    "listNode": Array [
-      Object {
-        "dateObject": "2012-11-05T00:00:00.000Z",
-      },
-      Object {
-        "dateObject": "2012-11-05T00:00:00.000Z",
       },
     ],
   },

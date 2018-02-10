@@ -35,9 +35,7 @@ function resolvePlugin(pluginName, directory, type) {
     ? pluginName
     : `babel-${type}-${pluginName}`
   const pluginInvariantMessage = `
-  You are trying to use a Babel plugin or preset which Gatsby cannot find: ${
-    pluginName
-  }
+  You are trying to use a Babel plugin or preset which Gatsby cannot find: ${pluginName}
 
   You can install it using "npm install --save ${name}".
 

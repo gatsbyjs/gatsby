@@ -1,6 +1,5 @@
 const crypto = require(`crypto`)
 const deepMapKeys = require(`deep-map-keys`)
-const uuidv5 = require(`uuid/v5`)
 const stringify = require(`json-stringify-safe`)
 
 const conflictFieldPrefix = `lever_`
@@ -98,9 +97,7 @@ function getValidKey({ key, verbose = false }) {
   }
   if (changed && verbose)
     console.log(
-      `Object with key "${key}" breaks GraphQL naming convention. Renamed to "${
-        nkey
-      }"`
+      `Object with key "${key}" breaks GraphQL naming convention. Renamed to "${nkey}"`
     )
 
   return nkey
@@ -131,10 +128,9 @@ exports.standardizeDates = entities =>
     return e
   })
 
-const seedConstant = `c2012db8-fafc-5a03-915f-e6016ff32086`
-exports.createGatsbyIds = entities =>
+exports.createGatsbyIds = (createNodeId, entities) =>
   entities.map(e => {
-    e.id = uuidv5(e.lever_id.toString(), uuidv5(`lever`, seedConstant))
+    e.id = createNodeId(e.lever_id.toString())
     return e
   })
 

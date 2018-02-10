@@ -1,11 +1,15 @@
 import * as React from "react";
 import { NavLinkProps } from "react-router-dom";
+import { LocationDescriptor } from "history";
 
 export interface GatsbyLinkProps extends NavLinkProps {
-  to: string;
   onClick?: (event: any) => void
+  className?: string
+  style?:any;
 }
 
-export const navigateTo: (path: string) => void;
+export const navigateTo: (to: LocationDescriptor) => void;
 
-export default class GatsbyLink extends React.Component<GatsbyLinkProps> { }
+export const withPrefix: (path: string) => string;
+
+export default class GatsbyLink extends React.Component<GatsbyLinkProps, any> { }

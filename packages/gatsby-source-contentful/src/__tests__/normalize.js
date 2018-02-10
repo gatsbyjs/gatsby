@@ -11,7 +11,14 @@ let resolvable
 let foreignReferenceMap
 const conflictFieldPrefix = `contentful_test`
 // restrictedNodeFields from here https://www.gatsbyjs.org/docs/node-interface/
-const restrictedNodeFields = [`id`, `children`, `parent`, `fields`, `internal`]
+const restrictedNodeFields = [
+  `id`,
+  `children`,
+  `contentful_id`,
+  `parent`,
+  `fields`,
+  `internal`,
+]
 
 describe(`Process contentful data`, () => {
   it(`builds entry list`, () => {
@@ -50,7 +57,7 @@ describe(`Process contentful data`, () => {
         contentTypeItem,
         restrictedNodeFields,
         conflictFieldPrefix,
-        entries: entryList[i],
+        entries: entryList[i].map(normalize.fixIds),
         createNode,
         resolvable,
         foreignReferenceMap,

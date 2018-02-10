@@ -24,9 +24,7 @@ class DocsPackagesTemplate extends React.Component {
         </Helmet>
         <strong>
           <a
-            href={`https://github.com/gatsbyjs/gatsby/tree/master/packages/${
-              packageName
-            }`}
+            href={`https://github.com/gatsbyjs/gatsby/tree/master/packages/${packageName}`}
             css={{
               position: `absolute`,
             }}
@@ -42,7 +40,7 @@ class DocsPackagesTemplate extends React.Component {
             __html: this.props.data.markdownRemark.html,
           }}
         />
-        <MarkdownPageFooter page={page} />
+        <MarkdownPageFooter page={page} packagePage />
       </Container>
     )
   }

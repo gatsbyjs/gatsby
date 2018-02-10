@@ -3,6 +3,7 @@ import PropTypes from "prop-types"
 import loader, { publicLoader } from "./loader"
 import emitter from "./emitter"
 import { apiRunner } from "./api-runner-browser"
+import shallowCompare from "shallow-compare"
 
 const DefaultLayout = ({ children }) => <div>{children()}</div>
 
@@ -12,9 +13,18 @@ const DefaultLayout = ({ children }) => <div>{children()}</div>
 class ComponentRenderer extends React.Component {
   constructor(props) {
     super()
+    let location = props.location
+
+    // Set the pathname for 404 pages.
+    if (!loader.getPage(location.pathname)) {
+      location = Object.assign({}, location, {
+        pathname: `/404.html`,
+      })
+    }
+
     this.state = {
-      location: props.location,
-      pageResources: loader.getResourcesForPathname(props.location.pathname),
+      location,
+      pageResources: loader.getResourcesForPathname(location.pathname),
     }
   }
 
@@ -35,18 +45,24 @@ class ComponentRenderer extends React.Component {
         nextProps.location.pathname
       )
       if (!pageResources) {
+        let location = nextProps.location
+
+        // Set the pathname for 404 pages.
+        if (!loader.getPage(location.pathname)) {
+          location = Object.assign({}, location, {
+            pathname: `/404.html`,
+          })
+        }
+
         // Page resources won't be set in cases where the browser back button
         // or forward button is pushed as we can't wait as normal for resources
         // to load before changing the page.
-        loader.getResourcesForPathname(
-          nextProps.location.pathname,
-          pageResources => {
-            this.setState({
-              location: nextProps.location,
-              pageResources,
-            })
-          }
-        )
+        loader.getResourcesForPathname(location.pathname, pageResources => {
+          this.setState({
+            location,
+            pageResources,
+          })
+        })
       } else {
         this.setState({
           location: nextProps.location,
@@ -61,7 +77,10 @@ class ComponentRenderer extends React.Component {
     // This is only useful on delayed transitions as the page will get rendered
     // without the necessary page resources and then re-render once those come in.
     emitter.on(`onPostLoadPageResources`, e => {
-      if (e.page.path === loader.getPage(this.state.location.pathname).path) {
+      if (
+        loader.getPage(this.state.location.pathname) &&
+        e.page.path === loader.getPage(this.state.location.pathname).path
+      ) {
         this.setState({ pageResources: e.pageResources })
       }
     })
@@ -72,12 +91,10 @@ class ComponentRenderer extends React.Component {
     if (!nextState.pageResources) {
       return true
     }
-
     // Check if the component or json have changed.
     if (!this.state.pageResources && nextState.pageResources) {
       return true
     }
-
     if (
       this.state.pageResources.component !== nextState.pageResources.component
     ) {
@@ -99,7 +116,7 @@ class ComponentRenderer extends React.Component {
       return true
     }
 
-    return false
+    return shallowCompare(this, nextProps, nextState)
   }
 
   render() {

@@ -1,11 +1,11 @@
 # gatsby-transformer-documentationjs
 
-Uses [Documentation.js](http://documentation.js.org/) to extract
-code metadata (JSDocs is supported currently though Flow is also supported
-by Documentation.js and can be added to this plugin as well).
+Uses [Documentation.js](http://documentation.js.org/) to extract code metadata
+(JSDocs is supported currently though Flow is also supported by Documentation.js
+and can be added to this plugin as well).
 
-It's used on gatsbyjs.org and can be seen in use on several pages
-there e.g. https://www.gatsbyjs.org/docs/node-apis/
+It's used on gatsbyjs.org and can be seen in use on several pages there e.g.
+https://www.gatsbyjs.org/docs/node-apis/
 
 ## Install
 
@@ -16,13 +16,11 @@ there e.g. https://www.gatsbyjs.org/docs/node-apis/
 Add the plugin to your `gatsby-config.js`.
 
 ```javascript
-plugins: [
-  `gatsby-transformer-documentationjs`,
-]
+plugins: [`gatsby-transformer-documentationjs`];
 ```
 
-Ensure that there's an instance of `gatsby-source-filesystem` that's
-pointed at your source code e.g.
+Ensure that there's an instance of `gatsby-source-filesystem` that's pointed at
+your source code e.g.
 
 ```javascript
 plugins: [
@@ -34,7 +32,7 @@ plugins: [
       path: `${__dirname}/../src/`,
     },
   },
-]
+];
 ```
 
 Then you can write GraphQL queries pulling out JSDoc comments like:

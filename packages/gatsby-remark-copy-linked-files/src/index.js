@@ -9,9 +9,7 @@ const sizeOf = require(`image-size`)
 const DEPLOY_DIR = `public`
 
 const invalidDestinationDirMessage = dir =>
-  `[gatsby-remark-copy-linked-files You have supplied an invalid destination directory. The destination directory must be a child but was: ${
-    dir
-  }`
+  `[gatsby-remark-copy-linked-files You have supplied an invalid destination directory. The destination directory must be a child but was: ${dir}`
 
 // dir must be a child
 const destinationDirIsValid = dir => !path.relative(`./`, dir).startsWith(`..`)
@@ -87,7 +85,7 @@ module.exports = (
 
   // Takes a node and generates the needed images and then returns
   // the needed HTML replacement for the image
-  const generateImagesAndUpdateNode = function(image) {
+  const generateImagesAndUpdateNode = function(image, node) {
     const imagePath = path.posix.join(
       getNode(markdownNode.parent).dir,
       image.attr(`src`)
@@ -107,7 +105,10 @@ module.exports = (
     // use that data to update our ref
     const link = { url: image.attr(`src`) }
     visitor(link)
-    image.attr(`src`, link.url)
+    node.value = node.value.replace(
+      new RegExp(image.attr(`src`), `g`),
+      link.url
+    )
 
     let dimensions
 
@@ -148,6 +149,14 @@ module.exports = (
       return
     }
 
+    // since dir will be undefined on non-files
+    if (
+      markdownNode.parent &&
+      getNode(markdownNode.parent).internal.type !== `File`
+    ) {
+      return
+    }
+
     const imagePath = path.posix.join(
       getNode(markdownNode.parent).dir,
       image.url
@@ -167,6 +176,7 @@ module.exports = (
   // For each HTML Node
   visit(markdownAST, `html`, node => {
     const $ = cheerio.load(node.value)
+
     // Handle Images
     const imageRefs = []
     $(`img`).each(function() {
@@ -189,14 +199,14 @@ module.exports = (
           return
         }
 
-        generateImagesAndUpdateNode(thisImg)
+        generateImagesAndUpdateNode(thisImg, node)
       } catch (err) {
         // Ignore
       }
     }
 
-    const videoRefs = []
     // Handle video tags.
+    const videoRefs = []
     $(`video source`).each(function() {
       try {
         if (isRelativeUrl($(this).attr(`src`))) {
@@ -221,7 +231,43 @@ module.exports = (
         // use that data to update our ref
         const link = { url: thisVideo.attr(`src`) }
         visitor(link)
-        thisVideo.attr(`src`, link.url)
+        node.value = node.value.replace(
+          new RegExp(thisVideo.attr(`src`), `g`),
+          link.url
+        )
+      } catch (err) {
+        // Ignore
+      }
+    }
+
+    // Handle audio tags.
+    const audioRefs = []
+    $(`audio source`).each(function() {
+      try {
+        if (isRelativeUrl($(this).attr(`src`))) {
+          audioRefs.push($(this))
+        }
+      } catch (err) {
+        // Ignore
+      }
+    })
+
+    for (let thisAudio of audioRefs) {
+      try {
+        const ext = thisAudio
+          .attr(`src`)
+          .split(`.`)
+          .pop()
+        if (options.ignoreFileExtensions.includes(ext)) {
+          return
+        }
+
+        const link = { url: thisAudio.attr(`src`) }
+        visitor(link)
+        node.value = node.value.replace(
+          new RegExp(thisAudio.attr(`src`), `g`),
+          link.url
+        )
       } catch (err) {
         // Ignore
       }
@@ -249,11 +295,13 @@ module.exports = (
           return
         }
 
-        // The link object will be modified to the new location so we'll
-        // use that data to update our ref
         const link = { url: thisATag.attr(`href`) }
         visitor(link)
-        thisATag.attr(`href`, link.url)
+
+        node.value = node.value.replace(
+          new RegExp(thisATag.attr(`href`), `g`),
+          link.url
+        )
       } catch (err) {
         // Ignore
       }

@@ -1,6 +1,6 @@
 const path = require(`path`)
 
-const { base64, responsiveSizes } = require(`../`)
+const { base64, responsiveSizes, resolutions } = require(`../`)
 
 describe(`gatsby-plugin-sharp`, () => {
   const args = {
@@ -70,6 +70,42 @@ describe(`gatsby-plugin-sharp`, () => {
       })
 
       expect(args).toEqual({ maxWidth: 400 })
+    })
+  })
+
+  describe(`resolutions`, () => {
+    console.warn = jest.fn()
+
+    beforeEach(() => {
+      console.warn.mockClear()
+    })
+
+    afterAll(() => {
+      console.warn.mockClear()
+    })
+
+    it(`does not warn when the requested width is equal to the image width`, async () => {
+      const args = { width: 1 }
+
+      const result = await resolutions({
+        file,
+        args,
+      })
+
+      expect(result.width).toEqual(1)
+      expect(console.warn).toHaveBeenCalledTimes(0)
+    })
+
+    it(`warns when the requested width is greater than the image width`, async () => {
+      const args = { width: 2 }
+
+      const result = await resolutions({
+        file,
+        args,
+      })
+
+      expect(result.width).toEqual(1)
+      expect(console.warn).toHaveBeenCalledTimes(1)
     })
   })
 

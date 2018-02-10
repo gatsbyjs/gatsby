@@ -24,7 +24,7 @@ class IndexComponent extends React.Component {
         <p>
           <a
             className={indexStyles.link}
-            href="https://github.com/gatsbyjs/gatsby/tree/1.0/examples/using-css-modules"
+            href="https://github.com/gatsbyjs/gatsby/tree/master/examples/using-css-modules"
           >
             cODe for eXAMple sIte on GiTHUb
           </a>

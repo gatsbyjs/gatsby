@@ -13,9 +13,12 @@ const createContentDigest = obj =>
 
 exports.sourceNodes = async (
   { boundActionCreators, getNode, hasNodeChanged, store, cache },
-  { baseUrl }
+  { baseUrl, apiBase }
 ) => {
   const { createNode } = boundActionCreators
+
+  // Default apiBase to `jsonapi`
+  apiBase = apiBase || `jsonapi`
 
   // Touch existing Drupal nodes so Gatsby doesn't garbage collect them.
   // _.values(store.getState().nodes)
@@ -36,7 +39,7 @@ exports.sourceNodes = async (
   // .lastFetched
   // }
 
-  const data = await axios.get(`${baseUrl}/api`)
+  const data = await axios.get(`${baseUrl}/${apiBase}`)
   const allData = await Promise.all(
     _.map(data.data.links, async (url, type) => {
       if (type === `self`) return

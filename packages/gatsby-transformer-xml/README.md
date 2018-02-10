@@ -10,15 +10,12 @@ Parses XML files. It supports also attributes
 
 ```javascript
 // In your gatsby-config.js
-plugins: [
-  `gatsby-transformer-xml`,
-]
+plugins: [`gatsby-transformer-xml`];
 ```
 
 ## Parsing algorithm
 
-The algorithm for arrays is to convert each item in the array into
-a node.
+The algorithm for arrays is to convert each item in the array into a node.
 
 So if your project has a `bookss.xml` with
 
@@ -31,7 +28,7 @@ So if your project has a `bookss.xml` with
       <genre>Computer</genre>
       <price>44.95</price>
       <publish_date>2000-10-01</publish_date>
-      <description>An in-depth look at creating applications 
+      <description>An in-depth look at creating applications
       with XML.</description>
    </book>
    <book id="bk102">
@@ -40,12 +37,13 @@ So if your project has a `bookss.xml` with
       <genre>Fantasy</genre>
       <price>5.95</price>
       <publish_date>2000-12-16</publish_date>
-      <description>A former architect battles corporate zombies, 
-      an evil sorceress, and her own childhood to become queen 
+      <description>A former architect battles corporate zombies,
+      an evil sorceress, and her own childhood to become queen
       of the world.</description>
    </book>
 </catalog>
 ```
+
 Then the following 2 nodes will be created
 
 ```javascript

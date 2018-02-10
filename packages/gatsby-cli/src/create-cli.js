@@ -2,6 +2,7 @@ const path = require(`path`)
 const resolveCwd = require(`resolve-cwd`)
 const yargs = require(`yargs`)
 const report = require(`./reporter`)
+const fs = require(`fs`)
 
 const DEFAULT_BROWSERS = [`> 1%`, `last 2 versions`, `IE >= 9`]
 
@@ -17,6 +18,7 @@ function buildLocalCommands(cli, isLocalSite) {
   const directory = path.resolve(`.`)
 
   let siteInfo = { directory, browserslist: DEFAULT_BROWSERS }
+  const useYarn = fs.existsSync(path.join(directory, `yarn.lock`))
   if (isLocalSite) {
     const json = require(path.join(directory, `package.json`))
     siteInfo.sitePackageJson = json
@@ -41,9 +43,7 @@ function buildLocalCommands(cli, isLocalSite) {
         resolveCwd.silent(`gatsby/dist/utils/${command}`)
       if (!cmdPath)
         return report.panic(
-          `There was a problem loading the local ${
-            command
-          } command. Gatsby may not be installed.`
+          `There was a problem loading the local ${command} command. Gatsby may not be installed. Perhaps you need to run "npm install"?`
         )
 
       report.verbose(`loading local command from: ${cmdPath}`)
@@ -51,9 +51,7 @@ function buildLocalCommands(cli, isLocalSite) {
     } catch (err) {
       cli.showHelp()
       return report.panic(
-        `There was a problem loading the local ${
-          command
-        } command. Gatsby may not be installed.`,
+        `There was a problem loading the local ${command} command. Gatsby may not be installed. Perhaps you need to run "npm install"?`,
         err
       )
     }
@@ -62,6 +60,7 @@ function buildLocalCommands(cli, isLocalSite) {
   function getCommandHandler(command, handler) {
     return argv => {
       report.setVerbose(!!argv.verbose)
+      report.setNoColor(!!argv.noColor)
 
       process.env.gatsby_log_level = argv.verbose ? `verbose` : `normal`
       report.verbose(`set gatsby_log_level: "${process.env.gatsby_log_level}"`)
@@ -70,7 +69,7 @@ function buildLocalCommands(cli, isLocalSite) {
       report.verbose(`set gatsby_executing_command: "${command}"`)
 
       let localCmd = resolveLocalCommand(command)
-      let args = { ...argv, ...siteInfo }
+      let args = { ...argv, ...siteInfo, useYarn }
 
       report.verbose(`running command: ${command}`)
       return handler ? handler(args, localCmd) : localCmd(args)
@@ -100,7 +99,16 @@ function buildLocalCommands(cli, isLocalSite) {
           type: `boolean`,
           describe: `Open the site in your browser for you.`,
         }),
-    handler: getCommandHandler(`develop`),
+    handler: handlerP(
+      getCommandHandler(`develop`, (args, cmd) => {
+        process.env.NODE_ENV = process.env.NODE_ENV || `development`
+        cmd(args)
+        // Return an empty promise to prevent handlerP from exiting early.
+        // The development server shouldn't ever exit until the user directly
+        // kills it so this is fine.
+        return new Promise(resolve => {})
+      })
+    ),
   })
 
   cli.command({
@@ -177,6 +185,12 @@ module.exports = (argv, handlers) => {
       describe: `Turn on verbose output`,
       global: true,
     })
+    .option(`no-color`, {
+      default: false,
+      type: `boolean`,
+      describe: `Turn off the color in output`,
+      global: true,
+    })
 
   buildLocalCommands(cli, isLocalSite)
 
@@ -193,6 +207,8 @@ module.exports = (argv, handlers) => {
     })
     .wrap(cli.terminalWidth())
     .demandCommand(1, `Pass --help to see all available commands and options.`)
-    .showHelpOnFail(true, `A command is required.`)
+    .strict()
+    .showHelpOnFail(true)
+    .recommendCommands()
     .parse(argv.slice(2))
 }

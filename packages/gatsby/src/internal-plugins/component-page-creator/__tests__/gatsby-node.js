@@ -34,6 +34,47 @@ describe(`JavaScript page creator`, () => {
     expect(files.filter(file => validatePath(file.path)).length).toEqual(1)
   })
 
+  it(`filters out files that have TypeScript declaration extensions`, () => {
+    const files = [
+      {
+        path: `something/foo.ts`,
+      },
+      {
+        path: `something/bar.tsx`,
+      },
+      {
+        path: `something/declaration-file.d.ts`,
+      },
+      {
+        path: `something-else/other-declaration-file.d.tsx`,
+      },
+    ]
+
+    expect(files.filter(file => validatePath(file.path)).length).toEqual(2)
+  })
+
+  it(`filters out test files`, () => {
+    const files = [
+      {
+        path: `__tests__/something.test.js`,
+      },
+      {
+        path: `foo.spec.js`,
+      },
+      {
+        path: `bar.test.js`,
+      },
+      {
+        path: `page.js`,
+      },
+      {
+        path: `page.jsx`,
+      },
+    ]
+
+    expect(files.filter(file => validatePath(file.path)).length).toEqual(2)
+  })
+
   describe(`create-path`, () => {
     it(`should create unix paths`, () => {
       const basePath = `/a/`

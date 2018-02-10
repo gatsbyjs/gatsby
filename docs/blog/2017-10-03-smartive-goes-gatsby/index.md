@@ -6,13 +6,15 @@ author: "Moreno Feltscher"
 excerpt: "At smartive we always saw the potential of static site generators. We recently made the switch to Gatsby.js for our company site. A decision we don’t regret. Here’s why."
 ---
 
-_This article was originally published on [our company blog](https://blog.smartive.ch/smartive-ch-goes-gatsby-js-27a056b3b817) on September 27, 2017._
+_This article was originally published on
+[our company blog](https://blog.smartive.ch/smartive-ch-goes-gatsby-js-27a056b3b817)
+on September 27, 2017._
 
 # smartive.ch goes Gatsby
 
-At smartive, a Swiss-based web agency, we always saw the potential of static site generators.
-After using Wintersmith and Next.js we recently made the switch to Gatsby for our company
-site. A decision we don’t regret. Here’s why.
+At smartive, a Swiss-based web agency, we always saw the potential of static
+site generators. After using Wintersmith and Next.js we recently made the switch
+to Gatsby for our company site. A decision we don’t regret. Here’s why.
 
 ## Back in the Days..
 
@@ -28,9 +30,12 @@ identity came in quite handy as well.
 After running Wintersmith for almost a year we encountered its limits. Some of
 the major drawbacks at that time were:
 
-* No code splitting, resulting in the client having to load a bunch of unnecessary JavaScript and CSS files
-* Pulling in external resources, such as blog posts, was quite unhandy and sometimes even impossible
-* Build process optimization was almost impossible and in our case resulted in a Webpack setup on top of Wintersmith which was not really maintainable
+* No code splitting, resulting in the client having to load a bunch of
+  unnecessary JavaScript and CSS files
+* Pulling in external resources, such as blog posts, was quite unhandy and
+  sometimes even impossible
+* Build process optimization was almost impossible and in our case resulted in a
+  Webpack setup on top of Wintersmith which was not really maintainable
 
 ## React to the Rescue!
 
@@ -46,33 +51,35 @@ chose [prismic.io](https://prismic.io/) for our backend system which served all
 the content. Although this felt right at first but, as all of us are developers,
 working around the constraints of it just didn’t feel right.
 
-Luckily at that time Gatsby version 1.0 [just got released](https://www.gatsbyjs.org/blog/gatsby-v1/)
-and we decided to give it a try during one of our so-called Hackdays. We instantly fell in love with
-the simplicity of the system. Our first approach was to just use all the
+Luckily at that time Gatsby version 1.0
+[just got released](/blog/gatsby-v1/) and we decided to
+give it a try during one of our so-called Hackdays. We instantly fell in love
+with the simplicity of the system. Our first approach was to just use all the
 components which we already had created for Next.js and backed it by simple JSON
 files containing the content we wanted to serve using the amazing yet simple
-GraphQL-based pull-in mechanism Gatsby provides. This was accomplished by
-using the [gatsby-transformer-json
-plugin](https://www.npmjs.com/package/gatsby-transformer-json) internally. Keep
-in mind that our content rarely changes, so this was always the way we wanted it
-to be (without knowing for some time as we had to admit to ourselves).
+GraphQL-based pull-in mechanism Gatsby provides. This was accomplished by using
+the
+[gatsby-transformer-json plugin](https://www.npmjs.com/package/gatsby-transformer-json)
+internally. Keep in mind that our content rarely changes, so this was always the
+way we wanted it to be (without knowing for some time as we had to admit to
+ourselves).
 
-One of our main goals all along was to show [our latest blog posts](https://blog.smartive.ch) on Medium.
-Unfortunately at that time there was no plugin to achieve this so we decided to
-write one ourselves. By the time of writing I’m proud to say we successfully did
-so and even [contributed it back to the
-community](https://github.com/gatsbyjs/gatsby/pull/1907). Make sure to check it
-out if you’re interested in a similar solution.
+One of our main goals all along was to show
+[our latest blog posts](https://blog.smartive.ch) on Medium. Unfortunately at
+that time there was no plugin to achieve this so we decided to write one
+ourselves. By the time of writing I’m proud to say we successfully did so and
+even
+[contributed it back to the community](https://github.com/gatsbyjs/gatsby/pull/1907).
+Make sure to check it out if you’re interested in a similar solution.
 
-The only thing left was to
-actually rebuild and deploy our site once a new blog post gets released on
-Medium. We chose [IFTTT](https://ifttt.com/) for this task, mainly because of
-its simplicity. Every time IFTTT picks up a newly published blog post it
-triggers a GitLab CI pipeline using a webhook, which then rebuilds and deploys
-our application onto our Docker Cloud infrastructure.
+The only thing left was to actually rebuild and deploy our site once a new blog
+post gets released on Medium. We chose [IFTTT](https://ifttt.com/) for this
+task, mainly because of its simplicity. Every time IFTTT picks up a newly
+published blog post it triggers a GitLab CI pipeline using a webhook, which then
+rebuilds and deploys our application onto our Docker Cloud infrastructure.
 
-The result of our work using Gatsby is an outstanding [Google PageSpeed
-score](https://developers.google.com/speed/pagespeed/insights/?url=https://smartive.ch&tab=desktop)
+The result of our work using Gatsby is an outstanding
+[Google PageSpeed score](https://developers.google.com/speed/pagespeed/insights/?url=https://smartive.ch&tab=desktop)
 thanks to the built-in code splitting and cache handling mechanisms. If you’re
 interested in how [smartive.ch](https://smartive.ch/) is built you can have a
 look at our code [on GitHub](https://github.com/smartive/smartive.ch).
@@ -82,6 +89,10 @@ Gatsby!
 
 ---
 
-If you have any questions about the way we built [smartive.ch](https://smartive.ch) feel free to contact me on [Twitter](https://twitter.com/luagsh_mrn).
+If you have any questions about the way we built
+[smartive.ch](https://smartive.ch) feel free to contact me on
+[Twitter](https://twitter.com/luagsh_mrn).
 
-*Special thanks goes to my co-worker [Robert Vogt](https://twitter.com/_deniaz) who did most of the work on our website and contributed the Medium plugin mentioned above.*
+_Special thanks goes to my co-worker [Robert Vogt](https://twitter.com/_deniaz)
+who did most of the work on our website and contributed the Medium plugin
+mentioned above._

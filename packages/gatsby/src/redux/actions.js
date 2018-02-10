@@ -6,7 +6,7 @@ const { bindActionCreators } = require(`redux`)
 const { stripIndent } = require(`common-tags`)
 const glob = require(`glob`)
 const path = require(`path`)
-
+const fs = require(`fs`)
 const { joinPath } = require(`../utils/path`)
 const {
   getNode,
@@ -30,6 +30,7 @@ type PageInput = {
 }
 type LayoutInput = {
   id?: string,
+  machineId?: string,
   component: string,
   layout?: string,
   context?: Object,
@@ -84,6 +85,8 @@ const pascalCase = _.flow(_.camelCase, _.upperFirst)
  * @param {Object} page a page object
  * @param {string} page.path Any valid URL. Must start with a forward slash
  * @param {string} page.component The absolute path to the component for this page
+ * @param {string} page.layout The name of the layout for this page. By default
+ * `'index'` layout is used
  * @param {Object} page.context Context data for this page. Passed as props
  * to the component `this.props.pathContext` as well as to the graphql query
  * as graphql arguments.
@@ -101,6 +104,45 @@ const pascalCase = _.flow(_.camelCase, _.upperFirst)
  * })
  */
 actions.createPage = (page: PageInput, plugin?: Plugin, traceId?: string) => {
+  let noPageOrComponent = false
+  let name = `The plugin "${plugin.name}"`
+  if (plugin.name === `default-site-plugin`) {
+    name = `Your site's "gatsby-node.js"`
+  }
+  if (!page.path) {
+    const message = `${name} must set the page path when creating a page`
+    // Don't log out when testing
+    if (process.env.NODE_ENV !== `test`) {
+      console.log(chalk.bold.red(message))
+      console.log(``)
+      console.log(page)
+    } else {
+      return message
+    }
+    noPageOrComponent = true
+  }
+
+  if (!page.component || !path.isAbsolute(page.component)) {
+    const message = `${name} must set the absolute path to the page component when create creating a page`
+    // Don't log out when testing
+    if (process.env.NODE_ENV !== `test`) {
+      console.log(chalk.bold.red(message))
+      console.log(``)
+      console.log(page)
+    } else {
+      return message
+    }
+    noPageOrComponent = true
+  }
+
+  if (noPageOrComponent) {
+    console.log(``)
+    console.log(
+      `See the documentation for createPage https://www.gatsbyjs.org/docs/bound-action-creators/#createPage`
+    )
+    process.exit(1)
+  }
+
   let jsonName = `${_.kebabCase(page.path)}.json`
   let internalComponentName = `Component${pascalCase(page.path)}`
 
@@ -132,6 +174,11 @@ actions.createPage = (page: PageInput, plugin?: Plugin, traceId?: string) => {
     updatedAt: Date.now(),
   }
 
+  // If the path doesn't have an initial forward slash, add it.
+  if (internalPage.path[0] !== `/`) {
+    internalPage.path = `/${internalPage.path}`
+  }
+
   const result = Joi.validate(internalPage, joiSchemas.pageSchema)
   if (result.error) {
     console.log(chalk.blue.bgYellow(`The upserted page didn't pass validation`))
@@ -140,9 +187,55 @@ actions.createPage = (page: PageInput, plugin?: Plugin, traceId?: string) => {
     return null
   }
 
-  // If the path doesn't have an initial forward slash, add it.
-  if (internalPage.path[0] !== `/`) {
-    internalPage.path = `/${internalPage.path}`
+  // Validate that the page component imports React and exports something
+  // (hopefully a component).
+  if (!internalPage.component.includes(`/.cache/`)) {
+    const fileContent = fs.readFileSync(internalPage.component, `utf-8`)
+    let notEmpty = true
+    let includesDefaultExport = true
+
+    if (fileContent === ``) {
+      notEmpty = false
+    }
+
+    if (
+      !fileContent.includes(`export default`) &&
+      !fileContent.includes(`module.exports`) &&
+      !fileContent.includes(`exports.default`)
+    ) {
+      includesDefaultExport = false
+    }
+    if (!notEmpty || !includesDefaultExport) {
+      const relativePath = path.relative(
+        store.getState().program.directory,
+        internalPage.component
+      )
+
+      if (!notEmpty) {
+        console.log(``)
+        console.log(
+          `You have an empty file in the "src/pages" directory at "${relativePath}". Please remove it or make it a valid component`
+        )
+        console.log(``)
+        process.exit(1)
+      }
+
+      console.log(``)
+      console.log(``)
+      console.log(
+        `The page component at "${relativePath}" didn't pass validation`
+      )
+
+      if (!includesDefaultExport) {
+        console.log(``)
+        console.log(
+          `The page component must export a React component for it to be valid`
+        )
+        console.log(``)
+      }
+
+      process.exit(1)
+    }
   }
 
   return {
@@ -187,6 +280,9 @@ actions.createLayout = (
   traceId?: string
 ) => {
   let id = layout.id || path.parse(layout.component).name
+  // Add a "machine" id as a universal ID to differentiate layout from
+  // page components.
+  const machineId = `layout---${id}`
   let componentWrapperPath = joinPath(
     store.getState().program.directory,
     `.cache`,
@@ -196,6 +292,7 @@ actions.createLayout = (
 
   let internalLayout: Layout = {
     id,
+    machineId,
     componentWrapperPath,
     isLayout: true,
     jsonName: `layout-${_.kebabCase(id)}.json`,
@@ -385,9 +482,7 @@ actions.createNode = (node: any, plugin?: Plugin, traceId?: string) => {
       typeOwners[node.internal.type] = pluginName
     else if (typeOwners[node.internal.type] !== pluginName)
       throw new Error(stripIndent`
-        The plugin "${
-          pluginName
-        }" created a node of a type owned by another plugin.
+        The plugin "${pluginName}" created a node of a type owned by another plugin.
 
         The node type "${node.internal.type}" is owned by "${
         typeOwners[node.internal.type]
@@ -467,7 +562,7 @@ type CreateNodeInput = {
  * key on the extended node object.
  *
  * Once a plugin has claimed a field name the field name can't be used by
- * other plugins.  Also since node's are immutable, you can't mutate the node
+ * other plugins.  Also since nodes are immutable, you can't mutate the node
  * directly. So to extend another node, use this.
  * @param {Object} $0
  * @param {Object} $0.node the target node object
@@ -541,7 +636,11 @@ actions.createNodeField = (
 }
 
 /**
- * Creates a link between a parent and child node
+ * Creates a link between a parent and child node. This is used when you
+ * transform content from a node creating a new child node. You need to add
+ * this new child node to the `children` array of the parent but since you
+ * don't have direct access to the immutable parent node, use this action
+ * instead.
  * @param {Object} $0
  * @param {Object} $0.parent the parent node object
  * @param {Object} $0.child the child node object
@@ -701,9 +800,10 @@ actions.setPluginStatus = (
 }
 
 /**
- * Create a redirect from one page to another.  Redirect data can be used to
- * configure hosting environments like Netlify (automatically handled with the
- * [Netlify plugin](/packages/gatsby-plugin-netlify/)).
+ * Create a redirect from one page to another. Server redirects don't work out
+ * of the box. You must have a plugin setup to integrate the redirect data with
+ * your hosting technology e.g. the [Netlify
+ * plugin](/packages/gatsby-plugin-netlify/)).
  *
  * @param {Object} redirect Redirect data
  * @param {string} redirect.fromPath Any valid URL. Must start with a forward slash
@@ -712,12 +812,14 @@ actions.setPluginStatus = (
  * @param {string} redirect.redirectInBrowser Redirects are generally for redirecting legacy URLs to their new configuration. If you can't update your UI for some reason, set `redirectInBrowser` to true and Gatsby will handle redirecting in the client as well.
  * @example
  * createRedirect({ fromPath: '/old-url', toPath: '/new-url', isPermanent: true })
+ * createRedirect({ fromPath: '/url', toPath: '/zn-CH/url', Language: 'zn' })
  */
 actions.createRedirect = ({
   fromPath,
   isPermanent = false,
-  toPath,
   redirectInBrowser = false,
+  toPath,
+  ...rest
 }) => {
   let pathPrefix = ``
   if (store.getState().program.prefixPaths) {
@@ -729,8 +831,9 @@ actions.createRedirect = ({
     payload: {
       fromPath: `${pathPrefix}${fromPath}`,
       isPermanent,
-      toPath: `${pathPrefix}${toPath}`,
       redirectInBrowser,
+      toPath: `${pathPrefix}${toPath}`,
+      ...rest,
     },
   }
 }

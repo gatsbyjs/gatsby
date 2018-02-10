@@ -6,6 +6,7 @@ const mapSeries = require(`async/mapSeries`)
 const reporter = require(`gatsby-cli/lib/reporter`)
 const cache = require(`./cache`)
 const apiList = require(`./api-node-docs`)
+const createNodeId = require(`./create-node-id`)
 
 // Bind action creators per plugin so we can auto-add
 // metadata to actions they create.
@@ -61,6 +62,8 @@ const runAPI = (plugin, api, args) => {
     pathPrefix = store.getState().config.pathPrefix
   }
 
+  const namespacedCreateNodeId = id => createNodeId(id, plugin.name)
+
   const gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
   if (gatsbyNode[api]) {
     const apiCallArgs = [
@@ -76,6 +79,7 @@ const runAPI = (plugin, api, args) => {
         reporter,
         getNodeAndSavePathDependency,
         cache,
+        createNodeId: namespacedCreateNodeId,
       },
       plugin.pluginOptions,
     ]
@@ -144,17 +148,20 @@ module.exports = async (api, args = {}, pluginSource) =>
 
     apisRunning.push(apiRunInstance)
 
-    let currentPluginName = null
-
+    let pluginName = null
     mapSeries(
       noSourcePluginPlugins,
       (plugin, callback) => {
-        currentPluginName = plugin.name
+        if (plugin.name === `default-site-plugin`) {
+          pluginName = `gatsby-node.js`
+        } else {
+          pluginName = `Plugin ${plugin.name}`
+        }
         Promise.resolve(runAPI(plugin, api, args)).asCallback(callback)
       },
       (err, results) => {
         if (err) {
-          reporter.error(`Plugin ${currentPluginName} returned an error`, err)
+          reporter.error(`${pluginName} returned an error`, err)
         }
         // Remove runner instance
         apisRunning = apisRunning.filter(runner => runner !== apiRunInstance)

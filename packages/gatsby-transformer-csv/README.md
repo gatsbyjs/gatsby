@@ -10,12 +10,11 @@ Parses CSV files into JSON arrays.
 
 ```javascript
 // In your gatsby-config.js
-plugins: [
-  `gatsby-transformer-csv`,
-]
+plugins: [`gatsby-transformer-csv`];
 ```
-Above is the minimal configuration required to begin working. Additional customization
-of the parsing process is possible using the parameters listed in
+
+Above is the minimal configuration required to begin working. Additional
+customization of the parsing process is possible using the parameters listed in
 [csvtojson](https://github.com/Keyang/node-csvtojson#parameters).
 
 ```javascript
@@ -24,10 +23,10 @@ plugins: [
   {
     resolve: `gatsby-transformer-csv`,
     options: {
-      noheader: true
-    }
-  }
-]
+      noheader: true,
+    },
+  },
+];
 ```
 
 ## Parsing algorithm
@@ -35,20 +34,22 @@ plugins: [
 Each row is converted into a node with CSV headers as the keys.
 
 So if your project has a `letters.csv` with
+
 ```
 letter,value
 a,65
 b,66
 c,67
 ```
+
 the following three nodes would be created.
 
 ```javascript
 [
-  { letter: 'a', value: 65, type: 'LettersCsv' },
-  { letter: 'b', value: 66, type: 'LettersCsv' },
-  { letter: 'c', value: 67, type: 'LettersCsv' },
-]
+  { letter: "a", value: 65, type: "LettersCsv" },
+  { letter: "b", value: 66, type: "LettersCsv" },
+  { letter: "c", value: 67, type: "LettersCsv" },
+];
 ```
 
 ## How to query
@@ -96,4 +97,3 @@ Which would return:
   }
 }
 ```
-

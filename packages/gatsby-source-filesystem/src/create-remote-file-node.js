@@ -7,8 +7,19 @@ const { isWebUri } = require(`valid-url`)
 const { createFileNode } = require(`./create-file-node`)
 const cacheId = url => `create-remote-file-node-${url}`
 
-module.exports = ({ url, store, cache, createNode }) =>
-  new Promise(async (resolve, reject) => {
+/**
+ * Index of promises resolving to File node from remote url
+ */
+const processingCache = {}
+
+module.exports = ({ url, store, cache, createNode, auth = {} }) => {
+  // Check if we already requested node for this remote file
+  // and return stored promise if we did.
+  if (processingCache[url]) {
+    return processingCache[url]
+  }
+
+  return (processingCache[url] = new Promise(async (resolve, reject) => {
     if (!url || isWebUri(url) === undefined) {
       resolve()
       return
@@ -27,6 +38,13 @@ module.exports = ({ url, store, cache, createNode }) =>
     // from a previous request.
     const cachedHeaders = await cache.get(cacheId(url))
     const headers = {}
+
+    // Add htaccess authentication if passed in. This isn't particularly
+    // extensible. We should define a proper API that we validate.
+    if (auth && auth.htaccess_pass && auth.htaccess_user) {
+      headers.auth = `${auth.htaccess_user}:${auth.htaccess_pass}`
+    }
+
     if (cachedHeaders && cachedHeaders.etag) {
       headers[`If-None-Match`] = cachedHeaders.etag
     }
@@ -53,7 +71,7 @@ module.exports = ({ url, store, cache, createNode }) =>
     let statusCode
     let responseHeaders
     let responseError = false
-    const responseStream = got.stream(url, { headers })
+    const responseStream = got.stream(url, headers)
     responseStream.pipe(fs.createWriteStream(tmpFilename))
     responseStream.on(`downloadProgress`, pro => console.log(pro))
 
@@ -92,4 +110,5 @@ module.exports = ({ url, store, cache, createNode }) =>
         resolve(fileNode)
       })
     })
-  })
+  }))
+}

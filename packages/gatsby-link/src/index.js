@@ -2,6 +2,7 @@
 import React from "react"
 import { Link, NavLink } from "react-router-dom"
 import PropTypes from "prop-types"
+import { createLocation as cL, createPath } from "history"
 
 let pathPrefix = `/`
 if (typeof __PREFIX_PATHS__ !== `undefined` && __PREFIX_PATHS__) {
@@ -14,6 +15,12 @@ export function withPrefix(path) {
 
 function normalizePath(path) {
   return path.replace(/^\/\//g, `/`)
+}
+
+function createLocation(path, history) {
+  const location = cL(path, null, null, history.location)
+  location.pathname = withPrefix(location.pathname)
+  return location
 }
 
 const NavLinkPropTypes = {
@@ -45,7 +52,7 @@ const handleIntersection = (el, cb) => {
 }
 
 class GatsbyLink extends React.Component {
-  constructor(props) {
+  constructor(props, context) {
     super()
     // Default to no support for IntersectionObserver
     let IOSupported = false
@@ -53,8 +60,12 @@ class GatsbyLink extends React.Component {
       IOSupported = true
     }
 
+    const { history } = context.router
+    const to = createLocation(props.to, history)
+
     this.state = {
-      to: withPrefix(props.to),
+      path: createPath(to),
+      to,
       IOSupported,
     }
     this.handleRef = this.handleRef.bind(this)
@@ -62,12 +73,14 @@ class GatsbyLink extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.to !== nextProps.to) {
+      const to = createLocation(nextProps.to, history)
       this.setState({
-        to: withPrefix(nextProps.to),
+        path: createPath(to),
+        to,
       })
       // Preserve non IO functionality if no support
       if (!this.state.IOSupported) {
-        ___loader.enqueue(this.state.to)
+        ___loader.enqueue(this.state.path)
       }
     }
   }
@@ -75,15 +88,17 @@ class GatsbyLink extends React.Component {
   componentDidMount() {
     // Preserve non IO functionality if no support
     if (!this.state.IOSupported) {
-      ___loader.enqueue(this.state.to)
+      ___loader.enqueue(this.state.path)
     }
   }
 
   handleRef(ref) {
+    this.props.innerRef && this.props.innerRef(ref)
+
     if (this.state.IOSupported && ref) {
       // If IO supported and element reference found, setup Observer functionality
       handleIntersection(ref, () => {
-        ___loader.enqueue(this.state.to)
+        ___loader.enqueue(this.state.path)
       })
     }
   }
@@ -114,7 +129,7 @@ class GatsbyLink extends React.Component {
           ) {
             // Is this link pointing to a hash on the same page? If so,
             // just scroll there.
-            let pathname = this.state.to
+            let pathname = this.state.path
             if (pathname.split(`#`).length > 1) {
               pathname = pathname
                 .split(`#`)
@@ -122,13 +137,18 @@ class GatsbyLink extends React.Component {
                 .join(``)
             }
             if (pathname === window.location.pathname) {
-              const hashFragment = this.state.to
+              const hashFragment = this.state.path
                 .split(`#`)
                 .slice(1)
                 .join(`#`)
               const element = document.getElementById(hashFragment)
               if (element !== null) {
                 element.scrollIntoView()
+                return true
+              } else {
+                // This is just a normal link to the current page so let's emulate default
+                // browser behavior by scrolling now to the top of the page.
+                window.scrollTo(0, 0)
                 return true
               }
             }
@@ -153,8 +173,9 @@ class GatsbyLink extends React.Component {
 
 GatsbyLink.propTypes = {
   ...NavLinkPropTypes,
-  to: PropTypes.string.isRequired,
+  innerRef: PropTypes.func,
   onClick: PropTypes.func,
+  to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
 }
 
 GatsbyLink.contextTypes = {
@@ -163,6 +184,6 @@ GatsbyLink.contextTypes = {
 
 export default GatsbyLink
 
-export const navigateTo = pathname => {
-  window.___navigateTo(withPrefix(pathname))
+export const navigateTo = to => {
+  window.___navigateTo(to)
 }

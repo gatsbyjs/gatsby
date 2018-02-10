@@ -1,7 +1,6 @@
 const crypto = require(`crypto`)
 const deepMapKeys = require(`deep-map-keys`)
 const _ = require(`lodash`)
-const uuidv5 = require(`uuid/v5`)
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 
 const colorized = require(`./output-color`)
@@ -47,9 +46,7 @@ function getValidKey({ key, verbose = false }) {
   if (changed && verbose)
     console.log(
       colorized.out(
-        `Object with key "${
-          key
-        }" breaks GraphQL naming convention. Renamed to "${nkey}"`,
+        `Object with key "${key}" breaks GraphQL naming convention. Renamed to "${nkey}"`,
         colorized.color.Font.FgRed
       )
     )
@@ -62,7 +59,7 @@ exports.getValidKey = getValidKey
 // Remove the ACF key from the response when it's not an object
 const normalizeACF = entities =>
   entities.map(e => {
-    if (!_.isObject(e[`acf`])) {
+    if (!_.isPlainObject(e[`acf`])) {
       delete e[`acf`]
     }
     return e
@@ -143,19 +140,9 @@ exports.liftRenderedField = entities =>
 exports.excludeUnknownEntities = entities =>
   entities.filter(e => e.wordpress_id) // Excluding entities without ID
 
-const seedConstant = `b2012db8-fafc-5a03-915f-e6016ff32086`
-const typeNamespaces = {}
-exports.createGatsbyIds = entities =>
+exports.createGatsbyIds = (createNodeId, entities) =>
   entities.map(e => {
-    let namespace
-    if (typeNamespaces[e.__type]) {
-      namespace = typeNamespaces[e.__type]
-    } else {
-      typeNamespaces[e.__type] = uuidv5(e.__type, seedConstant)
-      namespace = typeNamespaces[e.__type]
-    }
-
-    e.id = uuidv5(e.wordpress_id.toString(), namespace)
+    e.id = createNodeId(`${e.__type}-${e.wordpress_id.toString()}`)
     return e
   })
 
@@ -235,6 +222,52 @@ exports.mapTagsCategoriesToTaxonomies = entities =>
     }
     return e
   })
+
+exports.searchReplaceContentUrls = function({
+  entities,
+  searchAndReplaceContentUrls,
+}) {
+  if (
+    !_.isPlainObject(searchAndReplaceContentUrls) ||
+    !_.has(searchAndReplaceContentUrls, `sourceUrl`) ||
+    !_.has(searchAndReplaceContentUrls, `replacementUrl`) ||
+    typeof searchAndReplaceContentUrls.sourceUrl !== `string` ||
+    typeof searchAndReplaceContentUrls.replacementUrl !== `string`
+  ) {
+    return entities
+  }
+
+  const { sourceUrl, replacementUrl } = searchAndReplaceContentUrls
+
+  const _blacklist = [`_links`, `__type`]
+
+  const blacklistProperties = function(obj = {}, blacklist = []) {
+    for (var i = 0; i < blacklist.length; i++) {
+      delete obj[blacklist[i]]
+    }
+
+    return obj
+  }
+
+  return entities.map(function(entity) {
+    const original = Object.assign({}, entity)
+
+    try {
+      var whiteList = blacklistProperties(entity, _blacklist)
+      var replaceable = JSON.stringify(whiteList)
+      var replaced = replaceable.replace(
+        new RegExp(sourceUrl, `g`),
+        replacementUrl
+      )
+      var parsed = JSON.parse(replaced)
+    } catch (e) {
+      console.log(colorized.out(e.message, colorized.color.Font.FgRed))
+      return original
+    }
+
+    return _.defaultsDeep(parsed, original)
+  })
+}
 
 exports.mapEntitiesToMedia = entities => {
   const media = entities.filter(e => e.__type === `wordpress__wp_media`)
@@ -346,7 +379,13 @@ exports.mapEntitiesToMedia = entities => {
 }
 
 // Downloads media files and removes "sizes" data as useless in Gatsby context.
-exports.downloadMediaFiles = async ({ entities, store, cache, createNode }) =>
+exports.downloadMediaFiles = async ({
+  entities,
+  store,
+  cache,
+  createNode,
+  _auth,
+}) =>
   Promise.all(
     entities.map(async e => {
       let fileNode
@@ -357,6 +396,7 @@ exports.downloadMediaFiles = async ({ entities, store, cache, createNode }) =>
             store,
             cache,
             createNode,
+            auth: _auth,
           })
         } catch (e) {
           // Ignore

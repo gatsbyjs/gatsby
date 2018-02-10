@@ -7,12 +7,14 @@ tags:
   - remark
   - Code Highlighting
 ---
-![](jeremy-bishop-262119.jpg)
-*Photo by [Jeremy Bishop](https://unsplash.com/@tidesinourveins) via [Unsplash](https://unsplash.com/?photo=XxpCNQ_w3is)*
+
+![](jeremy-bishop-262119.jpg) _Photo by
+[Jeremy Bishop](https://unsplash.com/@tidesinourveins) via
+[Unsplash](https://unsplash.com/?photo=XxpCNQ_w3is)_
 
 Code blocks are part of the Markdown spec, but syntax highlighting isn't.
-However, many renderers support syntax highlighting.
-In [gatsby-remark-prismjs][1], we use 🤔 [PrismJS][2].
+However, many renderers support syntax highlighting. In
+[gatsby-remark-prismjs][1], we use 🤔 [PrismJS][2].
 
 ## Inline code
 
@@ -130,33 +132,46 @@ Let's do something crazy and add a list with another code example:
 
 * **A list item**
 
-  …and a paragraph! In my younger and more vulnerable years my father gave me some advice that I’ve been turning over in my mind ever since.
+  …and a paragraph! In my younger and more vulnerable years my father gave me
+  some advice that I’ve been turning over in my mind ever since.
 
   1. A nested numbered list
-  2. “Whenever you feel like criticizing any one,” he told me, “just remember that all the people in this world haven’t had the advantages that you’ve had.”
+  2. “Whenever you feel like criticizing any one,” he told me, “just remember
+     that all the people in this world haven’t had the advantages that you’ve
+     had.”
 
 * Roger that, now back to topic: _Highlighted code blocks work here, too:_
-    ```css{10,13}
-    .clearfix:after {
-    	visibility: hidden;
-    	display: block;
-    	font-size: 0;
-    	content: " ";
-    	clear: both;
-    	height: 0;
-    	}
-    .clearfix { display: inline-table; }
-    /* Hides from IE-mac \*/
-    * html .clearfix { height: 1%; }
-    .clearfix { display: block; }
-    /* End hide from IE-mac */
-    ```
 
-  Wow, "IE-mac"? [Yeah, that was a thing](https://en.wikipedia.org/wiki/Internet_Explorer_for_Mac) back in the day … a good one at the time, too:
+  ```css{10,13}
+  .clearfix:after {
+  	visibility: hidden;
+  	display: block;
+  	font-size: 0;
+  	content: " ";
+  	clear: both;
+  	height: 0;
+  	}
+  .clearfix { display: inline-table; }
+  /* Hides from IE-mac \*/
+  * html .clearfix { height: 1%; }
+  .clearfix { display: block; }
+  /* End hide from IE-mac */
+  ```
 
-  > Initial versions were developed from the same code base as Internet Explorer for Windows. Later versions diverged, particularly with the release of version 5 which included the cutting edge, [fault-tolerant](https://en.wikipedia.org/wiki/Fault-tolerant) and highly standards-compliant [Tasman](https://en.wikipedia.org/wiki/Tasman_(layout_engine)) [layout engine](https://en.wikipedia.org/wiki/Layout_engine).
+  Wow, "IE-mac"?
+  [Yeah, that was a thing](https://en.wikipedia.org/wiki/Internet_Explorer_for_Mac)
+  back in the day … a good one at the time, too:
+
+  > Initial versions were developed from the same code base as Internet Explorer
+  > for Windows. Later versions diverged, particularly with the release of
+  > version 5 which included the cutting edge,
+  > [fault-tolerant](https://en.wikipedia.org/wiki/Fault-tolerant) and highly
+  > standards-compliant
+  > [Tasman](<https://en.wikipedia.org/wiki/Tasman_(layout_engine)>) >
+  > [layout engine](https://en.wikipedia.org/wiki/Layout_engine).
 
   Source: https://en.wikipedia.org/wiki/Internet_Explorer_for_Mac
+
 * **The last list item** –- no more list items after this one, pinky swear!
 
 [1]: https://www.gatsbyjs.org/packages/gatsby-remark-prismjs/

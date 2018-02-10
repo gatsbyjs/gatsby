@@ -39,7 +39,7 @@ export const pageQuery = graphql`
     }
     allMarkdownRemark(
       limit: 2000
-      filter: { frontmatter: { draft: { ne: true } } }
+      filter: { frontmatter: { draft: { ne: true }, example: { ne: true } } }
     ) {
       group(field: frontmatter___tags) {
         fieldValue

@@ -3,9 +3,11 @@
 const fs = require(`fs`)
 const { extname, resolve } = require(`path`)
 const recursiveReaddir = require(`recursive-readdir-synchronous`)
+const normalizePath = require(`normalize-path`)
 
 const {
   OPTION_DEFAULT_LINK_TEXT,
+  OPTION_DEFAULT_HTML,
   OPTION_DEFAULT_REDIRECT_TEMPLATE_PATH,
 } = require(`./constants`)
 
@@ -14,6 +16,7 @@ exports.createPages = (
   {
     directory = OPTION_DEFAULT_LINK_TEXT,
     externals = [],
+    html = OPTION_DEFAULT_HTML,
     redirectTemplate = OPTION_DEFAULT_REDIRECT_TEMPLATE_PATH,
   } = {}
 ) => {
@@ -56,7 +59,7 @@ exports.createPages = (
       const action = `https://codepen.io/pen/define`
       const payload = JSON.stringify({
         editors: `0010`,
-        html: `<div id="root"></div>`,
+        html,
         js: code,
         js_external: externals.join(`;`),
         js_pre_processor: `babel`,
@@ -65,7 +68,8 @@ exports.createPages = (
 
       createPage({
         path: slug,
-        component: resolve(redirectTemplate),
+        // Normalize the path so tests pass on Linux + Windows
+        component: normalizePath(resolve(redirectTemplate)),
         context: {
           action,
           payload,

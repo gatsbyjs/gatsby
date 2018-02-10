@@ -1,4 +1,5 @@
 import React from "react"
+import Helmet from "react-helmet"
 
 import Functions from "../../components/function-list"
 import { rhythm, scale } from "../../utils/typography"
@@ -8,7 +9,12 @@ class NodeAPIDocs extends React.Component {
   render() {
     return (
       <Container>
-        <h1 css={{ marginTop: 0 }}>Gatsby Node APIs</h1>
+        <Helmet>
+          <title>Node APIs</title>
+        </Helmet>
+        <h1 id="gatsby-node-apis" css={{ marginTop: 0 }}>
+          Gatsby Node APIs
+        </h1>
         <p>
           Gatsby gives plugins and site builders many APIs for controlling your
           site.
@@ -43,6 +49,13 @@ exports.createPages = (_, pluginOptions, cb) => {
         <p>
           If your plugin doesn't do async work, you can just return directly.
         </p>
+        <hr />
+        <h2 css={{ marginBottom: rhythm(1 / 2) }}>Usage</h2>
+        <p css={{ marginBottom: rhythm(1) }}>
+          Implement any of these APIs by exporting them from a file named{` `}
+          <code>gatsby-node.js</code> in the root of your project.
+        </p>
+        <hr />
         <h2 css={{ marginBottom: rhythm(1 / 2) }}>APIs</h2>
         <ul css={{ ...scale(-1 / 5) }}>
           {this.props.data.allDocumentationJs.edges.map(({ node }, i) => (

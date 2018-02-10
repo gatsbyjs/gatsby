@@ -4,6 +4,9 @@ const {
   GraphQLList,
   GraphQLSchema,
 } = require(`graphql`)
+const path = require(`path`)
+const normalizePath = require(`normalize-path`)
+
 const { inferObjectStructureFromNodes } = require(`../infer-graphql-type`)
 
 function queryResult(nodes, fragment, { types = [] } = {}) {
@@ -39,7 +42,9 @@ function queryResult(nodes, fragment, { types = [] } = {}) {
         ${fragment}
       }
     }
-    `
+    `,
+    null,
+    { path: `/` }
   )
 }
 
@@ -53,6 +58,7 @@ describe(`GraphQL type inferance`, () => {
       hair: 1,
       date: `1012-11-01`,
       anArray: [1, 2, 3, 4],
+      aNestedArray: [[1, 2, 3, 4], [5, 6, 7, 8]],
       anObjectArray: [
         { aString: `some string`, aNumber: 2, aBoolean: true },
         { aString: `some string`, aNumber: 2, anArray: [1, 2] },
@@ -83,6 +89,7 @@ describe(`GraphQL type inferance`, () => {
       hair: 2,
       date: `1984-10-12`,
       anArray: [1, 2, 5, 4],
+      aNestedArray: [[1, 2, 3, 4]],
       anObjectArray: [{ anotherObjectArray: [{ baz: `quz` }] }],
       frontmatter: {
         date: `1984-10-12`,
@@ -114,19 +121,6 @@ describe(`GraphQL type inferance`, () => {
       `
     )
     expect(result.data.listNode[0].number).toEqual(1.1)
-  })
-
-  it(`handles date objects`, async () => {
-    let result = await queryResult(
-      [
-        { dateObject: new Date(Date.UTC(2012, 10, 5)) },
-        { dateObject: new Date(Date.UTC(2012, 10, 5)) },
-      ],
-      `
-        dateObject
-      `
-    )
-    expect(result).toMatchSnapshot()
   })
 
   it(`filters out empty objects`, async () => {
@@ -194,8 +188,167 @@ describe(`GraphQL type inferance`, () => {
     expect(Object.keys(fields.foo.type.getFields())).toHaveLength(4)
   })
 
+  describe(`Handles dates`, () => {
+    it(`Handles integer with valid date format`, async () => {
+      let result = await queryResult(
+        [{ number: 2018 }, { number: 1987 }],
+        `
+          number
+        `
+      )
+      expect(result.data.listNode[0].number).toEqual(2018)
+    })
+
+    it(`Infers from Date objects`, async () => {
+      let result = await queryResult(
+        [
+          { dateObject: new Date(Date.UTC(2012, 10, 5)) },
+          { dateObject: new Date(Date.UTC(2012, 10, 5)) },
+        ],
+        `
+          dateObject
+        `
+      )
+      expect(result).toMatchSnapshot()
+    })
+
+    it(`Infers from array of Date objects`, async () => {
+      let result = await queryResult(
+        [
+          {
+            dateObject: [
+              new Date(Date.UTC(2012, 10, 5)),
+              new Date(Date.UTC(2012, 10, 6)),
+            ],
+          },
+          { dateObject: [new Date(Date.UTC(2012, 10, 5))] },
+        ],
+        `
+          dateObject
+        `
+      )
+      expect(result).toMatchSnapshot()
+    })
+
+    it(`Infers from date strings`, async () => {
+      let result = await queryResult(
+        [{ date: `1012-11-01` }],
+        `
+          date(formatString:"DD.MM.YYYY")
+        `
+      )
+
+      expect(result.errors).not.toBeDefined()
+      expect(result.data.listNode[0].date).toEqual(`01.11.1012`)
+    })
+
+    it(`Infers from arrays of date strings`, async () => {
+      let result = await queryResult(
+        [{ date: [`1012-11-01`, `10390203`] }],
+        `
+          date(formatString:"DD.MM.YYYY")
+        `
+      )
+
+      expect(result.errors).not.toBeDefined()
+      expect(result.data.listNode[0].date.length).toEqual(2)
+      expect(result.data.listNode[0].date[0]).toEqual(`01.11.1012`)
+      expect(result.data.listNode[0].date[1]).toEqual(`03.02.1039`)
+    })
+  })
+
   xdescribe(`Linked inference from config mappings`)
-  xdescribe(`Linked inference from file URIs`)
+
+  describe(`Linked inference from file URIs`, () => {
+    let store, types, dir
+
+    beforeEach(() => {
+      ;({ store } = require(`../../redux`))
+
+      const { setFileNodeRootType } = require(`../types/type-file`)
+      const fileType = {
+        name: `File`,
+        nodeObjectType: new GraphQLObjectType({
+          name: `File`,
+          fields: inferObjectStructureFromNodes({
+            nodes: [{ id: `file_1`, absolutePath: `path`, dir: `path` }],
+            types: [{ name: `File` }],
+          }),
+        }),
+      }
+
+      types = [fileType]
+      setFileNodeRootType(fileType.nodeObjectType)
+
+      dir = normalizePath(path.resolve(`/path/`))
+
+      store.dispatch({
+        type: `CREATE_NODE`,
+        payload: {
+          id: `parent`,
+          internal: { type: `File` },
+          absolutePath: normalizePath(path.resolve(dir, `index.md`)),
+          dir: dir,
+        },
+      })
+      store.dispatch({
+        type: `CREATE_NODE`,
+        payload: {
+          id: `file_1`,
+          internal: { type: `File` },
+          absolutePath: normalizePath(path.resolve(dir, `file_1.jpg`)),
+          dir,
+        },
+      })
+      store.dispatch({
+        type: `CREATE_NODE`,
+        payload: {
+          id: `file_2`,
+          internal: { type: `File` },
+          absolutePath: normalizePath(path.resolve(dir, `file_2.txt`)),
+          dir,
+        },
+      })
+    })
+
+    it(`Links to file node`, async () => {
+      let result = await queryResult(
+        [{ file: `./file_1.jpg`, parent: `parent` }],
+        `
+          file {
+            absolutePath
+          }
+        `,
+        { types }
+      )
+
+      expect(result.errors).not.toBeDefined()
+      expect(result.data.listNode[0].file.absolutePath).toEqual(
+        normalizePath(path.resolve(dir, `file_1.jpg`))
+      )
+    })
+
+    it(`Links to array of file nodes`, async () => {
+      let result = await queryResult(
+        [{ files: [`./file_1.jpg`, `./file_2.txt`], parent: `parent` }],
+        `
+          files {
+            absolutePath
+          }
+        `,
+        { types }
+      )
+
+      expect(result.errors).not.toBeDefined()
+      expect(result.data.listNode[0].files.length).toEqual(2)
+      expect(result.data.listNode[0].files[0].absolutePath).toEqual(
+        normalizePath(path.resolve(dir, `file_1.jpg`))
+      )
+      expect(result.data.listNode[0].files[1].absolutePath).toEqual(
+        normalizePath(path.resolve(dir, `file_2.txt`))
+      )
+    })
+  })
 
   describe(`Linked inference by __NODE convention`, () => {
     let store, types
@@ -333,6 +486,7 @@ describe(`GraphQL type inferance`, () => {
       `
         hair,
         anArray,
+        aNestedArray,
         anObjectArray {
           aNumber,
           aBoolean,

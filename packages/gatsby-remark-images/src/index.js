@@ -52,6 +52,7 @@ module.exports = (
       }
       return null
     })
+
     if (!imageNode || !imageNode.absolutePath) {
       return resolve()
     }
@@ -85,15 +86,11 @@ module.exports = (
     class="gatsby-resp-image-wrapper"
     style="position: relative; display: block; ${
       options.wrapperStyle
-    }; max-width: ${
-      presentationWidth
-    }px; margin-left: auto; margin-right: auto;"
+    }; max-width: ${presentationWidth}px; margin-left: auto; margin-right: auto;"
   >
     <span
       class="gatsby-resp-image-background-image"
-      style="padding-bottom: ${
-        ratio
-      }; position: relative; bottom: 0; left: 0; background-image: url('${
+      style="padding-bottom: ${ratio}; position: relative; bottom: 0; left: 0; background-image: url('${
       responsiveSizesResult.base64
     }'); background-size: cover; display: block;"
     >
@@ -145,9 +142,12 @@ module.exports = (
             fileType !== `svg`
           ) {
             const rawHTML = await generateImagesAndUpdateNode(node, resolve)
-            // Replace the image node with an inline HTML node.
-            node.type = `html`
-            node.value = rawHTML
+
+            if (rawHTML) {
+              // Replace the image node with an inline HTML node.
+              node.type = `html`
+              node.value = rawHTML
+            }
             return resolve(node)
           } else {
             // Image isn't relative so there's nothing for us to do.
@@ -201,10 +201,13 @@ module.exports = (
                   formattedImgTag,
                   resolve
                 )
-                // Replace the image string
-                thisImg.replaceWith(rawHTML)
-              } else {
-                return resolve()
+
+                if (rawHTML) {
+                  // Replace the image string
+                  thisImg.replaceWith(rawHTML)
+                } else {
+                  return resolve()
+                }
               }
             }
 

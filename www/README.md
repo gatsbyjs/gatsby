@@ -1,7 +1,8 @@
-# gatsby-starter-default
-The default Gatsby starter
+# gatsbyjs.org
 
-Install this starter (assuming Gatsby is installed) by running from your CLI:
-```
-gatsby new gatsby-example-site
-```
+The main Gatsby site at gatsbyjs.org
+
+Run locally with
+
+* `yarn install`
+* `yarn run develop`

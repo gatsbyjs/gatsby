@@ -5,9 +5,10 @@ import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import ArrowBackIcon from "react-icons/lib/md/arrow-back"
 import Img from "gatsby-image"
 
-import presets from "../utils/presets"
+import presets, { colors } from "../utils/presets"
 import typography, { rhythm, scale, options } from "../utils/typography"
 import Container from "../components/container"
+import EmailCaptureForm from "../components/email-capture-form"
 
 class BlogPostTemplate extends React.Component {
   render() {
@@ -20,13 +21,13 @@ class BlogPostTemplate extends React.Component {
         borderBottom: 0,
         fontFamily: options.headerFontFamily.join(`,`),
         fontWeight: `bold`,
-        color: presets.brand,
+        color: colors.gatsby,
       },
     }
     const prevNextLabelStyles = {
       marginTop: 0,
       marginBottom: 0,
-      color: presets.calm,
+      color: colors.gray.calm,
       fontWeight: `normal`,
       ...scale(0),
       lineHeight: 1,
@@ -38,7 +39,7 @@ class BlogPostTemplate extends React.Component {
           fontFamily: typography.options.headerFontFamily.join(`,`),
           lineHeight: 1.3,
           margin: 0,
-          color: presets.calm,
+          color: colors.gray.calm,
           [presets.Mobile]: {
             ...scale(-1 / 5),
             lineHeight: 1.3,
@@ -56,7 +57,9 @@ class BlogPostTemplate extends React.Component {
             <title>{post.frontmatter.title}</title>
             <link
               rel="author"
-              href={`https://gatsbyjs.org${post.frontmatter.author.slug}`}
+              href={`https://gatsbyjs.org${
+                post.frontmatter.author.fields.slug
+              }`}
             />
             <meta
               name="description"
@@ -73,15 +76,17 @@ class BlogPostTemplate extends React.Component {
             {post.frontmatter.image && (
               <meta
                 name="og:image"
-                content={`https://gatsbyjs.org${post.frontmatter.image
-                  .childImageSharp.resize.src}`}
+                content={`https://gatsbyjs.org${
+                  post.frontmatter.image.childImageSharp.resize.src
+                }`}
               />
             )}
             {post.frontmatter.image && (
               <meta
                 name="twitter:image"
-                content={`https://gatsbyjs.org${post.frontmatter.image
-                  .childImageSharp.resize.src}`}
+                content={`https://gatsbyjs.org${
+                  post.frontmatter.image.childImageSharp.resize.src
+                }`}
               />
             )}
             <meta name="og:type" content="article" />
@@ -198,10 +203,11 @@ class BlogPostTemplate extends React.Component {
               __html: this.props.data.markdownRemark.html,
             }}
           />
+          <EmailCaptureForm />
         </Container>
         <div
           css={{
-            borderTop: `1px solid ${presets.veryLightPurple}`,
+            borderTop: `1px solid ${colors.ui.light}`,
             marginTop: rhythm(2),
             [presets.Tablet]: {
               marginTop: rhythm(2),

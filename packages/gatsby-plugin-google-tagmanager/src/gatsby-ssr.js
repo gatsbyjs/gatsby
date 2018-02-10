@@ -5,7 +5,10 @@ exports.onRenderBody = (
   { setHeadComponents, setPreBodyComponents },
   pluginOptions
 ) => {
-  if (process.env.NODE_ENV === `production`) {
+  if (
+    process.env.NODE_ENV === `production` ||
+    pluginOptions.includeInDevelopment
+  ) {
     setHeadComponents([
       <script
         key="plugin-google-tagmanager"
@@ -32,7 +35,7 @@ exports.onRenderBody = (
               height="0"
               width="0"
               style="display: none; visibility: hidden"
-            />`,
+            ></iframe>`,
         }}
       />,
     ])

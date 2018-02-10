@@ -224,9 +224,7 @@ module.exports = async (args: BootstrapArgs) => {
     )
     .join(`,`)
 
-  browserAPIRunner = `var plugins = [${browserPluginsRequires}]\n${
-    browserAPIRunner
-  }`
+  browserAPIRunner = `var plugins = [${browserPluginsRequires}]\n${browserAPIRunner}`
 
   let sSRAPIRunner = ``
 
@@ -359,7 +357,11 @@ module.exports = async (args: BootstrapArgs) => {
   // Write out files.
   activity = report.activityTimer(`write out page data`)
   activity.start()
-  await writePages()
+  try {
+    await writePages()
+  } catch (err) {
+    report.panic(`Failed to write out page data`, err)
+  }
   activity.end()
 
   // Write out redirects.

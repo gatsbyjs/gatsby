@@ -10,16 +10,14 @@ Parses Excel files into JSON arrays.
 
 ```javascript
 // In your gatsby-config.js
-plugins: [
-  `gatsby-transformer-excel`,
-]
+plugins: [`gatsby-transformer-excel`];
 ```
 
 ## Parsing algorithm
 
 The parsing is powered by the [SheetJS / js-xlsx](https://git.io/xlsx) library.
-Each row of each worksheet is converted into a node whose keys are determined
-by the first row and whose type is determined by the name of the worksheet.
+Each row of each worksheet is converted into a node whose keys are determined by
+the first row and whose type is determined by the name of the worksheet.
 
 So if your project has a `letters.xlsx` with two worksheets:
 
@@ -47,11 +45,11 @@ the following nodes would be created:
 
 ```javascript
 [
-  { letter: 'a', value: 97, type: 'LettersXlsxSheet1' },
-  { letter: 'b', value: 98, type: 'LettersXlsxSheet1' },
-  { letter: 'A', value: 65, type: 'LettersXlsxSheet2' },
-  { letter: 'B', value: 66, type: 'LettersXlsxSheet2' },
-]
+  { letter: "a", value: 97, type: "LettersXlsxSheet1" },
+  { letter: "b", value: 98, type: "LettersXlsxSheet1" },
+  { letter: "A", value: 65, type: "LettersXlsxSheet2" },
+  { letter: "B", value: 66, type: "LettersXlsxSheet2" },
+];
 ```
 
 ## How to query
@@ -93,4 +91,3 @@ Which would return:
   }
 }
 ```
-

@@ -262,9 +262,9 @@ function queueImageResizing({ file, args = {} }) {
 
   const argsDigestShort = argsDigest.substr(argsDigest.length - 5)
 
-  const imgSrc = `/${file.name}-${file.internal.contentDigest}-${
-    argsDigestShort
-  }.${fileExtension}`
+  const imgSrc = `/${file.name}-${
+    file.internal.contentDigest
+  }-${argsDigestShort}.${fileExtension}`
   const filePath = path.join(process.cwd(), `public`, `static`, imgSrc)
 
   // Create function to call when the image is finished.
@@ -413,9 +413,7 @@ async function responsiveSizes({ file, args = {} }) {
 
   // If the users didn't set a default sizes, we'll make one.
   if (!options.sizes) {
-    options.sizes = `(max-width: ${presentationWidth}px) 100vw, ${
-      presentationWidth
-    }px`
+    options.sizes = `(max-width: ${presentationWidth}px) 100vw, ${presentationWidth}px`
   }
 
   // Create sizes (in width) for the image. If the max width of the container
@@ -519,7 +517,7 @@ async function resolutions({ file, args = {} }) {
   sizes.push(options.width * 3)
   const dimensions = imageSize(file.absolutePath)
 
-  const filteredSizes = sizes.filter(size => size < dimensions.width)
+  const filteredSizes = sizes.filter(size => size <= dimensions.width)
 
   // If there's no sizes after filtering (e.g. image is smaller than what's
   // requested, add back the original so there's at least something)

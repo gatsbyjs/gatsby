@@ -34,6 +34,12 @@ describe(`contentful extend node type`, () => {
       },
     },
   }
+
+  const nullFileImage = {
+    defaultLocale: `en-US`,
+    file: null,
+  }
+
   describe(`resolveResponsiveResolution`, () => {
     it(`generates responsive resolution data for images`, async () => {
       const resp = await resolveResponsiveResolution(image, { width: 400 })
@@ -72,6 +78,12 @@ describe(`contentful extend node type`, () => {
       expect(resp.width).toBe(450)
       expect(resp.height).toBe(399)
     })
+    it(`handles null`, async () => {
+      const resp = await resolveResponsiveResolution(nullFileImage, {
+        width: 400,
+      })
+      expect(resp).toBe(null)
+    })
   })
   describe(`resolveResponsiveSizes`, () => {
     it(`generates responsive size data for images`, async () => {
@@ -88,6 +100,12 @@ describe(`contentful extend node type`, () => {
       expect(resp.srcSet.length).toBeGreaterThan(1)
       expect(resp).toMatchSnapshot()
     })
+    it(`handles null`, async () => {
+      const resp = await resolveResponsiveSizes(nullFileImage, {
+        maxWidth: 400,
+      })
+      expect(resp).toBe(null)
+    })
   })
   describe(`resolveResize`, () => {
     it(`generates resized images`, async () => {
@@ -101,6 +119,10 @@ describe(`contentful extend node type`, () => {
         quality: 50,
       })
       expect(resp).toMatchSnapshot()
+    })
+    it(`handles null`, async () => {
+      const resp = await resolveResize(nullFileImage, { width: 400 })
+      expect(resp).toBe(null)
     })
   })
 })

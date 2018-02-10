@@ -18,9 +18,14 @@ exports.replaceRenderer = ({
 
   const stylesheets = styletron.getStylesheets()
   const headComponents = stylesheets.map((sheet, index) => (
-    <style media={sheet.media || `all`} key={index}>
-      {sheet.css}
-    </style>
+    <style
+      media={sheet.media}
+      className="_styletron_hydrate_"
+      key={index}
+      dangerouslySetInnerHTML={{
+        __html: sheet.css,
+      }}
+    />
   ))
 
   setHeadComponents(headComponents)

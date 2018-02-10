@@ -4,7 +4,10 @@ description: "Post containing a code example with syntax highlighting"
 date: "2017-10-16T15:12:03.284Z"
 path: /code-example-line-highlighting/
 ---
-This post contains the same code snippet with synatax hightlighting from the previous post, but now includes highlighted lines. The highlight theme and is still same one used in the official React documentation.
+
+This post contains the same code snippet with synatax hightlighting from the
+previous post, but now includes highlighted lines. The highlight theme and is
+still same one used in the official React documentation.
 
 ```jsx{1,4-6}
 function NumberList(props) {

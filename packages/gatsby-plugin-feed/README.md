@@ -10,7 +10,7 @@ Create an RSS feed (or multiple feeds) for your Gatsby site.
 
 ```javascript
 // In your gatsby-config.js
-siteMetadata {
+siteMetadata: {
   title: `GatsbyJS`,
   description: `A fantastic new static site generator.`,
   siteUrl: `https://www.gatsbyjs.org`
@@ -51,7 +51,7 @@ plugins: [
                 description: edge.node.excerpt,
                 url: site.siteMetadata.siteUrl + edge.node.fields.slug,
                 guid: site.siteMetadata.siteUrl + edge.node.fields.slug,
-                custom_elements: [{ 'content:encoded': edge.node.html }],
+                custom_elements: [{ "content:encoded": edge.node.html }],
               });
             });
           },
@@ -76,10 +76,10 @@ plugins: [
               }
             }
           `,
-          output: '/rss.xml'
-        }
-      ]
-    }
-  }
-]
+          output: "/rss.xml",
+        },
+      ],
+    },
+  },
+];
 ```

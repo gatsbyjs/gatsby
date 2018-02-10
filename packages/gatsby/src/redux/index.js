@@ -122,14 +122,10 @@ exports.getNodeAndSavePathDependency = (id, path) => {
 exports.getRootNodeId = node => rootNodeMap.get(node)
 
 const addParentToSubObjects = (data, parentId) => {
-  _.each(data, (v, k) => {
-    if (_.isArray(v) && _.isObject(v[0])) {
-      _.each(v, o => addParentToSubObjects(o, parentId))
-    } else if (_.isObject(v)) {
-      addParentToSubObjects(v, parentId)
-    }
-  })
-  rootNodeMap.set(data, parentId)
+  if (_.isPlainObject(data) || _.isArray(data)) {
+    _.each(data, o => addParentToSubObjects(o, parentId))
+    rootNodeMap.set(data, parentId)
+  }
 }
 
 const trackSubObjectsToRootNodeId = node => {
@@ -138,11 +134,7 @@ const trackSubObjectsToRootNodeId = node => {
     if (k === `internal`) {
       return
     }
-    if (_.isArray(v) && _.isObject(v[0])) {
-      _.each(v, o => addParentToSubObjects(o, node.parent))
-    } else if (_.isObject(v)) {
-      addParentToSubObjects(v, node.parent)
-    }
+    addParentToSubObjects(v, node.parent)
   })
 }
 exports.trackSubObjectsToRootNodeId = trackSubObjectsToRootNodeId

@@ -1,4 +1,5 @@
 import React from "react"
+import Helmet from "react-helmet"
 
 import Functions from "../../components/function-list"
 import { rhythm, scale } from "../../utils/typography"
@@ -8,7 +9,18 @@ class BrowserAPIDocs extends React.Component {
   render() {
     return (
       <Container>
-        <h1 css={{ marginTop: 0 }}>Gatsby Browser APIs</h1>
+        <Helmet>
+          <title>Browser APIs</title>
+        </Helmet>
+        <h1 id="browser-apis" css={{ marginTop: 0 }}>
+          Gatsby Browser APIs
+        </h1>
+        <h2 css={{ marginBottom: rhythm(1 / 2) }}>Usage</h2>
+        <p css={{ marginBottom: rhythm(1) }}>
+          Implement any of these APIs by exporting them from a file named{` `}
+          <code>gatsby-browser.js</code> in the root of your project.
+        </p>
+        <hr />
         <h2 css={{ marginBottom: rhythm(1 / 2) }}>APIs</h2>
         <ul css={{ ...scale(-1 / 5) }}>
           {this.props.data.allDocumentationJs.edges.map(({ node }, i) => (

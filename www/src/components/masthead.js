@@ -2,7 +2,7 @@ import Link from "gatsby-link"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
 import { rhythm, scale, options } from "../utils/typography"
-import presets from "../utils/presets"
+import presets, { colors } from "../utils/presets"
 import CtaButton from "./cta-button"
 import MastheadBg from "./masthead-bg"
 import FuturaParagraph from "./futura-paragraph"
@@ -49,7 +49,7 @@ const MastheadContent = () => (
       <h1
         css={{
           ...scale(0.7),
-          color: presets.brand,
+          color: colors.gatsby,
           lineHeight: 1,
           margin: 0,
           marginBottom: `1.2em`,

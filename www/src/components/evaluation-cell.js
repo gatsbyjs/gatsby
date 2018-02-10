@@ -1,11 +1,11 @@
 import React, { Component } from "react"
 import { rhythm } from "../utils/typography"
-import presets from "../utils/presets"
+import presets, { colors } from "../utils/presets"
 
 class EvaluationCell extends Component {
   render() {
     const bgDefault = `#edebf0`
-    const bgFeatureAvailability = presets.accent
+    const bgFeatureAvailability = colors.accent
 
     const getBackground = num => {
       switch (num) {
@@ -16,9 +16,7 @@ class EvaluationCell extends Component {
           return `linear-gradient(90deg, transparent 50%, ${bgDefault} 50%)`
         }
         case `1`: {
-          return `linear-gradient(180deg, transparent 50%, ${
-            bgDefault
-          } 50%), linear-gradient(90deg, transparent 50%, ${bgDefault} 50%)`
+          return `linear-gradient(180deg, transparent 50%, ${bgDefault} 50%), linear-gradient(90deg, transparent 50%, ${bgDefault} 50%)`
         }
         case `0`: {
           return `none`
@@ -44,7 +42,6 @@ class EvaluationCell extends Component {
       <div
         css={{
           ...basicStyling,
-          // border: `1px solid ${presets.brandLight}`,
           backgroundColor:
             [`N/A`, `0`, ``].indexOf(this.props.num) !== -1
               ? bgDefault

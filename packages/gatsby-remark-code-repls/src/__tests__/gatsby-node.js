@@ -9,7 +9,10 @@ jest.mock(`recursive-readdir-synchronous`, () => jest.fn())
 const fs = require(`fs`)
 const recursiveReaddir = require(`recursive-readdir-synchronous`)
 
-const { OPTION_DEFAULT_REDIRECT_TEMPLATE_PATH } = require(`../constants`)
+const {
+  OPTION_DEFAULT_HTML,
+  OPTION_DEFAULT_REDIRECT_TEMPLATE_PATH,
+} = require(`../constants`)
 const { createPages } = require(`../gatsby-node`)
 
 const createPage = jest.fn()
@@ -154,6 +157,26 @@ describe(`gatsby-remark-code-repls`, () => {
 
       expect(action).toBeTruthy()
       expect(payload).toBeTruthy()
+    })
+
+    it(`should render default HTML for index page if no override specified`, () => {
+      recursiveReaddir.mockReturnValue([`file.js`])
+
+      createPages(createPagesParams, {})
+
+      const { html } = JSON.parse(createPage.mock.calls[0][0].context.payload)
+
+      expect(html).toBe(OPTION_DEFAULT_HTML)
+    })
+
+    it(`should support custom, user-defined HTML for index page`, () => {
+      recursiveReaddir.mockReturnValue([`file.js`])
+
+      createPages(createPagesParams, { html: `<span id="foo"></span>` })
+
+      const { html } = JSON.parse(createPage.mock.calls[0][0].context.payload)
+
+      expect(html).toBe(`<span id="foo"></span>`)
     })
   })
 })

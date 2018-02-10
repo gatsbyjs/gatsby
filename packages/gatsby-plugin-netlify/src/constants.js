@@ -10,9 +10,10 @@ export const NETLIFY_HEADERS_FILENAME = `_headers`
 export const DEFAULT_OPTIONS = {
   headers: {},
   mergeSecurityHeaders: true,
-  mergeLinkHeaders: false, // TODO: change this to true when gzip for server push is on netlify
+  mergeLinkHeaders: true,
   mergeCachingHeaders: true,
   transformHeaders: _.identity, // optional transform for manipulating headers for sorting, etc
+  generateMatchPathRewrites: true, // generate rewrites for client only paths
 }
 
 export const SECURITY_HEADERS = {

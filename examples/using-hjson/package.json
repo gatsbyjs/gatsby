@@ -1,0 +1,17 @@
+{
+  "name": "using-hjson",
+  "private": true,
+  "description": "Gatsby example site using hjson",
+  "author": "Remi Barraquand <dev@remibarraquand.com>",
+  "dependencies": {
+    "gatsby": "latest",
+    "gatsby-source-filesystem": "latest",
+    "gatsby-transformer-hjson": "latest"
+  },
+  "license": "MIT",
+  "main": "n/a",
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build"
+  }
+}
