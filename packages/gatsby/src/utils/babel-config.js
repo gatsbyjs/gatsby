@@ -57,6 +57,7 @@ module.exports = async function babelConfig(program, stage) {
   if (!babelrc) {
     babelrc = {
       cacheDirectory: true,
+      babelrc: false,
       presets: [
         [
           require.resolve(`@babel/preset-env`),
@@ -73,6 +74,15 @@ module.exports = async function babelConfig(program, stage) {
       plugins: [
         require.resolve(`@babel/plugin-proposal-class-properties`),
         require.resolve(`@babel/plugin-syntax-dynamic-import`),
+        // Polyfills the runtime needed for async/await and generators
+        [
+          require.resolve(`@babel/plugin-transform-runtime`),
+          {
+            helpers: false,
+            polyfill: false,
+            regenerator: true,
+          },
+        ],
       ],
     }
   }
