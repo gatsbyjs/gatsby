@@ -1,6 +1,6 @@
 const _ = require(`lodash`)
 
-module.exports = async function onCreateNode({ node, actions }) {
+module.exports = async function onCreateNode({ node, actions, createNodeId }) {
   const { createNode, createParentChildLink } = actions
 
   const extensions = [`jpeg`, `jpg`, `png`, `webp`, `tif`, `tiff`]
@@ -9,7 +9,7 @@ module.exports = async function onCreateNode({ node, actions }) {
   }
 
   const imageNode = {
-    id: `${node.id} >> ImageSharp`,
+    id: createNodeId(`${node.id} >> ImageSharp`),
     children: [],
     parent: node.id,
     internal: {

@@ -45,29 +45,19 @@ describe(`Process XML nodes correctly`, () => {
     const createNode = jest.fn()
     const createParentChildLink = jest.fn()
     const actions = { createNode, createParentChildLink }
+    const createNodeId = jest.fn()
+    createNodeId.mockReturnValue(`uuid-from-gatsby`)
 
     await onCreateNode({
       node,
       loadNodeContent,
       actions,
+      createNodeId,
     }).then(() => {
       expect(createNode.mock.calls).toMatchSnapshot()
       expect(createParentChildLink.mock.calls).toMatchSnapshot()
       expect(createNode).toHaveBeenCalledTimes(2)
       expect(createParentChildLink).toHaveBeenCalledTimes(2)
-    })
-  })
-  it(`should set the node id to the attribute id if specified`, async () => {
-    const createNode = jest.fn()
-    const createParentChildLink = jest.fn()
-    const actions = { createNode, createParentChildLink }
-
-    await onCreateNode({
-      node,
-      loadNodeContent,
-      actions,
-    }).then(() => {
-      expect(createNode.mock.calls[0][0].id).toEqual(`bk101`)
     })
   })
 })

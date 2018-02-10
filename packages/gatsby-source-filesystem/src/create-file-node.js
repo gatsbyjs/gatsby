@@ -14,7 +14,7 @@ const createId = path => {
 
 exports.createId = createId
 
-exports.createFileNode = async (pathToFile, pluginOptions = {}) => {
+exports.createFileNode = async (pathToFile, createNodeId, pluginOptions = {}) => {
   const slashed = slash(pathToFile)
   const parsedSlashed = path.parse(slashed)
   const slashedFile = {
@@ -56,7 +56,7 @@ exports.createFileNode = async (pathToFile, pluginOptions = {}) => {
       // Don't actually make the File id the absolute path as otherwise
       // people will use the id for that and ids shouldn't be treated as
       // useful information.
-      id: createId(pathToFile),
+      id: createNodeId(pathToFile),
       children: [],
       parent: `___SOURCE___`,
       internal,

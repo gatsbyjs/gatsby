@@ -12,7 +12,7 @@ Array [
         "parent": "whatever",
         "title": "my little pony",
       },
-      "id": "whatever >>> MarkdownRemark",
+      "id": "uuid-from-gatsby",
       "internal": Object {
         "content": "---
 title: \\"my little pony\\"
@@ -42,7 +42,7 @@ Array [
           "parent": "whatever",
           "title": "my little pony",
         },
-        "id": "whatever >>> MarkdownRemark",
+        "id": "uuid-from-gatsby",
         "internal": Object {
           "content": "---
 title: \\"my little pony\\"
@@ -90,7 +90,7 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
         "parent": "whatever",
         "title": "my little pony",
       },
-      "id": "whatever >>> MarkdownRemark",
+      "id": "uuid-from-gatsby",
       "internal": Object {
         "content": "---
 title: \\"my little pony\\"
@@ -134,7 +134,7 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
           "parent": "whatever",
           "title": "my little pony",
         },
-        "id": "whatever >>> MarkdownRemark",
+        "id": "uuid-from-gatsby",
         "internal": Object {
           "content": "---
 title: \\"my little pony\\"

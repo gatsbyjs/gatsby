@@ -3,7 +3,9 @@ const crypto = require(`crypto`)
 const path = require(`path`)
 const HJSON = require(`hjson`)
 
-async function onCreateNode({ node, actions, loadNodeContent }) {
+async function onCreateNode({ node, actions, loadNodeContent, createNodeId }) {
+  const { createNode, createParentChildLink } = actions
+
   function transformObject(obj, id, type) {
     const objStr = JSON.stringify(obj)
     const contentDigest = crypto
@@ -24,8 +26,6 @@ async function onCreateNode({ node, actions, loadNodeContent }) {
     createParentChildLink({ parent: node, child: jsonNode })
   }
 
-  const { createNode, createParentChildLink } = actions
-
   // We only care about HJSON content.
   // NOTE the mime package does not recognize HJSON yet
   // See RFC https://hjson.org/rfc.html#rfc.section.1.3
@@ -43,14 +43,16 @@ async function onCreateNode({ node, actions, loadNodeContent }) {
     parsedContent.forEach((obj, i) => {
       transformObject(
         obj,
-        obj.id ? obj.id : `${node.id} [${i}] >>> HJSON`,
+        obj.id ? obj.id : createNodeId(`${node.id} [${i}] >>> HJSON`),
         _.upperFirst(_.camelCase(`${node.name} HJson`))
       )
     })
   } else if (_.isPlainObject(parsedContent)) {
     transformObject(
       parsedContent,
-      parsedContent.id ? parsedContent.id : `${node.id} >>> HJSON`,
+      parsedContent.id
+        ? parsedContent.id
+        : createNodeId(`${node.id} >>> HJSON`),
       _.upperFirst(_.camelCase(`${path.basename(node.dir)} HJson`))
     )
   }

@@ -30,7 +30,7 @@ exports.setFieldsOnGraphQLNodeType = require(`./extend-node-type`).extendNodeTyp
  */
 
 exports.sourceNodes = async (
-  { actions, getNodes, hasNodeChanged, store },
+  { actions, getNodes, createNodeId, hasNodeChanged, store },
   { spaceId, accessToken, host }
 ) => {
   const { createNode, deleteNodes, touchNode, setPluginStatus } = actions
@@ -151,6 +151,7 @@ exports.sourceNodes = async (
       conflictFieldPrefix,
       entries: entryList[i],
       createNode,
+      createNodeId,
       resolvable,
       foreignReferenceMap,
       defaultLocale,
@@ -162,6 +163,7 @@ exports.sourceNodes = async (
     normalize.createAssetNodes({
       assetItem,
       createNode,
+      createNodeId,
       defaultLocale,
       locales,
     })
