@@ -1,5 +1,5 @@
 import React from "react"
-import Link from "gatsby-link"
+import { Link } from "gatsby"
 import gray from "gray-percentage"
 import Img from "gatsby-image"
 

@@ -1,5 +1,5 @@
 import React from "react"
-import Link from "gatsby-link"
+import { Link } from "gatsby"
 
 import "../css/news.css"
 import y18Gif from "../images/y18.gif"

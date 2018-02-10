@@ -6,7 +6,7 @@ import Close from "react-icons/lib/md/close"
 import findIndex from "lodash/findIndex"
 import mousetrap from "mousetrap"
 import * as PropTypes from "prop-types"
-import { navigateTo } from "gatsby-link"
+import { navigateTo } from "gatsby"
 
 import { rhythm } from "../utils/typography"
 

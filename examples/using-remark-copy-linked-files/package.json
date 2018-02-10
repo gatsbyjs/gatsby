@@ -4,8 +4,7 @@
   "description": "Gatsby example site on gatsby-remark-copy-linked-files",
   "author": "Florian Kissling <sechskilo@gmail.com>",
   "dependencies": {
-    "gatsby": "^1.9.108",
-    "gatsby-link": "latest",
+    "gatsby": "latest",
     "gatsby-plugin-google-analytics": "^1.0.12",
     "gatsby-plugin-offline": "^1.0.10",
     "gatsby-plugin-react-helmet": "^2.0.1",

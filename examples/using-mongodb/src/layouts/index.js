@@ -1,5 +1,5 @@
 import React from "react"
-import Link from "gatsby-link"
+import { Link } from "gatsby"
 import Helmet from "react-helmet"
 
 class DefaultLayout extends React.Component {
