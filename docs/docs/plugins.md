@@ -129,7 +129,7 @@ root.
 ## Official components
 
 * [gatsby-image](/packages/gatsby-image/)
-* [gatsby-link](/packages/gatsby-link/)
+* [Link](/packages/gatsby/)
 
 ## Community Plugins
 

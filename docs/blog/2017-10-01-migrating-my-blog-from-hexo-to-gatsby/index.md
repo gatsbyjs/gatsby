@@ -392,12 +392,12 @@ but the project is still young so the API could change at some point ¯\\_( ツ
 
 > But the links don't link anywhere... where's that `href`?
 
-Let's remedy that. Import the `gatsby-link` component and swap it for the simple
+Let's remedy that. Import the `Link` component and swap it for the simple
 `<a>` tag that was in there before:
 
 ```jsx
 import React from 'react';
-import Link from 'gatsby-link';
+import { Link } from 'gatsby';
 
 export default class BlogIndex extends React.Component {
   render() {

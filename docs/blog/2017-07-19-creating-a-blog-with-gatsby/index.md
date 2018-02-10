@@ -542,7 +542,7 @@ available within the browser and the statically generated site.
 
 ```javascript
 import React from "react";
-import Link from "gatsby-link";
+import { Link } from "gatsby";
 import Helmet from "react-helmet";
 
 // import '../css/index.css'; // add some style if you want!
@@ -596,7 +596,7 @@ string! GraphQL is awesome.
 
 The actual React component is fairly trivial, but one important note should be
 made. It's important that when linking to internal content, i.e. other blog
-links, that you should always use `gatsby-link`. Gatsby does not work if pages
+links, that you should always use `Link` from `gatsby`. Gatsby does not work if pages
 are not routed via this utility. Additionally, this utility also works with
 `pathPrefix`, which allows for a Gatsby site to be deployed a non-root domain.
 This is useful if this blog will be hosted on something like GitHub Pages, or

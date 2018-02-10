@@ -1,6 +1,6 @@
 import React from "react"
 import Helmet from "react-helmet"
-import Link from "gatsby-link"
+import { Link } from "gatsby"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import ArrowBackIcon from "react-icons/lib/md/arrow-back"
 import Img from "gatsby-image"
@@ -59,7 +59,7 @@ class BlogPostTemplate extends React.Component {
               rel="author"
               href={`https://gatsbyjs.org${
                 post.frontmatter.author.fields.slug
-              }`}
+                }`}
             />
             <meta
               name="description"
@@ -78,7 +78,7 @@ class BlogPostTemplate extends React.Component {
                 name="og:image"
                 content={`https://gatsbyjs.org${
                   post.frontmatter.image.childImageSharp.resize.src
-                }`}
+                  }`}
               />
             )}
             {post.frontmatter.image && (
@@ -86,7 +86,7 @@ class BlogPostTemplate extends React.Component {
                 name="twitter:image"
                 content={`https://gatsbyjs.org${
                   post.frontmatter.image.childImageSharp.resize.src
-                }`}
+                  }`}
               />
             )}
             <meta name="og:type" content="article" />
