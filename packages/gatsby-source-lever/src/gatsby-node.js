@@ -4,7 +4,6 @@ const normalize = require(`./normalize`)
 const typePrefix = `lever__`
 
 exports.sourceNodes = async (
-  { actions, getNode, store, cache },
   { actions, getNode, store, cache, createNodeId },
   { site, verboseOutput }
 ) => {

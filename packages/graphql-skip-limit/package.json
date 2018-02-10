@@ -4,7 +4,8 @@
   "version": "1.0.9",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "devDependencies": {
-    "babel-cli": "^6.26.0",
+    "@babel/cli": "^7.0.0-beta.38",
+    "@babel/core": "^7.0.0-beta.38",
     "cross-env": "^5.0.5",
     "graphql": "^0.11.7"
   },
@@ -20,6 +21,6 @@
     "prepublish": "cross-env NODE_ENV=production npm run build"
   },
   "dependencies": {
-    "babel-runtime": "^6.26.0"
+    "@babel/runtime": "^7.0.0-beta.38"
   }
 }

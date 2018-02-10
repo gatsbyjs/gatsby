@@ -1,7 +1,7 @@
 {
   "presets": [
-    ["../../.babelrc.js", { "browser": true }],
-    "stage-1",
+    ["../../.babel-preset.js", { "browser": true }],
+    "@babel/stage-1"
   ],
   "plugins": ["dev-expression"]
 }

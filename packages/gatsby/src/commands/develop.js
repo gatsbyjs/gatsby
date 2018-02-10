@@ -353,21 +353,25 @@ module.exports = async (program: any) => {
   }
 
   function printDeprecationWarnings() {
-    const deprecatedApis = ["boundActionCreators", "pathContext"];
-    const deprecatedLocations = {};
-    deprecatedApis.forEach(api => deprecatedLocations[api] = [])
+    const deprecatedApis = [`boundActionCreators`, `pathContext`]
+    const deprecatedLocations = {}
+    deprecatedApis.forEach(api => (deprecatedLocations[api] = []))
 
-    glob
-      .sync("{,!(node_modules|public)/**/}*.js")
-      .forEach(file => {
-        const fileText = fs.readFileSync(file)
-        const matchingApis = deprecatedApis.filter(api => fileText.indexOf(api) !== -1)
-        matchingApis.forEach(api => deprecatedLocations[api].push(file))
-      })
+    glob.sync(`{,!(node_modules|public)/**/}*.js`).forEach(file => {
+      const fileText = fs.readFileSync(file)
+      const matchingApis = deprecatedApis.filter(
+        api => fileText.indexOf(api) !== -1
+      )
+      matchingApis.forEach(api => deprecatedLocations[api].push(file))
+    })
 
-    deprecatedApis.forEach(api =>{
+    deprecatedApis.forEach(api => {
       if (deprecatedLocations[api].length) {
-        console.log(`${chalk.cyan(api)} ${chalk.yellow(`is deprecated but was found in the following files:`)}`)
+        console.log(
+          `${chalk.cyan(api)} ${chalk.yellow(
+            `is deprecated but was found in the following files:`
+          )}`
+        )
         console.log()
         deprecatedLocations[api].forEach(file => console.log(file))
         console.log()
