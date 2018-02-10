@@ -17,7 +17,7 @@ function preset(context, options = {}) {
 
   const nodeConfig = {
     targets: {
-      node: PRODUCTION ? 4.0 : "current",
+      node: PRODUCTION ? 6.0 : "current",
     },
   }
 
