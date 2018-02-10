@@ -1504,6 +1504,10 @@ babel-plugin-react-css-modules@^3.2.1:
     postcss-modules-scope "^1.0.2"
     postcss-modules-values "^1.2.2"
 
+babel-plugin-remove-graphql-queries@^2.0.0:
+  version "2.0.0-alpha.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-remove-graphql-queries/-/babel-plugin-remove-graphql-queries-2.0.0-alpha.0.tgz#8f982fff5b4f34262deb5458306dceca4f970ab4"
+
 babel-plugin-syntax-async-functions@^6.8.0:
   version "6.13.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-syntax-async-functions/-/babel-plugin-syntax-async-functions-6.13.0.tgz#cad9cad1191b5ad634bf30ae0872391e0647be95"
