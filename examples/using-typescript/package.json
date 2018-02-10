@@ -14,7 +14,6 @@
     "@types/react": "15.0.21",
     "@types/react-dom": "0.14.23",
     "gatsby": "latest",
-    "gatsby-link": "latest",
     "gatsby-plugin-typescript": "latest"
   }
 }

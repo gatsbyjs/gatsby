@@ -4,9 +4,8 @@
   "description": "Gatsby example site using using-gatsby-image",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "gatsby": "^1.9.77",
+    "gatsby": "latest",
     "gatsby-image": "^1.0.14",
-    "gatsby-link": "^1.6.23",
     "gatsby-plugin-glamor": "^1.6.7",
     "gatsby-plugin-netlify": "^1.0.0",
     "gatsby-plugin-sharp": "^1.6.10",

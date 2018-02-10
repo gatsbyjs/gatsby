@@ -5,7 +5,6 @@
   "author": "Kyle Mathews<mathews.kyle@gmail.com>",
   "dependencies": {
     "gatsby": "latest",
-    "gatsby-link": "latest",
     "gatsby-plugin-nprogress": "^0.2.0"
   },
   "license": "MIT",
