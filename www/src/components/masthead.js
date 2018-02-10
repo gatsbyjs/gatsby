@@ -1,4 +1,4 @@
-import Link from "gatsby-link"
+import { Link } from "gatsby"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
 import { rhythm, scale, options } from "../utils/typography"
