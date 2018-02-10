@@ -158,7 +158,7 @@ Let's add navigation links to each of our three pages:
 
 ```jsx{2-9,12-22}
 import React from "react";
-import Link from "gatsby-link";
+import { Link } from "gatsby";
 
 const ListLink = props =>
   <li style={{ display: `inline-block`, marginRight: `1rem` }}>

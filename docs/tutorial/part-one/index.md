@@ -147,7 +147,7 @@ page.
 
 First create the link to the new page.
 
-To do that, import the `<Link>` component from the `gatsby-link` package that
+To do that, import the `<Link>` component from the `gatsby` package that
 was installed along with the starter.
 
 Unlike the normal HTML `<a>` element, our `Link` component uses `to` for
@@ -157,7 +157,7 @@ like:
 
 ```jsx{2,9-12}
 import React from "react";
-import Link from "gatsby-link";
+import { Link } from "gatsby";
 
 export default () =>
   <div style={{ color: `tomato` }}>
@@ -182,7 +182,7 @@ Make the second page component look something like:
 
 ```jsx
 import React from "react";
-import Link from "gatsby-link";
+import { Link } from "gatsby";
 
 export default () => (
   <div>
@@ -212,7 +212,7 @@ We'll start by creating a new link to a page at `/counter`/ from our original
 
 ```jsx{13-15}
 import React from "react";
-import Link from "gatsby-link";
+import { Link } from "gatsby";
 
 export default () =>
   <div style={{ color: `tomato` }}>
