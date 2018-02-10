@@ -23,7 +23,9 @@ async function onCreateNode({ node, actions, loadNodeContent, createNodeId }) {
     }
     return {
       ...obj,
-      id: createNodeId(obj.attributes.id ? obj.attributes.id : `${node.id} [${i}] >>> XML`),
+      id: obj.attributes.id
+        ? obj.attributes.id
+        : createNodeId(`${node.id} [${i}] >>> XML`),
       parent: node.id,
       children: [],
       internal: {

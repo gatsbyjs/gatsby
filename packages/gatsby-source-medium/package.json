@@ -1,7 +1,7 @@
 {
   "name": "gatsby-source-medium",
   "description": "Gatsby source plugin for building websites using Medium as a data source",
-  "version": "1.0.11",
+  "version": "2.0.0",
   "author": "Robert Vogt <robert@smartive.ch>",
   "dependencies": {
     "axios": "^0.16.2",

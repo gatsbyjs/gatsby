@@ -1,5 +1,4 @@
 const Promise = require(`bluebird`)
-const _ = require(`lodash`)
 const json2csv = require(`json2csv`)
 
 const { onCreateNode } = require(`../gatsby-node`)

@@ -1,6 +1,5 @@
 const Promise = require(`bluebird`)
 const yaml = require(`js-yaml`)
-const _ = require(`lodash`)
 
 const { onCreateNode } = require(`../gatsby-node`)
 

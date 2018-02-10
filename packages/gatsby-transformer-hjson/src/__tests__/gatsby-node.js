@@ -1,5 +1,4 @@
 const Promise = require(`bluebird`)
-const _ = require(`lodash`)
 const HJSON = require(`hjson`)
 
 const { onCreateNode } = require(`../gatsby-node`)

@@ -12,7 +12,7 @@ async function onCreateNode({ node, actions, loadNodeContent, createNodeId }) {
       .digest(`hex`)
     const yamlNode = {
       ...obj,
-      id: createNodeId(id),
+      id,
       children: [],
       parent: node.id,
       internal: {
@@ -37,14 +37,14 @@ async function onCreateNode({ node, actions, loadNodeContent, createNodeId }) {
     parsedContent.forEach((obj, i) => {
       transformObject(
         obj,
-        obj.id ? obj.id : `${node.id} [${i}] >>> YAML`,
+        obj.id ? obj.id : createNodeId(`${node.id} [${i}] >>> YAML`),
         _.upperFirst(_.camelCase(`${node.name} Yaml`))
       )
     })
   } else if (_.isPlainObject(parsedContent)) {
     transformObject(
       parsedContent,
-      parsedContent.id ? parsedContent.id : `${node.id} >>> YAML`,
+      parsedContent.id ? parsedContent.id : createNodeId(`${node.id} >>> YAML`),
       _.upperFirst(_.camelCase(`${path.basename(node.dir)} Yaml`))
     )
   }
