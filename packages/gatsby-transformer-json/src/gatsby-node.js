@@ -11,7 +11,7 @@ async function onCreateNode({ node, actions, loadNodeContent, createNodeId }) {
       .digest(`hex`)
     const jsonNode = {
       ...obj,
-      id: createNodeId(id),
+      id,
       children: [],
       parent: node.id,
       internal: {
@@ -37,14 +37,14 @@ async function onCreateNode({ node, actions, loadNodeContent, createNodeId }) {
     parsedContent.forEach((obj, i) => {
       transformObject(
         obj,
-        obj.id ? obj.id : `${node.id} [${i}] >>> JSON`,
+        obj.id ? obj.id : createNodeId(`${node.id} [${i}] >>> JSON`),
         _.upperFirst(_.camelCase(`${node.name} Json`))
       )
     })
   } else if (_.isPlainObject(parsedContent)) {
     transformObject(
       parsedContent,
-      parsedContent.id ? parsedContent.id : `${node.id} >>> JSON`,
+      parsedContent.id ? parsedContent.id : createNodeId(`${node.id} >>> JSON`),
       _.upperFirst(_.camelCase(`${path.basename(node.dir)} Json`))
     )
   }

@@ -26,7 +26,9 @@ async function onCreateNode({ node, actions, loadNodeContent, createNodeId }) {
 
   const newNode = {
     ...parsedContent,
-    id: createNodeId(parsedContent.id ? parsedContent.id : `${node.id} >>> TOML`),
+    id: parsedContent.id
+      ? parsedContent.id
+      : createNodeId(`${node.id} >>> TOML`),
     children: [],
     parent: node.id,
     internal: {
