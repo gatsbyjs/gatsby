@@ -6,10 +6,7 @@
   "bin": {
     "gatsby": "./dist/bin/gatsby.js"
   },
-  "files": [
-    "./cache-dir",
-    "./dist"
-  ],
+  "browser": "dist/browser.js",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
@@ -17,6 +14,7 @@
     "@babel/code-frame": "^7.0.0-beta.38",
     "@babel/core": "^7.0.0-beta.38",
     "@babel/plugin-syntax-dynamic-import": "^7.0.0-beta.39",
+    "@babel/plugin-transform-runtime": "^7.0.0-beta.39",
     "@babel/polyfill": "^7.0.0-beta.38",
     "@babel/preset-env": "^7.0.0-beta.38",
     "@babel/preset-react": "^7.0.0-beta.38",
@@ -118,10 +116,6 @@
     "webpack-stats-plugin": "^0.1.5",
     "yaml-loader": "^0.5.0"
   },
-  "peerDependencies": {
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0"
-  },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.38",
     "@babel/core": "^7.0.0-beta.38",
@@ -134,9 +128,10 @@
   "engines": {
     "node": ">4.0.0"
   },
-  "resolutions": {
-    "graphql": "^0.11.7"
-  },
+  "files": [
+    "./cache-dir",
+    "./dist"
+  ],
   "homepage": "https://github.com/gatsbyjs/gatsby#readme",
   "keywords": [
     "blog",
@@ -149,10 +144,16 @@
   ],
   "license": "MIT",
   "main": "index.js",
-  "browser": "dist/browser.js",
+  "peerDependencies": {
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/gatsbyjs/gatsby.git"
+  },
+  "resolutions": {
+    "graphql": "^0.11.7"
   },
   "scripts": {
     "build": "rimraf dist && npm run build:src && npm run build:internal-plugins && npm run build:rawfiles",
