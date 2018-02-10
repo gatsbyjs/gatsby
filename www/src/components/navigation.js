@@ -1,5 +1,5 @@
 import React from "react"
-import Link from "gatsby-link"
+import { Link } from "gatsby"
 import GithubIcon from "react-icons/lib/go/mark-github"
 import TwitterIcon from "react-icons/lib/fa/twitter"
 
@@ -66,22 +66,22 @@ export default ({ pathname }) => {
   }
   const gutters = isHomepage
     ? {
-        paddingLeft: vP,
-        paddingRight: vP,
-        paddingTop: rhythm(1.5),
-        [presets.Hd]: {
-          paddingLeft: vPHd,
-          paddingRight: vPHd,
-        },
-        [presets.VHd]: {
-          paddingLeft: vPVHd,
-          paddingRight: vPVHd,
-        },
-        [presets.VVHd]: {
-          paddingLeft: vPVVHd,
-          paddingRight: vPVVHd,
-        },
-      }
+      paddingLeft: vP,
+      paddingRight: vP,
+      paddingTop: rhythm(1.5),
+      [presets.Hd]: {
+        paddingLeft: vPHd,
+        paddingRight: vPHd,
+      },
+      [presets.VHd]: {
+        paddingLeft: vPVHd,
+        paddingRight: vPVHd,
+      },
+      [presets.VVHd]: {
+        paddingLeft: vPVVHd,
+        paddingRight: vPVVHd,
+      },
+    }
     : {}
 
   return (

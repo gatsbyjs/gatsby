@@ -1,4 +1,4 @@
-import Link from "gatsby-link"
+import { Link } from "gatsby"
 import { rhythm, scale, options } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
 import hex2rgba from "hex2rgba"
@@ -36,7 +36,7 @@ const CtaButton = ({ to, overrideCSS, children }) => (
         backgroundSize: `30px 30px`,
         transition: `all ${presets.animation.speedDefault} ${
           presets.animation.curveDefault
-        }`,
+          }`,
         ":hover, &:focus": {
           backgroundSize: `30px 30px`,
           backgroundColor: colors.gatsby,

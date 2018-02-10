@@ -212,7 +212,7 @@ _Path: `src/pages/index.js`_
 
 ```jsx
 import React from "react";
-import Link from "gatsby-link";
+import { Link } from "gatsby";
 
 const IndexPage = ({ data }) => (
   <div>
@@ -272,7 +272,7 @@ _Path: `src/templates/article.js`_
 
 ```jsx
 import React from "react";
-import Link from "gatsby-link";
+import { Link } from "gatsby";
 
 const ArticleTemplate = ({ data }) => (
   <div>
@@ -378,7 +378,7 @@ _Path: `src/templates/user.js`_
 
 ```jsx
 import React from "react";
-import Link from "gatsby-link";
+import { Link } from "gatsby";
 
 const UserTemplate = ({ data }) => (
   <div>

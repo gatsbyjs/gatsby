@@ -8,7 +8,6 @@
     "email-validator": "^1.1.1",
     "gatsby": "canary",
     "gatsby-image": "canary",
-    "gatsby-link": "canary",
     "gatsby-plugin-canonical-urls": "canary",
     "gatsby-plugin-catch-links": "canary",
     "gatsby-plugin-feed": "canary",

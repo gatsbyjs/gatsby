@@ -329,7 +329,7 @@ A small layout component might look something like this.
 
 ```jsx
 import React from "react";
-import Link from "gatsby-link";
+import { Link } from "gatsby";
 
 class Layout extends React.Component {
   render() {
@@ -374,7 +374,7 @@ generates all the configuration for you.
 
 Normally page resources are pre-cached with a service worker. But as several
 browsers (Safari/Microsoft Edge) still don't support Service Workers, the
-[Gatsby `<Link>` component](/packages/gatsby-link/) pre-caches resources for
+[Gatsby `<Link>` component](/packages/gatsby/) pre-caches resources for
 pages it links to by loading them into memory.
 
 ## Plugins
