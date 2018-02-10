@@ -106,9 +106,7 @@ exports.modifyWebpackConfig = ({ stage, actions }) => {
   switch (stage) {
     case `build-javascript`:
       actions.setWebpackConfig({
-        plugins: [
-          webpackLodashPlugin,
-        ],
+        plugins: [webpackLodashPlugin],
       })
   }
 }

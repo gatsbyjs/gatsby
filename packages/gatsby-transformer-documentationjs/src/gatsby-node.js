@@ -22,7 +22,14 @@ const commentId = (parentId, commentNumber) =>
 const descriptionId = (parentId, name) =>
   `${parentId}--DocumentationJSComponentDescription--${name}`
 
-function createDescriptionNode(node, docNodeId, markdownStr, name, actions, createNodeId) {
+function createDescriptionNode(
+  node,
+  docNodeId,
+  markdownStr,
+  name,
+  actions,
+  createNodeId
+) {
   const { createNode } = actions
 
   const descriptionNode = {
@@ -47,7 +54,12 @@ function createDescriptionNode(node, docNodeId, markdownStr, name, actions, crea
  * Implement the onCreateNode API to create documentation.js nodes
  * @param {Object} super this is a super param
  */
-exports.onCreateNode = async ({ node, loadNodeContent, actions, createNodeId }) => {
+exports.onCreateNode = async ({
+  node,
+  loadNodeContent,
+  actions,
+  createNodeId,
+}) => {
   const { createNode, createParentChildLink } = actions
 
   if (

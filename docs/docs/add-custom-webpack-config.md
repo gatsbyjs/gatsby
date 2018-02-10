@@ -42,8 +42,13 @@ Here is an example adding an additional global variable via the `DefinePlugin` a
 the `less-loader`
 
 ```js
-exports.modifyWebpackConfig = ({ stage, rules, loaders, plugins, boundActionCreators }) => {
-
+exports.modifyWebpackConfig = ({
+  stage,
+  rules,
+  loaders,
+  plugins,
+  boundActionCreators,
+}) => {
   boundActionCreators.setWebpackConfig({
     module: {
       rules: [
@@ -59,17 +64,17 @@ exports.modifyWebpackConfig = ({ stage, rules, loaders, plugins, boundActionCrea
               // the postcss loader comes with some nice defaults
               // including autoprefixer for our configured browsers
               loaders.postcss(),
-              `less-loader`
+              `less-loader`,
             ],
           }),
-        }
-      ]
+        },
+      ],
     },
     plugins: [
       plugins.define({
-        __DEVELOPMENT__: stage === `develop` || stage === `develop-html`
-      })
-    ]
-  })
+        __DEVELOPMENT__: stage === `develop` || stage === `develop-html`,
+      }),
+    ],
+  });
 };
 ```

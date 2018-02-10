@@ -2,9 +2,7 @@
 const validatePrefixEntry = prefix => {
   if (!prefix.match(/^\//) || !prefix.match(/\/\*$/)) {
     throw Error(
-      `Plugin "gatsby-plugin-client-only-paths" found invalid prefix pattern: ${
-        prefix
-      }`
+      `Plugin "gatsby-plugin-client-only-paths" found invalid prefix pattern: ${prefix}`
     )
   }
 }

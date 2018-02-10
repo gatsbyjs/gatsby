@@ -32,10 +32,26 @@ exports.sourceNodes = (
       let collection = pluginOptions.collection || `documents`
       if (_.isArray(collection)) {
         for (const col of collection) {
-          createNodes(db, pluginOptions, dbName, createNode, createNodeId, col, done)
+          createNodes(
+            db,
+            pluginOptions,
+            dbName,
+            createNode,
+            createNodeId,
+            col,
+            done
+          )
         }
       } else {
-        createNodes(db, pluginOptions, dbName, createNode, createNodeId, collection, done)
+        createNodes(
+          db,
+          pluginOptions,
+          dbName,
+          createNode,
+          createNodeId,
+          collection,
+          done
+        )
       }
     }
   )

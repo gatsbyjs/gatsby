@@ -18,17 +18,17 @@ exports.createPages = ({ graphql, actions }) => {
     // from the fetched data that you can run queries against.
     graphql(
       `
-      {
-        allAsciidoc(limit: 1000) {
-          edges {
-            node {
-              id
-              slug
+        {
+          allAsciidoc(limit: 1000) {
+            edges {
+              node {
+                id
+                slug
+              }
             }
           }
         }
-      }
-    `
+      `
     ).then(result => {
       if (result.errors) {
         reject(result.errors)
@@ -59,16 +59,15 @@ exports.createPages = ({ graphql, actions }) => {
   })
 }
 
-exports.onCreateNode = async ({
-  node,
-  actions,
-  loadNodeContent,
-}) => {
+exports.onCreateNode = async ({ node, actions, loadNodeContent }) => {
   const { createNode, createParentChildLink } = actions
   if (node.extension === `adoc`) {
     const content = await loadNodeContent(node)
     const html = asciidoc.convert(content)
-    const contentDigest = crypto.createHash(`md5`).update(html).digest(`hex`)
+    const contentDigest = crypto
+      .createHash(`md5`)
+      .update(html)
+      .digest(`hex`)
     const slug = `/${path.parse(node.relativePath).name}/`
     const asciiNode = {
       id: `${node.id} >>> ASCIIDOC`,

@@ -1,18 +1,19 @@
 # gatsby-plugin-less
+
 Provides drop-in support for Less stylesheets
 
 ## Install
+
 `yarn add gatsby-plugin-less`
 
 ## How to use
+
 1. Include the plugin in your `gatsby-config.js` file.
 2. Write your stylesheets in Less and require or import them as normal.
 
 ```javascript
 // in gatsby-config.js
-plugins: [
-  `gatsby-plugin-less`
-]
+plugins: [`gatsby-plugin-less`];
 ```
 
 If you need to pass options to Less use the plugins options; see [less-loader](https://github.com/webpack-contrib/less-loader)
@@ -25,9 +26,9 @@ plugins: [
     resolve: `gatsby-plugin-less`,
     options: {
       strictMath: true,
-    }
-  }
-]
+    },
+  },
+];
 ```
 
 ### With CSS Modules
@@ -42,18 +43,14 @@ and common cross-browser flexbox bugs. Normally you don't need to think about it
 you'd prefer to add additional postprocessing to your Less output you can sepecify plugins
 in the plugin options
 
-
 ```javascript
 // in gatsby-config.js
 plugins: [
   {
     resolve: `gatsby-plugin-less`,
     options: {
-      postCssPlugins: [
-        somePostCssPlugin()
-      ]
-    }
-  }
-]
+      postCssPlugins: [somePostCssPlugin()],
+    },
+  },
+];
 ```
-
