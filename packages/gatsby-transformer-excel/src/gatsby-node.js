@@ -10,7 +10,10 @@ function _loadNodeContent(fileNode, fallback) {
     : fallback(fileNode)
 }
 
-async function onCreateNode({ node, actions, loadNodeContent }, options) {
+async function onCreateNode(
+  { node, actions, loadNodeContent, createNodeId },
+  options
+) {
   const { createNode, createParentChildLink } = actions
   const extensions = `xls|xlsx|xlsm|xlsb|xml|xlw|xlc|csv|txt|dif|sylk|slk|prn|ods|fods|uos|dbf|wks|123|wq1|qpw|htm|html`.split(
     `|`
@@ -36,7 +39,9 @@ async function onCreateNode({ node, actions, loadNodeContent }, options) {
 
         return {
           ...obj,
-          id: obj.id ? obj.id : `${node.id} [${n} ${i}] >>> ${node.extension}`,
+          id: obj.id
+            ? obj.id
+            : createNodeId(`${node.id} [${n} ${i}] >>> ${node.extension}`),
           children: [],
           parent: node.id,
           internal: {
@@ -62,7 +67,7 @@ async function onCreateNode({ node, actions, loadNodeContent }, options) {
         .digest(`hex`)
 
       const z = {
-        id: `${node.id} [${idx}] >>> ${node.extension}`,
+        id: createNodeId(`${node.id} [${idx}] >>> ${node.extension}`),
         children: [],
         parent: node.id,
         internal: {

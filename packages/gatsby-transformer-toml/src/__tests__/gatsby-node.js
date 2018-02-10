@@ -40,36 +40,19 @@ describe(`Process TOML nodes correctly`, () => {
     const createNode = jest.fn()
     const createParentChildLink = jest.fn()
     const actions = { createNode, createParentChildLink }
+    const createNodeId = jest.fn()
+    createNodeId.mockReturnValue(`uuid-from-gatsby`)
 
     await onCreateNode({
       node,
       loadNodeContent,
       actions,
+      createNodeId,
     }).then(() => {
       expect(createNode.mock.calls).toMatchSnapshot()
       expect(createParentChildLink.mock.calls).toMatchSnapshot()
       expect(createNode).toHaveBeenCalledTimes(1)
       expect(createParentChildLink).toHaveBeenCalledTimes(1)
-    })
-  })
-
-  it(`If the object has an id, it uses that as the id instead of the auto-generated one`, async () => {
-    node.content = `
-          id = 'foo'
-          blue = true
-          funny = 'yup'
-    `
-
-    const createNode = jest.fn()
-    const createParentChildLink = jest.fn()
-    const actions = { createNode, createParentChildLink }
-
-    await onCreateNode({
-      node,
-      loadNodeContent,
-      actions,
-    }).then(() => {
-      expect(createNode.mock.calls[0][0].id).toEqual(`foo`)
     })
   })
 

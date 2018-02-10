@@ -7,7 +7,7 @@ Array [
       "blue": true,
       "children": Array [],
       "funny": "yup",
-      "id": "foo",
+      "id": "uuid-from-gatsby",
       "internal": Object {
         "contentDigest": "8838e569ae02d98806532310fb2a577a",
         "type": "FooJson",
@@ -26,7 +26,7 @@ Array [
         "blue": true,
         "children": Array [],
         "funny": "yup",
-        "id": "foo",
+        "id": "uuid-from-gatsby",
         "internal": Object {
           "contentDigest": "8838e569ae02d98806532310fb2a577a",
           "type": "FooJson",
@@ -58,7 +58,7 @@ Array [
       "blue": true,
       "children": Array [],
       "funny": "yup",
-      "id": "foo",
+      "id": "uuid-from-gatsby",
       "internal": Object {
         "contentDigest": "8838e569ae02d98806532310fb2a577a",
         "type": "NodeNameJson",
@@ -71,7 +71,7 @@ Array [
       "blue": false,
       "children": Array [],
       "funny": "nope",
-      "id": "whatever [1] >>> JSON",
+      "id": "uuid-from-gatsby",
       "internal": Object {
         "contentDigest": "f624311d932d73dcd416d2a8bea2b67d",
         "type": "NodeNameJson",
@@ -90,7 +90,7 @@ Array [
         "blue": true,
         "children": Array [],
         "funny": "yup",
-        "id": "foo",
+        "id": "uuid-from-gatsby",
         "internal": Object {
           "contentDigest": "8838e569ae02d98806532310fb2a577a",
           "type": "NodeNameJson",
@@ -117,7 +117,7 @@ Array [
         "blue": false,
         "children": Array [],
         "funny": "nope",
-        "id": "whatever [1] >>> JSON",
+        "id": "uuid-from-gatsby",
         "internal": Object {
           "contentDigest": "f624311d932d73dcd416d2a8bea2b67d",
           "type": "NodeNameJson",

@@ -2,7 +2,7 @@ const parseXml = require(`xml-parser`)
 const crypto = require(`crypto`)
 const _ = require(`lodash`)
 
-async function onCreateNode({ node, actions, loadNodeContent }) {
+async function onCreateNode({ node, actions, loadNodeContent, createNodeId }) {
   const { createNode, createParentChildLink } = actions
 
   // We only care about XML content.
@@ -23,7 +23,9 @@ async function onCreateNode({ node, actions, loadNodeContent }) {
     }
     return {
       ...obj,
-      id: obj.attributes.id ? obj.attributes.id : `${node.id} [${i}] >>> XML`,
+      id: obj.attributes.id
+        ? obj.attributes.id
+        : createNodeId(`${node.id} [${i}] >>> XML`),
       parent: node.id,
       children: [],
       internal: {

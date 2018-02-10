@@ -1,6 +1,6 @@
 {
   "name": "gatsby-transformer-excel",
-  "version": "1.0.3",
+  "version": "2.0.0",
   "description": "Gatsby transformer plugin for Excel spreadsheets",
   "main": "index.js",
   "scripts": {

@@ -15,7 +15,10 @@ const convertToJson = (data, options) =>
       })
   })
 
-async function onCreateNode({ node, actions, loadNodeContent }, options) {
+async function onCreateNode(
+  { node, actions, loadNodeContent, createNodeId },
+  options
+) {
   const { createNode, createParentChildLink } = actions
   // Filter out non-csv content
   if (node.extension !== `csv`) {
@@ -36,7 +39,7 @@ async function onCreateNode({ node, actions, loadNodeContent }, options) {
 
       return {
         ...obj,
-        id: obj.id ? obj.id : `${node.id} [${i}] >>> CSV`,
+        id: obj.id ? obj.id : createNodeId(`${node.id} [${i}] >>> CSV`),
         children: [],
         parent: node.id,
         internal: {

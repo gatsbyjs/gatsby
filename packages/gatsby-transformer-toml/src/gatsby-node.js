@@ -2,7 +2,7 @@ const toml = require(`toml`)
 const _ = require(`lodash`)
 const crypto = require(`crypto`)
 
-async function onCreateNode({ node, actions, loadNodeContent }) {
+async function onCreateNode({ node, actions, loadNodeContent, createNodeId }) {
   const { createNode, createParentChildLink } = actions
   // Filter out non-toml content
   // Currently TOML files are considered 'application/octet-stream' in 'mime-db'
@@ -26,7 +26,9 @@ async function onCreateNode({ node, actions, loadNodeContent }) {
 
   const newNode = {
     ...parsedContent,
-    id: parsedContent.id ? parsedContent.id : `${node.id} >>> TOML`,
+    id: parsedContent.id
+      ? parsedContent.id
+      : createNodeId(`${node.id} >>> TOML`),
     children: [],
     parent: node.id,
     internal: {

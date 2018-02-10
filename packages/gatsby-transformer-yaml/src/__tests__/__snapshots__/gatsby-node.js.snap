@@ -7,7 +7,7 @@ Array [
       "blue": true,
       "children": Array [],
       "funny": "yup",
-      "id": "whatever >>> YAML",
+      "id": "uuid-from-gatsby",
       "internal": Object {
         "contentDigest": "73901821b17d5aa9dd6026181f73b64c",
         "type": "BarYaml",
@@ -26,7 +26,7 @@ Array [
         "blue": true,
         "children": Array [],
         "funny": "yup",
-        "id": "whatever >>> YAML",
+        "id": "uuid-from-gatsby",
         "internal": Object {
           "contentDigest": "73901821b17d5aa9dd6026181f73b64c",
           "type": "BarYaml",
@@ -59,7 +59,7 @@ Array [
       "blue": true,
       "children": Array [],
       "funny": "yup",
-      "id": "whatever [0] >>> YAML",
+      "id": "uuid-from-gatsby",
       "internal": Object {
         "contentDigest": "73901821b17d5aa9dd6026181f73b64c",
         "type": "TestYaml",
@@ -72,7 +72,7 @@ Array [
       "blue": false,
       "children": Array [],
       "funny": "nope",
-      "id": "whatever [1] >>> YAML",
+      "id": "uuid-from-gatsby",
       "internal": Object {
         "contentDigest": "f624311d932d73dcd416d2a8bea2b67d",
         "type": "TestYaml",
@@ -91,7 +91,7 @@ Array [
         "blue": true,
         "children": Array [],
         "funny": "yup",
-        "id": "whatever [0] >>> YAML",
+        "id": "uuid-from-gatsby",
         "internal": Object {
           "contentDigest": "73901821b17d5aa9dd6026181f73b64c",
           "type": "TestYaml",
@@ -121,7 +121,7 @@ Array [
         "blue": false,
         "children": Array [],
         "funny": "nope",
-        "id": "whatever [1] >>> YAML",
+        "id": "uuid-from-gatsby",
         "internal": Object {
           "contentDigest": "f624311d932d73dcd416d2a8bea2b67d",
           "type": "TestYaml",

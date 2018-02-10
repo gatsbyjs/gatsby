@@ -4,7 +4,7 @@ const createMappingChildNodes = require(`./mapping`)
 const _ = require(`lodash`)
 
 exports.sourceNodes = (
-  { actions, getNode, hasNodeChanged },
+  { actions, getNode, createNodeId, hasNodeChanged },
   pluginOptions,
   done
 ) => {
@@ -32,10 +32,10 @@ exports.sourceNodes = (
       let collection = pluginOptions.collection || `documents`
       if (_.isArray(collection)) {
         for (const col of collection) {
-          createNodes(db, pluginOptions, dbName, createNode, col, done)
+          createNodes(db, pluginOptions, dbName, createNode, createNodeId, col, done)
         }
       } else {
-        createNodes(db, pluginOptions, dbName, createNode, collection, done)
+        createNodes(db, pluginOptions, dbName, createNode, createNodeId, collection, done)
       }
     }
   )
@@ -46,6 +46,7 @@ function createNodes(
   pluginOptions,
   dbName,
   createNode,
+  createNodeId,
   collectionName,
   done
 ) {
@@ -66,7 +67,7 @@ function createNodes(
       var node = {
         // Data for the node.
         ...item,
-        id: `${id}`,
+        id: createNodeId(`${id}`),
         parent: `__${collectionName}__`,
         children: [],
         internal: {
