@@ -12,6 +12,38 @@ import type { DocumentNode, DefinitionNode } from "graphql"
 
 const apiRunnerNode = require(`../../utils/api-runner-node`)
 
+const BABYLON_OPTIONS = {
+  allowImportExportEverywhere: true,
+  allowReturnOutsideFunction: true,
+  allowSuperOutsideMethod: true,
+  sourceType: `unambigious`,
+  sourceFilename: true,
+  plugins: [
+    `jsx`,
+    `flow`,
+    `doExpressions`,
+    `objectRestSpread`,
+    `decorators`,
+    `classProperties`,
+    `classPrivateProperties`,
+    `classPrivateMethods`,
+    `exportDefaultFrom`,
+    `exportNamespaceFrom`,
+    `asyncGenerators`,
+    `functionBind`,
+    `functionSent`,
+    `dynamicImport`,
+    `numericSeparator`,
+    `optionalChaining`,
+    `importMeta`,
+    `bigInt`,
+    `optionalCatchBinding`,
+    `throwExpressions`,
+    `pipelineOperator`,
+    `nullishCoalescingOperator`,
+  ],
+}
+
 const getMissingNameErrorMessage = file => report.stripIndent`
   GraphQL definitions must be "named".
   The query with the missing name is in ${file}.
@@ -43,10 +75,7 @@ async function parseToAst(filePath, fileStr) {
   if (transpiled && transpiled.length) {
     for (const item of transpiled) {
       try {
-        const tmp = babylon.parse(item, {
-          sourceType: `module`,
-          plugins: [`*`],
-        })
+        const tmp = babylon.parse(item, BABYLON_OPTIONS)
         ast = tmp
         break
       } catch (error) {
@@ -59,11 +88,7 @@ async function parseToAst(filePath, fileStr) {
     }
   } else {
     try {
-      ast = babylon.parse(fileStr, {
-        sourceType: `module`,
-        sourceFilename: true,
-        plugins: [`*`],
-      })
+      ast = babylon.parse(fileStr, BABYLON_OPTIONS)
     } catch (error) {
       report.error(
         `There was a problem parsing "${filePath}"; any GraphQL ` +

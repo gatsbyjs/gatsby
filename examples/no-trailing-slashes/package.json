@@ -6,13 +6,14 @@
   "author": "Scotty Eckenthal <scott.eckenthal@gmail.com>",
   "dependencies": {
     "gatsby": "latest",
-    "gatsby-link": "latest",
     "gatsby-plugin-google-analytics": "latest",
     "gatsby-plugin-offline": "latest",
     "lodash": "^4.16.4",
     "slash": "^1.0.0"
   },
-  "keywords": ["gatsby"],
+  "keywords": [
+    "gatsby"
+  ],
   "license": "MIT",
   "main": "n/a",
   "scripts": {

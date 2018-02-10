@@ -7,17 +7,15 @@
     "Noah Lange <noahrlange@gmail.com>"
   ],
   "dependencies": {
-    "babel-plugin-remove-graphql-queries": "^2.0.0-alpha.f20ac0ed",
-    "babel-runtime": "^6.26.0",
+    "@babel/runtime": "^7.0.0-beta.38",
+    "babel-plugin-remove-graphql-queries": "^2.0.0-0",
     "ts-loader": "^2.0.3",
     "typescript": "^2.2.1"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
+    "@babel/cli": "^7.0.0-beta.38",
+    "@babel/core": "^7.0.0-beta.38",
     "cross-env": "^5.0.5"
-  },
-  "peerDependencies": {
-    "gatsby": "^1.0.0"
   },
   "keywords": [
     "gatsby",
@@ -26,8 +24,8 @@
   "license": "MIT",
   "main": "index.js",
   "scripts": {
-    "build": "babel src --out-dir . --ignore __tests__",
-    "watch": "babel -w src --out-dir . --ignore __tests__",
+    "build": "babel src --out-dir . --ignore **/__tests__/**",
+    "watch": "babel -w src --out-dir . --ignore **/__tests__/**",
     "prepublish": "cross-env NODE_ENV=production npm run build"
   }
 }

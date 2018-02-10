@@ -5,7 +5,6 @@
   "author": "Ricky de Laveaga <ricky@rdela.com>",
   "dependencies": {
     "gatsby": "latest",
-    "gatsby-link": "latest",
     "gatsby-plugin-react-helmet": "latest",
     "react-helmet": "^5.2.0"
   },

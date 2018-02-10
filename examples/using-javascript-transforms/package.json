@@ -10,11 +10,13 @@
     "serve": "node_modules/.bin/gatsby serve",
     "clean:public": "rm -rf public & mkdir public",
     "clean": "npm run clean:public",
-    "lint":
-      "./node_modules/.bin/eslint --ext .js,.jsx --ignore-pattern public .",
+    "lint": "./node_modules/.bin/eslint --ext .js,.jsx --ignore-pattern public .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["personal", "blog"],
+  "keywords": [
+    "personal",
+    "blog"
+  ],
   "author": "gatsbyjs",
   "license": "MIT",
   "bugs": {
@@ -25,7 +27,6 @@
     "bulma": "0.4.2",
     "d3": "4.9.1",
     "gatsby": "latest",
-    "gatsby-link": "latest",
     "gatsby-plugin-offline": "latest",
     "gatsby-plugin-postcss-sass": "latest",
     "gatsby-plugin-sharp": "latest",

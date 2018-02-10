@@ -7,7 +7,6 @@
   "dependencies": {
     "gatsby": "latest",
     "gatsby-image": "^1.0.5",
-    "gatsby-link": "latest",
     "gatsby-plugin-google-analytics": "latest",
     "gatsby-plugin-offline": "latest",
     "gatsby-source-contentful": "latest",

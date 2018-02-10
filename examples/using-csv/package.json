@@ -5,7 +5,6 @@
   "author": "Sonal Saldanha <sonal.saldanha@gmail.com>",
   "dependencies": {
     "gatsby": "latest",
-    "gatsby-link": "latest",
     "gatsby-plugin-google-analytics": "latest",
     "gatsby-source-filesystem": "latest",
     "gatsby-transformer-csv": "latest"

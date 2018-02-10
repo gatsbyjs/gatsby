@@ -5,7 +5,6 @@
   "author": "SheetJS <dev@sheetjs.com>",
   "dependencies": {
     "gatsby": "latest",
-    "gatsby-link": "latest",
     "gatsby-source-filesystem": "latest",
     "gatsby-transformer-excel": "latest"
   },

@@ -6,11 +6,12 @@
   "author": "Scotty Eckenthal <scott.eckenthal@gmail.com>",
   "dependencies": {
     "gatsby": "latest",
-    "gatsby-link": "latest",
     "lodash": "^4.16.4",
     "slash": "^1.0.0"
   },
-  "keywords": ["gatsby"],
+  "keywords": [
+    "gatsby"
+  ],
   "license": "MIT",
   "main": "n/a",
   "scripts": {

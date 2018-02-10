@@ -4,7 +4,7 @@
   "version": "1.0.10",
   "author": "Jeffrey Xiao <jeffrey.xiao1998@gmail.com>",
   "dependencies": {
-    "babel-runtime": "^6.26.0",
+    "@babel/runtime": "^7.0.0-beta.38",
     "katex": "^0.8.3",
     "remark-math": "^0.2.4",
     "unist-util-visit": "^1.1.1"
@@ -18,11 +18,13 @@
   "license": "MIT",
   "main": "index.js",
   "scripts": {
-    "build": "babel src --out-dir . --ignore __tests__",
-    "watch": "babel -w src --out-dir . --ignore __tests__",
+    "build": "babel src --out-dir . --ignore **/__tests__/**",
+    "watch": "babel -w src --out-dir . --ignore **/__tests__/**",
     "prepublish": "cross-env NODE_ENV=production npm run build"
   },
   "devDependencies": {
+    "@babel/cli": "^7.0.0-beta.38",
+    "@babel/core": "^7.0.0-beta.38",
     "cross-env": "^5.0.5"
   }
 }

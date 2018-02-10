@@ -1,4 +1,3 @@
-const babelPluginRemoveQueries = require(`babel-plugin-remove-graphql-queries`)
 const { transpileModule } = require(`typescript`)
 const resolve = require(`./resolve`)
 
@@ -19,7 +18,6 @@ module.exports.modifyWebpackConfig = (
   // Gatsby removes graphql queries from source code because they queries are
   // run ahead of time. We need to do that here as well in order to avoid
   // extra dead code sitting in the typescript files.
-  const jsLoader = loaders.js({ plugins: [babelPluginRemoveQueries] })
 
   const typescriptOptions = {
     // React-land is rather undertyped; nontrivial TS projects will most likely
@@ -38,7 +36,7 @@ module.exports.modifyWebpackConfig = (
         {
           test,
           use: [
-            jsLoader,
+            loaders.js(),
             {
               loader: resolve(`ts-loader`),
               options: typescriptOptions,
