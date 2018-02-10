@@ -29,7 +29,7 @@ const listStyles = {
         transform: `scale(0.1)`,
         transition: `all ${presets.animation.speedDefault} ${
           presets.animation.curveDefault
-          }`,
+        }`,
         [presets.Hd]: {
           height: 6,
           width: 6,
@@ -72,15 +72,15 @@ const Section = props => (
 const SectionLinks = props => {
   const tutorialStyles = props.isTutorial
     ? {
-      "&&": {
-        "& > li": {
-          marginBottom: `1rem`,
-          "& > .nav-link": {
-            fontWeight: `bold`,
+        "&&": {
+          "& > li": {
+            marginBottom: `1rem`,
+            "& > .nav-link": {
+              fontWeight: `bold`,
+            },
           },
         },
-      },
-    }
+      }
     : false
 
   return (
@@ -149,15 +149,15 @@ const SectionLink = props => {
           {title}
         </a>
       ) : (
-          <Link
-            to={item.link}
-            activeClassName="nav-link-active"
-            className="nav-link"
-            exact
-          >
-            {title}
-          </Link>
-        )}
+        <Link
+          to={item.link}
+          activeClassName="nav-link-active"
+          className="nav-link"
+          exact
+        >
+          {title}
+        </Link>
+      )}
       {childnodes ? <ul>{childnodes}</ul> : null}
     </li>
   )
@@ -173,15 +173,15 @@ class SidebarBody extends React.Component {
     const fontSize = isInline ? scale(0).fontSize : scale(-2 / 10).fontSize
     const headerStyles = isInline
       ? {
-        fontSize: scale(2 / 5).fontSize,
-      }
+          fontSize: scale(2 / 5).fontSize,
+        }
       : {
-        fontSize: scale(-2 / 5).fontSize,
-        color: colors.lilac,
-        textTransform: `uppercase`,
-        letterSpacing: `.15em`,
-        fontWeight: `normal`,
-      }
+          fontSize: scale(-2 / 5).fontSize,
+          color: colors.lilac,
+          textTransform: `uppercase`,
+          letterSpacing: `.15em`,
+          fontWeight: `normal`,
+        }
 
     return (
       <div

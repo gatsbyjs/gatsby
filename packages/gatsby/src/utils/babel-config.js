@@ -76,7 +76,7 @@ module.exports = async function babelConfig(program, stage) {
         require.resolve(`@babel/plugin-syntax-dynamic-import`),
         // Polyfills the runtime needed for async/await and generators
         [
-          require.resolve("@babel/plugin-transform-runtime"),
+          require.resolve(`@babel/plugin-transform-runtime`),
           {
             helpers: false,
             polyfill: false,

@@ -36,7 +36,7 @@ const CtaButton = ({ to, overrideCSS, children }) => (
         backgroundSize: `30px 30px`,
         transition: `all ${presets.animation.speedDefault} ${
           presets.animation.curveDefault
-          }`,
+        }`,
         ":hover, &:focus": {
           backgroundSize: `30px 30px`,
           backgroundColor: colors.gatsby,
