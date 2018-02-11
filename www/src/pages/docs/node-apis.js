@@ -1,5 +1,6 @@
 import React from "react"
 import Helmet from "react-helmet"
+import sortBy from "lodash/sortBy"
 
 import Functions from "../../components/function-list"
 import { rhythm, scale } from "../../utils/typography"
@@ -7,6 +8,10 @@ import Container from "../../components/container"
 
 class NodeAPIDocs extends React.Component {
   render() {
+    const funcs = sortBy(
+      this.props.data.file.childrenDocumentationJs,
+      func => func.name
+    )
     return (
       <Container>
         <Helmet>
@@ -56,7 +61,7 @@ exports.createPages = (_, pluginOptions, cb) => {
         <hr />
         <h2 css={{ marginBottom: rhythm(1 / 2) }}>APIs</h2>
         <ul css={{ ...scale(-1 / 5) }}>
-          {this.props.data.allDocumentationJs.edges.map(({ node }, i) => (
+          {funcs.map((node, i) => (
             <li key={`function list ${node.name}`}>
               <a href={`#${node.name}`}>{node.name}</a>
             </li>
@@ -65,7 +70,7 @@ exports.createPages = (_, pluginOptions, cb) => {
         <br />
         <hr />
         <h2>Reference</h2>
-        <Functions functions={this.props.data.allDocumentationJs.edges} />
+        <Functions functions={funcs} />
       </Container>
     )
   }
@@ -75,15 +80,10 @@ export default NodeAPIDocs
 
 export const pageQuery = graphql`
   query APINodeDocsQuery {
-    allDocumentationJs(
-      filter: { id: { regex: "/src.*api-node-docs.js/" } }
-      sort: { fields: [name] }
-    ) {
-      edges {
-        node {
-          name
-          ...FunctionList
-        }
+    file(relativePath: { regex: "/src.*api-node-docs.js/" }) {
+      childrenDocumentationJs {
+        name
+        ...FunctionList
       }
     }
   }
