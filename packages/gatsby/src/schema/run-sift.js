@@ -9,7 +9,7 @@ const Promise = require(`bluebird`)
 function awaitSiftField(fields, node, k) {
   const field = fields[k]
   if (field.resolve) {
-    return field.resolve(node)
+    return field.resolve(node, {}, {}, { fieldName: k })
   } else if (node[k] !== undefined) {
     return node[k]
   }

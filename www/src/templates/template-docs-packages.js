@@ -40,7 +40,7 @@ class DocsPackagesTemplate extends React.Component {
             __html: this.props.data.markdownRemark.html,
           }}
         />
-        <MarkdownPageFooter page={page} />
+        <MarkdownPageFooter page={page} packagePage />
       </Container>
     )
   }

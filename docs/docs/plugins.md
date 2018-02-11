@@ -141,7 +141,6 @@ root.
 * [gatsby-transformer-javascript-static-exports](/packages/gatsby-transformer-javascript-static-exports/)
 * [gatsby-transformer-json](/packages/gatsby-transformer-json/)
 * [gatsby-transformer-pdf](/packages/gatsby-transformer-pdf/)
-* [gatsby-transformer-pdfimages](/packages/gatsby-transformer-pdfimages/)
 * [gatsby-transformer-react-docgen](/packages/gatsby-transformer-react-docgen/)
 * [gatsby-transformer-remark](/packages/gatsby-transformer-remark/)
 * [gatsby-transformer-sharp](/packages/gatsby-transformer-sharp/)
@@ -204,6 +203,7 @@ root.
 * [gatsby-source-twitch](https://github.com/jedidiah/gatsby-source-twitch)
 * [gatsby-source-unsplash](https://github.com/vacas5/gatsby-source-unsplash)
 * [gatsby-source-workable](https://github.com/tumblbug/gatsby-source-workable)
+* [gatsby-transformer-orga](https://github.com/xiaoxinghu/orgajs/tree/master/packages/gatsby-transformer-orga)
 
 ## Community Library
 
