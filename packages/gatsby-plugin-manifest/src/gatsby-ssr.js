@@ -1,8 +1,5 @@
 import React from "react"
-import * as gatsbyUtils from "gatsby"
 import { withPrefix } from "gatsby"
-
-console.log(gatsbyUtils)
 
 exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
   setHeadComponents([
