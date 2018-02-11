@@ -32,7 +32,8 @@ async function readFetchCache(programDirectory) {
     console.log(`Using Contentful Offline cache ⚠️`)
     return await fs.readJson(`${programDirectory}/.cache/${cmsCacheFilename}`)
   } catch (err) {
-    console.error(err)
+    console.error(`Sorry, cached CMS data does not exist - unable to run offline`)
+    process.exit(1)
   }
   return null
 }
