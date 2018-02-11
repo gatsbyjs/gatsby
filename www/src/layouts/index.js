@@ -150,4 +150,4 @@ class DefaultLayout extends React.Component {
   }
 }
 
-module.exports = DefaultLayout
+export default DefaultLayout
