@@ -3,6 +3,9 @@
   "description": "CLI helpers for contributors working on Gatsby",
   "version": "1.2.10",
   "main": "index.js",
+  "bin": {
+    "gatsby-dev": "./dist/index.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "babel src --out-dir dist",
@@ -34,8 +37,5 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "cross-env": "^5.0.5"
-  },
-  "bin": {
-    "gatsby-dev": "./dist/index.js"
   }
 }

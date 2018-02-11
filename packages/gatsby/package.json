@@ -3,6 +3,9 @@
   "description": "React.js Static Site Generator",
   "version": "1.9.192",
   "main": "index.js",
+  "bin": {
+    "gatsby": "./dist/bin/gatsby.js"
+  },
   "scripts": {
     "build": "rimraf dist && npm run build:src && npm run build:internal-plugins && npm run build:rawfiles",
     "build:internal-plugins": "copyfiles -u 1 src/internal-plugins/**/package.json dist",
@@ -31,9 +34,6 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/gatsbyjs/gatsby.git"
-  },
-  "bin": {
-    "gatsby": "./dist/bin/gatsby.js"
   },
   "dependencies": {
     "async": "^2.1.2",
