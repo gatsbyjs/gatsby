@@ -1,5 +1,6 @@
 const algoliasearch = require(`algoliasearch`)
 const crypto = require(`crypto`)
+const createNodeId = require(`createNodeId`)
 
 const client = algoliasearch(`OFCNCOG2CU`, `f54e21fa3a2a0160595bb058179bfb1e`)
 var index = client.initIndex(`npm-search`)
@@ -36,9 +37,10 @@ exports.sourceNodes = async ({ boundActionCreators }, { keywords }) => {
       return
     }
 
-    const parentId = `plugin ${hit.objectID}`
+    const parentId = createNodeId(`plugin ${hit.objectID}`)
+    console.log(parentId)
     const readmeNode = {
-      id: `readme ${hit.objectID}`,
+      id: createNodeId(`readme ${hit.objectID}`),
       parent: parentId,
       slug: `/packages/en/${hit.objectID}`,
       children: [],
