@@ -199,11 +199,29 @@ describe(`GraphQL type inferance`, () => {
       expect(result.data.listNode[0].number).toEqual(2018)
     })
 
-    it(`Date type inference`, async () => {
+    it(`Infers from Date objects`, async () => {
       let result = await queryResult(
         [
           { dateObject: new Date(Date.UTC(2012, 10, 5)) },
           { dateObject: new Date(Date.UTC(2012, 10, 5)) },
+        ],
+        `
+          dateObject
+        `
+      )
+      expect(result).toMatchSnapshot()
+    })
+
+    it(`Infers from array of Date objects`, async () => {
+      let result = await queryResult(
+        [
+          {
+            dateObject: [
+              new Date(Date.UTC(2012, 10, 5)),
+              new Date(Date.UTC(2012, 10, 6)),
+            ],
+          },
+          { dateObject: [new Date(Date.UTC(2012, 10, 5))] },
         ],
         `
           dateObject

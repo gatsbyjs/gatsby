@@ -37,7 +37,7 @@ const typography = new Typography(fairyGateTheme);
 export default typography;
 ```
 
-Then edit our site's `gatsby-config.js` at the root of the site:
+Then create our site's `gatsby-config.js` at the root of the site, and add the following code to it:
 
 ```javascript
 module.exports = {
@@ -137,7 +137,7 @@ Stop `gatsby develop` and start it again for the new layout to take effect.
 Sweet, the layout is working! Now, our text is centered and constrained to a
 column 650 pixels wide, as we specified.
 
-Let's now add our site title:
+Let's now add, in the same file, our site title:
 
 ```jsx{5}
 import React from "react";

@@ -83,8 +83,10 @@ const extractFieldExamples = (nodes: any[]) =>
         return array
       }
 
-      // primitive values don't get merged further, just take the first item
-      if (!_.isObject(array[0])) return array.slice(0, 1)
+      // primitive values and dates don't get merged further, just take the first item
+      if (!_.isObject(array[0]) || array[0] instanceof Date) {
+        return array.slice(0, 1)
+      }
       let merged = extractFieldExamples(array)
       return isDefined(merged) ? [merged] : null
     }

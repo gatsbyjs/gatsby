@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`GraphQL type inferance Handles dates Date type inference 1`] = `
+exports[`GraphQL type inferance Handles dates Infers from Date objects 1`] = `
 Object {
   "data": Object {
     "listNode": Array [
@@ -9,6 +9,26 @@ Object {
       },
       Object {
         "dateObject": "2012-11-05T00:00:00.000Z",
+      },
+    ],
+  },
+}
+`;
+
+exports[`GraphQL type inferance Handles dates Infers from array of Date objects 1`] = `
+Object {
+  "data": Object {
+    "listNode": Array [
+      Object {
+        "dateObject": Array [
+          "2012-11-05T00:00:00.000Z",
+          "2012-11-06T00:00:00.000Z",
+        ],
+      },
+      Object {
+        "dateObject": Array [
+          "2012-11-05T00:00:00.000Z",
+        ],
       },
     ],
   },

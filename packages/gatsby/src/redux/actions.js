@@ -192,23 +192,20 @@ actions.createPage = (page: PageInput, plugin?: Plugin, traceId?: string) => {
   if (!internalPage.component.includes(`/.cache/`)) {
     const fileContent = fs.readFileSync(internalPage.component, `utf-8`)
     let notEmpty = true
-    let includesReactImport = true
     let includesDefaultExport = true
 
     if (fileContent === ``) {
       notEmpty = false
     }
 
-    if (!fileContent.includes(`React`)) {
-      includesReactImport = false
-    }
     if (
       !fileContent.includes(`export default`) &&
-      !fileContent.includes(`module.exports`)
+      !fileContent.includes(`module.exports`) &&
+      !fileContent.includes(`exports.default`)
     ) {
       includesDefaultExport = false
     }
-    if (!notEmpty || !includesDefaultExport || !includesReactImport) {
+    if (!notEmpty || !includesDefaultExport) {
       const relativePath = path.relative(
         store.getState().program.directory,
         internalPage.component
@@ -228,18 +225,6 @@ actions.createPage = (page: PageInput, plugin?: Plugin, traceId?: string) => {
       console.log(
         `The page component at "${relativePath}" didn't pass validation`
       )
-
-      if (!includesReactImport) {
-        console.log(``)
-        console.log(
-          `You must import React at the top of the file for a React component to be valid`
-        )
-        console.log(``)
-        console.log(`Add the following to the top of the component:`)
-        console.log(``)
-        console.log(`    import React from 'react'`)
-        console.log(``)
-      }
 
       if (!includesDefaultExport) {
         console.log(``)
