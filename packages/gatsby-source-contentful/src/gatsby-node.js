@@ -16,28 +16,6 @@ const restrictedNodeFields = [
   `parent`,
 ]
 
-const cmsCacheFilename = `contentful-result.json`
-
-async function writeFetchCache(programDirectory, fetchResult) {
-  try {
-    await fs.writeJson(`${programDirectory}/.cache/${cmsCacheFilename}`, fetchResult)
-  } catch (err) {
-    console.error(err)
-  }
-}
-
-async function readFetchCache(programDirectory) {
-  try {
-    console.time(`Fetch Contentful data`)
-    console.log(`Using Contentful Offline cache ⚠️`)
-    return await fs.readJson(`${programDirectory}/.cache/${cmsCacheFilename}`)
-  } catch (err) {
-    console.error(`Sorry, cached CMS data does not exist - unable to run offline`)
-    process.exit(1)
-  }
-  return null
-}
-
 exports.setFieldsOnGraphQLNodeType = require(`./extend-node-type`).extendNodeType
 
 /***
@@ -75,27 +53,18 @@ exports.sourceNodes = async (
     ]
   }
 
-  const programDir = store.getState().program.directory
-  let fetchResult
-
-  if (process.env.GATSBY_CONTENTFUL_OFFLINE === `true`) {
-    fetchResult = await readFetchCache(programDir)
-  } else {
-    fetchResult = await fetchData({
-      syncToken,
-      spaceId,
-      accessToken,
-      host,
-    })
-    writeFetchCache(programDir, fetchResult)
-  }
-
   const {
     currentSyncData,
     contentTypeItems,
     defaultLocale,
     locales,
-  } = fetchResult
+  } = await fetchData({
+    syncToken,
+    spaceId,
+    accessToken,
+    host,
+    cacheDir: `${store.getState().program.directory}/.cache`,
+  })
 
   const entryList = normalize.buildEntryList({
     currentSyncData,

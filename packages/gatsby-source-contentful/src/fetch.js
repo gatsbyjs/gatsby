@@ -1,11 +1,35 @@
 const contentful = require(`contentful`)
 const _ = require(`lodash`)
+const fs = require(`fs-extra`)
 
 const normalize = require(`./normalize`)
 
-module.exports = async ({ spaceId, accessToken, host, syncToken }) => {
+const cacheFilename = `contentful-result.json`
+
+async function writeCacheFile(dir, result) {
+  try {
+    await fs.writeJson(`${dir}/${cacheFilename}`, result)
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+module.exports = async ({ spaceId, accessToken, host, syncToken, cacheDir }) => {
   // Fetch articles.
   console.time(`Fetch Contentful data`)
+
+  // If the user knows they are offline, serve them cached result
+  if (process.env.GATSBY_CONTENTFUL_OFFLINE === `true`) {
+    console.log(`Using Contentful Offline cache ⚠️`)
+    try {
+      return await fs.readJson(`${cacheDir}/${cacheFilename}`)
+    }
+    catch (err) {
+      console.error(`Sorry, cached CMS data does not exist - unable to run offline`)
+      process.exit(1)
+    }
+  }
+
   console.log(`Starting to fetch data from Contentful`)
 
   const client = contentful.createClient({
@@ -84,12 +108,15 @@ module.exports = async ({ spaceId, accessToken, host, syncToken }) => {
     return null
   })
 
-  return {
+  const result = {
     currentSyncData,
     contentTypeItems,
     defaultLocale,
     locales: space.locales,
   }
+
+  writeCacheFile(cacheDir, result)
+  return result
 }
 
 /**
