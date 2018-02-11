@@ -1,7 +1,7 @@
 {
   "name": "gatsby-link",
-  "version": "1.6.36",
   "description": "An enhanced Link component for Gatsby sites with support for resource prefetching",
+  "version": "1.6.36",
   "main": "index.js",
   "types": "index.d.ts",
   "scripts": {
@@ -15,6 +15,14 @@
   ],
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git"
+  },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "cross-env": "^5.0.5"

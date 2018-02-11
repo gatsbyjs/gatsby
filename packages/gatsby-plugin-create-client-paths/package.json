@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-create-client-paths",
-  "version": "1.0.4",
   "description": "Gatsby-plugin for creating paths that exist only on the client",
+  "version": "1.0.4",
   "main": "index.js",
   "scripts": {
     "build": "babel src --out-dir . --ignore __tests__",
@@ -13,6 +13,14 @@
   ],
   "author": "scott.eckenthal@gmail.com",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-create-client-paths#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git"
+  },
   "dependencies": {
     "babel-runtime": "^6.26.0"
   },

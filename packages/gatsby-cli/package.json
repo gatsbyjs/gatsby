@@ -2,7 +2,25 @@
   "name": "gatsby-cli",
   "description": "Gatsby command-line interface for creating new sites and running Gatsby commands",
   "version": "1.1.39",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "babel src --out-dir lib --ignore __tests__",
+    "watch": "babel -w src --out-dir lib --ignore __tests__",
+    "prepublish": "cross-env NODE_ENV=production npm run build"
+  },
+  "keywords": [
+    "gatsby"
+  ],
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git"
+  },
   "bin": {
     "gatsby": "lib/index.js"
   },
@@ -31,16 +49,6 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "cross-env": "^5.0.5"
-  },
-  "keywords": [
-    "gatsby"
-  ],
-  "license": "MIT",
-  "main": "lib/index.js",
-  "scripts": {
-    "build": "babel src --out-dir lib --ignore __tests__",
-    "watch": "babel -w src --out-dir lib --ignore __tests__",
-    "prepublish": "cross-env NODE_ENV=production npm run build"
   },
   "yargs": {
     "boolean-negation": false

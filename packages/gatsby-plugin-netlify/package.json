@@ -1,15 +1,8 @@
 {
   "name": "gatsby-plugin-netlify",
-  "version": "1.0.17",
   "description": "A Gatsby plugin which generates a _headers file for netlify",
+  "version": "1.0.17",
   "main": "index.js",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
-  "contributors": [
-    {
-      "name": "Nathanael Beisiegel",
-      "email": "pknb.dev@gmail.com"
-    }
-  ],
   "scripts": {
     "build": "babel src --out-dir . --ignore __tests__",
     "watch": "babel -w src --out-dir . --ignore __tests__",
@@ -21,7 +14,22 @@
     "netlify",
     "http/2-server-push"
   ],
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git"
+  },
+  "contributors": [
+    {
+      "name": "Nathanael Beisiegel",
+      "email": "pknb.dev@gmail.com"
+    }
+  ],
   "dependencies": {
     "babel-runtime": "^6.26.0",
     "fs-extra": "^4.0.2",

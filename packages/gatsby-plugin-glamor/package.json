@@ -2,7 +2,27 @@
   "name": "gatsby-plugin-glamor",
   "description": "Gatsby plugin to add support for Glamor",
   "version": "1.6.11",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel src --out-dir . --ignore __tests__",
+    "watch": "babel -w src --out-dir . --ignore __tests__",
+    "prepublish": "cross-env NODE_ENV=production npm run build"
+  },
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "glamor"
+  ],
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-glamor#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git"
+  },
   "dependencies": {
     "babel-runtime": "^6.26.0",
     "glamor": "^2.20.29"
@@ -13,17 +33,5 @@
   },
   "peerDependencies": {
     "gatsby": "^1.0.0"
-  },
-  "keywords": [
-    "gatsby",
-    "gatsby-plugin",
-    "glamor"
-  ],
-  "license": "MIT",
-  "main": "index.js",
-  "scripts": {
-    "build": "babel src --out-dir . --ignore __tests__",
-    "watch": "babel -w src --out-dir . --ignore __tests__",
-    "prepublish": "cross-env NODE_ENV=production npm run build"
   }
 }

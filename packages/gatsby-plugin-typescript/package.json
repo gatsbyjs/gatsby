@@ -1,8 +1,27 @@
 {
   "name": "gatsby-plugin-typescript",
-  "version": "1.4.15",
   "description": "Adds TypeScript support for Gatsby layouts and pages.",
+  "version": "1.4.15",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel src --out-dir .",
+    "watch": "babel -w src --out-dir .",
+    "prepublish": "cross-env NODE_ENV=production npm run build"
+  },
+  "keywords": [
+    "gatsby",
+    "typescript"
+  ],
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typescript#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git"
+  },
   "contributors": [
     "Noah Lange <noahrlange@gmail.com>"
   ],
@@ -17,16 +36,5 @@
   },
   "peerDependencies": {
     "gatsby": "^1.0.0"
-  },
-  "keywords": [
-    "gatsby",
-    "typescript"
-  ],
-  "license": "MIT",
-  "main": "index.js",
-  "scripts": {
-    "build": "babel src --out-dir .",
-    "watch": "babel -w src --out-dir .",
-    "prepublish": "cross-env NODE_ENV=production npm run build"
   }
 }

@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-glamorous",
-  "version": "1.0.6",
   "description": "Stub description for gatsby-plugin-glamorous",
+  "version": "1.0.6",
   "main": "index.js",
   "scripts": {
     "build": "babel src --out-dir . --ignore __tests__",
@@ -13,6 +13,14 @@
   ],
   "author": "Kyle Mathews &lt;mathews.kyle@gmail.com&gt;",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-glamorous#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git"
+  },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "cross-env": "^5.0.5"

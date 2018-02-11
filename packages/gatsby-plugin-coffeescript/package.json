@@ -2,7 +2,26 @@
   "name": "gatsby-plugin-coffeescript",
   "description": "Adds CoffeeScript support for Gatsby layouts and pages.",
   "version": "1.4.9",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel src --out-dir . --ignore __tests__",
+    "watch": "babel -w src --out-dir . --ignore __tests__",
+    "prepublish": "cross-env NODE_ENV=production npm run build"
+  },
+  "keywords": [
+    "gatsby",
+    "coffeescript"
+  ],
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-coffeescript#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git"
+  },
   "contributors": [
     "Noah Lange <noahrlange@gmail.com>"
   ],
@@ -18,16 +37,5 @@
   "peerDependencies": {
     "gatsby": "^1.0.0"
   },
-  "keywords": [
-    "gatsby",
-    "coffeescript"
-  ],
-  "license": "MIT",
-  "main": "index.js",
-  "readme": "README.md",
-  "scripts": {
-    "build": "babel src --out-dir . --ignore __tests__",
-    "watch": "babel -w src --out-dir . --ignore __tests__",
-    "prepublish": "cross-env NODE_ENV=production npm run build"
-  }
+  "readme": "README.md"
 }

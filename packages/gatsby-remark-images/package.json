@@ -1,8 +1,13 @@
 {
   "name": "gatsby-remark-images",
-  "version": "1.5.43",
   "description": "Processes images in markdown so they can be used in the production build.",
+  "version": "1.5.43",
   "main": "index.js",
+  "scripts": {
+    "build": "babel src --out-dir . --ignore __tests__",
+    "watch": "babel -w src --out-dir . --ignore __tests__",
+    "prepublish": "cross-env NODE_ENV=production npm run build"
+  },
   "keywords": [
     "gatsby",
     "gatsby-plugin",
@@ -13,6 +18,14 @@
   ],
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git"
+  },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "cross-env": "^5.0.5"
@@ -25,10 +38,5 @@
     "lodash": "^4.17.4",
     "slash": "^1.0.0",
     "unist-util-select": "^1.5.0"
-  },
-  "scripts": {
-    "build": "babel src --out-dir . --ignore __tests__",
-    "watch": "babel -w src --out-dir . --ignore __tests__",
-    "prepublish": "cross-env NODE_ENV=production npm run build"
   }
 }

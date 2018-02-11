@@ -1,13 +1,8 @@
 {
   "name": "gatsby-plugin-typography",
-  "version": "1.7.13",
   "description": "Gatsby plugin to setup server rendering of Typography.js' CSS",
+  "version": "1.7.13",
   "main": "index.js",
-  "dependencies": {
-    "babel-runtime": "^6.26.0",
-    "react-typography": "^0.16.1",
-    "typography": "^0.16.0"
-  },
   "scripts": {
     "build": "babel src --out-dir . --ignore __tests__",
     "watch": "babel -w src --out-dir . --ignore __tests__",
@@ -21,6 +16,19 @@
   ],
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typography#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git"
+  },
+  "dependencies": {
+    "babel-runtime": "^6.26.0",
+    "react-typography": "^0.16.1",
+    "typography": "^0.16.0"
+  },
   "devDependencies": {
     "cross-env": "^5.0.5"
   },

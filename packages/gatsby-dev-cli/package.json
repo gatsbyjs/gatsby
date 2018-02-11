@@ -1,24 +1,8 @@
 {
-  "dependencies": {
-    "babel-runtime": "^6.26.0",
-    "chokidar": "^1.7.0",
-    "configstore": "^3.1.0",
-    "fs-extra": "^4.0.1",
-    "is-absolute": "^0.2.6",
-    "lodash": "^4.17.4",
-    "yargs": "^8.0.2"
-  },
   "name": "gatsby-dev-cli",
-  "version": "1.2.10",
   "description": "CLI helpers for contributors working on Gatsby",
+  "version": "1.2.10",
   "main": "index.js",
-  "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "cross-env": "^5.0.5"
-  },
-  "bin": {
-    "gatsby-dev": "./dist/index.js"
-  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "babel src --out-dir dist",
@@ -29,5 +13,29 @@
     "gatsby"
   ],
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git"
+  },
+  "dependencies": {
+    "babel-runtime": "^6.26.0",
+    "chokidar": "^1.7.0",
+    "configstore": "^3.1.0",
+    "fs-extra": "^4.0.1",
+    "is-absolute": "^0.2.6",
+    "lodash": "^4.17.4",
+    "yargs": "^8.0.2"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "cross-env": "^5.0.5"
+  },
+  "bin": {
+    "gatsby-dev": "./dist/index.js"
+  }
 }

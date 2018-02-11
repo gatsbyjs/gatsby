@@ -1,9 +1,8 @@
 {
   "name": "gatsby-plugin-netlify-cms",
-  "version": "1.0.6",
   "description": "A Gatsby plugin which generates the Netlify CMS single page app",
+  "version": "1.0.6",
   "main": "index.js",
-  "author": "Shawn Erquhart <shawn@erquh.art>",
   "scripts": {
     "build": "babel src --out-dir . --ignore __tests__",
     "watch": "babel -w src --out-dir . --ignore __tests__",
@@ -15,7 +14,16 @@
     "netlify",
     "netlify-cms"
   ],
+  "author": "Shawn Erquhart <shawn@erquh.art>",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git"
+  },
   "dependencies": {
     "html-webpack-include-assets-plugin": "^1.0.2",
     "html-webpack-plugin": "^2.30.1",

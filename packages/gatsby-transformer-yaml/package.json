@@ -1,7 +1,7 @@
 {
   "name": "gatsby-transformer-yaml",
-  "version": "1.5.14",
   "description": "Gatsby transformer plugin for yaml",
+  "version": "1.5.14",
   "scripts": {
     "build": "babel src --out-dir . --ignore __tests__",
     "watch": "babel -w src --out-dir . --ignore __tests__",
@@ -14,6 +14,14 @@
   ],
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-yaml#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git"
+  },
   "dependencies": {
     "babel-runtime": "^6.26.0",
     "js-yaml": "3.7.0",

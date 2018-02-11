@@ -2,12 +2,38 @@
   "name": "gatsby",
   "description": "React.js Static Site Generator",
   "version": "1.9.192",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
-  "bin": {
-    "gatsby": "./dist/bin/gatsby.js"
+  "main": "index.js",
+  "scripts": {
+    "build": "rimraf dist && npm run build:src && npm run build:internal-plugins && npm run build:rawfiles",
+    "build:internal-plugins": "copyfiles -u 1 src/internal-plugins/**/package.json dist",
+    "build:rawfiles": "copyfiles -u 1 src/internal-plugins/**/raw_* dist",
+    "build:src": "babel src --out-dir dist --source-maps --ignore gatsby-cli.js,raw_*,__tests__",
+    "clean-test-bundles": "find test/ -type f -name bundle.js* -exec rm -rf {} +",
+    "prepublish": "cross-env NODE_ENV=production npm run build",
+    "test-coverage": "node_modules/.bin/nyc --reporter=lcov --reporter=text npm test",
+    "watch": "rimraf dist && mkdir dist && npm run build:internal-plugins && npm run build:rawfiles && npm run build:src -- --watch"
   },
+  "keywords": [
+    "blog",
+    "generator",
+    "jekyll",
+    "markdown",
+    "react",
+    "ssg",
+    "website"
+  ],
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gatsbyjs/gatsby.git"
+  },
+  "bin": {
+    "gatsby": "./dist/bin/gatsby.js"
   },
   "dependencies": {
     "async": "^2.1.2",
@@ -129,31 +155,5 @@
   },
   "resolutions": {
     "graphql": "^0.11.7"
-  },
-  "homepage": "https://github.com/gatsbyjs/gatsby#readme",
-  "keywords": [
-    "blog",
-    "generator",
-    "jekyll",
-    "markdown",
-    "react",
-    "ssg",
-    "website"
-  ],
-  "license": "MIT",
-  "main": "index.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/gatsbyjs/gatsby.git"
-  },
-  "scripts": {
-    "build": "rimraf dist && npm run build:src && npm run build:internal-plugins && npm run build:rawfiles",
-    "build:internal-plugins": "copyfiles -u 1 src/internal-plugins/**/package.json dist",
-    "build:rawfiles": "copyfiles -u 1 src/internal-plugins/**/raw_* dist",
-    "build:src": "babel src --out-dir dist --source-maps --ignore gatsby-cli.js,raw_*,__tests__",
-    "clean-test-bundles": "find test/ -type f -name bundle.js* -exec rm -rf {} +",
-    "prepublish": "cross-env NODE_ENV=production npm run build",
-    "test-coverage": "node_modules/.bin/nyc --reporter=lcov --reporter=text npm test",
-    "watch": "rimraf dist && mkdir dist && npm run build:internal-plugins && npm run build:rawfiles && npm run build:src -- --watch"
   }
 }

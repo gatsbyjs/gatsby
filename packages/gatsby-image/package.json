@@ -1,7 +1,7 @@
 {
   "name": "gatsby-image",
-  "version": "1.0.35",
   "description": "Lazy-loading React image component with optional support for the blur-up effect.",
+  "version": "1.0.35",
   "main": "index.js",
   "scripts": {
     "build": "babel src --out-dir . --ignore __tests__",
@@ -15,6 +15,14 @@
   ],
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git"
+  },
   "dependencies": {
     "babel-runtime": "^6.26.0",
     "prop-types": "^15.6.0"
