@@ -53,9 +53,10 @@ module.exports = async ({ spaceId, accessToken, host, syncToken, cacheDir }) => 
     console.log(
       `Accessing your Contentful space failed. Perhaps you're offline or the spaceId/accessToken is incorrect.`
     )
-    // TODO perhaps continue if there's cached data? That would let
-    // someone develop a contentful site even if not connected to the internet.
-    // For prod builds though always fail if we can't get the latest data.
+    console.log(
+      `Try running setting GATSBY_CONTENTFUL_OFFLINE=true to see if we can serve from cache.`
+    )
+
     process.exit(1)
   }
 
