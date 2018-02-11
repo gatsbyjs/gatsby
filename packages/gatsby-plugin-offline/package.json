@@ -27,6 +27,6 @@
     "sw-precache": "^5.0.0"
   },
   "peerDependencies": {
-    "gatsby": "^1.0.0"
+    "gatsby": ">2.0.0-alpha"
   }
 }

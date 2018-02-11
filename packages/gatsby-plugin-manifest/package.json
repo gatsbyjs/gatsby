@@ -27,6 +27,6 @@
     "bluebird": "^3.5.0"
   },
   "peerDependencies": {
-    "gatsby": "^2.0.0"
+    "gatsby": ">1.0.0 || >2.0.0-alpha"
   }
 }

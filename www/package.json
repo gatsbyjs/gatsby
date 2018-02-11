@@ -19,7 +19,6 @@
     "gatsby-plugin-nprogress": "canary",
     "gatsby-plugin-offline": "canary",
     "gatsby-plugin-react-helmet": "canary",
-    "gatsby-plugin-react-next": "canary",
     "gatsby-plugin-sharp": "canary",
     "gatsby-plugin-sitemap": "canary",
     "gatsby-plugin-twitter": "canary",
