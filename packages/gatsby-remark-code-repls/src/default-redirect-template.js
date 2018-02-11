@@ -1,9 +1,9 @@
 "use strict"
 
-import React, { Component } from "react"
+import React from "react"
 import PropTypes from "prop-types"
 
-class GatsbyRemarkCodeReplsRedirect extends Component {
+class GatsbyRemarkCodeReplsRedirect extends React.Component {
   componentDidMount() {
     this.form.submit()
   }
