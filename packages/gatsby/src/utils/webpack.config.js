@@ -187,19 +187,19 @@ module.exports = async (
           new WatchMissingNodeModulesPlugin(directoryPath(`node_modules`)),
 
           plugins.namedModules(),
-          new FriendlyErrorsWebpackPlugin({
-            clearConsole: false,
-            compilationSuccessInfo: {
-              messages: [
-                `You can now view your site in the browser running at http://${
-                  program.host
-                }:${program.port}`,
-                `Your graphql debugger is running at http://${program.host}:${
-                  program.port
-                }/___graphql`,
-              ],
-            },
-          }),
+          // new FriendlyErrorsWebpackPlugin({
+          // clearConsole: false,
+          // compilationSuccessInfo: {
+          // messages: [
+          // `You can now view your site in the browser running at http://${
+          // program.host
+          // }:${program.port}`,
+          // `Your graphql debugger is running at http://${program.host}:${
+          // program.port
+          // }/___graphql`,
+          // ],
+          // },
+          // }),
         ])
         break
 
@@ -327,7 +327,6 @@ module.exports = async (
       rules.images(),
       rules.audioVideo(),
     ]
-    console.log(configRules[0])
     switch (stage) {
       case `develop`:
       case `build-css`:
