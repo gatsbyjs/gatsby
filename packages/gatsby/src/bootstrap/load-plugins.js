@@ -15,7 +15,7 @@ const report = require(`gatsby-cli/lib/reporter`)
 const resolvePluginModule = (plugin, moduleName) => {
   let resolved = false
   try {
-     resolved = require(`${plugin.resolve}/${moduleName}`)
+    resolved = require(`${plugin.resolve}/${moduleName}`)
   } catch (err) {
     if (!testRequireError(moduleName, err)) {
       // ignore
@@ -43,17 +43,19 @@ const getBadExports = (plugin, pluginAPIKeys, apis) => {
   return badExports
 }
 
-const getBadExportsMessage = (badExports, apis) => {
+const getBadExportsMessage = (badExports, exportType, apis) => {
   const { stripIndent } = require(`common-tags`)
   const stringSimiliarity = require(`string-similarity`)
+  let capitalized = `${exportType[0].toUpperCase()}${exportType.slice(1)}`
+  if (capitalized === `Ssr`) capitalized = `SSR`
 
   let message = `\n`
   message += stripIndent`
-    Your plugins must export known APIs from their gatsby-node.js.
+    Your plugins must export known APIs from their gatsby-${exportType}.js.
     The following exports aren't APIs. Perhaps you made a typo or
     your plugin is outdated?
 
-    See https://www.gatsbyjs.org/docs/node-apis/ for the list of Gatsby Node APIs`
+    See https://www.gatsbyjs.org/docs/${exportType}-apis/ for the list of Gatsby ${capitalized} APIs`
 
   badExports.forEach(bady => {
     const similarities = stringSimiliarity.findBestMatch(
@@ -62,7 +64,7 @@ const getBadExportsMessage = (badExports, apis) => {
     )
     message += `\n — `
     if (bady.pluginName == `default-site-plugin`) {
-      message += `Your site's gatsby-node.js is exporting a variable named "${
+      message += `Your site's gatsby-${exportType}.js is exporting a variable named "${
         bady.exportName
       }" which isn't an API.`
     } else {
@@ -273,7 +275,14 @@ module.exports = async (config = {}) => {
     acc[value] = []
     return acc
   }, {})
-  let badExports = []
+
+
+  const badExports = {
+    node: [],
+    browser: [],
+    ssr: [],
+  }
+
   flattenedPlugins.forEach(plugin => {
     plugin.nodeAPIs = []
     plugin.browserAPIs = []
@@ -283,35 +292,42 @@ module.exports = async (config = {}) => {
     const gatsbyBrowser = resolvePluginModule(plugin, `gatsby-browser`)
     const gatsbySSR = resolvePluginModule(plugin, `gatsby-ssr`)
 
-    // Discover which nodeAPIs this plugin implements and store
-    // an array against the plugin node itself *and* in a node
-    // API to plugins map for faster lookups later.
+    // Discover which APIs this plugin implements and store an array against
+    // the plugin node itself *and* in an API to plugins map for faster lookups
+    // later.
     if (gatsbyNode) {
       const gatsbyNodeKeys = _.keys(gatsbyNode)
       plugin.nodeAPIs = _.intersection(gatsbyNodeKeys, apis)
       plugin.nodeAPIs.map(nodeAPI => apiToPlugins[nodeAPI].push(plugin.name))
-      badExports.concat(getBadExports(plugin, gatsbyNodeKeys, apis))
+      badExports.node = getBadExports(plugin, gatsbyNodeKeys, apis) // Collate any bad exports
     }
 
     if (gatsbyBrowser) {
       const gatsbyBrowserKeys = _.keys(gatsbyBrowser)
       plugin.browserAPIs = _.intersection(gatsbyBrowserKeys, apis)
       plugin.browserAPIs.map(browserAPI => apiToPlugins[browserAPI].push(plugin.name))
-      badExports.concat(getBadExports(plugin, gatsbyBrowserKeys, apis))
+      badExports.browser = getBadExports(plugin, gatsbyBrowserKeys, apis) // Collate any bad exports
     }
 
     if (gatsbySSR) {
       const gatsbySSRKeys = _.keys(gatsbySSR)
       plugin.ssrAPIs = _.intersection(gatsbySSRKeys, apis)
       plugin.ssrAPIs.map(ssrAPI => apiToPlugins[ssrAPI].push(plugin.name))
-      badExports.concat(getBadExports(plugin, gatsbySSRKeys, apis))
+      badExports.ssr = getBadExports(plugin, gatsbySSRKeys, apis) // Collate any bad exports
     }
   })
 
-  if (badExports.length > 0) {
-    console.log(getBadExportsMessage(badExports, apis))
-    process.exit()
-  }
+  // Output error messages for all bad exports
+  let bad = false
+  Object.entries(badExports).forEach(bad => {
+    const [exportType, entries] = bad
+    if (entries.length > 0) {
+      bad = true
+      console.log(getBadExportsMessage(entries, exportType, apis))
+    }
+  })
+
+  if (bad) process.exit()
 
   store.dispatch({
     type: `SET_SITE_PLUGINS`,
