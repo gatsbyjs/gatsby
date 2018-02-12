@@ -1,3 +1,5 @@
+import { withPrefix } from "gatsby-link"
+
 module.exports = function(root, cb) {
   root.addEventListener(`click`, function(ev) {
     if (
@@ -55,6 +57,8 @@ module.exports = function(root, cb) {
     a2.href = window.location.href
 
     if (a1.host !== a2.host) return true
+
+    if (!`${a1.host}${a1.pathname}`.startsWith(`${a2.host}${withPrefix(`/`)}`)) return true
 
     ev.preventDefault()
 
