@@ -2,12 +2,8 @@ const createKey = require(`../create-key`)
 
 describe(`createKey`, () => {
   it(`leaves valid strings as is`, () => {
-    ;[
-      [`01234`, `01234`],
-      [`description`, `description`],
-      [`_hello`, `_hello`],
-    ].forEach(([input, output]) => {
-      expect(createKey(input)).toBe(output)
+    ;[`01234`, `validstring`, `_hello`, `_`].forEach(input => {
+      expect(createKey(input)).toBe(input)
     })
   })
 
