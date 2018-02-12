@@ -108,16 +108,16 @@ remote server.
 
 First open the remote devtools.
 
-![how to open the redux remote devtools extension](./images/open-remote-dev-tools.png)
+![how to open the redux remote devtools extension](./docs/docs/images/open-remote-dev-tools.png)
 
 Then click settings along the bottom menu and set the host and port.
 
-![how to set the host/port for the remote devtools extension to connect to Gatsby](./images/remote-dev-settings.png)
+![how to set the host/port for the remote devtools extension to connect to Gatsby](./docs/docs/images/remote-dev-settings.png)
 
 After this, the devtools extension _should_ connect to the remote server and
 you'll see actions start showing up.
 
-![gatsby redux remote devtools](./images/running-redux-devtools.png)
+![gatsby redux remote devtools](./docs/docs/images/running-redux-devtools.png)
 
 **Warning!! Lots of buginess**. While having this available is extremely
 helpful, this setup is very buggy and fragile. There is a memory leak in the
