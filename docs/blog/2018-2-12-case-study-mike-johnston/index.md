@@ -1,5 +1,5 @@
 ---
-title: Case Study: Mike Johnston for Colorado
+title: "Case Study: Mike Johnston for Colorado"
 date: 2018-02-12
 author: Brandon Konkle
 image: mike-johnston-homepage.png
