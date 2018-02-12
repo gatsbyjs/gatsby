@@ -319,7 +319,7 @@ module.exports = async (config = {}) => {
 
   // Output error messages for all bad exports
   let bad = false
-  Object.entries(badExports).forEach(bad => {
+  _.toPairs(badExports).forEach(bad => {
     const [exportType, entries] = bad
     if (entries.length > 0) {
       bad = true
