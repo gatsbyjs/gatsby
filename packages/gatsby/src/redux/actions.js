@@ -122,10 +122,24 @@ actions.createPage = (page: PageInput, plugin?: Plugin, traceId?: string) => {
     noPageOrComponent = true
   }
 
+  // Don't check if the component exists during tests as we use a lot of fake
+  // component paths.
+  if (process.env.NODE_ENV !== `test`) {
+    if (!fs.existsSync(page.component)) {
+      const message = `${name} created a page with a component that doesn't exist`
+      console.log(``)
+      console.log(chalk.bold.red(message))
+      console.log(``)
+      console.log(page)
+      noPageOrComponent = true
+    }
+  }
+
   if (!page.component || !path.isAbsolute(page.component)) {
     const message = `${name} must set the absolute path to the page component when create creating a page`
     // Don't log out when testing
     if (process.env.NODE_ENV !== `test`) {
+      console.log(``)
       console.log(chalk.bold.red(message))
       console.log(``)
       console.log(page)
@@ -140,6 +154,7 @@ actions.createPage = (page: PageInput, plugin?: Plugin, traceId?: string) => {
     console.log(
       `See the documentation for createPage https://www.gatsbyjs.org/docs/bound-action-creators/#createPage`
     )
+    console.log(``)
     process.exit(1)
   }
 
