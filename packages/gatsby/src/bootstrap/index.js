@@ -16,7 +16,7 @@ const { store, emitter } = require(`../redux`)
 const loadPlugins = require(`./load-plugins`)
 const { initCache } = require(`../utils/cache`)
 const report = require(`gatsby-cli/lib/reporter`)
-const getConfigFile = require('./get-config-file');
+const getConfigFile = require(`./get-config-file`)
 
 // Show stack trace on unhandled promises.
 process.on(`unhandledRejection`, (reason, p) => {
@@ -73,7 +73,9 @@ module.exports = async (args: BootstrapArgs) => {
   // Try opening the site's gatsby-config.js file.
   activity = report.activityTimer(`open and validate gatsby-config.js`)
   activity.start()
-  const config = await preferDefault(getConfigFile(program.directory, 'gatsby-config.js'));
+  const config = await preferDefault(
+    getConfigFile(program.directory, `gatsby-config.js`)
+  )
 
   store.dispatch({
     type: `SET_SITE_CONFIG`,
