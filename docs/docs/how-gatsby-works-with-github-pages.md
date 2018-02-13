@@ -8,8 +8,6 @@ The easiest way to push a gatsby app to github pages is using a package called `
 
 ## GitHub repository page
 
-If you want to use a [custom domain](https://help.github.com/articles/using-a-custom-domain-with-github-pages/), don't add the pathPrefix as it will cause navigation issues. The site will be at the root of the domain, rather than in a subdirectory like `http://username.github.io/reponame/`, and you will be redirected to a 404.
-
 Add a `deploy` script to `package.json`
 
 ```
@@ -46,3 +44,7 @@ In this case we dont need to specify `pathPrefix`, but our website needs to be p
 ```
 
 After running `yarn run deploy` you should see your website at `http://username.github.io`
+
+## Custom domains
+
+If you use a [custom domain](https://help.github.com/articles/using-a-custom-domain-with-github-pages/), don't add a `pathPrefix` as it will break navigation on your site. Path prefixing is only necessary when the site is *not* at the root of the domain like with repository sites.
