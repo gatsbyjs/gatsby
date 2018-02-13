@@ -34,12 +34,12 @@ const {
   writeRedirects,
 } = require(`../internal-plugins/query-runner/redirects-writer`)
 
-const preferDefault = m => (m && m.default) || m
-
 // Override console.log to add the source file + line number.
 // Useful for debugging if you lose a console.log somewhere.
 // Otherwise leave commented out.
 // require(`./log-line-function`)
+
+const preferDefault = m => (m && m.default) || m
 
 type BootstrapArgs = {
   directory: string,
