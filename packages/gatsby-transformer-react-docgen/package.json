@@ -1,21 +1,11 @@
 {
   "name": "gatsby-transformer-react-docgen",
-  "version": "1.0.12",
   "description": "Expose React component metadata and prop information as GraphQL types",
-  "main": "index.js",
-  "scripts": {
-    "build": "babel src --out-dir . --ignore __tests__",
-    "watch": "babel -w src --out-dir . --ignore __tests__",
-    "prepublish": "cross-env NODE_ENV=production npm run build"
-  },
-  "keywords": [
-    "gatsby",
-    "gatsby-plugin",
-    "react",
-    "react-docgen"
-  ],
+  "version": "1.0.12",
   "author": "Jason Quense <monastic.panic@gmail.com>",
-  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
   "dependencies": {
     "babel-runtime": "^6.26.0",
     "babel-types": "^6.24.1",
@@ -27,5 +17,23 @@
     "babel-cli": "^6.26.0",
     "cross-env": "^5.0.5",
     "lodash": "^4.17.4"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-react-docgen#readme",
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "react",
+    "react-docgen"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git"
+  },
+  "scripts": {
+    "build": "babel src --out-dir . --ignore __tests__",
+    "prepublish": "cross-env NODE_ENV=production npm run build",
+    "watch": "babel -w src --out-dir . --ignore __tests__"
   }
 }

@@ -1,4 +1,14 @@
 {
+  "name": "gatsby-dev-cli",
+  "description": "CLI helpers for contributors working on Gatsby",
+  "version": "1.2.10",
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "bin": {
+    "gatsby-dev": "./dist/index.js"
+  },
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
   "dependencies": {
     "babel-runtime": "^6.26.0",
     "chokidar": "^1.7.0",
@@ -8,26 +18,24 @@
     "lodash": "^4.17.4",
     "yargs": "^8.0.2"
   },
-  "name": "gatsby-dev-cli",
-  "version": "1.2.10",
-  "description": "CLI helpers for contributors working on Gatsby",
-  "main": "index.js",
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "cross-env": "^5.0.5"
   },
-  "bin": {
-    "gatsby-dev": "./dist/index.js"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel src --out-dir dist",
-    "watch": "babel -w src --out-dir dist",
-    "prepublish": "cross-env NODE_ENV=production npm run build"
-  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli#readme",
   "keywords": [
     "gatsby"
   ],
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git"
+  },
+  "scripts": {
+    "build": "babel src --out-dir dist",
+    "prepublish": "cross-env NODE_ENV=production npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "babel -w src --out-dir dist"
+  }
 }

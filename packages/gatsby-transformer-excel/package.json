@@ -1,20 +1,11 @@
 {
   "name": "gatsby-transformer-excel",
-  "version": "1.0.3",
   "description": "Gatsby transformer plugin for Excel spreadsheets",
-  "main": "index.js",
-  "scripts": {
-    "build": "babel src --out-dir . --ignore __tests__",
-    "watch": "babel -w src --out-dir . --ignore __tests__",
-    "prepublish": "cross-env NODE_ENV=production npm run build"
-  },
-  "keywords": [
-    "gatsby",
-    "excel",
-    "gatsby-plugin"
-  ],
+  "version": "1.0.3",
   "author": "SheetJS <dev@sheetjs.com>",
-  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
   "dependencies": {
     "babel-runtime": "^6.26.0",
     "xlsx": "^0.11.5"
@@ -22,5 +13,22 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "cross-env": "^5.0.5"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-excel#readme",
+  "keywords": [
+    "excel",
+    "gatsby",
+    "gatsby-plugin"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git"
+  },
+  "scripts": {
+    "build": "babel src --out-dir . --ignore __tests__",
+    "prepublish": "cross-env NODE_ENV=production npm run build",
+    "watch": "babel -w src --out-dir . --ignore __tests__"
   }
 }
