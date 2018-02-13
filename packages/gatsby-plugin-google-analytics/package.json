@@ -3,10 +3,17 @@
   "description": "Gatsby plugin to add google analytics onto a site",
   "version": "1.0.18",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "dependencies": {
+    "babel-runtime": "^6.26.0"
+  },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "cross-env": "^5.0.5"
   },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics#readme",
   "keywords": [
     "gatsby",
     "gatsby-plugin",
@@ -14,15 +21,16 @@
   ],
   "license": "MIT",
   "main": "index.js",
-  "scripts": {
-    "build": "babel src --out-dir . --ignore __tests__",
-    "watch": "babel -w src --out-dir . --ignore __tests__",
-    "prepublish": "cross-env NODE_ENV=production npm run build"
-  },
-  "dependencies": {
-    "babel-runtime": "^6.26.0"
-  },
   "peerDependencies": {
     "gatsby": "^1.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git"
+  },
+  "scripts": {
+    "build": "babel src --out-dir . --ignore __tests__",
+    "prepublish": "cross-env NODE_ENV=production npm run build",
+    "watch": "babel -w src --out-dir . --ignore __tests__"
   }
 }

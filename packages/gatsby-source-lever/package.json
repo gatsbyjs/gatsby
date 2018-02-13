@@ -1,5 +1,11 @@
 {
+  "name": "gatsby-source-lever",
+  "description": "Gatsby source plugin for building websites using the Lever.co Recruitment Software as a data source.",
+  "version": "1.0.7",
   "author": "Sebastien Fichot <fichot.sebastien@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
   "bundleDependencies": false,
   "dependencies": {
     "axios": "^0.16.1",
@@ -11,21 +17,23 @@
     "lodash": "^4.17.4"
   },
   "deprecated": false,
-  "description": "Gatsby source plugin for building websites using the Lever.co Recruitment Software as a data source.",
+  "devDependencies": {
+    "cross-env": "^5.0.5"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-lever#readme",
   "keywords": [
     "gatsby",
     "gatsby-plugin",
     "gatsby-source-plugin"
   ],
   "license": "MIT",
-  "name": "gatsby-source-lever",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git"
+  },
   "scripts": {
     "build": "babel src --out-dir . --ignore __tests__",
-    "watch": "babel -w src --out-dir . --ignore __tests__",
-    "prepublish": "cross-env NODE_ENV=production npm run build"
-  },
-  "version": "1.0.7",
-  "devDependencies": {
-    "cross-env": "^5.0.5"
+    "prepublish": "cross-env NODE_ENV=production npm run build",
+    "watch": "babel -w src --out-dir . --ignore __tests__"
   }
 }

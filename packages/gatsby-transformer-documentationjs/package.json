@@ -1,21 +1,11 @@
 {
   "name": "gatsby-transformer-documentationjs",
-  "version": "1.4.8",
   "description": "Gatsby transformer plugin which uses Documentation.js to extract JavaScript documentation",
-  "main": "index.js",
-  "scripts": {
-    "build": "babel src --out-dir . --ignore __tests__",
-    "watch": "babel -w src --out-dir . --ignore __tests__",
-    "prepublish": "cross-env NODE_ENV=production npm run build"
-  },
-  "keywords": [
-    "gatsby",
-    "gatsby-plugin",
-    "gatsby-transformer",
-    "documentation.js"
-  ],
+  "version": "1.4.8",
   "author": "Kyle Mathews",
-  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
   "dependencies": {
     "babel-runtime": "^6.26.0",
     "documentation": "^4.0.0-rc.1"
@@ -23,5 +13,23 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "cross-env": "^5.0.5"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-documentationjs#readme",
+  "keywords": [
+    "documentation.js",
+    "gatsby",
+    "gatsby-plugin",
+    "gatsby-transformer"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git"
+  },
+  "scripts": {
+    "build": "babel src --out-dir . --ignore __tests__",
+    "prepublish": "cross-env NODE_ENV=production npm run build",
+    "watch": "babel -w src --out-dir . --ignore __tests__"
   }
 }

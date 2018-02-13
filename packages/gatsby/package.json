@@ -127,9 +127,6 @@
   "engines": {
     "node": ">4.0.0"
   },
-  "resolutions": {
-    "graphql": "^0.11.7"
-  },
   "homepage": "https://github.com/gatsbyjs/gatsby#readme",
   "keywords": [
     "blog",
@@ -145,6 +142,9 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/gatsbyjs/gatsby.git"
+  },
+  "resolutions": {
+    "graphql": "^0.11.7"
   },
   "scripts": {
     "build": "rimraf dist && npm run build:src && npm run build:internal-plugins && npm run build:rawfiles",
