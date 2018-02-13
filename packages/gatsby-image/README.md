@@ -7,7 +7,7 @@ Gatsby's GraphQL queries. It combines
 [Gatsby's native image processing](https://image-processing.gatsbyjs.org/)
 capabilities with advanced image loading techniques to easily and completely
 optimize image loading for your sites. `gatsby-image` uses
-[gatsby-plugin-sharp](https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/) 
+[gatsby-plugin-sharp](https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/)
 to power its image transformations.
 
 _Warning: gatsby-image is **not** a drop-in replacement for `<img/>`. It's
@@ -250,15 +250,16 @@ prop. e.g. `<Img sizes={sizes} />`
 | `fadeIn`                | `bool`           | Defaults to fading in the image on load                                                                                     |
 | `title`                 | `string`         | Passed to the `img` element                                                                                                 |
 | `alt`                   | `string`         | Passed to the `img` element                                                                                                 |
-| `className`             | `string\|object` | Passed to the wrapper div. Object is needed to support Glamor's css prop                                                    |
-| `outerWrapperClassName` | `string\|object` | Passed to the outer wrapper div. Object is needed to support Glamor's css prop                                              |
-| `style`                 | `object`         | Spread into the default styles in the wrapper div                                                                           |
+| `className`             | `string\|object` | Passed to the wrapper element. Object is needed to support Glamor's css prop                                                    |
+| `outerWrapperClassName` | `string\|object` | Passed to the outer wrapper element. Object is needed to support Glamor's css prop                                              |
+| `style`                 | `object`         | Spread into the default styles in the wrapper element                                                                           |
 | `position`              | `string`         | Defaults to `relative`. Pass in `absolute` to make the component `absolute` positioned                                      |
 | `backgroundColor`       | `string\|bool`   | Set a colored background placeholder. If true, uses "lightgray" for the color. You can also pass in any valid color string. |
 | `onLoad`                | `func`           | A callback that is called when the full-size image has loaded.                                                              |
+| `Tag`                   | `string`         | Which HTML tag to use for wrapping elements. Defaults to `div`.                                                             |
 
 ## Image processing arguments
-[gatsby-plugin-sharp](/packages/gatsby-plugin-sharp) supports many additional arguments for transforming your images like 
+[gatsby-plugin-sharp](/packages/gatsby-plugin-sharp) supports many additional arguments for transforming your images like
 `quality`,`sizeByPixelDensity`,`pngCompressionLevel`,`cropFocus`,`greyscale` and many more. See its documentation for more.
 
 ## Some other stuff to be aware of
