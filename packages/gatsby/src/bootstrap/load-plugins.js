@@ -7,6 +7,8 @@ const glob = require(`glob`)
 
 const { store } = require(`../redux`)
 const nodeAPIs = require(`../utils/api-node-docs`)
+const browserAPIs = require(`../utils/api-browser-docs`)
+const ssrAPIs = require(`../../cache-dir/api-ssr-docs`)
 const testRequireError = require(`../utils/test-require-error`)
 const report = require(`gatsby-cli/lib/reporter`)
 
@@ -270,12 +272,17 @@ module.exports = async (config = {}) => {
   // APIs that a plugin supports are saved along with the plugin in the store for
   // easier filtering later. If there are bad exports (either typos, outdated, or
   // plain incorrect), then we output a readable error & quit.
-  const apis = _.keys(nodeAPIs)
-  const apiToPlugins = apis.reduce((acc, value) => {
+  const apis = {}
+  apis.node = _.keys(nodeAPIs)
+  apis.browser = _.keys(browserAPIs)
+  apis.ssr = _.keys(ssrAPIs)
+
+  const allAPIs = [...apis.node, ...apis.browser, ...apis.ssr]
+
+  const apiToPlugins = allAPIs.reduce((acc, value) => {
     acc[value] = []
     return acc
   }, {})
-
 
   const badExports = {
     node: [],
@@ -297,23 +304,23 @@ module.exports = async (config = {}) => {
     // later.
     if (gatsbyNode) {
       const gatsbyNodeKeys = _.keys(gatsbyNode)
-      plugin.nodeAPIs = _.intersection(gatsbyNodeKeys, apis)
+      plugin.nodeAPIs = _.intersection(gatsbyNodeKeys, apis.node)
       plugin.nodeAPIs.map(nodeAPI => apiToPlugins[nodeAPI].push(plugin.name))
-      badExports.node = getBadExports(plugin, gatsbyNodeKeys, apis) // Collate any bad exports
+      badExports.node = getBadExports(plugin, gatsbyNodeKeys, apis.node) // Collate any bad exports
     }
 
     if (gatsbyBrowser) {
       const gatsbyBrowserKeys = _.keys(gatsbyBrowser)
-      plugin.browserAPIs = _.intersection(gatsbyBrowserKeys, apis)
+      plugin.browserAPIs = _.intersection(gatsbyBrowserKeys, apis.browser)
       plugin.browserAPIs.map(browserAPI => apiToPlugins[browserAPI].push(plugin.name))
-      badExports.browser = getBadExports(plugin, gatsbyBrowserKeys, apis) // Collate any bad exports
+      badExports.browser = getBadExports(plugin, gatsbyBrowserKeys, apis.browser) // Collate any bad exports
     }
 
     if (gatsbySSR) {
       const gatsbySSRKeys = _.keys(gatsbySSR)
-      plugin.ssrAPIs = _.intersection(gatsbySSRKeys, apis)
+      plugin.ssrAPIs = _.intersection(gatsbySSRKeys, apis.ssr)
       plugin.ssrAPIs.map(ssrAPI => apiToPlugins[ssrAPI].push(plugin.name))
-      badExports.ssr = getBadExports(plugin, gatsbySSRKeys, apis) // Collate any bad exports
+      badExports.ssr = getBadExports(plugin, gatsbySSRKeys, apis.ssr) // Collate any bad exports
     }
   })
 
@@ -323,7 +330,7 @@ module.exports = async (config = {}) => {
     const [exportType, entries] = bad
     if (entries.length > 0) {
       bad = true
-      console.log(getBadExportsMessage(entries, exportType, apis))
+      console.log(getBadExportsMessage(entries, exportType, apis[exportType]))
     }
   })
 
