@@ -8,7 +8,7 @@ The easiest way to push a gatsby app to github pages is using a package called `
 
 ## GitHub repository page
 
-If you want to use a [custom domain](https://help.github.com/articles/using-a-custom-domain-with-github-pages/), don't add the pathPrefix as it will cause pathing issues. The site will be at the root of the domain, rather than in a subdirectory like `http://username.github.io/reponame/`, and you will be redirected to a 404.
+If you want to use a [custom domain](https://help.github.com/articles/using-a-custom-domain-with-github-pages/), don't add the pathPrefix as it will cause navigation issues. The site will be at the root of the domain, rather than in a subdirectory like `http://username.github.io/reponame/`, and you will be redirected to a 404.
 
 Add a `deploy` script to `package.json`
 
