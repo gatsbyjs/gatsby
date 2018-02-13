@@ -3,6 +3,7 @@ const levenshtein = require('fast-levenshtein');
 const fs = require('fs-extra');
 const testRequireError = require(`../utils/test-require-error`);
 const report = require(`gatsby-cli/lib/reporter`);
+const chalk = require('chalk');
 
 function isNearMatch(fileName: string, configName: string, distance: number): boolean {
   return levenshtein.get(fileName, configName) <= distance;
@@ -21,12 +22,13 @@ module.exports = async function getConfigFile(rootDir: string, configName: strin
             return isNearMatch(fileName, configName, distance);
           });
       });
-    if (testRequireError(configPath, err)) {
-      if (nearMatch) {
-        report.info(`The file ${nearMatch} looks like ${configName}, please rename.`);
-      }
-      report.error(`Could not load ${configName}`, err);
-      process.exit(1);
+    if (testRequireError(configPath, err) && nearMatch) {
+      console.log('');
+      report.info(`The file ${chalk.bold(nearMatch)} looks like ${chalk.bold(configName)}, please rename.`);
+      console.log('');
     }
+
+    report.error(`Could not load ${configName}`, err);
+    process.exit(1);
   }
 };
