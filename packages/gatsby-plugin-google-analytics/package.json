@@ -1,12 +1,17 @@
 {
   "name": "gatsby-plugin-google-analytics",
   "description": "Gatsby plugin to add google analytics onto a site",
-  "version": "1.0.17",
   "main": "index.js",
+  "version": "1.0.18",
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "scripts": {
     "build": "babel src --out-dir . --ignore __tests__",
     "watch": "babel -w src --out-dir . --ignore __tests__",
     "prepublish": "cross-env NODE_ENV=production npm run build"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "cross-env": "^5.0.5"
   },
   "keywords": [
     "gatsby",
