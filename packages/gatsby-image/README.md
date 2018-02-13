@@ -6,7 +6,9 @@ Speedy, optimized images without the work.
 Gatsby's GraphQL queries. It combines
 [Gatsby's native image processing](https://image-processing.gatsbyjs.org/)
 capabilities with advanced image loading techniques to easily and completely
-optimize image loading for your sites.
+optimize image loading for your sites. `gatsby-image` uses
+[gatsby-plugin-sharp](https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/) 
+to power its image transformations.
 
 _Warning: gatsby-image is **not** a drop-in replacement for `<img/>`. It's
 optimized for fixed width/height images and images that stretch the full-width
@@ -254,6 +256,10 @@ prop. e.g. `<Img sizes={sizes} />`
 | `position`              | `string`         | Defaults to `relative`. Pass in `absolute` to make the component `absolute` positioned                                      |
 | `backgroundColor`       | `string\|bool`   | Set a colored background placeholder. If true, uses "lightgray" for the color. You can also pass in any valid color string. |
 | `onLoad`                | `func`           | A callback that is called when the full-size image has loaded.                                                              |
+
+## Image processing arguments
+[gatsby-plugin-sharp](/packages/gatsby-plugin-sharp) supports many additional arguments for transforming your images like 
+`quality`,`sizeByPixelDensity`,`pngCompressionLevel`,`cropFocus`,`greyscale` and many more. See its documentation for more.
 
 ## Some other stuff to be aware of
 
