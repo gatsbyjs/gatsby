@@ -48,6 +48,7 @@ const trackInlineObjectsInRootNode = node => {
     }
     addRootNodeToInlineObject(v, node.id)
   })
+  return node
 }
 exports.trackInlineObjectsInRootNode = trackInlineObjectsInRootNode
 
