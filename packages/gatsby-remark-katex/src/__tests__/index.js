@@ -23,4 +23,15 @@ describe(`remark katex plugin`, () => {
     plugin({ markdownAST })
     expect(markdownAST).toMatchSnapshot()
   })
+
+  it(`renders math node properly`, () => {
+    const equation = `$$\na^2 + b^2 = c^2\n$$`
+    let remark = new Remark()
+    for (let parserPlugins of plugin.setParserPlugins()) {
+      remark = remark.use(parserPlugins)
+    }
+    const markdownAST = remark.parse(equation)
+    plugin({ markdownAST })
+    expect(markdownAST).toMatchSnapshot()
+  })
 })
