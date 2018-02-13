@@ -9,11 +9,6 @@ function isNearMatch(fileName: string, configName: string, distance: number): bo
   return levenshtein.get(fileName, configName) <= distance;
 }
 
-function failAndExit(configName, err) {
-  report.error(`Could not load ${configName}`, err);
-  process.exit(1);
-}
-
 module.exports = async function getConfigFile(rootDir: string, configName: string, distance: number = 3) {
   const configPath = `${rootDir}/${configName}`;
   try {
@@ -28,12 +23,13 @@ module.exports = async function getConfigFile(rootDir: string, configName: strin
           });
       });
     if (!testRequireError(configPath, err)) {
-      failAndExit(configName, err);
+      report.error(`Could not load ${configName}`, err);
+      process.exit(1);
     } else if (nearMatch) {
       console.log('');
-      report.info(`It looks like you were trying to add the config file? Please rename "${chalk.bold(nearMatch)}" to "${chalk.bold(configName)}"`);
+      report.error(`It looks like you were trying to add the config file? Please rename "${chalk.bold(nearMatch)}" to "${chalk.bold(configName)}"`);
       console.log('');
-      failAndExit(configName, err);
+      process.exit(1);
     }
   }
 };
