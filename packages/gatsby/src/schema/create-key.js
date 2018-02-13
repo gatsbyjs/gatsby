@@ -18,7 +18,7 @@ module.exports = (key: string): string => {
 
   // key is invalid; normalize with a leading underscore and dasherize rest
   if (replaced.match(/^__/)) {
-    return replaced.replace(/_/g, (char, index) => (index === 0 ? `_` : `-`))
+    return replaced.replace(/_/g, (char, index) => (index === 0 ? `_` : `x`))
   }
 
   return replaced
