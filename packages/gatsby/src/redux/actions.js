@@ -122,18 +122,17 @@ actions.createPage = (page: PageInput, plugin?: Plugin, traceId?: string) => {
     noPageOrComponent = true
   }
 
-  if (!fs.existsSync(page.component)) {
-    const message = `${name} created a page with a component that doesn't exist`
-    // Don't log out when testing
-    if (process.env.NODE_ENV !== `test`) {
+  // Don't check if the component exists during tests as we use a lot of fake
+  // component paths.
+  if (process.env.NODE_ENV !== `test`) {
+    if (!fs.existsSync(page.component)) {
+      const message = `${name} created a page with a component that doesn't exist`
       console.log(``)
       console.log(chalk.bold.red(message))
       console.log(``)
       console.log(page)
-    } else {
-      return message
+      noPageOrComponent = true
     }
-    noPageOrComponent = true
   }
 
   if (!page.component || !path.isAbsolute(page.component)) {
