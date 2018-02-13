@@ -67,7 +67,7 @@ Object {
 }
 `;
 
-exports[`remark katex plugin renders math node properly 1`] = `
+exports[`remark katex plugin renders double $ inlineMath node properly 1`] = `
 Object {
   "children": Array [
     Object {
@@ -82,7 +82,7 @@ Object {
             ],
             "hName": "span",
             "hProperties": Object {
-              "className": "inlineMath inlineMathDouble",
+              "className": "inlineMath",
             },
           },
           "position": Position {

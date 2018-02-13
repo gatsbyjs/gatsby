@@ -13,7 +13,7 @@ describe(`remark katex plugin`, () => {
     expect(markdownAST).toMatchSnapshot()
   })
 
-  it(`renders math node properly`, () => {
+  it(`renders double $ inlineMath node properly`, () => {
     const equation = `$$a^2 + b^2 = c^2$$`
     let remark = new Remark()
     for (let parserPlugins of plugin.setParserPlugins()) {
