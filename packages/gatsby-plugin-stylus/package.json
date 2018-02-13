@@ -2,26 +2,9 @@
   "name": "gatsby-plugin-stylus",
   "description": "Gatsby support for Stylus",
   "version": "1.1.14",
-  "main": "./gatsby-node.js",
-  "scripts": {
-    "build": "babel src --out-dir . --ignore __tests__",
-    "watch": "babel -w src --out-dir . --ignore __tests__",
-    "prepublish": "cross-env NODE_ENV=production npm run build"
-  },
-  "keywords": [
-    "gatsby",
-    "gatsby-plugin",
-    "stylus"
-  ],
   "author": "Ian Sinnott <ian@iansinnott.com>",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
-  },
-  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-stylus#readme",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby.git"
   },
   "dependencies": {
     "babel-runtime": "^6.26.0",
@@ -34,8 +17,25 @@
     "babel-cli": "^6.26.0",
     "cross-env": "^5.0.5"
   },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-stylus#readme",
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "stylus"
+  ],
+  "license": "MIT",
+  "main": "./gatsby-node.js",
   "peerDependencies": {
     "gatsby": "^1.0.0"
   },
-  "readme": "README.md"
+  "readme": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git"
+  },
+  "scripts": {
+    "build": "babel src --out-dir . --ignore __tests__",
+    "prepublish": "cross-env NODE_ENV=production npm run build",
+    "watch": "babel -w src --out-dir . --ignore __tests__"
+  }
 }

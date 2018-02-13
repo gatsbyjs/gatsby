@@ -2,25 +2,9 @@
   "name": "gatsby-plugin-less",
   "description": "Adds the ability to load and parse less-files to include in project your",
   "version": "1.1.4",
-  "main": "index.js",
-  "scripts": {
-    "build": "babel src --out-dir . --ignore __tests__,theme-test.js",
-    "prepublish": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir . --ignore __tests__,theme-test.js"
-  },
-  "keywords": [
-    "gatsby",
-    "less"
-  ],
   "author": "Ming Aldrich-Gan <mingaldrichgan@gmail.com>",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
-  },
-  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-less#readme",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby.git"
   },
   "contributors": [
     "Ole Martin Ruud <barskern@outlook.com> (barskern.github.io)"
@@ -37,7 +21,23 @@
     "babel-cli": "^6.26.0",
     "cross-env": "^5.0.5"
   },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-less#readme",
+  "keywords": [
+    "gatsby",
+    "less"
+  ],
+  "license": "MIT",
+  "main": "index.js",
   "peerDependencies": {
     "gatsby": "^1.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git"
+  },
+  "scripts": {
+    "build": "babel src --out-dir . --ignore __tests__,theme-test.js",
+    "prepublish": "cross-env NODE_ENV=production npm run build",
+    "watch": "babel -w src --out-dir . --ignore __tests__,theme-test.js"
   }
 }
