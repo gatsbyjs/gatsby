@@ -122,10 +122,18 @@ exports.sourceNodes = ({ boundActionCreators, store }) => {
     `gatsby-config.js`
   )
   chokidar.watch(pathToGatsbyConfig).on(`change`, () => {
-    // Delete require cache so we can reload the module.
-    delete require.cache[require.resolve(pathToGatsbyConfig)]
-    const config = require(pathToGatsbyConfig)
-    createGatsbyConfigNode(config)
+    const oldCache = require.cache[require.resolve(pathToGatsbyConfig)]
+    try {
+      // Delete require cache so we can reload the module.
+      delete require.cache[require.resolve(pathToGatsbyConfig)]
+      const config = require(pathToGatsbyConfig)
+      createGatsbyConfigNode(config)
+    } catch (e) {
+      // Restore the old cache since requiring the new gatsby-config.js failed.
+      if (oldCache !== undefined) {
+        require.cache[require.resolve(pathToGatsbyConfig)] = oldCache
+      }
+    }
   })
 }
 
