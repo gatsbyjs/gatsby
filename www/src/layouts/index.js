@@ -33,18 +33,17 @@ class DefaultLayout extends React.Component {
       this.props.location.pathname.slice(0, 10) === `/tutorial/` ||
       this.props.location.pathname.slice(0, 9) === `/features` ||
       this.props.location.pathname.slice(0, 8) === `/plugins`
-      this.props.location.pathname.slice(0, 9) === `/features`
+    this.props.location.pathname.slice(0, 9) === `/features`
 
-    const leftPadding = (rhythmSize) => {
-      if (this.props.location.pathname.slice(0, 9) === `/packages`){
-        return rhythm(18);
-      } else if (hasSidebar){
+    const leftPadding = rhythmSize => {
+      if (this.props.location.pathname.slice(0, 9) === `/packages`) {
+        return rhythm(18)
+      } else if (hasSidebar) {
         return rhythm(rhythmSize)
       } else {
-        return 0;
+        return 0
       }
     }
-
 
     const sidebarStyles = {
       borderRight: `1px solid ${colors.ui.light}`,

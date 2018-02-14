@@ -42,7 +42,6 @@
 .ais-SearchBox__root {
   display: inline-block;
   position: relative;
-  max-width: 300px;
   width: 100%;
   height: 32px;
   white-space: nowrap;
@@ -272,7 +271,6 @@
 .ais-RefinementList__SearchBox .ais-SearchBox__root {
   display: inline-block;
   position: relative;
-  max-width: 300px;
   width: 100%;
   height: 32px;
   white-space: nowrap;
@@ -434,7 +432,6 @@
   display: inline-block;
   position: relative;
   margin: 0;
-  max-width: 370px;
   width: 100%;
   height: 46px;
   white-space: nowrap;

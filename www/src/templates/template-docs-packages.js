@@ -22,7 +22,7 @@ class DocsPackagesTemplate extends React.Component {
     const html = page ? page.html : metaData.readme.childMarkdownRemark.html
     const github = page
       ? `https://github.com/gatsbyjs/gatsby/tree/master/packages/${packageName}`
-      : metaData.repository.url
+      : metaData.repository ? metaData.repository.url : null
 
     const gatsbyKeywords = [`gatsby`, `gatsby-plugin`, `gatsby-component`]
     const tags = metaData.keywords

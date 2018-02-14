@@ -19,6 +19,13 @@ import typography, { rhythm } from "../utils/typography"
 const updateAfter = 700
 //
 
+const wideScreenSize = {
+  "@media (min-width: 1600px)": {
+    margin: rhythm(0.25),
+    fontSize: rhythm(0.5),
+  },
+}
+
 const Search = ({ searchState }) => {
   const emptySearchBox = searchState.length > 0 ? false : true
 
@@ -28,9 +35,13 @@ const Search = ({ searchState }) => {
         css={{
           display: `flex`,
           justifyContent: `center`,
+          width: `100%`,
         }}
       >
-        <SearchBox translations={{ placeholder: "Search Gatsby Library" }} />
+        <SearchBox
+          style={{ width: `100%` }}
+          translations={{ placeholder: "Search Gatsby Library" }}
+        />
       </div>
 
       <div
@@ -97,6 +108,10 @@ const Search = ({ searchState }) => {
             fontSize: rhythm(0.55),
             textAlign: `center`,
             margin: rhythm(0.75),
+            "@media (min-width: 1600px)": {
+              margin: rhythm(0.25),
+              fontSize: rhythm(0.5),
+            },
           }}
         >
           Search by{" "}
