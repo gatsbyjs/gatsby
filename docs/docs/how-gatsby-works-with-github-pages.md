@@ -44,3 +44,7 @@ In this case we dont need to specify `pathPrefix`, but our website needs to be p
 ```
 
 After running `yarn run deploy` you should see your website at `http://username.github.io`
+
+## Custom domains
+
+If you use a [custom domain](https://help.github.com/articles/using-a-custom-domain-with-github-pages/), don't add a `pathPrefix` as it will break navigation on your site. Path prefixing is only necessary when the site is *not* at the root of the domain like with repository sites.
