@@ -19,13 +19,16 @@ module.exports = async function getConfigFile(
   distance: number = 3
 ) {
   const configPath = `${rootDir}/${configName}`
+  let configModule
   try {
-    return require(configPath)
+    configModule = require(configPath)
   } catch (err) {
-    const nearMatch = await fs.readdir(rootDir).then(files => files.find(file => {
+    const nearMatch = await fs.readdir(rootDir).then(files =>
+      files.find(file => {
         const fileName = file.split(rootDir).pop()
         return isNearMatch(fileName, configName, distance)
-      }))
+      })
+    )
     if (!testRequireError(configPath, err)) {
       report.error(`Could not load ${configName}`, err)
       process.exit(1)
@@ -40,4 +43,6 @@ module.exports = async function getConfigFile(
       process.exit(1)
     }
   }
+
+  return configModule
 }
