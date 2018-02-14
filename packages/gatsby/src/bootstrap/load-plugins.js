@@ -60,10 +60,7 @@ const getBadExportsMessage = (badExports, exportType, apis) => {
     See https://www.gatsbyjs.org/docs/${exportType}-apis/ for the list of Gatsby ${capitalized} APIs`
 
   badExports.forEach(bady => {
-    const similarities = stringSimiliarity.findBestMatch(
-      bady.exportName,
-      apis
-    )
+    const similarities = stringSimiliarity.findBestMatch(bady.exportName, apis)
     message += `\n — `
     if (bady.pluginName == `default-site-plugin`) {
       message += `Your site's gatsby-${exportType}.js is exporting a variable named "${
@@ -72,9 +69,7 @@ const getBadExportsMessage = (badExports, exportType, apis) => {
     } else {
       message += `The plugin "${bady.pluginName}@${
         bady.pluginVersion
-      }" is exporting a variable named "${
-        bady.exportName
-      }" which isn't an API.`
+      }" is exporting a variable named "${bady.exportName}" which isn't an API.`
     }
     if (similarities.bestMatch.rating > 0.5) {
       message += ` Perhaps you meant to export "${
