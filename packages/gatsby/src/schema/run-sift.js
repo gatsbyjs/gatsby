@@ -5,6 +5,7 @@ const { connectionFromArray } = require(`graphql-skip-limit`)
 const { createPageDependency } = require(`../redux/actions/add-page-dependency`)
 const prepareRegex = require(`./prepare-regex`)
 const Promise = require(`bluebird`)
+const { trackInlineObjectsInRootNode } = require(`../redux`)
 
 function awaitSiftField(fields, node, k) {
   const field = fields[k]
@@ -109,6 +110,7 @@ module.exports = ({
   return Promise.all(
     nodes.map(node => resolveRecursive(node, fieldsToSift, type.getFields()))
   ).then(myNodes => {
+    myNodes = myNodes.map(trackInlineObjectsInRootNode)
     if (!connection) {
       const index = _.isEmpty(siftArgs)
         ? 0

@@ -12,16 +12,55 @@ const emitter = mitt()
 // Reducers
 const reducers = require(`./reducers`)
 
+// Root node tracking
+
+/**
+ * Map containing links between inline objects or arrays
+ * and Node that contains them
+ * @type {Object.<(Object|Array),string>}
+ */
+const rootNodeMap = new WeakMap()
+
+/**
+ * Add link between passed data and Node. This function shouldn't be used
+ * directly. Use higher level `trackInlineObjectsInRootNode`
+ * @see trackInlineObjectsInRootNode
+ * @param {(Object|Array)} data Inline object or array
+ * @param {string} nodeId Id of node that contains data passed in first parameter
+ */
+const addRootNodeToInlineObject = (data, nodeId) => {
+  if (_.isPlainObject(data) || _.isArray(data)) {
+    _.each(data, o => addRootNodeToInlineObject(o, nodeId))
+    rootNodeMap.set(data, nodeId)
+  }
+}
+
+/**
+ * Adds link between inline objects/arrays contained in Node object
+ * and that Node object.
+ * @param {Node} node Root Node
+ */
+const trackInlineObjectsInRootNode = node => {
+  _.each(node, (v, k) => {
+    // Ignore the node internal object.
+    if (k === `internal`) {
+      return
+    }
+    addRootNodeToInlineObject(v, node.id)
+  })
+  return node
+}
+exports.trackInlineObjectsInRootNode = trackInlineObjectsInRootNode
+
 // Read from cache the old node data.
 let initialState = {}
-const rootNodeMap = new WeakMap()
 try {
   initialState = JSON.parse(
     fs.readFileSync(`${process.cwd()}/.cache/redux-state.json`)
   )
 
-  _.each(initialState.nodes, (id, node) => {
-    trackSubObjectsToRootNodeId(node)
+  _.each(initialState.nodes, node => {
+    trackInlineObjectsInRootNode(node)
   })
 } catch (e) {
   // ignore errors.
@@ -120,24 +159,6 @@ exports.getNodeAndSavePathDependency = (id, path) => {
 }
 
 exports.getRootNodeId = node => rootNodeMap.get(node)
-
-const addParentToSubObjects = (data, parentId) => {
-  if (_.isPlainObject(data) || _.isArray(data)) {
-    _.each(data, o => addParentToSubObjects(o, parentId))
-    rootNodeMap.set(data, parentId)
-  }
-}
-
-const trackSubObjectsToRootNodeId = node => {
-  _.each(node, (v, k) => {
-    // Ignore the node internal object.
-    if (k === `internal`) {
-      return
-    }
-    addParentToSubObjects(v, node.parent)
-  })
-}
-exports.trackSubObjectsToRootNodeId = trackSubObjectsToRootNodeId
 
 // Start plugin runner which listens to the store
 // and invokes Gatsby API based on actions.

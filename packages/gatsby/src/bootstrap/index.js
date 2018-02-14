@@ -10,12 +10,12 @@ const crypto = require(`crypto`)
 const del = require(`del`)
 
 const apiRunnerNode = require(`../utils/api-runner-node`)
-const testRequireError = require(`../utils/test-require-error`)
 const { graphql } = require(`graphql`)
 const { store, emitter } = require(`../redux`)
 const loadPlugins = require(`./load-plugins`)
 const { initCache } = require(`../utils/cache`)
 const report = require(`gatsby-cli/lib/reporter`)
+const getConfigFile = require(`./get-config-file`)
 
 // Show stack trace on unhandled promises.
 process.on(`unhandledRejection`, (reason, p) => {
@@ -72,16 +72,9 @@ module.exports = async (args: BootstrapArgs) => {
   // Try opening the site's gatsby-config.js file.
   activity = report.activityTimer(`open and validate gatsby-config.js`)
   activity.start()
-  let config
-  try {
-    // $FlowFixMe
-    config = preferDefault(require(`${program.directory}/gatsby-config`))
-  } catch (err) {
-    if (!testRequireError(`${program.directory}/gatsby-config`, err)) {
-      report.error(`Could not load gatsby-config`, err)
-      process.exit(1)
-    }
-  }
+  const config = await preferDefault(
+    getConfigFile(program.directory, `gatsby-config.js`)
+  )
 
   store.dispatch({
     type: `SET_SITE_CONFIG`,

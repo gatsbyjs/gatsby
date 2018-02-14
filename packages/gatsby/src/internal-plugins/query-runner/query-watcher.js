@@ -33,7 +33,7 @@ exports.extractQueries = () => {
         })
       } else {
         report.warn(
-          `GraphQL query in component "${component}" will not be run!`
+          `The GraphQL query in the non-page component "${component}" will not be run.`
         )
         queryWillNotRun = true
       }

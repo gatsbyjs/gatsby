@@ -35,7 +35,9 @@ module.exports = {
 };
 ```
 
-Plugins can take options. See each plugin page below for more detailed
+Plugins can take options. Note that plugin options will be stringified by Gatsby, so they cannot be functions.
+
+See each plugin page below for more detailed
 documentation on using each plugin.
 
 ## Locally defined plugins
