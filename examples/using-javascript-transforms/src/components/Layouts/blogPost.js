@@ -7,7 +7,7 @@ import MasterLayout from "./master"
 
 class BlogPostLayout extends React.Component {
   render() {
-    let siteMetadata = this.props.data.site.siteMetadata
+    let siteMetadata = this.props.siteMetadata
 
     const home = (
       <div className="nav">
@@ -23,9 +23,11 @@ class BlogPostLayout extends React.Component {
 
     return (
       <div>
-        <MasterLayout {...this.props}>
+        <MasterLayout
+          {...{ data: { site: { siteMetadata: this.props.siteMetadata } } }}
+        >
           {home}
-          <div className="container">{this.props.children()}</div>
+          <div className="container">{this.props.children}</div>
           <div className="footer container">
             <hr />
             <p>
@@ -44,17 +46,15 @@ class BlogPostLayout extends React.Component {
 export default BlogPostLayout
 
 export const pageQuery = graphql`
-  query BlogPostLayoutBySlug {
-    site {
-      siteMetadata {
-        title
-        siteDescr
-        siteAuthor
-        siteEmailUrl
-        siteEmailPretty
-        siteTwitterUrl
-        siteTwitterPretty
-      }
+  fragment sitemetadata on Site {
+    siteMetadata {
+      title
+      siteDescr
+      siteAuthor
+      siteEmailUrl
+      siteEmailPretty
+      siteTwitterUrl
+      siteTwitterPretty
     }
   }
 `
