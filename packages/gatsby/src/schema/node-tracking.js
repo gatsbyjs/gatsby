@@ -41,9 +41,14 @@ const trackInlineObjectsInRootNode = node => {
 }
 exports.trackInlineObjectsInRootNode = trackInlineObjectsInRootNode
 
-function findRootNode(node) {
+/**
+ * Finds top most ancestor of node that contains passed Object or Array
+ * @param {(Object|Array)} obj Object/Array belonging to Node object or Node object
+ * @returns {Node} Top most ancestor
+ */
+function findRootNode(obj) {
   // Find the root node.
-  let rootNode = node
+  let rootNode = obj
   let whileCount = 0
   let rootNodeId
   while (
