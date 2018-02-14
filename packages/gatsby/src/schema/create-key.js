@@ -16,9 +16,9 @@ module.exports = (key: string): string => {
 
   const replaced = key.replace(nonAlphaNumericExpr, `_`)
 
-  // key is invalid; normalize with a leading underscore and dasherize rest
+  // key is invalid; normalize with leading underscore and rest with x
   if (replaced.match(/^__/)) {
-    return replaced.replace(/_/g, (char, index) => (index === 0 ? `_` : `-`))
+    return replaced.replace(/_/g, (char, index) => (index === 0 ? `_` : `x`))
   }
 
   return replaced
