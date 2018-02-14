@@ -1,5 +1,4 @@
 @import '~normalize.css';
-@import 'prismjs/themes/prism-coy.css';
 // Override variables here
 // You can add new ones or update existing ones:
 
@@ -15,3 +14,4 @@ $family-sans-serif: 'Varela Round', sans-serif;
 $family-serif: 'Lora', serif; // Add a serif family
 
 @import '~bulma';
+@import '~prismjs/themes/prism-coy';

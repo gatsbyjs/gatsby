@@ -1,29 +1,29 @@
-# THIS PACKAGE HAS BEEN DEPRECATED IN FAVOR OF [`GATSBY-TRANSFORMER-JAVASCRIPT-FRONTMATTER`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-javascript-frontmatter)
+# gatsby-transformer-javascript-frontmatter
 
 Parses JavaScript files to extract data from exports.
 
 ## Install
 
-`npm install --save gatsby-transformer-javascript-static-exports`
+`npm install --save gatsby-transformer-frontmatter`
 
 ## How to use
 
 ```javascript
 // In your gatsby-config.js
-plugins: [`gatsby-transformer-javascript-static-exports`];
+plugins: [`gatsby-transformer-javascript-frontmatter`];
 ```
 
 ## Parsing algorithm
 
-The algorithm for uses babylon and traverse (from the babel family of code) to
-statically read the data exports.
+This plugin uses babylon and traverse (from the babel family of code) to
+statically read the frontmatter exports.
 
-In a .js file, export a data object to set your metadata variables, like so:
+In a .js file, export a frontmatter object to set your metadata variables, like so:
 
 ```javascript
 import React from 'react'
 
-exports.data = {
+exports.frontmatter = {
     title: 'Choropleth on d3v4',
     written: '2017-05-04',
     layoutType: 'post',
@@ -38,7 +38,7 @@ export default MyComponent ...
 You can also use a named export for the data object:
 
 ```javascript
-export const data = {
+export const frontmatter = {
   title: "Choropleth on d3v4",
   written: "2017-05-04",
   layoutType: "post",
@@ -54,7 +54,7 @@ You'd be able to query your data like:
 
 ```graphql
 {
-  allJsFrontmatter {
+  allJavascriptFrontmatter {
     edges {
       node {
         data {
@@ -77,7 +77,7 @@ Which would return something like:
 ```javascript
 {
   "data": {
-    "allJsFrontmatter": {
+    "allJavascriptFrontmatter": {
       "edges": [
         {
           "node": {
