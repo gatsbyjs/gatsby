@@ -10,9 +10,9 @@ describe(`createKey`, () => {
   it(`replaces invalid characters`, () => {
     ;[
       [`/hello`, `_hello`],
-      [`~/path/to/some/module`, `_-path-to-some-module`],
-      [`/*`, `_-`],
-      [`/*.js`, `_--js`],
+      [`~/path/to/some/module`, `_xpathxtoxsomexmodule`],
+      [`/*`, `_x`],
+      [`/*.js`, `_xxjs`],
     ].forEach(([input, output]) => {
       expect(createKey(input)).toBe(output)
     })
