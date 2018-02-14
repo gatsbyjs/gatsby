@@ -112,6 +112,13 @@ module.exports = {
         trackingId: `UA-93349937-1`,
       },
     },
+    {
+      resolve: `gatsby-plugin-google-tagmanager`,
+      options: {
+        id: `GTM-NWW5NJL`,
+        includeInDevelopment: true,
+      },
+    },
     `gatsby-plugin-sitemap`,
     {
       resolve: `gatsby-plugin-feed`,
