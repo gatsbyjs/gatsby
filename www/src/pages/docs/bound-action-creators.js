@@ -25,6 +25,25 @@ class ActionCreatorsDocs extends React.Component {
           and dispatch Redux actions when called) which you can use to
           manipulate state on your site.
         </p>
+        <p>
+          The object
+          {` `}
+          <code>boundActionCreators</code>
+          {` `}
+          contains the functions and these can be individually extracted
+          by using ES6 object destructuring.           
+        </p>
+        <pre>
+          <code
+            className="language-javascript"
+            dangerouslySetInnerHTML={{
+              __html: `// For function createNodeField
+exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
+  const { createNodeField } = boundActionCreators
+}`,
+            }}
+          />
+        </pre>
         <h2 css={{ marginBottom: rhythm(1 / 2) }}>Functions</h2>
         <ul css={{ ...scale(-1 / 5) }}>
           {this.props.data.allDocumentationJs.edges.map(({ node }, i) => (
