@@ -155,7 +155,8 @@ actions.createPage = (page: PageInput, plugin?: Plugin, traceId?: string) => {
       `See the documentation for createPage https://www.gatsbyjs.org/docs/bound-action-creators/#createPage`
     )
     console.log(``)
-    process.exit(1)
+    // TODO do actually quit during builds.
+    // process.exit(1)
   }
 
   let jsonName = `${_.kebabCase(page.path)}.json`
