@@ -1,4 +1,4 @@
-# gatsby-transformer-javascript-static-exports
+# THIS PACKAGE HAS BEEN DEPRECATED IN FAVOR OF [`GATSBY-TRANSFORMER-JAVASCRIPT-FRONTMATTER`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-javascript-frontmatter)
 
 Parses JavaScript files to extract data from exports.
 

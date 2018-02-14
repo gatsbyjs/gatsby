@@ -4,7 +4,7 @@ import { findDOMNode } from "react-dom"
 var d3 = require(`d3`)
 
 // this is one method to export data and make it usable elsewhere
-exports.data = {
+exports.frontmatter = {
   title: `Choropleth on d3v4`,
   written: `2017-03-09`,
   updated: `2017-04-28`,
@@ -52,7 +52,12 @@ class choroplethBase extends React.Component {
     let html = data.html
 
     return (
-      <BlogPostChrome {...this.props.data.jsFrontmatter.data}>
+      <BlogPostChrome
+        {...{
+          frontmatter: this.props.data.javascriptFrontmatter.frontmatter,
+          site: this.props.data.site,
+        }}
+      >
         <div className="section">
           <div className="container">
             <div id="states" />
@@ -207,8 +212,11 @@ export const pageQuery = graphql`
     ) {
       html
     }
-    jsFrontmatter(fields: { slug: { eq: $slug } }) {
-      ...JSBlogPost_data
+    javascriptFrontmatter(fields: { slug: { eq: $slug } }) {
+      ...JSBlogPost_frontmatter
+    }
+    site {
+      ...site_sitemetadata
     }
   }
 `
