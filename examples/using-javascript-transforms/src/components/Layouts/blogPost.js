@@ -23,7 +23,9 @@ class BlogPostLayout extends React.Component {
 
     return (
       <div>
-        <MasterLayout {...{data: {site: {siteMetadata: this.props.siteMetadata}}}}>
+        <MasterLayout
+          {...{ data: { site: { siteMetadata: this.props.siteMetadata } } }}
+        >
           {home}
           <div className="container">{this.props.children}</div>
           <div className="footer container">

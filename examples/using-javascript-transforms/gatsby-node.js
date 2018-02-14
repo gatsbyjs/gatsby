@@ -73,7 +73,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
 
         // Create from markdown
         result.data.allMarkdownRemark.edges.forEach(edge => {
-          let {frontmatter} = edge.node
+          let { frontmatter } = edge.node
           if (frontmatter.layoutType === `post`) {
             createPage({
               path: frontmatter.path, // required
@@ -98,7 +98,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
         //  /pages directory. We purposely don't have a folder with this name
         //  so that we can go full manual mode.
         result.data.allJavascriptFrontmatter.edges.forEach(edge => {
-          let {frontmatter} = edge.node
+          let { frontmatter } = edge.node
           // see above
           if (frontmatter.layoutType === `post`) {
             createPage({

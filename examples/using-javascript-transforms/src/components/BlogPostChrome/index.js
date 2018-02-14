@@ -5,7 +5,6 @@ import BlogPostLayout from "../Layouts/blogPost"
 
 class BlogPostChrome extends React.Component {
   render() {
-
     return (
       <BlogPostLayout {...this.props.site}>
         <div className="BlogPostChrome">

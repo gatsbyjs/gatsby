@@ -89,7 +89,6 @@ async function onCreateNode({
       },
     })
 
-
     exportsData = {
       ...frontmatter,
       error: false,

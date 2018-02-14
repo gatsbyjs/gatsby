@@ -7,10 +7,12 @@ class mdBlogPost extends React.Component {
     const { html, frontmatter } = this.props.data.markdownRemark
 
     return (
-      <BlogPostChrome {...{
-                      frontmatter: this.props.data.markdownRemark.frontmatter,
-                      site: this.props.data.site
-                      }}>
+      <BlogPostChrome
+        {...{
+          frontmatter: this.props.data.markdownRemark.frontmatter,
+          site: this.props.data.site,
+        }}
+      >
         <div className="container content">
           <div dangerouslySetInnerHTML={{ __html: html }} />
         </div>

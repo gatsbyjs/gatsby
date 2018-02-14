@@ -76,11 +76,7 @@ class SiteIndex extends React.Component {
       }
     })
 
-    return (
-      <InsetPageLayout {...this.props}>
-        {pageLinks}
-      </InsetPageLayout>
-    )
+    return <InsetPageLayout {...this.props}>{pageLinks}</InsetPageLayout>
   }
 }
 
