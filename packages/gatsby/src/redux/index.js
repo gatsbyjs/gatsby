@@ -12,25 +12,45 @@ const emitter = mitt()
 // Reducers
 const reducers = require(`./reducers`)
 
-// Parent node tracking
+// Root node tracking
+
+/**
+ * Map containing links between inline objects or arrays
+ * and Node that contains them
+ * @type {Object.<(Object|Array),string>}
+ */
 const rootNodeMap = new WeakMap()
-const addParentToSubObjects = (data, parentId) => {
+
+/**
+ * Add link between passed data and Node. This function shouldn't be used
+ * directly. Use higher level `trackInlineObjectsInRootNode`
+ * @see trackInlineObjectsInRootNode
+ * @param {(Object|Array)} data Inline object or array
+ * @param {string} nodeId Id of node that contains data passed in first parameter
+ */
+const addRootNodeToInlineObject = (data, nodeId) => {
   if (_.isPlainObject(data) || _.isArray(data)) {
-    _.each(data, o => addParentToSubObjects(o, parentId))
-    rootNodeMap.set(data, parentId)
+    _.each(data, o => addRootNodeToInlineObject(o, nodeId))
+    rootNodeMap.set(data, nodeId)
   }
 }
 
-const trackSubObjectsToRootNodeId = node => {
+/**
+ * Adds link between inline objects/arrays contained in Node object
+ * and that Node object.
+ * @param {Node} node Root Node
+ */
+const trackInlineObjectsInRootNode = node => {
   _.each(node, (v, k) => {
     // Ignore the node internal object.
     if (k === `internal`) {
       return
     }
-    addParentToSubObjects(v, node.parent)
+    addRootNodeToInlineObject(v, node.id)
   })
+  return node
 }
-exports.trackSubObjectsToRootNodeId = trackSubObjectsToRootNodeId
+exports.trackInlineObjectsInRootNode = trackInlineObjectsInRootNode
 
 // Read from cache the old node data.
 let initialState = {}
@@ -40,7 +60,7 @@ try {
   )
 
   _.each(initialState.nodes, node => {
-    trackSubObjectsToRootNodeId(node)
+    trackInlineObjectsInRootNode(node)
   })
 } catch (e) {
   // ignore errors.

@@ -11,7 +11,7 @@ const { joinPath } = require(`../utils/path`)
 const {
   getNode,
   hasNodeChanged,
-  trackSubObjectsToRootNodeId,
+  trackInlineObjectsInRootNode,
 } = require(`./index`)
 const { store } = require(`./index`)
 import * as joiSchemas from "../joi-schemas/joi"
@@ -484,7 +484,7 @@ actions.createNode = (node: any, plugin?: Plugin, traceId?: string) => {
     )
   }
 
-  trackSubObjectsToRootNodeId(node)
+  trackInlineObjectsInRootNode(node)
 
   const oldNode = getNode(node.id)
 
