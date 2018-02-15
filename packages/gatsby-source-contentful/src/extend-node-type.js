@@ -330,6 +330,40 @@ exports.extendNodeType = ({ type }) => {
           height: { type: GraphQLFloat },
           src: { type: GraphQLString },
           srcSet: { type: GraphQLString },
+          srcWebp: {
+            type: GraphQLString,
+            resolve({ image, options, context }) {
+              if (
+                _.get(image, `file.contentType`) === `image/webp` ||
+                options.toFormat === `webp`
+              ) {
+                return null
+              }
+
+              const resolutions = resolveResponsiveResolution(image, {
+                ...options,
+                toFormat: `webp`,
+              })
+              return _.get(resolutions, `src`)
+            },
+          },
+          srcSetWebp: {
+            type: GraphQLString,
+            resolve({ image, options, context }) {
+              if (
+                _.get(image, `file.contentType`) === `image/webp` ||
+                options.toFormat === `webp`
+              ) {
+                return null
+              }
+
+              const resolutions = resolveResponsiveResolution(image, {
+                ...options,
+                toFormat: `webp`,
+              })
+              return _.get(resolutions, `srcSet`)
+            },
+          },
         },
       }),
       args: {
@@ -356,9 +390,17 @@ exports.extendNodeType = ({ type }) => {
           defaultValue: null,
         },
       },
-      resolve(image, options, context) {
-        return resolveResponsiveResolution(image, options)
-      },
+      resolve: (image, options, context) =>
+        Promise.resolve(resolveResponsiveResolution(image, options)).then(
+          node => {
+            return {
+              ...node,
+              image,
+              options,
+              context,
+            }
+          }
+        ),
     },
     sizes: {
       type: new GraphQLObjectType({
@@ -373,6 +415,40 @@ exports.extendNodeType = ({ type }) => {
           aspectRatio: { type: GraphQLFloat },
           src: { type: GraphQLString },
           srcSet: { type: GraphQLString },
+          srcWebp: {
+            type: GraphQLString,
+            resolve({ image, options, context }) {
+              if (
+                _.get(image, `file.contentType`) === `image/webp` ||
+                options.toFormat === `webp`
+              ) {
+                return null
+              }
+
+              const sizes = resolveResponsiveSizes(image, {
+                ...options,
+                toFormat: `webp`,
+              })
+              return _.get(sizes, `src`)
+            },
+          },
+          srcSetWebp: {
+            type: GraphQLString,
+            resolve({ image, options, context }) {
+              if (
+                _.get(image, `file.contentType`) === `image/webp` ||
+                options.toFormat === `webp`
+              ) {
+                return null
+              }
+
+              const sizes = resolveResponsiveSizes(image, {
+                ...options,
+                toFormat: `webp`,
+              })
+              return _.get(sizes, `srcSet`)
+            },
+          },
           sizes: { type: GraphQLString },
         },
       }),
@@ -403,9 +479,15 @@ exports.extendNodeType = ({ type }) => {
           type: GraphQLString,
         },
       },
-      resolve(image, options, context) {
-        return resolveResponsiveSizes(image, options)
-      },
+      resolve: (image, options, context) =>
+        Promise.resolve(resolveResponsiveSizes(image, options)).then(node => {
+          return {
+            ...node,
+            image,
+            options,
+            context,
+          }
+        }),
     },
     responsiveResolution: {
       deprecationReason: `We dropped the "responsive" part of the name to make it shorter https://github.com/gatsbyjs/gatsby/pull/2320/`,

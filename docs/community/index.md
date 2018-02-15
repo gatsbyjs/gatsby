@@ -17,9 +17,9 @@ and orientation.
 
 The Gatsby community welcomes contributions. Please refer to the guides below on how to make sure your contributions get accepted:
 
-[How to Contribute](/docs/how-to-contribute/)
-
-[Gatsby Style Guide](/docs/gatsby-style-guide/)
+* [How to Contribute](/docs/how-to-contribute/)
+* [How to File an Issue](/docs/how-to-file-an-issue/)
+* [Gatsby Style Guide](/docs/gatsby-style-guide/)
 
 ## Gatsby news
 

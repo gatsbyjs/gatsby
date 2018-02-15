@@ -1,4 +1,4 @@
-// From "https://raw.githubusercontent.com/PrismJS/prism/v1.6.0/components.js"
+// From "https://raw.githubusercontent.com/PrismJS/prism/v1.11.0/components.js"
 module.exports = {
   meta: {
     path: `components/prism-{id}`,
@@ -54,22 +54,31 @@ module.exports = {
     title: `AppleScript`,
     owner: `Golmote`,
   },
+  arduino: {
+    title: `Arduino`,
+    require: `cpp`,
+    owner: `eisbehr-`,
+  },
   asciidoc: {
     title: `AsciiDoc`,
     owner: `Golmote`,
+  },
+  asm6502: {
+    title: `6502 Assembly`,
+    owner: `kzurawel`,
   },
   aspnet: {
     title: `ASP.NET (C#)`,
     require: `markup`,
     owner: `nauzilus`,
   },
-  autoit: {
-    title: `AutoIt`,
-    owner: `Golmote`,
-  },
   autohotkey: {
     title: `AutoHotkey`,
     owner: `aviaryan`,
+  },
+  autoit: {
+    title: `AutoIt`,
+    owner: `Golmote`,
   },
   bash: {
     title: `Bash`,
@@ -121,6 +130,10 @@ module.exports = {
     require: `ruby`,
     owner: `MakeNowJust`,
   },
+  csp: {
+    title: `Content-Security-Policy`,
+    owner: `ScottHelme`,
+  },
   "css-extras": {
     title: `CSS Extras`,
     require: `css`,
@@ -140,6 +153,11 @@ module.exports = {
     title: `Diff`,
     owner: `uranusjr`,
   },
+  django: {
+    title: `Django/Jinja2`,
+    require: `markup`,
+    owner: `romanvm`,
+  },
   docker: {
     title: `Docker`,
     owner: `JustinBeckwith`,
@@ -152,6 +170,10 @@ module.exports = {
     title: `Elixir`,
     owner: `Golmote`,
   },
+  elm: {
+    title: `Elm`,
+    owner: `zwilias`,
+  },
   erlang: {
     title: `Erlang`,
     owner: `Golmote`,
@@ -160,6 +182,11 @@ module.exports = {
     title: `F#`,
     require: `clike`,
     owner: `simonreynolds7`,
+  },
+  flow: {
+    title: `Flow`,
+    require: `javascript`,
+    owner: `Golmote`,
   },
   fortran: {
     title: `Fortran`,
@@ -215,6 +242,18 @@ module.exports = {
     title: `HTTP`,
     owner: `danielgtaylor`,
   },
+  hpkp: {
+    title: `HTTP Public-Key-Pins`,
+    owner: `ScottHelme`,
+  },
+  hsts: {
+    title: `HTTP Strict-Transport-Security`,
+    owner: `ScottHelme`,
+  },
+  ichigojam: {
+    title: `IchigoJam`,
+    owner: `BlueCocoa`,
+  },
   icon: {
     title: `Icon`,
     owner: `Golmote`,
@@ -227,13 +266,12 @@ module.exports = {
     title: `Ini`,
     owner: `aviaryan`,
   },
+  io: {
+    title: `Io`,
+    owner: `AlesTsurko`,
+  },
   j: {
     title: `J`,
-    owner: `Golmote`,
-  },
-  jade: {
-    title: `Jade`,
-    require: `javascript`,
     owner: `Golmote`,
   },
   java: {
@@ -309,6 +347,11 @@ module.exports = {
     title: `Monkey`,
     owner: `Golmote`,
   },
+  n4js: {
+    title: `N4JS`,
+    require: `javascript`,
+    owner: `bsmith-n4`,
+  },
   nasm: {
     title: `NASM`,
     owner: `rbmj`,
@@ -338,6 +381,11 @@ module.exports = {
   ocaml: {
     title: `OCaml`,
     owner: `Golmote`,
+  },
+  opencl: {
+    title: `OpenCL`,
+    require: `cpp`,
+    owner: `Milania1`,
   },
   oz: {
     title: `Oz`,
@@ -392,6 +440,11 @@ module.exports = {
     require: `clike`,
     owner: `just-boris`,
   },
+  pug: {
+    title: `Pug`,
+    require: `javascript`,
+    owner: `Golmote`,
+  },
   puppet: {
     title: `Puppet`,
     owner: `Golmote`,
@@ -421,6 +474,14 @@ module.exports = {
     title: `React JSX`,
     require: [`markup`, `javascript`],
     owner: `vkbansal`,
+  },
+  tsx: {
+    title: `React TSX`,
+    require: [`jsx`, `typescript`],
+  },
+  renpy: {
+    title: `Ren'py`,
+    owner: `HyuchiaDiego`,
   },
   reason: {
     title: `Reason`,
@@ -512,6 +573,11 @@ module.exports = {
     require: `javascript`,
     owner: `vkbansal`,
   },
+  vbnet: {
+    title: `VB.Net`,
+    require: `basic`,
+    owner: `Bigsby`,
+  },
   verilog: {
     title: `Verilog`,
     owner: `a-rey`,
@@ -528,6 +594,11 @@ module.exports = {
     title: `Wiki markup`,
     require: `markup`,
     owner: `Golmote`,
+  },
+  xeora: {
+    title: `Xeora`,
+    require: `markup`,
+    owner: `freakmaxi`,
   },
   xojo: {
     title: `Xojo (REALbasic)`,

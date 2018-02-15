@@ -6,6 +6,7 @@
   Useful Links:
   - Documentation: https://www.gatsbyjs.org/docs/
   - How to Contribute: https://www.gatsbyjs.org/docs/how-to-contribute/
+  - How to File an Issue: https://www.gatsbyjs.org/docs/how-to-file-an-issue/
   - Become a Sponsor: https://opencollective.com/gatsby#sponsor
   
   Before opening a new issue, please search existing issues (https://github.com/gatsbyjs/gatsby/issues)

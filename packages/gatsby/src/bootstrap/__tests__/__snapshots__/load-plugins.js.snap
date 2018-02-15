@@ -3,18 +3,21 @@
 exports[`Load plugins Loads plugins defined with an object but without an option key 1`] = `
 Array [
   Object {
+    "browserAPIs": Array [],
     "id": "Plugin dev-404-page",
     "name": "dev-404-page",
     "nodeAPIs": Array [
-      "createPages",
+      "createPagesStatefully",
     ],
     "pluginOptions": Object {
       "plugins": Array [],
     },
     "resolve": "",
+    "ssrAPIs": Array [],
     "version": "1.0.0",
   },
   Object {
+    "browserAPIs": Array [],
     "id": "Plugin component-page-creator",
     "name": "component-page-creator",
     "nodeAPIs": Array [
@@ -24,9 +27,11 @@ Array [
       "plugins": Array [],
     },
     "resolve": "",
+    "ssrAPIs": Array [],
     "version": "1.0.0",
   },
   Object {
+    "browserAPIs": Array [],
     "id": "Plugin component-layout-creator",
     "name": "component-layout-creator",
     "nodeAPIs": Array [
@@ -36,9 +41,11 @@ Array [
       "plugins": Array [],
     },
     "resolve": "",
+    "ssrAPIs": Array [],
     "version": "1.0.0",
   },
   Object {
+    "browserAPIs": Array [],
     "id": "Plugin internal-data-bridge",
     "name": "internal-data-bridge",
     "nodeAPIs": Array [
@@ -49,9 +56,11 @@ Array [
       "plugins": Array [],
     },
     "resolve": "",
+    "ssrAPIs": Array [],
     "version": "1.0.0",
   },
   Object {
+    "browserAPIs": Array [],
     "id": "Plugin prod-404",
     "name": "prod-404",
     "nodeAPIs": Array [
@@ -61,9 +70,11 @@ Array [
       "plugins": Array [],
     },
     "resolve": "",
+    "ssrAPIs": Array [],
     "version": "1.0.0",
   },
   Object {
+    "browserAPIs": Array [],
     "id": "Plugin query-runner",
     "name": "query-runner",
     "nodeAPIs": Array [
@@ -74,17 +85,21 @@ Array [
       "plugins": Array [],
     },
     "resolve": "",
+    "ssrAPIs": Array [],
     "version": "1.0.0",
   },
   Object {
+    "browserAPIs": Array [],
     "name": "TEST",
     "nodeAPIs": Array [],
     "pluginOptions": Object {
       "plugins": Array [],
     },
     "resolve": "",
+    "ssrAPIs": Array [],
   },
   Object {
+    "browserAPIs": Array [],
     "id": "Plugin default-site-plugin",
     "name": "default-site-plugin",
     "nodeAPIs": Array [],
@@ -92,6 +107,7 @@ Array [
       "plugins": Array [],
     },
     "resolve": "",
+    "ssrAPIs": Array [],
     "version": "d41d8cd98f00b204e9800998ecf8427e",
   },
 ]
@@ -100,18 +116,21 @@ Array [
 exports[`Load plugins load plugins for a site 1`] = `
 Array [
   Object {
+    "browserAPIs": Array [],
     "id": "Plugin dev-404-page",
     "name": "dev-404-page",
     "nodeAPIs": Array [
-      "createPages",
+      "createPagesStatefully",
     ],
     "pluginOptions": Object {
       "plugins": Array [],
     },
     "resolve": "",
+    "ssrAPIs": Array [],
     "version": "1.0.0",
   },
   Object {
+    "browserAPIs": Array [],
     "id": "Plugin component-page-creator",
     "name": "component-page-creator",
     "nodeAPIs": Array [
@@ -121,9 +140,11 @@ Array [
       "plugins": Array [],
     },
     "resolve": "",
+    "ssrAPIs": Array [],
     "version": "1.0.0",
   },
   Object {
+    "browserAPIs": Array [],
     "id": "Plugin component-layout-creator",
     "name": "component-layout-creator",
     "nodeAPIs": Array [
@@ -133,9 +154,11 @@ Array [
       "plugins": Array [],
     },
     "resolve": "",
+    "ssrAPIs": Array [],
     "version": "1.0.0",
   },
   Object {
+    "browserAPIs": Array [],
     "id": "Plugin internal-data-bridge",
     "name": "internal-data-bridge",
     "nodeAPIs": Array [
@@ -146,9 +169,11 @@ Array [
       "plugins": Array [],
     },
     "resolve": "",
+    "ssrAPIs": Array [],
     "version": "1.0.0",
   },
   Object {
+    "browserAPIs": Array [],
     "id": "Plugin prod-404",
     "name": "prod-404",
     "nodeAPIs": Array [
@@ -158,9 +183,11 @@ Array [
       "plugins": Array [],
     },
     "resolve": "",
+    "ssrAPIs": Array [],
     "version": "1.0.0",
   },
   Object {
+    "browserAPIs": Array [],
     "id": "Plugin query-runner",
     "name": "query-runner",
     "nodeAPIs": Array [
@@ -171,9 +198,11 @@ Array [
       "plugins": Array [],
     },
     "resolve": "",
+    "ssrAPIs": Array [],
     "version": "1.0.0",
   },
   Object {
+    "browserAPIs": Array [],
     "id": "Plugin default-site-plugin",
     "name": "default-site-plugin",
     "nodeAPIs": Array [],
@@ -181,6 +210,7 @@ Array [
       "plugins": Array [],
     },
     "resolve": "",
+    "ssrAPIs": Array [],
     "version": "d41d8cd98f00b204e9800998ecf8427e",
   },
 ]

@@ -12,8 +12,9 @@ To add custom webpack configurations, create (if there's not one already) a
 `gatsby-node.js` file in your root directory. Inside this file, export a
 function called `modifyWebpackConfig`.
 
-When Gatsby creates its webpack config, this function will be called allowing you to update the default
-webpack config.
+When Gatsby creates its webpack config, this function will be called allowing
+you to modify the default webpack config using
+[webpack-configurator](https://github.com/lewie9021/webpack-configurator).
 
 Gatsby does multiple webpack builds with somewhat different configuration. We
 call each build type a "stage". The following stages exist:
@@ -38,8 +39,7 @@ e.g. [Sass](/packages/gatsby-plugin-sass/),
 
 ## Example
 
-Here is an example adding an additional global variable via the `DefinePlugin` and
-the `less-loader`
+Here is an example that configures **flexboxgrid** when processing css files. Add this in `gatsby-node.js`:
 
 ```js
 exports.modifyWebpackConfig = ({
@@ -47,9 +47,9 @@ exports.modifyWebpackConfig = ({
   rules,
   loaders,
   plugins,
-  boundActionCreators,
+  actions,
 }) => {
-  boundActionCreators.setWebpackConfig({
+  actions.setWebpackConfig({
     module: {
       rules: [
         {

@@ -1,14 +1,14 @@
 {
   "name": "gatsby-cli",
   "description": "Gatsby command-line interface for creating new sites and running Gatsby commands",
-  "version": "1.1.31",
+  "version": "1.1.40",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "lib/index.js"
   },
-  "files": [
-    "lib"
-  ],
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
   "dependencies": {
     "@babel/code-frame": "^7.0.0-beta.38",
     "@babel/runtime": "^7.0.0-beta.38",
@@ -33,14 +33,25 @@
     "@babel/core": "^7.0.0-beta.38",
     "cross-env": "^5.0.5"
   },
+  "files": [
+    "lib"
+  ],
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli#readme",
   "keywords": [
     "gatsby"
   ],
   "license": "MIT",
   "main": "lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git"
+  },
   "scripts": {
-    "build": "babel src --out-dir lib --ignore **/__tests__/**",
-    "watch": "babel -w src --out-dir lib --ignore **/__tests__/**",
-    "prepublish": "cross-env NODE_ENV=production npm run build"
+    "build": "babel src --out-dir lib --ignore __tests__",
+    "prepublish": "cross-env NODE_ENV=production npm run build",
+    "watch": "babel -w src --out-dir lib --ignore __tests__"
+  },
+  "yargs": {
+    "boolean-negation": false
   }
 }

@@ -2,9 +2,8 @@ import React from "react"
 import { Link } from "gatsby"
 import GithubIcon from "react-icons/lib/go/mark-github"
 import TwitterIcon from "react-icons/lib/fa/twitter"
-
-import SearchForm from "../components/search-form"
 import DiscordIcon from "../components/discord"
+import SearchForm from "../components/search-form"
 import logo from "../logo.svg"
 import typography, { rhythm, scale } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
@@ -163,9 +162,11 @@ export default ({ pathname }) => {
             marginLeft: `auto`,
           }}
         >
-          {!isHomepage && (
-            <SearchForm key="SearchForm" styles={{ ...navItemStyles }} />
-          )}
+          <SearchForm
+            key="SearchForm"
+            iconStyles={{ ...socialIconsStyles }}
+            isHomepage={isHomepage}
+          />
           <a
             href="https://github.com/gatsbyjs/gatsby"
             title="GitHub"
@@ -176,27 +177,36 @@ export default ({ pathname }) => {
           >
             <GithubIcon style={{ verticalAlign: `text-top` }} />
           </a>
-          <a
-            href="https://discord.gg/0ZcbPKXt5bZjGY5n"
-            title="Discord"
+
+          <div
             css={{
-              ...navItemStyles,
-              ...socialIconsStyles,
+              display: `none`,
+              [presets.Desktop]: { display: !isHomepage && `inline-block` },
+              [presets.Hd]: { display: `inline-block` },
             }}
           >
-            <DiscordIcon overrideCSS={{ verticalAlign: `text-top` }} />
-          </a>
-          <a
-            href="https://twitter.com/gatsbyjs"
-            title="@gatsbyjs"
-            css={{
-              ...navItemStyles,
-              ...socialIconsStyles,
-              paddingRight: 0,
-            }}
-          >
-            <TwitterIcon style={{ verticalAlign: `text-top` }} />
-          </a>
+            <a
+              href="https://discord.gg/0ZcbPKXt5bZjGY5n"
+              title="Discord"
+              css={{
+                ...navItemStyles,
+                ...socialIconsStyles,
+              }}
+            >
+              <DiscordIcon overrideCSS={{ verticalAlign: `text-top` }} />
+            </a>
+            <a
+              href="https://twitter.com/gatsbyjs"
+              title="@gatsbyjs"
+              css={{
+                ...navItemStyles,
+                ...socialIconsStyles,
+                paddingRight: 0,
+              }}
+            >
+              <TwitterIcon style={{ verticalAlign: `text-top` }} />
+            </a>
+          </div>
         </div>
       </div>
     </div>
