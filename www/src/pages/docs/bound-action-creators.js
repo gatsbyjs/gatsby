@@ -30,15 +30,19 @@ class ActionCreatorsDocs extends React.Component {
           {` `}
           <code>boundActionCreators</code>
           {` `}
-          contains the functions and these can be individually extracted
-          by using ES6 object destructuring.           
+          contains the functions and these can be individually extracted by
+          using ES6 object destructuring.
         </p>
-        <pre>
+        <pre
+          dangerouslySetInnerHTML={{
+            __html: `
 <code class=" language-javascript"><span class="token comment">// For function createNodeField</span>
 exports<span class="token punctuation">.</span><span class="token function-variable function">onCreateNode</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">{</span> node<span class="token punctuation">,</span> getNode<span class="token punctuation">,</span> boundActionCreators <span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
   <span class="token keyword">const</span> <span class="token punctuation">{</span> createNodeField <span class="token punctuation">}</span> <span class="token operator">=</span> boundActionCreators
 <span class="token punctuation">}</span></code>
-        </pre>
+  `,
+          }}
+        />
         <h2 css={{ marginBottom: rhythm(1 / 2) }}>Functions</h2>
         <ul css={{ ...scale(-1 / 5) }}>
           {this.props.data.allDocumentationJs.edges.map(({ node }, i) => (
