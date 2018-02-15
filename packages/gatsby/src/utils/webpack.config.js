@@ -261,7 +261,10 @@ module.exports = async (
               ]
               const isFramework = some(
                 vendorModuleList.map(vendor => {
-                  const regex = new RegExp(`/node_modules/${vendor}/.*`, `i`)
+                  const regex = new RegExp(
+                    `[\\\\/]node_modules[\\\\/]${vendor}[\\\\/].*`,
+                    `i`
+                  )
                   return regex.test(module.resource)
                 })
               )

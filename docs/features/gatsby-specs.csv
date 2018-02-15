@@ -62,7 +62,7 @@ Developer Experience,Maintenance & Extensibility,Serverless,3,3,2,2,"<p>Serverle
 <li><b>Language features</b>: Classes, static variables, generators, async control flows like promises & async / await</lI>
 <li><b>Data structures / types and modularity</b>: Maps, sets, modules, module loading, unicode...</li>
 </ul>"
-Ecosystem,Ecosystem,Component ecosystem,3,0,3,0,"React has several sets of out-of-the-box component libraries, as well as curated sets eg <a href=""https://js.coach/react"">JSCoach</a>"
+Ecosystem,Ecosystem,Component ecosystem,3,0,3,0,"React has several sets of out-of-the-box component libraries, as well as curated sets eg <a href=""https://js.coach/?collection=React"">JSCoach</a>"
 ,,Hosted option,2,2,3,3,Gatsby and other static site generators can be plugged into static hosts such as Netlify or surge.sh. Wordpress and Squarespace both come with built-in hosting.
 ,,Theme ecosystem,2,2,3,3,"Gatsby offers various themes through Typography.js, and Jekyll has themes built on it as well. Wordpress and Squarespace offer support for multiple themes through theme selectors out of the box."
 Design,Faster design iterations,Programmatic Design,2,0,0,0,"Gatsby offers support for programmatic design by being built on <a href=""https://kyleamathews.github.io/typography.js/"">Typography.js</a>."

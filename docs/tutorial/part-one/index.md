@@ -68,7 +68,7 @@ cd tutorial-part-one
 gatsby develop
 ```
 
-You should shortly see some text that says `The development server is listening at:` [http://localhost:8000](http://localhost:8000). Open that address in your
+You should shortly see some text, close to the bottom, that says `The development server is listening at:` [http://localhost:8000](http://localhost:8000). Open that address in your
 browser and...
 
 ![Gatsby.js hello world](hello-world.png)
@@ -88,10 +88,10 @@ Let's try it.
 You'll need code editing software for the next part of this tutorial.
 [VS Code](https://code.visualstudio.com/) is a nice one. With your code editor,
 open the folder on your computer called "tutorial-part-one," which was
-automatically created when you ran the `gatsby new` terminal command above.
+automatically created in the location you chose when you ran the `gatsby new` terminal command above.
 
 Once you've opened the "tutorial-part-one" folder in your code editing
-software, it's time to edit your website. You'll see groups of directories and files; find the file in this location: `src/pages/index.js`. Once you find that, try changing "Hello
+software, it's time to edit your website. You'll see groups of directories and files; find the file in this location: `src/pages/index.js`. Once you open that file, try changing "Hello
 world!" in the page component to "Hello Gatsby!". Once you save that change, the text in your browser
 should change within a second.
 
@@ -100,7 +100,7 @@ Try some other tricks, like the ones below:
 1. Gatsby lets you add "inline styles" via a JavaScript style "prop" (we'll
    learn about other styling options later).
 
-   Try making your page component look like this:
+   Try replacing your page component with this:
 
 ```jsx
 import React from "react";
@@ -122,7 +122,7 @@ export default () =>
  </div>
 ```
 
-3. Add an image
+3. Add an image (in this case, a random one from Unsplash)
 
 ```jsx{7}
 import React from "react";
@@ -150,7 +150,7 @@ First create the link to the new page.
 To do that, import the `<Link>` component from the `gatsby` package that
 was installed along with the starter.
 
-Unlike the normal HTML `<a>` element, our `Link` component uses `to` for
+Unlike the normal HTML `<a>` element, Gatsby's `Link` component uses `to` for
 specifying the page you want to link to. Let's link to a page with the pathname
 of `/page-2/`. Try adding that. Once you're done, the page component should look
 like:
@@ -171,7 +171,7 @@ export default () =>
   </div>
 ```
 
-Click on that link and you should see:
+If you click on that link in the browser you should see:
 
 ![Gatsby.js development 404 page](dev-404.png)
 
@@ -202,10 +202,10 @@ pages!
 
 ## Interactive page
 
-One nice thing about using Gatsby for building websites vs. other tools is itʼs easier to add interactivity to your pages. React.js was designed for
+One nice thing about using Gatsby for building websites vs. other tools is that itʼs easier to add interactivity to your pages. React.js was designed for
 Facebook.com and is used on many other world-class web applications.
 
-Let's see how easy it is to add interactive elements to our pages.
+Let's see how easy it is to add interactive elements to our pages. Let's start with a counter.
 
 We'll start by creating a new link to a page at `/counter`/ from our original
 `index.js` page component `<Link to="/counter/">Counter</Link>`.

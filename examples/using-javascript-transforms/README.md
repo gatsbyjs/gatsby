@@ -12,7 +12,7 @@ There are two "root" data types that we use. There are routes that are based in
 markdown such as /a-first-post/ found at
 `src/articles/2017-01-22-a-first-post/index.md`. Of greater interest are routes
 based on JavaScript. This is not to be confused with the JavaScript react
-components in `src/layouts/*` or `src/templates/*` or even `src/components/*`.
+components in `src/templates/*` or even `src/components/*`.
 In this example, we use JavaScript for some articles. Check out
 `src/articles/2017-03-09-choropleth-on-d3v4/index.js`. Typically most examples
 will use a JavaScript root data type for the homepage.
@@ -22,8 +22,8 @@ template (`src/templates/*`). In the template, we can include dumb components to
 compose our structure in a DRY manner. The JavaScript routes are used directly
 which means you will need to include some of the route specific structure on
 every JavaScript page. This can be painful, but it can be managed with good use
-of higher order components (see `src/components/BlogPostChrome`) and graphql
-fragments. For further discussion and relevant prototypes see
+of higher order components (see `src/components/BlogPostChrome` and `src/components/Layouts`)
+and graphql fragments. For further discussion and relevant prototypes see
 [#1866](https://github.com/gatsbyjs/gatsby/issues/1866).
 
 The last thing of note is this example's `gatsby-node.js`. Gatsby by default
