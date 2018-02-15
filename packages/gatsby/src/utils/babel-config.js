@@ -35,7 +35,7 @@ function findBabelrc(directory, stage) {
   try {
     return json5.parse(fs.readFileSync(path.join(directory, `.babelrc`), `utf-8`))
   } catch (error) {
-    if (error.code == `ENOENT`) {
+    if (error.code !== `ENOENT`) {
       throw error
     }
   }
