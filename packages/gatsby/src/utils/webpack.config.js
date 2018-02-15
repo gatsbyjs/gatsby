@@ -13,6 +13,7 @@ const { actions } = require(`../redux/actions`)
 const debug = require(`debug`)(`gatsby:webpack-config`)
 const WebpackMD5Hash = require(`webpack-md5-hash`)
 const GatsbyModulePlugin = require(`gatsby-module-loader/plugin`)
+const report = require(`gatsby-cli/lib/reporter`)
 const { withBasePath } = require(`./path`)
 
 const apiRunnerNode = require(`./api-runner-node`)
@@ -48,11 +49,12 @@ module.exports = async (
     let parsed = {}
     try {
       parsed = dotenv.parse(fs.readFileSync(envFile, { encoding: `utf8` }))
-    } catch (e) {
-      if (e && e.code !== `ENOENT`) {
-        console.log(e)
+    } catch (err) {
+      if (err.code !== `ENOENT`) {
+        report.error(`There was a problem processing the .env file`, err)
       }
     }
+
     const envObject = Object.keys(parsed).reduce((acc, key) => {
       acc[key] = JSON.stringify(parsed[key])
       return acc
@@ -346,7 +348,7 @@ module.exports = async (
         configRules = configRules.concat([
           {
             ...rules.css(),
-            use: loaders.null,
+            use: [loaders.null()],
           },
           rules.cssModules(),
         ])
@@ -389,10 +391,8 @@ module.exports = async (
       if (fs.statSync(userLoaderDirectoryPath).isDirectory()) {
         root.push(userLoaderDirectoryPath)
       }
-    } catch (e) {
-      if (e && e.code !== `ENOENT`) {
-        console.log(e)
-      }
+    } catch (err) {
+      debug(`Error resolving user loaders directory`, err)
     }
 
     return {

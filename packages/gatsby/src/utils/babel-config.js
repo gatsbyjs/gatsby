@@ -4,6 +4,7 @@ import fs from "fs"
 import path from "path"
 import json5 from "json5"
 import _ from "lodash"
+const report = require(`gatsby-cli/lib/reporter`)
 import apiRunnerNode from "./api-runner-node"
 
 // TODO update this to store Babelrc config in Redux store.
@@ -18,12 +19,35 @@ function findBabelrc(directory) {
     const babelrc = fs.readFileSync(path.join(directory, `.babelrc`), `utf-8`)
     return json5.parse(babelrc)
   } catch (error) {
-    if (error.code === `ENOENT`) {
-      return null
-    } else {
-      throw error
-    }
+    if (error.code !== `ENOENT`) throw error
   }
+  return null
+}
+
+/**
+ * Locates a .babelrc.js in the Gatsby site root directory.
+ * requires it and unwraps any esm default export
+ */
+function findBabelrcJs(directory, stage) {
+  try {
+    // $FlowFixMe
+    let babelrc = require(path.join(directory, `.babelrc.js`))
+    babelrc =
+      babelrc && babelrc.__esModule ? babelrc.default || undefined : babelrc
+
+    // TODO support this
+    if (typeof babelrc === `function`) {
+      report.error(
+        `.babelrc.js files that export a function are not supported in Gatsby`
+      )
+      return null
+    }
+
+    return babelrc
+  } catch (error) {
+    if (error.code !== `ENOENT`) throw error
+  }
+  return null
 }
 
 /**
@@ -32,7 +56,7 @@ function findBabelrc(directory) {
  */
 function findBabelPackage(directory) {
   try {
-    // $FlowIssue - https://github.com/facebook/flow/issues/1975
+    // $FlowFixMe - https://github.com/facebook/flow/issues/1975
     const packageJson = require(path.join(directory, `package.json`))
     return packageJson.babel
   } catch (error) {
@@ -51,7 +75,10 @@ function findBabelPackage(directory) {
 module.exports = async function babelConfig(program, stage) {
   const { directory } = program
 
-  let babelrc = findBabelrc(directory) || findBabelPackage(directory)
+  let babelrc =
+    findBabelrc(directory) ||
+    findBabelrcJs(directory) ||
+    findBabelPackage(directory)
 
   // If user doesn't have a custom babelrc, add defaults.
   if (!babelrc) {
@@ -73,21 +100,26 @@ module.exports = async function babelConfig(program, stage) {
         [
           require.resolve(`@babel/preset-react`),
           {
+            useBuiltIns: true,
             pragma: `React.createElement`,
+            development: stage === `develop`,
           },
         ],
         require.resolve(`@babel/preset-flow`),
       ],
       plugins: [
-        require.resolve(`@babel/plugin-proposal-class-properties`),
+        [
+          require.resolve(`@babel/plugin-proposal-class-properties`),
+          { loose: true },
+        ],
         require.resolve(`@babel/plugin-syntax-dynamic-import`),
         // Polyfills the runtime needed for async/await and generators
         [
           require.resolve(`@babel/plugin-transform-runtime`),
           {
-            helpers: false,
-            polyfill: false,
+            helpers: true,
             regenerator: true,
+            polyfill: false,
           },
         ],
       ],
@@ -103,10 +135,6 @@ module.exports = async function babelConfig(program, stage) {
   if (stage === `develop`) {
     // TODO: maybe this should be left to the user?
     babelrc.plugins.unshift(require.resolve(`react-hot-loader/babel`))
-    // TODO figure out what this was — if left in it breaks builds
-    // babelrc.plugins.unshift(
-    // require.resolve(`@babel/transform-react-jsx-source`)
-    // )
   }
 
   babelrc.plugins.unshift(
