@@ -40,6 +40,58 @@ module.exports = {
   ],
 };
 ```
+## API
+
+`gatsby-source-filesystem` reveals two APIs:
+- `createFilePath`
+- `createRemoteFileNode`
+
+### createFilePath
+```javascript
+// In your gatsby-node.js
+createFilePath({
+  // The node you'd like to create into a filepath
+  // Param from `onCreateNode` can be used here
+  // ie: a markdown file, JSON data, etc
+  node:
+  // Method used to get a node
+  // Param from `onCreateNode` can be used here
+  getNode:
+  // the slug structure you'd like to create
+  // Defaults to `src/pages`
+  basePath:
+  // Whether you want your file paths to contain a trailing `/` slash
+  // Defaults to true
+  trailingSlash:
+})
+```
+
+#### Example usage
+The following is taken from [Gatsby Tutorial, Part Four](https://www.gatsbyjs.org/tutorial/part-four/#programmatically-creating-pages-from-data) and is used to create URL slugs from markdown pages.
+
+```javascript
+exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
+    const { createNodeField } = boundActionCreators
+    // Ensures we are processing only markdown files
+    if (node.internal.type === 'MarkdownRemark') {
+        // Use `createFilePath` to turn markdown files in our `data/faqs` directory into `/faqs/slug`
+        const relativeFilePath = createFilePath({ node, getNode, basePath: 'data/faqs/', trailingSlash: false })
+
+        // Creates new query'able field with name of 'slug'
+        createNodeField({
+            node,
+            name: 'slug',
+            value: `/faqs${relativeFilePath}`
+        })
+    }
+};
+```
+
+### createRemoteFileNode
+
+```javascript
+TO DO
+```
 
 ## How to query
 
