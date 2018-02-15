@@ -14,16 +14,20 @@ import apiRunnerNode from "./api-runner-node"
  * not parseable.
  */
 function findBabelrc(directory) {
+  let babelrc = null;
+  let rcPath = path.join(directory, `.babelrc`)
+  if (!fs.fileExistsSync(rcPath)) {
+    rcPath = path.join(directory, `.babelrc.js`)
+  }
+  
   try {
-    const babelrc = fs.readFileSync(path.join(directory, `.babelrc`), `utf-8`)
-    return json5.parse(babelrc)
+    babelrc = fs.readFileSync(rcPath, `utf-8`)
   } catch (error) {
-    if (error.code === `ENOENT`) {
-      return null
-    } else {
+    if (error.code !== `ENOENT`) {
       throw error
     }
   }
+  return babelrc && json5.parse(babelrc)
 }
 
 /**
