@@ -13,6 +13,7 @@ module.exports = (state = {}, action) => {
         state[action.payload.componentPath],
         {
           componentPath: action.payload.componentPath,
+          query: ``,
         }
       )
       return state

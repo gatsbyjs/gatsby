@@ -104,12 +104,28 @@ const watch = rootDir => {
   const debounceCompile = _.debounce(() => {
     queryCompiler().then(queries => {
       const components = store.getState().components
+
+      // If a component previously with a query now doesn't — update the
+      // store.
+      const noQueryComponents = Object.values(components).filter(
+        c => c.query !== `` && !queries.has(c.componentPath)
+      )
+      noQueryComponents.forEach(({ componentPath }) => {
+        boundActionCreators.replaceComponentQuery({
+          query: ``,
+          componentPath,
+        })
+        runQueriesForComponent(componentPath)
+      })
+
+      // Update the store with the new queries and re-run queries that were
+      // changed.
       queries.forEach(({ text }, id) => {
-        // Queries can be parsed from non page/layout components e.g. components
-        // with fragments so ignore those.
+        // Queries can be parsed from non page/layout components
+        // e.g. components with fragments so ignore those.
         //
-        // If the query has changed, set the new query in the store and run
-        // its queries.
+        // If the query has changed, set the new query in the
+        // store and run its queries.
         if (components[id] && text !== components[id].query) {
           boundActionCreators.replaceComponentQuery({
             query: text,
