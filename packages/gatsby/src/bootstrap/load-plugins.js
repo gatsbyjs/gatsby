@@ -7,8 +7,62 @@ const glob = require(`glob`)
 
 const { store } = require(`../redux`)
 const nodeAPIs = require(`../utils/api-node-docs`)
-const testRequireError = require(`../utils/test-require-error`).default
-const report = require(`gatsby-cli/lib/reporter`)
+const browserAPIs = require(`../utils/api-browser-docs`)
+const ssrAPIs = require(`../../cache-dir/api-ssr-docs`)
+const resolveModuleExports = require(`./resolve-module-exports`)
+
+// Given a plugin object, an array of the API names it exports and an
+// array of valid API names, return an array of invalid API exports.
+const getBadExports = (plugin, pluginAPIKeys, apis) => {
+  let badExports = []
+  // Discover any exports from plugins which are not "known"
+  badExports = badExports.concat(
+    _.difference(pluginAPIKeys, apis).map(e => {
+      return {
+        exportName: e,
+        pluginName: plugin.name,
+        pluginVersion: plugin.version,
+      }
+    })
+  )
+  return badExports
+}
+
+const getBadExportsMessage = (badExports, exportType, apis) => {
+  const { stripIndent } = require(`common-tags`)
+  const stringSimiliarity = require(`string-similarity`)
+  let capitalized = `${exportType[0].toUpperCase()}${exportType.slice(1)}`
+  if (capitalized === `Ssr`) capitalized = `SSR`
+
+  let message = `\n`
+  message += stripIndent`
+    Your plugins must export known APIs from their gatsby-${exportType}.js.
+    The following exports aren't APIs. Perhaps you made a typo or
+    your plugin is outdated?
+
+    See https://www.gatsbyjs.org/docs/${exportType}-apis/ for the list of Gatsby ${capitalized} APIs`
+
+  badExports.forEach(bady => {
+    const similarities = stringSimiliarity.findBestMatch(bady.exportName, apis)
+    message += `\n — `
+    if (bady.pluginName == `default-site-plugin`) {
+      message += `Your site's gatsby-${exportType}.js is exporting a variable named "${
+        bady.exportName
+      }" which isn't an API.`
+    } else {
+      message += `The plugin "${bady.pluginName}@${
+        bady.pluginVersion
+      }" is exporting a variable named "${bady.exportName}" which isn't an API.`
+    }
+    if (similarities.bestMatch.rating > 0.5) {
+      message += ` Perhaps you meant to export "${
+        similarities.bestMatch.target
+      }"?`
+    }
+  })
+
+  return message
+}
 
 function createFileContentHash(root, globPattern) {
   const hash = crypto.createHash(`md5`)
@@ -196,84 +250,66 @@ module.exports = async (config = {}) => {
   // APIs that a plugin supports are saved along with the plugin in the store for
   // easier filtering later. If there are bad exports (either typos, outdated, or
   // plain incorrect), then we output a readable error & quit.
-  const apis = _.keys(nodeAPIs)
-  const apiToPlugins = apis.reduce((acc, value) => {
+  const apis = {}
+  apis.node = _.keys(nodeAPIs)
+  apis.browser = _.keys(browserAPIs)
+  apis.ssr = _.keys(ssrAPIs)
+
+  const allAPIs = [...apis.node, ...apis.browser, ...apis.ssr]
+
+  const apiToPlugins = allAPIs.reduce((acc, value) => {
     acc[value] = []
     return acc
   }, {})
-  let badExports = []
+
+  const badExports = {
+    node: [],
+    browser: [],
+    ssr: [],
+  }
+
   flattenedPlugins.forEach(plugin => {
-    let gatsbyNode
     plugin.nodeAPIs = []
-    try {
-      gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
-    } catch (err) {
-      if (!testRequireError(`gatsby-node`, err)) {
-        // ignore
-      } else {
-        report.panic(`Error requiring ${plugin.resolve}/gatsby-node.js`, err)
-      }
+    plugin.browserAPIs = []
+    plugin.ssrAPIs = []
+
+    // Discover which APIs this plugin implements and store an array against
+    // the plugin node itself *and* in an API to plugins map for faster lookups
+    // later.
+    const pluginNodeExports = resolveModuleExports(`${plugin.resolve}/gatsby-node`)
+    const pluginBrowserExports = resolveModuleExports(`${plugin.resolve}/gatsby-browser`)
+    const pluginSSRExports = resolveModuleExports(`${plugin.resolve}/gatsby-ssr`)
+
+    if (pluginNodeExports.length > 0) {
+      plugin.nodeAPIs = _.intersection(pluginNodeExports, apis.node)
+      plugin.nodeAPIs.map(nodeAPI => apiToPlugins[nodeAPI].push(plugin.name))
+      badExports.node = getBadExports(plugin, pluginNodeExports, apis.node) // Collate any bad exports
     }
 
-    if (gatsbyNode) {
-      const gatsbyNodeKeys = _.keys(gatsbyNode)
-      // Discover which nodeAPIs this plugin implements and store
-      // an array against the plugin node itself *and* in a node
-      // API to plugins map for faster lookups later.
-      plugin.nodeAPIs = _.intersection(gatsbyNodeKeys, apis)
-      plugin.nodeAPIs.map(nodeAPI => apiToPlugins[nodeAPI].push(plugin.name))
-      // Discover any exports from plugins which are not "known"
-      badExports = badExports.concat(
-        _.difference(gatsbyNodeKeys, apis).map(e => {
-          return {
-            exportName: e,
-            pluginName: plugin.name,
-            pluginVersion: plugin.version,
-          }
-        })
-      )
+    if (pluginBrowserExports.length > 0) {
+      plugin.browserAPIs = _.intersection(pluginBrowserExports, apis.browser)
+      plugin.browserAPIs.map(browserAPI => apiToPlugins[browserAPI].push(plugin.name))
+      badExports.browser = getBadExports(plugin, pluginBrowserExports, apis.browser) // Collate any bad exports
+    }
+
+    if (pluginSSRExports.length > 0) {
+      plugin.ssrAPIs = _.intersection(pluginSSRExports, apis.ssr)
+      plugin.ssrAPIs.map(ssrAPI => apiToPlugins[ssrAPI].push(plugin.name))
+      badExports.ssr = getBadExports(plugin, pluginSSRExports, apis.ssr) // Collate any bad exports
     }
   })
 
-  if (badExports.length > 0) {
-    const stringSimiliarity = require(`string-similarity`)
-    const { stripIndent } = require(`common-tags`)
-    console.log(`\n`)
-    console.log(
-      stripIndent`
-      Your plugins must export known APIs from their gatsby-node.js.
-      The following exports aren't APIs. Perhaps you made a typo or
-      your plugin is outdated?
+  // Output error messages for all bad exports
+  let bad = false
+  _.toPairs(badExports).forEach(bad => {
+    const [exportType, entries] = bad
+    if (entries.length > 0) {
+      bad = true
+      console.log(getBadExportsMessage(entries, exportType, apis[exportType]))
+    }
+  })
 
-      See https://www.gatsbyjs.org/docs/node-apis/ for the list of Gatsby Node APIs`
-    )
-    badExports.forEach(bady => {
-      const similarities = stringSimiliarity.findBestMatch(
-        bady.exportName,
-        apis
-      )
-      let message = `\n — `
-      if (bady.pluginName == `default-site-plugin`) {
-        message += `Your site's gatsby-node.js is exporting a variable named "${
-          bady.exportName
-        }" which isn't an API.`
-      } else {
-        message += `The plugin "${bady.pluginName}@${
-          bady.pluginVersion
-        }" is exporting a variable named "${
-          bady.exportName
-        }" which isn't an API.`
-      }
-      if (similarities.bestMatch.rating > 0.5) {
-        message += ` Perhaps you meant to export "${
-          similarities.bestMatch.target
-        }"?`
-      }
-
-      console.log(message)
-    })
-    process.exit()
-  }
+  if (bad) process.exit()
 
   store.dispatch({
     type: `SET_SITE_PLUGINS`,

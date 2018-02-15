@@ -12,8 +12,9 @@ To add custom webpack configurations, create (if there's not one already) a
 `gatsby-node.js` file in your root directory. Inside this file, export a
 function called `modifyWebpackConfig`.
 
-When Gatsby creates its webpack config, this function will be called allowing you to update the default
-webpack config.
+When Gatsby creates its webpack config, this function will be called allowing
+you to modify the default webpack config using
+[webpack-configurator](https://github.com/lewie9021/webpack-configurator).
 
 Gatsby does multiple webpack builds with somewhat different configuration. We
 call each build type a "stage". The following stages exist:
@@ -38,43 +39,40 @@ e.g. [Sass](/packages/gatsby-plugin-sass/),
 
 ## Example
 
-Here is an example adding an additional global variable via the `DefinePlugin` and
-the `less-loader`
+Here is an example that configures **flexboxgrid** when processing css files. Add this in `gatsby-node.js`:
 
 ```js
-exports.modifyWebpackConfig = ({
-  stage,
-  rules,
-  loaders,
-  plugins,
-  boundActionCreators,
-}) => {
-  boundActionCreators.setWebpackConfig({
-    module: {
-      rules: [
-        {
-          test: /\.less$/,
-          // We don't need to add the matching ExtractText plugin
-          // because gatsby already includes it and makes sure its only
-          // run at the appropriate stages, e.g. not in development
-          use: plugins.extractText.extract({
-            fallback: loaders.style,
-            use: [
-              loaders.css({ importLoaders: 1 }),
-              // the postcss loader comes with some nice defaults
-              // including autoprefixer for our configured browsers
-              loaders.postcss(),
-              `less-loader`,
-            ],
-          }),
-        },
-      ],
-    },
-    plugins: [
-      plugins.define({
-        __DEVELOPMENT__: stage === `develop` || stage === `develop-html`,
-      }),
-    ],
-  });
+exports.modifyWebpackConfig = ({ config, stage }) => {
+  switch (stage) {
+    case "develop":
+      config.loader("css", {
+        include: /flexboxgrid/,
+      });
+
+      break;
+
+    case "build-css":
+      config.loader("css", {
+        include: /flexboxgrid/,
+      });
+
+      break;
+
+    case "build-html":
+      config.loader("css", {
+        include: /flexboxgrid/,
+      });
+
+      break;
+
+    case "build-javascript":
+      config.loader("css", {
+        include: /flexboxgrid/,
+      });
+
+      break;
+  }
+
+  return config;
 };
 ```

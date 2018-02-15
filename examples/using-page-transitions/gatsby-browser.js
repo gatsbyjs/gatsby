@@ -10,8 +10,7 @@ const timeout = 250
 const historyExitingEventType = `history::exiting`
 
 const getUserConfirmation = (pathname, callback) => {
-  const event = document.createEvent("CustomEvent");
-  event.initCustomEvent(historyExitingEventType, false, false, { detail: { pathname } });
+  const event = new CustomEvent(historyExitingEventType, { detail: { pathname } })
   window.dispatchEvent(event)
   setTimeout(() => {
     callback(true)

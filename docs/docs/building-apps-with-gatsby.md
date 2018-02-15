@@ -4,7 +4,7 @@ title: "Building apps with Gatsby"
 
 Gatsby is an excellent framework for building web apps. You can use Gatsby to create personalized, logged-in experiences with two different methods.
 
-The first approach to to build "hybrid" app pages which are statically rendered with dynamic sections. The second is, if needed, add client-only multi-page sections of the site.
+The first approach is to build "hybrid" app pages which are statically rendered with dynamic sections. The second is, if needed, add client-only multi-page sections of the site.
 
 ## Hybrid app pages
 

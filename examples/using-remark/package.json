@@ -28,6 +28,7 @@
     "lodash-id": "^0.14.0",
     "lodash-webpack-plugin": "^0.11.2",
     "react-typography": "^0.15.10",
+    "rehype-react": "^3.0.2",
     "slash": "^1.0.0",
     "typeface-space-mono": "^0.0.22",
     "typeface-spectral": "^0.0.29",

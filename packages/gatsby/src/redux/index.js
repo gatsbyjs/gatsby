@@ -14,15 +14,10 @@ const reducers = require(`./reducers`)
 
 // Read from cache the old node data.
 let initialState = {}
-const rootNodeMap = new WeakMap()
 try {
   initialState = JSON.parse(
     fs.readFileSync(`${process.cwd()}/.cache/redux-state.json`)
   )
-
-  _.each(initialState.nodes, (id, node) => {
-    trackSubObjectsToRootNodeId(node)
-  })
 } catch (e) {
   // ignore errors.
 }
@@ -118,26 +113,6 @@ exports.getNodeAndSavePathDependency = (id, path) => {
   createPageDependency({ path, nodeId: id })
   return node
 }
-
-exports.getRootNodeId = node => rootNodeMap.get(node)
-
-const addParentToSubObjects = (data, parentId) => {
-  if (_.isPlainObject(data) || _.isArray(data)) {
-    _.each(data, o => addParentToSubObjects(o, parentId))
-    rootNodeMap.set(data, parentId)
-  }
-}
-
-const trackSubObjectsToRootNodeId = node => {
-  _.each(node, (v, k) => {
-    // Ignore the node internal object.
-    if (k === `internal`) {
-      return
-    }
-    addParentToSubObjects(v, node.parent)
-  })
-}
-exports.trackSubObjectsToRootNodeId = trackSubObjectsToRootNodeId
 
 // Start plugin runner which listens to the store
 // and invokes Gatsby API based on actions.

@@ -187,6 +187,7 @@ class Image extends React.Component {
       sizes,
       resolutions,
       backgroundColor,
+      Tag,
     } = convertProps(this.props)
 
     let bgColor
@@ -207,7 +208,7 @@ class Image extends React.Component {
 
       // The outer div is necessary to reset the z-index to 0.
       return (
-        <div
+        <Tag
           className={`${
             outerWrapperClassName ? outerWrapperClassName : ``
           } gatsby-image-outer-wrapper`}
@@ -217,7 +218,7 @@ class Image extends React.Component {
             position: style.position === `absolute` ? `initial` : `relative`,
           }}
         >
-          <div
+          <Tag
             className={`${className ? className : ``} gatsby-image-wrapper`}
             style={{
               position: `relative`,
@@ -228,7 +229,7 @@ class Image extends React.Component {
             ref={this.handleRef}
           >
             {/* Preserve the aspect ratio. */}
-            <div
+            <Tag
               style={{
                 width: `100%`,
                 paddingBottom: `${100 / image.aspectRatio}%`,
@@ -259,7 +260,7 @@ class Image extends React.Component {
 
             {/* Show a solid background color. */}
             {bgColor && (
-              <div
+              <Tag
                 title={title}
                 style={{
                   backgroundColor: bgColor,
@@ -298,8 +299,8 @@ class Image extends React.Component {
                 __html: noscriptImg({ alt, title, ...image }),
               }}
             />
-          </div>
-        </div>
+          </Tag>
+        </Tag>
       )
     }
 
@@ -327,7 +328,7 @@ class Image extends React.Component {
 
       // The outer div is necessary to reset the z-index to 0.
       return (
-        <div
+        <Tag
           className={`${
             outerWrapperClassName ? outerWrapperClassName : ``
           } gatsby-image-outer-wrapper`}
@@ -337,7 +338,7 @@ class Image extends React.Component {
             position: style.position === `absolute` ? `initial` : `relative`,
           }}
         >
-          <div
+          <Tag
             className={`${className ? className : ``} gatsby-image-wrapper`}
             style={divStyle}
             ref={this.handleRef}
@@ -366,7 +367,7 @@ class Image extends React.Component {
 
             {/* Show a solid background color. */}
             {bgColor && (
-              <div
+              <Tag
                 title={title}
                 style={{
                   backgroundColor: bgColor,
@@ -409,8 +410,8 @@ class Image extends React.Component {
                 }),
               }}
             />
-          </div>
-        </div>
+          </Tag>
+        </Tag>
       )
     }
 
@@ -421,6 +422,7 @@ class Image extends React.Component {
 Image.defaultProps = {
   fadeIn: true,
   alt: ``,
+  Tag: `div`,
 }
 
 Image.propTypes = {
@@ -440,6 +442,7 @@ Image.propTypes = {
   position: PropTypes.string,
   backgroundColor: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   onLoad: PropTypes.func,
+  Tag: PropTypes.string,
 }
 
 export default Image

@@ -42,7 +42,7 @@ plugins: [
             destinationDir: 'path/to/dir',
           }
         }
-      }
+      ]
     }
   }
 ]
