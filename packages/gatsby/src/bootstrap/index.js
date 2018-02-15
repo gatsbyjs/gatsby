@@ -9,7 +9,7 @@ const crypto = require(`crypto`)
 const del = require(`del`)
 
 const apiRunnerNode = require(`../utils/api-runner-node`)
-const testRequireError = require(`../utils/test-require-error`)
+const testRequireError = require(`../utils/test-require-error`).default
 const { graphql } = require(`graphql`)
 const { store, emitter } = require(`../redux`)
 const loadPlugins = require(`./load-plugins`)

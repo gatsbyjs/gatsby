@@ -1,5 +1,5 @@
 import React from "react"
-import { withPrefix } from "gatsby-link"
+import { withPrefix } from "gatsby"
 
 exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
   setHeadComponents([

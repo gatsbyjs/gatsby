@@ -387,6 +387,7 @@ module.exports = async ({
         compress: {
           drop_console: true,
         },
+        ecma: 8,
         ie8: false,
         ...uglifyOptions,
       },

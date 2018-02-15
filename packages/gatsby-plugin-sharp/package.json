@@ -23,7 +23,7 @@
     "cross-env": "^5.0.5"
   },
   "peerDependencies": {
-    "gatsby": "^1.0.0"
+    "gatsby": ">1.0.0 || >2.0.0-alpha"
   },
   "keywords": [
     "gatsby",

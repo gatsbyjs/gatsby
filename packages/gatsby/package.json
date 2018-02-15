@@ -50,6 +50,7 @@
     "front-matter": "^2.1.0",
     "fs-extra": "^5.0.0",
     "gatsby-cli": "^1.1.28",
+    "gatsby-link": "^1.6.36",
     "gatsby-module-loader": "^2.0.0-alpha.1",
     "gatsby-react-router-scroll": "^1.0.8",
     "glob": "^7.1.1",
@@ -104,6 +105,7 @@
     "string-similarity": "^1.2.0",
     "style-loader": "^0.19.1",
     "type-of": "^2.0.1",
+    "uglifyjs-webpack-plugin": "^1.1.8",
     "url-loader": "^0.5.7",
     "uuid": "^3.1.0",
     "v8-compile-cache": "^1.1.0",
@@ -143,7 +145,7 @@
     "website"
   ],
   "license": "MIT",
-  "main": "index.js",
+  "main": "dist/browser.js",
   "peerDependencies": {
     "react": "^16.2.0",
     "react-dom": "^16.2.0"

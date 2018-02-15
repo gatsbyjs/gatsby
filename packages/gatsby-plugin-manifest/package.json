@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-manifest",
-  "version": "1.0.13",
+  "version": "2.0.0",
   "description": "Gatsby plugin which adds a manifest.json to make sites progressive web apps",
   "main": "index.js",
   "scripts": {
@@ -27,6 +27,6 @@
     "bluebird": "^3.5.0"
   },
   "peerDependencies": {
-    "gatsby": "^1.0.0"
+    "gatsby": ">1.0.0 || >2.0.0-alpha"
   }
 }

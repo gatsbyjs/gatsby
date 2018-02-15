@@ -1,3 +1,4 @@
+import React from "react"
 import { rhythm, scale, options } from "../utils/typography"
 import presets from "../utils/presets"
 

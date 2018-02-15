@@ -8,7 +8,7 @@
   },
   "peerDependencies": {
     "glamor": "^2.20.29",
-    "gatsby": "^1.0.0"
+    "gatsby": ">2.0.0-alpha"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.38",

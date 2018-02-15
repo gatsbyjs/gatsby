@@ -1,3 +1,4 @@
+import React from "react"
 import { Link } from "gatsby"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
