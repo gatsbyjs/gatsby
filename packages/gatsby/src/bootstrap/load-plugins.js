@@ -9,24 +9,7 @@ const { store } = require(`../redux`)
 const nodeAPIs = require(`../utils/api-node-docs`)
 const browserAPIs = require(`../utils/api-browser-docs`)
 const ssrAPIs = require(`../../cache-dir/api-ssr-docs`)
-const testRequireError = require(`../utils/test-require-error`)
-const report = require(`gatsby-cli/lib/reporter`)
-
-// Given a plugin object and a moduleName like `gatsby-node`, check that the
-// path to moduleName can be resolved.
-const resolvePluginModule = (plugin, moduleName) => {
-  let resolved = false
-  try {
-    resolved = require(`${plugin.resolve}/${moduleName}`)
-  } catch (err) {
-    if (!testRequireError(moduleName, err)) {
-      // ignore
-    } else {
-      report.panic(`Error requiring ${plugin.resolve}/${moduleName}.js`, err)
-    }
-  }
-  return resolved
-}
+const resolveModuleExports = require(`./resolve-module-exports`)
 
 // Given a plugin object, an array of the API names it exports and an
 // array of valid API names, return an array of invalid API exports.
@@ -290,32 +273,29 @@ module.exports = async (config = {}) => {
     plugin.browserAPIs = []
     plugin.ssrAPIs = []
 
-    const gatsbyNode = resolvePluginModule(plugin, `gatsby-node`)
-    const gatsbyBrowser = resolvePluginModule(plugin, `gatsby-browser`)
-    const gatsbySSR = resolvePluginModule(plugin, `gatsby-ssr`)
-
     // Discover which APIs this plugin implements and store an array against
     // the plugin node itself *and* in an API to plugins map for faster lookups
     // later.
-    if (gatsbyNode) {
-      const gatsbyNodeKeys = _.keys(gatsbyNode)
-      plugin.nodeAPIs = _.intersection(gatsbyNodeKeys, apis.node)
+    const pluginNodeExports = resolveModuleExports(`${plugin.resolve}/gatsby-node`)
+    const pluginBrowserExports = resolveModuleExports(`${plugin.resolve}/gatsby-browser`)
+    const pluginSSRExports = resolveModuleExports(`${plugin.resolve}/gatsby-ssr`)
+
+    if (pluginNodeExports.length > 0) {
+      plugin.nodeAPIs = _.intersection(pluginNodeExports, apis.node)
       plugin.nodeAPIs.map(nodeAPI => apiToPlugins[nodeAPI].push(plugin.name))
-      badExports.node = getBadExports(plugin, gatsbyNodeKeys, apis.node) // Collate any bad exports
+      badExports.node = getBadExports(plugin, pluginNodeExports, apis.node) // Collate any bad exports
     }
 
-    if (gatsbyBrowser) {
-      const gatsbyBrowserKeys = _.keys(gatsbyBrowser)
-      plugin.browserAPIs = _.intersection(gatsbyBrowserKeys, apis.browser)
+    if (pluginBrowserExports.length > 0) {
+      plugin.browserAPIs = _.intersection(pluginBrowserExports, apis.browser)
       plugin.browserAPIs.map(browserAPI => apiToPlugins[browserAPI].push(plugin.name))
-      badExports.browser = getBadExports(plugin, gatsbyBrowserKeys, apis.browser) // Collate any bad exports
+      badExports.browser = getBadExports(plugin, pluginBrowserExports, apis.browser) // Collate any bad exports
     }
 
-    if (gatsbySSR) {
-      const gatsbySSRKeys = _.keys(gatsbySSR)
-      plugin.ssrAPIs = _.intersection(gatsbySSRKeys, apis.ssr)
+    if (pluginSSRExports.length > 0) {
+      plugin.ssrAPIs = _.intersection(pluginSSRExports, apis.ssr)
       plugin.ssrAPIs.map(ssrAPI => apiToPlugins[ssrAPI].push(plugin.name))
-      badExports.ssr = getBadExports(plugin, gatsbySSRKeys, apis.ssr) // Collate any bad exports
+      badExports.ssr = getBadExports(plugin, pluginSSRExports, apis.ssr) // Collate any bad exports
     }
   })
 

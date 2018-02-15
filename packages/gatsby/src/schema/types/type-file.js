@@ -6,7 +6,8 @@ const isRelativeUrl = require(`is-relative-url`)
 const normalize = require(`normalize-path`)
 const systemPath = require(`path`)
 
-const { getNode, getNodes, getRootNodeId } = require(`../../redux`)
+const { getNodes } = require(`../../redux`)
+const { findRootNode } = require(`../node-tracking`)
 const {
   createPageDependency,
 } = require(`../../redux/actions/add-page-dependency`)
@@ -22,33 +23,6 @@ export function setFileNodeRootType(fileNodeRootType) {
     type = null
     listType = null
   }
-}
-
-function findRootNode(node) {
-  // Find the root node.
-  let rootNode = node
-  let whileCount = 0
-  let rootNodeId
-  while (
-    (rootNodeId = getRootNodeId(rootNode) || rootNode.parent) &&
-    (getNode(rootNode.parent) !== undefined || getNode(rootNodeId)) &&
-    whileCount < 101
-  ) {
-    if (rootNodeId) {
-      rootNode = getNode(rootNodeId)
-    } else {
-      rootNode = getNode(rootNode.parent)
-    }
-    whileCount += 1
-    if (whileCount > 100) {
-      console.log(
-        `It looks like you have a node that's set its parent as itself`,
-        rootNode
-      )
-    }
-  }
-
-  return rootNode
 }
 
 function pointsToFile(nodes, key, value) {

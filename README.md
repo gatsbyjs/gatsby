@@ -158,6 +158,7 @@ Websites built with Gatsby:
 * [Cardiogram](https://cardiogr.am/)
 * [LaserTime Clinic](https://lasertime.ru) ([source](https://github.com/oleglegun/lasertime))
 * [Gatsby Manor - themes for GatsbyJS](https://gatsbymanor.com)
+* [Darren Britton's Portfolio](https://darrenbritton.com) ([source](https://github.com/darrenbritton/darrenbritton.github.io))
 
 ## Docs
 
