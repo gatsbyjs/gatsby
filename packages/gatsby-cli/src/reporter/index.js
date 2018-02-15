@@ -27,6 +27,13 @@ module.exports = Object.assign(reporter, {
     process.exit(1)
   },
 
+  panicOnBuild(...args) {
+    this.error(...args)
+    if (process.env.gatsby_executing_command !== `build`) {
+      process.exit(1)
+    }
+  },
+
   error(message, error) {
     if (arguments.length === 1 && typeof message !== `string`) {
       error = message
