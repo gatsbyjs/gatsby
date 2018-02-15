@@ -34,15 +34,10 @@ class ActionCreatorsDocs extends React.Component {
           by using ES6 object destructuring.           
         </p>
         <pre>
-          <code
-            className="language-javascript"
-            dangerouslySetInnerHTML={{
-              __html: `// For function createNodeField
-exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
-  const { createNodeField } = boundActionCreators
-}`,
-            }}
-          />
+<code class=" language-javascript"><span class="token comment">// For function createNodeField</span>
+exports<span class="token punctuation">.</span><span class="token function-variable function">onCreateNode</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">{</span> node<span class="token punctuation">,</span> getNode<span class="token punctuation">,</span> boundActionCreators <span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> <span class="token punctuation">{</span> createNodeField <span class="token punctuation">}</span> <span class="token operator">=</span> boundActionCreators
+<span class="token punctuation">}</span></code>
         </pre>
         <h2 css={{ marginBottom: rhythm(1 / 2) }}>Functions</h2>
         <ul css={{ ...scale(-1 / 5) }}>
