@@ -4,6 +4,8 @@ import fs from "fs"
 import path from "path"
 import json5 from "json5"
 import _ from "lodash"
+
+const reporter = require(`gatsby-cli/lib/reporter`)
 import apiRunnerNode from "./api-runner-node"
 
 // TODO update this to store Babelrc config in Redux store.
@@ -13,21 +15,31 @@ import apiRunnerNode from "./api-runner-node"
  * json5 (what Babel uses). It throws an error if the users's .babelrc is
  * not parseable.
  */
-function findBabelrc(directory) {
-  let babelrc = null;
-  let rcPath = path.join(directory, `.babelrc`)
-  if (!fs.fileExistsSync(rcPath)) {
-    rcPath = path.join(directory, `.babelrc.js`)
+function findBabelrc(directory, stage) {
+  let rcJsPath = path.join(directory, `.babelrc.js`)
+
+  if (fs.fileExistsSync(rcJsPath)) {
+    let babelrc = require(rcJsPath)
+    babelrc = babelrc && babelrc.__esModule
+      ? babelrc.default || undefined
+      : babelrc;
+
+    // TODO support this
+    if (typeof babelrc === 'function') {
+      reporter.error(`.babelrc.js files that export a function are not supported in Gatsby`)
+      return null
+    }
+    return babelrc
   }
   
   try {
-    babelrc = fs.readFileSync(rcPath, `utf-8`)
+    return json5.parse(fs.readFileSync(path.join(directory, `.babelrc`), `utf-8`))
   } catch (error) {
-    if (error.code !== `ENOENT`) {
+    if (error.code == `ENOENT`) {
       throw error
     }
   }
-  return babelrc && json5.parse(babelrc)
+  return null
 }
 
 /**
@@ -55,7 +67,7 @@ function findBabelPackage(directory) {
 module.exports = async function babelConfig(program, stage) {
   const { directory } = program
 
-  let babelrc = findBabelrc(directory) || findBabelPackage(directory)
+  let babelrc = findBabelrc(directory, stage) || findBabelPackage(directory)
 
   // If user doesn't have a custom babelrc, add defaults.
   if (!babelrc) {
