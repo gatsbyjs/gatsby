@@ -4,6 +4,7 @@ const flatten = require(`flat`)
 const typeOf = require(`type-of`)
 
 const createKey = require(`./create-key`)
+const { typeConflictReporter } = require(`./type-conflict-reporter`)
 
 const INVALID_VALUE = Symbol(`INVALID_VALUE`)
 const isDefined = v => v != null
@@ -77,6 +78,9 @@ const extractFromEntries = (entries, selector, key = null) => {
     entriesOfUniqueType[0].arrayTypes.length > 1
   ) {
     // there is multiple types or array of multiple types
+    if (selector) {
+      typeConflictReporter.addConflict(selector, ...entriesOfUniqueType)
+    }
     return INVALID_VALUE
   }
 
@@ -207,6 +211,7 @@ let typeExampleValues = {}
 
 const clearTypeExampleValues = () => {
   typeExampleValues = {}
+  typeConflictReporter.clearConflicts()
 }
 
 const getNodesAndTypeFromArg = arg => {
