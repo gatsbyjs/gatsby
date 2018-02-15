@@ -50,6 +50,7 @@
     "slash": "^1.0.0",
     "typeface-space-mono": "^0.0.54",
     "typeface-spectral": "^0.0.54",
+    "typography": "^0.16.6",
     "typography-breakpoint-constants": "^0.15.10",
     "typography-plugin-code": "^0.16.11",
     "validator": "^9.2.0"

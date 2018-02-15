@@ -2,7 +2,7 @@ const path = require(`path`)
 const fs = require(`fs-extra`)
 const chokidar = require(`chokidar`)
 
-exports.createPagesStatefully = async ({ store, actions }) => {
+exports.createPagesStatefully = async ({ store, actions }, options, done) => {
   if (process.env.NODE_ENV !== `production`) {
     const { program } = store.getState()
     const { createPage } = actions
