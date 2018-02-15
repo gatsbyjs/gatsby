@@ -8,11 +8,8 @@ const glob = require(`glob`)
 const path = require(`path`)
 const fs = require(`fs`)
 const { joinPath } = require(`../utils/path`)
-const {
-  getNode,
-  hasNodeChanged,
-  trackInlineObjectsInRootNode,
-} = require(`./index`)
+const { getNode, hasNodeChanged } = require(`./index`)
+const { trackInlineObjectsInRootNode } = require(`../schema/node-tracking`)
 const { store } = require(`./index`)
 import * as joiSchemas from "../joi-schemas/joi"
 import { generateComponentChunkName } from "../utils/js-chunk-names"

@@ -5,7 +5,7 @@ const { connectionFromArray } = require(`graphql-skip-limit`)
 const { createPageDependency } = require(`../redux/actions/add-page-dependency`)
 const prepareRegex = require(`./prepare-regex`)
 const Promise = require(`bluebird`)
-const { trackInlineObjectsInRootNode } = require(`../redux`)
+const { trackInlineObjectsInRootNode } = require(`./node-tracking`)
 
 function awaitSiftField(fields, node, k) {
   const field = fields[k]
