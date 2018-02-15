@@ -2,7 +2,7 @@
   items:
     - title: Getting Started
       link: /docs/
-    - title: Using Starters
+    - title: Starters
       link: /docs/gatsby-starters/
     - title: Deploying
       link: /docs/deploy-gatsby/
@@ -92,6 +92,8 @@
   items:
     - title: How to Contribute
       link: /docs/how-to-contribute/
+    - title: How to File an Issue
+      link: /docs/how-to-file-an-issue/
     - title: Gatsby Style Guide
       link: /docs/gatsby-style-guide/
     - title: Design Principles*

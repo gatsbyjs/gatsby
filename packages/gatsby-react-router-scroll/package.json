@@ -1,20 +1,24 @@
 {
   "name": "gatsby-react-router-scroll",
   "description": "React Router scroll management forked from https://github.com/ytase/react-router-scroll for Gatsby",
-  "version": "1.0.8",
+  "version": "1.0.11",
   "author": "Jimmy Jia",
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
   "dependencies": {
     "@babel/runtime": "^7.0.0-beta.38",
-    "scroll-behavior": "^0.9.1",
+    "scroll-behavior": "^0.9.9",
     "warning": "^3.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.38",
     "@babel/core": "^7.0.0-beta.38",
-    "babel-plugin-dev-expression": "^0.2.1",
     "@babel/preset-stage-1": "^7.0.0-beta.38",
+    "babel-plugin-dev-expression": "^0.2.1",
     "cross-env": "^5.0.5"
   },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-react-router-scroll#readme",
   "keywords": [
     "gatsby"
   ],
@@ -24,6 +28,10 @@
     "react": "^0.14.0 || ^15.0.0 || ^16.0.0",
     "react-dom": "^0.14.0 || ^15.0.0 || ^16.0.0",
     "react-router-dom": "^4.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git"
   },
   "scripts": {
     "build": "babel src --out-dir . --ignore **/__tests__/**",

@@ -1,27 +1,15 @@
 {
   "name": "gatsby-remark-custom-blocks",
-  "version": "1.0.2",
   "description": "Gatsby remark plugin for adding custom blocks in markdown",
-  "main": "index.js",
-  "scripts": {
-    "build": "babel --out-dir . --ignore **/__tests__/** src",
-    "watch": "babel -w src --out-dir . --ignore **/__tests__/**",
-    "prepublish": "cross-env NODE_ENV=production npm run build"
-  },
-  "repository": "https://github.com/AlahmadiQ8/gatsby-remark-custom-blocks",
-  "keywords": [
-    "gatsby",
-    "gatsby-plugin",
-    "markdown",
-    "remark"
-  ],
+  "version": "1.0.3",
   "author": "Mohammad Asad Mohammad <m91.alahmadi@gmail.com>",
-  "license": "MIT",
-  "private": false,
-  "files": [
-    "index.js",
-    "README.md"
-  ],
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.0.0-beta.38",
+    "remark-custom-blocks": "^1.0.6"
+  },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.38",
     "@babel/core": "^7.0.0-beta.38",
@@ -29,8 +17,26 @@
     "rimraf": "^2.6.2",
     "unist-util-find": "^1.0.1"
   },
-  "dependencies": {
-    "@babel/runtime": "^7.0.0-beta.38",
-    "remark-custom-blocks": "^1.0.6"
+  "files": [
+    "index.js",
+    "README.md"
+  ],
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-custom-blocks#readme",
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "markdown",
+    "remark"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git"
+  },
+  "scripts": {
+    "build": "babel --out-dir . --ignore __tests__ src",
+    "prepublish": "cross-env NODE_ENV=production npm run build",
+    "watch": "babel -w src --out-dir . --ignore __tests__"
   }
 }

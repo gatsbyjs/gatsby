@@ -1,12 +1,19 @@
 import React from "react"
 import { Link } from "gatsby"
 import Img from "gatsby-image"
+import rehypeReact from "rehype-react"
 
 import styles from "../styles"
 import { rhythm, scale } from "../utils/typography"
 import presets from "../utils/presets"
+import Counter from "../components/Counter"
 
 import "katex/dist/katex.min.css"
+
+const renderAst = new rehypeReact({
+  createElement: React.createElement,
+  components: { "interactive-counter": Counter },
+}).Compiler
 
 class BlogPostRoute extends React.Component {
   render() {
@@ -69,7 +76,7 @@ class BlogPostRoute extends React.Component {
           className="toc"
         />
 
-        <div dangerouslySetInnerHTML={{ __html: post.html }} className="post" />
+        {renderAst(post.htmlAst)}
         <hr
           css={{
             marginBottom: rhythm(1),
@@ -122,7 +129,7 @@ export default BlogPostRoute
 export const pageQuery = graphql`
   query BlogPostBySlug($slug: String!) {
     markdownRemark(fields: { slug: { eq: $slug } }) {
-      html
+      htmlAst
       timeToRead
       tableOfContents
       fields {

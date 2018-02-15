@@ -1,8 +1,11 @@
 {
   "name": "gatsby-plugin-stylus",
   "description": "Gatsby support for Stylus",
-  "version": "2.0.0-alpha.f20ac0ed",
+  "version": "1.1.15",
   "author": "Ian Sinnott <ian@iansinnott.com>",
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
   "dependencies": {
     "@babel/runtime": "^7.0.0-beta.38",
     "stylus": "^0.54.5",
@@ -13,9 +16,7 @@
     "@babel/core": "^7.0.0-beta.38",
     "cross-env": "^5.0.5"
   },
-  "peerDependencies": {
-    "gatsby": "^1.0.0"
-  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-stylus#readme",
   "keywords": [
     "gatsby",
     "gatsby-plugin",
@@ -23,10 +24,17 @@
   ],
   "license": "MIT",
   "main": "./gatsby-node.js",
+  "peerDependencies": {
+    "gatsby": "^1.0.0"
+  },
   "readme": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git"
+  },
   "scripts": {
-    "build": "babel src --out-dir . --ignore **/__tests__/**",
-    "watch": "babel -w src --out-dir . --ignore **/__tests__/**",
-    "prepublish": "cross-env NODE_ENV=production npm run build"
+    "build": "babel src --out-dir . --ignore __tests__",
+    "prepublish": "cross-env NODE_ENV=production npm run build",
+    "watch": "babel -w src --out-dir . --ignore __tests__"
   }
 }

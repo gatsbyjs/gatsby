@@ -20,7 +20,7 @@ See the [list of official and community plugins](/docs/plugins/)
 
 * [Static Site Generation with Gatsby.js v0 — Scott Nonnenberg](https://blog.scottnonnenberg.com/static-site-generation-with-gatsby-js/)
 * [React.js Conf 2016 - Lightning Talks - Kyle Mathews](https://www.youtube.com/watch?v=RFkNRKL6ZoE)
-* [Developing with React and Gatsby.js — Kyle Mathews](http://www.staticwebtech.com/presentations/developing-with-react-gatsbyjs/)
+* [Developing with React and Gatsby.js — Kyle Mathews](https://www.youtube.com/watch?v=G4LVKJOOj7o)
 * [GraphQL Summit Open Source Lightning Talk on Gatsby — Kyle Mathews](https://youtu.be/y588qNiCZZo)
 * [Talk on GatsbyJS @ ViennaJS — Gerald Bauer](https://www.youtube.com/watch?v=f0O1nCgqA3E&feature=youtu.be&a)
 
@@ -38,3 +38,4 @@ See the [list of official and community plugins](/docs/plugins/)
 * [Michael Cereda's multi-part series of blog posts on building his site with Gatsby](https://medium.com/@michaelcereda/creating-an-isomorphic-universal-website-with-react-part-1-a905350acba8#.akoo25l6j)
 * [Gatsby – Static Site Generator For React](https://codingthesmartway.com/gatsby-static-site-generater-for-react-introduction/)
 * [Construye y Publica Tu Blog Personal con Gatsby y Netlify](https://medium.com/@n370/construye-y-publica-tu-blog-personal-con-gatsby-y-netlify-parte-1-89804ba63625)
+* [Ultra-schnellen Blog mit React und Gatsby erstellen](https://www.lekoarts.de/blog/ultra-schnellen-blog-mit-react-und-gatsby-erstellen)

@@ -157,7 +157,7 @@ class GatsbyLink extends React.Component {
             // loaded before continuing.
             if (process.env.NODE_ENV === `production`) {
               e.preventDefault()
-              window.___navigateTo(this.state.path)
+              window.___navigateTo(this.state.to)
             }
           }
 
@@ -184,6 +184,6 @@ GatsbyLink.contextTypes = {
 
 export default GatsbyLink
 
-export const navigateTo = pathname => {
-  window.___navigateTo(pathname)
+export const navigateTo = to => {
+  window.___navigateTo(to)
 }

@@ -3,11 +3,15 @@
   "description": "Gatsby transformer plugin for Markdown using the Remark library and ecosystem",
   "version": "2.0.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
   "dependencies": {
     "@babel/runtime": "^7.0.0-beta.38",
     "bluebird": "^3.5.0",
     "graphql-type-json": "^0.1.4",
     "gray-matter": "^3.0.0",
+    "hast-util-raw": "^2.0.2",
     "hast-util-to-html": "^3.0.0",
     "lodash": "^4.17.4",
     "mdast-util-to-hast": "^2.4.0",
@@ -29,6 +33,7 @@
     "@babel/core": "^7.0.0-beta.38",
     "cross-env": "^5.0.5"
   },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark#readme",
   "keywords": [
     "gatsby",
     "gatsby-plugin",
@@ -36,9 +41,13 @@
     "remark"
   ],
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git"
+  },
   "scripts": {
-    "build": "babel src --out-dir . --ignore **/__tests__/**",
-    "watch": "babel -w src --out-dir . --ignore **/__tests__/**",
-    "prepublish": "cross-env NODE_ENV=production npm run build"
+    "build": "babel src --out-dir . --ignore __tests__",
+    "prepublish": "cross-env NODE_ENV=production npm run build",
+    "watch": "babel -w src --out-dir . --ignore __tests__"
   }
 }

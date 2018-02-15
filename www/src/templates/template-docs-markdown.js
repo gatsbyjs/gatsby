@@ -20,7 +20,9 @@ class DocsTemplate extends React.Component {
           <meta name="twitter.label1" content="Reading time" />
           <meta name="twitter:data1" content={`${page.timeToRead} min read`} />
         </Helmet>
-        <h1 css={{ marginTop: 0 }}>{page.frontmatter.title}</h1>
+        <h1 id={page.fields.anchor} css={{ marginTop: 0 }}>
+          {page.frontmatter.title}
+        </h1>
         <div
           dangerouslySetInnerHTML={{
             __html: page.html,
@@ -40,6 +42,10 @@ export const pageQuery = graphql`
       html
       excerpt
       timeToRead
+      fields {
+        slug
+        anchor
+      }
       frontmatter {
         title
       }

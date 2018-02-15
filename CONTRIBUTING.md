@@ -2,15 +2,6 @@
 title: How to contribute
 ---
 
-## Filing an issue
-
-If you want your issue to be resolved quickly, please include in your issue:
-
-* Gatsby version, node.js version, OS version
-* The contents of your `gatsby-config.js` and `package.json` as well as your
-  `gatsby-node.js`, `gatsby-browser.js` `gatsby-ssr.js` files depending on
-  changes you've made there.
-
 ## Contributing
 
 We want contributing to Gatsby to be fun, enjoyable, and educational for anyone and everyone. Contributions go far beyond pull requests and commits; we are thrilled to receive a variety of other contributions including the following:
@@ -21,23 +12,14 @@ We want contributing to Gatsby to be fun, enjoyable, and educational for anyone 
 * Submitting documentation updates, enhancements, designs, or bugfixes
 * Submitting spelling or grammar fixes
 * Adding unit or functional tests
-* Triaging GitHub issues -- especially determining whether an issue still persists or is reproducible
+* Triaging [GitHub issues](https://github.com/gatsbyjs/gatsby/issues) -- especially determining whether an issue still persists or is reproducible
+* [Reporting bugs or issues](/docs/how-to-file-an-issue/)
 * Searching for Gatsby on Discord or Spectrum and helping someone else who needs help
 * Teaching others how to contribute to Gatsby's repo!
 
 If you are worried or don't know where to start, you can always reach out to Shannon Soper(@shannonb_ux) on Twitter or simply submit an issue and a maintainer can help give you guidance!
 
 Looking to speak about Gatsby? We'd love to review your talk abstract/CFP! You can email it to shannon [at] gatsbyjs [dot] com and we can give pointers or tips!!!
-
-### Special Note on Issues
-
-If an issue is affecting you, start at the top of this list and complete as many tasks on the list as you can:
-
-1. If there is an issue, +1 the issue to indicate that it's affecting you
-2. If there's an issue and you can add more detail, write a comment describing how the bug is affecting OR if you can, write up a work-around for the bug
-3. If there's not an issue, write the most complete description of what's happening, preferably with link to a Gatsby site that reproduces the problem
-4. Offer to help fix the bug (and it's totally expected that you ask for help; open-source maintainers want to help contributors)
-5. Deliver a well-crafted, tested PR
 
 ### Creating your own plugins and loaders
 
@@ -62,9 +44,7 @@ The usual contributing steps are:
 * setup up repo and Install dependencies: `yarn run bootstrap`
 * Make sure tests are passing for you: `yarn test`
 * Create a topic branch: `git checkout -b topics/new-feature-name`
-* Run `npm run watch` from the root of the repo to first do an initial Babel
-  build of all packages and then watch for changes to packages' source code and
-  compile these changes on-the-fly as you work.
+* Run `npm run watch` from the root of the repo to watch for changes to packages' source code and compile these changes on-the-fly as you work. Note that the watch command can be resource intensive. To limit it to the packages you're working on, add a scope flag, like `npm run watch -- --scope={gatsby,gatsby-cli}`. To watch just one package, run `npm run watch -- --scope=gatsby`.
 * Install [gatsby-dev-cli](/packages/gatsby-dev-cli/) globally: `yarn global add gatsby-dev-cli`
 * Run `yarn install` in each of the sites you're testing with.
 * For each of your Gatsby test sites, run the `gatsby-dev` command there to copy
@@ -78,7 +58,7 @@ The usual contributing steps are:
 
 ### Contributing to the documentation.
 
-Gatsby, unsurprisingly, uses Gatsby for it's documentation website.
+Gatsby, unsurprisingly, uses Gatsby for its documentation website.
 
 If you want to add/modify any Gatsby documentation, go to the
 [docs folder on Github](https://github.com/gatsbyjs/gatsby/tree/master/docs) and
