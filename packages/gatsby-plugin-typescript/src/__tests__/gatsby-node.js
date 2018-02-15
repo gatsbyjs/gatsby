@@ -1,6 +1,7 @@
 jest.mock(`../resolve`, () => module => `/resolved/path/${module}`)
 
 const babelPluginRemoveQueries = require(`babel-plugin-remove-graphql-queries`)
+  .default
 const {
   resolvableExtensions,
   modifyWebpackConfig,
