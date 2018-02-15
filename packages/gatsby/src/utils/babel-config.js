@@ -4,6 +4,7 @@ import fs from "fs"
 import path from "path"
 import json5 from "json5"
 import _ from "lodash"
+const report = require(`gatsby-cli/lib/reporter`)
 import apiRunnerNode from "./api-runner-node"
 
 // TODO update this to store Babelrc config in Redux store.
@@ -18,12 +19,35 @@ function findBabelrc(directory) {
     const babelrc = fs.readFileSync(path.join(directory, `.babelrc`), `utf-8`)
     return json5.parse(babelrc)
   } catch (error) {
-    if (error.code === `ENOENT`) {
-      return null
-    } else {
-      throw error
-    }
+    if (error.code !== `ENOENT`) throw error
   }
+  return null
+}
+
+/**
+ * Locates a .babelrc.js in the Gatsby site root directory.
+ * requires it and unwraps any esm default export
+ */
+function findBabelrcJs(directory, stage) {
+  try {
+    // $FlowFixMe
+    let babelrc = require(path.join(directory, `.babelrc.js`))
+    babelrc =
+      babelrc && babelrc.__esModule ? babelrc.default || undefined : babelrc
+
+    // TODO support this
+    if (typeof babelrc === `function`) {
+      report.error(
+        `.babelrc.js files that export a function are not supported in Gatsby`
+      )
+      return null
+    }
+
+    return babelrc
+  } catch (error) {
+    if (error.code !== `ENOENT`) throw error
+  }
+  return null
 }
 
 /**
@@ -51,7 +75,10 @@ function findBabelPackage(directory) {
 module.exports = async function babelConfig(program, stage) {
   const { directory } = program
 
-  let babelrc = findBabelrc(directory) || findBabelPackage(directory)
+  let babelrc =
+    findBabelrc(directory) ||
+    findBabelrcJs(directory) ||
+    findBabelPackage(directory)
 
   // If user doesn't have a custom babelrc, add defaults.
   if (!babelrc) {
