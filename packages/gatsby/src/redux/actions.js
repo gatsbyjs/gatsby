@@ -232,14 +232,9 @@ actions.createPage = (page: PageInput, plugin?: Plugin, traceId?: string) => {
           `You have an empty file in the "src/pages" directory at "${relativePath}". Please remove it or make it a valid component`
         )
         console.log(``)
-        process.exit(1)
+        // TODO actually do die during builds.
+        // process.exit(1)
       }
-
-      console.log(``)
-      console.log(``)
-      console.log(
-        `The page component at "${relativePath}" didn't pass validation`
-      )
 
       if (!includesDefaultExport) {
         console.log(``)
@@ -249,7 +244,8 @@ actions.createPage = (page: PageInput, plugin?: Plugin, traceId?: string) => {
         console.log(``)
       }
 
-      process.exit(1)
+      // TODO actually do die during builds.
+      // process.exit(1)
     }
   }
 
