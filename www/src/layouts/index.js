@@ -68,7 +68,7 @@ class DefaultLayout extends React.Component {
     }
 
     return (
-      <div className={isHomepage && `is-homepage`}>
+      <div className={isHomepage ? `is-homepage` : ``}>
         <Helmet defaultTitle={`GatsbyJS`} titleTemplate={`%s | GatsbyJS`}>
           <meta name="twitter:site" content="@gatsbyjs" />
           <meta name="og:type" content="website" />

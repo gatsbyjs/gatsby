@@ -1087,3 +1087,9 @@ In this part of the tutorial, we've learned the foundations of building with
 Gatsby's data layer. You've learned how to _source_ and _transform_ data using
 plugins. How to use GraphQL to _map_ data to pages. Then how to build _page
 template components_ where you query for data for each page.
+
+## Where next?
+
+Now that you've built a Gatsby site, where do you head to next?
+
+You could take a look at some [example sites](https://github.com/gatsbyjs/gatsby/tree/master/examples#gatsby-example-websites) and [plugins](/docs/plugins/), see what [other people are building with Gatsby](https://github.com/gatsbyjs/gatsby/#showcase), or check out the documentation on [Gatsby's APIs](/docs/api-specification/), [nodes](/docs/node-interface/) or [GraphQL](/docs/graphql-reference/).
