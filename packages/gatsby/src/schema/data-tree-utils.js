@@ -92,9 +92,9 @@ const extractFieldExamples = (nodes: any[]) =>
     }
   )
 
-const buildFieldEnumValues = (nodes: any[]) => {
+const buildFieldEnumValues = arg => {
   const enumValues = {}
-  const values = flatten(extractFieldExamples(nodes), {
+  const values = flatten(getExampleValue(arg), {
     maxDepth: 3,
     safe: true, // don't flatten arrays.
     delimiter: `___`,
@@ -110,8 +110,8 @@ const buildFieldEnumValues = (nodes: any[]) => {
 // extract a list of field names
 // nested objects get flattened to "outer___inner" which will be converted back to
 // "outer.inner" by run-sift
-const extractFieldNames = (nodes: any[]) => {
-  const values = flatten(extractFieldExamples(nodes), {
+const extractFieldNames = arg => {
+  const values = flatten(getExampleValue(arg), {
     maxDepth: 3,
     safe: true, // don't flatten arrays.
     delimiter: `___`,
@@ -120,10 +120,56 @@ const extractFieldNames = (nodes: any[]) => {
   return Object.keys(values)
 }
 
+let typeExampleValues = {}
+
+const clearTypeExampleValues = () => {
+  typeExampleValues = {}
+}
+
+const getNodesAndTypeFromArg = arg => {
+  let type, nodes
+
+  if (_.isPlainObject(arg)) {
+    type = arg.type
+    nodes = arg.nodes
+  } else if (_.isArray(arg)) {
+    nodes = arg
+    if (nodes.length > 0 && nodes[0].internal) {
+      type = nodes[0].internal.type
+    }
+  } else if (_.isString) {
+    type = arg
+  }
+
+  return { type, nodes }
+}
+
+const getExampleValue = arg => {
+  const { type, nodes } = getNodesAndTypeFromArg(arg)
+
+  // if type is defined and is in example value cache return it
+  if (type && type in typeExampleValues) {
+    return typeExampleValues[type]
+  }
+
+  // if nodes were passed extract field example from it
+  if (nodes && nodes.length > 0) {
+    const exampleValue = extractFieldExamples(nodes)
+    // if type is set - cache results
+    if (type) {
+      typeExampleValues[type] = exampleValue
+    }
+    return exampleValue
+  }
+
+  return {}
+}
+
 module.exports = {
   INVALID_VALUE,
-  extractFieldExamples,
   buildFieldEnumValues,
   extractFieldNames,
   isEmptyObjectOrArray,
+  clearTypeExampleValues,
+  getExampleValue,
 }

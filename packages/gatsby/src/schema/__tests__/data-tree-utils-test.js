@@ -1,5 +1,5 @@
 const {
-  extractFieldExamples,
+  getExampleValue,
   buildFieldEnumValues,
   INVALID_VALUE,
 } = require(`../data-tree-utils`)
@@ -83,15 +83,15 @@ describe(`Gatsby data tree utils`, () => {
   ]
 
   it(`builds field examples from an array of nodes`, () => {
-    expect(extractFieldExamples(nodes)).toMatchSnapshot()
+    expect(getExampleValue(nodes)).toMatchSnapshot()
   })
 
   it(`null fields should have a null value`, () => {
-    expect(extractFieldExamples(nodes).iAmNull).toBeNull()
+    expect(getExampleValue(nodes).iAmNull).toBeNull()
   })
 
   it(`should not mutate the nodes`, () => {
-    extractFieldExamples(nodes)
+    getExampleValue(nodes)
     expect(nodes[0].context.nestedObject).toBeNull()
     expect(nodes[1].context.nestedObject.someOtherProperty).toEqual(1)
     expect(nodes[2].context.nestedObject.someOtherProperty).toEqual(2)
@@ -99,8 +99,8 @@ describe(`Gatsby data tree utils`, () => {
   })
 
   it(`turns empty or sparse arrays to null`, () => {
-    expect(extractFieldExamples(nodes).emptyArray).toBeNull()
-    expect(extractFieldExamples(nodes).hair).toBeDefined()
+    expect(getExampleValue(nodes).emptyArray).toBeNull()
+    expect(getExampleValue(nodes).hair).toBeDefined()
   })
 
   it(`build enum values for fields from array on nodes`, () => {
@@ -108,7 +108,7 @@ describe(`Gatsby data tree utils`, () => {
   })
 
   it(`turns polymorphic fields null`, () => {
-    let example = extractFieldExamples([
+    let example = getExampleValue([
       { foo: null },
       { foo: [1] },
       { foo: { field: 1 } },
@@ -117,7 +117,7 @@ describe(`Gatsby data tree utils`, () => {
   })
 
   it(`handles polymorphic arrays`, () => {
-    let example = extractFieldExamples([
+    let example = getExampleValue([
       { foo: [[`foo`, `bar`]] },
       { foo: [{ field: 1 }] },
     ])
@@ -125,14 +125,14 @@ describe(`Gatsby data tree utils`, () => {
   })
 
   it(`doesn't confuse empty fields for polymorhpic ones`, () => {
-    let example = extractFieldExamples([
+    let example = getExampleValue([
       { foo: { bar: 1 } },
       { foo: null },
       { foo: { field: 1 } },
     ])
     expect(example.foo).toEqual({ field: 1, bar: 1 })
 
-    example = extractFieldExamples([
+    example = getExampleValue([
       { foo: [{ bar: 1 }] },
       { foo: null },
       { foo: [{ field: 1 }, { baz: 1 }] },
