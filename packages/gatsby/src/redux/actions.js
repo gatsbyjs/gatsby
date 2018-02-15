@@ -8,11 +8,8 @@ const glob = require(`glob`)
 const path = require(`path`)
 const fs = require(`fs`)
 const { joinPath } = require(`../utils/path`)
-const {
-  getNode,
-  hasNodeChanged,
-  trackInlineObjectsInRootNode,
-} = require(`./index`)
+const { getNode, hasNodeChanged } = require(`./index`)
+const { trackInlineObjectsInRootNode } = require(`../schema/node-tracking`)
 const { store } = require(`./index`)
 import * as joiSchemas from "../joi-schemas/joi"
 import { generateComponentChunkName } from "../utils/js-chunk-names"
@@ -232,14 +229,9 @@ actions.createPage = (page: PageInput, plugin?: Plugin, traceId?: string) => {
           `You have an empty file in the "src/pages" directory at "${relativePath}". Please remove it or make it a valid component`
         )
         console.log(``)
-        process.exit(1)
+        // TODO actually do die during builds.
+        // process.exit(1)
       }
-
-      console.log(``)
-      console.log(``)
-      console.log(
-        `The page component at "${relativePath}" didn't pass validation`
-      )
 
       if (!includesDefaultExport) {
         console.log(``)
@@ -249,7 +241,8 @@ actions.createPage = (page: PageInput, plugin?: Plugin, traceId?: string) => {
         console.log(``)
       }
 
-      process.exit(1)
+      // TODO actually do die during builds.
+      // process.exit(1)
     }
   }
 

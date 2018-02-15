@@ -34,7 +34,7 @@ export default class HTML extends React.Component {
           />
           <link
             rel="preload"
-            href="/static/spectral-latin-400.d6a7b14a.woff2"
+            href="/static/spectral-latin-400.d9fdfd34.woff2"
             as="font"
             crossOrigin="anonymous"
           />

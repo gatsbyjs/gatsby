@@ -1,22 +1,102 @@
 import React from "react"
 import Link from "gatsby-link"
 
-import typography, { rhythm, scale, options } from "../utils/typography"
+import { rhythm, scale, options } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
 
-const accentColor = colors.gatsby
-const listStyles = {
-  listStyle: `none`,
-  margin: 0,
-  padding: 0,
-  fontFamily: typography.options.headerFontFamily.join(`,`),
-  "& li": {
-    marginBottom: options.blockMarginBottom / 2,
-    lineHeight: 1.3,
-    paddingTop: rhythm(1 / 8),
-    paddingBottom: rhythm(1 / 8),
-    "& .nav-link": {
+const Section = props => (
+  <div>
+    <h3
+      css={{
+        ...props.headerStyles,
+        marginTop: props.index === 0 ? 0 : rhythm(3 / 2),
+      }}
+    >
+      {props.title}
+    </h3>
+    <SectionLinks
+      {...props}
+      title={props.title}
+      isTutorial={props.title === `Tutorial`}
+    />
+  </div>
+)
+
+const SectionLinks = props => {
+  const listStyles = {
+    listStyle: `none`,
+    margin: 0,
+    padding: 0,
+    fontFamily: options.headerFontFamily.join(`,`),
+  }
+
+  return (
+    <ul
+      css={{
+        ...listStyles,
+        // For nested <ul>s in the "Tutorial" section
+        "& ul": {
+          ...listStyles,
+        },
+      }}
+    >
+      {props.items.map((item, index) => (
+        <SectionLink
+          node={item}
+          children={item.items}
+          key={index}
+          isInline={props.isInline}
+          isTutorial={props.isTutorial}
+        />
+      ))}
+    </ul>
+  )
+}
+
+const SectionLink = props => {
+  // Don't show the main docs link on mobile as we put these
+  // links on that main docs page so it's confusing to have
+  // the page link to itself.
+  if (props.isInline && props.node.link === `/docs/`) {
+    return null
+  }
+
+  let childnodes = null
+  if (props.children) {
+    childnodes = props.children.map((childnode, index) => (
+      <SectionLink
+        key={index}
+        node={childnode}
+        children={childnode.items}
+        isNested={true}
+        isTutorial={props.isTutorial}
+      />
+    ))
+  }
+
+  const item = props.node
+
+  // If the last character is a * then the doc page is still in draft
+  const isDraft = item.title.slice(-1) === `*`
+  const title = isDraft ? item.title.slice(0, -1) : item.title
+  const isTutorialFirstLevel = props.isTutorial && !props.isNested
+
+  const styles = {
+    listItem: {
+      marginBottom: isTutorialFirstLevel
+        ? rhythm(1)
+        : options.blockMarginBottom / 2,
+      lineHeight: 1.3,
+      paddingTop: rhythm(1 / 8),
+      paddingBottom: rhythm(1 / 8),
+    },
+    linkDefault: {
       position: `relative`,
+      borderBottom: `none`,
+      boxShadow: `none`,
+      fontWeight: isTutorialFirstLevel ? `bold` : `normal`,
+      color: isDraft ? colors.gray.calm : colors.gray.text,
+      fontStyle: isDraft ? `italic` : false,
       "&:before": {
         content: ` `,
         height: 4,
@@ -39,108 +119,42 @@ const listStyles = {
         },
       },
     },
-    "& .nav-link-active": {
+    linkActive: {
       opacity: 1,
-      color: accentColor,
-      fontWeight: `600`,
+      color: colors.gatsby,
+      fontWeight: `bold`,
       "&:before": {
-        background: accentColor,
+        background: colors.gatsby,
         transform: `scale(1)`,
       },
     },
-  },
-}
+  }
 
-const Section = props => (
-  <div>
-    <h3
-      css={{
-        ...props.headerStyles,
-        marginTop: props.index === 0 ? 0 : rhythm(3 / 2),
-      }}
-    >
-      {props.title}
-    </h3>
-    <SectionLinks
-      {...props}
-      title={props.title}
-      isTutorial={props.title === `Tutorial`}
-    />
-  </div>
-)
-
-const SectionLinks = props => {
-  const tutorialStyles = props.isTutorial
+  const linkStyle = props.isNested
     ? {
-        "&&": {
-          "& > li": {
-            marginBottom: `1rem`,
-            "& > .nav-link": {
-              fontWeight: `bold`,
-            },
+        ...styles.listItem,
+        "& .nav-link": {
+          ...styles.linkDefault,
+          color: isDraft ? colors.gray.calm : colors.gray.text,
+        },
+        "& .nav-link-active": {
+          ...styles.linkActive,
+          color: isDraft ? colors.gray.calm : colors.gray.text,
+          fontWeight: `normal`,
+          "&:before": {
+            display: `none`,
           },
         },
       }
-    : false
-
-  return (
-    <ul
-      css={{
-        ...listStyles,
-        "& ul": {
-          ...listStyles,
+    : {
+        ...styles.listItem,
+        "& > .nav-link": {
+          ...styles.linkDefault,
         },
-        ...tutorialStyles,
-      }}
-    >
-      {props.items.map((item, index) => (
-        <SectionLink
-          node={item}
-          children={item.items}
-          key={index}
-          isInline={props.isInline}
-        />
-      ))}
-    </ul>
-  )
-}
-
-const SectionLink = props => {
-  // Don't show the main docs link on mobile as we put these
-  // links on that main docs page so it's confusing to have
-  // the page link to itself.
-  if (props.isInline && props.node.link === `/docs/`) {
-    return null
-  }
-
-  let childnodes = null
-  if (props.children) {
-    childnodes = props.children.map((childnode, index) => (
-      <SectionLink key={index} node={childnode} children={childnode.items} />
-    ))
-  }
-
-  const item = props.node
-
-  // If the last character is a * then the doc page is still in draft
-  const isDraft = item.title.slice(-1) === `*`
-  const title = isDraft ? item.title.slice(0, -1) : item.title
-  const linkStyle = {
-    "&&": {
-      "& .nav-link": {
-        borderBottom: `none`,
-        boxShadow: `none`,
-        color: isDraft ? colors.gray.calm : colors.gray.text,
-        fontWeight: `normal`,
-        fontStyle: isDraft ? `italic` : false,
-      },
-      "& .nav-link-active": {
-        color: accentColor,
-        fontWeight: `bold`,
-        fontStyle: isDraft ? `italic` : false,
-      },
-    },
-  }
+        "& > .nav-link-active": {
+          ...styles.linkActive,
+        },
+      }
 
   return (
     <li key={item.title} css={linkStyle}>
