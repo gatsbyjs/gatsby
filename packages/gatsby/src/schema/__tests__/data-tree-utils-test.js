@@ -13,6 +13,8 @@ describe(`Gatsby data tree utils`, () => {
       "key-with..unsupported-values": true,
       emptyArray: [],
       anArray: [1, 2, 3, 4],
+      nestedArrays: [[1, 2, 3], [4, 5, 6]],
+      objectsInArray: [{ field1: true }, { field2: 1 }],
       frontmatter: {
         date: `2006-07-22T22:39:53.000Z`,
         title: `The world of dash and adventure`,
@@ -29,6 +31,8 @@ describe(`Gatsby data tree utils`, () => {
       emptyArray: [undefined, null],
       anArray: [1, 2, 5, 4],
       iAmNull: null,
+      nestedArrays: [[1, 2, 3]],
+      objectsInArray: [{ field3: `foo` }],
       frontmatter: {
         date: `2006-07-22T22:39:53.000Z`,
         title: `The world of slash and adventure`,

@@ -35,6 +35,12 @@ Object {
   "name": Object {
     "field": "name",
   },
+  "nestedArrays": Object {
+    "field": "nestedArrays",
+  },
+  "objectsInArray": Object {
+    "field": "objectsInArray",
+  },
 }
 `;
 
@@ -61,5 +67,17 @@ Object {
   "iAmNull": null,
   "key-with..unsupported-values": true,
   "name": "The Mad Max",
+  "nestedArrays": Array [
+    Array [
+      1,
+    ],
+  ],
+  "objectsInArray": Array [
+    Object {
+      "field1": true,
+      "field2": 1,
+      "field3": "foo",
+    },
+  ],
 }
 `;
