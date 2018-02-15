@@ -30,7 +30,7 @@ const Search = ({ searchState }) => {
   const emptySearchBox = searchState.length > 0 ? false : true
 
   return (
-    <div className="container">
+    <div className="container" css={{ height: `100%` }}>
       <div
         css={{
           display: `flex`,
@@ -116,6 +116,7 @@ const Search = ({ searchState }) => {
         >
           Search by{" "}
           <a
+            id="mobile-scroll-anchor"
             href={`https://www.algolia.com/`}
             style={{ color: `#744C9E`, border: `none`, boxShadow: `none` }}
           >
@@ -135,7 +136,11 @@ const Result = ({ hit }) => {
   )} ago`
   return (
     <Link
-      to={`/packages/${hit.name}`}
+      to={
+        window.innerWidth > 750
+          ? `/packages/${hit.name}`
+          : `/packages/${hit.name}#mobile-scroll-anchor`
+      }
       style={{
         display: `block`,
         fontFamily: typography.options.bodyFontFamily.join(`,`),

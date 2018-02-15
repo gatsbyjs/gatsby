@@ -134,6 +134,14 @@ class DefaultLayout extends React.Component {
               margin: `0 auto`,
               paddingTop: isHomepage ? 0 : presets.headerHeight,
             },
+            "@media (max-width: 749px)": {
+              display: `grid`,
+              gridTemplateAreas: `
+                "searchResults"
+                "readMeContent"
+              `,
+              gridTemplateRows: `calc(100vh - ${presets.headerHeight}) 1fr`,
+            },
           }}
         >
           {/* TODO Move this under docs/index.js once Gatsby supports multiple levels
@@ -161,6 +169,16 @@ class DefaultLayout extends React.Component {
                   this.props.location.pathname.slice(0, 9) === `/packages`
                     ? `block`
                     : `none`,
+              },
+              "@media (max-width: 749px)": {
+                display:
+                  this.props.location.pathname.slice(0, 9) === `/packages`
+                    ? `block`
+                    : `none`,
+                position: `absolute`,
+                height: `calc(100% - ${presets.headerHeight})`,
+                width: `100vw`,
+                gridArea: `searchResults`,
               },
             }}
           >
@@ -200,6 +218,13 @@ class DefaultLayout extends React.Component {
             css={{
               [presets.Tablet]: {
                 paddingLeft: leftPadding(10),
+              },
+              "@media (max-width: 749px)": {
+                gridArea:
+                  this.props.location.pathname.slice(0, 9) === `/packages`
+                    ? `readMeContent`
+                    : ``,
+                maxWidth: `100vw`,
               },
               [presets.Desktop]: {
                 paddingLeft: leftPadding(12),
