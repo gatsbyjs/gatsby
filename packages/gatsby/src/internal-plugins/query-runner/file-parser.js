@@ -5,7 +5,8 @@ const crypto = require(`crypto`)
 // Traverse is a es6 module...
 import traverse from "babel-traverse"
 const babylon = require(`babylon`)
-const { getGraphQLTag } = require(`babel-plugin-remove-graphql-queries`)
+const getGraphQLTag = require(`babel-plugin-remove-graphql-queries`)
+  .getGraphQLTag
 const report = require(`gatsby-cli/lib/reporter`)
 
 import type { DocumentNode, DefinitionNode } from "graphql"

@@ -1,3 +1,4 @@
+import React from "react"
 import { Link } from "gatsby"
 import { rhythm, scale, options } from "../utils/typography"
 import presets, { colors } from "../utils/presets"

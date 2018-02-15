@@ -22,6 +22,6 @@
     "@babel/runtime": "^7.0.0-beta.38"
   },
   "peerDependencies": {
-    "gatsby": "^1.0.0"
+    "gatsby": ">1.0.0 || >2.0.0-alpha"
   }
 }

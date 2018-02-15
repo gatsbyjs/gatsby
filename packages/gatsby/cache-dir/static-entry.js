@@ -41,7 +41,7 @@ const getLayout = page => {
 
 const createElement = React.createElement
 
-module.exports = (locals, callback) => {
+export default (locals, callback) => {
   let pathPrefix = `/`
   if (__PREFIX_PATHS__) {
     pathPrefix = `${__PATH_PREFIX__}/`

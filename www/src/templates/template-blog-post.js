@@ -13,8 +13,8 @@ import EmailCaptureForm from "../components/email-capture-form"
 class BlogPostTemplate extends React.Component {
   render() {
     const post = this.props.data.markdownRemark
-    const prev = this.props.pathContext.prev
-    const next = this.props.pathContext.next
+    const prev = this.props.pageContext.prev
+    const next = this.props.pageContext.next
     const prevNextLinkStyles = {
       "&&": {
         boxShadow: `none`,

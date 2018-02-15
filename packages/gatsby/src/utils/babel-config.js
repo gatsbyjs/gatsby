@@ -65,11 +65,18 @@ module.exports = async function babelConfig(program, stage) {
             loose: true,
             modules: false,
             useBuiltIns: `usage`,
+            sourceType: `unambiguous`,
             shippedProposals: true, // includes async/await and Object spread/rest
             targets: { browsers: program.browserslist },
           },
         ],
-        `@babel/react`,
+        [
+          require.resolve(`@babel/preset-react`),
+          {
+            pragma: `React.createElement`,
+          },
+        ],
+        require.resolve(`@babel/preset-flow`),
       ],
       plugins: [
         require.resolve(`@babel/plugin-proposal-class-properties`),
@@ -96,9 +103,10 @@ module.exports = async function babelConfig(program, stage) {
   if (stage === `develop`) {
     // TODO: maybe this should be left to the user?
     babelrc.plugins.unshift(require.resolve(`react-hot-loader/babel`))
-    babelrc.plugins.unshift(
-      require.resolve(`@babel/transform-react-jsx-source`)
-    )
+    // TODO figure out what this was — if left in it breaks builds
+    // babelrc.plugins.unshift(
+    // require.resolve(`@babel/transform-react-jsx-source`)
+    // )
   }
 
   babelrc.plugins.unshift(

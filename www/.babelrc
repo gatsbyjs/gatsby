@@ -1,8 +1,0 @@
-{
-  "plugins": [
-    [
-      "transform-react-jsx",
-      { "pragma": "Glamor.createElement" }
-    ]
-  ]
-}

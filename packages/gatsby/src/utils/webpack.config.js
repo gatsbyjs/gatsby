@@ -6,7 +6,7 @@ const path = require(`path`)
 const dotenv = require(`dotenv`)
 const StaticSiteGeneratorPlugin = require(`static-site-generator-webpack-plugin`)
 const { StatsWriterPlugin } = require(`webpack-stats-plugin`)
-const FriendlyErrorsWebpackPlugin = require(`friendly-errors-webpack-plugin`)
+// const FriendlyErrorsWebpackPlugin = require(`friendly-errors-webpack-plugin`)
 const WatchMissingNodeModulesPlugin = require(`react-dev-utils/WatchMissingNodeModulesPlugin`)
 const { store } = require(`../redux`)
 const { actions } = require(`../redux/actions`)
@@ -187,19 +187,19 @@ module.exports = async (
           new WatchMissingNodeModulesPlugin(directoryPath(`node_modules`)),
 
           plugins.namedModules(),
-          new FriendlyErrorsWebpackPlugin({
-            clearConsole: false,
-            compilationSuccessInfo: {
-              messages: [
-                `You can now view your site in the browser running at http://${
-                  program.host
-                }:${program.port}`,
-                `Your graphql debugger is running at http://${program.host}:${
-                  program.port
-                }/___graphql`,
-              ],
-            },
-          }),
+          // new FriendlyErrorsWebpackPlugin({
+          // clearConsole: false,
+          // compilationSuccessInfo: {
+          // messages: [
+          // `You can now view your site in the browser running at http://${
+          // program.host
+          // }:${program.port}`,
+          // `Your graphql debugger is running at http://${program.host}:${
+          // program.port
+          // }/___graphql`,
+          // ],
+          // },
+          // }),
         ])
         break
 
@@ -327,7 +327,6 @@ module.exports = async (
       rules.images(),
       rules.audioVideo(),
     ]
-    console.log(configRules[0])
     switch (stage) {
       case `develop`:
       case `build-css`:
@@ -374,11 +373,7 @@ module.exports = async (
       // modules. But also make it possible to install modules within the src
       // directory if you need to install a specific version of a module for a
       // part of your site.
-      modules: [
-        `node_modules`,
-        directoryPath(`node_modules`),
-        directoryPath(`node_modules`, `gatsby/node_modules`),
-      ],
+      modules: [`node_modules`, directoryPath(`node_modules`)],
     }
   }
 
