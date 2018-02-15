@@ -17,7 +17,7 @@ exports.modifyWebpackConfig = (
     test: /\.s(a|c)ss$/,
     exclude: /\.module\.s(a|c)ss$/,
     use: plugins.extractText.extract({
-      fallback: loaders.style,
+      fallback: loaders.style(),
       use: [
         loaders.css({ importLoaders: 1 }),
         loaders.postcss({ plugins: postCssPlugins }),
@@ -28,7 +28,7 @@ exports.modifyWebpackConfig = (
   const sassRuleModules = {
     test: /\.module\.s(a|c)ss$/,
     use: plugins.extractText.extract({
-      fallback: loaders.style,
+      fallback: loaders.style(),
       use: [
         loaders.css({ modules: true, importLoaders: 1 }),
         loaders.postcss({ plugins: postCssPlugins }),
@@ -51,7 +51,7 @@ exports.modifyWebpackConfig = (
       configRules = configRules.concat([
         {
           ...sassRule,
-          use: loaders.null,
+          use: [loaders.null()],
         },
         sassRuleModules,
       ])

@@ -38,7 +38,7 @@ exports.modifyWebpackConfig = (
     test: /\.styl$/,
     exclude: /\.module\.styl$/,
     use: plugins.extractText.extract({
-      fallback: loaders.style,
+      fallback: loaders.style(),
       use: [
         loaders.css({ importLoaders: 1 }),
         loaders.postcss({ plugins: postCssPlugins }),
@@ -50,7 +50,7 @@ exports.modifyWebpackConfig = (
   const stylusRuleModules = {
     test: /\.module\.styl$/,
     use: plugins.extractText.extract({
-      fallback: loaders.style,
+      fallback: loaders.style(),
       use: [
         loaders.css({ modules: true, importLoaders: 1 }),
         loaders.postcss({ plugins: postCssPlugins }),
@@ -73,7 +73,7 @@ exports.modifyWebpackConfig = (
       configRules = configRules.concat([
         {
           ...stylusRule,
-          use: loaders.null,
+          use: [loaders.null()],
         },
         stylusRuleModules,
       ])

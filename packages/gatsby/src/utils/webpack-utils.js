@@ -197,6 +197,7 @@ module.exports = async ({
         loader: require.resolve(`postcss-loader`),
         options: {
           ident: `postcss-${++ident}`,
+          sourceMap: !PRODUCTION,
           plugins: loader => {
             plugins =
               (typeof plugins === `function` ? plugins(loader) : plugins) || []
@@ -355,7 +356,7 @@ module.exports = async ({
       return {
         test: /\.css$/,
         use: ExtractTextPlugin.extract({
-          fallback: loaders.style,
+          fallback: loaders.style(),
           use: [loaders.css({ importLoaders: 1 }), loaders.postcss(options)],
         }),
       }

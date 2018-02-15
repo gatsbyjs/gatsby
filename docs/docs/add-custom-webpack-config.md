@@ -58,7 +58,7 @@ exports.modifyWebpackConfig = ({
           // because gatsby already includes it and makes sure its only
           // run at the appropriate stages, e.g. not in development
           use: plugins.extractText.extract({
-            fallback: loaders.style,
+            fallback: loaders.style(),
             use: [
               loaders.css({ importLoaders: 1 }),
               // the postcss loader comes with some nice defaults

@@ -32,7 +32,7 @@ function findBabelrc(directory) {
  */
 function findBabelPackage(directory) {
   try {
-    // $FlowIssue - https://github.com/facebook/flow/issues/1975
+    // $FlowFixMe - https://github.com/facebook/flow/issues/1975
     const packageJson = require(path.join(directory, `package.json`))
     return packageJson.babel
   } catch (error) {
@@ -73,21 +73,26 @@ module.exports = async function babelConfig(program, stage) {
         [
           require.resolve(`@babel/preset-react`),
           {
+            useBuiltIns: true,
             pragma: `React.createElement`,
+            development: stage === `develop`,
           },
         ],
         require.resolve(`@babel/preset-flow`),
       ],
       plugins: [
-        require.resolve(`@babel/plugin-proposal-class-properties`),
+        [
+          require.resolve(`@babel/plugin-proposal-class-properties`),
+          { loose: true },
+        ],
         require.resolve(`@babel/plugin-syntax-dynamic-import`),
         // Polyfills the runtime needed for async/await and generators
         [
           require.resolve(`@babel/plugin-transform-runtime`),
           {
-            helpers: false,
-            polyfill: false,
+            helpers: true,
             regenerator: true,
+            polyfill: false,
           },
         ],
       ],
@@ -103,10 +108,6 @@ module.exports = async function babelConfig(program, stage) {
   if (stage === `develop`) {
     // TODO: maybe this should be left to the user?
     babelrc.plugins.unshift(require.resolve(`react-hot-loader/babel`))
-    // TODO figure out what this was — if left in it breaks builds
-    // babelrc.plugins.unshift(
-    // require.resolve(`@babel/transform-react-jsx-source`)
-    // )
   }
 
   babelrc.plugins.unshift(

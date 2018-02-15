@@ -187,7 +187,7 @@ exports.modifyBabelrc = true
  *       rules: [
  *         {
  *           test: 'my-css',
- *           use: [loaders.style, loaders.css()]
+ *           use: [loaders.style(), loaders.css()]
  *         },
  *       ],
  *     },
