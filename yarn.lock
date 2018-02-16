@@ -549,7 +549,7 @@ axios@^0.17.1:
     follow-redirects "^1.2.5"
     is-buffer "^1.1.5"
 
-"axios@github:contentful/axios#fix/https-via-http-proxy":
+axios@contentful/axios#fix/https-via-http-proxy:
   version "0.17.1"
   resolved "https://codeload.github.com/contentful/axios/tar.gz/4b06f4a63db3ac16c99f7c61b584ef0e6d11f1af"
   dependencies:
@@ -11307,9 +11307,9 @@ remark-html@6.0.1:
     mdast-util-to-hast "^2.1.1"
     xtend "^4.0.1"
 
-remark-math@^0.2.4:
-  version "0.2.4"
-  resolved "https://registry.yarnpkg.com/remark-math/-/remark-math-0.2.4.tgz#f027cf7f984108777c23425905bf0cbfeeeddda1"
+remark-math@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/remark-math/-/remark-math-1.0.3.tgz#e8cda5af8cd8a85fc7782ccbecf0261943c29b9a"
   dependencies:
     trim-trailing-lines "^1.1.0"
 
