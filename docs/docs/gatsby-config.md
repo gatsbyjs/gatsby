@@ -103,7 +103,6 @@ author.yaml
 ```yaml
 - id: Kyle Mathews
   bio: Founder @ GatsbyJS. Likes tech, reading/writing, founding things. Blogs at bricolage.io.
-  avatar: avatars/kyle-mathews.jpeg
   twitter: "@kylemathews"
 ```
 
@@ -132,9 +131,8 @@ query BlogPost($slug: String!) {
       author {
         # This now links to the author object
         id
-        fields {
-          slug
-        }
+        bio
+        twitter
       }
     }
   }
