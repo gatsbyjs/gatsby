@@ -126,7 +126,7 @@
     "rimraf": "^2.6.1"
   },
   "engines": {
-    "node": ">4.0.0"
+    "node": ">6.0.0"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby#readme",
   "keywords": [
