@@ -28,8 +28,6 @@ Websites built with Gatsby:
 * [Formidable](https://formidable.com/)
 * [openFDA](https://open.fda.gov/)
   ([source](https://github.com/FDA/open.fda.gov))
-* [ReasonML Docs](https://reasonml.github.io/)
-  ([source](https://github.com/reasonml/reasonml.github.io))
 * [Bricolage.io](https://www.bricolage.io/)
   ([source](https://github.com/KyleAMathews/blog))
 * [Hack Club](https://hackclub.com/)
