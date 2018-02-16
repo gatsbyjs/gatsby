@@ -384,7 +384,7 @@ module.exports = async (
     // Common config for every env.
     config.loader(`js`, {
       test: /\.jsx?$/, // Accept either .js or .jsx files.
-      exclude: [/(node_modules|bower_components)/],
+      exclude: /(node_modules|bower_components)/,
       loader: `babel`,
       query: babelConfig,
     })
@@ -421,7 +421,7 @@ module.exports = async (
       case `develop`:
         config.loader(`css`, {
           test: /\.css$/,
-          exclude: [/\.module\.css$/],
+          exclude: /\.module\.css$/,
           loaders: [`style`, `css`, `postcss`],
         })
 
@@ -446,7 +446,7 @@ module.exports = async (
       case `build-css`:
         config.loader(`css`, {
           test: /\.css$/,
-          exclude: [/\.module\.css$/],
+          exclude: /\.module\.css$/,
           loader: extractBuildCss.extract([`css?minimize`, `postcss`]),
         })
 
@@ -476,7 +476,7 @@ module.exports = async (
 
         config.loader(`css`, {
           test: /\.css$/,
-          exclude: [/\.module\.css$/],
+          exclude: /\.module\.css$/,
           loader: `null`,
         })
 
@@ -501,7 +501,7 @@ module.exports = async (
 
         config.loader(`css`, {
           test: /\.css$/,
-          exclude: [/\.module\.css$/],
+          exclude: /\.module\.css$/,
           // loader: `null`,
           loader: extractBuildJavascript.extract([`css`]),
         })
