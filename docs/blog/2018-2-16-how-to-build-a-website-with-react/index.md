@@ -49,6 +49,6 @@ GatsbyJS is a great way to build websites with React and actually solves some un
 
 * _Pulling in data:_ In Gatsby, GraphQL and plugins help you use data from nearly any source (including both traditional CMSs and headless CMSs. Some people I’ve talked to recently even built their Gatsby sites with Google sheets as the data source.
 * _Creating pages and routes:_ Gatsby also gives you an intuitive interface for creating pages and routes. So intuitive, in fact, that when I talked to a coworker, I said, “I remember creating pages and links to those pages from other pages, but I don’t remember creating any routes in Gatsby.” They responded, “Yeah, Gatsby took care of that for you.”
-* _Solving performance problems:_ Gatsby sites rarely has performance problems due to Gatsby’s way of loading static files.
+* _Solving performance problems:_ Gatsby sites rarely have performance problems due to Gatsby’s way of loading static files.
 
 Gatsby combines the awesomeness of React with all the friendly helpfulness you’d hope for in a modern PWA framework. Happy coding, and let us know how it goes by joining us on [Twitter](https://twitter.com/gatsbyjs) and [Github](https://github.com/gatsbyjs/gatsby)!
