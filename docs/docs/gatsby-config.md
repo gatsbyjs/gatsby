@@ -35,7 +35,7 @@ This way you can store it in one place, and pull it whenever you need it. If you
 
 See a fuller description and sample usage in [Gatsby.js Tutorial Part Four](/tutorial/part-four/#data-in-gatsby).
 
-## plugins
+## Plugins
 
 Plugins are Node.js packages that implement Gatsby APIs. The config file accepts an array of plugins. Some plugins may need only to be listed by name, while others may take options (see the docs for individual plugins).
 
@@ -69,7 +69,7 @@ module.exports = {
 
 See more about [Adding a Path Prefix](/docs/path-prefix/).
 
-## polyfill
+## Polyfill
 
 Gatsby uses the ES6 Promise API. Because some browsers don't support this, Gatsby includes a Promise polyfill by default.
 
@@ -83,28 +83,44 @@ module.exports = {
 
 See more about [Browser Support](/docs/browser-support/#polyfills) in Gatsby.
 
-## mapping
+## Mapping node types
 
-To query between nodes, Gatsby has a mapping feature which allows you to link two different nodes by id and then you can query with GraphQL. For instance, if you have a couple of blog posts which have author id in the frontmatter:
+Gatsby includes an advanced feature that lets you create "mappings" between node types.
 
-```
+For instance, imagine you have a multi-author markdown blog where you want to "link" from each blog post to the author information stored in a yaml file named `author.yaml`:
+
+```markdown
+---
 title: A blog post
 author: Kyle Mathews
+---
+
+A treatsie on the efficacy of bezoar for treating agricultural pesticide poisoning. 
 ```
 
-And you have a list of authors and their details stored in `authors.yaml`, you can map between `author` in `frontmatter` to id in `authors.yaml` file by:
+author.yaml
 
+```yaml
+- id: Kyle Mathews
+  bio: Founder @ GatsbyJS. Likes tech, reading/writing, founding things. Blogs at bricolage.io.
+  avatar: avatars/kyle-mathews.jpeg
+  twitter: "@kylemathews"
 ```
+
+You can map between the `author` field in `frontmatter` to the id in the `author.yaml` objects by adding to your `gatsby-config.js`:
+
+```javascript
 module.exports = {
+  plugins: [...],
   mapping: {
     "MarkdownRemark.frontmatter.author": `AuthorYaml`,
   },
 }
 ```
 
-This enables you to query data from both sources together:
+Gatsby then uses this mapping when creating the GraphQL schema to enable you to query data from both sources:
 
-```
+```graphql
 query BlogPost($slug: String!) {
     markdownRemark(fields: {slug: {eq: $slug}}) {
         html
@@ -113,7 +129,7 @@ query BlogPost($slug: String!) {
         }
         frontmatter {
             title
-            author {
+            author { # This now links to the author object
                 id
                 fields {
                     slug
