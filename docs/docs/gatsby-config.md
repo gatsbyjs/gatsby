@@ -95,7 +95,7 @@ title: A blog post
 author: Kyle Mathews
 ---
 
-A treatsie on the efficacy of bezoar for treating agricultural pesticide poisoning. 
+A treatsie on the efficacy of bezoar for treating agricultural pesticide poisoning.
 ```
 
 author.yaml
@@ -122,21 +122,22 @@ Gatsby then uses this mapping when creating the GraphQL schema to enable you to 
 
 ```graphql
 query BlogPost($slug: String!) {
-    markdownRemark(fields: {slug: {eq: $slug}}) {
-        html
-        fields {
-            slug
-        }
-        frontmatter {
-            title
-            author { # This now links to the author object
-                id
-                fields {
-                    slug
-                }
-            }
-        }
+  markdownRemark(fields: { slug: { eq: $slug } }) {
+    html
+    fields {
+      slug
     }
+    frontmatter {
+      title
+      author {
+        # This now links to the author object
+        id
+        fields {
+          slug
+        }
+      }
+    }
+  }
 }
 ```
 
