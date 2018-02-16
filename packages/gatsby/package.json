@@ -44,6 +44,7 @@
     "express": "^4.14.0",
     "express-graphql": "^0.6.6",
     "extract-text-webpack-plugin": "^3.0.2",
+    "fast-levenshtein": "~2.0.4",
     "file-loader": "^1.1.6",
     "flat": "^4.0.0",
     "friendly-errors-webpack-plugin": "^1.6.1",
