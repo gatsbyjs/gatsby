@@ -1,11 +1,13 @@
 /* @flow */
 
-import fs from "fs"
-import path from "path"
-import json5 from "json5"
-import _ from "lodash"
+const fs = require("fs")
+const path = require("path")
+const json5 = require("json5")
+const _ = require("lodash")
 const report = require(`gatsby-cli/lib/reporter`)
-import apiRunnerNode from "./api-runner-node"
+
+const apiRunnerNode = require("./api-runner-node")
+const testRequireError = require(`./test-require-error`).default
 
 // TODO update this to store Babelrc config in Redux store.
 
@@ -15,11 +17,14 @@ import apiRunnerNode from "./api-runner-node"
  * not parseable.
  */
 function findBabelrc(directory) {
-  try {
-    const babelrc = fs.readFileSync(path.join(directory, `.babelrc`), `utf-8`)
-    return json5.parse(babelrc)
-  } catch (error) {
-    if (error.code !== `ENOENT`) throw error
+  const babelrcPath = path.join(directory, `.babelrc`)
+  if (fs.existsSync(babelrcPath)) {
+    try {
+      const babelrc = fs.readFileSync(babelrcPath, `utf-8`)
+      return json5.parse(babelrc)
+    } catch (error) {
+      throw error
+    }
   }
   return null
 }
@@ -28,26 +33,27 @@ function findBabelrc(directory) {
  * Locates a .babelrc.js in the Gatsby site root directory.
  * requires it and unwraps any esm default export
  */
+const preferDefault = m => (m && m.default) || m
 function findBabelrcJs(directory, stage) {
+  let babelrc = null
+  const babelrcPath = path.join(directory, `.babelrc.js`)
   try {
-    // $FlowFixMe
-    let babelrc = require(path.join(directory, `.babelrc.js`))
-    babelrc =
-      babelrc && babelrc.__esModule ? babelrc.default || undefined : babelrc
-
-    // TODO support this
-    if (typeof babelrc === `function`) {
-      report.error(
-        `.babelrc.js files that export a function are not supported in Gatsby`
-      )
-      return null
-    }
-
-    return babelrc
+    babelrc = preferDefault(require(babelrcPath))
   } catch (error) {
-    if (error.code !== `ENOENT`) throw error
+    if (!testRequireError(babelrcPath, error)) {
+      throw error
+    }
   }
-  return null
+
+  // TODO support this
+  if (typeof babelrc === `function`) {
+    report.error(
+      `.babelrc.js files that export a function are not supported in Gatsby`
+    )
+    return null
+  }
+
+  return babelrc
 }
 
 /**
@@ -55,12 +61,12 @@ function findBabelrcJs(directory, stage) {
  * return undefined when the "babel" section does not exist.
  */
 function findBabelPackage(directory) {
+  const packageJson = require(path.join(directory, `package.json`))
   try {
     // $FlowFixMe - https://github.com/facebook/flow/issues/1975
-    const packageJson = require(path.join(directory, `package.json`))
     return packageJson.babel
   } catch (error) {
-    if (error.code === `MODULE_NOT_FOUND`) {
+    if (testRequireError(packageJson, error)) {
       return null
     } else {
       throw error
