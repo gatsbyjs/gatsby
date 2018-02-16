@@ -139,7 +139,7 @@ query BlogPost($slug: String!) {
 }
 ```
 
-## proxy
+## Proxy
 
 Setting the proxy config option will tell the development server to proxy any unknown requests to your specified server. For example:
 
