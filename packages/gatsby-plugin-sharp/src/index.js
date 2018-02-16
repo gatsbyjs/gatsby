@@ -84,9 +84,6 @@ const processFile = (file, jobs, cb) => {
         quality: args.quality,
         force: args.toFormat === `webp`,
       })
-      .tiff({
-        quality: args.quality,
-      })
 
     // grayscale
     if (args.grayscale) {
