@@ -62,8 +62,9 @@ You can query file nodes like the following:
 ## Helper functions
 
 `gatsby-source-filesystem` exports two helper functions:
-- `createFilePath`
-- `createRemoteFileNode`
+
+* `createFilePath`
+* `createRemoteFileNode`
 
 ### createFilePath
 
@@ -87,25 +88,30 @@ createFilePath({
 ```
 
 #### Example usage
+
 The following is taken from [Gatsby Tutorial, Part Four](https://www.gatsbyjs.org/tutorial/part-four/#programmatically-creating-pages-from-data) and is used to create URL slugs for markdown pages.
 
 ```javascript
-const { createFilePath } = require(`gatsby-source-filesystem`)
+const { createFilePath } = require(`gatsby-source-filesystem`);
 
 exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
-    const { createNodeField } = boundActionCreators
-    // Ensures we are processing only markdown files
-    if (node.internal.type === 'MarkdownRemark') {
-        // Use `createFilePath` to turn markdown files in our `data/faqs` directory into `/faqs/slug`
-        const relativeFilePath = createFilePath({ node, getNode, basePath: 'data/faqs/' })
+  const { createNodeField } = boundActionCreators;
+  // Ensures we are processing only markdown files
+  if (node.internal.type === "MarkdownRemark") {
+    // Use `createFilePath` to turn markdown files in our `data/faqs` directory into `/faqs/slug`
+    const relativeFilePath = createFilePath({
+      node,
+      getNode,
+      basePath: "data/faqs/",
+    });
 
-        // Creates new query'able field with name of 'slug'
-        createNodeField({
-            node,
-            name: 'slug',
-            value: `/faqs${relativeFilePath}`
-        })
-    }
+    // Creates new query'able field with name of 'slug'
+    createNodeField({
+      node,
+      name: "slug",
+      value: `/faqs${relativeFilePath}`,
+    });
+  }
 };
 ```
 
