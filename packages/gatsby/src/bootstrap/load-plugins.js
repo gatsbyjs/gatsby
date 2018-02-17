@@ -187,30 +187,18 @@ module.exports = async (config = {}) => {
   }
 
   // Add internal plugins
-  plugins.push(
-    processPlugin(path.join(__dirname, `../internal-plugins/dev-404-page`))
-  )
-  plugins.push(
-    processPlugin(
-      path.join(__dirname, `../internal-plugins/component-page-creator`)
-    )
-  )
-  plugins.push(
-    processPlugin(
-      path.join(__dirname, `../internal-plugins/component-layout-creator`)
-    )
-  )
-  plugins.push(
-    processPlugin(
-      path.join(__dirname, `../internal-plugins/internal-data-bridge`)
-    )
-  )
-  plugins.push(
-    processPlugin(path.join(__dirname, `../internal-plugins/prod-404`))
-  )
-  plugins.push(
-    processPlugin(path.join(__dirname, `../internal-plugins/query-runner`))
-  )
+  const internalPlugins = [
+    `../internal-plugins/dev-404-page`,
+    `../internal-plugins/component-page-creator`,
+    `../internal-plugins/component-layout-creator`,
+    `../internal-plugins/internal-data-bridge`,
+    `../internal-plugins/prod-404`,
+    `../internal-plugins/query-runner`,
+  ]
+  internalPlugins.forEach(relPath => {
+    const absPath = path.join(__dirname, relPath)
+    plugins.push(processPlugin(absPath))
+  })
 
   // Add plugins from the site config.
   if (config.plugins) {
