@@ -230,7 +230,7 @@ module.exports = {
       },
     },
   ],
-}
+};
 ```
 
 Restart the development server.
@@ -405,7 +405,7 @@ module.exports = {
       },
     },
   ],
-}
+};
 ```
 
 Save that and restart the gatsby development server. Then open up Graph_i_QL
