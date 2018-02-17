@@ -104,61 +104,80 @@ const Tags = ({ pathContext, data }) => {
       <Link to="/tags">All tags</Link>
     </div>
   );
-};
-
-Tags.propTypes = {
-  pathContext: PropTypes.shape({
-    tag: PropTypes.string.isRequired,
-  }),
-  data: PropTypes.shape({
-    allMarkdownRemark: PropTypes.shape({
-      totalCount: PropTypes.number.isRequired,
-      edges: PropTypes.arrayOf(
-        PropTypes.shape({
-          node: PropTypes.shape({
-            frontmatter: PropTypes.shape({
-              path: PropTypes.string.isRequired,
-              title: PropTypes.string.isRequired,
-            }),
-          }),
-        }).isRequired,
-      ),
-    }),
-  }),
-};
-
-export default Tags;
-
-export const pageQuery = graphql`
-    query TagPage($tag: String) {
-      allMarkdownRemark(
-        limit: 2000
-        sort: { fields: [frontmatter___date], order: DESC }
-        filter: { frontmatter: { tags: { in: [$tag] } } }
-      ) {
-        totalCount
-        edges {
-          node {
-            frontmatter {
-              title
-              path
-            }
-          }
-        }
-      }
-    }
-`;
+==== BASE ====
+}
 ```
 
-**Note**: `propTypes` are included in this example to help you ensure you're getting all the data you need in the component, and to help serve as a guide while destructuring / using those props.
+Now we'll instruct Gatsby to create the tag pages. In the site's `gatsby-node.js` file we'll call the the [`createPages`](/docs/node-apis/#createPages) API to make a page for every tag.
 
-## Modify `gatsby-node.js` to render pages using that template
+First create a function called `createTagPages`:
 
-Now we've got a template. Great! I'll assume you followed the tutorial for [Adding Markdown Pages](/docs/adding-tags-and-categories-to-blog-posts/) and provide a sample `createPages` that generates post pages as well as tag pages. In the site's `gatsby-node.js` file, include `lodash` (`const _ = require('lodash')`) and then make sure your [`createPages`](/docs/node-apis/#createPages) looks something like this:
+```javascript
+const path = require("path");
+
+const createTagPages = (createPage, edges) => {
+  // Tell it to use our tags template.
+  const tagTemplate = path.resolve(`src/templates/tags.js`);
+  // Create an empty object to store the posts.
+  const posts = {};
+  console.log("creating posts");
+==== BASE ====
+
+==== BASE ====
+  // Loop through all nodes (our markdown posts) and add the tags to our post object.
+==== BASE ====
+
+==== BASE ====
+  edges.forEach(({ node }) => {
+    if (node.frontmatter.tags) {
+      node.frontmatter.tags.forEach(tag => {
+        if (!posts[tag]) {
+          posts[tag] = [];
+==== BASE ====
+        }
+==== BASE ====
+        posts[tag].push(node);
+      });
+==== BASE ====
+    }
+==== BASE ====
+  });
+==== BASE ====
+
+==== BASE ====
+  // Create the tags page with the list of tags from our posts object.
+  createPage({
+    path: "/tags",
+    component: tagTemplate,
+    context: {
+      posts,
+    },
+  });
+==== BASE ====
+
+==== BASE ====
+  // For each of the tags in the post object, create a tag page.
+
+  Object.keys(posts).forEach(tagName => {
+    const post = posts[tagName];
+    createPage({
+      path: `/tags/${tagName}`,
+      component: tagTemplate,
+      context: {
+        posts,
+        post,
+        tag: tagName,
+      },
+    });
+  });
+};
+```
 
 ```js
-exports.createPages = ({ boundActionCreators, graphql }) => {
-  const { createPage } = boundActionCreators;
+const path = require("path");
+
+exports.createPages = ({ actions, graphql }) => {
+  const { createPage } = actions;
 
   const blogPostTemplate = path.resolve('src/templates/blog.js');
   const tagTemplate = path.resolve('src/templates/tags.js');
@@ -177,42 +196,26 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
             }
           }
         }
+==== BASE ====
       }
-    }
-  `).then(result => {
-    if (result.errors) {
-      return Promise.reject(result.errors);
-    }
+==== BASE ====
+    `).then(result => {
+      console.log(result);
+      const posts = result.data.allMarkdownRemark.edges;
 
-    const posts = result.data.allMarkdownRemark.edges;
+      // call createTagPages with the result of posts
+      createTagPages(createPage, posts);
 
-    // Create post detail pages
-    posts.forEach(({ node }) => {
-      createPage({
-        path: node.frontmatter.path,
-        component: blogPostTemplate,
-      });
-    });
-
-    // Tag pages:
-    let tags = [];
-    // Iterate through each post, putting all found tags into `tags`
-    _.each(posts, edge => {
-      if (_.get(edge, 'node.frontmatter.tags')) {
-        tags = tags.concat(edge.node.frontmatter.tags);
-      }
-    });
-    // Eliminate duplicate tags
-    tags = _.uniq(tags);
-
-    // Make tag pages
-    tags.forEach(tag => {
-      createPage({
-        path: `/tags/${_.kebabCase(tag)}/`,
-        component: tagTemplate,
-        context: {
-          tag,
-        },
+      // this is the original code used to create the pages from markdown posts
+      result.data.allMarkdownRemark.edges.map(({ node }) => {
+        createPage({
+          path: node.fields.slug,
+          component: path.resolve(`./src/templates/blog-post.js`),
+          context: {
+            slug: node.fields.slug,
+          },
+        });
+==== BASE ====
       });
     });
   });

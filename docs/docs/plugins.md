@@ -206,6 +206,7 @@ root.
 * [gatsby-source-unsplash](https://github.com/vacas5/gatsby-source-unsplash)
 * [gatsby-source-workable](https://github.com/tumblbug/gatsby-source-workable)
 * [gatsby-transformer-orga](https://github.com/xiaoxinghu/orgajs/tree/master/packages/gatsby-transformer-orga)
+* [gatsby-source-dribbble](https://github.com/smakosh/gatsby-source-dribbble)
 
 ## Community Library
 

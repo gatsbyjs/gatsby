@@ -19,7 +19,7 @@ Plugins can extend Gatsby in many ways:
   with URLs derived from their file names).
 * Modifying webpack config (e.g. for styling options, adding support for other
   compile-to-js languages)
-* Adding things to the rendered HTML (e.g. meta tags, analytics JS snippits like
+* Adding things to the rendered HTML (e.g. meta tags, analytics JS snippets like
   Google Analytics)
 * Writing out things to build directory based on site data (e.g. service worker,
   sitemap, RSS feed)
