@@ -18,6 +18,7 @@
   "keywords": [
     "gatsby"
   ],
+  "author": "Ming Aldrich-Gan <mingaldrichgan@gmail.com>",
   "license": "MIT",
   "main": "index.js",
   "repository": {
