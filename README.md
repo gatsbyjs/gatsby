@@ -158,6 +158,7 @@ Websites built with Gatsby:
 * [Gatsby Manor - themes for GatsbyJS](https://gatsbymanor.com)
 * [Darren Britton's Portfolio](https://darrenbritton.com) ([source](https://github.com/darrenbritton/darrenbritton.github.io))
 * [Portfolio / Blog of Preston Richey](https://prestonrichey.com/) ([source](https://github.com/prichey/prestonrichey.com))
+* [Beach Hut Poole](https://www.beachhutpoole.co.uk/)
 
 ## Docs
 
