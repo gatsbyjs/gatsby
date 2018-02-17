@@ -1,11 +1,11 @@
 /* @flow */
 const webpack = require(`webpack`)
 const fs = require(`fs`)
+const debug = require(`debug`)(`gatsby:html`)
+
 const webpackConfig = require(`../utils/webpack.config`)
 const { store } = require(`../redux`)
 const { createErrorFromString } = require(`gatsby-cli/lib/reporter/errors`)
-
-const debug = require(`debug`)(`gatsby:html`)
 
 module.exports = async (program: any) => {
   const { directory } = program
@@ -28,7 +28,7 @@ module.exports = async (program: any) => {
       if (e) {
         return reject(e)
       }
-      const outputFile = `${directory}/public/render-page.js`
+      const outputFile = `${directory}/public/main.render-page.js`
       if (stats.hasErrors()) {
         let webpackErrors = stats.toJson().errors.filter(Boolean)
         return reject(
