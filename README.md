@@ -28,8 +28,6 @@ Websites built with Gatsby:
 * [Formidable](https://formidable.com/)
 * [openFDA](https://open.fda.gov/)
   ([source](https://github.com/FDA/open.fda.gov))
-* [ReasonML Docs](https://reasonml.github.io/)
-  ([source](https://github.com/reasonml/reasonml.github.io))
 * [Bricolage.io](https://www.bricolage.io/)
   ([source](https://github.com/KyleAMathews/blog))
 * [Hack Club](https://hackclub.com/)
@@ -159,6 +157,8 @@ Websites built with Gatsby:
 * [LaserTime Clinic](https://lasertime.ru) ([source](https://github.com/oleglegun/lasertime))
 * [Gatsby Manor - themes for GatsbyJS](https://gatsbymanor.com)
 * [Darren Britton's Portfolio](https://darrenbritton.com) ([source](https://github.com/darrenbritton/darrenbritton.github.io))
+* [Portfolio / Blog of Preston Richey](https://prestonrichey.com/) ([source](https://github.com/prichey/prestonrichey.com))
+* [Beach Hut Poole](https://www.beachhutpoole.co.uk/)
 
 ## Docs
 

@@ -6,7 +6,7 @@ author: "Steven Natera"
 ---
 
 I am proud to announce [Gatsby Manor](https://www.gatsbymanor.com/), a gallery
-of themes for [Gatsby](https://www.Gatsby.org/). After 5 months of
+of themes for Gatsby. After 5 months of
 development, Gatsby Manor is now in public beta. Check out our
 [themes](https://www.gatsbymanor.com/themes) then use our [getting started](https://www.gatsbymanor.com/docs/quick-start/getting-started) guide to
 kickstart your Gatsby project.
