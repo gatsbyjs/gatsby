@@ -23,17 +23,28 @@ import "../fonts/Webfonts/futurapt_demiitalic_macroman/stylesheet.css"
 // Other fonts
 import "typeface-spectral"
 import "typeface-space-mono"
+import { isTuesday } from "date-fns"
+import searchbarBody from "../components/searchbar-body"
 
 class DefaultLayout extends React.Component {
   render() {
     const isHomepage = this.props.location.pathname == `/`
+    const isDoc = this.props.location.pathname.slice(0, 6) === `/docs/`
+    const isTutorial =
+      this.props.location.pathname.slice(0, 10) === `/tutorial/`
+    const isFeature = this.props.location.pathname.slice(0, 9) === `/features`
+    const isPlugin = this.props.location.pathname.slice(0, 8) === `/plugin`
+    const isPackage = this.props.location.pathname.slice(0, 9) === `/packages`
+    const isPackageReadme =
+      this.props.location.pathname.slice(0, 16) === `/packages/gatsby`
+
     const hasSidebar =
-      this.props.location.pathname.slice(0, 6) === `/docs/` ||
-      this.props.location.pathname.slice(0, 9) === `/packages` ||
-      this.props.location.pathname.slice(0, 10) === `/tutorial/` ||
-      this.props.location.pathname.slice(0, 9) === `/features` ||
-      this.props.location.pathname.slice(0, 8) === `/plugins`
-    this.props.location.pathname.slice(0, 9) === `/features`
+      isDoc ||
+      isTutorial ||
+      isFeature ||
+      isPlugin ||
+      isPackage ||
+      isPackageReadme
 
     const leftPadding = rhythmSize => {
       if (this.props.location.pathname.slice(0, 9) === `/packages`) {
@@ -81,40 +92,40 @@ class DefaultLayout extends React.Component {
       },
     }
 
+    let searchBarDisplayProperty
+    let childrenMobileDisplay
+    let childrenTabletDisplay
+    if (isPackage && !isPackageReadme) {
+      searchBarDisplayProperty = { display: `block` }
+      childrenMobileDisplay = { display: `none` }
+      childrenTabletDisplay = { display: `block` }
+    } else if (isPackage && isPackageReadme) {
+      searchBarDisplayProperty = {
+        [presets.Mobile]: {
+          display: `none`,
+        },
+        [presets.Tablet]: {
+          display: `block`,
+        },
+      }
+      childrenMobileDisplay = { display: `block` }
+      childrenTabletDisplay = { display: `block` }
+    } else {
+      searchBarDisplayProperty = {
+        display: `none`,
+      }
+      childrenMobileDisplay = { display: `block` }
+      childrenTabletDisplay = { display: `block` }
+    }
     const searchbarStyles = {
-      borderRight: `1px solid ${colors.ui.light}`,
-      backgroundColor: colors.ui.whisper,
-      boxShadow: `inset 0 4px 5px 0 ${hex2rgba(
-        colors.gatsby,
-        presets.shadowKeyPenumbraOpacity
-      )}, inset 0 1px 10px 0 ${hex2rgba(
-        colors.lilac,
-        presets.shadowAmbientShadowOpacity
-      )}, inset 0 2px 4px -1px ${hex2rgba(
-        colors.lilac,
-        presets.shadowKeyUmbraOpacity
-      )}`,
-      width: rhythm(17),
+      ...sidebarStyles,
+      // overrides of sidebarStyles
+      width: `100vw`,
       padding: rhythm(1),
-      display: `none`,
-      position: `fixed`,
-      top: `calc(${presets.headerHeight} - 1px)`,
-      height: `calc(100vh - ${presets.headerHeight} + 1px)`,
-      WebkitOverflowScrolling: `touch`,
-      "::-webkit-scrollbar": {
-        width: `6px`,
-        height: `6px`,
-      },
-      "::-webkit-scrollbar-thumb": {
-        background: colors.ui.bright,
-      },
-      "::-webkit-scrollbar-track": {
-        background: colors.ui.light,
-      },
       [presets.Desktop]: {
         width: rhythm(17),
-        padding: rhythm(1),
       },
+      ...searchBarDisplayProperty,
     }
 
     return (
@@ -134,14 +145,6 @@ class DefaultLayout extends React.Component {
               margin: `0 auto`,
               paddingTop: isHomepage ? 0 : presets.headerHeight,
             },
-            "@media (max-width: 749px)": {
-              display: `grid`,
-              gridTemplateAreas: `
-                "searchResults"
-                "readMeContent"
-              `,
-              gridTemplateRows: `calc(100vh - ${presets.headerHeight}) 1fr`,
-            },
           }}
         >
           {/* TODO Move this under docs/index.js once Gatsby supports multiple levels
@@ -150,10 +153,7 @@ class DefaultLayout extends React.Component {
             css={{
               ...sidebarStyles,
               [presets.Tablet]: {
-                display:
-                  this.props.location.pathname.slice(0, 6) === `/docs/`
-                    ? `block`
-                    : `none`,
+                display: isDoc ? `block` : `none`,
               },
             }}
           >
@@ -165,20 +165,10 @@ class DefaultLayout extends React.Component {
             css={{
               ...searchbarStyles,
               [presets.Tablet]: {
-                display:
-                  this.props.location.pathname.slice(0, 9) === `/packages`
-                    ? `block`
-                    : `none`,
-              },
-              "@media (max-width: 749px)": {
-                display:
-                  this.props.location.pathname.slice(0, 9) === `/packages`
-                    ? `block`
-                    : `none`,
-                position: `absolute`,
-                height: `calc(100% - ${presets.headerHeight})`,
-                width: `100vw`,
-                gridArea: `searchResults`,
+                display: isPackage
+                  ? `block`
+                  : isPackage && isPackageReadme ? `block` : `none`,
+                width: rhythm(17),
               },
             }}
           >
@@ -191,10 +181,7 @@ class DefaultLayout extends React.Component {
             css={{
               ...sidebarStyles,
               [presets.Tablet]: {
-                display:
-                  this.props.location.pathname.slice(0, 10) === `/tutorial/`
-                    ? `block`
-                    : `none`,
+                display: isTutorial ? `block` : `none`,
               },
             }}
           >
@@ -204,10 +191,7 @@ class DefaultLayout extends React.Component {
             css={{
               ...sidebarStyles,
               [presets.Tablet]: {
-                display:
-                  this.props.location.pathname.slice(0, 9) === `/features`
-                    ? `block`
-                    : `none`,
+                display: isFeature ? `block` : `none`,
               },
             }}
           >
@@ -216,15 +200,10 @@ class DefaultLayout extends React.Component {
 
           <div
             css={{
+              ...childrenMobileDisplay,
               [presets.Tablet]: {
                 paddingLeft: leftPadding(10),
-              },
-              "@media (max-width: 749px)": {
-                gridArea:
-                  this.props.location.pathname.slice(0, 9) === `/packages`
-                    ? `readMeContent`
-                    : ``,
-                maxWidth: `100vw`,
+                ...childrenTabletDisplay,
               },
               [presets.Desktop]: {
                 paddingLeft: leftPadding(12),
