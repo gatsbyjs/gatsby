@@ -6,43 +6,10 @@
 
 const apis = require(`./api-ssr-docs`)
 
-/**
- * Some APIs should only be implemented once. Given a list of plugins, and an
- * `api` to check, this will return [] for APIs that are implemented 1 or 0 times.
- *
- * For APIs that have been implemented multiple times, return an array of paths
- * pointing to the file implementing `api`.
- *
- * @param {array} pluginList
- * @param {string} api
- */
-const duplicatedApis = (pluginList, api) => {
-  let implementsApi = []
-
-  pluginList.forEach(p => {
-    if (p.plugin[api]) implementsApi.push(p.path)
-  })
-
-  if (implementsApi.length < 2) return [] // no dupes
-  return implementsApi // paths to dupes
-}
-
 // Run the specified API in any plugins that have implemented it
-const apiRunner = (api, args, defaultReturn) => {
+module.exports = (api, args, defaultReturn) => {
   if (!apis[api]) {
     console.log(`This API doesn't exist`, api)
-  }
-
-  if (api === `replaceRenderer`) {
-    const dupes = duplicatedApis(plugins, api)
-    if (dupes.length > 0) {
-      let m = `\nThe "${api}" API  is implemented by several enabled plugins.`
-      let m2 = `This could be an error, see https://www.gatsbyjs.org/docs/debugging-replace-renderer-api/ for details.`
-      console.log(m)
-      console.log(m2)
-      console.log(`Check the following plugins for "${api}" implementations:`)
-      dupes.map(d => console.log(d))
-    }
   }
 
   // Run each plugin in series.
@@ -62,6 +29,3 @@ const apiRunner = (api, args, defaultReturn) => {
     return [defaultReturn]
   }
 }
-
-exports.apiRunner = apiRunner
-exports.duplicatedApis = duplicatedApis

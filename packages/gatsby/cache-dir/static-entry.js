@@ -3,7 +3,7 @@ import { renderToString, renderToStaticMarkup } from "react-dom/server"
 import { StaticRouter, Route, withRouter } from "react-router-dom"
 import { kebabCase, get, merge, isArray, isString } from "lodash"
 
-import { apiRunner } from "./api-runner-ssr"
+import apiRunner from "./api-runner-ssr"
 import pages from "./pages.json"
 import syncRequires from "./sync-requires"
 import testRequireError from "./test-require-error"

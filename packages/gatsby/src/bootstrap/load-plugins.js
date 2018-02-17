@@ -309,7 +309,40 @@ module.exports = async (config = {}) => {
     }
   })
 
-  if (bad) process.exit()
+  if (bad) process.exit() // TODO: change to panicOnBuild
+
+  // multiple replaceRenderers may cause problems at build time
+  if (apiToPlugins.replaceRenderer.length > 1) {
+    const rendererPlugins = [...apiToPlugins.replaceRenderer]
+
+    if (rendererPlugins.includes(`default-site-plugin`)) {
+      console.log(`\nreplaceRenderer API found in these plugins:`)
+      console.log(rendererPlugins.join(`, `))
+      console.log(`This might be an error, see: https://www.gatsbyjs.org/docs/debugging-replace-renderer-api/`)
+    } else {
+      console.log(`\nGatsby's replaceRenderer API is implemented by multiple plugins:`)
+      console.log(rendererPlugins.join(`, `))
+      console.log(`This will break your build`)
+      console.log(`See: https://www.gatsbyjs.org/docs/debugging-replace-renderer-api/`)
+    }
+
+    // Now update plugin list so only final replaceRenderer will run
+    const ignorable = rendererPlugins.slice(0, -1)
+
+    // For each plugin in ignorable, reset its list of ssrAPIs to []
+    // This prevents apiRunnerSSR() from attempting to run it later
+    const messages = [``]
+    flattenedPlugins.forEach((fp, i) => {
+      if (ignorable.includes(fp.name)) {
+        messages.push(`Duplicate replaceRenderer found, skipping gatsby-ssr.js for plugin: ${fp.name}`)
+        flattenedPlugins[i].ssrAPIs = []
+      }
+    })
+    if (messages.length > 1) {
+      messages.forEach(m => console.log(m))
+      console.log(``)
+    }
+  }
 
   store.dispatch({
     type: `SET_SITE_PLUGINS`,

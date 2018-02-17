@@ -2,7 +2,7 @@ import React from "react"
 import { renderToStaticMarkup } from "react-dom/server"
 import { merge } from "lodash"
 import testRequireError from "./test-require-error"
-import { apiRunner } from "./api-runner-ssr"
+import apiRunner from "./api-runner-ssr"
 
 let HTML
 try {

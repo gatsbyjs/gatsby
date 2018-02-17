@@ -8,6 +8,7 @@ const fs = require(`fs-extra`)
 const md5File = require(`md5-file/promise`)
 const crypto = require(`crypto`)
 const del = require(`del`)
+const path = require(`path`)
 
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const { graphql } = require(`graphql`)
@@ -175,9 +176,12 @@ module.exports = async (args: BootstrapArgs) => {
 
   // Find plugins which implement gatsby-browser and gatsby-ssr and write
   // out api-runners for them.
-  const hasAPIFile = (env, plugin) =>
-    // TODO make this async...
-    glob.sync(`${plugin.resolve}/gatsby-${env}*`)[0]
+  const hasAPIFile = (env, plugin) => {
+    if (plugin[`${env}APIs`].length > 0 ) {
+      return path.join(plugin.resolve, `gatsby-${env}.js`)
+    }
+    return undefined
+  }
 
   const ssrPlugins = _.filter(
     flattenedPlugins.map(plugin => {
@@ -234,7 +238,6 @@ module.exports = async (args: BootstrapArgs) => {
       plugin =>
         `{
       plugin: require('${plugin.resolve}'),
-      path: "${plugin.resolve}",
       options: ${JSON.stringify(plugin.options)},
     }`
     )
