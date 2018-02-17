@@ -382,11 +382,7 @@ module.exports = async (
       // modules. But also make it possible to install modules within the src
       // directory if you need to install a specific version of a module for a
       // part of your site.
-      modules: [
-        `node_modules`,
-        directoryPath(`node_modules`),
-        directoryPath(`public`),
-      ],
+      modules: [`node_modules`, directoryPath(`node_modules`)],
     }
   }
 
