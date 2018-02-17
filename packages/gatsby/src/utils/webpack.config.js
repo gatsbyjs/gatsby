@@ -5,6 +5,7 @@ const fs = require(`fs`)
 const path = require(`path`)
 const dotenv = require(`dotenv`)
 const StaticSiteGeneratorPlugin = require(`static-site-generator-webpack-plugin`)
+const NameAllModulesPlugin = require(`name-all-modules-plugin`)
 const { StatsWriterPlugin } = require(`webpack-stats-plugin`)
 // const FriendlyErrorsWebpackPlugin = require(`friendly-errors-webpack-plugin`)
 const WatchMissingNodeModulesPlugin = require(`react-dev-utils/WatchMissingNodeModulesPlugin`)
@@ -15,6 +16,7 @@ const WebpackMD5Hash = require(`webpack-md5-hash`)
 const GatsbyModulePlugin = require(`gatsby-module-loader/plugin`)
 const report = require(`gatsby-cli/lib/reporter`)
 const { withBasePath } = require(`./path`)
+const { chunkNamer } = require(`./webpack-helpers`)
 
 const apiRunnerNode = require(`./api-runner-node`)
 const createUtils = require(`./webpack-utils`)
@@ -104,7 +106,7 @@ module.exports = async (
         // Deleted by build-html.js, since it's not needed for production.
         return {
           path: directoryPath(`public`),
-          filename: `render-page.js`,
+          filename: `[name].render-page.js`,
           libraryTarget: `umd`,
           publicPath: program.prefixPaths
             ? `${store.getState().config.pathPrefix}/`
@@ -188,6 +190,7 @@ module.exports = async (
           // See https://github.com/facebookincubator/create-react-app/issues/186
           new WatchMissingNodeModulesPlugin(directoryPath(`node_modules`)),
 
+          new NameAllModulesPlugin(),
           plugins.namedModules(),
           // new FriendlyErrorsWebpackPlugin({
           // clearConsole: false,
@@ -208,7 +211,10 @@ module.exports = async (
       case `develop-html`:
       case `build-html`:
         configPlugins = configPlugins.concat([
-          new StaticSiteGeneratorPlugin(`render-page.js`, pages),
+          new StaticSiteGeneratorPlugin(`main.render-page.js`, pages),
+          plugins.namedModules(),
+          plugins.namedChunks(chunkNamer),
+          new NameAllModulesPlugin(),
         ])
         break
       case `build-javascript`: {
@@ -221,6 +227,9 @@ module.exports = async (
         components.push(`layout-component---index`)
 
         configPlugins = configPlugins.concat([
+          plugins.namedModules(),
+          plugins.namedChunks(chunkNamer),
+          new NameAllModulesPlugin(),
           new WebpackMD5Hash(),
 
           // Extract "commons" chunk from the app entry and all
@@ -293,12 +302,7 @@ module.exports = async (
           }),
           new GatsbyModulePlugin(),
           plugins.namedModules(),
-          plugins.namedChunks(chunk => {
-            if (chunk.name) return chunk.name
-            return chunk.modules
-              .map(m => path.relative(m.context, m.request))
-              .join(`_`)
-          }),
+          plugins.namedChunks(chunkNamer),
         ])
         break
       }

@@ -1,6 +1,8 @@
 /* @flow */
 const webpack = require(`webpack`)
 const fs = require(`fs-extra`)
+const glob = require(`glob`)
+
 const webpackConfig = require(`../utils/webpack.config`)
 
 module.exports = async (program: any) => {
@@ -17,6 +19,9 @@ module.exports = async (program: any) => {
       // We don't want any javascript produced by this step in the process.
       try {
         fs.unlinkSync(`${directory}/public/bundle-for-css.js`)
+        glob
+          .sync(`${directory}/public/*bundle-for-css*`)
+          .map(bundlePath => fs.unlinkSync(bundlePath))
       } catch (e) {
         // ignore.
       }
