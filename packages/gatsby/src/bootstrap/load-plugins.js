@@ -326,6 +326,7 @@ module.exports = async (config = {}) => {
       reporter.error(rendererPlugins.join(`, `))
       reporter.error(`This will break your build`)
       reporter.error(`See: https://www.gatsbyjs.org/docs/debugging-replace-renderer-api/`)
+      if (process.env.NODE_ENV === `production`) process.exit(1)
     }
 
     // Now update plugin list so only final replaceRenderer will run
