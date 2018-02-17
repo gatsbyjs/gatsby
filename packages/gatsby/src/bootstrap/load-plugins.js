@@ -10,6 +10,7 @@ const nodeAPIs = require(`../utils/api-node-docs`)
 const browserAPIs = require(`../utils/api-browser-docs`)
 const ssrAPIs = require(`../../cache-dir/api-ssr-docs`)
 const resolveModuleExports = require(`./resolve-module-exports`)
+const reporter = require(`gatsby-cli/lib/reporter`)
 
 // Given a plugin object, an array of the API names it exports and an
 // array of valid API names, return an array of invalid API exports.
@@ -316,14 +317,15 @@ module.exports = async (config = {}) => {
     const rendererPlugins = [...apiToPlugins.replaceRenderer]
 
     if (rendererPlugins.includes(`default-site-plugin`)) {
-      console.log(`\nreplaceRenderer API found in these plugins:`)
-      console.log(rendererPlugins.join(`, `))
-      console.log(`This might be an error, see: https://www.gatsbyjs.org/docs/debugging-replace-renderer-api/`)
+      reporter.warn(`replaceRenderer API found in these plugins:`)
+      reporter.warn(rendererPlugins.join(`, `))
+      reporter.warn(`This might be an error, see: https://www.gatsbyjs.org/docs/debugging-replace-renderer-api/`)
     } else {
-      console.log(`\nGatsby's replaceRenderer API is implemented by multiple plugins:`)
-      console.log(rendererPlugins.join(`, `))
-      console.log(`This will break your build`)
-      console.log(`See: https://www.gatsbyjs.org/docs/debugging-replace-renderer-api/`)
+      console.log(``)
+      reporter.error(`Gatsby's replaceRenderer API is implemented by multiple plugins:`)
+      reporter.error(rendererPlugins.join(`, `))
+      reporter.error(`This will break your build`)
+      reporter.error(`See: https://www.gatsbyjs.org/docs/debugging-replace-renderer-api/`)
     }
 
     // Now update plugin list so only final replaceRenderer will run
@@ -331,15 +333,16 @@ module.exports = async (config = {}) => {
 
     // For each plugin in ignorable, reset its list of ssrAPIs to []
     // This prevents apiRunnerSSR() from attempting to run it later
-    const messages = [``]
+    const messages = []
     flattenedPlugins.forEach((fp, i) => {
       if (ignorable.includes(fp.name)) {
         messages.push(`Duplicate replaceRenderer found, skipping gatsby-ssr.js for plugin: ${fp.name}`)
         flattenedPlugins[i].ssrAPIs = []
       }
     })
-    if (messages.length > 1) {
-      messages.forEach(m => console.log(m))
+    if (messages.length > 0) {
+      console.log(``)
+      messages.forEach(m => reporter.warn(m))
       console.log(``)
     }
   }
