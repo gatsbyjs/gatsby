@@ -117,7 +117,7 @@ const Img = props => {
         height: `100%`,
         objectFit: `cover`,
         objectPosition: `center`,
-        ...style
+        ...style,
       }}
     />
   )
@@ -199,13 +199,13 @@ class Image extends React.Component {
     const imagePlaceholderStyle = {
       opacity: this.state.imgLoaded ? 0 : 1,
       transitionDelay: `0.25s`,
-      ...imgStyle
+      ...imgStyle,
     }
 
     const imageStyle = {
       opacity: this.state.imgLoaded || this.props.fadeIn === false ? 1 : 0,
       transitionDelay: `0.25s`,
-      ...imgStyle
+      ...imgStyle,
     }
 
     if (sizes) {
