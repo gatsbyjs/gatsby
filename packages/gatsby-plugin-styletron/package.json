@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-styletron",
   "description": "Stub description for gatsby-plugin-styletron",
-  "version": "1.0.12",
+  "version": "1.0.13-0",
   "author": "Nadiia Dmytrenko &lt;nadiia.dmytrenko@gmail.com&gt;",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
