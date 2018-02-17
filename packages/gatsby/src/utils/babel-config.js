@@ -143,6 +143,11 @@ module.exports = async function babelConfig(program, stage) {
     babelrc.plugins.unshift(require.resolve(`react-hot-loader/babel`))
   }
 
+  // Make dynamic imports work during SSR.
+  if (stage === `build-html` || stage === `develop-html`) {
+    babelrc.plugins.unshift(require.resolve(`babel-plugin-dynamic-import-node`))
+  }
+
   babelrc.plugins.unshift(
     require.resolve(`babel-plugin-remove-graphql-queries`)
   )
