@@ -1,7 +1,8 @@
 # Long-term caching testing
 
-Here we build a site many times, making small changes between builds, to test
-that the bundle names change correctly.
+To test that Gatsby correctly changes its JS bundles with every type of change
+to site modules a user can make, here we build a site many times, making small
+changes between builds, to test that the bundle names change correctly.
 
 After each run, move the public folder to `public-${runNumber}`.
 
