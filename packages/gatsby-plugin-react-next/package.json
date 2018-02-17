@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-react-next",
   "description": "Use React 16 with your Gatsby v1 site",
-  "version": "2.0.0",
+  "version": "2.0.1-0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"

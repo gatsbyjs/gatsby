@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-typescript",
   "description": "Adds TypeScript support for Gatsby layouts and pages.",
-  "version": "1.4.16",
+  "version": "1.4.17-0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -11,7 +11,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.0.0-beta.38",
-    "babel-plugin-remove-graphql-queries": "^2.0.0-alpha.d1544e1b",
+    "babel-plugin-remove-graphql-queries": "^2.0.1-0",
     "ts-loader": "^2.0.3",
     "typescript": "^2.2.1"
   },
