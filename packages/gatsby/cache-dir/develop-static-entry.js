@@ -3,7 +3,7 @@ import { renderToStaticMarkup } from "react-dom/server"
 import { merge } from "lodash"
 import apiRunner from "./api-runner-ssr"
 // import testRequireError from "./test-require-error"
-// For some extreamly mysterious reason, webpack adds the above module *after*
+// For some extremely mysterious reason, webpack adds the above module *after*
 // this module so that when this code runs, testRequireError is undefined.
 // So in the meantime, we'll just inline it.
 const testRequireError = (moduleName, err) => {
