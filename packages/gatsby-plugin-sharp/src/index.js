@@ -13,6 +13,7 @@ const path = require(`path`)
 
 const duotone = require(`./duotone`)
 const { boundActionCreators } = require(`gatsby/dist/redux/actions`)
+const report = require(`gatsby-cli/lib/reporter`)
 
 // Promisify the sharp prototype (methods) to promisify the alternative (for
 // raw) callback-accepting toBuffer(...) method
@@ -42,7 +43,15 @@ const processFile = (file, jobs, cb) => {
   // Wait for each job promise to resolve.
   Promise.all(jobs.map(job => job.finishedPromise)).then(() => cb())
 
-  const pipeline = sharp(file).rotate()
+  let pipeline
+  try {
+    pipeline = sharp(file).rotate()
+  } catch (err) {
+    report.error(`Failed to process image ${file}`, err)
+    jobs.forEach(job => job.outsideReject(err))
+    return
+  }
+
   jobs.forEach(async job => {
     const args = job.args
     let clonedPipeline
@@ -75,6 +84,10 @@ const processFile = (file, jobs, cb) => {
         quality: args.quality,
         force: args.toFormat === `webp`,
       })
+      .tiff({
+        quality: args.quality,
+        force: args.toFormat === `tiff`,
+      })
 
     // grayscale
     if (args.grayscale) {
@@ -95,76 +108,70 @@ const processFile = (file, jobs, cb) => {
       )
     }
 
+    const onFinish = err => {
+      imagesFinished += 1
+      bar.tick()
+      boundActionCreators.setJob(
+        {
+          id: `processing image ${job.file.absolutePath}`,
+          imagesFinished,
+        },
+        { name: `gatsby-plugin-sharp` }
+      )
+
+      if (err) {
+        report.error(`Failed to process image ${file}`, err)
+        job.outsideReject(err)
+      } else {
+        job.outsideResolve()
+      }
+    }
+
     if (
-      (job.file.extension.match(/^jp/) && args.toFormat === ``) ||
-      args.toFormat === `jpg`
-    ) {
-      clonedPipeline.toFile(job.outputPath, (err, info) => {
-        imagesFinished += 1
-        bar.tick()
-        boundActionCreators.setJob(
-          {
-            id: `processing image ${job.file.absolutePath}`,
-            imagesFinished,
-          },
-          { name: `gatsby-plugin-sharp` }
-        )
-        job.outsideResolve(info)
-      })
-      // Compress pngs
-    } else if (
       (job.file.extension === `png` && args.toFormat === ``) ||
       args.toFormat === `png`
     ) {
-      clonedPipeline.toBuffer().then(sharpBuffer => {
-        imagemin
-          .buffer(sharpBuffer, {
-            plugins: [
-              imageminPngquant({
-                quality: `${args.quality}-${Math.min(args.quality + 25, 100)}`, // e.g. 40-65
-              }),
-            ],
-          })
-          .then(imageminBuffer => {
-            fs.writeFile(job.outputPath, imageminBuffer, () => {
-              imagesFinished += 1
-              bar.tick()
-              boundActionCreators.setJob(
-                {
-                  id: `processing image ${job.file.absolutePath}`,
-                  imagesFinished,
-                },
-                { name: `gatsby-plugin-sharp` }
-              )
-              job.outsideResolve()
+      clonedPipeline
+        .toBuffer()
+        .then(sharpBuffer => {
+          imagemin
+            .buffer(sharpBuffer, {
+              plugins: [
+                imageminPngquant({
+                  quality: `${args.quality}-${Math.min(
+                    args.quality + 25,
+                    100
+                  )}`, // e.g. 40-65
+                }),
+              ],
             })
-          })
-      })
+            .then(imageminBuffer => {
+              fs.writeFile(job.outputPath, imageminBuffer, onFinish)
+            })
+            .catch(onFinish)
+        })
+        .catch(onFinish)
       // Compress webp
     } else if (
       (job.file.extension === `webp` && args.toFormat === ``) ||
       args.toFormat === `webp`
     ) {
-      clonedPipeline.toBuffer().then(sharpBuffer => {
-        imagemin
-          .buffer(sharpBuffer, {
-            plugins: [imageminWebp({ quality: args.quality })],
-          })
-          .then(imageminBuffer => {
-            fs.writeFile(job.outputPath, imageminBuffer, () => {
-              imagesFinished += 1
-              bar.tick()
-              boundActionCreators.setJob(
-                {
-                  id: `processing image ${job.file.absolutePath}`,
-                  imagesFinished,
-                },
-                { name: `gatsby-plugin-sharp` }
-              )
-              job.outsideResolve()
+      clonedPipeline
+        .toBuffer()
+        .then(sharpBuffer => {
+          imagemin
+            .buffer(sharpBuffer, {
+              plugins: [imageminWebp({ quality: args.quality })],
             })
-          })
-      })
+            .then(imageminBuffer => {
+              fs.writeFile(job.outputPath, imageminBuffer, onFinish)
+            })
+            .catch(onFinish)
+        })
+        .catch(onFinish)
+      // any other format (jpeg, tiff) - don't compress it just handle output
+    } else {
+      clonedPipeline.toFile(job.outputPath, onFinish)
     }
   })
 }
@@ -268,9 +275,10 @@ function queueImageResizing({ file, args = {} }) {
   const filePath = path.join(process.cwd(), `public`, `static`, imgSrc)
 
   // Create function to call when the image is finished.
-  let outsideResolve
-  const finishedPromise = new Promise(resolve => {
+  let outsideResolve, outsideReject
+  const finishedPromise = new Promise((resolve, reject) => {
     outsideResolve = resolve
+    outsideReject = reject
   })
 
   let width
@@ -300,6 +308,7 @@ function queueImageResizing({ file, args = {} }) {
     args: options,
     finishedPromise,
     outsideResolve,
+    outsideReject,
     inputPath: file.absolutePath,
     outputPath: filePath,
   }
@@ -331,7 +340,13 @@ async function notMemoizedbase64({ file, args = {} }) {
     toFormat: ``,
   }
   const options = _.defaults(args, defaultArgs)
-  let pipeline = sharp(file.absolutePath).rotate()
+  let pipeline
+  try {
+    pipeline = sharp(file.absolutePath).rotate()
+  } catch (err) {
+    report.error(`Failed to process image ${file.absolutePath}`, err)
+    return null
+  }
 
   pipeline
     .resize(options.width, options.height)
@@ -400,7 +415,15 @@ async function responsiveSizes({ file, args = {} }) {
 
   // Account for images with a high pixel density. We assume that these types of
   // images are intended to be displayed at their native resolution.
-  const { width, height, density } = await sharp(file.absolutePath).metadata()
+  let metadata
+  try {
+    metadata = await sharp(file.absolutePath).metadata()
+  } catch (err) {
+    report.error(`Failed to process image ${file.absolutePath}`, err)
+    return null
+  }
+
+  const { width, height, density } = metadata
   const pixelRatio =
     options.sizeByPixelDensity && typeof density === `number` && density > 0
       ? density / 72
@@ -620,7 +643,13 @@ async function notMemoizedtraceSVG({ file, args, fileArgs }) {
     toFormat: ``,
   }
   const options = _.defaults(fileArgs, defaultFileResizeArgs)
-  let pipeline = sharp(file.absolutePath).rotate()
+  let pipeline
+  try {
+    pipeline = sharp(file.absolutePath).rotate()
+  } catch (err) {
+    report.error(`Failed to process image ${file.absolutePath}`, err)
+    return null
+  }
 
   pipeline
     .resize(options.width, options.height)

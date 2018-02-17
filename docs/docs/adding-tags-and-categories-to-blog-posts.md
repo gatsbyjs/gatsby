@@ -157,6 +157,8 @@ export const pageQuery = graphql`
 Now we've got a template. Great! I'll assume you followed the tutorial for [Adding Markdown Pages](/docs/adding-tags-and-categories-to-blog-posts/) and provide a sample `createPages` that generates post pages as well as tag pages. In the site's `gatsby-node.js` file, include `lodash` (`const _ = require('lodash')`) and then make sure your [`createPages`](/docs/node-apis/#createPages) looks something like this:
 
 ```js
+const path = require("path");
+
 exports.createPages = ({ boundActionCreators, graphql }) => {
   const { createPage } = boundActionCreators;
 
