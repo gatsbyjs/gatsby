@@ -204,7 +204,6 @@ class Image extends React.Component {
 
     const imageStyle = {
       opacity: this.state.imgLoaded || this.props.fadeIn === false ? 1 : 0,
-      transitionDelay: `0.25s`,
       ...imgStyle,
     }
 
