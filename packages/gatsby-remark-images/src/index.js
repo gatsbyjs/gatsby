@@ -63,6 +63,10 @@ module.exports = (
       reporter,
     })
 
+    if (!responsiveSizesResult) {
+      return resolve()
+    }
+
     // Calculate the paddingBottom %
     const ratio = `${1 / responsiveSizesResult.aspectRatio * 100}%`
 
