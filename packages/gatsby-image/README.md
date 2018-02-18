@@ -253,7 +253,7 @@ prop. e.g. `<Img sizes={sizes} />`
 | `className`             | `string|object` | Passed to the wrapper element. Object is needed to support Glamor's css prop                                                    |
 | `outerWrapperClassName` | `string|object` | Passed to the outer wrapper element. Object is needed to support Glamor's css prop                                              |
 | `style`                 | `object`         | Spread into the default styles in the wrapper element                                                                           |
-| `imgStyle`              | `object`         | Spread into the default styles in the `img` element                                                                             |
+| `imgStyle`              | `object`         | Spread into the default styles for the actual `img` element                                                                             |
 | `position`              | `string`         | Defaults to `relative`. Pass in `absolute` to make the component `absolute` positioned                                      |
 | `backgroundColor`       | `string|bool`   | Set a colored background placeholder. If true, uses "lightgray" for the color. You can also pass in any valid color string. |
 | `onLoad`                | `func`           | A callback that is called when the full-size image has loaded.                                                              |
