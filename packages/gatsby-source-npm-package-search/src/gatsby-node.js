@@ -1,6 +1,5 @@
 const algoliasearch = require(`algoliasearch`)
 const crypto = require(`crypto`)
-const createNodeId = require(`createNodeId`)
 
 const client = algoliasearch(`OFCNCOG2CU`, `f54e21fa3a2a0160595bb058179bfb1e`)
 var index = client.initIndex(`npm-search`)
@@ -11,7 +10,7 @@ const createContentDigest = obj =>
     .update(JSON.stringify(obj))
     .digest(`hex`)
 
-exports.sourceNodes = async ({ boundActionCreators }, { keywords }) => {
+exports.sourceNodes = async ({ boundActionCreators, createNodeId }, { keywords }) => {
   const { createNode } = boundActionCreators
 
   console.log(`Grabbing NPM packages...`)
