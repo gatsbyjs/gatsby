@@ -119,14 +119,6 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
                 slug: edge.node.fields.slug,
               },
             })
-          } else if (edge.node.fields.slug === `/index/`) {
-            createPage({
-              path: `/`, // required, we don't have frontmatter for this page hence separate if()
-              component: path.resolve(edge.node.fileAbsolutePath),
-              context: {
-                slug: edge.node.fields.slug,
-              },
-            })
           }
         })
 

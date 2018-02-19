@@ -35,7 +35,7 @@ async function onCreateNode({
     ],
   }
 
-  let exportsData, frontmatter
+  let exportsData, frontmatter, error
   try {
     const ast = babylon.parse(code, options)
 
@@ -61,6 +61,7 @@ async function onCreateNode({
     }
 
     frontmatter = {}
+    error = false
     traverse(ast, {
       AssignmentExpression: function AssignmentExpression(astPath) {
         if (
@@ -88,49 +89,50 @@ async function onCreateNode({
         }
       },
     })
-
-    exportsData = {
-      ...frontmatter,
-      error: false,
-    }
   } catch (e) {
     // stick the error on the query so the user can
     // react to an error as they see fit
-    exportsData = {
-      ...frontmatter,
-      error: {
-        err: true,
-        code: e.code,
-        message: e.message,
-        stack: e.stack,
-      },
+    error = {
+      err: true,
+      code: e.code,
+      message: e.message,
+      stack: e.stack,
     }
   } finally {
-    const objStr = JSON.stringify(node)
-    const contentDigest = crypto
-      .createHash(`md5`)
-      .update(objStr)
-      .digest(`hex`)
+    // only create node if frontmatter is not empty
+    if (!_.isEmpty(frontmatter)) {
 
-    const nodeData = {
-      id: `${node.id} >>> JavascriptFrontmatter`,
-      children: [],
-      parent: node.id,
-      node: { ...node },
-      internal: {
-        contentDigest,
-        type: `JavascriptFrontmatter`,
-      },
+      exportsData = {
+        ...frontmatter,
+        error: error,
+      }
+
+      const objStr = JSON.stringify(node)
+      const contentDigest = crypto
+        .createHash(`md5`)
+        .update(objStr)
+        .digest(`hex`)
+
+      const nodeData = {
+        id: `${node.id} >>> JavascriptFrontmatter`,
+        children: [],
+        parent: node.id,
+        node: { ...node },
+        internal: {
+          contentDigest,
+          type: `JavascriptFrontmatter`,
+        },
+      }
+
+      nodeData.frontmatter = { ...exportsData }
+
+      if (node.internal.type === `File`) {
+        nodeData.fileAbsolutePath = node.absolutePath
+      }
+
+      createNode(nodeData)
+      createParentChildLink({ parent: node, child: nodeData })
     }
-
-    nodeData.frontmatter = { ...exportsData }
-
-    if (node.internal.type === `File`) {
-      nodeData.fileAbsolutePath = node.absolutePath
-    }
-
-    createNode(nodeData)
-    createParentChildLink({ parent: node, child: nodeData })
   }
 }
 
