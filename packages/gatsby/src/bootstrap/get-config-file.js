@@ -32,7 +32,7 @@ module.exports = async function getConfigFile(
     )
     if (!testRequireError(configPath, err)) {
       report.error(
-        `We encountered an error while trying to load load your site's ${configName}. Please fix the error and try again.`,
+        `We encountered an error while trying to load your site's ${configName}. Please fix the error and try again.`,
         err
       )
       process.exit(1)
@@ -48,7 +48,7 @@ module.exports = async function getConfigFile(
     } else if (fs.existsSync(path.join(rootDir, `src`, configName))) {
       console.log(``)
       report.error(
-        `Your ${configName} file is in the wrong place. You've placed in the src/ directory. It must instead be at the root of your site next to your package.json file.`
+        `Your ${configName} file is in the wrong place. You've placed it in the src/ directory. It must instead be at the root of your site next to your package.json file.`
       )
       console.log(``)
       process.exit(1)
