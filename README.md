@@ -3,6 +3,7 @@
 [![npm package](https://img.shields.io/npm/dm/gatsby.svg)](https://www.npmjs.org/package/gatsby)
 [![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/gatsby-js)
 [![gatsby channel on discord](https://img.shields.io/badge/discord-gatsby%40reactiflux-738bd7.svg?style=flat-square)](https://discord.gg/0ZcbPKXt5bVoxkfV)
+[![Open Source Helpers](https://www.codetriage.com/gatsbyjs/gatsby/badges/users.svg)](https://www.codetriage.com/gatsbyjs/gatsby)
 [![Twitter Follow](https://img.shields.io/twitter/follow/gatsbyjs.svg?style=social)](https://twitter.com/gatsbyjs)
 
 <img alt="Gatsby" src="https://www.gatsbyjs.org/monogram.svg" width="100">
