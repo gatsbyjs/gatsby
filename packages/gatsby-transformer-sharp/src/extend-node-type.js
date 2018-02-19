@@ -89,7 +89,12 @@ const PotraceType = new GraphQLInputObjectType({
   },
 })
 
-module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
+module.exports = ({
+  type,
+  pathPrefix,
+  getNodeAndSavePathDependency,
+  reporter,
+}) => {
   if (type.name !== `ImageSharp`) {
     return {}
   }
@@ -172,6 +177,7 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
                 resolutions({
                   file,
                   args,
+                  reporter,
                 })
               ).then(({ src }) => src)
             },
@@ -187,6 +193,7 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
                 resolutions({
                   file,
                   args,
+                  reporter,
                 })
               ).then(({ srcSet }) => srcSet)
             },
@@ -242,6 +249,7 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
           resolutions({
             file,
             args,
+            reporter,
           })
         ).then(o =>
           Object.assign({}, o, {
@@ -275,6 +283,7 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
                 sizes({
                   file,
                   args,
+                  reporter,
                 })
               ).then(({ src }) => src)
             },
@@ -290,6 +299,7 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
                 sizes({
                   file,
                   args,
+                  reporter,
                 })
               ).then(({ srcSet }) => srcSet)
             },
@@ -347,6 +357,7 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
           sizes({
             file,
             args,
+            reporter,
           })
         ).then(o =>
           Object.assign({}, o, {
@@ -415,6 +426,7 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
           resolutions({
             file,
             args,
+            reporter,
           })
         ).then(o =>
           Object.assign({}, o, {
@@ -483,6 +495,7 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
           sizes({
             file,
             args,
+            reporter,
           })
         ).then(o =>
           Object.assign({}, o, {
