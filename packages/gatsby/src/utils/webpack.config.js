@@ -170,7 +170,6 @@ module.exports = async (
         "process.env": processEnv(stage, `development`),
         __PREFIX_PATHS__: program.prefixPaths,
         __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
-        __POLYFILL__: store.getState().config.polyfill,
       }),
 
       plugins.extractText({

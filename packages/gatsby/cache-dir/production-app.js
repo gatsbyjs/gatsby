@@ -1,7 +1,3 @@
-if (__POLYFILL__) {
-  require(`core-js/fn/promise`)
-}
-
 import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
 import React, { createElement } from "react"
 import ReactDOM from "react-dom"
