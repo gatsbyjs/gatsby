@@ -8,8 +8,7 @@
     "serve": "gatsby serve"
   },
   "dependencies": {
-    "gatsby": "canary",
-    "gatsby-link": "canary",
+    "gatsby": "next",
     "gray-percentage": "^2.0.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0"
