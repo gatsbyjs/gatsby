@@ -175,6 +175,13 @@ Community:
 
   * localization (Multilanguage)
 
+* [gatsby-starter-contentful-i18n](https://github.com/mccrodp/gatsby-starter-contentful-i18n) [(demo)](https://gatsby-starter-contentful-i18n.netlify.com/)
+
+  Features:
+  * Localization (Multilanguage)
+  * Dynamic content from Contentful CMS
+  * Integrates [i18n plugin starter](https://github.com/angeloocana/gatsby-starter-default-i18n) and [using-contentful](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-contentful) repos
+
 * [gatsby-starter-gatsbythemes](https://github.com/saschajullmann/gatsby-starter-gatsbythemes)
   [(demo)](https://themes.gatsbythemes.com/gatsby-starter/)
 
@@ -451,7 +458,7 @@ Community:
   Features:
 
   * Parses [org-mode](http://orgmode.org) files with [Orga](https://github.com/xiaoxinghu/orgajs).
-  
+
 * [gatsby-starter-minimal-blog](https://github.com/LeKoArts/gatsby-starter-minimal-blog)
   [(demo)](https://minimal-blog.netlify.com/)
 
@@ -462,7 +469,7 @@ Community:
   * Automatic Favicons
   * Typography.js
   * Part of a german tutorial series on Gatsby. The starter will change over time to use more advanced stuff (feel free to express your ideas)
-  
+
 * [gatsby-starter-redux](https://github.com/caki0915/gatsby-starter-redux)
   [(demo)](https://caki0915.github.io/gatsby-starter-redux/)
 
