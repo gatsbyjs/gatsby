@@ -9,7 +9,7 @@ exports.sourceNodes = (
 ) => {
   if (!(pluginOptions && pluginOptions.path)) {
     reporter.panic(`
-You should pass 'path' options for gatsby-source-filesystem plugin
+"path" is a required option for gatsby-source-filesystem
 
 See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
     `)
