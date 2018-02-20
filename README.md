@@ -160,6 +160,7 @@ Websites built with Gatsby:
 * [Darren Britton's Portfolio](https://darrenbritton.com) ([source](https://github.com/darrenbritton/darrenbritton.github.io))
 * [Portfolio / Blog of Preston Richey](https://prestonrichey.com/) ([source](https://github.com/prichey/prestonrichey.com))
 * [Beach Hut Poole](https://www.beachhutpoole.co.uk/)
+* [In Sowerby Bridge](https://www.insowerbybridge.co.uk/)
 
 ## Docs
 
