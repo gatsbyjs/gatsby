@@ -7,21 +7,28 @@ exports.sourceNodes = (
   { boundActionCreators, getNode, hasNodeChanged, reporter },
   pluginOptions
 ) => {
-  const { createNode, deleteNode } = boundActionCreators
+  if (!(pluginOptions && pluginOptions.path)) {
+    reporter.panic(`
+"path" is a required option for gatsby-source-filesystem
 
-  let ready = false
+See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
+    `)
+  }
 
   // Validate that the path exists.
   if (!fs.existsSync(pluginOptions.path)) {
-    console.log(`
+    reporter.panic(`
 The path passed to gatsby-source-filesystem does not exist on your file system:
 
 ${pluginOptions.path}
 
 Please pick a path to an existing directory.
       `)
-    process.exit(1)
   }
+
+  const { createNode, deleteNode } = boundActionCreators
+
+  let ready = false
 
   const watcher = chokidar.watch(pluginOptions.path, {
     ignored: [
