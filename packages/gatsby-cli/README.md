@@ -28,7 +28,7 @@ for more.
 At the root of a Gatsby site run `gatsby develop` to start the Gatsby
 development server.
 
-Options:
+Options
 ```
   -H, --host    Set host. Defaults to localhost
   -p, --port    Set port. Defaults to 8000
