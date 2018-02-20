@@ -50,3 +50,4 @@ node_modules/
 .vscode/
 
 .serverless/
+yarn.lock
