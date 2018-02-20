@@ -13,8 +13,8 @@ Gatsby leverages Babel 7's ability to automatically add polyfills for your
 target browsers.
 
 Newer browsers support more JavaScript APIs than older browsers. For older
-versions, Gatsby (via Babel) automatically adds the "polyfills" necessary for
-your code to work in those browsers.
+versions, Gatsby (via Babel) automatically adds the minimum "polyfills"
+necessary for your code to work in those browsers.
 
 If you start using a newer JavaScript API like `[].includes` that isn't
 supported by some of your targeted browsers, you won't have to worry about it
@@ -46,5 +46,5 @@ By default, Gatsby emulates the following config:
 }
 ```
 
-If you're only supporting newer browsers then make sure to specify this as
-you'll often be able then to ship smaller JavaScript files.
+If you only support newer browsers then make sure to specify this in your
+package.json as you'll often be able then to ship smaller JavaScript files.

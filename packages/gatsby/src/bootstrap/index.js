@@ -77,7 +77,7 @@ module.exports = async (args: BootstrapArgs) => {
     getConfigFile(program.directory, `gatsby-config.js`)
   )
 
-  if (config.polyfill) {
+  if (config && config.polyfill) {
     reporter.warn(
       `Support for custom Promise polyfills has been removed in Gatsby v2. We only support Babel 7's new automatic polyfilling behavior.`
     )
