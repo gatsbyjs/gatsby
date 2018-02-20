@@ -68,14 +68,14 @@ A thing to remember about fragments [is they do not work in Graph_i_QL.](/packag
 
 
 
-In this case, I want the image to stretch so I use the resolution method with the parameters I want (a width of 400 pixels) and the  resolution fragment to grab the right fields
+In this case, I want the image to stretch so I use the resolution method with the parameters I want (a maxwidth of 400 pixels, max height of 250) and the  resolution fragment to grab the right fields
 ```jsx
 export const query = graphql`
   query indexQuery {
     fileName:file(relativePath: { eq: "images/myimage.jpg" }) {
       childImageSharp {
-        resolutions(width: 400) {
-          ...GatsbyImageSharpResolutions
+        sizes(maxWidth: 400, maxHeight: 250) {
+          ...GatsbyImageSharpSizes
         }
       }
     }
@@ -89,8 +89,60 @@ export const query = graphql`
 [Gatsby Image](/packages/gatsby-image/) is a plugin that automatically creates React components for the image that are fully responsive and have other high performance features.
 
 
+`npm install --save gatsby-image`
+
+Now I can import it at the top of my page component
+
+```
+import Img from 'gatsby-image'
+
+```
+
+And start using this component with my queried image as a prop
+
+```
+     <Img sizes={data.fileName.childImageSharp.sizes}  />
+```
 
 
 ## Using Fragments To Standardize Formatting
+
+What if you have a bunch of images and you want them all to us the same formatting? Like a gallery of square images. It's annoying to have to write the queries over and over again.
+
+You can make your own fragment, like 
+
+```
+export const squareImage = graphql`
+fragment squareImage on File {
+      childImageSharp {
+        sizes(maxWidth: 200, maxHeight: 200) {
+          ...GatsbyImageSharpSizes
+        }
+      }
+}
+`;
+```
+
+Then my query can use the fragment
+
+```
+
+export const query = graphql`
+  query imageGallery {
+    image1:file(relativePath: { eq: "images/image1.jpg" }) {
+      ...squareImage
+    }
+
+    image2:file(relativePath: { eq: "images/image2.jpg" }) {
+      ...squareImage
+    }
+
+   image3:file(relativePath: { eq: "images/image3.jpg" }) {
+      ...squareImage
+    }
+  }
+`;
+
+```
 
 
