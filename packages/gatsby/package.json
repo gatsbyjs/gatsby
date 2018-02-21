@@ -96,7 +96,7 @@
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
     "redux": "^3.6.0",
-    "relay-compiler": "^1.4.1",
+    "relay-compiler": "1.4.1",
     "remote-redux-devtools": "^0.5.7",
     "serve": "^6.4.0",
     "shallow-compare": "^1.2.2",
