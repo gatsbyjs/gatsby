@@ -299,7 +299,7 @@ function queueImageResizing({ file, args = {} }) {
     // Use the aspect ratio of the image to calculate what will be the resulting
     // height.
     width = options.width
-    height = options.width / aspectRatio
+    height = Math.round(options.width / aspectRatio)
   }
 
   // Create job and process.
