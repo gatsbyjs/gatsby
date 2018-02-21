@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "babel-runtime": "^6.26.0",
-    "lodash.merge": "^4.6.0",
+    "deepmerge": "^2.0.1",
     "pify": "^3.0.0",
     "rss": "^1.2.2"
   },

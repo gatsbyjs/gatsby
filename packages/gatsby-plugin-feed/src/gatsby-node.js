@@ -1,61 +1,73 @@
-import path from "path"
-import RSS from "rss"
-import merge from "lodash.merge"
-import { defaultOptions, runQuery, writeFile } from "./internals"
+import path from 'path'
+import deepmerge from 'deepmerge'
+
+import {
+  defaultOptions,
+  isFunction,
+  runQuery,
+  writeFile,
+} from './internals'
+import createFeed from './createFeed'
+import serialize from './serialize'
+import setup from './setup'
 
 const publicPath = `./public`
 
-// A default function to transform query data into feed entries.
-const serialize = ({ query: { site, allMarkdownRemark } }) =>
-  allMarkdownRemark.edges.map(edge => {
-    return {
-      ...edge.node.frontmatter,
-      description: edge.node.excerpt,
-      url: site.siteMetadata.siteUrl + edge.node.fields.slug,
-      guid: site.siteMetadata.siteUrl + edge.node.fields.slug,
-      custom_elements: [{ "content:encoded": edge.node.html }],
-    }
-  })
+exports.onPostBuild = async ({ graphql }, userOptions) => {
+  delete userOptions.plugins
 
-exports.onPostBuild = async ({ graphql }, pluginOptions) => {
-  delete pluginOptions.plugins
-
-  /*
-   * Run the site settings query to gather context, then
-   * then run the corresponding feed for each query.
-   */
-  const options = {
+  // Merge default options with user options,
+  // overriding the defaults.
+  const pluginOptions = {
     ...defaultOptions,
-    ...pluginOptions,
+    ...userOptions,
   }
 
-  if (`query` in options) {
-    options.query = await runQuery(graphql, options.query)
+  // If there is a top-level query to execute, do so,
+  // and replace the original query with the result.
+  // The resulting data will be used to generate the default
+  // no-configuration-required feed, or will be deep-merged
+  // with the result of any custom feed's query.
+  if (pluginOptions.query) {
+    pluginOptions.query = await runQuery(graphql, pluginOptions.query)
   }
 
-  for (let f of options.feeds) {
-    if (f.query) {
-      f.query = await runQuery(graphql, f.query)
-
-      if (options.query) {
-        f.query = merge(options.query, f.query)
-        delete options.query
-      }
+  return Promise.all(pluginOptions.feeds.map(async (feed) => {
+    // Each feed's inherits the result of the global query
+    let feedOptions = {
+      ...feed,
+      query: pluginOptions.query,
     }
 
-    const { setup, ...locals } = {
-      ...options,
-      ...f,
+    // Each feed may specify a query of its own. If this
+    // one has one, run it and deep merge it into the
+    // global query result.
+    if (feed.query) {
+      const feedQuery = await runQuery(graphql, feed.query)
+      feedOptions.query = deepmerge(feedOptions.query, feedQuery)
     }
 
-    const feed = new RSS(setup(locals))
-    const serializer =
-      f.serialize && typeof f.serialize === `function` ? f.serialize : serialize
-    const items = serializer(locals)
+    // Each feed may provide a `setup` function for the purpose
+    // of remapping feed options before they are passed to node-rss
+    const metadata = isFunction(feed.setup) ?
+      feed.setup(feedOptions.query) :
+      setup(feedOptions.query)
 
-    items.forEach(i => feed.item(i))
-    await writeFile(path.join(publicPath, f.output), feed.xml())
-  }
+    // Create the feed instance
+    const outputFeed = createFeed({
+      metadata,
+      entries: feedOptions.query.entries,
+      output: feedOptions.output,
+    })
 
-  return Promise.resolve()
+    // Then serialize each feed item and add it to the feed
+    const items = isFunction(feed.serialize) ?
+      feed.serialize(feedOptions.query) :
+      serialize(feedOptions.query)
+
+    items.forEach(i => outputFeed.item(i))
+
+    // Finally, write the feed file to disk
+    await writeFile(path.join(publicPath, feed.output), outputFeed.xml())
+  }))
 }
