@@ -158,7 +158,6 @@ export default (locals, callback) => {
   // Create paths to scripts
   const page = pages.find(page => page.path === locals.path)
   const scripts = [
-    `@@webpack-runtime`,
     `commons`,
     `app`,
     pathChunkName(locals.path),
@@ -187,6 +186,17 @@ export default (locals, callback) => {
       return prefixedScript
     })
     .filter(s => isString(s))
+
+  const runtimeRaw = require(`!raw-loader!../public/@@webpack-runtime`)
+  postBodyComponents.push(
+    <script
+      key={`webpack-runtime`}
+      id={`webpack-runtime`}
+      dangerouslySetInnerHTML={{
+        __html: runtimeRaw,
+      }}
+    />
+  )
 
   scripts
     .slice(0)
