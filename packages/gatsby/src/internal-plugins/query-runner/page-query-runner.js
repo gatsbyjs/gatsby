@@ -123,10 +123,12 @@ const findDirtyIds = actions => {
   return actions.reduce((dirtyIds, action) => {
     const node = action.payload
 
-    // find invalid pagesAndLayouts
+    if (!node || !node.id || !node.internal.type) return dirtyIds
+
+    // Find pagesAndLayouts that depend on this node so are now dirty.
     dirtyIds = dirtyIds.concat(state.componentDataDependencies.nodes[node.id])
 
-    // Find invalid connections
+    // Find connections that depend on this node so are now invalid.
     dirtyIds = dirtyIds.concat(
       state.componentDataDependencies.connections[node.internal.type]
     )
