@@ -122,6 +122,7 @@ class DefaultLayout extends React.Component {
       // overrides of sidebarStyles
       width: `100vw`,
       padding: rhythm(1),
+      overflowY: "hidden",
       [presets.Desktop]: {
         width: rhythm(17),
       },

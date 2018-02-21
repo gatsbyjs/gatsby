@@ -38,10 +38,7 @@ const Search = ({ searchState }) => {
           width: `100%`,
         }}
       >
-        <SearchBox
-          style={{ width: `100%` }}
-          translations={{ placeholder: "Search Gatsby Library" }}
-        />
+        <SearchBox translations={{ placeholder: "Search Gatsby Library" }} />
       </div>
 
       <div
@@ -61,6 +58,9 @@ const Search = ({ searchState }) => {
           height: rhythm(1.5),
           paddingTop: rhythm(0.25),
           paddingBottom: rhythm(0.25),
+          color: colors.gray.calm,
+          fontSize: 14,
+          fontStretch: "normal",
         }}
       >
         <Stats
