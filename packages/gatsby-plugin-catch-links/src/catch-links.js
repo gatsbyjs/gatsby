@@ -58,7 +58,19 @@ module.exports = function(root, cb) {
 
     if (a1.host !== a2.host) return true
 
-    if (!`${a1.host}${a1.pathname}`.startsWith(`${a2.host}${withPrefix(`/`)}`)) return true
+    // When a pathPrefix used in an app, and there happen to be a link referring to the same domain
+    // but outside of the app's pathPrefix. For example, an app lives at https://example.com/myapp/,
+    // with the pathPrefix set to `/myapp` respectively.
+    // When adding an absolute link to the same domain but outside of the /myapp path,
+    // for example, <a href="https://example.com/not-my-app"> the plugin won't catch it
+    // and will navigate to an external link instead of doing
+    // a pushState resulting in `https://example.com/myapp/https://example.com/not-my-app`
+    var re = new RegExp(`^${a2.host}${withPrefix(`/`)}`)
+    if (!re.test(`${a1.host}${a1.pathname}`)) return true
+
+    // TODO: add a check for absolute internal links in a callback or here,
+    // or always pass only `${a1.pathname}${a1.hash}`
+    // to avoid `https://example.com/myapp/https://example.com/myapp/here` navigation
 
     ev.preventDefault()
 
