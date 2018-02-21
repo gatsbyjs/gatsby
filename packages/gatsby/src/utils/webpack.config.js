@@ -309,6 +309,7 @@ module.exports = async (
           // just the runtime bits
           plugins.commonsChunk({
             name: `@@webpack-runtime`,
+            filename: `@@webpack-runtime.js`,
           }),
           // Write out mapping between chunk names and their hashed names. We use
           // this to add the needed javascript files to each HTML page.
