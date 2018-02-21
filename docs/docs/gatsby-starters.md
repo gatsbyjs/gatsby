@@ -479,3 +479,11 @@ Community:
   * [Emotion](https://github.com/emotion-js/emotion) with a basic theme and SSR
   * [Typography.js](https://kyleamathews.github.io/typography.js/)
   * Eslint rules based on [Prettier](https://prettier.io/) and [Airbnb](https://www.npmjs.com/package/eslint-config-airbnb)
+
+* [gatsby-contentful-starter](https://github.com/contentful-userland/gatsby-contentful-starter) [(demo)](https://contentful-userland.github.io/gatsby-contentful-starter/)
+
+  Features:
+  
+  * Based on the [Gatsby Starter Blog](https://github.com/gatsbyjs/gatsby-starter-blog)
+  * [Includes Contentful Delivery API for production build](https://www.contentful.com/developers/docs/references/content-delivery-api/)
+  * [Includes Contentful Preview API for development](https://www.contentful.com/developers/docs/references/content-preview-api/)
