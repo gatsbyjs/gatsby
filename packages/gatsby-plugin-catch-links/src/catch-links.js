@@ -58,13 +58,14 @@ module.exports = function(root, cb) {
 
     if (a1.host !== a2.host) return true
 
-    // When a pathPrefix used in an app, and there happen to be a link referring to the same domain
-    // but outside of the app's pathPrefix. For example, an app lives at https://example.com/myapp/,
-    // with the pathPrefix set to `/myapp` respectively.
-    // When adding an absolute link to the same domain but outside of the /myapp path,
-    // for example, <a href="https://example.com/not-my-app"> the plugin won't catch it
-    // and will navigate to an external link instead of doing
-    // a pushState resulting in `https://example.com/myapp/https://example.com/not-my-app`
+    // For when pathPrefix is used in an app and there happens to be a link
+    // pointing to the same domain but outside of the app's pathPrefix. For
+    // example, a Gatsby app lives at https://example.com/myapp/, with the
+    // pathPrefix set to `/myapp`. When adding an absolute link to the same
+    // domain but outside of the /myapp path, for example, <a
+    // href="https://example.com/not-my-app"> the plugin won't catch it and
+    // will navigate to an external link instead of doing a pushState resulting
+    // in `https://example.com/myapp/https://example.com/not-my-app`
     var re = new RegExp(`^${a2.host}${withPrefix(`/`)}`)
     if (!re.test(`${a1.host}${a1.pathname}`)) return true
 
