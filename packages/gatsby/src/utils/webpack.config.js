@@ -259,6 +259,7 @@ module.exports = async (
                 `isarray`, // Used by path-to-regexp.
                 `scroll-behavior`,
                 `history`,
+                `domready`,
                 `resolve-pathname`, // Used by history.
                 `value-equal`, // Used by history.
                 `invariant`, // Used by history.
@@ -268,7 +269,21 @@ module.exports = async (
                 `loose-envify`, // Used by history.
                 `prop-types`,
                 `gatsby-link`,
+                `mitt`,
+                `shallow-compare`,
               ]
+              const cacheDirList = [
+                `production-app`,
+                `loader`,
+                `prefetcher`,
+                `find-page`,
+                `component-renderer`,
+                `emitter`,
+                `register-service-worker`,
+                `strip-prefix`,
+                `history`,
+              ]
+
               const isFramework = some(
                 vendorModuleList.map(vendor => {
                   const regex = new RegExp(
@@ -278,7 +293,15 @@ module.exports = async (
                   return regex.test(module.resource)
                 })
               )
-              return isFramework || count > 3
+
+              const isRuntime = some(
+                cacheDirList.map(runtime => {
+                  const regex = new RegExp(`.*cache[\\\\/]${runtime}.*`, `i`)
+                  return regex.test(module.resource)
+                })
+              )
+
+              return isFramework || isRuntime || count > 3
             },
           }),
 
@@ -381,7 +404,10 @@ module.exports = async (
       // modules. But also make it possible to install modules within the src
       // directory if you need to install a specific version of a module for a
       // part of your site.
-      modules: [`node_modules`, directoryPath(`node_modules`)],
+      modules: [
+        directoryPath(path.join(`src`, `node_modules`)),
+        directoryPath(`node_modules`),
+      ],
     }
   }
 
