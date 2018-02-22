@@ -13,10 +13,12 @@
   "dependencies": {
     "@babel/code-frame": "^7.0.0-beta.38",
     "@babel/core": "^7.0.0-beta.38",
+    "@babel/plugin-proposal-class-properties": "^7.0.0-beta.39",
     "@babel/plugin-syntax-dynamic-import": "^7.0.0-beta.39",
     "@babel/plugin-transform-runtime": "^7.0.0-beta.39",
     "@babel/polyfill": "^7.0.0-beta.38",
     "@babel/preset-env": "^7.0.0-beta.38",
+    "@babel/preset-flow": "^7.0.0-beta.40",
     "@babel/preset-react": "^7.0.0-beta.38",
     "@babel/runtime": "^7.0.0-beta.38",
     "@babel/traverse": "^7.0.0-beta.38",
@@ -123,9 +125,6 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.38",
-    "@babel/core": "^7.0.0-beta.38",
-    "@babel/plugin-proposal-class-properties": "^7.0.0-beta.39",
-    "@babel/preset-flow": "^7.0.0-beta.40",
     "chokidar": "^2.0.0",
     "cross-env": "^5.0.5",
     "nyc": "^7.0.0",
