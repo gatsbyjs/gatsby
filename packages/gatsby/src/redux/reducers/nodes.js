@@ -7,7 +7,7 @@ module.exports = (state = {}, action) => {
   switch (action.type) {
     case `DELETE_CACHE`:
       return {}
-    case `CREATE_NODE`:
+    case `CREATE_NODE`: {
       // Remove any previously created descendant nodes as they're all due to be
       // recreated.
       const findChildrenRecursively = (children = []) => {
@@ -37,6 +37,7 @@ module.exports = (state = {}, action) => {
         [action.payload.id]: action.payload,
       }
       return newState
+    }
 
     case `ADD_FIELD_TO_NODE`:
     case `ADD_CHILD_NODE_TO_PARENT_NODE`:
