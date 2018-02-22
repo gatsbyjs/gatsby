@@ -64,6 +64,83 @@ describe(`Create and update nodes`, () => {
     expect(state[`hi`].deep2.boom).toEqual(`foo`)
   })
 
+  it(`deletes previously transformed children nodes when the parent node is updated`, () => {
+    const action = actions.createNode(
+      {
+        id: `hi`,
+        children: [],
+        parent: `test`,
+        internal: {
+          contentDigest: `hasdfljds`,
+          type: `Test`,
+        },
+      },
+      { name: `tests` }
+    )
+    let state = nodeReducer(undefined, action)
+
+    const createChildAction = actions.createNode(
+      {
+        id: `hi-1`,
+        children: [],
+        parent: `hi`,
+        internal: {
+          contentDigest: `hasdfljds-1`,
+          type: `Test-1`,
+        },
+      },
+      { name: `tests` }
+    )
+    state = nodeReducer(state, createChildAction)
+
+    const addChildToParent = actions.createParentChildLink(
+      {
+        parent: state[`hi`],
+        child: state[`hi-1`],
+      },
+      { name: `tests` }
+    )
+    state = nodeReducer(state, addChildToParent)
+
+    const create2ndChildAction = actions.createNode(
+      {
+        id: `hi-1-1`,
+        children: [],
+        parent: `hi-1`,
+        internal: {
+          contentDigest: `hasdfljds-1-1`,
+          type: `Test-1-1`,
+        },
+      },
+      { name: `tests` }
+    )
+    state = nodeReducer(state, create2ndChildAction)
+
+    const add2ndChildToParent = actions.createParentChildLink(
+      {
+        parent: state[`hi-1`],
+        child: state[`hi-1-1`],
+      },
+      { name: `tests` }
+    )
+    state = nodeReducer(state, add2ndChildToParent)
+
+    const updateAction = actions.createNode(
+      {
+        id: `hi`,
+        children: [],
+        parent: `test`,
+        internal: {
+          contentDigest: `hasdfljds2`,
+          type: `Test`,
+        },
+      },
+      { name: `tests` }
+    )
+    state = nodeReducer(state, updateAction)
+    expect(Object.keys(state).length).toEqual(1)
+  })
+
   it(`allows deleting nodes`, () => {
     const action = actions.createNode(
       {
