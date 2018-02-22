@@ -35,8 +35,15 @@ function plugins(stage) {
  * target loader key being named "css" in Gatsby's webpack config.
  */
 function excludeFromLoader(key, config) {
-  config.loader(key, {
-    exclude: [/\/node_modules\/netlify-cms\//],
+  config.loader(key, ({ exclude, ...configRest }) => {
+    const regex = /\/node_modules\/netlify-cms\//
+    if (!exclude) {
+      return { ...configRest, exclude: regex }
+    }
+    if (Array.isArray(exclude)) {
+      return { ...configRest, exclude: [...exclude, regex] }
+    }
+    return { ...configRest, exclude: [exclude, regex] }
   })
 }
 
