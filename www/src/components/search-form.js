@@ -5,7 +5,7 @@ import { rhythm } from "../utils/typography"
 
 import presets, { colors } from "../utils/presets"
 import hex2rgba from "hex2rgba"
-import SearchIcon from './search-icon'
+import SearchIcon from "./search-icon"
 
 import { css } from "glamor"
 
@@ -22,6 +22,10 @@ css.insert(`
     max-width: calc(100vw - 2rem) !important;
     max-height: calc(100vh - 5rem) !important;
     box-shadow: 0 3px 10px 0.05rem ${hex2rgba(colors.lilac, 0.25)} !important;
+  }
+
+  .is-homepage .algolia-autocomplete .ds-dropdown-menu {
+    top: ${rhythm(2.5)} !important;
   }
 
   /* .searchWrap to beat docsearch.css' !important */
@@ -193,6 +197,7 @@ css.insert(`
   }
 
   @media ${presets.tablet} {
+    .is-homepage .algolia-autocomplete .ds-dropdown-menu,
     .algolia-autocomplete .ds-dropdown-menu {
       top: 100% !important;
       position: absolute !important;
@@ -343,7 +348,7 @@ class SearchForm extends Component {
                 width: !isHomepage && rhythm(5),
                 ":focus": {
                   backgroundColor: colors.ui.light,
-                  color:  colors.gatsby,
+                  color: colors.gatsby,
                 },
               },
 

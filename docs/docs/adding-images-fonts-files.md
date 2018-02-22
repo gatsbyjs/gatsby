@@ -61,48 +61,48 @@ Examples:
 
 * Copy all `.pdf` files you have in your data layer to your build directory and return URLs to them:
 
-  ```graphql
-  {
-    allFile(filter: { extension: { eq: "pdf" } }) {
-      edges {
-        node {
-          publicURL
-        }
+```graphql
+{
+  allFile(filter: { extension: { eq: "pdf" } }) {
+    edges {
+      node {
+        publicURL
       }
     }
   }
-  ```
+}
+```
 
 * Copy post attachments defined in your Markdown files:
 
   Link to your attachments in the markdown frontmatter:
 
-  ```markdown
-  ---
-  title: "Title of article"
+```markdown
+---
+title: "Title of article"
 attachments:
-- "./assets.zip"
-- "./presentation.pdf"
-  ---
+  - "./assets.zip"
+  - "./presentation.pdf"
+---
 
-  Hi, this is a great article.
-  ```
+Hi, this is a great article.
+```
 
-  In the article template component file, you can query for the attachments:
+In the article template component file, you can query for the attachments:
 
-  ```graphql
-  query TemplateBlogPost($slug: String!) {
-    markdownRemark(fields: { slug: { eq: $slug } }) {
-      html
-      frontmatter {
-        title
-        attachments {
-          publicURL
-        }
+```graphql
+query TemplateBlogPost($slug: String!) {
+  markdownRemark(fields: { slug: { eq: $slug } }) {
+    html
+    frontmatter {
+      title
+      attachments {
+        publicURL
       }
     }
   }
-  ```
+}
+```
 
 ## Using the `static` Folder
 

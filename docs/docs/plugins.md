@@ -35,7 +35,9 @@ module.exports = {
 };
 ```
 
-Plugins can take options. See each plugin page below for more detailed
+Plugins can take options. Note that plugin options will be stringified by Gatsby, so they cannot be functions.
+
+See each plugin page below for more detailed
 documentation on using each plugin.
 
 ## Locally defined plugins
@@ -141,7 +143,6 @@ root.
 * [gatsby-transformer-javascript-static-exports](/packages/gatsby-transformer-javascript-static-exports/)
 * [gatsby-transformer-json](/packages/gatsby-transformer-json/)
 * [gatsby-transformer-pdf](/packages/gatsby-transformer-pdf/)
-* [gatsby-transformer-pdfimages](/packages/gatsby-transformer-pdfimages/)
 * [gatsby-transformer-react-docgen](/packages/gatsby-transformer-react-docgen/)
 * [gatsby-transformer-remark](/packages/gatsby-transformer-remark/)
 * [gatsby-transformer-sharp](/packages/gatsby-transformer-sharp/)
@@ -192,6 +193,7 @@ root.
 * [gatsby-remark-sequence](https://github.com/liudonghua123/gatsby-remark-sequence)
 * [gatsby-source-airtable](https://github.com/kevzettler/gatsby-source-airtable)
 * [gatsby-source-behance](https://github.com/LeKoArts/gatsby-source-behance)
+* [gatsby-source-behance-collection](https://github.com/n370/gatsby-source-behance-collection)
 * [gatsby-source-datocms](https://github.com/datocms/gatsby-source-datocms)
 * [gatsby-source-directus](https://github.com/iKonrad/gatsby-source-directus)
 * [gatsby-source-github](https://github.com/mosch/gatsby-source-github)
@@ -203,6 +205,8 @@ root.
 * [gatsby-source-twitch](https://github.com/jedidiah/gatsby-source-twitch)
 * [gatsby-source-unsplash](https://github.com/vacas5/gatsby-source-unsplash)
 * [gatsby-source-workable](https://github.com/tumblbug/gatsby-source-workable)
+* [gatsby-transformer-orga](https://github.com/xiaoxinghu/orgajs/tree/master/packages/gatsby-transformer-orga)
+* [gatsby-source-dribbble](https://github.com/smakosh/gatsby-source-dribbble)
 
 ## Community Library
 

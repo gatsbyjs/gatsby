@@ -14,7 +14,7 @@ const slash = require(`slash`)
 // 4. Create the responsive images.
 // 5. Set the html w/ aspect ratio helper.
 module.exports = (
-  { files, markdownNode, markdownAST, pathPrefix, getNode },
+  { files, markdownNode, markdownAST, pathPrefix, getNode, reporter },
   pluginOptions
 ) => {
   const defaults = {
@@ -60,7 +60,12 @@ module.exports = (
     let responsiveSizesResult = await sizes({
       file: imageNode,
       args: options,
+      reporter,
     })
+
+    if (!responsiveSizesResult) {
+      return resolve()
+    }
 
     // Calculate the paddingBottom %
     const ratio = `${1 / responsiveSizesResult.aspectRatio * 100}%`

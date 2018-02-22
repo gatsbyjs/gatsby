@@ -1,8 +1,14 @@
 import React from "react"
 
-exports.onRenderBody = ({ setPostBodyComponents }, pluginOptions) => {
+exports.onRenderBody = (
+  { setHeadComponents, setPostBodyComponents },
+  pluginOptions
+) => {
   if (process.env.NODE_ENV === `production`) {
-    return setPostBodyComponents([
+    const setComponents = pluginOptions.head
+      ? setHeadComponents
+      : setPostBodyComponents
+    return setComponents([
       <script
         key={`gatsby-plugin-google-analytics`}
         dangerouslySetInnerHTML={{

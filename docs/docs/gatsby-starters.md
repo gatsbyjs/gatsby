@@ -46,7 +46,7 @@ Community:
   Features:
 
   * React-MD for Material design
-  * SASS/SCSS
+  * Sass/SCSS
   * Tags
   * Categories
   * Google Analytics
@@ -147,7 +147,7 @@ Community:
 
   * Barebones configuration for using the [Grommet](https://grommet.github.io/)
     design system
-  * Uses SASS (with CSS modules support)
+  * Uses Sass (with CSS modules support)
 
 * [gatsby-starter-basic](https://github.com/PrototypeInteractive/gatsby-react-boilerplate)
   [(demo)](https://prototypeinteractive.github.io/gatsby-react-boilerplate/)
@@ -155,8 +155,8 @@ Community:
   Features:
 
   * Basic configuration and folder structure
-  * Uses postcss and sass (with autoprefixer and pixrem)
-  * Uses boostrap 4 grid
+  * Uses PostCSS and Sass (with autoprefixer and pixrem)
+  * Uses Bootstrap 4 grid
   * Leaves the styling to you
   * Uses data from local json files
   * Contains Node.js server code for easy, secure, and fast hosting
@@ -174,6 +174,13 @@ Community:
   Features:
 
   * localization (Multilanguage)
+
+* [gatsby-starter-contentful-i18n](https://github.com/mccrodp/gatsby-starter-contentful-i18n) [(demo)](https://gatsby-starter-contentful-i18n.netlify.com/)
+
+  Features:
+  * Localization (Multilanguage)
+  * Dynamic content from Contentful CMS
+  * Integrates [i18n plugin starter](https://github.com/angeloocana/gatsby-starter-default-i18n) and [using-contentful](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-contentful) repos
 
 * [gatsby-starter-gatsbythemes](https://github.com/saschajullmann/gatsby-starter-gatsbythemes)
   [(demo)](https://themes.gatsbythemes.com/gatsby-starter/)
@@ -209,7 +216,7 @@ Community:
     to learn how to set up authentication, and begin modeling your content.
 
 * [gatsby-starter-portfolio-emma](https://github.com/LeKoArts/gatsby-starter-portfolio-emma)
-  [(demo)](https://embalmer-glues-43220.netlify.com/)
+  [(demo)](https://portfolio-emma.netlify.com/)
 
   The target audience are designers and photographers.
 
@@ -224,7 +231,7 @@ Community:
   * And other good stuff (SEO, Offline Support, WebApp Manifest Support)
 
 * [gatsby-starter-portfolio-emilia](https://github.com/LeKoArts/gatsby-starter-portfolio-emilia)
-  [(demo)](https://upbeat-edison-0598aa.netlify.com/)
+  [(demo)](https://portfolio-emilia.netlify.com/)
 
   The target audience are designers and photographers.
 
@@ -247,7 +254,7 @@ Community:
   * Very similar to
     [gatsby-starter-netlify-cms](https://github.com/AustinGreen/gatsby-starter-netlify-cms),
     slightly more configurable (eg set site-title in `gatsby-config`) with
-    bootstrap/bootswatch instead of bulma
+    Bootstrap/Bootswatch instead of bulma
 
 * [open-crowd-fund](https://github.com/rwieruch/open-crowd-fund)
   [(demo)](https://www.roadtolearnreact.com/)
@@ -334,7 +341,7 @@ Community:
 
   Features:
 
-  * Based on the Ceevee site template, design by [Styleshout](https://www.styeshout.com/)
+  * Based on the Ceevee site template, design by [Styleshout](https://www.styleshout.com/)
   * Single Page Resume/Portfolio site
   * Target audience Developers, Designers, etc.
   * Used CSS Modules, easy to manipulate
@@ -347,7 +354,7 @@ Community:
 
   * Single Page
   * A portfolio Developers and Product launchers alike
-  * Using [Typography.js](kyleamathews.github.io/typography.js/) easy to switch fonts
+  * Using [Typography.js](https://kyleamathews.github.io/typography.js/) easy to switch fonts
   * All your Project/Portfolio Data in Markdown, server by GraphQL
   * Responsive Design, optimized for Mobile devices
 
@@ -383,7 +390,7 @@ Community:
   * Lost Grid.
   * Beautiful typography inspired by [matejlatin/Gutenberg](https://github.com/matejlatin/Gutenberg).
   * [Mobile-First](https://medium.com/@mrmrs_/mobile-first-css-48bc4cc3f60f) approach in development.
-  * Stylesheet built using SASS and [BEM](http://getbem.com/naming/)-Style naming.
+  * Stylesheet built using Sass and [BEM](http://getbem.com/naming/)-Style naming.
   * Syntax highlighting in code blocks.
   * Sidebar menu built using a configuration block.
   * Archive organized by tags and categories.
@@ -418,3 +425,65 @@ Community:
   * A basic blog, with posts under src/pages/blog
   * A few basic components (Navigation, Layout, Link wrapper around `gatsby-link`))
   * Based on [gatsby-starter-gatsbytheme](https://github.com/saschajullmann/gatsby-starter-gatsbythemes)
+
+* [gatsby-wordpress-starter](https://github.com/ericwindmill/gatsby-starter-wordpress)
+  [(demo)](https://gatsby-wordpress-starter.netlify.com/)
+
+  Features:
+
+  * All the features from
+    [gatsby-advanced-starter](https://github.com/Vagr9K/gatsby-advanced-starter),
+    plus:
+  * Leverages the [WordPress plugin for Gatsby](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress) for data
+  * Configured to work with WordPress Advanced Custom Fields
+  * Auto generated Navigation for your Wordpress Pages
+  * Minimal UI and Styling -- made to customize.
+  * Styled Components
+
+* [gatsby-starter-simple-landing](https://github.com/greglobinski/gatsby-starter-simple-landing)
+  [(demo)](https://gssl.greglobinski.com/)
+
+  Features:
+
+  * CSS-in-JS via [JSS](https://github.com/cssinjs/jss)
+  * easily restyled through theme object
+  * text content via Markdown files
+  * auto-generated sizes and types (png, webp) for background and hero images
+  * favicons generator
+  * webfonts with [webfontloader](https://github.com/typekit/webfontloader)
+
+* [gatsby-orga](https://github.com/xiaoxinghu/gatsby-orga)
+  [(demo)](https://xiaoxinghu.github.io/gatsby-orga/)
+
+  Features:
+
+  * Parses [org-mode](http://orgmode.org) files with [Orga](https://github.com/xiaoxinghu/orgajs).
+
+* [gatsby-starter-minimal-blog](https://github.com/LeKoArts/gatsby-starter-minimal-blog)
+  [(demo)](https://minimal-blog.netlify.com/)
+
+  Features:
+
+  * Minimal and clean white layout
+  * Offline Support, WebApp Manifest, SEO
+  * Automatic Favicons
+  * Typography.js
+  * Part of a german tutorial series on Gatsby. The starter will change over time to use more advanced stuff (feel free to express your ideas)
+
+* [gatsby-starter-redux](https://github.com/caki0915/gatsby-starter-redux)
+  [(demo)](https://caki0915.github.io/gatsby-starter-redux/)
+
+  Features:
+
+  * [Redux](https://github.com/reactjs/redux) and [Redux-devtools](https://github.com/gaearon/redux-devtools).
+  * [Emotion](https://github.com/emotion-js/emotion) with a basic theme and SSR
+  * [Typography.js](https://kyleamathews.github.io/typography.js/)
+  * Eslint rules based on [Prettier](https://prettier.io/) and [Airbnb](https://www.npmjs.com/package/eslint-config-airbnb)
+
+* [gatsby-contentful-starter](https://github.com/contentful-userland/gatsby-contentful-starter) [(demo)](https://contentful-userland.github.io/gatsby-contentful-starter/)
+
+  Features:
+  
+  * Based on the [Gatsby Starter Blog](https://github.com/gatsbyjs/gatsby-starter-blog)
+  * [Includes Contentful Delivery API for production build](https://www.contentful.com/developers/docs/references/content-delivery-api/)
+  * [Includes Contentful Preview API for development](https://www.contentful.com/developers/docs/references/content-preview-api/)

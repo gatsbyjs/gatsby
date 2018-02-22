@@ -6,13 +6,10 @@ const { bindActionCreators } = require(`redux`)
 const { stripIndent } = require(`common-tags`)
 const glob = require(`glob`)
 const path = require(`path`)
-
+const fs = require(`fs`)
 const { joinPath } = require(`../utils/path`)
-const {
-  getNode,
-  hasNodeChanged,
-  trackSubObjectsToRootNodeId,
-} = require(`./index`)
+const { getNode, hasNodeChanged } = require(`./index`)
+const { trackInlineObjectsInRootNode } = require(`../schema/node-tracking`)
 const { store } = require(`./index`)
 import * as joiSchemas from "../joi-schemas/joi"
 import { generateComponentChunkName } from "../utils/js-chunk-names"
@@ -122,10 +119,24 @@ actions.createPage = (page: PageInput, plugin?: Plugin, traceId?: string) => {
     noPageOrComponent = true
   }
 
+  // Don't check if the component exists during tests as we use a lot of fake
+  // component paths.
+  if (process.env.NODE_ENV !== `test`) {
+    if (!fs.existsSync(page.component)) {
+      const message = `${name} created a page with a component that doesn't exist`
+      console.log(``)
+      console.log(chalk.bold.red(message))
+      console.log(``)
+      console.log(page)
+      noPageOrComponent = true
+    }
+  }
+
   if (!page.component || !path.isAbsolute(page.component)) {
     const message = `${name} must set the absolute path to the page component when create creating a page`
     // Don't log out when testing
     if (process.env.NODE_ENV !== `test`) {
+      console.log(``)
       console.log(chalk.bold.red(message))
       console.log(``)
       console.log(page)
@@ -140,6 +151,7 @@ actions.createPage = (page: PageInput, plugin?: Plugin, traceId?: string) => {
     console.log(
       `See the documentation for createPage https://www.gatsbyjs.org/docs/bound-action-creators/#createPage`
     )
+    console.log(``)
     process.exit(1)
   }
 
@@ -185,6 +197,53 @@ actions.createPage = (page: PageInput, plugin?: Plugin, traceId?: string) => {
     console.log(chalk.bold.red(result.error))
     console.log(internalPage)
     return null
+  }
+
+  // Validate that the page component imports React and exports something
+  // (hopefully a component).
+  if (!internalPage.component.includes(`/.cache/`)) {
+    const fileContent = fs.readFileSync(internalPage.component, `utf-8`)
+    let notEmpty = true
+    let includesDefaultExport = true
+
+    if (fileContent === ``) {
+      notEmpty = false
+    }
+
+    if (
+      !fileContent.includes(`export default`) &&
+      !fileContent.includes(`module.exports`) &&
+      !fileContent.includes(`exports.default`)
+    ) {
+      includesDefaultExport = false
+    }
+    if (!notEmpty || !includesDefaultExport) {
+      const relativePath = path.relative(
+        store.getState().program.directory,
+        internalPage.component
+      )
+
+      if (!notEmpty) {
+        console.log(``)
+        console.log(
+          `You have an empty file in the "src/pages" directory at "${relativePath}". Please remove it or make it a valid component`
+        )
+        console.log(``)
+        // TODO actually do die during builds.
+        // process.exit(1)
+      }
+
+      if (!includesDefaultExport) {
+        console.log(``)
+        console.log(
+          `The page component must export a React component for it to be valid`
+        )
+        console.log(``)
+      }
+
+      // TODO actually do die during builds.
+      // process.exit(1)
+    }
   }
 
   return {
@@ -418,7 +477,7 @@ actions.createNode = (node: any, plugin?: Plugin, traceId?: string) => {
     )
   }
 
-  trackSubObjectsToRootNodeId(node)
+  trackInlineObjectsInRootNode(node)
 
   const oldNode = getNode(node.id)
 
@@ -511,7 +570,7 @@ type CreateNodeInput = {
  * key on the extended node object.
  *
  * Once a plugin has claimed a field name the field name can't be used by
- * other plugins.  Also since node's are immutable, you can't mutate the node
+ * other plugins.  Also since nodes are immutable, you can't mutate the node
  * directly. So to extend another node, use this.
  * @param {Object} $0
  * @param {Object} $0.node the target node object
