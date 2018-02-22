@@ -47,12 +47,18 @@ rendering.
 `gatsby-node.js` in the project root:
 
 ```js
-exports.modifyWebpackConfig = ({ config, stage }) => {
+exports.modifyWebpackConfig = ({ stage, loaders, actions }) => {
   if (stage === "build-html") {
-    config.loader("null", {
-      test: /bad-module/,
-      loader: "null-loader",
-    });
+    actions.setWebpackConfig({
+      module: {
+        rules: [
+          {
+            test: /bad-module/,
+            use: loaders.null(),
+          }
+        ]
+      }
+    })
   }
 };
 ```

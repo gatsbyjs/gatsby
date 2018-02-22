@@ -179,8 +179,8 @@ exports.modifyBabelrc = true
  * @param {object} $0.plugins A set of preconfigured webpack config plugins
  * @param {object} $0.actions
  * @example
- * exports.modifyBabelrc = ({
- *  getConfig, stage, loaders, actions
+ * exports.modifyWebpackConfig = ({
+ *  stage, getConfig, rules, loaders, actions
  * }) => {
  *   actions.setWebpackConfig({
  *     module: {
