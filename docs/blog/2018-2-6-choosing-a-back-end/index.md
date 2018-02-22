@@ -4,62 +4,62 @@ date: "2018-02-06"
 author: "Ross Whitehouse"
 ---
 
-A little while ago I had the six-monthly itch to redo my portfolio site, and I decided I was going to learn to use Gatsby. But that seems to be only half the battle. After you’ve built your front-end, how do you decide on the back-end? There’s so many out there!
+Hace un tiempo atrás tuve la picazón de cada seis meses de rehacer mi sitio de trabajo, y decidí que aprendería a usar Gatsby. Pero eso parece ser solo la mitad de la batalla. Luego de hayas construido tu interfaz, ¿cómo te decides con el dorsal final? ¡Hay muchísimos!
 
 ![GatsbyJS](gatsby.jpeg)
 
-## Background - Why Gatsby?
+## Fondo - ¿Por qué Gatsby?
 
-The only thing as abundant than Headless CMS options is Static Site Generator options. From Hugo (built on Google’s Go language) to Jekyll (Ruby) and even Nuxt which is based on VueJS. I picked Gatsby out of the pack for a number of reasons, chief amongst which is that I’m professionally a React.js developer, so getting to use React in these quick projects is a great benefit.
+La única cpsa tan abundante como las opciones de Headless CMS son las opciones de Static Site Generator. Desde Hugo (construido en lenguaje de Google Go) hasta Jekyll (Ruby) e incluso Nuxt que está basado en VueJS. Elegí Gatsby del paquete por un número de rasones, entre las cuales la romienente es que soy un desarrollador profesional de React.js, así que usar React en estos proyectos rápidos es un gran beneficio.
 
-Gatsby pitches as a “Blazing-fast static site generator for React”. So if I can build sites, but also encompass some React knowledge, all the better right? And I’m always looking for side-projects and sites for others, so if I can get a JAMstack sorted quicker and easier than my previous WordPress stack, then all the better going forward! I thought it was best to start with my own site, to test the viability.
+Gatsby hace de un "generador muy rápido de sitios estáticos para React". Así que si puedo crear sitios, pero también abarcar conocimientos de React, pues mejor, ¿no? Y siempre estoy buscando proyectos paralelos y en sitios para otros, así que si puedo tener un JAMstack ordenado más rápido y de manera más sencillaque mi anterior montón de WordPress, ¡entonces mejor! Pensé que era mejor empezar con mi propio sitio, para testear la viabilidad.
 
-> **What-stack?** JAM stands for Javascript, API, Markup. There are lots of benefits to this type of site, but the one I’m interested in is that your CMS is detached from your site - no hefty WordPress build for your tiny blog site.
-> [You can read more on the JAMstack website](https://jamstack.org/).
+> **¿Qué es apilar?** JAM significa Javascript, API, Markup. Hay muchos beneficios para este tipo de sitio, pero el único en el que estoy interesado es que tu CMS esté separado de tu sitio - no hay construcción fuerte de WordPress para tu pequeño sitio blog.
+> [Puedes leer más en la página web de JAMstack](https://jamstack.org/).
 
-I found Gatsby a real pleasure. You can find tutorials on their site for setup and once you see the code it’s fairly simple. I can personally recommend [Scott Tolinski’s series - available on Youtube](https://www.youtube.com/watch?v=b2H7fWhQcdE&list=PLLnpHn493BHHfoINKLELxDch3uJlSapxg). Gatsby nicely wraps up React and React Router with a nice folder structure, webkit, ES6, SASS support and - importantly - GraphQL.
+Descubrí que Gatsby es un verdadero placer. Puedes encontrar tutoriales en su sitio para la disposición y una vez que veas el código, es bastante simple. Puedo recomendar persomalmente [La serie de Scott Tolinski - disponible en YouTube](https://www.youtube.com/watch?v=b2H7fWhQcdE&list=PLLnpHn493BHHfoINKLELxDch3uJlSapxg). Gatsby envuelve React y React Router con una buena estructura de carpeta, webkit, ES6, soporte de SASS y - más importante - GraphQL.
 
-> **What-QL?** GraphQL is a query language for APIs. Where in the WordPress Days I’d have to get the whole post just to display the title, with GraphQL I can tell the API to give me just the title.
-> [Their site is pretty handy too](http://graphql.org/).
+> **¿Qué es QL?** GraphQL es un lenguaje dudoso para APIs. Mientras que en WordPress tenía que hacer el post completo solo para colocar el título, con GraphQL puedo decirle al API que me de solo el título.
+> [Su sitio es muy útil también](http://graphql.org/).
 
-I got the site setup pretty quickly after learning about it. There’s a tonne of tutorials and instructional material around. And you can use as much or as little React as you want. There’s also a [massive list of available plugins](/docs/plugins/), which is only going to grow.
+Tuve el sitio montado bastante rápido luego de aprenderlo. Hay muchos tutoriales y material instruccional por ahí. Y puedes usar tanto o tan poco de React como quieras. También hay una [lista masiva de complementos disponibles](/docs/plugins/), el cual solamente crecerá.
 
-So if you have any experience with React, or if you’re just getting started, this is a great choice. Gatsby doesn’t tell you how your code has to look. In fact it’s setup so you can use Markdown files for pages, but I didn’t fancy that, so I don’t. Simple as that! Likewise, if I want to scale this to build websites for other people, I don’t want to spend ages teaching them how to use Markdown, clone a git repo and add it to the git repo. Queue a Headless CMS.
+Así que si tienes alguna experiencia con React, o si apenas estás empezando, esta es una gran elección. Gatsby no te dice cómo se debe ver tu código. De hecho su montaje está hecho para que puedas usar archivos Markdown por páginas, pero no me encanta eso, así que no lo huzo. ¡Tan simple como eso! Igualmente, si quiero escalar esto para crear sitios web para otras personas, no quiero pasar años enseñandoles cómo usar Markdown, clona un git repo y añádelo al git repo. Cola a Headless CMS.
 
-You build your site. You’ve got your SASS, you’ve got your Markdown files (or not), but everything’s blank! So now what? How do we populate it with content?
+Haz construido tu sitio. Haz tenido tu SASS, haz tenido tus archivos Markdown (o no), ¡pero todo está en blanco! ¿Y ahora qué? ¿Cómo lo poblamos de contenido?
 
-## The Next Step: A back-end
+## El siguiente paso: un dorsal final.
 
-Now we need a system to manage and deliver our content in a nice API (instructed by our GraphQL of course). And there’s a whole bunch of them about. To help us out, Gatsby has plugins that cater to some Headless CMS like the WordPress API, Contentful, Cockpit, Prismic and NetlifyCMS - which Gatsby actually has a guide for. I’ll be going through a few of these to see which one might be more useful for this small project, and going forward.
+Ahora necesitamos un sistema para manejar y entregar nuestro contenido en un buen API (instruido por nuestro GraphQL, por supuesto). Y ahí hay muchos de ellos. Para ayudarnos, Gatsby tiene complementos para abastecer a algunos Headless CMS como el WordPress API, Contentful, Cockpit, Prismic y NetlifyCMS - del cual Gatsby tiene una guía. Estaré yendo a través de algunos de estos para ver cuál puede ser más útil para este pequeño proyecto, y yendo hacia adelante.
 
-> After posting this, I heard some really good thing about [GraphCMS](https://graphcms.com/) - It’s designed to work with GraphQL inherently and they have a [Gatsby Starter Project](https://github.com/GraphCMS/graphcms-examples/tree/master/gatsby-source-plugin-blog) example to check out.
+> Luego de postear esto, he oído algunas cosas buenas acerca [GraphCMS](https://graphcms.com/) - Está diseñado para trabajar con GraphQL inherentemente y tienen un [Proyecto de inciador de Gtasby](https://github.com/GraphCMS/graphcms-examples/tree/master/gatsby-source-plugin-blog) ejemplo para revisar.
 
-Firstly, though, why do we want a Headless CMS and a JAMstack for the project? There are a few reasons most people use them, and some that are down to personal preference:
+Primero, sin embargo, ¿por qué queremos un Headless CMS y un JAMstack para este proyecto? Hay unas pocas razones por los que las personas los usan, y algunas que se reducen a preferencia personal:
 
-1. **Easy setup!**
-2. **No back-end code.** I’m a front-end dev and honestly don’t want to spend hours setting up some PHP that I won’t enjoy. Gimme the good stuff.
-3. **No server needed.** Cloud CMSs mean that I don’t need to pay the hosting people to setup an SQL database.
-4. **Easy to edit.** If I need to edit a site on the fly or have a client who needs to do the same, they don’t need to touch any code or run to their home workstation to fix a spelling error. They can access it anywhere.
+1. **¡Fácil montaje!**
+2. **Sin código de el dorsal final.** Soy un desarrollador de interfaz y, honestamente, no quiero pasar horas desarrollando algunos PHP que no disfrutaré. Dame cosas buenas.
+3. **No necesitas servidor.** La nube de CMSs significa que no debo pagar a las personas anfitrionas para establecer un database SQL.
+4. **Fácil de editar.** Si necesito editar un sitio en el vuelo o tengo un cliente que necesita hacer lo mismo, no necesitan tocar ningún código o correr hacia su lugar de trabajo en casa para arreglarun error de gramática. Pueden acceder a ello desde cualquier lado.
 
 ---
 
 ![Contenful](contentful.png)
 
-### Contentful
+### Contento
 
-This is the one I’ve heard the most about in my research. Contentful is big and well-known - used by over 130 thousand developers if their website is to be believed. I also like their description “Fast. Flexible. Future-proof. It’s everything your CMS isn’t.” It might as well say “My CMS could beat up your CMS.”
+Este es del que más he hablado en mi investigación. Contentful es grande y muy conocido - usado por 130 mil desarroladores si su sitio web es para ser confiado. También me gusta su descripción "Rápido. Flexible. Prueba de futuro. Es todo lo que tu CMS no." También podría decir "Mi CMS puede vencer a tu CMS."
 
-With all the acclaim, however, can come a hefty price tag. Contentful does have a free tier if you display their logo in the footer, you can keep up to 10,000 records and have 3 users - which isn’t bad at all. For my personal site I’m happy to plaster whatever attribution on the bottom. If you wanted to use this for a client and they were dead against someone else’s logo being on there, you can go up a half-tier with the same spec for $39 a month.
+Con todo el aclamo, de todas maneras, puede venir una fuerte etiqueta de precio. Contentful si tiene un tier gratis si colocas su logo en el pie de página, puedes quedarte con 10,000 archivos y tener 3 usuarios- lo cual no está tan mal. Para mi sitio personal estoy feliz de plasmar cualquier atribución en el pie. Si querías usar para un cliente y no les gusta tener el logo de alguien más ahí, puedes ser un tier medio con las mismas especificaciones por 39$ al mes.
 
 ![Contentful's Pricing Packages](contentful-pricing.png)
 
-From the paid Developer edition upwards, it seems a pretty steep fee, especially compared to some others. That said, if you’ve got a client willing to fork out a hot $949, why not?
+De la edición del desarrollador pagado hacia arriba, parece una fuerte tarifa, especialmente comparado a otros. Con eso dicho, si tienes un cliente dispuesto a dar 949$, ¿por qué no?
 
 ![A quick sample project](contentful-project.png)
 
-As soon as you sign up (for free) you get access to a dashboard with some dummy content and links to tutorial videos\*. You can see the dashboard with all of your content types. I setup a ‘Page’ type for the text on my pages. You could do posts or other custom types.
+Tan pronto como te registres (gratis) tienes acceso a un tablero con algunos contenidos tontos y links de videos tutoriales\*. Puedes ver el tablero con todos los tipos de contenidos. Yo he montado una "página" para los tipos de textos de mis páginas. Podrías hacer posts u otros tipos personalizados.
 
-> \* In the videos the guy pronounces Contentful like ‘content’ as in pleased or satisfied. I always thought it was Contentful with ‘content’ as in CMS. But what do I know? He works there.
+> \* En los videos, el tipo pronuncia Contentful como "content" como en satisfecho o contento. Yo siempre pensé que era Contentful con "content" como en CMS. ¿Pero qué sé yo? Él trabaja ahí.
 
 ![Contentful's well-laid-out post-types](contentful-page.png)
 
