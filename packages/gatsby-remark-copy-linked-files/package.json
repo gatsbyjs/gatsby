@@ -1,7 +1,7 @@
 {
   "name": "gatsby-remark-copy-linked-files",
   "description": "Find files which are linked to from markdown and copy them to the public directory",
-  "version": "1.5.27",
+  "version": "1.5.28",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -10,10 +10,10 @@
     "babel-runtime": "^6.26.0",
     "cheerio": "^1.0.0-rc.2",
     "fs-extra": "^4.0.1",
-    "probe-image-size": "^3.2.0",
     "is-relative-url": "^2.0.0",
     "lodash": "^4.17.4",
     "path-is-inside": "^1.0.2",
+    "probe-image-size": "^3.2.0",
     "unist-util-visit": "^1.1.1"
   },
   "devDependencies": {
