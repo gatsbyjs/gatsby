@@ -17,8 +17,9 @@ const {
 } = require(`gatsby-plugin-sharp`)
 
 const sharp = require(`sharp`)
+const fs = require(`fs`)
 const fsExtra = require(`fs-extra`)
-const sizeOf = require(`image-size`)
+const imageSize = require(`probe-image-size`)
 const path = require(`path`)
 const Potrace = require(`potrace`).Potrace
 
@@ -89,6 +90,16 @@ const PotraceType = new GraphQLInputObjectType({
   },
 })
 
+function toArray(buf) {
+  var arr = new Array(buf.length)
+
+  for (var i = 0; i < buf.length; i++) {
+    arr[i] = buf[i]
+  }
+
+  return arr
+}
+
 module.exports = ({
   type,
   pathPrefix,
@@ -119,7 +130,7 @@ module.exports = ({
       args: {},
       async resolve(image, fieldArgs, context) {
         const details = getNodeAndSavePathDependency(image.parent, context.path)
-        const dimensions = sizeOf(details.absolutePath)
+        const dimensions = imageSize.sync(toArray(fs.readFileSync(details.absolutePath)))
         const imageName = `${details.name}-${image.internal.contentDigest}${
           details.ext
         }`
