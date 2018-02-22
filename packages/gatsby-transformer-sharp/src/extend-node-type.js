@@ -90,14 +90,14 @@ const PotraceType = new GraphQLInputObjectType({
   },
 })
 
-function toArray(buf) {
-  var arr = new Array(buf.length)
-
-  for (var i = 0; i < buf.length; i++) {
-    arr[i] = buf[i]
+async function getImageSize(fileName) {
+  const input = fs.createReadStream(fileName)
+  try {
+    const { width, height } = await imageSize(input)
+    return { width, height }
+  } finally {
+    input.destroy()
   }
-
-  return arr
 }
 
 module.exports = ({
@@ -130,7 +130,7 @@ module.exports = ({
       args: {},
       async resolve(image, fieldArgs, context) {
         const details = getNodeAndSavePathDependency(image.parent, context.path)
-        const dimensions = imageSize.sync(toArray(fs.readFileSync(details.absolutePath)))
+        const dimensions = await getImageSize(details.absolutePath)
         const imageName = `${details.name}-${image.internal.contentDigest}${
           details.ext
         }`
@@ -584,7 +584,7 @@ module.exports = ({
       resolve: (image, fieldArgs, context) => {
         const file = getNodeAndSavePathDependency(image.parent, context.path)
         const args = { ...fieldArgs, pathPrefix }
-        return new Promise(resolve => {
+        return new Promise(async resolve => {
           if (fieldArgs.base64) {
             resolve(
               base64({
@@ -592,7 +592,7 @@ module.exports = ({
               })
             )
           } else {
-            const o = queueImageResizing({
+            const o = await queueImageResizing({
               file,
               args,
             })

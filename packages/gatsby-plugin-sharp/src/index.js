@@ -247,7 +247,7 @@ const queueJob = (job, reporter) => {
   }
 }
 
-function queueImageResizing({ file, args = {}, reporter }) {
+async function queueImageResizing({ file, args = {}, reporter }) {
   const defaultArgs = {
     width: 400,
     quality: 50,
@@ -300,7 +300,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
   let width
   let height
   // Calculate the eventual width/height of the image.
-  const dimensions = imageSize.sync(toArray(fs.readFileSync(file.absolutePath)))
+  const dimensions = await getImageSize(file.absolutePath)
   let aspectRatio = dimensions.width / dimensions.height
   const originalName = file.base
 
@@ -481,7 +481,7 @@ async function responsiveSizes({ file, args = {}, reporter }) {
   const sortedSizes = _.sortBy(filteredSizes)
 
   // Queue sizes for processing.
-  const images = sortedSizes.map(size => {
+  const images = await Promise.all(sortedSizes.map(async size => {
     const arrrgs = {
       ...options,
       width: Math.round(size),
@@ -496,7 +496,7 @@ async function responsiveSizes({ file, args = {}, reporter }) {
       args: arrrgs, // matey
       reporter,
     })
-  })
+  }))
 
   const base64Width = 20
   const base64Height = Math.max(1, Math.round(base64Width * height / width))
@@ -555,7 +555,7 @@ async function resolutions({ file, args = {}, reporter }) {
   sizes.push(options.width * 1.5)
   sizes.push(options.width * 2)
   sizes.push(options.width * 3)
-  const dimensions = imageSize.sync(toArray(fs.readFileSync(file.absolutePath)))
+  const dimensions = await getImageSize(file.absolutePath)
 
   const filteredSizes = sizes.filter(size => size <= dimensions.width)
 
@@ -578,7 +578,7 @@ async function resolutions({ file, args = {}, reporter }) {
   // Sort sizes for prettiness.
   const sortedSizes = _.sortBy(filteredSizes)
 
-  const images = sortedSizes.map(size => {
+  const images = await Promise.all(sortedSizes.map(async size => {
     const arrrgs = {
       ...options,
       width: Math.round(size),
@@ -593,7 +593,7 @@ async function resolutions({ file, args = {}, reporter }) {
       args: arrrgs,
       reporter,
     })
-  })
+  }))
 
   const base64Args = {
     duotone: options.duotone,
@@ -747,14 +747,14 @@ const optimize = svg => {
   })
 }
 
-function toArray(buf) {
-  var arr = new Array(buf.length)
-
-  for (var i = 0; i < buf.length; i++) {
-    arr[i] = buf[i]
+async function getImageSize(fileName) {
+  const input = fs.createReadStream(fileName)
+  try {
+    const { width, height } = await imageSize(input)
+    return { width, height }
+  } finally {
+    input.destroy()
   }
-
-  return arr
 }
 
 exports.queueImageResizing = queueImageResizing

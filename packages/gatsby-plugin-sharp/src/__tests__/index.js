@@ -12,9 +12,9 @@ describe(`gatsby-plugin-sharp`, () => {
   const file = getFileObject(absolutePath)
 
   describe(`queueImageResizing`, () => {
-    it(`should round height when auto-calculated`, () => {
+    it(`should round height when auto-calculated`, async () => {
       // Resize 144-density.png (281x136) with a 3px width
-      const result = queueImageResizing({
+      const result = await queueImageResizing({
         file: getFileObject(path.join(__dirname, `images/144-density.png`)),
         args: { width: 3 },
       })
