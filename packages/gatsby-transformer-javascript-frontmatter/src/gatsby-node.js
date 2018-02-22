@@ -12,8 +12,10 @@ async function onCreateNode({
   const { createNode, createParentChildLink } = boundActionCreators
 
   // This only processes javascript & jsx files.
-  if (node.internal.mediaType !== `application/javascript` && 
-    node.internal.mediaType !== `text/jsx`) {
+  if (
+    node.internal.mediaType !== `application/javascript` &&
+    node.internal.mediaType !== `text/jsx`
+  ) {
     return
   }
 
@@ -102,7 +104,6 @@ async function onCreateNode({
   } finally {
     // only create node if frontmatter is not empty
     if (!_.isEmpty(frontmatter)) {
-
       exportsData = {
         ...frontmatter,
         error: error,

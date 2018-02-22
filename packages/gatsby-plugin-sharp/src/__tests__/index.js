@@ -1,6 +1,11 @@
 const path = require(`path`)
 
-const { base64, responsiveSizes, resolutions, queueImageResizing } = require(`../`)
+const {
+  base64,
+  responsiveSizes,
+  resolutions,
+  queueImageResizing,
+} = require(`../`)
 
 describe(`gatsby-plugin-sharp`, () => {
   const args = {

@@ -322,7 +322,6 @@ While we won't cover CSS-in-JS in this initial tutorial, we encourage you to exp
 as well as
 [Mark Dalgleish's more recent post "A Unified Styling Language"](https://medium.com/seek-blog/a-unified-styling-language-d0c208de2660).
 
-
 ### CSS Modules
 
 Let's explore **CSS Modules**.

@@ -27,7 +27,7 @@ Si crea un cargador o un complemento, nosotos <3 que lo suba en fuente abierta (
 
 ### Contribuciones al repositorio
 
-Gatsby usa un patrón de "monorepo" para administrar sus muchas dependencias y depende de 
+Gatsby usa un patrón de "monorepo" para administrar sus muchas dependencias y depende de
 lerna y/o yarn para configurar el repositorio para el desarrollo activo.
 
 Puede instalar la última versión de Gatsby siguiendo estos pasos:
@@ -44,7 +44,7 @@ Los pasos habituales para contribuir son:
 * prepara el repositorio e instala dependencias: `ejecuta yarn bootstrap`
 * Asegúrese de que las pruebas le estén funcionando: `yarn test`
 * Cree una rama con este tema: `git checkout -b topics/new-feature-name`
-* Ejecute `npm run watch` desde la raíz del repositorio para ver los cambios en el código fuente de los paquetes y guarde estos cambios sobre la marcha a medida que trabaja. Tenga en cuenta que el comando visualizar puede consumir muchos recursos. Para limitarlo a los paquetes en los que está trabajando, agregue un indicador de alcance, como `npm run watch -- --scope={gatsby,gatsby-cli}. Para ver solo un paquete, ejecute `npm run watch -- --scope=gatsby`.
+* Ejecute `npm run watch` desde la raíz del repositorio para ver los cambios en el código fuente de los paquetes y guarde estos cambios sobre la marcha a medida que trabaja. Tenga en cuenta que el comando visualizar puede consumir muchos recursos. Para limitarlo a los paquetes en los que está trabajando, agregue un indicador de alcance, como `npm run watch -- --scope={gatsby,gatsby-cli}. Para ver solo un paquete, ejecute`npm run watch -- --scope=gatsby`.
 * Instale [gatsby-dev-cli](/packages/gatsby-dev-cli/) globalmente: `yarn global add gatsby-dev-cli`
 * Ejecute `yarn install` en cada uno de los sitios con los que está probando
 * Para cada uno de los sitios de prueba Gatsby, usa el comando `gatsby-dev` allí para copiar
@@ -63,20 +63,20 @@ Gatsby, como era de esperar, utiliza Gatsby en la documentación de su sitio web
 Si desea agregar/modificar cualquier documentación de Gatsby,Ve a la
 [docs folder en Github](https://github.com/gatsbyjs/gatsby/tree/master/docs) utiliza el editor de archivos para editar y luego ver una vista previa de tus cambios. Github luego te permite
 que hagas un el cambio a un commit y subas a PR justo en la interfaz de usuario. Esta es la _manera más facil_
- en la que podrás colaborar con el proyecto!
+en la que podrás colaborar con el proyecto!
 
-Sin embargo, si desea hacer más cambios en el sitio web, eso es, cambiar 
+Sin embargo, si desea hacer más cambios en el sitio web, eso es, cambiar
 diseños, agregar secciones/páginas, siga los pasos a continuación.A continuación, puede girar su
 propia instancia del sitio web Gatsby y hacer/previsualizar sus cambios antes de subir un <tt>pull request</tt>.
 
 * Copie su repositorio y diríjase a `/www`
 * Utilice `yarn` para instalar todas las dependencias del sitio web.
 * Utilice `gatsby develop` para obtener una vista previa del sitio web en `http://localhost:8000`
-* El archivo _Markdown_ para la documentación _live_ en la `/docs` carpeta. Haga 
-adiciones o modificaciones aquí.
+* El archivo _Markdown_ para la documentación _live_ en la `/docs` carpeta. Haga
+  adiciones o modificaciones aquí.
 * Asegúrate de verificar que tu gramática sea la más apropiada.
 * Haga el _commit_ y llévelo a su _fork_.
-* Cree un  <tt>pull request</tt> desde su <tt>branch</tt>.
+* Cree un <tt>pull request</tt> desde su <tt>branch</tt>.
 
 ## Herramientas de desarrollo
 
@@ -110,14 +110,14 @@ A continuación, haga clic en configuración en el menú inferior y configure el
 
 ![cómo configurar el host/puerto para el remote devtools extension para conectarse en Gatsby](./images/remote-dev-settings.png)
 
-Luego de esto, el devtools extension _debería_ conectarse al <tt>remote server</tt> 
+Luego de esto, el devtools extension _debería_ conectarse al <tt>remote server</tt>
 y verás que las acciones comienzan a aparecer.
 
 ![gatsby redux remote devtools](./images/running-redux-devtools.png)
 
 **¡¡Advertencia!! Un montón de errores**. Si bien tener esto disponible es extremadamente
-útil, esta configuración es muy defectuosa y frágil. Hay una pérdida de memoria en la extensión que se activa, 
+útil, esta configuración es muy defectuosa y frágil. Hay una pérdida de memoria en la extensión que se activa,
 parece que cada vez que reinicia el servidor de desarrollo Gatsby.
-También la extensión a menudo, sin razón aparente, simplemente no mostrará ninguna acción desde el servidor <tt>remote</tt>.También a menudo se congela. 
+También la extensión a menudo, sin razón aparente, simplemente no mostrará ninguna acción desde el servidor <tt>remote</tt>.También a menudo se congela.
 La mejor solución parece ser apagar y volver a encender todo.Reparar estas herramientas sería muy útil para nosotros y muchos otros que usan estas herramientas si alguien
 quiere tomar este proyecto!

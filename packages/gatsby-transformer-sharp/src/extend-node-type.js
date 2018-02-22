@@ -130,7 +130,9 @@ module.exports = ({
       args: {},
       async resolve(image, fieldArgs, context) {
         const details = getNodeAndSavePathDependency(image.parent, context.path)
-        const dimensions = imageSize.sync(toArray(fs.readFileSync(details.absolutePath)))
+        const dimensions = imageSize.sync(
+          toArray(fs.readFileSync(details.absolutePath))
+        )
         const imageName = `${details.name}-${image.internal.contentDigest}${
           details.ext
         }`

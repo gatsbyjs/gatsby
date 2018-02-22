@@ -178,6 +178,7 @@ Community:
 * [gatsby-starter-contentful-i18n](https://github.com/mccrodp/gatsby-starter-contentful-i18n) [(demo)](https://gatsby-starter-contentful-i18n.netlify.com/)
 
   Features:
+
   * Localization (Multilanguage)
   * Dynamic content from Contentful CMS
   * Integrates [i18n plugin starter](https://github.com/angeloocana/gatsby-starter-default-i18n) and [using-contentful](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-contentful) repos
@@ -483,7 +484,7 @@ Community:
 * [gatsby-contentful-starter](https://github.com/contentful-userland/gatsby-contentful-starter) [(demo)](https://contentful-userland.github.io/gatsby-contentful-starter/)
 
   Features:
-  
+
   * Based on the [Gatsby Starter Blog](https://github.com/gatsbyjs/gatsby-starter-blog)
   * [Includes Contentful Delivery API for production build](https://www.contentful.com/developers/docs/references/content-delivery-api/)
   * [Includes Contentful Preview API for development](https://www.contentful.com/developers/docs/references/content-preview-api/)

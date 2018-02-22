@@ -276,9 +276,15 @@ module.exports = async (config = {}) => {
     // Discover which APIs this plugin implements and store an array against
     // the plugin node itself *and* in an API to plugins map for faster lookups
     // later.
-    const pluginNodeExports = resolveModuleExports(`${plugin.resolve}/gatsby-node`)
-    const pluginBrowserExports = resolveModuleExports(`${plugin.resolve}/gatsby-browser`)
-    const pluginSSRExports = resolveModuleExports(`${plugin.resolve}/gatsby-ssr`)
+    const pluginNodeExports = resolveModuleExports(
+      `${plugin.resolve}/gatsby-node`
+    )
+    const pluginBrowserExports = resolveModuleExports(
+      `${plugin.resolve}/gatsby-browser`
+    )
+    const pluginSSRExports = resolveModuleExports(
+      `${plugin.resolve}/gatsby-ssr`
+    )
 
     if (pluginNodeExports.length > 0) {
       plugin.nodeAPIs = _.intersection(pluginNodeExports, apis.node)
@@ -288,8 +294,14 @@ module.exports = async (config = {}) => {
 
     if (pluginBrowserExports.length > 0) {
       plugin.browserAPIs = _.intersection(pluginBrowserExports, apis.browser)
-      plugin.browserAPIs.map(browserAPI => apiToPlugins[browserAPI].push(plugin.name))
-      badExports.browser = getBadExports(plugin, pluginBrowserExports, apis.browser) // Collate any bad exports
+      plugin.browserAPIs.map(browserAPI =>
+        apiToPlugins[browserAPI].push(plugin.name)
+      )
+      badExports.browser = getBadExports(
+        plugin,
+        pluginBrowserExports,
+        apis.browser
+      ) // Collate any bad exports
     }
 
     if (pluginSSRExports.length > 0) {

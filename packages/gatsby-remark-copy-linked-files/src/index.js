@@ -124,7 +124,9 @@ module.exports = (
     let dimensions
 
     if (!image.attr(`width`) || !image.attr(`height`)) {
-      dimensions = imageSize.sync(toArray(fs.readFileSync(imageNode.absolutePath)))
+      dimensions = imageSize.sync(
+        toArray(fs.readFileSync(imageNode.absolutePath))
+      )
     }
 
     // Generate default alt tag
