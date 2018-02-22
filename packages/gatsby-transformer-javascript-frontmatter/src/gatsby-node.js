@@ -12,7 +12,8 @@ async function onCreateNode({
   const { createNode, createParentChildLink } = boundActionCreators
 
   // This only processes javascript files.
-  if (node.internal.mediaType !== `application/javascript`) {
+  if (node.internal.mediaType !== `application/javascript` &&
+    node.internal.mediaType !== `text/jsx`) {
     return
   }
 
