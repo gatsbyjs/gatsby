@@ -1,6 +1,6 @@
 const sharp = require(`sharp`)
 const crypto = require(`crypto`)
-const imageSize = require(`image-size`)
+const imageSize = require(`probe-image-size`)
 const _ = require(`lodash`)
 const Promise = require(`bluebird`)
 const fs = require(`fs`)
@@ -300,7 +300,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
   let width
   let height
   // Calculate the eventual width/height of the image.
-  const dimensions = imageSize(file.absolutePath)
+  const dimensions = imageSize.sync(toArray(fs.readFileSync(file.absolutePath)))
   let aspectRatio = dimensions.width / dimensions.height
   const originalName = file.base
 
@@ -555,7 +555,7 @@ async function resolutions({ file, args = {}, reporter }) {
   sizes.push(options.width * 1.5)
   sizes.push(options.width * 2)
   sizes.push(options.width * 3)
-  const dimensions = imageSize(file.absolutePath)
+  const dimensions = imageSize.sync(toArray(fs.readFileSync(file.absolutePath)))
 
   const filteredSizes = sizes.filter(size => size <= dimensions.width)
 
@@ -745,6 +745,16 @@ const optimize = svg => {
   return new Promise((resolve, reject) => {
     svgo.optimize(svg, ({ data }) => resolve(data))
   })
+}
+
+function toArray(buf) {
+  var arr = new Array(buf.length)
+
+  for (var i = 0; i < buf.length; i++) {
+    arr[i] = buf[i]
+  }
+
+  return arr
 }
 
 exports.queueImageResizing = queueImageResizing
