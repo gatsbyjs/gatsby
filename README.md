@@ -161,6 +161,7 @@ Websites built with Gatsby:
 * [Portfolio / Blog of Preston Richey](https://prestonrichey.com/) ([source](https://github.com/prichey/prestonrichey.com))
 * [Beach Hut Poole](https://www.beachhutpoole.co.uk/)
 * [In Sowerby Bridge](https://www.insowerbybridge.co.uk/)
+* [枫上雾棋的日志](https://fengshangwuqi.github.io/fswq-blog/)
 
 ## Docs
 
