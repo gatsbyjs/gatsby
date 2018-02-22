@@ -4,7 +4,7 @@ const fs = require(`fs`)
 const { createId, createFileNode } = require(`./create-file-node`)
 
 exports.sourceNodes = (
-  { boundActionCreators, getNode, hasNodeChanged, reporter },
+  { boundActionCreators, getNode, reporter },
   pluginOptions
 ) => {
   if (!(pluginOptions && pluginOptions.path)) {
