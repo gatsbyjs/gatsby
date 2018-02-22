@@ -14,7 +14,7 @@ function called `modifyWebpackConfig`.
 
 When Gatsby creates its webpack config, this function will be called allowing
 you to modify the default webpack config using
-[webpack-configurator](https://github.com/lewie9021/webpack-configurator).
+[webpack-merge](https://github.com/survivejs/webpack-merge).
 
 Gatsby does multiple webpack builds with somewhat different configuration. We
 call each build type a "stage". The following stages exist:
