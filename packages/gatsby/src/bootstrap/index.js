@@ -59,7 +59,9 @@ module.exports = async (args: BootstrapArgs) => {
 
   // Delete html and css files from the public directory as we don't want
   // deleted pages and styles from previous builds to stick around.
-  let activity = report.activityTimer(`delete html and css files from previous builds`)
+  let activity = report.activityTimer(
+    `delete html and css files from previous builds`
+  )
   activity.start()
   await del([
     `public/*.{html,css}`,

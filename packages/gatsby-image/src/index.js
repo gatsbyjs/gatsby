@@ -221,7 +221,7 @@ class Image extends React.Component {
         <Tag
           className={`${
             outerWrapperClassName ? outerWrapperClassName : ``
-            } gatsby-image-outer-wrapper`}
+          } gatsby-image-outer-wrapper`}
           style={{
             zIndex: 0,
             // Let users set component to be absolutely positioned.
@@ -337,7 +337,7 @@ class Image extends React.Component {
         <Tag
           className={`${
             outerWrapperClassName ? outerWrapperClassName : ``
-            } gatsby-image-outer-wrapper`}
+          } gatsby-image-outer-wrapper`}
           style={{
             zIndex: 0,
             // Let users set component to be absolutely positioned.

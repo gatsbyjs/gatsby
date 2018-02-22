@@ -14,8 +14,8 @@ Edit `gatsby-config.js`
 
 ```javascript
 module.exports = {
-  plugins: [`gatsby-plugin-styled-components`]
-}
+  plugins: [`gatsby-plugin-styled-components`],
+};
 ```
 
 ### Breaking changes history
