@@ -5,6 +5,7 @@ const hostedGitInfo = require(`hosted-git-info`)
 const fs = require(`fs-extra`)
 const sysPath = require(`path`)
 const report = require(`./reporter`)
+const url = require(`url`)
 
 const spawn = (cmd: string) => {
   const [file, ...args] = cmd.split(/\s+/)
@@ -107,6 +108,14 @@ type InitOptions = {
  */
 module.exports = async (starter: string, options: InitOptions = {}) => {
   const rootPath = options.rootPath || process.cwd()
+
+  const urlObject = url.parse(rootPath)
+  if (urlObject.protocol && urlObject.host) {
+    report.panic(
+      `It looks like you forgot to add the name of your new project. Try running "gatsby new new-gatsby-project ${rootPath}"`
+    )
+    return
+  }
 
   if (fs.existsSync(sysPath.join(rootPath, `package.json`))) {
     report.panic(`Directory ${rootPath} is already an npm project`)
