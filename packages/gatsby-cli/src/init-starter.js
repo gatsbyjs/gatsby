@@ -5,7 +5,7 @@ const hostedGitInfo = require(`hosted-git-info`)
 const fs = require(`fs-extra`)
 const sysPath = require(`path`)
 const report = require(`./reporter`)
-const urlRegex = require(`url-regex`)
+const url = require(`url`)
 
 const spawn = (cmd: string) => {
   const [file, ...args] = cmd.split(/\s+/)
@@ -109,7 +109,8 @@ type InitOptions = {
 module.exports = async (starter: string, options: InitOptions = {}) => {
   const rootPath = options.rootPath || process.cwd()
 
-  if (urlRegex({ exact: true }).test(rootPath)) {
+  const urlObject = url.parse(rootPath)
+  if (urlObject.protocol && urlObject.host) {
     report.panic(
       `Path provided to new Gatsby project seems to be an URL. Perhaps you forgot to specify a site name?`
     )
