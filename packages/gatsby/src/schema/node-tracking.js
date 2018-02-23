@@ -29,11 +29,15 @@ const addRootNodeToInlineObject = (data, nodeId) => {
  * and that Node object.
  * @param {Node} node Root Node
  */
-const nodeDigestTracked = new Set()
+// const nodeDigestTracked = new Set()
 const trackInlineObjectsInRootNode = node => {
-  if (nodeDigestTracked.has(node.internal.contentDigest)) {
-    return node
-  }
+  // const id =
+  // node && node.internal && node.internal.contentDigest
+  // ? node.internal.contentDigest
+  // : node.id
+  // if (nodeDigestTracked.has(id)) {
+  // return node
+  // }
 
   _.each(node, (v, k) => {
     // Ignore the node internal object.
@@ -43,7 +47,7 @@ const trackInlineObjectsInRootNode = node => {
     addRootNodeToInlineObject(v, node.id)
   })
 
-  nodeDigestTracked.add(node.internal.contentDigest)
+  // nodeDigestTracked.add(id)
   return node
 }
 exports.trackInlineObjectsInRootNode = trackInlineObjectsInRootNode
