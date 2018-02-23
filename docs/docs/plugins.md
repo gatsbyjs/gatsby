@@ -196,6 +196,7 @@ root.
 * [gatsby-source-behance-collection](https://github.com/n370/gatsby-source-behance-collection)
 * [gatsby-source-datocms](https://github.com/datocms/gatsby-source-datocms)
 * [gatsby-source-directus](https://github.com/iKonrad/gatsby-source-directus)
+* [gatsby-source-dribbble](https://github.com/smakosh/gatsby-source-dribbble)
 * [gatsby-source-github](https://github.com/mosch/gatsby-source-github)
 * [gatsby-source-google-sheets](https://github.com/brandonmp/gatsby-source-google-sheets)
 * [gatsby-source-graphcms](https://github.com/GraphCMS/gatsby-source-graphcms)
@@ -206,7 +207,6 @@ root.
 * [gatsby-source-unsplash](https://github.com/vacas5/gatsby-source-unsplash)
 * [gatsby-source-workable](https://github.com/tumblbug/gatsby-source-workable)
 * [gatsby-transformer-orga](https://github.com/xiaoxinghu/orgajs/tree/master/packages/gatsby-transformer-orga)
-* [gatsby-source-dribbble](https://github.com/smakosh/gatsby-source-dribbble)
 
 ## Community Library
 
