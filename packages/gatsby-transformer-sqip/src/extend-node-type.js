@@ -9,6 +9,7 @@ const {
 } = require(`graphql`)
 const fs = require(`fs-extra`)
 const sqip = require(`sqip`)
+const { schemes: { ImageResizingBehavior, ImageCropFocusType } } = require(`gatsby-source-contentful`)
 
 module.exports = async ({ type, store, cache }) => {
   if (type.name !== `ContentfulAsset`) {
@@ -40,24 +41,80 @@ module.exports = async ({ type, store, cache }) => {
           type: GraphQLInt,
           defaultValue: 0,
         },
-        // @todo allow width & height, respect aspect ratio
+        width: {
+          type: GraphQLInt,
+          defaultValue: 256,
+        },
+        height: {
+          type: GraphQLInt,
+        },
+        resizingBehavior: {
+          type: ImageResizingBehavior,
+        },
+        cropFocus: {
+          type: ImageCropFocusType,
+          defaultValue: null,
+        },
+        background: {
+          type: GraphQLString,
+          defaultValue: null,
+        },
       },
       async resolve(asset, fieldArgs, context) {
-        const { id, file: { url, fileName }, node_locale: locale, internal: { contentDigest } } = asset
-        const { blur, numberOfPrimitives, mode } = fieldArgs
+        const { id, file: { url, fileName, details, contentType }, node_locale: locale, internal: { contentDigest } } = asset
+        const { blur, numberOfPrimitives, mode, width, height, resizingBehavior, cropFocus, background } = fieldArgs
+
+        if (contentType.indexOf(`image/`) !== 0) {
+          return null
+        }
 
         console.log(`Processing: ${id}-${locale}`)
 
+        // Downloading small version of the image with same aspect ratio
+        const assetWidth = width || details.image.width
+        const assetHeight = height || details.image.height
+        const aspectRatio = assetHeight / assetWidth
+        const previewWidth = 256
+        const previewHeight = Math.floor(previewWidth * aspectRatio)
+
+        const params = [
+          `w=${previewWidth}`,
+          `h=${previewHeight}`,
+        ]
+        if (resizingBehavior) {
+          params.push(`fit=${resizingBehavior}`)
+        }
+        if (cropFocus) {
+          params.push(`crop=${cropFocus}`)
+        }
+        if (background) {
+          params.push(`bg=${background}`)
+        }
+
+        const uniqueId = [
+          aspectRatio,
+          resizingBehavior,
+          cropFocus,
+          background,
+        ]
+        .filter(Boolean)
+        .join(`-`)
+
         const extension = extname(fileName)
-        const absolutePath = resolve(cacheDir, `${contentDigest}${extension}`)
+        const absolutePath = resolve(cacheDir, `${contentDigest}-${uniqueId}${extension}`)
 
         const alreadyExists = await fs.pathExists(absolutePath)
 
+        console.log(`Calculated path: ${absolutePath}`)
+
         if (!alreadyExists) {
-          console.log(`Downloading: ${url}`)
+          const previewUrl = `http:${url}?${params.join(`&`)}`
+
+          console.log(`Downloading: ${previewUrl}`)
+
           const response = await axios({
             method: `get`,
-            url: `http:${url}?w=256`,
+            url: previewUrl,
             responseType: `stream`,
           })
 
