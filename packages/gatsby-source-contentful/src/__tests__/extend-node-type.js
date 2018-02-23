@@ -51,6 +51,7 @@ describe(`contentful extend node type`, () => {
         width: 450,
         height: 399,
         quality: 50,
+        background: `rgb:000000`,
       })
       expect(resp.srcSet.length).toBeGreaterThan(1)
       expect(resp).toMatchSnapshot()
@@ -94,8 +95,9 @@ describe(`contentful extend node type`, () => {
     it(`generates responsive sizes data for images using all options`, async () => {
       const resp = await resolveResponsiveSizes(image, {
         maxWidth: 450,
-        maxHeight: 400,
+        maxHeight: 399,
         quality: 50,
+        background: `rgb:000000`,
       })
       expect(resp.srcSet.length).toBeGreaterThan(1)
       expect(resp).toMatchSnapshot()
@@ -117,6 +119,7 @@ describe(`contentful extend node type`, () => {
         width: 450,
         height: 399,
         quality: 50,
+        background: `rgb:000000`,
       })
       expect(resp).toMatchSnapshot()
     })
