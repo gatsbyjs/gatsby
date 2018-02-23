@@ -72,10 +72,11 @@ Please pick a path to an existing directory.
   watcher.on(`unlink`, path => {
     reporter.info(`file deleted at ${path}`)
     const node = getNode(createId(path))
-    deleteNode(node.id, node)
-
-    // Also delete nodes for the file's transformed children nodes.
-    node.children.forEach(childId => deleteNode(childId, getNode(childId)))
+    // It's possible the file node was never created as sometimes tools will
+    // write and then immediately delete temporary files to the file system.
+    if (node) {
+      deleteNode(node.id, node)
+    }
   })
 
   watcher.on(`addDir`, path => {
