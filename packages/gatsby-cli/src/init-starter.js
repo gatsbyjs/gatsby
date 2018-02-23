@@ -112,7 +112,7 @@ module.exports = async (starter: string, options: InitOptions = {}) => {
   const urlObject = url.parse(rootPath)
   if (urlObject.protocol && urlObject.host) {
     report.panic(
-      `It looks like you forgot to add the name of your new project. Try running "gatsby new new-gatsby-project ${rootPath}"`
+      `It looks like you forgot to add a name for your new project. Try running instead "gatsby new new-gatsby-project ${rootPath}"`
     )
     return
   }
