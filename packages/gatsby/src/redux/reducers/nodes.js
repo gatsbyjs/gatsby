@@ -2,30 +2,30 @@ const _ = require(`lodash`)
 
 const parentChildrenMap = new Map()
 
+const findChildrenRecursively = (children = []) => {
+  children = children.concat(
+    ...children.map(child => {
+      const newChildren = parentChildrenMap.get(child)
+      parentChildrenMap.delete(child)
+      if (newChildren) {
+        return findChildrenRecursively(newChildren)
+      } else {
+        return []
+      }
+    })
+  )
+
+  return children
+}
+
 module.exports = (state = {}, action) => {
   let newState
   switch (action.type) {
     case `DELETE_CACHE`:
       return {}
     case `CREATE_NODE`: {
-      // Remove any previously created descendant nodes as they're all due to be
-      // recreated.
-      const findChildrenRecursively = (children = []) => {
-        children = children.concat(
-          ...children.map(child => {
-            const newChildren = parentChildrenMap.get(child)
-            parentChildrenMap.delete(child)
-            if (newChildren) {
-              return findChildrenRecursively(newChildren)
-            } else {
-              return []
-            }
-          })
-        )
-
-        return children
-      }
-
+      // Remove any previously created descendant nodes as they're all due
+      // to be recreated.
       const descendantNodes = findChildrenRecursively(
         parentChildrenMap.get(action.payload.id)
       )
@@ -48,9 +48,17 @@ module.exports = (state = {}, action) => {
       }
       return newState
 
-    case `DELETE_NODE`:
+    case `DELETE_NODE`: {
+      // Also delete any nodes transformed from this one.
+      const descendantNodes = findChildrenRecursively(
+        parentChildrenMap.get(action.payload)
+      )
+      parentChildrenMap.delete(action.payload)
+      newState = _.omit(state, descendantNodes)
+
       newState = _.omit(state, action.payload)
       return newState
+    }
 
     case `DELETE_NODES`:
       newState = _.omit(state, action.payload)
