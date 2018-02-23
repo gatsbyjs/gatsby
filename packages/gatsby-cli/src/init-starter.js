@@ -112,7 +112,7 @@ module.exports = async (starter: string, options: InitOptions = {}) => {
   const urlObject = url.parse(rootPath)
   if (urlObject.protocol && urlObject.host) {
     report.panic(
-      `Path provided to new Gatsby project seems to be an URL. Perhaps you forgot to specify a site name?`
+      `It looks like you forgot to add the name of your new project. Try running "gatsby new new-gatsby-project ${rootPath}"`
     )
     return
   }
