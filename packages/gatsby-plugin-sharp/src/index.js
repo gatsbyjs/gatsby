@@ -13,7 +13,10 @@ const path = require(`path`)
 
 const imageSizeCache = new Map()
 const getImageSize = file => {
-  if (imageSizeCache.has(file.internal.contentDigest)) {
+  if (
+    process.env.NODE_ENV !== `test` &&
+    imageSizeCache.has(file.internal.contentDigest)
+  ) {
     return imageSizeCache.get(file.internal.contentDigest)
   } else {
     const dimensions = imageSize.sync(
