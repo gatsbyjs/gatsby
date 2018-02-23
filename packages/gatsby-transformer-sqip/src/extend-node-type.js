@@ -2,19 +2,76 @@ const crypto = require(`crypto`)
 const { createWriteStream } = require(`fs`)
 const { extname, join, resolve } = require(`path`)
 
-const axios = require(`axios`)
 const {
   GraphQLString,
   GraphQLInt,
 } = require(`graphql`)
-const fs = require(`fs-extra`)
 const sqip = require(`sqip`)
-const { schemes: { ImageResizingBehavior, ImageCropFocusType } } = require(`gatsby-source-contentful`)
 
-module.exports = async ({ type, store, cache }) => {
+module.exports = async (args) => {
+  const { type: { name } } = args
+
+  if (name === `ImageSharp`) {
+    return sqipSharp(args)
+  }
+
+  if (name === `ContentfulAsset`) {
+    return sqipContentful(args)
+  }
+
+  return {}
+}
+
+async function sqipSharp ({ type, cache }) {
+  if (type.name !== `ImageSharp`) {
+    return {}
+  }
+
+  return {
+    sqip: {
+      type: GraphQLString,
+      args: {
+        blur: {
+          type: GraphQLInt,
+          defaultValue: 1,
+        },
+        numberOfPrimitives: {
+          type: GraphQLInt,
+          defaultValue: 10,
+        },
+        mode: {
+          type: GraphQLInt,
+          defaultValue: 0,
+        },
+      },
+      async resolve(image, fieldArgs, context) {
+        const { blur, numberOfPrimitives, mode } = fieldArgs
+        // not everything is available at this point of time, maybe conflicts with extend node type from gatsby-transform-sharp, so lets hack it for now...
+        // const { original: { src }, internal: { contentDigest } } = image
+        // const absolutePath = join(
+        //   process.cwd(),
+        //   `public`,
+        //   src
+        // )
+
+        const { id, internal: { contentDigest } } = image
+        const absolutePath = id.replace(` absPath of file >> ImageSharp`, ``)
+
+        return generateSqip({ cache, contentDigest, absolutePath, numberOfPrimitives, blur, mode })
+      },
+    },
+  }
+}
+
+async function sqipContentful ({ type, store, cache }) {
   if (type.name !== `ContentfulAsset`) {
     return {}
   }
+
+  const fs = require(`fs-extra`)
+  const axios = require(`axios`)
+
+  const { schemes: { ImageResizingBehavior, ImageCropFocusType } } = require(`gatsby-source-contentful`)
 
   const cacheDir = join(
     store.getState().program.directory,
@@ -127,38 +184,46 @@ module.exports = async ({ type, store, cache }) => {
           })
         }
 
-        const sqipOptions = {
-          filename: absolutePath,
-          numberOfPrimitives,
-          blur,
-          mode,
-        }
-
-        const optionsHash = crypto
-          .createHash(`md5`)
-          .update(JSON.stringify(sqipOptions))
-          .digest(`hex`)
-
-        const cacheKey = `sqip-${contentDigest}-${optionsHash}`
-
-        let svgThumbnail = await cache.get(cacheKey)
-
-        if (!svgThumbnail) {
-          console.log(`Calculating low quality svg thumbnail: ${url}`)
-          const result = sqip(sqipOptions)
-          // @todo make blur setting in sqip via PR
-          svgThumbnail = result.final_svg.replace(new RegExp(`<feGaussianBlur stdDeviation="[0-9]+"\\s*/>`), `<feGaussianBlur stdDeviation="${sqipOptions.blur}" />`)
-
-          await cache.set(cacheKey, svgThumbnail)
-          console.log(`done calculating primitive ${url}`)
-        }
-
-        const dataURI = encodeOptimizedSVGDataUri(svgThumbnail)
-
-        return dataURI
+        return generateSqip({ cache, contentDigest, absolutePath, numberOfPrimitives, blur, mode })
       },
     },
   }
+}
+
+async function generateSqip (options) {
+  const { cache, contentDigest, absolutePath, numberOfPrimitives, blur, mode } = options
+
+  // @todo add check if file actually exists
+
+  const sqipOptions = {
+    filename: absolutePath,
+    numberOfPrimitives,
+    blur,
+    mode,
+  }
+
+  const optionsHash = crypto
+    .createHash(`md5`)
+    .update(JSON.stringify(sqipOptions))
+    .digest(`hex`)
+
+  const cacheKey = `sqip-${contentDigest}-${optionsHash}`
+
+  let svgThumbnail = await cache.get(cacheKey)
+
+  if (!svgThumbnail) {
+    console.log(`Calculating low quality svg thumbnail: ${absolutePath}`)
+    const result = sqip(sqipOptions)
+    // @todo make blur setting in sqip via PR
+    svgThumbnail = result.final_svg.replace(new RegExp(`<feGaussianBlur stdDeviation="[0-9]+"\\s*/>`), `<feGaussianBlur stdDeviation="${sqipOptions.blur}" />`)
+
+    await cache.set(cacheKey, svgThumbnail)
+    console.log(`done calculating primitive ${absolutePath}`)
+  }
+
+  const dataURI = encodeOptimizedSVGDataUri(svgThumbnail)
+
+  return dataURI
 }
 
 // https://codepen.io/tigt/post/optimizing-svgs-in-data-uris

@@ -15,6 +15,10 @@
     "babel-cli": "^6.26.0",
     "cross-env": "^5.0.5"
   },
+  "peerDependencies": {
+    "gatsby-source-contentful": "*",
+    "gatsby-transformer-sharp": "*"
+  },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sqip#readme",
   "keywords": [
     "gatsby",
