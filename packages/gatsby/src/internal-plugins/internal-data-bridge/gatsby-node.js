@@ -141,10 +141,12 @@ const createPageId = path => `SitePage ${path}`
 
 exports.onCreatePage = ({ page, boundActionCreators }) => {
   const { createNode } = boundActionCreators
+  // eslint-disable-next-line
+  const { updatedAt, ...pageWithoutUpdated } = page
 
   // Add page.
   createNode({
-    ...page,
+    ...pageWithoutUpdated,
     id: createPageId(page.path),
     parent: `SOURCE`,
     children: [],

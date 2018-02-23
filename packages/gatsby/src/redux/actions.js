@@ -183,6 +183,7 @@ actions.createPage = (page: PageInput, plugin?: Plugin, traceId?: string) => {
     componentChunkName: generateComponentChunkName(page.component),
     // Ensure the page has a context object
     context: page.context || {},
+    updatedAt: Date.now(),
   }
 
   // If the path doesn't have an initial forward slash, add it.
