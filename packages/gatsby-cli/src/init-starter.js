@@ -5,6 +5,7 @@ const hostedGitInfo = require(`hosted-git-info`)
 const fs = require(`fs-extra`)
 const sysPath = require(`path`)
 const report = require(`./reporter`)
+const urlRegex = require(`url-regex`)
 
 const spawn = (cmd: string) => {
   const [file, ...args] = cmd.split(/\s+/)
@@ -107,6 +108,13 @@ type InitOptions = {
  */
 module.exports = async (starter: string, options: InitOptions = {}) => {
   const rootPath = options.rootPath || process.cwd()
+
+  if (urlRegex({ exact: true }).test(rootPath)) {
+    report.panic(
+      `Path provided to new Gatsby project seems to be an URL. Perhaps you forgot to specify a site name?`
+    )
+    return
+  }
 
   if (fs.existsSync(sysPath.join(rootPath, `package.json`))) {
     report.panic(`Directory ${rootPath} is already an npm project`)

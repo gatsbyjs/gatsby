@@ -25,6 +25,7 @@
     "source-map": "^0.5.7",
     "stack-trace": "^0.0.10",
     "update-notifier": "^2.3.0",
+    "url-regex": "^4.1.1",
     "yargs": "^8.0.2",
     "yurnalist": "^0.2.1"
   },
