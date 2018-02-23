@@ -50,13 +50,13 @@ module.exports = (state = {}, action) => {
 
     case `DELETE_NODE`: {
       // Also delete any nodes transformed from this one.
-      const descendantNodes = findChildrenRecursively(
-        parentChildrenMap.get(action.payload)
-      )
+      const allNodes = [
+        action.payload,
+        ...findChildrenRecursively(parentChildrenMap.get(action.payload)),
+      ]
       parentChildrenMap.delete(action.payload)
-      newState = _.omit(state, descendantNodes)
 
-      newState = _.omit(newState, action.payload)
+      newState = _.omit(newState, allNodes)
       return newState
     }
 
