@@ -60,9 +60,10 @@ const createUrl = (imgUrl, options = {}) => {
       h: options.height,
       fl: options.jpegProgressive ? `progressive` : null,
       q: options.quality,
-      fm: options.toFormat ? options.toFormat : ``,
-      fit: options.resizingBehavior ? options.resizingBehavior : ``,
-      f: options.cropFocus ? options.cropFocus : ``,
+      fm: options.toFormat || ``,
+      fit: options.resizingBehavior || ``,
+      f: options.cropFocus || ``,
+      bg: options.background || ``,
     },
     _.identity
   )
@@ -339,6 +340,10 @@ exports.extendNodeType = ({ type }) => {
           type: ImageCropFocusType,
           defaultValue: null,
         },
+        background: {
+          type: GraphQLString,
+          defaultValue: null,
+        },
       },
       resolve: (image, options, context) =>
         Promise.resolve(resolveResponsiveResolution(image, options)).then(
@@ -425,6 +430,10 @@ exports.extendNodeType = ({ type }) => {
           type: ImageCropFocusType,
           defaultValue: null,
         },
+        background: {
+          type: GraphQLString,
+          defaultValue: null,
+        },
         sizes: {
           type: GraphQLString,
         },
@@ -480,6 +489,10 @@ exports.extendNodeType = ({ type }) => {
           type: ImageCropFocusType,
           defaultValue: null,
         },
+        background: {
+          type: GraphQLString,
+          defaultValue: null,
+        },
       },
       resolve(image, options, context) {
         return resolveResponsiveResolution(image, options)
@@ -528,6 +541,10 @@ exports.extendNodeType = ({ type }) => {
         sizes: {
           type: GraphQLString,
         },
+        background: {
+          type: GraphQLString,
+          defaultValue: null,
+        },
       },
       resolve(image, options, context) {
         return resolveResponsiveSizes(image, options)
@@ -574,6 +591,10 @@ exports.extendNodeType = ({ type }) => {
         },
         cropFocus: {
           type: ImageCropFocusType,
+          defaultValue: null,
+        },
+        background: {
+          type: GraphQLString,
           defaultValue: null,
         },
       },
