@@ -7,13 +7,13 @@ This is a plugin that allows you to use [faker.js](https://github.com/marak/Fake
 Install `gatsby-source-faker`
 
 ```
-    yarn add -D gatsby-source-faker
+    yarn add gatsby-source-faker
 ```
 
 or
 
 ```
-    npm install --save-dev gatsby-source-faker
+    npm install gatsby-source-faker
 ```
 
 Add `gatsby-source-faker` to the `gatsby-config.js` as follows
