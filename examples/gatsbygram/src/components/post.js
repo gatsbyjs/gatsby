@@ -26,7 +26,7 @@ class Post extends React.Component {
 
   render() {
     const { smallImage, likes, id } = this.props.post
-    const { small } = smallImage.childImageSharp
+    const { small, sqip } = smallImage.childImageSharp
     return (
       <Link
         data-testid="post"
@@ -66,7 +66,7 @@ class Post extends React.Component {
           }}
         >
           <Img
-            sizes={{ ...small }}
+            sizes={{ ...small, base64: sqip.dataURI }}
             css={{
               margin: 0,
               height: `100%`,
@@ -132,12 +132,14 @@ export const postFragment = graphql`
     likes
     smallImage: image {
       childImageSharp {
-        small: sizes(maxWidth: 292, maxHeight: 292) {
+        sqip(numberOfPrimitives: 25) {
+          dataURI
+        }
+        small: responsiveSizes(maxWidth: 292, maxHeight: 292) {
           src
           srcSet
           aspectRatio
           sizes
-          tracedSVG
         }
       }
     }

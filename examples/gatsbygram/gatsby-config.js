@@ -60,6 +60,7 @@ module.exports = {
     // resistant to bad networks. Works with almost any
     // site!
     `gatsby-plugin-offline`,
+    `gatsby-transformer-sqip`,
     // This plugin sets up Google Analytics for you.
     {
       resolve: `gatsby-plugin-google-analytics`,
