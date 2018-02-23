@@ -94,7 +94,7 @@ describe(`contentful extend node type`, () => {
     it(`generates responsive sizes data for images using all options`, async () => {
       const resp = await resolveResponsiveSizes(image, {
         maxWidth: 450,
-        maxHeight: 399,
+        maxHeight: 400,
         quality: 50,
       })
       expect(resp.srcSet.length).toBeGreaterThan(1)
