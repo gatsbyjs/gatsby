@@ -488,3 +488,14 @@ Community:
   * Based on the [Gatsby Starter Blog](https://github.com/gatsbyjs/gatsby-starter-blog)
   * [Includes Contentful Delivery API for production build](https://www.contentful.com/developers/docs/references/content-delivery-api/)
   * [Includes Contentful Preview API for development](https://www.contentful.com/developers/docs/references/content-preview-api/)
+
+* [gatsby-starter-gcn](https://github.com/ryanwiemer/gatsby-starter-gcn) [(demo)](https://gcn.netlify.com/)
+
+  Features:
+
+  * Inspired by [gatsby-contentful-starter](https://github.com/contentful-userland/gatsby-contentful-starter)
+  * Contentful integration with ready to go placeholder content
+  * Netlify integration including a pre-built contact form
+  * Minimal responsive design - made to customize or tear apart
+  * Styled components
+  * SEO friendly
