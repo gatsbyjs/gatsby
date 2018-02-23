@@ -146,7 +146,7 @@ const resolveResponsiveResolution = (image, options) => {
   }
 
   return {
-    aspectRatio: aspectRatio,
+    aspectRatio: desiredAspectRatio,
     baseUrl,
     width: Math.round(options.width),
     height: Math.round(pickedHeight),
@@ -216,7 +216,7 @@ const resolveResponsiveSizes = (image, options) => {
     .join(`,\n`)
 
   return {
-    aspectRatio: aspectRatio,
+    aspectRatio: desiredAspectRatio,
     baseUrl,
     src: createUrl(baseUrl, {
       ...options,
