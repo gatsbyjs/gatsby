@@ -4,6 +4,7 @@ import chalk from "chalk"
 const _ = require(`lodash`)
 const { bindActionCreators } = require(`redux`)
 const { stripIndent } = require(`common-tags`)
+const report = require(`gatsby-cli/lib/reporter`)
 const glob = require(`glob`)
 const path = require(`path`)
 const fs = require(`fs`)
@@ -117,6 +118,42 @@ actions.createPage = (page: PageInput, plugin?: Plugin, traceId?: string) => {
       return message
     }
     noPageOrComponent = true
+  }
+
+  // Validate that the context object doesn't overlap with any core page fields
+  // as this will cause trouble when running graphql queries.
+  if (_.isObject(page.context)) {
+    const reservedFields = [
+      `path`,
+      `matchPath`,
+      `component`,
+      `componentChunkName`,
+      `pluginCreator___NODE`,
+      `pluginCreatorName`,
+    ]
+    const invalidFields = Object.keys(_.pick(page.context, reservedFields))
+
+    const singularMessage = `You used a reserved field name in the context object when creating a page:`
+    const pluralMessage = `You used reserved field names in the context object when creating a page:`
+    if (invalidFields.length > 0) {
+      const error = `${
+        invalidFields.length === 1 ? singularMessage : pluralMessage
+      }
+
+${invalidFields.map(f => `"${f}"`).join(`, `)}
+
+${JSON.stringify(page, null, 4)}
+
+Replace your invalid field names with ones not on the list of reserved field names:
+
+${reservedFields.map(f => `"${f}"`).join(`, `)}
+            `
+      if (process.env.NODE_ENV === `test`) {
+        return error
+      } else {
+        report.panic(error)
+      }
+    }
   }
 
   // Don't check if the component exists during tests as we use a lot of fake
