@@ -21,8 +21,8 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "emotion": "7 || 8 ",
-    "emotion-server": "7 || 8",
+    "emotion": "7 || 8 || 9",
+    "emotion-server": "7 || 8 || 9",
     "gatsby": "^1.0.0"
   },
   "repository": {
