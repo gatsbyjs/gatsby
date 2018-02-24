@@ -56,7 +56,7 @@ module.exports = (state = {}, action) => {
       ]
       parentChildrenMap.delete(action.payload)
 
-      newState = _.omit(newState, allNodes)
+      newState = _.omit(state, allNodes)
       return newState
     }
 

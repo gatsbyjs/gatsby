@@ -156,6 +156,20 @@ describe(`Create and update nodes`, () => {
     )
     let state = nodeReducer(undefined, action)
 
+    const secondNodeAction = actions.createNode(
+      {
+        id: `hi2`,
+        children: [],
+        parent: `test`,
+        internal: {
+          contentDigest: `hasdfljds`,
+          type: `Test`,
+        },
+      },
+      { name: `tests` }
+    )
+    state = nodeReducer(state, secondNodeAction)
+
     const createChildAction = actions.createNode(
       {
         id: `hi-1`,
@@ -204,7 +218,7 @@ describe(`Create and update nodes`, () => {
 
     const deleteNodeAction = actions.deleteNode(`hi`, { name: `tests` })
     const deleteNodeState = nodeReducer(state, deleteNodeAction)
-    expect(Object.keys(deleteNodeState).length).toEqual(0)
+    expect(Object.keys(deleteNodeState).length).toEqual(1)
   })
 
   it(`deletes previously transformed children nodes when parent nodes are deleted`, () => {
