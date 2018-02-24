@@ -9,7 +9,9 @@ const { trackInlineObjectsInRootNode } = require(`./node-tracking`)
 
 const enhancedNodeCache = new Map()
 const enhancedNodeCacheId = ({ node, args }) =>
-  `${node.internal.contentDigest}${JSON.stringify(args)}`
+  node && node.internal && node.internal.contentDigest
+    ? `${node.internal.contentDigest}${JSON.stringify(args)}`
+    : null
 
 function awaitSiftField(fields, node, k) {
   const field = fields[k]
@@ -86,18 +88,6 @@ module.exports = ({
 
   // Resolves every field used in the node.
   function resolveRecursive(node, siftFieldsObj, gqFields) {
-    if (
-      node &&
-      node.internal &&
-      node.internal.contentDigest &&
-      enhancedNodeCache.has(enhancedNodeCacheId({ node, args: siftFieldsObj }))
-    ) {
-      return Promise.resolve(
-        enhancedNodeCache.get(
-          enhancedNodeCacheId({ node, args: siftFieldsObj })
-        )
-      )
-    }
     return Promise.all(
       _.keys(siftFieldsObj).map(k =>
         Promise.resolve(awaitSiftField(gqFields, node, k))
@@ -119,20 +109,28 @@ module.exports = ({
     ).then(resolvedFields => {
       const myNode = { ...node }
       resolvedFields.forEach(([k, v]) => (myNode[k] = v))
-      if (node && node.internal && node.internal.contentDigest) {
-        enhancedNodeCache.set(
-          enhancedNodeCacheId({ node: myNode, args: siftFieldsObj }),
-          myNode
-        )
-      }
       return myNode
     })
   }
 
   return Promise.all(
-    nodes.map(node => resolveRecursive(node, fieldsToSift, type.getFields()))
+    nodes.map(node => {
+      const cacheKey = enhancedNodeCacheId({ node, args: fieldsToSift })
+      if (cacheKey && enhancedNodeCache.has(cacheKey)) {
+        return Promise.resolve(enhancedNodeCache.get(cacheKey))
+      }
+
+      return resolveRecursive(node, fieldsToSift, type.getFields()).then(
+        resolvedNode => {
+          trackInlineObjectsInRootNode(resolvedNode)
+          if (cacheKey) {
+            enhancedNodeCache.set(cacheKey, resolvedNode)
+          }
+          return resolvedNode
+        }
+      )
+    })
   ).then(myNodes => {
-    myNodes = myNodes.map(trackInlineObjectsInRootNode)
     if (!connection) {
       const index = _.isEmpty(siftArgs)
         ? 0
