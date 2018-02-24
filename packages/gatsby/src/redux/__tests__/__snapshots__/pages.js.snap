@@ -6,6 +6,26 @@ exports[`Add pages Fails if path is missing 1`] = `"The plugin \\"test\\" must s
 
 exports[`Add pages Fails if the component path isn't absolute 1`] = `"The plugin \\"test\\" must set the absolute path to the page component when create creating a page"`;
 
+exports[`Add pages Fails if use a reserved field in the context object 1`] = `
+"You used reserved field names in the context object when creating a page:
+
+\\"path\\", \\"matchPath\\"
+
+{
+    \\"component\\": \\"/path/to/file1.js\\",
+    \\"path\\": \\"/yo/\\",
+    \\"context\\": {
+        \\"path\\": \\"/yo/\\",
+        \\"matchPath\\": \\"/pizz*\\"
+    }
+}
+
+Replace your invalid field names with ones not on the list of reserved field names:
+
+\\"path\\", \\"matchPath\\", \\"component\\", \\"componentChunkName\\", \\"pluginCreator___NODE\\", \\"pluginCreatorName\\"
+            "
+`;
+
 exports[`Add pages allows you to add multiple pages 1`] = `
 Array [
   Object {
