@@ -136,7 +136,7 @@ actions.createPage = (page: PageInput, plugin?: Plugin, traceId?: string) => {
     const singularMessage = `You used a reserved field name in the context object when creating a page:`
     const pluralMessage = `You used reserved field names in the context object when creating a page:`
     if (invalidFields.length > 0) {
-      report.panic(`${
+      const error = `${
         invalidFields.length === 1 ? singularMessage : pluralMessage
       }
 
@@ -147,7 +147,12 @@ ${JSON.stringify(page, null, 4)}
 Replace your invalid field names with ones not on the list of reserved field names:
 
 ${reservedFields.map(f => `"${f}"`).join(`, `)}
-            `)
+            `
+      if (process.env.NODE_ENV === `test`) {
+        return error
+      } else {
+        report.panic(error)
+      }
     }
   }
 
