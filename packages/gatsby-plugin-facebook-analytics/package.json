@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-facebook-analytics",
   "version": "1.0.0",
-  "description": "Gatsby plugin to add facebook analitycs  onto a site",
+  "description": "Gatsby plugin to add facebook analytics  onto a site",
   "main": "index.js",
   "author": "Yeison Daza <jahir045@gmail.com>",
   "bugs": {
@@ -16,7 +16,7 @@
   },
   "homepage":
     "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-facebook-analytics#readme",
-  "keywords": ["gatsby", "gatsby-plugin", "facebook analitycs", "facebook sdk"],
+  "keywords": ["gatsby", "gatsby-plugin", "facebook analytics", "facebook sdk"],
   "peerDependencies": {
     "gatsby": "^1.0.0"
   },
