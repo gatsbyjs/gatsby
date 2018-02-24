@@ -9,7 +9,8 @@
   "dependencies": {
     "html-webpack-include-assets-plugin": "^1.0.2",
     "html-webpack-plugin": "^2.30.1",
-    "netlify-cms": "^1.0.1"
+    "netlify-cms": "^1.0.1",
+    "netlify-identity-widget": "^1.4.11"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

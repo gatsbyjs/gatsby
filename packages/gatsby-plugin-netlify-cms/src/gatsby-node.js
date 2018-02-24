@@ -1,5 +1,4 @@
 const HtmlWebpackPlugin = require(`html-webpack-plugin`)
-const HtmlWebpackIncludeAssetsPlugin = require(`html-webpack-include-assets-plugin`)
 const ExtractTextPlugin = require(`extract-text-webpack-plugin`)
 
 function plugins(stage) {
@@ -9,13 +8,6 @@ function plugins(stage) {
       title: `Content Manager`,
       filename: `admin/index.html`,
       chunks: [`cms`],
-    }),
-
-    // Include the identity widget script in the html file
-    new HtmlWebpackIncludeAssetsPlugin({
-      assets: [`https://identity.netlify.com/v1/netlify-identity-widget.js`],
-      append: false,
-      publicPath: false,
     }),
   ]
 
@@ -68,13 +60,10 @@ function module(config, stage) {
   }
 }
 
-exports.modifyWebpackConfig = (
-  { config, stage },
-  { modulePath = `${__dirname}/cms.js` }
-) => {
+exports.modifyWebpackConfig = ({ config, stage }, { modulePath }) => {
   config.merge({
     entry: {
-      cms: modulePath,
+      cms: [`${__dirname}/cms.js`, modulePath].filter(p => p),
     },
     plugins: plugins(stage),
   })
