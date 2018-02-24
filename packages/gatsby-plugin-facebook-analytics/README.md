@@ -1,4 +1,4 @@
-# gatsby-plugin-facebook-analitycs
+# gatsby-plugin-facebook-analytics
 
 Easily add Facebook Analytics to your Gatsby site.
 
