@@ -11,6 +11,22 @@ const imageminWebp = require(`imagemin-webp`)
 const queue = require(`async/queue`)
 const path = require(`path`)
 
+const imageSizeCache = new Map()
+const getImageSize = file => {
+  if (
+    process.env.NODE_ENV !== `test` &&
+    imageSizeCache.has(file.internal.contentDigest)
+  ) {
+    return imageSizeCache.get(file.internal.contentDigest)
+  } else {
+    const dimensions = imageSize.sync(
+      toArray(fs.readFileSync(file.absolutePath))
+    )
+    imageSizeCache.set(file.internal.contentDigest, dimensions)
+    return dimensions
+  }
+}
+
 const duotone = require(`./duotone`)
 const { boundActionCreators } = require(`gatsby/dist/redux/actions`)
 
@@ -312,7 +328,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
   let width
   let height
   // Calculate the eventual width/height of the image.
-  const dimensions = imageSize.sync(toArray(fs.readFileSync(file.absolutePath)))
+  const dimensions = getImageSize(file)
   let aspectRatio = dimensions.width / dimensions.height
   const originalName = file.base
 
@@ -567,7 +583,7 @@ async function resolutions({ file, args = {}, reporter }) {
   sizes.push(options.width * 1.5)
   sizes.push(options.width * 2)
   sizes.push(options.width * 3)
-  const dimensions = imageSize.sync(toArray(fs.readFileSync(file.absolutePath)))
+  const dimensions = getImageSize(file)
 
   const filteredSizes = sizes.filter(size => size <= dimensions.width)
 

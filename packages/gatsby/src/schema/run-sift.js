@@ -7,6 +7,10 @@ const prepareRegex = require(`./prepare-regex`)
 const Promise = require(`bluebird`)
 const { trackInlineObjectsInRootNode } = require(`./node-tracking`)
 
+const enhancedNodeCache = new Map()
+const enhancedNodeCacheId = ({ node, args }) =>
+  `${node.internal.contentDigest}${JSON.stringify(args)}`
+
 function awaitSiftField(fields, node, k) {
   const field = fields[k]
   if (field.resolve) {
@@ -80,8 +84,20 @@ module.exports = ({
     })
   }
 
-  // Resolves every field used in the sift.
+  // Resolves every field used in the node.
   function resolveRecursive(node, siftFieldsObj, gqFields) {
+    if (
+      node &&
+      node.internal &&
+      node.internal.contentDigest &&
+      enhancedNodeCache.has(enhancedNodeCacheId({ node, args: siftFieldsObj }))
+    ) {
+      return Promise.resolve(
+        enhancedNodeCache.get(
+          enhancedNodeCacheId({ node, args: siftFieldsObj })
+        )
+      )
+    }
     return Promise.all(
       _.keys(siftFieldsObj).map(k =>
         Promise.resolve(awaitSiftField(gqFields, node, k))
@@ -103,6 +119,12 @@ module.exports = ({
     ).then(resolvedFields => {
       const myNode = { ...node }
       resolvedFields.forEach(([k, v]) => (myNode[k] = v))
+      if (node && node.internal && node.internal.contentDigest) {
+        enhancedNodeCache.set(
+          enhancedNodeCacheId({ node: myNode, args: siftFieldsObj }),
+          myNode
+        )
+      }
       return myNode
     })
   }
