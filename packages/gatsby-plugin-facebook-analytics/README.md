@@ -1,10 +1,10 @@
 # gatsby-plugin-facebook-analitycs
 
-Easily add Facebook Analitycs to your Gatsby site.
+Easily add Facebook Analytics to your Gatsby site.
 
 ## Install
 
-`npm install --save gatsby-plugin-facebook-analitycs`
+`npm install --save gatsby-plugin-facebook-analytics`
 
 ## How to use
 
@@ -12,11 +12,11 @@ Easily add Facebook Analitycs to your Gatsby site.
 // In your gatsby-config.js
 plugins: [
   {
-    resolve: `gatsby-plugin-facebook-analitycs`,
+    resolve: `gatsby-plugin-facebook-analytics`,
     options: {
       appId: "YOUR_APP_ID",
-      // Include facebook analitycs in development.
-      // Defaults to false meaning will only be loaded in production.
+      // Include facebook analytics in development.
+      // Defaults to false meaning the library will only be loaded in production.
       includeInDevelopment: false,
     },
   },
