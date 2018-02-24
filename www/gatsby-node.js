@@ -26,11 +26,11 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
     const contributorPageTemplate = path.resolve(
       `src/templates/template-contributor-page.js`
     )
-    const packageTemplate = path.resolve(
-      `src/templates/template-docs-packages.js`
+    const localPackageTemplate = path.resolve(
+      `src/templates/template-docs-local-packages.js`
     )
     const remotePackageTemplate = path.resolve(
-      `src/templates/template-remote-packages.js`
+      `src/templates/template-docs-remote-packages.js`
     )
     // Query for markdown nodes to use in creating pages.
     resolve(
@@ -137,7 +137,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
             createPage({
               path: `${edge.node.fields.slug}`, // required
               component: slash(
-                edge.node.fields.package ? packageTemplate : docsTemplate
+                edge.node.fields.package ? localPackageTemplate : docsTemplate
               ),
               context: {
                 slug: edge.node.fields.slug,
@@ -146,13 +146,48 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
           }
         })
 
-        // Create package readme
-        result.data.allNpmPackage.edges.forEach(edge => {
+        const allPackages = result.data.allNpmPackage.edges
+        // Create local package readme
+        // this will filter on markdownremark a lot like the blog example above
+        let allLocalPackages = _.filter(allPackages, edge => {
+          const slug = _.get(edge, `node.fields.slug`)
+          // maybe add a deprectaed variable here
+          if (!slug) return
+
+          if (_.includes(slug, `/packages/`)) {
+            return edge
+          }
+        })
+
+        allLocalPackages = allLocalPackages.forEach(edge => {
           const slug = `/packages/${edge.node.title}/`
 
           createPage({
             path: slug,
-            component: slash(packageTemplate),
+            component: slash(localPackageTemplate),
+            context: {
+              slug,
+              id: edge.node.id,
+            },
+          })
+        })
+        console.log("running and running and running...")
+
+        // Create remote package readme
+        // this just needs to filter the localPackagesArr out to make sure those aren't used
+        // const allRemotePackages = _.differenceWith(
+        //   allPackages, // array of objects with names at node.title
+        //   localPackagesArr, // array full of names
+        //   (package, localName) =>
+        //     _.isMatchWith(package, localName, "node.title")
+        // )
+        allPackages.forEach(edge => {
+          const slug = `/packages/${edge.node.title}/`
+          if (_.includes(localPackagesArr, edge.node.title)) return
+
+          createPage({
+            path: slug,
+            component: slash(remotePackageTemplate),
             context: {
               slug,
               id: edge.node.id,

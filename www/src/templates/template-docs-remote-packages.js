@@ -7,25 +7,24 @@ import presets from "../utils/presets"
 import Container from "../components/container"
 import MarkdownPageFooter from "../components/markdown-page-footer"
 
-class DocsPackagesTemplate extends React.Component {
+class DocsRemotePackagesTemplate extends React.Component {
   render() {
-    const page = this.props.data.markdownRemark
-    const metaData = this.props.data.npmPackage
-    const packageName = page ? page.fields.title : metaData.name
-    const excerpt = page
-      ? page.excerpt
-      : metaData.readme.childMarkdownRemark.excerpt
+    // make this all one big destructuring
+    const remotePackageData = this.props.data.npmPackage
+    // const metaData = this.props.data.npmPackage
+    const packageName = remotePackageData.name
+    const excerpt = remotePackageData.readme.childMarkdownRemark.excerpt
     const lastUpdated = `${distanceInWords(
-      new Date(metaData.modified),
+      new Date(remotePackageData.modified),
       new Date()
     )} ago`
-    const html = page ? page.html : metaData.readme.childMarkdownRemark.html
-    const github = page
-      ? `https://github.com/gatsbyjs/gatsby/tree/master/packages/${packageName}`
-      : metaData.repository ? metaData.repository.url : null
+    const html = remotePackageData.readme.childMarkdownRemark.html
+    const github = remotePackageData.repository
+      ? remotePackageData.repository.url
+      : null
 
     const gatsbyKeywords = [`gatsby`, `gatsby-plugin`, `gatsby-component`]
-    const tags = metaData.keywords
+    const tags = remotePackageData.keywords
       .filter(keyword => !gatsbyKeywords.includes(keyword))
       .join(`, `)
 
@@ -106,19 +105,11 @@ class DocsPackagesTemplate extends React.Component {
   }
 }
 
-export default DocsPackagesTemplate
+export default DocsRemotePackagesTemplate
 
+// these won't have timetoread since they are pulled from algolia
 export const pageQuery = graphql`
-  query TemplateDocsPackages($slug: String!) {
-    markdownRemark(fields: { slug: { eq: $slug } }) {
-      html
-      excerpt
-      timeToRead
-      fields {
-        title
-      }
-      ...MarkdownPageFooter
-    }
+  query TemplateDocsRemotePackages($slug: String!) {
     npmPackage(slug: { eq: $slug }) {
       name
       description

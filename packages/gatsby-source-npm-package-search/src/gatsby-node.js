@@ -10,10 +10,13 @@ const createContentDigest = obj =>
     .update(JSON.stringify(obj))
     .digest(`hex`)
 
-exports.sourceNodes = async ({ boundActionCreators, createNodeId }, { keywords }) => {
+exports.sourceNodes = async (
+  { boundActionCreators, createNodeId },
+  { keywords }
+) => {
   const { createNode } = boundActionCreators
 
-  console.log(`Grabbing NPM packages...`)
+  console.log(`Grabbing local NPM packages...`)
 
   let buildFilter = []
 
