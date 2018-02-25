@@ -73,7 +73,7 @@ When building pages from files, you often want to create a URL from a file's pat
 ```javascript
 createFilePath({
   // The node you'd like to convert to a path
-  // e.g. froom a markdown, JSON, YAML file, etc
+  // e.g. from a markdown, JSON, YAML file, etc
   node:
   // Method used to get a node
   // The parameter from `onCreateNode` should be passed in here
