@@ -10,7 +10,7 @@ exports.onRenderBody = ({ setPostBodyComponents }, pluginOptions) => {
   } = pluginOptions
 
   if (
-    process.env.NODE_ENV === `production` || includeInDevelopment
+    process.env.NODE_ENV === `production` || includeInDevelopment || debug
   ) {
     setPostBodyComponents([
       <script
