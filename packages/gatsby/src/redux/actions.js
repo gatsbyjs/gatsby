@@ -140,13 +140,24 @@ actions.createPage = (page: PageInput, plugin?: Plugin, traceId?: string) => {
         invalidFields.length === 1 ? singularMessage : pluralMessage
       }
 
-${invalidFields.map(f => `"${f}"`).join(`, `)}
+${invalidFields.map(f => `  * "${f}"`).join(`\n`)}
 
 ${JSON.stringify(page, null, 4)}
 
-Replace your invalid field names with ones not on the list of reserved field names:
+Data in "context" is passed to GraphQL as potential arguments when running the
+page query.
 
-${reservedFields.map(f => `"${f}"`).join(`, `)}
+When arguments for GraphQL are constructed, the context object is combined with
+the page object so both page object and context data are available as
+arguments. If a context field duplicates a field already used by the page
+object, this can break functionality within Gatsby so must be avoided.
+
+Please choose another name for the conflicting fields.
+
+The following fields are used by the page object and must be avoided.
+
+${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
+
             `
       if (process.env.NODE_ENV === `test`) {
         return error
