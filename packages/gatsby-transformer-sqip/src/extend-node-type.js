@@ -22,7 +22,7 @@ module.exports = async (args) => {
   return {}
 }
 
-async function sqipSharp ({ type, cache }) {
+async function sqipSharp({ type, cache }) {
   if (type.name !== `ImageSharp`) {
     return {}
   }
@@ -54,16 +54,22 @@ async function sqipSharp ({ type, cache }) {
         //   src
         // )
 
-        const { id, internal: { contentDigest } } = image
+        const { id } = image
         const absolutePath = id.replace(` absPath of file >> ImageSharp`, ``)
 
-        return generateSqip({ cache, contentDigest, absolutePath, numberOfPrimitives, blur, mode })
+        return generateSqip({
+          cache,
+          absolutePath,
+          numberOfPrimitives,
+          blur,
+          mode,
+        })
       },
     },
   }
 }
 
-async function sqipContentful ({ type, store, cache }) {
+async function sqipContentful({ type, store, cache }) {
   if (type.name !== `ContentfulAsset`) {
     return {}
   }
@@ -118,8 +124,21 @@ async function sqipContentful ({ type, store, cache }) {
         },
       },
       async resolve(asset, fieldArgs, context) {
-        const { id, file: { url, fileName, details, contentType }, node_locale: locale, internal: { contentDigest } } = asset
-        const { blur, numberOfPrimitives, mode, width, height, resizingBehavior, cropFocus, background } = fieldArgs
+        const {
+          id,
+          file: { url, fileName, details, contentType },
+          node_locale: locale,
+        } = asset
+        const {
+          blur,
+          numberOfPrimitives,
+          mode,
+          width,
+          height,
+          resizingBehavior,
+          cropFocus,
+          background,
+        } = fieldArgs
 
         if (contentType.indexOf(`image/`) !== 0) {
           return null
@@ -149,16 +168,17 @@ async function sqipContentful ({ type, store, cache }) {
         }
 
         const uniqueId = [
+          id,
           aspectRatio,
           resizingBehavior,
           cropFocus,
           background,
         ]
-        .filter(Boolean)
-        .join(`-`)
+          .filter(Boolean)
+          .join(`-`)
 
         const extension = extname(fileName)
-        const absolutePath = resolve(cacheDir, `${contentDigest}-${uniqueId}${extension}`)
+        const absolutePath = resolve(cacheDir, `${uniqueId}${extension}`)
 
         const alreadyExists = await fs.pathExists(absolutePath)
 
@@ -176,22 +196,29 @@ async function sqipContentful ({ type, store, cache }) {
           })
 
           await new Promise((resolve, reject) => {
-
             const file = createWriteStream(absolutePath)
             response.data.pipe(file)
-            file.on(`finish`, () => { resolve() })
+            file.on(`finish`, () => {
+              resolve()
+            })
             file.on(`error`, reject)
           })
         }
 
-        return generateSqip({ cache, contentDigest, absolutePath, numberOfPrimitives, blur, mode })
+        return generateSqip({
+          cache,
+          absolutePath,
+          numberOfPrimitives,
+          blur,
+          mode,
+        })
       },
     },
   }
 }
 
-async function generateSqip (options) {
-  const { cache, contentDigest, absolutePath, numberOfPrimitives, blur, mode } = options
+async function generateSqip(options) {
+  const { cache, absolutePath, numberOfPrimitives, blur, mode } = options
 
   // @todo add check if file actually exists
 
@@ -207,7 +234,7 @@ async function generateSqip (options) {
     .update(JSON.stringify(sqipOptions))
     .digest(`hex`)
 
-  const cacheKey = `sqip-${contentDigest}-${optionsHash}`
+  const cacheKey = `sqip-${optionsHash}`
 
   let svgThumbnail = await cache.get(cacheKey)
 
