@@ -2,9 +2,15 @@ import React from "react"
 import { stripIndent } from "common-tags"
 
 exports.onRenderBody = ({ setPostBodyComponents }, pluginOptions) => {
+  const {
+    appId,
+    includeInDevelopment = false,
+    debug = false,
+    language = "en_US"
+  } = pluginOptions
+
   if (
-    process.env.NODE_ENV === `production` ||
-    pluginOptions.includeInDevelopment
+    process.env.NODE_ENV === `production` || includeInDevelopment
   ) {
     setPostBodyComponents([
       <script
@@ -13,7 +19,7 @@ exports.onRenderBody = ({ setPostBodyComponents }, pluginOptions) => {
           __html: stripIndent`
           window.fbAsyncInit = function() {
             FB.init({
-              appId      : ${pluginOptions.appId},
+              appId      : ${appId},
               xfbml      : true,
               version    : 'v2.12'
             });
@@ -26,7 +32,7 @@ exports.onRenderBody = ({ setPostBodyComponents }, pluginOptions) => {
              var js, fjs = d.getElementsByTagName(s)[0];
              if (d.getElementById(id)) {return;}
              js = d.createElement(s); js.id = id;
-             js.src = "https://connect.facebook.net/en_US/sdk.js";
+             js.src = "https://connect.facebook.net/${language}/${debug ? "debug" : "sdk"}.js";
              fjs.parentNode.insertBefore(js, fjs);
            }(document, 'script', 'facebook-jssdk'));`,
         }}

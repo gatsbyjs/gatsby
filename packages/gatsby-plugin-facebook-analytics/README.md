@@ -18,6 +18,11 @@ plugins: [
       // Include facebook analytics in development.
       // Defaults to false meaning the library will only be loaded in production.
       includeInDevelopment: false,
+      // Include debug version of sdk
+      // Defaults to false meaning the library will load sdk.js
+      debug: false,
+      // Can select your language, default will load english
+      language: "en_US"
     },
   },
 ]
