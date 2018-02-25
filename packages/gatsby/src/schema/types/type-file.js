@@ -7,7 +7,11 @@ const normalize = require(`normalize-path`)
 const systemPath = require(`path`)
 
 const { getNodes } = require(`../../redux`)
-const { findRootNode, getValuesFromPath } = require(`../node-tracking`)
+const {
+  findRootNode,
+  getValuesFromPath,
+  registerTrackedPath,
+} = require(`../node-tracking`)
 const {
   createPageDependency,
 } = require(`../../redux/actions/add-page-dependency`)
@@ -59,6 +63,9 @@ function pointsToFile(nodes, key, value) {
   const otherFileExists = getNodes().some(
     n => n.absolutePath === pathToOtherNode
   )
+  if (otherFileExists) {
+    registerTrackedPath(nodes[0].internal.type, key)
+  }
   return otherFileExists
 }
 
