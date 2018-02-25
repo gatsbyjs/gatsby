@@ -6,12 +6,10 @@ exports.onRenderBody = ({ setPostBodyComponents }, pluginOptions) => {
     appId,
     includeInDevelopment = false,
     debug = false,
-    language = "en_US"
+    language = `en_US`,
   } = pluginOptions
 
-  if (
-    process.env.NODE_ENV === `production` || includeInDevelopment || debug
-  ) {
+  if (process.env.NODE_ENV === `production` || includeInDevelopment || debug) {
     setPostBodyComponents([
       <script
         key="plugin-facebook-analitycs"
@@ -32,7 +30,9 @@ exports.onRenderBody = ({ setPostBodyComponents }, pluginOptions) => {
              var js, fjs = d.getElementsByTagName(s)[0];
              if (d.getElementById(id)) {return;}
              js = d.createElement(s); js.id = id;
-             js.src = "https://connect.facebook.net/${language}/${debug ? "debug" : "sdk"}.js";
+             js.src = "https://connect.facebook.net/${language}/sdk${
+            debug ? `/debug.js` : `.js`
+          }";
              fjs.parentNode.insertBefore(js, fjs);
            }(document, 'script', 'facebook-jssdk'));`,
         }}
