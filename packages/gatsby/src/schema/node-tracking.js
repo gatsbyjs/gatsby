@@ -86,6 +86,56 @@ function findRootNode(obj) {
 
 exports.findRootNode = findRootNode
 
+const getValuesFromPath = (object, path) => {
+  const results = []
+  getValuesFromSelector({ object, results, selector: path.split(`.`) })
+  return results
+}
+
+const getValuesFromSelector = ({
+  object,
+  selector,
+  results = null,
+  parents = null,
+  index = 0,
+  value = null,
+}) => {
+  if (!value) {
+    const key = selector[index]
+    value = object[key]
+  }
+
+  if (_.isArray(value)) {
+    value.forEach(item => {
+      getValuesFromSelector({
+        value: item,
+        selector,
+        results,
+        object: value,
+        parents,
+        index,
+      })
+    })
+  } else if (selector.length === index + 1) {
+    if (parents) {
+      parents.add(object)
+    }
+    if (results) {
+      results.push(value)
+    }
+  } else if (_.isPlainObject(value)) {
+    getValuesFromSelector({
+      object: value,
+      selector,
+      results,
+      parents,
+      index: index + 1,
+    })
+  }
+}
+
+exports.getValuesFromPath = getValuesFromPath
+
 // Track nodes that are already in store
 _.each(getNodes(), node => {
   trackInlineObjectsInRootNode(node)
