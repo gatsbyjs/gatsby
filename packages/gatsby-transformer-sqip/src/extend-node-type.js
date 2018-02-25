@@ -22,7 +22,7 @@ module.exports = async (args) => {
   return {}
 }
 
-async function sqipSharp({ type, cache }) {
+async function sqipSharp({ type, cache, getNodeAndSavePathDependency }) {
   if (type.name !== `ImageSharp`) {
     return {}
   }
@@ -46,16 +46,9 @@ async function sqipSharp({ type, cache }) {
       },
       async resolve(image, fieldArgs, context) {
         const { blur, numberOfPrimitives, mode } = fieldArgs
-        // not everything is available at this point of time, maybe conflicts with extend node type from gatsby-transform-sharp, so lets hack it for now...
-        // const { original: { src }, internal: { contentDigest } } = image
-        // const absolutePath = join(
-        //   process.cwd(),
-        //   `public`,
-        //   src
-        // )
 
-        const { id } = image
-        const absolutePath = id.replace(` absPath of file >> ImageSharp`, ``)
+        const file = getNodeAndSavePathDependency(image.parent, context.path)
+        const { absolutePath } = file
 
         return generateSqip({
           cache,
