@@ -13,5 +13,12 @@ rendering support.
 Edit `gatsby-config.js`
 
 ```javascript
-plugins: [`gatsby-plugin-styletron`];
+plugins: [
+  {
+    resolve: 'gatsby-plugin-styletron',
+    options: {
+      prefix: '_',
+    },
+  },
+];
 ```
