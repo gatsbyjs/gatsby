@@ -134,8 +134,8 @@ actions.createPage = (page: PageInput, plugin?: Plugin, traceId?: string) => {
     ]
     const invalidFields = Object.keys(_.pick(page.context, reservedFields))
 
-    const singularMessage = `You used a reserved field name in the context object when creating a page:`
-    const pluralMessage = `You used reserved field names in the context object when creating a page:`
+    const singularMessage = `${name} used a reserved field name in the context object when creating a page:`
+    const pluralMessage = `${name} used reserved field names in the context object when creating a page:`
     if (invalidFields.length > 0) {
       const error = `${
         invalidFields.length === 1 ? singularMessage : pluralMessage
