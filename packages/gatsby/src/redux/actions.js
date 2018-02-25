@@ -101,6 +101,7 @@ const pascalCase = _.flow(_.camelCase, _.upperFirst)
  *   },
  * })
  */
+const hasWarnedForPageComponent = new Set()
 actions.createPage = (page: PageInput, plugin?: Plugin, traceId?: string) => {
   let noPageOrComponent = false
   let name = `The plugin "${plugin.name}"`
@@ -133,8 +134,8 @@ actions.createPage = (page: PageInput, plugin?: Plugin, traceId?: string) => {
     ]
     const invalidFields = Object.keys(_.pick(page.context, reservedFields))
 
-    const singularMessage = `You used a reserved field name in the context object when creating a page:`
-    const pluralMessage = `You used reserved field names in the context object when creating a page:`
+    const singularMessage = `${name} used a reserved field name in the context object when creating a page:`
+    const pluralMessage = `${name} used reserved field names in the context object when creating a page:`
     if (invalidFields.length > 0) {
       const error = `${
         invalidFields.length === 1 ? singularMessage : pluralMessage
@@ -148,21 +149,31 @@ Data in "context" is passed to GraphQL as potential arguments when running the
 page query.
 
 When arguments for GraphQL are constructed, the context object is combined with
-the page object so both page object and context data are available as
-arguments. If a context field duplicates a field already used by the page
-object, this can break functionality within Gatsby so must be avoided.
+the page object so *both* page object and context data are available as
+arguments. So you don't need to add the page "path" to the context as it's
+already available in GraphQL. If a context field duplicates a field already
+used by the page object, this can break functionality within Gatsby so must be
+avoided.
 
 Please choose another name for the conflicting fields.
 
-The following fields are used by the page object and must be avoided.
+The following fields are used by the page object and should be avoided.
 
 ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
 
             `
       if (process.env.NODE_ENV === `test`) {
         return error
-      } else {
+        // Only error if the context version is different than the page
+        // version.  People in v1 often thought that they needed to also pass
+        // the path to context for it to be available in GraphQL
+      } else if (invalidFields.some(f => page.context[f] !== page[f])) {
         report.panic(error)
+      } else {
+        if (!hasWarnedForPageComponent.has(page.component)) {
+          report.warn(error)
+          hasWarnedForPageComponent.add(page.component)
+        }
       }
     }
   }
