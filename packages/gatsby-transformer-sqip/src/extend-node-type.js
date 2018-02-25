@@ -1,15 +1,31 @@
 const crypto = require(`crypto`)
-const { createWriteStream } = require(`fs`)
 const { extname, join, resolve } = require(`path`)
 
-const {
-  GraphQLString,
-  GraphQLInt,
-} = require(`graphql`)
+const fs = require(`fs-extra`)
+const { GraphQLObjectType, GraphQLString, GraphQLInt } = require(`graphql`)
+const PQueue = require(`p-queue`)
+const ProgressBar = require(`progress`)
 const sqip = require(`sqip`)
 
-module.exports = async (args) => {
+const SUPPORTED_NODES = [`ImageSharp`, `ContentfulAsset`]
+const queue = new PQueue({ concurrency: 1 })
+let bar
+
+module.exports = async args => {
   const { type: { name } } = args
+
+  if (!SUPPORTED_NODES.includes(name)) {
+    return {}
+  }
+
+  // @todo progress bar does not show up some times
+  bar = new ProgressBar(
+    `Generating sqip's [:bar] :current/:total :percent :eta left`,
+    {
+      total: 0,
+      width: process.stdout.columns || 40,
+    }
+  )
 
   if (name === `ImageSharp`) {
     return sqipSharp(args)
@@ -22,27 +38,21 @@ module.exports = async (args) => {
   return {}
 }
 
-async function sqipSharp({ type, cache, getNodeAndSavePathDependency }) {
-  if (type.name !== `ImageSharp`) {
-    return {}
-  }
-
+async function sqipSharp({ type, cache, getNodeAndSavePathDependency, store }) {
   return {
     sqip: {
-      type: GraphQLString,
+      type: new GraphQLObjectType({
+        name: `Sqip`,
+        fields: {
+          svg: { type: GraphQLString },
+          dataURI: { type: GraphQLString },
+          dataURIbase64: { type: GraphQLString },
+        },
+      }),
       args: {
-        blur: {
-          type: GraphQLInt,
-          defaultValue: 1,
-        },
-        numberOfPrimitives: {
-          type: GraphQLInt,
-          defaultValue: 10,
-        },
-        mode: {
-          type: GraphQLInt,
-          defaultValue: 0,
-        },
+        blur: { type: GraphQLInt, defaultValue: 1 },
+        numberOfPrimitives: { type: GraphQLInt, defaultValue: 10 },
+        mode: { type: GraphQLInt, defaultValue: 0 },
       },
       async resolve(image, fieldArgs, context) {
         const { blur, numberOfPrimitives, mode } = fieldArgs
@@ -56,6 +66,7 @@ async function sqipSharp({ type, cache, getNodeAndSavePathDependency }) {
           numberOfPrimitives,
           blur,
           mode,
+          store,
         })
       },
     },
@@ -63,14 +74,12 @@ async function sqipSharp({ type, cache, getNodeAndSavePathDependency }) {
 }
 
 async function sqipContentful({ type, store, cache }) {
-  if (type.name !== `ContentfulAsset`) {
-    return {}
-  }
-
-  const fs = require(`fs-extra`)
+  const { createWriteStream } = require(`fs`)
   const axios = require(`axios`)
 
-  const { schemes: { ImageResizingBehavior, ImageCropFocusType } } = require(`gatsby-source-contentful`)
+  const {
+    schemes: { ImageResizingBehavior, ImageCropFocusType },
+  } = require(`gatsby-source-contentful`)
 
   const cacheDir = join(
     store.getState().program.directory,
@@ -117,11 +126,7 @@ async function sqipContentful({ type, store, cache }) {
         },
       },
       async resolve(asset, fieldArgs, context) {
-        const {
-          id,
-          file: { url, fileName, details, contentType },
-          node_locale: locale,
-        } = asset
+        const { id, file: { url, fileName, details, contentType } } = asset
         const {
           blur,
           numberOfPrimitives,
@@ -137,8 +142,6 @@ async function sqipContentful({ type, store, cache }) {
           return null
         }
 
-        console.log(`Processing: ${id}-${locale}`)
-
         // Downloading small version of the image with same aspect ratio
         const assetWidth = width || details.image.width
         const assetHeight = height || details.image.height
@@ -146,10 +149,7 @@ async function sqipContentful({ type, store, cache }) {
         const previewWidth = 256
         const previewHeight = Math.floor(previewWidth * aspectRatio)
 
-        const params = [
-          `w=${previewWidth}`,
-          `h=${previewHeight}`,
-        ]
+        const params = [`w=${previewWidth}`, `h=${previewHeight}`]
         if (resizingBehavior) {
           params.push(`fit=${resizingBehavior}`)
         }
@@ -175,12 +175,10 @@ async function sqipContentful({ type, store, cache }) {
 
         const alreadyExists = await fs.pathExists(absolutePath)
 
-        console.log(`Calculated path: ${absolutePath}`)
-
         if (!alreadyExists) {
           const previewUrl = `http:${url}?${params.join(`&`)}`
 
-          console.log(`Downloading: ${previewUrl}`)
+          bar.interrupt(`Downloading: ${previewUrl}`)
 
           const response = await axios({
             method: `get`,
@@ -191,9 +189,7 @@ async function sqipContentful({ type, store, cache }) {
           await new Promise((resolve, reject) => {
             const file = createWriteStream(absolutePath)
             response.data.pipe(file)
-            file.on(`finish`, () => {
-              resolve()
-            })
+            file.on(`finish`, resolve)
             file.on(`error`, reject)
           })
         }
@@ -204,6 +200,7 @@ async function sqipContentful({ type, store, cache }) {
           numberOfPrimitives,
           blur,
           mode,
+          store,
         })
       },
     },
@@ -211,7 +208,9 @@ async function sqipContentful({ type, store, cache }) {
 }
 
 async function generateSqip(options) {
-  const { cache, absolutePath, numberOfPrimitives, blur, mode } = options
+  const { cache, absolutePath, numberOfPrimitives, blur, mode, store } = options
+
+  const dataDir = join(store.getState().program.directory, `.cache-sqip`)
 
   // @todo add check if file actually exists
 
@@ -228,22 +227,50 @@ async function generateSqip(options) {
     .digest(`hex`)
 
   const cacheKey = `sqip-${optionsHash}`
+  const cachePath = resolve(dataDir, `sqip-${optionsHash}.json`)
+  let primitiveData = await cache.get(cacheKey)
 
-  let svgThumbnail = await cache.get(cacheKey)
+  await fs.ensureDir(dataDir)
 
-  if (!svgThumbnail) {
-    console.log(`Calculating low quality svg thumbnail: ${absolutePath}`)
-    const result = sqip(sqipOptions)
-    // @todo make blur setting in sqip via PR
-    svgThumbnail = result.final_svg.replace(new RegExp(`<feGaussianBlur stdDeviation="[0-9]+"\\s*/>`), `<feGaussianBlur stdDeviation="${sqipOptions.blur}" />`)
+  bar.total++
 
-    await cache.set(cacheKey, svgThumbnail)
-    console.log(`done calculating primitive ${absolutePath}`)
+  if (!primitiveData) {
+    if (await fs.exists(cachePath)) {
+      const cacheData = await fs.readFile(cachePath)
+      primitiveData = JSON.parse(cacheData)
+    } else {
+      const result = await queue.add(
+        async () =>
+          new Promise((resolve, reject) => {
+            try {
+              resolve(sqip(sqipOptions))
+            } catch (error) {
+              reject(error)
+            }
+          })
+      )
+
+      // @todo make blur setting in sqip via PR
+      result.final_svg = result.final_svg.replace(
+        new RegExp(`<feGaussianBlur stdDeviation="[0-9]+"\\s*/>`),
+        `<feGaussianBlur stdDeviation="${sqipOptions.blur}" />`
+      )
+
+      primitiveData = {
+        svg: result.final_svg,
+        dataURI: encodeOptimizedSVGDataUri(result.final_svg),
+        dataURIbase64: `data:image/svg+xml;base64,${result.svg_base64encoded}`,
+      }
+
+      const json = JSON.stringify(primitiveData, null, 2)
+      await fs.writeFile(cachePath, json)
+    }
+
+    bar.tick()
+    await cache.set(cacheKey, primitiveData)
   }
 
-  const dataURI = encodeOptimizedSVGDataUri(svgThumbnail)
-
-  return dataURI
+  return primitiveData
 }
 
 // https://codepen.io/tigt/post/optimizing-svgs-in-data-uris
