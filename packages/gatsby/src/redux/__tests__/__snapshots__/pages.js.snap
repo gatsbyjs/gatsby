@@ -9,7 +9,8 @@ exports[`Add pages Fails if the component path isn't absolute 1`] = `"The plugin
 exports[`Add pages Fails if use a reserved field in the context object 1`] = `
 "You used reserved field names in the context object when creating a page:
 
-\\"path\\", \\"matchPath\\"
+  * \\"path\\"
+  * \\"matchPath\\"
 
 {
     \\"component\\": \\"/path/to/file1.js\\",
@@ -20,9 +21,25 @@ exports[`Add pages Fails if use a reserved field in the context object 1`] = `
     }
 }
 
-Replace your invalid field names with ones not on the list of reserved field names:
+Data in \\"context\\" is passed to GraphQL as potential arguments when running the
+page query.
 
-\\"path\\", \\"matchPath\\", \\"component\\", \\"componentChunkName\\", \\"pluginCreator___NODE\\", \\"pluginCreatorName\\"
+When arguments for GraphQL are constructed, the context object is combined with
+the page object so both page object and context data are available as
+arguments. If a context field duplicates a field already used by the page
+object, this can break functionality within Gatsby so must be avoided.
+
+Please choose another name for the conflicting fields.
+
+The following fields are used by the page object and must be avoided.
+
+  * \\"path\\"
+  * \\"matchPath\\"
+  * \\"component\\"
+  * \\"componentChunkName\\"
+  * \\"pluginCreator___NODE\\"
+  * \\"pluginCreatorName\\"
+
             "
 `;
 
