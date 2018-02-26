@@ -176,7 +176,12 @@ module.exports = async (args: BootstrapArgs) => {
   // Find plugins which implement gatsby-browser and gatsby-ssr and write
   // out api-runners for them.
   const hasAPIFile = (env, plugin) => {
-    if (plugin[`${env}APIs`].length > 0 ) {
+    // The plugin loader has disabled SSR APIs for this plugin. Usually due to
+    // multiple implementations of an API that can only be implemented once
+    if (env === `ssr` && plugin.skipSSR === true) return undefined
+
+    const envAPIs = plugin[`${env}APIs`]
+    if (envAPIs && Array.isArray(envAPIs) && envAPIs.length > 0 ) {
       return path.join(plugin.resolve, `gatsby-${env}.js`)
     }
     return undefined

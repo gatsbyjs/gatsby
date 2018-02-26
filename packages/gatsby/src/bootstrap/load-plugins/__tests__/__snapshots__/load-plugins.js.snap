@@ -1,5 +1,108 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Load plugins Load plugins for a site 1`] = `
+Array [
+  Object {
+    "browserAPIs": Array [],
+    "id": "Plugin dev-404-page",
+    "name": "dev-404-page",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [],
+    "version": "1.0.0",
+  },
+  Object {
+    "browserAPIs": Array [],
+    "id": "Plugin component-page-creator",
+    "name": "component-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [],
+    "version": "1.0.0",
+  },
+  Object {
+    "browserAPIs": Array [],
+    "id": "Plugin component-layout-creator",
+    "name": "component-layout-creator",
+    "nodeAPIs": Array [
+      "createLayouts",
+    ],
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [],
+    "version": "1.0.0",
+  },
+  Object {
+    "browserAPIs": Array [],
+    "id": "Plugin internal-data-bridge",
+    "name": "internal-data-bridge",
+    "nodeAPIs": Array [
+      "sourceNodes",
+      "onCreatePage",
+    ],
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [],
+    "version": "1.0.0",
+  },
+  Object {
+    "browserAPIs": Array [],
+    "id": "Plugin prod-404",
+    "name": "prod-404",
+    "nodeAPIs": Array [
+      "onCreatePage",
+    ],
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [],
+    "version": "1.0.0",
+  },
+  Object {
+    "browserAPIs": Array [],
+    "id": "Plugin query-runner",
+    "name": "query-runner",
+    "nodeAPIs": Array [
+      "onCreatePage",
+      "onCreateLayout",
+    ],
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [],
+    "version": "1.0.0",
+  },
+  Object {
+    "browserAPIs": Array [],
+    "id": "Plugin default-site-plugin",
+    "name": "default-site-plugin",
+    "nodeAPIs": Array [],
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [],
+    "version": "d41d8cd98f00b204e9800998ecf8427e",
+  },
+]
+`;
+
 exports[`Load plugins Loads plugins defined with an object but without an option key 1`] = `
 Array [
   Object {
@@ -97,109 +200,6 @@ Array [
     },
     "resolve": "",
     "ssrAPIs": Array [],
-  },
-  Object {
-    "browserAPIs": Array [],
-    "id": "Plugin default-site-plugin",
-    "name": "default-site-plugin",
-    "nodeAPIs": Array [],
-    "pluginOptions": Object {
-      "plugins": Array [],
-    },
-    "resolve": "",
-    "ssrAPIs": Array [],
-    "version": "d41d8cd98f00b204e9800998ecf8427e",
-  },
-]
-`;
-
-exports[`Load plugins load plugins for a site 1`] = `
-Array [
-  Object {
-    "browserAPIs": Array [],
-    "id": "Plugin dev-404-page",
-    "name": "dev-404-page",
-    "nodeAPIs": Array [
-      "createPagesStatefully",
-    ],
-    "pluginOptions": Object {
-      "plugins": Array [],
-    },
-    "resolve": "",
-    "ssrAPIs": Array [],
-    "version": "1.0.0",
-  },
-  Object {
-    "browserAPIs": Array [],
-    "id": "Plugin component-page-creator",
-    "name": "component-page-creator",
-    "nodeAPIs": Array [
-      "createPagesStatefully",
-    ],
-    "pluginOptions": Object {
-      "plugins": Array [],
-    },
-    "resolve": "",
-    "ssrAPIs": Array [],
-    "version": "1.0.0",
-  },
-  Object {
-    "browserAPIs": Array [],
-    "id": "Plugin component-layout-creator",
-    "name": "component-layout-creator",
-    "nodeAPIs": Array [
-      "createLayouts",
-    ],
-    "pluginOptions": Object {
-      "plugins": Array [],
-    },
-    "resolve": "",
-    "ssrAPIs": Array [],
-    "version": "1.0.0",
-  },
-  Object {
-    "browserAPIs": Array [],
-    "id": "Plugin internal-data-bridge",
-    "name": "internal-data-bridge",
-    "nodeAPIs": Array [
-      "sourceNodes",
-      "onCreatePage",
-    ],
-    "pluginOptions": Object {
-      "plugins": Array [],
-    },
-    "resolve": "",
-    "ssrAPIs": Array [],
-    "version": "1.0.0",
-  },
-  Object {
-    "browserAPIs": Array [],
-    "id": "Plugin prod-404",
-    "name": "prod-404",
-    "nodeAPIs": Array [
-      "onCreatePage",
-    ],
-    "pluginOptions": Object {
-      "plugins": Array [],
-    },
-    "resolve": "",
-    "ssrAPIs": Array [],
-    "version": "1.0.0",
-  },
-  Object {
-    "browserAPIs": Array [],
-    "id": "Plugin query-runner",
-    "name": "query-runner",
-    "nodeAPIs": Array [
-      "onCreatePage",
-      "onCreateLayout",
-    ],
-    "pluginOptions": Object {
-      "plugins": Array [],
-    },
-    "resolve": "",
-    "ssrAPIs": Array [],
-    "version": "1.0.0",
   },
   Object {
     "browserAPIs": Array [],
