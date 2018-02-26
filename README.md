@@ -164,6 +164,7 @@ Websites built with Gatsby:
 * [枫上雾棋的日志](https://fengshangwuqi.github.io/fswq-blog/)
 * [Juliette Pretot's Portfolio](https://juliette.sh)
 * [Théâtres Parisiens](http://theatres-parisiens.fr/) ([source](https://github.com/phacks/theatres-parisiens))
+* [Jia Hao's Website / Blog](https://jiahao.codes/) ([source](https://github.com/jiahaog/jiahao.codes))
 
 ## Docs
 
