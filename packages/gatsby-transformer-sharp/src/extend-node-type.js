@@ -17,8 +17,9 @@ const {
 } = require(`gatsby-plugin-sharp`)
 
 const sharp = require(`sharp`)
+const fs = require(`fs`)
 const fsExtra = require(`fs-extra`)
-const sizeOf = require(`image-size`)
+const imageSize = require(`probe-image-size`)
 const path = require(`path`)
 const Potrace = require(`potrace`).Potrace
 
@@ -89,7 +90,22 @@ const PotraceType = new GraphQLInputObjectType({
   },
 })
 
-module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
+function toArray(buf) {
+  var arr = new Array(buf.length)
+
+  for (var i = 0; i < buf.length; i++) {
+    arr[i] = buf[i]
+  }
+
+  return arr
+}
+
+module.exports = ({
+  type,
+  pathPrefix,
+  getNodeAndSavePathDependency,
+  reporter,
+}) => {
   if (type.name !== `ImageSharp`) {
     return {}
   }
@@ -114,7 +130,9 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
       args: {},
       async resolve(image, fieldArgs, context) {
         const details = getNodeAndSavePathDependency(image.parent, context.path)
-        const dimensions = sizeOf(details.absolutePath)
+        const dimensions = imageSize.sync(
+          toArray(fs.readFileSync(details.absolutePath))
+        )
         const imageName = `${details.name}-${image.internal.contentDigest}${
           details.ext
         }`
@@ -172,6 +190,7 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
                 resolutions({
                   file,
                   args,
+                  reporter,
                 })
               ).then(({ src }) => src)
             },
@@ -187,6 +206,7 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
                 resolutions({
                   file,
                   args,
+                  reporter,
                 })
               ).then(({ srcSet }) => srcSet)
             },
@@ -242,6 +262,7 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
           resolutions({
             file,
             args,
+            reporter,
           })
         ).then(o =>
           Object.assign({}, o, {
@@ -275,6 +296,7 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
                 sizes({
                   file,
                   args,
+                  reporter,
                 })
               ).then(({ src }) => src)
             },
@@ -290,6 +312,7 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
                 sizes({
                   file,
                   args,
+                  reporter,
                 })
               ).then(({ srcSet }) => srcSet)
             },
@@ -347,6 +370,7 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
           sizes({
             file,
             args,
+            reporter,
           })
         ).then(o =>
           Object.assign({}, o, {
@@ -415,6 +439,7 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
           resolutions({
             file,
             args,
+            reporter,
           })
         ).then(o =>
           Object.assign({}, o, {
@@ -483,6 +508,7 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
           sizes({
             file,
             args,
+            reporter,
           })
         ).then(o =>
           Object.assign({}, o, {

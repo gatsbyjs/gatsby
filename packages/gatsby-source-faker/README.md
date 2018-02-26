@@ -13,7 +13,7 @@ Install `gatsby-source-faker`
 or
 
 ```
-    npm install --save-dev gatsby-source-faker
+    npm install gatsby-source-faker
 ```
 
 Add `gatsby-source-faker` to the `gatsby-config.js` as follows
@@ -26,10 +26,10 @@ plugins: [
     options: {
       schema: {
         name: ["firstName", "lastName"],
-        count: 3 // how many fake objects you need
-        type: 'NameData' // Name of the graphql query node
-      }
-    }
-  }
+        count: 3, // how many fake objects you need
+        type: "NameData", // Name of the graphql query node
+      },
+    },
+  },
 ];
 ```

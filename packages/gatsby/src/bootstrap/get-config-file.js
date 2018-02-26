@@ -31,7 +31,10 @@ module.exports = async function getConfigFile(
       })
     )
     if (!testRequireError(configPath, err)) {
-      report.error(`Could not load ${configName}`, err)
+      report.error(
+        `We encountered an error while trying to load your site's ${configName}. Please fix the error and try again.`,
+        err
+      )
       process.exit(1)
     } else if (nearMatch) {
       console.log(``)
@@ -45,7 +48,7 @@ module.exports = async function getConfigFile(
     } else if (fs.existsSync(path.join(rootDir, `src`, configName))) {
       console.log(``)
       report.error(
-        `Your gatsby-config.js file is in the wrong place. You've placed in the src/ directory. It must instead be at the root of your site next to your package.json file.`
+        `Your ${configName} file is in the wrong place. You've placed it in the src/ directory. It must instead be at the root of your site next to your package.json file.`
       )
       console.log(``)
       process.exit(1)

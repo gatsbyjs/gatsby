@@ -95,7 +95,7 @@ title: A blog post
 author: Kyle Mathews
 ---
 
-A treatsie on the efficacy of bezoar for treating agricultural pesticide poisoning.
+A treatise on the efficacy of bezoar for treating agricultural pesticide poisoning.
 ```
 
 author.yaml
