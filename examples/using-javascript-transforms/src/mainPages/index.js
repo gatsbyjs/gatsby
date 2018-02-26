@@ -5,6 +5,11 @@ import sortBy from "lodash/sortBy"
 import moment from "moment"
 import InsetPageLayout from "../components/Layouts/insetPage"
 
+exports.frontmatter = {
+  layoutType: `page`,
+  path: `/`,
+}
+
 class SiteIndex extends React.Component {
   render() {
     const pageLinks = []

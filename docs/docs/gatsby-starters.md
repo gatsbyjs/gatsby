@@ -175,6 +175,14 @@ Community:
 
   * localization (Multilanguage)
 
+* [gatsby-starter-contentful-i18n](https://github.com/mccrodp/gatsby-starter-contentful-i18n) [(demo)](https://gatsby-starter-contentful-i18n.netlify.com/)
+
+  Features:
+
+  * Localization (Multilanguage)
+  * Dynamic content from Contentful CMS
+  * Integrates [i18n plugin starter](https://github.com/angeloocana/gatsby-starter-default-i18n) and [using-contentful](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-contentful) repos
+
 * [gatsby-starter-gatsbythemes](https://github.com/saschajullmann/gatsby-starter-gatsbythemes)
   [(demo)](https://themes.gatsbythemes.com/gatsby-starter/)
 
@@ -451,7 +459,7 @@ Community:
   Features:
 
   * Parses [org-mode](http://orgmode.org) files with [Orga](https://github.com/xiaoxinghu/orgajs).
-  
+
 * [gatsby-starter-minimal-blog](https://github.com/LeKoArts/gatsby-starter-minimal-blog)
   [(demo)](https://minimal-blog.netlify.com/)
 
@@ -462,7 +470,7 @@ Community:
   * Automatic Favicons
   * Typography.js
   * Part of a german tutorial series on Gatsby. The starter will change over time to use more advanced stuff (feel free to express your ideas)
-  
+
 * [gatsby-starter-redux](https://github.com/caki0915/gatsby-starter-redux)
   [(demo)](https://caki0915.github.io/gatsby-starter-redux/)
 
@@ -472,3 +480,22 @@ Community:
   * [Emotion](https://github.com/emotion-js/emotion) with a basic theme and SSR
   * [Typography.js](https://kyleamathews.github.io/typography.js/)
   * Eslint rules based on [Prettier](https://prettier.io/) and [Airbnb](https://www.npmjs.com/package/eslint-config-airbnb)
+
+* [gatsby-contentful-starter](https://github.com/contentful-userland/gatsby-contentful-starter) [(demo)](https://contentful-userland.github.io/gatsby-contentful-starter/)
+
+  Features:
+
+  * Based on the [Gatsby Starter Blog](https://github.com/gatsbyjs/gatsby-starter-blog)
+  * [Includes Contentful Delivery API for production build](https://www.contentful.com/developers/docs/references/content-delivery-api/)
+  * [Includes Contentful Preview API for development](https://www.contentful.com/developers/docs/references/content-preview-api/)
+
+* [gatsby-starter-gcn](https://github.com/ryanwiemer/gatsby-starter-gcn) [(demo)](https://gcn.netlify.com/)
+
+  Features:
+
+  * Inspired by [gatsby-contentful-starter](https://github.com/contentful-userland/gatsby-contentful-starter)
+  * Contentful integration with ready to go placeholder content
+  * Netlify integration including a pre-built contact form
+  * Minimal responsive design - made to customize or tear apart
+  * Styled components
+  * SEO friendly

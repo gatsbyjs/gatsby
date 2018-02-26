@@ -3,6 +3,7 @@ const crypto = require(`crypto`)
 const _ = require(`lodash`)
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 const { URL } = require(`url`)
+const { nodeFromData } = require(`./normalize`)
 
 // Get content digest of node.
 const createContentDigest = obj =>
@@ -102,15 +103,7 @@ exports.sourceNodes = async (
     if (!contentType) return
 
     _.each(contentType.data, datum => {
-      const node = {
-        id: datum.id,
-        parent: null,
-        children: [],
-        ...datum.attributes,
-        internal: {
-          type: datum.type.replace(/-|__|:|\.|\s/g, `_`),
-        },
-      }
+      const node = nodeFromData(datum)
 
       // Add relationships
       if (datum.relationships) {

@@ -73,16 +73,18 @@ If you followed the tutorial for [Adding Markdown Pages](/docs/adding-tags-and-c
 First, we'll add a tags template at `src/templates/tags.js`:
 
 ```jsx
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
 // Components
-import Link from 'gatsby-link';
+import Link from "gatsby-link";
 
 const Tags = ({ pathContext, data }) => {
   const { tag } = pathContext;
   const { edges, totalCount } = data.allMarkdownRemark;
-  const tagHeader = `${totalCount} post${totalCount === 1 ? '' : 's'} tagged with "${tag}"`;
+  const tagHeader = `${totalCount} post${
+    totalCount === 1 ? "" : "s"
+  } tagged with "${tag}"`;
 
   return (
     <div>
@@ -98,9 +100,9 @@ const Tags = ({ pathContext, data }) => {
         })}
       </ul>
       {/*
-        This links to a page that does not yet exist.
-        We'll come back to it!
-      */}
+              This links to a page that does not yet exist.
+              We'll come back to it!
+            */}
       <Link to="/tags">All tags</Link>
     </div>
   );
@@ -121,7 +123,7 @@ Tags.propTypes = {
               title: PropTypes.string.isRequired,
             }),
           }),
-        }).isRequired,
+        }).isRequired
       ),
     }),
   }),
@@ -130,23 +132,23 @@ Tags.propTypes = {
 export default Tags;
 
 export const pageQuery = graphql`
-    query TagPage($tag: String) {
-      allMarkdownRemark(
-        limit: 2000
-        sort: { fields: [frontmatter___date], order: DESC }
-        filter: { frontmatter: { tags: { in: [$tag] } } }
-      ) {
-        totalCount
-        edges {
-          node {
-            frontmatter {
-              title
-              path
-            }
+  query TagPage($tag: String) {
+    allMarkdownRemark(
+      limit: 2000
+      sort: { fields: [frontmatter___date], order: DESC }
+      filter: { frontmatter: { tags: { in: [$tag] } } }
+    ) {
+      totalCount
+      edges {
+        node {
+          frontmatter {
+            title
+            path
           }
         }
       }
     }
+  }
 `;
 ```
 
@@ -162,8 +164,8 @@ const path = require("path");
 exports.createPages = ({ boundActionCreators, graphql }) => {
   const { createPage } = boundActionCreators;
 
-  const blogPostTemplate = path.resolve('src/templates/blog.js');
-  const tagTemplate = path.resolve('src/templates/tags.js');
+  const blogPostTemplate = path.resolve("src/templates/blog.js");
+  const tagTemplate = path.resolve("src/templates/tags.js");
 
   return graphql(`
     {
@@ -200,7 +202,7 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
     let tags = [];
     // Iterate through each post, putting all found tags into `tags`
     _.each(posts, edge => {
-      if (_.get(edge, 'node.frontmatter.tags')) {
+      if (_.get(edge, "node.frontmatter.tags")) {
         tags = tags.concat(edge.node.frontmatter.tags);
       }
     });
@@ -220,6 +222,7 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
   });
 };
 ```
+
 Some notes:
 
 * Our graphql query only looks for data we need to generate these pages. Anything else can be queried again later (and, if you notice, we do this above in the tags template for the post title).
@@ -230,17 +233,19 @@ Some notes:
 Our `/tags` page will simply list out all tags, followed by the number of posts with that tag:
 
 ```jsx
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
 // Utilities
-import kebabCase from 'lodash/kebabcase';
+import kebabCase from "lodash/kebabcase";
 
 // Components
-import Helmet from 'react-helmet';
-import Link from 'gatsby-link';
+import Helmet from "react-helmet";
+import Link from "gatsby-link";
 
-const TagsPage = ({ data: { allMarkdownRemark: { group }, site: { siteMetadata: { title }} } }) =>
+const TagsPage = ({
+  data: { allMarkdownRemark: { group }, site: { siteMetadata: { title } } },
+}) => (
   <div>
     <Helmet title={title} />
     <div>
@@ -256,7 +261,7 @@ const TagsPage = ({ data: { allMarkdownRemark: { group }, site: { siteMetadata: 
       </ul>
     </div>
   </div>
-;
+);
 
 TagsPage.propTypes = {
   data: PropTypes.shape({
@@ -265,7 +270,7 @@ TagsPage.propTypes = {
         PropTypes.shape({
           fieldValue: PropTypes.string.isRequired,
           totalCount: PropTypes.number.isRequired,
-        }).isRequired,
+        }).isRequired
       ),
     }),
     site: PropTypes.shape({

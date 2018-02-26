@@ -54,7 +54,7 @@ The usual contributing steps are:
 * Add tests and code for your changes.
 * Once you're done, make sure all tests still pass: `yarn test`
 * Commit and push to your fork.
-* Create an pull request from your branch.
+* Create a pull request from your branch.
 
 ### Contributing to the documentation.
 
