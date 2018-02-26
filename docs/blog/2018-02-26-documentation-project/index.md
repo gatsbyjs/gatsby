@@ -48,14 +48,14 @@ Almost everyone is new to GraphQL and gets overwhelmed by Part 4.
 
 ## Documentation project beginnings
 
-After outlining the issues above and attempting to solve them myself, I realized the pooled efforts of the community would be so helpful and valuable in creating solutions to these issues. So, I created the Documentation Project in Github to plan and track documentation issues.
+After outlining the issues above and attempting to solve them myself, I realized the pooled efforts of the community would be incredibly valuable in creating solutions to these issues. So, I created the Documentation Project in Github to plan and track documentation issues.
 
-The [Documentation Project’s](https://github.com/gatsbyjs/gatsby/projects/3) goal is to make Gatsby documentation clear, organized, and useful. Issues in the project come from the community and/or interviews with community members. This project also provides a centralized way to plan, manage, and track our progress so that we maintain and enhance our track record of awesome docs and tutorials.
+The [Documentation Project’s](https://github.com/gatsbyjs/gatsby/projects/3) goal is to make Gatsby documentation clear, organized, and useful. Issues in the project come from the community and/or interviews with community members. This project also provides a centralized way to plan, manage, and track our progress so that we maintain and enhance the docs and tutorials.
 
 We know how easy the Gatsby development experience is for the majority of programmers, and some of that ease stems from clear docs and tutorials. Let’s keep up the good work.
 
 ## What you can do to help
 If you'd like to contribute, look through this list of options and pick one that you'd like to help with! 
-Go to Issue #4175 to help enhance the tutorials. 
-If you’d like to contribute to and/or follow other documentation projects, go here to find the [Documentation Project](https://github.com/gatsbyjs/gatsby/projects/3). 
-And, as always, if you have time to give us feedback on what you like about Gatsby and what can be improved in the docs/tutorials, schedule a time to chat with me here! [https://calendly.com/shannon-soper](https://calendly.com/shannon-soper)
+* Go to Issue #4175 to help enhance the tutorials. 
+* If you’d like to contribute to and/or follow other documentation projects, go here to find the [Documentation Project](https://github.com/gatsbyjs/gatsby/projects/3). 
+* And, as always, if you have time to give us feedback on what you like about Gatsby and what can be improved in the docs/tutorials, schedule a time to chat with me here! [https://calendly.com/shannon-soper](https://calendly.com/shannon-soper)
