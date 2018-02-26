@@ -163,6 +163,7 @@ Websites built with Gatsby:
 * [In Sowerby Bridge](https://www.insowerbybridge.co.uk/)
 * [枫上雾棋的日志](https://fengshangwuqi.github.io/fswq-blog/)
 * [Juliette Pretot's Portfolio](https://juliette.sh)
+* [Théâtres Parisiens](http://theatres-parisiens.fr/) ([source](https://github.com/phacks/theatres-parisiens))
 
 ## Docs
 
