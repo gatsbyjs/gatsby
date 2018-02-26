@@ -162,6 +162,7 @@ Websites built with Gatsby:
 * [Beach Hut Poole](https://www.beachhutpoole.co.uk/)
 * [In Sowerby Bridge](https://www.insowerbybridge.co.uk/)
 * [枫上雾棋的日志](https://fengshangwuqi.github.io/fswq-blog/)
+* [Juliette Pretot's Portfolio](https://juliette.sh)
 
 ## Docs
 
