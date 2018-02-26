@@ -9,6 +9,24 @@ import MarkdownPageFooter from "../components/markdown-page-footer"
 
 class PackageReadMe extends React.Component {
   render() {
+    const {
+      lastPublisher,
+      page,
+      packageName,
+      excerpt,
+      modified,
+      html,
+      githubUrl,
+      keywords,
+      timeToRead,
+    } = this.props
+
+    const lastUpdated = `${distanceInWords(new Date(modified), new Date())} ago`
+    const gatsbyKeywords = [`gatsby`, `gatsby-plugin`, `gatsby-component`]
+    const tags = keywords
+      .filter(keyword => !gatsbyKeywords.includes(keyword))
+      .join(`, `)
+
     return (
       <Container>
         <Helmet>
@@ -19,21 +37,14 @@ class PackageReadMe extends React.Component {
           <meta name="og:title" content={packageName} />
           <meta name="og:type" content="article" />
           <meta name="twitter.label1" content="Reading time" />
-          <meta
-            name="twitter:data1"
-            content={`${
-              page
-                ? page.timeToRead
-                : metaData.readme.childMarkdownRemark.timeToRead
-            } min read`}
-          />
+          <meta name="twitter:data1" content={`${timeToRead} min read`} />
         </Helmet>
         <strong>
           <a
             css={{
-              display: github ? `inline-block` : `none`,
+              display: githubUrl ? `inline-block` : `none`,
             }}
-            href={github}
+            href={githubUrl}
           >
             Browse source code for this package on GitHub
           </a>
@@ -55,7 +66,7 @@ class PackageReadMe extends React.Component {
               paddingTop: rhythm(0.25),
             }}
           >
-            <img width="20" height="20" src={metaData.lastPublisher.avatar} />
+            <img width="20" height="20" src={lastPublisher.avatar} />
             <span
               css={{
                 paddingLeft: rhythm(0.25),
@@ -63,7 +74,7 @@ class PackageReadMe extends React.Component {
                 textTransform: `uppercase`,
               }}
             >
-              {metaData.lastPublisher.name}
+              {lastPublisher.name}
             </span>
             <span css={{ paddingLeft: rhythm(0.25), fontSize: rhythm(0.5) }}>
               {lastUpdated}

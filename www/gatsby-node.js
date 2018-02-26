@@ -171,7 +171,6 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
             },
           })
         })
-        console.log("running and running and running...")
 
         // Create remote package readme
         // this just needs to filter the localPackagesArr out to make sure those aren't used
