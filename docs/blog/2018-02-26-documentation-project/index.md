@@ -4,25 +4,25 @@ author: Shannon Soper
 date: 2018-02-22
 ---
 
-Generally, people really like Gatsby docs and Gatsby in general. In fact, we’ve talked about tracking the number of curse words and endearingly pejorative terms that people use when tweeting about Gatsby. Here’s a sampling:
+Generally, people really like Gatsby docs and Gatsby. In fact, we’ve talked about tracking the number of curse words and endearingly pejorative terms that people use when tweeting about Gatsby. Here’s a sampling:
 
->”HOLY SHIT @gatsbyjs && @NetflifyCMS where have you been all my life”
+![Holy shit tweet](holy-shit-tweet.png)
 
->”The sites it produces are *disgustingly fast*.”
+![Disgustingly fast tweet](disgustingly-fast-tweet.png)
 
->”I mean @gatsbyjs has been on my list to learn for many months, and everyone praises it, but OMFG what a straightforward platform!!! Very impressed”
+![OMFG tweet](omfg-tweet.png)
 
-> “We just released our marketing site built with @gatsbyjs. It’s stupid fast, and best of all our marketing folks don’t have to bother us developers about changes anymore :D simplyagree.com.”
+![Stupid fast tweet](stupid-fast-tweet.png)
 
-And that’s just how much people like Gatsby in general. Now let’s look at how much people like the _docs_:
+And that’s just how much people like Gatsby. Now let’s look at how much people like the _docs_:
 
 ## How much people like the docs :D
 
-In over 60 interviews with Gatsby users, I asked “What do you like about Gatsby?” Documentation comes out as one of the clear winners, as you can see in this list of the top ten things interviewees like about Gatsby, courtesy of Unbird.com analytics:
+In my interviews with over 60 Gatsby users, I asked “What do you like about Gatsby?”. Documentation comes out as one of the clear winners, as you can see in this list of the top ten things interviewees like, courtesy of [Unbird.com](https://unbird.com/#/) analytics:
 
 ![Unbird.com analytics screenshot](unbird-gatsby-likes.png)
 
-To dive a little deeper, here are some quotes about how much people like the docs and tutorials:
+To dive a little deeper, here are some interview quotes about how much people like the docs and tutorials:
 
 > “Very advanced docs & tutorials for this stage in a project.”
 > “Documentation is wonderful.”
@@ -41,7 +41,9 @@ Just because the tutorials and docs are awesome and quite advanced doesn’t mea
 Many of you have given me valuable feedback during UX research interviews on ways to enhance the tutorials. Here is a brief overview of the issues (see Issue #4175 on Github to follow this and contribute):
 
 Gatsby is beginner-friendly; however, _true_ beginners to programming need an intro to basic tools like the command line, code editors, and browser consoles.
+
 Upon first visit to Gatsbyjs.org, most visitors click “Get Started.” This is the perfect solution for them if they prefer to jump into coding without reading much. If they prefer step-by-step instructions, it takes some looking around before they see the tutorial tab across the top.
+
 Installing new starters for every part of tutorial feels like a distraction to some beginners.
 "Part 1" is not a descriptive title for a tutorial if someone wants to preview or remember what was covered.
 Almost everyone is new to GraphQL and gets overwhelmed by Part 4.
@@ -55,6 +57,7 @@ The [Documentation Project’s](https://github.com/gatsbyjs/gatsby/projects/3) g
 We know how easy the Gatsby development experience is for the majority of programmers, and some of that ease stems from clear docs and tutorials. Let’s keep up the good work.
 
 ## What you can do to help
+
 If you'd like to contribute, look through this list of options and pick one that you'd like to help with! 
 * Go to Issue #4175 to help enhance the tutorials. 
 * If you’d like to contribute to and/or follow other documentation projects, go here to find the [Documentation Project](https://github.com/gatsbyjs/gatsby/projects/3). 
