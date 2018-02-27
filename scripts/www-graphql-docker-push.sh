@@ -3,8 +3,10 @@
 # Path to here
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
+docker version
+
 # Prepare
-docker login -u "$DOCKER_USER" -p "$DOCKER_PASS"
+echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
 export REPO=mikeallanson/gatsby-graphql
 export TAG=latest
 
