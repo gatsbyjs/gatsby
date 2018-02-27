@@ -1,5 +1,5 @@
 ---
-title: Why I Upgraded My Website to GatsbyJS
+title: Why I Upgraded My Website to GatsbyJS from Jekyll
 date: "2018-02-27"
 author: "Jia Hao Goh"
 excerpt: My thought process during the long overdue rewrite of this website
