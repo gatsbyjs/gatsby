@@ -77,6 +77,7 @@ actions.deletePage = (page: PageInput) => {
 }
 
 const pascalCase = _.flow(_.camelCase, _.upperFirst)
+const hasWarnedForPageComponent = new Set()
 /**
  * Create a page. See [the guide on creating and modifying pages](/docs/creating-and-modifying-pages/)
  * for detailed documenation about creating pages.
@@ -101,7 +102,6 @@ const pascalCase = _.flow(_.camelCase, _.upperFirst)
  *   },
  * })
  */
-const hasWarnedForPageComponent = new Set()
 actions.createPage = (page: PageInput, plugin?: Plugin, traceId?: string) => {
   let noPageOrComponent = false
   let name = `The plugin "${plugin.name}"`
