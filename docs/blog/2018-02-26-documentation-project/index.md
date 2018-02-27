@@ -10,11 +10,9 @@ Generally, people really like Gatsby docs and Gatsby. In fact, we’ve talked ab
 
 ![Disgustingly fast tweet](disgustingly-fast-tweet.png)
 
-![OMFG tweet](omfg-tweet.png)
-
 ![Stupid fast tweet](stupid-fast-tweet.png)
 
-And that’s just how much people like Gatsby. Now let’s look at how much people like the _docs_:
+And that’s just how much people like Gatsby. Now, let’s look at how much people like the _docs_:
 
 ## How much people like the docs :D
 
@@ -25,28 +23,32 @@ In my interviews with over 60 Gatsby users, I asked “What do you like about Ga
 To dive a little deeper, here are some interview quotes about how much people like the docs and tutorials:
 
 > “Very advanced docs & tutorials for this stage in a project.”
-> “Documentation is wonderful.”
-> “For me personally, the most important thing to help me reach my goals with Gatsby is good documentation with examples - which is, in my opinion, already the case compared to other projects.”
 > “Tutorials are very beginner friendly and great for someone who wants to become a better developer.”
 > “The tutorials are very easy to understand and go through great lengths to explain every line of code necessary.”
 
-So the bottom line: nearly everyone we’ve interviewed loves the Gatsby development experience and the docs, guides, and tutorial. 
+And some tweets:
+
+![Gatsby 100 docs](gatsby-100-docs.png)
+
+![React docs](react-docs.png)
+
+![Usability docs](usability-docs.png)
+
+So the bottom line: nearly everyone we’ve interviewed loves the Gatsby development experience and what the community has produced with the docs, guides, and tutorial. 
 
 So why fix what isn’t broken?
 
 ## Enhancing the Tutorials
 
-Just because the tutorials and docs are awesome and quite advanced doesn’t mean they can’t still grow! And we want them to be the absolute _best_ they can be.
+Many people have contributed to the docs and tutorials already and have done an excellent job. With that being said, there is still room to grow. 
 
-Many of you have given me valuable feedback during UX research interviews on ways to enhance the tutorials. Here is a brief overview of the issues (see Issue #4175 on Github to follow this and contribute):
+Here is a brief overview of issues that have come up again and again as I've interviewed people and observed them going through the tutorials and docs (see Issue #4175 on Github to follow this and contribute):
 
-Gatsby is beginner-friendly; however, _true_ beginners to programming need an intro to basic tools like the command line, code editors, and browser consoles.
-
-Upon first visit to Gatsbyjs.org, most visitors click “Get Started.” This is the perfect solution for them if they prefer to jump into coding without reading much. If they prefer step-by-step instructions, it takes some looking around before they see the tutorial tab across the top.
-
-Installing new starters for every part of tutorial feels like a distraction to some beginners.
+* Gatsby is beginner-friendly; however, _true_ beginners to programming need an intro to basic tools like the command line, code editors, and browser consoles.
+* Upon first visit to Gatsbyjs.org, most visitors click “Get Started.” This is the perfect solution for them if they prefer to jump into coding without reading much. If they prefer step-by-step instructions, it takes some looking around before they see the tutorial tab across the top.
+* Installing new starters for every part of tutorial feels like a distraction to some beginners.
 "Part 1" is not a descriptive title for a tutorial if someone wants to preview or remember what was covered.
-Almost everyone is new to GraphQL and gets overwhelmed by Part 4.
+* Almost everyone is new to GraphQL and gets overwhelmed by Part 4.
 
 ## Documentation project beginnings
 
