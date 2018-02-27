@@ -1,7 +1,7 @@
-const loadPlugins = require(`../load-plugins`)
+const loadPlugins = require(`../index`)
 
 describe(`Load plugins`, () => {
-  it(`load plugins for a site`, async () => {
+  it(`Load plugins for a site`, async () => {
     let plugins = await loadPlugins({ plugins: [] })
 
     // Delete the resolve path as that varies depending
