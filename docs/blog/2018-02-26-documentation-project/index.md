@@ -4,7 +4,7 @@ author: Shannon Soper
 date: 2018-02-22
 ---
 
-Generally, people really like Gatsby docs and Gatsby. In fact, we’ve talked about tracking the number of curse words and endearingly pejorative terms that people use when tweeting about Gatsby. Here’s a sampling:
+People really like Gatsby docs and Gatsby. In fact, we’ve talked about tracking the number of curse words and endearingly pejorative terms that people use when tweeting about Gatsby. Here’s a sampling:
 
 ![Holy shit tweet](holy-shit-tweet.png)
 
@@ -12,9 +12,8 @@ Generally, people really like Gatsby docs and Gatsby. In fact, we’ve talked ab
 
 ![Stupid fast tweet](stupid-fast-tweet.png)
 
-And that’s just how much people like Gatsby. Now, let’s look at how much people like the _docs_:
 
-## How much people like the docs :D
+## How much do people like the docs? :D
 
 In my interviews with over 60 Gatsby users, I asked “What do you like about Gatsby?”. Documentation comes out as one of the clear winners, as you can see in this list of the top ten things interviewees like, courtesy of [Unbird.com](https://unbird.com/#/) analytics:
 
@@ -30,11 +29,9 @@ And some tweets:
 
 ![Gatsby 100 docs](gatsby-100-docs.png)
 
-![React docs](react-docs.png)
-
 ![Usability docs](usability-docs.png)
 
-So the bottom line: nearly everyone we’ve interviewed loves the Gatsby development experience and what the community has produced with the docs, guides, and tutorial. 
+So here's the bottom line: nearly everyone we’ve interviewed loves the Gatsby development experience and what the community has produced with the docs, guides, and tutorial. 
 
 So why fix what isn’t broken?
 
