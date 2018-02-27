@@ -13,12 +13,14 @@ rendering support.
 Edit `gatsby-config.js`
 
 ```javascript
-plugins: [
-  {
-    resolve: 'gatsby-plugin-styletron',
-    options: {
-      prefix: '_',
+module.exports = {
+  plugins: [ 
+    {
+      resolve: 'gatsby-plugin-styletron',
+      options: {
+        prefix: '_',
+      },
     },
-  },
-];
+  ],
+};
 ```
