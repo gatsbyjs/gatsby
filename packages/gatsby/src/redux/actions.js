@@ -743,9 +743,10 @@ actions.replaceComponentQuery = ({
  *
  * @param {Object} config partial webpack config, to be merged into the current one
  */
-actions.setWebpackConfig = (config: Object) => {
+actions.setWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
   return {
     type: `SET_WEBPACK_CONFIG`,
+    plugin,
     payload: config,
   }
 }
@@ -759,9 +760,76 @@ actions.setWebpackConfig = (config: Object) => {
  *
  * @param {Object} config complete webpack config
  */
-actions.replaceWebpackConfig = (config: Object) => {
+actions.replaceWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
   return {
     type: `REPLACE_WEBPACK_CONFIG`,
+    plugin,
+    payload: config,
+  }
+}
+
+/**
+ * Add new plugins or merge options into existing Babel plugins.
+ * @param {Object} config A config object describing the Babel plugin to be added.
+ * @param {string} config.name The name of the Babel plugin
+ * @param {Object} config.options Options to pass to the Babel plugin.
+ * @example
+ * setBabelPlugin({
+ *   name:  `babel-plugin-emotion`,
+ *   options: {
+ *     sourceMap: true,
+ *   },
+ * })
+ */
+actions.setBabelPlugin = (config: Object, plugin?: ?Plugin = null) => {
+  // Validate
+  let name = `The plugin "${plugin.name}"`
+  if (plugin.name === `default-site-plugin`) {
+    name = `Your site's "gatsby-node.js"`
+  }
+  if (!config.name) {
+    console.log(`${name} must set the name of the Babel plugin`)
+    console.log(JSON.stringify(config, null, 4))
+    if (process.env.NODE_ENV !== `test`) {
+      process.exit()
+    }
+  }
+  return {
+    type: `SET_BABEL_PLUGIN`,
+    plugin,
+    payload: config,
+  }
+}
+
+/**
+ * Add new presets or merge options into existing Babel presets.
+ * @param {Object} config A config object describing the Babel plugin to be added.
+ * @param {string} config.name The name of the Babel preset.
+ * @param {Object} config.options Options to pass to the Babel preset.
+ * @example
+ * setBabelPreset({
+ *   name: `@babel/preset-react`,
+ *   options: {
+ *     pragma: `Glamor.createElement`,
+ *   },
+ * })
+ */
+actions.setBabelPreset = (config: Object, plugin?: ?Plugin = null) => {
+  // Validate
+  let name = `The plugin "${plugin.name}"`
+  if (plugin.name === `default-site-plugin`) {
+    name = `Your site's "gatsby-node.js"`
+  }
+  if (!config.name) {
+    console.log(`${name} must set the name of the Babel preset`)
+    console.log(JSON.stringify(config, null, 4))
+    if (process.env.NODE_ENV !== `test`) {
+      process.exit()
+    }
+  }
+  return {
+    type: `SET_BABEL_PRESET`,
+    plugin,
     payload: config,
   }
 }

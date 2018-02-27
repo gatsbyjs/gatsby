@@ -152,7 +152,7 @@ module.exports = async function babelConfig(program, stage) {
     require.resolve(`babel-plugin-remove-graphql-queries`)
   )
 
-  let modifiedConfig = await apiRunnerNode(`modifyBabelrc`, { babelrc })
+  let modifiedConfig = await apiRunnerNode(`onCreateBabelConfig`, { babelrc })
 
   if (modifiedConfig.length > 0) {
     modifiedConfig = _.merge({}, ...modifiedConfig)
