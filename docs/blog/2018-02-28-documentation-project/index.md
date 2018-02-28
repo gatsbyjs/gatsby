@@ -1,7 +1,7 @@
 ---
-title: Gatsby’s Documentation Project
+title: Introducing the Gatsby Documentation Project
 author: Shannon Soper
-date: 2018-02-22
+date: 2018-02-28
 ---
 
 People really like Gatsby docs and Gatsby. In fact, we’ve talked about tracking the number of curse words and endearingly pejorative terms that people use when tweeting about Gatsby. Here’s a sampling:
