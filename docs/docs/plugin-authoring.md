@@ -14,22 +14,22 @@ Of the many possibilities, plugins can:
 ## Core Concepts
 
 - Each Gatsby plugin can be installed as an npm package or as a [local plugin](#local-plugins)
-- At minimum, a `package.json` is required
-- A plugin has access to the the Gatsby [Node](/docs/node-apis/), [SSR](/docs/ssr-apis/), and [browser](/docs/browser-apis/) APIs
+- A `package.json` is required
+- Plugin implement the Gatsby APIs for [Node](/docs/node-apis/), [server-side rendering](/docs/ssr-apis/), and the [browser](/docs/browser-apis/)
 
 ## Plugin naming conventions
 
 There are four standard plugin naming conventions for Gatsby:
 
 - **`gatsby-source-*`** — a source plugin loads data from a given source (e.g. WordPress, MongoDB, the file system). Use this plugin type if you are connecting a new source of data to Gatsby.
-  - Example: `gatsby-source-contentful`
+  - Example: [`gatsby-source-contentful`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful)
   - Docs: [create a source plugin](/docs/create-source-plugin/)
-- **`gatsby-transformer-*`** — a transformer plugin converts data from one format to another (e.g. CSV to JSON). Use this naming convention
-  - Example: `gatsby-transformer-yaml`
+- **`gatsby-transformer-*`** — a transformer plugin converts data from one format (e.g. CSV, YAML) to a JavaScript object. Use this naming convention if your plugin will be transforming data from one format to another.
+  - Example: [`gatsby-transformer-yaml`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-yaml)
 - **`gatsby-[plugin-name]-*`** — if a plugin is a plugin for another plugin 😅, it should be prefixed with the name of the plugin it extends (e.g. if it adds emoji to the output of `gatsby-transformer-remark`, call it `gatsby-remark-add-emoji`). Use this naming convention whenever your plugin will be included as a plugin in the `options` object of another plugin.
-  - Example: `gatsby-remark-images`
+  - Example: [`gatsby-remark-images`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images)
 - **`gatsby-plugin-*`** — this is the most general plugin type. Use this naming convention if your plugin doesn’t meet the requirements of any other plugin types.
-  - Example: `gatsby-plugin-sass`
+  - Example: [`gatsby-plugin-sharp`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp)
 
 ## What files does Gatsby look for in a plugin?
 
@@ -47,12 +47,9 @@ All files are optional unless specifically marked as required.
 
 ## Local plugins
 
-When you want to work on a new plugin, or maybe write one that is only relevant
-to your specific use-case, a locally defined plugin is more convenient than
-having to create an NPM package for it.
+If a plugin is only relevant to your specific use-case, or if you’re developing a plugin and want a simpler workflow, a locally defined plugin is a convenient way to create and manage your plugin code.
 
-You can place the code in the `plugins` folder in the root of your project like
-this:
+Place the code in the `plugins` folder in the root of your project like this:
 
 ```
 plugins
