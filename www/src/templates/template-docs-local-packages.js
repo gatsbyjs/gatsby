@@ -5,20 +5,36 @@ import PackageReadme from "../components/package-readme"
 
 class DocsLocalPackagesTemplate extends React.Component {
   render() {
+    const npmPackageNotFound = {
+      keywords: ["gatsby"],
+      lastPublisher: {
+        name: "User Not Found",
+        avatar: "",
+      },
+      modified: new Date(),
+    }
     const { data: { npmPackage, markdownRemark } } = this.props
     return (
       <PackageReadme
-        lastPublisher={npmPackage.lastPublisher}
         page={_.pick(markdownRemark, "parent")}
         packageName={markdownRemark.fields.title}
         excerpt={markdownRemark.excerpt}
-        modified={npmPackage.modified}
         html={markdownRemark.html}
         githubUrl={`https://github.com/gatsbyjs/gatsby/tree/master/packages/${
           markdownRemark.fields.title
         }`}
-        keywords={npmPackage.keywords}
         timeToRead={markdownRemark.timeToRead}
+        modified={
+          npmPackage ? npmPackage.modified : npmPackageNotFound.modified
+        }
+        keywords={
+          npmPackage ? npmPackage.keywords : npmPackageNotFound.keywords
+        }
+        lastPublisher={
+          npmPackage
+            ? npmPackage.lastPublisher
+            : npmPackageNotFound.lastPublisher
+        }
       />
     )
   }

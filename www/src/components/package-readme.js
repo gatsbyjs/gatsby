@@ -1,4 +1,5 @@
 import React from "react"
+import PropTypes from "prop-types"
 import Helmet from "react-helmet"
 import distanceInWords from "date-fns/distance_in_words"
 
@@ -60,26 +61,28 @@ class PackageReadMe extends React.Component {
             {tags}
           </div>
 
-          <div
-            css={{
-              display: `flex`,
-              paddingTop: rhythm(0.25),
-            }}
-          >
-            <img width="20" height="20" src={lastPublisher.avatar} />
-            <span
+          {lastPublisher.name != "User Not Found" ? (
+            <div
               css={{
-                paddingLeft: rhythm(0.25),
-                fontSize: rhythm(0.5),
-                textTransform: `uppercase`,
+                display: `flex`,
+                paddingTop: rhythm(0.25),
               }}
             >
-              {lastPublisher.name}
-            </span>
-            <span css={{ paddingLeft: rhythm(0.25), fontSize: rhythm(0.5) }}>
-              {lastUpdated}
-            </span>
-          </div>
+              <img width="20" height="20" src={lastPublisher.avatar} />
+              <span
+                css={{
+                  paddingLeft: rhythm(0.25),
+                  fontSize: rhythm(0.5),
+                  textTransform: `uppercase`,
+                }}
+              >
+                {lastPublisher.name}
+              </span>
+              <span css={{ paddingLeft: rhythm(0.25), fontSize: rhythm(0.5) }}>
+                {lastUpdated}
+              </span>
+            </div>
+          ) : null}
         </div>
 
         <div
@@ -94,6 +97,18 @@ class PackageReadMe extends React.Component {
       </Container>
     )
   }
+}
+
+PackageReadMe.propTypes = {
+  page: PropTypes.object.isRequired,
+  packageName: PropTypes.string.isRequired,
+  excerpt: PropTypes.string,
+  html: PropTypes.string.isRequired,
+  githubUrl: PropTypes.string.isRequired,
+  timeToRead: PropTypes.number,
+  modified: PropTypes.string,
+  keywords: PropTypes.array,
+  lastPublisher: PropTypes.object,
 }
 
 export default PackageReadMe

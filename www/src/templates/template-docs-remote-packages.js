@@ -7,15 +7,15 @@ class DocsRemotePackagesTemplate extends React.Component {
     const { data: { npmPackage, markdownRemark } } = this.props
     return (
       <PackageReadme
-        lastPublisher={npmPackage.lastPublisher}
         page={markdownRemark}
         packageName={npmPackage.name}
         excerpt={npmPackage.readme.childMarkdownRemark.excerpt}
-        modified={npmPackage.modified}
         html={npmPackage.readme.childMarkdownRemark.html}
         githubUrl={npmPackage.repository}
-        keywords={npmPackage.keywords}
+        modified={npmPackage.modified}
         timeToRead={npmPackage.readme.childMarkdownRemark.timeToRead}
+        keywords={npmPackage.keywords}
+        lastPublisher={npmPackage.lastPublisher}
       />
     )
   }
