@@ -17,6 +17,7 @@ There are four standard plugin naming conventions for Gatsby:
 
 - **`gatsby-source-*`** — a source plugin loads data from a given source (e.g. WordPress, MongoDB, the file system). Use this plugin type if you are connecting a new source of data to Gatsby.
   - Example: `gatsby-source-contentful`
+  - Docs: [create a source plugin](/docs/create-source-plugin/)
 - **`gatsby-transformer-*`** — a transformer plugin converts data from one format to another (e.g. CSV to JSON). Use this naming convention
   - Example: `gatsby-transformer-yaml`
 - **`gatsby-[plugin-name]-*`** — if a plugin is a plugin for another plugin 😅, it should be prefixed with the name of the plugin it extends (e.g. if it adds emoji to the output of `gatsby-transformer-remark`, call it `gatsby-remark-add-emoji`). Use this naming convention whenever your plugin will be included as a plugin in the `options` object of another plugin.
@@ -26,8 +27,14 @@ There are four standard plugin naming conventions for Gatsby:
 
 ## What files does Gatsby look for in a plugin?
 
-- `package.json` — [required] used to find the `name` and `version` fields (both optional)
-  - this can be an empty object (`{}`) for local plugins
+All files are optional unless specifically marked as required.
+
+- `package.json` — [required] this can be an empty object (`{}`) for local plugins
+    - `name` is used to identify the plugin when it mutates Gatsby’s GraphQL data structure
+        - if `name` isn’t set, the folder name for the plugin is used
+    - `version` is used to manage the cache — if it changes, the cache is cleared
+        - if `version` isn’t set, an MD5 hash of the `gatsby-*` file contents is used to invalidate the cache
+        - omitting the `version` field is recommended for local plugins
 - `gatsby-browser.js` — usage details are in the [browser API reference](/docs/browser-apis/)
 - `gatsby-node.js` — usage details are in the [Node API reference](/docs/node-apis/)
 - `gatsby-ssr.js` — usage details are in the [SSR API reference](/docs/ssr-apis/)
@@ -47,20 +54,7 @@ plugins
     └── package.json
 ```
 
-**NOTE:** You still need to add the plugin to your `gatsby-config.js` like for plugins
-installed from NPM.
-
-At a minimum, each plugin requires a package.json file, but the minimum content is just an
-empty object `{}`. The `name` and `version` fields are read from the package
-file. The name is used to identify the plugin when it mutates the GraphQL data
-structure. The version is used to clear the cache when it changes.
-
-For local plugins it is best to leave the version field empty. Gatsby will
-generate an md5-hash from all `gatsby-*` file contents and use that as the
-version. This way the cache is automatically flushed when you change the code of
-your plugin.
-
-If the name is empty it is inferred from the plugin folder name.
+**NOTE:** You still need to add the plugin to your `gatsby-config.js`. There is no auto-detection of local plugins.
 
 Like all `gatsby-*` files, the code is not being processed by Babel. If you want
 to use JavaScript syntax which isn't supported by your version of Node.js, you
