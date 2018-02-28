@@ -5,6 +5,7 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "bluebird": "^3.5.1",
+    "date-fns": "^1.29.0",
     "email-validator": "^1.1.1",
     "gatsby": "^1.9.210",
     "gatsby-image": "^1.0.39",
@@ -47,6 +48,7 @@
     "parse-filepath": "^1.0.2",
     "react-helmet": "^5.2.0",
     "react-icons": "^2.2.7",
+    "react-instantsearch": "^4.5.1",
     "slash": "^1.0.0",
     "typeface-space-mono": "^0.0.54",
     "typeface-spectral": "^0.0.54",
