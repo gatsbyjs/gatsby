@@ -37,14 +37,13 @@ module.exports = {
 
 Plugins can take options. Note that plugin options will be stringified by Gatsby, so they cannot be functions.
 
-See each plugin page below for more detailed
-documentation on using each plugin.
-
 ## Creating your own plugins
 
 If you’d like to create a custom Gatsby plugin, check out the [plugin authoring guide](/docs/plugin-authoring/).
 
 ## Official plugins
+
+For usage instructions and options, see the plugin repo (linked below).
 
 * [gatsby-plugin-aphrodite](/packages/gatsby-plugin-aphrodite/)
 * [gatsby-plugin-canonical-urls](/packages/gatsby-plugin-canonical-urls/)
