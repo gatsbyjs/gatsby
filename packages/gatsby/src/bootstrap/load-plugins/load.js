@@ -35,7 +35,7 @@ function resolvePlugin(pluginName) {
   // Only find plugins when we're not given an absolute path
   if (!fs.existsSync(pluginName)) {
     // Find the plugin in the local plugins folder
-    const resolvedPath = slash(path.resolve(`../plugins/${pluginName}`))
+    const resolvedPath = slash(path.resolve(`./plugins/${pluginName}`))
 
     if (fs.existsSync(resolvedPath)) {
       if (fs.existsSync(`${resolvedPath}/package.json`)) {
