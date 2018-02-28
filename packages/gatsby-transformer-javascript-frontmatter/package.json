@@ -22,5 +22,6 @@
   },
   "devDependencies": {
     "cross-env": "^5.0.5"
-  }
+  },
+  "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-javascript-frontmatter"
 }

@@ -18,10 +18,7 @@
   ],
   "license": "MIT",
   "main": "index.js",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby.git"
-  },
+  "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-pdfimages",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   }
