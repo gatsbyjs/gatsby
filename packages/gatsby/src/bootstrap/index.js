@@ -181,8 +181,8 @@ module.exports = async (args: BootstrapArgs) => {
     if (env === `ssr` && plugin.skipSSR === true) return undefined
 
     const envAPIs = plugin[`${env}APIs`]
-    if (envAPIs && Array.isArray(envAPIs) && envAPIs.length > 0 ) {
-      return path.join(plugin.resolve, `gatsby-${env}.js`)
+    if (envAPIs && Array.isArray(envAPIs) && envAPIs.length > 0) {
+      return slash(path.join(plugin.resolve, `gatsby-${env}.js`))
     }
     return undefined
   }
