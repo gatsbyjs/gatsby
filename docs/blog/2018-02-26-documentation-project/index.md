@@ -22,7 +22,9 @@ In my interviews with over 60 Gatsby users, I asked “What do you like about Ga
 To dive a little deeper, here are some interview quotes about how much people like the docs and tutorials:
 
 > “Very advanced docs & tutorials for this stage in a project.”
+>
 > “Tutorials are very beginner friendly and great for someone who wants to become a better developer.”
+>
 > “The tutorials are very easy to understand and go through great lengths to explain every line of code necessary.”
 
 And some tweets:
@@ -45,7 +47,7 @@ Here is a brief overview of issues that have come up again and again as I've int
 * Upon first visit to Gatsbyjs.org, most visitors click “Get Started.” This is the perfect solution for them if they prefer to jump into coding without reading much. If they prefer step-by-step instructions, it takes some looking around before they see the tutorial tab across the top.
 * Installing new starters for every part of tutorial feels like a distraction to some beginners.
 "Part 1" is not a descriptive title for a tutorial if someone wants to preview or remember what was covered.
-* Almost everyone is new to GraphQL and gets overwhelmed by Part 4.
+* Almost everyone is new to GraphQL and gets overwhelmed when we introduce it in Part 4.
 
 ## Documentation project beginnings
 
