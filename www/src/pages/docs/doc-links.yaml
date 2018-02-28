@@ -42,6 +42,8 @@
       link: /docs/custom-html/
     - title: Debugging HTML Builds
       link: /docs/debugging-html-builds/
+    - title: Debugging Replace Renderer API
+      link: /docs/debugging-replace-renderer-api/
     - title: Environment Variables
       link: /docs/environment-variables/
     - title: Gatsby on Windows
