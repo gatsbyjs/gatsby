@@ -11,7 +11,7 @@ Here’s a list of basic programming knowledge and tools that are necessary befo
 * *Code editor:* Code editing programs allow you to write, edit, and save the code you'll need to write to make your website work. [Visual Studio Code](https://code.visualstudio.com/download) is a great code editor for Mac, Linux, and Windows users. Refer to their docs for help on getting started. There are many other great code editors; you may want to ask other programmers what code editor they prefer.
 * *Browser console:* Any internet browser you use has a console that allows you to inspect what is happening on any web site. This will help you figure out how to solve errors that happen while you build your website. If you are using Chrome as your web browser, here is an explanation of [how the Chrome browser console works](https://developers.google.com/web/tools/chrome-devtools/console/). If you use another web browser, search for instructions on how to access and use that browser's console.
 
-### Helpful yet not necessary:
+### Helpful, yet not necessary:
 * Some knowledge of HTML, CSS, and JS can be helpful. There are plenty of excellent tutorials out there; [Codecademy](https://www.codecademy.com/learn) is a good way to go.
 * *[React](https://reactjs.org/)* is a JavaScript library that Gatsby uses. Prior React experience is helpful but not necessary. In fact, many people are using Gatsby as a way to learn React.
 * *GraphQL:* The Gatsby tutorials also teach you basic [GraphQL](http://graphql.org/), which is a query language (a programming language that allows you to pull data into your website). Prior GraphQL knowledge is helpful but definitely not necessary. Many people are using Gatsby as a way to learn GraphQL.
