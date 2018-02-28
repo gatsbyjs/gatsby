@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-less",
   "description": "Adds the ability to load and parse less-files to include in project your",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "author": "Ming Aldrich-Gan <mingaldrichgan@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -12,7 +12,7 @@
   "dependencies": {
     "babel-runtime": "^6.26.0",
     "extract-text-webpack-plugin": "^1.0.1",
-    "gatsby-1-config-css-modules": "^1.0.9",
+    "gatsby-1-config-css-modules": "^1.0.10",
     "less": "^2.7.2",
     "less-loader": "^3.0.0",
     "webpack": "^1.13.3"

@@ -1,7 +1,7 @@
 {
   "name": "gatsby-transformer-pdf",
   "description": "Stub description for gatsby-transformer-pdf",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "author": "Kyle Mathews <matthews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
