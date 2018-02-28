@@ -94,7 +94,11 @@ module.exports = ({
           .then(v => {
             const innerSift = siftFieldsObj[k]
             const innerGqConfig = gqFields[k]
-            if (_.isObject(innerSift) && v != null) {
+            if (
+              _.isObject(innerSift) &&
+              v != null &&
+              innerGqConfig.type.getFields
+            ) {
               return resolveRecursive(
                 v,
                 innerSift,
