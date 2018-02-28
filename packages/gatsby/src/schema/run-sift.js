@@ -97,7 +97,9 @@ module.exports = ({
             if (
               _.isObject(innerSift) &&
               v != null &&
-              innerGqConfig.type.getFields
+              innerGqConfig &&
+              innerGqConfig.type &&
+              _.isFunction(innerGqConfig.type.getFields)
             ) {
               return resolveRecursive(
                 v,
