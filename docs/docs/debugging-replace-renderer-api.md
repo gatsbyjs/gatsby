@@ -15,12 +15,14 @@ Note that `replaceRenderer` is only used during `gatsby build`. It won't cause p
 If multiple plugins implement `replaceRenderer`, `gatsby build` will warn you:
 
 ```
-The "replaceRenderer" API  is implemented by several enabled plugins.
-This could be an error, see https://gatsbyjs.org/docs/debugging-replace-renderer-api for workarounds.
-Check the following plugins for "replaceRenderer" implementations:
-/path/to/my/site/node_modules/gatsby-plugin-styled-components/gatsby-ssr.js
-/path/to/my/site/gatsby-ssr.js
+warning replaceRenderer API found in these plugins:
+warning plugin-name-a, default-site-plugin
+warning This might be an error, see: https://www.gatsbyjs.org/docs/debugging-replace-renderer-api/
+
+warning Duplicate replaceRenderer found, skipping gatsby-ssr.js for plugin: plugin-name-a
 ```
+
+Note that `default-site-plugin` refers to your local `gatsby-ssr.js` file, if this file exists it will always be used in favor of `gatsby-ssr.js` from other plugins.
 
 ## Fixing `replaceRenderer` build errors
 
@@ -28,15 +30,14 @@ If you see errors during your build, you can fix them with the following steps.
 
 ### 1. Identify the plugins using `replaceRenderer`
 
-Your error message should list the files that use `replaceRenderer`
+Your error message should list which plugins implement `replaceRenderer`:
 
 ```shell
-Check the following files for "replaceRenderer" implementations:
-/path/to/my/site/node_modules/gatsby-plugin-styled-components/gatsby-ssr.js
-/path/to/my/site/gatsby-ssr.js
+warning replaceRenderer API found in these plugins:
+warning plugin-name-a, default-site-plugin
 ```
 
-In this example, your `gatsby-ssr.js` file and `gatsby-plugin-styled-components` are both using `replaceRenderer`.
+In this example, your `gatsby-ssr.js` file and `plugin-name-a` are both using `replaceRenderer`.
 
 ### 2. Copy the plugins' `replaceRenderer` functionality to your site's `gatsby-ssr.js` file
 
@@ -77,7 +78,7 @@ Note that the Styled Components plugin uses `replaceRenderer`, and the code in `
 
 ### Fixing the `replaceRenderer` error
 
-Our `gatsby-config.js` file will remain unchanged. However, oour `gatsby-ssr.js` file will update to include the [`replaceRenderer` functionality from the Styled Components plugin](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-styled-components/src/gatsby-ssr.js)
+Our `gatsby-config.js` file will remain unchanged. However, our `gatsby-ssr.js` file will update to include the [`replaceRenderer` functionality from the Styled Components plugin](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-styled-components/src/gatsby-ssr.js)
 
 `gatsby-ssr.js`
 
@@ -108,6 +109,6 @@ exports.replaceRenderer = ({
 }
 ```
 
-Now `gatsby-ssr.js` implements the Styled Components and Redux functionality using one `replaceRenderer` instance. Run `gatsby build` and the site will build without errors.
+Now `gatsby-ssr.js` implements the Styled Components and Redux functionality using one `replaceRenderer` instance. Run `gatsby build` and the site will build correctly.
 
 All the code from this example is [available on GitHub](https://github.com/m-allanson/gatsby-replace-renderer-example/commits/master).
