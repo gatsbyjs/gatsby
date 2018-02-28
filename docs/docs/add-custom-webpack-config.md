@@ -4,7 +4,7 @@ title: "Add custom webpack config"
 
 _Before creating custom webpack configuration, check to see if there's a Gatsby
 plugin already built that handles your use case in the
-[plugins section](/docs/plugins/). If there's not yet one and your use case is a
+[plugins section](/docs/docs/plugins.md). If there's not yet one and your use case is a
 general one, we highly encourage you to contribute back your plugin to the
 Gatsby repo so it's available to others (including your future self 😀)._
 
