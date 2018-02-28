@@ -20,6 +20,13 @@ See the [list of official and community plugins](/docs/plugins/)
 
 * [Develop & Build GatsbyJS static sites within Docker](https://github.com/aripalo/gatsby-docker/)
 
+## Podcasts
+
+* [2018-02-28 syntax.fm on Static Site Generators (lots of Gatsby love)](https://syntax.fm/show/034/why-static-site-generators-are-awesome)
+* [2017-09-21 Kyle Mathews on JAMSTACK radio on "Static Site Generation with GatsbyJS](https://www.heavybit.com/library/podcasts/jamstack-radio/ep-22-static-site-generation-with-gatsbyjs/)
+* [2017-07-21 Kyle Mathews on Web of Tomorrow](https://www.orbit.fm/weboftomorrow/39/)
+* [2017-08-17 Kyle Mathews on Software Engineering Daily](https://softwareengineeringdaily.com/2017/08/17/gatsbyjs-with-kyle-mathews/)
+
 ## Videos
 
 * [Static Site Generation with Gatsby.js v0 — Scott Nonnenberg](https://blog.scottnonnenberg.com/static-site-generation-with-gatsby-js/)
@@ -33,6 +40,7 @@ See the [list of official and community plugins](/docs/plugins/)
 * [Official tutorial](/tutorial/)
 * [Creating a blog with Gatsby](/blog/2017-07-19-creating-a-blog-with-gatsby/)
 * [Level Up Tutorials series on creating a blog](https://www.youtube.com/watch?v=b2H7fWhQcdE&list=PLLnpHn493BHHfoINKLELxDch3uJlSapxg)
+* [Level up Tutorials Pro Gatsby series](https://www.leveluptutorials.com/store/products/tutorials/lut-dd020)
 * [Giraffe Academy series on getting started with Gatsby](https://www.youtube.com/playlist?list=PLLAZ4kZ9dFpMXuwazIt4mWtTuqOHdjRlk)
 * [Egghead course — "Build a Blog with React and Markdown using Gatsby"](https://egghead.io/courses/build-a-blog-with-react-and-markdown-using-gatsby)
 * [Build a photo site with Gatsby — 6 part tutorial](https://jeremey.blog/gatsby-photo/)
