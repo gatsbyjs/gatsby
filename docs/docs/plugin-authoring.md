@@ -6,9 +6,8 @@ Creating custom plugins in Gatsby is a breeze with our straightforward authoring
 
 ## Core Concepts
 
-- Every Gatsby plugin is a standalone npm package
+- Each Gatsby plugin can installed as an npm package or as a [local plugin](#local-plugins)
 - At minimum, a `package.json` is required
-- Plugins can be used locally (see [local plugins](#local-plugins) below) or published to npm as packages
 - A plugin has access to the the Gatsby [Node](/docs/node-apis/), [SSR](/docs/ssr-apis/), and [browser](/docs/browser-apis/) APIs
 
 ## Plugin naming conventions
