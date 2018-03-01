@@ -54,7 +54,7 @@ The ordering of your results can be specified with `sort`. Here the results are 
 
 Dates can be formatted using the `formatString` function.
 
-<iframe src="https://gatsbygraphql.sloppy.zone/?query=%7B%0A%20%20allMarkdownRemark(%0A%20%20%20%20sort%3A%20%7Bfields%3A%20%5Bfrontmatter___date%5D%2C%20order%3A%20ASC%7D%2C%0A%20%20%20%20filter%3A%20%7B%20%0A%20%20%20%20%20%20frontmatter%3A%20%7B%20%0A%20%20%20%20%20%20%20%20draft%3A%20%7B%20ne%3A%20true%20%7D%20%0A%20%20%20%20%20%20%20%20title%3A%20%7B%20ne%3A%20""%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%2C%0A%20%20%20%20limit%3A%2010%0A%20%20)%20%7B%0A%20%20%20%20totalCount%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20id%0A%20%20%20%20%20%20%20%20frontmatter%20%7B%0A%20%20%20%20%20%20%20%20%20%20title%0A%20%20%20%20%20%20%20%20%20%20date(formatString%3A%20%22DD%20MMMM%2C%20YYYY%22)%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20excerpt%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A%0A" width="600" height="400"></iframe>
+<iframe src="https://gatsbygraphql.sloppy.zone/?query=%7B%0A%20%20allMarkdownRemark(%0A%20%20%20%20filter%3A%20%7Bfrontmatter%3A%20%7Bdate%3A%20%7Bne%3A%20null%7D%7D%7D%0A%20%20)%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20frontmatter%20%7B%0A%20%20%20%20%20%20%20%20%20%20title%0A%20%20%20%20%20%20%20%20%20%20date(formatString%3A%20%22dddd%20DD%20MMMM%20YYYY%22)%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D" width="600" height="400"></iframe>
 
 > TODO: Expand on the possibilities of formatting - which fields can be formatted? What are the available formatting options?
 
