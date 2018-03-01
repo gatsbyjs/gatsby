@@ -56,6 +56,8 @@
       link: /docs/migrating-from-v0-to-v1/
     - title: Path Prefix
       link: /docs/path-prefix/
+    - title: Plugin Authoring
+      link: /docs/plugin-authoring/
     - title: Proxying API Requests
       link: /docs/api-proxy/
     - title: Using CSS-in-JS library Glamor
