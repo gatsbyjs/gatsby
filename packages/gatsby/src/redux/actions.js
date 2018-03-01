@@ -769,6 +769,36 @@ actions.replaceWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
 }
 
 /**
+ * Set top-level Babel options. Plugins and presets will be ignored. Use
+ * setBabelPlugin and setBabelPreset for this.
+ * @param {Object} config An options object in the shape of a normal babelrc javascript object
+ * @example
+ * setBabelOptions({
+ *   sourceMaps: `inline`,
+ * })
+ */
+actions.setBabelOptions = (options: Object, plugin?: ?Plugin = null) => {
+  // Validate
+  let name = `The plugin "${plugin.name}"`
+  if (plugin.name === `default-site-plugin`) {
+    name = `Your site's "gatsby-node.js"`
+  }
+  if (!_.isObject(options)) {
+    console.log(`${name} must pass an object to "setBabelOptions"`)
+    console.log(JSON.stringify(options, null, 4))
+    if (process.env.NODE_ENV !== `test`) {
+      process.exit(1)
+    }
+  }
+
+  return {
+    type: `SET_BABEL_OPTIONS`,
+    plugin,
+    payload: options,
+  }
+}
+
+/**
  * Add new plugins or merge options into existing Babel plugins.
  * @param {Object} config A config object describing the Babel plugin to be added.
  * @param {string} config.name The name of the Babel plugin
@@ -791,8 +821,11 @@ actions.setBabelPlugin = (config: Object, plugin?: ?Plugin = null) => {
     console.log(`${name} must set the name of the Babel plugin`)
     console.log(JSON.stringify(config, null, 4))
     if (process.env.NODE_ENV !== `test`) {
-      process.exit()
+      process.exit(1)
     }
+  }
+  if (!config.options) {
+    config.options = {}
   }
   return {
     type: `SET_BABEL_PLUGIN`,
@@ -824,8 +857,11 @@ actions.setBabelPreset = (config: Object, plugin?: ?Plugin = null) => {
     console.log(`${name} must set the name of the Babel preset`)
     console.log(JSON.stringify(config, null, 4))
     if (process.env.NODE_ENV !== `test`) {
-      process.exit()
+      process.exit(1)
     }
+  }
+  if (!config.options) {
+    config.options = {}
   }
   return {
     type: `SET_BABEL_PRESET`,

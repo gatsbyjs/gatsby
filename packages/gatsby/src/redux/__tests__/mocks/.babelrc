@@ -1,0 +1,14 @@
+{
+  "presets": [
+    ["@babel/preset-env", {
+      "targets": {
+        "browsers": ["last 2 versions", "safari >= 7"]
+      }
+    }],
+    "@babel/react",
+  ],
+  "plugins": [
+    "@babel/plugin-transform-runtime",
+  ],
+  sourceMaps: "inline",
+}
