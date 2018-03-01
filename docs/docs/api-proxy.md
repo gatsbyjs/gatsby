@@ -12,7 +12,7 @@ in development, add a `proxy` field to your `gatsby-config.js`, for example:
 module.exports = {
   proxy: {
     prefix: "/api",
-    url: "http://dev-mysite.com/api/",
+    url: "http://dev-mysite.com",
   },
 };
 ```
