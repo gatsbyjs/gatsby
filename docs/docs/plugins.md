@@ -37,46 +37,13 @@ module.exports = {
 
 Plugins can take options. Note that plugin options will be stringified by Gatsby, so they cannot be functions.
 
-See each plugin page below for more detailed
-documentation on using each plugin.
+## Creating your own plugins
 
-## Locally defined plugins
-
-When you want to work on a new plugin, or maybe write one that is only relevant
-to your specific use-case, a locally defined plugin is more convenient than
-having to create an NPM package for it.
-
-You can place the code in the `plugins` folder in the root of your project like
-this:
-
-```
-plugins
-└── my-own-plugin
-    ├── gatsby-node.js
-    └── package.json
-```
-
-You still need to add the plugin to your `gatsby-config.js` like for plugins
-installed from NPM.
-
-Each plugin requires a package.json file, but the minimum content is just an
-empty object `{}`. The `name` and `version` fields are read from the package
-file. The name is used to identify the plugin when it mutates the GraphQL data
-structure. The version is used to clear the cache when it changes.
-
-For local plugins it is best to leave the version field empty. Gatsby will
-generate an md5-hash from all gatsby-\* file contents and use that as the
-version. This way the cache is automatically flushed when you change the code of
-your plugin.
-
-If the name is empty it is inferred from the plugin folder name.
-
-Like all gatsby-\* files, the code is not being processed by Babel. If you want
-to use JavaScript syntax which isn't supported by your version of Node.js, you
-can place the files in a `src` subfolder and build them to the plugin folder
-root.
+If you’d like to create a custom Gatsby plugin, check out the [plugin authoring guide](/docs/plugin-authoring/).
 
 ## Official plugins
+
+For usage instructions and options, see the plugin repo (linked below).
 
 * [gatsby-plugin-aphrodite](/packages/gatsby-plugin-aphrodite/)
 * [gatsby-plugin-canonical-urls](/packages/gatsby-plugin-canonical-urls/)
