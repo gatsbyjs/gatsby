@@ -2,7 +2,7 @@
 title: Plugin Authoring
 ---
 
-One of the best ways to add functionality to Gatsby is through our plugin system. Gatsby is designed to be extensible, which means plugins are able to modify and extend just about everything Gatsby does.
+One of the best ways to add functionality to Gatsby is through our plugin system. Gatsby is designed to be extensible, which means plugins are able to extend and modify just about everything Gatsby does.
 
 Of the many possibilities, plugins can:
 
