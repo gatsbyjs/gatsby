@@ -1,4 +1,5 @@
 {
+  "name": "gatsby",
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.2.1",
