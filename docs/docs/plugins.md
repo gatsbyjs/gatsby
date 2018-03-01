@@ -170,6 +170,7 @@ For usage instructions and options, see the plugin repo (linked below).
 * [gatsby-source-graphcms](https://github.com/GraphCMS/gatsby-source-graphcms)
 * [gatsby-source-mesh](https://github.com/gentics/gatsby-source-mesh)
 * [gatsby-source-soundcloud](https://github.com/jedidiah/gatsby-source-soundcloud)
+* [gatsby-source-strapi](https://github.com/strapi/gatsby-source-strapi)
 * [gatsby-source-stripe](https://github.com/njosefbeck/gatsby-source-stripe)
 * [gatsby-source-trello](https://github.com/Necmttn/gatsby-source-trello)
 * [gatsby-source-twitch](https://github.com/jedidiah/gatsby-source-twitch)
