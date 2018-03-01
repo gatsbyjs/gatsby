@@ -13,7 +13,7 @@ Of the many possibilities, plugins can:
 
 ## Core Concepts
 
-- Each Gatsby plugin can be installed as an npm package or as a [local plugin](#local-plugins)
+- Each Gatsby plugin can be created as an npm package or as a [local plugin](#local-plugins)
 - A `package.json` is required
 - Plugin implement the Gatsby APIs for [Node](/docs/node-apis/), [server-side rendering](/docs/ssr-apis/), and the [browser](/docs/browser-apis/)
 
@@ -59,7 +59,7 @@ plugins
 
 **NOTE:** You still need to add the plugin to your `gatsby-config.js`. There is no auto-detection of local plugins.
 
-Like all `gatsby-*` files, the code is not being processed by Babel. If you want
+Like all `gatsby-*` files, the code is not processed by Babel. If you want
 to use JavaScript syntax which isn't supported by your version of Node.js, you
 can place the files in a `src` subfolder and build them to the plugin folder
 root.
