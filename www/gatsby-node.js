@@ -147,11 +147,8 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
         })
 
         const allPackages = result.data.allNpmPackage.edges
-        // Create local package readme
-        // this will filter on markdownremark a lot like the blog example above
         let allLocalPackages = _.filter(allPackages, edge => {
           const slug = _.get(edge, `node.fields.slug`)
-          // maybe add a deprectaed variable here
           if (!slug) return
 
           if (_.includes(slug, `/packages/`)) {
@@ -159,6 +156,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
           }
         })
 
+        // Create local package readme
         allLocalPackages = allLocalPackages.forEach(edge => {
           const slug = `/packages/${edge.node.title}/`
 
@@ -173,13 +171,6 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
         })
 
         // Create remote package readme
-        // this just needs to filter the localPackagesArr out to make sure those aren't used
-        // const allRemotePackages = _.differenceWith(
-        //   allPackages, // array of objects with names at node.title
-        //   localPackagesArr, // array full of names
-        //   (package, localName) =>
-        //     _.isMatchWith(package, localName, "node.title")
-        // )
         allPackages.forEach(edge => {
           const slug = `/packages/${edge.node.title}/`
           if (_.includes(localPackagesArr, edge.node.title)) return

@@ -106,7 +106,7 @@ PackageReadMe.propTypes = {
   html: PropTypes.string.isRequired,
   githubUrl: PropTypes.string.isRequired,
   timeToRead: PropTypes.number,
-  modified: PropTypes.string,
+  modified: PropTypes.object,
   keywords: PropTypes.array,
   lastPublisher: PropTypes.object,
 }

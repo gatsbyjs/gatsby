@@ -30,17 +30,8 @@ exports.sourceNodes = async (
     hitsPerPage: 1000,
   })
 
-  // TODO: Currently the gatsby-transformer-remark plugin
-  // has a hard time with markdown that includes
-  // images -> for now this filters out those packages
-
   data.hits.forEach(hit => {
-    if (hit.readme.includes(`![`)) {
-      return
-    }
-
     const parentId = createNodeId(`plugin ${hit.objectID}`)
-    console.log(parentId)
     const readmeNode = {
       id: createNodeId(`readme ${hit.objectID}`),
       parent: parentId,
@@ -71,7 +62,7 @@ exports.sourceNodes = async (
       title: `${hit.objectID}`,
       internal: {
         type: `NPMPackage`,
-        content: hit.readme,
+        content: hit.readme !== undefined ? hit.readme : ``,
       },
     }
     node.internal.contentDigest = createContentDigest(node)
