@@ -6,7 +6,7 @@ title: GraphQL Reference
 
 ## Intro
 
-This page will walk you through a series of GraphQL queries, each designed to demonstrate a particular feature of GraphQL. We're using the data from gatsbyjs.org, so feel free to experiment!
+This page will walk you through a series of GraphQL queries, each designed to demonstrate a particular feature of GraphQL. You'll be querying the *real* schema used on gatsbyjs.org so feel free to experiment and poke around the innards of our site!
 
 ## Basic query
 
@@ -36,7 +36,7 @@ In this query `filter` and the `ne` (not equals) operator is used to show only r
 
 <iframe src="https://gatsbygraphql.sloppy.zone/?query=%7B%0A%20%20allMarkdownRemark(%0A%20%20%20%20filter%3A%20%7B%0A%20%20%20%20%20%20frontmatter%3A%20%7B%20title%3A%20%7B%20ne%3A%20%22%22%20%7D%20%7D%0A%20%20%09%7D%0A%20%20)%20%7B%0A%20%20%20%20totalCount%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20frontmatter%20%7B%0A%20%20%20%20%20%20%20%20%20%20title%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A" width="600" height="400"></iframe>
 
-Gatsby relies on [sift](https://www.npmjs.com/package/sift), enabling MongoDB query syntax for object filtering. This allows Gatsby to support operators like `eq`, `ne`, `in`, `regex` and querying nested fields through the `__` connector
+Gatsby relies on [Sift](https://www.npmjs.com/package/sift) to enable MongoDB-like query syntax for object filtering. This allows Gatsby to support operators like `eq`, `ne`, `in`, `regex` and querying nested fields through the `__` connector
 
 A good video tutorial on this is [here](https://www.youtube.com/watch?v=Lg1bom99uGM).
 
