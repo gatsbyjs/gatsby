@@ -331,7 +331,7 @@ module.exports = (
           await fsExtra.ensureDir(path.dirname(newFilePath))
           await fsExtra.copy(linkPath, newFilePath)
         } catch (err) {
-          console.error(`error copy ing file`, err)
+          console.error(`error copying file`, err)
         }
       }
     })
