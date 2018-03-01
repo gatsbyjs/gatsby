@@ -40,7 +40,7 @@ Gatsby relies on [sift](https://www.npmjs.com/package/sift), enabling MongoDB qu
 
 A good video tutorial on this is [here](https://www.youtube.com/watch?v=Lg1bom99uGM).
 
-> TODO: add more advanced examples here? Pull requests welcome!
+> TODO: Add more advanced examples
 
 ## Sort
 
@@ -48,7 +48,7 @@ The ordering of your results can be specified with `sort`. Here the results are 
 
 <iframe src="https://gatsbygraphql.sloppy.zone/?query=%7B%0A%20%20allMarkdownRemark(%0A%20%20%20%20sort%3A%20%7Bfields%3A%20%5Bfrontmatter___date%5D%2C%20order%3A%20ASC%7D%2C%0A%20%20)%20%7B%0A%20%20%20%20totalCount%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20frontmatter%20%7B%0A%20%20%20%20%20%20%20%20%20%20title%0A%20%20%20%20%20%20%20%20%20%20date%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A%0A" width="600" height="400"></iframe>
 
-> TODO: Can you sort on multiple fields? PR with working example query welcome!
+> TODO: Can you sort on multiple fields?
 
 ## Format
 
@@ -58,7 +58,7 @@ Dates can be formatted using the `formatString` function.
 
 > TODO: Expand on the possibilities of formatting - which fields can be formatted? What are the available formatting options?
 
-## Sort, filter & limit together
+## Sort, filter, limit & format together
 
 This query combines sorting, filtering, limiting and formatting together.
 
@@ -67,4 +67,4 @@ This query combines sorting, filtering, limiting and formatting together.
 
 ## Query variables
 
-Work in progress - pull requests welcome!
+Work in progress - pull requests welcome.
