@@ -9,6 +9,7 @@
   "dependencies": {
     "babel-runtime": "^6.26.0",
     "fs-extra": "^4.0.2",
+    "mini-svg-data-uri": "^1.0.0",
     "p-queue": "^2.3.0",
     "progress": "^2.0.0",
     "sqip": "^0.3.0"

@@ -3,6 +3,7 @@ const { extname, join, resolve } = require(`path`)
 
 const fs = require(`fs-extra`)
 const { GraphQLObjectType, GraphQLString, GraphQLInt } = require(`graphql`)
+const svgToMiniDataURI = require(`mini-svg-data-uri`)
 const PQueue = require(`p-queue`)
 const ProgressBar = require(`progress`)
 const sqip = require(`sqip`)
@@ -258,7 +259,7 @@ async function generateSqip(options) {
 
       primitiveData = {
         svg: result.final_svg,
-        dataURI: encodeOptimizedSVGDataUri(result.final_svg),
+        dataURI: svgToMiniDataURI(result.final_svg),
         dataURIbase64: `data:image/svg+xml;base64,${result.svg_base64encoded}`,
       }
 
@@ -271,17 +272,4 @@ async function generateSqip(options) {
   }
 
   return primitiveData
-}
-
-// https://codepen.io/tigt/post/optimizing-svgs-in-data-uris
-function encodeOptimizedSVGDataUri(svgString) {
-  var uriPayload = encodeURIComponent(svgString) // encode URL-unsafe characters
-    .replace(/%0A/g, ``) // remove newlines
-    .replace(/%20/g, ` `) // put spaces back in
-    .replace(/%3D/g, `=`) // ditto equals signs
-    .replace(/%3A/g, `:`) // ditto colons
-    .replace(/%2F/g, `/`) // ditto slashes
-    .replace(/%22/g, `'`) // replace quotes with apostrophes (may break certain SVGs)
-
-  return `data:image/svg+xml,` + uriPayload
 }
