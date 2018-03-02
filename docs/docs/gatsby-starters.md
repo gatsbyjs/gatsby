@@ -20,6 +20,14 @@ This downloads the files and initializes the site by running `npm install`
 If you don't specify a custom starter, your site will be created from the
 [default starter](https://github.com/gatsbyjs/gatsby-starter-default).
 
+## Prerequisites
+Starters may use npm plugins that require [native node extensions](https://github.com/nodejs/node-gyp). For those to build, you will need to install `build-essential` from your package source.
+
+For example, on Debian/Ubuntu:
+
+`sudo apt-get install build-essential`
+
+## Available Starters
 There are several starters that have been created. Create a PR to include yours!
 
 Official:
