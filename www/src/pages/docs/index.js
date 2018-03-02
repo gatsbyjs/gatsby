@@ -35,6 +35,18 @@ class IndexRoute extends React.Component {
           <li>
             <code>gatsby develop</code> — Gatsby will start a hot-reloading
             development environment accessible at <code>localhost:8000</code>
+            <p>Options:</p>
+            <ul>
+              <li>
+                <code>-H, --host</code>   Set host. Defaults to localhost
+              </li>
+              <li>
+                <code>-p, --port</code>   Set port. Defaults to 8000
+              </li>
+              <li>
+                <code>-o, --open</code>   Open the site in your standard browser for you
+              </li>
+            </ul>
           </li>
           <li>
             Try editing the javascript pages in <code>src/pages</code>. Saved
