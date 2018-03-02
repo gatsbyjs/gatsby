@@ -33,24 +33,14 @@ module.exports = {
 
 Then in your terminal run `gatsby develop` to start the Gatsby development server.
 
-Now let's create a new `Container` component.
-Create a `components` directory at `src/components` and then, in this directory,
-create a file named `container.js` and paste the following:
-
-```javascript
-import React from "react";
-
-export default ({ children }) => (
-  <div style={{ margin: "3rem auto", maxWidth: 600 }}>{children}</div>
-);
-```
-
-Then let's create a sample Glamor page at `src/pages/index.js`
+Now let's create a sample Glamor page at `src/pages/index.js`
 
 ```jsx
 import React from "react";
 
-import Container from "../components/container";
+const Container = ({ children }) => (
+  <div>{children}</div>
+);
 
 export default () => (
   <Container>
@@ -60,12 +50,14 @@ export default () => (
 );
 ```
 
-Let's add a inline `User` component using Glamor's `css` prop.
+Let's add css styles to `Container` and add a inline `User` component using Glamor's `css` prop.
 
-```jsx{5-27,33-40}
+```jsx{4,7-29,35-42}
 import React from "react"
 
-import Container from "../components/container"
+const Container = ({ children }) => (
+  <div css={{ margin: `3rem auto`, maxWidth: 600 }}>{children}</div>
+);
 
 const User = props =>
   <div
