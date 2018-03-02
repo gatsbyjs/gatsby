@@ -4,20 +4,23 @@ import Link from "gatsby-link"
 
 import Container from "../components/container"
 
-export default () => (
+export default (props) => (
   <Container>
     <Helmet>
       <title>Getting Started</title>
     </Helmet>
-    <h1 css={{ marginTop: 0 }}>Getting Started</h1>
-    <p>
-      Welcome. There are several options you may want to choose when building with Gatsby:
-      * [tutorial](/docs/tutorial/index.md) if you want step-by-step instructions
-      * [Quick start](/pages/docs/index.js) to install Gatsby and/or dive into the docs
-
-      Want to learn more about Gatsby? Read the overview of Gatsby Features to see whether Gatsby is right for your project.
-
-      [Gatsby Features](/docs/features.js)
-    </p>
+    <h1 css={{ marginTop: 0 }}>{props.data.markdownRemark.frontmatter.title}</h1>
+    <section dangerouslySetInnerHTML={{__html: props.data.markdownRemark.html}} />
   </Container>
 )
+
+export const query = graphql`
+query tutorialquery {
+  markdownRemark(id: {regex: "/docs/tutorial/index.md/"}) {
+    html
+    frontmatter {
+      title
+    }
+  }
+}
+`
