@@ -12,7 +12,6 @@ import history from "./history"
 window.___history = history
 import emitter from "./emitter"
 window.___emitter = emitter
-import shallowCompare from "shallow-compare"
 import pages from "./pages.json"
 import redirects from "./redirects.json"
 import ComponentRenderer from "./component-renderer"
@@ -62,9 +61,14 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     if (redirect) {
       pathname = redirect.toPath
     }
+    const wl = window.location
 
     // If we're already at this location, do nothing.
-    if (shallowCompare(window.location, location)) {
+    if (
+      wl.pathname === location.pathname &&
+      wl.search === location.search &&
+      wl.hash === location.hash
+    ) {
       return
     }
 
