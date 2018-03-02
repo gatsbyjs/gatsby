@@ -99,6 +99,7 @@ class BlogPostRoute extends React.Component {
               marginRight: rhythm(3 / 4),
               marginBottom: 0,
             }}
+            Tag="span"
           />
           <span
             css={{
