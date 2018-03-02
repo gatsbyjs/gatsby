@@ -2,13 +2,6 @@
 
 Generates vectorized primitive version of images to be used as preview thumbnails.
 
-
-## :cloud: Installation
-
-1. Install Golang (https://golang.org/doc/install)
-2. Install primitive (`go get -u github.com/fogleman/primitive`)
-3. Enable the plugin in your gatsby config
-
 ## :hand: Usage
 
 ### GraphQL
@@ -22,6 +15,12 @@ image {
 ```
 
 ### React
+
+#### Pure HTML
+
+Coming soon. Doing some preparations first.
+
+#### Gatsby Image
 ```jsx
 const Img = require(`gatsby-image`)
 
