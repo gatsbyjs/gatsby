@@ -117,29 +117,30 @@ exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
 
 ### createRemoteFileNode
 
-When working with remote files from a source such as headless CMS, you download the files and create `File` nodes. 
+When working with remote files from a source such as headless CMS, you download them and create `File` nodes using `createRemoteFileNode`
 
 ```javascript
 createRemoteFileNode({
   // The source url of the remote file
   url:
-  // The redux store.
+  // The redux store
   // The parameter from `downloadMediaFiles` should be passed in here
   store:
-  // The Gatsby cache
+  // The cache passed in to check if there's response headers for this url from previous request
   // The parameter from `downloadMediaFiles` should be passed in here
   cache:
   // Method used to create a node
+  // The parameter from `downloadMediaFiles` should be passed in here
   createNode:
   // OPTIONAL
-  // Adds htaccess authentication if passed in.
+  // Adds htaccess authentication if passed in
   auth:
 })
 ```
 
 #### Example usage
 
-The following is what's done in [gatsby-source-wordpress](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress). Downloaded files are created as `File` nodes.  
+The following is what's done in [gatsby-source-wordpress](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress). Downloaded files are created as `File` nodes and then linked to the Media File node, so it can be queried both as a regular `File` node and from the `localFile` field in the Media File node.
 
 ```javascript
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`);
@@ -147,11 +148,11 @@ const { createRemoteFileNode } = require(`gatsby-source-filesystem`);
 exports.downloadMediaFiles = ({ nodes, store, cache, createNode, _auth }) => {
   nodes.map(async node => {
     let fileNode
-    // Ensures we are only process Media Files
+    // Ensures we are only processing Media Files
     // `wordpress__wp_media` is the media file type name for Wordpress
     if (node.__type === `wordpress__wp_media`) {
-        try {
-          fileNode = await createRemoteFileNode({
+      try {
+        fileNode = await createRemoteFileNode({
             url: node.source_url,
             store,
             cache,
@@ -163,6 +164,8 @@ exports.downloadMediaFiles = ({ nodes, store, cache, createNode, _auth }) => {
         }
       }
 
+      // Adds a field `localFile` to the node
+      // ___NODE appendix tells gatsby that this field will link to another node
       if (fileNode) {
         node.localFile___NODE = fileNode.id
       }
