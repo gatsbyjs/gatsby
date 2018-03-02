@@ -117,30 +117,33 @@ exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
 
 ### createRemoteFileNode
 
-When working with remote files from a source such as headless CMS, you download them and create `File` nodes using `createRemoteFileNode`
+When building source plugins for remote data sources such as headless CMSs, their data will often link to files stored remotely that are often convenient to download so you can work with locally.
+
+The `createRemoteFileNode` helper makes it easy to download remote files and add them to your site's GraphQL schema.
 
 ```javascript
 createRemoteFileNode({
   // The source url of the remote file
-  url:
-  // The redux store
-  // The parameter from `downloadMediaFiles` should be passed in here
-  store:
-  // The cache passed in to check if there's response headers for this url from previous request
-  // The parameter from `downloadMediaFiles` should be passed in here
-  cache:
-  // Method used to create a node
-  // The parameter from `downloadMediaFiles` should be passed in here
-  createNode:
+  url: `https://example.com/a-file.jpg`,
+  
+  // The redux store which is passed to all Node APIs.
+  store,
+  
+  // Gatsby's cache which the helper uses to check if the file has been downloaded already. It's passed to all Node APIs.
+  cache,
+  
+  // The boundActionCreator used to create nodes
+  createNode,
+  
   // OPTIONAL
-  // Adds htaccess authentication if passed in
-  auth:
+  // Adds htaccess authentication to the download request if passed in.
+  auth: { user: `USER`, password: `PASSWORD` },
 })
 ```
 
 #### Example usage
 
-The following is what's done in [gatsby-source-wordpress](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress). Downloaded files are created as `File` nodes and then linked to the Media File node, so it can be queried both as a regular `File` node and from the `localFile` field in the Media File node.
+The following example is pulled from [gatsby-source-wordpress](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress). Downloaded files are created as `File` nodes and then linked to the WordPress Media node, so it can be queried both as a regular `File` node and from the `localFile` field in the Media node.
 
 ```javascript
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`);
@@ -165,7 +168,7 @@ exports.downloadMediaFiles = ({ nodes, store, cache, createNode, _auth }) => {
       }
 
       // Adds a field `localFile` to the node
-      // ___NODE appendix tells gatsby that this field will link to another node
+      // ___NODE appendix tells Gatsby that this field will link to another node
       if (fileNode) {
         node.localFile___NODE = fileNode.id
       }
