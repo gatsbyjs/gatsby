@@ -1,7 +1,7 @@
 {
   "name": "load-babel-config",
   "version": "1.0.0",
-  "description": "Internal plugin handles loading Babel configs",
+  "description": "Internal plugin that handles loading Babel configs",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

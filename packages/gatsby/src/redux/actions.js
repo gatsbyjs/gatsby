@@ -791,6 +791,14 @@ actions.setBabelOptions = (options: Object, plugin?: ?Plugin = null) => {
     }
   }
 
+  if (!_.isObject(options.options)) {
+    console.log(`${name} must pass options to "setBabelOptions"`)
+    console.log(JSON.stringify(options, null, 4))
+    if (process.env.NODE_ENV !== `test`) {
+      process.exit(1)
+    }
+  }
+
   return {
     type: `SET_BABEL_OPTIONS`,
     plugin,

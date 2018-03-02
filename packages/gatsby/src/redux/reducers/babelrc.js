@@ -2,16 +2,47 @@ const _ = require(`lodash`)
 
 module.exports = (
   state = {
-    options: {
-      cacheDirectory: true,
-      babelrc: false,
-    },
     stages: {
-      develop: { plugins: [], presets: [] },
-      "develop-html": { plugins: [], presets: [] },
-      "build-css": { plugins: [], presets: [] },
-      "build-html": { plugins: [], presets: [] },
-      "build-javascript": { plugins: [], presets: [] },
+      develop: {
+        plugins: [],
+        presets: [],
+        options: {
+          cacheDirectory: true,
+          babelrc: false,
+        },
+      },
+      "develop-html": {
+        plugins: [],
+        presets: [],
+        options: {
+          cacheDirectory: true,
+          babelrc: false,
+        },
+      },
+      "build-css": {
+        plugins: [],
+        presets: [],
+        options: {
+          cacheDirectory: true,
+          babelrc: false,
+        },
+      },
+      "build-html": {
+        plugins: [],
+        presets: [],
+        options: {
+          cacheDirectory: true,
+          babelrc: false,
+        },
+      },
+      "build-javascript": {
+        plugins: [],
+        presets: [],
+        options: {
+          cacheDirectory: true,
+          babelrc: false,
+        },
+      },
     },
   },
   action
@@ -73,13 +104,17 @@ module.exports = (
       return state
     }
     case `SET_BABEL_OPTIONS`: {
-      return {
-        ...state,
-        options: {
-          ...state.options,
-          ...action.payload,
-        },
-      }
+      Object.keys(state.stages).forEach(stage => {
+        if (action.payload.stage && action.payload.stage !== stage) {
+          return
+        }
+
+        state.stages[stage].options = {
+          ...state.stages[stage].options,
+          ...action.payload.options,
+        }
+      })
+      return state
     }
   }
 

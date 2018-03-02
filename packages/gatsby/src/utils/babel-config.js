@@ -11,9 +11,9 @@ const testRequireError = require(`./test-require-error`).default
 const { actions } = require(`../redux/actions`)
 const { store } = require(`../redux`)
 
-const buildConfig = (abstractConfig, babelOptions, stage) => {
+const buildConfig = (abstractConfig, stage) => {
   let babelrc = {
-    ...babelOptions,
+    ...abstractConfig.options,
     presets: [],
     plugins: [],
   }
@@ -55,11 +55,7 @@ exports.buildConfig = buildConfig
 exports.createBabelConfig = async function babelConfig(program, stage) {
   await apiRunnerNode(`onCreateBabelConfig`, { stage })
   const babelrcState = store.getState().babelrc
-  let babelrc = buildConfig(
-    babelrcState.stages[stage],
-    babelrcState.options,
-    stage
-  )
+  let babelrc = buildConfig(babelrcState.stages[stage], stage)
 
   return babelrc
 }

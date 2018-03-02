@@ -102,29 +102,35 @@ describe(`Babelrc actions/reducer`, () => {
       undefined
     )
     expect(endState).toMatchSnapshot()
-    expect(
-      buildConfig(endState.stages.develop, endState.options, `develop`)
-    ).toMatchSnapshot()
-    expect(
-      buildConfig(endState.stages.develop, endState.options, `build-html`)
-    ).toMatchSnapshot()
+    expect(buildConfig(endState.stages.develop, `develop`)).toMatchSnapshot()
+    expect(buildConfig(endState.stages.develop, `build-html`)).toMatchSnapshot()
   })
 
   it(`allows setting options`, () => {
     const action = actions.setBabelOptions(
-      { sourceMaps: `inline` },
+      { options: { sourceMaps: `inline` } },
       { name: `test` }
     )
     let state = babelrcReducer(undefined, action)
-    expect(state.options.sourceMaps).toBe(`inline`)
+    expect(state.stages.develop.options.sourceMaps).toBe(`inline`)
 
     const updateAction = actions.setBabelOptions(
-      { sourceMaps: true },
+      { options: { sourceMaps: true } },
       { name: `test` }
     )
     state = babelrcReducer(state, updateAction)
 
-    expect(state.options.sourceMaps).toBe(true)
+    expect(state.stages.develop.options.sourceMaps).toBe(true)
+  })
+
+  it(`allows setting options on a particular stage`, () => {
+    const action = actions.setBabelOptions(
+      { options: { sourceMaps: `inline` }, stage: `develop` },
+      { name: `test` }
+    )
+    let state = babelrcReducer(undefined, action)
+    expect(state.stages.develop.options.sourceMaps).toBe(`inline`)
+    expect(state.stages[`develop-html`].options.sourceMaps).toBe(undefined)
   })
 
   it(`handles custom .babelrc files`, async () => {
@@ -143,7 +149,9 @@ describe(`Babelrc actions/reducer`, () => {
         actionsLog.push(actions.setBabelPlugin(args, { name: `test` }))
       },
       setBabelOptions: args => {
-        actionsLog.push(actions.setBabelOptions(args, { name: `test` }))
+        actionsLog.push(
+          actions.setBabelOptions({ options: args }, { name: `test` })
+        )
       },
     }
     actionifyBabelrc(parsed, mockActions)

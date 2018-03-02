@@ -2,12 +2,12 @@
 
 exports[`Babelrc actions/reducer allows adding a new plugin 1`] = `
 Object {
-  "options": Object {
-    "babelrc": false,
-    "cacheDirectory": true,
-  },
   "stages": Object {
     "build-css": Object {
+      "options": Object {
+        "babelrc": false,
+        "cacheDirectory": true,
+      },
       "plugins": Array [
         Object {
           "name": "test-babel-plugin",
@@ -17,6 +17,10 @@ Object {
       "presets": Array [],
     },
     "build-html": Object {
+      "options": Object {
+        "babelrc": false,
+        "cacheDirectory": true,
+      },
       "plugins": Array [
         Object {
           "name": "test-babel-plugin",
@@ -26,6 +30,10 @@ Object {
       "presets": Array [],
     },
     "build-javascript": Object {
+      "options": Object {
+        "babelrc": false,
+        "cacheDirectory": true,
+      },
       "plugins": Array [
         Object {
           "name": "test-babel-plugin",
@@ -35,6 +43,10 @@ Object {
       "presets": Array [],
     },
     "develop": Object {
+      "options": Object {
+        "babelrc": false,
+        "cacheDirectory": true,
+      },
       "plugins": Array [
         Object {
           "name": "test-babel-plugin",
@@ -44,6 +56,10 @@ Object {
       "presets": Array [],
     },
     "develop-html": Object {
+      "options": Object {
+        "babelrc": false,
+        "cacheDirectory": true,
+      },
       "plugins": Array [
         Object {
           "name": "test-babel-plugin",
@@ -58,12 +74,12 @@ Object {
 
 exports[`Babelrc actions/reducer allows adding a new preset 1`] = `
 Object {
-  "options": Object {
-    "babelrc": false,
-    "cacheDirectory": true,
-  },
   "stages": Object {
     "build-css": Object {
+      "options": Object {
+        "babelrc": false,
+        "cacheDirectory": true,
+      },
       "plugins": Array [],
       "presets": Array [
         Object {
@@ -73,6 +89,10 @@ Object {
       ],
     },
     "build-html": Object {
+      "options": Object {
+        "babelrc": false,
+        "cacheDirectory": true,
+      },
       "plugins": Array [],
       "presets": Array [
         Object {
@@ -82,6 +102,10 @@ Object {
       ],
     },
     "build-javascript": Object {
+      "options": Object {
+        "babelrc": false,
+        "cacheDirectory": true,
+      },
       "plugins": Array [],
       "presets": Array [
         Object {
@@ -91,6 +115,10 @@ Object {
       ],
     },
     "develop": Object {
+      "options": Object {
+        "babelrc": false,
+        "cacheDirectory": true,
+      },
       "plugins": Array [],
       "presets": Array [
         Object {
@@ -100,6 +128,10 @@ Object {
       ],
     },
     "develop-html": Object {
+      "options": Object {
+        "babelrc": false,
+        "cacheDirectory": true,
+      },
       "plugins": Array [],
       "presets": Array [
         Object {
@@ -114,13 +146,13 @@ Object {
 
 exports[`Babelrc actions/reducer handles custom .babelrc files 1`] = `
 Object {
-  "options": Object {
-    "babelrc": false,
-    "cacheDirectory": true,
-    "sourceMaps": "inline",
-  },
   "stages": Object {
     "build-css": Object {
+      "options": Object {
+        "babelrc": false,
+        "cacheDirectory": true,
+        "sourceMaps": "inline",
+      },
       "plugins": Array [
         Object {
           "name": "@babel/plugin-transform-runtime",
@@ -146,6 +178,11 @@ Object {
       ],
     },
     "build-html": Object {
+      "options": Object {
+        "babelrc": false,
+        "cacheDirectory": true,
+        "sourceMaps": "inline",
+      },
       "plugins": Array [
         Object {
           "name": "@babel/plugin-transform-runtime",
@@ -171,6 +208,11 @@ Object {
       ],
     },
     "build-javascript": Object {
+      "options": Object {
+        "babelrc": false,
+        "cacheDirectory": true,
+        "sourceMaps": "inline",
+      },
       "plugins": Array [
         Object {
           "name": "@babel/plugin-transform-runtime",
@@ -196,6 +238,11 @@ Object {
       ],
     },
     "develop": Object {
+      "options": Object {
+        "babelrc": false,
+        "cacheDirectory": true,
+        "sourceMaps": "inline",
+      },
       "plugins": Array [
         Object {
           "name": "@babel/plugin-transform-runtime",
@@ -221,6 +268,11 @@ Object {
       ],
     },
     "develop-html": Object {
+      "options": Object {
+        "babelrc": false,
+        "cacheDirectory": true,
+        "sourceMaps": "inline",
+      },
       "plugins": Array [
         Object {
           "name": "@babel/plugin-transform-runtime",
@@ -251,16 +303,20 @@ Object {
 
 exports[`Babelrc actions/reducer sets default presets/plugins if there's no userland babelrc 1`] = `
 Object {
-  "options": Object {
-    "babelrc": false,
-    "cacheDirectory": true,
-  },
   "stages": Object {
     "build-css": Object {
+      "options": Object {
+        "babelrc": false,
+        "cacheDirectory": true,
+      },
       "plugins": Array [],
       "presets": Array [],
     },
     "build-html": Object {
+      "options": Object {
+        "babelrc": false,
+        "cacheDirectory": true,
+      },
       "plugins": Array [
         Object {
           "name": "@babel/plugin-proposal-class-properties",
@@ -316,10 +372,18 @@ Object {
       ],
     },
     "build-javascript": Object {
+      "options": Object {
+        "babelrc": false,
+        "cacheDirectory": true,
+      },
       "plugins": Array [],
       "presets": Array [],
     },
     "develop": Object {
+      "options": Object {
+        "babelrc": false,
+        "cacheDirectory": true,
+      },
       "plugins": Array [
         Object {
           "name": "@babel/plugin-proposal-class-properties",
@@ -375,6 +439,10 @@ Object {
       ],
     },
     "develop-html": Object {
+      "options": Object {
+        "babelrc": false,
+        "cacheDirectory": true,
+      },
       "plugins": Array [],
       "presets": Array [],
     },
