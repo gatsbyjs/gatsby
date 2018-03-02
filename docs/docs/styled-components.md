@@ -32,7 +32,19 @@ module.exports = {
 
 Then in your terminal run `gatsby develop` to start the Gatsby development server.
 
-Now let's create a sample Styled Components page at `src/pages/index.js`:
+Now let's create a new `Container` component.
+Create a `components` directory at `src/components` and then, in this directory,
+create a file named `container.js` and paste the following:
+
+```javascript
+import React from "react";
+
+export default ({ children }) => (
+  <div style={{ margin: "3rem auto", maxWidth: 600 }}>{children}</div>
+);
+```
+
+Then let's create a sample Styled Components page at `src/pages/index.js`:
 
 ```jsx
 import React from "react";
@@ -103,3 +115,7 @@ export default () => (
   </Container>
 );
 ```
+
+### Final result
+
+![glamor page](../tutorial/part-two/glamor-example.png)
