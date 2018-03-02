@@ -32,7 +32,7 @@ module.exports = ({ markdownAST }, { classPrefix = `language-` } = {}) => {
     // 100% width highlighted code lines work
     node.type = `html`
     node.value = `<div class="gatsby-highlight">
-      <pre class="${className}"><code>${highlightCode(
+      <pre class="${className}"><code class="${className}">${highlightCode(
       language,
       node.value,
       highlightLines

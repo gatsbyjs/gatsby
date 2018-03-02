@@ -69,7 +69,11 @@ class Runner {
   }
 
   reportError(message) {
-    report.log(`${report.format.red(`GraphQL Error`)} ${message}`)
+    if (process.env.NODE_ENV === `production`) {
+      report.panic(`${report.format.red(`GraphQL Error`)} ${message}`)
+    } else {
+      report.log(`${report.format.red(`GraphQL Error`)} ${message}`)
+    }
   }
 
   async compileAll() {

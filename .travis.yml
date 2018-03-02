@@ -1,20 +1,40 @@
-language: node_js
-node_js:
-  - "6"
-  - "8"
+sudo: required
 
-os: [linux]
+services:
+  - docker
+
+os:
+  - linux
+
 dist: trusty
 sudo: required
-cache:
-  yarn: true
 
-before_install:
-  - curl -o- -L https://yarnpkg.com/install.sh | bash
-  - export PATH=$HOME/.yarn/bin:$PATH
+jobs:
+    include:
+        - stage: build and test
+          if: type = pull_request
+          language: node_js
+          node_js:
+            - '6'
+            - '8'
+          cache:
+            yarn: true
+          before_install:
+          - curl -o- -L https://yarnpkg.com/install.sh | bash
+          - export PATH=$HOME/.yarn/bin:$PATH
+          install:
+          - yarn run bootstrap
+          script:
+          - yarn test
 
-install:
-  - yarn run bootstrap
+        - stage: www graphql docker image build and push
+          if: (NOT type = pull_request) AND branch = master
+          env:
+            - DOCKER_USER=mikeallanson
+            - secure: "oF3OuabOsUtqf1IIo/YQA/FzVzZOQFlNqGbnu7/KO5LugtMBkxDcrT9FA33LHn1kX2TsblOaMviY5ukTVIQIAFTcaqPmYzt8phCi3x6tugcT0bfYmTWIQZ/KsZFFufB8MiLFAgILpfhpooDPFhiRZMdv/NLlTPO50iAth6/WqfgMffvtU3xpWrqxLzvAJLw1Dgx0cDsw515FcMjy2QJHmwob3eb7/PTfd0qmpQlzrspvf7PxTfGd6mZDfXsaOnqHAH36oiXe5Hwhnfoz0oePeb7d36RY1/SUX7kYBhf/gWNcFMzERGGnFjbT5RtQPAViMjCpPuPI3RsytA1DdH/I/ykobQ0fx94Vr+R3xe4+gujYDkTRek6JvnS1gj2BxJ6J8rZHOJyI0WpGNORwkOwDla2KRuJZLWBaZ6MvDH+uWeRuEDZnSlqgNERWztLpCAjx8V+MdHbI/rG4OC2AanrgD3BabGm/YwBptfc0x+23ibSlez4LtJmozx6wOzYDXhqfvRk6pD4YhXc0XXUlwBqAymFszZY7yyDkdeN+2SgBBye+dSbDqS7X26r/tyT+0NrjQH+oUM5EeHL8mH2I5Tvwx3fgaK5d3Uuvaet49CROMKb+IcDnK5qZnaD3Oq6glDgAfINPXPT3ptVjQSCDenrUbRkNR3x3bgETCPRak4/x1nw=" # DOCKER_PASS
+          before_install:
+            - chmod +x scripts/www-graphql-docker-push.sh
+          script:
+            - ./scripts/www-graphql-docker-push.sh
 
-script:
-  - yarn test
+

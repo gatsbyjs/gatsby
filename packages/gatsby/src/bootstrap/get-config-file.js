@@ -4,6 +4,7 @@ const fs = require(`fs-extra`)
 const testRequireError = require(`../utils/test-require-error`)
 const report = require(`gatsby-cli/lib/reporter`)
 const chalk = require(`chalk`)
+const path = require(`path`)
 
 function isNearMatch(
   fileName: string,
@@ -18,7 +19,7 @@ module.exports = async function getConfigFile(
   configName: string,
   distance: number = 3
 ) {
-  const configPath = `${rootDir}/${configName}`
+  const configPath = path.join(rootDir, configName)
   let configModule
   try {
     configModule = require(configPath)
@@ -30,7 +31,10 @@ module.exports = async function getConfigFile(
       })
     )
     if (!testRequireError(configPath, err)) {
-      report.error(`Could not load ${configName}`, err)
+      report.error(
+        `We encountered an error while trying to load your site's ${configName}. Please fix the error and try again.`,
+        err
+      )
       process.exit(1)
     } else if (nearMatch) {
       console.log(``)
@@ -38,6 +42,13 @@ module.exports = async function getConfigFile(
         `It looks like you were trying to add the config file? Please rename "${chalk.bold(
           nearMatch
         )}" to "${chalk.bold(configName)}"`
+      )
+      console.log(``)
+      process.exit(1)
+    } else if (fs.existsSync(path.join(rootDir, `src`, configName))) {
+      console.log(``)
+      report.error(
+        `Your ${configName} file is in the wrong place. You've placed it in the src/ directory. It must instead be at the root of your site next to your package.json file.`
       )
       console.log(``)
       process.exit(1)

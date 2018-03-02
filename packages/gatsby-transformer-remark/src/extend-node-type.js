@@ -52,7 +52,7 @@ const withPathPrefix = (url, pathPrefix) =>
   (pathPrefix + url).replace(/\/\//, `/`)
 
 module.exports = (
-  { type, store, pathPrefix, getNode, cache },
+  { type, store, pathPrefix, getNode, cache, reporter },
   pluginOptions
 ) => {
   if (type.name !== `MarkdownRemark`) {
@@ -104,6 +104,7 @@ module.exports = (
                   markdownNode,
                   files,
                   getNode,
+                  reporter,
                 },
                 plugin.pluginOptions
               )
@@ -170,6 +171,7 @@ module.exports = (
                     getNode,
                     files,
                     pathPrefix,
+                    reporter,
                   },
                   plugin.pluginOptions
                 )

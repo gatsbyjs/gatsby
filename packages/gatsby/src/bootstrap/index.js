@@ -1,13 +1,13 @@
 /* @flow */
 const Promise = require(`bluebird`)
 
-const glob = require(`glob`)
 const _ = require(`lodash`)
 const slash = require(`slash`)
 const fs = require(`fs-extra`)
 const md5File = require(`md5-file/promise`)
 const crypto = require(`crypto`)
 const del = require(`del`)
+const path = require(`path`)
 
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const { graphql } = require(`graphql`)
@@ -57,15 +57,17 @@ module.exports = async (args: BootstrapArgs) => {
     payload: program,
   })
 
-  // Delete html files from the public directory as we don't want deleted
-  // pages from previous builds to stick around.
-  let activity = report.activityTimer(`delete html files from previous builds`)
+  // Delete html and css files from the public directory as we don't want
+  // deleted pages and styles from previous builds to stick around.
+  let activity = report.activityTimer(
+    `delete html and css files from previous builds`
+  )
   activity.start()
   await del([
-    `public/*.html`,
-    `public/**/*.html`,
+    `public/*.{html,css}`,
+    `public/**/*.{html,css}`,
     `!public/static`,
-    `!public/static/**/*.html`,
+    `!public/static/**/*.{html,css}`,
   ])
   activity.end()
 
@@ -173,9 +175,17 @@ module.exports = async (args: BootstrapArgs) => {
 
   // Find plugins which implement gatsby-browser and gatsby-ssr and write
   // out api-runners for them.
-  const hasAPIFile = (env, plugin) =>
-    // TODO make this async...
-    glob.sync(`${plugin.resolve}/gatsby-${env}*`)[0]
+  const hasAPIFile = (env, plugin) => {
+    // The plugin loader has disabled SSR APIs for this plugin. Usually due to
+    // multiple implementations of an API that can only be implemented once
+    if (env === `ssr` && plugin.skipSSR === true) return undefined
+
+    const envAPIs = plugin[`${env}APIs`]
+    if (envAPIs && Array.isArray(envAPIs) && envAPIs.length > 0) {
+      return slash(path.join(plugin.resolve, `gatsby-${env}.js`))
+    }
+    return undefined
+  }
 
   const ssrPlugins = _.filter(
     flattenedPlugins.map(plugin => {

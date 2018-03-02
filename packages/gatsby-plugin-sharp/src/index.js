@@ -1,6 +1,6 @@
 const sharp = require(`sharp`)
 const crypto = require(`crypto`)
-const imageSize = require(`image-size`)
+const imageSize = require(`probe-image-size`)
 const _ = require(`lodash`)
 const Promise = require(`bluebird`)
 const fs = require(`fs`)
@@ -11,9 +11,24 @@ const imageminWebp = require(`imagemin-webp`)
 const queue = require(`async/queue`)
 const path = require(`path`)
 
+const imageSizeCache = new Map()
+const getImageSize = file => {
+  if (
+    process.env.NODE_ENV !== `test` &&
+    imageSizeCache.has(file.internal.contentDigest)
+  ) {
+    return imageSizeCache.get(file.internal.contentDigest)
+  } else {
+    const dimensions = imageSize.sync(
+      toArray(fs.readFileSync(file.absolutePath))
+    )
+    imageSizeCache.set(file.internal.contentDigest, dimensions)
+    return dimensions
+  }
+}
+
 const duotone = require(`./duotone`)
 const { boundActionCreators } = require(`gatsby/dist/redux/actions`)
-const report = require(`gatsby-cli/lib/reporter`)
 
 // Promisify the sharp prototype (methods) to promisify the alternative (for
 // raw) callback-accepting toBuffer(...) method
@@ -33,8 +48,20 @@ const bar = new ProgressBar(
   }
 )
 
+const reportError = (message, err, reporter) => {
+  if (reporter) {
+    reporter.error(message, err)
+  } else {
+    console.error(message, err)
+  }
+
+  if (process.env.gatsby_executing_command === `build`) {
+    process.exit(1)
+  }
+}
+
 let totalJobs = 0
-const processFile = (file, jobs, cb) => {
+const processFile = (file, jobs, cb, reporter) => {
   // console.log("totalJobs", totalJobs)
   bar.total = totalJobs
 
@@ -47,7 +74,7 @@ const processFile = (file, jobs, cb) => {
   try {
     pipeline = sharp(file).rotate()
   } catch (err) {
-    report.error(`Failed to process image ${file}`, err)
+    reportError(`Failed to process image ${file}`, err, reporter)
     jobs.forEach(job => job.outsideReject(err))
     return
   }
@@ -86,6 +113,7 @@ const processFile = (file, jobs, cb) => {
       })
       .tiff({
         quality: args.quality,
+        force: args.toFormat === `tiff`,
       })
 
     // grayscale
@@ -119,7 +147,7 @@ const processFile = (file, jobs, cb) => {
       )
 
       if (err) {
-        report.error(`Failed to process image ${file}`, err)
+        reportError(`Failed to process image ${file}`, err, reporter)
         job.outsideReject(err)
       } else {
         job.outsideResolve()
@@ -180,7 +208,7 @@ const q = queue((task, callback) => {
   task(callback)
 }, 1)
 
-const queueJob = job => {
+const queueJob = (job, reporter) => {
   const inputFileKey = job.file.absolutePath.replace(/\./g, `%2E`)
   const outputFileKey = job.outputPath.replace(/\./g, `%2E`)
   const jobPath = `${inputFileKey}.${outputFileKey}`
@@ -217,20 +245,25 @@ const queueJob = job => {
         { name: `gatsby-plugin-sharp` }
       )
       // We're now processing the file's jobs.
-      processFile(job.file.absolutePath, jobs, () => {
-        boundActionCreators.endJob(
-          {
-            id: `processing image ${job.file.absolutePath}`,
-          },
-          { name: `gatsby-plugin-sharp` }
-        )
-        cb()
-      })
+      processFile(
+        job.file.absolutePath,
+        jobs,
+        () => {
+          boundActionCreators.endJob(
+            {
+              id: `processing image ${job.file.absolutePath}`,
+            },
+            { name: `gatsby-plugin-sharp` }
+          )
+          cb()
+        },
+        reporter
+      )
     })
   }
 }
 
-function queueImageResizing({ file, args = {} }) {
+function queueImageResizing({ file, args = {}, reporter }) {
   const defaultArgs = {
     width: 400,
     quality: 50,
@@ -283,7 +316,7 @@ function queueImageResizing({ file, args = {} }) {
   let width
   let height
   // Calculate the eventual width/height of the image.
-  const dimensions = imageSize(file.absolutePath)
+  const dimensions = getImageSize(file)
   let aspectRatio = dimensions.width / dimensions.height
   const originalName = file.base
 
@@ -298,7 +331,7 @@ function queueImageResizing({ file, args = {} }) {
     // Use the aspect ratio of the image to calculate what will be the resulting
     // height.
     width = options.width
-    height = options.width / aspectRatio
+    height = Math.round(options.width / aspectRatio)
   }
 
   // Create job and process.
@@ -312,7 +345,7 @@ function queueImageResizing({ file, args = {} }) {
     outputPath: filePath,
   }
 
-  queueJob(job)
+  queueJob(job, reporter)
 
   // Prefix the image src.
   const prefixedSrc = options.pathPrefix + `/static` + imgSrc
@@ -328,7 +361,7 @@ function queueImageResizing({ file, args = {} }) {
   }
 }
 
-async function notMemoizedbase64({ file, args = {} }) {
+async function notMemoizedbase64({ file, args = {}, reporter }) {
   const defaultArgs = {
     width: 20,
     quality: 50,
@@ -343,7 +376,7 @@ async function notMemoizedbase64({ file, args = {} }) {
   try {
     pipeline = sharp(file.absolutePath).rotate()
   } catch (err) {
-    report.error(`Failed to process image ${file.absolutePath}`, err)
+    reportError(`Failed to process image ${file.absolutePath}`, err, reporter)
     return null
   }
 
@@ -397,7 +430,7 @@ async function base64(args) {
   return await memoizedBase64(args)
 }
 
-async function responsiveSizes({ file, args = {} }) {
+async function responsiveSizes({ file, args = {}, reporter }) {
   const defaultArgs = {
     maxWidth: 800,
     quality: 50,
@@ -418,7 +451,7 @@ async function responsiveSizes({ file, args = {} }) {
   try {
     metadata = await sharp(file.absolutePath).metadata()
   } catch (err) {
-    report.error(`Failed to process image ${file.absolutePath}`, err)
+    reportError(`Failed to process image ${file.absolutePath}`, err, reporter)
     return null
   }
 
@@ -477,6 +510,7 @@ async function responsiveSizes({ file, args = {} }) {
     return queueImageResizing({
       file,
       args: arrrgs, // matey
+      reporter,
     })
   })
 
@@ -491,7 +525,7 @@ async function responsiveSizes({ file, args = {} }) {
   }
 
   // Get base64 version
-  const base64Image = await base64({ file, args: base64Args })
+  const base64Image = await base64({ file, args: base64Args, reporter })
 
   // Construct src and srcSet strings.
   const originalImg = _.maxBy(images, image => image.width).src
@@ -517,7 +551,7 @@ async function responsiveSizes({ file, args = {} }) {
   }
 }
 
-async function resolutions({ file, args = {} }) {
+async function resolutions({ file, args = {}, reporter }) {
   const defaultArgs = {
     width: 400,
     quality: 50,
@@ -537,7 +571,7 @@ async function resolutions({ file, args = {} }) {
   sizes.push(options.width * 1.5)
   sizes.push(options.width * 2)
   sizes.push(options.width * 3)
-  const dimensions = imageSize(file.absolutePath)
+  const dimensions = getImageSize(file)
 
   const filteredSizes = sizes.filter(size => size <= dimensions.width)
 
@@ -573,6 +607,7 @@ async function resolutions({ file, args = {} }) {
     return queueImageResizing({
       file,
       args: arrrgs,
+      reporter,
     })
   })
 
@@ -583,7 +618,7 @@ async function resolutions({ file, args = {} }) {
   }
 
   // Get base64 version
-  const base64Image = await base64({ file, args: base64Args })
+  const base64Image = await base64({ file, args: base64Args, reporter })
 
   const fallbackSrc = images[0].src
   const srcSet = images
@@ -621,7 +656,7 @@ async function resolutions({ file, args = {} }) {
   }
 }
 
-async function notMemoizedtraceSVG({ file, args, fileArgs }) {
+async function notMemoizedtraceSVG({ file, args, fileArgs, reporter }) {
   const potrace = require(`potrace`)
   const trace = Promise.promisify(potrace.trace)
   const defaultArgs = {
@@ -646,7 +681,7 @@ async function notMemoizedtraceSVG({ file, args, fileArgs }) {
   try {
     pipeline = sharp(file.absolutePath).rotate()
   } catch (err) {
-    report.error(`Failed to process image ${file.absolutePath}`, err)
+    reportError(`Failed to process image ${file.absolutePath}`, err, reporter)
     return null
   }
 
@@ -722,10 +757,20 @@ function encodeOptimizedSVGDataUri(svgString) {
 
 const optimize = svg => {
   const SVGO = require(`svgo`)
-  const svgo = new SVGO({ multipass: true, floatPrecision: 1 })
+  const svgo = new SVGO({ multipass: true, floatPrecision: 0 })
   return new Promise((resolve, reject) => {
     svgo.optimize(svg, ({ data }) => resolve(data))
   })
+}
+
+function toArray(buf) {
+  var arr = new Array(buf.length)
+
+  for (var i = 0; i < buf.length; i++) {
+    arr[i] = buf[i]
+  }
+
+  return arr
 }
 
 exports.queueImageResizing = queueImageResizing

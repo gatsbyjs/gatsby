@@ -13,7 +13,7 @@ What if you want custom UI interactions embedded in your Markdown?
 
 By using `rehype-react` with the `htmlAst` field, you can write custom React components and then reference them from your Markdown files.
 
-*Note: this functionality was added in version 1.7.31 of gatsby-transformer-remark*
+_Note: this functionality was added in version 1.7.31 of gatsby-transformer-remark_
 
 ## Writing a component
 

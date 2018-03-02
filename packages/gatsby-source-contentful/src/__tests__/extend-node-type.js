@@ -51,6 +51,7 @@ describe(`contentful extend node type`, () => {
         width: 450,
         height: 399,
         quality: 50,
+        background: `rgb:000000`,
       })
       expect(resp.srcSet.length).toBeGreaterThan(1)
       expect(resp).toMatchSnapshot()
@@ -96,6 +97,7 @@ describe(`contentful extend node type`, () => {
         maxWidth: 450,
         maxHeight: 399,
         quality: 50,
+        background: `rgb:000000`,
       })
       expect(resp.srcSet.length).toBeGreaterThan(1)
       expect(resp).toMatchSnapshot()
@@ -117,6 +119,7 @@ describe(`contentful extend node type`, () => {
         width: 450,
         height: 399,
         quality: 50,
+        background: `rgb:000000`,
       })
       expect(resp).toMatchSnapshot()
     })
