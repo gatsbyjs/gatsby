@@ -8,6 +8,8 @@ title: GraphQL Reference
 
 This page will walk you through a series of GraphQL queries, each designed to demonstrate a particular feature of GraphQL. You'll be querying the *real* schema used on gatsbyjs.org so feel free to experiment and poke around the innards of our site!
 
+You'll be using GraphiQL, an interactive editor you can also use [while building your Gatsby site](/tutorial/part-four/#introducing-graphiql).  
+
 ## Basic query
 
 Let's start with the basics, pulling up the site `title` from your `gatsby-config.js`'s `siteMetaData`. Here the query is on the left and the results are on the right.
