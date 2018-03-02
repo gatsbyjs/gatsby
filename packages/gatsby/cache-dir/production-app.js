@@ -12,7 +12,7 @@ import history from "./history"
 window.___history = history
 import emitter from "./emitter"
 window.___emitter = emitter
-import { isEqual } from "lodash"
+import shallowCompare from "shallow-compare"
 import pages from "./pages.json"
 import redirects from "./redirects.json"
 import ComponentRenderer from "./component-renderer"
@@ -64,7 +64,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     }
 
     // If we're already at this location, do nothing.
-    if (isEqual(window.location, location)) {
+    if (shallowCompare(window.location, location)) {
       return
     }
 
