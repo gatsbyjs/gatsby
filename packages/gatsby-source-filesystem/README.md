@@ -117,6 +117,61 @@ exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
 
 ### createRemoteFileNode
 
+When building source plugins for remote data sources such as headless CMSs, their data will often link to files stored remotely that are often convenient to download so you can work with locally.
+
+The `createRemoteFileNode` helper makes it easy to download remote files and add them to your site's GraphQL schema.
+
 ```javascript
-TO DO
+createRemoteFileNode({
+  // The source url of the remote file
+  url: `https://example.com/a-file.jpg`,
+  
+  // The redux store which is passed to all Node APIs.
+  store,
+  
+  // Gatsby's cache which the helper uses to check if the file has been downloaded already. It's passed to all Node APIs.
+  cache,
+  
+  // The boundActionCreator used to create nodes
+  createNode,
+  
+  // OPTIONAL
+  // Adds htaccess authentication to the download request if passed in.
+  auth: { user: `USER`, password: `PASSWORD` },
+})
+```
+
+#### Example usage
+
+The following example is pulled from [gatsby-source-wordpress](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress). Downloaded files are created as `File` nodes and then linked to the WordPress Media node, so it can be queried both as a regular `File` node and from the `localFile` field in the Media node.
+
+```javascript
+const { createRemoteFileNode } = require(`gatsby-source-filesystem`);
+
+exports.downloadMediaFiles = ({ nodes, store, cache, createNode, _auth }) => {
+  nodes.map(async node => {
+    let fileNode
+    // Ensures we are only processing Media Files
+    // `wordpress__wp_media` is the media file type name for Wordpress
+    if (node.__type === `wordpress__wp_media`) {
+      try {
+        fileNode = await createRemoteFileNode({
+            url: node.source_url,
+            store,
+            cache,
+            createNode,
+            auth: _auth,
+          })
+        } catch (e) {
+          // Ignore
+        }
+      }
+
+      // Adds a field `localFile` to the node
+      // ___NODE appendix tells Gatsby that this field will link to another node
+      if (fileNode) {
+        node.localFile___NODE = fileNode.id
+      }
+  })
+};
 ```
