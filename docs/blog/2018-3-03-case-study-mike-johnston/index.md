@@ -1,13 +1,13 @@
 ---
 title: "Case Study: Mike Johnston for Colorado"
-date: 2018-02-12
+date: 2018-03-03
 author: Brandon Konkle
 image: mike-johnston-homepage.png
 ---
 
 ### How we used React, Headless WordPress, GraphQL & Gatsby to build Mike’s new online platform
 
-[Mike Johnston](https://www.mikejohnstonforcolorado.com) is a Colorado gubernatorial candidate with an ambitious vision. When I heard about his ideas for an online platform to truly engage with his constituents and give them a real voice, I was excited about the opportunity to make his ideas into reality!
+[Ecliptic](http://www.ecliptic.io) is a small development team out of Broomfield, Colorado. We build everything from high-performance content-driven sites to richly interactive web and mobile applications using React, GraphQL, and functional programming. [Mike Johnston](https://www.mikejohnstonforcolorado.com) is a Colorado gubernatorial candidate with an ambitious vision. When we heard about his ideas for an online platform to truly engage with his constituents and give them a real voice, we were excited about the opportunity to make his ideas into reality!
 
 While we’re still a few phases away from seeing Mike’s ultimate vision come to fruition, we’ve got the foundations in place and we’re putting the finishing touches on a gorgeous new interface for Mike’s homepage. Check it out at [https://www.mikejohnstonforcolorado.com](https://www.mikejohnstonforcolorado.com)!
 
@@ -15,25 +15,25 @@ While we’re still a few phases away from seeing Mike’s ultimate vision come 
 
 Our goal was to provide a solid architecture to build a long-term future on top of. In later phases the site will become a full-fledged web application with an organizing and fundraising platform built-in, and the goal beyond that is to create an innovative “open source policy” platform to involve citizens in the policy-making process like never before!
 
-To execute on this effectively, I prioritized a few architectural goals:
+To execute on this effectively, we prioritized a few architectural goals:
 
-- **System Resources** — Sadly, public sector software budgets often don’t match those of their private sector counterparts. I wanted to pursue a system that would not require a large deployment, a lot of performance tuning, and constant monitoring and maintenance.
-- **Security** — It’s no secret that there are bad actors across the world that would love to influence campaigns and governance wherever they can. I wanted to provide strong protections to prevent hackers from gaining access and interfering.
-- **Maintainability** — If this stack is going to support a growing engagement and policy platform on a lean budget, it needs to be easy to work on. I wanted to maintain best practices wherever possible and use techniques that would be easy for someone to come in behind me and build on.
+- **System Resources** — Sadly, public sector software budgets often don’t match those of their private sector counterparts. We wanted to pursue a system that would not require a large deployment, a lot of performance tuning, and constant monitoring and maintenance.
+- **Security** — It’s no secret that there are bad actors across the world that would love to influence campaigns and governance wherever they can. We wanted to provide strong protections to prevent hackers from gaining access and interfering.
+- **Maintainability** — If this stack is going to support a growing engagement and policy platform on a lean budget, it needs to be easy to work on. We wanted to maintain best practices wherever possible and use techniques that would be easy for someone to come in behind me and build on.
 
 ## Content Management with WordPress
 
-The first decision I made was to use the ubiquitous [WordPress](http://wordpress.org) CMS to manage dynamic homepage content. WordPress has a lot of rough edges, but if you can work around them it provides an excellent admin with rich content editing. It’s also very widely used, so there’s a good chance that team members have had experience with it previously.
+The first decision we made was to use the ubiquitous [WordPress](http://wordpress.org) CMS to manage dynamic homepage content. WordPress has a lot of rough edges, but if you can work around them it provides an excellent admin with rich content editing. It’s also very widely used, so there’s a good chance that team members have had experience with it previously.
 
 The downside is that WordPress is implemented with [PHP](http://www.php.net/), and it takes some effort to host and maintain it in an efficient way. As traffic grows, so does system load. When a site achieves great success, it also is introduced to a host of new performance problems caused by heavy traffic. Caching and query optimization can mitigate this greatly, but it takes a lot of time and effort to configure and maintain. In addition, it can be challenging to use modern front-end tools like React to their full potential.
 
 In addition, because WordPress is so broadly adopted it is often the subject of a lot of hacking effort. As exploits are discovered, they can be widely utilized because of the number of targets available.
 
-To work around these issues, I decided to go with a “headless” WordPress instance that only functions as an admin interface. Using tools like [Advanced Custom Fields](https://www.advancedcustomfields.com/) and the [Custom Post Type UI](https://wordpress.org/plugins/custom-post-type-ui/), we created a very flexible repository for homepage content that is then available via the [REST API](https://developer.wordpress.org/rest-api/). This frees us up to use whatever frontend tools are the best for the job, and adds a layer of separation from WordPress’s performance and security challenges.
+To work around these issues, we decided to go with a “headless” WordPress instance that only functions as an admin interface. Using tools like [Advanced Custom Fields](https://www.advancedcustomfields.com/) and the [Custom Post Type UI](https://wordpress.org/plugins/custom-post-type-ui/), we created a very flexible repository for homepage content that is then available via the [REST API](https://developer.wordpress.org/rest-api/). This frees us up to use whatever frontend tools are the best for the job, and adds a layer of separation from WordPress’s performance and security challenges.
 
 ## Static Site Generation with Gatsby
 
-Since I had complete freedom on the front end, I wanted to pursue a solution based on [React](https://reactjs.org/), my framework of choice in the browser. I’ve used [Server Side Rendering](https://reactjs.org/docs/react-dom-server.html) solutions in the past based on [Node](https://nodejs.org/en/) and [Express](https://expressjs.com/), but over time they run into some of the same performance issues that PHP does. Server load is always a significant issue on dynamically rendered high-traffic applications, because they typically need to interact with a variety of other systems to construct each page. As concurrent requests grow, so does response time.
+Since we had complete freedom on the front end, we wanted to pursue a solution based on [React](https://reactjs.org/), our framework of choice in the browser. I’ve used [Server Side Rendering](https://reactjs.org/docs/react-dom-server.html) solutions in the past based on [Node](https://nodejs.org/en/) and [Express](https://expressjs.com/), but over time they run into some of the same performance issues that PHP does. Server load is always a significant issue on dynamically rendered high-traffic applications, because they typically need to interact with a variety of other systems to construct each page. As concurrent requests grow, so does response time.
 
 One way to sidestep a great deal of these concerns is to make use of as much static content as possible. Static content is astonishingly light on system resources to serve up even at higher traffic levels, and it can be propagated to worldwide [Content Delivery Networks](https://en.wikipedia.org/wiki/Content_delivery_network) and served up to local users at lightning speeds. Static content traditionally has two big problems, however. It’s not trivial for non-technical users to update with frequently changing content, and it’s typically not very interactive or responsive.
 
@@ -41,7 +41,7 @@ One way to sidestep a great deal of these concerns is to make use of as much sta
 
 ## WordPress Integration with Triggered Builds
 
-To connect with the content, I used Gatsby’s supported WordPress REST API plugin. This uses WordPress’s API discovery to identify all available endpoints, and then retrieves all content available from each one. It then makes the data available in its own [GraphQL](http://graphql.org/) schema, which it uses to power the build system API. This ends up being a novel and quite effective way to make it easy for front end developers to integrate with the data generated by the build system. Using a guided graphical query system, developers can discover the data available to them and test out different ways of querying and mutating it before they ever use it in their React components.
+To connect with the content, we used Gatsby’s supported WordPress REST API plugin. This uses WordPress’s API discovery to identify all available endpoints, and then retrieves all content available from each one. It then makes the data available in its own [GraphQL](http://graphql.org/) schema, which it uses to power the build system API. This ends up being a novel and quite effective way to make it easy for front end developers to integrate with the data generated by the build system. Using a guided graphical query system, developers can discover the data available to them and test out different ways of querying and mutating it before they ever use it in their React components.
 
 Using the custom fields and post types, we built out a structure for managing content in a variety of different places on the site using the WordPress admin. Media is made available via the REST API, and Gatsby downloads each file used in the build locally so that it can apply image processing and responsive sizing. Using small custom scripts in the Gatsby project root, developers can turn WordPress content into GraphQL data that they can use anywhere on a page.
 
@@ -59,14 +59,12 @@ Using tools like [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) 
 
 ## The Trail Ahead
 
-The WordPress solution is excellent for managing dynamic editorial content, but as we build out more interactive features we need to begin interacting with an API to show content that changes depending on the logged in user, or user-generated content. We could begin interacting with the WordPress API directly, but that works against the aforementioned security and performance benefits of using a headless instance and a static build.
+The WordPress solution is excellent for managing dynamic editorial content, but as we build out more interactive features we need to begin interacting with an API to show content that changes depending on the logged in user, or user-generated content. We could interact with the WordPress API directly, but that works against the aforementioned security and performance benefits of using a headless instance and a static build.
 
-Instead, I decided to go with an [Apollo](https://www.apollographql.com/) GraphQL server so that I could interact with the API server the same way we were interacting with the Gatsby content system. Using standard Express middleware and Apollo tools, I was able to quickly define a schema that both my server and client code can programmatically understand and help type-check during development. It’s working quite well to help us quickly build out interfaces with minimal data issues.
+Instead, we decided to go with an [Apollo](https://www.apollographql.com/) GraphQL server so that we could interact with the API server the same way we were interacting with the Gatsby content system. Using standard Express middleware and Apollo tools, we were able to quickly define a schema that both my server and client code can programmatically understand and help type-check during development. It’s working quite well to help us quickly build out interfaces with minimal data issues.
 
 Security and performance will obviously become greater concerns as the interactive application is built out, but we have more time to deal with that while the homepage is already up and running and serving up dynamic content with the performance of static files.
 
-## We’re Available!
+## Let's Chat!
 
-While Ecliptic is finishing up the interactive features for the site, we also have wide availability opening up in February for new contracts! We can get started right away on your next project, from high-performance content-driven sites to richly interactive web and mobile applications.
-
-We’ll be updating our own [homepage](http://www.ecliptic.io) in the coming weeks with a new design and integrated chat that connects directly to our team’s Slack account. In the meantime, [send me an email](mailto:brandon@ecliptic.io) and let’s talk!
+Have questions about the setup and future plans, or comments about our approach? We're launching a branch new [homepage](http://www.ecliptic.io) this weekend with a new design and integrated chat that connects directly to our team’s Slack account. In the meantime, [send me an email](mailto:brandon@ecliptic.io) and let’s talk!
