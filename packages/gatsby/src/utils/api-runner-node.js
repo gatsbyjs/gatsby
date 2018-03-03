@@ -161,6 +161,9 @@ module.exports = async (api, args = {}, pluginSource) =>
       },
       (err, results) => {
         if (err) {
+          if (process.env.NODE_ENV === `production`) {
+            return reporter.panic(`${pluginName} returned an error`, err)
+          }
           reporter.error(`${pluginName} returned an error`, err)
         }
         // Remove runner instance
