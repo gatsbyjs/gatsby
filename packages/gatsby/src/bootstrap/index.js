@@ -1,27 +1,25 @@
 /* @flow */
 
-const glob = require(`glob`)
 const _ = require(`lodash`)
 const slash = require(`slash`)
 const fs = require(`fs-extra`)
 const md5File = require(`md5-file/promise`)
 const crypto = require(`crypto`)
 const del = require(`del`)
+const path = require(`path`)
 
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const { graphql } = require(`graphql`)
 const { store, emitter } = require(`../redux`)
 const loadPlugins = require(`./load-plugins`)
 const { initCache } = require(`../utils/cache`)
-const report = require(`gatsby-cli/lib/reporter`)
+const reporter = require(`gatsby-cli/lib/reporter`)
 const getConfigFile = require(`./get-config-file`)
 
 // Show stack trace on unhandled promises.
 process.on(`unhandledRejection`, (reason, p) => {
   report.panic(reason)
 })
-
-type ApiType = "browser" | "ssr"
 
 const {
   extractQueries,
@@ -58,15 +56,17 @@ module.exports = async (args: BootstrapArgs) => {
     payload: program,
   })
 
-  // Delete html files from the public directory as we don't want deleted
-  // pages from previous builds to stick around.
-  let activity = report.activityTimer(`delete html files from previous builds`)
+  // Delete html and css files from the public directory as we don't want
+  // deleted pages and styles from previous builds to stick around.
+  let activity = report.activityTimer(
+    `delete html and css files from previous builds`
+  )
   activity.start()
   await del([
-    `public/*.html`,
-    `public/**/*.html`,
+    `public/*.{html,css}`,
+    `public/**/*.{html,css}`,
     `!public/static`,
-    `!public/static/**/*.html`,
+    `!public/static/**/*.{html,css}`,
   ])
   activity.end()
 
@@ -180,51 +180,85 @@ module.exports = async (args: BootstrapArgs) => {
 
   // Find plugins which implement gatsby-browser and gatsby-ssr and write
   // out api-runners for them.
-  function getPluginsForType(type: ApiType) {
-    return flattenedPlugins
-      .map(plugin => {
-        return {
-          resolve: glob.sync(`${plugin.resolve}/gatsby-${type}*`)[0],
-          options: plugin.pluginOptions,
-        }
-      })
-      .filter(plugin => plugin.resolve)
+  const hasAPIFile = (env, plugin) => {
+    // The plugin loader has disabled SSR APIs for this plugin. Usually due to
+    // multiple implementations of an API that can only be implemented once
+    if (env === `ssr` && plugin.skipSSR === true) return undefined
+
+    const envAPIs = plugin[`${env}APIs`]
+    if (envAPIs && Array.isArray(envAPIs) && envAPIs.length > 0) {
+      return slash(path.join(plugin.resolve, `gatsby-${env}.js`))
+    }
+    return undefined
   }
 
-  function appendPluginsToFile(type: ApiType) {
-    const filePath = `${siteDir}/api-runner-${type}.js`
-    const plugins = getPluginsForType(type)
-    let src
-    try {
-      src = fs.readFileSync(filePath, `utf-8`)
-    } catch (err) {
-      report.panic(`Failed to read ${filePath}`, err)
-    }
+  const ssrPlugins = _.filter(
+    flattenedPlugins.map(plugin => {
+      return {
+        resolve: hasAPIFile(`ssr`, plugin),
+        options: plugin.pluginOptions,
+      }
+    }),
+    plugin => plugin.resolve
+  )
+  const browserPlugins = _.filter(
+    flattenedPlugins.map(plugin => {
+      return {
+        resolve: hasAPIFile(`browser`, plugin),
+        options: plugin.pluginOptions,
+      }
+    }),
+    plugin => plugin.resolve
+  )
 
-    fs.writeFileSync(
-      filePath,
-      report.stripIndent`
-        var preferDefault = m => (m && m.default) || m;
-        var plugins = [
-          ${plugins
-            .map(
-              ({ options, resolve }) => `
-          {
-            plugin: preferDefault(require('${resolve}')),
-            options: ${JSON.stringify(options)},
-          }`
-            )
-            .join(`,`)}
-        ];
+  let browserAPIRunner = ``
 
-        ${src}
-      `,
+  try {
+    browserAPIRunner = fs.readFileSync(
+      `${siteDir}/api-runner-browser.js`,
       `utf-8`
     )
+  } catch (err) {
+    report.panic(`Failed to read ${siteDir}/api-runner-browser.js`, err)
   }
 
-  appendPluginsToFile(`browser`)
-  appendPluginsToFile(`ssr`)
+  const browserPluginsRequires = browserPlugins
+    .map(
+      plugin =>
+        `{
+      plugin: require('${plugin.resolve}'),
+      options: ${JSON.stringify(plugin.options)},
+    }`
+    )
+    .join(`,`)
+
+  browserAPIRunner = `var plugins = [${browserPluginsRequires}]\n${browserAPIRunner}`
+
+  let sSRAPIRunner = ``
+
+  try {
+    sSRAPIRunner = fs.readFileSync(`${siteDir}/api-runner-ssr.js`, `utf-8`)
+  } catch (err) {
+    report.panic(`Failed to read ${siteDir}/api-runner-ssr.js`, err)
+  }
+
+  const ssrPluginsRequires = ssrPlugins
+    .map(
+      plugin =>
+        `{
+      plugin: require('${plugin.resolve}'),
+      options: ${JSON.stringify(plugin.options)},
+    }`
+    )
+    .join(`,`)
+  sSRAPIRunner = `var plugins = [${ssrPluginsRequires}]\n${sSRAPIRunner}`
+
+  fs.writeFileSync(
+    `${siteDir}/api-runner-browser.js`,
+    browserAPIRunner,
+    `utf-8`
+  )
+  fs.writeFileSync(`${siteDir}/api-runner-ssr.js`, sSRAPIRunner, `utf-8`)
 
   activity.end()
   /**

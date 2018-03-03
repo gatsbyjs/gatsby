@@ -1,8 +1,9 @@
 [![Travis CI Build Status](https://travis-ci.org/gatsbyjs/gatsby.svg?branch=master)](https://travis-ci.org/gatsbyjs/gatsby)
 [![npm package](https://img.shields.io/npm/v/gatsby.svg?style=flat-square)](https://www.npmjs.org/package/gatsby)
-[![npm package](https://img.shields.io/npm/dm/gatsby.svg)](https://www.npmjs.org/package/gatsby)
+[![npm package](https://img.shields.io/npm/dm/gatsby.svg)](https://npmcharts.com/compare/gatsby?minimal=true)
 [![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/gatsby-js)
 [![gatsby channel on discord](https://img.shields.io/badge/discord-gatsby%40reactiflux-738bd7.svg?style=flat-square)](https://discord.gg/0ZcbPKXt5bVoxkfV)
+[![Open Source Helpers](https://www.codetriage.com/gatsbyjs/gatsby/badges/users.svg)](https://www.codetriage.com/gatsbyjs/gatsby)
 [![Twitter Follow](https://img.shields.io/twitter/follow/gatsbyjs.svg?style=social)](https://twitter.com/gatsbyjs)
 
 <img alt="Gatsby" src="https://www.gatsbyjs.org/monogram.svg" width="100">
@@ -159,6 +160,13 @@ Websites built with Gatsby:
 * [Darren Britton's Portfolio](https://darrenbritton.com) ([source](https://github.com/darrenbritton/darrenbritton.github.io))
 * [Portfolio / Blog of Preston Richey](https://prestonrichey.com/) ([source](https://github.com/prichey/prestonrichey.com))
 * [Beach Hut Poole](https://www.beachhutpoole.co.uk/)
+* [In Sowerby Bridge](https://www.insowerbybridge.co.uk/)
+* [枫上雾棋的日志](https://fengshangwuqi.github.io/fswq-blog/)
+* [Juliette Pretot's Portfolio](https://juliette.sh)
+* [Théâtres Parisiens](http://theatres-parisiens.fr/) ([source](https://github.com/phacks/theatres-parisiens))
+* [Jia Hao's Website / Blog](https://jiahao.codes/) ([source](https://github.com/jiahaog/jiahao.codes))
+* [Orbit FM Podcasts](https://www.orbit.fm/) ([source](https://github.com/agarrharr/orbit.fm))
+* [Michele Mazzucco's Portfolio](https://www.michelemazzucco.it) ([source](https://github.com/michelemazzucco/michelemazzucco.it))
 
 ## Docs
 

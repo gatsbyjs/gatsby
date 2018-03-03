@@ -10,12 +10,12 @@
     "@babel/runtime": "^7.0.0-beta.38",
     "async": "^2.1.2",
     "bluebird": "^3.5.0",
-    "image-size": "^0.6.2",
     "imagemin": "^5.2.2",
     "imagemin-pngquant": "^5.0.0",
     "imagemin-webp": "^4.0.0",
     "lodash": "^4.17.4",
     "potrace": "^2.1.1",
+    "probe-image-size": "^3.2.0",
     "progress": "^1.1.8",
     "sharp": "lovell/sharp#prebuild",
     "svgo": "^0.7.2"
@@ -36,10 +36,7 @@
   "peerDependencies": {
     "gatsby": ">2.0.0"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby.git"
-  },
+  "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp",
   "scripts": {
     "build": "babel src --out-dir . --ignore __tests__",
     "prepublish": "cross-env NODE_ENV=production npm run build",

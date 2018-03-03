@@ -10,7 +10,7 @@
     "@babel/runtime": "^7.0.0-beta.38",
     "axios": "^0.16.1",
     "bluebird": "^3.5.0",
-    "gatsby-source-filesystem": "^2.0.0-alpha.f20ac0ed",
+    "gatsby-source-filesystem": "^2.0.0-alpha.2",
     "lodash": "^4.17.4"
   },
   "devDependencies": {
@@ -25,10 +25,7 @@
     "gatsby-source-plugin"
   ],
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby.git"
-  },
+  "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal",
   "scripts": {
     "build": "babel src --out-dir . --ignore __tests__",
     "prepublish": "cross-env NODE_ENV=production npm run build",

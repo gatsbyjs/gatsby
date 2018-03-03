@@ -42,7 +42,6 @@ class Post extends React.Component {
         }}
         css={{
           display: `block`,
-          backgroundColor: `lightgray`,
           flex: `1 0 0%`,
           marginRight: rhythm(1 / 8),
           width: `100%`,
@@ -61,14 +60,11 @@ class Post extends React.Component {
             flexDirection: `column`,
             flexShrink: 0,
             position: `relative`,
-            paddingBottom: `100%`,
             overflow: `hidden`,
           }}
         >
-          <img
-            src={small.src}
-            srcSet={small.srcSet}
-            sizes="(min-width: 960px) 292px, 33vw"
+          <Img
+            sizes={{ ...small }}
             css={{
               margin: 0,
               height: `100%`,
@@ -133,9 +129,12 @@ export const postFragment = graphql`
     likes
     smallImage: image {
       childImageSharp {
-        small: responsiveSizes(maxWidth: 292, maxHeight: 292) {
+        small: sizes(maxWidth: 292, maxHeight: 292) {
           src
           srcSet
+          aspectRatio
+          sizes
+          tracedSVG
         }
       }
     }

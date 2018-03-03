@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Load plugins Loads plugins defined with an object but without an option key 1`] = `
+exports[`Load plugins Load plugins for a site 1`] = `
 Array [
   Object {
     "browserAPIs": Array [],
@@ -127,7 +127,7 @@ Array [
 ]
 `;
 
-exports[`Load plugins load plugins for a site 1`] = `
+exports[`Load plugins Loads plugins defined with an object but without an option key 1`] = `
 Array [
   Object {
     "browserAPIs": Array [],
@@ -228,6 +228,16 @@ Array [
     "resolve": "",
     "ssrAPIs": Array [],
     "version": "1.0.0",
+  },
+  Object {
+    "browserAPIs": Array [],
+    "name": "TEST",
+    "nodeAPIs": Array [],
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [],
   },
   Object {
     "browserAPIs": Array [],

@@ -1,14 +1,6 @@
 /* @flow */
 
-const fs = require(`fs`)
-const path = require(`path`)
-const json5 = require(`json5`)
-const _ = require(`lodash`)
-const report = require(`gatsby-cli/lib/reporter`)
-
 const apiRunnerNode = require(`./api-runner-node`)
-const testRequireError = require(`./test-require-error`).default
-const { actions } = require(`../redux/actions`)
 const { store } = require(`../redux`)
 
 const buildConfig = (abstractConfig, stage) => {

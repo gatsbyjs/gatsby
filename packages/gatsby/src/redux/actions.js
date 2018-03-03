@@ -4,6 +4,7 @@ import chalk from "chalk"
 const _ = require(`lodash`)
 const { bindActionCreators } = require(`redux`)
 const { stripIndent } = require(`common-tags`)
+const report = require(`gatsby-cli/lib/reporter`)
 const glob = require(`glob`)
 const path = require(`path`)
 const fs = require(`fs`)
@@ -76,6 +77,7 @@ actions.deletePage = (page: PageInput) => {
 }
 
 const pascalCase = _.flow(_.camelCase, _.upperFirst)
+const hasWarnedForPageComponent = new Set()
 /**
  * Create a page. See [the guide on creating and modifying pages](/docs/creating-and-modifying-pages/)
  * for detailed documenation about creating pages.
@@ -117,6 +119,63 @@ actions.createPage = (page: PageInput, plugin?: Plugin, traceId?: string) => {
       return message
     }
     noPageOrComponent = true
+  }
+
+  // Validate that the context object doesn't overlap with any core page fields
+  // as this will cause trouble when running graphql queries.
+  if (_.isObject(page.context)) {
+    const reservedFields = [
+      `path`,
+      `matchPath`,
+      `component`,
+      `componentChunkName`,
+      `pluginCreator___NODE`,
+      `pluginCreatorName`,
+    ]
+    const invalidFields = Object.keys(_.pick(page.context, reservedFields))
+
+    const singularMessage = `${name} used a reserved field name in the context object when creating a page:`
+    const pluralMessage = `${name} used reserved field names in the context object when creating a page:`
+    if (invalidFields.length > 0) {
+      const error = `${
+        invalidFields.length === 1 ? singularMessage : pluralMessage
+      }
+
+${invalidFields.map(f => `  * "${f}"`).join(`\n`)}
+
+${JSON.stringify(page, null, 4)}
+
+Data in "context" is passed to GraphQL as potential arguments when running the
+page query.
+
+When arguments for GraphQL are constructed, the context object is combined with
+the page object so *both* page object and context data are available as
+arguments. So you don't need to add the page "path" to the context as it's
+already available in GraphQL. If a context field duplicates a field already
+used by the page object, this can break functionality within Gatsby so must be
+avoided.
+
+Please choose another name for the conflicting fields.
+
+The following fields are used by the page object and should be avoided.
+
+${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
+
+            `
+      if (process.env.NODE_ENV === `test`) {
+        return error
+        // Only error if the context version is different than the page
+        // version.  People in v1 often thought that they needed to also pass
+        // the path to context for it to be available in GraphQL
+      } else if (invalidFields.some(f => page.context[f] !== page[f])) {
+        report.panic(error)
+      } else {
+        if (!hasWarnedForPageComponent.has(page.component)) {
+          report.warn(error)
+          hasWarnedForPageComponent.add(page.component)
+        }
+      }
+    }
   }
 
   // Don't check if the component exists during tests as we use a lot of fake
@@ -959,9 +1018,9 @@ actions.setPluginStatus = (
  *
  * @param {Object} redirect Redirect data
  * @param {string} redirect.fromPath Any valid URL. Must start with a forward slash
- * @param {string} redirect.isPermanent This is a permanent redirect; defaults to temporary
+ * @param {boolean} redirect.isPermanent This is a permanent redirect; defaults to temporary
  * @param {string} redirect.toPath URL of a created page (see `createPage`)
- * @param {string} redirect.redirectInBrowser Redirects are generally for redirecting legacy URLs to their new configuration. If you can't update your UI for some reason, set `redirectInBrowser` to true and Gatsby will handle redirecting in the client as well.
+ * @param {boolean} redirect.redirectInBrowser Redirects are generally for redirecting legacy URLs to their new configuration. If you can't update your UI for some reason, set `redirectInBrowser` to true and Gatsby will handle redirecting in the client as well.
  * @example
  * createRedirect({ fromPath: '/old-url', toPath: '/new-url', isPermanent: true })
  * createRedirect({ fromPath: '/url', toPath: '/zn-CH/url', Language: 'zn' })

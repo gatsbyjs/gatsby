@@ -27,8 +27,6 @@ try {
 Html = Html && Html.__esModule ? Html.default : Html
 
 export default (locals, callback) => {
-  // const apiRunner = require(`${directory}/.cache/api-runner-ssr`)
-  let headComponents = []
   let htmlAttributes = {}
   let bodyAttributes = {}
   let preBodyComponents = []

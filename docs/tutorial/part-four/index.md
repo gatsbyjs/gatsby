@@ -86,7 +86,7 @@ gatsby new tutorial-part-four https://github.com/gatsbyjs/gatsby-starter-hello-w
 
 Then install some other needed dependencies at the root of the project. We'll use the Typography theme
 Kirkham + we'll try out a CSS-in-JS library
-[Glamorous](https://glamorous.rocks/):
+[Glamorous](https://glamorous.rocks/). Change to your new `tutorial-part-four` directory and run:
 
 ```shell
 npm install --save gatsby-plugin-typography gatsby-plugin-glamor glamorous typography-theme-kirkham
@@ -1019,7 +1019,7 @@ The last step is to link to our new pages from the index page.
 Return to `src/pages/index.js` and let's query for our Markdown slugs and create
 links.
 
-```jsx{3,18-19,29,46-48}
+```jsx{3,18-19,29,47-49}
 import React from "react"
 import g from "glamorous"
 import { Link } from "gatsby"

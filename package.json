@@ -55,7 +55,7 @@
     "lerna": "lerna",
     "lerna-prepublish": "lerna run prepublish",
     "lint": "eslint --ext .js,.jsx packages/**/src",
-    "lint:flow": "node scripts/flow-check.js",
+    "lint:flow": "babel-node scripts/flow-check.js",
     "plop": "plop",
     "prebootstrap": "yarn",
     "publish": "lerna publish",

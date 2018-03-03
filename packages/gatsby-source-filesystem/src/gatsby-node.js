@@ -9,19 +9,20 @@ exports.sourceNodes = (
 ) => {
   const { createNode, deleteNode } = actions
 
-  let ready = false
-
   // Validate that the path exists.
   if (!fs.existsSync(pluginOptions.path)) {
-    console.log(`
+    reporter.panic(`
 The path passed to gatsby-source-filesystem does not exist on your file system:
 
 ${pluginOptions.path}
 
 Please pick a path to an existing directory.
+
+See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
       `)
-    process.exit(1)
   }
+
+  let ready = false
 
   const watcher = chokidar.watch(pluginOptions.path, {
     ignored: [
@@ -65,10 +66,11 @@ Please pick a path to an existing directory.
   watcher.on(`unlink`, path => {
     reporter.info(`file deleted at ${path}`)
     const node = getNode(createId(path))
-    deleteNode(node.id, node)
-
-    // Also delete nodes for the file's transformed children nodes.
-    node.children.forEach(childId => deleteNode(childId, getNode(childId)))
+    // It's possible the file node was never created as sometimes tools will
+    // write and then immediately delete temporary files to the file system.
+    if (node) {
+      deleteNode(node.id, node)
+    }
   })
 
   watcher.on(`addDir`, path => {

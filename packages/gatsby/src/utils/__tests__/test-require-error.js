@@ -10,6 +10,15 @@ describe(`test-require-error`, () => {
       )
     }
   })
+  it(`detects require errors when using windows path`, () => {
+    try {
+      require(`.\\fixtures\\module-does-not-exist`)
+    } catch (err) {
+      expect(
+        testRequireError(`.\\fixtures\\module-does-not-exist`, err)
+      ).toEqual(true)
+    }
+  })
   it(`Only returns true on not found errors for actual module not "not found" errors of requires inside the module`, () => {
     try {
       require(`./fixtures/bad-module-require`)

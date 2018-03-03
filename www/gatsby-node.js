@@ -15,6 +15,14 @@ const slugToAnchor = slug =>
 
 exports.createPages = ({ graphql, actions }) => {
   const { createPage, createRedirect } = actions
+
+  // Random redirects
+  createRedirect({
+    fromPath: `/blog/2018-02-26-documentation-project/`, // Tweeted this link out then switched it
+    toPath: `/2018-02-28-documentation-project/`,
+    isPermanent: true,
+  })
+
   return new Promise((resolve, reject) => {
     const docsTemplate = path.resolve(`src/templates/template-docs-markdown.js`)
     const blogPostTemplate = path.resolve(`src/templates/template-blog-post.js`)
