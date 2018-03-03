@@ -164,7 +164,7 @@ exports.generateSideEffects = true
  * This API will change before 2.0 as it needs still to be converted to use
  * Redux actions.
  */
-exports.modifyBabelrc = true
+exports.onCreateBabelConfig = true
 
 /**
  * Let plugins extend/mutate the site's webpack configuration.

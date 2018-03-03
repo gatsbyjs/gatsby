@@ -1,5 +1,5 @@
 import React from "react"
-import { fontFace, injectGlobal } from "emotion"
+import { injectGlobal } from "emotion"
 import styled from "react-emotion"
 
 injectGlobal`
@@ -10,11 +10,24 @@ injectGlobal`
   }
 `
 
-fontFace`
-  font-family: system-ui;
-  font-style: normal;
-  font-weight: 400;
-  src: local(".SFNSText-Regular"), local(".HelveticaNeueDeskInterface-Regular"), local(".LucidaGrandeUI"), local("Segoe UI"), local("Ubuntu"), local("Roboto-Regular"), local("DroidSans"), local("Tahoma");
+injectGlobal`
+  html, body {
+    font-family: -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      "Roboto",
+      "Roboto Light",
+      "Oxygen",
+      "Ubuntu",
+      "Cantarell",
+      "Fira Sans",
+      "Droid Sans",
+      "Helvetica Neue",
+      sans-serif,
+      "Apple Color Emoji",
+      "Segoe UI Emoji",
+      "Segoe UI Symbol";
+  }
 `
 
 const Wrapper = styled.section`
@@ -22,7 +35,6 @@ const Wrapper = styled.section`
   background: #282a36;
   display: flex;
   flex-direction: column;
-  font-family: system-ui;
   height: 100vh;
   justify-content: center;
   width: 100vw;

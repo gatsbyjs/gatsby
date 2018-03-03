@@ -26,6 +26,8 @@
       link: /docs/add-404-page/
     - title: Adding Images, Fonts, and Files
       link: /docs/adding-images-fonts-files/
+    - title: Babel.js
+      link: /docs/babel/
     - title: Browser Support
       link: /docs/browser-support/
     - title: Building apps with Gatsby

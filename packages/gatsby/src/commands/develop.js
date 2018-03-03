@@ -81,7 +81,7 @@ async function startServer(program) {
   const app = express()
   app.use(
     require(`webpack-hot-middleware`)(compiler, {
-      log: () => {},
+      log: false,
       path: `/__webpack_hmr`,
       heartbeat: 10 * 1000,
     })
@@ -131,7 +131,7 @@ async function startServer(program) {
 
   app.use(
     require(`webpack-dev-middleware`)(compiler, {
-      logLevel: `warn`,
+      logLevel: `trace`,
       publicPath: devConfig.output.publicPath,
       stats: `errors-only`,
     })

@@ -188,6 +188,9 @@ module.exports = async (config = {}) => {
 
   // Add internal plugins
   plugins.push(
+    processPlugin(path.join(__dirname, `../internal-plugins/load-babel-config`))
+  )
+  plugins.push(
     processPlugin(path.join(__dirname, `../internal-plugins/dev-404-page`))
   )
   plugins.push(
