@@ -21,12 +21,10 @@
     "gatsby-plugin",
     "gatsby-source-plugin"
   ],
+  "author": "Pavithra Kodmad<pavithra.kodmad@gmail.com>",
   "license": "MIT",
   "main": "index.js",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby.git"
-  },
+  "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-faker",
   "scripts": {
     "build": "babel src --out-dir . --ignore __tests__",
     "prepublish": "cross-env NODE_ENV=production npm run build",

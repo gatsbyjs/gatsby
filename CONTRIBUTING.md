@@ -23,7 +23,7 @@ Looking to speak about Gatsby? We'd love to review your talk abstract/CFP! You c
 
 ### Creating your own plugins and loaders
 
-If you create a loader or plugin, we would <3 for you to open source it, and put it on npm.
+If you create a loader or plugin, we would <3 for you to open source it, and put it on npm. For more information on creating custom plugins, please see the documentation for [plugins](/docs/plugins/) and the [API specification](/docs/api-specification/).
 
 ### Contributing to the repo
 
@@ -54,7 +54,7 @@ The usual contributing steps are:
 * Add tests and code for your changes.
 * Once you're done, make sure all tests still pass: `yarn test`
 * Commit and push to your fork.
-* Create an pull request from your branch.
+* Create a pull request from your branch.
 
 ### Contributing to the documentation.
 

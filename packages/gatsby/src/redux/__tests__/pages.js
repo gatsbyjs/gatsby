@@ -70,6 +70,22 @@ describe(`Add pages`, () => {
     expect(action).toMatchSnapshot()
   })
 
+  it(`Fails if use a reserved field in the context object`, () => {
+    const { actions } = require(`../actions`)
+    const action = actions.createPage(
+      {
+        component: `/path/to/file1.js`,
+        path: `/yo/`,
+        context: {
+          path: `/yo/`,
+          matchPath: `/pizz*`,
+        },
+      },
+      { id: `test`, name: `test` }
+    )
+    expect(action).toMatchSnapshot()
+  })
+
   it(`adds an initial forward slash if the user doesn't`, () => {
     const { actions } = require(`../actions`)
     const action = actions.createPage(

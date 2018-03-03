@@ -25,10 +25,7 @@
     "gatsby": "^1.0.0",
     "styled-components": ">= 2.0.0"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby.git"
-  },
+  "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-styled-components",
   "scripts": {
     "build": "babel src --out-dir .",
     "prepublish": "npm run build"

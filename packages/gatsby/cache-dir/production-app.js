@@ -64,9 +64,14 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     if (redirect) {
       pathname = redirect.toPath
     }
+    const wl = window.location
 
-    // If we're already at this path, do nothing.
-    if (window.location.pathname === pathname) {
+    // If we're already at this location, do nothing.
+    if (
+      wl.pathname === location.pathname &&
+      wl.search === location.search &&
+      wl.hash === location.hash
+    ) {
       return
     }
 

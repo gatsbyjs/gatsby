@@ -1,5 +1,4 @@
 const HtmlWebpackPlugin = require(`html-webpack-plugin`)
-const HtmlWebpackIncludeAssetsPlugin = require(`html-webpack-include-assets-plugin`)
 const ExtractTextPlugin = require(`extract-text-webpack-plugin`)
 
 function plugins(stage) {
@@ -9,13 +8,6 @@ function plugins(stage) {
       title: `Content Manager`,
       filename: `admin/index.html`,
       chunks: [`cms`],
-    }),
-
-    // Include the identity widget script in the html file
-    new HtmlWebpackIncludeAssetsPlugin({
-      assets: [`https://identity.netlify.com/v1/netlify-identity-widget.js`],
-      append: false,
-      publicPath: false,
     }),
   ]
 
@@ -35,8 +27,15 @@ function plugins(stage) {
  * target loader key being named "css" in Gatsby's webpack config.
  */
 function excludeFromLoader(key, config) {
-  config.loader(key, {
-    exclude: [/\/node_modules\/netlify-cms\//],
+  config.loader(key, ({ exclude, ...configRest }) => {
+    const regex = /\/node_modules\/netlify-cms\//
+    if (!exclude) {
+      return { ...configRest, exclude: regex }
+    }
+    if (Array.isArray(exclude)) {
+      return { ...configRest, exclude: [...exclude, regex] }
+    }
+    return { ...configRest, exclude: [exclude, regex] }
   })
 }
 
@@ -61,13 +60,10 @@ function module(config, stage) {
   }
 }
 
-exports.modifyWebpackConfig = (
-  { config, stage },
-  { modulePath = `${__dirname}/cms.js` }
-) => {
+exports.modifyWebpackConfig = ({ config, stage }, { modulePath }) => {
   config.merge({
     entry: {
-      cms: modulePath,
+      cms: [`${__dirname}/cms.js`, modulePath].filter(p => p),
     },
     plugins: plugins(stage),
   })

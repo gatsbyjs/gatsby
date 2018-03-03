@@ -30,14 +30,16 @@ By using `gatsby-plugin-typography` and specifying the path to your `typography.
 
 ```javascript
 // In your gatsby-config.js
-plugins: [
-  {
-    resolve: `gatsby-plugin-typography`,
-    options: {
-      pathToConfigModule: `src/utils/typography`,
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-typography`,
+      options: {
+        pathToConfigModule: `src/utils/typography`,
+      },
     },
-  },
-];
+  ],
+}
 ```
 
 ## Options

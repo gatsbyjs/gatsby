@@ -84,7 +84,7 @@ exports.hasNodeChanged = (id, digest) => {
 }
 
 exports.loadNodeContent = node => {
-  if (node.internal.content) {
+  if (_.isString(node.internal.content)) {
     return Promise.resolve(node.internal.content)
   } else {
     return new Promise(resolve => {
