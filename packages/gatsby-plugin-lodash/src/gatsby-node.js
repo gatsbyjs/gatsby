@@ -36,9 +36,8 @@ exports.modifyWebpackConfig = (
 }
 
 // Add Lodash Babel plugin
-exports.modifyBabelrc = ({ babelrc }) => {
-  return {
-    ...babelrc,
-    plugins: babelrc.plugins.concat([`lodash`]),
-  }
+exports.onCreateBabelConfig = ({ actions }) => {
+  actions.setBabelPlugin({
+    name: `babel-plugin-lodash`,
+  })
 }
