@@ -23,7 +23,7 @@ Looking to speak about Gatsby? We'd love to review your talk abstract/CFP! You c
 
 ### Creating your own plugins and loaders
 
-If you create a loader or plugin, we would <3 for you to open source it, and put it on npm.
+If you create a loader or plugin, we would <3 for you to open source it, and put it on npm. For more information on creating custom plugins, please see the documentation for [plugins](/docs/plugins/) and the [API specification](/docs/api-specification/).
 
 ### Contributing to the repo
 
@@ -44,9 +44,7 @@ The usual contributing steps are:
 * setup up repo and Install dependencies: `yarn run bootstrap`
 * Make sure tests are passing for you: `yarn test`
 * Create a topic branch: `git checkout -b topics/new-feature-name`
-* Run `npm run watch` from the root of the repo to first do an initial Babel
-  build of all packages and then watch for changes to packages' source code and
-  compile these changes on-the-fly as you work.
+* Run `npm run watch` from the root of the repo to watch for changes to packages' source code and compile these changes on-the-fly as you work. Note that the watch command can be resource intensive. To limit it to the packages you're working on, add a scope flag, like `npm run watch -- --scope={gatsby,gatsby-cli}`. To watch just one package, run `npm run watch -- --scope=gatsby`.
 * Install [gatsby-dev-cli](/packages/gatsby-dev-cli/) globally: `yarn global add gatsby-dev-cli`
 * Run `yarn install` in each of the sites you're testing with.
 * For each of your Gatsby test sites, run the `gatsby-dev` command there to copy
@@ -56,7 +54,7 @@ The usual contributing steps are:
 * Add tests and code for your changes.
 * Once you're done, make sure all tests still pass: `yarn test`
 * Commit and push to your fork.
-* Create an pull request from your branch.
+* Create a pull request from your branch.
 
 ### Contributing to the documentation.
 

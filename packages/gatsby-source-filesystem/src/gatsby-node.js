@@ -4,24 +4,31 @@ const fs = require(`fs`)
 const { createId, createFileNode } = require(`./create-file-node`)
 
 exports.sourceNodes = (
-  { boundActionCreators, getNode, hasNodeChanged, reporter },
+  { boundActionCreators, getNode, reporter },
   pluginOptions
 ) => {
-  const { createNode, deleteNode } = boundActionCreators
+  if (!(pluginOptions && pluginOptions.path)) {
+    reporter.panic(`
+"path" is a required option for gatsby-source-filesystem
 
-  let ready = false
+See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
+    `)
+  }
 
   // Validate that the path exists.
   if (!fs.existsSync(pluginOptions.path)) {
-    console.log(`
+    reporter.panic(`
 The path passed to gatsby-source-filesystem does not exist on your file system:
 
 ${pluginOptions.path}
 
 Please pick a path to an existing directory.
       `)
-    process.exit(1)
   }
+
+  const { createNode, deleteNode } = boundActionCreators
+
+  let ready = false
 
   const watcher = chokidar.watch(pluginOptions.path, {
     ignored: [
@@ -65,10 +72,11 @@ Please pick a path to an existing directory.
   watcher.on(`unlink`, path => {
     reporter.info(`file deleted at ${path}`)
     const node = getNode(createId(path))
-    deleteNode(node.id, node)
-
-    // Also delete nodes for the file's transformed children nodes.
-    node.children.forEach(childId => deleteNode(childId, getNode(childId)))
+    // It's possible the file node was never created as sometimes tools will
+    // write and then immediately delete temporary files to the file system.
+    if (node) {
+      deleteNode(node.id, node)
+    }
   })
 
   watcher.on(`addDir`, path => {

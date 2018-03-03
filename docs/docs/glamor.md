@@ -38,7 +38,9 @@ Now let's create a sample Glamor page at `src/pages/index.js`
 ```jsx
 import React from "react";
 
-import Container from "../components/container";
+const Container = ({ children }) => (
+  <div>{children}</div>
+);
 
 export default () => (
   <Container>
@@ -48,12 +50,14 @@ export default () => (
 );
 ```
 
-Let's add a inline `User` component using Glamor's `css` prop.
+Let's add css styles to `Container` and add a inline `User` component using Glamor's `css` prop.
 
-```jsx{5-27,33-40}
+```jsx{4,7-29,35-42}
 import React from "react"
 
-import Container from "../components/container"
+const Container = ({ children }) => (
+  <div css={{ margin: `3rem auto`, maxWidth: 600 }}>{children}</div>
+);
 
 const User = props =>
   <div

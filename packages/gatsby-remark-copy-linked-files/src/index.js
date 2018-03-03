@@ -1,10 +1,11 @@
 const visit = require(`unist-util-visit`)
 const isRelativeUrl = require(`is-relative-url`)
+const fs = require(`fs`)
 const fsExtra = require(`fs-extra`)
 const path = require(`path`)
 const _ = require(`lodash`)
 const cheerio = require(`cheerio`)
-const sizeOf = require(`image-size`)
+const imageSize = require(`probe-image-size`)
 
 const DEPLOY_DIR = `public`
 
@@ -37,6 +38,16 @@ const newLinkURL = (linkNode, destinationDir) => {
     return path.posix.join(`/`, destinationDir, newFileName(linkNode))
   }
   return path.posix.join(`/`, newFileName(linkNode))
+}
+
+function toArray(buf) {
+  var arr = new Array(buf.length)
+
+  for (var i = 0; i < buf.length; i++) {
+    arr[i] = buf[i]
+  }
+
+  return arr
 }
 
 module.exports = (
@@ -113,7 +124,9 @@ module.exports = (
     let dimensions
 
     if (!image.attr(`width`) || !image.attr(`height`)) {
-      dimensions = sizeOf(imageNode.absolutePath)
+      dimensions = imageSize.sync(
+        toArray(fs.readFileSync(imageNode.absolutePath))
+      )
     }
 
     // Generate default alt tag
@@ -318,7 +331,7 @@ module.exports = (
           await fsExtra.ensureDir(path.dirname(newFilePath))
           await fsExtra.copy(linkPath, newFilePath)
         } catch (err) {
-          console.error(`error copy ing file`, err)
+          console.error(`error copying file`, err)
         }
       }
     })

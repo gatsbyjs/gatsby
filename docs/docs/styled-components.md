@@ -38,7 +38,14 @@ Now let's create a sample Styled Components page at `src/pages/index.js`:
 import React from "react";
 import styled from "styled-components";
 
-import Container from "../components/container";
+const Container = styled.div`
+  margin: 3rem auto;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
 
 const UserWrapper = styled.div`
   display: flex;
