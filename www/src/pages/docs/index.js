@@ -35,18 +35,6 @@ class IndexRoute extends React.Component {
           <li>
             <code>gatsby develop</code> — Gatsby will start a hot-reloading
             development environment accessible at <code>localhost:8000</code>
-            <p>Options:</p>
-            <ul>
-              <li>
-                <code>-H, --host</code>   Set host. Defaults to localhost
-              </li>
-              <li>
-                <code>-p, --port</code>   Set port. Defaults to 8000
-              </li>
-              <li>
-                <code>-o, --open</code>   Open the site in your standard browser for you
-              </li>
-            </ul>
           </li>
           <li>
             Try editing the javascript pages in <code>src/pages</code>. Saved
@@ -62,6 +50,7 @@ class IndexRoute extends React.Component {
             testing your built site.
           </li>
         </ol>
+        <p>There are several <a href="https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-cli/README.md">options</a> available to the Gatsby CLI.</p>
         <h2 id="using-other-starters">Using other starters</h2>
         <p>
           Running <code>gatsby new</code> installs the default Gatsby starter.
