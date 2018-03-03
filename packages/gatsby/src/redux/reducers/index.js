@@ -16,4 +16,5 @@ module.exports = {
   jobs: require(`./jobs`),
   webpack: require(`./webpack`),
   redirects: require(`./redirects`),
+  babelrc: require(`./babelrc`),
 }

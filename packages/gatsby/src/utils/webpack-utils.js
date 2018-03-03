@@ -7,7 +7,7 @@ const flexbugs = require(`postcss-flexbugs-fixes`)
 const UglifyPlugin = require(`uglifyjs-webpack-plugin`)
 
 const builtinPlugins = require(`./webpack-plugins`)
-const genBabelConfig = require(`./babel-config`)
+const { createBabelConfig } = require(`./babel-config`)
 
 type LoaderSpec = string | { loader: string, options?: Object }
 type LoaderResolver<T: Object> = (options?: T) => LoaderSpec
@@ -120,7 +120,7 @@ module.exports = async ({
 
   const PRODUCTION = !stage.includes(`develop`)
 
-  const babelConfig = await genBabelConfig(program, stage)
+  const babelConfig = await createBabelConfig(program, stage)
 
   const makeExternalOnly = (original: RuleFactory<*>) => (
     options = {}

@@ -4,6 +4,20 @@ exports[`Load plugins Loads plugins defined with an object but without an option
 Array [
   Object {
     "browserAPIs": Array [],
+    "id": "Plugin load-babel-config",
+    "name": "load-babel-config",
+    "nodeAPIs": Array [
+      "onCreateBabelConfig",
+    ],
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [],
+    "version": "1.0.0",
+  },
+  Object {
+    "browserAPIs": Array [],
     "id": "Plugin dev-404-page",
     "name": "dev-404-page",
     "nodeAPIs": Array [
@@ -115,6 +129,20 @@ Array [
 
 exports[`Load plugins load plugins for a site 1`] = `
 Array [
+  Object {
+    "browserAPIs": Array [],
+    "id": "Plugin load-babel-config",
+    "name": "load-babel-config",
+    "nodeAPIs": Array [
+      "onCreateBabelConfig",
+    ],
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [],
+    "version": "1.0.0",
+  },
   Object {
     "browserAPIs": Array [],
     "id": "Plugin dev-404-page",
