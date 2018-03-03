@@ -1,5 +1,4 @@
-const crypto = require(`crypto`)
-const { extname, join, resolve, parse } = require(`path`)
+const { extname, resolve } = require(`path`)
 
 const {
   DuotoneGradientType,
@@ -15,15 +14,13 @@ const {
   GraphQLInt,
   GraphQLBoolean,
 } = require(`graphql`)
-const svgToMiniDataURI = require(`mini-svg-data-uri`)
-const PQueue = require(`p-queue`)
 const sharp = require(`sharp`)
-const sqip = require(`sqip`)
+
+const generateSqip = require(`./generate-sqip`)
 
 const SUPPORTED_NODES = [`ImageSharp`, `ContentfulAsset`]
-const cacheDir = join(process.cwd(), `public`, `static`)
-const queue = new PQueue({ concurrency: 1 })
 const debug = Debug(`gatsby-transformer-qip`)
+const cacheDir = resolve(process.cwd(), `public`, `static`)
 
 module.exports = async args => {
   const { type: { name } } = args
@@ -31,10 +28,6 @@ module.exports = async args => {
   if (!SUPPORTED_NODES.includes(name)) {
     return {}
   }
-
-  // Ensure our cache directory exists.
-  await fs.ensureDir(cacheDir)
-
   if (name === `ImageSharp`) {
     return sqipSharp(args)
   }
@@ -120,6 +113,7 @@ async function sqipSharp({ type, cache, getNodeAndSavePathDependency }) {
 
         return generateSqip({
           cache,
+          cacheDir,
           absolutePath,
           numberOfPrimitives,
           blur,
@@ -244,6 +238,7 @@ async function sqipContentful({ type, cache }) {
 
         return generateSqip({
           cache,
+          cacheDir,
           absolutePath,
           numberOfPrimitives,
           blur,
@@ -252,62 +247,4 @@ async function sqipContentful({ type, cache }) {
       },
     },
   }
-}
-
-async function generateSqip(options) {
-  const { cache, absolutePath, numberOfPrimitives, blur, mode } = options
-
-  const { name } = parse(absolutePath)
-
-  const sqipOptions = {
-    numberOfPrimitives,
-    blur,
-    mode,
-  }
-
-  const optionsHash = crypto
-    .createHash(`md5`)
-    .update(JSON.stringify(sqipOptions))
-    .digest(`hex`)
-
-  const cacheKey = `sqip-${name}-${optionsHash}`
-  const cachePath = resolve(cacheDir, `${name}-${optionsHash}.svg`)
-  let primitiveData = await cache.get(cacheKey)
-
-  if (!primitiveData) {
-    let svg
-    if (await fs.exists(cachePath)) {
-      const svgBuffer = await fs.readFile(cachePath)
-      svg = svgBuffer.toString()
-    } else {
-      debug(`generate sqip for ${name}`)
-      const result = await queue.add(
-        async () =>
-          new Promise((resolve, reject) => {
-            try {
-              const result = sqip({
-                filename: absolutePath,
-                ...sqipOptions,
-              })
-              resolve(result)
-            } catch (error) {
-              reject(error)
-            }
-          })
-      )
-
-      svg = result.final_svg
-
-      await fs.writeFile(cachePath, svg)
-    }
-
-    primitiveData = {
-      svg,
-      dataURI: svgToMiniDataURI(svg),
-    }
-
-    await cache.set(cacheKey, primitiveData)
-  }
-
-  return primitiveData
 }
