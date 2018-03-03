@@ -1,5 +1,7 @@
 import React from "react"
 
+import Img from "gatsby-image"
+
 import presets from "../utils/presets"
 import typography, { rhythm, scale } from "../utils/typography"
 
@@ -19,7 +21,7 @@ class PostDetail extends React.Component {
       avatar,
     } = this.props.post
 
-    const { big } = bigImage.childImageSharp
+    const { big, sqip } = bigImage.childImageSharp
 
     const UserBar = () => (
       <div
@@ -146,11 +148,8 @@ class PostDetail extends React.Component {
               overflow: `hidden`,
             }}
           >
-            <img
-              key={big.src}
-              src={big.src}
-              srcSet={big.srcSet}
-              sizes="(min-width: 640px) 640px, 100vw"
+            <Img
+              sizes={{ ...big, base64: sqip.dataURI }}
               css={{
                 margin: 0,
                 height: `100%`,
@@ -211,14 +210,19 @@ export const postDetailFragment = graphql`
     weeksAgo: time(difference: "weeks")
     bigImage: image {
       childImageSharp {
+        sqip(numberOfPrimitives: 100, blur: 0, width: 640) {
+          dataURI
+        }
         # Here we query for *multiple* image thumbnails to be
         # created. So with no effort on our part, 100s of
         # thumbnails are created. This makes iterating on
         # designs effortless as we change the args
         # for the query and we get new thumbnails.
-        big: sizes(maxWidth: 640) {
+        big: responsiveSizes(maxWidth: 640, maxHeight: 640) {
           src
           srcSet
+          aspectRatio
+          sizes
         }
       }
     }

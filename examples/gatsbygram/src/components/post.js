@@ -132,7 +132,7 @@ export const postFragment = graphql`
     likes
     smallImage: image {
       childImageSharp {
-        sqip(numberOfPrimitives: 25) {
+        sqip(numberOfPrimitives: 25, blur: 0, width: 292, height: 292) {
           dataURI
         }
         small: responsiveSizes(maxWidth: 292, maxHeight: 292) {
