@@ -285,12 +285,11 @@ async function generateSqip(options) {
         async () =>
           new Promise((resolve, reject) => {
             try {
-              resolve(
-                sqip({
-                  filename: absolutePath,
-                  ...sqipOptions,
-                })
-              )
+              const result = sqip({
+                filename: absolutePath,
+                ...sqipOptions,
+              })
+              resolve(result)
             } catch (error) {
               reject(error)
             }
