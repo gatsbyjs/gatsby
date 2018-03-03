@@ -1,16 +1,29 @@
 const crypto = require(`crypto`)
-const { extname, join, resolve } = require(`path`)
+const { extname, join, resolve, parse } = require(`path`)
 
+const {
+  DuotoneGradientType,
+  ImageCropFocusType,
+} = require(`gatsby-transformer-sharp/types`)
+const { queueImageResizing } = require(`gatsby-plugin-sharp`)
+
+const Debug = require(`debug`)
 const fs = require(`fs-extra`)
-const { GraphQLObjectType, GraphQLString, GraphQLInt } = require(`graphql`)
+const {
+  GraphQLObjectType,
+  GraphQLString,
+  GraphQLInt,
+  GraphQLBoolean,
+} = require(`graphql`)
 const svgToMiniDataURI = require(`mini-svg-data-uri`)
 const PQueue = require(`p-queue`)
-const ProgressBar = require(`progress`)
+const sharp = require(`sharp`)
 const sqip = require(`sqip`)
 
 const SUPPORTED_NODES = [`ImageSharp`, `ContentfulAsset`]
+const cacheDir = join(process.cwd(), `public`, `static`)
 const queue = new PQueue({ concurrency: 1 })
-let bar
+const debug = Debug(`gatsby-transformer-qip`)
 
 module.exports = async args => {
   const { type: { name } } = args
@@ -19,14 +32,8 @@ module.exports = async args => {
     return {}
   }
 
-  // @todo progress bar does not show up some times
-  bar = new ProgressBar(
-    `Generating sqip's [:bar] :current/:total :percent :eta left`,
-    {
-      total: 0,
-      width: process.stdout.columns || 40,
-    }
-  )
+  // Ensure our cache directory exists.
+  await fs.ensureDir(cacheDir)
 
   if (name === `ImageSharp`) {
     return sqipSharp(args)
@@ -39,7 +46,7 @@ module.exports = async args => {
   return {}
 }
 
-async function sqipSharp({ type, cache, getNodeAndSavePathDependency, store }) {
+async function sqipSharp({ type, cache, getNodeAndSavePathDependency }) {
   return {
     sqip: {
       type: new GraphQLObjectType({
@@ -54,12 +61,62 @@ async function sqipSharp({ type, cache, getNodeAndSavePathDependency, store }) {
         blur: { type: GraphQLInt, defaultValue: 1 },
         numberOfPrimitives: { type: GraphQLInt, defaultValue: 10 },
         mode: { type: GraphQLInt, defaultValue: 0 },
+        width: {
+          type: GraphQLInt,
+          defaultValue: 400,
+        },
+        height: {
+          type: GraphQLInt,
+        },
+        grayscale: {
+          type: GraphQLBoolean,
+          defaultValue: false,
+        },
+        duotone: {
+          type: DuotoneGradientType,
+          defaultValue: false,
+        },
+        cropFocus: {
+          type: ImageCropFocusType,
+          defaultValue: sharp.strategy.attention,
+        },
+        rotate: {
+          type: GraphQLInt,
+          defaultValue: 0,
+        },
       },
       async resolve(image, fieldArgs, context) {
-        const { blur, numberOfPrimitives, mode } = fieldArgs
+        const {
+          blur,
+          numberOfPrimitives,
+          mode,
+          width,
+          height,
+          grayscale,
+          duotone,
+          cropFocus,
+          rotate,
+        } = fieldArgs
+
+        const sharpArgs = {
+          width,
+          height,
+          grayscale,
+          duotone,
+          cropFocus,
+          rotate,
+        }
 
         const file = getNodeAndSavePathDependency(image.parent, context.path)
-        const { absolutePath } = file
+
+        const job = await queueImageResizing({ file, args: sharpArgs })
+
+        if (!await fs.exists(job.absolutePath)) {
+          debug(`Preparing ${file.name}`)
+          await job.finishedPromise
+        }
+
+        const { absolutePath } = job
 
         return generateSqip({
           cache,
@@ -67,29 +124,19 @@ async function sqipSharp({ type, cache, getNodeAndSavePathDependency, store }) {
           numberOfPrimitives,
           blur,
           mode,
-          store,
         })
       },
     },
   }
 }
 
-async function sqipContentful({ type, store, cache }) {
+async function sqipContentful({ type, cache }) {
   const { createWriteStream } = require(`fs`)
   const axios = require(`axios`)
 
   const {
     schemes: { ImageResizingBehavior, ImageCropFocusType },
   } = require(`gatsby-source-contentful`)
-
-  const cacheDir = join(
-    store.getState().program.directory,
-    `.cache`,
-    `gatsby-transform-sqip`
-  )
-
-  // Ensure our cache directory exists.
-  await fs.ensureDir(cacheDir)
 
   return {
     sqip: {
@@ -179,7 +226,7 @@ async function sqipContentful({ type, store, cache }) {
         if (!alreadyExists) {
           const previewUrl = `http:${url}?${params.join(`&`)}`
 
-          bar.interrupt(`Downloading: ${previewUrl}`)
+          debug(`Downloading: ${previewUrl}`)
 
           const response = await axios({
             method: `get`,
@@ -201,7 +248,6 @@ async function sqipContentful({ type, store, cache }) {
           numberOfPrimitives,
           blur,
           mode,
-          store,
         })
       },
     },
@@ -209,14 +255,11 @@ async function sqipContentful({ type, store, cache }) {
 }
 
 async function generateSqip(options) {
-  const { cache, absolutePath, numberOfPrimitives, blur, mode, store } = options
+  const { cache, absolutePath, numberOfPrimitives, blur, mode } = options
 
-  const dataDir = join(store.getState().program.directory, `.cache-sqip`)
-
-  // @todo add check if file actually exists
+  const { name } = parse(absolutePath)
 
   const sqipOptions = {
-    filename: absolutePath,
     numberOfPrimitives,
     blur,
     mode,
@@ -227,47 +270,43 @@ async function generateSqip(options) {
     .update(JSON.stringify(sqipOptions))
     .digest(`hex`)
 
-  const cacheKey = `sqip-${optionsHash}`
-  const cachePath = resolve(dataDir, `sqip-${optionsHash}.json`)
+  const cacheKey = `sqip-${name}-${optionsHash}`
+  const cachePath = resolve(cacheDir, `${name}-${optionsHash}.svg`)
   let primitiveData = await cache.get(cacheKey)
 
-  await fs.ensureDir(dataDir)
-
-  bar.total++
-
   if (!primitiveData) {
+    let svg
     if (await fs.exists(cachePath)) {
       const cacheData = await fs.readFile(cachePath)
-      primitiveData = JSON.parse(cacheData)
+      svg = JSON.parse(cacheData)
     } else {
+      debug(`generate sqip for ${name}`)
       const result = await queue.add(
         async () =>
           new Promise((resolve, reject) => {
             try {
-              resolve(sqip(sqipOptions))
+              resolve(
+                sqip({
+                  filename: absolutePath,
+                  ...sqipOptions,
+                })
+              )
             } catch (error) {
               reject(error)
             }
           })
       )
 
-      // @todo make blur setting in sqip via PR
-      result.final_svg = result.final_svg.replace(
-        new RegExp(`<feGaussianBlur stdDeviation="[0-9]+"\\s*/>`),
-        `<feGaussianBlur stdDeviation="${sqipOptions.blur}" />`
-      )
+      svg = result.final_svg
 
-      primitiveData = {
-        svg: result.final_svg,
-        dataURI: svgToMiniDataURI(result.final_svg),
-        dataURIbase64: `data:image/svg+xml;base64,${result.svg_base64encoded}`,
-      }
-
-      const json = JSON.stringify(primitiveData, null, 2)
-      await fs.writeFile(cachePath, json)
+      await fs.writeFile(cachePath, svg)
     }
 
-    bar.tick()
+    primitiveData = {
+      svg,
+      dataURI: svgToMiniDataURI(svg),
+    }
+
     await cache.set(cacheKey, primitiveData)
   }
 
