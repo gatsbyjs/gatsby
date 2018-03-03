@@ -194,7 +194,7 @@ async function sqipContentful({ type, cache }) {
         const assetWidth = width || details.image.width
         const assetHeight = height || details.image.height
         const aspectRatio = assetHeight / assetWidth
-        const previewWidth = 256
+        const previewWidth = 400
         const previewHeight = Math.floor(previewWidth * aspectRatio)
 
         const params = [`w=${previewWidth}`, `h=${previewHeight}`]
