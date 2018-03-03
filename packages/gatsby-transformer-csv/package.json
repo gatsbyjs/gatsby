@@ -1,7 +1,7 @@
 {
   "name": "gatsby-transformer-csv",
   "description": "Gatsby transformer plugin for CSV files",
-  "version": "1.3.9-0",
+  "version": "1.3.9-1",
   "author": "Sonal Saldanha <sonal.saldanha@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -23,7 +23,6 @@
     "gatsby",
     "gatsby-plugin"
   ],
-  "author": "Sonal Saldanha <sonal.saldanha@gmail.com>",
   "license": "MIT",
   "main": "index.js",
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-csv",

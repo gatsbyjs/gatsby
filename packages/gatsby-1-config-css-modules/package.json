@@ -1,7 +1,7 @@
 {
   "name": "gatsby-1-config-css-modules",
   "description": "CSS Modules configuration for Gatsby v1 plugins",
-  "version": "1.0.10-0",
+  "version": "1.0.10-1",
   "author": "Ming Aldrich-Gan <mingaldrichgan@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
