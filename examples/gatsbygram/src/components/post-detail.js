@@ -143,25 +143,9 @@ class PostDetail extends React.Component {
             css={{
               flexDirection: `column`,
               flexShrink: 0,
-              position: `relative`,
-              paddingBottom: `100%`,
-              overflow: `hidden`,
             }}
           >
-            <Img
-              sizes={{ ...big, base64: sqip.dataURI }}
-              css={{
-                margin: 0,
-                height: `100%`,
-                width: `100%`,
-                verticalAlign: `baseline`,
-                position: `absolute`,
-                top: 0,
-                bottom: 0,
-                left: 0,
-                right: 0,
-              }}
-            />
+            <Img sizes={{ ...big, base64: sqip.dataURI }} />
             <div
               css={{
                 flexDirection: `column`,
