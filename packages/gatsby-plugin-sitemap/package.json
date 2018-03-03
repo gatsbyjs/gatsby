@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-sitemap",
   "description": "Stub description for gatsby-plugin-sitemap",
-  "version": "1.2.14-0",
+  "version": "1.2.14-1",
   "author": "Nicholas Young &lt;nicholas@nicholaswyoung.com&gt;",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -19,7 +19,6 @@
   "keywords": [
     "gatsby"
   ],
-  "author": "Nicholas Young &lt;nicholas@nicholaswyoung.com&gt;",
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {

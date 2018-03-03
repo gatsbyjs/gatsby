@@ -1,7 +1,7 @@
 {
   "name": "gatsby-transformer-xml",
   "description": "Stub description for gatsby-transformer-xml",
-  "version": "1.0.13-0",
+  "version": "1.0.13-1",
   "author": "Kyle Mathews <matthews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
