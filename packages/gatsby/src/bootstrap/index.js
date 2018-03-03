@@ -13,7 +13,7 @@ const { graphql } = require(`graphql`)
 const { store, emitter } = require(`../redux`)
 const loadPlugins = require(`./load-plugins`)
 const { initCache } = require(`../utils/cache`)
-const reporter = require(`gatsby-cli/lib/reporter`)
+const report = require(`gatsby-cli/lib/reporter`)
 const getConfigFile = require(`./get-config-file`)
 
 // Show stack trace on unhandled promises.
@@ -78,7 +78,7 @@ module.exports = async (args: BootstrapArgs) => {
   )
 
   if (config && config.polyfill) {
-    reporter.warn(
+    report.warn(
       `Support for custom Promise polyfills has been removed in Gatsby v2. We only support Babel 7's new automatic polyfilling behavior.`
     )
   }

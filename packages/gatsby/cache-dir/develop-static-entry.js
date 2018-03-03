@@ -27,6 +27,7 @@ try {
 Html = Html && Html.__esModule ? Html.default : Html
 
 export default (locals, callback) => {
+  let headComponents = []
   let htmlAttributes = {}
   let bodyAttributes = {}
   let preBodyComponents = []
