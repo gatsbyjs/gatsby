@@ -277,8 +277,8 @@ async function generateSqip(options) {
   if (!primitiveData) {
     let svg
     if (await fs.exists(cachePath)) {
-      const cacheData = await fs.readFile(cachePath)
-      svg = JSON.parse(cacheData)
+      const svgBuffer = await fs.readFile(cachePath)
+      svg = svgBuffer.toString()
     } else {
       debug(`generate sqip for ${name}`)
       const result = await queue.add(
