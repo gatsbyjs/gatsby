@@ -116,3 +116,14 @@
   width: 12px;
   height: 12px;
 }
+
+.ais-InfiniteHits__loadMore {
+  width: 100%;
+  height: 50px;
+  background-color: #663399;
+  color: #f5f3f7;
+  outline: none;
+}
+.ais-InfiniteHits__loadMore[disabled] {
+  display: none;
+}

@@ -6,6 +6,7 @@ import {
   Stats,
   RefinementList,
   PoweredBy,
+  InfiniteHits,
 } from "react-instantsearch/dom"
 import distanceInWords from "date-fns/distance_in_words"
 import presets, { colors } from "../utils/presets"
@@ -98,7 +99,7 @@ const Search = ({ searchState }) => {
             },
           }}
         >
-          <Hits hitComponent={Result} />
+          <InfiniteHits hitComponent={Result} />
         </div>
       </div>
 

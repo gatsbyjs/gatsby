@@ -31,6 +31,12 @@ exports.sourceNodes = async (
   })
 
   data.hits.forEach(hit => {
+    // commented changed remove all badges and images from readme content to keep the creation of the node from failing below
+    // if (hit.readme.includes(`![`)) {
+    //   hit.readme = hit.readme.replace(/[[]?!\[.*\b/gi, ``)
+    //   console.log(hit.name)
+    // }
+
     const parentId = createNodeId(`plugin ${hit.objectID}`)
     const readmeNode = {
       id: createNodeId(`readme ${hit.objectID}`),
@@ -40,7 +46,7 @@ exports.sourceNodes = async (
       internal: {
         type: `NPMPackageReadme`,
         mediaType: `text/markdown`,
-        content: hit.readme,
+        content: hit.readme !== undefined ? hit.readme : ``,
       },
     }
     readmeNode.internal.contentDigest = createContentDigest(readmeNode)
