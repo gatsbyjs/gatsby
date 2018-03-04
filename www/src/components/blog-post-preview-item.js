@@ -18,22 +18,12 @@ class BlogPostPreviewItem extends React.Component {
             {post.frontmatter.excerpt ? post.frontmatter.excerpt : post.excerpt}
           </p>
         </Link>
-        {/* ALL margins below must be...
-
+        {/* margins on wrapping div below must be...
             - equal on opposite sides
-
             - at least
-              wrapping div:
-                marginBottom: rhythm(2), // 2.125
-                marginTop: rhythm(2), // 2.125
-              Img
-                marginLeft: rhythm(1 / 2), // 0.5
-                marginRight: rhythm(1 / 2), // 0.5
-
-            ...to prevent avatar hover twitching.
-
-            <3 @rdela
-        */}
+                marginBottom: rhythm(2),
+                marginTop: rhythm(2),
+            to prevent avatar hover twitching. */}
         <div
           css={{
             display: `flex`,
@@ -63,8 +53,6 @@ class BlogPostPreviewItem extends React.Component {
             css={{
               borderRadius: `100%`,
               display: `inline-block`,
-              // marginBottom: 0,
-              // marginTop: 0,
               marginRight: rhythm(1 / 32),
               marginLeft: rhythm(1 / 32),
               verticalAlign: `top`,
