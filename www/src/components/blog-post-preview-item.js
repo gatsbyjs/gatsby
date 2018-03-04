@@ -18,7 +18,7 @@ class BlogPostPreviewItem extends React.Component {
             {post.frontmatter.excerpt ? post.frontmatter.excerpt : post.excerpt}
           </p>
         </Link>
-        {/* margins on wrapping div and below must be...
+        {/* margins on wrapping div below must be...
             - equal on opposite sides
             - at least
                 marginBottom: rhythm(17 / 8), // 2.125
