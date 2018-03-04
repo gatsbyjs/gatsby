@@ -21,15 +21,15 @@ class BlogPostPreviewItem extends React.Component {
         {/* margins on wrapping div below must be...
             - equal on opposite sides
             - at least
-                marginBottom: rhythm(2),
-                marginTop: rhythm(2),
+                marginBottom: rhythm(17 / 8), // 2.125
+                marginTop: rhythm(17 / 8), // 2.125
             to prevent avatar hover twitching. */}
         <div
           css={{
             display: `flex`,
             alignItems: `center`,
-            marginTop: rhythm(2),
-            marginBottom: rhythm(2),
+            marginTop: rhythm(17 / 8),
+            marginBottom: rhythm(17 / 8),
           }}
         >
           <Link
