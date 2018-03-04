@@ -79,6 +79,9 @@ The result of the query is automatically inserted into your React component
 on the `data` prop. GraphQL and Gatsby let you ask for data and then
 immediately start using it.
 
+*Note:* Queries are only executed from Page or Layout components. For other
+components you'll want to use GraphQL [*fragments*](#fragments).
+
 ## How to learn GraphQL
 
 Your experience developing with Gatsby might be the first time you've seen GraphQL! We hope you love it as much
