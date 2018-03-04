@@ -1,4 +1,5 @@
-const { actions } = require(`../actions`)
+const { actions, boundActionCreators } = require(`../actions`)
+const { store, getNode } = require(`../index`)
 const nodeReducer = require(`../reducers/nodes`)
 const nodeTouchedReducer = require(`../reducers/nodes-touched`)
 
@@ -65,11 +66,12 @@ describe(`Create and update nodes`, () => {
   })
 
   it(`deletes previously transformed children nodes when the parent node is updated`, () => {
-    const action = actions.createNode(
+    store.dispatch({ type: `DELETE_CACHE` })
+    boundActionCreators.createNode(
       {
         id: `hi`,
         children: [],
-        parent: `test`,
+        parent: null,
         internal: {
           contentDigest: `hasdfljds`,
           type: `Test`,
@@ -77,9 +79,8 @@ describe(`Create and update nodes`, () => {
       },
       { name: `tests` }
     )
-    let state = nodeReducer(undefined, action)
 
-    const createChildAction = actions.createNode(
+    boundActionCreators.createNode(
       {
         id: `hi-1`,
         children: [],
@@ -91,18 +92,16 @@ describe(`Create and update nodes`, () => {
       },
       { name: `tests` }
     )
-    state = nodeReducer(state, createChildAction)
 
-    const addChildToParent = actions.createParentChildLink(
+    boundActionCreators.createParentChildLink(
       {
-        parent: state[`hi`],
-        child: state[`hi-1`],
+        parent: store.getState().nodes[`hi`],
+        child: store.getState().nodes[`hi-1`],
       },
       { name: `tests` }
     )
-    state = nodeReducer(state, addChildToParent)
 
-    const create2ndChildAction = actions.createNode(
+    boundActionCreators.createNode(
       {
         id: `hi-1-1`,
         children: [],
@@ -114,18 +113,16 @@ describe(`Create and update nodes`, () => {
       },
       { name: `tests` }
     )
-    state = nodeReducer(state, create2ndChildAction)
 
-    const add2ndChildToParent = actions.createParentChildLink(
+    boundActionCreators.createParentChildLink(
       {
-        parent: state[`hi-1`],
-        child: state[`hi-1-1`],
+        parent: store.getState().nodes[`hi-1`],
+        child: store.getState().nodes[`hi-1-1`],
       },
       { name: `tests` }
     )
-    state = nodeReducer(state, add2ndChildToParent)
 
-    const updateAction = actions.createNode(
+    boundActionCreators.createNode(
       {
         id: `hi`,
         children: [],
@@ -137,12 +134,12 @@ describe(`Create and update nodes`, () => {
       },
       { name: `tests` }
     )
-    state = nodeReducer(state, updateAction)
-    expect(Object.keys(state).length).toEqual(1)
+    expect(Object.keys(store.getState().nodes).length).toEqual(1)
   })
 
   it(`deletes previously transformed children nodes when the parent node is deleted`, () => {
-    const action = actions.createNode(
+    store.dispatch({ type: `DELETE_CACHE` })
+    boundActionCreators.createNode(
       {
         id: `hi`,
         children: [],
@@ -154,9 +151,8 @@ describe(`Create and update nodes`, () => {
       },
       { name: `tests` }
     )
-    let state = nodeReducer(undefined, action)
 
-    const secondNodeAction = actions.createNode(
+    boundActionCreators.createNode(
       {
         id: `hi2`,
         children: [],
@@ -168,9 +164,8 @@ describe(`Create and update nodes`, () => {
       },
       { name: `tests` }
     )
-    state = nodeReducer(state, secondNodeAction)
 
-    const createChildAction = actions.createNode(
+    boundActionCreators.createNode(
       {
         id: `hi-1`,
         children: [],
@@ -182,18 +177,16 @@ describe(`Create and update nodes`, () => {
       },
       { name: `tests` }
     )
-    state = nodeReducer(state, createChildAction)
 
-    const addChildToParent = actions.createParentChildLink(
+    boundActionCreators.createParentChildLink(
       {
-        parent: state[`hi`],
-        child: state[`hi-1`],
+        parent: store.getState().nodes[`hi`],
+        child: getNode(`hi-1`),
       },
       { name: `tests` }
     )
-    state = nodeReducer(state, addChildToParent)
 
-    const create2ndChildAction = actions.createNode(
+    boundActionCreators.createNode(
       {
         id: `hi-1-1`,
         children: [],
@@ -205,24 +198,22 @@ describe(`Create and update nodes`, () => {
       },
       { name: `tests` }
     )
-    state = nodeReducer(state, create2ndChildAction)
 
-    const add2ndChildToParent = actions.createParentChildLink(
+    boundActionCreators.createParentChildLink(
       {
-        parent: state[`hi-1`],
-        child: state[`hi-1-1`],
+        parent: getNode(`hi-1`),
+        child: getNode(`hi-1-1`),
       },
       { name: `tests` }
     )
-    state = nodeReducer(state, add2ndChildToParent)
 
-    const deleteNodeAction = actions.deleteNode(`hi`, { name: `tests` })
-    const deleteNodeState = nodeReducer(state, deleteNodeAction)
-    expect(Object.keys(deleteNodeState).length).toEqual(1)
+    boundActionCreators.deleteNode(`hi`, getNode(`hi`), { name: `tests` })
+    expect(Object.keys(store.getState().nodes).length).toEqual(1)
   })
 
   it(`deletes previously transformed children nodes when parent nodes are deleted`, () => {
-    const action = actions.createNode(
+    store.dispatch({ type: `DELETE_CACHE` })
+    boundActionCreators.createNode(
       {
         id: `hi`,
         children: [],
@@ -234,9 +225,8 @@ describe(`Create and update nodes`, () => {
       },
       { name: `tests` }
     )
-    let state = nodeReducer(undefined, action)
 
-    const createChildAction = actions.createNode(
+    boundActionCreators.createNode(
       {
         id: `hi-1`,
         children: [],
@@ -248,18 +238,16 @@ describe(`Create and update nodes`, () => {
       },
       { name: `tests` }
     )
-    state = nodeReducer(state, createChildAction)
 
-    const addChildToParent = actions.createParentChildLink(
+    boundActionCreators.createParentChildLink(
       {
-        parent: state[`hi`],
-        child: state[`hi-1`],
+        parent: getNode(`hi`),
+        child: getNode(`hi-1`),
       },
       { name: `tests` }
     )
-    state = nodeReducer(state, addChildToParent)
 
-    const create2ndChildAction = actions.createNode(
+    boundActionCreators.createNode(
       {
         id: `hi-1-1`,
         children: [],
@@ -271,24 +259,22 @@ describe(`Create and update nodes`, () => {
       },
       { name: `tests` }
     )
-    state = nodeReducer(state, create2ndChildAction)
 
-    const add2ndChildToParent = actions.createParentChildLink(
+    boundActionCreators.createParentChildLink(
       {
-        parent: state[`hi-1`],
-        child: state[`hi-1-1`],
+        parent: getNode(`hi-1`),
+        child: getNode(`hi-1-1`),
       },
       { name: `tests` }
     )
-    state = nodeReducer(state, add2ndChildToParent)
 
-    const deleteNodesAction = actions.deleteNodes([`hi`], { name: `tests` })
-    const deleteNodesState = nodeReducer(state, deleteNodesAction)
-    expect(Object.keys(deleteNodesState).length).toEqual(0)
+    boundActionCreators.deleteNodes([`hi`], { name: `tests` })
+    expect(Object.keys(store.getState().nodes).length).toEqual(0)
   })
 
   it(`allows deleting nodes`, () => {
-    const action = actions.createNode(
+    store.dispatch({ type: `DELETE_CACHE` })
+    boundActionCreators.createNode(
       {
         id: `hi`,
         children: [],
@@ -304,11 +290,9 @@ describe(`Create and update nodes`, () => {
       },
       { name: `tests` }
     )
-    const deleteAction = actions.deleteNode(`hi`)
+    boundActionCreators.deleteNode(`hi`, getNode(`hi`))
 
-    let state = nodeReducer(undefined, action)
-    state = nodeReducer(state, deleteAction)
-    expect(state[`hi`]).toBeUndefined()
+    expect(getNode(`hi`)).toBeUndefined()
   })
 
   it(`nodes that are added are also "touched"`, () => {

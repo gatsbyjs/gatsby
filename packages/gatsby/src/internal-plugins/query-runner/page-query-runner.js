@@ -120,7 +120,7 @@ const runQueriesForIds = ids => {
 
 const findDirtyIds = actions => {
   const state = store.getState()
-  return _.uniq(
+  const uniqDirties = _.uniq(
     actions.reduce((dirtyIds, action) => {
       const node = action.payload
 
@@ -137,4 +137,5 @@ const findDirtyIds = actions => {
       return _.compact(dirtyIds)
     }, [])
   )
+  return uniqDirties
 }
