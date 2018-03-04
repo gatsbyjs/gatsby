@@ -1,7 +1,7 @@
 {
   "name": "gatsby-dev-cli",
   "description": "CLI helpers for contributors working on Gatsby",
-  "version": "1.2.11",
+  "version": "1.2.12",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby-dev": "./dist/index.js"
@@ -28,10 +28,7 @@
   ],
   "license": "MIT",
   "main": "index.js",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby.git"
-  },
+  "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli",
   "scripts": {
     "build": "babel src --out-dir dist",
     "prepublish": "cross-env NODE_ENV=production npm run build",
