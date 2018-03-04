@@ -9,13 +9,28 @@ const glob = require(`glob`)
 const path = require(`path`)
 const fs = require(`fs`)
 const { joinPath } = require(`../utils/path`)
-const { getNode, hasNodeChanged } = require(`./index`)
+const { hasNodeChanged, getNode } = require(`./index`)
 const { trackInlineObjectsInRootNode } = require(`../schema/node-tracking`)
 const { store } = require(`./index`)
 import * as joiSchemas from "../joi-schemas/joi"
 import { generateComponentChunkName } from "../utils/js-chunk-names"
 
 const actions = {}
+
+const findChildrenRecursively = (children = []) => {
+  children = children.concat(
+    ...children.map(child => {
+      const newChildren = getNode(child).children
+      if (_.isArray(newChildren) && newChildren.length > 0) {
+        return findChildrenRecursively(newChildren)
+      } else {
+        return []
+      }
+    })
+  )
+
+  return children
+}
 
 type Job = {
   id: string,
@@ -397,11 +412,26 @@ actions.createLayout = (
  * deleteNode(node.id, node)
  */
 actions.deleteNode = (nodeId: string, node: any, plugin: Plugin) => {
-  return {
+  // Also delete any nodes transformed from this one.
+  let deleteDescendantsActions
+  const descendantNodes = findChildrenRecursively(node.children)
+  if (descendantNodes.length > 0) {
+    deleteDescendantsActions = descendantNodes.map(n =>
+      actions.deleteNode(n, getNode(n), plugin)
+    )
+  }
+
+  const deleteAction = {
     type: `DELETE_NODE`,
     plugin,
     node,
     payload: nodeId,
+  }
+
+  if (deleteDescendantsActions) {
+    return [...deleteDescendantsActions, deleteAction]
+  } else {
+    return deleteAction
   }
 }
 
@@ -412,10 +442,27 @@ actions.deleteNode = (nodeId: string, node: any, plugin: Plugin) => {
  * deleteNodes([`node1`, `node2`])
  */
 actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
-  return {
+  // Also delete any nodes transformed from these.
+  const descendantNodes = _.flatten(
+    nodes.map(n => findChildrenRecursively(getNode(n).children))
+  )
+  let deleteDescendantsActions
+  if (descendantNodes.length > 0) {
+    deleteDescendantsActions = descendantNodes.map(n =>
+      actions.deleteNode(n, getNode(n), plugin)
+    )
+  }
+
+  const deleteNodesAction = {
     type: `DELETE_NODES`,
     plugin,
     payload: nodes,
+  }
+
+  if (deleteDescendantsActions) {
+    return [...deleteDescendantsActions, deleteNodesAction]
+  } else {
+    return deleteNodesAction
   }
 }
 
@@ -581,21 +628,38 @@ actions.createNode = (node: any, plugin?: Plugin, traceId?: string) => {
     }
   }
 
+  let deleteAction
+  let updateNodeAction
   // Check if the node has already been processed.
   if (oldNode && !hasNodeChanged(node.id, node.internal.contentDigest)) {
-    return {
+    updateNodeAction = {
       type: `TOUCH_NODE`,
       plugin,
       traceId,
       payload: node.id,
     }
   } else {
-    return {
+    // Remove any previously created descendant nodes as they're all due
+    // to be recreated.
+    if (oldNode) {
+      const descendantNodes = findChildrenRecursively(oldNode.children)
+      if (descendantNodes.length > 0) {
+        deleteAction = actions.deleteNodes(descendantNodes)
+      }
+    }
+
+    updateNodeAction = {
       type: `CREATE_NODE`,
       plugin,
       traceId,
       payload: node,
     }
+  }
+
+  if (deleteAction) {
+    return [deleteAction, updateNodeAction]
+  } else {
+    return updateNodeAction
   }
 }
 
