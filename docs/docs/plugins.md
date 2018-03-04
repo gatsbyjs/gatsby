@@ -158,6 +158,7 @@ For usage instructions and options, see the plugin repo (linked below).
 * [gatsby-remark-external-links](https://github.com/JLongley/gatsby-remark-external-links)
 * [gatsby-remark-flowchart](https://github.com/liudonghua123/gatsby-remark-flowchart)
 * [gatsby-remark-graph](https://github.com/konsumer/gatsby-remark-graph)
+* [gatsby-remark-numbered-footnotes](https://github.com/jlengstorf/gatsby-remark-numbered-footnotes)
 * [gatsby-remark-sequence](https://github.com/liudonghua123/gatsby-remark-sequence)
 * [gatsby-source-airtable](https://github.com/kevzettler/gatsby-source-airtable)
 * [gatsby-source-behance](https://github.com/LeKoArts/gatsby-source-behance)
