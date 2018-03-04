@@ -77,6 +77,7 @@ actions.deletePage = (page: PageInput) => {
 }
 
 const pascalCase = _.flow(_.camelCase, _.upperFirst)
+const hasWarnedForPageComponent = new Set()
 /**
  * Create a page. See [the guide on creating and modifying pages](/docs/creating-and-modifying-pages/)
  * for detailed documenation about creating pages.
@@ -101,7 +102,6 @@ const pascalCase = _.flow(_.camelCase, _.upperFirst)
  *   },
  * })
  */
-const hasWarnedForPageComponent = new Set()
 actions.createPage = (page: PageInput, plugin?: Plugin, traceId?: string) => {
   let noPageOrComponent = false
   let name = `The plugin "${plugin.name}"`
@@ -874,9 +874,9 @@ actions.setPluginStatus = (
  *
  * @param {Object} redirect Redirect data
  * @param {string} redirect.fromPath Any valid URL. Must start with a forward slash
- * @param {string} redirect.isPermanent This is a permanent redirect; defaults to temporary
+ * @param {boolean} redirect.isPermanent This is a permanent redirect; defaults to temporary
  * @param {string} redirect.toPath URL of a created page (see `createPage`)
- * @param {string} redirect.redirectInBrowser Redirects are generally for redirecting legacy URLs to their new configuration. If you can't update your UI for some reason, set `redirectInBrowser` to true and Gatsby will handle redirecting in the client as well.
+ * @param {boolean} redirect.redirectInBrowser Redirects are generally for redirecting legacy URLs to their new configuration. If you can't update your UI for some reason, set `redirectInBrowser` to true and Gatsby will handle redirecting in the client as well.
  * @example
  * createRedirect({ fromPath: '/old-url', toPath: '/new-url', isPermanent: true })
  * createRedirect({ fromPath: '/url', toPath: '/zn-CH/url', Language: 'zn' })

@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-glamorous",
   "description": "Stub description for gatsby-plugin-glamorous",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "author": "Kyle Mathews <matthews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -22,10 +22,7 @@
   "peerDependencies": {
     "gatsby": "^1.0.0"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby.git"
-  },
+  "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-glamorous",
   "scripts": {
     "build": "babel src --out-dir . --ignore __tests__",
     "prepublish": "cross-env NODE_ENV=production npm run build",
