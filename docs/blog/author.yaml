@@ -77,19 +77,27 @@
 - id: Robin Vasan
   bio: Robin Vasan is an experienced early-stage venture investor and former repeat entrepreneur. His expertise covers the full life-cycle of building and scaling companies and he primarily invests in applications, cloud computing, open source, virtualization and security.
   avatar: avatars/robin-vasan.jpg
-- id: Angel Piscola
-  bio: Web Developer, open source enthusiast, professional beard grower.
-  avatar: avatars/angel-piscola.png
-  twitter: "@angelpiscola"
-- id: Hugo Meissner
-  bio: Founder and CTO at Blazity
-  avatar: avatars/hugo-meissner.jpg
-  twitter: "@blazity"
-- id: Rafael Cordones
-  bio: Full-stack software developer with the business value of the product on top of that stack. From Barcelona by birth and European by choice. Currently living in Vienna.
-  avatar: avatars/rafael-cordones.jpg
-  twitter: "@rafacm"
-- id: Ricky de Laveaga
-  bio: Various bug fixes and improvements
-  twitter: "@rickydelaveaga"
-  avatar: avatars/ricky-de-laveaga.jpg
+- id: Ross Whitehouse
+  bio: React and Front-End Developer from Birmingham, UK
+  avatar: avatars/ross-whitehouse.jpg
+  twitter: "@RossWhitehouse"
+- id: Vlad Pasculescu
+  bio: Designer turned maker living and creating in Southern California
+  avatar: avatars/vlad-pasculescu.jpg
+  twitter: "@vladpasculescu"
+- id: Brandon Konkle
+  bio: Full-stack developer building a flexible consulting team powered by React
+  avatar: avatars/brandon-konkle.jpg
+  twitter: "@bkonkle"
+- id: Steven Natera
+  bio: Founder of Gatsby Manor. Site Reliability Engineer. Open source addict. Writer at Hackernoon.
+  avatar: avatars/steven-natera.jpg
+  twitter: "@stevennatera"
+- id: Ryan Wiemer
+  bio: Oakland based account manager that enjoys working on web and interactive projects - https://www.ryanwiemer.com
+  avatar: avatars/ryan-wiemer.jpg
+  twitter: "@ryanwiemer"
+- id: Jia Hao Goh
+  bio: Software engineer who loves open source and keeping up with awesome tech — https://jiahao.codes/
+  avatar: avatars/jia-hao-goh.jpg
+  twitter: "@jiahaog"

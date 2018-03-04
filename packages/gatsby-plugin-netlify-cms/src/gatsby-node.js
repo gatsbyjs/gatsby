@@ -1,5 +1,4 @@
 const HtmlWebpackPlugin = require(`html-webpack-plugin`)
-const HtmlWebpackIncludeAssetsPlugin = require(`html-webpack-include-assets-plugin`)
 const ExtractTextPlugin = require(`extract-text-webpack-plugin`)
 
 function plugins(stage) {
@@ -9,13 +8,6 @@ function plugins(stage) {
       title: `Content Manager`,
       filename: `admin/index.html`,
       chunks: [`cms`],
-    }),
-
-    // Include the identity widget script in the html file
-    new HtmlWebpackIncludeAssetsPlugin({
-      assets: [`https://identity.netlify.com/v1/netlify-identity-widget.js`],
-      append: false,
-      publicPath: false,
     }),
   ]
 
@@ -29,16 +21,31 @@ function plugins(stage) {
   }
 }
 
+/**
+ * Exclude Netlify CMS styles from Gatsby CSS bundle. This relies on Gatsby
+ * using webpack-configurator for webpack config extension, and also on the
+ * target loader key being named "css" in Gatsby's webpack config.
+ */
+function excludeFromLoader(key, config) {
+  config.loader(key, ({ exclude, ...configRest }) => {
+    const regex = /\/node_modules\/netlify-cms\//
+    if (!exclude) {
+      return { ...configRest, exclude: regex }
+    }
+    if (Array.isArray(exclude)) {
+      return { ...configRest, exclude: [...exclude, regex] }
+    }
+    return { ...configRest, exclude: [exclude, regex] }
+  })
+}
+
 function module(config, stage) {
   switch (stage) {
+    case `build-css`:
+      excludeFromLoader(`css`, config)
+      return config
     case `build-javascript`:
-      // Exclude Netlify CMS styles from Gatsby CSS bundle. This relies on
-      // Gatsby using webpack-configurator for webpack config extension, and
-      // also on the target loader key being named "css" in Gatsby's webpack
-      // config.
-      config.loader(`css`, {
-        exclude: [/\/node_modules\/netlify-cms\//],
-      })
+      excludeFromLoader(`css`, config)
 
       // Exclusively extract Netlify CMS styles to /cms.css (filename configured
       // above with plugin instantiation).
@@ -53,13 +60,10 @@ function module(config, stage) {
   }
 }
 
-exports.modifyWebpackConfig = (
-  { config, stage },
-  { modulePath = `${__dirname}/cms.js` }
-) => {
+exports.modifyWebpackConfig = ({ config, stage }, { modulePath }) => {
   config.merge({
     entry: {
-      cms: modulePath,
+      cms: [`${__dirname}/cms.js`, modulePath].filter(p => p),
     },
     plugins: plugins(stage),
   })

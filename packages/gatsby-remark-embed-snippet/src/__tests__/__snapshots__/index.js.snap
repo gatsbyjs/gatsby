@@ -1066,11 +1066,11 @@ Object {
           },
           "type": "html",
           "value": "<div class=\\"gatsby-highlight\\">
-        <pre class=\\"language-bash\\"><code><span class=\\"token comment\\" spellcheck=\\"true\\"># Yarn</span>
+        <pre class=\\"language-bash\\"><code><span class=\\"token comment\\"># Yarn</span>
 yarn init
 <span class=\\"gatsby-highlight-code-line\\">yarn add react react-dom
 </span>
-<span class=\\"token comment\\" spellcheck=\\"true\\"># NPM</span>
+<span class=\\"token comment\\"># NPM</span>
 <span class=\\"token function\\">npm</span> init
 <span class=\\"gatsby-highlight-code-line\\"><span class=\\"token function\\">npm</span> <span class=\\"token function\\">install</span> --save react react-dom
 </span></code></pre>

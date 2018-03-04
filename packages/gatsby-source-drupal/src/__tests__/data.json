@@ -1,0 +1,14 @@
+{
+    "idOverlayExample": {
+        "type": "menu_link_content--menu_link_content",
+        "id": "bae879ec-42da-4b79-9341-006623d4a9cc",
+        "attributes": {
+            "id": 1,
+            "uuid": "bae879ec-42da-4b79-9341-006623d4a9cc",
+            "bundle": "menu_link_content"
+        },
+        "links": {
+            "self": "https://cms.eidentity.cz/cs/jsonapi/menu_link_content/menu_link_content/bae879ec-42da-4b79-9341-006623d4a9cc"
+        }
+    }
+}

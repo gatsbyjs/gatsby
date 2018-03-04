@@ -6,8 +6,23 @@ const fs = require(`fs-extra`)
 const slash = require(`slash`)
 const slugify = require(`limax`)
 
+// convert a string like `/some/long/path/name-of-docs/` to `name-of-docs`
+const slugToAnchor = slug =>
+  slug
+    .split(`/`) // split on dir separators
+    .filter(item => item !== ``) // remove empty values
+    .pop() // take last item
+
 exports.createPages = ({ graphql, boundActionCreators }) => {
-  const { createPage } = boundActionCreators
+  const { createPage, createRedirect } = boundActionCreators
+
+  // Random redirects
+  createRedirect({
+    fromPath: `/blog/2018-02-26-documentation-project/`, // Tweeted this link out then switched it
+    toPath: `/2018-02-28-documentation-project/`,
+    isPermanent: true,
+  })
+
   return new Promise((resolve, reject) => {
     const docsTemplate = path.resolve(`src/templates/template-docs-markdown.js`)
     const blogPostTemplate = path.resolve(`src/templates/template-blog-post.js`)
@@ -170,6 +185,7 @@ exports.onCreateNode = ({ node, boundActionCreators, getNode }) => {
       createNodeField({ node, name: `package`, value: true })
     }
     if (slug) {
+      createNodeField({ node, name: `anchor`, value: slugToAnchor(slug) })
       createNodeField({ node, name: `slug`, value: slug })
     }
   } else if (node.internal.type === `AuthorYaml`) {

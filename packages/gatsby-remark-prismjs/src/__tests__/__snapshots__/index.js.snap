@@ -23,7 +23,7 @@ Object {
       },
       "type": "html",
       "value": "<div class=\\"gatsby-highlight\\">
-      <pre class=\\"custom-js\\"><code><span class=\\"token comment\\" spellcheck=\\"true\\">// Fake</span>
+      <pre class=\\"custom-js\\"><code class=\\"custom-js\\"><span class=\\"token comment\\">// Fake</span>
 </code></pre>
       </div>",
     },
@@ -67,7 +67,7 @@ Object {
       },
       "type": "html",
       "value": "<div class=\\"gatsby-highlight\\">
-      <pre class=\\"language-js\\"><code><span class=\\"token comment\\" spellcheck=\\"true\\">// Fake</span>
+      <pre class=\\"language-js\\"><code class=\\"language-js\\"><span class=\\"token comment\\">// Fake</span>
 </code></pre>
       </div>",
     },

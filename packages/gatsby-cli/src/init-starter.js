@@ -5,6 +5,7 @@ const hostedGitInfo = require(`hosted-git-info`)
 const fs = require(`fs-extra`)
 const sysPath = require(`path`)
 const report = require(`./reporter`)
+const url = require(`url`)
 
 const spawn = (cmd: string) => {
   const [file, ...args] = cmd.split(/\s+/)
@@ -82,7 +83,7 @@ const clone = async (hostInfo: any, rootPath: string) => {
     url = hostInfo.ssh({ noCommittish: true })
     // Otherwise default to normal git syntax.
   } else {
-    url = hostInfo.git({ noCommittish: true })
+    url = hostInfo.https({ noCommittish: true, noGitPlus: true })
   }
 
   const branch = hostInfo.committish ? `-b ${hostInfo.committish}` : ``
@@ -107,6 +108,14 @@ type InitOptions = {
  */
 module.exports = async (starter: string, options: InitOptions = {}) => {
   const rootPath = options.rootPath || process.cwd()
+
+  const urlObject = url.parse(rootPath)
+  if (urlObject.protocol && urlObject.host) {
+    report.panic(
+      `It looks like you forgot to add a name for your new project. Try running instead "gatsby new new-gatsby-project ${rootPath}"`
+    )
+    return
+  }
 
   if (fs.existsSync(sysPath.join(rootPath, `package.json`))) {
     report.panic(`Directory ${rootPath} is already an npm project`)

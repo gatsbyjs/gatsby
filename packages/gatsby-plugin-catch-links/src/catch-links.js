@@ -1,3 +1,5 @@
+import { withPrefix } from "gatsby-link"
+
 module.exports = function(root, cb) {
   root.addEventListener(`click`, function(ev) {
     if (
@@ -55,6 +57,21 @@ module.exports = function(root, cb) {
     a2.href = window.location.href
 
     if (a1.host !== a2.host) return true
+
+    // For when pathPrefix is used in an app and there happens to be a link
+    // pointing to the same domain but outside of the app's pathPrefix. For
+    // example, a Gatsby app lives at https://example.com/myapp/, with the
+    // pathPrefix set to `/myapp`. When adding an absolute link to the same
+    // domain but outside of the /myapp path, for example, <a
+    // href="https://example.com/not-my-app"> the plugin won't catch it and
+    // will navigate to an external link instead of doing a pushState resulting
+    // in `https://example.com/myapp/https://example.com/not-my-app`
+    var re = new RegExp(`^${a2.host}${withPrefix(`/`)}`)
+    if (!re.test(`${a1.host}${a1.pathname}`)) return true
+
+    // TODO: add a check for absolute internal links in a callback or here,
+    // or always pass only `${a1.pathname}${a1.hash}`
+    // to avoid `https://example.com/myapp/https://example.com/myapp/here` navigation
 
     ev.preventDefault()
 
