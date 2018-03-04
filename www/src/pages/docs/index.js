@@ -18,6 +18,10 @@ class IndexRoute extends React.Component {
           Get started
         </h1>
         <p>Gatsby is a blazing-fast static site generator for React.</p>
+        <p>
+          For more detailed step-by-step instructions on getting started, see
+          the <Link to="/tutorial/">tutorial</Link>.
+        </p>
         <h2>Install Gatsby{`'`}s command line tool</h2>
         <p>
           <code>npm install --global gatsby-cli</code>
