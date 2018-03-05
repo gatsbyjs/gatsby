@@ -75,7 +75,7 @@ exports.sourceNodes = async (
   // TODO figure out if entries referencing now deleted entries/assets
   // are "updated" so will get the now deleted reference removed.
   currentSyncData.deletedEntries.map(e => e.sys.id).forEach(id => deleteNode(id, getNode(id)))
-  currentSyncData.deletedAssets.map(e => e.sys.id)).forEach(id => deleteNode(id, getNode(id)))
+  currentSyncData.deletedAssets.map(e => e.sys.id).forEach(id => deleteNode(id, getNode(id)))
 
   const existingNodes = getNodes().filter(
     n => n.internal.owner === `gatsby-source-contentful`
