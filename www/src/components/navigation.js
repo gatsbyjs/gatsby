@@ -186,7 +186,7 @@ export default ({ pathname }) => {
             }}
           >
             <a
-              href="https://discord.gg/0ZcbPKXt5bZjGY5n"
+              href="https://discord.gg/0ZcbPKXt5bVoxkfV"
               title="Discord"
               css={{
                 ...navItemStyles,

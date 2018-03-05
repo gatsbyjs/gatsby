@@ -34,12 +34,25 @@ if (process.env.REDUX_DEVTOOLS === `true`) {
   store = Redux.createStore(
     Redux.combineReducers({ ...reducers }),
     initialState,
-    composeEnhancers(Redux.applyMiddleware())
+    composeEnhancers(
+      Redux.applyMiddleware(function multi({ dispatch }) {
+        return next => action =>
+          Array.isArray(action)
+            ? action.filter(Boolean).map(dispatch)
+            : next(action)
+      })
+    )
   )
 } else {
   store = Redux.createStore(
     Redux.combineReducers({ ...reducers }),
-    initialState
+    initialState,
+    Redux.applyMiddleware(function multi({ dispatch }) {
+      return next => action =>
+        Array.isArray(action)
+          ? action.filter(Boolean).map(dispatch)
+          : next(action)
+    })
   )
 }
 

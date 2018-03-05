@@ -40,6 +40,6 @@ tagged with **gatsby** or
 ### Reactiflux Chat
 
 If you need an answer right away, check out the
-[Reactiflux Discord](https://discord.gg/0ZcbPKXt5bZjGY5n) #gatsby channel. There
+[Reactiflux Discord](https://discord.gg/0ZcbPKXt5bVoxkfV) #gatsby channel. There
 are usually a number of Gatsby experts there who can help out or point you to
 useful resources.
