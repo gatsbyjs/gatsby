@@ -10,6 +10,6 @@ This tutorial is for _everyone_! You do not need to be a programmer or React.js 
 
 0. [Programming basics](/tutorial/part-zero/): If you are new to programming, go here for an introduction to some basics like terminal, code editors, and browser consoles.
 1. [Introduction to basics of Gatsby](/tutorial/part-one/) - Starting new projects, developing, and deploying sites.
-1. [Introduction to using CSS in Gatsby](/tutorial/part-two/): Explore libraries like Typography.js and CSS Modules.
-1. [Building nested layouts in Gatsby](/tutorial/part-three/). Layouts are sections of your site that are reused across multiple pages like headers and footers.
-1. [Learn how to work with GraphQL](/tutorial/part-four/). Explore source & transformer plugins. Get introduced to programmatic pages and how to write GraphQL queries. In this part of the tutorial we'll build a bare-bones markdown blog.
+2. [Introduction to using CSS in Gatsby](/tutorial/part-two/): Explore libraries like Typography.js and CSS Modules.
+3. [Building nested layouts in Gatsby](/tutorial/part-three/). Layouts are sections of your site that are reused across multiple pages like headers and footers.
+4. [Learn how to work with GraphQL](/tutorial/part-four/). Explore source & transformer plugins. Get introduced to programmatic pages and how to write GraphQL queries. In this part of the tutorial we'll build a bare-bones markdown blog.
