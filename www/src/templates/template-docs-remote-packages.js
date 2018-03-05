@@ -11,7 +11,11 @@ class DocsRemotePackagesTemplate extends React.Component {
         packageName={npmPackage.name}
         excerpt={npmPackage.readme.childMarkdownRemark.excerpt}
         html={npmPackage.readme.childMarkdownRemark.html}
-        githubUrl={npmPackage.repository}
+        githubUrl={
+          npmPackage.repository !== null
+            ? npmPackage.repository.url
+            : `https://github.com/search?q=${npmPackage.name}`
+        }
         modified={npmPackage.modified}
         timeToRead={npmPackage.readme.childMarkdownRemark.timeToRead}
         keywords={npmPackage.keywords}

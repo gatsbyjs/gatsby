@@ -5,7 +5,6 @@ import {
   SearchBox,
   Stats,
   RefinementList,
-  PoweredBy,
   InfiniteHits,
 } from "react-instantsearch/dom"
 import distanceInWords from "date-fns/distance_in_words"
@@ -27,109 +26,122 @@ const wideScreenSize = {
   },
 }
 
-const Search = ({ searchState }) => {
-  const emptySearchBox = searchState.length > 0 ? false : true
-
-  return (
-    <div className="container">
-      <div
-        css={{
-          display: `flex`,
-          justifyContent: `center`,
-          width: `100%`,
-        }}
-      >
-        <SearchBox translations={{ placeholder: "Search Gatsby Library" }} />
-      </div>
-
-      <div
-        css={{
-          display: `none`,
-        }}
-      >
-        <RefinementList
-          attributeName="keywords"
-          defaultRefinement={["gatsby-component", "gatsby-plugin"]}
-        />
-      </div>
-
-      <div
-        css={{
-          opacity: emptySearchBox ? 0 : 1,
-          height: rhythm(1.5),
-          paddingTop: rhythm(0.25),
-          paddingBottom: rhythm(0.25),
-          color: colors.gray.calm,
-          fontSize: 14,
-          fontStretch: "normal",
-        }}
-      >
-        <Stats
-          translations={{
-            stats: function(n, ms) {
-              return `${n} results`
-            },
-          }}
-        />
-      </div>
-
-      <div
-        css={{
-          borderTop: `2px solid #F5F3F7`,
-          borderBottom: `2px solid #F5F3F7`,
-          borderLeft: `2px solid #F5F3F7`,
-        }}
-      >
+// Search shows a list of "hits", and is a child of the SearchBar component
+class Search extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      searchState: this.props.searchState,
+      emptySearchBox: this.props.searchState.length > 0 ? false : true,
+    }
+  }
+  render() {
+    return (
+      <div className="container">
         <div
           css={{
-            backgroundColor: `white`,
-            height: `calc(100vh - 225px)`,
-            border: `2 px solid red`,
-            overflowY: `scroll`,
-            WebkitOverflowScrolling: `touch`,
-            "::-webkit-scrollbar": {
-              width: `6px`,
-              height: `6px`,
-            },
-            "::-webkit-scrollbar-thumb": {
-              background: colors.ui.bright,
-            },
-            "::-webkit-scrollbar-track": {
-              background: colors.ui.light,
-            },
+            display: `flex`,
+            justifyContent: `center`,
+            width: `100%`,
           }}
         >
-          <InfiniteHits hitComponent={Result} />
+          <SearchBox translations={{ placeholder: "Search Gatsby Library" }} />
+        </div>
+
+        <div
+          css={{
+            display: `none`,
+          }}
+        >
+          <RefinementList
+            attributeName="keywords"
+            defaultRefinement={["gatsby-component", "gatsby-plugin"]}
+          />
+        </div>
+
+        <div
+          css={{
+            opacity: this.state.emptySearchBox ? 0 : 1,
+            height: rhythm(1.5),
+            paddingTop: rhythm(0.25),
+            paddingBottom: rhythm(0.25),
+            color: colors.gray.calm,
+            fontSize: 14,
+            fontStretch: "normal",
+          }}
+        >
+          <Stats
+            translations={{
+              stats: function(n, ms) {
+                return `${n} results`
+              },
+            }}
+          />
+        </div>
+
+        <div
+          css={{
+            borderTop: `2px solid #F5F3F7`,
+            borderBottom: `2px solid #F5F3F7`,
+            borderLeft: `2px solid #F5F3F7`,
+          }}
+        >
+          <div
+            css={{
+              backgroundColor: `white`,
+              height: `calc(100vh - 225px)`,
+              border: `2 px solid red`,
+              overflowY: `scroll`,
+              WebkitOverflowScrolling: `touch`,
+              "::-webkit-scrollbar": {
+                width: `6px`,
+                height: `6px`,
+              },
+              "::-webkit-scrollbar-thumb": {
+                background: colors.ui.bright,
+              },
+              "::-webkit-scrollbar-track": {
+                background: colors.ui.light,
+              },
+            }}
+          >
+            <InfiniteHits
+              hitComponent={result => (
+                <Result hit={result.hit} pathname={this.props.pathname} />
+              )}
+            />
+          </div>
+        </div>
+
+        <div>
+          <h3
+            css={{
+              fontSize: rhythm(0.55),
+              textAlign: `center`,
+              margin: rhythm(0.75),
+              "@media (min-width: 1600px)": {
+                margin: rhythm(0.25),
+                fontSize: rhythm(0.5),
+              },
+            }}
+          >
+            Search by{" "}
+            <a
+              href={`https://www.algolia.com/`}
+              style={{ color: `#744C9E`, border: `none`, boxShadow: `none` }}
+            >
+              Algolia
+            </a>
+          </h3>
         </div>
       </div>
-
-      <div>
-        <h3
-          css={{
-            fontSize: rhythm(0.55),
-            textAlign: `center`,
-            margin: rhythm(0.75),
-            "@media (min-width: 1600px)": {
-              margin: rhythm(0.25),
-              fontSize: rhythm(0.5),
-            },
-          }}
-        >
-          Search by{" "}
-          <a
-            href={`https://www.algolia.com/`}
-            style={{ color: `#744C9E`, border: `none`, boxShadow: `none` }}
-          >
-            Algolia
-          </a>
-        </h3>
-      </div>
-    </div>
-  )
+    )
+  }
 }
 
-const Result = ({ hit }) => {
-  const selected = location.pathname.slice(10) === hit.name
+// the result component is fed into the InfiniteHits component
+const Result = ({ hit, pathname }) => {
+  const selected = pathname.slice(10) === hit.name
   const lastUpdated = `${distanceInWords(
     new Date(hit.modified),
     new Date()
@@ -202,6 +214,7 @@ const Result = ({ hit }) => {
   )
 }
 
+// the search bar holds the Search component in the InstantSearch widget
 class SearchBar extends Component {
   constructor(props) {
     super(props)
@@ -232,7 +245,10 @@ class SearchBar extends Component {
           searchState={this.state.searchState}
           onSearchStateChange={this.onSearchStateChange.bind(this)}
         >
-          <Search searchState={this.state.searchState.query} />
+          <Search
+            pathname={this.props.history.location.pathname}
+            searchState={this.state.searchState.query}
+          />
         </InstantSearch>
       </div>
     )
