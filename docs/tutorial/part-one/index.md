@@ -24,7 +24,7 @@ computer's terminal. Gatsby is built using Node.js.
 
 Open a terminal window. See
 [terminal instructions for Mac users](http://www.macworld.co.uk/feature/mac-software/how-use-terminal-on-mac-3608274/) and
-[terminal instructions for Windows users](https://www.quora.com/How-do-I-open-terminal-in-windows). In your terminal window, type `node --version` and hit ENTER, then `npm --version` and hit ENTER (tip: every time you run a command, you must type a command into your terminal and then press ENTER to run the command).
+[terminal instructions for Windows users](https://www.quora.com/How-do-I-open-terminal-in-windows). In your terminal window, type `node --version` and hit ENTER, then `npm --version` and hit ENTER (tip: to run a specified command, you must type the command into your terminal and then press ENTER. Then the command will run).
 
 You should see something like:
 
@@ -42,7 +42,7 @@ are partially built Gatsby sites that are pre-configured to help you get moving 
 There are several official starters and many others contributed from the Gatsby
 community! [See the Starters page for the full list](/docs/gatsby-starters/).
 
-To install a starter, first install Gatsby's terminal program by running the following command:
+To install a starter, first install Gatsby's command line program by running the following:
 
 ```sh
 npm install --global gatsby-cli
