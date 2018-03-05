@@ -499,3 +499,17 @@ Community:
   * Minimal responsive design - made to customize or tear apart
   * Styled components
   * SEO friendly
+  
+  
+* [gatsby-starter-timeline-theme](https://github.com/amandeepmittal/gatsby-portfolio-v3) [(Demo)](http://portfolio-v3.surge.sh/)
+ 
+  Features:
+  
+    * Single Page, Timeline View
+    * A portfolio Developers and Product launchers 
+    * Bring in Data, plug-n-play
+    * Responsive Design, optimized for Mobile devices
+    * Seo Friendly
+    * Uses Flexbox
+  
+  
