@@ -1,6 +1,8 @@
 const ExtractTextPlugin = require(`extract-text-webpack-plugin`)
 const { cssModulesConfig } = require(`gatsby-1-config-css-modules`)
 
+const extractSass = new ExtractTextPlugin(`styles.css`, { allChunks: true })
+
 exports.modifyWebpackConfig = ({ config, stage }, options) => {
   const sassFiles = /\.s[ac]ss$/
   const sassModulesFiles = /\.module\.s[ac]ss$/
@@ -24,16 +26,21 @@ exports.modifyWebpackConfig = ({ config, stage }, options) => {
       config.loader(`sass`, {
         test: sassFiles,
         exclude: sassModulesFiles,
-        loader: ExtractTextPlugin.extract([`css?minimize`, sassLoader]),
+        loader: extractSass.extract([`css?minimize`, sassLoader]),
       })
 
       config.loader(`sassModules`, {
         test: sassModulesFiles,
-        loader: ExtractTextPlugin.extract(`style`, [
+        loader: extractSass.extract(`style`, [
           cssModulesConfig(stage),
           sassLoader,
         ]),
       })
+
+      config.merge({
+        plugins: [extractSass],
+      })
+
       return config
     }
     case `develop-html`:
@@ -47,11 +54,16 @@ exports.modifyWebpackConfig = ({ config, stage }, options) => {
 
       config.loader(`sassModules`, {
         test: sassModulesFiles,
-        loader: ExtractTextPlugin.extract(`style`, [
+        loader: extractSass.extract(`style`, [
           cssModulesConfig(stage),
           sassLoader,
         ]),
       })
+
+      config.merge({
+        plugins: [extractSass],
+      })
+
       return config
     }
     default: {
