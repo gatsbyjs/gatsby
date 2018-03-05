@@ -19,7 +19,8 @@ Describe the issue or the enhancement that you want to see.
 
 ### Environment
 
-Gatsby version:
+Gatsby version (`npm list gatsby`):
+gatsby-cli version (`gatsby --version`):
 Node.js version:
 Operating System:
 
