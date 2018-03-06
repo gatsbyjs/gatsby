@@ -168,7 +168,7 @@ Websites built with Gatsby:
 * [Orbit FM Podcasts](https://www.orbit.fm/) ([source](https://github.com/agarrharr/orbit.fm))
 * [Michele Mazzucco's Portfolio](https://www.michelemazzucco.it) ([source](https://github.com/michelemazzucco/michelemazzucco.it))
 * [Rung](https://rung.com.br)
-* [Adnan Fajlur Portfolio](https://https://adnanfajlur1999.firebaseapp.com/)
+* [Adnan Fajlur Portfolio](https://adnanfajlur1999.firebaseapp.com/)
 
 ## Docs
 
