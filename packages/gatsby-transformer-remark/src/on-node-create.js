@@ -52,6 +52,11 @@ module.exports = async function onCreateNode(
 
   markdownNode.excerpt = data.excerpt
 
+  // Add path to the markdown file path
+  if (node.internal.type === `File`) {
+    markdownNode.fileAbsolutePath = node.absolutePath
+  }
+
   markdownNode.internal.contentDigest = crypto
     .createHash(`md5`)
     .update(JSON.stringify(markdownNode))
