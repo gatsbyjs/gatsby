@@ -1,0 +1,5 @@
+node_modules
+npm-debug.log
+
+/index.js
+/gatsby-node.js

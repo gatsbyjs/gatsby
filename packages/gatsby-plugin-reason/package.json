@@ -1,0 +1,28 @@
+{
+  "name": "gatsby-plugin-reason",
+  "version": "1.0.0",
+  "description": "Adds Reason support for Gatsby layouts and pages.",
+  "main": "index.js",
+  "dependencies": {
+    "bs-loader": "^1.5.8"
+  },
+  "keywords": [
+    "gatsby",
+    "reason"
+  ],
+  "author": "Jason Rose <jasoncrose@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1"
+  },
+  "scripts": {
+    "build": "babel src --out-dir .",
+    "watch": "babel -w src --out-dir ."
+  },
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/jasonrose/gatsby-plugin-reason.git"
+  }
+}
