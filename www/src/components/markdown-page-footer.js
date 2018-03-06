@@ -91,7 +91,7 @@ export default class MarkdownPageFooter extends React.Component {
           }}
           href={`https://github.com/gatsbyjs/gatsby/blob/master/${
             this.props.packagePage ? `packages` : `docs`
-          }/${this.props.page.parent.relativePath}`}
+          }/${this.props.page ? this.props.page.parent.relativePath : ""}`}
         >
           <EditIcon css={{ fontSize: 20, position: `relative`, top: -2 }} />
           {` `}

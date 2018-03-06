@@ -9,6 +9,12 @@ module.exports = {
   },
   plugins: [
     {
+      resolve: `gatsby-source-npm-package-search`,
+      options: {
+        keywords: [`gatsby-plugin`, `gatsby-component`]
+      }
+    },
+    {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `docs`,
