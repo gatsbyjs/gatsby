@@ -149,9 +149,7 @@ describe(`Babelrc actions/reducer`, () => {
         actionsLog.push(actions.setBabelPlugin(args, { name: `test` }))
       },
       setBabelOptions: args => {
-        actionsLog.push(
-          actions.setBabelOptions({ options: args }, { name: `test` })
-        )
+        actionsLog.push(actions.setBabelOptions(args, { name: `test` }))
       },
     }
     actionifyBabelrc(parsed, mockActions)

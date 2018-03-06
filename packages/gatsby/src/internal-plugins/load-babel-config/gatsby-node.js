@@ -111,7 +111,7 @@ const actionifyBabelrc = (babelrc, actions) => {
   }
 
   if (_.isObject(options) && !_.isEmpty(options)) {
-    actions.setBabelOptions(options)
+    actions.setBabelOptions({ options })
   }
 }
 
