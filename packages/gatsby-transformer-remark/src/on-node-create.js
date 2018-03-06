@@ -31,17 +31,12 @@ module.exports = async function onCreateNode(
     })
   }
 
-  const contentDigest = crypto
-    .createHash(`md5`)
-    .update(JSON.stringify(data))
-    .digest(`hex`)
   const markdownNode = {
     id: `${node.id} >>> MarkdownRemark`,
     children: [],
     parent: node.id,
     internal: {
       content,
-      contentDigest,
       type: `MarkdownRemark`,
     },
   }
@@ -57,10 +52,10 @@ module.exports = async function onCreateNode(
 
   markdownNode.excerpt = data.excerpt
 
-  // Add path to the markdown file path
-  if (node.internal.type === `File`) {
-    markdownNode.fileAbsolutePath = node.absolutePath
-  }
+  markdownNode.internal.contentDigest = crypto
+    .createHash(`md5`)
+    .update(JSON.stringify(markdownNode))
+    .digest(`hex`)
 
   createNode(markdownNode)
   createParentChildLink({ parent: node, child: markdownNode })
