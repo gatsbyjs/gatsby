@@ -60,7 +60,7 @@
     "prebootstrap": "yarn",
     "publish": "lerna publish",
     "publish-canary": "lerna publish --canary --yes",
-    "publish-next": "lerna publish --npm-tag=next",
+    "publish-next": "lerna publish --npm-tag=next --cd-version=prerelease",
     "remotedev": "remotedev --hostname=localhost --port=19999",
     "test": "npm-run-all -s lint jest",
     "test:update": "jest --updateSnapshot",
