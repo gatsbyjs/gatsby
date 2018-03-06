@@ -10,7 +10,7 @@ const { trackInlineObjectsInRootNode } = require(`./node-tracking`)
 const enhancedNodeCache = new Map()
 const enhancedNodeCacheId = ({ node, args }) =>
   node && node.internal && node.internal.contentDigest
-    ? `${node.internal.contentDigest}${JSON.stringify(args)}`
+    ? `${node.id}${node.internal.contentDigest}${JSON.stringify(args)}`
     : null
 
 function awaitSiftField(fields, node, k) {
