@@ -37,6 +37,38 @@ e.g. [Sass](/packages/gatsby-plugin-sass/),
 [Typescript](/packages/gatsby-plugin-typescript/),
 [Glamor](/packages/gatsby-plugin-glamor/), and many more!
 
+## Modifying js babel loader
+
+Manually allow tweaking of include + exclude of babel loader.
+ ```
+const generateBabelConfig = require( 'gatsby/dist/utils/babel-config' );
+
+...
+
+exports.modifyWebpackConfig = ( { config, stage } ) => {
+    const program = {
+        directory: __dirname,
+        browserslist: [ '> 1%', 'last 2 versions', 'IE >= 9' ]
+    };
+
+    return generateBabelConfig( program, stage )
+        .then( babelConfig => {
+            config
+                .removeLoader( 'js' )
+                .loader( 'js', {
+                    test: /\.jsx?$/,
+                    exclude: ( modulePath ) => {
+                        return /node_modules/.test( modulePath ) &&
+                            !/node_modules\/(swiper|dom7)/.test( modulePath );
+                    },
+                    loader: 'babel',
+                    query: babelConfig
+                } );
+        } );
+};
+
+```
+
 ## Example
 
 Here is an example that configures **flexboxgrid** when processing css files. Add this in `gatsby-node.js`:
