@@ -78,6 +78,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
                 node {
                   id
                   title
+                  slug
                   readme {
                     id
                     childMarkdownRemark {
@@ -155,42 +156,27 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
         })
 
         const allPackages = result.data.allNpmPackage.edges
-        let allLocalPackages = _.filter(allPackages, edge => {
-          const slug = _.get(edge, `node.fields.slug`)
-          if (!slug) return
-
-          if (_.includes(slug, `/packages/`)) {
-            return edge
-          }
-        })
-
-        // Create local package readme
-        allLocalPackages = allLocalPackages.forEach(edge => {
-          const slug = `/packages/${edge.node.title}/`
-
-          createPage({
-            path: slug,
-            component: slash(localPackageTemplate),
-            context: {
-              slug,
-              id: edge.node.id,
-            },
-          })
-        })
-
-        // Create remote package readme
+        // Create package readme
         allPackages.forEach(edge => {
-          const slug = `/packages/${edge.node.title}/`
-          if (_.includes(localPackagesArr, edge.node.title)) return
-
-          createPage({
-            path: slug,
-            component: slash(remotePackageTemplate),
-            context: {
-              slug,
-              id: edge.node.id,
-            },
-          })
+          if (_.includes(localPackagesArr, edge.node.title)) {
+            createPage({
+              path: edge.node.slug,
+              component: slash(localPackageTemplate),
+              context: {
+                slug: edge.node.slug,
+                id: edge.node.id,
+              },
+            })
+          } else {
+            createPage({
+              path: edge.node.slug,
+              component: slash(remotePackageTemplate),
+              context: {
+                slug: edge.node.slug,
+                id: edge.node.id,
+              },
+            })
+          }
         })
 
         return

@@ -32,10 +32,10 @@ class Search extends Component {
     super(props)
     this.state = {
       searchState: this.props.searchState,
-      emptySearchBox: this.props.searchState.length > 0 ? false : true,
     }
   }
   render() {
+    const emptySearchBox = this.props.searchState.length > 0 ? false : true
     return (
       <div className="container">
         <div
@@ -61,7 +61,7 @@ class Search extends Component {
 
         <div
           css={{
-            opacity: this.state.emptySearchBox ? 0 : 1,
+            opacity: emptySearchBox ? 0 : 1,
             height: rhythm(1.5),
             paddingTop: rhythm(0.25),
             paddingBottom: rhythm(0.25),

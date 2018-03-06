@@ -100,7 +100,7 @@ class PackageReadMe extends React.Component {
 }
 
 PackageReadMe.propTypes = {
-  page: PropTypes.object.isRequired,
+  page: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   packageName: PropTypes.string.isRequired,
   excerpt: PropTypes.string,
   html: PropTypes.string.isRequired,

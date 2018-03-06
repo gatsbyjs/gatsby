@@ -5,6 +5,7 @@ import PackageReadme from "../components/package-readme"
 
 class DocsLocalPackagesTemplate extends React.Component {
   render() {
+    const { data: { npmPackage, markdownRemark } } = this.props
     const npmPackageNotFound = {
       keywords: ["gatsby"],
       lastPublisher: {
@@ -13,17 +14,41 @@ class DocsLocalPackagesTemplate extends React.Component {
       },
       modified: new Date(),
     }
-    const { data: { npmPackage, markdownRemark } } = this.props
+    const markdownRemarkNotFound = {
+      html: "No Package Readme Found",
+      excerpt: "",
+      timeToRead: 0,
+      fields: {
+        title: npmPackage ? npmPackage.name : "Title Not Found",
+      },
+    }
+
     return (
       <PackageReadme
-        page={_.pick(markdownRemark, "parent")}
-        packageName={markdownRemark.fields.title}
-        excerpt={markdownRemark.excerpt}
-        html={markdownRemark.html}
+        page={markdownRemark ? _.pick(markdownRemark, "parent") : false}
+        packageName={
+          markdownRemark
+            ? markdownRemark.fields.title
+            : markdownRemarkNotFound.fields.title
+        }
+        excerpt={
+          markdownRemark
+            ? markdownRemark.excerpt
+            : markdownRemarkNotFound.excerpt
+        }
+        html={
+          markdownRemark ? markdownRemark.html : markdownRemarkNotFound.html
+        }
         githubUrl={`https://github.com/gatsbyjs/gatsby/tree/master/packages/${
-          markdownRemark.fields.title
+          markdownRemark
+            ? markdownRemark.fields.title
+            : markdownRemarkNotFound.fields.title
         }`}
-        timeToRead={markdownRemark.timeToRead}
+        timeToRead={
+          markdownRemark
+            ? markdownRemark.timeToRead
+            : markdownRemarkNotFound.timeToRead
+        }
         modified={
           npmPackage ? npmPackage.modified : npmPackageNotFound.modified
         }
@@ -54,6 +79,7 @@ export const pageQuery = graphql`
       ...MarkdownPageFooter
     }
     npmPackage(slug: { eq: $slug }) {
+      name
       keywords
       lastPublisher {
         name
