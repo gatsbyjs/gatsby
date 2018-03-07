@@ -1,5 +1,5 @@
 // Add Glamor support
-exports.modifyWebpackConfig = ({ actions, plugins }) =>
+exports.onCreateWebpackConfig = ({ actions, plugins }) =>
   actions.setWebpackConfig({
     plugins: [
       plugins.provide({

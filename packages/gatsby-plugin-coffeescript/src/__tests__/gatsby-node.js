@@ -2,7 +2,7 @@ jest.mock(`../resolve`, () => module => `/resolved/path/${module}`)
 
 const {
   resolvableExtensions,
-  modifyWebpackConfig,
+  onCreateWebpackConfig,
   preprocessSource,
 } = require(`../gatsby-node`)
 
@@ -17,7 +17,7 @@ describe(`gatsby-plugin-coffeescript`, () => {
     }
     const loaders = { js: () => `babel-loader` }
 
-    modifyWebpackConfig({ actions, loaders })
+    onCreateWebpackConfig({ actions, loaders })
 
     expect(actions.setWebpackConfig).toHaveBeenCalledTimes(
       resolvableExtensions().length

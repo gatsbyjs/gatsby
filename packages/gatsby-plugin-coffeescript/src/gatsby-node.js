@@ -7,7 +7,7 @@ export function resolvableExtensions() {
   return [`.coffee`]
 }
 
-export function modifyWebpackConfig({ loaders, actions }) {
+export function onCreateWebpackConfig({ loaders, actions }) {
   // We need to use Babel to get around the ES6 export issue.
   actions.setWebpackConfig({
     module: {

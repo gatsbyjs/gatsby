@@ -1,7 +1,7 @@
 const webpackLodashPlugin = require(`lodash-webpack-plugin`)
 
 // Add Lodash webpack plugin
-exports.modifyWebpackConfig = (
+exports.onCreateWebpackConfig = (
   { actions, stage },
   { disabledFeatures = [] }
 ) => {

@@ -179,7 +179,7 @@ exports.onCreateBabelConfig = true
  * @param {object} $0.plugins A set of preconfigured webpack config plugins
  * @param {object} $0.actions
  * @example
- * exports.modifyWebpackConfig = ({
+ * exports.onCreateWebpackConfig = ({
  *  stage, getConfig, rules, loaders, actions
  * }) => {
  *   actions.setWebpackConfig({
@@ -194,7 +194,7 @@ exports.onCreateBabelConfig = true
  *   });
  * }
  */
-exports.modifyWebpackConfig = true
+exports.onCreateWebpackConfig = true
 
 /**
  * Called at the start of the bootstrap process before any other extension APIs are called.

@@ -4,7 +4,7 @@ const babelPluginRemoveQueries = require(`babel-plugin-remove-graphql-queries`)
   .default
 const {
   resolvableExtensions,
-  modifyWebpackConfig,
+  onCreateWebpackConfig,
   preprocessSource,
 } = require(`../gatsby-node`)
 
@@ -34,7 +34,7 @@ describe(`gatsby-plugin-typescript`, () => {
       loader: jest.fn(),
     }
 
-    modifyWebpackConfig({ config, babelConfig }, { compilerOptions: {} })
+    onCreateWebpackConfig({ config, babelConfig }, { compilerOptions: {} })
 
     expect(args.actions.setWebpackConfig).toHaveBeenCalledTimes(1)
     const lastCall = args.actions.setWebpackConfig.mock.calls.pop()
@@ -42,7 +42,7 @@ describe(`gatsby-plugin-typescript`, () => {
   })
 
   it(`adds the remove graphql queries plugin`, () => {
-    modifyWebpackConfig(args, { compilerOptions: {} })
+    onCreateWebpackConfig(args, { compilerOptions: {} })
 
     expect(args.loaders.js).toHaveBeenCalledTimes(1)
     const lastCall = args.loaders.js.mock.calls.pop()
@@ -59,7 +59,7 @@ describe(`gatsby-plugin-typescript`, () => {
     }
     const options = { compilerOptions: { foo: `bar` }, transpileOnly: false }
 
-    modifyWebpackConfig({ config, babelConfig }, options)
+    onCreateWebpackConfig({ config, babelConfig }, options)
 
     const expectedOptions = {
       compilerOptions: {
@@ -89,7 +89,7 @@ describe(`gatsby-plugin-typescript`, () => {
     const config = {
       loader: jest.fn(),
     }
-    modifyWebpackConfig({ config, babelConfig }, { compilerOptions: {} })
+    onCreateWebpackConfig({ config, babelConfig }, { compilerOptions: {} })
 
     const expectedOptions = {
       compilerOptions: {
