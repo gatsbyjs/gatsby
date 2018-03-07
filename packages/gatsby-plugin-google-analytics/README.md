@@ -19,6 +19,8 @@ plugins: [
       head: false,
       // Setting this parameter is optional
       anonymize: true,
+      // Setting this parameter is also optional
+      respectDNT: true,
     },
   },
 ];
@@ -43,3 +45,8 @@ If your visitors should be able to set an Opt-Out-Cookie (No future tracking)
 you can set a link e.g. in your imprint as follows:
 
 `<a href="javascript:gaOptout();">Deactive Google Analytics</a>`
+
+
+## The "respectDNT" option
+
+If you enable this optional option, Google Analytics will not be loaded at all for visitors that have "Do Not Track" enabled. While using Google Analytics does not necessarily constitute Tracking, you might still want to do this to cater to more privacy oriented users.
