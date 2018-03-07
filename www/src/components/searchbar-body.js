@@ -11,13 +11,155 @@ import distanceInWords from "date-fns/distance_in_words"
 import presets, { colors } from "../utils/presets"
 import Link from "gatsby-link"
 import DownloadArrow from "react-icons/lib/go/arrow-small-down"
-import { debounce } from "lodash"
+import debounce from "lodash/debounce"
+import unescape from "lodash/unescape"
 
-import typography, { rhythm } from "../utils/typography"
-
+import typography, { rhythm, scale } from "../utils/typography"
+import { css as glam } from "glamor"
+console.log(scale(1))
 // This is for the urlSync
 const updateAfter = 700
 //
+
+glam.insert(`
+  .ais-SearchBox__input:valid ~ .ais-SearchBox__reset {
+    display: block;
+  }
+
+  .ais-SearchBox__root {
+    display: inline-block;
+    position: relative;
+    margin: 0;
+    width: 100%;
+    height: 46px;
+    white-space: nowrap;
+    box-sizing: border-box;
+  }
+
+  .ais-SearchBox__wrapper {
+    width: 100%;
+    height: 100%;
+  }
+
+  .ais-SearchBox__input {
+    -webkit-appearance: none;
+    display: inline-block;
+    -webkit-transition: box-shadow 0.4s ease, background 0.4s ease;
+    transition: box-shadow 0.4s ease, background 0.4s ease;
+    border: 1px solid #e0d6eb;
+    border-radius: 4px;
+    color: ${colors.gatsby};
+    background: #ffffff;
+    padding: 0;
+    padding-right: 36px;
+    padding-left: 46px;
+    width: 100%;
+    height: 100%;
+    vertical-align: middle;
+    white-space: normal;
+    font-size: inherit;
+    font-family: ${typography.options.headerFontFamily.join(`,`)};
+  }
+  .ais-SearchBox__input:hover,
+  .ais-SearchBox__input:active,
+  .ais-SearchBox__input:focus {
+    box-shadow: none;
+    outline: 0;
+  }
+  .ais-SearchBox__input::-webkit-input-placeholder,
+  .ais-SearchBox__input::-moz-placeholder,
+  .ais-SearchBox__input:-ms-input-placeholder,
+  .ais-SearchBox__input::placeholder {
+    color: ${colors.lilac};
+  }
+
+  .ais-SearchBox__submit {
+    position: absolute;
+    top: 0;
+    right: inherit;
+    left: 0;
+    margin: 0;
+    border: 0;
+    border-radius: 4px 0 0 4px;
+    background-color: rgba(255, 255, 255, 0);
+    padding: 0;
+    width: 46px;
+    height: 100%;
+    vertical-align: middle;
+    text-align: center;
+    font-size: inherit;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  .ais-SearchBox__submit::before {
+    display: inline-block;
+    margin-right: -4px;
+    height: 100%;
+    vertical-align: middle;
+    content: "" 2;
+  }
+  .ais-SearchBox__submit:hover,
+  .ais-SearchBox__submit:active {
+    cursor: pointer;
+  }
+  .ais-SearchBox__submit:focus {
+    outline: 0;
+  }
+  .ais-SearchBox__submit svg {
+    width: 18px;
+    height: 18px;
+    vertical-align: middle;
+    fill: ${colors.ui.bright};
+  }
+
+  .ais-SearchBox__reset {
+    display: none;
+    position: absolute;
+    top: 13px;
+    right: 13px;
+    margin: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    padding: 0;
+    font-size: inherit;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    fill: ${colors.ui.bright};
+  }
+  .ais-SearchBox__reset:focus {
+    outline: 0;
+  }
+  .ais-SearchBox__reset svg {
+    display: block;
+    margin: 4px;
+    width: 12px;
+    height: 12px;
+  }
+
+  .ais-InfiniteHits__loadMore {
+    width: 100%;
+    height: ${rhythm(2)};
+    margin-top: ${rhythm(1 / 2)};
+    cursor: pointer;
+    background-color: transparent;
+    color: ${colors.gatsby};
+    outline: none;
+    font-family: ${typography.options.headerFontFamily.join(`,`)};
+  }
+  .ais-InfiniteHits__loadMore:hover {
+    background-color: ${colors.gatsby};
+    color: #fff;
+  }
+
+  .ais-InfiniteHits__loadMore[disabled] {
+    display: none;
+  }
+`)
 
 const wideScreenSize = {
   "@media (min-width: 1600px)": {
@@ -45,7 +187,7 @@ class Search extends Component {
             width: `100%`,
           }}
         >
-          <SearchBox translations={{ placeholder: "Search Gatsby Library" }} />
+          <SearchBox translations={{ placeholder: `Search Gatsby Library` }} />
         </div>
 
         <div
@@ -55,7 +197,7 @@ class Search extends Component {
         >
           <RefinementList
             attributeName="keywords"
-            defaultRefinement={["gatsby-component", "gatsby-plugin"]}
+            defaultRefinement={[`gatsby-component`, `gatsby-plugin`]}
           />
         </div>
 
@@ -67,7 +209,7 @@ class Search extends Component {
             paddingBottom: rhythm(0.25),
             color: colors.gray.calm,
             fontSize: 14,
-            fontStretch: "normal",
+            fontStretch: `normal`,
           }}
         >
           <Stats
@@ -79,13 +221,7 @@ class Search extends Component {
           />
         </div>
 
-        <div
-          css={{
-            borderTop: `2px solid #F5F3F7`,
-            borderBottom: `2px solid #F5F3F7`,
-            borderLeft: `2px solid #F5F3F7`,
-          }}
-        >
+        <div css={{}}>
           <div
             css={{
               backgroundColor: `white`,
@@ -119,16 +255,22 @@ class Search extends Component {
               fontSize: rhythm(0.55),
               textAlign: `center`,
               margin: rhythm(0.75),
+              fontWeight: `normal`,
               "@media (min-width: 1600px)": {
                 margin: rhythm(0.25),
                 fontSize: rhythm(0.5),
               },
             }}
           >
-            Search by{" "}
+            Search by{` `}
             <a
               href={`https://www.algolia.com/`}
-              style={{ color: `#744C9E`, border: `none`, boxShadow: `none` }}
+              style={{
+                color: `#744C9E`,
+                border: `none`,
+                boxShadow: `none`,
+                fontWeight: `normal`,
+              }}
             >
               Algolia
             </a>
@@ -149,13 +291,31 @@ const Result = ({ hit, pathname }) => {
   return (
     <Link
       to={`/packages/${hit.name}`}
-      style={{
-        display: `block`,
-        fontFamily: typography.options.bodyFontFamily.join(`,`),
-        fontWeight: `400`,
-        color: selected ? `white` : `black`,
-        backgroundColor: selected ? `#744C9E` : `white`,
-        padding: rhythm(0.5),
+      css={{
+        "&&": {
+          display: `block`,
+          fontFamily: typography.options.bodyFontFamily.join(`,`),
+          fontWeight: `400`,
+          color: colors.gray.dark,
+          borderLeft: `${rhythm(3 / 16)} solid ${
+            selected ? colors.gatsby : `none`
+          }`,
+          padding: rhythm(0.5),
+          paddingLeft: selected ? rhythm(5 / 16) : rhythm(1 / 2),
+          boxShadow: `none`,
+          borderBottom: 0,
+          position: `relative`,
+          "&:after": {
+            content: ` `,
+            position: `absolute`,
+            bottom: 0,
+            top: `auto`,
+            width: `100%`,
+            height: 1,
+            left: 0,
+            background: colors.ui.light,
+          },
+        },
       }}
     >
       <div
@@ -181,34 +341,25 @@ const Result = ({ hit, pathname }) => {
           }}
         >
           {hit.humanDownloadsLast30Days}
-          {selected ? (
-            <DownloadArrow
-              style={{
-                width: 25,
-                height: 25,
-              }}
-              color="#fff"
-            />
-          ) : (
-            <DownloadArrow
-              style={{
-                width: 25,
-                height: 25,
-              }}
-              color="#000"
-            />
-          )}
+
+          <DownloadArrow
+            style={{
+              width: 25,
+              height: 25,
+            }}
+            color="#000"
+          />
         </div>
       </div>
 
       <div
         css={{
-          fontSize: rhythm(0.6),
-          paddingTop: rhythm(0.25),
-          lineHeight: rhythm(0.75),
+          color: colors.gray.calm,
+          fontSize: scale(-1 / 5).fontSize,
+          fontFamily: typography.options.headerFontFamily.join(`,`),
         }}
       >
-        {hit.description}
+        {unescape(hit.description)}
       </div>
     </Link>
   )
@@ -222,9 +373,7 @@ class SearchBar extends Component {
     this.updateHistory = debounce(this.updateHistory, updateAfter)
   }
 
-  urlToSearch = () => {
-    return this.props.history.location.search.slice(2)
-  }
+  urlToSearch = () => this.props.history.location.search.slice(2)
 
   updateHistory(value) {
     this.props.history.replace(`/packages?=${value.query}`)
