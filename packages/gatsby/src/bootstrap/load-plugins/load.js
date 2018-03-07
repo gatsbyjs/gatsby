@@ -131,6 +131,7 @@ module.exports = async (config = {}) => {
   const internalPlugins = [
     `../../internal-plugins/dev-404-page`,
     `../../internal-plugins/load-babel-config`,
+    `../../internal-plugins/load-postcss-config`,
     `../../internal-plugins/component-page-creator`,
     `../../internal-plugins/component-layout-creator`,
     `../../internal-plugins/internal-data-bridge`,
