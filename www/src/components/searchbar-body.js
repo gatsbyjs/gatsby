@@ -275,7 +275,7 @@ const Result = ({ hit, pathname }) => {
   const selected = pathname.slice(10) === hit.name
   return (
     <Link
-      to={`/packages/${hit.name}`}
+      to={`/packages/${hit.name}/`}
       css={{
         "&&": {
           display: `block`,
