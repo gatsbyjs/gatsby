@@ -1,18 +1,19 @@
 import React, { Component } from "react"
 import {
   InstantSearch,
-  Hits,
   SearchBox,
   Stats,
   RefinementList,
   InfiniteHits,
 } from "react-instantsearch/dom"
-import distanceInWords from "date-fns/distance_in_words"
-import presets, { colors } from "../utils/presets"
+import { colors } from "../utils/presets"
 import Link from "gatsby-link"
 import DownloadArrow from "react-icons/lib/go/arrow-small-down"
 import debounce from "lodash/debounce"
 import unescape from "lodash/unescape"
+import algoliasearch from "algoliasearch/lite"
+let alClient
+let alIndex
 
 import typography, { rhythm, scale } from "../utils/typography"
 import { css as glam } from "glamor"
@@ -160,23 +161,16 @@ glam.insert(`
   }
 `)
 
-const wideScreenSize = {
-  "@media (min-width: 1600px)": {
-    margin: rhythm(0.25),
-    fontSize: rhythm(0.5),
-  },
-}
-
 // Search shows a list of "hits", and is a child of the SearchBar component
 class Search extends Component {
-  constructor(props) {
+  constructor(props, context) {
     super(props)
     this.state = {
       searchState: this.props.searchState,
     }
   }
+
   render() {
-    const emptySearchBox = this.props.searchState.length > 0 ? false : true
     return (
       <div className="container">
         <div
@@ -202,7 +196,6 @@ class Search extends Component {
 
         <div
           css={{
-            opacity: emptySearchBox ? 0 : 1,
             height: rhythm(1.5),
             paddingTop: rhythm(0.25),
             paddingBottom: rhythm(0.25),
@@ -220,7 +213,7 @@ class Search extends Component {
           />
         </div>
 
-        <div css={{}}>
+        <div>
           <div
             css={{
               backgroundColor: `white`,
@@ -283,10 +276,6 @@ class Search extends Component {
 // the result component is fed into the InfiniteHits component
 const Result = ({ hit, pathname }) => {
   const selected = pathname.slice(10) === hit.name
-  const lastUpdated = `${distanceInWords(
-    new Date(hit.modified),
-    new Date()
-  )} ago`
   return (
     <Link
       to={`/packages/${hit.name}`}
