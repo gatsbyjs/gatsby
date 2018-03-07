@@ -1,10 +1,8 @@
 import React from "react"
 import PropTypes from "prop-types"
 import Helmet from "react-helmet"
-import distanceInWords from "date-fns/distance_in_words"
 
-import { rhythm, scale } from "../utils/typography"
-import presets, { colors } from "../utils/presets"
+import { colors } from "../utils/presets"
 import Container from "../components/container"
 import MarkdownPageFooter from "../components/markdown-page-footer"
 import GithubIcon from "react-icons/lib/go/mark-github"
@@ -12,22 +10,13 @@ import GithubIcon from "react-icons/lib/go/mark-github"
 class PackageReadMe extends React.Component {
   render() {
     const {
-      lastPublisher,
       page,
       packageName,
       excerpt,
-      modified,
       html,
       githubUrl,
-      keywords,
       timeToRead,
     } = this.props
-
-    const lastUpdated = `${distanceInWords(new Date(modified), new Date())} ago`
-    const gatsbyKeywords = [`gatsby`, `gatsby-plugin`, `gatsby-component`]
-    const tags = keywords
-      .filter(keyword => !gatsbyKeywords.includes(keyword))
-      .join(`, `)
 
     return (
       <Container>
@@ -84,8 +73,6 @@ PackageReadMe.propTypes = {
   html: PropTypes.string.isRequired,
   githubUrl: PropTypes.string,
   timeToRead: PropTypes.number,
-  modified: PropTypes.string,
-  keywords: PropTypes.array,
   lastPublisher: PropTypes.object,
 }
 
