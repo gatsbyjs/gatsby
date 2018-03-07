@@ -4,7 +4,7 @@ const report = require(`gatsby-cli/lib/reporter`)
 const apiRunner = require(`./api-runner-node`)
 const { store, getNode } = require(`../redux`)
 const { boundActionCreators } = require(`../redux/actions`)
-const { deleteNodes } = boundActionCreators
+const { deleteNode } = boundActionCreators
 
 /**
  * Finds the name of all plugins which implement Gatsby APIs that
@@ -67,6 +67,6 @@ module.exports = async () => {
   })
 
   if (staleNodes.length > 0) {
-    deleteNodes(staleNodes.map(n => n.id))
+    staleNodes.forEach(n => deleteNode(n.id, n))
   }
 }
