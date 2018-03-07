@@ -162,9 +162,6 @@ glam.insert(`
 class Search extends Component {
   constructor(props, context) {
     super(props)
-    this.state = {
-      searchState: this.props.searchState,
-    }
   }
 
   render() {
@@ -232,7 +229,11 @@ class Search extends Component {
           >
             <InfiniteHits
               hitComponent={result => (
-                <Result hit={result.hit} pathname={this.props.pathname} />
+                <Result
+                  hit={result.hit}
+                  pathname={this.props.pathname}
+                  search={this.props.searchState}
+                />
               )}
             />
           </div>
@@ -271,11 +272,14 @@ class Search extends Component {
 }
 
 // the result component is fed into the InfiniteHits component
-const Result = ({ hit, pathname }) => {
+const Result = ({ hit, pathname, search }) => {
   const selected = pathname.slice(10) === hit.name
   return (
     <Link
-      to={`/packages/${hit.name}/`}
+      to={{
+        pathname: `/packages/${hit.name}/`,
+        search: `?=${search}`,
+      }}
       css={{
         "&&": {
           display: `block`,
@@ -361,7 +365,10 @@ class SearchBar extends Component {
   urlToSearch = () => this.props.history.location.search.slice(2)
 
   updateHistory(value) {
-    this.props.history.replace(`/packages?=${value.query}`)
+    this.props.history.replace({
+      pathname: window.location.pathname,
+      search: `?=${value.query}`,
+    })
   }
 
   onSearchStateChange(searchState) {
