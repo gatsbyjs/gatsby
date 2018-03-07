@@ -4,9 +4,10 @@ import Helmet from "react-helmet"
 import distanceInWords from "date-fns/distance_in_words"
 
 import { rhythm, scale } from "../utils/typography"
-import presets from "../utils/presets"
+import presets, { colors } from "../utils/presets"
 import Container from "../components/container"
 import MarkdownPageFooter from "../components/markdown-page-footer"
+import GithubIcon from "react-icons/lib/go/mark-github"
 
 class PackageReadMe extends React.Component {
   render() {
@@ -40,54 +41,31 @@ class PackageReadMe extends React.Component {
           <meta name="twitter.label1" content="Reading time" />
           <meta name="twitter:data1" content={`${timeToRead} min read`} />
         </Helmet>
-        <strong>
-          <a
-            css={{
+        <a
+          css={{
+            "&&": {
               display: githubUrl ? `inline-block` : `none`,
-            }}
-            href={githubUrl}
-          >
-            Browse source code for this package on GitHub
-          </a>
-        </strong>
-
-        <div className="metadataHeader">
-          <div
-            css={{
-              fontSize: rhythm(0.5),
-              color: `#D3D3D3`,
-            }}
-          >
-            {tags}
-          </div>
-
-          {lastPublisher.name != "User Not Found" ? (
-            <div
-              css={{
-                display: `flex`,
-                paddingTop: rhythm(0.25),
-              }}
-            >
-              <img width="20" height="20" src={lastPublisher.avatar} />
-              <span
-                css={{
-                  paddingLeft: rhythm(0.25),
-                  fontSize: rhythm(0.5),
-                  textTransform: `uppercase`,
-                }}
-              >
-                {lastPublisher.name}
-              </span>
-              <span css={{ paddingLeft: rhythm(0.25), fontSize: rhythm(0.5) }}>
-                {lastUpdated}
-              </span>
-            </div>
-          ) : null}
-        </div>
+              fontWeight: `normal`,
+              border: 0,
+              color: colors.gray.calm,
+              boxShadow: `none`,
+              "&:hover": {
+                background: `none`,
+                color: colors.gatsby,
+              },
+            },
+          }}
+          href={githubUrl}
+        >
+          <GithubIcon style={{ verticalAlign: `text-top` }} />
+        </a>
 
         <div
           css={{
             position: `relative`,
+            "& h1": {
+              marginTop: 0,
+            },
           }}
           dangerouslySetInnerHTML={{
             __html: html,
