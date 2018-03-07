@@ -16,7 +16,8 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-medium#readme",
   "keywords": [
-    "gatsby"
+    "gatsby",
+    "gatsby-plugin"
   ],
   "license": "MIT",
   "main": "index.js",
