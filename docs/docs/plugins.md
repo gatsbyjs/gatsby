@@ -45,7 +45,6 @@ If you’d like to create a custom Gatsby plugin, check out the [plugin authorin
 
 For usage instructions and options, see the plugin repo (linked below).
 
-* [gatsby-plugin-aphrodite](/packages/gatsby-plugin-aphrodite/)
 * [gatsby-plugin-canonical-urls](/packages/gatsby-plugin-canonical-urls/)
 * [gatsby-plugin-catch-links](/packages/gatsby-plugin-catch-links/)
 * [gatsby-plugin-coffeescript](/packages/gatsby-plugin-coffeescript/)
