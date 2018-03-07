@@ -17,7 +17,7 @@
     "potrace": "^2.1.1",
     "probe-image-size": "^3.2.0",
     "progress": "^1.1.8",
-    "sharp": "lovell/sharp#prebuild",
+    "sharp": "^0.20.0",
     "svgo": "^0.7.2"
   },
   "devDependencies": {
