@@ -22,7 +22,6 @@ import "../fonts/Webfonts/futurapt_demiitalic_macroman/stylesheet.css"
 // Other fonts
 import "typeface-spectral"
 import "typeface-space-mono"
-import { isTuesday } from "date-fns"
 import searchbarBody from "../components/searchbar-body"
 
 class DefaultLayout extends React.Component {
@@ -121,7 +120,7 @@ class DefaultLayout extends React.Component {
       // overrides of sidebarStyles
       width: `100vw`,
       padding: rhythm(1),
-      overflowY: "hidden",
+      overflowY: `hidden`,
       [presets.Desktop]: {
         width: rhythm(17),
       },

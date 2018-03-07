@@ -5,7 +5,6 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "bluebird": "^3.5.1",
-    "date-fns": "^1.29.0",
     "email-validator": "^1.1.1",
     "gatsby": "^1.9.225",
     "gatsby-image": "^1.0.41",
