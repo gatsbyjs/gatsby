@@ -11,9 +11,6 @@ import Link from "gatsby-link"
 import DownloadArrow from "react-icons/lib/go/arrow-small-down"
 import debounce from "lodash/debounce"
 import unescape from "lodash/unescape"
-import algoliasearch from "algoliasearch/lite"
-let alClient
-let alIndex
 
 import typography, { rhythm, scale } from "../utils/typography"
 import { css as glam } from "glamor"
