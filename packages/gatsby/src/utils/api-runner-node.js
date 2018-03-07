@@ -161,7 +161,10 @@ module.exports = async (api, args = {}, pluginSource) =>
       },
       (err, results) => {
         if (err) {
-          reporter.error(`${pluginName} returned an error`, err)
+          if (process.env.NODE_ENV === `production`) {
+            return reporter.panic(`${pluginName} returned an error`, err)
+          }
+          return reporter.error(`${pluginName} returned an error`, err)
         }
         // Remove runner instance
         apisRunning = apisRunning.filter(runner => runner !== apiRunInstance)
@@ -181,7 +184,7 @@ module.exports = async (api, args = {}, pluginSource) =>
         }
 
         // Check if any of our waiters are done.
-        waitingForCasacadeToFinish = waitingForCasacadeToFinish.filter(
+        return waitingForCasacadeToFinish = waitingForCasacadeToFinish.filter(
           instance => {
             // If none of its trace IDs are running, it's done.
             if (!_.some(apisRunning, a => a.traceId === instance.traceId)) {
