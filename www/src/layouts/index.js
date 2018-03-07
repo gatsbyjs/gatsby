@@ -44,6 +44,8 @@ class DefaultLayout extends React.Component {
       isPackage ||
       isPackageReadme
 
+    const isSearchSource = hasSidebar
+
     const leftPadding = rhythmSize => {
       if (this.props.location.pathname.slice(0, 9) === `/packages`) {
         return rhythm(18)
@@ -208,6 +210,7 @@ class DefaultLayout extends React.Component {
                 paddingLeft: leftPadding(12),
               },
             }}
+            className={isSearchSource && `docSearch-content`}
           >
             {this.props.children()}
           </div>
