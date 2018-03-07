@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-sass",
   "description": "Gatsby plugin to handle scss/sass files",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "author": "Daniel Farrell <daniel@mobelux.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
