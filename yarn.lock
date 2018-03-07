@@ -9291,9 +9291,13 @@ name-all-modules-plugin@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/name-all-modules-plugin/-/name-all-modules-plugin-1.0.1.tgz#0abfb6ad835718b9fb4def0674e06657a954375c"
 
-nan@^2.3.0, nan@^2.3.2, nan@^2.8.0:
+nan@^2.3.0, nan@^2.3.2:
   version "2.8.0"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.8.0.tgz#ed715f3fe9de02b57a5e6252d90a96675e1f085a"
+
+nan@^2.9.2:
+  version "2.9.2"
+  resolved "https://registry.yarnpkg.com/nan/-/nan-2.9.2.tgz#f564d75f5f8f36a6d9456cca7a6c4fe488ab7866"
 
 nanomatch@^1.2.5:
   version "1.2.7"
@@ -10958,7 +10962,7 @@ potrace@^2.1.1:
   dependencies:
     jimp "^0.2.24"
 
-prebuild-install@^2.5.0:
+prebuild-install@^2.5.1:
   version "2.5.1"
   resolved "https://registry.yarnpkg.com/prebuild-install/-/prebuild-install-2.5.1.tgz#0f234140a73760813657c413cdccdda58296b1da"
   dependencies:
@@ -12972,19 +12976,19 @@ shallow-equal@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/shallow-equal/-/shallow-equal-1.0.0.tgz#508d1838b3de590ab8757b011b25e430900945f7"
 
-sharp@lovell/sharp#prebuild:
-  version "0.20.0-prebuild.test.1"
-  resolved "https://codeload.github.com/lovell/sharp/tar.gz/32fd71af44cc7a0c4a018851b6a9d7c87b3765f5"
+sharp@^0.20.0:
+  version "0.20.0"
+  resolved "https://registry.yarnpkg.com/sharp/-/sharp-0.20.0.tgz#2ff9f1ae11f068ce7d7591f531cad52c7821d033"
   dependencies:
     color "^3.0.0"
     detect-libc "^1.0.3"
     fs-copy-file-sync "^1.0.1"
-    nan "^2.8.0"
+    nan "^2.9.2"
     npmlog "^4.1.2"
-    prebuild-install "^2.5.0"
+    prebuild-install "^2.5.1"
     semver "^5.5.0"
     simple-get "^2.7.0"
-    tar "^4.3.2"
+    tar "^4.4.0"
     tunnel-agent "^0.6.0"
 
 shebang-command@^1.2.0:
@@ -14002,9 +14006,9 @@ tar@^2.0.0, tar@^2.2.1:
     fstream "^1.0.2"
     inherits "2"
 
-tar@^4.3.2:
-  version "4.3.3"
-  resolved "https://registry.yarnpkg.com/tar/-/tar-4.3.3.tgz#e03823dbde4e8060f606fef7d09f92ce06c1064b"
+tar@^4.4.0:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/tar/-/tar-4.4.0.tgz#3aaf8c29b6b800a8215f33efb4df1c95ce2ac2f5"
   dependencies:
     chownr "^1.0.1"
     fs-minipass "^1.2.3"
