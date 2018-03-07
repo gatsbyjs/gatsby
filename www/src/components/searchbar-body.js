@@ -16,7 +16,6 @@ import unescape from "lodash/unescape"
 
 import typography, { rhythm, scale } from "../utils/typography"
 import { css as glam } from "glamor"
-console.log(scale(1))
 // This is for the urlSync
 const updateAfter = 700
 //
