@@ -102,7 +102,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 }
 
 // Sass and Lodash.
-exports.modifyWebpackConfig = ({ stage, actions }) => {
+exports.onCreateWebpackConfig = ({ stage, actions }) => {
   switch (stage) {
     case `build-javascript`:
       actions.setWebpackConfig({

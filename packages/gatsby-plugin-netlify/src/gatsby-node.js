@@ -10,7 +10,7 @@ import { DEFAULT_OPTIONS, BUILD_HTML_STAGE, BUILD_CSS_STAGE } from "./constants"
 let assetsManifest = {}
 
 // Inject a webpack plugin to get the file manifests so we can translate all link headers
-exports.modifyWebpackConfig = ({ actions, stage }) => {
+exports.onCreateWebpackConfig = ({ actions, stage }) => {
   if (stage !== BUILD_HTML_STAGE && stage !== BUILD_CSS_STAGE) {
     return
   }

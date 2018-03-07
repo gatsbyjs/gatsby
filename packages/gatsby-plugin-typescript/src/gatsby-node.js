@@ -11,7 +11,7 @@ const compilerDefaults = {
 
 module.exports.resolvableExtensions = () => [`.ts`, `.tsx`]
 
-module.exports.modifyWebpackConfig = (
+module.exports.onCreateWebpackConfig = (
   { actions, loaders },
   { compilerOptions, ...options }
 ) => {

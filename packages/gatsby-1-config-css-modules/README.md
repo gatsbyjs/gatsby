@@ -14,7 +14,7 @@ Example from [`gatsby-plugin-sass`](../gatsby-plugin-sass/):
 // in gatsby-node.js
 const { cssModulesConfig } = require("gatsby-1-config-css-modules");
 
-exports.modifyWebpackConfig = ({ config, stage }, { precision }) => {
+exports.onCreateWebpackConfig = ({ config, stage }, { precision }) => {
   const sassFiles = /\.s[ac]ss$/;
   const sassModulesFiles = /\.module\.s[ac]ss$/;
   const sassLoader = precision ? `sass?precision=${precision}` : `sass`;
