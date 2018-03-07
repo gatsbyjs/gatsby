@@ -11,7 +11,8 @@ class ActionCreatorsDocs extends React.Component {
     const funcs = sortBy(
       this.props.data.file.childrenDocumentationJs,
       func => func.name
-    )
+    ).filter(func => func.name !== `deleteNodes`)
+
     return (
       <Container>
         <Helmet>
