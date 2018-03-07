@@ -19,7 +19,7 @@
  *   },
  * ],
  */
-exports.modifyWebpackConfig = (
+exports.onCreateWebpackConfig = (
   { actions, stage, rules, plugins, loaders },
   { postCssPlugins, ...stylusOptions }
 ) => {

@@ -6,7 +6,7 @@ const rootReact = resolve.sync(`react`, {
 })
 const React = require(rootReact)
 
-exports.modifyWebpackConfig = ({ actions, plugins }) => {
+exports.onCreateWebpackConfig = ({ actions, plugins }) => {
   if (React.version.slice(0, 2) === `16`) return
 
   actions.setWebpackConfig({

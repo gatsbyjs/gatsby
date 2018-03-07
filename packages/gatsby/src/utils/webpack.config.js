@@ -463,7 +463,7 @@ module.exports = async (
   store.dispatch(actions.replaceWebpackConfig(config))
   const getConfig = () => store.getState().webpack
 
-  await apiRunnerNode(`modifyWebpackConfig`, {
+  await apiRunnerNode(`onCreateWebpackConfig`, {
     getConfig,
     stage,
     rules,

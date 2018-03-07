@@ -29,7 +29,6 @@ const getImageSize = file => {
 
 const duotone = require(`./duotone`)
 const { boundActionCreators } = require(`gatsby/dist/redux/actions`)
-const reporter = require(`gatsby-cli/lib/reporter`)
 
 // Promisify the sharp prototype (methods) to promisify the alternative (for
 // raw) callback-accepting toBuffer(...) method
