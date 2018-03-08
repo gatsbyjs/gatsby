@@ -1,5 +1,6 @@
 {
   "name": "gatsby-source-npm-package-search",
+  "private": true,
   "description": "Search gatsby plugins and pull metadata with algolia search",
   "version": "1.0.4",
   "author": "james.a.stack@gmail.com",
