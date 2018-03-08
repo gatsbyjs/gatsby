@@ -1,9 +1,7 @@
 describe(`gatsby-plugin-sass`, () => {
-  jest.mock(`extract-text-webpack-plugin`, () => {
-    return {
-      extract(...args) {
-        return { extractTextCalledWithArgs: args }
-      },
+  jest.mock(`extract-text-webpack-plugin`, () => class {
+    extract(...args) {
+      return { extractTextCalledWithArgs: args }
     }
   })
 
@@ -77,7 +75,7 @@ describe(`gatsby-plugin-sass`, () => {
           const stringified = JSON.stringify(options)
 
           it(`modifies webpack config for ${stringified}`, () => {
-            const config = { loader: jest.fn() }
+            const config = { loader: jest.fn(), merge: jest.fn() }
             const modified = modifyWebpackConfig({ config, stage }, options)
 
             expect(modified).toBe(config)

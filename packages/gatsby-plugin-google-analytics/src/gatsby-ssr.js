@@ -20,17 +20,25 @@ exports.onRenderBody = (
         }',disableStr='ga-disable-'+gaProperty;document.cookie.indexOf(disableStr+'=true')>-1&&(window[disableStr]=!0);`
       : ``
   }
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-  ga('create', '${pluginOptions.trackingId}', 'auto');
-  ${
-    typeof pluginOptions.anonymize !== `undefined`
-      ? `ga('set', 'anonymizeIp', 1);`
-      : ``
-  }`,
+  if(${
+    typeof pluginOptions.respectDNT !== `undefined` &&
+    pluginOptions.respectDNT == true
+      ? `!(navigator.doNotTrack == "1" || window.doNotTrack == "1")`
+      : `true`
+  }) {
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  }
+  if (typeof ga === "function") {
+    ga('create', '${pluginOptions.trackingId}', 'auto');
+      ${
+        typeof pluginOptions.anonymize !== `undefined`
+          ? `ga('set', 'anonymizeIp', 1);`
+          : ``
+      }}
+      `,
         }}
       />,
     ])

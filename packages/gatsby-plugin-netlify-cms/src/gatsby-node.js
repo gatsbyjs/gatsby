@@ -1,6 +1,8 @@
 const HtmlWebpackPlugin = require(`html-webpack-plugin`)
 const ExtractTextPlugin = require(`extract-text-webpack-plugin`)
 
+const extractCmsCss = new ExtractTextPlugin(`cms.css`)
+
 function plugins(stage) {
   const commonPlugins = [
     // Output /admin/index.html
@@ -15,7 +17,7 @@ function plugins(stage) {
     case `develop`:
       return commonPlugins
     case `build-javascript`:
-      return [...commonPlugins, new ExtractTextPlugin(`cms.css`)]
+      return [...commonPlugins, extractCmsCss]
     default:
       return []
   }
@@ -52,7 +54,7 @@ function module(config, stage) {
       config.loader(`cms-css`, {
         test: /\.css$/,
         include: [/\/node_modules\/netlify-cms\//],
-        loader: ExtractTextPlugin.extract([`css`]),
+        loader: extractCmsCss.extract([`css`]),
       })
       return config
     default:

@@ -1,6 +1,6 @@
 # gatsby-transformer-javascript-frontmatter
 
-Parses JavaScript files to extract data from exports.
+Parses JavaScript files to extract frontmatter from exports.
 
 ## Install
 
@@ -35,7 +35,7 @@ exports.frontmatter = {
 export default MyComponent ...
 ```
 
-You can also use a named export for the data object:
+You can also use a named export for the frontmatter object:
 
 ```javascript
 export const frontmatter = {
@@ -50,14 +50,14 @@ export const frontmatter = {
 
 ## How to query
 
-You'd be able to query your data like:
+You'd be able to query your frontmatter like:
 
 ```graphql
 {
   allJavascriptFrontmatter {
     edges {
       node {
-        data {
+        frontmatter {
           error
           path
           title
@@ -81,7 +81,7 @@ Which would return something like:
       "edges": [
         {
           "node": {
-            "data": {
+            "frontmatter": {
               "error": false,
               "path": "choropleth-on-d3v4",
               "title": "Choropleth on d3v4",
@@ -98,7 +98,7 @@ Which would return something like:
 }
 ```
 
-Any attribute on "data" across your js files will be exported. If a file is
+Any attribute on "frontmatter" across your js files will be exported. If a file is
 missing it, the value will be null.
 
 The error field will contain `false` or an object with error information just to

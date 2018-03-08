@@ -22,8 +22,8 @@ plugins: [
       // Defaults to false meaning the library will load sdk.js
       debug: false,
       // Can select your language, default will load english
-      language: "en_US"
+      language: "en_US",
     },
   },
-]
+];
 ```

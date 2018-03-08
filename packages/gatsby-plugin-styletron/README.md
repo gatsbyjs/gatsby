@@ -14,12 +14,12 @@ Edit `gatsby-config.js`
 
 ```javascript
 module.exports = {
-  plugins: [ 
+  plugins: [
     {
-      resolve: 'gatsby-plugin-styletron',
+      resolve: "gatsby-plugin-styletron",
       options: {
         // You can pass options to Styletron.
-        prefix: '_',
+        prefix: "_",
       },
     },
   ],
