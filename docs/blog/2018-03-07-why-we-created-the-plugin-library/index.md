@@ -20,7 +20,7 @@ After talking to over 60 Gatsby users, I compiled what’s called an “empathy 
 Based on the empathy map above, we identified five “jobs” that Gatsby users want done regarding plugins and packages:
 * Make it easy to search for and find the best, most recent, and relevant plugin for their site.
     * Scrollable, searchable list of plugins with a search bar at the top, tags attached to each plugin, and accurate information on version compatibility, popularity, maintenance, stability.
-    * Each profile card should have a short description and the profile page should have the Github READme file.
+    * Each profile card should have a short description and the profile page should have the Github README file.
 * Make it easy to imitate plugins as they build their own.
     * The profile cards and pages should easily link to the Github repo.
 * Recommend plugins based on their needs.
@@ -28,7 +28,7 @@ Based on the empathy map above, we identified five “jobs” that Gatsby users 
     * There could be permanent categories like “for beginners” or other categories.
     * There can also be changing categories like “editor’s picks,” “trending,” “most popular,” etc.
 * Show (or at least explain) what plugins do (preview) before installation.
-    * Make sure READme files are filled out with instructions and a list of sites that use the plugin.
+    * Make sure README files are filled out with instructions and a list of sites that use the plugin.
     * Possible showcase every week?
 * Make it easy to share plugins they build and/or plugins they like.
     * A huge thank you to @jlengstorf and all involved in building the [Plugin Authoring page in the docs](https://www.gatsbyjs.org/docs/plugin-authoring/#what-files-does-gatsby-look-for-in-a-plugin)
@@ -37,7 +37,7 @@ Based on the empathy map above, we identified five “jobs” that Gatsby users 
 
 ## Learning from other plugin libraries
 
-We also analyzed over 10 admirable and/or popular plugin libraries to draw from their strengths and learn from their weaknesses. Examples in no particular order include [JS.coach](https://js.coach/), [VIM Awesome](https://vimawesome.com/), [Best of JS](https://bestof.js.org/), [Sketch extension library](https://sketchapp.com/extensions/), [Chrome plugin library](https://chrome.google.com/webstore/detail/plugins/mmcblfncjaclajmegihojiekebofjcen?hl=en), [Microsoft Visual Studio Code Extensions](https://marketplace.visualstudio.com/VSCode), [Wordpress Plugins](https://wordpress.org/plugins/), [Npms.io](https://npms.io/), [Yarnpkg.com](https://yarnpkg.com/en/packages), [Apple App store](https://www.apple.com/ios/app-store/), which just got redesigned, so I’m interested to learn from their changes, [Google Play store](https://play.google.com/store/apps/top?utm_source=na_Med&utm_medium=hasem&utm_content=Jan3118&utm_campaign=Evergreen&pcampaignid=MKT-DR-na-us-1000189-Med-hasem-py-Evergreen-Jan3118-Text_Search_BKWS-audiencetest%7cEXA%7cONSEM_kwid_43700029906604977&gclid=EAIaIQobChMIt5mJ--ja2QIVAdtkCh0-PQWgEAAYASAAEgK_0vD_BwE&gclsrc=aw.ds&dclid=CPaIm_zo2tkCFdWUfgodw58Gaw).
+We also analyzed over 10 admirable and/or popular plugin libraries to draw from their strengths and learn from their weaknesses. Examples in no particular order include [JS.coach](https://js.coach/), [VIM Awesome](https://vimawesome.com/), [Best of JS](https://bestof.js.org/), [Sketch extension library](https://sketchapp.com/extensions/), [Chrome plugin library](https://chrome.google.com/webstore/detail/plugins/mmcblfncjaclajmegihojiekebofjcen?hl=en), [Microsoft Visual Studio Code Extensions](https://marketplace.visualstudio.com/VSCode), [Wordpress Plugins](https://wordpress.org/plugins/), [Npms.io](https://npms.io/), [Yarnpkg.com](https://yarnpkg.com/en/packages), [Apple App store](https://www.apple.com/ios/app-store/), which just got redesigned, so I’m interested to learn from their changes, [Google Play store](https://play.google.com/store/apps/top).
 
 
 ## Card sorting
