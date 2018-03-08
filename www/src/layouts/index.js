@@ -31,18 +31,12 @@ class DefaultLayout extends React.Component {
     const isTutorial =
       this.props.location.pathname.slice(0, 10) === `/tutorial/`
     const isFeature = this.props.location.pathname.slice(0, 9) === `/features`
-    const isPlugin = this.props.location.pathname.slice(0, 8) === `/plugin`
     const isPackage = this.props.location.pathname.slice(0, 9) === `/packages`
     const isPackageReadme =
       this.props.location.pathname.slice(0, 16) === `/packages/gatsby`
 
     const hasSidebar =
-      isDoc ||
-      isTutorial ||
-      isFeature ||
-      isPlugin ||
-      isPackage ||
-      isPackageReadme
+      isDoc || isTutorial || isFeature || isPackage || isPackageReadme
 
     const isSearchSource = hasSidebar
 
