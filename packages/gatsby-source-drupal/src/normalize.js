@@ -1,6 +1,7 @@
 const nodeFromData = datum => {
   const { attributes: { id: _attributes_id, ...attributes } = {} } = datum
-  const preservedId = typeof _attributes_id !== `undefined` ? { _attributes_id } : {}
+  const preservedId =
+    typeof _attributes_id !== `undefined` ? { _attributes_id } : {}
   return {
     id: datum.id,
     parent: null,
@@ -14,4 +15,3 @@ const nodeFromData = datum => {
 }
 
 exports.nodeFromData = nodeFromData
-

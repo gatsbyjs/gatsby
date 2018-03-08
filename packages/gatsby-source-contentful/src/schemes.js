@@ -1,6 +1,4 @@
-const {
-  GraphQLEnumType,
-} = require(`graphql`)
+const { GraphQLEnumType } = require(`graphql`)
 
 const ImageFormatType = new GraphQLEnumType({
   name: `ContentfulImageFormat`,

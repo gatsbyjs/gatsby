@@ -26,6 +26,7 @@ import "typeface-space-mono"
 class DefaultLayout extends React.Component {
   render() {
     const isHomepage = this.props.location.pathname == `/`
+    const isBlog = this.props.location.pathname.slice(0, 6) === `/blog/`
     const isDoc = this.props.location.pathname.slice(0, 6) === `/docs/`
     const isTutorial =
       this.props.location.pathname.slice(0, 10) === `/tutorial/`
@@ -36,9 +37,10 @@ class DefaultLayout extends React.Component {
 
     const hasSidebar =
       isDoc || isTutorial || isFeature || isPackage || isPackageReadme
-
-    const isSearchSource = hasSidebar
+    const isSearchSource = hasSidebar || isBlog
+    
     const packageSidebarWidth = rhythm(17)
+
 
     const leftPadding = rhythmSize => {
       if (this.props.location.pathname.slice(0, 9) === `/packages`) {

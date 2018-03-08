@@ -7,25 +7,25 @@ class DocsLocalPackagesTemplate extends React.Component {
   render() {
     const { data: { npmPackage, markdownRemark } } = this.props
     const npmPackageNotFound = {
-      keywords: ["gatsby"],
+      keywords: [`gatsby`],
       lastPublisher: {
-        name: "User Not Found",
-        avatar: "",
+        name: `User Not Found`,
+        avatar: ``,
       },
       modified: new Date(),
     }
     const markdownRemarkNotFound = {
-      html: "No Package Readme Found",
-      excerpt: "",
+      html: `No Package Readme Found`,
+      excerpt: ``,
       timeToRead: 0,
       fields: {
-        title: npmPackage ? npmPackage.name : "Title Not Found",
+        title: npmPackage ? npmPackage.name : `Title Not Found`,
       },
     }
 
     return (
       <PackageReadme
-        page={markdownRemark ? _.pick(markdownRemark, "parent") : false}
+        page={markdownRemark ? _.pick(markdownRemark, `parent`) : false}
         packageName={
           markdownRemark
             ? markdownRemark.fields.title
