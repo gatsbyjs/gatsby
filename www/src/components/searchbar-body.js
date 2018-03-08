@@ -218,7 +218,6 @@ class Search extends Component {
             css={{
               backgroundColor: `white`,
               height: `calc(100vh - 225px)`,
-              border: `2 px solid red`,
               overflowY: `scroll`,
               WebkitOverflowScrolling: `touch`,
               "::-webkit-scrollbar": {
