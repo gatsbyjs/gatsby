@@ -27,6 +27,7 @@ import searchbarBody from "../components/searchbar-body"
 class DefaultLayout extends React.Component {
   render() {
     const isHomepage = this.props.location.pathname == `/`
+    const isBlog = this.props.location.pathname.slice(0, 6) === `/blog/`
     const isDoc = this.props.location.pathname.slice(0, 6) === `/docs/`
     const isTutorial =
       this.props.location.pathname.slice(0, 10) === `/tutorial/`
@@ -44,7 +45,7 @@ class DefaultLayout extends React.Component {
       isPackage ||
       isPackageReadme
 
-    const isSearchSource = hasSidebar
+    const isSearchSource = hasSidebar || isBlog
 
     const leftPadding = rhythmSize => {
       if (this.props.location.pathname.slice(0, 9) === `/packages`) {
