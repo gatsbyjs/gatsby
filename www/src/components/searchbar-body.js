@@ -9,6 +9,7 @@ import {
 import { colors } from "../utils/presets"
 import Link from "gatsby-link"
 import DownloadArrow from "react-icons/lib/go/arrow-small-down"
+import AlgoliaLogo from "../assets/algolia.svg"
 import debounce from "lodash/debounce"
 import unescape from "lodash/unescape"
 
@@ -17,7 +18,6 @@ import typography, { rhythm, scale } from "../utils/typography"
 import { css as glam } from "glamor"
 // This is for the urlSync
 const updateAfter = 700
-//
 
 glam.insert(`
   .ais-SearchBox__input:valid ~ .ais-SearchBox__reset {
@@ -253,32 +253,45 @@ class Search extends Component {
           </div>
         </div>
 
-        <div>
-          <h3
+        <div
+          css={{
+            fontSize: 0,
+            lineHeight: 0,
+            height: 20,
+            marginTop: rhythm(3 / 4),
+          }}
+        >
+          Search by{` `}
+          <a
+            href={`https://www.algolia.com/`}
             css={{
-              fontSize: rhythm(0.55),
-              textAlign: `center`,
-              margin: rhythm(0.75),
-              fontWeight: `normal`,
-              "@media (min-width: 1600px)": {
-                margin: rhythm(0.25),
-                fontSize: rhythm(0.5),
-              },
-            }}
-          >
-            Search by{` `}
-            <a
-              href={`https://www.algolia.com/`}
-              style={{
-                color: `#744C9E`,
+              "&&": {
+                background: `url(${AlgoliaLogo})`,
                 border: `none`,
                 boxShadow: `none`,
                 fontWeight: `normal`,
-              }}
-            >
-              Algolia
-            </a>
-          </h3>
+                backgroundRepeat: `no-repeat`,
+                backgroundPosition: `50%`,
+                backgroundSize: `100%`,
+                overflow: `hidden`,
+                textIndent: `-9000px`,
+                padding: `0!important`,
+                width: `100%`,
+                height: `100%`,
+                display: `block`,
+                width: 110,
+                marginLeft: `auto`,
+                "&:hover": {
+                  background: `url(${AlgoliaLogo})`,
+                  backgroundRepeat: `no-repeat`,
+                  backgroundPosition: `50%`,
+                  backgroundSize: `100%`,
+                },
+              },
+            }}
+          >
+            Algolia
+          </a>
         </div>
       </div>
     )
