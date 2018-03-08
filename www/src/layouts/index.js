@@ -38,10 +38,11 @@ class DefaultLayout extends React.Component {
       isDoc || isTutorial || isFeature || isPackage || isPackageReadme
 
     const isSearchSource = hasSidebar
+    const packageSidebarWidth = rhythm(17)
 
     const leftPadding = rhythmSize => {
       if (this.props.location.pathname.slice(0, 9) === `/packages`) {
-        return rhythm(18)
+        return packageSidebarWidth
       } else if (hasSidebar) {
         return rhythm(rhythmSize)
       } else {
@@ -109,7 +110,7 @@ class DefaultLayout extends React.Component {
         ...sidebarStyles,
         position: `fixed`,
         overflowY: `hidden`,
-        width: rhythm(17),
+        width: packageSidebarWidth,
       },
       ...searchBarDisplayProperty,
     }
@@ -155,7 +156,7 @@ class DefaultLayout extends React.Component {
                 display: isPackage
                   ? `block`
                   : isPackage && isPackageReadme ? `block` : `none`,
-                width: rhythm(17),
+                width: packageSidebarWidth,
                 position: `fixed`,
                 background: colors.ui.whisper,
                 borderRight: `1px solid ${colors.ui.light}`,
