@@ -3,6 +3,7 @@
 This plugin uses Yarn's Algolia search to import all gatsby-related package info (any package with the gatsby-component or gatsby-plugin keyword). Check back for updates to search for other npm packages based on keyword.
 
 ## Install
+
 `npm install --save gatsby-source-npm`
 
 ## How to use
@@ -23,13 +24,13 @@ You can query npm nodes like the following
 
 ```graphql
 {
-  allNpmPackages{
-    edges{
-      node{
+  allNpmPackages {
+    edges {
+      node {
         name
         humanDownloadsLast30Days
-        readme{
-          childMarkdownRemark{
+        readme {
+          childMarkdownRemark {
             html
           }
         }

@@ -193,7 +193,7 @@ export default ({ children }) =>
 
 And there we have it! A three page site with a basic global navigation.
 
-*Challenge:* With your new "layout component" powers, trying adding headers, footers,
+_Challenge:_ With your new "layout component" powers, trying adding headers, footers,
 global navigation, sidebars, etc. to your Gatsby sites!
 
 ## What's coming next?

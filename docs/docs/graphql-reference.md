@@ -6,9 +6,9 @@ title: GraphQL Reference
 
 ## Intro
 
-This page will walk you through a series of GraphQL queries, each designed to demonstrate a particular feature of GraphQL. You'll be querying the *real* schema used on gatsbyjs.org so feel free to experiment and poke around the innards of our site!
+This page will walk you through a series of GraphQL queries, each designed to demonstrate a particular feature of GraphQL. You'll be querying the _real_ schema used on gatsbyjs.org so feel free to experiment and poke around the innards of our site!
 
-You'll be using GraphiQL, an interactive editor you can also use [while building your Gatsby site](/tutorial/part-four/#introducing-graphiql).  
+You'll be using GraphiQL, an interactive editor you can also use [while building your Gatsby site](/tutorial/part-four/#introducing-graphiql).
 
 ## Basic query
 
