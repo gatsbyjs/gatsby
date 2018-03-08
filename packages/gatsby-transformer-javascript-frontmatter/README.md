@@ -57,7 +57,7 @@ You'd be able to query your data like:
   allJavascriptFrontmatter {
     edges {
       node {
-        data {
+        frontmatter {
           error
           path
           title
@@ -81,7 +81,7 @@ Which would return something like:
       "edges": [
         {
           "node": {
-            "data": {
+            "frontmatter": {
               "error": false,
               "path": "choropleth-on-d3v4",
               "title": "Choropleth on d3v4",
@@ -98,7 +98,7 @@ Which would return something like:
 }
 ```
 
-Any attribute on "data" across your js files will be exported. If a file is
+Any attribute on "frontmatter" across your js files will be exported. If a file is
 missing it, the value will be null.
 
 The error field will contain `false` or an object with error information just to
