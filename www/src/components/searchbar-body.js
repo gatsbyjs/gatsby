@@ -12,6 +12,7 @@ import DownloadArrow from "react-icons/lib/go/arrow-small-down"
 import debounce from "lodash/debounce"
 import unescape from "lodash/unescape"
 
+import presets from "../utils/presets"
 import typography, { rhythm, scale } from "../utils/typography"
 import { css as glam } from "glamor"
 // This is for the urlSync
@@ -141,11 +142,16 @@ glam.insert(`
   .ais-InfiniteHits__loadMore {
     width: 100%;
     height: ${rhythm(2)};
-    margin-top: ${rhythm(1 / 2)};
+    border-radius: ${presets.radius}px;
+    border: 1px solid ${colors.gatsby};
+    margin-top: 0;
     cursor: pointer;
     background-color: transparent;
     color: ${colors.gatsby};
     outline: none;
+    transition: all ${presets.animation.speedDefault} ${
+  presets.animation.curveDefault
+};
     font-family: ${typography.options.headerFontFamily.join(`,`)};
   }
   .ais-InfiniteHits__loadMore:hover {
