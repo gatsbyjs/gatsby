@@ -395,8 +395,8 @@ Full example:
 
 ### Image processing
 
-To use image processing you need `gatsby-transformer-sharp` and
-`gatsby-plugin-sharp` in your `gatsby-config.js`.
+To use image processing you need `gatsby-transformer-sharp`, `gatsby-plugin-sharp` and their
+dependencies `gatsby-image` and `gatsby-source-filesystem` in your `gatsby-config.js`.
 
 You can apply image processing to:
 
