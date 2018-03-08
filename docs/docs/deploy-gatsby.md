@@ -248,7 +248,12 @@ Finally, add a `static.json` file in the root of your project to define the dire
 
 ```
 {
-  "root": "public/"
+  "root": "public/",
+  "headers": {
+    "/**.js": {
+      "Cache-Control": "public, max-age=0, must-revalidate"
+    }
+  }
 }
 ```
 
