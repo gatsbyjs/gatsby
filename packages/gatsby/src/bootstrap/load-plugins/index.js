@@ -46,13 +46,13 @@ module.exports = async (config = {}) => {
 
   // Work out which plugins use which APIs, including those which are not
   // valid Gatsby APIs, aka 'badExports'
-  const x = collatePluginAPIs({ apis, flattenedPlugins  })
+  const x = collatePluginAPIs({ apis, flattenedPlugins })
   flattenedPlugins = x.flattenedPlugins
   const apiToPlugins = x.apiToPlugins
   const badExports = x.badExports
 
   // Show errors for any non-Gatsby APIs exported from plugins
-  const isBad = handleBadExports({ apis, badExports  })
+  const isBad = handleBadExports({ apis, badExports })
   if (isBad && process.env.NODE_ENV === `production`) process.exit(1) // TODO: change to panicOnBuild
 
   // Show errors when ReplaceRenderer has been implemented multiple times

@@ -160,7 +160,8 @@ const processFile = (file, jobs, cb, reporter) => {
     ) {
       clonedPipeline
         .toBuffer()
-        .then(sharpBuffer => imagemin
+        .then(sharpBuffer =>
+          imagemin
             .buffer(sharpBuffer, {
               plugins: [
                 imageminPngquant({
@@ -174,7 +175,8 @@ const processFile = (file, jobs, cb, reporter) => {
             .then(imageminBuffer => {
               fs.writeFile(job.outputPath, imageminBuffer, onFinish)
             })
-            .catch(onFinish))
+            .catch(onFinish)
+        )
         .catch(onFinish)
       // Compress webp
     } else if (
@@ -183,14 +185,16 @@ const processFile = (file, jobs, cb, reporter) => {
     ) {
       clonedPipeline
         .toBuffer()
-        .then(sharpBuffer => imagemin
+        .then(sharpBuffer =>
+          imagemin
             .buffer(sharpBuffer, {
               plugins: [imageminWebp({ quality: args.quality })],
             })
             .then(imageminBuffer => {
               fs.writeFile(job.outputPath, imageminBuffer, onFinish)
             })
-            .catch(onFinish))
+            .catch(onFinish)
+        )
         .catch(onFinish)
       // any other format (jpeg, tiff) - don't compress it just handle output
     } else {
