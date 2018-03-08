@@ -9,14 +9,15 @@ import {
 import { colors } from "../utils/presets"
 import Link from "gatsby-link"
 import DownloadArrow from "react-icons/lib/go/arrow-small-down"
+import AlgoliaLogo from "../assets/algolia.svg"
 import debounce from "lodash/debounce"
 import unescape from "lodash/unescape"
 
+import presets from "../utils/presets"
 import typography, { rhythm, scale } from "../utils/typography"
 import { css as glam } from "glamor"
 // This is for the urlSync
 const updateAfter = 700
-//
 
 glam.insert(`
   .ais-SearchBox__input:valid ~ .ais-SearchBox__reset {
@@ -141,11 +142,16 @@ glam.insert(`
   .ais-InfiniteHits__loadMore {
     width: 100%;
     height: ${rhythm(2)};
-    margin-top: ${rhythm(1 / 2)};
+    border-radius: ${presets.radius}px;
+    border: 1px solid ${colors.gatsby};
+    margin-top: 0;
     cursor: pointer;
     background-color: transparent;
     color: ${colors.gatsby};
     outline: none;
+    transition: all ${presets.animation.speedDefault} ${
+  presets.animation.curveDefault
+};
     font-family: ${typography.options.headerFontFamily.join(`,`)};
   }
   .ais-InfiniteHits__loadMore:hover {
@@ -166,7 +172,14 @@ class Search extends Component {
 
   render() {
     return (
-      <div className="container">
+      <div
+        css={{
+          paddingBottom: rhythm(2.5),
+          [presets.Tablet]: {
+            paddingBottom: 0,
+          },
+        }}
+      >
         <div
           css={{
             display: `flex`,
@@ -211,19 +224,20 @@ class Search extends Component {
           <div
             css={{
               backgroundColor: `white`,
-              height: `calc(100vh - 225px)`,
-              border: `2 px solid red`,
-              overflowY: `scroll`,
-              WebkitOverflowScrolling: `touch`,
-              "::-webkit-scrollbar": {
-                width: `6px`,
-                height: `6px`,
-              },
-              "::-webkit-scrollbar-thumb": {
-                background: colors.ui.bright,
-              },
-              "::-webkit-scrollbar-track": {
-                background: colors.ui.light,
+              [presets.Tablet]: {
+                height: `calc(100vh - 225px)`,
+                overflowY: `scroll`,
+                WebkitOverflowScrolling: `touch`,
+                "::-webkit-scrollbar": {
+                  width: `6px`,
+                  height: `6px`,
+                },
+                "::-webkit-scrollbar-thumb": {
+                  background: colors.ui.bright,
+                },
+                "::-webkit-scrollbar-track": {
+                  background: colors.ui.light,
+                },
               },
             }}
           >
@@ -239,32 +253,45 @@ class Search extends Component {
           </div>
         </div>
 
-        <div>
-          <h3
+        <div
+          css={{
+            fontSize: 0,
+            lineHeight: 0,
+            height: 20,
+            marginTop: rhythm(3 / 4),
+          }}
+        >
+          Search by{` `}
+          <a
+            href={`https://www.algolia.com/`}
             css={{
-              fontSize: rhythm(0.55),
-              textAlign: `center`,
-              margin: rhythm(0.75),
-              fontWeight: `normal`,
-              "@media (min-width: 1600px)": {
-                margin: rhythm(0.25),
-                fontSize: rhythm(0.5),
-              },
-            }}
-          >
-            Search by{` `}
-            <a
-              href={`https://www.algolia.com/`}
-              style={{
-                color: `#744C9E`,
+              "&&": {
+                background: `url(${AlgoliaLogo})`,
                 border: `none`,
                 boxShadow: `none`,
                 fontWeight: `normal`,
-              }}
-            >
-              Algolia
-            </a>
-          </h3>
+                backgroundRepeat: `no-repeat`,
+                backgroundPosition: `50%`,
+                backgroundSize: `100%`,
+                overflow: `hidden`,
+                textIndent: `-9000px`,
+                padding: `0!important`,
+                width: `100%`,
+                height: `100%`,
+                display: `block`,
+                width: 110,
+                marginLeft: `auto`,
+                "&:hover": {
+                  background: `url(${AlgoliaLogo})`,
+                  backgroundRepeat: `no-repeat`,
+                  backgroundPosition: `50%`,
+                  backgroundSize: `100%`,
+                },
+              },
+            }}
+          >
+            Algolia
+          </a>
         </div>
       </div>
     )
