@@ -184,7 +184,7 @@ module.exports = async (api, args = {}, pluginSource) =>
         }
 
         // Check if any of our waiters are done.
-        return waitingForCasacadeToFinish = waitingForCasacadeToFinish.filter(
+        return (waitingForCasacadeToFinish = waitingForCasacadeToFinish.filter(
           instance => {
             // If none of its trace IDs are running, it's done.
             if (!_.some(apisRunning, a => a.traceId === instance.traceId)) {
@@ -194,7 +194,7 @@ module.exports = async (api, args = {}, pluginSource) =>
               return true
             }
           }
-        )
+        ))
       }
     )
   })

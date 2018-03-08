@@ -201,7 +201,7 @@ pages!
   <p>Your browser does not support the video element.</p>
 </video>
 
-*Challenge*: Using the instructions above as hints, see if you can create a third page and link to it from the home page.
+_Challenge_: Using the instructions above as hints, see if you can create a third page and link to it from the home page.
 
 ## Interactive page
 
@@ -335,7 +335,7 @@ export default Counter
 
 There you go! A working React.js counter inside your static website 👌
 
-*Bonus challenge*: One fun thing is that hot reloading isn't just for content and styles; it
+_Bonus challenge_: One fun thing is that hot reloading isn't just for content and styles; it
 works on code as well. Currently, when you click the buttons on the counter, the numbers go up and down in increments of 1. Try to make the counter go up and down in a different increments (for example, 5).
 
 ## Deploying Gatsby.js websites on the web
