@@ -1,4 +1,5 @@
 import React from "react"
+import { withPrefix } from "gatsby-link"
 import { defaultOptions } from "./internals"
 
 exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
@@ -12,7 +13,7 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
       key={`gatsby-plugin-sitemap`}
       rel="sitemap"
       type="application/xml"
-      href={output}
+      href={withPrefix(output)}
     />,
   ])
 }
