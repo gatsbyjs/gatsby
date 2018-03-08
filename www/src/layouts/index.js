@@ -8,7 +8,7 @@ import SearchBar from "../components/searchbar-body"
 import tutorialSidebar from "../pages/docs/tutorial-links.yml"
 import docsSidebar from "../pages/docs/doc-links.yaml"
 import featuresSidebar from "../pages/docs/features-links.yaml"
-import { rhythm, scale } from "../utils/typography"
+import { rhythm } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
 import hex2rgba from "hex2rgba"
 import "../css/prism-coy.css"
@@ -22,7 +22,6 @@ import "../fonts/Webfonts/futurapt_demiitalic_macroman/stylesheet.css"
 // Other fonts
 import "typeface-spectral"
 import "typeface-space-mono"
-import searchbarBody from "../components/searchbar-body"
 
 class DefaultLayout extends React.Component {
   render() {
@@ -53,16 +52,6 @@ class DefaultLayout extends React.Component {
     const sidebarStyles = {
       borderRight: `1px solid ${colors.ui.light}`,
       backgroundColor: colors.ui.whisper,
-      boxShadow: `inset 0 4px 5px 0 ${hex2rgba(
-        colors.gatsby,
-        presets.shadowKeyPenumbraOpacity
-      )}, inset 0 1px 10px 0 ${hex2rgba(
-        colors.lilac,
-        presets.shadowAmbientShadowOpacity
-      )}, inset 0 2px 4px -1px ${hex2rgba(
-        colors.lilac,
-        presets.shadowKeyUmbraOpacity
-      )}`,
       width: rhythm(10),
       display: `none`,
       position: `fixed`,
@@ -80,6 +69,9 @@ class DefaultLayout extends React.Component {
       "::-webkit-scrollbar-track": {
         background: colors.ui.light,
       },
+    }
+
+    const sidebarStylesDesktop = {
       [presets.Desktop]: {
         width: rhythm(12),
         padding: rhythm(1),
@@ -98,9 +90,6 @@ class DefaultLayout extends React.Component {
         [presets.Mobile]: {
           display: `none`,
         },
-        [presets.Tablet]: {
-          display: `block`,
-        },
       }
       childrenMobileDisplay = { display: `block` }
       childrenTabletDisplay = { display: `block` }
@@ -112,12 +101,14 @@ class DefaultLayout extends React.Component {
       childrenTabletDisplay = { display: `block` }
     }
     const searchbarStyles = {
-      ...sidebarStyles,
       // overrides of sidebarStyles
+      display: `none`,
       width: `100vw`,
       padding: rhythm(1),
-      overflowY: `hidden`,
       [presets.Desktop]: {
+        ...sidebarStyles,
+        position: `fixed`,
+        overflowY: `hidden`,
         width: rhythm(17),
       },
       ...searchBarDisplayProperty,
@@ -150,6 +141,7 @@ class DefaultLayout extends React.Component {
               [presets.Tablet]: {
                 display: isDoc ? `block` : `none`,
               },
+              ...sidebarStylesDesktop,
             }}
           >
             <SidebarBody yaml={docsSidebar} />
@@ -164,6 +156,9 @@ class DefaultLayout extends React.Component {
                   ? `block`
                   : isPackage && isPackageReadme ? `block` : `none`,
                 width: rhythm(17),
+                position: `fixed`,
+                background: colors.ui.whisper,
+                borderRight: `1px solid ${colors.ui.light}`,
               },
             }}
           >
@@ -178,6 +173,7 @@ class DefaultLayout extends React.Component {
               [presets.Tablet]: {
                 display: isTutorial ? `block` : `none`,
               },
+              ...sidebarStylesDesktop,
             }}
           >
             <SidebarBody yaml={tutorialSidebar} />
@@ -188,6 +184,7 @@ class DefaultLayout extends React.Component {
               [presets.Tablet]: {
                 display: isFeature ? `block` : `none`,
               },
+              ...sidebarStylesDesktop,
             }}
           >
             <SidebarBody yaml={featuresSidebar} />

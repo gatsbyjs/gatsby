@@ -172,7 +172,14 @@ class Search extends Component {
 
   render() {
     return (
-      <div className="container">
+      <div
+        css={{
+          paddingBottom: rhythm(2.5),
+          [presets.Tablet]: {
+            paddingBottom: 0,
+          },
+        }}
+      >
         <div
           css={{
             display: `flex`,
@@ -217,18 +224,20 @@ class Search extends Component {
           <div
             css={{
               backgroundColor: `white`,
-              height: `calc(100vh - 225px)`,
-              overflowY: `scroll`,
-              WebkitOverflowScrolling: `touch`,
-              "::-webkit-scrollbar": {
-                width: `6px`,
-                height: `6px`,
-              },
-              "::-webkit-scrollbar-thumb": {
-                background: colors.ui.bright,
-              },
-              "::-webkit-scrollbar-track": {
-                background: colors.ui.light,
+              [presets.Tablet]: {
+                height: `calc(100vh - 225px)`,
+                overflowY: `scroll`,
+                WebkitOverflowScrolling: `touch`,
+                "::-webkit-scrollbar": {
+                  width: `6px`,
+                  height: `6px`,
+                },
+                "::-webkit-scrollbar-thumb": {
+                  background: colors.ui.bright,
+                },
+                "::-webkit-scrollbar-track": {
+                  background: colors.ui.light,
+                },
               },
             }}
           >
