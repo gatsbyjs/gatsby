@@ -313,9 +313,7 @@ import IndexPost from "../components/IndexPost";
 export default ({ data }) => {
   return (
     <div>
-		<h1>
-        Index page
-		</h1>
+      <h1>Index page</h1>
       <h4>{data.allMarkdownRemark.totalCount} Posts</h4>
       {data.allMarkdownRemark.edges.map(({ node }) => (
         <div key={node.id}>
