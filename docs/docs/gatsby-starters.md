@@ -295,18 +295,36 @@ Community:
   * Custom prismjs theme
   * React Icons
 
-* [gatsby-styled-blog-starter](https://github.com/greglobinski/gatsby-styled-blog-starter)
-  [(demo)](https://gsbs.greglobinski.com/)
+* [gatsby-starter-personal-blog](https://github.com/greglobinski/gatsby-starter-personal-blog)
+  [(demo)](https://gatsby-starter-personal-blog.greglobinski.com/)
 
   Features:
-
-  * sidebar navigation
-  * look like an app
-  * page transitions
-  * pwa
-  * styling with styled-components
-  * easily restyled through theme object
-  * [README](https://github.com/greglobinski/gatsby-styled-blog-starter)
+  
+  * Ready to use, but easily customizable a fully equipped theme starter
+  * Easy editable content in Markdown files (posts, pages and parts)
+  * 'Like an app' layout transitions 
+  * Easily restyled through theme object
+  * Styling with JSS
+  * Page transitions
+  * Comments (Facebook)
+  * Post categories 
+  * Post list filtering
+  * Full text searching (Algolia)
+  * Contact form (Netlify form handling)
+  * Material UI (@next)
+  * RSS feed
+  * Full screen mode
+  * User adjustable articles' body copy font size
+  * Social sharing (Twitter, Facebook, Google, LinkedIn)
+  * PWA (manifes.json, offline support, favicons)
+  * Google Analytics
+  * Favicons generator (node script)
+  * Components leazy loading with AsyncComponent (social sharing, info box)
+  * ESLint (google config)
+  * Prettier code styling
+  * Custom webpack CommonsChunkPlugin settings
+  * Webpack BundleAnalyzerPlugin
+  * [README](https://github.com/greglobinski/gatsby-starter-personal-blog) / [DEMO](https://gatsby-starter-personal-blog.greglobinski.com/)
 
 * [gatsby-starter-deck](https://github.com/fabe/gatsby-starter-deck)
   [(demo)](https://gatsby-deck.netlify.com/)
