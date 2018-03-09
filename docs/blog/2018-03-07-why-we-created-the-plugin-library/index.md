@@ -4,14 +4,13 @@ date: 2018-03-07
 author: Shannon Soper
 ---
 
+Earlier this week, we launched a [Plugin Library](/packages/) on Gatsbyjs.org and are excited for you to use it! This article explains how UX research drove the design of this library and the accompanying [Plugin Authoring](/docs/plugin-authoring/) doc.
+
+![Plugin tweet](plugin-tweet.png)
+
 ## Why build a plugin / package library
 
-From October 2017 to February 2018, we conducted over 60 interviews with Gatsby users, and plugin discoverability appeared as a top pain point (see [blog post on the Gatsby UX research program](/blog/2017-12-20-introducing-the-gatsby-ux-research-program/) for a full list of pain points).
-
-To solve this, we built a [Plugin Library](/packages/) and a [Plugin Authoring](/docs/plugin-authoring/) doc!
-
-This article will walk through our thought processes as we designed and developed our plugin library. We'd love your help contributing as we continue to improve the library!
-
+From October 2017 to February 2018, I conducted over 60 interviews with Gatsby users, and plugin discoverability and plugin authoring appeared as top pain points (see [blog post on the Gatsby UX research program](/blog/2017-12-20-introducing-the-gatsby-ux-research-program/) for a full list of pain points).
 
 ## Jobs to be done
 
