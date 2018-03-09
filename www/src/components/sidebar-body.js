@@ -10,6 +10,7 @@ const Section = props => (
       css={{
         ...props.headerStyles,
         marginTop: props.index === 0 ? 0 : rhythm(3 / 2),
+        marginBottom: rhythm(options.blockMarginBottom / 2),
       }}
     >
       {props.title}
