@@ -1,34 +1,37 @@
 ---
 title: Why we created the Gatsby plugin library
-date: 03-07-2018
+date: 2018-03-07
 author: Shannon Soper
 ---
 
 ## Why build a plugin / package library
 
-From October 2017 to February 2018, we conducted over 60 interviews with Gatsby users, and plugin discoverability appeared as a top pain point (see [blog post on the Gatsby UX research program](/2017-12-20-introducing-the-gatsby-ux-research-program/) for a full list of pain points). We built a [Plugin Library](/packages/) and a [Plugin Authoring](/docs/plugin-authoring.md) doc!
+From October 2017 to February 2018, we conducted over 60 interviews with Gatsby users, and plugin discoverability appeared as a top pain point (see [blog post on the Gatsby UX research program](/blog/2017-12-20-introducing-the-gatsby-ux-research-program/) for a full list of pain points).
 
-This article will walk through our thought processes as we designed and developed this plugin library. We'd love your help contributing as the library continues to improve!
+To solve this, we built a [Plugin Library](/packages/) and a [Plugin Authoring](/docs/plugin-authoring/) doc!
+
+This article will walk through our thought processes as we designed and developed our plugin library. We'd love your help contributing as we continue to improve the library!
 
 
 ## Jobs to be done
 
-After compiling data from the interviews, we compiled what’s called an “empathy map” in UX design to put ourselves in the shoes of Gatsby users; basically, this map describes a summary of what the typical Gatsby user experiences when searching for plugins.
+After compiling data from the interviews, I drew what’s called an “empathy map” in UX design to put myself in the shoes of Gatsby users. This map describes a summary of what the typical Gatsby user experienced when searching for plugins.
 
 ![Empathy map](empathy-map.png)
 
-To summarize the pain points, most Gatsby fans need to use plugins and it takes them a lot of browsing the plugin list and searching example sites to figure out what plugins they need and want. They also frequently mention how difficult it was to build their own plugin with no tutorials available, and by having more plugins easily searchable at their fingertips, they will be able to find and imitate plugins more quickly.
+To summarize the pain points, most Gatsby fans need to use plugins and it takes them a lot of time browsing through the plugin list and searching example sites to figure out what plugins they need and want. They also frequently mention how difficult it was to build their own plugin with no tutorials available.
 
-People generally want to:
-1. Find the best, most recent, and relevant plugin, package, or component for their site.
+People want to:
+
+1. Find the best, most recent, and relevant plugin, library, or component for their site.
 2. Learn how to build a plugin.
-3. Preview plugins functionality before installation.
-4. Share plugins they build and/or recommend.
-
+3. Preview plugin functionality before installation.
+4. Share plugins with others.
 
 ## Learning from other plugin libraries
 
-We also analyzed over 10 admirable and/or popular plugin libraries to draw from their strengths and learn from their weaknesses. Examples in no particular order include:
+We also analyzed over 10 admirable and/or popular plugin libraries to draw from their strengths and learn from their weaknesses. Examples, in no particular order, include:
+
 * [JS.coach](https://js.coach/)
 * [VIM Awesome](https://vimawesome.com/)
 * [Best of JS](https://bestof.js.org/)
@@ -38,20 +41,27 @@ We also analyzed over 10 admirable and/or popular plugin libraries to draw from 
 * [Wordpress Plugins](https://wordpress.org/plugins/)
 * [Npms.io](https://npms.io/)
 * [Yarnpkg.com](https://yarnpkg.com/en/packages)
-* [Apple App store](https://www.apple.com/ios/app-store/), which just got redesigned, so I’m interested to learn from their changes
-* [Google Play store](https://play.google.com/store/apps/top).
+* [Apple App store](https://www.apple.com/ios/app-store/)
+* [Google Play store](https://play.google.com/store/apps/top)
 
-Many of the above plugin libaries have strengths we wanted to imitate:
-* an easy way to view many plugins without much clicking necessary
-* categories and tags to help refine searches
-* important statistics that help people choose plugins based on certain metrics
-* a guide for people creating their own plugin
 
-They also have some weaknesses we wanted to avoid:
-* poor contrast and poor information heirarchy in visual design
-* no filters available
-* too many filters available
-* image heavy without important statistics for each plugin
+### The goods 👍
+
+We liked that these libraries let users:
+
+* browse plugins without much clicking
+* refine searches using categories and tags
+* rank plugins based on metrics
+* learn how to create their own plugin
+
+### The bads 👎
+
+We *didn't* like these things in some of the above libraries:
+
+* poor contrast and poor information heirarchy
+* limited filters
+* too many filters
+* low information density
 
 
 ## Prototypes and their evolutions
@@ -71,11 +81,13 @@ Here are some ways you can help make the Gatsby plugin ecoystem great:
 
 * Share feedback on the plugin library on [Github Issue #4394](https://github.com/gatsbyjs/gatsby/issues/4394).
 * If you created a plugin and it's not showing up in the library, double check that the package has "gatsby-plugin" in its keywords.
-* Create plugins (or publish ones you've already built! If you're interested, the [Plugin Authoring](/docs/plugin-authoring/) page can help.
+* Create plugins (or publish ones you've already built)! If you're interested, the [Plugin Authoring](/docs/plugin-authoring/) page can help.
 * [Contact me](https://twitter.com/shannonb_ux/status/938551014956732418) here if you have feedback that differs from or provides deeper insight into one of the pain points this article mentions. 
 * Follow us on [Twitter](https://twitter.com/gatsbyjs).
 
 
 ## Sneak peak into the next UX project
 
-For our next step, we're designing a [Gatsby site showcase](https://github.com/gatsbyjs/gatsby/issues/4394) and UX research is driving the design process. Again, many thanks to all the community members who have contributed to this research and to making Gatsby awesome. Stay tuned for updates on the plugin library and future Gatsby UX research projects!
+Our next UX project is designing and building a [Gatsby site showcase](https://github.com/gatsbyjs/gatsby/issues/4394). Please contribute to and subscribe to the issue to help out!
+
+Again, many thanks to all the community members who have contributed to this research and to making Gatsby awesome. Stay tuned for updates on the plugin library and future Gatsby UX research projects!
