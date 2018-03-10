@@ -46,7 +46,7 @@ We also analyzed over 10 admirable and/or popular plugin libraries to draw from 
 
 ### The goods 👍
 
-We liked that these libraries let users:
+We liked when these libraries let users:
 
 * browse plugins without much clicking
 * refine searches using categories and tags
