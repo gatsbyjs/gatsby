@@ -24,7 +24,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
   // Random redirects
   createRedirect({
     fromPath: `/blog/2018-02-26-documentation-project/`, // Tweeted this link out then switched it
-    toPath: `/2018-02-28-documentation-project/`,
+    toPath: `/blog/2018-02-28-documentation-project/`,
     isPermanent: true,
   })
 
