@@ -1,7 +1,7 @@
 {
   "name": "gatsby-source-mongodb",
   "description": "Stub description for gatsby-source-mongodb",
-  "version": "1.5.15",
+  "version": "1.5.17",
   "author": "jhermans85@hotmail.com",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -17,14 +17,12 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-mongodb#readme",
   "keywords": [
-    "gatsby"
+    "gatsby",
+    "gatsby-plugin"
   ],
   "license": "MIT",
   "main": "index.js",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby.git"
-  },
+  "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-mongodb",
   "scripts": {
     "build": "babel src --out-dir . --ignore __tests__",
     "prepublish": "cross-env NODE_ENV=production npm run build",

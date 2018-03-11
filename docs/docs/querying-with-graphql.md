@@ -79,6 +79,9 @@ The result of the query is automatically inserted into your React component
 on the `data` prop. GraphQL and Gatsby let you ask for data and then
 immediately start using it.
 
+_Note:_ Queries are only executed from Page or Layout components. For other
+components you'll want to use GraphQL [_fragments_](#fragments).
+
 ## How to learn GraphQL
 
 Your experience developing with Gatsby might be the first time you've seen GraphQL! We hope you love it as much
@@ -310,9 +313,7 @@ import IndexPost from "../components/IndexPost";
 export default ({ data }) => {
   return (
     <div>
-		<h1>
-        Index page
-		</h1>
+      <h1>Index page</h1>
       <h4>{data.allMarkdownRemark.totalCount} Posts</h4>
       {data.allMarkdownRemark.edges.map(({ node }) => (
         <div key={node.id}>

@@ -37,48 +37,14 @@ module.exports = {
 
 Plugins can take options. Note that plugin options will be stringified by Gatsby, so they cannot be functions.
 
-See each plugin page below for more detailed
-documentation on using each plugin.
+## Creating your own plugins
 
-## Locally defined plugins
-
-When you want to work on a new plugin, or maybe write one that is only relevant
-to your specific use-case, a locally defined plugin is more convenient than
-having to create an NPM package for it.
-
-You can place the code in the `plugins` folder in the root of your project like
-this:
-
-```
-plugins
-└── my-own-plugin
-    ├── gatsby-node.js
-    └── package.json
-```
-
-You still need to add the plugin to your `gatsby-config.js` like for plugins
-installed from NPM.
-
-Each plugin requires a package.json file, but the minimum content is just an
-empty object `{}`. The `name` and `version` fields are read from the package
-file. The name is used to identify the plugin when it mutates the GraphQL data
-structure. The version is used to clear the cache when it changes.
-
-For local plugins it is best to leave the version field empty. Gatsby will
-generate an md5-hash from all gatsby-\* file contents and use that as the
-version. This way the cache is automatically flushed when you change the code of
-your plugin.
-
-If the name is empty it is inferred from the plugin folder name.
-
-Like all gatsby-\* files, the code is not being processed by Babel. If you want
-to use JavaScript syntax which isn't supported by your version of Node.js, you
-can place the files in a `src` subfolder and build them to the plugin folder
-root.
+If you’d like to create a custom Gatsby plugin, check out the [plugin authoring guide](/docs/plugin-authoring/).
 
 ## Official plugins
 
-* [gatsby-plugin-aphrodite](/packages/gatsby-plugin-aphrodite/)
+For usage instructions and options, see the plugin repo (linked below).
+
 * [gatsby-plugin-canonical-urls](/packages/gatsby-plugin-canonical-urls/)
 * [gatsby-plugin-catch-links](/packages/gatsby-plugin-catch-links/)
 * [gatsby-plugin-coffeescript](/packages/gatsby-plugin-coffeescript/)
@@ -177,6 +143,7 @@ root.
 * [gatsby-plugin-mixpanel](https://github.com/thomascarvalho/gatsby-plugin-mixpanel)
 * [gatsby-plugin-protoculture](https://github.com/atrauzzi/gatsby-plugin-protoculture)
 * [gatsby-plugin-purify-css](https://github.com/rongierlach/gatsby-plugin-purify-css)
+* [gatsby-plugin-react-native-web](https://github.com/slorber/gatsby-plugin-react-native-web)
 * [gatsby-plugin-segment-js](https://github.com/benjaminhoffman/gatsby-plugin-segment-js)
 * [gatsby-plugin-sentry](https://github.com/octalmage/gatsby-plugin-sentry)
 * [gatsby-plugin-stripe-checkout](https://github.com/njosefbeck/gatsby-plugin-stripe-checkout)
@@ -190,6 +157,7 @@ root.
 * [gatsby-remark-external-links](https://github.com/JLongley/gatsby-remark-external-links)
 * [gatsby-remark-flowchart](https://github.com/liudonghua123/gatsby-remark-flowchart)
 * [gatsby-remark-graph](https://github.com/konsumer/gatsby-remark-graph)
+* [gatsby-remark-numbered-footnotes](https://github.com/jlengstorf/gatsby-remark-numbered-footnotes)
 * [gatsby-remark-sequence](https://github.com/liudonghua123/gatsby-remark-sequence)
 * [gatsby-source-airtable](https://github.com/kevzettler/gatsby-source-airtable)
 * [gatsby-source-behance](https://github.com/LeKoArts/gatsby-source-behance)
@@ -201,7 +169,9 @@ root.
 * [gatsby-source-google-sheets](https://github.com/brandonmp/gatsby-source-google-sheets)
 * [gatsby-source-graphcms](https://github.com/GraphCMS/gatsby-source-graphcms)
 * [gatsby-source-mesh](https://github.com/gentics/gatsby-source-mesh)
+* [gatsby-source-mozaik](https://github.com/mozaikio/gatsby-source-mozaik)
 * [gatsby-source-soundcloud](https://github.com/jedidiah/gatsby-source-soundcloud)
+* [gatsby-source-strapi](https://github.com/strapi/gatsby-source-strapi)
 * [gatsby-source-stripe](https://github.com/njosefbeck/gatsby-source-stripe)
 * [gatsby-source-trello](https://github.com/Necmttn/gatsby-source-trello)
 * [gatsby-source-twitch](https://github.com/jedidiah/gatsby-source-twitch)

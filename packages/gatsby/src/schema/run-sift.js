@@ -10,7 +10,7 @@ const { trackInlineObjectsInRootNode } = require(`./node-tracking`)
 const enhancedNodeCache = new Map()
 const enhancedNodeCacheId = ({ node, args }) =>
   node && node.internal && node.internal.contentDigest
-    ? `${node.internal.contentDigest}${JSON.stringify(args)}`
+    ? `${node.id}${node.internal.contentDigest}${JSON.stringify(args)}`
     : null
 
 function awaitSiftField(fields, node, k) {
@@ -94,7 +94,13 @@ module.exports = ({
           .then(v => {
             const innerSift = siftFieldsObj[k]
             const innerGqConfig = gqFields[k]
-            if (_.isObject(innerSift) && v != null) {
+            if (
+              _.isObject(innerSift) &&
+              v != null &&
+              innerGqConfig &&
+              innerGqConfig.type &&
+              _.isFunction(innerGqConfig.type.getFields)
+            ) {
               return resolveRecursive(
                 v,
                 innerSift,

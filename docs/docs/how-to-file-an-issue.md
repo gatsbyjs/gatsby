@@ -11,7 +11,7 @@ If you want your issue to be resolved quickly, please include in your issue:
   `gatsby-node.js`, `gatsby-browser.js` `gatsby-ssr.js` files depending on
   changes you've made there.
 
-Please do not use the issue tracker for personal support requests. [Stack Overflow](http://stackoverflow.com/questions/ask?tags=gatsby) (**gatsby** tag) and the [Reactiflux Discord](https://discord.gg/0ZcbPKXt5bZjGY5n) #gatsby channels are better places to get help.
+Please do not use the issue tracker for personal support requests. [Stack Overflow](http://stackoverflow.com/questions/ask?tags=gatsby) (**gatsby** tag) and the [Reactiflux Discord](https://discord.gg/0ZcbPKXt5bVoxkfV) #gatsby channels are better places to get help.
 
 ### Special Note on Issues
 

@@ -80,7 +80,7 @@ class GatsbyLink extends React.Component {
       })
       // Preserve non IO functionality if no support
       if (!this.state.IOSupported) {
-        ___loader.enqueue(this.state.path)
+        ___loader.enqueue(this.state.to.pathname)
       }
     }
   }
@@ -88,7 +88,7 @@ class GatsbyLink extends React.Component {
   componentDidMount() {
     // Preserve non IO functionality if no support
     if (!this.state.IOSupported) {
-      ___loader.enqueue(this.state.path)
+      ___loader.enqueue(this.state.to.pathname)
     }
   }
 
@@ -98,7 +98,7 @@ class GatsbyLink extends React.Component {
     if (this.state.IOSupported && ref) {
       // If IO supported and element reference found, setup Observer functionality
       handleIntersection(ref, () => {
-        ___loader.enqueue(this.state.path)
+        ___loader.enqueue(this.state.to.pathname)
       })
     }
   }

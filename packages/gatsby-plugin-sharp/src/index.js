@@ -60,18 +60,6 @@ const reportError = (message, err, reporter) => {
   }
 }
 
-// Sharp sometimes will throw error when image is just scaled (not cropped)
-// and using crop "attention" or "entropy" strategy.
-// https://github.com/lovell/sharp/issues/1134
-// As a workaround use "center" crop strategy if we are scaling and one of
-// propblematic crop strategy is used.
-const validateCropFocus = options =>
-  (!options.width || !options.height) &&
-  (options.cropFocus === sharp.strategy.entropy ||
-    options.cropFocus === sharp.strategy.attention)
-    ? sharp.gravity.center
-    : options.cropFocus
-
 let totalJobs = 0
 const processFile = (file, jobs, cb, reporter) => {
   // console.log("totalJobs", totalJobs)
@@ -108,7 +96,7 @@ const processFile = (file, jobs, cb, reporter) => {
     const roundedWidth = Math.round(args.width)
     clonedPipeline
       .resize(roundedWidth, roundedHeight)
-      .crop(validateCropFocus(args))
+      .crop(args.cropFocus)
       .png({
         compressionLevel: args.pngCompressionLevel,
         adaptiveFiltering: false,
@@ -172,7 +160,7 @@ const processFile = (file, jobs, cb, reporter) => {
     ) {
       clonedPipeline
         .toBuffer()
-        .then(sharpBuffer => {
+        .then(sharpBuffer =>
           imagemin
             .buffer(sharpBuffer, {
               plugins: [
@@ -188,7 +176,7 @@ const processFile = (file, jobs, cb, reporter) => {
               fs.writeFile(job.outputPath, imageminBuffer, onFinish)
             })
             .catch(onFinish)
-        })
+        )
         .catch(onFinish)
       // Compress webp
     } else if (
@@ -197,7 +185,7 @@ const processFile = (file, jobs, cb, reporter) => {
     ) {
       clonedPipeline
         .toBuffer()
-        .then(sharpBuffer => {
+        .then(sharpBuffer =>
           imagemin
             .buffer(sharpBuffer, {
               plugins: [imageminWebp({ quality: args.quality })],
@@ -206,7 +194,7 @@ const processFile = (file, jobs, cb, reporter) => {
               fs.writeFile(job.outputPath, imageminBuffer, onFinish)
             })
             .catch(onFinish)
-        })
+        )
         .catch(onFinish)
       // any other format (jpeg, tiff) - don't compress it just handle output
     } else {
@@ -394,7 +382,7 @@ async function notMemoizedbase64({ file, args = {}, reporter }) {
 
   pipeline
     .resize(options.width, options.height)
-    .crop(validateCropFocus(options))
+    .crop(options.cropFocus)
     .png({
       compressionLevel: options.pngCompressionLevel,
       adaptiveFiltering: false,
@@ -699,7 +687,7 @@ async function notMemoizedtraceSVG({ file, args, fileArgs, reporter }) {
 
   pipeline
     .resize(options.width, options.height)
-    .crop(validateCropFocus(options))
+    .crop(options.cropFocus)
     .png({
       compressionLevel: options.pngCompressionLevel,
       adaptiveFiltering: false,
@@ -769,7 +757,7 @@ function encodeOptimizedSVGDataUri(svgString) {
 
 const optimize = svg => {
   const SVGO = require(`svgo`)
-  const svgo = new SVGO({ multipass: true, floatPrecision: 1 })
+  const svgo = new SVGO({ multipass: true, floatPrecision: 0 })
   return new Promise((resolve, reject) => {
     svgo.optimize(svg, ({ data }) => resolve(data))
   })
