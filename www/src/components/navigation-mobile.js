@@ -31,7 +31,7 @@ const MobileNavItem = ({ linkTo, label, icon }) => (
   </Link>
 )
 
-export default () => (
+const MobileNavigation = () => (
   <div
     css={{
       position: `fixed`,
@@ -61,3 +61,5 @@ export default () => (
     <MobileNavItem linkTo="/blog/" label="Blog" icon={BlogIcon} />
   </div>
 )
+
+export default MobileNavigation
