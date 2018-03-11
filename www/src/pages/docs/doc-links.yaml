@@ -94,6 +94,8 @@
       link: /docs/graphql-reference/
 - title: Contributing
   items:
+    - title: Community
+      link: /docs/community/
     - title: How to Contribute
       link: /docs/how-to-contribute/
     - title: How to File an Issue
