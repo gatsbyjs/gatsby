@@ -67,6 +67,23 @@ module.exports = ({ url, store, cache, createNode, auth = {} }) => {
       digest + path.parse(url).ext
     )
 
+    const createFileSystemNode = () => {
+      // Create the file node and return.
+      createFileNode(filename, {}).then(fileNode => {
+        // Override the default plugin as gatsby-source-filesystem needs to
+        // be the owner of File nodes or there'll be conflicts if any other
+        // File nodes are created through normal usages of
+        // gatsby-source-filesystem.
+        createNode(fileNode, { name: `gatsby-source-filesystem` })
+        resolve(fileNode)
+      })
+    }
+
+    if (fs.existsSync(filename)) {
+      createFileSystemNode()
+      return
+    }
+
     // Fetch the file.
     let statusCode
     let responseHeaders
@@ -100,15 +117,7 @@ module.exports = ({ url, store, cache, createNode, auth = {} }) => {
         fs.removeSync(tmpFilename)
       }
 
-      // Create the file node and return.
-      createFileNode(filename, {}).then(fileNode => {
-        // Override the default plugin as gatsby-source-filesystem needs to
-        // be the owner of File nodes or there'll be conflicts if any other
-        // File nodes are created through normal usages of
-        // gatsby-source-filesystem.
-        createNode(fileNode, { name: `gatsby-source-filesystem` })
-        resolve(fileNode)
-      })
+      createFileSystemNode()
     })
   }))
 }
