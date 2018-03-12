@@ -170,6 +170,7 @@ Websites built with Gatsby:
 * [Rung](https://rung.com.br)
 * [Óbuda University - EE Faculty Student Union Website](https://www.kandohok.hu)
 * [Neostack](https://neostack.com)
+* [Daniel Hollcraft](https://danielhollcraft.com) ([source](https://github.com/danielbh/danielhollcraft.com))
 
 ## Docs
 
