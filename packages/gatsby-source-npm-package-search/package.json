@@ -5,7 +5,7 @@
   "version": "1.0.5",
   "author": "james.a.stack@gmail.com",
   "dependencies": {
-    "algoliasearch": "^3.24.9",
+    "algoliasearch": "^3.25.1",
     "babel-runtime": "^6.26.0"
   },
   "devDependencies": {
