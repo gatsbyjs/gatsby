@@ -224,6 +224,20 @@ exports.createContentTypeNodes = ({
       // Get localized fields.
       const entryItemFields = _.mapValues(entryItem.fields, v => getField(v))
 
+      // Check if all required fields are set on the entry. Required fields can
+      // be null if no values have been added for a locale.
+      // See https://github.com/gatsbyjs/gatsby/issues/4170
+      const requiredFieldsSet = Object.keys(entryItemFields).every(key => {
+        const field = _.find(contentTypeItem.fields, {id: key})
+        if (field && field.required) {
+          return entryItemFields[key] != null
+        }
+        return true
+      })
+      if (!requiredFieldsSet) {
+        return null
+      }
+
       // Prefix any conflicting fields
       // https://github.com/gatsbyjs/gatsby/pull/1084#pullrequestreview-41662888
       conflictFields.forEach(conflictField => {
@@ -364,7 +378,7 @@ exports.createContentTypeNodes = ({
       entryNode.internal.contentDigest = contentDigest
 
       return entryNode
-    })
+    }).filter(entry => entry != null)
 
     // Create a node for each content type
     const contentTypeNode = {
