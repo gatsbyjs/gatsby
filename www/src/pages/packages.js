@@ -1,7 +1,8 @@
 import React, { Component } from "react"
 import Container from "../components/container"
 import logo from "../monogram.svg"
-import { rhythm } from "../utils/typography"
+import { rhythm, options } from "../utils/typography"
+import { colors } from "../utils/presets"
 
 class Packages extends Component {
   render() {
@@ -40,9 +41,11 @@ class Packages extends Component {
           </h1>
           <p
             css={{
+              color: colors.gray.calm,
               marginLeft: rhythm(3),
               marginRight: rhythm(3),
               fontSize: rhythm(3 / 4),
+              fontFamily: options.headerFontFamily.join(`,`),
               textAlign: `center`,
             }}
           >
