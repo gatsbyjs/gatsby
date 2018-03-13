@@ -2,12 +2,13 @@ const https = require(`https`)
 const execSync = require(`child_process`).execSync
 const fs = require(`fs`)
 const path = require(`path`)
+const util = require('util')
 
-const fileSavePath = path.resolve(__dirname, `../src/prism-language-dependencies.js`)
+const fileSavePath = path.resolve(__dirname, `../src/prism-language-dependencies.js`);
 
 function getVersion() {
-  const prismInfo = JSON.parse(execSync(`npm ls prismjs --json`))
-  return prismInfo.dependencies.prismjs.version
+  const version = JSON.parse((execSync('yarn info prismjs version --json')));
+  return version.data;
 }
 
 function processData(data, url) {
@@ -25,7 +26,7 @@ function processData(data, url) {
   // eslint-disable-next-line no-undef
   const languages = components.languages
   const content = `// From ${JSON.stringify(url)}
-module.exports = ${JSON.stringify(languages, null, 2)}
+module.exports = ${util.inspect(languages)}
 `
 
   fs.writeFileSync(fileSavePath, content, `utf8`)
