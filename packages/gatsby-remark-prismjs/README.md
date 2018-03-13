@@ -186,7 +186,7 @@ to facilitate the desired line highlight behavior.
 
 ## Contributing Notes
 
-We are vendoring the `prismjs` components file in `prism-language-dependencies.js`. We use the `prism-language-dependencies.js` file to tell `gatsby-remark-prismjs` which languages it can syntax highlight. Thus, when the `prismjs` library is updated, we need to update the our `prism-language-dependencies.js` file. To do this, we have created a script at `scripts/get-prism-language-dependencies.js`. To run this script:
+We vendor the `prismjs` components file in `prism-language-dependencies.js`. We use the `prism-language-dependencies.js` file to tell `gatsby-remark-prismjs` which languages it can syntax highlight. Thus, when the `prismjs` library is updated, we need to update the our `prism-language-dependencies.js` file. To do this, we have created a script at `scripts/get-prism-language-dependencies.js`. To run this script:
 
 * Move into the `gatsby/packages/gatsby-remark-prismjs/scripts` dir
 
