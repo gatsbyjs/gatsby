@@ -1,12 +1,21 @@
-const ExtractTextPlugin = require(`extract-text-webpack-plugin`)
 const { cssModulesConfig } = require(`gatsby-1-config-css-modules`)
-
-const extractSass = new ExtractTextPlugin(`styles.css`, { allChunks: true })
 
 exports.modifyWebpackConfig = ({ config, stage }, options) => {
   const sassFiles = /\.s[ac]ss$/
   const sassModulesFiles = /\.module\.s[ac]ss$/
   const sassLoader = `sass?${JSON.stringify(options)}`
+
+  /**
+   * Get the first instance of `ExtractTextPlugin` from the plugins array. This
+   * relies on other plugins not intentionally inserting their own instance of
+   * `ExtractTextPlugin` before Gatsby's own.
+   */
+  const extractPlugin = config
+    .resolve()
+    .plugins.find(
+      plugin =>
+        plugin.constructor && plugin.constructor.name === `ExtractTextPlugin`
+    )
 
   switch (stage) {
     case `develop`: {
@@ -26,19 +35,15 @@ exports.modifyWebpackConfig = ({ config, stage }, options) => {
       config.loader(`sass`, {
         test: sassFiles,
         exclude: sassModulesFiles,
-        loader: extractSass.extract([`css?minimize`, sassLoader]),
+        loader: extractPlugin.extract([`css?minimize`, sassLoader]),
       })
 
       config.loader(`sassModules`, {
         test: sassModulesFiles,
-        loader: extractSass.extract(`style`, [
+        loader: extractPlugin.extract(`style`, [
           cssModulesConfig(stage),
           sassLoader,
         ]),
-      })
-
-      config.merge({
-        plugins: [extractSass],
       })
 
       return config
@@ -54,14 +59,10 @@ exports.modifyWebpackConfig = ({ config, stage }, options) => {
 
       config.loader(`sassModules`, {
         test: sassModulesFiles,
-        loader: extractSass.extract(`style`, [
+        loader: extractPlugin.extract(`style`, [
           cssModulesConfig(stage),
           sassLoader,
         ]),
-      })
-
-      config.merge({
-        plugins: [extractSass],
       })
 
       return config
