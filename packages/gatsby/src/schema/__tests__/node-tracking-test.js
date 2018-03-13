@@ -28,7 +28,7 @@ describe(`Track root nodes`, () => {
   require(`fs`).__setMockFiles(MOCK_FILE_INFO)
 
   const { getNode, getNodes } = require(`../../redux`)
-  const { findRootNode } = require(`../node-tracking`)
+  const { findRootNode, registerTrackedPath } = require(`../node-tracking`)
   const runSift = require(`../run-sift`)
   const buildNodeTypes = require(`../build-node-types`)
   const { boundActionCreators: { createNode } } = require(`../../redux/actions`)
@@ -51,6 +51,9 @@ describe(`Track root nodes`, () => {
       name: `test`,
     }
   )
+
+  registerTrackedPath(`TestNode`, `inlineObject.field`)
+  registerTrackedPath(`TestNode`, `inlineArray`)
 
   describe(`Tracks nodes read from redux state cache`, () => {
     it(`Tracks inline objects`, () => {

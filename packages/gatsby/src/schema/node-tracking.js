@@ -8,20 +8,37 @@ const { getNode, getNodes } = require(`../redux`)
  */
 const rootNodeMap = new WeakMap()
 
+const trackedPaths = new Map()
+
+const registerTrackedPath = (type, path) => {
+  if (trackedPaths.has(type)) {
+    trackedPaths.get(type).add(path)
+  } else {
+    trackedPaths.set(type, new Set([path]))
+  }
+
+  getNodes()
+    .filter(node => node.internal.type === type)
+    .forEach(node => trackInlineObjectInRootNodeByPath(node, path))
+}
+
+exports.registerTrackedPath = registerTrackedPath
+
 const getRootNodeId = node => rootNodeMap.get(node)
 
-/**
- * Add link between passed data and Node. This function shouldn't be used
- * directly. Use higher level `trackInlineObjectsInRootNode`
- * @see trackInlineObjectsInRootNode
- * @param {(Object|Array)} data Inline object or array
- * @param {string} nodeId Id of node that contains data passed in first parameter
- */
-const addRootNodeToInlineObject = (data, nodeId) => {
-  if (_.isPlainObject(data) || _.isArray(data)) {
-    _.each(data, o => addRootNodeToInlineObject(o, nodeId))
-    rootNodeMap.set(data, nodeId)
-  }
+const trackInlineObjectInRootNodeByPath = (node, path) => {
+  const selector = path.split(`.`)
+  const parents = new Set()
+  getValuesFromSelector({
+    object: node,
+    selector,
+    parents,
+  })
+  parents.forEach(parent => {
+    if (node !== parent && !rootNodeMap.has(parent)) {
+      rootNodeMap.set(parent, node.id)
+    }
+  })
 }
 
 /**
@@ -29,26 +46,17 @@ const addRootNodeToInlineObject = (data, nodeId) => {
  * and that Node object.
  * @param {Node} node Root Node
  */
-// const nodeDigestTracked = new Set()
 const trackInlineObjectsInRootNode = node => {
-  // const id =
-  // node && node.internal && node.internal.contentDigest
-  // ? node.internal.contentDigest
-  // : node.id
-  // if (nodeDigestTracked.has(id)) {
-  // return node
-  // }
-
-  _.each(node, (v, k) => {
-    // Ignore the node internal object.
-    if (k === `internal`) {
-      return
-    }
-    addRootNodeToInlineObject(v, node.id)
-  })
-
-  // nodeDigestTracked.add(id)
-  return node
+  if (
+    node &&
+    node.internal &&
+    node.internal.type &&
+    trackedPaths.has(node.internal.type)
+  ) {
+    trackedPaths.get(node.internal.type).forEach(path => {
+      trackInlineObjectInRootNodeByPath(node, path)
+    })
+  }
 }
 exports.trackInlineObjectsInRootNode = trackInlineObjectsInRootNode
 
@@ -86,7 +94,52 @@ function findRootNode(obj) {
 
 exports.findRootNode = findRootNode
 
-// Track nodes that are already in store
-_.each(getNodes(), node => {
-  trackInlineObjectsInRootNode(node)
-})
+const getValuesFromPath = (object, path) => {
+  const results = []
+  getValuesFromSelector({ object, results, selector: path.split(`.`) })
+  return results
+}
+
+const getValuesFromSelector = ({
+  object,
+  selector,
+  results = null,
+  parents = null,
+  index = 0,
+  value = null,
+}) => {
+  if (!value) {
+    const key = selector[index]
+    value = object[key]
+  }
+
+  if (_.isArray(value)) {
+    value.forEach(item => {
+      getValuesFromSelector({
+        value: item,
+        selector,
+        results,
+        object: value,
+        parents,
+        index,
+      })
+    })
+  } else if (selector.length === index + 1) {
+    if (parents) {
+      parents.add(object)
+    }
+    if (results) {
+      results.push(value)
+    }
+  } else if (_.isPlainObject(value)) {
+    getValuesFromSelector({
+      object: value,
+      selector,
+      results,
+      parents,
+      index: index + 1,
+    })
+  }
+}
+
+exports.getValuesFromPath = getValuesFromPath
