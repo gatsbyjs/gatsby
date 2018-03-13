@@ -172,6 +172,7 @@ Websites built with Gatsby:
 * [Neostack](https://neostack.com)
 * [Prosecco Springs](https://www.proseccosprings.com/)
 * [Fröhlich ∧ Frei](https://www.froehlichundfrei.de/)
+* [Alec Lomas's Portfolio & Blog](https://lowmess.com) ([source](https://github.com/lowmess/lowmess))
 
 ## Docs
 
