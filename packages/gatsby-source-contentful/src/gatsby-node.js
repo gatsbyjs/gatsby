@@ -33,7 +33,7 @@ exports.sourceNodes = async (
   { actions, getNodes, createNodeId, hasNodeChanged, store },
   { spaceId, accessToken, host }
 ) => {
-  const { createNode, deleteNodes, touchNode, setPluginStatus } = actions
+  const { createNode, deleteNode, touchNode, setPluginStatus } = actions
 
   host = host || `cdn.contentful.com`
   // Get sync token if it exists.
@@ -68,8 +68,8 @@ exports.sourceNodes = async (
   // Remove deleted entries & assets.
   // TODO figure out if entries referencing now deleted entries/assets
   // are "updated" so will get the now deleted reference removed.
-  deleteNodes(currentSyncData.deletedEntries.map(e => e.sys.id))
-  deleteNodes(currentSyncData.deletedAssets.map(e => e.sys.id))
+  currentSyncData.deletedEntries.forEach(e => deleteNode(e.sys.id, e.sys))
+  currentSyncData.deletedAssets.forEach(e => deleteNode(e.sys.id, e.sys))
 
   const existingNodes = getNodes().filter(
     n => n.internal.owner === `gatsby-source-contentful`
