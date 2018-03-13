@@ -55,7 +55,7 @@ want to put the configuration file in that same directory.
 
 Still in the root directory, add a "static" folder. Gatsby will copy everything in the static folder
 into the output, so we'll want to place the Netlify CMS configuration file as
-"static/admin/config.yml". Let's create a test configuration now - add this to your new
+"static/config.yml". Let's create a test configuration now - add this to your new
 `config.yml`:
 
 ```yaml
