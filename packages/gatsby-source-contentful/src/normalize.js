@@ -228,7 +228,7 @@ exports.createContentTypeNodes = ({
       // be null if no values have been added for a locale.
       // See https://github.com/gatsbyjs/gatsby/issues/4170
       const requiredFieldsSet = Object.keys(entryItemFields).every(key => {
-        const field = _.find(contentTypeItem.fields, {id: key})
+        const field = _.find(contentTypeItem.fields, { id: key })
         if (field && field.required) {
           return entryItemFields[key] != null
         }
