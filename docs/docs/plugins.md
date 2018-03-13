@@ -161,7 +161,6 @@ For usage instructions and options, see the plugin repo (linked below).
 * [gatsby-remark-sequence](https://github.com/liudonghua123/gatsby-remark-sequence)
 * [gatsby-source-airtable](https://github.com/kevzettler/gatsby-source-airtable)
 * [gatsby-source-behance](https://github.com/LeKoArts/gatsby-source-behance)
-* [gatsby-source-behance-collection](https://github.com/n370/gatsby-source-behance-collection)
 * [gatsby-source-datocms](https://github.com/datocms/gatsby-source-datocms)
 * [gatsby-source-directus](https://github.com/iKonrad/gatsby-source-directus)
 * [gatsby-source-dribbble](https://github.com/smakosh/gatsby-source-dribbble)
