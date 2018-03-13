@@ -131,6 +131,7 @@ For usage instructions and options, see the plugin repo (linked below).
 * [gatsby-plugin-fastclick](https://github.com/escaladesports/gatsby-plugin-fastclick)
 * [gatsby-plugin-favicon](https://github.com/Creatiwity/gatsby-plugin-favicon)
 * [gatsby-plugin-fela](https://github.com/mmintel/gatsby-plugin-fela)
+* [gatsby-plugin-gauges](https://github.com/lowmess/gatsby-plugin-gauges)
 * [gatsby-plugin-google-fonts](https://github.com/didierfranc/gatsby-plugin-google-fonts)
 * [gatsby-plugin-gosquared](https://github.com/jongold/gatsby-plugin-gosquared)
 * [gatsby-plugin-hotjar](https://github.com/pavloko/gatsby-plugin-hotjar)
