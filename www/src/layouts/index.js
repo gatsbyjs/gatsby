@@ -38,9 +38,8 @@ class DefaultLayout extends React.Component {
     const hasSidebar =
       isDoc || isTutorial || isFeature || isPackage || isPackageReadme
     const isSearchSource = hasSidebar || isBlog
-    
-    const packageSidebarWidth = rhythm(17)
 
+    const packageSidebarWidth = rhythm(17)
 
     const leftPadding = rhythmSize => {
       if (this.props.location.pathname.slice(0, 9) === `/packages`) {
@@ -108,6 +107,7 @@ class DefaultLayout extends React.Component {
       display: `none`,
       width: `100vw`,
       padding: rhythm(3 / 4),
+      zIndex: 1,
       [presets.Desktop]: {
         ...sidebarStyles,
         position: `fixed`,
