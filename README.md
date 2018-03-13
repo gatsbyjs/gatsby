@@ -171,6 +171,7 @@ Websites built with Gatsby:
 * [Óbuda University - EE Faculty Student Union Website](https://www.kandohok.hu)
 * [Neostack](https://neostack.com)
 * [Prosecco Springs](https://www.proseccosprings.com/)
+* [Fröhlich ∧ Frei](https://www.froehlichundfrei.de/)
 
 ## Docs
 
