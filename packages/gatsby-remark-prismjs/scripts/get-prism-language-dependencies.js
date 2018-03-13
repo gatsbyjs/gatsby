@@ -2,13 +2,16 @@ const https = require(`https`)
 const execSync = require(`child_process`).execSync
 const fs = require(`fs`)
 const path = require(`path`)
-const util = require('util')
+const util = require(`util`)
 
-const fileSavePath = path.resolve(__dirname, `../src/prism-language-dependencies.js`);
+const fileSavePath = path.resolve(
+  __dirname,
+  `../src/prism-language-dependencies.js`
+)
 
 function getVersion() {
-  const version = JSON.parse((execSync('yarn info prismjs version --json')));
-  return version.data;
+  const version = JSON.parse(execSync(`yarn info prismjs version --json`))
+  return version.data
 }
 
 function processData(data, url) {
@@ -39,7 +42,9 @@ function requestData() {
   https
     .get(url, res => {
       if (res.statusCode !== 200) {
-        throw new Error(`Request Failed.\nRequest URL: ${url}\nStatus Code: ${res.statusCode}`)
+        throw new Error(
+          `Request Failed.\nRequest URL: ${url}\nStatus Code: ${res.statusCode}`
+        )
       }
 
       res.setEncoding(`utf8`)
