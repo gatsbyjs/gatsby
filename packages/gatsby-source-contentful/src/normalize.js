@@ -242,11 +242,21 @@ exports.createContentTypeNodes = ({
               entryItemFieldValue[0].sys.type &&
               entryItemFieldValue[0].sys.id
             ) {
-              entryItemFields[
-                `${entryItemFieldKey}___NODE`
-              ] = entryItemFieldValue
-                .filter(v => resolvable.has(v.sys.id))
-                .map(v => mId(v.sys.id))
+              // Check if there are any values in entryItemFieldValue to prevent
+              // creating an empty node field in case when original key field value
+              // is empty due to links to missing entities
+              const resolvableEntryItemFieldValue = entryItemFieldValue
+                .filter(function(v) {
+                  return resolvable.has(v.sys.id)
+                })
+                .map(function(v) {
+                  return mId(v.sys.id)
+                })
+              if (resolvableEntryItemFieldValue.length !== 0) {
+                entryItemFields[
+                  `${entryItemFieldKey}___NODE`
+                ] = resolvableEntryItemFieldValue
+              }
 
               delete entryItemFields[entryItemFieldKey]
             }
