@@ -2,19 +2,22 @@ import React, { Component } from "react"
 import Container from "../components/container"
 import logo from "../monogram.svg"
 import { rhythm, options } from "../utils/typography"
-import { colors } from "../utils/presets"
+import presets, { colors } from "../utils/presets"
 
 class Packages extends Component {
   render() {
     return (
-      <Container>
+      <Container
+        css={{
+          alignItems: `center`,
+          display: `flex`,
+          minHeight: `calc(100vh - ${presets.headerHeight})`,
+        }}
+      >
         <div
           css={{
             display: `flex`,
             flexDirection: `column`,
-            alignItems: `center`,
-            justifyContent: `center`,
-            height: `calc(100vh - 300px)`,
           }}
         >
           <img
