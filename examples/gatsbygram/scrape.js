@@ -38,7 +38,7 @@ let posts = []
 
 // Write json
 const saveJSON = _ =>
-  fs.writeFileSync(`./data/posts.json`, JSON.stringify(posts, '', 2))
+  fs.writeFileSync(`./data/posts.json`, JSON.stringify(posts, ``, 2))
 
 const getPosts = maxId => {
   let url = `https://www.instagram.com/${username}/?__a=1`
@@ -46,21 +46,21 @@ const getPosts = maxId => {
 
   request(url, { encoding: `utf8` }, (err, res, body) => {
     if (err) console.log(`error: ${err}`)
-    body = JSON.parse(body)
-    body.user.media.nodes
-      .filter(item => item[`__typename`] === `GraphImage`)
-      .map(item => {
+    body = JSON.parse(body).graphql
+    body.user.edge_owner_to_timeline_media.edges
+      .filter(({ node: item }) => item[`__typename`] === `GraphImage`)
+      .map(({ node: item }) => {
         // Parse item to a simple object
         return {
           id: get(item, `id`),
-          code: get(item, `code`),
-          time: toISO8601(get(item, `date`)),
+          code: get(item, `shortcode`),
+          time: toISO8601(get(item, `taken_at_timestamp`)),
           type: get(item, `__typename`),
-          likes: get(item, `likes.count`),
-          comment: get(item, `comments.count`),
-          text: get(item, `caption`),
-          media: get(item, `display_src`),
-          image: `images/${item.code}.jpg`,
+          likes: get(item, `edge_liked_by.count`),
+          comment: get(item, `edge_media_to_comment.count`),
+          text: get(item, `edge_media_to_caption.edges[0].node.text`),
+          media: get(item, `display_url`),
+          image: `images/${item.shortcode}.jpg`,
           username: get(body, `user.username`),
           avatar: get(body, `user.profile_pic_url`),
         }
