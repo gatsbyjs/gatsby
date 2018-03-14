@@ -12326,6 +12326,15 @@ shallow-equal@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/shallow-equal/-/shallow-equal-1.0.0.tgz#508d1838b3de590ab8757b011b25e430900945f7"
 
+<<<<<<< HEAD
+sharp@^0.19.1:
+  version "0.19.1"
+  resolved "https://registry.yarnpkg.com/sharp/-/sharp-0.19.1.tgz#819bf11f5c3f4ff32eb465f255b5fb87e43ceea1"
+  dependencies:
+    color "^3.0.0"
+    detect-libc "^1.0.3"
+    nan "^2.9.2"
+=======
 sharp@^0.20.0:
   version "0.20.0"
   resolved "https://registry.yarnpkg.com/sharp/-/sharp-0.20.0.tgz#2ff9f1ae11f068ce7d7591f531cad52c7821d033"
@@ -12336,6 +12345,7 @@ sharp@^0.20.0:
     nan "^2.9.2"
     npmlog "^4.1.2"
     prebuild-install "^2.5.1"
+>>>>>>> master
     semver "^5.5.0"
     simple-get "^2.7.0"
     tar "^4.4.0"
