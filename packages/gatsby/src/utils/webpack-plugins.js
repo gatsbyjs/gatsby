@@ -45,7 +45,7 @@ const plugins = {
 
   aggressiveMerging: plugin(`AggressiveMergingPlugin`, true),
   aggressiveSplitting: plugin(`AggressiveSplittingPlugin`, true),
-  commonsChunk: plugin(`CommonsChunkPlugin`, true),
+  splitChunks: plugin(`SplitChunks`, true),
   chunkModuleIdRange: plugin(`ChunkModuleIdRangePlugin`, true),
   dedupe: plugin(`DedupePlugin`, true),
   limitChunkCount: plugin(`LimitChunkCountPlugin`, true),

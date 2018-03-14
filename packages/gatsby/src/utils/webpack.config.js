@@ -172,9 +172,9 @@ module.exports = async (
         __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
       }),
 
-      plugins.extractText({
-        filename: stage === `build-css` ? `styles.css` : `${stage}.css`,
-      }),
+      // plugins.extractText({
+      // filename: stage === `build-css` ? `styles.css` : `${stage}.css`,
+      // }),
     ]
 
     switch (stage) {
@@ -233,84 +233,84 @@ module.exports = async (
 
           // Extract "commons" chunk from the app entry and all
           // page components.
-          plugins.commonsChunk({
-            name: `commons`,
-            chunks: [`app`, ...components],
-            // The more page components there are, the higher we raise the bar
-            // for merging in page-specific JS libs into the commons chunk. The
-            // two principles here is a) keep the TTI (time to interaction) as
-            // low as possible so that means keeping commons.js small with
-            // critical framework code (e.g. React/react-router) and b) is we
-            // want to push JS parse/eval work as close as possible to when
-            // it's used. Since most people don't navigate to most pages, take
-            // tradeoff of loading/evaling modules multiple times over
-            // loading/evaling lots of unused code on the initial opening of
-            // the app.
-            minChunks: (module, count) => {
-              const vendorModuleList = [
-                `react`,
-                `react-dom`,
-                `fbjs`,
-                `react-router`,
-                `react-router-dom`,
-                `gatsby-react-router-scroll`,
-                `dom-helpers`, // Used in gatsby-react-router-scroll
-                `path-to-regexp`,
-                `isarray`, // Used by path-to-regexp.
-                `scroll-behavior`,
-                `history`,
-                `domready`,
-                `resolve-pathname`, // Used by history.
-                `value-equal`, // Used by history.
-                `invariant`, // Used by history.
-                `warning`, // Used by history.
-                `babel-runtime`, // Used by history.
-                `core-js`, // Used by history.
-                `loose-envify`, // Used by history.
-                `prop-types`,
-                `gatsby-link`,
-                `mitt`,
-                `shallow-compare`,
-              ]
-              const cacheDirList = [
-                `production-app`,
-                `loader`,
-                `prefetcher`,
-                `find-page`,
-                `component-renderer`,
-                `emitter`,
-                `register-service-worker`,
-                `strip-prefix`,
-                `history`,
-              ]
+          // plugins.splitChunks({
+          // minSize: 0,
+          // chunks: [`app`, ...components],
+          // The more page components there are, the higher we raise the bar
+          // for merging in page-specific JS libs into the commons chunk. The
+          // two principles here is a) keep the TTI (time to interaction) as
+          // low as possible so that means keeping commons.js small with
+          // critical framework code (e.g. React/react-router) and b) is we
+          // want to push JS parse/eval work as close as possible to when
+          // it's used. Since most people don't navigate to most pages, take
+          // tradeoff of loading/evaling modules multiple times over
+          // loading/evaling lots of unused code on the initial opening of
+          // the app.
+          // minChunks: (module, count) => {
+          // const vendorModuleList = [
+          // `react`,
+          // `react-dom`,
+          // `fbjs`,
+          // `react-router`,
+          // `react-router-dom`,
+          // `gatsby-react-router-scroll`,
+          // `dom-helpers`, // Used in gatsby-react-router-scroll
+          // `path-to-regexp`,
+          // `isarray`, // Used by path-to-regexp.
+          // `scroll-behavior`,
+          // `history`,
+          // `domready`,
+          // `resolve-pathname`, // Used by history.
+          // `value-equal`, // Used by history.
+          // `invariant`, // Used by history.
+          // `warning`, // Used by history.
+          // `babel-runtime`, // Used by history.
+          // `core-js`, // Used by history.
+          // `loose-envify`, // Used by history.
+          // `prop-types`,
+          // `gatsby-link`,
+          // `mitt`,
+          // `shallow-compare`,
+          // ]
+          // const cacheDirList = [
+          // `production-app`,
+          // `loader`,
+          // `prefetcher`,
+          // `find-page`,
+          // `component-renderer`,
+          // `emitter`,
+          // `register-service-worker`,
+          // `strip-prefix`,
+          // `history`,
+          // ]
 
-              const isFramework = some(
-                vendorModuleList.map(vendor => {
-                  const regex = new RegExp(
-                    `[\\\\/]node_modules[\\\\/]${vendor}[\\\\/].*`,
-                    `i`
-                  )
-                  return regex.test(module.resource)
-                })
-              )
+          // const isFramework = some(
+          // vendorModuleList.map(vendor => {
+          // const regex = new RegExp(
+          // `[\\\\/]node_modules[\\\\/]${vendor}[\\\\/].*`,
+          // `i`
+          // )
+          // return regex.test(module.resource)
+          // })
+          // )
 
-              const isRuntime = some(
-                cacheDirList.map(runtime => {
-                  const regex = new RegExp(`.*cache[\\\\/]${runtime}.*`, `i`)
-                  return regex.test(module.resource)
-                })
-              )
+          // const isRuntime = some(
+          // cacheDirList.map(runtime => {
+          // const regex = new RegExp(`.*cache[\\\\/]${runtime}.*`, `i`)
+          // return regex.test(module.resource)
+          // })
+          // )
 
-              return isFramework || isRuntime || count > 3
-            },
-          }),
+          // return isFramework || isRuntime || count > 3
+          // },
+          // }),
 
           // using a chunk name that doesn't exist creates a chunk with
           // just the runtime bits
-          plugins.commonsChunk({
-            name: `@@webpack-runtime`,
-            filename: `@@webpack-runtime.js`,
-          }),
+          // plugins.commonsChunk({
+          // name: `@@webpack-runtime`,
+          // filename: `@@webpack-runtime.js`,
+          // }),
           // Write out mapping between chunk names and their hashed names. We use
           // this to add the needed javascript files to each HTML page.
           new StatsWriterPlugin(),
@@ -323,7 +323,7 @@ module.exports = async (
               },
             },
           }),
-          new GatsbyModulePlugin(),
+          // new GatsbyModulePlugin(),
           plugins.namedModules(),
           plugins.namedChunks(chunkNamer),
         ])
@@ -451,6 +451,16 @@ module.exports = async (
     performance: {
       hints: false,
     },
+    mode: `production`,
+    optimization: {
+      splitChunks: {
+        minSize: 0,
+        chunks: "all",
+        cacheGroups: {
+          "vendor-1": /modules[\\/][abc]/,
+        },
+      },
+    },
 
     resolveLoader: getResolveLoader(),
     resolve: getResolve(),
@@ -471,5 +481,6 @@ module.exports = async (
     plugins,
   })
 
+  // console.log(JSON.stringify(getConfig(), null, 4))
   return getConfig()
 }

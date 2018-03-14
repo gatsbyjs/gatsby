@@ -27,8 +27,8 @@
     "lerna": "^2.1.1",
     "npm-run-all": "4.1.2",
     "plop": "^1.8.1",
-    "prettier": "^1.9.2",
-    "prettier-eslint-cli": "4.2.x",
+    "prettier": "^1.11.1",
+    "prettier-eslint-cli": "4.7.1",
     "remotedev-server": "^0.2.3",
     "rimraf": "^2.6.1",
     "yargs": "^10.0.3"
