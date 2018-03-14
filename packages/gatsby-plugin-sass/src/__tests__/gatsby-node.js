@@ -1,10 +1,7 @@
 describe(`gatsby-plugin-sass`, () => {
-  jest.mock(`extract-text-webpack-plugin`, () => class {
-    extract(...args) {
-      return { extractTextCalledWithArgs: args }
-    }
+  jest.mock(`extract-text-webpack-plugin`, function ExtractTextPlugin() {
+    this.extract = (...args) => {return { extractTextCalledWithArgs: args }}
   })
-
   const { modifyWebpackConfig } = require(`../gatsby-node`)
   const cssLoader = expect.stringMatching(/^css/)
   ;[
@@ -75,7 +72,19 @@ describe(`gatsby-plugin-sass`, () => {
           const stringified = JSON.stringify(options)
 
           it(`modifies webpack config for ${stringified}`, () => {
-            const config = { loader: jest.fn(), merge: jest.fn() }
+            const config = {
+              loader: jest.fn(),
+              merge: jest.fn(),
+              resolve: jest.fn(() => {return {
+                plugins: [
+                  new function ExtractTextPlugin() {
+                    this.extract = (...args) => {return {
+                      extractTextCalledWithArgs: args,
+                    }}
+                  }(),
+                ],
+              }}),
+            }
             const modified = modifyWebpackConfig({ config, stage }, options)
 
             expect(modified).toBe(config)

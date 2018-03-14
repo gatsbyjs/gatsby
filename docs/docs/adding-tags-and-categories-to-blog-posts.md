@@ -68,7 +68,7 @@ The resulting data includes the `path` and `tags` frontmatter for each post, whi
 
 ## Make a tags page template (for `/tags/{tag}`)
 
-If you followed the tutorial for [Adding Markdown Pages](/docs/adding-tags-and-categories-to-blog-posts/), then this process should sound familiar: we'll make a tag page template, then use it in `createPages` in `gatsby-node.js` to generate individual pages for the tags in our posts.
+If you followed the tutorial for [Adding Markdown Pages](/docs/adding-markdown-pages/), then this process should sound familiar: we'll make a tag page template, then use it in `createPages` in `gatsby-node.js` to generate individual pages for the tags in our posts.
 
 First, we'll add a tags template at `src/templates/tags.js`:
 
@@ -156,7 +156,7 @@ export const pageQuery = graphql`
 
 ## Modify `gatsby-node.js` to render pages using that template
 
-Now we've got a template. Great! I'll assume you followed the tutorial for [Adding Markdown Pages](/docs/adding-tags-and-categories-to-blog-posts/) and provide a sample `createPages` that generates post pages as well as tag pages. In the site's `gatsby-node.js` file, include `lodash` (`const _ = require('lodash')`) and then make sure your [`createPages`](/docs/node-apis/#createPages) looks something like this:
+Now we've got a template. Great! I'll assume you followed the tutorial for [Adding Markdown Pages](/docs/adding-markdown-pages/) and provide a sample `createPages` that generates post pages as well as tag pages. In the site's `gatsby-node.js` file, include `lodash` (`const _ = require('lodash')`) and then make sure your [`createPages`](/docs/node-apis/#createPages) looks something like this:
 
 ```js
 const path = require("path");
@@ -237,7 +237,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 // Utilities
-import kebabCase from "lodash/kebabcase";
+import kebabCase from "lodash/kebabCase";
 
 // Components
 import Helmet from "react-helmet";

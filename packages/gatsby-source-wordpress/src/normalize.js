@@ -412,26 +412,26 @@ exports.downloadMediaFiles = async ({
     })
   )
 
-const createACFChildNodes = (
+const prepareACFChildNodes = (
   obj,
   entityId,
   topLevelIndex,
   type,
   children,
-  createNode
+  childrenNodes
 ) => {
   // Replace any child arrays with pointers to nodes
   _.each(obj, (value, key) => {
     if (_.isArray(value) && value[0] && value[0].acf_fc_layout) {
       obj[`${key}___NODE`] = value.map(
         v =>
-          createACFChildNodes(
+          prepareACFChildNodes(
             v,
             entityId,
             topLevelIndex,
             type + key,
             children,
-            createNode
+            childrenNodes
           ).id
       )
       delete obj[key]
@@ -445,8 +445,13 @@ const createACFChildNodes = (
     children: [],
     internal: { type, contentDigest: digest(JSON.stringify(obj)) },
   }
-  createNode(acfChildNode)
+
   children.push(acfChildNode.id)
+
+  // We recursively handle children nodes first, so we need
+  // to make sure parent nodes will be before their children.
+  // So let's use unshift to put nodes in the beginning.
+  childrenNodes.unshift(acfChildNode)
 
   return acfChildNode
 }
@@ -456,6 +461,7 @@ exports.createNodesFromEntities = ({ entities, createNode }) => {
     // Create subnodes for ACF Flexible layouts
     let { __type, ...entity } = e // eslint-disable-line no-unused-vars
     let children = []
+    let childrenNodes = []
     if (entity.acf) {
       _.each(entity.acf, (value, key) => {
         if (_.isArray(value) && value[0] && value[0].acf_fc_layout) {
@@ -464,13 +470,13 @@ exports.createNodesFromEntities = ({ entities, createNode }) => {
               const type = `WordPressAcf_${f.acf_fc_layout}`
               delete f.acf_fc_layout
 
-              const acfChildNode = createACFChildNodes(
+              const acfChildNode = prepareACFChildNodes(
                 f,
                 entity.id + i,
                 key,
                 type,
                 children,
-                createNode
+                childrenNodes
               )
 
               return acfChildNode.id
@@ -492,5 +498,8 @@ exports.createNodesFromEntities = ({ entities, createNode }) => {
       },
     }
     createNode(node)
+    childrenNodes.forEach(node => {
+      createNode(node)
+    })
   })
 }
