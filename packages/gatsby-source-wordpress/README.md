@@ -83,11 +83,19 @@ plugins: [
       // Set verboseOutput to true to display a verbose output on `npm run develop` or `npm run build`
       // It can help you debug specific API Endpoints problems
       verboseOutput: false,
+      // Set how many pages are retrieved per API request
+      perPage: 100,
       // Search and Replace Urls across WordPress content
       searchAndReplaceContentUrls: {
         sourceUrl: "https://source-url.com",
         replacementUrl: "https://replacement-url.com",
       },
+      // Exclude specific endpoint manufacturers
+      // Example: [`yoast`] will exclude all `/yoast/` endpoints such as `/yoast/v1/statistics` from fetch.
+      // excludedManufacturers: [`disqus`, `yoast`],
+      // Exclude sepcific endpoint types
+      // Example: [`comments`] will exclude all `comments` type endpoints such as `/wp/v2/comments` from fetch.
+      // excludedTypes: [`comments`, `media`],
     },
   },
 ];

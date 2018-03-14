@@ -16,6 +16,8 @@ async function fetch({
   _hostingWPCOM,
   _auth,
   _perPage,
+  _excludedManufacturers,
+  _excludedTypes,
   baseUrl,
   typePrefix,
   refactoredEntityTypes,
@@ -347,6 +349,8 @@ function getValidRoutes({
   _verbose,
   _useACF,
   _hostingWPCOM,
+  _excludedManufacturers,
+  _excludedTypes,
   typePrefix,
   refactoredEntityTypes,
 }) {
@@ -357,10 +361,13 @@ function getValidRoutes({
 
     // A valid route exposes its _links (for now)
     if (route._links) {
+      const manufacturer = getManufacturer(route)
+      const excludedManufacturers = _excludedManufacturers
+
       const entityType = getRawEntityType(route)
 
       // Excluding the "technical" API Routes
-      const excludedTypes = [
+      const defaultExcludedTypes = [
         undefined,
         `v2`,
         `v3`,
@@ -371,7 +378,23 @@ function getValidRoutes({
         ``,
         baseUrl,
       ]
-      if (!excludedTypes.includes(entityType)) {
+      const excludedTypes = [
+        ...defaultExcludedTypes,
+        ..._excludedTypes,
+      ]
+
+
+      if (excludedManufacturers.includes(manufacturer)) {
+        if (_verbose)
+          console.log(
+            colorized.out(`Invalid route manufacturer.`, colorized.color.Font.FgRed)
+          )
+      } else if (excludedTypes.includes(entityType)) {
+        if (_verbose)
+          console.log(
+            colorized.out(`Invalid route type.`, colorized.color.Font.FgRed)
+          )
+      } else {
         if (_verbose)
           console.log(
             colorized.out(
@@ -380,7 +403,6 @@ function getValidRoutes({
             )
           )
 
-        const manufacturer = getManufacturer(route)
 
         let rawType = ``
         if (manufacturer === `wp`) {
@@ -409,11 +431,6 @@ function getValidRoutes({
             break
         }
         validRoutes.push({ url: route._links.self, type: validType })
-      } else {
-        if (_verbose)
-          console.log(
-            colorized.out(`Invalid route.`, colorized.color.Font.FgRed)
-          )
       }
     } else {
       if (_verbose)
