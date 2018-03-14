@@ -1,19 +1,23 @@
 import React, { Component } from "react"
 import Container from "../components/container"
 import logo from "../monogram.svg"
-import { rhythm } from "../utils/typography"
+import { rhythm, options } from "../utils/typography"
+import presets, { colors } from "../utils/presets"
 
 class Packages extends Component {
   render() {
     return (
-      <Container>
+      <Container
+        css={{
+          alignItems: `center`,
+          display: `flex`,
+          minHeight: `calc(100vh - ${presets.headerHeight})`,
+        }}
+      >
         <div
           css={{
             display: `flex`,
             flexDirection: `column`,
-            alignItems: `center`,
-            justifyContent: `center`,
-            height: `calc(100vh - 300px)`,
           }}
         >
           <img
@@ -40,9 +44,11 @@ class Packages extends Component {
           </h1>
           <p
             css={{
+              color: colors.gray.calm,
               marginLeft: rhythm(3),
               marginRight: rhythm(3),
               fontSize: rhythm(3 / 4),
+              fontFamily: options.headerFontFamily.join(`,`),
               textAlign: `center`,
             }}
           >

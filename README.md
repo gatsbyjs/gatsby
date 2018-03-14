@@ -170,6 +170,10 @@ Websites built with Gatsby:
 * [Rung](https://rung.com.br)
 * [Óbuda University - EE Faculty Student Union Website](https://www.kandohok.hu)
 * [Neostack](https://neostack.com)
+* [Prosecco Springs](https://www.proseccosprings.com/)
+* [Alec Lomas's Portfolio & Blog](https://lowmess.com) ([source](https://github.com/lowmess/lowmess))
+* [Alex Pate - Blog/Portfolio](https://alexpate.uk) ([source](https://github.com/alexpate/alexpate.uk))
+* [Matthias Jordan - Portfolio](https://iammatthias.com) ([source](https://github.com/iammatthias/net))
 * [Daniel Hollcraft](https://danielhollcraft.com) ([source](https://github.com/danielbh/danielhollcraft.com))
 
 ## Docs

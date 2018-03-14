@@ -132,19 +132,21 @@ function inferFromMapping(
   fieldSelector,
   types
 ): ?GraphQLFieldConfig<*, *> {
-  const matchedTypes = types.filter(
-    type => type.name === mapping[fieldSelector]
-  )
+  const linkedType = mapping[fieldSelector].split(`.`)[0]
+  const linkedField =
+    mapping[fieldSelector].slice(linkedType.length + 1) || `id`
+
+  const matchedTypes = types.filter(type => type.name === linkedType)
   if (_.isEmpty(matchedTypes)) {
     console.log(`Couldn't find a matching node type for "${fieldSelector}"`)
     return null
   }
 
   const findNode = (fieldValue, path) => {
-    const linkedType = mapping[fieldSelector]
     const linkedNode = _.find(
       getNodes(),
-      n => n.internal.type === linkedType && n.id === fieldValue
+      n =>
+        n.internal.type === linkedType && _.get(n, linkedField) === fieldValue
     )
     if (linkedNode) {
       createPageDependency({ path, nodeId: linkedNode.id })

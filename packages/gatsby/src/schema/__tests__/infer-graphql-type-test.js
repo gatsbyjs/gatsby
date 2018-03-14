@@ -257,7 +257,187 @@ describe(`GraphQL type inferance`, () => {
     })
   })
 
-  xdescribe(`Linked inference from config mappings`)
+  describe(`Linked inference from config mappings`, () => {
+    let store, types
+
+    beforeAll(() => {
+      ;({ store } = require(`../../redux`))
+
+      store.dispatch({
+        type: `CREATE_NODE`,
+        payload: {
+          id: `node1`,
+          label: `First node`,
+          internal: { type: `MappingTest` },
+          nestedField: {
+            mapTarget: `test1`,
+          },
+        },
+      })
+
+      store.dispatch({
+        type: `CREATE_NODE`,
+        payload: {
+          id: `node2`,
+          label: `Second node`,
+          internal: { type: `MappingTest` },
+          nestedField: {
+            mapTarget: `test2`,
+          },
+        },
+      })
+
+      store.dispatch({
+        type: `CREATE_NODE`,
+        payload: {
+          id: `node3`,
+          label: `Third node`,
+          internal: { type: `MappingTest` },
+          nestedField: {
+            mapTarget: `test3`,
+          },
+        },
+      })
+
+      const mappingTestType = {
+        name: `MappingTest`,
+        nodeObjectType: new GraphQLObjectType({
+          name: `MappingTest`,
+          fields: inferObjectStructureFromNodes({
+            nodes: [
+              {
+                label: `string`,
+                nestedField: { mapTarget: `string` },
+                linkedOnID: `string`,
+                linkedOnCustomField: `string`,
+              },
+            ],
+            types: [{ name: `MappingTest` }],
+          }),
+        }),
+      }
+
+      types = [mappingTestType]
+
+      store.dispatch({
+        type: `SET_SITE_CONFIG`,
+        payload: {
+          mapping: {
+            "Test.linkedOnID": `MappingTest`,
+            "Test.linkedOnCustomField": `MappingTest.nestedField.mapTarget`,
+          },
+        },
+      })
+    })
+
+    it(`Links to single node by id`, async () => {
+      let result = await queryResult(
+        [
+          {
+            linkedOnID: `node1`,
+            internal: { type: `Test` },
+          },
+          {
+            linkedOnID: `not_existing`,
+            internal: { type: `Test` },
+          },
+        ],
+        `
+          linkedOnID {
+            label
+          }
+        `,
+        { types }
+      )
+
+      expect(result.errors).not.toBeDefined()
+      expect(result.data.listNode.length).toEqual(2)
+      expect(result.data.listNode[0].linkedOnID).toBeDefined()
+      expect(result.data.listNode[1].linkedOnID).toEqual(null)
+      expect(result.data.listNode[0].linkedOnID.label).toEqual(`First node`)
+    })
+
+    it(`Links to array of nodes by id`, async () => {
+      let result = await queryResult(
+        [
+          {
+            linkedOnID: [`node1`, `node2`],
+            internal: { type: `Test` },
+          },
+        ],
+        `
+          linkedOnID {
+            label
+          }
+        `,
+        { types }
+      )
+
+      expect(result.errors).not.toBeDefined()
+      expect(result.data.listNode.length).toEqual(1)
+      expect(result.data.listNode[0].linkedOnID).toBeDefined()
+      expect(result.data.listNode[0].linkedOnID.length).toEqual(2)
+      expect(result.data.listNode[0].linkedOnID[0].label).toEqual(`First node`)
+      expect(result.data.listNode[0].linkedOnID[1].label).toEqual(`Second node`)
+    })
+
+    it(`Links to single node by custom field`, async () => {
+      let result = await queryResult(
+        [
+          {
+            linkedOnCustomField: `test2`,
+            internal: { type: `Test` },
+          },
+          {
+            linkedOnCustomField: `not_existing`,
+            internal: { type: `Test` },
+          },
+        ],
+        `
+          linkedOnCustomField {
+            label
+          }
+        `,
+        { types }
+      )
+
+      expect(result.errors).not.toBeDefined()
+      expect(result.data.listNode.length).toEqual(2)
+      expect(result.data.listNode[0].linkedOnCustomField).toBeDefined()
+      expect(result.data.listNode[1].linkedOnCustomField).toEqual(null)
+      expect(result.data.listNode[0].linkedOnCustomField.label).toEqual(
+        `Second node`
+      )
+    })
+
+    it(`Links to array of nodes by custom field`, async () => {
+      let result = await queryResult(
+        [
+          {
+            linkedOnCustomField: [`test1`, `test3`],
+            internal: { type: `Test` },
+          },
+        ],
+        `
+          linkedOnCustomField {
+            label
+          }
+        `,
+        { types }
+      )
+
+      expect(result.errors).not.toBeDefined()
+      expect(result.data.listNode.length).toEqual(1)
+      expect(result.data.listNode[0].linkedOnCustomField).toBeDefined()
+      expect(result.data.listNode[0].linkedOnCustomField.length).toEqual(2)
+      expect(result.data.listNode[0].linkedOnCustomField[0].label).toEqual(
+        `First node`
+      )
+      expect(result.data.listNode[0].linkedOnCustomField[1].label).toEqual(
+        `Third node`
+      )
+    })
+  })
 
   describe(`Linked inference from file URIs`, () => {
     let store, types, dir
