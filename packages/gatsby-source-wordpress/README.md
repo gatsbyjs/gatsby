@@ -98,7 +98,7 @@ plugins: [
 These plugins were tested. We welcome PRs adding support for data from other
 plugins.
 
-* [x] Custom Post Types : it will work seemlessly, no further option needs to be
+* [x] Custom Post Types : it will work seamlessly, no further option needs to be
       activated. ("Show in REST API" setting needs to be set to true on the
       custom post in the plugin settings for this to work. It's set to "false"
       by default.)
