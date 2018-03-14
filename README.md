@@ -171,6 +171,7 @@ Websites built with Gatsby:
 * [Óbuda University - EE Faculty Student Union Website](https://www.kandohok.hu)
 * [Neostack](https://neostack.com)
 * [Prosecco Springs](https://www.proseccosprings.com/)
+* [Fröhlich ∧ Frei](https://www.froehlichundfrei.de/)
 * [Alec Lomas's Portfolio & Blog](https://lowmess.com) ([source](https://github.com/lowmess/lowmess))
 * [Alex Pate - Blog/Portfolio](https://alexpate.uk) ([source](https://github.com/alexpate/alexpate.uk))
 * [Matthias Jordan - Portfolio](https://iammatthias.com) ([source](https://github.com/iammatthias/net))
