@@ -176,6 +176,7 @@ Websites built with Gatsby:
 * [Alex Pate - Blog/Portfolio](https://alexpate.uk) ([source](https://github.com/alexpate/alexpate.uk))
 * [Matthias Jordan - Portfolio](https://iammatthias.com) ([source](https://github.com/iammatthias/net))
 * [Daniel Hollcraft](https://danielhollcraft.com) ([source](https://github.com/danielbh/danielhollcraft.com))
+* [Investment Calculator](https://investmentcalculator.io/)
 
 ## Docs
 
