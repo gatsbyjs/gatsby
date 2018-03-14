@@ -1,6 +1,6 @@
 const React = require(`react`)
-const Styletron = require(`styletron-server`)
-const { StyletronProvider } = require(`styletron-react`)
+const Styletron = require(`styletron-engine-atomic`).Server
+const StyletronProvider = require(`styletron-react`).Provider
 const { renderToString } = require(`react-dom/server`)
 
 exports.replaceRenderer = ({
@@ -11,7 +11,7 @@ exports.replaceRenderer = ({
   const styletron = new Styletron()
 
   const app = (
-    <StyletronProvider styletron={styletron}>{bodyComponent}</StyletronProvider>
+    <StyletronProvider value={styletron}>{bodyComponent}</StyletronProvider>
   )
 
   replaceBodyHTMLString(renderToString(app))

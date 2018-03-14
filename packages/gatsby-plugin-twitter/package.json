@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-twitter",
   "description": "Stub description for gatsby-plugin-twitter",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -15,7 +15,8 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-twitter#readme",
   "keywords": [
-    "gatsby"
+    "gatsby",
+    "gatsby-plugin"
   ],
   "license": "MIT",
   "main": "index.js",

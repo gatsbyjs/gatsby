@@ -4,7 +4,7 @@
       link: /tutorial/
     - title: 0. Programming basics
       link: /tutorial/part-zero/
-    - title: 1. Introduction to basics of Gatsby
+    - title: 1. Introduction to Gatsby basics
       link: /tutorial/part-one/
       items:
         - title: Check Environment

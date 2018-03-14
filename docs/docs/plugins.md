@@ -45,7 +45,6 @@ If you’d like to create a custom Gatsby plugin, check out the [plugin authorin
 
 For usage instructions and options, see the plugin repo (linked below).
 
-* [gatsby-plugin-aphrodite](/packages/gatsby-plugin-aphrodite/)
 * [gatsby-plugin-canonical-urls](/packages/gatsby-plugin-canonical-urls/)
 * [gatsby-plugin-catch-links](/packages/gatsby-plugin-catch-links/)
 * [gatsby-plugin-coffeescript](/packages/gatsby-plugin-coffeescript/)
@@ -132,6 +131,7 @@ For usage instructions and options, see the plugin repo (linked below).
 * [gatsby-plugin-fastclick](https://github.com/escaladesports/gatsby-plugin-fastclick)
 * [gatsby-plugin-favicon](https://github.com/Creatiwity/gatsby-plugin-favicon)
 * [gatsby-plugin-fela](https://github.com/mmintel/gatsby-plugin-fela)
+* [gatsby-plugin-gauges](https://github.com/lowmess/gatsby-plugin-gauges)
 * [gatsby-plugin-google-fonts](https://github.com/didierfranc/gatsby-plugin-google-fonts)
 * [gatsby-plugin-gosquared](https://github.com/jongold/gatsby-plugin-gosquared)
 * [gatsby-plugin-hotjar](https://github.com/pavloko/gatsby-plugin-hotjar)
@@ -158,10 +158,10 @@ For usage instructions and options, see the plugin repo (linked below).
 * [gatsby-remark-external-links](https://github.com/JLongley/gatsby-remark-external-links)
 * [gatsby-remark-flowchart](https://github.com/liudonghua123/gatsby-remark-flowchart)
 * [gatsby-remark-graph](https://github.com/konsumer/gatsby-remark-graph)
+* [gatsby-remark-numbered-footnotes](https://github.com/jlengstorf/gatsby-remark-numbered-footnotes)
 * [gatsby-remark-sequence](https://github.com/liudonghua123/gatsby-remark-sequence)
 * [gatsby-source-airtable](https://github.com/kevzettler/gatsby-source-airtable)
 * [gatsby-source-behance](https://github.com/LeKoArts/gatsby-source-behance)
-* [gatsby-source-behance-collection](https://github.com/n370/gatsby-source-behance-collection)
 * [gatsby-source-datocms](https://github.com/datocms/gatsby-source-datocms)
 * [gatsby-source-directus](https://github.com/iKonrad/gatsby-source-directus)
 * [gatsby-source-dribbble](https://github.com/smakosh/gatsby-source-dribbble)
@@ -169,6 +169,7 @@ For usage instructions and options, see the plugin repo (linked below).
 * [gatsby-source-google-sheets](https://github.com/brandonmp/gatsby-source-google-sheets)
 * [gatsby-source-graphcms](https://github.com/GraphCMS/gatsby-source-graphcms)
 * [gatsby-source-mesh](https://github.com/gentics/gatsby-source-mesh)
+* [gatsby-source-mozaik](https://github.com/mozaikio/gatsby-source-mozaik)
 * [gatsby-source-soundcloud](https://github.com/jedidiah/gatsby-source-soundcloud)
 * [gatsby-source-strapi](https://github.com/strapi/gatsby-source-strapi)
 * [gatsby-source-stripe](https://github.com/njosefbeck/gatsby-source-stripe)
