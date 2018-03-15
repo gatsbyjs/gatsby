@@ -376,14 +376,15 @@ function getValidRoutes({
         baseUrl,
       ]
 
-      const excludedRoutes = _excludedRoutes
+      const routePath = getRoutePath(url, route._links.self)
+      const excludedRoutes = getExtGlob(_excludedRoutes)
 
       if (excludedTypes.includes(entityType)) {
         if (_verbose)
           console.log(
             colorized.out(`Invalid route.`, colorized.color.Font.FgRed)
           )
-      } else if (minimatch(route._links.self, excludedRoutes)) {
+      } else if (minimatch(routePath, excludedRoutes)) {
         if (_verbose)
           console.log(
             colorized.out(`Excluded route from excludedRoutes pattern.`, colorized.color.Font.FgYellow)
@@ -468,6 +469,24 @@ const getRawEntityType = route =>
     route._links.self.lastIndexOf(`/`) + 1,
     route._links.self.length
   )
+
+/**
+ * Extract the route path for an endpoint
+ *
+ * @param {any} baseUrl The base site URL that should be removed
+ * @param {any} fullUrl The full URL to retrieve the route path from
+ */
+const getRoutePath = (baseUrl, fullUrl) =>
+  fullUrl.replace(baseUrl, ``)
+
+/**
+ * Build an extglob from an array of patterns
+ * Ex. ['*\/*\/comments', 'yoast\/*'] returns `+(*\/*\/comments|yoast\/*)`
+ *
+ * @param {Array} patterns An array to build the extglob pattern from
+ */
+const getExtGlob = patterns =>
+  `+(${patterns.map((p) => `${p}`).join('|')})`
 
 /**
  * Extract the route manufacturer
