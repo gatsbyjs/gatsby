@@ -34,7 +34,7 @@ Options
   -H, --host    Set host. Defaults to localhost
   -p, --port    Set port. Defaults to 8000
   -o, --open    Open the site in your browser for you
-  -S, --https   Use HTTPS?
+  -S, --https   Use HTTPS
 ```
 
 Follow the [Local HTTPS guide](https://www.gatsbyjs.org/docs/local-https/)
