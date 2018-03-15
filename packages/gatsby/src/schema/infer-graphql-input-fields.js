@@ -190,6 +190,22 @@ type InferInputOptions = {
   exampleValue?: Object,
 }
 
+const recursiveOmitBy = (value, fn) => {
+  if (_.isObject(value)) {
+    if (_.isPlainObject(value)) {
+      value = _.omitBy(value, fn)
+    }
+    _.each(value, (v, k) => {
+      value[k] = recursiveOmitBy(v, fn)
+    })
+    if (_.isEmpty(value)) {
+      // don't return empty objects - gatsby doesn't support these
+      return null
+    }
+  }
+  return value
+}
+
 const linkedNodeCache = {}
 
 export function inferInputObjectStructureFromNodes({
@@ -223,7 +239,7 @@ export function inferInputObjectStructureFromNodes({
           node => node.internal.type === linkedNode.internal.type
         )
         value = extractFieldExamples(relatedNodes)
-        value = _.omitBy(value, (_v, _k) => _.includes(_k, `___NODE`))
+        value = recursiveOmitBy(value, (_v, _k) => _.includes(_k, `___NODE`))
         linkedNodeCache[linkedNode.internal.type] = value
       }
 

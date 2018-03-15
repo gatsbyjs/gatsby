@@ -22,11 +22,11 @@ In the processing, it make images responsive by:
 ```javascript
 // In your gatsby-config.js
 plugins: [
+  `gatsby-plugin-sharp`,
   {
     resolve: `gatsby-transformer-remark`,
     options: {
       plugins: [
-        `gatsby-plugin-sharp`,
         {
           resolve: `gatsby-remark-images`,
           options: {

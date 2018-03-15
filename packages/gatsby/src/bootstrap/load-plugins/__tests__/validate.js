@@ -149,7 +149,10 @@ describe(`handleMultipleReplaceRenderers`, () => {
       },
     ]
 
-    const result = handleMultipleReplaceRenderers({ apiToPlugins, flattenedPlugins })
+    const result = handleMultipleReplaceRenderers({
+      apiToPlugins,
+      flattenedPlugins,
+    })
 
     expect(result).toMatchSnapshot()
   })
@@ -182,7 +185,10 @@ describe(`handleMultipleReplaceRenderers`, () => {
       },
     ]
 
-    const result = handleMultipleReplaceRenderers({ apiToPlugins, flattenedPlugins })
+    const result = handleMultipleReplaceRenderers({
+      apiToPlugins,
+      flattenedPlugins,
+    })
 
     expect(result).toMatchSnapshot()
   })

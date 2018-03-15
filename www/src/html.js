@@ -75,6 +75,7 @@ export default class HTML extends React.Component {
           />
           <meta name="msapplication-config" content={`/browserconfig.xml`} />
           <script src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js" />
+
           {css}
         </head>
         <body {...this.props.bodyAttributes}>

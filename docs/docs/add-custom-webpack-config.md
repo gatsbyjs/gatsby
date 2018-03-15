@@ -1,5 +1,5 @@
 ---
-title: "Add custom webpack config"
+title: "Add Custom webpack Config"
 ---
 
 _Before creating custom webpack configuration, check to see if there's a Gatsby
@@ -36,6 +36,35 @@ There are many plugins in the Gatsby repo using this API to look to for examples
 e.g. [Sass](/packages/gatsby-plugin-sass/),
 [Typescript](/packages/gatsby-plugin-typescript/),
 [Glamor](/packages/gatsby-plugin-glamor/), and many more!
+
+## Modifying the babel loader
+
+Manually allow tweaking of include + exclude of babel loader.
+
+```javascript
+const generateBabelConfig = require("gatsby/dist/utils/babel-config");
+
+exports.modifyWebpackConfig = ({ config, stage }) => {
+  const program = {
+    directory: __dirname,
+    browserslist: ["> 1%", "last 2 versions", "IE >= 9"],
+  };
+
+  return generateBabelConfig(program, stage).then(babelConfig => {
+    config.removeLoader("js").loader("js", {
+      test: /\.jsx?$/,
+      exclude: modulePath => {
+        return (
+          /node_modules/.test(modulePath) &&
+          !/node_modules\/(swiper|dom7)/.test(modulePath)
+        );
+      },
+      loader: "babel",
+      query: babelConfig,
+    });
+  });
+};
+```
 
 ## Example
 

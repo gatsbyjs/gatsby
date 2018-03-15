@@ -31,10 +31,10 @@ What happened.
 
 ### Environment
 
-- Gatsby version (`npm list gatsby`):
-- gatsby-cli version (`gatsby --version`):
-- Node.js version:
-- Operating System:
+* Gatsby version (`npm list gatsby`):
+* gatsby-cli version (`gatsby --version`):
+* Node.js version:
+* Operating System:
 
 ### File contents (if changed):
 
@@ -43,4 +43,3 @@ What happened.
 `gatsby-node.js`: <!-- code block or not changed -->
 `gatsby-browser.js`: <!-- code block or not changed -->
 `gatsby-ssr.js`: <!-- code block or not changed -->
-
