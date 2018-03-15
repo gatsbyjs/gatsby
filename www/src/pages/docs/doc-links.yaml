@@ -50,6 +50,8 @@
       link: /docs/environment-variables/
     - title: Gatsby on Windows
       link: /docs/gatsby-on-windows/
+    - title: Local HTTPS
+      link: /docs/local-https/
     - title: Managing Content with Netlify CMS
       link: /docs/netlify-cms/
     - title: How Gatsby Works with GitHub Pages

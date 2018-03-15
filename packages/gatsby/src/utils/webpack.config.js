@@ -96,7 +96,9 @@ module.exports = async (
         return {
           path: directory,
           filename: `[name].js`,
-          publicPath: `http://${program.host}:${webpackPort}/`,
+          publicPath: `${program.ssl ? `https` : `http`}://${
+            program.host
+          }:${webpackPort}/`,
           devtoolModuleFilenameTemplate: info =>
             path.resolve(info.absoluteResourcePath).replace(/\\/g, `/`),
         }
@@ -142,7 +144,9 @@ module.exports = async (
         return {
           commons: [
             require.resolve(`react-hot-loader/patch`),
-            `${require.resolve(`webpack-hot-middleware/client`)}?path=http://${
+            `${require.resolve(`webpack-hot-middleware/client`)}?path=${
+              program.ssl ? `https` : `http`
+            }://${
               program.host
             }:${webpackPort}/__webpack_hmr&reload=true&overlay=false`,
             directoryPath(`.cache/app`),
