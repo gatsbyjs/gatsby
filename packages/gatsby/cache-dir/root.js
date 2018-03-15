@@ -9,6 +9,7 @@ import redirects from "./redirects.json"
 import ComponentRenderer from "./component-renderer"
 import loader from "./loader"
 import { hot } from "react-hot-loader"
+import JSONStore from "./json-store"
 
 import * as ErrorOverlay from "react-error-overlay"
 
@@ -167,29 +168,13 @@ const Root = () =>
               attachToHistory(props.history)
               const { pathname } = props.location
               const pageResources = loader.getResourcesForPathname(pathname)
-              if (pageResources && pageResources.component) {
-                return createElement(ComponentRenderer, {
-                  key: `normal-page`,
-                  page: true,
-                  ...props,
-                  pageResources,
-                })
-              } else {
-                const dev404Page = pages.find(p =>
-                  /^\/dev-404-page/.test(p.path)
-                )
-                return createElement(Route, {
-                  key: `404-page`,
-                  component: props =>
-                    createElement(
-                      syncRequires.components[dev404Page.componentChunkName],
-                      {
-                        ...props,
-                        ...syncRequires.json[dev404Page.jsonName],
-                      }
-                    ),
-                })
-              }
+              const isPage = !!(pageResources && pageResources.component)
+              return createElement(JSONStore, {
+                page: isPage,
+                pages,
+                ...props,
+                pageResources,
+              })
             },
           }),
       })
