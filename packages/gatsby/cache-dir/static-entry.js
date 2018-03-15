@@ -2,6 +2,7 @@ import React from "react"
 import { renderToString, renderToStaticMarkup } from "react-dom/server"
 import { StaticRouter, Route, withRouter } from "react-router-dom"
 import { kebabCase, get, merge, isArray, isString } from "lodash"
+import { readFileSync } from "fs"
 
 import apiRunner from "./api-runner-ssr"
 import pages from "./pages.json"
@@ -107,11 +108,17 @@ export default (locals, callback) => {
         return createElement(withRouter(layout), {
           children: layoutProps => {
             const props = layoutProps ? layoutProps : routeProps
+
+            // this is in node - we can just load json here
+            const dataAndContext = JSON.parse(
+              readFileSync(process.cwd() + `/.cache/json/` + page.jsonName)
+            )
+
             return createElement(
               syncRequires.components[page.componentChunkName],
               {
                 ...props,
-                ...syncRequires.json[page.jsonName],
+                ...dataAndContext,
               }
             )
           },

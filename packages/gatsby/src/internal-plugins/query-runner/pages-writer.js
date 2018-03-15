@@ -85,17 +85,6 @@ const preferDefault = m => m && m.default || m
     )
     .join(`,\n`)}
 }\n\n`
-  syncRequires += `exports.json = {\n${json
-    .map(
-      j =>
-        `  "${j.jsonName}": require("${joinPath(
-          program.directory,
-          `/.cache/json/`,
-          j.jsonName
-        )}")`
-    )
-    .join(`,\n`)}
-}`
 
   // Create file with async requires of layouts/components/json files.
   let asyncRequires = `// prefer default export if available
