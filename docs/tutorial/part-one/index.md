@@ -338,7 +338,7 @@ There you go! A working React.js counter inside your static website 👌
 _Bonus challenge_: One fun thing is that hot reloading isn't just for content and styles; it
 works on code as well. Currently, when you click the buttons on the counter, the numbers go up and down in increments of 1. Try to make the counter go up and down in a different increments (for example, 5).
 
-## Deploying Gatsby.js websites on the web
+## Deploying Gatsby.js websites
 
 Gatsby.js is a _static site generator_, which means there are no servers to setup or complicated databases to
 deploy. Instead, the Gatsby `build` command produces a directory of static HTML
