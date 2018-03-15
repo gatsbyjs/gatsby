@@ -4,7 +4,7 @@ exports.onRouteUpdate = function({ location }) {
     window.ga(
         `set`,
         `page`,
-        location ? location.pathname + location.search : undefined
+        location ? location.pathname + location.search + location.hash : undefined
     )
     window.ga(`send`, `pageview`)
   }
