@@ -60,13 +60,22 @@ module.exports = async (pageOrLayout, component) => {
   const resultHash = md5(resultJSON)
   const resultPath = joinPath(
     program.directory,
-    `.cache`,
-    `json`,
+    `public`,
+    `static`,
+    `d`,
     pageOrLayout.jsonName
   )
 
   if (resultHashes[resultPath] !== resultHash) {
     resultHashes[resultPath] = resultHash
+    // In development push new result to client
+    // const socket = get io instance from...?
+    // socket.emit(`resultJSON`, {
+    //   id: pageOrLayout.jsonName,
+    //   content: resultJSON,
+    // })
+
+    // In production, write file to public/static/d/ folder.
     await fs.writeFile(resultPath, resultJSON)
   }
 }
