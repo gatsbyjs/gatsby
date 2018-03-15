@@ -14,13 +14,13 @@ From October 2017 to February 2018, I conducted over 60 interviews with Gatsby u
 
 ## Jobs to be done
 
-After compiling data from the interviews, I drew what’s called an “empathy map” in UX design to put myself in the shoes of Gatsby users. This map describes a summary of what the typical Gatsby user experienced when searching for plugins.
+After compiling data from the interviews, I drew what’s called an “empathy map” to put myself in the shoes of Gatsby users. This map describes what a Gatsby users usually experienced when searching for plugins.
 
 ![Empathy map](empathy-map.png)
 
-To summarize the pain points, most Gatsby fans need to use plugins and it takes them a lot of time browsing through the plugin list and searching example sites to figure out what plugins they need and want. They also frequently mention how difficult it was to build their own plugin with no tutorials available.
+This map reflects how it took most people a lot of time browsing through the plugin list and searching example sites to figure out what plugins they need and want. They also frequently mentioned how difficult it was to build their own plugin with no tutorials available.
 
-People want to:
+With the empathy map and the interviews as our guide, we learned that most people want to:
 
 1. Find the best, most recent, and relevant plugin, library, or component for their site.
 2. Learn how to build a plugin.
@@ -29,7 +29,7 @@ People want to:
 
 ## Learning from other plugin libraries
 
-We also analyzed over 10 admirable and/or popular plugin libraries to draw from their strengths and learn from their weaknesses. Examples, in no particular order, include:
+Next, we analyzed over 10 admirable and/or popular plugin libraries to draw from their strengths and learn from their weaknesses. Examples, in no particular order, include:
 
 * [JS.coach](https://js.coach/)
 * [VIM Awesome](https://vimawesome.com/)
