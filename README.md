@@ -177,6 +177,8 @@ Websites built with Gatsby:
 * [Matthias Jordan - Portfolio](https://iammatthias.com) ([source](https://github.com/iammatthias/net))
 * [Daniel Hollcraft](https://danielhollcraft.com) ([source](https://github.com/danielbh/danielhollcraft.com))
 * [Investment Calculator](https://investmentcalculator.io/)
+* [Nikbelikov.ru](http://nikbelikov.ru/)
+* [Watchcards.ru](http://watchcards.ru/)
 
 ## Docs
 
