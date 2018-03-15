@@ -92,8 +92,9 @@ plugins: [
       },
       // Exclude specific routes using glob parameters
       // See: https://github.com/isaacs/minimatch
-      // Example: "**/+(comments|media)" will exclude routes ending in `comments` and `media` from fetch.
-      excludedRoutes: "**/+(comments|media)",
+      // Example:  `["/*/*/comments", "/*/*/media"]` will exclude routes ending in `comments` and
+      // `media` from fetch.
+      excludedRoutes: ["/*/*/comments", "/*/*/media"],
     },
   },
 ];
