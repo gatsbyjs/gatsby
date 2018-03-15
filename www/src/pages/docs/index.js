@@ -15,7 +15,7 @@ class IndexRoute extends React.Component {
           <title>Docs</title>
         </Helmet>
         <h1 id="get-started" css={{ marginTop: 0 }}>
-          Get started
+          Get Started
         </h1>
         <p>Gatsby is a blazing-fast static site generator for React.</p>
         <p>
