@@ -1,6 +1,7 @@
 const querystring = require(`querystring`)
 const axios = require(`axios`)
 const _ = require(`lodash`)
+const minimatch = require(`minimatch`)
 const colorized = require(`./output-color`)
 const httpExceptionHandler = require(`./http-exception-handler`)
 const requestInQueue = require(`./request-in-queue`)
@@ -10,15 +11,14 @@ const requestInQueue = require(`./request-in-queue`)
  * site.
  */
 async function fetch({
+  baseUrl,
   _verbose,
   _siteURL,
   _useACF,
   _hostingWPCOM,
   _auth,
   _perPage,
-  _excludedManufacturers,
-  _excludedTypes,
-  baseUrl,
+  _excludedRoutes,
   typePrefix,
   refactoredEntityTypes,
   concurrentRequests,
@@ -106,6 +106,7 @@ async function fetch({
       _verbose,
       _useACF,
       _hostingWPCOM,
+      _excludedRoutes,
       typePrefix,
       refactoredEntityTypes,
     })
@@ -349,8 +350,7 @@ function getValidRoutes({
   _verbose,
   _useACF,
   _hostingWPCOM,
-  _excludedManufacturers,
-  _excludedTypes,
+  _excludedRoutes,
   typePrefix,
   refactoredEntityTypes,
 }) {
@@ -361,13 +361,10 @@ function getValidRoutes({
 
     // A valid route exposes its _links (for now)
     if (route._links) {
-      const manufacturer = getManufacturer(route)
-      const excludedManufacturers = _excludedManufacturers
-
       const entityType = getRawEntityType(route)
 
       // Excluding the "technical" API Routes
-      const defaultExcludedTypes = [
+      const excludedTypes = [
         undefined,
         `v2`,
         `v3`,
@@ -378,21 +375,18 @@ function getValidRoutes({
         ``,
         baseUrl,
       ]
-      const excludedTypes = [
-        ...defaultExcludedTypes,
-        ..._excludedTypes,
-      ]
 
+      const excludedRoutes = _excludedRoutes
 
-      if (excludedManufacturers.includes(manufacturer)) {
+      if (excludedTypes.includes(entityType)) {
         if (_verbose)
           console.log(
-            colorized.out(`Invalid route manufacturer.`, colorized.color.Font.FgRed)
+            colorized.out(`Invalid route.`, colorized.color.Font.FgRed)
           )
-      } else if (excludedTypes.includes(entityType)) {
+      } else if (minimatch(route._links.self, excludedRoutes)) {
         if (_verbose)
           console.log(
-            colorized.out(`Invalid route type.`, colorized.color.Font.FgRed)
+            colorized.out(`Excluded route from excludedRoutes pattern.`, colorized.color.Font.FgYellow)
           )
       } else {
         if (_verbose)
@@ -403,6 +397,7 @@ function getValidRoutes({
             )
           )
 
+        const manufacturer = getManufacturer(route)
 
         let rawType = ``
         if (manufacturer === `wp`) {

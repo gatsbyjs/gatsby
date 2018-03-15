@@ -90,12 +90,10 @@ plugins: [
         sourceUrl: "https://source-url.com",
         replacementUrl: "https://replacement-url.com",
       },
-      // Exclude specific endpoint manufacturers
-      // Example: [`yoast`] will exclude all `/yoast/` endpoints such as `/yoast/v1/statistics` from fetch.
-      // excludedManufacturers: [`disqus`, `yoast`],
-      // Exclude sepcific endpoint types
-      // Example: [`comments`] will exclude all `comments` type endpoints such as `/wp/v2/comments` from fetch.
-      // excludedTypes: [`comments`, `media`],
+      // Exclude specific routes using glob parameters
+      // See: https://github.com/isaacs/minimatch
+      // Example: "**/+(comments|media)" will exclude routes ending in `comments` and `media` from fetch.
+      excludedRoutes: "**/+(comments|media)",
     },
   },
 ];

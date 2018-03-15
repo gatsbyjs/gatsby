@@ -16,8 +16,7 @@ let _useACF = true
 let _hostingWPCOM
 let _auth
 let _perPage
-let _excludedManufacturers
-let _excludedTypes
+let _excludedRoutes
 
 exports.sourceNodes = async (
   { boundActionCreators, getNode, store, cache, createNodeId },
@@ -31,8 +30,7 @@ exports.sourceNodes = async (
     perPage = 100,
     searchAndReplaceContentUrls = {},
     concurrentRequests = 10,
-    excludedManufacturers = [],
-    excludedTypes = [],
+    excludedRoutes = [],
   }
 ) => {
   const { createNode } = boundActionCreators
@@ -42,8 +40,7 @@ exports.sourceNodes = async (
   _hostingWPCOM = hostingWPCOM
   _auth = auth
   _perPage = perPage
-  _excludedManufacturers = excludedManufacturers
-  _excludedTypes = excludedTypes
+  _excludedRoutes = excludedRoutes
 
   let entities = await fetch({
     baseUrl,
@@ -53,8 +50,7 @@ exports.sourceNodes = async (
     _hostingWPCOM,
     _auth,
     _perPage,
-    _excludedManufacturers,
-    _excludedTypes,
+    _excludedRoutes,
     typePrefix,
     refactoredEntityTypes,
     concurrentRequests,
