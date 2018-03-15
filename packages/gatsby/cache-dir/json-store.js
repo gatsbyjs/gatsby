@@ -3,52 +3,64 @@ import { Route } from "react-router-dom"
 import ComponentRenderer from "./component-renderer"
 import syncRequires from "./sync-requires"
 import omit from "lodash/omit"
+import get from "lodash/get"
 
 class JSONStore extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { pages: {} }
+    this.state = {
+      data: {},
+      receivedData: false,
+    }
+    try {
+      this.socket = window.io()
+    } catch (err) {
+      console.error(`Could not connect to socket.io on dev server.`)
+    }
   }
 
   componentDidMount() {
-    // let io
-    // try {
-    //   io = window.io()
-    // } catch (err) {
-    //   console.error(`Could not connect to socket.io on dev server.`)
-    // }
-    // io &&
-    //   io.on(`connection`, client => {
-    //     client.on(`pages`, pages => {
-    //       console.log(`got pages from client`, pages)
-    //       this.setState({ pages })
-    //     })
-    //   })
+    this.socket.on(`queryResult`, data => {
+      this.setState({
+        data,
+        receivedData: true,
+      })
+    })
   }
 
-  componentWillReceiveProps(nextProps, nextState) {
-    console.log(`props`, nextProps)
+  getPageData(path) {
+    const ob = this.state.data[path]
+    if (!ob) {
+      console.log(`Missing JSON: ${path}`)
+      return {}
+    }
+    return JSON.parse(ob)
   }
 
   render() {
-    const { page, pages } = this.props
-    if (page) {
-      const propsWithoutPages = omit(this.props, `pages`)
+    if (!this.state.receivedData) return ``
+    const { isPage, pages, pageResources } = this.props
+    const propsWithoutPages = omit(this.props, `pages`)
+    if (isPage) {
+      const jsonId = get(pageResources, `page.jsonName`)
+      const pageData = this.getPageData(jsonId)
       return createElement(ComponentRenderer, {
         key: `normal-page`,
         ...propsWithoutPages,
+        ...pageData,
       })
     } else {
       const dev404Page = pages.find(p => /^\/dev-404-page/.test(p.path))
+      const dev404Props = {
+        ...propsWithoutPages,
+        ...this.getPageData(dev404Page.jsonName),
+      }
       return createElement(Route, {
         key: `404-page`,
         component: props =>
           createElement(
             syncRequires.components[dev404Page.componentChunkName],
-            {
-              ...props,
-              ...syncRequires.json[dev404Page.jsonName],
-            }
+            dev404Props
           ),
       })
     }

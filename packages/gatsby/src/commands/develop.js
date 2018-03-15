@@ -22,6 +22,7 @@ const formatWebpackMessages = require(`react-dev-utils/formatWebpackMessages`)
 const chalk = require(`chalk`)
 const address = require(`address`)
 const sourceNodes = require(`../utils/source-nodes`)
+const ws = require(`../utils/websocket`)
 
 // const isInteractive = process.stdout.isTTY
 
@@ -197,10 +198,11 @@ async function startServer(program) {
    **/
 
   const server = require(`http`).Server(app)
-  const io = require(`socket.io`)(server)
-
+  ws.init(server)
+  const io = ws.instance()
   io.on(`connection`, socket => {
     socket.join(`clients`)
+    socket.emit(`queryResult`, ws.flushResults())
   })
 
   const listener = server.listen(program.port, program.host, err => {
@@ -402,6 +404,10 @@ module.exports = async (program: any) => {
     }
 
     isFirstCompile = false
+
+    // const websocket = new Promise(resolve => {
+    //   resolve(io)
+    // })
 
     // If errors exist, only show errors.
     // if (messages.errors.length) {

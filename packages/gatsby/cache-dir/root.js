@@ -1,5 +1,5 @@
 import React, { createElement } from "react"
-import { Router, Route, matchPath, withRouter } from "react-router-dom"
+import { Router, Route, withRouter } from "react-router-dom"
 import { ScrollContext } from "gatsby-react-router-scroll"
 import history from "./history"
 import { apiRunner } from "./api-runner-browser"
@@ -151,7 +151,7 @@ const ComponentRendererWithRouter = withRouter(ComponentRenderer)
 // can have ones below that. Find page, if has different
 // parent layout(s), loop through those until finally the
 // page. Tricky part is avoiding re-mounting I think...
-
+/* eslint-disable react/display-name */
 const Root = () =>
   createElement(
     AltRouter ? AltRouter : DefaultRouter,

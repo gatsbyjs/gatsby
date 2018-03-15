@@ -2,10 +2,10 @@ import { graphql as graphqlFunction } from "graphql"
 const fs = require(`fs-extra`)
 const report = require(`gatsby-cli/lib/reporter`)
 const md5 = require(`md5`)
+const ws = require(`../../utils/websocket`)
 
 const { joinPath } = require(`../../utils/path`)
 const { store } = require(`../../redux`)
-
 const resultHashes = {}
 
 // Run query for a page
@@ -68,14 +68,24 @@ module.exports = async (pageOrLayout, component) => {
 
   if (resultHashes[resultPath] !== resultHash) {
     resultHashes[resultPath] = resultHash
-    // In development push new result to client
-    // const socket = get io instance from...?
-    // socket.emit(`resultJSON`, {
-    //   id: pageOrLayout.jsonName,
-    //   content: resultJSON,
-    // })
+    const programType = program._[0]
 
     // In production, write file to public/static/d/ folder.
-    await fs.writeFile(resultPath, resultJSON)
+    if (programType === `build`) {
+      await fs.writeFile(resultPath, resultJSON)
+      return
+    }
+
+    // In development queue up results until a client is available
+    // push subsequent results to client
+    if (programType === `develop`) {
+      const result = {}
+      result[pageOrLayout.jsonName] = resultJSON
+      ws.pushResult(result)
+      const sockets = ws.instance()
+      if (sockets) {
+        sockets.emit(`queryResult`, result)
+      }
+    }
   }
 }
