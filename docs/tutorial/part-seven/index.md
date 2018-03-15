@@ -18,7 +18,7 @@ ways to use it for the remainder of the tutorial.
 
 Let's get started.
 
-## Programmatically create pages from data
+## Creating slugs for pages
 
 Creating new pages has two steps:
 
@@ -142,6 +142,8 @@ query to see our new slugs.
 ```
 
 Now that the slugs are created, we can create the pages.
+
+## Creating pages
 
 In the same `gatsby-node.js` file, add the following. Here we tell Gatsby about
 our pages—what are their paths, what template component do they use, etc.

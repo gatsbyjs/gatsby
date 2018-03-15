@@ -1,5 +1,5 @@
 ---
-title: Gatsby.js Tutorial Part Two
+title: Introduction to Using CSS in Gatsby
 typora-copy-images-to: ./
 ---
 
