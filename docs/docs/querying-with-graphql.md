@@ -1,5 +1,5 @@
 ---
-title: Querying data with GraphQL
+title: Querying Data with GraphQL
 ---
 
 There are many options for loading data into React components. One of the most
