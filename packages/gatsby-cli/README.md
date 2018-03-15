@@ -37,6 +37,9 @@ Options
   -S, --https   Use HTTPS?
 ```
 
+Follow the [Local HTTPS guide](https://www.gatsbyjs.org/docs/local-https/)
+to find out how you can set up an HTTPS development server using Gatsby.
+
 ### Build
 
 At the root of a Gatsby site run `gatsby build` to do a production build of a
