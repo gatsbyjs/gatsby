@@ -206,9 +206,9 @@ Object {
         Object {
           "position": Position {
             "end": Object {
-              "column": 26,
+              "column": 29,
               "line": 1,
-              "offset": 25,
+              "offset": 28,
             },
             "indent": Array [],
             "start": Object {
@@ -224,9 +224,9 @@ Object {
       ],
       "position": Position {
         "end": Object {
-          "column": 26,
+          "column": 29,
           "line": 1,
-          "offset": 25,
+          "offset": 28,
         },
         "indent": Array [],
         "start": Object {
@@ -240,9 +240,9 @@ Object {
   ],
   "position": Object {
     "end": Object {
-      "column": 26,
+      "column": 29,
       "line": 1,
-      "offset": 25,
+      "offset": 28,
     },
     "start": Object {
       "column": 1,
