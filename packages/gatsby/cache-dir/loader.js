@@ -248,7 +248,6 @@ const queue = {
       if (!page) return cb()
       const pageResources = {
         component: syncRequires.components[page.componentChunkName],
-        json: syncRequires.json[page.jsonName],
         layout: syncRequires.layouts[page.layout],
         page,
       }
