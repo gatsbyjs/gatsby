@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-react-helmet",
-  "description": "Stub description for gatsby-plugin-react-helmet",
+  "description": "Provides drop-in support for server rendering data added with react-helmet",
   "version": "2.0.7",
   "author": "Kyle Mathews <matthews.kyle@gmail.com>",
   "bugs": {
