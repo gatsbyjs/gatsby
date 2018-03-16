@@ -179,6 +179,7 @@ Websites built with Gatsby:
 * [Investment Calculator](https://investmentcalculator.io/)
 * [Nikbelikov.ru](http://nikbelikov.ru/)
 * [Watchcards.ru](http://watchcards.ru/)
+* [John Meguerian's Portfolio](https://johnmeguerian.com) ([source](https://github.com/jmegs/portfolio))
 
 ## Docs
 
