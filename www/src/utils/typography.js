@@ -26,7 +26,7 @@ const options = {
   ],
   bodyFontFamily: [`Spectral`, `Georgia`, `Times New Roman`, `Times`, `serif`],
   monospaceFontFamily: [
-    `Space Mono`,
+    `overpass-mono`,
     `SFMono-Regular`,
     `Menlo`,
     `Monaco`,
@@ -89,6 +89,7 @@ const options = {
         fontFeatureSettings: `"clig" 0, "calt" 0`,
         paddingTop: `0.1em`,
         paddingBottom: `0.1em`,
+        fontWeight: 300,
       },
       ".gatsby-highlight": {
         //background: colors.a[0],
