@@ -39,4 +39,22 @@ module.exports = ({ markdownAST }, { classPrefix = `language-` } = {}) => {
     )}</code></pre>
       </div>`
   })
+
+  visit(markdownAST, `inlineCode`, node => {
+    let languageName = `none`
+
+    let [ language, restOfValue ] = node.value.split(`›`, 2)
+    if (language && restOfValue) {
+      languageName = language.toLowerCase()
+      node.value = restOfValue
+    }
+
+    const className = `${classPrefix}${languageName}`
+
+    node.type = `html`
+    node.value = `<code class="${className}">${highlightCode(
+      languageName,
+      node.value
+    )}</code>`
+  })
 }
