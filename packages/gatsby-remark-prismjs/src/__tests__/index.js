@@ -31,9 +31,9 @@ describe(`remark prism plugin`, () => {
   })
 
   it(`inlineCode handles language specifiers`, () => {
-    const code = `\`css›.foo { color: red }\``
+    const code = `\`css🍺  .foo { color: red }\``
     const markdownAST = remark.parse(code)
-    plugin({ markdownAST })
+    plugin({ markdownAST }, { inlineCodeMarker: `🍺  ` })
     expect(markdownAST).toMatchSnapshot()
   })
 })
