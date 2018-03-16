@@ -15,7 +15,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-fullstory`,
       options: {
-        fs_org: YOUR_ORD_ID
+        fs_org: YOUR_ORG_ID
       },
     },
   ]
