@@ -42,7 +42,6 @@
     "dotenv": "^4.0.0",
     "express": "^4.14.0",
     "express-graphql": "^0.6.6",
-    "extract-text-webpack-plugin": "^1.0.1",
     "fast-levenshtein": "~2.0.4",
     "file-loader": "^0.9.0",
     "flat": "^2.0.1",
@@ -123,6 +122,7 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "cross-env": "^5.0.5",
+    "gatsby-1-config-extract-plugin": "^1.0.1",
     "nyc": "^7.0.0",
     "rimraf": "^2.6.1"
   },
