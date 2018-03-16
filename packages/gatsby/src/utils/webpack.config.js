@@ -6,11 +6,11 @@ import path from "path"
 import webpack from "webpack"
 import dotenv from "dotenv"
 import Config from "webpack-configurator"
-import ExtractTextPlugin from "extract-text-webpack-plugin"
 import StaticSiteGeneratorPlugin from "static-site-generator-webpack-plugin"
 import { StatsWriterPlugin } from "webpack-stats-plugin"
 import FriendlyErrorsWebpackPlugin from "friendly-errors-webpack-plugin"
 import { cssModulesConfig } from "gatsby-1-config-css-modules"
+import { extractTextPlugin } from "gatsby-1-config-extract-plugin"
 
 // This isn't working right it seems.
 // import WebpackStableModuleIdAndHash from 'webpack-stable-module-id-and-hash'
@@ -24,16 +24,6 @@ const GatsbyModulePlugin = require(`gatsby-module-loader/plugin`)
 const genBabelConfig = require(`./babel-config`)
 const { withBasePath } = require(`./path`)
 const HashedChunkIdsPlugin = require(`./hashed-chunk-ids-plugin`)
-
-// Use separate extract-text-webpack-plugin instances for each stage per the docs
-const extractDevelopHtml = new ExtractTextPlugin(`build-html-styles.css`)
-const extractBuildHtml = new ExtractTextPlugin(`build-html-styles.css`, {
-  allChunks: true,
-})
-const extractBuildCss = new ExtractTextPlugin(`styles.css`, { allChunks: true })
-const extractBuildJavascript = new ExtractTextPlugin(`build-js-styles.css`, {
-  allChunks: true,
-})
 
 // Five stages or modes:
 //   1) develop: for `gatsby develop` command, hot reload and CSS injection into page
@@ -96,7 +86,9 @@ module.exports = async (
         return {
           path: directory,
           filename: `[name].js`,
-          publicPath: `http://${program.host}:${webpackPort}/`,
+          publicPath: `${program.ssl ? `https` : `http`}://${
+            program.host
+          }:${webpackPort}/`,
           devtoolModuleFilenameTemplate: info =>
             path.resolve(info.absoluteResourcePath).replace(/\\/g, `/`),
         }
@@ -142,7 +134,9 @@ module.exports = async (
         return {
           commons: [
             require.resolve(`react-hot-loader/patch`),
-            `${require.resolve(`webpack-hot-middleware/client`)}?path=http://${
+            `${require.resolve(`webpack-hot-middleware/client`)}?path=${
+              program.ssl ? `https` : `http`
+            }://${
               program.host
             }:${webpackPort}/__webpack_hmr&reload=true&overlay=false`,
             directoryPath(`.cache/app`),
@@ -209,7 +203,7 @@ module.exports = async (
             __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
             __POLYFILL__: store.getState().config.polyfill,
           }),
-          extractDevelopHtml,
+          extractTextPlugin(stage),
         ]
       case `build-css`:
         return [
@@ -219,7 +213,7 @@ module.exports = async (
             __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
             __POLYFILL__: store.getState().config.polyfill,
           }),
-          extractBuildCss,
+          extractTextPlugin(stage),
         ]
       case `build-html`:
         return [
@@ -233,7 +227,7 @@ module.exports = async (
             __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
             __POLYFILL__: store.getState().config.polyfill,
           }),
-          extractBuildHtml,
+          extractTextPlugin(stage),
         ]
       case `build-javascript`: {
         // Get array of page template component names.
@@ -310,7 +304,7 @@ module.exports = async (
             __POLYFILL__: store.getState().config.polyfill,
           }),
           // Extract CSS so it doesn't get added to JS bundles.
-          extractBuildJavascript,
+          extractTextPlugin(stage),
           // Write out mapping between chunk names and their hashed names. We use
           // this to add the needed javascript files to each HTML page.
           new StatsWriterPlugin(),
@@ -447,13 +441,13 @@ module.exports = async (
         config.loader(`css`, {
           test: /\.css$/,
           exclude: /\.module\.css$/,
-          loader: extractBuildCss.extract([`css?minimize`, `postcss`]),
+          loader: extractTextPlugin(stage).extract([`css?minimize`, `postcss`]),
         })
 
         // CSS modules
         config.loader(`cssModules`, {
           test: /\.module\.css$/,
-          loader: extractBuildCss.extract(`style`, [
+          loader: extractTextPlugin(stage).extract(`style`, [
             cssModulesConfig(stage),
             `postcss`,
           ]),
@@ -483,10 +477,10 @@ module.exports = async (
         // CSS modules
         config.loader(`cssModules`, {
           test: /\.module\.css$/,
-          loader: (stage === `build-html`
-            ? extractBuildHtml
-            : extractDevelopHtml
-          ).extract(`style`, [cssModulesConfig(stage), `postcss`]),
+          loader: extractTextPlugin(stage).extract(`style`, [
+            cssModulesConfig(stage),
+            `postcss`,
+          ]),
         })
 
         return config
@@ -503,13 +497,13 @@ module.exports = async (
           test: /\.css$/,
           exclude: /\.module\.css$/,
           // loader: `null`,
-          loader: extractBuildJavascript.extract([`css`]),
+          loader: extractTextPlugin(stage).extract([`css`]),
         })
 
         // CSS modules
         config.loader(`cssModules`, {
           test: /\.module\.css$/,
-          loader: extractBuildJavascript.extract(`style`, [
+          loader: extractTextPlugin(stage).extract(`style`, [
             cssModulesConfig(stage),
             `postcss`,
           ]),

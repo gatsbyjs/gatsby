@@ -6,6 +6,8 @@
       link: /docs/gatsby-starters/
     - title: Deploying
       link: /docs/deploy-gatsby/
+    - title: Community
+      link: /docs/community/
     - title: Awesome Gatsby
       link: /docs/awesome-gatsby/
 - title: Core Concepts
@@ -18,7 +20,7 @@
       link: /docs/plugins/
     - title: PRPL Pattern
       link: /docs/prpl-pattern/
-    - title: Querying data with GraphQL
+    - title: Querying Data with GraphQL
       link: /docs/querying-with-graphql/
 - title: Guides
   items:
@@ -28,13 +30,13 @@
       link: /docs/adding-images-fonts-files/
     - title: Browser Support
       link: /docs/browser-support/
-    - title: Building apps with Gatsby
+    - title: Building Apps with Gatsby
       link: /docs/building-apps-with-gatsby/
     - title: Caching
       link: /docs/caching/
     - title: Creating and Modifying Pages
       link: /docs/creating-and-modifying-pages/
-    - title: Create a source plugin
+    - title: Create a Source Plugin
       link: /docs/create-source-plugin/
     - title: Custom webpack config
       link: /docs/add-custom-webpack-config/
@@ -48,6 +50,8 @@
       link: /docs/environment-variables/
     - title: Gatsby on Windows
       link: /docs/gatsby-on-windows/
+    - title: Local HTTPS
+      link: /docs/local-https/
     - title: Managing Content with Netlify CMS
       link: /docs/netlify-cms/
     - title: How Gatsby Works with GitHub Pages
@@ -60,9 +64,9 @@
       link: /docs/plugin-authoring/
     - title: Proxying API Requests
       link: /docs/api-proxy/
-    - title: Using CSS-in-JS library Glamor
+    - title: Using CSS-in-JS Library Glamor
       link: /docs/glamor/
-    - title: Using CSS-in-JS library Styled Components
+    - title: Using CSS-in-JS Library Styled Components
       link: /docs/styled-components/
     - title: Adding Markdown Pages
       link: /docs/adding-markdown-pages/

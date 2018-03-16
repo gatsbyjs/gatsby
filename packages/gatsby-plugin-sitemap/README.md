@@ -21,12 +21,15 @@ plugins: [
 ```
 
 Above is the minimal configuration required to have it work. By default, the
-generated sitemap will include all of your site's pages except the dev 404 page
-(`/dev-404-page/`).
+generated sitemap will include all of your site's pages, except the ones you exclude.
 
-The [default query](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-sitemap/src/internals.js#L16)
-as well as any of the other `defaultOptions` [here](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-sitemap/src/internals.js#L15)
-can be overridden - for example:
+## Options
+
+The `defaultOptions` [here](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-sitemap/src/internals.js#L15) can be overridden.
+
+We _ALWAYS_ exclude the following pages: `/dev-404-page/`,`/404` &`/offline-plugin-app-shell-fallback/`, this cannot be changed.
+
+Example:
 
 ```javascript
 // In your gatsby-config.js
@@ -38,6 +41,7 @@ plugins: [
     resolve: `gatsby-plugin-sitemap`,
     options: {
       output: `/some-other-sitemap.xml`,
+      exclude: [`/path/to/page`, `/another/page`],
       query: `
         {
           site {

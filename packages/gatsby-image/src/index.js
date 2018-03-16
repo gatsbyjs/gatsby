@@ -223,7 +223,6 @@ class Image extends React.Component {
             outerWrapperClassName ? outerWrapperClassName : ``
           } gatsby-image-outer-wrapper`}
           style={{
-            zIndex: 0,
             // Let users set component to be absolutely positioned.
             position: style.position === `absolute` ? `initial` : `relative`,
           }}
@@ -233,7 +232,6 @@ class Image extends React.Component {
             style={{
               position: `relative`,
               overflow: `hidden`,
-              zIndex: 1,
               ...style,
             }}
             ref={this.handleRef}
@@ -316,7 +314,6 @@ class Image extends React.Component {
         position: `relative`,
         overflow: `hidden`,
         display: `inline-block`,
-        zIndex: 1,
         width: image.width,
         height: image.height,
         ...style,
@@ -339,7 +336,6 @@ class Image extends React.Component {
             outerWrapperClassName ? outerWrapperClassName : ``
           } gatsby-image-outer-wrapper`}
           style={{
-            zIndex: 0,
             // Let users set component to be absolutely positioned.
             position: style.position === `absolute` ? `initial` : `relative`,
           }}

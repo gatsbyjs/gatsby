@@ -98,6 +98,11 @@ function buildLocalCommands(cli, isLocalSite) {
           alias: `open`,
           type: `boolean`,
           describe: `Open the site in your browser for you.`,
+        })
+        .option(`S`, {
+          alias: `https`,
+          type: `boolean`,
+          describe: `Use HTTPS. See https://www.gatsbyjs.org/docs/local-https/ for an initial setup guide`,
         }),
     handler: handlerP(
       getCommandHandler(`develop`, (args, cmd) => {

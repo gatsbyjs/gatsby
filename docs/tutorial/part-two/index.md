@@ -1,5 +1,5 @@
 ---
-title: Introduction to using CSS in Gatsby
+title: Introduction to Using CSS in Gatsby
 typora-copy-images-to: ./
 ---
 
@@ -199,7 +199,7 @@ Let's make a quick improvement. Many sites have a single column of text centered
 in the middle of the page. To create this, add the following styles to the
 `<div>` in `src/pages/index.js`.
 
-```jsx{4,23}
+```jsx{4,25}
 import React from "react";
 
 export default () =>
