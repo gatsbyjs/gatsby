@@ -238,7 +238,6 @@ class SearchForm extends Component {
     super()
     this.state = { enabled: true, focussed: false }
     this.autocompleteSelected = this.autocompleteSelected.bind(this)
-    this.focusSearchInput = this.focusSearchInput.bind(this)
   }
 
   /**
@@ -257,16 +256,6 @@ class SearchForm extends Component {
     navigateTo(`${a.pathname}${a.hash}`)
   }
 
-  focusSearchInput(e) {
-    if (e.key !== `s`) return
-
-    // ignore this shortcut whenever an <input> has focus
-    if (document.activeElement instanceof window.HTMLInputElement) return // eslint-disable-line no-undef
-
-    e.preventDefault()
-    this.searchInput.focus()
-  }
-
   componentDidMount() {
     if (
       typeof window === `undefined` || // eslint-disable-line no-undef
@@ -276,9 +265,6 @@ class SearchForm extends Component {
       this.setState({ enabled: false })
       return
     }
-
-    // eslint-disable-next-line no-undef
-    window.addEventListener(`keydown`, this.focusSearchInput)
 
     // eslint-disable-next-line no-undef
     window.addEventListener(
@@ -293,12 +279,13 @@ class SearchForm extends Component {
       indexName: `gatsbyjs`,
       inputSelector: `#doc-search`,
       debug: false,
+      autocompleteOptions: {
+        openOnFocus: true,
+        autoselect: true,
+        hint: false,
+        keyboardShortcuts: ['s']
+      },
     })
-  }
-
-  componentWillUnmount() {
-    // eslint-disable-next-line no-undef
-    window.removeEventListener(`keydown`, this.focusSearchInput)
   }
 
   render() {

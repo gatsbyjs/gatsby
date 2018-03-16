@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-typescript",
   "description": "Adds TypeScript support for Gatsby layouts and pages.",
-  "version": "1.4.17",
+  "version": "1.4.18",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -21,6 +21,7 @@
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typescript#readme",
   "keywords": [
     "gatsby",
+    "gatsby-plugin",
     "typescript"
   ],
   "license": "MIT",

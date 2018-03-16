@@ -1,9 +1,13 @@
 ---
-title: Gatsby.js Tutorial Part Three
+title: Building nested layouts in Gatsby
 typora-copy-images-to: ./
 ---
 
-Gatsby lets you create "layout components". Layout components are
+Welcome to part three!
+
+## What's in this tutorial?
+
+In this part, you'll learn about how Gatsby lets you create "layout components". Layout components are
 sections of your site that you want to share across multiple pages. For example,
 Gatsby sites will commonly have a layout component with a shared header and
 footer. Other common things to add to layouts are a sidebar and navigation menu.
@@ -13,7 +17,9 @@ the header at the top are part of gatsbyjs.org's layout component.
 
 Let's dive in and explore Gatsby layouts.
 
-First, create a new site for this part of the tutorial (and, as we mentioned in Part Two, at this point it's probably a good idea to close the terminal window(s) and project files from previous parts of the tutorial, to keep things clean on your desktop). We'll use the "hello world" starter again:
+## Install a starter
+
+First, create a new site for this part of the tutorial (and, as we mentioned in Part Two, at this point it's probably a good idea to close the terminal window(s) and project files from previous parts of the tutorial, to keep things clean on your desktop). We'll use a "hello world" starter again:
 
 ```shell
 gatsby new tutorial-part-three https://github.com/gatsbyjs/gatsby-starter-hello-world
@@ -187,8 +193,10 @@ export default ({ children }) =>
 
 And there we have it! A three page site with a basic global navigation.
 
-With your new "layout component" powers, you can add headers, footers,
-global navigation, sidebars, etc. to your Gatsby sites.
+_Challenge:_ With your new "layout component" powers, trying adding headers, footers,
+global navigation, sidebars, etc. to your Gatsby sites!
+
+## What's coming next?
 
 Continue on to
 [part four of the tutorial where we'll start learning about Gatsby's data layer and programmatic pages!](/tutorial/part-four/)

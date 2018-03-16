@@ -1,7 +1,7 @@
 {
   "name": "gatsby-source-wordpress-com",
   "description": "Stub description for gatsby-source-wordpress-com",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "author": "Kyle Mathews <matthews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -15,7 +15,8 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress-com#readme",
   "keywords": [
-    "gatsby"
+    "gatsby",
+    "gatsby-plugin"
   ],
   "license": "MIT",
   "main": "index.js",

@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-sitemap",
-  "description": "Stub description for gatsby-plugin-sitemap",
-  "version": "1.2.14",
+  "description": "Gatsby plugin that automatically creates a sitemap for your site",
+  "version": "1.2.18",
   "author": "Nicholas Young &lt;nicholas@nicholaswyoung.com&gt;",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -16,7 +16,8 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sitemap#readme",
   "keywords": [
-    "gatsby"
+    "gatsby",
+    "gatsby-plugin"
   ],
   "license": "MIT",
   "main": "index.js",

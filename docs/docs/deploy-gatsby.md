@@ -48,10 +48,10 @@ choose to use the default setup (without a custom domain), or if you create a
 project site, you will need to setup your site with
 [path prefixing](/docs/path-prefix/).
 
-On Github, you get one site per GitHub account and organization, and unlimited
+On GitHub, you get one site per GitHub account and organization, and unlimited
 project sites. So it is most likely you will be creating a project site. If you
-do not have an existing repository on Github that you plan to use, take the time
-now to create a new repository on Github.
+do not have an existing repository on GitHub that you plan to use, take the time
+now to create a new repository on GitHub.
 
 ### Use the NPM package `gh-pages` for deploying
 
@@ -114,9 +114,9 @@ custom domain url inside, like so:
 your-custom-domain.com
 ```
 
-## Gitlab Pages
+## GitLab Pages
 
-Gitlab Pages are similar to GitHub pages, perhaps even easier to setup. It also
+GitLab Pages are similar to GitHub Pages, perhaps even easier to setup. It also
 supports custom domain names and SSL certificates. The process of setting GitLab
 pages up is made a lot easier with GitLab's included continuous integration
 platform.
@@ -131,7 +131,7 @@ git add .
 git push -u origin master
 ```
 
-You can deploy sites on Gitlab Pages with or without a custom domain. If you choose to use the default setup (without a custom domain), or if you create a project site, you will need to setup your site with path prefixing. If adding a custom domain, you can skip the Path Prefix step, and remove `--prefix-paths` from the gitlab-ci.yml file.
+You can deploy sites on GitLab Pages with or without a custom domain. If you choose to use the default setup (without a custom domain), or if you create a project site, you will need to setup your site with path prefixing. If adding a custom domain, you can skip the Path Prefix step, and remove `--prefix-paths` from the gitlab-ci.yml file.
 
 ### Path Prefix
 
@@ -149,7 +149,7 @@ module.exports = {
 }
 ```
 
-### Build and deploy with Gitlab CI
+### Build and Deploy with GitLab CI
 
 To use GitLab's continuous integration (CI), you need to add a `.gitlab-ci.yml`
 configuration file. This can be added into your project folder, or once you have
@@ -248,7 +248,12 @@ Finally, add a `static.json` file in the root of your project to define the dire
 
 ```
 {
-  "root": "public/"
+  "root": "public/",
+  "headers": {
+    "/**.js": {
+      "Cache-Control": "public, max-age=0, must-revalidate"
+    }
+  }
 }
 ```
 

@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-styled-jsx",
   "description": "Adds SSR support for styled-jsx",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "author": "Tim Suchanek <tim.suchanek@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -15,6 +15,7 @@
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-styled-jsx#readme",
   "keywords": [
     "gatsby",
+    "gatsby-plugin",
     "styled-jsx"
   ],
   "license": "MIT",

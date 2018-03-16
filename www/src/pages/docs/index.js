@@ -15,7 +15,7 @@ class IndexRoute extends React.Component {
           <title>Docs</title>
         </Helmet>
         <h1 id="get-started" css={{ marginTop: 0 }}>
-          Get started
+          Get Started
         </h1>
         <p>Gatsby is a blazing-fast static site generator for React.</p>
         <p>
@@ -56,8 +56,9 @@ class IndexRoute extends React.Component {
         </ol>
         <p>
           To see detailed documentation for the CLI commands, run in the
-          terminal `gatsby --help` and for specific commands `gatsby
-          COMMAND_NAME --help` e.g. `gatsby develop --help`.
+          terminal <code>gatsby --help</code> and for specific commands{` `}
+          <code>gatsby COMMAND_NAME --help</code> e.g.{` `}
+          <code>gatsby develop --help</code>.
         </p>
         <h2 id="using-other-starters">Using other starters</h2>
         <p>

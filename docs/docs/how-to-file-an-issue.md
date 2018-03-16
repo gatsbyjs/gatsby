@@ -1,5 +1,5 @@
 ---
-title: How to file an issue
+title: How to File an Issue
 ---
 
 The [issue tracker](https://github.com/gatsbyjs/gatsby/issues) is the preferred channel for bug reports, features requests and submitting pull requests.

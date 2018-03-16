@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-react-helmet",
-  "description": "Stub description for gatsby-plugin-react-helmet",
-  "version": "2.0.6",
+  "description": "Provides drop-in support for server rendering data added with react-helmet",
+  "version": "2.0.8",
   "author": "Kyle Mathews <matthews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -15,7 +15,8 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-react-helmet#readme",
   "keywords": [
-    "gatsby"
+    "gatsby",
+    "gatsby-plugin"
   ],
   "license": "MIT",
   "main": "index.js",

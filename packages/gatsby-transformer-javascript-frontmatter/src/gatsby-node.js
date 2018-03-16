@@ -10,12 +10,10 @@ async function onCreateNode({
   loadNodeContent,
 }) {
   const { createNode, createParentChildLink } = boundActionCreators
+  const fileExtsToProcess = [`js`, `jsx`, `ts`, `tsx`]
 
-  // This only processes javascript & jsx files.
-  if (
-    node.internal.mediaType !== `application/javascript` &&
-    node.internal.mediaType !== `text/jsx`
-  ) {
+  // This only processes javascript and typescript files.
+  if (!_.includes(fileExtsToProcess, node.extension)) {
     return
   }
 

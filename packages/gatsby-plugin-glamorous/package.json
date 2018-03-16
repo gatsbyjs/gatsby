@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-glamorous",
   "description": "Stub description for gatsby-plugin-glamorous",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "author": "Kyle Mathews <matthews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -15,7 +15,8 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-glamorous#readme",
   "keywords": [
-    "gatsby"
+    "gatsby",
+    "gatsby-plugin"
   ],
   "license": "MIT",
   "main": "index.js",

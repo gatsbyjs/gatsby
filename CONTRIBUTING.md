@@ -1,5 +1,5 @@
 ---
-title: How to contribute
+title: How to Contribute
 ---
 
 ## Contributing
@@ -61,8 +61,8 @@ The usual contributing steps are:
 Gatsby, unsurprisingly, uses Gatsby for its documentation website.
 
 If you want to add/modify any Gatsby documentation, go to the
-[docs folder on Github](https://github.com/gatsbyjs/gatsby/tree/master/docs) and
-use the file editor to edit and then preview your changes. Github then allows
+[docs folder on GitHub](https://github.com/gatsbyjs/gatsby/tree/master/docs) and
+use the file editor to edit and then preview your changes. GitHub then allows
 you to commit the change and raise a PR right in the UI. This is the _easiest_
 way you can contribute to the project!
 

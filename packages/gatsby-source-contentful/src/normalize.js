@@ -149,7 +149,7 @@ exports.buildForeignReferenceMap = ({
   return foreignReferenceMap
 }
 
-function createTextNode(node, key, text, createNode) {
+function prepareTextNode(node, key, text) {
   const str = _.isString(text) ? text : ` `
   const textNode = {
     id: `${node.id}${key}TextNode`,
@@ -165,13 +165,11 @@ function createTextNode(node, key, text, createNode) {
   }
 
   node.children = node.children.concat([textNode.id])
-  createNode(textNode)
 
-  return textNode.id
+  return textNode
 }
-exports.createTextNode = createTextNode
 
-function createJSONNode(node, key, content, createNode) {
+function prepareJSONNode(node, key, content) {
   const str = JSON.stringify(content)
   const JSONNode = {
     ...content,
@@ -187,11 +185,9 @@ function createJSONNode(node, key, content, createNode) {
   }
 
   node.children = node.children.concat([JSONNode.id])
-  createNode(JSONNode)
 
-  return JSONNode.id
+  return JSONNode
 }
-exports.createJSONNode = createJSONNode
 
 exports.createContentTypeNodes = ({
   contentTypeItem,
@@ -221,6 +217,8 @@ exports.createContentTypeNodes = ({
       }
     })
 
+    const childrenNodes = []
+
     // First create nodes for each of the entries of that content type
     const entryNodes = entries.map(entryItem => {
       // Get localized fields.
@@ -244,11 +242,21 @@ exports.createContentTypeNodes = ({
               entryItemFieldValue[0].sys.type &&
               entryItemFieldValue[0].sys.id
             ) {
-              entryItemFields[
-                `${entryItemFieldKey}___NODE`
-              ] = entryItemFieldValue
-                .filter(v => resolvable.has(v.sys.id))
-                .map(v => mId(v.sys.id))
+              // Check if there are any values in entryItemFieldValue to prevent
+              // creating an empty node field in case when original key field value
+              // is empty due to links to missing entities
+              const resolvableEntryItemFieldValue = entryItemFieldValue
+                .filter(function(v) {
+                  return resolvable.has(v.sys.id)
+                })
+                .map(function(v) {
+                  return mId(v.sys.id)
+                })
+              if (resolvableEntryItemFieldValue.length !== 0) {
+                entryItemFields[
+                  `${entryItemFieldKey}___NODE`
+                ] = resolvableEntryItemFieldValue
+              }
 
               delete entryItemFields[entryItemFieldKey]
             }
@@ -324,21 +332,25 @@ exports.createContentTypeNodes = ({
               : f.id) === entryItemFieldKey
         ).type
         if (fieldType === `Text`) {
-          entryItemFields[`${entryItemFieldKey}___NODE`] = createTextNode(
+          const textNode = prepareTextNode(
             entryNode,
             entryItemFieldKey,
-            entryItemFields[entryItemFieldKey],
-            createNode
+            entryItemFields[entryItemFieldKey]
           )
+
+          childrenNodes.push(textNode)
+          entryItemFields[`${entryItemFieldKey}___NODE`] = textNode.id
 
           delete entryItemFields[entryItemFieldKey]
         } else if (fieldType === `Object`) {
-          entryItemFields[`${entryItemFieldKey}___NODE`] = createJSONNode(
+          const jsonNode = prepareJSONNode(
             entryNode,
             entryItemFieldKey,
-            entryItemFields[entryItemFieldKey],
-            createNode
+            entryItemFields[entryItemFieldKey]
           )
+
+          childrenNodes.push(jsonNode)
+          entryItemFields[`${entryItemFieldKey}___NODE`] = jsonNode.id
 
           delete entryItemFields[entryItemFieldKey]
         }
@@ -374,6 +386,9 @@ exports.createContentTypeNodes = ({
 
     createNode(contentTypeNode)
     entryNodes.forEach(entryNode => {
+      createNode(entryNode)
+    })
+    childrenNodes.forEach(entryNode => {
       createNode(entryNode)
     })
   })

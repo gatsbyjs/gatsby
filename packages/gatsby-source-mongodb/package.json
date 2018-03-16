@@ -1,7 +1,7 @@
 {
   "name": "gatsby-source-mongodb",
-  "description": "Stub description for gatsby-source-mongodb",
-  "version": "1.5.16",
+  "description": "Source plugin for pulling data into Gatsby from MongoDB collections",
+  "version": "1.5.19",
   "author": "jhermans85@hotmail.com",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -17,7 +17,8 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-mongodb#readme",
   "keywords": [
-    "gatsby"
+    "gatsby",
+    "gatsby-plugin"
   ],
   "license": "MIT",
   "main": "index.js",

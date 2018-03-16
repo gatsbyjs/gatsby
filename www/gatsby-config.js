@@ -9,6 +9,12 @@ module.exports = {
   },
   plugins: [
     {
+      resolve: `gatsby-source-npm-package-search`,
+      options: {
+        keywords: [`gatsby-plugin`, `gatsby-component`],
+      },
+    },
+    {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `docs`,
@@ -110,6 +116,12 @@ module.exports = {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
         trackingId: `UA-93349937-1`,
+      },
+    },
+    {
+      resolve: `gatsby-plugin-fullstory`,
+      options: {
+        fs_org: `B2TRP`,
       },
     },
     `gatsby-plugin-sitemap`,

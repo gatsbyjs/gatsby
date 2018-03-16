@@ -168,6 +168,18 @@ Websites built with Gatsby:
 * [Orbit FM Podcasts](https://www.orbit.fm/) ([source](https://github.com/agarrharr/orbit.fm))
 * [Michele Mazzucco's Portfolio](https://www.michelemazzucco.it) ([source](https://github.com/michelemazzucco/michelemazzucco.it))
 * [Rung](https://rung.com.br)
+* [Óbuda University - EE Faculty Student Union Website](https://www.kandohok.hu)
+* [Neostack](https://neostack.com)
+* [Prosecco Springs](https://www.proseccosprings.com/)
+* [Fröhlich ∧ Frei](https://www.froehlichundfrei.de/)
+* [Alec Lomas's Portfolio & Blog](https://lowmess.com) ([source](https://github.com/lowmess/lowmess))
+* [Alex Pate - Blog/Portfolio](https://alexpate.uk) ([source](https://github.com/alexpate/alexpate.uk))
+* [Matthias Jordan - Portfolio](https://iammatthias.com) ([source](https://github.com/iammatthias/net))
+* [Daniel Hollcraft](https://danielhollcraft.com) ([source](https://github.com/danielbh/danielhollcraft.com))
+* [Investment Calculator](https://investmentcalculator.io/)
+* [Nikbelikov.ru](http://nikbelikov.ru/)
+* [Watchcards.ru](http://watchcards.ru/)
+* [John Meguerian's Portfolio](https://johnmeguerian.com) ([source](https://github.com/jmegs/portfolio))
 
 ## Docs
 
