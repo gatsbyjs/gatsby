@@ -405,10 +405,6 @@ module.exports = async (program: any) => {
 
     isFirstCompile = false
 
-    // const websocket = new Promise(resolve => {
-    //   resolve(io)
-    // })
-
     // If errors exist, only show errors.
     // if (messages.errors.length) {
     // // Only keep the first error. Others are often indicative
