@@ -60,9 +60,8 @@ module.exports = async (pageOrLayout, component) => {
   const resultHash = md5(resultJSON)
   const resultPath = joinPath(
     program.directory,
-    `public`,
-    `static`,
-    `d`,
+    `.cache`,
+    `json`,
     pageOrLayout.jsonName
   )
 
