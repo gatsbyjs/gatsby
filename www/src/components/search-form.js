@@ -293,6 +293,11 @@ class SearchForm extends Component {
       indexName: `gatsbyjs`,
       inputSelector: `#doc-search`,
       debug: false,
+      autocompleteOptions: {
+        openOnFocus: true,
+        autoselect: true,
+        hint: false,
+      },
     })
   }
 
