@@ -1,5 +1,4 @@
 # gatsby-plugin-google-analytics
-
 Easily add Google Analytics to your Gatsby site.
 
 ## Install
@@ -10,20 +9,22 @@ Easily add Google Analytics to your Gatsby site.
 
 ```javascript
 // In your gatsby-config.js
-plugins: [
-  {
-    resolve: `gatsby-plugin-google-analytics`,
-    options: {
-      trackingId: "YOUR_GOOGLE_ANALYTICS_TRACKING_ID",
-      // Puts tracking script in the head instead of the body
-      head: false,
-      // Setting this parameter is optional
-      anonymize: true,
-      // Setting this parameter is also optional
-      respectDNT: true,
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-google-analytics`,
+      options: {
+        trackingId: "YOUR_GOOGLE_ANALYTICS_TRACKING_ID",
+        // Puts tracking script in the head instead of the body
+        head: false,
+        // Setting this parameter is optional
+        anonymize: true,
+        // Setting this parameter is also optional
+        respectDNT: true,
+      },
     },
-  },
-];
+  ]
+}
 ```
 
 ## The "anonymize" option
