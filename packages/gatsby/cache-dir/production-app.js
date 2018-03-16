@@ -173,12 +173,12 @@ apiRunnerAsync(`onClientEntry`).then(() => {
 
                   if (loader.getPage(props.location.pathname)) {
                     return createElement(ComponentRenderer, {
-                      page: true,
+                      isPage: true,
                       ...props,
                     })
                   } else {
                     return createElement(ComponentRenderer, {
-                      page: true,
+                      isPage: true,
                       location: { pathname: `/404.html` },
                     })
                   }
