@@ -1,6 +1,6 @@
 {
   "name": "gatsby-transformer-xml",
-  "description": "Stub description for gatsby-transformer-xml",
+  "description": "Gatsby plugin for parsing XML files. It supports also attributes",
   "version": "1.0.14",
   "author": "Kyle Mathews <matthews.kyle@gmail.com>",
   "bugs": {
