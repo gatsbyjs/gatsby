@@ -101,17 +101,19 @@ const preferDefault = m => m && m.default || m
     )
     .join(`,\n`)}
 }\n\n`
-  asyncRequires += `exports.json = {\n${json
-    .map(
-      j =>
-        `  "${
-          j.jsonName
-        }": require("gatsby-module-loader?name=${generatePathChunkName(
-          j.path
-        )}!${joinPath(program.directory, `/.cache/json/`, j.jsonName)}")`
+
+  // TODO:
+  // - figure out performant way of getting/generating hash for jsons
+  json.forEach(j => {
+    fs.copyFileSync(
+      program.directory + `/.cache/json/` + j.jsonName,
+      program.directory +
+        `/public/data/` +
+        generatePathChunkName(j.path) +
+        `.json`
     )
-    .join(`,\n`)}
-}\n\n`
+  })
+
   asyncRequires += `exports.layouts = {\n${pageLayouts
     .map(
       l =>
