@@ -1,7 +1,7 @@
 {
   "name": "gatsby",
   "description": "React.js Static Site Generator",
-  "version": "1.9.233",
+  "version": "1.9.234",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "./dist/bin/gatsby.js"
@@ -122,7 +122,7 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "cross-env": "^5.0.5",
-    "gatsby-1-config-extract-plugin": "^1.0.1",
+    "gatsby-1-config-extract-plugin": "^1.0.2",
     "nyc": "^7.0.0",
     "rimraf": "^2.6.1"
   },
