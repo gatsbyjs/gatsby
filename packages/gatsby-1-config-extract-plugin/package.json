@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "babel-runtime": "^6.26.0",
-    "extract-text-webpack-plugin": "^3.0.2"
+    "extract-text-webpack-plugin": "^1.0.1"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
