@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-twitter",
   "description": "Loads the Twitter JavaScript for embedding tweets. Let's you add tweets to markdown and in other places.",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
