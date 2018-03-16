@@ -5,6 +5,7 @@ import {
   Stats,
   RefinementList,
   InfiniteHits,
+  Toggle,
 } from "react-instantsearch/dom"
 import { colors } from "../utils/presets"
 import Link from "gatsby-link"
@@ -199,6 +200,7 @@ class Search extends Component {
             attributeName="keywords"
             defaultRefinement={[`gatsby-component`, `gatsby-plugin`]}
           />
+          <Toggle attributeName="deprecated" defaultRefinement={false} />
         </div>
 
         <div
