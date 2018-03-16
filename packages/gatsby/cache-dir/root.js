@@ -170,7 +170,7 @@ const Root = () =>
               const pageResources = loader.getResourcesForPathname(pathname)
               const isPage = !!(pageResources && pageResources.component)
               return createElement(JSONStore, {
-                page: isPage,
+                isPage,
                 pages,
                 ...props,
                 pageResources,
