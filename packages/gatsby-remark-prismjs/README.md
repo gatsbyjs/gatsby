@@ -188,7 +188,7 @@ Our approach follows the [Pygments-based][2] implementation of the [React
 Tutorial/Documentation][4] for line highlights:
 
 * It uses a wrapper element `<div class="gatsby-highlight">` around the
-  PrismJS-formatted `<pre><code>`-blocks.`.
+  PrismJS-formatted `<pre><code>`-blocks.
 * Highlighted lines are wrapped in `<span class="gatsby-highlight-code-line">`.
 * We insert a linebreak before the closing tag of `.gatsby-highlight-code-line`
   so it ends up at the start of the follwing line.
