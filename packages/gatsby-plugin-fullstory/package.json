@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-fullstory",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Plugin to add the tracking code for Fullstory.com",
   "main": "index.js",
   "scripts": {
@@ -9,7 +9,8 @@
     "prepublish": "cross-env NODE_ENV=production npm run build"
   },
   "keywords": [
-    "gatsby", "gatsby-plugin"
+    "gatsby",
+    "gatsby-plugin"
   ],
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
