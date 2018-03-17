@@ -9,14 +9,14 @@
   "dependencies": {
     "babel-runtime": "^6.26.0",
     "gatsby-1-config-css-modules": "^1.0.10",
+    "gatsby-1-config-extract-plugin": "^1.0.2",
     "node-sass": "^4.5.2",
     "sass-loader": "^4.1.1",
     "webpack": "^1.13.3"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
-    "cross-env": "^5.0.5",
-    "gatsby-1-config-extract-plugin": "^1.0.2"
+    "cross-env": "^5.0.5"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sass#readme",
   "keywords": [
