@@ -116,6 +116,7 @@ Similar to part one, open a new terminal window and run the following to create 
 
 ```shell
 gatsby new tutorial-part-two https://github.com/gatsbyjs/gatsby-starter-hello-world
+cd tutorial-part-two
 ```
 
 This creates a new site with the following structure.
