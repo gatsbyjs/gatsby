@@ -8,6 +8,7 @@ import pages from "./pages.json"
 import redirects from "./redirects.json"
 import ComponentRenderer from "./component-renderer"
 import loader from "./loader"
+import { hot } from "react-hot-loader"
 
 import * as ErrorOverlay from "react-error-overlay"
 
@@ -198,4 +199,4 @@ const Root = () =>
 // Let site, plugins wrap the site e.g. for Redux.
 const WrappedRoot = apiRunner(`wrapRootComponent`, { Root }, Root)[0]
 
-export default WrappedRoot
+export default hot(module)(WrappedRoot)

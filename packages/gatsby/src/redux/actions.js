@@ -415,7 +415,9 @@ actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
   console.log(
     `The "deleteNodes" is now deprecated and will be removed in Gatsby v3. Please use "deleteNode" instead`
   )
-  console.log(`"deleteNodes" was called by ${plugin.name}`)
+  if (plugin && plugin.name) {
+    console.log(`"deleteNodes" was called by ${plugin.name}`)
+  }
 
   return {
     type: `DELETE_NODES`,
