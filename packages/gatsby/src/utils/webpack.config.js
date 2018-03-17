@@ -5,7 +5,7 @@ const fs = require(`fs`)
 const path = require(`path`)
 const dotenv = require(`dotenv`)
 const StaticSiteGeneratorPlugin = require(`static-site-generator-webpack-plugin`)
-// const FriendlyErrorsWebpackPlugin = require(`friendly-errors-webpack-plugin`)
+const FriendlyErrorsWebpackPlugin = require(`friendly-errors-webpack-plugin`)
 const WatchMissingNodeModulesPlugin = require(`react-dev-utils/WatchMissingNodeModulesPlugin`)
 const { store } = require(`../redux`)
 const { actions } = require(`../redux/actions`)
@@ -86,8 +86,8 @@ module.exports = async (
             path.resolve(info.absoluteResourcePath).replace(/\\/g, `/`),
         }
       case `build-css`:
-        // Webpack will always generate a resultant javascript file.
-        // But we don't want it for this step. Deleted by build-css.js.
+        // We don't care about the JS file that is generated for this step
+        // so well specify a name that we can then delete in build-css.js
         return {
           path: directoryPath(`public`),
           filename: `bundle-for-css.js`,
@@ -169,6 +169,7 @@ module.exports = async (
         __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
       }),
 
+      // TODO add mini-extract-css
       // plugins.extractText({
       // filename: stage === `build-css` ? `styles.css` : `${stage}.css`,
       // }),
@@ -186,19 +187,19 @@ module.exports = async (
           // See https://github.com/facebookincubator/create-react-app/issues/186
           new WatchMissingNodeModulesPlugin(directoryPath(`node_modules`)),
 
-          // new FriendlyErrorsWebpackPlugin({
-          // clearConsole: false,
-          // compilationSuccessInfo: {
-          // messages: [
-          // `You can now view your site in the browser running at http://${
-          // program.host
-          // }:${program.port}`,
-          // `Your graphql debugger is running at http://${program.host}:${
-          // program.port
-          // }/___graphql`,
-          // ],
-          // },
-          // }),
+          new FriendlyErrorsWebpackPlugin({
+            clearConsole: false,
+            compilationSuccessInfo: {
+              messages: [
+                `You can now view your site in the browser running at http://${
+                  program.host
+                }:${program.port}`,
+                `Your graphql debugger is running at http://${program.host}:${
+                  program.port
+                }/___graphql`,
+              ],
+            },
+          }),
         ])
         break
 
@@ -218,8 +219,8 @@ module.exports = async (
               },
             },
           }),
-          // Write out stats object mapping chunks to
-          // all their combined chunks.
+          // Write out stats object mapping named dynamic imports (aka page
+          // components) to all their async chunks.
           {
             apply: function(compiler) {
               compiler.plugin(`done`, function(stats, done) {
@@ -258,7 +259,7 @@ module.exports = async (
   function getDevtool() {
     switch (stage) {
       case `develop`:
-        return `cheap-module-source-map`
+        return `eval`
       // use a normal `source-map` for the html phases since
       // it gives better line and column numbers
       case `develop-html`:
@@ -303,9 +304,9 @@ module.exports = async (
         break
 
       case `build-javascript`:
-        // we don't deal with css at all when building the javascript.  but
-        // still need to process the css so offline-plugin knows about the
-        // various assets referenced in your css.
+        // We don't deal with CSS at all when building JavaScript but we still
+        // need to process the CSS so offline-plugin knows about the various
+        // assets referenced in your CSS.
         //
         // It's also necessary to process CSS Modules so your JS knows the
         // classNames to use.
@@ -313,9 +314,9 @@ module.exports = async (
           rules.css(),
           rules.cssModules(),
 
-          // Remove manually unused React Router modules.
-          // Try removing these whenever they make a new
-          // release tree shaking fixes.
+          // Remove manually unused React Router modules. Try removing these
+          // rules whenever they get around to making a new release with their
+          // tree shaking fixes.
           { test: /HashHistory/, use: `null-loader` },
           { test: /MemoryHistory/, use: `null-loader` },
           { test: /StaticRouter/, use: `null-loader` },
@@ -387,7 +388,7 @@ module.exports = async (
     },
     mode:
       stage === `build-html` || stage === `develop-html`
-        ? `development`
+        ? `development` // So we don't uglify the html bundle
         : `production`,
 
     resolveLoader: getResolveLoader(),
@@ -404,12 +405,7 @@ module.exports = async (
         name: `webpack-runtime`,
       },
       splitChunks: {
-        minSize: 0,
         name: false,
-        // chunks: `all`,
-        // cacheGroups: {
-        // "vendor-1": /modules[\\/][abc]/,
-        // },
       },
     }
   }
