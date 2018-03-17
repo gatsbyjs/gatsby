@@ -2,9 +2,9 @@
 const os = require(`os`)
 
 const autoprefixer = require(`autoprefixer`)
-const ExtractTextPlugin = require(`extract-text-webpack-plugin`)
 const flexbugs = require(`postcss-flexbugs-fixes`)
 const UglifyPlugin = require(`uglifyjs-webpack-plugin`)
+const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 
 const builtinPlugins = require(`./webpack-plugins`)
 const { createBabelConfig } = require(`./babel-config`)
@@ -321,13 +321,11 @@ module.exports = async ({
     const css = ({ browsers, ...options } = {}) => {
       return {
         test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: loaders.style(),
-          use: [
-            loaders.css({ ...options, importLoaders: 1 }),
-            loaders.postcss({ browsers }),
-          ],
-        }),
+        use: [
+          MiniCssExtractPlugin.loader,
+          loaders.css({ ...options, importLoaders: 1 }),
+          loaders.postcss({ browsers }),
+        ],
       }
     }
 
@@ -355,10 +353,7 @@ module.exports = async ({
     const postcss = options => {
       return {
         test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: loaders.style(),
-          use: [loaders.css({ importLoaders: 1 }), loaders.postcss(options)],
-        }),
+        use: [loaders.css({ importLoaders: 1 }), loaders.postcss(options)],
       }
     }
 
@@ -400,16 +395,14 @@ module.exports = async ({
    * includes some reasonable defaults
    */
   plugins.extractText = options =>
-    new ExtractTextPlugin({
-      filename: `[name]-[contenthash].css`,
-      allChunks: true,
-      disable: !PRODUCTION,
-      // Useful when using css modules
+    new MiniCssExtractPlugin({
+      filename: "[name][hash].css",
+      chunkFilename: "[id][hash].css",
       ignoreOrder: true,
       ...options,
     })
 
-  plugins.extractText.extract = (...args) => ExtractTextPlugin.extract(...args)
+  // plugins.extractText.extract = (...args) => ExtractTextPlugin.extract(...args)
 
   plugins.moment = () => plugins.ignore(/^\.\/locale$/, /moment$/)
 

@@ -1,6 +1,5 @@
 require(`v8-compile-cache`)
 
-const { uniq } = require(`lodash`)
 const fs = require(`fs`)
 const path = require(`path`)
 const dotenv = require(`dotenv`)
@@ -170,9 +169,9 @@ module.exports = async (
       }),
 
       // TODO add mini-extract-css
-      // plugins.extractText({
-      // filename: stage === `build-css` ? `styles.css` : `${stage}.css`,
-      // }),
+      plugins.extractText({
+        // filename: stage === `build-css` ? `styles.css` : undefined,
+      }),
     ]
 
     switch (stage) {

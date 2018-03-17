@@ -74,6 +74,7 @@
     "md5": "^2.2.1",
     "md5-file": "^3.1.1",
     "mime": "^2.2.0",
+    "mini-css-extract-plugin": "^0.2.0",
     "mitt": "^1.1.2",
     "mkdirp": "^0.5.1",
     "moment": "^2.16.0",
