@@ -4,7 +4,8 @@ title: Using the crossorigin Attribute
 
 Many times we need to include html tags which require the `crossorigin`
 attribute which will output to a standard html page's source but in GatsbyJS we
-need to use `crossOrigin`. This is because GatsbyJS uses
+need to use `crossOrigin`; otherwise, `crossorigin` will not output to our page's 
+source when GatsbyJS compiles. This is because GatsbyJS uses
 [webpack - output.crossOriginLoading](https://webpack.js.org/configuration/output/#output-crossoriginloading).
 For more information on `crossOrigin` in webpack take look at
 [webpack - output.crossOriginLoading](https://webpack.js.org/configuration/output/#output-crossoriginloading)
