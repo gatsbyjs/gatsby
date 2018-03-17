@@ -1,12 +1,10 @@
 import React from "react"
+import fs from "fs"
 
+const stylesPath = `${process.cwd()}/public/styles.css`
 let stylesStr
-if (process.env.NODE_ENV === `production`) {
-  try {
-    stylesStr = require(`!raw-loader!../public/styles.css`)
-  } catch (e) {
-    console.log(e)
-  }
+if (process.env.NODE_ENV === `production` && fs.existsSync(stylesPath)) {
+  stylesStr = fs.readFileSync(stylesPath)
 }
 
 export default class HTML extends React.Component {

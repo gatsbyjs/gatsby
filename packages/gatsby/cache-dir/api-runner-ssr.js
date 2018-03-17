@@ -10,10 +10,10 @@
 //   },
 // ]
 
-import apis from "./api-ssr-docs"
+const apis = require(`./api-ssr-docs`)
 
 // Run the specified API in any plugins that have implemented it
-export default (api, args, defaultReturn) => {
+module.exports = (api, args, defaultReturn) => {
   if (!apis[api]) {
     console.log(`This API doesn't exist`, api)
   }

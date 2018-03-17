@@ -103,23 +103,31 @@ const preferDefault = m => m && m.default || m
 \n`
   asyncRequires += `exports.components = {\n${components
     .map(
-      c => `  "${c.componentChunkName}": require("${joinPath(c.component)}")`
+      c =>
+        `  "${c.componentChunkName}": require("gatsby-module-loader?name=${
+          c.componentChunkName
+        }!${joinPath(c.component)}")`
     )
     .join(`,\n`)}
 }\n\n`
   asyncRequires += `exports.json = {\n${json
     .map(
       j =>
-        `  "${j.jsonName}": require("!${joinPath(
+        `  "${j.jsonName}": () => import("${joinPath(
           program.directory,
           `/.cache/json/`,
           j.jsonName
-        )}")`
+        )}" /* webpackChunkName: "${generatePathChunkName(j.path)}" */ )`
     )
     .join(`,\n`)}
 }\n\n`
   asyncRequires += `exports.layouts = {\n${pageLayouts
-    .map(l => `  "${l.machineId}": require("${l.componentWrapperPath}")`)
+    .map(
+      l =>
+        `  "${l.machineId}": require("gatsby-module-loader?name=${
+          l.componentChunkName
+        }!${l.componentWrapperPath}")`
+    )
     .join(`,\n`)}
 }`
 

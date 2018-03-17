@@ -1,22 +1,17 @@
 require(`v8-compile-cache`)
 
-const { uniq, some } = require(`lodash`)
+const { uniq } = require(`lodash`)
 const fs = require(`fs`)
 const path = require(`path`)
 const dotenv = require(`dotenv`)
 const StaticSiteGeneratorPlugin = require(`static-site-generator-webpack-plugin`)
-const NameAllModulesPlugin = require(`name-all-modules-plugin`)
-const { StatsWriterPlugin } = require(`webpack-stats-plugin`)
 // const FriendlyErrorsWebpackPlugin = require(`friendly-errors-webpack-plugin`)
 const WatchMissingNodeModulesPlugin = require(`react-dev-utils/WatchMissingNodeModulesPlugin`)
 const { store } = require(`../redux`)
 const { actions } = require(`../redux/actions`)
 const debug = require(`debug`)(`gatsby:webpack-config`)
-const WebpackMD5Hash = require(`webpack-md5-hash`)
-const GatsbyModulePlugin = require(`gatsby-module-loader/plugin`)
 const report = require(`gatsby-cli/lib/reporter`)
 const { withBasePath } = require(`./path`)
-const { chunkNamer } = require(`./webpack-helpers`)
 
 const apiRunnerNode = require(`./api-runner-node`)
 const createUtils = require(`./webpack-utils`)
@@ -106,16 +101,19 @@ module.exports = async (
         // Deleted by build-html.js, since it's not needed for production.
         return {
           path: directoryPath(`public`),
-          filename: `[name].render-page.js`,
+          filename: `render-page.js`,
           libraryTarget: `umd`,
+          library: `lib`,
+          umdNamedDefine: true,
+          globalObject: `this`,
           publicPath: program.prefixPaths
             ? `${store.getState().config.pathPrefix}/`
             : `/`,
         }
       case `build-javascript`:
         return {
-          filename: `[name]-[chunkhash].js`,
-          chunkFilename: `[name]-[chunkhash].js`,
+          filename: `[name]-[hash].js`,
+          chunkFilename: `[name]-[hash].js`,
           path: directoryPath(`public`),
           publicPath: program.prefixPaths
             ? `${store.getState().config.pathPrefix}/`
@@ -188,8 +186,6 @@ module.exports = async (
           // See https://github.com/facebookincubator/create-react-app/issues/186
           new WatchMissingNodeModulesPlugin(directoryPath(`node_modules`)),
 
-          new NameAllModulesPlugin(),
-          plugins.namedModules(),
           // new FriendlyErrorsWebpackPlugin({
           // clearConsole: false,
           // compilationSuccessInfo: {
@@ -209,111 +205,11 @@ module.exports = async (
       case `develop-html`:
       case `build-html`:
         configPlugins = configPlugins.concat([
-          new StaticSiteGeneratorPlugin(`main.render-page.js`, pages),
-          plugins.namedModules(),
-          plugins.namedChunks(chunkNamer),
-          new NameAllModulesPlugin(),
+          new StaticSiteGeneratorPlugin(`render-page.js`, pages),
         ])
         break
       case `build-javascript`: {
-        // Get array of page template component names.
-        let components = store
-          .getState()
-          .pages.map(page => page.componentChunkName)
-
-        components = uniq(components)
-        components.push(`layout-component---index`)
-
         configPlugins = configPlugins.concat([
-          plugins.namedModules(),
-          plugins.namedChunks(chunkNamer),
-          new NameAllModulesPlugin(),
-          new WebpackMD5Hash(),
-
-          // Extract "commons" chunk from the app entry and all
-          // page components.
-          // plugins.splitChunks({
-          // minSize: 0,
-          // chunks: [`app`, ...components],
-          // The more page components there are, the higher we raise the bar
-          // for merging in page-specific JS libs into the commons chunk. The
-          // two principles here is a) keep the TTI (time to interaction) as
-          // low as possible so that means keeping commons.js small with
-          // critical framework code (e.g. React/react-router) and b) is we
-          // want to push JS parse/eval work as close as possible to when
-          // it's used. Since most people don't navigate to most pages, take
-          // tradeoff of loading/evaling modules multiple times over
-          // loading/evaling lots of unused code on the initial opening of
-          // the app.
-          // minChunks: (module, count) => {
-          // const vendorModuleList = [
-          // `react`,
-          // `react-dom`,
-          // `fbjs`,
-          // `react-router`,
-          // `react-router-dom`,
-          // `gatsby-react-router-scroll`,
-          // `dom-helpers`, // Used in gatsby-react-router-scroll
-          // `path-to-regexp`,
-          // `isarray`, // Used by path-to-regexp.
-          // `scroll-behavior`,
-          // `history`,
-          // `domready`,
-          // `resolve-pathname`, // Used by history.
-          // `value-equal`, // Used by history.
-          // `invariant`, // Used by history.
-          // `warning`, // Used by history.
-          // `babel-runtime`, // Used by history.
-          // `core-js`, // Used by history.
-          // `loose-envify`, // Used by history.
-          // `prop-types`,
-          // `gatsby-link`,
-          // `mitt`,
-          // `shallow-compare`,
-          // ]
-          // const cacheDirList = [
-          // `production-app`,
-          // `loader`,
-          // `prefetcher`,
-          // `find-page`,
-          // `component-renderer`,
-          // `emitter`,
-          // `register-service-worker`,
-          // `strip-prefix`,
-          // `history`,
-          // ]
-
-          // const isFramework = some(
-          // vendorModuleList.map(vendor => {
-          // const regex = new RegExp(
-          // `[\\\\/]node_modules[\\\\/]${vendor}[\\\\/].*`,
-          // `i`
-          // )
-          // return regex.test(module.resource)
-          // })
-          // )
-
-          // const isRuntime = some(
-          // cacheDirList.map(runtime => {
-          // const regex = new RegExp(`.*cache[\\\\/]${runtime}.*`, `i`)
-          // return regex.test(module.resource)
-          // })
-          // )
-
-          // return isFramework || isRuntime || count > 3
-          // },
-          // }),
-
-          // using a chunk name that doesn't exist creates a chunk with
-          // just the runtime bits
-          // plugins.commonsChunk({
-          // name: `@@webpack-runtime`,
-          // filename: `@@webpack-runtime.js`,
-          // }),
-          // Write out mapping between chunk names and their hashed names. We use
-          // this to add the needed javascript files to each HTML page.
-          new StatsWriterPlugin(),
-
           // Minify Javascript.
           plugins.uglify({
             uglifyOptions: {
@@ -322,9 +218,35 @@ module.exports = async (
               },
             },
           }),
-          // new GatsbyModulePlugin(),
-          plugins.namedModules(),
-          plugins.namedChunks(chunkNamer),
+          // Write out stats object mapping chunks to
+          // all their combined chunks.
+          {
+            apply: function(compiler) {
+              compiler.plugin(`done`, function(stats, done) {
+                let assets = {}
+
+                for (let chunkGroup of stats.compilation.chunkGroups) {
+                  if (chunkGroup.name) {
+                    let files = []
+                    for (let chunk of chunkGroup.chunks) {
+                      files.push(...chunk.files)
+                    }
+                    assets[chunkGroup.name] = files.filter(
+                      f => f.slice(-4) !== `.map`
+                    )
+                  }
+                }
+
+                fs.writeFile(
+                  path.join(`public`, `webpack.stats.json`),
+                  JSON.stringify({
+                    assetsByChunkName: assets,
+                  }),
+                  done
+                )
+              })
+            },
+          },
         ])
         break
       }
@@ -387,7 +309,20 @@ module.exports = async (
         //
         // It's also necessary to process CSS Modules so your JS knows the
         // classNames to use.
-        configRules = configRules.concat([rules.css(), rules.cssModules()])
+        configRules = configRules.concat([
+          rules.css(),
+          rules.cssModules(),
+
+          // Remove manually unused React Router modules.
+          // Try removing these whenever they make a new
+          // release tree shaking fixes.
+          { test: /HashHistory/, use: `null-loader` },
+          { test: /MemoryHistory/, use: `null-loader` },
+          { test: /StaticRouter/, use: `null-loader` },
+          { test: /MemoryRouter/, use: `null-loader` },
+          { test: /HashRouter/, use: `null-loader` },
+        ])
+
         break
     }
 
@@ -450,16 +385,10 @@ module.exports = async (
     performance: {
       hints: false,
     },
-    mode: `production`,
-    optimization: {
-      splitChunks: {
-        minSize: 0,
-        chunks: "all",
-        cacheGroups: {
-          "vendor-1": /modules[\\/][abc]/,
-        },
-      },
-    },
+    mode:
+      stage === `build-html` || stage === `develop-html`
+        ? `development`
+        : `production`,
 
     resolveLoader: getResolveLoader(),
     resolve: getResolve(),
@@ -467,6 +396,22 @@ module.exports = async (
     node: {
       __filename: true,
     },
+  }
+
+  if (stage === `build-javascript`) {
+    config.optimization = {
+      runtimeChunk: {
+        name: `webpack-runtime`,
+      },
+      splitChunks: {
+        minSize: 0,
+        name: false,
+        // chunks: `all`,
+        // cacheGroups: {
+        // "vendor-1": /modules[\\/][abc]/,
+        // },
+      },
+    }
   }
 
   store.dispatch(actions.replaceWebpackConfig(config))
