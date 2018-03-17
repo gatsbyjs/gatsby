@@ -1,12 +1,13 @@
 import React from "react"
 import { renderToString, renderToStaticMarkup } from "react-dom/server"
 import { StaticRouter, Route, withRouter } from "react-router-dom"
-import { kebabCase, get, merge, isArray, isString } from "lodash"
+import { get, merge, isArray, isString } from "lodash"
 import { readFileSync } from "fs"
 
 import apiRunner from "./api-runner-ssr"
 import pages from "./pages.json"
 import syncRequires from "./sync-requires"
+import staticDataPaths from "./static-data-paths.json"
 
 // import testRequireError from "./test-require-error"
 // For some extremely mysterious reason, webpack adds the above module *after*
@@ -35,11 +36,6 @@ try {
 }
 
 Html = Html && Html.__esModule ? Html.default : Html
-
-const pathChunkName = path => {
-  const name = path === `/` ? `index` : kebabCase(path)
-  return `path---${name}`
-}
 
 const getPage = path => pages.find(page => page.path === path)
 const defaultLayout = props => <div>{props.children()}</div>
@@ -105,14 +101,19 @@ export default (locals, callback) => {
       render: routeProps => {
         const page = getPage(routeProps.location.pathname)
         const layout = getLayout(page)
+
+        const dataAndContext =
+          page.jsonName in staticDataPaths
+            ? JSON.parse(
+                readFileSync(
+                  process.cwd() + `/public/` + staticDataPaths[page.jsonName]
+                )
+              )
+            : {}
+
         return createElement(withRouter(layout), {
           children: layoutProps => {
             const props = layoutProps ? layoutProps : routeProps
-
-            // this is in node - we can just load json here
-            const dataAndContext = JSON.parse(
-              readFileSync(process.cwd() + `/.cache/json/` + page.jsonName)
-            )
 
             return createElement(
               syncRequires.components[page.componentChunkName],
@@ -167,7 +168,6 @@ export default (locals, callback) => {
   const scripts = [
     `commons`,
     `app`,
-    pathChunkName(locals.path),
     page.componentChunkName,
     page.layoutComponentChunkName,
   ]
@@ -215,6 +215,16 @@ export default (locals, callback) => {
       )
     })
 
+  if (page.jsonName in staticDataPaths) {
+    const dataPath = `${pathPrefix}${staticDataPaths[page.jsonName]}`
+    // Insert json data path after commons and app
+    headComponents.splice(
+      2,
+      0,
+      <link rel="preload" key={dataPath} href={dataPath} as="fetch" />
+    )
+  }
+
   // Add script loader for page scripts to the end of body element (after webpack manifest).
   // Taken from https://www.html5rocks.com/en/tutorials/speed/script-loading/
   const scriptsString = scripts.map(s => `"${s}"`).join(`,`)
@@ -243,3 +253,5 @@ export default (locals, callback) => {
 
   callback(null, html)
 }
+
+// export const __esModule = true

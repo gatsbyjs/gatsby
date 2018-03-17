@@ -2,7 +2,6 @@ const _ = require(`lodash`)
 const fs = require(`fs-extra`)
 
 const { store, emitter } = require(`../../redux/`)
-import { generatePathChunkName } from "../../utils/js-chunk-names"
 
 import { joinPath } from "../../utils/path"
 
@@ -54,12 +53,33 @@ const writePages = async () => {
 
       if (!_.includes(pageLayouts, layout)) {
         pageLayouts.push(layout)
-        json.push({
-          jsonName: layout.jsonName,
-        })
+        if (layout.dataPath) {
+          json.push({
+            jsonName: layout.jsonName,
+            dataPath: layout.dataPath,
+          })
+        }
+
+        const wrapperComponent = `
+        import React from "react"
+        import Component from "${layout.component}"
+        ${layout.dataPath &&
+          `import data from "${joinPath(
+            program.directory,
+            `public`,
+            layout.dataPath
+          )}"`}
+        
+      
+        export default (props) => <Component {...props}${layout.dataPath &&
+          ` {...data}`} />
+        `
+        fs.writeFileSync(layout.componentWrapperPath, wrapperComponent)
       }
     }
-    json.push({ path: p.path, jsonName: p.jsonName })
+    if (p.dataPath) {
+      json.push({ jsonName: p.jsonName, dataPath: p.dataPath })
+    }
   })
 
   pageLayouts = _.uniq(pageLayouts)
@@ -102,17 +122,20 @@ const preferDefault = m => m && m.default || m
     .join(`,\n`)}
 }\n\n`
 
-  // TODO:
-  // - figure out performant way of getting/generating hash for jsons
-  json.forEach(j => {
-    fs.copyFileSync(
-      program.directory + `/.cache/json/` + j.jsonName,
-      program.directory +
-        `/public/data/` +
-        generatePathChunkName(j.path) +
-        `.json`
-    )
-  })
+  const staticDataPaths = JSON.stringify(
+    _.reduce(
+      json,
+      (acc, j) => {
+        acc[j.jsonName] = j.dataPath
+        return acc
+      },
+      {}
+    ),
+    null,
+    2
+  )
+
+  asyncRequires += `exports.json = ${staticDataPaths}\n\n`
 
   asyncRequires += `exports.layouts = {\n${pageLayouts
     .map(
@@ -136,6 +159,7 @@ const preferDefault = m => m && m.default || m
     writeAndMove(`pages.json`, JSON.stringify(pagesData, null, 4)),
     writeAndMove(`sync-requires.js`, syncRequires),
     writeAndMove(`async-requires.js`, asyncRequires),
+    writeAndMove(`static-data-paths.json`, staticDataPaths),
   ])
 }
 

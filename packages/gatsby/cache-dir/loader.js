@@ -1,7 +1,6 @@
 import pageFinderFactory from "./find-page"
 import emitter from "./emitter"
 import stripPrefix from "./strip-prefix"
-import { kebabCase } from "lodash"
 
 const preferDefault = m => (m && m.default) || m
 
@@ -15,12 +14,6 @@ let fetchHistory = []
 const failedPaths = {}
 const failedResources = {}
 const MAX_HISTORY = 5
-
-// hacks
-const generatePathChunkName = path => {
-  const name = path === `/` ? `index` : kebabCase(path)
-  return `path---${name}`
-}
 
 const jsonStore = {}
 
@@ -39,9 +32,9 @@ const fetchResource = resourceName => {
         })
     } else {
       const path =
-        `/data/` + generatePathChunkName(resourceName.slice(0, -4)) + `.json`
+        (pathPrefix ? pathPrefix : `/`) + asyncRequires.json[resourceName]
       resourceFunction = () =>
-        window.fetch(path).then(response =>
+        fetch(path).then(response =>
           response.json().then(json => {
             jsonStore[resourceName] = json
             return json
