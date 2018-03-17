@@ -68,6 +68,8 @@
       link: /docs/glamor/
     - title: Using CSS-in-JS Library Styled Components
       link: /docs/styled-components/
+    - title: Using the crossorigin Attribute
+      link: /docs/using-the-crossorigin-attribute/
     - title: Adding Markdown Pages
       link: /docs/adding-markdown-pages/
     - title: Adding a List of Markdown Blog Posts
