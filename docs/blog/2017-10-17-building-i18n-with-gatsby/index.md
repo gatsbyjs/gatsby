@@ -335,6 +335,8 @@ exports.replaceRenderer = ({ bodyComponent, replaceBodyHTMLString }) => {
 }
 ```
 
+> `translate` hoc from react-i18next cause page / component not able to SSR. I make it works by import i18n & use i18n.t
+
 ## Finishing up
 
 As you can see, i18n in Gatsby is actually pretty simple when you know how! We
