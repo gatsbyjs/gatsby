@@ -23,6 +23,7 @@ First, create a new site for this part of the tutorial (and, as we mentioned in 
 
 ```shell
 gatsby new tutorial-part-three https://github.com/gatsbyjs/gatsby-starter-hello-world
+cd tutorial-part-three
 ```
 
 Once the site is finished installing, install `gatsby-plugin-typography`. For a reminder of how to do this, see Part Two of the tutorials. For
