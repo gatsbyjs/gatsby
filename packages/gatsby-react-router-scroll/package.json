@@ -19,8 +19,7 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-react-router-scroll#readme",
   "keywords": [
-    "gatsby",
-    "gatsby-plugin"
+    "gatsby"
   ],
   "license": "MIT",
   "main": "index.js",
