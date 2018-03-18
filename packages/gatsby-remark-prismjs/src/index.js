@@ -3,7 +3,7 @@ const visit = require(`unist-util-visit`)
 const parseLineNumberRange = require(`./parse-line-number-range`)
 const highlightCode = require(`./highlight-code`)
 
-module.exports = ({ markdownAST }, { classPrefix = `language-`, inlineCodeMarker = null } = {}) => {
+module.exports = ({ markdownAST }, { classPrefix = `language-` } = {}) => {
   visit(markdownAST, `code`, node => {
     let language = node.lang
     let { splitLanguage, highlightLines } = parseLineNumberRange(language)
@@ -38,25 +38,5 @@ module.exports = ({ markdownAST }, { classPrefix = `language-`, inlineCodeMarker
       highlightLines
     )}</code></pre>
       </div>`
-  })
-
-  visit(markdownAST, `inlineCode`, node => {
-    let languageName = `none`
-
-    if (inlineCodeMarker) {
-      let [ language, restOfValue ] = node.value.split(`${inlineCodeMarker}`, 2)
-      if (language && restOfValue) {
-        languageName = language.toLowerCase()
-        node.value = restOfValue
-      }
-    }
-
-    const className = `${classPrefix}${languageName}`
-
-    node.type = `html`
-    node.value = `<code class="${className}">${highlightCode(
-      languageName,
-      node.value
-    )}</code>`
   })
 }
