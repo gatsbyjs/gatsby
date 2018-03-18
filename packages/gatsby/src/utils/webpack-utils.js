@@ -33,12 +33,7 @@ type PluginFactory = (...args?: any) => PluginInstance
 
 type BuiltinPlugins = typeof builtinPlugins
 
-type Stage =
-  | "develop"
-  | "develop-html"
-  | "build-css"
-  | "build-html"
-  | "build-javascript"
+type Stage = "develop" | "develop-html" | "build-javascript" | "build-html"
 
 /**
  * Configuration options for `createUtils`
@@ -396,8 +391,8 @@ module.exports = async ({
    */
   plugins.extractText = options =>
     new MiniCssExtractPlugin({
-      filename: `[name][hash].css`,
-      chunkFilename: `[id][hash].css`,
+      filename: `[name].[hash].css`,
+      chunkFilename: `[id].[chunkhash].css`,
       ignoreOrder: true,
       ...options,
     })

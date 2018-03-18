@@ -15,12 +15,11 @@ const { withBasePath } = require(`./path`)
 const apiRunnerNode = require(`./api-runner-node`)
 const createUtils = require(`./webpack-utils`)
 
-// Five stages or modes:
+// Four stages or modes:
 //   1) develop: for `gatsby develop` command, hot reload and CSS injection into page
 //   2) develop-html: same as develop without react-hmre in the babel config for html renderer
-//   3) build-css: build styles.css file
+//   3) build-javascript: Build JS and CSS chunks for production
 //   4) build-html: build all HTML files
-//   5) build-javascript: Build js chunks for Single Page App in production
 
 module.exports = async (
   program,
@@ -84,16 +83,6 @@ module.exports = async (
           devtoolModuleFilenameTemplate: info =>
             path.resolve(info.absoluteResourcePath).replace(/\\/g, `/`),
         }
-      case `build-css`:
-        // We don't care about the JS file that is generated for this step
-        // so well specify a name that we can then delete in build-css.js
-        return {
-          path: directoryPath(`public`),
-          filename: `bundle-for-css.js`,
-          publicPath: program.prefixPaths
-            ? `${store.getState().config.pathPrefix}/`
-            : `/`,
-        }
       case `build-html`:
       case `develop-html`:
         // A temp file required by static-site-generator-plugin. See plugins() below.
@@ -137,10 +126,6 @@ module.exports = async (
       case `develop-html`:
         return {
           main: directoryPath(`.cache/develop-static-entry`),
-        }
-      case `build-css`:
-        return {
-          main: directoryPath(`.cache/app`),
         }
       case `build-html`:
         return {
@@ -279,7 +264,6 @@ module.exports = async (
     ]
     switch (stage) {
       case `develop`:
-      case `build-css`:
         configRules = configRules.concat([rules.css(), rules.cssModules()])
         break
 
@@ -417,6 +401,5 @@ module.exports = async (
     plugins,
   })
 
-  // console.log(JSON.stringify(getConfig(), null, 4))
   return getConfig()
 }

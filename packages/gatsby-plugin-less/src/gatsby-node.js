@@ -39,7 +39,6 @@ exports.onCreateWebpackConfig = (
 
   switch (stage) {
     case `develop`:
-    case `build-css`:
     case `build-javascript`:
       configRules = configRules.concat([lessRule, lessRuleModules])
       break

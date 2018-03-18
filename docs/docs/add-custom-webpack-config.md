@@ -23,10 +23,9 @@ call each build type a "stage". The following stages exist:
    reloading and CSS injection into page
 2. develop-html: same as develop but without react-hmre in the babel config for
    rendering the HTML component.
-3. build-css: production build of CSS
+3. build-javascript: production JavaScript and CSS build. Creates route JS bundles as well
+   as commons chunks for JS and CSS.
 4. build-html: production build static HTML pages
-5. build-javascript: production JavaScript build. Creates route bundles as well
-   as a `commons` and `app bundle`.
 
 Check
 [webpack.config.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/webpack.config.js)
