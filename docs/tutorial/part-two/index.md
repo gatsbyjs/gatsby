@@ -38,7 +38,7 @@ your button styles and use it throughout your site like:
 ```
 
 Components become the base building blocks of your site. Instead of being
-limited to what the browser provides e.g. `<button>`, you can easily create new
+limited to what the browser provides e.g. `<button />`, you can easily create new
 building blocks that elegantly meet the needs of your projects.
 
 ## Creating global styles
