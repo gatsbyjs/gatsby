@@ -528,3 +528,15 @@ Community:
   * Responsive Design, optimized for Mobile devices
   * Seo Friendly
   * Uses Flexbox
+  
+* [gatsby-starter-stellar](https://github.com/codebushi/gatsby-starter-stellar)
+  [(demo)](http://gatsby-stellar.surge.sh/)
+
+  Features:
+
+  * Based off of the Stellar site template. Designed by
+    [HTML5 UP](https://html5up.net/stellar)
+  * Scroll friendly, responsive site. Can be used as a single or multi-page site.
+  * Sticky Navigation when scrolling.
+  * Scroll spy and smooth scrolling to different sections of the page.
+  * Styling with SCSS
