@@ -100,7 +100,7 @@ const getNode = id => store.getState().nodes[id]
   *
   * @param {string} id
   * @returns {Object}
-  * /
+  */
 exports.getNode = getNode
 
 /**
