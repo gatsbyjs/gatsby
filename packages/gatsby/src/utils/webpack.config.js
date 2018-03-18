@@ -168,10 +168,7 @@ module.exports = async (
         __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
       }),
 
-      // TODO add mini-extract-css
-      plugins.extractText({
-        // filename: stage === `build-css` ? `styles.css` : undefined,
-      }),
+      plugins.extractText(),
     ]
 
     switch (stage) {

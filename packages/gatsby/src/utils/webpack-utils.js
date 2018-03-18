@@ -4,7 +4,7 @@ const os = require(`os`)
 const autoprefixer = require(`autoprefixer`)
 const flexbugs = require(`postcss-flexbugs-fixes`)
 const UglifyPlugin = require(`uglifyjs-webpack-plugin`)
-const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const MiniCssExtractPlugin = require(`mini-css-extract-plugin`)
 
 const builtinPlugins = require(`./webpack-plugins`)
 const { createBabelConfig } = require(`./babel-config`)
@@ -396,8 +396,8 @@ module.exports = async ({
    */
   plugins.extractText = options =>
     new MiniCssExtractPlugin({
-      filename: "[name][hash].css",
-      chunkFilename: "[id][hash].css",
+      filename: `[name][hash].css`,
+      chunkFilename: `[id][hash].css`,
       ignoreOrder: true,
       ...options,
     })

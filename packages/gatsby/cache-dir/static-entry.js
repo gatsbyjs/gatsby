@@ -1,12 +1,12 @@
-const React = require("react")
-const fs = require("fs")
-const { renderToString, renderToStaticMarkup } = require("react-dom/server")
-const { StaticRouter, Route, withRouter } = require("react-router-dom")
-const { kebabCase, get, merge, isArray, isString, flatten } = require("lodash")
+const React = require(`react`)
+const fs = require(`fs`)
+const { renderToString, renderToStaticMarkup } = require(`react-dom/server`)
+const { StaticRouter, Route, withRouter } = require(`react-router-dom`)
+const { kebabCase, get, merge, isArray, isString, flatten } = require(`lodash`)
 
-const apiRunner = require("./api-runner-ssr")
-const pages = require("./pages.json")
-const syncRequires = require("./sync-requires")
+const apiRunner = require(`./api-runner-ssr`)
+const pages = require(`./pages.json`)
+const syncRequires = require(`./sync-requires`)
 
 const stats = JSON.parse(
   fs.readFileSync(`${process.cwd()}/public/webpack.stats.json`, `utf-8`)

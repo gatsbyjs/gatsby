@@ -9,7 +9,8 @@
   "dependencies": {
     "@babel/runtime": "^7.0.0-beta.42",
     "less": "^2.7.2",
-    "less-loader": "^4.0.5"
+    "less-loader": "^4.0.5",
+    "mini-css-extract-plugin": "^0.2.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.42",
