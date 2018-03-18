@@ -969,5 +969,12 @@ actions.createRedirect = ({
   }
 }
 
+/**
+  * All defined actions.
+  */
 exports.actions = actions
+
+/**
+ * All action creators wrapped with a dispatch.
+ */
 exports.boundActionCreators = bindActionCreators(actions, store.dispatch)
