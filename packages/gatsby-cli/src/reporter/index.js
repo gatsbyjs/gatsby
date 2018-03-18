@@ -38,7 +38,7 @@ module.exports = Object.assign(reporter, {
   },
   /**
    * Log arguments and exit process with status 1.
-   * @param {*} [arguments].
+   * @param {*} [arguments]
    */
   panic(...args) {
     this.error(...args)
