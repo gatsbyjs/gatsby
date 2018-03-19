@@ -3,7 +3,12 @@ import { withPrefix } from "gatsby-link"
 import { defaultOptions } from "./internals"
 
 exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
-  let { output } = { ...defaultOptions, ...pluginOptions }
+  let { output, addLinkToHead } = { ...defaultOptions, ...pluginOptions }
+
+  if (!addLinkToHead) {
+    return
+  }
+
   if (output.charAt(0) !== `/`) {
     output = `/` + output
   }
