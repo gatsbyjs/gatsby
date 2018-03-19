@@ -42,16 +42,16 @@ We welcome PRs adding support for data from other plugins.
 // In your gatsby-config.js
 plugins: [
   /*
-     * Gatsby's data processing layer begins with “source”
-     * plugins. Here the site sources its data from Wordpress.
-     */
+           * Gatsby's data processing layer begins with “source”
+           * plugins. Here the site sources its data from Wordpress.
+           */
   {
     resolve: "gatsby-source-wordpress",
     options: {
       /*
-        * The base URL of the Wordpress site without the trailingslash and the protocol. This is required.
-        * Example : 'gatsbyjsexamplewordpress.wordpress.com' or 'www.example-site.com'
-        */
+                          * The base URL of the Wordpress site without the trailingslash and the protocol. This is required.
+                          * Example : 'gatsbyjsexamplewordpress.wordpress.com' or 'www.example-site.com'
+                          */
       baseUrl: "gatsbyjsexamplewordpress.wordpress.com",
       // The protocol. This can be http or https.
       protocol: "http",
@@ -88,9 +88,12 @@ plugins: [
         sourceUrl: "https://source-url.com",
         replacementUrl: "https://replacement-url.com",
       },
+      // How many media objects should be downloaded in parallel. Higher = faster
+      // OSX defaults to 256 max open connections, you cannot surpass that unless you increase the restriction
+      chunkSize: 100,
     },
   },
-];
+]
 ```
 
 ## WordPress Plugins
@@ -470,10 +473,10 @@ To learn more about image processing check
 ## Site's `gatsby-node.js` example
 
 ```javascript
-const _ = require(`lodash`);
-const Promise = require(`bluebird`);
-const path = require(`path`);
-const slash = require(`slash`);
+const _ = require(`lodash`)
+const Promise = require(`bluebird`)
+const path = require(`path`)
+const slash = require(`slash`)
 
 // Implement the Gatsby API “createPages”. This is
 // called after the Gatsby bootstrap is finished so you have
@@ -482,7 +485,7 @@ const slash = require(`slash`);
 // Will create pages for WordPress pages (route : /{slug})
 // Will create pages for WordPress posts (route : /post/{slug})
 exports.createPages = ({ graphql, boundActionCreators }) => {
-  const { createPage } = boundActionCreators;
+  const { createPage } = boundActionCreators
   return new Promise((resolve, reject) => {
     // The “graphql” function allows us to run arbitrary
     // queries against the local WordPress graphql schema. Think of
@@ -508,12 +511,12 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
     )
       .then(result => {
         if (result.errors) {
-          console.log(result.errors);
-          reject(result.errors);
+          console.log(result.errors)
+          reject(result.errors)
         }
 
         // Create Page pages.
-        const pageTemplate = path.resolve("./src/templates/page.js");
+        const pageTemplate = path.resolve("./src/templates/page.js")
         // We want to create a detailed page for each
         // page node. We'll just use the WordPress Slug for the slug.
         // The Page ID is prefixed with 'PAGE_'
@@ -531,8 +534,8 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
             context: {
               id: edge.node.id,
             },
-          });
-        });
+          })
+        })
       })
       // ==== END PAGES ====
 
@@ -556,10 +559,10 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
           `
         ).then(result => {
           if (result.errors) {
-            console.log(result.errors);
-            reject(result.errors);
+            console.log(result.errors)
+            reject(result.errors)
           }
-          const postTemplate = path.resolve("./src/templates/post.js");
+          const postTemplate = path.resolve("./src/templates/post.js")
           // We want to create a detailed page for each
           // post node. We'll just use the WordPress Slug for the slug.
           // The Post ID is prefixed with 'POST_'
@@ -570,12 +573,12 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
               context: {
                 id: edge.node.id,
               },
-            });
-          });
-          resolve();
-        });
-      });
+            })
+          })
+          resolve()
+        })
+      })
     // ==== END POSTS ====
-  });
-};
+  })
+}
 ```
