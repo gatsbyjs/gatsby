@@ -25,6 +25,12 @@ function getErrorFormatter() {
     "pretty-error": {
       marginTop: 1,
     },
+    'pretty-error > header': {
+      background: `red`,
+    },
+    'pretty-error > header > colon': {
+      color: `white`,
+    },
   })
 
   prettyError.render = err => {
