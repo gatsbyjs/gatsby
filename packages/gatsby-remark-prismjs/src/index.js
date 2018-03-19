@@ -18,7 +18,7 @@ module.exports = (
     // outcome without any additional CSS.
     //
     // @see https://github.com/PrismJS/prism/blob/1d5047df37aacc900f8270b1c6215028f6988eb1/themes/prism.css#L49-L54
-    let languageName = `none`
+    let languageName = `text`
     if (language) {
       language = language.toLowerCase()
       languageName = language
