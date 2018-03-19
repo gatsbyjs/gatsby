@@ -34,7 +34,8 @@ module.exports = async (pageOrLayout, component) => {
   if (result && result.errors) {
     report.log(
       report.stripIndent`
-        The GraphQL query from ${component.componentPath} failed
+        The GraphQL query from ${component.componentPath} failed.
+        See .cache/json/${pageOrLayout.jsonName} if develop mode.
 
         Errors:
           ${result.errors || []}
