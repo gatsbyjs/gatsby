@@ -283,7 +283,7 @@ class SearchForm extends Component {
         openOnFocus: true,
         autoselect: true,
         hint: false,
-        keyboardShortcuts: ['s']
+        keyboardShortcuts: [`s`],
       },
     })
   }
@@ -303,7 +303,7 @@ class SearchForm extends Component {
           marginBottom: 0,
         }}
         className="searchWrap"
-        onSubmit={e => e.preventDefault()}
+        onSubmit={e => {this.searchInput.blur(); e.preventDefault()}}
       >
         <label css={{ position: `relative` }}>
           <input
