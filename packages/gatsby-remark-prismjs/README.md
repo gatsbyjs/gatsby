@@ -27,6 +27,13 @@ plugins: [
             // This is an uncommon use-case though;
             // If you're unsure, it's best to use the default value.
             classPrefix: "language-",
+            // This is used to allow setting a language for inline code
+            // (i.e. single backticks) by creating a separator.
+            // This separator is a string and will do no white-space
+            // stripping.
+            // A suggested value for English speakers is the non-ascii
+            // character '›'.
+            inlineCodeMarker: null,
           },
         },
       ],
@@ -149,6 +156,20 @@ CSS along your PrismJS theme and the styles for `.gatsby-highlight-code-line`:
     ]
     ```
 
+    In addition to fenced code blocks, inline code blocks will be passed through
+    prismjs as well.
+
+    If you set the `inlineCodeMarker`, then you can also specify a format style.
+
+    Here's an example of how to use this if the `inlineCodeMarker` was set to `±`:
+
+    ``` markdown
+    I can highlight `css±.some-class { background-color: red }` with CSS syntax.
+    ```
+
+    This will be rendered in a `<code class=language-css>` with just the (syntax
+    highlighted) text of `.some-class { background-color: red }`
+
 ## Implementation notes
 
 ### Line highlighting
@@ -167,7 +188,7 @@ Our approach follows the [Pygments-based][2] implementation of the [React
 Tutorial/Documentation][4] for line highlights:
 
 * It uses a wrapper element `<div class="gatsby-highlight">` around the
-  PrismJS-formatted `<pre><code>`-blocks.`.
+  PrismJS-formatted `<pre><code>`-blocks.
 * Highlighted lines are wrapped in `<span class="gatsby-highlight-code-line">`.
 * We insert a linebreak before the closing tag of `.gatsby-highlight-code-line`
   so it ends up at the start of the follwing line.
