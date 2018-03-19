@@ -86,10 +86,10 @@ repository.
 Finally, if you want to run a version of the guides repository locally, follow
 these steps:
 
-1. Ensure you have the yarn package manager installed `npm install -g yarn`
-2. Install the Gatsby cli `yarn add --global gatsby-cli`
-3. Follow the steps above to fork and clone the Gatsby repo.
-4. Enter the `www` directory where gatsbyjs.org is and install its dependencies `yarn install` then run `gatsby develop`.
+1. Install the Gatsby command-line tool `npm install --global gatsby-cli`.
+2. Follow the steps above to fork and clone the Gatsby repo.
+3. Enter the `www` directory where gatsbyjs.org is by `cd path-to-gatsby/www` and install its dependencies with `npm install`.
+4. Run `gatsby develop` and view Guides locally.
 
 ## Article style guide
 
