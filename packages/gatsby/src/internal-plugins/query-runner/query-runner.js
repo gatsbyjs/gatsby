@@ -39,6 +39,10 @@ module.exports = async (pageOrLayout, component) => {
 
         Errors:
           ${result.errors || []}
+        Path:
+          ${pageOrLayout.path || `unset`}
+        Plugin:
+          ${pageOrLayout.pluginCreatorId || `none`}
         Query:
           ${component.query}
       `
