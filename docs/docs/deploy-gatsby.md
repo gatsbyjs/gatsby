@@ -56,8 +56,7 @@ now to create a new repository on GitHub.
 ### Use the NPM package `gh-pages` for deploying
 
 First add **gh-pages** as a `devDependency` of your site and create an npm
-script to **deploy** your project by running `npm install gh-pages --save-dev`
-or `yarn add gh-pages --dev` (if you have yarn installed).
+script to **deploy** your project by running `npm install gh-pages --save-dev`.
 
 Then add a `deploy` script in your `package.json` file.
 
@@ -84,7 +83,7 @@ repo, set up git in your project with `git init`. Then tell Gatsby where to
 deploy your site by adding the git remote address with https or ssh. Here is how
 to do it with https: `git remote add origin git@github.com:username/project-name.git`.
 
-Now run `yarn deploy` or `npm run deploy`. Preview changes in your GitHub page
+Now run `npm run deploy`. Preview changes in your GitHub page
 `https://username.github.io/project-name/`. You can also find the link to your
 site on GitHub under `Settings` > `GitHub Pages`.
 
