@@ -27,6 +27,8 @@ Websites built with Gatsby:
 * [Segment's Blog](https://segment.com/blog/)
 * [Fabric](https://meetfabric.com/)
 * [Formidable](https://formidable.com/)
+* [Ledgy](https://www.ledgy.com/)
+  ([source](https://github.com/morloy/ledgy.com))
 * [openFDA](https://open.fda.gov/)
   ([source](https://github.com/FDA/open.fda.gov))
 * [Bricolage.io](https://www.bricolage.io/)
