@@ -1,5 +1,4 @@
 const React = require(`react`)
-const Styletron = require(`styletron-engine-atomic`).Server
 const StyletronProvider = require(`styletron-react`).Provider
 const { renderToString } = require(`react-dom/server`)
 
@@ -7,26 +6,37 @@ exports.replaceRenderer = ({
   bodyComponent,
   setHeadComponents,
   replaceBodyHTMLString,
-}) => {
-  const styletron = new Styletron()
+}, options) => {
+  const StyletronContext = require(`./StyletronContext.js`)(options)
 
   const app = (
-    <StyletronProvider value={styletron}>{bodyComponent}</StyletronProvider>
+    <StyletronContext.Consumer>
+      {value => (
+        <StyletronProvider value={value}>{bodyComponent}</StyletronProvider>
+      )}
+    </StyletronContext.Consumer>
   )
 
   replaceBodyHTMLString(renderToString(app))
 
-  const stylesheets = styletron.getStylesheets()
-  const headComponents = stylesheets.map((sheet, index) => (
-    <style
-      media={sheet.media}
-      className="_styletron_hydrate_"
-      key={index}
-      dangerouslySetInnerHTML={{
-        __html: sheet.css,
-      }}
-    />
-  ))
+  const headComponents = (
+    <StyletronContext.Consumer>
+      {value => (
+        <StyletronProvider value={value}>
+          {value.getStylesheets().map((sheet, index) => (
+            <style
+              media={sheet.media}
+              className="_styletron_hydrate_"
+              key={index}
+              dangerouslySetInnerHTML={{
+                __html: sheet.css,
+              }}
+            />
+          ))}
+        </StyletronProvider>
+      )}
+    </StyletronContext.Consumer>
+  )
 
   setHeadComponents(headComponents)
 }
