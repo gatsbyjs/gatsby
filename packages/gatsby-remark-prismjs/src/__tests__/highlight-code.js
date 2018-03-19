@@ -52,4 +52,11 @@ export default Counter
       highlightCode(language, code, lineNumbersHighlight)
     ).toMatchSnapshot()
   })
+
+  it(`(language-text) escapes &, <, " elements #4597`, () => {
+    const highlightCode = require(`../highlight-code`)
+    const language = `text`
+    const code = `<button />`
+    expect(highlightCode(language, code)).toMatch(`&lt;button /&gt;`)
+  })
 })
