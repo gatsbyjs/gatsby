@@ -156,7 +156,7 @@ export default (locals, callback) => {
   // Create paths to scripts
   const page = pages.find(page => page.path === locals.path)
   let runtimeScript
-  const scripts = flatten(
+  const scriptsAndStyles = flatten(
     [`app`, pathChunkName(locals.path), page.layoutComponentChunkName, page.componentChunkName].map(s => {
       const fetchKey = `assetsByChunkName[${s}]`
 
@@ -183,6 +183,8 @@ export default (locals, callback) => {
       })
     })
   ).filter(s => isString(s))
+  const scripts = scriptsAndStyles.filter(s => s.endsWith(`.js`))
+  const styles = scriptsAndStyles.filter(s => s.endsWith(`.css`))
 
   const runtimeRaw = fs.readFileSync(
     `${process.cwd()}/public/${runtimeScript}`,
@@ -205,6 +207,16 @@ export default (locals, callback) => {
       // Add preload <link>s for scripts.
       headComponents.unshift(
         <link rel="preload" key={script} href={script} as="script" />
+      )
+    })
+
+  styles
+    .slice(0)
+    .reverse()
+    .forEach(style => {
+      // Add <link>s for styles.
+      headComponents.unshift(
+        <link rel="stylesheet" key={style} href={style} />
       )
     })
 
