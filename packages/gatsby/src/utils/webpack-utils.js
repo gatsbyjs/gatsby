@@ -393,7 +393,6 @@ module.exports = async ({
     new MiniCssExtractPlugin({
       filename: `[name].[hash].css`,
       chunkFilename: `[id].[chunkhash].css`,
-      ignoreOrder: true,
       ...options,
     })
 
