@@ -222,7 +222,7 @@ export default (locals, callback) => {
 
   // Add script loader for page scripts to the end of body element (after webpack manifest).
   // Taken from https://www.html5rocks.com/en/tutorials/speed/script-loading/
-  const scriptsString = scripts.map(s => `"${s}"`).join(`,`)
+  const scriptsString = scripts.map(s => JSON.stringify(s)).join(`,`)
   postBodyComponents.push(
     <script
       key={`script-loader`}
