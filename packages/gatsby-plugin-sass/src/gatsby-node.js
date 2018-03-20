@@ -50,6 +50,7 @@ exports.onCreateWebpackConfig = (
           ...sassRule,
           use: [loaders.null()],
         },
+        // TODO (sokra): omit the MiniCssExtractPlugin.loader for server-rendering
         sassRuleModules,
       ])
       break
