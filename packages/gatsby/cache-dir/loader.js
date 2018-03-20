@@ -25,22 +25,30 @@ const fetchResource = resourceName => {
   } else if (resourceName.slice(0, 9) === `layout---`) {
     resourceFunction = asyncRequires.layouts[resourceName]
   } else {
-    if (resourceName in jsonStore) {
-      resourceFunction = () =>
-        new Promise(resolve => {
+    resourceFunction = () =>
+      new Promise((resolve, reject) => {
+        if (resourceName in jsonStore) {
           resolve(jsonStore[resourceName])
-        })
-    } else {
-      const path =
-        (pathPrefix ? pathPrefix : `/`) + asyncRequires.json[resourceName]
-      resourceFunction = () =>
-        fetch(path).then(response =>
-          response.json().then(json => {
-            jsonStore[resourceName] = json
-            return json
-          })
-        )
-    }
+        } else {
+          const url =
+            (pathPrefix ? pathPrefix : `/`) + asyncRequires.json[resourceName]
+          var req = new XMLHttpRequest()
+          req.open(`GET`, url, true)
+          req.withCredentials = true
+          req.onreadystatechange = () => {
+            if (req.readyState == 4) {
+              if (req.status === 200) {
+                resolve(
+                  (jsonStore[resourceName] = JSON.parse(req.responseText))
+                )
+              } else {
+                reject()
+              }
+            }
+          }
+          req.send(null)
+        }
+      })
   }
 
   // Download the resource
