@@ -17,7 +17,6 @@ exports.onCreateWebpackConfig = (
 
   const sassRule = {
     test: /\.s(a|c)ss$/,
-    exclude: /\.module\.s(a|c)ss$/,
     use: [
       MiniCssExtractPlugin.loader,
       loaders.css({ importLoaders: 1 }),
@@ -34,25 +33,39 @@ exports.onCreateWebpackConfig = (
       sassLoader,
     ],
   }
+  const sassRuleModulesSSR = {
+    test: /\.module\.s(a|c)ss$/,
+    use: [
+      loaders.css({ modules: true, importLoaders: 1 }),
+      loaders.postcss({ plugins: postCssPlugins }),
+      sassLoader,
+    ],
+  }
 
   let configRules = []
 
   switch (stage) {
     case `develop`:
     case `build-javascript`:
-      configRules = configRules.concat([sassRule, sassRuleModules])
+      configRules = configRules.concat([{
+        oneOf: [
+          sassRuleModules,
+          sassRule,
+        ],
+      }])
       break
 
     case `build-html`:
     case `develop-html`:
-      configRules = configRules.concat([
-        {
-          ...sassRule,
-          use: [loaders.null()],
-        },
-        // TODO (sokra): omit the MiniCssExtractPlugin.loader for server-rendering
-        sassRuleModules,
-      ])
+      configRules = configRules.concat([{
+        oneOf: [
+          sassRuleModulesSSR,
+          {
+            ...sassRule,
+            use: [loaders.null()],
+          },
+        ],
+      }])
       break
   }
 

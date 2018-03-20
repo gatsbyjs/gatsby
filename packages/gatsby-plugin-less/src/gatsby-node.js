@@ -17,7 +17,6 @@ exports.onCreateWebpackConfig = (
 
   const lessRule = {
     test: /\.less$/,
-    exclude: /\.module\.less$/,
     use: [
       MiniCssExtractPlugin.loader,
       loaders.css({ importLoaders: 1 }),
@@ -34,24 +33,39 @@ exports.onCreateWebpackConfig = (
       lessLoader,
     ],
   }
+  const lessRuleModulesSSR = {
+    test: /\.module\.less$/,
+    use: [
+      loaders.css({ modules: true, importLoaders: 1 }),
+      loaders.postcss({ plugins: postCssPlugins }),
+      lessLoader,
+    ],
+  }
 
   let configRules = []
 
   switch (stage) {
     case `develop`:
     case `build-javascript`:
-      configRules = configRules.concat([lessRule, lessRuleModules])
+      configRules = configRules.concat([{
+        oneOf: [
+          lessRuleModules,
+          lessRule,
+        ],
+      }])
       break
 
     case `build-html`:
     case `develop-html`:
-      configRules = configRules.concat([
-        {
-          ...lessRule,
-          use: [loaders.null()],
-        },
-        lessRuleModules,
-      ])
+      configRules = configRules.concat([{
+        oneOf: [
+          lessRuleModules,
+          {
+            ...lessRule,
+            use: [loaders.null()],
+          },
+        ],
+      }])
       break
   }
 
