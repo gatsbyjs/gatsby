@@ -245,6 +245,19 @@ module.exports = async (
     }
   }
 
+  function getMode() {
+    switch (stage) {
+      case `build-javascript`:
+        return `production`
+      case `develop`:
+      case `develop-html`:
+      case `build-html`:
+        return `development` // So we don't uglify the html bundle
+      default:
+        return `production`
+    }
+  }
+
   function getModule(config) {
     // Common config for every env.
     // prettier-ignore
@@ -374,10 +387,7 @@ module.exports = async (
     performance: {
       hints: false,
     },
-    mode:
-      stage === `build-html` || stage === `develop-html`
-        ? `development` // So we don't uglify the html bundle
-        : `production`,
+    mode: getMode(),
 
     resolveLoader: getResolveLoader(),
     resolve: getResolve(),
