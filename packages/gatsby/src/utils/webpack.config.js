@@ -152,7 +152,10 @@ module.exports = async (
         __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
       }),
 
-      plugins.extractText(),
+      plugins.extractText(stage === `develop` ? {
+        filename: `[name].css`,
+        chunkFilename: `[name].css`,
+      } : {}),
     ]
 
     switch (stage) {

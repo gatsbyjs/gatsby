@@ -1,23 +1,7 @@
 import React from "react"
-import fs from "fs"
-
-const stylesPath = `${process.cwd()}/public/styles.css`
-let stylesStr
-if (process.env.NODE_ENV === `production` && fs.existsSync(stylesPath)) {
-  stylesStr = fs.readFileSync(stylesPath)
-}
 
 export default class HTML extends React.Component {
   render() {
-    let css
-    if (process.env.NODE_ENV === `production`) {
-      css = (
-        <style
-          id="gatsby-inlined-css"
-          dangerouslySetInnerHTML={{ __html: stylesStr }}
-        />
-      )
-    }
     return (
       <html {...this.props.htmlAttributes}>
         <head>
@@ -28,7 +12,6 @@ export default class HTML extends React.Component {
             content="width=device-width, initial-scale=1, shrink-to-fit=no"
           />
           {this.props.headComponents}
-          {css}
         </head>
         <body {...this.props.bodyAttributes}>
           {this.props.preBodyComponents}
