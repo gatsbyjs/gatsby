@@ -139,7 +139,7 @@ query BlogPost($slug: String!) {
 }
 ```
 
-Mapping can be used also to map an array of ids to any other collection of data. For example, if you have two JSON files
+Mapping can also be used to map an array of ids to any other collection of data. For example, if you have two JSON files
 `experience.json` and `tech.json` as follows:
 
 ```javascript
@@ -186,9 +186,10 @@ Mapping can be used also to map an array of ids to any other collection of data.
 ]
 ```
 
-if you add following rule into the `gatsby-config.js`
+And then add the following rule to your `gatsby-config.js`:
 
-```javascriptmodule.exports = {
+```javascript
+module.exports = {
   plugins: [...],
   mapping: {
     'ExperienceJson.items.tech': `TechJson`
@@ -196,7 +197,7 @@ if you add following rule into the `gatsby-config.js`
 }
 ```
 
-You can query `tech` object referred by ids in `experience`:
+You can query the `tech` object via the referred ids in `experience`:
 
 ```graphql
 query CV {
