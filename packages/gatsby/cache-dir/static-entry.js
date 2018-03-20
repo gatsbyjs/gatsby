@@ -216,7 +216,13 @@ export default (locals, callback) => {
     .forEach(style => {
       // Add <link>s for styles.
       headComponents.unshift(
-        <link rel="stylesheet" key={style} href={style} />
+        // TODO: figure out the correct prefix for inlined style (path prefix matching with webpack public path)
+        <style type="text/css" data-href={`/${style}`} dangerouslySetInnerHTML={{
+          __html: fs.readFileSync(
+            `${process.cwd()}/public/${style}`,
+            `utf-8`
+          ),
+        }} />
       )
     })
 
