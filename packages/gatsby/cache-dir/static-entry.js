@@ -157,7 +157,7 @@ export default (locals, callback) => {
   const page = pages.find(page => page.path === locals.path)
   let runtimeScript
   const scripts = flatten(
-    [`app`, pathChunkName(locals.path), page.componentChunkName].map(s => {
+    [`app`, pathChunkName(locals.path), page.layoutComponentChunkName, page.componentChunkName].map(s => {
       const fetchKey = `assetsByChunkName[${s}]`
 
       let chunks = get(stats, fetchKey)
