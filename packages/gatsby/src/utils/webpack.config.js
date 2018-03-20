@@ -5,7 +5,6 @@ const path = require(`path`)
 const dotenv = require(`dotenv`)
 const StaticSiteGeneratorPlugin = require(`static-site-generator-webpack-plugin`)
 const FriendlyErrorsWebpackPlugin = require(`friendly-errors-webpack-plugin`)
-const WatchMissingNodeModulesPlugin = require(`react-dev-utils/WatchMissingNodeModulesPlugin`)
 const { store } = require(`../redux`)
 const { actions } = require(`../redux/actions`)
 const debug = require(`debug`)(`gatsby:webpack-config`)
@@ -161,12 +160,6 @@ module.exports = async (
         configPlugins = configPlugins.concat([
           plugins.hotModuleReplacement(),
           plugins.noEmitOnErrors(),
-
-          // If you require a missing module and then `npm install` it, you still have
-          // to restart the development server for Webpack to discover it. This plugin
-          // makes the discovery automatic so you don't have to restart.
-          // See https://github.com/facebookincubator/create-react-app/issues/186
-          new WatchMissingNodeModulesPlugin(directoryPath(`node_modules`)),
 
           new FriendlyErrorsWebpackPlugin({
             clearConsole: false,
