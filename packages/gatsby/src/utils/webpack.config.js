@@ -257,7 +257,14 @@ module.exports = async (
     ]
     switch (stage) {
       case `develop`:
-        configRules = configRules.concat([rules.css(), rules.cssModules()])
+        configRules = configRules.concat([
+          {
+            oneOf: [
+              rules.cssModules(),
+              rules.css(),
+            ],
+          },
+        ])
         break
 
       case `build-html`:
@@ -269,10 +276,14 @@ module.exports = async (
         // prettier-ignore
         configRules = configRules.concat([
           {
-            ...rules.css(),
-            use: [loaders.null()],
+            oneOf: [
+              rules.cssModules(),
+              {
+                ...rules.css(),
+                use: [loaders.null()],
+              },
+            ],
           },
-          rules.cssModules(),
         ])
         break
 
@@ -284,8 +295,12 @@ module.exports = async (
         // It's also necessary to process CSS Modules so your JS knows the
         // classNames to use.
         configRules = configRules.concat([
-          rules.css(),
-          rules.cssModules(),
+          {
+            oneOf: [
+              rules.cssModules(),
+              rules.css(),
+            ],
+          },
 
           // Remove manually unused React Router modules. Try removing these
           // rules whenever they get around to making a new release with their
