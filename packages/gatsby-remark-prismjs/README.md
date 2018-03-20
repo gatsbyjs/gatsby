@@ -118,7 +118,7 @@ CSS along your PrismJS theme and the styles for `.gatsby-highlight-code-line`:
 
 ### Usage in Markdown
 
-    This is some beautiful code:
+This is some beautiful code:
 
     ```javascript
     // In your gatsby-config.js
@@ -132,15 +132,15 @@ CSS along your PrismJS theme and the styles for `.gatsby-highlight-code-line`:
         }
       }
     ]
-    ```
+    ````
 
-    You can also add line highlighting. It adds a span around lines of
-    code with a special class `.gatsby-highlight-code-line` that you can
-    target with styles. See this readme for more info.
+You can also add line highlighting. It adds a span around lines of code with a
+special class `.gatsby-highlight-code-line` that you can target with styles. See
+this README for more info.
 
-    In the following code snippit, lines 1 and 4 through 6 will get
-    the line highlighting. The line range parsing is done with
-    https://www.npmjs.com/package/parse-numeric-range.
+In the following code snippet, lines 1 and 4 through 6 will get the line
+highlighting. The line range parsing is done with
+<https://www.npmjs.com/package/parse-numeric-range>.
 
     ```javascript{1,4-6}
     // In your gatsby-config.js
@@ -156,19 +156,20 @@ CSS along your PrismJS theme and the styles for `.gatsby-highlight-code-line`:
     ]
     ```
 
-    In addition to fenced code blocks, inline code blocks will be passed through
-    prismjs as well.
+In addition to fenced code blocks, inline code blocks will be passed through
+PrismJS as well.
 
-    If you set the `inlineCodeMarker`, then you can also specify a format style.
+If you set the `inlineCodeMarker`, then you can also specify a format style.
 
-    Here's an example of how to use this if the `inlineCodeMarker` was set to `±`:
+Here's an example of how to use this if the `inlineCodeMarker` was set to `±`:
 
-    ``` markdown
     I can highlight `css±.some-class { background-color: red }` with CSS syntax.
-    ```
 
-    This will be rendered in a `<code class=language-css>` with just the (syntax
-    highlighted) text of `.some-class { background-color: red }`
+This will be rendered in a `<code class=language-css>` with just the (syntax
+highlighted) text of `.some-class { background-color: red }`
+
+If you need to prevent any escaping or highlighting, you can use the `none`
+language; the inner contents will not be changed at all.
 
 ## Implementation notes
 
