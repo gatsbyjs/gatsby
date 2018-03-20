@@ -99,8 +99,8 @@ module.exports = async (
         }
       case `build-javascript`:
         return {
-          filename: `[name]-[hash].js`,
-          chunkFilename: `[name]-[hash].js`,
+          filename: `[name]-[chunkhash].js`,
+          chunkFilename: `[name]-[chunkhash].js`,
           path: directoryPath(`public`),
           publicPath: program.prefixPaths
             ? `${store.getState().config.pathPrefix}/`
