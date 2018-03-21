@@ -5,11 +5,13 @@ import { defaultOptions, runQuery, writeFile } from "./internals"
 const publicPath = `./public`
 
 exports.onPostBuild = async ({ graphql }, pluginOptions) => {
-  delete pluginOptions.plugins
+  const options = { ...pluginOptions }
+  delete options.plugins
+  delete options.addLinkToHead
 
   const { query, serialize, output, exclude, ...rest } = {
     ...defaultOptions,
-    ...pluginOptions,
+    ...options,
   }
 
   const map = sitemap.createSitemap(rest)
