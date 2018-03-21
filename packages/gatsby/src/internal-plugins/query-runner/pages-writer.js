@@ -2,7 +2,6 @@ const _ = require(`lodash`)
 const fs = require(`fs-extra`)
 
 const { store, emitter } = require(`../../redux/`)
-import { generatePathChunkName } from "../../utils/js-chunk-names"
 
 import { joinPath } from "../../utils/path"
 
@@ -52,12 +51,37 @@ const writePages = async () => {
         )
       }
 
-      pageLayouts.push(layout)
-      json.push({
-        jsonName: layout.jsonName,
-      })
+      if (!_.includes(pageLayouts, layout)) {
+        pageLayouts.push(layout)
+        if (layout.dataPath) {
+          json.push({
+            jsonName: layout.jsonName,
+            dataPath: layout.dataPath,
+          })
+        }
+
+        const wrapperComponent = `
+        import React from "react"
+        import Component from "${layout.component}"
+        ${layout.dataPath &&
+          `import data from "${joinPath(
+            program.directory,
+            `public`,
+            `static`,
+            `d`,
+            `${layout.dataPath}.json`
+          )}"`}
+        
+      
+        export default (props) => <Component {...props}${layout.dataPath &&
+          ` {...data}`} />
+        `
+        fs.writeFileSync(layout.componentWrapperPath, wrapperComponent)
+      }
     }
-    json.push({ path: p.path, jsonName: p.jsonName })
+    if (p.dataPath) {
+      json.push({ jsonName: p.jsonName, dataPath: p.dataPath })
+    }
   })
 
   pageLayouts = _.uniq(pageLayouts)
@@ -85,17 +109,6 @@ const preferDefault = m => m && m.default || m
     )
     .join(`,\n`)}
 }\n\n`
-  syncRequires += `exports.json = {\n${json
-    .map(
-      j =>
-        `  "${j.jsonName}": require("${joinPath(
-          program.directory,
-          `/.cache/json/`,
-          j.jsonName
-        )}")`
-    )
-    .join(`,\n`)}
-}`
 
   // Create file with async requires of layouts/components/json files.
   let asyncRequires = `// prefer default export if available
@@ -110,17 +123,22 @@ const preferDefault = m => m && m.default || m
     )
     .join(`,\n`)}
 }\n\n`
-  asyncRequires += `exports.json = {\n${json
-    .map(
-      j =>
-        `  "${
-          j.jsonName
-        }": require("gatsby-module-loader?name=${generatePathChunkName(
-          j.path
-        )}!${joinPath(program.directory, `/.cache/json/`, j.jsonName)}")`
-    )
-    .join(`,\n`)}
-}\n\n`
+
+  const staticDataPaths = JSON.stringify(
+    _.reduce(
+      json,
+      (acc, j) => {
+        acc[j.jsonName] = j.dataPath
+        return acc
+      },
+      {}
+    ),
+    null,
+    2
+  )
+
+  asyncRequires += `exports.json = ${staticDataPaths}\n\n`
+
   asyncRequires += `exports.layouts = {\n${pageLayouts
     .map(
       l =>
@@ -143,6 +161,7 @@ const preferDefault = m => m && m.default || m
     writeAndMove(`pages.json`, JSON.stringify(pagesData, null, 4)),
     writeAndMove(`sync-requires.js`, syncRequires),
     writeAndMove(`async-requires.js`, asyncRequires),
+    writeAndMove(`static-data-paths.json`, staticDataPaths),
   ])
 }
 

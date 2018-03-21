@@ -4,8 +4,10 @@ const report = require(`gatsby-cli/lib/reporter`)
 const md5 = require(`md5`)
 const ws = require(`../../utils/websocket`)
 
-const { joinPath } = require(`../../utils/path`)
+const path = require(`path`)
 const { store } = require(`../../redux`)
+const { generatePathChunkName } = require(`../../utils/js-chunk-names`)
+
 const resultHashes = {}
 
 // Run query for a page
@@ -58,21 +60,44 @@ module.exports = async (pageOrLayout, component) => {
   }
   const resultJSON = JSON.stringify(result)
   const resultHash = md5(resultJSON)
-  const resultPath = joinPath(
-    program.directory,
-    `public`,
-    `static`,
-    `d`,
-    pageOrLayout.jsonName
-  )
 
-  if (resultHashes[resultPath] !== resultHash) {
-    resultHashes[resultPath] = resultHash
+  if (resultHashes[pageOrLayout.jsonName] !== resultHash) {
+    resultHashes[pageOrLayout.jsonName] = resultHash
     const programType = program._[0]
 
     // In production, write file to public/static/d/ folder.
     if (programType === `build`) {
+      const dataPath = `${generatePathChunkName(
+        pageOrLayout.jsonName
+      )}-${resultHash}`
+
+      const resultPath = path.join(
+        program.directory,
+        `public`,
+        `static`,
+        `d`,
+        `${dataPath}.json`
+      )
       await fs.writeFile(resultPath, resultJSON)
+
+      if (!pageOrLayout.path) {
+        store.dispatch({
+          type: `SET_LAYOUT_DATA_PATH`,
+          payload: {
+            id: pageOrLayout.id,
+            dataPath,
+          },
+        })
+      } else {
+        store.dispatch({
+          type: `SET_PAGE_DATA_PATH`,
+          payload: {
+            path: pageOrLayout.path,
+            dataPath,
+          },
+        })
+      }
+
       return
     }
 
