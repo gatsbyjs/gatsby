@@ -120,7 +120,7 @@ exports.hasNodeChanged = (id, digest) => {
 }
 
 /**
-  * Get content from node.
+  * Get content for a node from the plugin that created it.
   *
   * @param {Object} node
   * @returns {promise}
