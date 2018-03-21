@@ -186,6 +186,7 @@ Websites built with Gatsby:
 * [Deliveroo.Design](https://www.deliveroo.design/)
 * [The Rick and Morty API](http://rickandmortyapi.com/)
 * [Adnan Fajlur - Portfolio](https://adnanfajlur.xyz/)
+* [Hapticmedia](https://hapticmedia.fr/en/)
 
 ## Docs
 
