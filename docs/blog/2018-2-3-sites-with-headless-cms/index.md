@@ -10,7 +10,7 @@ A traditional Content Management System (CMS)--like Wordpress, Drupal, or Joomla
 
 You can think of a traditional CMS like an old home built by one person and with custom fittings. Gorgeous, and expensive to maintain, like the home in _The Money Pit_ (1986) with Tom Hanks and Shelley Long.
 
-![Tom Hanks on a staircase that is falling apart](money-pit-2.jpeg)
+![Tom Hanks on a staircase that is falling apart](money-pit.jpeg)
 
 Despite the advantages of this scenario, there are also some disadvantages which are listed below.
 
