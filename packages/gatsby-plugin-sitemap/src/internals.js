@@ -36,7 +36,7 @@ export const defaultOptions = {
   }`,
   output: `/sitemap.xml`,
   exclude: [`/dev-404-page`, `/404`, `/offline-plugin-app-shell-fallback`],
-  addLinkToHead: true,
+  createLinkInHead: true,
   serialize: ({ site, allSitePage }) =>
     allSitePage.edges.map(edge => {
       return {

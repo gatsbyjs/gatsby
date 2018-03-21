@@ -7,7 +7,7 @@ const publicPath = `./public`
 exports.onPostBuild = async ({ graphql }, pluginOptions) => {
   const options = { ...pluginOptions }
   delete options.plugins
-  delete options.addLinkToHead
+  delete options.createLinkInHead
 
   const { query, serialize, output, exclude, ...rest } = {
     ...defaultOptions,
