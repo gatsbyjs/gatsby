@@ -184,6 +184,7 @@ Websites built with Gatsby:
 * [John Meguerian's Portfolio](https://johnmeguerian.com) ([source](https://github.com/jmegs/portfolio))
 * [Krashna Musika Association Website](https://www.krashna.nl/) ([source](https://github.com/krashnamusika/krashna-site))
 * [Deliveroo.Design](https://www.deliveroo.design/)
+* [The Rick and Morty API](http://rickandmortyapi.com/)
 
 ## Docs
 
