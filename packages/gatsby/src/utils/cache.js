@@ -5,6 +5,10 @@ const _ = require(`lodash`)
 
 let db
 let directory
+
+/**
+  * Initialize cache store. Reuse existing store if available.
+  */
 exports.initCache = () => {
   fs.ensureDirSync(`${process.cwd()}/.cache/cache`)
   if (process.env.NODE_ENV === `test`) {
@@ -34,6 +38,11 @@ exports.initCache = () => {
   }
 }
 
+/**
+  * Get value of key
+  * @param key
+  * @returns {Promise}
+  */
 exports.get = key =>
   new Promise((resolve, reject) => {
     let pair
@@ -53,6 +62,12 @@ exports.get = key =>
     }
   })
 
+/**
+  * Create or update key with value
+  * @param key
+  * @param value
+  * @returns {Promise} - Promise object which resolves to 'Ok' if successful.
+  */
 exports.set = (key, value) =>
   new Promise((resolve, reject) => {
     db
