@@ -391,13 +391,10 @@ module.exports = async ({
    */
   plugins.extractText = options =>
     new MiniCssExtractPlugin({
-      filename: `[name].[hash].css`,
-      chunkFilename: `[id].[chunkhash].css`,
-      ignoreOrder: true,
+      filename: `[name].[chunkhash].css`,
+      chunkFilename: `[name].[chunkhash].css`,
       ...options,
     })
-
-  // plugins.extractText.extract = (...args) => ExtractTextPlugin.extract(...args)
 
   plugins.moment = () => plugins.ignore(/^\.\/locale$/, /moment$/)
 

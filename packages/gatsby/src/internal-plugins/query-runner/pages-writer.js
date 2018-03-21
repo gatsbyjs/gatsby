@@ -104,9 +104,9 @@ const preferDefault = m => m && m.default || m
   asyncRequires += `exports.components = {\n${components
     .map(
       c =>
-        `  "${c.componentChunkName}": require("gatsby-module-loader?name=${
-          c.componentChunkName
-        }!${joinPath(c.component)}")`
+        `  "${c.componentChunkName}": () => import("${joinPath(
+          c.component
+        )}" /* webpackChunkName: "${c.componentChunkName}" */)`
     )
     .join(`,\n`)}
 }\n\n`
@@ -124,9 +124,9 @@ const preferDefault = m => m && m.default || m
   asyncRequires += `exports.layouts = {\n${pageLayouts
     .map(
       l =>
-        `  "${l.machineId}": require("gatsby-module-loader?name=${
-          l.componentChunkName
-        }!${l.componentWrapperPath}")`
+        `  "${l.machineId}": () => import("${
+          l.componentWrapperPath
+        }" /* webpackChunkName: "${l.componentChunkName}" */)`
     )
     .join(`,\n`)}
 }`

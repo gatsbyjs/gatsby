@@ -156,8 +156,8 @@ export default (locals, callback) => {
   // Create paths to scripts
   const page = pages.find(page => page.path === locals.path)
   let runtimeScript
-  const scripts = flatten(
-    [`app`, pathChunkName(locals.path), page.componentChunkName].map(s => {
+  const scriptsAndStyles = flatten(
+    [`app`, pathChunkName(locals.path), page.layoutComponentChunkName, page.componentChunkName].map(s => {
       const fetchKey = `assetsByChunkName[${s}]`
 
       let chunks = get(stats, fetchKey)
@@ -183,6 +183,8 @@ export default (locals, callback) => {
       })
     })
   ).filter(s => isString(s))
+  const scripts = scriptsAndStyles.filter(s => s.endsWith(`.js`))
+  const styles = scriptsAndStyles.filter(s => s.endsWith(`.css`))
 
   const runtimeRaw = fs.readFileSync(
     `${process.cwd()}/public/${runtimeScript}`,
@@ -208,9 +210,25 @@ export default (locals, callback) => {
       )
     })
 
+  styles
+    .slice(0)
+    .reverse()
+    .forEach(style => {
+      // Add <link>s for styles.
+      headComponents.unshift(
+        // TODO: figure out the correct prefix for inlined style (path prefix matching with webpack public path)
+        <style type="text/css" data-href={`/${style}`} dangerouslySetInnerHTML={{
+          __html: fs.readFileSync(
+            `${process.cwd()}/public/${style}`,
+            `utf-8`
+          ),
+        }} />
+      )
+    })
+
   // Add script loader for page scripts to the end of body element (after webpack manifest).
   // Taken from https://www.html5rocks.com/en/tutorials/speed/script-loading/
-  const scriptsString = scripts.map(s => `"${s}"`).join(`,`)
+  const scriptsString = scripts.map(s => JSON.stringify(s)).join(`,`)
   postBodyComponents.push(
     <script
       key={`script-loader`}

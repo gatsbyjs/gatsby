@@ -5,7 +5,6 @@ const path = require(`path`)
 const dotenv = require(`dotenv`)
 const StaticSiteGeneratorPlugin = require(`static-site-generator-webpack-plugin`)
 const FriendlyErrorsWebpackPlugin = require(`friendly-errors-webpack-plugin`)
-const WatchMissingNodeModulesPlugin = require(`react-dev-utils/WatchMissingNodeModulesPlugin`)
 const { store } = require(`../redux`)
 const { actions } = require(`../redux/actions`)
 const debug = require(`debug`)(`gatsby:webpack-config`)
@@ -100,8 +99,8 @@ module.exports = async (
         }
       case `build-javascript`:
         return {
-          filename: `[name]-[hash].js`,
-          chunkFilename: `[name]-[hash].js`,
+          filename: `[name]-[chunkhash].js`,
+          chunkFilename: `[name]-[chunkhash].js`,
           path: directoryPath(`public`),
           publicPath: program.prefixPaths
             ? `${store.getState().config.pathPrefix}/`
@@ -153,7 +152,10 @@ module.exports = async (
         __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
       }),
 
-      plugins.extractText(),
+      plugins.extractText(stage === `develop` ? {
+        filename: `[name].css`,
+        chunkFilename: `[name].css`,
+      } : {}),
     ]
 
     switch (stage) {
@@ -161,12 +163,6 @@ module.exports = async (
         configPlugins = configPlugins.concat([
           plugins.hotModuleReplacement(),
           plugins.noEmitOnErrors(),
-
-          // If you require a missing module and then `npm install` it, you still have
-          // to restart the development server for Webpack to discover it. This plugin
-          // makes the discovery automatic so you don't have to restart.
-          // See https://github.com/facebookincubator/create-react-app/issues/186
-          new WatchMissingNodeModulesPlugin(directoryPath(`node_modules`)),
 
           new FriendlyErrorsWebpackPlugin({
             clearConsole: false,
@@ -252,6 +248,19 @@ module.exports = async (
     }
   }
 
+  function getMode() {
+    switch (stage) {
+      case `build-javascript`:
+        return `production`
+      case `develop`:
+      case `develop-html`:
+      case `build-html`:
+        return `development` // So we don't uglify the html bundle
+      default:
+        return `production`
+    }
+  }
+
   function getModule(config) {
     // Common config for every env.
     // prettier-ignore
@@ -264,7 +273,14 @@ module.exports = async (
     ]
     switch (stage) {
       case `develop`:
-        configRules = configRules.concat([rules.css(), rules.cssModules()])
+        configRules = configRules.concat([
+          {
+            oneOf: [
+              rules.cssModules(),
+              rules.css(),
+            ],
+          },
+        ])
         break
 
       case `build-html`:
@@ -276,10 +292,14 @@ module.exports = async (
         // prettier-ignore
         configRules = configRules.concat([
           {
-            ...rules.css(),
-            use: [loaders.null()],
+            oneOf: [
+              rules.cssModules(),
+              {
+                ...rules.css(),
+                use: [loaders.null()],
+              },
+            ],
           },
-          rules.cssModules(),
         ])
         break
 
@@ -291,8 +311,12 @@ module.exports = async (
         // It's also necessary to process CSS Modules so your JS knows the
         // classNames to use.
         configRules = configRules.concat([
-          rules.css(),
-          rules.cssModules(),
+          {
+            oneOf: [
+              rules.cssModules(),
+              rules.css(),
+            ],
+          },
 
           // Remove manually unused React Router modules. Try removing these
           // rules whenever they get around to making a new release with their
@@ -366,10 +390,7 @@ module.exports = async (
     performance: {
       hints: false,
     },
-    mode:
-      stage === `build-html` || stage === `develop-html`
-        ? `development` // So we don't uglify the html bundle
-        : `production`,
+    mode: getMode(),
 
     resolveLoader: getResolveLoader(),
     resolve: getResolve(),
