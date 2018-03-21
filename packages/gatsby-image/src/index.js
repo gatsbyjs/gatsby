@@ -95,7 +95,7 @@ const noscriptImg = props => {
   const srcSet = props.srcSet ? `srcset="${props.srcSet}" ` : ``
   const sizes = props.sizes ? `sizes="${props.sizes}" ` : ``
   const title = props.title ? `title="${props.title}" ` : ``
-  const alt = props.alt ? `alt="${props.alt}" ` : `alt=""` // required attribue
+  const alt = props.alt ? `alt="${props.alt}" ` : `alt=""` // required attribute
   const width = props.width ? `width="${props.width}" ` : ``
   const height = props.height ? `height="${props.height}" ` : ``
   const transitionDelay = `0.5s`
