@@ -67,7 +67,9 @@ const writePages = async () => {
           `import data from "${joinPath(
             program.directory,
             `public`,
-            layout.dataPath
+            `static`,
+            `d`,
+            `${layout.dataPath}.json`
           )}"`}
         
       

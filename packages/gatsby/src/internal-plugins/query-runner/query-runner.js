@@ -5,7 +5,6 @@ const md5 = require(`md5`)
 const ws = require(`../../utils/websocket`)
 
 const path = require(`path`)
-const slash = require(`slash`)
 const { store } = require(`../../redux`)
 const { generatePathChunkName } = require(`../../utils/js-chunk-names`)
 
@@ -68,15 +67,17 @@ module.exports = async (pageOrLayout, component) => {
 
     // In production, write file to public/static/d/ folder.
     if (programType === `build`) {
-      const dataPath = slash(
-        path.join(
-          `static`,
-          `d`,
-          `${generatePathChunkName(pageOrLayout.jsonName)}-${resultHash}.json`
-        )
-      )
+      const dataPath = `${generatePathChunkName(
+        pageOrLayout.jsonName
+      )}-${resultHash}`
 
-      const resultPath = path.join(program.directory, `public`, dataPath)
+      const resultPath = path.join(
+        program.directory,
+        `public`,
+        `static`,
+        `d`,
+        `${dataPath}.json`
+      )
       await fs.writeFile(resultPath, resultJSON)
 
       if (!pageOrLayout.path) {

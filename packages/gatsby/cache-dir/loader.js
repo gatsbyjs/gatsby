@@ -30,8 +30,9 @@ const fetchResource = resourceName => {
         if (resourceName in jsonStore) {
           resolve(jsonStore[resourceName])
         } else {
-          const url =
-            (pathPrefix ? pathPrefix : `/`) + asyncRequires.json[resourceName]
+          const url = `${pathPrefix ? pathPrefix : `/`}static/d/${
+            asyncRequires.json[resourceName]
+          }.json`
           var req = new XMLHttpRequest()
           req.open(`GET`, url, true)
           req.withCredentials = true
