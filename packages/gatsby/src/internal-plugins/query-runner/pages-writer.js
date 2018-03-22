@@ -10,7 +10,7 @@ const getLayoutById = layouts => id => layouts.find(l => l.id === id)
 // Write out pages information.
 const writePages = async () => {
   bootstrapFinished = true
-  let { program, pages, layouts } = store.getState()
+  let { program, jsonDataPaths, pages, layouts } = store.getState()
   // Write out pages.json
   const pagesData = pages.reduce(
     (mem, { path, matchPath, componentChunkName, layout, jsonName }) => {
@@ -40,9 +40,10 @@ const writePages = async () => {
       componentChunkName: p.componentChunkName,
       component: p.component,
     })
+
     if (p.layout) {
       let layout = getLayoutById(layouts)(p.layout)
-
+      const layoutDataPath = jsonDataPaths[layout.jsonName]
       if (!layout) {
         throw new Error(
           `Could not find layout '${
@@ -53,34 +54,34 @@ const writePages = async () => {
 
       if (!_.includes(pageLayouts, layout)) {
         pageLayouts.push(layout)
-        if (layout.dataPath) {
+        if (typeof layoutDataPath !== `undefined`) {
           json.push({
             jsonName: layout.jsonName,
-            dataPath: layout.dataPath,
+            layoutDataPath,
           })
         }
 
         const wrapperComponent = `
         import React from "react"
         import Component from "${layout.component}"
-        ${layout.dataPath &&
+        ${layoutDataPath &&
           `import data from "${joinPath(
             program.directory,
             `public`,
             `static`,
             `d`,
-            `${layout.dataPath}.json`
+            `${layoutDataPath}.json`
           )}"`}
-        
-      
-        export default (props) => <Component {...props}${layout.dataPath &&
+
+
+        export default (props) => <Component {...props}${layoutDataPath &&
           ` {...data}`} />
         `
         fs.writeFileSync(layout.componentWrapperPath, wrapperComponent)
       }
     }
-    if (p.dataPath) {
-      json.push({ jsonName: p.jsonName, dataPath: p.dataPath })
+    if (p.jsonName && jsonDataPaths[p.jsonName]) {
+      json.push({ jsonName: p.jsonName, dataPath: jsonDataPaths[p.jsonName] })
     }
   })
 
@@ -124,18 +125,7 @@ const preferDefault = m => m && m.default || m
     .join(`,\n`)}
 }\n\n`
 
-  const staticDataPaths = JSON.stringify(
-    _.reduce(
-      json,
-      (acc, j) => {
-        acc[j.jsonName] = j.dataPath
-        return acc
-      },
-      {}
-    ),
-    null,
-    2
-  )
+  const staticDataPaths = JSON.stringify(jsonDataPaths)
 
   asyncRequires += `exports.json = ${staticDataPaths}\n\n`
 

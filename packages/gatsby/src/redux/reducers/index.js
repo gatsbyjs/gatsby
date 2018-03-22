@@ -17,4 +17,5 @@ module.exports = {
   webpack: require(`./webpack`),
   redirects: require(`./redirects`),
   babelrc: require(`./babelrc`),
+  jsonDataPaths: require(`./json-data-paths`),
 }

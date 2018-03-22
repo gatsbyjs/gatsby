@@ -17,14 +17,17 @@ class JSONStore extends React.Component {
     } catch (err) {
       console.error(`Could not connect to socket.io on dev server.`)
     }
+    this.setJsonData = this.setJsonData.bind(this)
   }
 
   componentDidMount() {
-    this.socket.on(`queryResult`, data => {
-      this.setState({
-        data,
-        receivedData: true,
-      })
+    this.socket.on(`queryResult`, this.setJsonData)
+  }
+
+  setJsonData(newData) {
+    this.setState({
+      data: { ...this.state.data, ...newData },
+      receivedData: true,
     })
   }
 

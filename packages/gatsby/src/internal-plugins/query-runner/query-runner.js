@@ -2,7 +2,7 @@ import { graphql as graphqlFunction } from "graphql"
 const fs = require(`fs-extra`)
 const report = require(`gatsby-cli/lib/reporter`)
 const md5 = require(`md5`)
-const ws = require(`../../utils/websocket`)
+const websocketManager = require(`../../utils/websocket-manager`)
 
 const path = require(`path`)
 const { store } = require(`../../redux`)
@@ -65,52 +65,39 @@ module.exports = async (pageOrLayout, component) => {
     resultHashes[pageOrLayout.jsonName] = resultHash
     const programType = program._[0]
 
-    // In production, write file to public/static/d/ folder.
-    if (programType === `build`) {
-      const dataPath = `${generatePathChunkName(
-        pageOrLayout.jsonName
-      )}-${resultHash}`
-
-      const resultPath = path.join(
-        program.directory,
-        `public`,
-        `static`,
-        `d`,
-        `${dataPath}.json`
-      )
-      await fs.writeFile(resultPath, resultJSON)
-
-      if (!pageOrLayout.path) {
-        store.dispatch({
-          type: `SET_LAYOUT_DATA_PATH`,
-          payload: {
-            id: pageOrLayout.id,
-            dataPath,
-          },
-        })
-      } else {
-        store.dispatch({
-          type: `SET_PAGE_DATA_PATH`,
-          payload: {
-            path: pageOrLayout.path,
-            dataPath,
-          },
-        })
-      }
-
-      return
-    }
-
-    // In development queue up results until a client is available
-    // push subsequent results to client
     if (programType === `develop`) {
-      const result = {}
-      result[pageOrLayout.jsonName] = resultJSON
-      ws.pushResult(result)
-      const sockets = ws.instance()
-      if (sockets) {
-        sockets.emit(`queryResult`, result)
+      const result = { [pageOrLayout.jsonName]: resultJSON }
+      const socket = websocketManager.instance()
+      if (socket) {
+        // push result straight to client
+        socket.emit(`queryResult`, result)
+      } else {
+        // queue results up until socket is available
+        websocketManager.pushResults(result)
       }
     }
+
+    // Always write file to public/static/d/ folder.
+    const dataPath = `${generatePathChunkName(
+      pageOrLayout.jsonName
+    )}-${resultHash}`
+
+    const resultPath = path.join(
+      program.directory,
+      `public`,
+      `static`,
+      `d`,
+      `${dataPath}.json`
+    )
+    await fs.writeFile(resultPath, resultJSON)
+
+    store.dispatch({
+      type: `SET_JSON_DATA_PATH`,
+      payload: {
+        [pageOrLayout.jsonName]: dataPath,
+      },
+    })
+
+    return
   }
 }
