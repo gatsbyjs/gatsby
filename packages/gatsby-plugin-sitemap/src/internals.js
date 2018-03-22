@@ -1,6 +1,9 @@
 import fs from "fs"
 import pify from "pify"
 
+const withoutTrailingSlash = path =>
+  path === `/` ? path : path.replace(/\/$/, ``)
+
 export const writeFile = pify(fs.writeFile)
 
 export const runQuery = (handler, query, excludes) =>
@@ -11,7 +14,7 @@ export const runQuery = (handler, query, excludes) =>
 
     // Removing exluded paths
     r.data.allSitePage.edges = r.data.allSitePage.edges.filter(
-      page => !excludes.includes(page.node.path)
+      page => !excludes.includes(withoutTrailingSlash(page.node.path))
     )
 
     return r.data
