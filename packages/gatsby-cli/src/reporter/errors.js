@@ -25,9 +25,19 @@ function getErrorFormatter() {
     "pretty-error": {
       marginTop: 1,
     },
+    'pretty-error > header': {
+      background: `red`,
+    },
+    'pretty-error > header > colon': {
+      color: `white`,
+    },
   })
 
   prettyError.render = err => {
+    if (Array.isArray(err)) {
+      return err.map(this.render).join(`\n`)
+    }
+
     let rendered = baseRender.call(prettyError, err)
     if (err && err.codeFrame) rendered = `\n${err.codeFrame}\n${rendered}`
     return rendered

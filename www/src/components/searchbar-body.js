@@ -5,6 +5,7 @@ import {
   Stats,
   RefinementList,
   InfiniteHits,
+  Toggle,
 } from "react-instantsearch/dom"
 import { colors } from "../utils/presets"
 import Link from "gatsby-link"
@@ -199,6 +200,12 @@ class Search extends Component {
             attributeName="keywords"
             defaultRefinement={[`gatsby-component`, `gatsby-plugin`]}
           />
+          <Toggle
+            attributeName="deprecated"
+            value={false}
+            label="No deprecated plugins"
+            defaultRefinement={true}
+          />
         </div>
 
         <div
@@ -276,10 +283,9 @@ class Search extends Component {
                 overflow: `hidden`,
                 textIndent: `-9000px`,
                 padding: `0!important`,
-                width: `100%`,
+                width: 110,
                 height: `100%`,
                 display: `block`,
-                width: 110,
                 marginLeft: `auto`,
                 "&:hover": {
                   background: `url(${AlgoliaLogo})`,
