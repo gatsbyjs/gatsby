@@ -10,7 +10,9 @@ For larger / complex sites, they let you modularize your site customizations
 into site-specific plugins.
 
 Gatsby has a large and growing set of plugins. To search/browse official and 
-community plugins and their documentation, visit the [Plugin Library](/packages/). For information on building your own plugin, see the Plugin Authoring page (/plugin-authoring.md).
+community plugins and their documentation, visit the [Plugin Library](/packages/).
+
+For information on building your own plugin, see the Plugin Authoring page (/plugin-authoring.md).
 
 ## How to use Gatsby plugins?
 
@@ -34,7 +36,3 @@ module.exports = {
 ```
 
 Plugins can take options. Note that plugin options will be stringified by Gatsby, so they cannot be functions.
-
-## Creating your own plugins
-
-If you’d like to create a custom Gatsby plugin, check out the [plugin authoring guide](/docs/plugin-authoring/).
