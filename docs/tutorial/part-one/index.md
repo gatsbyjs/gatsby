@@ -234,7 +234,7 @@ export default () =>
 
 Add that link, click on it, and then we'll create a "Hello World" page component
 for `/counter/` as before. But instead of using the "functional component" form
-as we did before, we'll create a "class" component.
+as we did before, this time we'll create a "class" component at `src/pages/counter.js`.
 
 ```jsx
 import React from "react";
