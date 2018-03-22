@@ -118,6 +118,12 @@ module.exports = {
         trackingId: `UA-93349937-1`,
       },
     },
+    {
+      resolve: `gatsby-plugin-fullstory`,
+      options: {
+        fs_org: `B2TRP`,
+      },
+    },
     `gatsby-plugin-sitemap`,
     {
       resolve: `gatsby-plugin-feed`,

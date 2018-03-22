@@ -27,6 +27,8 @@ Websites built with Gatsby:
 * [Segment's Blog](https://segment.com/blog/)
 * [Fabric](https://meetfabric.com/)
 * [Formidable](https://formidable.com/)
+* [Ledgy](https://www.ledgy.com/)
+  ([source](https://github.com/morloy/ledgy.com))
 * [openFDA](https://open.fda.gov/)
   ([source](https://github.com/FDA/open.fda.gov))
 * [Bricolage.io](https://www.bricolage.io/)
@@ -179,6 +181,12 @@ Websites built with Gatsby:
 * [Investment Calculator](https://investmentcalculator.io/)
 * [Nikbelikov.ru](http://nikbelikov.ru/)
 * [Watchcards.ru](http://watchcards.ru/)
+* [John Meguerian's Portfolio](https://johnmeguerian.com) ([source](https://github.com/jmegs/portfolio))
+* [Krashna Musika Association Website](https://www.krashna.nl/) ([source](https://github.com/krashnamusika/krashna-site))
+* [Deliveroo.Design](https://www.deliveroo.design/)
+* [The Rick and Morty API](http://rickandmortyapi.com/)
+* [Adnan Fajlur - Portfolio](https://adnanfajlur.xyz/)
+* [Hapticmedia](https://hapticmedia.fr/en/)
 
 ## Docs
 
