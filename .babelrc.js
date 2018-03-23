@@ -2,7 +2,7 @@ let ignore = [`**/dist/**`]
 
 // Jest needs to compile this code, but generally we don't want this copied
 // to output folders
-if (process.env !== `test`) {
+if (process.env.NODE_ENV !== `test`) {
   ignore.push(`**/__tests__/**`)
 }
 
