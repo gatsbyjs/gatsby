@@ -61,17 +61,23 @@ exports.onCreateWebpackConfig = (
   switch (stage) {
     case `develop`:
     case `build-javascript`:
-      configRules = configRules.concat([stylusRule, stylusRuleModules])
+      configRules = configRules.concat([
+        { oneOf: [stylusRule, stylusRuleModules] },
+      ])
       break
 
     case `build-html`:
     case `develop-html`:
       configRules = configRules.concat([
         {
-          ...stylusRule,
-          use: [loaders.null()],
+          oneOf: [
+            {
+              ...stylusRule,
+              use: [loaders.null()],
+            },
+            stylusRuleModules,
+          ],
         },
-        stylusRuleModules,
       ])
       break
   }
