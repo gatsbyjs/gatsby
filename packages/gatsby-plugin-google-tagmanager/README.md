@@ -22,3 +22,6 @@ plugins: [
   },
 ];
 ```
+
+#### Note
+Out of the box this plugin will simply load Google Tag Manager on the initial page/app load. It's up to you to fire tags based on changes in your app. To automatically track page changes, in GA for instance, you can configure your tags in GTM to trigger on [History Change](https://support.google.com/tagmanager/topic/7679384?hl=en&rd=1#HistoryChange). 
