@@ -88,9 +88,6 @@ plugins: [
         sourceUrl: "https://source-url.com",
         replacementUrl: "https://replacement-url.com",
       },
-      // How many media objects should be downloaded in parallel. Higher = faster
-      // OSX defaults to 256 max open connections, you cannot surpass that unless you increase the restriction
-      chunkSize: 100,
     },
   },
 ];

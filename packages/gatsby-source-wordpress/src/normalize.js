@@ -379,7 +379,7 @@ exports.mapEntitiesToMedia = entities => {
 }
 
 // Downloads media files and removes "sizes" data as useless in Gatsby context.
-const downloadMediaFilesChunk = async ({
+exports.downloadMediaFiles = async ({
   entities,
   store,
   cache,
@@ -411,36 +411,6 @@ const downloadMediaFilesChunk = async ({
       return e
     })
   )
-
-// chunk the entities from the wordpress /media/ endpoint and process them as noted above
-exports.downloadMediaFiles = async ({
-  entities,
-  store,
-  cache,
-  createNode,
-  _auth,
-  chunkSize,
-}) => {
-  const chunks = _.chunk(entities, chunkSize)
-  let processed = []
-
-  while (chunks.length) {
-    const chunk = chunks.shift()
-
-    const entitiesChunk = await downloadMediaFilesChunk({
-      entities: chunk,
-      store,
-      cache,
-      createNode,
-      _auth,
-      chunkSize,
-    })
-
-    processed = processed.concat(entitiesChunk)
-  }
-
-  return processed
-}
 
 const prepareACFChildNodes = (
   obj,

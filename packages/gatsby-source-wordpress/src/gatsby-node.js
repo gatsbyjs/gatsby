@@ -28,7 +28,6 @@ exports.sourceNodes = async (
     verboseOutput,
     perPage = 100,
     searchAndReplaceContentUrls = {},
-    chunkSize = 100,
   }
 ) => {
   const { createNode } = boundActionCreators
@@ -93,7 +92,6 @@ exports.sourceNodes = async (
     cache,
     createNode,
     _auth,
-    chunkSize,
   })
 
   // Search and replace Content Urls
