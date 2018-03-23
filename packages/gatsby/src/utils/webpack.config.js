@@ -152,10 +152,14 @@ module.exports = async (
         __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
       }),
 
-      plugins.extractText(stage === `develop` ? {
-        filename: `[name].css`,
-        chunkFilename: `[name].css`,
-      } : {}),
+      plugins.extractText(
+        stage === `develop`
+          ? {
+              filename: `[name].css`,
+              chunkFilename: `[name].css`,
+            }
+          : {}
+      ),
     ]
 
     switch (stage) {
@@ -275,10 +279,7 @@ module.exports = async (
       case `develop`:
         configRules = configRules.concat([
           {
-            oneOf: [
-              rules.cssModules(),
-              rules.css(),
-            ],
+            oneOf: [rules.cssModules(), rules.css()],
           },
         ])
         break
@@ -312,10 +313,7 @@ module.exports = async (
         // classNames to use.
         configRules = configRules.concat([
           {
-            oneOf: [
-              rules.cssModules(),
-              rules.css(),
-            ],
+            oneOf: [rules.cssModules(), rules.css()],
           },
 
           // Remove manually unused React Router modules. Try removing these

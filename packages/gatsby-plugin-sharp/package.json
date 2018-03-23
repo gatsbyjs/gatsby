@@ -11,7 +11,7 @@
     "async": "^2.1.2",
     "bluebird": "^3.5.0",
     "imagemin": "^5.2.2",
-    "imagemin-pngquant": "^5.0.0",
+    "imagemin-pngquant": "^5.1.0",
     "imagemin-webp": "^4.0.0",
     "lodash": "^4.17.4",
     "potrace": "^2.1.1",

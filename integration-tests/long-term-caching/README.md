@@ -10,9 +10,9 @@ You can easily compare run outputs with the tool Meld. `meld public-1 public-2`.
 
 ## Runs
 
-1. Hello world
-2. Add character to src/pages/index.js
-3. Add import to src/pages/index.js (`import gray from "gray-percentage"`)
-4. Add async import (`import('../async')`)
-5. Add another async import (`import("../async-2")`)
-6. Add character to `async-2.js`
+1.  Hello world
+2.  Add character to src/pages/index.js
+3.  Add import to src/pages/index.js (`import gray from "gray-percentage"`)
+4.  Add async import (`import('../async')`)
+5.  Add another async import (`import("../async-2")`)
+6.  Add character to `async-2.js`

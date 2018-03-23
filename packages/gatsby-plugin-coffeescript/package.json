@@ -11,9 +11,9 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.0.0-beta.42",
-    "coffee-loader": "^0.7.3",
+    "coffee-loader": "^0.9.0",
     "coffee-react-transform": "^5.0.0",
-    "coffeescript": "^2.1.1"
+    "coffeescript": "^2.2.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.42",
