@@ -18,7 +18,7 @@
     "core-js": "^2.5.0",
     "execa": "^0.8.0",
     "fs-extra": "^4.0.1",
-    "hosted-git-info": "^2.5.0",
+    "hosted-git-info": "^2.6.0",
     "lodash": "^4.17.4",
     "pretty-error": "^2.1.1",
     "resolve-cwd": "^2.0.0",

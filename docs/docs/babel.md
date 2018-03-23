@@ -30,36 +30,44 @@ to root of your site and modifying it per your needs.
   "cacheDirectory": true,
   "babelrc": false,
   "presets": [
-    ["@babel/preset-env", {
-      "loose": true,
-      "modules": false,
-      "useBuiltIns": "usage",
-      "sourceType": "unambiguous",
-      "shippedProposals": true,
-      "targets": {
-        "browsers": [
-          "> 1%",
-          "IE >= 9",
-          "last 2 versions"
-        ]
+    [
+      "@babel/preset-env",
+      {
+        "loose": true,
+        "modules": false,
+        "useBuiltIns": "usage",
+        "sourceType": "unambiguous",
+        "shippedProposals": true,
+        "targets": {
+          "browsers": ["> 1%", "IE >= 9", "last 2 versions"]
+        }
       }
-    }],
-    ["@babel/preset-react", {
-      "useBuiltIns": true,
-      "pragma": "React.createElement"
-    }],
+    ],
+    [
+      "@babel/preset-react",
+      {
+        "useBuiltIns": true,
+        "pragma": "React.createElement"
+      }
+    ],
     "@babel/preset-flow"
   ],
   "plugins": [
-    ["@babel/plugin-proposal/class-properties", {
-      "loose": true
-    }],
+    [
+      "@babel/plugin-proposal/class-properties",
+      {
+        "loose": true
+      }
+    ],
     "@babel/plugin-syntax-dynamic-import",
-      ["@babel/plugin-transform-runtime", {
-      "helpers": true,
-      "regenerator": true,
-      "polyfill": false
-    }]
+    [
+      "@babel/plugin-transform-runtime",
+      {
+        "helpers": true,
+        "regenerator": true,
+        "polyfill": false
+      }
+    ]
   ]
 }
 ```

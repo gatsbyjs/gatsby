@@ -10,7 +10,7 @@
     "@babel/runtime": "^7.0.0-beta.42",
     "@types/history": "^4.6.2",
     "@types/react-router-dom": "^4.2.5",
-    "prop-types": "^15.5.8",
+    "prop-types": "^15.6.1",
     "ric": "^1.3.0"
   },
   "devDependencies": {

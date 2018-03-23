@@ -47,25 +47,26 @@ exports.onCreateWebpackConfig = (
   switch (stage) {
     case `develop`:
     case `build-javascript`:
-      configRules = configRules.concat([{
-        oneOf: [
-          lessRuleModules,
-          lessRule,
-        ],
-      }])
+      configRules = configRules.concat([
+        {
+          oneOf: [lessRuleModules, lessRule],
+        },
+      ])
       break
 
     case `build-html`:
     case `develop-html`:
-      configRules = configRules.concat([{
-        oneOf: [
-          lessRuleModules,
-          {
-            ...lessRule,
-            use: [loaders.null()],
-          },
-        ],
-      }])
+      configRules = configRules.concat([
+        {
+          oneOf: [
+            lessRuleModules,
+            {
+              ...lessRule,
+              use: [loaders.null()],
+            },
+          ],
+        },
+      ])
       break
   }
 
