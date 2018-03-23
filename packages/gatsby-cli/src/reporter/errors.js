@@ -35,7 +35,7 @@ function getErrorFormatter() {
 
   prettyError.render = err => {
     if (Array.isArray(err)) {
-      return err.map(this.render).join(`\n`)
+      return err.map(prettyError.render).join(`\n`)
     }
 
     let rendered = baseRender.call(prettyError, err)
