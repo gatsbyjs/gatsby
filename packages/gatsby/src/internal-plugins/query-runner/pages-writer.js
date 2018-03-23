@@ -64,6 +64,7 @@ const writePages = async () => {
 
   pageLayouts = _.uniq(pageLayouts)
   components = _.uniqBy(components, c => c.componentChunkName)
+  json = _.uniqBy(json, x => x.jsonName)
 
   // Create file with sync requires of layouts/components/json files.
   let syncRequires = `// prefer default export if available
