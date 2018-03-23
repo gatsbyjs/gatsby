@@ -1,12 +1,12 @@
 const metadata = require(`react-docgen`)
 
-let cleanDocletValue = str =>
-  str
-    .trim()
-    .replace(/^\{/, ``)
-    .replace(/\}$/, ``)
+let cleanDocletValue = str => {
+  str = str.trim()
+  if (str.endsWith(`}`) && str.startsWith(`{`)) str = str.slice(1, -1)
+  return str
+}
 
-let isLiteral = str => /^('|")/.test(str.trim())
+let isLiteral = str => /^('|"|true|false|\d+)/.test(str.trim())
 
 /**
  * Remove doclets from string
@@ -48,9 +48,12 @@ export const applyPropDoclets = prop => {
 
     if (value[0] === `(`) {
       value = value.substring(1, value.length - 1).split(`|`)
-
-      prop.type.value = value
-      prop.type.name = value.every(isLiteral) ? `enum` : `union`
+      const name = value.every(isLiteral) ? `enum` : `union`
+      prop.type.name = name
+      prop.type.value = value.map(
+        value =>
+          name === `enum` ? { value, computed: false } : { name: value }
+      )
     }
   }
 
@@ -67,4 +70,5 @@ export const applyPropDoclets = prop => {
       computed: false,
     }
   }
+  return prop
 }
