@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-remove-trailing-slashes",
   "description": "Stub description for gatsby-plugin-remove-trailing-slashes",
-  "version": "1.0.6-1",
+  "version": "1.0.6-2",
   "author": "scott.eckenthal@gmail.com",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
