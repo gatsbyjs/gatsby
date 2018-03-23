@@ -37,13 +37,9 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   }
 
   domReady(() =>
-    ReactDOM.render(
-      <Root />,
-      rootElement,
-      () => {
-        apiRunner(`onInitialClientRender`)
-      }
-    )
+    ReactDOM.render(<Root />, rootElement, () => {
+      apiRunner(`onInitialClientRender`)
+    })
   )
 })
 

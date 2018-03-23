@@ -7,13 +7,13 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.0.0-beta.38",
+    "@babel/runtime": "^7.0.0-beta.42",
     "remark-custom-blocks": "^1.0.6"
   },
   "devDependencies": {
-    "@babel/cli": "^7.0.0-beta.38",
-    "@babel/core": "^7.0.0-beta.38",
-    "cross-env": "^5.0.5",
+    "@babel/cli": "^7.0.0-beta.42",
+    "@babel/core": "^7.0.0-beta.42",
+    "cross-env": "^5.1.4",
     "rimraf": "^2.6.2",
     "unist-util-find": "^1.0.1"
   },

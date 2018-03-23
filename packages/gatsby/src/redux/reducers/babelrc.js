@@ -19,14 +19,6 @@ module.exports = (
           babelrc: false,
         },
       },
-      "build-css": {
-        plugins: [],
-        presets: [],
-        options: {
-          cacheDirectory: true,
-          babelrc: false,
-        },
-      },
       "build-html": {
         plugins: [],
         presets: [],

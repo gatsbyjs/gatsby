@@ -1,13 +1,18 @@
-import React from "react"
-import { renderToString, renderToStaticMarkup } from "react-dom/server"
-import { StaticRouter, Route, withRouter } from "react-router-dom"
-import { kebabCase, get, merge, isArray, isString } from "lodash"
+const React = require(`react`)
+const fs = require(`fs`)
+const { renderToString, renderToStaticMarkup } = require(`react-dom/server`)
+const { StaticRouter, Route, withRouter } = require(`react-router-dom`)
+const { kebabCase, get, merge, isArray, isString, flatten } = require(`lodash`)
 
-import apiRunner from "./api-runner-ssr"
-import pages from "./pages.json"
-import syncRequires from "./sync-requires"
+const apiRunner = require(`./api-runner-ssr`)
+const pages = require(`./pages.json`)
+const syncRequires = require(`./sync-requires`)
 
-// import testRequireError from "./test-require-error"
+const stats = JSON.parse(
+  fs.readFileSync(`${process.cwd()}/public/webpack.stats.json`, `utf-8`)
+)
+
+// const testRequireError = require("./test-require-error")
 // For some extremely mysterious reason, webpack adds the above module *after*
 // this module so that when this code runs, testRequireError is undefined.
 // So in the meantime, we'll just inline it.
@@ -148,46 +153,48 @@ export default (locals, callback) => {
     bodyHtml,
   })
 
-  let stats
-  try {
-    stats = require(`../public/stats.json`)
-  } catch (e) {
-    // ignore
-  }
-
   // Create paths to scripts
   const page = pages.find(page => page.path === locals.path)
-  const scripts = [
-    `commons`,
-    `app`,
-    pathChunkName(locals.path),
-    page.componentChunkName,
-    page.layoutComponentChunkName,
-  ]
-    .map(s => {
+  let runtimeScript
+  const scriptsAndStyles = flatten(
+    [
+      `app`,
+      pathChunkName(locals.path),
+      page.layoutComponentChunkName,
+      page.componentChunkName,
+    ].map(s => {
       const fetchKey = `assetsByChunkName[${s}]`
 
-      let fetchedScript = get(stats, fetchKey)
+      let chunks = get(stats, fetchKey)
 
-      if (!fetchedScript) {
+      // Remove the runtime as we always inline that instead
+      // of loading it.
+      if (s === `app`) {
+        runtimeScript = chunks[0]
+      }
+
+      if (!chunks) {
         return null
       }
 
-      // If sourcemaps are enabled, then the entry will be an array with
-      // the script name as the first entry.
-      fetchedScript = isArray(fetchedScript) ? fetchedScript[0] : fetchedScript
-      const prefixedScript = `${pathPrefix}${fetchedScript}`
-
-      // Make sure we found a component.
-      if (prefixedScript === `/`) {
-        return null
-      }
-
-      return prefixedScript
+      return chunks.map(c => {
+        if (c === `/`) {
+          return null
+        }
+        if (c.slice(0, 15) === `webpack-runtime`) {
+          return null
+        }
+        return `${pathPrefix}${c}`
+      })
     })
-    .filter(s => isString(s))
+  ).filter(s => isString(s))
+  const scripts = scriptsAndStyles.filter(s => s.endsWith(`.js`))
+  const styles = scriptsAndStyles.filter(s => s.endsWith(`.css`))
 
-  const runtimeRaw = require(`!raw-loader!../public/@@webpack-runtime`)
+  const runtimeRaw = fs.readFileSync(
+    `${process.cwd()}/public/${runtimeScript}`,
+    `utf-8`
+  )
   postBodyComponents.push(
     <script
       key={`webpack-runtime`}
@@ -208,9 +215,28 @@ export default (locals, callback) => {
       )
     })
 
+  styles
+    .slice(0)
+    .reverse()
+    .forEach(style => {
+      // Add <link>s for styles.
+      headComponents.unshift(
+        <style
+          type="text/css"
+          data-href={`${pathPrefix}${style}`}
+          dangerouslySetInnerHTML={{
+            __html: fs.readFileSync(
+              `${process.cwd()}/public/${style}`,
+              `utf-8`
+            ),
+          }}
+        />
+      )
+    })
+
   // Add script loader for page scripts to the end of body element (after webpack manifest).
   // Taken from https://www.html5rocks.com/en/tutorials/speed/script-loading/
-  const scriptsString = scripts.map(s => `"${s}"`).join(`,`)
+  const scriptsString = scripts.map(s => JSON.stringify(s)).join(`,`)
   postBodyComponents.push(
     <script
       key={`script-loader`}
