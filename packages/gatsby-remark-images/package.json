@@ -7,7 +7,7 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.0.0-beta.38",
+    "@babel/runtime": "^7.0.0-beta.42",
     "cheerio": "^1.0.0-rc.2",
     "gatsby-plugin-sharp": "^2.0.0-alpha.7",
     "is-relative-url": "^2.0.0",
@@ -17,7 +17,7 @@
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
-    "cross-env": "^5.0.5"
+    "cross-env": "^5.1.4"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images#readme",
   "keywords": [

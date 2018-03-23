@@ -7,7 +7,7 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.0.0-beta.38",
+    "@babel/runtime": "^7.0.0-beta.42",
     "bluebird": "^3.5.0",
     "graphql-type-json": "^0.1.4",
     "gray-matter": "^3.0.0",
@@ -21,7 +21,7 @@
     "remark-retext": "^3.1.0",
     "remark-stringify": "^4.0.0",
     "retext-english": "^3.0.0",
-    "sanitize-html": "^1.14.1",
+    "sanitize-html": "^1.18.2",
     "underscore.string": "^3.3.4",
     "unified": "^6.1.5",
     "unist-util-remove-position": "^1.1.1",
@@ -29,9 +29,9 @@
     "unist-util-visit": "^1.1.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.0.0-beta.38",
-    "@babel/core": "^7.0.0-beta.38",
-    "cross-env": "^5.0.5"
+    "@babel/cli": "^7.0.0-beta.42",
+    "@babel/core": "^7.0.0-beta.42",
+    "cross-env": "^5.1.4"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark#readme",
   "keywords": [

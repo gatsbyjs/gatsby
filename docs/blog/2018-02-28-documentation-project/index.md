@@ -12,7 +12,6 @@ People really like Gatsby docs and Gatsby. In fact, we’ve talked about trackin
 
 ![Stupid fast tweet](stupid-fast-tweet.png)
 
-
 ## How much do people like the docs? :D
 
 In my interviews with over 60 Gatsby users, I asked “What do you like about Gatsby?”. Documentation comes out as one of the clear winners, as you can see in this list of the top ten things interviewees like, courtesy of [Unbird.com](https://unbird.com/#/) analytics:
@@ -33,20 +32,20 @@ And some tweets:
 
 ![Usability docs](usability-docs.png)
 
-So here's the bottom line: nearly everyone we’ve interviewed loves the Gatsby development experience and what the community has produced with the docs, guides, and tutorials. 
+So here's the bottom line: nearly everyone we’ve interviewed loves the Gatsby development experience and what the community has produced with the docs, guides, and tutorials.
 
 So why fix what isn’t broken?
 
 ## Enhancing the Tutorials
 
-Many people have contributed to the docs and tutorials already and have done an excellent job. With that being said, there is still room to grow. 
+Many people have contributed to the docs and tutorials already and have done an excellent job. With that being said, there is still room to grow.
 
 Here is a brief overview of issues that have come up again and again as I've interviewed people and observed them going through the tutorials and docs (see [Issue #4175](https://github.com/gatsbyjs/gatsby/issues/4175) on Github to follow this and contribute):
 
 * Gatsby is beginner-friendly; however, _true_ beginners to programming need an intro to basic tools like the command line, code editors, and browser consoles.
 * Upon first visit to Gatsbyjs.org, most visitors click “Get Started.” This is the perfect solution for them if they prefer to jump into coding without reading much. If they prefer step-by-step instructions, it takes some looking around before they see the tutorial tab across the top.
 * Installing new starters for every part of tutorial feels like a distraction to some beginners.
-"Part 1" is not a descriptive title for a tutorial if someone wants to preview or remember what was covered.
+  "Part 1" is not a descriptive title for a tutorial if someone wants to preview or remember what was covered.
 * Almost everyone is new to GraphQL and gets overwhelmed when we introduce it in Part 4.
 
 ## Documentation project beginnings

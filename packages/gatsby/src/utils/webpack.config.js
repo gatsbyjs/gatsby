@@ -1,32 +1,24 @@
 require(`v8-compile-cache`)
 
-const { uniq, some } = require(`lodash`)
 const fs = require(`fs`)
 const path = require(`path`)
 const dotenv = require(`dotenv`)
 const StaticSiteGeneratorPlugin = require(`static-site-generator-webpack-plugin`)
-const NameAllModulesPlugin = require(`name-all-modules-plugin`)
-const { StatsWriterPlugin } = require(`webpack-stats-plugin`)
-// const FriendlyErrorsWebpackPlugin = require(`friendly-errors-webpack-plugin`)
-const WatchMissingNodeModulesPlugin = require(`react-dev-utils/WatchMissingNodeModulesPlugin`)
+const FriendlyErrorsWebpackPlugin = require(`friendly-errors-webpack-plugin`)
 const { store } = require(`../redux`)
 const { actions } = require(`../redux/actions`)
 const debug = require(`debug`)(`gatsby:webpack-config`)
-const WebpackMD5Hash = require(`webpack-md5-hash`)
-const GatsbyModulePlugin = require(`gatsby-module-loader/plugin`)
 const report = require(`gatsby-cli/lib/reporter`)
 const { withBasePath } = require(`./path`)
-const { chunkNamer } = require(`./webpack-helpers`)
 
 const apiRunnerNode = require(`./api-runner-node`)
 const createUtils = require(`./webpack-utils`)
 
-// Five stages or modes:
+// Four stages or modes:
 //   1) develop: for `gatsby develop` command, hot reload and CSS injection into page
 //   2) develop-html: same as develop without react-hmre in the babel config for html renderer
-//   3) build-css: build styles.css file
+//   3) build-javascript: Build JS and CSS chunks for production
 //   4) build-html: build all HTML files
-//   5) build-javascript: Build js chunks for Single Page App in production
 
 module.exports = async (
   program,
@@ -90,24 +82,17 @@ module.exports = async (
           devtoolModuleFilenameTemplate: info =>
             path.resolve(info.absoluteResourcePath).replace(/\\/g, `/`),
         }
-      case `build-css`:
-        // Webpack will always generate a resultant javascript file.
-        // But we don't want it for this step. Deleted by build-css.js.
-        return {
-          path: directoryPath(`public`),
-          filename: `bundle-for-css.js`,
-          publicPath: program.prefixPaths
-            ? `${store.getState().config.pathPrefix}/`
-            : `/`,
-        }
       case `build-html`:
       case `develop-html`:
         // A temp file required by static-site-generator-plugin. See plugins() below.
         // Deleted by build-html.js, since it's not needed for production.
         return {
           path: directoryPath(`public`),
-          filename: `[name].render-page.js`,
+          filename: `render-page.js`,
           libraryTarget: `umd`,
+          library: `lib`,
+          umdNamedDefine: true,
+          globalObject: `this`,
           publicPath: program.prefixPaths
             ? `${store.getState().config.pathPrefix}/`
             : `/`,
@@ -141,10 +126,6 @@ module.exports = async (
         return {
           main: directoryPath(`.cache/develop-static-entry`),
         }
-      case `build-css`:
-        return {
-          main: directoryPath(`.cache/app`),
-        }
       case `build-html`:
         return {
           main: directoryPath(`.cache/static-entry`),
@@ -171,9 +152,10 @@ module.exports = async (
         __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
       }),
 
-      plugins.extractText({
-        filename: stage === `build-css` ? `styles.css` : `${stage}.css`,
-      }),
+      plugins.extractText(stage === `develop` ? {
+        filename: `[name].css`,
+        chunkFilename: `[name].css`,
+      } : {}),
     ]
 
     switch (stage) {
@@ -182,138 +164,30 @@ module.exports = async (
           plugins.hotModuleReplacement(),
           plugins.noEmitOnErrors(),
 
-          // If you require a missing module and then `npm install` it, you still have
-          // to restart the development server for Webpack to discover it. This plugin
-          // makes the discovery automatic so you don't have to restart.
-          // See https://github.com/facebookincubator/create-react-app/issues/186
-          new WatchMissingNodeModulesPlugin(directoryPath(`node_modules`)),
-
-          new NameAllModulesPlugin(),
-          plugins.namedModules(),
-          // new FriendlyErrorsWebpackPlugin({
-          // clearConsole: false,
-          // compilationSuccessInfo: {
-          // messages: [
-          // `You can now view your site in the browser running at http://${
-          // program.host
-          // }:${program.port}`,
-          // `Your graphql debugger is running at http://${program.host}:${
-          // program.port
-          // }/___graphql`,
-          // ],
-          // },
-          // }),
+          new FriendlyErrorsWebpackPlugin({
+            clearConsole: false,
+            compilationSuccessInfo: {
+              messages: [
+                `You can now view your site in the browser running at http://${
+                  program.host
+                }:${program.port}`,
+                `Your graphql debugger is running at http://${program.host}:${
+                  program.port
+                }/___graphql`,
+              ],
+            },
+          }),
         ])
         break
 
       case `develop-html`:
       case `build-html`:
         configPlugins = configPlugins.concat([
-          new StaticSiteGeneratorPlugin(`main.render-page.js`, pages),
-          plugins.namedModules(),
-          plugins.namedChunks(chunkNamer),
-          new NameAllModulesPlugin(),
+          new StaticSiteGeneratorPlugin(`render-page.js`, pages),
         ])
         break
       case `build-javascript`: {
-        // Get array of page template component names.
-        let components = store
-          .getState()
-          .pages.map(page => page.componentChunkName)
-
-        components = uniq(components)
-        components.push(`layout-component---index`)
-
         configPlugins = configPlugins.concat([
-          plugins.namedModules(),
-          plugins.namedChunks(chunkNamer),
-          new NameAllModulesPlugin(),
-          new WebpackMD5Hash(),
-
-          // Extract "commons" chunk from the app entry and all
-          // page components.
-          plugins.commonsChunk({
-            name: `commons`,
-            chunks: [`app`, ...components],
-            // The more page components there are, the higher we raise the bar
-            // for merging in page-specific JS libs into the commons chunk. The
-            // two principles here is a) keep the TTI (time to interaction) as
-            // low as possible so that means keeping commons.js small with
-            // critical framework code (e.g. React/react-router) and b) is we
-            // want to push JS parse/eval work as close as possible to when
-            // it's used. Since most people don't navigate to most pages, take
-            // tradeoff of loading/evaling modules multiple times over
-            // loading/evaling lots of unused code on the initial opening of
-            // the app.
-            minChunks: (module, count) => {
-              const vendorModuleList = [
-                `react`,
-                `react-dom`,
-                `fbjs`,
-                `react-router`,
-                `react-router-dom`,
-                `gatsby-react-router-scroll`,
-                `dom-helpers`, // Used in gatsby-react-router-scroll
-                `path-to-regexp`,
-                `isarray`, // Used by path-to-regexp.
-                `scroll-behavior`,
-                `history`,
-                `domready`,
-                `resolve-pathname`, // Used by history.
-                `value-equal`, // Used by history.
-                `invariant`, // Used by history.
-                `warning`, // Used by history.
-                `babel-runtime`, // Used by history.
-                `core-js`, // Used by history.
-                `loose-envify`, // Used by history.
-                `prop-types`,
-                `gatsby-link`,
-                `mitt`,
-                `shallow-compare`,
-              ]
-              const cacheDirList = [
-                `production-app`,
-                `loader`,
-                `prefetcher`,
-                `find-page`,
-                `component-renderer`,
-                `emitter`,
-                `register-service-worker`,
-                `strip-prefix`,
-                `history`,
-              ]
-
-              const isFramework = some(
-                vendorModuleList.map(vendor => {
-                  const regex = new RegExp(
-                    `[\\\\/]node_modules[\\\\/]${vendor}[\\\\/].*`,
-                    `i`
-                  )
-                  return regex.test(module.resource)
-                })
-              )
-
-              const isRuntime = some(
-                cacheDirList.map(runtime => {
-                  const regex = new RegExp(`.*cache[\\\\/]${runtime}.*`, `i`)
-                  return regex.test(module.resource)
-                })
-              )
-
-              return isFramework || isRuntime || count > 3
-            },
-          }),
-
-          // using a chunk name that doesn't exist creates a chunk with
-          // just the runtime bits
-          plugins.commonsChunk({
-            name: `@@webpack-runtime`,
-            filename: `@@webpack-runtime.js`,
-          }),
-          // Write out mapping between chunk names and their hashed names. We use
-          // this to add the needed javascript files to each HTML page.
-          new StatsWriterPlugin(),
-
           // Minify Javascript.
           plugins.uglify({
             uglifyOptions: {
@@ -322,9 +196,35 @@ module.exports = async (
               },
             },
           }),
-          new GatsbyModulePlugin(),
-          plugins.namedModules(),
-          plugins.namedChunks(chunkNamer),
+          // Write out stats object mapping named dynamic imports (aka page
+          // components) to all their async chunks.
+          {
+            apply: function(compiler) {
+              compiler.plugin(`done`, function(stats, done) {
+                let assets = {}
+
+                for (let chunkGroup of stats.compilation.chunkGroups) {
+                  if (chunkGroup.name) {
+                    let files = []
+                    for (let chunk of chunkGroup.chunks) {
+                      files.push(...chunk.files)
+                    }
+                    assets[chunkGroup.name] = files.filter(
+                      f => f.slice(-4) !== `.map`
+                    )
+                  }
+                }
+
+                fs.writeFile(
+                  path.join(`public`, `webpack.stats.json`),
+                  JSON.stringify({
+                    assetsByChunkName: assets,
+                  }),
+                  done
+                )
+              })
+            },
+          },
         ])
         break
       }
@@ -336,7 +236,7 @@ module.exports = async (
   function getDevtool() {
     switch (stage) {
       case `develop`:
-        return `cheap-module-source-map`
+        return `eval`
       // use a normal `source-map` for the html phases since
       // it gives better line and column numbers
       case `develop-html`:
@@ -345,6 +245,19 @@ module.exports = async (
         return `source-map`
       default:
         return false
+    }
+  }
+
+  function getMode() {
+    switch (stage) {
+      case `build-javascript`:
+        return `production`
+      case `develop`:
+      case `develop-html`:
+      case `build-html`:
+        return `development` // So we don't uglify the html bundle
+      default:
+        return `production`
     }
   }
 
@@ -360,8 +273,14 @@ module.exports = async (
     ]
     switch (stage) {
       case `develop`:
-      case `build-css`:
-        configRules = configRules.concat([rules.css(), rules.cssModules()])
+        configRules = configRules.concat([
+          {
+            oneOf: [
+              rules.cssModules(),
+              rules.css(),
+            ],
+          },
+        ])
         break
 
       case `build-html`:
@@ -373,21 +292,42 @@ module.exports = async (
         // prettier-ignore
         configRules = configRules.concat([
           {
-            ...rules.css(),
-            use: [loaders.null()],
+            oneOf: [
+              rules.cssModules(),
+              {
+                ...rules.css(),
+                use: [loaders.null()],
+              },
+            ],
           },
-          rules.cssModules(),
         ])
         break
 
       case `build-javascript`:
-        // we don't deal with css at all when building the javascript.  but
-        // still need to process the css so offline-plugin knows about the
-        // various assets referenced in your css.
+        // We don't deal with CSS at all when building JavaScript but we still
+        // need to process the CSS so offline-plugin knows about the various
+        // assets referenced in your CSS.
         //
         // It's also necessary to process CSS Modules so your JS knows the
         // classNames to use.
-        configRules = configRules.concat([rules.css(), rules.cssModules()])
+        configRules = configRules.concat([
+          {
+            oneOf: [
+              rules.cssModules(),
+              rules.css(),
+            ],
+          },
+
+          // Remove manually unused React Router modules. Try removing these
+          // rules whenever they get around to making a new release with their
+          // tree shaking fixes.
+          { test: /HashHistory/, use: `null-loader` },
+          { test: /MemoryHistory/, use: `null-loader` },
+          { test: /StaticRouter/, use: `null-loader` },
+          { test: /MemoryRouter/, use: `null-loader` },
+          { test: /HashRouter/, use: `null-loader` },
+        ])
+
         break
     }
 
@@ -450,6 +390,7 @@ module.exports = async (
     performance: {
       hints: false,
     },
+    mode: getMode(),
 
     resolveLoader: getResolveLoader(),
     resolve: getResolve(),
@@ -457,6 +398,17 @@ module.exports = async (
     node: {
       __filename: true,
     },
+  }
+
+  if (stage === `build-javascript`) {
+    config.optimization = {
+      runtimeChunk: {
+        name: `webpack-runtime`,
+      },
+      splitChunks: {
+        name: false,
+      },
+    }
   }
 
   store.dispatch(actions.replaceWebpackConfig(config))
