@@ -181,7 +181,7 @@ Let's fix that. We need to teach Gatsby how to query the file system. Luckily
 this is so common it's been done for you. Install the file system source plugin:
 
 ```
-yarn add gatsby-source-filesystem
+npm i --save gatsby-source-filesystem
 ```
 
 Now modify `gatsby-config.js` to both use the plugin and tell it what directory
@@ -230,7 +230,7 @@ files this is all you will need. But if you want to render markdown files as
 HTML you will need another plugin. Let's add that now:
 
 ```
-yarn add gatsby-transformer-remark
+npm i --save gatsby-transformer-remark
 ```
 
 As before, add it to the `plugins` field in `gatsby-config.js`:
