@@ -1,14 +1,14 @@
 {
   "name": "gatsby-plugin-sass",
   "description": "Gatsby plugin to handle scss/sass files",
-  "version": "1.0.23",
+  "version": "1.0.24",
   "author": "Daniel Farrell <daniel@mobelux.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
     "babel-runtime": "^6.26.0",
-    "gatsby-1-config-css-modules": "^1.0.10",
+    "gatsby-1-config-css-modules": "^1.0.11",
     "gatsby-1-config-extract-plugin": "^1.0.2",
     "node-sass": "^4.5.2",
     "sass-loader": "^4.1.1",
