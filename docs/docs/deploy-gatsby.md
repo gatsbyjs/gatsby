@@ -166,7 +166,7 @@ cache:
 
 pages:
   script:
-  - yarn install
+  - npm install
   - ./node_modules/.bin/gatsby build --prefix-paths
   artifacts:
     paths:
@@ -181,14 +181,14 @@ in between builds, so subsequent builds should be a lot faster as it doesn't hav
 to reinstall all the dependancies required. `pages:` is the name of the
 CI stage. You can have multiple stages, e.g. 'Test', 'Build', 'Deploy' etc.
 `script:` starts the next part of the CI stage, telling it to start running the
-below scripts inside the image selected. We have used the `yarn install` and
+below scripts inside the image selected. We have used the `npm install` and
 `./node_modules/.bin/gatsby build --prefix-paths` which will install all dependancies, and
 start the static site build, respectively.
 
 We have used
 `./node_modules/.bin/gatsby build --prefix-paths` because we then don't have to install
 gatsby-cli to build the image, as it has already been included and installed
-with `yarn install`. We have included `--prefix-paths` as when running the command _without_ that flag, Gatsby ignores your pathPrefix. `artifacts:` and `paths:` are used to tell GitLab pages
+with `npm install`. We have included `--prefix-paths` as when running the command _without_ that flag, Gatsby ignores your pathPrefix. `artifacts:` and `paths:` are used to tell GitLab pages
 where the static files are kept. `only:` and `master` tells the CI to only run
 the above instructions when the master branch is deployed.
 
