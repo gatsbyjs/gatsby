@@ -16,6 +16,13 @@ describe(`remark prism plugin`, () => {
       plugin({ markdownAST }, { classPrefix: `custom-` })
       expect(markdownAST).toMatchSnapshot()
     })
+
+    it(`with aliases applied`, () => {
+      const code = `\`\`\`foobar\n// Fake\n\`\`\``
+      const markdownAST = remark.parse(code)
+      plugin({ markdownAST }, { aliases: { foobar: `javascript` } })
+      expect(markdownAST).toMatchSnapshot()
+    })
   })
 
   describe(`generates an inline <code> tag`, () => {
@@ -37,6 +44,16 @@ describe(`remark prism plugin`, () => {
       const code = `\`css🍺  .foo { color: red }\``
       const markdownAST = remark.parse(code)
       plugin({ markdownAST }, { inlineCodeMarker: `🍺  ` })
+      expect(markdownAST).toMatchSnapshot()
+    })
+
+    it(`with aliases applied`, () => {
+      const code = `\`foobar : Fake\``
+      const markdownAST = remark.parse(code)
+      plugin(
+        { markdownAST },
+        { inlineCodeMarker: ` : `, aliases: { foobar: `javascript` } }
+      )
       expect(markdownAST).toMatchSnapshot()
     })
   })

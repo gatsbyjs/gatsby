@@ -5,8 +5,13 @@ const highlightCode = require(`./highlight-code`)
 
 module.exports = (
   { markdownAST },
-  { classPrefix = `language-`, inlineCodeMarker = null } = {}
+  { classPrefix = `language-`, inlineCodeMarker = null, aliases = {} } = {}
 ) => {
+  const normalizeLanguage = lang => {
+    const lower = lang.toLowerCase()
+    return aliases[lower] || lower
+  }
+
   visit(markdownAST, `code`, node => {
     let language = node.lang
     let { splitLanguage, highlightLines } = parseLineNumberRange(language)
@@ -20,8 +25,7 @@ module.exports = (
     // @see https://github.com/PrismJS/prism/blob/1d5047df37aacc900f8270b1c6215028f6988eb1/themes/prism.css#L49-L54
     let languageName = `text`
     if (language) {
-      language = language.toLowerCase()
-      languageName = language
+      languageName = normalizeLanguage(language)
     }
 
     // Allow users to specify a custom class prefix to avoid breaking
@@ -49,7 +53,7 @@ module.exports = (
     if (inlineCodeMarker) {
       let [language, restOfValue] = node.value.split(`${inlineCodeMarker}`, 2)
       if (language && restOfValue) {
-        languageName = language.toLowerCase()
+        languageName = normalizeLanguage(language)
         node.value = restOfValue
       }
     }
