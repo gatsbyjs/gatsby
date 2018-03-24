@@ -34,6 +34,11 @@ plugins: [
             // A suggested value for English speakers is the non-ascii
             // character '›'.
             inlineCodeMarker: null,
+            // This lets you set up language aliases.  For example,
+            // setting this to '{ sh: "bash" }' will let you use
+            // the language "sh" which will highlight using the
+            // bash highlighter.
+            aliases: {},
           },
         },
       ],
