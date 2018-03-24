@@ -76,7 +76,7 @@ const getPosts = maxId => {
         posts.push(item)
       })
 
-    const lastId = get(body, `user.media.page_info.end_cursor`)
+    const lastId = get(body, `user.edge_owner_to_timeline_media.page_info.end_cursor`)
     if (posts.length < 100 && lastId) getPosts(lastId)
     else saveJSON()
   })
