@@ -13,7 +13,7 @@ We want contributing to Gatsby to be fun, enjoyable, and educational for anyone 
 * Submitting spelling or grammar fixes
 * Adding unit or functional tests
 * Triaging [GitHub issues](https://github.com/gatsbyjs/gatsby/issues) -- especially determining whether an issue still persists or is reproducible
-* [Reporting bugs or issues](/docs/how-to-file-an-issue/)
+* [Reporting bugs or issues](/docs/docs/how-to-file-an-issue.md)
 * Searching for Gatsby on Discord or Spectrum and helping someone else who needs help
 * Teaching others how to contribute to Gatsby's repo!
 
