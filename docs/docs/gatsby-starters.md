@@ -540,3 +540,13 @@ Community:
   * Sticky Navigation when scrolling.
   * Scroll spy and smooth scrolling to different sections of the page.
   * Styling with SCSS
+  
+* [gatsby-starter-tailwind](https://github.com/taylorbryant/gatsby-starter-tailwind)
+  [(demo)](https://quizzical-mcclintock-0226ac.netlify.com/)
+
+  Features:
+
+  * Based on [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default)
+  * [Tailwind CSS](https://tailwindcss.com) Framework
+  * Removes unused CSS with [Purgecss](https://www.purgecss.com/)
+  * Includes responsive navigation and form examples
