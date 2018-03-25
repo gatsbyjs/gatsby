@@ -33,21 +33,21 @@ const findChildrenRecursively = (children = []) => {
 }
 
 type Job = {
-  id: string,
-}
+  id: string
+};
 type PageInput = {
   path: string,
   component: string,
   layout?: string,
-  context?: Object,
-}
+  context?: Object
+};
 type LayoutInput = {
   id?: string,
   machineId?: string,
   component: string,
   layout?: string,
-  context?: Object,
-}
+  context?: Object
+};
 
 type Page = {
   path: string,
@@ -58,8 +58,8 @@ type Page = {
   jsonName: string,
   componentChunkName: string,
   layout: ?string,
-  updatedAt: number,
-}
+  updatedAt: number
+};
 
 type Layout = {
   id: any,
@@ -69,12 +69,12 @@ type Layout = {
   componentChunkName: string,
   internalComponentName: string,
   jsonName: string,
-  isLayout: true,
-}
+  isLayout: true
+};
 
 type Plugin = {
-  name: string,
-}
+  name: string
+};
 
 /**
  * Delete a page
@@ -267,7 +267,9 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
 
   const result = Joi.validate(internalPage, joiSchemas.pageSchema)
   if (result.error) {
-    console.log(chalk.blue.bgYellow(`The upserted page didn't pass validation`))
+    console.log(
+      chalk.blue.bgYellow(`The upserted page didn't pass validation`)
+    )
     console.log(chalk.bold.red(result.error))
     console.log(internalPage)
     return null
@@ -412,13 +414,17 @@ actions.createLayout = (
  * deleteNode(node.id, node)
  */
 actions.deleteNode = (nodeId: string, node: any, plugin: Plugin) => {
-  // Also delete any nodes transformed from this one.
   let deleteDescendantsActions
-  const descendantNodes = findChildrenRecursively(node.children)
-  if (descendantNodes.length > 0) {
-    deleteDescendantsActions = descendantNodes.map(n =>
-      actions.deleteNode(n, getNode(n), plugin)
-    )
+  // It's possible the file node was never created as sometimes tools will
+  // write and then immediately delete temporary files to the file system.
+  if (node) {
+    // Also delete any nodes transformed from this one.
+    const descendantNodes = findChildrenRecursively(node.children)
+    if (descendantNodes.length > 0) {
+      deleteDescendantsActions = descendantNodes.map(n =>
+        actions.deleteNode(n, getNode(n), plugin)
+      )
+    }
   }
 
   const deleteAction = {
@@ -686,8 +692,8 @@ type CreateNodeInput = {
   fieldName?: string,
   fieldValue?: string,
   name?: string,
-  value: any,
-}
+  value: any
+};
 /**
  * Extend another node. The new node field is placed under the `fields`
  * key on the extended node object.
@@ -846,7 +852,7 @@ actions.replaceComponentQuery = ({
   componentPath,
 }: {
   query: string,
-  componentPath: string,
+  componentPath: string
 }) => {
   return {
     type: `REPLACE_COMPONENT_QUERY`,
@@ -970,8 +976,8 @@ actions.createRedirect = ({
 }
 
 /**
-  * All defined actions.
-  */
+ * All defined actions.
+ */
 exports.actions = actions
 
 /**
