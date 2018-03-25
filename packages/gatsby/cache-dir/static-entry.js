@@ -226,7 +226,7 @@ export default (locals, callback) => {
           data-href={`${pathPrefix}${style}`}
           dangerouslySetInnerHTML={{
             __html: fs.readFileSync(
-              `${process.cwd()}/public/${style}`,
+              `${process.cwd()}/public/${style.replace(pathPrefix, ``)}`,
               `utf-8`
             ),
           }}
