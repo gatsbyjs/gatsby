@@ -220,7 +220,9 @@ export default (locals, callback) => {
     })
 
   if (page.jsonName in staticDataPaths) {
-    const dataPath = `${pathPrefix}static/d/${staticDataPaths[page.jsonName]}`
+    const dataPath = `${pathPrefix}static/d/${
+      staticDataPaths[page.jsonName]
+    }.json`
     // Insert json data path after app
     headComponents.splice(
       1,
