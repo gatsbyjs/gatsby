@@ -6,7 +6,7 @@ built-in server-side rendering support.
 
 ## Install
 
-`npm install --save gatsby-plugin-styled-components styled-components`
+`npm install --save gatsby-plugin-styled-components styled-components babel-plugin-styled-components`
 
 ## How to use
 
