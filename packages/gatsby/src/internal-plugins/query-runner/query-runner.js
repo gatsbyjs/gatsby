@@ -63,24 +63,22 @@ module.exports = async (pageOrLayout, component) => {
 
   if (resultHashes[pageOrLayout.jsonName] !== resultHash) {
     resultHashes[pageOrLayout.jsonName] = resultHash
-    const programType = program._[0]
-
-    if (programType === `develop`) {
-      const result = { [pageOrLayout.jsonName]: resultJSON }
-      const socket = websocketManager.instance()
-      if (socket) {
-        // push result straight to client
-        socket.emit(`queryResult`, result)
-      } else {
-        // queue results up until socket is available
-        websocketManager.pushResults(result)
-      }
-    }
 
     // Always write file to public/static/d/ folder.
     const dataPath = `${generatePathChunkName(
       pageOrLayout.jsonName
     )}-${resultHash}`
+
+    const programType = program._[0]
+
+    if (programType === `develop`) {
+      const data = {
+        dataPath,
+        data: resultJSON,
+        path: pageOrLayout.jsonName,
+      }
+      websocketManager.emitData({ data })
+    }
 
     const resultPath = path.join(
       program.directory,

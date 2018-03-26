@@ -23,7 +23,6 @@ const chalk = require(`chalk`)
 const address = require(`address`)
 const sourceNodes = require(`../utils/source-nodes`)
 const websocketManager = require(`../utils/websocket-manager`)
-const path = require(`path`)
 
 // const isInteractive = process.stdout.isTTY
 
@@ -43,26 +42,6 @@ const rlInterface = rl.createInterface({
 rlInterface.on(`SIGINT`, () => {
   process.exit()
 })
-
-// Read query results from cached json files
-const getCachedQueryResults = ({ pages, jsonDataPaths, directory }) => {
-  let data = {}
-
-  pages.forEach(page => {
-    const dataPath = jsonDataPaths[page.jsonName]
-    if (typeof dataPath === `undefined`) return
-    const filePath = path.join(
-      directory,
-      `public`,
-      `static`,
-      `d`,
-      `${dataPath}.json`
-    )
-    data[page.jsonName] = fs.readFileSync(filePath, `utf-8`)
-  })
-
-  return data
-}
 
 async function startServer(program) {
   const directory = program.directory
@@ -218,18 +197,8 @@ async function startServer(program) {
    * Set up the HTTP server and socket.io.
    **/
   const server = require(`http`).Server(app)
-  const state = store.getState()
-  const cachedQueryResults = getCachedQueryResults({
-    pages: state.pages,
-    jsonDataPaths: state.jsonDataPaths,
-    directory: program.directory,
-  })
-  websocketManager.pushResults(cachedQueryResults)
-  websocketManager.init(server)
-  const socket = websocketManager.instance()
-  socket.on(`connection`, s => {
-    s.join(`clients`)
-  })
+  websocketManager.init({ server, directory: program.directory })
+  const socket = websocketManager.getSocket()
 
   const listener = server.listen(program.port, program.host, err => {
     if (err) {

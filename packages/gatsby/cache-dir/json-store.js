@@ -10,43 +10,61 @@ class JSONStore extends React.Component {
     super(props)
     this.state = {
       data: {},
-      receivedData: false,
     }
     try {
       this.socket = window.io()
     } catch (err) {
       console.error(`Could not connect to socket.io on dev server.`)
     }
-    this.setJsonData = this.setJsonData.bind(this)
+    this.setPageData = this.setPageData.bind(this)
+    this.getPageData = this.getPageData.bind(this)
   }
 
   componentDidMount() {
-    this.socket.on(`queryResult`, this.setJsonData)
+    this.socket.on(`queryResult`, this.setPageData)
   }
 
-  setJsonData(newData) {
+  shouldComponentUpdate(nextProps, nextState) {
+    if (nextProps !== this.props) return true
+
+    // if json for nextState is not available
+    const nextJsonId = get(nextProps.pageResources, `page.jsonName`)
+    if (!nextState.data[nextJsonId]) return false
+
+    // if nextState json is the same as current state json
+    const sameDataPath =
+      get(nextState, `data[${nextJsonId}].dataPath`) ===
+      get(this, `state.data[${nextJsonId}].dataPath`)
+
+    if (sameDataPath) return false
+
+    return true
+  }
+
+  setPageData(newData) {
     this.setState({
-      data: { ...this.state.data, ...newData },
-      receivedData: true,
+      data: { [newData.path]: newData },
     })
   }
 
   getPageData(path) {
-    const ob = this.state.data[path]
-    if (!ob) {
-      console.log(`Missing JSON: ${path}`)
-      return {}
-    }
-    return JSON.parse(ob)
+    const res = this.state.data[path]
+
+    // always check for fresh data
+    this.socket.emit(`getPageData`, path)
+
+    if (!res || !res.data) return false
+    return JSON.parse(res.data)
   }
 
   render() {
-    if (!this.state.receivedData) return ``
     const { isPage, pages, pageResources } = this.props
     const propsWithoutPages = omit(this.props, `pages`)
+
     if (isPage) {
       const jsonId = get(pageResources, `page.jsonName`)
       const pageData = this.getPageData(jsonId)
+      if (pageData === false) return ``
       return createElement(ComponentRenderer, {
         key: `normal-page`,
         ...propsWithoutPages,
