@@ -26,6 +26,12 @@ To compile and install native addons from npm you may also need to install build
 sudo apt install -y build-essential
 ```
 
+**Install node**
+
+If installing node via the instructions given on the nodejs.org site doesn't give the correct permissions i.e. permission errors when trying to `npm install` try using [n] instead, you can install it with [n-install]:
+
+
+
 ### Using Windows Subsystem Linux: Debian
 
 ```sh
@@ -41,3 +47,7 @@ Or to install all at the same time and approve (y) all installs:
 ```sh
 sudo apt update && sudo apt -y upgrade && sudo apt install build-essential && sudo apt install git && sudo apt install libpng-dev
 ```
+
+<!-- links -->
+[n]: https://github.com/tj/n
+[n-install]: https://github.com/mklement0/n-install
