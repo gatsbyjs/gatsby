@@ -30,12 +30,10 @@ This might be your problem if, after running `npm install` on a Gatsby site, you
 see compilation errors such as `node-gyp` or `sharp` or `binding.gyp not found`.
 
 If you suspect this is your problem, download the
-[Visual Studio Community 2015 Package](https://www.visualstudio.com/products/visual-studio-community-vs)
+[Visual Studio Community 2015 Package](https://www.visualstudio.com/vs/older-downloads/) (also available from this [direct download link](https://go.microsoft.com/fwlink/?LinkId=532606&clcid=0x409))
 and install only the part of the package that interests us : `Programming languages > Visual C++ > Common tools for Visual Studio 2015`. Be sure to
 download the 2015 version of VS Community, not the 2017 version (see Note 1
-below) ; you'll have to use the
-[search bar on the VS site](https://www.visualstudio.com/products/visual-studio-community-vs)
-to find it. You can uncheck everything else. You don't need to install the full
+below). You can uncheck everything else. You don't need to install the full
 VS2015 Express on your system and this won't mess up your existing VS201x
 installs.
 
