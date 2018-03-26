@@ -36,11 +36,11 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     Root = Root.default
   }
 
-  domReady(() =>
+  domReady(() => {
     ReactDOM.render(<Root />, rootElement, () => {
       apiRunner(`onInitialClientRender`)
     })
-  )
+  })
 })
 
 function supportsServiceWorkers(location, navigator) {

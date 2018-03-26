@@ -105,19 +105,26 @@ export default (locals, callback) => {
     bodyProps = merge({}, bodyProps, props)
   }
 
+  const AltStaticRouter = apiRunner(`replaceStaticRouterComponent`)[0]
+
+  apiRunner(`replaceStaticRouterComponent`)
+
   const bodyComponent = createElement(
-    StaticRouter,
+    AltStaticRouter || StaticRouter,
     {
+      basename: pathPrefix,
       location: {
         pathname: locals.path,
       },
       context: {},
     },
     createElement(Route, {
+      // eslint-disable-next-line react/display-name
       render: routeProps => {
         const page = getPage(routeProps.location.pathname)
         const layout = getLayout(page)
         return createElement(withRouter(layout), {
+          // eslint-disable-next-line react/display-name
           children: layoutProps => {
             const props = layoutProps ? layoutProps : routeProps
             return createElement(
