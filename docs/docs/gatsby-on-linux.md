@@ -7,7 +7,7 @@ TODO
 
 ## Windows Subsystem Linux (WSL)
 
-As of October 17th 2017 Windows 10 ships with WSL and Linux distributions are available via the [Windows Store], there are several different distributions to use which can be configured via `wslconfig` if you have more than one distribution installed.
+As of October 17th 2017, Windows 10 ships with WSL and Linux distributions are available via the [Windows Store], there are several different distributions to use which can be configured via `wslconfig` if you have more than one distribution installed.
 
 ```sh
 # set default distribution to Ubuntu
@@ -35,7 +35,7 @@ sudo apt install -y build-essential
 
 **Install node**
 
-If installing node via the instructions given on the nodejs.org site doesn't give the correct permissions (i.e. permission errors when trying to `npm install`) try using [n] instead, you can install it with [n-install]:
+Following the install instructions on nodejs.org leaves a slightly broken install (i.e. permission errors when trying to `npm install`). Instead trying installing node versions using [n] which you can install with [n-install]:
 
 ```sh
 curl -L https://git.io/n-install | bash
