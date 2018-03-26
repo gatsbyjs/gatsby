@@ -1,11 +1,15 @@
 describe(`gatsby-plugin-sass`, () => {
-  jest.mock(`gatsby-1-config-extract-plugin`, () => {return {
-    extractTextPlugin: () => {return {
-      extract: (...args) => {
-        return { extractTextCalledWithArgs: args }
+  jest.mock(`gatsby-1-config-extract-plugin`, () => {
+    return {
+      extractTextPlugin: () => {
+        return {
+          extract: (...args) => {
+            return { extractTextCalledWithArgs: args }
+          },
+        }
       },
-    }},
-  }})
+    }
+  })
   const { modifyWebpackConfig } = require(`../gatsby-node`)
   const cssLoader = expect.stringMatching(/^css/)
   ;[

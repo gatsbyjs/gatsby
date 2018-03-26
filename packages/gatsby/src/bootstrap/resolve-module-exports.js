@@ -48,7 +48,10 @@ module.exports = (modulePath, resolver = require.resolve) => {
   traverse(ast, {
     // get foo from `export const foo = bar`
     ExportNamedDeclaration: function ExportNamedDeclaration(astPath) {
-      const exportName = get(astPath, `node.declaration.declarations[0].id.name`)
+      const exportName = get(
+        astPath,
+        `node.declaration.declarations[0].id.name`
+      )
       if (exportName) exportNames.push(exportName)
     },
     AssignmentExpression: function AssignmentExpression(astPath) {
