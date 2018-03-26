@@ -5,7 +5,7 @@ title: Gatsby on Linux
 
 ## Windows Subsystem Linux (WSL)
 
-As of October 17th 2017 Windows 10 ships with WSL and is available via the Windows Store, there are several different distributions to use which can be configured via `wslconfig` if you have more than one distribution installed.
+As of October 17th 2017 Windows 10 ships with WSL and Linux distributions are available via the [Windows Store], there are several different distributions to use which can be configured via `wslconfig` if you have more than one distribution installed.
 
 ```sh
 # set default distribution to Ubuntu
@@ -25,7 +25,7 @@ sudo apt -y upgrade
 
 **Build tools**
 
-To compile and install native addons from npm you may also need to install build tools, I need this for Gatsby images which uses `sharp` which in turn uses `node-gyp`:
+To compile and install native addons from npm you may also need to install build tools for `node-gyp`:
 
 ```sh
 sudo apt install -y build-essential
@@ -43,7 +43,7 @@ There are other alternatives for managing you node versions such as [nvm] but th
 
 ### Using Windows Subsystem Linux: Debian
 
-Debian 
+Debian setup is nearly identical to Ubuntu except for the additional installs of `git` and `libpng-dev`.
 
 ```sh
 sudo apt update
@@ -60,6 +60,7 @@ sudo apt update && sudo apt -y upgrade && sudo apt install build-essential && su
 ```
 
 <!-- links -->
+[windows store]: https://www.microsoft.com/en-us/store/p/ubuntu/9nblggh4msv6
 [n]: https://github.com/tj/n
 [n-install]: https://github.com/mklement0/n-install
 [nvm]: https://github.com/creationix/nvm
