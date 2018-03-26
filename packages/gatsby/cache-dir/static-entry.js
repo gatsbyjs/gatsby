@@ -1,8 +1,9 @@
 const React = require(`react`)
 const fs = require(`fs`)
+const { join } = require(`path`)
 const { renderToString, renderToStaticMarkup } = require(`react-dom/server`)
 const { StaticRouter, Route, withRouter } = require(`react-router-dom`)
-const { kebabCase, get, merge, isArray, isString, flatten } = require(`lodash`)
+const { kebabCase, get, merge, isString, flatten } = require(`lodash`)
 
 const apiRunner = require(`./api-runner-ssr`)
 const pages = require(`./pages.json`)
@@ -39,6 +40,13 @@ try {
 }
 
 Html = Html && Html.__esModule ? Html.default : Html
+
+function urlJoin(...parts) {
+  return parts.reduce((r, next) => {
+    const segment = next == null ? `` : String(next).replace(/^\/+/, ``)
+    return segment ? `${r.replace(/\/$/, ``)}/${segment}` : r
+  }, ``)
+}
 
 const pathChunkName = path => {
   const name = path === `/` ? `index` : kebabCase(path)
@@ -177,14 +185,14 @@ export default (locals, callback) => {
         return null
       }
 
-      return chunks.map(c => {
-        if (c === `/`) {
+      return chunks.map(chunk => {
+        if (chunk === `/`) {
           return null
         }
-        if (c.slice(0, 15) === `webpack-runtime`) {
+        if (chunk.slice(0, 15) === `webpack-runtime`) {
           return null
         }
-        return `${pathPrefix}${c}`
+        return chunk
       })
     })
   ).filter(s => isString(s))
@@ -192,7 +200,7 @@ export default (locals, callback) => {
   const styles = scriptsAndStyles.filter(s => s.endsWith(`.css`))
 
   const runtimeRaw = fs.readFileSync(
-    `${process.cwd()}/public/${runtimeScript}`,
+    join(process.cwd(), `public`, runtimeScript),
     `utf-8`
   )
   postBodyComponents.push(
@@ -211,7 +219,12 @@ export default (locals, callback) => {
     .forEach(script => {
       // Add preload <link>s for scripts.
       headComponents.unshift(
-        <link rel="preload" key={script} href={script} as="script" />
+        <link
+          as="script"
+          rel="preload"
+          key={script}
+          href={urlJoin(pathPrefix, script)}
+        />
       )
     })
 
@@ -223,10 +236,10 @@ export default (locals, callback) => {
       headComponents.unshift(
         <style
           type="text/css"
-          data-href={`${pathPrefix}${style}`}
+          data-href={urlJoin(pathPrefix, style)}
           dangerouslySetInnerHTML={{
             __html: fs.readFileSync(
-              `${process.cwd()}/public/${style}`,
+              join(process.cwd(), `public`, style),
               `utf-8`
             ),
           }}
