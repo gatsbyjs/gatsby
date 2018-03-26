@@ -35,7 +35,7 @@ sudo apt install -y build-essential
 
 **Install node**
 
-Following the install instructions on nodejs.org leaves a slightly broken install (i.e. permission errors when trying to `npm install`). Instead trying installing node versions using [n] which you can install with [n-install]:
+Following the install instructions on nodejs.org leaves a slightly broken install (i.e. permission errors when trying to `npm install`). Instead try installing node versions using [n] which you can install with [n-install]:
 
 ```sh
 curl -L https://git.io/n-install | bash
