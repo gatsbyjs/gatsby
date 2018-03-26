@@ -15,9 +15,9 @@ This tutorial is for _everyone_! You do not need to be a programmer or React.js 
 
 ## Advanced tutorials
 
-In these advanced tutorials, you'll learn how to pull data from almost anywhere into your Gatsby site with GraphQL. 
+In these advanced tutorials, you'll learn how to pull data from almost anywhere into your Gatsby site with GraphQL.
 
-4. [Querying for data in a blog](/tutorial/part-four/): Create a blog and use a GraphQL query to pull your site title into the blog header. 
+4. [Querying for data in a blog](/tutorial/part-four/): Create a blog and use a GraphQL query to pull your site title into the blog header.
 5. [Source plugins and rendering queried data](/tutorial/part-five/): Use a source plugin to pull Markdown blogposts into your site and create an index page with a list of blogposts.
 6. [Transformer plugins](/tutorial/part-six/): Use a transformer plugin to transform your Markdown blogposts into a form the blog can render.
 7. [Programmatically create pages from data](/tutorial/part-seven/): Learn how to programmatically create a set of pages for your blogposts.

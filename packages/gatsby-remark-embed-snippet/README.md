@@ -119,7 +119,7 @@ quz: "highlighted"
 ```javascript
 // In your gatsby-config.js
 module.exports = {
-  plugins: [ 
+  plugins: [
     {
       resolve: `gatsby-transformer-remark`,
       options: {
@@ -138,7 +138,7 @@ module.exports = {
             },
           },
           {
-            resolve: 'gatsby-remark-embed-snippet',
+            resolve: "gatsby-remark-embed-snippet",
             options: {
               // Class prefix for <pre> tags containing syntax highlighting;
               // defaults to 'language-' (eg <pre class="language-js">).
@@ -147,7 +147,7 @@ module.exports = {
               // you may use this to prevent Prism from re-processing syntax.
               // This is an uncommon use-case though;
               // If you're unsure, it's best to use the default value.
-              classPrefix: 'language-',
+              classPrefix: "language-",
 
               // Example code links are relative to this dir.
               // eg examples/path/to/file.js
@@ -157,6 +157,6 @@ module.exports = {
         ],
       },
     },
-  ]
-}
+  ],
+};
 ```

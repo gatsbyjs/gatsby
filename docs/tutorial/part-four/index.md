@@ -347,4 +347,3 @@ in our source.
 ## What's coming next?
 
 Next, you'll be learning about how to pull data into your Gatsby site using GraphQL with source plugins in [part five](/tutorial/part-five/) of the tutorial.
-
