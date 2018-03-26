@@ -28,6 +28,7 @@ exports.sourceNodes = async (
     verboseOutput,
     perPage = 100,
     searchAndReplaceContentUrls = {},
+    concurrentRequests = 10,
   }
 ) => {
   const { createNode } = boundActionCreators
@@ -48,6 +49,7 @@ exports.sourceNodes = async (
     _perPage,
     typePrefix,
     refactoredEntityTypes,
+    concurrentRequests,
   })
 
   // Normalize data & create nodes
