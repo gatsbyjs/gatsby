@@ -186,6 +186,7 @@ Websites built with Gatsby:
 * [Adnan Fajlur - Portfolio](https://adnanfajlur.xyz/)
 * [Hapticmedia](https://hapticmedia.fr/en/)
 * [CodeBushi](https://codebushi.com/)
+* [Philipp Czernitzki - Blog/Website](http://philippczernitzki.me)
 
 ## Docs
 
