@@ -185,6 +185,7 @@ Websites built with Gatsby:
 * [The Rick and Morty API](http://rickandmortyapi.com/)
 * [Adnan Fajlur - Portfolio](https://adnanfajlur.xyz/)
 * [Hapticmedia](https://hapticmedia.fr/en/)
+* [Philipp Czernitzki - Blog/Website](http://philippczernitzki.me)
 * [CodeBushi](https://codebushi.com/)
 
 ## Docs
