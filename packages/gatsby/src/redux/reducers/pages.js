@@ -33,19 +33,7 @@ module.exports = (state = [], action) => {
         return [...state.concat(action.payload)]
       }
     }
-    case `SET_PAGE_DATA_PATH`: {
-      const index = _.findIndex(state, p => p.path === action.payload.path)
-      if (index !== -1) {
-        return [
-          ...state
-            .slice(0, index)
-            .concat({ ...state[index], dataPath: action.payload.dataPath })
-            .concat(state.slice(index + 1)),
-        ]
-      }
 
-      return state
-    }
     case `DELETE_PAGE`:
       return state.filter(p => p.path !== action.payload.path)
     default:

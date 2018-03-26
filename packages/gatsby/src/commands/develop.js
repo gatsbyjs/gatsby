@@ -22,7 +22,7 @@ const formatWebpackMessages = require(`react-dev-utils/formatWebpackMessages`)
 const chalk = require(`chalk`)
 const address = require(`address`)
 const sourceNodes = require(`../utils/source-nodes`)
-const ws = require(`../utils/websocket`)
+const websocketManager = require(`../utils/websocket-manager`)
 
 // const isInteractive = process.stdout.isTTY
 
@@ -196,14 +196,9 @@ async function startServer(program) {
   /**
    * Set up the HTTP server and socket.io.
    **/
-
   const server = require(`http`).Server(app)
-  ws.init(server)
-  const io = ws.instance()
-  io.on(`connection`, socket => {
-    socket.join(`clients`)
-    socket.emit(`queryResult`, ws.flushResults())
-  })
+  websocketManager.init({ server, directory: program.directory })
+  const socket = websocketManager.getSocket()
 
   const listener = server.listen(program.port, program.host, err => {
     if (err) {
@@ -228,7 +223,7 @@ async function startServer(program) {
 
   chokidar.watch(watchGlobs).on(`change`, async () => {
     await createIndexHtml()
-    io.to(`clients`).emit(`reload`)
+    socket.to(`clients`).emit(`reload`)
   })
 
   return [compiler, listener]

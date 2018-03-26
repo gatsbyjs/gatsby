@@ -34,19 +34,7 @@ module.exports = (state = [], action) => {
         return [...state.concat(action.payload)]
       }
     }
-    case `SET_LAYOUT_DATA_PATH`: {
-      const index = _.findIndex(state, l => l.id === action.payload.id)
-      if (index !== -1) {
-        return [
-          ...state
-            .slice(0, index)
-            .concat({ ...state[index], dataPath: action.payload.dataPath })
-            .concat(state.slice(index + 1)),
-        ]
-      }
 
-      return state
-    }
     case `DELETE_LAYOUT`:
       return state.filter(l => l.id !== action.payload.id)
     default:
