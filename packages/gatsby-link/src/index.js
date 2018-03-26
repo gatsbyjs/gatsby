@@ -2,7 +2,7 @@
 import React from "react"
 import { Link, NavLink } from "react-router-dom"
 import PropTypes from "prop-types"
-import { createLocation as cL, createPath } from "history"
+import { createLocation, createPath } from "history"
 
 let pathPrefix = `/`
 if (typeof __PREFIX_PATHS__ !== `undefined` && __PREFIX_PATHS__) {
@@ -15,12 +15,6 @@ export function withPrefix(path) {
 
 function normalizePath(path) {
   return path.replace(/^\/\//g, `/`)
-}
-
-function createLocation(path, history) {
-  const location = cL(path, null, null, history.location)
-  location.pathname = withPrefix(location.pathname)
-  return location
 }
 
 const NavLinkPropTypes = {

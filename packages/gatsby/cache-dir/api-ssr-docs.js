@@ -37,6 +37,11 @@
 exports.replaceRenderer = true
 
 /**
+ * Allow a plugin to replace the static router component.
+ */
+exports.replaceStaticRouterComponent = true
+
+/**
  * Called after every page Gatsby server renders while building HTML so you can
  * set head and body components to be rendered in your `html.js`.
  *
