@@ -236,7 +236,7 @@ exports.onCreateNode = ({ node, boundActionCreators, getNode }) => {
       fileNode.sourceInstanceName === `packages` &&
       parsedFilePath.name === `README`
     ) {
-      slug = `/plugins/${parsedFilePath.dir}/`
+      slug = `/packages/${parsedFilePath.dir}/`
       createNodeField({
         node,
         name: `title`,
