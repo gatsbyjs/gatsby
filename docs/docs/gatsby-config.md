@@ -10,12 +10,12 @@ _Note: There are many sample configs which may be helpful to reference in the di
 
 Options available to set within `gatsby-config.js` include:
 
-1. siteMetadata (object)
-2. plugins (array)
-3. pathPrefix (string)
-4. polyfill (boolean)
-5. mapping (object)
-6. proxy (object)
+1.  siteMetadata (object)
+2.  plugins (array)
+3.  pathPrefix (string)
+4.  polyfill (boolean)
+5.  mapping (object)
+6.  proxy (object)
 
 ## siteMetadata
 
@@ -142,45 +142,45 @@ query BlogPost($slug: String!) {
 Mapping can also be used to map an array of ids to any other collection of data. For example, if you have two JSON files
 `experience.json` and `tech.json` as follows:
 
-```javascript
+```json
 // experience.json
 [
   {
-    id: "companyA",
-    company: "Company A",
-    position: "Unicorn Developer",
-    from: "Dec 2016",
-    to: "Present",
-    items: [
+    "id": "companyA",
+    "company": "Company A",
+    "position": "Unicorn Developer",
+    "from": "Dec 2016",
+    "to": "Present",
+    "items": [
       {
-        label: "Responsibility",
-        description: "Being an unicorn",
+        "label": "Responsibility",
+        "description": "Being an unicorn"
       },
       {
-        label: "Hands on",
-        tech: ["REACT", "NODE"],
-      },
-    ],
-  },
-];
+        "label": "Hands on",
+        "tech": ["REACT", "NODE"]
+      }
+    ]
+  }
+]
 ```
 
-```javascript
+```json
 // tech.json
 [
   {
-    id: "REACT",
-    icon: "facebook",
-    color: "teal",
-    label: "React",
+    "id": "REACT",
+    "icon": "facebook",
+    "color": "teal",
+    "label": "React"
   },
   {
-    id: "NODE",
-    icon: "server",
-    color: "green",
-    label: "NodeJS",
-  },
-];
+    "id": "NODE",
+    "icon": "server",
+    "color": "green",
+    "label": "NodeJS"
+  }
+]
 ```
 
 And then add the following rule to your `gatsby-config.js`:

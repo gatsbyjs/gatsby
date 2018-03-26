@@ -9,10 +9,10 @@ Source plugin for pulling data into Gatsby from MongoDB collections.
 module.exports = {
   plugins: [
     /*
-         * Gatsby's data processing layer begins with “source” plugins. Here we
-         * setup the site to pull data from the "documents" collection in a local
-         * MongoDB instance
-         */
+     * Gatsby's data processing layer begins with “source” plugins. Here we
+     * setup the site to pull data from the "documents" collection in a local
+     * MongoDB instance
+     */
     {
       resolve: `gatsby-source-mongodb`,
       options: { dbName: `local`, collection: `documents` },
