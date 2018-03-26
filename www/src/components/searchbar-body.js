@@ -306,7 +306,8 @@ class Search extends Component {
 
 // the result component is fed into the InfiniteHits component
 const Result = ({ hit, pathname, search }) => {
-  const selected = pathname.slice(10) === hit.name
+  // Example: pathname = `/plugins/gatsby-link/`, hit.name = `gatsby-link`
+  const selected = pathname.split(`/`)[2] === hit.name
   return (
     <Link
       to={{
