@@ -310,7 +310,7 @@ const Result = ({ hit, pathname, search }) => {
   return (
     <Link
       to={{
-        pathname: `/packages/${hit.name}/`,
+        pathname: `/plugins/${hit.name}/`,
         search: `?=${search}`,
       }}
       css={{
