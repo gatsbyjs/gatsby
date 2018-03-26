@@ -1,3 +1,5 @@
+const MiniCssExtractPlugin = require(`mini-css-extract-plugin`)
+
 exports.onCreateWebpackConfig = (
   { actions, stage, rules, plugins, loaders },
   { postCssPlugins, ...sassOptions }
@@ -15,45 +17,55 @@ exports.onCreateWebpackConfig = (
 
   const sassRule = {
     test: /\.s(a|c)ss$/,
-    exclude: /\.module\.s(a|c)ss$/,
-    use: plugins.extractText.extract({
-      fallback: loaders.style(),
-      use: [
-        loaders.css({ importLoaders: 1 }),
-        loaders.postcss({ plugins: postCssPlugins }),
-        sassLoader,
-      ],
-    }),
+    use: [
+      MiniCssExtractPlugin.loader,
+      loaders.css({ importLoaders: 1 }),
+      loaders.postcss({ plugins: postCssPlugins }),
+      sassLoader,
+    ],
   }
   const sassRuleModules = {
     test: /\.module\.s(a|c)ss$/,
-    use: plugins.extractText.extract({
-      fallback: loaders.style(),
-      use: [
-        loaders.css({ modules: true, importLoaders: 1 }),
-        loaders.postcss({ plugins: postCssPlugins }),
-        sassLoader,
-      ],
-    }),
+    use: [
+      MiniCssExtractPlugin.loader,
+      loaders.css({ modules: true, importLoaders: 1 }),
+      loaders.postcss({ plugins: postCssPlugins }),
+      sassLoader,
+    ],
+  }
+  const sassRuleModulesSSR = {
+    test: /\.module\.s(a|c)ss$/,
+    use: [
+      loaders.css({ modules: true, importLoaders: 1 }),
+      loaders.postcss({ plugins: postCssPlugins }),
+      sassLoader,
+    ],
   }
 
   let configRules = []
 
   switch (stage) {
     case `develop`:
-    case `build-css`:
     case `build-javascript`:
-      configRules = configRules.concat([sassRule, sassRuleModules])
+      configRules = configRules.concat([
+        {
+          oneOf: [sassRuleModules, sassRule],
+        },
+      ])
       break
 
     case `build-html`:
     case `develop-html`:
       configRules = configRules.concat([
         {
-          ...sassRule,
-          use: [loaders.null()],
+          oneOf: [
+            sassRuleModulesSSR,
+            {
+              ...sassRule,
+              use: [loaders.null()],
+            },
+          ],
         },
-        sassRuleModules,
       ])
       break
   }

@@ -172,7 +172,7 @@ exports.onCreateBabelConfig = true
  * See also the documentation for [`setWebpackConfig`](/docs/actions/#setWebpackConfig).
  *
  * @param {object} $0
- * @param {'develop' | 'develop-html' | 'build-css' | 'build-javascript' | 'build-html'} $0.stage The current build stage
+ * @param {'develop' | 'develop-html' | 'build-javascript' | 'build-html'} $0.stage The current build stage
  * @param {function(): object} $0.getConfig Returns the current webpack config
  * @param {object} $0.rules A set of preconfigured webpack config rules
  * @param {object} $0.loaders A set of preconfigured webpack config loaders
