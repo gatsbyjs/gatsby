@@ -5,7 +5,12 @@ title: Gatsby on Linux
 
 ## Windows Subsystem Linux (WSL)
 
-As of October 17th 2017 Windows 10 ships with Just for info for those that are not aware WSL has been available in Windows 10 via the Windows Store since the Fall Creators Update there will be a very large portion of developers that could use this instead of
+As of October 17th 2017 Windows 10 ships with WSL and is available via the Windows Store, there are several different distributions to use which can be configured via `wslconfig` if you have more than one distribution installed.
+
+```sh
+# set default distribution to Ubuntu
+wslconfig /setdefault ubuntu
+```
 
 ### Using Windows Subsystem Linux: Ubuntu
 
@@ -28,11 +33,17 @@ sudo apt install -y build-essential
 
 **Install node**
 
-If installing node via the instructions given on the nodejs.org site doesn't give the correct permissions i.e. permission errors when trying to `npm install` try using [n] instead, you can install it with [n-install]:
+If installing node via the instructions given on the nodejs.org site doesn't give the correct permissions (i.e. permission errors when trying to `npm install`) try using [n] instead, you can install it with [n-install]:
 
+```sh
+curl -L https://git.io/n-install | bash
+```
 
+There are other alternatives for managing you node versions such as [nvm] but this is known to slow down [bash startup] on WSL.
 
 ### Using Windows Subsystem Linux: Debian
+
+Debian 
 
 ```sh
 sudo apt update
@@ -51,3 +62,5 @@ sudo apt update && sudo apt -y upgrade && sudo apt install build-essential && su
 <!-- links -->
 [n]: https://github.com/tj/n
 [n-install]: https://github.com/mklement0/n-install
+[nvm]: https://github.com/creationix/nvm
+[bash startup]: https://github.com/Microsoft/WSL/issues/776#issuecomment-266112578
