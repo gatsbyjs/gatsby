@@ -283,7 +283,7 @@ class SearchForm extends Component {
         openOnFocus: true,
         autoselect: true,
         hint: false,
-        keyboardShortcuts: ['s']
+        keyboardShortcuts: [`s`],
       },
     })
   }

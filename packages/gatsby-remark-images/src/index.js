@@ -130,7 +130,7 @@ module.exports = (
     `
     }
 
-     // Wrap in figure and use title as caption
+    // Wrap in figure and use title as caption
 
     if (options.showCaptions && node.title) {
       rawHTML = `

@@ -18,7 +18,7 @@ When setting up a development SSL certificate for the first time, you may be ask
 
     Password:
 
-This is *only* required the first time you are using Gatsby's HTTPS feature on your machine. After that, certificates will be created on the fly.
+This is _only_ required the first time you are using Gatsby's HTTPS feature on your machine. After that, certificates will be created on the fly.
 
 After typing in your password, `devcert` will attempt to install some software necessary to tell Firefox (and Chrome, only on Linux) to trust your development certificates.
 
@@ -33,6 +33,6 @@ Now open the development server at [https://localhost:8000](https://localhost:80
 
 Find out more about [how devcert works](https://github.com/davewasmer/devcert#how-it-works).
 
-****
+---
 
 Keep in mind that the certificates are explicitly issued to `localhost` and will only be accepted there. Using it together with the `--host` option will likely result in browser warnings.

@@ -299,15 +299,15 @@ Community:
   [(demo)](https://gatsby-starter-personal-blog.greglobinski.com/)
 
   Features:
-  
+
   * Ready to use, but easily customizable a fully equipped theme starter
   * Easy editable content in Markdown files (posts, pages and parts)
-  * 'Like an app' layout transitions 
+  * 'Like an app' layout transitions
   * Easily restyled through theme object
   * Styling with JSS
   * Page transitions
   * Comments (Facebook)
-  * Post categories 
+  * Post categories
   * Post list filtering
   * Full text searching (Algolia)
   * Contact form (Netlify form handling)
@@ -528,7 +528,7 @@ Community:
   * Responsive Design, optimized for Mobile devices
   * Seo Friendly
   * Uses Flexbox
-  
+
 * [gatsby-starter-stellar](https://github.com/codebushi/gatsby-starter-stellar)
   [(demo)](http://gatsby-stellar.surge.sh/)
 
