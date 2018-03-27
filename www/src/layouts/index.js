@@ -32,7 +32,8 @@ class DefaultLayout extends React.Component {
       this.props.location.pathname.slice(0, 10) === `/tutorial/`
     const isFeature = this.props.location.pathname.slice(0, 9) === `/features`
     const isPackageSearchPage =
-      this.props.location.pathname.slice(0, 8) === `/plugins`
+      this.props.location.pathname.slice(0, 8) === `/plugins` ||
+      this.props.location.pathname.slice(0, 9) === `/packages`
     const isPackageReadme =
       this.props.location.pathname.slice(0, 16) === `/packages/gatsby`
 
