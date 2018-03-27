@@ -31,9 +31,12 @@ class DefaultLayout extends React.Component {
     const isTutorial =
       this.props.location.pathname.slice(0, 10) === `/tutorial/`
     const isFeature = this.props.location.pathname.slice(0, 9) === `/features`
-    const isPackage = this.props.location.pathname.slice(0, 8) === `/plugins`
+    const isPackage =
+      this.props.location.pathname.slice(0, 8) === `/plugins` ||
+      this.props.location.pathname.slice(0, 9) === `/packages`
     const isPackageReadme =
-      this.props.location.pathname.slice(0, 15) === `/plugins/gatsby`
+      this.props.location.pathname.slice(0, 15) === `/plugins/gatsby` ||
+      this.props.location.pathname.slice(0, 16) === `/packages/gatsby`
 
     const hasSidebar =
       isDoc || isTutorial || isFeature || isPackage || isPackageReadme
@@ -42,7 +45,10 @@ class DefaultLayout extends React.Component {
     const packageSidebarWidth = rhythm(17)
 
     const leftPadding = rhythmSize => {
-      if (this.props.location.pathname.slice(0, 8) === `/plugins`) {
+      if (
+        this.props.location.pathname.slice(0, 8) === `/plugins` ||
+        this.props.location.pathname.slice(0, 9) === `/packages`
+      ) {
         return packageSidebarWidth
       } else if (hasSidebar) {
         return rhythm(rhythmSize)
