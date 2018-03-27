@@ -35,7 +35,6 @@ class DefaultLayout extends React.Component {
       this.props.location.pathname.slice(0, 8) === `/plugins` ||
       this.props.location.pathname.slice(0, 9) === `/packages`
     const isPackageReadme =
-      this.props.location.pathname.slice(0, 15) === `/plugins/gatsby` ||
       this.props.location.pathname.slice(0, 16) === `/packages/gatsby`
 
     const hasSidebar =
