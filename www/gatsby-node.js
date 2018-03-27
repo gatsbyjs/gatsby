@@ -34,6 +34,12 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
     isPermanent: true,
   })
 
+  createRedirect({
+    fromPath: `/packages/`, // Moved "Plugins" page from /packages to /plugins
+    toPath: `/plugins/`,
+    isPermanent: true,
+  })
+
   return new Promise((resolve, reject) => {
     const docsTemplate = path.resolve(`src/templates/template-docs-markdown.js`)
     const blogPostTemplate = path.resolve(`src/templates/template-blog-post.js`)

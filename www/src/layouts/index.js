@@ -31,18 +31,20 @@ class DefaultLayout extends React.Component {
     const isTutorial =
       this.props.location.pathname.slice(0, 10) === `/tutorial/`
     const isFeature = this.props.location.pathname.slice(0, 9) === `/features`
-    const isPackage = this.props.location.pathname.slice(0, 9) === `/packages`
+    const isPackageSearchPage =
+      this.props.location.pathname.slice(0, 8) === `/plugins` ||
+      this.props.location.pathname.slice(0, 9) === `/packages`
     const isPackageReadme =
       this.props.location.pathname.slice(0, 16) === `/packages/gatsby`
 
     const hasSidebar =
-      isDoc || isTutorial || isFeature || isPackage || isPackageReadme
+      isDoc || isTutorial || isFeature || isPackageSearchPage || isPackageReadme
     const isSearchSource = hasSidebar || isBlog
 
     const packageSidebarWidth = rhythm(17)
 
     const leftPadding = rhythmSize => {
-      if (this.props.location.pathname.slice(0, 9) === `/packages`) {
+      if (isPackageReadme || isPackageSearchPage) {
         return packageSidebarWidth
       } else if (hasSidebar) {
         return rhythm(rhythmSize)
@@ -83,11 +85,11 @@ class DefaultLayout extends React.Component {
     let searchBarDisplayProperty
     let childrenMobileDisplay
     let childrenTabletDisplay
-    if (isPackage && !isPackageReadme) {
+    if (isPackageSearchPage && !isPackageReadme) {
       searchBarDisplayProperty = { display: `block` }
       childrenMobileDisplay = { display: `none` }
       childrenTabletDisplay = { display: `block` }
-    } else if (isPackage && isPackageReadme) {
+    } else if (isPackageSearchPage && isPackageReadme) {
       searchBarDisplayProperty = {
         [presets.Mobile]: {
           display: `none`,
@@ -155,9 +157,9 @@ class DefaultLayout extends React.Component {
             css={{
               ...searchbarStyles,
               [presets.Tablet]: {
-                display: isPackage
+                display: isPackageSearchPage
                   ? `block`
-                  : isPackage && isPackageReadme ? `block` : `none`,
+                  : isPackageSearchPage && isPackageReadme ? `block` : `none`,
                 width: packageSidebarWidth,
                 position: `fixed`,
                 background: colors.ui.whisper,
