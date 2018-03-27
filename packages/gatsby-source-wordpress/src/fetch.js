@@ -204,7 +204,7 @@ async function fetchData({
   if (_verbose) console.time(`Fetching the ${type} took`)
 
   let routeResponse = await getPages(
-    { url, _perPage, _hostingWPCOM, _auth, _accessToken, getPages },
+    { url, _perPage, _hostingWPCOM, _auth, _accessToken, getPages, concurrentRequests },
     1
   )
 
@@ -319,9 +319,7 @@ async function getPages(
     // We got page 1, now we want pages 2 through totalPages
     const pageOptions = _.range(2, totalPages + 1).map(getPage => getOptions(getPage))
 
-    // using batchSize instead of concurrent for less overhead from better-queue
-    // the lib doesn't utilize cluster/child_process, so there isn't real concurrency
-    const pages = await requestInQueue(pageOptions, { concurrency: concurrentRequests })
+    const pages = await requestInQueue(pageOptions, { concurrent: concurrentRequests })
 
     const pageData = pages.map(page => page.data)
     pageData.forEach(list => {
