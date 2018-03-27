@@ -550,3 +550,13 @@ Community:
   * [Tailwind CSS](https://tailwindcss.com) Framework
   * Removes unused CSS with [Purgecss](https://www.purgecss.com/)
   * Includes responsive navigation and form examples
+
+* [gatsby-starter-bloomer](https://github.com/Cethy/gatsby-starter-bloomer)
+  [(demo)](https://gatsby-starter-bloomer.netlify.com/)
+
+  Features:
+  
+  * Based on [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default)
+  * [Bulma CSS Framework](https://bulma.io/) with its [Bloomer react components](https://bloomer.js.org/)
+  * [Font-Awesome icons](https://fontawesome.com/icons)
+  * Includes a simple fullscreen hero w/ footer example
