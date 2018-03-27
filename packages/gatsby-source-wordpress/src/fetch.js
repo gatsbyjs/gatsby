@@ -321,7 +321,7 @@ async function getPages(
 
     // using batchSize instead of concurrent for less overhead from better-queue
     // the lib doesn't utilize cluster/child_process, so there isn't real concurrency
-    const pages = await requestInQueue(pageOptions, { batchSize: concurrentRequests })
+    const pages = await requestInQueue(pageOptions, { concurrency: concurrentRequests })
 
     const pageData = pages.map(page => page.data)
     pageData.forEach(list => {
