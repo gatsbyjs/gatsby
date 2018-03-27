@@ -306,7 +306,10 @@ class Search extends Component {
 
 // the result component is fed into the InfiniteHits component
 const Result = ({ hit, pathname, search }) => {
-  const selected = pathname.slice(10) === hit.name
+  // Example:
+  // pathname = `/plugins/gatsby-link/` || `/plugins/@comsoc/gatsby-mdast-copy-linked-files`
+  //  hit.name = `gatsby-link` || `@comsoc/gatsby-mdast-copy-linked-files`
+  const selected = pathname.includes(hit.name)
   return (
     <Link
       to={{

@@ -25,10 +25,10 @@ function getErrorFormatter() {
     "pretty-error": {
       marginTop: 1,
     },
-    'pretty-error > header': {
+    "pretty-error > header": {
       background: `red`,
     },
-    'pretty-error > header > colon': {
+    "pretty-error > header > colon": {
       color: `white`,
     },
   })
