@@ -15,10 +15,9 @@ module.exports = {
     {
       resolve: `gatsby-plugin-fullstory`,
       options: {
-        fs_org: YOUR_ORG_ID
+        fs_org: YOUR_ORG_ID,
       },
     },
-  ]
-}
+  ],
+};
 ```
-

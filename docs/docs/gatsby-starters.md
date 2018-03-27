@@ -299,15 +299,15 @@ Community:
   [(demo)](https://gatsby-starter-personal-blog.greglobinski.com/)
 
   Features:
-  
+
   * Ready to use, but easily customizable a fully equipped theme starter
   * Easy editable content in Markdown files (posts, pages and parts)
-  * 'Like an app' layout transitions 
+  * 'Like an app' layout transitions
   * Easily restyled through theme object
   * Styling with JSS
   * Page transitions
   * Comments (Facebook)
-  * Post categories 
+  * Post categories
   * Post list filtering
   * Full text searching (Algolia)
   * Contact form (Netlify form handling)
@@ -528,7 +528,7 @@ Community:
   * Responsive Design, optimized for Mobile devices
   * Seo Friendly
   * Uses Flexbox
-  
+
 * [gatsby-starter-stellar](https://github.com/codebushi/gatsby-starter-stellar)
   [(demo)](http://gatsby-stellar.surge.sh/)
 
@@ -540,3 +540,13 @@ Community:
   * Sticky Navigation when scrolling.
   * Scroll spy and smooth scrolling to different sections of the page.
   * Styling with SCSS
+  
+* [gatsby-starter-tailwind](https://github.com/taylorbryant/gatsby-starter-tailwind)
+  [(demo)](https://quizzical-mcclintock-0226ac.netlify.com/)
+
+  Features:
+
+  * Based on [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default)
+  * [Tailwind CSS](https://tailwindcss.com) Framework
+  * Removes unused CSS with [Purgecss](https://www.purgecss.com/)
+  * Includes responsive navigation and form examples
