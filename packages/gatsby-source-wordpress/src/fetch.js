@@ -3,7 +3,6 @@ const axios = require(`axios`)
 const _ = require(`lodash`)
 const colorized = require(`./output-color`)
 const httpExceptionHandler = require(`./http-exception-handler`)
-const requestInQueue = require(`./request-in-queue`)
 
 /**
  * High-level function to coordinate fetching data from a WordPress
@@ -19,7 +18,6 @@ async function fetch({
   baseUrl,
   typePrefix,
   refactoredEntityTypes,
-  concurrentRequests,
 }) {
   // If the site is hosted on wordpress.com, the API Route differs.
   // Same entity types are exposed (excepted for medias and users which need auth)
@@ -129,7 +127,6 @@ async function fetch({
           _hostingWPCOM,
           _auth,
           _accessToken,
-          concurrentRequests,
         })
       )
       if (_verbose) console.log(``)
@@ -188,7 +185,6 @@ async function fetchData({
   _hostingWPCOM,
   _auth,
   _accessToken,
-  concurrentRequests,
 }) {
   const type = route.type
   const url = route.url
@@ -204,7 +200,7 @@ async function fetchData({
   if (_verbose) console.time(`Fetching the ${type} took`)
 
   let routeResponse = await getPages(
-    { url, _perPage, _hostingWPCOM, _auth, _accessToken, getPages },
+    { url, _perPage, _hostingWPCOM, _auth, _accessToken },
     1
   )
 
@@ -267,7 +263,7 @@ async function fetchData({
  * @returns
  */
 async function getPages(
-  { url, _perPage, _hostingWPCOM, _auth, _accessToken, _verbose, concurrentRequests },
+  { url, _perPage, _hostingWPCOM, _auth, _accessToken, _verbose },
   page = 1
 ) {
   try {
@@ -317,18 +313,18 @@ async function getPages(
     }
 
     // We got page 1, now we want pages 2 through totalPages
-    const pageOptions = _.range(2, totalPages + 1).map(getPage => getOptions(getPage))
-
-    // using batchSize instead of concurrent for less overhead from better-queue
-    // the lib doesn't utilize cluster/child_process, so there isn't real concurrency
-    const pages = await requestInQueue(pageOptions, { batchSize: concurrentRequests })
-
-    const pageData = pages.map(page => page.data)
-    pageData.forEach(list => {
-      result = result.concat(list)
+    const requests = _.range(2, totalPages + 1).map(getPage => {
+      const options = getOptions(getPage)
+      return axios(options)
     })
 
-    return result
+    return Promise.all(requests).then(pages => {
+      const data = pages.map(page => page.data)
+      data.forEach(list => {
+        result = result.concat(list)
+      })
+      return result
+    })
   } catch (e) {
     return httpExceptionHandler(e)
   }
@@ -353,6 +349,7 @@ function getValidRoutes({
   refactoredEntityTypes,
 }) {
   let validRoutes = []
+
   for (let key of Object.keys(allRoutes.data.routes)) {
     if (_verbose) console.log(`Route discovered :`, key)
     let route = allRoutes.data.routes[key]

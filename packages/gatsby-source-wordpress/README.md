@@ -88,10 +88,6 @@ plugins: [
         sourceUrl: "https://source-url.com",
         replacementUrl: "https://replacement-url.com",
       },
-      // How many requests should be sent out simultaneously.
-      // Lower this number if your blog is on a server with
-      // limitted resources.
-      concurrentRequests: 50
     },
   },
 ];
