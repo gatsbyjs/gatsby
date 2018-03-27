@@ -88,6 +88,12 @@ plugins: [
         sourceUrl: "https://source-url.com",
         replacementUrl: "https://replacement-url.com",
       },
+      // Add plugins to modify WordPress entitys
+      plugins: [
+        {
+          resolve: `wordpress-normalizer-plugin`
+        },
+      ]
     },
   },
 ];
@@ -466,6 +472,26 @@ To learn more about image processing check
 * documentation of [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/),
 * source code of [image processing example
   site](https://github.com/gatsbyjs/gatsby/tree/master/examples/image-processing).
+
+## WordPress Source Normalizer Plugins
+
+Write custom plugins to modify WordPress entities during the build process.
+
+The set method accepts two arguments, the normalizer and the priority in which this normalizer is set. Do not pass the priority if you wish your normalizer to be called last.
+
+**index.js Example**
+
+```javascript
+exports.normalize = function (normalizer) {
+
+  function modify(entities, args) {
+    // Modify entities
+    return entities
+  }
+
+  return normalizer.set(modify, 140)
+}
+```
 
 ## Site's `gatsby-node.js` example
 

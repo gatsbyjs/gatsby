@@ -140,9 +140,9 @@ exports.liftRenderedField = entities =>
 exports.excludeUnknownEntities = entities =>
   entities.filter(e => e.wordpress_id) // Excluding entities without ID
 
-exports.createGatsbyIds = (createNodeId, entities) =>
+exports.createGatsbyIds = (entities, args) =>
   entities.map(e => {
-    e.id = createNodeId(`${e.__type}-${e.wordpress_id.toString()}`)
+    e.id = args.createNodeId(`${e.__type}-${e.wordpress_id.toString()}`)
     return e
   })
 
@@ -223,21 +223,18 @@ exports.mapTagsCategoriesToTaxonomies = entities =>
     return e
   })
 
-exports.searchReplaceContentUrls = function({
-  entities,
-  searchAndReplaceContentUrls,
-}) {
+exports.searchReplaceContentUrls = function(entities, args) {
   if (
-    !_.isPlainObject(searchAndReplaceContentUrls) ||
-    !_.has(searchAndReplaceContentUrls, `sourceUrl`) ||
-    !_.has(searchAndReplaceContentUrls, `replacementUrl`) ||
-    typeof searchAndReplaceContentUrls.sourceUrl !== `string` ||
-    typeof searchAndReplaceContentUrls.replacementUrl !== `string`
+    !_.isPlainObject(args.searchAndReplaceContentUrls) ||
+    !_.has(args.searchAndReplaceContentUrls, `sourceUrl`) ||
+    !_.has(args.searchAndReplaceContentUrls, `replacementUrl`) ||
+    typeof args.searchAndReplaceContentUrls.sourceUrl !== `string` ||
+    typeof args.searchAndReplaceContentUrls.replacementUrl !== `string`
   ) {
     return entities
   }
 
-  const { sourceUrl, replacementUrl } = searchAndReplaceContentUrls
+  const { sourceUrl, replacementUrl } = args.searchAndReplaceContentUrls
 
   const _blacklist = [`_links`, `__type`]
 
@@ -379,13 +376,7 @@ exports.mapEntitiesToMedia = entities => {
 }
 
 // Downloads media files and removes "sizes" data as useless in Gatsby context.
-exports.downloadMediaFiles = async ({
-  entities,
-  store,
-  cache,
-  createNode,
-  _auth,
-}) =>
+exports.downloadMediaFiles = async (entities, args) =>
   Promise.all(
     entities.map(async e => {
       let fileNode
@@ -393,10 +384,10 @@ exports.downloadMediaFiles = async ({
         try {
           fileNode = await createRemoteFileNode({
             url: e.source_url,
-            store,
-            cache,
-            createNode,
-            auth: _auth,
+            store: args.store,
+            cache: args.cache,
+            createNode: args.createNode,
+            auth: args._auth,
           })
         } catch (e) {
           // Ignore

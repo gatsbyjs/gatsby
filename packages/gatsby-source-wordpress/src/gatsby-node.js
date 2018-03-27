@@ -1,5 +1,7 @@
 const fetch = require(`./fetch`)
 const normalize = require(`./normalize`)
+const Normalizer = require(`./normalizer`)
+const _ = require(`lodash`)
 
 const typePrefix = `wordpress__`
 const refactoredEntityTypes = {
@@ -28,6 +30,7 @@ exports.sourceNodes = async (
     verboseOutput,
     perPage = 100,
     searchAndReplaceContentUrls = {},
+    plugins = [],
   }
 ) => {
   const { createNode } = boundActionCreators
@@ -50,57 +53,44 @@ exports.sourceNodes = async (
     refactoredEntityTypes,
   })
 
-  // Normalize data & create nodes
-
-  // Remove ACF key if it's not an object
-  entities = normalize.normalizeACF(entities)
-
-  // Creates entities from object collections of entities
-  entities = normalize.normalizeEntities(entities)
-
-  // Standardizes ids & cleans keys
-  entities = normalize.standardizeKeys(entities)
-
-  // Converts to use only GMT dates
-  entities = normalize.standardizeDates(entities)
-
-  // Lifts all "rendered" fields to top-level.
-  entities = normalize.liftRenderedField(entities)
-
-  // Exclude entities of unknown shape
-  entities = normalize.excludeUnknownEntities(entities)
-
-  // Creates Gatsby IDs for each entity
-  entities = normalize.createGatsbyIds(createNodeId, entities)
-
-  // Creates links between authors and user entities
-  entities = normalize.mapAuthorsToUsers(entities)
-
-  // Creates links between posts and tags/categories.
-  entities = normalize.mapPostsToTagsCategories(entities)
-
-  // Creates links between tags/categories and taxonomies.
-  entities = normalize.mapTagsCategoriesToTaxonomies(entities)
-
-  // Creates links from entities to media nodes
-  entities = normalize.mapEntitiesToMedia(entities)
-
-  // Downloads media files and removes "sizes" data as useless in Gatsby context.
-  entities = await normalize.downloadMediaFiles({
-    entities,
+  var normalizer = new Normalizer(entities, {
+    createNodeId,
     store,
     cache,
     createNode,
     _auth,
-  })
-
-  // Search and replace Content Urls
-  entities = normalize.searchReplaceContentUrls({
-    entities,
     searchAndReplaceContentUrls,
   })
 
-  // creates nodes for each entry
+  normalizer
+    .set(normalize.normalizeACF, 10)
+    .set(normalize.normalizeEntities, 20)
+    .set(normalize.standardizeKeys, 30)
+    .set(normalize.standardizeDates, 40)
+    .set(normalize.liftRenderedField, 50)
+    .set(normalize.excludeUnknownEntities, 60)
+    .set(normalize.createGatsbyIds, 70)
+    .set(normalize.mapAuthorsToUsers, 80)
+    .set(normalize.mapPostsToTagsCategories, 90)
+    .set(normalize.mapTagsCategoriesToTaxonomies, 100)
+    .set(normalize.mapEntitiesToMedia, 110)
+    .set(normalize.downloadMediaFiles, 120)
+    .set(normalize.searchReplaceContentUrls, 130)
+
+  for (let i = 0; i < plugins.length; i++) {
+    var requiredPlugin = require(plugins[i].resolve)
+
+    if (_.isFunction(requiredPlugin.normalize)) {
+      var pluginNormalizer = requiredPlugin.normalize(normalizer)
+      if (pluginNormalizer instanceof Normalizer) {
+        normalizer = pluginNormalizer
+      }
+    }
+
+  }
+
+  entities = await normalizer.normalize()
+
   normalize.createNodesFromEntities({ entities, createNode })
 
   return
