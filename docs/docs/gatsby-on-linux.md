@@ -41,7 +41,7 @@ Following the install instructions on nodejs.org leaves a slightly broken instal
 curl -L https://git.io/n-install | bash
 ```
 
-There are other alternatives for managing you node versions such as [nvm] but this is known to slow down [bash startup] on WSL.
+There are other alternatives for managing your node versions such as [nvm] but this is known to slow down [bash startup] on WSL.
 
 ### Using Windows Subsystem Linux: Debian
 
