@@ -93,14 +93,14 @@ const createFilePath = (directory, filename, ext) => path.join(
 const queue = new Queue(pushToQueue, {
   id: `url`,
   merge: (old, _, cb) => cb(old),
-  batchSize: 200,
+  concurrent: 200,
 })
 
 // Detetmine the max file descriptors on the users machine
 // Then set the batch size to be 3/4 of that becuase the user
 // will most likely have files open already
 getMaxFileLock().then((max) => {
-  queue.batchSize = max * .75
+  queue.concurrent = max * .75
 })
 
 /**
@@ -120,8 +120,12 @@ getMaxFileLock().then((max) => {
  * @return {Promise<null>}
  */
 async function pushToQueue (task, cb) {
-  const node = await processRemoteNode(task)
-  return cb(null, node)
+  try {
+    const node = await processRemoteNode(task)
+    return cb(null, node)
+  } catch (e) {
+    return cb(null, e)
+  }
 }
 
 
@@ -141,21 +145,17 @@ async function pushToQueue (task, cb) {
  * @return {Promise<Object>}  Resolves with the [http Result Object]{@link https://nodejs.org/api/http.html#http_class_http_serverresponse}
  */
 const requestRemoteNode = (url, headers, tmpFilename, filename) => new Promise((resolve, reject) => {
-  let responseError = false
-  const responseStream = got.stream(url, headers)
+  const responseStream = got.stream(url, { ...headers, timeout: 30000 })
   responseStream.pipe(fs.createWriteStream(tmpFilename))
   responseStream.on(`downloadProgress`, pro => console.log(pro))
 
   // If there's a 400/500 response or other error.
   responseStream.on(`error`, (error, body, response) => {
-    responseError = true
     fs.removeSync(tmpFilename)
     reject({ error, body, response })
   })
 
-  responseStream.on(`end`, response => {
-    if (responseError) return
-
+  responseStream.on(`response`, response => {
     resolve(response)
   })
 })
@@ -175,8 +175,8 @@ async function processRemoteNode ({ url, store, cache, createNode, auth = {} }) 
   await fs.ensureDir(
     path.join(
       programDir,
-      `.cache`,
-      `gatsby-source-filesystem`
+      CACHE_DIR,
+      FS_PLUGIN_DIR
     )
   )
 
@@ -203,30 +203,33 @@ async function processRemoteNode ({ url, store, cache, createNode, auth = {} }) 
   const filename = createFilePath(programDir, digest, ext)
 
   // Fetch the file.
-  // Let the consumer handle thrown errors
-  const response = await requestRemoteNode(url, headers, tmpFilename, filename)
+  try {
+    const response = await requestRemoteNode(url, headers, tmpFilename, filename)
+    // Save the response headers for future requests.
+    cache.set(cacheId(url), response.headers)
 
-  // Save the response headers for future requests.
-  cache.set(cacheId(url), response.headers)
+    // If the status code is 200, move the piped temp file to the real name.
+    if (response.statusCode === 200) {
+      await fs.move(tmpFilename, filename, { overwrite: true })
+    // Else if 304, remove the empty response.
+    } else {
+      await fs.remove(tmpFilename)
+    }
 
-  // If the status code is 200, move the piped temp file to the real name.
-  if (response.statusCode === 200) {
-    await fs.move(tmpFilename, filename, { overwrite: true })
-  // Else if 304, remove the empty response.
-  } else {
-    await fs.remove(tmpFilename)
+    // Create the file node.
+    const fileNode = await createFileNode(filename, {})
+
+    // Override the default plugin as gatsby-source-filesystem needs to
+    // be the owner of File nodes or there'll be conflicts if any other
+    // File nodes are created through normal usages of
+    // gatsby-source-filesystem.
+    createNode(fileNode, { name: `gatsby-source-filesystem` })
+
+    return fileNode
+  } catch (err) {
+    // ignore
   }
-
-  // Create the file node.
-  const fileNode = await createFileNode(filename, {})
-
-  // Override the default plugin as gatsby-source-filesystem needs to
-  // be the owner of File nodes or there'll be conflicts if any other
-  // File nodes are created through normal usages of
-  // gatsby-source-filesystem.
-  createNode(fileNode, { name: `gatsby-source-filesystem` })
-
-  return fileNode
+  return null
 }
 
 
@@ -234,7 +237,6 @@ async function processRemoteNode ({ url, store, cache, createNode, auth = {} }) 
  * Index of promises resolving to File node from remote url
  */
 const processingCache = {}
-
 /**
  * pushTask
  * --
@@ -247,8 +249,12 @@ const processingCache = {}
 const pushTask = (task) => new Promise((resolve, reject) => {
   queue
     .push(task)
-    .on(`finish`, resolve)
-    .on(`failed`, reject)
+    .on(`finish`, (task) => {
+      resolve(task)
+    })
+    .on(`failed`, () => {
+      resolve()
+    })
 })
 
 
@@ -273,6 +279,7 @@ module.exports = ({ url, store, cache, createNode, auth = {} }) => {
   if (processingCache[url]) {
     return processingCache[url]
   }
+
 
 
   if (!url || isWebUri(url) === undefined) {
