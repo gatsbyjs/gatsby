@@ -6,7 +6,6 @@ const { isWebUri } = require(`valid-url`)
 const Queue = require(`better-queue`)
 
 const { createFileNode } = require(`./create-file-node`)
-const getMaxFileLock = require(`./get-max-file-lock`)
 const cacheId = url => `create-remote-file-node-${url}`
 
 /********************
@@ -96,12 +95,6 @@ const queue = new Queue(pushToQueue, {
   concurrent: 200,
 })
 
-// Detetmine the max file descriptors on the users machine
-// Then set the batch size to be 3/4 of that becuase the user
-// will most likely have files open already
-getMaxFileLock().then((max) => {
-  queue.concurrent = max * .75
-})
 
 /**
  * @callback {Queue~queueCallback}
