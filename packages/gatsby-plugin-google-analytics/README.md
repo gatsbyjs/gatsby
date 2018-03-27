@@ -1,4 +1,5 @@
 # gatsby-plugin-google-analytics
+
 Easily add Google Analytics to your Gatsby site.
 
 ## Install
@@ -23,8 +24,8 @@ module.exports = {
         respectDNT: true,
       },
     },
-  ]
-}
+  ],
+};
 ```
 
 ## The "anonymize" option

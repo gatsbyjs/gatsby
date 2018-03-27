@@ -86,10 +86,10 @@ exports.emitter = emitter
 exports.store = store
 
 /**
-  * Get all nodes from redux store.
-  *
-  * @returns {Array}
-  */
+ * Get all nodes from redux store.
+ *
+ * @returns {Array}
+ */
 exports.getNodes = () => {
   let nodes = _.values(store.getState().nodes)
   return nodes ? nodes : []
@@ -97,19 +97,19 @@ exports.getNodes = () => {
 const getNode = id => store.getState().nodes[id]
 
 /** Get node by id from store.
-  *
-  * @param {string} id
-  * @returns {Object}
-  */
+ *
+ * @param {string} id
+ * @returns {Object}
+ */
 exports.getNode = getNode
 
 /**
-  * Determine if node has changed.
-  *
-  * @param {string} id
-  * @param {string} digest
-  * @returns {boolean}
-  */
+ * Determine if node has changed.
+ *
+ * @param {string} id
+ * @param {string} digest
+ * @returns {boolean}
+ */
 exports.hasNodeChanged = (id, digest) => {
   const node = store.getState().nodes[id]
   if (!node) {
@@ -120,11 +120,11 @@ exports.hasNodeChanged = (id, digest) => {
 }
 
 /**
-  * Get content for a node from the plugin that created it.
-  *
-  * @param {Object} node
-  * @returns {promise}
-  */
+ * Get content for a node from the plugin that created it.
+ *
+ * @param {Object} node
+ * @returns {promise}
+ */
 exports.loadNodeContent = node => {
   if (_.isString(node.internal.content)) {
     return Promise.resolve(node.internal.content)
@@ -150,12 +150,12 @@ exports.loadNodeContent = node => {
 }
 
 /**
-  * Get node and save path dependency.
-  *
-  * @param {string} id
-  * @param {string} path
-  * @returns {Object} node
-  */
+ * Get node and save path dependency.
+ *
+ * @param {string} id
+ * @param {string} path
+ * @returns {Object} node
+ */
 exports.getNodeAndSavePathDependency = (id, path) => {
   const { createPageDependency } = require(`./actions/add-page-dependency`)
   const node = getNode(id)

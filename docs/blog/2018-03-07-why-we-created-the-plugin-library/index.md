@@ -43,7 +43,6 @@ Next, we analyzed over 10 admirable and/or popular plugin libraries to draw from
 * [Apple App store](https://www.apple.com/ios/app-store/)
 * [Google Play store](https://play.google.com/store/apps/top)
 
-
 ### The goods 👍
 
 We liked when these libraries let users:
@@ -55,13 +54,12 @@ We liked when these libraries let users:
 
 ### The bads 👎
 
-We *didn't* like these things in some of the above libraries:
+We _didn't_ like these things in some of the above libraries:
 
 * poor contrast and poor information heirarchy
 * limited filters
 * too many filters
 * low information density
-
 
 ## Prototypes and their evolutions
 
@@ -74,16 +72,15 @@ Here’s a sampling of screenshots that many community members contributed to an
 
 ## Next steps for the plugin library
 
-The plugin ecosystem is a huge part of what makes Gatsby awesome because plugins and packages make Gatsby extensible. There's a virtuous cycle where people find plugins, use them, contribute to them, and create new ones. We hope to accelerate this cycle, so the Gatsby ecosystem can develop faster and more people can build awesome sites! 
+The plugin ecosystem is a huge part of what makes Gatsby awesome because plugins and packages make Gatsby extensible. There's a virtuous cycle where people find plugins, use them, contribute to them, and create new ones. We hope to accelerate this cycle, so the Gatsby ecosystem can develop faster and more people can build awesome sites!
 
 Here are some ways you can help make the Gatsby plugin ecoystem great:
 
 * Share feedback on the plugin library on [Github Issue #4394](https://github.com/gatsbyjs/gatsby/issues/4394).
 * If you created a plugin and it's not showing up in the library, double check that the package has "gatsby-plugin" in its keywords.
 * Create plugins (or publish ones you've already built)! If you're interested, the [Plugin Authoring](/docs/plugin-authoring/) page can help.
-* [Contact me](https://twitter.com/shannonb_ux/status/938551014956732418) here if you have feedback that differs from or provides deeper insight into one of the pain points this article mentions. 
+* [Contact me](https://twitter.com/shannonb_ux/status/938551014956732418) here if you have feedback that differs from or provides deeper insight into one of the pain points this article mentions.
 * Follow us on [Twitter](https://twitter.com/gatsbyjs).
-
 
 ## Sneak peak into the next UX project
 
