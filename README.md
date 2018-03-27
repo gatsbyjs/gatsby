@@ -187,6 +187,7 @@ Websites built with Gatsby:
 * [Hapticmedia](https://hapticmedia.fr/en/)
 * [CodeBushi](https://codebushi.com/)
 * [Philipp Czernitzki - Blog/Website](http://philippczernitzki.me)
+* [WebGazer](https://www.webgazer.io)
 
 ## Docs
 
