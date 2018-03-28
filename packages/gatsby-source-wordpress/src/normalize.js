@@ -223,6 +223,19 @@ exports.mapTagsCategoriesToTaxonomies = entities =>
     return e
   })
 
+exports.mapPagesToParentPages = entities => {
+  const pages = entities.filter(e => e.__type === `wordpress__PAGE`)
+  return entities.map(e => {
+    if (e.wordpress_parent && e.__type === `wordpress__PAGE`) {
+      // Replace wordpress_parent with a link to the parent page node.
+      e.parent_page___NODE = pages.find(
+        t => t.wordpress_id === e.wordpress_parent
+      ).id
+    }
+    return e
+  })
+}
+
 exports.searchReplaceContentUrls = function({
   entities,
   searchAndReplaceContentUrls,
