@@ -223,18 +223,16 @@ exports.mapTagsCategoriesToTaxonomies = entities =>
     return e
   })
 
-exports.mapPagesToParentPages = entities => {
-  const pages = entities.filter(e => e.__type === `wordpress__PAGE`)
-  return entities.map(e => {
-    if (e.wordpress_parent && e.__type === `wordpress__PAGE`) {
-      // Replace wordpress_parent with a link to the parent page node.
-      e.parent_page___NODE = pages.find(
-        t => t.wordpress_id === e.wordpress_parent
-      ).id
+exports.mapElementsToParent = entities => entities.map(e => {
+    if (e.wordpress_parent) {
+      // Replace wordpress_parent with a link to the parent node of type.
+      e.parent_element___NODE = entities
+        .filter(el => el.__type === e.__type)
+        .find(t => t.wordpress_id === e.wordpress_parent).id
+      delete e.wordpress_parent
     }
     return e
   })
-}
 
 exports.searchReplaceContentUrls = function({
   entities,
