@@ -560,3 +560,14 @@ Community:
   * [Bulma CSS Framework](https://bulma.io/) with its [Bloomer react components](https://bloomer.js.org/)
   * [Font-Awesome icons](https://fontawesome.com/icons)
   * Includes a simple fullscreen hero w/ footer example
+
+* [gatsby-starter-i18n-lingui](https://github.com/dcroitoru/gatsby-starter-i18n-lingui)
+  [(demo)](https://gatsby-starter-i18n-lingui.netlify.com/)
+
+  Features:
+
+  * Localization (Multilanguage) provided by [js-lingui](https://github.com/lingui/js-lingui)
+  * Message extraction
+  * Avoids code duplication - generates pages for each locale
+  * Possibility of translated paths 
+  
