@@ -93,7 +93,7 @@ plugins: [
 
 ### Automatic configuration
 
-In the automatic configuration you are responsible for defining the entire web app manifest ecept for the icons, you only provide a hi-res source icon to be used to auto generate the default set of icons. See the example below:
+In the automatic configuration you are responsible for defining the entire web app manifest except for the icons. You only provide a hi-res source icon. The icons themselves and the needed configuration will be generated. See the example below:
 
 ```javascript
 // In your gatsby-config.js
