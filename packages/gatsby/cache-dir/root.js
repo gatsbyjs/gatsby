@@ -119,22 +119,6 @@ for (let i = 0; i < pages.length; i++) {
   }
 }
 
-const addNotFoundRoute = () => {
-  if (noMatch) {
-    return createElement(Route, {
-      key: `404-page`,
-
-      component: props =>
-        createElement(syncRequires.components[noMatch.componentChunkName], {
-          ...props,
-          ...syncRequires.json[noMatch.jsonName],
-        }),
-    })
-  } else {
-    return null
-  }
-}
-
 const navigateTo = to => {
   window.___history.push(to)
 }
