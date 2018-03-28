@@ -4,7 +4,7 @@ Provides drop-in support for Stylus with or without CSS Modules
 
 ## Install
 
-`yarn add gatsby-plugin-stylus`
+`npm install --save gatsby-plugin-stylus`
 
 ## How to use
 

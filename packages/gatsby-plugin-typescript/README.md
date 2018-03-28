@@ -4,7 +4,7 @@ Provides drop-in support for TypeScript and TSX.
 
 ## Install
 
-`yarn add gatsby-plugin-typescript typescript`
+`npm install --save gatsby-plugin-typescript typescript`
 
 ## How to use
 

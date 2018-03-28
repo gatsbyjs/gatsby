@@ -110,8 +110,6 @@ Websites built with Gatsby:
 * [greglobinski.com](https://greglobinski.com)
   ([source](https://github.com/greglobinski/greglobinski-com))
 * [Vibert Thio's Portfolio](https://vibertthio.com/portfolio/)([source](https://github.com/vibertthio/portfolio))
-* [hunterchang.com](https://hunterchang.com)
-  ([source](https://github.com/ChangoMan/hc-gatsby))
 * [YouFoundRon.com](https://youfoundron.com)
   ([source](https://github.com/rongierlach/yfr-dot-com))
 * [heml.io](https://heml.io)
@@ -188,6 +186,9 @@ Websites built with Gatsby:
 * [Adnan Fajlur - Portfolio](https://adnanfajlur.xyz/)
 * [Hapticmedia](https://hapticmedia.fr/en/)
 * [Smakosh](https://smakosh.com) ([source](https://github.com/smakosh/smakosh.com))
+* [Philipp Czernitzki - Blog/Website](http://philippczernitzki.me)
+* [CodeBushi](https://codebushi.com/)
+* [WebGazer](https://www.webgazer.io)
 
 ## Docs
 

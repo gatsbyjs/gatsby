@@ -37,7 +37,10 @@ class Html extends Component {
 
           <meta name="referrer" content="origin" />
           <meta charSet="utf-8" />
-          <meta name="description" content="Gatsby example site using Styled Components" />
+          <meta
+            name="description"
+            content="Gatsby example site using Styled Components"
+          />
           <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
           <meta
             name="viewport"
