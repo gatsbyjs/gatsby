@@ -18,10 +18,10 @@ async function fetch({
   _hostingWPCOM,
   _auth,
   _perPage,
+  _concurrentRequests,
   _excludedRoutes,
   typePrefix,
   refactoredEntityTypes,
-  concurrentRequests,
 }) {
   // If the site is hosted on wordpress.com, the API Route differs.
   // Same entity types are exposed (excepted for medias and users which need auth)
@@ -132,7 +132,7 @@ async function fetch({
           _hostingWPCOM,
           _auth,
           _accessToken,
-          concurrentRequests,
+          _concurrentRequests,
         })
       )
       if (_verbose) console.log(``)
@@ -191,7 +191,7 @@ async function fetchData({
   _hostingWPCOM,
   _auth,
   _accessToken,
-  concurrentRequests,
+  _concurrentRequests,
 }) {
   const type = route.type
   const url = route.url
@@ -207,7 +207,7 @@ async function fetchData({
   if (_verbose) console.time(`Fetching the ${type} took`)
 
   let routeResponse = await getPages(
-    { url, _perPage, _hostingWPCOM, _auth, _accessToken, getPages, concurrentRequests },
+    { url, _perPage, _hostingWPCOM, _auth, _accessToken, _verbose, _concurrentRequests },
     1
   )
 
@@ -270,7 +270,7 @@ async function fetchData({
  * @returns
  */
 async function getPages(
-  { url, _perPage, _hostingWPCOM, _auth, _accessToken, _verbose, concurrentRequests },
+  { url, _perPage, _hostingWPCOM, _auth, _accessToken,  _concurrentRequests, _verbose },
   page = 1
 ) {
   try {
@@ -322,7 +322,7 @@ async function getPages(
     // We got page 1, now we want pages 2 through totalPages
     const pageOptions = _.range(2, totalPages + 1).map(getPage => getOptions(getPage))
 
-    const pages = await requestInQueue(pageOptions, { concurrent: concurrentRequests })
+    const pages = await requestInQueue(pageOptions, { concurrent: _concurrentRequests })
 
     const pageData = pages.map(page => page.data)
     pageData.forEach(list => {
