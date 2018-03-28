@@ -19,6 +19,11 @@ the created manifest.json.
 
 ## How to use
 
+There are three configurations in which this plugin will function: manual, hybrid, and auto. What config options you include will determine how the plugin functions.
+
+### Manual configuration
+In the manual configuration you are responsible for defining the entire web app manifest and providing the defined icons in the static directory. See the example below:
+
 ```javascript
 // In your gatsby-config.js
 plugins: [
@@ -52,4 +57,62 @@ plugins: [
 ];
 ```
 
+### Hybrid configuration
+
+In the hybrid configuration you are responsible for defining the entire web app manifest but instead of manually generating the defined icons you provide a hi-res source icon to be used to auto generate your defined icons. See the example below:
+
+```javascript
+// In your gatsby-config.js
+plugins: [
+  {
+    resolve: `gatsby-plugin-manifest`,
+    options: {
+      name: "GatsbyJS",
+      short_name: "GatsbyJS",
+      start_url: "/",
+      background_color: "#f7f0eb",
+      theme_color: "#a2466c",
+      display: "minimal-ui",
+      icon: src/images/icon.png
+      icons: [
+        {
+          src: `/favicons/android-chrome-192x192.png`,
+          sizes: `192x192`,
+          type: `image/png`,
+        },
+        {
+          src: `/favicons/android-chrome-512x512.png`,
+          sizes: `512x512`,
+          type: `image/png`,
+        },
+      ],
+    },
+  },
+];
+```
+
+### Automatic configuration
+
+In the automatic configuration you are responsible for defining the entire web app manifest ecept for the icons, you only provide a hi-res source icon to be used to auto generate the default set of icons. See the example below:
+
+```javascript
+// In your gatsby-config.js
+plugins: [
+  {
+    resolve: `gatsby-plugin-manifest`,
+    options: {
+      name: "GatsbyJS",
+      short_name: "GatsbyJS",
+      start_url: "/",
+      background_color: "#f7f0eb",
+      theme_color: "#a2466c",
+      display: "minimal-ui",
+      icon: src/images/icon.png
+    },
+  },
+];
+```
+
 To create `manifest.json`, you need to run `gatsby build`.
+
+
