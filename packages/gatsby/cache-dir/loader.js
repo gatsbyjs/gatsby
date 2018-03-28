@@ -221,7 +221,10 @@ const queue = {
     // so we just return with it immediately.
     if (process.env.NODE_ENV !== `production`) {
       const page = findPage(path)
-      if (!page) return cb()
+      if (!page) {
+        cb()
+        return null
+      }
       const pageResources = {
         component: syncRequires.components[page.componentChunkName],
         json: syncRequires.json[page.jsonName],
@@ -237,14 +240,15 @@ const queue = {
         path,
         `Previously detected load failure for "${path}"`
       )
-
-      return cb()
+      cb()
+      return null
     }
     const page = findPage(path)
 
     if (!page) {
       console.log(`A page wasn't found for "${path}"`)
-      return cb()
+      cb()
+      return null
     }
 
     // Use the path from the page so the pathScriptsCache uses
