@@ -123,6 +123,7 @@ const addNotFoundRoute = () => {
   if (noMatch) {
     return createElement(Route, {
       key: `404-page`,
+
       component: props =>
         createElement(syncRequires.components[noMatch.componentChunkName], {
           ...props,
@@ -140,6 +141,11 @@ const navigateTo = to => {
 
 window.___navigateTo = navigateTo
 
+let pathPrefix = `/`
+if (__PREFIX_PATHS__) {
+  pathPrefix = `${__PATH_PREFIX__}/`
+}
+
 const AltRouter = apiRunner(`replaceRouterComponent`, { history })[0]
 const DefaultRouter = ({ children }) => (
   <Router history={history}>{children}</Router>
@@ -155,14 +161,16 @@ const ComponentRendererWithRouter = withRouter(ComponentRenderer)
 const Root = () =>
   createElement(
     AltRouter ? AltRouter : DefaultRouter,
-    null,
+    { basename: pathPrefix },
     createElement(
       ScrollContext,
       { shouldUpdateScroll },
       createElement(ComponentRendererWithRouter, {
         layout: true,
+        // eslint-disable-next-line react/display-name
         children: layoutProps =>
           createElement(Route, {
+            // eslint-disable-next-line react/display-name
             render: routeProps => {
               const props = layoutProps ? layoutProps : routeProps
               attachToHistory(props.history)

@@ -156,15 +156,21 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   const ComponentRendererWithRouter = withRouter(ComponentRenderer)
 
   loader.getResourcesForPathname(window.location.pathname, () => {
+    let pathPrefix = `/`
+    if (__PREFIX_PATHS__) {
+      pathPrefix = `${__PATH_PREFIX__}/`
+    }
+
     const Root = () =>
       createElement(
         AltRouter ? AltRouter : DefaultRouter,
-        null,
+        { basename: pathPrefix },
         createElement(
           ScrollContext,
           { shouldUpdateScroll },
           createElement(ComponentRendererWithRouter, {
             layout: true,
+            // eslint-disable-next-line react/display-name
             children: layoutProps =>
               createElement(Route, {
                 render: routeProps => {
