@@ -71,3 +71,4 @@ Reserved environment variables:
 
 * `NODE_ENV`
 * `PUBLIC_DIR`
+* `GATSBY_OUTPUT_DIR`

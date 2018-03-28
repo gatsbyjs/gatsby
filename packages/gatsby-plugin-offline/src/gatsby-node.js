@@ -14,7 +14,7 @@ exports.createPages = ({ boundActionCreators }) => {
 }
 
 exports.onPostBuild = (args, pluginOptions) => {
-  const rootDir = `public`
+  const rootDir = process.env.GATSBY_OUTPUT_DIR
 
   const options = {
     staticFileGlobs: [
@@ -27,7 +27,7 @@ exports.onPostBuild = (args, pluginOptions) => {
     ],
     stripPrefix: rootDir,
     // If `pathPrefix` is configured by user, we should replace
-    // the `public` prefix with `pathPrefix`.
+    // the output directory (default: `public`) prefix with `pathPrefix`.
     // See more at:
     // https://github.com/GoogleChrome/sw-precache#replaceprefix-string
     replacePrefix: args.pathPrefix || ``,
@@ -56,5 +56,5 @@ exports.onPostBuild = (args, pluginOptions) => {
 
   const combinedOptions = _.defaults(pluginOptions, options)
 
-  return precache.write(`public/sw.js`, combinedOptions)
+  return precache.write(`${process.env.GATSBY_OUTPUT_DIR}/sw.js`, combinedOptions)
 }

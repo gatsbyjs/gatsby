@@ -138,7 +138,7 @@ module.exports = ({
         }`
         const publicPath = path.join(
           process.cwd(),
-          `public`,
+          process.env.GATSBY_OUTPUT_DIR,
           `static`,
           imageName
         )

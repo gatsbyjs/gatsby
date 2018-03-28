@@ -24,7 +24,7 @@ const getSslCert = require(`../utils/get-ssl-cert`)
 
 // const isInteractive = process.stdout.isTTY
 
-// Watch the static directory and copy files to public as they're added or
+// Watch the static directory and copy files to output directory (default: public) as they're added or
 // changed. Wait 10 seconds so copying doesn't interfer with the regular
 // bootstrap.
 setTimeout(() => {
@@ -127,7 +127,7 @@ async function startServer(program) {
     res.end()
   })
 
-  app.use(express.static(__dirname + `/public`))
+  app.use(express.static(__dirname + `/${process.env.GATSBY_OUTPUT_DIR}`))
 
   app.use(
     require(`webpack-dev-middleware`)(compiler, {
@@ -147,11 +147,11 @@ async function startServer(program) {
     })
   }
 
-  // Check if the file exists in the public folder.
+  // Check if the file exists in the output directory (default: public).
   app.get(`*`, (req, res, next) => {
     // Load file but ignore errors.
     res.sendFile(
-      directoryPath(`/public${decodeURIComponent(req.path)}`),
+      directoryPath(`/${process.env.GATSBY_OUTPUT_DIR}{decodeURIComponent(req.path)}`),
       err => {
         // No err so a file was sent successfully.
         if (!err || !err.path) {
@@ -182,7 +182,7 @@ async function startServer(program) {
       parsedPath.extname.startsWith(`.html`) ||
       parsedPath.path.endsWith(`/`)
     ) {
-      res.sendFile(directoryPath(`public/index.html`), err => {
+      res.sendFile(directoryPath(`${process.env.GATSBY_OUTPUT_DIR}/index.html`), err => {
         if (err) {
           res.status(500).end()
         }

@@ -7,8 +7,6 @@ const _ = require(`lodash`)
 const cheerio = require(`cheerio`)
 const imageSize = require(`probe-image-size`)
 
-const DEPLOY_DIR = `public`
-
 const invalidDestinationDirMessage = dir =>
   `[gatsby-remark-copy-linked-files You have supplied an invalid destination directory. The destination directory must be a child but was: ${dir}`
 
@@ -25,12 +23,12 @@ const newPath = (linkNode, destinationDir) => {
   if (destinationDir) {
     return path.posix.join(
       process.cwd(),
-      DEPLOY_DIR,
+      process.env.GATSBY_OUTPUT_DIR,
       destinationDir,
       newFileName(linkNode)
     )
   }
-  return path.posix.join(process.cwd(), DEPLOY_DIR, newFileName(linkNode))
+  return path.posix.join(process.cwd(), process.env.GATSBY_OUTPUT_DIR, newFileName(linkNode))
 }
 
 const newLinkURL = (linkNode, destinationDir) => {

@@ -2,7 +2,7 @@ import path from "path"
 import sitemap from "sitemap"
 import { defaultOptions, runQuery, writeFile } from "./internals"
 
-const publicPath = `./public`
+const publicPath = `./${process.env.GATSBY_OUTPUT_DIR}`
 
 exports.onPostBuild = async ({ graphql }, pluginOptions) => {
   const options = { ...pluginOptions }
