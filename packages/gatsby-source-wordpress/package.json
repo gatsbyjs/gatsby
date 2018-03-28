@@ -10,12 +10,14 @@
   "dependencies": {
     "axios": "^0.16.1",
     "babel-runtime": "^6.26.0",
+    "better-queue": "^3.8.6",
     "bluebird": "^3.5.0",
     "deep-map": "^1.5.0",
     "deep-map-keys": "^1.2.0",
     "gatsby-source-filesystem": "^1.5.27",
     "json-stringify-safe": "^5.0.1",
     "lodash": "^4.17.4",
+    "minimatch": "^3.0.4",
     "qs": "^6.4.0"
   },
   "deprecated": false,
