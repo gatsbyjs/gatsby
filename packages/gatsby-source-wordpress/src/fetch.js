@@ -1,6 +1,7 @@
 const querystring = require(`querystring`)
 const axios = require(`axios`)
 const _ = require(`lodash`)
+const minimatch = require(`minimatch`)
 const colorized = require(`./output-color`)
 const httpExceptionHandler = require(`./http-exception-handler`)
 const requestInQueue = require(`./request-in-queue`)
@@ -10,16 +11,17 @@ const requestInQueue = require(`./request-in-queue`)
  * site.
  */
 async function fetch({
+  baseUrl,
   _verbose,
   _siteURL,
   _useACF,
   _hostingWPCOM,
   _auth,
   _perPage,
-  baseUrl,
+  _concurrentRequests,
+  _excludedRoutes,
   typePrefix,
   refactoredEntityTypes,
-  concurrentRequests,
 }) {
   // If the site is hosted on wordpress.com, the API Route differs.
   // Same entity types are exposed (excepted for medias and users which need auth)
@@ -104,6 +106,7 @@ async function fetch({
       _verbose,
       _useACF,
       _hostingWPCOM,
+      _excludedRoutes,
       typePrefix,
       refactoredEntityTypes,
     })
@@ -129,7 +132,7 @@ async function fetch({
           _hostingWPCOM,
           _auth,
           _accessToken,
-          concurrentRequests,
+          _concurrentRequests,
         })
       )
       if (_verbose) console.log(``)
@@ -188,7 +191,7 @@ async function fetchData({
   _hostingWPCOM,
   _auth,
   _accessToken,
-  concurrentRequests,
+  _concurrentRequests,
 }) {
   const type = route.type
   const url = route.url
@@ -204,7 +207,7 @@ async function fetchData({
   if (_verbose) console.time(`Fetching the ${type} took`)
 
   let routeResponse = await getPages(
-    { url, _perPage, _hostingWPCOM, _auth, _accessToken, getPages, concurrentRequests },
+    { url, _perPage, _hostingWPCOM, _auth, _accessToken, _verbose, _concurrentRequests },
     1
   )
 
@@ -267,7 +270,7 @@ async function fetchData({
  * @returns
  */
 async function getPages(
-  { url, _perPage, _hostingWPCOM, _auth, _accessToken, _verbose, concurrentRequests },
+  { url, _perPage, _hostingWPCOM, _auth, _accessToken,  _concurrentRequests, _verbose },
   page = 1
 ) {
   try {
@@ -319,7 +322,7 @@ async function getPages(
     // We got page 1, now we want pages 2 through totalPages
     const pageOptions = _.range(2, totalPages + 1).map(getPage => getOptions(getPage))
 
-    const pages = await requestInQueue(pageOptions, { concurrent: concurrentRequests })
+    const pages = await requestInQueue(pageOptions, { concurrent: _concurrentRequests })
 
     const pageData = pages.map(page => page.data)
     pageData.forEach(list => {
@@ -347,6 +350,7 @@ function getValidRoutes({
   _verbose,
   _useACF,
   _hostingWPCOM,
+  _excludedRoutes,
   typePrefix,
   refactoredEntityTypes,
 }) {
@@ -371,7 +375,20 @@ function getValidRoutes({
         ``,
         baseUrl,
       ]
-      if (!excludedTypes.includes(entityType)) {
+
+      const routePath = getRoutePath(url, route._links.self)
+
+      if (excludedTypes.includes(entityType)) {
+        if (_verbose)
+          console.log(
+            colorized.out(`Invalid route.`, colorized.color.Font.FgRed)
+          )
+      } else if (_excludedRoutes.some(excludedRoute => minimatch(routePath, excludedRoute))) {
+        if (_verbose)
+          console.log(
+            colorized.out(`Excluded route from excludedRoutes pattern.`, colorized.color.Font.FgYellow)
+          )
+      } else {
         if (_verbose)
           console.log(
             colorized.out(
@@ -409,11 +426,6 @@ function getValidRoutes({
             break
         }
         validRoutes.push({ url: route._links.self, type: validType })
-      } else {
-        if (_verbose)
-          console.log(
-            colorized.out(`Invalid route.`, colorized.color.Font.FgRed)
-          )
       }
     } else {
       if (_verbose)
@@ -456,6 +468,15 @@ const getRawEntityType = route =>
     route._links.self.lastIndexOf(`/`) + 1,
     route._links.self.length
   )
+
+/**
+ * Extract the route path for an endpoint
+ *
+ * @param {any} baseUrl The base site URL that should be removed
+ * @param {any} fullUrl The full URL to retrieve the route path from
+ */
+const getRoutePath = (baseUrl, fullUrl) =>
+  fullUrl.replace(baseUrl, ``)
 
 /**
  * Extract the route manufacturer
