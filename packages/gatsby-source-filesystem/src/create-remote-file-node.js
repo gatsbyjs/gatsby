@@ -78,7 +78,7 @@ const createFilePath = (directory, filename, ext) => path.join(
   `${filename}${ext}`
 )
 
-const ignoreCache = () => process.env.NODE_ENV === 'production' || process.env.NO_CACHE
+const ignoreCache = () => process.env.NODE_ENV === `production` || process.env.NO_CACHE
 
 /********************
  * Queue Management *
