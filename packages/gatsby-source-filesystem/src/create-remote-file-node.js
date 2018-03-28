@@ -78,6 +78,7 @@ const createFilePath = (directory, filename, ext) => path.join(
   `${filename}${ext}`
 )
 
+const ignoreCache = () => process.env.NODE_ENV === 'production' || process.env.NO_CACHE
 
 /********************
  * Queue Management *
@@ -197,16 +198,23 @@ async function processRemoteNode ({ url, store, cache, createNode, auth = {} }) 
 
   // Fetch the file.
   try {
-    const response = await requestRemoteNode(url, headers, tmpFilename, filename)
-    // Save the response headers for future requests.
-    cache.set(cacheId(url), response.headers)
+    // check if the file has been downloaded already
+    const exists = await fs.pathExists(filename)
 
-    // If the status code is 200, move the piped temp file to the real name.
-    if (response.statusCode === 200) {
-      await fs.move(tmpFilename, filename, { overwrite: true })
-    // Else if 304, remove the empty response.
-    } else {
-      await fs.remove(tmpFilename)
+    // ensure we have the file and the cached headers before skipping the request
+    // ignore logic if user set NO_CACHE flag
+    if (ignoreCache() || (cachedHeaders && !exists)) {
+      const response = await requestRemoteNode(url, headers, tmpFilename, filename)
+      // Save the response headers for future requests.
+      cache.set(cacheId(url), response.headers)
+
+      // If the status code is 200, move the piped temp file to the real name.
+      if (response.statusCode === 200) {
+        await fs.move(tmpFilename, filename, { overwrite: true })
+      // Else if 304, remove the empty response.
+      } else {
+        await fs.remove(tmpFilename)
+      }
     }
 
     // Create the file node.
