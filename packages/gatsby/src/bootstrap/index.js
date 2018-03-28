@@ -57,17 +57,17 @@ module.exports = async (args: BootstrapArgs) => {
     payload: program,
   })
 
-  // Delete html and css files from the public directory as we don't want
+  // Delete html and css files from the output directory (default: public) as we don't want
   // deleted pages and styles from previous builds to stick around.
   let activity = report.activityTimer(
     `delete html and css files from previous builds`
   )
   activity.start()
   await del([
-    `public/*.{html,css}`,
-    `public/**/*.{html,css}`,
-    `!public/static`,
-    `!public/static/**/*.{html,css}`,
+    `${process.env.GATSBY_OUTPUT_DIR}/*.{html,css}`,
+    `${process.env.GATSBY_OUTPUT_DIR}/**/*.{html,css}`,
+    `!${process.env.GATSBY_OUTPUT_DIR}/static`,
+    `!${process.env.GATSBY_OUTPUT_DIR}/static/**/*.{html,css}`,
   ])
   activity.end()
 
@@ -149,7 +149,7 @@ module.exports = async (args: BootstrapArgs) => {
   initCache()
 
   // Ensure the public/static directory is created.
-  await fs.ensureDirSync(`${program.directory}/public/static`)
+  await fs.ensureDirSync(`${program.directory}/${process.env.GATSBY_OUTPUT_DIR}/static`)
 
   // Copy our site files to the root of the site.
   activity = report.activityTimer(`copy gatsby files`)

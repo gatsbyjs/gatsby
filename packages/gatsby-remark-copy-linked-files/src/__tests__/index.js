@@ -172,7 +172,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
   describe(`options.destinationDir`, () => {
     const imagePath = `images/sample-image.gif`
 
-    it(`throws an error if the destination directory is not within 'public'`, async () => {
+    it(`throws an error if the destination directory is not within '${process.env.GATSBY_OUTPUT_DIR}'`, async () => {
       const markdownAST = remark.parse(`![some absolute image](${imagePath})`)
       const invalidDestinationDir = `../destination`
       expect.assertions(2)
@@ -192,7 +192,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
       const validDestinationDir = `path/to/dir`
       const expectedNewPath = path.posix.join(
         process.cwd(),
-        `public`,
+        process.env.GATSBY_OUTPUT_DIR,
         validDestinationDir,
         `/undefined-undefined.gif`
       )
@@ -215,7 +215,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
       const markdownAST = remark.parse(`![some absolute image](${imagePath})`)
       const expectedNewPath = path.posix.join(
         process.cwd(),
-        `public`,
+        process.env.GATSBY_OUTPUT_DIR,
         `/undefined-undefined.gif`
       )
       expect.assertions(3)

@@ -5,6 +5,6 @@ exports.onPostBuild = (args, pluginOptions) =>
   new Promise(resolve => {
     const manifest = { ...pluginOptions }
     delete manifest.plugins
-    fs.writeFileSync(`./public/manifest.json`, JSON.stringify(manifest))
+    fs.writeFileSync(`./${process.env.GATSBY_OUTPUT_DIR}/manifest.json`, JSON.stringify(manifest))
     resolve()
   })

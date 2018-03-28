@@ -74,7 +74,7 @@ module.exports = async (
 
     // Don't allow overwriting of NODE_ENV, PUBLIC_DIR as to not break gatsby things
     envObject.NODE_ENV = JSON.stringify(env)
-    envObject.PUBLIC_DIR = JSON.stringify(`${process.cwd()}/public`)
+    envObject.PUBLIC_DIR = JSON.stringify(`${process.cwd()}/${process.env.GATSBY_OUTPUT_DIR}`)
 
     return Object.assign(envObject, gatsbyVarObject)
   }
@@ -96,7 +96,7 @@ module.exports = async (
         // Webpack will always generate a resultant javascript file.
         // But we don't want it for this step. Deleted by build-css.js.
         return {
-          path: directoryPath(`public`),
+          path: directoryPath(process.env.GATSBY_OUTPUT_DIR),
           filename: `bundle-for-css.js`,
           publicPath: program.prefixPaths
             ? `${store.getState().config.pathPrefix}/`
@@ -107,7 +107,7 @@ module.exports = async (
         // A temp file required by static-site-generator-plugin. See plugins() below.
         // Deleted by build-html.js, since it's not needed for production.
         return {
-          path: directoryPath(`public`),
+          path: directoryPath(process.env.GATSBY_OUTPUT_DIR),
           filename: `render-page.js`,
           libraryTarget: `umd`,
           publicPath: program.prefixPaths
@@ -118,7 +118,7 @@ module.exports = async (
         return {
           filename: `[name]-[chunkhash].js`,
           chunkFilename: `[name]-[chunkhash].js`,
-          path: directoryPath(`public`),
+          path: directoryPath(process.env.GATSBY_OUTPUT_DIR),
           publicPath: program.prefixPaths
             ? `${store.getState().config.pathPrefix}/`
             : `/`,
@@ -391,7 +391,7 @@ module.exports = async (
       loaders: [`json`, `yaml`],
     })
 
-    // "file" loader makes sure those assets end up in the `public` folder.
+    // "file" loader makes sure those assets end up in the output folder (default: public).
     // When you `import` an asset, you get its filename.
     config.loader(`file-loader`, {
       test: /\.(ico|eot|otf|webp|pdf|ttf|woff(2)?)(\?.*)?$/,

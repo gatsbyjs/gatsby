@@ -7,10 +7,10 @@ module.exports = () => {
     .watch(`${process.cwd()}/static`)
     .on(`add`, path => {
       const relativePath = nodePath.relative(`${process.cwd()}/static`, path)
-      fs.copy(path, `${process.cwd()}/public/${relativePath}`)
+      fs.copy(path, `${process.cwd()}/${process.env.GATSBY_OUTPUT_DIR}/${relativePath}`)
     })
     .on(`change`, path => {
       const relativePath = nodePath.relative(`${process.cwd()}/static`, path)
-      fs.copy(path, `${process.cwd()}/public/${relativePath}`)
+      fs.copy(path, `${process.cwd()}/${process.env.GATSBY_OUTPUT_DIR}/${relativePath}`)
     })
 }
