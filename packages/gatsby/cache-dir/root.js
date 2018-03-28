@@ -111,14 +111,6 @@ function shouldUpdateScroll(prevRouterProps, { location: { pathname } }) {
   return true
 }
 
-let noMatch
-for (let i = 0; i < pages.length; i++) {
-  if (/^\/dev-404-page/.test(pages[i].path)) {
-    noMatch = pages[i]
-    break
-  }
-}
-
 const navigateTo = to => {
   window.___history.push(to)
 }
