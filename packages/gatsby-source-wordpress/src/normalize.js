@@ -225,11 +225,9 @@ exports.mapTagsCategoriesToTaxonomies = entities =>
 
 exports.mapElementsToParent = entities => entities.map(e => {
     if (e.wordpress_parent) {
-      // Replace wordpress_parent with a link to the parent node of type.
+      // Create parent_element with a link to the parent node of type.
       e.parent_element___NODE = entities
-        .filter(el => el.__type === e.__type)
-        .find(t => t.wordpress_id === e.wordpress_parent).id
-      delete e.wordpress_parent
+        .find(t => t.wordpress_id === e.wordpress_parent && t.__type === e.__type).id
     }
     return e
   })
