@@ -39,14 +39,11 @@ class ScrollContainer extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(prevProps) {
     warning(
-      nextProps.scrollKey === this.props.scrollKey,
+      prevProps.scrollKey === this.props.scrollKey,
       `<ScrollContainer> does not support changing scrollKey.`
     )
-  }
-
-  componentDidUpdate() {
     if (__DEV__) {
       const prevDomNode = this.domNode
       this.domNode = ReactDOM.findDOMNode(this) // eslint-disable-line react/no-find-dom-node
