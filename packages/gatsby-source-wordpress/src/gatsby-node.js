@@ -96,6 +96,9 @@ exports.sourceNodes = async (
     _auth,
   })
 
+  // Creates links between pages and parent pages.
+  entities = normalize.mapPagesToParentPages(entities)
+
   // Search and replace Content Urls
   entities = normalize.searchReplaceContentUrls({
     entities,
