@@ -25,7 +25,13 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
     h3:hover .anchor svg,
     h4:hover .anchor svg,
     h5:hover .anchor svg,
-    h6:hover .anchor svg {
+    h6:hover .anchor svg,
+    h1 .anchor:focus svg,
+    h2 .anchor:focus svg,
+    h3 .anchor:focus svg,
+    h4 .anchor:focus svg,
+    h5 .anchor:focus svg,
+    h6 .anchor:focus svg {
       visibility: visible;
     }
   `
