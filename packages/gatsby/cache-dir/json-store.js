@@ -2,6 +2,7 @@ import React, { createElement } from "react"
 import { Route } from "react-router-dom"
 import ComponentRenderer from "./component-renderer"
 import syncRequires from "./sync-requires"
+import socketIo from "./socketIo"
 import omit from "lodash/omit"
 import get from "lodash/get"
 
@@ -11,11 +12,9 @@ class JSONStore extends React.Component {
     this.state = {
       data: {},
     }
-    try {
-      this.socket = window.io()
-    } catch (err) {
-      console.error(`Could not connect to socket.io on dev server.`)
-    }
+
+    this.socket = socketIo()
+
     this.setPageData = this.setPageData.bind(this)
     this.getPageData = this.getPageData.bind(this)
   }
