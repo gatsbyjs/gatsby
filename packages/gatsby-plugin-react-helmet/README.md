@@ -9,7 +9,7 @@ their React component.
 With this plugin, attributes you add in their component, e.g. title, meta
 attributes, etc. will get added to the static HTML pages Gatsby builds. 
 
-This is important not just for site viewers, but also for SEO -- title and description metadata stored in the document head is a key components used by Google and other search engines in determining result placement.
+This is important not just for site viewers, but also for SEO -- title and description metadata stored in the document head is a key component used by Google in determining placement in search results.
 
 ## Install
 
