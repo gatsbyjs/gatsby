@@ -35,6 +35,8 @@ Websites built with Gatsby:
   ([source](https://github.com/KyleAMathews/blog))
 * [Hack Club](https://hackclub.com/)
   ([source](https://github.com/hackclub/site))
+* [High School Hackathons](https://hackathons.hackclub.com/)
+  ([source](https://github.com/hackclub/hackathons))
 * [Jamie Henson's Blog](http://jamiehenson.com/)
   ([source](https://github.com/jamiehenson/jh47-gatsby))
 * [Sean Coker's Blog](https://sean.is/)
