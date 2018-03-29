@@ -2,13 +2,14 @@
 title: Migration to GatsbyJS and JAM stack from WordPress
 date: 2018-03-29
 author: Vojtech Ruzicka
+canonicalLink: https://www.vojtechruzicka.com/gatsby-migration/
+publishedAt: Vojtech Ruzicka's Programming Blog
+excerpt: How and Why I migrated from WordPress to static JAM Stack site built with Gatsby JS.
 ---
 
-![jam](jam.jpg)
+![jam](./jam.jpg)
 
 How and Why I migrated from WordPress to static JAM Stack site built with Gatsby JS.
-
-*This article was originally published on [Vojtech Ruzicka's Blog](https://www.vojtechruzicka.com/).*
 
 ##Before
 When I started my blog back in 2016, I wanted to focus as much as possible on creating content rather than
@@ -81,6 +82,6 @@ My blog is now deployed on Netlify CDN, which means the user will be served fast
 ###After
 ![after](./results.png)
 
-Quite a difference, right? Long story short - Gatsby is great. You should give it a try, especially if you are a front-end developer. And keep watching its development as I am sure we can look forward to even more awesomeness in the future. If Gatsby is not your cup of the, you should still consider switching to a static site generator as the advantages are too good to ignore.
+Quite a difference, right? Long story short - Gatsby is great. You should give it a try, especially if you are a front-end developer. And keep watching its development as I am sure we can look forward to even more awesomeness in the future. If Gatsby is not your cup of the, you should still consider switching to a static site generator as the advantages are too good to ignore. To learn more about Gatsby Check [this curated list](https://github.com/prayasht/awesome-gatsby) of Gatsby-related resources.
 
-To learn more about Gatsby Check [this curated list](https://github.com/prayasht/awesome-gatsby) of Gatsby-related resources.
+*This article was originally published on [Vojtech Ruzicka's Blog](https://www.vojtechruzicka.com/).*
