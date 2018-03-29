@@ -86,6 +86,19 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
     expect(types.ComponentProp).toHaveLength(14)
   })
 
+  it(`should delicately remove doclets`, async () => {
+    await run(node)
+
+    let types = groupBy(createdNodes, `internal.type`)
+    expect(types.ComponentProp[0].description).toEqual(
+      `An object hash of field (fix this @mention?) errors for the form.`
+    )
+    expect(types.ComponentProp[0].doclets).toEqual({
+      type: `{Foo}`,
+      default: `blue`,
+    })
+  })
+
   it(`should extract create description nodes with markdown types`, async () => {
     await run(node)
     let types = groupBy(createdNodes, `internal.type`)

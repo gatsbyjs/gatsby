@@ -67,6 +67,7 @@ const Method = new GraphQLObjectType({
 
 function extendComponents() {
   return {
+    doclets: { type: GraphQLJSON },
     composes: {
       type: new GraphQLList(new GraphQLNonNull(GraphQLString)),
       description: stripIndent`
@@ -91,6 +92,7 @@ function extendProp() {
   return {
     type: { type: PropTypeValue },
     defaultValue: { type: PropDefaultValue },
+    doclets: { type: GraphQLJSON },
     docblock: {
       type: GraphQLString,
       description: oneLine`

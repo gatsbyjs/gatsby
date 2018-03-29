@@ -1,5 +1,7 @@
 const metadata = require(`react-docgen`)
 
+const DOCLET_PATTERN = /^@(\w+)(?:$|\s((?:[^](?!^@\w))*))/gim
+
 let cleanDocletValue = str => {
   str = str.trim()
   if (str.endsWith(`}`) && str.startsWith(`{`)) str = str.slice(1, -1)
@@ -13,7 +15,7 @@ let isLiteral = str => /^('|"|true|false|\d+)/.test(str.trim())
  */
 export const cleanDoclets = desc => {
   desc = desc || ``
-  let idx = desc.indexOf(`@`)
+  let idx = desc.search(DOCLET_PATTERN)
   return (idx === -1 ? desc : desc.substr(0, idx)).trim()
 }
 
@@ -64,9 +66,9 @@ export const applyPropDoclets = prop => {
   }
 
   // Use @defaultValue to provide a prop's default value
-  if (doclets.defaultValue) {
+  if (doclets.defaultValue || doclets.default) {
     prop.defaultValue = {
-      value: cleanDocletValue(doclets.defaultValue),
+      value: doclets.defaultValue,
       computed: false,
     }
   }
