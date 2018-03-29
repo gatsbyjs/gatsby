@@ -5,7 +5,7 @@ support.
 
 ## Install
 
-`yarn add gatsby-plugin-postcss-sass`
+`npm install --save gatsby-plugin-postcss-sass`
 
 ## How to use
 

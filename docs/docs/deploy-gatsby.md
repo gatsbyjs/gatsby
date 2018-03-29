@@ -56,8 +56,7 @@ now to create a new repository on GitHub.
 ### Use the NPM package `gh-pages` for deploying
 
 First add **gh-pages** as a `devDependency` of your site and create an npm
-script to **deploy** your project by running `npm install gh-pages --save-dev`
-or `yarn add gh-pages --dev` (if you have yarn installed).
+script to **deploy** your project by running `npm install gh-pages --save-dev`.
 
 Then add a `deploy` script in your `package.json` file.
 
@@ -84,7 +83,7 @@ repo, set up git in your project with `git init`. Then tell Gatsby where to
 deploy your site by adding the git remote address with https or ssh. Here is how
 to do it with https: `git remote add origin git@github.com:username/project-name.git`.
 
-Now run `yarn deploy` or `npm run deploy`. Preview changes in your GitHub page
+Now run `npm run deploy`. Preview changes in your GitHub page
 `https://username.github.io/project-name/`. You can also find the link to your
 site on GitHub under `Settings` > `GitHub Pages`.
 
@@ -167,7 +166,7 @@ cache:
 
 pages:
   script:
-  - yarn install
+  - npm install
   - ./node_modules/.bin/gatsby build --prefix-paths
   artifacts:
     paths:
@@ -182,14 +181,14 @@ in between builds, so subsequent builds should be a lot faster as it doesn't hav
 to reinstall all the dependancies required. `pages:` is the name of the
 CI stage. You can have multiple stages, e.g. 'Test', 'Build', 'Deploy' etc.
 `script:` starts the next part of the CI stage, telling it to start running the
-below scripts inside the image selected. We have used the `yarn install` and
+below scripts inside the image selected. We have used the `npm install` and
 `./node_modules/.bin/gatsby build --prefix-paths` which will install all dependancies, and
 start the static site build, respectively.
 
 We have used
 `./node_modules/.bin/gatsby build --prefix-paths` because we then don't have to install
 gatsby-cli to build the image, as it has already been included and installed
-with `yarn install`. We have included `--prefix-paths` as when running the command _without_ that flag, Gatsby ignores your pathPrefix. `artifacts:` and `paths:` are used to tell GitLab pages
+with `npm install`. We have included `--prefix-paths` as when running the command _without_ that flag, Gatsby ignores your pathPrefix. `artifacts:` and `paths:` are used to tell GitLab pages
 where the static files are kept. `only:` and `master` tells the CI to only run
 the above instructions when the master branch is deployed.
 

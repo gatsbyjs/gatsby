@@ -78,11 +78,12 @@ Run this command in a new terminal window:
 
 ```shell
 gatsby new tutorial-part-four https://github.com/gatsbyjs/gatsby-starter-hello-world
+cd tutorial-part-four
 ```
 
 Then install some other needed dependencies at the root of the project. We'll use the Typography theme
 Kirkham + we'll try out a CSS-in-JS library
-[Glamorous](https://glamorous.rocks/). Change to your new `tutorial-part-four` directory and run:
+[Glamorous](https://glamorous.rocks/):
 
 ```shell
 npm install --save gatsby-plugin-typography gatsby-plugin-glamor glamorous typography-theme-kirkham
@@ -346,4 +347,3 @@ in our source.
 ## What's coming next?
 
 Next, you'll be learning about how to pull data into your Gatsby site using GraphQL with source plugins in [part five](/tutorial/part-five/) of the tutorial.
-

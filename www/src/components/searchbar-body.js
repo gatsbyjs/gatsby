@@ -200,7 +200,12 @@ class Search extends Component {
             attributeName="keywords"
             defaultRefinement={[`gatsby-component`, `gatsby-plugin`]}
           />
-          <Toggle attributeName="deprecated" defaultRefinement={false} />
+          <Toggle
+            attributeName="deprecated"
+            value={false}
+            label="No deprecated plugins"
+            defaultRefinement={true}
+          />
         </div>
 
         <div
@@ -278,10 +283,9 @@ class Search extends Component {
                 overflow: `hidden`,
                 textIndent: `-9000px`,
                 padding: `0!important`,
-                width: `100%`,
+                width: 110,
                 height: `100%`,
                 display: `block`,
-                width: 110,
                 marginLeft: `auto`,
                 "&:hover": {
                   background: `url(${AlgoliaLogo})`,
@@ -302,7 +306,10 @@ class Search extends Component {
 
 // the result component is fed into the InfiniteHits component
 const Result = ({ hit, pathname, search }) => {
-  const selected = pathname.slice(10) === hit.name
+  // Example:
+  // pathname = `/plugins/gatsby-link/` || `/plugins/@comsoc/gatsby-mdast-copy-linked-files`
+  //  hit.name = `gatsby-link` || `@comsoc/gatsby-mdast-copy-linked-files`
+  const selected = pathname.includes(hit.name)
   return (
     <Link
       to={{

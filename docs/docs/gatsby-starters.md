@@ -299,15 +299,15 @@ Community:
   [(demo)](https://gatsby-starter-personal-blog.greglobinski.com/)
 
   Features:
-  
+
   * Ready to use, but easily customizable a fully equipped theme starter
   * Easy editable content in Markdown files (posts, pages and parts)
-  * 'Like an app' layout transitions 
+  * 'Like an app' layout transitions
   * Easily restyled through theme object
   * Styling with JSS
   * Page transitions
   * Comments (Facebook)
-  * Post categories 
+  * Post categories
   * Post list filtering
   * Full text searching (Algolia)
   * Contact form (Netlify form handling)
@@ -528,7 +528,7 @@ Community:
   * Responsive Design, optimized for Mobile devices
   * Seo Friendly
   * Uses Flexbox
-  
+
 * [gatsby-starter-stellar](https://github.com/codebushi/gatsby-starter-stellar)
   [(demo)](http://gatsby-stellar.surge.sh/)
 
@@ -540,3 +540,34 @@ Community:
   * Sticky Navigation when scrolling.
   * Scroll spy and smooth scrolling to different sections of the page.
   * Styling with SCSS
+  
+* [gatsby-starter-tailwind](https://github.com/taylorbryant/gatsby-starter-tailwind)
+  [(demo)](https://quizzical-mcclintock-0226ac.netlify.com/)
+
+  Features:
+
+  * Based on [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default)
+  * [Tailwind CSS](https://tailwindcss.com) Framework
+  * Removes unused CSS with [Purgecss](https://www.purgecss.com/)
+  * Includes responsive navigation and form examples
+
+* [gatsby-starter-bloomer](https://github.com/Cethy/gatsby-starter-bloomer)
+  [(demo)](https://gatsby-starter-bloomer.netlify.com/)
+
+  Features:
+  
+  * Based on [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default)
+  * [Bulma CSS Framework](https://bulma.io/) with its [Bloomer react components](https://bloomer.js.org/)
+  * [Font-Awesome icons](https://fontawesome.com/icons)
+  * Includes a simple fullscreen hero w/ footer example
+
+* [gatsby-starter-i18n-lingui](https://github.com/dcroitoru/gatsby-starter-i18n-lingui)
+  [(demo)](https://gatsby-starter-i18n-lingui.netlify.com/)
+
+  Features:
+
+  * Localization (Multilanguage) provided by [js-lingui](https://github.com/lingui/js-lingui)
+  * Message extraction
+  * Avoids code duplication - generates pages for each locale
+  * Possibility of translated paths 
+  

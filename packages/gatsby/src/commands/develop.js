@@ -372,7 +372,11 @@ module.exports = async (program: any) => {
     // options so we are going to "massage" the warnings and errors and present
     // them in a readable focused way.
     const messages = formatWebpackMessages(stats.toJson({}, true))
-    const urls = prepareUrls(program.ssl ? `https` : `http`, program.host, program.port)
+    const urls = prepareUrls(
+      program.ssl ? `https` : `http`,
+      program.host,
+      program.port
+    )
     const isSuccessful = !messages.errors.length && !messages.warnings.length
     // if (isSuccessful) {
     // console.log(chalk.green(`Compiled successfully!`))

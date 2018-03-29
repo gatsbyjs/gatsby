@@ -116,6 +116,7 @@ Similar to part one, open a new terminal window and run the following to create 
 
 ```shell
 gatsby new tutorial-part-two https://github.com/gatsbyjs/gatsby-starter-hello-world
+cd tutorial-part-two
 ```
 
 This creates a new site with the following structure.
@@ -307,7 +308,7 @@ export default typography;
 
 ![typography-lawton](typography-lawton.png)
 
-*Challenge:* Typography.js has more than 30 themes!
+_Challenge:_ Typography.js has more than 30 themes!
 [Try them live](http://kyleamathews.github.io/typography.js) or check out
 [the complete list](https://github.com/KyleAMathews/typography.js#published-typographyjs-themes) and try installing one on your current Gatsby site.
 

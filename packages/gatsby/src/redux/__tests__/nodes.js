@@ -436,4 +436,9 @@ describe(`Create and update nodes`, () => {
 
     expect(callActionCreator).toThrowErrorMatchingSnapshot()
   })
+
+  it(`does not crash when delete node is called on undefined`, () => {
+    boundActionCreators.deleteNode(undefined, undefined, { name: `tests` })
+    expect(Object.keys(store.getState().nodes).length).toEqual(0)
+  })
 })

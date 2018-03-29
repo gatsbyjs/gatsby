@@ -179,6 +179,7 @@ module.exports = async function babelConfig(program, stage) {
 
   const normalizedConfig = normalizeConfig(babelrc, directory)
   let modifiedConfig = await apiRunnerNode(`modifyBabelrc`, {
+    stage,
     babelrc: normalizedConfig,
   })
   if (modifiedConfig.length > 0) {

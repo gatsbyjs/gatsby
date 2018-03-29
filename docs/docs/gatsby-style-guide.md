@@ -83,7 +83,7 @@ repository.
 
 # Running the Guide locally on your own computer
 
-Finally, if you want to run a version of the guides repository locally, follow
+Finally, if you want to run a version of the Guides repository locally, follow
 these steps:
 
 1. Ensure you have the yarn package manager installed `npm install -g yarn`

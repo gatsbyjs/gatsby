@@ -110,8 +110,6 @@ Websites built with Gatsby:
 * [greglobinski.com](https://greglobinski.com)
   ([source](https://github.com/greglobinski/greglobinski-com))
 * [Vibert Thio's Portfolio](https://vibertthio.com/portfolio/)([source](https://github.com/vibertthio/portfolio))
-* [hunterchang.com](https://hunterchang.com)
-  ([source](https://github.com/ChangoMan/hc-gatsby))
 * [YouFoundRon.com](https://youfoundron.com)
   ([source](https://github.com/rongierlach/yfr-dot-com))
 * [heml.io](https://heml.io)
@@ -183,6 +181,15 @@ Websites built with Gatsby:
 * [Watchcards.ru](http://watchcards.ru/)
 * [John Meguerian's Portfolio](https://johnmeguerian.com) ([source](https://github.com/jmegs/portfolio))
 * [Krashna Musika Association Website](https://www.krashna.nl/) ([source](https://github.com/krashnamusika/krashna-site))
+* [Deliveroo.Design](https://www.deliveroo.design/)
+* [The Rick and Morty API](http://rickandmortyapi.com/)
+* [Adnan Fajlur - Portfolio](https://adnanfajlur.xyz/)
+* [Hapticmedia](https://hapticmedia.fr/en/)
+* [Smakosh](https://smakosh.com) ([source](https://github.com/smakosh/smakosh.com))
+* [Philipp Czernitzki - Blog/Website](http://philippczernitzki.me)
+* [CodeBushi](https://codebushi.com/)
+* [WebGazer](https://www.webgazer.io)
+* [Joe Seifi's Blog](http://seifi.org)
 
 ## Docs
 

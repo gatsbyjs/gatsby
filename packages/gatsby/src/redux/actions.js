@@ -412,13 +412,17 @@ actions.createLayout = (
  * deleteNode(node.id, node)
  */
 actions.deleteNode = (nodeId: string, node: any, plugin: Plugin) => {
-  // Also delete any nodes transformed from this one.
   let deleteDescendantsActions
-  const descendantNodes = findChildrenRecursively(node.children)
-  if (descendantNodes.length > 0) {
-    deleteDescendantsActions = descendantNodes.map(n =>
-      actions.deleteNode(n, getNode(n), plugin)
-    )
+  // It's possible the file node was never created as sometimes tools will
+  // write and then immediately delete temporary files to the file system.
+  if (node) {
+    // Also delete any nodes transformed from this one.
+    const descendantNodes = findChildrenRecursively(node.children)
+    if (descendantNodes.length > 0) {
+      deleteDescendantsActions = descendantNodes.map(n =>
+        actions.deleteNode(n, getNode(n), plugin)
+      )
+    }
   }
 
   const deleteAction = {
@@ -969,5 +973,12 @@ actions.createRedirect = ({
   }
 }
 
+/**
+ * All defined actions.
+ */
 exports.actions = actions
+
+/**
+ * All action creators wrapped with a dispatch.
+ */
 exports.boundActionCreators = bindActionCreators(actions, store.dispatch)

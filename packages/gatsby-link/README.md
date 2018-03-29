@@ -93,3 +93,42 @@ const IndexLayout = ({ children, location }) => {
   );
 };
 ```
+
+## For internal links only!
+
+Note that this component is intended only for links to pages handled by Gatsby.
+
+If the `to` prop is on a different domain (such as a full off-site URL) the
+behavior is undefined, and the user will likely not be taken to the expected
+location.
+Links will fail similarly if the `to` prop points somewhere on the same domain
+but handled by something other than Gatsby (which may be the case if your server
+proxies requests for certain paths to a different application).
+
+Sometimes you won't know ahead of time whether a link will be internal or not,
+such as when the data is coming from a CMS.
+In these cases you may find it useful to make a component which inspects the
+link and renders either with `gatsby-link` or with a regular `<a>` tag
+accordingly.
+Since deciding whether a link is internal or not depends on the site in
+question, you may need to customize the heuristic to your environment, but the
+following may be a good starting point:
+
+```jsx
+import GatsbyLink from "gatsby-link";
+
+const Link = ({ children, to, ...other }) => {
+  // Tailor the following test to your environment.
+  // This example assumes that any internal link (intended for Gatsby)
+  // will start with exactly one slash, and that anything else is external.
+  const internal = /^\/(?!\/)/.test(to);
+
+  // Use gatsby-link for internal links, and <a> for others
+  if (internal) {
+    return <GatsbyLink to={to} {...other}>{children}</GatsbyLink>;
+  }
+  return <a href={to} {...other}>{children}</a>;
+};
+
+export default Link;
+```
