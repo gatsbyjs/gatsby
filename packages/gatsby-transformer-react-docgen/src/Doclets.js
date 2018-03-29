@@ -1,7 +1,7 @@
 const metadata = require(`react-docgen`)
 
 const DOCLET_PATTERN = /^@(\w+)(?:$|\s((?:[^](?!^@\w))*))/gim
-
+const { hasOwnProperty: has } = Object.prototype
 let cleanDocletValue = str => {
   str = str.trim()
   if (str.endsWith(`}`) && str.startsWith(`{`)) str = str.slice(1, -1)
@@ -64,11 +64,13 @@ export const applyPropDoclets = prop => {
   if (doclets.required) {
     prop.required = true
   }
-
+  const dft = has.call(doclets, `default`)
+    ? doclets.default
+    : doclets.defaultValue
   // Use @defaultValue to provide a prop's default value
-  if (doclets.defaultValue || doclets.default) {
+  if (dft != null) {
     prop.defaultValue = {
-      value: doclets.defaultValue,
+      value: dft,
       computed: false,
     }
   }
