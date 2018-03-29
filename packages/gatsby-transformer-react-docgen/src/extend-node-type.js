@@ -91,6 +91,7 @@ function extendComponents() {
 function extendProp() {
   return {
     type: { type: PropTypeValue },
+    flowType: { type: GraphQLJSON },
     defaultValue: { type: PropDefaultValue },
     doclets: { type: GraphQLJSON },
     docblock: {

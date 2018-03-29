@@ -1,5 +1,4 @@
-import os from "os"
-import { applyPropDoclets, cleanDoclets } from "../Doclets"
+import { applyPropDoclets } from "../Doclets"
 
 describe(`transformer-react-doc-gen: Doclets`, () => {
   it(`should apply @required`, () => {

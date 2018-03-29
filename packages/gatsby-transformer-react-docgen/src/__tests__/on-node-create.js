@@ -117,4 +117,16 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
 
     expect(!!handler.mock.calls.length).toBe(true)
   })
+
+  describe(`flowTypes`, () => {
+    beforeEach(() => {
+      node.__fixture = `flow.js`
+    })
+    it(`should add flow type info`, async () => {
+      await run(node)
+      expect(createdNodes[1].flowType).toEqual({
+        name: `number`,
+      })
+    })
+  })
 })
