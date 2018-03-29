@@ -28,6 +28,12 @@
       link: /docs/add-404-page/
     - title: Adding Images, Fonts, and Files
       link: /docs/adding-images-fonts-files/
+    - title: Adding Markdown Pages
+      link: /docs/adding-markdown-pages/
+    - title: Adding a List of Markdown Blog Posts
+      link: /docs/adding-a-list-of-markdown-blog-posts/
+    - title: Adding Tags and Categories to Blog Posts
+      link: /docs/adding-tags-and-categories-to-blog-posts/
     - title: Browser Support
       link: /docs/browser-support/
     - title: Building Apps with Gatsby
@@ -68,12 +74,6 @@
       link: /docs/glamor/
     - title: Using CSS-in-JS Library Styled Components
       link: /docs/styled-components/
-    - title: Adding Markdown Pages
-      link: /docs/adding-markdown-pages/
-    - title: Adding a List of Markdown Blog Posts
-      link: /docs/adding-a-list-of-markdown-blog-posts/
-    - title: Adding Tags and Categories to Blog Posts
-      link: /docs/adding-tags-and-categories-to-blog-posts/
     - title: Creating Dynamically-Rendered Navigation*
       link: /docs/creating-dynamically-rendered-navigation/
     - title: Dropping Images into Static Folders*
