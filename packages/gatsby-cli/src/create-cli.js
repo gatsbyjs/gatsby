@@ -127,7 +127,7 @@ function buildLocalCommands(cli, isLocalSite) {
       }).option(`no-uglify`, {
         type: `boolean`,
         default: false,
-        describe: `Build site without uglifying JS bundles (for debugging).`
+        describe: `Build site without uglifying JS bundles (for debugging).`,
       }),
     handler: handlerP(
       getCommandHandler(`build`, (args, cmd) => {

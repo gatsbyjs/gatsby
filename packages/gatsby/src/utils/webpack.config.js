@@ -321,22 +321,24 @@ module.exports = async (
           new GatsbyModulePlugin(),
           // new WebpackStableModuleIdAndHash({ seed: 9, hashSize: 47 }),
           new HashedChunkIdsPlugin(),
-        ];
-        if(!noUglify) {
+        ]
+        if (!noUglify) {
           // Minify JavaScript.
-          plugins.push(new webpack.optimize.UglifyJsPlugin({
-            compress: {
-              screw_ie8: true, // React doesn't support IE8
-              warnings: false,
-            },
-            mangle: {
-              screw_ie8: true,
-            },
-            output: {
-              comments: false,
-              screw_ie8: true,
-            },
-          }))
+          plugins.push(
+            new webpack.optimize.UglifyJsPlugin({
+              compress: {
+                screw_ie8: true, // React doesn't support IE8
+                warnings: false,
+              },
+              mangle: {
+                screw_ie8: true,
+              },
+              output: {
+                comments: false,
+                screw_ie8: true,
+              },
+            })
+          )
         }
         return plugins
       }
