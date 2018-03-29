@@ -189,6 +189,7 @@ Websites built with Gatsby:
 * [Philipp Czernitzki - Blog/Website](http://philippczernitzki.me)
 * [CodeBushi](https://codebushi.com/)
 * [WebGazer](https://www.webgazer.io)
+* [Joe Seifi's Blog](http://seifi.org)
 
 ## Docs
 
