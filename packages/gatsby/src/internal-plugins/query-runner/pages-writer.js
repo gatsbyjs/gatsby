@@ -1,5 +1,6 @@
 const _ = require(`lodash`)
 const fs = require(`fs-extra`)
+const crypto = require(`crypto`)
 
 const { store, emitter } = require(`../../redux/`)
 
@@ -7,20 +8,34 @@ import { joinPath } from "../../utils/path"
 
 const getLayoutById = layouts => id => layouts.find(l => l.id === id)
 
+let lastHash = null
+
 // Write out pages information.
 const writePages = async () => {
   bootstrapFinished = true
   let { program, jsonDataPaths, pages, layouts } = store.getState()
+
+  const pagesComponentDependencies = {}
+
   // Write out pages.json
   const pagesData = pages.reduce(
     (mem, { path, matchPath, componentChunkName, layout, jsonName }) => {
       const layoutOjb = getLayoutById(layouts)(layout)
+
+      const pageComponentsChunkNames = {
+        componentChunkName,
+        layoutComponentChunkName: layoutOjb && layoutOjb.componentChunkName,
+      }
+
+      if (program._[0] === `develop`) {
+        pagesComponentDependencies[path] = pageComponentsChunkNames
+      }
+
       return [
         ...mem,
         {
-          componentChunkName,
+          ...pageComponentsChunkNames,
           layout: layoutOjb ? layoutOjb.machineId : layout,
-          layoutComponentChunkName: layoutOjb && layoutOjb.componentChunkName,
           jsonName,
           path,
           matchPath,
@@ -29,6 +44,18 @@ const writePages = async () => {
     },
     []
   )
+
+  const newHash = crypto
+    .createHash(`md5`)
+    .update(JSON.stringify(pagesComponentDependencies))
+    .digest(`hex`)
+
+  if (newHash === lastHash) {
+    // components didn't change - no need to rewrite pages.json
+    return Promise.resolve()
+  }
+
+  lastHash = newHash
 
   // Get list of components, layouts, and json files.
   let components = []
