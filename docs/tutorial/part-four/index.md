@@ -260,7 +260,6 @@ export const query = graphql`
       }
     }
   }
-`
 ```
 
 `src/layouts/index.js`
