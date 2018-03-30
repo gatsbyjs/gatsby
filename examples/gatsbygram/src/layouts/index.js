@@ -104,6 +104,7 @@ class DefaultLayout extends React.Component {
               }}
             >
               <h1
+                data-testid="site-title"
                 css={{
                   ...scale(4 / 5),
                   lineHeight: 1,
