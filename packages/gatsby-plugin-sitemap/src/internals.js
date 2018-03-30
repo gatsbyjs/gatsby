@@ -1,5 +1,7 @@
 import fs from "fs"
 import pify from "pify"
+import minimatch from "minimatch"
+import { withPrefix } from "gatsby-link"
 
 const withoutTrailingSlash = path =>
   path === `/` ? path : path.replace(/\/$/, ``)
@@ -14,7 +16,9 @@ export const runQuery = (handler, query, excludes) =>
 
     // Removing exluded paths
     r.data.allSitePage.edges = r.data.allSitePage.edges.filter(
-      page => !excludes.includes(withoutTrailingSlash(page.node.path))
+      page => !excludes.some(
+        excludedRoute => minimatch(withoutTrailingSlash(page.node.path), excludedRoute)
+      )
     )
 
     return r.data
@@ -48,7 +52,7 @@ export const defaultOptions = {
   serialize: ({ site, allSitePage }) =>
     allSitePage.edges.map(edge => {
       return {
-        url: site.siteMetadata.siteUrl + edge.node.path,
+        url: site.siteMetadata.siteUrl + withPrefix(edge.node.path),
         changefreq: `daily`,
         priority: 0.7,
       }
