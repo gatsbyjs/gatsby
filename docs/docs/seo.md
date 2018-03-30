@@ -1,6 +1,6 @@
 # SEO with Gatsby
 
-Gatsby offers several advantages to your site in search engine result placement. Some come out of the box, and some require light configutation.
+Gatsby offers several advantages to your site in search engine result placement. Some come out of the box, and some require light configuration.
 
 ### Server rendering
 
