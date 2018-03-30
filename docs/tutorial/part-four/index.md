@@ -300,7 +300,6 @@ export const query = graphql`
       }
     }
   }
-`
 ```
 
 It worked!! 🎉
