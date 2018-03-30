@@ -354,11 +354,14 @@ module.exports = async (args: BootstrapArgs) => {
     require(`./page-hot-reloader`)(graphqlRunner)
   }
 
-  // Run queries
-  activity = report.activityTimer(`run graphql queries`)
-  activity.start()
-  await runQueries()
-  activity.end()
+  // Run queries only for build. In develop we run queries on demand.
+  if (process.env.NODE_ENV === `production`) {
+    // Run queries
+    activity = report.activityTimer(`run graphql queries`)
+    activity.start()
+    await runQueries()
+    activity.end()
+  }
 
   // Write out files.
   activity = report.activityTimer(`write out page data`)

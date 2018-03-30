@@ -12,6 +12,7 @@ const { store, emitter } = require(`../../redux`)
 
 let queuedDirtyActions = []
 let active = false
+let pathFilter = []
 
 // Do initial run of graphql queries during bootstrap.
 // Afterwards we listen "API_RUNNING_QUEUE_EMPTY" and check
@@ -30,7 +31,6 @@ exports.runQueries = async () => {
 
   // Run these pages
   await runQueriesForPathnames(cleanIds)
-
   active = true
   return
 }
@@ -43,8 +43,22 @@ emitter.on(`DELETE_NODE`, action => {
   queuedDirtyActions.push({ payload: action.node })
 })
 
+emitter.on(`RUN_QUERIES_FOR_PATH`, path => {
+  if (!pathFilter.includes(path)) {
+    pathFilter.push(path)
+    runQueriesForPathnames([path])
+  }
+})
+
+emitter.on(`STOP_RUNNING_QUERIES_FOR_PATH`, path => {
+  const index = pathFilter.indexOf(path)
+  if (index !== -1) {
+    pathFilter.splice(index, 1)
+  }
+})
+
 const runQueuedActions = async () => {
-  if (active) {
+  if (active || pathFilter.length > 0) {
     queuedDirtyActions = _.uniq(queuedDirtyActions, a => a.payload.id)
     await runQueriesForPathnames(findDirtyIds(queuedDirtyActions))
     queuedDirtyActions = []
@@ -97,6 +111,9 @@ const runQueriesForPathnames = pathnames => {
   const state = store.getState()
   const pagesAndLayouts = [...state.pages, ...state.layouts]
   let didNotQueueItems = true
+  if (pathFilter.length > 0) {
+    pathnames = _.intersection(pathnames, pathFilter)
+  }
   pathnames.forEach(id => {
     const plObj = pagesAndLayouts.find(
       pl => pl.path === id || `LAYOUT___${pl.id}` === id
