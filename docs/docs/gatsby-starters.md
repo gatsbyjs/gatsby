@@ -571,3 +571,13 @@ Community:
   * Avoids code duplication - generates pages for each locale
   * Possibility of translated paths 
   
+* [gatsby-starter-photon](https://github.com/codebushi/gatsby-starter-photon)
+  [(demo)](http://gatsby-photon.surge.sh/)
+
+  Features:
+
+  * Based off of the Photon site template. Designed by
+    [HTML5 UP](https://html5up.net/photon)
+  * Single Page, Responsive Site
+  * Custom grid made with CSS Grid
+  * Styling with SCSS
