@@ -4,7 +4,7 @@ Gatsby helps your site place better in search engines. Some advantages come out 
 
 ### Server rendering
 
-Because Gatsby pages are server-rendered, rather than client-rendered, all the page content is available to Google and other search engines or crawlers.
+Because Gatsby pages are server-rendered, all the page content is available to Google and other search engines or crawlers.
 
 (You can see this by viewing the source for this page).
 
