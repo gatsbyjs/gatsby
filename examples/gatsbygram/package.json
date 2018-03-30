@@ -42,6 +42,10 @@
     "develop": "gatsby develop",
     "dev": "gatsby develop",
     "build": "gatsby build",
-    "deploy": "gatsby build --prefix-paths && gh-pages -d public"
+    "deploy": "gatsby build --prefix-paths && gh-pages -d public",
+    "cypress:open": "cypress open"
+  },
+  "devDependencies": {
+    "cypress": "^2.1.0"
   }
 }
