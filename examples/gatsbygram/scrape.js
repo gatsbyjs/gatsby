@@ -35,6 +35,7 @@ const bar = new ProgressBar(
 mkdirp.sync(`./data/images`)
 
 let posts = []
+let userId 
 
 // Write json
 const saveJSON = _ =>
@@ -42,11 +43,19 @@ const saveJSON = _ =>
 
 const getPosts = maxId => {
   let url = `https://www.instagram.com/${username}/?__a=1`
-  if (maxId) url += `&max_id=${maxId}`
+  let url2 = `https://www.instagram.com/graphql/query/?query_hash=472f257a40c653c64c666ce877d59d2b`
+
+  if (maxId) url = url2 + `&variables={"id":"${userId}","first":12,"after":"${maxId}"}`
 
   request(url, { encoding: `utf8` }, (err, res, body) => {
     if (err) console.log(`error: ${err}`)
-    body = JSON.parse(body).graphql
+    if (maxId) {
+       body = JSON.parse(body).data
+    } else {
+       //This is the first request, lets get the userId
+       body = JSON.parse(body).graphql
+       userId = body.user.id
+    }
     body.user.edge_owner_to_timeline_media.edges
       .filter(({ node: item }) => item[`__typename`] === `GraphImage`)
       .map(({ node: item }) => {
@@ -76,7 +85,7 @@ const getPosts = maxId => {
         posts.push(item)
       })
 
-    const lastId = get(body, `user.media.page_info.end_cursor`)
+    const lastId = get(body, `user.edge_owner_to_timeline_media.page_info.end_cursor`)
     if (posts.length < 100 && lastId) getPosts(lastId)
     else saveJSON()
   })
