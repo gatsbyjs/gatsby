@@ -409,6 +409,7 @@ exports.downloadMediaFiles = async ({
           })
         } catch (e) {
           // Ignore
+          console.log(e)
         }
       }
 
