@@ -260,7 +260,6 @@ export const query = graphql`
       }
     }
   }
-`
 ```
 
 `src/layouts/index.js`
@@ -301,7 +300,6 @@ export const query = graphql`
       }
     }
   }
-`
 ```
 
 It worked!! 🎉
