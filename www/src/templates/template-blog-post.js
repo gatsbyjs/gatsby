@@ -299,6 +299,7 @@ export const pageQuery = graphql`
         rawDate: date
         canonicalLink
         publishedAt
+        tags
         image {
           childImageSharp {
             resize(width: 1500, height: 1500) {

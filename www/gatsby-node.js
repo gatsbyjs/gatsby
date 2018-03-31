@@ -73,6 +73,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
                     draft
                     canonicalLink
                     publishedAt
+                    tags
                   }
                 }
               }
@@ -139,13 +140,13 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
           })
         })
 
-        const tags = blogPosts
+        const tagLists = blogPosts
           .filter(post => _.get(post, "node.frontmatter.tags"))
           .map(post => _.get(post, "node.frontmatter.tags"))
 
-        _.uniq(tags).forEach(tag => {
+        _.uniq(_.flatten(tagLists)).forEach(tag => {
           createPage({
-            path: `/tags/${_.kebabCase(tag)}/`,
+            path: `/blog/tags/${_.kebabCase(tag)}/`,
             component: tagTemplate,
             context: {
               tag,
