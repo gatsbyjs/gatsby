@@ -1,7 +1,7 @@
 const Queue = require(`better-queue`)
 
 const queryRunner = require(`./query-runner`)
-const { store } = require(`../../redux`)
+const { store, emitter } = require(`../../redux`)
 
 const processing = new Set()
 const waiting = new Map()
@@ -42,5 +42,9 @@ const queue = new Queue(
     },
   }
 )
+
+queue.on(`drain`, () => {
+  emitter.emit(`QUERY_QUEUE_DRAINED`)
+})
 
 module.exports = queue

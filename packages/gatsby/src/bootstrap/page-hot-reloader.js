@@ -19,8 +19,9 @@ emitter.on(`DELETE_NODE`, action => {
 })
 
 emitter.on(`API_RUNNING_QUEUE_EMPTY`, () => {
+  console.log(`API_RUNNING_QUEUE_EMPTY`)
   if (pagesDirty) {
-    debouncedCreatePages()
+    runCreatePages()
   }
 })
 
