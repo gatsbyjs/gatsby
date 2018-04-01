@@ -139,7 +139,7 @@ class DefaultLayout extends React.Component {
             boxShadow: `inset 0px -3px 2px 0px ${colors.ui.bright}`,
           }}
         >
-          Attend 2-day Gatsby workshops by Kyle Mathews in{" "}
+          Live 2-day Gatsby training with Kyle Mathews! Sign up for{" "}
           <OutboundLink
             target="_blank"
             rel="noopener"
