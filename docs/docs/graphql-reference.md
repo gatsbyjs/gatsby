@@ -68,7 +68,13 @@ This query combines sorting, filtering, limiting and formatting together.
 
 ## Query variables
 
-Work in progress - pull requests welcome.
+Like the query above, we passed parameters called scalar value, but graphql provide the possibility to create objects thanks to input types.
+Thus, we can directly pass an object as a query variable.
+
+The query below is the same one than the query above, but with input types added and the keyword `query` which mean that we will create a query named `GetBlogPosts` to request `allMarkdownRemark` wanted.
+
+<iframe src="https://gatsbygraphql.sloppy.zone/?query=query%20GetBlogPosts(%24filter%3A%20filterMarkdownRemark%2C%20%24sort%3A%20markdownRemarkConnectionSort)%20%7B%0A%09allMarkdownRemark(%0A%20%20%20%20limit%3A%203%2C%0A%20%20%20%20filter%3A%20%24filter%2C%0A%20%20%20%20sort%3A%20%24sort%0A%20%20)%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20fields%7B%0A%20%20%20%20%20%20%20%20%20%20slug%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20frontmatter%20%7B%0A%20%20%20%20%20%20%20%20%20%20title%0A%20%20%20%20%20%20%20%20%20%20date(formatString%3A%20%22dddd%20DD%20MMMM%20YYYY%22)%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%20%20%20%20%0A%7D&operationName=GetBlogPosts&variables=%7B%0A%20%20%22filter%22%3A%20%7B%0A%20%20%20%20%22frontmatter%22%3A%20%7B%0A%20%20%20%20%20%20%22date%22%3A%20%7B%0A%20%20%20%20%20%20%20%20%22ne%22%3A%20null%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%2C%0A%20%20%22sort%22%3A%20%7B%0A%20%20%20%20%22fields%22%3A%20%22frontmatter___date%22%2C%20%0A%20%20%20%20%22order%22%3A%20%22DESC%22%0A%20%20%20%20%7D%0A%7D" width="600" height="400"></iframe>
+
 
 ## Where next?
 
