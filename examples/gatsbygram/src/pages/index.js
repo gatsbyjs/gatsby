@@ -156,6 +156,7 @@ class Index extends React.Component {
         ))}
         {!this.state.showingMore && (
           <a
+            data-testid="load-more"
             css={{
               ...scale(-0.5),
               border: `1px solid blue`,

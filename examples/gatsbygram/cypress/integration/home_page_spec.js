@@ -86,4 +86,21 @@ describe(`The Home Page`, () => {
       cy.getTestElement(`modal-close`).click()
     })
   })
+
+  it(`loads more posts when Load More button is clicked & on scroll`, () => {
+    // initially loads 12 posts
+    cy.getTestElement(`post`).should('have.length', 12)
+
+    // loads 12 more posts when Load More button is clicked
+    cy.getTestElement(`load-more`).click()
+    cy.getTestElement(`post`).should('have.length', 24)
+
+    // loads 12 more posts when scrolled to bottom
+    // cy.getTestElement(`home-container`).scrollTo(`0%`, `99%`)
+    cy.window().scrollTo(`bottom`)
+    cy.getTestElement(`post`).should('have.length', 36)
+
+    // let's go back to top
+    cy.window().scrollTo(`top`)
+  })
 })
