@@ -4,6 +4,7 @@ import Link from "gatsby-link"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import ArrowBackIcon from "react-icons/lib/md/arrow-back"
 import Img from "gatsby-image"
+import { OutboundLink } from "gatsby-plugin-google-analytics"
 
 import presets, { colors } from "../utils/presets"
 import typography, { rhythm, scale, options } from "../utils/typography"
@@ -160,9 +161,9 @@ class BlogPostTemplate extends React.Component {
                   <span>
                     {` `}
                     (originally published at{` `}
-                    <a href={post.frontmatter.canonicalLink}>
+                    <OutboundLink href={post.frontmatter.canonicalLink}>
                       {post.frontmatter.publishedAt}
-                    </a>)
+                    </OutboundLink>)
                   </span>
                 )}
               </BioLine>
@@ -190,9 +191,9 @@ class BlogPostTemplate extends React.Component {
                   post.frontmatter.imageAuthorLink && (
                     <em>
                       Image by{` `}
-                      <a href={post.frontmatter.imageAuthorLink}>
+                      <OutboundLink href={post.frontmatter.imageAuthorLink}>
                         {post.frontmatter.imageAuthor}
-                      </a>
+                      </OutboundLink>
                     </em>
                   )}
               </div>
