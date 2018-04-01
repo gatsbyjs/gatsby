@@ -130,7 +130,6 @@ module.exports = async (config = {}) => {
   // Add internal plugins
   const internalPlugins = [
     `../../internal-plugins/dev-404-page`,
-    `../../internal-plugins/component-page-creator`,
     `../../internal-plugins/component-layout-creator`,
     `../../internal-plugins/internal-data-bridge`,
     `../../internal-plugins/prod-404`,
@@ -156,6 +155,30 @@ module.exports = async (config = {}) => {
     version: createFileContentHash(process.cwd(), `gatsby-*`),
     pluginOptions: {
       plugins: [],
+    },
+  })
+
+  // Add the auto page creator plugin
+  const pluginPageCreator = {
+    version: require(
+      path.join(
+        path.dirname(
+          require.resolve(`gatsby-plugin-page-creator`)), `package.json`
+        )
+      ).version,
+
+    path: slash(
+      path.dirname(require.resolve(`gatsby-plugin-page-creator`))
+    ),
+  }
+  plugins.push({
+    resolve: pluginPageCreator.path,
+    id: `Plugin gatsby-plugin-page-creator`,
+    name: `gatsby-plugin-page-creator`,
+    version: pluginPageCreator.version,
+    pluginOptions: {
+      plugins: [],
+      path: `${process.cwd()}/src/pages`,
     },
   })
 
