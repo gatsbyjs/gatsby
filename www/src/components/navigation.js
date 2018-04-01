@@ -2,7 +2,7 @@ import React from "react"
 import Link from "gatsby-link"
 import TwitterIcon from "react-icons/lib/fa/twitter"
 import GithubIcon from "react-icons/lib/go/mark-github"
-import { OutBoundLink } from "gatsby-plugin-google-analytics"
+import { OutboundLink } from "gatsby-plugin-google-analytics"
 
 import SearchForm from "../components/search-form"
 import DiscordIcon from "../components/discord"
@@ -169,7 +169,7 @@ export default ({ pathname }) => {
             iconStyles={{ ...socialIconsStyles }}
             isHomepage={isHomepage}
           />
-          <OutBoundLink
+          <OutboundLink
             href="https://github.com/gatsbyjs/gatsby"
             title="GitHub"
             css={{
@@ -178,7 +178,7 @@ export default ({ pathname }) => {
             }}
           >
             <GithubIcon style={{ verticalAlign: `text-top` }} />
-          </OutBoundLink>
+          </OutboundLink>
 
           <div
             css={{
@@ -187,7 +187,7 @@ export default ({ pathname }) => {
               [presets.Hd]: { display: `inline-block` },
             }}
           >
-            <OutBoundLink
+            <OutboundLink
               href="https://discord.gg/0ZcbPKXt5bVoxkfV"
               title="Discord"
               css={{
@@ -196,8 +196,8 @@ export default ({ pathname }) => {
               }}
             >
               <DiscordIcon overrideCSS={{ verticalAlign: `text-top` }} />
-            </OutBoundLink>
-            <OutBoundLink
+            </OutboundLink>
+            <OutboundLink
               href="https://twitter.com/gatsbyjs"
               title="@gatsbyjs"
               css={{
@@ -207,7 +207,7 @@ export default ({ pathname }) => {
               }}
             >
               <TwitterIcon style={{ verticalAlign: `text-top` }} />
-            </OutBoundLink>
+            </OutboundLink>
           </div>
         </div>
       </div>

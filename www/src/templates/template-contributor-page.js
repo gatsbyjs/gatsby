@@ -1,6 +1,6 @@
 import React from "react"
 import Img from "gatsby-image"
-import { OutBoundLink } from "gatsby-plugin-google-analytics"
+import { OutboundLink } from "gatsby-plugin-google-analytics"
 
 import Container from "../components/container"
 import BlogPostPreviewItem from "../components/blog-post-preview-item"
@@ -46,10 +46,10 @@ class ContributorPageTemplate extends React.Component {
             >
               {contributor.bio}
             </p>
-            <OutBoundLink href={`https://twitter.com/${contributor.twitter}`}>
+            <OutboundLink href={`https://twitter.com/${contributor.twitter}`}>
               {` `}
               {contributor.twitter}
-            </OutBoundLink>
+            </OutboundLink>
           </div>
         </div>
         <div
