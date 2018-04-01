@@ -19,7 +19,10 @@ function OutboundLink(props) {
         }
 
         if (window.ga) {
-          window.ga(`send`, `event`, `outbound`, `click`, props.href, {
+          ga(`send`, `event`, {
+            eventCategory: `Outbound Link`,
+            eventAction: `click`,
+            eventLabel: props.href,
             transport: `beacon`,
             hitCallback: function() {
               if (redirect) {
