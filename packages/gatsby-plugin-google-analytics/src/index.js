@@ -17,13 +17,15 @@ function OutboundLink(props) {
         ) {
           redirect = false
         }
-
+        if (props.target && props.target.toLowerCase() !== `_self`) {
+          redirect = false
+        }
         if (window.ga) {
-          ga(`send`, `event`, {
+          window.ga(`send`, `event`, {
             eventCategory: `Outbound Link`,
             eventAction: `click`,
             eventLabel: props.href,
-            transport: `beacon`,
+            transport: redirect ? `beacon` : ``,
             hitCallback: function() {
               if (redirect) {
                 document.location = props.href
@@ -44,6 +46,7 @@ function OutboundLink(props) {
 
 OutboundLink.propTypes = {
   href: PropTypes.string,
+  target: PropTypes.string,
 }
 
 export { OutboundLink }
