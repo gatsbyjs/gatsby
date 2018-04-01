@@ -132,6 +132,7 @@ class DefaultLayout extends React.Component {
               </h1>
             </Link>
             <Link
+              data-testid="about-link"
               to="/about/"
               css={{
                 color: `inherit`,
