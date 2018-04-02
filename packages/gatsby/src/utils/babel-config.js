@@ -128,7 +128,7 @@ function findBabelPackage(directory) {
  * the paths will be absolute so that Babel behaves as expected.
  */
 module.exports = async function babelConfig(program, stage) {
-  const { directory } = program
+  const { directory, noUglify } = program
 
   let babelrc = findBabelrc(directory) || findBabelPackage(directory)
 
@@ -149,7 +149,7 @@ module.exports = async function babelConfig(program, stage) {
       require.resolve(`babel-preset-env`),
       {
         loose: true,
-        uglify: true,
+        uglify: !noUglify,
         modules: `commonjs`,
         targets: {
           browsers: program.browserslist,
