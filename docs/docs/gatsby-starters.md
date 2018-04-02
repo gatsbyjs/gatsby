@@ -571,3 +571,15 @@ Community:
   * Avoids code duplication - generates pages for each locale
   * Possibility of translated paths 
   
+* [gatsby-starter-business](https://github.com/v4iv/gatsby-starter-business)
+  [(demo)](https://gatsby-starter-business.netlify.com/)
+  
+  Features:
+  
+  * Complete Business Website Suite - Home Page, About Page, Pricing Page, Contact Page and Blog
+  * Netlify CMS for Content Management
+  * SEO Friendly (Sitemap, Schemas, Meta Tags, GTM etc)
+  * Bulma and Sass Support for styling
+  * Progressive Web App & Offline Support
+  * Tags and RSS Feed for Blog
+  * Disqus and Share Support
