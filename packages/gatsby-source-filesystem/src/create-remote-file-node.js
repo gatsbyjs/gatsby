@@ -30,7 +30,7 @@ const cacheId = url => `create-remote-file-node-${url}`
  */
 
 /**
- * @typedef {CRFNPayload}
+ * @typedef {CreateRemoteFileNodePayload}
  * @typedef {Object}
  * @description Create Remote File Node Payload
  *
@@ -58,7 +58,6 @@ const createHash = (str) => crypto
   .update(str)
   .digest(`hex`)
 
-
 const CACHE_DIR = `.cache`
 const FS_PLUGIN_DIR = `gatsby-source-filesystem`
 
@@ -78,7 +77,6 @@ const createFilePath = (directory, filename, ext) => path.join(
   `${filename}${ext}`
 )
 
-
 /********************
  * Queue Management *
  ********************/
@@ -95,7 +93,6 @@ const queue = new Queue(pushToQueue, {
   concurrent: 200,
 })
 
-
 /**
  * @callback {Queue~queueCallback}
  * @param {*} error
@@ -108,7 +105,7 @@ const queue = new Queue(pushToQueue, {
  * Handle tasks that are pushed in to the Queue
  *
  *
- * @param  {CRFNPayload}          task
+ * @param  {CreateRemoteFileNodePayload}          task
  * @param  {Queue~queueCallback}  cb
  * @return {Promise<null>}
  */
@@ -120,7 +117,6 @@ async function pushToQueue (task, cb) {
     return cb(null, e)
   }
 }
-
 
 /******************
  * Core Functions *
@@ -153,13 +149,12 @@ const requestRemoteNode = (url, headers, tmpFilename, filename) => new Promise((
   })
 })
 
-
 /**
  * processRemoteNode
  * --
  * Request the remote file and return the fileNode
  *
- * @param {CRFNPayload} options
+ * @param {CreateRemoteFileNodePayload} options
  * @return {Promise<Object>} Resolves with the fileNode
  */
 async function processRemoteNode ({ url, store, cache, createNode, auth = {} }) {
@@ -225,7 +220,6 @@ async function processRemoteNode ({ url, store, cache, createNode, auth = {} }) 
   return null
 }
 
-
 /**
  * Index of promises resolving to File node from remote url
  */
@@ -236,7 +230,7 @@ const processingCache = {}
  * pushes a task in to the Queue and the processing cache
  *
  * Promisfy a task in queue
- * @param {CRFNPayload} task
+ * @param {CreateRemoteFileNodePayload} task
  * @return {Promise<Object>}
  */
 const pushTask = (task) => new Promise((resolve, reject) => {
@@ -250,7 +244,6 @@ const pushTask = (task) => new Promise((resolve, reject) => {
     })
 })
 
-
 /***************
  * Entry Point *
  ***************/
@@ -263,7 +256,7 @@ const pushTask = (task) => new Promise((resolve, reject) => {
  * First checks cache to ensure duplicate requests aren't processed
  * Then pushes to a queue
  *
- * @param {CRFNPayload} options
+ * @param {CreateRemoteFileNodePayload} options
  * @return {Promise<Object>}                  Returns the created node
  */
 module.exports = ({ url, store, cache, createNode, auth = {} }) => {
@@ -272,7 +265,6 @@ module.exports = ({ url, store, cache, createNode, auth = {} }) => {
   if (processingCache[url]) {
     return processingCache[url]
   }
-
 
 
   if (!url || isWebUri(url) === undefined) {
