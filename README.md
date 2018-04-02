@@ -192,6 +192,7 @@ Websites built with Gatsby:
 * [CodeBushi](https://codebushi.com/)
 * [WebGazer](https://www.webgazer.io)
 * [Joe Seifi's Blog](http://seifi.org)
+* [Bartosz Dominiak Blog/Portfolio](http://www.bartoszdominiak.com/) ([source](https://github.com/bartdominiak/blog))
 
 ## Docs
 
