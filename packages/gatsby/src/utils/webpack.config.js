@@ -45,6 +45,7 @@ module.exports = async (
   // webpack config.
   const stage = suppliedStage
   const babelConfig = await genBabelConfig(program, suppliedStage)
+  const { noUglify } = program
 
   function processEnv(stage, defaultNodeEnv) {
     debug(`Building env for "${stage}"`)
@@ -235,7 +236,7 @@ module.exports = async (
           .getState()
           .pages.map(page => page.componentChunkName)
         components = uniq(components)
-        return [
+        const plugins = [
           // Moment.js includes 100s of KBs of extra localization data by
           // default in Webpack that most sites don't want. This line disables
           // loading locale modules. This is a practical solution that requires
@@ -315,26 +316,31 @@ module.exports = async (
             filename: `chunk-manifest.json`,
             manifestVariable: `webpackManifest`,
           }),
-          // Minify Javascript.
-          new webpack.optimize.UglifyJsPlugin({
-            compress: {
-              screw_ie8: true, // React doesn't support IE8
-              warnings: false,
-            },
-            mangle: {
-              screw_ie8: true,
-            },
-            output: {
-              comments: false,
-              screw_ie8: true,
-            },
-          }),
           // Ensure module order stays the same. Supposibly fixed in webpack 2.0.
           new webpack.optimize.OccurenceOrderPlugin(),
           new GatsbyModulePlugin(),
           // new WebpackStableModuleIdAndHash({ seed: 9, hashSize: 47 }),
           new HashedChunkIdsPlugin(),
         ]
+        if (!noUglify) {
+          // Minify JavaScript.
+          plugins.push(
+            new webpack.optimize.UglifyJsPlugin({
+              compress: {
+                screw_ie8: true, // React doesn't support IE8
+                warnings: false,
+              },
+              mangle: {
+                screw_ie8: true,
+              },
+              output: {
+                comments: false,
+                screw_ie8: true,
+              },
+            })
+          )
+        }
+        return plugins
       }
       default:
         throw new Error(`The state requested ${stage} doesn't exist.`)
