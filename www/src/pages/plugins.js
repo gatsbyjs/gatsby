@@ -4,14 +4,14 @@ import logo from "../monogram.svg"
 import { rhythm, options } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
 
-class Packages extends Component {
+class Plugins extends Component {
   render() {
     return (
       <Container
         css={{
           alignItems: `center`,
           display: `flex`,
-          minHeight: `calc(100vh - ${presets.headerHeight})`,
+          minHeight: `calc(100vh - (${presets.headerHeight} + 2.8rem - 1px))`,
         }}
       >
         <div
@@ -40,7 +40,7 @@ class Packages extends Component {
               textAlign: `center`,
             }}
           >
-            Welcome to the Gatsby Package Library!
+            Welcome to the Gatsby Plugin Library!
           </h1>
           <p
             css={{
@@ -52,7 +52,7 @@ class Packages extends Component {
               textAlign: `center`,
             }}
           >
-            Please use the search bar to find packages that will make your
+            Please use the search bar to find plugins that will make your
             blazing-fast site even more awesome.
           </p>
         </div>
@@ -61,4 +61,4 @@ class Packages extends Component {
   }
 }
 
-export default Packages
+export default Plugins

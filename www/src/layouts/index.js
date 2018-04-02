@@ -141,6 +141,8 @@ class DefaultLayout extends React.Component {
             fontFamily: options.headerFontFamily.join(`,`),
             textAlign: `center`,
             boxShadow: `inset 0px -3px 2px 0px ${colors.ui.bright}`,
+            zIndex: `2`,
+            position: isHomepage || isBlog ? `absolute` : `fixed`,
           }}
         >
           Live 2-day Gatsby training with Kyle Mathews! Sign up for{" "}
@@ -230,6 +232,7 @@ class DefaultLayout extends React.Component {
 
           <div
             css={{
+              marginTop: isHomepage || isBlog ? 0 : `calc(2.8rem - 1px)`,
               ...childrenMobileDisplay,
               [presets.Tablet]: {
                 paddingLeft: leftPadding(10),
