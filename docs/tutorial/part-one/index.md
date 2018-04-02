@@ -48,7 +48,7 @@ To install a starter, first install Gatsby's command line program by running the
 npm install --global gatsby-cli
 ```
 
-Once that's installed, open a new terminal window and run the following commands to install and then change to your new tutorial-part-one directory:
+Once that's installed, open a new terminal window and run the following commands to create a new Gatsby site in a directory called tutorial-part-one and then move to this new directory:
 
 ```sh
 gatsby new tutorial-part-one https://github.com/gatsbyjs/gatsby-starter-hello-world
