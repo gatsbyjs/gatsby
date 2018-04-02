@@ -354,6 +354,10 @@ const queue = {
   ___resources: () => resourcesArray.slice().reverse(),
 }
 
+emitter.on(`PREFETCH_PATH`, rawPath => {
+  queue.enqueue(rawPath)
+})
+
 export const publicLoader = {
   getResourcesForPathname: queue.getResourcesForPathname,
 }
