@@ -21,7 +21,7 @@ This way, when you `fetch('/api/todos')` in development, the development server
 will recognize that it’s not a static asset, and will proxy your request to
 `http://dev-mysite.com/api/todos` as a fallback.
 
-If you want to configure rewrite rules (say for testing Netlify functions locally), pass a `rewritePaths` object to the proxy config.
+If you want to configure rewrite rules (say for testing Netlify functions locally), pass a `pathRewrite` object to the proxy config.
 
 ```js
 module.exports = {
