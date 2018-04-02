@@ -25,7 +25,29 @@ module.exports = {
       },
     },
   ],
-};
+}
+```
+
+## `<OutboundLink>` component
+
+To make it easy to track clicks on outbound links in Google Analytics,
+the plugin provides a component.
+
+To use it, simply import it and use it like you would the `<a>` element e.g.
+
+```jsx
+import React
+import { Outboundink } from 'gatsby-plugin-google-analytics'
+
+export default () => {
+  <div>
+    <Outboundink
+      href="https://www.gatsbyjs.org/packages/gatsby-plugin-google-analytics/"
+    >
+      Visit the Google Analytics plugin page!
+    </Outboundink>
+  </div>
+}
 ```
 
 ## The "anonymize" option
