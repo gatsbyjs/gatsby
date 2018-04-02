@@ -37,8 +37,6 @@ Websites built with Gatsby:
   ([source](https://github.com/hackclub/site))
 * [High School Hackathons](https://hackathons.hackclub.com/)
   ([source](https://github.com/hackclub/hackathons))
-* [HBTU MUN 2018](https://hbtumun18.netlify.com/)
-  ([source](https://github.com/HaoZeke/hbtuMun18))
 * [Jamie Henson's Blog](http://jamiehenson.com/)
   ([source](https://github.com/jamiehenson/jh47-gatsby))
 * [Sean Coker's Blog](https://sean.is/)
@@ -195,6 +193,8 @@ Websites built with Gatsby:
 * [WebGazer](https://www.webgazer.io)
 * [Joe Seifi's Blog](http://seifi.org)
 * [Bartosz Dominiak Blog/Portfolio](http://www.bartoszdominiak.com/) ([source](https://github.com/bartdominiak/blog))
+* [HBTU MUN 2018](https://hbtumun18.netlify.com/)
+  ([source](https://github.com/HaoZeke/hbtuMun18))
 
 ## Docs
 
