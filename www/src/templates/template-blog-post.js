@@ -50,6 +50,11 @@ class BlogPostTemplate extends React.Component {
         {children}
       </p>
     )
+    let canonicalLink
+    if(post.frontmatter.canonicalLink) {
+      canonicalLink = <link rel="canonical" href={post.frontmatter.canonicalLink} />
+    }
+
     return (
       <div>
         <Container className="post" css={{ paddingBottom: `0 !important` }}>
@@ -106,6 +111,7 @@ class BlogPostTemplate extends React.Component {
               name="article:published_time"
               content={post.frontmatter.rawDate}
             />
+            {canonicalLink}
           </Helmet>
           <header
             css={{
