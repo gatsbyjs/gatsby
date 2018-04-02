@@ -33,13 +33,6 @@ class WebsocketManager {
 
         if (isRoomEmpty(roomName)) {
           emitter.emit(`STOP_RUNNING_QUERIES_FOR_PATH`, path)
-
-          // keep results in memory for few seconds
-          setTimeout(() => {
-            if (isRoomEmpty(roomName)) {
-              this.results.delete(path)
-            }
-          }, 5000)
         }
       }
 
