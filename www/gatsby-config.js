@@ -34,12 +34,6 @@ module.exports = {
         pathToConfigModule: `src/utils/typography`,
       },
     },
-    {
-      resolve: `gatsby-plugin-canonical-urls`,
-      options: {
-        siteUrl: `https://www.gatsbyjs.org`,
-      },
-    },
     `gatsby-transformer-sharp`,
     `gatsby-transformer-documentationjs`,
     `gatsby-transformer-yaml`,
