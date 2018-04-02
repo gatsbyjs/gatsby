@@ -193,6 +193,8 @@ Websites built with Gatsby:
 * [WebGazer](https://www.webgazer.io)
 * [Joe Seifi's Blog](http://seifi.org)
 * [Bartosz Dominiak Blog/Portfolio](http://www.bartoszdominiak.com/) ([source](https://github.com/bartdominiak/blog))
+* [HBTU MUN 2018](https://hbtumun18.netlify.com/)
+  ([source](https://github.com/HaoZeke/hbtuMun18))
 
 ## Docs
 
