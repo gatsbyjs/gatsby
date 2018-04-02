@@ -24,7 +24,7 @@ Gatsby structures its content as collections of `nodes`, which are connected to 
 
 <iframe src="https://gatsbygraphql.sloppy.zone/?query=%7B%0A%20%20allSitePlugin%20%7B%0A%20%20%20%20totalCount%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20name%0A%20%20%20%20%20%20%20%20version%0A%20%20%20%20%20%20%20%20packageJson%20%7B%0A%20%20%20%20%20%20%20%20%20%20description%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A" width="600" height="400"></iframe>
 
-Try using the editor's autocomplete (`Crtl + Space`) to get extended details from the `packageJson` nodes.
+Try using the editor's autocomplete (`Ctrl + Space`) to get extended details from the `packageJson` nodes.
 
 ## Limit
 
