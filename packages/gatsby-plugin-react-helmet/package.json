@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-react-helmet",
-  "description": "Provides drop-in support for server rendering data added with react-helmet",
+  "description": "Manage document head data with react-helmet. Provides drop-in server rendering support for Gatsby.",
   "version": "2.0.9",
   "author": "Kyle Mathews <matthews.kyle@gmail.com>",
   "bugs": {
@@ -16,7 +16,19 @@
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-react-helmet#readme",
   "keywords": [
     "gatsby",
-    "gatsby-plugin"
+    "gatsby-plugin",
+    "favicon",
+    "react-helmet",
+    "seo",
+    "document",
+    "head",
+    "title",
+    "meta",
+    "link",
+    "script",
+    "base",
+    "noscript",
+    "style"
   ],
   "license": "MIT",
   "main": "index.js",
