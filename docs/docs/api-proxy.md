@@ -14,12 +14,24 @@ module.exports = {
     prefix: "/api",
     url: "http://dev-mysite.com",
   },
-};
+}
 ```
 
 This way, when you `fetch('/api/todos')` in development, the development server
 will recognize that it’s not a static asset, and will proxy your request to
 `http://dev-mysite.com/api/todos` as a fallback.
+
+If you want to configure rewrite rules (say for testing Netlify functions locally), pass a `rewritePaths` object to the proxy config.
+
+```js
+module.exports = {
+  proxy: {
+    prefix: "/.netlify/functions",
+    url: "http://localhost:9000",
+    pathRewrite: { "/.netlify/functions": "" },
+  },
+}
+```
 
 Keep in mind that `proxy` only has effect in development (with `gatsby develop`), and it is up to you to ensure that URLs like `/api/todos` point to
 the right place in production.

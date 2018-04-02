@@ -140,9 +140,22 @@ async function startServer(program) {
   // Set up API proxy.
   const { proxy } = store.getState().config
   if (proxy) {
-    const { prefix, url } = proxy
+    const { prefix, url, pathRewrite } = proxy
+
     app.use(`${prefix}/*`, (req, res) => {
-      const proxiedUrl = url + req.originalUrl
+      let path = req.originalUrl
+
+      if (pathRewrite) {
+        const matchedPath = Object.keys(pathRewrite).find(k =>
+          req.originalUrl.match(k)
+        )
+
+        if (matchedPath) {
+          path = path.replace(new RegExp(matchedPath), pathRewrite[matchedPath])
+        }
+      }
+
+      const proxiedUrl = url + path
       req.pipe(request(proxiedUrl)).pipe(res)
     })
   }

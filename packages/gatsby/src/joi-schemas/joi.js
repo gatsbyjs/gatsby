@@ -9,6 +9,7 @@ export const gatsbyConfigSchema = Joi.object().keys({
   proxy: Joi.object().keys({
     prefix: Joi.string().required(),
     url: Joi.string().required(),
+    pathRewrite: Joi.object(),
   }),
 })
 
