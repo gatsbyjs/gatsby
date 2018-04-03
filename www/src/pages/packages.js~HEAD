@@ -43,8 +43,9 @@ class Plugins extends Component {
                   marginRight: rhythm(3),
                   fontSize: rhythm(3/4),
                 }}>
-                Please use the search bar to find packages
-                that will make your blazing-fast site even more awesome.
+                Please use the search bar to find plugins
+                that will make your blazing-fast site even more awesome. If you're interested in creating
+                your own plugin or package, see the <a href="https://www.gatsbyjs.org/docs/plugin-authoring/">Plugin Authoring</a> page.
               </p>
         </div>
       </Container>
