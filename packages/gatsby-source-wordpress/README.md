@@ -97,6 +97,10 @@ plugins: [
       // Example:  `["/*/*/comments", "/yoast/**"]` will exclude routes ending in `comments` and
       // all routes that begin with `yoast` from fetch.
       excludedRoutes: ["/*/*/comments", "/yoast/**"],
+      // Include other media files.
+      // You can provide any regex that will be matched against the file URL.
+      // Example : /\.(svg)$/i will include SVG files.
+       extraMediasRegex: /\.(svg)$/i,
     },
   },
 ];
