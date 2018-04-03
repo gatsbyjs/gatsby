@@ -21,8 +21,7 @@ Object {
           },
           "type": "html",
           "value": "<div class=\\"gatsby-highlight\\">
-        <pre class=\\"language-css\\"><code><span class=\\"token selector\\">html</span> <span class=\\"token punctuation\\">{</span> <span class=\\"token property\\">height</span><span class=\\"token punctuation\\">:</span> 100%<span class=\\"token punctuation\\">;</span> <span class=\\"token punctuation\\">}</span>
-</code></pre>
+        <pre class=\\"language-css\\"><code><span class=\\"token selector\\">html</span> <span class=\\"token punctuation\\">{</span> <span class=\\"token property\\">height</span><span class=\\"token punctuation\\">:</span> 100%<span class=\\"token punctuation\\">;</span> <span class=\\"token punctuation\\">}</span></code></pre>
         </div>",
         },
       ],
@@ -204,8 +203,7 @@ Object {
           },
           "type": "html",
           "value": "<div class=\\"gatsby-highlight\\">
-        <pre class=\\"language-html\\"><code><span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;</span>html</span><span class=\\"token punctuation\\">></span></span><span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;/</span>html</span><span class=\\"token punctuation\\">></span></span>
-</code></pre>
+        <pre class=\\"language-html\\"><code><span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;</span>html</span><span class=\\"token punctuation\\">></span></span><span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;/</span>html</span><span class=\\"token punctuation\\">></span></span></code></pre>
         </div>",
         },
       ],
@@ -391,8 +389,7 @@ Object {
           },
           "type": "html",
           "value": "<div class=\\"gatsby-highlight\\">
-        <pre class=\\"language-jsx\\"><code><span class=\\"token keyword\\">const</span> foo <span class=\\"token operator\\">=</span> <span class=\\"token string\\">\\"bar\\"</span><span class=\\"token punctuation\\">;</span>
-</code></pre>
+        <pre class=\\"language-jsx\\"><code><span class=\\"token keyword\\">const</span> foo <span class=\\"token operator\\">=</span> <span class=\\"token string\\">\\"bar\\"</span><span class=\\"token punctuation\\">;</span></code></pre>
         </div>",
         },
       ],
@@ -771,8 +768,7 @@ Object {
           },
           "type": "html",
           "value": "<div class=\\"gatsby-highlight\\">
-        <pre class=\\"language-markup\\"><code># Hi
-</code></pre>
+        <pre class=\\"language-markup\\"><code># Hi</code></pre>
         </div>",
         },
       ],
@@ -829,8 +825,7 @@ Object {
           },
           "type": "html",
           "value": "<div class=\\"gatsby-highlight\\">
-        <pre class=\\"language-yaml\\"><code><span class=\\"token key atrule\\">name</span><span class=\\"token punctuation\\">:</span> Brian Vaughn
-</code></pre>
+        <pre class=\\"language-yaml\\"><code><span class=\\"token key atrule\\">name</span><span class=\\"token punctuation\\">:</span> Brian Vaughn</code></pre>
         </div>",
         },
       ],
@@ -1008,8 +1003,7 @@ Object {
           },
           "type": "html",
           "value": "<div class=\\"gatsby-highlight\\">
-        <pre class=\\"language-bash\\"><code><span class=\\"token function\\">pwd</span>
-</code></pre>
+        <pre class=\\"language-bash\\"><code><span class=\\"token function\\">pwd</span></code></pre>
         </div>",
         },
       ],
@@ -1191,8 +1185,7 @@ Object {
           },
           "type": "html",
           "value": "<div class=\\"gatsby-highlight\\">
-        <pre class=\\"language-jsx\\"><code><span class=\\"token keyword\\">const</span> foo <span class=\\"token operator\\">=</span> <span class=\\"token string\\">\\"bar\\"</span><span class=\\"token punctuation\\">;</span>
-</code></pre>
+        <pre class=\\"language-jsx\\"><code><span class=\\"token keyword\\">const</span> foo <span class=\\"token operator\\">=</span> <span class=\\"token string\\">\\"bar\\"</span><span class=\\"token punctuation\\">;</span></code></pre>
         </div>",
         },
       ],
@@ -1249,8 +1242,7 @@ Object {
           },
           "type": "html",
           "value": "<div class=\\"gatsby-highlight\\">
-        <pre class=\\"language-jsx\\"><code>console<span class=\\"token punctuation\\">.</span><span class=\\"token function\\">log</span><span class=\\"token punctuation\\">(</span><span class=\\"token string\\">\\"oops!\\"</span><span class=\\"token punctuation\\">)</span><span class=\\"token punctuation\\">;</span>
-</code></pre>
+        <pre class=\\"language-jsx\\"><code>console<span class=\\"token punctuation\\">.</span><span class=\\"token function\\">log</span><span class=\\"token punctuation\\">(</span><span class=\\"token string\\">\\"oops!\\"</span><span class=\\"token punctuation\\">)</span><span class=\\"token punctuation\\">;</span></code></pre>
         </div>",
         },
       ],
