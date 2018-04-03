@@ -3,6 +3,7 @@ title: "Case Study: Mike Johnston for Colorado"
 date: 2018-03-03
 author: Brandon Konkle
 image: mike-johnston-homepage.png
+tags: ["wordpress", "netlify", "security", "case-studies"]
 ---
 
 ### How we used React, Headless WordPress, GraphQL & Gatsby to build Mike’s new online platform

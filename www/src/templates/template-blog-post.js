@@ -10,6 +10,7 @@ import presets, { colors } from "../utils/presets"
 import typography, { rhythm, scale, options } from "../utils/typography"
 import Container from "../components/container"
 import EmailCaptureForm from "../components/email-capture-form"
+import TagsSection from "../components/tags-section"
 
 class BlogPostTemplate extends React.Component {
   render() {
@@ -210,6 +211,7 @@ class BlogPostTemplate extends React.Component {
               __html: this.props.data.markdownRemark.html,
             }}
           />
+          <TagsSection tags={this.props.data.markdownRemark.frontmatter.tags} />
           <EmailCaptureForm />
         </Container>
         <div
@@ -304,6 +306,7 @@ export const pageQuery = graphql`
         rawDate: date
         canonicalLink
         publishedAt
+        tags
         image {
           childImageSharp {
             resize(width: 1500, height: 1500) {

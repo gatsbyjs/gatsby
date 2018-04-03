@@ -2,6 +2,7 @@
 title: "Building i18n with Gatsby"
 date: 2017-10-17
 author: "Samuel Goudie"
+tags: ["i18n"]
 ---
 
 Languages are a key part of who we are; they are an expression of our identity.

@@ -2,6 +2,7 @@
 title: Getting Started with Gatsby and WordPress
 date: "2018-01-22"
 author: "Amberley Romo"
+tags: ["getting-started", "wordpress"]
 ---
 
 _This post was originally published on
