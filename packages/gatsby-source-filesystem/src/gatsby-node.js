@@ -4,6 +4,17 @@ const { Machine } = require(`xstate`)
 
 const { createId, createFileNode } = require(`./create-file-node`)
 
+/**
+ * Create a state machine to manage Chokidar's not-ready/ready states and for
+ * emitting file system events into Gatsby.
+ *
+ * On the latter, this solves the problem where if you call createNode for the
+ * same File node in quick succession, this can leave Gatsby's internal state
+ * in disarray causing queries to fail. The latter state machine tracks when
+ * Gatsby is "processing" a node update or when it's "idle". If updates come in
+ * while Gatsby is processing, we queue them until the system returns to an
+ * "idle" state.
+ */
 const fsMachine = Machine({
   key: "emitFSEvents",
   parallel: true,
@@ -15,18 +26,11 @@ const fsMachine = Machine({
         CHOKIDAR_NOT_READY: {
           on: {
             CHOKIDAR_READY: "CHOKIDAR_WATCHING",
-            BOOTSTRAP_FINISHED: "CHOKIDAR_WATCHING_BOOTSTRAP_FINISHED",
           },
         },
         CHOKIDAR_WATCHING: {
           on: {
-            BOOTSTRAP_FINISHED: "CHOKIDAR_WATCHING_BOOTSTRAP_FINISHED",
             CHOKIDAR_READY: "CHOKIDAR_WATCHING",
-          },
-        },
-        CHOKIDAR_WATCHING_BOOTSTRAP_FINISHED: {
-          on: {
-            CHOKIDAR_READY: "CHOKIDAR_WATCHING_BOOTSTRAP_FINISHED",
           },
         },
       },
