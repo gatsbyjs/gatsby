@@ -471,6 +471,17 @@ Community:
   * favicons generator
   * webfonts with [webfontloader](https://github.com/typekit/webfontloader)
 
+* [gatsby-starter-typescript-plus](https://github.com/resir014/gatsby-starter-typescript-plus)
+  [(demo)](https://gatsby-starter-typescript-plus.netlify.com/)
+
+  Features:
+
+  * TypeScript
+  * TSLint (with custom TSLint rules)
+  * Markdown rendering with Remark
+  * Basic component structure
+  * Styling with [styled-components](https://www.styled-components.com/)
+
 * [gatsby-orga](https://github.com/xiaoxinghu/gatsby-orga)
   [(demo)](https://xiaoxinghu.github.io/gatsby-orga/)
 
@@ -540,7 +551,7 @@ Community:
   * Sticky Navigation when scrolling.
   * Scroll spy and smooth scrolling to different sections of the page.
   * Styling with SCSS
-  
+
 * [gatsby-starter-tailwind](https://github.com/taylorbryant/gatsby-starter-tailwind)
   [(demo)](https://quizzical-mcclintock-0226ac.netlify.com/)
 
@@ -555,7 +566,7 @@ Community:
   [(demo)](https://gatsby-starter-bloomer.netlify.com/)
 
   Features:
-  
+
   * Based on [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default)
   * [Bulma CSS Framework](https://bulma.io/) with its [Bloomer react components](https://bloomer.js.org/)
   * [Font-Awesome icons](https://fontawesome.com/icons)
@@ -569,8 +580,8 @@ Community:
   * Localization (Multilanguage) provided by [js-lingui](https://github.com/lingui/js-lingui)
   * Message extraction
   * Avoids code duplication - generates pages for each locale
-  * Possibility of translated paths 
-  
+  * Possibility of translated paths
+
 * [gatsby-starter-photon](https://github.com/codebushi/gatsby-starter-photon)
   [(demo)](http://gatsby-photon.surge.sh/)
 
@@ -584,9 +595,9 @@ Community:
 
 * [gatsby-starter-business](https://github.com/v4iv/gatsby-starter-business)
   [(demo)](https://gatsby-starter-business.netlify.com/)
-  
+
   Features:
-  
+
   * Complete Business Website Suite - Home Page, About Page, Pricing Page, Contact Page and Blog
   * Netlify CMS for Content Management
   * SEO Friendly (Sitemap, Schemas, Meta Tags, GTM etc)
