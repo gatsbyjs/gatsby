@@ -7,13 +7,6 @@ const prettyBytes = require(`pretty-bytes`)
 const md5File = require(`bluebird`).promisify(require(`md5-file`))
 const crypto = require(`crypto`)
 
-const createId = path => {
-  const slashed = slash(path)
-  return `${slashed} absPath of file`
-}
-
-exports.createId = createId
-
 exports.createFileNode = async (
   pathToFile,
   createNodeId,

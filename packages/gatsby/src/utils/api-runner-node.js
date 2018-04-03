@@ -44,6 +44,7 @@ const runAPI = (plugin, api, args) => {
   let pathPrefix = ``
   const {
     store,
+    emitter,
     loadNodeContent,
     getNodes,
     getNode,
@@ -75,6 +76,7 @@ const runAPI = (plugin, api, args) => {
         actions: doubleBoundActionCreators,
         loadNodeContent,
         store,
+        emitter,
         getNodes,
         getNode,
         hasNodeChanged,
