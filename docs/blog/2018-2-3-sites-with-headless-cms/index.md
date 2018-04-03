@@ -2,6 +2,7 @@
 title: Building Sites with Headless CMSs
 date: "2018-02-03"
 author: "Shannon Soper"
+tags: ["headless-cms", "contentful", "graphcms", "cloudcms"]
 ---
 
 ## What is a traditional CMS?

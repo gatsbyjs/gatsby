@@ -2,6 +2,7 @@
 title: Why we created the Gatsby plugin library
 date: 2018-03-07
 author: Shannon Soper
+tags: ["plugins", "documentation"]
 ---
 
 Earlier this week, we launched a [Plugin Library](/packages/) on Gatsbyjs.org and are excited for you to use it! This article explains how UX research drove the design of this library and the accompanying [Plugin Authoring](/docs/plugin-authoring/) doc.
