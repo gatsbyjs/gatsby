@@ -22,7 +22,7 @@ Websites built with Gatsby:
 * [Simply](https://simply.co.za)
 * [The freeCodeCamp Guide](https://guide.freecodecamp.org)
   ([source](https://github.com/freeCodeCamp/guides))
-* [Storybook](storybook.js.org) ([source](https://github.com/storybooks/storybook/))
+* [Storybook](https://storybook.js.org) ([source](https://github.com/storybooks/storybook))
 * [FloydHub's Blog](https://blog.floydhub.com)
 * [mParticle's Documentation](https://docs.mparticle.com)
 * [Segment's Blog](https://segment.com/blog/)
