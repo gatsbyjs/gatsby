@@ -121,7 +121,9 @@ class DefaultLayout extends React.Component {
     }
 
     return (
-      <div className={isHomepage ? `is-homepage` : ``}>
+      <div className={isHomepage ? `is-homepage` : ``} css={{
+        paddingTop: `50px`,
+      }}>
         <Helmet defaultTitle={`GatsbyJS`} titleTemplate={`%s | GatsbyJS`}>
           <meta name="twitter:site" content="@gatsbyjs" />
           <meta name="og:type" content="website" />
@@ -141,6 +143,9 @@ class DefaultLayout extends React.Component {
             fontFamily: options.headerFontFamily.join(`,`),
             textAlign: `center`,
             boxShadow: `inset 0px -3px 2px 0px ${colors.ui.bright}`,
+            position: `fixed`,
+            top: 0,
+            zIndex: 3,
           }}
         >
           Live 2-day Gatsby training with Kyle Mathews! Sign up for{" "}
