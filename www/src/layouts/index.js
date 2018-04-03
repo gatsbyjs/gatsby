@@ -28,6 +28,7 @@ class DefaultLayout extends React.Component {
   render() {
     const isHomepage = this.props.location.pathname == `/`
     const isBlog = this.props.location.pathname.slice(0, 6) === `/blog/`
+    const isBlogLanding = this.props.location.pathname === `/blog/`
     const isDoc = this.props.location.pathname.slice(0, 6) === `/docs/`
     const isTutorial =
       this.props.location.pathname.slice(0, 10) === `/tutorial/`
@@ -141,8 +142,8 @@ class DefaultLayout extends React.Component {
             fontFamily: options.headerFontFamily.join(`,`),
             textAlign: `center`,
             boxShadow: `inset 0px -3px 2px 0px ${colors.ui.bright}`,
-            zIndex: `2`,
-            position: isHomepage || isBlog ? `absolute` : `fixed`,
+            zIndex: `3`,
+            position: isHomepage || isBlogLanding ? `absolute` : `fixed`,
           }}
         >
           Live 2-day Gatsby training with Kyle Mathews! Sign up for{" "}
