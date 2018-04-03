@@ -325,17 +325,8 @@ exports.mapEntitiesToMedia = (entities, extraMediasRegex) => {
             : null,
           deleteField: true,
         }
-      } else if (isPhotoUrl(value) && !isMediaUrlAlreadyProcessed(key)) {
-        const mediaNodeID = getMediaItemID(
-          media.find(m => m.source_url === value)
-        )
-        return {
-          mediaNodeID,
-          deleteField: !!mediaNodeID,
-        }
       } else if (
-        extraMediasRegex &&
-        isOtherMediaUrl(value) &&
+        (isPhotoUrl(value) || (extraMediasRegex && isOtherMediaUrl(value))) &&
         !isMediaUrlAlreadyProcessed(key)
       ) {
         const mediaNodeID = getMediaItemID(
