@@ -223,11 +223,13 @@ exports.mapTagsCategoriesToTaxonomies = entities =>
     return e
   })
 
-exports.mapElementsToParent = entities => entities.map(e => {
+exports.mapElementsToParent = entities =>
+  entities.map(e => {
     if (e.wordpress_parent) {
       // Create parent_element with a link to the parent node of type.
-      e.parent_element___NODE = entities
-        .find(t => t.wordpress_id === e.wordpress_parent && t.__type === e.__type).id
+      e.parent_element___NODE = entities.find(
+        t => t.wordpress_id === e.wordpress_parent && t.__type === e.__type
+      ).id
     }
     return e
   })
@@ -278,7 +280,7 @@ exports.searchReplaceContentUrls = function({
   })
 }
 
-exports.mapEntitiesToMedia = entities => {
+exports.mapEntitiesToMedia = (entities, extraMediasRegex) => {
   const media = entities.filter(e => e.__type === `wordpress__wp_media`)
 
   return entities.map(e => {
@@ -298,7 +300,11 @@ exports.mapEntitiesToMedia = entities => {
     const photoRegex = /\.(gif|jpg|jpeg|tiff|png)$/i
     const isPhotoUrl = filename =>
       _.isString(filename) && photoRegex.test(filename)
-    const isPhotoUrlAlreadyProcessed = key => key == `source_url`
+    const isOtherMediaUrl = filename =>
+      _.isString(filename) &&
+      extraMediasRegex &&
+      extraMediasRegex.test(filename)
+    const isMediaUrlAlreadyProcessed = key => key == `source_url`
     const isFeaturedMedia = (value, key) =>
       (_.isNumber(value) || _.isBoolean(value)) && key === `featured_media`
     // ACF Gallery and similarly shaped arrays
@@ -319,7 +325,19 @@ exports.mapEntitiesToMedia = entities => {
             : null,
           deleteField: true,
         }
-      } else if (isPhotoUrl(value) && !isPhotoUrlAlreadyProcessed(key)) {
+      } else if (isPhotoUrl(value) && !isMediaUrlAlreadyProcessed(key)) {
+        const mediaNodeID = getMediaItemID(
+          media.find(m => m.source_url === value)
+        )
+        return {
+          mediaNodeID,
+          deleteField: !!mediaNodeID,
+        }
+      } else if (
+        extraMediasRegex &&
+        isOtherMediaUrl(value) &&
+        !isMediaUrlAlreadyProcessed(key)
+      ) {
         const mediaNodeID = getMediaItemID(
           media.find(m => m.source_url === value)
         )
