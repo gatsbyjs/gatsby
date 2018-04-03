@@ -6,13 +6,44 @@
  */
 
 const _ = require(`lodash`)
+const crypto = require(`crypto`)
 
 const queue = require(`./query-queue`)
 const { store, emitter } = require(`../../redux`)
 
 let queuedDirtyActions = []
 let active = false
+
+const generateHash = obj =>
+  crypto
+    .createHash(`md5`)
+    .update(JSON.stringify(obj))
+    .digest(`hex`)
+
+const queryResultsListeners = new Map()
+
 let pathFilter = []
+let pathPriority = {}
+
+let updatePathFilter = () => {
+  const newPathFilter = []
+  const newPathPriority = {}
+
+  queryResultsListeners.forEach(({ path, mode }) => {
+    if (!newPathFilter.includes(path)) {
+      newPathFilter.push(path)
+    }
+
+    const priority = mode === `ACTIVE_PATH` ? 2 : 1
+
+    if (!newPathPriority[path] || priority > newPathPriority[path]) {
+      newPathPriority[path] = priority
+    }
+  })
+
+  pathFilter = newPathFilter
+  pathPriority = newPathPriority
+}
 
 // Do initial run of graphql queries during bootstrap.
 // Afterwards we listen "API_RUNNING_QUEUE_EMPTY" and check
@@ -43,17 +74,30 @@ emitter.on(`DELETE_NODE`, action => {
   queuedDirtyActions.push({ payload: action.node })
 })
 
-emitter.on(`RUN_QUERIES_FOR_PATH`, path => {
-  if (!pathFilter.includes(path)) {
-    pathFilter.push(path)
-    runQueriesForPathnames([path])
+emitter.on(`ADD_QUERY_RESULTS_LISTENER`, arg => {
+  const argHash = generateHash(arg)
+
+  const existingQueryResultListener = queryResultsListeners.get(argHash)
+
+  if (!existingQueryResultListener) {
+    queryResultsListeners.set(argHash, arg)
+    const alreadyRunningQueriesForPath = pathFilter.includes(arg.path)
+
+    updatePathFilter()
+
+    if (!alreadyRunningQueriesForPath) {
+      runQueriesForPathnames([arg.path])
+    }
   }
 })
 
-emitter.on(`STOP_RUNNING_QUERIES_FOR_PATH`, path => {
-  const index = pathFilter.indexOf(path)
-  if (index !== -1) {
-    pathFilter.splice(index, 1)
+emitter.on(`REMOVE_QUERY_RESULTS_LISTENER`, arg => {
+  const argHash = generateHash(arg)
+
+  const existingQueryResultListener = queryResultsListeners.get(argHash)
+  if (existingQueryResultListener) {
+    queryResultsListeners.delete(argHash)
+    updatePathFilter()
   }
 })
 
@@ -111,17 +155,30 @@ const runQueriesForPathnames = pathnames => {
   const state = store.getState()
   const pagesAndLayouts = [...state.pages, ...state.layouts]
   let didNotQueueItems = true
-  if (pathFilter.length > 0) {
-    pathnames = _.intersection(pathnames, pathFilter)
-  }
+
+  const tasks = []
   pathnames.forEach(id => {
-    const plObj = pagesAndLayouts.find(
-      pl => pl.path === id || `LAYOUT___${pl.id}` === id
-    )
-    if (plObj) {
-      didNotQueueItems = false
-      queue.push({ ...plObj, _id: plObj.id, id: plObj.jsonName })
+    // If paths are filtered - invalidate paths not in filtered and run filtered ones
+    if (pathFilter.length > 0 && pathFilter.includes(id)) {
+      const plObj = pagesAndLayouts.find(
+        pl => pl.path === id || `LAYOUT___${pl.id}` === id
+      )
+      if (plObj) {
+        didNotQueueItems = false
+        tasks.push({
+          ...plObj,
+          _id: plObj.id,
+          id: plObj.jsonName,
+          priority: pathPriority[id] || 0,
+        })
+      }
+    } else {
+      emitter.emit(`INVALIDATE_QUERY_RESULTS`, id)
     }
+  })
+
+  _.sortBy(tasks, task => -task.priority).forEach(task => {
+    queue.push(task)
   })
 
   if (didNotQueueItems || !pathnames || pathnames.length === 0) {

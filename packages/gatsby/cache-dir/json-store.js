@@ -3,6 +3,8 @@ import { Route } from "react-router-dom"
 import ComponentRenderer from "./component-renderer"
 import syncRequires from "./sync-requires"
 import socketIo from "./socketIo"
+import emitter from "./emitter"
+import stripPrefix from "./strip-prefix"
 import omit from "lodash/omit"
 import get from "lodash/get"
 
@@ -14,11 +16,13 @@ const getPathFromProps = props => {
   }
 }
 
+const pathPrefix = __PREFIX_PATHS__ === true ? __PATH_PREFIX__ : ``
+
 class JSONStore extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      data: null,
+      data: {},
       path: null,
     }
 
@@ -26,10 +30,20 @@ class JSONStore extends React.Component {
 
     this.socket = socketIo()
     this.socket.on(`queryResult`, this.setPageData)
+
+    emitter.on(`PREFETCH_PATH`, rawPath => {
+      const path = stripPrefix(rawPath, pathPrefix)
+      this.registerPath({ path, mode: `LINKED_PATH` })
+    })
+
+    emitter.on(`UNPREFETCH_PATH`, rawPath => {
+      const path = stripPrefix(rawPath, pathPrefix)
+      this.unregisterPath({ path, mode: `LINKED_PATH` })
+    })
   }
 
   componentWillMount() {
-    this.registerPath(getPathFromProps(this.props))
+    this.registerPath({ path: getPathFromProps(this.props) })
   }
 
   componentWillReceiveProps(nextProps) {
@@ -37,35 +51,42 @@ class JSONStore extends React.Component {
     const newPath = getPathFromProps(nextProps)
 
     if (path !== newPath) {
-      this.unregisterPath(path)
-      this.registerPath(newPath)
+      this.unregisterPath({ path })
+      this.registerPath({ path: newPath })
     }
   }
 
-  registerPath(path) {
-    this.setState({ path })
-    this.socket.emit(`registerPath`, path)
+  registerPath({ path, mode = `ACTIVE_PATH` }) {
+    if (mode === `ACTIVE_PATH`) {
+      this.setState({ path })
+    }
+    this.socket.emit(`registerPath`, { path, mode })
   }
 
-  unregisterPath(path) {
-    this.setState({ data: null, path: null })
-    this.socket.emit(`unregisterPath`, path)
+  unregisterPath({ path, mode = `ACTIVE_PATH` }) {
+    if (mode === `ACTIVE_PATH`) {
+      this.setState({ path: null })
+    }
+    this.socket.emit(`unregisterPath`, { path, mode })
   }
 
   componentWillUnmount() {
-    this.unregisterPath(this.state.path)
+    this.unregisterPath({ path: this.state.path })
   }
 
   setPageData({ path, result }) {
-    if (this.state.path === path)
-      this.setState({
-        data: result,
-      })
+    this.setState({
+      data: {
+        ...this.state.data,
+        [path]: result,
+      },
+    })
   }
 
   render() {
     const { isPage, pages, pageResources } = this.props
-    const { data } = this.state
+
+    const data = this.state.data[this.state.path]
     const propsWithoutPages = omit(this.props, `pages`)
 
     if (!data) {
