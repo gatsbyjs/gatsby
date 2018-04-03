@@ -23,8 +23,7 @@ Object {
       },
       "type": "html",
       "value": "<div class=\\"gatsby-highlight\\">
-      <pre class=\\"custom-js\\"><code class=\\"custom-js\\"><span class=\\"token comment\\">// Fake</span>
-</code></pre>
+      <pre class=\\"custom-js\\"><code class=\\"custom-js\\"><span class=\\"token comment\\">// Fake</span></code></pre>
       </div>",
     },
   ],
@@ -110,8 +109,7 @@ Object {
       },
       "type": "html",
       "value": "<div class=\\"gatsby-highlight\\">
-      <pre class=\\"language-js\\"><code class=\\"language-js\\"><span class=\\"token comment\\">// Fake</span>
-</code></pre>
+      <pre class=\\"language-js\\"><code class=\\"language-js\\"><span class=\\"token comment\\">// Fake</span></code></pre>
       </div>",
     },
   ],
@@ -151,8 +149,7 @@ Object {
             },
           },
           "type": "html",
-          "value": "<code class=\\"language-css\\"><span class=\\"token selector\\">.foo</span> <span class=\\"token punctuation\\">{</span> <span class=\\"token property\\">color</span><span class=\\"token punctuation\\">:</span> red <span class=\\"token punctuation\\">}</span>
-</code>",
+          "value": "<code class=\\"language-css\\"><span class=\\"token selector\\">.foo</span> <span class=\\"token punctuation\\">{</span> <span class=\\"token property\\">color</span><span class=\\"token punctuation\\">:</span> red <span class=\\"token punctuation\\">}</span></code>",
         },
       ],
       "position": Position {
@@ -262,8 +259,7 @@ Object {
             },
           },
           "type": "html",
-          "value": "<code class=\\"language-javascript\\">Fake
-</code>",
+          "value": "<code class=\\"language-javascript\\">Fake</code>",
         },
       ],
       "position": Position {

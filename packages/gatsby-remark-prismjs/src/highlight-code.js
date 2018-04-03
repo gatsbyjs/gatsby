@@ -21,7 +21,7 @@ module.exports = (language, code, lineNumbersHighlight = []) => {
   const lang = Prism.languages[language]
 
   let highlightedCode = Prism.highlight(code, lang)
-  if (lineNumbersHighlight) {
+  if (lineNumbersHighlight.length > 0) {
     const codeSplits = highlightedCode.split(`\n`).map((split, i) => {
       if (_.includes(lineNumbersHighlight, i + 1)) {
         return {
