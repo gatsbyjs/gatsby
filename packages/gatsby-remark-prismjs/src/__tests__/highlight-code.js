@@ -70,4 +70,13 @@ export default Counter
       expect(highlightCode(language, code)).toMatch(code)
     })
   })
+
+  describe(`as per issue #4802`, () => {
+    it(`does not add trailing newlines`, () => {
+      const highlightCode = require(`../highlight-code`)
+      const language = `javascript`
+      const code = `const a = 1`
+      expect(highlightCode(language, code)).not.toMatch(/\n$/)
+    })
+  })
 })

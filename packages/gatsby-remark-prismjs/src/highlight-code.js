@@ -36,10 +36,12 @@ module.exports = (language, code, lineNumbersHighlight = []) => {
     highlightedCode = ``
     // Don't add a new line character after highlighted lines as they
     // need to be display: block and full-width.
-    codeSplits.forEach(split => {
-      split.highlighted
-        ? (highlightedCode += split.code)
-        : (highlightedCode += `${split.code}\n`)
+    const maxCodeSplits = codeSplits.length - 1
+    codeSplits.forEach((split, idx) => {
+      highlightedCode += split.code
+      if (!split.highlighted && idx < maxCodeSplits) {
+        highlightedCode += `\n`
+      }
     })
   }
 
