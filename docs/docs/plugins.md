@@ -12,7 +12,7 @@ into site-specific plugins.
 Gatsby has a large and growing set of plugins. To search/browse official and
 community plugins and their documentation, visit the [Plugin Library](/packages/).
 
-For information on building your own plugin, see the Plugin Authoring page (/plugin-authoring.md).
+For information on building your own plugin, see the [Plugin Authoring page](/docs/plugin-authoring/).
 
 ## How to use Gatsby plugins?
 
