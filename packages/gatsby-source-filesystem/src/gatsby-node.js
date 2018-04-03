@@ -26,11 +26,18 @@ const fsMachine = Machine({
         CHOKIDAR_NOT_READY: {
           on: {
             CHOKIDAR_READY: "CHOKIDAR_WATCHING",
+            BOOTSTRAP_FINISHED: "CHOKIDAR_WATCHING_BOOTSTRAP_FINISHED",
           },
         },
         CHOKIDAR_WATCHING: {
           on: {
+            BOOTSTRAP_FINISHED: "CHOKIDAR_WATCHING_BOOTSTRAP_FINISHED",
             CHOKIDAR_READY: "CHOKIDAR_WATCHING",
+          },
+        },
+        CHOKIDAR_WATCHING_BOOTSTRAP_FINISHED: {
+          on: {
+            CHOKIDAR_READY: "CHOKIDAR_WATCHING_BOOTSTRAP_FINISHED",
           },
         },
       },
@@ -152,7 +159,11 @@ See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
 
   watcher.on(`add`, path => {
     if (currentState.value.CHOKIDAR !== `CHOKIDAR_NOT_READY`) {
-      reporter.info(`added file at ${path}`)
+      if (
+        currentState.value.CHOKIDAR === `CHOKIDAR_WATCHING_BOOTSTRAP_FINISHED`
+      ) {
+        reporter.info(`added file at ${path}`)
+      }
       createAndProcessNode(path).catch(err => reporter.error(err))
     } else {
       pathQueue.push(path)
@@ -160,12 +171,20 @@ See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
   })
 
   watcher.on(`change`, path => {
-    reporter.info(`changed file at ${path}`)
+    if (
+      currentState.value.CHOKIDAR === `CHOKIDAR_WATCHING_BOOTSTRAP_FINISHED`
+    ) {
+      reporter.info(`changed file at ${path}`)
+    }
     createAndProcessNode(path).catch(err => reporter.error(err))
   })
 
   watcher.on(`unlink`, path => {
-    reporter.info(`file deleted at ${path}`)
+    if (
+      currentState.value.CHOKIDAR === `CHOKIDAR_WATCHING_BOOTSTRAP_FINISHED`
+    ) {
+      reporter.info(`file deleted at ${path}`)
+    }
     const node = getNode(createNodeId(path))
     // It's possible the file node was never created as sometimes tools will
     // write and then immediately delete temporary files to the file system.
@@ -177,7 +196,11 @@ See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
 
   watcher.on(`addDir`, path => {
     if (currentState.value.CHOKIDAR !== `CHOKIDAR_NOT_READY`) {
-      reporter.info(`added directory at ${path}`)
+      if (
+        currentState.value.CHOKIDAR === `CHOKIDAR_WATCHING_BOOTSTRAP_FINISHED`
+      ) {
+        reporter.info(`added directory at ${path}`)
+      }
       createAndProcessNode(path).catch(err => reporter.error(err))
     } else {
       pathQueue.push(path)
@@ -185,7 +208,11 @@ See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
   })
 
   watcher.on(`unlinkDir`, path => {
-    reporter.info(`directory deleted at ${path}`)
+    if (
+      currentState.value.CHOKIDAR === `CHOKIDAR_WATCHING_BOOTSTRAP_FINISHED`
+    ) {
+      reporter.info(`directory deleted at ${path}`)
+    }
     const node = getNode(createNodeId(path))
     deleteNode(node.id, node)
   })
