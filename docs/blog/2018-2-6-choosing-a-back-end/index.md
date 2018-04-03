@@ -2,6 +2,7 @@
 title: Picking a back-end for GatsbyJS
 date: "2018-02-06"
 author: "Ross Whitehouse"
+tags: ["headless-cms", "wordpress", "contentful", "netlify-cms", "jamstack"]
 ---
 
 A little while ago I had the six-monthly itch to redo my portfolio site, and I decided I was going to learn to use Gatsby. But that seems to be only half the battle. After you’ve built your front-end, how do you decide on the back-end? There’s so many out there!

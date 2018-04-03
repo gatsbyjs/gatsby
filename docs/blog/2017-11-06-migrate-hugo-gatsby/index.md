@@ -2,6 +2,7 @@
 title: Migrate from Hugo to Gatsby
 date: 2017-11-06
 author: "Kalin Chernev"
+tags: ["hugo", "markdown", "getting-started", "netlify-cms"]
 ---
 
 ## Introduction

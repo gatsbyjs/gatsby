@@ -43,6 +43,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
   return new Promise((resolve, reject) => {
     const docsTemplate = path.resolve(`src/templates/template-docs-markdown.js`)
     const blogPostTemplate = path.resolve(`src/templates/template-blog-post.js`)
+    const tagTemplate = path.resolve(`src/templates/tags.js`);
     const contributorPageTemplate = path.resolve(
       `src/templates/template-contributor-page.js`
     )
@@ -72,6 +73,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
                     draft
                     canonicalLink
                     publishedAt
+                    tags
                   }
                 }
               }
@@ -136,6 +138,20 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
               next,
             },
           })
+        })
+
+        const tagLists = blogPosts
+          .filter(post => _.get(post, "node.frontmatter.tags"))
+          .map(post => _.get(post, "node.frontmatter.tags"))
+
+        _.uniq(_.flatten(tagLists)).forEach(tag => {
+          createPage({
+            path: `/blog/tags/${_.kebabCase(tag)}/`,
+            component: tagTemplate,
+            context: {
+              tag,
+            },
+          });
         })
 
         // Create contributor pages.
