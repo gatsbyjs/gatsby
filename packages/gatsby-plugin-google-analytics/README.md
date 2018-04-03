@@ -37,15 +37,15 @@ To use it, simply import it and use it like you would the `<a>` element e.g.
 
 ```jsx
 import React
-import { Outboundink } from 'gatsby-plugin-google-analytics'
+import { OutboundLink } from 'gatsby-plugin-google-analytics'
 
 export default () => {
   <div>
-    <Outboundink
+    <OutboundLink
       href="https://www.gatsbyjs.org/packages/gatsby-plugin-google-analytics/"
     >
       Visit the Google Analytics plugin page!
-    </Outboundink>
+    </OutboundLink>
   </div>
 }
 ```
