@@ -141,7 +141,7 @@ class DefaultLayout extends React.Component {
             fontFamily: options.headerFontFamily.join(`,`),
             textAlign: `center`,
             boxShadow: `inset 0px -3px 2px 0px ${colors.ui.bright}`,
-            zIndex: `2`,
+            zIndex: `3`,
             position: isHomepage || isBlog ? `absolute` : `fixed`,
           }}
         >
