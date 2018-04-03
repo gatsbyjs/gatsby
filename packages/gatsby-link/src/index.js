@@ -61,6 +61,7 @@ class GatsbyLink extends React.Component {
       path: createPath(to),
       to,
       IOSupported,
+      emittedPrefetch: false,
     }
     this.handleRef = this.handleRef.bind(this)
   }
@@ -69,17 +70,18 @@ class GatsbyLink extends React.Component {
     if (this.props.to !== nextProps.to) {
       const to = createLocation(nextProps.to, null, null, history.location)
 
-      if (!this.state.IOSupported) {
+      if (!this.state.IOSupported && this.state.emittedPrefetch) {
         ___emitter.emit(`UNPREFETCH_PATH`, this.state.path)
       }
 
       this.setState({
         path: createPath(to),
         to,
+        emittedPrefetch: !this.state.IOSupported,
       })
       // Preserve non IO functionality if no support
       if (!this.state.IOSupported) {
-        ___emitter.emit(`PREFETCH_PATH`, this.state.path.toString())
+        ___emitter.emit(`PREFETCH_PATH`, this.state.path)
       }
     }
   }
@@ -87,12 +89,17 @@ class GatsbyLink extends React.Component {
   componentDidMount() {
     // Preserve non IO functionality if no support
     if (!this.state.IOSupported) {
-      ___emitter.emit(`PREFETCH_PATH`, this.state.path.toString())
+      ___emitter.emit(`PREFETCH_PATH`, this.state.path)
+      this.setState({
+        emittedPrefetch: true,
+      })
     }
   }
 
   componentWillUnmount() {
-    ___emitter.emit(`UNPREFETCH_PATH`, this.state.path.toString())
+    if (this.state.emittedPrefetch) {
+      ___emitter.emit(`UNPREFETCH_PATH`, this.state.path)
+    }
   }
 
   handleRef(ref) {
@@ -101,7 +108,10 @@ class GatsbyLink extends React.Component {
     if (this.state.IOSupported && ref) {
       // If IO supported and element reference found, setup Observer functionality
       handleIntersection(ref, () => {
-        ___emitter.emit(`PREFETCH_PATH`, this.state.path.toString())
+        ___emitter.emit(`PREFETCH_PATH`, this.state.path)
+        this.setState({
+          emittedPrefetch: true,
+        })
       })
     }
   }
