@@ -55,7 +55,7 @@ class GatsbyLink extends React.Component {
     }
 
     const { history } = context.router
-    const to = createLocation(props.to, history)
+    const to = createLocation(props.to, null, null, history.location)
 
     this.state = {
       path: createPath(to),
@@ -67,7 +67,7 @@ class GatsbyLink extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.to !== nextProps.to) {
-      const to = createLocation(nextProps.to, history)
+      const to = createLocation(nextProps.to, null, null, history.location)
       this.setState({
         path: createPath(to),
         to,
