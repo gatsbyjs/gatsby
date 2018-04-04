@@ -196,6 +196,7 @@ Websites built with Gatsby:
 * [Bartosz Dominiak Blog/Portfolio](http://www.bartoszdominiak.com/) ([source](https://github.com/bartdominiak/blog))
 * [HBTU MUN 2018](https://hbtumun18.netlify.com/)
   ([source](https://github.com/HaoZeke/hbtuMun18))
+* [The Audacious Project](https://audaciousproject.org/)
 
 ## Docs
 
