@@ -19,7 +19,7 @@ The aim is to make it easier for new and existing contributors to work on Gatsby
 The broad areas discussed were:
 
 - Type: labels like `bug`, `discussion`, `feature request`
-- Status: lables like `needs repro`, `ready`
+- Status: labels like `needs repro`, `ready`
 - Misc: labels like `good first issue`
 - Target (area of responsibility): Use GitHub projects
 - Roadmap: Use GitHub Milestones
@@ -115,7 +115,14 @@ This is relevent to the Gatsby GitHub repo, so no adoption strategy is necessary
 
 # How we teach this
 
-By example, along with a post to the [Gatsby core maintainers discussion board](https://github.com/orgs/gatsbyjs/teams/gatsby-core-maintainers).
+A few approaches:
+
+- By example i.e. start labelling up issues
+- Posting to the [Gatsby core maintainers discussion board](https://github.com/orgs/gatsbyjs/teams/gatsby-core-maintainers)
+- Adding label descriptions to [GitHub's labels page](https://github.com/gatsbyjs/gatsby/labels)
+- Adding labelling info to [CONTRIBUTING.MD](https://github.com/gatsbyjs/gatsby/blob/master/CONTRIBUTING.md)
+
+As a follow on from this, it'd be interesting to explore automated contributor onboarding. See https://github.com/styled-components/styled-components/blob/master/CONTRIBUTING.md#ownership for a good example.
 
 # Unresolved questions
 
