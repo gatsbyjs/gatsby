@@ -79,7 +79,7 @@ There are 20 existing labels. While we're adding new labels, it makes sense to r
 | needs-repro | ✅keep | rename to `needs repro` or similar |
 | performance | ❌delete | too specific (currently applied to 4 issues) |
 | question | ✅keep | rename to `type: discussion` or similar |
-| review | ✅keep | Used by wafflebot? Investigate this |
+| review | ❌delete | ~~~Used by wafflebot? Investigate this~~~ No longer used |
 | stale? |  ✅keep | Used by stalebot to close stale issues. Maybe rename to `bot: stale?` |
 | upstream-issue | ❌delete | I'm 50/50 on this one. There's only two issues using it so have opted to delete it |
 | UX Design | ❌delete | redundant - add all issues with this label to the 'UX' project before deleting the label |
