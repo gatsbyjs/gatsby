@@ -1,8 +1,8 @@
 # gatsby-remark-autolink-headers
 
-This is a plugin for a plugin.  Note in the `How to use` section below that you're adding this to the configuration of the `gatsby-transformer-remark` plugin and not adding another plugin in the chain.  
+This is a sub-plugin for gatsby-transformer-remark.  As demoed below, add this plugin to options of `gatsby-transformer-remark`.
 
-When enabled this plugin takes the headers from your markdown files and adds the 🔗 on-hover in your rendered pages (much like GitHub does in markdown files like the readme).
+This plugin a hover link to headers in your markdown files when rendered (this is the same as the links GitHub adds to its rendered markdown headers).
 
 ## Install
 
@@ -12,12 +12,14 @@ When enabled this plugin takes the headers from your markdown files and adds the
 
 ```javascript
 // In your gatsby-config.js
-plugins: [
-  {
-    resolve: `gatsby-transformer-remark`,
-    options: {
-      plugins: [`gatsby-remark-autolink-headers`],
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-transformer-remark`,
+      options: {
+        plugins: [`gatsby-remark-autolink-headers`],
+      },
     },
-  },
-];
+  ],
+}
 ```
