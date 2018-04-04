@@ -2,16 +2,23 @@ import React from "react"
 import { withPrefix } from "gatsby-link"
 
 exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
-  setHeadComponents([
+  const headComponents = [
     <link
       key={`gatsby-plugin-manifest-link`}
       rel="manifest"
       href={withPrefix(`/manifest.json`)}
     />,
-    <meta
-      key={`gatsby-plugin-manifest-meta`}
-      name="theme-color"
-      content={pluginOptions.theme_color}
-    />,
-  ])
+  ]
+
+  if (!pluginOptions.avoid_meta) {
+    headComponents.push(
+      <meta
+        key={`gatsby-plugin-manifest-meta`}
+        name="theme-color"
+        content={pluginOptions.theme_color}
+      />
+    )
+  }
+
+  setHeadComponents(headComponents)
 }
