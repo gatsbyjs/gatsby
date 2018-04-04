@@ -1,13 +1,15 @@
 # gatsby-plugin-manifest
 
 Adds support for shipping a manifest.json with your site. The web application
-manifest is a JSON file that lets users (on Android Chrome —
-[support in MS Edge & Firefox is under development](http://caniuse.com/#feat=web-app-manifest))
+manifest is a JSON file that lets users (on Android Chrome, Firefox, and Opera —
+[support in MS Edge & Safari is under development](http://caniuse.com/#feat=web-app-manifest))
 save your web application to their smartphone home screen so it behaves similar
 to native apps.
 
 This article from the Chrome DevRel team is a good intro to the web app
 manifest—https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
+
+For more information see the w3 spec https://www.w3.org/TR/appmanifest/ or Mozilla Docs https://developer.mozilla.org/en-US/docs/Web/Manifest.
 
 If you're using this plugin together with `gatsby-plugin-offline` (recommended),
 this plugin should be listed _before_ the offline plugin so that it can cache
@@ -19,10 +21,10 @@ the created manifest.json.
 
 ## How to use
 
-There are three configurations in which this plugin will function: manual, hybrid, and auto. What config options you include will determine how the plugin functions.
+There are three configs in which this plugin will function: manual, hybrid, and auto. These three configuration options are explained below. The plugin functions differently depending on which of the three you choose.
 
-### Manual configuration
-In the manual configuration you are responsible for defining the entire web app manifest and providing the defined icons in the static directory. See the example below:
+### Manual config
+In the manual config you are responsible for defining the entire web app manifest and providing the defined icons in the static directory. See the example below:
 
 ```javascript
 // In your gatsby-config.js
@@ -57,9 +59,9 @@ plugins: [
 ];
 ```
 
-### Hybrid configuration
+### Hybrid config
 
-In the hybrid configuration you are responsible for defining the entire web app manifest but instead of manually generating the defined icons you provide a hi-res source icon to be used to auto generate your defined icons. See the example below:
+In the hybrid config you are responsible for defining the entire web app manifest but instead of manually generating the defined icons you provide a high resolution source icon to be used to auto generate your defined icons. See the example below:
 
 ```javascript
 // In your gatsby-config.js
@@ -91,9 +93,9 @@ plugins: [
 ];
 ```
 
-### Automatic configuration
+### Auto config
 
-In the automatic configuration you are responsible for defining the entire web app manifest except for the icons. You only provide a hi-res source icon. The icons themselves and the needed configuration will be generated. See the example below:
+In the auto config you are responsible for defining the entire web app manifest except for the icons. You only provide a high resolution source icon. The icons themselves and the needed config will be generated. See the example below:
 
 ```javascript
 // In your gatsby-config.js
