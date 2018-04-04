@@ -27,7 +27,7 @@ This plugin configures Gatsby to create a `manifest.json` file on every site bui
 
 It can be tedious creating the multitude of icon sizes required by different devices and browsers. This plugin includes code to auto-generate smaller icons from a larger src image.
 
-There are three modes in which icon generation can function: manual, hybrid, and auto. These three modes are explained below. Icon generation functions differently depending on which of the three you choose.
+There are three modes in which icon generation can function: automatic, hybrid, and manual. These three modes are explained below. Icon generation functions differently depending on which of the three you choose.
 
 ### Automatic mode
 
@@ -51,13 +51,9 @@ plugins: [
 ];
 ```
 
-### Hybrid mode
+When in automatic mode the following json array is injected into the manifest configuration you provide and the icons are generated from it. The source icon you provide should be at least as big as the largest icon being generated.
 
-The auto config is the easiest option for most people. However, if need to use different icons for different targets, then the hybrid option is for you. Like Automatic mode, you should include a high-res icon to generate smaller icons from. But unlike Automatic mode, you can include manually created icons for some sizes.
-
-The following are all the icon sizes we create.
-
-```js
+```javascript
 [
   {
       "src": `icons/icon-48x48.png`,
@@ -102,9 +98,11 @@ The following are all the icon sizes we create.
 ]
 ```
 
-To override any of these, include an `icons` array with a link to the image file you've added to the "static" directory. It should be an absolute path e.g. if you add a file a `static/favicons/android-chrome-192x192.png` then the `src` should be `/favicons/android-chrome-192x192.png`.
+The automatic mode is the easiest option for most people.
 
-Here's an example:
+### Hybrid mode
+
+ However, if you want to include more or fewer sizes, then the hybrid option is for you. Like automatic mode, you should include a high resolution icon to generate smaller icons from. But unlike automatic mode, you provide the `icons` array config and icons are generated based on the sizes defined in your config. Here's an example:
 
 ```javascript
 // In your gatsby-config.js
@@ -138,8 +136,8 @@ plugins: [
 
 The hybrid option allows the most flexibility while still not requiring you to create most icons sizes manually.
 
-### Manual config
-In the manual config, you are responsible for defining the entire web app manifest and providing the defined icons in the static directory. Only icons you provide will be added. See the example below:
+### Manual mode
+In the manual mode, you are responsible for defining the entire web app manifest and providing the defined icons in the static directory. Only icons you provide will be available. There is no automatic resizing done for you. See the example below:
 
 ```javascript
 // In your gatsby-config.js
