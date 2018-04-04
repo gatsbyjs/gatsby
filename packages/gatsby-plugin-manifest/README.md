@@ -21,11 +21,17 @@ the created manifest.json.
 
 ## How to use
 
-There are three configs in which this plugin will function: manual, hybrid, and auto. These three configuration options are explained below. The plugin functions differently depending on which of the three you choose.
+This plugin configures Gatsby to create a `manifest.json` file on every site build.
 
-### Auto config
+## Generating icons
 
-In the auto config you are responsible for defining the entire web app manifest except for the icons portion. You only provide a high resolution source icon. The icons themselves and the needed config will be generated at build time. See the example below:
+It can be tedious creating the multitude of icon sizes required by different devices and browsers. This plugin includes code to auto-generate smaller icons from a larger src image.
+
+There are three modes in which icon generation can function: manual, hybrid, and auto. These three modes are explained below. Icon generation functions differently depending on which of the three you choose.
+
+### Automatic mode
+
+In the automatic mode, you are responsible for defining the entire web app manifest except for the icons portion. You only provide a high resolution source icon. The icons themselves and the needed config will be generated at build time. See the example below:
 
 ```javascript
 // In your gatsby-config.js
@@ -39,13 +45,17 @@ plugins: [
       background_color: "#f7f0eb",
       theme_color: "#a2466c",
       display: "minimal-ui",
-      icon: src/images/icon.png
+      icon: src/images/icon.png // This path is relative to the root of the site.
     },
   },
 ];
 ```
 
-The auto config will be the easiest option for most people. If you're looking to customize the icon set included in your web app manifest, then the hybrid option is for you. For your reference the default icons config used is as follows:
+### Hybrid mode
+
+The auto config is the easiest option for most people. However, if need to use different icons for different targets, then the hybrid option is for you. Like Automatic mode, you should include a high-res icon to generate smaller icons from. But unlike Automatic mode, you can include manually created icons for some sizes.
+
+The following are all the icon sizes we create.
 
 ```js
 [
@@ -92,9 +102,9 @@ The auto config will be the easiest option for most people. If you're looking to
 ]
 ```
 
-### Hybrid config
+To override any of these, include an `icons` array with a link to the image file you've added to the "static" directory. It should be an absolute path e.g. if you add a file a `static/favicons/android-chrome-192x192.png` then the `src` should be `/favicons/android-chrome-192x192.png`.
 
-In the hybrid config you are responsible for defining the entire web app manifest, including the icons portion. Including the icons config will override the default config and only the icons you have defined will be generated. See the example below:
+Here's an example:
 
 ```javascript
 // In your gatsby-config.js
@@ -108,7 +118,7 @@ plugins: [
       background_color: "#f7f0eb",
       theme_color: "#a2466c",
       display: "minimal-ui",
-      icon: src/images/icon.png
+      icon: src/images/icon.png // This path is relative to the root of the site.
       icons: [
         {
           src: `/favicons/android-chrome-192x192.png`,
@@ -125,10 +135,11 @@ plugins: [
   },
 ];
 ```
-The hybrid option allows the most flexibility while still not requiring you to create the variety of icon sizes manually. However, if the auto icon resize is not up to you standards the manual config is for you.
+
+The hybrid option allows the most flexibility while still not requiring you to create most icons sizes manually.
 
 ### Manual config
-In the manual config you are responsible for defining the entire web app manifest and providing the defined icons in the static directory. See the example below:
+In the manual config, you are responsible for defining the entire web app manifest and providing the defined icons in the static directory. Only icons you provide will be added. See the example below:
 
 ```javascript
 // In your gatsby-config.js
@@ -162,7 +173,3 @@ plugins: [
   },
 ];
 ```
-
-To create `manifest.json`, you need to run `gatsby build`.
-
-
