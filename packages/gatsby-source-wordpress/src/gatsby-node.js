@@ -32,7 +32,6 @@ exports.sourceNodes = async (
     searchAndReplaceContentUrls = {},
     concurrentRequests = 10,
     excludedRoutes = [],
-    extraMediasRegex,
   }
 ) => {
   const { createNode } = boundActionCreators
@@ -92,7 +91,7 @@ exports.sourceNodes = async (
   entities = normalize.mapTagsCategoriesToTaxonomies(entities)
 
   // Creates links from entities to media nodes
-  entities = normalize.mapEntitiesToMedia(entities, extraMediasRegex)
+  entities = normalize.mapEntitiesToMedia(entities)
 
   // Downloads media files and removes "sizes" data as useless in Gatsby context.
   entities = await normalize.downloadMediaFiles({
