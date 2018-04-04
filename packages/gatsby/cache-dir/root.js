@@ -8,6 +8,7 @@ import pages from "./pages.json"
 import redirects from "./redirects.json"
 import ComponentRenderer from "./component-renderer"
 import loader from "./loader"
+import { hot } from "react-hot-loader"
 
 import * as ErrorOverlay from "react-error-overlay"
 
@@ -121,6 +122,7 @@ const addNotFoundRoute = () => {
   if (noMatch) {
     return createElement(Route, {
       key: `404-page`,
+
       component: props =>
         createElement(syncRequires.components[noMatch.componentChunkName], {
           ...props,
@@ -138,6 +140,11 @@ const navigateTo = to => {
 
 window.___navigateTo = navigateTo
 
+let pathPrefix = `/`
+if (__PREFIX_PATHS__) {
+  pathPrefix = `${__PATH_PREFIX__}/`
+}
+
 const AltRouter = apiRunner(`replaceRouterComponent`, { history })[0]
 const DefaultRouter = ({ children }) => (
   <Router history={history}>{children}</Router>
@@ -153,12 +160,13 @@ const ComponentRendererWithRouter = withRouter(ComponentRenderer)
 const Root = () =>
   createElement(
     AltRouter ? AltRouter : DefaultRouter,
-    null,
+    { basename: pathPrefix },
     createElement(
       ScrollContext,
       { shouldUpdateScroll },
       createElement(ComponentRendererWithRouter, {
         layout: true,
+        // eslint-disable-next-line react/display-name
         children: layoutProps =>
           createElement(Route, {
             render: routeProps => {
@@ -179,6 +187,7 @@ const Root = () =>
                 )
                 return createElement(Route, {
                   key: `404-page`,
+                  // eslint-disable-next-line react/display-name
                   component: props =>
                     createElement(
                       syncRequires.components[dev404Page.componentChunkName],
@@ -198,4 +207,4 @@ const Root = () =>
 // Let site, plugins wrap the site e.g. for Redux.
 const WrappedRoot = apiRunner(`wrapRootComponent`, { Root }, Root)[0]
 
-export default WrappedRoot
+export default hot(module)(WrappedRoot)

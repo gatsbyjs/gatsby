@@ -1,19 +1,21 @@
 const metadata = require(`react-docgen`)
 
-let cleanDocletValue = str =>
-  str
-    .trim()
-    .replace(/^\{/, ``)
-    .replace(/\}$/, ``)
+const DOCLET_PATTERN = /^@(\w+)(?:$|\s((?:[^](?!^@\w))*))/gim
+const { hasOwnProperty: has } = Object.prototype
+let cleanDocletValue = str => {
+  str = str.trim()
+  if (str.endsWith(`}`) && str.startsWith(`{`)) str = str.slice(1, -1)
+  return str
+}
 
-let isLiteral = str => /^('|")/.test(str.trim())
+let isLiteral = str => /^('|"|true|false|\d+)/.test(str.trim())
 
 /**
  * Remove doclets from string
  */
 export const cleanDoclets = desc => {
   desc = desc || ``
-  let idx = desc.indexOf(`@`)
+  let idx = desc.search(DOCLET_PATTERN)
   return (idx === -1 ? desc : desc.substr(0, idx)).trim()
 }
 
@@ -48,9 +50,12 @@ export const applyPropDoclets = prop => {
 
     if (value[0] === `(`) {
       value = value.substring(1, value.length - 1).split(`|`)
-
-      prop.type.value = value
-      prop.type.name = value.every(isLiteral) ? `enum` : `union`
+      const name = value.every(isLiteral) ? `enum` : `union`
+      prop.type.name = name
+      prop.type.value = value.map(
+        value =>
+          name === `enum` ? { value, computed: false } : { name: value }
+      )
     }
   }
 
@@ -59,12 +64,15 @@ export const applyPropDoclets = prop => {
   if (doclets.required) {
     prop.required = true
   }
-
+  const dft = has.call(doclets, `default`)
+    ? doclets.default
+    : doclets.defaultValue
   // Use @defaultValue to provide a prop's default value
-  if (doclets.defaultValue) {
+  if (dft != null) {
     prop.defaultValue = {
-      value: cleanDocletValue(doclets.defaultValue),
+      value: dft,
       computed: false,
     }
   }
+  return prop
 }

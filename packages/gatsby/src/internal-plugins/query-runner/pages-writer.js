@@ -104,29 +104,29 @@ const preferDefault = m => m && m.default || m
   asyncRequires += `exports.components = {\n${components
     .map(
       c =>
-        `  "${c.componentChunkName}": require("gatsby-module-loader?name=${
-          c.componentChunkName
-        }!${joinPath(c.component)}")`
+        `  "${c.componentChunkName}": () => import("${joinPath(
+          c.component
+        )}" /* webpackChunkName: "${c.componentChunkName}" */)`
     )
     .join(`,\n`)}
 }\n\n`
   asyncRequires += `exports.json = {\n${json
     .map(
       j =>
-        `  "${
+        `  "${j.jsonName}": () => import("${joinPath(
+          program.directory,
+          `/.cache/json/`,
           j.jsonName
-        }": require("gatsby-module-loader?name=${generatePathChunkName(
-          j.path
-        )}!${joinPath(program.directory, `/.cache/json/`, j.jsonName)}")`
+        )}" /* webpackChunkName: "${generatePathChunkName(j.path)}" */ )`
     )
     .join(`,\n`)}
 }\n\n`
   asyncRequires += `exports.layouts = {\n${pageLayouts
     .map(
       l =>
-        `  "${l.machineId}": require("gatsby-module-loader?name=${
-          l.componentChunkName
-        }!${l.componentWrapperPath}")`
+        `  "${l.machineId}": () => import("${
+          l.componentWrapperPath
+        }" /* webpackChunkName: "${l.componentChunkName}" */)`
     )
     .join(`,\n`)}
 }`

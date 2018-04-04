@@ -1,6 +1,5 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import { AppContainer as HotContainer } from "react-hot-loader"
 import domReady from "domready"
 
 import socketIo from "./socketIo"
@@ -37,35 +36,11 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     Root = Root.default
   }
 
-  domReady(() =>
-    ReactDOM.render(
-      <HotContainer>
-        <Root />
-      </HotContainer>,
-      rootElement,
-      () => {
-        apiRunner(`onInitialClientRender`)
-      }
-    )
-  )
-
-  if (module.hot) {
-    module.hot.accept(`./root`, () => {
-      let NextRoot = require(`./root`)
-      if (NextRoot.default) {
-        NextRoot = NextRoot.default
-      }
-      ReactDOM.render(
-        <HotContainer>
-          <NextRoot />
-        </HotContainer>,
-        rootElement,
-        () => {
-          apiRunner(`onInitialClientRender`)
-        }
-      )
+  domReady(() => {
+    ReactDOM.render(<Root />, rootElement, () => {
+      apiRunner(`onInitialClientRender`)
     })
-  }
+  })
 })
 
 function supportsServiceWorkers(location, navigator) {

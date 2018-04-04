@@ -1,8 +1,8 @@
 // @flow
 const os = require(`os`)
 
-const ExtractTextPlugin = require(`extract-text-webpack-plugin`)
 const UglifyPlugin = require(`uglifyjs-webpack-plugin`)
+const MiniCssExtractPlugin = require(`mini-css-extract-plugin`)
 
 const builtinPlugins = require(`./webpack-plugins`)
 const { createBabelConfig } = require(`./babel-config`)
@@ -31,12 +31,7 @@ type PluginFactory = (...args?: any) => PluginInstance
 
 type BuiltinPlugins = typeof builtinPlugins
 
-type Stage =
-  | "develop"
-  | "develop-html"
-  | "build-css"
-  | "build-html"
-  | "build-javascript"
+type Stage = "develop" | "develop-html" | "build-javascript" | "build-html"
 
 /**
  * Configuration options for `createUtils`
@@ -315,13 +310,11 @@ module.exports = async ({
     const css = ({ browsers, ...options } = {}) => {
       return {
         test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: loaders.style(),
-          use: [
-            loaders.css({ ...options, importLoaders: 1 }),
-            loaders.postcss({ browsers }),
-          ],
-        }),
+        use: [
+          MiniCssExtractPlugin.loader,
+          loaders.css({ ...options, importLoaders: 1 }),
+          loaders.postcss({ browsers }),
+        ],
       }
     }
 
@@ -349,10 +342,7 @@ module.exports = async ({
     const postcss = options => {
       return {
         test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: loaders.style(),
-          use: [loaders.css({ importLoaders: 1 }), loaders.postcss(options)],
-        }),
+        use: [loaders.css({ importLoaders: 1 }), loaders.postcss(options)],
       }
     }
 
@@ -394,16 +384,11 @@ module.exports = async ({
    * includes some reasonable defaults
    */
   plugins.extractText = options =>
-    new ExtractTextPlugin({
-      filename: `[name]-[contenthash].css`,
-      allChunks: true,
-      disable: !PRODUCTION,
-      // Useful when using css modules
-      ignoreOrder: true,
+    new MiniCssExtractPlugin({
+      filename: `[name].[chunkhash].css`,
+      chunkFilename: `[name].[chunkhash].css`,
       ...options,
     })
-
-  plugins.extractText.extract = (...args) => ExtractTextPlugin.extract(...args)
 
   plugins.moment = () => plugins.ignore(/^\.\/locale$/, /moment$/)
 

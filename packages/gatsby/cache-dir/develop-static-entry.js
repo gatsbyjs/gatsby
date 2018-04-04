@@ -73,6 +73,7 @@ export default (locals, callback) => {
     body: ``,
     headComponents: headComponents.concat([
       <script key={`io`} src="/socket.io/socket.io.js" />,
+      <link key={`style`} rel="stylesheet" href="/commons.css" />,
     ]),
     preBodyComponents,
     postBodyComponents: postBodyComponents.concat([
