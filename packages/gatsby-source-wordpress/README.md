@@ -42,16 +42,16 @@ We welcome PRs adding support for data from other plugins.
 // In your gatsby-config.js
 plugins: [
   /*
-     * Gatsby's data processing layer begins with “source”
-     * plugins. Here the site sources its data from Wordpress.
-     */
+   * Gatsby's data processing layer begins with “source”
+   * plugins. Here the site sources its data from Wordpress.
+   */
   {
     resolve: "gatsby-source-wordpress",
     options: {
       /*
-        * The base URL of the Wordpress site without the trailingslash and the protocol. This is required.
-        * Example : 'gatsbyjsexamplewordpress.wordpress.com' or 'www.example-site.com'
-        */
+       * The base URL of the Wordpress site without the trailingslash and the protocol. This is required.
+       * Example : 'gatsbyjsexamplewordpress.wordpress.com' or 'www.example-site.com'
+       */
       baseUrl: "gatsbyjsexamplewordpress.wordpress.com",
       // The protocol. This can be http or https.
       protocol: "http",
