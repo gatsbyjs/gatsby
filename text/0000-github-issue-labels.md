@@ -68,7 +68,7 @@ There are 20 existing labels. While we're adding new labels, it makes sense to r
 |---|---|---|
 | API/Plugins | ❌delete | too specific (currently applied to 66 issues) |
 | bug | ✅keep |  rename to `type: bug` or similar |
-| Documentation | ❌delete | redundant - add all issues with this label to the 'Documentation' project before deleting the label |
+| Documentation | ✅keep | rename to `type: documentation` or similar |
 | DX | ❌delete |  too specific (currently applied to 13 issues) |
 | Feature Request | ✅keep | rename to `type: feature` or similar |
 | good first issue | ✅keep | exact name is used by GitHub, don't rename |
