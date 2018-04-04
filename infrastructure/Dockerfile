@@ -10,4 +10,4 @@ COPY package.json gatsby/infrastructure/
 COPY yarn.lock gatsby/infrastructure/
 RUN cd gatsby/infrastructure && yarn
 COPY build-site.js gatsby/infrastructure/
-CMD ["node", "gatsby/infrastructure/build-site.js"]
+ENTRYPOINT ["node", "gatsby/infrastructure/build-site.js"]

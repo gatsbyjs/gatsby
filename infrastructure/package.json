@@ -10,7 +10,11 @@
   "license": "ISC",
   "dependencies": {
     "async": "^2.6.0",
+    "aws-sdk": "^2.173.0",
     "graphql-request": "^1.4.0",
+    "hyper-api": "^1.6.0",
+    "hyper-aws4": "^1.1.3",
+    "node-fetch": "^1.7.3",
     "s3": "^4.4.0",
     "shelljs": "^0.7.8"
   }
