@@ -1,0 +1,16 @@
+{
+  "name": "check-types",
+  "private": true,
+  "description": "Gatsby example site using check-types",
+  "author": "scott.eckenthal@gmail.com",
+  "dependencies": {
+    "gatsby": "latest",
+    "gatsby-link": "latest"
+  },
+  "license": "MIT",
+  "main": "n/a",
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build"
+  }
+}
