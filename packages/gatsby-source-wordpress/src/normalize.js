@@ -280,7 +280,7 @@ exports.searchReplaceContentUrls = function({
   })
 }
 
-exports.mapEntitiesToMedia = (entities, extraMediasRegex) => {
+exports.mapEntitiesToMedia = entities => {
   const media = entities.filter(e => e.__type === `wordpress__wp_media`)
 
   return entities.map(e => {
@@ -297,13 +297,7 @@ exports.mapEntitiesToMedia = (entities, extraMediasRegex) => {
         ? true
         : false
 
-    const photoRegex = /\.(gif|jpg|jpeg|tiff|png)$/i
-    const isPhotoUrl = filename =>
-      _.isString(filename) && photoRegex.test(filename)
-    const isOtherMediaUrl = filename =>
-      _.isString(filename) &&
-      extraMediasRegex &&
-      extraMediasRegex.test(filename)
+    const isURL = value => _.isString(value) && value.startsWith(`http`)
     const isMediaUrlAlreadyProcessed = key => key == `source_url`
     const isFeaturedMedia = (value, key) =>
       (_.isNumber(value) || _.isBoolean(value)) && key === `featured_media`
@@ -314,7 +308,7 @@ exports.mapEntitiesToMedia = (entities, extraMediasRegex) => {
 
     // Try to get media node from value:
     //  - special case - check if key is featured_media and value is photo ID
-    //  - check if value is photo url
+    //  - check if value is media url
     //  - check if value is ACF Image Object
     //  - check if value is ACF Gallery
     const getMediaFromValue = (value, key) => {
@@ -325,10 +319,7 @@ exports.mapEntitiesToMedia = (entities, extraMediasRegex) => {
             : null,
           deleteField: true,
         }
-      } else if (
-        (isPhotoUrl(value) || (extraMediasRegex && isOtherMediaUrl(value))) &&
-        !isMediaUrlAlreadyProcessed(key)
-      ) {
+      } else if (isURL(value) && !isMediaUrlAlreadyProcessed(key)) {
         const mediaNodeID = getMediaItemID(
           media.find(m => m.source_url === value)
         )
