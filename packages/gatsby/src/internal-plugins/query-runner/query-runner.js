@@ -34,10 +34,14 @@ module.exports = async (pageOrLayout, component) => {
   if (result && result.errors) {
     report.log(
       report.stripIndent`
-        The GraphQL query from ${component.componentPath} failed
+        The GraphQL query from ${component.componentPath} failed.
 
         Errors:
           ${result.errors || []}
+        URL path:
+          ${pageOrLayout.path}
+        Plugin:
+          ${pageOrLayout.pluginCreatorId || `none`}
         Query:
           ${component.query}
       `
