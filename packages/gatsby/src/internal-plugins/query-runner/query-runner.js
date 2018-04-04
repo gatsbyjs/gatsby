@@ -35,12 +35,11 @@ module.exports = async (pageOrLayout, component) => {
     report.log(
       report.stripIndent`
         The GraphQL query from ${component.componentPath} failed.
-        See .cache/json/${pageOrLayout.jsonName} if develop mode.
 
         Errors:
           ${result.errors || []}
-        Path:
-          ${pageOrLayout.path || `unset`}
+        URL path:
+          ${pageOrLayout.path}
         Plugin:
           ${pageOrLayout.pluginCreatorId || `none`}
         Query:
