@@ -66,16 +66,16 @@ exports.onPostBuild = (args, pluginOptions) =>
     const { icon } = pluginOptions
     const manifest = { ...pluginOptions }
   
-    //cleanup non manifest config from manifest
+    // Delete options we won't pass to the manifest.json.
     delete manifest.plugins
     delete manifest.icon
 
-    //if icons are not manually defined use default icon set
+    // If icons are not manually defined, use the default icon set.
     if (!manifest.icons) {
       manifest.icons = defaultIcons
     }
 
-    //determine destination path for icons and 
+    // Determine destination path for icons.
     const iconPath = `./public/` + manifest.icons[0].src.substring(0, manifest.icons[0].src.lastIndexOf(`/`))
 
     //create destination directory if it doesn't exist
@@ -85,7 +85,7 @@ exports.onPostBuild = (args, pluginOptions) =>
 
     fs.writeFileSync(`${iconPath}/manifest.json`, JSON.stringify(manifest))
     
-    // only auto-generate if a src icon is defined
+    // Only auto-generate icons if a src icon is defined.
     if (icon !== undefined) {
         generateIcons(manifest.icons, icon).then(() => {
             //images have been generated
