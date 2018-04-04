@@ -1,6 +1,8 @@
 # gatsby-remark-autolink-headers
 
-Adds GitHub-style links to `MarkdownRemark` headers.
+This is a plugin for a plugin.  Note in the `How to use` section below that you're adding this to the configuration of the `gatsby-transformer-remark` plugin and not adding another plugin in the chain.  
+
+When enabled this plugin takes the headers from your markdown files and adds the 🔗 on-hover in your rendered pages (much like GitHub does in markdown files like the readme).
 
 ## Install
 
