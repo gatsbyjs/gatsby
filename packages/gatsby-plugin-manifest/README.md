@@ -23,6 +23,110 @@ the created manifest.json.
 
 There are three configs in which this plugin will function: manual, hybrid, and auto. These three configuration options are explained below. The plugin functions differently depending on which of the three you choose.
 
+### Auto config
+
+In the auto config you are responsible for defining the entire web app manifest except for the icons portion. You only provide a high resolution source icon. The icons themselves and the needed config will be generated at build time. See the example below:
+
+```javascript
+// In your gatsby-config.js
+plugins: [
+  {
+    resolve: `gatsby-plugin-manifest`,
+    options: {
+      name: "GatsbyJS",
+      short_name: "GatsbyJS",
+      start_url: "/",
+      background_color: "#f7f0eb",
+      theme_color: "#a2466c",
+      display: "minimal-ui",
+      icon: src/images/icon.png
+    },
+  },
+];
+```
+
+The auto config will be the easiest option for most people. If you're looking to customize the icon set included in your web app manifest, then the hybrid option is for you. For your reference the default icons config used is as follows:
+
+```js
+[
+  {
+      "src": `icons/icon-48x48.png`,
+      "sizes": `48x48`,
+      "type": `image/png`,
+  },
+  {
+      "src": `icons/icon-72x72.png`,
+      "sizes": `72x72`,
+      "type": `image/png`,
+  },
+  {
+      "src": `icons/icon-96x96.png`,
+      "sizes": `96x96`,
+      "type": `image/png`,
+  },
+  {
+      "src": `icons/icon-144x144.png`,
+      "sizes": `144x144`,
+      "type": `image/png`,
+  },
+  {
+      "src": `icons/icon-192x192.png`,
+      "sizes": `192x192`,
+      "type": `image/png`,
+  },
+  {
+      "src": `icons/icon-256x256.png`,
+      "sizes": `256x256`,
+      "type": `image/png`,
+  },
+  {
+      "src": `icons/icon-384x384.png`,
+      "sizes": `384x384`,
+      "type": `image/png`,
+  },
+  {
+      "src": `icons/icon-512x512.png`,
+      "sizes": `512x512`,
+      "type": `image/png`,
+  },
+]
+```
+
+### Hybrid config
+
+In the hybrid config you are responsible for defining the entire web app manifest, including the icons portion. Including the icons config will override the default config and only the icons you have defined will be generated. See the example below:
+
+```javascript
+// In your gatsby-config.js
+plugins: [
+  {
+    resolve: `gatsby-plugin-manifest`,
+    options: {
+      name: "GatsbyJS",
+      short_name: "GatsbyJS",
+      start_url: "/",
+      background_color: "#f7f0eb",
+      theme_color: "#a2466c",
+      display: "minimal-ui",
+      icon: src/images/icon.png
+      icons: [
+        {
+          src: `/favicons/android-chrome-192x192.png`,
+          sizes: `192x192`,
+          type: `image/png`,
+        },
+        {
+          src: `/favicons/android-chrome-512x512.png`,
+          sizes: `512x512`,
+          type: `image/png`,
+        },
+      ],
+    },
+  },
+];
+```
+The hybrid option allows the most flexibility while still not requiring you to create the variety of icon sizes manually. However, if the auto icon resize is not up to you standards the manual config is for you.
+
 ### Manual config
 In the manual config you are responsible for defining the entire web app manifest and providing the defined icons in the static directory. See the example below:
 
@@ -54,62 +158,6 @@ plugins: [
           type: `image/png`,
         },
       ],
-    },
-  },
-];
-```
-
-### Hybrid config
-
-In the hybrid config you are responsible for defining the entire web app manifest but instead of manually generating the defined icons you provide a high resolution source icon to be used to auto generate your defined icons. See the example below:
-
-```javascript
-// In your gatsby-config.js
-plugins: [
-  {
-    resolve: `gatsby-plugin-manifest`,
-    options: {
-      name: "GatsbyJS",
-      short_name: "GatsbyJS",
-      start_url: "/",
-      background_color: "#f7f0eb",
-      theme_color: "#a2466c",
-      display: "minimal-ui",
-      icon: src/images/icon.png
-      icons: [
-        {
-          src: `/favicons/android-chrome-192x192.png`,
-          sizes: `192x192`,
-          type: `image/png`,
-        },
-        {
-          src: `/favicons/android-chrome-512x512.png`,
-          sizes: `512x512`,
-          type: `image/png`,
-        },
-      ],
-    },
-  },
-];
-```
-
-### Auto config
-
-In the auto config you are responsible for defining the entire web app manifest except for the icons. You only provide a high resolution source icon. The icons themselves and the needed config will be generated. See the example below:
-
-```javascript
-// In your gatsby-config.js
-plugins: [
-  {
-    resolve: `gatsby-plugin-manifest`,
-    options: {
-      name: "GatsbyJS",
-      short_name: "GatsbyJS",
-      start_url: "/",
-      background_color: "#f7f0eb",
-      theme_color: "#a2466c",
-      display: "minimal-ui",
-      icon: src/images/icon.png
     },
   },
 ];
