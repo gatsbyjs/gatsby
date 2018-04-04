@@ -35,14 +35,16 @@ async function handleQueue(task, cb) {
  * @param  {Options}  opts   Options that will be given to better-queue
  * @return {Promise}         Resolves with the accumulated values from the tasks
  */
-module.exports = function requestInQueue (tasks, opts = {}) {
+module.exports = function requestInQueue(tasks, opts = {}) {
   return new Promise((res, rej) => {
     const q = new Queue(handleQueue, { ..._defaults, ...opts })
 
-    const taskMap = new Map(tasks.map((t) => {
-      q.push(t)
-      return [t.url, null]
-    }))
+    const taskMap = new Map(
+      tasks.map(t => {
+        q.push(t)
+        return [t.url, null]
+      })
+    )
 
     q.on(`task_failed`, (id, err) => {
       rej(`${id} failed with err: ${err}`)
