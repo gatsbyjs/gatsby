@@ -3,84 +3,111 @@ import { Route } from "react-router-dom"
 import ComponentRenderer from "./component-renderer"
 import syncRequires from "./sync-requires"
 import socketIo from "./socketIo"
+import emitter from "./emitter"
+import stripPrefix from "./strip-prefix"
 import omit from "lodash/omit"
 import get from "lodash/get"
+
+const getPathFromProps = props => {
+  if (props.isPage) {
+    return get(props.pageResources, `page.path`)
+  } else {
+    return `/dev-404-page/`
+  }
+}
+
+const pathPrefix = __PREFIX_PATHS__ === true ? __PATH_PREFIX__ : ``
 
 class JSONStore extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       data: {},
+      path: null,
     }
 
-    this.socket = socketIo()
-
     this.setPageData = this.setPageData.bind(this)
-    this.getPageData = this.getPageData.bind(this)
-  }
 
-  componentDidMount() {
+    this.socket = socketIo()
     this.socket.on(`queryResult`, this.setPageData)
-  }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    if (nextProps !== this.props) return true
+    emitter.on(`PREFETCH_PATH`, rawPath => {
+      const path = stripPrefix(rawPath, pathPrefix)
+      this.registerPath({ path, mode: `LINKED_PATH` })
+    })
 
-    // if json for nextState is not available
-    const nextJsonId = get(nextProps.pageResources, `page.jsonName`)
-    if (!nextState.data[nextJsonId]) return false
-
-    // if nextState json is the same as current state json
-    const sameDataPath =
-      get(nextState, `data[${nextJsonId}].dataPath`) ===
-      get(this, `state.data[${nextJsonId}].dataPath`)
-
-    if (sameDataPath) return false
-
-    return true
-  }
-
-  setPageData(newData) {
-    this.setState({
-      data: { [newData.path]: newData },
+    emitter.on(`UNPREFETCH_PATH`, rawPath => {
+      const path = stripPrefix(rawPath, pathPrefix)
+      this.unregisterPath({ path, mode: `LINKED_PATH` })
     })
   }
 
-  getPageData(path) {
-    const res = this.state.data[path]
+  componentWillMount() {
+    this.registerPath({ path: getPathFromProps(this.props) })
+  }
 
-    // always check for fresh data
-    this.socket.emit(`getPageData`, path)
+  componentWillReceiveProps(nextProps) {
+    const { path } = this.state
+    const newPath = getPathFromProps(nextProps)
 
-    if (!res || !res.data) return false
-    return JSON.parse(res.data)
+    if (path !== newPath) {
+      this.unregisterPath({ path })
+      this.registerPath({ path: newPath })
+    }
+  }
+
+  registerPath({ path, mode = `ACTIVE_PATH` }) {
+    if (mode === `ACTIVE_PATH`) {
+      this.setState({ path })
+    }
+    this.socket.emit(`registerPath`, { path, mode })
+  }
+
+  unregisterPath({ path, mode = `ACTIVE_PATH` }) {
+    if (mode === `ACTIVE_PATH`) {
+      this.setState({ path: null })
+    }
+    this.socket.emit(`unregisterPath`, { path, mode })
+  }
+
+  componentWillUnmount() {
+    this.unregisterPath({ path: this.state.path })
+  }
+
+  setPageData({ path, result }) {
+    this.setState({
+      data: {
+        ...this.state.data,
+        [path]: result,
+      },
+    })
   }
 
   render() {
     const { isPage, pages, pageResources } = this.props
+
+    const data = this.state.data[this.state.path]
     const propsWithoutPages = omit(this.props, `pages`)
 
-    if (isPage) {
-      const jsonId = get(pageResources, `page.jsonName`)
-      const pageData = this.getPageData(jsonId)
-      if (pageData === false) return ``
+    if (!data) {
+      return null
+    } else if (isPage) {
       return createElement(ComponentRenderer, {
         key: `normal-page`,
         ...propsWithoutPages,
-        ...pageData,
+        ...data,
       })
     } else {
       const dev404Page = pages.find(p => /^\/dev-404-page/.test(p.path))
-      const dev404Props = {
-        ...propsWithoutPages,
-        ...this.getPageData(dev404Page.jsonName),
-      }
       return createElement(Route, {
         key: `404-page`,
         component: props =>
           createElement(
             syncRequires.components[dev404Page.componentChunkName],
-            dev404Props
+            {
+              ...propsWithoutPages,
+              ...data,
+            }
           ),
       })
     }

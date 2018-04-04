@@ -49,7 +49,12 @@ function urlJoin(...parts) {
   }, ``)
 }
 
-const getPage = path => pages.find(page => page.path === path)
+const getPage = path => {
+  const pathWithStartingSlash =
+    path.length > 0 && path[0] === `/` ? path : `/${path}`
+
+  return pages.find(page => page.path === pathWithStartingSlash)
+}
 const defaultLayout = props => <div>{props.children()}</div>
 
 const getLayout = page => {

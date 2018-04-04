@@ -27,7 +27,8 @@ const queue = new Queue(
     concurrent: 4,
     // Merge duplicate jobs.
     merge: (oldTask, newTask, cb) => {
-      cb(null, newTask)
+      // Use task with higher priority
+      cb(null, newTask.priority > oldTask.priority ? newTask : oldTask)
     },
     // Filter out new query jobs if that query is already running.  When the
     // query finshes, it checks the waiting map and pushes another job to
@@ -39,6 +40,9 @@ const queue = new Queue(
       } else {
         cb(null, job)
       }
+    },
+    priority: (task, cb) => {
+      cb(null, task.priority)
     },
   }
 )

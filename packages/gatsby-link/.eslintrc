@@ -1,4 +1,4 @@
 env:
   browser: true
 globals:
-  ___loader: false
+  ___emitter: false

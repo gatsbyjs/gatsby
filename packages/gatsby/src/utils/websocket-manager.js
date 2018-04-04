@@ -1,37 +1,16 @@
-const path = require(`path`)
-const { store } = require(`../redux`)
-const fs = require(`fs`)
+const { emitter } = require(`../redux`)
 
-const getCachedPageData = (jsonName, directory) => {
-  const jsonDataPaths = store.getState().jsonDataPaths
-  const dataPath = jsonDataPaths[jsonName]
-  if (typeof dataPath === `undefined`) return undefined
-  const filePath = path.join(
-    directory,
-    `public`,
-    `static`,
-    `d`,
-    `${dataPath}.json`
-  )
-  const data = fs.readFileSync(filePath, `utf-8`)
-  return {
-    data,
-    dataPath,
-    path: jsonName,
-  }
-}
+const getRoomNameFromPath = path => `path-${path}`
 
 class WebsocketManager {
   constructor() {
     this.isInitialised = false
-    this.results = {}
-    this.activePaths = new Map()
+    this.results = new Map()
     this.websocket
     this.programDir
 
     this.init = this.init.bind(this)
     this.getSocket = this.getSocket.bind(this)
-    this.getPageData = this.getPageData.bind(this)
     this.emitData = this.emitData.bind(this)
   }
 
@@ -39,14 +18,97 @@ class WebsocketManager {
     this.programDir = directory
     this.websocket = require(`socket.io`)(server)
 
+    emitter.on(`INVALIDATE_QUERY_RESULTS`, path => {
+      this.results.delete(path)
+    })
+
     this.websocket.on(`connection`, s => {
-      const clientId = s.id
-      s.join(`clients`)
-      s.on(`getPageData`, path => {
-        this.getPageData(path, clientId)
+      /**
+       * Ref counting map for paths
+       * differentiate between active path and linked path, because
+       * queries will have different priorities for each type
+       */
+      const pathRefCount = {
+        ACTIVE_PATH: new Map(),
+        LINKED_PATH: new Map(),
+      }
+
+      const leaveRoom = ({ path, mode, forceRemove = false }) => {
+        const roomName = getRoomNameFromPath(path)
+
+        let removeQueryListener = forceRemove
+
+        if (!forceRemove) {
+          let refCount = pathRefCount[mode].get(path)
+          if (typeof refCount !== `undefined`) {
+            refCount--
+            if (refCount <= 0) {
+              removeQueryListener = true
+            } else {
+              pathRefCount[mode].set(path, refCount)
+            }
+          } else {
+            // If we have not ref counts, remove listener just in case
+            removeQueryListener = true
+          }
+        }
+
+        if (removeQueryListener) {
+          pathRefCount[mode].delete(path)
+
+          if (
+            !pathRefCount.ACTIVE_PATH.has(path) &&
+            !pathRefCount.LINKED_PATH.has(path)
+          ) {
+            // Leave room if both ACTIVE and LINKED paths don't have
+            s.leave(roomName)
+          }
+
+          emitter.emit(`REMOVE_QUERY_RESULTS_LISTENER`, {
+            path,
+            mode,
+            listenerID: s.id,
+          })
+        }
+      }
+
+      s.on(`disconnect`, () => {
+        ;[`ACTIVE_PATH`, `LINKED_PATH`].forEach(mode => {
+          pathRefCount[mode].forEach((refCount, path) => {
+            leaveRoom({ path, mode, forceRemove: true })
+          })
+        })
       })
-      s.on(`disconnect`, s => {
-        this.activePaths.delete(clientId)
+
+      s.on(`registerPath`, ({ path, mode }) => {
+        const refCount = pathRefCount[mode].get(path)
+        if (typeof refCount !== `undefined`) {
+          pathRefCount[mode].set(path, refCount + 1)
+        } else {
+          const roomName = getRoomNameFromPath(path)
+
+          emitter.emit(`ADD_QUERY_RESULTS_LISTENER`, {
+            path,
+            mode,
+            listenerID: s.id,
+          })
+
+          s.join(roomName)
+
+          pathRefCount[mode].set(path, 1)
+
+          if (this.results.has(path)) {
+            s.emit(`queryResult`, this.results.get(path))
+          }
+        }
+      })
+
+      s.on(`unregisterPath`, args => {
+        // Add small delay before leaving room, to allow page to change
+        // so we first add new listeners before removing old ones
+        setTimeout(() => {
+          leaveRoom(args)
+        }, 500)
       })
     })
 
@@ -57,21 +119,9 @@ class WebsocketManager {
     return this.isInitialised && this.websocket
   }
 
-  getPageData(path, clientId) {
-    // track the active path for each connected client
-    this.activePaths.set(clientId, path)
-    const data = getCachedPageData(path, this.programDir)
-    this.emitData({ data, forceEmit: true })
-  }
-
-  emitData({ data, forceEmit = false }) {
-    const isActivePath =
-      data.path && Array.from(this.activePaths.values()).includes(data.path)
-
-    // push results if this path is active on a client
-    if (isActivePath || forceEmit) {
-      this.websocket.emit(`queryResult`, data)
-    }
+  emitData(data) {
+    this.websocket.to(getRoomNameFromPath(data.path)).emit(`queryResult`, data)
+    this.results.set(data.path, data)
   }
 }
 

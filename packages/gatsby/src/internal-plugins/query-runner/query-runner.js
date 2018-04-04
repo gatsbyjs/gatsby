@@ -57,44 +57,40 @@ module.exports = async (pageOrLayout, component) => {
   } else {
     result[`pageContext`] = pageOrLayout.context
   }
-  const resultJSON = JSON.stringify(result)
-  const resultHash = md5(resultJSON)
 
-  if (resultHashes[pageOrLayout.jsonName] !== resultHash) {
-    resultHashes[pageOrLayout.jsonName] = resultHash
-
-    // Always write file to public/static/d/ folder.
-    const dataPath = `${generatePathChunkName(
-      pageOrLayout.jsonName
-    )}-${resultHash}`
-
-    const programType = program._[0]
-
-    if (programType === `develop`) {
-      const data = {
-        dataPath,
-        data: resultJSON,
-        path: pageOrLayout.jsonName,
-      }
-      websocketManager.emitData({ data })
-    }
-
-    const resultPath = path.join(
-      program.directory,
-      `public`,
-      `static`,
-      `d`,
-      `${dataPath}.json`
-    )
-    await fs.writeFile(resultPath, resultJSON)
-
-    store.dispatch({
-      type: `SET_JSON_DATA_PATH`,
-      payload: {
-        [pageOrLayout.jsonName]: dataPath,
-      },
+  const programType = program._[0]
+  if (programType === `develop`) {
+    websocketManager.emitData({
+      result,
+      path: pageOrLayout.path,
     })
+  } else {
+    const resultJSON = JSON.stringify(result)
+    const resultHash = md5(resultJSON)
 
-    return
+    if (resultHashes[pageOrLayout.jsonName] !== resultHash) {
+      resultHashes[pageOrLayout.jsonName] = resultHash
+
+      // Write file to public/static/d/ folder.
+      const dataPath = `${generatePathChunkName(
+        pageOrLayout.jsonName
+      )}-${resultHash}`
+
+      const resultPath = path.join(
+        program.directory,
+        `public`,
+        `static`,
+        `d`,
+        `${dataPath}.json`
+      )
+      await fs.writeFile(resultPath, resultJSON)
+
+      store.dispatch({
+        type: `SET_JSON_DATA_PATH`,
+        payload: {
+          [pageOrLayout.jsonName]: dataPath,
+        },
+      })
+    }
   }
 }
