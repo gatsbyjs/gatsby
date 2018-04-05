@@ -4,10 +4,19 @@ const autoprefixer = require(`autoprefixer`)
 const flexbugs = require(`postcss-flexbugs-fixes`)
 const report = require(`gatsby-cli/lib/reporter`)
 
-// { stage, rules, loaders, actions, store, getConfig }
-exports.onCreateWebpackConfig = async ({ actions, store }) => {
+exports.onCreateWebpackConfig = async ({
+  actions,
+  getConfig,
+  loaders,
+  rules,
+  stage,
+  store,
+}) => {
   const program = store.getState().program
   const { directory, browserslist } = program
+
+  // console.log(`initial config for stage: `, stage)
+  // console.dir(getConfig(), { depth: null })
 
   const defaultPlugins = {
     plugins: [
@@ -26,10 +35,14 @@ exports.onCreateWebpackConfig = async ({ actions, store }) => {
   }
 
   const postcssPlugins = customPlugins || defaultPlugins
+  const postcssRule = rules.postcss({ plugins: postcssPlugins })
 
-  // Now we have a set of postCSS plugins...
-  // How do we apply them to the webpack config?
-  // with setWebpackConfig?
+  actions.setWebpackConfig({
+    module: {
+      rules: [postcssRule],
+    },
+  })
 
-  // actions.setWebpackConfig({})
+  // console.log(`UPDATED config for stage: `, stage)
+  // console.dir(getConfig(), { depth: null })
 }
