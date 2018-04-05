@@ -70,7 +70,7 @@ module.exports = async (pageOrLayout, component) => {
 
     const programType = program._[0]
 
-    if (programType === `develop`) {
+    if (programType === `develop` && pageOrLayout.path) {
       const data = {
         dataPath,
         data: resultJSON,
