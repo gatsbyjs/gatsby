@@ -26,7 +26,7 @@ const getRoomNameFromPath = path => `path-${path}`
 class WebsocketManager {
   constructor() {
     this.isInitialised = false
-    this.activePaths = new Map()
+    this.activePaths = new Set()
     this.results = new Map()
     this.websocket
     this.programDir
@@ -45,17 +45,19 @@ class WebsocketManager {
 
       const leaveRoom = path => {
         s.leave(getRoomNameFromPath(path))
+        const leftRoom = this.websocket.sockets.adapter.rooms[
+          getRoomNameFromPath(path)
+        ]
+        if (!leftRoom || leftRoom.length === 0) {
+          this.activePaths.delete(path)
+        }
         activePath = null
       }
-
-      s.on(`disconnect`, s => {
-        leaveRoom(activePath)
-      })
 
       s.on(`registerPath`, path => {
         s.join(getRoomNameFromPath(path))
         activePath = path
-        this.activePaths.set(s.id, path)
+        this.activePaths.add(path)
 
         if (this.results.has(path)) {
           s.emit(`queryResult`, this.results.get(path))

@@ -2,6 +2,7 @@ const Queue = require(`better-queue`)
 
 const queryRunner = require(`./query-runner`)
 const { store, emitter } = require(`../../redux`)
+const websocketManager = require(`../../utils/websocket-manager`)
 
 const processing = new Set()
 const waiting = new Map()
@@ -28,6 +29,14 @@ const queue = new Queue(
     // Merge duplicate jobs.
     merge: (oldTask, newTask, cb) => {
       cb(null, newTask)
+    },
+    priority: (job, cb) => {
+      const activePaths = Array.from(websocketManager.activePaths.values())
+      if (activePaths.includes(job.path)) {
+        cb(null, 10)
+      } else {
+        cb(null, 1)
+      }
     },
     // Filter out new query jobs if that query is already running.  When the
     // query finshes, it checks the waiting map and pushes another job to
