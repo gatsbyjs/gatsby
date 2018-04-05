@@ -6,11 +6,7 @@ Parses Excel files into JSON arrays.
 
 `npm install --save gatsby-transformer-excel`
 
-> Note: You will also need to use the [`gatsby-source-filesystem`](https://www.gatsbyjs.org/packages/gatsby-source-filesystem/) plugin to
-make it works. You will have to point the path of the directory of your excel
-files.
-
-`npm install --save gatsby-source-filesystem`
+Note: You generally will use this plugin together with the [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/) plugin. `gatsby-source-filesystem` reads in the files then this plugin *transforms* the files into data you can query.
 
 ## How to use
 
@@ -18,19 +14,21 @@ If you put your Excel's files in `./src/data`:
 
 ```javascript
 // In your gatsby-config.js
-plugins: [
-  {
-    resolve: `gatsby-source-filesystem`,
-    options: {
-      name: `data`,
-      path: `${__dirname}/src/data/`,
+module.exports = {
+  plugins: [ 
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `data`,
+        path: `${__dirname}/src/data/`,
+      },
     },
-  },
-  `gatsby-transformer-excel`,
-  ];
+    `gatsby-transformer-excel`,
+  ],
+}
 ```
 
-You can see an example project on the official [Gatsby repository](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-excel).
+You can see an example project at https://github.com/gatsbyjs/gatsby/tree/master/examples/using-excel.
 
 ## Parsing algorithm
 
