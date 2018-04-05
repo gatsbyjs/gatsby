@@ -70,13 +70,11 @@ module.exports = async (pageOrLayout, component) => {
 
     const programType = program._[0]
 
-    if (programType === `develop`) {
-      const data = {
-        dataPath,
-        data: resultJSON,
-        path: pageOrLayout.jsonName,
-      }
-      websocketManager.emitData({ data })
+    if (programType === `develop` && pageOrLayout.path) {
+      websocketManager.emitData({
+        result,
+        path: pageOrLayout.path,
+      })
     }
 
     const resultPath = path.join(
