@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import Container from "../components/container"
+import Link from "gatsby-link"
 import logo from "../monogram.svg"
 import { rhythm, options } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
