@@ -1,7 +1,7 @@
 const algoliasearch = require(`algoliasearch`)
 const crypto = require(`crypto`)
 
-const client = algoliasearch(`OFCNCOG2CU`, `f54e21fa3a2a0160595bb058179bfb1e`)
+const client = algoliasearch(`OFCNCOG2CU`, `6fbcaeafced8913bf0e4d39f0b541957`)
 var index = client.initIndex(`npm-search`)
 
 const createContentDigest = obj =>
@@ -9,6 +9,17 @@ const createContentDigest = obj =>
     .createHash(`md5`)
     .update(JSON.stringify(obj))
     .digest(`hex`)
+
+function browse({ index, ...params }) {
+  let hits = []
+  const browser = index.browseAll(params)
+
+  return new Promise((resolve, reject) => {
+    browser.on(`result`, content => (hits = hits.concat(content.hits)))
+    browser.on(`end`, () => resolve(hits))
+    browser.on(`error`, err => reject(err))
+  })
+}
 
 exports.sourceNodes = async (
   { boundActionCreators, createNodeId },
@@ -24,8 +35,8 @@ exports.sourceNodes = async (
     buildFilter.push(`keywords:${keyword}`)
   })
 
-  const data = await index.search({
-    query: ``,
+  const data = await browse({
+    index,
     filters: `(${buildFilter.join(` OR `)})`,
     hitsPerPage: 1000,
   })
@@ -52,7 +63,6 @@ exports.sourceNodes = async (
     readmeNode.internal.contentDigest = createContentDigest(readmeNode)
     // Remove unneeded data
     delete hit.readme
-    delete hit._highlightResult
     delete hit.versions
 
     const node = {
