@@ -19,6 +19,7 @@ The Gatsby community welcomes contributions. Please refer to the guides below on
 
 * [How to Contribute](/docs/how-to-contribute/)
 * [How to File an Issue](/docs/how-to-file-an-issue/)
+* [Make feature requests with an RFC](/blog/2018-04-06-introducing-gatsby-rfc-process/)
 * [Gatsby Style Guide](/docs/gatsby-style-guide/)
 
 ## Gatsby news
