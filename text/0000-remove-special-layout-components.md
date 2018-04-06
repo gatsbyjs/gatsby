@@ -71,7 +71,7 @@ accept variables e.g. the id of the markdown file that's being shown on that
 page.
 
 This was also convenient as it allowed us to easily split data from code so
-we could load the code for the blog post page separtely from the data for pages.
+we could load the code for the blog post page separately from the data for pages.
 
 When we added the layout component, we reused the same graphql syntax so they could
 query for data.
@@ -147,7 +147,7 @@ It'll also enable new types of components that you can now attach not just marku
 * Requires implementing the new StaticQuery feature — which isn't trivial — and means
  more code to maintain.
 * It's a breaking change so we'd need to educate existing users of layouts who'll need to migrate v1 sites.
- This could involve inventing new patterns to handle more comples cases like
+ This could involve inventing new patterns to handle more complex cases like
  i18n
 
 # Alternatives
@@ -168,7 +168,7 @@ pages and make it the top-most component there.
 # How we teach this
 
 For layouts, there's nothing to teach as it's just normal React now. Probably
-will want some guides around more sophesticated patterns e.g. i18n.
+will want some guides around more sophisticated patterns e.g. i18n.
 
 For `<StaticQuery>`, we'll add documentation to the tutorial + our GraphQL
 concepts page.
