@@ -33,6 +33,7 @@ module.exports = (state = [], action) => {
         return [...state.concat(action.payload)]
       }
     }
+
     case `DELETE_PAGE`:
       return state.filter(p => p.path !== action.payload.path)
     default:

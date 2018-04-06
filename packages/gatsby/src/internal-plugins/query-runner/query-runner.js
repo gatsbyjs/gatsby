@@ -2,9 +2,11 @@ import { graphql as graphqlFunction } from "graphql"
 const fs = require(`fs-extra`)
 const report = require(`gatsby-cli/lib/reporter`)
 const md5 = require(`md5`)
+const websocketManager = require(`../../utils/websocket-manager`)
 
-const { joinPath } = require(`../../utils/path`)
+const path = require(`path`)
 const { store } = require(`../../redux`)
+const { generatePathChunkName } = require(`../../utils/js-chunk-names`)
 
 const resultHashes = {}
 
@@ -28,7 +30,6 @@ module.exports = async (pageOrLayout, component) => {
       ...pageOrLayout.context,
     })
   }
-  // console.log(`running query`, component.pathname, component.query, result)
 
   // If there's a graphql error then log the error. If we're building, also
   // quit.
@@ -58,15 +59,40 @@ module.exports = async (pageOrLayout, component) => {
   }
   const resultJSON = JSON.stringify(result)
   const resultHash = md5(resultJSON)
-  const resultPath = joinPath(
-    program.directory,
-    `.cache`,
-    `json`,
-    pageOrLayout.jsonName
-  )
 
-  if (resultHashes[resultPath] !== resultHash) {
-    resultHashes[resultPath] = resultHash
+  if (resultHashes[pageOrLayout.jsonName] !== resultHash) {
+    resultHashes[pageOrLayout.jsonName] = resultHash
+
+    // Always write file to public/static/d/ folder.
+    const dataPath = `${generatePathChunkName(
+      pageOrLayout.jsonName
+    )}-${resultHash}`
+
+    const programType = program._[0]
+
+    if (programType === `develop` && pageOrLayout.path) {
+      websocketManager.emitData({
+        result,
+        path: pageOrLayout.path,
+      })
+    }
+
+    const resultPath = path.join(
+      program.directory,
+      `public`,
+      `static`,
+      `d`,
+      `${dataPath}.json`
+    )
     await fs.writeFile(resultPath, resultJSON)
+
+    store.dispatch({
+      type: `SET_JSON_DATA_PATH`,
+      payload: {
+        [pageOrLayout.jsonName]: dataPath,
+      },
+    })
+
+    return
   }
 }
