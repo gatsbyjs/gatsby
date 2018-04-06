@@ -117,7 +117,7 @@ export default (locals, callback) => {
     createElement(Route, {
       // eslint-disable-next-line react/display-name
       render: routeProps => {
-        const page = getPage(routeProps.location.pathname)
+        const page = getPage(`/${routeProps.location.pathname}`)
         const layout = getLayout(page)
 
         const dataAndContext =
