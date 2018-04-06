@@ -8,6 +8,8 @@ Parses JavaScript files to extract frontmatter from exports.
 
 ## How to use
 
+To use this plugin you need [gatsby-source-filesystem](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem) installed.
+
 ```javascript
 // In your gatsby-config.js
 plugins: [`gatsby-transformer-javascript-frontmatter`];
