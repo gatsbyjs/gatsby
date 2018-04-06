@@ -76,8 +76,7 @@ would need to accept variables e.g. the id of the markdown file that's being
 shown on that page.
 
 When we added the layout component, we reused the same graphql syntax and
-pattern as they too needed to include queries — though they don't accept
-variables like page queries do.
+pattern as they too needed to include queries.
 
 For static queries in v2 layout components, I propose the following pattern:
 
