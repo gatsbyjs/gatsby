@@ -78,6 +78,8 @@ Reserved environment variables:
 
 For instance. If you would like to add a staging environment with a custom Google Analytics Tracking ID.  You can add `.env.staging` at the root of your project with the following modification to your `gatsby-config.js`
 
+### Example
+
 ```shell
 # .env.staging
 GATSBY_GA_TRACKING_ID="UA-1234567890"
@@ -115,7 +117,10 @@ module.exports = {
     }
   ]
 };
-
-
 ```
 
+Local testing of staging is as simple as 
+
+```
+ACTIVE_ENV=staging gatsby develop
+```
