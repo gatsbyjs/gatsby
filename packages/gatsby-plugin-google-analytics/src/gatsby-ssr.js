@@ -1,10 +1,16 @@
 import React from "react"
 
 exports.onRenderBody = (
-  { setHeadComponents, setPostBodyComponents },
+  { pathname, setHeadComponents, setPostBodyComponents },
   pluginOptions
 ) => {
   if (process.env.NODE_ENV === `production`) {
+    if (
+      typeof pluginOptions.exclude !== `undefined` &&
+      pluginOptions.exclude.some(rx => new RegExp(rx).test(pathname))
+    ) {
+      return null
+    }
     const setComponents = pluginOptions.head
       ? setHeadComponents
       : setPostBodyComponents
