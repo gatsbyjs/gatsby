@@ -27,6 +27,6 @@ Not every change must go through the RFC process. Bug fixes or performance impro
 
 ## RFCs for a new GitHub labeling system and to remove our special layout component
 
-Coinciding with the launch of our RFC process, we've submitted a [proposal for a new GitHub labeling system](https://github.com/gatsbyjs/rfcs/pull/1) and a [proposal to remove our special layout component](https://github.com/gatsbyjs/rfcs/pull/2). The labeling system proposal has already received many valuable comments from the community that we will incorporate into the design of the new API.
+Coinciding with the launch of our RFC process, we've submitted a [proposal for a new GitHub labeling system](https://github.com/gatsbyjs/rfcs/pull/1) and a [proposal to remove our special layout component](https://github.com/gatsbyjs/rfcs/pull/2). Both proposals have already received many valuable comments from the community that we're incorporating into the design of the new process and API.
 
 Both PRs are good examples of how a typical RFC should be structured. We're excited to start receiving your proposals!
