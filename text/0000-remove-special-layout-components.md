@@ -10,7 +10,7 @@ component composition.
 
 # Basic example
 
-Currently people might have a single or multiple global layout components e.g.
+Currently sites might have a global layout components like:
 
 ```jsx
 import React from 'react'
@@ -23,7 +23,8 @@ export default ({ children }) => (
 )
 ```
 
-Now people would import the same component into each page component e.g.
+After this RFC is implemented, people would import the same component into each
+page component e.g.
 
 ```jsx
 import React from 'react'
@@ -41,45 +42,42 @@ export default ({ props }) => (
 There are several motivations for eliminating the special layout component:
 
 * It's frequently confusing to people used to React as it breaks the normal component composition model
-* It has a number of limitations e.g. we don't support multiple levels of layouts e.g. a global header and footer and then on some pages, a sidebar menu. Currently you have to stuff both into a single layout component with a lot of
+* It has a number of limitations e.g. we don't support multiple levels of layouts e.g. a global header and footer and then on some pages, a sidebar menu. Currently you have to stuff both levels into a single layout component with a lot of
 conditional logic keyed to pathnames.
-* There's no easy way for a page component to communicate with a layout component
+* Communicating between the layout and page components is non-standard and hard to understand
 * It significantly complicates Gatsby's codebase and client runtime
 * It reduces the effectiveness of our new code splitting setup in Gatsby v2 and prevents some potential code splitting/loading improvements
-* It makes Gatsby page transitions very non-standard compared to normal React and relatively
+* It makes Gatsby page transitions work oddly compared to normal React and relatively
 difficult to do well
 
-So it short, it complicates learning and using Gatsby as well as our codebase
-for no benefit over using normal React components. Many people report that they
-didn't realize the special layout components existed so they followed the
-proposed pattern of creating a layout component which they imported into pages.
+So it short, it complicates learning and using Gatsby for users as well as
+maintaining our codebase for maintainers — all for no benefit over using normal
+React components. Many people report that they didn't realize the special
+layout components existed so they followed the proposed pattern of creating
+a layout component which they imported into pages.
 
 # Detailed design
 
 V1 layout components are normal components in all respect *except* they, like
-page components, can export a query. People sometimes use that to query data
-like the site title, etc. for setting site metadata with react-helmet.
+page components, can query for data. People sometimes use this to query data in
+layouts like the site title, etc. for setting site metadata with react-helmet.
 
-To replace this, I propose adding support to Gatsby for "static queries" so
-that layout components (and any other component) can query for data.
+Since migrated layout components won't be able to include queries in the
+existing form, I propose adding support to components for "static queries",
+or queries that don't take arguments.
 
 During the planning stages of Gatsby, I considered adding something similar to
 this so that people could query data into any component. Ultimately I decided
-against this as a very common use case is "page template" components e.g.
-a component for blog posts. The query for this page component would need to
-accept variables e.g. the id of the markdown file that's being shown on that
-page.
+against this as a very common use case for querying is "page template"
+components e.g. a component for blog posts. The query for this page component
+would need to accept variables e.g. the id of the markdown file that's being
+shown on that page.
 
-This was also convenient as it allowed us to easily split data from code so
-we could load the code for the blog post page separately from the data for pages.
+When we added the layout component, we reused the same graphql syntax and
+pattern as they too needed to include queries — though they don't accept
+variables like page queries do.
 
-When we added the layout component, we reused the same graphql syntax so they could
-query for data.
-
-When layout components become normal components, they'll now need a way to query
-for data.
-
-You'd write queries like the following:
+For static queries in v2 layout components, I propose the following pattern:
 
 ```jsx
 import React from 'react'
@@ -110,11 +108,15 @@ export default class ExampleComponent extends React.Component {
 }
 ```
 
-Just like with our current GraphQL implementation, we'd extract the graphql queries and run them for you. You'd be able to use fragments, etc. The only difference is you can't pass arguments to the query (hence the name, staticQuery :-)).
+Just like with our current GraphQL implementation, we'd extract the graphql
+queries and run them for you. You'd be able to use fragments, etc. The only
+difference is you can't pass arguments to the query (hence the name,
+`StaticQuery` :-)).
 
 During development, we'd hot-reload changes to the query & underlying data.
 
-Then in production, we'd do a cool optimization. We'd have a babel plugin which compiles the above into something that looks like:
+Then in production, we'd do a cool optimization. We'd have a babel plugin which
+compiles the above into something that looks like:
 
 ```jsx
 import React from 'react'
@@ -140,7 +142,7 @@ export default class ExampleComponent extends React.Component {
 
 There's now a little packet of JSON attached to the component! Also, the static file name would be a hash of the query so on the off-chance you reuse a query, webpack 4 would split out the query result module into a new chunk that's shared between components.
 
-It'll also enable new types of components that you can now attach not just markup, styles, and interactivity, but also bits of data. E.g. imagine a SEO component that queries standard data + you can pass in page specific data as well. Or a team member avatar component that has queried the name + image of the 10 team members so you can drop in the component anywhere it's needed. Or a product preview that you can manually add throughout the site as needed. Or translation strings.
+It'll also enable new types of components that you can now attach not just markup, styles, and interactivity, but also bits of data. E.g. imagine a SEO component that queries standard data + you can pass in page specific data as well. Or a team member avatar component that has queried the name + image of the 10 team members so you can drop in the component anywhere it's needed. Or a product preview that you can manually add throughout the site as needed. Or a menu component.
 
 # Drawbacks
 
