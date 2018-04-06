@@ -20,7 +20,7 @@ exports.runQueries = async () => {
   // Run queued dirty nodes now that we're active.
   queuedDirtyActions = _.uniq(queuedDirtyActions, a => a.payload.id)
   const dirtyIds = findDirtyIds(queuedDirtyActions)
-  await runQueriesForIds(dirtyIds)
+  await runQueriesForPathnames(dirtyIds)
 
   queuedDirtyActions = []
 
@@ -29,7 +29,7 @@ exports.runQueries = async () => {
   const cleanIds = findIdsWithoutDataDependencies()
 
   // Run these pages
-  await runQueriesForIds(cleanIds)
+  await runQueriesForPathnames(cleanIds)
 
   active = true
   return
@@ -46,13 +46,13 @@ emitter.on(`DELETE_NODE`, action => {
 const runQueuedActions = async () => {
   if (active) {
     queuedDirtyActions = _.uniq(queuedDirtyActions, a => a.payload.id)
-    await runQueriesForIds(findDirtyIds(queuedDirtyActions))
+    await runQueriesForPathnames(findDirtyIds(queuedDirtyActions))
     queuedDirtyActions = []
 
     // Find ids without data dependencies (e.g. new pages) and run
     // their queries.
     const cleanIds = findIdsWithoutDataDependencies()
-    runQueriesForIds(cleanIds)
+    runQueriesForPathnames(cleanIds)
   }
 }
 
@@ -93,11 +93,11 @@ const findIdsWithoutDataDependencies = () => {
   return notTrackedIds
 }
 
-const runQueriesForIds = ids => {
+const runQueriesForPathnames = pathnames => {
   const state = store.getState()
   const pagesAndLayouts = [...state.pages, ...state.layouts]
   let didNotQueueItems = true
-  ids.forEach(id => {
+  pathnames.forEach(id => {
     const plObj = pagesAndLayouts.find(
       pl => pl.path === id || `LAYOUT___${pl.id}` === id
     )
@@ -107,7 +107,7 @@ const runQueriesForIds = ids => {
     }
   })
 
-  if (didNotQueueItems || !ids || ids.length === 0) {
+  if (didNotQueueItems || !pathnames || pathnames.length === 0) {
     return Promise.resolve()
   }
 

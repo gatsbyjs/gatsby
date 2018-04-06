@@ -214,11 +214,11 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     process.exit(1)
   }
 
-  let jsonName = `${_.kebabCase(page.path)}.json`
+  let jsonName = `${_.kebabCase(page.path)}`
   let internalComponentName = `Component${pascalCase(page.path)}`
 
-  if (jsonName === `.json`) {
-    jsonName = `index.json`
+  if (jsonName === ``) {
+    jsonName = `index`
     internalComponentName = `ComponentIndex`
   }
   let layout = page.layout || null
@@ -362,7 +362,7 @@ actions.createLayout = (
     machineId,
     componentWrapperPath,
     isLayout: true,
-    jsonName: `layout-${_.kebabCase(id)}.json`,
+    jsonName: `layout-${_.kebabCase(id)}`,
     internalComponentName: `Component-layout-${pascalCase(id)}`,
     component: layout.component,
     componentChunkName: generateComponentChunkName(layout.component),
