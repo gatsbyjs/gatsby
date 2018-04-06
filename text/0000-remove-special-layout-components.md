@@ -8,6 +8,8 @@ Gatsby v1 includes a special "layout" component that can wrap page components.
 This RFC proposes removing it and encouraging people to use normal React
 component composition.
 
+[Previous discussiong](https://github.com/gatsbyjs/gatsby/issues/3830)
+
 # Basic example
 
 Currently sites might have a global layout components like:
