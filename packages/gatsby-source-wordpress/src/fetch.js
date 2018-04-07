@@ -1,5 +1,4 @@
 const querystring = require(`querystring`)
-const axios = require(`axios`)
 const _ = require(`lodash`)
 const minimatch = require(`minimatch`)
 const colorized = require(`./output-color`)
@@ -78,6 +77,10 @@ async function fetch({
     )
   if (_verbose) console.log(``)
 
+  requestInQueue.initQueue({
+    concurrent: _concurrentRequests,
+  })
+
   // Call the main API Route to discover the all the routes exposed on this API.
   let allRoutes
   try {
@@ -91,7 +94,7 @@ async function fetch({
         password: _auth.htaccess_pass,
       }
     }
-    allRoutes = await axios(options)
+    allRoutes = await requestInQueue.request(options)
   } catch (e) {
     httpExceptionHandler(e)
   }
@@ -123,20 +126,20 @@ async function fetch({
       )
     if (_verbose) console.log(``)
 
-    for (let route of validRoutes) {
-      entities = entities.concat(
-        await fetchData({
+    const results = await Promise.all(
+      validRoutes.map(route =>
+        fetchData({
           route,
           _verbose,
           _perPage,
           _hostingWPCOM,
           _auth,
           _accessToken,
-          _concurrentRequests,
         })
       )
-      if (_verbose) console.log(``)
-    }
+    )
+
+    entities = results.reduce((acc, val) => acc.concat(val), [])
 
     if (_verbose)
       console.timeEnd(`=END PLUGIN=====================================`)
@@ -169,7 +172,7 @@ async function getWPCOMAccessToken(_auth) {
         grant_type: `password`,
       }),
     }
-    result = await axios(options)
+    result = await requestInQueue.request(options)
     result = result.data.access_token
   } catch (e) {
     httpExceptionHandler(e)
@@ -191,7 +194,6 @@ async function fetchData({
   _hostingWPCOM,
   _auth,
   _accessToken,
-  _concurrentRequests,
 }) {
   const type = route.type
   const url = route.url
@@ -214,7 +216,6 @@ async function fetchData({
       _auth,
       _accessToken,
       _verbose,
-      _concurrentRequests,
     },
     1
   )
@@ -278,15 +279,7 @@ async function fetchData({
  * @returns
  */
 async function getPages(
-  {
-    url,
-    _perPage,
-    _hostingWPCOM,
-    _auth,
-    _accessToken,
-    _concurrentRequests,
-    _verbose,
-  },
+  { url, _perPage, _hostingWPCOM, _auth, _accessToken, _verbose },
   page = 1
 ) {
   try {
@@ -316,7 +309,7 @@ async function getPages(
     // but also the total count of objects, used for
     // multiple concurrent requests (rather than waterfall)
     const options = getOptions(page)
-    const { headers, data } = await axios(options)
+    const { headers, data } = await requestInQueue.request(options)
 
     result = result.concat(data)
 
@@ -336,13 +329,11 @@ async function getPages(
     }
 
     // We got page 1, now we want pages 2 through totalPages
-    const pageOptions = _.range(2, totalPages + 1).map(getPage =>
-      getOptions(getPage)
+    const requests = _.range(2, totalPages + 1).map(getPage =>
+      requestInQueue.request(getOptions(getPage))
     )
 
-    const pages = await requestInQueue(pageOptions, {
-      concurrent: _concurrentRequests,
-    })
+    const pages = await Promise.all(requests)
 
     const pageData = pages.map(page => page.data)
     pageData.forEach(list => {

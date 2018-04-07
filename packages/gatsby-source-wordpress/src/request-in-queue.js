@@ -22,6 +22,11 @@ async function handleQueue(task, cb) {
 }
 
 /**
+ * Queue instance for handling concurent request
+ */
+let queue
+
+/**
  * @typedef {Options}
  * @type {Object}
  * @see For a detailed descriptions of the options,
@@ -29,32 +34,32 @@ async function handleQueue(task, cb) {
  */
 
 /**
- * Run a series of requests tasks in a queue for better flow control
+ * Initialize request queue
  *
- * @param  {Object[]} tasks  An array of Axios formatted request objects
  * @param  {Options}  opts   Options that will be given to better-queue
- * @return {Promise}         Resolves with the accumulated values from the tasks
  */
-module.exports = function requestInQueue(tasks, opts = {}) {
-  return new Promise((res, rej) => {
-    const q = new Queue(handleQueue, { ..._defaults, ...opts })
-
-    const taskMap = new Map(
-      tasks.map(t => {
-        q.push(t)
-        return [t.url, null]
-      })
-    )
-
-    q.on(`task_failed`, (id, err) => {
-      rej(`${id} failed with err: ${err}`)
-      q.destroy()
-    })
-
-    q.on(`task_finish`, (id, response) => {
-      taskMap.set(id, response)
-    })
-
-    q.on(`drain`, () => res(Array.from(taskMap.values())))
-  })
+exports.initQueue = opts => {
+  queue = new Queue(handleQueue, { ..._defaults, ...opts })
 }
+
+/**
+ * Manage running request with queue to limit maximum concurrent requests
+ *
+ * @param  {Object} task     Axios formatted request object
+ * @return {Promise}         Resolves with the reponse of request
+ */
+exports.request = task =>
+  new Promise((resolve, reject) => {
+    if (!queue) {
+      reject(`Queue not initialized`)
+    }
+
+    queue
+      .push(task)
+      .on(`finish`, function(result) {
+        resolve(result)
+      })
+      .on(`failed`, function(err) {
+        reject(err)
+      })
+  })
