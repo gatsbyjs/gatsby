@@ -2,7 +2,7 @@
 
 Source plugin for pulling data into [Gatsby](https://github.com/gatsbyjs) from
 WordPress sites using the
-[WordPress JSON REST API](https://developer.wordpress.org/rest-api/reference/).
+[WordPress WP REST API](https://developer.wordpress.org/rest-api/reference/).
 
 An example site for this plugin is available.
 
