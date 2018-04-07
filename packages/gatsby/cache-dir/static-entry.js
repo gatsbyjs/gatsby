@@ -50,12 +50,6 @@ function urlJoin(...parts) {
 }
 
 const getPage = path => pages.find(page => page.path === path)
-const defaultLayout = props => <div>{props.children()}</div>
-
-const getLayout = page => {
-  const layout = syncRequires.layouts[page.layout]
-  return layout ? layout : defaultLayout
-}
 
 const createElement = React.createElement
 
@@ -120,7 +114,6 @@ export default (locals, callback) => {
         const page = getPage(
           `${routeProps.match.path}${routeProps.location.pathname}`
         )
-        const layout = getLayout(page)
 
         const dataAndContext =
           page.jsonName in staticDataPaths
@@ -133,19 +126,9 @@ export default (locals, callback) => {
               )
             : {}
 
-        return createElement(withRouter(layout), {
-          // eslint-disable-next-line react/display-name
-          children: layoutProps => {
-            const props = layoutProps ? layoutProps : routeProps
-
-            return createElement(
-              syncRequires.components[page.componentChunkName],
-              {
-                ...props,
-                ...dataAndContext,
-              }
-            )
-          },
+        return createElement(syncRequires.components[page.componentChunkName], {
+          ...routeProps,
+          ...dataAndContext,
         })
       },
     })
@@ -183,7 +166,7 @@ export default (locals, callback) => {
   const page = pages.find(page => page.path === locals.path)
   let runtimeScript
   const scriptsAndStyles = flatten(
-    [`app`, page.layoutComponentChunkName, page.componentChunkName].map(s => {
+    [`app`, page.componentChunkName].map(s => {
       const fetchKey = `assetsByChunkName[${s}]`
 
       let chunks = get(stats, fetchKey)

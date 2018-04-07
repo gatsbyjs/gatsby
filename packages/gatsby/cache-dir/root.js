@@ -127,13 +127,6 @@ const DefaultRouter = ({ children }) => (
   <Router history={history}>{children}</Router>
 )
 
-const ComponentRendererWithRouter = withRouter(ComponentRenderer)
-
-// Always have to have one top-level layout
-// can have ones below that. Find page, if has different
-// parent layout(s), loop through those until finally the
-// page. Tricky part is avoiding re-mounting I think...
-
 const Root = () =>
   createElement(
     AltRouter ? AltRouter : DefaultRouter,
@@ -141,26 +134,20 @@ const Root = () =>
     createElement(
       ScrollContext,
       { shouldUpdateScroll },
-      createElement(ComponentRendererWithRouter, {
-        layout: true,
+      createElement(withRouter(Route), {
         // eslint-disable-next-line react/display-name
-        children: layoutProps =>
-          createElement(Route, {
-            // eslint-disable-next-line react/display-name
-            render: routeProps => {
-              const props = layoutProps ? layoutProps : routeProps
-              attachToHistory(props.history)
-              const { pathname } = props.location
-              const pageResources = loader.getResourcesForPathname(pathname)
-              const isPage = !!(pageResources && pageResources.component)
-              return createElement(JSONStore, {
-                isPage,
-                pages,
-                ...props,
-                pageResources,
-              })
-            },
-          }),
+        render: routeProps => {
+          attachToHistory(routeProps.history)
+          const { pathname } = routeProps.location
+          const pageResources = loader.getResourcesForPathname(pathname)
+          const isPage = !!(pageResources && pageResources.component)
+          return createElement(JSONStore, {
+            isPage,
+            pages,
+            ...routeProps,
+            pageResources,
+          })
+        },
       })
     )
   )

@@ -168,28 +168,22 @@ apiRunnerAsync(`onClientEntry`).then(() => {
         createElement(
           ScrollContext,
           { shouldUpdateScroll },
-          createElement(ComponentRendererWithRouter, {
-            layout: true,
-            // eslint-disable-next-line react/display-name
-            children: layoutProps =>
-              createElement(Route, {
-                render: routeProps => {
-                  attachToHistory(routeProps.history)
-                  const props = layoutProps ? layoutProps : routeProps
+          createElement(withRouter(Route), {
+            render: routeProps => {
+              attachToHistory(routeProps.history)
 
-                  if (loader.getPage(props.location.pathname)) {
-                    return createElement(ComponentRenderer, {
-                      isPage: true,
-                      ...props,
-                    })
-                  } else {
-                    return createElement(ComponentRenderer, {
-                      isPage: true,
-                      location: { pathname: `/404.html` },
-                    })
-                  }
-                },
-              }),
+              if (loader.getPage(routeProps.location.pathname)) {
+                return createElement(ComponentRenderer, {
+                  isPage: true,
+                  ...routeProps,
+                })
+              } else {
+                return createElement(ComponentRenderer, {
+                  isPage: true,
+                  location: { pathname: `/404.html` },
+                })
+              }
+            },
           })
         )
       )

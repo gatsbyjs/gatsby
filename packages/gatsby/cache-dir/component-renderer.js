@@ -5,8 +5,6 @@ import emitter from "./emitter"
 import { apiRunner } from "./api-runner-browser"
 import shallowCompare from "shallow-compare"
 
-const DefaultLayout = ({ children }) => <div>{children()}</div>
-
 // Pass pathname in as prop.
 // component will try fetching resources. If they exist,
 // will just render, else will render null.
@@ -136,26 +134,7 @@ class ComponentRenderer extends React.Component {
             ...this.state.pageResources.json,
           })
         )
-      } else {
-        return null
       }
-      // If layout.
-    } else if (this.props.layout) {
-      return (
-        replacementComponent ||
-        createElement(
-          this.state.pageResources && this.state.pageResources.layout
-            ? this.state.pageResources.layout
-            : DefaultLayout,
-          {
-            key:
-              this.state.pageResources && this.state.pageResources.layout
-                ? this.state.pageResources.layout
-                : `DefaultLayout`,
-            ...this.props,
-          }
-        )
-      )
     } else {
       return null
     }
@@ -164,7 +143,6 @@ class ComponentRenderer extends React.Component {
 
 ComponentRenderer.propTypes = {
   isPage: PropTypes.bool,
-  layout: PropTypes.bool,
   location: PropTypes.object,
 }
 

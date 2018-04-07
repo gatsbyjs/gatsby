@@ -44,10 +44,10 @@ website][6]) that you can easily include in your Gatsby site, or you can build
 your own by copying and modifying an example (which is what we've done for
 [gatsbyjs.org](https://gatsbyjs.org)).
 
-To load a theme, just require its CSS file in your `layouts/index.js` file, e.g.
+To load a theme, just require its CSS file in your `gatsby-browser.js` file, e.g.
 
 ```javascript
-// layouts/index.js
+// gatsby-browser.js
 require("prismjs/themes/prism-solarizedlight.css");
 ```
 

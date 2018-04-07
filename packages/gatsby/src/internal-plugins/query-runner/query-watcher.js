@@ -20,8 +20,8 @@ const report = require(`gatsby-cli/lib/reporter`)
 
 exports.extractQueries = () => {
   const state = store.getState()
-  const pagesAndLayouts = [...state.pages, ...state.layouts]
-  const components = _.uniq(pagesAndLayouts.map(p => normalize(p.component)))
+  const pages = [...state.pages]
+  const components = _.uniq(pages.map(p => normalize(p.component)))
   const queryCompilerPromise = queryCompiler().then(queries => {
     let queryWillNotRun = false
 
@@ -41,9 +41,9 @@ exports.extractQueries = () => {
 
     if (queryWillNotRun) {
       report.log(report.stripIndent`
-        Queries are only executed for Page or Layout components. Instead of a query,
+        Queries are only executed for Page components. Instead of a query,
         co-locate a GraphQL fragment and compose that fragment into the query (or other
-        fragment) of the top-level page or layout that renders this component. For more
+        fragment) of the top-level page that renders this component. For more
         info on fragments and composition see: http://graphql.org/learn/queries/#fragments
       `)
     }
@@ -67,7 +67,7 @@ exports.extractQueries = () => {
 
 const runQueriesForComponent = componentPath => {
   const pages = getPagesForComponent(componentPath)
-  // Remove page & layout data dependencies before re-running queries because
+  // Remove page data dependencies before re-running queries because
   // the changing of the query could have changed the data dependencies.
   // Re-running the queries will add back data dependencies.
   boundActionCreators.deleteComponentsDependencies(
@@ -84,9 +84,7 @@ const runQueriesForComponent = componentPath => {
 
 const getPagesForComponent = componentPath => {
   const state = store.getState()
-  return [...state.pages, ...state.layouts].filter(
-    p => p.componentPath === componentPath
-  )
+  return [...state.pages].filter(p => p.componentPath === componentPath)
 }
 
 let watcher
@@ -121,7 +119,7 @@ const watch = rootDir => {
       // Update the store with the new queries and re-run queries that were
       // changed.
       queries.forEach(({ text }, id) => {
-        // Queries can be parsed from non page/layout components
+        // Queries can be parsed from non page components
         // e.g. components with fragments so ignore those.
         //
         // If the query has changed, set the new query in the

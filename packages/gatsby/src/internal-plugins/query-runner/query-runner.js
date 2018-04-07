@@ -11,8 +11,8 @@ const { generatePathChunkName } = require(`../../utils/js-chunk-names`)
 const resultHashes = {}
 
 // Run query for a page
-module.exports = async (pageOrLayout, component) => {
-  pageOrLayout.id = pageOrLayout._id
+module.exports = async (page, component) => {
+  page.id = page._id
   const { schema, program } = store.getState()
 
   const graphql = (query, context) =>
@@ -26,8 +26,8 @@ module.exports = async (pageOrLayout, component) => {
     result = {}
   } else {
     result = await graphql(component.query, {
-      ...pageOrLayout,
-      ...pageOrLayout.context,
+      ...page,
+      ...page.context,
     })
   }
 
@@ -51,29 +51,23 @@ module.exports = async (pageOrLayout, component) => {
     }
   }
 
-  // Add the path/layout context onto the results.
-  if (!pageOrLayout.path) {
-    result[`layoutContext`] = pageOrLayout.context
-  } else {
-    result[`pageContext`] = pageOrLayout.context
-  }
+  // Add the path context onto the results.
+  result[`pageContext`] = page.context
   const resultJSON = JSON.stringify(result)
   const resultHash = md5(resultJSON)
 
-  if (resultHashes[pageOrLayout.jsonName] !== resultHash) {
-    resultHashes[pageOrLayout.jsonName] = resultHash
+  if (resultHashes[page.jsonName] !== resultHash) {
+    resultHashes[page.jsonName] = resultHash
 
     // Always write file to public/static/d/ folder.
-    const dataPath = `${generatePathChunkName(
-      pageOrLayout.jsonName
-    )}-${resultHash}`
+    const dataPath = `${generatePathChunkName(page.jsonName)}-${resultHash}`
 
     const programType = program._[0]
 
-    if (programType === `develop` && pageOrLayout.path) {
+    if (programType === `develop` && page.path) {
       websocketManager.emitData({
         result,
-        path: pageOrLayout.path,
+        path: page.path,
       })
     }
 
@@ -89,7 +83,7 @@ module.exports = async (pageOrLayout, component) => {
     store.dispatch({
       type: `SET_JSON_DATA_PATH`,
       payload: {
-        [pageOrLayout.jsonName]: dataPath,
+        [page.jsonName]: dataPath,
       },
     })
 

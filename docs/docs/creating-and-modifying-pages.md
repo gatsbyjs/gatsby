@@ -84,8 +84,6 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
           createPage({
             path,
             component: blogPostTemplate,
-            // If you have a layout component at src/layouts/blog-layout.js
-            layout: `blog-layout`,
             // In your blog post template's graphql query, you can use path
             // as a GraphQL variable to query for data from the markdown file.
             context: {
@@ -129,36 +127,6 @@ exports.onCreatePage = ({ page, boundActionCreators }) => {
       deletePage(oldPage);
       createPage(page);
     }
-    resolve();
-  });
-};
-```
-
-### Choosing the page layout
-
-By default, all pages will use the layout found at `/layouts/index.js`.
-
-You may wish to choose a custom layout for certain pages (such as removing
-header and footer for landing pages). You can choose the layout component when
-creating pages with the `createPage` action by adding a layout key to the page
-object or modify pages created elsewhere using the `onCreatePage` API. All
-components in the `/layouts/` directory are automatically available.
-
-```javascript
-// Implement the Gatsby API “onCreatePage”. This is
-// called after every page is created.
-exports.onCreatePage = async ({ page, boundActionCreators }) => {
-  const { createPage } = boundActionCreators;
-
-  return new Promise((resolve, reject) => {
-    if (page.path.match(/^\/landing-page/)) {
-      // It's assumed that `landingPage.js` exists in the `/layouts/` directory
-      page.layout = "landingPage";
-
-      // Update the page.
-      createPage(page);
-    }
-
     resolve();
   });
 };

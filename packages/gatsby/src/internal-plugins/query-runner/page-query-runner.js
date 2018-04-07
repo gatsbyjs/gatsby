@@ -76,15 +76,12 @@ const findIdsWithoutDataDependencies = () => {
   // Get list of paths not already tracked and run the queries for these
   // paths.
   const notTrackedIds = _.difference(
-    [
-      ...state.pages.map(p => p.path),
-      ...state.layouts.map(l => `LAYOUT___${l.id}`),
-    ],
+    [...state.pages.map(p => p.path)],
     [...allTrackedIds, ...seenIdsWithoutDataDependencies]
   )
 
   // Add new IDs to our seen array so we don't keep trying to run queries for them.
-  // Pages/Layouts without queries can't be tracked.
+  // Pages without queries can't be tracked.
   seenIdsWithoutDataDependencies = _.uniq([
     ...notTrackedIds,
     ...seenIdsWithoutDataDependencies,
@@ -95,15 +92,13 @@ const findIdsWithoutDataDependencies = () => {
 
 const runQueriesForPathnames = pathnames => {
   const state = store.getState()
-  const pagesAndLayouts = [...state.pages, ...state.layouts]
+  const pages = [...state.pages]
   let didNotQueueItems = true
   pathnames.forEach(id => {
-    const plObj = pagesAndLayouts.find(
-      pl => pl.path === id || `LAYOUT___${pl.id}` === id
-    )
-    if (plObj) {
+    const page = pages.find(pl => pl.path === id)
+    if (page) {
       didNotQueueItems = false
-      queue.push({ ...plObj, _id: plObj.id, id: plObj.jsonName })
+      queue.push({ ...page, _id: page.id, id: page.jsonName })
     }
   })
 
@@ -126,7 +121,7 @@ const findDirtyIds = actions => {
 
       if (!node || !node.id || !node.internal.type) return dirtyIds
 
-      // Find pagesAndLayouts that depend on this node so are now dirty.
+      // Find pages that depend on this node so are now dirty.
       dirtyIds = dirtyIds.concat(state.componentDataDependencies.nodes[node.id])
 
       // Find connections that depend on this node so are now invalid.
