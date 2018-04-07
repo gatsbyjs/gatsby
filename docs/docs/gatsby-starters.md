@@ -619,3 +619,22 @@ Community:
   * Portfolio
   * Resume
   * Redux for managing statement (with redux-saga / reselect)
+
+* [gatsby-starter-procyon](https://github.com/danielmahon/gatsby-starter-procyon)
+  [(demo)](https://gatsby-starter-procyon.netlify.com/)
+
+  Features:
+  
+  * [Gatsby](https://www.gatsbyjs.org/) + [ReactJS](https://reactjs.org/) (server side rendering)
+  * [GraphCMS](https://graphcms.com/) Headless CMS
+  * [DraftJS](https://draftjs.org/) (in-place) [Medium](https://medium.com)-like Editing
+  * [Apollo GraphQL](https://www.apollographql.com/) (client-side)
+  * Local caching between builds
+  * [Material-UI](https://material-ui-next.com/) (layout, typography, components, etc)
+  * Styled-Components™-like API via Material-UI
+  * [Netlify](https://www.netlify.com/) Deployment Friendly
+  * [Netlify Identity](https://www.netlify.com/docs/identity/) Authentication (enables editing)
+  * Automatic versioning, deployment and CHANGELOG
+  * Automatic rebuilds with GraphCMS and Netlify web hooks
+  * PWA (Progressive Web App)
+  * [Google Fonts](https://fonts.google.com/)
