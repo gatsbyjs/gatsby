@@ -111,9 +111,12 @@ export default (locals, callback) => {
     createElement(Route, {
       // eslint-disable-next-line react/display-name
       render: routeProps => {
-        const page = getPage(
-          `${routeProps.match.path}${routeProps.location.pathname}`
-        )
+        // TODO figure out why this is necessary. Something
+        // related to this change perhaps https://github.com/gatsbyjs/gatsby/pull/4714
+        routeProps.location.pathname = `${routeProps.match.path}${
+          routeProps.location.pathname
+        }`
+        const page = getPage(routeProps.location.pathname)
 
         const dataAndContext =
           page.jsonName in staticDataPaths
