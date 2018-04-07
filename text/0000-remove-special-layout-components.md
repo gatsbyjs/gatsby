@@ -56,7 +56,8 @@ So it short, it complicates learning and using Gatsby for users as well as
 maintaining our codebase for maintainers — all for no benefit over using normal
 React components. Many people report that they didn't realize the special
 layout components existed so they followed the proposed pattern of creating
-a layout component which they imported into pages.
+a layout component which they imported into pages. We should be very wary whenever
+we realize we've badly reimplemented a basic React pattern :-)
 
 # Detailed design
 
