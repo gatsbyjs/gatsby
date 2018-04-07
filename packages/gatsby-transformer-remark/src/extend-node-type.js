@@ -198,9 +198,9 @@ module.exports = (
           })
 
           // Save new AST to cache and return
-          cache.set(astCacheKey(markdownNode), ast)
+          cache.set(cacheKey, ast)
           // We can now release promise, as we cached result
-          ASTPromiseMap.delete(astCacheKey)
+          ASTPromiseMap.delete(cacheKey)
           return resolve(ast)
         })
         ASTPromiseMap.set(cacheKey, ASTGenerationPromise)
