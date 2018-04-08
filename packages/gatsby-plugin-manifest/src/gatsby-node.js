@@ -9,7 +9,7 @@ function generateIcons(icons, srcIcon) {
   return Promise.map(icons, icon => {
     const size = parseInt(icon.sizes.substring(0, icon.sizes.lastIndexOf(`x`)))
     const imgPath = `./public/` + icon.src
-    
+
     return sharp(srcIcon)
       .resize(size)
       .toFile(imgPath)
@@ -22,7 +22,7 @@ exports.onPostBuild = (args, pluginOptions) =>
   new Promise(resolve => {
     const { icon } = pluginOptions
     const manifest = { ...pluginOptions }
-  
+
     // Delete options we won't pass to the manifest.json.
     delete manifest.plugins
     delete manifest.icon
@@ -40,8 +40,8 @@ exports.onPostBuild = (args, pluginOptions) =>
       fs.mkdirSync(iconPath)
     }
 
-    fs.writeFileSync(`${iconPath}/manifest.json`, JSON.stringify(manifest))
-    
+    fs.writeFileSync(`./public/manifest.json`, JSON.stringify(manifest))
+
     // Only auto-generate icons if a src icon is defined.
     if (icon !== undefined) {
         generateIcons(manifest.icons, icon).then(() => {
