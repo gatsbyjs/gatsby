@@ -1,18 +1,24 @@
 import fs from "fs"
 import pify from "pify"
 
+const withoutTrailingSlash = path =>
+  path === `/` ? path : path.replace(/\/$/, ``)
+
 export const writeFile = pify(fs.writeFile)
 
-export const runQuery = (handler, query) =>
+export const runQuery = (handler, query, excludes) =>
   handler(query).then(r => {
     if (r.errors) {
       throw new Error(r.errors.join(`, `))
     }
 
+    // Removing exluded paths
+    r.data.allSitePage.edges = r.data.allSitePage.edges.filter(
+      page => !excludes.includes(withoutTrailingSlash(page.node.path))
+    )
+
     return r.data
   })
-
-export const regexExclude404AndOfflineShell = /^(?!\/(dev-404-page|404|offline-plugin-app-shell-fallback)).*$/
 
 export const defaultOptions = {
   query: `
@@ -23,13 +29,7 @@ export const defaultOptions = {
         }
       }
 
-      allSitePage(
-        filter: {
-          path: {
-            regex: "${regexExclude404AndOfflineShell}"
-          }
-        }
-      ) {
+      allSitePage {
         edges {
           node {
             path
@@ -38,6 +38,13 @@ export const defaultOptions = {
       }
   }`,
   output: `/sitemap.xml`,
+  exclude: [
+    `/dev-404-page`,
+    `/404`,
+    `/404.html`,
+    `/offline-plugin-app-shell-fallback`,
+  ],
+  createLinkInHead: true,
   serialize: ({ site, allSitePage }) =>
     allSitePage.edges.map(edge => {
       return {

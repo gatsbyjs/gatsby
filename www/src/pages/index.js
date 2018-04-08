@@ -1,5 +1,6 @@
 import React from "react"
 import Link from "gatsby-link"
+import { OutboundLink } from "gatsby-plugin-google-analytics"
 
 import presets, { colors } from "../utils/presets"
 import { rhythm, scale, options } from "../utils/typography"
@@ -82,9 +83,11 @@ class IndexRoute extends React.Component {
                 <FuturaParagraph>
                   Don't build a website with last decade's tech. The future of
                   the web is mobile, JavaScript and APIs—the {` `}
-                  <a href="https://jamstack.org/">JAMstack</a>. Every website is
-                  a web app and every web app is a website. Gatsby.js is the
-                  universal JavaScript framework you’ve been waiting for.
+                  <OutboundLink href="https://jamstack.org/">
+                    JAMstack
+                  </OutboundLink>. Every website is a web app and every web app
+                  is a website. Gatsby.js is the universal JavaScript framework
+                  you’ve been waiting for.
                 </FuturaParagraph>
               </Card>
               <Card>

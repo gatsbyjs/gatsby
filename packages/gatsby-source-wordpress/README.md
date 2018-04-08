@@ -2,7 +2,7 @@
 
 Source plugin for pulling data into [Gatsby](https://github.com/gatsbyjs) from
 WordPress sites using the
-[WordPress JSON REST API](https://developer.wordpress.org/rest-api/reference/).
+[WordPress REST API](https://developer.wordpress.org/rest-api/reference/).
 
 An example site for this plugin is available.
 
@@ -42,16 +42,16 @@ We welcome PRs adding support for data from other plugins.
 // In your gatsby-config.js
 plugins: [
   /*
-     * Gatsby's data processing layer begins with “source”
-     * plugins. Here the site sources its data from Wordpress.
-     */
+   * Gatsby's data processing layer begins with “source”
+   * plugins. Here the site sources its data from Wordpress.
+   */
   {
     resolve: "gatsby-source-wordpress",
     options: {
       /*
-        * The base URL of the Wordpress site without the trailingslash and the protocol. This is required.
-        * Example : 'gatsbyjsexamplewordpress.wordpress.com' or 'www.example-site.com'
-        */
+       * The base URL of the Wordpress site without the trailingslash and the protocol. This is required.
+       * Example : 'gatsbyjsexamplewordpress.wordpress.com' or 'www.example-site.com'
+       */
       baseUrl: "gatsbyjsexamplewordpress.wordpress.com",
       // The protocol. This can be http or https.
       protocol: "http",
@@ -81,13 +81,22 @@ plugins: [
         wpcom_pass: "very-secured-password",
       },
       // Set verboseOutput to true to display a verbose output on `npm run develop` or `npm run build`
-      // It can help you debug specific API Endpoints problems
+      // It can help you debug specific API Endpoints problems.
       verboseOutput: false,
-      // Search and Replace Urls across WordPress content
+      // Set how many pages are retrieved per API request.
+      perPage: 100,
+      // Search and Replace Urls across WordPress content.
       searchAndReplaceContentUrls: {
         sourceUrl: "https://source-url.com",
         replacementUrl: "https://replacement-url.com",
       },
+      // Set how many simultaneous requests are sent at once.
+      concurrentRequests: 10,
+      // Exclude specific routes using glob parameters
+      // See: https://github.com/isaacs/minimatch
+      // Example:  `["/*/*/comments", "/yoast/**"]` will exclude routes ending in `comments` and
+      // all routes that begin with `yoast` from fetch.
+      excludedRoutes: ["/*/*/comments", "/yoast/**"],
     },
   },
 ];
@@ -98,7 +107,7 @@ plugins: [
 These plugins were tested. We welcome PRs adding support for data from other
 plugins.
 
-* [x] Custom Post Types : it will work seemlessly, no further option needs to be
+* [x] Custom Post Types : it will work seamlessly, no further option needs to be
       activated. ("Show in REST API" setting needs to be set to true on the
       custom post in the plugin settings for this to work. It's set to "false"
       by default.)

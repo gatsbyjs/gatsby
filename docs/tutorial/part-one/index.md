@@ -48,10 +48,11 @@ To install a starter, first install Gatsby's command line program by running the
 npm install --global gatsby-cli
 ```
 
-Once that's installed, type the following command in and hit ENTER:
+Once that's installed, open a new terminal window and run the following commands to create a new Gatsby site in a directory called `tutorial-part-one` and then move to this new directory:
 
 ```sh
 gatsby new tutorial-part-one https://github.com/gatsbyjs/gatsby-starter-hello-world
+cd tutorial-part-one
 ```
 
 This command downloads the files for the starter and then installs the needed
@@ -60,12 +61,10 @@ nothing is happening at first; be patient!
 
 Now let's try running Gatsby!
 
-Gatsby has a built-in development server. Let's start it up by typing in the
-following commands into the same terminal window you've used so far in this
-tutorial.
+Gatsby has a built-in development server. Let's start it up by running the
+following command:
 
 ```sh
-cd tutorial-part-one
 gatsby develop
 ```
 
@@ -234,7 +233,7 @@ export default () =>
 
 Add that link, click on it, and then we'll create a "Hello World" page component
 for `/counter/` as before. But instead of using the "functional component" form
-as we did before, we'll create a "class" component.
+as we did before, this time we'll create a "class" component at `src/pages/counter.js`.
 
 ```jsx
 import React from "react";
@@ -338,7 +337,7 @@ There you go! A working React.js counter inside your static website 👌
 _Bonus challenge_: One fun thing is that hot reloading isn't just for content and styles; it
 works on code as well. Currently, when you click the buttons on the counter, the numbers go up and down in increments of 1. Try to make the counter go up and down in a different increments (for example, 5).
 
-## Deploying Gatsby.js websites on the web
+## Deploying Gatsby.js websites
 
 Gatsby.js is a _static site generator_, which means there are no servers to setup or complicated databases to
 deploy. Instead, the Gatsby `build` command produces a directory of static HTML

@@ -1,5 +1,6 @@
 import React from "react"
 import Helmet from "react-helmet"
+import { OutboundLink } from "gatsby-plugin-google-analytics"
 
 import Navigation from "../components/navigation"
 import MobileNavigation from "../components/navigation-mobile"
@@ -8,7 +9,7 @@ import SearchBar from "../components/searchbar-body"
 import tutorialSidebar from "../pages/docs/tutorial-links.yml"
 import docsSidebar from "../pages/docs/doc-links.yaml"
 import featuresSidebar from "../pages/docs/features-links.yaml"
-import { rhythm } from "../utils/typography"
+import { rhythm, options } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
 import hex2rgba from "hex2rgba"
 import "../css/prism-coy.css"
@@ -27,23 +28,25 @@ class DefaultLayout extends React.Component {
   render() {
     const isHomepage = this.props.location.pathname == `/`
     const isBlog = this.props.location.pathname.slice(0, 6) === `/blog/`
+    const isBlogLanding = this.props.location.pathname === `/blog/`
     const isDoc = this.props.location.pathname.slice(0, 6) === `/docs/`
     const isTutorial =
       this.props.location.pathname.slice(0, 10) === `/tutorial/`
     const isFeature = this.props.location.pathname.slice(0, 9) === `/features`
-    const isPackage = this.props.location.pathname.slice(0, 9) === `/packages`
+    const isPackageSearchPage =
+      this.props.location.pathname.slice(0, 8) === `/plugins` ||
+      this.props.location.pathname.slice(0, 9) === `/packages`
     const isPackageReadme =
       this.props.location.pathname.slice(0, 16) === `/packages/gatsby`
 
     const hasSidebar =
-      isDoc || isTutorial || isFeature || isPackage || isPackageReadme
+      isDoc || isTutorial || isFeature || isPackageSearchPage || isPackageReadme
     const isSearchSource = hasSidebar || isBlog
-    
+
     const packageSidebarWidth = rhythm(17)
 
-
     const leftPadding = rhythmSize => {
-      if (this.props.location.pathname.slice(0, 9) === `/packages`) {
+      if (isPackageReadme || isPackageSearchPage) {
         return packageSidebarWidth
       } else if (hasSidebar) {
         return rhythm(rhythmSize)
@@ -58,9 +61,9 @@ class DefaultLayout extends React.Component {
       width: rhythm(10),
       display: `none`,
       position: `fixed`,
-      top: `calc(${presets.headerHeight} - 1px)`,
+      top: `calc(${presets.headerHeight} + 2.8rem - 1px)`,
       overflowY: `auto`,
-      height: `calc(100vh - ${presets.headerHeight} + 1px)`,
+      height: `calc(100vh - ${presets.headerHeight} - 2.8rem + 1px)`,
       WebkitOverflowScrolling: `touch`,
       "::-webkit-scrollbar": {
         width: `6px`,
@@ -84,11 +87,11 @@ class DefaultLayout extends React.Component {
     let searchBarDisplayProperty
     let childrenMobileDisplay
     let childrenTabletDisplay
-    if (isPackage && !isPackageReadme) {
+    if (isPackageSearchPage && !isPackageReadme) {
       searchBarDisplayProperty = { display: `block` }
       childrenMobileDisplay = { display: `none` }
       childrenTabletDisplay = { display: `block` }
-    } else if (isPackage && isPackageReadme) {
+    } else if (isPackageSearchPage && isPackageReadme) {
       searchBarDisplayProperty = {
         [presets.Mobile]: {
           display: `none`,
@@ -108,6 +111,7 @@ class DefaultLayout extends React.Component {
       display: `none`,
       width: `100vw`,
       padding: rhythm(3 / 4),
+      zIndex: 1,
       [presets.Desktop]: {
         ...sidebarStyles,
         position: `fixed`,
@@ -123,8 +127,42 @@ class DefaultLayout extends React.Component {
           <meta name="twitter:site" content="@gatsbyjs" />
           <meta name="og:type" content="website" />
           <meta name="og:site_name" content="GatsbyJS" />
+          <link
+            rel="canonical"
+            href={`https://gatsbyjs.org${this.props.location.pathname}`}
+          />
           <html lang="en" />
         </Helmet>
+        <div
+          css={{
+            width: `100%`,
+            padding: rhythm(1 / 2),
+            background: colors.ui.bright,
+            color: colors.gatsby,
+            fontFamily: options.headerFontFamily.join(`,`),
+            textAlign: `center`,
+            boxShadow: `inset 0px -3px 2px 0px ${colors.ui.bright}`,
+            zIndex: `3`,
+            position: isHomepage || isBlogLanding ? `absolute` : `fixed`,
+          }}
+        >
+          Live 2-day Gatsby training with Kyle Mathews! Sign up for{" "}
+          <OutboundLink
+            target="_blank"
+            rel="noopener"
+            href="https://workshop.me/2018-04-gatsby"
+          >
+            SF in April
+          </OutboundLink>{" "}
+          and{" "}
+          <OutboundLink
+            target="_blank"
+            rel="noopener"
+            href="https://workshop.me/2018-05-gatsby"
+          >
+            NYC in May
+          </OutboundLink>!
+        </div>
         <Navigation pathname={this.props.location.pathname} />
         <div
           className={hasSidebar ? `main-body has-sidebar` : `main-body`}
@@ -155,9 +193,9 @@ class DefaultLayout extends React.Component {
             css={{
               ...searchbarStyles,
               [presets.Tablet]: {
-                display: isPackage
+                display: isPackageSearchPage
                   ? `block`
-                  : isPackage && isPackageReadme ? `block` : `none`,
+                  : isPackageSearchPage && isPackageReadme ? `block` : `none`,
                 width: packageSidebarWidth,
                 position: `fixed`,
                 background: colors.ui.whisper,
@@ -195,6 +233,7 @@ class DefaultLayout extends React.Component {
 
           <div
             css={{
+              marginTop: isHomepage || isBlog ? 0 : `calc(2.8rem - 1px)`,
               ...childrenMobileDisplay,
               [presets.Tablet]: {
                 paddingLeft: leftPadding(10),

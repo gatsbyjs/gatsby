@@ -10,20 +10,44 @@ Easily add Google Analytics to your Gatsby site.
 
 ```javascript
 // In your gatsby-config.js
-plugins: [
-  {
-    resolve: `gatsby-plugin-google-analytics`,
-    options: {
-      trackingId: "YOUR_GOOGLE_ANALYTICS_TRACKING_ID",
-      // Puts tracking script in the head instead of the body
-      head: false,
-      // Setting this parameter is optional
-      anonymize: true,
-      // Setting this parameter is also optional
-      respectDNT: true,
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-google-analytics`,
+      options: {
+        trackingId: "YOUR_GOOGLE_ANALYTICS_TRACKING_ID",
+        // Puts tracking script in the head instead of the body
+        head: false,
+        // Setting this parameter is optional
+        anonymize: true,
+        // Setting this parameter is also optional
+        respectDNT: true,
+      },
     },
-  },
-];
+  ],
+}
+```
+
+## `<OutboundLink>` component
+
+To make it easy to track clicks on outbound links in Google Analytics,
+the plugin provides a component.
+
+To use it, simply import it and use it like you would the `<a>` element e.g.
+
+```jsx
+import React
+import { OutboundLink } from 'gatsby-plugin-google-analytics'
+
+export default () => {
+  <div>
+    <OutboundLink
+      href="https://www.gatsbyjs.org/packages/gatsby-plugin-google-analytics/"
+    >
+      Visit the Google Analytics plugin page!
+    </OutboundLink>
+  </div>
+}
 ```
 
 ## The "anonymize" option

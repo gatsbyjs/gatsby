@@ -1,19 +1,24 @@
 import React, { Component } from "react"
 import Container from "../components/container"
+import Link from "gatsby-link"
 import logo from "../monogram.svg"
-import { rhythm } from "../utils/typography"
+import { rhythm, options } from "../utils/typography"
+import presets, { colors } from "../utils/presets"
 
-class Packages extends Component {
+class Plugins extends Component {
   render() {
     return (
-      <Container>
+      <Container
+        css={{
+          alignItems: `center`,
+          display: `flex`,
+          minHeight: `calc(100vh - (${presets.headerHeight} + 2.8rem - 1px))`,
+        }}
+      >
         <div
           css={{
             display: `flex`,
             flexDirection: `column`,
-            alignItems: `center`,
-            justifyContent: `center`,
-            height: `calc(100vh - 300px)`,
           }}
         >
           <img
@@ -36,18 +41,21 @@ class Packages extends Component {
               textAlign: `center`,
             }}
           >
-            Welcome to the Gatsby Package Library!
+            Welcome to the Gatsby Plugin Library!
           </h1>
           <p
             css={{
+              color: colors.gray.calm,
               marginLeft: rhythm(3),
               marginRight: rhythm(3),
               fontSize: rhythm(3 / 4),
+              fontFamily: options.headerFontFamily.join(`,`),
               textAlign: `center`,
             }}
           >
-            Please use the search bar to find packages that will make your
-            blazing-fast site even more awesome.
+            Please use the search bar to find plugins that will make your
+            blazing-fast site even more awesome. If you'd like to create your own plugin,
+            see the <Link to="/docs/plugin-authoring/">Plugin Authoring</Link> page in the docs!
           </p>
         </div>
       </Container>
@@ -55,4 +63,4 @@ class Packages extends Component {
   }
 }
 
-export default Packages
+export default Plugins

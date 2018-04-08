@@ -55,7 +55,7 @@ function formatError(message: string, filePath: string, codeFrame: string) {
 }
 
 function extractError(error: Error): { message: string, docName: string } {
-  const docRegex = /Invariant Violation: RelayParser: (.*). Source: document `(.*)` file:/g
+  const docRegex = /Invariant Violation: (RelayParser|GraphQLParser): (.*). Source: document `(.*)` file:/g
   let matches
   let message = ``,
     docName = ``

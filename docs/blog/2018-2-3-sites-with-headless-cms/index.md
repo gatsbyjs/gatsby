@@ -2,6 +2,7 @@
 title: Building Sites with Headless CMSs
 date: "2018-02-03"
 author: "Shannon Soper"
+tags: ["headless-cms", "contentful", "graphcms", "cloudcms"]
 ---
 
 ## What is a traditional CMS?
@@ -10,7 +11,7 @@ A traditional Content Management System (CMS)--like Wordpress, Drupal, or Joomla
 
 You can think of a traditional CMS like an old home built by one person and with custom fittings. Gorgeous, and expensive to maintain, like the home in _The Money Pit_ (1986) with Tom Hanks and Shelley Long.
 
-![Tom Hanks on a staircase that is falling apart](money-pit-2.jpeg)
+![Tom Hanks in a house that is falling apart](money-pit-2.jpeg)
 
 Despite the advantages of this scenario, there are also some disadvantages which are listed below.
 

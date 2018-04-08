@@ -1,5 +1,5 @@
 ---
-title: API specification
+title: API Specification
 ---
 
 Gatsby's APIs are tailored conceptually to some extent after React.js to improve

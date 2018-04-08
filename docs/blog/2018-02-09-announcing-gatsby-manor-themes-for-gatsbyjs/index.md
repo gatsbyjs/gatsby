@@ -3,6 +3,7 @@ title: Announcing Gatsby Manor, themes for Gatsby 🎉🎊
 date: "2018-02-09"
 image: "gatsbymanor.jpg"
 author: "Steven Natera"
+tags: ["themes"]
 ---
 
 I am proud to announce [Gatsby Manor](https://www.gatsbymanor.com/), a gallery

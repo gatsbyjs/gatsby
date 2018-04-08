@@ -9,6 +9,7 @@ imageTitle: "Old typewriter"
 canonicalLink: "https://objectpartners.com/2017/07/19/creating-a-static-blog-with-gatsby/"
 publishedAt: "Object Partners, Inc."
 excerpt: "In this post, we'll take a deep dive into Gatsby and some of the new 1.0 features by creating a static blog. Let's get on it!"
+tags: ["getting-started", "blog", "markdown"]
 ---
 
 Gatsby is an incredible static site generator that allows for React to be used
@@ -413,13 +414,8 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
     ) {
       edges {
         node {
-          excerpt(pruneLength: 250)
-          html
-          id
           frontmatter {
-            date
             path
-            title
           }
         }
       }
@@ -466,13 +462,8 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
     ) {
       edges {
         node {
-          excerpt(pruneLength: 250)
-          html
-          id
           frontmatter {
-            date
             path
-            title
           }
         }
       }

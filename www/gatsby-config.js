@@ -34,12 +34,6 @@ module.exports = {
         pathToConfigModule: `src/utils/typography`,
       },
     },
-    {
-      resolve: `gatsby-plugin-canonical-urls`,
-      options: {
-        siteUrl: `https://www.gatsbyjs.org`,
-      },
-    },
     `gatsby-transformer-sharp`,
     `gatsby-transformer-documentationjs`,
     `gatsby-transformer-yaml`,
@@ -116,6 +110,12 @@ module.exports = {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
         trackingId: `UA-93349937-1`,
+      },
+    },
+    {
+      resolve: `gatsby-plugin-fullstory`,
+      options: {
+        fs_org: `B2TRP`,
       },
     },
     `gatsby-plugin-sitemap`,
