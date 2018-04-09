@@ -1,4 +1,5 @@
 const fs = require(`fs`)
+const path = require(`path`)
 const Promise = require(`bluebird`)
 const sharp = require(`sharp`)
 const defaultIcons = require(`./common.js`).defaultIcons
@@ -8,8 +9,8 @@ sharp.simd(true)
 function generateIcons(icons, srcIcon) {
   return Promise.map(icons, icon => {
     const size = parseInt(icon.sizes.substring(0, icon.sizes.lastIndexOf(`x`)))
-    const imgPath = `./public/` + icon.src
-    
+    const imgPath = path.join(`public`, icon.src)
+
     return sharp(srcIcon)
       .resize(size)
       .toFile(imgPath)
@@ -22,7 +23,7 @@ exports.onPostBuild = (args, pluginOptions) =>
   new Promise(resolve => {
     const { icon } = pluginOptions
     const manifest = { ...pluginOptions }
-  
+
     // Delete options we won't pass to the manifest.json.
     delete manifest.plugins
     delete manifest.icon
@@ -33,15 +34,15 @@ exports.onPostBuild = (args, pluginOptions) =>
     }
 
     // Determine destination path for icons.
-    const iconPath = `./public/` + manifest.icons[0].src.substring(0, manifest.icons[0].src.lastIndexOf(`/`))
+    const iconPath = path.join(`public`, manifest.icons[0].src.substring(0, manifest.icons[0].src.lastIndexOf(`/`)))
 
     //create destination directory if it doesn't exist
     if (!fs.existsSync(iconPath)){
       fs.mkdirSync(iconPath)
     }
 
-    fs.writeFileSync(`${iconPath}/manifest.json`, JSON.stringify(manifest))
-    
+    fs.writeFileSync(path.join(`public`, `manifest.json`), JSON.stringify(manifest))
+
     // Only auto-generate icons if a src icon is defined.
     if (icon !== undefined) {
         generateIcons(manifest.icons, icon).then(() => {
