@@ -24,6 +24,7 @@ module.exports = (
     linkImagesToOriginal: true,
     showCaptions: false,
     pathPrefix,
+    withNetlifyCMS: false,
   }
 
   const options = _.defaults(pluginOptions, defaults)
@@ -41,13 +42,24 @@ module.exports = (
     // won't work if the image isn't hosted locally.
     const parentNode = getNode(markdownNode.parent)
     let imagePath
-    if (parentNode && parentNode.dir) {
+    if (options.withNetlifyCMS) {
+      // If we are using NetlifyCMS don't append parent dir
+      imagePath = slash(node.url)
+    } else if (parentNode && parentNode.dir) {
       imagePath = slash(path.join(parentNode.dir, node.url))
     } else {
       return null
     }
 
     const imageNode = _.find(files, file => {
+      // Look for files from gatsby-source-filesystem with
+      // options.name = "netlifycms"
+      if (file.sourceInstanceName === `netlifycms`) {
+        // Join base file dir to imagePath jumping back a level
+        // since imagePath is relative to static
+        const netlifyImagePath = slash(path.join(file.dir, `..`, imagePath))
+        return file.absolutePath === netlifyImagePath
+      }
       if (file && file.absolutePath) {
         return file.absolutePath === imagePath
       }
