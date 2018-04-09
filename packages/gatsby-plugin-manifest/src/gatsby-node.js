@@ -40,7 +40,7 @@ exports.onPostBuild = (args, pluginOptions) =>
       fs.mkdirSync(iconPath)
     }
 
-    fs.writeFileSync(`${iconPath}/manifest.json`, JSON.stringify(manifest))
+    fs.writeFileSync(`./public/manifest.json`, JSON.stringify(manifest))
     
     // Only auto-generate icons if a src icon is defined.
     if (icon !== undefined) {
