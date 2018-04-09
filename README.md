@@ -197,6 +197,7 @@ Websites built with Gatsby:
 * [HBTU MUN 2018](https://hbtumun18.netlify.com/)
   ([source](https://github.com/HaoZeke/hbtuMun18))
 * [The Audacious Project](https://audaciousproject.org/)
+* [upGizmo](https://www.upgizmo.com/)
 
 ## Docs
 
