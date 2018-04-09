@@ -266,10 +266,12 @@ module.exports = async (
   }
 
   function getModule(config) {
+    const { schema } = store.getState()
     // Common config for every env.
     // prettier-ignore
     let configRules = [
       rules.js(),
+      rules.eslint(schema),
       rules.yaml(),
       rules.fonts(),
       rules.images(),
