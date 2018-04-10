@@ -52,13 +52,18 @@ class BlogPostTemplate extends React.Component {
       </p>
     )
     let canonicalLink
-    if(post.frontmatter.canonicalLink) {
-      canonicalLink = <link rel="canonical" href={post.frontmatter.canonicalLink} />
+    if (post.frontmatter.canonicalLink) {
+      canonicalLink = (
+        <link rel="canonical" href={post.frontmatter.canonicalLink} />
+      )
     }
 
     return (
       <div>
-        <Container className="post" css={{ paddingBottom: `0 !important` }}>
+        <Container
+          className="post"
+          css={{ paddingTop: rhythm(3), paddingBottom: `0 !important` }}
+        >
           {/* Add long list of social meta tags */}
           <Helmet>
             <title>{post.frontmatter.title}</title>

@@ -223,11 +223,13 @@ exports.mapTagsCategoriesToTaxonomies = entities =>
     return e
   })
 
-exports.mapElementsToParent = entities => entities.map(e => {
+exports.mapElementsToParent = entities =>
+  entities.map(e => {
     if (e.wordpress_parent) {
       // Create parent_element with a link to the parent node of type.
-      e.parent_element___NODE = entities
-        .find(t => t.wordpress_id === e.wordpress_parent && t.__type === e.__type).id
+      e.parent_element___NODE = entities.find(
+        t => t.wordpress_id === e.wordpress_parent && t.__type === e.__type
+      ).id
     }
     return e
   })
@@ -295,10 +297,8 @@ exports.mapEntitiesToMedia = entities => {
         ? true
         : false
 
-    const photoRegex = /\.(gif|jpg|jpeg|tiff|png)$/i
-    const isPhotoUrl = filename =>
-      _.isString(filename) && photoRegex.test(filename)
-    const isPhotoUrlAlreadyProcessed = key => key == `source_url`
+    const isURL = value => _.isString(value) && value.startsWith(`http`)
+    const isMediaUrlAlreadyProcessed = key => key == `source_url`
     const isFeaturedMedia = (value, key) =>
       (_.isNumber(value) || _.isBoolean(value)) && key === `featured_media`
     // ACF Gallery and similarly shaped arrays
@@ -308,7 +308,7 @@ exports.mapEntitiesToMedia = entities => {
 
     // Try to get media node from value:
     //  - special case - check if key is featured_media and value is photo ID
-    //  - check if value is photo url
+    //  - check if value is media url
     //  - check if value is ACF Image Object
     //  - check if value is ACF Gallery
     const getMediaFromValue = (value, key) => {
@@ -319,7 +319,7 @@ exports.mapEntitiesToMedia = entities => {
             : null,
           deleteField: true,
         }
-      } else if (isPhotoUrl(value) && !isPhotoUrlAlreadyProcessed(key)) {
+      } else if (isURL(value) && !isMediaUrlAlreadyProcessed(key)) {
         const mediaNodeID = getMediaItemID(
           media.find(m => m.source_url === value)
         )
@@ -393,27 +393,50 @@ exports.downloadMediaFiles = async ({
   store,
   cache,
   createNode,
+  touchNode,
   _auth,
 }) =>
   Promise.all(
     entities.map(async e => {
-      let fileNode
+      let fileNodeID
       if (e.__type === `wordpress__wp_media`) {
-        try {
-          fileNode = await createRemoteFileNode({
-            url: e.source_url,
-            store,
-            cache,
-            createNode,
-            auth: _auth,
-          })
-        } catch (e) {
-          // Ignore
+        const mediaDataCacheKey = `wordpress-media-${e.wordpress_id}`
+        const cacheMediaData = await cache.get(mediaDataCacheKey)
+
+        // If we have cached media data and it wasn't modified, reuse
+        // previously created file node to not try to redownload
+        if (cacheMediaData && e.modified === cacheMediaData.modified) {
+          fileNodeID = cacheMediaData.fileNodeID
+          touchNode(cacheMediaData.fileNodeID)
+        }
+
+        // If we don't have cached data, download the file
+        if (!fileNodeID) {
+          try {
+            const fileNode = await createRemoteFileNode({
+              url: e.source_url,
+              store,
+              cache,
+              createNode,
+              auth: _auth,
+            })
+
+            if (fileNode) {
+              fileNodeID = fileNode.id
+
+              await cache.set(mediaDataCacheKey, {
+                fileNodeID,
+                modified: e.modified,
+              })
+            }
+          } catch (e) {
+            // Ignore
+          }
         }
       }
 
-      if (fileNode) {
-        e.localFile___NODE = fileNode.id
+      if (fileNodeID) {
+        e.localFile___NODE = fileNodeID
         delete e.media_details.sizes
       }
 
