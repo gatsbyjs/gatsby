@@ -32,7 +32,7 @@ function applyLayouts(pages, layouts) {
 export default function makePluginData(store, assetsManifest, pathPrefix) {
   const { program, layouts, pages: storePages } = store.getState()
   const publicFolder = buildPrefixer(program.directory, `public`)
-  const stats = require(publicFolder(`stats.json`))
+  const stats = require(publicFolder(`webpack.stats.json`))
   const chunkManifest = normalizeStats(stats)
   const pages = applyLayouts(storePages, layouts)
 
