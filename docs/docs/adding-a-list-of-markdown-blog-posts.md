@@ -24,7 +24,7 @@ The first step will be to create the page which will display your posts, in `src
 
 ```jsx
 import React from "react";
-import PostLink from "../components/post-link";
+import PostLink from "../components/PostLink";
 
 const IndexPage = ({ data: { allMarkdownRemark: { edges } } }) => {
   const Posts = edges
@@ -43,7 +43,7 @@ Second, you need to provide the data to your component with a GraphQL query. Let
 
 ```jsx
 import React from "react";
-import PostLink from "../components/post-link";
+import PostLink from "../components/PostLink";
 
 const IndexPage = ({ data: { allMarkdownRemark: { edges } } }) => {
   const Posts = edges
