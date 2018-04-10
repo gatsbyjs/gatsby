@@ -30,13 +30,12 @@ exports.setFieldsOnGraphQLNodeType = require(`./extend-node-type`).extendNodeTyp
  */
 
 exports.sourceNodes = async (
-  { boundActionCreators, getNodes, hasNodeChanged, store },
+  { boundActionCreators, getNode, getNodes, hasNodeChanged, store },
   { spaceId, accessToken, host }
 ) => {
   const {
     createNode,
     deleteNode,
-    getNode,
     touchNode,
     setPluginStatus,
   } = boundActionCreators
