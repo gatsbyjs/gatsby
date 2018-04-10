@@ -1,7 +1,8 @@
 import React from "react"
 import { Link } from "gatsby"
 
-import { rhythm } from "../utils/typography"
+import typography from "../utils/typography"
+const { rhythm } = typography
 
 class DefaultLayout extends React.Component {
   render() {
@@ -21,7 +22,7 @@ class DefaultLayout extends React.Component {
             Example of adding client only paths
           </h3>
         </Link>
-        {this.props.children()}
+        {this.props.children}
       </div>
     )
   }
