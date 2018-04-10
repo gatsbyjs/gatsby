@@ -44,8 +44,8 @@ exports.onPreBootstrap = (
 exports.onCreateNode = async ({ node, boundActionCreators, store, cache }) => {
   const { createNode, createParentChildLink } = boundActionCreators
 
-  // We only care about parsed sites.yaml files
-  if (node.internal.type !== `SitesYaml`) {
+  // We only care about parsed sites.yaml files with a url field
+  if (node.internal.type !== `SitesYaml` || !node.url) {
     return
   }
 
