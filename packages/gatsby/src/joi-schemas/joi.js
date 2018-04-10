@@ -10,6 +10,7 @@ export const gatsbyConfigSchema = Joi.object().keys({
     prefix: Joi.string().required(),
     url: Joi.string().required(),
   }),
+  middleware: Joi.func(),
 })
 
 export const layoutSchema = Joi.object()
