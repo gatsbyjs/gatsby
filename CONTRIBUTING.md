@@ -54,7 +54,8 @@ The usual contributing steps are:
   see the [gatsby-dev-cli README](/packages/gatsby-dev-cli/)
 * Add tests and code for your changes.
 * Once you're done, make sure all tests still pass: `yarn test`
-* Commit and push to your fork.
+* Commit with ["Signed-off-by"](#developer-certificate-of-origin) line appended
+  to commit message and push to your fork.
 * Create a pull request from your branch.
 
 ### Contributing to the documentation.
@@ -78,8 +79,36 @@ a pull request.
 * The Markdown files for the documentation live in `/docs` folder. Make
   additions or modifications here.
 * Make sure to double check your grammar and capitalise correctly.
-* Commit and push to your fork.
+* Commit with ["Signed-off-by"](#developer-certificate-of-origin) line appended
+  to commit message and push to your fork.
 * Create a pull request from your branch.
+
+### Developer Certificate of Origin
+
+Gatsby repository enforces the 
+[Developer Certificate of Origin](https://developercertificate.org/) (DCO) on 
+Pull Requests. It requires all commit messages to contain the `Signed-off-by` 
+line with an email address that matches the commit author.
+
+Git has a `-s` (or longer `--signoff`) command line option to append this 
+automatically to your commit message:
+
+```shell
+$ git commit -s -m 'This is my commit message'
+```
+
+If you already created Pull Request and noticed that DCO check is failing, you
+can use this command to append signoff to your commits:
+
+```shell
+$ git rebase --signoff
+```
+
+or amend last commit if you have single commit in your Pull Request:
+
+```shell
+$ git commit --amend -s
+```
 
 ## Development tools
 
