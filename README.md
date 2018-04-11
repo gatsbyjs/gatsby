@@ -199,6 +199,7 @@ Websites built with Gatsby:
 * [The Audacious Project](https://audaciousproject.org/)
 * [upGizmo](https://www.upgizmo.com/)
 * [The Bastion Bot](https://bastionbot.org/ 'The Bastion Bot')
+* [Yuuniworks](https://www.yuuniworks.com/) ([source](https://github.com/junkboy0315/yuuni-web))
 
 ## Docs
 
