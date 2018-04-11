@@ -11,7 +11,7 @@
     "babel-runtime": "^6.26.0",
     "bluebird": "^3.5.0",
     "imagemin": "^5.2.2",
-    "imagemin-pngquant": "^5.0.0",
+    "imagemin-pngquant": "5.0.1",
     "imagemin-webp": "^4.0.0",
     "lodash": "^4.17.4",
     "potrace": "^2.1.1",
