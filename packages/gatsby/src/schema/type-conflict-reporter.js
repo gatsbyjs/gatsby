@@ -5,14 +5,14 @@ const typeOf = require(`type-of`)
 const util = require(`util`)
 const { findRootNodeAncestor } = require(`./node-tracking`)
 
-const isNodeWithNodeDescription = node =>
-  node && node.internal && node.internal.nodeDescription
+const isNodeWithDescription = node =>
+  node && node.internal && node.internal.description
 
 const findNodeDescription = obj => {
   if (obj) {
-    const node = findRootNodeAncestor(obj, isNodeWithNodeDescription)
-    if (isNodeWithNodeDescription(node)) {
-      return node.internal.nodeDescription
+    const node = findRootNodeAncestor(obj, isNodeWithDescription)
+    if (isNodeWithDescription(node)) {
+      return node.internal.description
     }
   }
   return ``
@@ -57,7 +57,7 @@ class TypeConflictEntry {
   addExample({ value, type, parent }) {
     this.types[type] = {
       value,
-      nodeDescription: findNodeDescription(parent),
+      description: findNodeDescription(parent),
     }
   }
 
@@ -70,9 +70,9 @@ class TypeConflictEntry {
     report.log(
       `${this.selector}:${sortedByTypeName
         .map(
-          ([typeName, { value, nodeDescription }]) =>
-            `\n - ${typeName}: ${formatValue(value)}${nodeDescription &&
-              ` (${nodeDescription})`}`
+          ([typeName, { value, description }]) =>
+            `\n - ${typeName}: ${formatValue(value)}${description &&
+              ` (${description})`}`
         )
         .join(``)}`
     )

@@ -57,7 +57,7 @@ export const nodeSchema = Joi.object()
       owner: Joi.string().required(),
       fieldOwners: Joi.array(),
       content: Joi.string().allow(``),
-      nodeDescription: Joi.string(),
+      description: Joi.string(),
     }),
   })
   .unknown()
