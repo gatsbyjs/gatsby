@@ -160,11 +160,13 @@ module.exports = async (config = {}) => {
 
   // Add the auto page creator plugin
   plugins.push({
-    resolve: `gatsby-plugin-page-creator`,
+    resolve: slash(`${process.cwd()}/node_modules/gatsby-plugin-page-creator`),
     id: `Plugin gatsby-plugin-page-creator`,
+    name: `gatsby-plugin-page-creator`,
+    // version: `1.0.0`,
     pluginOptions: {
       plugins: [],
-      path: `src/pages`,
+      path: `${process.cwd()}/src/pages`,
     },
   })
 
