@@ -416,7 +416,7 @@ class SearchBar extends Component {
     return (
       <div>
         <InstantSearch
-          apiKey="f54e21fa3a2a0160595bb058179bfb1e"
+          apiKey="ae43b69014c017e05950a1cd4273f404"
           appId="OFCNCOG2CU"
           indexName="npm-search"
           searchState={this.state.searchState}
