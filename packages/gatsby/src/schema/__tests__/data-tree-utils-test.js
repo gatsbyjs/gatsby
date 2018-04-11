@@ -1,8 +1,13 @@
 const {
   getExampleValue,
   buildFieldEnumValues,
+  clearTypeExampleValues,
   INVALID_VALUE,
 } = require(`../data-tree-utils`)
+const {
+  typeConflictReporter,
+  TypeConflictEntry,
+} = require(`../type-conflict-reporter`)
 
 describe(`Gatsby data tree utils`, () => {
   const nodes = [
@@ -142,5 +147,116 @@ describe(`Gatsby data tree utils`, () => {
       { foo: [{ field: 1 }, { baz: 1 }] },
     ])
     expect(example.foo).toEqual([{ field: 1, bar: 1, baz: 1 }])
+  })
+})
+
+describe(`Type conflicts`, () => {
+  let addConflictSpy = jest.spyOn(typeConflictReporter, `addConflict`)
+  let addConflictExampleSpy = jest.spyOn(
+    TypeConflictEntry.prototype,
+    `addExample`
+  )
+
+  beforeEach(() => {
+    clearTypeExampleValues()
+    addConflictExampleSpy.mockReset()
+  })
+
+  afterAll(() => {
+    addConflictSpy.mockRestore()
+    addConflictExampleSpy.mockRestore()
+  })
+
+  it(`Doesn't report conflicts if there are none`, () => {
+    const nodes = [
+      {
+        id: `id1`,
+        string: `string`,
+        number: 5,
+        boolean: true,
+        arrayOfStrings: [`string1`],
+      },
+      {
+        id: `id2`,
+        string: `other string`,
+        number: 3.5,
+        boolean: false,
+        arrayOfStrings: null,
+      },
+    ]
+
+    getExampleValue({ nodes, type: `NoConflict` })
+
+    expect(addConflictExampleSpy).not.toBeCalled()
+  })
+
+  it(`Report type conflicts and its origin`, () => {
+    const nodes = [
+      {
+        id: `id1`,
+        stringOrNumber: `string`,
+        number: 5,
+        boolean: true,
+        arrayOfStrings: [`string1`],
+      },
+      {
+        id: `id2`,
+        stringOrNumber: 5,
+        number: 3.5,
+        boolean: false,
+        arrayOfStrings: null,
+      },
+    ]
+
+    getExampleValue({ nodes, type: `Conflict_1` })
+
+    expect(addConflictSpy).toBeCalled()
+    expect(addConflictSpy).toBeCalledWith(
+      `Conflict_1.stringOrNumber`,
+      expect.any(Array)
+    )
+
+    // expect(addConflictExampleSpy).toBeCalled()
+    expect(addConflictExampleSpy).toHaveBeenCalledTimes(2)
+    expect(addConflictExampleSpy).toBeCalledWith(
+      expect.objectContaining({
+        value: nodes[0].stringOrNumber,
+        type: `string`,
+        parent: nodes[0],
+      })
+    )
+    expect(addConflictExampleSpy).toBeCalledWith(
+      expect.objectContaining({
+        value: nodes[1].stringOrNumber,
+        type: `number`,
+        parent: nodes[1],
+      })
+    )
+  })
+
+  it(`Report conflict when array has mixed types and its origin`, () => {
+    const nodes = [
+      {
+        id: `id1`,
+        arrayOfMixedType: [`string1`, 5, `string2`, true],
+      },
+    ]
+
+    getExampleValue({ nodes, type: `Conflict_2` })
+    expect(addConflictSpy).toBeCalled()
+    expect(addConflictSpy).toBeCalledWith(
+      `Conflict_2.arrayOfMixedType`,
+      expect.any(Array)
+    )
+
+    expect(addConflictExampleSpy).toBeCalled()
+    expect(addConflictExampleSpy).toHaveBeenCalledTimes(1)
+    expect(addConflictExampleSpy).toBeCalledWith(
+      expect.objectContaining({
+        value: nodes[0].arrayOfMixedType,
+        type: `array<boolean|number|string>`,
+        parent: nodes[0],
+      })
+    )
   })
 })

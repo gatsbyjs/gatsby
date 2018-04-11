@@ -98,7 +98,7 @@ class TypeConflictReporter {
     return dataEntry
   }
 
-  addConflict(selector, ...examples) {
+  addConflict(selector, examples) {
     const entry = this.getFromSelector(selector)
     examples
       .filter(example => example.value != null)
@@ -122,4 +122,4 @@ const printConflicts = () => {
   typeConflictReporter.printConflicts()
 }
 
-module.exports = { typeConflictReporter, printConflicts }
+module.exports = { typeConflictReporter, printConflicts, TypeConflictEntry }
