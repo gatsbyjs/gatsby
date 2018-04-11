@@ -71,8 +71,9 @@ class TypeConflictEntry {
       `${this.selector}:${sortedByTypeName
         .map(
           ([typeName, { value, description }]) =>
-            `\n - ${typeName}: ${formatValue(value)}${description &&
-              ` (${description})`}`
+            `\n - type: ${typeName}\n   value: ${formatValue(
+              value
+            )}${description && `\n   source: ${description}`}`
         )
         .join(``)}`
     )
