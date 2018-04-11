@@ -5,7 +5,7 @@ typora-copy-images-to: ./
 
 ## What's in this tutorial?
 
-The previous tutorial showed how source plugins bring data _into_ Gatsby’s data system. In this tutorial,you'll learn how transformer plugins _transform_ the raw content brought by source plugins. The combination of source plugins and transformer plugins can handle all data sourcing and data transformation you might need when building a Gatsby site.
+The previous tutorial showed how source plugins bring data _into_ Gatsby’s data system. In this tutorial, you'll learn how transformer plugins _transform_ the raw content brought by source plugins. The combination of source plugins and transformer plugins can handle all data sourcing and data transformation you might need when building a Gatsby site.
 
 ## Transformer plugins
 
@@ -191,7 +191,7 @@ Try creating a new page containing a blog post and see what happens to the list 
 ## What's coming next?
 
 This is great! We've just created a nice index page where we're querying our Markdown
-files and produces a list of blogpost titles and excerpts. But we don't want to just see excerpts, we want actual pages for our Markdown files.
+files and producing a list of blogpost titles and excerpts. But we don't want to just see excerpts, we want actual pages for our Markdown files.
 
 We could continue to create pages by placing React components in `src/pages`. However, we'll
 next learn how to _programmatically_ create pages from _data_. Gatsby is _not_
