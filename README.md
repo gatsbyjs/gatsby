@@ -200,6 +200,7 @@ Websites built with Gatsby:
 * [upGizmo](https://www.upgizmo.com/)
 * [The Bastion Bot](https://bastionbot.org/ 'The Bastion Bot')
 * [Yuuniworks](https://www.yuuniworks.com/) ([source](https://github.com/junkboy0315/yuuni-web))
+* [Chin Loong Tan - Blog/Portfolio](https://chinloongtan.com/)
 
 ## Docs
 
