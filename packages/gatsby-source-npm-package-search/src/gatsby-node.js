@@ -29,19 +29,15 @@ exports.sourceNodes = async (
 
   console.log(`Grabbing local NPM packages...`)
 
-  let buildFilter = []
+  const buildFilter = keywords.map(keyword => `keywords:${keyword}`)
 
-  keywords.forEach(keyword => {
-    buildFilter.push(`keywords:${keyword}`)
-  })
-
-  const data = await browse({
+  const hits = await browse({
     index,
     filters: `(${buildFilter.join(` OR `)})`,
     hitsPerPage: 1000,
   })
 
-  data.hits.forEach(hit => {
+  hits.forEach(hit => {
     // commented changed remove all badges and images from readme content to keep the creation of the node from failing below
     // if (hit.readme.includes(`![`)) {
     //   hit.readme = hit.readme.replace(/[[]?!\[.*\b/gi, ``)
