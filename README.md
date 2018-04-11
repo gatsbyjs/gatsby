@@ -198,6 +198,7 @@ Websites built with Gatsby:
   ([source](https://github.com/HaoZeke/hbtuMun18))
 * [The Audacious Project](https://audaciousproject.org/)
 * [upGizmo](https://www.upgizmo.com/)
+* [The Bastion Bot](https://bastionbot.org/ 'The Bastion Bot')
 
 ## Docs
 
