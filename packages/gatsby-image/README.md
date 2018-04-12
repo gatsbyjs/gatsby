@@ -7,7 +7,7 @@ Gatsby's GraphQL queries. It combines
 [Gatsby's native image processing](https://image-processing.gatsbyjs.org/)
 capabilities with advanced image loading techniques to easily and completely
 optimize image loading for your sites. `gatsby-image` uses
-[gatsby-plugin-sharp](https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/)
+[gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/)
 to power its image transformations.
 
 _Warning: gatsby-image is **not** a drop-in replacement for `<img/>`. It's
