@@ -85,6 +85,6 @@ Here are some ways you can help make the Gatsby plugin ecoystem great:
 
 ## Sneak peak into the next UX project
 
-Our next UX project is designing and building a [Gatsby site showcase](https://github.com/gatsbyjs/gatsby/issues/4394). Please contribute to and subscribe to the issue to help out!
+Our next UX project is designing and building a [Gatsby site showcase](https://github.com/gatsbyjs/gatsby/issues/4392). Please contribute to and subscribe to the issue to help out!
 
 Again, many thanks to all the community members who have contributed to this research and to making Gatsby awesome. Stay tuned for updates on the plugin library and future Gatsby UX research projects!
