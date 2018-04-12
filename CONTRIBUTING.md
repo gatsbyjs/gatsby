@@ -20,11 +20,11 @@ We want contributing to Gatsby to be fun, enjoyable, and educational for anyone 
 
 If you are worried or don't know where to start, you can always reach out to Shannon Soper(@shannonb_ux) on Twitter or simply submit an issue and a maintainer can help give you guidance!
 
-Looking to speak about Gatsby? We'd love to review your talk abstract/CFP! You can email it to shannon [at] gatsbyjs [dot] com and we can give pointers or tips!!!
+Looking to speak about Gatsby? We'd love to review your talk abstract/CFP! You can email it to shannon [at] gatsbyjs [dot] com, and we can give pointers or tips!!!
 
 ### Creating your own plugins and loaders
 
-If you create a loader or plugin, we would <3 for you to open source it, and put it on npm. For more information on creating custom plugins, please see the documentation for [plugins](/docs/plugins/) and the [API specification](/docs/api-specification/).
+If you create a loader or plugin, we would <3 for you to open source it and put it on npm. For more information on creating custom plugins, please see the documentation for [plugins](/docs/plugins/) and the [API specification](/docs/api-specification/).
 
 ### Contributing to the repo
 
@@ -42,12 +42,12 @@ The usual contributing steps are:
 
 * Fork the [official repository](https://github.com/gatsbyjs/gatsby).
 * Clone your fork: git clone `git@github.com:<your-username>/gatsby.git`
-* setup up repo and Install dependencies: `yarn run bootstrap`
+* Setup up repo and install dependencies: `yarn run bootstrap`
 * Make sure tests are passing for you: `yarn test`
 * Create a topic branch: `git checkout -b topics/new-feature-name`
 * Run `npm run watch` from the root of the repo to watch for changes to packages' source code and compile these changes on-the-fly as you work. Note that the watch command can be resource intensive. To limit it to the packages you're working on, add a scope flag, like `npm run watch -- --scope={gatsby,gatsby-cli}`. To watch just one package, run `npm run watch -- --scope=gatsby`.
 * Install [gatsby-dev-cli](/packages/gatsby-dev-cli/) globally: `yarn global add gatsby-dev-cli`
-* Run `yarn install` in each of the sites you're testing with.
+* Run `yarn install` in each of the sites you're testing.
 * For each of your Gatsby test sites, run the `gatsby-dev` command there to copy
   the built files from your cloned copy of Gatsby. It'll watch for your changes
   to Gatsby packages and copy them into the site. For more detailed instructions
@@ -85,12 +85,12 @@ a pull request.
 
 ### Developer Certificate of Origin
 
-The Gatsby repository enforces the 
-[Developer Certificate of Origin](https://developercertificate.org/) (DCO) on 
-Pull Requests. It requires all commit messages to contain the `Signed-off-by` 
+The Gatsby repository enforces the
+[Developer Certificate of Origin](https://developercertificate.org/) (DCO) on
+Pull Requests. It requires all commit messages to contain the `Signed-off-by`
 line with an email address that matches the commit author.
 
-Git has a `-s` (or longer `--signoff`) command line option to append this 
+Git has a `-s` (or longer `--signoff`) command line option to append this
 automatically to your commit message:
 
 ```shell
@@ -115,10 +115,10 @@ $ git commit --amend -s
 ### Redux devtools
 
 Gatsby uses Redux for managing state during development and building. It's often
-helpful to see the flow of actions and builtup state for a site you're working
+helpful to see the flow of actions and built-up state for a site you're working
 on or if adding new functionality to core. We leverage
-https://github.com/zalmoxisus/remote-redux-devtools and
-https://github.com/zalmoxisus/remotedev-server to give you use the Redux
+[Remote Redux Devtools](https://github.com/zalmoxisus/remote-redux-devtools) and
+[RemoteDev Server](https://github.com/zalmoxisus/remotedev-server) to give you use the Redux
 devtools extension for debugging Gatsby.
 
 To use this, first install
