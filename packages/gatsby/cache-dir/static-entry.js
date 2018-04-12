@@ -3,11 +3,12 @@ const fs = require(`fs`)
 const { join } = require(`path`)
 const { renderToString, renderToStaticMarkup } = require(`react-dom/server`)
 const { StaticRouter, Route, withRouter } = require(`react-router-dom`)
-const { kebabCase, get, merge, isString, flatten } = require(`lodash`)
+const { get, merge, isString, flatten } = require(`lodash`)
 
 const apiRunner = require(`./api-runner-ssr`)
 const pages = require(`./pages.json`)
 const syncRequires = require(`./sync-requires`)
+const staticDataPaths = require(`./static-data-paths.json`)
 
 const stats = JSON.parse(
   fs.readFileSync(`${process.cwd()}/public/webpack.stats.json`, `utf-8`)
@@ -46,11 +47,6 @@ function urlJoin(...parts) {
     const segment = next == null ? `` : String(next).replace(/^\/+/, ``)
     return segment ? `${r.replace(/\/$/, ``)}/${segment}` : r
   }, ``)
-}
-
-const pathChunkName = path => {
-  const name = path === `/` ? `index` : kebabCase(path)
-  return `path---${name}`
 }
 
 const getPage = path => pages.find(page => page.path === path)
@@ -121,17 +117,32 @@ export default (locals, callback) => {
     createElement(Route, {
       // eslint-disable-next-line react/display-name
       render: routeProps => {
-        const page = getPage(routeProps.location.pathname)
+        const page = getPage(
+          `${routeProps.match.path}${routeProps.location.pathname}`
+        )
         const layout = getLayout(page)
+
+        const dataAndContext =
+          page.jsonName in staticDataPaths
+            ? JSON.parse(
+                fs.readFileSync(
+                  `${process.cwd()}/public/static/d/${
+                    staticDataPaths[page.jsonName]
+                  }.json`
+                )
+              )
+            : {}
+
         return createElement(withRouter(layout), {
           // eslint-disable-next-line react/display-name
           children: layoutProps => {
             const props = layoutProps ? layoutProps : routeProps
+
             return createElement(
               syncRequires.components[page.componentChunkName],
               {
                 ...props,
-                ...syncRequires.json[page.jsonName],
+                ...dataAndContext,
               }
             )
           },
@@ -172,12 +183,7 @@ export default (locals, callback) => {
   const page = pages.find(page => page.path === locals.path)
   let runtimeScript
   const scriptsAndStyles = flatten(
-    [
-      `app`,
-      pathChunkName(locals.path),
-      page.layoutComponentChunkName,
-      page.componentChunkName,
-    ].map(s => {
+    [`app`, page.layoutComponentChunkName, page.componentChunkName].map(s => {
       const fetchKey = `assetsByChunkName[${s}]`
 
       let chunks = get(stats, fetchKey)
@@ -235,6 +241,24 @@ export default (locals, callback) => {
       )
     })
 
+  if (page.jsonName in staticDataPaths) {
+    const dataPath = `${pathPrefix}static/d/${
+      staticDataPaths[page.jsonName]
+    }.json`
+    // Insert json data path after app
+    headComponents.splice(
+      1,
+      0,
+      <link
+        rel="preload"
+        key={dataPath}
+        href={dataPath}
+        as="fetch"
+        crossOrigin="use-credentials"
+      />
+    )
+  }
+
   styles
     .slice(0)
     .reverse()
@@ -282,3 +306,5 @@ export default (locals, callback) => {
 
   callback(null, html)
 }
+
+// export const __esModule = true

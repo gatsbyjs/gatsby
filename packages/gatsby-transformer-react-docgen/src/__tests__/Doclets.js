@@ -10,6 +10,7 @@ describe(`transformer-react-doc-gen: Doclets`, () => {
       required: true,
     })
   })
+
   it(`should apply @required`, () => {
     const doclets = {
       defaultValue: `() => {}`,
@@ -43,7 +44,7 @@ describe(`transformer-react-doc-gen: Doclets`, () => {
 
   it(`should create a union type for none-literals`, () => {
     const doclets = {
-      type: `(string|func|bool)`,
+      type: `{(string|func|bool)}`,
     }
     expect(applyPropDoclets({ doclets, type: {} })).toEqual({
       doclets,

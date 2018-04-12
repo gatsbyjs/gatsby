@@ -11,7 +11,12 @@ window.___emitter = emitter
 // Let the site/plugins run code very early.
 apiRunnerAsync(`onClientEntry`).then(() => {
   // Hook up the client to socket.io on server
-  socketIo()
+  const socket = socketIo()
+  if (socket) {
+    socket.on(`reload`, () => {
+      window.location.reload()
+    })
+  }
 
   /**
    * Service Workers are persistent by nature. They stick around,

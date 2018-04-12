@@ -1,5 +1,5 @@
 import React, { createElement } from "react"
-import { Router, Route, matchPath, withRouter } from "react-router-dom"
+import { Router, Route, withRouter } from "react-router-dom"
 import { ScrollContext } from "gatsby-react-router-scroll"
 import history from "./history"
 import { apiRunner } from "./api-runner-browser"
@@ -9,6 +9,7 @@ import redirects from "./redirects.json"
 import ComponentRenderer from "./component-renderer"
 import loader from "./loader"
 import { hot } from "react-hot-loader"
+import JSONStore from "./json-store"
 
 import * as ErrorOverlay from "react-error-overlay"
 
@@ -110,30 +111,6 @@ function shouldUpdateScroll(prevRouterProps, { location: { pathname } }) {
   return true
 }
 
-let noMatch
-for (let i = 0; i < pages.length; i++) {
-  if (/^\/dev-404-page/.test(pages[i].path)) {
-    noMatch = pages[i]
-    break
-  }
-}
-
-const addNotFoundRoute = () => {
-  if (noMatch) {
-    return createElement(Route, {
-      key: `404-page`,
-
-      component: props =>
-        createElement(syncRequires.components[noMatch.componentChunkName], {
-          ...props,
-          ...syncRequires.json[noMatch.jsonName],
-        }),
-    })
-  } else {
-    return null
-  }
-}
-
 const navigateTo = to => {
   window.___history.push(to)
 }
@@ -169,35 +146,19 @@ const Root = () =>
         // eslint-disable-next-line react/display-name
         children: layoutProps =>
           createElement(Route, {
+            // eslint-disable-next-line react/display-name
             render: routeProps => {
               const props = layoutProps ? layoutProps : routeProps
               attachToHistory(props.history)
               const { pathname } = props.location
               const pageResources = loader.getResourcesForPathname(pathname)
-              if (pageResources && pageResources.component) {
-                return createElement(ComponentRenderer, {
-                  key: `normal-page`,
-                  page: true,
-                  ...props,
-                  pageResources,
-                })
-              } else {
-                const dev404Page = pages.find(p =>
-                  /^\/dev-404-page/.test(p.path)
-                )
-                return createElement(Route, {
-                  key: `404-page`,
-                  // eslint-disable-next-line react/display-name
-                  component: props =>
-                    createElement(
-                      syncRequires.components[dev404Page.componentChunkName],
-                      {
-                        ...props,
-                        ...syncRequires.json[dev404Page.jsonName],
-                      }
-                    ),
-                })
-              }
+              const isPage = !!(pageResources && pageResources.component)
+              return createElement(JSONStore, {
+                isPage,
+                pages,
+                ...props,
+                pageResources,
+              })
             },
           }),
       })

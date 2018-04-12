@@ -121,7 +121,7 @@ class ComponentRenderer extends React.Component {
     })
     const replacementComponent = pluginResponses[0]
     // If page.
-    if (this.props.page) {
+    if (this.props.isPage) {
       if (this.state.pageResources) {
         return (
           replacementComponent ||
@@ -158,7 +158,7 @@ class ComponentRenderer extends React.Component {
 }
 
 ComponentRenderer.propTypes = {
-  page: PropTypes.bool,
+  isPage: PropTypes.bool,
   layout: PropTypes.bool,
   location: PropTypes.object,
 }
