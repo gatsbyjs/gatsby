@@ -125,9 +125,9 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
 
         // Create blog pages.
         blogPosts.forEach((edge, index) => {
-          const next = index === 0 ? false : blogPosts[index - 1].node
+          const next = index === 0 ? null : blogPosts[index - 1].node
           const prev =
-            index === blogPosts.length - 1 ? false : blogPosts[index + 1].node
+            index === blogPosts.length - 1 ? null : blogPosts[index + 1].node
 
           createPage({
             path: `${edge.node.fields.slug}`, // required
