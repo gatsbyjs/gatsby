@@ -11,10 +11,18 @@ function Foo() {
   return <div />
 }
 
+/**
+ * Description!
+ *
+ * @alias {MyComponent}
+ */
 class Bar extends React.Component {
   static propTypes = {
     /**
-     * An object hash of field errors for the form.
+     * An object hash of field (fix this @mention?) errors for the form.
+     *
+     * @type {Foo}
+     * @default blue
      */
     objProp: React.PropTypes.object,
 

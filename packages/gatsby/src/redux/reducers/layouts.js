@@ -34,6 +34,7 @@ module.exports = (state = [], action) => {
         return [...state.concat(action.payload)]
       }
     }
+
     case `DELETE_LAYOUT`:
       return state.filter(l => l.id !== action.payload.id)
     default:

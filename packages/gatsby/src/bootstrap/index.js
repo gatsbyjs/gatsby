@@ -152,7 +152,7 @@ module.exports = async (args: BootstrapArgs) => {
   initCache()
 
   // Ensure the public/static directory is created.
-  await fs.ensureDirSync(`${program.directory}/public/static`)
+  await fs.ensureDirSync(`${program.directory}/public/static/d`)
 
   // Copy our site files to the root of the site.
   activity = report.activityTimer(`copy gatsby files`)
@@ -403,6 +403,7 @@ module.exports = async (args: BootstrapArgs) => {
     report.log(``)
     report.info(`bootstrap finished - ${process.uptime()} s`)
     report.log(``)
+    emitter.emit(`BOOTSTRAP_FINISHED`)
     return { graphqlRunner }
   } else {
     return new Promise(resolve => {

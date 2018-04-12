@@ -15,6 +15,8 @@ const failedPaths = {}
 const failedResources = {}
 const MAX_HISTORY = 5
 
+const jsonStore = {}
+
 const fetchResource = resourceName => {
   // Find resource
   let resourceFunction
@@ -23,7 +25,31 @@ const fetchResource = resourceName => {
   } else if (resourceName.slice(0, 9) === `layout---`) {
     resourceFunction = asyncRequires.layouts[resourceName]
   } else {
-    resourceFunction = asyncRequires.json[resourceName]
+    resourceFunction = () =>
+      new Promise((resolve, reject) => {
+        if (resourceName in jsonStore) {
+          resolve(jsonStore[resourceName])
+        } else {
+          const url = `${pathPrefix ? pathPrefix : `/`}static/d/${
+            asyncRequires.json[resourceName]
+          }.json`
+          var req = new XMLHttpRequest()
+          req.open(`GET`, url, true)
+          req.withCredentials = true
+          req.onreadystatechange = () => {
+            if (req.readyState == 4) {
+              if (req.status === 200) {
+                resolve(
+                  (jsonStore[resourceName] = JSON.parse(req.responseText))
+                )
+              } else {
+                reject()
+              }
+            }
+          }
+          req.send(null)
+        }
+      })
   }
 
   // Download the resource
@@ -227,7 +253,6 @@ const queue = {
       }
       const pageResources = {
         component: syncRequires.components[page.componentChunkName],
-        json: syncRequires.json[page.jsonName],
         layout: syncRequires.layouts[page.layout],
         page,
       }
