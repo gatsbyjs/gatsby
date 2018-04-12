@@ -23,7 +23,7 @@ module.exports = {
         // Setting this parameter is also optional
         respectDNT: true,
         // Avoids sending pageview hits from custom paths
-        exclude: ["/preview", "/do-not-track/me/too"],
+        exclude: ["/preview/**", "/do-not-track/me/too/"],
       },
     },
   ],
@@ -78,4 +78,4 @@ If you enable this optional option, Google Analytics will not be loaded at all f
 
 ## The "exclude" option
 
-If you need to exclude any path from the tracking system, you can add it (one or more) to this optional array as [regular expressions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions) patterns.
+If you need to exclude any path from the tracking system, you can add it (one or more) to this optional array as glob expressions.
