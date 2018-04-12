@@ -94,7 +94,7 @@
     "react-dev-utils": "^4.2.1",
     "react-error-overlay": "^3.0.0",
     "react-hot-loader": "^4.0.0",
-    "react-lifecycles-compat": "^1.0.2",
+    "react-lifecycles-compat": "^3.0.2",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
     "redux": "^3.6.0",

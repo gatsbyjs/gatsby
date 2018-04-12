@@ -2,7 +2,7 @@
 import PropTypes from "prop-types"
 import React from "react"
 import { Link, NavLink } from "react-router-dom"
-import polyfill from "react-lifecycles-compat"
+import { polyfill } from "react-lifecycles-compat"
 import { createLocation, createPath } from "history"
 
 let pathPrefix = `/`
@@ -74,24 +74,10 @@ class GatsbyLink extends React.Component {
 
     // Preserve non IO functionality if no support
     if (!prevState.IOSupported) {
-      ___loader.enqueue(this.state.path)
+      ___loader.enqueue(path)
     }
 
     return { path, to }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (this.props.to !== nextProps.to) {
-      const to = createLocation(nextProps.to, history)
-      this.setState({
-        path: createPath(to),
-        to,
-      })
-      // Preserve non IO functionality if no support
-      if (!this.state.IOSupported) {
-        ___loader.enqueue(this.state.path)
-      }
-    }
   }
 
   componentDidMount() {
