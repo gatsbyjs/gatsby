@@ -2,7 +2,7 @@ import React, { createElement } from "react"
 import PropTypes from "prop-types"
 import loader, { publicLoader } from "./loader"
 import emitter from "./emitter"
-import polyfill from "react-lifecycles-compat"
+import { polyfill } from "react-lifecycles-compat"
 import { apiRunner } from "./api-runner-browser"
 import shallowCompare from "shallow-compare"
 
