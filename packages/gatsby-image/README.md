@@ -250,8 +250,8 @@ prop. e.g. `<Img sizes={sizes} />`
 | `fadeIn`                | `bool`          | Defaults to fading in the image on load                                                                                     |
 | `title`                 | `string`        | Passed to the `img` element                                                                                                 |
 | `alt`                   | `string`        | Passed to the `img` element                                                                                                 |
-| `className`             | `string|object` | Passed to the wrapper element. Object is needed to support Glamor's css prop                                                |
-| `outerWrapperClassName` | `string|object` | Passed to the outer wrapper element. Object is needed to support Glamor's css prop                                          |
+| `className`             | `string` / `object` | Passed to the wrapper element. Object is needed to support Glamor's css prop                                                |
+| `outerWrapperClassName` | `string` / `object` | Passed to the outer wrapper element. Object is needed to support Glamor's css prop                                          |
 | `style`                 | `object`        | Spread into the default styles in the wrapper element                                                                       |
 | `imgStyle`              | `object`        | Spread into the default styles for the actual `img` element                                                                 |
 | `position`              | `string`        | Defaults to `relative`. Pass in `absolute` to make the component `absolute` positioned                                      |

@@ -7,6 +7,7 @@ title: How to Contribute
 We want contributing to Gatsby to be fun, enjoyable, and educational for anyone and everyone. Contributions go far beyond pull requests and commits; we are thrilled to receive a variety of other contributions including the following:
 
 * Blogging, speaking about, or creating tutorials about one of Gatsby's many features. Mention @gatsbyjs on Twitter and/or email shannon [at] gatsbyjs [dot] com so we can give pointers and tips (if you want them :) and help you spread the word. Please add your blog posts and videos of talks to our [Awesome Gatsby](/docs/awesome-gatsby/) page.
+* [Submit new feature ideas through an RFC](/blog/2018-04-06-introducing-gatsby-rfc-process/)
 * Submitting new documentation; titles in _italics_ on gatsbyjs.org are stubs and need contributions
 * Tweeting about things you build with @gatsbyjs (make sure to @ mention us!)
 * Submitting documentation updates, enhancements, designs, or bugfixes

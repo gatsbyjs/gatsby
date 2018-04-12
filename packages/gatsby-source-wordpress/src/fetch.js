@@ -207,7 +207,15 @@ async function fetchData({
   if (_verbose) console.time(`Fetching the ${type} took`)
 
   let routeResponse = await getPages(
-    { url, _perPage, _hostingWPCOM, _auth, _accessToken, _verbose, _concurrentRequests },
+    {
+      url,
+      _perPage,
+      _hostingWPCOM,
+      _auth,
+      _accessToken,
+      _verbose,
+      _concurrentRequests,
+    },
     1
   )
 
@@ -270,7 +278,15 @@ async function fetchData({
  * @returns
  */
 async function getPages(
-  { url, _perPage, _hostingWPCOM, _auth, _accessToken,  _concurrentRequests, _verbose },
+  {
+    url,
+    _perPage,
+    _hostingWPCOM,
+    _auth,
+    _accessToken,
+    _concurrentRequests,
+    _verbose,
+  },
   page = 1
 ) {
   try {
@@ -320,9 +336,13 @@ async function getPages(
     }
 
     // We got page 1, now we want pages 2 through totalPages
-    const pageOptions = _.range(2, totalPages + 1).map(getPage => getOptions(getPage))
+    const pageOptions = _.range(2, totalPages + 1).map(getPage =>
+      getOptions(getPage)
+    )
 
-    const pages = await requestInQueue(pageOptions, { concurrent: _concurrentRequests })
+    const pages = await requestInQueue(pageOptions, {
+      concurrent: _concurrentRequests,
+    })
 
     const pageData = pages.map(page => page.data)
     pageData.forEach(list => {
@@ -383,10 +403,17 @@ function getValidRoutes({
           console.log(
             colorized.out(`Invalid route.`, colorized.color.Font.FgRed)
           )
-      } else if (_excludedRoutes.some(excludedRoute => minimatch(routePath, excludedRoute))) {
+      } else if (
+        _excludedRoutes.some(excludedRoute =>
+          minimatch(routePath, excludedRoute)
+        )
+      ) {
         if (_verbose)
           console.log(
-            colorized.out(`Excluded route from excludedRoutes pattern.`, colorized.color.Font.FgYellow)
+            colorized.out(
+              `Excluded route from excludedRoutes pattern.`,
+              colorized.color.Font.FgYellow
+            )
           )
       } else {
         if (_verbose)
@@ -475,8 +502,7 @@ const getRawEntityType = route =>
  * @param {any} baseUrl The base site URL that should be removed
  * @param {any} fullUrl The full URL to retrieve the route path from
  */
-const getRoutePath = (baseUrl, fullUrl) =>
-  fullUrl.replace(baseUrl, ``)
+const getRoutePath = (baseUrl, fullUrl) => fullUrl.replace(baseUrl, ``)
 
 /**
  * Extract the route manufacturer

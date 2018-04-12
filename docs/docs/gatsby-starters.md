@@ -605,3 +605,49 @@ Community:
   * Progressive Web App & Offline Support
   * Tags and RSS Feed for Blog
   * Disqus and Share Support
+
+* [gatsby-advanced-blog](https://github.com/wonism/gatsby-advanced-blog)
+  [(demo)](https://kind-cori-836fe1.netlify.com/)
+
+  Features:
+
+  * Blog post listing with previews (image + summary) for each blog post
+  * Categories and tags for blog posts with pagination
+  * Search post with keyword
+  * Put react application / tweet into post
+  * Copy some codes in post with clicking button
+  * Portfolio
+  * Resume
+  * Redux for managing statement (with redux-saga / reselect)
+
+* [gatsby-starter-procyon](https://github.com/danielmahon/gatsby-starter-procyon)
+  [(demo)](https://gatsby-starter-procyon.netlify.com/)
+
+  Features:
+  
+  * [Gatsby](https://www.gatsbyjs.org/) + [ReactJS](https://reactjs.org/) (server side rendering)
+  * [GraphCMS](https://graphcms.com/) Headless CMS
+  * [DraftJS](https://draftjs.org/) (in-place) [Medium](https://medium.com)-like Editing
+  * [Apollo GraphQL](https://www.apollographql.com/) (client-side)
+  * Local caching between builds
+  * [Material-UI](https://material-ui-next.com/) (layout, typography, components, etc)
+  * Styled-Components™-like API via Material-UI
+  * [Netlify](https://www.netlify.com/) Deployment Friendly
+  * [Netlify Identity](https://www.netlify.com/docs/identity/) Authentication (enables editing)
+  * Automatic versioning, deployment and CHANGELOG
+  * Automatic rebuilds with GraphCMS and Netlify web hooks
+  * PWA (Progressive Web App)
+  * [Google Fonts](https://fonts.google.com/)
+  
+* [gatsby-starter-2column-portfolio](https://github.com/praagyajoshi/gatsby-starter-2column-portfolio)
+  [(demo)](http://2column-portfolio.surge.sh/)
+
+  Features:
+
+  * Designed as a minimalistic portfolio website
+  * Grid system using flexboxgrid
+  * Styled using SCSS
+  * Font icons using font-awesome
+  * Google Analytics integration
+  * Open Sans font using Google Fonts
+  * Prerendered Open Graph tags for rich sharing

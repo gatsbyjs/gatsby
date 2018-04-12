@@ -74,7 +74,7 @@ It's dedicated to showing off the best pictures & videos of Pandas eating lots
 of food. Along the way we'll be dipping our toes into GraphQL and Gatsby's
 Markdown support.
 
-Run this command in a new terminal window:
+Open a new terminal window and run the following commands to create a new Gatsby site in a directory called `tutorial-part-four`. Then change to this new directory:
 
 ```shell
 gatsby new tutorial-part-four https://github.com/gatsbyjs/gatsby-starter-hello-world

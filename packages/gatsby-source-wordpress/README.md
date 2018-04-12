@@ -2,7 +2,7 @@
 
 Source plugin for pulling data into [Gatsby](https://github.com/gatsbyjs) from
 WordPress sites using the
-[WordPress JSON REST API](https://developer.wordpress.org/rest-api/reference/).
+[WordPress REST API](https://developer.wordpress.org/rest-api/reference/).
 
 An example site for this plugin is available.
 
@@ -42,16 +42,16 @@ We welcome PRs adding support for data from other plugins.
 // In your gatsby-config.js
 plugins: [
   /*
-     * Gatsby's data processing layer begins with “source”
-     * plugins. Here the site sources its data from Wordpress.
-     */
+   * Gatsby's data processing layer begins with “source”
+   * plugins. Here the site sources its data from Wordpress.
+   */
   {
     resolve: "gatsby-source-wordpress",
     options: {
       /*
-        * The base URL of the Wordpress site without the trailingslash and the protocol. This is required.
-        * Example : 'gatsbyjsexamplewordpress.wordpress.com' or 'www.example-site.com'
-        */
+       * The base URL of the Wordpress site without the trailingslash and the protocol. This is required.
+       * Example : 'gatsbyjsexamplewordpress.wordpress.com' or 'www.example-site.com'
+       */
       baseUrl: "gatsbyjsexamplewordpress.wordpress.com",
       // The protocol. This can be http or https.
       protocol: "http",
