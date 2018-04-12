@@ -9,6 +9,8 @@ excerpt: A five minute starter for Gatsby and Contentful
 
 ![Gatsby+Contentful](gatsby_contentful.png)
 
+_This blog post was originally posted on the [Contentful Docs](https://www.contentful.com/r/knowledgebase/gatsbyjs-and-contentful-in-five-minutes/)_
+
 Working with React and having an emphasis on speedy performance, GatsbyJS is a promising static site generator that allows you to connect your projects to a variety of APIs and data sources; including Contentful’s content infrastructure.
 
 This piece will walk you through getting your GatsbyJS website up and running with Contentful. Contentful makes it easy for you to focus on developing beautiful, well-performing websites while we deliver the content - this makes us a great companion to the full-fledged static content authoring experience offered by GatsbyJS.
