@@ -66,5 +66,4 @@ plugins: [
 ]
 ```
 
-If you are using `pathPrefix` in `gatsby-config.js`, you must run `gatsby build --prefix-paths` to build a sitemap with the prefix included. See [path prefix docs](https://www.gatsbyjs.org/docs/path-prefix/#production-build).
 _NOTE: This plugin only generates output when run in `production` mode! To test your sitemap, run: `gatsby build && gatsby serve`_

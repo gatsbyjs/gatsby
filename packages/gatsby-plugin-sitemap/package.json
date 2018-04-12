@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "babel-runtime": "^6.26.0",
+    "minimatch": "^3.0.4",
     "sitemap": "^1.12.0"
   },
   "devDependencies": {
