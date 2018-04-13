@@ -19,7 +19,7 @@
  *   },
  * ],
  */
-const ExtractTextPlugin = require(`extract-text-webpack-plugin`)
+const { extractTextPlugin } = require(`gatsby-1-config-extract-plugin`)
 const { cssModulesConfig } = require(`gatsby-1-config-css-modules`)
 
 exports.modifyWebpackConfig = ({ config, stage }, options = {}) => {
@@ -74,7 +74,7 @@ exports.modifyWebpackConfig = ({ config, stage }, options = {}) => {
       config.loader(`stylus`, {
         test: stylusFiles,
         exclude: stylusModulesFiles,
-        loader: ExtractTextPlugin.extract(`style`, [
+        loader: extractTextPlugin(stage).extract(`style`, [
           `css?minimize`,
           `postcss`,
           `stylus`,
@@ -82,7 +82,7 @@ exports.modifyWebpackConfig = ({ config, stage }, options = {}) => {
       })
       config.loader(`stylusModules`, {
         test: stylusModulesFiles,
-        loader: ExtractTextPlugin.extract(`style`, [
+        loader: extractTextPlugin(stage).extract(`style`, [
           cssModulesConfig(stage),
           `postcss`,
           `stylus`,
@@ -93,7 +93,7 @@ exports.modifyWebpackConfig = ({ config, stage }, options = {}) => {
 
     case `develop-html`:
     case `build-html`: {
-      const moduleLoader = ExtractTextPlugin.extract(`style`, [
+      const moduleLoader = extractTextPlugin(stage).extract(`style`, [
         cssModulesConfig(stage),
         `postcss`,
         `stylus`,
@@ -112,7 +112,7 @@ exports.modifyWebpackConfig = ({ config, stage }, options = {}) => {
     }
 
     case `build-javascript`: {
-      const moduleLoader = ExtractTextPlugin.extract(`style`, [
+      const moduleLoader = extractTextPlugin(stage).extract(`style`, [
         cssModulesConfig(stage),
         `stylus`,
       ])
