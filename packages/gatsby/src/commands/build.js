@@ -27,7 +27,7 @@ module.exports = async function build(program: BuildArgs) {
   await apiRunnerNode(`onPreBuild`, { graphql: graphqlRunner })
 
   // Copy files from the static directory to
-  // an equivalent static directory within public.
+  // an equivalent static directory within build directory (default: public).
   copyStaticDirectory()
 
   let activity

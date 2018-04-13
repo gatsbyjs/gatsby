@@ -119,7 +119,7 @@ module.exports = {
 };
 ```
 
-Local testing of staging is as simple as 
+Local testing of staging is as simple as
 
 ```
 ACTIVE_ENV=staging gatsby develop
