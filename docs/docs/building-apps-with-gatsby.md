@@ -17,7 +17,7 @@ Some examples of how you could use this:
 
 You can also use your React components to create interactive widgets e.g. allow a user to do searches or submit forms. Because Gatsby is just React, it's easy to blend static and interactive/dynamic models of building web sites.
 
-## Client-only routes
+## Client-only routes & user authentication
 
 Often you want to create a site with client-only portions that are gated by authentication.
 
@@ -46,3 +46,5 @@ exports.onCreatePage = async ({ page, boundActionCreators }) => {
   }
 };
 ```
+
+The [example site "simple auth"](https://github.com/gatsbyjs/gatsby/blob/master/examples/simple-auth/README.md) demos how to combine user authentication with restricted client-only routes.

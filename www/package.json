@@ -5,7 +5,7 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "bluebird": "^3.5.1",
-    "email-validator": "^1.1.1",
+    "email-validator": "1.1.1",
     "gatsby": "^1.9.246",
     "gatsby-image": "^1.0.43",
     "gatsby-link": "^1.6.40",
@@ -15,7 +15,7 @@
     "gatsby-plugin-glamor": "^1.6.13",
     "gatsby-plugin-google-analytics": "^1.0.28",
     "gatsby-plugin-lodash": "^1.0.11",
-    "gatsby-plugin-manifest": "^1.0.17",
+    "gatsby-plugin-manifest": "^1.0.19",
     "gatsby-plugin-netlify": "^1.0.19",
     "gatsby-plugin-nprogress": "^1.0.14",
     "gatsby-plugin-offline": "^1.0.15",
