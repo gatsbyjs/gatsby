@@ -171,6 +171,13 @@ module.exports = async ({
       }
     },
 
+    miniCssExtract: ({ disable = !PRODUCTION, fallback, ...options }) => {
+      return {
+        options,
+        loader: MiniCssExtractPlugin.loader,
+      }
+    },
+
     css: (options = {}) => {
       return {
         loader: require.resolve(`css-loader`),

@@ -1,5 +1,3 @@
-const MiniCssExtractPlugin = require(`mini-css-extract-plugin`)
-
 exports.onCreateWebpackConfig = (
   { actions, stage, rules, plugins, loaders },
   { postCssPlugins, ...lessOptions }
@@ -18,7 +16,7 @@ exports.onCreateWebpackConfig = (
   const lessRule = {
     test: /\.less$/,
     use: [
-      MiniCssExtractPlugin.loader,
+      loaders.miniCssExtract(),
       loaders.css({ importLoaders: 1 }),
       loaders.postcss({ plugins: postCssPlugins }),
       lessLoader,
@@ -27,7 +25,7 @@ exports.onCreateWebpackConfig = (
   const lessRuleModules = {
     test: /\.module\.less$/,
     use: [
-      MiniCssExtractPlugin.loader,
+      loaders.miniCssExtract(),
       loaders.css({ modules: true, importLoaders: 1 }),
       loaders.postcss({ plugins: postCssPlugins }),
       lessLoader,
@@ -59,7 +57,7 @@ exports.onCreateWebpackConfig = (
       configRules = configRules.concat([
         {
           oneOf: [
-            lessRuleModules,
+            lessRuleModulesSSR,
             {
               ...lessRule,
               use: [loaders.null()],
