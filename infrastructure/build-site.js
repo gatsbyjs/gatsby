@@ -142,7 +142,8 @@ const Main = async () => {
       updateBuild(buildId, "FAILURE")
       process.exit(code)
     }
-    const publicDir = `${pathToSite}/public`
+    const buildDirectory = process.env.GATSBY_BUILD_DIR || `public`
+    const publicDir = `${pathToSite}/${buildDirectory}`
     console.log(`uploading files from ${publicDir}`)
 
     // 1. Push built files to s3 bucket

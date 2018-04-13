@@ -31,7 +31,8 @@ function applyLayouts(pages, layouts) {
 // hashed filenames and ensure we pull in the componentChunkName and layoutComponentChunkName.
 export default function makePluginData(store, assetsManifest, pathPrefix) {
   const { program, layouts, pages: storePages } = store.getState()
-  const publicFolder = buildPrefixer(program.directory, `public`)
+  const buildDirectory = process.env.GATSBY_BUILD_DIR || `public`
+  const publicFolder = buildPrefixer(program.directory, buildDirectory)
   const stats = require(publicFolder(`stats.json`))
   const chunkManifest = normalizeStats(stats)
   const pages = applyLayouts(storePages, layouts)

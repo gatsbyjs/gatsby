@@ -6,7 +6,8 @@ import typography from "./utils/typography"
 let stylesStr
 if (process.env.NODE_ENV === `production`) {
   try {
-    stylesStr = require(`!raw-loader!../public/styles.css`)
+    const buildDirectory = process.env.GATSBY_BUILD_DIR || `public`
+    stylesStr = require(`!raw-loader!../${buildDirectory}/styles.css`)
   } catch (e) {
     console.log(e)
   }
