@@ -59,7 +59,7 @@ plugins: [
       // If false, then the asumption is made that the site is self hosted.
       // If true, then the plugin will source its content on wordpress.com using the JSON REST API V2.
       // If your site is hosted on wordpress.org, then set this to false.
-      hostingWPCOM: true,
+      hostingWPCOM: false,
       // If useACF is true, then the source plugin will try to import the Wordpress ACF Plugin contents.
       // This feature is untested for sites hosted on Wordpress.com.
       // Defaults to true.
@@ -154,6 +154,7 @@ GraphQL model.
 ### Query posts
 
 ```graphql
+{
   allWordpressPost {
     edges {
       node {
@@ -167,11 +168,13 @@ GraphQL model.
       }
     }
   }
+}
 ```
 
 ### Query pages
 
 ```graphql
+{
   allWordpressPage {
     edges {
       node {
@@ -186,6 +189,7 @@ GraphQL model.
       }
     }
   }
+}
 ```
 
 Same thing for other type of entity (tag, media, categories, ...).
@@ -213,6 +217,7 @@ For example the following URL:
 * Final GraphQL Type : AllWordpressWpApiMenusMenuLocations
 
 ```graphql
+{
   allWordpress${Manufacturer}${Endpoint} {
     edges {
       node {
@@ -222,6 +227,7 @@ For example the following URL:
       }
     }
   }
+}
 ```
 
 ### Query posts with the child ACF Fields Node
@@ -229,6 +235,7 @@ For example the following URL:
 Mention the apparition of `childWordpressAcfField` in the query below :
 
 ```graphql
+{
   allWordpressPost {
     edges {
       node {
@@ -250,6 +257,7 @@ Mention the apparition of `childWordpressAcfField` in the query below :
       }
     }
   }
+}
 ```
 
 ### Query pages with the child ACF Fields Node
@@ -257,6 +265,7 @@ Mention the apparition of `childWordpressAcfField` in the query below :
 Mention the apparition of `childWordpressAcfField` in the query below :
 
 ```graphql
+{
   allWordpressPage {
     edges {
       node {
@@ -276,6 +285,7 @@ Mention the apparition of `childWordpressAcfField` in the query below :
       }
     }
   }
+}
 ```
 
 ### Query with ACF Flexible Content
@@ -293,6 +303,7 @@ require you to know types of nodes. The easiest way to get the types of nodes is
 `___GraphiQL` debugger and run the below query (adjust post type and field name):
 
 ```graphQL
+{
   allWordpressPage {
     edges {
       node {
@@ -305,6 +316,7 @@ require you to know types of nodes. The easiest way to get the types of nodes is
       }
     }
   }
+}
 ```
 
 When you have node type names, you can use them to create inline fragments.
@@ -312,6 +324,7 @@ When you have node type names, you can use them to create inline fragments.
 Full example:
 
 ```graphQL
+{
   allWordpressPage {
     edges {
       node {
@@ -342,11 +355,13 @@ Full example:
       }
     }
   }
+}
 ```
 
 ### Query posts with the WPML Fields Node
 
 ```graphql
+{
   allWordpressPost {
     edges {
       node {
@@ -372,11 +387,13 @@ Full example:
       }
     }
   }
+}
 ```
 
 ### Query pages with the WPML Fields Node
 
 ```graphql
+{
   allWordpressPage {
     edges {
       node {
@@ -400,6 +417,7 @@ Full example:
       }
     }
   }
+}
 ```
 
 ### Image processing
@@ -420,10 +438,12 @@ currently not supported.
 To access image processing in your queries you need to use this pattern:
 
 ```
-imageFieldName {
-  localFile {
-    childImageSharp {
-      ...
+{
+  imageFieldName {
+    localFile {
+      childImageSharp {
+        ...ImageFragment
+      }
     }
   }
 }
@@ -432,6 +452,7 @@ imageFieldName {
 Full example:
 
 ```graphql
+{
   allWordpressPost {
     edges {
       node {
@@ -468,6 +489,7 @@ Full example:
       }
     }
   }
+}
 ```
 
 To learn more about image processing check
