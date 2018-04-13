@@ -8,7 +8,6 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0-beta.42",
-    "mini-css-extract-plugin": "^0.2.0",
     "node-sass": "^4.5.2",
     "sass-loader": "^6.0.7"
   },
@@ -17,19 +16,17 @@
     "@babel/core": "^7.0.0-beta.42",
     "cross-env": "^5.1.4"
   },
-  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sass#readme",
-  "keywords": [
-    "gatsby",
-    "sass",
-    "scss"
-  ],
+  "homepage":
+    "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sass#readme",
+  "keywords": ["gatsby", "sass", "scss"],
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
     "gatsby": "^2.0.0-0"
   },
   "readme": "README.md",
-  "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sass",
+  "repository":
+    "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sass",
   "scripts": {
     "build": "babel src --out-dir . --ignore __tests__",
     "prepublish": "cross-env NODE_ENV=production npm run build",
