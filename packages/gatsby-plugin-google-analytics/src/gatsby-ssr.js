@@ -5,6 +5,14 @@ exports.onRenderBody = (
   pluginOptions
 ) => {
   if (process.env.NODE_ENV === `production`) {
+    let excludeGAPaths = []
+    if (typeof pluginOptions.exclude !== `undefined`) {
+      const Minimatch = require(`minimatch`).Minimatch
+      pluginOptions.exclude.map(exclude => {
+        const mm = new Minimatch(exclude)
+        excludeGAPaths.push(mm.makeRe())
+      })
+    }
     const setComponents = pluginOptions.head
       ? setHeadComponents
       : setPostBodyComponents
@@ -13,6 +21,11 @@ exports.onRenderBody = (
         key={`gatsby-plugin-google-analytics`}
         dangerouslySetInnerHTML={{
           __html: `
+  ${
+    excludeGAPaths.length
+      ? `window.excludeGAPaths=[${excludeGAPaths.join(`,`)}];`
+      : ``
+  }          
   ${
     typeof pluginOptions.anonymize !== `undefined`
       ? `function gaOptout(){document.cookie=disableStr+'=true; expires=Thu, 31 Dec 2099 23:59:59 UTC;path=/',window[disableStr]=!0}var gaProperty='${
