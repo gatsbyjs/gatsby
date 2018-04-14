@@ -26,7 +26,8 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "gatsby": "^1.0.0"
+    "gatsby": "^1.0.0",
+    "extract-text-webpack-plugin": "^1.0.1"
   },
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms",
   "scripts": {
