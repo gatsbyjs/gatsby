@@ -19,7 +19,10 @@ const { nodeInterface } = require(`./node-interface`)
 const { getNodes, getNode, getNodeAndSavePathDependency } = require(`../redux`)
 const { createPageDependency } = require(`../redux/actions/add-page-dependency`)
 const { setFileNodeRootType } = require(`./types/type-file`)
-const { clearTypeExampleValues, getExampleValue } = require(`./data-tree-utils`)
+const {
+  clearTypeExampleValues,
+  getExampleValues,
+} = require(`./data-tree-utils`)
 
 import type { ProcessedNodeType } from "./infer-graphql-type"
 
@@ -115,7 +118,7 @@ module.exports = async () => {
     const inferredFields = inferObjectStructureFromNodes({
       nodes: type.nodes,
       types: _.values(processedTypes),
-      exampleValue: getExampleValue({ type: type.name, nodes: type.nodes }),
+      exampleValue: getExampleValues({ type: type.name, nodes: type.nodes }),
     })
 
     return {

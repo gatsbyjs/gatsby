@@ -16,7 +16,7 @@ const { store, getNode, getNodes } = require(`../redux`)
 const { createPageDependency } = require(`../redux/actions/add-page-dependency`)
 const createTypeName = require(`./create-type-name`)
 const createKey = require(`./create-key`)
-const { getExampleValue, isEmptyObjectOrArray } = require(`./data-tree-utils`)
+const { getExampleValues, isEmptyObjectOrArray } = require(`./data-tree-utils`)
 const DateType = require(`./types/type-date`)
 const FileType = require(`./types/type-file`)
 
@@ -324,7 +324,7 @@ export function inferObjectStructureFromNodes({
 
   const nodeTypeName = nodes[0].internal.type
   if (exampleValue === null) {
-    exampleValue = getExampleValue({ type: nodeTypeName, nodes })
+    exampleValue = getExampleValues({ type: nodeTypeName, nodes })
   }
 
   const inferredFields = {}

@@ -14,7 +14,7 @@ const typeOf = require(`type-of`)
 const createTypeName = require(`./create-type-name`)
 const createKey = require(`./create-key`)
 const {
-  getExampleValue,
+  getExampleValues,
   extractFieldNames,
   isEmptyObjectOrArray,
 } = require(`./data-tree-utils`)
@@ -219,7 +219,7 @@ export function inferInputObjectStructureFromNodes({
 
   prefix = isRoot ? typeName : prefix
   if (exampleValue === null) {
-    exampleValue = getExampleValue(nodes)
+    exampleValue = getExampleValues(nodes)
   }
 
   _.each(exampleValue, (v, k) => {
@@ -241,7 +241,7 @@ export function inferInputObjectStructureFromNodes({
         const relatedNodes = getNodes().filter(
           node => node.internal.type === linkedNode.internal.type
         )
-        value = getExampleValue({
+        value = getExampleValues({
           nodes: relatedNodes,
           type: linkedNode.internal.type,
         })

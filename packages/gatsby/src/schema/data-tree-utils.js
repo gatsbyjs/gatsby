@@ -181,7 +181,7 @@ const extractFieldExamples = (nodes: object[], selector: string) => {
 
 const buildFieldEnumValues = arg => {
   const enumValues = {}
-  const values = flatten(getExampleValue(arg), {
+  const values = flatten(getExampleValues(arg), {
     maxDepth: 3,
     safe: true, // don't flatten arrays.
     delimiter: `___`,
@@ -198,7 +198,7 @@ const buildFieldEnumValues = arg => {
 // nested objects get flattened to "outer___inner" which will be converted back to
 // "outer.inner" by run-sift
 const extractFieldNames = arg => {
-  const values = flatten(getExampleValue(arg), {
+  const values = flatten(getExampleValues(arg), {
     maxDepth: 3,
     safe: true, // don't flatten arrays.
     delimiter: `___`,
@@ -232,7 +232,7 @@ const getNodesAndTypeFromArg = arg => {
   return { type, nodes }
 }
 
-const getExampleValue = arg => {
+const getExampleValues = arg => {
   const { type, nodes } = getNodesAndTypeFromArg(arg)
 
   // if type is defined and is in example value cache return it
@@ -259,5 +259,5 @@ module.exports = {
   extractFieldNames,
   isEmptyObjectOrArray,
   clearTypeExampleValues,
-  getExampleValue,
+  getExampleValues,
 }
