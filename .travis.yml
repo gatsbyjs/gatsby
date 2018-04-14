@@ -26,6 +26,7 @@ jobs:
           - yarn run bootstrap
           script:
           - yarn test
+          - yarn danger ci
 
         - stage: www graphql docker image build and push
           if: (NOT type = pull_request) AND branch = master
