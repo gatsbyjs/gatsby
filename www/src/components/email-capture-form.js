@@ -41,32 +41,31 @@ class EmailCaptureForm extends React.Component {
   }
 
   // Post to MC server & handle its response
-  _postEmailToMailchimp = async (email, attributes) => {
-    let result
-    try {
-      result = await addToMailchimp(email, attributes)
-    } catch(e) {
+  _postEmailToMailchimp = (email, attributes) => {
+    addToMailchimp(email, attributes)
+    .then(result => {
+      // Mailchimp always returns a 200 response
+      // So we check the result for MC errors & failures
+      if (result.result !== `success`) {
+        this.setState({
+          status: `error`,
+          msg: result.msg,
+        })
+      } else {
+        // Email address succesfully subcribed to Mailchimp
+        this.setState({
+          status: `success`,
+          msg: result.msg,
+        })
+      }
+    })
+    .catch(err => {
       // Network failures, timeouts, etc
       this.setState({
         status: `error`,
-        msg: e,
+        msg: err,
       })
-    }
-
-    // Mailchimp always returns a 200 response
-    // So we check the result for MC errors & failures
-    if (result.result !== `success`) {
-      this.setState({
-        status: `error`,
-        msg: result.msg,
-      })
-    } else {
-      // Email address succesfully subcribed to Mailchimp
-      this.setState({
-        status: `success`,
-        msg: result.msg,
-      })
-    }
+    })
   }
 
   _handleFormSubmit = e => {
