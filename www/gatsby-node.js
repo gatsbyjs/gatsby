@@ -276,11 +276,3 @@ exports.onPostBuild = () => {
     `./public/gatsbygram.mp4`
   )
 }
-
-exports.modifyBabelrc = ({ babelrc }) => ({
-  ...babelrc,
-  plugins: babelrc.plugins.concat([
-    `transform-decorators-legacy`,
-    `transform-regenerator`,
-  ]),
-})
