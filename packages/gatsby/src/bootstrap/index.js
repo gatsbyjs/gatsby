@@ -340,6 +340,8 @@ module.exports = async (args: BootstrapArgs) => {
   await require(`../schema`)()
   activity.end()
 
+  require(`../schema/type-conflict-reporter`).printConflicts()
+
   // Extract queries
   activity = report.activityTimer(`extract queries from components`)
   activity.start()

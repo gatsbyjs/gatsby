@@ -15,7 +15,10 @@ const {
 const { buildFieldEnumValues } = require(`./data-tree-utils`)
 
 module.exports = type => {
-  const enumValues = buildFieldEnumValues(type.nodes)
+  const enumValues = buildFieldEnumValues({
+    nodes: type.nodes,
+    type: type.name,
+  })
   const { connectionType: groupConnection } = connectionDefinitions({
     name: _.camelCase(`${type.name} groupConnection`),
     nodeType: type.nodeObjectType,
