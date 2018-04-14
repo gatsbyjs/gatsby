@@ -10,6 +10,10 @@ const {
 } = require(`../type-conflict-reporter`)
 
 describe(`Gatsby data tree utils`, () => {
+  beforeEach(() => {
+    clearTypeExampleValues()
+  })
+
   const nodes = [
     {
       name: `The Mad Max`,
