@@ -5,17 +5,17 @@
   "version": "1.0.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "gatsby": "^1.9.52",
-    "gatsby-image": "^1.0.39",
-    "gatsby-link": "^1.6.20",
-    "gatsby-plugin-glamor": "^1.6.8",
-    "gatsby-plugin-google-analytics": "^1.0.8",
-    "gatsby-plugin-manifest": "^1.0.8",
-    "gatsby-plugin-offline": "^1.0.9",
-    "gatsby-plugin-sharp": "^1.6.8",
-    "gatsby-source-filesystem": "^1.5.2",
-    "gatsby-transformer-json": "^1.0.8",
-    "gatsby-transformer-sharp": "^1.6.8",
+    "gatsby": "latest",
+    "gatsby-image": "latest",
+    "gatsby-link": "latest",
+    "gatsby-plugin-glamor": "latest",
+    "gatsby-plugin-google-analytics": "latest",
+    "gatsby-plugin-manifest": "latest",
+    "gatsby-plugin-offline": "latest",
+    "gatsby-plugin-sharp": "latest",
+    "gatsby-source-filesystem": "latest",
+    "gatsby-transformer-json": "latest",
+    "gatsby-transformer-sharp": "latest",
     "instagram-screen-scrape": "^2.0.0",
     "lodash": "^4.16.4",
     "mkdirp": "^0.5.1",
@@ -38,10 +38,16 @@
   "main": "n/a",
   "scripts": {
     "lint": "./node_modules/.bin/eslint --ext .js,.jsx --ignore-pattern public .",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "start-server-and-test develop http://localhost:8000 cy:run",
     "develop": "gatsby develop",
     "dev": "gatsby develop",
     "build": "gatsby build",
-    "deploy": "gatsby build --prefix-paths && gh-pages -d public"
+    "deploy": "gatsby build --prefix-paths && gh-pages -d public",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run"
+  },
+  "devDependencies": {
+    "cypress": "^2.1.0",
+    "start-server-and-test": "^1.1.4"
   }
 }
