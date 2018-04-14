@@ -8,6 +8,7 @@ const MiniCssExtractPlugin = require(`mini-css-extract-plugin`)
 
 const builtinPlugins = require(`./webpack-plugins`)
 const { createBabelConfig } = require(`./babel-config`)
+const eslintConfig = require(`./eslint-config`)
 
 type LoaderSpec = string | { loader: string, options?: Object }
 type LoaderResolver<T: Object> = (options?: T) => LoaderSpec
@@ -62,6 +63,8 @@ export type LoaderUtils = {
 
   imports: LoaderResolver<*>,
   exports: LoaderResolver<*>,
+
+  eslint: LaoderResolver<*>,
 }
 
 /**
@@ -80,6 +83,8 @@ export type RuleUtils = {
   css: ContextualRuleFactory,
   cssModules: RuleFactory<*>,
   postcss: ContextualRuleFactory,
+
+  eslint: RuleFactory<*>,
 }
 
 export type PluginUtils = BuiltinPlugins & {
@@ -243,6 +248,15 @@ module.exports = async ({
       }
     },
 
+    eslint: (schema = ``) => {
+      const options = eslintConfig(schema)
+
+      return {
+        options,
+        loader: require.resolve(`eslint-loader`),
+      }
+    },
+
     imports: (options = {}) => {
       return {
         options,
@@ -276,6 +290,19 @@ module.exports = async ({
     }
 
     rules.js = js
+  }
+
+  {
+    let eslint = schema => {
+      return {
+        enforce: `pre`,
+        test: /\.jsx?$/,
+        exclude: vendorRegex,
+        use: [loaders.eslint(schema)],
+      }
+    }
+
+    rules.eslint = eslint
   }
 
   rules.yaml = () => {
