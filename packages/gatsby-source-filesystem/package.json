@@ -28,6 +28,9 @@
     "gatsby-plugin"
   ],
   "license": "MIT",
+  "peerDependencies": {
+    "gatsby": "^1.9.250"
+  },
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem",
   "scripts": {
     "build": "babel src --out-dir . --ignore __tests__",
