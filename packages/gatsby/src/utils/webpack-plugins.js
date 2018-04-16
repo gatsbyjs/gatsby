@@ -42,7 +42,6 @@ const plugins = {
   namedChunks: plugin(`NamedChunksPlugin`),
   hashedModuleIds: plugin(`HashedModuleIdsPlugin`),
   moduleFilenameH: plugin(`ModuleFilenameHelpers`),
-
   aggressiveMerging: plugin(`AggressiveMergingPlugin`, true),
   aggressiveSplitting: plugin(`AggressiveSplittingPlugin`, true),
   splitChunks: plugin(`SplitChunks`, true),

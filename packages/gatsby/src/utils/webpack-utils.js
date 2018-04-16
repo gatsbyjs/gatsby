@@ -1,8 +1,6 @@
 // @flow
 const os = require(`os`)
 
-const autoprefixer = require(`autoprefixer`)
-const flexbugs = require(`postcss-flexbugs-fixes`)
 const UglifyPlugin = require(`uglifyjs-webpack-plugin`)
 const MiniCssExtractPlugin = require(`mini-css-extract-plugin`)
 
@@ -198,7 +196,7 @@ module.exports = async ({
     },
 
     postcss: (options = {}) => {
-      let { plugins, browsers = supportedBrowsers, ...postcssOpts } = options
+      let { plugins, ...postcssOpts } = options
 
       return {
         loader: require.resolve(`postcss-loader`),
@@ -209,11 +207,7 @@ module.exports = async ({
             plugins =
               (typeof plugins === `function` ? plugins(loader) : plugins) || []
 
-            return [
-              flexbugs,
-              autoprefixer({ browsers, flexbox: `no-2009` }),
-              ...plugins,
-            ]
+            return [...plugins]
           },
           ...postcssOpts,
         },
