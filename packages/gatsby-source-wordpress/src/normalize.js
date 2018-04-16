@@ -164,7 +164,7 @@ exports.mapTypes = entities => {
 exports.mapAuthorsToUsers = entities => {
   const users = entities.filter(e => e.__type === `wordpress__wp_users`)
   return entities.map(e => {
-    if (e.author) {
+    if (users && e.author) {
       // Find the user
       const user = users.find(u => u.wordpress_id === e.author)
       if (user) {
@@ -194,13 +194,13 @@ exports.mapPostsToTagsCategories = entities => {
   return entities.map(e => {
     if (e.__type === `wordpress__POST`) {
       // Replace tags & categories with links to their nodes.
-      if (e.tags.length) {
+      if (tags && e.tags.length) {
         e.tags___NODE = e.tags.map(
           t => tags.find(tObj => t === tObj.wordpress_id).id
         )
         delete e.tags
       }
-      if (e.categories.length) {
+      if (categories && e.categories.length) {
         e.categories___NODE = e.categories.map(
           c => categories.find(cObj => c === cObj.wordpress_id).id
         )
