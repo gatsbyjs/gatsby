@@ -129,7 +129,12 @@ const extractFromArrays = (values, entries, selector) => {
     )
   )
 
-  return [extractFromEntries(flattenEntries, `${selector}[]`)]
+  const arrayItemExample = extractFromEntries(flattenEntries, `${selector}[]`)
+  if (!isDefined(arrayItemExample) || arrayItemExample === INVALID_VALUE) {
+    return INVALID_VALUE
+  }
+
+  return [arrayItemExample]
 }
 
 /**
