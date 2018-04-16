@@ -153,7 +153,7 @@ containing a Markdown file with your blog post content!
 This is the basic function of Netlify CMS - providing a comfortable editing experience and
 outputting raw content files to a Git repository. You've probably noticed that, even though the file
 was created in your repo, it's not anywhere on your site. That's because Netlify CMS doesn't go
-beyond creating the raw content - its able to work with almost any static site generator because it
+beyond creating the raw content - it's able to work with almost any static site generator because it
 allows the generator to determine how to build the raw content into something useful, whether for a
 website, mobile app, or something else entirely.
 
