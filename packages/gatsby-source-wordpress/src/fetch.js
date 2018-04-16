@@ -298,6 +298,8 @@ async function getPages(
         url: `${url}?${querystring.stringify({
           per_page: _perPage,
           page: page,
+          'filter[orderby]': `date`,
+          order: `asc`,
         })}`,
       }
       if (_hostingWPCOM) {
