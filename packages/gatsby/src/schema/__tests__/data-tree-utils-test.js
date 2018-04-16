@@ -152,6 +152,16 @@ describe(`Gatsby data tree utils`, () => {
     ])
     expect(example.foo).toEqual([{ field: 1, bar: 1, baz: 1 }])
   })
+
+  it(`skips unsupported types`, () => {
+    // Skips functions
+    let example = getExampleValues([{ foo: () => {} }])
+    expect(example.foo).toEqual(null)
+
+    // Skips array of functions
+    example = getExampleValues([{ foo: [() => {}] }])
+    expect(example.foo).toEqual(null)
+  })
 })
 
 describe(`Type conflicts`, () => {
