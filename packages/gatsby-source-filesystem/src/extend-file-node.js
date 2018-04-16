@@ -2,44 +2,36 @@ const { GraphQLString } = require(`graphql`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
 
-module.exports = ({ type, getNodeAndSavePathDependency, pathPrefix = `` }) => {
-  if (type.name !== `File`) {
-    return {}
-  }
+const staticPath = path.join(process.cwd(), `public`, `static`)
 
-  return {
-    publicURL: {
-      type: GraphQLString,
-      args: {},
-      description: `Copy file to static directory and return public url to it`,
-      resolve: (file, fieldArgs, context) => {
-        const details = getNodeAndSavePathDependency(file.id, context.path)
-        const fileName = `${file.name}-${file.internal.contentDigest}${
-          details.ext
-        }`
+module.exports = ({ getNodeAndSavePathDependency, pathPrefix = ``, type }) =>
+  type.name === `File`
+    ? {
+        publicURL: {
+          args: {},
+          description: `Copy file to static directory and return its public URL`,
+          resolve: (file, _fieldArgs, context) => {
+            const details = getNodeAndSavePathDependency(file.id, context.path)
+            const digest = file.internal.contentDigest.slice(0, 6)
+            const fileName = `${file.name}-${digest}${details.ext}`
+            const publicPath = path.join(staticPath, fileName)
 
-        const publicPath = path.join(
-          process.cwd(),
-          `public`,
-          `static`,
-          fileName
-        )
-
-        if (!fs.existsSync(publicPath)) {
-          fs.copy(details.absolutePath, publicPath, err => {
-            if (err) {
-              console.error(
-                `error copying file from ${
-                  details.absolutePath
-                } to ${publicPath}`,
-                err
-              )
+            if (!fs.existsSync(publicPath)) {
+              fs.copy(details.absolutePath, publicPath, err => {
+                if (err) {
+                  console.error(
+                    `error copying "${
+                      details.absolutePath
+                    }" to "${publicPath}"`,
+                    err
+                  )
+                }
+              })
             }
-          })
-        }
 
-        return `${pathPrefix}/static/${fileName}`
-      },
-    },
-  }
-}
+            return `${pathPrefix}/static/${fileName}`
+          },
+          type: GraphQLString,
+        },
+      }
+    : {}
