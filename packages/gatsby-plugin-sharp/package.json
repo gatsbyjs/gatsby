@@ -15,7 +15,7 @@
     "imagemin-webp": "^4.0.0",
     "lodash": "^4.17.4",
     "potrace": "^2.1.1",
-    "probe-image-size": "^3.2.0",
+    "probe-image-size": "^4.0.0",
     "progress": "^1.1.8",
     "sharp": "^0.20.0",
     "svgo": "^0.7.2"
