@@ -39,8 +39,10 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     Root = Root.default
   }
 
+  const renderer = apiRunner(`getRenderer`, undefined, ReactDOM.render)[0]
+
   domReady(() =>
-    ReactDOM.render(
+    renderer(
       <HotContainer>
         <Root />
       </HotContainer>,
