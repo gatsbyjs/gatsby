@@ -178,11 +178,11 @@ pages:
 The CI platform uses Docker images/containers, so `image: node:latest` tells the
 CI to use the latest node image. `cache:` caches the `node_modules` folder
 in between builds, so subsequent builds should be a lot faster as it doesn't have
-to reinstall all the dependancies required. `pages:` is the name of the
+to reinstall all the dependencies required. `pages:` is the name of the
 CI stage. You can have multiple stages, e.g. 'Test', 'Build', 'Deploy' etc.
 `script:` starts the next part of the CI stage, telling it to start running the
 below scripts inside the image selected. We have used the `npm install` and
-`./node_modules/.bin/gatsby build --prefix-paths` which will install all dependancies, and
+`./node_modules/.bin/gatsby build --prefix-paths` which will install all dependencies, and
 start the static site build, respectively.
 
 We have used
