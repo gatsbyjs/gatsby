@@ -150,14 +150,6 @@ class DefaultLayout extends React.Component {
           <OutboundLink
             target="_blank"
             rel="noopener"
-            href="https://workshop.me/2018-04-gatsby"
-          >
-            SF in April
-          </OutboundLink>{" "}
-          and{" "}
-          <OutboundLink
-            target="_blank"
-            rel="noopener"
             href="https://workshop.me/2018-05-gatsby"
           >
             NYC in May
