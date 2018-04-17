@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Adds canonical link to head correctly creates a canonical link if siteUrl is set 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Array [
+        <link
+          data-basehost="someurl.com"
+          data-baseprotocol="http:"
+          href="http://someurl.com/somepost"
+          rel="canonical"
+        />,
+      ],
+    ],
+  ],
+}
+`;
+
+exports[`Adds canonical link to head correctly does not create a canonical link if siteUrl is not set 1`] = `[MockFunction]`;
