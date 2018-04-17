@@ -1,7 +1,7 @@
 # gatsby-plugin-page-creator
 
-Plugin to auto create pages from React components, using custom directory paths.
-React components will live inside those directory paths.
+Gatsby plugin that automatically creates pages from React components in specified directories. Gatsby
+includes this plugin automatically in all sites for creating pages from components in `src/pages`.
 
 ## Install
 
@@ -15,7 +15,7 @@ React components will live inside those directory paths.
 module.exports = {
   plugins: [
     // You can have multiple instances of this plugin
-    // to create pages from create components
+    // to create pages from components in different directories.
     //
     // The following sets up the pattern of having multiple
     // "pages" directories in your project
