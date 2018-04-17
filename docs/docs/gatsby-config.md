@@ -10,12 +10,13 @@ _Note: There are many sample configs which may be helpful to reference in the di
 
 Options available to set within `gatsby-config.js` include:
 
-1.  siteMetadata (object)
-2.  plugins (array)
-3.  pathPrefix (string)
-4.  polyfill (boolean)
-5.  mapping (object)
-6.  proxy (object)
+1. siteMetadata (object)
+2. plugins (array)
+3. pathPrefix (string)
+4. polyfill (boolean)
+5. mapping (object)
+6. proxy (object)
+7. developMiddleware (function)
 
 ## siteMetadata
 
@@ -28,7 +29,7 @@ module.exports = {
     siteUrl: `https://www.gatsbyjs.org`,
     description: `Blazing-fast static site generator for React`,
   },
-};
+}
 ```
 
 This way you can store it in one place, and pull it whenever you need it. If you ever need to update the info, you only have to change it here.
@@ -51,7 +52,7 @@ module.exports = {
       },
     },
   ],
-};
+}
 ```
 
 See more about [Plugins](/docs/plugins/) for more on utilizing plugins, and to see available official and community plugins.
@@ -64,7 +65,7 @@ It's common for sites to be hosted somewhere other than the root of their domain
 module.exports = {
   // Note: it must *not* have a trailing slash.
   pathPrefix: `/blog`,
-};
+}
 ```
 
 See more about [Adding a Path Prefix](/docs/path-prefix/).
@@ -78,7 +79,7 @@ If you'd like to provide your own Promise polyfill, you can set `polyfill` to fa
 ```javascript
 module.exports = {
   polyfill: false,
-};
+}
 ```
 
 See more about [Browser Support](/docs/browser-support/#polyfills) in Gatsby.
@@ -223,7 +224,7 @@ query CV {
 
 ## Proxy
 
-Setting the proxy config option will tell the development server to proxy any unknown requests to your specified server. For example:
+Setting the proxy config option will tell the develop server to proxy any unknown requests to your specified server. For example:
 
 ```javascript
 module.exports = {
@@ -231,7 +232,11 @@ module.exports = {
     prefix: "/api",
     url: "http://examplesite.com/api/",
   },
-};
+}
 ```
 
-See more about [Proxying API Requests in Development](/docs/api-proxy/).
+See more about [Proxying API Requests in Develop](/docs/api-proxy/).
+
+## Advanced proxying with `developMiddleware`
+
+See more about [adding develop middleware](/docs/api-proxy/#advanced-proxying).
