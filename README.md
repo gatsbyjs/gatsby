@@ -88,7 +88,7 @@ Websites built with Gatsby:
 * [Random Screencast](https://randomscreencast.com)
 * [Phu Quoc Tea & Coffee Store](http://trasuaphuquoc.com)
 * [Steven Natera's blog](https://www.stevennatera.com)
-* [LekoArts - Graphic Designer](https://www.lekoarts.de)
+* [LekoArts - Graphic Designer Portfolio](https://www.lekoarts.de) ([source](https://github.com/LeKoArts/portfolio))
 * [Georgi Yanev](https://blog.georgi-yanev.com)
   ([source](https://github.com/jumpalottahigh/blog.georgi-yanev.com))
 * [OnCallogy.com](https://www.oncallogy.com)
