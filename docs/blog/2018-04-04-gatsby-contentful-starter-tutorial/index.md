@@ -111,12 +111,14 @@ If you like what you see, use the npm run build command to start a static produc
 
 Your static files can then be deployed on a variety of platforms of your choice, like [BitBalloon](https://www.bitballoon.com/) and [GitHub Pages](https://pages.github.com/). Take your pick. Contentful gives you infrastructure for the content in your stack, that matches your modular and agile way of working with platform independence and by serving as a layer in your stack.
 
-Our CDN is key to all of this; it ensures your website and its users can access your content quickly and reliably. Content is just an API call away, as demonstrated by the use of APIs to grab your content above.
+Contentful ensures your website and its users can access your content quickly and reliably. Your content is just an API call away.
 
 ###Summary
 
-That’s a quick overview of how to get your website up and running from scratch using Contentful and GatsbyJS - and we've just scratched the surface of what Contentful can do for you and your projects.
+###Summary
 
-Our platform offers speed, flexibility, and ease of integration with your code, supporting any stack you use. We have SDKs for common languages like [Javascript](https://www.contentful.com/developers/docs/javascript/sdks/), [Python](https://www.contentful.com/developers/docs/python/sdks/), and [PHP](https://www.contentful.com/developers/docs/php/sdks/). Unlike a CMS, Contentful provides you with actual separation between content and presentation, allowing you to focus on developing your website and leave content delivery to us.
+That’s a quick overview of how to get your website up and running from scratch using Contentful and GatsbyJS.
 
-Our cloud-based solution for content infrastructure is designed to scale to grow, so your content is always available regardless of load peaks and increases in userbase. Check out our [Developer Center](https://www.contentful.com/developers/docs/) to learn more on how our tech works and what it can do for your projects, or head over to the [Guides and tutorials](https://www.contentful.com/guides/) section to see ways you and your projects can work with Contentful.
+Contentful's platform offers speed, flexibility, and ease of integration with your code, supporting any stack you use with SDKs for common languages like [Javascript](https://www.contentful.com/developers/docs/javascript/sdks/), [Python](https://www.contentful.com/developers/docs/python/sdks/), and [PHP](https://www.contentful.com/developers/docs/php/sdks/). Unlike a CMS, Contentful provides you with separation between content and presentation, allowing you to focus on developing your website and leave content delivery to Contentful. 
+
+If you're curious to learn more about Contentful, you can check out the Contentful [Developer Center](https://www.contentful.com/developers/docs/) to learn more on how the technology works, or head over to the [Guides and tutorials](https://www.contentful.com/guides/) section. 
