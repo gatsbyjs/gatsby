@@ -12,8 +12,8 @@ const createFileNode = async (src, createNodeId, opts = {}) => {
     children: [],
     cwd: slash(opts.path || process.cwd()),
     id: createNodeId(src),
-    parent: `___SOURCE___`,
-    sourceInstanceName: opts.name || `__PROGRAMATTIC__`,
+    parent: null,
+    sourceInstanceName: opts.name,
   }
 
   const stats = await fs.stat(node.absolutePath)
