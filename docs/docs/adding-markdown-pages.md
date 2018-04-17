@@ -41,7 +41,7 @@ Now that we've "sourced" the markdown files from the filesystem, we can now "tra
 
 ### Transforming markdown — `gatsby-transformer-remark`
 
-We'll use the plugin [`gatsby-transformer-remark`](/packages/gatsby-transformer-remark/) to recognise files which are markdown and read its content. It will convert the frontmatter metadata part of your markdown file as `frontmatter` and the content part as HTML.
+We'll use the plugin [`gatsby-transformer-remark`](/packages/gatsby-transformer-remark/) to recognize files which are markdown and read its content. It will convert the frontmatter metadata part of your markdown file as `frontmatter` and the content part as HTML.
 
 `npm i --save gatsby-transformer-remark`
 
@@ -164,7 +164,7 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
 };
 ```
 
-This should get you started on some basic markdown power in your Gatsby site. You can further customise the `frontmatter` and the template file to get desired effects!
+This should get you started on some basic markdown power in your Gatsby site. You can further customize the `frontmatter` and the template file to get desired effects!
 
 ## Other tutorials
 
