@@ -16,7 +16,7 @@ Options available to set within `gatsby-config.js` include:
 4. polyfill (boolean)
 5. mapping (object)
 6. proxy (object)
-7. middleware (function)
+7. developMiddleware (function)
 
 ## siteMetadata
 
@@ -224,7 +224,7 @@ query CV {
 
 ## Proxy
 
-Setting the proxy config option will tell the development server to proxy any unknown requests to your specified server. For example:
+Setting the proxy config option will tell the develop server to proxy any unknown requests to your specified server. For example:
 
 ```javascript
 module.exports = {
@@ -235,8 +235,8 @@ module.exports = {
 }
 ```
 
-See more about [Proxying API Requests in Development](/docs/api-proxy/).
+See more about [Proxying API Requests in Develop](/docs/api-proxy/).
 
-## Middleware
+## Advanced proxying with develop middleware
 
-See [Development Middleware](/docs/develop-middleware/).
+See more about [adding develop middleware](/docs/api-proxy/#advanced-proxying).

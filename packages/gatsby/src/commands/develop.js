@@ -138,10 +138,10 @@ async function startServer(program) {
   )
 
   // Expose access to app for advanced use cases
-  const { middleware } = store.getState().config
+  const { developMiddleware } = store.getState().config
 
-  if (middleware) {
-    middleware(app)
+  if (developMiddleware) {
+    developMiddleware(app)
   }
 
   // Set up API proxy.
