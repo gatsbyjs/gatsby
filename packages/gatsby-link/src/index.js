@@ -72,12 +72,14 @@ class GatsbyLink extends React.Component {
     const to = createLocation(nextProps.to, null, null, history.location)
     const path = createPath(to)
 
-    // Preserve non IO functionality if no support
-    if (!prevState.IOSupported) {
-      ___loader.enqueue(path)
-    }
-
     return { path, to }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    // Preserve non IO functionality if no support
+    if (this.props.to !== prevProps.to && !this.state.IOSupported) {
+      ___loader.enqueue(this.state.path)
+    }
   }
 
   componentDidMount() {
