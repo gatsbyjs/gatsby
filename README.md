@@ -202,6 +202,7 @@ Websites built with Gatsby:
 * [Yuuniworks](https://www.yuuniworks.com/) ([source](https://github.com/junkboy0315/yuuni-web))
 * [Chin Loong Tan - Blog/Portfolio](https://chinloongtan.com/)
 * [F1 Vision](https://f1vision.com/)
+* [GraphQL College](https://graphql.college) ([source](https://github.com/GraphQLCollege/graphql-college))
 
 ## Docs
 
