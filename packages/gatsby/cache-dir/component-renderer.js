@@ -2,6 +2,7 @@ import React, { createElement } from "react"
 import PropTypes from "prop-types"
 import loader, { publicLoader } from "./loader"
 import emitter from "./emitter"
+import { polyfill } from "react-lifecycles-compat"
 import { apiRunner } from "./api-runner-browser"
 import shallowCompare from "shallow-compare"
 
@@ -11,15 +12,37 @@ const DefaultLayout = ({ children }) => <div>{children()}</div>
 // component will try fetching resources. If they exist,
 // will just render, else will render null.
 class ComponentRenderer extends React.Component {
+  static getDerivedStateFromProps({ pageResources, location }, prevState) {
+    let nextState = {}
+
+    if (
+      process.env.NODE_ENV !== `production` &&
+      pageResources &&
+      pageResources.json
+    ) {
+      nextState = { pageResources }
+    }
+
+    if (prevState.location.pathname !== location.pathname) {
+      const pageResources = loader.getResourcesForPathname(location.pathname)
+
+      if (pageResources) {
+        nextState = { location, pageResources }
+      } else if (!loader.getPage(location.pathname)) {
+        nextState.location = { ...location, pathname: `/404.html` }
+      }
+    }
+
+    return nextState
+  }
+
   constructor(props) {
     super()
     let location = props.location
 
     // Set the pathname for 404 pages.
     if (!loader.getPage(location.pathname)) {
-      location = Object.assign({}, location, {
-        pathname: `/404.html`,
-      })
+      location = { ...location, pathname: `/404.html` }
     }
 
     this.state = {
@@ -28,48 +51,20 @@ class ComponentRenderer extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    // During development, always pass a component's JSON through so graphql
-    // updates go through.
-    if (process.env.NODE_ENV !== `production`) {
-      if (
-        nextProps &&
-        nextProps.pageResources &&
-        nextProps.pageResources.json
-      ) {
-        this.setState({ pageResources: nextProps.pageResources })
-      }
-    }
-    if (this.state.location.pathname !== nextProps.location.pathname) {
-      const pageResources = loader.getResourcesForPathname(
-        nextProps.location.pathname
-      )
-      if (!pageResources) {
-        let location = nextProps.location
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps === this.props) return
 
-        // Set the pathname for 404 pages.
-        if (!loader.getPage(location.pathname)) {
-          location = Object.assign({}, location, {
-            pathname: `/404.html`,
-          })
-        }
-
-        // Page resources won't be set in cases where the browser back button
-        // or forward button is pushed as we can't wait as normal for resources
-        // to load before changing the page.
-        loader.getResourcesForPathname(location.pathname, pageResources => {
-          this.setState({
-            location,
-            pageResources,
-          })
-        })
-      } else {
+    const { location } = this.state
+    if (!loader.getResourcesForPathname(location.pathname))
+      // Page resources won't be set in cases where the browser back button
+      // or forward button is pushed as we can't wait as normal for resources
+      // to load before changing the page.
+      loader.getResourcesForPathname(location.pathname, pageResources => {
         this.setState({
-          location: nextProps.location,
+          location,
           pageResources,
         })
-      }
-    }
+      })
   }
 
   componentDidMount() {
@@ -168,4 +163,4 @@ ComponentRenderer.propTypes = {
   location: PropTypes.object,
 }
 
-export default ComponentRenderer
+export default polyfill(ComponentRenderer)
