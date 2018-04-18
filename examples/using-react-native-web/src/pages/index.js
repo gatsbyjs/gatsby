@@ -1,5 +1,12 @@
-import React from 'react'
-import { StyleSheet, View, Text, Switch, Button, ActivityIndicator } from 'react-native'
+import React from "react"
+import {
+  StyleSheet,
+  View,
+  Text,
+  Switch,
+  Button,
+  ActivityIndicator,
+} from "react-native"
 
 const styles = StyleSheet.create({
   container: {
@@ -7,29 +14,25 @@ const styles = StyleSheet.create({
   },
 })
 
-
-const Container = (props) => (
-  <View {...props} style={[styles.container,props.style]}/>
+const Container = props => (
+  <View {...props} style={[styles.container, props.style]} />
 )
-
 
 const IndexPage = () => (
   <View>
     <Container>
-    <Text>Hi people</Text>
+      <Text>Hi people</Text>
     </Container>
     <Container>
-      <Button onPress={() => alert(`it works!`)} title="Press me"/>
+      <Button onPress={() => alert(`it works!`)} title="Press me" />
     </Container>
     <Container>
-      <ActivityIndicator size="large"/>
+      <ActivityIndicator size="large" />
     </Container>
     <Container>
-      <Switch/>
+      <Switch />
     </Container>
-    <span style={{ padding: 10 }}>
-      Normal span text also works
-    </span>
+    <span style={{ padding: 10 }}>Normal span text also works</span>
   </View>
 )
 

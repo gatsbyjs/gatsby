@@ -20,18 +20,17 @@ Or with theme
 ```javascript
 const theme = {
   fontSize: 16,
-  fontFamily: 'Roboto',
-  color: '#212121',
+  fontFamily: "Roboto",
+  color: "#212121",
 };
 
 plugins: [
   {
-    resolve: 'jss',
+    resolve: "jss",
     options: { theme },
   },
 ];
 ```
-
 
 ## Example
 

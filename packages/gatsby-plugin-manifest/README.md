@@ -45,7 +45,7 @@ plugins: [
       background_color: "#f7f0eb",
       theme_color: "#a2466c",
       display: "minimal-ui",
-      icon: "src/images/icon.png" // This path is relative to the root of the site.
+      icon: "src/images/icon.png", // This path is relative to the root of the site.
     },
   },
 ];
@@ -56,53 +56,53 @@ When in automatic mode the following json array is injected into the manifest co
 ```javascript
 [
   {
-      "src": `icons/icon-48x48.png`,
-      "sizes": `48x48`,
-      "type": `image/png`,
+    src: `icons/icon-48x48.png`,
+    sizes: `48x48`,
+    type: `image/png`,
   },
   {
-      "src": `icons/icon-72x72.png`,
-      "sizes": `72x72`,
-      "type": `image/png`,
+    src: `icons/icon-72x72.png`,
+    sizes: `72x72`,
+    type: `image/png`,
   },
   {
-      "src": `icons/icon-96x96.png`,
-      "sizes": `96x96`,
-      "type": `image/png`,
+    src: `icons/icon-96x96.png`,
+    sizes: `96x96`,
+    type: `image/png`,
   },
   {
-      "src": `icons/icon-144x144.png`,
-      "sizes": `144x144`,
-      "type": `image/png`,
+    src: `icons/icon-144x144.png`,
+    sizes: `144x144`,
+    type: `image/png`,
   },
   {
-      "src": `icons/icon-192x192.png`,
-      "sizes": `192x192`,
-      "type": `image/png`,
+    src: `icons/icon-192x192.png`,
+    sizes: `192x192`,
+    type: `image/png`,
   },
   {
-      "src": `icons/icon-256x256.png`,
-      "sizes": `256x256`,
-      "type": `image/png`,
+    src: `icons/icon-256x256.png`,
+    sizes: `256x256`,
+    type: `image/png`,
   },
   {
-      "src": `icons/icon-384x384.png`,
-      "sizes": `384x384`,
-      "type": `image/png`,
+    src: `icons/icon-384x384.png`,
+    sizes: `384x384`,
+    type: `image/png`,
   },
   {
-      "src": `icons/icon-512x512.png`,
-      "sizes": `512x512`,
-      "type": `image/png`,
+    src: `icons/icon-512x512.png`,
+    sizes: `512x512`,
+    type: `image/png`,
   },
-]
+];
 ```
 
 The automatic mode is the easiest option for most people.
 
 ### Hybrid mode
 
- However, if you want to include more or fewer sizes, then the hybrid option is for you. Like automatic mode, you should include a high resolution icon to generate smaller icons from. But unlike automatic mode, you provide the `icons` array config and icons are generated based on the sizes defined in your config. Here's an example:
+However, if you want to include more or fewer sizes, then the hybrid option is for you. Like automatic mode, you should include a high resolution icon to generate smaller icons from. But unlike automatic mode, you provide the `icons` array config and icons are generated based on the sizes defined in your config. Here's an example:
 
 ```javascript
 // In your gatsby-config.js
@@ -137,6 +137,7 @@ plugins: [
 The hybrid option allows the most flexibility while still not requiring you to create most icons sizes manually.
 
 ### Manual mode
+
 In the manual mode, you are responsible for defining the entire web app manifest and providing the defined icons in the static directory. Only icons you provide will be available. There is no automatic resizing done for you. See the example below:
 
 ```javascript
