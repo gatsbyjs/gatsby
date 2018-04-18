@@ -14,7 +14,7 @@ module.exports = schema => {
           `error`,
           {
             env: `relay`,
-            schemaString: printSchema(schema),
+            schemaString: printSchema(schema, { commentDescriptions: true }),
             tagName: `graphql`,
           },
         ],
