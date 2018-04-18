@@ -1,7 +1,8 @@
 /*global __PREFIX_PATHS__, __PATH_PREFIX__ */
+import PropTypes from "prop-types"
 import React from "react"
 import { Link, NavLink } from "react-router-dom"
-import PropTypes from "prop-types"
+import { polyfill } from "react-lifecycles-compat"
 import { createLocation, createPath } from "history"
 
 let pathPrefix = `/`
@@ -54,28 +55,29 @@ class GatsbyLink extends React.Component {
       IOSupported = true
     }
 
-    const { history } = context.router
-    const to = createLocation(props.to, null, null, history.location)
+    const { location } = context.router.history
+    const to = createLocation(props.to, null, null, location)
 
     this.state = {
       path: createPath(to),
       to,
       IOSupported,
+      location,
     }
     this.handleRef = this.handleRef.bind(this)
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.to !== nextProps.to) {
-      const to = createLocation(nextProps.to, null, null, history.location)
-      this.setState({
-        path: createPath(to),
-        to,
-      })
-      // Preserve non IO functionality if no support
-      if (!this.state.IOSupported) {
-        ___loader.enqueue(this.state.path)
-      }
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (prevState.to === nextProps.to) return null
+    const to = createLocation(nextProps.to, null, null, prevState.location)
+    const path = createPath(to)
+    return { path, to }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    // Preserve non IO functionality if no support
+    if (this.props.to !== prevProps.to && !this.state.IOSupported) {
+      ___loader.enqueue(this.state.path)
     }
   }
 
@@ -176,7 +178,7 @@ GatsbyLink.contextTypes = {
   router: PropTypes.object,
 }
 
-export default GatsbyLink
+export default polyfill(GatsbyLink)
 
 export const navigateTo = to => {
   window.___navigateTo(to)

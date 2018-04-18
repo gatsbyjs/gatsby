@@ -55,14 +55,7 @@ describe(`<Link />`, () => {
     it.skip(`will use __PATH_PREFIX__ if __PREFIX_PATHS__ defined`, () => {
       const to = `/path`
       const pathPrefix = `/blog`
-
-      const instance = getInstance(
-        {
-          to,
-        },
-        pathPrefix
-      )
-
+      const instance = getInstance({ to }, pathPrefix)
       expect(instance.state.to).toEqual(`${pathPrefix}${to}`)
     })
   })
@@ -151,7 +144,7 @@ describe(`withRouter`, () => {
     })
 
     /*
-     * Same as above, settings a path perfix does not work because the 
+     * Same as above, setting a path prefix does not work because the
      * link module sets variables on first import
      */
     it.skip(`respects path prefix`, () => {
