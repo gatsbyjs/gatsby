@@ -347,8 +347,8 @@ Gatsby works out of the box with CSS Modules.
 Let's build a page using CSS Modules.
 
 First, let's create a new `Container` component which we'll use for each of the
-CSS-in-JS examples. Create a `components` directory at `src/components` and
-then, in this directory, create a file named `container.js` and paste the
+CSS-in-JS examples. Create a `container` directory at `src/components` and
+then, in this directory, create a file named `index.js` and paste the
 following:
 
 ```javascript
