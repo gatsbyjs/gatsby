@@ -55,23 +55,22 @@ class GatsbyLink extends React.Component {
       IOSupported = true
     }
 
-    const { history } = context.router
-    const to = createLocation(props.to, null, null, history.location)
+    const { location } = context.router.history
+    const to = createLocation(props.to, null, null, location)
 
     this.state = {
       path: createPath(to),
       to,
       IOSupported,
+      location,
     }
     this.handleRef = this.handleRef.bind(this)
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (prevState.to === nextProps.to) return null
-
-    const to = createLocation(nextProps.to, null, null, history.location)
+    const to = createLocation(nextProps.to, null, null, prevState.location)
     const path = createPath(to)
-
     return { path, to }
   }
 
