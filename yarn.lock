@@ -3652,7 +3652,7 @@ deep-map@^1.5.0:
 
 deepmerge@^2.0.1:
   version "2.1.0"
-  resolved "http://localhost:4873/deepmerge/-/deepmerge-2.1.0.tgz#511a54fff405fc346f0240bb270a3e9533a31102"
+  resolved "https://registry.yarnpkg.com/deepmerge/-/deepmerge-2.1.0.tgz#511a54fff405fc346f0240bb270a3e9533a31102"
 
 default-require-extensions@^1.0.0:
   version "1.0.0"
@@ -10607,7 +10607,7 @@ private@^0.1.6, private@^0.1.7, private@~0.1.5:
 
 probe-image-size@^4.0.0:
   version "4.0.0"
-  resolved "http://localhost:4873/probe-image-size/-/probe-image-size-4.0.0.tgz#d35b71759e834bcf580ea9f18ec8b9265c0977eb"
+  resolved "https://registry.yarnpkg.com/probe-image-size/-/probe-image-size-4.0.0.tgz#d35b71759e834bcf580ea9f18ec8b9265c0977eb"
   dependencies:
     any-promise "^1.3.0"
     deepmerge "^2.0.1"
