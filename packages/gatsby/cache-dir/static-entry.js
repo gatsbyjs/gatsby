@@ -59,7 +59,7 @@ const getLayout = page => {
 
 const createElement = React.createElement
 
-export default (locals, callback) => {
+export default (pagePath, callback) => {
   let pathPrefix = `/`
   if (__PREFIX_PATHS__) {
     pathPrefix = `${__PATH_PREFIX__}/`
@@ -110,7 +110,7 @@ export default (locals, callback) => {
     {
       basename: pathPrefix,
       location: {
-        pathname: locals.path,
+        pathname: pagePath,
       },
       context: {},
     },
@@ -175,12 +175,12 @@ export default (locals, callback) => {
     setPreBodyComponents,
     setPostBodyComponents,
     setBodyProps,
-    pathname: locals.path,
+    pathname: pagePath,
     bodyHtml,
   })
 
   // Create paths to scripts
-  const page = pages.find(page => page.path === locals.path)
+  const page = pages.find(page => page.path === pagePath)
   let runtimeScript
   const scriptsAndStyles = flatten(
     [`app`, page.layoutComponentChunkName, page.componentChunkName].map(s => {
@@ -300,11 +300,9 @@ export default (locals, callback) => {
       preBodyComponents={preBodyComponents}
       postBodyComponents={postBodyComponents}
       body={bodyHtml}
-      path={locals.path}
+      path={pagePath}
     />
   )}`
 
   callback(null, html)
 }
-
-// export const __esModule = true

@@ -26,7 +26,7 @@ try {
 
 Html = Html && Html.__esModule ? Html.default : Html
 
-export default (locals, callback) => {
+export default (pagePath, callback) => {
   let headComponents = []
   let htmlAttributes = {}
   let bodyAttributes = {}
