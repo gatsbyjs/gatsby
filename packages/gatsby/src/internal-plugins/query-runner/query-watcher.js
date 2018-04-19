@@ -18,7 +18,6 @@ const queryCompiler = require(`./query-compiler`).default
 const queue = require(`./query-queue`)
 const normalize = require(`normalize-path`)
 const report = require(`gatsby-cli/lib/reporter`)
-const murmurhash = require("murmurhash")
 
 exports.extractQueries = () => {
   const state = store.getState()
@@ -43,7 +42,7 @@ exports.extractQueries = () => {
           id: query.jsonName,
           jsonName: query.jsonName,
           query: query.text,
-          hash: murmurhash.v3(query.originalText),
+          hash: query.hash,
         })
       } else {
         report.warn(

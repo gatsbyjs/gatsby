@@ -79,7 +79,6 @@
     "moment": "^2.21.0",
     "name-all-modules-plugin": "^1.0.1",
     "node-libs-browser": "^2.0.0",
-    "node-murmurhash": "^2.1.0",
     "normalize-path": "^2.1.1",
     "null-loader": "^0.1.1",
     "opn": "^5.3.0",

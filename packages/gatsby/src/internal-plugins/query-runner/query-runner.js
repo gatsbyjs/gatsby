@@ -62,7 +62,7 @@ module.exports = async (queryJob, component) => {
     result[`pageContext`] = queryJob.context
     dataPath = `${generatePathChunkName(queryJob.jsonName)}-${resultHash}`
   } else {
-    dataPath = resultHash
+    dataPath = queryJob.hash
   }
 
   const programType = program._[0]

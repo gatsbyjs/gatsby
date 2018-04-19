@@ -1,6 +1,7 @@
 /*  eslint-disable new-cap */
 const graphql = require(`graphql`)
-const murmurhash = require("murmurhash")
+const murmurhash = require("./murmur")
+const nodePath = require(`path`)
 
 function getGraphQLTag(path) {
   const tag = path.get(`tag`)
@@ -17,7 +18,7 @@ function getGraphQLTag(path) {
   }
 
   const text = quasis[0].value.raw
-  const hash = murmurhash.v3(text)
+  const hash = murmurhash(text, `abc`)
 
   try {
     const ast = graphql.parse(text)
@@ -38,13 +39,61 @@ function getGraphQLTag(path) {
 export default function({ types: t }) {
   return {
     visitor: {
-      TaggedTemplateExpression(path, state) {
-        const { ast, text, hash } = getGraphQLTag(path)
+      Program(path, state) {
+        const nestedJSXVistor = {
+          JSXIdentifier(path2) {
+            if (
+              [`production`, `test`].includes(process.env.NODE_ENV) &&
+              path2.isJSXIdentifier({ name: `StaticQuery` })
+            ) {
+              const identifier = t.identifier("staticQueryData")
+              const filename = state.file.opts.filename
+              const shortResultPath = `public/static/d/${this.queryHash}.json`
+              const resultPath = nodePath.join(process.cwd(), shortResultPath)
+              // Add query
+              path2.parent.attributes.push(
+                t.jSXAttribute(
+                  t.jSXIdentifier(`data`),
+                  t.jSXExpressionContainer(identifier)
+                )
+              )
+              // Add import
+              const importDefaultSpecifier = t.importDefaultSpecifier(
+                identifier
+              )
+              const importDeclaration = t.importDeclaration(
+                [importDefaultSpecifier],
+                t.stringLiteral(
+                  filename
+                    ? nodePath.relative(
+                        nodePath.parse(filename).dir,
+                        resultPath
+                      )
+                    : shortResultPath
+                )
+              )
+              path.unshiftContainer("body", importDeclaration)
+            }
+          },
+        }
 
-        if (!ast) return null
+        path.traverse({
+          TaggedTemplateExpression(path2, state) {
+            const { ast, text, hash } = getGraphQLTag(path2)
 
-        path.replaceWith(t.StringLiteral(hash.toString()))
-        return null
+            if (!ast) return null
+
+            const queryHash = hash.toString()
+            const query = text
+
+            // Replace the query with the hash of the query.
+            path2.replaceWith(t.StringLiteral(queryHash))
+
+            path.traverse(nestedJSXVistor, { queryHash, query })
+
+            return null
+          },
+        })
       },
     },
   }

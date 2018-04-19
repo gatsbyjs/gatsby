@@ -6,10 +6,16 @@ const StaticQueryContext = React.createContext({})
 const StaticQuery = props => (
   <StaticQueryContext.Consumer>
     {staticQueryData => {
-      if (staticQueryData[props.query] && staticQueryData[props.query].data) {
-        return props.render(staticQueryData[props.query].data)
+      console.log(props)
+      if (
+        props.data ||
+        (staticQueryData[props.query] && staticQueryData[props.query].data)
+      ) {
+        return props.render(
+          props.data ? props.data.data : staticQueryData[props.query].data
+        )
       } else {
-        return <div>Loading</div>
+        return <div>Loading (StaticQuery)</div>
       }
     }}
   </StaticQueryContext.Consumer>
