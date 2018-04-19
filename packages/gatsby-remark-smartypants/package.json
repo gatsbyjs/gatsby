@@ -8,8 +8,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0-beta.42",
-    "retext": "^4.0.0",
-    "retext-smartypants": "^2.0.0",
+    "retext": "^5.0.0",
+    "retext-smartypants": "^3.0.0",
     "unist-util-visit": "^1.1.1"
   },
   "devDependencies": {
