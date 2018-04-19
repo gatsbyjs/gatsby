@@ -1,7 +1,6 @@
 import { graphql as graphqlFunction } from "graphql"
 const fs = require(`fs-extra`)
 const report = require(`gatsby-cli/lib/reporter`)
-const md5 = require(`md5`)
 const websocketManager = require(`../../utils/websocket-manager`)
 
 const path = require(`path`)
@@ -10,9 +9,8 @@ const { generatePathChunkName } = require(`../../utils/js-chunk-names`)
 
 const resultHashes = {}
 
-// Run query for a page
-module.exports = async (page, component) => {
-  page.id = page._id
+// Run query
+module.exports = async (queryJob, component) => {
   const { schema, program } = store.getState()
 
   const graphql = (query, context) =>
@@ -22,13 +20,10 @@ module.exports = async (page, component) => {
   let result
 
   // Nothing to do if the query doesn't exist.
-  if (!component.query || component.query === ``) {
+  if (!queryJob.query || queryJob.query === ``) {
     result = {}
   } else {
-    result = await graphql(component.query, {
-      ...page,
-      ...page.context,
-    })
+    result = await graphql(queryJob.query, queryJob.context)
   }
 
   // If there's a graphql error then log the error. If we're building, also
@@ -51,26 +46,45 @@ module.exports = async (page, component) => {
     }
   }
 
-  // Add the path context onto the results.
-  result[`pageContext`] = page.context
   const resultJSON = JSON.stringify(result)
-  const resultHash = md5(resultJSON)
+  const resultHash = require("crypto")
+    .createHash("sha1")
+    .update(resultJSON)
+    .digest("base64")
+    // Remove potentially unsafe characters. This increases chances of collisions
+    // slightly but it should still be very safe + we get a shorter
+    // url vs hex.
+    .replace(/[^a-zA-Z0-9-_]/g, "")
 
-  if (resultHashes[page.jsonName] !== resultHash) {
-    resultHashes[page.jsonName] = resultHash
+  let dataPath
+  if (queryJob?.isPage) {
+    // Add the page context onto the results.
+    result[`pageContext`] = queryJob.context
+    dataPath = `${generatePathChunkName(queryJob.jsonName)}-${resultHash}`
+  } else {
+    dataPath = resultHash
+  }
 
-    // Always write file to public/static/d/ folder.
-    const dataPath = `${generatePathChunkName(page.jsonName)}-${resultHash}`
+  const programType = program._[0]
 
-    const programType = program._[0]
-
-    if (programType === `develop` && page.path) {
-      websocketManager.emitData({
+  if (programType === `develop`) {
+    if (queryJob.isPage) {
+      websocketManager.emitPageData({
         result,
-        path: page.path,
+        id: queryJob.id,
+      })
+    } else {
+      websocketManager.emitStaticQueryData({
+        result,
+        id: queryJob.id,
       })
     }
+  }
 
+  if (resultHashes[queryJob.id] !== resultHash) {
+    resultHashes[queryJob.id] = resultHash
+
+    // Always write file to public/static/d/ folder.
     const resultPath = path.join(
       program.directory,
       `public`,
@@ -78,12 +92,13 @@ module.exports = async (page, component) => {
       `d`,
       `${dataPath}.json`
     )
+
     await fs.writeFile(resultPath, resultJSON)
 
     store.dispatch({
       type: `SET_JSON_DATA_PATH`,
       payload: {
-        [page.jsonName]: dataPath,
+        [queryJob.jsonName]: dataPath,
       },
     })
 

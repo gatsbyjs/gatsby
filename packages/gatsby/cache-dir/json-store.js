@@ -1,10 +1,12 @@
 import React, { createElement } from "react"
 import { Route } from "react-router-dom"
-import ComponentRenderer from "./component-renderer"
-import syncRequires from "./sync-requires"
-import socketIo from "./socketIo"
 import omit from "lodash/omit"
 import get from "lodash/get"
+
+import ComponentRenderer from "./component-renderer"
+import syncRequires from "./sync-requires"
+import { StaticQueryContext } from "gatsby"
+import socketIo, { getStaticQueryData, getPageQueryData } from "./socketIo"
 
 const getPathFromProps = props => {
   if (props.isPage) {
@@ -18,18 +20,28 @@ class JSONStore extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      data: {},
+      staticQueryData: getStaticQueryData(),
+      pageQueryData: getPageQueryData(),
       path: null,
     }
-
-    this.setPageData = this.setPageData.bind(this)
-
     this.socket = socketIo()
-    this.socket.on(`queryResult`, this.setPageData)
   }
 
-  componentWillMount() {
+  handleMittEvent = (type, event) => {
+    this.setState({
+      staticQueryData: getStaticQueryData(),
+      pageQueryData: getPageQueryData(),
+    })
+  }
+
+  componentDidMount() {
     this.registerPath(getPathFromProps(this.props))
+    ___emitter.on("*", this.handleMittEvent)
+  }
+
+  componentWillUnmount() {
+    this.unregisterPath(this.state.path)
+    ___emitter.off("*", this.handleMittEvent)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -52,32 +64,20 @@ class JSONStore extends React.Component {
     this.socket.emit(`unregisterPath`, path)
   }
 
-  componentWillUnmount() {
-    this.unregisterPath(this.state.path)
-  }
-
-  setPageData({ path, result }) {
-    this.setState({
-      data: {
-        ...this.state.data,
-        [path]: result,
-      },
-    })
-  }
-
   render() {
     const { isPage, pages, pageResources } = this.props
-    const data = this.state.data[this.state.path]
+    const data = this.state.pageQueryData[this.state.path]
     const propsWithoutPages = omit(this.props, `pages`)
-
     if (!data) {
-      return null
-    } else if (isPage) {
-      return createElement(ComponentRenderer, {
-        key: `normal-page`,
-        ...propsWithoutPages,
-        ...data,
-      })
+      return <div />
+    }
+
+    if (isPage) {
+      return (
+        <StaticQueryContext.Provider value={this.state.staticQueryData}>
+          <ComponentRenderer {...propsWithoutPages} {...data} />
+        </StaticQueryContext.Provider>
+      )
     } else {
       const dev404Page = pages.find(p => /^\/dev-404-page/.test(p.path))
       return createElement(Route, {

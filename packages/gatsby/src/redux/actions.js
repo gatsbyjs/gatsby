@@ -669,7 +669,7 @@ actions.deleteComponentsDependencies = (paths: string[]) => {
 }
 
 /**
- * When the query watcher extracts a graphq query, it calls
+ * When the query watcher extracts a GraphQL query, it calls
  * this to store the query with its component.
  * @private
  */
@@ -686,6 +686,19 @@ actions.replaceComponentQuery = ({
       query,
       componentPath,
     },
+  }
+}
+
+/**
+ * When the query watcher extracts a "static" GraphQL query from <StaticQuery>
+ * components, it calls this to store the query with its component.
+ * @private
+ */
+actions.replaceStaticQuery = (args: any, plugin?: ?Plugin = null) => {
+  return {
+    type: `REPLACE_STATIC_QUERY`,
+    plugin,
+    payload: args,
   }
 }
 

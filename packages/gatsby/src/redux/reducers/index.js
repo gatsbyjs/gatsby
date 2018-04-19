@@ -12,6 +12,7 @@ module.exports = {
   status: require(`./status`),
   componentDataDependencies: require(`./component-data-dependencies`),
   components: require(`./components`),
+  staticQueryComponents: require(`./static-query-components`),
   jobs: require(`./jobs`),
   webpack: require(`./webpack`),
   redirects: require(`./redirects`),

@@ -76,7 +76,10 @@ const findIdsWithoutDataDependencies = () => {
   // Get list of paths not already tracked and run the queries for these
   // paths.
   const notTrackedIds = _.difference(
-    [...state.pages.map(p => p.path)],
+    [
+      ...state.pages.map(p => p.path),
+      ...[...state.staticQueryComponents.values()].map(c => c.jsonName),
+    ],
     [...allTrackedIds, ...seenIdsWithoutDataDependencies]
   )
 
@@ -91,14 +94,39 @@ const findIdsWithoutDataDependencies = () => {
 }
 
 const runQueriesForPathnames = pathnames => {
+  const staticQueries = pathnames.filter(p => p.slice(0, 4) === `sq--`)
+  const pageQueries = pathnames.filter(p => p.slice(0, 4) !== `sq--`)
   const state = store.getState()
+
+  staticQueries.forEach(id => {
+    const staticQueryComponent = store.getState().staticQueryComponents.get(id)
+    const queryJob = {
+      id: staticQueryComponent.hash,
+      hash: staticQueryComponent.hash,
+      jsonName: staticQueryComponent.jsonName,
+      query: staticQueryComponent.query,
+      componentPath: staticQueryComponent.componentPath,
+      context: { path: staticQueryComponent.jsonName },
+    }
+    queue.push(queryJob)
+  })
+
   const pages = [...state.pages]
   let didNotQueueItems = true
-  pathnames.forEach(id => {
+  pageQueries.forEach(id => {
     const page = pages.find(pl => pl.path === id)
     if (page) {
       didNotQueueItems = false
-      queue.push({ ...page, _id: page.id, id: page.jsonName })
+      queue.push({
+        id: page.path,
+        jsonName: page.jsonName,
+        query: store.getState().components[page.componentPath].query,
+        isPage: true,
+        context: {
+          ...page,
+          ...page.context,
+        },
+      })
     }
   })
 
@@ -121,7 +149,7 @@ const findDirtyIds = actions => {
 
       if (!node || !node.id || !node.internal.type) return dirtyIds
 
-      // Find pages that depend on this node so are now dirty.
+      // Find components that depend on this node so are now dirty.
       dirtyIds = dirtyIds.concat(state.componentDataDependencies.nodes[node.id])
 
       // Find connections that depend on this node so are now invalid.

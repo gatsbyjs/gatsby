@@ -152,6 +152,10 @@
   version "7.0.0-beta.42"
   resolved "https://registry.yarnpkg.com/@babel/helper-plugin-utils/-/helper-plugin-utils-7.0.0-beta.42.tgz#9aa8b3e5dc72abea6b4f686712a7363cb29ea057"
 
+"@babel/helper-plugin-utils@7.0.0-beta.44":
+  version "7.0.0-beta.44"
+  resolved "https://registry.yarnpkg.com/@babel/helper-plugin-utils/-/helper-plugin-utils-7.0.0-beta.44.tgz#9f590bc3ae6daa8a10b853233baa3e25d263751d"
+
 "@babel/helper-regex@7.0.0-beta.42":
   version "7.0.0-beta.42"
   resolved "https://registry.yarnpkg.com/@babel/helper-regex/-/helper-regex-7.0.0-beta.42.tgz#ba01d0cd94786561e2afeb8c8b0e544aa034a1e1"
@@ -303,6 +307,13 @@
     "@babel/helper-plugin-utils" "7.0.0-beta.42"
     "@babel/plugin-syntax-optional-chaining" "7.0.0-beta.42"
 
+"@babel/plugin-proposal-optional-chaining@^7.0.0-beta.44":
+  version "7.0.0-beta.44"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-optional-chaining/-/plugin-proposal-optional-chaining-7.0.0-beta.44.tgz#f90682a4ced3eaf80c906a349ce9faa424c0b211"
+  dependencies:
+    "@babel/helper-plugin-utils" "7.0.0-beta.44"
+    "@babel/plugin-syntax-optional-chaining" "7.0.0-beta.44"
+
 "@babel/plugin-proposal-pipeline-operator@7.0.0-beta.42":
   version "7.0.0-beta.42"
   resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-pipeline-operator/-/plugin-proposal-pipeline-operator-7.0.0-beta.42.tgz#8d614cb3796beb1ec6810955f818062ac552c3b9"
@@ -420,6 +431,12 @@
   resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-optional-chaining/-/plugin-syntax-optional-chaining-7.0.0-beta.42.tgz#2c4e2ffc276e8e22577c68cea6a8ca472c147802"
   dependencies:
     "@babel/helper-plugin-utils" "7.0.0-beta.42"
+
+"@babel/plugin-syntax-optional-chaining@7.0.0-beta.44":
+  version "7.0.0-beta.44"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-optional-chaining/-/plugin-syntax-optional-chaining-7.0.0-beta.44.tgz#3e41156dc1cc94b1b6cc21cfb96e50dda4ad9986"
+  dependencies:
+    "@babel/helper-plugin-utils" "7.0.0-beta.44"
 
 "@babel/plugin-syntax-pipeline-operator@7.0.0-beta.42":
   version "7.0.0-beta.42"
@@ -9982,6 +9999,10 @@ node-libs-browser@^2.0.0:
     url "^0.11.0"
     util "^0.10.3"
     vm-browserify "0.0.4"
+
+node-murmurhash@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/node-murmurhash/-/node-murmurhash-2.1.0.tgz#26939a971056b77f8132e35715b316d6eeebc040"
 
 node-notifier@^5.2.1:
   version "5.2.1"
