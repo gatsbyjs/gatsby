@@ -8,10 +8,13 @@ describe(`Adds canonical link to head correctly`, () => {
     const setHeadComponents = jest.fn()
     const pathname = `/somepost`
 
-    await onRenderBody({
-      setHeadComponents,
-      pathname,
-    }, pluginOptions )
+    await onRenderBody(
+      {
+        setHeadComponents,
+        pathname,
+      },
+      pluginOptions
+    )
 
     expect(setHeadComponents).toMatchSnapshot()
     expect(setHeadComponents).toHaveBeenCalledTimes(1)
@@ -22,10 +25,13 @@ describe(`Adds canonical link to head correctly`, () => {
     const setHeadComponents = jest.fn()
     const pathname = `/somepost`
 
-    await onRenderBody({
-      setHeadComponents,
-      pathname,
-    }, pluginOptions )
+    await onRenderBody(
+      {
+        setHeadComponents,
+        pathname,
+      },
+      pluginOptions
+    )
 
     expect(setHeadComponents).toMatchSnapshot()
     expect(setHeadComponents).toHaveBeenCalledTimes(0)

@@ -18,7 +18,10 @@ const Tags = ({ pathContext, data }) => {
         <h1>{tagHeader}</h1>
         <ul>
           {edges.map(({ node }) => {
-            const { frontmatter: { title }, fields: { slug } } = node
+            const {
+              frontmatter: { title },
+              fields: { slug },
+            } = node
             return (
               <li key={slug}>
                 <Link to={slug}>{title}</Link>

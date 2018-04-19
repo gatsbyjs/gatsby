@@ -14,8 +14,7 @@ function generateIcons(icons, srcIcon) {
     return sharp(srcIcon)
       .resize(size)
       .toFile(imgPath)
-      .then(() => {
-      })
+      .then(() => {})
   })
 }
 
@@ -34,23 +33,29 @@ exports.onPostBuild = (args, pluginOptions) =>
     }
 
     // Determine destination path for icons.
-    const iconPath = path.join(`public`, manifest.icons[0].src.substring(0, manifest.icons[0].src.lastIndexOf(`/`)))
+    const iconPath = path.join(
+      `public`,
+      manifest.icons[0].src.substring(0, manifest.icons[0].src.lastIndexOf(`/`))
+    )
 
     //create destination directory if it doesn't exist
-    if (!fs.existsSync(iconPath)){
+    if (!fs.existsSync(iconPath)) {
       fs.mkdirSync(iconPath)
     }
 
-    fs.writeFileSync(path.join(`public`, `manifest.json`), JSON.stringify(manifest))
+    fs.writeFileSync(
+      path.join(`public`, `manifest.json`),
+      JSON.stringify(manifest)
+    )
 
     // Only auto-generate icons if a src icon is defined.
     if (icon !== undefined) {
-        generateIcons(manifest.icons, icon).then(() => {
-            //images have been generated
-            console.log(`done`)
-            resolve()
-        })
-    } else {
+      generateIcons(manifest.icons, icon).then(() => {
+        //images have been generated
+        console.log(`done`)
         resolve()
+      })
+    } else {
+      resolve()
     }
   })

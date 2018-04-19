@@ -223,7 +223,13 @@ describe(`gatsby-remark-copy-linked-files`, () => {
       )
       expect.assertions(3)
       await plugin(
-        { files: getFiles(imagePath), markdownAST, markdownNode, pathPrefix, getNode },
+        {
+          files: getFiles(imagePath),
+          markdownAST,
+          markdownNode,
+          pathPrefix,
+          getNode,
+        },
         {
           destinationDir: validDestinationDir,
         }

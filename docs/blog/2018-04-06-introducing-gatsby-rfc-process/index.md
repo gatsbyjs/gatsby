@@ -4,15 +4,15 @@ author: Kyle Mathews
 date: "2018-04-06"
 ---
 
-We're adopting an RFC ("request for comments") process for contributing ideas to Gatsby. 
+We're adopting an RFC ("request for comments") process for contributing ideas to Gatsby.
 
 Inspired by [React](https://github.com/reactjs/rfcs), [Yarn](https://github.com/yarnpkg/rfcs), [Ember](https://github.com/emberjs/rfcs), and [Rust](https://github.com/rust-lang/rfcs), the goal is to allow Gatsby core team members and community members to collaborate on the design of new features. It's also intended to provide a clear path for ideas to enter the project:
 
-- Create an RFC document detailing your proposal.
-- Submit a PR to the [RFC repository](https://github.com/gatsbyjs/rfcs).
-- Incorporate feedback into the proposal.
-- After discussion, the core team may or may not accept the RFC.
-- If the RFC is accepted, the PR is merged.
+* Create an RFC document detailing your proposal.
+* Submit a PR to the [RFC repository](https://github.com/gatsbyjs/rfcs).
+* Incorporate feedback into the proposal.
+* After discussion, the core team may or may not accept the RFC.
+* If the RFC is accepted, the PR is merged.
 
 RFCs are accepted when they are approved for implementation in Gatsby. A more thorough description of the process is available in the repository's [README](https://github.com/gatsbyjs/rfcs/blob/master/README.md). The exact details may be refined in the future.
 

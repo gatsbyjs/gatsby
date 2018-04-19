@@ -16,17 +16,14 @@ exports.replaceRenderer = (
   const stylesheets = instance.getStylesheets()
   const headComponents = stylesheets[0].css
     ? stylesheets.map((sheet, index) =>
-        h(
-          `style`,
-          {
-            className: `_styletron_hydrate_`,
-            dangerouslySetInnerHTML: {
-              __html: sheet.css,
-            },
-            key: index,
-            media: sheet.attrs.media,
-          }
-        )
+        h(`style`, {
+          className: `_styletron_hydrate_`,
+          dangerouslySetInnerHTML: {
+            __html: sheet.css,
+          },
+          key: index,
+          media: sheet.attrs.media,
+        })
       )
     : null
 

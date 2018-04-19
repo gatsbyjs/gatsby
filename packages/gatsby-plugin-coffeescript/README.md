@@ -8,8 +8,8 @@ Provides drop-in support for CoffeeScript and CJSX.
 
 ## How to use
 
-1. Include the plugin in your `gatsby-config.js` file.
-2. Write your components in CJSX or CoffeeScript.
+1.  Include the plugin in your `gatsby-config.js` file.
+2.  Write your components in CJSX or CoffeeScript.
 
 ```javascript
 // in gatsby-config.js

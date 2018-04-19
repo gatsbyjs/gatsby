@@ -3,7 +3,7 @@ title: How to handle comments in Gatsby blogs
 date: "2018-04-09"
 author: "Gatsby Central"
 canonicalLink: https://www.gatsbycentral.com/how-to-handle-comments-in-gatsby-blogs
-publishedAt: "Gatsby Central" 
+publishedAt: "Gatsby Central"
 ---
 
 > tl;dr Hosted services like disqus are the easiest. Staticman is the best option, but requires some setup.

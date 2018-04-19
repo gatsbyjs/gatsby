@@ -135,10 +135,10 @@ Let's do something crazy and add a list with another code example:
   …and a paragraph! In my younger and more vulnerable years my father gave me
   some advice that I’ve been turning over in my mind ever since.
 
-  1. A nested numbered list
-  2. “Whenever you feel like criticizing any one,” he told me, “just remember
-     that all the people in this world haven’t had the advantages that you’ve
-     had.”
+  1.  A nested numbered list
+  2.  “Whenever you feel like criticizing any one,” he told me, “just remember
+      that all the people in this world haven’t had the advantages that you’ve
+      had.”
 
 * Roger that, now back to topic: _Highlighted code blocks work here, too:_
 

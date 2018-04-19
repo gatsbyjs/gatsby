@@ -20,7 +20,12 @@ exports.onPostBuild = async ({ graphql, pathPrefix }, pluginOptions) => {
   // Paths we're excluding...
   const excludeOptions = exclude.concat(defaultOptions.exclude)
 
-  const queryRecords = await runQuery(graphql, query, excludeOptions, pathPrefix)
+  const queryRecords = await runQuery(
+    graphql,
+    query,
+    excludeOptions,
+    pathPrefix
+  )
   serialize(queryRecords).forEach(u => map.add(u))
 
   return await writeFile(saved, map.toString())
