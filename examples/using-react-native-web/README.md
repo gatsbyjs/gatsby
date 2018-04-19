@@ -1,6 +1,5 @@
 # using-react-native-web
 
-
 The example shows how to use
 [gatsby-plugin-react-native-web](https://github.com/slorber/gatsby-plugin-react-native-web)
 

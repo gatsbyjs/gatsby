@@ -7,10 +7,10 @@ You add plugins to read and understand folders with markdown files and from them
 
 Here's the steps Gatsby follows for making this happen.
 
-1. Read files into Gatsby from the filesystem
-2. Transform markdown to HTML and frontmatter to data
-3. Create a page component for the markdown files
-4. Programmatically create pages using Gatsby's node.js `createPage` API
+1.  Read files into Gatsby from the filesystem
+2.  Transform markdown to HTML and frontmatter to data
+3.  Create a page component for the markdown files
+4.  Programmatically create pages using Gatsby's node.js `createPage` API
 
 ### Read files into Gatsby from the filesystem - `gatsby-source-filesystem`
 
@@ -115,9 +115,9 @@ export const pageQuery = graphql`
 
 Two things are important in the file above.
 
-1. A GraphQL query is made in the second half of the file to get the Markdown data. Gatsby has automagically given you all the Markdown metadata and HTML in this query's result.
-   **Note: To learn more about GraphQL, consider this [excellent resource](https://www.howtographql.com/)**
-2. The result of the query is injected by Gatsby into the `Template` component as `data`. `markdownRemark` is the property that we find has all the details of the Markdown file. We can use that to construct a template for our blogpost view. Since it's a React component, you could style it with any of the recommended styling systems in Gatsby.
+1.  A GraphQL query is made in the second half of the file to get the Markdown data. Gatsby has automagically given you all the Markdown metadata and HTML in this query's result.
+    **Note: To learn more about GraphQL, consider this [excellent resource](https://www.howtographql.com/)**
+2.  The result of the query is injected by Gatsby into the `Template` component as `data`. `markdownRemark` is the property that we find has all the details of the Markdown file. We can use that to construct a template for our blogpost view. Since it's a React component, you could style it with any of the recommended styling systems in Gatsby.
 
 ### Create static pages using Gatsby's Node API.
 

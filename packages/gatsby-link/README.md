@@ -125,9 +125,17 @@ const Link = ({ children, to, ...other }) => {
 
   // Use gatsby-link for internal links, and <a> for others
   if (internal) {
-    return <GatsbyLink to={to} {...other}>{children}</GatsbyLink>;
+    return (
+      <GatsbyLink to={to} {...other}>
+        {children}
+      </GatsbyLink>
+    );
   }
-  return <a href={to} {...other}>{children}</a>;
+  return (
+    <a href={to} {...other}>
+      {children}
+    </a>
+  );
 };
 
 export default Link;

@@ -54,8 +54,10 @@ class Plugins extends Component {
             }}
           >
             Please use the search bar to find plugins that will make your
-            blazing-fast site even more awesome. If you'd like to create your own plugin,
-            see the <Link to="/docs/plugin-authoring/">Plugin Authoring</Link> page in the docs!
+            blazing-fast site even more awesome. If you'd like to create your
+            own plugin, see the{` `}
+            <Link to="/docs/plugin-authoring/">Plugin Authoring</Link> page in
+            the docs!
           </p>
         </div>
       </Container>

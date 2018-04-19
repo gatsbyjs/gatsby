@@ -2,7 +2,7 @@
 
 Adds GitHub-style hover links to headers in your markdown files when they're rendered.
 
-This is a sub-plugin for `gatsby-transformer-remark`.  As demoed below, add this plugin to the options of `gatsby-transformer-remark`.
+This is a sub-plugin for `gatsby-transformer-remark`. As demoed below, add this plugin to the options of `gatsby-transformer-remark`.
 
 ## Install
 
@@ -21,5 +21,5 @@ module.exports = {
       },
     },
   ],
-}
+};
 ```

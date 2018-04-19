@@ -17,8 +17,8 @@ Please do not use the issue tracker for personal support requests. [Stack Overfl
 
 If an issue is affecting you, start at the top of this list and complete as many tasks on the list as you can:
 
-1. If there is an issue, +1 the issue to indicate that it's affecting you
-2. If there is an issue and you can add more detail, write a comment describing how the bug is affecting OR if you can, write up a work-around for the bug
-3. If there _is not_ an issue, write the most complete description of what's happening, preferably with link to a Gatsby site that reproduces the problem
-4. Offer to help fix the bug (and it is totally expected that you ask for help; open-source maintainers want to help contributors)
-5. Deliver a well-crafted, tested PR
+1.  If there is an issue, +1 the issue to indicate that it's affecting you
+2.  If there is an issue and you can add more detail, write a comment describing how the bug is affecting OR if you can, write up a work-around for the bug
+3.  If there _is not_ an issue, write the most complete description of what's happening, preferably with link to a Gatsby site that reproduces the problem
+4.  Offer to help fix the bug (and it is totally expected that you ask for help; open-source maintainers want to help contributors)
+5.  Deliver a well-crafted, tested PR

@@ -34,11 +34,15 @@ const newPath = (linkNode, destinationDir) => {
 }
 
 const newLinkURL = (linkNode, destinationDir, pathPrefix) => {
-  const linkPaths = [`/`, pathPrefix, destinationDir, newFileName(linkNode)]
-    .filter(function(lpath) {
-      if (lpath) return true
-        return false
-      })
+  const linkPaths = [
+    `/`,
+    pathPrefix,
+    destinationDir,
+    newFileName(linkNode),
+  ].filter(function(lpath) {
+    if (lpath) return true
+    return false
+  })
 
   return path.posix.join(...linkPaths)
 }

@@ -37,10 +37,10 @@ Now we need a system to manage and deliver our content in a nice API (instructed
 
 Firstly, though, why do we want a Headless CMS and a JAMstack for the project? There are a few reasons most people use them, and some that are down to personal preference:
 
-1. **Easy setup!**
-2. **No back-end code.** I’m a front-end dev and honestly don’t want to spend hours setting up some PHP that I won’t enjoy. Gimme the good stuff.
-3. **No server needed.** Cloud CMSs mean that I don’t need to pay the hosting people to setup an SQL database.
-4. **Easy to edit.** If I need to edit a site on the fly or have a client who needs to do the same, they don’t need to touch any code or run to their home workstation to fix a spelling error. They can access it anywhere.
+1.  **Easy setup!**
+2.  **No back-end code.** I’m a front-end dev and honestly don’t want to spend hours setting up some PHP that I won’t enjoy. Gimme the good stuff.
+3.  **No server needed.** Cloud CMSs mean that I don’t need to pay the hosting people to setup an SQL database.
+4.  **Easy to edit.** If I need to edit a site on the fly or have a client who needs to do the same, they don’t need to touch any code or run to their home workstation to fix a spelling error. They can access it anywhere.
 
 ---
 

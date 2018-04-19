@@ -22,8 +22,8 @@ Let's get started.
 
 Creating new pages has two steps:
 
-1. Generate the "path" or "slug" for the page.
-2. Create the page.
+1.  Generate the "path" or "slug" for the page.
+2.  Create the page.
 
 To create our Markdown pages, we'll learn to use two Gatsby APIs
 [`onCreateNode`](/docs/node-apis/#onCreateNode) and

@@ -634,7 +634,7 @@ Community:
   [(demo)](https://gatsby-starter-procyon.netlify.com/)
 
   Features:
-  
+
   * [Gatsby](https://www.gatsbyjs.org/) + [ReactJS](https://reactjs.org/) (server side rendering)
   * [GraphCMS](https://graphcms.com/) Headless CMS
   * [DraftJS](https://draftjs.org/) (in-place) [Medium](https://medium.com)-like Editing
@@ -648,7 +648,7 @@ Community:
   * Automatic rebuilds with GraphCMS and Netlify web hooks
   * PWA (Progressive Web App)
   * [Google Fonts](https://fonts.google.com/)
-  
+
 * [gatsby-starter-2column-portfolio](https://github.com/praagyajoshi/gatsby-starter-2column-portfolio)
   [(demo)](http://2column-portfolio.surge.sh/)
 

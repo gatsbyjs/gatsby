@@ -31,7 +31,7 @@ const ISO_8601_FORMAT = [
   `YYYY-MM-DDTHHmmssZ`,
   `YYYY-MM-DDTHH:mm:ss.SSSZ`,
   `YYYY-MM-DDTHHmmss.SSSZ`,
-  
+
   `YYYY-[W]WW`,
   `YYYY[W]WW`,
   `YYYY-[W]WW-E`,
