@@ -21,6 +21,7 @@ const chalk = require(`chalk`)
 const address = require(`address`)
 const sourceNodes = require(`../utils/source-nodes`)
 const getSslCert = require(`../utils/get-ssl-cert`)
+const fs = require(`fs`)
 
 // const isInteractive = process.stdout.isTTY
 
@@ -248,12 +249,25 @@ async function startServer(program) {
 module.exports = async (program: any) => {
   const detect = require(`detect-port`)
   const port =
-    typeof program.port === `string` ? parseInt(program.port, 10) : program.port
+    typeof program.port === `string`
+      ? parseInt(program.port, 10)
+      : program.port
 
   // Check if https is enabled, then create or get SSL cert.
   // Certs are named after `name` inside the project's package.json.
   if (program.https) {
     program.ssl = await getSslCert(program.sitePackageJson.name)
+  } else if (program[`cert-file`] && program[`key-file`]) {
+    const { directory } = program
+    const keyPath = `${directory}/${program[`key-file`]}`
+    const certPath = `${directory}/${program[`cert-file`]}`
+
+    program.ssl = {
+      keyPath,
+      certPath,
+      key: fs.readFileSync(keyPath),
+      cert: fs.readFileSync(certPath),
+    }
   }
 
   let compiler

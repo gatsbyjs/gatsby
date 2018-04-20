@@ -33,6 +33,16 @@ Now open the development server at [https://localhost:8000](https://localhost:80
 
 Find out more about [how devcert works](https://github.com/davewasmer/devcert#how-it-works).
 
+## Custom Key and Certificate Files
+
+If you need to use a custom key and certificate file, you can pass they key and
+certificate in the following way
+
+    $ gatsby develop --key-file /path/to/key.key --cert-file /path/to/cert/crt
+
+the `--https` flag takes precedence over this option, and the `-https` is easier and more
+convenient in most cases
+
 ---
 
 Keep in mind that the certificates are explicitly issued to `localhost` and will only be accepted there. Using it together with the `--host` option will likely result in browser warnings.
