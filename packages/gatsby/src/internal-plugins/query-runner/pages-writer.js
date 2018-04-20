@@ -96,9 +96,11 @@ const preferDefault = m => m && m.default || m
     .join(`,\n`)}
 }\n\n`
 
-  const staticDataPaths = JSON.stringify(jsonDataPaths)
-
-  asyncRequires += `exports.json = ${staticDataPaths}\n\n`
+  asyncRequires += `exports.data = () => import("${joinPath(
+    program.directory,
+    `.cache`,
+    `data.json`
+  )}")\n\n`
 
   const writeAndMove = (file, data) => {
     const destination = joinPath(program.directory, `.cache`, file)
@@ -112,7 +114,13 @@ const preferDefault = m => m && m.default || m
     writeAndMove(`pages.json`, JSON.stringify(pagesData, null, 4)),
     writeAndMove(`sync-requires.js`, syncRequires),
     writeAndMove(`async-requires.js`, asyncRequires),
-    writeAndMove(`static-data-paths.json`, staticDataPaths),
+    writeAndMove(
+      `data.json`,
+      JSON.stringify({
+        pages: pagesData,
+        dataPaths: jsonDataPaths,
+      })
+    ),
   ])
 }
 
