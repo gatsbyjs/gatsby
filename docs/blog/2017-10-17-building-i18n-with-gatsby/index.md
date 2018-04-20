@@ -298,22 +298,22 @@ To let it render the content into html, you need to load i18n namespaces (using 
 ```js
 // gatsby-ssr.js
 
-import React from 'react'
-import { Provider } from 'react-redux'
-import { renderToString } from 'react-dom/server'
-import i18n from './src/i18n'
+import React from "react";
+import { Provider } from "react-redux";
+import { renderToString } from "react-dom/server";
+import i18n from "./src/i18n";
 
-import createStore from './src/state/createStore'
+import createStore from "./src/state/createStore";
 
 exports.replaceRenderer = ({ bodyComponent, replaceBodyHTMLString }) => {
-  i18n.loadNamespaces(['common'], () => {
-    const store = createStore()
+  i18n.loadNamespaces(["common"], () => {
+    const store = createStore();
     const ConnectedBody = () => (
       <Provider store={store}>{bodyComponent}</Provider>
-    )
-    replaceBodyHTMLString(renderToString(<ConnectedBody />))
-  })
-}
+    );
+    replaceBodyHTMLString(renderToString(<ConnectedBody />));
+  });
+};
 ```
 
 ### Without redux
@@ -323,17 +323,17 @@ exports.replaceRenderer = ({ bodyComponent, replaceBodyHTMLString }) => {
 ```js
 // gatsby-ssr.js
 
-import React from 'react'
-import { renderToString } from 'react-dom/server'
-import i18n from './src/i18n'
+import React from "react";
+import { renderToString } from "react-dom/server";
+import i18n from "./src/i18n";
 
-import createStore from './src/state/createStore'
+import createStore from "./src/state/createStore";
 
 exports.replaceRenderer = ({ bodyComponent, replaceBodyHTMLString }) => {
-  i18n.loadNamespaces(['common'], () => {
-    replaceBodyHTMLString(bodyComponent)
-  })
-}
+  i18n.loadNamespaces(["common"], () => {
+    replaceBodyHTMLString(bodyComponent);
+  });
+};
 ```
 
 > `translate` hoc from react-i18next cause page / component not able to SSR. I make it works by import i18n & use i18n.t

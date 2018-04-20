@@ -39,6 +39,7 @@ exports.createFileNode = async (pathToFile, pluginOptions = {}) => {
     internal = {
       contentDigest,
       type: `Directory`,
+      description: `Directory "${path.relative(process.cwd(), slashed)}"`,
     }
   } else {
     const contentDigest = await md5File(slashedFile.absolutePath)
@@ -46,6 +47,7 @@ exports.createFileNode = async (pathToFile, pluginOptions = {}) => {
       contentDigest,
       mediaType: mime.lookup(slashedFile.ext),
       type: `File`,
+      description: `File "${path.relative(process.cwd(), slashed)}"`,
     }
   }
 

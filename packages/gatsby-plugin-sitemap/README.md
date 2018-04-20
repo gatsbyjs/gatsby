@@ -25,7 +25,7 @@ generated sitemap will include all of your site's pages, except the ones you exc
 
 ## Options
 
-The `defaultOptions` [here](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-sitemap/src/internals.js#L20) can be overridden.
+The `defaultOptions` [here](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-sitemap/src/internals.js#L34) can be overridden.
 
 We _ALWAYS_ exclude the following pages: `/dev-404-page/`,`/404` &`/offline-plugin-app-shell-fallback/`, this cannot be changed.
 
@@ -41,7 +41,10 @@ plugins: [
     resolve: `gatsby-plugin-sitemap`,
     options: {
       output: `/some-other-sitemap.xml`,
-      exclude: [`/path/to/page`, `/another/page`],
+      // Exclude specific pages or groups of pages using glob parameters
+      // See: https://github.com/isaacs/minimatch
+      // The example below will exclude the single `path/to/page` and all routes beginning with `category`
+      exclude: ["/category/*", `/path/to/page`],
       query: `
         {
           site {

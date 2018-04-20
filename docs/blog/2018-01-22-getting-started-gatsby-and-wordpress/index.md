@@ -124,7 +124,7 @@ A template is a page component we can loop over to dynamically create pages base
 
 So a template is a page component that we can use to programmatically create pages. Then what's a page component?
 
-> Page Component — React.js component that renders a page and can optionally specify a layout component and a graphql query. ([Source](https://www.gatsbyjs.org/docs/api-specification/#concepts)).
+> Page Component — React.js component that renders a page and can optionally specify a layout component and a graphql query. ([Source](/docs/api-specification/#concepts)).
 
 React components living in `src/pages` automatically become pages. The file name of a page maps to its site path. My site in its current state only has one good example of this — `src/pages/index.js` maps to [amberley.blog](https://amberley.blog/). If I had an 'about' page, it would live at `src/pages/about.js`, and map to [amberley.blog/about](https://amberley.blog/about). (Since that doesn't exist, it will actually end up hitting the only other page currently defined in my site, which is `src/pages/404.js` — ([read about 404 pages](/docs/add-404-page/)).
 
@@ -136,8 +136,8 @@ While this isn't a tutorial -- more a guided walkthrough of me familiarizing and
 
 ##Sidenotes
 
-1. You [don't need to know GraphQL](https://github.com/gatsbyjs/gatsby/issues/1172#issuecomment-308634739) to get started with Gatsby. I didn't. It's been a good introduction.
-2. Gatsby makes heavy use of [plugins](/docs/plugins/) — both official and community — for a lot of things, from one that implements [Google Analytics](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics), to one that adds [GitHub's accessibility error scanner](https://github.com/alampros/gatsby-plugin-accessibilityjs) to all pages.
-3. Read through some of the source code. I particularly enjoyed reading through [the bootstrap process](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/bootstrap/index.js). (It's beautifully commented).
-4. Gatsby.js is a static Progressive Web App (PWA) generator, but to be PWA friendly (at least according to the [Lighthouse PWA audit](https://developers.google.com/web/tools/lighthouse/)), look into two plugins: `gatsby-plugin-manifest` and `gatsby-plugin-offline`.
-5. I did end up [deploying with Netlify](/docs/deploy-gatsby/#netlify), and I'm super happy with it. (A [previous post](https://www.gatsbyjs.org/blog/2017-12-06-gatsby-plus-contentful-plus-netlify/#solution-netlify--gatsby) discussed Netlify a bit more, if you're interested).
+1.  You [don't need to know GraphQL](https://github.com/gatsbyjs/gatsby/issues/1172#issuecomment-308634739) to get started with Gatsby. I didn't. It's been a good introduction.
+2.  Gatsby makes heavy use of [plugins](/docs/plugins/) — both official and community — for a lot of things, from one that implements [Google Analytics](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics), to one that adds [GitHub's accessibility error scanner](https://github.com/alampros/gatsby-plugin-accessibilityjs) to all pages.
+3.  Read through some of the source code. I particularly enjoyed reading through [the bootstrap process](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/bootstrap/index.js). (It's beautifully commented).
+4.  Gatsby.js is a static Progressive Web App (PWA) generator, but to be PWA friendly (at least according to the [Lighthouse PWA audit](https://developers.google.com/web/tools/lighthouse/)), look into two plugins: `gatsby-plugin-manifest` and `gatsby-plugin-offline`.
+5.  I did end up [deploying with Netlify](/docs/deploy-gatsby/#netlify), and I'm super happy with it. (A [previous post](/blog/2017-12-06-gatsby-plus-contentful-plus-netlify/#solution-netlify--gatsby) discussed Netlify a bit more, if you're interested).

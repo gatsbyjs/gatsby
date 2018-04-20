@@ -22,10 +22,12 @@ module.exports = {
         anonymize: true,
         // Setting this parameter is also optional
         respectDNT: true,
+        // Avoids sending pageview hits from custom paths
+        exclude: ["/preview/**", "/do-not-track/me/too/"],
       },
     },
   ],
-}
+};
 ```
 
 ## `<OutboundLink>` component
@@ -73,3 +75,7 @@ you can set a link e.g. in your imprint as follows:
 ## The "respectDNT" option
 
 If you enable this optional option, Google Analytics will not be loaded at all for visitors that have "Do Not Track" enabled. While using Google Analytics does not necessarily constitute Tracking, you might still want to do this to cater to more privacy oriented users.
+
+## The "exclude" option
+
+If you need to exclude any path from the tracking system, you can add it (one or more) to this optional array as glob expressions.

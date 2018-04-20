@@ -67,61 +67,61 @@ export default class Counter extends React.Component {
 
 In order to display this component within a Markdown file, you'll need to add a reference to the component in the template that renders your Markdown content. There are five parts to this:
 
-1. Install `rehype-react` as a dependency
+1.  Install `rehype-react` as a dependency
 
-   ```bash
-   # If you use Yarn
-   yarn add rehype-react
+    ```bash
+    # If you use Yarn
+    yarn add rehype-react
 
-   # If you use npm
-   npm install --save rehype-react
-   ```
+    # If you use npm
+    npm install --save rehype-react
+    ```
 
-2. Import `rehype-react` and whichever components you wish to use
+2.  Import `rehype-react` and whichever components you wish to use
 
-   ```js
-   import rehypeReact from "rehype-react";
-   import Counter from "../components/Counter";
-   ```
+    ```js
+    import rehypeReact from "rehype-react";
+    import Counter from "../components/Counter";
+    ```
 
-3. Create a render function with references to your custom components
+3.  Create a render function with references to your custom components
 
-   ```js
-   const renderAst = new rehypeReact({
-     createElement: React.createElement,
-     components: { "interactive-counter": Counter },
-   }).Compiler;
-   ```
+    ```js
+    const renderAst = new rehypeReact({
+      createElement: React.createElement,
+      components: { "interactive-counter": Counter },
+    }).Compiler;
+    ```
 
-   I prefer to use hyphenated names to make it clear that it's a custom component.
+    I prefer to use hyphenated names to make it clear that it's a custom component.
 
-4. Render your content using `htmlAst` instead of `html`
+4.  Render your content using `htmlAst` instead of `html`
 
-   This will look different depending on how you were previously referring to the post object retrieved from GraphQL, but in general you'll want to replace this:
+    This will look different depending on how you were previously referring to the post object retrieved from GraphQL, but in general you'll want to replace this:
 
-   ```js
-   <div dangerouslySetInnerHTML={{ __html: post.html }} />
-   ```
+    ```js
+    <div dangerouslySetInnerHTML={{ __html: post.html }} />
+    ```
 
-   with this:
+    with this:
 
-   ```js
-   {
-     renderAst(post.htmlAst);
-   }
-   ```
+    ```js
+    {
+      renderAst(post.htmlAst);
+    }
+    ```
 
-5. Change `html` to `htmlAst` in your `pageQuery`
+5.  Change `html` to `htmlAst` in your `pageQuery`
 
-   ```graphql
-   # ...
-   markdownRemark(fields: { slug: { eq: $slug } }) {
-     htmlAst # previously `html`
+    ```graphql
+    # ...
+    markdownRemark(fields: { slug: { eq: $slug } }) {
+      htmlAst # previously `html`
 
-     # other fields...
-   }
-   # ...
-   ```
+      # other fields...
+    }
+    # ...
+    ```
 
 ## Using the component
 

@@ -178,11 +178,11 @@ pages:
 The CI platform uses Docker images/containers, so `image: node:latest` tells the
 CI to use the latest node image. `cache:` caches the `node_modules` folder
 in between builds, so subsequent builds should be a lot faster as it doesn't have
-to reinstall all the dependancies required. `pages:` is the name of the
+to reinstall all the dependencies required. `pages:` is the name of the
 CI stage. You can have multiple stages, e.g. 'Test', 'Build', 'Deploy' etc.
 `script:` starts the next part of the CI stage, telling it to start running the
 below scripts inside the image selected. We have used the `npm install` and
-`./node_modules/.bin/gatsby build --prefix-paths` which will install all dependancies, and
+`./node_modules/.bin/gatsby build --prefix-paths` which will install all dependencies, and
 start the static site build, respectively.
 
 We have used
@@ -260,19 +260,19 @@ Finally, add a `static.json` file in the root of your project to define the dire
 
 In order to deploy your Gatsby project using [Now](https://zeit.co/now), you can do the following:
 
-1. Install the Now CLI
+1.  Install the Now CLI
 
 `npm install -g now`
 
-2. Install a node server package (such as `serve`, or `http-server`)
+2.  Install a node server package (such as `serve`, or `http-server`)
 
 `npm install --save serve`
 
-3. Add a `start` script to your `package.json` file, this is what Now will use to run your application:
+3.  Add a `start` script to your `package.json` file, this is what Now will use to run your application:
 
 `"start": "serve public/"`
 
-4. Run `now` at the root of your Gatsby project, this will upload your project, run the `build` script, and then your `start` script.
+4.  Run `now` at the root of your Gatsby project, this will upload your project, run the `build` script, and then your `start` script.
 
 ## Debugging tips
 

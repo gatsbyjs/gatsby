@@ -101,7 +101,9 @@ function shouldUpdateScroll(prevRouterProps, { location: { pathname } }) {
   }
 
   if (prevRouterProps) {
-    const { location: { pathname: oldPathname } } = prevRouterProps
+    const {
+      location: { pathname: oldPathname },
+    } = prevRouterProps
     if (oldPathname === pathname) {
       return false
     }

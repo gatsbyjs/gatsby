@@ -146,15 +146,7 @@ class DefaultLayout extends React.Component {
             position: isHomepage || isBlogLanding ? `absolute` : `fixed`,
           }}
         >
-          Live 2-day Gatsby training with Kyle Mathews! Sign up for{" "}
-          <OutboundLink
-            target="_blank"
-            rel="noopener"
-            href="https://workshop.me/2018-04-gatsby"
-          >
-            SF in April
-          </OutboundLink>{" "}
-          and{" "}
+          Live 2-day Gatsby training with Kyle Mathews! Sign up for{` `}
           <OutboundLink
             target="_blank"
             rel="noopener"

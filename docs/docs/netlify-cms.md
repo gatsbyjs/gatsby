@@ -37,7 +37,7 @@ gatsby new netlify-cms-tutorial https://github.com/gatsbyjs/gatsby-starter-hello
 Now move into the newly created directory and install the Gatsby plugin for Netlify CMS:
 
 ```shell
-cd netlify-cms-tutorial && npm install --save gatsby-plugin-netlify-cms
+cd netlify-cms-tutorial && npm install --save netlify-cms gatsby-plugin-netlify-cms
 ```
 
 Gatsby plugins are registered in a file called `gatsby-config.js` in the site root. Create that file
@@ -153,7 +153,7 @@ containing a Markdown file with your blog post content!
 This is the basic function of Netlify CMS - providing a comfortable editing experience and
 outputting raw content files to a Git repository. You've probably noticed that, even though the file
 was created in your repo, it's not anywhere on your site. That's because Netlify CMS doesn't go
-beyond creating the raw content - its able to work with almost any static site generator because it
+beyond creating the raw content - it's able to work with almost any static site generator because it
 allows the generator to determine how to build the raw content into something useful, whether for a
 website, mobile app, or something else entirely.
 
@@ -163,7 +163,7 @@ Let's fix that.
 ### Processing Netlify CMS Output with Gatsby
 
 Gatsby can be configured to process Markdown by following the [Adding Markdown
-Pages](https://www.gatsbyjs.org/docs/adding-markdown-pages/) guide in the docs. Our `config.yml`
+Pages](/docs/adding-markdown-pages/) guide in the docs. Our `config.yml`
 file for Netlify CMS is set up to use the same fields used in the guide, so you can follow the
 instructions to the letter and should work fine. **Note:** When configuring the
 `gatsby-source-filesystem` plugin in the Adding Markdown Pages Guide, the path to your markdown

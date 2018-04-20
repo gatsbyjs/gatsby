@@ -174,6 +174,16 @@ Community:
   Features:
 
   * localization (Multilanguage)
+ 
+* [gatsby-starter-datocms](https://github.com/datocms/gatsby-portfolio)
+  [(demo)](http://cranky-edison-12166d.netlify.com/)
+
+  Features:
+  
+  * Simple portfolio to quick start a site with DatoCMS
+  * Contents and media from DatoCMS
+  * Custom sass style
+  * SEO
 
 * [gatsby-starter-contentful-i18n](https://github.com/mccrodp/gatsby-starter-contentful-i18n) [(demo)](https://gatsby-starter-contentful-i18n.netlify.com/)
 
@@ -624,7 +634,7 @@ Community:
   [(demo)](https://gatsby-starter-procyon.netlify.com/)
 
   Features:
-  
+
   * [Gatsby](https://www.gatsbyjs.org/) + [ReactJS](https://reactjs.org/) (server side rendering)
   * [GraphCMS](https://graphcms.com/) Headless CMS
   * [DraftJS](https://draftjs.org/) (in-place) [Medium](https://medium.com)-like Editing
@@ -638,7 +648,7 @@ Community:
   * Automatic rebuilds with GraphCMS and Netlify web hooks
   * PWA (Progressive Web App)
   * [Google Fonts](https://fonts.google.com/)
-  
+
 * [gatsby-starter-2column-portfolio](https://github.com/praagyajoshi/gatsby-starter-2column-portfolio)
   [(demo)](http://2column-portfolio.surge.sh/)
 

@@ -505,6 +505,10 @@ const typeOwners = {}
  * @param {string} node.internal.contentDigest the digest for the content
  * of this node. Helps Gatsby avoid doing extra work on data that hasn't
  * changed.
+ * @param {string} node.internal.description An optional field. Human
+ * readable description of what this node represent / its source. It will
+ * be displayed when type conflicts are found, making it easier to find
+ * and correct type conflicts.
  * @example
  * createNode({
  *   // Data for the node.
@@ -525,6 +529,7 @@ const typeOwners = {}
  *       .digest(`hex`),
  *     mediaType: `text/markdown`, // optional
  *     content: JSON.stringify(fieldData), // optional
+ *     description: `Cool Service: "Title of entry"`, // optional
  *   }
  * })
  */
