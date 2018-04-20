@@ -149,9 +149,6 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   }
 
   const AltRouter = apiRunner(`replaceRouterComponent`, { history })[0]
-  const DefaultRouter = ({ children }) => (
-    <Router history={history}>{children}</Router>
-  )
 
   const ComponentRendererWithRouter = withRouter(ComponentRenderer)
 
@@ -163,8 +160,11 @@ apiRunnerAsync(`onClientEntry`).then(() => {
 
     const Root = () =>
       createElement(
-        AltRouter ? AltRouter : DefaultRouter,
-        { basename: pathPrefix },
+        AltRouter ? AltRouter : Router,
+        {
+          basename: pathPrefix,
+          history: !AltRouter ? history : undefined,
+        },
         createElement(
           ScrollContext,
           { shouldUpdateScroll },

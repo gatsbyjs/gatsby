@@ -123,18 +123,18 @@ if (__PREFIX_PATHS__) {
 }
 
 const AltRouter = apiRunner(`replaceRouterComponent`, { history })[0]
-const DefaultRouter = ({ children }) => (
-  <Router history={history}>{children}</Router>
-)
 
 const Root = () =>
   createElement(
-    AltRouter ? AltRouter : DefaultRouter,
-    { basename: pathPrefix },
+    AltRouter ? AltRouter : Router,
+    {
+      basename: pathPrefix,
+      history: !AltRouter ? history : undefined,
+    },
     createElement(
       ScrollContext,
       { shouldUpdateScroll },
-      createElement(withRouter(Route), {
+      createElement(Route, {
         // eslint-disable-next-line react/display-name
         render: routeProps => {
           attachToHistory(routeProps.history)
