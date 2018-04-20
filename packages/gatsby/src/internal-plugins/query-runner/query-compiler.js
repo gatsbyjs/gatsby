@@ -26,8 +26,8 @@ import type { DocumentNode, GraphQLSchema } from "graphql"
 const { printTransforms } = IRTransforms
 
 const {
-  ArgumentsOfCorrectTypeRule,
-  DefaultValuesOfCorrectTypeRule,
+  ValuesOfCorrectTypeRule,
+  VariablesDefaultValueAllowedRule,
   FragmentsOnCompositeTypesRule,
   KnownTypeNamesRule,
   LoneAnonymousOperationRule,
@@ -46,8 +46,8 @@ type RootQuery = {
 type Queries = Map<string, RootQuery>
 
 const validationRules = [
-  ArgumentsOfCorrectTypeRule,
-  DefaultValuesOfCorrectTypeRule,
+  ValuesOfCorrectTypeRule,
+  VariablesDefaultValueAllowedRule,
   FragmentsOnCompositeTypesRule,
   KnownTypeNamesRule,
   LoneAnonymousOperationRule,
@@ -146,7 +146,12 @@ class Runner {
       return compiledNodes
     }
 
-    const printContext = printTransforms.reduce(
+    // relay-compiler v1.5.0 added "StripUnusedVariablesTransform" to 
+    // printTransforms. Unfortunately it currently doesn't detect variables
+    // in input objects widely used in gatsby, and therefore removing 
+    // variable declaration from queries.
+    // As a temporary workaround remove that transform by slicing printTransforms.
+    const printContext = printTransforms.slice(0, -1).reduce(
       (ctx, transform) => transform(ctx, this.schema),
       compilerContext
     )
