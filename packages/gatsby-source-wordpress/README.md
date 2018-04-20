@@ -138,8 +138,8 @@ plugins.
 
 Set `hostingWPCOM: true`.
 
-You will need to provide an (API
-Key)[https://en.support.wordpress.com/api-keys/].
+You will need to provide an [API
+Key](https://en.support.wordpress.com/api-keys/).
 
 Note : you don't need this for Wordpress.org hosting in which your WordPress
 will behave like a self-hosted instance.
