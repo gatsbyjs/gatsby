@@ -35,14 +35,17 @@ Find out more about [how devcert works](https://github.com/davewasmer/devcert#ho
 
 ## Custom Key and Certificate Files
 
-If you need to use a custom key and certificate file, you can pass they key and
-certificate in the following way
+You may find that you need a custom key and certificate file for https if you use multiple
+machines for development (or if your dev environment is containerized in Docker).
 
-    $ gatsby develop --key-file /path/to/key.key --cert-file /path/to/cert/crt
+If you need to use a custom key and certificate file, you can pass the `--key-file` and
+`--cert-file` flags to `gatsby develop`.
 
-the `--https` flag takes precedence over this option, and the `-https` is easier and more
-convenient in most cases
+    $ gatsby develop --key-file /path/to/key.key --cert-file /path/to/cert.crt
+
+the `--https` flag takes precedence over this option, and the `--https` is easier and more
+convenient in most use cases.
 
 ---
 
-Keep in mind that the certificates are explicitly issued to `localhost` and will only be accepted there. Using it together with the `--host` option will likely result in browser warnings.
+Keep in mind that the certificates issued with the `--https` flag are explicitly issued to `localhost` and will only be accepted there. Using it together with the `--host` option will likely result in browser warnings.
