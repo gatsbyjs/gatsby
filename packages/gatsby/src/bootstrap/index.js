@@ -61,10 +61,10 @@ module.exports = async (args: BootstrapArgs) => {
   let activity = report.activityTimer(`delete html files from previous builds`)
   activity.start()
   await del([
-    `public/*.{html}`,
-    `public/**/*.{html}`,
+    `public/*.htm}`,
+    `public/**/*.html`,
     `!public/static`,
-    `!public/static/**/*.{html}`,
+    `!public/static/**/*.html`,
   ])
   activity.end()
 
