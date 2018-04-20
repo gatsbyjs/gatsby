@@ -22,6 +22,7 @@ See the [list of official and community plugins](/docs/plugins/)
 
 ## Podcasts
 
+* [2018-04-17 Gatsby.js w/Jason Lengstorf](https://spec.fm/podcasts/toolsday/134337)
 * [2018-02-28 syntax.fm on Static Site Generators (lots of Gatsby love)](https://syntax.fm/show/034/why-static-site-generators-are-awesome)
 * [2017-09-21 Kyle Mathews on JAMSTACK radio on "Static Site Generation with GatsbyJS](https://www.heavybit.com/library/podcasts/jamstack-radio/ep-22-static-site-generation-with-gatsbyjs/)
 * [2017-07-21 Kyle Mathews on Web of Tomorrow](https://www.orbit.fm/weboftomorrow/39/)
