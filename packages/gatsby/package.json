@@ -49,7 +49,7 @@
     "eslint-config-react-app": "^2.1.0",
     "eslint-loader": "^2.0.0",
     "eslint-plugin-flowtype": "^2.46.1",
-    "eslint-plugin-graphql": "^1.5.0",
+    "eslint-plugin-graphql": "^2.0.0",
     "eslint-plugin-import": "^2.9.0",
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-react": "^7.7.0",
@@ -65,8 +65,8 @@
     "gatsby-link": "^1.6.38-3",
     "gatsby-react-router-scroll": "^1.0.12-2",
     "glob": "^7.1.1",
-    "graphql": "^0.11.7",
-    "graphql-relay": "^0.5.1",
+    "graphql": "^0.13.2",
+    "graphql-relay": "^0.5.5",
     "graphql-skip-limit": "^1.0.11-2",
     "history": "^4.6.2",
     "invariant": "^2.2.4",
@@ -107,7 +107,7 @@
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
     "redux": "^3.6.0",
-    "relay-compiler": "1.4.1",
+    "relay-compiler": "1.5.0",
     "remote-redux-devtools": "^0.5.7",
     "serve": "^6.5.3",
     "shallow-compare": "^1.2.2",
@@ -174,7 +174,7 @@
     "url": "git+https://github.com/gatsbyjs/gatsby.git"
   },
   "resolutions": {
-    "graphql": "^0.11.7"
+    "graphql": "^0.13.2"
   },
   "scripts": {
     "build": "rimraf dist && npm run build:src && npm run build:internal-plugins && npm run build:rawfiles",
