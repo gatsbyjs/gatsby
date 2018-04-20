@@ -46,6 +46,11 @@ module.exports = async (queryJob, component) => {
     }
   }
 
+  // Add the page context onto the results.
+  if (queryJob?.isPage) {
+    result[`pageContext`] = queryJob.context
+  }
+
   const resultJSON = JSON.stringify(result)
   const resultHash = require("crypto")
     .createHash("sha1")
@@ -58,8 +63,6 @@ module.exports = async (queryJob, component) => {
 
   let dataPath
   if (queryJob?.isPage) {
-    // Add the page context onto the results.
-    result[`pageContext`] = queryJob.context
     dataPath = `${generatePathChunkName(queryJob.jsonName)}-${resultHash}`
   } else {
     dataPath = queryJob.hash
