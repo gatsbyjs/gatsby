@@ -520,6 +520,7 @@ async function responsiveSizes({ file, args = {}, reporter }) {
     duotone: options.duotone,
     grayscale: options.grayscale,
     rotate: options.rotate,
+    toFormat: options.toFormat,
     width: base64Width,
     height: base64Height,
   }
@@ -615,6 +616,7 @@ async function resolutions({ file, args = {}, reporter }) {
     duotone: options.duotone,
     grayscale: options.grayscale,
     rotate: options.rotate,
+    toFormat: options.toFormat,
   }
 
   // Get base64 version
