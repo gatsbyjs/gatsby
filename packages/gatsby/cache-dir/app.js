@@ -39,7 +39,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     Root = Root.default
   }
 
-  const renderer = apiRunner(`getRenderer`, undefined, ReactDOM.render)[0]
+  const renderer = apiRunner(`replaceHydrateFunction`, undefined, ReactDOM.render)[0]
 
   domReady(() =>
     renderer(
@@ -59,7 +59,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       if (NextRoot.default) {
         NextRoot = NextRoot.default
       }
-      ReactDOM.render(
+      renderer(
         <HotContainer>
           <NextRoot />
         </HotContainer>,
