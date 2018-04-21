@@ -128,7 +128,7 @@ const Root = () =>
   createElement(
     AltRouter ? AltRouter : Router,
     {
-      basename: pathPrefix,
+      basename: pathPrefix.slice(0, -1),
       history: !AltRouter ? history : undefined,
     },
     createElement(

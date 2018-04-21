@@ -102,7 +102,7 @@ export default (locals, callback) => {
   const bodyComponent = createElement(
     AltStaticRouter || StaticRouter,
     {
-      basename: pathPrefix,
+      basename: pathPrefix.slice(0, -1),
       location: {
         pathname: locals.path,
       },
@@ -111,11 +111,6 @@ export default (locals, callback) => {
     createElement(Route, {
       // eslint-disable-next-line react/display-name
       render: routeProps => {
-        // TODO figure out why this is necessary. Something
-        // related to this change perhaps https://github.com/gatsbyjs/gatsby/pull/4714
-        routeProps.location.pathname = `${routeProps.match.path}${
-          routeProps.location.pathname
-        }`
         const page = getPage(routeProps.location.pathname)
 
         const dataAndContext =
@@ -266,7 +261,9 @@ export default (locals, callback) => {
 
   // Add script loader for page scripts to the end of body element (after webpack manifest).
   // Taken from https://www.html5rocks.com/en/tutorials/speed/script-loading/
-  const scriptsString = scripts.map(s => JSON.stringify(s)).join(`,`)
+  const scriptsString = scripts
+    .map(s => `"${pathPrefix}${JSON.stringify(s).slice(1, -1)}"`)
+    .join(`,`)
   postBodyComponents.push(
     <script
       key={`script-loader`}
