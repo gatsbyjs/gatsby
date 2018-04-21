@@ -5,6 +5,7 @@ import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import ArrowBackIcon from "react-icons/lib/md/arrow-back"
 import Img from "gatsby-image"
 
+import GlobalLayout from "../layouts"
 import presets, { colors } from "../utils/presets"
 import typography, { rhythm, scale, options } from "../utils/typography"
 import Container from "../components/container"
@@ -50,7 +51,7 @@ class BlogPostTemplate extends React.Component {
       </p>
     )
     return (
-      <div>
+      <GlobalLayout location={this.props.location}>
         <Container className="post" css={{ paddingBottom: `0 !important` }}>
           {/* Add long list of social meta tags */}
           <Helmet>
@@ -274,7 +275,7 @@ class BlogPostTemplate extends React.Component {
             </div>
           </Container>
         </div>
-      </div>
+      </GlobalLayout>
     )
   }
 }
