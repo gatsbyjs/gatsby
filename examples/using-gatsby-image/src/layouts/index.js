@@ -15,7 +15,7 @@ const MainLayout = ({ children, location }) => (
     }}
   >
     {location.pathname !== `/` && <Navigation />}
-    {children()}
+    {children}
   </div>
 )
 
