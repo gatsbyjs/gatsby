@@ -5,7 +5,7 @@ const nodePath = require(`path`)
 
 function getGraphQLTag(path) {
   const tag = path.get(`tag`)
-  if (!tag.isIdentifier({ name: `graphql` })) return null
+  if (!tag.isIdentifier({ name: `graphql` })) return {}
 
   const quasis = path.node.quasi.quasis
 
