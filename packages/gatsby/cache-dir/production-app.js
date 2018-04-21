@@ -11,7 +11,7 @@ import emitter from "./emitter"
 window.___emitter = emitter
 import pages from "./pages.json"
 import redirects from "./redirects.json"
-import ComponentRenderer from "./component-renderer"
+import PageRenderer from "./page-renderer"
 import asyncRequires from "./async-requires"
 import loader from "./loader"
 loader.addPagesArray(pages)
@@ -150,8 +150,6 @@ apiRunnerAsync(`onClientEntry`).then(() => {
 
   const AltRouter = apiRunner(`replaceRouterComponent`, { history })[0]
 
-  const ComponentRendererWithRouter = withRouter(ComponentRenderer)
-
   loader.getResourcesForPathname(window.location.pathname, () => {
     let pathPrefix = `/`
     if (__PREFIX_PATHS__) {
@@ -173,12 +171,12 @@ apiRunnerAsync(`onClientEntry`).then(() => {
               attachToHistory(routeProps.history)
 
               if (loader.getPage(routeProps.location.pathname)) {
-                return createElement(ComponentRenderer, {
+                return createElement(PageRenderer, {
                   isPage: true,
                   ...routeProps,
                 })
               } else {
-                return createElement(ComponentRenderer, {
+                return createElement(PageRenderer, {
                   isPage: true,
                   location: { pathname: `/404.html` },
                 })

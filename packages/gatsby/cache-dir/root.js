@@ -6,7 +6,7 @@ import { apiRunner } from "./api-runner-browser"
 import syncRequires from "./sync-requires"
 import pages from "./pages.json"
 import redirects from "./redirects.json"
-import ComponentRenderer from "./component-renderer"
+import PageRenderer from "./page-renderer"
 import loader from "./loader"
 import { hot } from "react-hot-loader"
 import JSONStore from "./json-store"
@@ -141,12 +141,26 @@ const Root = () =>
           const { pathname } = routeProps.location
           const pageResources = loader.getResourcesForPathname(pathname)
           const isPage = !!(pageResources && pageResources.component)
-          return createElement(JSONStore, {
-            isPage,
-            pages,
-            ...routeProps,
-            pageResources,
-          })
+          if (isPage) {
+            return createElement(JSONStore, {
+              pages,
+              ...routeProps,
+              pageResources,
+            })
+          } else {
+            const dev404Page = pages.find(p => /^\/dev-404-page/.test(p.path))
+            return createElement(Route, {
+              key: `404-page`,
+              component: props =>
+                createElement(
+                  syncRequires.components[dev404Page.componentChunkName],
+                  {
+                    ...propsWithoutPages,
+                    ...data,
+                  }
+                ),
+            })
+          }
         },
       })
     )
