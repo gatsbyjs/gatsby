@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-less",
   "description": "Gatsby plugin to add support for using Less",
-  "version": "2.0.0-alpha.5",
+  "version": "2.0.0-alpha.6",
   "author": "monastic.panic@gmail.com",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -16,16 +16,18 @@
     "@babel/core": "^7.0.0-beta.42",
     "cross-env": "^5.1.4"
   },
-  "homepage":
-    "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-less#readme",
-  "keywords": ["gatsby", "gatsby-plugin", "less"],
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-less#readme",
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "less"
+  ],
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
     "gatsby": ">1.0.0 || >2.0.0-alpha"
   },
-  "repository":
-    "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-less",
+  "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-less",
   "scripts": {
     "build": "babel src --out-dir . --ignore __tests__,theme-test.js",
     "prepublish": "cross-env NODE_ENV=production npm run build",
