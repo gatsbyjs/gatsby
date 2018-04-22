@@ -12,8 +12,13 @@
     "watch": "babel src --out-dir ./ --source-maps --watch"
   },
   "homepage": "https://github.com/mdreizin/gatsby-plugin-robots-txt",
-  "repository": "https://github.com/mdreizin/gatsby-plugin-robots-txt",
-  "bugs": "https://github.com/mdreizin/gatsby-plugin-robots-txt/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mdreizin/gatsby-plugin-robots-txt.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mdreizin/gatsby-plugin-robots-txt/issues"
+  },
   "author": "Marat Dreizin <marat.dreizin@gmail.com>",
   "license": "MIT",
   "keywords": ["gatsby", "gatsby-plugin"],
