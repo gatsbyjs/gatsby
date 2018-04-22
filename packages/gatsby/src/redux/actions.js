@@ -23,14 +23,6 @@ type Job = {
 type PageInput = {
   path: string,
   component: string,
-  layout?: string,
-  context?: Object,
-}
-type LayoutInput = {
-  id?: string,
-  machineId?: string,
-  component: string,
-  layout?: string,
   context?: Object,
 }
 
@@ -42,19 +34,7 @@ type Page = {
   internalComponentName: string,
   jsonName: string,
   componentChunkName: string,
-  layout: ?string,
   updatedAt: number,
-}
-
-type Layout = {
-  id: any,
-  context: Object,
-  component: string,
-  componentWrapperPath: string,
-  componentChunkName: string,
-  internalComponentName: string,
-  jsonName: string,
-  isLayout: true,
 }
 
 type Plugin = {
@@ -84,8 +64,6 @@ const hasWarnedForPageComponent = new Set()
  * @param {Object} page a page object
  * @param {string} page.path Any valid URL. Must start with a forward slash
  * @param {string} page.component The absolute path to the component for this page
- * @param {string} page.layout The name of the layout for this page. By default
- * `'index'` layout is used
  * @param {Object} page.context Context data for this page. Passed as props
  * to the component `this.props.pageContext` as well as to the graphql query
  * as graphql arguments.
@@ -93,8 +71,6 @@ const hasWarnedForPageComponent = new Set()
  * createPage({
  *   path: `/my-sweet-new-page/`,
  *   component: path.resolve(`./src/templates/my-sweet-new-page.js`),
- *   // If you have a layout component at src/layouts/blog-layout.js
- *   layout: `blog-layout`,
  *   // The context is passed as props to the component as well
  *   // as into the component's GraphQL query.
  *   context: {
@@ -221,19 +197,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     jsonName = `index`
     internalComponentName = `ComponentIndex`
   }
-  let layout = page.layout || null
-  // If no layout is set we try fallback to `/src/layouts/index`.
-  if (
-    !layout &&
-    glob.sync(
-      joinPath(store.getState().program.directory, `src/layouts/index.*`)
-    ).length
-  ) {
-    layout = `index`
-  }
 
   let internalPage: Page = {
-    layout,
     jsonName,
     internalComponentName,
     path: page.path,
@@ -310,82 +275,6 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     plugin,
     traceId,
     payload: internalPage,
-  }
-}
-
-/**
- * Delete a layout
- * @param {string} layout a layout object with at least the name set
- * @example
- * deleteLayout(layout)
- */
-actions.deleteLayout = (layout: Layout, plugin?: Plugin) => {
-  return {
-    type: `DELETE_LAYOUT`,
-    payload: layout,
-  }
-}
-
-/**
- * Create a layout. Generally layouts are created automatically by placing a
- * React component in the `src/layouts/` directory. This action should be used
- * if loading layouts from an NPM package or from a non-standard location.
- * @param {Object} layout a layout object
- * @param {string} layout.component The absolute path to the component for this layout
- * @example
- * createLayout({
- *   component: path.resolve(`./src/templates/myNewLayout.js`),
- *   id: 'custom-id', // If no id is provided, the filename will be used as id.
- *   context: {
- *     title: `My New Layout`
- *   }
- * })
- */
-actions.createLayout = (
-  layout: LayoutInput,
-  plugin?: Plugin,
-  traceId?: string
-) => {
-  let id = layout.id || path.parse(layout.component).name
-  // Add a "machine" id as a universal ID to differentiate layout from
-  // page components.
-  const machineId = `layout---${id}`
-  let componentWrapperPath = joinPath(
-    store.getState().program.directory,
-    `.cache`,
-    `layouts`,
-    `${id}.js`
-  )
-
-  let internalLayout: Layout = {
-    id,
-    machineId,
-    componentWrapperPath,
-    isLayout: true,
-    jsonName: `layout-${_.kebabCase(id)}`,
-    internalComponentName: `Component-layout-${pascalCase(id)}`,
-    component: layout.component,
-    componentChunkName: generateComponentChunkName(layout.component),
-    // Ensure the page has a context object
-    context: layout.context || {},
-  }
-
-  const result = Joi.validate(internalLayout, joiSchemas.layoutSchema)
-
-  if (result.error) {
-    console.log(
-      chalk.blue.bgYellow(`The upserted layout didn't pass validation`)
-    )
-    console.log(chalk.bold.red(result.error))
-    console.log(internalLayout)
-    return null
-  }
-
-  return {
-    type: `CREATE_LAYOUT`,
-    plugin,
-    traceId,
-    payload: internalLayout,
   }
 }
 
@@ -780,7 +669,7 @@ actions.deleteComponentsDependencies = (paths: string[]) => {
 }
 
 /**
- * When the query watcher extracts a graphq query, it calls
+ * When the query watcher extracts a GraphQL query, it calls
  * this to store the query with its component.
  * @private
  */
@@ -797,6 +686,19 @@ actions.replaceComponentQuery = ({
       query,
       componentPath,
     },
+  }
+}
+
+/**
+ * When the query watcher extracts a "static" GraphQL query from <StaticQuery>
+ * components, it calls this to store the query with its component.
+ * @private
+ */
+actions.replaceStaticQuery = (args: any, plugin?: ?Plugin = null) => {
+  return {
+    type: `REPLACE_STATIC_QUERY`,
+    plugin,
+    payload: args,
   }
 }
 

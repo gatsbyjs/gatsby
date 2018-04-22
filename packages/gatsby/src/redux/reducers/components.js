@@ -6,7 +6,6 @@ module.exports = (state = {}, action) => {
     case `DELETE_CACHE`:
       return {}
     case `CREATE_PAGE`:
-    case `CREATE_LAYOUT`:
       action.payload.componentPath = normalize(action.payload.component)
       state[action.payload.componentPath] = _.merge(
         { query: `` },

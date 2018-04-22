@@ -61,10 +61,10 @@ module.exports = async (args: BootstrapArgs) => {
   let activity = report.activityTimer(`delete html files from previous builds`)
   activity.start()
   await del([
-    `public/*.{html}`,
-    `public/**/*.{html}`,
+    `public/*.htm}`,
+    `public/**/*.html`,
     `!public/static`,
-    `!public/static/**/*.{html}`,
+    `!public/static/**/*.html`,
   ])
   activity.end()
 
@@ -166,7 +166,6 @@ module.exports = async (args: BootstrapArgs) => {
       clobber: true,
     })
     await fs.ensureDirSync(`${program.directory}/.cache/json`)
-    await fs.ensureDirSync(`${program.directory}/.cache/layouts`)
 
     // Ensure .cache/fragments exists and is empty. We want fragments to be
     // added on every run in response to data as fragments can only be added if
@@ -298,16 +297,6 @@ module.exports = async (args: BootstrapArgs) => {
     const schema = store.getState().schema
     return graphql(schema, query, context, context, context)
   }
-
-  // Collect layouts.
-  activity = report.activityTimer(`createLayouts`)
-  activity.start()
-  await apiRunnerNode(`createLayouts`, {
-    graphql: graphqlRunner,
-    traceId: `initial-createLayouts`,
-    waitForCascadingActions: true,
-  })
-  activity.end()
 
   // Collect pages.
   activity = report.activityTimer(`createPages`)

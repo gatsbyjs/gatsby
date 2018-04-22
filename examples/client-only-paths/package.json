@@ -5,16 +5,16 @@
   "version": "1.0.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "gatsby": "latest",
-    "gatsby-plugin-google-analytics": "latest",
-    "gatsby-plugin-offline": "latest",
-    "gatsby-source-drupal": "latest",
+    "gatsby": "canary",
+    "gatsby-plugin-typography": "canary",
     "lodash": "^4.16.4",
+    "react": "^16.3.1",
     "react-addons-css-transition-group": "^15.5.2",
-    "react-typography": "^0.15.0",
+    "react-dom": "^16.3.1",
+    "react-typography": "^0.16.13",
     "slash": "^1.0.0",
-    "typography": "^0.15.8",
-    "typography-breakpoint-constants": "^0.14.0"
+    "typography": "^0.16.6",
+    "typography-breakpoint-constants": "^0.15.10"
   },
   "keywords": [
     "gatsby"

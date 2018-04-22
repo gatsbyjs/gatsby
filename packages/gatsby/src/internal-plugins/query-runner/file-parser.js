@@ -108,16 +108,51 @@ async function findGraphQLTags(file, text): Promise<Array<DefinitionNode>> {
     parseToAst(file, text)
       .then(ast => {
         let queries = []
+        let isStaticQuery = false
         if (!ast) {
           resolve(queries)
           return
         }
 
+        // Look for queries in <StaticQuery /> elements.
+        traverse(ast, {
+          TaggedTemplateExpression(path) {
+            if (
+              (`descendant of query`,
+              path?.parentPath?.parentPath?.node?.name?.name !== `query`)
+            ) {
+              return
+            }
+            if (
+              path.parentPath?.parentPath?.parentPath?.node?.name?.name !==
+              `StaticQuery`
+            ) {
+              return
+            }
+            const { ast: gqlAst, text, hash } = getGraphQLTag(path)
+            if (gqlAst) {
+              gqlAst.definitions.forEach(def => {
+                if (!def.name || !def.name.value) {
+                  report.panic(getMissingNameErrorMessage(file))
+                }
+              })
+            }
+            const definitions = [...gqlAst.definitions].map(d => {
+              d.isStaticQuery = true
+              d.text = text
+              d.hash = hash
+              return d
+            })
+            queries.push(...definitions)
+          },
+        })
+
+        // Look for exported page queries
         traverse(ast, {
           ExportNamedDeclaration(path, state) {
             path.traverse({
               TaggedTemplateExpression(innerPath) {
-                const gqlAst = getGraphQLTag(innerPath)
+                const { ast: gqlAst } = getGraphQLTag(innerPath)
                 if (gqlAst) {
                   gqlAst.definitions.forEach(def => {
                     if (!def.name || !def.name.value) {

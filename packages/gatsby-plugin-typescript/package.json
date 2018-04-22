@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-typescript",
-  "description": "Adds TypeScript support for Gatsby layouts and pages.",
+  "description": "Adds TypeScript support to Gatsby",
   "version": "1.4.17-3",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {

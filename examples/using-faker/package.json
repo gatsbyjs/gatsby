@@ -4,9 +4,13 @@
   "version": "1.0.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "gatsby": "latest",
-    "gatsby-plugin-react-helmet": "^1.0.8",
-    "gatsby-source-faker": "latest"
+    "core-js": "^2.5.5",
+    "gatsby": "next",
+    "gatsby-plugin-react-helmet": "next",
+    "gatsby-source-faker": "next",
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2",
+    "react-helmet": "^5.2.0"
   },
   "keywords": [
     "gatsby"

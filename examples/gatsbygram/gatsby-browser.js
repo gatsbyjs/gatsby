@@ -9,3 +9,7 @@ exports.shouldUpdateScroll = args => {
     return false
   }
 }
+
+exports.onInitialClientRender = () => {
+  window.___GATSBYGRAM_INITIAL_RENDER_COMPLETE = true
+}

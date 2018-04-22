@@ -67,15 +67,6 @@ module.exports = (types: any) => {
         if (typeof rootValue !== `undefined`) {
           path = rootValue.path
         }
-        // If path isn't set, this is probably a layout
-        if (
-          !path &&
-          rootValue &&
-          rootValue.componentChunkName &&
-          _.includes(rootValue.componentChunkName, `layout`)
-        ) {
-          path = `LAYOUT___${rootValue.id}`
-        }
         const runSift = require(`./run-sift`)
         const latestNodes = _.filter(
           getNodes(),

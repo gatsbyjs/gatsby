@@ -339,6 +339,9 @@ module.exports = async (
         directoryPath(path.join(`src`, `node_modules`)),
         directoryPath(`node_modules`),
       ],
+      alias: {
+        gatsby$: directoryPath(path.join(`.cache`, `gatsby-browser-entry.js`)),
+      },
     }
   }
 

@@ -31,13 +31,13 @@ exports.createPages = ({ graphql, actions }) => {
       `
     ).then(result => {
       if (result.errors) {
+        console.log(result)
         reject(result.errors)
       }
 
       // Create Asciidoc pages.
       const articleTemplate = path.resolve(`./src/templates/article.js`)
       _.each(result.data.allAsciidoc.edges, edge => {
-        console.log(edge)
         // Gatsby uses Redux to manage its internal state.
         // Plugins and sites can use functions like "createPage"
         // to interact with Gatsby.
@@ -59,27 +59,34 @@ exports.createPages = ({ graphql, actions }) => {
   })
 }
 
-exports.onCreateNode = async ({ node, actions, loadNodeContent }) => {
+exports.onCreateNode = async ({
+  node,
+  createNodeId,
+  actions,
+  loadNodeContent,
+}) => {
   const { createNode, createParentChildLink } = actions
   if (node.extension === `adoc`) {
     const content = await loadNodeContent(node)
     const html = asciidoc.convert(content)
-    const contentDigest = crypto
-      .createHash(`md5`)
-      .update(html)
-      .digest(`hex`)
     const slug = `/${path.parse(node.relativePath).name}/`
     const asciiNode = {
-      id: `${node.id} >>> ASCIIDOC`,
-      contentDigest,
+      id: createNodeId(`${node.id} >>> ASCIIDOC`),
       parent: node.id,
-      type: `Asciidoc`,
-      mediaType: `text/html`,
+      internal: {
+        type: `Asciidoc`,
+        mediaType: `text/html`,
+        content: html,
+      },
       children: [],
-      content: html,
       html,
       slug,
     }
+
+    asciiNode.internal.contentDigest = crypto
+      .createHash(`md5`)
+      .update(JSON.stringify(asciiNode))
+      .digest(`hex`)
 
     createNode(asciiNode)
     createParentChildLink({ parent: node, child: asciiNode })

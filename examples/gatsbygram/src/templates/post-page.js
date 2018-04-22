@@ -1,6 +1,7 @@
 import * as PropTypes from "prop-types"
 import React from "react"
 import PostDetail from "../components/post-detail"
+import Layout from "../layouts"
 
 class PostTemplate extends React.Component {
   static propTypes = {
@@ -9,10 +10,21 @@ class PostTemplate extends React.Component {
     }),
   }
   render() {
+    let isModal = false
+    // We don't want to show the modal if a user navigates
+    // directly to a post so if this code is running on Gatsby's
+    // initial render then we don't show the modal, otherwise we
+    // do.
+    if (
+      typeof window !== `undefined` &&
+      window.___GATSBYGRAM_INITIAL_RENDER_COMPLETE
+    ) {
+      isModal = true
+    }
     return (
-      // PostDetail is used for this detail page and
-      // also in the modal.
-      <PostDetail post={this.props.data.postsJson} />
+      <Layout location={this.props.location} isModal={isModal}>
+        <PostDetail post={this.props.data.postsJson} />
+      </Layout>
     )
   }
 }

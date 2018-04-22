@@ -27,13 +27,15 @@ class WebsocketManager {
   constructor() {
     this.isInitialised = false
     this.activePaths = new Set()
-    this.results = new Map()
+    this.pageResults = new Map()
+    this.staticQueryResults = new Map()
     this.websocket
     this.programDir
 
     this.init = this.init.bind(this)
     this.getSocket = this.getSocket.bind(this)
-    this.emitData = this.emitData.bind(this)
+    this.emitPageData = this.emitPageData.bind(this)
+    this.emitStaticQueryData = this.emitStaticQueryData.bind(this)
   }
 
   init({ server, directory }) {
@@ -43,6 +45,20 @@ class WebsocketManager {
     this.websocket.on(`connection`, s => {
       let activePath = null
 
+      // Send already existing static query results
+      this.staticQueryResults.forEach((result, id) => {
+        this.websocket.send({
+          type: `staticQueryResult`,
+          payload: { id, result },
+        })
+      })
+      this.pageResults.forEach((result, path) => {
+        this.websocket.send({
+          type: `pageQueryResult`,
+          payload: result,
+        })
+      })
+
       const leaveRoom = path => {
         s.leave(getRoomNameFromPath(path))
         const leftRoom = this.websocket.sockets.adapter.rooms[
@@ -51,7 +67,6 @@ class WebsocketManager {
         if (!leftRoom || leftRoom.length === 0) {
           this.activePaths.delete(path)
         }
-        activePath = null
       }
 
       s.on(`registerPath`, path => {
@@ -59,12 +74,18 @@ class WebsocketManager {
         activePath = path
         this.activePaths.add(path)
 
-        if (this.results.has(path)) {
-          s.emit(`queryResult`, this.results.get(path))
+        if (this.pageResults.has(path)) {
+          this.websocket.send({
+            type: `pageQueryResult`,
+            payload: this.pageResults.get(path),
+          })
         } else {
           const result = getCachedPageData(path, this.programDir)
-          this.results.set(path, result)
-          s.emit(`queryResult`, result)
+          this.pageResults.set(path, result)
+          this.websocket.send({
+            type: `pageQueryResult`,
+            payload: this.pageResults.get(path),
+          })
         }
       })
       
@@ -84,16 +105,17 @@ class WebsocketManager {
     return this.isInitialised && this.websocket
   }
 
-  emitData(data) {
-    const isActivePath =
-      data.path && Array.from(this.activePaths.values()).includes(data.path)
-
-    if (isActivePath) {
-      this.websocket
-        .to(getRoomNameFromPath(data.path))
-        .emit(`queryResult`, data)
+  emitStaticQueryData(data) {
+    this.staticQueryResults.set(data.id, data.result)
+    if (this.isInitialised) {
+      this.websocket.send({ type: `staticQueryResult`, payload: data })
     }
-    this.results.set(data.path, data)
+  }
+  emitPageData(data) {
+    if (this.isInitialised) {
+      this.websocket.send({ type: `pageQueryResult`, payload: data })
+    }
+    this.pageResults.set(data.path, data)
   }
 }
 

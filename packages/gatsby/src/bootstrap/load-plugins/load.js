@@ -132,7 +132,6 @@ module.exports = async (config = {}) => {
     `../../internal-plugins/dev-404-page`,
     `../../internal-plugins/load-babel-config`,
     `../../internal-plugins/component-page-creator`,
-    `../../internal-plugins/component-layout-creator`,
     `../../internal-plugins/internal-data-bridge`,
     `../../internal-plugins/prod-404`,
     `../../internal-plugins/query-runner`,

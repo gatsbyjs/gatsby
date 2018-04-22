@@ -53,10 +53,10 @@ exports.registerServiceWorker = true
 exports.replaceRouterComponent = true
 
 /**
- * Allow a plugin to replace the page and layout component renderer. This api runner can be used to
+ * Allow a plugin to replace the page component renderer. This api runner can be used to
  * implement page transitions. See https://github.com/gatsbyjs/gatsby/tree/master/examples/using-page-transitions for an example of this.
  * @param {object} $0
- * @param {object} $0.props The props of the page or layout.
+ * @param {object} $0.props The props of the page.
  * @param {object} $0.loader The gatsby loader.
  */
 exports.replaceComponentRenderer = true

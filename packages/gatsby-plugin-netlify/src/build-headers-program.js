@@ -63,7 +63,6 @@ function preloadHeadersByPage(pages, manifest, pathPrefix) {
       ...COMMON_BUNDLES,
       pathChunkName(page.path),
       page.componentChunkName,
-      page.layoutComponentChunkName,
     ]
 
     const pathKey = headersPath(pathPrefix, page.path)

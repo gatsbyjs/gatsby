@@ -179,7 +179,7 @@ module.exports = async () => {
           return runSift({
             args: { filter: { ...args } },
             nodes: latestNodes,
-            path: context.path ? context.path : `LAYOUT___${context.id}`,
+            path: context.path ? context.path : ``,
             type: gqlType,
           })
         },

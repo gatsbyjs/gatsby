@@ -1,9 +1,12 @@
 import React, { Component } from "react"
 import Helmet from "react-helmet"
 
+import GlobalLayout from "../layouts"
 import EvaluationTable from "../components/evaluation-table"
 import EvaluationCell from "../components/evaluation-cell"
 import FuturaParagraph from "../components/futura-paragraph"
+import PageWithSidebar from "../components/page-with-sidebar"
+import featuresSidebar from "./docs/features-links.yaml"
 import Container from "../components/container"
 import { options, rhythm } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
@@ -196,11 +199,21 @@ class FeaturesPage extends Component {
     )
 
     return (
-      <Container>
-        <FeaturesHeader />
-        <EvaluationTable sections={sections} sectionHeaders={sectionHeaders} />
-        <FeaturesFooter />
-      </Container>
+      <GlobalLayout location={this.props.location}>
+        <PageWithSidebar
+          yaml={featuresSidebar}
+          renderContent={() => (
+            <Container>
+              <FeaturesHeader />
+              <EvaluationTable
+                sections={sections}
+                sectionHeaders={sectionHeaders}
+              />
+              <FeaturesFooter />
+            </Container>
+          )}
+        />
+      </GlobalLayout>
     )
   }
 }

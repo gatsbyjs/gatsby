@@ -40,10 +40,7 @@ A basic directory structure of a project might look like this:
     │       └── 01-03-2017
     │           └── index.md
     ├── templates
-    │   └── post.jsx
-    │
-    └── layouts
-        └── index.jsx
+        └── post.jsx
 ```
 
 ### Page components
@@ -115,31 +112,6 @@ export const pageQuery = graphql`
     }
   }
 `;
-```
-
-### Layout components
-
-`src/layouts/index.jsx` (optional) wraps page components. You can use it for
-portions of pages that are shared across pages like headers and footers.
-
-You can use the `location` prop to render conditionally based on the page
-URL.
-
-Example:
-
-```jsx
-import React from "react";
-import Navigation from "../components/Navigation/Navigation.jsx";
-
-export default class Template extends React.Component {
-  render() {
-    if (this.props.location.pathname !== "/") {
-      return <Navigation>{this.props.children()}</Navigation>;
-    } else {
-      return this.props.children();
-    }
-  }
-}
 ```
 
 ### HTML component
