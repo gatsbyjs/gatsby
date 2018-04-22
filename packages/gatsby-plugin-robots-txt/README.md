@@ -55,19 +55,29 @@ If you would like to disable crawlers for [deploy-previews](https://www.netlify.
 `gatsby-config.js`
 
 ```js
-const sitePreviewUrl = process.env.DEPLOY_PRIME_URL;
+const {
+  NODE_ENV,
+  URL: NETLIFY_SITE_URL = 'https://www.example.com',
+  DEPLOY_PRIME_URL: NETLIFY_DEPLOY_URL = NETLIFY_SITE_URL,
+  CONTEXT: NETLIFY_ENV = NODE_ENV
+} = process.env;
+const isNetlifyProduction = NETLIFY_ENV === 'production';
+const siteUrl = isNetlifyProduction ? NETLIFY_SITE_URL : NETLIFY_DEPLOY_URL;
 
 module.exports = {
   siteMetadata: {
-    siteUrl: 'https://www.example.com'
+    siteUrl
   },
   plugins: [
     {
       resolve: 'gatsby-plugin-robots-txt',
-      options:
-        typeof sitePreviewUrl !== 'undefined'
-          ? { policy: [{ userAgent: '*', disallow: ['/'] }] }
-          : { policy: [{ userAgent: '*' }] }
+      options: isNetlifyProduction
+        ? { policy: [{ userAgent: '*' }] }
+        : {
+            policy: [{ userAgent: '*', disallow: ['/'] }],
+            sitemap: null,
+            host: null
+          }
     }
   ]
 };
