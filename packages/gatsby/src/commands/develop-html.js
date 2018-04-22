@@ -4,6 +4,7 @@ const webpack = require(`webpack`)
 const { createErrorFromString } = require(`gatsby-cli/lib/reporter/errors`)
 const debug = require(`debug`)(`gatsby:html`)
 const webpackConfig = require(`../utils/webpack.config`)
+const renderHTML = require(`../utils/html-renderer`)
 
 module.exports = async (program: any) => {
   const { directory } = program
@@ -15,8 +16,7 @@ module.exports = async (program: any) => {
     program,
     directory,
     `develop-html`,
-    null,
-    [`/`]
+    null
   )
 
   return new Promise((resolve, reject) => {
@@ -33,14 +33,16 @@ module.exports = async (program: any) => {
         )
       }
 
-      // Remove the temp JS bundle file built for the static-site-generator-plugin
-      try {
-        fs.unlinkSync(outputFile)
-      } catch (e) {
-        // This function will fail on Windows with no further consequences.
-      }
+      return renderHTML(require(outputFile), [`/`]).then(() => {
+        // Remove the temp JS bundle file built for the static-site-generator-plugin
+        try {
+          fs.unlinkSync(outputFile)
+        } catch (e) {
+          // This function will fail on Windows with no further consequences.
+        }
 
-      return resolve(null, stats)
+        return resolve(null, stats)
+      })
     })
   })
 }

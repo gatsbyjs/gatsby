@@ -1,5 +1,3 @@
-const MiniCssExtractPlugin = require(`mini-css-extract-plugin`)
-
 exports.onCreateWebpackConfig = (
   { actions, stage, rules, plugins, loaders },
   { postCssPlugins, ...sassOptions }
@@ -18,7 +16,7 @@ exports.onCreateWebpackConfig = (
   const sassRule = {
     test: /\.s(a|c)ss$/,
     use: [
-      MiniCssExtractPlugin.loader,
+      loaders.miniCssExtract(),
       loaders.css({ importLoaders: 1 }),
       loaders.postcss({ plugins: postCssPlugins }),
       sassLoader,
@@ -27,7 +25,7 @@ exports.onCreateWebpackConfig = (
   const sassRuleModules = {
     test: /\.module\.s(a|c)ss$/,
     use: [
-      MiniCssExtractPlugin.loader,
+      loaders.miniCssExtract(),
       loaders.css({ modules: true, importLoaders: 1 }),
       loaders.postcss({ plugins: postCssPlugins }),
       sassLoader,
