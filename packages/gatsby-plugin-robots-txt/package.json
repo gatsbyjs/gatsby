@@ -9,8 +9,7 @@
     "clean": "rm -rf gatsby-node.js*",
     "lint": "eslint --ext js ./ --cache",
     "build": "babel src --out-dir ./ --source-maps",
-    "watch": "babel src --out-dir ./ --source-maps --watch",
-    "release": "semantic-release"
+    "watch": "babel src --out-dir ./ --source-maps --watch"
   },
   "homepage": "https://github.com/mdreizin/gatsby-plugin-robots-txt",
   "repository": "https://github.com/mdreizin/gatsby-plugin-robots-txt",
@@ -31,7 +30,8 @@
     "eslint": "^4.19.1",
     "eslint-plugin-babel": "^5.1.0",
     "prettier": "^1.12.1",
-    "semantic-release": "^15.1.7"
+    "semantic-release": "^15.1.7",
+    "travis-deploy-once": "^4.4.1"
   },
   "peerDependencies": {
     "gatsby": "^1.0.0"

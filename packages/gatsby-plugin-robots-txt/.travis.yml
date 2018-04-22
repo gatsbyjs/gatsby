@@ -26,6 +26,6 @@ jobs:
       deploy:
         skip_cleanup: true
         provider: script
-        script: yarn run release
+        script: npx travis-deploy-once "npx semantic-release"
       on:
         branch: master
