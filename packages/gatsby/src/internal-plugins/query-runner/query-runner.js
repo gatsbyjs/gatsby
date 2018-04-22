@@ -1,3 +1,5 @@
+// @flow
+
 import { graphql as graphqlFunction } from "graphql"
 const fs = require(`fs-extra`)
 const report = require(`gatsby-cli/lib/reporter`)
@@ -9,8 +11,18 @@ const { generatePathChunkName } = require(`../../utils/js-chunk-names`)
 
 const resultHashes = {}
 
+type QueryJob = {
+  id: string,
+  hash?: string,
+  jsonName: string,
+  query: string,
+  componentPath: string,
+  context: Object,
+  isPage: Boolean,
+}
+
 // Run query
-module.exports = async (queryJob, component) => {
+module.exports = async (queryJob: QueryJob, component: Any) => {
   const { schema, program } = store.getState()
 
   const graphql = (query, context) =>

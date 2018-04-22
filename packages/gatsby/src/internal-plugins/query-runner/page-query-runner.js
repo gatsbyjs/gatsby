@@ -1,3 +1,7 @@
+// @flow
+
+import type { QueryJob } from "../query-runner"
+
 /**
  * Jobs of this module
  * - Ensure on bootstrap that all invalid page queries are run and report
@@ -100,7 +104,7 @@ const runQueriesForPathnames = pathnames => {
 
   staticQueries.forEach(id => {
     const staticQueryComponent = store.getState().staticQueryComponents.get(id)
-    const queryJob = {
+    const queryJob: QueryJob = {
       id: staticQueryComponent.hash,
       hash: staticQueryComponent.hash,
       jsonName: staticQueryComponent.jsonName,
@@ -117,16 +121,18 @@ const runQueriesForPathnames = pathnames => {
     const page = pages.find(pl => pl.path === id)
     if (page) {
       didNotQueueItems = false
-      queue.push({
-        id: page.path,
-        jsonName: page.jsonName,
-        query: store.getState().components[page.componentPath].query,
-        isPage: true,
-        context: {
-          ...page,
-          ...page.context,
-        },
-      })
+      queue.push(
+        ({
+          id: page.path,
+          jsonName: page.jsonName,
+          query: store.getState().components[page.componentPath].query,
+          isPage: true,
+          context: {
+            ...page,
+            ...page.context,
+          },
+        }: QueryJob)
+      )
     }
   })
 
