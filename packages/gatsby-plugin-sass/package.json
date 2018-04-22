@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-sass",
   "description": "Gatsby plugin to handle scss/sass files",
-  "version": "2.0.0-alpha.5",
+  "version": "2.0.0-alpha.6",
   "author": "Daniel Farrell <daniel@mobelux.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -29,8 +29,7 @@
     "gatsby": "^2.0.0-0"
   },
   "readme": "README.md",
-  "repository":
-    "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sass",
+  "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sass",
   "scripts": {
     "build": "babel src --out-dir . --ignore __tests__",
     "prepublish": "cross-env NODE_ENV=production npm run build",
