@@ -11,7 +11,7 @@ import emitter from "./emitter"
 window.___emitter = emitter
 import pages from "./pages.json"
 import redirects from "./redirects.json"
-import ComponentRenderer from "./component-renderer"
+import PageRenderer from "./page-renderer"
 import asyncRequires from "./async-requires"
 import loader from "./loader"
 loader.addPagesArray(pages)
@@ -149,11 +149,6 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   }
 
   const AltRouter = apiRunner(`replaceRouterComponent`, { history })[0]
-  const DefaultRouter = ({ children }) => (
-    <Router history={history}>{children}</Router>
-  )
-
-  const ComponentRendererWithRouter = withRouter(ComponentRenderer)
 
   loader.getResourcesForPathname(window.location.pathname, () => {
     let pathPrefix = `/`
@@ -163,33 +158,30 @@ apiRunnerAsync(`onClientEntry`).then(() => {
 
     const Root = () =>
       createElement(
-        AltRouter ? AltRouter : DefaultRouter,
-        { basename: pathPrefix },
+        AltRouter ? AltRouter : Router,
+        {
+          basename: pathPrefix.slice(0, -1),
+          history: !AltRouter ? history : undefined,
+        },
         createElement(
           ScrollContext,
           { shouldUpdateScroll },
-          createElement(ComponentRendererWithRouter, {
-            layout: true,
-            // eslint-disable-next-line react/display-name
-            children: layoutProps =>
-              createElement(Route, {
-                render: routeProps => {
-                  attachToHistory(routeProps.history)
-                  const props = layoutProps ? layoutProps : routeProps
+          createElement(withRouter(Route), {
+            render: routeProps => {
+              attachToHistory(routeProps.history)
 
-                  if (loader.getPage(props.location.pathname)) {
-                    return createElement(ComponentRenderer, {
-                      isPage: true,
-                      ...props,
-                    })
-                  } else {
-                    return createElement(ComponentRenderer, {
-                      isPage: true,
-                      location: { pathname: `/404.html` },
-                    })
-                  }
-                },
-              }),
+              if (loader.getPage(routeProps.location.pathname)) {
+                return createElement(PageRenderer, {
+                  isPage: true,
+                  ...routeProps,
+                })
+              } else {
+                return createElement(PageRenderer, {
+                  isPage: true,
+                  location: { pathname: `/404.html` },
+                })
+              }
+            },
           })
         )
       )

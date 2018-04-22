@@ -22,8 +22,6 @@ const fetchResource = resourceName => {
   let resourceFunction
   if (resourceName.slice(0, 12) === `component---`) {
     resourceFunction = asyncRequires.components[resourceName]
-  } else if (resourceName.slice(0, 9) === `layout---`) {
-    resourceFunction = asyncRequires.layouts[resourceName]
   } else {
     resourceFunction = () =>
       new Promise((resolve, reject) => {
@@ -253,7 +251,6 @@ const queue = {
       }
       const pageResources = {
         component: syncRequires.components[page.componentChunkName],
-        layout: syncRequires.layouts[page.layout],
         page,
       }
       cb(pageResources)
@@ -296,14 +293,12 @@ const queue = {
       // Nope, we need to load resource(s)
       let component
       let json
-      let layout
-      // Load the component/json/layout and parallel and call this
-      // function when they're done loading. When both are loaded,
-      // we move on.
+      // Load the component/json in parallel and call this function when
+      // they're done loading. When both are loaded, we move on.
       const done = () => {
-        if (component && json && (!page.layoutComponentChunkName || layout)) {
-          pathScriptsCache[path] = { component, json, layout, page }
-          const pageResources = { component, json, layout, page }
+        if (component && json) {
+          pathScriptsCache[path] = { component, json, page }
+          const pageResources = { component, json, page }
           cb(pageResources)
           emitter.emit(`onPostLoadPageResources`, {
             page,
@@ -338,9 +333,8 @@ const queue = {
     Promise.all([
       getResourceModule(page.componentChunkName),
       getResourceModule(page.jsonName),
-      page.layout && getResourceModule(page.layout),
-    ]).then(([component, json, layout]) => {
-      const pageResources = { component, json, layout, page }
+    ]).then(([component, json]) => {
+      const pageResources = { component, json, page }
 
       pathScriptsCache[path] = pageResources
       cb(pageResources)

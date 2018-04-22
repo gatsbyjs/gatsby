@@ -1,11 +1,15 @@
 import React from "react"
 
+import Layout from "../layouts"
+
 class Article extends React.Component {
   render() {
     return (
-      <div
-        dangerouslySetInnerHTML={{ __html: this.props.data.asciidoc.html }}
-      />
+      <Layout>
+        <div
+          dangerouslySetInnerHTML={{ __html: this.props.data.asciidoc.html }}
+        />
+      </Layout>
     )
   }
 }

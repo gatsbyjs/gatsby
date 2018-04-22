@@ -1,3 +1,7 @@
+// @flow
+
+import type { QueryJob } from "../query-runner"
+
 /**
  * Jobs of this module
  * - Ensure on bootstrap that all invalid page queries are run and report
@@ -78,13 +82,13 @@ const findIdsWithoutDataDependencies = () => {
   const notTrackedIds = _.difference(
     [
       ...state.pages.map(p => p.path),
-      ...state.layouts.map(l => `LAYOUT___${l.id}`),
+      ...[...state.staticQueryComponents.values()].map(c => c.jsonName),
     ],
     [...allTrackedIds, ...seenIdsWithoutDataDependencies]
   )
 
   // Add new IDs to our seen array so we don't keep trying to run queries for them.
-  // Pages/Layouts without queries can't be tracked.
+  // Pages without queries can't be tracked.
   seenIdsWithoutDataDependencies = _.uniq([
     ...notTrackedIds,
     ...seenIdsWithoutDataDependencies,
@@ -94,16 +98,41 @@ const findIdsWithoutDataDependencies = () => {
 }
 
 const runQueriesForPathnames = pathnames => {
+  const staticQueries = pathnames.filter(p => p.slice(0, 4) === `sq--`)
+  const pageQueries = pathnames.filter(p => p.slice(0, 4) !== `sq--`)
   const state = store.getState()
-  const pagesAndLayouts = [...state.pages, ...state.layouts]
+
+  staticQueries.forEach(id => {
+    const staticQueryComponent = store.getState().staticQueryComponents.get(id)
+    const queryJob: QueryJob = {
+      id: staticQueryComponent.hash,
+      hash: staticQueryComponent.hash,
+      jsonName: staticQueryComponent.jsonName,
+      query: staticQueryComponent.query,
+      componentPath: staticQueryComponent.componentPath,
+      context: { path: staticQueryComponent.jsonName },
+    }
+    queue.push(queryJob)
+  })
+
+  const pages = [...state.pages]
   let didNotQueueItems = true
-  pathnames.forEach(id => {
-    const plObj = pagesAndLayouts.find(
-      pl => pl.path === id || `LAYOUT___${pl.id}` === id
-    )
-    if (plObj) {
+  pageQueries.forEach(id => {
+    const page = pages.find(pl => pl.path === id)
+    if (page) {
       didNotQueueItems = false
-      queue.push({ ...plObj, _id: plObj.id, id: plObj.jsonName })
+      queue.push(
+        ({
+          id: page.path,
+          jsonName: page.jsonName,
+          query: store.getState().components[page.componentPath].query,
+          isPage: true,
+          context: {
+            ...page,
+            ...page.context,
+          },
+        }: QueryJob)
+      )
     }
   })
 
@@ -126,7 +155,7 @@ const findDirtyIds = actions => {
 
       if (!node || !node.id || !node.internal.type) return dirtyIds
 
-      // Find pagesAndLayouts that depend on this node so are now dirty.
+      // Find components that depend on this node so are now dirty.
       dirtyIds = dirtyIds.concat(state.componentDataDependencies.nodes[node.id])
 
       // Find connections that depend on this node so are now invalid.

@@ -1,7 +1,8 @@
+// @flow
+
 import { graphql as graphqlFunction } from "graphql"
 const fs = require(`fs-extra`)
 const report = require(`gatsby-cli/lib/reporter`)
-const md5 = require(`md5`)
 const websocketManager = require(`../../utils/websocket-manager`)
 
 const path = require(`path`)
@@ -10,9 +11,18 @@ const { generatePathChunkName } = require(`../../utils/js-chunk-names`)
 
 const resultHashes = {}
 
-// Run query for a page
-module.exports = async (pageOrLayout, component) => {
-  pageOrLayout.id = pageOrLayout._id
+type QueryJob = {
+  id: string,
+  hash?: string,
+  jsonName: string,
+  query: string,
+  componentPath: string,
+  context: Object,
+  isPage: Boolean,
+}
+
+// Run query
+module.exports = async (queryJob: QueryJob, component: Any) => {
   const { schema, program } = store.getState()
 
   const graphql = (query, context) =>
@@ -22,13 +32,10 @@ module.exports = async (pageOrLayout, component) => {
   let result
 
   // Nothing to do if the query doesn't exist.
-  if (!component.query || component.query === ``) {
+  if (!queryJob.query || queryJob.query === ``) {
     result = {}
   } else {
-    result = await graphql(component.query, {
-      ...pageOrLayout,
-      ...pageOrLayout.context,
-    })
+    result = await graphql(queryJob.query, queryJob.context)
   }
 
   // If there's a graphql error then log the error. If we're building, also
@@ -51,32 +58,48 @@ module.exports = async (pageOrLayout, component) => {
     }
   }
 
-  // Add the path/layout context onto the results.
-  if (!pageOrLayout.path) {
-    result[`layoutContext`] = pageOrLayout.context
-  } else {
-    result[`pageContext`] = pageOrLayout.context
+  // Add the page context onto the results.
+  if (queryJob?.isPage) {
+    result[`pageContext`] = queryJob.context
   }
+
   const resultJSON = JSON.stringify(result)
-  const resultHash = md5(resultJSON)
+  const resultHash = require("crypto")
+    .createHash("sha1")
+    .update(resultJSON)
+    .digest("base64")
+    // Remove potentially unsafe characters. This increases chances of collisions
+    // slightly but it should still be very safe + we get a shorter
+    // url vs hex.
+    .replace(/[^a-zA-Z0-9-_]/g, "")
 
-  if (resultHashes[pageOrLayout.jsonName] !== resultHash) {
-    resultHashes[pageOrLayout.jsonName] = resultHash
+  let dataPath
+  if (queryJob?.isPage) {
+    dataPath = `${generatePathChunkName(queryJob.jsonName)}-${resultHash}`
+  } else {
+    dataPath = queryJob.hash
+  }
 
-    // Always write file to public/static/d/ folder.
-    const dataPath = `${generatePathChunkName(
-      pageOrLayout.jsonName
-    )}-${resultHash}`
+  const programType = program._[0]
 
-    const programType = program._[0]
-
-    if (programType === `develop` && pageOrLayout.path) {
-      websocketManager.emitData({
+  if (programType === `develop`) {
+    if (queryJob.isPage) {
+      websocketManager.emitPageData({
         result,
-        path: pageOrLayout.path,
+        id: queryJob.id,
+      })
+    } else {
+      websocketManager.emitStaticQueryData({
+        result,
+        id: queryJob.id,
       })
     }
+  }
 
+  if (resultHashes[queryJob.id] !== resultHash) {
+    resultHashes[queryJob.id] = resultHash
+
+    // Always write file to public/static/d/ folder.
     const resultPath = path.join(
       program.directory,
       `public`,
@@ -84,12 +107,13 @@ module.exports = async (pageOrLayout, component) => {
       `d`,
       `${dataPath}.json`
     )
+
     await fs.writeFile(resultPath, resultJSON)
 
     store.dispatch({
       type: `SET_JSON_DATA_PATH`,
       payload: {
-        [pageOrLayout.jsonName]: dataPath,
+        [queryJob.jsonName]: dataPath,
       },
     })
 

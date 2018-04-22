@@ -50,12 +50,6 @@ function urlJoin(...parts) {
 }
 
 const getPage = path => pages.find(page => page.path === path)
-const defaultLayout = props => <div>{props.children()}</div>
-
-const getLayout = page => {
-  const layout = syncRequires.layouts[page.layout]
-  return layout ? layout : defaultLayout
-}
 
 const createElement = React.createElement
 
@@ -108,7 +102,7 @@ export default (pagePath, callback) => {
   const bodyComponent = createElement(
     AltStaticRouter || StaticRouter,
     {
-      basename: pathPrefix,
+      basename: pathPrefix.slice(0, -1),
       location: {
         pathname: pagePath,
       },
@@ -117,10 +111,7 @@ export default (pagePath, callback) => {
     createElement(Route, {
       // eslint-disable-next-line react/display-name
       render: routeProps => {
-        const page = getPage(
-          `${routeProps.match.path}${routeProps.location.pathname}`
-        )
-        const layout = getLayout(page)
+        const page = getPage(routeProps.location.pathname)
 
         const dataAndContext =
           page.jsonName in staticDataPaths
@@ -133,19 +124,9 @@ export default (pagePath, callback) => {
               )
             : {}
 
-        return createElement(withRouter(layout), {
-          // eslint-disable-next-line react/display-name
-          children: layoutProps => {
-            const props = layoutProps ? layoutProps : routeProps
-
-            return createElement(
-              syncRequires.components[page.componentChunkName],
-              {
-                ...props,
-                ...dataAndContext,
-              }
-            )
-          },
+        return createElement(syncRequires.components[page.componentChunkName], {
+          ...routeProps,
+          ...dataAndContext,
         })
       },
     })
@@ -183,7 +164,7 @@ export default (pagePath, callback) => {
   const page = pages.find(page => page.path === pagePath)
   let runtimeScript
   const scriptsAndStyles = flatten(
-    [`app`, page.layoutComponentChunkName, page.componentChunkName].map(s => {
+    [`app`, page.componentChunkName].map(s => {
       const fetchKey = `assetsByChunkName[${s}]`
 
       let chunks = get(stats, fetchKey)
@@ -280,7 +261,9 @@ export default (pagePath, callback) => {
 
   // Add script loader for page scripts to the end of body element (after webpack manifest).
   // Taken from https://www.html5rocks.com/en/tutorials/speed/script-loading/
-  const scriptsString = scripts.map(s => JSON.stringify(s)).join(`,`)
+  const scriptsString = scripts
+    .map(s => `"${pathPrefix}${JSON.stringify(s).slice(1, -1)}"`)
+    .join(`,`)
   postBodyComponents.push(
     <script
       key={`script-loader`}

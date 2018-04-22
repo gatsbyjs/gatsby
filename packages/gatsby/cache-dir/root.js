@@ -6,7 +6,7 @@ import { apiRunner } from "./api-runner-browser"
 import syncRequires from "./sync-requires"
 import pages from "./pages.json"
 import redirects from "./redirects.json"
-import ComponentRenderer from "./component-renderer"
+import PageRenderer from "./page-renderer"
 import loader from "./loader"
 import { hot } from "react-hot-loader"
 import JSONStore from "./json-store"
@@ -123,44 +123,45 @@ if (__PREFIX_PATHS__) {
 }
 
 const AltRouter = apiRunner(`replaceRouterComponent`, { history })[0]
-const DefaultRouter = ({ children }) => (
-  <Router history={history}>{children}</Router>
-)
-
-const ComponentRendererWithRouter = withRouter(ComponentRenderer)
-
-// Always have to have one top-level layout
-// can have ones below that. Find page, if has different
-// parent layout(s), loop through those until finally the
-// page. Tricky part is avoiding re-mounting I think...
 
 const Root = () =>
   createElement(
-    AltRouter ? AltRouter : DefaultRouter,
-    { basename: pathPrefix },
+    AltRouter ? AltRouter : Router,
+    {
+      basename: pathPrefix.slice(0, -1),
+      history: !AltRouter ? history : undefined,
+    },
     createElement(
       ScrollContext,
       { shouldUpdateScroll },
-      createElement(ComponentRendererWithRouter, {
-        layout: true,
+      createElement(Route, {
         // eslint-disable-next-line react/display-name
-        children: layoutProps =>
-          createElement(Route, {
-            // eslint-disable-next-line react/display-name
-            render: routeProps => {
-              const props = layoutProps ? layoutProps : routeProps
-              attachToHistory(props.history)
-              const { pathname } = props.location
-              const pageResources = loader.getResourcesForPathname(pathname)
-              const isPage = !!(pageResources && pageResources.component)
-              return createElement(JSONStore, {
-                isPage,
-                pages,
-                ...props,
-                pageResources,
-              })
-            },
-          }),
+        render: routeProps => {
+          attachToHistory(routeProps.history)
+          const { pathname } = routeProps.location
+          const pageResources = loader.getResourcesForPathname(pathname)
+          const isPage = !!(pageResources && pageResources.component)
+          if (isPage) {
+            return createElement(JSONStore, {
+              pages,
+              ...routeProps,
+              pageResources,
+            })
+          } else {
+            const dev404Page = pages.find(p => /^\/dev-404-page/.test(p.path))
+            return createElement(Route, {
+              key: `404-page`,
+              component: props =>
+                createElement(
+                  syncRequires.components[dev404Page.componentChunkName],
+                  {
+                    ...propsWithoutPages,
+                    ...data,
+                  }
+                ),
+            })
+          }
+        },
       })
     )
   )

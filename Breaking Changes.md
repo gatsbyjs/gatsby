@@ -5,4 +5,4 @@
 * Remove explicit polyfill and use the new builtins: usage support in babel 7.
 * Changed `modifyBabelrc` to `onCreateBabelConfig`
 * Changed `modifyWebpackConfig` to `onCreateWebpackConfig`
-* inlining css changed — remove it as done automatically by core now.
+* inlining css changed — remove it from any custom html.js as done automatically by core now.

@@ -2,7 +2,7 @@ const chokidar = require(`chokidar`)
 const fs = require(`fs`)
 const { Machine } = require(`xstate`)
 
-const { createId, createFileNode } = require(`./create-file-node`)
+const { createFileNode } = require(`./create-file-node`)
 
 /**
  * Create a state machine to manage Chokidar's not-ready/ready states and for

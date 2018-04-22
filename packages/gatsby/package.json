@@ -6,7 +6,6 @@
   "bin": {
     "gatsby": "./dist/bin/gatsby.js"
   },
-  "browser": "dist/browser.js",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },

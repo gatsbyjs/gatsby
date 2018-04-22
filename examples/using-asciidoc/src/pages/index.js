@@ -1,11 +1,12 @@
 import React from "react"
 import { Link } from "gatsby"
 
+import Layout from "../layouts"
+
 class IndexPage extends React.Component {
   render() {
-    console.log(this.props)
     return (
-      <div>
+      <Layout>
         <ul>
           {this.props.data.allAsciidoc.edges.map(({ node }) => (
             <li>
@@ -13,7 +14,7 @@ class IndexPage extends React.Component {
             </li>
           ))}
         </ul>
-      </div>
+      </Layout>
     )
   }
 }

@@ -14,5 +14,6 @@
   "scripts": {
     "build": "babel src --out-dir . --ignore **/__tests__/**",
     "watch": "babel -w src --out-dir . --ignore **/__tests__/**"
-  }
+  },
+  "dependencies": {}
 }
