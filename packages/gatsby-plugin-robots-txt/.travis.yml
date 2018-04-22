@@ -26,6 +26,6 @@ jobs:
       deploy:
         skip_cleanup: true
         provider: script
-        script: TRAVIS_JOB_NUMBER=WORKAROUND.1 yarn run semantic-release
+        script: yarn run release
       on:
         branch: master

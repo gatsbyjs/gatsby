@@ -10,8 +10,7 @@
     "lint": "eslint --ext js ./ --cache",
     "build": "babel src --out-dir ./ --source-maps",
     "watch": "babel src --out-dir ./ --source-maps --watch",
-    "semantic-release":
-      "semantic-release pre && npm publish && semantic-release post"
+    "release": "semantic-release"
   },
   "homepage": "https://github.com/mdreizin/gatsby-plugin-robots-txt",
   "repository": "https://github.com/mdreizin/gatsby-plugin-robots-txt",
@@ -32,13 +31,9 @@
     "eslint": "^4.19.1",
     "eslint-plugin-babel": "^5.1.0",
     "prettier": "^1.12.1",
-    "semantic-release": "^15.1.7",
-    "semantic-release-conventional-commits": "^2.0.0"
+    "semantic-release": "^15.1.7"
   },
   "peerDependencies": {
     "gatsby": "^1.0.0"
-  },
-  "release": {
-    "analyzeCommits": "semantic-release-conventional-commits"
   }
 }

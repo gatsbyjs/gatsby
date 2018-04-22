@@ -3220,12 +3220,6 @@ sax@^1.2.4:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
 
-semantic-release-conventional-commits@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/semantic-release-conventional-commits/-/semantic-release-conventional-commits-2.0.0.tgz#2bc779725c6e19b1f9f2a4c37d15ceaabdebc05c"
-  dependencies:
-    conventional-commits-parser "^2.0.0"
-
 semantic-release@^15.1.7:
   version "15.1.7"
   resolved "https://registry.yarnpkg.com/semantic-release/-/semantic-release-15.1.7.tgz#b29eef1b9443f75addab7c2e353338b72b9b628d"
