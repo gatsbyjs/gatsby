@@ -1,0 +1,44 @@
+{
+  "name": "gatsby-plugin-robots-txt",
+  "version": "1.0.0",
+  "files": ["gatsby-*.js*"],
+  "main": "index.js",
+  "description":
+    "Gatsby plugin that automatically creates robots.txt for your site",
+  "scripts": {
+    "clean": "rm -rf gatsby-node.js*",
+    "lint": "eslint --ext js ./ --cache",
+    "build": "babel src --out-dir ./ --source-maps",
+    "watch": "babel src --out-dir ./ --source-maps --watch",
+    "semantic-release":
+      "semantic-release pre && npm publish && semantic-release post"
+  },
+  "homepage": "https://github.com/mdreizin/gatsby-plugin-robots-txt",
+  "repository": "https://github.com/mdreizin/gatsby-plugin-robots-txt",
+  "bugs": "https://github.com/mdreizin/gatsby-plugin-robots-txt/issues",
+  "author": "Marat Dreizin <marat.dreizin@gmail.com>",
+  "license": "MIT",
+  "keywords": ["gatsby", "gatsby-plugin"],
+  "dependencies": {
+    "babel-runtime": "^6.26.0",
+    "generate-robotstxt": "^5.0.5"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^8.2.3",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.6.1",
+    "eslint": "^4.19.1",
+    "eslint-plugin-babel": "^5.1.0",
+    "prettier": "^1.12.1",
+    "semantic-release": "^15.1.7",
+    "semantic-release-conventional-commits": "^2.0.0"
+  },
+  "peerDependencies": {
+    "gatsby": "^1.0.0"
+  },
+  "release": {
+    "analyzeCommits": "semantic-release-conventional-commits"
+  }
+}
