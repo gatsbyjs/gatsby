@@ -43,8 +43,8 @@ Under `Policy` you can specify any allowed [rules](http://www.robotstxt.org/orig
 
 ```js
 {
-  userAgent: "*",
-  allow: "/"
+  userAgent: '*',
+  allow: '/'
 }
 ```
 
