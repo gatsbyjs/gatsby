@@ -103,6 +103,7 @@ class Layout extends React.Component {
               }}
             >
               <h1
+                data-testid="site-title"
                 css={{
                   ...scale(4 / 5),
                   lineHeight: 1,
@@ -130,6 +131,7 @@ class Layout extends React.Component {
               </h1>
             </Link>
             <Link
+              data-testid="about-link"
               to="/about/"
               css={{
                 color: `inherit`,

@@ -4,18 +4,29 @@ import { defaultOptions, runQuery, writeFile } from "./internals"
 
 const publicPath = `./public`
 
-exports.onPostBuild = async ({ graphql }, pluginOptions) => {
-  delete pluginOptions.plugins
+exports.onPostBuild = async ({ graphql, pathPrefix }, pluginOptions) => {
+  const options = { ...pluginOptions }
+  delete options.plugins
+  delete options.createLinkInHead
 
-  const { query, serialize, output, ...rest } = {
+  const { query, serialize, output, exclude, ...rest } = {
     ...defaultOptions,
-    ...pluginOptions,
+    ...options,
   }
 
   const map = sitemap.createSitemap(rest)
-  const records = await runQuery(graphql, query)
   const saved = path.join(publicPath, output)
 
-  serialize(records).forEach(u => map.add(u))
+  // Paths we're excluding...
+  const excludeOptions = exclude.concat(defaultOptions.exclude)
+
+  const queryRecords = await runQuery(
+    graphql,
+    query,
+    excludeOptions,
+    pathPrefix
+  )
+  serialize(queryRecords).forEach(u => map.add(u))
+
   return await writeFile(saved, map.toString())
 }

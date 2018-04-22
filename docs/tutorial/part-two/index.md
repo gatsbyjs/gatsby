@@ -1,20 +1,22 @@
 ---
-title: Gatsby.js Tutorial Part Two
+title: Introduction to Using CSS in Gatsby
 typora-copy-images-to: ./
 ---
 
 Welcome to part two of the Gatsby tutorial!
+
+## What's in this tutorial?
 
 In this part we're going to explore options for styling Gatsby websites and dive
 deeper into using React components for building sites.
 
 ## Building with components
 
-One of the big mental shifts you make when starting to build with components is
-that now your CSS, HTML, and JavaScript are tightly coupled, often living even
+One of the big mental shifts you make when starting to build with components (if you are already a developer) is
+that now your CSS, HTML, and JavaScript are tightly coupled, and often living even
 within the same file.
 
-While a seemingly simple change, it has profound implications for how you think
+While a seemingly simple change, this has profound implications for how you think
 about building websites.
 
 Take the example of creating a custom button. In the past you would
@@ -36,7 +38,7 @@ your button styles and use it throughout your site like:
 ```
 
 Components become the base building blocks of your site. Instead of being
-limited to what the browser provides e.g. `<button>`, you can easily create new
+limited to what the browser provides e.g. `<button />`, you can easily create new
 building blocks that elegantly meet the needs of your projects.
 
 ## Creating global styles
@@ -49,7 +51,7 @@ Often people will use something like Bootstrap or Foundation for their global
 styles. The problem with these, however, is they're difficult to customize and
 they're not designed to work well with React components.
 
-So for this tutorial let's explore a JavaScript library called
+For this tutorial, let's explore a JavaScript library called
 [Typography.js](https://github.com/kyleamathews/typography.js) that generates
 global styles and works particularly well with Gatsby and React.
 
@@ -101,19 +103,20 @@ JavaScript code) that others can then use when building Gatsby sites.
 There's already dozens of plugins! Check them out at the
 [plugins section of the site](/docs/plugins/).
 
-Our goal with Gatsby plugins is to make them easy to install and use. In almost every Gatsby site you
+Our goal with Gatsby plugins is to make them straightforward to install and use. In almost every Gatsby site you
 build, you will be installing plugins. While working through the rest of the
 tutorial, you'll have many opportunities to practice installing and using
 plugins.
 
 ## Installing your first Gatsby plugin
 
-Let's start by creating a new site. At this point it probably makes sense to close the terminal window(s) you used to build tutorial-part-one so that you don't accidentally start building tutorial-part-two in the wrong place. If you don't close tutorial-part-one prior to building tutorial-part-two, you will see that tutorial-part-two appears at localhost:8001 instead of localhost:8000.
+Let's start by creating a new site. At this point it probably makes sense to close the terminal windows you used to build tutorial-part-one so that you don't accidentally start building tutorial-part-two in the wrong place. If you don't close tutorial-part-one prior to building tutorial-part-two, you will see that tutorial-part-two appears at localhost:8001 instead of localhost:8000.
 
-Similar to part one, open a new terminal window and run the following to create a new site:
+Just like in part one, open a new terminal window and run the following commands to create a new Gatsby site in a directory called `tutorial-part-two`. Then, change to this new directory:
 
 ```shell
 gatsby new tutorial-part-two https://github.com/gatsbyjs/gatsby-starter-hello-world
+cd tutorial-part-two
 ```
 
 This creates a new site with the following structure.
@@ -147,7 +150,7 @@ module.exports = {
 };
 ```
 
-Gatsby reads the site's config file when starting. Here we tell it to look for a
+Gatsby reads the site's config file when starting. Here, we tell it to look for a
 plugin named `gatsby-plugin-typography`. Gatsby knows to look for plugins that
 are NPM packages, so it will find the package we installed previously.
 
@@ -197,7 +200,7 @@ Let's make a quick improvement. Many sites have a single column of text centered
 in the middle of the page. To create this, add the following styles to the
 `<div>` in `src/pages/index.js`.
 
-```jsx{4,23}
+```jsx{4,25}
 import React from "react";
 
 export default () =>
@@ -305,9 +308,9 @@ export default typography;
 
 ![typography-lawton](typography-lawton.png)
 
-Typography.js has more than 30 themes!
+_Challenge:_ Typography.js has more than 30 themes!
 [Try them live](http://kyleamathews.github.io/typography.js) or check out
-[the complete list](https://github.com/KyleAMathews/typography.js#published-typographyjs-themes)
+[the complete list](https://github.com/KyleAMathews/typography.js#published-typographyjs-themes) and try installing one on your current Gatsby site.
 
 ## Component CSS
 
@@ -316,7 +319,7 @@ one very popular method: CSS Modules.
 
 ### CSS-in-JS
 
-While we won't cover CSS-in-JS in this initial tutorial, we encourage you to explore CSS-in-JS libraries as these solve many of the problems with traditional CSS plus help make your React components even smarter. There are mini-tutorials for two libraries, [Glamor](/docs/glamor/) and [Styled Components](/docs/styled-components/). Check out the following resources for background reading on CSS-in-JS:
+While we won't cover CSS-in-JS in this initial tutorial, we encourage you to explore CSS-in-JS libraries because these solve many of the problems with traditional CSS plus help make your React components even smarter. There are mini-tutorials for two libraries, [Glamor](/docs/glamor/) and [Styled Components](/docs/styled-components/). Check out the following resources for background reading on CSS-in-JS:
 
 [Christopher "vjeux" Chedeau's 2014 presentation that sparked this movement](https://speakerdeck.com/vjeux/react-css-in-js)
 as well as
@@ -357,7 +360,7 @@ export default ({ children }) => (
 );
 ```
 
-Then create a new component page by creating a file at
+Then, create a new component page by creating a file at
 `src/pages/about-css-modules.js`:
 
 ```javascript
@@ -503,5 +506,7 @@ yet for your favorite CSS option,
 * [JSS](/packages/gatsby-plugin-jss/)
 * [Stylus](/packages/gatsby-plugin-stylus/)
 * and more!
+
+## What's coming next?
 
 Now continue on to [Part Three](/tutorial/part-three/) of the tutorial.

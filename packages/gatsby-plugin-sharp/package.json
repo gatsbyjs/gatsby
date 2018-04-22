@@ -15,7 +15,7 @@
     "imagemin-webp": "^4.0.0",
     "lodash": "^4.17.4",
     "potrace": "^2.1.1",
-    "probe-image-size": "^3.2.0",
+    "probe-image-size": "^4.0.0",
     "progress": "^1.1.8",
     "sharp": "^0.20.1",
     "svgo": "^0.7.2"
@@ -28,6 +28,7 @@
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp#readme",
   "keywords": [
     "gatsby",
+    "gatsby-plugin",
     "image",
     "sharp"
   ],

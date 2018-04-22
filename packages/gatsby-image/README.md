@@ -7,7 +7,7 @@ Gatsby's GraphQL queries. It combines
 [Gatsby's native image processing](https://image-processing.gatsbyjs.org/)
 capabilities with advanced image loading techniques to easily and completely
 optimize image loading for your sites. `gatsby-image` uses
-[gatsby-plugin-sharp](https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/)
+[gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/)
 to power its image transformations.
 
 _Warning: gatsby-image is **not** a drop-in replacement for `<img/>`. It's
@@ -50,9 +50,9 @@ With Gatsby, we can make images way _way_ better.
 processing capabilities powered by GraphQL and Sharp. To produce perfect images,
 you need only:
 
-1. Import `gatsby-image` and use it in place of the built-in `img`
-2. Write a GraphQL query using one of the included GraphQL "fragments"
-   which specify the fields needed by `gatsby-image`.
+1.  Import `gatsby-image` and use it in place of the built-in `img`
+2.  Write a GraphQL query using one of the included GraphQL "fragments"
+    which specify the fields needed by `gatsby-image`.
 
 The GraphQL query creates multiple thumbnails with optimized JPEG and PNG
 compression. The `gatsby-image` component automatically sets up the "blur-up"
@@ -114,8 +114,8 @@ For another explanation of how to get started with gatsby-image, see this blog p
 
 There are two types of responsive images supported by gatsby-image.
 
-1. Images that have a _fixed_ width and height
-2. Images that stretch across a fluid container
+1.  Images that have a _fixed_ width and height
+2.  Images that stretch across a fluid container
 
 In the first scenario, you want to vary the image's size for different screen
 _resolutions_ -- in other words, create retina images.
@@ -243,21 +243,21 @@ prop. e.g. `<Img sizes={sizes} />`
 
 ## `gatsby-image` props
 
-| Name                    | Type            | Description                                                                                                                 |
-| ----------------------- | --------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| `resolutions`           | `object`        | Data returned from the `resolutions` query                                                                                  |
-| `sizes`                 | `object`        | Data returned from the `sizes` query                                                                                        |
-| `fadeIn`                | `bool`          | Defaults to fading in the image on load                                                                                     |
-| `title`                 | `string`        | Passed to the `img` element                                                                                                 |
-| `alt`                   | `string`        | Passed to the `img` element                                                                                                 |
-| `className`             | `string|object` | Passed to the wrapper element. Object is needed to support Glamor's css prop                                                |
-| `outerWrapperClassName` | `string|object` | Passed to the outer wrapper element. Object is needed to support Glamor's css prop                                          |
-| `style`                 | `object`        | Spread into the default styles in the wrapper element                                                                       |
-| `imgStyle`              | `object`        | Spread into the default styles for the actual `img` element                                                                 |
-| `position`              | `string`        | Defaults to `relative`. Pass in `absolute` to make the component `absolute` positioned                                      |
-| `backgroundColor`       | `string|bool`   | Set a colored background placeholder. If true, uses "lightgray" for the color. You can also pass in any valid color string. |
-| `onLoad`                | `func`          | A callback that is called when the full-size image has loaded.                                                              |
-| `Tag`                   | `string`        | Which HTML tag to use for wrapping elements. Defaults to `div`.                                                             |
+| Name                    | Type                | Description                                                                                                                 |
+| ----------------------- | ------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `resolutions`           | `object`            | Data returned from the `resolutions` query                                                                                  |
+| `sizes`                 | `object`            | Data returned from the `sizes` query                                                                                        |
+| `fadeIn`                | `bool`              | Defaults to fading in the image on load                                                                                     |
+| `title`                 | `string`            | Passed to the `img` element                                                                                                 |
+| `alt`                   | `string`            | Passed to the `img` element                                                                                                 |
+| `className`             | `string` / `object` | Passed to the wrapper element. Object is needed to support Glamor's css prop                                                |
+| `outerWrapperClassName` | `string` / `object` | Passed to the outer wrapper element. Object is needed to support Glamor's css prop                                          |
+| `style`                 | `object`            | Spread into the default styles in the wrapper element                                                                       |
+| `imgStyle`              | `object`            | Spread into the default styles for the actual `img` element                                                                 |
+| `position`              | `string`            | Defaults to `relative`. Pass in `absolute` to make the component `absolute` positioned                                      |
+| `backgroundColor`       | `string|bool`       | Set a colored background placeholder. If true, uses "lightgray" for the color. You can also pass in any valid color string. |
+| `onLoad`                | `func`              | A callback that is called when the full-size image has loaded.                                                              |
+| `Tag`                   | `string`            | Which HTML tag to use for wrapping elements. Defaults to `div`.                                                             |
 
 ## Image processing arguments
 

@@ -780,3 +780,4 @@ exports.responsiveSizes = responsiveSizes
 exports.responsiveResolution = resolutions
 exports.sizes = responsiveSizes
 exports.resolutions = resolutions
+exports.getImageSize = getImageSize

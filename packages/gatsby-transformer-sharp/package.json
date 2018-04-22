@@ -10,7 +10,7 @@
     "@babel/runtime": "^7.0.0-beta.42",
     "bluebird": "^3.5.0",
     "fs-extra": "^4.0.2",
-    "probe-image-size": "^3.2.0"
+    "probe-image-size": "^4.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.42",

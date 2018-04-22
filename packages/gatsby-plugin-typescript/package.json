@@ -23,6 +23,7 @@
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typescript#readme",
   "keywords": [
     "gatsby",
+    "gatsby-plugin",
     "typescript"
   ],
   "license": "MIT",

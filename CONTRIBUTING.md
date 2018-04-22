@@ -1,5 +1,5 @@
 ---
-title: How to contribute
+title: How to Contribute
 ---
 
 ## Contributing
@@ -7,6 +7,7 @@ title: How to contribute
 We want contributing to Gatsby to be fun, enjoyable, and educational for anyone and everyone. Contributions go far beyond pull requests and commits; we are thrilled to receive a variety of other contributions including the following:
 
 * Blogging, speaking about, or creating tutorials about one of Gatsby's many features. Mention @gatsbyjs on Twitter and/or email shannon [at] gatsbyjs [dot] com so we can give pointers and tips (if you want them :) and help you spread the word. Please add your blog posts and videos of talks to our [Awesome Gatsby](/docs/awesome-gatsby/) page.
+* [Submit new feature ideas through an RFC](/blog/2018-04-06-introducing-gatsby-rfc-process/)
 * Submitting new documentation; titles in _italics_ on gatsbyjs.org are stubs and need contributions
 * Tweeting about things you build with @gatsbyjs (make sure to @ mention us!)
 * Submitting documentation updates, enhancements, designs, or bugfixes
@@ -19,11 +20,11 @@ We want contributing to Gatsby to be fun, enjoyable, and educational for anyone 
 
 If you are worried or don't know where to start, you can always reach out to Shannon Soper(@shannonb_ux) on Twitter or simply submit an issue and a maintainer can help give you guidance!
 
-Looking to speak about Gatsby? We'd love to review your talk abstract/CFP! You can email it to shannon [at] gatsbyjs [dot] com and we can give pointers or tips!!!
+Looking to speak about Gatsby? We'd love to review your talk abstract/CFP! You can email it to shannon [at] gatsbyjs [dot] com, and we can give pointers or tips!!!
 
 ### Creating your own plugins and loaders
 
-If you create a loader or plugin, we would <3 for you to open source it, and put it on npm. For more information on creating custom plugins, please see the documentation for [plugins](/docs/plugins/) and the [API specification](/docs/api-specification/).
+If you create a loader or plugin, we would <3 for you to open source it and put it on npm. For more information on creating custom plugins, please see the documentation for [plugins](/docs/plugins/) and the [API specification](/docs/api-specification/).
 
 ### Contributing to the repo
 
@@ -41,19 +42,20 @@ The usual contributing steps are:
 
 * Fork the [official repository](https://github.com/gatsbyjs/gatsby).
 * Clone your fork: git clone `git@github.com:<your-username>/gatsby.git`
-* setup up repo and Install dependencies: `yarn run bootstrap`
+* Setup up repo and install dependencies: `yarn run bootstrap`
 * Make sure tests are passing for you: `yarn test`
 * Create a topic branch: `git checkout -b topics/new-feature-name`
 * Run `yarn run watch` from the root of the repo to watch for changes to packages' source code and compile these changes on-the-fly as you work. Note that the watch command can be resource intensive. To limit it to the packages you're working on, add a scope flag, like `yarn run watch --scope={gatsby,gatsby-cli}`. To watch just one package, run `yarn run watch --scope=gatsby`.
 * Install [gatsby-dev-cli](/packages/gatsby-dev-cli/) globally: `yarn global add gatsby-dev-cli`
-* Run `yarn install` in each of the sites you're testing with.
+* Run `yarn install` in each of the sites you're testing.
 * For each of your Gatsby test sites, run the `gatsby-dev` command there to copy
   the built files from your cloned copy of Gatsby. It'll watch for your changes
   to Gatsby packages and copy them into the site. For more detailed instructions
   see the [gatsby-dev-cli README](/packages/gatsby-dev-cli/)
 * Add tests and code for your changes.
 * Once you're done, make sure all tests still pass: `yarn test`
-* Commit and push to your fork.
+* Commit with a ["Signed-off-by"](#developer-certificate-of-origin) line appended
+  to your commit message and push to your fork.
 * Create a pull request from your branch.
 
 ### Contributing to the documentation.
@@ -61,8 +63,8 @@ The usual contributing steps are:
 Gatsby, unsurprisingly, uses Gatsby for its documentation website.
 
 If you want to add/modify any Gatsby documentation, go to the
-[docs folder on Github](https://github.com/gatsbyjs/gatsby/tree/master/docs) and
-use the file editor to edit and then preview your changes. Github then allows
+[docs folder on GitHub](https://github.com/gatsbyjs/gatsby/tree/master/docs) and
+use the file editor to edit and then preview your changes. GitHub then allows
 you to commit the change and raise a PR right in the UI. This is the _easiest_
 way you can contribute to the project!
 
@@ -77,18 +79,46 @@ a pull request.
 * The Markdown files for the documentation live in `/docs` folder. Make
   additions or modifications here.
 * Make sure to double check your grammar and capitalise correctly.
-* Commit and push to your fork.
+* Commit with a ["Signed-off-by"](#developer-certificate-of-origin) line appended
+  to your commit message and push to your fork.
 * Create a pull request from your branch.
+
+### Developer Certificate of Origin
+
+The Gatsby repository enforces the
+[Developer Certificate of Origin](https://developercertificate.org/) (DCO) on
+Pull Requests. It requires all commit messages to contain the `Signed-off-by`
+line with an email address that matches the commit author.
+
+Git has a `-s` (or longer `--signoff`) command line option to append this
+automatically to your commit message:
+
+```shell
+$ git commit -s -m 'This is my commit message'
+```
+
+If you've already created a Pull Request and notice that the DCO check is failing, you
+can use this command to append a signoff message to your commits:
+
+```shell
+$ git rebase --signoff
+```
+
+or amend your last commit if you have a single commit in your Pull Request:
+
+```shell
+$ git commit --amend -s
+```
 
 ## Development tools
 
 ### Redux devtools
 
 Gatsby uses Redux for managing state during development and building. It's often
-helpful to see the flow of actions and builtup state for a site you're working
+helpful to see the flow of actions and built-up state for a site you're working
 on or if adding new functionality to core. We leverage
-https://github.com/zalmoxisus/remote-redux-devtools and
-https://github.com/zalmoxisus/remotedev-server to give you use the Redux
+[Remote Redux Devtools](https://github.com/zalmoxisus/remote-redux-devtools) and
+[RemoteDev Server](https://github.com/zalmoxisus/remotedev-server) to give you use the Redux
 devtools extension for debugging Gatsby.
 
 To use this, first install

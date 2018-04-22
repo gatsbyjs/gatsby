@@ -16,10 +16,7 @@ const { store, getNode, getNodes } = require(`../redux`)
 const { createPageDependency } = require(`../redux/actions/add-page-dependency`)
 const createTypeName = require(`./create-type-name`)
 const createKey = require(`./create-key`)
-const {
-  extractFieldExamples,
-  isEmptyObjectOrArray,
-} = require(`./data-tree-utils`)
+const { getExampleValues, isEmptyObjectOrArray } = require(`./data-tree-utils`)
 const DateType = require(`./types/type-date`)
 const FileType = require(`./types/type-file`)
 
@@ -132,19 +129,21 @@ function inferFromMapping(
   fieldSelector,
   types
 ): ?GraphQLFieldConfig<*, *> {
-  const matchedTypes = types.filter(
-    type => type.name === mapping[fieldSelector]
-  )
+  const linkedType = mapping[fieldSelector].split(`.`)[0]
+  const linkedField =
+    mapping[fieldSelector].slice(linkedType.length + 1) || `id`
+
+  const matchedTypes = types.filter(type => type.name === linkedType)
   if (_.isEmpty(matchedTypes)) {
     console.log(`Couldn't find a matching node type for "${fieldSelector}"`)
     return null
   }
 
   const findNode = (fieldValue, path) => {
-    const linkedType = mapping[fieldSelector]
     const linkedNode = _.find(
       getNodes(),
-      n => n.internal.type === linkedType && n.id === fieldValue
+      n =>
+        n.internal.type === linkedType && _.get(n, linkedField) === fieldValue
     )
     if (linkedNode) {
       createPageDependency({ path, nodeId: linkedNode.id })
@@ -246,10 +245,12 @@ function inferFromFieldName(value, selector, types): GraphQLFieldConfig<*, *> {
     // If there's more than one type, we'll create a union type.
     if (fields.length > 1) {
       type = new GraphQLUnionType({
-        name: `Union_${key}_${fields
-          .map(f => f.name)
-          .sort()
-          .join(`__`)}`,
+        name: createTypeName(
+          `Union_${key}_${fields
+            .map(f => f.name)
+            .sort()
+            .join(`__`)}`
+        ),
         description: `Union interface for the field "${key}" for types [${fields
           .map(f => f.name)
           .sort()
@@ -314,7 +315,7 @@ export function inferObjectStructureFromNodes({
   nodes,
   types,
   selector,
-  exampleValue = extractFieldExamples(nodes),
+  exampleValue = null,
 }: inferTypeOptions): GraphQLFieldConfigMap<*, *> {
   const config = store.getState().config
   const isRoot = !selector
@@ -322,6 +323,11 @@ export function inferObjectStructureFromNodes({
 
   // Ensure nodes have internal key with object.
   nodes = nodes.map(n => (n.internal ? n : { ...n, internal: {} }))
+
+  const nodeTypeName = nodes[0].internal.type
+  if (exampleValue === null) {
+    exampleValue = getExampleValues({ type: nodeTypeName, nodes })
+  }
 
   const inferredFields = {}
   _.each(exampleValue, (value, key) => {
@@ -332,7 +338,7 @@ export function inferObjectStructureFromNodes({
     // Several checks to see if a field is pointing to custom type
     // before we try automatic inference.
     const nextSelector = selector ? `${selector}.${key}` : key
-    const fieldSelector = `${nodes[0].internal.type}.${nextSelector}`
+    const fieldSelector = `${nodeTypeName}.${nextSelector}`
 
     let fieldName = key
     let inferredField

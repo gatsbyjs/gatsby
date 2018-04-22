@@ -42,6 +42,7 @@
     "debug": "^3.1.0",
     "del": "^3.0.0",
     "detect-port": "^1.2.1",
+    "devcert-san": "^0.3.3",
     "domready": "^1.0.8",
     "dotenv": "^4.0.0",
     "eslint": "^4.19.1",

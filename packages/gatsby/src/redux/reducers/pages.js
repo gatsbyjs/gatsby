@@ -1,5 +1,10 @@
-const _ = require(`lodash`)
 const normalize = require(`normalize-path`)
+
+const stateToMap = state => {
+  let stateMap = new Map()
+  state.forEach(payload => stateMap.set(payload.path, payload))
+  return stateMap
+}
 
 module.exports = (state = [], action) => {
   switch (action.type) {
@@ -19,23 +24,16 @@ module.exports = (state = [], action) => {
       // Link page to its plugin.
       action.payload.pluginCreator___NODE = action.plugin.id
       action.payload.pluginCreatorId = action.plugin.id
-      const index = _.findIndex(state, p => p.path === action.payload.path)
-      // If the path already exists, overwrite it.
-      // Otherwise, add it to the end.
-      if (index !== -1) {
-        return [
-          ...state
-            .slice(0, index)
-            .concat(action.payload)
-            .concat(state.slice(index + 1)),
-        ]
-      } else {
-        return [...state.concat(action.payload)]
-      }
-    }
 
-    case `DELETE_PAGE`:
-      return state.filter(p => p.path !== action.payload.path)
+      let stateMap = stateToMap(state)
+      stateMap.set(action.payload.path, action.payload)
+      return Array.from(stateMap.values())
+    }
+    case `DELETE_PAGE`: {
+      let stateMap = stateToMap(state)
+      stateMap.delete(action.payload.path)
+      return Array.from(stateMap.values())
+    }
     default:
       return state
   }

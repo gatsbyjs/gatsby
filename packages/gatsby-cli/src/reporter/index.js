@@ -11,17 +11,35 @@ const errorFormatter = getErrorFormatter()
 const reporter = createReporter({ emoji: true, verbose: VERBOSE })
 const base = Object.getPrototypeOf(reporter)
 
-module.exports = Object.assign(reporter, {
-  stripIndent,
+/* Reporter module.
+ * @module reporter
+ */
 
+module.exports = Object.assign(reporter, {
+  /**
+   * Strip initial indentation template function.
+   */
+  stripIndent,
+  /**
+   * Toggle verbosity.
+   * @param {boolean} [isVerbose=true]
+   */
   setVerbose(isVerbose = true) {
     this.isVerbose = !!isVerbose
   },
+  /**
+   * Turn off colors in error output.
+   * @param {boolean} [isNoColor=false]
+   */
   setNoColor(isNoColor = false) {
     if (isNoColor) {
       errorFormatter.withoutColors()
     }
   },
+  /**
+   * Log arguments and exit process with status 1.
+   * @param {*} [arguments]
+   */
   panic(...args) {
     this.error(...args)
     process.exit(1)
@@ -42,11 +60,18 @@ module.exports = Object.assign(reporter, {
     base.error.call(this, message)
     if (error) console.log(errorFormatter.render(error))
   },
-
+  /**
+   * Set prefix on uptime.
+   * @param {string} prefix - A string to prefix uptime with.
+   */
   uptime(prefix: string) {
     this.verbose(`${prefix}: ${(process.uptime() * 1000).toFixed(3)}ms`)
   },
-
+  /**
+   * Time an activity.
+   * @param {string} name - Name of activity.
+   * @returns {string} The elapsed time of activity.
+   */
   activityTimer(name) {
     const spinner = reporter.activity()
     const start = process.hrtime()

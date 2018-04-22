@@ -114,6 +114,8 @@ module.exports = async (
       case `develop`:
         return {
           commons: [
+==== BASE ====
+            require.resolve(`react-hot-loader/patch`),
             `${require.resolve(`webpack-hot-middleware/client`)}?path=http://${
               program.host
             }:${webpackPort}/__webpack_hmr&reload=true&overlay=false`,

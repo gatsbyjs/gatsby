@@ -38,9 +38,7 @@ Now let's create a sample Glamor page at `src/pages/index.js`
 ```jsx
 import React from "react";
 
-const Container = ({ children }) => (
-  <div>{children}</div>
-);
+const Container = ({ children }) => <div>{children}</div>;
 
 export default () => (
   <Container>

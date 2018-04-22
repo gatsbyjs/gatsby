@@ -18,7 +18,7 @@
   },
   "homepage":
     "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-less#readme",
-  "keywords": ["gatsby", "less"],
+  "keywords": ["gatsby", "gatsby-plugin", "less"],
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {

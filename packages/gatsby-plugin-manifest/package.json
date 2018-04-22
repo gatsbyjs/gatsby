@@ -8,7 +8,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0-beta.42",
-    "bluebird": "^3.5.0"
+    "bluebird": "^3.5.0",
+    "sharp": "^0.20.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.42",
@@ -19,6 +20,8 @@
   "keywords": [
     "gatsby",
     "gatsby-plugin",
+    "favicon",
+    "icons",
     "manifest.json",
     "progressive-web-app",
     "pwa"

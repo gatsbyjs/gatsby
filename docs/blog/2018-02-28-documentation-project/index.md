@@ -2,6 +2,7 @@
 title: Introducing the Gatsby Documentation Project
 author: Shannon Soper
 date: 2018-02-28
+tags: ["ux", "documentation", "community"]
 ---
 
 People really like Gatsby docs and Gatsby. In fact, we’ve talked about tracking the number of curse words and endearingly pejorative terms that people use when tweeting about Gatsby. Here’s a sampling:
@@ -58,7 +59,8 @@ We know how easy the Gatsby development experience is for the majority of progra
 
 ## What you can do to help
 
-If you'd like to contribute, look through this list of options and pick one that you'd like to help with! 
-* Go to [Issue #4175](https://github.com/gatsbyjs/gatsby/issues/4175) to help enhance the tutorials. 
-* If you’d like to contribute to and/or follow other documentation projects, go here to find the [Documentation Project](https://github.com/gatsbyjs/gatsby/projects/3). 
+If you'd like to contribute, look through this list of options and pick one that you'd like to help with!
+
+* Go to [Issue #4175](https://github.com/gatsbyjs/gatsby/issues/4175) to help enhance the tutorials.
+* If you’d like to contribute to and/or follow other documentation projects, go here to find the [Documentation Project](https://github.com/gatsbyjs/gatsby/projects/3).
 * And, as always, if you have time to give us feedback on what you like about Gatsby and what can be improved in the docs/tutorials, schedule a time to chat with me here! [https://calendly.com/shannon-soper](https://calendly.com/shannon-soper)

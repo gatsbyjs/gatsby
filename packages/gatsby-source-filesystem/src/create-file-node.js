@@ -36,6 +36,7 @@ exports.createFileNode = async (
     internal = {
       contentDigest,
       type: `Directory`,
+      description: `Directory "${path.relative(process.cwd(), slashed)}"`,
     }
   } else {
     const contentDigest = await md5File(slashedFile.absolutePath)
@@ -44,6 +45,7 @@ exports.createFileNode = async (
       contentDigest,
       type: `File`,
       mediaType: mediaType ? mediaType : `application/octet-stream`,
+      description: `File "${path.relative(process.cwd(), slashed)}"`,
     }
   }
 

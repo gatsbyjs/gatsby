@@ -23,6 +23,7 @@ const chalk = require(`chalk`)
 const address = require(`address`)
 const sourceNodes = require(`../utils/source-nodes`)
 const websocketManager = require(`../utils/websocket-manager`)
+const getSslCert = require(`../utils/get-ssl-cert`)
 
 // const isInteractive = process.stdout.isTTY
 
@@ -138,6 +139,13 @@ async function startServer(program) {
     })
   )
 
+  // Expose access to app for advanced use cases
+  const { developMiddleware } = store.getState().config
+
+  if (developMiddleware) {
+    developMiddleware(app)
+  }
+
   // Set up API proxy.
   const { proxy } = store.getState().config
   if (proxy) {
@@ -196,7 +204,14 @@ async function startServer(program) {
   /**
    * Set up the HTTP server and socket.io.
    **/
-  const server = require(`http`).Server(app)
+==== BASE ====
+
+  let server = require(`http`).Server(app)
+
+  // If a SSL cert exists in program, use it with `createServer`.
+  if (program.ssl) {
+    server = require(`https`).createServer(program.ssl, app)
+  }
   websocketManager.init({ server, directory: program.directory })
   const socket = websocketManager.getSocket()
 
@@ -233,6 +248,12 @@ module.exports = async (program: any) => {
   const detect = require(`detect-port`)
   const port =
     typeof program.port === `string` ? parseInt(program.port, 10) : program.port
+
+  // Check if https is enabled, then create or get SSL cert.
+  // Certs are named after `name` inside the project's package.json.
+  if (program.https) {
+    program.ssl = await getSslCert(program.sitePackageJson.name)
+  }
 
   let compiler
   await new Promise(resolve => {
@@ -384,7 +405,11 @@ module.exports = async (program: any) => {
     // options so we are going to "massage" the warnings and errors and present
     // them in a readable focused way.
     const messages = formatWebpackMessages(stats.toJson({}, true))
-    const urls = prepareUrls(`http`, program.host, program.port)
+    const urls = prepareUrls(
+      program.ssl ? `https` : `http`,
+      program.host,
+      program.port
+    )
     const isSuccessful = !messages.errors.length && !messages.warnings.length
     // if (isSuccessful) {
     // console.log(chalk.green(`Compiled successfully!`))

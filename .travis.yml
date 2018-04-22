@@ -26,6 +26,24 @@ jobs:
           - yarn run bootstrap
           script:
           - yarn test
+          - yarn danger ci
+
+        - stage: gatsbygram ui tests
+          language: node_js
+          node_js:
+            - '6'
+            - '8'
+          cache:
+            yarn: true
+          before_install:
+          - curl -o- -L https://yarnpkg.com/install.sh | bash
+          - export PATH=$HOME/.yarn/bin:$PATH
+          - cd examples/gatsbygram
+          install:
+          - yarn
+          script:
+          - yarn test
+
 
         - stage: www graphql docker image build and push
           if: (NOT type = pull_request) AND branch = master

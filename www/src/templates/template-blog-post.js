@@ -4,12 +4,14 @@ import { Link } from "gatsby"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import ArrowBackIcon from "react-icons/lib/md/arrow-back"
 import Img from "gatsby-image"
+import { OutboundLink } from "gatsby-plugin-google-analytics"
 
 import GlobalLayout from "../layouts"
 import presets, { colors } from "../utils/presets"
 import typography, { rhythm, scale, options } from "../utils/typography"
 import Container from "../components/container"
 import EmailCaptureForm from "../components/email-capture-form"
+import TagsSection from "../components/tags-section"
 
 class BlogPostTemplate extends React.Component {
   render() {
@@ -50,6 +52,13 @@ class BlogPostTemplate extends React.Component {
         {children}
       </p>
     )
+    let canonicalLink
+    if (post.frontmatter.canonicalLink) {
+      canonicalLink = (
+        <link rel="canonical" href={post.frontmatter.canonicalLink} />
+      )
+    }
+
     return (
       <GlobalLayout location={this.props.location}>
         <Container className="post" css={{ paddingBottom: `0 !important` }}>
@@ -106,6 +115,7 @@ class BlogPostTemplate extends React.Component {
               name="article:published_time"
               content={post.frontmatter.rawDate}
             />
+            {canonicalLink}
           </Helmet>
           <header
             css={{
@@ -161,9 +171,9 @@ class BlogPostTemplate extends React.Component {
                   <span>
                     {` `}
                     (originally published at{` `}
-                    <a href={post.frontmatter.canonicalLink}>
+                    <OutboundLink href={post.frontmatter.canonicalLink}>
                       {post.frontmatter.publishedAt}
-                    </a>)
+                    </OutboundLink>)
                   </span>
                 )}
               </BioLine>
@@ -191,9 +201,9 @@ class BlogPostTemplate extends React.Component {
                   post.frontmatter.imageAuthorLink && (
                     <em>
                       Image by{` `}
-                      <a href={post.frontmatter.imageAuthorLink}>
+                      <OutboundLink href={post.frontmatter.imageAuthorLink}>
                         {post.frontmatter.imageAuthor}
-                      </a>
+                      </OutboundLink>
                     </em>
                   )}
               </div>
@@ -204,6 +214,7 @@ class BlogPostTemplate extends React.Component {
               __html: this.props.data.markdownRemark.html,
             }}
           />
+          <TagsSection tags={this.props.data.markdownRemark.frontmatter.tags} />
           <EmailCaptureForm />
         </Container>
         <div
@@ -298,6 +309,7 @@ export const pageQuery = graphql`
         rawDate: date
         canonicalLink
         publishedAt
+        tags
         image {
           childImageSharp {
             resize(width: 1500, height: 1500) {

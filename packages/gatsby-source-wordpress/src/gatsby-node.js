@@ -16,6 +16,8 @@ let _useACF = true
 let _hostingWPCOM
 let _auth
 let _perPage
+let _concurrentRequests
+let _excludedRoutes
 
 exports.sourceNodes = async (
   { actions, getNode, store, cache, createNodeId },
@@ -28,6 +30,8 @@ exports.sourceNodes = async (
     verboseOutput,
     perPage = 100,
     searchAndReplaceContentUrls = {},
+    concurrentRequests = 10,
+    excludedRoutes = [],
   }
 ) => {
   const { createNode } = actions
@@ -37,6 +41,8 @@ exports.sourceNodes = async (
   _hostingWPCOM = hostingWPCOM
   _auth = auth
   _perPage = perPage
+  _concurrentRequests = concurrentRequests
+  _excludedRoutes = excludedRoutes
 
   let entities = await fetch({
     baseUrl,
@@ -46,6 +52,8 @@ exports.sourceNodes = async (
     _hostingWPCOM,
     _auth,
     _perPage,
+    _concurrentRequests,
+    _excludedRoutes,
     typePrefix,
     refactoredEntityTypes,
   })
@@ -91,8 +99,12 @@ exports.sourceNodes = async (
     store,
     cache,
     createNode,
+    touchNode,
     _auth,
   })
+
+  // Creates links between elements and parent element.
+  entities = normalize.mapElementsToParent(entities)
 
   // Search and replace Content Urls
   entities = normalize.searchReplaceContentUrls({

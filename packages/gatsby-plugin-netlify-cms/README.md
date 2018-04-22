@@ -9,7 +9,10 @@ site](https://netlifycms.org).
 
 ## Install
 
-`npm install --save gatsby-plugin-netlify-cms`
+```shell
+npm install --save netlify-cms
+npm install --save gatsby-plugin-netlify-cms
+```
 
 ## How to use
 

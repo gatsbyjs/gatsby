@@ -33,11 +33,18 @@ const newPath = (linkNode, destinationDir) => {
   return path.posix.join(process.cwd(), DEPLOY_DIR, newFileName(linkNode))
 }
 
-const newLinkURL = (linkNode, destinationDir) => {
-  if (destinationDir) {
-    return path.posix.join(`/`, destinationDir, newFileName(linkNode))
-  }
-  return path.posix.join(`/`, newFileName(linkNode))
+const newLinkURL = (linkNode, destinationDir, pathPrefix) => {
+  const linkPaths = [
+    `/`,
+    pathPrefix,
+    destinationDir,
+    newFileName(linkNode),
+  ].filter(function(lpath) {
+    if (lpath) return true
+    return false
+  })
+
+  return path.posix.join(...linkPaths)
 }
 
 function toArray(buf) {
@@ -51,7 +58,7 @@ function toArray(buf) {
 }
 
 module.exports = (
-  { files, markdownNode, markdownAST, getNode },
+  { files, markdownNode, markdownAST, pathPrefix, getNode },
   pluginOptions = {}
 ) => {
   const defaults = {
@@ -87,7 +94,7 @@ module.exports = (
         // Prevent uneeded copying
         if (linkPath === newFilePath) return
 
-        const linkURL = newLinkURL(linkNode, options.destinationDir)
+        const linkURL = newLinkURL(linkNode, options.destinationDir, pathPrefix)
         link.url = linkURL
         filesToCopy.set(linkPath, newFilePath)
       }

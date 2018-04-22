@@ -4,7 +4,7 @@ CSS Modules configuration for Gatsby v1 plugins
 
 ## Install
 
-`yarn add --dev gatsby-plugin-sass`
+`npm install --save-dev gatsby-plugin-sass`
 
 ## How to use
 

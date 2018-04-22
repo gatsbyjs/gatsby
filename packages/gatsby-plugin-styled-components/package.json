@@ -22,6 +22,7 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
+    "babel-plugin-styled-components": ">1.5.0",
     "gatsby": "^1.0.0",
     "styled-components": ">= 2.0.0"
   },

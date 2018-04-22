@@ -140,7 +140,9 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     }
 
     if (prevRouterProps) {
-      const { location: { pathname: oldPathname } } = prevRouterProps
+      const {
+        location: { pathname: oldPathname },
+      } = prevRouterProps
       if (oldPathname === pathname) {
         return false
       }

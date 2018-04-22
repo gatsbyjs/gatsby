@@ -80,6 +80,7 @@ class Index extends React.Component {
         >
           {/* user profile */}
           <div
+            data-testid="user-avatar"
             css={{
               paddingBottom: rhythm(2),
               paddingTop: rhythm(1.5),

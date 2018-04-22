@@ -48,6 +48,7 @@ node_modules/
 # IDE specific
 .idea/
 .vscode/
+*.sw*
 
 .serverless/
 yarn.lock

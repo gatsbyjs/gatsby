@@ -9,13 +9,28 @@ const glob = require(`glob`)
 const path = require(`path`)
 const fs = require(`fs`)
 const { joinPath } = require(`../utils/path`)
-const { getNode, hasNodeChanged } = require(`./index`)
+const { hasNodeChanged, getNode } = require(`./index`)
 const { trackInlineObjectsInRootNode } = require(`../schema/node-tracking`)
 const { store } = require(`./index`)
 import * as joiSchemas from "../joi-schemas/joi"
 import { generateComponentChunkName } from "../utils/js-chunk-names"
 
 const actions = {}
+
+const findChildrenRecursively = (children = []) => {
+  children = children.concat(
+    ...children.map(child => {
+      const newChildren = getNode(child).children
+      if (_.isArray(newChildren) && newChildren.length > 0) {
+        return findChildrenRecursively(newChildren)
+      } else {
+        return []
+      }
+    })
+  )
+
+  return children
+}
 
 type Job = {
   id: string,
@@ -286,11 +301,30 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
  * deleteNode(node.id, node)
  */
 actions.deleteNode = (nodeId: string, node: any, plugin: Plugin) => {
-  return {
+  let deleteDescendantsActions
+  // It's possible the file node was never created as sometimes tools will
+  // write and then immediately delete temporary files to the file system.
+  if (node) {
+    // Also delete any nodes transformed from this one.
+    const descendantNodes = findChildrenRecursively(node.children)
+    if (descendantNodes.length > 0) {
+      deleteDescendantsActions = descendantNodes.map(n =>
+        actions.deleteNode(n, getNode(n), plugin)
+      )
+    }
+  }
+
+  const deleteAction = {
     type: `DELETE_NODE`,
     plugin,
     node,
     payload: nodeId,
+  }
+
+  if (deleteDescendantsActions) {
+    return [...deleteDescendantsActions, deleteAction]
+  } else {
+    return deleteAction
   }
 }
 
@@ -313,6 +347,12 @@ actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
     plugin,
     payload: nodes,
   }
+
+  if (deleteDescendantsActions) {
+    return [...deleteDescendantsActions, deleteNodesAction]
+  } else {
+    return deleteNodesAction
+  }
 }
 
 const typeOwners = {}
@@ -322,7 +362,7 @@ const typeOwners = {}
  * @param {string} node.id The node's ID. Must be globally unique.
  * @param {string} node.parent The ID of the parent's node. If the node is
  * derived from another node, set that node as the parent. Otherwise it can
- * just be an empty string.
+ * just be `null`.
  * @param {Array} node.children An array of children node IDs. If you're
  * creating the children nodes while creating the parent node, add the
  * children node IDs here directly. If you're adding a child node to a
@@ -350,6 +390,10 @@ const typeOwners = {}
  * @param {string} node.internal.contentDigest the digest for the content
  * of this node. Helps Gatsby avoid doing extra work on data that hasn't
  * changed.
+ * @param {string} node.internal.description An optional field. Human
+ * readable description of what this node represent / its source. It will
+ * be displayed when type conflicts are found, making it easier to find
+ * and correct type conflicts.
  * @example
  * createNode({
  *   // Data for the node.
@@ -370,6 +414,7 @@ const typeOwners = {}
  *       .digest(`hex`),
  *     mediaType: `text/markdown`, // optional
  *     content: JSON.stringify(fieldData), // optional
+ *     description: `Cool Service: "Title of entry"`, // optional
  *   }
  * })
  */
@@ -477,21 +522,38 @@ actions.createNode = (node: any, plugin?: Plugin, traceId?: string) => {
     }
   }
 
+  let deleteAction
+  let updateNodeAction
   // Check if the node has already been processed.
   if (oldNode && !hasNodeChanged(node.id, node.internal.contentDigest)) {
-    return {
+    updateNodeAction = {
       type: `TOUCH_NODE`,
       plugin,
       traceId,
       payload: node.id,
     }
   } else {
-    return {
+    // Remove any previously created descendant nodes as they're all due
+    // to be recreated.
+    if (oldNode) {
+      const descendantNodes = findChildrenRecursively(oldNode.children)
+      if (descendantNodes.length > 0) {
+        deleteAction = actions.deleteNodes(descendantNodes)
+      }
+    }
+
+    updateNodeAction = {
       type: `CREATE_NODE`,
       plugin,
       traceId,
       payload: node,
     }
+  }
+
+  if (deleteAction) {
+    return [deleteAction, updateNodeAction]
+  } else {
+    return updateNodeAction
   }
 }
 
@@ -958,5 +1020,12 @@ actions.createRedirect = ({
   }
 }
 
+/**
+ * All defined actions.
+ */
 exports.actions = actions
+
+/**
+ * All action creators wrapped with a dispatch.
+ */
 exports.boundActionCreators = bindActionCreators(actions, store.dispatch)
