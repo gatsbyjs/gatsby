@@ -204,8 +204,6 @@ async function startServer(program) {
   /**
    * Set up the HTTP server and socket.io.
    **/
-==== BASE ====
-
   let server = require(`http`).Server(app)
 
   // If a SSL cert exists in program, use it with `createServer`.
