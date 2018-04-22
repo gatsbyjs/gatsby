@@ -176,10 +176,13 @@ module.exports = async ({
       }
     },
 
-    miniCssExtract: ({ disable = !PRODUCTION, fallback, ...options }) => {
+    miniCssExtract: (options = {}) => {
       return {
         options,
-        loader: MiniCssExtractPlugin.loader,
+        // use MiniCssExtractPlugin only on production builds
+        loader: PRODUCTION
+          ? MiniCssExtractPlugin.loader
+          : require.resolve(`style-loader`),
       }
     },
 
@@ -351,7 +354,7 @@ module.exports = async ({
       return {
         test: /\.css$/,
         use: [
-          MiniCssExtractPlugin.loader,
+          loaders.miniCssExtract(),
           loaders.css({ ...options, importLoaders: 1 }),
           loaders.postcss({ browsers }),
         ],
