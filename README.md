@@ -204,6 +204,7 @@ Websites built with Gatsby:
 * [F1 Vision](https://f1vision.com/)
 * [GraphQL College](https://graphql.college) ([source](https://github.com/GraphQLCollege/graphql-college))
 * [Hyunwoo Kim - Blog/Portfolio](https://devhalloween.com) ([source](https://github.com/khw1031/dev-blog))
+* [Dovetail](https://dovetailapp.com)
 
 ## Docs
 
