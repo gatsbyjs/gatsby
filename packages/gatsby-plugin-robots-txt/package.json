@@ -1,13 +1,12 @@
 {
   "name": "gatsby-plugin-robots-txt",
-  "version": "1.0.0",
   "files": ["gatsby-*.js*"],
   "main": "index.js",
   "description":
     "Gatsby plugin that automatically creates robots.txt for your site",
   "scripts": {
     "clean": "rm -rf gatsby-node.js*",
-    "lint": "eslint --ext js ./ --cache",
+    "lint": "eslint --ext js,md ./ --cache",
     "build": "babel src --out-dir ./ --source-maps",
     "watch": "babel src --out-dir ./ --source-maps --watch"
   },
@@ -34,6 +33,7 @@
     "babel-preset-env": "^1.6.1",
     "eslint": "^4.19.1",
     "eslint-plugin-babel": "^5.1.0",
+    "eslint-plugin-markdown": "^1.0.0-beta.6",
     "prettier": "^1.12.1",
     "semantic-release": "^15.1.7",
     "travis-deploy-once": "^4.4.1"
