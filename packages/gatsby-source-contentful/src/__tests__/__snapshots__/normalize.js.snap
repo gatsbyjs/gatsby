@@ -2432,8 +2432,8 @@ Array [
       "children": Array [],
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "content": "Haus & Küche",
-        "contentDigest": "21786d8d63d043d9cc0f639450bd5b70",
+        "content": "Home & Kitchen",
+        "contentDigest": "71520a45fe8b5ecded737e074a6b30a0",
         "mediaType": "text/markdown",
         "type": "contentfulCategoryTitleTextNode",
       },
@@ -2443,12 +2443,12 @@ Array [
   ],
   Array [
     Object {
-      "categoryDescription": "Shop für Möbel, Bettwäsche, Bad, Staubsauger, Küchenprodukte und vieles mehr",
+      "categoryDescription": "Shop for furniture, bedding, bath, vacuums, kitchen products, and more",
       "children": Array [],
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "content": "Shop für Möbel, Bettwäsche, Bad, Staubsauger, Küchenprodukte und vieles mehr",
-        "contentDigest": "7d7b0c68e20954c3f092bae55ccbdd9f",
+        "content": "Shop for furniture, bedding, bath, vacuums, kitchen products, and more",
+        "contentDigest": "24709e2bdb88b89104c215e6b5492bf8",
         "mediaType": "text/markdown",
         "type": "contentfulCategoryCategoryDescriptionTextNode",
       },
@@ -2460,8 +2460,8 @@ Array [
       "children": Array [],
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "content": "Spielzeug",
-        "contentDigest": "22658c0cbfd038b32380aa036bff1cfe",
+        "content": "Toys",
+        "contentDigest": "66d0af2d5da0109dc2aae67829f7d4d4",
         "mediaType": "text/markdown",
         "type": "contentfulCategoryTitleTextNode",
       },
@@ -2471,12 +2471,12 @@ Array [
   ],
   Array [
     Object {
-      "categoryDescription": "Spielzeugladen, Spiele, Lernhilfen",
+      "categoryDescription": "Shop for toys, games, educational aids",
       "children": Array [],
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "content": "Spielzeugladen, Spiele, Lernhilfen",
-        "contentDigest": "93335f47e41d44163239227427760695",
+        "content": "Shop for toys, games, educational aids",
+        "contentDigest": "c3cd3eaea58a115e968573664df3a603",
         "mediaType": "text/markdown",
         "type": "contentfulCategoryCategoryDescriptionTextNode",
       },
@@ -2581,16 +2581,17 @@ Array [
       "companyName": "Lemnos",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "content": "Lemnos",
-        "contentDigest": "7b0e3f7cc613d34aafa689516e96056e",
+        "content": "Haus & Küche",
+        "contentDigest": "21786d8d63d043d9cc0f639450bd5b70",
         "mediaType": "text/markdown",
-        "type": "contentfulBrandCompanyNameTextNode",
+        "type": "contentfulCategoryTitleTextNode",
       },
       "parent": "uuid-from-gatsby",
     },
   ],
   Array [
     Object {
+      "categoryDescription": "Shop für Möbel, Bettwäsche, Bad, Staubsauger, Küchenprodukte und vieles mehr",
       "children": Array [],
       "companyDescription": "TAKATA Lemnos Inc. was founded in 1947 as a brass casting manufacturing industry in Takaoka-city, Toyama Prefecture, Japan and we launched out into the full-scale business trade with Seiko Clock Co., Ltd. since 1966.
 
@@ -2605,20 +2606,10 @@ In recent years, we also have been given high priority to develop interior acces
 Our Lemnos products are made carefully by our craftsmen finely honed skillful techniques in Japan. They surely bring out the attractiveness of the materials to the maximum and create fine products not being influenced on the fashion trend accordingly. TAKATA Lemnos Inc. definitely would like to be innovative and continuously propose the beauty lasts forever.",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "content": "TAKATA Lemnos Inc. was founded in 1947 as a brass casting manufacturing industry in Takaoka-city, Toyama Prefecture, Japan and we launched out into the full-scale business trade with Seiko Clock Co., Ltd. since 1966.
-
-We entered into the development for the original planning from late 1980 and \\"Lemnos Brand\\" recognized as the global design clock by a masterpiece \\"HOLA\\" designed by Kazuo KAWASAKI which released in 1989.
-
-Afterwards, we made a lot of projects with well-known designers who took in active in Japan and overseas such as Riki WATANABE, Kazuo KAWASAKI, Shin AZUMI, Tomoko AZUMI, Kanae TSUKAMOTO etc. and we made announcement of their fine works abounding in artistry and prominent designs. In addition, we realized to make a special project by the collaboration with Andrea Branzi, a well-known architect in the world.
-
-Lemnos brand products are now highly praised from the design shops and the interior shops all over the world.
-
-In recent years, we also have been given high priority to develop interior accessories making full use of our traditional techniques by the founding manufacturer and we always focus our minds on the development for the new Lemnos products in the new market.
-
-Our Lemnos products are made carefully by our craftsmen finely honed skillful techniques in Japan. They surely bring out the attractiveness of the materials to the maximum and create fine products not being influenced on the fashion trend accordingly. TAKATA Lemnos Inc. definitely would like to be innovative and continuously propose the beauty lasts forever.",
-        "contentDigest": "fa3b5588d6eb6ed5a367ea48e5e47be2",
+        "content": "Shop für Möbel, Bettwäsche, Bad, Staubsauger, Küchenprodukte und vieles mehr",
+        "contentDigest": "7d7b0c68e20954c3f092bae55ccbdd9f",
         "mediaType": "text/markdown",
-        "type": "contentfulBrandCompanyDescriptionTextNode",
+        "type": "contentfulCategoryCategoryDescriptionTextNode",
       },
       "parent": "uuid-from-gatsby",
     },
@@ -2629,24 +2620,25 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
       "companyName": "Playsam",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "content": "Playsam",
-        "contentDigest": "1d2de5c3096635ca01f6ab4131252039",
+        "content": "Spielzeug",
+        "contentDigest": "22658c0cbfd038b32380aa036bff1cfe",
         "mediaType": "text/markdown",
-        "type": "contentfulBrandCompanyNameTextNode",
+        "type": "contentfulCategoryTitleTextNode",
       },
       "parent": "uuid-from-gatsby",
     },
   ],
   Array [
     Object {
+      "categoryDescription": "Spielzeugladen, Spiele, Lernhilfen",
       "children": Array [],
       "companyDescription": "Playsam is the leading Scandinavian design company for executive wooden toy gift. Scandinavian design playful creativity, integrity and sophistication are Playsam. Scandinavian design and wooden toy makes Playsam gift lovely to the world of design since 1984.",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "content": "Playsam is the leading Scandinavian design company for executive wooden toy gift. Scandinavian design playful creativity, integrity and sophistication are Playsam. Scandinavian design and wooden toy makes Playsam gift lovely to the world of design since 1984.",
-        "contentDigest": "f27a71b7f2ee9eabad3335e0c03da951",
+        "content": "Spielzeugladen, Spiele, Lernhilfen",
+        "contentDigest": "93335f47e41d44163239227427760695",
         "mediaType": "text/markdown",
-        "type": "contentfulBrandCompanyDescriptionTextNode",
+        "type": "contentfulCategoryCategoryDescriptionTextNode",
       },
       "parent": "uuid-from-gatsby",
     },
@@ -2770,8 +2762,8 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
       "companyDescription": "Normann Kopenhagen ist eine Art zu leben - eine Denkweise. Wir lieben es, die konventionellen Designregeln herauszufordern. Aus diesem Grund finden Sie traditionelle Materialien, die in untraditionelle Verwendung wie ein Steinhaken aus isländischen Steinen, eine Vase aus Silizium und last but not least ein Hund aus Kunststoff.",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "content": "Normann Kopenhagen ist eine Art zu leben - eine Denkweise. Wir lieben es, die konventionellen Designregeln herauszufordern. Aus diesem Grund finden Sie traditionelle Materialien, die in untraditionelle Verwendung wie ein Steinhaken aus isländischen Steinen, eine Vase aus Silizium und last but not least ein Hund aus Kunststoff.",
-        "contentDigest": "0a7c7553a38bb0a62a22c20deb99a93f",
+        "content": "Normann Copenhagen is a way of living - a mindset. We love to challenge the conventional design rules. This is why you will find traditional materials put into untraditional use such as a Stone Hook made of Icelandic stones, a vase made out of silicon and last but not least a dog made out of plastic.",
+        "contentDigest": "8010f6e93f3a7dbca56c041a46d4ab77",
         "mediaType": "text/markdown",
         "type": "contentfulBrandCompanyDescriptionTextNode",
       },
@@ -2795,31 +2787,31 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
   Array [
     Object {
       "children": Array [],
-      "companyDescription": "TAKATA Lemnos Inc. wurde im Jahre 1947 als Messing-Casting-Fertigungsindustrie in Takaoka-Stadt, Toyama Prefecture, Japan gegründet und wir starteten seit 1966 mit der Seiko Clock Co., Ltd.
+      "companyDescription": "TAKATA Lemnos Inc. was founded in 1947 as a brass casting manufacturing industry in Takaoka-city, Toyama Prefecture, Japan and we launched out into the full-scale business trade with Seiko Clock Co., Ltd. since 1966.
 
-Wir haben die Entwicklung für die ursprüngliche Planung ab Ende 1980 eingegangen und \\"Lemnos Brand\\" wurde als globale Designuhr von einem Meisterwerk \\"HOLA\\" von Kazuo KAWASAKI entworfen, das 1989 erschien.
+We entered into the development for the original planning from late 1980 and \\"Lemnos Brand\\" recognized as the global design clock by a masterpiece \\"HOLA\\" designed by Kazuo KAWASAKI which released in 1989.
 
-Danach machten wir viele Projekte mit namhaften Designern, die in Japan und Übersee tätig waren, wie zB Riki WATANABE, Kazuo KAWASAKI, Shin AZUMI, Tomoko AZUMI, Kanae TSUKAMOTO etc. und wir kündigten ihre Werke in der Kunst an Und prominenten Designs. Darüber hinaus haben wir durch die Zusammenarbeit mit Andrea Branzi, einem bekannten Architekten der Welt, ein besonderes Projekt gemacht.
+Afterwards, we made a lot of projects with well-known designers who took in active in Japan and overseas such as Riki WATANABE, Kazuo KAWASAKI, Shin AZUMI, Tomoko AZUMI, Kanae TSUKAMOTO etc. and we made announcement of their fine works abounding in artistry and prominent designs. In addition, we realized to make a special project by the collaboration with Andrea Branzi, a well-known architect in the world.
 
-Lemnos Markenprodukte werden nun von den Designläden und den Innenhandelsgeschäften auf der ganzen Welt hoch gelobt.
+Lemnos brand products are now highly praised from the design shops and the interior shops all over the world.
 
-In den vergangenen Jahren haben wir auch eine hohe Priorität für die Entwicklung von Innenausstattung, die den traditionellen Techniken des Gründungsherstellers voll ausnutzt, und wir konzentrieren uns immer auf die Entwicklung der neuen Lemnos-Produkte im neuen Markt.
+In recent years, we also have been given high priority to develop interior accessories making full use of our traditional techniques by the founding manufacturer and we always focus our minds on the development for the new Lemnos products in the new market.
 
 Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliffen geschickten Techniken in Japan gemacht. Sie bringen sicherlich die Attraktivität der Materialien auf das Maximum und schaffen feine Produkte nicht beeinflusst auf die Mode-Trend entsprechend. TAKATA Lemnos Inc. möchte definitiv innovativ sein und ständig vorschlagen, die Schönheit dauert ewig.",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "content": "TAKATA Lemnos Inc. wurde im Jahre 1947 als Messing-Casting-Fertigungsindustrie in Takaoka-Stadt, Toyama Prefecture, Japan gegründet und wir starteten seit 1966 mit der Seiko Clock Co., Ltd.
+        "content": "TAKATA Lemnos Inc. was founded in 1947 as a brass casting manufacturing industry in Takaoka-city, Toyama Prefecture, Japan and we launched out into the full-scale business trade with Seiko Clock Co., Ltd. since 1966.
 
-Wir haben die Entwicklung für die ursprüngliche Planung ab Ende 1980 eingegangen und \\"Lemnos Brand\\" wurde als globale Designuhr von einem Meisterwerk \\"HOLA\\" von Kazuo KAWASAKI entworfen, das 1989 erschien.
+We entered into the development for the original planning from late 1980 and \\"Lemnos Brand\\" recognized as the global design clock by a masterpiece \\"HOLA\\" designed by Kazuo KAWASAKI which released in 1989.
 
-Danach machten wir viele Projekte mit namhaften Designern, die in Japan und Übersee tätig waren, wie zB Riki WATANABE, Kazuo KAWASAKI, Shin AZUMI, Tomoko AZUMI, Kanae TSUKAMOTO etc. und wir kündigten ihre Werke in der Kunst an Und prominenten Designs. Darüber hinaus haben wir durch die Zusammenarbeit mit Andrea Branzi, einem bekannten Architekten der Welt, ein besonderes Projekt gemacht.
+Afterwards, we made a lot of projects with well-known designers who took in active in Japan and overseas such as Riki WATANABE, Kazuo KAWASAKI, Shin AZUMI, Tomoko AZUMI, Kanae TSUKAMOTO etc. and we made announcement of their fine works abounding in artistry and prominent designs. In addition, we realized to make a special project by the collaboration with Andrea Branzi, a well-known architect in the world.
 
-Lemnos Markenprodukte werden nun von den Designläden und den Innenhandelsgeschäften auf der ganzen Welt hoch gelobt.
+Lemnos brand products are now highly praised from the design shops and the interior shops all over the world.
 
-In den vergangenen Jahren haben wir auch eine hohe Priorität für die Entwicklung von Innenausstattung, die den traditionellen Techniken des Gründungsherstellers voll ausnutzt, und wir konzentrieren uns immer auf die Entwicklung der neuen Lemnos-Produkte im neuen Markt.
+In recent years, we also have been given high priority to develop interior accessories making full use of our traditional techniques by the founding manufacturer and we always focus our minds on the development for the new Lemnos products in the new market.
 
-Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliffen geschickten Techniken in Japan gemacht. Sie bringen sicherlich die Attraktivität der Materialien auf das Maximum und schaffen feine Produkte nicht beeinflusst auf die Mode-Trend entsprechend. TAKATA Lemnos Inc. möchte definitiv innovativ sein und ständig vorschlagen, die Schönheit dauert ewig.",
-        "contentDigest": "b8d1cb0f951b10e0f84f32a8c28ee503",
+Our Lemnos products are made carefully by our craftsmen finely honed skillful techniques in Japan. They surely bring out the attractiveness of the materials to the maximum and create fine products not being influenced on the fashion trend accordingly. TAKATA Lemnos Inc. definitely would like to be innovative and continuously propose the beauty lasts forever.",
+        "contentDigest": "fa3b5588d6eb6ed5a367ea48e5e47be2",
         "mediaType": "text/markdown",
         "type": "contentfulBrandCompanyDescriptionTextNode",
       },
@@ -2846,8 +2838,8 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "companyDescription": "Playsam ist die führende skandinavische Designfirma für Executive Holzspielzeug Geschenk. Skandinavisches Design spielerische Kreativität, Integrität und Raffinesse sind Playsam. Skandinavisches Design und hölzernes Spielzeug macht Playsam Geschenk schön in die Welt des Designs seit 1984.",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "content": "Playsam ist die führende skandinavische Designfirma für Executive Holzspielzeug Geschenk. Skandinavisches Design spielerische Kreativität, Integrität und Raffinesse sind Playsam. Skandinavisches Design und hölzernes Spielzeug macht Playsam Geschenk schön in die Welt des Designs seit 1984.",
-        "contentDigest": "7b0a48d4861111805b6c614bf2373eb6",
+        "content": "Playsam is the leading Scandinavian design company for executive wooden toy gift. Scandinavian design playful creativity, integrity and sophistication are Playsam. Scandinavian design and wooden toy makes Playsam gift lovely to the world of design since 1984.",
+        "contentDigest": "f27a71b7f2ee9eabad3335e0c03da951",
         "mediaType": "text/markdown",
         "type": "contentfulBrandCompanyDescriptionTextNode",
       },
@@ -2986,10 +2978,10 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "children": Array [],
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "content": "Hudson Wall Cup",
-        "contentDigest": "927daa584fb961e59edbd07f921b916c",
+        "content": "Normann Copenhagen",
+        "contentDigest": "5fb9d019c3646f6fee84172952337463",
         "mediaType": "text/markdown",
-        "type": "contentfulProductProductNameTextNode",
+        "type": "contentfulBrandCompanyNameTextNode",
       },
       "parent": "uuid-from-gatsby",
       "productName": "Hudson Wall Cup",
@@ -3000,10 +2992,10 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "children": Array [],
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "content": "Wall Hanging Glass Flower Vase and Terrarium",
-        "contentDigest": "da605021a35b1da89c6810fb46275a58",
+        "content": "Normann Kopenhagen ist eine Art zu leben - eine Denkweise. Wir lieben es, die konventionellen Designregeln herauszufordern. Aus diesem Grund finden Sie traditionelle Materialien, die in untraditionelle Verwendung wie ein Steinhaken aus isländischen Steinen, eine Vase aus Silizium und last but not least ein Hund aus Kunststoff.",
+        "contentDigest": "0a7c7553a38bb0a62a22c20deb99a93f",
         "mediaType": "text/markdown",
-        "type": "contentfulProductProductDescriptionTextNode",
+        "type": "contentfulBrandCompanyDescriptionTextNode",
       },
       "parent": "uuid-from-gatsby",
       "productDescription": "Wall Hanging Glass Flower Vase and Terrarium",
@@ -3014,10 +3006,10 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "children": Array [],
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "content": "Whisk Beater",
-        "contentDigest": "bfab59c3dba2ca3c2fce106049470741",
+        "content": "Lemnos",
+        "contentDigest": "7b0e3f7cc613d34aafa689516e96056e",
         "mediaType": "text/markdown",
-        "type": "contentfulProductProductNameTextNode",
+        "type": "contentfulBrandCompanyNameTextNode",
       },
       "parent": "uuid-from-gatsby",
       "productName": "Whisk Beater",
@@ -3028,10 +3020,20 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "children": Array [],
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "content": "A creative little whisk that comes in 8 different colors. Handy and easy to clean after use. A great gift idea.",
-        "contentDigest": "223b5836966aa0ab2c43a9a870e7a631",
+        "content": "TAKATA Lemnos Inc. wurde im Jahre 1947 als Messing-Casting-Fertigungsindustrie in Takaoka-Stadt, Toyama Prefecture, Japan gegründet und wir starteten seit 1966 mit der Seiko Clock Co., Ltd.
+
+Wir haben die Entwicklung für die ursprüngliche Planung ab Ende 1980 eingegangen und \\"Lemnos Brand\\" wurde als globale Designuhr von einem Meisterwerk \\"HOLA\\" von Kazuo KAWASAKI entworfen, das 1989 erschien.
+
+Danach machten wir viele Projekte mit namhaften Designern, die in Japan und Übersee tätig waren, wie zB Riki WATANABE, Kazuo KAWASAKI, Shin AZUMI, Tomoko AZUMI, Kanae TSUKAMOTO etc. und wir kündigten ihre Werke in der Kunst an Und prominenten Designs. Darüber hinaus haben wir durch die Zusammenarbeit mit Andrea Branzi, einem bekannten Architekten der Welt, ein besonderes Projekt gemacht.
+
+Lemnos Markenprodukte werden nun von den Designläden und den Innenhandelsgeschäften auf der ganzen Welt hoch gelobt.
+
+In den vergangenen Jahren haben wir auch eine hohe Priorität für die Entwicklung von Innenausstattung, die den traditionellen Techniken des Gründungsherstellers voll ausnutzt, und wir konzentrieren uns immer auf die Entwicklung der neuen Lemnos-Produkte im neuen Markt.
+
+Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliffen geschickten Techniken in Japan gemacht. Sie bringen sicherlich die Attraktivität der Materialien auf das Maximum und schaffen feine Produkte nicht beeinflusst auf die Mode-Trend entsprechend. TAKATA Lemnos Inc. möchte definitiv innovativ sein und ständig vorschlagen, die Schönheit dauert ewig.",
+        "contentDigest": "b8d1cb0f951b10e0f84f32a8c28ee503",
         "mediaType": "text/markdown",
-        "type": "contentfulProductProductDescriptionTextNode",
+        "type": "contentfulBrandCompanyDescriptionTextNode",
       },
       "parent": "uuid-from-gatsby",
       "productDescription": "A creative little whisk that comes in 8 different colors. Handy and easy to clean after use. A great gift idea.",
@@ -3042,10 +3044,10 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "children": Array [],
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "content": "SoSo Wall Clock",
-        "contentDigest": "2bd6c9f1667f2fbb59343e203cb0b7bf",
+        "content": "Playsam",
+        "contentDigest": "1d2de5c3096635ca01f6ab4131252039",
         "mediaType": "text/markdown",
-        "type": "contentfulProductProductNameTextNode",
+        "type": "contentfulBrandCompanyNameTextNode",
       },
       "parent": "uuid-from-gatsby",
       "productName": "SoSo Wall Clock",
@@ -3056,10 +3058,10 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "children": Array [],
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "content": "The newly released SoSo Clock from Lemnos marries simple, clean design and bold, striking features. Its saturated marigold face is a lively pop of color to white or grey walls, but would also pair nicely with navy and maroon. Where most clocks feature numbers at the border of the clock, the SoSo brings them in tight to the middle, leaving a wide space between the numbers and the slight frame. The hour hand provides a nice interruption to the black and yellow of the clock - it is featured in a brilliant white. Despite its bold color and contrast, the SoSo maintains a clean, pure aesthetic that is suitable to a variety of contemporary interiors.",
-        "contentDigest": "c5b4a61c6d533216a0efe0d4ee66c98b",
+        "content": "Playsam ist die führende skandinavische Designfirma für Executive Holzspielzeug Geschenk. Skandinavisches Design spielerische Kreativität, Integrität und Raffinesse sind Playsam. Skandinavisches Design und hölzernes Spielzeug macht Playsam Geschenk schön in die Welt des Designs seit 1984.",
+        "contentDigest": "7b0a48d4861111805b6c614bf2373eb6",
         "mediaType": "text/markdown",
-        "type": "contentfulProductProductDescriptionTextNode",
+        "type": "contentfulBrandCompanyDescriptionTextNode",
       },
       "parent": "uuid-from-gatsby",
       "productDescription": "The newly released SoSo Clock from Lemnos marries simple, clean design and bold, striking features. Its saturated marigold face is a lively pop of color to white or grey walls, but would also pair nicely with navy and maroon. Where most clocks feature numbers at the border of the clock, the SoSo brings them in tight to the middle, leaving a wide space between the numbers and the slight frame. The hour hand provides a nice interruption to the black and yellow of the clock - it is featured in a brilliant white. Despite its bold color and contrast, the SoSo maintains a clean, pure aesthetic that is suitable to a variety of contemporary interiors.",
@@ -3242,8 +3244,8 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "children": Array [],
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "content": "Playsam Streamliner Klassisches Auto, Espresso",
-        "contentDigest": "7f76178eaaeb38fc20570d0c6eb49c3e",
+        "content": "Playsam Streamliner Classic Car, Espresso",
+        "contentDigest": "fb5febcf7ce227772c3998af60b6e740",
         "mediaType": "text/markdown",
         "type": "contentfulProductProductNameTextNode",
       },
@@ -3256,8 +3258,8 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "children": Array [],
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "content": "Ein klassisches Playsam-Design, das Streamliner Classic Car wurde als Swedish Design Classic vom Schwedischen Nationalmuseum für seinen erfinderischen Stil und seine schlanke Oberfläche ausgewählt. Es ist kein Wunder, dass dieses hölzerne Auto auch ein langjähriger Liebling für Kinder gewesen ist, die groß und klein sind!",
-        "contentDigest": "85779a170b2fe2458d707b34459d4085",
+        "content": "A classic Playsam design, the Streamliner Classic Car has been selected as Swedish Design Classic by the Swedish National Museum for its inventive style and sleek surface. It's no wonder that this wooden car has also been a long-standing favorite for children both big and small!",
+        "contentDigest": "d27a98d8abd9865c279017aed14f2766",
         "mediaType": "text/markdown",
         "type": "contentfulProductProductDescriptionTextNode",
       },
@@ -3270,8 +3272,8 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "children": Array [],
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "content": "Becher",
-        "contentDigest": "aac31ab0dcf429f1be1d2764db549f43",
+        "content": "Hudson Wall Cup",
+        "contentDigest": "927daa584fb961e59edbd07f921b916c",
         "mediaType": "text/markdown",
         "type": "contentfulProductProductNameTextNode",
       },
@@ -3284,8 +3286,8 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "children": Array [],
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "content": "Wand-hängende Glas-Blumen-Vase und Terrarium",
-        "contentDigest": "41d1166dbe8f8af2f8f2bad50fe42f03",
+        "content": "Wall Hanging Glass Flower Vase and Terrarium",
+        "contentDigest": "da605021a35b1da89c6810fb46275a58",
         "mediaType": "text/markdown",
         "type": "contentfulProductProductDescriptionTextNode",
       },
@@ -3298,8 +3300,8 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "children": Array [],
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "content": "Schneebesen",
-        "contentDigest": "811253206ba751ed27cf3ceb68e334dc",
+        "content": "Whisk Beater",
+        "contentDigest": "bfab59c3dba2ca3c2fce106049470741",
         "mediaType": "text/markdown",
         "type": "contentfulProductProductNameTextNode",
       },
@@ -3312,8 +3314,8 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "children": Array [],
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "content": "Ein kreativer kleiner Schneebesen, der in 8 verschiedenen Farben kommt. Praktisch und nach dem Gebrauch leicht zu reinigen. Eine tolle Geschenkidee.",
-        "contentDigest": "d0793a3c142dc3f7377edd6625091cb7",
+        "content": "A creative little whisk that comes in 8 different colors. Handy and easy to clean after use. A great gift idea.",
+        "contentDigest": "223b5836966aa0ab2c43a9a870e7a631",
         "mediaType": "text/markdown",
         "type": "contentfulProductProductDescriptionTextNode",
       },
@@ -3326,8 +3328,8 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "children": Array [],
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "content": "SoSo wanduhr",
-        "contentDigest": "8b38ff25d8ab847042efc8d525aaf7a0",
+        "content": "SoSo Wall Clock",
+        "contentDigest": "2bd6c9f1667f2fbb59343e203cb0b7bf",
         "mediaType": "text/markdown",
         "type": "contentfulProductProductNameTextNode",
       },
@@ -3340,8 +3342,8 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "children": Array [],
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "content": "Die neu veröffentlichte SoSo Clock von Lemnos heiratet einfaches, sauberes Design und fette, auffällige Features. Sein gesättigtes Ringelblumengesicht ist ein lebhafter Pop der Farbe zu den weißen oder grauen Wänden, aber würde auch gut mit Marine und kastanienbraun paaren. Wo die meisten Uhren am Rande der Uhr Nummern sind, bringt der SoSo sie in die Mitte und lässt einen weiten Raum zwischen den Zahlen und dem leichten Rahmen. Der Stundenzeiger bietet eine schöne Unterbrechung der schwarzen und gelben der Uhr - es ist in einem brillanten Weiß vorgestellt. Trotz seiner kräftigen Farbe und des Kontrastes behält der SoSo eine saubere, reine Ästhetik, die für eine Vielzahl von zeitgenössischen Interieurs geeignet ist.",
-        "contentDigest": "038ff737ccc03e4525691d265d5a92b7",
+        "content": "The newly released SoSo Clock from Lemnos marries simple, clean design and bold, striking features. Its saturated marigold face is a lively pop of color to white or grey walls, but would also pair nicely with navy and maroon. Where most clocks feature numbers at the border of the clock, the SoSo brings them in tight to the middle, leaving a wide space between the numbers and the slight frame. The hour hand provides a nice interruption to the black and yellow of the clock - it is featured in a brilliant white. Despite its bold color and contrast, the SoSo maintains a clean, pure aesthetic that is suitable to a variety of contemporary interiors.",
+        "contentDigest": "c5b4a61c6d533216a0efe0d4ee66c98b",
         "mediaType": "text/markdown",
         "type": "contentfulProductProductDescriptionTextNode",
       },
@@ -3519,6 +3521,150 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       ],
       "updatedAt": "2017-06-27T09:52:29.215Z",
       "website": "http://store.dwell.com/soso-wall-clock.html",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "id": "c5KsDBWseXY6QegucYAoacS___deproductNameTextNode",
+      "internal": Object {
+        "content": "Playsam Streamliner Klassisches Auto, Espresso",
+        "contentDigest": "7f76178eaaeb38fc20570d0c6eb49c3e",
+        "mediaType": "text/markdown",
+        "type": "contentfulProductProductNameTextNode",
+      },
+      "parent": "c5KsDBWseXY6QegucYAoacS___de",
+      "productName": "Playsam Streamliner Klassisches Auto, Espresso",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "id": "c5KsDBWseXY6QegucYAoacS___deproductDescriptionTextNode",
+      "internal": Object {
+        "content": "Ein klassisches Playsam-Design, das Streamliner Classic Car wurde als Swedish Design Classic vom Schwedischen Nationalmuseum für seinen erfinderischen Stil und seine schlanke Oberfläche ausgewählt. Es ist kein Wunder, dass dieses hölzerne Auto auch ein langjähriger Liebling für Kinder gewesen ist, die groß und klein sind!",
+        "contentDigest": "85779a170b2fe2458d707b34459d4085",
+        "mediaType": "text/markdown",
+        "type": "contentfulProductProductDescriptionTextNode",
+      },
+      "parent": "c5KsDBWseXY6QegucYAoacS___de",
+      "productDescription": "Ein klassisches Playsam-Design, das Streamliner Classic Car wurde als Swedish Design Classic vom Schwedischen Nationalmuseum für seinen erfinderischen Stil und seine schlanke Oberfläche ausgewählt. Es ist kein Wunder, dass dieses hölzerne Auto auch ein langjähriger Liebling für Kinder gewesen ist, die groß und klein sind!",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "id": "c3DVqIYj4dOwwcKu6sgqOgg___deproductNameTextNode",
+      "internal": Object {
+        "content": "Becher",
+        "contentDigest": "aac31ab0dcf429f1be1d2764db549f43",
+        "mediaType": "text/markdown",
+        "type": "contentfulProductProductNameTextNode",
+      },
+      "parent": "c3DVqIYj4dOwwcKu6sgqOgg___de",
+      "productName": "Becher",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "id": "c3DVqIYj4dOwwcKu6sgqOgg___deproductDescriptionTextNode",
+      "internal": Object {
+        "content": "Wand-hängende Glas-Blumen-Vase und Terrarium",
+        "contentDigest": "41d1166dbe8f8af2f8f2bad50fe42f03",
+        "mediaType": "text/markdown",
+        "type": "contentfulProductProductDescriptionTextNode",
+      },
+      "parent": "c3DVqIYj4dOwwcKu6sgqOgg___de",
+      "productDescription": "Wand-hängende Glas-Blumen-Vase und Terrarium",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "id": "c6dbjWqNd9SqccegcqYq224___deproductNameTextNode",
+      "internal": Object {
+        "content": "Schneebesen",
+        "contentDigest": "811253206ba751ed27cf3ceb68e334dc",
+        "mediaType": "text/markdown",
+        "type": "contentfulProductProductNameTextNode",
+      },
+      "parent": "c6dbjWqNd9SqccegcqYq224___de",
+      "productName": "Schneebesen",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "id": "c6dbjWqNd9SqccegcqYq224___deproductDescriptionTextNode",
+      "internal": Object {
+        "content": "Ein kreativer kleiner Schneebesen, der in 8 verschiedenen Farben kommt. Praktisch und nach dem Gebrauch leicht zu reinigen. Eine tolle Geschenkidee.",
+        "contentDigest": "d0793a3c142dc3f7377edd6625091cb7",
+        "mediaType": "text/markdown",
+        "type": "contentfulProductProductDescriptionTextNode",
+      },
+      "parent": "c6dbjWqNd9SqccegcqYq224___de",
+      "productDescription": "Ein kreativer kleiner Schneebesen, der in 8 verschiedenen Farben kommt. Praktisch und nach dem Gebrauch leicht zu reinigen. Eine tolle Geschenkidee.",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "id": "c4BqrajvA8E6qwgkieoqmqO___deproductNameTextNode",
+      "internal": Object {
+        "content": "SoSo wanduhr",
+        "contentDigest": "8b38ff25d8ab847042efc8d525aaf7a0",
+        "mediaType": "text/markdown",
+        "type": "contentfulProductProductNameTextNode",
+      },
+      "parent": "c4BqrajvA8E6qwgkieoqmqO___de",
+      "productName": "SoSo wanduhr",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "id": "c4BqrajvA8E6qwgkieoqmqO___deproductDescriptionTextNode",
+      "internal": Object {
+        "content": "Die neu veröffentlichte SoSo Clock von Lemnos heiratet einfaches, sauberes Design und fette, auffällige Features. Sein gesättigtes Ringelblumengesicht ist ein lebhafter Pop der Farbe zu den weißen oder grauen Wänden, aber würde auch gut mit Marine und kastanienbraun paaren. Wo die meisten Uhren am Rande der Uhr Nummern sind, bringt der SoSo sie in die Mitte und lässt einen weiten Raum zwischen den Zahlen und dem leichten Rahmen. Der Stundenzeiger bietet eine schöne Unterbrechung der schwarzen und gelben der Uhr - es ist in einem brillanten Weiß vorgestellt. Trotz seiner kräftigen Farbe und des Kontrastes behält der SoSo eine saubere, reine Ästhetik, die für eine Vielzahl von zeitgenössischen Interieurs geeignet ist.",
+        "contentDigest": "038ff737ccc03e4525691d265d5a92b7",
+        "mediaType": "text/markdown",
+        "type": "contentfulProductProductDescriptionTextNode",
+      },
+      "parent": "c4BqrajvA8E6qwgkieoqmqO___de",
+      "productDescription": "Die neu veröffentlichte SoSo Clock von Lemnos heiratet einfaches, sauberes Design und fette, auffällige Features. Sein gesättigtes Ringelblumengesicht ist ein lebhafter Pop der Farbe zu den weißen oder grauen Wänden, aber würde auch gut mit Marine und kastanienbraun paaren. Wo die meisten Uhren am Rande der Uhr Nummern sind, bringt der SoSo sie in die Mitte und lässt einen weiten Raum zwischen den Zahlen und dem leichten Rahmen. Der Stundenzeiger bietet eine schöne Unterbrechung der schwarzen und gelben der Uhr - es ist in einem brillanten Weiß vorgestellt. Trotz seiner kräftigen Farbe und des Kontrastes behält der SoSo eine saubere, reine Ästhetik, die für eine Vielzahl von zeitgenössischen Interieurs geeignet ist.",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "description": "just for testing JSON fields",
+      "displayField": null,
+      "id": "JSON-test",
+      "internal": Object {
+        "contentDigest": "f16da69f5e198a8896039313bbcb3fa0",
+        "type": "ContentfulContentType",
+      },
+      "name": "JSON-test",
+      "parent": null,
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [
+        "c71mfnH4QKsSsQmgoaQuq6OjsonTestJSONNode",
+      ],
+      "contentful_id": "c71mfnH4QKsSsQmgoaQuq6O",
+      "createdAt": "2017-11-28T02:16:10.604Z",
+      "id": "c71mfnH4QKsSsQmgoaQuq6O",
+      "internal": Object {
+        "contentDigest": "6e84478bcc75fa7f7c8c722b216af25d",
+        "type": "ContentfulJsonTest",
+      },
+      "jsonTest___NODE": "c71mfnH4QKsSsQmgoaQuq6OjsonTestJSONNode",
+      "node_locale": "en-US",
+      "parent": "JSON-test",
+      "updatedAt": "2017-11-28T02:16:10.604Z",
     },
   ],
   Array [

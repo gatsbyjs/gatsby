@@ -15,6 +15,23 @@ Add the plugin to your `gatsby-config.js`.
 plugins: [`gatsby-plugin-jss`];
 ```
 
+Or with theme
+
+```javascript
+const theme = {
+  fontSize: 16,
+  fontFamily: "Roboto",
+  color: "#212121",
+};
+
+plugins: [
+  {
+    resolve: "jss",
+    options: { theme },
+  },
+];
+```
+
 ## Example
 
 https://using-jss.gatsbyjs.org/

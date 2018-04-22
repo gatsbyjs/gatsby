@@ -3,7 +3,10 @@ import { Link } from "gatsby"
 import GithubIcon from "react-icons/lib/go/mark-github"
 import TwitterIcon from "react-icons/lib/fa/twitter"
 import DiscordIcon from "../components/discord"
+import GithubIcon from "react-icons/lib/go/mark-github"
+==== BASE ====
 import SearchForm from "../components/search-form"
+import DiscordIcon from "../components/discord"
 import logo from "../logo.svg"
 import typography, { rhythm, scale } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
@@ -94,6 +97,7 @@ export default ({ pathname }) => {
         zIndex: `2`,
         left: 0,
         right: 0,
+        top: `calc(2.8rem - 1px)`,
         [presets.Tablet]: {
           position: isHomepage || isBlog ? `absolute` : `fixed`,
         },
@@ -152,7 +156,7 @@ export default ({ pathname }) => {
         >
           <NavItem linkTo="/docs/">Docs</NavItem>
           <NavItem linkTo="/tutorial/">Tutorial</NavItem>
-          <NavItem linkTo="/community/">Community</NavItem>
+          <NavItem linkTo="/plugins/">Plugins</NavItem>
           <NavItem linkTo="/features/">Features</NavItem>
           <NavItem linkTo="/blog/">Blog</NavItem>
         </ul>
@@ -167,7 +171,7 @@ export default ({ pathname }) => {
             iconStyles={{ ...socialIconsStyles }}
             isHomepage={isHomepage}
           />
-          <a
+          <OutboundLink
             href="https://github.com/gatsbyjs/gatsby"
             title="GitHub"
             css={{
@@ -176,7 +180,7 @@ export default ({ pathname }) => {
             }}
           >
             <GithubIcon style={{ verticalAlign: `text-top` }} />
-          </a>
+          </OutboundLink>
 
           <div
             css={{
@@ -185,8 +189,8 @@ export default ({ pathname }) => {
               [presets.Hd]: { display: `inline-block` },
             }}
           >
-            <a
-              href="https://discord.gg/0ZcbPKXt5bZjGY5n"
+            <OutboundLink
+              href="https://discord.gg/0ZcbPKXt5bVoxkfV"
               title="Discord"
               css={{
                 ...navItemStyles,
@@ -194,8 +198,8 @@ export default ({ pathname }) => {
               }}
             >
               <DiscordIcon overrideCSS={{ verticalAlign: `text-top` }} />
-            </a>
-            <a
+            </OutboundLink>
+            <OutboundLink
               href="https://twitter.com/gatsbyjs"
               title="@gatsbyjs"
               css={{
@@ -205,7 +209,7 @@ export default ({ pathname }) => {
               }}
             >
               <TwitterIcon style={{ verticalAlign: `text-top` }} />
-            </a>
+            </OutboundLink>
           </div>
         </div>
       </div>

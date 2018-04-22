@@ -54,24 +54,26 @@ In this example project we're using [`redux`](https://github.com/gatsbyjs/gatsby
 ```js
 module.exports = {
   plugins: [`gatsby-plugin-styled-components`],
-}
+};
 ```
 
 `gatsby-ssr.js` (based on the [using Redux example](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-redux/gatsby-ssr.js))
 
 ```js
-import React from "react"
-import { Provider } from "react-redux"
-import { renderToString } from "react-dom/server"
+import React from "react";
+import { Provider } from "react-redux";
+import { renderToString } from "react-dom/server";
 
-import createStore from "./src/state/createStore"
+import createStore from "./src/state/createStore";
 
 exports.replaceRenderer = ({ bodyComponent, replaceBodyHTMLString }) => {
-  const store = createStore()
+  const store = createStore();
 
-  const ConnectedBody = () => <Provider store={store}>{bodyComponent}</Provider>
-  replaceBodyHTMLString(renderToString(<ConnectedBody />))
-}
+  const ConnectedBody = () => (
+    <Provider store={store}>{bodyComponent}</Provider>
+  );
+  replaceBodyHTMLString(renderToString(<ConnectedBody />));
+};
 ```
 
 Note that the Styled Components plugin uses `replaceRenderer`, and the code in `gatsby-ssr.js` also uses `replaceRenderer`.
@@ -83,19 +85,19 @@ Our `gatsby-config.js` file will remain unchanged. However, our `gatsby-ssr.js` 
 `gatsby-ssr.js`
 
 ```js
-import React from "react"
-import { Provider } from "react-redux"
-import { renderToString } from "react-dom/server"
-import { ServerStyleSheet, StyleSheetManager } from "styled-components"
-import createStore from "./src/state/createStore"
+import React from "react";
+import { Provider } from "react-redux";
+import { renderToString } from "react-dom/server";
+import { ServerStyleSheet, StyleSheetManager } from "styled-components";
+import createStore from "./src/state/createStore";
 
 exports.replaceRenderer = ({
   bodyComponent,
   replaceBodyHTMLString,
   setHeadComponents,
 }) => {
-  const sheet = new ServerStyleSheet()
-  const store = createStore()
+  const sheet = new ServerStyleSheet();
+  const store = createStore();
 
   const app = () => (
     <Provider store={store}>
@@ -103,10 +105,10 @@ exports.replaceRenderer = ({
         {bodyComponent}
       </StyleSheetManager>
     </Provider>
-  )
-  replaceBodyHTMLString(renderToString(<app />))
-  setHeadComponents([sheet.getStyleElement()])
-}
+  );
+  replaceBodyHTMLString(renderToString(<app />));
+  setHeadComponents([sheet.getStyleElement()]);
+};
 ```
 
 Now `gatsby-ssr.js` implements the Styled Components and Redux functionality using one `replaceRenderer` instance. Run `gatsby build` and the site will build correctly.

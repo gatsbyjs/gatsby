@@ -5,7 +5,7 @@ Adds syntax highlighting to code blocks in markdown files using
 
 ## Install
 
-`npm install --save gatsby-transformer-remark gatsby-remark-prismjs`
+`npm install --save gatsby-transformer-remark gatsby-remark-prismjs prismjs`
 
 ## How to use
 
@@ -27,6 +27,18 @@ plugins: [
             // This is an uncommon use-case though;
             // If you're unsure, it's best to use the default value.
             classPrefix: "language-",
+            // This is used to allow setting a language for inline code
+            // (i.e. single backticks) by creating a separator.
+            // This separator is a string and will do no white-space
+            // stripping.
+            // A suggested value for English speakers is the non-ascii
+            // character '›'.
+            inlineCodeMarker: null,
+            // This lets you set up language aliases.  For example,
+            // setting this to '{ sh: "bash" }' will let you use
+            // the language "sh" which will highlight using the
+            // bash highlighter.
+            aliases: {},
           },
         },
       ],
@@ -111,7 +123,7 @@ CSS along your PrismJS theme and the styles for `.gatsby-highlight-code-line`:
 
 ### Usage in Markdown
 
-    This is some beautiful code:
+This is some beautiful code:
 
     ```javascript
     // In your gatsby-config.js
@@ -127,13 +139,13 @@ CSS along your PrismJS theme and the styles for `.gatsby-highlight-code-line`:
     ]
     ```
 
-    You can also add line highlighting. It adds a span around lines of
-    code with a special class `.gatsby-highlight-code-line` that you can
-    target with styles. See this readme for more info.
+You can also add line highlighting. It adds a span around lines of code with a
+special class `.gatsby-highlight-code-line` that you can target with styles. See
+this README for more info.
 
-    In the following code snippit, lines 1 and 4 through 6 will get
-    the line highlighting. The line range parsing is done with
-    https://www.npmjs.com/package/parse-numeric-range.
+In the following code snippet, lines 1 and 4 through 6 will get the line
+highlighting. The line range parsing is done with
+<https://www.npmjs.com/package/parse-numeric-range>.
 
     ```javascript{1,4-6}
     // In your gatsby-config.js
@@ -148,6 +160,21 @@ CSS along your PrismJS theme and the styles for `.gatsby-highlight-code-line`:
       }
     ]
     ```
+
+In addition to fenced code blocks, inline code blocks will be passed through
+PrismJS as well.
+
+If you set the `inlineCodeMarker`, then you can also specify a format style.
+
+Here's an example of how to use this if the `inlineCodeMarker` was set to `±`:
+
+    I can highlight `css±.some-class { background-color: red }` with CSS syntax.
+
+This will be rendered in a `<code class=language-css>` with just the (syntax
+highlighted) text of `.some-class { background-color: red }`
+
+If you need to prevent any escaping or highlighting, you can use the `none`
+language; the inner contents will not be changed at all.
 
 ## Implementation notes
 
@@ -167,7 +194,7 @@ Our approach follows the [Pygments-based][2] implementation of the [React
 Tutorial/Documentation][4] for line highlights:
 
 * It uses a wrapper element `<div class="gatsby-highlight">` around the
-  PrismJS-formatted `<pre><code>`-blocks.`.
+  PrismJS-formatted `<pre><code>`-blocks.
 * Highlighted lines are wrapped in `<span class="gatsby-highlight-code-line">`.
 * We insert a linebreak before the closing tag of `.gatsby-highlight-code-line`
   so it ends up at the start of the follwing line.
@@ -183,3 +210,19 @@ to facilitate the desired line highlight behavior.
 [4]: https://facebook.github.io/react/tutorial/tutorial.html
 [5]: https://github.com/PrismJS/prism/tree/1d5047df37aacc900f8270b1c6215028f6988eb1/themes
 [6]: http://prismjs.com/
+
+## Contributing Notes
+
+We vendor the `prismjs` components file in `prism-language-dependencies.js`. We use the `prism-language-dependencies.js` file to tell `gatsby-remark-prismjs` which languages it can syntax highlight. Thus, when the `prismjs` library is updated, we need to update the our `prism-language-dependencies.js` file. To do this, we have created a script at `scripts/get-prism-language-dependencies.js`. To run this script:
+
+* Move into the `gatsby/packages/gatsby-remark-prismjs/scripts` dir
+
+  ```bash
+  cd gatsby/packages/gatsby-remark-prismjs/scripts
+  ```
+
+* Run the script
+
+  ```bash
+  node get-prism-language-dependencies.js
+  ```

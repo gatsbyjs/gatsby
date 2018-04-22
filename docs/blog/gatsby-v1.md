@@ -71,11 +71,11 @@ static React sites are useful.
 But in many conversations among community members building Gatsby sites, two
 more questions kept coming up.
 
-1. How could we _query_ data from _anywhere_ and have that data show up in our
-   pages **without** any custom scripting?
-2. How should a website framework work for an _internet dominated by smartphones
-   on unreliable networks_ — an internet vastly different and larger than the
-   one frameworks were designed for a decade ago?
+1.  How could we _query_ data from _anywhere_ and have that data show up in our
+    pages **without** any custom scripting?
+2.  How should a website framework work for an _internet dominated by smartphones
+    on unreliable networks_ — an internet vastly different and larger than the
+    one frameworks were designed for a decade ago?
 
 ## Plugin system
 

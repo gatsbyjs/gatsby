@@ -10,6 +10,17 @@ Object {
 }
 `;
 
+exports[`gatsby-plugin-sharp image quirks handles padding bytes correctly 1`] = `
+Object {
+  "hUnits": "px",
+  "height": 1000,
+  "mime": "image/jpeg",
+  "type": "jpg",
+  "wUnits": "px",
+  "width": 746,
+}
+`;
+
 exports[`gatsby-plugin-sharp responsiveSizes accounts for pixel density 1`] = `
 Object {
   "aspectRatio": 2.0661764705882355,

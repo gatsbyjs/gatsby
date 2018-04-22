@@ -9,6 +9,7 @@
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-no-sourcemaps#readme",
   "keywords": [
     "gatsby",
+    "gatsby-plugin",
     "sourcemaps",
     "webpack"
   ],

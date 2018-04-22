@@ -34,6 +34,7 @@ const Method = new GraphQLObjectType({
   fields: () => {
     return {
       name: { type: new GraphQLNonNull(GraphQLString) },
+      description: { type: GraphQLString },
       docblock: {
         type: GraphQLString,
         description: oneLine`

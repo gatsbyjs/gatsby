@@ -58,6 +58,12 @@ class IndexRoute extends React.Component {
                     server for testing your built site.
                   </li>
                 </ol>
+                <p>
+                  To see detailed documentation for the CLI commands, run in the
+                  terminal <code>gatsby --help</code> and for specific commands{` `}
+                  <code>gatsby COMMAND_NAME --help</code> e.g.{` `}
+                  <code>gatsby develop --help</code>.
+                </p>
                 <h2 id="using-other-starters">Using other starters</h2>
                 <p>
                   Running <code>gatsby new</code> installs the default Gatsby

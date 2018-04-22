@@ -23,9 +23,9 @@ If you want to access variables in `.env.*` files in your node.js code, use the
 NPM package [dotenv](https://www.npmjs.com/package/dotenv). Install the package and
 require it in your `gatsby-config.js` or `gatsby-node.js` the following way on top of your file:
 
-```
-require('dotenv').config({
-  path: `.env.${process.env.NODE_ENV}`
+```javascript
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV}`,
 });
 ```
 
@@ -33,13 +33,13 @@ Now the variables are available.
 
 ## Example
 
-```
+```shell
 # Example .env.development file
 
 API_URL=https://dev.example.com/api
 ```
 
-```
+```shell
 # Example .env.production file
 
 API_URL=https://example.com/api
@@ -71,3 +71,56 @@ Reserved environment variables:
 
 * `NODE_ENV`
 * `PUBLIC_DIR`
+
+## Additional Environments (Staging, Test, etc)
+
+`NODE_ENV` is a reserved environment variable in Gatsby as it is needed by the build system to make key optimizations when compiling React and other modules. For this reason it is advised to make use of a secondary environment variable for additional environment support.
+
+For instance. If you would like to add a staging environment with a custom Google Analytics Tracking ID. You can add `.env.staging` at the root of your project with the following modification to your `gatsby-config.js`
+
+### Example
+
+```shell
+# .env.staging
+GATSBY_GA_TRACKING_ID="UA-1234567890"
+```
+
+```javascript
+// gatsby-config.js
+
+let activeEnv = process.env.ACTIVE_ENV;
+
+if (!activeEnv) {
+  activeEnv = "development";
+}
+
+require("dotenv").config({
+  path: `.env.${activeEnv}`,
+});
+
+module.exports = {
+  siteMetadata: {
+    title: "Gatsby Default Starter",
+  },
+  plugins: [
+    {
+      resolve: `gatsby-plugin-google-analytics`,
+      options: {
+        trackingId: process.env.GATSBY_GA_TRACKING_ID,
+        // Puts tracking script in the head instead of the body
+        head: false,
+        // Setting this parameter is optional
+        anonymize: true,
+        // Setting this parameter is also optional
+        respectDNT: true,
+      },
+    },
+  ],
+};
+```
+
+Local testing of staging is as simple as
+
+```
+ACTIVE_ENV=staging gatsby develop
+```

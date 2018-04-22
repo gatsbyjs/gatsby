@@ -7,7 +7,7 @@ for details.
 
 ## Install
 
-`yarn add gatsby-plugin-react-css-modules`
+`npm install --save gatsby-plugin-react-css-modules`
 
 ## How to use
 
