@@ -4,10 +4,6 @@ import presets from "../utils/presets"
 import typography, { rhythm, scale } from "../utils/typography"
 
 class PostDetail extends React.Component {
-  constructor() {
-    super()
-  }
-
   render() {
     const {
       bigImage,
@@ -147,6 +143,7 @@ class PostDetail extends React.Component {
             }}
           >
             <img
+              alt={``}
               key={big.src}
               src={big.src}
               srcSet={big.srcSet}
