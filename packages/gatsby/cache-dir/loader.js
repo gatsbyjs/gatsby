@@ -189,7 +189,7 @@ const queue = {
     jsonDataPaths = dataPaths
   },
   dequeue: () => resourcesArray.pop(),
-  enqueue: async rawPath => {
+  enqueue: rawPath => {
     // Check page exists.
     const path = stripPrefix(rawPath, pathPrefix)
 
@@ -202,8 +202,7 @@ const queue = {
     ) {
       // If page wasn't found check and we didn't fetch resources map for
       // all pages, wait for fetch to complete and try find page again
-      await fetchPageResourceMap()
-      page = findPage(path)
+      return fetchPageResourceMap().then(() => queue.enqueue(rawPath))
     }
 
     if (!page) {
