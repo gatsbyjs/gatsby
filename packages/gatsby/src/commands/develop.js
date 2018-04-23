@@ -24,6 +24,7 @@ const address = require(`address`)
 const sourceNodes = require(`../utils/source-nodes`)
 const websocketManager = require(`../utils/websocket-manager`)
 const getSslCert = require(`../utils/get-ssl-cert`)
+const slash = require(`slash`)
 
 // const isInteractive = process.stdout.isTTY
 
@@ -231,7 +232,7 @@ async function startServer(program) {
 
   // Register watcher that rebuilds index.html every time html.js changes.
   const watchGlobs = [`src/html.js`, `plugins/**/gatsby-ssr.js`].map(path =>
-    directoryPath(path)
+    slash(directoryPath(path))
   )
 
   chokidar.watch(watchGlobs).on(`change`, async () => {
