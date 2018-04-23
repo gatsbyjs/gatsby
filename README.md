@@ -205,6 +205,7 @@ Websites built with Gatsby:
 * [GraphQL College](https://graphql.college) ([source](https://github.com/GraphQLCollege/graphql-college))
 * [Hyunwoo Kim - Blog/Portfolio](https://devhalloween.com) ([source](https://github.com/khw1031/dev-blog))
 * [Abinav Seelan - Personal Website](https://abinavseelan.com) ([source](https://github.com/abinavseelan/abinavseelan.com))
+* [Dovetail](https://dovetailapp.com)
 
 ## Docs
 
