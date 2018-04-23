@@ -305,7 +305,7 @@ Sweet!
 
 The last step is to link to our new pages from the index page.
 
-Return to `src/pages/my-files.js` and let's query for our Markdown slugs and create
+Return to `src/pages/index.js` and let's query for our Markdown slugs and create
 links.
 
 ```jsx{3,18-19,29,47-49}
