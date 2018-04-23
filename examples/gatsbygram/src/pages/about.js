@@ -16,7 +16,11 @@ class About extends React.Component {
             Gatsbygram is an example website built with the JavaScript web
             framework
             {` `}
-            <a target="_blank" href="https://github.com/gatsbyjs/gatsby">
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://github.com/gatsbyjs/gatsby"
+            >
               Gatsby
             </a>
             .
@@ -25,6 +29,7 @@ class About extends React.Component {
             The code for the site lives at{` `}
             <a
               href="https://github.com/gatsbyjs/gatsby/tree/master/examples/gatsbygram"
+              rel="noopener noreferrer"
               target="_blank"
             >
               https://github.com/gatsbyjs/gatsby/tree/master/examples/gatsbygram
