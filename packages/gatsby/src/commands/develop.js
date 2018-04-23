@@ -257,6 +257,11 @@ module.exports = async (program: any) => {
   // Certs are named after `name` inside the project's package.json.
   if (program.https) {
     program.ssl = await getSslCert(program.sitePackageJson.name)
+  } else if (
+    program[`cert-file`] ? !program[`key-file`] : program[`key-file`]
+  ) {
+    // these keys must either both empty or both present in order to work
+    report.panic(`--key-file and --cert-file must be used together`)
   } else if (program[`cert-file`] && program[`key-file`]) {
     const { directory } = program
     const keyPath = `${directory}/${program[`key-file`]}`
