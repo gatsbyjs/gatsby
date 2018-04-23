@@ -617,7 +617,7 @@ Community:
   * Disqus and Share Support
 
 * [gatsby-advanced-blog](https://github.com/wonism/gatsby-advanced-blog)
-  [(demo)](https://kind-cori-836fe1.netlify.com/)
+  [(demo)](https://wonism.github.io/)
 
   Features:
 
