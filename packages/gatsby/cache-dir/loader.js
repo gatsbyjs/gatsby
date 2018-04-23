@@ -311,7 +311,11 @@ const queue = {
     }
 
     if (!page) {
-      console.log(`A page wasn't found for "${path}"`)
+      emitter.emit(`onPostLoadPageResources`, {
+        path,
+        error: new Error(`A page wasn't found for "${path}"`),
+      })
+
       cb()
       return null
     }
@@ -325,6 +329,7 @@ const queue = {
       Promise.resolve().then(() => {
         cb(pathScriptsCache[path])
         emitter.emit(`onPostLoadPageResources`, {
+          path,
           page,
           pageResources: pathScriptsCache[path],
         })
@@ -344,6 +349,7 @@ const queue = {
           const pageResources = { component, json, page }
           cb(pageResources)
           emitter.emit(`onPostLoadPageResources`, {
+            path,
             page,
             pageResources,
           })
@@ -383,6 +389,7 @@ const queue = {
       cb(pageResources)
 
       emitter.emit(`onPostLoadPageResources`, {
+        path,
         page,
         pageResources,
       })

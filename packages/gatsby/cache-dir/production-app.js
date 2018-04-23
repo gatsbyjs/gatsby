@@ -76,19 +76,19 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     // Listen to loading events. If page resources load before
     // a second, navigate immediately.
     function eventHandler(e) {
-      if (e.page.path === loader.getPage(pathname).path) {
+      if (e.path === pathname) {
         emitter.off(`onPostLoadPageResources`, eventHandler)
         clearTimeout(timeoutId)
-        window.___history.push(location)
+        if (!e.error) {
+          window.___history.push(location)
+        }
       }
     }
 
     // Start a timer to wait for a second before transitioning and showing a
     // loader in case resources aren't around yet.
     const timeoutId = setTimeout(() => {
-      emitter.off(`onPostLoadPageResources`, eventHandler)
       emitter.emit(`onDelayedLoadPageResources`, { pathname })
-      window.___history.push(location)
     }, 1000)
 
     if (loader.getResourcesForPathname(pathname)) {
