@@ -1,5 +1,5 @@
-# using-gatsby-image
+# Using Gatsby Image
 
 https://using-gatsby-image.gatsbyjs.org
 
-Stub README description
+Gatsby example site that shows how to use the [gatsby-image](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image) plugin.
