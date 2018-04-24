@@ -263,7 +263,6 @@ module.exports = async (
     // prettier-ignore
     let configRules = [
       rules.js(),
-      rules.eslint(schema),
       rules.yaml(),
       rules.fonts(),
       rules.images(),
@@ -272,6 +271,7 @@ module.exports = async (
     switch (stage) {
       case `develop`:
         configRules = configRules.concat([
+          rules.eslint(schema),
           {
             oneOf: [rules.cssModules(), rules.css()],
           },
