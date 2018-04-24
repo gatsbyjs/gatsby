@@ -39,9 +39,9 @@ By default, Gatsby emulates the following config:
 // package.json
 {
  "browserslist": [
-   "> 1%",
-   "IE >= 9",
-   "last 2 versions"
+   ">0.25%",
+   "not ie 11",
+   "not op_mini all"
  ]
 }
 ```
