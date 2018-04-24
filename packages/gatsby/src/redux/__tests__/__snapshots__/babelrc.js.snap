@@ -121,62 +121,6 @@ Object {
 exports[`Babelrc actions/reducer handles custom .babelrc files 1`] = `
 Object {
   "stages": Object {
-    "build-css": Object {
-      "options": Object {
-        "babelrc": false,
-        "cacheDirectory": true,
-      },
-      "plugins": Array [
-        Object {
-          "name": "@babel/plugin-proposal/class-properties",
-          "options": Object {
-            "loose": true,
-          },
-        },
-        Object {
-          "name": "@babel/plugin-syntax-dynamic-import",
-          "options": Object {},
-        },
-        Object {
-          "name": "@babel/plugin-transform-runtime",
-          "options": Object {
-            "helpers": true,
-            "polyfill": false,
-            "regenerator": true,
-          },
-        },
-      ],
-      "presets": Array [
-        Object {
-          "name": "@babel/preset-env",
-          "options": Object {
-            "loose": true,
-            "modules": false,
-            "shippedProposals": true,
-            "sourceType": "unambiguous",
-            "targets": Object {
-              "browsers": Array [
-                "> 1%",
-                "IE >= 9",
-                "last 2 versions",
-              ],
-            },
-            "useBuiltIns": "usage",
-          },
-        },
-        Object {
-          "name": "@babel/preset-react",
-          "options": Object {
-            "pragma": "React.createElement",
-            "useBuiltIns": true,
-          },
-        },
-        Object {
-          "name": "@babel/preset-flow",
-          "options": Object {},
-        },
-      ],
-    },
     "build-html": Object {
       "options": Object {
         "babelrc": false,
