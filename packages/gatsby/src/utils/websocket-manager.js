@@ -88,7 +88,7 @@ class WebsocketManager {
           })
         }
       })
-      
+
       s.on(`disconnect`, s => {
         leaveRoom(activePath)
       })

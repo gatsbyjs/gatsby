@@ -149,15 +149,14 @@ class Runner {
       return compiledNodes
     }
 
-    // relay-compiler v1.5.0 added "StripUnusedVariablesTransform" to 
+    // relay-compiler v1.5.0 added "StripUnusedVariablesTransform" to
     // printTransforms. Unfortunately it currently doesn't detect variables
-    // in input objects widely used in gatsby, and therefore removing 
+    // in input objects widely used in gatsby, and therefore removing
     // variable declaration from queries.
     // As a temporary workaround remove that transform by slicing printTransforms.
-    const printContext = printTransforms.slice(0, -1).reduce(
-      (ctx, transform) => transform(ctx, this.schema),
-      compilerContext
-    )
+    const printContext = printTransforms
+      .slice(0, -1)
+      .reduce((ctx, transform) => transform(ctx, this.schema), compilerContext)
 
     compilerContext.documents().forEach((node: { name: string }) => {
       if (node.kind !== `Root`) return

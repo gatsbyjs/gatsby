@@ -14,12 +14,12 @@
     "cross-env": "^5.1.4",
     "eslint": "^4.19.1",
     "eslint-config-google": "^0.9.1",
-    "eslint-config-prettier": "^2.5.0",
+    "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-flow-vars": "^0.5.0",
     "eslint-plugin-flowtype": "^2.46.1",
     "eslint-plugin-import": "^2.9.0",
     "eslint-plugin-jsx-a11y": "^6.0.2",
-    "eslint-plugin-prettier": "^2.2.0",
+    "eslint-plugin-prettier": "^2.6.0",
     "eslint-plugin-react": "^7.7.0",
     "flow-bin": "^0.42.0",
     "glob": "^7.1.1",
@@ -28,7 +28,7 @@
     "lerna": "^2.1.1",
     "npm-run-all": "4.1.2",
     "plop": "^1.8.1",
-    "prettier": "^1.11.1",
+    "prettier": "^1.12",
     "prettier-eslint-cli": "4.7.1",
     "remotedev-server": "^0.2.3",
     "rimraf": "^2.6.1",
@@ -37,17 +37,17 @@
   "engines": {
     "yarn": "^1.2.1"
   },
-  "eslintIgnore": [
-    "interfaces",
-    "**/__tests__/fixtures/"
-  ],
+  "eslintIgnore": ["interfaces", "**/__tests__/fixtures/"],
   "private": true,
   "scripts": {
     "bootstrap": "npm-run-all -s check-versions lerna-prepublish",
     "check-versions": "babel-node scripts/check-versions.js",
-    "format": "npm-run-all -p format-packages format-cache-dir format-www format-examples format-scripts format-markdown",
-    "format-cache-dir": "prettier-eslint --write \"packages/gatsby/cache-dir/*.js\"",
-    "format-examples": "prettier-eslint --write \"examples/**/gatsby-node.js\" \"examples/**/gatsby-config.js\" \"examples/**/src/**/*.js\"",
+    "format":
+      "npm-run-all -p format-packages format-cache-dir format-www format-examples format-scripts format-markdown",
+    "format-cache-dir":
+      "prettier-eslint --write \"packages/gatsby/cache-dir/*.js\"",
+    "format-examples":
+      "prettier-eslint --write \"examples/**/gatsby-node.js\" \"examples/**/gatsby-config.js\" \"examples/**/src/**/*.js\"",
     "format-markdown": "prettier --write \"**/*.md\" --semi",
     "format-packages": "prettier-eslint --write \"packages/*/src/**/*.js\"",
     "format-scripts": "prettier-eslint --write \"scripts/**/*.js\"",
@@ -69,7 +69,5 @@
     "test_bkup": "npm-run-all -s lint test-node test-integration",
     "watch": "lerna run watch --no-sort --stream --concurrency 999"
   },
-  "workspaces": [
-    "packages/*"
-  ]
+  "workspaces": ["packages/*"]
 }

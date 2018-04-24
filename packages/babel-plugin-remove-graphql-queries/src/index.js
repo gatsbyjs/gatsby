@@ -1,6 +1,6 @@
 /*  eslint-disable new-cap */
 const graphql = require(`graphql`)
-const murmurhash = require("./murmur")
+const murmurhash = require(`./murmur`)
 const nodePath = require(`path`)
 
 function getGraphQLTag(path) {
@@ -46,7 +46,7 @@ export default function({ types: t }) {
               [`production`, `test`].includes(process.env.NODE_ENV) &&
               path2.isJSXIdentifier({ name: `StaticQuery` })
             ) {
-              const identifier = t.identifier("staticQueryData")
+              const identifier = t.identifier(`staticQueryData`)
               const filename = state.file.opts.filename
               const shortResultPath = `public/static/d/${this.queryHash}.json`
               const resultPath = nodePath.join(process.cwd(), shortResultPath)
@@ -72,7 +72,7 @@ export default function({ types: t }) {
                     : shortResultPath
                 )
               )
-              path.unshiftContainer("body", importDeclaration)
+              path.unshiftContainer(`body`, importDeclaration)
             }
           },
         }
