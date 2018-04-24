@@ -72,3 +72,13 @@ exports.replaceHistory = true
  * @param {object} $0.Root The "Root" component built by Gatsby.
  */
 exports.wrapRootComponent = true
+
+/**
+ * Allow a plugin to replace the ReactDOM.render function call by a custom renderer.
+ * This method receives the same parameters as ReactDOM.render takes.
+ * Note it's very important to call the provided callback after rendering, otherwise Gatsby will not be able to call `onInitialClientRender`
+ * @param {object} $0 element
+ * @param {object} $1 container
+ * @param {object} $2 callback
+ */
+exports.replaceHydrateFunction = true
