@@ -1,6 +1,6 @@
-const babel = require("babel-core")
-const reactPreset = require("@babel/preset-react")
-const plugin = require("../")
+const babel = require(`babel-core`)
+const reactPreset = require(`@babel/preset-react`)
+const plugin = require(`../`)
 
 var staticQuery = `
 import React from 'react'
@@ -28,7 +28,7 @@ export const query = graphql\`
 \`
 `
 
-it("Transforms queries in <StaticQuery>", () => {
+it(`Transforms queries in <StaticQuery>`, () => {
   const { code } = babel.transform(staticQuery, {
     presets: [reactPreset],
     plugins: [plugin],
@@ -36,7 +36,7 @@ it("Transforms queries in <StaticQuery>", () => {
   expect(code).toMatchSnapshot()
 })
 
-it("Transforms queries in page components", () => {
+it(`Transforms queries in page components`, () => {
   const { code } = babel.transform(pageComponent, {
     presets: [reactPreset],
     plugins: [plugin],

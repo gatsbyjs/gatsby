@@ -16,7 +16,7 @@ const { createFileNode } = require(`./create-file-node`)
  * "idle" state.
  */
 const fsMachine = Machine({
-  key: "emitFSEvents",
+  key: `emitFSEvents`,
   parallel: true,
   strict: true,
   states: {
@@ -25,19 +25,19 @@ const fsMachine = Machine({
       states: {
         CHOKIDAR_NOT_READY: {
           on: {
-            CHOKIDAR_READY: "CHOKIDAR_WATCHING",
-            BOOTSTRAP_FINISHED: "CHOKIDAR_WATCHING_BOOTSTRAP_FINISHED",
+            CHOKIDAR_READY: `CHOKIDAR_WATCHING`,
+            BOOTSTRAP_FINISHED: `CHOKIDAR_WATCHING_BOOTSTRAP_FINISHED`,
           },
         },
         CHOKIDAR_WATCHING: {
           on: {
-            BOOTSTRAP_FINISHED: "CHOKIDAR_WATCHING_BOOTSTRAP_FINISHED",
-            CHOKIDAR_READY: "CHOKIDAR_WATCHING",
+            BOOTSTRAP_FINISHED: `CHOKIDAR_WATCHING_BOOTSTRAP_FINISHED`,
+            CHOKIDAR_READY: `CHOKIDAR_WATCHING`,
           },
         },
         CHOKIDAR_WATCHING_BOOTSTRAP_FINISHED: {
           on: {
-            CHOKIDAR_READY: "CHOKIDAR_WATCHING_BOOTSTRAP_FINISHED",
+            CHOKIDAR_READY: `CHOKIDAR_WATCHING_BOOTSTRAP_FINISHED`,
           },
         },
       },
@@ -47,7 +47,7 @@ const fsMachine = Machine({
       states: {
         BOOTSTRAPPING: {
           on: {
-            BOOTSTRAP_FINISHED: "IDLE",
+            BOOTSTRAP_FINISHED: `IDLE`,
           },
         },
         IDLE: {

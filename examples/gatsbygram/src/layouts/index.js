@@ -10,7 +10,7 @@ import { rhythm, scale } from "../utils/typography"
 import presets from "../utils/presets"
 
 let Modal
-import("../components/modal").then(modal => {
+import(`../components/modal`).then(modal => {
   Modal = modal.default
 })
 

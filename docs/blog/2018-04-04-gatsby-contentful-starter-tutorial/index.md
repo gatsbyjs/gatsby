@@ -17,14 +17,14 @@ This piece will walk you through getting your GatsbyJS website up and running wi
 
 Here’s an overview of what’s involved:
 
-- Create a free Contentful account
-- Clone a sample repo
-- Create a space on Contentful to store content
-- Generate your Content Management and Content Delivery API access tokens
-- Import data into your space
-- Tweak your configuration file
-- Preview a production build
-- Publish and go live
+* Create a free Contentful account
+* Clone a sample repo
+* Create a space on Contentful to store content
+* Generate your Content Management and Content Delivery API access tokens
+* Import data into your space
+* Tweak your configuration file
+* Preview a production build
+* Publish and go live
 
 ###Getting started
 
@@ -32,21 +32,21 @@ This guide assumes that you have [GatsbyJS installed](/docs/) and, optionally, a
 
 Start by using this with the Gatsby CLI:
 
-~~~bash
+```bash
 gatsby new contentful-starter https://github.com/contentful-userland/gatsby-contentful-starter
-~~~
+```
 
 Alternatively, you can also clone a sample repo from Github:
 
-~~~bash
+```bash
 git clone git@github.com:contentful-userland/gatsby-contentful-starter.git
-~~~
+```
 
 And go into the directory and install the required dependencies with:
 
-~~~bash
+```bash
 npm install
-~~~
+```
 
 ###Create a new space to store content
 
@@ -56,15 +56,13 @@ Create a new empty space by opening the sidebar menu and adding a Space. Give th
 
 ![create a new space](new_space.png)
 
-
-
 ###Generate access tokens
 
 Before getting to the exciting part of setting up your website, you first need to generate three access tokens to get your Contentful-powered website up and running by fetching data from the API.
 
-- [Content Management API](https://www.contentful.com/developers/docs/references/content-management-api/)
-- [Content Delivery API](https://www.contentful.com/developers/docs/references/content-delivery-api/)
-- [Content Preview API](https://www.contentful.com/developers/docs/references/content-preview-api/)
+* [Content Management API](https://www.contentful.com/developers/docs/references/content-management-api/)
+* [Content Delivery API](https://www.contentful.com/developers/docs/references/content-delivery-api/)
+* [Content Preview API](https://www.contentful.com/developers/docs/references/content-preview-api/)
 
 Head over to your Space Settings dropdown menu and navigate to the APIs section. From there, navigate to the tab for the API token you would like to generate.
 
@@ -84,20 +82,19 @@ Start setting things up with the npm run setup command, which first prompts you 
 
 After that, it writes the credentials you provided into a file named .contentful.json into lines of code that look like so:
 
-
-~~~json
-{  
-   "development":{  
-      "host":"preview.contentful.com",
-      "spaceId":"...",
-      "accessToken":"..."
-   },
-   "production":{  
-      "spaceId":"...",
-      "accessToken":"..."
-   }
+```json
+{
+  "development": {
+    "host": "preview.contentful.com",
+    "spaceId": "...",
+    "accessToken": "..."
+  },
+  "production": {
+    "spaceId": "...",
+    "accessToken": "..."
+  }
 }
-~~~
+```
 
 Using the credentials in the .contentful.json file, [content can now be imported](https://www.contentful.com/developers/docs/tutorials/general/import-and-export/) into your space to being displayed on your website via our API.
 
@@ -119,6 +116,6 @@ Contentful ensures your website and its users can access your content quickly an
 
 That’s a quick overview of how to get your website up and running from scratch using Contentful and GatsbyJS.
 
-Contentful's platform offers speed, flexibility, and ease of integration with your code, supporting any stack you use with SDKs for common languages like [Javascript](https://www.contentful.com/developers/docs/javascript/sdks/), [Python](https://www.contentful.com/developers/docs/python/sdks/), and [PHP](https://www.contentful.com/developers/docs/php/sdks/). Unlike a CMS, Contentful provides you with separation between content and presentation, allowing you to focus on developing your website and leave content delivery to Contentful. 
+Contentful's platform offers speed, flexibility, and ease of integration with your code, supporting any stack you use with SDKs for common languages like [Javascript](https://www.contentful.com/developers/docs/javascript/sdks/), [Python](https://www.contentful.com/developers/docs/python/sdks/), and [PHP](https://www.contentful.com/developers/docs/php/sdks/). Unlike a CMS, Contentful provides you with separation between content and presentation, allowing you to focus on developing your website and leave content delivery to Contentful.
 
-If you're curious to learn more about Contentful, you can check out the Contentful [Developer Center](https://www.contentful.com/developers/docs/) to learn more on how the technology works, or head over to the [Guides and tutorials](https://www.contentful.com/guides/) section. 
+If you're curious to learn more about Contentful, you can check out the Contentful [Developer Center](https://www.contentful.com/developers/docs/) to learn more on how the technology works, or head over to the [Guides and tutorials](https://www.contentful.com/guides/) section.
