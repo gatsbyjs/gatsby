@@ -33,8 +33,8 @@
   "private": false,
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-custom-blocks",
   "scripts": {
-    "build": "babel --out-dir . --ignore __tests__ src",
+    "build": "babel --out-dir . --ignore **/__tests__ src",
     "prepublish": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir . --ignore __tests__"
+    "watch": "babel -w src --out-dir . --ignore **/__tests__"
   }
 }
