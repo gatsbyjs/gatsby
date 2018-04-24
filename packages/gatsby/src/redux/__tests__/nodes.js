@@ -1,4 +1,4 @@
-const { actions, boundActionCreators } = require(`../actions`)
+const { actions } = require(`../actions`)
 const { store, getNode } = require(`../index`)
 const nodeReducer = require(`../reducers/nodes`)
 const nodeTouchedReducer = require(`../reducers/nodes-touched`)
@@ -67,7 +67,7 @@ describe(`Create and update nodes`, () => {
 
   it(`deletes previously transformed children nodes when the parent node is updated`, () => {
     store.dispatch({ type: `DELETE_CACHE` })
-    boundActionCreators.createNode(
+    actions.createNode(
       {
         id: `hi`,
         children: [],
@@ -80,7 +80,7 @@ describe(`Create and update nodes`, () => {
       { name: `tests` }
     )
 
-    boundActionCreators.createNode(
+    actions.createNode(
       {
         id: `hi-1`,
         children: [],
@@ -93,7 +93,7 @@ describe(`Create and update nodes`, () => {
       { name: `tests` }
     )
 
-    boundActionCreators.createParentChildLink(
+    actions.createParentChildLink(
       {
         parent: store.getState().nodes[`hi`],
         child: store.getState().nodes[`hi-1`],
@@ -101,7 +101,7 @@ describe(`Create and update nodes`, () => {
       { name: `tests` }
     )
 
-    boundActionCreators.createNode(
+    actions.createNode(
       {
         id: `hi-1-1`,
         children: [],
@@ -114,7 +114,7 @@ describe(`Create and update nodes`, () => {
       { name: `tests` }
     )
 
-    boundActionCreators.createParentChildLink(
+    actions.createParentChildLink(
       {
         parent: store.getState().nodes[`hi-1`],
         child: store.getState().nodes[`hi-1-1`],
@@ -122,7 +122,7 @@ describe(`Create and update nodes`, () => {
       { name: `tests` }
     )
 
-    boundActionCreators.createNode(
+    actions.createNode(
       {
         id: `hi`,
         children: [],
@@ -139,7 +139,7 @@ describe(`Create and update nodes`, () => {
 
   it(`deletes previously transformed children nodes when the parent node is deleted`, () => {
     store.dispatch({ type: `DELETE_CACHE` })
-    boundActionCreators.createNode(
+    actions.createNode(
       {
         id: `hi`,
         children: [],
@@ -152,7 +152,7 @@ describe(`Create and update nodes`, () => {
       { name: `tests` }
     )
 
-    boundActionCreators.createNode(
+    actions.createNode(
       {
         id: `hi2`,
         children: [],
@@ -165,7 +165,7 @@ describe(`Create and update nodes`, () => {
       { name: `tests` }
     )
 
-    boundActionCreators.createNode(
+    actions.createNode(
       {
         id: `hi-1`,
         children: [],
@@ -178,7 +178,7 @@ describe(`Create and update nodes`, () => {
       { name: `tests` }
     )
 
-    boundActionCreators.createParentChildLink(
+    actions.createParentChildLink(
       {
         parent: store.getState().nodes[`hi`],
         child: getNode(`hi-1`),
@@ -186,7 +186,7 @@ describe(`Create and update nodes`, () => {
       { name: `tests` }
     )
 
-    boundActionCreators.createNode(
+    actions.createNode(
       {
         id: `hi-1-1`,
         children: [],
@@ -199,7 +199,7 @@ describe(`Create and update nodes`, () => {
       { name: `tests` }
     )
 
-    boundActionCreators.createParentChildLink(
+    actions.createParentChildLink(
       {
         parent: getNode(`hi-1`),
         child: getNode(`hi-1-1`),
@@ -207,13 +207,13 @@ describe(`Create and update nodes`, () => {
       { name: `tests` }
     )
 
-    boundActionCreators.deleteNode(`hi`, getNode(`hi`), { name: `tests` })
+    actions.deleteNode(`hi`, getNode(`hi`), { name: `tests` })
     expect(Object.keys(store.getState().nodes).length).toEqual(1)
   })
 
   it(`deletes previously transformed children nodes when parent nodes are deleted`, () => {
     store.dispatch({ type: `DELETE_CACHE` })
-    boundActionCreators.createNode(
+    actions.createNode(
       {
         id: `hi`,
         children: [],
@@ -226,7 +226,7 @@ describe(`Create and update nodes`, () => {
       { name: `tests` }
     )
 
-    boundActionCreators.createNode(
+    actions.createNode(
       {
         id: `hi-1`,
         children: [],
@@ -239,7 +239,7 @@ describe(`Create and update nodes`, () => {
       { name: `tests` }
     )
 
-    boundActionCreators.createParentChildLink(
+    actions.createParentChildLink(
       {
         parent: getNode(`hi`),
         child: getNode(`hi-1`),
@@ -247,7 +247,7 @@ describe(`Create and update nodes`, () => {
       { name: `tests` }
     )
 
-    boundActionCreators.createNode(
+    actions.createNode(
       {
         id: `hi-1-1`,
         children: [],
@@ -260,7 +260,7 @@ describe(`Create and update nodes`, () => {
       { name: `tests` }
     )
 
-    boundActionCreators.createParentChildLink(
+    actions.createParentChildLink(
       {
         parent: getNode(`hi-1`),
         child: getNode(`hi-1-1`),
@@ -268,13 +268,13 @@ describe(`Create and update nodes`, () => {
       { name: `tests` }
     )
 
-    boundActionCreators.deleteNodes([`hi`], { name: `tests` })
+    actions.deleteNodes([`hi`], { name: `tests` })
     expect(Object.keys(store.getState().nodes).length).toEqual(0)
   })
 
   it(`allows deleting nodes`, () => {
     store.dispatch({ type: `DELETE_CACHE` })
-    boundActionCreators.createNode(
+    actions.createNode(
       {
         id: `hi`,
         children: [],
@@ -290,7 +290,7 @@ describe(`Create and update nodes`, () => {
       },
       { name: `tests` }
     )
-    boundActionCreators.deleteNode(`hi`, getNode(`hi`))
+    actions.deleteNode(`hi`, getNode(`hi`))
 
     expect(getNode(`hi`)).toBeUndefined()
   })
@@ -438,7 +438,7 @@ describe(`Create and update nodes`, () => {
   })
 
   it(`does not crash when delete node is called on undefined`, () => {
-    boundActionCreators.deleteNode(undefined, undefined, { name: `tests` })
+    actions.deleteNode(undefined, undefined, { name: `tests` })
     expect(Object.keys(store.getState().nodes).length).toEqual(0)
   })
 })

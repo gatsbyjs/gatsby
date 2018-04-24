@@ -46,20 +46,6 @@ Array [
   },
   Object {
     "browserAPIs": Array [],
-    "id": "Plugin component-layout-creator",
-    "name": "component-layout-creator",
-    "nodeAPIs": Array [
-      "createLayouts",
-    ],
-    "pluginOptions": Object {
-      "plugins": Array [],
-    },
-    "resolve": "",
-    "ssrAPIs": Array [],
-    "version": "1.0.0",
-  },
-  Object {
-    "browserAPIs": Array [],
     "id": "Plugin internal-data-bridge",
     "name": "internal-data-bridge",
     "nodeAPIs": Array [
@@ -93,7 +79,6 @@ Array [
     "name": "query-runner",
     "nodeAPIs": Array [
       "onCreatePage",
-      "onCreateLayout",
     ],
     "pluginOptions": Object {
       "plugins": Array [],
@@ -163,20 +148,6 @@ Array [
   },
   Object {
     "browserAPIs": Array [],
-    "id": "Plugin component-layout-creator",
-    "name": "component-layout-creator",
-    "nodeAPIs": Array [
-      "createLayouts",
-    ],
-    "pluginOptions": Object {
-      "plugins": Array [],
-    },
-    "resolve": "",
-    "ssrAPIs": Array [],
-    "version": "1.0.0",
-  },
-  Object {
-    "browserAPIs": Array [],
     "id": "Plugin internal-data-bridge",
     "name": "internal-data-bridge",
     "nodeAPIs": Array [
@@ -210,7 +181,6 @@ Array [
     "name": "query-runner",
     "nodeAPIs": Array [
       "onCreatePage",
-      "onCreateLayout",
     ],
     "pluginOptions": Object {
       "plugins": Array [],
