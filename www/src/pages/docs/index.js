@@ -41,7 +41,7 @@ class IndexRoute extends React.Component {
                   </li>
                   <li>
                     <code>gatsby develop</code> — Gatsby will start a
-                    hot-reloading development environment accessible at{" "}
+                    hot-reloading development environment accessible at{` `}
                     <code>localhost:8000</code>
                   </li>
                   <li>

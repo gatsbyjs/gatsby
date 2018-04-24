@@ -106,82 +106,78 @@ class IndexRoute extends React.Component {
                 </FuturaParagraph>
               </Card>
 
-                <Diagram
-                  containerCSS={{
-                    borderTopLeftRadius: 0,
-                    borderTopRightRadius: 0,
-                    flex: `1 1 100%`,
-                    borderTop: `1px solid ${colors.ui.light}`,
-                  }}
-                />
+              <Diagram
+                containerCSS={{
+                  borderTopLeftRadius: 0,
+                  borderTopRightRadius: 0,
+                  flex: `1 1 100%`,
+                  borderTop: `1px solid ${colors.ui.light}`,
+                }}
+              />
 
-                <div css={{ flex: `1 1 100%` }}>
-                  <Container hasSideBar={false}>
-                    <div
-                      css={{
-                        textAlign: `center`,
-                        padding: `${rhythm(1)} 0 ${rhythm(2)}`,
-                      }}
-                    >
-                      <h1 css={{ marginTop: 0 }}>Curious yet?</h1>
-                      <FuturaParagraph>
-                        It only takes a few minutes to get up and running!
-                      </FuturaParagraph>
-                      <CtaButton
-                        to="/docs/"
-                        overrideCSS={{ marginTop: `1rem` }}
-                      >
-                        Get Started
-                      </CtaButton>
-                    </div>
-                  </Container>
-                </div>
-
-                <div
-                  css={{
-                    borderTop: `1px solid ${colors.ui.light}`,
-                    flex: `1 1 100%`,
-                    [presets.Tablet]: {
-                      paddingTop: rhythm(1),
-                    },
-                  }}
-                >
-                  <Container
-                    hasSideBar={false}
+              <div css={{ flex: `1 1 100%` }}>
+                <Container hasSideBar={false}>
+                  <div
                     css={{
-                      maxWidth: rhythm(30),
-                      paddingBottom: `0 !important`,
+                      textAlign: `center`,
+                      padding: `${rhythm(1)} 0 ${rhythm(2)}`,
                     }}
                   >
-                    <h2
-                      css={{
-                        textAlign: `left`,
-                        marginTop: 0,
-                        color: colors.gatsby,
-                        [presets.Tablet]: {
-                          paddingBottom: rhythm(1),
-                        },
-                      }}
-                    >
-                      Latest from the Gatsby blog
-                    </h2>
-                    {blogPosts.edges.map(({ node }) => (
-                      <BlogPostPreviewItem
-                        post={node}
-                        key={node.fields.slug}
-                        css={{ marginBottom: rhythm(2) }}
-                      />
-                    ))}
-                    <CtaButton
-                      to="/blog/"
-                      overrideCSS={{ marginBottom: rhythm(2) }}
-                    >
-                      Read More
+                    <h1 css={{ marginTop: 0 }}>Curious yet?</h1>
+                    <FuturaParagraph>
+                      It only takes a few minutes to get up and running!
+                    </FuturaParagraph>
+                    <CtaButton to="/docs/" overrideCSS={{ marginTop: `1rem` }}>
+                      Get Started
                     </CtaButton>
-                  </Container>
-                </div>
-              </Cards>
-            </div>
+                  </div>
+                </Container>
+              </div>
+
+              <div
+                css={{
+                  borderTop: `1px solid ${colors.ui.light}`,
+                  flex: `1 1 100%`,
+                  [presets.Tablet]: {
+                    paddingTop: rhythm(1),
+                  },
+                }}
+              >
+                <Container
+                  hasSideBar={false}
+                  css={{
+                    maxWidth: rhythm(30),
+                    paddingBottom: `0 !important`,
+                  }}
+                >
+                  <h2
+                    css={{
+                      textAlign: `left`,
+                      marginTop: 0,
+                      color: colors.gatsby,
+                      [presets.Tablet]: {
+                        paddingBottom: rhythm(1),
+                      },
+                    }}
+                  >
+                    Latest from the Gatsby blog
+                  </h2>
+                  {blogPosts.edges.map(({ node }) => (
+                    <BlogPostPreviewItem
+                      post={node}
+                      key={node.fields.slug}
+                      css={{ marginBottom: rhythm(2) }}
+                    />
+                  ))}
+                  <CtaButton
+                    to="/blog/"
+                    overrideCSS={{ marginBottom: rhythm(2) }}
+                  >
+                    Read More
+                  </CtaButton>
+                </Container>
+              </div>
+            </Cards>
           </div>
         </div>
       </Layout>
