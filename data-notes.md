@@ -1,3 +1,4 @@
+```
 new SourceDirectory({
   parsers: [
     {
@@ -12,6 +13,7 @@ new SourceDirectory({
     },
   ]
 })
+```
 
 Just copy Jekyll?
 

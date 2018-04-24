@@ -35,14 +35,14 @@ class JSONStore extends React.Component {
   componentDidMount() {
     if (process.env.NODE_ENV !== `production`) {
       this.registerPath(getPathFromProps(this.props))
-      ___emitter.on("*", this.handleMittEvent)
+      ___emitter.on(`*`, this.handleMittEvent)
     }
   }
 
   componentWillUnmount() {
     if (process.env.NODE_ENV !== `production`) {
       this.unregisterPath(this.state.path)
-      ___emitter.off("*", this.handleMittEvent)
+      ___emitter.off(`*`, this.handleMittEvent)
     }
   }
 

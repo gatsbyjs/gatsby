@@ -68,14 +68,14 @@ module.exports = async (queryJob: QueryJob, component: Any) => {
   }
 
   const resultJSON = JSON.stringify(result)
-  const resultHash = require("crypto")
-    .createHash("sha1")
+  const resultHash = require(`crypto`)
+    .createHash(`sha1`)
     .update(resultJSON)
-    .digest("base64")
+    .digest(`base64`)
     // Remove potentially unsafe characters. This increases chances of collisions
     // slightly but it should still be very safe + we get a shorter
     // url vs hex.
-    .replace(/[^a-zA-Z0-9-_]/g, "")
+    .replace(/[^a-zA-Z0-9-_]/g, ``)
 
   let dataPath
   if (queryJob?.isPage) {

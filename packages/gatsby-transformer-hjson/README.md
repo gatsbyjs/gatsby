@@ -15,8 +15,8 @@ points to your files.
 ```javascript
 // In your gatsby-config.js
 module.exports = {
-  plugins: [`gatsby-transformer-hjson`]
-}
+  plugins: [`gatsby-transformer-hjson`],
+};
 ```
 
 ## Parsing algorithm
