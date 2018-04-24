@@ -7,7 +7,7 @@ module.exports = ({ markdownAST }, pluginOptions = {}) => {
     const processedText = String(
       retext()
         .use(smartypants, pluginOptions)
-        .process(node.value)
+        .processSync(node.value)
     )
     node.value = processedText
   })

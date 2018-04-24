@@ -2,7 +2,7 @@ const React = require(`react`)
 const fs = require(`fs`)
 const { join } = require(`path`)
 const { renderToString, renderToStaticMarkup } = require(`react-dom/server`)
-const { StaticRouter, Route, withRouter } = require(`react-router-dom`)
+const { StaticRouter, Route } = require(`react-router-dom`)
 const { get, merge, isString, flatten } = require(`lodash`)
 
 const apiRunner = require(`./api-runner-ssr`)
