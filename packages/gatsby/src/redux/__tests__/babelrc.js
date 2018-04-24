@@ -80,6 +80,7 @@ describe(`Babelrc actions/reducer`, () => {
   })
 
   it(`sets default presets/plugins if there's no userland babelrc`, () => {
+    const fakeResolver = moduleName => `/path/to/module/${moduleName}`
     const actionsLog = []
     const mockActions = {
       setBabelPreset: args => {
@@ -102,8 +103,12 @@ describe(`Babelrc actions/reducer`, () => {
       undefined
     )
     expect(endState).toMatchSnapshot()
-    expect(buildConfig(endState.stages.develop, `develop`)).toMatchSnapshot()
-    expect(buildConfig(endState.stages.develop, `build-html`)).toMatchSnapshot()
+    expect(
+      buildConfig(endState.stages.develop, `develop`, fakeResolver)
+    ).toMatchSnapshot()
+    expect(
+      buildConfig(endState.stages.develop, `build-html`, fakeResolver)
+    ).toMatchSnapshot()
   })
 
   it(`allows setting options`, () => {
