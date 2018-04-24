@@ -15,7 +15,7 @@ From October 2017 to February 2018, I conducted over 60 interviews with Gatsby u
 
 ## Jobs to be done
 
-After compiling data from the interviews, I drew what’s called an “empathy map” to put myself in the shoes of Gatsby users. This map describes what a Gatsby users usually experienced when searching for plugins.
+After compiling data from the interviews, I drew what’s called an “empathy map” to put myself in the shoes of Gatsby users. This map describes what Gatsby users usually experienced when searching for plugins.
 
 ![Empathy map](empathy-map.png)
 
