@@ -9,6 +9,24 @@
 exports.onClientEntry = true
 
 /**
+ * Called when gatsby is fetching resources for a page longer than 1 second.
+ * @example
+ * exports.onFetchingResources = () => {
+ *   console.log("We can show loading indicator")
+ * }
+ */
+exports.onFetchingResources = true
+
+/**
+ * Called when gatsby has fetched all resources for page
+ * @example
+ * exports.onFetchedResources = () => {
+ *   console.log("We can hide loading indicator")
+ * }
+ */
+exports.onFetchedResources = true
+
+/**
  * Called when the initial (but not subsequent) render of Gatsby App is done on the client.
  * @example
  * exports.onInitialClientRender = () => {

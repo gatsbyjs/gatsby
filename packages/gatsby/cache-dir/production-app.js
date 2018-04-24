@@ -79,6 +79,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       if (e.path === pathname) {
         emitter.off(`onPostLoadPageResources`, eventHandler)
         clearTimeout(timeoutId)
+        apiRunner(`onFetchedResources`, e)
         if (!e.error) {
           window.___history.push(location)
         }
@@ -89,6 +90,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     // loader in case resources aren't around yet.
     const timeoutId = setTimeout(() => {
       emitter.emit(`onDelayedLoadPageResources`, { pathname })
+      apiRunner(`onFetchingResources`, { path: pathname })
     }, 1000)
 
     if (loader.getResourcesForPathname(pathname)) {
@@ -138,9 +140,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     }
 
     if (prevRouterProps) {
-      const {
-        location: { pathname: oldPathname },
-      } = prevRouterProps
+      const { location: { pathname: oldPathname } } = prevRouterProps
       if (oldPathname === pathname) {
         return false
       }
