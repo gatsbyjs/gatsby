@@ -3,19 +3,6 @@
 exports[`Babelrc actions/reducer allows adding a new plugin 1`] = `
 Object {
   "stages": Object {
-    "build-css": Object {
-      "options": Object {
-        "babelrc": false,
-        "cacheDirectory": true,
-      },
-      "plugins": Array [
-        Object {
-          "name": "test-babel-plugin",
-          "options": Object {},
-        },
-      ],
-      "presets": Array [],
-    },
     "build-html": Object {
       "options": Object {
         "babelrc": false,
@@ -75,19 +62,6 @@ Object {
 exports[`Babelrc actions/reducer allows adding a new preset 1`] = `
 Object {
   "stages": Object {
-    "build-css": Object {
-      "options": Object {
-        "babelrc": false,
-        "cacheDirectory": true,
-      },
-      "plugins": Array [],
-      "presets": Array [
-        Object {
-          "name": "test-babel-preset",
-          "options": Object {},
-        },
-      ],
-    },
     "build-html": Object {
       "options": Object {
         "babelrc": false,
@@ -434,14 +408,6 @@ Object {
 exports[`Babelrc actions/reducer sets default presets/plugins if there's no userland babelrc 1`] = `
 Object {
   "stages": Object {
-    "build-css": Object {
-      "options": Object {
-        "babelrc": false,
-        "cacheDirectory": true,
-      },
-      "plugins": Array [],
-      "presets": Array [],
-    },
     "build-html": Object {
       "options": Object {
         "babelrc": false,
