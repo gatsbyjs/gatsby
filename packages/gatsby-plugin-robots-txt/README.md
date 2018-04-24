@@ -1,4 +1,3 @@
-
 [![NPM version](https://img.shields.io/npm/v/gatsby-plugin-robots-txt.svg)](https://www.npmjs.org/package/gatsby-plugin-robots-txt)
 [![Travis build status](https://img.shields.io/travis/mdreizin/gatsby-plugin-robots-txt/master.svg)](https://travis-ci.org/mdreizin/gatsby-plugin-robots-txt)
 [![AppVeyor build status](https://img.shields.io/appveyor/ci/mdreizin/gatsby-plugin-robots-txt/master.svg?logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMjAgMGMxMSAwIDIwIDkgMjAgMjBzLTkgMjAtMjAgMjBTMCAzMSAwIDIwIDkgMCAyMCAwem00LjkgMjMuOWMyLjItMi44IDEuOS02LjgtLjktOC45LTIuNy0yLjEtNi43LTEuNi05IDEuMi0yLjIgMi44LTEuOSA2LjguOSA4LjkgMi44IDIuMSA2LjggMS42IDktMS4yem0tMTAuNyAxM2MxLjIuNSAzLjggMSA1LjEgMUwyOCAyNS4zYzIuOC00LjIgMi4xLTkuOS0xLjgtMTMtMy41LTIuOC04LjQtMi43LTExLjkgMEwyLjIgMjEuNmMuMyAzLjIgMS4yIDQuOCAxLjIgNC45bDYuOS03LjVjLS41IDMuMy43IDYuNyAzLjUgOC44IDIuNCAxLjkgNS4zIDIuNCA4LjEgMS44bC03LjcgNy4zeiIgZmlsbD0iI0NDQyIgZmlsbC1ydWxlPSJub256ZXJvIi8%2BPC9zdmc%2B)](https://ci.appveyor.com/project/mdreizin/gatsby-plugin-robots-txt/branch/master)
@@ -33,7 +32,7 @@ module.exports = {
 
 ## Options
 
-By default this plugin detects the following options:
+This plugin uses [`generate-robotstxt`](https://github.com/itgalaxy/generate-robotstxt#usage) to generate content of `robots.txt` and it has the following options:
 
 |   Name    |    Type    |                Default                |      Description       |
 | :-------: | :--------: | :-----------------------------------: | :--------------------: |
@@ -41,12 +40,18 @@ By default this plugin detects the following options:
 | `sitemap` |  `String`  | `${siteMetadata.siteUrl}/sitemap.xml` | Path to `sitemap.xml`  |
 | `policy`  | `Policy[]` |                 `[]`                  | List of `Policy` rules |
 
-Under `Policy` you can specify any allowed [rules](http://www.robotstxt.org/orig.html#format):
+You can specify any allowed [`generate-robotstxt](https://github.com/itgalaxy/generate-robotstxt#usage) options:
 
 ```json
 {
-  "userAgent": "*",
-  "allow": "/"
+  "host": "https://www.example.com",
+  "sitemap": "https://www.example.com/sitemap.xml",
+  "policy": [
+    {
+      "userAgent": "*",
+      "allow": "/"
+    }
+  ]
 }
 ```
 
