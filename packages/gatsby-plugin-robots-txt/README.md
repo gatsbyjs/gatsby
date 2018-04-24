@@ -40,19 +40,23 @@ This plugin uses [`generate-robotstxt`](https://github.com/itgalaxy/generate-rob
 | `sitemap` |  `String`  | `${siteMetadata.siteUrl}/sitemap.xml` | Path to `sitemap.xml`  |
 | `policy`  | `Policy[]` |                 `[]`                  | List of `Policy` rules |
 
-You can specify any allowed [`generate-robotstxt](https://github.com/itgalaxy/generate-robotstxt#usage) options:
+You can specify any allowed [`generate-robotstxt`](https://github.com/itgalaxy/generate-robotstxt#usage) options:
 
-```json
-{
-  "host": "https://www.example.com",
-  "sitemap": "https://www.example.com/sitemap.xml",
-  "policy": [
+`gatsby-config.js`
+
+```js
+module.exports = {
+  plugins: [
     {
-      "userAgent": "*",
-      "allow": "/"
+      resolve: 'gatsby-plugin-robots-txt',
+      options: {
+        host: 'https://www.example.com',
+        sitemap: 'https://www.example.com/sitemap.xml',
+        policy: [{ userAgent: '*', allow: '/' }]
+      }
     }
   ]
-}
+};
 ```
 
 ### Netlify

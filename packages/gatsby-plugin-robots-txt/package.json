@@ -7,6 +7,7 @@
   "scripts": {
     "clean": "rm -rf gatsby-node.js*",
     "lint": "eslint --ext js,md ./ --cache",
+    "format": "prettier --write 'src/*.js' 'README.md'",
     "build": "babel src --out-dir ./ --source-maps",
     "watch": "babel src --out-dir ./ --source-maps --watch"
   },
