@@ -3,7 +3,7 @@
 const apiRunnerNode = require(`./api-runner-node`)
 const { store } = require(`../redux`)
 
-const buildConfig = (abstractConfig, stage) => {
+const buildConfig = (abstractConfig, stage, resolve = require.resolve) => {
   let babelrc = {
     ...abstractConfig.options,
     presets: [],
@@ -11,10 +11,10 @@ const buildConfig = (abstractConfig, stage) => {
   }
 
   abstractConfig.presets.forEach(p =>
-    babelrc.presets.push([require.resolve(p.name), p.options])
+    babelrc.presets.push([resolve(p.name), p.options])
   )
   abstractConfig.plugins.forEach(p =>
-    babelrc.plugins.push([require.resolve(p.name), p.options])
+    babelrc.plugins.push([resolve(p.name), p.options])
   )
 
   if (!babelrc.hasOwnProperty(`cacheDirectory`)) {
@@ -23,17 +23,15 @@ const buildConfig = (abstractConfig, stage) => {
 
   if (stage === `develop`) {
     // TODO: maybe this should be left to the user?
-    babelrc.plugins.unshift(require.resolve(`react-hot-loader/babel`))
+    babelrc.plugins.unshift(resolve(`react-hot-loader/babel`))
   }
 
   // Make dynamic imports work during SSR.
   if (stage === `build-html` || stage === `develop-html`) {
-    babelrc.plugins.unshift(require.resolve(`babel-plugin-dynamic-import-node`))
+    babelrc.plugins.unshift(resolve(`babel-plugin-dynamic-import-node`))
   }
 
-  babelrc.plugins.unshift(
-    require.resolve(`babel-plugin-remove-graphql-queries`)
-  )
+  babelrc.plugins.unshift(resolve(`babel-plugin-remove-graphql-queries`))
 
   return babelrc
 }
