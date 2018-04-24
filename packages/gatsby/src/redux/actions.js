@@ -5,10 +5,8 @@ const _ = require(`lodash`)
 const { bindActionCreators } = require(`redux`)
 const { stripIndent } = require(`common-tags`)
 const report = require(`gatsby-cli/lib/reporter`)
-const glob = require(`glob`)
 const path = require(`path`)
 const fs = require(`fs`)
-const { joinPath } = require(`../utils/path`)
 const { hasNodeChanged, getNode } = require(`./index`)
 const { trackInlineObjectsInRootNode } = require(`../schema/node-tracking`)
 const { store } = require(`./index`)
@@ -346,12 +344,6 @@ actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
     type: `DELETE_NODES`,
     plugin,
     payload: nodes,
-  }
-
-  if (deleteDescendantsActions) {
-    return [...deleteDescendantsActions, deleteNodesAction]
-  } else {
-    return deleteNodesAction
   }
 }
 
