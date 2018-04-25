@@ -25,7 +25,7 @@ const writeRedirects = async () => {
 
   lastHash = newHash
 
-  await fs.writeFile(
+  return await fs.writeFile(
     joinPath(program.directory, `.cache/redirects.json`),
     JSON.stringify(browserRedirects, null, 2)
   )
