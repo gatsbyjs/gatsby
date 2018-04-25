@@ -97,7 +97,7 @@ class DefaultLayout extends React.Component {
             </Link>
           </div>
         </Container>
-        {this.props.children()}
+        {this.props.children}
         <footer css={{ background: constants.paleYellow }}>
           <Container>
             <div css={{ maxWidth: `50%`, float: `left` }}>
