@@ -1,7 +1,7 @@
 {
   "name": "gatsby-source-mongodb",
   "description": "Stub description for gatsby-source-mongodb",
-  "version": "1.5.16-3",
+  "version": "1.5.16-4",
   "author": "jhermans85@hotmail.com",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
