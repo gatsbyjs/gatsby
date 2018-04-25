@@ -345,6 +345,12 @@ actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
     plugin,
     payload: nodes,
   }
+
+  if (deleteDescendantsActions) {
+    return [...deleteDescendantsActions, deleteNodesAction]
+  } else {
+    return deleteNodesAction
+  }
 }
 
 const typeOwners = {}
