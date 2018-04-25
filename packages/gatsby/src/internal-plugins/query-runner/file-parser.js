@@ -118,13 +118,11 @@ async function findGraphQLTags(file, text): Promise<Array<DefinitionNode>> {
           TaggedTemplateExpression(path) {
             if (
               (`descendant of query`,
-              // eslint-disable-next-line no-undef
               path?.parentPath?.parentPath?.node?.name?.name !== `query`)
             ) {
               return
             }
             if (
-              // eslint-disable-next-line no-undef
               path.parentPath?.parentPath?.parentPath?.node?.name?.name !==
               `StaticQuery`
             ) {

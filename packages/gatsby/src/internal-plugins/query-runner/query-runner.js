@@ -63,7 +63,6 @@ module.exports = async (queryJob: QueryJob, component: Any) => {
   }
 
   // Add the page context onto the results.
-  // eslint-disable-next-line no-undef
   if (queryJob?.isPage) {
     result[`pageContext`] = queryJob.context
   }
@@ -79,7 +78,6 @@ module.exports = async (queryJob: QueryJob, component: Any) => {
     .replace(/[^a-zA-Z0-9-_]/g, ``)
 
   let dataPath
-  // eslint-disable-next-line no-undef
   if (queryJob?.isPage) {
     dataPath = `${generatePathChunkName(queryJob.jsonName)}-${resultHash}`
   } else {
