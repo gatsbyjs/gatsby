@@ -13,8 +13,8 @@ const createContentDigest = obj =>
     .digest(`hex`)
 
 exports.sourceNodes = async (
-  { actions, getNode, hasNodeChanged, store, cache },
-  { baseUrl, apiBase, createNodeId }
+  { actions, getNode, hasNodeChanged, store, cache, createNodeId },
+  { baseUrl, apiBase }
 ) => {
   const { createNode } = actions
 
@@ -142,6 +142,7 @@ exports.sourceNodes = async (
             store,
             cache,
             createNode,
+            createNodeId,
           })
         } catch (e) {
           // Ignore
