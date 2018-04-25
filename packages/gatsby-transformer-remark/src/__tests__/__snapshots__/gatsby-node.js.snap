@@ -9,18 +9,13 @@ Array [
       "frontmatter": Object {
         "_PARENT": "whatever",
         "date": "2017-09-18T23:19:51.246Z",
-        "parent": "whatever",
         "title": "my little pony",
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "content": "---
-title: \\"my little pony\\"
-date: \\"2017-09-18T23:19:51.246Z\\"
----
-Where oh where is my little pony?
+        "content": "Where oh where is my little pony?
             ",
-        "contentDigest": "c28ae5f9cd5d74e0697ce8a0e8ff5715",
+        "contentDigest": "2e8a2dfc6008c678361832a928592cff",
         "type": "MarkdownRemark",
       },
       "parent": "whatever",
@@ -39,18 +34,13 @@ Array [
         "frontmatter": Object {
           "_PARENT": "whatever",
           "date": "2017-09-18T23:19:51.246Z",
-          "parent": "whatever",
           "title": "my little pony",
         },
         "id": "uuid-from-gatsby",
         "internal": Object {
-          "content": "---
-title: \\"my little pony\\"
-date: \\"2017-09-18T23:19:51.246Z\\"
----
-Where oh where is my little pony?
+          "content": "Where oh where is my little pony?
             ",
-          "contentDigest": "c28ae5f9cd5d74e0697ce8a0e8ff5715",
+          "contentDigest": "2e8a2dfc6008c678361832a928592cff",
           "type": "MarkdownRemark",
         },
         "parent": "whatever",
@@ -87,16 +77,11 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
       "frontmatter": Object {
         "_PARENT": "whatever",
         "date": "2017-09-18T23:19:51.246Z",
-        "parent": "whatever",
         "title": "my little pony",
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "content": "---
-title: \\"my little pony\\"
-date: \\"2017-09-18T23:19:51.246Z\\"
----
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet velit id facilisis. Nulla viverra, eros at efficitur pulvinar, lectus orci accumsan nisi, eu blandit elit nulla nec lectus. Integer porttitor imperdiet sapien. Quisque in orci sed nisi consequat aliquam. Aenean id mollis nisi. Sed auctor odio id erat facilisis venenatis. Quisque posuere faucibus libero vel fringilla.
+        "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet velit id facilisis. Nulla viverra, eros at efficitur pulvinar, lectus orci accumsan nisi, eu blandit elit nulla nec lectus. Integer porttitor imperdiet sapien. Quisque in orci sed nisi consequat aliquam. Aenean id mollis nisi. Sed auctor odio id erat facilisis venenatis. Quisque posuere faucibus libero vel fringilla.
 
 In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincidunt, sem velit vulputate enim, nec interdum augue enim nec mauris. Nulla iaculis ante sed enim placerat pretium. Nulla metus odio, facilisis vestibulum lobortis vitae, bibendum at nunc. Donec sit amet efficitur metus, in bibendum nisi. Vivamus tempus vel turpis sit amet auctor. Maecenas luctus vestibulum velit, at sagittis leo volutpat quis. Praesent posuere nec augue eget sodales. Pellentesque vitae arcu ut est varius venenatis id maximus sem. Curabitur non consectetur turpis.
 
@@ -108,7 +93,7 @@ Sed eu gravida mauris. Suspendisse potenti. Praesent sit amet egestas mi, sed he
 
 Sed bibendum sem iaculis, pellentesque leo sed, imperdiet ante. Sed consequat mattis dui nec pretium. Donec vel consectetur est. Nam sagittis, libero vitae pretium pharetra, velit est dignissim erat, at cursus quam massa vitae ligula. Suspendisse potenti. In hac habitasse platea dictumst. Donec sit amet finibus justo. Mauris ante dolor, pulvinar vitae feugiat eu, rhoncus nec diam. In ut accumsan diam, faucibus fringilla odio. Nunc id ultricies turpis. Quisque justo quam, tristique sit amet interdum quis, facilisis at mi. Fusce porttitor vel sem ut condimentum. Praesent at libero congue, vulputate elit ut, rhoncus erat.
             ",
-        "contentDigest": "f254262a22000e42becc065aab25e3a3",
+        "contentDigest": "d30295937761618f4695bf2b1c43a4a2",
         "type": "MarkdownRemark",
       },
       "parent": "whatever",
@@ -131,16 +116,11 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
         "frontmatter": Object {
           "_PARENT": "whatever",
           "date": "2017-09-18T23:19:51.246Z",
-          "parent": "whatever",
           "title": "my little pony",
         },
         "id": "uuid-from-gatsby",
         "internal": Object {
-          "content": "---
-title: \\"my little pony\\"
-date: \\"2017-09-18T23:19:51.246Z\\"
----
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet velit id facilisis. Nulla viverra, eros at efficitur pulvinar, lectus orci accumsan nisi, eu blandit elit nulla nec lectus. Integer porttitor imperdiet sapien. Quisque in orci sed nisi consequat aliquam. Aenean id mollis nisi. Sed auctor odio id erat facilisis venenatis. Quisque posuere faucibus libero vel fringilla.
+          "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet velit id facilisis. Nulla viverra, eros at efficitur pulvinar, lectus orci accumsan nisi, eu blandit elit nulla nec lectus. Integer porttitor imperdiet sapien. Quisque in orci sed nisi consequat aliquam. Aenean id mollis nisi. Sed auctor odio id erat facilisis venenatis. Quisque posuere faucibus libero vel fringilla.
 
 In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincidunt, sem velit vulputate enim, nec interdum augue enim nec mauris. Nulla iaculis ante sed enim placerat pretium. Nulla metus odio, facilisis vestibulum lobortis vitae, bibendum at nunc. Donec sit amet efficitur metus, in bibendum nisi. Vivamus tempus vel turpis sit amet auctor. Maecenas luctus vestibulum velit, at sagittis leo volutpat quis. Praesent posuere nec augue eget sodales. Pellentesque vitae arcu ut est varius venenatis id maximus sem. Curabitur non consectetur turpis.
 
@@ -152,7 +132,7 @@ Sed eu gravida mauris. Suspendisse potenti. Praesent sit amet egestas mi, sed he
 
 Sed bibendum sem iaculis, pellentesque leo sed, imperdiet ante. Sed consequat mattis dui nec pretium. Donec vel consectetur est. Nam sagittis, libero vitae pretium pharetra, velit est dignissim erat, at cursus quam massa vitae ligula. Suspendisse potenti. In hac habitasse platea dictumst. Donec sit amet finibus justo. Mauris ante dolor, pulvinar vitae feugiat eu, rhoncus nec diam. In ut accumsan diam, faucibus fringilla odio. Nunc id ultricies turpis. Quisque justo quam, tristique sit amet interdum quis, facilisis at mi. Fusce porttitor vel sem ut condimentum. Praesent at libero congue, vulputate elit ut, rhoncus erat.
             ",
-          "contentDigest": "f254262a22000e42becc065aab25e3a3",
+          "contentDigest": "d30295937761618f4695bf2b1c43a4a2",
           "type": "MarkdownRemark",
         },
         "parent": "whatever",

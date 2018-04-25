@@ -15,7 +15,7 @@ module.exports.onCreateWebpackConfig = (
   { actions, loaders },
   { compilerOptions, ...options }
 ) => {
-  // Gatsby removes graphql queries from source code because they queries are
+  // Gatsby removes graphql queries from source code because the queries are
   // run ahead of time. We need to do that here as well in order to avoid
   // extra dead code sitting in the typescript files.
 
