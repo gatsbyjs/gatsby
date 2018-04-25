@@ -60,7 +60,7 @@ function buildLocalCommands(cli, isLocalSite) {
   function getCommandHandler(command, handler) {
     return argv => {
       report.setVerbose(!!argv.verbose)
-      report.setNoColor(!!argv.noColor)
+      report.setNoColor(!!argv.disableColor)
 
       process.env.gatsby_log_level = argv.verbose ? `verbose` : `normal`
       report.verbose(`set gatsby_log_level: "${process.env.gatsby_log_level}"`)
@@ -124,7 +124,7 @@ function buildLocalCommands(cli, isLocalSite) {
         type: `boolean`,
         default: false,
         describe: `Build site with link paths prefixed (set prefix in your config).`,
-      }).option(`no-uglify`, {
+      }).option(`disable-uglify`, {
         type: `boolean`,
         default: false,
         describe: `Build site without uglifying JS bundles (for debugging).`,
@@ -192,7 +192,7 @@ module.exports = (argv, handlers) => {
       describe: `Turn on verbose output`,
       global: true,
     })
-    .option(`no-color`, {
+    .option(`disable-color`, {
       default: false,
       type: `boolean`,
       describe: `Turn off the color in output`,

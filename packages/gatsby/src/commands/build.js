@@ -18,7 +18,7 @@ type BuildArgs = {
   sitePackageJson: object,
   browserslist: string[],
   prefixPaths: boolean,
-  noUglify: boolean,
+  disableUglify: boolean,
 }
 
 module.exports = async function build(program: BuildArgs) {

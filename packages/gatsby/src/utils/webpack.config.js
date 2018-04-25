@@ -45,7 +45,7 @@ module.exports = async (
   // webpack config.
   const stage = suppliedStage
   const babelConfig = await genBabelConfig(program, suppliedStage)
-  const { noUglify } = program
+  const { disableUglify } = program
 
   function processEnv(stage, defaultNodeEnv) {
     debug(`Building env for "${stage}"`)
@@ -322,7 +322,7 @@ module.exports = async (
           // new WebpackStableModuleIdAndHash({ seed: 9, hashSize: 47 }),
           new HashedChunkIdsPlugin(),
         ]
-        if (!noUglify) {
+        if (!disableUglify) {
           // Minify JavaScript.
           plugins.push(
             new webpack.optimize.UglifyJsPlugin({
