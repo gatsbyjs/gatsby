@@ -12,8 +12,8 @@ wordpress2013.overrideThemeStyles = () => {
     },
   }
 }
-console.log(wordpress2013)
 
 const typography = new Typography(wordpress2013)
 
+export const { rhythm, scale } = typography
 export default typography

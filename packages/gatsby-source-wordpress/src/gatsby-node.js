@@ -34,7 +34,7 @@ exports.sourceNodes = async (
     excludedRoutes = [],
   }
 ) => {
-  const { createNode } = actions
+  const { createNode, touchNode } = actions
   _verbose = verboseOutput
   _siteURL = `${protocol}://${baseUrl}`
   _useACF = useACF
@@ -99,6 +99,7 @@ exports.sourceNodes = async (
     store,
     cache,
     createNode,
+    createNodeId,
     touchNode,
     _auth,
   })
