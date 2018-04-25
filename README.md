@@ -23,6 +23,7 @@ Websites built with Gatsby:
 * [The freeCodeCamp Guide](https://guide.freecodecamp.org)
   ([source](https://github.com/freeCodeCamp/guides))
 * [Storybook](https://storybook.js.org) ([source](https://github.com/storybooks/storybook))
+* [Learn Storybook](https://learnstorybook.com) ([source](https://github.com/hichroma/learnstorybook.com))
 * [FloydHub's Blog](https://blog.floydhub.com)
 * [mParticle's Documentation](https://docs.mparticle.com)
 * [Segment's Blog](https://segment.com/blog/)
