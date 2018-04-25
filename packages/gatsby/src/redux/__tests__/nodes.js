@@ -67,208 +67,233 @@ describe(`Create and update nodes`, () => {
 
   it(`deletes previously transformed children nodes when the parent node is updated`, () => {
     store.dispatch({ type: `DELETE_CACHE` })
-    actions.createNode(
-      {
-        id: `hi`,
-        children: [],
-        parent: null,
-        internal: {
-          contentDigest: `hasdfljds`,
-          type: `Test`,
+
+    store.dispatch(
+      actions.createNode(
+        {
+          id: `hi`,
+          children: [],
+          parent: null,
+          internal: {
+            contentDigest: `hasdfljds`,
+            type: `Test`,
+          },
         },
-      },
-      { name: `tests` }
+        { name: `tests` }
+      )
     )
 
-    actions.createNode(
-      {
-        id: `hi-1`,
-        children: [],
-        parent: `hi`,
-        internal: {
-          contentDigest: `hasdfljds-1`,
-          type: `Test-1`,
+    store.dispatch(
+      actions.createNode(
+        {
+          id: `hi-1`,
+          children: [],
+          parent: `hi`,
+          internal: {
+            contentDigest: `hasdfljds-1`,
+            type: `Test-1`,
+          },
         },
-      },
-      { name: `tests` }
+        { name: `tests` }
+      )
     )
 
-    actions.createParentChildLink(
-      {
-        parent: store.getState().nodes[`hi`],
-        child: store.getState().nodes[`hi-1`],
-      },
-      { name: `tests` }
-    )
-
-    actions.createNode(
-      {
-        id: `hi-1-1`,
-        children: [],
-        parent: `hi-1`,
-        internal: {
-          contentDigest: `hasdfljds-1-1`,
-          type: `Test-1-1`,
+    store.dispatch(
+      actions.createParentChildLink(
+        {
+          parent: store.getState().nodes[`hi`],
+          child: store.getState().nodes[`hi-1`],
         },
-      },
-      { name: `tests` }
+        { name: `tests` }
+      )
     )
 
-    actions.createParentChildLink(
-      {
-        parent: store.getState().nodes[`hi-1`],
-        child: store.getState().nodes[`hi-1-1`],
-      },
-      { name: `tests` }
-    )
-
-    actions.createNode(
-      {
-        id: `hi`,
-        children: [],
-        parent: `test`,
-        internal: {
-          contentDigest: `hasdfljds2`,
-          type: `Test`,
+    store.dispatch(
+      actions.createNode(
+        {
+          id: `hi-1-1`,
+          children: [],
+          parent: `hi-1`,
+          internal: {
+            contentDigest: `hasdfljds-1-1`,
+            type: `Test-1-1`,
+          },
         },
-      },
-      { name: `tests` }
+        { name: `tests` }
+      )
+    )
+
+    store.dispatch(
+      actions.createParentChildLink(
+        {
+          parent: store.getState().nodes[`hi-1`],
+          child: store.getState().nodes[`hi-1-1`],
+        },
+        { name: `tests` }
+      )
+    )
+
+    store.dispatch(
+      actions.createNode(
+        {
+          id: `hi`,
+          children: [],
+          parent: `test`,
+          internal: {
+            contentDigest: `hasdfljds2`,
+            type: `Test`,
+          },
+        },
+        { name: `tests` }
+      )
     )
     expect(Object.keys(store.getState().nodes).length).toEqual(1)
   })
 
   it(`deletes previously transformed children nodes when the parent node is deleted`, () => {
     store.dispatch({ type: `DELETE_CACHE` })
-    actions.createNode(
-      {
-        id: `hi`,
-        children: [],
-        parent: `test`,
-        internal: {
-          contentDigest: `hasdfljds`,
-          type: `Test`,
+
+    store.dispatch(
+      actions.createNode(
+        {
+          id: `hi`,
+          children: [],
+          parent: `test`,
+          internal: {
+            contentDigest: `hasdfljds`,
+            type: `Test`,
+          },
         },
-      },
-      { name: `tests` }
+        { name: `tests` }
+      )
     )
-
-    actions.createNode(
-      {
-        id: `hi2`,
-        children: [],
-        parent: `test`,
-        internal: {
-          contentDigest: `hasdfljds`,
-          type: `Test`,
+    store.dispatch(
+      actions.createNode(
+        {
+          id: `hi2`,
+          children: [],
+          parent: `test`,
+          internal: {
+            contentDigest: `hasdfljds`,
+            type: `Test`,
+          },
         },
-      },
-      { name: `tests` }
+        { name: `tests` }
+      )
     )
-
-    actions.createNode(
-      {
-        id: `hi-1`,
-        children: [],
-        parent: `hi`,
-        internal: {
-          contentDigest: `hasdfljds-1`,
-          type: `Test-1`,
+    store.dispatch(
+      actions.createNode(
+        {
+          id: `hi-1`,
+          children: [],
+          parent: `hi`,
+          internal: {
+            contentDigest: `hasdfljds-1`,
+            type: `Test-1`,
+          },
         },
-      },
-      { name: `tests` }
+        { name: `tests` }
+      )
     )
-
-    actions.createParentChildLink(
-      {
-        parent: store.getState().nodes[`hi`],
-        child: getNode(`hi-1`),
-      },
-      { name: `tests` }
-    )
-
-    actions.createNode(
-      {
-        id: `hi-1-1`,
-        children: [],
-        parent: `hi-1`,
-        internal: {
-          contentDigest: `hasdfljds-1-1`,
-          type: `Test-1-1`,
+    store.dispatch(
+      actions.createParentChildLink(
+        {
+          parent: store.getState().nodes[`hi`],
+          child: getNode(`hi-1`),
         },
-      },
-      { name: `tests` }
+        { name: `tests` }
+      )
     )
-
-    actions.createParentChildLink(
-      {
-        parent: getNode(`hi-1`),
-        child: getNode(`hi-1-1`),
-      },
-      { name: `tests` }
+    store.dispatch(
+      actions.createNode(
+        {
+          id: `hi-1-1`,
+          children: [],
+          parent: `hi-1`,
+          internal: {
+            contentDigest: `hasdfljds-1-1`,
+            type: `Test-1-1`,
+          },
+        },
+        { name: `tests` }
+      )
     )
-
-    actions.deleteNode(`hi`, getNode(`hi`), { name: `tests` })
+    store.dispatch(
+      actions.createParentChildLink(
+        {
+          parent: getNode(`hi-1`),
+          child: getNode(`hi-1-1`),
+        },
+        { name: `tests` }
+      )
+    )
+    store.dispatch(actions.deleteNode(`hi`, getNode(`hi`), { name: `tests` }))
     expect(Object.keys(store.getState().nodes).length).toEqual(1)
   })
 
   it(`deletes previously transformed children nodes when parent nodes are deleted`, () => {
     store.dispatch({ type: `DELETE_CACHE` })
-    actions.createNode(
-      {
-        id: `hi`,
-        children: [],
-        parent: `test`,
-        internal: {
-          contentDigest: `hasdfljds`,
-          type: `Test`,
+    store.dispatch(
+      actions.createNode(
+        {
+          id: `hi`,
+          children: [],
+          parent: `test`,
+          internal: {
+            contentDigest: `hasdfljds`,
+            type: `Test`,
+          },
         },
-      },
-      { name: `tests` }
+        { name: `tests` }
+      )
     )
-
-    actions.createNode(
-      {
-        id: `hi-1`,
-        children: [],
-        parent: `hi`,
-        internal: {
-          contentDigest: `hasdfljds-1`,
-          type: `Test-1`,
+    store.dispatch(
+      actions.createNode(
+        {
+          id: `hi-1`,
+          children: [],
+          parent: `hi`,
+          internal: {
+            contentDigest: `hasdfljds-1`,
+            type: `Test-1`,
+          },
         },
-      },
-      { name: `tests` }
+        { name: `tests` }
+      )
     )
-
-    actions.createParentChildLink(
-      {
-        parent: getNode(`hi`),
-        child: getNode(`hi-1`),
-      },
-      { name: `tests` }
-    )
-
-    actions.createNode(
-      {
-        id: `hi-1-1`,
-        children: [],
-        parent: `hi-1`,
-        internal: {
-          contentDigest: `hasdfljds-1-1`,
-          type: `Test-1-1`,
+    store.dispatch(
+      actions.createParentChildLink(
+        {
+          parent: getNode(`hi`),
+          child: getNode(`hi-1`),
         },
-      },
-      { name: `tests` }
+        { name: `tests` }
+      )
     )
-
-    actions.createParentChildLink(
-      {
-        parent: getNode(`hi-1`),
-        child: getNode(`hi-1-1`),
-      },
-      { name: `tests` }
+    store.dispatch(
+      actions.createNode(
+        {
+          id: `hi-1-1`,
+          children: [],
+          parent: `hi-1`,
+          internal: {
+            contentDigest: `hasdfljds-1-1`,
+            type: `Test-1-1`,
+          },
+        },
+        { name: `tests` }
+      )
     )
-
-    actions.deleteNodes([`hi`], { name: `tests` })
+    store.dispatch(
+      actions.createParentChildLink(
+        {
+          parent: getNode(`hi-1`),
+          child: getNode(`hi-1-1`),
+        },
+        { name: `tests` }
+      )
+    )
+    store.dispatch(actions.deleteNodes([`hi`], { name: `tests` }))
     expect(Object.keys(store.getState().nodes).length).toEqual(0)
   })
 
