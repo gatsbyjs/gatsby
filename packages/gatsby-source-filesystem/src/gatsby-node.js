@@ -68,8 +68,6 @@ const fsMachine = Machine({
 
 let currentState = fsMachine.initialState
 
-const fileQueue = new Map()
-
 exports.sourceNodes = (
   { actions, getNode, createNodeId, hasNodeChanged, reporter, emitter },
   pluginOptions

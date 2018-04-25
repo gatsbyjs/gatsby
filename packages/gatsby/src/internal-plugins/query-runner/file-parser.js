@@ -95,7 +95,7 @@ async function parseToAst(filePath, fileStr) {
         `There was a problem parsing "${filePath}"; any GraphQL ` +
           `fragments or queries in this file were not processed. \n` +
           `This may indicate a syntax error in the code, or it may be a file type ` +
-          `That Gatsby does not know how to parse.`
+          `that Gatsby does not know how to parse.`
       )
     }
   }
@@ -108,7 +108,6 @@ async function findGraphQLTags(file, text): Promise<Array<DefinitionNode>> {
     parseToAst(file, text)
       .then(ast => {
         let queries = []
-        let isStaticQuery = false
         if (!ast) {
           resolve(queries)
           return
