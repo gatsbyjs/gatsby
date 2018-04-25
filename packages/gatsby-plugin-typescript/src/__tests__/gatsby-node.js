@@ -34,7 +34,10 @@ describe(`gatsby-plugin-typescript`, () => {
       loader: jest.fn(),
     }
 
-    onCreateWebpackConfig({ config, babelConfig, ...args }, { compilerOptions: {} })
+    onCreateWebpackConfig(
+      { config, babelConfig, ...args },
+      { compilerOptions: {} }
+    )
 
     expect(args.actions.setWebpackConfig).toHaveBeenCalledTimes(1)
     const lastCall = args.actions.setWebpackConfig.mock.calls.pop()
@@ -90,7 +93,10 @@ describe(`gatsby-plugin-typescript`, () => {
     const config = {
       loader: jest.fn(),
     }
-    onCreateWebpackConfig({ config, babelConfig, ...args }, { compilerOptions: {} })
+    onCreateWebpackConfig(
+      { config, babelConfig, ...args },
+      { compilerOptions: {} }
+    )
 
     const expectedOptions = {
       compilerOptions: {
