@@ -48,9 +48,9 @@ module.exports = async (queryJob: QueryJob, component: Any) => {
         Errors:
           ${result.errors || []}
         URL path:
-          ${pageOrLayout.path}
+          ${queryJob.path}
         Plugin:
-          ${pageOrLayout.pluginCreatorId || `none`}
+          ${queryJob.pluginCreatorId || `none`}
         Query:
           ${component.query}
       `

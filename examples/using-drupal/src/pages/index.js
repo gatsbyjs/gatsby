@@ -3,6 +3,7 @@ import { Link } from "gatsby"
 import gray from "gray-percentage"
 import Img from "gatsby-image"
 
+import Layout from "../layouts"
 import Container from "../components/container"
 import { rhythm } from "../utils/typography"
 import constants from "../utils/constants"
@@ -112,98 +113,100 @@ class IndexPage extends React.Component {
     )
 
     return (
-      <div css={{ overflow: `hidden` }}>
-        <Container>
-          <div
-            css={{
-              "@media(min-width: 800px)": {
-                display: `flex`,
-                justifyContent: `space-between`,
-              },
-            }}
-          >
-            <FirstPromoted recipe={topRecipe} />
-            {nextTwoPromotedRecipes.map(recipe => (
-              <PromotedCard
-                recipe={recipe}
-                square={true}
-                columns={4}
-                marginBottom={0}
-              />
-            ))}
-          </div>
-        </Container>
-
-        <div
-          css={{
-            background: constants.darkYellow,
-          }}
-        >
-          <Container
-            css={{
-              paddingLeft: rhythm(4),
-            }}
-          >
-            <div css={{ maxWidth: rhythm(15) }}>
-              <h2>In this month's edition</h2>
-              <p>
-                Quisque vitae pulvinar arcu. Aliquam ac pellentesque erat, at
-                finibus massa.
-              </p>
-              <p>
-                {` `}
-                Suspendisse eget • leo sed • felis commodo • semper id • sed
-                erat
-              </p>
-              <button
-                css={{
-                  background: constants.darkGray,
-                  color: gray(75, 0, true),
-                  padding: `${rhythm(1 / 3)} ${rhythm(2 / 3)}`,
-                  lineHeight: 1.3,
-                  cursor: `pointer`,
-                }}
-              >
-                More Umami
-              </button>
+      <Layout>
+        <div css={{ overflow: `hidden` }}>
+          <Container>
+            <div
+              css={{
+                "@media(min-width: 800px)": {
+                  display: `flex`,
+                  justifyContent: `space-between`,
+                },
+              }}
+            >
+              <FirstPromoted recipe={topRecipe} />
+              {nextTwoPromotedRecipes.map(recipe => (
+                <PromotedCard
+                  recipe={recipe}
+                  square={true}
+                  columns={4}
+                  marginBottom={0}
+                />
+              ))}
             </div>
           </Container>
-        </div>
 
-        <Container>
-          <h1 css={{ textAlign: `center` }}>Recipes</h1>
-          <h2 css={{ textAlign: `center` }}>
-            Explore recipes across every type of occasion, ingredients, and
-            skill level
-          </h2>
           <div
             css={{
-              display: `flex`,
-              justifyContent: `space-between`,
-              flexWrap: `wrap`,
+              background: constants.darkYellow,
             }}
           >
-            {nextFourPromotedRecipes.map(recipe => (
-              <PromotedCard recipe={recipe} columns={2} />
-            ))}
+            <Container
+              css={{
+                paddingLeft: rhythm(4),
+              }}
+            >
+              <div css={{ maxWidth: rhythm(15) }}>
+                <h2>In this month's edition</h2>
+                <p>
+                  Quisque vitae pulvinar arcu. Aliquam ac pellentesque erat, at
+                  finibus massa.
+                </p>
+                <p>
+                  {` `}
+                  Suspendisse eget • leo sed • felis commodo • semper id • sed
+                  erat
+                </p>
+                <button
+                  css={{
+                    background: constants.darkGray,
+                    color: gray(75, 0, true),
+                    padding: `${rhythm(1 / 3)} ${rhythm(2 / 3)}`,
+                    lineHeight: 1.3,
+                    cursor: `pointer`,
+                  }}
+                >
+                  More Umami
+                </button>
+              </div>
+            </Container>
           </div>
-        </Container>
 
-        <div
-          css={{
-            background: constants.darkYellow,
-          }}
-        >
           <Container>
-            <h2>Umami Magazine</h2>
-            <p>
-              Umami Publications example footer content. Integer posuere erat a
-              ante venenatis dapibus posueure velit aliquet. Sed posueure
-              consectetur est at lobortis. Donec id elit non mi porta.
-            </p>
+            <h1 css={{ textAlign: `center` }}>Recipes</h1>
+            <h2 css={{ textAlign: `center` }}>
+              Explore recipes across every type of occasion, ingredients, and
+              skill level
+            </h2>
+            <div
+              css={{
+                display: `flex`,
+                justifyContent: `space-between`,
+                flexWrap: `wrap`,
+              }}
+            >
+              {nextFourPromotedRecipes.map(recipe => (
+                <PromotedCard recipe={recipe} columns={2} />
+              ))}
+            </div>
           </Container>
+
+          <div
+            css={{
+              background: constants.darkYellow,
+            }}
+          >
+            <Container>
+              <h2>Umami Magazine</h2>
+              <p>
+                Umami Publications example footer content. Integer posuere erat
+                a ante venenatis dapibus posueure velit aliquet. Sed posueure
+                consectetur est at lobortis. Donec id elit non mi porta.
+              </p>
+            </Container>
+          </div>
         </div>
-      </div>
+      </Layout>
     )
   }
 }
