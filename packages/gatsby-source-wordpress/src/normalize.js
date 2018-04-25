@@ -393,6 +393,7 @@ exports.downloadMediaFiles = async ({
   store,
   cache,
   createNode,
+  createNodeId,
   touchNode,
   _auth,
 }) =>
@@ -418,6 +419,7 @@ exports.downloadMediaFiles = async ({
               store,
               cache,
               createNode,
+              createNodeId,
               auth: _auth,
             })
 
