@@ -44,7 +44,7 @@ exports.onPostBuild = (args, pluginOptions) =>
     }
 
     fs.writeFileSync(
-      path.join(`public`, `manifest.json`),
+      path.join(`public`, `manifest.webmanifest`),
       JSON.stringify(manifest)
     )
 
