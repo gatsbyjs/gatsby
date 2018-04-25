@@ -340,7 +340,18 @@ actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
     console.log(`"deleteNodes" was called by ${plugin.name}`)
   }
 
-  return {
+  // Also delete any nodes transformed from these.
+  const descendantNodes = _.flatten(
+    nodes.map(n => findChildrenRecursively(getNode(n).children))
+  )
+  let deleteDescendantsActions
+  if (descendantNodes.length > 0) {
+    deleteDescendantsActions = descendantNodes.map(n =>
+      actions.deleteNode(n, getNode(n), plugin)
+    )
+  }
+
+  const deleteNodesAction = {
     type: `DELETE_NODES`,
     plugin,
     payload: nodes,

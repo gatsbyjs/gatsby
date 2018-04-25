@@ -27,7 +27,7 @@
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
     "react-gravatar": "^2.6.1",
-    "react-icons": "^2.2.3",
+    "react-icons": "^2.2.7",
     "react-modal": "^3.4.2",
     "react-typography": "^0.16.13",
     "request": "^2.79.0",
