@@ -2,6 +2,7 @@ import React, { Component } from "react"
 import PropTypes from "prop-types"
 import PostIcons from "../components/PostIcons"
 import Img from "gatsby-image"
+import Layout from "../layouts"
 
 import { rhythm } from "../utils/typography"
 
@@ -10,7 +11,7 @@ class PostTemplate extends Component {
     const post = this.props.data.wordpressPost
 
     return (
-      <div>
+      <Layout>
         <h1 dangerouslySetInnerHTML={{ __html: post.title }} />
         <PostIcons node={post} css={{ marginBottom: rhythm(1 / 2) }} />
         <div dangerouslySetInnerHTML={{ __html: post.content }} />
@@ -49,11 +50,10 @@ class PostTemplate extends Component {
             }
             return null
           })}
-      </div>
+      </Layout>
     )
   }
 }
-//<img src={post.image.sizes.thumbnail} />
 
 PostTemplate.propTypes = {
   data: PropTypes.object.isRequired,

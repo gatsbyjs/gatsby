@@ -51,7 +51,7 @@ class DefaultLayout extends React.Component {
             </h1>
           </div>
         </div>
-        <div css={containerStyle}>{this.props.children()}</div>
+        <div css={containerStyle}>{this.props.children}</div>
       </div>
     )
   }
