@@ -1,0 +1,154 @@
+- Start Date: 2018-04-25
+- RFC PR:
+- Gatsby Issue:
+
+# Summary
+
+A proposal to add a second (maybe even third) level of navigation to the docs on gatsbyjs.org and to add new top-level categories.
+
+# Motivation
+
+Through many user research interviews, I've heard that it's difficult for people to find what they are looking for in the docs. They have mentioned many instances where the information they are looking for does not exist, it exists but they couldn't find it, or it exists and they could find it in multiple places (not in one single place). This is likely because the docs have outgrown their current categories.
+This design also proposes a possibly heuristic for determining what we can reasonably commit to maintaining as part of Gatsby core docs, and what might be too far outside the scope of core docs (either because the topics don't fit or because they are not a priority, given our limited time and resources). includes a list of what will *not* be included in Gatsby core docs.
+
+# Detailed design
+
+Here is a possible restructure of the current docs information architecture (with the inclusion of many docs we still need to write):
+
+Tutorials
+- Quick Start
+- Build and deploy a site
+    - Introduction
+    - 0. Setting up the development environment
+    - 1. Creating pages
+    - 2. Adding styles
+    - 3. Using layouts to build reusable site sections
+    - 4. Deploying a site live online (debating whether to keep this inside part 1, where it currently is)
+- Build a blog with GraphQL
+    - 5. Querying data for your blog
+    - 6. Source plugins and rendering queried data
+    - 7. Transformer plugins and transforming data into site content
+    - 8. Programmatically creating pages from data
+- Adding images to your site (or "Adding svg or blur-up effect to images)
+- Creating your own plugin (tutorial for creating a plugin we've already vetted as easy to create)
+- E-commerce
+- User authentication
+
+Reference docs
+- How Gatsby works
+    - The Gatsby core philosophy
+    - Basic structure of a Gatsby site (includes config.js)
+    - How Gatsby works with GraphQL (includes Node interface and how GraphQL works)
+    - How Gatsby works with React (API specification)
+    - How Gatsby works with Redux (bound action creators)
+    - How Gatsby works with plugins
+    - PRPL pattern
+    - Lifecycle APIs
+- API references
+    - @jlengstorf this idea is from you, don't know how to fill this in...
+    - API specification
+    - Gatsby Browser APIs
+    - Gatsby Node APIs
+    - Gatsby SSR APIs 
+
+- Gatsby CLI commands
+- Basic tasks
+    - Setting up dev environment   
+        - Gatsby on Windows
+    - Customizing site structure
+        - html.js
+        - webpack config
+        - Environment variables (right place for this??)
+    - Adding content 
+        - Images
+        - Markdown pages
+        - adding tags and categories to blogposts
+        - adding a 404 page
+    - Querying for data with GraphQL
+    - Debugging
+        - Debugging HTML builds
+        - Debugging Replace Renderer API
+    - Adding dynamic functionality
+        - Building apps with Gatsby
+        - E-commerce
+        - authentication
+        - dynamically rendered navigation
+    - Deploying
+    - Hosting
+        - Path Prefix
+    - Performance
+        - Search Engine Optimization (SEO)
+        - Browser 
+        - Setting up proper HTTP caching
+- Migration Guides
+    - v0 to v1
+    - v1 to v2
+    - v0 to v2 (good idea??)
+- Gatsby components and libraries
+    - Glamor
+    - Styled components
+    - gatsby-image
+
+
+Plugins
+- Plugin Authoring Guides
+    - How Gatsby works with plugins
+    - Plugin library
+    - When to create your own plugin?
+    - Source plugins
+    - Transformer plugins
+    - All other plugins
+    - How to get your plugin to show up in the Plugin Library
+
+
+Contributing
+- Welcome to Gatsby's open source community!
+- Code of Conduct
+- How to Contribute
+    - List of ways to contribute
+    - How to file an issue
+    - How to submit a PR
+- Style Guides
+    - Written documents
+    - Visual design
+- Templates & Resources
+    - Workshops
+    - PowerPoint presentations
+    - Blogpost
+    - Tutorial
+    - Plugin READme
+    - Site READme
+
+
+
+What we may not need to include in the docs:
+- Starters and the Awesome Gatsby stuff will appear in a starter library and a site showcase, so will no longer need to be in docs fairly soon.
+- Integration tutorials and guides (such as Gatsby + Netlify, Gatsby + Contentful). 
+    - Reasons to exclude these from docs: imho, we don't have the time to maintain the potentially infinite number of tutorials this could include. Also, perhaps we don't want to show preference for any company over another? Do we just make sure all the plugin READme files are really high quality?
+    - Reasons to still include them in docs or somewhere else (like a blog): tons and tons of people would use them.
+
+# Drawbacks
+
+Why should we *not* do this? Please consider:
+
+- I'm not sure what the code complexity of changing the URL structure of pages includes
+- The side bar might be able to remain the same size or structure. Not sure.
+- Could this break links people have to current docs?
+
+
+# Alternatives
+
+I'm not aware of any other designs we've considered. Anyone? The potential benefits of doing this outweight the negatives, imho. Especially because docs are only going to keep growing. The current hierarchy doesn't allow for much more growth.
+
+# Adoption strategy
+
+I don't think this would be hard for people to adopt, hopefully.
+
+# How we teach this
+
+If it's really good information architecture, it won't need to be taught ;). We would redesign it if we find that we have to explain it to people. We could write an initial blogpost with a tour of the docs structure for those who want to understand the change and see an overview, and then this overview could be included in an intro to the docs.
+
+# Unresolved questions
+
+- Number of levels of hierarchy. I want to keep it to 3 at the most. Suggestions or reasons to only do 2, or to do more, like 4?
+- How to handle change in all the URLs
