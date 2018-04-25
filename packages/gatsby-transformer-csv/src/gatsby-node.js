@@ -31,6 +31,15 @@ async function onCreateNode(
 
   if (_.isArray(parsedContent)) {
     const csvArray = parsedContent.map((obj, i) => {
+      const invalidCharacters = new RegExp(/[^_A-Za-z0-9]/, "g");
+
+      Object.getOwnPropertyNames(obj).map(property => {
+        if ( property.match(invalidCharacters) ) {
+          obj[property.replace(invalidCharacters, "_")] = obj[property];
+          delete obj[property];
+        }
+      })
+
       const objStr = JSON.stringify(obj)
       const contentDigest = crypto
         .createHash(`md5`)

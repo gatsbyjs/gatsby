@@ -42,6 +42,68 @@ describe(`Process  nodes correctly`, () => {
     })
   })
 
+  it(`correctly replaces disallowed characters with _ in fieldnames to maintain compatibility with GraphQL syntax`, async () => {
+    const fields = [`blue dogs`, `funny/cats`, "who&is it?"]
+    const data = [
+      {
+        "blue dogs": true,
+        "funny/cats": `yup`,
+        "who&is it?": "me"
+      }, {
+        "blue dogs": false,
+        "funny/cats": `nope`,
+        "who&is it?": "you"
+      }];
+    const csv = json2csv({ data: data, fields: fields })
+    node.content = csv
+
+    const createNode = jest.fn()
+    const createParentChildLink = jest.fn()
+    const boundActionCreators = { createNode, createParentChildLink }
+
+    await onCreateNode({
+      node,
+      loadNodeContent,
+      boundActionCreators,
+    }).then(() => {
+      expect(createNode.mock.calls).toMatchSnapshot()
+      expect(createParentChildLink.mock.calls).toMatchSnapshot()
+      expect(createNode).toHaveBeenCalledTimes(2)
+      expect(createParentChildLink).toHaveBeenCalledTimes(2)
+    })
+  });
+
+  it(`correctly keeps GraphQL disallowed characters in field values when using {noheaders: true}`, async () => {
+    const fields = [`blue dogs`, `funny/cats`, "who&is it?"]
+    const data = [
+      {
+        "blue dogs": true,
+        "funny/cats": `yup`,
+        "who&is it?": "me"
+      }, {
+        "blue dogs": false,
+        "funny/cats": `nope`,
+        "who&is it?": "you"
+      }];
+    const csv = json2csv({ data: data, fields: fields })
+    node.content = csv
+
+    const createNode = jest.fn()
+    const createParentChildLink = jest.fn()
+    const boundActionCreators = { createNode, createParentChildLink }
+
+    await onCreateNode({
+      node,
+      loadNodeContent,
+      boundActionCreators,
+    }, {noheader: true}).then(() => {
+      expect(createNode.mock.calls).toMatchSnapshot()
+      expect(createParentChildLink.mock.calls).toMatchSnapshot()
+      expect(createNode).toHaveBeenCalledTimes(3)
+      expect(createParentChildLink).toHaveBeenCalledTimes(3)
+    })
+  });
+
   it(`correctly handles the options object that is passed to it`, async () => {
     node.content = `blue,funny\ntrue,yup\nfalse,nope`
 

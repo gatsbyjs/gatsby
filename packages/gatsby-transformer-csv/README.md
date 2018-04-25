@@ -78,6 +78,35 @@ the following three nodes would be created.
 ];
 ```
 
+### Illegal Characters in GraphQL
+
+Because GraphQL field names can only use alphanumeric characters and underscores gatsby-transformer-csv will replace any characters in headers not matching `/[_A-za-z0-9]/` with an underscore.  If you have spacing or punctuation you want to preserve in your headers use the `{noheaders: true}` option, and handle your headers as data in your own code.  For example, if you have a CSV file such as:
+
+```
+"Type of Ice Cream", "Is it good?"
+"Vanilla", "Yes"
+"Chocolate", "No"
+```
+
+the following three nodes will be created with the default options:
+
+```javascript
+[
+  { Type_of_Ice_Cream: "Vanilla", Is_it_good_: "Yes" },
+  { Type_of_Ice_Cream: "Chocolate", Is_it_good_: "No" },
+];
+```
+
+and with `{noheaders: true}` you will get:
+
+```javascript
+[
+  { field1: "Type of Ice Cream", field2: "Is it good?" },
+  { field1: "Vanilla", field2: "Yes" },
+  { field1: "Chocolate", field2: "No" },
+];
+```
+
 ## How to query
 
 You'd be able to query your letters like:
