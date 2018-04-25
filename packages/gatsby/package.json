@@ -179,7 +179,7 @@
     "build": "rimraf dist && npm run build:src && npm run build:internal-plugins && npm run build:rawfiles",
     "build:internal-plugins": "copyfiles -u 1 src/internal-plugins/**/package.json dist",
     "build:rawfiles": "copyfiles -u 1 src/internal-plugins/**/raw_* dist",
-    "build:src": "babel src --out-dir dist --source-maps --ignore **/gatsby-cli.js,**/raw_*,**/__tests__/***",
+    "build:src": "babel src --out-dir dist --source-maps --ignore **/gatsby-cli.js,**/raw_*,**/__tests__",
     "clean-test-bundles": "find test/ -type f -name bundle.js* -exec rm -rf {} +",
     "prepublish": "cross-env NODE_ENV=production npm run build",
     "test-coverage": "node_modules/.bin/nyc --reporter=lcov --reporter=text npm test",
