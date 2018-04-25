@@ -15,7 +15,7 @@
     "gatsby-transformer-sharp": "canary",
     "lodash": "^4.16.4",
     "react-helmet": "^5.2.0",
-    "react-icons": "^2.2.5",
+    "react-icons": "^2.2.7",
     "typography-theme-wordpress-2013": "^0.15.10"
   },
   "keywords": [
