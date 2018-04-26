@@ -207,6 +207,8 @@ Websites built with Gatsby:
 * [Hyunwoo Kim - Blog/Portfolio](https://devhalloween.com) ([source](https://github.com/khw1031/dev-blog))
 * [Abinav Seelan - Personal Website](https://abinavseelan.com) ([source](https://github.com/abinavseelan/abinavseelan.com))
 * [Dovetail](https://dovetailapp.com)
+* [Bart van der Waerden Blog](http://bartvanderwaerden.com/) ([source](https://github.com/BartvdWaerden/BartvdWaerden.github.io))
+
 
 ## Docs
 
