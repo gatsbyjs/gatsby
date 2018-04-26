@@ -170,7 +170,8 @@ abstract syntax tree (AST) is ..."
 
 Text should use the second person ("you") to help to give it a conversational
 tone. This way, the text and instructions seem to speak directly to the person
-reading it. Try to avoid using the first person ("I", "we", "let's", and "us").
+reading it. Try to avoid using the first person ("I", "we", "let's", and "us"). 
+Using second person is also more accurate than saying "we," because typically only one person is reading the tutorial or guide at a time and the person who wrote the tutorial is not actually going through it with them, so "we" would be inaccurate. Finally, some technical documentation uses third person pronouns and nouns like "they" and "the user," which add more distance and feel colder than the conversational and warm "you" and "your."
 
 If there are other Guide resources you think readers would benefit from, add
 them at the bottom in an "Other Resources" section.
@@ -191,6 +192,12 @@ Use the Oxford Comma when possible (it is a comma used after the penultimate
 item in a list of three or more items, before ‘and’ or ‘or’ e.g. an Italian
 painter, sculptor, and architect). It makes things easier, clearer, and prettier
 to read.
+
+Avoid using words like "easier" or "simple," because if users have a hard time completing the task that is supposedly "easy," they will question their abilities. Consider using more specific descriptors; for example, when you say the phrase "deployment is easy," what do you really mean? Is it easy because it takes fewer steps than another option? If so, just use the most specific descriptor possible, which in that case would be "this deployment method involves fewer steps than other options."
+
+Hyperlinks should contain the clearest words to indicate where the link will lead you. So instead of linking to the word [here](https://www.gatsbyjs.org/) link to [Gatsby's docs](https://www.gatsbyjs.org/).
+
+When a paragraph or sentence offers an optional path, the beginning of the first sentence should indicate optionality. For example, "if you'd like to learn more about xyz, see our reference guide" is clearer than "Go to the reference guide if you'd like to learn more about xyz." This method allows people who would *not* like to learn more about xyz to stop reading the sentence as early as possible. This method also allows people who *would* like to learn more about xyz to recognize the opportunity to learn quicker instead of skipping over the paragraph.
 
 # Formatting example code
 
