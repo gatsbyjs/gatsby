@@ -45,7 +45,12 @@ class Index extends React.Component {
               documentation
             </a>
             {` `}
-            or peep the code of this example site for more information.
+            or peep the{` `}
+            <a href="https://github.com/gatsbyjs/gatsby/tree/master/examples/image-processing">
+              code
+            </a>
+            {` `}
+            of this example site for more information.
           </strong>
         </p>
 
