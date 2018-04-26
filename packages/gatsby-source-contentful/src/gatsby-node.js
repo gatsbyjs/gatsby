@@ -63,6 +63,7 @@ exports.sourceNodes = async (
     spaceId,
     accessToken,
     host,
+    cacheDir: `${store.getState().program.directory}/.cache`,
   })
 
   const entryList = normalize.buildEntryList({
