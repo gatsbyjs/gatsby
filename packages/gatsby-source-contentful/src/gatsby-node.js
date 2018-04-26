@@ -41,7 +41,7 @@ exports.sourceNodes = async (
   } = boundActionCreators
 
   host = host || `cdn.contentful.com`
-  environment = environment || 'master' // default is always master
+  environment = environment || `master` // default is always master
   // Get sync token if it exists.
   let syncToken
   if (
