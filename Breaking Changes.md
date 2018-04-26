@@ -6,3 +6,4 @@
 * Changed `modifyBabelrc` to `onCreateBabelConfig`
 * Changed `modifyWebpackConfig` to `onCreateWebpackConfig`
 * inlining css changed — remove it from any custom html.js as done automatically by core now.
+* manually install `react` and `react-dom`
