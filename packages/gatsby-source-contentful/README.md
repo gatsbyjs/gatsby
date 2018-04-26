@@ -25,7 +25,7 @@ plugins: [
       accessToken: `your_access_token`,
     },
   },
-];
+]
 ```
 
 ### Using Preview API
@@ -41,7 +41,7 @@ plugins: [
       host: `preview.contentful.com`,
     },
   },
-];
+]
 ```
 
 ## Notes on Contentful Content Models

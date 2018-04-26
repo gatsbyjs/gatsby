@@ -18,7 +18,7 @@ plugins: [
       plugins: [`gatsby-remark-smartypants`],
     },
   },
-];
+]
 ```
 
 ### Options
@@ -43,5 +43,5 @@ plugins: [
       ],
     },
   },
-];
+]
 ```

@@ -39,8 +39,8 @@ Gatsby whenever a new node is created (or updated).
 
 ```javascript
 exports.onCreateNode = ({ node }) => {
-  console.log(node.internal.type);
-};
+  console.log(node.internal.type)
+}
 ```
 
 Stop and restart the development server. As you do, you'll see quite a few newly
@@ -201,11 +201,11 @@ Create a directory at `src/templates` and then add the following in a file named
 `src/templates/blog-post.js`.
 
 ```jsx
-import React from "react";
+import React from "react"
 
 export default () => {
-  return <div>Hello blog post</div>;
-};
+  return <div>Hello blog post</div>
+}
 ```
 
 Then update `gatsby-node.js`
@@ -273,17 +273,17 @@ Which is a bit boring. Let's pull in data from our Markdown post. Change
 `src/templates/blog-post.js` to:
 
 ```jsx
-import React from "react";
+import React from "react"
 
 export default ({ data }) => {
-  const post = data.markdownRemark;
+  const post = data.markdownRemark
   return (
     <div>
       <h1>{post.frontmatter.title}</h1>
       <div dangerouslySetInnerHTML={{ __html: post.html }} />
     </div>
-  );
-};
+  )
+}
 
 export const query = graphql`
   query BlogPostQuery($slug: String!) {
@@ -294,7 +294,7 @@ export const query = graphql`
       }
     }
   }
-`;
+`
 ```
 
 And…

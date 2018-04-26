@@ -72,7 +72,7 @@ export const query = graphql`
       }
     }
   }
-`;
+`
 ```
 
 ### Deployment and content management can be so good!

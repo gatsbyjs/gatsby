@@ -44,7 +44,7 @@ plugins: [
       ],
     },
   },
-];
+]
 ```
 
 ### Include CSS
@@ -60,7 +60,7 @@ To load a theme, just require its CSS file in your `gatsby-browser.js` file, e.g
 
 ```javascript
 // gatsby-browser.js
-require("prismjs/themes/prism-solarizedlight.css");
+require("prismjs/themes/prism-solarizedlight.css")
 ```
 
 #### Optional: Add line highlighting styles

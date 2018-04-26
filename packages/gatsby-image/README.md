@@ -83,15 +83,15 @@ plugins: [
 This is what a component using `gatsby-image` looks like:
 
 ```jsx
-import React from "react";
-import Img from "gatsby-image";
+import React from "react"
+import Img from "gatsby-image"
 
 export default ({ data }) => (
   <div>
     <h1>Hello gatsby-image</h1>
     <Img resolutions={data.file.childImageSharp.resolutions} />
   </div>
-);
+)
 
 export const query = graphql`
   query GatsbyImageSampleQuery {
@@ -105,7 +105,7 @@ export const query = graphql`
       }
     }
   }
-`;
+`
 ```
 
 For another explanation of how to get started with gatsby-image, see this blog post by community member Kyle Gill [Image Optimization Made Easy with Gatsby.js](https://medium.com/@kyle.robert.gill/ridiculously-easy-image-optimization-with-gatsby-js-59d48e15db6e)

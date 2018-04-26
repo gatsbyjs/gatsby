@@ -74,6 +74,6 @@ exports.onCreateWebpackConfig = ({
         __DEVELOPMENT__: stage === `develop` || stage === `develop-html`,
       }),
     ],
-  });
-};
+  })
+}
 ```

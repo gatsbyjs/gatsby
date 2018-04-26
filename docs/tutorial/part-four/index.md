@@ -95,7 +95,7 @@ component and two page components:
 `src/pages/index.js`
 
 ```jsx
-import React from "react";
+import React from "react"
 
 export default () => (
   <div>
@@ -107,13 +107,13 @@ export default () => (
       />
     </div>
   </div>
-);
+)
 ```
 
 `src/pages/about.js`
 
 ```jsx
-import React from "react";
+import React from "react"
 
 export default () => (
   <div>
@@ -123,20 +123,20 @@ export default () => (
       photos and videos of pandas eating lots of food.
     </p>
   </div>
-);
+)
 ```
 
 `src/layouts/index.js`
 
 ```jsx
-import React from "react";
-import g from "glamorous";
-import { css } from "glamor";
-import { Link } from "gatsby";
+import React from "react"
+import g from "glamorous"
+import { css } from "glamor"
+import { Link } from "gatsby"
 
-import { rhythm } from "../utils/typography";
+import { rhythm } from "../utils/typography"
 
-const linkStyle = css({ float: `right` });
+const linkStyle = css({ float: `right` })
 
 export default ({ children }) => (
   <g.Div
@@ -159,18 +159,18 @@ export default ({ children }) => (
     </Link>
     {children()}
   </g.Div>
-);
+)
 ```
 
 `src/utils/typography.js`
 
 ```javascript
-import Typography from "typography";
-import kirkhamTheme from "typography-theme-kirkham";
+import Typography from "typography"
+import kirkhamTheme from "typography-theme-kirkham"
 
-const typography = new Typography(kirkhamTheme);
+const typography = new Typography(kirkhamTheme)
 
-export default typography;
+export default typography
 ```
 
 `gatsby-config.js` (must be in the root of your project, not under src)
@@ -186,7 +186,7 @@ module.exports = {
       },
     },
   ],
-};
+}
 ```
 
 Add the above files and then run `gatsby develop` like normal and you should see
