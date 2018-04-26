@@ -103,9 +103,9 @@ Try some other tricks, like the ones below:
     Try replacing your page component with this:
 
 ```jsx
-import React from "react";
+import React from "react"
 
-export default () => <div style={{ color: `blue` }}>Hello Gatsby!</div>;
+export default () => <div style={{ color: `blue` }}>Hello Gatsby!</div>
 ```
 
 Change the color to "pink". Then to "tomato".
@@ -181,15 +181,15 @@ and create a React.js page component at `src/pages/page-2.js`.
 Make the second page component look something like:
 
 ```jsx
-import React from "react";
-import { Link } from "gatsby";
+import React from "react"
+import { Link } from "gatsby"
 
 export default () => (
   <div>
     <p>Hello world from my second Gatsby page</p>
     <Link to="/">back home</Link>
   </div>
-);
+)
 ```
 
 Save that and now you should be able to click back and forth between the two
@@ -236,15 +236,15 @@ for `/counter/` as before. But instead of using the "functional component" form
 as we did before, this time we'll create a "class" component at `src/pages/counter.js`.
 
 ```jsx
-import React from "react";
+import React from "react"
 
 class Counter extends React.Component {
   render() {
-    return <div>Hello Class Component</div>;
+    return <div>Hello Class Component</div>
   }
 }
 
-export default Counter;
+export default Counter
 ```
 
 The class form of React allows us to have component state. We'll need that for

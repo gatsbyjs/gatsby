@@ -20,7 +20,7 @@ plugins: [
       includeInDevelopment: false,
     },
   },
-];
+]
 ```
 
 #### Note

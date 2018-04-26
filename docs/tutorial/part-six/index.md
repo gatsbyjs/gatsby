@@ -103,13 +103,13 @@ Like with the `src/pages/my-files.js` page, replace `src/pages/index.js` with
 the following to add a query with some initial HTML and styling.
 
 ```jsx
-import React from "react";
-import g from "glamorous";
+import React from "react"
+import g from "glamorous"
 
-import { rhythm } from "../utils/typography";
+import { rhythm } from "../utils/typography"
 
 export default ({ data }) => {
-  console.log(data);
+  console.log(data)
   return (
     <div>
       <g.H1 display={"inline-block"} borderBottom={"1px solid"}>
@@ -126,8 +126,8 @@ export default ({ data }) => {
         </div>
       ))}
     </div>
-  );
-};
+  )
+}
 
 export const query = graphql`
   query IndexQuery {
@@ -145,7 +145,7 @@ export const query = graphql`
       }
     }
   }
-`;
+`
 ```
 
 Now the frontpage should look like:

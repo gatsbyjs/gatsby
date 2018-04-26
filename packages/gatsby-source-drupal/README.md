@@ -29,7 +29,7 @@ plugins: [
       apiBase: `api`, // optional, defaults to `jsonapi`
     },
   },
-];
+]
 ```
 
 ## How to query

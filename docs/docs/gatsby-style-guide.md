@@ -216,7 +216,7 @@ Here are specific formatting guidelines for any code:
 
   ```javascript
   function logTheThings(stuff) {
-    console.log(stuff);
+    console.log(stuff)
   }
   ```
 

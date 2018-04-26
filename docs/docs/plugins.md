@@ -32,7 +32,7 @@ to the plugins array like:
 ```javascript
 module.exports = {
   plugins: [`gatsby-transformer-json`],
-};
+}
 ```
 
 Plugins can take options. Note that plugin options will be stringified by Gatsby, so they cannot be functions.

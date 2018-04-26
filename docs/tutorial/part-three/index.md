@@ -36,12 +36,12 @@ npm install --save gatsby-plugin-typography typography-theme-fairy-gates
 Create a `src/utils` directory, and then create the typography config file at `src/utils/typography.js`:
 
 ```javascript
-import Typography from "typography";
-import fairyGateTheme from "typography-theme-fairy-gates";
+import Typography from "typography"
+import fairyGateTheme from "typography-theme-fairy-gates"
 
-const typography = new Typography(fairyGateTheme);
+const typography = new Typography(fairyGateTheme)
 
-export default typography;
+export default typography
 ```
 
 Then create our site's `gatsby-config.js` at the root of the site, and add the following code to it:
@@ -56,7 +56,7 @@ module.exports = {
       },
     },
   ],
-};
+}
 ```
 
 Now, let's add a few different pages: a front page, an about page, and a contact
@@ -65,7 +65,7 @@ page.
 `src/pages/index.js`
 
 ```jsx
-import React from "react";
+import React from "react"
 
 export default () => (
   <div>
@@ -75,26 +75,26 @@ export default () => (
       websites.
     </p>
   </div>
-);
+)
 ```
 
 `src/pages/about.js`
 
 ```jsx
-import React from "react";
+import React from "react"
 
 export default () => (
   <div>
     <h1>About me</h1>
     <p>I’m good enough, I’m smart enough, and gosh darn it, people like me!</p>
   </div>
-);
+)
 ```
 
 `src/pages/contact.js`
 
 ```jsx
-import React from "react";
+import React from "react"
 
 export default () => (
   <div>
@@ -103,7 +103,7 @@ export default () => (
       <a href="mailto:me@example.com">me@example.com</a>
     </p>
   </div>
-);
+)
 ```
 
 ![no-layout](no-layout.png)
@@ -125,13 +125,13 @@ in this directory.
 Let's create a very basic layout component at `src/layouts/index.js`:
 
 ```jsx
-import React from "react";
+import React from "react"
 
 export default ({ children }) => (
   <div style={{ margin: `0 auto`, maxWidth: 650, padding: `0 1rem` }}>
     {children()}
   </div>
-);
+)
 ```
 
 _Notice that unlike most `children` props, the `children` prop passed to layout
