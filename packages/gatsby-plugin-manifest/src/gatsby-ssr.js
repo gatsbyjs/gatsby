@@ -6,7 +6,7 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
     <link
       key={`gatsby-plugin-manifest-link`}
       rel="manifest"
-      href={withPrefix(`manifest.json`)}
+      href={withPrefix(`manifest.webmanifest`)}
     />,
     <meta
       key={`gatsby-plugin-manifest-meta`}
