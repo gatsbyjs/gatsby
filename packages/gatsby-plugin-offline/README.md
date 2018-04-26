@@ -32,7 +32,7 @@ const options = {
   staticFileGlobs: [
     `${rootDir}/**/*.{js,woff2}`,
     `${rootDir}/index.html`,
-    `${rootDir}/manifest.json`,
+    `${rootDir}/manifest.webmanifest`,
     `${rootDir}/offline-plugin-app-shell-fallback/index.html`,
   ],
   stripPrefix: rootDir,

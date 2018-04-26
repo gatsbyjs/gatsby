@@ -23,7 +23,7 @@ exports.onPostBuild = (args, pluginOptions) =>
     const { icon } = pluginOptions
     const manifest = { ...pluginOptions }
 
-    // Delete options we won't pass to the manifest.json.
+    // Delete options we won't pass to the manifest.webmanifest.
     delete manifest.plugins
     delete manifest.icon
 
@@ -44,7 +44,7 @@ exports.onPostBuild = (args, pluginOptions) =>
     }
 
     fs.writeFileSync(
-      path.join(`public`, `manifest.json`),
+      path.join(`public`, `manifest.webmanifest`),
       JSON.stringify(manifest)
     )
 
