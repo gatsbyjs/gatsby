@@ -9,13 +9,10 @@ import history from "./history"
 window.___history = history
 import emitter from "./emitter"
 window.___emitter = emitter
-import pages from "./pages.json"
 import redirects from "./redirects.json"
 import PageRenderer from "./page-renderer"
 import asyncRequires from "./async-requires"
 import loader from "./loader"
-loader.addPagesArray(pages)
-loader.addProdRequires(asyncRequires)
 
 window.asyncRequires = asyncRequires
 window.___emitter = emitter
@@ -23,7 +20,8 @@ window.___loader = loader
 
 window.matchPath = matchPath
 
-loader.addPagesArray(pages)
+loader.addPagesArray([window.page])
+loader.addDataPaths({ [window.page.jsonName]: window.dataPath })
 loader.addProdRequires(asyncRequires)
 
 // Convert to a map for faster lookup in maybeRedirect()

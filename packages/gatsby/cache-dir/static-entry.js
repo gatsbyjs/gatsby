@@ -6,9 +6,8 @@ const { StaticRouter, Route } = require(`react-router-dom`)
 const { get, merge, isString, flatten } = require(`lodash`)
 
 const apiRunner = require(`./api-runner-ssr`)
-const pages = require(`./pages.json`)
 const syncRequires = require(`./sync-requires`)
-const staticDataPaths = require(`./static-data-paths.json`)
+const { dataPaths, pages } = require(`./data.json`)
 
 const stats = JSON.parse(
   fs.readFileSync(`${process.cwd()}/public/webpack.stats.json`, `utf-8`)
@@ -95,6 +94,23 @@ export default (pagePath, callback) => {
     bodyProps = merge({}, bodyProps, props)
   }
 
+  const page = getPage(pagePath)
+
+  let dataAndContext = {}
+  if (page.jsonName in dataPaths) {
+    const pathToJsonData = `../public/` + dataPaths[page.jsonName]
+    try {
+      dataAndContext = JSON.parse(
+        fs.readFileSync(
+          `${process.cwd()}/public/static/d/${dataPaths[page.jsonName]}.json`
+        )
+      )
+    } catch (e) {
+      console.log(`error`, pathToJsonData, e)
+      process.exit()
+    }
+  }
+
   const AltStaticRouter = apiRunner(`replaceStaticRouterComponent`)[0]
 
   apiRunner(`replaceStaticRouterComponent`)
@@ -110,25 +126,10 @@ export default (pagePath, callback) => {
     },
     createElement(Route, {
       // eslint-disable-next-line react/display-name
-      render: routeProps => {
-        const page = getPage(routeProps.location.pathname)
-
-        const dataAndContext =
-          page.jsonName in staticDataPaths
-            ? JSON.parse(
-                fs.readFileSync(
-                  `${process.cwd()}/public/static/d/${
-                    staticDataPaths[page.jsonName]
-                  }.json`
-                )
-              )
-            : {}
-
-        return createElement(syncRequires.components[page.componentChunkName], {
+      render: routeProps => createElement(syncRequires.components[page.componentChunkName], {
           ...routeProps,
           ...dataAndContext,
-        })
-      },
+        }),
     })
   )
 
@@ -161,7 +162,6 @@ export default (pagePath, callback) => {
   })
 
   // Create paths to scripts
-  const page = pages.find(page => page.path === pagePath)
   let runtimeScript
   const scriptsAndStyles = flatten(
     [`app`, page.componentChunkName].map(s => {
@@ -222,11 +222,9 @@ export default (pagePath, callback) => {
       )
     })
 
-  if (page.jsonName in staticDataPaths) {
-    const dataPath = `${pathPrefix}static/d/${
-      staticDataPaths[page.jsonName]
-    }.json`
-    // Insert json data path after app
+  if (page.jsonName in dataPaths) {
+    const dataPath = `${pathPrefix}static/d/${dataPaths[page.jsonName]}.json`
+    // Insert json data path after commons and app
     headComponents.splice(
       1,
       0,
@@ -269,7 +267,11 @@ export default (pagePath, callback) => {
       key={`script-loader`}
       id={`gatsby-script-loader`}
       dangerouslySetInnerHTML={{
-        __html: `/*<![CDATA[*/!function(e,t,r){function n(){for(;d[0]&&"loaded"==d[0][f];)c=d.shift(),c[o]=!i.parentNode.insertBefore(c,i)}for(var s,a,c,d=[],i=e.scripts[0],o="onreadystatechange",f="readyState";s=r.shift();)a=e.createElement(t),"async"in i?(a.async=!1,e.head.appendChild(a)):i[f]?(d.push(a),a[o]=n):e.write("<"+t+' src="'+s+'" defer></'+t+">"),a.src=s}(document,"script",[${scriptsString}])/*]]>*/`,
+        __html: `/*<![CDATA[*/window.page=${JSON.stringify(page)};${
+          page.jsonName in dataPaths
+            ? `window.dataPath="${dataPaths[page.jsonName]}";`
+            : ``
+        }!function(e,t,r){function n(){for(;d[0]&&"loaded"==d[0][f];)c=d.shift(),c[o]=!i.parentNode.insertBefore(c,i)}for(var s,a,c,d=[],i=e.scripts[0],o="onreadystatechange",f="readyState";s=r.shift();)a=e.createElement(t),"async"in i?(a.async=!1,e.head.appendChild(a)):i[f]?(d.push(a),a[o]=n):e.write("<"+t+' src="'+s+'" defer></'+t+">"),a.src=s}(document,"script",[${scriptsString}])/*]]>*/`,
       }}
     />
   )

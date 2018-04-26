@@ -9,13 +9,33 @@ let inInitialRender = true
 let hasFetched = Object.create(null)
 let syncRequires = {}
 let asyncRequires = {}
+let jsonDataPaths = {}
 let pathPrefix = ``
 let fetchHistory = []
+let fetchingPageResourceMapPromise = null
+let fetchedPageResourceMap = false
 const failedPaths = {}
 const failedResources = {}
 const MAX_HISTORY = 5
 
 const jsonStore = {}
+
+/**
+ * Fetch resource map (pages data and paths to json files with results of
+ *  queries)
+ */
+const fetchPageResourceMap = () => {
+  if (!fetchingPageResourceMapPromise) {
+    fetchingPageResourceMapPromise = new Promise(resolve => {
+      asyncRequires.data().then(({ pages, dataPaths }) => {
+        queue.addPagesArray(pages)
+        queue.addDataPaths(dataPaths)
+        resolve((fetchedPageResourceMap = true))
+      })
+    })
+  }
+  return fetchingPageResourceMapPromise
+}
 
 const fetchResource = resourceName => {
   // Find resource
@@ -29,7 +49,7 @@ const fetchResource = resourceName => {
           resolve(jsonStore[resourceName])
         } else {
           const url = `${pathPrefix ? pathPrefix : `/`}static/d/${
-            asyncRequires.json[resourceName]
+            jsonDataPaths[resourceName]
           }.json`
           var req = new XMLHttpRequest()
           req.open(`GET`, url, true)
@@ -165,12 +185,27 @@ const queue = {
   addProdRequires: prodRequires => {
     asyncRequires = prodRequires
   },
-
+  addDataPaths: dataPaths => {
+    jsonDataPaths = dataPaths
+  },
   dequeue: () => resourcesArray.pop(),
   enqueue: rawPath => {
     // Check page exists.
     const path = stripPrefix(rawPath, pathPrefix)
-    if (!pages.some(p => p.path === path)) {
+
+    let page = findPage(path)
+
+    if (
+      process.env.NODE_ENV === `production` &&
+      !page &&
+      !fetchedPageResourceMap
+    ) {
+      // If page wasn't found check and we didn't fetch resources map for
+      // all pages, wait for fetch to complete and try find page again
+      return fetchPageResourceMap().then(() => queue.enqueue(rawPath))
+    }
+
+    if (!page) {
       return false
     }
 
@@ -194,8 +229,6 @@ const queue = {
     }
 
     // Add resources to queue.
-    const page = findPage(path)
-
     enqueueResource(page.jsonName)
     enqueueResource(page.componentChunkName)
 
@@ -240,6 +273,7 @@ const queue = {
           })
       }
     }
+    const doingInitialRender = inInitialRender
     inInitialRender = false
     // In development we know the code is loaded already
     // so we just return with it immediately.
@@ -266,6 +300,15 @@ const queue = {
       return null
     }
     const page = findPage(path)
+
+    if (!page && !fetchedPageResourceMap) {
+      // If page wasn't found check and we didn't fetch resources map for
+      // all pages, wait for fetch to complete and try to get resources again
+      fetchPageResourceMap().then(() => {
+        queue.getResourcesForPathname(path, cb)
+      })
+      return null
+    }
 
     if (!page) {
       console.log(`A page wasn't found for "${path}"`)
@@ -343,6 +386,12 @@ const queue = {
         page,
         pageResources,
       })
+
+      if (doingInitialRender) {
+        // We got all resourecs needed for first mount,
+        // we can fetch resoures for all pages.
+        fetchPageResourceMap()
+      }
     })
 
     return null
