@@ -48,7 +48,7 @@
       "prettier-eslint --write \"packages/gatsby/cache-dir/*.js\"",
     "format-examples":
       "prettier-eslint --write \"examples/**/gatsby-node.js\" \"examples/**/gatsby-config.js\" \"examples/**/src/**/*.js\"",
-    "format-markdown": "prettier --write \"**/*.md\" --semi",
+    "format-markdown": "prettier --write \"**/*.md\" --no-semi",
     "format-packages": "prettier-eslint --write \"packages/*/src/**/*.js\"",
     "format-scripts": "prettier-eslint --write \"scripts/**/*.js\"",
     "format-www": "prettier-eslint --write \"www/*.js\" \"www/src/**/*.js\"",

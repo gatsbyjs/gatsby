@@ -53,10 +53,10 @@ of the markdown file.
 // Implement the Gatsby API “createPages”. This is called once the
 // data layer is bootstrapped to let plugins create pages from data.
 exports.createPages = ({ boundActionCreators, graphql }) => {
-  const { createPage } = boundActionCreators;
+  const { createPage } = boundActionCreators
 
   return new Promise((resolve, reject) => {
-    const blogPostTemplate = path.resolve(`src/templates/blog-post.js`);
+    const blogPostTemplate = path.resolve(`src/templates/blog-post.js`)
     // Query for markdown nodes to use in creating pages.
     resolve(
       graphql(
@@ -75,12 +75,12 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
         `
       ).then(result => {
         if (result.errors) {
-          reject(result.errors);
+          reject(result.errors)
         }
 
         // Create pages for each markdown file.
         result.data.allMarkdownRemark.edges.forEach(({ node }) => {
-          const path = node.frontmatter.path;
+          const path = node.frontmatter.path
           createPage({
             path,
             component: blogPostTemplate,
@@ -89,12 +89,12 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
             context: {
               path,
             },
-          });
-        });
+          })
+        })
       })
-    );
-  });
-};
+    )
+  })
+}
 ```
 
 ## Modifying pages created by core or plugins
@@ -117,17 +117,17 @@ _Note: There's also a plugin that will remove all trailing slashes from pages au
 // Implement the Gatsby API “onCreatePage”. This is
 // called after every page is created.
 exports.onCreatePage = ({ page, boundActionCreators }) => {
-  const { createPage, deletePage } = boundActionCreators;
+  const { createPage, deletePage } = boundActionCreators
   return new Promise(resolve => {
-    const oldPage = Object.assign({}, page);
+    const oldPage = Object.assign({}, page)
     // Remove trailing slash unless page is /
-    page.path = _path => (_path === `/` ? _path : _path.replace(/\/$/, ``));
+    page.path = _path => (_path === `/` ? _path : _path.replace(/\/$/, ``))
     if (page.path !== oldPage.path) {
       // Replace new page with old page
-      deletePage(oldPage);
-      createPage(page);
+      deletePage(oldPage)
+      createPage(page)
     }
-    resolve();
-  });
-};
+    resolve()
+  })
+}
 ```

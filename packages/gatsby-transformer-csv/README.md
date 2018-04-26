@@ -25,7 +25,7 @@ module.exports = {
     },
     `gatsby-transformer-csv`,
   ],
-};
+}
 ```
 
 Above is the minimal configuration required to begin working. Additional
@@ -71,11 +71,11 @@ c,67
 the following three nodes would be created.
 
 ```javascript
-[
+;[
   { letter: "a", value: 65, type: "LettersCsv" },
   { letter: "b", value: 66, type: "LettersCsv" },
   { letter: "c", value: 67, type: "LettersCsv" },
-];
+]
 ```
 
 ## How to query

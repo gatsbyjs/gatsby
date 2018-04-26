@@ -48,13 +48,13 @@ plugins: [
       icon: "src/images/icon.png", // This path is relative to the root of the site.
     },
   },
-];
+]
 ```
 
 When in automatic mode the following json array is injected into the manifest configuration you provide and the icons are generated from it. The source icon you provide should be at least as big as the largest icon being generated.
 
 ```javascript
-[
+;[
   {
     src: `icons/icon-48x48.png`,
     sizes: `48x48`,
@@ -95,7 +95,7 @@ When in automatic mode the following json array is injected into the manifest co
     sizes: `512x512`,
     type: `image/png`,
   },
-];
+]
 ```
 
 The automatic mode is the easiest option for most people.
@@ -170,5 +170,5 @@ plugins: [
       ],
     },
   },
-];
+]
 ```

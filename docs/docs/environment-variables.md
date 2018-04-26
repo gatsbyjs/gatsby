@@ -26,7 +26,7 @@ require it in your `gatsby-config.js` or `gatsby-node.js` the following way on t
 ```javascript
 require("dotenv").config({
   path: `.env.${process.env.NODE_ENV}`,
-});
+})
 ```
 
 Now the variables are available.
@@ -88,15 +88,15 @@ GATSBY_GA_TRACKING_ID="UA-1234567890"
 ```javascript
 // gatsby-config.js
 
-let activeEnv = process.env.ACTIVE_ENV;
+let activeEnv = process.env.ACTIVE_ENV
 
 if (!activeEnv) {
-  activeEnv = "development";
+  activeEnv = "development"
 }
 
 require("dotenv").config({
   path: `.env.${activeEnv}`,
-});
+})
 
 module.exports = {
   siteMetadata: {
@@ -116,7 +116,7 @@ module.exports = {
       },
     },
   ],
-};
+}
 ```
 
 Local testing of staging is as simple as

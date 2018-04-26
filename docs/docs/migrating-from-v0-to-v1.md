@@ -67,7 +67,7 @@ module.exports = {
   siteMetadata: {
     title: `My Sweet Gatsby Site!`,
   },
-};
+}
 ```
 
 and a minimal query would look like
@@ -162,7 +162,7 @@ module.exports = {
     },
     `gatsby-plugin-sharp`,
   ],
-};
+}
 ```
 
 ### Create slugs for markdown files
@@ -174,26 +174,26 @@ Here's how you do that.
 
 ```javascript
 // In your gatsby-node.js
-const path = require("path");
+const path = require("path")
 
 exports.onCreateNode = ({ node, boundActionCreators, getNode }) => {
-  const { createNodeField } = boundActionCreators;
-  let slug;
+  const { createNodeField } = boundActionCreators
+  let slug
   if (node.internal.type === `MarkdownRemark`) {
-    const fileNode = getNode(node.parent);
-    const parsedFilePath = path.parse(fileNode.relativePath);
+    const fileNode = getNode(node.parent)
+    const parsedFilePath = path.parse(fileNode.relativePath)
     if (parsedFilePath.name !== `index` && parsedFilePath.dir !== ``) {
-      slug = `/${parsedFilePath.dir}/${parsedFilePath.name}/`;
+      slug = `/${parsedFilePath.dir}/${parsedFilePath.name}/`
     } else if (parsedFilePath.dir === ``) {
-      slug = `/${parsedFilePath.name}/`;
+      slug = `/${parsedFilePath.name}/`
     } else {
-      slug = `/${parsedFilePath.dir}/`;
+      slug = `/${parsedFilePath.dir}/`
     }
 
     // Add slug as a field on the node.
-    createNodeField({ node, name: `slug`, value: slug });
+    createNodeField({ node, name: `slug`, value: slug })
   }
-};
+}
 ```
 
 Now we can create pages for each markdown file using our slug. In the same
@@ -201,11 +201,11 @@ Now we can create pages for each markdown file using our slug. In the same
 
 ```javascript
 exports.createPages = ({ graphql, boundActionCreators }) => {
-  const { createPage } = boundActionCreators;
+  const { createPage } = boundActionCreators
 
   return new Promise((resolve, reject) => {
-    const pages = [];
-    const blogPost = path.resolve("src/templates/blog-post.js");
+    const pages = []
+    const blogPost = path.resolve("src/templates/blog-post.js")
     // Query for all markdown "nodes" and for the slug we previously created.
     resolve(
       graphql(
@@ -224,8 +224,8 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
         `
       ).then(result => {
         if (result.errors) {
-          console.log(result.errors);
-          reject(result.errors);
+          console.log(result.errors)
+          reject(result.errors)
         }
 
         // Create blog posts pages.
@@ -236,14 +236,14 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
             context: {
               slug: edge.node.fields.slug,
             },
-          });
-        });
+          })
+        })
 
-        return;
+        return
       })
-    );
-  });
-};
+    )
+  })
+}
 ```
 
 So we've now generated the pathname or slug for each markdown page as well as
@@ -258,22 +258,22 @@ specifying the data needs of the component. As a start, make the component look
 like the following. You can make it more complex once the basics are working.
 
 ```javascript
-import React from "react";
+import React from "react"
 
 class BlogPostTemplate extends React.Component {
   render() {
-    const post = this.props.data.markdownRemark;
+    const post = this.props.data.markdownRemark
 
     return (
       <div>
         <h1>{post.frontmatter.title}</h1>
         <div dangerouslySetInnerHTML={{ __html: post.html }} />
       </div>
-    );
+    )
   }
 }
 
-export default BlogPostTemplate;
+export default BlogPostTemplate
 
 export const pageQuery = graphql`
   query BlogPostBySlug($slug: String!) {
@@ -284,7 +284,7 @@ export const pageQuery = graphql`
       }
     }
   }
-`;
+`
 ```
 
 At the bottom of the file you'll notice the graphql query. This is how pages and

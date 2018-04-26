@@ -20,36 +20,36 @@ _Note: this functionality was added in version 1.7.31 of gatsby-transformer-rema
 Write the component the way you normally would. For example, here's a simple "Counter" component:
 
 ```js
-import React from "react";
+import React from "react"
 
 const counterStyle = {
   /* styles skipped for brevity */
-};
+}
 
 export default class Counter extends React.Component {
   static defaultProps = {
     initialvalue: 0,
-  };
+  }
 
   state = {
     value: Number(this.props.initialvalue),
-  };
+  }
 
   handleIncrement = () => {
     this.setState(state => {
       return {
         value: state.value + 1,
-      };
-    });
-  };
+      }
+    })
+  }
 
   handleDecrement = () => {
     this.setState(state => {
       return {
         value: state.value - 1,
-      };
-    });
-  };
+      }
+    })
+  }
 
   render() {
     return (
@@ -58,7 +58,7 @@ export default class Counter extends React.Component {
         <button onClick={this.handleDecrement}>-1</button>
         <button onClick={this.handleIncrement}>+1</button>
       </span>
-    );
+    )
   }
 }
 ```
@@ -80,8 +80,8 @@ In order to display this component within a Markdown file, you'll need to add a 
 2.  Import `rehype-react` and whichever components you wish to use
 
     ```js
-    import rehypeReact from "rehype-react";
-    import Counter from "../components/Counter";
+    import rehypeReact from "rehype-react"
+    import Counter from "../components/Counter"
     ```
 
 3.  Create a render function with references to your custom components
@@ -90,7 +90,7 @@ In order to display this component within a Markdown file, you'll need to add a 
     const renderAst = new rehypeReact({
       createElement: React.createElement,
       components: { "interactive-counter": Counter },
-    }).Compiler;
+    }).Compiler
     ```
 
     I prefer to use hyphenated names to make it clear that it's a custom component.
@@ -107,7 +107,7 @@ In order to display this component within a Markdown file, you'll need to add a 
 
     ```js
     {
-      renderAst(post.htmlAst);
+      renderAst(post.htmlAst)
     }
     ```
 

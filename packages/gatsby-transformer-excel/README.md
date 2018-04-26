@@ -25,7 +25,7 @@ module.exports = {
     },
     `gatsby-transformer-excel`,
   ],
-};
+}
 ```
 
 You can see an example project at https://github.com/gatsbyjs/gatsby/tree/master/examples/using-excel.
@@ -61,12 +61,12 @@ So if your project has a `letters.xlsx` with two worksheets:
 the following nodes would be created:
 
 ```javascript
-[
+;[
   { letter: "a", value: 97, type: "LettersXlsxSheet1" },
   { letter: "b", value: 98, type: "LettersXlsxSheet1" },
   { letter: "A", value: 65, type: "LettersXlsxSheet2" },
   { letter: "B", value: 66, type: "LettersXlsxSheet2" },
-];
+]
 ```
 
 ## How to query

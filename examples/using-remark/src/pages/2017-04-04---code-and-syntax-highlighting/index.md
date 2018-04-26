@@ -50,8 +50,8 @@ names, see the [PrismJS homepage][3].
     ```
 
 ```javascript
-var s = "JavaScript syntax highlighting";
-alert(s);
+var s = "JavaScript syntax highlighting"
+alert(s)
 ```
 
 ```python

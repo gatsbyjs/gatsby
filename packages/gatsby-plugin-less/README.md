@@ -13,7 +13,7 @@ Provides drop-in support for Less stylesheets
 
 ```javascript
 // in gatsby-config.js
-plugins: [`gatsby-plugin-less`];
+plugins: [`gatsby-plugin-less`]
 ```
 
 If you need to pass options to Less use the plugins options; see [less-loader](https://github.com/webpack-contrib/less-loader)
@@ -28,7 +28,7 @@ plugins: [
       strictMath: true,
     },
   },
-];
+]
 ```
 
 ### With CSS Modules
@@ -52,5 +52,5 @@ plugins: [
       postCssPlugins: [somePostCssPlugin()],
     },
   },
-];
+]
 ```

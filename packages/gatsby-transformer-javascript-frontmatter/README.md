@@ -14,7 +14,7 @@ To use this plugin you also need [gatsby-source-filesystem](https://github.com/g
 // In your gatsby-config.js
 module.exports = {
   plugins: [`gatsby-transformer-javascript-frontmatter`],
-};
+}
 ```
 
 ## Parsing algorithm
@@ -49,7 +49,7 @@ export const frontmatter = {
   path: "choropleth-on-d3v4",
   category: "data science",
   description: "Things about the choropleth.",
-};
+}
 ```
 
 ## How to query

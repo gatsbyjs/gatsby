@@ -28,7 +28,7 @@ Data should be in a yaml file named `sites.yml` and look like:
 // in your gatsby-config.js
 module.exports = {
   plugins: [`gatsby-transformer-screenshot`],
-};
+}
 ```
 
 ## How to query
