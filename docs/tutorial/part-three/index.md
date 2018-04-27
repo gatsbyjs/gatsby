@@ -147,7 +147,7 @@ column 650 pixels wide, as we specified.
 Let's now add, in the same file, our site title:
 
 ```jsx{5}
-import React from "react";
+import React from "react"
 
 export default ({ children }) =>
   <div style={{ margin: `0 auto`, maxWidth: 650, padding: `0 1rem` }}>
@@ -164,8 +164,8 @@ If we go to any of our three pages we'll see the same title added e.g. the
 Let's add navigation links to each of our three pages:
 
 ```jsx{2-9,12-22}
-import React from "react";
-import { Link } from "gatsby";
+import React from "react"
+import { Link } from "gatsby"
 
 const ListLink = props =>
   <li style={{ display: `inline-block`, marginRight: `1rem` }}>
