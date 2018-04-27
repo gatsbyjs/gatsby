@@ -113,7 +113,7 @@ Change the color to "pink". Then to "tomato".
 2.  Add some paragraph text.
 
 ```jsx{5-6}
-import React from "react";
+import React from "react"
 
 export default () =>
  <div style={{ color: `tomato` }}>
@@ -125,7 +125,7 @@ export default () =>
 3.  Add an image (in this case, a random one from Unsplash)
 
 ```jsx{7}
-import React from "react";
+import React from "react"
 
 export default () =>
  <div style={{ color: `tomato` }}>
@@ -156,8 +156,8 @@ of `/page-2/`. Try adding that. Once you're done, the page component should look
 like:
 
 ```jsx{2,9-12}
-import React from "react";
-import { Link } from "gatsby";
+import React from "react"
+import { Link } from "gatsby"
 
 export default () =>
   <div style={{ color: `tomato` }}>
@@ -213,8 +213,8 @@ We'll start by creating a new link to a page at `/counter`/ from our original
 `index.js` page component `<Link to="/counter/">Counter</Link>`.
 
 ```jsx{13-15}
-import React from "react";
-import { Link } from "gatsby";
+import React from "react"
+import { Link } from "gatsby"
 
 export default () =>
   <div style={{ color: `tomato` }}>
@@ -254,7 +254,7 @@ Let's continue to flesh out our counter. Let's add two buttons. One to increment
 and one to decrement the count of the counter.
 
 ```jsx{5-12}
-import React from "react";
+import React from "react"
 
 class Counter extends React.Component {
   render() {
@@ -277,7 +277,7 @@ Now we have everything we need to make a nice counter. Let's make it live.
 First we'll set up the component state.
 
 ```jsx{4-7,13}
-import React from "react";
+import React from "react"
 
 class Counter extends React.Component {
   constructor() {
@@ -305,7 +305,7 @@ We're now rendering the current count from the component state.
 Let's now change the state when we click on our buttons.
 
 ```jsx{14-19}
-import React from "react";
+import React from "react"
 
 class Counter extends React.Component {
   constructor() {
