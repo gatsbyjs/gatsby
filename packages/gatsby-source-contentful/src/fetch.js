@@ -23,6 +23,7 @@ module.exports = async ({ spaceId, accessToken, host, syncToken, environment }) 
   let defaultLocale = `en-US`
   try {
     console.log(`Fetching default locale`)
+    console.log(client)
     locales = await client.getLocales().then(response => response.items)
     defaultLocale = _.find(locales, { default: true }).code
     console.log(`default local is : ${defaultLocale}`)
