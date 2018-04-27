@@ -5,4 +5,5 @@
 * Remove explicit polyfill and use the new builtins: usage support in babel 7.
 * Changed `modifyBabelrc` to `onCreateBabelConfig`
 * Changed `modifyWebpackConfig` to `onCreateWebpackConfig`
-* inlining css changed — remove it from any custom html.js as done automatically by core now.
+* Inlining CSS changed — remove it from any custom html.js as done automatically by core now.
+* Manually install `react` and `react-dom`, along with any dependencies required by your plugins.
