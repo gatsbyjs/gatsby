@@ -83,33 +83,6 @@ a pull request.
   to your commit message and push to your fork.
 * Create a pull request from your branch.
 
-### Developer Certificate of Origin
-
-The Gatsby repository enforces the
-[Developer Certificate of Origin](https://developercertificate.org/) (DCO) on
-Pull Requests. It requires all commit messages to contain the `Signed-off-by`
-line with an email address that matches the commit author.
-
-Git has a `-s` (or longer `--signoff`) command line option to append this
-automatically to your commit message:
-
-```shell
-$ git commit -s -m 'This is my commit message'
-```
-
-If you've already created a Pull Request and notice that the DCO check is failing, you
-can use this command to append a signoff message to your commits:
-
-```shell
-$ git rebase --signoff
-```
-
-or amend your last commit if you have a single commit in your Pull Request:
-
-```shell
-$ git commit --amend -s
-```
-
 ## Development tools
 
 ### Redux devtools
