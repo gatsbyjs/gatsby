@@ -31,7 +31,7 @@ exports.setFieldsOnGraphQLNodeType = require(`./extend-node-type`).extendNodeTyp
 
 exports.sourceNodes = async (
   { boundActionCreators, getNode, getNodes, hasNodeChanged, store },
-  { spaceId, accessToken, host }
+  { spaceId, accessToken, host, environment }
 ) => {
   const {
     createNode,
@@ -41,15 +41,16 @@ exports.sourceNodes = async (
   } = boundActionCreators
 
   host = host || `cdn.contentful.com`
+  environment = environment || `master` // default is always master
   // Get sync token if it exists.
   let syncToken
   if (
     store.getState().status.plugins &&
     store.getState().status.plugins[`gatsby-source-contentful`] &&
-    store.getState().status.plugins[`gatsby-source-contentful`][spaceId]
+    store.getState().status.plugins[`gatsby-source-contentful`][`${spaceId}-${environment}`]
   ) {
     syncToken = store.getState().status.plugins[`gatsby-source-contentful`][
-      spaceId
+      `${spaceId}-${environment}`
     ]
   }
 
@@ -62,6 +63,7 @@ exports.sourceNodes = async (
     syncToken,
     spaceId,
     accessToken,
+    environment,
     host,
   })
 
