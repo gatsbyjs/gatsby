@@ -8,7 +8,7 @@ tags: ["i18n", "netlify", "case-studies", "contentful"]
 
 On March 29th, we launched [Eviction Free NYC](http://www.evictionfreenyc.org/) with the [Right to Counsel Coalition](https://www.righttocounselnyc.org/) as part of a campaign to educate tenants living in affordable housing on their legal rights and how to navigate the daunting process of receiving an eviction notice.
 
-In order to build this new resource we applied a [human-centered design process](https://medium.com/@JustFixNYC/co-designing-eviction-free-nyc-b54570c69153) followed by specialized technical scoping in order to determine what was best for our users and build something for this unique context. **That process led us to using GatsbyJS, Contentful, and Netlify!** Below, we've written up how we mapped design to dev, approached different stakeholders, and utilized Gatsy's great flexibility & plugin library.
+In order to build this new resource we applied a [human-centered design process](https://medium.com/@JustFixNYC/co-designing-eviction-free-nyc-b54570c69153) followed by specialized technical scoping in order to determine what was best for our users and build something for this unique context. **That process led us to using GatsbyJS, Contentful, and Netlify!** Below, we've written up how we mapped design to dev, approached different stakeholders, and utilized Gatsby's great flexibility & plugin library.
 
 
 #### **Mapping Design Considerations to Technical Scoping**
