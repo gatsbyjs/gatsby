@@ -201,7 +201,7 @@ in the middle of the page. To create this, add the following styles to the
 `<div>` in `src/pages/index.js`.
 
 ```jsx{4,25}
-import React from "react";
+import React from "react"
 
 export default () =>
   <div style={{ margin: '3rem auto', maxWidth: 600 }}>
@@ -259,7 +259,7 @@ module.exports = {
       },
     },
   ],
-};
+}
 ```
 
 Stop `gatsby develop` by typing <kbd>Ctrl + c</kbd> into the terminal window where the development process has been running. Then, run `gatsby develop` again to restart it. This will allow our plugin change to take effect.
@@ -282,12 +282,12 @@ npm install --save typography-theme-bootstrap typography-theme-lawton
 To use the Bootstrap theme, change your typography code to:
 
 ```javascript{2,4}
-import Typography from "typography";
-import bootstrapTheme from "typography-theme-bootstrap";
+import Typography from "typography"
+import bootstrapTheme from "typography-theme-bootstrap"
 
-const typography = new Typography(bootstrapTheme);
+const typography = new Typography(bootstrapTheme)
 
-export default typography;
+export default typography
 ```
 
 ![typography-bootstrap](typography-bootstrap.png)
@@ -297,13 +297,13 @@ Bootstrap theme does this. Replace your typography module code with the
 following, then restart the dev server (necessary to load the new Google Fonts).
 
 ```javascript{2-3,5}
-import Typography from "typography";
+import Typography from "typography"
 // import bootstrapTheme from "typography-theme-bootstrap"
-import lawtonTheme from "typography-theme-lawton";
+import lawtonTheme from "typography-theme-lawton"
 
-const typography = new Typography(lawtonTheme);
+const typography = new Typography(lawtonTheme)
 
-export default typography;
+export default typography
 ```
 
 ![typography-lawton](typography-lawton.png)
@@ -454,11 +454,11 @@ directory. But, if it's used only in one file, create it inline.
 Modify `about-css-modules.js` so it looks like the following:
 
 ```jsx{6-17,23-30}
-import React from "react";
-import styles from "./about-css-modules.module.css";
-console.log(styles);
+import React from "react"
+import styles from "./about-css-modules.module.css"
+console.log(styles)
 
-import Container from "../components/container";
+import Container from "../components/container"
 
 const User = props =>
   <div className={styles.user}>
