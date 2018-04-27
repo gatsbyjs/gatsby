@@ -35,7 +35,7 @@ Tutorials
 - User authentication*
 
 Reference docs
-- How Gatsby works
+- How Gatsby works (Gatsby tutorials will frequently refer to this section)
     - The Gatsby core philosophy*
     - Basic structure of a Gatsby site (includes config.js)*
     - How Gatsby works with GraphQL (includes Node interface and how GraphQL works)*
@@ -50,9 +50,8 @@ Reference docs
     - Gatsby Browser APIs
     - Gatsby Node APIs
     - Gatsby SSR APIs 
-
-- Gatsby CLI commands
-- Basic tasks
+- Gatsby CLI commands (Part 0 of tutorials will refer to this)
+- Fundamentals
     - Setting up dev environment   
         - Gatsby on Windows
     - Customizing site structure
@@ -65,6 +64,9 @@ Reference docs
         - adding tags and categories to blogposts
         - adding a 404 page
     - Querying for data with GraphQL
+    - Creating a styling system
+        - Glamor
+        - Styled components
     - Debugging
         - Debugging HTML builds
         - Debugging Replace Renderer API
@@ -84,10 +86,8 @@ Reference docs
     - v0 to v1
     - v1 to v2*
     - v0 to v2 (good idea??)*
-- Gatsby components and libraries
-    - Glamor
-    - Styled components
-    - gatsby-image
+
+   
 
 
 Plugins
@@ -108,6 +108,7 @@ Contributing
     - List of ways to contribute*
     - How to file an issue
     - How to submit a PR*
+    - RFC process*
 - Style Guides
     - Written documents*
     - Visual design*
