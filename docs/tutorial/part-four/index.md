@@ -229,7 +229,7 @@ module.exports = {
       },
     },
   ],
-};
+}
 ```
 
 Restart the development server.
@@ -239,7 +239,7 @@ Then edit the two components:
 `src/pages/about.js`
 
 ```jsx{3,5-7,14-23}
-import React from "react";
+import React from "react"
 
 export default ({ data }) =>
   <div>
@@ -266,12 +266,12 @@ export const query = graphql`
 `src/layouts/index.js`
 
 ```jsx{10,19,28-33}
-import React from "react";
-import g from "glamorous";
-import { css } from "glamor";
-import { Link } from "gatsby";
+import React from "react"
+import g from "glamorous"
+import { css } from "glamor"
+import { Link } from "gatsby"
 
-import { rhythm } from "../utils/typography";
+import { rhythm } from "../utils/typography"
 
 const linkStyle = css({ float: `right` })
 
