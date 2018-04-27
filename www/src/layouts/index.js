@@ -28,6 +28,7 @@ class DefaultLayout extends React.Component {
   render() {
     const isHomepage = this.props.location.pathname == `/`
     const isBlog = this.props.location.pathname.slice(0, 6) === `/blog/`
+    const isBlogLanding = this.props.location.pathname === `/blog/`
     const isDoc = this.props.location.pathname.slice(0, 6) === `/docs/`
     const isTutorial =
       this.props.location.pathname.slice(0, 10) === `/tutorial/`
@@ -62,7 +63,7 @@ class DefaultLayout extends React.Component {
       position: `fixed`,
       top: `calc(${presets.headerHeight} + 2.8rem - 1px)`,
       overflowY: `auto`,
-      height: `calc(100vh - ${presets.headerHeight} + 1px)`,
+      height: `calc(100vh - ${presets.headerHeight} - 2.8rem + 1px)`,
       WebkitOverflowScrolling: `touch`,
       "::-webkit-scrollbar": {
         width: `6px`,
@@ -126,6 +127,10 @@ class DefaultLayout extends React.Component {
           <meta name="twitter:site" content="@gatsbyjs" />
           <meta name="og:type" content="website" />
           <meta name="og:site_name" content="GatsbyJS" />
+          <link
+            rel="canonical"
+            href={`https://gatsbyjs.org${this.props.location.pathname}`}
+          />
           <html lang="en" />
         </Helmet>
         <div
@@ -137,6 +142,8 @@ class DefaultLayout extends React.Component {
             fontFamily: options.headerFontFamily.join(`,`),
             textAlign: `center`,
             boxShadow: `inset 0px -3px 2px 0px ${colors.ui.bright}`,
+            zIndex: `3`,
+            position: isHomepage || isBlogLanding ? `absolute` : `fixed`,
           }}
         >
           Live 2-day Gatsby training with Kyle Mathews! Sign up for{" "}
@@ -226,6 +233,7 @@ class DefaultLayout extends React.Component {
 
           <div
             css={{
+              marginTop: isHomepage || isBlog ? 0 : `calc(2.8rem - 1px)`,
               ...childrenMobileDisplay,
               [presets.Tablet]: {
                 paddingLeft: leftPadding(10),

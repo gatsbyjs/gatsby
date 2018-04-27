@@ -2,6 +2,7 @@
 title: "Creative Software Destruction and the New Presentation Layer"
 date: "2018-01-24"
 author: "Robin Vasan"
+tags: ["architecture", "serverless", "cdn"]
 ---
 
 > “To improve is to change, so to be perfect is to have changed often.” — Winston Churchill

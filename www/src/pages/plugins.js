@@ -1,17 +1,18 @@
 import React, { Component } from "react"
 import Container from "../components/container"
+import Link from "gatsby-link"
 import logo from "../monogram.svg"
 import { rhythm, options } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
 
-class Packages extends Component {
+class Plugins extends Component {
   render() {
     return (
       <Container
         css={{
           alignItems: `center`,
           display: `flex`,
-          minHeight: `calc(100vh - ${presets.headerHeight})`,
+          minHeight: `calc(100vh - (${presets.headerHeight} + 2.8rem - 1px))`,
         }}
       >
         <div
@@ -40,7 +41,7 @@ class Packages extends Component {
               textAlign: `center`,
             }}
           >
-            Welcome to the Gatsby Package Library!
+            Welcome to the Gatsby Plugin Library!
           </h1>
           <p
             css={{
@@ -52,8 +53,9 @@ class Packages extends Component {
               textAlign: `center`,
             }}
           >
-            Please use the search bar to find packages that will make your
-            blazing-fast site even more awesome.
+            Please use the search bar to find plugins that will make your
+            blazing-fast site even more awesome. If you'd like to create your own plugin,
+            see the <Link to="/docs/plugin-authoring/">Plugin Authoring</Link> page in the docs!
           </p>
         </div>
       </Container>
@@ -61,4 +63,4 @@ class Packages extends Component {
   }
 }
 
-export default Packages
+export default Plugins

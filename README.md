@@ -22,6 +22,7 @@ Websites built with Gatsby:
 * [Simply](https://simply.co.za)
 * [The freeCodeCamp Guide](https://guide.freecodecamp.org)
   ([source](https://github.com/freeCodeCamp/guides))
+* [Storybook](https://storybook.js.org) ([source](https://github.com/storybooks/storybook))
 * [FloydHub's Blog](https://blog.floydhub.com)
 * [mParticle's Documentation](https://docs.mparticle.com)
 * [Segment's Blog](https://segment.com/blog/)
@@ -193,6 +194,10 @@ Websites built with Gatsby:
 * [WebGazer](https://www.webgazer.io)
 * [Joe Seifi's Blog](http://seifi.org)
 * [Bartosz Dominiak Blog/Portfolio](http://www.bartoszdominiak.com/) ([source](https://github.com/bartdominiak/blog))
+* [HBTU MUN 2018](https://hbtumun18.netlify.com/)
+  ([source](https://github.com/HaoZeke/hbtuMun18))
+* [The Audacious Project](https://audaciousproject.org/)
+* [upGizmo](https://www.upgizmo.com/)
 
 ## Docs
 

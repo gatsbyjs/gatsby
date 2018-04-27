@@ -2,6 +2,7 @@
 title: Building a Site with React and Contentful
 date: "2018-01-25"
 author: "Shannon Soper"
+tags: ["react", "contentful", "graphql"]
 ---
 
 A poster of _Starry Night_ by Vincent Van Gogh followed me to each new dorm room in college until it ripped beyond repair. I loved that poster.
@@ -146,18 +147,18 @@ export default ({ data }) => {
 export const query = graphql`
 query PhotoQuery {
 // starting here is where I copied and pasted the query I created in GraphiQL.
-    allContentfulPhotoGallery { 
-        edges { 
-            node { 
-                photos { 
-                    title 
-                    description 
-                    file { 
-                        url } 
-                        } 
-                    } 
-                } 
-            } 
+    allContentfulPhotoGallery {
+        edges {
+            node {
+                photos {
+                    title
+                    description
+                    file {
+                        url }
+                        }
+                    }
+                }
+            }
         }`;
 ```
 

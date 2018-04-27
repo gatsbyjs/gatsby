@@ -87,7 +87,7 @@ allContentfulProduct {
         id
         productName
         image {
-          responsiveResolution(width: 100) {
+          resolutions(width: 100) {
             width
             height
             src
