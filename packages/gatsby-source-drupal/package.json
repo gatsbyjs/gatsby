@@ -10,7 +10,7 @@
     "@babel/runtime": "^7.0.0-beta.42",
     "axios": "^0.18.0",
     "bluebird": "^3.5.0",
-    "gatsby-source-filesystem": "^2.0.0-alpha.8",
+    "gatsby-source-filesystem": "next",
     "lodash": "^4.17.4"
   },
   "devDependencies": {
