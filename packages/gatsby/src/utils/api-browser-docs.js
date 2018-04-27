@@ -9,22 +9,38 @@
 exports.onClientEntry = true
 
 /**
- * Called when gatsby is fetching resources for a page longer than 1 second.
+ * Called when Gatsby starts fetching resources for a page.
+ * @param {object} $0
+ * @param {object} $0.path Path to a page
  * @example
- * exports.onFetchingResources = () => {
- *   console.log("We can show loading indicator")
+ * exports.onPreLoadPageResources = ({ path }) => {
+ *   console.log("Gatsby started fetching resources for page", path)
  * }
  */
-exports.onFetchingResources = true
+exports.onPreLoadPageResources = true
 
 /**
- * Called when gatsby has fetched all resources for page
+ * Called when Gatsby is fetching resources for a page longer than 1 second.
+ * @param {object} $0
+ * @param {object} $0.path Path to a page
  * @example
- * exports.onFetchedResources = () => {
- *   console.log("We can hide loading indicator")
+ * exports.onDelayedLoadPageResources = ({ path }) => {
+ *   console.log("We can show loading indicator now")
  * }
  */
-exports.onFetchedResources = true
+exports.onDelayedLoadPageResources = true
+
+/**
+ * Called when Gatsby has fetched all resources for a page.
+ * @param {object} $0
+ * @param {object} $0.path Path to a page
+ * @param {object} $0.error Error if there is no such path
+ * @example
+ * exports.onLoadPageResources = ({ path, error }) => {
+ *   console.log("We can hide loading indicator now")
+ * }
+ */
+exports.onLoadPageResources = true
 
 /**
  * Called when the initial (but not subsequent) render of Gatsby App is done on the client.

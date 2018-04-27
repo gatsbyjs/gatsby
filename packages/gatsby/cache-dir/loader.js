@@ -311,7 +311,7 @@ const queue = {
     }
 
     if (!page) {
-      emitter.emit(`onPostLoadPageResources`, {
+      emitter.emit(`onLoadPageResourcesError`, {
         path,
         error: new Error(`A page wasn't found for "${path}"`),
       })

@@ -63,6 +63,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       pathname = redirect.toPath
     }
     const wl = window.location
+    let errorWasEmitted = false
 
     // If we're already at this location, do nothing.
     if (
@@ -78,10 +79,13 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     function eventHandler(e) {
       if (e.path === pathname) {
         emitter.off(`onPostLoadPageResources`, eventHandler)
+        emitter.off(`onLoadPageResourcesError`, eventHandler)
         clearTimeout(timeoutId)
-        apiRunner(`onFetchedResources`, e)
+        apiRunner(`onLoadPageResources`, e)
         if (!e.error) {
           window.___history.push(location)
+        } else {
+          errorWasEmitted = true
         }
       }
     }
@@ -90,14 +94,21 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     // loader in case resources aren't around yet.
     const timeoutId = setTimeout(() => {
       emitter.emit(`onDelayedLoadPageResources`, { pathname })
-      apiRunner(`onFetchingResources`, { path: pathname })
+      apiRunner(`onDelayedLoadPageResources`, { path: pathname })
     }, 1000)
 
+    // Listen to error events early as they can be emitted before
+    // `loader.getResourcesForPathname` finish.
+    emitter.on(`onLoadPageResourcesError`, eventHandler)
     if (loader.getResourcesForPathname(pathname)) {
       // The resources are already loaded so off we go.
       clearTimeout(timeoutId)
       window.___history.push(location)
-    } else {
+
+      // Don't run pre/delayed APIs if error was already emitted,
+      // onLoadPageResources API already ran with error.
+    } else if (!errorWasEmitted) {
+      apiRunner(`onPreLoadPageResources`, { path: pathname })
       // They're not loaded yet so let's add a listener for when
       // they finish loading.
       emitter.on(`onPostLoadPageResources`, eventHandler)

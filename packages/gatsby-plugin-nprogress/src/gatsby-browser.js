@@ -84,10 +84,10 @@ exports.onClientEntry = (a, pluginOptions = {}) => {
   NProgress.configure(options)
 }
 
-exports.onFetchingResources = () => {
+exports.onDelayedLoadPageResources = () => {
   NProgress.start()
 }
 
-exports.onFetchedResources = () => {
+exports.onLoadPageResources = () => {
   NProgress.done()
 }
