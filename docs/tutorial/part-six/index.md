@@ -73,7 +73,7 @@ module.exports = {
       },
     },
   ],
-};
+}
 ```
 
 Restart the development server then refresh (or open again) Graph_i_QL and look
