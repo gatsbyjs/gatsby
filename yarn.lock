@@ -85,6 +85,13 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
+"@contentful/axios@^0.18.0":
+  version "0.18.0"
+  resolved "https://registry.yarnpkg.com/@contentful/axios/-/axios-0.18.0.tgz#576e0e6047411a66971e82d40688a8c795e62f27"
+  dependencies:
+    follow-redirects "^1.2.5"
+    is-buffer "^1.1.5"
+
 "@octokit/rest@^15.2.6":
   version "15.2.6"
   resolved "https://registry.yarnpkg.com/@octokit/rest/-/rest-15.2.6.tgz#16226f58fbf0ba88f631848fb622dfe0ad410c0c"
@@ -158,15 +165,8 @@
     "@types/react" "*"
 
 "@types/react@*":
-<<<<<<< HEAD
-  version "16.3.11"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.3.11.tgz#345a17f1c96420f10b9f0dc696c31091ff9d66ea"
-  dependencies:
-    csstype "^2.2.0"
-=======
   version "16.0.36"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.0.36.tgz#ceb5639013bdb92a94147883052e69bb2c22c69b"
->>>>>>> master
 
 "@types/tmp@^0.0.32":
   version "0.0.32"
@@ -650,13 +650,6 @@ axios@^0.16.1, axios@^0.16.2:
 axios@^0.17.1:
   version "0.17.1"
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.17.1.tgz#2d8e3e5d0bdbd7327f91bc814f5c57660f81824d"
-  dependencies:
-    follow-redirects "^1.2.5"
-    is-buffer "^1.1.5"
-
-"axios@github:contentful/axios#fix/https-via-http-proxy":
-  version "0.17.1"
-  resolved "https://codeload.github.com/contentful/axios/tar.gz/4b06f4a63db3ac16c99f7c61b584ef0e6d11f1af"
   dependencies:
     follow-redirects "^1.2.5"
     is-buffer "^1.1.5"
@@ -1762,7 +1755,7 @@ better-queue-memory@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/better-queue-memory/-/better-queue-memory-1.0.2.tgz#aa6d169aa1d0cc77409185cb9cb5c7dc251bcd41"
 
-better-queue@^3.8.6:
+better-queue@^3.8.6, better-queue@^3.8.7:
   version "3.8.7"
   resolved "https://registry.yarnpkg.com/better-queue/-/better-queue-3.8.7.tgz#de39b82b05f55d92ba065c9066958dad80789ab3"
   dependencies:
@@ -2276,13 +2269,8 @@ cfb@~1.0.2:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/cfb/-/cfb-1.0.6.tgz#d0107fa579a8d79c53a31074a755abcb898017f0"
   dependencies:
-<<<<<<< HEAD
     commander "^2.14.1"
     printj "~1.1.2"
-=======
-    commander "^2.12.1"
-    printj "~1.1.1"
->>>>>>> master
 
 chalk@1.1.3, chalk@^1.0.0, chalk@^1.1.1, chalk@^1.1.3:
   version "1.1.3"
@@ -2890,21 +2878,28 @@ content-type@1.0.4, content-type@^1.0.4, content-type@~1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/content-type/-/content-type-1.0.4.tgz#e138cc75e040c727b1966fe5e5f8c9aee256fe3b"
 
-contentful-sdk-core@^5.0.0:
-  version "5.0.4"
-  resolved "https://registry.yarnpkg.com/contentful-sdk-core/-/contentful-sdk-core-5.0.4.tgz#9bf74775a56bfeb311e772f08ef55daad05ee116"
+contentful-resolve-response@^1.1.4:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/contentful-resolve-response/-/contentful-resolve-response-1.1.4.tgz#9eb656876eecb2cd00444f0adf26bd91a5ec1992"
+  dependencies:
+    lodash "^4.17.4"
+
+contentful-sdk-core@^6.0.0-beta0:
+  version "6.0.0-beta1"
+  resolved "https://registry.yarnpkg.com/contentful-sdk-core/-/contentful-sdk-core-6.0.0-beta1.tgz#4d45c7e90ed71dffcd25448ef9617d73b6e28484"
   dependencies:
     lodash "^4.17.4"
     qs "^6.5.1"
 
-contentful@^4.3.0:
-  version "4.6.4"
-  resolved "https://registry.yarnpkg.com/contentful/-/contentful-4.6.4.tgz#59c4b11810ebe1e425ff5905b053007ec4820097"
+contentful@^6.1.0:
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/contentful/-/contentful-6.1.0.tgz#c8f6761a7180cfe66ef54391cf07b8f864549c0c"
   dependencies:
-    axios contentful/axios#fix/https-via-http-proxy
-    contentful-sdk-core "^5.0.0"
+    "@contentful/axios" "^0.18.0"
+    contentful-resolve-response "^1.1.4"
+    contentful-sdk-core "^6.0.0-beta0"
     json-stringify-safe "^5.0.1"
-    lodash "^4.17.4"
+    lodash "^4.17.5"
 
 continuable-cache@^0.3.1:
   version "0.3.1"
@@ -3187,11 +3182,7 @@ cross-env@^3.1.1:
     cross-spawn "^5.1.0"
     is-windows "^1.0.0"
 
-<<<<<<< HEAD
 cross-env@^5, cross-env@^5.0.5, cross-env@^5.1.3:
-=======
-cross-env@^5:
->>>>>>> master
   version "5.1.4"
   resolved "https://registry.yarnpkg.com/cross-env/-/cross-env-5.1.4.tgz#f61c14291f7cc653bb86457002ea80a04699d022"
   dependencies:
@@ -3406,10 +3397,6 @@ cssom@0.3.x, "cssom@>= 0.3.2 < 0.4.0":
   dependencies:
     cssom "0.3.x"
 
-csstype@^2.2.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/csstype/-/csstype-2.3.0.tgz#062e141c78345cf814da0e0b716ad777931b08af"
-
 csvtojson@^1.1:
   version "1.1.9"
   resolved "https://registry.yarnpkg.com/csvtojson/-/csvtojson-1.1.9.tgz#e641ae72f7bc2fa3f9aaf127e021fc89447c1cd1"
@@ -3523,11 +3510,7 @@ debug@*, debug@3.1.0, debug@^3.1.0, debug@~3.1.0:
   dependencies:
     ms "2.0.0"
 
-<<<<<<< HEAD
 debug@2, debug@2.6.9, debug@^2.2.0, debug@^2.3.3, debug@^2.6.0, debug@^2.6.3, debug@^2.6.6, debug@^2.6.8, debug@^2.6.9:
-=======
-debug@2, debug@2.6.9, debug@^2.2.0, debug@^2.3.3, debug@^2.6.0, debug@^2.6.3, debug@^2.6.6, debug@^2.6.8, debug@^2.6.9, debug@~2.6.4, debug@~2.6.6, debug@~2.6.7, debug@~2.6.9:
->>>>>>> master
   version "2.6.9"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.9.tgz#5d128515df134ff327e90a4c93f4e077a536341f"
   dependencies:
@@ -4508,10 +4491,6 @@ esrecurse@^4.1.0:
   resolved "https://registry.yarnpkg.com/esrecurse/-/esrecurse-4.2.1.tgz#007a3b9fdbc2b3bb87e4879ea19c92fdbd3942cf"
   dependencies:
     estraverse "^4.1.0"
-<<<<<<< HEAD
-=======
-    object-assign "^4.0.1"
->>>>>>> master
 
 estraverse@^4.0.0, estraverse@^4.1.0, estraverse@^4.1.1, estraverse@^4.2.0:
   version "4.2.0"
@@ -6093,13 +6072,8 @@ hoist-non-react-statics@^1.2.0:
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-1.2.0.tgz#aa448cf0986d55cc40773b17174b7dd066cb7cfb"
 
 hoist-non-react-statics@^2.3.0:
-<<<<<<< HEAD
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.5.0.tgz#d2ca2dfc19c5a91c5a6615ce8e564ef0347e2a40"
-=======
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.3.1.tgz#343db84c6018c650778898240135a1420ee22ce0"
->>>>>>> master
 
 home-or-tmp@^2.0.0:
   version "2.0.0"
@@ -6451,13 +6425,8 @@ interpret@^1.0.0:
   resolved "https://registry.yarnpkg.com/interpret/-/interpret-1.1.0.tgz#7ed1b1410c6a0e0f78cf95d3b8440c63f78b8614"
 
 invariant@^2.2.0, invariant@^2.2.1, invariant@^2.2.2:
-<<<<<<< HEAD
-  version "2.2.4"
-  resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.4.tgz#610f3c92c9359ce1db616e538008d23ff35158e6"
-=======
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.2.tgz#9e1f56ac0acdb6bf303306f338be3b204ae60360"
->>>>>>> master
   dependencies:
     loose-envify "^1.0.0"
 
@@ -8278,6 +8247,10 @@ lodash@4.11.1:
   version "4.11.1"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.11.1.tgz#a32106eb8e2ec8e82c241611414773c9df15f8bc"
 
+lodash@^4.17.5:
+  version "4.17.10"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.10.tgz#1b7793cf7259ea38fb3661d4d38b3260af8ae4e7"
+
 log-symbols@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/log-symbols/-/log-symbols-1.0.2.tgz#376ff7b58ea3086a0f09facc74617eca501e1a18"
@@ -8863,13 +8836,8 @@ module-deps-sortable@4.0.6:
     xtend "^4.0.0"
 
 moment@2.x.x, moment@^2.16.0, moment@^2.6.0:
-<<<<<<< HEAD
-  version "2.22.1"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.22.1.tgz#529a2e9bf973f259c9643d237fda84de3a26e8ad"
-=======
   version "2.20.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.20.1.tgz#d6eb1a46cbcc14a2b2f9434112c1ff8907f313fd"
->>>>>>> master
 
 mongodb-core@2.1.19:
   version "2.1.19"
@@ -8912,7 +8880,7 @@ mute-stream@0.0.7, mute-stream@~0.0.4:
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.7.tgz#3075ce93bc21b8fab43e1bc4da7e8115ed1e7bab"
 
-nan@^2.10.0, nan@^2.3.0:
+nan@^2.10.0, nan@^2.3.0, nan@^2.9.2:
   version "2.10.0"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.10.0.tgz#96d0cd610ebd58d4b4de9cc0c6828cda99c7548f"
 
@@ -10683,12 +10651,6 @@ prismjs@^1.12.2, prismjs@^1.13.0:
   optionalDependencies:
     clipboard "^2.0.0"
 
-prismjs@^1.13.0:
-  version "1.14.0"
-  resolved "https://registry.yarnpkg.com/prismjs/-/prismjs-1.14.0.tgz#bbccfdb8be5d850d26453933cb50122ca0362ae0"
-  optionalDependencies:
-    clipboard "^2.0.0"
-
 private@^0.1.6, private@^0.1.7, private@~0.1.5:
   version "0.1.8"
   resolved "https://registry.yarnpkg.com/private/-/private-0.1.8.tgz#2381edb3689f7a53d653190060fcf822d2f368ff"
@@ -10741,13 +10703,8 @@ promise@^7.1.1:
     asap "~2.0.3"
 
 prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.8, prop-types@^15.6.0:
-<<<<<<< HEAD
-  version "15.6.1"
-  resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.1.tgz#36644453564255ddda391191fb3a125cbdf654ca"
-=======
   version "15.6.0"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.0.tgz#ceaf083022fc46b4a35f69e13ef75aed0d639856"
->>>>>>> master
   dependencies:
     fbjs "^0.8.16"
     loose-envify "^1.3.1"
@@ -12380,9 +12337,6 @@ shallow-compare@^1.2.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/shallow-compare/-/shallow-compare-1.2.2.tgz#fa4794627bf455a47c4f56881d8a6132d581ffdb"
 
-<<<<<<< HEAD
-sharp@^0.20.0, sharp@^0.20.1:
-=======
 sharp@^0.20.0:
   version "0.20.0"
   resolved "https://registry.yarnpkg.com/sharp/-/sharp-0.20.0.tgz#2ff9f1ae11f068ce7d7591f531cad52c7821d033"
@@ -12399,7 +12353,6 @@ sharp@^0.20.0:
     tunnel-agent "^0.6.0"
 
 sharp@^0.20.1:
->>>>>>> master
   version "0.20.1"
   resolved "https://registry.yarnpkg.com/sharp/-/sharp-0.20.1.tgz#13adde896bc9ec0372b0907554e0329f35a7bce6"
   dependencies:
@@ -13622,16 +13575,10 @@ to-regex@^3.0.1, to-regex@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/to-regex/-/to-regex-3.0.2.tgz#13cfdd9b336552f30b51f33a8ae1b42a7a7599ce"
   dependencies:
-<<<<<<< HEAD
     define-property "^2.0.2"
     extend-shallow "^3.0.2"
     regex-not "^1.0.2"
     safe-regex "^1.1.0"
-=======
-    define-property "^0.2.5"
-    extend-shallow "^2.0.1"
-    regex-not "^1.0.0"
->>>>>>> master
 
 toml@^2.3.2:
   version "2.3.3"
@@ -14895,6 +14842,23 @@ yargs@^10.0.3:
 yargs@^11.0.0:
   version "11.0.0"
   resolved "https://registry.yarnpkg.com/yargs/-/yargs-11.0.0.tgz#c052931006c5eee74610e5fc0354bedfd08a201b"
+  dependencies:
+    cliui "^4.0.0"
+    decamelize "^1.1.1"
+    find-up "^2.1.0"
+    get-caller-file "^1.0.1"
+    os-locale "^2.0.0"
+    require-directory "^2.1.1"
+    require-main-filename "^1.0.1"
+    set-blocking "^2.0.0"
+    string-width "^2.0.0"
+    which-module "^2.0.0"
+    y18n "^3.2.1"
+    yargs-parser "^9.0.2"
+
+yargs@^11.1.0:
+  version "11.1.0"
+  resolved "https://registry.yarnpkg.com/yargs/-/yargs-11.1.0.tgz#90b869934ed6e871115ea2ff58b03f4724ed2d77"
   dependencies:
     cliui "^4.0.0"
     decamelize "^1.1.1"
