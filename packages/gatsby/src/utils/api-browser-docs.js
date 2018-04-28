@@ -81,7 +81,7 @@ exports.wrapRootComponent = true
  * exports.replaceHydrateFunction = () => {
  *   return (element, container, callback) => {
  *     console.log("rendering!");
- *     ReactDOM.render(element,container,callback);
+ *     ReactDOM.render(element, container, callback);
  *   };
  * };
  */
