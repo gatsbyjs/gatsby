@@ -7720,11 +7720,11 @@ jws@^3.1.4:
     jwa "^1.1.4"
     safe-buffer "^5.0.1"
 
-katex@^0.8.3:
-  version "0.8.3"
-  resolved "https://registry.yarnpkg.com/katex/-/katex-0.8.3.tgz#909d99864baf964c3ccae39c4a99a8e0fb9a1bd0"
+katex@^0.9.0:
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/katex/-/katex-0.9.0.tgz#26a7d082c21d53725422d2d71da9b2d8455fbd4a"
   dependencies:
-    match-at "^0.1.0"
+    match-at "^0.1.1"
 
 kebab-case@^1.0.0:
   version "1.0.0"
@@ -8419,7 +8419,7 @@ markdown-table@^1.1.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/markdown-table/-/markdown-table-1.1.1.tgz#4b3dd3a133d1518b8ef0dbc709bf2a1b4824bc8c"
 
-match-at@^0.1.0:
+match-at@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/match-at/-/match-at-0.1.1.tgz#25d040d291777704d5e6556bbb79230ec2de0540"
 
