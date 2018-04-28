@@ -175,3 +175,5 @@ exports.downloadMediaFiles = ({ nodes, store, cache, createNode, _auth }) => {
   });
 };
 ```
+
+Your file node can then be queried using a transformer or source plugin as shown in this [use case](https://www.gatsbyjs.org/packages/gatsby-source-wordpress/?=wordpres#image-processing) in `gatsby-source-wordpress`. Here downloaded images are retrieved for use in required specifications using `gatsby-transformer-sharp`.
