@@ -8,3 +8,4 @@ This permits to use React Native UI View components inside a Gatsby Storybook, a
 
 Check the [Online demo](https://gatsby-rnw.now.sh/)
 
+![online demo screenshot](https://pbs.twimg.com/media/Db4PTPKW0AAVPl8.jpg)
