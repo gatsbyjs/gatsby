@@ -11,7 +11,8 @@ module.exports = {
     {
       resolve: `gatsby-source-npm-package-search`,
       options: {
-        keywords: [`gatsby-plugin`, `gatsby-component`],
+        queryStrings: [`gatsby-source`, `gatsby-plugin`, `gatsby-transformer`],
+        keywords: [`gatsby-plugin`, `gatsby-component`, `gatsby-source`, `gatsby-transformer`],
       },
     },
     {

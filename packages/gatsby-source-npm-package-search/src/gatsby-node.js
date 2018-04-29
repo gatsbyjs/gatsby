@@ -4,13 +4,18 @@ const crypto = require(`crypto`)
 const client = algoliasearch(`OFCNCOG2CU`, `6fbcaeafced8913bf0e4d39f0b541957`)
 var index = client.initIndex(`npm-search`)
 
+
+const OBSCURED = `3f3f81d91a4ec03e6950d8deb9bf7f3390090909090`.slice(0,32)
+const client2 = algoliasearch(`CJN8T7ZVN1`, OBSCURED)
+var customIndex = client2.initIndex(`gatsby-custom-npm-search`)
+
 const createContentDigest = obj =>
   crypto
     .createHash(`md5`)
     .update(JSON.stringify(obj))
     .digest(`hex`)
 
-function browse({ index, ...params }) {
+const browse = ({ index, ...params }) => {
   let hits = []
   const browser = index.browseAll(params)
 
@@ -21,19 +26,48 @@ function browse({ index, ...params }) {
   })
 }
 
+const ALGOLIA_BLACKLIST = new Map([[`gatsby-source-aem`, `gatsby-source-aem`]])
+
+// returns all results matching ANY keyword or ANY name, ordered by dowwnloads
+const getHits = async (keywords, queryStrings) => {
+  const keywordFilter = keywords.map(keyword => `keywords:${keyword}`).join(` OR `)
+
+  // because Algolia API does not allow OR-ing together query strings and filters,
+  // we need to construct a query for each query string
+  const queries = [{
+    index,
+    filters: keywordFilter,
+    hitsPerPage: 1000,
+  }].concat(queryStrings.map(queryString =>
+    {
+      return {
+        index,
+        query: queryString,
+        hitsPerPage: 1000,
+      }
+    }
+  ))
+
+  //console.log(queries)
+  //console.log(queries.map(query => browse(query)))
+  const queryHits = await Promise.all(queries.map(query => (browse(query)) ))
+  //console.log(queryHits)
+  const allPlugins = new Map()
+  console.log(queryHits.map(result => result.length))
+  queryHits.forEach(result => result.forEach(hit => allPlugins.set(hit.name, hit)))
+  const results = Array.from(allPlugins.values()).sort((pluginA, pluginB) => (pluginB.downloadsLast30Days - pluginA.downloadsLast30Days))
+  console.log(results.length)
+  return results
+}
+
 exports.sourceNodes = async (
   { boundActionCreators, createNodeId },
-  { keywords }
+  { keywords, queryStrings = [] }
 ) => {
   const { createNode } = boundActionCreators
 
-  const buildFilter = keywords.map(keyword => `keywords:${keyword}`)
-
-  const hits = await browse({
-    index,
-    filters: `(${buildFilter.join(` OR `)})`,
-    hitsPerPage: 1000,
-  })
+  const hits = await getHits(keywords, queryStrings)
+  customIndex.saveObjects(hits.filter(hit => !ALGOLIA_BLACKLIST.has(hit.name)))
 
   hits.forEach(hit => {
     const parentId = createNodeId(`plugin ${hit.objectID}`)

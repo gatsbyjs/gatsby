@@ -416,9 +416,9 @@ class SearchBar extends Component {
     return (
       <div>
         <InstantSearch
-          apiKey="ae43b69014c017e05950a1cd4273f404"
-          appId="OFCNCOG2CU"
-          indexName="npm-search"
+          apiKey="31037ceaa94c61c19e42abcc67739b6c"
+          appId="CJN8T7ZVN1"
+          indexName="gatsby-custom-npm-search"
           searchState={this.state.searchState}
           onSearchStateChange={this.onSearchStateChange.bind(this)}
         >
