@@ -36,20 +36,32 @@ function runQuery(handler, query) {
 }
 
 export async function onPostBuild({ graphql }, pluginOptions) {
-  const options = { ...pluginOptions };
+  const userOptions = { ...pluginOptions };
 
-  delete options.plugins;
+  delete userOptions.plugins;
 
-  const { site: { siteMetadata: { siteUrl } = {} } = {} } = await runQuery(
-    graphql,
-    query
-  );
   const defaultOptions = {
-    output: '/robots.txt',
-    host: siteUrl,
-    sitemap: siteUrl && url.resolve(siteUrl, 'sitemap.xml')
+    output: '/robots.txt'
   };
-  const { policy, sitemap, host, output } = { ...defaultOptions, ...options };
+
+  const mergedOptions = { ...defaultOptions, ...userOptions };
+
+  if (
+    !mergedOptions.hasOwnProperty('host') ||
+    !mergedOptions.hasOwnProperty('sitemap')
+  ) {
+    const {
+      site: {
+        siteMetadata: { siteUrl }
+      }
+    } = await runQuery(graphql, query);
+
+    mergedOptions.host = siteUrl;
+    mergedOptions.sitemap = url.resolve(siteUrl, 'sitemap.xml');
+  }
+
+  const { policy, sitemap, host, output } = mergedOptions;
+
   const content = await robotsTxt({
     policy,
     sitemap,
