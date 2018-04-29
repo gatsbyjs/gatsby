@@ -4,30 +4,15 @@ try {
   require.resolve(`babel-plugin-styled-components`)
   babelPluginExists = true
 } catch (e) {
-  // Ignore
+  throw new Error(`'babel-plugin-styled-components' is not installed`)
 }
 
-exports.modifyBabelrc = ({ babelrc, stage }) => {
-  if (babelPluginExists) {
-    if (stage === `build-html`) {
-      return {
-        ...babelrc,
-        plugins: babelrc.plugins.concat([
-          [
-            `babel-plugin-styled-components`,
-            {
-              ssr: true,
-            },
-          ],
-        ]),
-      }
-    }
+exports.onCreateBabelConfig = ({ stage, actions }) => {
+  if (!babelPluginExists) return
 
-    return {
-      ...babelrc,
-      plugins: babelrc.plugins.concat([`babel-plugin-styled-components`]),
-    }
-  }
-
-  return babelrc
+  actions.setBabelPlugin({
+    name: `babel-plugin-styled-components`,
+    stage,
+    options: { ssr: stage === `build-html` },
+  })
 }
