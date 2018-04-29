@@ -56,7 +56,7 @@ async function sqipSharp({ type, cache, getNodeAndSavePathDependency }) {
         mode: { type: GraphQLInt, defaultValue: 0 },
         width: {
           type: GraphQLInt,
-          defaultValue: 400,
+          defaultValue: 256,
         },
         height: {
           type: GraphQLInt,
@@ -188,7 +188,7 @@ async function sqipContentful({ type, cache }) {
         const assetWidth = width || details.image.width
         const assetHeight = height || details.image.height
         const aspectRatio = assetHeight / assetWidth
-        const previewWidth = 400
+        const previewWidth = 256
         const previewHeight = Math.floor(previewWidth * aspectRatio)
 
         const params = [`w=${previewWidth}`, `h=${previewHeight}`]
