@@ -32,7 +32,7 @@ describe(`gatsby-transformer-sqip`, async () => {
   const absolutePath = resolve(
     __dirname,
     `images`,
-    `alisa-anton-166247-unsplash-400px.jpg`
+    `this-file-does-not-neet-to-exist-for-the-test.jpg`
   )
   const cacheDir = __dirname
 
