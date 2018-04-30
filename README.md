@@ -209,6 +209,7 @@ Websites built with Gatsby:
 * [Dovetail](https://dovetailapp.com)
 * [Bart van der Waerden Blog](http://bartvanderwaerden.com/) ([source](https://github.com/BartvdWaerden/BartvdWaerden.github.io))
 * [Canella Riccardo - Portfolio](https://canellariccardo.it) ([source](https://github.com/thecreazy/canellariccardo.it))
+* [Rafael Belliard's Portfolio](https://rafael.do) ([source](https://github.com/rebelliard/rebelliard.github.io))
 
 ## Docs
 
