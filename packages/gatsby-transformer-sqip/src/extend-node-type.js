@@ -49,7 +49,6 @@ async function sqipSharp({ type, cache, getNodeAndSavePathDependency }) {
         fields: {
           svg: { type: GraphQLString },
           dataURI: { type: GraphQLString },
-          dataURIbase64: { type: GraphQLString },
         },
       }),
       args: {
