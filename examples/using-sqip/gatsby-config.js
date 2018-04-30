@@ -3,7 +3,6 @@ module.exports = {
     title: `Gatsby SQIP Example`,
   },
   plugins: [
-    `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
