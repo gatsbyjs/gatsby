@@ -209,6 +209,7 @@ Websites built with Gatsby:
 * [Dovetail](https://dovetailapp.com)
 * [Bart van der Waerden Blog](http://bartvanderwaerden.com/) ([source](https://github.com/BartvdWaerden/BartvdWaerden.github.io))
 * [Canella Riccardo - Portfolio](https://canellariccardo.it) ([source](https://github.com/thecreazy/canellariccardo.it))
+* [Eviction Free NYC!](https://www.evictionfreenyc.org/) ([source](https://github.com/JustFixNYC/eviction-free-nyc))
 * [Rafael Belliard's Portfolio](https://rafael.do) ([source](https://github.com/rebelliard/rebelliard.github.io))
 
 ## Docs
