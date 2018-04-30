@@ -37,7 +37,7 @@
     "eslint-plugin-markdown": "^1.0.0-beta.6",
     "prettier": "^1.12.1",
     "semantic-release": "^15.1.7",
-    "travis-deploy-once": "^4.4.1"
+    "travis-deploy-once": "^5.0.0"
   },
   "peerDependencies": {
     "gatsby": "^1.0.0"
