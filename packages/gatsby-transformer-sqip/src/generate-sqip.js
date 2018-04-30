@@ -8,7 +8,7 @@ const PQueue = require(`p-queue`)
 const sqip = require(`sqip`)
 
 const queue = new PQueue({ concurrency: 1 })
-const debug = Debug(`gatsby-transformer-qip`)
+const debug = Debug(`gatsby-transformer-sqip`)
 
 module.exports = async function generateSqip(options) {
   const {
@@ -19,6 +19,8 @@ module.exports = async function generateSqip(options) {
     mode,
     cacheDir,
   } = options
+
+  debug({ options })
 
   const { name } = parse(absolutePath)
 
@@ -36,6 +38,8 @@ module.exports = async function generateSqip(options) {
   const cacheKey = `sqip-${name}-${optionsHash}`
   const cachePath = resolve(cacheDir, `${name}-${optionsHash}.svg`)
   let primitiveData = await cache.get(cacheKey)
+
+  debug({ primitiveData })
 
   if (!primitiveData) {
     let svg

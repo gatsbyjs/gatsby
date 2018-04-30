@@ -18,12 +18,14 @@ const sharp = require(`sharp`)
 
 const generateSqip = require(`./generate-sqip`)
 
+const debug = Debug(`gatsby-transformer-sqip`)
 const SUPPORTED_NODES = [`ImageSharp`, `ContentfulAsset`]
-const debug = Debug(`gatsby-transformer-qip`)
-const cacheDir = resolve(process.cwd(), `public`, `static`)
+const CACHE_DIR = resolve(process.cwd(), `public`, `static`)
 
 module.exports = async args => {
-  const { type: { name } } = args
+  const {
+    type: { name },
+  } = args
 
   if (!SUPPORTED_NODES.includes(name)) {
     return {}
@@ -104,7 +106,7 @@ async function sqipSharp({ type, cache, getNodeAndSavePathDependency }) {
 
         const job = await queueImageResizing({ file, args: sharpArgs })
 
-        if (!await fs.exists(job.absolutePath)) {
+        if (!(await fs.exists(job.absolutePath))) {
           debug(`Preparing ${file.name}`)
           await job.finishedPromise
         }
@@ -113,7 +115,7 @@ async function sqipSharp({ type, cache, getNodeAndSavePathDependency }) {
 
         return generateSqip({
           cache,
-          cacheDir,
+          cacheDir: CACHE_DIR,
           absolutePath,
           numberOfPrimitives,
           blur,
@@ -168,7 +170,10 @@ async function sqipContentful({ type, cache }) {
         },
       },
       async resolve(asset, fieldArgs, context) {
-        const { id, file: { url, fileName, details, contentType } } = asset
+        const {
+          id,
+          file: { url, fileName, details, contentType },
+        } = asset
         const {
           blur,
           numberOfPrimitives,
@@ -213,7 +218,7 @@ async function sqipContentful({ type, cache }) {
           .join(`-`)
 
         const extension = extname(fileName)
-        const absolutePath = resolve(cacheDir, `${uniqueId}${extension}`)
+        const absolutePath = resolve(CACHE_DIR, `${uniqueId}${extension}`)
 
         const alreadyExists = await fs.pathExists(absolutePath)
 
@@ -238,7 +243,7 @@ async function sqipContentful({ type, cache }) {
 
         return generateSqip({
           cache,
-          cacheDir,
+          CACHE_DIR,
           absolutePath,
           numberOfPrimitives,
           blur,
