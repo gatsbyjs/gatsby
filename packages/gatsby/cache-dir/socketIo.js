@@ -15,7 +15,6 @@ export default function socketIo() {
       try {
         socket = io()
         socket.on(`message`, msg => {
-          console.log(`====message received`, msg)
           if (msg.type === `staticQueryResult`) {
             staticQueryData = {
               ...staticQueryData,
