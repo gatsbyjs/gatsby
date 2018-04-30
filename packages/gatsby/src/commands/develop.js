@@ -371,6 +371,10 @@ module.exports = async (program: any) => {
 
   function printDeprecationWarnings() {
     const deprecatedApis = [`boundActionCreators`, `pathContext`]
+    const fixMap = {
+      boundActionCreators: `actions`,
+      pathContext: `pageContext`,
+    }
     const deprecatedLocations = {}
     deprecatedApis.forEach(api => (deprecatedLocations[api] = []))
 
@@ -385,9 +389,11 @@ module.exports = async (program: any) => {
     deprecatedApis.forEach(api => {
       if (deprecatedLocations[api].length) {
         console.log(
-          `${chalk.cyan(api)} ${chalk.yellow(
-            `is deprecated but was found in the following files:`
-          )}`
+          `%s %s %s %s`,
+          chalk.cyan(api),
+          chalk.yellow(`is deprecated. Use`),
+          chalk.cyan(fixMap[api]),
+          chalk.yellow(`instead. Check the following files:`)
         )
         console.log()
         deprecatedLocations[api].forEach(file => console.log(file))
