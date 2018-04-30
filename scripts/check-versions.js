@@ -6,12 +6,24 @@ const PackageUtilities = require(`lerna/lib/PackageUtilities`)
 const packages = PackageUtilities.getPackages(new Repository())
 
 let warned = false
-let argv = yargs.option(`fix`).argv
+let argv = yargs
+  .option(`fix`, {
+    default: false,
+    describe: `Fixes outdated dependencies`,
+  })
+  .option(`allow-next`, {
+    default: false,
+    describe: `Allow using "next" versions. Use this only for alpha/beta releases`,
+  }).argv
 
 packages.forEach(pkg => {
-  const outdated = packages
+  let outdated = packages
     .filter(p => !!pkg.allDependencies[p.name] && p.name !== pkg.name)
     .filter(p => !pkg.hasMatchingDependency(p))
+
+  if (argv[`allow-next`]) {
+    outdated = outdated.filter(p => pkg.allDependencies[p.name] !== `next`)
+  }
 
   if (!outdated.length) return
 
