@@ -4,6 +4,8 @@ date: "2018-04-27"
 author: "Dan Kass"
 excerpt: Lessons in building a minimal, low-connectivity site for navigating a daunting legal process.
 tags: ["i18n", "netlify", "case-studies", "contentful"]
+canonicalLink: https://medium.com/@JustFixNYC/building-eviction-free-nyc-with-gatsbyjs-contentful-a0308bfcb866
+publishedAt: "JustFixNYC"
 ---
 
 On March 29th, we launched [Eviction Free NYC](http://www.evictionfreenyc.org/) with the [Right to Counsel Coalition](https://www.righttocounselnyc.org/) as part of a campaign to educate tenants living in affordable housing on their legal rights and how to navigate the daunting process of receiving an eviction notice.
@@ -23,7 +25,7 @@ Web-App](https://www.justfix.nyc/) and other resources. As you might imagine,
 the majority of our users are coming from mobile devices (**over 95% of
 low-income Americans now have a device that connects to the Internet**) and
 usually do not have a very fast connection to the Internet. We learned from
-user-testing in Housing Court was that there is usually little-to-no cell
+user-testing in Housing Court that there is usually little-to-no cell
 reception in the building. We also knew that internationalization (i18n) and
 language localization would be a launch requirement. Previous analytics from the
 Tenant Web-App also informed us to account for older browsers such as Internet
@@ -43,8 +45,8 @@ possible.
 We knew that we would build the site in [React](https://reactjs.org/).
 Developers can build websites quickly and reliably through its modular
 architecture and extensive system of third-party components. React’s simple
-component-based philosophy creates code and structure that just *makes sense,
-*allowing other developers to more easily contribute to the project as well.
+component-based philosophy creates code and structure that just *makes sense*,
+allowing other developers to more easily contribute to the project as well.
 It’s also unobtrusive enough that it can be applied to both large and small web
 development projects.
 
@@ -52,7 +54,7 @@ From there, we looked for different scaffolds that would help us get
 up-and-running quickly. While we’re big fans of
 [create-react-app](https://github.com/facebook/create-react-app) and have used
 it on other projects, due to an aggressive project timeline, we needed something
-that provided a more “out-of-the-box” solution. We wound building the site in
+that provided a more “out-of-the-box” solution. We wound up building the site in
 GatsbyJS, which is a **React-based static site generator**. GatsbyJS is the
 perfect fit for a number of reasons:
 
@@ -87,7 +89,7 @@ video embeds. A headless CMS takes those publishing features (and the easy admin
 tools that come with them) and additionally gives you total flexibility as to
 how the website itself is constructed.
 
-In previous projects where we used Contentful, content was be loaded dynamically
+In previous projects where we used Contentful, content was loaded dynamically
 (via AJAX) when a user visits the site. GatsbyJS instead pulls content from
 Contentful *as the site compiles* (pre-deploy), not when the user visits it.
 This change creates significantly less server requests after page load and
@@ -105,7 +107,7 @@ As GatsbyJS compiles the site (either in dev or building for production), it
 will pull content from Contentful and make it available via GraphQL. A file’s
 GraphQL `pageQuery` will then populate your React component’s `props` with the
 corresponding data, creating an incredibly simple pipeline from content → code.
-As an example, here’s a the provider portion of a sample `pageQuery`:
+As an example, here’s the provider portion of a sample `pageQuery`:
 
     providers {
       title
@@ -129,7 +131,7 @@ As an example, here’s a the provider portion of a sample `pageQuery`:
 #### **Challenge: Hyper-personalized result pages in a static site**
 
 When a tenant goes to Eviction Free NYC, they answer a simple questionnaire that
-determines a results page. Its tailored to their borough’s housing court
+determines a results page. It's tailored to their borough’s housing court
 (including information about room numbers and different parts) and factors in
 their eligibility for legal representation as well as different types of
 eviction proceedings. **This level of personalization is difficult to achieve in
@@ -145,7 +147,7 @@ pages:
 > eligibility = 60 static results pages**!
 
 This doesn’t include additional pages we built afterwards to account for NYCHA
-tenants and other situations. Here’s an example of all what this looks like in
+tenants and other situations. Here’s an example of what this looks like in
 Contentful:
 
 ![](https://cdn-images-1.medium.com/max/1600/0*KTLd5tuKs82l9II8.)
@@ -177,10 +179,10 @@ how all this works!
 When it came time to deploy, we were very excited to try out a new hosting
 platform called [Netlify](https://www.netlify.com/) that we’d been hearing a lot
 about. It has a great free tier and is perfect for hosting static sites. We
-simply linked Netlify it to a branch in the Eviction Free NYC github repo and it
+simply linked Netlify to a branch in the Eviction Free NYC GitHub repo and it
 compiles and deploys the site with each push. It simplifies HTTPS certificate
 generation and even includes a system for deploying AWS Lambda functions, which
-we used to ship a small Twilio integration for the sites “Save to Phone”
+we used to ship a small Twilio integration for the site's “Save to Phone”
 feature. *(note: we’re actually still using the original
 *[Serverless](https://serverless.com/)* solution, but this code is in the repo
 as a to-do)*
