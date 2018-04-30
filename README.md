@@ -208,8 +208,8 @@ Websites built with Gatsby:
 * [Abinav Seelan - Personal Website](https://abinavseelan.com) ([source](https://github.com/abinavseelan/abinavseelan.com))
 * [Dovetail](https://dovetailapp.com)
 * [Bart van der Waerden Blog](http://bartvanderwaerden.com/) ([source](https://github.com/BartvdWaerden/BartvdWaerden.github.io))
+* [Canella Riccardo - Portfolio](https://canellariccardo.it) ([source](https://github.com/thecreazy/canellariccardo.it))
 * [Eviction Free NYC!](https://www.evictionfreenyc.org/) ([source](https://github.com/JustFixNYC/eviction-free-nyc))
-
 
 ## Docs
 

@@ -90,11 +90,11 @@ const isWebpSupported = () => {
 const noscriptImg = props => {
   // Check if prop exists before adding each attribute to the string output below to prevent
   // HTML validation issues caused by empty values like width="" and height=""
-  const src = props.src ? `src="${props.src}" ` : `src=""` // required attribute
+  const src = props.src ? `src="${props.src}" ` : `src="" ` // required attribute
   const srcSet = props.srcSet ? `srcset="${props.srcSet}" ` : ``
   const sizes = props.sizes ? `sizes="${props.sizes}" ` : ``
   const title = props.title ? `title="${props.title}" ` : ``
-  const alt = props.alt ? `alt="${props.alt}" ` : `alt=""` // required attribute
+  const alt = props.alt ? `alt="${props.alt}" ` : `alt="" ` // required attribute
   const width = props.width ? `width="${props.width}" ` : ``
   const height = props.height ? `height="${props.height}" ` : ``
   const opacity = props.opacity ? props.opacity : `1`
