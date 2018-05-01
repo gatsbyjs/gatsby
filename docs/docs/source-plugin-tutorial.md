@@ -4,25 +4,25 @@ title: "Source plugin tutorial"
 
 Creating your own source plugin.
 
-# What this tutorial covers
+## What this tutorial covers
 
 In this tutorial you'll create your own source plugin. Your plugin will source data from [pixabay.com](https://pixabay.com) allowing you to add Pixabay images to any Gatsby site.
 
-# What is a source plugin?
+## What is a source plugin?
 
 Source plugins "source" data from remote or local locations into what Gatsby calls [nodes](https://www.gatsbyjs.org/docs/node-interface/).
 
 For more background on source plugins, check out [Gatsby's source plugin documentation](https://www.gatsbyjs.org/docs/create-source-plugin/)
 
-# Why create a source plugin?
+## Why create a source plugin?
 
 Source plugins convert data from any source into a format that can be processed by Gatsby. Your Gatsby site could use several source plugins to combine data in interesting ways.
 
 If you can't find a plugin for your data source you can create your own.
 
-# How to create a source plugin
+## How to create a source plugin
 
-## Overview
+### Overview
 
 Your plugin is going to source images from Pixabay. You'll be able to configure your plugin in your site's `gatsby-config.js` file and write GraphQL queries to access your plugin's data.
 
@@ -359,13 +359,13 @@ Or [open the query from this link](<http://localhost:8000/___graphql?query=%7B%0
 
 Experiment with different options in your `gatsby-config.js` file to see how that affects your query results. The [Pixabay API docs](https://pixabay.com/api/docs/#api_search_images) might be a useful reference.
 
-## Publishing a plugin
+### Publishing a plugin
 
 You've built a local plugin for your project, but what if you want to share it with others? `npm` allows you to publish your plugins, check out the npm docs on [How to Publish & Update a Package](https://docs.npmjs.com/getting-started/publishing-npm-packages) for more info.
 
 > Don't forget to edit your plugin's `package.json` file to include info about your plugin.
 
-## Summary
+### Summary
 
 You've written a local Gatsby plugin that:
 
@@ -376,7 +376,7 @@ You've written a local Gatsby plugin that:
 
 Congratulations!
 
-## Where next?
+### Where next?
 
 Your plugin has been adapted from Jason Lengstorf's [gatsby-source-pixabay plugin](https://www.npmjs.com/package/gatsby-source-pixabay). Check out [the source on GitHub](https://github.com/jlengstorf/gatsby-source-pixabay).
 
