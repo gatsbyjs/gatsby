@@ -1,0 +1,29 @@
+{
+  "name": "gatsby-example-using-css-blocks",
+  "private": true,
+  "description": "Gatsby example site using the CSS Blocks plugin",
+  "version": "1.0.0",
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "dependencies": {
+    "@css-blocks/jsx": "^0.19.0",
+    "@css-blocks/webpack": "^0.19.0",
+    "gatsby": "2.0.0-alpha.9fe50b00",
+    "gatsby-plugin-css-blocks": "file:../../packages/gatsby-plugin-css-blocks",
+    "gatsby-plugin-offline": "canary",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-typography": "^0.16.13",
+    "slash": "^1.0.0",
+    "typography": "^0.16.6",
+    "typography-breakpoint-constants": "^0.15.10"
+  },
+  "keywords": [
+    "gatsby"
+  ],
+  "license": "MIT",
+  "main": "n/a",
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build"
+  }
+}

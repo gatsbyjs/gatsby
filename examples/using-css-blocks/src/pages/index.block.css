@@ -1,0 +1,23 @@
+:scope {
+  margin: 0 auto;
+  margin-top: 3rem;
+  padding: 1.5rem;
+  max-width: 800;
+  color: red;
+}
+
+.p1 {
+  color: blue;
+}
+
+.p2 {
+  color: pink;
+
+  @media (min-width: 750px) {
+    color: blue;
+  }
+}
+
+.p3 {
+  font-style: italic;
+}

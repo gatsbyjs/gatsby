@@ -1,0 +1,37 @@
+{
+  "name": "gatsby-plugin-css-blocks",
+  "description": "Gatsby plugin to add support for CSS Blocks",
+  "version": "1.0.0-alpha.1",
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "dependencies": {
+    "babel-loader": "^8.0.0-beta.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.0.0-beta.46",
+    "@babel/core": "^7.0.0-beta.46",
+    "cross-env": "^5.1.4"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-css-blocks#readme",
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "css",
+    "blocks"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "peerDependencies": {
+    "@css-blocks/jsx": "^0.19.0",
+    "@css-blocks/webpack": "^0.19.0",
+    "gatsby": ">2.0.0-alpha"
+  },
+  "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-css-blocks",
+  "scripts": {
+    "build": "babel src --out-dir .",
+    "prepublish": "cross-env NODE_ENV=production npm run build",
+    "watch": "babel -w src --out-dir ."
+  }
+}
