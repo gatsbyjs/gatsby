@@ -359,13 +359,13 @@ Or [open the query from this link](<http://localhost:8000/___graphql?query=%7B%0
 
 Experiment with different options in your `gatsby-config.js` file to see how that affects your query results. The [Pixabay API docs](https://pixabay.com/api/docs/#api_search_images) might be a useful reference.
 
-### Publishing a plugin
+## Publishing a plugin
 
 You've built a local plugin for your project, but what if you want to share it with others? `npm` allows you to publish your plugins, check out the npm docs on [How to Publish & Update a Package](https://docs.npmjs.com/getting-started/publishing-npm-packages) for more info.
 
 > Don't forget to edit your plugin's `package.json` file to include info about your plugin.
 
-### Summary
+## Summary
 
 You've written a local Gatsby plugin that:
 
@@ -376,7 +376,7 @@ You've written a local Gatsby plugin that:
 
 Congratulations!
 
-### Where next?
+## Where next?
 
 Your plugin has been adapted from Jason Lengstorf's [gatsby-source-pixabay plugin](https://www.npmjs.com/package/gatsby-source-pixabay). Check out [the source on GitHub](https://github.com/jlengstorf/gatsby-source-pixabay).
 
@@ -384,7 +384,7 @@ Try adding new features to your plugin, for example - download images from Pixab
 
 Check out Gatsby's docs on [plugin authoring](/docs/plugin-authoring/) and [creating a source plugin](/docs/create-source-plugin).
 
-#### A note on JavaScript versions
+### A note on JavaScript versions
 
 In this tutorial you've written code in a version of JavaScript that's compatible with Node.js version 6 and above.
 
