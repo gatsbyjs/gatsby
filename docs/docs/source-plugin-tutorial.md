@@ -24,7 +24,7 @@ If you can't find a plugin for your data source you can create your own.
 
 ## Overview
 
-Your plugin is going to source images from pixabay.com. You'l be able to configure your plugin in your site's `gatsby-config.js` file and write GraphQL queries to access your plugin's data.
+Your plugin is going to source images from Pixabay. You'll be able to configure your plugin in your site's `gatsby-config.js` file and write GraphQL queries to access your plugin's data.
 
 > **NOTE:** You'll need a Pixabay API key which you can get by [registering for a Pixabay account](https://pixabay.com/en/accounts/register/). Your API key is in the [“Search Images” section of the Pixabay API docs](https://pixabay.com/api/docs/#api_search_images).
 
@@ -34,13 +34,13 @@ Pixabay's [API documentation](https://pixabay.com/api/docs/#api_search_images) d
 
 `https://pixabay.com/api/?q=yellow+flowers&editors_choice=true&pretty=true&key=<YOUR_API_KEY_HERE>`
 
-Take the above URL and paste it in to a browser to see Pixabay's response to your query. It's given us a list of photos matching the query "yellow flowers" that have been picked as editor's choice.
+Take the above URL and paste it in to a browser to see Pixabay's response to your query. It's given us a list of photos matching the query "yellow flowers" that have received an Editor's Choice award.
 
 > **NOTE:** You should replace <YOUR_API_KEY_HERE> with your Pixabay API key.
 
 ### Plugin behaviour
 
-Your plugin will have the following behaviour:
+Your plugin will have the following behavior:
 
 * Accept config options like a Pixabay API key and a search query
 * Make an API request using the provided config options
@@ -367,10 +367,10 @@ You've built a local plugin for your project, but what if you want to share it w
 
 ## Summary
 
-You've written a local Gatsby plugin, it:
+You've written a local Gatsby plugin that:
 
 * can be configured with an entry in your `gatsby-config.js` file
-* requests data from a 3rd-party API
+* requests data from a third-party API
 * pulls the API data into Gatsby's node system
 * allows the data to be queried with GraphQL
 
