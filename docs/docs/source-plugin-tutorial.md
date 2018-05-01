@@ -38,7 +38,7 @@ Take the above URL and paste it in to a browser to see Pixabay's response to you
 
 > **NOTE:** You should replace <YOUR_API_KEY_HERE> with your Pixabay API key.
 
-### Plugin behaviour
+### Plugin behavior
 
 Your plugin will have the following behavior:
 
