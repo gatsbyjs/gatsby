@@ -119,25 +119,74 @@ Let's tackle these problems by creating our first layout component.
 
 ## Our first layout component
 
-First, create a new directory at `src/layouts`. All layout components have to be
-in this directory.
+Layout component is a React component that wraps children components.
 
-Let's create a very basic layout component at `src/layouts/index.js`:
+Let’s start by creating a new directory at `src/components` and then, in this new directory, create a file named `layout.js` and paste the following:
 
 ```jsx
 import React from "react"
 
 export default ({ children }) => (
   <div style={{ margin: `0 auto`, maxWidth: 650, padding: `0 1rem` }}>
-    {children()}
+    {children}
   </div>
 )
 ```
 
-_Notice that unlike most `children` props, the `children` prop passed to layout
-components is a function and needs to be executed_
+Next, we will wrap each of our pages in this newly created Layout component, starting with our front page.
 
-Stop `gatsby develop` and start it again for the new layout to take effect.
+`src/pages/index.js`
+
+```jsx{2, 5, 13}
+import React from "react"
+import Layout from "../components/layout"
+
+export default () => (
+  <Layout>
+    <div>
+      <h1>Hi! I'm building a fake Gatsby site as part of a tutorial!</h1>
+      <p>
+        What do I like to do? Lots of course but definitely enjoy building
+        websites.
+      </p>
+    </div>
+  </Layout>
+)
+```
+
+`src/pages/about.js`
+
+```jsx{2, 5, 10}
+import React from "react"
+import Layout from "../components/layout"
+
+export default () => (
+  <Layout>
+    <div>
+      <h1>About me</h1>
+      <p>I’m good enough, I’m smart enough, and gosh darn it, people like me!</p>
+    </div>
+  </Layout>
+)
+```
+
+`src/pages/contact.js`
+
+```jsx{2, 5, 12}
+import React from "react"
+import Layout from "../components/layout"
+
+export default () => (
+  <Layout>
+    <div>
+      <h1>I'd love to talk! Email me at the address below</h1>
+      <p>
+        <a href="mailto:me@example.com">me@example.com</a>
+      </p>
+    </div>
+  </Layout>
+)
+```
 
 ![with-layout2](with-layout2.png)
 
@@ -152,7 +201,7 @@ import React from "react"
 export default ({ children }) =>
   <div style={{ margin: `0 auto`, maxWidth: 650, padding: `0 1rem` }}>
     <h3>MySweetSite</h3>
-    {children()}
+    {children}
   </div>
 ```
 
@@ -163,18 +212,19 @@ If we go to any of our three pages we'll see the same title added e.g. the
 
 Let's add navigation links to each of our three pages:
 
-```jsx{2-9,12-22}
+```jsx{2-10,13-23}
 import React from "react"
 import { Link } from "gatsby"
 
-const ListLink = props =>
+const ListLink = props => (
   <li style={{ display: `inline-block`, marginRight: `1rem` }}>
     <Link to={props.to}>
       {props.children}
     </Link>
   </li>
+)
 
-export default ({ children }) =>
+export default ({ children }) => (
   <div style={{ margin: `0 auto`, maxWidth: 650, padding: `1.25rem 1rem` }}>
     <header style={{ marginBottom: `1.5rem` }}>
       <Link to="/" style={{ textShadow: `none`, backgroundImage: `none` }}>
@@ -186,8 +236,9 @@ export default ({ children }) =>
         <ListLink to="/contact/">Contact</ListLink>
       </ul>
     </header>
-    {children()}
+    {children}
   </div>
+)
 ```
 
 ![with-navigation](with-navigation.png)
