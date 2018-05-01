@@ -10,9 +10,9 @@ In this tutorial you'll create your own source plugin. Your plugin will source d
 
 ## What is a source plugin?
 
-Source plugins "source" data from remote or local locations into what Gatsby calls [nodes](https://www.gatsbyjs.org/docs/node-interface/).
+Source plugins "source" data from remote or local locations into what Gatsby calls [nodes](/docs/node-interface/).
 
-For more background on source plugins, check out [Gatsby's source plugin documentation](https://www.gatsbyjs.org/docs/create-source-plugin/)
+For more background on source plugins, check out [Gatsby's source plugin documentation](/docs/create-source-plugin/)
 
 ## Why create a source plugin?
 
@@ -142,7 +142,7 @@ const fetch = require("node-fetch");
 const queryString = require("query-string");
 ```
 
-Then you implement Gatsby's [`sourceNodes` API](https://www.gatsbyjs.org/docs/node-apis/#sourceNodes) which Gatsby will run as part of its bootstrap process. When Gatsby calls `sourceNodes`, it'll pass in some helper functions (`boundActionCreators` and `createNodeId`) along with any config options that are provided in your project's `gatsby-config.js` file:
+Then you implement Gatsby's [`sourceNodes` API](/docs/node-apis/#sourceNodes) which Gatsby will run as part of its bootstrap process. When Gatsby calls `sourceNodes`, it'll pass in some helper functions (`boundActionCreators` and `createNodeId`) along with any config options that are provided in your project's `gatsby-config.js` file:
 
 ```js
 exports.sourceNodes = (
@@ -382,7 +382,7 @@ Your plugin has been adapted from Jason Lengstorf's [gatsby-source-pixabay plugi
 
 Try adding new features to your plugin, for example - download images from Pixabay, improve error handling, add documentation or automated tests.
 
-Check out Gatsby's docs on [plugin authoring](https://www.gatsbyjs.org/docs/plugin-authoring/) and [creating a source plugin](https://www.gatsbyjs.org/docs/create-source-plugin).
+Check out Gatsby's docs on [plugin authoring](/docs/plugin-authoring/) and [creating a source plugin](/docs/create-source-plugin).
 
 #### A note on JavaScript versions
 
