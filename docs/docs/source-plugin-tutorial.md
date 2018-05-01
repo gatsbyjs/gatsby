@@ -111,7 +111,7 @@ Open your `package.json` file and you'll see `node-fetch` and `query-string` hav
 
 With the setup done, move on to adding the plugin's functionality.
 
-### Create gatsby-node.js file
+### Create a `gatsby-node.js` file
 
 Create a new file called `gatsby-node.js`, and add the following:
 
@@ -226,12 +226,13 @@ exports.sourceNodes = (
   // Gatsby adds a configOption that's not needed for this plugin, delete it
   delete configOptions.plugins
 
-  // Convert our options object into a query string
+  // Convert the options object into a query string
   const apiOptions = queryString.stringify(configOptions)
 
   // Join apiOptions with the Pixabay API URL
   const apiUrl = `https://pixabay.com/api/?${apiOptions}`
 
+  // Gatsby expects sourceNodes to return a promise
   return (
     // Fetch a response from the apiUrl
     fetch(apiUrl)
@@ -272,7 +273,7 @@ You're ready to add the final step of your plugin - converting this data into a 
 
 ### Use `createNode` function
 
-You're adding a helper function on line 15 and processing the data into a node on lines 52-55:
+You're adding a helper function on lines 15 to 35 and processing the data into a node on lines 52 to 55:
 
 ```js{15-35,52-55}
 const fetch = require('node-fetch')
@@ -288,7 +289,7 @@ exports.sourceNodes = (
   // Gatsby adds a configOption that's not needed for this plugin, delete it
   delete configOptions.plugins
 
-  // Helper function to process a photo to match Gatsby's node structure
+  // Helper function that processes a photo to match Gatsby's node structure
   const processPhoto = photo => {
     const nodeId = createNodeId(`pixabay-photo-${photo.id}`)
     const nodeContent = JSON.stringify(photo)
@@ -311,12 +312,13 @@ exports.sourceNodes = (
     return nodeData
   }
 
-  // Convert our options object into a query string
+  // Convert the options object into a query string
   const apiOptions = queryString.stringify(configOptions)
 
   // Join apiOptions with the Pixabay API URL
   const apiUrl = `https://pixabay.com/api/?${apiOptions}`
 
+  // Gatsby expects sourceNodes to return a promise
   return (
     // Fetch a response from the apiUrl
     fetch(apiUrl)
@@ -363,7 +365,7 @@ Experiment with different options in your `gatsby-config.js` file to see how tha
 
 You've built a local plugin for your project, but what if you want to share it with others? `npm` allows you to publish your plugins, check out the npm docs on [How to Publish & Update a Package](https://docs.npmjs.com/getting-started/publishing-npm-packages) for more info.
 
-> Don't forget to edit your plugin's `package.json` file to include info about your plugin.
+> **NOTE:** Don't forget to edit your plugin's `package.json` file to include info about your plugin.
 
 ## Summary
 
