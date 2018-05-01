@@ -40,6 +40,8 @@ module.exports = async (pageOrLayout, component) => {
           ${result.errors || []}
         URL path:
           ${pageOrLayout.path}
+        Context:
+          ${JSON.stringify(pageOrLayout.context, null, 4)}
         Plugin:
           ${pageOrLayout.pluginCreatorId || `none`}
         Query:
