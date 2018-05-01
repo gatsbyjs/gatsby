@@ -42,9 +42,9 @@ Take the above URL and paste it in to a browser to see Pixabay's response to you
 
 Your plugin will have the following behaviour:
 
-- Accept config options like a Pixabay API key and a search query
-- Make an API request using the provided config options
-- Convert the data in the API response to Gatsby's node system
+* Accept config options like a Pixabay API key and a search query
+* Make an API request using the provided config options
+* Convert the data in the API response to Gatsby's node system
 
 ### Setup a new Gatsby site
 
@@ -92,7 +92,6 @@ to create the file using default options.
 
 > **NOTE:** You can omit `--yes` if you'd like to specify the options yourself.
 
-
 ### Add dependencies
 
 You'll use a couple of modules from npm to add some helper functionality. Install them with:
@@ -117,33 +116,33 @@ With the setup done, move on to adding the plugin's functionality.
 Create a new file called `gatsby-node.js`, and add the following:
 
 ```js
-const crypto = require('crypto');
-const fetch = require('node-fetch');
-const queryString = require('query-string');
+const crypto = require("crypto");
+const fetch = require("node-fetch");
+const queryString = require("query-string");
 
 exports.sourceNodes = (
   { boundActionCreators, createNodeId },
   configOptions
 ) => {
-  const { createNode } = boundActionCreators
+  const { createNode } = boundActionCreators;
 
   // Gatsby adds a configOption that's not needed for this plugin, delete it
-  delete configOptions.plugins
+  delete configOptions.plugins;
 
   // plugin code goes here...
-  console.log("Testing my plugin", configOptions)
+  console.log("Testing my plugin", configOptions);
 };
 ```
 
 Let's break this down, you start by importing the dependencies that you added earlier (along with one built in dependency):
 
 ```js
-const crypto = require('crypto');
-const fetch = require('node-fetch');
-const queryString = require('query-string');
+const crypto = require("crypto");
+const fetch = require("node-fetch");
+const queryString = require("query-string");
 ```
 
-Then you implement Gatsby's [`sourceNodes` API]((https://www.gatsbyjs.org/docs/node-apis/#sourceNodes)) which Gatsby will run as part of its bootstrap process. When Gatsby calls `sourceNodes`, it'll pass in some helper functions (`boundActionCreators` and `createNodeId`) along with any config options that are provided in your project's `gatsby-config.js` file:
+Then you implement Gatsby's [`sourceNodes` API](https://www.gatsbyjs.org/docs/node-apis/#sourceNodes) which Gatsby will run as part of its bootstrap process. When Gatsby calls `sourceNodes`, it'll pass in some helper functions (`boundActionCreators` and `createNodeId`) along with any config options that are provided in your project's `gatsby-config.js` file:
 
 ```js
 exports.sourceNodes = (
@@ -155,17 +154,17 @@ exports.sourceNodes = (
 You do some initial setup:
 
 ```js
-  const { createNode } = boundActionCreators
+const { createNode } = boundActionCreators;
 
-  // Gatsby adds a configOption that's not needed for this plugin, delete it
-  delete configOptions.plugins
+// Gatsby adds a configOption that's not needed for this plugin, delete it
+delete configOptions.plugins;
 ```
 
 And finally add a placeholder message:
 
 ```js
-  // plugin code goes here...
-  console.log("Testing my plugin", configOptions)
+// plugin code goes here...
+console.log("Testing my plugin", configOptions);
 ```
 
 ### Add the plugin to your site
@@ -177,19 +176,19 @@ Open `gatsby-config.js` from the root directory of your tutorial site, and add t
 ```js
 module.exports = {
   siteMetadata: {
-    title: 'Gatsby Default Starter',
+    title: "Gatsby Default Starter",
   },
   plugins: [
-    'gatsby-plugin-react-helmet',
+    "gatsby-plugin-react-helmet",
     {
-      resolve: 'gatsby-source-pixabay',
+      resolve: "gatsby-source-pixabay",
       options: {
-        key: '<YOUR_API_KEY_HERE>',
-        q: 'yellow flowers'
-      }
-    }
+        key: "<YOUR_API_KEY_HERE>",
+        q: "yellow flowers",
+      },
+    },
   ],
-}
+};
 ```
 
 Open a new terminal in the root directory of your tutorial site, then start Gatsby's development mode:
@@ -339,7 +338,7 @@ exports.sourceNodes = (
 
 ### Query for results
 
-Your plugin is ready. Restart `gatsby dev` and open a browser at [http://localhost:8000/___graphql](http://localhost:8000/___graphql). The Pixabay data can be queried from here, try:
+Your plugin is ready. Restart `gatsby dev` and open a browser at [http://localhost:8000/\_\_\_graphql](http://localhost:8000/___graphql). The Pixabay data can be queried from here, try:
 
 ```graphql
 {
@@ -356,7 +355,7 @@ Your plugin is ready. Restart `gatsby dev` and open a browser at [http://localho
 }
 ```
 
-Or [open the query from this link](http://localhost:8000/___graphql?query=%7B%0A%20%20allPixabayPhoto(limit%3A%2010)%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20largeImageURL%0A%20%20%20%20%20%20%20%20pageURL%0A%20%20%20%20%20%20%20%20tags%0A%20%20%20%20%20%20%20%20user%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A).
+Or [open the query from this link](<http://localhost:8000/___graphql?query=%7B%0A%20%20allPixabayPhoto(limit%3A%2010)%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20largeImageURL%0A%20%20%20%20%20%20%20%20pageURL%0A%20%20%20%20%20%20%20%20tags%0A%20%20%20%20%20%20%20%20user%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A>).
 
 Experiment with different options in your `gatsby-config.js` file to see how that affects your query results. The [Pixabay API docs](https://pixabay.com/api/docs/#api_search_images) might be a useful reference.
 
@@ -370,10 +369,10 @@ You've built a local plugin for your project, but what if you want to share it w
 
 You've written a local Gatsby plugin, it:
 
-- can be configured with an entry in your `gatsby-config.js` file
-- requests data from a 3rd-party API
-- pulls the API data into Gatsby's node system
-- allows the data to be queried with GraphQL
+* can be configured with an entry in your `gatsby-config.js` file
+* requests data from a 3rd-party API
+* pulls the API data into Gatsby's node system
+* allows the data to be queried with GraphQL
 
 Congratulations!
 
@@ -390,6 +389,3 @@ Check out Gatsby's docs on [plugin authoring](https://www.gatsbyjs.org/docs/plug
 In this tutorial you've written code in a version of JavaScript that's compatible with Node.js version 6 and above.
 
 Jason's version of [the plugin](https://github.com/jlengstorf/gatsby-source-pixabay/blob/master/src/gatsby-node.js) uses newer JavaScript features with [babel](https://babeljs.io/) to provide compatibility for older versions of Node. Compare your code with Jason's to see how newer JavaScript features allow for more succinct code.
-
-
-
