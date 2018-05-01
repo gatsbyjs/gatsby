@@ -136,7 +136,7 @@ package and second, you add the plugin to your site's `gatsby-config.js`.
 Typography.js has a Gatsby plugin, so let's install that by running:
 
 ```shell
-npm install --save gatsby-plugin-typography
+npm install --save gatsby-plugin-typography react-typography typography
 ```
 
 Next, in your code editor, create a file at the root of your project folder named `gatsby-config.js`.
