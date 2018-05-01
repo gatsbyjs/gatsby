@@ -453,7 +453,7 @@ directory. But, if it's used only in one file, create it inline.
 
 Modify `about-css-modules.js` so it looks like the following:
 
-```jsx{6-17,23-30}
+```jsx{6-18,24-31}
 import React from "react"
 import styles from "./about-css-modules.module.css"
 console.log(styles)
