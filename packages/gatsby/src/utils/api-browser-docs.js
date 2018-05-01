@@ -63,6 +63,8 @@ exports.replaceComponentRenderer = true
 
 /**
  * Allow a plugin to replace the history object.
+ * @param {object} $0
+ * @param {object} $0.basename The base URL of the app.
  */
 exports.replaceHistory = true
 
