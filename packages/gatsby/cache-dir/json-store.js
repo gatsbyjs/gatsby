@@ -72,7 +72,6 @@ class JSONStore extends React.Component {
   }
 
   render() {
-    const { pages, pageResources } = this.props
     const data = this.state.pageQueryData[this.state.path]
     const omit = { propsWithoutPages: { ...this.props }, pages }
     if (!data) {
