@@ -22,6 +22,10 @@ module.exports = {
 
 <!-- Please keep the breaking changes list ordered with the newest change at the top -->
 
+#### v3.0.0
+
+support Gatsby v2 only
+
 #### v2.0.1
 
 `styled-components` is moved to a peer dependency. Installing the package
