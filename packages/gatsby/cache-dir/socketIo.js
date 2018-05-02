@@ -13,6 +13,7 @@ export default function socketIo() {
     if (!socket) {
       // Try to initialize web socket if we didn't do it already
       try {
+        // eslint-disable-next-line no-undef
         socket = io()
         socket.on(`message`, msg => {
           if (msg.type === `staticQueryResult`) {
