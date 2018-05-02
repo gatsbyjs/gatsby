@@ -1,3 +1,5 @@
+import resolve from "./resolve"
+
 exports.onCreateWebpackConfig = (
   { actions, stage, rules, plugins, loaders },
   { postCssPlugins, ...sassOptions }
@@ -6,7 +8,7 @@ exports.onCreateWebpackConfig = (
   const PRODUCTION = stage !== `develop`
 
   const sassLoader = {
-    loader: require.resolve(`sass-loader`),
+    loader: resolve(`sass-loader`),
     options: {
       sourceMap: !PRODUCTION,
       ...sassOptions,
