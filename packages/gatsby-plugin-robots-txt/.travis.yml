@@ -8,16 +8,30 @@ os:
 cache: yarn
 notifications:
   email: false
+env:
+  global:
+    - CC_VERSION=0.5.1
 branches:
   only:
     - master
     - /^greenkeeper/.*$/
   except:
     - gh-pages
+before_install:
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-${CC_VERSION}-darwin-amd64 > ./cc-test-reporter; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-${CC_VERSION}-linux-amd64 > ./cc-test-reporter; fi
+  - chmod +x ./cc-test-reporter
+install:
+  - yarn install
+before_script:
+  - ./cc-test-reporter before-build
 script:
   - yarn run clean
   - yarn run lint
+  - yarn run test
   - yarn run build
+after_script:
+  - ./cc-test-reporter after-build -t lcov --exit-code $TRAVIS_TEST_RESULT
 jobs:
   fast_finish: true
   include:

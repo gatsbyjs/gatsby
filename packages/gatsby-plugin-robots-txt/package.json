@@ -1,12 +1,14 @@
 {
   "name": "gatsby-plugin-robots-txt",
-  "files": ["gatsby-*.js*"],
+  "files": [
+    "gatsby-*.js*"
+  ],
   "main": "index.js",
-  "description":
-    "Gatsby plugin that automatically creates robots.txt for your site",
+  "description": "Gatsby plugin that automatically creates robots.txt for your site",
   "scripts": {
     "clean": "rm -rf gatsby-node.js*",
     "lint": "eslint --ext js,md ./ --cache",
+    "test": "jest --color",
     "format": "prettier --write 'src/*.js' 'README.md'",
     "build": "babel src --out-dir ./ --source-maps",
     "watch": "babel src --out-dir ./ --source-maps --watch"
@@ -21,7 +23,10 @@
   },
   "author": "Marat Dreizin <marat.dreizin@gmail.com>",
   "license": "MIT",
-  "keywords": ["gatsby", "gatsby-plugin"],
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin"
+  ],
   "dependencies": {
     "babel-runtime": "^6.26.0",
     "generate-robotstxt": "^5.0.5"
@@ -35,11 +40,16 @@
     "eslint": "^4.19.1",
     "eslint-plugin-babel": "^5.1.0",
     "eslint-plugin-markdown": "^1.0.0-beta.6",
+    "jest": "^22.4.3",
+    "memory-fs": "^0.4.1",
     "prettier": "^1.12.1",
     "semantic-release": "^15.1.7",
     "travis-deploy-once": "^5.0.0"
   },
   "peerDependencies": {
     "gatsby": "^1.0.0"
+  },
+  "jest": {
+    "collectCoverage": true
   }
 }

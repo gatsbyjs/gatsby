@@ -65,4 +65,5 @@ typings/
 
 # gatsby
 gatsby-*
-!src/*
+!src/**
+!test/**

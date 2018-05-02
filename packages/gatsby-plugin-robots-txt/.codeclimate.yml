@@ -1,0 +1,11 @@
+engines:
+  duplication:
+    enabled: true
+    config:
+      languages:
+        - javascript
+ratings:
+  paths:
+    - 'src/**.js'
+exclude_paths:
+  - 'node_modules/**'

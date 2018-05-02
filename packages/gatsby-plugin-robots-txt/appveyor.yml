@@ -26,4 +26,5 @@ test_script:
   - yarn --version
   - cmd: yarn run clean
   - cmd: yarn run lint
+  - cmd: yarn run test
   - cmd: yarn run build

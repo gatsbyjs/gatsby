@@ -69,5 +69,5 @@ export async function onPostBuild({ graphql }, pluginOptions) {
   });
   const filename = path.join(publicPath, output);
 
-  return await writeFile(filename, content);
+  return await writeFile(path.resolve(filename), content);
 }
