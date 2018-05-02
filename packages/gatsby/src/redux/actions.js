@@ -293,12 +293,20 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
 
 /**
  * Delete a node
- * @param {string} nodeId a node id
  * @param {object} node the node object
  * @example
- * deleteNode(node.id, node)
+ * deleteNode(node)
  */
-actions.deleteNode = (nodeId: string, node: any, plugin: Plugin) => {
+actions.deleteNode = (node: any, plugin: Plugin) => {
+  if (typeof node === `string`) {
+    console.log(
+      `The "deleteNode" action no longer accepts a nodeId string. Please pass a full node object instead.`
+    )
+    if (plugin && plugin.name) {
+      console.log(`"deleteNode" was called by ${plugin.name}`)
+    }
+  }
+
   let deleteDescendantsActions
   // It's possible the file node was never created as sometimes tools will
   // write and then immediately delete temporary files to the file system.
@@ -307,7 +315,7 @@ actions.deleteNode = (nodeId: string, node: any, plugin: Plugin) => {
     const descendantNodes = findChildrenRecursively(node.children)
     if (descendantNodes.length > 0) {
       deleteDescendantsActions = descendantNodes.map(n =>
-        actions.deleteNode(n, getNode(n), plugin)
+        actions.deleteNode(getNode(n), plugin)
       )
     }
   }
@@ -315,8 +323,7 @@ actions.deleteNode = (nodeId: string, node: any, plugin: Plugin) => {
   const deleteAction = {
     type: `DELETE_NODE`,
     plugin,
-    node,
-    payload: nodeId,
+    payload: node,
   }
 
   if (deleteDescendantsActions) {
@@ -334,7 +341,7 @@ actions.deleteNode = (nodeId: string, node: any, plugin: Plugin) => {
  */
 actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
   console.log(
-    `The "deleteNodes" is now deprecated and will be removed in Gatsby v3. Please use "deleteNode" instead`
+    `The "deleteNodes" action is now deprecated and will be removed in Gatsby v3. Please use "deleteNode" instead.`
   )
   if (plugin && plugin.name) {
     console.log(`"deleteNodes" was called by ${plugin.name}`)
@@ -347,7 +354,7 @@ actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
   let deleteDescendantsActions
   if (descendantNodes.length > 0) {
     deleteDescendantsActions = descendantNodes.map(n =>
-      actions.deleteNode(n, getNode(n), plugin)
+      actions.deleteNode(getNode(n), plugin)
     )
   }
 

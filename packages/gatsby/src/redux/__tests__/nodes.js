@@ -227,7 +227,8 @@ describe(`Create and update nodes`, () => {
         { name: `tests` }
       )
     )
-    store.dispatch(actions.deleteNode(`hi`, getNode(`hi`), { name: `tests` }))
+
+    store.dispatch(actions.deleteNode(getNode(`hi`), { name: `tests` }))
     expect(Object.keys(store.getState().nodes).length).toEqual(1)
   })
 
@@ -315,8 +316,7 @@ describe(`Create and update nodes`, () => {
       },
       { name: `tests` }
     )
-    actions.deleteNode(`hi`, getNode(`hi`))
-
+    actions.deleteNode(getNode(`hi`))
     expect(getNode(`hi`)).toBeUndefined()
   })
 
@@ -463,7 +463,7 @@ describe(`Create and update nodes`, () => {
   })
 
   it(`does not crash when delete node is called on undefined`, () => {
-    actions.deleteNode(undefined, undefined, { name: `tests` })
+    actions.deleteNode(undefined, { name: `tests` })
     expect(Object.keys(store.getState().nodes).length).toEqual(0)
   })
 })
