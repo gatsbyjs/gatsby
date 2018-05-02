@@ -1,6 +1,8 @@
 import Typography from "typography"
-import { baseHsl, colors } from "../styles/colors"
+import styleColors from "../styles/colors"
 import presets from "../utils/presets"
+
+const { baseHsl, colors } = styleColors
 
 const linkRaw = colors.link.substr(1)
 const linkHoverRaw = colors.linkHover.substr(1)
@@ -209,4 +211,4 @@ if (process.env.NODE_ENV !== `production`) {
   typography.injectStyles()
 }
 
-module.exports = typography
+export default typography
