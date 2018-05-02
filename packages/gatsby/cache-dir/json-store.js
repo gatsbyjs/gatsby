@@ -1,10 +1,8 @@
-import React, { createElement } from "react"
-import { Route } from "react-router-dom"
+import React from "react"
 import omit from "lodash/omit"
 import get from "lodash/get"
 
 import PageRenderer from "./page-renderer"
-import syncRequires from "./sync-requires"
 import { StaticQueryContext } from "gatsby"
 import socketIo, { getStaticQueryData, getPageQueryData } from "./socketIo"
 
@@ -71,7 +69,6 @@ class JSONStore extends React.Component {
   }
 
   render() {
-    const { pages, pageResources } = this.props
     const data = this.state.pageQueryData[this.state.path]
     const propsWithoutPages = omit(this.props, `pages`)
     if (!data) {
