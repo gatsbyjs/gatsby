@@ -34,7 +34,7 @@ Pixabay's [API documentation](https://pixabay.com/api/docs/#api_search_images) d
 
 `https://pixabay.com/api/?q=yellow+flowers&editors_choice=true&pretty=true&key=<YOUR_API_KEY_HERE>`
 
-Take the above URL and paste it in to a browser to see Pixabay's response to your query. It's given us a list of photos matching the query "yellow flowers" that have received an Editor's Choice award.
+Take the above URL and paste it in to a browser to see Pixabay's response to your query. It gives you a list of photos matching the query "yellow flowers" that have received an Editor's Choice award.
 
 > **NOTE:** You should replace <YOUR_API_KEY_HERE> with your Pixabay API key.
 
@@ -113,7 +113,7 @@ With the setup done, move on to adding the plugin's functionality.
 
 ### Create a `gatsby-node.js` file
 
-Create a new file called `gatsby-node.js`, and add the following:
+Create a new file called `gatsby-node.js` in your `gatsby-source-pixabay` directory, and add the following:
 
 ```js
 const crypto = require("crypto");
@@ -134,7 +134,7 @@ exports.sourceNodes = (
 };
 ```
 
-Let's break this down, you start by importing the dependencies that you added earlier (along with one built in dependency):
+What did you do by adding this code? You started by importing the dependencies that you added earlier (along with one built in dependency):
 
 ```js
 const crypto = require("crypto");
@@ -142,7 +142,7 @@ const fetch = require("node-fetch");
 const queryString = require("query-string");
 ```
 
-Then you implement Gatsby's [`sourceNodes` API](/docs/node-apis/#sourceNodes) which Gatsby will run as part of its bootstrap process. When Gatsby calls `sourceNodes`, it'll pass in some helper functions (`boundActionCreators` and `createNodeId`) along with any config options that are provided in your project's `gatsby-config.js` file:
+Then you implemented Gatsby's [`sourceNodes` API](/docs/node-apis/#sourceNodes) which Gatsby will run as part of its bootstrap process. When Gatsby calls `sourceNodes`, it'll pass in some helper functions (`boundActionCreators` and `createNodeId`) along with any config options that are provided in your project's `gatsby-config.js` file:
 
 ```js
 exports.sourceNodes = (
@@ -249,7 +249,7 @@ exports.sourceNodes = (
 }
 ```
 
-You've added code that fetches photo data from the Pixabay API. For now your plugin logs that data but doesn't do anything else. Check that you can see the logged photo data by restarting `gatsby dev`, this time you should see a series of results like:
+You've added code that fetches photo data from the Pixabay API. For now, your plugin logs that data but doesn't do anything else. Check that you can see the logged photo data by restarting `gatsby dev`. This time you should see a series of results like:
 
 ```shell
 success onPreBootstrap — 0.035 s
@@ -340,7 +340,7 @@ exports.sourceNodes = (
 
 ### Query for results
 
-Your plugin is ready. Restart `gatsby dev` and open a browser at [http://localhost:8000/\_\_\_graphql](http://localhost:8000/___graphql). The Pixabay data can be queried from here, try:
+Your plugin is ready. Restart `gatsby dev` and open a browser at [http://localhost:8000/\_\_\_graphql](http://localhost:8000/___graphql). The Pixabay data can be queried from here. try:
 
 ```graphql
 {
@@ -363,7 +363,7 @@ Experiment with different options in your `gatsby-config.js` file to see how tha
 
 ## Publishing a plugin
 
-You've built a local plugin for your project, but what if you want to share it with others? `npm` allows you to publish your plugins, check out the npm docs on [How to Publish & Update a Package](https://docs.npmjs.com/getting-started/publishing-npm-packages) for more info.
+You've built a local plugin for your project, but what if you want to share it with others? `npm` allows you to publish your plugins. Check out the npm docs on [How to Publish & Update a Package](https://docs.npmjs.com/getting-started/publishing-npm-packages) for more info.
 
 > **NOTE:** Don't forget to edit your plugin's `package.json` file to include info about your plugin.
 
