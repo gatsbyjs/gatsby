@@ -1,0 +1,1103 @@
+- title: NEON
+  main_url: 'http://neonrated.com/'
+  url: 'http://neonrated.com/'
+  featured: true
+  categories:
+    - Gallery
+    - Cinema
+    - Featured
+- title: The State of European Tech
+  main_url: 'https://2017.stateofeuropeantech.com/'
+  url: 'https://2017.stateofeuropeantech.com/'
+  featured: true
+  categories:
+    - Featured
+    - Technology
+  plugins: 'gatsby-plugin-react-helmet, gatsby-plugin-react-next'
+  built_by: Studio Lovelock
+  built_by_url: 'http://www.studiolovelock.com/'
+- title: Bottender Docs
+  main_url: 'https://bottender.js.org/'
+  url: 'https://bottender.js.org/'
+  source_url: 'https://github.com/bottenderjs/bottenderjs.github.io'
+  featured: true
+  categories:
+    - Documentation
+    - Web Dev
+    - Open Source
+    - Featured
+- title: Cardiogram
+  main_url: 'https://cardiogr.am/'
+  url: 'https://cardiogr.am/'
+  featured: true
+  categories:
+    - Marketing
+    - Technology
+    - Featured
+- title: Etcetera Design
+  main_url: 'https://etcetera.design/'
+  url: 'https://etcetera.design/'
+  source_url: 'https://github.com/etceteradesign/website'
+  featured: true
+  categories:
+    - Portfolio
+    - Creative
+    - Featured
+- title: Hack Club
+  main_url: 'https://hackclub.com/'
+  url: 'https://hackclub.com/'
+  source_url: 'https://github.com/hackclub/site'
+  featured: true
+  categories:
+    - Education
+    - Web Dev
+    - Featured
+- title: Matthias Jordan Portfolio
+  main_url: 'https://iammatthias.com/'
+  url: 'https://iammatthias.com/'
+  source_url: 'https://github.com/iammatthias/net'
+  featured: true
+  categories:
+    - Photography
+    - Portfolio
+    - Featured
+- title: Investment Calculator
+  main_url: 'https://investmentcalculator.io/'
+  url: 'https://investmentcalculator.io/'
+  featured: true
+  categories:
+    - Education
+    - Featured
+    - Finance
+- title: CSS Grid Playground by MozillaDev
+  main_url: 'https://mozilladevelopers.github.io/playground/'
+  url: 'https://mozilladevelopers.github.io/playground/'
+  source_url: 'https://github.com/MozillaDevelopers/playground'
+  featured: true
+  categories:
+    - Education
+    - Web Dev
+    - Featured
+- title: Piotr Fedorczyk Portfolio
+  main_url: 'https://piotrf.pl/'
+  url: 'https://piotrf.pl/'
+  featured: true
+  categories:
+    - Portfolio
+    - Creative
+    - Web Dev
+    - Featured
+- title: ReactJS
+  main_url: 'https://reactjs.org/'
+  url: 'https://reactjs.org/'
+  source_url: 'https://github.com/reactjs/reactjs.org'
+  featured: true
+  categories:
+    - Web Dev
+    - Featured
+- title: Slite
+  main_url: 'https://slite.com/'
+  url: 'https://slite.com/'
+  featured: true
+  categories:
+    - Landing
+    - Marketing
+    - Technology
+    - Featured
+- title: unrealcpp
+  main_url: 'https://unrealcpp.com/'
+  url: 'https://unrealcpp.com/'
+  source_url: 'https://github.com/Harrison1/unrealcpp-com'
+  featured: true
+  categories:
+    - Blog
+    - Web Dev
+    - Featured
+- title: Andy Slezak
+  main_url: 'https://www.aslezak.com/'
+  url: 'https://www.aslezak.com/'
+  source_url: 'https://github.com/amslezak'
+  featured: true
+  categories:
+    - Web Dev
+    - Portfolio
+    - Featured
+- title: Deliveroo.Design
+  main_url: 'https://www.deliveroo.design/'
+  url: 'https://www.deliveroo.design/'
+  featured: true
+  categories:
+    - Food
+    - Marketing
+    - Featured
+- title: Dona Rita
+  main_url: 'https://www.donarita.co.uk/'
+  url: 'https://www.donarita.co.uk/'
+  source_url: 'https://github.com/peduarte/dona-rita-website'
+  featured: true
+  categories:
+    - Food
+    - Marketing
+    - Featured
+- title: Fröhlich ∧ Frei
+  main_url: 'https://www.froehlichundfrei.de/'
+  url: 'https://www.froehlichundfrei.de/'
+  featured: true
+  categories:
+    - Web Dev
+    - Blog
+    - Open Source
+- title: How to GraphQL
+  main_url: 'https://www.howtographql.com/'
+  url: 'https://www.howtographql.com/'
+  source_url: 'https://github.com/howtographql/howtographql'
+  featured: true
+  categories:
+    - Documentation
+    - Web Dev
+    - Open Source
+    - Featured
+- title: OnCallogy
+  main_url: 'https://www.oncallogy.com/'
+  url: 'https://www.oncallogy.com/'
+  featured: true
+  categories:
+    - Landing
+    - Marketing
+    - Featured
+    - Healthcare
+- title: Ryan Wiemer's Portfolio
+  main_url: 'https://www.ryanwiemer.com/'
+  url: 'https://www.ryanwiemer.com/knw-photography/'
+  source_url: 'https://github.com/ryanwiemer/rw'
+  featured: true
+  categories:
+    - Portfolio
+    - Web Dev
+    - Featured
+- title: Ventura Digitalagentur Köln
+  main_url: 'https://www.ventura-digital.de/'
+  url: 'https://www.ventura-digital.de/'
+  featured: true
+  categories:
+    - Agency
+    - Marketing
+    - Featured
+- title: Azer Koçulu
+  main_url: 'http://azer.bike/'
+  url: 'http://azer.bike/photography'
+  featured: false
+  categories:
+    - Portfolio
+    - Photography
+    - Web Dev
+- title: Damir.io
+  main_url: 'http://damir.io/'
+  url: 'http://damir.io/'
+  source_url: 'https://github.com/dvzrd/gatsby-sfiction'
+  featured: false
+  categories:
+    - Creative
+- title: Digital Psychology
+  main_url: 'http://digitalpsychology.io/'
+  url: 'http://digitalpsychology.io/'
+  source_url: 'https://github.com/danistefanovic/digitalpsychology.io'
+  featured: false
+  categories:
+    - Education
+    - Library
+- title: GRANDstack
+  main_url: 'http://grandstack.io/'
+  url: 'http://grandstack.io/'
+  featured: false
+  categories:
+    - Open Source
+    - Web Dev
+- title: Théâtres Parisiens
+  main_url: 'http://theatres-parisiens.fr/'
+  url: 'http://theatres-parisiens.fr/'
+  source_url: 'https://github.com/phacks/theatres-parisiens'
+  featured: false
+  categories:
+    - Education
+    - Entertainment
+- title: William Owen UK Portfolio / Blog
+  main_url: 'http://william-owen.co.uk/'
+  url: 'http://william-owen.co.uk/'
+  featured: false
+  description: >-
+    Over 20 years experience delivering customer-facing websites, internet-based
+    solutions and creative visual design for a wide range of companies and
+    organisations.
+  categories:
+    - Portfolio
+    - Blog
+  built_by: William Owen
+  built_by_url: 'https://twitter.com/twilowen'
+- title: A4 纸网
+  main_url: 'http://www.a4z.cn/'
+  url: 'http://www.a4z.cn/price'
+  source_url: 'https://github.com/hiooyUI/hiooyui.github.io'
+  featured: false
+  categories:
+    - Retail
+- title: Steve Meredith's Portfolio
+  main_url: 'http://www.stevemeredith.com/'
+  url: 'http://www.stevemeredith.com/'
+  featured: false
+  categories:
+    - Portfolio
+- title: Sourcegraph
+  main_url: 'https://about.sourcegraph.com/'
+  url: 'https://about.sourcegraph.com/'
+  featured: false
+  categories:
+    - Web Dev
+- title: Adnan Fajlur Portfolio
+  main_url: 'https://adnanfajlur.xyz/'
+  url: 'https://adnanfajlur.xyz/'
+  featured: false
+  categories:
+    - Nonprofit
+- title: API Platform
+  main_url: 'https://api-platform.com/'
+  url: 'https://api-platform.com/'
+  source_url: 'https://github.com/api-platform/website'
+  featured: false
+  categories:
+    - Documentation
+    - Web Dev
+    - Open Source
+    - Library
+- title: Artivest
+  main_url: 'https://artivest.co/'
+  url: 'https://artivest.co/what-we-do/for-advisors-and-investors/'
+  featured: false
+  categories:
+    - Marketing
+    - Blog
+    - Documentation
+    - Finance
+- title: The Audacious Project
+  main_url: 'https://audaciousproject.org/'
+  url: 'https://audaciousproject.org/'
+  featured: false
+  categories:
+    - Nonprofit
+- title: Dustin Schau's Blog
+  main_url: 'https://blog.dustinschau.com/'
+  url: 'https://blog.dustinschau.com/'
+  source_url: 'https://github.com/dschau/blog'
+  featured: false
+  categories:
+    - Blog
+    - Web Dev
+- title: FloydHub's Blog
+  main_url: 'https://blog.floydhub.com/'
+  url: 'https://blog.floydhub.com/'
+  featured: false
+  categories:
+    - Technology
+    - Blog
+- title: iContract Blog
+  main_url: 'https://blog.icontract.co.uk/'
+  url: 'http://blog.icontract.co.uk/'
+  featured: false
+  categories:
+    - Blog
+- title: BRIIM
+  main_url: 'https://bri.im/'
+  url: 'https://bri.im/'
+  featured: false
+  description: >-
+    BRIIM is a movement to enable JavaScript enthusiasts and web developers in
+    machine learning. Learn about artificial intelligence and data science, two
+    fields which are governed by machine learning, in JavaScript. Take it right
+    to your browser with WebGL.
+  categories:
+    - Education
+    - Web Dev
+    - Technology
+- title: Caddy Smells Like Trees
+  main_url: 'https://caddysmellsliketrees.ru/'
+  url: 'https://caddysmellsliketrees.ru/'
+  source_url: 'https://github.com/podabed/caddysmellsliketrees.github.io'
+  featured: false
+  description: >-
+    We play soul-searching songs for every day. They are merging in our forests
+    in such a way that it is difficult to separate them from each other, and
+    between them bellow bold deer poems.
+  categories:
+    - Music
+- title: Calpa's Blog
+  main_url: 'https://calpa.me/'
+  url: 'https://calpa.me/'
+  source_url: 'https://github.com/calpa/blog'
+  featured: false
+  categories:
+    - Blog
+    - Web Dev
+- title: The Chiedo Companies Website
+  main_url: 'https://chiedo.tv/'
+  url: 'https://chiedo.tv/'
+  featured: false
+  categories:
+    - Landing
+    - Web Dev
+- title: Chocolate Free
+  main_url: 'https://chocolate-free.com/'
+  url: 'https://chocolate-free.com/'
+  source_url: 'https://github.com/Khaledgarbaya/chocolate-free-website'
+  featured: false
+  description: "A full time foodie \U0001F60D a forever Parisian \"patisserie\" lover and \U0001F382 \U0001F369 \U0001F370 \U0001F36A explorer and finally an under construction #foodblogger #foodblog"
+  categories:
+    - Blog
+    - Food
+- title: CodeBushi
+  main_url: 'https://codebushi.com/'
+  url: 'https://codebushi.com/'
+  featured: false
+  categories:
+    - Web Dev
+    - Open Source
+    - Blog
+- title: Daniel Hollcraft
+  main_url: 'https://danielhollcraft.com/'
+  url: 'https://danielhollcraft.com/'
+  source_url: 'https://github.com/danielbh/danielhollcraft.com'
+  featured: false
+  categories:
+    - Web Dev
+    - Blog
+    - Portfolio
+- title: Darren Britton's Portfolio
+  main_url: 'https://darrenbritton.com/'
+  url: 'https://darrenbritton.com/'
+  source_url: 'https://github.com/darrenbritton/darrenbritton.github.io'
+  featured: false
+  categories:
+    - Web Dev
+    - Portfolio
+- title: Design Systems Weekly
+  main_url: 'https://designsystems.email/'
+  url: 'https://designsystems.email/'
+  featured: false
+  categories:
+    - Education
+    - Web Dev
+- title: Dalbinaco's Website
+  main_url: 'https://dlbn.co/en/'
+  url: 'https://dlbn.co/en/'
+  source_url: 'https://github.com/dalbinaco/dlbn.co'
+  featured: false
+  categories:
+    - Portfolio
+    - Web Dev
+- title: mParticle's Documentation
+  main_url: 'https://docs.mparticle.com/'
+  url: 'https://docs.mparticle.com/'
+  featured: false
+  categories:
+    - Web Dev
+    - Documentation
+- title: Doopoll
+  main_url: 'https://doopoll.co/'
+  url: 'https://doopoll.co/'
+  featured: false
+  categories:
+    - Landing
+    - Marketing
+    - Technology
+- title: ERC dEX
+  main_url: 'https://ercdex.com/'
+  url: 'https://ercdex.com/aqueduct'
+  featured: false
+  categories:
+    - Marketing
+- title: Fabian Schultz' Portfolio
+  main_url: 'https://fabianschultz.com/'
+  url: 'https://fabianschultz.com/'
+  source_url: 'https://github.com/fabe/site'
+  featured: false
+  description: >-
+    Hello, I’m Fabian — a product designer and developer based in Potsdam,
+    Germany. I’ve been working both as a product designer and frontend developer
+    for over 5 years now. I particularly enjoy working with companies that try
+    to meet broad and unique user needs.
+  categories:
+    - Portfolio
+    - Web Dev
+- title: Formidable
+  main_url: 'https://formidable.com/'
+  url: 'https://formidable.com/'
+  featured: true
+  categories:
+    - Web Dev
+    - Agency
+    - Open Source
+    - Featured
+- title: Gatsby Manor
+  main_url: 'https://gatsbymanor.com/'
+  url: 'https://gatsbymanor.com/themes'
+  featured: false
+  categories:
+    - Web Dev
+- title: GraphCMS
+  main_url: 'https://graphcms.com/'
+  url: 'https://graphcms.com/'
+  featured: false
+  categories:
+    - Landing
+    - Marketing
+    - Technology
+- title: The freeCodeCamp Guide
+  main_url: 'https://guide.freecodecamp.org/'
+  url: 'https://guide.freecodecamp.org/'
+  source_url: 'https://github.com/freeCodeCamp/guide'
+  featured: false
+  categories:
+    - Web Dev
+    - Documentation
+- title: High School Hackathons
+  main_url: 'https://hackathons.hackclub.com/'
+  url: 'https://hackathons.hackclub.com/'
+  source_url: 'https://github.com/hackclub/hackathons'
+  featured: false
+  categories:
+    - Education
+    - Web Dev
+- title: Hapticmedia
+  main_url: 'https://hapticmedia.fr/en/'
+  url: 'https://hapticmedia.fr/en/'
+  featured: false
+  categories:
+    - Agency
+    - Creative
+- title: heml.io
+  main_url: 'https://heml.io/'
+  url: 'https://heml.io/'
+  source_url: 'https://github.com/SparkPost/heml.io'
+  featured: false
+  categories:
+    - Documentation
+    - Web Dev
+    - Open Source
+- title: Juliette Pretot's Portfolio
+  main_url: 'https://juliette.sh/'
+  url: 'https://juliette.sh/'
+  featured: false
+  categories:
+    - Web Dev
+    - Portfolio
+    - Blog
+- title: Kris Hedstrom's Portfolio
+  main_url: 'https://k-create.com/'
+  url: 'https://k-create.com/portfolio/'
+  source_url: 'https://github.com/kristofferh/kristoffer'
+  featured: false
+  description: >-
+    Hey. I’m Kris. I’m an interactive designer / developer. I grew up in Umeå,
+    in northern Sweden, but I now live in Brooklyn, NY. I am currently enjoying
+    a hybrid Art Director + Lead Product Engineer role at a small startup called
+    Nomad Health. Before that, I was a Product (Engineering) Manager at Tumblr.
+    Before that, I worked at agencies. Before that, I was a baby. I like to
+    design things, and then I like to build those things. I occasionally take on
+    freelance projects. Feel free to get in touch if you have an interesting
+    project that you want to collaborate on. Or if you just want to say hello,
+    that’s cool too.
+  categories:
+    - Creative
+    - Portfolio
+- title: knpw.rs
+  main_url: 'https://knpw.rs/'
+  url: 'https://knpw.rs/'
+  source_url: 'https://github.com/knpwrs/knpw.rs'
+  featured: false
+  categories:
+    - Blog
+    - Web Dev
+- title: Kostas Bariotis' Blog
+  main_url: 'https://kostasbariotis.com/'
+  url: 'https://kostasbariotis.com/'
+  source_url: 'https://github.com/kbariotis/kostasbariotis.com'
+  featured: false
+  categories:
+    - Blog
+    - Portfolio
+    - Web Dev
+- title: LaserTime Clinic
+  main_url: 'https://lasertime.ru/'
+  url: 'https://lasertime.ru/'
+  source_url: 'https://github.com/oleglegun/lasertime'
+  featured: false
+  categories:
+    - Marketing
+- title: Jason Lengstorf
+  main_url: 'https://lengstorf.com'
+  source_url: 'https://github.com/jlengstorf/lengstorf.com'
+  featured: false
+  date_added: Apr 10
+  gatsby_version: V1
+  categories:
+    - Blog
+    - Personal
+  built_by: Jason Lengstorf
+  built_by_url: 'https://github.com/jlengstorf'
+- title: Mannequin.io
+  main_url: 'https://mannequin.io/'
+  url: 'https://mannequin.io/'
+  source_url: 'https://github.com/LastCallMedia/Mannequin/tree/master/site'
+  featured: false
+  categories:
+    - Open Source
+    - Web Dev
+    - Documentation
+- title: manu.ninja
+  main_url: 'https://manu.ninja/'
+  url: 'https://manu.ninja/'
+  source_url: 'https://github.com/Lorti/manu.ninja'
+  featured: false
+  description: >-
+    manu.ninja is the personal blog of Manuel Wieser, where he talks about
+    front-end development, games and digital art
+  categories:
+    - Blog
+    - Technology
+    - Web Dev
+- title: Fabric
+  main_url: 'https://meetfabric.com/'
+  url: 'https://meetfabric.com/'
+  featured: true
+  categories:
+    - Corporate
+    - Marketing
+    - Featured
+    - Insurance
+- title: Nexit
+  main_url: 'https://nexit.sk/'
+  url: 'https://nexit.sk/references'
+  featured: false
+  categories:
+    - Web Dev
+- title: Nortcast
+  main_url: 'https://nortcast.com/'
+  url: 'https://nortcast.com/'
+  featured: false
+  categories:
+    - Technology
+    - Entertainment
+    - Podcast
+- title: openFDA
+  main_url: 'https://open.fda.gov/'
+  url: 'https://open.fda.gov/'
+  source_url: 'https://github.com/FDA/open.fda.gov'
+  featured: false
+  categories:
+    - Government
+    - Open Source
+    - Web Dev
+- title: NYC Planning Labs (New York City Department of City Planning)
+  main_url: 'https://planninglabs.nyc/'
+  url: 'https://planninglabs.nyc/about/'
+  source_url: 'https://github.com/NYCPlanning/'
+  featured: false
+  description: >-
+    We work with New York City's Urban Planners to deliver impactful, modern
+    technology tools.
+  categories:
+    - Open Source
+    - Government
+- title: Pravdomil
+  main_url: 'https://pravdomil.com/'
+  url: 'https://pravdomil.com/'
+  source_url: 'https://github.com/pravdomil/pravdomil.com'
+  featured: false
+  description: >-
+    I’ve been working both as a product designer and frontend developer for over
+    5 years now. I particularly enjoy working with companies that try to meet
+    broad and unique user needs.
+  categories:
+    - Portfolio
+    - Personal
+- title: Preston Richey Portfolio / Blog
+  main_url: 'https://prestonrichey.com/'
+  url: 'https://prestonrichey.com/'
+  source_url: 'https://github.com/prichey/prestonrichey.com'
+  featured: false
+  categories:
+    - Web Dev
+    - Portfolio
+    - Blog
+- title: Landing page of Put.io
+  main_url: 'https://put.io/'
+  url: 'https://put.io/'
+  featured: false
+  categories:
+    - eCommerce
+    - Technology
+- title: The Rick and Morty API
+  main_url: 'https://rickandmortyapi.com/'
+  url: 'https://rickandmortyapi.com/'
+  featured: false
+  categories:
+    - Web Dev
+    - Entertainment
+    - Documentation
+    - Open Source
+- title: Santa Compañía Creativa
+  main_url: 'https://santacc.es/'
+  source_url: 'https://github.com/DesarrolloWebSantaCC/santacc-web'
+  featured: false
+  categories:
+    - Agency
+    - Creative
+- title: Sean Coker's Blog
+  main_url: 'https://sean.is/'
+  url: 'https://sean.is/'
+  featured: false
+  categories:
+    - Blog
+    - Portfolio
+    - Web Dev
+- title: Segment's Blog
+  main_url: 'https://segment.com/blog/'
+  url: 'https://segment.com/blog/'
+  featured: false
+  categories:
+    - Web Dev
+    - Blog
+- title: Several Levels
+  main_url: 'https://severallevels.io/'
+  url: 'https://severallevels.io/'
+  source_url: 'https://github.com/Harrison1/several-levels'
+  featured: false
+  categories:
+    - Agency
+    - Web Dev
+- title: Simply
+  main_url: 'https://simply.co.za/'
+  url: 'https://simply.co.za/'
+  featured: false
+  categories:
+    - Corporate
+    - Marketing
+    - Insurance
+- title: Storybook
+  main_url: 'https://storybook.js.org/'
+  url: 'https://storybook.js.org/'
+  source_url: 'https://github.com/storybooks/storybook'
+  featured: false
+  categories:
+    - Web Dev
+    - Open Source
+- title: Vibert Thio's Portfolio
+  main_url: 'https://vibertthio.com/portfolio/'
+  url: 'https://vibertthio.com/portfolio/projects/'
+  source_url: 'https://github.com/vibertthio/portfolio'
+  featured: false
+  categories:
+    - Portfolio
+    - Web Dev
+    - Creative
+- title: VisitGemer
+  main_url: 'https://visitgemer.sk/'
+  url: 'https://visitgemer.sk/'
+  featured: false
+  categories:
+    - Marketing
+- title: Beach Hut Poole
+  main_url: 'https://www.beachhutpoole.co.uk/'
+  url: 'https://www.beachhutpoole.co.uk/'
+  featured: false
+- title: Bricolage.io
+  main_url: 'https://www.bricolage.io/'
+  url: 'https://www.bricolage.io/'
+  source_url: 'https://github.com/KyleAMathews/blog'
+  featured: false
+  categories:
+    - Blog
+- title: Charles Pinnix Website
+  main_url: 'https://www.charlespinnix.com/'
+  url: 'https://www.charlespinnix.com/'
+  featured: false
+  description: >-
+    I’m a senior front end engineer with 8 years of experience building websites
+    and web applications. I’m interested in leading creative, multidisciplinary
+    engineering teams. I’m a creative technologist, merging photography, art,
+    and design into engineering and visa versa. I take a pragmatic,
+    product-oriented approach to development, allowing me to see the big picture
+    and ensuring quality products are completed on time. I have a passion for
+    modern front end javascript frameworks such as React and Vue, and I have
+    substantial experience on the back end with an interest in Node and
+    container based deployment with Docker and AWS.
+  categories:
+    - Portfolio
+    - Web Dev
+- title: Charlie Harrington's Blog
+  main_url: 'https://www.charlieharrington.com/'
+  url: 'https://www.charlieharrington.com/'
+  source_url: 'https://github.com/whatrocks/blog'
+  featured: false
+  categories:
+    - Blog
+    - Web Dev
+    - Music
+- title: Developer Ecosystem
+  main_url: 'https://www.developerecosystem.com/'
+  url: 'https://www.developerecosystem.com/'
+  featured: false
+  categories:
+    - Blog
+    - Web Dev
+- title: Flooring Factories Outlets
+  main_url: 'https://www.flooringfactoriesoutlets.com/'
+  url: 'https://www.flooringfactoriesoutlets.com/'
+  featured: false
+  categories:
+    - Marketing
+- title: Gabriel Adorf's Portfolio
+  main_url: 'https://www.gabrieladorf.com/'
+  url: 'https://www.gabrieladorf.com/'
+  source_url: 'https://github.com/gabdorf/gabriel-adorf-portfolio'
+  featured: false
+  categories:
+    - Portfolio
+    - Web Dev
+- title: greglobinski.com
+  main_url: 'https://www.greglobinski.com/'
+  url: 'https://www.greglobinski.com/'
+  source_url: 'https://github.com/greglobinski/www.greglobinski.com'
+  featured: false
+  categories:
+    - Portfolio
+    - Web Dev
+- title: I am Putra
+  main_url: 'https://www.iamputra.com/'
+  url: 'https://www.iamputra.com/'
+  featured: false
+  categories:
+    - Portfolio
+    - Web Dev
+    - Blog
+- title: In Sowerby Bridge
+  main_url: 'https://www.insowerbybridge.co.uk/'
+  url: 'https://www.insowerbybridge.co.uk/'
+  featured: false
+  categories:
+    - Marketing
+    - Government
+- title: JavaScript Stuff
+  main_url: 'https://www.javascriptstuff.com/'
+  url: 'https://www.javascriptstuff.com/'
+  featured: false
+  categories:
+    - Education
+    - Web Dev
+    - Library
+- title: KNW Photography
+  main_url: 'https://www.knw.io/'
+  url: 'https://www.knw.io/galleries/'
+  source_url: 'https://github.com/ryanwiemer/knw'
+  featured: false
+  description: >-
+    Hi there! I’m Kirsten and I’m currently living in Oakland with my husband
+    and fluffy pup Birch. I’ve always been an excessive photo taker and decided
+    to turn my love for taking photos into a career.
+  categories:
+    - Photography
+    - Portfolio
+- title: Ledgy
+  main_url: 'https://www.ledgy.com/'
+  url: 'https://github.com/morloy/ledgy.com'
+  featured: false
+  categories:
+    - Marketing
+    - Finance
+- title: Alec Lomas's Portfolio / Blog
+  main_url: 'https://www.lowmess.com/'
+  url: 'https://www.lowmess.com/'
+  source_url: 'https://github.com/lowmess/lowmess'
+  featured: false
+  categories:
+    - Web Dev
+    - Blog
+    - Portfolio
+- title: Michele Mazzucco's Portfolio
+  main_url: 'https://www.michelemazzucco.it/'
+  url: 'https://www.michelemazzucco.it/'
+  source_url: 'https://github.com/michelemazzucco/michelemazzucco.it'
+  featured: false
+  categories:
+    - Creative
+    - Portfolio
+- title: Orbit FM Podcasts
+  main_url: 'https://www.orbit.fm/'
+  url: 'https://www.orbit.fm/'
+  source_url: 'https://github.com/agarrharr/orbit.fm'
+  featured: false
+  categories:
+    - Podcast
+- title: Prosecco Springs
+  main_url: 'https://www.proseccosprings.com/'
+  url: 'https://www.proseccosprings.com/'
+  featured: false
+  categories:
+    - Food
+    - Blog
+    - Marketing
+- title: Verious
+  main_url: 'https://www.verious.io/'
+  url: 'https://www.verious.io/'
+  source_url: 'https://github.com/cpinnix/verious'
+  featured: false
+  categories:
+    - Web Dev
+- title: Whittle School
+  main_url: 'https://www.whittleschool.org/en/'
+  url: 'https://www.whittleschool.org/en/'
+  featured: false
+  categories:
+    - Education
+- title: Yisela
+  main_url: 'https://www.yisela.com/'
+  url: 'https://www.yisela.com/tetris-against-trauma-gaming-as-therapy/'
+  featured: false
+  categories:
+    - Blog
+- title: YouFoundRon.com
+  main_url: 'https://www.youfoundron.com/'
+  url: 'https://www.youfoundron.com/'
+  source_url: 'https://github.com/rongierlach/yfr-dot-com'
+  featured: false
+  categories:
+    - Portfolio
+    - Web Dev
+    - Blog
+- title: yerevancoder
+  main_url: 'https://yerevancoder.com/'
+  url: 'https://forum.yerevancoder.com/categories'
+  source_url: 'https://github.com/yerevancoder/yerevancoder.github.io'
+  featured: false
+  categories:
+    - Blog
+    - Web Dev
+- title: EaseCentral
+  main_url: 'https://www.easecentral.com/'
+  url: 'https://www.easecentral.com/'
+  featured: false
+  categories:
+    - Marketing
+    - Healthcare
+- title: Policygenius
+  main_url: 'https://www.policygenius.com/'
+  url: 'https://www.policygenius.com/'
+  featured: false
+  categories:
+    - Marketing
+    - Healthcare
+- title: Moteefe
+  main_url: 'http://www.moteefe.com/'
+  url: 'http://www.moteefe.com/'
+  featured: false
+  categories:
+    - Marketing
+    - Agency
+    - Technology
+- title: Athelas
+  main_url: 'http://www.athelas.com/'
+  url: 'http://www.athelas.com/'
+  featured: true
+  categories:
+    - Marketing
+    - Healthcare
+    - Featured
+- title: Pathwright
+  main_url: 'http://www.pathwright.com/'
+  url: 'http://www.pathwright.com/'
+  featured: false
+  categories:
+    - Marketing
+    - Education
+- title: pi-top
+  main_url: 'http://www.pi-top.com/'
+  url: 'http://www.pi-top.com/'
+  featured: false
+  categories:
+    - Marketing
+    - Web Dev
+    - Technology
+    - eCommerce
+- title: Troops
+  main_url: 'http://www.troops.ai/'
+  url: 'http://www.troops.ai/'
+  featured: false
+  categories:
+    - Marketing
+    - Technology
+- title: ClearBrain
+  main_url: 'https://clearbrain.com/'
+  url: 'https://clearbrain.com/'
+  featured: false
+  categories:
+    - Marketing
+    - Technology
+- title: Lucid
+  main_url: 'https://www.golucid.co/'
+  url: 'https://www.golucid.co/'
+  featured: true
+  categories:
+    - Marketing
+    - Technology
+    - Featured
+- title: Bench
+  main_url: 'http://www.bench.co/'
+  url: 'http://www.bench.co/'
+  featured: false
+  categories:
+    - Marketing
+- title: Union Plus Credit Card
+  main_url: 'http://www.unionpluscard.com'
+  url: 'https://unionplus.capitalone.com/'
+  featured: false
+  categories:
+    - Marketing
+    - Finance
+- title: Gin Lane
+  main_url: 'http://www.ginlane.com/'
+  url: 'https://www.ginlane.com/'
+  featured: false
+  categories:
+    - Web Dev
+    - Creative
+    - Agency
+- title: Marmelab
+  main_url: 'https://marmelab.com/en/'
+  url: 'https://marmelab.com/en/'
+  featured: false
+  categories:
+    - Web Dev
+    - Agency
+- title: Fusion Media Group
+  main_url: 'http://thefmg.com/'
+  url: 'http://thefmg.com/'
+  featured: true
+  categories:
+    - Creative
+    - Entertainment
+    - News
+    - Featured
+- title: Cool Hunting
+  main_url: 'http://www.coolhunting.com/'
+  url: 'http://www.coolhunting.com/'
+  featured: false
+  categories:
+    - Magazine
+- title: Dovetail
+  main_url: 'https://dovetailapp.com/'
+  url: 'https://dovetailapp.com/'
+  featured: false
+  categories:
+    - Marketing
+    - Technology
+- title: GraphQL College
+  main_url: 'https://www.graphql.college/'
+  url: 'https://www.graphql.college/'
+  source_url: 'https://github.com/GraphQLCollege/graphql-college'
+  featured: false
+  categories:
+    - Web Dev
+    - Education
+- title: F1 Vision
+  main_url: 'https://www.f1vision.com/'
+  url: 'https://www.f1vision.com/'
+  featured: false
+  categories:
+    - Marketing
+    - Entertainment
+    - Technology
+    - eCommerce
+- title: Yuuniworks Portfolio / Blog
+  main_url: 'https://www.yuuniworks.com/'
+  url: 'https://www.yuuniworks.com/'
+  source_url: 'https://github.com/junkboy0315/yuuni-web'
+  featured: false
+  categories:
+    - Portfolio
+    - Web Dev
+    - Blog
+- title: Bastion Bot
+  main_url: 'https://bastionbot.org/'
+  url: 'https://bastionbot.org/'
+  featured: false
+  categories:
+    - Marketing
+    - Technology
+    - Documentation
+    - Web Dev
+- title: upGizmo
+  main_url: 'https://www.upgizmo.com/'
+  url: 'https://www.upgizmo.com/'
+  featured: false
+  categories:
+    - News
+    - Technology
+- title: Smakosh (source)
+  featured: false
+- title: Philipp Czernitzki - Blog/Website
+  featured: false
+- title: WebGazer
+  featured: false
+- title: Joe Seifi's Blog
+  featured: false
+- title: Bartosz Dominiak Blog/Portfolio (source)
+  featured: false
+- title: HBTU MUN 2018 (source)
+  featured: false
+- title: Jamie Henson's Blog (source)
+  featured: false
+- title: Ruben's Blog (source)
+  featured: false
+- title: Thao Am Private Enterprise
+  featured: false
+- title: Bakadono
+  featured: false
+- title: Travellers.cafe
+  featured: false
+- title: Oliver Benns' Portfolio (source)
+  featured: false
+- title: angeloocana.com (source)
+  featured: false
+- title: Overlap.show (source)
+  featured: false
+- title: smartive Company Website
+  featured: false
+- title: Haboba Find Jobs at Phu Quoc Island
+  featured: false
+- title: Song Wang’s website (source)
+  featured: false
+- title: Magicly's blog (source)
+  featured: false
+- title: Phu Quoc Works
+  featured: false
+- title: Kabir Goel's website (source)
+  featured: false
+- title: David James' Portfolio (source)
+  featured: false
+- title: Tic Tac Toe AI (source)
+  featured: false
+- title: Random Screencast
+  featured: false
+- title: Phu Quoc Tea & Coffee Store
+  featured: false
+- title: Steven Natera's blog
+  featured: false
+- title: LekoArts - Graphic Designer
+  featured: false
+- title: Georgi Yanev (source)
+  featured: false
+- title: Hallingdata
+  featured: false
+- title: '@swyx (source)'
+  featured: false
+- title: 伊撒尔の窝
+  featured: false
