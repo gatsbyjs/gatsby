@@ -134,6 +134,8 @@ exports.sourceNodes = (
 };
 ```
 
+### Step by step through your `gatsby-node.js` file
+
 What did you do by adding this code? You started by importing the dependencies that you added earlier (along with one built in dependency):
 
 ```js
