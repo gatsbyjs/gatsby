@@ -10,7 +10,7 @@ let hasFetched = Object.create(null)
 let syncRequires = {}
 let asyncRequires = {}
 let jsonDataPaths = {}
-let pathPrefix = ``
+let pathPrefix = `/`
 let fetchHistory = []
 let fetchingPageResourceMapPromise = null
 let fetchedPageResourceMap = false
@@ -48,7 +48,7 @@ const fetchResource = resourceName => {
         if (resourceName in jsonStore) {
           resolve(jsonStore[resourceName])
         } else {
-          const url = `${pathPrefix ? pathPrefix : `/`}static/d/${
+          const url = `${pathPrefix}static/d/${
             jsonDataPaths[resourceName]
           }.json`
           var req = new XMLHttpRequest()
@@ -156,7 +156,6 @@ const sortResourcesByCount = (a, b) => {
 }
 
 let findPage
-let pages = []
 let pathScriptsCache = {}
 let resourcesArray = []
 let mountOrder = 1
@@ -165,19 +164,14 @@ const queue = {
   empty: () => {
     resourcesCount = Object.create(null)
     resourcesArray = []
-    pages = []
-    pathPrefix = ``
+    pathPrefix = `/`
   },
 
   addPagesArray: newPages => {
-    pages = newPages
-    if (
-      typeof __PREFIX_PATHS__ !== `undefined` &&
-      typeof __PATH_PREFIX__ !== `undefined`
-    ) {
-      if (__PREFIX_PATHS__ === true) pathPrefix = `${__PATH_PREFIX__}/`
+    if (__PREFIX_PATHS__) {
+      pathPrefix = `${__PATH_PREFIX__}/`
     }
-    findPage = pageFinderFactory(newPages, pathPrefix)
+    findPage = pageFinderFactory(newPages, pathPrefix.slice(0, -1))
   },
   addDevRequires: devRequires => {
     syncRequires = devRequires
@@ -191,7 +185,7 @@ const queue = {
   dequeue: () => resourcesArray.pop(),
   enqueue: rawPath => {
     // Check page exists.
-    const path = stripPrefix(rawPath, pathPrefix)
+    const path = stripPrefix(rawPath, pathPrefix.slice(0, -1))
 
     let page = findPage(path)
 
