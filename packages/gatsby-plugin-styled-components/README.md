@@ -18,15 +18,27 @@ module.exports = {
     {
       resolve: `gatsby-plugin-styled-components`,
       options: {
-        // Debug option, default to `true`
-        displayName: false,
-        // See more options here https://www.styled-components.com/docs/tooling#babel-plugin
-        // Note: `ssr` option will be ignored and handled automatically
+        // Add any options here
       },
     },
   ],
 }
 ```
+
+# Options
+
+You can pass options to the plugin, see the [Styled Components docs](https://www.styled-components.com/docs/tooling#babel-plugin) for a full list of options.
+
+For example, to disable the `displayName` option:
+
+```js
+  options: {
+    displayName: false
+  }
+```
+
+Note: The `ssr` option will be ignored. Gatsby will apply it automatically when needed.
+
 
 ### Breaking changes history
 
