@@ -73,14 +73,15 @@ class JSONStore extends React.Component {
 
   render() {
     const data = this.state.pageQueryData[this.state.path]
-    const omit = { propsWithoutPages: { ...this.props }, pages }
+    // eslint-disable-next-line
+    const { pages, ...propsWithoutPages } = this.props
     if (!data) {
       return <div />
     }
 
     return (
       <StaticQueryContext.Provider value={this.state.staticQueryData}>
-        <PageRenderer {...omit.propsWithoutPages} {...data} />
+        <PageRenderer {...propsWithoutPages} {...data} />
       </StaticQueryContext.Provider>
     )
   }
