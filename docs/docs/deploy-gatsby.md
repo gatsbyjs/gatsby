@@ -155,7 +155,8 @@ configuration file. This is the file that Gitlab uses to manage the CI job.
 
 It can easily be added to your repository by the [Gitlab](https://gitlab.com) 
 website, as the online editor contains a pre-built template for Gatsby deployment. 
-Just open your repository on their website, select the 'Setup CI/CD' option on 
+
+To use the template open your repository on their website, select the 'Setup CI/CD' option on 
 the center menu, and it will create a new blank `.gitlab-ci.yml` for you. Now 
 select the 'Apply a Gitlab CI Yaml Template' drop-down, and type 'Gatsby' into 
 the filter. Select the Gatsby option, click 'Commit Changes', and you are done!
