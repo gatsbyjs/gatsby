@@ -118,7 +118,7 @@ class TracedSVG extends React.Component {
             },
           }}
           title={`Photo by Redd Angelo on Unsplash`}
-          resolutions={data.reddImageMobile.childImageSharp.resolutions}
+          fixed={data.reddImageMobile.childImageSharp.fixed}
         />
         <Img
           style={{ display: `inherit` }}
@@ -132,7 +132,7 @@ class TracedSVG extends React.Component {
             },
           }}
           title={`Photo by Redd Angelo on Unsplash`}
-          resolutions={data.reddImage.childImageSharp.resolutions}
+          fixed={data.reddImage.childImageSharp.fixed}
         />
         <Lorem />
 
@@ -156,15 +156,15 @@ export const query = graphql`
   query TracedSVGQuery {
     reddImageMobile: file(relativePath: { regex: "/redd/" }) {
       childImageSharp {
-        resolutions(width: 125) {
-          ...GatsbyImageSharpResolutions_tracedSVG
+        fixed(width: 125) {
+          ...GatsbyImageSharpFixed_tracedSVG
         }
       }
     }
     reddImage: file(relativePath: { regex: "/redd/" }) {
       childImageSharp {
-        resolutions(width: 200) {
-          ...GatsbyImageSharpResolutions_tracedSVG
+        fixed(width: 200) {
+          ...GatsbyImageSharpFixed_tracedSVG
         }
       }
     }

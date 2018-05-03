@@ -466,8 +466,8 @@ Full example:
         featured_media {
           localFile {
             childImageSharp {
-              resolutions(width: 500, height: 300) {
-                ...GatsbyImageSharpResolutions_withWebp
+              fixed(width: 500, height: 300) {
+                ...GatsbyImageSharpFixed_withWebp
               }
             }
           }

@@ -1,6 +1,6 @@
 /* eslint-disable */
-export const gatsbyImageSharpResolutions = graphql`
-  fragment GatsbyImageSharpResolutions on ImageSharpResolutions {
+export const gatsbyImageSharpFixed = graphql`
+  fragment GatsbyImageSharpFixed on ImageSharpFixed {
     base64
     width
     height
@@ -9,8 +9,8 @@ export const gatsbyImageSharpResolutions = graphql`
   }
 `
 
-export const gatsbyImageSharpResolutionsTracedSVG = graphql`
-  fragment GatsbyImageSharpResolutions_tracedSVG on ImageSharpResolutions {
+export const gatsbyImageSharpFixedTracedSVG = graphql`
+  fragment GatsbyImageSharpFixed_tracedSVG on ImageSharpFixed {
     tracedSVG
     width
     height
@@ -19,8 +19,8 @@ export const gatsbyImageSharpResolutionsTracedSVG = graphql`
   }
 `
 
-export const gatsbyImageSharpResolutionsPreferWebp = graphql`
-  fragment GatsbyImageSharpResolutions_withWebp on ImageSharpResolutions {
+export const gatsbyImageSharpFixedPreferWebp = graphql`
+  fragment GatsbyImageSharpFixed_withWebp on ImageSharpFixed {
     base64
     width
     height
@@ -31,8 +31,8 @@ export const gatsbyImageSharpResolutionsPreferWebp = graphql`
   }
 `
 
-export const gatsbyImageSharpResolutionsPreferWebpTracedSVG = graphql`
-  fragment GatsbyImageSharpResolutions_withWebp_tracedSVG on ImageSharpResolutions {
+export const gatsbyImageSharpFixedPreferWebpTracedSVG = graphql`
+  fragment GatsbyImageSharpFixed_withWebp_tracedSVG on ImageSharpFixed {
     tracedSVG
     width
     height
@@ -43,8 +43,8 @@ export const gatsbyImageSharpResolutionsPreferWebpTracedSVG = graphql`
   }
 `
 
-export const gatsbyImageSharpResolutionsNoBase64 = graphql`
-  fragment GatsbyImageSharpResolutions_noBase64 on ImageSharpResolutions {
+export const gatsbyImageSharpFixedNoBase64 = graphql`
+  fragment GatsbyImageSharpFixed_noBase64 on ImageSharpFixed {
     width
     height
     src
@@ -52,8 +52,8 @@ export const gatsbyImageSharpResolutionsNoBase64 = graphql`
   }
 `
 
-export const gatsbyImageSharpResolutionsPreferWebpNoBase64 = graphql`
-  fragment GatsbyImageSharpResolutions_withWebp_noBase64 on ImageSharpResolutions {
+export const gatsbyImageSharpFixedPreferWebpNoBase64 = graphql`
+  fragment GatsbyImageSharpFixed_withWebp_noBase64 on ImageSharpFixed {
     width
     height
     src

@@ -551,7 +551,7 @@ async function responsiveSizes({ file, args = {}, reporter }) {
   }
 }
 
-async function resolutions({ file, args = {}, reporter }) {
+async function fixed({ file, args = {}, reporter }) {
   const defaultArgs = {
     width: 400,
     quality: 50,
@@ -765,7 +765,7 @@ exports.queueImageResizing = queueImageResizing
 exports.base64 = base64
 exports.traceSVG = traceSVG
 exports.responsiveSizes = responsiveSizes
-exports.responsiveResolution = resolutions
+exports.responsiveResolution = fixed
 exports.sizes = responsiveSizes
-exports.resolutions = resolutions
+exports.fixed = fixed
 exports.getImageSize = getImageSize

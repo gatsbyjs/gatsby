@@ -4,9 +4,9 @@ import PropTypes from "prop-types"
 // Handle legacy names for image queries.
 const convertProps = props => {
   let convertedProps = { ...props }
-  if (convertedProps.responsiveResolution) {
-    convertedProps.resolutions = convertedProps.responsiveResolution
-    delete convertedProps.responsiveResolution
+  if (convertedProps.resolutions) {
+    convertedProps.fixed = convertedProps.resolutions
+    delete convertedProps.resolutions
   }
   if (convertedProps.responsiveSizes) {
     convertedProps.sizes = convertedProps.responsiveSizes
@@ -24,7 +24,7 @@ const inImageCache = props => {
   // Find src
   const src = convertedProps.sizes
     ? convertedProps.sizes.src
-    : convertedProps.resolutions.src
+    : convertedProps.fixed.src
 
   if (imageCache[src]) {
     return true
@@ -185,7 +185,7 @@ class Image extends React.Component {
       style = {},
       imgStyle = {},
       sizes,
-      resolutions,
+      fixed,
       backgroundColor,
       Tag,
     } = convertProps(this.props)
@@ -309,8 +309,8 @@ class Image extends React.Component {
       )
     }
 
-    if (resolutions) {
-      const image = resolutions
+    if (fixed) {
+      const image = fixed
       const divStyle = {
         position: `relative`,
         overflow: `hidden`,
@@ -427,7 +427,7 @@ Image.defaultProps = {
 Image.propTypes = {
   responsiveResolution: PropTypes.object,
   responsiveSizes: PropTypes.object,
-  resolutions: PropTypes.object,
+  fixed: PropTypes.object,
   sizes: PropTypes.object,
   fadeIn: PropTypes.bool,
   title: PropTypes.string,

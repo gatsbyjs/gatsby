@@ -10,7 +10,7 @@ const {
   queueImageResizing,
   base64,
   sizes,
-  resolutions,
+  fixed,
   traceSVG,
 } = require(`gatsby-plugin-sharp`)
 
@@ -100,9 +100,9 @@ module.exports = ({
         }
       },
     },
-    resolutions: {
+    fixed: {
       type: new GraphQLObjectType({
-        name: `ImageSharpResolutions`,
+        name: `ImageSharpFixed`,
         fields: {
           base64: { type: GraphQLString },
           tracedSVG: {
@@ -124,7 +124,7 @@ module.exports = ({
               }
               const args = { ...fieldArgs, pathPrefix, toFormat: `webp` }
               return Promise.resolve(
-                resolutions({
+                fixed({
                   file,
                   args,
                   reporter,
@@ -140,7 +140,7 @@ module.exports = ({
               }
               const args = { ...fieldArgs, pathPrefix, toFormat: `webp` }
               return Promise.resolve(
-                resolutions({
+                fixed({
                   file,
                   args,
                   reporter,
@@ -196,7 +196,7 @@ module.exports = ({
         const file = getNodeAndSavePathDependency(image.parent, context.path)
         const args = { ...fieldArgs, pathPrefix }
         return Promise.resolve(
-          resolutions({
+          fixed({
             file,
             args,
             reporter,
@@ -373,7 +373,7 @@ module.exports = ({
         const file = getNodeAndSavePathDependency(image.parent, context.path)
         const args = { ...fieldArgs, pathPrefix }
         return Promise.resolve(
-          resolutions({
+          fixed({
             file,
             args,
             reporter,

@@ -9,7 +9,7 @@ jest.mock(`async/queue`, () => () => {
 const {
   base64,
   responsiveSizes,
-  resolutions,
+  fixed,
   queueImageResizing,
   getImageSize,
 } = require(`../`)
@@ -99,7 +99,7 @@ describe(`gatsby-plugin-sharp`, () => {
     })
   })
 
-  describe(`resolutions`, () => {
+  describe(`fixed`, () => {
     console.warn = jest.fn()
 
     beforeEach(() => {
@@ -113,7 +113,7 @@ describe(`gatsby-plugin-sharp`, () => {
     it(`does not warn when the requested width is equal to the image width`, async () => {
       const args = { width: 1 }
 
-      const result = await resolutions({
+      const result = await fixed({
         file,
         args,
       })
@@ -125,7 +125,7 @@ describe(`gatsby-plugin-sharp`, () => {
     it(`warns when the requested width is greater than the image width`, async () => {
       const args = { width: 2 }
 
-      const result = await resolutions({
+      const result = await fixed({
         file,
         args,
       })

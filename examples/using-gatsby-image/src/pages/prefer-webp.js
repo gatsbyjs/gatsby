@@ -20,7 +20,7 @@ const PreferWebp = ({ data, location }) => (
         },
       }}
       title={`Photo by Redd Angelo on Unsplash`}
-      resolutions={data.reddImageMobile.childImageSharp.resolutions}
+      fixed={data.reddImageMobile.childImageSharp.fixed}
     />
     <Img
       style={{ display: `inherit` }}
@@ -34,7 +34,7 @@ const PreferWebp = ({ data, location }) => (
         },
       }}
       title={`Photo by Redd Angelo on Unsplash`}
-      resolutions={data.reddImage.childImageSharp.resolutions}
+      fixed={data.reddImage.childImageSharp.fixed}
     />
     <p>
       Lorem markdownum nocens, est aut tergo, inmansuetique bella. Neve illud
@@ -91,15 +91,15 @@ export const query = graphql`
   query PreferWebpQuery {
     reddImageMobile: file(relativePath: { regex: "/redd/" }) {
       childImageSharp {
-        resolutions(width: 125) {
-          ...GatsbyImageSharpResolutions_withWebp
+        fixed(width: 125) {
+          ...GatsbyImageSharpFixed_withWebp
         }
       }
     }
     reddImage: file(relativePath: { regex: "/redd/" }) {
       childImageSharp {
-        resolutions(width: 200) {
-          ...GatsbyImageSharpResolutions_withWebp
+        fixed(width: 200) {
+          ...GatsbyImageSharpFixed_withWebp
         }
       }
     }

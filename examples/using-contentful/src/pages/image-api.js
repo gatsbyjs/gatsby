@@ -54,9 +54,9 @@ export default props => {
         />
       </pre>
 
-      <h2>Responsive Resolution</h2>
+      <h2>Fixed</h2>
       <p>
-        If you make queries with <code>resolutions</code> then Gatsby
+        If you make queries with <code>fixed</code> then Gatsby
         automatically generates images with 1x, 1.5x, 2x, and 3x versions so
         your images look great on whatever screen resolution of device they're
         on.
@@ -68,12 +68,12 @@ export default props => {
       <p>
         You should prefer this operator over <code>resize</code>.
       </p>
-      {assets.map(({ node: { title, resolutions } }) => (
-        <div key={resolutions.src} style={{ display: `inline-block` }}>
+      {assets.map(({ node: { title, fixed } }) => (
+        <div key={fixed.src} style={{ display: `inline-block` }}>
           <Img
-            key={resolutions.src}
+            key={fixed.src}
             alt={title}
-            resolutions={resolutions}
+            fixed={fixed}
             backgroundColor
             style={{
               marginRight: rhythm(1 / 2),
@@ -93,7 +93,7 @@ export default props => {
     edges {
       node {
         title
-        resolutions(width: 100) {
+        fixed(width: 100) {
           width
           height
           src
@@ -109,7 +109,7 @@ export default props => {
 
       <h2>Resizing</h2>
       <p>
-        On both resize and resolutions you can also add a{` `}
+        On both resize and fixed you can also add a{` `}
         <code>height</code>
         {` `}
         argument to the GraphQL argument to crop the image to a certain size.
@@ -129,7 +129,7 @@ export default props => {
         <div key={resizing.src} style={{ display: `inline-block` }}>
           <Img
             alt={title}
-            resolutions={resizing}
+            fixed={resizing}
             style={{
               marginRight: rhythm(1 / 2),
               marginBottom: rhythm(1 / 2),
@@ -147,7 +147,7 @@ export default props => {
     edges {
       node {
         title
-        resolutions(width: 100, height: 100) {
+        fixed(width: 100, height: 100) {
           width
           height
           src
@@ -211,7 +211,7 @@ export default props => {
         WebP is an image format that provides lossy and lossless compression
         that may be better than JPEG or PNG. The <code>srcWebp</code> and{` `}
         <code>srcSetWebp</code> fields are available for{` `}
-        <code>resolutions</code> and <code>sizes</code> queries.
+        <code>fixed</code> and <code>sizes</code> queries.
       </p>
       <p>
         WebP is currently only supported in{` `}
@@ -229,7 +229,7 @@ export default props => {
           <Img
             key={webp.src}
             alt={title}
-            resolutions={webp}
+            fixed={webp}
             style={{
               marginRight: rhythm(1 / 2),
               marginBottom: rhythm(1 / 2),
@@ -247,7 +247,7 @@ export default props => {
     edges {
       node {
         title
-        resolutions(width: 100) {
+        fixed(width: 100) {
           width
           height
           src
@@ -277,14 +277,14 @@ export const pageQuery = graphql`
             width
             height
           }
-          resolutions(width: 100) {
-            ...GatsbyContentfulResolutions_noBase64
+          fixed(width: 100) {
+            ...GatsbyContentfulFixed_noBase64
           }
-          resizing: resolutions(width: 100, height: 100) {
-            ...GatsbyContentfulResolutions_noBase64
+          resizing: fixed(width: 100, height: 100) {
+            ...GatsbyContentfulFixed_noBase64
           }
-          webp: resolutions(width: 100) {
-            ...GatsbyContentfulResolutions_withWebp_noBase64
+          webp: fixed(width: 100) {
+            ...GatsbyContentfulFixed_withWebp_noBase64
           }
           sizes(maxWidth: 613) {
             ...GatsbyContentfulSizes_noBase64

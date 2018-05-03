@@ -7,7 +7,7 @@ class Index extends React.Component {
   render() {
     const images = this.props.data.allImageSharp.edges
     const sizes = this.props.data.sizes.childImageSharp.sizes
-    const resolutions = this.props.data.resolution.childImageSharp.resolutions
+    const fixed = this.props.data.resolution.childImageSharp.fixed
     const cropDefault = this.props.data.cropDefault.childImageSharp.resize
     const cropBottomLeft = this.props.data.cropBottomLeft.childImageSharp.resize
     const cropEntropy = this.props.data.cropEntropy.childImageSharp.resize
@@ -285,8 +285,8 @@ class Index extends React.Component {
             paddingTop: rhythm(2),
           }}
         >
-          <a href="https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/#responsiveresolution">
-            <code>resolutions</code>
+          <a href="https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/#fixed">
+            <code>fixed</code>
           </a>
         </h2>
         <p>
@@ -313,7 +313,7 @@ class Index extends React.Component {
           to convert the source image to 8-bit greyscale, 256 shades of grey.
         </p>
 
-        <Img resolutions={resolutions} />
+        <Img fixed={fixed} />
       </div>
     )
   }
@@ -443,8 +443,8 @@ export const pageQuery = graphql`
     }
     resolution: file(relativePath: { regex: "/lol.jpg/" }) {
       childImageSharp {
-        resolutions(grayscale: true, width: 500) {
-          ...GatsbyImageSharpResolutions_withWebp
+        fixed(grayscale: true, width: 500) {
+          ...GatsbyImageSharpFixed_withWebp
         }
       }
     }

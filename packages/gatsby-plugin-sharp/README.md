@@ -45,7 +45,7 @@ plugins: [`gatsby-plugin-sharp`]
 * `height` (int)
 * `aspectRatio` (float)
 
-### responsiveResolution
+### fixed
 
 Automatically create sizes for different resolutions — we do 1x, 1.5x, 2x, and
 3x.

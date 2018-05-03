@@ -3,7 +3,7 @@ import * as React from "react";
 interface GatsbyImageProps {
   responsiveResolution?: object;
   responsiveSizes?: object;
-  resolutions?: object;
+  fixed?: object;
   sizes?: object;
   fadeIn?: boolean;
   title?: string;

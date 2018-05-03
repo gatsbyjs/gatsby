@@ -21,7 +21,7 @@ const BlurUp = ({ data, location }) => (
         },
       }}
       title={`Photo by Redd Angelo on Unsplash`}
-      resolutions={data.reddImageMobile.childImageSharp.resolutions}
+      fixed={data.reddImageMobile.childImageSharp.fixed}
     />
     <Img
       backgroundColor
@@ -36,7 +36,7 @@ const BlurUp = ({ data, location }) => (
         },
       }}
       title={`Photo by Redd Angelo on Unsplash`}
-      resolutions={data.reddImage.childImageSharp.resolutions}
+      fixed={data.reddImage.childImageSharp.fixed}
     />
     <Lorem />
     <Img
@@ -54,15 +54,15 @@ export const query = graphql`
   query BackgroundColorQuery {
     reddImageMobile: file(relativePath: { regex: "/redd/" }) {
       childImageSharp {
-        resolutions(width: 126) {
-          ...GatsbyImageSharpResolutions_noBase64
+        fixed(width: 126) {
+          ...GatsbyImageSharpFixed_noBase64
         }
       }
     }
     reddImage: file(relativePath: { regex: "/redd/" }) {
       childImageSharp {
-        resolutions(width: 201) {
-          ...GatsbyImageSharpResolutions_noBase64
+        fixed(width: 201) {
+          ...GatsbyImageSharpFixed_noBase64
         }
       }
     }

@@ -71,7 +71,7 @@ const createUrl = (imgUrl, options = {}) => {
 }
 exports.createUrl = createUrl
 
-const resolveResponsiveResolution = (image, options) => {
+const resolveFixed = (image, options) => {
   if (!isImage(image)) return null
 
   const { baseUrl, width, aspectRatio } = getBasicImageProps(image, options)
@@ -157,7 +157,7 @@ const resolveResponsiveResolution = (image, options) => {
     srcSet,
   }
 }
-exports.resolveResponsiveResolution = resolveResponsiveResolution
+exports.resolveResponsiveResolution = resolveFixed
 
 const resolveResponsiveSizes = (image, options) => {
   if (!isImage(image)) return null
@@ -266,9 +266,9 @@ exports.extendNodeType = ({ type }) => {
   }
 
   return {
-    resolutions: {
+    fixed: {
       type: new GraphQLObjectType({
-        name: `ContentfulResolutions`,
+        name: `ContentfulFixed`,
         fields: {
           base64: {
             type: GraphQLString,
@@ -291,11 +291,11 @@ exports.extendNodeType = ({ type }) => {
                 return null
               }
 
-              const resolutions = resolveResponsiveResolution(image, {
+              const fixed = resolveFixed(image, {
                 ...options,
                 toFormat: `webp`,
               })
-              return _.get(resolutions, `src`)
+              return _.get(fixed, `src`)
             },
           },
           srcSetWebp: {
@@ -308,11 +308,11 @@ exports.extendNodeType = ({ type }) => {
                 return null
               }
 
-              const resolutions = resolveResponsiveResolution(image, {
+              const fixed = resolveFixed(image, {
                 ...options,
                 toFormat: `webp`,
               })
-              return _.get(resolutions, `srcSet`)
+              return _.get(fixed, `srcSet`)
             },
           },
         },

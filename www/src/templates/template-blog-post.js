@@ -134,8 +134,8 @@ class BlogPostTemplate extends React.Component {
               }}
             >
               <Img
-                resolutions={
-                  post.frontmatter.author.avatar.childImageSharp.resolutions
+                fixed={
+                  post.frontmatter.author.avatar.childImageSharp.fixed
                 }
                 css={{
                   height: rhythm(2.3),
@@ -330,7 +330,7 @@ export const pageQuery = graphql`
           twitter
           avatar {
             childImageSharp {
-              resolutions(
+              fixed(
                 width: 63
                 height: 63
                 quality: 75
@@ -340,7 +340,7 @@ export const pageQuery = graphql`
                   color: "#e0d6eb"
                 }
               ) {
-                ...GatsbyImageSharpResolutions_tracedSVG
+                ...GatsbyImageSharpFixed_tracedSVG
               }
             }
           }
