@@ -260,6 +260,10 @@ export const query = graphql`
 `
 ```
 
+Your demo site should look something like this:
+
+![Demo site example](./images/wordpress-image-tutorial.gif)
+
 ### Testing your image loading speed and effects
 It is useful and can be fun to purposefully slow down your browser to see image effects animate more slowly.
 
