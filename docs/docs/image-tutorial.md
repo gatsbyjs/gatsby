@@ -10,7 +10,7 @@ In this tutorial, you will install the several image plugins and components in o
 
 Images are one of the most beautiful and striking ways to communicate to people, and are a key part of creating an effective and positive user experience; at the same time, high quality images can load slowly and cause text boxes to jump around, both of which make it difficult for people to be patient with visiting your website.
 
-The Gatsby Way™ of creating images is a phrase we made up to describe a set of best practices that help you optimize performance and responsiveness of images. This Gatsbygram site (an Instagram feed fed through Gatsby) shows off the svg image tracing effect. Here’s an [image processing demo site](https://image-processing.gatsbyjs.org/) exploring how to have fun with images in your Gatsby site.
+The Gatsby Way™ of creating images is a phrase we made up to describe a set of best practices that help you optimize performance and responsiveness of images. This [Gatsbygram site](https://gatsbygram.gatsbyjs.org/) (an Instagram feed fed through Gatsby) shows off the svg image tracing effect. Here’s an [image processing demo site](https://image-processing.gatsbyjs.org/) exploring how to have fun with images in your Gatsby site.
 
 ### Installing the `gatsby-source-wordpress` plugin
 
@@ -52,7 +52,7 @@ Add the `gatsby-source-wordpress` plugin to `gatsby-config.js` using the followi
         // The protocol. This can be http or https.
         protocol: `http`,
         // Indicates whether the site is hosted on wordpress.com.
-        // If false, then the asumption is made that the site is self hosted.
+        // If false, then the assumption is made that the site is self hosted.
         // If true, then the plugin will source its content on wordpress.com using the JSON REST API V2.
         // If your site is hosted on wordpress.org, then set this to false.
         hostingWPCOM: false,
