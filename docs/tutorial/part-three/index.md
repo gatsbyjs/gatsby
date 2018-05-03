@@ -120,7 +120,7 @@ Let's tackle these problems by creating our first layout component.
 
 First, create a new directory at `src/components`.
 
-Now create a very basic layout component at `src/components/index.js`:
+Now create a very basic layout component at `src/components/layout.js`:
 
 ```jsx
 import React from "react"
