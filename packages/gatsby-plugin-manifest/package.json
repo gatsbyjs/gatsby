@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-manifest",
   "description": "Gatsby plugin which adds a manifest.json to make sites progressive web apps",
-  "version": "2.0.1-5",
+  "version": "2.0.1-6",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -9,7 +9,7 @@
   "dependencies": {
     "@babel/runtime": "^7.0.0-beta.42",
     "bluebird": "^3.5.0",
-    "sharp": "^0.20.1"
+    "sharp": "^0.20.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.42",
