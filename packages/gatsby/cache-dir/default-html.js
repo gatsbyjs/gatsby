@@ -30,7 +30,7 @@ export default class HTML extends React.Component {
 
 HTML.propTypes = {
   htmlAttributes: PropTypes.object,
-  headComponents: PropTypes.object,
+  headComponents: PropTypes.array,
   bodyAttributes: PropTypes.object,
   preBodyComponents: PropTypes.array,
   body: PropTypes.string,
