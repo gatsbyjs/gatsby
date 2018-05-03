@@ -146,10 +146,14 @@ Here’s an example of creating specific widths and heights for images:
           photo {
             localFile {
               childImageSharp {
-                  # In the GraphQL explorer, use field names
-                  # like "src". Then, in your site's code,
-                  # comment them out and use the fragments 
-                  # provided by Gatsby instead.
+                  # edit the maxWidth value to generate resized
+                  # images
+                  resolutions(width: 200, height: 200) {
+                  # use field names in the GraphQL explorer
+                  # in your site, comment them out and use
+                  # the fragments provided by Gatsby instead
+                  src
+                  
                   # This fragment won't work in the GraphQL
                   # explorer, but you can use it in your site
                   # ...GatsbyImageSharpResolutions_withWebp
