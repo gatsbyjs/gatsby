@@ -7,10 +7,13 @@ try {
   )
 }
 
-exports.onCreateBabelConfig = ({ stage, actions }) => {
+exports.onCreateBabelConfig = ({ stage, actions }, pluginOptions) => {
   actions.setBabelPlugin({
     name: `babel-plugin-styled-components`,
     stage,
-    options: { ssr: stage === `build-html` },
+    options: {
+      ...pluginOptions,
+      ssr: stage === `build-html`,
+    },
   })
 }
