@@ -15,12 +15,15 @@ If you’d like to look at the growing number source plugins available to you, s
 Create a new Gatsby project and change directories into the new project you just created:
 
 ```shell
-`gatsby new wordpress-tutorial-site`
-`cd wordpress-tutorial-site`
+gatsby new wordpress-tutorial-site
+cd wordpress-tutorial-site
 ```
 
 Install the `gatsby-source-wordpress` plugin. For extra reading on the plugin’s features and examples of GraphQL queries not included in this tutorial, see the [`gatsby-source-wordpress` plugin’s READme file](https://www.gatsbyjs.org/packages/gatsby-source-wordpress/?=wordpress).
-`npm install --save gatsby-source-wordpress`
+
+```shell
+npm install --save gatsby-source-wordpress
+```
 
 Add the `gatsby-source-wordpress` plugin to `gatsby-config.js` using the following code, which you can also find in the [demo site’s source code](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-wordpress/gatsby-config.js). 
 
@@ -65,7 +68,7 @@ Now you are ready to create a GraphQL query to pull in some data from the WordPr
 
 Run:
 ```shell
-`gatsby develop`
+gatsby develop
 ```
 
 Open localhost:8000 and localhost:8000/__graphql. 
@@ -147,7 +150,7 @@ export const pageQuery = graphql`
 `
 ```
 
-[Insert screenshot of final result here]
+[Note to editors: it would be useful to insert a screenshot of the final result here]
 
 ### Create slugs for each blogpost and link to them from `index.js`
-[Part 7](https://www.gatsbyjs.org/tutorial/part-seven/) of the foundational tutorial goes through this process.
+[Part 7](/tutorial/part-seven/) of the foundational tutorial goes through this process.
