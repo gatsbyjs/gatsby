@@ -108,10 +108,11 @@ created:
 
 ```jsx{4}
 import React from "react"
+import Layout from "../components/layout"
 
 export default ({ data }) => {
   console.log(data)
-  return <div>Hello world</div>
+  return <Layout><div>Hello world</div></Layout>
 }
 
 export const query = graphql`
@@ -145,10 +146,12 @@ Let's add some code to our component to print out the File data.
 
 ```jsx{5-37}
 import React from "react"
+import Layout from "../components/layout"
 
 export default ({ data }) => {
   console.log(data)
   return (
+  <Layout>
     <div>
       <h1>My Site's Files</h1>
       <table>
@@ -180,6 +183,7 @@ export default ({ data }) => {
         </tbody>
       </table>
     </div>
+   <Layout/>
   )
 }
 
