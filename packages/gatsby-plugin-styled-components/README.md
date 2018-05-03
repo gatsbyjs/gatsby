@@ -14,7 +14,17 @@ Edit `gatsby-config.js`
 
 ```javascript
 module.exports = {
-  plugins: [`gatsby-plugin-styled-components`],
+  plugins: [
+    {
+      resolve: `gatsby-plugin-styled-components`,
+      options: {
+        // Debug option, default to `true`
+        displayName: false,
+        // See more options here https://www.styled-components.com/docs/tooling#babel-plugin
+        // Note: `ssr` option will be ignored and handled automatically
+      },
+    },
+  ],
 }
 ```
 
