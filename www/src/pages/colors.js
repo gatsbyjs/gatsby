@@ -1,7 +1,6 @@
 import React from "react"
 import colors from "../utils/colors"
-import presets from "../utils/presets"
-import { rhythm, options, scale } from "../utils/typography"
+import { rhythm, options } from "../utils/typography"
 import Container from "../components/container"
 import range from "lodash/range"
 
