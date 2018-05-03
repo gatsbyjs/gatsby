@@ -18,14 +18,14 @@ First you’ll need to install the `gatsby-source-wordpress` plugin that has ima
 
 Create a new Gatsby project and change directories into the new project you just created:
 ```shell
-`gatsby new images-tutorial-site`
-`cd images-tutorial-site`
+gatsby new images-tutorial-site
+cd images-tutorial-site
 ```
 
 Install the `gatsby-source-wordpress` plugin. For extra reading on the plugin’s features and examples of GraphQL queries not included in this tutorial, see the [`gatsby-source-wordpress` plugin’s READme file](https://www.gatsbyjs.org/packages/gatsby-source-wordpress/?=wordpress).
 
 ```shell
-`npm install --save gatsby-source-wordpress`
+npm install --save gatsby-source-wordpress
 ```
 
 Add the `gatsby-source-wordpress` plugin to `gatsby-config.js` using the following code, which you can also find in the [demo site’s source code](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-wordpress/gatsby-config.js). 
@@ -70,10 +70,10 @@ Now you’ll configure gatsby-source-filesystem to load the image directory, add
 First, you’ll need to install a few plugins and their dependencies:
 
 ```shell
-`npm install --save gatsby-transformer-sharp`
-`npm install --save gatsby-plugin-sharp`
-`npm install --save gatsby-image`
-`npm install --save gatsby-source-filesystem` 
+npm install --save gatsby-transformer-sharp
+npm install --save gatsby-plugin-sharp
+npm install --save gatsby-image
+npm install --save gatsby-source-filesystem
 ```
 
 Place these plugins in your `gatsby-config.js` like this:
@@ -130,7 +130,7 @@ Now you are ready to create a GraphQL query to pull in some images from the Word
 Run:
 
 ```shell
-`gatsby develop`
+gatsby develop
 ```
 
 Open localhost:8000 and localhost:8000/__graphql. 
