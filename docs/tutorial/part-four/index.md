@@ -77,7 +77,7 @@ Markdown support.
 Open a new terminal window and run the following commands to create a new Gatsby site in a directory called `tutorial-part-four`. Then change to this new directory:
 
 ```shell
-gatsby new tutorial-part-four https://github.com/gatsbyjs/gatsby-starter-hello-world
+gatsby new tutorial-part-four https://github.com/gatsbyjs/gatsby-starter-hello-world#v2
 cd tutorial-part-four
 ```
 
@@ -96,9 +96,10 @@ component and two page components:
 
 ```jsx
 import React from "react"
+import Layout from "../components/layout"
 
 export default () => (
-  <div>
+  <Layout>
     <h1>Amazing Pandas Eating Things</h1>
     <div>
       <img
@@ -106,7 +107,7 @@ export default () => (
         alt="Group of pandas eating bamboo"
       />
     </div>
-  </div>
+  </Layout>
 )
 ```
 
@@ -114,19 +115,20 @@ export default () => (
 
 ```jsx
 import React from "react"
+import Layout from "../components/layout"
 
 export default () => (
-  <div>
+  <Layout>
     <h1>About Pandas Eating Lots</h1>
     <p>
       We're the only site running on your computer dedicated to showing the best
       photos and videos of pandas eating lots of food.
     </p>
-  </div>
+  </Layout>
 )
 ```
 
-`src/layouts/index.js`
+`src/components/index.js`
 
 ```jsx
 import React from "react"
@@ -157,7 +159,7 @@ export default ({ children }) => (
     <Link className={linkStyle} to={`/about/`}>
       About
     </Link>
-    {children()}
+    {children}
   </g.Div>
 )
 ```
@@ -263,45 +265,48 @@ export const query = graphql`
 `
 ```
 
-`src/layouts/index.js`
+`src/components/index.js`
 
-```jsx{10,19,28-33}
+```jsx{4,10-21,28-33,39}
 import React from "react"
 import g from "glamorous"
 import { css } from "glamor"
-import { Link } from "gatsby"
+import { StaticQuery, Link } from "gatsby"
 
 import { rhythm } from "../utils/typography"
 
 const linkStyle = css({ float: `right` })
 
-export default ({ children, data }) =>
-  <g.Div
-    margin={`0 auto`}
-    maxWidth={700}
-    padding={rhythm(2)}
-    paddingTop={rhythm(1.5)}
-  >
-    <Link to={`/`}>
-      <g.H3 marginBottom={rhythm(2)} display={`inline-block`}>
-        {data.site.siteMetadata.title}
-      </g.H3>
-    </Link>
-    <Link className={linkStyle} to={`/about/`}>
-      About
-    </Link>
-    {children()}
-  </g.Div>
-
-export const query = graphql`
-  query LayoutQuery {
-    site {
-      siteMetadata {
-        title
+export default ({ children }) =>
+  <StaticQuery
+    query={graphql`
+      query LayoutQuery {
+        site {
+          siteMetadata {
+            title
+          }
+        }
       }
+    `}
+    render={data =>
+      <g.Div
+        margin={`0 auto`}
+        maxWidth={700}
+        padding={rhythm(2)}
+        paddingTop={rhythm(1.5)}
+      >
+        <Link to={`/`}>
+          <g.H3 marginBottom={rhythm(2)} display={`inline-block`}>
+            {data.site.siteMetadata.title}
+          </g.H3>
+        </Link>
+        <Link className={linkStyle} to={`/about/`}>
+          About
+        </Link>
+        {children}
+      </g.Div>
     }
-  }
-`
+  />
 ```
 
 It worked!! 🎉
@@ -310,8 +315,8 @@ It worked!! 🎉
 
 But let's restore the real title.
 
-One of the core principles of Gatsby is creators need an immediate connection to
-what they're creating
+One of the core principles of Gatsby is _creators need an immediate connection to
+what they're creating_
 ([hat tip to Bret Victor](http://blog.ezyang.com/2012/02/transcript-of-inventing-on-principleb/)).
 Or, in other words, when you make any change to code you should immediately see
 the effect of that change. You manipulate an input of Gatsby and you see the new

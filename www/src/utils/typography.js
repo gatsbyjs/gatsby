@@ -78,7 +78,7 @@ const _options = {
       hr: {
         backgroundColor: colors.ui.light,
       },
-      "tt,code": {
+      "tt,code,kbd": {
         // background: `hsla(23, 60%, 97%, 1)`,
         background: colors.a[0],
         fontFamily: options.monospaceFontFamily.join(`,`),
