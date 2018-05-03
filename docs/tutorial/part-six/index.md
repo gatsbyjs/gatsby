@@ -105,27 +105,29 @@ the following to add a query with some initial HTML and styling.
 ```jsx
 import React from "react"
 import g from "glamorous"
-
 import { rhythm } from "../utils/typography"
+import Layout from "../components/layout"
 
 export default ({ data }) => {
   console.log(data)
   return (
-    <div>
-      <g.H1 display={"inline-block"} borderBottom={"1px solid"}>
-        Amazing Pandas Eating Things
-      </g.H1>
-      <h4>{data.allMarkdownRemark.totalCount} Posts</h4>
-      {data.allMarkdownRemark.edges.map(({ node }) => (
-        <div key={node.id}>
-          <g.H3 marginBottom={rhythm(1 / 4)}>
-            {node.frontmatter.title}{" "}
-            <g.Span color="#BBB">— {node.frontmatter.date}</g.Span>
-          </g.H3>
-          <p>{node.excerpt}</p>
-        </div>
-      ))}
-    </div>
+    <Layout>
+      <div>
+        <g.H1 display={"inline-block"} borderBottom={"1px solid"}>
+          Amazing Pandas Eating Things
+        </g.H1>
+        <h4>{data.allMarkdownRemark.totalCount} Posts</h4>
+        {data.allMarkdownRemark.edges.map(({ node }) => (
+          <div key={node.id}>
+            <g.H3 marginBottom={rhythm(1 / 4)}>
+              {node.frontmatter.title}{" "}
+              <g.Span color="#BBB">— {node.frontmatter.date}</g.Span>
+            </g.H3>
+            <p>{node.excerpt}</p>
+          </div>
+        ))}
+      </div>
+    </Layout>
   )
 }
 
