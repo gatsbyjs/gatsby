@@ -1,7 +1,7 @@
 {
   "name": "gatsby-1-config-extract-plugin",
   "description": "extract-text-webpack-plugin instance getter for Gatsby v1 plugins",
-  "version": "1.0.4-1",
+  "version": "1.0.4-2",
   "author": "Shawn Erquhart<shawn@erquh.art>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"

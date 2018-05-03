@@ -1,5 +1,7 @@
 const { extractTextPlugin, extractTextFilename } = require(`../index`)
 
+jest.mock(`extract-text-webpack-plugin`)
+
 describe(`gatsby-1-config-extract-plugin`, () => {
   ;[
     {
