@@ -125,7 +125,7 @@ module.exports = {
 
 ### Creating GraphQL queries that pull in images from WordPress
 
-Now you are ready to create a GraphQL query to pull in some images from the WordPress site before we can view them in your browser. You will create a query that pulls in the images.
+Now you are ready to create a GraphQL query to pull in some images from the WordPress site before you can view them in your browser. You will create a query that pulls in the images.
 
 Run:
 
