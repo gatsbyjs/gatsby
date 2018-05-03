@@ -128,7 +128,7 @@ export default () => (
 )
 ```
 
-`src/components/index.js`
+`src/components/layout.js`
 
 ```jsx
 import React from "react"
@@ -265,7 +265,7 @@ export const query = graphql`
 `
 ```
 
-`src/components/index.js`
+`src/components/layout.js`
 
 ```jsx{4,10-21,28-33,39}
 import React from "react"
