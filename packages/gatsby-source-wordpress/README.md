@@ -349,8 +349,8 @@ Full example:
               image {
                 localFile {
                   childImageSharp {
-                    sizes(maxWidth: 800) {
-                      ...GatsbyImageSharpSizes_withWebp
+                    fluid(maxWidth: 800) {
+                      ...GatsbyImageSharpFluid_withWebp
                     }
                   }
                 }
@@ -476,8 +476,8 @@ Full example:
           image {
             localFile {
               childImageSharp {
-                sizes(maxWidth: 500) {
-                  ...GatsbyImageSharpSizes_withWebp
+                fluid(maxWidth: 500) {
+                  ...GatsbyImageSharpFluid_withWebp
                 }
               }
             }

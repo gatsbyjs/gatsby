@@ -97,15 +97,15 @@ const resolveFixed = (image, options) => {
   //
   // This is enough sizes to provide close to the optimal image size for every
   // device size / screen resolution
-  let sizes = []
-  sizes.push(options.width)
-  sizes.push(options.width * 1.5)
-  sizes.push(options.width * 2)
-  sizes.push(options.width * 3)
-  sizes = sizes.map(Math.round)
+  let fixedSizes = []
+  fixedSizes.push(options.width)
+  fixedSizes.push(options.width * 1.5)
+  fixedSizes.push(options.width * 2)
+  fixedSizes.push(options.width * 3)
+  fixedSizes = fixedSizes.map(Math.round)
 
   // Filter out sizes larger than the image's width.
-  const filteredSizes = sizes.filter(size => size < width)
+  const filteredSizes = fixedSizes.filter(size => size < width)
 
   // Sort sizes for prettiness.
   const sortedSizes = _.sortBy(filteredSizes)
@@ -157,9 +157,9 @@ const resolveFixed = (image, options) => {
     srcSet,
   }
 }
-exports.resolveResponsiveResolution = resolveFixed
+exports.resolveFixed = resolveFixed
 
-const resolveResponsiveSizes = (image, options) => {
+const resolveFluid = (image, options) => {
   if (!isImage(image)) return null
 
   const { baseUrl, width, aspectRatio } = getBasicImageProps(image, options)
@@ -184,17 +184,17 @@ const resolveResponsiveSizes = (image, options) => {
   //
   // This is enough sizes to provide close to the optimal image size for every
   // device size / screen resolution
-  let sizes = []
-  sizes.push(options.maxWidth / 4)
-  sizes.push(options.maxWidth / 2)
-  sizes.push(options.maxWidth)
-  sizes.push(options.maxWidth * 1.5)
-  sizes.push(options.maxWidth * 2)
-  sizes.push(options.maxWidth * 3)
-  sizes = sizes.map(Math.round)
+  let fluidSizes = []
+  fluidSizes.push(options.maxWidth / 4)
+  fluidSizes.push(options.maxWidth / 2)
+  fluidSizes.push(options.maxWidth)
+  fluidSizes.push(options.maxWidth * 1.5)
+  fluidSizes.push(options.maxWidth * 2)
+  fluidSizes.push(options.maxWidth * 3)
+  fluidSizes = fluidSizes.map(Math.round)
 
   // Filter out sizes larger than the image's maxWidth.
-  const filteredSizes = sizes.filter(size => size < width)
+  const filteredSizes = fluidSizes.filter(size => size < width)
 
   // Add the original image to ensure the largest image possible
   // is available for small images.
@@ -224,10 +224,10 @@ const resolveResponsiveSizes = (image, options) => {
       height: options.maxHeight,
     }),
     srcSet,
-    sizes: options.sizes,
+    fluid: options.sizes,
   }
 }
-exports.resolveResponsiveSizes = resolveResponsiveSizes
+exports.resolveFluid = resolveFluid
 
 const resolveResize = (image, options) => {
   if (!isImage(image)) return null
@@ -357,9 +357,9 @@ exports.extendNodeType = ({ type }) => {
           }
         ),
     },
-    sizes: {
+    fluid: {
       type: new GraphQLObjectType({
-        name: `ContentfulSizes`,
+        name: `ContentfulFluid`,
         fields: {
           base64: {
             type: GraphQLString,
@@ -380,11 +380,11 @@ exports.extendNodeType = ({ type }) => {
                 return null
               }
 
-              const sizes = resolveResponsiveSizes(image, {
+              const fluid = resolveFluid(image, {
                 ...options,
                 toFormat: `webp`,
               })
-              return _.get(sizes, `src`)
+              return _.get(fluid, `src`)
             },
           },
           srcSetWebp: {
@@ -397,11 +397,11 @@ exports.extendNodeType = ({ type }) => {
                 return null
               }
 
-              const sizes = resolveResponsiveSizes(image, {
+              const fluid = resolveFluid(image, {
                 ...options,
                 toFormat: `webp`,
               })
-              return _.get(sizes, `srcSet`)
+              return _.get(fluid, `srcSet`)
             },
           },
           sizes: { type: GraphQLString },
@@ -439,7 +439,7 @@ exports.extendNodeType = ({ type }) => {
         },
       },
       resolve: (image, options, context) =>
-        Promise.resolve(resolveResponsiveSizes(image, options)).then(node => {
+        Promise.resolve(resolveFluid(image, options)).then(node => {
           return {
             ...node,
             image,
@@ -495,7 +495,7 @@ exports.extendNodeType = ({ type }) => {
         },
       },
       resolve(image, options, context) {
-        return resolveResponsiveResolution(image, options)
+        return resolveFixed(image, options)
       },
     },
     responsiveSizes: {
@@ -547,7 +547,7 @@ exports.extendNodeType = ({ type }) => {
         },
       },
       resolve(image, options, context) {
-        return resolveResponsiveSizes(image, options)
+        return resolveFluid(image, options)
       },
     },
     resize: {

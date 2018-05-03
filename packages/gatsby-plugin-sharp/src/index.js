@@ -430,7 +430,7 @@ async function base64(args) {
   return await memoizedBase64(args)
 }
 
-async function responsiveSizes({ file, args = {}, reporter }) {
+async function fluid({ file, args = {}, reporter }) {
   const defaultArgs = {
     maxWidth: 800,
     quality: 50,
@@ -466,9 +466,9 @@ async function responsiveSizes({ file, args = {}, reporter }) {
   )
   const presentationHeight = Math.round(presentationWidth * (height / width))
 
-  // If the users didn't set a default sizes, we'll make one.
-  if (!options.sizes) {
-    options.sizes = `(max-width: ${presentationWidth}px) 100vw, ${presentationWidth}px`
+  // If the users didn't set default fluid sizes, we'll make one.
+  if (!options.fluid) {
+    options.fluid = `(max-width: ${presentationWidth}px) 100vw, ${presentationWidth}px`
   }
 
   // Create sizes (in width) for the image. If the max width of the container
@@ -479,30 +479,30 @@ async function responsiveSizes({ file, args = {}, reporter }) {
   // device size / screen resolution while (hopefully) not requiring too much
   // image processing time (Sharp has optimizations thankfully for creating
   // multiple sizes of the same input file)
-  const sizes = []
-  sizes.push(options.maxWidth / 4)
-  sizes.push(options.maxWidth / 2)
-  sizes.push(options.maxWidth)
-  sizes.push(options.maxWidth * 1.5)
-  sizes.push(options.maxWidth * 2)
-  sizes.push(options.maxWidth * 3)
-  const filteredSizes = sizes.filter(size => size < width)
+  const fluid = []
+  fluid.push(options.maxWidth / 4)
+  fluid.push(options.maxWidth / 2)
+  fluid.push(options.maxWidth)
+  fluid.push(options.maxWidth * 1.5)
+  fluid.push(options.maxWidth * 2)
+  fluid.push(options.maxWidth * 3)
+  const filteredFluid = fluid.filter(size => size < width)
 
   // Add the original image to ensure the largest image possible
   // is available for small images. Also so we can link to
   // the original image.
-  filteredSizes.push(width)
+  filteredFluid.push(width)
 
-  // Sort sizes for prettiness.
-  const sortedSizes = _.sortBy(filteredSizes)
+  // Sort fluid sizes for prettiness.
+  const sortedFluid = _.sortBy(filteredFluid)
 
-  // Queue sizes for processing.
-  const images = sortedSizes.map(size => {
+  // Queue fluid sizes for processing.
+  const images = sortedFluid.map(size => {
     const arrrgs = {
       ...options,
       width: Math.round(size),
     }
-    // Queue sizes for processing.
+    // Queue fluid sizes for processing.
     if (options.maxHeight) {
       arrrgs.height = Math.round(size * (options.maxHeight / options.maxWidth))
     }
@@ -542,7 +542,7 @@ async function responsiveSizes({ file, args = {}, reporter }) {
     aspectRatio: images[0].aspectRatio,
     src: fallbackSrc,
     srcSet,
-    sizes: options.sizes,
+    fluid: options.fluid,
     originalImg: originalImg,
     originalName: originalName,
     density,
@@ -566,19 +566,19 @@ async function fixed({ file, args = {}, reporter }) {
   options.width = parseInt(options.width, 10)
 
   // Create sizes for different resolutions — we do 1x, 1.5x, 2x, and 3x.
-  const sizes = []
-  sizes.push(options.width)
-  sizes.push(options.width * 1.5)
-  sizes.push(options.width * 2)
-  sizes.push(options.width * 3)
+  const fluid = []
+  fluid.push(options.width)
+  fluid.push(options.width * 1.5)
+  fluid.push(options.width * 2)
+  fluid.push(options.width * 3)
   const dimensions = getImageSize(file)
 
-  const filteredSizes = sizes.filter(size => size <= dimensions.width)
+  const filteredFluid = fluid.filter(size => size <= dimensions.width)
 
-  // If there's no sizes after filtering (e.g. image is smaller than what's
+  // If there's no fluid images after filtering (e.g. image is smaller than what's
   // requested, add back the original so there's at least something)
-  if (filteredSizes.length === 0) {
-    filteredSizes.push(dimensions.width)
+  if (filteredFluid.length === 0) {
+    filteredFluid.push(dimensions.width)
     console.warn(
       `
                  The requested width "${
@@ -591,15 +591,15 @@ async function fixed({ file, args = {}, reporter }) {
     )
   }
 
-  // Sort sizes for prettiness.
-  const sortedSizes = _.sortBy(filteredSizes)
+  // Sort images for prettiness.
+  const sortedFluid = _.sortBy(filteredFluid)
 
-  const images = sortedSizes.map(size => {
+  const images = sortedFluid.map(size => {
     const arrrgs = {
       ...options,
       width: Math.round(size),
     }
-    // Queue sizes for processing.
+    // Queue images for processing.
     if (options.height) {
       arrrgs.height = Math.round(size * (options.height / options.width))
     }
@@ -764,8 +764,8 @@ function toArray(buf) {
 exports.queueImageResizing = queueImageResizing
 exports.base64 = base64
 exports.traceSVG = traceSVG
-exports.responsiveSizes = responsiveSizes
+exports.responsiveSizes = fluid
 exports.responsiveResolution = fixed
-exports.sizes = responsiveSizes
+exports.fluid = fluid
 exports.fixed = fixed
 exports.getImageSize = getImageSize

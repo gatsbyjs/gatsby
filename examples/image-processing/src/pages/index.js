@@ -6,8 +6,8 @@ import { rhythm } from "../utils/typography"
 class Index extends React.Component {
   render() {
     const images = this.props.data.allImageSharp.edges
-    const sizes = this.props.data.sizes.childImageSharp.sizes
-    const fixed = this.props.data.resolution.childImageSharp.fixed
+    const fluid = this.props.data.fluid.childImageSharp.sizes
+    const fixed = this.props.data.fixed.childImageSharp.resolutions
     const cropDefault = this.props.data.cropDefault.childImageSharp.resize
     const cropBottomLeft = this.props.data.cropBottomLeft.childImageSharp.resize
     const cropEntropy = this.props.data.cropEntropy.childImageSharp.resize
@@ -161,9 +161,9 @@ class Index extends React.Component {
             paddingTop: rhythm(2),
           }}
         >
-          <a href="https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/#responsivesizes">
+          <a href="https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/#fluid">
             <code>
-              <strong>sizes</strong>
+              <strong>fluid</strong>
             </code>
           </a>
         </h2>
@@ -175,7 +175,7 @@ class Index extends React.Component {
         </p>
         <p>
           If the max width of the container for the rendered markdown file is
-          800px, the sizes would then be: 200, 400, 800, 1200, 1600, 2400 –
+          800px, the fluid sizes would then be: 200, 400, 800, 1200, 1600, 2400 –
           enough to provide close to the optimal image size for every device
           size / screen resolution.
         </p>
@@ -236,18 +236,18 @@ class Index extends React.Component {
 
         <h3>
           <small>
-            sizes(duotone:
+            fluid(duotone:
             {` `}
             {`{ `}
             highlight: "#f00e2e", shadow: "#192550" {`}`}, toFormat: PNG)
           </small>
         </h3>
 
-        <Img sizes={sizes} />
+        <Img fluid={fluid} />
 
         <h3 style={{ marginTop: rhythm(2) }}>
           <small>
-            sizes(duotone:
+            fluid(duotone:
             {` `}
             {`{ `}
             highlight: "#0ec4f1", shadow: "#192550", opacity: 50 {`}`})
@@ -256,19 +256,19 @@ class Index extends React.Component {
 
         <div style={styles.row}>
           <div style={styles.column20}>
-            <Img sizes={sizesDuotoneOriginal} />
+            <Img fluid={sizesDuotoneOriginal} />
           </div>
           <div style={styles.column20}>
-            <Img sizes={sizesDuotone25} />
+            <Img fluid={sizesDuotone25} />
           </div>
           <div style={styles.column20}>
-            <Img sizes={sizesDuotone50} />
+            <Img fluid={sizesDuotone50} />
           </div>
           <div style={styles.column20}>
-            <Img sizes={sizesDuotone75} />
+            <Img fluid={sizesDuotone75} />
           </div>
           <div style={styles.column20}>
-            <Img sizes={sizesDuotone} />
+            <Img fluid={sizesDuotone} />
           </div>
         </div>
 
@@ -365,9 +365,9 @@ export const pageQuery = graphql`
         }
       }
     }
-    sizes: file(relativePath: { regex: "/fecolormatrix-kanye-west.jpg/" }) {
+    fluid: file(relativePath: { regex: "/fecolormatrix-kanye-west.jpg/" }) {
       childImageSharp {
-        sizes(
+        fluid(
           duotone: { highlight: "#f00e2e", shadow: "#192550" }
           traceSVG: {
             color: "#f00e2e"
@@ -376,7 +376,7 @@ export const pageQuery = graphql`
           }
           toFormat: PNG
         ) {
-          ...GatsbyImageSharpSizes_tracedSVG
+          ...GatsbyImageSharpFluid_tracedSVG
         }
       }
     }
@@ -384,12 +384,12 @@ export const pageQuery = graphql`
       relativePath: { regex: "/fecolormatrix-kanye-west.jpg/" }
     ) {
       childImageSharp {
-        sizes(
+        fluid(
           maxWidth: 120
           duotone: { highlight: "#0ec4f1", shadow: "#192550" }
           traceSVG: { color: "#1E2151" }
         ) {
-          ...GatsbyImageSharpSizes_tracedSVG
+          ...GatsbyImageSharpFluid_tracedSVG
         }
       }
     }
@@ -397,12 +397,12 @@ export const pageQuery = graphql`
       relativePath: { regex: "/fecolormatrix-kanye-west.jpg/" }
     ) {
       childImageSharp {
-        sizes(
+        fluid(
           maxWidth: 120
           duotone: { highlight: "#0ec4f1", shadow: "#192550", opacity: 50 }
           traceSVG: { color: "#A7DEF6" }
         ) {
-          ...GatsbyImageSharpSizes_tracedSVG
+          ...GatsbyImageSharpFluid_tracedSVG
         }
       }
     }
@@ -410,34 +410,32 @@ export const pageQuery = graphql`
       relativePath: { regex: "/fecolormatrix-kanye-west.jpg/" }
     ) {
       childImageSharp {
-        sizes(
+        fluid(
           maxWidth: 120
           duotone: { highlight: "#0ec4f1", shadow: "#192550", opacity: 75 }
           traceSVG: { color: "#0ec4f1" }
         ) {
-          ...GatsbyImageSharpSizes_tracedSVG
+          ...GatsbyImageSharpFluid_tracedSVG
         }
       }
     }
     sizesDuotone25: file(
       relativePath: { regex: "/fecolormatrix-kanye-west.jpg/" }
     ) {
-      childImageSharp {
-        sizes(
-          maxWidth: 120
-          traceSVG: { color: "#D1EFFB" }
-          duotone: { highlight: "#0ec4f1", shadow: "#192550", opacity: 25 }
-        ) {
-          ...GatsbyImageSharpSizes_tracedSVG
-        }
+      fluid(
+        maxWidth: 120
+        traceSVG: { color: "#D1EFFB" }
+        duotone: { highlight: "#0ec4f1", shadow: "#192550", opacity: 25 }
+      ) {
+        ...GatsbyImageSharpFluid_tracedSVG
       }
     }
     sizesDuotoneOriginal: file(
       relativePath: { regex: "/fecolormatrix-kanye-west.jpg/" }
     ) {
       childImageSharp {
-        sizes(maxWidth: 120, traceSVG: { color: "#e7f7fe" }, toFormat: PNG) {
-          ...GatsbyImageSharpSizes_tracedSVG
+        fluid(maxWidth: 120, traceSVG: { color: "#e7f7fe" }, toFormat: PNG) {
+          ...GatsbyImageSharpFluid_tracedSVG
         }
       }
     }

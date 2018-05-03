@@ -1,7 +1,7 @@
 import React from "react"
 import Img from "gatsby-image"
 import { rhythm } from "../utils/typography"
-
+/* eslint-disable */
 export default props => {
   const assets = props.data.allContentfulAsset.edges
   return (
@@ -161,7 +161,7 @@ export default props => {
         />
       </pre>
 
-      <h2>Responsive Sizes</h2>
+      <h2>Fluid</h2>
       <p>
         This GraphQL option allows you to generate responsive images that
         automatically respond to different device screen resolution and widths.
@@ -169,15 +169,15 @@ export default props => {
         desktop device.
       </p>
       <p>
-        Instead of specifying a width and height, with sizes you specify a{` `}
+        Instead of specifying a width and height, with <code>fluid</code> you specify a{` `}
         <code>maxWidth</code>, the max width the container of the images
         reaches.
       </p>
-      {assets.map(({ node: { title, sizes } }) => (
+      {assets.map(({ node: { title, fluid } }) => (
         <Img
-          key={sizes.src}
+          key={fluid.src}
           alt={title}
-          sizes={sizes}
+          fluid={fluid}
           style={{
             marginRight: rhythm(1 / 2),
             marginBottom: rhythm(1 / 2),
@@ -194,8 +194,8 @@ export default props => {
     edges {
       node {
         title
-        sizes(maxWidth: 613) {
-          sizes
+        fluid(maxWidth: 613) {
+          fluid
           src
           srcSet
         }
@@ -211,7 +211,7 @@ export default props => {
         WebP is an image format that provides lossy and lossless compression
         that may be better than JPEG or PNG. The <code>srcWebp</code> and{` `}
         <code>srcSetWebp</code> fields are available for{` `}
-        <code>fixed</code> and <code>sizes</code> queries.
+        <code>fixed</code> and <code>fluid</code> queries.
       </p>
       <p>
         WebP is currently only supported in{` `}
@@ -286,8 +286,8 @@ export const pageQuery = graphql`
           webp: fixed(width: 100) {
             ...GatsbyContentfulFixed_withWebp_noBase64
           }
-          sizes(maxWidth: 613) {
-            ...GatsbyContentfulSizes_noBase64
+          fluid(maxWidth: 613) {
+            ...GatsbyContentfulFluid_noBase64
           }
         }
       }

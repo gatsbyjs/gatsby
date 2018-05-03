@@ -4,7 +4,7 @@ interface GatsbyImageProps {
   responsiveResolution?: object;
   responsiveSizes?: object;
   fixed?: object;
-  sizes?: object;
+  fluid?: object;
   fadeIn?: boolean;
   title?: string;
   alt?: string;

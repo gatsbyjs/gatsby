@@ -41,8 +41,8 @@ export const contentfulAssetFixedPreferWebpNoBase64 = graphql`
   }
 `
 
-export const contentfulAssetSizes = graphql`
-  fragment GatsbyContentfulSizes on ContentfulSizes {
+export const contentfulAssetFluid = graphql`
+  fragment GatsbyContentfulFluid on ContentfulFluid {
     base64
     aspectRatio
     src
@@ -51,8 +51,8 @@ export const contentfulAssetSizes = graphql`
   }
 `
 
-export const contentfulAssetSizesNoBase64 = graphql`
-  fragment GatsbyContentfulSizes_noBase64 on ContentfulSizes {
+export const contentfulAssetFluidNoBase64 = graphql`
+  fragment GatsbyContentfulFluid_noBase64 on ContentfulFluid {
     aspectRatio
     src
     srcSet
@@ -60,8 +60,8 @@ export const contentfulAssetSizesNoBase64 = graphql`
   }
 `
 
-export const contentfulAssetSizesPreferWebp = graphql`
-  fragment GatsbyContentfulSizes_withWebp on ContentfulSizes {
+export const contentfulAssetFluidPreferWebp = graphql`
+  fragment GatsbyContentfulFluid_withWebp on ContentfulFluid {
     base64
     aspectRatio
     src
@@ -72,8 +72,8 @@ export const contentfulAssetSizesPreferWebp = graphql`
   }
 `
 
-export const contentfulAssetSizesPreferWebpNoBase64 = graphql`
-  fragment GatsbyContentfulSizes_withWebp_noBase64 on ContentfulSizes {
+export const contentfulAssetFluidPreferWebpNoBase64 = graphql`
+  fragment GatsbyContentfulFluid_withWebp_noBase64 on ContentfulFluid {
     aspectRatio
     src
     srcSet

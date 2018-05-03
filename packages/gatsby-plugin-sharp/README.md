@@ -65,14 +65,14 @@ Automatically create sizes for different resolutions — we do 1x, 1.5x, 2x, and
 * `src` (string)
 * `srcSet` (string)
 
-### responsiveSizes
+### fluid
 
-Create sizes (in width) for the image. If the max width of the container for the
+Create fluid sizes (in width) for the image. If the max width of the container for the
 rendered markdown file is 800px, the sizes would then be: 200, 400, 800, 1200,
 1600, 2400 – enough to provide close to the optimal image size for every device
 size / screen resolution.
 
-On top of that, responsiveSizes returns everything else (namely aspectRatio and
+On top of that, `fluid` returns everything else (namely aspectRatio and
 a base64 image to use as a placeholder) you need to implement the "blur up"
 technique popularized by Medium and Facebook (and also available as a Gatsby
 plugin for Markdown content as gatsby-remark-images).

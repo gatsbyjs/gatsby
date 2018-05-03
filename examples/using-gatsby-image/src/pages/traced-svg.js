@@ -66,7 +66,7 @@ const UnsplashMasonry = edges => (
             },
           }}
         >
-          <Img sizes={image.node.childImageSharp.sizes} />
+          <Img fluid={image.node.childImageSharp.fluid} />
           <span
             css={{
               ...scale(-1),
@@ -86,7 +86,7 @@ const UnsplashMasonry = edges => (
             {` `}
             {numeral(
               Buffer.byteLength(
-                image.node.childImageSharp.sizes.tracedSVG,
+                image.node.childImageSharp.fluid.tracedSVG,
                 `utf8`
               )
             ).format()}
@@ -142,7 +142,7 @@ class TracedSVG extends React.Component {
         <Ipsum />
 
         <Img
-          sizes={data.kenImage.childImageSharp.sizes}
+          fluid={data.kenImage.childImageSharp.fluid}
           title={`Photo by Ken Treloar on Unsplash`}
         />
       </Layout>
@@ -170,8 +170,8 @@ export const query = graphql`
     }
     kenImage: file(relativePath: { regex: "/ken-treloar/" }) {
       childImageSharp {
-        sizes(maxWidth: 600) {
-          ...GatsbyImageSharpSizes_tracedSVG
+        fluid(maxWidth: 600) {
+          ...GatsbyImageSharpFluid_tracedSVG
         }
       }
     }
@@ -179,12 +179,12 @@ export const query = graphql`
       edges {
         node {
           childImageSharp {
-            sizes(
+            fluid(
               maxWidth: 430
               quality: 80
               traceSVG: { background: "#f2f8f3", color: "#d6ebd9" }
             ) {
-              ...GatsbyImageSharpSizes_tracedSVG
+              ...GatsbyImageSharpFluid_tracedSVG
             }
           }
         }

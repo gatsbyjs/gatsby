@@ -40,7 +40,7 @@ const BlurUp = ({ data, location }) => (
     />
     <Lorem />
     <Img
-      sizes={data.kenImage.childImageSharp.sizes}
+      fluid={data.kenImage.childImageSharp.fluid}
       title={`Photo by Ken Treloar on Unsplash`}
     />
     <Ipsum />
@@ -67,8 +67,8 @@ export const query = graphql`
     }
     kenImage: file(relativePath: { regex: "/ken-treloar/" }) {
       childImageSharp {
-        sizes(maxWidth: 600) {
-          ...GatsbyImageSharpSizes
+        fluid(maxWidth: 600) {
+          ...GatsbyImageSharpFluid
         }
       }
     }

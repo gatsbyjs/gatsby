@@ -1,13 +1,13 @@
 jest.mock(`gatsby-plugin-sharp`, () => {
   return {
-    sizes({ file, args }) {
+    fluid({ file, args }) {
       return Promise.resolve({
         aspectRatio: 0.75,
         presentationWidth: 300,
         originalImg: file.absolutePath,
         src: file.absolutePath,
         srcSet: `${file.absolutePath}, ${file.absolutePath}`,
-        sizes: `(max-width: ${args.maxWidth}px) 100vw, ${args.maxWidth}px`,
+        fluid: `(max-width: ${args.maxWidth}px) 100vw, ${args.maxWidth}px`,
         base64: `url('data:image/png;base64, iVBORw)`,
       })
     },

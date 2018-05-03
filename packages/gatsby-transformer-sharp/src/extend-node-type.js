@@ -9,7 +9,7 @@ const {
 const {
   queueImageResizing,
   base64,
-  sizes,
+  fluid,
   fixed,
   traceSVG,
 } = require(`gatsby-plugin-sharp`)
@@ -210,9 +210,9 @@ module.exports = ({
         )
       },
     },
-    sizes: {
+    fluid: {
       type: new GraphQLObjectType({
-        name: `ImageSharpSizes`,
+        name: `ImageSharpFluid`,
         fields: {
           base64: { type: GraphQLString },
           tracedSVG: {
@@ -230,7 +230,7 @@ module.exports = ({
               }
               const args = { ...fieldArgs, pathPrefix, toFormat: `webp` }
               return Promise.resolve(
-                sizes({
+                fluid({
                   file,
                   args,
                   reporter,
@@ -246,7 +246,7 @@ module.exports = ({
               }
               const args = { ...fieldArgs, pathPrefix, toFormat: `webp` }
               return Promise.resolve(
-                sizes({
+                fluid({
                   file,
                   args,
                   reporter,
@@ -254,7 +254,7 @@ module.exports = ({
               ).then(({ srcSet }) => srcSet)
             },
           },
-          sizes: { type: GraphQLString },
+          fluid: { type: GraphQLString },
           originalImg: { type: GraphQLString },
           originalName: { type: GraphQLString },
         },
@@ -304,7 +304,7 @@ module.exports = ({
         const file = getNodeAndSavePathDependency(image.parent, context.path)
         const args = { ...fieldArgs, pathPrefix }
         return Promise.resolve(
-          sizes({
+          fluid({
             file,
             args,
             reporter,
@@ -396,7 +396,7 @@ module.exports = ({
           aspectRatio: { type: GraphQLFloat },
           src: { type: GraphQLString },
           srcSet: { type: GraphQLString },
-          sizes: { type: GraphQLString },
+          fluid: { type: GraphQLString },
           originalImg: { type: GraphQLString },
           originalName: { type: GraphQLString },
         },
@@ -442,7 +442,7 @@ module.exports = ({
         const file = getNodeAndSavePathDependency(image.parent, context.path)
         const args = { ...fieldArgs, pathPrefix }
         return Promise.resolve(
-          sizes({
+          fluid({
             file,
             args,
             reporter,

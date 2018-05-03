@@ -66,7 +66,7 @@ const PreferWebp = ({ data, location }) => (
       <li>Constitit nomine senta suspirat et signis genuisse</li>
     </ol>
     <Img
-      sizes={data.kenImage.childImageSharp.sizes}
+      fluid={data.kenImage.childImageSharp.fluid}
       title={`Photo by Ken Treloar on Unsplash`}
     />
     <h2>Levia mihi</h2>
@@ -105,8 +105,8 @@ export const query = graphql`
     }
     kenImage: file(relativePath: { regex: "/ken-treloar/" }) {
       childImageSharp {
-        sizes(maxWidth: 600) {
-          ...GatsbyImageSharpSizes_withWebp
+        fluid(maxWidth: 600) {
+          ...GatsbyImageSharpFluid_withWebp
         }
       }
     }

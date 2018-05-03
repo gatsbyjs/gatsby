@@ -52,9 +52,9 @@ class IndexPage extends React.Component {
           <h2>{recipe.title}</h2>
         </div>
         <Img
-          sizes={
+          fluid={
             recipe.relationships.image.relationships.imageFile.localFile
-              .childImageSharp.sizes
+              .childImageSharp.fluid
           }
         />
       </Link>
@@ -80,9 +80,9 @@ class IndexPage extends React.Component {
         }}
       >
         <Img
-          sizes={
+          fluid={
             recipe.relationships.image.relationships.imageFile.localFile
-              .childImageSharp.sizes
+              .childImageSharp.fluid
           }
         />
         <div
@@ -90,10 +90,10 @@ class IndexPage extends React.Component {
             padding: `${rhythm(3 / 4)} ${rhythm(1)}`,
             width:
               recipe.relationships.image.relationships.imageFile.localFile
-                .childImageSharp.sizes.width,
+                .childImageSharp.fluid.width,
             height: square
               ? recipe.relationships.image.relationships.imageFile.localFile
-                  .childImageSharp.sizes.height
+                  .childImageSharp.fluid.height
               : undefined,
           }}
         >
@@ -228,8 +228,8 @@ export const pageQuery = graphql`
                 imageFile {
                   localFile {
                     childImageSharp {
-                      sizes(maxWidth: 740, maxHeight: 555) {
-                        ...GatsbyImageSharpSizes
+                      fluid(maxWidth: 740, maxHeight: 555) {
+                        ...GatsbyImageSharpFluid
                       }
                     }
                   }
@@ -260,8 +260,8 @@ export const pageQuery = graphql`
                 imageFile {
                   localFile {
                     childImageSharp {
-                      sizes(maxWidth: 240, maxHeight: 240) {
-                        ...GatsbyImageSharpSizes
+                      fluid(maxWidth: 240, maxHeight: 240) {
+                        ...GatsbyImageSharpFluid
                       }
                     }
                   }
@@ -292,8 +292,8 @@ export const pageQuery = graphql`
                 imageFile {
                   localFile {
                     childImageSharp {
-                      sizes(maxWidth: 475, maxHeight: 475) {
-                        ...GatsbyImageSharpSizes
+                      fluid(maxWidth: 475, maxHeight: 475) {
+                        ...GatsbyImageSharpFluid
                       }
                     }
                   }
