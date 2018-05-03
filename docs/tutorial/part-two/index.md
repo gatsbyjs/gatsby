@@ -283,6 +283,7 @@ To use the Bootstrap theme, change your typography code to:
 
 ```javascript{2,4}
 import Typography from "typography"
+// import bootstrapTheme from "typography-theme-bootstrap"
 import bootstrapTheme from "typography-theme-bootstrap"
 
 const typography = new Typography(bootstrapTheme)
@@ -298,7 +299,6 @@ following, then restart the dev server (necessary to load the new Google Fonts).
 
 ```javascript{2-3,5}
 import Typography from "typography"
-// import bootstrapTheme from "typography-theme-bootstrap"
 import lawtonTheme from "typography-theme-lawton"
 
 const typography = new Typography(lawtonTheme)
