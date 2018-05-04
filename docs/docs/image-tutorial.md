@@ -4,7 +4,7 @@ Using images pulled from a WordPress demo CMS
 
 ### What this tutorial covers:
 
-In this tutorial, you will install the several image plugins and components in order to pull image data from a WordPress account into your Gatsby site and render that data. This [Gatsby + Wordpress demo site]{https://using-wordpress.gatsbyjs.org/sample-post-1) shows you a sample of what you’re going to be building in this tutorial, although in this tutorial you’ll just focus on adding images.
+In this tutorial, you will install the several image plugins and components in order to pull image data from a WordPress account into your Gatsby site and render that data. This [Gatsby + Wordpress demo site](https://using-wordpress.gatsbyjs.org/sample-post-1) shows you a sample of what you’re going to be building in this tutorial, although in this tutorial you’ll just focus on adding images.
 
 ### Why go through this tutorial? 
 
@@ -70,7 +70,7 @@ Now you’ll configure gatsby-source-filesystem to load the image directory, add
 First, you’ll need to install a few plugins and their dependencies:
 
 ```shell
-npm install --save gatsby-transformer-sharp gatsby-plugin-sharp gatsby-image gatsby-source-filesystem
+npm install --save gatsby-transformer-sharp gatsby-plugin-sharp gatsby-image
 ```
 
 Place these plugins in your `gatsby-config.js` like this:
@@ -109,13 +109,6 @@ module.exports = {
    'gatsby-plugin-react-helmet',
    'gatsby-transformer-sharp',
    'gatsby-plugin-sharp',
-   {
-     resolve: `gatsby-source-filesystem`,
-     options: {
-       name: `images`,
-       path: `${__dirname}/src/images/`,
-     },
-   },
  ],
 }
 ```
