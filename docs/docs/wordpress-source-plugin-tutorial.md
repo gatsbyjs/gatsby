@@ -133,7 +133,6 @@ export default ({ data }) => {
  )
 }
 
-// Set here the ID of the home page.
 export const pageQuery = graphql`
  query MyFiles {
    allWordpressPost(sort: { fields: [date] }) {
