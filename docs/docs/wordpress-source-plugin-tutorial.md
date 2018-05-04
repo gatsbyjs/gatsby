@@ -8,7 +8,7 @@ In this tutorial, you will install the `gatsby-source-wordpress` plugin in order
 
 While each source plugin may operate differently from others, it’s worth going through this tutorial because you will almost definitely be using a source plugin in any Gatsby site you build. This tutorial will walk you through the basics of connecting your Gatsby site to a CMS, pulling in data, and using React to render that data in beautiful ways on your site.
 
-If you’d like to look at the growing number source plugins available to you, search for “source” in the [Gatsby plugin library](https://www.gatsbyjs.org/plugins/?=source).
+If you’d like to look at the growing number source plugins available to you, search for “source” in the [Gatsby plugin library](/plugins/?=source).
 
 ### Creating a site with the `gatsby-source-wordpress` plugin
 
@@ -19,7 +19,7 @@ gatsby new wordpress-tutorial-site
 cd wordpress-tutorial-site
 ```
 
-Install the `gatsby-source-wordpress` plugin. For extra reading on the plugin’s features and examples of GraphQL queries not included in this tutorial, see the [`gatsby-source-wordpress` plugin’s READme file](https://www.gatsbyjs.org/packages/gatsby-source-wordpress/?=wordpress).
+Install the `gatsby-source-wordpress` plugin. For extra reading on the plugin’s features and examples of GraphQL queries not included in this tutorial, see the [`gatsby-source-wordpress` plugin’s READme file](/packages/gatsby-source-wordpress/?=wordpress).
 
 ```shell
 npm install --save gatsby-source-wordpress
