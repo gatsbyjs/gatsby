@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-styletron",
   "description": "A Gatsby plugin for styletron with built-in server-side rendering support",
-  "version": "2.0.8",
+  "version": "2.0.9",
   "author": "Nadiia Dmytrenko <nadiia.dmytrenko@gmail.com>",
   "authors": [
     "Nadiia Dmytrenko <nadiia.dmytrenko@gmail.com>",
