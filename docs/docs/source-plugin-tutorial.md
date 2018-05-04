@@ -251,7 +251,7 @@ exports.sourceNodes = (
 }
 ```
 
-You've added code that fetches photo data from the Pixabay API. For now, your plugin logs that data but doesn't do anything else. Check that you can see the logged photo data by restarting `gatsby dev`. This time you should see a series of results like:
+You've added code that fetches photo data from the Pixabay API. For now, your plugin logs that data but doesn't do anything else. Check that you can see the logged photo data by restarting `gatsby develop`. This time you should see a series of results like:
 
 ```shell
 success onPreBootstrap — 0.035 s
@@ -342,7 +342,7 @@ exports.sourceNodes = (
 
 ### Query for results
 
-Your plugin is ready. Restart `gatsby dev` and open a browser at [http://localhost:8000/\_\_\_graphql](http://localhost:8000/___graphql). The Pixabay data can be queried from here. try:
+Your plugin is ready. Restart `gatsby develop` and open a browser at [http://localhost:8000/\_\_\_graphql](http://localhost:8000/___graphql). The Pixabay data can be queried from here. try:
 
 ```graphql
 {
