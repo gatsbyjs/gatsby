@@ -131,7 +131,7 @@ export default ({ data }) => {
        </div>
      ))}
    </div>
- )T
+ )
 }
 
 // Set here the ID of the home page.
