@@ -2,7 +2,7 @@
 title: "Adding search to your website"
 ---
 
-There few ways to approach this.
+There are few ways to approach this.
 
 1. Using Libraries like [elesticlunr][1] for offline search but it will require you to create the index at build time which is fortunately achievable using the [gatsby-plugin-elasticlunr-search][2] plugin
 
