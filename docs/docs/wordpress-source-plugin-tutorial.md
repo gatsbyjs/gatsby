@@ -72,7 +72,7 @@ Run:
 gatsby develop
 ```
 
-Open localhost:8000 and localhost:8000/__graphql. 
+Open localhost:8000 and localhost:8000/___graphql. 
 
 This query will pull in the blogpost content from WordPress:
 
