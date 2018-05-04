@@ -126,7 +126,7 @@ export default ({ data }) => {
      {data.allWordpressPost.edges.map(({ node }) => (
        <div>
          <p>{node.title}</p>
-         <p>{node.excerpt}</p>
+         <div dangerouslySetInnerHTML={{__html: node.excerpt}}/>
        </div>
      ))}
    </div>
