@@ -80,7 +80,7 @@
       link: /docs/creating-dynamically-rendered-navigation/
     - title: Dropping Images into Static Folders*
       link: /docs/dropping-images-into-static-folders/
-    - title: Adding search to your website
+    - title: Adding search to your Gatsby website
       link: /docs/adding-search/
 - title: Reference
   items:
