@@ -335,7 +335,7 @@ Quoting from
 > A **CSS Module** is a CSS file in which all class names and animation names
 > are scoped locally by default.
 
-CSS Modules is very popular as it lets you write CSS like normal but with a lot
+CSS Modules are very popular as they let you write CSS like normal but with a lot
 more safety. The tool automatically makes class and animation names unique so
 you don't have to worry about selector name collisions.
 
