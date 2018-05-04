@@ -195,8 +195,6 @@ Websites built with Gatsby:
 * [WebGazer](https://www.webgazer.io)
 * [Joe Seifi's Blog](http://seifi.org)
 * [Bartosz Dominiak Blog/Portfolio](http://www.bartoszdominiak.com/) ([source](https://github.com/bartdominiak/blog))
-* [HBTU MUN 2018](https://hbtumun18.netlify.com/)
-  ([source](https://github.com/HaoZeke/hbtuMun18))
 * [The Audacious Project](https://audaciousproject.org/)
 * [upGizmo](https://www.upgizmo.com/)
 * [The Bastion Bot](https://bastionbot.org/ "The Bastion Bot")
@@ -212,6 +210,8 @@ Websites built with Gatsby:
 * [Eviction Free NYC!](https://www.evictionfreenyc.org/) ([source](https://github.com/JustFixNYC/eviction-free-nyc))
 * [Rafael Belliard's Portfolio](https://rafael.do) ([source](https://github.com/rebelliard/rebelliard.github.io))
 * [Tinder Interracial Couple Emoji Project](https://emoji.tinder.com/)
+* [aQuICK](https://aquick.review/)
+  ([source](https://github.com/aQuICK-Review/aQuick))
 
 ## Docs
 
