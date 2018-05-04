@@ -56,7 +56,7 @@ plugins: [
       // The protocol. This can be http or https.
       protocol: "http",
       // Indicates whether the site is hosted on wordpress.com.
-      // If false, then the asumption is made that the site is self hosted.
+      // If false, then the assumption is made that the site is self hosted.
       // If true, then the plugin will source its content on wordpress.com using the JSON REST API V2.
       // If your site is hosted on wordpress.org, then set this to false.
       hostingWPCOM: false,
@@ -138,11 +138,17 @@ plugins.
 
 Set `hostingWPCOM: true`.
 
-You will need to provide an (API
-Key)[https://en.support.wordpress.com/api-keys/].
+You will need to provide an [API
+Key](https://en.support.wordpress.com/api-keys/).
 
 Note : you don't need this for Wordpress.org hosting in which your WordPress
 will behave like a self-hosted instance.
+
+## Test your WordPress API
+
+Before you run your first query, ensure the WordPress JSON API is working correctly by visiting /wp-json at your WordPress install. The result should be similar to the [WordPress demo API](https://demo.wp-api.org/wp-json/).
+
+If you see a page on your site, rather than the JSON output, check if your permalink settings are set to “Plain”. After changing this to any of the other settings, the JSON API should be accessible.
 
 ## How to query
 
