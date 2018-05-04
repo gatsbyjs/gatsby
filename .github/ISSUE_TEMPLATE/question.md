@@ -1,6 +1,6 @@
 ---
-name: Feature Request
-about: Suggest a new idea for the project.
+name: Question 🤔
+about: We may help you.
 ---
 
 Have a question related to the project or need some quick help?
