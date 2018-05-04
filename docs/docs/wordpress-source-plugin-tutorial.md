@@ -2,11 +2,11 @@
 
 ### What this tutorial covers:
 
-In this tutorial, you will install the `gatsby-source-wordpress` plugin in order to pull blog and image data from a WordPress account into your Gatsby site and render that data. This [Gatsby + Wordpress demo site](https://using-wordpress.gatsbyjs.org/) shows you a sample of what you’re going to be building in this tutorial., although it’s missing the cool images you’ll be adding :D
+In this tutorial, you will install the `gatsby-source-wordpress` plugin in order to pull blog and image data from a WordPress install into your Gatsby site and render that data. This [Gatsby + Wordpress demo site](https://using-wordpress.gatsbyjs.org/) shows you a sample of what you’re going to be building in this tutorial., although it’s missing the cool images you’ll be adding :D
 
 ### Why go through this tutorial? 
 
-While each source plugin may operate differently from others, it’s worth going through this tutorial because you will almost definitely be using a source plugin in any Gatsby site you build. This tutorial will walk you through the basics of connecting your Gatsby site to a CMS, pulling in data, and using React to render that data in beautiful ways on your site.
+While each source plugin may operate differently from others, it’s worth going through this tutorial because you will almost definitely be using a source plugin in most Gatsby sites you build. This tutorial will walk you through the basics of connecting your Gatsby site to a CMS, pulling in data, and using React to render that data in beautiful ways on your site.
 
 If you’d like to look at the growing number source plugins available to you, search for “source” in the [Gatsby plugin library](/plugins/?=source).
 
@@ -64,9 +64,10 @@ Add the `gatsby-source-wordpress` plugin to `gatsby-config.js` using the followi
 
 ### Creating GraphQL queries that pull data from WordPress
 
-Now you are ready to create a GraphQL query to pull in some data from the WordPress site before we can render it and sort it on `index.js.` You will create a query that pulls in the title of the blogposts, date they were posted, and blogpost content.
+Now you are ready to create a GraphQL query to pull in some data from the WordPress site. You will create a query that pulls in the title of the blogposts, date they were posted, and blogpost content.
 
 Run:
+
 ```shell
 gatsby develop
 ```
@@ -75,8 +76,8 @@ Open localhost:8000 and localhost:8000/__graphql.
 
 This query will pull in the blogpost content from WordPress:
 
-```jsx
-query { 
+```graphql
+query {
   allWordpressPage {
     edges {
       node {
@@ -94,7 +95,7 @@ query {
 
 This query will pull in a sorted list of those blogposts:
 
-```jsx
+```graphql
 {
   allWordpressPost(sort: { fields: [date] }) {
     edges {
@@ -102,8 +103,7 @@ This query will pull in a sorted list of those blogposts:
         title
         excerpt
         Slug
-	...PostIcons
-	
+        ...PostIcons
       }
     }
   }
