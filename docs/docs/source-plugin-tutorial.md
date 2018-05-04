@@ -196,7 +196,7 @@ module.exports = {
 Open a new terminal in the root directory of your tutorial site, then start Gatsby's development mode:
 
 ```shell
-npm run develop
+gatsby develop
 ```
 
 Check the lines after `success on PreBootstrap`, you should see your "Testing my plugin" message along with the `key` from your `gatsby-config.js` file:
