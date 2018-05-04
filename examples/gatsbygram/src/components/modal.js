@@ -123,6 +123,7 @@ class GatsbyGramModal extends React.Component {
             }}
           >
             <CaretLeft
+              data-testid="previous-post"
               css={{
                 cursor: `pointer`,
                 fontSize: `50px`,
@@ -135,6 +136,7 @@ class GatsbyGramModal extends React.Component {
               location: { pathname: this.props.location.pathname },
             })}
             <CaretRight
+              data-testid="next-post"
               css={{
                 cursor: `pointer`,
                 fontSize: `50px`,
@@ -145,6 +147,7 @@ class GatsbyGramModal extends React.Component {
             />
           </div>
           <Close
+            data-testid="modal-close"
             onClick={() => navigateTo(`/`)}
             css={{
               cursor: `pointer`,

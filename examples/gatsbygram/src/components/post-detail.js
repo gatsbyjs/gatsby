@@ -31,6 +31,7 @@ class PostDetail extends React.Component {
         }}
       >
         <img
+          data-testid="post-detail-avatar"
           src={avatar}
           alt={username}
           css={{
@@ -42,6 +43,7 @@ class PostDetail extends React.Component {
           }}
         />
         <h5
+          data-testid="post-detail-username"
           css={{
             lineHeight: rhythm(1),
             marginBottom: rhythm(3 / 4),
@@ -66,6 +68,7 @@ class PostDetail extends React.Component {
           }}
         >
           <strong
+            data-testid="post-detail-likes"
             css={{
               float: `left`,
             }}
@@ -81,7 +84,7 @@ class PostDetail extends React.Component {
             {weeksAgo}w
           </strong>
         </div>
-        <div>
+        <div data-testid="post-detail-text">
           <strong>{username}</strong> {text}
         </div>
       </div>
@@ -211,7 +214,7 @@ export const postDetailFragment = graphql`
         # Here we query for *multiple* image thumbnails to be
         # created. So with no effort on our part, 100s of
         # thumbnails are created. This makes iterating on
-        # designs effortless as we simply change the args
+        # designs effortless as we change the args
         # for the query and we get new thumbnails.
         big: sizes(maxWidth: 640) {
           src

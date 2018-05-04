@@ -1,7 +1,7 @@
 const scrollToHash = offsetY => {
-  // Make sure React has had a change to flush to DOM first.
+  // Make sure React has had a chance to flush to DOM first.
   setTimeout(() => {
-    const hash = window.location.hash.replace(`#`, ``)
+    const hash = window.decodeURI(window.location.hash.replace(`#`, ``))
     if (hash !== ``) {
       const element = document.getElementById(hash)
       if (element) {

@@ -13,7 +13,10 @@
     "lodash": "^4.16.4",
     "react-typography": "^0.15.0",
     "slash": "^1.0.0",
-    "styletron-react": "^3.0.0-rc.2",
+    "styletron-engine-atomic": "^1",
+    "styletron-react": "^4",
+    "styletron-react-core": "^1",
+    "styletron-standard": "^1",
     "typography": "^0.15.8",
     "typography-breakpoint-constants": "^0.14.0"
   },

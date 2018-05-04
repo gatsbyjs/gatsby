@@ -1,4 +1,5 @@
 import React from "react"
+import colors from "./utils/colors"
 
 let stylesStr
 if (process.env.NODE_ENV === `production`) {
@@ -33,7 +34,7 @@ export default class HTML extends React.Component {
           />
           <link
             rel="preload"
-            href="/static/spectral-latin-400.d6a7b14a.woff2"
+            href="/static/spectral-latin-400.d9fdfd34.woff2"
             as="font"
             crossOrigin="anonymous"
           />
@@ -48,7 +49,7 @@ export default class HTML extends React.Component {
           <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
           <meta
             name="viewport"
-            content="width=device-width, initial-scale=1.0"
+            content="width=device-width, initial-scale=1.0, viewport-fit=cover"
           />
           <link
             rel="apple-touch-icon"
@@ -70,8 +71,11 @@ export default class HTML extends React.Component {
           <link
             rel="mask-icon"
             href={`/safari-pinned-tab.svg`}
-            color="#5bbad5"
+            color={colors.gatsby}
           />
+          <meta name="msapplication-config" content={`/browserconfig.xml`} />
+          <script src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js" />
+
           {css}
         </head>
         <body {...this.props.bodyAttributes}>
@@ -80,6 +84,10 @@ export default class HTML extends React.Component {
             dangerouslySetInnerHTML={{ __html: this.props.body }}
           />
           {this.props.postBodyComponents}
+          <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css"
+          />
         </body>
       </html>
     )

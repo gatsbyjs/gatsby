@@ -16,9 +16,11 @@ let _useACF = true
 let _hostingWPCOM
 let _auth
 let _perPage
+let _concurrentRequests
+let _excludedRoutes
 
 exports.sourceNodes = async (
-  { boundActionCreators, getNode, store, cache },
+  { boundActionCreators, getNode, store, cache, createNodeId },
   {
     baseUrl,
     protocol,
@@ -27,15 +29,20 @@ exports.sourceNodes = async (
     auth = {},
     verboseOutput,
     perPage = 100,
+    searchAndReplaceContentUrls = {},
+    concurrentRequests = 10,
+    excludedRoutes = [],
   }
 ) => {
-  const { createNode } = boundActionCreators
+  const { createNode, touchNode } = boundActionCreators
   _verbose = verboseOutput
   _siteURL = `${protocol}://${baseUrl}`
   _useACF = useACF
   _hostingWPCOM = hostingWPCOM
   _auth = auth
   _perPage = perPage
+  _concurrentRequests = concurrentRequests
+  _excludedRoutes = excludedRoutes
 
   let entities = await fetch({
     baseUrl,
@@ -45,6 +52,8 @@ exports.sourceNodes = async (
     _hostingWPCOM,
     _auth,
     _perPage,
+    _concurrentRequests,
+    _excludedRoutes,
     typePrefix,
     refactoredEntityTypes,
   })
@@ -70,7 +79,7 @@ exports.sourceNodes = async (
   entities = normalize.excludeUnknownEntities(entities)
 
   // Creates Gatsby IDs for each entity
-  entities = normalize.createGatsbyIds(entities)
+  entities = normalize.createGatsbyIds(createNodeId, entities)
 
   // Creates links between authors and user entities
   entities = normalize.mapAuthorsToUsers(entities)
@@ -90,6 +99,17 @@ exports.sourceNodes = async (
     store,
     cache,
     createNode,
+    touchNode,
+    _auth,
+  })
+
+  // Creates links between elements and parent element.
+  entities = normalize.mapElementsToParent(entities)
+
+  // Search and replace Content Urls
+  entities = normalize.searchReplaceContentUrls({
+    entities,
+    searchAndReplaceContentUrls,
   })
 
   // creates nodes for each entry

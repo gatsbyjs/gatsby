@@ -35,6 +35,12 @@ Object {
   "name": Object {
     "field": "name",
   },
+  "nestedArrays": Object {
+    "field": "nestedArrays",
+  },
+  "objectsInArray": Object {
+    "field": "objectsInArray",
+  },
 }
 `;
 
@@ -45,21 +51,31 @@ Object {
   ],
   "context": Object {
     "nestedObject": Object {
-      "someOtherProperty": 3,
+      "someOtherProperty": 1,
     },
   },
   "date": "2006-07-22T22:39:53.000Z",
-  "emptyArray": null,
   "frontmatter": Object {
-    "blue": 10010,
+    "blue": 100,
     "circle": "happy",
     "date": "2006-07-22T22:39:53.000Z",
     "draft": false,
-    "title": "The world of slash and adventure",
+    "title": "The world of dash and adventure",
   },
-  "hair": 4,
-  "iAmNull": null,
+  "hair": 1,
   "key-with..unsupported-values": true,
-  "name": "The Mad Wax",
+  "name": "The Mad Max",
+  "nestedArrays": Array [
+    Array [
+      1,
+    ],
+  ],
+  "objectsInArray": Array [
+    Object {
+      "field1": true,
+      "field2": 1,
+      "field3": "foo",
+    },
+  ],
 }
 `;

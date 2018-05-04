@@ -14,10 +14,13 @@ const typeOf = require(`type-of`)
 const createTypeName = require(`./create-type-name`)
 const createKey = require(`./create-key`)
 const {
-  extractFieldExamples,
+  getExampleValues,
   extractFieldNames,
   isEmptyObjectOrArray,
 } = require(`./data-tree-utils`)
+
+const { findLinkedNode } = require(`./infer-graphql-type`)
+const { getNodes } = require(`../redux`)
 
 import type {
   GraphQLInputFieldConfig,
@@ -76,6 +79,7 @@ function inferGraphQLInputFields({
         case `float`:
           inType = GraphQLFloat
           break
+        case `date`:
         case `string`:
           inType = GraphQLString
           break
@@ -126,6 +130,7 @@ function inferGraphQLInputFields({
         }),
       }
     }
+    case `date`:
     case `string`: {
       return {
         type: new GraphQLInputObjectType({
@@ -185,24 +190,71 @@ type InferInputOptions = {
   exampleValue?: Object,
 }
 
+const recursiveOmitBy = (value, fn) => {
+  if (_.isObject(value)) {
+    if (_.isPlainObject(value)) {
+      value = _.omitBy(value, fn)
+    }
+    _.each(value, (v, k) => {
+      value[k] = recursiveOmitBy(v, fn)
+    })
+    if (_.isEmpty(value)) {
+      // don't return empty objects - gatsby doesn't support these
+      return null
+    }
+  }
+  return value
+}
+
+const linkedNodeCache = {}
+
 export function inferInputObjectStructureFromNodes({
   nodes,
   typeName = ``,
   prefix = ``,
-  exampleValue = extractFieldExamples(nodes),
+  exampleValue = null,
 }: InferInputOptions): Object {
   const inferredFields = {}
   const isRoot = !prefix
 
   prefix = isRoot ? typeName : prefix
+  if (exampleValue === null) {
+    exampleValue = getExampleValues(nodes)
+  }
 
-  _.each(exampleValue, (value, key) => {
+  _.each(exampleValue, (v, k) => {
+    let value = v
+    let key = k
     // Remove fields for traversing through nodes as we want to control
     // setting traversing up not try to automatically infer them.
     if (isRoot && EXCLUDE_KEYS[key]) return
 
-    // Input arguments on linked fields aren't currently supported
-    if (_.includes(key, `___NODE`)) return
+    if (_.includes(key, `___NODE`)) {
+      // TODO: Union the objects in array
+      const nodeToFind = _.isArray(value) ? value[0] : value
+      const linkedNode = findLinkedNode(nodeToFind)
+
+      // Get from cache if found, else store into it
+      if (linkedNodeCache[linkedNode.internal.type]) {
+        value = linkedNodeCache[linkedNode.internal.type]
+      } else {
+        const relatedNodes = getNodes().filter(
+          node => node.internal.type === linkedNode.internal.type
+        )
+        value = getExampleValues({
+          nodes: relatedNodes,
+          type: linkedNode.internal.type,
+        })
+        value = recursiveOmitBy(value, (_v, _k) => _.includes(_k, `___NODE`))
+        linkedNodeCache[linkedNode.internal.type] = value
+      }
+
+      if (_.isArray(value)) {
+        value = [value]
+      }
+
+      ;[key] = key.split(`___`)
+    }
 
     let field = inferGraphQLInputFields({
       nodes,

@@ -6,10 +6,9 @@
  */
 
 const _ = require(`lodash`)
-const async = require(`async`)
 
+const queue = require(`./query-queue`)
 const { store, emitter } = require(`../../redux`)
-const queryRunner = require(`./query-runner`)
 
 let queuedDirtyActions = []
 let active = false
@@ -62,6 +61,7 @@ const runQueuedActions = async () => {
 // query things in a 1/2 finished state.
 emitter.on(`API_RUNNING_QUEUE_EMPTY`, runQueuedActions)
 
+let seenIdsWithoutDataDependencies = []
 const findIdsWithoutDataDependencies = () => {
   const state = store.getState()
   const allTrackedIds = _.uniq(
@@ -75,59 +75,67 @@ const findIdsWithoutDataDependencies = () => {
 
   // Get list of paths not already tracked and run the queries for these
   // paths.
-  return _.difference(
+  const notTrackedIds = _.difference(
     [
       ...state.pages.map(p => p.path),
       ...state.layouts.map(l => `LAYOUT___${l.id}`),
     ],
-    allTrackedIds
+    [...allTrackedIds, ...seenIdsWithoutDataDependencies]
   )
+
+  // Add new IDs to our seen array so we don't keep trying to run queries for them.
+  // Pages/Layouts without queries can't be tracked.
+  seenIdsWithoutDataDependencies = _.uniq([
+    ...notTrackedIds,
+    ...seenIdsWithoutDataDependencies,
+  ])
+
+  return notTrackedIds
 }
 
 const runQueriesForIds = ids => {
-  ids = _.uniq(ids)
-  if (ids.length < 1) {
+  const state = store.getState()
+  const pagesAndLayouts = [...state.pages, ...state.layouts]
+  let didNotQueueItems = true
+  ids.forEach(id => {
+    const plObj = pagesAndLayouts.find(
+      pl => pl.path === id || `LAYOUT___${pl.id}` === id
+    )
+    if (plObj) {
+      didNotQueueItems = false
+      queue.push({ ...plObj, _id: plObj.id, id: plObj.jsonName })
+    }
+  })
+
+  if (didNotQueueItems || !ids || ids.length === 0) {
     return Promise.resolve()
   }
-  const state = store.getState()
 
-  return new Promise((resolve, reject) => {
-    async.mapLimit(
-      ids,
-      4,
-      (id, callback) => {
-        const pagesAndLayouts = [...state.pages, ...state.layouts]
-        const plObj = pagesAndLayouts.find(
-          pl => pl.path === id || `LAYOUT___${pl.id}` === id
-        )
-        if (plObj) {
-          return queryRunner(plObj, state.components[plObj.component]).then(
-            result => callback(null, result),
-            error => callback(error)
-          )
-        }
-        return callback(null, null)
-      },
-      (error, result) => {
-        error ? reject(error) : resolve(result)
-      }
-    )
+  return new Promise(resolve => {
+    queue.on(`drain`, () => {
+      resolve()
+    })
   })
 }
 
 const findDirtyIds = actions => {
   const state = store.getState()
-  return actions.reduce((dirtyIds, action) => {
-    const node = action.payload
+  const uniqDirties = _.uniq(
+    actions.reduce((dirtyIds, action) => {
+      const node = action.payload
 
-    // find invalid pagesAndLayouts
-    dirtyIds = dirtyIds.concat(state.componentDataDependencies.nodes[node.id])
+      if (!node || !node.id || !node.internal.type) return dirtyIds
 
-    // Find invalid connections
-    dirtyIds = dirtyIds.concat(
-      state.componentDataDependencies.connections[node.internal.type]
-    )
+      // Find pagesAndLayouts that depend on this node so are now dirty.
+      dirtyIds = dirtyIds.concat(state.componentDataDependencies.nodes[node.id])
 
-    return _.compact(dirtyIds)
-  }, [])
+      // Find connections that depend on this node so are now invalid.
+      dirtyIds = dirtyIds.concat(
+        state.componentDataDependencies.connections[node.internal.type]
+      )
+
+      return _.compact(dirtyIds)
+    }, [])
+  )
+  return uniqDirties
 }

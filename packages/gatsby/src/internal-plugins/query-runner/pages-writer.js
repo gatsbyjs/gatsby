@@ -43,10 +43,21 @@ const writePages = async () => {
     })
     if (p.layout) {
       let layout = getLayoutById(layouts)(p.layout)
-      pageLayouts.push(layout)
-      json.push({
-        jsonName: layout.jsonName,
-      })
+
+      if (!layout) {
+        throw new Error(
+          `Could not find layout '${
+            p.layout
+          }'. Check if this file exists in 'src/layouts'.`
+        )
+      }
+
+      if (!_.includes(pageLayouts, layout)) {
+        pageLayouts.push(layout)
+        json.push({
+          jsonName: layout.jsonName,
+        })
+      }
     }
     json.push({ path: p.path, jsonName: p.jsonName })
   })
@@ -54,15 +65,19 @@ const writePages = async () => {
   pageLayouts = _.uniq(pageLayouts)
   components = _.uniqBy(components, c => c.componentChunkName)
 
-  await fs.writeFile(
-    joinPath(program.directory, `.cache/pages.json`),
-    JSON.stringify(pagesData, null, 4)
-  )
-
   // Create file with sync requires of layouts/components/json files.
   let syncRequires = `// prefer default export if available
 const preferDefault = m => m && m.default || m
 \n\n`
+  syncRequires += `exports.layouts = {\n${pageLayouts
+    .map(
+      l =>
+        `  "${l.machineId}": preferDefault(require("${
+          l.componentWrapperPath
+        }"))`
+    )
+    .join(`,\n`)}
+}\n\n`
   syncRequires += `exports.components = {\n${components
     .map(
       c =>
@@ -82,21 +97,8 @@ const preferDefault = m => m && m.default || m
         )}")`
     )
     .join(`,\n`)}
-}\n\n`
-  syncRequires += `exports.layouts = {\n${pageLayouts
-    .map(
-      l =>
-        `  "${l.machineId}": preferDefault(require("${
-          l.componentWrapperPath
-        }"))`
-    )
-    .join(`,\n`)}
 }`
 
-  await fs.writeFile(
-    `${program.directory}/.cache/sync-requires.js`,
-    syncRequires
-  )
   // Create file with async requires of layouts/components/json files.
   let asyncRequires = `// prefer default export if available
 const preferDefault = m => m && m.default || m
@@ -131,27 +133,50 @@ const preferDefault = m => m && m.default || m
     .join(`,\n`)}
 }`
 
-  await fs.writeFile(
-    joinPath(program.directory, `.cache/async-requires.js`),
-    asyncRequires
-  )
+  const writeAndMove = (file, data) => {
+    const destination = joinPath(program.directory, `.cache`, file)
+    const tmp = `${destination}.${Date.now()}`
+    return fs
+      .writeFile(tmp, data)
+      .then(() => fs.move(tmp, destination, { overwrite: true }))
+  }
 
-  return
+  return await Promise.all([
+    writeAndMove(`pages.json`, JSON.stringify(pagesData, null, 4)),
+    writeAndMove(`sync-requires.js`, syncRequires),
+    writeAndMove(`async-requires.js`, asyncRequires),
+  ])
 }
 
 exports.writePages = writePages
 
 let bootstrapFinished = false
 let oldPages
-const debouncedWritePages = _.debounce(() => {
-  // Don't write pages again until bootstrap has finished.
-  if (bootstrapFinished && !_.isEqual(oldPages, store.getState().pages)) {
-    writePages()
-    oldPages = store.getState().pages
-  }
-}, 250)
-
+const debouncedWritePages = _.debounce(
+  () => {
+    // Don't write pages again until bootstrap has finished.
+    if (bootstrapFinished && !_.isEqual(oldPages, store.getState().pages)) {
+      writePages()
+      oldPages = store.getState().pages
+    }
+  },
+  500,
+  { leading: true }
+)
 emitter.on(`CREATE_PAGE`, () => {
+  // Ignore CREATE_PAGE until bootstrap is finished
+  // as this is called many many times during bootstrap and
+  // we can ignore them until CREATE_PAGE_END is called.
+  //
+  // After bootstrap, we need to listen for this as stateful page
+  // creators e.g. the internal plugin "component-page-creator"
+  // calls createPage directly so CREATE_PAGE_END won't get fired.
+  if (bootstrapFinished) {
+    debouncedWritePages()
+  }
+})
+
+emitter.on(`CREATE_PAGE_END`, () => {
   debouncedWritePages()
 })
 emitter.on(`DELETE_PAGE`, () => {

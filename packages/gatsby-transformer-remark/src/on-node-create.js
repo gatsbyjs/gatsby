@@ -2,12 +2,10 @@ const grayMatter = require(`gray-matter`)
 const crypto = require(`crypto`)
 const _ = require(`lodash`)
 
-module.exports = async function onCreateNode({
-  node,
-  getNode,
-  loadNodeContent,
-  boundActionCreators,
-}) {
+module.exports = async function onCreateNode(
+  { node, getNode, loadNodeContent, boundActionCreators },
+  pluginOptions
+) {
   const { createNode, createParentChildLink } = boundActionCreators
 
   // We only care about markdown content.
@@ -19,7 +17,7 @@ module.exports = async function onCreateNode({
   }
 
   const content = await loadNodeContent(node)
-  let data = grayMatter(content)
+  let data = grayMatter(content, pluginOptions)
 
   // Convert date objects to string. Otherwise there's type mismatches
   // during inference as some dates are strings and others date objects.
@@ -33,17 +31,12 @@ module.exports = async function onCreateNode({
     })
   }
 
-  const contentDigest = crypto
-    .createHash(`md5`)
-    .update(JSON.stringify(data))
-    .digest(`hex`)
   const markdownNode = {
     id: `${node.id} >>> MarkdownRemark`,
     children: [],
     parent: node.id,
     internal: {
       content,
-      contentDigest,
       type: `MarkdownRemark`,
     },
   }
@@ -57,10 +50,17 @@ module.exports = async function onCreateNode({
     parent: node.id,
   }
 
+  markdownNode.excerpt = data.excerpt
+
   // Add path to the markdown file path
   if (node.internal.type === `File`) {
     markdownNode.fileAbsolutePath = node.absolutePath
   }
+
+  markdownNode.internal.contentDigest = crypto
+    .createHash(`md5`)
+    .update(JSON.stringify(markdownNode))
+    .digest(`hex`)
 
   createNode(markdownNode)
   createParentChildLink({ parent: node, child: markdownNode })

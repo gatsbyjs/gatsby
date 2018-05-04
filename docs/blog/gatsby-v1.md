@@ -71,11 +71,11 @@ static React sites are useful.
 But in many conversations among community members building Gatsby sites, two
 more questions kept coming up.
 
-1. How could we _query_ data from _anywhere_ and have that data show up in our
-   pages **without** any custom scripting?
-2. How should a website framework work for an _internet dominated by smartphones
-   on unreliable networks_ — an internet vastly different and larger than the
-   one frameworks were designed for a decade ago?
+1.  How could we _query_ data from _anywhere_ and have that data show up in our
+    pages **without** any custom scripting?
+2.  How should a website framework work for an _internet dominated by smartphones
+    on unreliable networks_ — an internet vastly different and larger than the
+    one frameworks were designed for a decade ago?
 
 ## Plugin system
 
@@ -116,7 +116,7 @@ enables rich integrations with CMSs like Contentful, Wordpress, and Drupal along
 with other remote and local sources.
 
 In Gatsby v0, (like pretty much every static site generator) data was processed
-then _pushed_ into templates to be rendered into HTML. This is a simple pattern
+then _pushed_ into templates to be rendered into HTML. This is a straight-forward pattern
 and works great for many use cases. But when you start working on more complex
 sites, you really start to miss the flexibility of a database-driven site. With
 a database, all your data is available to query against in any fashion you'd
@@ -144,7 +144,7 @@ This pattern of _colocating_ your queries next to your views is copied from the
 Colocation makes it easy to fully understand your views as everything necessary
 for that view is fully defined there.
 
-A simple example of how this works in practice.
+An example of how this works in practice.
 
 Say we had a markdown file that looked like:
 
@@ -161,7 +161,7 @@ In our site, we would write a React component which acts as a template for all
 the blog posts. Included with the component is an exported `pageQuery`.
 
 ```jsx
-// A simple React component for rendering a blog page.
+// A basic React component for rendering a blog page.
 import React from "react";
 
 class BlogPostTemplate extends React.Component {

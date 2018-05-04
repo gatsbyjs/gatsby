@@ -713,3 +713,213 @@ Object {
   "type": "root",
 }
 `;
+
+exports[`gatsby-remark-code-repls Ramda remark transform generates a link for files in nested directories 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "type": "html",
+          "value": "<a href=\\"http://ramdajs.com/repl/#?const%20foo%20%3D%20%22bar%22%3B\\" >REPL</a>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 35,
+          "line": 1,
+          "offset": 34,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 35,
+      "line": 1,
+      "offset": 34,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`gatsby-remark-code-repls Ramda remark transform generates a link for the specified example file 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "type": "html",
+          "value": "<a href=\\"http://ramdajs.com/repl/#?const%20foo%20%3D%20%22bar%22%3B\\" >REPL</a>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 20,
+          "line": 1,
+          "offset": 19,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 20,
+      "line": 1,
+      "offset": 19,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`gatsby-remark-code-repls Ramda remark transform generates a link with the specified default text 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "type": "html",
+          "value": "<a href=\\"http://ramdajs.com/repl/#?const%20foo%20%3D%20%22bar%22%3B\\" >Click me</a>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 20,
+          "line": 1,
+          "offset": 19,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 20,
+      "line": 1,
+      "offset": 19,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`gatsby-remark-code-repls Ramda remark transform generates a link with the specified inline text even if default text is specified 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "type": "html",
+          "value": "<a href=\\"http://ramdajs.com/repl/#?const%20foo%20%3D%20%22bar%22%3B\\" >Custom link text</a>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 36,
+          "line": 1,
+          "offset": 35,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 36,
+      "line": 1,
+      "offset": 35,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`gatsby-remark-code-repls Ramda remark transform generates a link with the specified target 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "type": "html",
+          "value": "<a href=\\"http://ramdajs.com/repl/#?const%20foo%20%3D%20%22bar%22%3B\\" target=\\"_blank\\" rel=\\"noreferrer\\">REPL</a>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 20,
+          "line": 1,
+          "offset": 19,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 20,
+      "line": 1,
+      "offset": 19,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;

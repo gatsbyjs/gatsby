@@ -28,6 +28,18 @@ for more.
 At the root of a Gatsby site run `gatsby develop` to start the Gatsby
 development server.
 
+Options
+
+```
+  -H, --host    Set host. Defaults to localhost
+  -p, --port    Set port. Defaults to 8000
+  -o, --open    Open the site in your browser for you
+  -S, --https   Use HTTPS
+```
+
+Follow the [Local HTTPS guide](https://www.gatsbyjs.org/docs/local-https/)
+to find out how you can set up an HTTPS development server using Gatsby.
+
 ### Build
 
 At the root of a Gatsby site run `gatsby build` to do a production build of a

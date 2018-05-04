@@ -4,6 +4,7 @@ date: "2017-12-06"
 author: "Josh Weaver"
 image: "gatsby-contentful-netlify-algolia.jpg"
 excerpt: "Gatsby has been getting a lot of recognition and adoption lately, and for good reason. It’s so flexible and it works well with nearly everything."
+tags: ["contentful", "netlify", "algolia", "getting-started", "hosting", "ci", "performance"]
 ---
 
 Gatsby has been getting a lot of recognition and
@@ -57,7 +58,7 @@ make content changes or add a markdown file then fire off a site rebuild
 command, and finally redeploy. Even though static site generators have solved
 this in many clever ways, I feel Gatsby solves this problem in a particularly
 elegant fashion via it’s GraphQL data layer (more on that later) and its vast
-ecosystem of data [source plugins](https://www.gatsbyjs.org/docs/plugins/).
+ecosystem of data [source plugins](/docs/plugins/).
 
 Before I jump into the topic of content and “data”, I want to briefly say that
 building a static site template with React-based architecture and hot module
@@ -78,7 +79,7 @@ experience couldn’t rely on creating a file and committing changes to a git
 repo.
 
 > Sidebar: There is
-> [Gatsby-Source-Wordpress](https://www.gatsbyjs.org/packages/gatsby-source-wordpress/)
+> [Gatsby-Source-Wordpress](/packages/gatsby-source-wordpress/)
 > plugin that pulls in content via a Wordpress API. However, to me, this was not
 > appealing because I was trying to avoid hosting a traditional CMS entirely.
 
@@ -122,7 +123,7 @@ for grabbing content as well, but how you deal with actually pulling it into
 your React components/pages with GraphQL is beautiful.
 
 After you install the `gatsby-source-contentful`
-[plugin](https://www.gatsbyjs.org/packages/gatsby-source-contentful/) with NPM
+[plugin](/packages/gatsby-source-contentful/) with NPM
 and add your Contentful API credentials to the gatsby-config file, the fun
 begins.
 

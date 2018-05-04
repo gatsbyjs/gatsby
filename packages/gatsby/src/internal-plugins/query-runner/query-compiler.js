@@ -69,7 +69,11 @@ class Runner {
   }
 
   reportError(message) {
-    report.log(`${report.format.red(`GraphQL Error`)} ${message}`)
+    if (process.env.NODE_ENV === `production`) {
+      report.panic(`${report.format.red(`GraphQL Error`)} ${message}`)
+    } else {
+      report.log(`${report.format.red(`GraphQL Error`)} ${message}`)
+    }
   }
 
   async compileAll() {
@@ -80,8 +84,12 @@ class Runner {
   async parseEverything() {
     // FIXME: this should all use gatsby's configuration to determine parsable
     // files (and how to parse them)
-    let files = glob.sync(`${this.fragmentsDir}/**/*.+(t|j)s?(x)`)
-    files = files.concat(glob.sync(`${this.baseDir}/**/*.+(t|j)s?(x)`))
+    let files = glob.sync(`${this.fragmentsDir}/**/*.+(t|j)s?(x)`, {
+      nodir: true,
+    })
+    files = files.concat(
+      glob.sync(`${this.baseDir}/**/*.+(t|j)s?(x)`, { nodir: true })
+    )
     files = files.filter(d => !d.match(/\.d\.ts$/))
     files = files.map(normalize)
 

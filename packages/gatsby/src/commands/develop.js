@@ -19,6 +19,8 @@ const launchEditor = require(`react-dev-utils/launchEditor`)
 const formatWebpackMessages = require(`react-dev-utils/formatWebpackMessages`)
 const chalk = require(`chalk`)
 const address = require(`address`)
+const sourceNodes = require(`../utils/source-nodes`)
+const getSslCert = require(`../utils/get-ssl-cert`)
 
 // const isInteractive = process.stdout.isTTY
 
@@ -91,6 +93,35 @@ async function startServer(program) {
       graphiql: true,
     })
   )
+
+  // Allow requests from any origin. Avoids CORS issues when using the `--host` flag.
+  app.use((req, res, next) => {
+    res.header(`Access-Control-Allow-Origin`, `*`)
+    res.header(
+      `Access-Control-Allow-Headers`,
+      `Origin, X-Requested-With, Content-Type, Accept`
+    )
+    next()
+  })
+
+  /**
+   * Refresh external data sources.
+   * This behavior is disabled by default, but the ENABLE_REFRESH_ENDPOINT env var enables it
+   * If no GATSBY_REFRESH_TOKEN env var is available, then no Authorization header is required
+   **/
+  app.post(`/__refresh`, (req, res) => {
+    const enableRefresh = process.env.ENABLE_GATSBY_REFRESH_ENDPOINT
+    const refreshToken = process.env.GATSBY_REFRESH_TOKEN
+    const authorizedRefresh =
+      !refreshToken || req.headers.authorization === refreshToken
+
+    if (enableRefresh && authorizedRefresh) {
+      console.log(`Refreshing source data`)
+      sourceNodes()
+    }
+    res.end()
+  })
+
   app.get(`/__open-stack-frame-in-editor`, (req, res) => {
     launchEditor(req.query.fileName, req.query.lineNumber)
     res.end()
@@ -105,6 +136,13 @@ async function startServer(program) {
       publicPath: devConfig.output.publicPath,
     })
   )
+
+  // Expose access to app for advanced use cases
+  const { developMiddleware } = store.getState().config
+
+  if (developMiddleware) {
+    developMiddleware(app)
+  }
 
   // Set up API proxy.
   const { proxy } = store.getState().config
@@ -146,7 +184,11 @@ async function startServer(program) {
   // Render an HTML page and serve it.
   app.use((req, res, next) => {
     const parsedPath = parsePath(req.path)
-    if (parsedPath.extname === `` || parsedPath.extname.startsWith(`.html`)) {
+    if (
+      parsedPath.extname === `` ||
+      parsedPath.extname.startsWith(`.html`) ||
+      parsedPath.path.endsWith(`/`)
+    ) {
       res.sendFile(directoryPath(`public/index.html`), err => {
         if (err) {
           res.status(500).end()
@@ -161,7 +203,13 @@ async function startServer(program) {
    * Set up the HTTP server and socket.io.
    **/
 
-  const server = require(`http`).Server(app)
+  let server = require(`http`).Server(app)
+
+  // If a SSL cert exists in program, use it with `createServer`.
+  if (program.ssl) {
+    server = require(`https`).createServer(program.ssl, app)
+  }
+
   const io = require(`socket.io`)(server)
 
   io.on(`connection`, socket => {
@@ -201,6 +249,12 @@ module.exports = async (program: any) => {
   const detect = require(`detect-port`)
   const port =
     typeof program.port === `string` ? parseInt(program.port, 10) : program.port
+
+  // Check if https is enabled, then create or get SSL cert.
+  // Certs are named after `name` inside the project's package.json.
+  if (program.https) {
+    program.ssl = await getSslCert(program.sitePackageJson.name)
+  }
 
   let compiler
   await new Promise(resolve => {
@@ -303,6 +357,13 @@ module.exports = async (program: any) => {
     }
 
     console.log()
+    console.log(
+      `View GraphiQL, an in-browser IDE, to explore your site's data and schema`
+    )
+    console.log()
+    console.log(`  ${urls.localUrlForTerminal}___graphql`)
+
+    console.log()
     console.log(`Note that the development build is not optimized.`)
     console.log(
       `To create a production build, use ` + `${chalk.cyan(`gatsby build`)}`
@@ -318,7 +379,11 @@ module.exports = async (program: any) => {
     // options so we are going to "massage" the warnings and errors and present
     // them in a readable focused way.
     const messages = formatWebpackMessages(stats.toJson({}, true))
-    const urls = prepareUrls(`http`, program.host, program.port)
+    const urls = prepareUrls(
+      program.ssl ? `https` : `http`,
+      program.host,
+      program.port
+    )
     const isSuccessful = !messages.errors.length && !messages.warnings.length
     // if (isSuccessful) {
     // console.log(chalk.green(`Compiled successfully!`))
@@ -326,10 +391,9 @@ module.exports = async (program: any) => {
     // if (isSuccessful && (isInteractive || isFirstCompile)) {
     if (isSuccessful && isFirstCompile) {
       printInstructions(program.sitePackageJson.name, urls, program.useYarn)
-    }
-
-    if (program.open) {
-      require(`opn`)(urls.localUrlForBrowser)
+      if (program.open) {
+        require(`opn`)(urls.localUrlForBrowser)
+      }
     }
 
     isFirstCompile = false

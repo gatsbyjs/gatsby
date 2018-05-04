@@ -5,11 +5,18 @@ const { connectionFromArray } = require(`graphql-skip-limit`)
 const { createPageDependency } = require(`../redux/actions/add-page-dependency`)
 const prepareRegex = require(`./prepare-regex`)
 const Promise = require(`bluebird`)
+const { trackInlineObjectsInRootNode } = require(`./node-tracking`)
+
+const enhancedNodeCache = new Map()
+const enhancedNodeCacheId = ({ node, args }) =>
+  node && node.internal && node.internal.contentDigest
+    ? `${node.id}${node.internal.contentDigest}${JSON.stringify(args)}`
+    : null
 
 function awaitSiftField(fields, node, k) {
   const field = fields[k]
   if (field.resolve) {
-    return field.resolve(node)
+    return field.resolve(node, {}, {}, { fieldName: k })
   } else if (node[k] !== undefined) {
     return node[k]
   }
@@ -79,7 +86,7 @@ module.exports = ({
     })
   }
 
-  // Resolves every field used in the sift.
+  // Resolves every field used in the node.
   function resolveRecursive(node, siftFieldsObj, gqFields) {
     return Promise.all(
       _.keys(siftFieldsObj).map(k =>
@@ -87,7 +94,13 @@ module.exports = ({
           .then(v => {
             const innerSift = siftFieldsObj[k]
             const innerGqConfig = gqFields[k]
-            if (_.isObject(innerSift) && v != null) {
+            if (
+              _.isObject(innerSift) &&
+              v != null &&
+              innerGqConfig &&
+              innerGqConfig.type &&
+              _.isFunction(innerGqConfig.type.getFields)
+            ) {
               return resolveRecursive(
                 v,
                 innerSift,
@@ -107,20 +120,40 @@ module.exports = ({
   }
 
   return Promise.all(
-    nodes.map(node => resolveRecursive(node, fieldsToSift, type.getFields()))
+    nodes.map(node => {
+      const cacheKey = enhancedNodeCacheId({ node, args: fieldsToSift })
+      if (cacheKey && enhancedNodeCache.has(cacheKey)) {
+        return Promise.resolve(enhancedNodeCache.get(cacheKey))
+      }
+
+      return resolveRecursive(node, fieldsToSift, type.getFields()).then(
+        resolvedNode => {
+          trackInlineObjectsInRootNode(resolvedNode)
+          if (cacheKey) {
+            enhancedNodeCache.set(cacheKey, resolvedNode)
+          }
+          return resolvedNode
+        }
+      )
+    })
   ).then(myNodes => {
     if (!connection) {
       const index = _.isEmpty(siftArgs)
         ? 0
         : sift.indexOf({ $and: siftArgs }, myNodes)
 
-      // Create dependency between resulting node and the path.
-      createPageDependency({
-        path,
-        nodeId: myNodes[index].id,
-      })
+      // If a node is found, create a dependency between the resulting node and
+      // the path.
+      if (index !== -1) {
+        createPageDependency({
+          path,
+          nodeId: myNodes[index].id,
+        })
 
-      return myNodes[index]
+        return myNodes[index]
+      } else {
+        return null
+      }
     }
 
     let result = _.isEmpty(siftArgs)

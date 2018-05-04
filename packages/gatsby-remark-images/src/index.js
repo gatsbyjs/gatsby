@@ -14,7 +14,7 @@ const slash = require(`slash`)
 // 4. Create the responsive images.
 // 5. Set the html w/ aspect ratio helper.
 module.exports = (
-  { files, markdownNode, markdownAST, pathPrefix, getNode },
+  { files, markdownNode, markdownAST, pathPrefix, getNode, reporter },
   pluginOptions
 ) => {
   const defaults = {
@@ -22,6 +22,7 @@ module.exports = (
     wrapperStyle: ``,
     backgroundColor: `white`,
     linkImagesToOriginal: true,
+    showCaptions: false,
     pathPrefix,
   }
 
@@ -52,6 +53,7 @@ module.exports = (
       }
       return null
     })
+
     if (!imageNode || !imageNode.absolutePath) {
       return resolve()
     }
@@ -59,7 +61,12 @@ module.exports = (
     let responsiveSizesResult = await sizes({
       file: imageNode,
       args: options,
+      reporter,
     })
+
+    if (!responsiveSizesResult) {
+      return resolve()
+    }
 
     // Calculate the paddingBottom %
     const ratio = `${1 / responsiveSizesResult.aspectRatio * 100}%`
@@ -123,6 +130,17 @@ module.exports = (
     `
     }
 
+    // Wrap in figure and use title as caption
+
+    if (options.showCaptions && node.title) {
+      rawHTML = `
+  <figure class="gatsby-resp-image-figure">
+  ${rawHTML}
+  <figcaption class="gatsby-resp-image-figcaption">${node.title}</figcaption>
+  </figure>
+      `
+    }
+
     return rawHTML
   }
 
@@ -141,9 +159,12 @@ module.exports = (
             fileType !== `svg`
           ) {
             const rawHTML = await generateImagesAndUpdateNode(node, resolve)
-            // Replace the image node with an inline HTML node.
-            node.type = `html`
-            node.value = rawHTML
+
+            if (rawHTML) {
+              // Replace the image node with an inline HTML node.
+              node.type = `html`
+              node.value = rawHTML
+            }
             return resolve(node)
           } else {
             // Image isn't relative so there's nothing for us to do.
@@ -197,10 +218,13 @@ module.exports = (
                   formattedImgTag,
                   resolve
                 )
-                // Replace the image string
-                thisImg.replaceWith(rawHTML)
-              } else {
-                return resolve()
+
+                if (rawHTML) {
+                  // Replace the image string
+                  thisImg.replaceWith(rawHTML)
+                } else {
+                  return resolve()
+                }
               }
             }
 

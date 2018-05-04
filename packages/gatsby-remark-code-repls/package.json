@@ -1,32 +1,38 @@
 {
   "name": "gatsby-remark-code-repls",
   "description": "Gatsby plugin to auto-generate links to popular REPLs like Babel and Codepen",
-  "version": "1.0.7",
+  "version": "1.0.10",
   "author": "Brian Vaughn <brian.david.vaughn@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
   "dependencies": {
     "babel-runtime": "^6.26.0",
     "lz-string": "^1.4.4",
     "normalize-path": "^2.1.1",
     "recursive-readdir-synchronous": "^0.0.3",
-    "unist-util-map": "^1.0.3"
+    "unist-util-map": "^1.0.3",
+    "urijs": "^1.19.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "cross-env": "^5.0.5"
   },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-code-repls#readme",
   "keywords": [
+    "babel",
+    "codepen",
     "gatsby",
     "gatsby-plugin",
     "remark",
-    "babel",
-    "codepen",
     "repl"
   ],
   "license": "MIT",
   "main": "index.js",
+  "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-code-repls",
   "scripts": {
     "build": "babel src --out-dir . --ignore __tests__",
-    "watch": "babel -w src --out-dir . --ignore __tests__",
-    "prepublish": "cross-env NODE_ENV=production npm run build"
+    "prepublish": "cross-env NODE_ENV=production npm run build",
+    "watch": "babel -w src --out-dir . --ignore __tests__"
   }
 }

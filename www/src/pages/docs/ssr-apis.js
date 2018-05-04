@@ -1,4 +1,5 @@
 import React from "react"
+import Helmet from "react-helmet"
 
 import Functions from "../../components/function-list"
 import { rhythm, scale } from "../../utils/typography"
@@ -8,7 +9,12 @@ class SSRAPIs extends React.Component {
   render() {
     return (
       <Container>
-        <h1 css={{ marginTop: 0 }}>Gatsby Server Rendering APIs</h1>
+        <Helmet>
+          <title>SSR APIs</title>
+        </Helmet>
+        <h1 id="gatsby-server-rendering-apis" css={{ marginTop: 0 }}>
+          Gatsby Server Rendering APIs
+        </h1>
         <h2 css={{ marginBottom: rhythm(1 / 2) }}>Usage</h2>
         <p css={{ marginBottom: rhythm(1) }}>
           Implement any of these APIs by exporting them from a file named{` `}

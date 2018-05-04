@@ -3,6 +3,7 @@ const crypto = require(`crypto`)
 const _ = require(`lodash`)
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 const { URL } = require(`url`)
+const { nodeFromData } = require(`./normalize`)
 
 // Get content digest of node.
 const createContentDigest = obj =>
@@ -13,9 +14,12 @@ const createContentDigest = obj =>
 
 exports.sourceNodes = async (
   { boundActionCreators, getNode, hasNodeChanged, store, cache },
-  { baseUrl }
+  { baseUrl, apiBase }
 ) => {
   const { createNode } = boundActionCreators
+
+  // Default apiBase to `jsonapi`
+  apiBase = apiBase || `jsonapi`
 
   // Touch existing Drupal nodes so Gatsby doesn't garbage collect them.
   // _.values(store.getState().nodes)
@@ -36,7 +40,7 @@ exports.sourceNodes = async (
   // .lastFetched
   // }
 
-  const data = await axios.get(`${baseUrl}/api`)
+  const data = await axios.get(`${baseUrl}/${apiBase}`)
   const allData = await Promise.all(
     _.map(data.data.links, async (url, type) => {
       if (type === `self`) return
@@ -99,15 +103,7 @@ exports.sourceNodes = async (
     if (!contentType) return
 
     _.each(contentType.data, datum => {
-      const node = {
-        id: datum.id,
-        parent: null,
-        children: [],
-        ...datum.attributes,
-        internal: {
-          type: datum.type.replace(/-|__|:|\.|\s/g, `_`),
-        },
-      }
+      const node = nodeFromData(datum)
 
       // Add relationships
       if (datum.relationships) {

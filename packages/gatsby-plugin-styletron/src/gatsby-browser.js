@@ -1,11 +1,6 @@
-const React = require(`react`)
-const Styletron = require(`styletron-client`)
-const { StyletronProvider } = require(`styletron-react`)
+import { createElement as h } from "react"
+import styletron from "./index.js"
+import { Provider } from "styletron-react"
 
-const styletron = new Styletron()
-
-exports.wrapRootComponent = ({ Root }) => () => (
-  <StyletronProvider styletron={styletron}>
-    <Root />
-  </StyletronProvider>
-)
+exports.wrapRootComponent = ({ Root }, options) => () =>
+  h(Provider, { value: styletron(options).instance }, h(Root))

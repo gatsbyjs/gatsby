@@ -4,10 +4,13 @@ import Link from "gatsby-link"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import ArrowBackIcon from "react-icons/lib/md/arrow-back"
 import Img from "gatsby-image"
+import { OutboundLink } from "gatsby-plugin-google-analytics"
 
-import presets from "../utils/presets"
+import presets, { colors } from "../utils/presets"
 import typography, { rhythm, scale, options } from "../utils/typography"
 import Container from "../components/container"
+import EmailCaptureForm from "../components/email-capture-form"
+import TagsSection from "../components/tags-section"
 
 class BlogPostTemplate extends React.Component {
   render() {
@@ -20,13 +23,13 @@ class BlogPostTemplate extends React.Component {
         borderBottom: 0,
         fontFamily: options.headerFontFamily.join(`,`),
         fontWeight: `bold`,
-        color: presets.brand,
+        color: colors.gatsby,
       },
     }
     const prevNextLabelStyles = {
       marginTop: 0,
       marginBottom: 0,
-      color: presets.calm,
+      color: colors.gray.calm,
       fontWeight: `normal`,
       ...scale(0),
       lineHeight: 1,
@@ -38,7 +41,7 @@ class BlogPostTemplate extends React.Component {
           fontFamily: typography.options.headerFontFamily.join(`,`),
           lineHeight: 1.3,
           margin: 0,
-          color: presets.calm,
+          color: colors.gray.calm,
           [presets.Mobile]: {
             ...scale(-1 / 5),
             lineHeight: 1.3,
@@ -48,15 +51,27 @@ class BlogPostTemplate extends React.Component {
         {children}
       </p>
     )
+    let canonicalLink
+    if (post.frontmatter.canonicalLink) {
+      canonicalLink = (
+        <link rel="canonical" href={post.frontmatter.canonicalLink} />
+      )
+    }
+
     return (
       <div>
-        <Container className="post" css={{ paddingBottom: `0 !important` }}>
+        <Container
+          className="post"
+          css={{ paddingTop: rhythm(3), paddingBottom: `0 !important` }}
+        >
           {/* Add long list of social meta tags */}
           <Helmet>
             <title>{post.frontmatter.title}</title>
             <link
               rel="author"
-              href={`https://gatsbyjs.org${post.frontmatter.author.slug}`}
+              href={`https://gatsbyjs.org${
+                post.frontmatter.author.fields.slug
+              }`}
             />
             <meta
               name="description"
@@ -102,6 +117,7 @@ class BlogPostTemplate extends React.Component {
               name="article:published_time"
               content={post.frontmatter.rawDate}
             />
+            {canonicalLink}
           </Helmet>
           <header
             css={{
@@ -157,9 +173,9 @@ class BlogPostTemplate extends React.Component {
                   <span>
                     {` `}
                     (originally published at{` `}
-                    <a href={post.frontmatter.canonicalLink}>
+                    <OutboundLink href={post.frontmatter.canonicalLink}>
                       {post.frontmatter.publishedAt}
-                    </a>)
+                    </OutboundLink>)
                   </span>
                 )}
               </BioLine>
@@ -187,9 +203,9 @@ class BlogPostTemplate extends React.Component {
                   post.frontmatter.imageAuthorLink && (
                     <em>
                       Image by{` `}
-                      <a href={post.frontmatter.imageAuthorLink}>
+                      <OutboundLink href={post.frontmatter.imageAuthorLink}>
                         {post.frontmatter.imageAuthor}
-                      </a>
+                      </OutboundLink>
                     </em>
                   )}
               </div>
@@ -200,10 +216,12 @@ class BlogPostTemplate extends React.Component {
               __html: this.props.data.markdownRemark.html,
             }}
           />
+          <TagsSection tags={this.props.data.markdownRemark.frontmatter.tags} />
+          <EmailCaptureForm />
         </Container>
         <div
           css={{
-            borderTop: `1px solid ${presets.veryLightPurple}`,
+            borderTop: `1px solid ${colors.ui.light}`,
             marginTop: rhythm(2),
             [presets.Tablet]: {
               marginTop: rhythm(2),
@@ -293,6 +311,7 @@ export const pageQuery = graphql`
         rawDate: date
         canonicalLink
         publishedAt
+        tags
         image {
           childImageSharp {
             resize(width: 1500, height: 1500) {

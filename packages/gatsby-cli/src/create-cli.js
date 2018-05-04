@@ -43,7 +43,7 @@ function buildLocalCommands(cli, isLocalSite) {
         resolveCwd.silent(`gatsby/dist/utils/${command}`)
       if (!cmdPath)
         return report.panic(
-          `There was a problem loading the local ${command} command. Gatsby may not be installed.`
+          `There was a problem loading the local ${command} command. Gatsby may not be installed. Perhaps you need to run "npm install"?`
         )
 
       report.verbose(`loading local command from: ${cmdPath}`)
@@ -51,7 +51,7 @@ function buildLocalCommands(cli, isLocalSite) {
     } catch (err) {
       cli.showHelp()
       return report.panic(
-        `There was a problem loading the local ${command} command. Gatsby may not be installed.`,
+        `There was a problem loading the local ${command} command. Gatsby may not be installed. Perhaps you need to run "npm install"?`,
         err
       )
     }
@@ -60,6 +60,7 @@ function buildLocalCommands(cli, isLocalSite) {
   function getCommandHandler(command, handler) {
     return argv => {
       report.setVerbose(!!argv.verbose)
+      report.setNoColor(!!argv.noColor)
 
       process.env.gatsby_log_level = argv.verbose ? `verbose` : `normal`
       report.verbose(`set gatsby_log_level: "${process.env.gatsby_log_level}"`)
@@ -97,8 +98,22 @@ function buildLocalCommands(cli, isLocalSite) {
           alias: `open`,
           type: `boolean`,
           describe: `Open the site in your browser for you.`,
+        })
+        .option(`S`, {
+          alias: `https`,
+          type: `boolean`,
+          describe: `Use HTTPS. See https://www.gatsbyjs.org/docs/local-https/ for an initial setup guide`,
         }),
-    handler: getCommandHandler(`develop`),
+    handler: handlerP(
+      getCommandHandler(`develop`, (args, cmd) => {
+        process.env.NODE_ENV = process.env.NODE_ENV || `development`
+        cmd(args)
+        // Return an empty promise to prevent handlerP from exiting early.
+        // The development server shouldn't ever exit until the user directly
+        // kills it so this is fine.
+        return new Promise(resolve => {})
+      })
+    ),
   })
 
   cli.command({
@@ -109,6 +124,10 @@ function buildLocalCommands(cli, isLocalSite) {
         type: `boolean`,
         default: false,
         describe: `Build site with link paths prefixed (set prefix in your config).`,
+      }).option(`no-uglify`, {
+        type: `boolean`,
+        default: false,
+        describe: `Build site without uglifying JS bundles (for debugging).`,
       }),
     handler: handlerP(
       getCommandHandler(`build`, (args, cmd) => {
@@ -165,14 +184,18 @@ module.exports = (argv, handlers) => {
 
   cli
     .usage(`Usage: $0 <command> [options]`)
-    .help(`h`)
     .alias(`h`, `help`)
-    .version()
     .alias(`v`, `version`)
     .option(`verbose`, {
       default: false,
       type: `boolean`,
       describe: `Turn on verbose output`,
+      global: true,
+    })
+    .option(`no-color`, {
+      default: false,
+      type: `boolean`,
+      describe: `Turn off the color in output`,
       global: true,
     })
 
@@ -191,6 +214,8 @@ module.exports = (argv, handlers) => {
     })
     .wrap(cli.terminalWidth())
     .demandCommand(1, `Pass --help to see all available commands and options.`)
-    .showHelpOnFail(true, `A command is required.`)
+    .strict()
+    .showHelpOnFail(true)
+    .recommendCommands()
     .parse(argv.slice(2))
 }

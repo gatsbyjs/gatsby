@@ -11,7 +11,7 @@ site is drop-in upgrade to React 16.
 
 ## How to use
 
-Simply add the plugin to your `gatsby-config.js`.
+Add the plugin to your `gatsby-config.js`.
 
 ```javascript
 plugins: [`gatsby-plugin-react-next`];

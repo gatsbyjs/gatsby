@@ -1,5 +1,5 @@
 ---
-title: "Creating and modifying pages"
+title: "Creating and Modifying Pages"
 ---
 
 Gatsby makes it easy to programmatically control your pages.
@@ -12,7 +12,7 @@ Pages can be created in three ways:
 * Plugins can also implement `createPages` and create pages for you
 
 You can also implement the API [`onCreatePage`](/docs/node-apis/#onCreatePage)
-to modify pages created in core or plugins or to create client-only pages.
+to modify pages created in core or plugins or to create [client-only routes](/docs/building-apps-with-gatsby/).
 
 ## Debugging help
 
@@ -112,51 +112,25 @@ trailing slashes.
 
 To do this, in your site's `gatsby-node.js` add code similar to the following:
 
+_Note: There's also a plugin that will remove all trailing slashes from pages automatically:
+[gatsby-plugin-remove-trailing-slashes](/packages/gatsby-plugin-remove-trailing-slashes/)_.
+
 ```javascript
 // Implement the Gatsby API “onCreatePage”. This is
 // called after every page is created.
 exports.onCreatePage = ({ page, boundActionCreators }) => {
   const { createPage, deletePage } = boundActionCreators;
-
-  return new Promise((resolve, reject) => {
-    // Remove trailing slash
-    const newPage = Object.assign({}, page, {
-      path: page.path === `/` ? page.path : page.path.replace(/\/$/, ``),
-    });
-
-    if (newPage.path !== page.path) {
-      // Remove the old page
-      deletePage(page);
-      // Add the new page
-      createPage(newPage);
+  return new Promise(resolve => {
+    const oldPage = Object.assign({}, page);
+    // Remove trailing slash unless page is /
+    page.path = _path => (_path === `/` ? _path : _path.replace(/\/$/, ``));
+    if (page.path !== oldPage.path) {
+      // Replace new page with old page
+      deletePage(oldPage);
+      createPage(page);
     }
-
     resolve();
   });
-};
-```
-
-### Creating client-only routes
-
-If you're creating a "hybrid" Gatsby app with both statically rendered pages as
-well as client-only routes e.g. an app that combines marketing pages and your
-app that lives under `/app/*`, you want to add code to your `gatsby-node.js`
-like the following:
-
-```javascript
-// Implement the Gatsby API “onCreatePage”. This is
-// called after every page is created.
-exports.onCreatePage = async ({ page, boundActionCreators }) => {
-  const { createPage } = boundActionCreators;
-
-  // page.matchPath is a special key that's used for matching pages
-  // only on the client.
-  if (page.path.match(/^\/app/)) {
-    page.matchPath = "/app/:path";
-
-    // Update the page.
-    createPage(page);
-  }
 };
 ```
 

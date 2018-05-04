@@ -1,12 +1,16 @@
 import { graphql as graphqlFunction } from "graphql"
 const fs = require(`fs-extra`)
 const report = require(`gatsby-cli/lib/reporter`)
+const md5 = require(`md5`)
 
 const { joinPath } = require(`../../utils/path`)
 const { store } = require(`../../redux`)
 
+const resultHashes = {}
+
 // Run query for a page
 module.exports = async (pageOrLayout, component) => {
+  pageOrLayout.id = pageOrLayout._id
   const { schema, program } = store.getState()
 
   const graphql = (query, context) =>
@@ -30,10 +34,14 @@ module.exports = async (pageOrLayout, component) => {
   if (result && result.errors) {
     report.log(
       report.stripIndent`
-        The GraphQL query from ${component.componentPath} failed
+        The GraphQL query from ${component.componentPath} failed.
 
         Errors:
           ${result.errors || []}
+        URL path:
+          ${pageOrLayout.path}
+        Plugin:
+          ${pageOrLayout.pluginCreatorId || `none`}
         Query:
           ${component.query}
       `
@@ -51,10 +59,17 @@ module.exports = async (pageOrLayout, component) => {
     contextKey = `layoutContext`
   }
   result[contextKey] = pageOrLayout.context
-  const resultJSON = JSON.stringify(result, null, 4)
-
-  await fs.writeFile(
-    joinPath(program.directory, `.cache`, `json`, pageOrLayout.jsonName),
-    resultJSON
+  const resultJSON = JSON.stringify(result)
+  const resultHash = md5(resultJSON)
+  const resultPath = joinPath(
+    program.directory,
+    `.cache`,
+    `json`,
+    pageOrLayout.jsonName
   )
+
+  if (resultHashes[resultPath] !== resultHash) {
+    resultHashes[resultPath] = resultHash
+    await fs.writeFile(resultPath, resultJSON)
+  }
 }

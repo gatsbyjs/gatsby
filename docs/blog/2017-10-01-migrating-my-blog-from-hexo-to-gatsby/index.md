@@ -4,6 +4,7 @@ date: "2017-10-01"
 image: "hexo-to-gatsby.png"
 author: "Ian Sinnott"
 excerpt: "How I migrated my blog to Gatsby and how you can do the same."
+tags: ["hexo", "getting-started", "markdown"]
 ---
 
 _This article was originally posted on
@@ -16,7 +17,7 @@ Gatsby!_
 ---
 
 **Abstract:** Gatsby is a great tool for building a blog. In part 1 I did the
-more simple task of migrating an existing React site to Gatsby. This time I
+more basic task of migrating an existing React site to Gatsby. This time I
 migrated my blog, which was a lot more involved and required a lot more
 Gatsby-specific knowledge.
 
@@ -36,7 +37,7 @@ Let's jump in.
 
 **NOTE:** If you _don't_ already have a blog or want to create one from scratch
 there's a
-[tutorial for exactly that right here](https://www.gatsbyjs.org/blog/2017-07-19-creating-a-blog-with-gatsby/).
+[tutorial for exactly that right here](/blog/2017-07-19-creating-a-blog-with-gatsby/).
 
 Let's move some files around. Gatsby gives you a good amount of flexibility when
 it comes to file structure, but for consistency with the docs I'm going to use
@@ -181,7 +182,7 @@ Let's fix that. We need to teach Gatsby how to query the file system. Luckily
 this is so common it's been done for you. Install the file system source plugin:
 
 ```
-yarn add gatsby-source-filesystem
+npm i --save gatsby-source-filesystem
 ```
 
 Now modify `gatsby-config.js` to both use the plugin and tell it what directory
@@ -230,7 +231,7 @@ files this is all you will need. But if you want to render markdown files as
 HTML you will need another plugin. Let's add that now:
 
 ```
-yarn add gatsby-transformer-remark
+npm i --save gatsby-transformer-remark
 ```
 
 As before, add it to the `plugins` field in `gatsby-config.js`:
@@ -522,7 +523,7 @@ If you've worked with GraphQL before this should look very familiar. In fact, as
 you can see the string type is imported directly from GraphQL and not from
 Gatsby.
 
-Basically you check the type of node and if it's a type your interested in you
+You check the type of node and if it's a type youʼre interested in you
 resolve with some fields. Fields in GraphQL require a `type` and a way to
 `resolve` the value.
 

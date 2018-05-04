@@ -6,7 +6,9 @@ Speedy, optimized images without the work.
 Gatsby's GraphQL queries. It combines
 [Gatsby's native image processing](https://image-processing.gatsbyjs.org/)
 capabilities with advanced image loading techniques to easily and completely
-optimize image loading for your sites.
+optimize image loading for your sites. `gatsby-image` uses
+[gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/)
+to power its image transformations.
 
 _Warning: gatsby-image is **not** a drop-in replacement for `<img/>`. It's
 optimized for fixed width/height images and images that stretch the full-width
@@ -31,7 +33,7 @@ Ideally you would:
   show a preview of the image while it loads
 * Hold the image position so your page doesn't jump while images load
 
-Doing this consistantly across a site feels like sisyphean labor. You manually
+Doing this consistently across a site feels like sisyphean labor. You manually
 optimize your images and then… several images are swapped in at the last minute
 or a design-tweak shaves 100px of width off your images.
 
@@ -48,15 +50,37 @@ With Gatsby, we can make images way _way_ better.
 processing capabilities powered by GraphQL and Sharp. To produce perfect images,
 you need only:
 
-1. Import `gatsby-image` and use it in place of the built-in `img`
-2. Write a simple GraphQL query using one of the included GraphQL "fragments"
-   which specify the fields needed by `gatsby-image`.
+1.  Import `gatsby-image` and use it in place of the built-in `img`
+2.  Write a GraphQL query using one of the included GraphQL "fragments"
+    which specify the fields needed by `gatsby-image`.
 
 The GraphQL query creates multiple thumbnails with optimized JPEG and PNG
 compression. The `gatsby-image` component automatically sets up the "blur-up"
 effect as well as lazy loading of images further down the screen.
 
-This is what a component using `gatsby-images` looks like.
+## Install
+
+`npm install --save gatsby-image`
+
+Depending on the gatsby starter you used, you may need to include [gatsby-transformer-sharp](/packages/gatsby-transformer-sharp/) and [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/) as well, and make sure they are installed and included in your gatsby-config.
+
+```
+npm install --save gatsby-transformer-sharp
+npm install --save gatsby-plugin-sharp
+```
+
+Then in your `gatsby-config.js`:
+
+```
+plugins: [
+  `gatsby-transformer-sharp`,
+  `gatsby-plugin-sharp`
+];
+```
+
+## How to use
+
+This is what a component using `gatsby-image` looks like:
 
 ```jsx
 import React from "react";
@@ -73,7 +97,7 @@ export const query = graphql`
   query GatsbyImageSampleQuery {
     file(relativePath: { eq: "blog/avatars/kyle-mathews.jpeg" }) {
       childImageSharp {
-        # Specify the image processing steps right in the query
+        # Specify the image processing specifications right in the query.
         # Makes it trivial to update as your page's design changes.
         resolutions(width: 125, height: 125) {
           ...GatsbyImageSharpResolutions
@@ -84,12 +108,14 @@ export const query = graphql`
 `;
 ```
 
+For another explanation of how to get started with gatsby-image, see this blog post by community member Kyle Gill [Image Optimization Made Easy with Gatsby.js](https://medium.com/@kyle.robert.gill/ridiculously-easy-image-optimization-with-gatsby-js-59d48e15db6e)
+
 ## Two types of responsive images
 
 There are two types of responsive images supported by gatsby-image.
 
-1. Images that have a _fixed_ width and height
-2. Images that stretch across a fluid container
+1.  Images that have a _fixed_ width and height
+2.  Images that stretch across a fluid container
 
 In the first scenario, you want to vary the image's size for different screen
 _resolutions_ -- in other words, create retina images.
@@ -142,8 +168,12 @@ Their fragments are:
 
 * `GatsbyContentfulResolutions`
 * `GatsbyContentfulResolutions_noBase64`
+* `GatsbyContentfulResolutions_withWebp`
+* `GatsbyContentfulResolutions_withWebp_noBase64`
 * `GatsbyContentfulSizes`
 * `GatsbyContentfulSizes_noBase64`
+* `GatsbyContentfulSizes_withWebp`
+* `GatsbyContentfulSizes_withWebp_noBase64`
 
 ### gatsby-source-datocms
 
@@ -161,7 +191,7 @@ format, use the `withWebp` fragments. If the browser doesn't support WebP,
 `gatsby-image` will fall back to the default image format.
 
 _Please see the
-[gatsby-plugin-sharp](https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/#tracedsvg)
+[gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/#tracedsvg)
 documentation for more information on `tracedSVG` and its configuration
 options._
 
@@ -213,19 +243,26 @@ prop. e.g. `<Img sizes={sizes} />`
 
 ## `gatsby-image` props
 
-| Name                    | Type             | Description                                                                                                                 |
-| ----------------------- | ---------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| `resolutions`           | `object`         | Data returned from the `resolutions` query                                                                                  |
-| `sizes`                 | `object`         | Data returned from the `sizes` query                                                                                        |
-| `fadeIn`                | `bool`           | Defaults to fading in the image on load                                                                                     |
-| `title`                 | `string`         | Passed to the `img` element                                                                                                 |
-| `alt`                   | `string`         | Passed to the `img` element                                                                                                 |
-| `className`             | `string\|object` | Passed to the wrapper div. Object is needed to support Glamor's css prop                                                    |
-| `outerWrapperClassName` | `string\|object` | Passed to the outer wrapper div. Object is needed to support Glamor's css prop                                              |
-| `style`                 | `object`         | Spread into the default styles in the wrapper div                                                                           |
-| `position`              | `string`         | Defaults to `relative`. Pass in `absolute` to make the component `absolute` positioned                                      |
-| `backgroundColor`       | `string\|bool`   | Set a colored background placeholder. If true, uses "lightgray" for the color. You can also pass in any valid color string. |
-| `onLoad`                | `func`           | A callback that is called when the full-size image has loaded.                                                              |
+| Name                    | Type                | Description                                                                                                                 |
+| ----------------------- | ------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `resolutions`           | `object`            | Data returned from the `resolutions` query                                                                                  |
+| `sizes`                 | `object`            | Data returned from the `sizes` query                                                                                        |
+| `fadeIn`                | `bool`              | Defaults to fading in the image on load                                                                                     |
+| `title`                 | `string`            | Passed to the `img` element                                                                                                 |
+| `alt`                   | `string`            | Passed to the `img` element                                                                                                 |
+| `className`             | `string` / `object` | Passed to the wrapper element. Object is needed to support Glamor's css prop                                                |
+| `outerWrapperClassName` | `string` / `object` | Passed to the outer wrapper element. Object is needed to support Glamor's css prop                                          |
+| `style`                 | `object`            | Spread into the default styles in the wrapper element                                                                       |
+| `imgStyle`              | `object`            | Spread into the default styles for the actual `img` element                                                                 |
+| `position`              | `string`            | Defaults to `relative`. Pass in `absolute` to make the component `absolute` positioned                                      |
+| `backgroundColor`       | `string|bool`       | Set a colored background placeholder. If true, uses "lightgray" for the color. You can also pass in any valid color string. |
+| `onLoad`                | `func`              | A callback that is called when the full-size image has loaded.                                                              |
+| `Tag`                   | `string`            | Which HTML tag to use for wrapping elements. Defaults to `div`.                                                             |
+
+## Image processing arguments
+
+[gatsby-plugin-sharp](/packages/gatsby-plugin-sharp) supports many additional arguments for transforming your images like
+`quality`,`sizeByPixelDensity`,`pngCompressionLevel`,`cropFocus`,`greyscale` and many more. See its documentation for more.
 
 ## Some other stuff to be aware of
 

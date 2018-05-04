@@ -1,0 +1,25 @@
+{
+  "name": "using-sqip",
+  "description": "Gatsby example site using the sqip transformer plugin",
+  "version": "1.0.0",
+  "author": "Benedikt Rötsch <info@benedikt-roetsch.de>",
+  "dependencies": {
+    "gatsby": "^1.9.247",
+    "gatsby-image": "^1.0.48",
+    "gatsby-plugin-sharp": "^1.6.43",
+    "gatsby-source-filesystem": "^1.5.34",
+    "gatsby-transformer-sharp": "^1.6.23",
+    "gatsby-transformer-sqip": "*"
+  },
+  "keywords": ["gatsby"],
+  "license": "MIT",
+  "scripts": {
+    "build": "gatsby build",
+    "develop": "gatsby develop",
+    "format": "prettier --write 'src/**/*.js'",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "prettier": "^1.12.0"
+  }
+}

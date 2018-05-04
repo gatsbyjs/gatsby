@@ -14,15 +14,10 @@ const reducers = require(`./reducers`)
 
 // Read from cache the old node data.
 let initialState = {}
-const rootNodeMap = new WeakMap()
 try {
   initialState = JSON.parse(
     fs.readFileSync(`${process.cwd()}/.cache/redux-state.json`)
   )
-
-  _.each(initialState.nodes, (id, node) => {
-    trackSubObjectsToRootNodeId(node)
-  })
 } catch (e) {
   // ignore errors.
 }
@@ -39,12 +34,25 @@ if (process.env.REDUX_DEVTOOLS === `true`) {
   store = Redux.createStore(
     Redux.combineReducers({ ...reducers }),
     initialState,
-    composeEnhancers(Redux.applyMiddleware())
+    composeEnhancers(
+      Redux.applyMiddleware(function multi({ dispatch }) {
+        return next => action =>
+          Array.isArray(action)
+            ? action.filter(Boolean).map(dispatch)
+            : next(action)
+      })
+    )
   )
 } else {
   store = Redux.createStore(
     Redux.combineReducers({ ...reducers }),
-    initialState
+    initialState,
+    Redux.applyMiddleware(function multi({ dispatch }) {
+      return next => action =>
+        Array.isArray(action)
+          ? action.filter(Boolean).map(dispatch)
+          : next(action)
+    })
   )
 }
 
@@ -71,14 +79,37 @@ emitter.on(`*`, () => {
   saveState(store.getState())
 })
 
+/** Event emitter */
 exports.emitter = emitter
+
+/** Redux store */
 exports.store = store
+
+/**
+ * Get all nodes from redux store.
+ *
+ * @returns {Array}
+ */
 exports.getNodes = () => {
   let nodes = _.values(store.getState().nodes)
   return nodes ? nodes : []
 }
 const getNode = id => store.getState().nodes[id]
+
+/** Get node by id from store.
+ *
+ * @param {string} id
+ * @returns {Object}
+ */
 exports.getNode = getNode
+
+/**
+ * Determine if node has changed.
+ *
+ * @param {string} id
+ * @param {string} digest
+ * @returns {boolean}
+ */
 exports.hasNodeChanged = (id, digest) => {
   const node = store.getState().nodes[id]
   if (!node) {
@@ -88,8 +119,14 @@ exports.hasNodeChanged = (id, digest) => {
   }
 }
 
+/**
+ * Get content for a node from the plugin that created it.
+ *
+ * @param {Object} node
+ * @returns {promise}
+ */
 exports.loadNodeContent = node => {
-  if (node.internal.content) {
+  if (_.isString(node.internal.content)) {
     return Promise.resolve(node.internal.content)
   } else {
     return new Promise(resolve => {
@@ -112,32 +149,19 @@ exports.loadNodeContent = node => {
   }
 }
 
+/**
+ * Get node and save path dependency.
+ *
+ * @param {string} id
+ * @param {string} path
+ * @returns {Object} node
+ */
 exports.getNodeAndSavePathDependency = (id, path) => {
   const { createPageDependency } = require(`./actions/add-page-dependency`)
   const node = getNode(id)
   createPageDependency({ path, nodeId: id })
   return node
 }
-
-exports.getRootNodeId = node => rootNodeMap.get(node)
-
-const addParentToSubObjects = (data, parentId) => {
-  if (_.isPlainObject(data) || _.isArray(data)) {
-    _.each(data, o => addParentToSubObjects(o, parentId))
-    rootNodeMap.set(data, parentId)
-  }
-}
-
-const trackSubObjectsToRootNodeId = node => {
-  _.each(node, (v, k) => {
-    // Ignore the node internal object.
-    if (k === `internal`) {
-      return
-    }
-    addParentToSubObjects(v, node.parent)
-  })
-}
-exports.trackSubObjectsToRootNodeId = trackSubObjectsToRootNodeId
 
 // Start plugin runner which listens to the store
 // and invokes Gatsby API based on actions.

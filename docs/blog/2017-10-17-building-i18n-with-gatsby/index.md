@@ -2,6 +2,7 @@
 title: "Building i18n with Gatsby"
 date: 2017-10-17
 author: "Samuel Goudie"
+tags: ["i18n"]
 ---
 
 Languages are a key part of who we are; they are an expression of our identity.
@@ -287,6 +288,55 @@ that in our menu.
 The `handleLanguageChange` function just wraps the `react-i18n` function passed
 in as a prop through `translate`. Pretty much everything is handled for us.
 Hooray! 🎉
+
+## SSR
+
+To let it render the content into html, you need to load i18n namespaces (using `i18n.loadNamespaces`) before render
+
+### With redux
+
+```js
+// gatsby-ssr.js
+
+import React from "react";
+import { Provider } from "react-redux";
+import { renderToString } from "react-dom/server";
+import i18n from "./src/i18n";
+
+import createStore from "./src/state/createStore";
+
+exports.replaceRenderer = ({ bodyComponent, replaceBodyHTMLString }) => {
+  i18n.loadNamespaces(["common"], () => {
+    const store = createStore();
+    const ConnectedBody = () => (
+      <Provider store={store}>{bodyComponent}</Provider>
+    );
+    replaceBodyHTMLString(renderToString(<ConnectedBody />));
+  });
+};
+```
+
+### Without redux
+
+> Not yet tested
+
+```js
+// gatsby-ssr.js
+
+import React from "react";
+import { renderToString } from "react-dom/server";
+import i18n from "./src/i18n";
+
+import createStore from "./src/state/createStore";
+
+exports.replaceRenderer = ({ bodyComponent, replaceBodyHTMLString }) => {
+  i18n.loadNamespaces(["common"], () => {
+    replaceBodyHTMLString(bodyComponent);
+  });
+};
+```
+
+> `translate` hoc from react-i18next cause page / component not able to SSR. I make it works by import i18n & use i18n.t
 
 ## Finishing up
 

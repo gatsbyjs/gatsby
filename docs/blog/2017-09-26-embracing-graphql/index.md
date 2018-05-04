@@ -4,6 +4,7 @@ date: "2017-09-26"
 image: "toa-heftiba-274947.jpg"
 author: "Tim Arney"
 excerpt: "Moving to Gatsby 1.x and embracing the new GraphQL setup can be daunting but the effort is going to payoff"
+tags: ["v1", "graphql", "getting-started"]
 ---
 
 Before I built [React FAQ](https://reactfaq.site/), I went looking for a static
@@ -81,7 +82,7 @@ works, but I have it working, so cool”. Easy to update — check.
 
 I'm not the type of person to settle on “It's working so don't touch anything”.
 So I started digging into how Gatsby 1.x works—particular the
-[data layer](https://www.gatsbyjs.org/tutorial/part-four/#data-in-gatsby).
+[data layer](/tutorial/part-four/#data-in-gatsby).
 
 Things really clicked when I read this part about the GraphiQL IDE and watched
 how to drill down on the data.

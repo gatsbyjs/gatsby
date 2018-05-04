@@ -1,6 +1,12 @@
 const path = require(`path`)
 
-const { base64, responsiveSizes } = require(`../`)
+const {
+  base64,
+  responsiveSizes,
+  resolutions,
+  queueImageResizing,
+  getImageSize,
+} = require(`../`)
 
 describe(`gatsby-plugin-sharp`, () => {
   const args = {
@@ -10,6 +16,20 @@ describe(`gatsby-plugin-sharp`, () => {
   }
   const absolutePath = path.join(__dirname, `images/test.png`)
   const file = getFileObject(absolutePath)
+
+  describe(`queueImageResizing`, () => {
+    it(`should round height when auto-calculated`, () => {
+      // Resize 144-density.png (281x136) with a 3px width
+      const result = queueImageResizing({
+        file: getFileObject(path.join(__dirname, `images/144-density.png`)),
+        args: { width: 3 },
+      })
+
+      // Width should be: w = (3 * 136) / 281 = 1.451957295
+      // We expect value to be rounded to 1
+      expect(result.height).toBe(1)
+    })
+  })
 
   describe(`responsiveSizes`, () => {
     it(`includes responsive image properties, e.g. sizes, srcset, etc.`, async () => {
@@ -73,12 +93,59 @@ describe(`gatsby-plugin-sharp`, () => {
     })
   })
 
+  describe(`resolutions`, () => {
+    console.warn = jest.fn()
+
+    beforeEach(() => {
+      console.warn.mockClear()
+    })
+
+    afterAll(() => {
+      console.warn.mockClear()
+    })
+
+    it(`does not warn when the requested width is equal to the image width`, async () => {
+      const args = { width: 1 }
+
+      const result = await resolutions({
+        file,
+        args,
+      })
+
+      expect(result.width).toEqual(1)
+      expect(console.warn).toHaveBeenCalledTimes(0)
+    })
+
+    it(`warns when the requested width is greater than the image width`, async () => {
+      const args = { width: 2 }
+
+      const result = await resolutions({
+        file,
+        args,
+      })
+
+      expect(result.width).toEqual(1)
+      expect(console.warn).toHaveBeenCalledTimes(1)
+    })
+  })
+
   describe(`base64`, () => {
     it(`converts image to base64`, async () => {
       const result = await base64({
         file,
         args,
       })
+
+      expect(result).toMatchSnapshot()
+    })
+  })
+
+  describe(`image quirks`, () => {
+    // issue https://github.com/nodeca/probe-image-size/issues/20
+    it(`handles padding bytes correctly`, () => {
+      const result = getImageSize(
+        getFileObject(path.join(__dirname, `images/padding-bytes.jpg`))
+      )
 
       expect(result).toMatchSnapshot()
     })

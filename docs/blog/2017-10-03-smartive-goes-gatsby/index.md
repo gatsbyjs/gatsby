@@ -4,6 +4,7 @@ date: "2017-10-03"
 image: "smartive-loves-gatsby.png"
 author: "Moreno Feltscher"
 excerpt: "At smartive we always saw the potential of static site generators. We recently made the switch to Gatsby.js for our company site. A decision we don’t regret. Here’s why."
+tags: ["company-site", "ci"]
 ---
 
 _This article was originally published on
@@ -52,7 +53,7 @@ the content. Although this felt right at first but, as all of us are developers,
 working around the constraints of it just didn’t feel right.
 
 Luckily at that time Gatsby version 1.0
-[just got released](https://www.gatsbyjs.org/blog/gatsby-v1/) and we decided to
+[just got released](/blog/gatsby-v1/) and we decided to
 give it a try during one of our so-called Hackdays. We instantly fell in love
 with the simplicity of the system. Our first approach was to just use all the
 components which we already had created for Next.js and backed it by simple JSON

@@ -18,6 +18,11 @@ const {
 const { nodeInterface } = require(`./node-interface`)
 const { getNodes, getNode, getNodeAndSavePathDependency } = require(`../redux`)
 const { createPageDependency } = require(`../redux/actions/add-page-dependency`)
+const { setFileNodeRootType } = require(`./types/type-file`)
+const {
+  clearTypeExampleValues,
+  getExampleValues,
+} = require(`./data-tree-utils`)
 
 import type { ProcessedNodeType } from "./infer-graphql-type"
 
@@ -26,6 +31,11 @@ type TypeMap = { [typeName: string]: ProcessedNodeType }
 module.exports = async () => {
   const types = _.groupBy(getNodes(), node => node.internal.type)
   const processedTypes: TypeMap = {}
+
+  clearTypeExampleValues()
+
+  // Reset stored File type to not point to outdated type definition
+  setFileNodeRootType(null)
 
   function createNodeFields(type: ProcessedNodeType) {
     const defaultNodeFields = {
@@ -108,7 +118,7 @@ module.exports = async () => {
     const inferredFields = inferObjectStructureFromNodes({
       nodes: type.nodes,
       types: _.values(processedTypes),
-      allNodes: getNodes(),
+      exampleValue: getExampleValues({ type: type.name, nodes: type.nodes }),
     })
 
     return {
@@ -183,6 +193,11 @@ module.exports = async () => {
     }
 
     processedTypes[_.camelCase(typeName)] = proccesedType
+
+    // Special case to construct linked file type used by type inferring
+    if (typeName === `File`) {
+      setFileNodeRootType(gqlType)
+    }
   }
 
   // Create node types and node fields for nodes that have a resolve function.
