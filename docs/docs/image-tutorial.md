@@ -130,7 +130,7 @@ Run:
 gatsby develop
 ```
 
-Open localhost:8000 and localhost:8000/__graphql. 
+Open localhost:8000 and localhost:8000/___graphql. 
 
 Here’s an example of creating specific widths and heights for images:
 
