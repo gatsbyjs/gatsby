@@ -48,6 +48,8 @@ const data = {
   },
 }
 
+// @todo move all the styles to css file
+
 function generateStyle(imageData) {
   const rotation = Math.floor(Math.random() * 26) - 13
   return {
