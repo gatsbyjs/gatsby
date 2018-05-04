@@ -103,7 +103,7 @@ exports.sourceNodes = async (
   // This might change though
   if (host !== `preview.contentful.com`) {
     const newState = {}
-    newState[spaceId] = nextSyncToken
+    newState[`${spaceId}-${environment}`] = nextSyncToken
     setPluginStatus(newState)
   }
 
