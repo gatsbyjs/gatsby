@@ -70,10 +70,7 @@ Now you’ll configure gatsby-source-filesystem to load the image directory, add
 First, you’ll need to install a few plugins and their dependencies:
 
 ```shell
-npm install --save gatsby-transformer-sharp
-npm install --save gatsby-plugin-sharp
-npm install --save gatsby-image
-npm install --save gatsby-source-filesystem
+npm install --save gatsby-transformer-sharp gatsby-plugin-sharp gatsby-image gatsby-source-filesystem
 ```
 
 Place these plugins in your `gatsby-config.js` like this:
@@ -125,7 +122,7 @@ module.exports = {
 
 ### Creating GraphQL queries that pull in images from WordPress
 
-Now you are ready to create a GraphQL query to pull in some images from the WordPress site before you can view them in your browser. You will create a query that pulls in the images.
+Now you are ready to create a GraphQL query to pull in some images from the WordPress site.
 
 Run:
 
@@ -200,9 +197,7 @@ Here’s an example query for generating different sizes of an image:
 }
 ```
 
-In either case, you can add traced SVG support by adding _tracedSVG to the end of each fragment. Note this won’t work in the GraphQL explorer.
-
-
+In either case, you can add traced SVG support by adding `_tracedSVG` to the end of each fragment. _Note this won’t work in the GraphQL explorer._
 
 ### Rendering the images to `index.js`
 
