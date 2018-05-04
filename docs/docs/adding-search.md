@@ -8,7 +8,7 @@ There are few ways to approach this.
 
 2. If your website type is documentation you can use [Algolia docs][3] feature. They will scrape the dom and build the search index automatically and then it's a matter of building the [search ui][4]
 
-3. Using Algolia and collect the search index at build time and upload it to algolia and Guess what there is [plugin][5] for that.
+3. Using Algolia and collect the search index at build time and upload it to using [gatsby-plugin-algolia][5].
 
 
   [1]: https://www.npmjs.com/package/elasticlunr
