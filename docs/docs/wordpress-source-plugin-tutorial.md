@@ -102,8 +102,7 @@ This query will pull in a sorted list of those blogposts:
       node {
         title
         excerpt
-        Slug
-        ...PostIcons
+        slug
       }
     }
   }
