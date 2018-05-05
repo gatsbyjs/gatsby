@@ -5,7 +5,7 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
   // If icons were generated, also add a favicon link.
   if (pluginOptions.icon) {
     setHeadComponents([
-      <link rel="shortcut icon" href="/static/icons/icon-48x48.png" />,
+      <link rel="shortcut icon" href="/icons/icon-48x48.png" />,
     ])
   }
   setHeadComponents([
