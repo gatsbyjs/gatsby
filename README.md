@@ -212,6 +212,7 @@ Websites built with Gatsby:
 * [Tinder Interracial Couple Emoji Project](https://emoji.tinder.com/)
 * [aQuICK](https://aquick.review/)
   ([source](https://github.com/aQuICK-Review/aQuick))
+* [Workshop In The Woods](https://www.workshop-in-the-woods.com/) ([source](https://github.com/ryanwiemer/workshop))
 
 ## Docs
 
