@@ -82,7 +82,7 @@ like the following:
 
 ```graphql
 {
- allContentfulProduct {
+  allContentfulProduct {
     edges {
       node {
         id
