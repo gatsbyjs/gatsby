@@ -41,9 +41,8 @@ exports.onPostBuild = (args, pluginOptions) => {
     // Regex from http://stackoverflow.com/a/18017805
     navigateFallbackWhitelist: [/^.*([^.]{5}|.html)$/],
     cacheId: `gatsby-plugin-offline`,
-    // Do cache bust JS URLs until can figure out how to make Webpack's
-    // URLs truely content-addressed.
-    dontCacheBustUrlsMatching: /(.\w{8}.woff2)/, // |-\w{20}.js)/,
+    // Don't cache-bust JS files and anything in the static directory
+    dontCacheBustUrlsMatching: /(.*js$|\/static\/)/,
     runtimeCaching: [
       {
         // Add runtime caching of images.
