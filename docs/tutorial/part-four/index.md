@@ -86,7 +86,7 @@ Kirkham + we'll try out a CSS-in-JS library
 [Glamorous](https://glamorous.rocks/):
 
 ```shell
-npm install --save gatsby-plugin-typography gatsby-plugin-glamor glamorous typography-theme-kirkham
+npm install --save gatsby-plugin-typography react-typography typography gatsby-plugin-glamor glamorous typography-theme-kirkham
 ```
 
 Let's set up a site similar to what we ended with in Part Three. This site will have a layout
