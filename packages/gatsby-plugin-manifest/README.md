@@ -158,7 +158,7 @@ plugins: [
         {
           // Everything in /static will be copied to an equivalent
           // directory in /public during development and build, so
-          // assuming your favicons are in /gcfavicons,
+          // assuming your favicons are in /favicons,
           // you can reference them here
           src: `/favicons/android-chrome-192x192.png`,
           sizes: `192x192`,
