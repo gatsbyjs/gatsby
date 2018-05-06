@@ -5,7 +5,14 @@ module.exports = (state = {}, action) => {
   switch (action.type) {
     case `DELETE_CACHE`:
       return {}
-    case `CREATE_NODE`:
+    case `CREATE_NODE`: {
+      newState = {
+        ...state,
+        [action.payload.id]: action.payload,
+      }
+      return newState
+    }
+
     case `ADD_FIELD_TO_NODE`:
     case `ADD_CHILD_NODE_TO_PARENT_NODE`:
       newState = {
@@ -14,13 +21,15 @@ module.exports = (state = {}, action) => {
       }
       return newState
 
-    case `DELETE_NODE`:
+    case `DELETE_NODE`: {
       newState = _.omit(state, action.payload)
       return newState
+    }
 
-    case `DELETE_NODES`:
+    case `DELETE_NODES`: {
       newState = _.omit(state, action.payload)
       return newState
+    }
 
     default:
       return state

@@ -48,16 +48,15 @@ choose to use the default setup (without a custom domain), or if you create a
 project site, you will need to setup your site with
 [path prefixing](/docs/path-prefix/).
 
-On Github, you get one site per GitHub account and organization, and unlimited
+On GitHub, you get one site per GitHub account and organization, and unlimited
 project sites. So it is most likely you will be creating a project site. If you
-do not have an existing repository on Github that you plan to use, take the time
-now to create a new repository on Github.
+do not have an existing repository on GitHub that you plan to use, take the time
+now to create a new repository on GitHub.
 
 ### Use the NPM package `gh-pages` for deploying
 
 First add **gh-pages** as a `devDependency` of your site and create an npm
-script to **deploy** your project by running `npm install gh-pages --save-dev`
-or `yarn add gh-pages --dev` (if you have yarn installed).
+script to **deploy** your project by running `npm install gh-pages --save-dev`.
 
 Then add a `deploy` script in your `package.json` file.
 
@@ -84,7 +83,7 @@ repo, set up git in your project with `git init`. Then tell Gatsby where to
 deploy your site by adding the git remote address with https or ssh. Here is how
 to do it with https: `git remote add origin git@github.com:username/project-name.git`.
 
-Now run `yarn deploy` or `npm run deploy`. Preview changes in your GitHub page
+Now run `npm run deploy`. Preview changes in your GitHub page
 `https://username.github.io/project-name/`. You can also find the link to your
 site on GitHub under `Settings` > `GitHub Pages`.
 
@@ -114,9 +113,9 @@ custom domain url inside, like so:
 your-custom-domain.com
 ```
 
-## Gitlab Pages
+## GitLab Pages
 
-Gitlab Pages are similar to GitHub pages, perhaps even easier to setup. It also
+GitLab Pages are similar to GitHub Pages, perhaps even easier to setup. It also
 supports custom domain names and SSL certificates. The process of setting GitLab
 pages up is made a lot easier with GitLab's included continuous integration
 platform.
@@ -131,7 +130,7 @@ git add .
 git push -u origin master
 ```
 
-You can deploy sites on Gitlab Pages with or without a custom domain. If you choose to use the default setup (without a custom domain), or if you create a project site, you will need to setup your site with path prefixing. If adding a custom domain, you can skip the Path Prefix step, and remove `--prefix-paths` from the gitlab-ci.yml file.
+You can deploy sites on GitLab Pages with or without a custom domain. If you choose to use the default setup (without a custom domain), or if you create a project site, you will need to setup your site with path prefixing. If adding a custom domain, you can skip the Path Prefix step, and remove `--prefix-paths` from the gitlab-ci.yml file.
 
 ### Path Prefix
 
@@ -149,12 +148,21 @@ module.exports = {
 }
 ```
 
-### Build and deploy with Gitlab CI
+### Build and Deploy with GitLab CI
 
 To use GitLab's continuous integration (CI), you need to add a `.gitlab-ci.yml`
-configuration file. This can be added into your project folder, or once you have
-pushed the repository, you can add it with GitLab's website. The file needs to
-contain a few required fields:
+configuration file. This is the file that Gitlab uses to manage the CI job.
+
+It can easily be added to your repository by the [Gitlab](https://gitlab.com) 
+website, as the online editor contains a pre-built template for Gatsby deployment. 
+
+To use the template open your repository on their website, select the 'Setup CI/CD' option on 
+the center menu, and it will create a new blank `.gitlab-ci.yml` for you. Now 
+select the 'Apply a Gitlab CI Yaml Template' drop-down, and type 'Gatsby' into 
+the filter. Select the Gatsby option, click 'Commit Changes', and you are done!
+
+If adding this manually to your project, the file needs to contain a few required 
+fields:
 
 ```
 image: node:latest
@@ -167,7 +175,7 @@ cache:
 
 pages:
   script:
-  - yarn install
+  - npm install
   - ./node_modules/.bin/gatsby build --prefix-paths
   artifacts:
     paths:
@@ -179,17 +187,17 @@ pages:
 The CI platform uses Docker images/containers, so `image: node:latest` tells the
 CI to use the latest node image. `cache:` caches the `node_modules` folder
 in between builds, so subsequent builds should be a lot faster as it doesn't have
-to reinstall all the dependancies required. `pages:` is the name of the
+to reinstall all the dependencies required. `pages:` is the name of the
 CI stage. You can have multiple stages, e.g. 'Test', 'Build', 'Deploy' etc.
 `script:` starts the next part of the CI stage, telling it to start running the
-below scripts inside the image selected. We have used the `yarn install` and
-`./node_modules/.bin/gatsby build --prefix-paths` which will install all dependancies, and
+below scripts inside the image selected. We have used the `npm install` and
+`./node_modules/.bin/gatsby build --prefix-paths` which will install all dependencies, and
 start the static site build, respectively.
 
 We have used
 `./node_modules/.bin/gatsby build --prefix-paths` because we then don't have to install
 gatsby-cli to build the image, as it has already been included and installed
-with `yarn install`. We have included `--prefix-paths` as when running the command _without_ that flag, Gatsby ignores your pathPrefix. `artifacts:` and `paths:` are used to tell GitLab pages
+with `npm install`. We have included `--prefix-paths` as when running the command _without_ that flag, Gatsby ignores your pathPrefix. `artifacts:` and `paths:` are used to tell GitLab pages
 where the static files are kept. `only:` and `master` tells the CI to only run
 the above instructions when the master branch is deployed.
 
@@ -248,7 +256,12 @@ Finally, add a `static.json` file in the root of your project to define the dire
 
 ```
 {
-  "root": "public/"
+  "root": "public/",
+  "headers": {
+    "/**.js": {
+      "Cache-Control": "public, max-age=0, must-revalidate"
+    }
+  }
 }
 ```
 
@@ -256,19 +269,19 @@ Finally, add a `static.json` file in the root of your project to define the dire
 
 In order to deploy your Gatsby project using [Now](https://zeit.co/now), you can do the following:
 
-1. Install the Now CLI
+1.  Install the Now CLI
 
 `npm install -g now`
 
-2. Install a node server package (such as `serve`, or `http-server`)
+2.  Install a node server package (such as `serve`, or `http-server`)
 
 `npm install --save serve`
 
-3. Add a `start` script to your `package.json` file, this is what Now will use to run your application:
+3.  Add a `start` script to your `package.json` file, this is what Now will use to run your application:
 
 `"start": "serve public/"`
 
-4. Run `now` at the root of your Gatsby project, this will upload your project, run the `build` script, and then your `start` script.
+4.  Run `now` at the root of your Gatsby project, this will upload your project, run the `build` script, and then your `start` script.
 
 ## Debugging tips
 

@@ -1,10 +1,11 @@
 const visit = require(`unist-util-visit`)
 const isRelativeUrl = require(`is-relative-url`)
+const fs = require(`fs`)
 const fsExtra = require(`fs-extra`)
 const path = require(`path`)
 const _ = require(`lodash`)
 const cheerio = require(`cheerio`)
-const sizeOf = require(`image-size`)
+const imageSize = require(`probe-image-size`)
 
 const DEPLOY_DIR = `public`
 
@@ -32,15 +33,32 @@ const newPath = (linkNode, destinationDir) => {
   return path.posix.join(process.cwd(), DEPLOY_DIR, newFileName(linkNode))
 }
 
-const newLinkURL = (linkNode, destinationDir) => {
-  if (destinationDir) {
-    return path.posix.join(`/`, destinationDir, newFileName(linkNode))
+const newLinkURL = (linkNode, destinationDir, pathPrefix) => {
+  const linkPaths = [
+    `/`,
+    pathPrefix,
+    destinationDir,
+    newFileName(linkNode),
+  ].filter(function(lpath) {
+    if (lpath) return true
+    return false
+  })
+
+  return path.posix.join(...linkPaths)
+}
+
+function toArray(buf) {
+  var arr = new Array(buf.length)
+
+  for (var i = 0; i < buf.length; i++) {
+    arr[i] = buf[i]
   }
-  return path.posix.join(`/`, newFileName(linkNode))
+
+  return arr
 }
 
 module.exports = (
-  { files, markdownNode, markdownAST, getNode },
+  { files, markdownNode, markdownAST, pathPrefix, getNode },
   pluginOptions = {}
 ) => {
   const defaults = {
@@ -76,7 +94,7 @@ module.exports = (
         // Prevent uneeded copying
         if (linkPath === newFilePath) return
 
-        const linkURL = newLinkURL(linkNode, options.destinationDir)
+        const linkURL = newLinkURL(linkNode, options.destinationDir, pathPrefix)
         link.url = linkURL
         filesToCopy.set(linkPath, newFilePath)
       }
@@ -113,7 +131,9 @@ module.exports = (
     let dimensions
 
     if (!image.attr(`width`) || !image.attr(`height`)) {
-      dimensions = sizeOf(imageNode.absolutePath)
+      dimensions = imageSize.sync(
+        toArray(fs.readFileSync(imageNode.absolutePath))
+      )
     }
 
     // Generate default alt tag
@@ -318,7 +338,7 @@ module.exports = (
           await fsExtra.ensureDir(path.dirname(newFilePath))
           await fsExtra.copy(linkPath, newFilePath)
         } catch (err) {
-          console.error(`error copy ing file`, err)
+          console.error(`error copying file`, err)
         }
       }
     })

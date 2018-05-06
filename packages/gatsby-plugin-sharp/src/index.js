@@ -1,6 +1,6 @@
 const sharp = require(`sharp`)
 const crypto = require(`crypto`)
-const imageSize = require(`image-size`)
+const imageSize = require(`probe-image-size`)
 const _ = require(`lodash`)
 const Promise = require(`bluebird`)
 const fs = require(`fs`)
@@ -10,6 +10,22 @@ const imageminPngquant = require(`imagemin-pngquant`)
 const imageminWebp = require(`imagemin-webp`)
 const queue = require(`async/queue`)
 const path = require(`path`)
+
+const imageSizeCache = new Map()
+const getImageSize = file => {
+  if (
+    process.env.NODE_ENV !== `test` &&
+    imageSizeCache.has(file.internal.contentDigest)
+  ) {
+    return imageSizeCache.get(file.internal.contentDigest)
+  } else {
+    const dimensions = imageSize.sync(
+      toArray(fs.readFileSync(file.absolutePath))
+    )
+    imageSizeCache.set(file.internal.contentDigest, dimensions)
+    return dimensions
+  }
+}
 
 const duotone = require(`./duotone`)
 const { boundActionCreators } = require(`gatsby/dist/redux/actions`)
@@ -144,7 +160,7 @@ const processFile = (file, jobs, cb, reporter) => {
     ) {
       clonedPipeline
         .toBuffer()
-        .then(sharpBuffer => {
+        .then(sharpBuffer =>
           imagemin
             .buffer(sharpBuffer, {
               plugins: [
@@ -160,7 +176,7 @@ const processFile = (file, jobs, cb, reporter) => {
               fs.writeFile(job.outputPath, imageminBuffer, onFinish)
             })
             .catch(onFinish)
-        })
+        )
         .catch(onFinish)
       // Compress webp
     } else if (
@@ -169,7 +185,7 @@ const processFile = (file, jobs, cb, reporter) => {
     ) {
       clonedPipeline
         .toBuffer()
-        .then(sharpBuffer => {
+        .then(sharpBuffer =>
           imagemin
             .buffer(sharpBuffer, {
               plugins: [imageminWebp({ quality: args.quality })],
@@ -178,7 +194,7 @@ const processFile = (file, jobs, cb, reporter) => {
               fs.writeFile(job.outputPath, imageminBuffer, onFinish)
             })
             .catch(onFinish)
-        })
+        )
         .catch(onFinish)
       // any other format (jpeg, tiff) - don't compress it just handle output
     } else {
@@ -300,7 +316,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
   let width
   let height
   // Calculate the eventual width/height of the image.
-  const dimensions = imageSize(file.absolutePath)
+  const dimensions = getImageSize(file)
   let aspectRatio = dimensions.width / dimensions.height
   const originalName = file.base
 
@@ -555,7 +571,7 @@ async function resolutions({ file, args = {}, reporter }) {
   sizes.push(options.width * 1.5)
   sizes.push(options.width * 2)
   sizes.push(options.width * 3)
-  const dimensions = imageSize(file.absolutePath)
+  const dimensions = getImageSize(file)
 
   const filteredSizes = sizes.filter(size => size <= dimensions.width)
 
@@ -642,6 +658,7 @@ async function resolutions({ file, args = {}, reporter }) {
 
 async function notMemoizedtraceSVG({ file, args, fileArgs, reporter }) {
   const potrace = require(`potrace`)
+  const svgToMiniDataURI = require(`mini-svg-data-uri`)
   const trace = Promise.promisify(potrace.trace)
   const defaultArgs = {
     color: `lightgray`,
@@ -714,7 +731,7 @@ async function notMemoizedtraceSVG({ file, args, fileArgs, reporter }) {
 
   return trace(tmpFilePath, optionsSVG)
     .then(svg => optimize(svg))
-    .then(svg => encodeOptimizedSVGDataUri(svg))
+    .then(svg => svgToMiniDataURI(svg))
 }
 
 const memoizedTraceSVG = _.memoize(
@@ -726,25 +743,22 @@ async function traceSVG(args) {
   return await memoizedTraceSVG(args)
 }
 
-// https://codepen.io/tigt/post/optimizing-svgs-in-data-uris
-function encodeOptimizedSVGDataUri(svgString) {
-  var uriPayload = encodeURIComponent(svgString) // encode URL-unsafe characters
-    .replace(/%0A/g, ``) // remove newlines
-    .replace(/%20/g, ` `) // put spaces back in
-    .replace(/%3D/g, `=`) // ditto equals signs
-    .replace(/%3A/g, `:`) // ditto colons
-    .replace(/%2F/g, `/`) // ditto slashes
-    .replace(/%22/g, `'`) // replace quotes with apostrophes (may break certain SVGs)
-
-  return `data:image/svg+xml,` + uriPayload
-}
-
 const optimize = svg => {
   const SVGO = require(`svgo`)
-  const svgo = new SVGO({ multipass: true, floatPrecision: 1 })
+  const svgo = new SVGO({ multipass: true, floatPrecision: 0 })
   return new Promise((resolve, reject) => {
     svgo.optimize(svg, ({ data }) => resolve(data))
   })
+}
+
+function toArray(buf) {
+  var arr = new Array(buf.length)
+
+  for (var i = 0; i < buf.length; i++) {
+    arr[i] = buf[i]
+  }
+
+  return arr
 }
 
 exports.queueImageResizing = queueImageResizing
@@ -754,3 +768,4 @@ exports.responsiveSizes = responsiveSizes
 exports.responsiveResolution = resolutions
 exports.sizes = responsiveSizes
 exports.resolutions = resolutions
+exports.getImageSize = getImageSize

@@ -2,6 +2,7 @@
 title: "Migrate from Jekyll to Gatsby"
 date: 2017-11-08
 author: "Nahuel Scotti"
+tags: ["jekyll", "markdown", "getting-started", "ci"]
 ---
 
 ## A bit of history

@@ -5,66 +5,16 @@ const {
   GraphQLString,
   GraphQLInt,
   GraphQLFloat,
-  GraphQLEnumType,
 } = require(`graphql`)
 const qs = require(`qs`)
 const base64Img = require(`base64-img`)
 const _ = require(`lodash`)
 
-const ImageFormatType = new GraphQLEnumType({
-  name: `ContentfulImageFormat`,
-  values: {
-    NO_CHANGE: { value: `` },
-    JPG: { value: `jpg` },
-    PNG: { value: `png` },
-    WEBP: { value: `webp` },
-  },
-})
-
-const ImageResizingBehavior = new GraphQLEnumType({
-  name: `ImageResizingBehavior`,
-  values: {
-    NO_CHANGE: {
-      value: ``,
-    },
-    PAD: {
-      value: `pad`,
-      description: `Same as the default resizing, but adds padding so that the generated image has the specified dimensions.`,
-    },
-
-    CROP: {
-      value: `crop`,
-      description: `Crop a part of the original image to match the specified size.`,
-    },
-    FILL: {
-      value: `fill`,
-      description: `Crop the image to the specified dimensions, if the original image is smaller than these dimensions, then the image will be upscaled.`,
-    },
-    THUMB: {
-      value: `thumb`,
-      description: `When used in association with the f parameter below, creates a thumbnail from the image based on a focus area.`,
-    },
-    SCALE: {
-      value: `scale`,
-      description: `Scale the image regardless of the original aspect ratio.`,
-    },
-  },
-})
-
-const ImageCropFocusType = new GraphQLEnumType({
-  name: `ContentfulImageCropFocus`,
-  values: {
-    TOP: { value: `top` },
-    TOP_LEFT: { value: `top_left` },
-    TOP_RIGHT: { value: `top_right` },
-    BOTTOM: { value: `bottom` },
-    BOTTOM_RIGHT: { value: `bottom_left` },
-    BOTTOM_LEFT: { value: `bottom_right` },
-    RIGHT: { value: `right` },
-    LEFT: { value: `left` },
-    FACES: { value: `faces` },
-  },
-})
+const {
+  ImageFormatType,
+  ImageResizingBehavior,
+  ImageCropFocusType,
+} = require(`./schemes`)
 
 const isImage = image =>
   _.includes(
@@ -110,9 +60,10 @@ const createUrl = (imgUrl, options = {}) => {
       h: options.height,
       fl: options.jpegProgressive ? `progressive` : null,
       q: options.quality,
-      fm: options.toFormat ? options.toFormat : ``,
-      fit: options.resizingBehavior ? options.resizingBehavior : ``,
-      f: options.cropFocus ? options.cropFocus : ``,
+      fm: options.toFormat || ``,
+      fit: options.resizingBehavior || ``,
+      f: options.cropFocus || ``,
+      bg: options.background || ``,
     },
     _.identity
   )
@@ -195,7 +146,7 @@ const resolveResponsiveResolution = (image, options) => {
   }
 
   return {
-    aspectRatio: aspectRatio,
+    aspectRatio: desiredAspectRatio,
     baseUrl,
     width: Math.round(options.width),
     height: Math.round(pickedHeight),
@@ -265,7 +216,7 @@ const resolveResponsiveSizes = (image, options) => {
     .join(`,\n`)
 
   return {
-    aspectRatio: aspectRatio,
+    aspectRatio: desiredAspectRatio,
     baseUrl,
     src: createUrl(baseUrl, {
       ...options,
@@ -389,6 +340,10 @@ exports.extendNodeType = ({ type }) => {
           type: ImageCropFocusType,
           defaultValue: null,
         },
+        background: {
+          type: GraphQLString,
+          defaultValue: null,
+        },
       },
       resolve: (image, options, context) =>
         Promise.resolve(resolveResponsiveResolution(image, options)).then(
@@ -475,6 +430,10 @@ exports.extendNodeType = ({ type }) => {
           type: ImageCropFocusType,
           defaultValue: null,
         },
+        background: {
+          type: GraphQLString,
+          defaultValue: null,
+        },
         sizes: {
           type: GraphQLString,
         },
@@ -530,6 +489,10 @@ exports.extendNodeType = ({ type }) => {
           type: ImageCropFocusType,
           defaultValue: null,
         },
+        background: {
+          type: GraphQLString,
+          defaultValue: null,
+        },
       },
       resolve(image, options, context) {
         return resolveResponsiveResolution(image, options)
@@ -578,6 +541,10 @@ exports.extendNodeType = ({ type }) => {
         sizes: {
           type: GraphQLString,
         },
+        background: {
+          type: GraphQLString,
+          defaultValue: null,
+        },
       },
       resolve(image, options, context) {
         return resolveResponsiveSizes(image, options)
@@ -624,6 +591,10 @@ exports.extendNodeType = ({ type }) => {
         },
         cropFocus: {
           type: ImageCropFocusType,
+          defaultValue: null,
+        },
+        background: {
+          type: GraphQLString,
           defaultValue: null,
         },
       },

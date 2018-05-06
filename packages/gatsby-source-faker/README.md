@@ -7,13 +7,13 @@ This is a plugin that allows you to use [faker.js](https://github.com/marak/Fake
 Install `gatsby-source-faker`
 
 ```
-    yarn add gatsby-source-faker
+    npm install --save gatsby-source-faker
 ```
 
 or
 
 ```
-    npm install --save-dev gatsby-source-faker
+    npm install gatsby-source-faker
 ```
 
 Add `gatsby-source-faker` to the `gatsby-config.js` as follows
@@ -27,9 +27,9 @@ plugins: [
       schema: {
         name: ["firstName", "lastName"],
         count: 3, // how many fake objects you need
-        type: 'NameData' // Name of the graphql query node
-      }
-    }
-  }
+        type: "NameData", // Name of the graphql query node
+      },
+    },
+  },
 ];
 ```

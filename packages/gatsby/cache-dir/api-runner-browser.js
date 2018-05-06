@@ -1,8 +1,14 @@
 // During bootstrap, we write requires at top of this file which looks
 // basically like:
 // var plugins = [
-//   require('/path/to/plugin1/gatsby-browser.js'),
-//   require('/path/to/plugin2/gatsby-browser.js'),
+//   {
+//     plugin: require("/path/to/plugin1/gatsby-browser.js"),
+//     options: { ... },
+//   },
+//   {
+//     plugin: require("/path/to/plugin2/gatsby-browser.js"),
+//     options: { ... },
+//   },
 // ]
 
 export function apiRunner(api, args, defaultReturn) {

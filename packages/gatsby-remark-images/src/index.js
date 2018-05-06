@@ -22,6 +22,7 @@ module.exports = (
     wrapperStyle: ``,
     backgroundColor: `white`,
     linkImagesToOriginal: true,
+    showCaptions: false,
     pathPrefix,
   }
 
@@ -127,6 +128,17 @@ module.exports = (
   ${rawHTML}
   </a>
     `
+    }
+
+    // Wrap in figure and use title as caption
+
+    if (options.showCaptions && node.title) {
+      rawHTML = `
+  <figure class="gatsby-resp-image-figure">
+  ${rawHTML}
+  <figcaption class="gatsby-resp-image-figcaption">${node.title}</figcaption>
+  </figure>
+      `
     }
 
     return rawHTML

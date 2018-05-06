@@ -23,6 +23,9 @@
   ],
   "license": "MIT",
   "main": "n/a",
+  "resolutions": {
+    "contentful": "6.1.0"
+  },
   "scripts": {
     "develop": "gatsby develop",
     "build": "gatsby build",

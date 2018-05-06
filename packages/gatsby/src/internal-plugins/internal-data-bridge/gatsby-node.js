@@ -141,10 +141,12 @@ const createPageId = path => `SitePage ${path}`
 
 exports.onCreatePage = ({ page, boundActionCreators }) => {
   const { createNode } = boundActionCreators
+  // eslint-disable-next-line
+  const { updatedAt, ...pageWithoutUpdated } = page
 
   // Add page.
   createNode({
-    ...page,
+    ...pageWithoutUpdated,
     id: createPageId(page.path),
     parent: `SOURCE`,
     children: [],
@@ -154,6 +156,10 @@ exports.onCreatePage = ({ page, boundActionCreators }) => {
         .createHash(`md5`)
         .update(JSON.stringify(page))
         .digest(`hex`),
+      description:
+        page.pluginCreatorId === `Plugin default-site-plugin`
+          ? `Your site's "gatsby-node.js"`
+          : page.pluginCreatorId,
     },
   })
 }

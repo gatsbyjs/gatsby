@@ -5,7 +5,6 @@ import rehypeReact from "rehype-react"
 
 import styles from "../styles"
 import { rhythm, scale } from "../utils/typography"
-import presets from "../utils/presets"
 import Counter from "../components/Counter"
 
 import "katex/dist/katex.min.css"
@@ -99,6 +98,7 @@ class BlogPostRoute extends React.Component {
               marginRight: rhythm(3 / 4),
               marginBottom: 0,
             }}
+            Tag="span"
           />
           <span
             css={{

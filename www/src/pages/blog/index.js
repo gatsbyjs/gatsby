@@ -15,6 +15,7 @@ class BlogPostsIndex extends React.Component {
     return (
       <div
         css={{
+          marginTop: `calc(2.8rem - 1px)`,
           [presets.Tablet]: {
             background: colors.ui.whisper,
             paddingBottom: rhythm(options.blockMarginBottom * 4),

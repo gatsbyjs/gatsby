@@ -2,9 +2,9 @@
 title: How Gatsby Works with GitHub Pages
 ---
 
-The easiest way to push a gatsby app to github pages is using a package called `gh-pages`.
+The easiest way to push a gatsby app to GitHub Pages is using a package called `gh-pages`.
 
-`yarn add --dev gh-pages`
+`npm install gh-pages --save-dev`
 
 ## GitHub repository page
 
@@ -26,7 +26,7 @@ We are using prefix paths because our website is inside a folder `http://usernam
 }
 ```
 
-When you run `yarn run deploy` all contents of `public` folder will be moved to your repositorys `gh-pages` branch.
+When you run `npm run deploy` all contents of `public` folder will be moved to your repositories `gh-pages` branch.
 
 ## GitHub Organization or User page
 
@@ -43,8 +43,8 @@ In this case we dont need to specify `pathPrefix`, but our website needs to be p
     }
 ```
 
-After running `yarn run deploy` you should see your website at `http://username.github.io`
+After running `npm run deploy` you should see your website at `http://username.github.io`
 
 ## Custom domains
 
-If you use a [custom domain](https://help.github.com/articles/using-a-custom-domain-with-github-pages/), don't add a `pathPrefix` as it will break navigation on your site. Path prefixing is only necessary when the site is *not* at the root of the domain like with repository sites.
+If you use a [custom domain](https://help.github.com/articles/using-a-custom-domain-with-github-pages/), don't add a `pathPrefix` as it will break navigation on your site. Path prefixing is only necessary when the site is _not_ at the root of the domain like with repository sites. Also don't forget to add your [CNAME](https://help.github.com/articles/troubleshooting-custom-domains/#github-repository-setup-errors) file to the `static` directory.

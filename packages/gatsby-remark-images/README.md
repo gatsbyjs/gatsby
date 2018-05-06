@@ -22,11 +22,11 @@ In the processing, it make images responsive by:
 ```javascript
 // In your gatsby-config.js
 plugins: [
+  `gatsby-plugin-sharp`,
   {
     resolve: `gatsby-transformer-remark`,
     options: {
       plugins: [
-        `gatsby-plugin-sharp`,
         {
           resolve: `gatsby-remark-images`,
           options: {
@@ -48,6 +48,7 @@ plugins: [
 | ---------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `maxWidth`             | `650`   | The `maxWidth` in pixels of the div where the markdown will be displayed. This value is used when deciding what the width of the various responsive thumbnails should be.                                                                                                                                                                                                                                                              |
 | `linkImagesToOriginal` | `true`  | Add a link to each image to the original image. Sometimes people want to see a full-sized version of an image e.g. to see extra detail on a part of the image and this is a convenient and common pattern for enabling this. Set this option to false to disable this behavior.                                                                                                                                                        |
+| `showCaptions`         | `false` | Add a caption to each image with the contents of the title attribute, when this is not empty. Set this option to true to enable this behavior.                                                                                                                                                                                                                                                                                         |
 | `sizeByPixelDensity`   | `false` | Analyze images' pixel density to make decisions about target image size. This is what GitHub is doing when embedding images in tickets. This is a useful setting for documentation pages with a lot of screenshots. It can have unintended side effects on high pixel density artworks.<br/><br/>Example: A screenshot made on a retina screen with a resolution of 144 (e.g. Macbook) and a width of 100px, will be rendered at 50px. |
 | `wrapperStyle`         |         | Add custom styles to the div wrapping the responsive images. Use the syntax for the style attribute e.g. `margin-bottom:10px; background: red;`                                                                                                                                                                                                                                                                                        |
 | `backgroundColor`      | `white` | Set the background color of the image to match the background image of your design                                                                                                                                                                                                                                                                                                                                                     |

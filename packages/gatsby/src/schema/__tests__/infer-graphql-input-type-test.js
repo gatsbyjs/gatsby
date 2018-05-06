@@ -15,6 +15,7 @@ const {
   inferInputObjectStructureFromNodes,
 } = require(`../infer-graphql-input-fields`)
 const createSortField = require(`../create-sort-field`)
+const { clearTypeExampleValues } = require(`../data-tree-utils`)
 
 function queryResult(nodes, query, { types = [] } = {}) {
   const nodeType = new GraphQLObjectType({
@@ -29,7 +30,7 @@ function queryResult(nodes, query, { types = [] } = {}) {
     nodeType,
     connectionFields: () =>
       buildConnectionFields({
-        name: `Test`,
+        name,
         nodes,
         nodeObjectType: nodeType,
       }),
@@ -74,6 +75,10 @@ function queryResult(nodes, query, { types = [] } = {}) {
 
   return graphql(schema, query)
 }
+
+beforeEach(() => {
+  clearTypeExampleValues()
+})
 
 describe(`GraphQL Input args`, () => {
   const nodes = [

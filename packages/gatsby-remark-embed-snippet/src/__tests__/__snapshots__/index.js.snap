@@ -21,8 +21,7 @@ Object {
           },
           "type": "html",
           "value": "<div class=\\"gatsby-highlight\\">
-        <pre class=\\"language-css\\"><code><span class=\\"token selector\\">html</span> <span class=\\"token punctuation\\">{</span> <span class=\\"token property\\">height</span><span class=\\"token punctuation\\">:</span> 100%<span class=\\"token punctuation\\">;</span> <span class=\\"token punctuation\\">}</span>
-</code></pre>
+        <pre class=\\"language-css\\"><code><span class=\\"token selector\\">html</span> <span class=\\"token punctuation\\">{</span> <span class=\\"token property\\">height</span><span class=\\"token punctuation\\">:</span> 100%<span class=\\"token punctuation\\">;</span> <span class=\\"token punctuation\\">}</span></code></pre>
         </div>",
         },
       ],
@@ -85,8 +84,7 @@ Object {
 
 <span class=\\"token selector\\">*</span> <span class=\\"token punctuation\\">{</span>
 <span class=\\"gatsby-highlight-code-line\\"><span class=\\"token property\\">box-sizing</span><span class=\\"token punctuation\\">:</span> border-box<span class=\\"token punctuation\\">;</span>
-</span><span class=\\"token punctuation\\">}</span>
-</code></pre>
+</span><span class=\\"token punctuation\\">}</span></code></pre>
         </div>",
         },
       ],
@@ -146,8 +144,7 @@ Object {
         <pre class=\\"language-css\\"><code><span class=\\"token selector\\">html</span> <span class=\\"token punctuation\\">{</span>
 <span class=\\"gatsby-highlight-code-line\\"><span class=\\"token property\\">height</span><span class=\\"token punctuation\\">:</span> 100%<span class=\\"token punctuation\\">;</span>
 </span><span class=\\"gatsby-highlight-code-line\\"><span class=\\"token property\\">width</span><span class=\\"token punctuation\\">:</span> 100%<span class=\\"token punctuation\\">;</span>
-</span><span class=\\"token punctuation\\">}</span>
-</code></pre>
+</span><span class=\\"token punctuation\\">}</span></code></pre>
         </div>",
         },
       ],
@@ -204,8 +201,7 @@ Object {
           },
           "type": "html",
           "value": "<div class=\\"gatsby-highlight\\">
-        <pre class=\\"language-html\\"><code><span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;</span>html</span><span class=\\"token punctuation\\">></span></span><span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;/</span>html</span><span class=\\"token punctuation\\">></span></span>
-</code></pre>
+        <pre class=\\"language-html\\"><code><span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;</span>html</span><span class=\\"token punctuation\\">></span></span><span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;/</span>html</span><span class=\\"token punctuation\\">></span></span></code></pre>
         </div>",
         },
       ],
@@ -269,8 +265,7 @@ Object {
 <span class=\\"gatsby-highlight-code-line\\">highlighted
 </span><span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;/</span>p</span><span class=\\"token punctuation\\">></span></span>
 <span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;/</span>body</span><span class=\\"token punctuation\\">></span></span>
-<span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;/</span>html</span><span class=\\"token punctuation\\">></span></span>
-</code></pre>
+<span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;/</span>html</span><span class=\\"token punctuation\\">></span></span></code></pre>
         </div>",
         },
       ],
@@ -333,8 +328,7 @@ Object {
 <span class=\\"gatsby-highlight-code-line\\">highlighted
 </span><span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;/</span>p</span><span class=\\"token punctuation\\">></span></span>
 <span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;/</span>body</span><span class=\\"token punctuation\\">></span></span>
-<span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;/</span>html</span><span class=\\"token punctuation\\">></span></span>
-</code></pre>
+<span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;/</span>html</span><span class=\\"token punctuation\\">></span></span></code></pre>
         </div>",
         },
       ],
@@ -391,8 +385,7 @@ Object {
           },
           "type": "html",
           "value": "<div class=\\"gatsby-highlight\\">
-        <pre class=\\"language-jsx\\"><code><span class=\\"token keyword\\">const</span> foo <span class=\\"token operator\\">=</span> <span class=\\"token string\\">\\"bar\\"</span><span class=\\"token punctuation\\">;</span>
-</code></pre>
+        <pre class=\\"language-jsx\\"><code><span class=\\"token keyword\\">const</span> foo <span class=\\"token operator\\">=</span> <span class=\\"token string\\">\\"bar\\"</span><span class=\\"token punctuation\\">;</span></code></pre>
         </div>",
         },
       ],
@@ -454,12 +447,11 @@ Object {
 </span>
 <span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;</span>ReactCSSTransitionGroup</span>
 <span class=\\"token attr-name\\">transitionName</span><span class=\\"token attr-value\\"><span class=\\"token punctuation\\">=</span><span class=\\"token punctuation\\">\\"</span>example<span class=\\"token punctuation\\">\\"</span></span>
-<span class=\\"token attr-name\\">transitionEnterTimeout</span><span class=\\"token script language-javascript\\"><span class=\\"token punctuation\\">=</span><span class=\\"token punctuation\\">{</span><span class=\\"token number\\">500</span><span class=\\"token punctuation\\">}</span></span>
-<span class=\\"token attr-name\\">transitionLeaveTimeout</span><span class=\\"token script language-javascript\\"><span class=\\"token punctuation\\">=</span><span class=\\"token punctuation\\">{</span><span class=\\"token number\\">300</span><span class=\\"token punctuation\\">}</span></span><span class=\\"token punctuation\\">></span></span>
+<span class=\\"token attr-name\\">transitionEnterTimeout</span><span class=\\"token script language-javascript\\"><span class=\\"token script-punctuation punctuation\\">=</span><span class=\\"token punctuation\\">{</span><span class=\\"token number\\">500</span><span class=\\"token punctuation\\">}</span></span>
+<span class=\\"token attr-name\\">transitionLeaveTimeout</span><span class=\\"token script language-javascript\\"><span class=\\"token script-punctuation punctuation\\">=</span><span class=\\"token punctuation\\">{</span><span class=\\"token number\\">300</span><span class=\\"token punctuation\\">}</span></span><span class=\\"token punctuation\\">></span></span>
 <span class=\\"gatsby-highlight-code-line\\"><span class=\\"token punctuation\\">{</span>items<span class=\\"token punctuation\\">}</span>
 </span><span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;/</span>ReactCSSTransitionGroup</span><span class=\\"token punctuation\\">></span></span>
-<span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;/</span>div</span><span class=\\"token punctuation\\">></span></span>
-</code></pre>
+<span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;/</span>div</span><span class=\\"token punctuation\\">></span></span></code></pre>
         </div>",
         },
       ],
@@ -583,8 +575,7 @@ Object {
         <pre class=\\"language-jsx\\"><code>ReactDOM<span class=\\"token punctuation\\">.</span><span class=\\"token function\\">render</span><span class=\\"token punctuation\\">(</span>
 <span class=\\"gatsby-highlight-code-line\\"><span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;</span>h1</span><span class=\\"token punctuation\\">></span></span>Hello<span class=\\"token punctuation\\">,</span> world<span class=\\"token operator\\">!</span><span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;/</span>h1</span><span class=\\"token punctuation\\">></span></span><span class=\\"token punctuation\\">,</span>
 </span><span class=\\"gatsby-highlight-code-line\\">document<span class=\\"token punctuation\\">.</span><span class=\\"token function\\">getElementById</span><span class=\\"token punctuation\\">(</span><span class=\\"token string\\">'root'</span><span class=\\"token punctuation\\">)</span>
-</span><span class=\\"token punctuation\\">)</span><span class=\\"token punctuation\\">;</span>
-</code></pre>
+</span><span class=\\"token punctuation\\">)</span><span class=\\"token punctuation\\">;</span></code></pre>
         </div>",
         },
       ],
@@ -647,8 +638,7 @@ Object {
 </span><span class=\\"gatsby-highlight-code-line\\"><span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;</span>li</span><span class=\\"token punctuation\\">></span></span>Highlighted<span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;/</span>li</span><span class=\\"token punctuation\\">></span></span>
 </span><span class=\\"gatsby-highlight-code-line\\"><span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;</span>li</span><span class=\\"token punctuation\\">></span></span>Highlighted<span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;/</span>li</span><span class=\\"token punctuation\\">></span></span>
 </span><span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;</span>li</span><span class=\\"token punctuation\\">></span></span>Not highlighted<span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;/</span>li</span><span class=\\"token punctuation\\">></span></span>
-<span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;/</span>div</span><span class=\\"token punctuation\\">></span></span>
-</code></pre>
+<span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;/</span>div</span><span class=\\"token punctuation\\">></span></span></code></pre>
         </div>",
         },
       ],
@@ -771,8 +761,7 @@ Object {
           },
           "type": "html",
           "value": "<div class=\\"gatsby-highlight\\">
-        <pre class=\\"language-markup\\"><code># Hi
-</code></pre>
+        <pre class=\\"language-markup\\"><code># Hi</code></pre>
         </div>",
         },
       ],
@@ -829,8 +818,7 @@ Object {
           },
           "type": "html",
           "value": "<div class=\\"gatsby-highlight\\">
-        <pre class=\\"language-yaml\\"><code><span class=\\"token key atrule\\">name</span><span class=\\"token punctuation\\">:</span> Brian Vaughn
-</code></pre>
+        <pre class=\\"language-yaml\\"><code><span class=\\"token key atrule\\">name</span><span class=\\"token punctuation\\">:</span> Brian Vaughn</code></pre>
         </div>",
         },
       ],
@@ -890,8 +878,7 @@ Object {
         <pre class=\\"language-yaml\\"><code><span class=\\"gatsby-highlight-code-line\\"><span class=\\"token key atrule\\">foo</span><span class=\\"token punctuation\\">:</span> <span class=\\"token string\\">\\"highlighted\\"</span>
 </span><span class=\\"token key atrule\\">bar</span><span class=\\"token punctuation\\">:</span> <span class=\\"token string\\">\\"not highlighted\\"</span>
 <span class=\\"gatsby-highlight-code-line\\"><span class=\\"token key atrule\\">baz</span><span class=\\"token punctuation\\">:</span> <span class=\\"token string\\">\\"highlighted\\"</span>
-</span><span class=\\"token key atrule\\">qux</span><span class=\\"token punctuation\\">:</span> <span class=\\"token string\\">\\"not highlighted\\"</span>
-</code></pre>
+</span><span class=\\"token key atrule\\">qux</span><span class=\\"token punctuation\\">:</span> <span class=\\"token string\\">\\"not highlighted\\"</span></code></pre>
         </div>",
         },
       ],
@@ -1008,8 +995,7 @@ Object {
           },
           "type": "html",
           "value": "<div class=\\"gatsby-highlight\\">
-        <pre class=\\"language-bash\\"><code><span class=\\"token function\\">pwd</span>
-</code></pre>
+        <pre class=\\"language-bash\\"><code><span class=\\"token function\\">pwd</span></code></pre>
         </div>",
         },
       ],
@@ -1133,8 +1119,7 @@ Object {
         <pre class=\\"language-bash\\"><code><span class=\\"token keyword\\">echo</span> <span class=\\"token string\\">\\"not highlighted\\"</span>
 <span class=\\"gatsby-highlight-code-line\\"><span class=\\"token keyword\\">echo</span> <span class=\\"token string\\">\\"highlighted\\"</span>
 </span><span class=\\"gatsby-highlight-code-line\\"><span class=\\"token keyword\\">echo</span> <span class=\\"token string\\">\\"highlighted\\"</span>
-</span><span class=\\"token keyword\\">echo</span> <span class=\\"token string\\">\\"not highlighted\\"</span>
-</code></pre>
+</span><span class=\\"token keyword\\">echo</span> <span class=\\"token string\\">\\"not highlighted\\"</span></code></pre>
         </div>",
         },
       ],
@@ -1191,8 +1176,7 @@ Object {
           },
           "type": "html",
           "value": "<div class=\\"gatsby-highlight\\">
-        <pre class=\\"language-jsx\\"><code><span class=\\"token keyword\\">const</span> foo <span class=\\"token operator\\">=</span> <span class=\\"token string\\">\\"bar\\"</span><span class=\\"token punctuation\\">;</span>
-</code></pre>
+        <pre class=\\"language-jsx\\"><code><span class=\\"token keyword\\">const</span> foo <span class=\\"token operator\\">=</span> <span class=\\"token string\\">\\"bar\\"</span><span class=\\"token punctuation\\">;</span></code></pre>
         </div>",
         },
       ],
@@ -1249,8 +1233,7 @@ Object {
           },
           "type": "html",
           "value": "<div class=\\"gatsby-highlight\\">
-        <pre class=\\"language-jsx\\"><code>console<span class=\\"token punctuation\\">.</span><span class=\\"token function\\">log</span><span class=\\"token punctuation\\">(</span><span class=\\"token string\\">\\"oops!\\"</span><span class=\\"token punctuation\\">)</span><span class=\\"token punctuation\\">;</span>
-</code></pre>
+        <pre class=\\"language-jsx\\"><code>console<span class=\\"token punctuation\\">.</span><span class=\\"token function\\">log</span><span class=\\"token punctuation\\">(</span><span class=\\"token string\\">\\"oops!\\"</span><span class=\\"token punctuation\\">)</span><span class=\\"token punctuation\\">;</span></code></pre>
         </div>",
         },
       ],

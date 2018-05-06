@@ -1,5 +1,5 @@
 ---
-title: "Creating and modifying pages"
+title: "Creating and Modifying Pages"
 ---
 
 Gatsby makes it easy to programmatically control your pages.

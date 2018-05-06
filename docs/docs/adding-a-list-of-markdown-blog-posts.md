@@ -26,7 +26,11 @@ The first step will be to create the page which will display your posts, in `src
 import React from "react";
 import PostLink from "../components/post-link";
 
-const IndexPage = ({ data: { allMarkdownRemark: { edges } } }) => {
+const IndexPage = ({
+  data: {
+    allMarkdownRemark: { edges },
+  },
+}) => {
   const Posts = edges
     .filter(edge => !!edge.node.frontmatter.date) // You can filter your posts based on some criteria
     .map(edge => <PostLink key={edge.node.id} post={edge.node} />);
@@ -45,7 +49,11 @@ Second, you need to provide the data to your component with a GraphQL query. Let
 import React from "react";
 import PostLink from "../components/post-link";
 
-const IndexPage = ({ data: { allMarkdownRemark: { edges } } }) => {
+const IndexPage = ({
+  data: {
+    allMarkdownRemark: { edges },
+  },
+}) => {
   const Posts = edges
     .filter(edge => !!edge.node.frontmatter.date) // You can filter your posts based on some criteria
     .map(edge => <PostLink key={edge.node.id} post={edge.node} />);

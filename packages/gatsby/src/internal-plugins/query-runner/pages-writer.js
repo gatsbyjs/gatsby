@@ -52,10 +52,12 @@ const writePages = async () => {
         )
       }
 
-      pageLayouts.push(layout)
-      json.push({
-        jsonName: layout.jsonName,
-      })
+      if (!_.includes(pageLayouts, layout)) {
+        pageLayouts.push(layout)
+        json.push({
+          jsonName: layout.jsonName,
+        })
+      }
     }
     json.push({ path: p.path, jsonName: p.jsonName })
   })
