@@ -25,7 +25,7 @@ const MobileNavItem = ({ linkTo, label, icon }) => (
       textAlign: `center`,
     }}
   >
-    <img src={icon} css={{ height: 32, display: `block`, margin: `0 auto` }} />
+    <img alt="" src={icon} css={{ height: 32, display: `block`, margin: `0 auto` }} />
     <div>{label}</div>
   </Link>
 )
@@ -54,6 +54,8 @@ const MobileNavigation = () => (
     <MobileNavItem linkTo="/tutorial/" label="Tutorial" icon={TutorialIcon} />
     <MobileNavItem linkTo="/plugins/" label="Plugins" icon={PluginsIcon} />
     <MobileNavItem linkTo="/blog/" label="Blog" icon={BlogIcon} />
+    {/* TODO: change to showcase icon */}
+    <MobileNavItem linkTo="/showcase/" label="Showcase" icon={BlogIcon} />
   </div>
 )
 

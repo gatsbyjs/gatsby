@@ -71,6 +71,8 @@ class ContributorPageTemplate extends React.Component {
                   )
                 }
               }
+
+              return null
             })}
           </div>
         </Container>
