@@ -158,6 +158,9 @@ let findPage
 let pathScriptsCache = {}
 let resourcesArray = []
 let mountOrder = 1
+let prefetchTriggered = {}
+
+const disableCorePrefetching = apiRunner(`disableCorePrefetching`)
 
 const queue = {
   empty: () => {
