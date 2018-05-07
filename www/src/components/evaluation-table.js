@@ -32,6 +32,7 @@ class EvaluationTable extends Component {
           {` `}
           {`${words[words.length - 1]} `}
           <img
+            alt=""
             src={infoIcon}
             css={{
               height: rhythm(2 / 5),
@@ -46,6 +47,7 @@ class EvaluationTable extends Component {
     const headers = [`Feature`, `Gatsby`, `Jekyll`, `Wordpress`, `Squarespace`]
     const renderCell = (text, column) => {
       switch (column) {
+        default:
         case 0: {
           return (
             <div
@@ -63,7 +65,9 @@ class EvaluationTable extends Component {
                 },
               }}
             >
-              {/* eslint-disable jsx-a11y/anchor-is-valid */}
+            {/* eslint-disable jsx-a11y/anchor-is-valid */}
+            {/* jsx-a11y really wants us to change this to a button */}
+            {/* eslint-disable-next-line */}
               <a
                 css={{
                   "&&": {

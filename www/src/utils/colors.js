@@ -90,6 +90,7 @@ colorStr
       case `b`:
         pointer = `c`
         break
+      default:
       case `c`:
         pointer = `a`
         break

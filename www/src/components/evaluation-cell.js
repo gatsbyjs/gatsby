@@ -22,7 +22,8 @@ class EvaluationCell extends Component {
           return `none`
         }
         case ``:
-        case `N/A`: {
+        case `N/A`:
+        default: {
           return `none`
         }
         default: {

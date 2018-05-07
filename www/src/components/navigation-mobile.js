@@ -54,6 +54,8 @@ const MobileNavigation = () => (
     <MobileNavItem linkTo="/tutorial/" label="Tutorial" icon={TutorialIcon} />
     <MobileNavItem linkTo="/plugins/" label="Plugins" icon={PluginsIcon} />
     <MobileNavItem linkTo="/blog/" label="Blog" icon={BlogIcon} />
+    {/* TODO: change to showcase icon */}
+    <MobileNavItem linkTo="/showcase/" label="Showcase" icon={BlogIcon} />
   </div>
 )
 

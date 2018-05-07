@@ -253,12 +253,6 @@
   featured: false
   categories:
     - Web Dev
-- title: Adnan Fajlur Portfolio
-  main_url: 'https://adnanfajlur.xyz/'
-  url: 'https://adnanfajlur.xyz/'
-  featured: false
-  categories:
-    - Nonprofit
 - title: API Platform
   main_url: 'https://api-platform.com/'
   url: 'https://api-platform.com/'
@@ -749,12 +743,6 @@
   categories:
     - Blog
     - Web Dev
-- title: Flooring Factories Outlets
-  main_url: 'https://www.flooringfactoriesoutlets.com/'
-  url: 'https://www.flooringfactoriesoutlets.com/'
-  featured: false
-  categories:
-    - Marketing
 - title: Gabriel Adorf's Portfolio
   main_url: 'https://www.gabrieladorf.com/'
   url: 'https://www.gabrieladorf.com/'
