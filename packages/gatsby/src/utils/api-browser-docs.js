@@ -74,3 +74,17 @@ exports.replaceHistory = true
  * @param {object} $0.Root The "Root" component built by Gatsby.
  */
 exports.wrapRootComponent = true
+
+/**
+ * Called when prefetching for a pathname is triggered. Allows
+ * for plugins with custom prefetching logic.
+ * @param {object} $0
+ * @param {object} $0.pathname The pathname whose resources should now be prefetched
+ */
+exports.onPrefetchPathname = true
+
+/**
+ * Plugins can take over prefetching logic. If they do, they should call this
+ * to disable the now duplicate core prefetching logic.
+ */
+exports.disableCorePrefetching = true

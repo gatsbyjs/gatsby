@@ -100,7 +100,7 @@ class GatsbyLink extends React.Component {
   }
 
   render() {
-    const { onClick, ...rest } = this.props
+    const { onClick, onMouseEnter, ...rest } = this.props
     let El
     if (Object.keys(NavLinkPropTypes).some(propName => this.props[propName])) {
       El = NavLink
@@ -110,6 +110,11 @@ class GatsbyLink extends React.Component {
 
     return (
       <El
+        onMouseEnter={e => {
+          // eslint-disable-line
+          onMouseEnter && onMouseEnter(e)
+          ___loader.hovering(this.state.path)
+        }}
         onClick={e => {
           // eslint-disable-line
           onClick && onClick(e)

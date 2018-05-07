@@ -126,7 +126,8 @@ export default (pagePath, callback) => {
     },
     createElement(Route, {
       // eslint-disable-next-line react/display-name
-      render: routeProps => createElement(syncRequires.components[page.componentChunkName], {
+      render: routeProps =>
+        createElement(syncRequires.components[page.componentChunkName], {
           ...routeProps,
           ...dataAndContext,
         }),
@@ -149,17 +150,6 @@ export default (pagePath, callback) => {
   if (!bodyHtml) {
     bodyHtml = renderToString(bodyComponent)
   }
-
-  apiRunner(`onRenderBody`, {
-    setHeadComponents,
-    setHtmlAttributes,
-    setBodyAttributes,
-    setPreBodyComponents,
-    setPostBodyComponents,
-    setBodyProps,
-    pathname: pagePath,
-    bodyHtml,
-  })
 
   // Create paths to scripts
   let runtimeScript
@@ -192,6 +182,20 @@ export default (pagePath, callback) => {
   ).filter(s => isString(s))
   const scripts = scriptsAndStyles.filter(s => s.endsWith(`.js`))
   const styles = scriptsAndStyles.filter(s => s.endsWith(`.css`))
+
+  apiRunner(`onRenderBody`, {
+    setHeadComponents,
+    setHtmlAttributes,
+    setBodyAttributes,
+    setPreBodyComponents,
+    setPostBodyComponents,
+    setBodyProps,
+    pathname: pagePath,
+    bodyHtml,
+    scripts,
+    styles,
+    pathPrefix,
+  })
 
   const runtimeRaw = fs.readFileSync(
     join(process.cwd(), `public`, runtimeScript),
