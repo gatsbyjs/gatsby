@@ -29,6 +29,10 @@ const fetchPageResourceMap = () => {
   if (!fetchingPageResourceMapPromise) {
     fetchingPageResourceMapPromise = new Promise(resolve => {
       asyncRequires.data().then(({ pages, dataPaths }) => {
+        // TODO — expose proper way to access this data from plugins.
+        // Need to come up with an API for plugins to access
+        // site info.
+        window.___dataPaths = dataPaths
         queue.addPagesArray(pages)
         queue.addDataPaths(dataPaths)
         resolve((fetchedPageResourceMap = true))
