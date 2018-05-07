@@ -1,5 +1,6 @@
 import React from "react"
 import { Link } from "gatsby"
+import Layout from "../layouts"
 
 class TagRoute extends React.Component {
   render() {
@@ -11,7 +12,7 @@ class TagRoute extends React.Component {
     ))
 
     return (
-      <div>
+      <Layout location={this.props.location}>
         <h1>
           {this.props.data.allMarkdownRemark.totalCount}
           {` `}posts tagged with “{this.props.pageContext.tag}”
@@ -20,7 +21,7 @@ class TagRoute extends React.Component {
         <p>
           <Link to="/tags/">Browse all tags</Link>
         </p>
-      </div>
+      </Layout>
     )
   }
 }

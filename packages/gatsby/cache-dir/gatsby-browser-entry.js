@@ -19,7 +19,6 @@ const StaticQueryContext = React.createContext({})
 const StaticQuery = props => (
   <StaticQueryContext.Consumer>
     {staticQueryData => {
-      console.log(props)
       if (
         props.data ||
         (staticQueryData[props.query] && staticQueryData[props.query].data)

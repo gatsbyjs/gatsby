@@ -136,7 +136,7 @@ package and second, you add the plugin to your site's `gatsby-config.js`.
 Typography.js has a Gatsby plugin, so let's install that by running:
 
 ```shell
-npm install --save gatsby-plugin-typography
+npm install --save gatsby-plugin-typography react-typography typography
 ```
 
 Next, in your code editor, create a file at the root of your project folder named `gatsby-config.js`.
@@ -453,7 +453,7 @@ directory. But, if it's used only in one file, create it inline.
 
 Modify `about-css-modules.js` so it looks like the following:
 
-```jsx{6-17,23-30}
+```jsx{6-18,24-31}
 import React from "react"
 import styles from "./about-css-modules.module.css"
 console.log(styles)

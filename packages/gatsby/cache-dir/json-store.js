@@ -1,14 +1,15 @@
-import React, { createElement } from "react"
-import { Route } from "react-router-dom"
-import omit from "lodash/omit"
-import get from "lodash/get"
+import React from "react"
 
 import PageRenderer from "./page-renderer"
-import syncRequires from "./sync-requires"
 import { StaticQueryContext } from "gatsby"
 import socketIo, { getStaticQueryData, getPageQueryData } from "./socketIo"
 
-const getPathFromProps = props => get(props.pageResources, `page.path`)
+const getPathFromProps = props =>
+  props.pageResources
+    ? props.pageResources.page
+      ? props.pageResources.page.path
+      : undefined
+    : undefined
 
 class JSONStore extends React.Component {
   constructor(props) {
@@ -71,9 +72,9 @@ class JSONStore extends React.Component {
   }
 
   render() {
-    const { pages, pageResources } = this.props
     const data = this.state.pageQueryData[this.state.path]
-    const propsWithoutPages = omit(this.props, `pages`)
+    // eslint-disable-next-line
+    const { pages, ...propsWithoutPages } = this.props
     if (!data) {
       return <div />
     }

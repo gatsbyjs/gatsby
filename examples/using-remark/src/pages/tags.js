@@ -1,5 +1,6 @@
 import React from "react"
 import { Link } from "gatsby"
+import Layout from "../layouts"
 import kebabCase from "lodash/kebabCase"
 
 class TagsPageRoute extends React.Component {
@@ -7,7 +8,7 @@ class TagsPageRoute extends React.Component {
     const allTags = this.props.data.allMarkdownRemark.group
 
     return (
-      <div>
+      <Layout location={this.props.location}>
         <h1>Tags</h1>
         <ul>
           {allTags.map(tag => (
@@ -23,7 +24,7 @@ class TagsPageRoute extends React.Component {
             </li>
           ))}
         </ul>
-      </div>
+      </Layout>
     )
   }
 }

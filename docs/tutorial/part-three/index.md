@@ -30,7 +30,7 @@ Once the site is finished installing, install `gatsby-plugin-typography`. For a 
 the Typography.js theme, let's try the "Fairy Gates" typography theme this time:
 
 ```shell
-npm install --save gatsby-plugin-typography typography-theme-fairy-gates
+npm install --save gatsby-plugin-typography react-typography typography typography-theme-fairy-gates
 ```
 
 Create a `src/utils` directory, and then create the typography config file at `src/utils/typography.js`:
