@@ -1,6 +1,7 @@
 import pageFinderFactory from "./find-page"
 import emitter from "./emitter"
 import stripPrefix from "./strip-prefix"
+import { apiRunner } from "./api-runner-browser"
 
 const preferDefault = m => (m && m.default) || m
 
@@ -128,8 +129,6 @@ const appearsOnLine = () => {
 }
 
 const handleResourceLoadError = (path, message) => {
-  console.log(message)
-
   if (!failedPaths[path]) {
     failedPaths[path] = message
   }
@@ -159,6 +158,9 @@ let findPage
 let pathScriptsCache = {}
 let resourcesArray = []
 let mountOrder = 1
+let prefetchTriggered = {}
+
+const disableCorePrefetching = apiRunner(`disableCorePrefetching`)
 
 const queue = {
   empty: () => {
@@ -183,10 +185,29 @@ const queue = {
     jsonDataPaths = dataPaths
   },
   dequeue: () => resourcesArray.pop(),
+  // Hovering on a link is a very strong indication the user is going to
+  // click on it soon so let's start prefetching resources for this
+  // pathname.
+  hovering: rawPath => {
+    const path = stripPrefix(rawPath, pathPrefix.slice(0, -1))
+    queue.getResourcesForPathname(path)
+  },
   enqueue: rawPath => {
-    // Check page exists.
     const path = stripPrefix(rawPath, pathPrefix.slice(0, -1))
 
+    // Tell plugins with custom prefetching logic that they should start
+    // prefetching this path.
+    if (!prefetchTriggered[path]) {
+      apiRunner(`onPrefetchPathname`, { pathname: path })
+      prefetchTriggered[path] = true
+    }
+
+    // If a plugin has disabled core prefetching, stop now.
+    if (disableCorePrefetching.some(a => a)) {
+      return false
+    }
+
+    // Check if the page exists.
     let page = findPage(path)
 
     if (
