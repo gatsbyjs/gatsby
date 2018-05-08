@@ -15,7 +15,7 @@ const getLocalizedField = ({ field, localeCode, localesFallback }) => {
   if (!_.isUndefined(field[localeCode])) {
     return field[localeCode]
   } else if (!_.isUndefined(localesFallback[localeCode])) {
-    return getLocalizedField({ field, localeCode: localesFallback[localeCode], localesFallback})
+    return getLocalizedField({ field, localeCode: localesFallback[localeCode], localesFallback })
   } else {
     return null
   }
