@@ -59,7 +59,7 @@ export const defaultOptions = {
   serialize: ({ site, allSitePage }) =>
     allSitePage.edges.map(edge => {
       return {
-        url: site.siteMetadata.siteUrl + edge.node.path,
+        url: site.siteMetadata.siteUrl + edge.node.path.toLowerCase(),
         changefreq: `daily`,
         priority: 0.7,
       }
