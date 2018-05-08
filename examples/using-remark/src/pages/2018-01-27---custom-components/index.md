@@ -145,7 +145,7 @@ In addition, you can also pass attributes, which can be used as props in your co
 
 ## Mapping from generic HTML elements
 
-You can also map a generic HTML element to one of your own components. This can be particularly useful if you are using something like styled-components as it allows you to share these primatives between markdown content and the rest of your site. It also means the author of the Markdown doesn't need to use any custom markup - just standard markdown.
+You can also map a generic HTML element to one of your own components. This can be particularly useful if you are using something like styled-components as it allows you to share these primitives between markdown content and the rest of your site. It also means the author of the Markdown doesn't need to use any custom markup - just standard markdown.
 
 For example if you have a series of header components:
 
