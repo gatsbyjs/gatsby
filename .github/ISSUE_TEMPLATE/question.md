@@ -1,6 +1,6 @@
 ---
 name: Question 🤔
-about: Usage question or discussion about Gatsy.
+about: Usage question or discussion about Gatsby.
 ---
 
 <!--
