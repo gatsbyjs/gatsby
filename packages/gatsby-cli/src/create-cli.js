@@ -102,7 +102,19 @@ function buildLocalCommands(cli, isLocalSite) {
         .option(`S`, {
           alias: `https`,
           type: `boolean`,
-          describe: `Use HTTPS. See https://www.gatsbyjs.org/docs/local-https/ for an initial setup guide`,
+          describe: `Use HTTPS. See https://www.gatsbyjs.org/docs/local-https/ as a guide`,
+        })
+        .option(`c`, {
+          alias: `cert-file`,
+          type: `string`,
+          default: ``,
+          describe: `Custom HTTPS cert file (relative path; also required: --https, --key-file). See https://www.gatsbyjs.org/docs/local-https/`,
+        })
+        .option(`k`, {
+          alias: `key-file`,
+          type: `string`,
+          default: ``,
+          describe: `Custom HTTPS key file (relative path; also required: --https, --cert-file). See https://www.gatsbyjs.org/docs/local-https/`,
         }),
     handler: handlerP(
       getCommandHandler(`develop`, (args, cmd) => {
