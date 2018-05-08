@@ -11,18 +11,22 @@ const digest = str =>
 const typePrefix = `Contentful`
 const makeTypeName = type => _.upperFirst(_.camelCase(`${typePrefix} ${type}`))
 
-const getLocalizedField = ({ field, defaultLocale, locale }) => {
-  if (!_.isUndefined(field[locale.code])) {
-    return field[locale.code]
-  } else if (!_.isUndefined(field[locale.fallbackCode])) {
-    return field[locale.fallbackCode]
+const getLocalizedField = ({ field, localeCode, localesFallback }) => {
+  if (!_.isUndefined(field[localeCode])) {
+    return field[localeCode]
+  } else if (!_.isUndefined(localesFallback[localeCode])) {
+    return getLocalizedField({ field, localeCode: localesFallback[localeCode], localesFallback})
   } else {
     return null
   }
 }
-
-const makeGetLocalizedField = ({ locale, defaultLocale }) => field =>
-  getLocalizedField({ field, locale, defaultLocale })
+const buildFallbackChain = (locales) => {
+  const localesFallback = {}
+  _.each(locales, locale => localesFallback[locale.code] = locale.fallbackCode)
+  return localesFallback
+}
+const makeGetLocalizedField = ({ locale, localesFallback }) => field =>
+  getLocalizedField({ field, localeCode: locale.code, localesFallback })
 
 exports.getLocalizedField = getLocalizedField
 
@@ -202,8 +206,9 @@ exports.createContentTypeNodes = ({
 }) => {
   const contentTypeItemId = contentTypeItem.name
   locales.forEach(locale => {
+    const localesFallback = buildFallbackChain(locales)
     const mId = makeMakeId({ currentLocale: locale.code, defaultLocale })
-    const getField = makeGetLocalizedField({ locale, defaultLocale })
+    const getField = makeGetLocalizedField({ locale, localesFallback, defaultLocale })
 
     // Warn about any field conflicts
     const conflictFields = []
@@ -401,8 +406,9 @@ exports.createAssetNodes = ({
   locales,
 }) => {
   locales.forEach(locale => {
+    const localesFallback = buildFallbackChain(locales)
     const mId = makeMakeId({ currentLocale: locale.code, defaultLocale })
-    const getField = makeGetLocalizedField({ locale, defaultLocale })
+    const getField = makeGetLocalizedField({ locale, localesFallback, defaultLocale })
 
     const localizedAsset = { ...assetItem }
     // Create a node for each asset. They may be referenced by Entries
