@@ -47,8 +47,8 @@ export const query = graphql`
 > * Holds the image position while loading so your page doesn't jump around as images load
 > * Uses the "blur-up" effect i.e. it loads a tiny version of the image to show while the full image is loading
 > * Alternatively provides a "traced placeholder" SVG of the image
-> * Lazy loads images which reduces bandwidth and speeds the initial load time
-> * Uses [WebP](https://developers.google.com/speed/webp/) images if browser supports the format
+> * Lazy loads images, which reduces bandwidth and speeds the initial load time
+> * Uses [WebP](https://developers.google.com/speed/webp/) images, if browser supports the format
 
 
 Here is an image component that uses the query from the previous example:
