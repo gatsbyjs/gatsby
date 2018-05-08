@@ -4,22 +4,24 @@ about: Suggest a new idea for the project.
 ---
 
 <!--
-  If you're reading this... it means that you want to contribute to the project! Awesome and thanks!
-
-  To make it easier for us to help you — please follow the suggested format below (as it makes sense).
+  To make it easier for us to help you — please follow the suggested format below.
 
   Useful Links:
-  - Documentation: https://www.gatsbyjs.org/docs/
+  - Gatsby RFCs: https://github.com/gatsbyjs/rfcs
   - How to Contribute: https://www.gatsbyjs.org/docs/how-to-contribute/
   - How to File an Issue: https://www.gatsbyjs.org/docs/how-to-file-an-issue/
-  - Become a Sponsor: https://opencollective.com/gatsby#sponsor
 
-  Before opening a new feature request, please search
-  on current feature list (https://github.com/gatsbyjs/gatsby/labels/%F0%9F%8F%B7%20type%3A%20feature)
+  Before opening a new issue, please search existing issues https://github.com/gatsbyjs/gatsby/issues
 -->
 
-## Description
-A clear description of the feature.
+## Summary
 
-### Expected result
-What is the expected behavior of the feature?
+Brief explanation of the feature.
+
+### Basic example
+
+If the proposal involves a new or changed API, include a basic code example. Omit this section if it's not applicable.
+
+### Motivation
+
+Why are we doing this? What use cases does it support? What is the expected outcome?
