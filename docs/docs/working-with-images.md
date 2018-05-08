@@ -7,7 +7,7 @@ title: Working With Images In Gatsby
 Optimizing images is a challenge on any website. To utilize best practices for performance across devices, you need multiple sizes and resolutions of each image. Luckily, Gatsby has several useful [plugins](/docs/plugins/) that work together to do that for images on [page components](/docs/building-with-components/#page-components).
 
 
-The recommended approach is to use [GraphQL queries](/docs/querying-with-graphql/) to get images of the optimal size or resolution. Then, display them with the [`gatsby-image`](/packages/gatsby-image/) component. 
+The recommended approach is to use [GraphQL queries](/docs/querying-with-graphql/) to get images of the optimal size or resolution, then, display them with the [`gatsby-image`](/packages/gatsby-image/) component. 
 
 
 ## Query Images With GraphQL
@@ -21,7 +21,7 @@ You'll need a few plugins for this:
 
 If the final image is of a fixed size, optimization relies on having multiple resolutions of the image. If it is responsive, that is it stretches to fill a container or page, optimization relies on having different sizes of the same image.  See the [Gatsby Image documentation for more information](/packages/gatsby-image/#two-types-of-responsive-images).
 
-You can also use arguments in your query to specific exact, minimum, maximum dimensions. See the [Gatsby Image documentation for complete options](/packages/gatsby-image/#two-types-of-responsive-images).
+You can also use arguments in your query to specify exact, minimum, and maximum dimensions. See the [Gatsby Image documentation for complete options](/packages/gatsby-image/#two-types-of-responsive-images).
 
 This example is for an image gallery where images stretch when the page is resized. It uses the `sizes` method and the size fragment to grab the right data to use in `gatsby-image` component and arguments to set the maximum width as 400px and maximum height as 250px. 
 ```jsx
