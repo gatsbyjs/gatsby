@@ -4,10 +4,10 @@ title: Working With Images In Gatsby
 
 # Working With Images In Gatsby
 
-Optimizing images is a challenge on any website. To utilize best practices for performance across devices, you need multiple sizes and resolutions of each image. Luckily Gatsby has several useful [plugins](/docs/plugins/) that work together to do just that for images on [page components](/docs/building-with-components/#page-components)
+Optimizing images is a challenge on any website. To utilize best practices for performance across devices, you need multiple sizes and resolutions of each image. Luckily, Gatsby has several useful [plugins](/docs/plugins/) that work together to do that for images on [page components](/docs/building-with-components/#page-components).
 
 
-The recommend approach is to use [GraphQL queries](/docs/querying-with-graphql/) to get images of the optimal size or resolution. Then display them with the [`gatsby-image`](/packages/gatsby-image/) component. 
+The recommended approach is to use [GraphQL queries](/docs/querying-with-graphql/) to get images of the optimal size or resolution. Then, display them with the [`gatsby-image`](/packages/gatsby-image/) component. 
 
 
 ## Query Images With GraphQL
@@ -46,12 +46,12 @@ export const query = graphql`
 > * Loads the optimal size of image for each device size and screen resolution
 > * Holds the image position while loading so your page doesn't jump around as images load
 > * Uses the "blur-up" effect i.e. it loads a tiny version of the image to show while the full image is loading
-> * Alternatively provides a "traced placeholder" SVG of the image.
+> * Alternatively provides a "traced placeholder" SVG of the image
 > * Lazy loads images which reduces bandwidth and speeds the initial load time
 > * Uses [WebP](https://developers.google.com/speed/webp/) images if browser supports the format
 
 
-Here is an image component that uses the query from the previous example
+Here is an image component that uses the query from the previous example:
 
 ```
 <Img sizes={data.fileName.childImageSharp.sizes}  />
@@ -60,9 +60,9 @@ Here is an image component that uses the query from the previous example
 
 ## Using Fragments To Standardize Formatting
 
-What if you have a bunch of images and you want them all to us the same formatting?
+What if you have a bunch of images and you want them all to use the same formatting?
 
-A custom fragment is an easy way to standardize formatting and re-use it on multiple images.
+A custom fragment is an easy way to standardize formatting and re-use it on multiple images:
 
 ```
 export const squareImage = graphql`
@@ -76,7 +76,7 @@ fragment squareImage on File {
 `;
 ```
 
-The fragment can then be referenced in the image query
+The fragment can then be referenced in the image query:
 
 ```
 
