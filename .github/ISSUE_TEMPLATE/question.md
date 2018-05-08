@@ -1,12 +1,19 @@
 ---
 name: Question 🤔
-about: We may help you.
+about: Usage question or discussion about Gatsy.
 ---
 
-Have a question related to the project or need some quick help?
-We recommend you to send it on:
+<!--
+  To make it easier for us to help you, please include as much useful information as possible.
 
-- RFC - consistent and controlled path for new features: https://github.com/gatsbyjs/rfcs
-- Twitter: https://twitter.com/gatsbyjs
-- Discord: https://discord.gg/0ZcbPKXt5bVoxkfV
-- Spectrum: https://spectrum.chat/gatsby-js
+  Useful Links:
+  - Documentation: https://www.gatsbyjs.org/docs/
+
+  Gatsby has several community support channels, try asking your question on:
+
+  - Discord: https://discord.gg/0ZcbPKXt5bVoxkfV
+  - Spectrum: https://spectrum.chat/gatsby-js
+  - Twitter: https://twitter.com/gatsbyjs
+
+  Before opening a new issue, please search existing issues https://github.com/gatsbyjs/gatsby/issues
+-->
