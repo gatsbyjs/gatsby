@@ -1,3 +1,5 @@
+import resolve from "./resolve"
+
 exports.onCreateWebpackConfig = (
   { actions, stage, rules, plugins, loaders },
   { postCssPlugins, ...lessOptions }
@@ -6,7 +8,7 @@ exports.onCreateWebpackConfig = (
   const PRODUCTION = stage !== `develop`
 
   const lessLoader = {
-    loader: require.resolve(`less-loader`),
+    loader: resolve(`less-loader`),
     options: {
       sourceMap: !PRODUCTION,
       ...lessOptions,

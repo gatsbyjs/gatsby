@@ -54,3 +54,41 @@ plugins: [
   },
 ]
 ```
+
+## Breaking changes history
+
+<!-- Please keep the breaking changes list ordered with the newest change at the top -->
+
+### v2.0.0
+
+`theme` option has been removed. You can pass configuration object to less-loader:
+
+```diff
+plugins: [
+  {
+    resolve: `gatsby-plugin-less`,
+    options: {
+-      theme: {
+-        "text-color": `#fff`,
+-      }
++      modifyVars: {
++        "text-color": `#fff`,
++      }
+    },
+  },
+]
+```
+
+```diff
+plugins: [
+  {
+    resolve: `gatsby-plugin-less`,
+    options: {
+-      theme: `./src/theme.js`,
++      modifyVars: require(`./src/theme.js`),
+    },
+  },
+]
+```
+
+
