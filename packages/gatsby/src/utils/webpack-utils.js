@@ -181,7 +181,9 @@ module.exports = async ({
         options,
         // use MiniCssExtractPlugin only on production builds
         loader: PRODUCTION
-          ? MiniCssExtractPlugin.loader
+          ? stage === `build-html`
+            ? require.resolve(`./webpack-extract-css-modules-map`)
+            : MiniCssExtractPlugin.loader
           : require.resolve(`style-loader`),
       }
     },
