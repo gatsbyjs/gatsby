@@ -11,24 +11,35 @@ const digest = str =>
 const typePrefix = `Contentful`
 const makeTypeName = type => _.upperFirst(_.camelCase(`${typePrefix} ${type}`))
 
-const getLocalizedField = ({ field, localeCode, localesFallback }) => {
-  if (!_.isUndefined(field[localeCode])) {
-    return field[localeCode]
-  } else if (!_.isUndefined(localesFallback[localeCode])) {
-    return getLocalizedField({ field, localeCode: localesFallback[localeCode], localesFallback })
+const getLocalizedField = ({ field, locale, localesFallback }) => {
+  if (!_.isUndefined(field[locale.code])) {
+    return field[locale.code]
+  } else if (
+    !_.isUndefined(locale.code) &&
+    !_.isUndefined(localesFallback[locale.code])
+  ) {
+    return getLocalizedField({
+      field,
+      locale: { code: localesFallback[locale.code] },
+      localesFallback,
+    })
   } else {
     return null
   }
 }
-const buildFallbackChain = (locales) => {
+const buildFallbackChain = locales => {
   const localesFallback = {}
-  _.each(locales, locale => localesFallback[locale.code] = locale.fallbackCode)
+  _.each(
+    locales,
+    locale => (localesFallback[locale.code] = locale.fallbackCode)
+  )
   return localesFallback
 }
 const makeGetLocalizedField = ({ locale, localesFallback }) => field =>
-  getLocalizedField({ field, localeCode: locale.code, localesFallback })
+  getLocalizedField({ field, locale, localesFallback })
 
 exports.getLocalizedField = getLocalizedField
+exports.buildFallbackChain = buildFallbackChain
 
 // If the id starts with a number, left-pad it with a c (for Contentful of
 // course :-))
@@ -208,7 +219,11 @@ exports.createContentTypeNodes = ({
   locales.forEach(locale => {
     const localesFallback = buildFallbackChain(locales)
     const mId = makeMakeId({ currentLocale: locale.code, defaultLocale })
-    const getField = makeGetLocalizedField({ locale, localesFallback, defaultLocale })
+    const getField = makeGetLocalizedField({
+      locale,
+      localesFallback,
+      defaultLocale,
+    })
 
     // Warn about any field conflicts
     const conflictFields = []
@@ -408,7 +423,11 @@ exports.createAssetNodes = ({
   locales.forEach(locale => {
     const localesFallback = buildFallbackChain(locales)
     const mId = makeMakeId({ currentLocale: locale.code, defaultLocale })
-    const getField = makeGetLocalizedField({ locale, localesFallback, defaultLocale })
+    const getField = makeGetLocalizedField({
+      locale,
+      localesFallback,
+      defaultLocale,
+    })
 
     const localizedAsset = { ...assetItem }
     // Create a node for each asset. They may be referenced by Entries
