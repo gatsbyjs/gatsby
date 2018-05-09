@@ -159,8 +159,6 @@ const addDefaultPluginsPresets = (
       loose: true,
       modules: false,
       useBuiltIns: `usage`,
-      sourceType: `unambiguous`,
-      shippedProposals: true, // includes async/await and Object spread/rest
       targets,
     },
   })

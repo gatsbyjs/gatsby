@@ -11,7 +11,7 @@
 //   },
 // ]
 
-export function apiRunner(api, args, defaultReturn) {
+exports.apiRunner = (api, args, defaultReturn) => {
   // eslint-disable-next-line no-undef
   let results = plugins.map(plugin => {
     if (!plugin.plugin[api]) {
@@ -33,13 +33,12 @@ export function apiRunner(api, args, defaultReturn) {
   }
 }
 
-export function apiRunnerAsync(api, args, defaultReturn) {
+exports.apiRunnerAsync = (api, args, defaultReturn) =>
   // eslint-disable-next-line no-undef
-  return plugins.reduce(
+  plugins.reduce(
     (previous, next) =>
       next.plugin[api]
         ? previous.then(() => next.plugin[api](args, next.options))
         : previous,
     Promise.resolve()
   )
-}
