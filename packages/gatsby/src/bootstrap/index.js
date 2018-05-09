@@ -208,17 +208,6 @@ module.exports = async (args: BootstrapArgs) => {
     plugin => plugin.resolve
   )
 
-  let browserAPIRunner = ``
-
-  try {
-    browserAPIRunner = fs.readFileSync(
-      `${siteDir}/api-runner-browser.js`,
-      `utf-8`
-    )
-  } catch (err) {
-    report.panic(`Failed to read ${siteDir}/api-runner-browser.js`, err)
-  }
-
   const browserPluginsRequires = browserPlugins
     .map(
       plugin =>
@@ -229,7 +218,7 @@ module.exports = async (args: BootstrapArgs) => {
     )
     .join(`,`)
 
-  browserAPIRunner = `var plugins = [${browserPluginsRequires}]\n${browserAPIRunner}`
+  const browserAPIRunner = `module.exports = [${browserPluginsRequires}]\n`
 
   let sSRAPIRunner = ``
 
@@ -251,7 +240,7 @@ module.exports = async (args: BootstrapArgs) => {
   sSRAPIRunner = `var plugins = [${ssrPluginsRequires}]\n${sSRAPIRunner}`
 
   fs.writeFileSync(
-    `${siteDir}/api-runner-browser.js`,
+    `${siteDir}/api-runner-browser-plugins.js`,
     browserAPIRunner,
     `utf-8`
   )
