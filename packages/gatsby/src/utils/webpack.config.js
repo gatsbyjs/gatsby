@@ -150,20 +150,15 @@ module.exports = async (
         __PREFIX_PATHS__: program.prefixPaths,
         __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
       }),
-
-      plugins.extractText(
-        stage === `develop`
-          ? {
-              filename: `[name].css`,
-              chunkFilename: `[name].css`,
-            }
-          : {}
-      ),
     ]
 
     switch (stage) {
       case `develop`:
         configPlugins = configPlugins.concat([
+          plugins.extractText({
+            filename: `[name].css`,
+            chunkFilename: `[name].css`,
+          }),
           plugins.hotModuleReplacement(),
           plugins.noEmitOnErrors(),
 
@@ -184,6 +179,7 @@ module.exports = async (
         break
       case `build-javascript`: {
         configPlugins = configPlugins.concat([
+          plugins.extractText(),
           // Minify Javascript.
           plugins.uglify({
             uglifyOptions: {
