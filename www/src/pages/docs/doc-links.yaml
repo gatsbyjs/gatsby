@@ -76,12 +76,12 @@
       link: /docs/adding-a-list-of-markdown-blog-posts/
     - title: Adding Tags and Categories to Blog Posts
       link: /docs/adding-tags-and-categories-to-blog-posts/
+    - title: Adding search to your Gatsby website
+      link: /docs/adding-search/
     - title: Creating Dynamically-Rendered Navigation*
       link: /docs/creating-dynamically-rendered-navigation/
     - title: Dropping Images into Static Folders*
       link: /docs/dropping-images-into-static-folders/
-    - title: Adding search to your Gatsby website
-      link: /docs/adding-search/
 - title: Reference
   items:
     - title: Node Interface
