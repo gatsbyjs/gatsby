@@ -218,7 +218,7 @@ module.exports = async (args: BootstrapArgs) => {
     )
     .join(`,`)
 
-  const browserAPIRunner = `module.exports = [${browserPluginsRequires}]\n$`
+  const browserAPIRunner = `module.exports = [${browserPluginsRequires}]\n`
 
   let sSRAPIRunner = ``
 

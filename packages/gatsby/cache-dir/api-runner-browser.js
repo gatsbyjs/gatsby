@@ -1,7 +1,6 @@
 const plugins = require(`./api-runner-browser-plugins`)
 
 exports.apiRunner = (api, args, defaultReturn) => {
-  // eslint-disable-next-line no-undef
   let results = plugins.map(plugin => {
     if (!plugin.plugin[api]) {
       return undefined
@@ -23,7 +22,6 @@ exports.apiRunner = (api, args, defaultReturn) => {
 }
 
 exports.apiRunnerAsync = (api, args, defaultReturn) =>
-  // eslint-disable-next-line no-undef
   plugins.reduce(
     (previous, next) =>
       next.plugin[api]
