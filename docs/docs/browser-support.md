@@ -40,8 +40,7 @@ By default, Gatsby emulates the following config:
 {
  "browserslist": [
    ">0.25%",
-   "not ie 11",
-   "not op_mini all"
+   "not dead"
  ]
 }
 ```
