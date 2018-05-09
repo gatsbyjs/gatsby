@@ -72,7 +72,7 @@ Run:
 gatsby develop
 ```
 
-Open localhost:8000 and localhost:8000/__graphql. 
+Open localhost:8000 and localhost:8000/___graphql. 
 
 This query will pull in the blogpost content from WordPress:
 
@@ -102,8 +102,7 @@ This query will pull in a sorted list of those blogposts:
       node {
         title
         excerpt
-        Slug
-        ...PostIcons
+        slug
       }
     }
   }
@@ -127,14 +126,13 @@ export default ({ data }) => {
      {data.allWordpressPost.edges.map(({ node }) => (
        <div>
          <p>{node.title}</p>
-         <p>{node.excerpt}</p>
+         <div dangerouslySetInnerHTML={{__html: node.excerpt}}/>
        </div>
      ))}
    </div>
- )T
+ )
 }
 
-// Set here the ID of the home page.
 export const pageQuery = graphql`
  query MyFiles {
    allWordpressPost(sort: { fields: [date] }) {

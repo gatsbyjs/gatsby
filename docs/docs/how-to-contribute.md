@@ -120,7 +120,7 @@ you'll see actions start showing up.
 
 ![gatsby redux remote devtools](./images/running-redux-devtools.png)
 
-**Warning!! Lots of buginess**. While having this available is extremely
+**Warning!! Lots of bugginess**. While having this available is extremely
 helpful, this setup is very buggy and fragile. There is a memory leak in the
 extension that's triggered it seems every time you restart the Gatsby
 development server. Also the extension often, for no apparent reason, just won't

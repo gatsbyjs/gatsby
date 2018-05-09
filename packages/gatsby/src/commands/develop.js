@@ -248,12 +248,27 @@ async function startServer(program) {
 module.exports = async (program: any) => {
   const detect = require(`detect-port`)
   const port =
-    typeof program.port === `string` ? parseInt(program.port, 10) : program.port
+    typeof program.port === `string`
+      ? parseInt(program.port, 10)
+      : program.port
+
+  // In order to enable custom ssl, --cert-file --key-file and -https flags must all be
+  // used together
+  if ((program[`cert-file`] || program[`key-file`]) && !program.https) {
+    report.panic(
+      `for custom ssl --https, --cert-file, and --key-file must be used together`
+    )
+  }
 
   // Check if https is enabled, then create or get SSL cert.
   // Certs are named after `name` inside the project's package.json.
   if (program.https) {
-    program.ssl = await getSslCert(program.sitePackageJson.name)
+    program.ssl = await getSslCert({
+      name: program.sitePackageJson.name,
+      certFile: program[`cert-file`],
+      keyFile: program[`key-file`],
+      directory: program.directory,
+    })
   }
 
   let compiler
