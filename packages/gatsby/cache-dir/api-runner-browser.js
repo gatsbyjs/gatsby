@@ -1,18 +1,6 @@
-// During bootstrap, we write requires at top of this file which looks
-// basically like:
-// var plugins = [
-//   {
-//     plugin: require("/path/to/plugin1/gatsby-browser.js"),
-//     options: { ... },
-//   },
-//   {
-//     plugin: require("/path/to/plugin2/gatsby-browser.js"),
-//     options: { ... },
-//   },
-// ]
+const plugins = require(`./api-runner-browser-plugins`)
 
 exports.apiRunner = (api, args, defaultReturn) => {
-  // eslint-disable-next-line no-undef
   let results = plugins.map(plugin => {
     if (!plugin.plugin[api]) {
       return undefined
@@ -34,7 +22,6 @@ exports.apiRunner = (api, args, defaultReturn) => {
 }
 
 exports.apiRunnerAsync = (api, args, defaultReturn) =>
-  // eslint-disable-next-line no-undef
   plugins.reduce(
     (previous, next) =>
       next.plugin[api]
