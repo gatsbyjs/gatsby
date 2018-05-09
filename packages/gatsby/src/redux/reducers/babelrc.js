@@ -9,6 +9,7 @@ module.exports = (
         options: {
           cacheDirectory: true,
           babelrc: false,
+          sourceType: `unambiguous`,
         },
       },
       "develop-html": {
@@ -17,6 +18,7 @@ module.exports = (
         options: {
           cacheDirectory: true,
           babelrc: false,
+          sourceType: `unambiguous`,
         },
       },
       "build-html": {
@@ -25,6 +27,7 @@ module.exports = (
         options: {
           cacheDirectory: true,
           babelrc: false,
+          sourceType: `unambiguous`,
         },
       },
       "build-javascript": {
@@ -33,6 +36,7 @@ module.exports = (
         options: {
           cacheDirectory: true,
           babelrc: false,
+          sourceType: `unambiguous`,
         },
       },
     },
