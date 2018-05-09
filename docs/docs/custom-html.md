@@ -5,7 +5,7 @@ title: Customizing html.js
 Gatsby uses a React component to server render the `<head>` and other parts of
 the HTML outside of the core Gatsby application.
 
-Most sites should use the default `html.js` shipped with Gatsby, But if you need
+Most sites should use the default `html.js` shipped with Gatsby. But if you need
 to customize your site's html.js, copy the default one into your source
 tree by running:
 
