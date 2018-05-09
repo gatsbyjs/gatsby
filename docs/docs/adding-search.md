@@ -2,31 +2,30 @@
 title: "Adding search to your Gatsby website"
 ---
 
-Before we go through the possibilities let's explain the components needed in order to have a searchable website.
+Before we go through the possibilities let's explain the components needed in order to have a searchable website. There are three major components:
 
-- First component is the search index which is the data to facilitate fast and accurate information retrieval, The purpose of storing an index is to optimize speed and performance in finding relevant documents for a search query. Without an index, you would scan every document in the website which is very slow.
+1. The search index is a copy of your data stored in a search-friendly format. The purpose of storing an index is to optimize speed and performance in finding relevant documents for a search query. Without an index every search would need to scan every page in your site, which would be too slow.
 
-- Second component is a search engine that perform the search using the index component and returns the requested document based on a query
+1. The search engine takes a search query, runs it through the search index and returns any matching documents.
 
-- The third and last component is the visual component i.e the ui that the user will use to type the query.
+1. Finally the visual component provides an interface to the user, allowing them to write search queries and view the restuls of each query.
 
 There are few ways to approach adding search to your Gatsby-powered site:
 
-# Offline Search using an opensource library
+# Offline search using an open source library
 
-Using open-source libraries like [elesticlunr](https://www.npmjs.com/package/elasticlunr) or [js-search](https://github.com/bvaughn/js-search) for offline search but doing so will require you to create a search index at build time. For elesticlunr there is a plugin called [gatsby-plugin-elasticlunr-search](https://github.com/andrew-codes/gatsby-plugin-elasticlunr-search) that does that automatically, for other library you can use a combination of [onCreateNode](https://www.gatsbyjs.org/docs/node-apis/#onCreateNode), [setFieldsOnGraphQLNodeType](https://www.gatsbyjs.org/docs/node-apis/#setFieldsOnGraphQLNodeType) and [sourceNodes](https://www.gatsbyjs.org/docs/node-apis/#sourceNodes) from the Gatsby node API to create the search index and make available in GraphQL. for more info on how todo this you checkout gatsby-plugin-elasticlunr-search [source code](https://github.com/andrew-codes/gatsby-plugin-elasticlunr-search/blob/master/src/gatsby-node.js#L88-L126).
+Use open source libraries like [`elesticlunr`](https://www.npmjs.com/package/elasticlunr) or [`js-search`](https://github.com/bvaughn/js-search) for offline search, note that doing so will require you to create a search index when your site is built. For `elesticlunr` there is a plugin called [`gatsby-plugin-elasticlunr-search`](https://github.com/andrew-codes/gatsby-plugin-elasticlunr-search) that does that automatically, for other libraries you can use a combination of [`onCreateNode`](https://www.gatsbyjs.org/docs/node-apis/#onCreateNode), [`setFieldsOnGraphQLNodeType`](https://www.gatsbyjs.org/docs/node-apis/#setFieldsOnGraphQLNodeType) and [`sourceNodes`](https://www.gatsbyjs.org/docs/node-apis/#sourceNodes) from the Gatsby node API to create the search index and make it available in GraphQL. For more info on how to do this check out [`gatsby-plugin-elasticlunr-search`'s source code](https://github.com/andrew-codes/gatsby-plugin-elasticlunr-search/blob/master/src/gatsby-node.js#L88-L126).
 
-After building the search index and including it in Gatsby's data layer you will need to allow the user to be able to search your website that can be done using a simple form with a search input that captures the search term and using one of the library mentionned above to retrieve the desired document.
+After building the search index and including it in Gatsby's data layer, you will need to allow the user to search your website. This is typically done by using a text input to capture the search query, then using one of the libraries mentioned above to retrieve the desired document(s).
 
 You need to be careful with this approach because the entire search index has to be brought into the client which will affect the bundle size significantly.
 
-# Using an API based Search engine
+# Using an API based search engine
 
-If you're building a website for your documentation, you can use the [Algolia](https://www.algolia.com/) [docs](https://www.algolia.com/doc/) feature it  scrapes the DOM and builds the search index automatically.
+If you're building a documentation website you can use [Algolia](https://www.algolia.com/)'s [docs feature](https://www.algolia.com/doc/), it will automatically create a search index from the content of your pages.
 
-If your website does not qualify as documentation you need collect the search index at build time and upload it using [gatsby-plugin-algolia](https://github.com/algolia/gatsby-plugin-algolia)
+If your website does not qualify as documentation you need collect the search index at build time and upload it using [`gatsby-plugin-algolia`](https://github.com/algolia/gatsby-plugin-algolia).
 
-For both cases you'll need to implement your own search experience but instead of having the search index embedded in the website and run the search client side you let algolia doing that for you and simply send the search term through their API.
-algolia provides a [react library](https://github.com/algolia/react-instantsearch) to facilitate that.
+When using Algolia they host the search index and search engine for you, your search queries will be sent to their servers which will respond with any results.  You'll need to implement your own visual component, however Algolia provide a [React library](https://github.com/algolia/react-instantsearch) to help with that.
 
-This approach keeps your bundle size small since hosting the search index will be elsewhere but depends on the traffic to your website and the amount of search performed you might need to have a paid plan
+Using an API based search engine like Algolia means visitors to your site don't have to download your whole search index (which can become quite large) in order to search your site. The trade-off is that Algolia is a commercial service, in most cases you'll need to pay to use it.
