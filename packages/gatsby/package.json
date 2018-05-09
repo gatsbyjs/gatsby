@@ -107,7 +107,7 @@
     "string-similarity": "^1.2.0",
     "style-loader": "^0.13.0",
     "type-of": "^2.0.1",
-    "url-loader": "^0.5.7",
+    "url-loader": "^0.6.2",
     "uuid": "^3.1.0",
     "v8-compile-cache": "^1.1.0",
     "webpack": "^1.13.3",
