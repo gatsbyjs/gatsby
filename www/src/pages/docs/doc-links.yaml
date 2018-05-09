@@ -76,6 +76,8 @@
       link: /docs/adding-a-list-of-markdown-blog-posts/
     - title: Adding Tags and Categories to Blog Posts
       link: /docs/adding-tags-and-categories-to-blog-posts/
+    - title: Working With Images in Gatsby
+      link: /docs/working-with-images/
     - title: Creating Dynamically-Rendered Navigation*
       link: /docs/creating-dynamically-rendered-navigation/
     - title: Dropping Images into Static Folders*
