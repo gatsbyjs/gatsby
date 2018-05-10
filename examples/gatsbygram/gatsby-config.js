@@ -44,17 +44,17 @@ module.exports = {
     // This plugin takes your configuration and generates a
     // web manifest file so Gatsbygram can be added to your
     // homescreen on Android.
-    {
-      resolve: `gatsby-plugin-manifest`,
-      options: {
-        name: `Gatsbygram`,
-        short_name: `Gatsbygram`,
-        start_url: `/`,
-        background_color: `#f7f7f7`,
-        theme_color: `#191919`,
-        display: `minimal-ui`,
-      },
-    },
+    // {
+    //   resolve: `gatsby-plugin-manifest`,
+    //   options: {
+    //     name: `Gatsbygram`,
+    //     short_name: `Gatsbygram`,
+    //     start_url: `/`,
+    //     background_color: `#f7f7f7`,
+    //     theme_color: `#191919`,
+    //     display: `minimal-ui`,
+    //   },
+    // },
     // This plugin generates a service worker and AppShell
     // html file so the site works offline and is otherwise
     // resistant to bad networks. Works with almost any
