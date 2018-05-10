@@ -76,7 +76,6 @@ exports.onRenderBody = (
       componentUrls = _.uniq(componentUrls)
       const components = componentUrls.map(c =>
         React.createElement(`Link`, {
-          rel: `prefetch`,
           as: c.slice(-2) === `js` ? `script` : undefined,
           rel:
             c.slice(-2) === `js` ? `prefetch` : `prefetch alternate stylesheet`,
@@ -90,4 +89,5 @@ exports.onRenderBody = (
 
     return true
   }
+  return false
 }
