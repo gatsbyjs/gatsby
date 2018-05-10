@@ -158,7 +158,14 @@ const requestRemoteNode = (url, headers, tmpFilename, filename) =>
  * @param {CreateRemoteFileNodePayload} options
  * @return {Promise<Object>} Resolves with the fileNode
  */
-async function processRemoteNode({ url, store, cache, createNode, auth = {}, createNodeId }) {
+async function processRemoteNode({
+  url,
+  store,
+  cache,
+  createNode,
+  auth = {},
+  createNodeId,
+}) {
   // Ensure our cache directory exists.
   const programDir = store.getState().program.directory
   await fs.ensureDir(path.join(programDir, CACHE_DIR, FS_PLUGIN_DIR))
@@ -260,7 +267,14 @@ const pushTask = task =>
  * @param {CreateRemoteFileNodePayload} options
  * @return {Promise<Object>}                  Returns the created node
  */
-module.exports = ({ url, store, cache, createNode, auth = {}, createNodeId }) => {
+module.exports = ({
+  url,
+  store,
+  cache,
+  createNode,
+  auth = {},
+  createNodeId,
+}) => {
   // Check if we already requested node for this remote file
   // and return stored promise if we did.
   if (processingCache[url]) {
