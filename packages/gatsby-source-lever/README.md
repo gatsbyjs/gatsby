@@ -17,18 +17,20 @@ Source plugin for pulling data into [Gatsby](https://github.com/gatsbyjs) from
 
 ```javascript
 // In your gatsby-config.js
-plugins: [
-  {
-    resolve: "gatsby-source-lever",
-    options: {
-      // Your Lever site instance name.
-      site: "lever",
-      // Set verboseOutput to true to display a verbose output on `npm run develop` or `npm run build`
-      // It can help you debug specific API Endpoints problems
-      verboseOutput: false,
+module.exports = {
+  plugins: [
+    {
+      resolve: "gatsby-source-lever",
+      options: {
+        // Your Lever site instance name.
+        site: "lever",
+        // Set verboseOutput to true to display a verbose output on `npm run develop` or `npm run build`
+        // It can help you debug specific API Endpoints problems
+        verboseOutput: false,
+      },
     },
-  },
-]
+  ]
+}
 ```
 
 ### GraphQL Query to get all jobs
