@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-guess-js",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0-alpha.2",
   "description": "Gatsby plugin providing drop-in integration with Guess.js to enabling using machine learning and analytics data to power prefetching",
   "main": "index.js",
   "scripts": {
@@ -9,7 +9,12 @@
     "prepublish": "cross-env NODE_ENV=production npm run build"
   },
   "keywords": [
-    "gatsby", "gatsby-plugin", "guess.js", "google analytics", "machine learning", "prefetch"
+    "gatsby",
+    "gatsby-plugin",
+    "guess.js",
+    "google analytics",
+    "machine learning",
+    "prefetch"
   ],
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
