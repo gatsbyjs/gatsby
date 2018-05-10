@@ -158,7 +158,14 @@ const requestRemoteNode = (url, headers, tmpFilename, filename) =>
  * @param {CreateRemoteFileNodePayload} options
  * @return {Promise<Object>} Resolves with the fileNode
  */
-async function processRemoteNode({ url, store, cache, createNode, auth = {}, createNodeId }) {
+async function processRemoteNode({
+  url,
+  store,
+  cache,
+  createNode,
+  auth = {},
+  createNodeId,
+}) {
   // Ensure our cache directory exists.
   const programDir = store.getState().program.directory
   await fs.ensureDir(path.join(programDir, CACHE_DIR, FS_PLUGIN_DIR))
