@@ -27,7 +27,6 @@ module.exports = async (program: any) => {
       const outputFile = `${directory}/public/render-page.js`
       if (stats.hasErrors()) {
         let webpackErrors = stats.toJson().errors
-        console.log(`here`, webpackErrors[0])
         return reject(
           createErrorFromString(webpackErrors[0], `${outputFile}.map`)
         )
@@ -37,6 +36,7 @@ module.exports = async (program: any) => {
         // Remove the temp JS bundle file built for the static-site-generator-plugin
         try {
           fs.unlinkSync(outputFile)
+          fs.unlinkSync(`${outputFile}.map`)
         } catch (e) {
           // This function will fail on Windows with no further consequences.
         }
