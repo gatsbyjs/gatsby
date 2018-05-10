@@ -2,13 +2,30 @@
 title: "Adding search to your Gatsby website"
 ---
 
-Before we go through the steps required to add search to your Gatsby website, it's important to explain the components needed in order to have a searchable website. There are three major components:
+Before we go through the steps required to add search to your Gatsby website, it's important to explain the components needed in order to have a searchable website. 
 
-1. The search index is a copy of your data stored in a search-friendly format. The purpose of storing an index is to optimize speed and performance in finding relevant documents for a search query. Without an index, every search would need to scan every page in your site, which would be too slow.
+There are three components Required:
 
-2. The search engine takes a search query, runs it through the search index, and returns any matching documents.
+1. Search Index
+2. Search engine
+3. Visual component
 
-3. Finally, the visual component provides an interface to the user, which allows them to write search queries and view the restuls of each query.
+Then, there are 2 important things to know in order to add search to your site:
+
+1. Offline search using an open source library
+2. Using an API based search engine 
+
+# Search Index
+
+The search index is a copy of your data stored in a search-friendly format. The purpose of storing an index is to optimize speed and performance in finding relevant documents for a search query. Without an index, every search would need to scan every page in your site, which would be too slow.
+
+# Search engine
+
+The search engine takes a search query, runs it through the search index, and returns any matching documents.
+
+# Visual component
+
+The visual component provides an interface to the user, which allows them to write search queries and view the restuls of each query.
 
 Now that you know the three required components, there are few ways to approach adding search to your Gatsby-powered site.
 
