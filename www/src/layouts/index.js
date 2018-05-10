@@ -2,10 +2,11 @@ import React from "react"
 import Helmet from "react-helmet"
 import { OutboundLink } from "gatsby-plugin-google-analytics"
 
+import { rhythm, options } from "../utils/typography"
+import presets, { colors } from "../utils/presets"
 import Navigation from "../components/navigation"
 import MobileNavigation from "../components/navigation-mobile"
 import "../css/prism-coy.css"
-import presets from "../utils/presets"
 
 // Import Futura PT typeface
 import "../fonts/Webfonts/futurapt_book_macroman/stylesheet.css"
@@ -19,7 +20,8 @@ import "typeface-space-mono"
 
 class DefaultLayout extends React.Component {
   render() {
-    const isHomepage = this.props.location.pathname == `/`
+    const isHomepage = this.props.location.pathname === `/`
+    const isBlogLanding = this.props.location.pathname === `/blog/`
 
     return (
       <div className={isHomepage ? `is-homepage` : ``}>
@@ -33,28 +35,6 @@ class DefaultLayout extends React.Component {
           />
           <html lang="en" />
         </Helmet>
-        <div
-          css={{
-            width: `100%`,
-            padding: rhythm(1 / 2),
-            background: colors.ui.bright,
-            color: colors.gatsby,
-            fontFamily: options.headerFontFamily.join(`,`),
-            textAlign: `center`,
-            boxShadow: `inset 0px -3px 2px 0px ${colors.ui.bright}`,
-            zIndex: `3`,
-            position: isHomepage || isBlogLanding ? `absolute` : `fixed`,
-          }}
-        >
-          Live 2-day Gatsby training with Kyle Mathews! Sign up for{` `}
-          <OutboundLink
-            target="_blank"
-            rel="noopener"
-            href="https://workshop.me/2018-05-gatsby"
-          >
-            NYC in May
-          </OutboundLink>!
-        </div>
         <Navigation pathname={this.props.location.pathname} />
         <div
           className={`main-body`}

@@ -69,8 +69,8 @@ class DocsTemplate extends React.Component {
 export default DocsTemplate
 
 export const pageQuery = graphql`
-  query TemplateDocsMarkdown($slug: String!) {
-    markdownRemark(fields: { slug: { eq: $slug } }) {
+  query TemplateDocsMarkdown($path: String!) {
+    markdownRemark(fields: { slug: { eq: $path } }) {
       html
       excerpt
       timeToRead
