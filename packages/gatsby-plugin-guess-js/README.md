@@ -32,7 +32,7 @@ https://guess-gatsby-wikipedia-demo.firebaseapp.com
 module.exports = {
   plugins: [
     {
-      resolve: "gatsby-source-wikipedia",
+      resolve: "gatsby-plugin-guess-js",
       options: {
         // Find the view id in the GA admin in a section labeled "views"
         GAViewID: `VIEW_ID`,
