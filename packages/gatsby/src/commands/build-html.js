@@ -41,16 +41,20 @@ module.exports = async (program: any) => {
         )
       }
 
-      return renderHTML(require(outputFile), pages).then(() => {
-        // Remove the temp JS bundle file built for the static-site-generator-plugin
-        try {
-          fs.unlinkSync(outputFile)
-          fs.unlinkSync(`${outputFile}.map`)
-        } catch (e) {
-          // This function will fail on Windows with no further consequences.
-        }
-        return resolve(null, stats)
-      })
+      return renderHTML(require(outputFile), pages)
+        .then(() => {
+          // Remove the temp JS bundle file built for the static-site-generator-plugin
+          try {
+            fs.unlinkSync(outputFile)
+            fs.unlinkSync(`${outputFile}.map`)
+          } catch (e) {
+            // This function will fail on Windows with no further consequences.
+          }
+          return resolve(null, stats)
+        })
+        .catch(e => {
+          console.log(e)
+        })
     })
   })
 }

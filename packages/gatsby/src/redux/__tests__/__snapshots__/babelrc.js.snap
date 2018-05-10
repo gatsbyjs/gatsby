@@ -7,6 +7,7 @@ Object {
       "options": Object {
         "babelrc": false,
         "cacheDirectory": true,
+        "sourceType": "unambiguous",
       },
       "plugins": Array [
         Object {
@@ -20,6 +21,7 @@ Object {
       "options": Object {
         "babelrc": false,
         "cacheDirectory": true,
+        "sourceType": "unambiguous",
       },
       "plugins": Array [
         Object {
@@ -33,6 +35,7 @@ Object {
       "options": Object {
         "babelrc": false,
         "cacheDirectory": true,
+        "sourceType": "unambiguous",
       },
       "plugins": Array [
         Object {
@@ -46,6 +49,7 @@ Object {
       "options": Object {
         "babelrc": false,
         "cacheDirectory": true,
+        "sourceType": "unambiguous",
       },
       "plugins": Array [
         Object {
@@ -66,6 +70,7 @@ Object {
       "options": Object {
         "babelrc": false,
         "cacheDirectory": true,
+        "sourceType": "unambiguous",
       },
       "plugins": Array [],
       "presets": Array [
@@ -79,6 +84,7 @@ Object {
       "options": Object {
         "babelrc": false,
         "cacheDirectory": true,
+        "sourceType": "unambiguous",
       },
       "plugins": Array [],
       "presets": Array [
@@ -92,6 +98,7 @@ Object {
       "options": Object {
         "babelrc": false,
         "cacheDirectory": true,
+        "sourceType": "unambiguous",
       },
       "plugins": Array [],
       "presets": Array [
@@ -105,6 +112,7 @@ Object {
       "options": Object {
         "babelrc": false,
         "cacheDirectory": true,
+        "sourceType": "unambiguous",
       },
       "plugins": Array [],
       "presets": Array [
@@ -125,6 +133,7 @@ Object {
       "options": Object {
         "babelrc": false,
         "cacheDirectory": true,
+        "sourceType": "unambiguous",
       },
       "plugins": Array [
         Object {
@@ -181,6 +190,7 @@ Object {
       "options": Object {
         "babelrc": false,
         "cacheDirectory": true,
+        "sourceType": "unambiguous",
       },
       "plugins": Array [
         Object {
@@ -237,6 +247,7 @@ Object {
       "options": Object {
         "babelrc": false,
         "cacheDirectory": true,
+        "sourceType": "unambiguous",
       },
       "plugins": Array [
         Object {
@@ -293,6 +304,7 @@ Object {
       "options": Object {
         "babelrc": false,
         "cacheDirectory": true,
+        "sourceType": "unambiguous",
       },
       "plugins": Array [
         Object {
@@ -356,6 +368,7 @@ Object {
       "options": Object {
         "babelrc": false,
         "cacheDirectory": true,
+        "sourceType": "unambiguous",
       },
       "plugins": Array [
         Object {
@@ -386,10 +399,8 @@ Object {
           "options": Object {
             "loose": true,
             "modules": false,
-            "shippedProposals": true,
-            "sourceType": "unambiguous",
             "targets": Object {
-              "browsers": Object {},
+              "node": "current",
             },
             "useBuiltIns": "usage",
           },
@@ -415,6 +426,7 @@ Object {
       "options": Object {
         "babelrc": false,
         "cacheDirectory": true,
+        "sourceType": "unambiguous",
       },
       "plugins": Array [],
       "presets": Array [],
@@ -423,6 +435,7 @@ Object {
       "options": Object {
         "babelrc": false,
         "cacheDirectory": true,
+        "sourceType": "unambiguous",
       },
       "plugins": Array [
         Object {
@@ -453,8 +466,6 @@ Object {
           "options": Object {
             "loose": true,
             "modules": false,
-            "shippedProposals": true,
-            "sourceType": "unambiguous",
             "targets": Object {
               "browsers": Object {},
             },
@@ -482,6 +493,7 @@ Object {
       "options": Object {
         "babelrc": false,
         "cacheDirectory": true,
+        "sourceType": "unambiguous",
       },
       "plugins": Array [],
       "presets": Array [],
@@ -522,8 +534,6 @@ Object {
       Object {
         "loose": true,
         "modules": false,
-        "shippedProposals": true,
-        "sourceType": "unambiguous",
         "targets": Object {
           "browsers": Object {},
         },
@@ -543,6 +553,7 @@ Object {
       Object {},
     ],
   ],
+  "sourceType": "unambiguous",
 }
 `;
 
@@ -578,8 +589,6 @@ Object {
       Object {
         "loose": true,
         "modules": false,
-        "shippedProposals": true,
-        "sourceType": "unambiguous",
         "targets": Object {
           "browsers": Object {},
         },
@@ -599,5 +608,6 @@ Object {
       Object {},
     ],
   ],
+  "sourceType": "unambiguous",
 }
 `;

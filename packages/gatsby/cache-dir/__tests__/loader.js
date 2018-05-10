@@ -2,14 +2,14 @@ import loader from "../loader.js"
 
 describe(`Loader`, () => {
   beforeEach(() => {
-    delete global.__PATH_PREFIX__
-    delete global.__PREFIX_PATHS__
+    global.__PATH_PREFIX__ = ``
+    global.__PREFIX_PATHS__ = false
 
     // Workaround for Node 6 issue: https://github.com/facebook/jest/issues/5159
     if (global.hasOwnProperty(`__PATH_PREFIX__`))
-      global.__PATH_PREFIX__ = undefined
+      global.__PATH_PREFIX__ = ``
     if (global.hasOwnProperty(`__PREFIX_PATHS__`))
-      global.__PREFIX_PATHS__ = undefined
+      global.__PREFIX_PATHS__ = false
 
     loader.empty()
     loader.addPagesArray([

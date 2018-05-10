@@ -3,7 +3,6 @@ import { Link } from "gatsby"
 
 import {
   BlogIcon,
-  CommunityIcon,
   DocsIcon,
   TutorialIcon,
   PluginsIcon,

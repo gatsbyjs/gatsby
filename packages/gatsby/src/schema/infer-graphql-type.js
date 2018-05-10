@@ -368,7 +368,34 @@ export function inferObjectStructureFromNodes({
     if (!inferredField) return
 
     // Replace unsupported values
-    inferredFields[createKey(fieldName)] = inferredField
+    const sanitizedFieldName = createKey(fieldName)
+
+    // If sanitized field name is different from original field name
+    // add resolve passthrough to reach value using original field name
+    if (sanitizedFieldName !== fieldName) {
+      const {
+        resolve: fieldResolve,
+        ...inferredFieldWithoutResolve
+      } = inferredField
+
+      // Using copy if field as we sometimes have predefined frozen
+      // field definitions and we can't mutate them.
+      inferredField = inferredFieldWithoutResolve
+
+      if (fieldResolve) {
+        // If field has resolver, call it with adjusted resolveInfo
+        // that points to original field name
+        inferredField.resolve = (source, args, context, resolveInfo) =>
+          fieldResolve(source, args, context, {
+            ...resolveInfo,
+            fieldName: fieldName,
+          })
+      } else {
+        inferredField.resolve = source => source[fieldName]
+      }
+    }
+
+    inferredFields[sanitizedFieldName] = inferredField
   })
 
   return inferredFields

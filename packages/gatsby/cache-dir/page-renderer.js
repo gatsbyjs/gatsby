@@ -118,17 +118,18 @@ class PageRenderer extends React.Component {
   }
 
   render() {
-    if (this.state.pageResources) {
-      return createElement(this.state.pageResources.component, {
-        ...this.props,
-        ...this.state.pageResources.json,
-      })
-    }
+    if (!this.state.pageResources) return null
+
+    return createElement(this.state.pageResources.component, {
+      ...this.props,
+      ...this.state.pageResources.json,
+    })
   }
 }
 
 PageRenderer.propTypes = {
   location: PropTypes.object,
+  pageResources: PropTypes.object,
 }
 
 export default polyfill(PageRenderer)

@@ -16,8 +16,8 @@ const writePages = async () => {
   const pagesComponentDependencies = {}
 
   // Write out pages.json
-  const pagesData = pages.reduce(
-    (mem, { path, matchPath, componentChunkName, jsonName }) => {
+  const pagesData = _.sortBy(
+    pages.reduce((mem, { path, matchPath, componentChunkName, jsonName }) => {
       const pageComponentsChunkNames = {
         componentChunkName,
       }
@@ -35,8 +35,10 @@ const writePages = async () => {
           matchPath,
         },
       ]
-    },
-    []
+    }, []),
+    // Sort pages with matchPath to end so explicit routes
+    // will match before general.
+    p => (p.matchPath ? 1 : 0)
   )
 
   const newHash = crypto

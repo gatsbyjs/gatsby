@@ -145,6 +145,12 @@ const addDefaultPluginsPresets = (
   actions,
   { stage = ``, browserslist = {} }
 ) => {
+  let targets
+  if (stage === `build-html`) {
+    targets = { node: `current` }
+  } else {
+    targets = { browsers: browserslist }
+  }
   // Presets
   actions.setBabelPreset({
     name: `@babel/preset-env`,
@@ -153,9 +159,7 @@ const addDefaultPluginsPresets = (
       loose: true,
       modules: false,
       useBuiltIns: `usage`,
-      sourceType: `unambiguous`,
-      shippedProposals: true, // includes async/await and Object spread/rest
-      targets: { browsers: browserslist },
+      targets,
     },
   })
   actions.setBabelPreset({

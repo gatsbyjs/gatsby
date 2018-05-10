@@ -150,20 +150,15 @@ module.exports = async (
         __PREFIX_PATHS__: program.prefixPaths,
         __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
       }),
-
-      plugins.extractText(
-        stage === `develop`
-          ? {
-              filename: `[name].css`,
-              chunkFilename: `[name].css`,
-            }
-          : {}
-      ),
     ]
 
     switch (stage) {
       case `develop`:
         configPlugins = configPlugins.concat([
+          plugins.extractText({
+            filename: `[name].css`,
+            chunkFilename: `[name].css`,
+          }),
           plugins.hotModuleReplacement(),
           plugins.noEmitOnErrors(),
 
@@ -184,6 +179,7 @@ module.exports = async (
         break
       case `build-javascript`: {
         configPlugins = configPlugins.concat([
+          plugins.extractText(),
           // Minify Javascript.
           plugins.uglify({
             uglifyOptions: {
@@ -196,29 +192,32 @@ module.exports = async (
           // components) to all their async chunks.
           {
             apply: function(compiler) {
-              compiler.plugin(`done`, function(stats, done) {
-                let assets = {}
+              compiler.hooks.done.tapAsync(
+                `gatsby-webpack-stats-extractor`,
+                (stats, done) => {
+                  let assets = {}
 
-                for (let chunkGroup of stats.compilation.chunkGroups) {
-                  if (chunkGroup.name) {
-                    let files = []
-                    for (let chunk of chunkGroup.chunks) {
-                      files.push(...chunk.files)
+                  for (let chunkGroup of stats.compilation.chunkGroups) {
+                    if (chunkGroup.name) {
+                      let files = []
+                      for (let chunk of chunkGroup.chunks) {
+                        files.push(...chunk.files)
+                      }
+                      assets[chunkGroup.name] = files.filter(
+                        f => f.slice(-4) !== `.map`
+                      )
                     }
-                    assets[chunkGroup.name] = files.filter(
-                      f => f.slice(-4) !== `.map`
-                    )
                   }
-                }
 
-                fs.writeFile(
-                  path.join(`public`, `webpack.stats.json`),
-                  JSON.stringify({
-                    assetsByChunkName: assets,
-                  }),
-                  done
-                )
-              })
+                  fs.writeFile(
+                    path.join(`public`, `webpack.stats.json`),
+                    JSON.stringify({
+                      assetsByChunkName: assets,
+                    }),
+                    done
+                  )
+                }
+              )
             },
           },
         ])

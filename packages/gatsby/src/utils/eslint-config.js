@@ -10,6 +10,7 @@ module.exports = schema => {
       extends: `react-app`,
       plugins: [`graphql`],
       rules: {
+        "import/no-webpack-loader-syntax": [0],
         "graphql/template-strings": [
           `error`,
           {

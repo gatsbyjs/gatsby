@@ -67,7 +67,7 @@ module.exports = {
       },
     },
   ],
-};
+}
 ```
 
 Save that and restart the gatsby development server. Then open up Graph_i_QL

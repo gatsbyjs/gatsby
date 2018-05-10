@@ -56,7 +56,7 @@ exports.onCreateNode = ({ node }) => {
   if (node.internal.type === `MarkdownRemark`) {
     console.log(node.internal.type)
   }
-};
+}
 ```
 
 We want to use each Markdown file name to create the page slug. So
@@ -71,7 +71,7 @@ exports.onCreateNode = ({ node, getNode }) => {
     const fileNode = getNode(node.parent)
     console.log(`\n`, fileNode.relativePath)
   }
-};
+}
 ```
 
 There in your terminal you should see the relative paths for our two Markdown
@@ -84,13 +84,13 @@ tricky, the `gatsby-source-filesystem` plugin ships with a function for creating
 slugs. Let's use that.
 
 ```javascript{1,5}
-const { createFilePath } = require(`gatsby-source-filesystem`);
+const { createFilePath } = require(`gatsby-source-filesystem`)
 
 exports.onCreateNode = ({ node, getNode }) => {
   if (node.internal.type === `MarkdownRemark`) {
     console.log(createFilePath({ node, getNode, basePath: `pages` }))
   }
-};
+}
 ```
 
 The function handles finding the parent `File` node along with creating the
@@ -109,7 +109,7 @@ the original creator of a node can directly modify the node—all other plugins
 fields.
 
 ```javascript{3,4,6-11}
-const { createFilePath } = require(`gatsby-source-filesystem`);
+const { createFilePath } = require(`gatsby-source-filesystem`)
 
 exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
   const { createNodeField } = boundActionCreators
@@ -121,7 +121,7 @@ exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
       value: slug,
     })
   }
-};
+}
 ```
 
 Restart the development server and open or refresh Graph_i_QL. Then run this
@@ -149,7 +149,7 @@ In the same `gatsby-node.js` file, add the following. Here we tell Gatsby about
 our pages—what are their paths, what template component do they use, etc.
 
 ```javascript{15-34}
-const { createFilePath } = require(`gatsby-source-filesystem`);
+const { createFilePath } = require(`gatsby-source-filesystem`)
 
 exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
   const { createNodeField } = boundActionCreators
@@ -161,7 +161,7 @@ exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
       value: slug,
     })
   }
-};
+}
 
 exports.createPages = ({ graphql, boundActionCreators }) => {
   return new Promise((resolve, reject) => {
@@ -182,7 +182,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
       resolve()
     })
   })
-};
+}
 ```
 
 We've added an implementation of the
@@ -211,8 +211,8 @@ export default () => {
 Then update `gatsby-node.js`
 
 ```javascript{1,17,32-41}
-const path = require(`path`);
-const { createFilePath } = require(`gatsby-source-filesystem`);
+const path = require(`path`)
+const { createFilePath } = require(`gatsby-source-filesystem`)
 
 exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
   const { createNodeField } = boundActionCreators
@@ -224,7 +224,7 @@ exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
       value: slug,
     })
   }
-};
+}
 
 exports.createPages = ({ graphql, boundActionCreators }) => {
   const { createPage } = boundActionCreators
@@ -255,7 +255,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
       resolve()
     })
   })
-};
+}
 ```
 
 Restart the development server and our pages will be created! An easy way to
@@ -309,11 +309,11 @@ Return to `src/pages/index.js` and let's query for our Markdown slugs and create
 links.
 
 ```jsx{3,18-19,29,47-49}
-import React from "react";
-import g from "glamorous";
-import Link from "gatsby-link";
+import React from "react"
+import g from "glamorous"
+import Link from "gatsby-link"
 
-import { rhythm } from "../utils/typography";
+import { rhythm } from "../utils/typography"
 
 export default ({ data }) => {
   return (

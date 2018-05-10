@@ -1,12 +1,11 @@
-import React, { createElement } from "react"
-import { Router, Route, withRouter } from "react-router-dom"
+import { createElement } from "react"
+import { Router, Route } from "react-router-dom"
 import { ScrollContext } from "gatsby-react-router-scroll"
 import history from "./history"
 import { apiRunner } from "./api-runner-browser"
 import syncRequires from "./sync-requires"
 import pages from "./pages.json"
 import redirects from "./redirects.json"
-import PageRenderer from "./page-renderer"
 import loader from "./loader"
 import { hot } from "react-hot-loader"
 import JSONStore from "./json-store"
@@ -153,12 +152,13 @@ const Root = () =>
             const dev404Page = pages.find(p => /^\/dev-404-page/.test(p.path))
             return createElement(Route, {
               key: `404-page`,
+              // eslint-disable-next-line react/display-name
               component: props =>
                 createElement(
                   syncRequires.components[dev404Page.componentChunkName],
                   {
-                    ...propsWithoutPages,
-                    ...data,
+                    pages,
+                    ...routeProps,
                   }
                 ),
             })

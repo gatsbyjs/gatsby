@@ -1,6 +1,7 @@
 import pageFinderFactory from "./find-page"
 import emitter from "./emitter"
 import stripPrefix from "./strip-prefix"
+import { apiRunner } from "./api-runner-browser"
 
 const preferDefault = m => (m && m.default) || m
 
@@ -10,7 +11,7 @@ let hasFetched = Object.create(null)
 let syncRequires = {}
 let asyncRequires = {}
 let jsonDataPaths = {}
-let pathPrefix = ``
+let pathPrefix = `/`
 let fetchHistory = []
 let fetchingPageResourceMapPromise = null
 let fetchedPageResourceMap = false
@@ -28,6 +29,10 @@ const fetchPageResourceMap = () => {
   if (!fetchingPageResourceMapPromise) {
     fetchingPageResourceMapPromise = new Promise(resolve => {
       asyncRequires.data().then(({ pages, dataPaths }) => {
+        // TODO — expose proper way to access this data from plugins.
+        // Need to come up with an API for plugins to access
+        // site info.
+        window.___dataPaths = dataPaths
         queue.addPagesArray(pages)
         queue.addDataPaths(dataPaths)
         resolve((fetchedPageResourceMap = true))
@@ -48,7 +53,7 @@ const fetchResource = resourceName => {
         if (resourceName in jsonStore) {
           resolve(jsonStore[resourceName])
         } else {
-          const url = `${pathPrefix ? pathPrefix : `/`}static/d/${
+          const url = `${pathPrefix}static/d/${
             jsonDataPaths[resourceName]
           }.json`
           var req = new XMLHttpRequest()
@@ -128,8 +133,6 @@ const appearsOnLine = () => {
 }
 
 const handleResourceLoadError = (path, message) => {
-  console.log(message)
-
   if (!failedPaths[path]) {
     failedPaths[path] = message
   }
@@ -156,28 +159,25 @@ const sortResourcesByCount = (a, b) => {
 }
 
 let findPage
-let pages = []
 let pathScriptsCache = {}
 let resourcesArray = []
 let mountOrder = 1
+let prefetchTriggered = {}
+
+const disableCorePrefetching = apiRunner(`disableCorePrefetching`)
 
 const queue = {
   empty: () => {
     resourcesCount = Object.create(null)
     resourcesArray = []
-    pages = []
-    pathPrefix = ``
+    pathPrefix = `/`
   },
 
   addPagesArray: newPages => {
-    pages = newPages
-    if (
-      typeof __PREFIX_PATHS__ !== `undefined` &&
-      typeof __PATH_PREFIX__ !== `undefined`
-    ) {
-      if (__PREFIX_PATHS__ === true) pathPrefix = __PATH_PREFIX__
+    if (__PREFIX_PATHS__) {
+      pathPrefix = `${__PATH_PREFIX__}/`
     }
-    findPage = pageFinderFactory(newPages, pathPrefix)
+    findPage = pageFinderFactory(newPages, pathPrefix.slice(0, -1))
   },
   addDevRequires: devRequires => {
     syncRequires = devRequires
@@ -189,10 +189,29 @@ const queue = {
     jsonDataPaths = dataPaths
   },
   dequeue: () => resourcesArray.pop(),
+  // Hovering on a link is a very strong indication the user is going to
+  // click on it soon so let's start prefetching resources for this
+  // pathname.
+  hovering: rawPath => {
+    const path = stripPrefix(rawPath, pathPrefix.slice(0, -1))
+    queue.getResourcesForPathname(path)
+  },
   enqueue: rawPath => {
-    // Check page exists.
-    const path = stripPrefix(rawPath, pathPrefix)
+    const path = stripPrefix(rawPath, pathPrefix.slice(0, -1))
 
+    // Tell plugins with custom prefetching logic that they should start
+    // prefetching this path.
+    if (!prefetchTriggered[path]) {
+      apiRunner(`onPrefetchPathname`, { pathname: path })
+      prefetchTriggered[path] = true
+    }
+
+    // If a plugin has disabled core prefetching, stop now.
+    if (disableCorePrefetching.some(a => a)) {
+      return false
+    }
+
+    // Check if the page exists.
     let page = findPage(path)
 
     if (

@@ -56,8 +56,8 @@ const makeId = ({ id, currentLocale, defaultLocale }) =>
 
 exports.makeId = makeId
 
-const makeMakeId = ({ currentLocale, defaultLocale }) => id =>
-  makeId({ id, currentLocale, defaultLocale })
+const makeMakeId = ({ currentLocale, defaultLocale, createNodeId }) => id =>
+  createNodeId(makeId({ id, currentLocale, defaultLocale }))
 
 exports.buildEntryList = ({ contentTypeItems, currentSyncData }) =>
   contentTypeItems.map(contentType =>
@@ -203,7 +203,11 @@ exports.createContentTypeNodes = ({
 }) => {
   const contentTypeItemId = contentTypeItem.name
   locales.forEach(locale => {
-    const mId = makeMakeId({ currentLocale: locale.code, defaultLocale })
+    const mId = makeMakeId({
+      currentLocale: locale.code,
+      defaultLocale,
+      createNodeId,
+    })
     const getField = makeGetLocalizedField({ locale, defaultLocale })
 
     // Warn about any field conflicts
@@ -295,7 +299,7 @@ exports.createContentTypeNodes = ({
       }
 
       let entryNode = {
-        id: createNodeId(mId(entryItem.sys.id)),
+        id: mId(entryItem.sys.id),
         contentful_id: entryItem.sys.contentful_id,
         createdAt: entryItem.sys.createdAt,
         updatedAt: entryItem.sys.updatedAt,
@@ -407,7 +411,11 @@ exports.createAssetNodes = ({
   locales,
 }) => {
   locales.forEach(locale => {
-    const mId = makeMakeId({ currentLocale: locale.code, defaultLocale })
+    const mId = makeMakeId({
+      currentLocale: locale.code,
+      defaultLocale,
+      createNodeId,
+    })
     const getField = makeGetLocalizedField({ locale, defaultLocale })
 
     const localizedAsset = { ...assetItem }
@@ -426,7 +434,7 @@ exports.createAssetNodes = ({
         : ``,
     }
     const assetNode = {
-      id: createNodeId(mId(localizedAsset.sys.id)),
+      id: mId(localizedAsset.sys.id),
       parent: null,
       children: [],
       ...localizedAsset.fields,

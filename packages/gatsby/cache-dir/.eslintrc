@@ -1,9 +1,10 @@
 {
-  env: {
-    browser: true
+  "env": {
+    "browser": true
   },
   "globals": {
-    __PREFIX_PATHS__: false,
-    __PATH_PREFIX__: false
+    "__PREFIX_PATHS__": false,
+    "__PATH_PREFIX__": false,
+    "___emitter": false
   }
 }

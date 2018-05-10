@@ -15,6 +15,8 @@ If you're using this plugin together with `gatsby-plugin-offline` (recommended),
 this plugin should be listed _before_ the offline plugin so that it can cache
 the created manifest.json.
 
+If you use the "automatic mode" (described below), this plugin will also add a favicon link to your html pages.
+
 ## Install
 
 `npm install --save gatsby-plugin-manifest`
@@ -156,7 +158,7 @@ plugins: [
         {
           // Everything in /static will be copied to an equivalent
           // directory in /public during development and build, so
-          // assuming your favicons are in /static/favicons,
+          // assuming your favicons are in /favicons,
           // you can reference them here
           src: `/favicons/android-chrome-192x192.png`,
           sizes: `192x192`,
