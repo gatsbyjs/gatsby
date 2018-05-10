@@ -186,7 +186,11 @@ const FeaturesFooter = () => (
   <p css={{ fontSize: `80%`, marginTop: rhythm(1) }}>
     Want to help keep this information complete, accurate, and up-to-date?
     Please comment{` `}
-    <a href="https://github.com/gatsbyjs/gatsby/issues/2444" target="_blank">
+    <a
+      href="https://github.com/gatsbyjs/gatsby/issues/2444"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
       here.
     </a>
   </p>

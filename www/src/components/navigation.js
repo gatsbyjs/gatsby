@@ -1,5 +1,6 @@
 import React from "react"
 import { Link } from "gatsby"
+import { OutboundLink } from "gatsby-plugin-google-analytics"
 import GithubIcon from "react-icons/lib/go/mark-github"
 import TwitterIcon from "react-icons/lib/fa/twitter"
 import SearchForm from "../components/search-form"
@@ -40,8 +41,8 @@ const NavItem = ({ linkTo, children }) => (
 )
 
 export default ({ pathname }) => {
-  const isHomepage = pathname == `/`
-  const isBlog = pathname == `/blog/`
+  const isHomepage = pathname === `/`
+  const isBlog = pathname === `/blog/`
   let styles = {}
   if (isHomepage) {
     styles.backgroundColor = `rgba(255,255,255,0)`
@@ -94,7 +95,6 @@ export default ({ pathname }) => {
         zIndex: `2`,
         left: 0,
         right: 0,
-        top: `calc(2.8rem - 1px)`,
         [presets.Tablet]: {
           position: isHomepage || isBlog ? `absolute` : `fixed`,
         },

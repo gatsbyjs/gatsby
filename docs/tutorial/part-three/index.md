@@ -7,22 +7,21 @@ Welcome to part three!
 
 ## What's in this tutorial?
 
-In this part, you'll learn about how Gatsby lets you create "layout components". Layout components are
+In this part, you'll learn about creating "layout" components. Layout components are for
 sections of your site that you want to share across multiple pages. For example,
 Gatsby sites will commonly have a layout component with a shared header and
-footer. Other common things to add to layouts are a sidebar and navigation menu.
+footer. Other common things to add to layouts are a sidebar and/or navigation menu.
 
-On this page, the sidebar to the left (assuming you're on a larger device) and
-the header at the top are part of gatsbyjs.org's layout component.
+On this page for example, the header at the top is part of gatsbyjs.org's layout component.
 
-Let's dive in and explore Gatsby layouts.
+Let's dive in and explore creating layouts.
 
 ## Install a starter
 
 As we mentioned in Part Two, at this point it's probably a good idea to close the terminal window(s) and project files from previous parts of the tutorial, to keep things clean on your desktop. Then, open a new terminal window and run the following commands to create a new Gatsby site in a directory called `tutorial-part-three` and then move to this new directory:
 
 ```shell
-gatsby new tutorial-part-three https://github.com/gatsbyjs/gatsby-starter-hello-world
+gatsby new tutorial-part-three https://github.com/gatsbyjs/gatsby-starter-hello-world#v2
 cd tutorial-part-three
 ```
 
@@ -119,32 +118,47 @@ Let's tackle these problems by creating our first layout component.
 
 ## Our first layout component
 
-First, create a new directory at `src/layouts`. All layout components have to be
-in this directory.
+First, create a new directory at `src/components`.
 
-Let's create a very basic layout component at `src/layouts/index.js`:
+Now create a very basic layout component at `src/components/layout.js`:
 
 ```jsx
 import React from "react"
 
 export default ({ children }) => (
   <div style={{ margin: `0 auto`, maxWidth: 650, padding: `0 1rem` }}>
-    {children()}
+    {children}
   </div>
 )
 ```
 
-_Notice that unlike most `children` props, the `children` prop passed to layout
-components is a function and needs to be executed_
+Now you need to import this new layout component into your page components.
 
-Stop `gatsby develop` and start it again for the new layout to take effect.
+Change `src/pages/index.js` to look like:
+
+```jsx{5,8}
+import React from "react"
+import Layout from "../components/layout"
+
+export default () => (
+  <Layout>
+    <h1>Hi! I'm building a fake Gatsby site as part of a tutorial!</h1>
+    <p>What do I like to do? Lots of course but definitely enjoy building      websites.</p>
+  </Layout>)
+```
+
+
 
 ![with-layout2](with-layout2.png)
 
-Sweet, the layout is working! Now, our text is centered and constrained to a
-column 650 pixels wide, as we specified.
+Sweet, the layout is working! Now, our text is centered and constrained to
+a column 650 pixels wide, as we specified.
 
-Let's now add, in the same file, our site title:
+But try navigating to one of the other pages e.g. `/about/`. That page still
+isn't centered. Try now importing and adding the layout component to `about.js` and
+`contact.js`.
+
+Let's now add to the layout component our site title:
 
 ```jsx{5}
 import React from "react"
@@ -152,7 +166,7 @@ import React from "react"
 export default ({ children }) =>
   <div style={{ margin: `0 auto`, maxWidth: 650, padding: `0 1rem` }}>
     <h3>MySweetSite</h3>
-    {children()}
+    {children}
   </div>
 ```
 
@@ -186,7 +200,7 @@ export default ({ children }) =>
         <ListLink to="/contact/">Contact</ListLink>
       </ul>
     </header>
-    {children()}
+    {children}
   </div>
 ```
 
