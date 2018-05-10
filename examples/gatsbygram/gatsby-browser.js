@@ -1,6 +1,5 @@
-const windowWidth = window.innerWidth
-
 exports.shouldUpdateScroll = args => {
+  const windowWidth = window.innerWidth
   // Scroll position only matters on mobile as on larger screens, we use a
   // modal.
   if (windowWidth < 750) {
