@@ -74,7 +74,7 @@ exports.sourceNodes = async (
   const existingNodes = getNodes().filter(
     n => n.internal.owner === `gatsby-source-contentful`
   )
-  existingNodes.forEach(n => touchNode(n.id))
+  existingNodes.forEach(n => touchNode({ nodeId: n.id }))
 
   const assets = currentSyncData.assets
 

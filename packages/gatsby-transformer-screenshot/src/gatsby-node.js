@@ -35,7 +35,7 @@ exports.onPreBootstrap = (
         } else {
           // Screenshot hasn't yet expired, touch the image node
           // to prevent garbage collection
-          touchNode(n.screenshotFile___NODE)
+          touchNode({ nodeId: n.screenshotFile___NODE })
         }
       })
   )
