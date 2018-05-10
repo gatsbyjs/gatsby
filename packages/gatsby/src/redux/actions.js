@@ -293,12 +293,28 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
 
 /**
  * Delete a node
- * @param {string} nodeId a node id
- * @param {object} node the node object
+ * @param {object} $0
+ * @param {object} $0.node the node object
  * @example
- * deleteNode(node.id, node)
+ * deleteNode({node: node})
  */
-actions.deleteNode = (nodeId: string, node: any, plugin: Plugin) => {
+actions.deleteNode = (options: any, plugin: Plugin, ...args) => {
+  let node = _.get(options, `node`)
+
+  // Check if using old method signature. Warn about incorrect usage but get
+  // node from nodeID anyway.
+  if (typeof options === `string`) {
+    console.warn(
+      `Calling "deleteNode" with a nodeId is deprecated. Please pass an object containing a full node instead: deleteNode({ node })`
+    )
+
+    if (args[0] && args[0].name) { // `plugin` used to be the third argument
+      console.log(`"deleteNode" was called by ${args[0].name}`)
+    }
+
+    node = getNode(options)
+  }
+
   let deleteDescendantsActions
   // It's possible the file node was never created as sometimes tools will
   // write and then immediately delete temporary files to the file system.
@@ -307,7 +323,7 @@ actions.deleteNode = (nodeId: string, node: any, plugin: Plugin) => {
     const descendantNodes = findChildrenRecursively(node.children)
     if (descendantNodes.length > 0) {
       deleteDescendantsActions = descendantNodes.map(n =>
-        actions.deleteNode(n, getNode(n), plugin)
+        actions.deleteNode({ node: getNode(n) }, plugin)
       )
     }
   }
@@ -315,8 +331,7 @@ actions.deleteNode = (nodeId: string, node: any, plugin: Plugin) => {
   const deleteAction = {
     type: `DELETE_NODE`,
     plugin,
-    node,
-    payload: nodeId,
+    payload: node,
   }
 
   if (deleteDescendantsActions) {
@@ -334,7 +349,7 @@ actions.deleteNode = (nodeId: string, node: any, plugin: Plugin) => {
  */
 actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
   console.log(
-    `The "deleteNodes" is now deprecated and will be removed in Gatsby v3. Please use "deleteNode" instead`
+    `The "deleteNodes" action is now deprecated and will be removed in Gatsby v3. Please use "deleteNode" instead.`
   )
   if (plugin && plugin.name) {
     console.log(`"deleteNodes" was called by ${plugin.name}`)
@@ -347,7 +362,7 @@ actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
   let deleteDescendantsActions
   if (descendantNodes.length > 0) {
     deleteDescendantsActions = descendantNodes.map(n =>
-      actions.deleteNode(n, getNode(n), plugin)
+      actions.deleteNode({ node: getNode(n) }, plugin)
     )
   }
 
@@ -572,11 +587,27 @@ actions.createNode = (node: any, plugin?: Plugin, traceId?: string) => {
  * nodes from a remote system that can return only nodes that have
  * updated. The source plugin then touches all the nodes that haven't
  * updated but still exist so Gatsby knows to keep them.
- * @param {string} nodeId The id of a node.
+ * @param {Object} $0
+ * @param {string} $0.nodeId The id of a node
  * @example
- * touchNode(`a-node-id`)
+ * touchNode({ nodeId: `a-node-id` })
  */
-actions.touchNode = (nodeId: string, plugin?: Plugin) => {
+actions.touchNode = (options: any, plugin?: Plugin) => {
+  let nodeId = _.get(options, `nodeId`)
+
+  // Check if using old method signature. Warn about incorrect usage
+  if (typeof options === `string`) {
+    console.warn(
+      `Calling "touchNode" with a nodeId is deprecated. Please pass an object containing a nodeId instead: touchNode({ nodeId: 'a-node-id' })`
+    )
+
+    if (plugin && plugin.name) {
+      console.log(`"touchNode" was called by ${plugin.name}`)
+    }
+
+    nodeId = options
+  }
+
   return {
     type: `TOUCH_NODE`,
     plugin,

@@ -174,8 +174,8 @@ const queue = {
   },
 
   addPagesArray: newPages => {
-    if (__PREFIX_PATHS__) {
-      pathPrefix = `${__PATH_PREFIX__}/`
+    if (typeof __PREFIX_PATHS__ !== `undefined`) {
+      pathPrefix = typeof __PATH_PREFIX__ !== `undefined` ? `${__PATH_PREFIX__}/` : `/`
     }
     findPage = pageFinderFactory(newPages, pathPrefix.slice(0, -1))
   },

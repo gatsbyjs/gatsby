@@ -188,7 +188,7 @@ See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
     // write and then immediately delete temporary files to the file system.
     if (node) {
       currentState = fsMachine.transition(currentState.value, `EMIT_FS_EVENT`)
-      deleteNode(node.id, node)
+      deleteNode({ node })
     }
   })
 
@@ -212,7 +212,7 @@ See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
       reporter.info(`directory deleted at ${path}`)
     }
     const node = getNode(createNodeId(path))
-    deleteNode(node.id, node)
+    deleteNode({ node })
   })
 
   return new Promise((resolve, reject) => {

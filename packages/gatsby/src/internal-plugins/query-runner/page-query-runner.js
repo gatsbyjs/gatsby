@@ -44,7 +44,7 @@ emitter.on(`CREATE_NODE`, action => {
 })
 
 emitter.on(`DELETE_NODE`, action => {
-  queuedDirtyActions.push({ payload: action.node })
+  queuedDirtyActions.push({ payload: action.payload })
 })
 
 const runQueuedActions = async () => {
