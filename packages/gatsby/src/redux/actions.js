@@ -293,18 +293,26 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
 
 /**
  * Delete a node
- * @param {object} node the node object
+ * @param {object} $0
+ * @param {object} $0.node the node object
  * @example
- * deleteNode(node)
+ * deleteNode({node: node})
  */
-actions.deleteNode = (node: any, plugin: Plugin) => {
-  if (typeof node === `string`) {
-    console.log(
-      `The "deleteNode" action no longer accepts a nodeId string. Please pass a full node object instead.`
+actions.deleteNode = (options: any, plugin: Plugin, ...args) => {
+  let node = _.get(options, `node`)
+
+  // Check if using old method signature. Warn about incorrect usage but get
+  // node from nodeID anyway.
+  if (typeof options === `string`) {
+    console.warn(
+      `Calling "deleteNode" with a nodeId is deprecated. Please pass an object containing a full node instead: deleteNode({ node })`
     )
-    if (plugin && plugin.name) {
-      console.log(`"deleteNode" was called by ${plugin.name}`)
+
+    if (args[0] && args[0].name) { // `plugin` used to be the third argument
+      console.log(`"deleteNode" was called by ${args[0].name}`)
     }
+
+    node = getNode(options)
   }
 
   let deleteDescendantsActions
@@ -315,7 +323,7 @@ actions.deleteNode = (node: any, plugin: Plugin) => {
     const descendantNodes = findChildrenRecursively(node.children)
     if (descendantNodes.length > 0) {
       deleteDescendantsActions = descendantNodes.map(n =>
-        actions.deleteNode(getNode(n), plugin)
+        actions.deleteNode({ node: getNode(n) }, plugin)
       )
     }
   }
@@ -354,7 +362,7 @@ actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
   let deleteDescendantsActions
   if (descendantNodes.length > 0) {
     deleteDescendantsActions = descendantNodes.map(n =>
-      actions.deleteNode(getNode(n), plugin)
+      actions.deleteNode({ node: getNode(n) }, plugin)
     )
   }
 

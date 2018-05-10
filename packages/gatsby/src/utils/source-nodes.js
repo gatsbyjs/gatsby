@@ -67,6 +67,6 @@ module.exports = async () => {
   })
 
   if (staleNodes.length > 0) {
-    staleNodes.forEach(n => deleteNode(n))
+    staleNodes.forEach(node => deleteNode({ node }))
   }
 }
