@@ -260,7 +260,14 @@ const pushTask = task =>
  * @param {CreateRemoteFileNodePayload} options
  * @return {Promise<Object>}                  Returns the created node
  */
-module.exports = ({ url, store, cache, createNode, auth = {}, createNodeId }) => {
+module.exports = ({
+  url,
+  store,
+  cache,
+  createNode,
+  auth = {},
+  createNodeId,
+}) => {
   // Check if we already requested node for this remote file
   // and return stored promise if we did.
   if (processingCache[url]) {
