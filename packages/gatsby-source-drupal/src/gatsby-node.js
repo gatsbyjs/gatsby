@@ -24,7 +24,7 @@ exports.sourceNodes = async (
   // Touch existing Drupal nodes so Gatsby doesn't garbage collect them.
   // _.values(store.getState().nodes)
   // .filter(n => n.internal.type.slice(0, 8) === `drupal__`)
-  // .forEach(n => touchNode(n.id))
+  // .forEach(n => touchNode({ nodeId: n.id }))
 
   // Fetch articles.
   // console.time(`fetch Drupal data`)
