@@ -342,9 +342,9 @@ The longer answer is a little more involved: Gatsby borrows a technique from
 [Relay](https://facebook.github.io/relay/) that converts our source code into an
 [abstract syntax tree (AST)](https://en.wikipedia.org/wiki/Abstract_syntax_tree)
 during the build step. All `graphql`-tagged templates are found in
-[`file-parser.js`](https://github.com/gatsbyjs/gatsby/blob/v1.6.3/packages/gatsby/src/internal-plugins/query-runner/file-parser.js#L63)
+[`file-parser.js`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/file-parser.js)
 and
-[`query-compiler.js`](https://github.com/gatsbyjs/gatsby/blob/v1.6.3/packages/gatsby/src/internal-plugins/query-runner/query-compiler.js),
+[`query-compiler.js`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/query-compiler.js),
 which effectively removes them from the original source code. This means that
 the `graphql` tag isn’t executed the way that we might expect, which is why
 there’s no error, despite the fact that we’re technically using an undefined tag
