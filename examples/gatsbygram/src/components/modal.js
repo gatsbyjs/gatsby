@@ -12,6 +12,8 @@ import { rhythm } from "../utils/typography"
 
 let posts
 
+Modal.setAppElement(`#___gatsby`)
+
 class GatsbyGramModal extends React.Component {
   static propTypes = {
     isOpen: PropTypes.bool,
@@ -139,6 +141,7 @@ class GatsbyGramModal extends React.Component {
                   }}
                 >
                   <CaretLeft
+                    data-testid="previous-post"
                     css={{
                       cursor: `pointer`,
                       fontSize: `50px`,
@@ -149,6 +152,7 @@ class GatsbyGramModal extends React.Component {
                   />
                   {this.props.children}
                   <CaretRight
+                    data-testid="next-post"
                     css={{
                       cursor: `pointer`,
                       fontSize: `50px`,
@@ -159,6 +163,7 @@ class GatsbyGramModal extends React.Component {
                   />
                 </div>
                 <Close
+                  data-testid="modal-close"
                   onClick={() => navigateTo(`/`)}
                   css={{
                     cursor: `pointer`,
