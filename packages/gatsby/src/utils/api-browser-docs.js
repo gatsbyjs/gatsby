@@ -9,40 +9,6 @@
 exports.onClientEntry = true
 
 /**
- * Called when Gatsby starts fetching resources for a page.
- * @param {object} $0
- * @param {object} $0.path Path to a page
- * @example
- * exports.onPreLoadPageResources = ({ path }) => {
- *   console.log("Gatsby started fetching resources for page", path)
- * }
- */
-exports.onPreLoadPageResources = true
-
-/**
- * Called when Gatsby is fetching resources for a page longer than 1 second.
- * @param {object} $0
- * @param {object} $0.path Path to a page
- * @example
- * exports.onDelayedLoadPageResources = ({ path }) => {
- *   console.log("We can show loading indicator now")
- * }
- */
-exports.onDelayedLoadPageResources = true
-
-/**
- * Called when Gatsby has fetched all resources for a page.
- * @param {object} $0
- * @param {object} $0.path Path to a page
- * @param {object} $0.error Error if there is no such path
- * @example
- * exports.onLoadPageResources = ({ path, error }) => {
- *   console.log("We can hide loading indicator now")
- * }
- */
-exports.onLoadPageResources = true
-
-/**
  * Called when the initial (but not subsequent) render of Gatsby App is done on the client.
  * @example
  * exports.onInitialClientRender = () => {
@@ -50,6 +16,32 @@ exports.onLoadPageResources = true
  * }
  */
 exports.onInitialClientRender = true
+
+/**
+ * Called when changing location is started.
+ *
+ * Note: This won't be called when navigating using history
+ * @param {object} $0
+ * @param {object} $0.location A location object
+ * @param {object} $0.action The "action" that caused the route change
+ * @example
+ * exports.onPreRouteUpdate = ({ location }) => {
+ *   console.log("Gatsby started to change location", location.pathname)
+ * }
+ */
+exports.onPreRouteUpdate = true
+
+/**
+ * Called when changing location is longer than 1 second.
+ * @param {object} $0
+ * @param {object} $0.location A location object
+ * @param {object} $0.action The "action" that caused the route change
+ * @example
+ * exports.onRouteUpdateDelayed = () => {
+ *   console.log("We can show loading indicator now")
+ * }
+ */
+exports.onRouteUpdateDelayed = true
 
 /**
  * Called when the user changes routes
