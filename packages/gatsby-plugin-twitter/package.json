@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-twitter",
   "description": "Stub description for gatsby-plugin-twitter",
-  "version": "1.0.18-5",
+  "version": "1.0.18-6",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
