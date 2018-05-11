@@ -144,11 +144,11 @@ const requestRemoteNode = (url, headers, tmpFilename, filename) =>
     // If there's a 400/500 response or other error.
     responseStream.on(`error`, (error, body, response) => {
       fs.removeSync(tmpFilename)
-      reject({ error, body, response })
+      reject(error)
     })
 
     fsWriteStream.on(`error`, error => {
-      reject({ error })
+      reject(error)
     })
 
     responseStream.on(`response`, response => {
