@@ -183,7 +183,7 @@ export default ({ data }) => {
         </tbody>
       </table>
     </div>
-   <Layout/>
+   </Layout>
   )
 }
 
