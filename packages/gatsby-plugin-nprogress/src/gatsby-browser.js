@@ -91,3 +91,7 @@ exports.onRouteUpdateDelayed = () => {
 exports.onRouteUpdate = () => {
   NProgress.done()
 }
+
+exports.onRouteUpdateError = () => {
+  NProgress.done()
+}

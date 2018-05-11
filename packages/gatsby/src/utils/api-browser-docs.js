@@ -44,6 +44,21 @@ exports.onPreRouteUpdate = true
 exports.onRouteUpdateDelayed = true
 
 /**
+ * Called when error is thrown during location change
+ *
+ * Most likely it caused by trying to navigate to path that doesn't exist
+ * @param {object} $0
+ * @param {object} $0.location A location object
+ * @param {object} $0.action The "action" that caused the route change
+ * @param {object} $0.error An error object
+ * @example
+ * exports.onRouteUpdateError = ({ location, error }) => {
+ *   console.log('There was error', location.pathname, error)
+ * }
+ */
+exports.onRouteUpdateError = true
+
+/**
  * Called when the user changes routes
  * @param {object} $0
  * @param {object} $0.location A location object

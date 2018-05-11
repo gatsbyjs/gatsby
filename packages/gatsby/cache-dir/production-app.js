@@ -85,6 +85,11 @@ apiRunnerAsync(`onClientEntry`).then(() => {
           window.___history.push(location)
         } else {
           errorWasEmitted = true
+          apiRunner(`onRouteUpdateError`, {
+            location,
+            error: e.error,
+            action: `PUSH`,
+          })
         }
       }
     }
@@ -95,6 +100,8 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       emitter.emit(`onDelayedLoadPageResources`, { pathname })
       apiRunner(`onRouteUpdateDelayed`, { location, action: `PUSH` })
     }, 1000)
+
+    apiRunner(`onPreRouteUpdate`, { location, action: `PUSH` })
 
     // Listen to error events early as they can be emitted before
     // `loader.getResourcesForPathname` finish.
@@ -107,7 +114,6 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       // Don't run pre/delayed APIs if error was already emitted,
       // onLoadPageResources API already ran with error.
     } else if (!errorWasEmitted) {
-      apiRunner(`onPreRouteUpdate`, { location, action: `PUSH` })
       // They're not loaded yet so let's add a listener for when
       // they finish loading.
       emitter.on(`onPostLoadPageResources`, eventHandler)
