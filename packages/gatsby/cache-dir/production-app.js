@@ -52,6 +52,8 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     require(`./register-service-worker`)
   }
 
+  let lastNavigateToLocationString = null
+
   const navigateTo = to => {
     const location = createLocation(to, null, null, history.location)
     let { pathname } = location
@@ -101,6 +103,9 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       apiRunner(`onRouteUpdateDelayed`, { location, action: `PUSH` })
     }, 1000)
 
+    lastNavigateToLocationString = `${location.pathname}${location.search}${
+      location.hash
+    }`
     apiRunner(`onPreRouteUpdate`, { location, action: `PUSH` })
 
     // Listen to error events early as they can be emitted before
@@ -137,6 +142,14 @@ apiRunnerAsync(`onClientEntry`).then(() => {
 
       history.listen((location, action) => {
         if (!maybeRedirect(location.pathname)) {
+          // Check if we already ran onPreRouteUpdate API
+          // in navigateTo function
+          if (
+            lastNavigateToLocationString !==
+            `${location.pathname}${location.search}${location.hash}`
+          ) {
+            apiRunner(`onPreRouteUpdate`, { location, action })
+          }
           // Make sure React has had a chance to flush to DOM first.
           setTimeout(() => {
             apiRunner(`onRouteUpdate`, { location, action })
