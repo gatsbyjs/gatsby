@@ -106,7 +106,7 @@ Let's try this.
 Create a new file at `src/pages/my-files.js` with the `allFile` query we just
 created:
 
-```jsx{4}
+```jsx{5}
 import React from "react"
 import Layout from "../components/layout"
 
@@ -135,8 +135,8 @@ The `console.log(data)` line is highlighted above. It's often helpful when
 creating a new component to console out the data you're getting from the query
 so you can explore the data in your browser console while building the UI.
 
-If you visit the new page at `/my-files/` and open up your browser console you
-will see:
+If you visit the new page at `/my-files/` and open up your browser console
+you will see something like:
 
 ![data-in-console](data-in-console.png)
 
@@ -144,7 +144,7 @@ The shape of the data matches the shape of the query.
 
 Let's add some code to our component to print out the File data.
 
-```jsx{5-37}
+```jsx{7-39}
 import React from "react"
 import Layout from "../components/layout"
 
