@@ -32,7 +32,7 @@
           link: /tutorial/part-two/#component-css
         - title: CSS Modules
           link: /tutorial/part-two/#css-modules
-    - title: 3. Building nested layouts in Gatsby
+    - title: 3. Creating nested layout components
       link: /tutorial/part-three/
       items:
         - title: Our first layout component
@@ -71,3 +71,10 @@
           link: /tutorial/part-seven/#creating-slugs-for-pages
         - title: Creating pages
           link: /tutorial/part-seven/#creating-pages
+    - title: 8. Preparing a site to go live
+      link: /tutorial/part-eight/
+      items:
+        - title: Creating slugs for pages
+          link: /tutorial/part-eight/#creating-slugs-for-pages
+        - title: Creating pages
+          link: /tutorial/part-eight/#creating-pages
