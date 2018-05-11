@@ -25,7 +25,7 @@ Quoting from the Lighthouse website:
 
 >Lighthouse is an open-source, automated tool for improving the quality of web pages. You can run it against any web page, public or requiring authentication. It has audits for performance, accessibility, progressive web apps, and more.
 
-Lighthouse is included as part of Chrome DevTools. Running its audit and fixing problems it's fine is a great way to prepare your site to go live because it helps give you confidence that your site is as fast and accessible as possible.
+Lighthouse is included as part of Chrome DevTools. Running its audit and fixing problems it finds is a great way to prepare your site to go live because it helps give you confidence that your site is as fast and accessible as possible.
 
 Let's try it out!
 
