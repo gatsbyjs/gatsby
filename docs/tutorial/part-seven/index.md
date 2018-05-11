@@ -320,7 +320,7 @@ links.
 ```jsx{3,18-19,29,47-49}
 import React from "react"
 import g from "glamorous"
-import Link from "gatsby-link"
+import { Link } from "gatsby"
 
 import { rhythm } from "../utils/typography"
 
