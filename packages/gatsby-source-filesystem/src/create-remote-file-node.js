@@ -143,6 +143,10 @@ const requestRemoteNode = (url, headers, tmpFilename, filename) =>
       reject({ error, body, response })
     })
 
+    fsWriteStream.on(`error`, error => {
+      reject({ error })
+    })
+
     responseStream.on(`response`, response => {
       fsWriteStream.on(`finish`, () => {
         resolve(response)
