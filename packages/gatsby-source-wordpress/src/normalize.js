@@ -227,9 +227,12 @@ exports.mapElementsToParent = entities =>
   entities.map(e => {
     if (e.wordpress_parent) {
       // Create parent_element with a link to the parent node of type.
-      e.parent_element___NODE = entities.find(
+      const parentElement = entities.find(
         t => t.wordpress_id === e.wordpress_parent && t.__type === e.__type
-      ).id
+      )
+      if (parentElement) {
+        e.parent_element___NODE = parentElement.id
+      }
     }
     return e
   })
