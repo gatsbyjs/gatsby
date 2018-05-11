@@ -39,7 +39,7 @@ to root of your site and modifying it per your needs.
         "sourceType": "unambiguous",
         "shippedProposals": true,
         "targets": {
-          "browsers": ["> 1%", "IE >= 9", "last 2 versions"]
+          "browsers": [ ">0.25%", "not dead"]
         }
       }
     ],
