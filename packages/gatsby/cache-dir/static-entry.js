@@ -130,6 +130,7 @@ export default (pagePath, callback) => {
         createElement(syncRequires.components[page.componentChunkName], {
           ...routeProps,
           ...dataAndContext,
+          pathContext: dataAndContext.pageContext,
         }),
     })
   )
