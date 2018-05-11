@@ -132,7 +132,11 @@ async function pushToQueue(task, cb) {
  */
 const requestRemoteNode = (url, headers, tmpFilename, filename) =>
   new Promise((resolve, reject) => {
-    const responseStream = got.stream(url, { ...headers, timeout: 30000 })
+    const responseStream = got.stream(url, {
+      ...headers,
+      timeout: 30000,
+      retries: 5,
+    })
     const fsWriteStream = fs.createWriteStream(tmpFilename)
     responseStream.pipe(fsWriteStream)
     responseStream.on(`downloadProgress`, pro => console.log(pro))
