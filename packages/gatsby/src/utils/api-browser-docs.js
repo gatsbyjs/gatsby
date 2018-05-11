@@ -19,8 +19,6 @@ exports.onInitialClientRender = true
 
 /**
  * Called when changing location is started.
- *
- * Note: This won't be called when navigating using history
  * @param {object} $0
  * @param {object} $0.location A location object
  * @param {object} $0.action The "action" that caused the route change
@@ -46,7 +44,7 @@ exports.onRouteUpdateDelayed = true
 /**
  * Called when error is thrown during location change
  *
- * Most likely it caused by trying to navigate to path that doesn't exist
+ * Most likely it is caused by navigating to path that doesn't exist
  * @param {object} $0
  * @param {object} $0.location A location object
  * @param {object} $0.action The "action" that caused the route change
