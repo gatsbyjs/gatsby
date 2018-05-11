@@ -1,5 +1,5 @@
 ---
-title: Building nested layouts in Gatsby
+title: Creating nested layout components
 typora-copy-images-to: ./
 ---
 
