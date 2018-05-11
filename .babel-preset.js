@@ -38,9 +38,13 @@ function preset(context, options = {}) {
         ),
       ],
       [r("@babel/preset-react"), { development: !PRODUCTION }],
-      r("@babel/preset-flow"),
+      // r("@babel/preset-flow"),
     ],
     plugins: [
+      // TODO: Use @babel/preset-flow when
+      // https://github.com/babel/babel/issues/7233 is fixed
+      r("@babel/plugin-transform-flow-strip-types"),
+      r("@babel/plugin-proposal-object-rest-spread"),
       r("@babel/plugin-proposal-class-properties"),
       r("@babel/plugin-proposal-optional-chaining"),
       [

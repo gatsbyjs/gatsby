@@ -10,8 +10,8 @@
     "bluebird": "^3.5.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.0.0-beta.42",
-    "@babel/core": "^7.0.0-beta.42",
+    "@babel/cli": "^7.0.0-beta.46",
+    "@babel/core": "^7.0.0-beta.46",
     "cross-env": "^5.1.4"
   },
   "keywords": [
