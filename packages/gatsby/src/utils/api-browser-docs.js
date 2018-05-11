@@ -75,10 +75,14 @@ exports.wrapRootComponent = true
 
 /**
  * Allow a plugin to replace the ReactDOM.render function call by a custom renderer.
- * This method receives the same parameters as ReactDOM.render takes.
- * Note it's very important to call the provided callback after rendering, otherwise Gatsby will not be able to call `onInitialClientRender`
- * @param {object} $0 element
- * @param {object} $1 container
- * @param {object} $2 callback
+ * This method takes no param and should return a function with same signature as ReactDOM.render()
+ * Note it's very important to call the callback after rendering, otherwise Gatsby will not be able to call `onInitialClientRender`
+ * @example
+ * exports.replaceHydrateFunction = () => {
+ *   return (element, container, callback) => {
+ *     console.log("rendering!");
+ *     ReactDOM.render(element, container, callback);
+ *   };
+ * };
  */
 exports.replaceHydrateFunction = true

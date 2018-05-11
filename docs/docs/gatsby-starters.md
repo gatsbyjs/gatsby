@@ -168,6 +168,17 @@ Community:
 
   * TypeScript
 
+* [gatsby-starter-bulma-storybook](https://github.com/gvaldambrini/gatsby-starter-bulma-storybook)
+  [(demo)](http://gatsby-bulma-storybook.surge.sh/)
+
+  Features:
+
+  * Storybook for developing components in isolation
+  * Bulma and Sass support for styling
+  * CSS modules
+  * Prettier & eslint to format & check the code
+  * Jest
+
 * [gatsby-starter-default-i18n](https://github.com/angeloocana/gatsby-starter-default-i18n)
   [(demo)](https://gatsby-starter-default-i18n.netlify.com)
 

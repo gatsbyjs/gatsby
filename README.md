@@ -165,7 +165,7 @@ Websites built with Gatsby:
 * [Portfolio / Blog of Preston Richey](https://prestonrichey.com/) ([source](https://github.com/prichey/prestonrichey.com))
 * [Beach Hut Poole](https://www.beachhutpoole.co.uk/)
 * [In Sowerby Bridge](https://www.insowerbybridge.co.uk/)
-* [枫上雾棋的日志](https://fengshangwuqi.github.io/fswq-blog/)
+* [枫上雾棋的日志](https://fengshangwuqi.github.io/)
 * [Juliette Pretot's Portfolio](https://juliette.sh)
 * [Théâtres Parisiens](http://theatres-parisiens.fr/) ([source](https://github.com/phacks/theatres-parisiens))
 * [Jia Hao's Website / Blog](https://jiahao.codes/) ([source](https://github.com/jiahaog/jiahao.codes))
@@ -195,8 +195,6 @@ Websites built with Gatsby:
 * [WebGazer](https://www.webgazer.io)
 * [Joe Seifi's Blog](http://seifi.org)
 * [Bartosz Dominiak Blog/Portfolio](http://www.bartoszdominiak.com/) ([source](https://github.com/bartdominiak/blog))
-* [HBTU MUN 2018](https://hbtumun18.netlify.com/)
-  ([source](https://github.com/HaoZeke/hbtuMun18))
 * [The Audacious Project](https://audaciousproject.org/)
 * [upGizmo](https://www.upgizmo.com/)
 * [The Bastion Bot](https://bastionbot.org/ "The Bastion Bot")
@@ -207,6 +205,15 @@ Websites built with Gatsby:
 * [Hyunwoo Kim - Blog/Portfolio](https://devhalloween.com) ([source](https://github.com/khw1031/dev-blog))
 * [Abinav Seelan - Personal Website](https://abinavseelan.com) ([source](https://github.com/abinavseelan/abinavseelan.com))
 * [Dovetail](https://dovetailapp.com)
+* [Bart van der Waerden Blog](http://bartvanderwaerden.com/) ([source](https://github.com/BartvdWaerden/BartvdWaerden.github.io))
+* [Canella Riccardo - Portfolio](https://canellariccardo.it) ([source](https://github.com/thecreazy/canellariccardo.it))
+* [Eviction Free NYC!](https://www.evictionfreenyc.org/) ([source](https://github.com/JustFixNYC/eviction-free-nyc))
+* [Rafael Belliard's Portfolio](https://rafael.do) ([source](https://github.com/rebelliard/rebelliard.github.io))
+* [Tinder Interracial Couple Emoji Project](https://emoji.tinder.com/)
+* [aQuICK](https://aquick.review/)
+  ([source](https://github.com/aQuICK-Review/aQuick))
+* [Workshop In The Woods](https://www.workshop-in-the-woods.com/) ([source](https://github.com/ryanwiemer/workshop))
+* [Steven Koerts - Portfolio](http://stevenkoerts.nl/)([source](https://github.com/Steven24K/Steven24K.github.io))
 
 ## Docs
 
