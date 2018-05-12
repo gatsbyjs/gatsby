@@ -1,0 +1,731 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Process notebook if extension is ipynb Process generated notebook node correctly Correctly creates a new JupyterNotebook node 1`] = `
+Array [
+  Array [
+    Object {
+      "children": Array [],
+      "id": "whatever >>> JupyterNotebook",
+      "internal": Object {
+        "content": "{
+  \\"cells\\": [
+    {
+      \\"cell_type\\": \\"markdown\\",
+      \\"source\\": [
+        \\"This is a jupyter notebook running [Node.js](https://nodejs.org).\\"
+      ],
+      \\"metadata\\": {}
+    },
+    {
+      \\"cell_type\\": \\"code\\",
+      \\"source\\": [
+        \\"# nodejs code\\",
+        \\"process.version\\"
+      ],
+      \\"outputs\\": [
+        {
+          \\"output_type\\": \\"execute_result\\",
+          \\"execution_count\\": 3,
+          \\"data\\": {
+            \\"text/plain\\": [
+              \\"'v8.2.1'\\"
+            ]
+          },
+          \\"metadata\\": {}
+        }
+      ],
+      \\"execution_count\\": 3,
+      \\"metadata\\": {
+        \\"collapsed\\": false,
+        \\"outputHidden\\": false,
+        \\"inputHidden\\": false
+      }
+    }
+  ],
+  \\"metadata\\": {
+    \\"kernel_info\\": {
+      \\"name\\": \\"node_nteract\\"
+    },
+    \\"kernelspec\\": {
+      \\"name\\": \\"node_nteract\\",
+      \\"language\\": \\"javascript\\",
+      \\"display_name\\": \\"Node.js (nteract)\\"
+    },
+    \\"language_info\\": {
+      \\"name\\": \\"javascript\\",
+      \\"version\\": \\"8.2.1\\",
+      \\"mimetype\\": \\"application/javascript\\",
+      \\"file_extension\\": \\".js\\"
+    },
+    \\"nteract\\": {
+      \\"version\\": \\"0.8.4\\"
+    }
+  },
+  \\"nbformat\\": 4,
+  \\"nbformat_minor\\": 4
+}",
+        "contentDigest": "a269da4cc77606dd9c23b6317a57b2d1",
+        "type": "JupyterNotebook",
+      },
+      "json": Object {
+        "cells": Array [
+          Object {
+            "cell_type": "markdown",
+            "metadata": Object {},
+            "source": Array [
+              "This is a jupyter notebook running [Node.js](https://nodejs.org).",
+            ],
+          },
+          Object {
+            "cell_type": "code",
+            "execution_count": 3,
+            "metadata": Object {
+              "collapsed": false,
+              "inputHidden": false,
+              "outputHidden": false,
+            },
+            "outputs": Array [
+              Object {
+                "data": Object {
+                  "text/plain": Array [
+                    "'v8.2.1'",
+                  ],
+                },
+                "execution_count": 3,
+                "metadata": Object {},
+                "output_type": "execute_result",
+              },
+            ],
+            "source": Array [
+              "# nodejs code",
+              "process.version",
+            ],
+          },
+        ],
+        "metadata": Object {
+          "kernel_info": Object {
+            "name": "node_nteract",
+          },
+          "kernelspec": Object {
+            "display_name": "Node.js (nteract)",
+            "language": "javascript",
+            "name": "node_nteract",
+          },
+          "language_info": Object {
+            "file_extension": ".js",
+            "mimetype": "application/javascript",
+            "name": "javascript",
+            "version": "8.2.1",
+          },
+          "nteract": Object {
+            "version": "0.8.4",
+          },
+        },
+        "nbformat": 4,
+        "nbformat_minor": 4,
+      },
+      "metadata": Object {
+        "kernel_info": Object {
+          "name": "node_nteract",
+        },
+        "kernelspec": Object {
+          "display_name": "Node.js (nteract)",
+          "language": "javascript",
+          "name": "node_nteract",
+        },
+        "language_info": Object {
+          "file_extension": ".js",
+          "mimetype": "application/javascript",
+          "name": "javascript",
+          "version": "8.2.1",
+        },
+        "nteract": Object {
+          "version": "0.8.4",
+        },
+      },
+      "parent": "whatever",
+    },
+  ],
+]
+`;
+
+exports[`Process notebook if extension is ipynb Process generated notebook node correctly Correctly creates a new JupyterNotebook node 2`] = `
+Array [
+  Array [
+    Object {
+      "child": Object {
+        "children": Array [],
+        "id": "whatever >>> JupyterNotebook",
+        "internal": Object {
+          "content": "{
+  \\"cells\\": [
+    {
+      \\"cell_type\\": \\"markdown\\",
+      \\"source\\": [
+        \\"This is a jupyter notebook running [Node.js](https://nodejs.org).\\"
+      ],
+      \\"metadata\\": {}
+    },
+    {
+      \\"cell_type\\": \\"code\\",
+      \\"source\\": [
+        \\"# nodejs code\\",
+        \\"process.version\\"
+      ],
+      \\"outputs\\": [
+        {
+          \\"output_type\\": \\"execute_result\\",
+          \\"execution_count\\": 3,
+          \\"data\\": {
+            \\"text/plain\\": [
+              \\"'v8.2.1'\\"
+            ]
+          },
+          \\"metadata\\": {}
+        }
+      ],
+      \\"execution_count\\": 3,
+      \\"metadata\\": {
+        \\"collapsed\\": false,
+        \\"outputHidden\\": false,
+        \\"inputHidden\\": false
+      }
+    }
+  ],
+  \\"metadata\\": {
+    \\"kernel_info\\": {
+      \\"name\\": \\"node_nteract\\"
+    },
+    \\"kernelspec\\": {
+      \\"name\\": \\"node_nteract\\",
+      \\"language\\": \\"javascript\\",
+      \\"display_name\\": \\"Node.js (nteract)\\"
+    },
+    \\"language_info\\": {
+      \\"name\\": \\"javascript\\",
+      \\"version\\": \\"8.2.1\\",
+      \\"mimetype\\": \\"application/javascript\\",
+      \\"file_extension\\": \\".js\\"
+    },
+    \\"nteract\\": {
+      \\"version\\": \\"0.8.4\\"
+    }
+  },
+  \\"nbformat\\": 4,
+  \\"nbformat_minor\\": 4
+}",
+          "contentDigest": "a269da4cc77606dd9c23b6317a57b2d1",
+          "type": "JupyterNotebook",
+        },
+        "json": Object {
+          "cells": Array [
+            Object {
+              "cell_type": "markdown",
+              "metadata": Object {},
+              "source": Array [
+                "This is a jupyter notebook running [Node.js](https://nodejs.org).",
+              ],
+            },
+            Object {
+              "cell_type": "code",
+              "execution_count": 3,
+              "metadata": Object {
+                "collapsed": false,
+                "inputHidden": false,
+                "outputHidden": false,
+              },
+              "outputs": Array [
+                Object {
+                  "data": Object {
+                    "text/plain": Array [
+                      "'v8.2.1'",
+                    ],
+                  },
+                  "execution_count": 3,
+                  "metadata": Object {},
+                  "output_type": "execute_result",
+                },
+              ],
+              "source": Array [
+                "# nodejs code",
+                "process.version",
+              ],
+            },
+          ],
+          "metadata": Object {
+            "kernel_info": Object {
+              "name": "node_nteract",
+            },
+            "kernelspec": Object {
+              "display_name": "Node.js (nteract)",
+              "language": "javascript",
+              "name": "node_nteract",
+            },
+            "language_info": Object {
+              "file_extension": ".js",
+              "mimetype": "application/javascript",
+              "name": "javascript",
+              "version": "8.2.1",
+            },
+            "nteract": Object {
+              "version": "0.8.4",
+            },
+          },
+          "nbformat": 4,
+          "nbformat_minor": 4,
+        },
+        "metadata": Object {
+          "kernel_info": Object {
+            "name": "node_nteract",
+          },
+          "kernelspec": Object {
+            "display_name": "Node.js (nteract)",
+            "language": "javascript",
+            "name": "node_nteract",
+          },
+          "language_info": Object {
+            "file_extension": ".js",
+            "mimetype": "application/javascript",
+            "name": "javascript",
+            "version": "8.2.1",
+          },
+          "nteract": Object {
+            "version": "0.8.4",
+          },
+        },
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "{
+  \\"cells\\": [
+    {
+      \\"cell_type\\": \\"markdown\\",
+      \\"source\\": [
+        \\"This is a jupyter notebook running [Node.js](https://nodejs.org).\\"
+      ],
+      \\"metadata\\": {}
+    },
+    {
+      \\"cell_type\\": \\"code\\",
+      \\"source\\": [
+        \\"# nodejs code\\",
+        \\"process.version\\"
+      ],
+      \\"outputs\\": [
+        {
+          \\"output_type\\": \\"execute_result\\",
+          \\"execution_count\\": 3,
+          \\"data\\": {
+            \\"text/plain\\": [
+              \\"'v8.2.1'\\"
+            ]
+          },
+          \\"metadata\\": {}
+        }
+      ],
+      \\"execution_count\\": 3,
+      \\"metadata\\": {
+        \\"collapsed\\": false,
+        \\"outputHidden\\": false,
+        \\"inputHidden\\": false
+      }
+    }
+  ],
+  \\"metadata\\": {
+    \\"kernel_info\\": {
+      \\"name\\": \\"node_nteract\\"
+    },
+    \\"kernelspec\\": {
+      \\"name\\": \\"node_nteract\\",
+      \\"language\\": \\"javascript\\",
+      \\"display_name\\": \\"Node.js (nteract)\\"
+    },
+    \\"language_info\\": {
+      \\"name\\": \\"javascript\\",
+      \\"version\\": \\"8.2.1\\",
+      \\"mimetype\\": \\"application/javascript\\",
+      \\"file_extension\\": \\".js\\"
+    },
+    \\"nteract\\": {
+      \\"version\\": \\"0.8.4\\"
+    }
+  },
+  \\"nbformat\\": 4,
+  \\"nbformat_minor\\": 4
+}",
+        "extension": "ipynb",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+        },
+      },
+    },
+  ],
+]
+`;
+
+exports[`Process notebook if extension is ipynb Process generated notebook node correctly Correctly parses metadata fields 1`] = `
+Array [
+  Array [
+    Object {
+      "children": Array [],
+      "id": "whatever >>> JupyterNotebook",
+      "internal": Object {
+        "content": "{
+  \\"cells\\": [
+    {
+      \\"cell_type\\": \\"markdown\\",
+      \\"source\\": [
+        \\"This is a jupyter notebook running [Node.js](https://nodejs.org).\\"
+      ],
+      \\"metadata\\": {}
+    },
+    {
+      \\"cell_type\\": \\"code\\",
+      \\"source\\": [
+        \\"# nodejs code\\",
+        \\"process.version\\"
+      ],
+      \\"outputs\\": [
+        {
+          \\"output_type\\": \\"execute_result\\",
+          \\"execution_count\\": 3,
+          \\"data\\": {
+            \\"text/plain\\": [
+              \\"'v8.2.1'\\"
+            ]
+          },
+          \\"metadata\\": {}
+        }
+      ],
+      \\"execution_count\\": 3,
+      \\"metadata\\": {
+        \\"collapsed\\": false,
+        \\"outputHidden\\": false,
+        \\"inputHidden\\": false
+      }
+    }
+  ],
+  \\"metadata\\": {
+    \\"kernel_info\\": {
+      \\"name\\": \\"node_nteract\\"
+    },
+    \\"kernelspec\\": {
+      \\"name\\": \\"node_nteract\\",
+      \\"language\\": \\"javascript\\",
+      \\"display_name\\": \\"Node.js (nteract)\\"
+    },
+    \\"language_info\\": {
+      \\"name\\": \\"javascript\\",
+      \\"version\\": \\"8.2.1\\",
+      \\"mimetype\\": \\"application/javascript\\",
+      \\"file_extension\\": \\".js\\"
+    },
+    \\"nteract\\": {
+      \\"version\\": \\"0.8.4\\"
+    }
+  },
+  \\"nbformat\\": 4,
+  \\"nbformat_minor\\": 4
+}",
+        "contentDigest": "a269da4cc77606dd9c23b6317a57b2d1",
+        "type": "JupyterNotebook",
+      },
+      "json": Object {
+        "cells": Array [
+          Object {
+            "cell_type": "markdown",
+            "metadata": Object {},
+            "source": Array [
+              "This is a jupyter notebook running [Node.js](https://nodejs.org).",
+            ],
+          },
+          Object {
+            "cell_type": "code",
+            "execution_count": 3,
+            "metadata": Object {
+              "collapsed": false,
+              "inputHidden": false,
+              "outputHidden": false,
+            },
+            "outputs": Array [
+              Object {
+                "data": Object {
+                  "text/plain": Array [
+                    "'v8.2.1'",
+                  ],
+                },
+                "execution_count": 3,
+                "metadata": Object {},
+                "output_type": "execute_result",
+              },
+            ],
+            "source": Array [
+              "# nodejs code",
+              "process.version",
+            ],
+          },
+        ],
+        "metadata": Object {
+          "kernel_info": Object {
+            "name": "node_nteract",
+          },
+          "kernelspec": Object {
+            "display_name": "Node.js (nteract)",
+            "language": "javascript",
+            "name": "node_nteract",
+          },
+          "language_info": Object {
+            "file_extension": ".js",
+            "mimetype": "application/javascript",
+            "name": "javascript",
+            "version": "8.2.1",
+          },
+          "nteract": Object {
+            "version": "0.8.4",
+          },
+        },
+        "nbformat": 4,
+        "nbformat_minor": 4,
+      },
+      "metadata": Object {
+        "kernel_info": Object {
+          "name": "node_nteract",
+        },
+        "kernelspec": Object {
+          "display_name": "Node.js (nteract)",
+          "language": "javascript",
+          "name": "node_nteract",
+        },
+        "language_info": Object {
+          "file_extension": ".js",
+          "mimetype": "application/javascript",
+          "name": "javascript",
+          "version": "8.2.1",
+        },
+        "nteract": Object {
+          "version": "0.8.4",
+        },
+      },
+      "parent": "whatever",
+    },
+  ],
+]
+`;
+
+exports[`Process notebook if extension is ipynb Process generated notebook node correctly Correctly parses metadata fields 2`] = `
+Array [
+  Array [
+    Object {
+      "child": Object {
+        "children": Array [],
+        "id": "whatever >>> JupyterNotebook",
+        "internal": Object {
+          "content": "{
+  \\"cells\\": [
+    {
+      \\"cell_type\\": \\"markdown\\",
+      \\"source\\": [
+        \\"This is a jupyter notebook running [Node.js](https://nodejs.org).\\"
+      ],
+      \\"metadata\\": {}
+    },
+    {
+      \\"cell_type\\": \\"code\\",
+      \\"source\\": [
+        \\"# nodejs code\\",
+        \\"process.version\\"
+      ],
+      \\"outputs\\": [
+        {
+          \\"output_type\\": \\"execute_result\\",
+          \\"execution_count\\": 3,
+          \\"data\\": {
+            \\"text/plain\\": [
+              \\"'v8.2.1'\\"
+            ]
+          },
+          \\"metadata\\": {}
+        }
+      ],
+      \\"execution_count\\": 3,
+      \\"metadata\\": {
+        \\"collapsed\\": false,
+        \\"outputHidden\\": false,
+        \\"inputHidden\\": false
+      }
+    }
+  ],
+  \\"metadata\\": {
+    \\"kernel_info\\": {
+      \\"name\\": \\"node_nteract\\"
+    },
+    \\"kernelspec\\": {
+      \\"name\\": \\"node_nteract\\",
+      \\"language\\": \\"javascript\\",
+      \\"display_name\\": \\"Node.js (nteract)\\"
+    },
+    \\"language_info\\": {
+      \\"name\\": \\"javascript\\",
+      \\"version\\": \\"8.2.1\\",
+      \\"mimetype\\": \\"application/javascript\\",
+      \\"file_extension\\": \\".js\\"
+    },
+    \\"nteract\\": {
+      \\"version\\": \\"0.8.4\\"
+    }
+  },
+  \\"nbformat\\": 4,
+  \\"nbformat_minor\\": 4
+}",
+          "contentDigest": "a269da4cc77606dd9c23b6317a57b2d1",
+          "type": "JupyterNotebook",
+        },
+        "json": Object {
+          "cells": Array [
+            Object {
+              "cell_type": "markdown",
+              "metadata": Object {},
+              "source": Array [
+                "This is a jupyter notebook running [Node.js](https://nodejs.org).",
+              ],
+            },
+            Object {
+              "cell_type": "code",
+              "execution_count": 3,
+              "metadata": Object {
+                "collapsed": false,
+                "inputHidden": false,
+                "outputHidden": false,
+              },
+              "outputs": Array [
+                Object {
+                  "data": Object {
+                    "text/plain": Array [
+                      "'v8.2.1'",
+                    ],
+                  },
+                  "execution_count": 3,
+                  "metadata": Object {},
+                  "output_type": "execute_result",
+                },
+              ],
+              "source": Array [
+                "# nodejs code",
+                "process.version",
+              ],
+            },
+          ],
+          "metadata": Object {
+            "kernel_info": Object {
+              "name": "node_nteract",
+            },
+            "kernelspec": Object {
+              "display_name": "Node.js (nteract)",
+              "language": "javascript",
+              "name": "node_nteract",
+            },
+            "language_info": Object {
+              "file_extension": ".js",
+              "mimetype": "application/javascript",
+              "name": "javascript",
+              "version": "8.2.1",
+            },
+            "nteract": Object {
+              "version": "0.8.4",
+            },
+          },
+          "nbformat": 4,
+          "nbformat_minor": 4,
+        },
+        "metadata": Object {
+          "kernel_info": Object {
+            "name": "node_nteract",
+          },
+          "kernelspec": Object {
+            "display_name": "Node.js (nteract)",
+            "language": "javascript",
+            "name": "node_nteract",
+          },
+          "language_info": Object {
+            "file_extension": ".js",
+            "mimetype": "application/javascript",
+            "name": "javascript",
+            "version": "8.2.1",
+          },
+          "nteract": Object {
+            "version": "0.8.4",
+          },
+        },
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "{
+  \\"cells\\": [
+    {
+      \\"cell_type\\": \\"markdown\\",
+      \\"source\\": [
+        \\"This is a jupyter notebook running [Node.js](https://nodejs.org).\\"
+      ],
+      \\"metadata\\": {}
+    },
+    {
+      \\"cell_type\\": \\"code\\",
+      \\"source\\": [
+        \\"# nodejs code\\",
+        \\"process.version\\"
+      ],
+      \\"outputs\\": [
+        {
+          \\"output_type\\": \\"execute_result\\",
+          \\"execution_count\\": 3,
+          \\"data\\": {
+            \\"text/plain\\": [
+              \\"'v8.2.1'\\"
+            ]
+          },
+          \\"metadata\\": {}
+        }
+      ],
+      \\"execution_count\\": 3,
+      \\"metadata\\": {
+        \\"collapsed\\": false,
+        \\"outputHidden\\": false,
+        \\"inputHidden\\": false
+      }
+    }
+  ],
+  \\"metadata\\": {
+    \\"kernel_info\\": {
+      \\"name\\": \\"node_nteract\\"
+    },
+    \\"kernelspec\\": {
+      \\"name\\": \\"node_nteract\\",
+      \\"language\\": \\"javascript\\",
+      \\"display_name\\": \\"Node.js (nteract)\\"
+    },
+    \\"language_info\\": {
+      \\"name\\": \\"javascript\\",
+      \\"version\\": \\"8.2.1\\",
+      \\"mimetype\\": \\"application/javascript\\",
+      \\"file_extension\\": \\".js\\"
+    },
+    \\"nteract\\": {
+      \\"version\\": \\"0.8.4\\"
+    }
+  },
+  \\"nbformat\\": 4,
+  \\"nbformat_minor\\": 4
+}",
+        "extension": "ipynb",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+        },
+      },
+    },
+  ],
+]
+`;
