@@ -8,9 +8,7 @@ canonicalLink: https://www.raygesualdo.com/posts/six-reasons-i-chose-gatsby/
 publishedAt: raygesualdo.com
 ---
 
-Spoiler alert: I'm a big fan of [Gatsby](https://gatsbyjs.org/). I've worked with it multiple times and I'm continually impressed with its power and flexibility. For those who aren't familiar, Gatsby is an open-source static site generator incorporating React and GraphQL. A few weeks ago, I switched this site to Gatsby and wanted to share my reasons for doing so. Plenty of articles have been written about _how_ to build a Gatsby site, but I wanted to talk about _why_ Gatsby is a great choice. I've outlined these reasons below in no particular order (the numbering is only for organizational purposes). I hope they give you a better understanding of Gatsby's benefits and features.
-
-_For those interested, this website is fully open-sourced so feel free to [check out the source code](https://github.com/raygesualdo/raygesualdo.com)._
+Spoiler alert: I'm a big fan of [Gatsby](https://gatsbyjs.org/). I've worked with it multiple times and I'm continually impressed with its power and flexibility. For those who aren't familiar, Gatsby is an open-source static site generator incorporating React and GraphQL. A few weeks ago, I switched my site to Gatsby and wanted to share my reasons for doing so. Plenty of articles have been written about _how_ to build a Gatsby site, but I wanted to talk about _why_ Gatsby is a great choice. I've outlined these reasons below in no particular order (the numbering is only for organizational purposes). I hope they give you a better understanding of Gatsby's benefits and features.
 
 ## #1: It's React
 
