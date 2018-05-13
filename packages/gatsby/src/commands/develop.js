@@ -405,7 +405,7 @@ module.exports = async (program: any) => {
   let isFirstCompile = true
   // "done" event fires when Webpack has finished recompiling the bundle.
   // Whether or not you have warnings or errors, you will get this event.
-  compiler.plugin(`done`, stats => {
+  compiler.hooks.done.tapAsync(`print getsby instructions`, (stats, done) => {
     // We have switched off the default Webpack output in WebpackDevServer
     // options so we are going to "massage" the warnings and errors and present
     // them in a readable focused way.
@@ -459,5 +459,7 @@ module.exports = async (program: any) => {
     // " to the line before.\n"
     // )
     // }
+
+    done()
   })
 }
