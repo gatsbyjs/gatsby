@@ -34,6 +34,8 @@ class BlogPostPreviewItem extends React.Component {
               marginRight: rhythm(1 / 2),
               marginBottom: 0,
               verticalAlign: `top`,
+              // prevents image twitch in Chrome when hovering the card
+              transform: `translateZ(0)`,
             }}
           />
           <div
