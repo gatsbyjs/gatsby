@@ -214,6 +214,7 @@ Websites built with Gatsby:
   ([source](https://github.com/aQuICK-Review/aQuick))
 * [Workshop In The Woods](https://www.workshop-in-the-woods.com/) ([source](https://github.com/ryanwiemer/workshop))
 * [Steven Koerts - Portfolio](http://stevenkoerts.nl/)([source](https://github.com/Steven24K/Steven24K.github.io))
+* [Ray Gesualdo - Personal Website](http://www.raygesualdo.com/) ([source](https://github.com/raygesualdo/raygesualdo.com))
 
 ## Docs
 
