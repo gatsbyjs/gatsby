@@ -4,8 +4,8 @@ const {
   GraphQLList,
   GraphQLString,
   GraphQLNonNull,
-} = require(`graphql`)
-const GraphQLJSON = require(`graphql-type-json`)
+  GraphQLJSON,
+} = require(`gatsby/graphql`)
 const { stripIndent, oneLine } = require(`common-tags`)
 
 const PropDefaultValue = new GraphQLObjectType({

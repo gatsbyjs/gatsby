@@ -1,5 +1,5 @@
 /*  eslint-disable new-cap */
-const graphql = require(`graphql`)
+const graphql = require(`gatsby/graphql`)
 const murmurhash = require(`./murmur`)
 const nodePath = require(`path`)
 
