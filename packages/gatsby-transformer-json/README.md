@@ -30,9 +30,9 @@ So if your project has a `letters.json` with `[{ "value": "a" }, { "value": "b" 
 
 ```javascript
 [
-  { value: "a", type: "Letters" },
-  { value: "b", type: "Letters" },
-  { value: "c", type: "Letters" },
+  { value: "a" },
+  { value: "b" },
+  { value: "c" },
 ];
 ```
 
@@ -72,15 +72,12 @@ Then the following three nodes would be created.
 [
   {
     value: "a",
-    type: "Letters",
   },
   {
     value: "b",
-    type: "Letters",
   },
   {
     value: "c",
-    type: "Letters",
   },
 ];
 ```
