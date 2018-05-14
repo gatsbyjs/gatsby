@@ -120,9 +120,14 @@ class PageRenderer extends React.Component {
   render() {
     if (!this.state.pageResources) return null
 
+    const pathContext = process.env.NODE_ENV !== `production`
+      ? this.props.pageContext 
+      : this.state.pageResources.json.pageContext
+
     return createElement(this.state.pageResources.component, {
       ...this.props,
       ...this.state.pageResources.json,
+      pathContext,
     })
   }
 }
@@ -130,6 +135,7 @@ class PageRenderer extends React.Component {
 PageRenderer.propTypes = {
   location: PropTypes.object,
   pageResources: PropTypes.object,
+  pageContext: PropTypes.object,
 }
 
 export default polyfill(PageRenderer)
