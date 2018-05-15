@@ -203,7 +203,7 @@ in the middle of the page. To create this, add the following styles to the
 ```jsx{4,25}
 import React from "react"
 
-export default () =>
+export default () => (
   <div style={{ margin: '3rem auto', maxWidth: 600 }}>
     <h1>Richard Hamming on Luck</h1>
     <div>
@@ -226,6 +226,7 @@ export default () =>
     </div>
     <p>Posted April 09, 2011</p>
   </div>
+)
 ```
 
 ![basic-typography-centered](typography-centered.png)
@@ -441,12 +442,12 @@ directory. But, if it's used only in one file, create it inline.
 
 Modify `about-css-modules.js` so it looks like the following:
 
-```jsx{6-19,24-31}
+```jsx{5-17,20,23-32}
 import React from "react"
 import styles from "./about-css-modules.module.css"
 console.log(styles)
 
-const User = props =>
+const User = props => (
   <div className={styles.user}>
     <img src={props.avatar} className={styles.avatar} alt="" />
     <div className={styles.description}>
@@ -458,8 +459,9 @@ const User = props =>
       </p>
     </div>
   </div>
+)
 
-export default () =>
+export default () => (
   <div className={styles.container}>
     <h1>About CSS Modules</h1>
     <p>CSS Modules are cool</p>
@@ -474,6 +476,7 @@ export default () =>
       excerpt="I'm Bob smith, a vertically aligned type of guy. Lorem ipsum dolor sit amet, consectetur adipisicing elit."
     />
   </div>
+)
 ```
 
 The finished page should now look like:
