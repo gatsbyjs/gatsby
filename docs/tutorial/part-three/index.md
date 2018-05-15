@@ -43,7 +43,7 @@ const typography = new Typography(fairyGateTheme)
 export default typography
 ```
 
-Then create our site's `gatsby-config.js` at the root of the site, and add the following code to it:
+Then create your site's `gatsby-config.js` at the root of the site, and add the following code to it:
 
 ```javascript
 module.exports = {
@@ -107,16 +107,16 @@ export default () => (
 
 ![no-layout](no-layout.png)
 
-We now have the start of a nice personal site!
+You now have the start of a nice personal site!
 
 But there are a few problems. First, it'd be nice if the page content was
-centered on the screen like in part two of the tutorial. And second, we should
+centered on the screen like in part two of the tutorial. And second, you should
 really have some sort of global navigation so it's easy for visitors to find and
 visit each of the sub-pages.
 
-Let's tackle these problems by creating our first layout component.
+Let's tackle these problems by creating your first layout component.
 
-## Our first layout component
+## Your first layout component
 
 First, create a new directory at `src/components`.
 
@@ -151,14 +151,14 @@ export default () => (
 
 ![with-layout2](with-layout2.png)
 
-Sweet, the layout is working! Now, our text is centered and constrained to
-a column 650 pixels wide, as we specified.
+Sweet, the layout is working! Now, your text is centered and constrained to
+a column 650 pixels wide, as you specified.
 
 But try navigating to one of the other pages e.g. `/about/`. That page still
 isn't centered. Try now importing and adding the layout component to `about.js` and
 `contact.js`.
 
-Let's now add to the layout component our site title:
+Let's now add to the layout component your site title:
 
 ```jsx{5}
 import React from "react"
@@ -170,12 +170,12 @@ export default ({ children }) =>
   </div>
 ```
 
-If we go to any of our three pages we'll see the same title added e.g. the
+If you go to any of your three pages you'll see the same title added e.g. the
 `/about/` page:
 
 ![with-title](with-title.png)
 
-Let's add navigation links to each of our three pages:
+Let's add navigation links to each of your three pages:
 
 ```jsx{2-9,12-22}
 import React from "react"
@@ -206,7 +206,7 @@ export default ({ children }) =>
 
 ![with-navigation](with-navigation.png)
 
-And there we have it! A three page site with a basic global navigation.
+And there you have it! A three page site with a basic global navigation.
 
 _Challenge:_ With your new "layout component" powers, trying adding headers, footers,
 global navigation, sidebars, etc. to your Gatsby sites!
@@ -214,4 +214,4 @@ global navigation, sidebars, etc. to your Gatsby sites!
 ## What's coming next?
 
 Continue on to
-[part four of the tutorial where we'll start learning about Gatsby's data layer and programmatic pages!](/tutorial/part-four/)
+[part four of the tutorial where you'll start learning about Gatsby's data layer and programmatic pages!](/tutorial/part-four/)
