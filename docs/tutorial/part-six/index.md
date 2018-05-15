@@ -9,7 +9,7 @@ The previous tutorial showed how source plugins bring data _into_ Gatsby’s dat
 
 ## Transformer plugins
 
-Often, the format of the data we get from source plugins isn't what you want to
+Often, the format of the data you get from source plugins isn't what you want to
 use to build your website. The filesystem source plugin lets you query data
 _about_ files but what if you want to query data _inside_ files?
 
@@ -19,8 +19,8 @@ content from source plugins and _transform_ it into something more usable.
 For example, markdown files. Markdown is nice to write in but when you build a
 page with it, you need the markdown to be HTML.
 
-Let's add a markdown file to our site at
-`src/pages/sweet-pandas-eating-sweets.md` (This will become our first markdown
+Let's add a markdown file to your site at
+`src/pages/sweet-pandas-eating-sweets.md` (This will become your first markdown
 blog post) and learn how to _transform_ it to HTML using transformer plugins and
 GraphQL.
 
@@ -81,8 +81,8 @@ at the autocomplete:
 
 ![markdown-autocomplete](markdown-autocomplete.png)
 
-Select `allMarkdownRemark` again and run it like we did for `allFile`. You'll
-see there the markdown file we recently added. Explore the fields that are
+Select `allMarkdownRemark` again and run it like you did for `allFile`. You'll
+see there the markdown file you recently added. Explore the fields that are
 available on the `MarkdownRemark` node.
 
 ![markdown-query](markdown-query.png)
@@ -92,12 +92,12 @@ data _into_ Gatsby's data system and _transformer_ plugins transform raw content
 brought by source plugins. This pattern can handle all data sourcing and
 data transformation you might need when building a Gatsby site.
 
-## Create a list of our site's markdown files in `src/pages/index.js`
+## Create a list of your site's markdown files in `src/pages/index.js`
 
-Let's now create a list of our markdown files on the front page. Like many
-blogs, we want to end up with a list of links on the front page pointing to each
-blog post. With GraphQL we can _query_ for the current list of markdown blog
-posts so we won't need to maintain the list manually.
+Let's now create a list of your markdown files on the front page. Like many
+blogs, you want to end up with a list of links on the front page pointing to each
+blog post. With GraphQL you can _query_ for the current list of markdown blog
+posts so you won't need to maintain the list manually.
 
 Like with the `src/pages/my-files.js` page, replace `src/pages/index.js` with
 the following to add a query with some initial HTML and styling.
@@ -154,7 +154,7 @@ Now the frontpage should look like:
 
 ![frontpage](frontpage.png)
 
-But our one blog post looks a bit lonely. So let's add another one at
+But your one blog post looks a bit lonely. So let's add another one at
 `src/pages/pandas-and-bananas.md`
 
 ```markdown
@@ -176,10 +176,10 @@ Which looks great! Except… the order of the posts is wrong.
 But this is easy to fix. When querying a connection of some type, you can pass a
 variety of arguments to the query. You can `sort` and `filter` nodes, set how
 many nodes to `skip`, and choose the `limit` of how many nodes to retrieve. With
-this powerful set of operators, we can select any data we want—in the format we
+this powerful set of operators, you can select any data you want—in the format you
 need.
 
-In our index page's query, change `allMarkdownRemark` to
+In your index page's query, change `allMarkdownRemark` to
 `allMarkdownRemark(sort: {fields: [frontmatter___date], order: DESC})`. Save
 this and the sort order should be fixed.
 
@@ -194,12 +194,12 @@ Try creating a new page containing a blog post and see what happens to the list 
 
 ## What's coming next?
 
-This is great! We've just created a nice index page where we're querying our markdown
-files and producing a list of blogpost titles and excerpts. But we don't want to just see excerpts, we want actual pages for our markdown files.
+This is great! You've just created a nice index page where you're querying your markdown
+files and producing a list of blogpost titles and excerpts. But you don't want to just see excerpts, you want actual pages for your markdown files.
 
-We could continue to create pages by placing React components in `src/pages`. However, we'll
+You could continue to create pages by placing React components in `src/pages`. However, you'll
 next learn how to _programmatically_ create pages from _data_. Gatsby is _not_
 limited to making pages from files like many static site generators. Gatsby lets
 you use GraphQL to query your _data_ and _map_ the query results to _pages_—all at build
-time. This is a really powerful idea. We'll be exploring its implications and
+time. This is a really powerful idea. You'll be exploring its implications and
 ways to use it in the next tutorial, where you'll learn how to [programmatically create pages from data](/tutorial/part-seven/).
