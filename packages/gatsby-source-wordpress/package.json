@@ -8,7 +8,7 @@
   },
   "bundleDependencies": false,
   "dependencies": {
-    "@babel/runtime": "7.0.0-beta.42",
+    "@babel/runtime": "7.0.0-beta.47",
     "axios": "^0.18.0",
     "better-queue": "^3.8.6",
     "bluebird": "^3.5.0",
@@ -22,8 +22,8 @@
   },
   "deprecated": false,
   "devDependencies": {
-    "@babel/cli": "7.0.0-beta.42",
-    "@babel/core": "7.0.0-beta.42",
+    "@babel/cli": "7.0.0-beta.47",
+    "@babel/core": "7.0.0-beta.47",
     "cross-env": "^5.1.4"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress#readme",

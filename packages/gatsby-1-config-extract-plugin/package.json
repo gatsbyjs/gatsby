@@ -7,11 +7,12 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "babel-runtime": "^6.26.0",
+    "@babel/runtime": "7.0.0-beta.47",
     "extract-text-webpack-plugin": "^1.0.1"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
+    "@babel/cli": "7.0.0-beta.47",
+    "@babel/core": "7.0.0-beta.47",
     "cross-env": "^5.0.5"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-1-config-extract-plugin#readme",
