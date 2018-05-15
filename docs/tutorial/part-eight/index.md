@@ -3,7 +3,7 @@ title: Preparing a site to go live
 typora-copy-images-to: ./
 ---
 
-Wow! We've come a long way! We've learned how to:
+Wow! You've come a long way! You've learned how to:
 
 * create new Gatsby sites
 * create pages and components
@@ -11,7 +11,7 @@ Wow! We've come a long way! We've learned how to:
 * add plugins to a site
 * source & transform data
 * use GraphQL to query data for pages
-* how to programatically create pages from our data.
+* programmatically create pages from your data
 
 All the voices in your head are super proud of you (as am I, the anonymous tutorial instructor)! They rise in great applause! Feel free to take a moment to bow and acknolwedge their admiration 🙇
 
@@ -29,13 +29,13 @@ Lighthouse is included as part of Chrome DevTools. Running its audit and fixing 
 
 Let's try it out!
 
-First we need to create a production build of our Gatsby site. The Gatsby development server is optimized for making development fast but the site that it generates, while it closely resembles a production version of the site, isn't as optimized.
+First you need to create a production build of your Gatsby site. The Gatsby development server is optimized for making development fast but the site that it generates, while it closely resembles a production version of the site, isn't as optimized.
 
 Stop the development server (if it's still running) and run:
 
 `gatsby build`
 
-As we learned in part 1 of the tutorial, this does a production build
+As you learned in part 1 of the tutorial, this does a production build
 of your site and outputs the built static files into the `public` directory.
 
 To view the production site locally run:
@@ -44,7 +44,7 @@ To view the production site locally run:
 
 Once this starts, you can now view your site at `localhost:9000`.
 
-Now let's run our first Lighthouse test. To do so, open the site in Chrome (if you didn't already do so) and then open up the Chrome DevTools. Now click on the "Audits" tab where you'll see a screen that looks like:
+Now let's run your first Lighthouse test. To do so, open the site in Chrome (if you didn't already do so) and then open up the Chrome DevTools. Now click on the "Audits" tab where you'll see a screen that looks like:
 
 ![Lighthouse audit start](./lighthouse-audit.png)
 
