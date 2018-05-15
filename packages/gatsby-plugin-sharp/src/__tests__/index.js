@@ -1,5 +1,11 @@
 const path = require(`path`)
 
+jest.mock(`async/queue`, () => () => {
+  return {
+    push: jest.fn(),
+  }
+})
+
 const {
   base64,
   responsiveSizes,
