@@ -141,7 +141,6 @@
     "@babel/preset-react": "7.0.0-beta.42",
     "@babel/runtime": "7.0.0-beta.42",
     "cross-env": "^5.1.4",
-    "eslint-plugin-react": "^7.8.2",
     "jest": "^22.4.3",
     "lerna": "^2.9.0",
     "nyc": "^7.0.0",
