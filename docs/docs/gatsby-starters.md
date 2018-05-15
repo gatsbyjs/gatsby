@@ -672,3 +672,19 @@ Community:
   * Google Analytics integration
   * Open Sans font using Google Fonts
   * Prerendered Open Graph tags for rich sharing
+
+* [gatsby-starter-modern](https://github.com/kripod/gatsby-starter-modern)
+  [(demo)](https://gatsby-starter-modern-demo.netlify.com/)
+
+  Features:
+
+  * Built on the upcoming version of Gatsby
+  * A set of strict linting rules (based on the [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript))
+    * `lint` script
+  * Encourage automatic code formatting
+    * `format` script
+  * Prefer using [Yarn](https://yarnpkg.com) for package management
+  * Use [EditorConfig](http://editorconfig.org) to maintain consistent coding styles between different editors and IDEs
+  * Integration with [Visual Studio Code](https://code.visualstudio.com)
+    * Pre-configured auto-formatting on file save
+  * Based on [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default)
