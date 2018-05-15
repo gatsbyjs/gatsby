@@ -241,11 +241,12 @@ Then edit the two components:
 
 `src/pages/about.js`
 
-```jsx{3,5-7,14-23}
+```jsx{4,6-8,15-24}
 import React from "react"
+import Layout from "../components/layout"
 
-export default ({ data }) =>
-  <div>
+export default ({ data }) => (
+  <Layout>
     <h1>
       About {data.site.siteMetadata.title}
     </h1>
@@ -253,7 +254,8 @@ export default ({ data }) =>
       We're the only site running on your computer dedicated to showing the best
       photos and videos of pandas eating lots of food.
     </p>
-  </div>
+  </Layout>
+)
 
 export const query = graphql`
   query AboutQuery {
@@ -268,7 +270,7 @@ export const query = graphql`
 
 `src/components/layout.js`
 
-```jsx{4,10-21,28-33,39}
+```jsx{4,11-21,34,42-43}
 import React from "react"
 import g from "glamorous"
 import { css } from "glamor"
@@ -278,7 +280,7 @@ import { rhythm } from "../utils/typography"
 
 const linkStyle = css({ float: `right` })
 
-export default ({ children }) =>
+export default ({ children }) => (
   <StaticQuery
     query={graphql`
       query LayoutQuery {
@@ -289,7 +291,7 @@ export default ({ children }) =>
         }
       }
     `}
-    render={data =>
+    render={data => (
       <g.Div
         margin={`0 auto`}
         maxWidth={700}
@@ -297,7 +299,11 @@ export default ({ children }) =>
         paddingTop={rhythm(1.5)}
       >
         <Link to={`/`}>
-          <g.H3 marginBottom={rhythm(2)} display={`inline-block`}>
+          <g.H3
+            marginBottom={rhythm(2)}
+            display={`inline-block`}
+            fontStyle={`normal`}
+          >
             {data.site.siteMetadata.title}
           </g.H3>
         </Link>
@@ -306,8 +312,9 @@ export default ({ children }) =>
         </Link>
         {children}
       </g.Div>
-    }
+    )}
   />
+)
 ```
 
 It worked!! 🎉
