@@ -112,14 +112,15 @@ Change the color to "pink". Then to "tomato".
 
 2.  Add some paragraph text.
 
-```jsx{5-6}
+```jsx{3,5-6,8}
 import React from "react"
 
-export default () =>
- <div style={{ color: `tomato` }}>
-   <h1>Hello Gatsby!</h1>
-   <p>What a world.</p>
- </div>
+export default () => (
+  <div style={{ color: `tomato` }}>
+    <h1>Hello Gatsby!</h1>
+    <p>What a world.</p>
+  </div>
+)
 ```
 
 3.  Add an image (in this case, a random one from Unsplash)
@@ -127,12 +128,13 @@ export default () =>
 ```jsx{7}
 import React from "react"
 
-export default () =>
- <div style={{ color: `tomato` }}>
-   <h1>Hello Gatsby!</h1>
-   <p>What a world.</p>
-   <img src="https://source.unsplash.com/random/400x200" alt="" />
- </div>
+export default () => (
+  <div style={{ color: `tomato` }}>
+    <h1>Hello Gatsby!</h1>
+    <p>What a world.</p>
+    <img src="https://source.unsplash.com/random/400x200" alt="" />
+  </div>
+)
 ```
 
 Now your screen should look something like this:
@@ -159,7 +161,7 @@ like:
 import React from "react"
 import { Link } from "gatsby"
 
-export default () =>
+export default () => (
   <div style={{ color: `tomato` }}>
     <h1>Hello Gatsby!</h1>
     <p>What a world.</p>
@@ -169,6 +171,7 @@ export default () =>
       <Link to="/page-2/">Link</Link>
     </div>
   </div>
+)
 ```
 
 If you click on that link in the browser you should see:
@@ -216,7 +219,7 @@ You'll start by creating a new link to a page at `/counter`/ from your original
 import React from "react"
 import { Link } from "gatsby"
 
-export default () =>
+export default () => (
   <div style={{ color: `tomato` }}>
     <h1>Hello Gatsby!</h1>
     <p>What a world.</p>
@@ -229,6 +232,7 @@ export default () =>
       <Link to="/counter/">Counter</Link>
     </div>
   </div>
+)
 ```
 
 Add that link, click on it, and then you'll create a "Hello World" page component
