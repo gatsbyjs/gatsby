@@ -20,10 +20,10 @@ You can access it when your site's development server is running—normally at
   <p>Your browser does not support the video element.</p>
 </video>
 
-Here we poke around the built-in `Site` "type" and see what fields are available
-on it—including the `siteMetadata` object we queried earlier. Try opening
+Here you poke around the built-in `Site` "type" and see what fields are available
+on it—including the `siteMetadata` object you queried earlier. Try opening
 Graph_i_QL and play with your data! Press <kbd>Ctrl + Space</kbd> to bring up
-the autocomplete window and <kbd>Ctrl + Enter</kbd> to run the query. We'll be
+the autocomplete window and <kbd>Ctrl + Enter</kbd> to run the query. You'll be
 using Graph_i_QL a lot more through the remainder of the tutorial.
 
 ## Source plugins
@@ -93,7 +93,7 @@ each time to re-run the query. You'll see something like this:
 ![allfile-query](allfile-query.png)
 
 The result is an array of File "nodes" (node is a fancy name for an object in a
-"graph"). Each File object has the fields we queried for.
+"graph"). Each File object has the fields you queried for.
 
 ## Build a page with a GraphQL query
 
@@ -103,7 +103,7 @@ to start building the UI.
 
 Let's try this.
 
-Create a new file at `src/pages/my-files.js` with the `allFile` query we just
+Create a new file at `src/pages/my-files.js` with the `allFile` query you just
 created:
 
 ```jsx{5}
@@ -142,7 +142,7 @@ you will see something like:
 
 The shape of the data matches the shape of the query.
 
-Let's add some code to our component to print out the File data.
+Let's add some code to your component to print out the File data.
 
 ```jsx{7-39}
 import React from "react"
