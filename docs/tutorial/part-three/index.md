@@ -70,8 +70,8 @@ export default () => (
   <div>
     <h1>Hi! I'm building a fake Gatsby site as part of a tutorial!</h1>
     <p>
-      What do I like to do? Lots of course but definitely enjoy building
-      websites.
+      What do I like to do? Lots of course but definitely enjoy
+      building websites.
     </p>
   </div>
 )
@@ -136,18 +136,20 @@ Now you need to import this new layout component into your page components.
 
 Change `src/pages/index.js` to look like:
 
-```jsx{5,8}
+```jsx{2,5,11}
 import React from "react"
 import Layout from "../components/layout"
 
 export default () => (
   <Layout>
     <h1>Hi! I'm building a fake Gatsby site as part of a tutorial!</h1>
-    <p>What do I like to do? Lots of course but definitely enjoy building      websites.</p>
-  </Layout>)
+    <p>
+      What do I like to do? Lots of course but definitely enjoy
+      building websites.
+    </p>
+  </Layout>
+)
 ```
-
-
 
 ![with-layout2](with-layout2.png)
 
@@ -163,11 +165,12 @@ Let's now add to the layout component your site title:
 ```jsx{5}
 import React from "react"
 
-export default ({ children }) =>
+export default ({ children }) => (
   <div style={{ margin: `0 auto`, maxWidth: 650, padding: `0 1rem` }}>
     <h3>MySweetSite</h3>
     {children}
   </div>
+)
 ```
 
 If you go to any of your three pages you'll see the same title added e.g. the
@@ -177,18 +180,21 @@ If you go to any of your three pages you'll see the same title added e.g. the
 
 Let's add navigation links to each of your three pages:
 
-```jsx{2-9,12-22}
+`src/components/layout.js`
+
+```jsx{2-10,13-23}
 import React from "react"
 import { Link } from "gatsby"
 
-const ListLink = props =>
+const ListLink = props => (
   <li style={{ display: `inline-block`, marginRight: `1rem` }}>
     <Link to={props.to}>
       {props.children}
     </Link>
   </li>
+)
 
-export default ({ children }) =>
+export default ({ children }) => (
   <div style={{ margin: `0 auto`, maxWidth: 650, padding: `1.25rem 1rem` }}>
     <header style={{ marginBottom: `1.5rem` }}>
       <Link to="/" style={{ textShadow: `none`, backgroundImage: `none` }}>
@@ -202,6 +208,7 @@ export default ({ children }) =>
     </header>
     {children}
   </div>
+)
 ```
 
 ![with-navigation](with-navigation.png)
