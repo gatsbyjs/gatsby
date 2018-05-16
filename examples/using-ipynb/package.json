@@ -1,0 +1,33 @@
+{
+  "name": "gatsby-example-using-ipynb",
+  "private": true,
+  "description": "Gatsby example site using the ipynb plugin",
+  "version": "1.0.0",
+  "author": "Benjamin Abel <dev.abel@laposte.net>",
+  "dependencies": {
+    "gatsby": "latest",
+    "gatsby-link": "latest",
+    "gatsby-source-filesystem": "latest",
+    "gatsby-transformer-ipynb": "file:../../packages/gatsby-transformer-ipynb",
+    "@nteract/notebook-preview": "^7.1.1",
+    "styled-jsx": "^2.2.6"
+  },
+  "keywords": [
+    "gatsby"
+  ],
+  "license": "MIT",
+  "main": "n/a",
+  "scripts": {
+    "build": "gatsby build",
+    "develop": "gatsby develop",
+    "format": "prettier --write 'src/**/*.js'",
+    "prettier-watch": "onchange 'src/**/*.(js|md)' -- prettier --write {{changed}}",
+    "watch-plugin": "rm -rf .cache;cd ../../packages/gatsby-transformer-ipynb/;npm run watch",
+    "start": "concurrently --kill-others \"npm run prettier-watch\" \"npm run develop\" \"npm run watch-plugin\""
+  },
+  "devDependencies": {
+    "concurrently": "^3.5.1",
+    "onchange": "^3.3.0",
+    "prettier": "^1.12.0"
+  }
+}

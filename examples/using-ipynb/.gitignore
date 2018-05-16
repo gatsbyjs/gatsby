@@ -1,0 +1,16 @@
+# Project dependencies
+.cache
+node_modules
+yarn-error.log
+
+# Builds
+/public
+.DS_Store
+
+# override ignore rule
+!.index.js
+
+# notebook checkpoints
+.ipynb_checkpoints
+
+

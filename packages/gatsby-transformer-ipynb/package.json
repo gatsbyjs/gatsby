@@ -1,0 +1,45 @@
+{
+  "author": {
+    "name": "Benjamin Abel",
+    "email": "dev.abel@laposte.net"
+  },
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "dependencies": {
+    "graphql-type-json": "^0.2.1"
+  },
+  "deprecated": false,
+  "description": "Gatsby transformer plugin for jupyter notebooks",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "bluebird": "^3.5.1",
+    "concurrently": "^3.5.1",
+    "cross-env": "^5.1.5",
+    "lodash": "^4.17.10",
+    "onchange": "^4.0.0",
+    "prettier": "^1.12.1"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-ipynb#readme",
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "jupyter",
+    "notebook"
+  ],
+  "license": "MIT",
+  "name": "gatsby-transformer-ipynb",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-ipynb"
+  },
+  "scripts": {
+    "build": "babel src --out-dir . --ignore __tests__",
+    "prepublish": "cross-env NODE_ENV=production npm run build",
+    "build-watch": "babel -w src --out-dir . --ignore __tests__",
+    "prettier-watch": "onchange 'src/**/*.js' -- prettier --write {{changed}}",
+    "watch": "concurrently --kill-others \"npm run prettier-watch\" \"npm run build-watch\"",
+    "test": "jest"
+  },
+  "version": "0.1.0"
+}
