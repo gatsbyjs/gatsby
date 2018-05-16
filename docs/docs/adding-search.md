@@ -15,21 +15,25 @@ Then there are two ways to add search to your site:
 1. Use an open source search engine
 2. Use an API-based search engine 
 
-# Search Index
+# Site search components
+
+## Search Index
 
 The search index is a copy of your data stored in a search-friendly format. The purpose of storing an index is to optimize speed and performance in finding relevant documents for a search query. Without an index, every search would need to scan every page in your site, which would be too slow.
 
-# Search engine
+## Search engine
 
 The search engine takes a search query, runs it through the search index, and returns any matching documents.
 
-# Visual component
+## Visual component
 
 The visual component provides an interface to the user, which allows them to write search queries and view the restuls of each query.
 
+# Adding search to your site
+
 Now that you know the three required components, there are few ways to approach adding search to your Gatsby-powered site.
 
-# Use an open source search engine
+## Use an open source search engine
 
 Using an open source search engine is always free and allows you to enable offline search for your site. Note that you need to be careful with offline search because the entire search index has to be brought into the client, which can affect the bundle size significantly.
 
@@ -41,7 +45,7 @@ For other libraries, you can use a combination of [`onCreateNode`](https://www.g
 
 After building the search index and including it in Gatsby's data layer, you will need to allow the user to search your website. This is typically done by using a text input to capture the search query, then using one of the libraries mentioned above to retrieve the desired document(s).
 
-# Use an API-based search engine 
+## Use an API-based search engine 
 
 Using an API-based search engine like Algolia means visitors to your site don't have to download your whole search index (which can become quite large) in order to search your site. The trade-off is that Algolia is a commercial service, so in many cases you'll need to pay to use it.
 
