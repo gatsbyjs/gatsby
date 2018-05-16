@@ -23,6 +23,8 @@ Often you want to create a site with client-only portions that are gated by auth
 
 A classic example would be a site that has a landing page, various marketing pages, a login page, and then an app section for logged-in users. The logged-in section doesn't need to be server rendered as all data will be loaded live from your API after the user logs so it makes sense to make this portion of your site client-only.
 
+Gatsby uses [React Router](https://reacttraining.com/react-router/) under the hood. You should use React Router to create client-only routes.
+
 These routes will exist on the client only and will not correspond to index.html files in an app's built assets. If you wish people to visit client routes directly, you'll need to setup your server to handle these correctly.
 
 To create client-only routes, you want to add code to your site's `gatsby-node.js` like the following:
