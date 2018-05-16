@@ -1,6 +1,5 @@
 import React from "react"
 import Helmet from "react-helmet"
-import { OutboundLink } from "gatsby-plugin-google-analytics"
 
 import { rhythm, options } from "../utils/typography"
 import presets, { colors } from "../utils/presets"

@@ -673,8 +673,15 @@ actions.createNodeField = (
     node.fields = {}
   }
 
+  /**
+   * Normalized name of the field that will be used in schema
+   */
+  const schemaFieldName = _.includes(name, `___NODE`)
+    ? name.split(`___`)[0]
+    : name
+
   // Check that this field isn't owned by another plugin.
-  const fieldOwner = node.internal.fieldOwners[name]
+  const fieldOwner = node.internal.fieldOwners[schemaFieldName]
   if (fieldOwner && fieldOwner !== plugin.name) {
     throw new Error(
       stripIndent`
@@ -690,7 +697,7 @@ actions.createNodeField = (
 
   // Update node
   node.fields[name] = value
-  node.internal.fieldOwners[name] = plugin.name
+  node.internal.fieldOwners[schemaFieldName] = plugin.name
 
   return {
     type: `ADD_FIELD_TO_NODE`,

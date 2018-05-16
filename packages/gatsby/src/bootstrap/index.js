@@ -69,10 +69,10 @@ module.exports = async (args: BootstrapArgs) => {
   activity.end()
 
   // Try opening the site's gatsby-config.js file.
-  activity = report.activityTimer(`open and validate gatsby-config.js`)
+  activity = report.activityTimer(`open and validate gatsby-config`)
   activity.start()
   const config = await preferDefault(
-    getConfigFile(program.directory, `gatsby-config.js`)
+    getConfigFile(program.directory, `gatsby-config`)
   )
 
   if (config && config.polyfill) {
@@ -184,7 +184,7 @@ module.exports = async (args: BootstrapArgs) => {
 
     const envAPIs = plugin[`${env}APIs`]
     if (envAPIs && Array.isArray(envAPIs) && envAPIs.length > 0) {
-      return slash(path.join(plugin.resolve, `gatsby-${env}.js`))
+      return slash(path.join(plugin.resolve, `gatsby-${env}`))
     }
     return undefined
   }

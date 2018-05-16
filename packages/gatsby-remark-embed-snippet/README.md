@@ -116,6 +116,8 @@ quz: "highlighted"
 
 ## How to use
 
+Important: This module must appear before `gatsby-remark-prismjs` in your plugins array, or the markup will have already been transformed into a code block and this plugin will fail to detect it and inline the file.  
+
 ```javascript
 // In your gatsby-config.js
 module.exports = {

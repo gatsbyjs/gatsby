@@ -153,34 +153,37 @@ const extractFieldExamples = (nodes: object[], selector: string) => {
   // get list of keys in all nodes
   const allKeys = _.uniq(_.flatten(nodes.map(_.keys)))
 
-  return _.zipObject(
-    allKeys,
-    allKeys.map(key => {
-      const nextSelector = selector && `${selector}.${key}`
+  return _.pickBy(
+    _.zipObject(
+      allKeys,
+      allKeys.map(key => {
+        const nextSelector = selector && `${selector}.${key}`
 
-      const nodeWithValues = nodes.filter(node => {
-        if (!node) return false
+        const nodeWithValues = nodes.filter(node => {
+          if (!node) return false
 
-        const value = node[key]
-        if (_.isObject(value)) {
-          return !isEmptyObjectOrArray(value)
-        } else {
-          return isDefined(value)
-        }
+          const value = node[key]
+          if (_.isObject(value)) {
+            return !isEmptyObjectOrArray(value)
+          } else {
+            return isDefined(value)
+          }
+        })
+
+        // we want to keep track of nodes as we need it to get origin of data
+        const entries = nodeWithValues.map(node => {
+          const value = node[key]
+          return {
+            value,
+            parent: node,
+            ...extractTypes(value),
+          }
+        })
+
+        return extractFromEntries(entries, nextSelector, key)
       })
-
-      // we want to keep track of nodes as we need it to get origin of data
-      const entries = nodeWithValues.map(node => {
-        const value = node[key]
-        return {
-          value,
-          parent: node,
-          ...extractTypes(value),
-        }
-      })
-
-      return extractFromEntries(entries, nextSelector, key)
-    })
+    ),
+    isDefined
   )
 }
 

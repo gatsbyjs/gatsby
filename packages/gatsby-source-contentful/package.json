@@ -11,7 +11,7 @@
     "axios": "^0.18.0",
     "base64-img": "^1.0.3",
     "bluebird": "^3.5.0",
-    "contentful": "^4.3.0",
+    "contentful": "^6.1.0",
     "deep-map": "^1.5.0",
     "fs-extra": "^4.0.2",
     "json-stringify-safe": "^5.0.1",
