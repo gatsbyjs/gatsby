@@ -1,8 +1,8 @@
 {
   "name": "gatsby-plugin-styletron",
-  "description": "Stub description for gatsby-plugin-styletron",
+  "description": "A Gatsby plugin for styletron with built-in server-side rendering support",
   "version": "1.0.13-8",
-  "author": "Nadiia Dmytrenko &lt;nadiia.dmytrenko@gmail.com&gt;",
+  "author": "Nadiia Dmytrenko <nadiia.dmytrenko@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },

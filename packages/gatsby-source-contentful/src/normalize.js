@@ -11,20 +11,35 @@ const digest = str =>
 const typePrefix = `Contentful`
 const makeTypeName = type => _.upperFirst(_.camelCase(`${typePrefix} ${type}`))
 
-const getLocalizedField = ({ field, defaultLocale, locale }) => {
+const getLocalizedField = ({ field, locale, localesFallback }) => {
   if (!_.isUndefined(field[locale.code])) {
     return field[locale.code]
-  } else if (!_.isUndefined(field[locale.fallbackCode])) {
-    return field[locale.fallbackCode]
+  } else if (
+    !_.isUndefined(locale.code) &&
+    !_.isUndefined(localesFallback[locale.code])
+  ) {
+    return getLocalizedField({
+      field,
+      locale: { code: localesFallback[locale.code] },
+      localesFallback,
+    })
   } else {
     return null
   }
 }
-
-const makeGetLocalizedField = ({ locale, defaultLocale }) => field =>
-  getLocalizedField({ field, locale, defaultLocale })
+const buildFallbackChain = locales => {
+  const localesFallback = {}
+  _.each(
+    locales,
+    locale => (localesFallback[locale.code] = locale.fallbackCode)
+  )
+  return localesFallback
+}
+const makeGetLocalizedField = ({ locale, localesFallback }) => field =>
+  getLocalizedField({ field, locale, localesFallback })
 
 exports.getLocalizedField = getLocalizedField
+exports.buildFallbackChain = buildFallbackChain
 
 // If the id starts with a number, left-pad it with a c (for Contentful of
 // course :-))
@@ -203,12 +218,17 @@ exports.createContentTypeNodes = ({
 }) => {
   const contentTypeItemId = contentTypeItem.name
   locales.forEach(locale => {
+    const localesFallback = buildFallbackChain(locales)
     const mId = makeMakeId({
       currentLocale: locale.code,
       defaultLocale,
       createNodeId,
     })
-    const getField = makeGetLocalizedField({ locale, defaultLocale })
+    const getField = makeGetLocalizedField({
+      locale,
+      localesFallback,
+      defaultLocale,
+    })
 
     // Warn about any field conflicts
     const conflictFields = []
@@ -411,12 +431,17 @@ exports.createAssetNodes = ({
   locales,
 }) => {
   locales.forEach(locale => {
+    const localesFallback = buildFallbackChain(locales)
     const mId = makeMakeId({
       currentLocale: locale.code,
       defaultLocale,
       createNodeId,
     })
-    const getField = makeGetLocalizedField({ locale, defaultLocale })
+    const getField = makeGetLocalizedField({
+      locale,
+      localesFallback,
+      defaultLocale,
+    })
 
     const localizedAsset = { ...assetItem }
     // Create a node for each asset. They may be referenced by Entries
