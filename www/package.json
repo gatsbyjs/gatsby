@@ -11,6 +11,7 @@
     "gatsby-plugin-canonical-urls": "next",
     "gatsby-plugin-catch-links": "next",
     "gatsby-plugin-feed": "next",
+    "gatsby-plugin-fullstory": "^1.0.4-5",
     "gatsby-plugin-glamor": "next",
     "gatsby-plugin-google-analytics": "next",
     "gatsby-plugin-lodash": "next",
