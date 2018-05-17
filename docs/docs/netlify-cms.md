@@ -63,6 +63,7 @@ backend:
   name: test-repo
 
 media_folder: static/assets
+public_folder: assets
 
 collections:
   - name: blog
@@ -73,6 +74,7 @@ collections:
       - { name: path, label: Path }
       - { name: date, label: Date, widget: date }
       - { name: title, label: Title }
+      - { name: body, label: Body, widget: markdown }
 ```
 
 Then in your terminal run `gatsby develop` to start the Gatsby development server. Once the server

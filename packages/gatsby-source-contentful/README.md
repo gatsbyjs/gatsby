@@ -81,7 +81,8 @@ if you have `Product` as one of your content types, you will be able to query it
 like the following:
 
 ```graphql
-allContentfulProduct {
+{
+  allContentfulProduct {
     edges {
       node {
         id

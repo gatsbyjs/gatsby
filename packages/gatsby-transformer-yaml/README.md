@@ -130,7 +130,7 @@ single objects, you'd be able to query your letters like:
   allLettersYaml {
     edges {
       node {
-        value
+        character
       }
     }
   }

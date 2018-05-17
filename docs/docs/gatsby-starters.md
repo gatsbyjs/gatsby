@@ -168,6 +168,17 @@ Community:
 
   * TypeScript
 
+* [gatsby-starter-bulma-storybook](https://github.com/gvaldambrini/gatsby-starter-bulma-storybook)
+  [(demo)](http://gatsby-bulma-storybook.surge.sh/)
+
+  Features:
+
+  * Storybook for developing components in isolation
+  * Bulma and Sass support for styling
+  * CSS modules
+  * Prettier & eslint to format & check the code
+  * Jest
+
 * [gatsby-starter-default-i18n](https://github.com/angeloocana/gatsby-starter-default-i18n)
   [(demo)](https://gatsby-starter-default-i18n.netlify.com)
 
@@ -617,7 +628,7 @@ Community:
   * Disqus and Share Support
 
 * [gatsby-advanced-blog](https://github.com/wonism/gatsby-advanced-blog)
-  [(demo)](https://kind-cori-836fe1.netlify.com/)
+  [(demo)](https://wonism.github.io/)
 
   Features:
 
@@ -661,3 +672,19 @@ Community:
   * Google Analytics integration
   * Open Sans font using Google Fonts
   * Prerendered Open Graph tags for rich sharing
+
+* [gatsby-starter-modern](https://github.com/kripod/gatsby-starter-modern)
+  [(demo)](https://gatsby-starter-modern-demo.netlify.com/)
+
+  Features:
+
+  * Built on the upcoming version of Gatsby
+  * A set of strict linting rules (based on the [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript))
+    * `lint` script
+  * Encourage automatic code formatting
+    * `format` script
+  * Prefer using [Yarn](https://yarnpkg.com) for package management
+  * Use [EditorConfig](http://editorconfig.org) to maintain consistent coding styles between different editors and IDEs
+  * Integration with [Visual Studio Code](https://code.visualstudio.com)
+    * Pre-configured auto-formatting on file save
+  * Based on [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default)
