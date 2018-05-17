@@ -1,7 +1,6 @@
 import React, { Component } from "react"
 import presets, { colors } from "../utils/presets"
 import EvaluationCell from "./evaluation-cell"
-import { Link } from "gatsby"
 import infoIcon from "../assets/info-icon.svg"
 import SectionTitle from "./evaluation-table-section-title"
 import SectionHeaderTop from "./evaluation-table-section-header-top"

@@ -1,8 +1,7 @@
 import React from "react"
 import Helmet from "react-helmet"
 
-import { rhythm, options } from "../utils/typography"
-import presets, { colors } from "../utils/presets"
+import presets from "../utils/presets"
 import Navigation from "../components/navigation"
 import MobileNavigation from "../components/navigation-mobile"
 import "../css/prism-coy.css"
@@ -20,6 +19,7 @@ import "typeface-space-mono"
 class DefaultLayout extends React.Component {
   render() {
     const isHomepage = this.props.location.pathname === `/`
+    // TODO: isBlogLanding is unused var, is this still needed?
     const isBlogLanding = this.props.location.pathname === `/blog/`
 
     return (
