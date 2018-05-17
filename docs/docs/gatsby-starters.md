@@ -710,7 +710,7 @@ Community:
   * App favicons generator (node script)
   * Easy customizable base styles via `theme` object generated from `yaml` file (fonts, colors, sizes)
   * React v.16.3 (gatsby-plugin-react-next)
-  * Components leazy loading (social sharing)
+  * Components lazy loading (social sharing)
   * ESLint (google config)
   * Prettier code styling
   * Webpack `BundleAnalyzerPlugin`
