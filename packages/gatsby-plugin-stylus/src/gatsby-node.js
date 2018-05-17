@@ -20,7 +20,7 @@
  * ],
  */
 
-const resolve = require("./resolve")
+const resolve = require(`./resolve`)
 
 exports.onCreateWebpackConfig = (
   { actions, stage, rules, plugins, loaders },
