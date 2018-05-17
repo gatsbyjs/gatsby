@@ -25,7 +25,7 @@ about: Usage question or discussion about Gatsby.
 <!-- Provide as much useful information as you can -->
 
 
-### Environment
+### Environment (if relevant)
 * Gatsby version (`npm list gatsby`):
 * gatsby-cli version (`gatsby --version`):
 * Node.js version:
