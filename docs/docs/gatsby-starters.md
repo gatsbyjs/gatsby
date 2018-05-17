@@ -340,7 +340,7 @@ Community:
   * PWA (manifes.json, offline support, favicons)
   * Google Analytics
   * Favicons generator (node script)
-  * Components leazy loading with AsyncComponent (social sharing, info box)
+  * Components lazy loading with AsyncComponent (social sharing, info box)
   * ESLint (google config)
   * Prettier code styling
   * Custom webpack CommonsChunkPlugin settings
