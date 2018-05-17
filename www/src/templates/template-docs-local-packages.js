@@ -1,6 +1,7 @@
 import React from "react"
 import _ from "lodash"
 
+import GlobalLayout from "../layouts"
 import PackageReadme from "../components/package-readme"
 
 class DocsLocalPackagesTemplate extends React.Component {
@@ -26,43 +27,45 @@ class DocsLocalPackagesTemplate extends React.Component {
     }
 
     return (
-      <PackageReadme
-        page={markdownRemark ? _.pick(markdownRemark, `parent`) : false}
-        packageName={
-          markdownRemark
-            ? markdownRemark.fields.title
-            : markdownRemarkNotFound.fields.title
-        }
-        excerpt={
-          markdownRemark
-            ? markdownRemark.excerpt
-            : markdownRemarkNotFound.excerpt
-        }
-        html={
-          markdownRemark ? markdownRemark.html : markdownRemarkNotFound.html
-        }
-        githubUrl={`https://github.com/gatsbyjs/gatsby/tree/master/packages/${
-          markdownRemark
-            ? markdownRemark.fields.title
-            : markdownRemarkNotFound.fields.title
-        }`}
-        timeToRead={
-          markdownRemark
-            ? markdownRemark.timeToRead
-            : markdownRemarkNotFound.timeToRead
-        }
-        modified={
-          npmPackage ? npmPackage.modified : npmPackageNotFound.modified
-        }
-        keywords={
-          npmPackage ? npmPackage.keywords : npmPackageNotFound.keywords
-        }
-        lastPublisher={
-          npmPackage
-            ? npmPackage.lastPublisher
-            : npmPackageNotFound.lastPublisher
-        }
-      />
+      <GlobalLayout location={this.props.location}>
+        <PackageReadme
+          page={markdownRemark ? _.pick(markdownRemark, `parent`) : false}
+          packageName={
+            markdownRemark
+              ? markdownRemark.fields.title
+              : markdownRemarkNotFound.fields.title
+          }
+          excerpt={
+            markdownRemark
+              ? markdownRemark.excerpt
+              : markdownRemarkNotFound.excerpt
+          }
+          html={
+            markdownRemark ? markdownRemark.html : markdownRemarkNotFound.html
+          }
+          githubUrl={`https://github.com/gatsbyjs/gatsby/tree/master/packages/${
+            markdownRemark
+              ? markdownRemark.fields.title
+              : markdownRemarkNotFound.fields.title
+          }`}
+          timeToRead={
+            markdownRemark
+              ? markdownRemark.timeToRead
+              : markdownRemarkNotFound.timeToRead
+          }
+          modified={
+            npmPackage ? npmPackage.modified : npmPackageNotFound.modified
+          }
+          keywords={
+            npmPackage ? npmPackage.keywords : npmPackageNotFound.keywords
+          }
+          lastPublisher={
+            npmPackage
+              ? npmPackage.lastPublisher
+              : npmPackageNotFound.lastPublisher
+          }
+        />
+      </GlobalLayout>
     )
   }
 }

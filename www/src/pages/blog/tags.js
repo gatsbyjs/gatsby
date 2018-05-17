@@ -7,6 +7,7 @@ import kebabCase from "lodash/kebabCase"
 // Components
 import Helmet from "react-helmet"
 import Link from "gatsby-link"
+import GlobalLayout from "../../layouts"
 import Container from "../../components/container"
 
 const TagsPage = ({
@@ -16,8 +17,9 @@ const TagsPage = ({
       siteMetadata: { title },
     },
   },
+  location,
 }) => (
-  <div>
+  <GlobalLayout location={location}>
     <Container>
       <Helmet title={title} />
       <div>
@@ -33,7 +35,7 @@ const TagsPage = ({
         </ul>
       </div>
     </Container>
-  </div>
+  </GlobalLayout>
 )
 
 TagsPage.propTypes = {

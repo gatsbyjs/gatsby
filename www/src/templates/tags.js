@@ -2,10 +2,10 @@ import React from "react"
 import PropTypes from "prop-types"
 import Container from "../components/container"
 
-// Components
 import Link from "gatsby-link"
+import GlobalLayout from "../layouts"
 
-const Tags = ({ pageContext, data }) => {
+const Tags = ({ pageContext, data, location }) => {
   const { tag } = pageContext
   const { edges, totalCount } = data.allMarkdownRemark
   const tagHeader = `${totalCount} post${
@@ -13,7 +13,7 @@ const Tags = ({ pageContext, data }) => {
   } tagged with "${tag}"`
 
   return (
-    <div>
+    <GlobalLayout location={location}>
       <Container>
         <h1>{tagHeader}</h1>
         <ul>
@@ -31,7 +31,7 @@ const Tags = ({ pageContext, data }) => {
         </ul>
         <Link to="/blog/tags">All tags</Link>
       </Container>
-    </div>
+    </GlobalLayout>
   )
 }
 
@@ -46,7 +46,6 @@ Tags.propTypes = {
         PropTypes.shape({
           node: PropTypes.shape({
             frontmatter: PropTypes.shape({
-              path: PropTypes.string.isRequired,
               title: PropTypes.string.isRequired,
             }),
           }),

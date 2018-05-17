@@ -95,7 +95,6 @@ const LegendTable = () => {
           border: `1px solid ${legendBorderColor}`,
           borderLeft: 0,
           fontFamily: options.headerFontFamily.join(`,`),
-          display: `table`,
           [presets.Phablet]: {
             display: `none`,
           },

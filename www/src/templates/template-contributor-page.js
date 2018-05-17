@@ -2,6 +2,7 @@ import React from "react"
 import Img from "gatsby-image"
 import { OutboundLink } from "gatsby-plugin-google-analytics"
 
+import GlobalLayout from "../layouts"
 import Container from "../components/container"
 import BlogPostPreviewItem from "../components/blog-post-preview-item"
 import typography, { rhythm, options } from "../utils/typography"
@@ -11,67 +12,69 @@ class ContributorPageTemplate extends React.Component {
     const contributor = this.props.data.authorYaml
     const allMarkdownRemark = this.props.data.allMarkdownRemark
     return (
-      <Container>
-        <div
-          css={{
-            textAlign: `center`,
-            padding: `${rhythm(1.5)} ${rhythm(options.blockMarginBottom)}`,
-          }}
-        >
-          <div>
-            <Img
-              resolutions={contributor.avatar.childImageSharp.resolutions}
-              css={{
-                height: rhythm(2.3),
-                width: rhythm(2.3),
-                borderRadius: `100%`,
-                display: `inline-block`,
-                verticalAlign: `middle`,
-              }}
-            />
-            <h1
-              css={{
-                marginTop: 0,
-              }}
-            >
-              {contributor.id}
-            </h1>
-            <p
-              css={{
-                fontFamily: typography.options.headerFontFamily.join(`,`),
-                maxWidth: rhythm(18),
-                marginLeft: `auto`,
-                marginRight: `auto`,
-              }}
-            >
-              {contributor.bio}
-            </p>
-            <OutboundLink href={`https://twitter.com/${contributor.twitter}`}>
-              {` `}
-              {contributor.twitter}
-            </OutboundLink>
+      <GlobalLayout location={this.props.location}>
+        <Container>
+          <div
+            css={{
+              textAlign: `center`,
+              padding: `${rhythm(1.5)} ${rhythm(options.blockMarginBottom)}`,
+            }}
+          >
+            <div>
+              <Img
+                resolutions={contributor.avatar.childImageSharp.resolutions}
+                css={{
+                  height: rhythm(2.3),
+                  width: rhythm(2.3),
+                  borderRadius: `100%`,
+                  display: `inline-block`,
+                  verticalAlign: `middle`,
+                }}
+              />
+              <h1
+                css={{
+                  marginTop: 0,
+                }}
+              >
+                {contributor.id}
+              </h1>
+              <p
+                css={{
+                  fontFamily: typography.options.headerFontFamily.join(`,`),
+                  maxWidth: rhythm(18),
+                  marginLeft: `auto`,
+                  marginRight: `auto`,
+                }}
+              >
+                {contributor.bio}
+              </p>
+              <OutboundLink href={`https://twitter.com/${contributor.twitter}`}>
+                {` `}
+                {contributor.twitter}
+              </OutboundLink>
+            </div>
           </div>
-        </div>
-        <div
-          css={{
-            padding: `${rhythm(1.5)} ${rhythm(options.blockMarginBottom)}`,
-          }}
-        >
-          {allMarkdownRemark.edges.map(({ node }) => {
-            if (node.frontmatter.author) {
-              if (node.frontmatter.author.id === contributor.id) {
-                return (
-                  <BlogPostPreviewItem
-                    post={node}
-                    key={node.fields.slug}
-                    css={{ marginBottom: rhythm(2) }}
-                  />
-                )
+          <div
+            css={{
+              padding: `${rhythm(1.5)} ${rhythm(options.blockMarginBottom)}`,
+            }}
+          >
+            {allMarkdownRemark.edges.map(({ node }) => {
+              if (node.frontmatter.author) {
+                if (node.frontmatter.author.id === contributor.id) {
+                  return (
+                    <BlogPostPreviewItem
+                      post={node}
+                      key={node.fields.slug}
+                      css={{ marginBottom: rhythm(2) }}
+                    />
+                  )
+                }
               }
-            }
-          })}
-        </div>
-      </Container>
+            })}
+          </div>
+        </Container>
+      </GlobalLayout>
     )
   }
 }
