@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import Layout from "../components/layout"
 import Container from "../components/container"
-import Link from "gatsby-link"
+import { Link } from "gatsby"
 import logo from "../monogram.svg"
 import { rhythm, options } from "../utils/typography"
 import presets, { colors } from "../utils/presets"

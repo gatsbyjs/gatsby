@@ -6,7 +6,7 @@ import kebabCase from "lodash/kebabCase"
 
 // Components
 import Helmet from "react-helmet"
-import Link from "gatsby-link"
+import { Link } from "gatsby"
 import Layout from "../../components/layout"
 import Container from "../../components/container"
 

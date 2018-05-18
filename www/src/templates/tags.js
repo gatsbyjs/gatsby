@@ -2,7 +2,7 @@ import React from "react"
 import PropTypes from "prop-types"
 import Container from "../components/container"
 
-import Link from "gatsby-link"
+import { Link } from "gatsby"
 import Layout from "../components/layout"
 
 const Tags = ({ pageContext, data, location }) => {
