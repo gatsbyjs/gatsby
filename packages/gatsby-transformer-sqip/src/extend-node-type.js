@@ -248,7 +248,7 @@ async function sqipContentful({ type, cache }) {
 
         return generateSqip({
           cache,
-          CACHE_DIR,
+          cacheDir: CACHE_DIR,
           absolutePath,
           numberOfPrimitives,
           blur,
