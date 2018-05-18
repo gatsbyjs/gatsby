@@ -2,8 +2,8 @@ import React from "react"
 import PropTypes from "prop-types"
 import Container from "../components/container"
 
-import Link from "gatsby-link"
-import GlobalLayout from "../layouts"
+import { Link } from "gatsby"
+import Layout from "../components/layout"
 
 const Tags = ({ pageContext, data, location }) => {
   const { tag } = pageContext
@@ -13,7 +13,7 @@ const Tags = ({ pageContext, data, location }) => {
   } tagged with "${tag}"`
 
   return (
-    <GlobalLayout location={location}>
+    <Layout location={location}>
       <Container>
         <h1>{tagHeader}</h1>
         <ul>
@@ -31,7 +31,7 @@ const Tags = ({ pageContext, data, location }) => {
         </ul>
         <Link to="/blog/tags">All tags</Link>
       </Container>
-    </GlobalLayout>
+    </Layout>
   )
 }
 

@@ -1,7 +1,7 @@
 import React from "react"
 import { OutboundLink } from "gatsby-plugin-google-analytics"
 
-import Layout from "../layouts"
+import Layout from "../components/layout"
 import presets, { colors } from "../utils/presets"
 import { rhythm } from "../utils/typography"
 import { WebpackIcon, ReactJSIcon, GraphQLIcon } from "../assets/logos"

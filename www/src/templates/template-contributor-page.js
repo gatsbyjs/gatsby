@@ -2,7 +2,7 @@ import React from "react"
 import Img from "gatsby-image"
 import { OutboundLink } from "gatsby-plugin-google-analytics"
 
-import GlobalLayout from "../layouts"
+import Layout from "../components/layout"
 import Container from "../components/container"
 import BlogPostPreviewItem from "../components/blog-post-preview-item"
 import typography, { rhythm, options } from "../utils/typography"
@@ -12,7 +12,7 @@ class ContributorPageTemplate extends React.Component {
     const contributor = this.props.data.authorYaml
     const allMarkdownRemark = this.props.data.allMarkdownRemark
     return (
-      <GlobalLayout location={this.props.location}>
+      <Layout location={this.props.location}>
         <Container>
           <div
             css={{
@@ -74,7 +74,7 @@ class ContributorPageTemplate extends React.Component {
             })}
           </div>
         </Container>
-      </GlobalLayout>
+      </Layout>
     )
   }
 }

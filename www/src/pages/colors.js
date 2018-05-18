@@ -1,12 +1,12 @@
 import React from "react"
 import colors from "../utils/colors"
 import { rhythm, options } from "../utils/typography"
-import GlobalLayout from "../layouts"
+import Layout from "../components/layout"
 import Container from "../components/container"
 import range from "lodash/range"
 
 export default ({ location }) => (
-  <GlobalLayout location={location}>
+  <Layout location={location}>
     <Container>
       <h1 css={{ margin: 0, marginLeft: rhythm(1 / 4) }}>Colors</h1>
       <div css={{ overflow: `hidden` }}>
@@ -48,5 +48,5 @@ export default ({ location }) => (
         </div>
       </div>
     </Container>
-  </GlobalLayout>
+  </Layout>
 )

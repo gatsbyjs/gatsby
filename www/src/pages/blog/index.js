@@ -1,7 +1,7 @@
 import React from "react"
 import Helmet from "react-helmet"
 
-import GlobalLayout from "../../layouts"
+import Layout from "../../components/layout"
 import Container from "../../components/container"
 import BlogPostPreviewItem from "../../components/blog-post-preview-item"
 
@@ -14,7 +14,7 @@ class BlogPostsIndex extends React.Component {
     const { allMarkdownRemark } = this.props.data
 
     return (
-      <GlobalLayout location={this.props.location}>
+      <Layout location={this.props.location}>
         <div
           css={{
             [presets.Tablet]: {
@@ -96,7 +96,7 @@ class BlogPostsIndex extends React.Component {
             ))}
           </Container>
         </div>
-      </GlobalLayout>
+      </Layout>
     )
   }
 }

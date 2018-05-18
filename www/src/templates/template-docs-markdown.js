@@ -1,9 +1,9 @@
 import React from "react"
 import Helmet from "react-helmet"
 
+import Layout from "../components/layout"
 import docsSidebar from "../pages/docs/doc-links.yaml"
 import tutorialSidebar from "../pages/docs/tutorial-links.yml"
-import GlobalLayout from "../layouts"
 import MarkdownPageFooter from "../components/markdown-page-footer"
 import PageWithSidebar from "../components/page-with-sidebar"
 import DocSearchContent from "../components/docsearch-content"
@@ -15,7 +15,7 @@ class DocsTemplate extends React.Component {
   render() {
     const page = this.props.data.markdownRemark
     return (
-      <GlobalLayout location={this.props.location}>
+      <Layout location={this.props.location}>
         <PageWithSidebar
           disable={
             this.props.location.pathname === `/community/` ||
@@ -61,7 +61,7 @@ class DocsTemplate extends React.Component {
             </DocSearchContent>
           )}
         />
-      </GlobalLayout>
+      </Layout>
     )
   }
 }

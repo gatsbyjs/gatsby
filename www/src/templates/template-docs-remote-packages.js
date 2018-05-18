@@ -1,6 +1,6 @@
 import React from "react"
 
-import GlobalLayout from "../layouts"
+import Layout from "../components/layout"
 import PackageReadme from "../components/package-readme"
 
 class DocsRemotePackagesTemplate extends React.Component {
@@ -9,7 +9,7 @@ class DocsRemotePackagesTemplate extends React.Component {
       data: { npmPackage, markdownRemark },
     } = this.props
     return (
-      <GlobalLayout location={this.props.location}>
+      <Layout location={this.props.location}>
         <PackageReadme
           page={markdownRemark}
           packageName={npmPackage.name}
@@ -25,7 +25,7 @@ class DocsRemotePackagesTemplate extends React.Component {
           keywords={npmPackage.keywords}
           lastPublisher={npmPackage.lastPublisher}
         />
-      </GlobalLayout>
+      </Layout>
     )
   }
 }

@@ -8,7 +8,7 @@ import {
   Toggle,
 } from "react-instantsearch/dom"
 import { colors } from "../utils/presets"
-import Link from "gatsby-link"
+import { Link } from "gatsby"
 import DownloadArrow from "react-icons/lib/go/arrow-small-down"
 import AlgoliaLogo from "../assets/algolia.svg"
 import debounce from "lodash/debounce"
