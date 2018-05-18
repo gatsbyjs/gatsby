@@ -1,14 +1,14 @@
 {
   "name": "gatsby-remark-embed-snippet",
   "description": "Gatsby plugin to embed formatted code snippets within markdown",
-  "version": "1.0.10-9",
+  "version": "1.0.10-10",
   "author": "Brian Vaughn <brian.david.vaughn@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
     "@babel/runtime": "7.0.0-beta.47",
-    "gatsby-remark-prismjs": "^1.2.16-8",
+    "gatsby-remark-prismjs": "^1.2.16-9",
     "normalize-path": "^2.1.1",
     "parse-numeric-range": "^0.0.2",
     "unist-util-map": "^1.0.3"
