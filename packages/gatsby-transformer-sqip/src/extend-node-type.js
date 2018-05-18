@@ -135,7 +135,13 @@ async function sqipContentful({ type, cache }) {
 
   return {
     sqip: {
-      type: GraphQLString,
+      type: new GraphQLObjectType({
+        name: `Sqip`,
+        fields: {
+          svg: { type: GraphQLString },
+          dataURI: { type: GraphQLString },
+        },
+      }),
       args: {
         blur: {
           type: GraphQLInt,
