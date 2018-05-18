@@ -1,7 +1,7 @@
 import React from "react"
 import _ from "lodash"
 
-import GlobalLayout from "../layouts"
+import Layout from "../components/layout"
 import PackageReadme from "../components/package-readme"
 
 class DocsLocalPackagesTemplate extends React.Component {
@@ -27,7 +27,7 @@ class DocsLocalPackagesTemplate extends React.Component {
     }
 
     return (
-      <GlobalLayout location={this.props.location}>
+      <Layout location={this.props.location}>
         <PackageReadme
           page={markdownRemark ? _.pick(markdownRemark, `parent`) : false}
           packageName={
@@ -65,7 +65,7 @@ class DocsLocalPackagesTemplate extends React.Component {
               : npmPackageNotFound.lastPublisher
           }
         />
-      </GlobalLayout>
+      </Layout>
     )
   }
 }

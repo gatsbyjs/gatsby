@@ -4,7 +4,7 @@ import sortBy from "lodash/sortBy"
 
 import Functions from "../../components/function-list"
 import { rhythm, scale } from "../../utils/typography"
-import GlobalLayout from "../../layouts"
+import Layout from "../../components/layout"
 import Container from "../../components/container"
 
 class BrowserAPIDocs extends React.Component {
@@ -15,7 +15,7 @@ class BrowserAPIDocs extends React.Component {
     )
 
     return (
-      <GlobalLayout location={this.props.location}>
+      <Layout location={this.props.location}>
         <Container>
           <Helmet>
             <title>Browser APIs</title>
@@ -42,7 +42,7 @@ class BrowserAPIDocs extends React.Component {
           <h2>Reference</h2>
           <Functions functions={funcs} />
         </Container>
-      </GlobalLayout>
+      </Layout>
     )
   }
 }

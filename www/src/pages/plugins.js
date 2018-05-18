@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import GlobalLayout from "../layouts"
+import Layout from "../components/layout"
 import Container from "../components/container"
 import Link from "gatsby-link"
 import logo from "../monogram.svg"
@@ -9,7 +9,7 @@ import presets, { colors } from "../utils/presets"
 class Plugins extends Component {
   render() {
     return (
-      <GlobalLayout location={this.props.location}>
+      <Layout location={this.props.location}>
         <Container
           css={{
             alignItems: `center`,
@@ -63,7 +63,7 @@ class Plugins extends Component {
             </p>
           </div>
         </Container>
-      </GlobalLayout>
+      </Layout>
     )
   }
 }

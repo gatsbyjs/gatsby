@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import Helmet from "react-helmet"
 
-import GlobalLayout from "../layouts"
+import Layout from "../components/layout"
 import EvaluationTable from "../components/evaluation-table"
 import EvaluationCell from "../components/evaluation-cell"
 import FuturaParagraph from "../components/futura-paragraph"
@@ -202,7 +202,7 @@ class FeaturesPage extends Component {
     )
 
     return (
-      <GlobalLayout location={this.props.location}>
+      <Layout location={this.props.location}>
         <PageWithSidebar
           yaml={featuresSidebar}
           renderContent={() => (
@@ -216,7 +216,7 @@ class FeaturesPage extends Component {
             </Container>
           )}
         />
-      </GlobalLayout>
+      </Layout>
     )
   }
 }

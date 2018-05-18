@@ -4,7 +4,7 @@ import sortBy from "lodash/sortBy"
 
 import Functions from "../../components/function-list"
 import { rhythm, scale } from "../../utils/typography"
-import GlobalLayout from "../../layouts"
+import Layout from "../../components/layout"
 import Container from "../../components/container"
 
 class NodeAPIDocs extends React.Component {
@@ -14,7 +14,7 @@ class NodeAPIDocs extends React.Component {
       func => func.name
     )
     return (
-      <GlobalLayout location={this.props.location}>
+      <Layout location={this.props.location}>
         <Container>
           <Helmet>
             <title>Node APIs</title>
@@ -76,7 +76,7 @@ class NodeAPIDocs extends React.Component {
           <h2>Reference</h2>
           <Functions functions={funcs} />
         </Container>
-      </GlobalLayout>
+      </Layout>
     )
   }
 }

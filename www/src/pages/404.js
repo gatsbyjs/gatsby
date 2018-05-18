@@ -1,15 +1,15 @@
 import React from "react"
 import Container from "../components/container"
-import GlobalLayout from "../layouts"
+import Layout from "../components/layout"
 
 class FourOhFour extends React.Component {
   render() {
     return (
-      <GlobalLayout location={this.props.location}>
+      <Layout location={this.props.location}>
         <Container>
           <h1>Page not found</h1>
         </Container>
-      </GlobalLayout>
+      </Layout>
     )
   }
 }
