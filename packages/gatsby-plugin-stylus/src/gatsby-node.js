@@ -19,6 +19,9 @@
  *   },
  * ],
  */
+
+const resolve = require(`./resolve`)
+
 exports.onCreateWebpackConfig = (
   { actions, stage, rules, plugins, loaders },
   { postCssPlugins, ...stylusOptions }
@@ -27,7 +30,7 @@ exports.onCreateWebpackConfig = (
   const PRODUCTION = stage !== `develop`
 
   const stylusLoader = {
-    loader: require.resolve(`stylus-loader`),
+    loader: resolve(`stylus-loader`),
     options: {
       sourceMap: !PRODUCTION,
       ...stylusOptions,

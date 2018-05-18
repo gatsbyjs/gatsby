@@ -21,12 +21,15 @@ class CssModules extends React.Component {
             <h2>Nav example</h2>
             <ul>
               <li>
+                { /* eslint-disable-next-line jsx-a11y/anchor-is-valid */ }
                 <a href="#">Store</a>
               </li>
               <li>
+                { /* eslint-disable-next-line jsx-a11y/anchor-is-valid */ }
                 <a href="#">Help</a>
               </li>
               <li>
+               { /* eslint-disable-next-line jsx-a11y/anchor-is-valid */ }
                 <a href="#">Logout</a>
               </li>
             </ul>
