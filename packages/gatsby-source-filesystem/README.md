@@ -41,6 +41,34 @@ module.exports = {
 };
 ```
 
+```javascript
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    // The following setup creates "File" nodes for all files from
+    // "data" directory except files with "xml" extension.
+    //
+    // The "ignore" parameter will be passed to `chokidar` and currently must be one of the following:
+    //    - string to be directly matched,
+    //    - string with glob patterns,
+    //    - regular expression test,
+    //    - function that takes the testString as an argument and returns a truthy value if it should be matched,
+    //    - an array of any number and mix of these types.
+    //
+    // Note that the whole path is tested, not just filename.
+    // For more information about `chokidar`, please visit https://github.com/paulmillr/chokidar.
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `data`,
+        path: `${__dirname}/src/data/`,
+        ignore: `**/*.xml`,
+      },
+    },
+  ],
+};
+```
+
 ## How to query
 
 You can query file nodes like the following:
