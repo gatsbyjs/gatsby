@@ -217,6 +217,7 @@ Websites built with Gatsby:
 * [Ray Gesualdo - Personal Website](http://www.raygesualdo.com/) ([source](https://github.com/raygesualdo/raygesualdo.com))
 * [10M GmbH](https://10m.de)
 * [Edge Database](https://edgedb.com/)
+* [Rolling Stone: The New Classics](https://www.rollingstone.com/the-new-classics)
 * [Jacob Bolda - Personal Website](https://www.jacobbolda.com/)
 
 ## Docs
