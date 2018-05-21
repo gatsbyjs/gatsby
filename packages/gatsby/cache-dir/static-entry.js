@@ -217,7 +217,7 @@ export default (pagePath, callback) => {
     .reverse()
     .forEach(script => {
       // Add preload <link>s for scripts.
-      headComponents.unshift(
+      headComponents.push(
         <link
           as="script"
           rel="preload"
