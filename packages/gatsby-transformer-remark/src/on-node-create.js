@@ -4,7 +4,7 @@ const _ = require(`lodash`)
 
 module.exports = async function onCreateNode(
   { node, getNode, loadNodeContent, boundActionCreators },
-  pluginOptions
+  pluginOptions = {}
 ) {
   const { createNode, createParentChildLink } = boundActionCreators
 
@@ -18,6 +18,13 @@ module.exports = async function onCreateNode(
 
   const content = await loadNodeContent(node)
   let data = grayMatter(content, pluginOptions)
+  const frontmatterDefaults = pluginOptions.frontmatter && pluginOptions.frontmatter.defaultValues
+  if(frontmatterDefaults) {
+    const defaultKeys = _.keys(frontmatterDefaults)
+    for(const key of defaultKeys) {
+      data.data[key] = data.data[key] || frontmatterDefaults[key]
+    }
+  }
 
   // Convert date objects to string. Otherwise there's type mismatches
   // during inference as some dates are strings and others date objects.
