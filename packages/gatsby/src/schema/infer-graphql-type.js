@@ -105,13 +105,15 @@ function inferGraphQLType({
       return {
         type: new GraphQLObjectType({
           name: createTypeName(fieldName),
-          fields: inferObjectStructureFromNodes({
-            ...otherArgs,
-            exampleValue,
-            selector,
-            nodes,
-            types,
-          }),
+          fields: _inferObjectStructureFromNodes(
+            {
+              ...otherArgs,
+              selector,
+              nodes,
+              types,
+            },
+            exampleValue
+          ),
         }),
       }
     case `number`:
@@ -299,8 +301,8 @@ function inferFromFieldName(value, selector, types): GraphQLFieldConfig<*, *> {
 type inferTypeOptions = {
   nodes: Object[],
   types: ProcessedNodeType[],
+  ignoreFields?: string[],
   selector?: string,
-  exampleValue?: Object,
 }
 
 const EXCLUDE_KEYS = {
@@ -311,12 +313,10 @@ const EXCLUDE_KEYS = {
 
 // Call this for the top level node + recursively for each sub-object.
 // E.g. This gets called for Markdown and then for its frontmatter subobject.
-export function inferObjectStructureFromNodes({
-  nodes,
-  types,
-  selector,
-  exampleValue = null,
-}: inferTypeOptions): GraphQLFieldConfigMap<*, *> {
+function _inferObjectStructureFromNodes(
+  { nodes, types, selector, ignoreFields }: inferTypeOptions,
+  exampleValue: ?Object
+): GraphQLFieldConfigMap<*, *> {
   const config = store.getState().config
   const isRoot = !selector
   const mapping = config && config.mapping
@@ -324,13 +324,15 @@ export function inferObjectStructureFromNodes({
   // Ensure nodes have internal key with object.
   nodes = nodes.map(n => (n.internal ? n : { ...n, internal: {} }))
 
-  const nodeTypeName = nodes[0].internal.type
-  if (exampleValue === null) {
-    exampleValue = getExampleValues({ type: nodeTypeName, nodes })
-  }
+  const typeName: string = nodes[0].internal.type
+
+  let resolvedExample: Object =
+    exampleValue != null
+      ? exampleValue
+      : getExampleValues({ nodes, typeName, ignoreFields })
 
   const inferredFields = {}
-  _.each(exampleValue, (value, key) => {
+  _.each(resolvedExample, (value, key) => {
     // Remove fields common to the top-level of all nodes.  We add these
     // elsewhere so don't need to infer their type.
     if (isRoot && EXCLUDE_KEYS[key]) return
@@ -338,7 +340,7 @@ export function inferObjectStructureFromNodes({
     // Several checks to see if a field is pointing to custom type
     // before we try automatic inference.
     const nextSelector = selector ? `${selector}.${key}` : key
-    const fieldSelector = `${nodeTypeName}.${nextSelector}`
+    const fieldSelector = `${typeName}.${nextSelector}`
 
     let fieldName = key
     let inferredField
@@ -350,9 +352,17 @@ export function inferObjectStructureFromNodes({
 
       // Second if the field has a suffix of ___node. We use then the value
       // (a node id) to find the node and use that node's type as the field
-    } else if (_.includes(key, `___NODE`)) {
+    } else if (key.includes(`___NODE`)) {
       ;[fieldName] = key.split(`___`)
       inferredField = inferFromFieldName(value, nextSelector, types)
+    }
+
+    // Replace unsupported values
+    const sanitizedFieldName = createKey(fieldName)
+
+    // If a pluging has already provided a type for this, don't infer it.
+    if (ignoreFields && ignoreFields.includes(sanitizedFieldName)) {
+      return
     }
 
     // Finally our automatic inference of field value type.
@@ -366,9 +376,6 @@ export function inferObjectStructureFromNodes({
     }
 
     if (!inferredField) return
-
-    // Replace unsupported values
-    const sanitizedFieldName = createKey(fieldName)
 
     // If sanitized field name is different from original field name
     // add resolve passthrough to reach value using original field name
@@ -399,4 +406,8 @@ export function inferObjectStructureFromNodes({
   })
 
   return inferredFields
+}
+
+export function inferObjectStructureFromNodes(options: inferTypeOptions) {
+  return _inferObjectStructureFromNodes(options, null)
 }
