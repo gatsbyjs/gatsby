@@ -219,6 +219,10 @@ Websites built with Gatsby:
 * [Edge Database](https://edgedb.com/)
 * [Rolling Stone: The New Classics](https://www.rollingstone.com/the-new-classics)
 * [Jacob Bolda - Personal Website](https://www.jacobbolda.com/)
+* [Apideck](https://apideck.com)
+* [GDPR Checklist](https://gdprchecklist.io) ([source](https://github.com/privacyradius/gdpr-checklist))
+* [GDPR Tracker](https://gdprtracker.io)
+* [GDPR Form](https://gdprform.io)
 
 ## Docs
 
