@@ -10,7 +10,7 @@ In this tutorial you'll create your own source plugin. Your plugin will source d
 
 ## What is a source plugin?
 
-Source plugins "source" data from remote or local locations into what Gatsby calls [nodes](/docs/node-interface/).
+Source plugins "source" data from remote or local locations into what Gatsby calls [nodes](https://www.gatsbyjs.org/docs/node-interface/).
 
 For more background on source plugins, check out [Gatsby's source plugin documentation](/docs/create-source-plugin/)
 
