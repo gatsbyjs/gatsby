@@ -51,15 +51,15 @@ Contentful spaceId
 
 **`accessToken`** [string][required]
 
-Contentful delivery api key, when using the preview API use your preview api key
+Contentful delivery api key, when using the preview API use your Preview API key
 
 **`host`** [string][optional] [default: `'cdn.contentful.com'`]
 
-The base host for all the API requests, by default it's 'cdn.contentful.com', if you want to use the preview api set it to `'preview.contentful.com'`. You can use your own host for debugging/testing purposes as long as you respect the same Contentful JSON structure.
+The base host for all the API requests, by default it's 'cdn.contentful.com', if you want to use the Preview API set it to `'preview.contentful.com'`. You can use your own host for debugging/testing purposes as long as you respect the same Contentful JSON structure.
 
 **`environment`** [string][optional] [default: 'master']
 
-The environment to pull the content from, for more info on environment check out this [Guide](https://www.contentful.com/developers/docs/concepts/multiple-environments/).
+The environment to pull the content from, for more info on environments check out this [Guide](https://www.contentful.com/developers/docs/concepts/multiple-environments/).
 
 ## Notes on Contentful Content Models
 
