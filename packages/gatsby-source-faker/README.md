@@ -33,3 +33,5 @@ plugins: [
   },
 ];
 ```
+
+Example: [Using Faker](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-faker)
