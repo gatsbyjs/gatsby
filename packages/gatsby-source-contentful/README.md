@@ -51,7 +51,7 @@ Contentful spaceId
 
 **`accessToken`** [string][required]
 
-Contentful delivery api key, when using the preview API use your Preview API key
+Contentful delivery api key, when using the Preview API use your Preview API key
 
 **`host`** [string][optional] [default: `'cdn.contentful.com'`]
 
