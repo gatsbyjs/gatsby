@@ -60,7 +60,7 @@ export default (pagePath, callback) => {
 
   let bodyHtml = ``
   let headComponents = []
-  let htmlAttributes = {}
+  let htmlAttributes = {xmlns: `http://www.w3.org/1999/xhtml`}
   let bodyAttributes = {}
   let preBodyComponents = []
   let postBodyComponents = []
@@ -207,7 +207,7 @@ export default (pagePath, callback) => {
       key={`webpack-runtime`}
       id={`webpack-runtime`}
       dangerouslySetInnerHTML={{
-        __html: runtimeRaw,
+        __html: `/*<![CDATA[*/${runtimeRaw} /*]]>*/`,
       }}
     />
   )
@@ -275,7 +275,7 @@ export default (pagePath, callback) => {
           page.jsonName in dataPaths
             ? `window.dataPath="${dataPaths[page.jsonName]}";`
             : ``
-        }[${scriptsString}].forEach(function(s){document.write('<script src="'+s+'" defer></'+'script>')})/*]]>*/`,
+        }[${scriptsString}].forEach(function(s){var d=document,e=d.createElement("script");e.async=false,e.src=s,d.head.appendChild(e)})/*]]>*/`,
       }}
     />
   )
