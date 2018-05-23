@@ -7,6 +7,7 @@ const { stripIndent } = require(`common-tags`)
 const report = require(`gatsby-cli/lib/reporter`)
 const path = require(`path`)
 const fs = require(`fs`)
+const kebabHash = require(`kebab-hash`)
 const { hasNodeChanged, getNode } = require(`./index`)
 const { trackInlineObjectsInRootNode } = require(`../schema/node-tracking`)
 const { store } = require(`./index`)
@@ -203,7 +204,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     process.exit(1)
   }
 
-  let jsonName = `${_.kebabCase(page.path)}`
+  let jsonName = `${kebabHash(page.path)}`
   let internalComponentName = `Component${pascalCase(page.path)}`
 
   if (jsonName === ``) {
