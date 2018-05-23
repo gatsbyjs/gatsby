@@ -26,17 +26,18 @@ const readStats = () => {
   }
 }
 
-const getAssetsForChunks = (chunks, rootDir) => {
-  return _.flatten(chunks.map(chunk => readStats().assetsByChunkName[chunk]))
+const getAssetsForChunks = (chunks, rootDir) => _.flatten(chunks.map(chunk => readStats().assetsByChunkName[chunk]))
     .filter(assetFileName => assetFileName.indexOf(`webpack-runtime-`) !== 0)
     .map(assetFileName => `${rootDir}/${assetFileName}`)
-}
 
 exports.onPostBuild = (args, pluginOptions) => {
   const rootDir = `public`
 
   // Get exact asset filenames for app and offline app shell chunks
-  const files = getAssetsForChunks(['app', 'component---node-modules-gatsby-plugin-offline-app-shell-js'], rootDir)
+  const files = getAssetsForChunks(
+    [`app`, `component---node-modules-gatsby-plugin-offline-app-shell-js`],
+    rootDir
+  )
 
   const options = {
     staticFileGlobs: files.concat([
