@@ -86,6 +86,8 @@
       link: /docs/dropping-images-into-static-folders/
 - title: Reference
   items:
+    - title: Gatsby Project File Structure
+      link: /docs/gatsby-project-structure/
     - title: Node Interface
       link: /docs/node-interface/
     - title: API Specification

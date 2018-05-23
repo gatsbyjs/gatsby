@@ -1,390 +1,282 @@
 ---
-title: Introduction to Gatsby basics
+title: Familiarize with Gatsby Building Blocks
 typora-copy-images-to: ./
 ---
 
-Hello fellow Gatsby-er! Welcome to _part one_ of our community Gatsby.js
-tutorial.
+In the [previous section](/tutorial/part-zero/), we got our development environment all ready to go by installing different software and scaffolding out our first Gatsby site using the [“hello world” starter](https://github.com/gatsbyjs/gatsby-starter-hello-world). Now we’re going to take a deeper dive into what exactly the [Gatsby](https://github.com/gatsbyjs/gatsby-starter-default)’s [default starter](https://github.com/gatsbyjs/gatsby-starter-default) gives us.
 
-## What's in this tutorial?
+## Gatsby’s default starter
 
-In this tutorial you'll be gently introduced to the Gatsby development
-environment, how to create component pages, and how to build and deploy Gatsby
-sites.
+In the previous section, we created a site based on the “hello world” starter using the following command:
 
-Sit down, buckle up, and let's get going!
+`gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world`
 
-## Check your development environment
+When creating a new Gatsby site, you can use the following command structure to create a new site based on any existing Gatsby starter:
 
-Let's check first that you have everything set up to start creating with Gatsby.
-You will need a recent version of Node.js installed.
+`gatsby new [SITE_DIRECTORY] [URL_OF_STARTER_GITHUB_REPO]`
 
-Node.js is a programming tool for running JavaScript on servers and in your
-computer's terminal. Gatsby is built using Node.js.
+> 💡 See a list of the existing [official and community starters](/docs/gatsby-starters/)!
 
-Open a terminal window. See
-[terminal instructions for Mac users](http://www.macworld.co.uk/feature/mac-software/how-use-terminal-on-mac-3608274/) and
-[terminal instructions for Windows users](https://www.quora.com/How-do-I-open-terminal-in-windows). In your terminal window, type `node --version` and hit ENTER, then `npm --version` and hit ENTER (tip: to run a specified command, you must type the command into your terminal and then press ENTER. Then the command will run).
+If you omit a URL from the end, Gatsby will automatically generate a site for you based on the [default starter](https://github.com/gatsbyjs/gatsby-starter-default). Let’s do that now, to create a new site with the default starter, and explore the output.
 
-You should see something like:
+### ✋ Generate a new site based on Gatsby’s default starter
 
-![Check if node.js/npm is installed](check-versions.png)
+1. Open up your terminal. 
+2. Run `gatsby new my-tutorial-site`.
+3. Run `cd my-tutorial-site`.
+4. Run `gatsby develop`.
 
-Gatsby supports versions of Node back to v6 and npm to v3.
+This process should look familiar — it’s almost exactly what we did in the last section to scaffold out the "hello world" site. But this time, because we’re using a different starter, when you visit [http://localhost:8000](http://localhost:8000/) things will look a little different:
 
-If you don't have Node.js installed, go to https://nodejs.org/ and install the
-recommended version for your operating system.
+![](https://d2mxuefqeaa7sj.cloudfront.net/s_E618395E4841D470F48D0AACF52A3EBAEA74345E0FB4AC285CBC937727755E20_1520719644125_Screen+Shot+2018-03-07+at+11.00.28+PM.png)
 
-## Install the "Hello World" starter
 
-Gatsby uses "starters" for starting new projects. Starters
-are partially built Gatsby sites that are pre-configured to help you get moving faster.
-There are several official starters and many others contributed from the Gatsby
-community! [See the Starters page for the full list](/docs/gatsby-starters/).
+Let’s take a look at the code we’ve just generated.
 
-To install a starter, first install Gatsby's command line program by running the following:
+## Gatsby’s project structure
+### ✋ Open up the code using your editor of choice.
 
-```sh
-npm install --global gatsby-cli
-```
+You should see something like this:
 
-Once that's installed, open a new terminal window and run the following commands to create a new Gatsby site in a directory called `tutorial-part-one` and then move to this new directory:
+![](https://d2mxuefqeaa7sj.cloudfront.net/s_E618395E4841D470F48D0AACF52A3EBAEA74345E0FB4AC285CBC937727755E20_1522382930687_Screen+Shot+2018-03-29+at+11.06.11+PM.png)
 
-```sh
-gatsby new tutorial-part-one https://github.com/gatsbyjs/gatsby-starter-hello-world
-cd tutorial-part-one
-```
 
-This command downloads the files for the starter and then installs the needed
-npm packages. It should take around 1.5-3 minutes to finish. It may look like
-nothing is happening at first; be patient!
+*Note: The editor shown here is Visual Studio. If you’re using a different editor, it will look a little different.*
 
-Now let's try running Gatsby!
+Below, we've listed each top-level files and directories you see in the default project directory. The main pieces we’ll be concerned with for this piece of the tutorial are the `src` directory and the `gatsby-config.js` file.
 
-Gatsby has a built-in development server. Let's start it up by running the
-following command:
+> 💡 For a high-level definiton of each piece, see the [page on Gatsby's project file structure](/docs/gatsby-project-structure/).
 
-```sh
-gatsby develop
-```
+1. `/node_modules`
+2. **`/src`**: This directory will contain all of the code related to what you will see on the front-end of your site (what you see in the browser), like your site header, or a page template. “Src” is a convention for “source code”.
+3. `.gitignore`
+4. `.prettierrc`
+5. `gatsby-browser.js`
+6. **`gatsby-config.js`**: This is the main configuration file for a Gatsby site. This is where you can specify information about your site (metadata) like the site title and description, which Gatsby plugins you’d like to include, etc. (Check out the [config docs](/docs/gatsby-config/) for more detail).
+7. `gatsby-node.js`
+8. `gatsby-ssr.js`
+9. `LICENSE`
+10. `package-lock.json`
+11. `package.json`
+12. `README.md`
+13. `yarn.lock`
 
-You should shortly see some text, close to the bottom, that says `The development server is listening at:` [http://localhost:8000](http://localhost:8000). Open that address in your
-browser and...
+Now that our site is up and running (at http://localhost:8000/), and we have been introduced to the files and directories that are powering it, let’s start exploring the starter code. (*Reminder, if you're not able to see your site running locally, make sure you've started running the development server with `gatsby develop`!*)
 
-![Gatsby.js hello world](hello-world.png)
+## Meet pages: The starter homepage
 
-Yeah! It's working!!!
+Open up the `/src` directory in your code editor.
 
-Too cool 😎
+Inside are three more directories -- `/components`, `/layouts`, and `/pages`. Open the file at `/src/pages/index.js`. The code in this file creates a component that contains the level-one header, two paragraphs, and link you see in the main content area of the starter homepage.
 
-Gatsby's development server is a "hot reloading" server, meaning any change you
-make to your React.js page components (and later we'll learn, your data files)
-will be immediately visible and/or loaded in the browser.
+### ✋ Make changes to the page markup
+1. Change some of the words, and edit the code on line 5 to add a border to the main div (see below), and save the file:
 
-This is huge because it makes development so much faster and fun.
 
-Let's try it.
+![](https://d2mxuefqeaa7sj.cloudfront.net/s_E618395E4841D470F48D0AACF52A3EBAEA74345E0FB4AC285CBC937727755E20_1522460558137_gatsby1.gif)
 
-You'll need code editing software for the next part of this tutorial.
-[VS Code](https://code.visualstudio.com/) is a nice one. With your code editor,
-open the folder on your computer called "tutorial-part-one," which was
-automatically created in the location you chose when you ran the `gatsby new` terminal command above.
 
-Once you've opened the "tutorial-part-one" folder in your code editing
-software, it's time to edit your website. You'll see groups of directories and files; find the file in this location: `src/pages/index.js`. Once you open that file, try changing "Hello
-world!" in the page component to "Hello Gatsby!". Once you save that change, the text in your browser
-should change within a second (tip: you will always need to save changes before they appear in your browser).
+If your windows are side-by-side, you can see that your code and content changes are reflected almost instantly in the browser, once you save the file.
 
-Try some other tricks, like the ones below:
+### 💡 Hot reloading
+Gatsby uses "hot reloading" to speed up your development process. Essentially, when you're running a Gatsby development server, the Gatsby site files are being "watched" in the background -- any time you save changes to a file, your changes will be immediately reflected in the browser, without refreshing the page!
 
-1.  Gatsby lets you add "inline styles" via a JavaScript style "prop" (we'll
-    learn about other styling options later).
+### 💡 Wait… HTML in our JavaScript?
 
-    Try replacing your page component with this:
+*If you’re familiar with React and JSX, feel free to skip this section.* If you haven’t worked with the React framework before, you may be wondering what HTML is doing in a JavaScript function. Or why we’re importing `react` but not using it anywhere. This hybrid “HTML-in-JS” is actually a syntax extension of JavaScript, for React, called JSX. You can follow along this tutorial without prior experience with React, but if you’re curious, here’s a brief primer…
 
-```jsx
-import React from "react";
+This is the JSX from the starter `/src/pages/index.js` file:
 
-export default () => <div style={{ color: `blue` }}>Hello Gatsby!</div>;
-```
 
-Change the color to "pink". Then to "tomato".
-
-2.  Add some paragraph text.
-
-```jsx{5-6}
-import React from "react";
-
-export default () =>
- <div style={{ color: `tomato` }}>
-   <h1>Hello Gatsby!</h1>
-   <p>What a world.</p>
- </div>
-```
-
-3.  Add an image (in this case, a random one from Unsplash)
-
-```jsx{7}
-import React from "react";
-
-export default () =>
- <div style={{ color: `tomato` }}>
-   <h1>Hello Gatsby!</h1>
-   <p>What a world.</p>
-   <img src="https://source.unsplash.com/random/400x200" alt="" />
- </div>
-```
-
-Now your screen should look something like this:
-
-![Screen Shot 2017-06-03 at 11.57.10 AM](moving-along.png)
-
-## Linking between pages
-
-Websites are pages and links between pages. While we've now got a pretty sweet
-first page—one page and no links doesn't feel very webby. So let's create a new
-page.
-
-First create the link to the new page.
-
-To do that, import the `<Link>` component from the `gatsby-link` package that
-was installed along with the starter.
-
-Unlike the normal HTML `<a>` element, Gatsby's `Link` component uses `to` for
-specifying the page you want to link to. Let's link to a page with the pathname
-of `/page-2/`. Try adding that. Once you're done, the page component should look
-like:
-
-```jsx{2,9-12}
-import React from "react";
-import Link from "gatsby-link";
-
-export default () =>
-  <div style={{ color: `tomato` }}>
-    <h1>Hello Gatsby!</h1>
-    <p>What a world.</p>
-    <img src="https://source.unsplash.com/random/400x200" alt="" />
-    <br />
-    <div>
-      <Link to="/page-2/">Link</Link>
-    </div>
-  </div>
-```
-
-If you click on that link in the browser you should see:
-
-![Gatsby.js development 404 page](dev-404.png)
-
-What you're seeing is the Gatsby.js development 404 page. Let's do what it says
-and create a React.js page component at `src/pages/page-2.js`.
-
-Make the second page component look something like:
-
-```jsx
-import React from "react";
-import Link from "gatsby-link";
-
-export default () => (
-  <div>
-    <p>Hello world from my second Gatsby page</p>
-    <Link to="/">back home</Link>
-  </div>
-);
-```
-
-Save that and now you should be able to click back and forth between the two
-pages!
-
-<video controls="controls" autoplay="true" loop="true">
-  <source type="video/mp4" src="/images/clicking-2.mp4"></source>
-  <p>Your browser does not support the video element.</p>
-</video>
-
-_Challenge_: Using the instructions above as hints, see if you can create a third page and link to it from the home page.
-
-## Interactive page
-
-One nice thing about using Gatsby for building websites vs. other tools is that itʼs easier to add interactivity to your pages. React.js was designed for
-Facebook.com and is used on many other world-class web applications.
-
-Let's see how to add interactive elements to our pages. Let's start with a counter.
-
-We'll start by creating a new link to a page at `/counter`/ from our original
-`index.js` page component `<Link to="/counter/">Counter</Link>`.
-
-```jsx{13-15}
-import React from "react";
-import Link from "gatsby-link";
-
-export default () =>
-  <div style={{ color: `tomato` }}>
-    <h1>Hello Gatsby!</h1>
-    <p>What a world.</p>
-    <img src="https://source.unsplash.com/random/400x200" alt="" />
-    <br />
-    <div>
-      <Link to="/page-2/">Link</Link>
-    </div>
-    <div>
-      <Link to="/counter/">Counter</Link>
-    </div>
-  </div>
-```
-
-Add that link, click on it, and then we'll create a "Hello World" page component
-for `/counter/` as before. But instead of using the "functional component" form
-as we did before, this time we'll create a "class" component at `src/pages/counter.js`.
-
-```jsx
-import React from "react";
-
-class Counter extends React.Component {
-  render() {
-    return <div>Hello Class Component</div>;
-  }
-}
-
-export default Counter;
-```
-
-The class form of React allows us to have component state. We'll need that for
-our counter.
-
-Let's continue to flesh out our counter. Let's add two buttons. One to increment
-and one to decrement the count of the counter.
-
-```jsx{5-12}
-import React from "react";
-
-class Counter extends React.Component {
-  render() {
-    return (
+    import React from 'react'
+    import Link from 'gatsby-link'
+    const IndexPage = () => (
       <div>
-        <h1>Counter</h1>
-        <p>current count: 0</p>
-        <button>plus</button>
-        <button>minus</button>
+        <h1>Hi people</h1>
+        <p>Welcome to your new Gatsby site.</p>
+        <p>Now go build something great.</p>
+        <Link to="/page-2/">Go to page 2</Link>
       </div>
     )
-  }
-}
+    export default IndexPage
 
-export default Counter
-```
+In pure JavaScript, it looks more like this:
 
-Now we have everything we need to make a nice counter. Let's make it live.
 
-First we'll set up the component state.
+    import React from 'react';
+    import Link from 'gatsby-link';
+    
+    const IndexPage = () => React.createElement(
+      'div',
+      null,
+      React.createElement(
+        'h1',
+        null,
+        'Hi people'
+      ),
+      React.createElement(
+        'p',
+        null,
+        'Welcome to your new Gatsby site.'
+      ),
+      React.createElement(
+        'p',
+        null,
+        'Now go build something great.'
+      ),
+      React.createElement(
+        Link,
+        { to: '/page-2/' },
+        'Go to page 2'
+      )
+    );
+    
+    export default IndexPage;
 
-```jsx{4-7,13}
-import React from "react";
+(Now you can spot the use of the `'react'` import on several lines in the snippet above!) But wait. We’re writing JSX, right? How does the browser read that? The short answer: It doesn’t. Gatsby sites comes with tooling already set up to convert your source code into backward-compatible code that different browsers can reliably interpret. 
 
-class Counter extends React.Component {
-  constructor() {
-    super()
-    this.state = { count: 0 }
-  }
+## Meet components: The starter header
 
-  render() {
-    return (
-      <div>
-        <h1>Counter</h1>
-        <p>current count: {this.state.count}</p>
-        <button>plus</button>
-        <button>minus</button>
-      </div>
-    )
-  }
-}
+If `/src/pages/index.js` generated our homepage, then where was our purple “Gatsby” header?
 
-export default Counter
-```
+1. Open up `/src/components/Header/index.js`.
+2. On line 7, change `rebeccapurple` to `teal`, and, as in the “Meet `/pages`" section, add a border to the main div: `border: '6px dashed LightCoral'`.
 
-We're now rendering the current count from the component state.
+![](https://d2mxuefqeaa7sj.cloudfront.net/s_E618395E4841D470F48D0AACF52A3EBAEA74345E0FB4AC285CBC937727755E20_1522526490724_gatsby-header.gif)
 
-Let's now change the state when we click on our buttons.
 
-```jsx{14-19}
-import React from "react";
+We found our header! But how did the content defined in these two separate files end up on the homepage?
 
-class Counter extends React.Component {
-  constructor() {
-    super()
-    this.state = { count: 0 }
-  }
+## Meet layouts: The starter default layout
 
-  render() {
-    return (
-      <div>
-        <h1>Counter</h1>
-        <p>current count: {this.state.count}</p>
-        <button onClick={() => this.setState({ count: this.state.count +
-          1 })}>plus
-        </button>
-        <button onClick={() => this.setState({ count: this.state.count -
-          1 })}>minus
-        </button>
-      </div>
-    )
-  }
-}
+1. Open up `/src/layouts/index.js`. In this file, we are exporting a function called “TemplateWrapper”.
+2. Edit the main div on line 9 to add a border here, too — `border: '4px solid black'` — and save.
 
-export default Counter
-```
+![](https://d2mxuefqeaa7sj.cloudfront.net/s_E618395E4841D470F48D0AACF52A3EBAEA74345E0FB4AC285CBC937727755E20_1522527607495_gatsby-layout.gif)
 
-There you go! A working React.js counter inside your static website 👌
 
-_Bonus challenge_: One fun thing is that hot reloading isn't just for content and styles; it
-works on code as well. Currently, when you click the buttons on the counter, the numbers go up and down in increments of 1. Try to make the counter go up and down in a different increments (for example, 5).
+Alright! This file is defining a component in that wraps our header component and page content. Components like these-- layout components -- define sections of your site that you want to share across multiple pages. Gatsby sites will, for example, commonly define a layout component with a shared header, footer, navigation menu, etc. By default, all pages in your Gatsby site will use the layout defined at `/layouts/index.js`.
 
-## Deploying Gatsby.js websites
+On line five, we’re importing the header component from  `../components/Header`, and on line 21, we’re including it by using a self-closing JSX tag, `<Header />`. This is why we see the header component on the homepage, even though at first perhaps it seemed like it was missing from our homepage file (`/src/pages/index.js`).
 
-Gatsby.js is a _static site generator_, which means there are no servers to setup or complicated databases to
-deploy. Instead, the Gatsby `build` command produces a directory of static HTML
-and JavaScript files which you can deploy to a static site hosting service.
+Below, I’ve opened up our [homepage](http://localhost:8000/) and [page 2](http://localhost:8000/page-2/) in separate browser windows, and the header component in my code editor. If we modify the default header text (“Gatsby”) and save the file, we’ll see the text change immediately reflected on both pages. 
 
-Let's try using [Surge](http://surge.sh/) for deploying our first Gatsby
-website. Surge is one of many "static site hosts" which make it possible to
-deploy Gatsby sites.
+![](https://d2mxuefqeaa7sj.cloudfront.net/s_E618395E4841D470F48D0AACF52A3EBAEA74345E0FB4AC285CBC937727755E20_1522600157911_gatsby-header2.gif)
 
-If you haven't previously installed & setup Surge, open a new terminal window and install their terminal tool:
 
-```bash
-npm install --global surge
+That’s the header. Where’s the page content? On line 28, you’ll see `{children()}`. What?
 
-# Then create a (free) account with them
-surge
-```
+## What are React “props”?
 
-Next, build your site by running the following command in the terminal at the root of your site (tip: make sure you're running this command at the root of your site, in this case in the tutorial-part-one folder, which you can do by opening a new tab in the same window you used to run `gatsby develop`):
+We’ll come back to `{children()}`.  First, let’s talk about React “props”. “Props” are a way of passing data around in React; They are properties that are supplied to React components. React components are reusable pieces of user interface (UI) that we define. To make them reusable — or, dynamic — we need to be able to supply them with different data. Let’s take a look at this using our familiar `<Header />` component.
 
-```bash
-gatsby build
-```
+### ✋ Generate the Header’s title text using props, instead
+1. On line 17 of `/src/layouts/index.js`, add an attribute called “title” to the `<Header />` component, and assign it some arbitrary text.
 
-Building should take 15-30 seconds. At this point, it's useful to take a look at the files that the `gatsby build` command just prepared to deploy. Take a look at a list of the generated files by typing in the following terminal command into the root of your site, which will let you look at the `public` directory:
 
-```bash
-ls public
-```
+    <Header
+      title="Meet React Props!"
+    />
 
-Then finally deploy your site by publishing the generated files to surge.sh.
 
-```bash
-surge public/
-```
+2. On line 4 of `/src/components/Header/index.js`, type `props` between the parentheses.
+3. On line 27 of `/src/components/Header/index.js`, change the text “Gatsby” to `{props.title}` and then save.
+![](https://d2mxuefqeaa7sj.cloudfront.net/s_6A62B36EFB998D5FDEECD8DADE2FB6C1DA809B18BA696F4E3EE3B05A492D3DF8_1522726966324_gatsby-header3.gif)
 
-Once this finishes running, you should see in your terminal something like:
 
-![Screenshot of publishing Gatsby site with Surge](surge-deployment.png)
+When React sees that we are including a user-defined component like `<Header />`, it will pass any attributes provided to the component as a single object (“props”). 
 
-Open the web address listed on the bottom line (`lowly-pain.surge.sh` in this
-case) and you'll see your newly published site! Good work!
+> 💡 In JSX, you can embed any JavaScript expression by wrapping it with `{}`. This is how, in step 3, we can access the `title` property (or “prop!”) from the “props” object.)
 
-## What's coming next?
+To emphasize how this makes our components reusable, let’s add an extra `<Header />`  component to our layout.
 
-In this tutorial, you've installed Gatsby, played in the development
-environment, and deployed your first site! Awesome! We hope you're enjoying
-yourself so far. Feel free to continue now to part two of the tutorial,
-["Introduction to using CSS in Gatsby"](/tutorial/part-two/), or go exploring around
-the rest of the site.
+### ✋ Reuse a React Component
+1. Back over in `/src/layouts/index.js`, add a second `<Header />` under our existing one, and pass it a different title. 
+
+
+    <Header 
+      title="Meet React Props!"
+    />
+    <Header
+      title="Reusing the Header!" 
+    />
+
+
+![](https://d2mxuefqeaa7sj.cloudfront.net/s_E618395E4841D470F48D0AACF52A3EBAEA74345E0FB4AC285CBC937727755E20_1522986592512_gatsby-component-reuse.gif)
+
+
+And there we have it; A second header — without rewriting any code — by passing different data using props.
+
+*(Note: Before moving on, to avoid confusion, let’s delete the second `<Header />` and change the `title` of the remaining* `<Header />` *component back to “Gatsby”).*
+
+## What are React "children"?
+
+We learned in the previous section that React automatically makes any attributes we explicitly pass to a component available on an object. But that’s not all it passes!
+
+### ✋ Manually import the homepage component
+1. Back over in `/src/layouts/index.js`, let’s import our homepage from the `/pages` directory:
+
+
+    import HomePage from '../pages/index'
+
+
+2. Then, change `{children()}` to `<HomePage />`.
+![](https://d2mxuefqeaa7sj.cloudfront.net/s_6A62B36EFB998D5FDEECD8DADE2FB6C1DA809B18BA696F4E3EE3B05A492D3DF8_1522987849900_gatsby-homepage-direct.gif)
+
+
+You should see no changes on your homepage. What’s happening here?
+
+In Gatsby, components defined in `/src/pages` automatically become pages. (`/src/pages/index.js` becomes your homepage at (`'/'`), `/src/pages/page-2.js` is located at (`'/page-2'`), and so forth). 
+
+Under the hood, Gatsby is passing your `/pages` components into the default layout for you. 
+
+### ✋ Using `props.children`
+1. On the line where we define `const TemplateWrapper…`, change `({ children })` to `( props )`.
+2. Replace `<HomePage />` with `{props.children()}`.
+
+
+![](https://d2mxuefqeaa7sj.cloudfront.net/s_6A62B36EFB998D5FDEECD8DADE2FB6C1DA809B18BA696F4E3EE3B05A492D3DF8_1522991267233_gatsby-homepage-children.gif)
+
+
+As before, you should see no change in the browser when you save the file. `props.children()` essentially displays whatever is passed to the parent component. In this case, our parent component is the layout component defined at `/src/layouts/index.js`. 
+
+It’s as if we wrote something like this:
+
+
+    <DefaultLayout>
+      <HomePage /> // this is a "child" of <DefaultLayout>
+    </DefaultLayout>
+
+Except we aren’t explicitly including `<HomePage />`  ourselves — Gatsby is taking care of that for us.
+
+### 💡 `{children()}` vs `{props.children()}`
+
+If you’re new to JavaScript, you may be wondering how these are equivalent. The answer lies in the first line of our function definition (`const TemplateWrapper…`). 
+
+
+    `const TemplateWrapper = (props) => (` […]
+
+When we use `(props)`, we are essentially assigning the name `props` to the object that React automatically passes to our component. We then reference the value of the `children` property on the `props` object — `props.children`.
+
+
+    `const TemplateWrapper = ({ children }) => (` […]
+
+When we use `({ children })`, we are essentially saying, “I know I’m receiving an object here with a property called `children`. Go ahead and give me a reference to the value of the `children` property on that object, with a variable of the same name.”
+
+> 💡 If you’re curious, read more about [destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment).
+
+
+## ➡️ What’s Next?
+
+In this section we:
+
+- [x] Learned about Gatsby starters, and how to use them to create new projects
+- [x] Familiarized with Gatsby’s basic file structure
+- [x] Learned about JSX syntax
+- [x] Learned about `/pages`
+- [x] Learned about `/components`
+- [x] Learned about `/layouts`
+- [x] Learned about React “props”, reusing React components, and `props.children`
+
+Now, let’s move on to [adding styles to our site](/tutorial/part-two/)!
+
