@@ -223,6 +223,7 @@ Websites built with Gatsby:
 * [GDPR Checklist](https://gdprchecklist.io) ([source](https://github.com/privacyradius/gdpr-checklist))
 * [GDPR Tracker](https://gdprtracker.io)
 * [GDPR Form](https://gdprform.io)
+* [Josh Palacios - Personal Website](https://joshpalacios.com) ([source](https://github.com/jshwa/joshpalacios-site))
 
 ## Docs
 
