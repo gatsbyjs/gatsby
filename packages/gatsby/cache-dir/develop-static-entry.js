@@ -28,7 +28,7 @@ Html = Html && Html.__esModule ? Html.default : Html
 
 export default (pagePath, callback) => {
   let headComponents = []
-  let htmlAttributes = {}
+  let htmlAttributes = {xmlns: `http://www.w3.org/1999/xhtml`}
   let bodyAttributes = {}
   let preBodyComponents = []
   let postBodyComponents = []
