@@ -87,7 +87,7 @@ module.exports = async (
         return {
           path: directory,
           filename: `[name].js`,
-          publicPath: `${program.ssl ? `https` : `http`}://${
+          publicPath: process.env.GATSBY_WEBPACK_PUBLICPATH || `${program.ssl ? `https` : `http`}://${
             program.host
           }:${webpackPort}/`,
           devtoolModuleFilenameTemplate: info =>
