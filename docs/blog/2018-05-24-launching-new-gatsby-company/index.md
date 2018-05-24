@@ -112,6 +112,6 @@ It’s been an amazing journey so far. Wish Sam and I and our new colleagues luc
 
 ### Learn more about Gatsby
 
-* New stack article
+* [From the New Stack "GatsbyJS, the Open Source React-Based SSG, Creates Company to Evolve Cloud-Native Website Builds"](https://thenewstack.io/gatsbyjs-the-open-source-react-based-ssg-creates-company-to-evolve-cloud-native-website-builds/)
 * [gatsbyjs.com](https://www.gatsbyjs.com)
 * [gatsbyjs.org](/)
