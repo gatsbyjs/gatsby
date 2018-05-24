@@ -26,9 +26,9 @@ plugins: [
     options: {
       schema: {
         name: ["firstName", "lastName"],
-        count: 3, // how many fake objects you need
-        type: "NameData", // Name of the graphql query node
       },
+      count: 3, // how many fake objects you need
+      type: "NameData", // Name of the graphql query node
     },
   },
 ];
