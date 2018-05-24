@@ -174,9 +174,6 @@ export default (pagePath, callback) => {
         if (chunk === `/`) {
           return null
         }
-        if (chunk.slice(0, 15) === `webpack-runtime`) {
-          return null
-        }
         return chunk
       })
     })
@@ -201,15 +198,6 @@ export default (pagePath, callback) => {
   const runtimeRaw = fs.readFileSync(
     join(process.cwd(), `public`, runtimeScript),
     `utf-8`
-  )
-  postBodyComponents.push(
-    <script
-      key={`webpack-runtime`}
-      id={`webpack-runtime`}
-      dangerouslySetInnerHTML={{
-        __html: runtimeRaw,
-      }}
-    />
   )
 
   scripts
@@ -279,15 +267,12 @@ export default (pagePath, callback) => {
     />
   )
 
-  const bodyScripts = scripts
-    .map(s => {
-      const scriptPath = `${pathPrefix}${JSON.stringify(s).slice(1, -1)}`
-      return <script key={scriptPath} src={scriptPath} async></script>
-    })
+  const bodyScripts = scripts.map(s => {
+    const scriptPath = `${pathPrefix}${JSON.stringify(s).slice(1, -1)}`
+    return <script key={scriptPath} src={scriptPath} async />
+  })
 
-  postBodyComponents.push(
-    ...bodyScripts
-  )
+  postBodyComponents.push(...bodyScripts)
 
   const html = `<!DOCTYPE html>${renderToStaticMarkup(
     <Html
