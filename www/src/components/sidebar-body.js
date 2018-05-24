@@ -229,6 +229,10 @@ class SidebarBody extends React.Component {
           "::-webkit-scrollbar-track": {
             background: colors.ui.light,
           },
+          display: `none`,
+          [presets.Tablet]: {
+            display: `block`,
+          },
           [presets.Desktop]: {
             width: rhythm(12),
             padding: rhythm(1),
