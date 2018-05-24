@@ -263,21 +263,30 @@ export default (pagePath, callback) => {
     })
 
   // Add script loader for page scripts to the end of body element (after webpack manifest).
-  const scriptsString = scripts
-    .map(s => `"${pathPrefix}${JSON.stringify(s).slice(1, -1)}"`)
-    .join(`,`)
+  const windowData = `/*<![CDATA[*/window.page=${JSON.stringify(page)};${
+    page.jsonName in dataPaths
+      ? `window.dataPath="${dataPaths[page.jsonName]}";`
+      : ``
+  }/*]]>*/`
+
   postBodyComponents.push(
     <script
       key={`script-loader`}
       id={`gatsby-script-loader`}
       dangerouslySetInnerHTML={{
-        __html: `/*<![CDATA[*/window.page=${JSON.stringify(page)};${
-          page.jsonName in dataPaths
-            ? `window.dataPath="${dataPaths[page.jsonName]}";`
-            : ``
-        }[${scriptsString}].forEach(function(s){document.write('<script src="'+s+'" defer></'+'script>')})/*]]>*/`,
+        __html: windowData,
       }}
     />
+  )
+
+  const bodyScripts = scripts
+    .map(s => {
+      const scriptPath = `${pathPrefix}${JSON.stringify(s).slice(1, -1)}`
+      return <script key={scriptPath} src={scriptPath} async></script>
+    })
+
+  postBodyComponents.push(
+    ...bodyScripts
   )
 
   const html = `<!DOCTYPE html>${renderToStaticMarkup(
