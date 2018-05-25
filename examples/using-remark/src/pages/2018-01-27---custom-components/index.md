@@ -11,7 +11,7 @@ tags:
 
 What if you want custom UI interactions embedded in your Markdown?
 
-By using `rehype-react` with the `htmlAst` field, you can write custom React components and then reference them from your Markdown files.
+By using `rehype-react` with the `htmlAst` field, you can write custom React components and then reference them from your Markdown files, or map generic HTML elements like `<ul>` or `<h2>` to your own components. 
 
 _Note: this functionality was added in version 1.7.31 of gatsby-transformer-remark_
 
@@ -142,6 +142,39 @@ In addition, you can also pass attributes, which can be used as props in your co
 ```
 
 <interactive-counter initialvalue="10"></interactive-counter>
+
+## Mapping from generic HTML elements
+
+You can also map a generic HTML element to one of your own components. This can be particularly useful if you are using something like styled-components as it allows you to share these primitives between markdown content and the rest of your site. It also means the author of the Markdown doesn't need to use any custom markup - just standard markdown.
+
+For example if you have a series of header components:
+
+```javascript
+const PrimaryTitle = styled.h1`…`
+const SecondaryTitle styled.h2`…`
+const TertiaryTitle styled.h3`…`
+```
+
+You can map headers defined in markdown to these components:
+
+```js
+const renderAst = new rehypeReact({
+  createElement: React.createElement,
+  components: { 
+    "h1": PrimaryTitle,
+    "h2": SecondaryTitle,
+    "h3": TertiaryTitle,
+   },
+}).Compiler;
+```
+
+And headers defined in markdown will be rendered as your components instead of generic HTML elements:
+
+```markdown
+# This will be rendered as a PrimaryTitle component
+## This will be rendered as a SecondaryTitle component
+### This will be rendered as a TertiaryTitle component
+```
 
 ## Caveats
 

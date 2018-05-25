@@ -83,3 +83,5 @@ plugins: [
   },
 ];
 ```
+
+NOTE: This plugin only generates the `/rss.xml` file when run in `production` mode! To test your feed, run: `gatsby build && gatsby serve`.

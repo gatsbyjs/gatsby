@@ -14,7 +14,7 @@ const MastheadContent = () => (
     css={{
       display: `flex`,
       padding: vP,
-      paddingTop: rhythm(4),
+      paddingTop: rhythm(5),
       paddingBottom: rhythm(1),
       paddingBottom: rhythm(1),
       flexGrow: `0`,
@@ -26,7 +26,7 @@ const MastheadContent = () => (
         paddingRight: 0,
       },
       [presets.Tablet]: {
-        paddingTop: rhythm(4),
+        paddingTop: rhythm(5),
       },
       [presets.Desktop]: {
         paddingTop: rhythm(5),

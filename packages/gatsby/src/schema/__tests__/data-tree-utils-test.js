@@ -99,8 +99,8 @@ describe(`Gatsby data tree utils`, () => {
     expect(getExampleValues(nodes)).toMatchSnapshot()
   })
 
-  it(`null fields should have a null value`, () => {
-    expect(getExampleValues(nodes).iAmNull).toBeNull()
+  it(`skips null fields`, () => {
+    expect(getExampleValues(nodes).iAmNull).not.toBeDefined()
   })
 
   it(`should not mutate the nodes`, () => {
@@ -111,8 +111,8 @@ describe(`Gatsby data tree utils`, () => {
     expect(nodes[3].context.nestedObject.someOtherProperty).toEqual(3)
   })
 
-  it(`turns empty or sparse arrays to null`, () => {
-    expect(getExampleValues(nodes).emptyArray).toBeNull()
+  it(`skips empty or sparse arrays`, () => {
+    expect(getExampleValues(nodes).emptyArray).not.toBeDefined()
     expect(getExampleValues(nodes).hair).toBeDefined()
   })
 
@@ -156,11 +156,11 @@ describe(`Gatsby data tree utils`, () => {
   it(`skips unsupported types`, () => {
     // Skips functions
     let example = getExampleValues([{ foo: () => {} }])
-    expect(example.foo).toEqual(null)
+    expect(example.foo).not.toBeDefined()
 
     // Skips array of functions
     example = getExampleValues([{ foo: [() => {}] }])
-    expect(example.foo).toEqual(null)
+    expect(example.foo).not.toBeDefined()
   })
 })
 

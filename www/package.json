@@ -14,7 +14,7 @@
     "gatsby-plugin-glamor": "^1.6.13",
     "gatsby-plugin-google-analytics": "^1.0.28",
     "gatsby-plugin-lodash": "^1.0.11",
-    "gatsby-plugin-mailchimp": "^1.1.1",
+    "gatsby-plugin-mailchimp": "^2.2.2",
     "gatsby-plugin-manifest": "^1.0.19",
     "gatsby-plugin-netlify": "^1.0.19",
     "gatsby-plugin-nprogress": "^1.0.14",
