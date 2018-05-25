@@ -1,7 +1,7 @@
 {
   "name": "gatsby-source-filesystem",
   "description": "Gatsby plugin which parses files within a directory for further parsing by other plugins",
-  "version": "1.5.29",
+  "version": "1.5.33",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -28,6 +28,9 @@
     "gatsby-plugin"
   ],
   "license": "MIT",
+  "peerDependencies": {
+    "gatsby": "^1.9.250"
+  },
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem",
   "scripts": {
     "build": "babel src --out-dir . --ignore __tests__",

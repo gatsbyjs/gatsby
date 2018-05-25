@@ -27,8 +27,6 @@ exports.sourceNodes = async (
 ) => {
   const { createNode } = boundActionCreators
 
-  console.log(`Grabbing local NPM packages...`)
-
   const buildFilter = keywords.map(keyword => `keywords:${keyword}`)
 
   const hits = await browse({
@@ -38,12 +36,6 @@ exports.sourceNodes = async (
   })
 
   hits.forEach(hit => {
-    // commented changed remove all badges and images from readme content to keep the creation of the node from failing below
-    // if (hit.readme.includes(`![`)) {
-    //   hit.readme = hit.readme.replace(/[[]?!\[.*\b/gi, ``)
-    //   console.log(hit.name)
-    // }
-
     const parentId = createNodeId(`plugin ${hit.objectID}`)
     const readmeNode = {
       id: createNodeId(`readme ${hit.objectID}`),

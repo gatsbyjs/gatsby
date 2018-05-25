@@ -85,6 +85,8 @@ exports.run = async (browser, url, width, height) => {
 
   await page.setViewport({ width, height })
   await page.goto(url, { waitUntil: [`load`, `networkidle0`] })
+  // wait for full-size images to fade in
+  await page.waitFor(1000);
 
   const screenshot = await page.screenshot()
   const up = await s3PutObject(key, screenshot)

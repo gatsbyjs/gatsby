@@ -48,9 +48,9 @@ plugins: [
 
 There are currently some things to keep in mind when building your content models at contentful.
 
-1. At the moment, Fields that do not have at least 1 populated instance will not be created in the graphql schema.
+1.  At the moment, Fields that do not have at least 1 populated instance will not be created in the graphql schema.
 
-2. When using reference fields, be aware that this source plugin will automatically create the reverse reference. You do not need to create references on both content types. For simplicity, it is easier to put the reference field on the child in child/parent relationships.
+2.  When using reference fields, be aware that this source plugin will automatically create the reverse reference. You do not need to create references on both content types. For simplicity, it is easier to put the reference field on the child in child/parent relationships.
 
 ## How to query
 

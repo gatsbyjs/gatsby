@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-jss",
   "description": "Gatsby plugin that adds SSR support for JSS",
-  "version": "1.5.12",
+  "version": "1.5.14",
   "author": "Vladimir Guguiev <wizardzloy@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"

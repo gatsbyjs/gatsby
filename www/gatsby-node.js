@@ -43,7 +43,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
   return new Promise((resolve, reject) => {
     const docsTemplate = path.resolve(`src/templates/template-docs-markdown.js`)
     const blogPostTemplate = path.resolve(`src/templates/template-blog-post.js`)
-    const tagTemplate = path.resolve(`src/templates/tags.js`);
+    const tagTemplate = path.resolve(`src/templates/tags.js`)
     const contributorPageTemplate = path.resolve(
       `src/templates/template-contributor-page.js`
     )
@@ -125,9 +125,9 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
 
         // Create blog pages.
         blogPosts.forEach((edge, index) => {
-          const next = index === 0 ? false : blogPosts[index - 1].node
+          const next = index === 0 ? null : blogPosts[index - 1].node
           const prev =
-            index === blogPosts.length - 1 ? false : blogPosts[index + 1].node
+            index === blogPosts.length - 1 ? null : blogPosts[index + 1].node
 
           createPage({
             path: `${edge.node.fields.slug}`, // required
@@ -141,8 +141,8 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
         })
 
         const tagLists = blogPosts
-          .filter(post => _.get(post, "node.frontmatter.tags"))
-          .map(post => _.get(post, "node.frontmatter.tags"))
+          .filter(post => _.get(post, `node.frontmatter.tags`))
+          .map(post => _.get(post, `node.frontmatter.tags`))
 
         _.uniq(_.flatten(tagLists)).forEach(tag => {
           createPage({
@@ -151,7 +151,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
             context: {
               tag,
             },
-          });
+          })
         })
 
         // Create contributor pages.

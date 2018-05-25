@@ -1,16 +1,17 @@
 import React from "react"
 import { renderToString } from "react-dom/server"
-import { JssProvider, SheetsRegistry } from "react-jss"
+import { JssProvider, SheetsRegistry, ThemeProvider } from "react-jss"
 
-exports.replaceRenderer = ({
-  bodyComponent,
-  replaceBodyHTMLString,
-  setHeadComponents,
-}) => {
+exports.replaceRenderer = (
+  { bodyComponent, replaceBodyHTMLString, setHeadComponents },
+  { theme = {} }
+) => {
   const sheets = new SheetsRegistry()
 
   const bodyHTML = renderToString(
-    <JssProvider registry={sheets}>{bodyComponent}</JssProvider>
+    <JssProvider registry={sheets}>
+      <ThemeProvider theme={theme}>{bodyComponent}</ThemeProvider>
+    </JssProvider>
   )
 
   replaceBodyHTMLString(bodyHTML)

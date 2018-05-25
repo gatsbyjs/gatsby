@@ -19,14 +19,14 @@ you to modify the default webpack config using
 Gatsby does multiple webpack builds with somewhat different configuration. We
 call each build type a "stage". The following stages exist:
 
-1. develop: when running the `gatsby develop` command. Has configuration for hot
-   reloading and CSS injection into page
-2. develop-html: same as develop but without react-hmre in the babel config for
-   rendering the HTML component.
-3. build-css: production build of CSS
-4. build-html: production build static HTML pages
-5. build-javascript: production JavaScript build. Creates route bundles as well
-   as a `commons` and `app bundle`.
+1.  develop: when running the `gatsby develop` command. Has configuration for hot
+    reloading and CSS injection into page
+2.  develop-html: same as develop but without react-hmre in the babel config for
+    rendering the HTML component.
+3.  build-css: production build of CSS
+4.  build-html: production build static HTML pages
+5.  build-javascript: production JavaScript build. Creates route bundles as well
+    as a `commons` and `app bundle`.
 
 Check
 [webpack.config.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/webpack.config.js)

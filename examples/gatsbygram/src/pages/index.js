@@ -95,6 +95,7 @@ class Index extends React.Component {
           }}
         >
           <div
+            data-testid="user-avatar"
             css={{
               marginRight: rhythm(1),
               flexGrow: 1,
@@ -115,13 +116,14 @@ class Index extends React.Component {
             }}
           >
             <h3
+              data-testid="username"
               css={{
                 fontWeight: `normal`,
               }}
             >
               {user.username}
             </h3>
-            <p>
+            <p data-testid="user-meta">
               <strong>{posts.length}</strong> posts
               <strong css={{ marginLeft: rhythm(1) }}>192k</strong> followers
             </p>
@@ -154,6 +156,7 @@ class Index extends React.Component {
         ))}
         {!this.state.showingMore && (
           <a
+            data-testid="load-more"
             css={{
               ...scale(-0.5),
               border: `1px solid blue`,

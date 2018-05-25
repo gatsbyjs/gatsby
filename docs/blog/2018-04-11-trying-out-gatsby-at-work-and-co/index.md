@@ -19,9 +19,9 @@ Our project was to build a new website for [Whittle School & Studios](https://ww
 
 We had a blast building the site, and learned a lot about Gatsby in the process. This post will take you through the different parts of our journey:
 
-- [Choosing a stack](#choosing-a-stack)
-- [Creating a Gatsby workflow](#creating-a-gatsby-workflow)
-- [Contributing to Gatsby](#contributing-to-gatsby)
+* [Choosing a stack](#choosing-a-stack)
+* [Creating a Gatsby workflow](#creating-a-gatsby-workflow)
+* [Contributing to Gatsby](#contributing-to-gatsby)
 
 ## Choosing a stack
 
@@ -37,7 +37,7 @@ As a content-heavy site, the project would need a CMS. Our choice here was [Cont
 
 We also knew that the site would eventually need to launch in both the US and China. This came with a bunch of unknowns on the China side of things: Could we rely on the same build system and CDN for all locales, or would China require a unique setup to account for server performance discrepancies and possible API restrictions?
 
-We didn’t know, and we weren’t going to know for some time, because most of these decisions were going to be made by an external vendor. Not wanting to back ourselves into a corner, we decided to use a static site generator. No matter what devops we wound up with, we could bank on compiling static files and putting them *somewhere*.
+We didn’t know, and we weren’t going to know for some time, because most of these decisions were going to be made by an external vendor. Not wanting to back ourselves into a corner, we decided to use a static site generator. No matter what devops we wound up with, we could bank on compiling static files and putting them _somewhere_.
 
 All of this begged the question: “What’s a good static site generator that works with Contentful?”
 
@@ -51,7 +51,7 @@ Gatsby is built on React, something our team already knows and likes. We use Rea
 
 #### Prefetched pages ⚡️
 
-When we decided to use a static site generator, we assumed we’d be building a classic *static site*, with each route change requesting brand new HTML from the server. For a small, simple site, we thought this was good enough, but Gatsby gave us one better: pre-fetching, out of the box. This meant that our site would feel like a single page app while still benefiting from the flexibility and improved performance of a static site.
+When we decided to use a static site generator, we assumed we’d be building a classic _static site_, with each route change requesting brand new HTML from the server. For a small, simple site, we thought this was good enough, but Gatsby gave us one better: pre-fetching, out of the box. This meant that our site would feel like a single page app while still benefiting from the flexibility and improved performance of a static site.
 
 #### Contentful support
 
@@ -261,13 +261,13 @@ If you’re nervous about contributing to a library, do what I did: make a reall
 
 ### Reading the documentation
 
-We developers often take pride in how far we’re able to get *without* reading the documentation — at least I know I do — but, as I came to make subsequent PRs to Gatsby, I found the [contributor guidelines](https://github.com/gatsbyjs/gatsby/blob/master/CONTRIBUTING.md) to be incredibly helpful.
+We developers often take pride in how far we’re able to get _without_ reading the documentation — at least I know I do — but, as I came to make subsequent PRs to Gatsby, I found the [contributor guidelines](https://github.com/gatsbyjs/gatsby/blob/master/CONTRIBUTING.md) to be incredibly helpful.
 
 In particular, the documentation will show you how to use your local Gatsby clone and [gatsby-dev-cli](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli) to:
 
-- Watch for your local changes to Gatsby packages
-- Recompile packages on-the-fly
-- Copy these packages into your project’s `node_modules` folder to test as you go
+* Watch for your local changes to Gatsby packages
+* Recompile packages on-the-fly
+* Copy these packages into your project’s `node_modules` folder to test as you go
 
 If you’ve ever used `yarn link` to modify a dependency locally, this provides a similar experience.
 
@@ -287,9 +287,9 @@ Gatsby, however, uses a monorepo architecture, so pushing up a fork with a chang
 
 Our workaround was to create a new repo for the package in question and push the build directly to Github. Here’s how it would work if you were making an update to, say, `gatsby-source-contentful`:
 
-- Go to your local fork of Gatsby, on the branch with your changes, and run `yarn watch` to compile a built version of your modified package.
-- Copy that package to a new directory `cp -a packages/gatsby-source-contentful path-to-my-repo`
-- Push the contents of this directory to Github and link it in your `package.json` as usual.
+* Go to your local fork of Gatsby, on the branch with your changes, and run `yarn watch` to compile a built version of your modified package.
+* Copy that package to a new directory `cp -a packages/gatsby-source-contentful path-to-my-repo`
+* Push the contents of this directory to Github and link it in your `package.json` as usual.
 
 ## Following up
 

@@ -47,33 +47,33 @@ Before you begin writing, make sure to read the article style guide below.
 You can create a PR with your draft article (or edits on an existing article) in
 two ways:
 
-1. The easiest method is to use the GitHub interface. Read
-   [these instructions](https://help.github.com/articles/editing-files-in-another-user-s-repository/)
-   on how to create a draft article or propose edits in the GitHub interface.
-2. Go into the
-   ["docs" folder](https://github.com/gatsbyjs/gatsby/tree/master/docs/docs) and
-   find the article stub you'd like to write or edit. All stubs will be in an
-   index.md file.
-3. Click the "Edit this file" pencil icon and make your changes to the file in
-   GitHub-flavored Markdown.
-4. Scroll to the bottom of the screen and add a commit message explaining your
-   changes. Then select the radio button option for "Create a new branch for
-   this commit and start a pull request" and click "Propose file changes"
-5. On the next screen, you can add any other details about your PR, then click
-   "Create pull request".
+1.  The easiest method is to use the GitHub interface. Read
+    [these instructions](https://help.github.com/articles/editing-files-in-another-user-s-repository/)
+    on how to create a draft article or propose edits in the GitHub interface.
+2.  Go into the
+    ["docs" folder](https://github.com/gatsbyjs/gatsby/tree/master/docs/docs) and
+    find the article stub you'd like to write or edit. All stubs will be in an
+    index.md file.
+3.  Click the "Edit this file" pencil icon and make your changes to the file in
+    GitHub-flavored Markdown.
+4.  Scroll to the bottom of the screen and add a commit message explaining your
+    changes. Then select the radio button option for "Create a new branch for
+    this commit and start a pull request" and click "Propose file changes"
+5.  On the next screen, you can add any other details about your PR, then click
+    "Create pull request".
 
 If you prefer to write locally before submitting a PR, then follow these steps:
 
-1. Fork this repository
-2. Copy your fork to your local machine.
-3. Add a remote upstream so git knows where the official Gatsby
-   repository is located by running the command `git remote add upstream`
-   _incomplete code here_
-4. Create a new branch for your work with the command `git checkout -b NEW-BRANCH-NAME`. Try to name your branch in a way that describes your
-   article topic, like `fix/ArticleHTMLElements`
-5. Write your article, commit your changes locally, and push your new branch to
-   GitHub with the command `git push origin NEW-BRANCH-NAME`
-6. Go to your repository on GitHub and open a PR
+1.  Fork this repository
+2.  Copy your fork to your local machine.
+3.  Add a remote upstream so git knows where the official Gatsby
+    repository is located by running the command `git remote add upstream`
+    _incomplete code here_
+4.  Create a new branch for your work with the command `git checkout -b NEW-BRANCH-NAME`. Try to name your branch in a way that describes your
+    article topic, like `fix/ArticleHTMLElements`
+5.  Write your article, commit your changes locally, and push your new branch to
+    GitHub with the command `git push origin NEW-BRANCH-NAME`
+6.  Go to your repository on GitHub and open a PR
 
 Make sure to maintain your local fork going forward so it stays up-to-date with
 the Gatsby guides repository. The next time you want to contribute, checkout
@@ -86,10 +86,10 @@ repository.
 Finally, if you want to run a version of the Guides repository locally, follow
 these steps:
 
-1. Ensure you have the yarn package manager installed `npm install -g yarn`
-2. Install the Gatsby cli `yarn add --global gatsby-cli`
-3. Follow the steps above to fork and clone the Gatsby repo.
-4. Enter the `www` directory where gatsbyjs.org is and install its dependencies `yarn install` then run `gatsby develop`.
+1.  Ensure you have the yarn package manager installed `npm install -g yarn`
+2.  Install the Gatsby cli `yarn add --global gatsby-cli`
+3.  Follow the steps above to fork and clone the Gatsby repo.
+4.  Enter the `www` directory where gatsbyjs.org is and install its dependencies `yarn install` then run `gatsby develop`.
 
 ## Article style guide
 

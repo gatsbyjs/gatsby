@@ -29,6 +29,7 @@ class Post extends React.Component {
     const { small } = smallImage.childImageSharp
     return (
       <Link
+        data-testid="post"
         to={`/${id}/`}
         onTouchStart={() => (touched = true)}
         onMouseEnter={() => {
@@ -93,6 +94,7 @@ class Post extends React.Component {
         {/* overlay */}
         {this.state.hovering && (
           <div
+            data-testid="likes"
             css={{
               position: `absolute`,
               top: 0,

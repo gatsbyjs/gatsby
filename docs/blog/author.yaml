@@ -105,6 +105,14 @@
   bio: Full-stack developer, clean code enthusiast, blogger at https://www.vojtechruzicka.com/
   avatar: avatars/vojtech-ruzicka.jpg
   twitter: "@vojtechruzicka"
+- id: Robert Svensson
+  bio: Developer and web security enthusiast living in Berlin.
+  avatar: avatars/robert-svensson.jpg
+  twitter: "@RobertDMW"
+- id: Carolyn Stransky
+  bio: Journalist and JavaScript developer based in Berlin, Germany.
+  avatar: avatars/carolyn-stransky.jpg
+  twitter: "@carolstran"
 - id: Sarah Mogin
   bio: Developer and Diet Coke enthusiast in Brooklyn, NY
   avatar: avatars/sarah-mogin.jpg

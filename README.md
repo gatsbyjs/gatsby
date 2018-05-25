@@ -88,7 +88,7 @@ Websites built with Gatsby:
 * [Random Screencast](https://randomscreencast.com)
 * [Phu Quoc Tea & Coffee Store](http://trasuaphuquoc.com)
 * [Steven Natera's blog](https://www.stevennatera.com)
-* [LekoArts - Graphic Designer](https://www.lekoarts.de)
+* [LekoArts - Graphic Designer Portfolio](https://www.lekoarts.de) ([source](https://github.com/LeKoArts/portfolio))
 * [Georgi Yanev](https://blog.georgi-yanev.com)
   ([source](https://github.com/jumpalottahigh/blog.georgi-yanev.com))
 * [OnCallogy.com](https://www.oncallogy.com)
@@ -198,10 +198,12 @@ Websites built with Gatsby:
   ([source](https://github.com/HaoZeke/hbtuMun18))
 * [The Audacious Project](https://audaciousproject.org/)
 * [upGizmo](https://www.upgizmo.com/)
-* [The Bastion Bot](https://bastionbot.org/ 'The Bastion Bot')
+* [The Bastion Bot](https://bastionbot.org/ "The Bastion Bot")
 * [Yuuniworks](https://www.yuuniworks.com/) ([source](https://github.com/junkboy0315/yuuni-web))
 * [Chin Loong Tan - Blog/Portfolio](https://chinloongtan.com/)
 * [F1 Vision](https://f1vision.com/)
+* [GraphQL College](https://graphql.college) ([source](https://github.com/GraphQLCollege/graphql-college))
+* [Hyunwoo Kim - Blog/Portfolio](https://devhalloween.com) ([source](https://github.com/khw1031/dev-blog))
 
 ## Docs
 

@@ -206,7 +206,7 @@ async function processRemoteNode({ url, store, cache, createNode, auth = {} }) {
 
     // Create the file node.
     const fileNode = await createFileNode(filename, {})
-
+    fileNode.internal.description = `File "${url}"`
     // Override the default plugin as gatsby-source-filesystem needs to
     // be the owner of File nodes or there'll be conflicts if any other
     // File nodes are created through normal usages of
