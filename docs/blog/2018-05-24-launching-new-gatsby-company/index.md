@@ -115,3 +115,5 @@ It’s been an amazing journey so far. Wish Sam and I and our new colleagues luc
 * [From the New Stack "GatsbyJS, the Open Source React-Based SSG, Creates Company to Evolve Cloud-Native Website Builds"](https://thenewstack.io/gatsbyjs-the-open-source-react-based-ssg-creates-company-to-evolve-cloud-native-website-builds/)
 * [gatsbyjs.com](https://www.gatsbyjs.com)
 * [gatsbyjs.org](/)
+
+_Also participating in Gatsby's funding round: Fathom Ventures, Robin Vasan, Mulesoft founder Ross Mason & the Pantheon founding team (Zack Rosen, Josh Koenig, Matt Cheney and David Strauss)._
