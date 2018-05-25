@@ -1,6 +1,7 @@
 import React from "react"
 
 import Layout from "../components/layout"
+import PageWithSearchBar from "../components/page-with-searchbar"
 import PackageReadme from "../components/package-readme"
 
 class DocsRemotePackagesTemplate extends React.Component {
@@ -10,21 +11,23 @@ class DocsRemotePackagesTemplate extends React.Component {
     } = this.props
     return (
       <Layout location={this.props.location}>
-        <PackageReadme
-          page={markdownRemark}
-          packageName={npmPackage.name}
-          excerpt={npmPackage.readme.childMarkdownRemark.excerpt}
-          html={npmPackage.readme.childMarkdownRemark.html}
-          githubUrl={
-            npmPackage.repository !== null
-              ? npmPackage.repository.url
-              : `https://github.com/search?q=${npmPackage.name}`
-          }
-          modified={npmPackage.modified}
-          timeToRead={npmPackage.readme.childMarkdownRemark.timeToRead}
-          keywords={npmPackage.keywords}
-          lastPublisher={npmPackage.lastPublisher}
-        />
+        <PageWithSearchBar history={this.props.history}>
+          <PackageReadme
+            page={markdownRemark}
+            packageName={npmPackage.name}
+            excerpt={npmPackage.readme.childMarkdownRemark.excerpt}
+            html={npmPackage.readme.childMarkdownRemark.html}
+            githubUrl={
+              npmPackage.repository !== null
+                ? npmPackage.repository.url
+                : `https://github.com/search?q=${npmPackage.name}`
+            }
+            modified={npmPackage.modified}
+            timeToRead={npmPackage.readme.childMarkdownRemark.timeToRead}
+            keywords={npmPackage.keywords}
+            lastPublisher={npmPackage.lastPublisher}
+          />
+        </PageWithSearchBar>
       </Layout>
     )
   }
