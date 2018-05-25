@@ -114,7 +114,7 @@ function buildLocalCommands(cli, isLocalSite) {
       getCommandHandler(`develop`, (args, cmd) => {
         process.env.NODE_ENV = process.env.NODE_ENV || `development`
 
-        process.env.GATSBY_BUILD_DIR = path.resolve(args.buildDirectory) || `public`
+        process.env.GATSBY_BUILD_DIR = process.env.GATSBY_BUILD_DIR || path.resolve(args.buildDirectory)  || `public`
         if (!fs.existsSync(process.env.GATSBY_BUILD_DIR)) {
           fs.mkdirSync(process.env.GATSBY_BUILD_DIR)
         }
@@ -150,7 +150,7 @@ function buildLocalCommands(cli, isLocalSite) {
       getCommandHandler(`build`, (args, cmd) => {
         process.env.NODE_ENV = `production`
 
-        process.env.GATSBY_BUILD_DIR = path.resolve(args.buildDirectory) || `public`
+        process.env.GATSBY_BUILD_DIR = process.env.GATSBY_BUILD_DIR || path.resolve(args.buildDirectory)  || `public`
         if (!fs.existsSync(process.env.GATSBY_BUILD_DIR)) {
           fs.mkdirSync(process.env.GATSBY_BUILD_DIR)
         }
