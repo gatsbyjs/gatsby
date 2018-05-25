@@ -409,6 +409,7 @@ module.exports = async (
   const getConfig = () => store.getState().webpack
 
   await apiRunnerNode(`onCreateWebpackConfig`, {
+    actions,
     getConfig,
     stage,
     rules,
