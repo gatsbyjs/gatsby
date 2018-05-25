@@ -8,6 +8,8 @@ const { store } = require(`../../redux`)
 
 const resultHashes = {}
 
+const indentString = string => string.replace(/\n/g, `\n  `)
+
 // Run query for a page
 module.exports = async (pageOrLayout, component) => {
   pageOrLayout.id = pageOrLayout._id
@@ -32,22 +34,19 @@ module.exports = async (pageOrLayout, component) => {
   // If there's a graphql error then log the error. If we're building, also
   // quit.
   if (result && result.errors) {
-    report.log(
-      report.stripIndent`
-        The GraphQL query from ${component.componentPath} failed.
+    report.log(`
+The GraphQL query from ${component.componentPath} failed.
 
-        Errors:
-          ${result.errors || []}
-        URL path:
-          ${pageOrLayout.path}
-        Context:
-          ${JSON.stringify(pageOrLayout.context, null, 4)}
-        Plugin:
-          ${pageOrLayout.pluginCreatorId || `none`}
-        Query:
-          ${component.query}
-      `
-    )
+Errors:
+  ${result.errors || []}
+URL path:
+  ${pageOrLayout.path}
+Context:
+  ${indentString(JSON.stringify(pageOrLayout.context, null, 2))}
+Plugin:
+  ${pageOrLayout.pluginCreatorId || `none`}
+Query:
+  ${indentString(component.query)}`)
 
     // Perhaps this isn't the best way to see if we're building?
     if (program._name === `build`) {
