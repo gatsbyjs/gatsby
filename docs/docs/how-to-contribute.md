@@ -54,8 +54,6 @@ The usual contributing steps are:
   see the [gatsby-dev-cli README](/packages/gatsby-dev-cli/)
 * Add tests and code for your changes.
 * Once you're done, make sure all tests still pass: `yarn test`
-* Commit with a ["Signed-off-by"](#developer-certificate-of-origin) line appended
-  to your commit message and push to your fork.
 * Create a pull request from your branch.
 
 ### Contributing to the documentation.
