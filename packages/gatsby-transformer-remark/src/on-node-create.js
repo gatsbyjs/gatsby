@@ -38,6 +38,7 @@ module.exports = async function onCreateNode(
     internal: {
       content,
       type: `MarkdownRemark`,
+      rawMarkdownBody: data.content,
     },
   }
 
