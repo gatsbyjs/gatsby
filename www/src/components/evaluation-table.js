@@ -84,6 +84,9 @@ class EvaluationTable extends Component {
         case 4: {
           return <EvaluationCell num={text} />
         }
+        default: {
+          return null
+        }
       }
     }
 
