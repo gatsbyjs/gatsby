@@ -25,8 +25,10 @@ class EvaluationCell extends Component {
         case `N/A`: {
           return `none`
         }
+        default: {
+          return `none`
+        }
       }
-      return `none`
     }
     const basicStyling = {
       height: rhythm(3 / 4),
