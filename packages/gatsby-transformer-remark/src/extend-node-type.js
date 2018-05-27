@@ -361,6 +361,12 @@ module.exports = (
           })
         },
       },
+      rawMarkdownBody: {
+        type: GraphQLString,
+        resolve(markdownNode) {
+          return markdownNode.rawMarkdownBody
+        },
+      },
       headings: {
         type: new GraphQLList(HeadingType),
         args: {

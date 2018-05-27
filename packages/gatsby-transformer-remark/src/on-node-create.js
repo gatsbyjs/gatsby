@@ -38,7 +38,6 @@ module.exports = async function onCreateNode(
     internal: {
       content,
       type: `MarkdownRemark`,
-      rawMarkdownBody: data.content,
     },
   }
 
@@ -52,6 +51,7 @@ module.exports = async function onCreateNode(
   }
 
   markdownNode.excerpt = data.excerpt
+  markdownNode.rawMarkdownBody = data.content
 
   // Add path to the markdown file path
   if (node.internal.type === `File`) {
