@@ -159,7 +159,7 @@ const SectionLink = props => {
 
   return (
     <li key={item.title} css={linkStyle}>
-      {item.link.charAt(0) == `#` ? (
+      {item.link.charAt(0) === `#` ? (
         <a href={item.link} className="nav-link">
           {title}
         </a>
