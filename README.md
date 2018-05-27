@@ -224,6 +224,7 @@ Websites built with Gatsby:
 * [GDPR Tracker](https://gdprtracker.io)
 * [GDPR Form](https://gdprform.io)
 * [Josh Palacios - Personal Website](https://joshpalacios.com) ([source](https://github.com/jshwa/joshpalacios-site))
+* [Cup of Data](https://cupofdata.com) ([source](https://github.com/cupofdata/cupofdata.com))
 
 ## Docs
 
