@@ -38,6 +38,7 @@ class EvaluationTable extends Component {
               marginBottom: rhythm(2 / 15),
               verticalAlign: `text-bottom`,
             }}
+            alt={`Info Icon`}
           />
         </span>,
       ]
