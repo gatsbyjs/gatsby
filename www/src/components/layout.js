@@ -19,8 +19,6 @@ import "typeface-space-mono"
 class DefaultLayout extends React.Component {
   render() {
     const isHomepage = this.props.location.pathname === `/`
-    // TODO: isBlogLanding is unused var, is this still needed?
-    const isBlogLanding = this.props.location.pathname === `/blog/`
 
     return (
       <div className={isHomepage ? `is-homepage` : ``}>
