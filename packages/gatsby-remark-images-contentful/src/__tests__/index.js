@@ -51,20 +51,25 @@ const createPluginOptions = (content, imagePaths = `/`) => {
 }
 
 jest.mock(`axios`, () => () =>
-    Promise.resolve({
-      data: {
-        pipe: jest.fn(),
-        destroy: jest.fn(),
-      },
-    }))
+  Promise.resolve({
+    data: {
+      pipe: jest.fn(),
+      destroy: jest.fn(),
+    },
+  })
+)
 
-jest.mock(`sharp`, () => () => {return {
-    metadata: jest.fn(() => {return {
-      width: 200,
-      height: 200,
-      density: 75,
-    }}),
-  }})
+jest.mock(`sharp`, () => () => {
+  return {
+    metadata: jest.fn(() => {
+      return {
+        width: 200,
+        height: 200,
+        density: 75,
+      }
+    }),
+  }
+})
 
 test(`it returns empty array when 0 images`, async () => {
   const content = `
