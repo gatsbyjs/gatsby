@@ -20,7 +20,7 @@ const navItemStyles = {
   textTransform: `uppercase`,
   letterSpacing: `0.03em`,
   lineHeight: `calc(${presets.headerHeight} - 6px)`,
-  padding: `6px ${rhythm(1 / 4)} 0 ${rhythm(1 / 2)} `,
+  padding: `6px ${rhythm(1 / 4)} 0 ${rhythm(1 / 2)}`,
   position: `relative`,
   top: 0,
   transition: `color .15s ease-out`,
@@ -202,7 +202,6 @@ export default ({ pathname }) => {
               css={{
                 ...navItemStyles,
                 ...socialIconsStyles,
-                paddingRight: rhythm(1 / 4),
               }}
             >
               <TwitterIcon style={{ verticalAlign: `text-top` }} />
