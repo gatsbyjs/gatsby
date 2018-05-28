@@ -1,6 +1,7 @@
 import colors from "./colors"
 
 module.exports = {
+  colors: colors,
   mobile: `(min-width: 400px)`,
   Mobile: `@media (min-width: 400px)`,
   phablet: `(min-width: 550px)`,
@@ -15,18 +16,6 @@ module.exports = {
   VVHd: `@media (min-width: 1650px)`,
   maxWidth: 35,
   maxWidthWithSidebar: 26,
-  lightPurple: `#e0d6eb`,
-  veryLightPurple: `#f6f2f8`,
-  sidebar: `#fbfafc`,
-  calm: `rgba(38, 32, 44, .5)`,
-  // palette by @SachaG
-  // @see https://www.figma.com/file/J6IYJEtdRmwJQOrcZ2DfvxDD/Gatsby
-  brand: `#744C9E`,
-  brandLight: `#9D7CBF`,
-  brandLighter: `#F5F3F7`,
-  // bolder palette by @ArchieHicklin
-  // @see https://github.com/gatsbyjs/gatsby/issues/1173#issuecomment-309415650
-  accent: `#ffb238`, // "Mustard"
   radius: 2,
   radiusLg: 4,
   gutters: {
@@ -38,12 +27,11 @@ module.exports = {
   shadowKeyUmbraOpacity: 0.1,
   shadowKeyPenumbraOpacity: 0.07,
   shadowAmbientShadowOpacity: 0.06,
-  shadowColor: `157, 124, 191`,
   animation: {
     curveDefault: `cubic-bezier(0.4, 0, 0.2, 1)`,
     speedDefault: `250ms`,
     speedFast: `100ms`,
   },
-  logoOffset: 1.7,
+  logoOffset: 1.8,
   headerHeight: `3.5rem`,
 }

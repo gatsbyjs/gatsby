@@ -6,9 +6,9 @@ import EvaluationCell from "../components/evaluation-cell"
 import FuturaParagraph from "../components/futura-paragraph"
 import Container from "../components/container"
 import { options, rhythm } from "../utils/typography"
-import presets from "../utils/presets"
+import presets, { colors } from "../utils/presets"
 
-const legendBorderColor = presets.veryLightPurple
+const legendBorderColor = colors.ui.light
 
 const LegendTable = () => {
   const legendBallStyle = {

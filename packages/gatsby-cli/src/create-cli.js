@@ -60,6 +60,7 @@ function buildLocalCommands(cli, isLocalSite) {
   function getCommandHandler(command, handler) {
     return argv => {
       report.setVerbose(!!argv.verbose)
+      report.setNoColor(!!argv.noColor)
 
       process.env.gatsby_log_level = argv.verbose ? `verbose` : `normal`
       report.verbose(`set gatsby_log_level: "${process.env.gatsby_log_level}"`)
@@ -97,8 +98,34 @@ function buildLocalCommands(cli, isLocalSite) {
           alias: `open`,
           type: `boolean`,
           describe: `Open the site in your browser for you.`,
+        })
+        .option(`S`, {
+          alias: `https`,
+          type: `boolean`,
+          describe: `Use HTTPS. See https://www.gatsbyjs.org/docs/local-https/ as a guide`,
+        })
+        .option(`c`, {
+          alias: `cert-file`,
+          type: `string`,
+          default: ``,
+          describe: `Custom HTTPS cert file (relative path; also required: --https, --key-file). See https://www.gatsbyjs.org/docs/local-https/`,
+        })
+        .option(`k`, {
+          alias: `key-file`,
+          type: `string`,
+          default: ``,
+          describe: `Custom HTTPS key file (relative path; also required: --https, --cert-file). See https://www.gatsbyjs.org/docs/local-https/`,
         }),
-    handler: getCommandHandler(`develop`),
+    handler: handlerP(
+      getCommandHandler(`develop`, (args, cmd) => {
+        process.env.NODE_ENV = process.env.NODE_ENV || `development`
+        cmd(args)
+        // Return an empty promise to prevent handlerP from exiting early.
+        // The development server shouldn't ever exit until the user directly
+        // kills it so this is fine.
+        return new Promise(resolve => {})
+      })
+    ),
   })
 
   cli.command({
@@ -109,6 +136,10 @@ function buildLocalCommands(cli, isLocalSite) {
         type: `boolean`,
         default: false,
         describe: `Build site with link paths prefixed (set prefix in your config).`,
+      }).option(`no-uglify`, {
+        type: `boolean`,
+        default: false,
+        describe: `Build site without uglifying JS bundles (for debugging).`,
       }),
     handler: handlerP(
       getCommandHandler(`build`, (args, cmd) => {
@@ -165,14 +196,18 @@ module.exports = (argv, handlers) => {
 
   cli
     .usage(`Usage: $0 <command> [options]`)
-    .help(`h`)
     .alias(`h`, `help`)
-    .version()
     .alias(`v`, `version`)
     .option(`verbose`, {
       default: false,
       type: `boolean`,
       describe: `Turn on verbose output`,
+      global: true,
+    })
+    .option(`no-color`, {
+      default: false,
+      type: `boolean`,
+      describe: `Turn off the color in output`,
       global: true,
     })
 

@@ -7,7 +7,12 @@ class mdBlogPost extends React.Component {
     const { html, frontmatter } = this.props.data.markdownRemark
 
     return (
-      <BlogPostChrome {...frontmatter}>
+      <BlogPostChrome
+        {...{
+          frontmatter: this.props.data.markdownRemark.frontmatter,
+          site: this.props.data.site,
+        }}
+      >
         <div className="container content">
           <div dangerouslySetInnerHTML={{ __html: html }} />
         </div>
@@ -23,6 +28,9 @@ export const pageQuery = graphql`
     markdownRemark(fields: { slug: { eq: $slug } }) {
       html
       ...MarkdownBlogPost_frontmatter
+    }
+    site {
+      ...site_sitemetadata
     }
   }
 `

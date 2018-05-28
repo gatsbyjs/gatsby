@@ -9,7 +9,7 @@ module.exports = (state = {}, action) => {
     case `CREATE_LAYOUT`:
       action.payload.componentPath = normalize(action.payload.component)
       state[action.payload.componentPath] = _.merge(
-        {},
+        { query: `` },
         state[action.payload.componentPath],
         {
           componentPath: action.payload.componentPath,

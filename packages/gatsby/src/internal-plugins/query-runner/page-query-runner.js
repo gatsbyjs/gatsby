@@ -120,17 +120,22 @@ const runQueriesForIds = ids => {
 
 const findDirtyIds = actions => {
   const state = store.getState()
-  return actions.reduce((dirtyIds, action) => {
-    const node = action.payload
+  const uniqDirties = _.uniq(
+    actions.reduce((dirtyIds, action) => {
+      const node = action.payload
 
-    // find invalid pagesAndLayouts
-    dirtyIds = dirtyIds.concat(state.componentDataDependencies.nodes[node.id])
+      if (!node || !node.id || !node.internal.type) return dirtyIds
 
-    // Find invalid connections
-    dirtyIds = dirtyIds.concat(
-      state.componentDataDependencies.connections[node.internal.type]
-    )
+      // Find pagesAndLayouts that depend on this node so are now dirty.
+      dirtyIds = dirtyIds.concat(state.componentDataDependencies.nodes[node.id])
 
-    return _.compact(dirtyIds)
-  }, [])
+      // Find connections that depend on this node so are now invalid.
+      dirtyIds = dirtyIds.concat(
+        state.componentDataDependencies.connections[node.internal.type]
+      )
+
+      return _.compact(dirtyIds)
+    }, [])
+  )
+  return uniqDirties
 }

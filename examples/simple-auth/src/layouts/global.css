@@ -1,0 +1,35 @@
+html,
+body {
+  color: #2a2a2a;
+  font-size: 18px;
+  line-height: 1.45;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+  margin: 0;
+}
+
+* + * {
+  margin-top: 1rem;
+}
+
+body {
+  margin: 0;
+}
+
+li {
+  margin-top: 0.25rem;
+}
+
+code {
+  background: lightgrey;
+  border-radius: 0.125rem;
+  font-weight: bold;
+  padding: 0.125rem 0.25rem;
+}

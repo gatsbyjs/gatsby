@@ -4,7 +4,7 @@ const normalize = require(`./normalize`)
 const typePrefix = `lever__`
 
 exports.sourceNodes = async (
-  { boundActionCreators, getNode, store, cache },
+  { boundActionCreators, getNode, store, cache, createNodeId },
   { site, verboseOutput }
 ) => {
   const { createNode } = boundActionCreators
@@ -27,7 +27,7 @@ exports.sourceNodes = async (
   entities = normalize.standardizeDates(entities)
 
   // creates Gatsby IDs for each entity
-  entities = normalize.createGatsbyIds(entities)
+  entities = normalize.createGatsbyIds(createNodeId, entities)
 
   // creates nodes for each entry
   normalize.createNodesFromEntities({ entities, createNode })

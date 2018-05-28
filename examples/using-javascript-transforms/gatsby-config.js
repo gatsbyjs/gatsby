@@ -24,30 +24,13 @@ module.exports = {
         path: `${__dirname}/src/articles/`,
       },
     },
-    `gatsby-transformer-javascript-static-exports`,
-    `gatsby-transformer-yaml`,
+    `gatsby-transformer-javascript-frontmatter`,
     {
       resolve: `gatsby-transformer-remark`,
       options: {
-        plugins: [
-          {
-            resolve: `gatsby-remark-images`,
-            options: {
-              maxWidth: 690,
-            },
-          },
-          {
-            resolve: `gatsby-remark-responsive-iframe`,
-            options: {},
-          },
-          `gatsby-remark-prismjs`,
-          `gatsby-remark-copy-linked-files`,
-          `gatsby-remark-smartypants`,
-        ],
+        plugins: [`gatsby-remark-prismjs`],
       },
     },
-    `gatsby-plugin-sharp`,
-    `gatsby-plugin-postcss-sass`,
-    `gatsby-plugin-offline`,
+    `gatsby-plugin-sass`,
   ],
 }

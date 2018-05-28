@@ -1,5 +1,4 @@
 const { transpileModule } = require(`typescript`)
-const path = require(`path`)
 
 const test = /\.tsx?$/
 const compilerDefaults = {
@@ -11,7 +10,7 @@ const compilerDefaults = {
 module.exports.resolvableExtensions = () => [`.ts`, `.tsx`]
 
 module.exports.modifyWebpackConfig = (
-  { config },
+  { config, babelConfig },
   { compilerOptions, transpileOnly = true }
 ) => {
   // CommonJS to keep Webpack happy.
@@ -23,16 +22,10 @@ module.exports.modifyWebpackConfig = (
   // error (i.e., not build) at something or other.
   const opts = { compilerOptions: copts, transpileOnly }
 
-  // Load gatsby babel plugin to extract graphql query
-  const extractQueryPlugin = path.resolve(
-    __dirname,
-    `../gatsby/dist/utils/babel-plugin-extract-graphql.js`
-  )
-
   config.loader(`typescript`, {
     test,
     loaders: [
-      `babel?${JSON.stringify({ plugins: [extractQueryPlugin] })}`,
+      `babel?${JSON.stringify(babelConfig)}`,
       `ts-loader?${JSON.stringify(opts)}`,
     ],
   })

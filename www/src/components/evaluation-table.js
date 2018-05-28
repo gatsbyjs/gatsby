@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import presets from "../utils/presets"
+import presets, { colors } from "../utils/presets"
 import EvaluationCell from "./evaluation-cell"
 import Link from "gatsby-link"
 import infoIcon from "../assets/info-icon.svg"
@@ -26,7 +26,7 @@ class EvaluationTable extends Component {
             // wordBreak: `break-all`,
             // display: `inline-block`,
             "&:hover": {
-              background: presets.lightPurple,
+              background: colors.ui.bright,
             },
           }}
         >
@@ -133,7 +133,7 @@ class EvaluationTable extends Component {
                               cursor: j >= 0 ? `pointer` : `inherit`,
                             },
                             borderBottom: !showTooltip(s, i)
-                              ? `1px solid ${presets.veryLightPurple}`
+                              ? `1px solid ${colors.ui.light}`
                               : `none`,
                             minWidth: 40,
                             paddingRight: 0,

@@ -5,6 +5,7 @@ author: "Kyle Mathews"
 image: "reactnext-gatsby-performance.001.png"
 showImageInArticle: false
 typora-copy-images-to: ./
+tags: ["performance", "mobile", "pwa"]
 ---
 
 _I gave this talk last weekend at [ReactNext](http://react-next.com/) in Tel

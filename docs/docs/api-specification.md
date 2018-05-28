@@ -1,5 +1,5 @@
 ---
-title: API specification
+title: API Specification
 ---
 
 Gatsby's APIs are tailored conceptually to some extent after React.js to improve
@@ -19,7 +19,7 @@ Plugins can extend Gatsby in many ways:
   with URLs derived from their file names).
 * Modifying webpack config (e.g. for styling options, adding support for other
   compile-to-js languages)
-* Adding things to the rendered HTML (e.g. meta tags, analytics JS snippits like
+* Adding things to the rendered HTML (e.g. meta tags, analytics JS snippets like
   Google Analytics)
 * Writing out things to build directory based on site data (e.g. service worker,
   sitemap, RSS feed)
@@ -27,10 +27,10 @@ Plugins can extend Gatsby in many ways:
 A single plugin can use multiple APIs to accomplish its purpose. E.g. the plugin
 for the css-in-js library [Glamor](/packages/gatsby-plugin-glamor/):
 
-1. modifies the webpack config to add its plugin
-2. adds a Babel plugin to replace React's default createElement
-3. modifies server rendering to extract out the critical CSS for each rendered
-   page and inline the CSS in the `<head>` of that HTML page.
+1.  modifies the webpack config to add its plugin
+2.  adds a Babel plugin to replace React's default createElement
+3.  modifies server rendering to extract out the critical CSS for each rendered
+    page and inline the CSS in the `<head>` of that HTML page.
 
 Plugins can also depend on other plugins. [The Sharp
 plugin](/packages/gatsby-plugin-sharp/) exposes a number of high-level APIs for

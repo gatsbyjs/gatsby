@@ -6,6 +6,7 @@ const mapSeries = require(`async/mapSeries`)
 const reporter = require(`gatsby-cli/lib/reporter`)
 const cache = require(`./cache`)
 const apiList = require(`./api-node-docs`)
+const createNodeId = require(`./create-node-id`)
 
 // Bind action creators per plugin so we can auto-add
 // metadata to actions they create.
@@ -61,6 +62,8 @@ const runAPI = (plugin, api, args) => {
     pathPrefix = store.getState().config.pathPrefix
   }
 
+  const namespacedCreateNodeId = id => createNodeId(id, plugin.name)
+
   const gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
   if (gatsbyNode[api]) {
     const apiCallArgs = [
@@ -76,6 +79,7 @@ const runAPI = (plugin, api, args) => {
         reporter,
         getNodeAndSavePathDependency,
         cache,
+        createNodeId: namespacedCreateNodeId,
       },
       plugin.pluginOptions,
     ]
@@ -157,7 +161,10 @@ module.exports = async (api, args = {}, pluginSource) =>
       },
       (err, results) => {
         if (err) {
-          reporter.error(`${pluginName} returned an error`, err)
+          if (process.env.NODE_ENV === `production`) {
+            return reporter.panic(`${pluginName} returned an error`, err)
+          }
+          return reporter.error(`${pluginName} returned an error`, err)
         }
         // Remove runner instance
         apisRunning = apisRunning.filter(runner => runner !== apiRunInstance)
@@ -177,7 +184,7 @@ module.exports = async (api, args = {}, pluginSource) =>
         }
 
         // Check if any of our waiters are done.
-        waitingForCasacadeToFinish = waitingForCasacadeToFinish.filter(
+        return (waitingForCasacadeToFinish = waitingForCasacadeToFinish.filter(
           instance => {
             // If none of its trace IDs are running, it's done.
             if (!_.some(apisRunning, a => a.traceId === instance.traceId)) {
@@ -187,7 +194,7 @@ module.exports = async (api, args = {}, pluginSource) =>
               return true
             }
           }
-        )
+        ))
       }
     )
   })

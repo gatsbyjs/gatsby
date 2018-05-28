@@ -1,6 +1,6 @@
 // @flow
 const invariant = require(`invariant`)
-const regex = new RegExp(`[^a-zA-Z0-9_]`, `g`)
+const nonAlphaNumericExpr = new RegExp(`[^a-zA-Z0-9_]`, `g`)
 
 /**
  * GraphQL field names must be a string and cannot contain anything other than
@@ -14,5 +14,12 @@ module.exports = (key: string): string => {
     `Graphql field name (key) is not a string -> ${key}`
   )
 
-  return key.replace(regex, `_`)
+  const replaced = key.replace(nonAlphaNumericExpr, `_`)
+
+  // key is invalid; normalize with leading underscore and rest with x
+  if (replaced.match(/^__/)) {
+    return replaced.replace(/_/g, (char, index) => (index === 0 ? `_` : `x`))
+  }
+
+  return replaced
 }

@@ -5,13 +5,13 @@ support.
 
 ## Install
 
-`yarn add gatsby-plugin-postcss-sass`
+`npm install --save gatsby-plugin-postcss-sass`
 
 ## How to use
 
-1. Include the plugin in your `gatsby-config.js` file.
-2. Write your stylesheets in SASS/SCSS (with your desired _postcss_ featureset)
-   and require/import them
+1.  Include the plugin in your `gatsby-config.js` file.
+2.  Write your stylesheets in SASS/SCSS (with your desired _postcss_ featureset)
+    and require/import them
 
 ```javascript
 // in gatsby-config.js

@@ -1,0 +1,67 @@
+# gatsby-transformer-screenshot
+
+Plugin for creating screenshots of website URLs using an AWS Lambda
+Function. This plugin looks for `SitesYaml` nodes with a `url`
+property, and creates `Screenshot` child nodes with an `screenshotFile` field.
+
+[Live demo](https://thatotherperson.github.io/gatsby-screenshot-demo/)
+([source](https://github.com/ThatOtherPerson/gatsby-screenshot-demo))
+
+Data should be in a yaml file named `sites.yml` and look like:
+
+```yaml
+- url: https://reactjs.org/
+  name: React
+- url: https://about.sourcegraph.com/
+  name: Sourcegraph
+- url: https://simply.co.za/
+  name: Simply
+```
+
+## Install
+
+`npm install gatsby-transformer-screenshot`
+
+## How to use
+
+```javascript
+// in your gatsby-config.js
+module.exports = {
+  plugins: [`gatsby-transformer-screenshot`],
+};
+```
+
+## How to query
+
+You can query for screenshot files as shown below:
+
+```graphql
+{
+  allSitesYaml {
+    edges {
+      node {
+        url
+        childScreenshot {
+          screenshotFile {
+            id
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+screenshotFile is a PNG file like any other loaded from your filesystem, so you can use this plugin in combination with `gatsby-image`.
+
+## Lambda setup
+
+Gatsby provides a hosted screenshot service for you to use; however, you can run the service yourself on AWS Lambda.
+
+AWS Lambda is a "serverless" computing platform that lets you run code in response to events, without needing to set up a server. This plugin uses a Lambda function to take screenshots and store them in an AWS S3 bucket.
+
+First, you will need to (create a S3 bucket)[https://docs.aws.amazon.com/AmazonS3/latest/gsg/CreatingABucket.html] for storing screenshots. Once you have done that, create a (Lifecycle Policy)[https://docs.aws.amazon.com/AmazonS3/latest/user-guide/create-lifecycle.html] for the bucket that sets a number of days before files in the bucket expire. Screenshots will be cached until this date.
+
+To build the Lambda package, run `npm run build-lambda-package` in this directory. A file called `lambda-package.zip` will be generated - upload this as the source of your AWS Lambda. Finally, you will need to set `S3_BUCKET` as an environment variable for the lambda.
+
+To set up the HTTP interface, you will need to use AWS API Gateway. Create a new API, create a new resource under `/`, select "Configure as proxy resource", and leave all the settings with their defaults. Create a method on the new resource, selecting "Lambda Function Proxy" as the integration type, and fill in the details of your lambda.

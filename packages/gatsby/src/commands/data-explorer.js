@@ -12,11 +12,13 @@ module.exports = async (program: any) => {
   // bootstrap to ensure schema is in the store
   await bootstrap(program)
 
+  const schema = store.getState().schema
+
   const app = express()
   app.use(
     `/`,
     graphqlHTTP({
-      schema: store.getState().schema,
+      schema,
       graphiql: true,
     })
   )

@@ -10,7 +10,7 @@ Create an RSS feed (or multiple feeds) for your Gatsby site.
 
 ```javascript
 // In your gatsby-config.js
-siteMetadata {
+siteMetadata: {
   title: `GatsbyJS`,
   description: `A fantastic new static site generator.`,
   siteUrl: `https://www.gatsbyjs.org`
@@ -83,3 +83,5 @@ plugins: [
   },
 ];
 ```
+
+NOTE: This plugin only generates the `/rss.xml` file when run in `production` mode! To test your feed, run: `gatsby build && gatsby serve`.

@@ -13,6 +13,7 @@ export const DEFAULT_OPTIONS = {
   mergeLinkHeaders: true,
   mergeCachingHeaders: true,
   transformHeaders: _.identity, // optional transform for manipulating headers for sorting, etc
+  generateMatchPathRewrites: true, // generate rewrites for client only paths
 }
 
 export const SECURITY_HEADERS = {

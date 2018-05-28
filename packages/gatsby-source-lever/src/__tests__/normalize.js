@@ -15,7 +15,9 @@ describe(`Process Lever data`, () => {
     expect(entities).toMatchSnapshot()
   })
   it(`creates Gatsby IDs for each entity`, () => {
-    entities = normalize.createGatsbyIds(entities)
+    const createNodeId = jest.fn()
+    createNodeId.mockReturnValue(`uuid-from-gatsby`)
+    entities = normalize.createGatsbyIds(createNodeId, entities)
     expect(entities).toMatchSnapshot()
   })
   it(`creates nodes for each entry`, () => {

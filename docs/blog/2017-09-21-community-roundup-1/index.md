@@ -5,6 +5,7 @@ author: "Kyle Mathews"
 image: "on-the-trail.jpg"
 showImageInArticle: true
 typora-copy-images-to: ./
+tags: ["v1", "tutorials", "plugins"]
 ---
 
 It's been a wild 77 days since Gatsby 1.0.0 was released into the world on July

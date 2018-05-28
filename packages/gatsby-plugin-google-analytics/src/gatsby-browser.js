@@ -1,10 +1,18 @@
 exports.onRouteUpdate = function({ location }) {
   // Don't track while developing.
   if (process.env.NODE_ENV === `production` && typeof ga === `function`) {
-    // Wait for the title update (see #2478)
-    setTimeout(() => {
-      window.ga(`set`, `page`, (location || {}).pathname)
-      window.ga(`send`, `pageview`)
-    }, 0)
+    if (
+      location &&
+      typeof window.excludeGAPaths !== `undefined` &&
+      window.excludeGAPaths.some(rx => rx.test(location.pathname))
+    ) {
+      return
+    }
+    window.ga(
+      `set`,
+      `page`,
+      location ? location.pathname + location.search + location.hash : undefined
+    )
+    window.ga(`send`, `pageview`)
   }
 }

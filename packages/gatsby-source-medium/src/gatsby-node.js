@@ -35,8 +35,9 @@ exports.sourceNodes = async ({ boundActionCreators }, { username }) => {
     let importableResources = []
     let posts = {} // because `posts` needs to be in a scope accessible by `links` below
 
-    const users = Object.keys(json.payload.references.User)
-      .map(key => json.payload.references.User[key])
+    const users = Object.keys(json.payload.references.User).map(
+      key => json.payload.references.User[key]
+    )
     importableResources = importableResources.concat(users)
 
     if (json.payload.posts) {
@@ -45,14 +46,16 @@ exports.sourceNodes = async ({ boundActionCreators }, { username }) => {
     }
 
     if (json.payload.references.Post) {
-      posts = Object.keys(json.payload.references.Post)
-        .map(key => json.payload.references.Post[key])
+      posts = Object.keys(json.payload.references.Post).map(
+        key => json.payload.references.Post[key]
+      )
       importableResources = importableResources.concat(posts)
     }
 
     if (json.payload.references.Collection) {
-      const collections = Object.keys(json.payload.references.Collection)
-        .map(key => json.payload.references.Collection[key])
+      const collections = Object.keys(json.payload.references.Collection).map(
+        key => json.payload.references.Collection[key]
+      )
       importableResources = importableResources.concat(collections)
     }
 

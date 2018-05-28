@@ -83,14 +83,19 @@ export default ({ functions }) => (
               <h4 css={{ marginTop: rhythm(1) }}>Example</h4>
               {` `}
               {node.examples.map((example, i) => (
-                <pre key={`${node.name} example ${i}`}>
-                  <code
+                <div className="gatsby-highlight">
+                  <pre
                     className="language-javascript"
-                    dangerouslySetInnerHTML={{
-                      __html: example.highlighted,
-                    }}
-                  />
-                </pre>
+                    key={`${node.name} example ${i}`}
+                  >
+                    <code
+                      className="language-javascript"
+                      dangerouslySetInnerHTML={{
+                        __html: example.highlighted,
+                      }}
+                    />
+                  </pre>
+                </div>
               ))}
             </div>
           )}

@@ -2,9 +2,14 @@ import React, { Component } from "react"
 import PropTypes from "prop-types"
 import { navigateTo } from "gatsby-link"
 import { rhythm } from "../utils/typography"
-import presets from "../utils/presets"
+
+import presets, { colors } from "../utils/presets"
+import hex2rgba from "hex2rgba"
+import SearchIcon from "./search-icon"
 
 import { css } from "glamor"
+
+const { curveDefault, speedDefault } = presets.animation
 
 // Override default search result styles (docsearch.css)
 css.insert(`
@@ -16,7 +21,11 @@ css.insert(`
     min-width: calc(100vw - ${rhythm(1)}) !important;
     max-width: calc(100vw - 2rem) !important;
     max-height: calc(100vh - 5rem) !important;
-    box-shadow: 0 3px 10px 0.05rem rgba(${presets.shadowColor}, .25) !important;
+    box-shadow: 0 3px 10px 0.05rem ${hex2rgba(colors.lilac, 0.25)} !important;
+  }
+
+  .is-homepage .algolia-autocomplete .ds-dropdown-menu {
+    top: ${rhythm(2.5)} !important;
   }
 
   /* .searchWrap to beat docsearch.css' !important */
@@ -35,14 +44,14 @@ css.insert(`
   }
 
   .algolia-autocomplete .algolia-docsearch-suggestion--subcategory-column {
-    color: ${presets.calm} !important;
+    color: ${colors.gray.calm} !important;
     font-size: 0.9rem !important;
     font-weight: normal !important;
     padding: ${rhythm(0.25)} ${rhythm(0.5)} !important;
   }
 
   .algolia-autocomplete .algolia-docsearch-suggestion--subcategory-column:before {
-    background: ${presets.veryLightPurple} !important;
+    background: ${colors.ui.light} !important;
   }
 
   .algolia-autocomplete .algolia-docsearch-suggestion--subcategory-column:after {
@@ -61,28 +70,28 @@ css.insert(`
 
   /* Caret */
   .algolia-autocomplete .ds-dropdown-menu::before {
-    border-top-color: ${presets.lightPurple} !important;
-    border-right-color: ${presets.lightPurple} !important;
+    border-top-color: ${colors.ui.bright} !important;
+    border-right-color: ${colors.ui.bright} !important;
   }
 
   .algolia-autocomplete .ds-dropdown-menu [class^="ds-dataset-"] {
     padding: 0 !important;
-    border-color: ${presets.lightPurple} !important;
+    border-color: ${colors.ui.bright} !important;
   }
 
   .algolia-autocomplete .algolia-docsearch-suggestion--highlight {
-    background-color: ${presets.lightPurple} !important;
+    background-color: ${colors.ui.bright} !important;
     box-shadow: 0 !important;
-    color: ${presets.brand} !important;
+    color: ${colors.gatsby} !important;
   }
 
   .algolia-autocomplete .algolia-docsearch-suggestion--text {
-    color: ${presets.calm} !important;
+    color: ${colors.gray.calm} !important;
   }
 
   .algolia-autocomplete .algolia-docsearch-suggestion--text .algolia-docsearch-suggestion--highlight {
     background: transparent !important;
-    box-shadow: inset 0 -2px 0 0 ${presets.brand} !important;
+    box-shadow: inset 0 -2px 0 0 ${colors.gatsby} !important;
   }
 
   .algolia-autocomplete .algolia-docsearch-suggestion .algolia-docsearch-suggestion--subcategory-column {
@@ -90,7 +99,7 @@ css.insert(`
   }
 
   .algolia-autocomplete .ds-dropdown-menu .ds-suggestion.ds-cursor .algolia-docsearch-suggestion:not(.suggestion-layout-simple) .algolia-docsearch-suggestion--content {
-    background-color: ${presets.brandLighter} !important;
+    background-color: ${colors.ui.light} !important;
   }
 
   .algolia-autocomplete .algolia-docsearch-suggestion .algolia-docsearch-suggestion--content.algolia-docsearch-suggestion--no-results {
@@ -105,7 +114,7 @@ css.insert(`
   }
 
   .algolia-autocomplete .algolia-docsearch-suggestion .algolia-docsearch-suggestion--content.algolia-docsearch-suggestion--no-results .algolia-docsearch-suggestion--text {
-    color: rgb(38, 32, 44) !important;
+    color: inherit !important;
     font-weight: normal !important;
   }
 
@@ -117,8 +126,8 @@ css.insert(`
     padding: ${rhythm(0.25)} ${rhythm(0.5)} !important;
     margin-top: 0 !important;
     font-size: 0.9rem !important;
-    border-color: ${presets.veryLightPurple} !important;
-    color: ${presets.brand} !important;
+    border-color: ${colors.ui.light} !important;
+    color: ${colors.gatsby} !important;
     font-weight: bold !important;
   }
 
@@ -134,7 +143,7 @@ css.insert(`
     width: 100% !important;
     height: 30px !important;
     margin-top: 0 !important;
-    border-top: 1px dotted ${presets.veryLightPurple} !important;
+    border-top: 1px dotted ${colors.ui.light} !important;
   }
 
   .algolia-autocomplete .algolia-docsearch-footer--logo {
@@ -175,7 +184,7 @@ css.insert(`
       top: 0 !important;
       height: 100% !important;
       width: 1px !important;
-      background: ${presets.veryLightPurple} !important;
+      background: ${colors.ui.light} !important;
     }
 
     .algolia-autocomplete .algolia-docsearch-suggestion--subcategory-column:after {
@@ -188,6 +197,7 @@ css.insert(`
   }
 
   @media ${presets.tablet} {
+    .is-homepage .algolia-autocomplete .ds-dropdown-menu,
     .algolia-autocomplete .ds-dropdown-menu {
       top: 100% !important;
       position: absolute !important;
@@ -226,9 +236,8 @@ css.insert(`
 class SearchForm extends Component {
   constructor() {
     super()
-    this.state = { enabled: true }
+    this.state = { enabled: true, focussed: false }
     this.autocompleteSelected = this.autocompleteSelected.bind(this)
-    this.focusSearchInput = this.focusSearchInput.bind(this)
   }
 
   /**
@@ -247,13 +256,6 @@ class SearchForm extends Component {
     navigateTo(`${a.pathname}${a.hash}`)
   }
 
-  focusSearchInput(e) {
-    if (e.key !== `s`) return
-    if (document.activeElement === this.searchInput) return // eslint-disable-line no-undef
-    e.preventDefault()
-    this.searchInput.focus()
-  }
-
   componentDidMount() {
     if (
       typeof window === `undefined` || // eslint-disable-line no-undef
@@ -263,9 +265,6 @@ class SearchForm extends Component {
       this.setState({ enabled: false })
       return
     }
-
-    // eslint-disable-next-line no-undef
-    window.addEventListener(`keydown`, this.focusSearchInput)
 
     // eslint-disable-next-line no-undef
     window.addEventListener(
@@ -280,21 +279,22 @@ class SearchForm extends Component {
       indexName: `gatsbyjs`,
       inputSelector: `#doc-search`,
       debug: false,
+      autocompleteOptions: {
+        openOnFocus: true,
+        autoselect: true,
+        hint: false,
+        keyboardShortcuts: [`s`],
+      },
     })
   }
 
-  componentWillUnmount() {
-    // eslint-disable-next-line no-undef
-    window.removeEventListener(`keydown`, this.focusSearchInput)
-  }
-
   render() {
-    const { enabled } = this.state
-    const { styles } = this.props.styles
+    const { enabled, focussed } = this.state
+    const { iconStyles, isHomepage } = this.props
+
     return enabled ? (
       <form
         css={{
-          ...styles,
           display: `flex`,
           flex: `0 0 auto`,
           flexDirection: `row`,
@@ -303,53 +303,85 @@ class SearchForm extends Component {
           marginBottom: 0,
         }}
         className="searchWrap"
+        onSubmit={e => e.preventDefault()}
       >
-        <input
-          id="doc-search"
-          css={{
-            appearance: `none`,
-            background: `transparent`,
-            border: 0,
-            color: presets.brand,
-            paddingTop: rhythm(1 / 8),
-            paddingRight: rhythm(1 / 4),
-            paddingBottom: rhythm(1 / 8),
-            paddingLeft: rhythm(1),
-            backgroundImage: `url(/search.svg)`,
-            backgroundSize: `16px 16px`,
-            backgroundRepeat: `no-repeat`,
-            backgroundPositionY: `center`,
-            backgroundPositionX: `5px`,
-            overflow: `hidden`,
-            width: rhythm(1),
-            transition: `width 0.2s ease`,
-
-            ":focus": {
-              outline: 0,
-              backgroundColor: presets.brandLighter,
+        <label css={{ position: `relative` }}>
+          <input
+            id="doc-search"
+            css={{
+              appearance: `none`,
+              backgroundColor: `transparent`,
+              border: 0,
               borderRadius: presets.radiusLg,
-              width: rhythm(5),
-            },
+              color: colors.gatsby,
+              paddingTop: rhythm(1 / 8),
+              paddingRight: rhythm(1 / 4),
+              paddingBottom: rhythm(1 / 8),
+              paddingLeft: rhythm(1),
+              overflow: `hidden`,
+              width: rhythm(1),
+              transition: `width ${speedDefault} ${curveDefault}, background-color ${speedDefault} ${curveDefault}`,
+              ":focus": {
+                outline: 0,
+                backgroundColor: colors.ui.light,
+                borderRadius: presets.radiusLg,
+                width: rhythm(5),
+                transition: `width ${speedDefault} ${curveDefault}, background-color ${speedDefault} ${curveDefault}`,
+              },
 
-            [presets.Desktop]: {
-              width: rhythm(5),
-            },
-          }}
-          type="search"
-          placeholder="Search docs"
-          aria-label="Search docs"
-          title="Hit 's' to search docs"
-          ref={input => {
-            this.searchInput = input
-          }}
-        />
+              [presets.Desktop]: {
+                backgroundColor: !isHomepage && `#fff`,
+                color: colors.gatsby,
+                width: !isHomepage && rhythm(5),
+                ":focus": {
+                  backgroundColor: colors.ui.light,
+                  color: colors.gatsby,
+                },
+              },
+
+              [presets.Hd]: {
+                backgroundColor: isHomepage && colors.lilac,
+                color: isHomepage && colors.ui.light,
+                width: isHomepage && rhythm(5),
+              },
+            }}
+            type="search"
+            placeholder="Search docs"
+            aria-label="Search docs"
+            title="Hit 's' to search docs"
+            onFocus={() => this.setState({ focussed: true })}
+            onBlur={() => this.setState({ focussed: false })}
+            ref={input => {
+              this.searchInput = input
+            }}
+          />
+          <SearchIcon
+            overrideCSS={{
+              ...iconStyles,
+              fill: focussed && colors.gatsby,
+              position: `absolute`,
+              left: `5px`,
+              top: `50%`,
+              width: `16px`,
+              height: `16px`,
+              pointerEvents: `none`,
+              transition: `fill ${speedDefault} ${curveDefault}`,
+              transform: `translateY(-50%)`,
+
+              [presets.Hd]: {
+                fill: focussed && isHomepage && colors.gatsby,
+              },
+            }}
+          />
+        </label>
       </form>
     ) : null
   }
 }
 
 SearchForm.propTypes = {
-  styles: PropTypes.object,
+  isHomepage: PropTypes.bool,
+  iconStyles: PropTypes.object,
 }
 
 export default SearchForm

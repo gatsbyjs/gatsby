@@ -1,21 +1,22 @@
 import React from "react"
 import HelmetBlock from "../HelmetBlock"
 import PostPublished from "../PostPublished"
+import BlogPostLayout from "../Layouts/blogPost"
 
 class BlogPostChrome extends React.Component {
   render() {
-    const frontmatter = this.props
-
     return (
-      <div className="BlogPostChrome">
-        <HelmetBlock {...frontmatter} />
-        <div className="content">
-          <div className="section">
-            <div className="container content">{this.props.children}</div>
+      <BlogPostLayout {...this.props.site}>
+        <div className="BlogPostChrome">
+          <HelmetBlock {...this.props.frontmatter} />
+          <div className="content">
+            <div className="section">
+              <div className="container content">{this.props.children}</div>
+            </div>
           </div>
+          <PostPublished {...this.props.frontmatter} />
         </div>
-        <PostPublished {...frontmatter} />
-      </div>
+      </BlogPostLayout>
     )
   }
 }
@@ -35,8 +36,8 @@ export const blogPostFragment = graphql`
     }
   }
 
-  fragment JSBlogPost_data on JSFrontmatter {
-    data {
+  fragment JSBlogPost_frontmatter on JavascriptFrontmatter {
+    frontmatter {
       title
       path
       layoutType

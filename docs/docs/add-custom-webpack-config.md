@@ -1,5 +1,5 @@
 ---
-title: "Add custom webpack config"
+title: "Add Custom webpack Config"
 ---
 
 _Before creating custom webpack configuration, check to see if there's a Gatsby
@@ -19,14 +19,14 @@ you to modify the default webpack config using
 Gatsby does multiple webpack builds with somewhat different configuration. We
 call each build type a "stage". The following stages exist:
 
-1. develop: when running the `gatsby develop` command. Has configuration for hot
-   reloading and CSS injection into page
-2. develop-html: same as develop but without react-hmre in the babel config for
-   rendering the HTML component.
-3. build-css: production build of CSS
-4. build-html: production build static HTML pages
-5. build-javascript: production JavaScript build. Creates route bundles as well
-   as a `commons` and `app bundle`.
+1.  develop: when running the `gatsby develop` command. Has configuration for hot
+    reloading and CSS injection into page
+2.  develop-html: same as develop but without react-hmre in the babel config for
+    rendering the HTML component.
+3.  build-css: production build of CSS
+4.  build-html: production build static HTML pages
+5.  build-javascript: production JavaScript build. Creates route bundles as well
+    as a `commons` and `app bundle`.
 
 Check
 [webpack.config.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/webpack.config.js)
@@ -37,9 +37,38 @@ e.g. [Sass](/packages/gatsby-plugin-sass/),
 [Typescript](/packages/gatsby-plugin-typescript/),
 [Glamor](/packages/gatsby-plugin-glamor/), and many more!
 
+## Modifying the babel loader
+
+Manually allow tweaking of include + exclude of babel loader.
+
+```javascript
+const generateBabelConfig = require("gatsby/dist/utils/babel-config");
+
+exports.modifyWebpackConfig = ({ config, stage }) => {
+  const program = {
+    directory: __dirname,
+    browserslist: ["> 1%", "last 2 versions", "IE >= 9"],
+  };
+
+  return generateBabelConfig(program, stage).then(babelConfig => {
+    config.removeLoader("js").loader("js", {
+      test: /\.jsx?$/,
+      exclude: modulePath => {
+        return (
+          /node_modules/.test(modulePath) &&
+          !/node_modules\/(swiper|dom7)/.test(modulePath)
+        );
+      },
+      loader: "babel",
+      query: babelConfig,
+    });
+  });
+};
+```
+
 ## Example
 
-Here is an example adding support for **flexboxgrid** when processing css files.
+Here is an example that configures **flexboxgrid** when processing css files. Add this in `gatsby-node.js`:
 
 ```js
 exports.modifyWebpackConfig = ({ config, stage }) => {

@@ -1,0 +1,25 @@
+{
+  "name": "gatsby-demo-simple-auth",
+  "description": "Gatsby demo of simplified authentication flow.",
+  "version": "1.0.0",
+  "author": "Jason Lengstorf <jason@lengstorf.com>",
+  "dependencies": {
+    "gatsby": "latest",
+    "gatsby-link": "latest",
+    "gatsby-plugin-react-helmet": "latest",
+    "prop-types": "^15.6.1",
+    "react-helmet": "^5.2.0",
+    "react-router-dom": "^4.2.2"
+  },
+  "keywords": ["gatsby"],
+  "license": "MIT",
+  "scripts": {
+    "build": "gatsby build",
+    "develop": "gatsby develop",
+    "format": "prettier --write 'src/**/*.js'",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "prettier": "^1.11.1"
+  }
+}

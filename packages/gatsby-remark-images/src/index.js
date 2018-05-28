@@ -14,7 +14,7 @@ const slash = require(`slash`)
 // 4. Create the responsive images.
 // 5. Set the html w/ aspect ratio helper.
 module.exports = (
-  { files, markdownNode, markdownAST, pathPrefix, getNode },
+  { files, markdownNode, markdownAST, pathPrefix, getNode, reporter },
   pluginOptions
 ) => {
   const defaults = {
@@ -22,6 +22,7 @@ module.exports = (
     wrapperStyle: ``,
     backgroundColor: `white`,
     linkImagesToOriginal: true,
+    showCaptions: false,
     pathPrefix,
   }
 
@@ -60,7 +61,12 @@ module.exports = (
     let responsiveSizesResult = await sizes({
       file: imageNode,
       args: options,
+      reporter,
     })
+
+    if (!responsiveSizesResult) {
+      return resolve()
+    }
 
     // Calculate the paddingBottom %
     const ratio = `${1 / responsiveSizesResult.aspectRatio * 100}%`
@@ -122,6 +128,17 @@ module.exports = (
   ${rawHTML}
   </a>
     `
+    }
+
+    // Wrap in figure and use title as caption
+
+    if (options.showCaptions && node.title) {
+      rawHTML = `
+  <figure class="gatsby-resp-image-figure">
+  ${rawHTML}
+  <figcaption class="gatsby-resp-image-figcaption">${node.title}</figcaption>
+  </figure>
+      `
     }
 
     return rawHTML

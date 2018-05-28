@@ -1,5 +1,6 @@
 import * as React from "react";
 import { NavLinkProps } from "react-router-dom";
+import { LocationDescriptor } from "history";
 
 export interface GatsbyLinkProps extends NavLinkProps {
   onClick?: (event: any) => void
@@ -7,7 +8,7 @@ export interface GatsbyLinkProps extends NavLinkProps {
   style?:any;
 }
 
-export const navigateTo: (path: string) => void;
+export const navigateTo: (to: LocationDescriptor) => void;
 
 export const withPrefix: (path: string) => string;
 

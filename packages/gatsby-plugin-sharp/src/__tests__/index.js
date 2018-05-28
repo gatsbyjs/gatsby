@@ -1,6 +1,12 @@
 const path = require(`path`)
 
-const { base64, responsiveSizes, resolutions } = require(`../`)
+const {
+  base64,
+  responsiveSizes,
+  resolutions,
+  queueImageResizing,
+  getImageSize,
+} = require(`../`)
 
 describe(`gatsby-plugin-sharp`, () => {
   const args = {
@@ -10,6 +16,20 @@ describe(`gatsby-plugin-sharp`, () => {
   }
   const absolutePath = path.join(__dirname, `images/test.png`)
   const file = getFileObject(absolutePath)
+
+  describe(`queueImageResizing`, () => {
+    it(`should round height when auto-calculated`, () => {
+      // Resize 144-density.png (281x136) with a 3px width
+      const result = queueImageResizing({
+        file: getFileObject(path.join(__dirname, `images/144-density.png`)),
+        args: { width: 3 },
+      })
+
+      // Width should be: w = (3 * 136) / 281 = 1.451957295
+      // We expect value to be rounded to 1
+      expect(result.height).toBe(1)
+    })
+  })
 
   describe(`responsiveSizes`, () => {
     it(`includes responsive image properties, e.g. sizes, srcset, etc.`, async () => {
@@ -115,6 +135,17 @@ describe(`gatsby-plugin-sharp`, () => {
         file,
         args,
       })
+
+      expect(result).toMatchSnapshot()
+    })
+  })
+
+  describe(`image quirks`, () => {
+    // issue https://github.com/nodeca/probe-image-size/issues/20
+    it(`handles padding bytes correctly`, () => {
+      const result = getImageSize(
+        getFileObject(path.join(__dirname, `images/padding-bytes.jpg`))
+      )
 
       expect(result).toMatchSnapshot()
     })

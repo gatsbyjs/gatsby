@@ -11,20 +11,35 @@ const digest = str =>
 const typePrefix = `Contentful`
 const makeTypeName = type => _.upperFirst(_.camelCase(`${typePrefix} ${type}`))
 
-const getLocalizedField = ({ field, defaultLocale, locale }) => {
+const getLocalizedField = ({ field, locale, localesFallback }) => {
   if (!_.isUndefined(field[locale.code])) {
     return field[locale.code]
-  } else if (!_.isUndefined(field[locale.fallbackCode])) {
-    return field[locale.fallbackCode]
+  } else if (
+    !_.isUndefined(locale.code) &&
+    !_.isUndefined(localesFallback[locale.code])
+  ) {
+    return getLocalizedField({
+      field,
+      locale: { code: localesFallback[locale.code] },
+      localesFallback,
+    })
   } else {
     return null
   }
 }
-
-const makeGetLocalizedField = ({ locale, defaultLocale }) => field =>
-  getLocalizedField({ field, locale, defaultLocale })
+const buildFallbackChain = locales => {
+  const localesFallback = {}
+  _.each(
+    locales,
+    locale => (localesFallback[locale.code] = locale.fallbackCode)
+  )
+  return localesFallback
+}
+const makeGetLocalizedField = ({ locale, localesFallback }) => field =>
+  getLocalizedField({ field, locale, localesFallback })
 
 exports.getLocalizedField = getLocalizedField
+exports.buildFallbackChain = buildFallbackChain
 
 // If the id starts with a number, left-pad it with a c (for Contentful of
 // course :-))
@@ -149,7 +164,7 @@ exports.buildForeignReferenceMap = ({
   return foreignReferenceMap
 }
 
-function createTextNode(node, key, text, createNode) {
+function prepareTextNode(node, key, text) {
   const str = _.isString(text) ? text : ` `
   const textNode = {
     id: `${node.id}${key}TextNode`,
@@ -165,13 +180,11 @@ function createTextNode(node, key, text, createNode) {
   }
 
   node.children = node.children.concat([textNode.id])
-  createNode(textNode)
 
-  return textNode.id
+  return textNode
 }
-exports.createTextNode = createTextNode
 
-function createJSONNode(node, key, content, createNode) {
+function prepareJSONNode(node, key, content) {
   const str = JSON.stringify(content)
   const JSONNode = {
     ...content,
@@ -187,11 +200,9 @@ function createJSONNode(node, key, content, createNode) {
   }
 
   node.children = node.children.concat([JSONNode.id])
-  createNode(JSONNode)
 
-  return JSONNode.id
+  return JSONNode
 }
-exports.createJSONNode = createJSONNode
 
 exports.createContentTypeNodes = ({
   contentTypeItem,
@@ -206,8 +217,13 @@ exports.createContentTypeNodes = ({
 }) => {
   const contentTypeItemId = contentTypeItem.name
   locales.forEach(locale => {
+    const localesFallback = buildFallbackChain(locales)
     const mId = makeMakeId({ currentLocale: locale.code, defaultLocale })
-    const getField = makeGetLocalizedField({ locale, defaultLocale })
+    const getField = makeGetLocalizedField({
+      locale,
+      localesFallback,
+      defaultLocale,
+    })
 
     // Warn about any field conflicts
     const conflictFields = []
@@ -220,6 +236,8 @@ exports.createContentTypeNodes = ({
         conflictFields.push(fieldName)
       }
     })
+
+    const childrenNodes = []
 
     // First create nodes for each of the entries of that content type
     const entryNodes = entries.map(entryItem => {
@@ -244,11 +262,21 @@ exports.createContentTypeNodes = ({
               entryItemFieldValue[0].sys.type &&
               entryItemFieldValue[0].sys.id
             ) {
-              entryItemFields[
-                `${entryItemFieldKey}___NODE`
-              ] = entryItemFieldValue
-                .filter(v => resolvable.has(v.sys.id))
-                .map(v => mId(v.sys.id))
+              // Check if there are any values in entryItemFieldValue to prevent
+              // creating an empty node field in case when original key field value
+              // is empty due to links to missing entities
+              const resolvableEntryItemFieldValue = entryItemFieldValue
+                .filter(function(v) {
+                  return resolvable.has(v.sys.id)
+                })
+                .map(function(v) {
+                  return mId(v.sys.id)
+                })
+              if (resolvableEntryItemFieldValue.length !== 0) {
+                entryItemFields[
+                  `${entryItemFieldKey}___NODE`
+                ] = resolvableEntryItemFieldValue
+              }
 
               delete entryItemFields[entryItemFieldKey]
             }
@@ -324,21 +352,25 @@ exports.createContentTypeNodes = ({
               : f.id) === entryItemFieldKey
         ).type
         if (fieldType === `Text`) {
-          entryItemFields[`${entryItemFieldKey}___NODE`] = createTextNode(
+          const textNode = prepareTextNode(
             entryNode,
             entryItemFieldKey,
-            entryItemFields[entryItemFieldKey],
-            createNode
+            entryItemFields[entryItemFieldKey]
           )
+
+          childrenNodes.push(textNode)
+          entryItemFields[`${entryItemFieldKey}___NODE`] = textNode.id
 
           delete entryItemFields[entryItemFieldKey]
         } else if (fieldType === `Object`) {
-          entryItemFields[`${entryItemFieldKey}___NODE`] = createJSONNode(
+          const jsonNode = prepareJSONNode(
             entryNode,
             entryItemFieldKey,
-            entryItemFields[entryItemFieldKey],
-            createNode
+            entryItemFields[entryItemFieldKey]
           )
+
+          childrenNodes.push(jsonNode)
+          entryItemFields[`${entryItemFieldKey}___NODE`] = jsonNode.id
 
           delete entryItemFields[entryItemFieldKey]
         }
@@ -376,6 +408,9 @@ exports.createContentTypeNodes = ({
     entryNodes.forEach(entryNode => {
       createNode(entryNode)
     })
+    childrenNodes.forEach(entryNode => {
+      createNode(entryNode)
+    })
   })
 }
 
@@ -386,8 +421,13 @@ exports.createAssetNodes = ({
   locales,
 }) => {
   locales.forEach(locale => {
+    const localesFallback = buildFallbackChain(locales)
     const mId = makeMakeId({ currentLocale: locale.code, defaultLocale })
-    const getField = makeGetLocalizedField({ locale, defaultLocale })
+    const getField = makeGetLocalizedField({
+      locale,
+      localesFallback,
+      defaultLocale,
+    })
 
     const localizedAsset = { ...assetItem }
     // Create a node for each asset. They may be referenced by Entries

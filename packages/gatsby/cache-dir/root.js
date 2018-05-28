@@ -101,7 +101,9 @@ function shouldUpdateScroll(prevRouterProps, { location: { pathname } }) {
   }
 
   if (prevRouterProps) {
-    const { location: { pathname: oldPathname } } = prevRouterProps
+    const {
+      location: { pathname: oldPathname },
+    } = prevRouterProps
     if (oldPathname === pathname) {
       return false
     }
@@ -111,7 +113,7 @@ function shouldUpdateScroll(prevRouterProps, { location: { pathname } }) {
 
 let noMatch
 for (let i = 0; i < pages.length; i++) {
-  if (pages[i].path === `/dev-404-page/`) {
+  if (/^\/dev-404-page/.test(pages[i].path)) {
     noMatch = pages[i]
     break
   }
@@ -132,8 +134,8 @@ const addNotFoundRoute = () => {
   }
 }
 
-const navigateTo = pathname => {
-  window.___history.push(pathname)
+const navigateTo = to => {
+  window.___history.push(to)
 }
 
 window.___navigateTo = navigateTo
@@ -174,7 +176,9 @@ const Root = () =>
                   pageResources,
                 })
               } else {
-                const dev404Page = pages.find(p => p.path === `/dev-404-page/`)
+                const dev404Page = pages.find(p =>
+                  /^\/dev-404-page/.test(p.path)
+                )
                 return createElement(Route, {
                   key: `404-page`,
                   component: props =>

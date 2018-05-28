@@ -12,6 +12,8 @@ exports.resolvableExtensions = true
  *
  * See also [the documentation for the boundActionCreator `createPage`](/docs/bound-action-creators/#createPage).
  * @example
+ * const path = require("path");
+ *
  * exports.createPages = ({ graphql, boundActionCreators }) => {
  *   const { createPage } = boundActionCreators
  *   return new Promise((resolve, reject) => {
@@ -41,9 +43,13 @@ exports.resolvableExtensions = true
  *         result.data.allMarkdownRemark.edges.forEach(edge => {
  *             createPage({
  *               path: `${edge.node.fields.slug}`, // required
- *               component: slash(blogPostTemplate),
+ *               component: blogPostTemplate,
  *               context: {
- *                 slug: edge.node.fields.slug,
+ *                 // Add optional context data. Data can be used as
+ *                 // arguments to the page GraphQL query.
+ *                 //
+ *                 // The page "path" is always available as a GraphQL
+ *                 // argument.
  *               },
  *             })
  *         })

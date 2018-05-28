@@ -1,0 +1,29 @@
+{
+  "name": "gatsby-1-config-extract-plugin",
+  "description": "extract-text-webpack-plugin instance getter for Gatsby v1 plugins",
+  "version": "1.0.3",
+  "author": "Shawn Erquhart<shawn@erquh.art>",
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "dependencies": {
+    "babel-runtime": "^6.26.0",
+    "extract-text-webpack-plugin": "^1.0.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "cross-env": "^5.0.5"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-1-config-extract-plugin#readme",
+  "keywords": [
+    "gatsby"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-1-config-extract-plugin",
+  "scripts": {
+    "build": "babel src --out-dir . --ignore __tests__",
+    "prepublish": "cross-env NODE_ENV=production npm run build",
+    "watch": "babel -w src --out-dir . --ignore __tests__"
+  }
+}

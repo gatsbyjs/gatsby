@@ -4,6 +4,7 @@ date: "2017-12-06"
 author: "Arden de Raaij"
 image: "great-gatsby.jpg"
 excerpt: "A static site generator based on React, does that even make sense? GatsbyJS tries to answer this question with a hypermodern, feature-packed, *jamstacked* development tool that you can try out right now!"
+tags: ["performance", "pwa", "react", "graphql", "netlify"]
 ---
 
 A static site generator based on React, does that even make sense? [GatsbyJS](/) tries to answer this question with a hypermodern, feature-packed, _jamstacked_ development tool that you can try out right now! In this post I'll give you a quick introduction and an overview of my own thoughts on Gatsby.
@@ -52,27 +53,25 @@ Data from anywhere with static output. That's sort of the holy grail isn't it? R
 
 ```es6
 export const query = graphql`
-   query BlogPostQuery($slug: String!) {
-       markdownRemark(fields: { slug: { eq: $slug } }) {
-           html
-           fields {
-               slug
-           }
-           frontmatter {
-               title
-               date(formatString: "DD MMMM, YYYY")
-               cover {
-                   childImageSharp {
-                       resolutions(
-                           width: 1200,
-                       ) {
-                           src
-                       }
-                   }
-               }
-           }
-       }
-   }
+  query BlogPostQuery($slug: String!) {
+    markdownRemark(fields: { slug: { eq: $slug } }) {
+      html
+      fields {
+        slug
+      }
+      frontmatter {
+        title
+        date(formatString: "DD MMMM, YYYY")
+        cover {
+          childImageSharp {
+            resolutions(width: 1200) {
+              src
+            }
+          }
+        }
+      }
+    }
+  }
 `;
 ```
 

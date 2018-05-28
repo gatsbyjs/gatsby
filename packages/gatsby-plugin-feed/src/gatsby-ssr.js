@@ -1,4 +1,5 @@
 import React from "react"
+import { withPrefix } from "gatsby-link"
 import { defaultOptions } from "./internals"
 
 exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
@@ -17,7 +18,7 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
         key={`gatsby-plugin-feed-${i}`}
         rel="alternate"
         type="application/rss+xml"
-        href={output}
+        href={withPrefix(output)}
       />
     )
   })

@@ -4,6 +4,7 @@ date: "2017-09-18"
 image: "code-image.jpg"
 author: "Kostas Bariotis"
 excerpt: "In this post, I will talk about static site generators -- how they have evolved and why I switched from a Ghost powered site to Gatsby.js, a modern static site generator."
+tags: ["ghost", "wordpress", "caching"]
 ---
 
 In this post, I will talk about static site generators -- how they have evolved
@@ -20,7 +21,7 @@ production by creating a landing page very fast.
 
 Static site generators like Jekyll all work pretty similarly:
 
-* Describe your content in some common templating language ([Pug](pugjs.org),
+* Describe your content in some common templating language ([Pug](http://pugjs.org),
   [Handlebars](http://handlebarsjs.com), etc)
 * While in development, start a local web server and add file "watchers" that
   will listen for content changes and re-render the site

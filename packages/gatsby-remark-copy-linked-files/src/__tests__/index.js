@@ -211,6 +211,37 @@ describe(`gatsby-remark-copy-linked-files`, () => {
       })
     })
 
+    it(`copies file to destinationDir when supplied (with pathPrefix)`, async () => {
+      const markdownAST = remark.parse(`![some absolute image](${imagePath})`)
+      const pathPrefix = `/blog`
+      const validDestinationDir = `path/to/dir`
+      const expectedNewPath = path.posix.join(
+        process.cwd(),
+        `public`,
+        validDestinationDir,
+        `/undefined-undefined.gif`
+      )
+      expect.assertions(3)
+      await plugin(
+        {
+          files: getFiles(imagePath),
+          markdownAST,
+          markdownNode,
+          pathPrefix,
+          getNode,
+        },
+        {
+          destinationDir: validDestinationDir,
+        }
+      ).then(v => {
+        expect(v).toBeDefined()
+        expect(fsExtra.copy).toHaveBeenCalledWith(imagePath, expectedNewPath)
+        expect(imageURL(markdownAST)).toEqual(
+          `${pathPrefix}/path/to/dir/undefined-undefined.gif`
+        )
+      })
+    })
+
     it(`copies file to root dir when not supplied'`, async () => {
       const markdownAST = remark.parse(`![some absolute image](${imagePath})`)
       const expectedNewPath = path.posix.join(
