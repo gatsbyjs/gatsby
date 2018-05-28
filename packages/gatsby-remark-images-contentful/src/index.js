@@ -56,13 +56,13 @@ module.exports = async (
 
     const responsiveSizesResult = buildResponsiveSizes({
       metadata,
-      imageUrl: node.url,
+      imageUrl: `https:${node.url}`,
       options,
     })
     // Calculate the paddingBottom %
     const ratio = `${1 / responsiveSizesResult.aspectRatio * 100}%`
 
-    const fallbackSrc = node.url
+    const fallbackSrc = `https${node.url}`
     const srcSet = responsiveSizesResult.srcSet
     const presentationWidth = responsiveSizesResult.presentationWidth
 

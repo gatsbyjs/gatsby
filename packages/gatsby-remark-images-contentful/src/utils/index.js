@@ -29,7 +29,7 @@ exports.buildResponsiveSizes = ({ metadata, imageUrl, options = {} }) => {
   filteredSizes.push(width)
 
   const srcSet = filteredSizes
-    .map(size => `${imageUrl}?w=${size} ${size}w`)
+    .map(size => `${imageUrl}?w=${Math.round(size)} ${Math.round(size)}w`)
     .join(`,\n`)
 
   return {
