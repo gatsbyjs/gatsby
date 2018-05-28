@@ -31,7 +31,7 @@ function buildLocalCommands(cli, isLocalSite) {
       report.verbose(`current directory: ${directory}`)
       return report.panic(
         `gatsby <${command}> can only be run for a gatsby site. \n` +
-          `Either the current working directory does not contain a package.json or ` +
+          `Either the current working directory does not contain a valid package.json or ` +
           `'gatsby' is not specified as a dependency`
       )
     }
