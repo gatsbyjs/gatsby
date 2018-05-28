@@ -12,9 +12,19 @@ points to your files.
 
 ## How to use
 
+In your `gatsby-config.js`:
 ```javascript
-// In your gatsby-config.js
-plugins: [`gatsby-transformer-json`];
+module.exports = {
+  plugins: [
+    `gatsby-transformer-json`,
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `./src/data/`,
+      },
+    },
+  ],
+};
 ```
 
 ## Parsing algorithm
@@ -26,7 +36,7 @@ or as single objects spread across multiple files.
 
 The algorithm for arrays is to convert each item in the array into a node.
 
-So if your project has a `letters.json` with `[{ "value": "a" }, { "value": "b" }, { "value": "c" }]` then the following three nodes would be created.
+So if your project has a `letters.json` with `[{ "value": "a" }, { "value": "b" }, { "value": "c" }]` then the following three nodes would be created:
 
 ```javascript
 [
@@ -66,7 +76,7 @@ Where each of `a.json`, `b.json` and `c.json` look like:
 { 'value': 'c' }
 ```
 
-Then the following three nodes would be created.
+Then the following three nodes would be created:
 
 ```javascript
 [
