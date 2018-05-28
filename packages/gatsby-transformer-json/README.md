@@ -12,9 +12,13 @@ points to your files.
 
 ## How to use
 
+In your `gatsby-config.js`:
 ```javascript
-// In your gatsby-config.js
-plugins: [`gatsby-transformer-json`]
+module.exports = {
+  plugins: [
+    `gatsby-transformer-json`,
+  ],
+};
 ```
 
 ## Parsing algorithm
