@@ -89,7 +89,7 @@ test(`it leaves relative images alone`, async () => {
 })
 
 test(`it leaves non-contentful images alone`, async () => {
-  const imagePath = `https://google.com/images/an-image.jpeg`
+  const imagePath = `//google.com/images/an-image.jpeg`
   const content = `
 ![asdf](${imagePath})
   `.trim()
@@ -100,7 +100,7 @@ test(`it leaves non-contentful images alone`, async () => {
 })
 
 test(`it transforms images in markdown`, async () => {
-  const imagePath = `https://images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg`
+  const imagePath = `//images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg`
   const content = `
 ![image](${imagePath})
   `.trim()
@@ -117,8 +117,8 @@ test(`it transforms images in markdown`, async () => {
 
 test(`it transforms multiple images in markdown`, async () => {
   const imagePaths = [
-    `https://images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg`,
-    `https://images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg`,
+    `//images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg`,
+    `//images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg`,
   ]
 
   const content = `
@@ -132,7 +132,7 @@ test(`it transforms multiple images in markdown`, async () => {
 })
 
 test(`it transforms HTML img tags`, async () => {
-  const imagePath = `https://images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg`
+  const imagePath = `//images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg`
 
   const content = `
 <img src="${imagePath}">

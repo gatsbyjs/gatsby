@@ -44,7 +44,7 @@ module.exports = async (
 
     const response = await axios({
       method: `GET`,
-      url: `${node.url}`, // for some reason there is a './' prefix
+      url: `https:${node.url}`, // for some reason there is a './' prefix
       responseType: `stream`,
     })
 
