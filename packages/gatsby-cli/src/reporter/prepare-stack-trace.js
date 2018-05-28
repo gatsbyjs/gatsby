@@ -3,7 +3,7 @@
  */
 
 const { readFileSync } = require(`fs`)
-const babelCodeFrame = require(`babel-code-frame`)
+const babelCodeFrame = require(`@babel/code-frame`)
 const stackTrace = require(`stack-trace`)
 const { SourceMapConsumer } = require(`source-map`)
 
