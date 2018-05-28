@@ -42,7 +42,7 @@ exports.resolvableExtensions = true
  *         // Create blog post pages.
  *         result.data.allMarkdownRemark.edges.forEach(edge => {
  *             createPage({
- *               path: `edge.node.fields.slug`, // required
+ *               path: `${edge.node.fields.slug}`, // required
  *               component: blogPostTemplate,
  *               context: {
  *                 // Add optional context data. Data can be used as
