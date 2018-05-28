@@ -1,6 +1,6 @@
 exports.buildResponsiveSizes = ({ metadata, imageUrl, options = {} }) => {
   const { width, height, density } = metadata
-  const aspectRatio = metadata.width / metadata.height
+  const aspectRatio = width / height
   const pixelRatio =
     options.sizeByPixelDensity && typeof density === `number` && density > 0
       ? density / 72

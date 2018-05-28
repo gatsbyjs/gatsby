@@ -17,7 +17,6 @@ module.exports = async (
   { files, markdownNode, markdownAST, pathPrefix, getNode, reporter },
   pluginOptions
 ) => {
-
   const defaults = {
     maxWidth: 650,
     wrapperStyle: ``,
@@ -36,7 +35,6 @@ module.exports = async (
   const rawHtmlNodes = select(markdownAST, `html`)
 
   const generateImagesAndUpdateNode = async function(node, resolve) {
-
     // Ingonre if it is not contentful image
     if (node.url.indexOf(`images.ctfassets.net`) === -1) {
       return resolve()
@@ -53,10 +51,14 @@ module.exports = async (
     response.data.pipe(metaReader)
 
     const metadata = await metaReader.metadata()
-    
+
     response.data.destroy()
 
-    const responsiveSizesResult = buildResponsiveSizes({ metadata, imageUrl: node.url, options }) 
+    const responsiveSizesResult = buildResponsiveSizes({
+      metadata,
+      imageUrl: node.url,
+      options,
+    })
     // Calculate the paddingBottom %
     const ratio = `${1 / responsiveSizesResult.aspectRatio * 100}%`
 
@@ -74,15 +76,21 @@ module.exports = async (
     let rawHTML = `
   <span
     class="gatsby-resp-image-wrapper"
-    style="position: relative; display: block; ${options.wrapperStyle}; max-width: ${presentationWidth}px; margin-left: auto; margin-right: auto;"
+    style="position: relative; display: block; ${
+      options.wrapperStyle
+    }; max-width: ${presentationWidth}px; margin-left: auto; margin-right: auto;"
   >
     <span
       class="gatsby-resp-image-background-image"
-      style="padding-bottom: ${ratio}; position: relative; bottom: 0; left: 0; background-image: url('${responsiveSizesResult.base64}'); background-size: cover; display: block;"
+      style="padding-bottom: ${ratio}; position: relative; bottom: 0; left: 0; background-image: url('${
+      responsiveSizesResult.base64
+    }'); background-size: cover; display: block;"
     >
       <img
         class="gatsby-resp-image-image"
-        style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px ${options.backgroundColor};"
+        style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px ${
+          options.backgroundColor
+        };"
         alt="${node.alt ? node.alt : defaultAlt}"
         title="${node.title ? node.title : ``}"
         src="${fallbackSrc}"
@@ -92,14 +100,13 @@ module.exports = async (
     </span>
   </span>
   `
-  return rawHTML
+    return rawHTML
   }
   return Promise.all(
     // Simple because there is no nesting in markdown
     markdownImageNodes.map(
       node =>
         new Promise(async (resolve, reject) => {
-
           // Ignore gifs as we can't process them,
           // svgs as they are already responsive by definition
           if (node.url.indexOf(`images.ctfassets.net`) !== -1) {
