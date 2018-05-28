@@ -170,17 +170,10 @@ apiRunnerAsync(`onClientEntry`).then(() => {
                   attachToHistory(routeProps.history)
                   const props = layoutProps ? layoutProps : routeProps
 
-                  if (loader.getPage(props.location.pathname)) {
-                    return createElement(ComponentRenderer, {
-                      page: true,
-                      ...props,
-                    })
-                  } else {
-                    return createElement(ComponentRenderer, {
-                      page: true,
-                      location: { pathname: `/404.html` },
-                    })
-                  }
+                  return createElement(ComponentRenderer, {
+                    page: true,
+                    ...props,
+                  })
                 },
               }),
           })
