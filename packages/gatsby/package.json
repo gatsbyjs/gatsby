@@ -160,7 +160,7 @@
     "website"
   ],
   "license": "MIT",
-  "main": "dist/browser.js",
+  "main": "cache-dir/gatsby-browser-entry.js",
   "peerDependencies": {
     "react": "^16.2.0",
     "react-dom": "^16.2.0"
