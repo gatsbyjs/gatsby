@@ -36,7 +36,7 @@ const htmlCacheKey = node =>
   }-${pluginsCacheStr}-${pathPrefixCacheStr}`
 const excerptHtmlCacheKey = node =>
   `transformer-remark-markdown-html-excerpt-${
-  node.internal.contentDigest
+    node.internal.contentDigest
   }-${pluginsCacheStr}-${pathPrefixCacheStr}`
 const htmlAstCacheKey = node =>
   `transformer-remark-markdown-html-ast-${
@@ -203,7 +203,9 @@ module.exports = (
             })
           }
           const futureContent = processMarkdown(markdownNode.internal.content)
-          const futureExcerpt = (markdownNode.excerpt) ? processMarkdown(markdownNode.excerpt) : Promise.resolve()
+          const futureExcerpt = markdownNode.excerpt
+            ? processMarkdown(markdownNode.excerpt)
+            : Promise.resolve()
           const contentAst = await futureContent
           const excerptAst = await futureExcerpt
 
@@ -324,7 +326,11 @@ module.exports = (
     }
 
     async function getExcerptHTML(markdownNode) {
-      return await convertHtmlAstToHTML(markdownNode, getExcerptAST, excerptHtmlCacheKey)
+      return await convertHtmlAstToHTML(
+        markdownNode,
+        getExcerptAST,
+        excerptHtmlCacheKey
+      )
     }
 
     const HeadingType = new GraphQLObjectType({
