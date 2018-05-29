@@ -5,19 +5,20 @@ import { rhythm } from "../utils/typography"
 
 class Index extends React.Component {
   render() {
-    const images = this.props.data.allImageSharp.edges
-    const fluid = this.props.data.fluid.childImageSharp.sizes
-    const fixed = this.props.data.fixed.childImageSharp.resolutions
-    const cropDefault = this.props.data.cropDefault.childImageSharp.resize
-    const cropBottomLeft = this.props.data.cropBottomLeft.childImageSharp.resize
-    const cropEntropy = this.props.data.cropEntropy.childImageSharp.resize
-    const cropCenter = this.props.data.cropCenter.childImageSharp.resize
-    const sizesDuotoneOriginal = this.props.data.sizesDuotoneOriginal
+    const data = this.props.data
+    const images = data.allImageSharp.edges
+    const fluid = data.fluid.childImageSharp.sizes
+    const fixed = data.fixed.childImageSharp.resolutions
+    const cropDefault = data.cropDefault.childImageSharp.resize
+    const cropBottomLeft = data.cropBottomLeft.childImageSharp.resize
+    const cropEntropy = data.cropEntropy.childImageSharp.resize
+    const cropCenter = data.cropCenter.childImageSharp.resize
+    const sizesDuotoneOriginal = data.sizesDuotoneOriginal
       .childImageSharp.sizes
-    const sizesDuotone25 = this.props.data.sizesDuotone25.childImageSharp.sizes
-    const sizesDuotone50 = this.props.data.sizesDuotone50.childImageSharp.sizes
-    const sizesDuotone75 = this.props.data.sizesDuotone75.childImageSharp.sizes
-    const sizesDuotone = this.props.data.sizesDuotone.childImageSharp.sizes
+    const sizesDuotone25 = data.sizesDuotone25.childImageSharp.sizes
+    const sizesDuotone50 = data.sizesDuotone50.childImageSharp.sizes
+    const sizesDuotone75 = data.sizesDuotone75.childImageSharp.sizes
+    const sizesDuotone = data.sizesDuotone.childImageSharp.sizes
 
     return (
       <div>
