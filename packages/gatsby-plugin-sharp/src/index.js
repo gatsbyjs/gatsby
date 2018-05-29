@@ -764,8 +764,8 @@ function toArray(buf) {
 exports.queueImageResizing = queueImageResizing
 exports.base64 = base64
 exports.traceSVG = traceSVG
-exports.responsiveSizes = fluid
-exports.responsiveResolution = fixed
+exports.sizes = fluid
+exports.resolutions = fixed
 exports.fluid = fluid
 exports.fixed = fixed
 exports.getImageSize = getImageSize

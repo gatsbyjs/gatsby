@@ -425,8 +425,8 @@ Image.defaultProps = {
 }
 
 Image.propTypes = {
-  responsiveResolution: PropTypes.object,
-  responsiveSizes: PropTypes.object,
+  resolutions: PropTypes.object,
+  sizes: PropTypes.object,
   fixed: PropTypes.object,
   fluid: PropTypes.object,
   fadeIn: PropTypes.bool,

@@ -144,7 +144,7 @@ given two hex colors `shadow` and `highlight` defining start and end color of
 the duotone gradient, e.g.
 
 ```javascript
-responsiveResolution(
+fixed(
   width: 800,
   duotone: {
     highlight: "#f00e2e",
@@ -164,7 +164,7 @@ Logic is borrowed from [react-duotone][5].
 You can pass a third optional parameter, `opacity`:
 
 ```javascript
-responsiveResolution(
+fluid(
   width: 800,
   duotone: {
     highlight: "#f00e2e",
@@ -215,7 +215,7 @@ All [node-potrace `Potrace` parameters][13] are exposed and can be set via the
 `traceSVG` argument:
 
 ```javascript
-responsiveResolution(
+fixed(
   traceSVG: {
     color: "#f00e2e"
     turnPolicy: TURNPOLICY_MINORITY
