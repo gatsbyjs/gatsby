@@ -383,7 +383,7 @@ module.exports = (
         },
         resolve(markdownNode, { pruneLength }) {
           if (markdownNode.excerpt) {
-            return Promise.resolve(markdownNode.excerpt)
+            return getExcerptHTML(markdownNode)
           }
           return getAST(markdownNode).then(ast => {
             const excerptNodes = []
