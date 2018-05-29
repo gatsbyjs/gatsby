@@ -215,7 +215,8 @@ module.exports = (
     }
 
     async function getAST(markdownNode) {
-      return getAllASTs()
+      const allASTs = getAllASTs()
+      return allASTs
     }
 
     async function getHeadings(markdownNode) {
