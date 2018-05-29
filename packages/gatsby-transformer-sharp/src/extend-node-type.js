@@ -37,6 +37,247 @@ function toArray(buf) {
   return arr
 }
 
+const getTracedSVG = async ({ file, image, fieldArgs }) =>
+traceSVG({
+  file,
+  args: { ...fieldArgs.traceSVG },
+  fileArgs: fieldArgs,
+})
+
+const fixedNodeType = ({
+  type,
+  pathPrefix,
+  getNodeAndSavePathDependency,
+  reporter,
+}) => {
+  return {
+    type: new GraphQLObjectType({
+      name: `ImageSharpFixed`,
+      fields: {
+        base64: { type: GraphQLString },
+        tracedSVG: {
+          type: GraphQLString,
+          resolve: parent => getTracedSVG(parent),
+        },
+        aspectRatio: { type: GraphQLFloat },
+        width: { type: GraphQLFloat },
+        height: { type: GraphQLFloat },
+        src: { type: GraphQLString },
+        srcSet: { type: GraphQLString },
+        srcWebp: {
+          type: GraphQLString,
+          resolve: ({ file, image, fieldArgs }) => {
+            // If the file is already in webp format or should explicitly
+            // be converted to webp, we do not create additional webp files
+            if (image.extension === `webp` || fieldArgs.toFormat === `webp`) {
+              return null
+            }
+            const args = { ...fieldArgs, pathPrefix, toFormat: `webp` }
+            return Promise.resolve(
+              fixed({
+                file,
+                args,
+                reporter,
+              })
+            ).then(({ src }) => src)
+          },
+        },
+        srcSetWebp: {
+          type: GraphQLString,
+          resolve: ({ file, image, fieldArgs }) => {
+            if (image.extension === `webp` || fieldArgs.toFormat === `webp`) {
+              return null
+            }
+            const args = { ...fieldArgs, pathPrefix, toFormat: `webp` }
+            return Promise.resolve(
+              fixed({
+                file,
+                args,
+                reporter,
+              })
+            ).then(({ srcSet }) => srcSet)
+          },
+        },
+        originalName: { type: GraphQLString },
+      },
+    }),
+    args: {
+      width: {
+        type: GraphQLInt,
+        defaultValue: 400,
+      },
+      height: {
+        type: GraphQLInt,
+      },
+      jpegProgressive: {
+        type: GraphQLBoolean,
+        defaultValue: true,
+      },
+      grayscale: {
+        type: GraphQLBoolean,
+        defaultValue: false,
+      },
+      duotone: {
+        type: DuotoneGradientType,
+        defaultValue: false,
+      },
+      traceSVG: {
+        type: PotraceType,
+        defaultValue: false,
+      },
+      quality: {
+        type: GraphQLInt,
+        defaultValue: 50,
+      },
+      toFormat: {
+        type: ImageFormatType,
+        defaultValue: ``,
+      },
+      cropFocus: {
+        type: ImageCropFocusType,
+        defaultValue: sharp.strategy.attention,
+      },
+      rotate: {
+        type: GraphQLInt,
+        defaultValue: 0,
+      },
+    },
+    resolve: (image, fieldArgs, context) => {
+      const file = getNodeAndSavePathDependency(image.parent, context.path)
+      const args = { ...fieldArgs, pathPrefix }
+      return Promise.resolve(
+        fixed({
+          file,
+          args,
+          reporter,
+        })
+      ).then(o =>
+        Object.assign({}, o, {
+          fieldArgs: args,
+          image,
+          file,
+        })
+      )
+    },
+  }
+}
+
+const fluidNodeType = ({
+  type,
+  pathPrefix,
+  getNodeAndSavePathDependency,
+  reporter,
+}) => {
+  return {
+    type: new GraphQLObjectType({
+      name: `ImageSharpFluid`,
+      fields: {
+        base64: { type: GraphQLString },
+        tracedSVG: {
+          type: GraphQLString,
+          resolve: parent => getTracedSVG(parent),
+        },
+        aspectRatio: { type: GraphQLFloat },
+        src: { type: GraphQLString },
+        srcSet: { type: GraphQLString },
+        srcWebp: {
+          type: GraphQLString,
+          resolve: ({ file, image, fieldArgs }) => {
+            if (image.extension === `webp` || fieldArgs.toFormat === `webp`) {
+              return null
+            }
+            const args = { ...fieldArgs, pathPrefix, toFormat: `webp` }
+            return Promise.resolve(
+              fluid({
+                file,
+                args,
+                reporter,
+              })
+            ).then(({ src }) => src)
+          },
+        },
+        srcSetWebp: {
+          type: GraphQLString,
+          resolve: ({ file, image, fieldArgs }) => {
+            if (image.extension === `webp` || fieldArgs.toFormat === `webp`) {
+              return null
+            }
+            const args = { ...fieldArgs, pathPrefix, toFormat: `webp` }
+            return Promise.resolve(
+              fluid({
+                file,
+                args,
+                reporter,
+              })
+            ).then(({ srcSet }) => srcSet)
+          },
+        },
+        sizes: { type: GraphQLString },
+        originalImg: { type: GraphQLString },
+        originalName: { type: GraphQLString },
+      },
+    }),
+    args: {
+      maxWidth: {
+        type: GraphQLInt,
+        defaultValue: 800,
+      },
+      maxHeight: {
+        type: GraphQLInt,
+      },
+      grayscale: {
+        type: GraphQLBoolean,
+        defaultValue: false,
+      },
+      jpegProgressive: {
+        type: GraphQLBoolean,
+        defaultValue: true,
+      },
+      duotone: {
+        type: DuotoneGradientType,
+        defaultValue: false,
+      },
+      traceSVG: {
+        type: PotraceType,
+        defaultValue: false,
+      },
+      quality: {
+        type: GraphQLInt,
+        defaultValue: 50,
+      },
+      toFormat: {
+        type: ImageFormatType,
+        defaultValue: ``,
+      },
+      cropFocus: {
+        type: ImageCropFocusType,
+        defaultValue: sharp.strategy.attention,
+      },
+      rotate: {
+        type: GraphQLInt,
+        defaultValue: 0,
+      },
+    },
+    resolve: (image, fieldArgs, context) => {
+      const file = getNodeAndSavePathDependency(image.parent, context.path)
+      const args = { ...fieldArgs, pathPrefix }
+      return Promise.resolve(
+        fluid({
+          file,
+          args,
+          reporter,
+        })
+      ).then(o =>
+        Object.assign({}, o, {
+          fieldArgs: args,
+          image,
+          file,
+        })
+      )
+    },
+  }
+}
+
 module.exports = ({
   type,
   pathPrefix,
@@ -47,14 +288,21 @@ module.exports = ({
     return {}
   }
 
-  const getTracedSVG = async ({ file, image, fieldArgs }) =>
-    traceSVG({
-      file,
-      args: { ...fieldArgs.traceSVG },
-      fileArgs: fieldArgs,
-    })
+  const nodeOptions = { type, pathPrefix, getNodeAndSavePathDependency, reporter }
+
+  const fixedNode = fixedNodeType(nodeOptions)
+  const resolutionsNode = fixedNodeType(nodeOptions)
+  resolutionsNode.deprecationReason = `Resolutions was deprecated in Gatsby v2. It's been renamed to "fixed" https://example.com/write-docs-and-fix-this-example-link`
+
+  const fluidNode = fluidNodeType(nodeOptions)
+  const sizesNode = fluidNodeType(nodeOptions)
+  sizesNode.deprecationReason = `Resolutions was deprecated in Gatsby v2. It's been renamed to "fluid" https://example.com/write-docs-and-fix-this-example-link`
 
   return {
+    fixed: fixedNode,
+    resolutions: resolutionsNode,
+    fluid: fluidNode,
+    sizes: sizesNode,
     original: {
       type: new GraphQLObjectType({
         name: `ImageSharpOriginal`,
@@ -98,362 +346,6 @@ module.exports = ({
           height: dimensions.height,
           src: `${pathPrefix}/static/${imageName}`,
         }
-      },
-    },
-    fixed: {
-      type: new GraphQLObjectType({
-        name: `ImageSharpFixed`,
-        fields: {
-          base64: { type: GraphQLString },
-          tracedSVG: {
-            type: GraphQLString,
-            resolve: parent => getTracedSVG(parent),
-          },
-          aspectRatio: { type: GraphQLFloat },
-          width: { type: GraphQLFloat },
-          height: { type: GraphQLFloat },
-          src: { type: GraphQLString },
-          srcSet: { type: GraphQLString },
-          srcWebp: {
-            type: GraphQLString,
-            resolve: ({ file, image, fieldArgs }) => {
-              // If the file is already in webp format or should explicitly
-              // be converted to webp, we do not create additional webp files
-              if (image.extension === `webp` || fieldArgs.toFormat === `webp`) {
-                return null
-              }
-              const args = { ...fieldArgs, pathPrefix, toFormat: `webp` }
-              return Promise.resolve(
-                fixed({
-                  file,
-                  args,
-                  reporter,
-                })
-              ).then(({ src }) => src)
-            },
-          },
-          srcSetWebp: {
-            type: GraphQLString,
-            resolve: ({ file, image, fieldArgs }) => {
-              if (image.extension === `webp` || fieldArgs.toFormat === `webp`) {
-                return null
-              }
-              const args = { ...fieldArgs, pathPrefix, toFormat: `webp` }
-              return Promise.resolve(
-                fixed({
-                  file,
-                  args,
-                  reporter,
-                })
-              ).then(({ srcSet }) => srcSet)
-            },
-          },
-          originalName: { type: GraphQLString },
-        },
-      }),
-      args: {
-        width: {
-          type: GraphQLInt,
-          defaultValue: 400,
-        },
-        height: {
-          type: GraphQLInt,
-        },
-        jpegProgressive: {
-          type: GraphQLBoolean,
-          defaultValue: true,
-        },
-        grayscale: {
-          type: GraphQLBoolean,
-          defaultValue: false,
-        },
-        duotone: {
-          type: DuotoneGradientType,
-          defaultValue: false,
-        },
-        traceSVG: {
-          type: PotraceType,
-          defaultValue: false,
-        },
-        quality: {
-          type: GraphQLInt,
-          defaultValue: 50,
-        },
-        toFormat: {
-          type: ImageFormatType,
-          defaultValue: ``,
-        },
-        cropFocus: {
-          type: ImageCropFocusType,
-          defaultValue: sharp.strategy.attention,
-        },
-        rotate: {
-          type: GraphQLInt,
-          defaultValue: 0,
-        },
-      },
-      resolve: (image, fieldArgs, context) => {
-        const file = getNodeAndSavePathDependency(image.parent, context.path)
-        const args = { ...fieldArgs, pathPrefix }
-        return Promise.resolve(
-          fixed({
-            file,
-            args,
-            reporter,
-          })
-        ).then(o =>
-          Object.assign({}, o, {
-            fieldArgs: args,
-            image,
-            file,
-          })
-        )
-      },
-    },
-    fluid: {
-      type: new GraphQLObjectType({
-        name: `ImageSharpFluid`,
-        fields: {
-          base64: { type: GraphQLString },
-          tracedSVG: {
-            type: GraphQLString,
-            resolve: parent => getTracedSVG(parent),
-          },
-          aspectRatio: { type: GraphQLFloat },
-          src: { type: GraphQLString },
-          srcSet: { type: GraphQLString },
-          srcWebp: {
-            type: GraphQLString,
-            resolve: ({ file, image, fieldArgs }) => {
-              if (image.extension === `webp` || fieldArgs.toFormat === `webp`) {
-                return null
-              }
-              const args = { ...fieldArgs, pathPrefix, toFormat: `webp` }
-              return Promise.resolve(
-                fluid({
-                  file,
-                  args,
-                  reporter,
-                })
-              ).then(({ src }) => src)
-            },
-          },
-          srcSetWebp: {
-            type: GraphQLString,
-            resolve: ({ file, image, fieldArgs }) => {
-              if (image.extension === `webp` || fieldArgs.toFormat === `webp`) {
-                return null
-              }
-              const args = { ...fieldArgs, pathPrefix, toFormat: `webp` }
-              return Promise.resolve(
-                fluid({
-                  file,
-                  args,
-                  reporter,
-                })
-              ).then(({ srcSet }) => srcSet)
-            },
-          },
-          sizes: { type: GraphQLString },
-          originalImg: { type: GraphQLString },
-          originalName: { type: GraphQLString },
-        },
-      }),
-      args: {
-        maxWidth: {
-          type: GraphQLInt,
-          defaultValue: 800,
-        },
-        maxHeight: {
-          type: GraphQLInt,
-        },
-        grayscale: {
-          type: GraphQLBoolean,
-          defaultValue: false,
-        },
-        jpegProgressive: {
-          type: GraphQLBoolean,
-          defaultValue: true,
-        },
-        duotone: {
-          type: DuotoneGradientType,
-          defaultValue: false,
-        },
-        traceSVG: {
-          type: PotraceType,
-          defaultValue: false,
-        },
-        quality: {
-          type: GraphQLInt,
-          defaultValue: 50,
-        },
-        toFormat: {
-          type: ImageFormatType,
-          defaultValue: ``,
-        },
-        cropFocus: {
-          type: ImageCropFocusType,
-          defaultValue: sharp.strategy.attention,
-        },
-        rotate: {
-          type: GraphQLInt,
-          defaultValue: 0,
-        },
-      },
-      resolve: (image, fieldArgs, context) => {
-        const file = getNodeAndSavePathDependency(image.parent, context.path)
-        const args = { ...fieldArgs, pathPrefix }
-        return Promise.resolve(
-          fluid({
-            file,
-            args,
-            reporter,
-          })
-        ).then(o =>
-          Object.assign({}, o, {
-            fieldArgs: args,
-            image,
-            file,
-          })
-        )
-      },
-    },
-    responsiveResolution: {
-      deprecationReason: `We dropped the "responsive" part of the name to make it shorter https://github.com/gatsbyjs/gatsby/pull/2320/`,
-      type: new GraphQLObjectType({
-        name: `ImageSharpResponsiveResolution`,
-        fields: {
-          base64: { type: GraphQLString },
-          aspectRatio: { type: GraphQLFloat },
-          width: { type: GraphQLFloat },
-          height: { type: GraphQLFloat },
-          src: { type: GraphQLString },
-          srcSet: { type: GraphQLString },
-          originalName: { type: GraphQLString },
-        },
-      }),
-      args: {
-        width: {
-          type: GraphQLInt,
-          defaultValue: 400,
-        },
-        height: {
-          type: GraphQLInt,
-        },
-        jpegProgressive: {
-          type: GraphQLBoolean,
-          defaultValue: true,
-        },
-        grayscale: {
-          type: GraphQLBoolean,
-          defaultValue: false,
-        },
-        duotone: {
-          type: DuotoneGradientType,
-          defaultValue: false,
-        },
-        quality: {
-          type: GraphQLInt,
-          defaultValue: 50,
-        },
-        toFormat: {
-          type: ImageFormatType,
-          defaultValue: ``,
-        },
-        cropFocus: {
-          type: ImageCropFocusType,
-          defaultValue: sharp.strategy.attention,
-        },
-        rotate: {
-          type: GraphQLInt,
-          defaultValue: 0,
-        },
-      },
-      resolve: (image, fieldArgs, context) => {
-        const file = getNodeAndSavePathDependency(image.parent, context.path)
-        const args = { ...fieldArgs, pathPrefix }
-        return Promise.resolve(
-          fixed({
-            file,
-            args,
-            reporter,
-          })
-        ).then(o =>
-          Object.assign({}, o, {
-            fieldArgs: args,
-            image,
-            file,
-          })
-        )
-      },
-    },
-    responsiveSizes: {
-      deprecationReason: `We dropped the "responsive" part of the name to make it shorter https://github.com/gatsbyjs/gatsby/pull/2320/`,
-      type: new GraphQLObjectType({
-        name: `ImageSharpResponsiveSizes`,
-        fields: {
-          base64: { type: GraphQLString },
-          aspectRatio: { type: GraphQLFloat },
-          src: { type: GraphQLString },
-          srcSet: { type: GraphQLString },
-          fluid: { type: GraphQLString },
-          originalImg: { type: GraphQLString },
-          originalName: { type: GraphQLString },
-        },
-      }),
-      args: {
-        maxWidth: {
-          type: GraphQLInt,
-          defaultValue: 800,
-        },
-        maxHeight: {
-          type: GraphQLInt,
-        },
-        grayscale: {
-          type: GraphQLBoolean,
-          defaultValue: false,
-        },
-        jpegProgressive: {
-          type: GraphQLBoolean,
-          defaultValue: true,
-        },
-        duotone: {
-          type: DuotoneGradientType,
-          defaultValue: false,
-        },
-        quality: {
-          type: GraphQLInt,
-          defaultValue: 50,
-        },
-        toFormat: {
-          type: ImageFormatType,
-          defaultValue: ``,
-        },
-        cropFocus: {
-          type: ImageCropFocusType,
-          defaultValue: sharp.strategy.attention,
-        },
-        rotate: {
-          type: GraphQLInt,
-          defaultValue: 0,
-        },
-      },
-      resolve: (image, fieldArgs, context) => {
-        const file = getNodeAndSavePathDependency(image.parent, context.path)
-        const args = { ...fieldArgs, pathPrefix }
-        return Promise.resolve(
-          fluid({
-            file,
-            args,
-            reporter,
-          })
-        ).then(o =>
-          Object.assign({}, o, {
-            fieldArgs: args,
-            image,
-            file,
-          })
-        )
       },
     },
     resize: {
