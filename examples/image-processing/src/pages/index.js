@@ -1,6 +1,6 @@
 import React from "react"
 import Img from "gatsby-image"
-
+import Layout from "../layouts"
 import { rhythm } from "../utils/typography"
 
 class Index extends React.Component {
@@ -20,7 +20,7 @@ class Index extends React.Component {
     const sizesDuotone = this.props.data.sizesDuotone.childImageSharp.sizes
 
     return (
-      <div>
+      <Layout>
         <p>
           <a href="https://www.gatsbyjs.org/packages/gatsby-transformer-sharp/">
             <code>gatsby-transformer-sharp</code>
@@ -97,7 +97,7 @@ class Index extends React.Component {
         <ul style={{ ...styles.ul, ...styles.row }}>
           {images.map(image => (
             <li style={styles.column20} key={image.node.resize.src}>
-              <img src={image.node.resize.src} />
+              <img src={image.node.resize.src} alt={image.node.resize.originalName}/>
             </li>
           ))}
         </ul>
@@ -127,10 +127,10 @@ class Index extends React.Component {
 
         <ul style={{ ...styles.ul, ...styles.row }}>
           <li style={styles.column25}>
-            <img src={cropDefault.src} />
+            <img src={cropDefault.src} alt={`File ${cropDefault.originalName} with a default crop`} />
           </li>
           <li style={styles.column25}>
-            <img src={cropBottomLeft.src} />
+            <img src={cropBottomLeft.src} alt={`File ${cropBottomLeft.originalName} cropped to the bottom left`} />
             <p>
               <small>
                 <code>cropFocus: SOUTHWEST</code>
@@ -138,7 +138,7 @@ class Index extends React.Component {
             </p>
           </li>
           <li style={styles.column25}>
-            <img src={cropEntropy.src} />
+            <img src={cropEntropy.src} alt={`File ${cropEntropy.originalName} with an "entropy" crop`} />
             <p>
               <small>
                 <code>cropFocus: ENTROPY</code>
@@ -146,7 +146,7 @@ class Index extends React.Component {
             </p>
           </li>
           <li style={styles.column25}>
-            <img src={cropCenter.src} />
+            <img src={cropCenter.src} alt={`File ${cropCenter.originalName} cropped to the centre`} />
             <p>
               <small>
                 <code>cropFocus: CENTER</code>
@@ -314,7 +314,7 @@ class Index extends React.Component {
         </p>
 
         <Img resolutions={resolutions} />
-      </div>
+      </Layout>
     )
   }
 }
