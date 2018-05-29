@@ -285,7 +285,7 @@ module.exports = (
     }
 
     async function getHTMLAst(markdownNode) {
-      return await async function convertASTToHtmlAST() {
+      async function convertASTToHtmlAST() {
       const cachedAst = await cache.get(htmlAstCacheKey(markdownNode))
       if (cachedAst) {
         return cachedAst
@@ -297,7 +297,8 @@ module.exports = (
         cache.set(htmlAstCacheKey(markdownNode), htmlAst)
         return htmlAst
       }
-    }()
+    }
+      return await convertASTToHtmlAST()
     }
 
     async function getHTML(markdownNode) {
