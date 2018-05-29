@@ -1,8 +1,7 @@
 import Typography from "typography"
+import theme from "typography-theme-bootstrap"
 
-let theme = require(`typography-theme-bootstrap`).default
-
-theme.overrideThemeStyles = ({ rhythm, scale }) => {
+theme.overrideThemeStyles = ({ rhythm, scale }, options) => {
   return {
     "h1, h2, h3": {
       ...scale(1 / 6),
@@ -56,9 +55,9 @@ theme.overrideThemeStyles = ({ rhythm, scale }) => {
 
 const typography = new Typography(theme)
 
-// Hot reload typography in development.
-if (process.env.NODE_ENV !== `production`) {
-  typography.injectStyles()
-}
-
+// Back out the below once Typography is upgraded for es6
 export default typography
+
+export const rhythm = typography.rhythm
+export const scale = typography.scale
+export const options = typography.options
