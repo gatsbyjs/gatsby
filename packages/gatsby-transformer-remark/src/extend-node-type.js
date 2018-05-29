@@ -215,7 +215,7 @@ module.exports = (
     }
 
     async function getAST(markdownNode) {
-      const allASTs = getAllASTs()
+      const allASTs = await getAllASTs()
       return allASTs
     }
 
