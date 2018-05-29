@@ -303,12 +303,12 @@ module.exports = (
     }
 
     async function getHTML(markdownNode) {
-      async function convertHtmlAstToHTML(markdownNode, keyFn) {
+      async function convertHtmlAstToHTML(markdownNode, astLoaderFn, keyFn) {
       const cachedHTML = await cache.get(keyFn(markdownNode))
       if (cachedHTML) {
         return cachedHTML
       } else {
-        const ast = await convertASTToHtmlAST(markdownNode, getAST)
+        const ast = await convertASTToHtmlAST(markdownNode, astLoaderFn)
         // Save new HTML to cache and return
         const html = hastToHTML(ast, {
           allowDangerousHTML: true,
@@ -319,7 +319,7 @@ module.exports = (
         return html
       }
     }
-      return await convertHtmlAstToHTML(markdownNode, htmlCacheKey)
+      return await convertHtmlAstToHTML(markdownNode, getAST, htmlCacheKey)
     }
 
     const HeadingType = new GraphQLObjectType({
