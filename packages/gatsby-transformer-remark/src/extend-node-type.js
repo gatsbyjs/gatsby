@@ -95,6 +95,7 @@ module.exports = (
     }
 
     async function getAST(markdownNode) {
+      return async function() {
       const cacheKey = astCacheKey(markdownNode)
       const cachedAST = await cache.get(cacheKey)
       if (cachedAST) {
@@ -212,6 +213,7 @@ module.exports = (
         ASTPromiseMap.set(cacheKey, ASTGenerationPromise)
         return await ASTGenerationPromise
       }
+    }()
     }
 
     async function getHeadings(markdownNode) {
