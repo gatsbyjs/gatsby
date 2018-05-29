@@ -303,7 +303,7 @@ module.exports = (
     }
 
     async function getHTML(markdownNode) {
-      return await async function() {
+      return await async function convertHtmlAstToHTML() {
       const cachedHTML = await cache.get(htmlCacheKey(markdownNode))
       if (cachedHTML) {
         return cachedHTML
