@@ -199,7 +199,7 @@ module.exports = (
             })
           }
           const futureContent = processMarkdown(markdownNode.internal.content)
-          const futureExcerpt = processMarkdown(markdownNode.excerpt)
+          const futureExcerpt = (!!markdownNode.excerpt) ? processMarkdown(markdownNode.excerpt) : Promise.resolve()
           const contentAst = await futureContent
           const excerptAst = await futureExcerpt
 
