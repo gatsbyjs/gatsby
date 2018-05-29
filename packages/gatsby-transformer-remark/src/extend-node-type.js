@@ -107,7 +107,7 @@ module.exports = (
           const files = _.values(store.getState().nodes).filter(
             n => n.internal.type === `File`
           )
-          const ast = await function(){
+          const ast = await function processMarkdown(){
             return new Promise((resolve, reject) => {
             // Use Bluebird's Promise function "each" to run remark plugins serially.
             Promise.each(pluginOptions.plugins, plugin => {
