@@ -10,7 +10,19 @@ Parses Markdown files using [Remark](http://remark.js.org/).
 
 ```javascript
 // In your gatsby-config.js
-plugins: [`gatsby-transformer-remark`];
+plugins: [
+  {
+    resolve: `gatsby-transformer-remark`,
+    options: {
+      // define default values for frontmatter variables here (optional)
+      frontmatter: {
+        defaultValues: {
+          category: `Uncategorised`
+        }
+      }
+    }
+  }
+];
 ```
 
 A full explanation of how to use markdown in Gatsby can be found here:
