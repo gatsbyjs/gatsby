@@ -4,7 +4,11 @@ exports.modifyBabelrc = ({ babelrc }, pluginOptions) => {
       plugins: [
         [
           require.resolve(`babel-plugin-emotion`),
-          pluginOptions ? pluginOptions : { sourceMap: true, autoLabel: true },
+          {
+            sourceMap: true,
+            autoLabel: true,
+            ...(pluginOptions ? pluginOptions : {}),
+          },
         ],
       ].concat(babelrc.plugins),
     }
