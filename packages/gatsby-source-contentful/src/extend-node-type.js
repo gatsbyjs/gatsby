@@ -346,7 +346,7 @@ exports.extendNodeType = ({ type }) => {
         },
       },
       resolve: (image, options, context) =>
-        Promise.resolve(resolveResponsiveResolution(image, options)).then(
+        Promise.resolve(resolveFixed(image, options)).then(
           node => {
             return {
               ...node,
