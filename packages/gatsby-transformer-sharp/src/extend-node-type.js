@@ -254,7 +254,7 @@ module.exports = ({
               ).then(({ srcSet }) => srcSet)
             },
           },
-          fluid: { type: GraphQLString },
+          sizes: { type: GraphQLString },
           originalImg: { type: GraphQLString },
           originalName: { type: GraphQLString },
         },
