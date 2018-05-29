@@ -198,7 +198,8 @@ module.exports = (
             })
           })
         }
-          const ast = await processMarkdown(markdownNode.internal.content)
+          const futureContent = await processMarkdown(markdownNode.internal.content)
+          const ast = futureContent
 
           // Save new AST to cache and return
           cache.set(cacheKey, ast)
