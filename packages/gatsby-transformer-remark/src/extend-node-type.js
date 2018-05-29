@@ -107,7 +107,7 @@ module.exports = (
           const files = _.values(store.getState().nodes).filter(
             n => n.internal.type === `File`
           )
-          function processMarkdown(){
+          function processMarkdown(markdownSource){
             return new Promise((resolve, reject) => {
             // Use Bluebird's Promise function "each" to run remark plugins serially.
             Promise.each(pluginOptions.plugins, plugin => {
@@ -126,7 +126,7 @@ module.exports = (
                 return Promise.resolve()
               }
             }).then(() => {
-              const markdownAST = remark.parse(markdownNode.internal.content)
+              const markdownAST = remark.parse(markdownSource)
 
               if (pathPrefix) {
                 // Ensure relative links include `pathPrefix`
@@ -198,7 +198,7 @@ module.exports = (
             })
           })
         }
-          const ast = await processMarkdown()
+          const ast = await processMarkdown(markdownNode.internal.content)
 
           // Save new AST to cache and return
           cache.set(cacheKey, ast)
