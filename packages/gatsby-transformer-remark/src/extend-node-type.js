@@ -303,7 +303,7 @@ module.exports = (
     }
 
     async function getHTML(markdownNode) {
-      return await async function convertHtmlAstToHTML() {
+      async function convertHtmlAstToHTML() {
       const cachedHTML = await cache.get(htmlCacheKey(markdownNode))
       if (cachedHTML) {
         return cachedHTML
@@ -318,7 +318,8 @@ module.exports = (
         cache.set(htmlCacheKey(markdownNode), html)
         return html
       }
-    }()
+    }
+      return await convertHtmlAstToHTML()
     }
 
     const HeadingType = new GraphQLObjectType({
