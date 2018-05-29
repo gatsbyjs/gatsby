@@ -298,12 +298,7 @@ module.exports = (
       }
     }
 
-    async function getHTMLAst(markdownNode) {
-      return await convertASTToHtmlAST(markdownNode, getAST)
-    }
-
-    async function getHTML(markdownNode) {
-      async function convertHtmlAstToHTML(markdownNode, astLoaderFn, keyFn) {
+    async function convertHtmlAstToHTML(markdownNode, astLoaderFn, keyFn) {
       const cachedHTML = await cache.get(keyFn(markdownNode))
       if (cachedHTML) {
         return cachedHTML
@@ -319,6 +314,12 @@ module.exports = (
         return html
       }
     }
+
+    async function getHTMLAst(markdownNode) {
+      return await convertASTToHtmlAST(markdownNode, getAST)
+    }
+
+    async function getHTML(markdownNode) {
       return await convertHtmlAstToHTML(markdownNode, getAST, htmlCacheKey)
     }
 
