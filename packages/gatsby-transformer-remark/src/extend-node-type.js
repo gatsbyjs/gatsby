@@ -203,13 +203,13 @@ module.exports = (
             })
           }
           const futureContent = processMarkdown(markdownNode.internal.content)
-          const futureExcerpt = (!!markdownNode.excerpt) ? processMarkdown(markdownNode.excerpt) : Promise.resolve()
+          const futureExcerpt = (markdownNode.excerpt) ? processMarkdown(markdownNode.excerpt) : Promise.resolve()
           const contentAst = await futureContent
           const excerptAst = await futureExcerpt
 
           const ast = {
             content: contentAst,
-            excerpt: excerptAst
+            excerpt: excerptAst,
           }
 
           // Save new AST to cache and return
