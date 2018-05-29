@@ -203,7 +203,10 @@ module.exports = (
           const contentAst = await futureContent
           const excerptAst = await futureExcerpt
 
-          const ast = contentAst
+          const ast = {
+            content: contentAst,
+            excerpt: excerptAst
+          }
 
           // Save new AST to cache and return
           cache.set(cacheKey, ast)
@@ -218,7 +221,7 @@ module.exports = (
 
     async function getAST(markdownNode) {
       const allASTs = await getAllASTs()
-      return allASTs
+      return allASTs.content
     }
 
     async function getHeadings(markdownNode) {
