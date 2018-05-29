@@ -34,6 +34,10 @@ const htmlCacheKey = node =>
   `transformer-remark-markdown-html-${
     node.internal.contentDigest
   }-${pluginsCacheStr}-${pathPrefixCacheStr}`
+const excerptHtmlCacheKey = node =>
+  `transformer-remark-markdown-html-excerpt-${
+  node.internal.contentDigest
+  }-${pluginsCacheStr}-${pathPrefixCacheStr}`
 const htmlAstCacheKey = node =>
   `transformer-remark-markdown-html-ast-${
     node.internal.contentDigest
