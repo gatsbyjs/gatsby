@@ -49,3 +49,8 @@ site.
 
 At the root of a Gatsby site run `gatsby serve` to serve the production build of
 the site for testing.
+
+### Info
+
+At the root of a Gatsby site run `gatsby info` to get helpful environment information which
+and will be required when reporting a bug.
