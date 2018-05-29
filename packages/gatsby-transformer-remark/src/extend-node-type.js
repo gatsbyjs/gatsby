@@ -95,7 +95,7 @@ module.exports = (
     }
 
     async function getAST(markdownNode) {
-      return async function() {
+      return async function getAllASTs() {
       const cacheKey = astCacheKey(markdownNode)
       const cachedAST = await cache.get(cacheKey)
       if (cachedAST) {
