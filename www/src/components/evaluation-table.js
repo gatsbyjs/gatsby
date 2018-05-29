@@ -39,6 +39,7 @@ class EvaluationTable extends Component {
               marginBottom: rhythm(2 / 15),
               verticalAlign: `text-bottom`,
             }}
+            alt={`Info Icon`}
           />
         </span>,
       ]
@@ -87,6 +88,9 @@ class EvaluationTable extends Component {
         case 3:
         case 4: {
           return <EvaluationCell num={text} />
+        }
+        default: {
+          return null
         }
       }
     }
