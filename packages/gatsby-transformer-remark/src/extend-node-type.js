@@ -308,7 +308,7 @@ module.exports = (
       if (cachedHTML) {
         return cachedHTML
       } else {
-        const ast = await getHTMLAst(markdownNode)
+        const ast = await convertASTToHtmlAST(markdownNode, getAST)
         // Save new HTML to cache and return
         const html = hastToHTML(ast, {
           allowDangerousHTML: true,
