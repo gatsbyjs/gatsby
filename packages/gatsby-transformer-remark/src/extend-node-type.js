@@ -224,6 +224,11 @@ module.exports = (
       return allASTs.content
     }
 
+    async function getExcerptAST(markdownNode) {
+      const allASTs = await getAllASTs()
+      return allASTs.excerpt
+    }
+
     async function getHeadings(markdownNode) {
       const cachedHeadings = await cache.get(headingsCacheKey(markdownNode))
       if (cachedHeadings) {
