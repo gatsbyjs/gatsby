@@ -323,6 +323,10 @@ module.exports = (
       return await convertHtmlAstToHTML(markdownNode, getAST, htmlCacheKey)
     }
 
+    async function getExcerptHTML(markdownNode) {
+      return await convertHtmlAstToHTML(markdownNode, getExcerptAST, excerptHtmlCacheKey)
+    }
+
     const HeadingType = new GraphQLObjectType({
       name: `MarkdownHeading`,
       fields: {
