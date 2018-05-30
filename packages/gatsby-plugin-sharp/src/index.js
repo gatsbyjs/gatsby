@@ -542,7 +542,7 @@ async function fluid({ file, args = {}, reporter }) {
     aspectRatio: images[0].aspectRatio,
     src: fallbackSrc,
     srcSet,
-    fluid: options.fluid,
+    sizes: options.fluid,
     originalImg: originalImg,
     originalName: originalName,
     density,

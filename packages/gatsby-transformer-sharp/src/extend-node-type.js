@@ -49,10 +49,11 @@ const fixedNodeType = ({
   pathPrefix,
   getNodeAndSavePathDependency,
   reporter,
+  name,
 }) => {
   return {
     type: new GraphQLObjectType({
-      name: `ImageSharpFixed`,
+      name: name,
       fields: {
         base64: { type: GraphQLString },
         tracedSVG: {
@@ -167,10 +168,11 @@ const fluidNodeType = ({
   pathPrefix,
   getNodeAndSavePathDependency,
   reporter,
+  name,
 }) => {
   return {
     type: new GraphQLObjectType({
-      name: `ImageSharpFluid`,
+      name: name,
       fields: {
         base64: { type: GraphQLString },
         tracedSVG: {
@@ -290,12 +292,12 @@ module.exports = ({
 
   const nodeOptions = { type, pathPrefix, getNodeAndSavePathDependency, reporter }
 
-  const fixedNode = fixedNodeType(nodeOptions)
-  const resolutionsNode = fixedNodeType(nodeOptions)
+  const fixedNode = fixedNodeType({ name: `ImageSharpFixed`, ...nodeOptions })
+  const resolutionsNode = fixedNodeType({ name: `ImageSharpResolutions`, ...nodeOptions })
   resolutionsNode.deprecationReason = `Resolutions was deprecated in Gatsby v2. It's been renamed to "fixed" https://example.com/write-docs-and-fix-this-example-link`
 
-  const fluidNode = fluidNodeType(nodeOptions)
-  const sizesNode = fluidNodeType(nodeOptions)
+  const fluidNode = fluidNodeType({ name: `ImageSharpFluid`, ...nodeOptions })
+  const sizesNode = fluidNodeType({ name: `ImageSharpSizes`, ...nodeOptions })
   sizesNode.deprecationReason = `Resolutions was deprecated in Gatsby v2. It's been renamed to "fluid" https://example.com/write-docs-and-fix-this-example-link`
 
   return {

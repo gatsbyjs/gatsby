@@ -7,18 +7,18 @@ class Index extends React.Component {
   render() {
     const data = this.props.data
     const images = data.allImageSharp.edges
-    const fluid = data.fluid.childImageSharp.sizes
-    const fixed = data.fixed.childImageSharp.resolutions
+    const fluid = data.fluidImages.childImageSharp.fluid
+    const fixed = data.fixedImages.childImageSharp.fixed
     const cropDefault = data.cropDefault.childImageSharp.resize
     const cropBottomLeft = data.cropBottomLeft.childImageSharp.resize
     const cropEntropy = data.cropEntropy.childImageSharp.resize
     const cropCenter = data.cropCenter.childImageSharp.resize
-    const sizesDuotoneOriginal = data.sizesDuotoneOriginal
-      .childImageSharp.sizes
-    const sizesDuotone25 = data.sizesDuotone25.childImageSharp.sizes
-    const sizesDuotone50 = data.sizesDuotone50.childImageSharp.sizes
-    const sizesDuotone75 = data.sizesDuotone75.childImageSharp.sizes
-    const sizesDuotone = data.sizesDuotone.childImageSharp.sizes
+    const fluidDuotoneOriginal = data.fluidDuotoneOriginal
+      .childImageSharp.fluid
+    const fluidDuotone25 = data.fluidDuotone25.childImageSharp.fluid
+    const fluidDuotone50 = data.fluidDuotone50.childImageSharp.fluid
+    const fluidDuotone75 = data.fluidDuotone75.childImageSharp.fluid
+    const fluidDuotone = data.fluidDuotone.childImageSharp.fluid
 
     return (
       <Layout>
@@ -102,7 +102,6 @@ class Index extends React.Component {
             </li>
           ))}
         </ul>
-
         <p
           style={{
             clear: `left`,
@@ -181,7 +180,7 @@ class Index extends React.Component {
           size / screen resolution.
         </p>
         <p>
-          On top of that, <code>sizes</code>
+          On top of that, <code>fluid</code>
           {` `}
           returns everything else (namely
           {` `}
@@ -257,19 +256,19 @@ class Index extends React.Component {
 
         <div style={styles.row}>
           <div style={styles.column20}>
-            <Img fluid={sizesDuotoneOriginal} />
+            <Img fluid={fluidDuotoneOriginal} />
           </div>
           <div style={styles.column20}>
-            <Img fluid={sizesDuotone25} />
+            <Img fluid={fluidDuotone25} />
           </div>
           <div style={styles.column20}>
-            <Img fluid={sizesDuotone50} />
+            <Img fluid={fluidDuotone50} />
           </div>
           <div style={styles.column20}>
-            <Img fluid={sizesDuotone75} />
+            <Img fluid={fluidDuotone75} />
           </div>
           <div style={styles.column20}>
-            <Img fluid={sizesDuotone} />
+            <Img fluid={fluidDuotone} />
           </div>
         </div>
 
@@ -366,7 +365,7 @@ export const pageQuery = graphql`
         }
       }
     }
-    fluid: file(relativePath: { regex: "/fecolormatrix-kanye-west.jpg/" }) {
+    fluidImages: file(relativePath: { regex: "/fecolormatrix-kanye-west.jpg/" }) {
       childImageSharp {
         fluid(
           duotone: { highlight: "#f00e2e", shadow: "#192550" }
@@ -381,7 +380,7 @@ export const pageQuery = graphql`
         }
       }
     }
-    sizesDuotone: file(
+    fluidDuotone: file(
       relativePath: { regex: "/fecolormatrix-kanye-west.jpg/" }
     ) {
       childImageSharp {
@@ -394,7 +393,7 @@ export const pageQuery = graphql`
         }
       }
     }
-    sizesDuotone50: file(
+    fluidDuotone50: file(
       relativePath: { regex: "/fecolormatrix-kanye-west.jpg/" }
     ) {
       childImageSharp {
@@ -407,7 +406,7 @@ export const pageQuery = graphql`
         }
       }
     }
-    sizesDuotone75: file(
+    fluidDuotone75: file(
       relativePath: { regex: "/fecolormatrix-kanye-west.jpg/" }
     ) {
       childImageSharp {
@@ -420,18 +419,20 @@ export const pageQuery = graphql`
         }
       }
     }
-    sizesDuotone25: file(
+    fluidDuotone25: file(
       relativePath: { regex: "/fecolormatrix-kanye-west.jpg/" }
     ) {
-      fluid(
-        maxWidth: 120
-        traceSVG: { color: "#D1EFFB" }
-        duotone: { highlight: "#0ec4f1", shadow: "#192550", opacity: 25 }
-      ) {
-        ...GatsbyImageSharpFluid_tracedSVG
+      childImageSharp {
+        fluid(
+          maxWidth: 120
+          traceSVG: { color: "#D1EFFB" }
+          duotone: { highlight: "#0ec4f1", shadow: "#192550", opacity: 25 }
+        ) {
+          ...GatsbyImageSharpFluid_tracedSVG
+        }
       }
     }
-    sizesDuotoneOriginal: file(
+    fluidDuotoneOriginal: file(
       relativePath: { regex: "/fecolormatrix-kanye-west.jpg/" }
     ) {
       childImageSharp {
@@ -440,7 +441,7 @@ export const pageQuery = graphql`
         }
       }
     }
-    resolution: file(relativePath: { regex: "/lol.jpg/" }) {
+    fixedImages: file(relativePath: { regex: "/lol.jpg/" }) {
       childImageSharp {
         fixed(grayscale: true, width: 500) {
           ...GatsbyImageSharpFixed_withWebp
