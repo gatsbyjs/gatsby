@@ -272,6 +272,17 @@ const queue = {
       // we're on a new page that this (now old) service worker doesn't know
       // about so we'll unregister it and reload.
       if (!findPage(path)) {
+        // Check if 404 route was served, if so don't reload service worker
+        let is404 = false
+        const preloads = document.getElementsByTagName('link')
+        for(let i = 0; i < preloads.length && !is404; i++) {
+          const { href, rel } = preloads[i]
+          if(rel === 'preload' && href.indexOf('path---404') > -1) {
+            is404 = true
+          }
+        }
+        if(is404) return
+
         navigator.serviceWorker
           .getRegistrations()
           .then(function(registrations) {
