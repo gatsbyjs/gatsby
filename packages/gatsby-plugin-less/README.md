@@ -4,7 +4,7 @@ Provides drop-in support for Less stylesheets
 
 ## Install
 
-`yarn add less gatsby-plugin-less`
+`npm install --save less gatsby-plugin-less`
 
 ## How to use
 
