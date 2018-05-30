@@ -196,7 +196,7 @@ const ImageAPI = props => {
       node {
         title
         fluid(maxWidth: 613) {
-          fluid
+          sizes
           src
           srcSet
         }

@@ -38,7 +38,7 @@ describe(`gatsby-plugin-sharp`, () => {
   })
 
   describe(`fluid`, () => {
-    it(`includes responsive image properties, e.g. fluid, srcset, etc.`, async () => {
+    it(`includes responsive image properties, e.g. sizes, srcset, etc.`, async () => {
       const result = await fluid({ file })
 
       expect(result).toMatchSnapshot()

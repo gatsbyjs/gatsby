@@ -109,7 +109,7 @@ module.exports = (
         title="${node.title ? node.title : ``}"
         src="${fallbackSrc}"
         srcset="${srcSet}"
-        fluid="${fluidResult.fluid}"
+        sizes="${fluidResult.sizes}"
       />
     </span>
   </span>

@@ -136,7 +136,7 @@ export const postFragment = graphql`
           src
           srcSet
           aspectRatio
-          fluid
+          sizes
           tracedSVG
         }
       }

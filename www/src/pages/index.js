@@ -223,7 +223,7 @@ export const pageQuery = graphql`
         fluid(maxWidth: 870) {
           src
           srcSet
-          fluid
+          sizes
         }
       }
     }
