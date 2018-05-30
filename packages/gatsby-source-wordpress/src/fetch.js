@@ -248,6 +248,37 @@ async function fetchData({
         }
       }
     }
+    // Gravity Forms
+    if (type == `wordpress__gf_forms`) {
+      for (let key in routeResponse) {
+        for (let formKey in routeResponse[key]) {
+          let form = routeResponse[key][formKey]
+          if (form && form.id && form.title) {
+            // Ex. /gf/v2/forms/12
+            let formUrl = `${url}/${form.id}`
+            let fetchedData = await fetchData({
+              route: { url: formUrl, type: `${type}_items` },
+              _verbose,
+              _perPage,
+              _hostingWPCOM,
+              _auth,
+              _accessToken,
+            })
+            entities = entities.concat(fetchedData)
+          }
+        }
+      }
+      if (_hostingWPCOM) {
+        // TODO : Need to test that out with Gravity Forms on Wordpress.com hosted site. Need a premium account on wp.com to install extensions. See also ACF options page.
+        if (_verbose)
+          console.log(
+            colorized.out(
+              `Gravity Forms untested under wordpress.com hosting. Please let me know if it works.`,
+              colorized.color.Effect.Blink
+            )
+          )
+      }
+    }
     // TODO : Get the number of created nodes using the nodes in state.
     let length
     if (routeResponse && Array.isArray(routeResponse)) {
