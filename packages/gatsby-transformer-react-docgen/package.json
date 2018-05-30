@@ -12,7 +12,7 @@
     "@babel/types": "7.0.0-beta.47",
     "common-tags": "^1.4.0",
     "graphql-type-json": "^0.1.4",
-    "react-docgen": "^2.20.1"
+    "react-docgen": "^3.0.0-beta12"
   },
   "devDependencies": {
     "@babel/cli": "7.0.0-beta.47",
