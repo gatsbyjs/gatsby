@@ -26,9 +26,6 @@ class EvaluationCell extends Component {
         default: {
           return `none`
         }
-        default: {
-          return `none`
-        }
       }
     }
     const basicStyling = {
