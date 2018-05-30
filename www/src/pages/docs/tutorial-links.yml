@@ -19,7 +19,7 @@
           link: /tutorial/part-zero/#generate-a-new-site-with-hello-world
         - title: Code Editor
           link: /tutorial/part-zero/#code-editor
-    - title: 1. Familiarize with Gatsby building blocks
+    - title: 1. Get to know Gatsby building blocks
       link: /tutorial/part-one/
       items:
         - title: Gatsby's default starter

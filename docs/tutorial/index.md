@@ -8,10 +8,10 @@ The full tutorial is intended to be as accessible as possible to people without 
 
 ## Upcoming sections
 
-0. [**Set up your development environment**](/tutorial/part-zero/): We’ll start by making sure you have installed all the tools you’ll need to begin development on a Gatsby site, and generate our very first site.
-1. [**Familiarize with Gatsby building blocks**](//tutorial/part-one/). We’ll tour the code we’ve generated for our new Gatsby site and get introduced to the Gatsby project code structure.
-2. [**Add styles to your site.**](/tutorial/part-two/) We’ll take a look at how we can start making changes to the presentational layer of the site by experimenting with styling.
-3. [**Use layouts to build reusable site sections.**](/tutorial/part-three/) Using layouts makes the site-building less repetitive. Using self-contained components allows us to reuse them in different places on a site (like headers, footers, sidebars, etc). In this section, we’ll look deeper into what layouts are, and how we use them.
+0. [**Set up your development environment**](/tutorial/part-zero/): First you'll install all the tools you’ll need to begin development on a Gatsby site, and generate your very first site.
+1. [**Get to know Gatsby building blocks**](//tutorial/part-one/). You'll familiarize with the Gatsby project code structure.
+2. [**Add styles to your site.**](/tutorial/part-two/) You'll learn about making changes to the presentational layer of a Gatsby site by experimenting with styling.
+3. [**Use layouts to build reusable site sections.**](/tutorial/part-three/) Using layouts makes the site-building less repetitive. Using self-contained components allows us to reuse them in different places on a site (like headers, footers, sidebars, etc). In this section, you'll learn about layouts, and how they're used.
 
 ## Advanced tutorials
 
