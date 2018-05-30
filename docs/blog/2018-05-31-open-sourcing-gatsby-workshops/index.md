@@ -4,9 +4,9 @@ date: "2018-05-31"
 author: "Shannon Soper"
 ---
 
-# Recent workshops in SF & NYC
+# When we started hosting workshops & why we're sharing
 
-In April and May, we hosted 2-day Gatsby workshops in both San Francisco and NYC and met a lot of awesome developers. In this blogpost, we want to share what we learned and resources you can use to host your own Gatsby workshop. A big thank you to [Ryan Florence](https://twitter.com/ryanflorence) for organizing the workshop logistics; check out his company's website at [workshop.me](https://workshop.me/). Ryan has been an awesome supporter of Gatsby and a longtime fan, so yes, the workshop.me site is built on Gatsby :).
+In April and May, we hosted 2-day Gatsby workshops in both San Francisco and NYC and met a lot of awesome developers. In this blogpost, we want to share what we learned and resources you can use to host your own Gatsby workshop. A big thank you to Ryan Florence for organizing the workshop logistics; check out his website at [workshop.me](https://workshop.me/). Ryan has been an awesome supporter of Gatsby and a longtime fan, so yes, the workshop.me site is built on Gatsby :).
 
 # What we learned in the first few workshops
 
@@ -37,17 +37,17 @@ We'd love to hear how it goes and hope that you'll use the resources below.
 # Where to find workshop resources
 
 Please use the follow links to find our open source workshop materials in the Gatsby open source repo:
-* [Survey questions to send out before and after workshops]()
-* [Introductory slide deck for Day 1](www/public/static/day-1-slide-deck.pdf), [Introductory slide deck for Day 2](www/public/static/day-2-slide-deck.pdf)
-* [Agenda for workshop attendees](www/public/static/attendee-workshop-outline.pdf)
-* [Step-by-step guide for the workshop host](www/public/static/workshop-outline.pdf)
+* Survey questions to send out [before](https://docs.google.com/a/gatsbyjs.com/forms/d/1S6diwCjR36VSJod7DGL0ZpESx3KdaNGiB4Szl4hOpg0/edit?usp=sharing) and [after](https://docs.google.com/a/gatsbyjs.com/forms/d/1iKok_QJHSav51_668QneqwxOFOMw_WNDPnX0PdBfUVA/edit?usp=sharing) workshops
+* [Introductory slide deck for Day 1](https://docs.google.com/presentation/d/1fQNLvf1C8kj4rY-hVVY5zCsxy0z03gGkiqc-wiHHYhI/edit?usp=sharing), [Introductory slide deck for Day 2](https://docs.google.com/presentation/d/1w_0CGX2DNUDAIDT0MCaCPNqA_0HgamutaECP8kZ3yyI/edit?usp=sharing)
+* [Agenda for workshop attendees](https://docs.google.com/document/d/1gn5dk5RkuOXgZatd-Ow4XGqKY1NWZVCaUhyOwrRP0JE/edit?usp=sharing)
+* [Step-by-step guide for the workshop host](https://docs.google.com/document/d/1epeLO_7xkbd-WvPDCEZZ8f2GV5uMLHHM_UIhpZxqRbo/edit?usp=sharing)
 
-We hope these workshop materials help you share Gatsby at work, meetups, and wherever else it makes sense. Let us know how it goes and how you customize or modify these workshops! We’ve seen many of you hosting meetups and workshops already, so if you’d like to share your resources, you can do so in the repo.
+We hope these workshop materials help you share Gatsby at work, meetups, and wherever else it makes sense. Let us know how it goes and how you customize or modify these workshops!
 
 
 # How you can contribute
 
-And here are a few of the many issues we created in the [Documentation Project](https://github.com/gatsbyjs/gatsby/projects/3) as a result of what we learned in the workshops; contributions welcome! (Note: we used the [tutorials](/docs/tutorial/) in the workshops, so edits and improvements to the tutorials also improve the workshop)
+And here are a few of the many issues we created in the Documentation Project as a result of what we learned in the workshops; contributions welcome! (Note: we used the tutorials in the workshops, so edits and improvements to the tutorials also improve the workshop)
 
 * *Good first issue*: [Emphasize file names](https://github.com/gatsbyjs/gatsby/issues/5608) with (bold, italics, headers, or some other way) when people copy and paste code, because it’s easy to miss _where_ you’re supposed to paste it with the current format
 * *Good first issue*: Make it clear in tutorial part 0 and workshops that all instructions are built assuming that you have installed [VS Code and Prettier](https://github.com/gatsbyjs/gatsby/issues/5610) because those work well with React
