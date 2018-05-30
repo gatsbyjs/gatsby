@@ -6,7 +6,7 @@ author: "Shannon Soper"
 
 # Recent workshops in SF & NYC
 
-In April and May, we hosted 2-day Gatsby workshops in both San Francisco and NYC and met a lot of awesome developers. In this blogpost, we want to share what we learned and resources you can use to host your own Gatsby workshop. A big thank you to Ryan Florence for organizing the workshop logistics; check out his website at [workshop.me](https://workshop.me/). Ryan has been an awesome supporter of Gatsby and a longtime fan, so yes, the workshop.me site is built on Gatsby :).
+In April and May, we hosted 2-day Gatsby workshops in both San Francisco and NYC and met a lot of awesome developers. In this blogpost, we want to share what we learned and resources you can use to host your own Gatsby workshop. A big thank you to [Ryan Florence](https://twitter.com/ryanflorence) for organizing the workshop logistics; check out his company's website at [workshop.me](https://workshop.me/). Ryan has been an awesome supporter of Gatsby and a longtime fan, so yes, the workshop.me site is built on Gatsby :).
 
 # What we learned in the first few workshops
 
