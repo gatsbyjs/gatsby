@@ -2,6 +2,7 @@ import React from "react"
 import { Link } from "gatsby"
 import * as PropTypes from "prop-types"
 import Img from "gatsby-image"
+import Layout from "../layouts"
 
 import { rhythm } from "../utils/typography"
 
@@ -19,7 +20,7 @@ class CategoryTemplate extends React.Component {
     } = category
     const iconImg = icon.resolutions
     return (
-      <div>
+      <Layout>
         <div
           style={{
             display: `flex`,
@@ -51,7 +52,7 @@ class CategoryTemplate extends React.Component {
               ))}
           </ul>
         </div>
-      </div>
+      </Layout>
     )
   }
 }
