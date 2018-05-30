@@ -2,8 +2,7 @@ import React from "react"
 import { Link } from "gatsby"
 import * as PropTypes from "prop-types"
 import Img from "gatsby-image"
-
-import { rhythm } from "../utils/typography"
+import Layout from "../layouts"
 
 const propTypes = {
   data: PropTypes.object.isRequired,
@@ -21,7 +20,7 @@ class ProductTemplate extends React.Component {
       categories,
     } = product
     return (
-      <div>
+      <Layout>
         <div
           style={{
             display: `flex`,
@@ -53,7 +52,7 @@ class ProductTemplate extends React.Component {
             </ul>
           </div>
         </div>
-      </div>
+      </Layout>
     )
   }
 }
