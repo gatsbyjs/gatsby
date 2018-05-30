@@ -47,7 +47,7 @@ We hope these workshop materials help you share Gatsby at work, meetups, and whe
 
 # How you can contribute
 
-And here are a few of the many issues we created in the Documentation Project as a result of what we learned in the workshops; contributions welcome! (Note: we used the tutorials in the workshops, so edits and improvements to the tutorials also improve the workshop)
+And here are a few of the many issues we created in the [Documentation Project](https://github.com/gatsbyjs/gatsby/projects/3) as a result of what we learned in the workshops; contributions welcome! (Note: we used the [tutorials](/docs/tutorial/) in the workshops, so edits and improvements to the tutorials also improve the workshop)
 
 * *Good first issue*: [Emphasize file names](https://github.com/gatsbyjs/gatsby/issues/5608) with (bold, italics, headers, or some other way) when people copy and paste code, because it’s easy to miss _where_ you’re supposed to paste it with the current format
 * *Good first issue*: Make it clear in tutorial part 0 and workshops that all instructions are built assuming that you have installed [VS Code and Prettier](https://github.com/gatsbyjs/gatsby/issues/5610) because those work well with React
