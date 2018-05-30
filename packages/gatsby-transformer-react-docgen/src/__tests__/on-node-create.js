@@ -23,6 +23,7 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
         loadNodeContent,
         actions,
         createNodeId,
+        reporter: { error: console.error },
       },
       opts
     )
@@ -45,10 +46,10 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
     }
   })
 
-  it(`should only process javascript and jsx nodes`, () => {
+  it(`should only process javascript and jsx nodes`, async () => {
     loadNodeContent = jest.fn(() => new Promise(() => {}))
 
-    expect(run({ internal: { mediaType: `text/x-foo` } })).toBeNull()
+    expect(await run({ internal: { mediaType: `text/x-foo` } })).toBeUndefined()
     expect(
       run({ internal: { mediaType: `application/javascript` } })
     ).toBeDefined()

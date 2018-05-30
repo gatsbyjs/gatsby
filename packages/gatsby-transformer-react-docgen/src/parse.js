@@ -1,9 +1,8 @@
 import path from "path"
-
+import { codeFrameColumns } from "@babel/code-frame"
 import * as types from "babel-types"
-import { parse, defaultHandlers } from "react-docgen"
+import { parse, defaultHandlers, resolver } from "react-docgen"
 import { ERROR_MISSING_DEFINITION } from "react-docgen/dist/parse"
-import findAllComponentDefinitions from "react-docgen/dist/resolver/findAllComponentDefinitions"
 
 import { cleanDoclets, parseDoclets, applyPropDoclets } from "./Doclets"
 
@@ -17,7 +16,7 @@ function getAssignedIdenifier(path) {
 }
 
 let fileCount = 0
-function nameHandler(filePath = `/AnonymousComponent_${++fileCount}`) {
+function nameHandler(filePath) {
   let defaultName = path.basename(filePath, path.extname(filePath))
   let componentCount = 0
 
@@ -38,7 +37,7 @@ function nameHandler(filePath = `/AnonymousComponent_${++fileCount}`) {
       displayName = nodePath.node.id.name
     }
 
-    docs.set(`displayName`, displayName || `${defaultName}_${++componentCount}`)
+    docs.set(`displayName`, displayName || `${defaultName}${++componentCount}`)
   }
 }
 
@@ -47,7 +46,10 @@ function nameHandler(filePath = `/AnonymousComponent_${++fileCount}`) {
  */
 function makeHandlers(node, handlers) {
   handlers = (handlers || []).map(h => (...args) => h(...args, node))
-  return [nameHandler(node.absolutePath), ...handlers]
+  return [
+    nameHandler(node.absolutePath || `/UnknownComponent${++fileCount}`),
+    ...handlers,
+  ]
 }
 
 export default function parseMetadata(content, node, options) {
@@ -56,16 +58,27 @@ export default function parseMetadata(content, node, options) {
   try {
     components = parse(
       content,
-      options.resolver || findAllComponentDefinitions,
+      options.resolver || resolver.findAllComponentDefinitions,
       defaultHandlers.concat(makeHandlers(node, options.handlers))
     )
   } catch (err) {
     if (err.message === ERROR_MISSING_DEFINITION) return []
+    // reset the stack to here since it's not helpful to see all the react-docgen guts
+    // const parseErr = new Error(err.message)
+    if (err.loc) {
+      err.codeFrame = codeFrameColumns(
+        content,
+        err.loc.start || { start: err.loc },
+        {
+          highlightCode: true,
+        }
+      )
+    }
     throw err
   }
 
   if (components.length === 1) {
-    components[0].displayName = components[0].displayName.replace(/_\d+$/, ``)
+    components[0].displayName = components[0].displayName.replace(/\d+$/, ``)
   }
 
   components.forEach(component => {
