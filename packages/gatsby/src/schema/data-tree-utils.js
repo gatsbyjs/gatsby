@@ -88,7 +88,6 @@ const extractFromEntries = (
   ) {
     // there is multiple types or array of multiple types
     if (selector) {
-      console.log(selector)
       typeConflictReporter.addConflict(selector, entriesOfUniqueType)
     }
     return INVALID_VALUE
