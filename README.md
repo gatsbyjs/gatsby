@@ -225,6 +225,7 @@ Websites built with Gatsby:
 * [GDPR Form](https://gdprform.io)
 * [Josh Palacios - Personal Website](https://joshpalacios.com) ([source](https://github.com/jshwa/joshpalacios-site))
 * [Cup of Data](https://cupofdata.com) ([source](https://github.com/cupofdata/cupofdata.com))
+* [Natalia Acevedo - Personal Website](https://nataliaacevedo.com) ([source](https://github.com/yeion7/nataliaacevedo.com))
 
 ## Docs
 
