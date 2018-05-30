@@ -97,6 +97,10 @@ plugins: [
       // Example:  `["/*/*/comments", "/yoast/**"]` will exclude routes ending in `comments` and
       // all routes that begin with `yoast` from fetch.
       excludedRoutes: ["/*/*/comments", "/yoast/**"],
+      // use a custom normalizer which is applied after the built-in ones.
+      normalizer: function({ entities }) {
+        return entities;
+      },
     },
   },
 ];
