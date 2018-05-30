@@ -260,10 +260,10 @@ const resolveResize = (image, options) => {
 
 exports.resolveResize = resolveResize
 
-const fixedNodeType = () => {
+const fixedNodeType = ({ name }) => {
   return {
     type: new GraphQLObjectType({
-      name: `ContentfulFixed`,
+      name: name,
       fields: {
         base64: {
           type: GraphQLString,
@@ -354,10 +354,10 @@ const fixedNodeType = () => {
   }
 }
 
-const fluidNodeType = () => {
+const fluidNodeType = ({ name }) => {
   return {
     type: new GraphQLObjectType({
-      name: `ContentfulFluid`,
+      name: name,
       fields: {
         base64: {
           type: GraphQLString,
@@ -453,13 +453,13 @@ exports.extendNodeType = ({ type }) => {
     return {}
   }
 
-  const fixedNode = fixedNodeType()
-  const resolutionsNode = fixedNodeType()
+  const fixedNode = fixedNodeType({ name: `ContentfulFixed` })
+  const resolutionsNode = fixedNodeType({ name: `ContentfulResolutions` })
   resolutionsNode.deprecationReason = `Resolutions was deprecated in Gatsby v2. It's been renamed to "fixed" https://example.com/write-docs-and-fix-this-example-link`
 
-  const fluidNode = fluidNodeType()
-  const sizesNode = fluidNodeType()
   sizesNode.deprecationReason = `Resolutions was deprecated in Gatsby v2. It's been renamed to "fluid" https://example.com/write-docs-and-fix-this-example-link`
+  const fluidNode = fluidNodeType({ name: `ContentfulFluid` })
+  const sizesNode = fluidNodeType({ name: `ContentfulSizes` })
 
   return {
     fixed: fixedNode,
