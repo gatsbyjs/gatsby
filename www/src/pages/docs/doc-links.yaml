@@ -40,6 +40,8 @@
       link: /docs/creating-and-modifying-pages/
     - title: Create a Source Plugin
       link: /docs/create-source-plugin/
+    - title: Source Plugin Tutorial
+      link: /docs/source-plugin-tutorial/
     - title: Custom webpack config
       link: /docs/add-custom-webpack-config/
     - title: Customizing html.js
