@@ -257,7 +257,7 @@ async function fetchData({
             // Ex. /gf/v2/forms/12
             let formUrl = `${url}/${form.id}`
             let fetchedData = await fetchData({
-              route: { url: formUrl, type: `${type}_items` },
+              route: { url: formUrl, type: `${type}` },
               _verbose,
               _perPage,
               _hostingWPCOM,
