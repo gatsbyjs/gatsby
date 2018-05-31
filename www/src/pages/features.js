@@ -5,7 +5,6 @@ import Layout from "../components/layout"
 import EvaluationTable from "../components/evaluation-table"
 import EvaluationCell from "../components/evaluation-cell"
 import FuturaParagraph from "../components/futura-paragraph"
-import PageWithSidebar from "../components/page-with-sidebar"
 import featuresSidebar from "./docs/features-links.yaml"
 import Container from "../components/container"
 import { options, rhythm } from "../utils/typography"
@@ -202,20 +201,15 @@ class FeaturesPage extends Component {
     )
 
     return (
-      <Layout location={this.props.location}>
-        <PageWithSidebar
-          yaml={featuresSidebar}
-          renderContent={() => (
-            <Container>
-              <FeaturesHeader />
-              <EvaluationTable
-                sections={sections}
-                sectionHeaders={sectionHeaders}
-              />
-              <FeaturesFooter />
-            </Container>
-          )}
-        />
+      <Layout location={this.props.location} sidebarYaml={featuresSidebar}>
+        <Container>
+          <FeaturesHeader />
+          <EvaluationTable
+            sections={sections}
+            sectionHeaders={sectionHeaders}
+          />
+          <FeaturesFooter />
+        </Container>
       </Layout>
     )
   }
