@@ -4,7 +4,7 @@ const {
   GraphQLString,
   GraphQLInt,
   GraphQLEnumType,
-  GraphQlJson,
+  GraphQLJSON,
 } = require(`gatsby/graphql`)
 const Remark = require(`remark`)
 const select = require(`unist-util-select`)
@@ -328,7 +328,7 @@ module.exports = (
         },
       },
       htmlAst: {
-        type: GraphQlJson,
+        type: GraphQLJSON,
         resolve(markdownNode) {
           return getHTMLAst(markdownNode).then(ast => {
             const strippedAst = stripPosition(_.clone(ast), true)
