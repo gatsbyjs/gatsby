@@ -75,5 +75,8 @@
   },
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "gatsby-cli": "^1.1.57"
+  }
 }
