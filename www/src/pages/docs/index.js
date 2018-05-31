@@ -3,6 +3,7 @@ import { Link } from "gatsby"
 import Helmet from "react-helmet"
 
 import Layout from "../../components/layout"
+import docsSidebar from "../../data/sidebars/doc-links.yaml"
 import Container from "../../components/container"
 import DocSearchContent from "../../components/docsearch-content"
 import presets from "../../utils/presets"
