@@ -2,8 +2,8 @@ import React from "react"
 import Helmet from "react-helmet"
 
 import Layout from "../components/layout"
-import docsSidebar from "../pages/docs/doc-links.yaml"
-import tutorialSidebar from "../pages/docs/tutorial-links.yml"
+import docsSidebar from "../data/sidebars/doc-links.yaml"
+import tutorialSidebar from "../data/sidebars/tutorial-links.yaml"
 import MarkdownPageFooter from "../components/markdown-page-footer"
 import DocSearchContent from "../components/docsearch-content"
 
