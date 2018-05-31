@@ -640,3 +640,45 @@ blockquote:before {
 blockquote p {
   display: inline;
 }
+
+.polaroid {
+  box-sizing: content-box;
+  display: block;
+  position: absolute;
+  width: 18vw;
+  padding: 0.8vw 0.4vw 0;
+  background: linear-gradient(120deg, #fff, #eee 60%);
+  color: inherit;
+  text-decoration: none;
+  box-shadow: 2px 2px 7px 0px rgba(0, 0, 0, 0.4),
+    rgba(0, 0, 0, 0.1) 1px 1px 3px 0px inset;
+}
+
+.polaroid-image-wrapper {
+  position: relative;
+}
+
+.polaroid-image-wrapper::after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.5),
+    transparent 60%,
+    rgba(0, 0, 0, 0.4) 99%
+  );
+  box-shadow: inset 4px 5px 10px 0 rgba(0, 0, 0, 0.05);
+  width: 100%;
+  height: 100%;
+}
+
+.polaroid-author {
+  line-height: 4vw;
+  text-align: center;
+  font-size: 1.4vw;
+  /* Hate me or not, Comic Sans is a great fit here */
+  font-family: "Comic Sans MS", cursive, sans-serif;
+}
