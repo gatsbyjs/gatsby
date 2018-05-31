@@ -26,9 +26,9 @@ The biggest takeaways were:
 # New tutorials!
 
 People are interested in tutorials that go beyond the basic [Tutorial](/tutorial/), so we created three new tutorials: 
-* [WordPress Source Plugin Tutorial](/wordpress-source-plugin-tutorial/)
-* [Adding Images to a WordPress Site](/image-tutorial/)
-* [Creating a Source Plugin](/source-plugin-tutorial/)
+* [WordPress Source Plugin Tutorial](/docs/wordpress-source-plugin-tutorial/)
+* [Adding Images to a WordPress Site](/docs/image-tutorial/)
+* [Creating a Source Plugin](/docs/source-plugin-tutorial/)
 
 
 ## Why you might want to host a workshop
@@ -43,7 +43,7 @@ We'd love to hear how it goes and hope that you'll use the resources below.
 
 # Where to find workshop resources
 
-Please use the follow links to find our open source workshop materials in the Gatsby open source repo:
+Please use the following links to find our open source workshop materials in the Gatsby open source repo:
 * Survey questions to send out [before](https://docs.google.com/a/gatsbyjs.com/forms/d/1S6diwCjR36VSJod7DGL0ZpESx3KdaNGiB4Szl4hOpg0/edit?usp=sharing) and [after](https://docs.google.com/a/gatsbyjs.com/forms/d/1iKok_QJHSav51_668QneqwxOFOMw_WNDPnX0PdBfUVA/edit?usp=sharing) workshops
 * [Introductory slide deck for Day 1](https://docs.google.com/presentation/d/1fQNLvf1C8kj4rY-hVVY5zCsxy0z03gGkiqc-wiHHYhI/edit?usp=sharing), [Introductory slide deck for Day 2](https://docs.google.com/presentation/d/1w_0CGX2DNUDAIDT0MCaCPNqA_0HgamutaECP8kZ3yyI/edit?usp=sharing)
 * [Agenda for workshop attendees](https://docs.google.com/document/d/1gn5dk5RkuOXgZatd-Ow4XGqKY1NWZVCaUhyOwrRP0JE/edit?usp=sharing)
@@ -58,6 +58,6 @@ And here are a few of the many issues we created in the [Documentation Project](
 
 * *Good first issue*: [Emphasize file names](https://github.com/gatsbyjs/gatsby/issues/5608) with (bold, italics, headers, or some other way) when people copy and paste code, because it’s easy to miss _where_ you’re supposed to paste it with the current format
 * *Good first issue*: Make it clear in tutorial part 0 and workshops that all instructions are built assuming that you have installed [VS Code and Prettier](https://github.com/gatsbyjs/gatsby/issues/5610) because those work well with React
-* [Add a copy button to code examples](https://github.com/gatsbyjs/gatsby/issues/5030) because people often missed backtics if their screen resolution didn’t make the tics very visible
+* [Add a copy button to code examples](https://github.com/gatsbyjs/gatsby/issues/5030) because people often missed backticks if their screen resolution didn’t make the ticks very visible
 
 We loved hosting workshops and plan to keep developing the resources as we learn. We’re so grateful for the workshop attendees and their feedback. It is helping the Gatsby community grow!
