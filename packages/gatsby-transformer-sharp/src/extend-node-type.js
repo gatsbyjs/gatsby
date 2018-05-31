@@ -310,15 +310,9 @@ module.exports = ({
       type: new GraphQLObjectType({
         name: `ImageSharpOriginal`,
         fields: {
-          width: {
-            type: GraphQLFloat
-          },
-          height: {
-            type: GraphQLFloat
-          },
-          src: {
-            type: GraphQLString
-          },
+          width: { type: GraphQLFloat },
+          height: { type: GraphQLFloat },
+          src: { type: GraphQLString },
         },
       }),
       args: {},
@@ -361,25 +355,15 @@ module.exports = ({
       type: new GraphQLObjectType({
         name: `ImageSharpResize`,
         fields: {
-          src: {
-            type: GraphQLString
-          },
+          src: { type: GraphQLString },
           tracedSVG: {
             type: GraphQLString,
             resolve: parent => getTracedSVG(parent),
           },
-          width: {
-            type: GraphQLInt
-          },
-          height: {
-            type: GraphQLInt
-          },
-          aspectRatio: {
-            type: GraphQLFloat
-          },
-          originalName: {
-            type: GraphQLString
-          },
+          width: { type: GraphQLInt },
+          height: { type: GraphQLInt },
+          aspectRatio: { type: GraphQLFloat },
+          originalName: { type: GraphQLString },
         },
       }),
       args: {
@@ -433,9 +417,7 @@ module.exports = ({
       },
       resolve: (image, fieldArgs, context) => {
         const file = getNodeAndSavePathDependency(image.parent, context.path)
-        const args = { ...fieldArgs,
-          pathPrefix
-        }
+        const args = { ...fieldArgs, pathPrefix }
         return new Promise(resolve => {
           if (fieldArgs.base64) {
             resolve(
