@@ -2,7 +2,7 @@
 title: "Wordpress Source Plugin Tutorial"
 ---
 
-# How to create a site with data pulled from WordPress 
+## How to create a site with data pulled from WordPress 
 
 ## What this tutorial covers:
 
@@ -14,7 +14,7 @@ While each source plugin may operate differently from others, it’s worth going
 
 If you’d like to look at the growing number source plugins available to you, search for “source” in the [Gatsby plugin library](/plugins/?=source).
 
-# Creating a site with the `gatsby-source-wordpress` plugin
+## Creating a site with the `gatsby-source-wordpress` plugin
 
 Create a new Gatsby project and change directories into the new project you just created:
 
@@ -66,7 +66,7 @@ Add the `gatsby-source-wordpress` plugin to `gatsby-config.js` using the followi
 }
 ```
 
-### Creating GraphQL queries that pull data from WordPress
+## Creating GraphQL queries that pull data from WordPress
 
 Now you are ready to create a GraphQL query to pull in some data from the WordPress site. You will create a query that pulls in the title of the blogposts, date they were posted, and blogpost content.
 
