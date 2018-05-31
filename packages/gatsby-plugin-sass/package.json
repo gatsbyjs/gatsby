@@ -8,8 +8,7 @@
   },
   "dependencies": {
     "@babel/runtime": "7.0.0-beta.47",
-    "node-sass": "^4.5.2",
-    "sass-loader": "^6.0.7"
+    "sass-loader": "^7.0.1"
   },
   "devDependencies": {
     "@babel/cli": "7.0.0-beta.47",
@@ -26,7 +25,8 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "gatsby": "^2.0.0-0"
+    "gatsby": "^2.0.0-0",
+    "node-sass": "^4.9.0"
   },
   "readme": "README.md",
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sass",
