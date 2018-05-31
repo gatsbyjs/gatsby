@@ -201,7 +201,7 @@ function buildLocalCommands(cli, isLocalSite) {
           }
         )
       } catch (err) {
-        console.log("Error: unable to print environment info")
+        console.log(`Error: unable to print environment info`)
         console.log(err)
       }
     },
