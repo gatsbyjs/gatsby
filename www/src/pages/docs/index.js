@@ -7,7 +7,6 @@ import docsSidebar from "../../data/sidebars/doc-links.yaml"
 import Container from "../../components/container"
 import DocSearchContent from "../../components/docsearch-content"
 import presets from "../../utils/presets"
-import docsSidebar from "../../pages/docs/doc-links.yaml"
 
 class IndexRoute extends React.Component {
   render() {
@@ -37,8 +36,8 @@ class IndexRoute extends React.Component {
                 <code>cd gatsby-site</code>
               </li>
               <li>
-                <code>gatsby develop</code> — Gatsby will start a
-                hot-reloading development environment accessible at{` `}
+                <code>gatsby develop</code> — Gatsby will start a hot-reloading
+                development environment accessible at{` `}
                 <code>localhost:8000</code>
               </li>
               <li>
@@ -51,8 +50,8 @@ class IndexRoute extends React.Component {
                 per-route JavaScript code bundles.
               </li>
               <li>
-                <code>gatsby serve</code> — Gatsby starts a local HTML
-                server for testing your built site.
+                <code>gatsby serve</code> — Gatsby starts a local HTML server
+                for testing your built site.
               </li>
             </ol>
             <p>
@@ -71,9 +70,7 @@ class IndexRoute extends React.Component {
               {` `}
               you can use to kickstart building your Gatsby site.
             </p>
-            <h2 id="work-through-the-tutorial">
-              Work through the tutorial
-            </h2>
+            <h2 id="work-through-the-tutorial">Work through the tutorial</h2>
             <p>
               It walks you through building a Gatsby site from scratch to a
               finished polished site.
