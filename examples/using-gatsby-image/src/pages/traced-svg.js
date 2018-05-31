@@ -66,7 +66,7 @@ const UnsplashMasonry = edges => (
             },
           }}
         >
-          <Img sizes={image.node.childImageSharp.sizes} />
+          <Img fluid={image.node.childImageSharp.fluid} />
           <span
             css={{
               ...scale(-1),
@@ -86,7 +86,7 @@ const UnsplashMasonry = edges => (
             {` `}
             {numeral(
               Buffer.byteLength(
-                image.node.childImageSharp.sizes.tracedSVG,
+                image.node.childImageSharp.fluid.tracedSVG,
                 `utf8`
               )
             ).format()}
@@ -118,7 +118,7 @@ class TracedSVG extends React.Component {
             },
           }}
           title={`Photo by Redd Angelo on Unsplash`}
-          resolutions={data.reddImageMobile.childImageSharp.resolutions}
+          fixed={data.reddImageMobile.childImageSharp.fixed}
         />
         <Img
           style={{ display: `inherit` }}
@@ -132,7 +132,7 @@ class TracedSVG extends React.Component {
             },
           }}
           title={`Photo by Redd Angelo on Unsplash`}
-          resolutions={data.reddImage.childImageSharp.resolutions}
+          fixed={data.reddImage.childImageSharp.fixed}
         />
         <Lorem />
 
@@ -142,7 +142,7 @@ class TracedSVG extends React.Component {
         <Ipsum />
 
         <Img
-          sizes={data.kenImage.childImageSharp.sizes}
+          fluid={data.kenImage.childImageSharp.fluid}
           title={`Photo by Ken Treloar on Unsplash`}
         />
       </Layout>
@@ -156,22 +156,22 @@ export const query = graphql`
   query TracedSVGQuery {
     reddImageMobile: file(relativePath: { regex: "/redd/" }) {
       childImageSharp {
-        resolutions(width: 125) {
-          ...GatsbyImageSharpResolutions_tracedSVG
+        fixed(width: 125) {
+          ...GatsbyImageSharpFixed_tracedSVG
         }
       }
     }
     reddImage: file(relativePath: { regex: "/redd/" }) {
       childImageSharp {
-        resolutions(width: 200) {
-          ...GatsbyImageSharpResolutions_tracedSVG
+        fixed(width: 200) {
+          ...GatsbyImageSharpFixed_tracedSVG
         }
       }
     }
     kenImage: file(relativePath: { regex: "/ken-treloar/" }) {
       childImageSharp {
-        sizes(maxWidth: 600) {
-          ...GatsbyImageSharpSizes_tracedSVG
+        fluid(maxWidth: 600) {
+          ...GatsbyImageSharpFluid_tracedSVG
         }
       }
     }
@@ -179,12 +179,12 @@ export const query = graphql`
       edges {
         node {
           childImageSharp {
-            sizes(
+            fluid(
               maxWidth: 430
               quality: 80
               traceSVG: { background: "#f2f8f3", color: "#d6ebd9" }
             ) {
-              ...GatsbyImageSharpSizes_tracedSVG
+              ...GatsbyImageSharpFluid_tracedSVG
             }
           }
         }

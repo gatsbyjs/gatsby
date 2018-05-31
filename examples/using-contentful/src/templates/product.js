@@ -27,7 +27,7 @@ class ProductTemplate extends React.Component {
             alignItems: `center`,
           }}
         >
-          <Img resolutions={image[0].resolutions} />
+          <Img fixed={image[0].fixed} />
           <h4>{productName}</h4>
         </div>
         <h1>{productName}</h1>
@@ -74,7 +74,7 @@ export const pageQuery = graphql`
       }
       price
       image {
-        resolutions(width: 50, height: 50) {
+        fixed(width: 50, height: 50) {
           base64
           src
           srcSet
