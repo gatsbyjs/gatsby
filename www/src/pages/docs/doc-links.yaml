@@ -28,6 +28,8 @@
       link: /docs/add-404-page/
     - title: Adding Images, Fonts, and Files
       link: /docs/adding-images-fonts-files/
+    - title: Adding Images to a WordPress Site
+      link: /docs/image-tutorial/
     - title: Browser Support
       link: /docs/browser-support/
     - title: Building Apps with Gatsby
