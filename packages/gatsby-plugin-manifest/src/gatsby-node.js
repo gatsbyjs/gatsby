@@ -3,13 +3,14 @@ const path = require(`path`)
 const Promise = require(`bluebird`)
 const sharp = require(`sharp`)
 const defaultIcons = require(`./common.js`).defaultIcons
+const buildDirectory = process.env.GATSBY_BUILD_DIR || `public`
 
 sharp.simd(true)
 
 function generateIcons(icons, srcIcon) {
   return Promise.map(icons, icon => {
     const size = parseInt(icon.sizes.substring(0, icon.sizes.lastIndexOf(`x`)))
-    const imgPath = path.join(`public`, icon.src)
+    const imgPath = path.join(buildDirectory, icon.src)
 
     return sharp(srcIcon)
       .resize(size)
@@ -34,7 +35,7 @@ exports.onPostBuild = (args, pluginOptions) =>
 
     // Determine destination path for icons.
     const iconPath = path.join(
-      `public`,
+      buildDirectory,
       manifest.icons[0].src.substring(0, manifest.icons[0].src.lastIndexOf(`/`))
     )
 
@@ -44,7 +45,7 @@ exports.onPostBuild = (args, pluginOptions) =>
     }
 
     fs.writeFileSync(
-      path.join(`public`, `manifest.webmanifest`),
+      path.join(buildDirectory, `manifest.webmanifest`),
       JSON.stringify(manifest)
     )
 

@@ -161,9 +161,10 @@ import React from "react";
 import favicon from "./favicon.png";
 
 let inlinedStyles = "";
+const buildDirectory = process.env.GATSBY_BUILD_DIR || `public`
 if (process.env.NODE_ENV === "production") {
   try {
-    inlinedStyles = require("!raw-loader!../public/styles.css");
+    inlinedStyles = require(`!raw-loader!../${buildDirectory}/styles.css`);
   } catch (e) {
     console.log(e);
   }
