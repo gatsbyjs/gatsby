@@ -1,3 +1,7 @@
+---
+title: "Wordpress Source Plugin Tutorial"
+---
+
 ## How to create a site with data pulled from WordPress 
 
 ### What this tutorial covers:
