@@ -31,6 +31,10 @@ module.exports = async args => {
   if (!SUPPORTED_NODES.includes(name)) {
     return {}
   }
+
+  // Ensure cache dir exists
+  await fs.ensureDir(CACHE_DIR)
+
   if (name === `ImageSharp`) {
     return sqipSharp(args)
   }
