@@ -13,20 +13,25 @@ This project can create beautiful results, but this comes with the cost of proce
 ## :hand: Usage
 
 ### Configuring and getting the previews
-```graphql
-image {
-  sqip(numberOfPrimitives: 30, blur: 0),
-  resolutions {
-    ...GatsbyContentfulResolutions_withWebp_noBase64
-  }
-}
-```
+
+With `gatsby-transformer-sharp`:
 
 ```graphql
 image {
   sqip(numberOfPrimitives: 12, blur: 12, width: 256, height: 256),
   sizes(maxWidth: 400, maxHeight: 400) {
     ...GatsbyImageSharpSizes_noBase64
+  }
+}
+```
+
+With `gatsby-transformer-contentful`:
+
+```graphql
+image {
+  sqip(numberOfPrimitives: 30, blur: 0),
+  resolutions {
+    ...GatsbyContentfulResolutions_withWebp_noBase64
   }
 }
 ```
@@ -129,7 +134,7 @@ See: https://www.contentful.com/developers/docs/references/images-api/#/referenc
 
 **Pros:**
 
-* No JS required
+* No client-side JavaScript required
 * Browser cache ensures previews are not shown when a user visits the page a second time
 
 **Cons:**
@@ -167,6 +172,7 @@ const Img = require(`gatsby-image`)
 
 **Cons:**
 
+* Requires client-side JavaScript
 * Images fade in all the time, even when the image is already in the browser cache
 
 
@@ -174,6 +180,13 @@ const Img = require(`gatsby-image`)
 
 The plugin offers a wide variety of settings, which affect the size of the resulting preview image.
 
-Some research: https://axe312ger.github.io/embedded-svg-loading-impact-research/
+The maximum size of your previews really depend on your current html payload size and your personal limits.
 
-@todo image with loading time impact from webpagetest.com
+* Smaller thumbnails should range between 500-1000byte
+* A single header image or a full sized hero might take 1-10kb
+* For frequent previews like article teasers or image gallery thumbnails I’d recommend 15-25 shapes
+* For header and hero images you may go up to 50-200 shapes
+
+**Generally:** Keep it as small as possible and test the impact of your image previews via [webpagetest.org](https://www.webpagetest.org/) on a 3G connection.
+
+You may use my research repository for more detailed insights on how much the configuration can affect your payload size: https://axe312ger.github.io/embedded-svg-loading-impact-research/
