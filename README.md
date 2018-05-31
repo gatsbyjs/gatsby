@@ -226,6 +226,7 @@ Websites built with Gatsby:
 * [Josh Palacios - Personal Website](https://joshpalacios.com) ([source](https://github.com/jshwa/joshpalacios-site))
 * [Cup of Data](https://cupofdata.com) ([source](https://github.com/cupofdata/cupofdata.com))
 * [Natalia Acevedo - Personal Website](https://nataliaacevedo.com) ([source](https://github.com/yeion7/nataliaacevedo.com))
+* [Airbnb Cereal](https://airbnb.design/cereal/)
 
 ## Docs
 
