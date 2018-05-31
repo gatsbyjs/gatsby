@@ -4,14 +4,14 @@
   "version": "1.0.6-8",
   "author": "Jacob Bolda <me@jacobbolda.com>",
   "dependencies": {
-    "@babel/runtime": "7.0.0-beta.49",
-    "@babel/traverse": "7.0.0-beta.49",
+    "@babel/runtime": "7.0.0-beta.47",
+    "@babel/traverse": "7.0.0-beta.47",
     "babylon": "7.0.0-beta.47",
     "bluebird": "^3.5.0"
   },
   "devDependencies": {
-    "@babel/cli": "7.0.0-beta.49",
-    "@babel/core": "7.0.0-beta.49",
+    "@babel/cli": "7.0.0-beta.47",
+    "@babel/core": "7.0.0-beta.47",
     "cross-env": "^5.1.4"
   },
   "keywords": [

@@ -7,15 +7,15 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "7.0.0-beta.49",
+    "@babel/runtime": "7.0.0-beta.47",
     "fs-extra": "^4.0.2",
     "mini-svg-data-uri": "^1.0.0",
     "p-queue": "^2.3.0",
     "sqip": "^0.3.0"
   },
   "devDependencies": {
-    "@babel/cli": "7.0.0-beta.49",
-    "@babel/core": "7.0.0-beta.49",
+    "@babel/cli": "7.0.0-beta.47",
+    "@babel/core": "7.0.0-beta.47",
     "cross-env": "^5.0.5",
     "debug": "^3.1.0"
   },
