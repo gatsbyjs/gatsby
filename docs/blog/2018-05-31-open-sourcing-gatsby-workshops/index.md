@@ -12,12 +12,12 @@ In April and May, we hosted 2-day Gatsby workshops in both San Francisco and NYC
 
 Here is a photo of how many notes I took during our first workshop in San Francisco:
 
-![Photo of my workshop outline with notes scribbled all over it](./workshop-notes.jpg)
+![Photo of my workshop outline with notes scribbled all over it](./workshop-notes.JPG)
 
 The biggest takeaways were:
 * People wanted to know how Gatsby works, so we drew this diagram and nearly everyone said it was helpful:
 
-![Diagram of how Gatsby build time and run time works](./gatsby-diagram.JPG)
+![Diagram of how Gatsby build time and run time works](./gatsby-diagram.jpg)
 
 * This diagram helped them understand why adding extra plugins to their Gatsby sites doesn’t slow them down (because plugins do their work at build time, not at runtime)
 * People wanted to know how Gatsby works with React and GraphQL, and we’re still working on diagrams to illustrate those concepts
