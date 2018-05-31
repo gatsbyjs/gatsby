@@ -5,10 +5,9 @@ import * as React from "react";
 
 // Load production style
 let styles: string;
-const buildDirectory = process.env.GATSBY_BUILD_DIR || `public`
 if (process.env.NODE_ENV === `production`) {
   try {
-    styles = require(`!raw-loader!../${buildDirectory}/styles.css`);
+    styles = require("!raw-loader!../public/styles.css");
   } catch (err) {
     console.log(err);
   }

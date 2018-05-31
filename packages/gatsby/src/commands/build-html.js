@@ -28,8 +28,7 @@ module.exports = async (program: any) => {
       if (e) {
         return reject(e)
       }
-      const buildDirectory = process.env.GATSBY_BUILD_DIR || `public`
-      const outputFile = `${directory}/${buildDirectory}/render-page.js`
+      const outputFile = `${directory}/public/render-page.js`
       if (stats.hasErrors()) {
         let webpackErrors = stats.toJson().errors.filter(Boolean)
         return reject(
