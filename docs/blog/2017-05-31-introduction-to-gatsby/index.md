@@ -1,3 +1,13 @@
+---
+title: Introduction to Gatsby
+date: 2018-05-31
+author: Michelle Barker
+excerpt: "In case you haven’t heard about it, Gatsby is the latest hot thing in static site generators"
+tags: ["gatsby", "css", "graphql", "blog"]
+canonicalLink: https://css-irl.info/introduction-to-gatsby/
+publishedAt: css-irl.info
+---
+
 In case you haven’t heard about it, Gatsby is the latest hot thing in static site generators. While many static site generators (SSGs) use templating languages like Handlebars or Mustache, Gatsby uses React, helping contribute to its “blazing fast” claim.
 
 Having never used an SSG before (although I’ve read about them), and with very limited experience with React, what better way to dip my toe into the water than using Gatsby to publish my brand new blog [CSS {In Real Life}](https://css-irl.info/)?
