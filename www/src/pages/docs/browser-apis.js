@@ -6,6 +6,7 @@ import Functions from "../../components/function-list"
 import { rhythm, scale } from "../../utils/typography"
 import Layout from "../../components/layout"
 import Container from "../../components/container"
+import docsSidebar from "../../pages/docs/doc-links.yaml"
 
 class BrowserAPIDocs extends React.Component {
   render() {
@@ -15,7 +16,7 @@ class BrowserAPIDocs extends React.Component {
     )
 
     return (
-      <Layout location={this.props.location}>
+      <Layout location={this.props.location} sidebarYaml={docsSidebar}>
         <Container>
           <Helmet>
             <title>Browser APIs</title>
