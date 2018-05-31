@@ -73,9 +73,10 @@ module.exports = ({
         const imageName = `${details.name}-${image.internal.contentDigest}${
           details.ext
         }`
+        const buildDirectory = process.env.GATSBY_BUILD_DIR || `public`
         const publicPath = path.join(
           process.cwd(),
-          `public`,
+          buildDirectory,
           `static`,
           imageName
         )

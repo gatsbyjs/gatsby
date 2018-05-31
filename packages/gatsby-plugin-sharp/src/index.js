@@ -173,7 +173,7 @@ const processFile = (file, jobs, cb, reporter) => {
               ],
             })
             .then(imageminBuffer => {
-              fs.writeFile(job.outputPath, imageminBuffer, onFinish)
+              fs.writeFile(job.buildPath, imageminBuffer, onFinish)
             })
             .catch(onFinish)
         )
@@ -191,14 +191,14 @@ const processFile = (file, jobs, cb, reporter) => {
               plugins: [imageminWebp({ quality: args.quality })],
             })
             .then(imageminBuffer => {
-              fs.writeFile(job.outputPath, imageminBuffer, onFinish)
+              fs.writeFile(job.buildPath, imageminBuffer, onFinish)
             })
             .catch(onFinish)
         )
         .catch(onFinish)
       // any other format (jpeg, tiff) - don't compress it just handle output
     } else {
-      clonedPipeline.toFile(job.outputPath, onFinish)
+      clonedPipeline.toFile(job.buildPath, onFinish)
     }
   })
 }
@@ -210,7 +210,7 @@ const q = queue((task, callback) => {
 
 const queueJob = (job, reporter) => {
   const inputFileKey = job.file.absolutePath.replace(/\./g, `%2E`)
-  const outputFileKey = job.outputPath.replace(/\./g, `%2E`)
+  const outputFileKey = job.buildPath.replace(/\./g, `%2E`)
   const jobPath = `${inputFileKey}.${outputFileKey}`
 
   // Check if the job has already been queued. If it has, there's nothing
@@ -220,7 +220,7 @@ const queueJob = (job, reporter) => {
   }
 
   // Check if the output file already exists so we don't redo work.
-  if (fs.existsSync(job.outputPath)) {
+  if (fs.existsSync(job.buildPath)) {
     return
   }
 
@@ -304,7 +304,8 @@ function queueImageResizing({ file, args = {}, reporter }) {
   const imgSrc = `/${file.name}-${
     file.internal.contentDigest
   }-${argsDigestShort}.${fileExtension}`
-  const filePath = path.join(process.cwd(), `public`, `static`, imgSrc)
+  const buildDirectory = process.env.GATSBY_BUILD_DIR || `public`
+  const filePath = path.join(process.cwd(), buildDirectory, `static`, imgSrc)
 
   // Create function to call when the image is finished.
   let outsideResolve, outsideReject
@@ -342,7 +343,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
     outsideResolve,
     outsideReject,
     inputPath: file.absolutePath,
-    outputPath: filePath,
+    buildPath: filePath,
   }
 
   queueJob(job, reporter)

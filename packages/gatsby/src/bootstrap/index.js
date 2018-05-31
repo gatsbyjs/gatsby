@@ -46,6 +46,7 @@ type BootstrapArgs = {
 }
 
 module.exports = async (args: BootstrapArgs) => {
+  const buildDirectory = process.env.GATSBY_BUILD_DIR || `public`
   const program = {
     ...args,
     // Fix program directory path for windows env.
@@ -57,17 +58,17 @@ module.exports = async (args: BootstrapArgs) => {
     payload: program,
   })
 
-  // Delete html and css files from the public directory as we don't want
+  // Delete html and css files from the build directory (default: public) as we don't want
   // deleted pages and styles from previous builds to stick around.
   let activity = report.activityTimer(
     `delete html and css files from previous builds`
   )
   activity.start()
   await del([
-    `public/*.{html,css}`,
-    `public/**/*.{html,css}`,
-    `!public/static`,
-    `!public/static/**/*.{html,css}`,
+    `${buildDirectory}/*.{html,css}`,
+    `${buildDirectory}/**/*.{html,css}`,
+    `!${buildDirectory}/static`,
+    `!${buildDirectory}/static/**/*.{html,css}`,
   ])
   activity.end()
 
@@ -149,7 +150,7 @@ module.exports = async (args: BootstrapArgs) => {
   initCache()
 
   // Ensure the public/static directory is created.
-  await fs.ensureDirSync(`${program.directory}/public/static`)
+  await fs.ensureDirSync(`${program.directory}/${buildDirectory}/static`)
 
   // Copy our site files to the root of the site.
   activity = report.activityTimer(`copy gatsby files`)
