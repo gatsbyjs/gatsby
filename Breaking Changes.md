@@ -9,3 +9,4 @@
 * Inlining CSS changed — remove it from any custom html.js as done automatically by core now.
 * Manually install `react` and `react-dom`, along with any dependencies required by your plugins.
 * Layouts have been removed. To achieve the same behavior as v1, you have to wrap your pages and page templates with your own Layout component. Since Layout is a non-page component, making query has to be done with StaticQuery.
+* `graphql` package is exported from `gatsby`. If you use `setFieldsOnGraphQLNodeType` node API, please import graphql types from `gatsby/graphql` to prevent `Schema must contain unique named types but contains multiple types named "<typename>"` errors.
