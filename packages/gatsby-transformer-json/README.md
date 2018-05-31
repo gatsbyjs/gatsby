@@ -29,11 +29,11 @@ The algorithm for arrays is to convert each item in the array into a node.
 So if your project has a `letters.json` with `[{ "value": "a" }, { "value": "b" }, { "value": "c" }]` then the following three nodes would be created.
 
 ```javascript
-;[
-  { value: "a", type: "Letters" },
-  { value: "b", type: "Letters" },
-  { value: "c", type: "Letters" },
-]
+[
+  { value: "a" },
+  { value: "b" },
+  { value: "c" },
+];
 ```
 
 ### Single Object
@@ -72,15 +72,12 @@ Then the following three nodes would be created.
 ;[
   {
     value: "a",
-    type: "Letters",
   },
   {
     value: "b",
-    type: "Letters",
   },
   {
     value: "c",
-    type: "Letters",
   },
 ]
 ```
@@ -127,3 +124,7 @@ Which would return:
   }
 }
 ```
+
+## Examples
+
+The [gatsbygram example site](https://github.com/gatsbyjs/gatsby/blob/master/examples/gatsbygram/gatsby-node.js) uses this plugin.

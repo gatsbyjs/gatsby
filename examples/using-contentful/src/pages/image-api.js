@@ -1,11 +1,12 @@
 import React from "react"
 import Img from "gatsby-image"
+import Layout from "../layouts"
 import { rhythm } from "../utils/typography"
 
-export default props => {
+const ImageAPI = props => {
   const assets = props.data.allContentfulAsset.edges
   return (
-    <div>
+    <Layout>
       <h1>Image API examples</h1>
       <p>
         Gatsby offers rich integration with{` `}
@@ -262,9 +263,11 @@ export default props => {
           }}
         />
       </pre>
-    </div>
+    </Layout>
   )
 }
+
+export default ImageAPI
 
 export const pageQuery = graphql`
   query ImageAPIExamples {

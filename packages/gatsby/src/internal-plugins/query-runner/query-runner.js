@@ -49,6 +49,8 @@ module.exports = async (queryJob: QueryJob, component: Any) => {
           ${result.errors || []}
         URL path:
           ${queryJob.path}
+        Context:
+          ${JSON.stringify(queryJob.context, null, 4)}
         Plugin:
           ${queryJob.pluginCreatorId || `none`}
         Query:

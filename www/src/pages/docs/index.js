@@ -2,7 +2,7 @@ import React from "react"
 import { Link } from "gatsby"
 import Helmet from "react-helmet"
 
-import GlobalLayout from "../../layouts"
+import Layout from "../../components/layout"
 import docsSidebar from "./doc-links.yaml"
 import Container from "../../components/container"
 import PageWithSidebar from "../../components/page-with-sidebar"
@@ -12,7 +12,7 @@ import presets from "../../utils/presets"
 class IndexRoute extends React.Component {
   render() {
     return (
-      <GlobalLayout location={this.props.location}>
+      <Layout location={this.props.location}>
         <PageWithSidebar
           yaml={docsSidebar}
           renderContent={() => (
@@ -97,7 +97,7 @@ class IndexRoute extends React.Component {
             </DocSearchContent>
           )}
         />
-      </GlobalLayout>
+      </Layout>
     )
   }
 }

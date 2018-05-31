@@ -130,6 +130,7 @@ export default (pagePath, callback) => {
         createElement(syncRequires.components[page.componentChunkName], {
           ...routeProps,
           ...dataAndContext,
+          pathContext: dataAndContext.pageContext,
         }),
     })
   )
@@ -173,9 +174,6 @@ export default (pagePath, callback) => {
         if (chunk === `/`) {
           return null
         }
-        if (chunk.slice(0, 15) === `webpack-runtime`) {
-          return null
-        }
         return chunk
       })
     })
@@ -201,22 +199,13 @@ export default (pagePath, callback) => {
     join(process.cwd(), `public`, runtimeScript),
     `utf-8`
   )
-  postBodyComponents.push(
-    <script
-      key={`webpack-runtime`}
-      id={`webpack-runtime`}
-      dangerouslySetInnerHTML={{
-        __html: runtimeRaw,
-      }}
-    />
-  )
 
   scripts
     .slice(0)
     .reverse()
     .forEach(script => {
       // Add preload <link>s for scripts.
-      headComponents.unshift(
+      headComponents.push(
         <link
           as="script"
           rel="preload"
@@ -262,23 +251,28 @@ export default (pagePath, callback) => {
     })
 
   // Add script loader for page scripts to the end of body element (after webpack manifest).
-  // Taken from https://www.html5rocks.com/en/tutorials/speed/script-loading/
-  const scriptsString = scripts
-    .map(s => `"${pathPrefix}${JSON.stringify(s).slice(1, -1)}"`)
-    .join(`,`)
+  const windowData = `/*<![CDATA[*/window.page=${JSON.stringify(page)};${
+    page.jsonName in dataPaths
+      ? `window.dataPath="${dataPaths[page.jsonName]}";`
+      : ``
+  }/*]]>*/`
+
   postBodyComponents.push(
     <script
       key={`script-loader`}
       id={`gatsby-script-loader`}
       dangerouslySetInnerHTML={{
-        __html: `/*<![CDATA[*/window.page=${JSON.stringify(page)};${
-          page.jsonName in dataPaths
-            ? `window.dataPath="${dataPaths[page.jsonName]}";`
-            : ``
-        }!function(e,t,r){function n(){for(;d[0]&&"loaded"==d[0][f];)c=d.shift(),c[o]=!i.parentNode.insertBefore(c,i)}for(var s,a,c,d=[],i=e.scripts[0],o="onreadystatechange",f="readyState";s=r.shift();)a=e.createElement(t),"async"in i?(a.async=!1,e.head.appendChild(a)):i[f]?(d.push(a),a[o]=n):e.write("<"+t+' src="'+s+'" defer></'+t+">"),a.src=s}(document,"script",[${scriptsString}])/*]]>*/`,
+        __html: windowData,
       }}
     />
   )
+
+  const bodyScripts = scripts.map(s => {
+    const scriptPath = `${pathPrefix}${JSON.stringify(s).slice(1, -1)}`
+    return <script key={scriptPath} src={scriptPath} async />
+  })
+
+  postBodyComponents.push(...bodyScripts)
 
   const html = `<!DOCTYPE html>${renderToStaticMarkup(
     <Html

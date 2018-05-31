@@ -1,6 +1,6 @@
 import React from "react"
 import presets from "../utils/presets"
-import { rhythm, scale, options } from "../utils/typography"
+import { scale } from "../utils/typography"
 
 const CardHeadline = ({ children }) => (
   <h2

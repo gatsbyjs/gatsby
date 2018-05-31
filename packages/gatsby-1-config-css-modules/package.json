@@ -1,17 +1,17 @@
 {
   "name": "gatsby-1-config-css-modules",
   "description": "CSS Modules configuration for Gatsby v1 plugins",
-  "version": "1.0.10-6",
+  "version": "1.0.10-9",
   "author": "Ming Aldrich-Gan <mingaldrichgan@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "7.0.0-beta.42"
+    "@babel/runtime": "7.0.0-beta.47"
   },
   "devDependencies": {
-    "@babel/cli": "7.0.0-beta.42",
-    "@babel/core": "7.0.0-beta.42",
+    "@babel/cli": "7.0.0-beta.47",
+    "@babel/core": "7.0.0-beta.47",
     "cross-env": "^5.1.4"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-1-config-css-modules#readme",

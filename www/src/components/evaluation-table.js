@@ -1,7 +1,6 @@
 import React, { Component } from "react"
 import presets, { colors } from "../utils/presets"
 import EvaluationCell from "./evaluation-cell"
-import { Link } from "gatsby"
 import infoIcon from "../assets/info-icon.svg"
 import SectionTitle from "./evaluation-table-section-title"
 import SectionHeaderTop from "./evaluation-table-section-header-top"
@@ -39,6 +38,7 @@ class EvaluationTable extends Component {
               marginBottom: rhythm(2 / 15),
               verticalAlign: `text-bottom`,
             }}
+            alt={`Info Icon`}
           />
         </span>,
       ]
@@ -84,6 +84,9 @@ class EvaluationTable extends Component {
         case 3:
         case 4: {
           return <EvaluationCell num={text} />
+        }
+        default: {
+          return null
         }
       }
     }

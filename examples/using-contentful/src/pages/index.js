@@ -1,8 +1,9 @@
 import React from "react"
 import { Link } from "gatsby"
 import * as PropTypes from "prop-types"
-import { rhythm } from "../utils/typography"
 import Img from "gatsby-image"
+import { rhythm } from "../utils/typography"
+import Layout from "../layouts"
 
 const propTypes = {
   data: PropTypes.object.isRequired,
@@ -42,35 +43,37 @@ class IndexPage extends React.Component {
     const usProductEdges = this.props.data.us.edges
     const deProductEdges = this.props.data.german.edges
     return (
-      <div style={{ marginBottom: rhythm(2) }}>
-        <h2>Gatsby's integration with the Contentful Image API</h2>
-        <Link to="/image-api/">See examples</Link>
-        <br />
-        <br />
-        <br />
-        <h2>Localization</h2>
-        <p>
-          The <code>gatsby-source-contentful</code> plugin offers full support
-          for Contentful's localization features. Our sample space includes
-          products localized into both English and German.
-        </p>
-        <p>
-          An entry and asset node are created for each locale following fallback
-          rules for missing localization. In addition, each node has an
-          additional field added, <code>node_locale</code> so you can select for
-          nodes from a single locale
-        </p>
-        <h3>en-US</h3>
-        {usProductEdges.map(({ node }, i) => (
-          <Product node={node} key={node.id} />
-        ))}
-        <br />
-        <br />
-        <h3>de</h3>
-        {deProductEdges.map(({ node }, i) => (
-          <Product node={node} key={node.id} />
-        ))}
-      </div>
+      <Layout>
+        <div style={{ marginBottom: rhythm(2) }}>
+          <h2>Gatsby's integration with the Contentful Image API</h2>
+          <Link to="/image-api/">See examples</Link>
+          <br />
+          <br />
+          <br />
+          <h2>Localization</h2>
+          <p>
+            The <code>gatsby-source-contentful</code> plugin offers full support
+            for Contentful's localization features. Our sample space includes
+            products localized into both English and German.
+          </p>
+          <p>
+            An entry and asset node are created for each locale following fallback
+            rules for missing localization. In addition, each node has an
+            additional field added, <code>node_locale</code> so you can select for
+            nodes from a single locale
+          </p>
+          <h3>en-US</h3>
+          {usProductEdges.map(({ node }, i) => (
+            <Product node={node} key={node.id} />
+          ))}
+          <br />
+          <br />
+          <h3>de</h3>
+          {deProductEdges.map(({ node }, i) => (
+            <Product node={node} key={node.id} />
+          ))}
+        </div>
+      </Layout>
     )
   }
 }

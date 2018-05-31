@@ -12,10 +12,10 @@ const createContentDigest = obj =>
     .digest(`hex`)
 
 exports.onPreBootstrap = (
-  { store, cache, boundActionCreators },
+  { store, cache, actions, createNodeId },
   pluginOptions
 ) => {
-  const { createNode, touchNode } = boundActionCreators
+  const { createNode, touchNode } = actions
 
   // Check for updated screenshots
   // and prevent Gatsby from garbage collecting remote file nodes
@@ -31,6 +31,7 @@ exports.onPreBootstrap = (
             store,
             cache,
             createNode,
+            createNodeId,
           })
         } else {
           // Screenshot hasn't yet expired, touch the image node
@@ -41,8 +42,14 @@ exports.onPreBootstrap = (
   )
 }
 
-exports.onCreateNode = async ({ node, boundActionCreators, store, cache }) => {
-  const { createNode, createParentChildLink } = boundActionCreators
+exports.onCreateNode = async ({
+  node,
+  actions,
+  store,
+  cache,
+  createNodeId,
+}) => {
+  const { createNode, createParentChildLink } = actions
 
   // We only care about parsed sites.yaml files with a url field
   if (node.internal.type !== `SitesYaml` || !node.url) {
@@ -55,6 +62,7 @@ exports.onCreateNode = async ({ node, boundActionCreators, store, cache }) => {
     store,
     cache,
     createNode,
+    createNodeId,
   })
 
   createParentChildLink({
@@ -69,6 +77,7 @@ const createScreenshotNode = async ({
   store,
   cache,
   createNode,
+  createNodeId,
 }) => {
   const screenshotResponse = await axios.post(SCREENSHOT_ENDPOINT, { url })
 
@@ -77,6 +86,7 @@ const createScreenshotNode = async ({
     store,
     cache,
     createNode,
+    createNodeId,
   })
 
   const screenshotNode = {

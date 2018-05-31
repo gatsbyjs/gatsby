@@ -187,8 +187,11 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       )
 
     const NewRoot = apiRunner(`wrapRootComponent`, { Root }, Root)[0]
+
+    const renderer = apiRunner(`replaceHydrateFunction`, undefined, ReactDOM.hydrate)[0]
+
     domReady(() => {
-      ReactDOM.hydrate(
+      renderer(
         <NewRoot />,
         typeof window !== `undefined`
           ? document.getElementById(`___gatsby`)
