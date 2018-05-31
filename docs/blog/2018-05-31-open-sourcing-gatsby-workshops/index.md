@@ -4,9 +4,7 @@ date: "2018-05-31"
 author: "Shannon Soper"
 ---
 
-# When we started hosting workshops & why we're sharing
-
-In April and May, we hosted 2-day Gatsby workshops in both San Francisco and NYC and met a lot of awesome developers. In this blogpost, we want to share what we learned and resources you can use to host your own Gatsby workshop. A big thank you to Ryan Florence for organizing the workshop logistics; check out his website at [workshop.me](https://workshop.me/). Ryan has been an awesome supporter of Gatsby and a longtime fan, so yes, the workshop.me site is built on Gatsby :).
+In April and May, we hosted 2-day Gatsby workshops in both San Francisco and NYC and want to share what we learned and resources you can use to host your own Gatsby workshops. A big thank you to all the developers who came to these workshops, and another big thank you to Ryan Florence for organizing the workshop logistics; check out his company's website at [workshop.me](https://workshop.me/). Ryan has been an awesome supporter of Gatsby and a longtime fan, so yes, the workshop.me site is built on Gatsby :).
 
 # What we learned in the first few workshops
 
@@ -14,7 +12,7 @@ Here is a photo of how many notes I took during our first workshop in San Franci
 
 ![Photo of my workshop outline with notes scribbled all over it](./workshop-notes.JPG)
 
-The biggest takeaways were:
+And that's just one page of notes (there were many more). The biggest takeaways were:
 * People wanted to know how Gatsby works, so we drew this diagram and nearly everyone said it was helpful:
 
 ![Diagram of how Gatsby build time and run time works](./gatsby-diagram.jpg)
@@ -33,7 +31,7 @@ People are interested in tutorials that go beyond the basic [Tutorial](/tutorial
 
 ## Why you might want to host a workshop
 
-Here are some advantages that we experienced in the workshops; if these appeal to you, you could consider hosting your own workshop at your work, a meetup, or any other setting that makes sense:
+Here are some advantages that we experienced in the workshops; if these appeal to you, you could consider hosting your own workshop at your work, a meetup, or any other setting that makes sense!
 
 * _Dedicated time and place to learn:_ it’s easier to set aside time to learn something new when you are in a room with other people doing the same thing
 * _Quicker problem-solving:_ you can usually get answers to your questions and solve problems faster than you could otherwise
@@ -43,7 +41,7 @@ We'd love to hear how it goes and hope that you'll use the resources below.
 
 # Where to find workshop resources
 
-Please use the following links to find our open source workshop materials in the Gatsby open source repo:
+Please use the following links to find workshop materials in the Gatsby open source repo:
 * Survey questions to send out [before](https://docs.google.com/a/gatsbyjs.com/forms/d/1S6diwCjR36VSJod7DGL0ZpESx3KdaNGiB4Szl4hOpg0/edit?usp=sharing) and [after](https://docs.google.com/a/gatsbyjs.com/forms/d/1iKok_QJHSav51_668QneqwxOFOMw_WNDPnX0PdBfUVA/edit?usp=sharing) workshops
 * [Introductory slide deck for Day 1](https://docs.google.com/presentation/d/1fQNLvf1C8kj4rY-hVVY5zCsxy0z03gGkiqc-wiHHYhI/edit?usp=sharing), [Introductory slide deck for Day 2](https://docs.google.com/presentation/d/1w_0CGX2DNUDAIDT0MCaCPNqA_0HgamutaECP8kZ3yyI/edit?usp=sharing)
 * [Agenda for workshop attendees](https://docs.google.com/document/d/1gn5dk5RkuOXgZatd-Ow4XGqKY1NWZVCaUhyOwrRP0JE/edit?usp=sharing)
@@ -54,7 +52,7 @@ We hope these workshop materials help you share Gatsby at work, meetups, and whe
 
 # How you can contribute
 
-And here are a few of the many issues we created in the [Documentation Project](https://github.com/gatsbyjs/gatsby/projects/3) as a result of what we learned in the workshops; contributions welcome! (Note: we used the main [tutorials](/tutorial/) in the workshops, so edits and improvements to the tutorials also improve the workshop)
+If you'd like to contribute to making workshops and tutorials more awesome, here are a few of the many issues we created in the [Documentation Project](https://github.com/gatsbyjs/gatsby/projects/3) as a result of what we learned in the workshops; contributions welcome! (Note: we used the main [tutorials](/tutorial/) in the workshops, so edits and improvements to the tutorials also improve the workshop)
 
 * *Good first issue*: [Emphasize file names](https://github.com/gatsbyjs/gatsby/issues/5608) with (bold, italics, headers, or some other way) when people copy and paste code, because it’s easy to miss _where_ you’re supposed to paste it with the current format
 * *Good first issue*: Make it clear in tutorial part 0 and workshops that all instructions are built assuming that you have installed [VS Code and Prettier](https://github.com/gatsbyjs/gatsby/issues/5610) because those work well with React
