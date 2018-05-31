@@ -192,8 +192,8 @@ exports.mapPostsToTagsCategories = entities => {
   const categories = entities.filter(e => e.__type === `wordpress__CATEGORY`)
 
   return entities.map(e => {
-    let hasCategories = (e.categories && Array.isArray(e.categories) && e.categories.length);
-    let hasTags = (e.tags && Array.isArray(e.tags) && e.tags.length);
+    let hasCategories = (e.categories && Array.isArray(e.categories) && e.categories.length)
+    let hasTags = (e.tags && Array.isArray(e.tags) && e.tags.length)
       // Replace tags & categories with links to their nodes.
       if (hasTags) {
         e.tags___NODE = e.tags.map(
