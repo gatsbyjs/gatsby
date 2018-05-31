@@ -7,14 +7,14 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "7.0.0-beta.49",
+    "@babel/runtime": "7.0.0-beta.47",
     "js-yaml": "3.11.0",
     "lodash": "^4.17.4",
     "unist-util-select": "^1.5.0"
   },
   "devDependencies": {
-    "@babel/cli": "7.0.0-beta.49",
-    "@babel/core": "7.0.0-beta.49",
+    "@babel/cli": "7.0.0-beta.47",
+    "@babel/core": "7.0.0-beta.47",
     "cross-env": "^5.1.4"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-yaml#readme",
