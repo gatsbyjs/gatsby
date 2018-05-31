@@ -130,11 +130,42 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     expect(fsExtra.copy).toHaveBeenCalledTimes(2)
   })
 
+  it(`can copy HTML multiple images when some are in ignore extensions`, async () => {
+    const path1 = `images/sample-image.jpg`
+    const path2 = `images/another-sample-image.gif`
+
+    const markdownAST = remark.parse(
+      `<div><img src="${path1}"><img src="${path2}"></div>`
+    )
+
+    await plugin({
+      files: [...getFiles(path1), ...getFiles(path2)],
+      markdownAST,
+      markdownNode,
+      getNode,
+    })
+
+    expect(fsExtra.copy).toHaveBeenCalledTimes(1)
+  })
+
   it(`can copy HTML videos`, async () => {
     const path = `videos/sample-video.mp4`
 
     const markdownAST = remark.parse(
       `<video controls="controls" autoplay="true" loop="true">\n<source type="video/mp4" src="${path}"></source>\n<p>Your browser does not support the video element.</p>\n</video>`
+    )
+
+    await plugin({ files: getFiles(path), markdownAST, markdownNode, getNode })
+
+    expect(fsExtra.copy).toHaveBeenCalled()
+  })
+
+  it(`can copy HTML videos when some siblings are in ignore extensions`, async () => {
+    const path = `videos/sample-video.mp4`
+    const path1 = `images/sample-image.jpg`
+
+    const markdownAST = remark.parse(
+      `<div><img src="${path1}"><video controls="controls" autoplay="true" loop="true">\n<source type="video/mp4" src="${path}"></source>\n<p>Your browser does not support the video element.</p>\n</video></div>`
     )
 
     await plugin({ files: getFiles(path), markdownAST, markdownNode, getNode })
