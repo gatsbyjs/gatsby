@@ -52,5 +52,4 @@ the site for testing.
 
 ### Info
 
-At the root of a Gatsby site run `gatsby info` to get helpful environment information which
-and will be required when reporting a bug.
+At the root of a Gatsby site run `gatsby info` to get helpful environment information which will be required when reporting a bug.
