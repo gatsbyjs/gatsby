@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@babel/runtime": "7.0.0-beta.47",
-    "documentation": "^4.0.0-rc.1"
+    "documentation": "^7.1.0"
   },
   "devDependencies": {
     "@babel/cli": "7.0.0-beta.47",
