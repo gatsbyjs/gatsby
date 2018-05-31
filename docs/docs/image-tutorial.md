@@ -1,8 +1,8 @@
-## The Gatsby Way™ of rendering images 
+---
+title: "Adding Images to a WordPress Site"
+---
 
-Using images pulled from a WordPress demo CMS
-
-### What this tutorial covers:
+## What this tutorial covers:
 
 In this tutorial, you will install the several image plugins and components in order to pull image data from a WordPress account into your Gatsby site and render that data. This [Gatsby + Wordpress demo site](https://using-wordpress.gatsbyjs.org/sample-post-1) shows you a sample of what you’re going to be building in this tutorial, although in this tutorial you’ll just focus on adding images.
 
@@ -10,7 +10,7 @@ In this tutorial, you will install the several image plugins and components in o
 
 Images are one of the most beautiful and striking ways to communicate to people, and are a key part of creating an effective and positive user experience; at the same time, high quality images can load slowly and cause text boxes to jump around, both of which make it difficult for people to be patient with visiting your website.
 
-The Gatsby Way™ of creating images is a phrase we made up to describe a set of best practices that help you optimize performance and responsiveness of images. This [Gatsbygram site](https://gatsbygram.gatsbyjs.org/) (an Instagram feed fed through Gatsby) shows off the svg image tracing effect. Here’s an [image processing demo site](https://image-processing.gatsbyjs.org/) exploring how to have fun with images in your Gatsby site.
+The Gatsby Way™ of creating images describes a set of best practices that help you optimize performance and responsiveness of images so that you can get the benefits of awesome images that don't slow down your site. This [Gatsbygram site](https://gatsbygram.gatsbyjs.org/) (an Instagram feed fed through Gatsby) shows off the svg image tracing effect. Here’s an [image processing demo site](https://image-processing.gatsbyjs.org/) exploring how to have fun with images in your Gatsby site.
 
 ### Installing the `gatsby-source-wordpress` plugin
 
