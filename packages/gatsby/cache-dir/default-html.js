@@ -1,10 +1,9 @@
 import React from "react"
 
 let stylesStr
-const buildDirectory = process.env.GATSBY_BUILD_DIR || `public`
 if (process.env.NODE_ENV === `production`) {
   try {
-    stylesStr = require(`!raw-loader!../${buildDirectory}/styles.css`)
+    stylesStr = require(`!raw-loader!../public/styles.css`)
   } catch (e) {
     console.log(e)
   }
