@@ -4,13 +4,13 @@ import PropTypes from "prop-types"
 // Handle legacy names for image queries.
 const convertProps = props => {
   let convertedProps = { ...props }
-  if (convertedProps.responsiveResolution) {
-    convertedProps.resolutions = convertedProps.responsiveResolution
-    delete convertedProps.responsiveResolution
+  if (convertedProps.resolutions) {
+    convertedProps.fixed = convertedProps.resolutions
+    delete convertedProps.resolutions
   }
-  if (convertedProps.responsiveSizes) {
-    convertedProps.sizes = convertedProps.responsiveSizes
-    delete convertedProps.responsiveSizes
+  if (convertedProps.sizes) {
+    convertedProps.fluid = convertedProps.sizes
+    delete convertedProps.sizes
   }
 
   return convertedProps
@@ -22,9 +22,9 @@ const imageCache = {}
 const inImageCache = props => {
   const convertedProps = convertProps(props)
   // Find src
-  const src = convertedProps.sizes
-    ? convertedProps.sizes.src
-    : convertedProps.resolutions.src
+  const src = convertedProps.fluid
+    ? convertedProps.fluid.src
+    : convertedProps.fixed.src
 
   if (imageCache[src]) {
     return true
@@ -92,7 +92,7 @@ const noscriptImg = props => {
   // HTML validation issues caused by empty values like width="" and height=""
   const src = props.src ? `src="${props.src}" ` : `src="" ` // required attribute
   const srcSet = props.srcSet ? `srcset="${props.srcSet}" ` : ``
-  const sizes = props.sizes ? `sizes="${props.sizes}" ` : ``
+  const fluid = props.fluid ? `fluid="${props.fluid}" ` : ``
   const title = props.title ? `title="${props.title}" ` : ``
   const alt = props.alt ? `alt="${props.alt}" ` : `alt="" ` // required attribute
   const width = props.width ? `width="${props.width}" ` : ``
@@ -100,7 +100,7 @@ const noscriptImg = props => {
   const opacity = props.opacity ? props.opacity : `1`
   const transitionDelay = props.transitionDelay ? props.transitionDelay : `0.5s`
 
-  return `<img ${width}${height}${src}${srcSet}${alt}${title}${sizes}style="position:absolute;top:0;left:0;transition:opacity 0.5s;transition-delay:${transitionDelay};opacity:${opacity};width:100%;height:100%;object-fit:cover;object-position:center"/>`
+  return `<img ${width}${height}${src}${srcSet}${alt}${title}${fluid}style="position:absolute;top:0;left:0;transition:opacity 0.5s;transition-delay:${transitionDelay};opacity:${opacity};width:100%;height:100%;object-fit:cover;object-position:center"/>`
 }
 
 const Img = props => {
@@ -184,8 +184,8 @@ class Image extends React.Component {
       outerWrapperClassName,
       style = {},
       imgStyle = {},
-      sizes,
-      resolutions,
+      fluid,
+      fixed,
       backgroundColor,
       Tag,
     } = convertProps(this.props)
@@ -208,8 +208,8 @@ class Image extends React.Component {
       ...imgStyle,
     }
 
-    if (sizes) {
-      const image = sizes
+    if (fluid) {
+      const image = fluid
 
       // Use webp by default if browser supports it
       if (image.srcWebp && image.srcSetWebp && isWebpSupported()) {
@@ -289,7 +289,7 @@ class Image extends React.Component {
                 title={title}
                 srcSet={image.srcSet}
                 src={image.src}
-                sizes={image.sizes}
+                fluid={image.fluid}
                 style={imageStyle}
                 onLoad={() => {
                   this.state.IOSupported && this.setState({ imgLoaded: true })
@@ -309,8 +309,8 @@ class Image extends React.Component {
       )
     }
 
-    if (resolutions) {
-      const image = resolutions
+    if (fixed) {
+      const image = fixed
       const divStyle = {
         position: `relative`,
         overflow: `hidden`,
@@ -425,10 +425,10 @@ Image.defaultProps = {
 }
 
 Image.propTypes = {
-  responsiveResolution: PropTypes.object,
-  responsiveSizes: PropTypes.object,
   resolutions: PropTypes.object,
   sizes: PropTypes.object,
+  fixed: PropTypes.object,
+  fluid: PropTypes.object,
   fadeIn: PropTypes.bool,
   title: PropTypes.string,
   alt: PropTypes.string,

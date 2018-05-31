@@ -25,10 +25,10 @@ const Product = ({ node }) => (
         }}
       >
         <div style={{ marginRight: rhythm(1 / 2) }}>
-          {node.image[0].resolutions.src && (
+          {node.image[0].fixed.src && (
             <Img
               style={{ margin: 0 }}
-              resolutions={node.image[0].resolutions}
+              fixed={node.image[0].fixed}
             />
           )}
         </div>
@@ -92,8 +92,8 @@ export const pageQuery = graphql`
             productName
           }
           image {
-            resolutions(width: 75) {
-              ...GatsbyContentfulResolutions
+            fixed(width: 75) {
+              ...GatsbyContentfulFixed
             }
           }
         }
@@ -107,8 +107,8 @@ export const pageQuery = graphql`
             productName
           }
           image {
-            resolutions(width: 75) {
-              ...GatsbyContentfulResolutions
+            fixed(width: 75) {
+              ...GatsbyContentfulFixed
             }
           }
         }

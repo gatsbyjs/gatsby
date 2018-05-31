@@ -22,8 +22,8 @@ const Layout = ({ children, data }) => {
       >
         <Image
           // Inject the sqip dataURI as base64 value
-          sizes={{
-            ...background.childImageSharp.sizes,
+          fluid={{
+            ...background.childImageSharp.fluid,
             base64: background.childImageSharp.sqip.dataURI,
           }}
           alt={background.name}
@@ -52,8 +52,8 @@ export const query = graphql`
           publicURL
           name
           childImageSharp {
-            sizes(maxWidth: 400, maxHeight: 400) {
-              ...GatsbyImageSharpSizes_noBase64
+            fluid(maxWidth: 400, maxHeight: 400) {
+              ...GatsbyImageSharpFluid_noBase64
             }
             sqip(
               # Make sure to keep the same aspect ratio when cropping
@@ -78,8 +78,8 @@ export const query = graphql`
           publicURL
           name
           childImageSharp {
-            sizes(maxWidth: 4000) {
-              ...GatsbyImageSharpSizes_noBase64
+            fluid(maxWidth: 4000) {
+              ...GatsbyImageSharpFluid_noBase64
             }
             sqip(numberOfPrimitives: 160, blur: 0) {
               dataURI

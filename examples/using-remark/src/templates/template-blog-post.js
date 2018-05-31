@@ -94,8 +94,8 @@ class BlogPostRoute extends React.Component {
           >
             <Img
               alt={`Avatar of ${post.frontmatter.author.id}`}
-              resolutions={
-                post.frontmatter.author.avatar.children[0].resolutions
+              fixed={
+                post.frontmatter.author.avatar.children[0].fixed
               }
               css={{
                 borderRadius: `100%`,
@@ -151,13 +151,13 @@ export const pageQuery = graphql`
           avatar {
             children {
               ... on ImageSharp {
-                resolutions(
+                fixed(
                   width: 50
                   height: 50
                   quality: 75
                   grayscale: true
                 ) {
-                  ...GatsbyImageSharpResolutions
+                  ...GatsbyImageSharpFixed
                 }
               }
             }
