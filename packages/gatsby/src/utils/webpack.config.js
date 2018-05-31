@@ -398,7 +398,7 @@ module.exports = async (
       loaders: [`json`, `yaml`],
     })
 
-    // "file" loader makes sure those assets end up in the build folder (default: public).
+    // "file" loader makes sure the assets end up in the build folder (default: public).
     // When you `import` an asset, you get its filename.
     config.loader(`file-loader`, {
       test: /\.(ico|eot|otf|webp|pdf|ttf|woff(2)?)(\?.*)?$/,
