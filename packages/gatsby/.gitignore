@@ -28,4 +28,4 @@ node_modules
 
 decls
 dist
-./cache-dir
+cache-dir
