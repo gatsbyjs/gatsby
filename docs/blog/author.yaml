@@ -105,3 +105,27 @@
   bio: Full-stack developer, clean code enthusiast, blogger at https://www.vojtechruzicka.com/
   avatar: avatars/vojtech-ruzicka.jpg
   twitter: "@vojtechruzicka"
+- id: Robert Svensson
+  bio: Developer and web security enthusiast living in Berlin.
+  avatar: avatars/robert-svensson.jpg
+  twitter: "@RobertDMW"
+- id: Carolyn Stransky
+  bio: Journalist and JavaScript developer based in Berlin, Germany.
+  avatar: avatars/carolyn-stransky.jpg
+  twitter: "@carolstran"
+- id: Sarah Mogin
+  bio: Developer and Diet Coke enthusiast in Brooklyn, NY
+  avatar: avatars/sarah-mogin.jpg
+  twitter: "@sarahmogin"
+- id: Dan Kass
+  bio: Co-founder and engineering lead at JustFix.nyc
+  avatar: avatars/dan-kass.jpg
+  twitter: "@JustFixNYC"
+- id: Gatsby Central
+  bio: The community for gatsby developers
+  avatar: avatars/gatsby-central.jpg
+  twitter: "@GatsbyCentral"
+- id: Ray Gesualdo
+  bio: UI Engineer at SalesLoft. Full-stack JavaScript-er. Speaker. Mentor. Writer. - https://www.raygesualdo.com
+  avatar: avatars/ray-gesualdo.jpg
+  twitter: "@RayGesualdo"

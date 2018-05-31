@@ -31,7 +31,7 @@ function buildLocalCommands(cli, isLocalSite) {
       report.verbose(`current directory: ${directory}`)
       return report.panic(
         `gatsby <${command}> can only be run for a gatsby site. \n` +
-          `Either the current working directory does not contain a package.json or ` +
+          `Either the current working directory does not contain a valid package.json or ` +
           `'gatsby' is not specified as a dependency`
       )
     }
@@ -102,11 +102,35 @@ function buildLocalCommands(cli, isLocalSite) {
         .option(`S`, {
           alias: `https`,
           type: `boolean`,
-          describe: `Use HTTPS. See https://www.gatsbyjs.org/docs/local-https/ for an initial setup guide`,
+          describe: `Use HTTPS. See https://www.gatsbyjs.org/docs/local-https/ as a guide`,
+        })
+        .option(`c`, {
+          alias: `cert-file`,
+          type: `string`,
+          default: ``,
+          describe: `Custom HTTPS cert file (relative path; also required: --https, --key-file). See https://www.gatsbyjs.org/docs/local-https/`,
+        })
+        .option(`k`, {
+          alias: `key-file`,
+          type: `string`,
+          default: ``,
+          describe: `Custom HTTPS key file (relative path; also required: --https, --cert-file). See https://www.gatsbyjs.org/docs/local-https/`,
+        })
+        .option(`build-dir`, {
+          alias: `buildDirectory`,
+          type: `string`,
+          default: `public`,
+          describe: `Set build directory. Defaults to public`,
         }),
     handler: handlerP(
       getCommandHandler(`develop`, (args, cmd) => {
         process.env.NODE_ENV = process.env.NODE_ENV || `development`
+
+        process.env.GATSBY_BUILD_DIR = process.env.GATSBY_BUILD_DIR || path.resolve(args.buildDirectory)  || `public`
+        if (!fs.existsSync(process.env.GATSBY_BUILD_DIR)) {
+          fs.mkdirSync(process.env.GATSBY_BUILD_DIR)
+        }
+
         cmd(args)
         // Return an empty promise to prevent handlerP from exiting early.
         // The development server shouldn't ever exit until the user directly
@@ -128,10 +152,21 @@ function buildLocalCommands(cli, isLocalSite) {
         type: `boolean`,
         default: false,
         describe: `Build site without uglifying JS bundles (for debugging).`,
+      }).option(`build-dir`, {
+        alias: `buildDirectory`,
+        type: `string`,
+        default: `public`,
+        describe: `Set build directory. Defaults to public`,
       }),
     handler: handlerP(
       getCommandHandler(`build`, (args, cmd) => {
         process.env.NODE_ENV = `production`
+
+        process.env.GATSBY_BUILD_DIR = process.env.GATSBY_BUILD_DIR || path.resolve(args.buildDirectory)  || `public`
+        if (!fs.existsSync(process.env.GATSBY_BUILD_DIR)) {
+          fs.mkdirSync(process.env.GATSBY_BUILD_DIR)
+        }
+        
         return cmd(args)
       })
     ),
@@ -184,9 +219,7 @@ module.exports = (argv, handlers) => {
 
   cli
     .usage(`Usage: $0 <command> [options]`)
-    .help(`h`)
     .alias(`h`, `help`)
-    .version()
     .alias(`v`, `version`)
     .option(`verbose`, {
       default: false,

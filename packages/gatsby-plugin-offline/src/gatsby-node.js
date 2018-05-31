@@ -14,7 +14,7 @@ exports.createPages = ({ boundActionCreators }) => {
 }
 
 exports.onPostBuild = (args, pluginOptions) => {
-  const rootDir = `public`
+  const rootDir = process.env.GATSBY_BUILD_DIR || `public`
 
   const options = {
     staticFileGlobs: [
@@ -23,11 +23,12 @@ exports.onPostBuild = (args, pluginOptions) => {
       `${rootDir}/app-*js`,
       `${rootDir}/index.html`,
       `${rootDir}/manifest.json`,
+      `${rootDir}/manifest.webmanifest`,
       `${rootDir}/offline-plugin-app-shell-fallback/index.html`,
     ],
     stripPrefix: rootDir,
     // If `pathPrefix` is configured by user, we should replace
-    // the `public` prefix with `pathPrefix`.
+    // the build directory (default: `public`) prefix with `pathPrefix`.
     // See more at:
     // https://github.com/GoogleChrome/sw-precache#replaceprefix-string
     replacePrefix: args.pathPrefix || ``,
@@ -56,5 +57,5 @@ exports.onPostBuild = (args, pluginOptions) => {
 
   const combinedOptions = _.defaults(pluginOptions, options)
 
-  return precache.write(`public/sw.js`, combinedOptions)
+  return precache.write(`${rootDir}/sw.js`, combinedOptions)
 }

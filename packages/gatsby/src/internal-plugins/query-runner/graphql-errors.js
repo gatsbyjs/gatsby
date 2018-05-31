@@ -62,7 +62,7 @@ function extractError(error: Error): { message: string, docName: string } {
   while ((matches = docRegex.exec(error.toString())) !== null) {
     // This is necessary to avoid infinite loops with zero-width matches
     if (matches.index === docRegex.lastIndex) docRegex.lastIndex++
-    ;[, message, docName] = matches
+    ;[, , message, docName] = matches
   }
 
   if (!message) {

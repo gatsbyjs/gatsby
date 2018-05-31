@@ -24,7 +24,7 @@ const getSslCert = require(`../utils/get-ssl-cert`)
 
 // const isInteractive = process.stdout.isTTY
 
-// Watch the static directory and copy files to public as they're added or
+// Watch the static directory and copy files to build directory (default: public) as they're added or
 // changed. Wait 10 seconds so copying doesn't interfer with the regular
 // bootstrap.
 setTimeout(() => {
@@ -44,6 +44,7 @@ rlInterface.on(`SIGINT`, () => {
 async function startServer(program) {
   const directory = program.directory
   const directoryPath = withBasePath(directory)
+  const buildDirectory = process.env.GATSBY_BUILD_DIR || `public`
   const createIndexHtml = () =>
     developHtml(program).catch(err => {
       if (err.name !== `WebpackError`) {
@@ -127,7 +128,7 @@ async function startServer(program) {
     res.end()
   })
 
-  app.use(express.static(__dirname + `/public`))
+  app.use(express.static(__dirname + `/${buildDirectory}`))
 
   app.use(
     require(`webpack-dev-middleware`)(compiler, {
@@ -136,6 +137,13 @@ async function startServer(program) {
       publicPath: devConfig.output.publicPath,
     })
   )
+
+  // Expose access to app for advanced use cases
+  const { developMiddleware } = store.getState().config
+
+  if (developMiddleware) {
+    developMiddleware(app)
+  }
 
   // Set up API proxy.
   const { proxy } = store.getState().config
@@ -147,11 +155,11 @@ async function startServer(program) {
     })
   }
 
-  // Check if the file exists in the public folder.
+  // Check if the file exists in the output directory (default: public).
   app.get(`*`, (req, res, next) => {
     // Load file but ignore errors.
     res.sendFile(
-      directoryPath(`/public${decodeURIComponent(req.path)}`),
+      directoryPath(`/${buildDirectory}{decodeURIComponent(req.path)}`),
       err => {
         // No err so a file was sent successfully.
         if (!err || !err.path) {
@@ -182,7 +190,7 @@ async function startServer(program) {
       parsedPath.extname.startsWith(`.html`) ||
       parsedPath.path.endsWith(`/`)
     ) {
-      res.sendFile(directoryPath(`public/index.html`), err => {
+      res.sendFile(directoryPath(`${buildDirectory}/index.html`), err => {
         if (err) {
           res.status(500).end()
         }
@@ -241,12 +249,27 @@ async function startServer(program) {
 module.exports = async (program: any) => {
   const detect = require(`detect-port`)
   const port =
-    typeof program.port === `string` ? parseInt(program.port, 10) : program.port
+    typeof program.port === `string`
+      ? parseInt(program.port, 10)
+      : program.port
+
+  // In order to enable custom ssl, --cert-file --key-file and -https flags must all be
+  // used together
+  if ((program[`cert-file`] || program[`key-file`]) && !program.https) {
+    report.panic(
+      `for custom ssl --https, --cert-file, and --key-file must be used together`
+    )
+  }
 
   // Check if https is enabled, then create or get SSL cert.
   // Certs are named after `name` inside the project's package.json.
   if (program.https) {
-    program.ssl = await getSslCert(program.sitePackageJson.name)
+    program.ssl = await getSslCert({
+      name: program.sitePackageJson.name,
+      certFile: program[`cert-file`],
+      keyFile: program[`key-file`],
+      directory: program.directory,
+    })
   }
 
   let compiler

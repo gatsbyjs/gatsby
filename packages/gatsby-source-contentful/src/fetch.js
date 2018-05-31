@@ -3,7 +3,7 @@ const _ = require(`lodash`)
 
 const normalize = require(`./normalize`)
 
-module.exports = async ({ spaceId, accessToken, host, syncToken }) => {
+module.exports = async ({ spaceId, accessToken, host, syncToken, environment }) => {
   // Fetch articles.
   console.time(`Fetch Contentful data`)
   console.log(`Starting to fetch data from Contentful`)
@@ -11,6 +11,7 @@ module.exports = async ({ spaceId, accessToken, host, syncToken }) => {
   const client = contentful.createClient({
     space: spaceId,
     accessToken,
+    environment,
     host: host || `cdn.contentful.com`,
   })
 
@@ -18,12 +19,12 @@ module.exports = async ({ spaceId, accessToken, host, syncToken }) => {
   // {'locale': value} } so we need to get the space and its default local.
   //
   // We'll extend this soon to support multiple locales.
-  let space
+  let locales
   let defaultLocale = `en-US`
   try {
     console.log(`Fetching default locale`)
-    space = await client.getSpace()
-    defaultLocale = _.find(space.locales, { default: true }).code
+    locales = await client.getLocales().then(response => response.items)
+    defaultLocale = _.find(locales, { default: true }).code
     console.log(`default local is : ${defaultLocale}`)
   } catch (e) {
     console.log(
@@ -88,7 +89,7 @@ module.exports = async ({ spaceId, accessToken, host, syncToken }) => {
     currentSyncData,
     contentTypeItems,
     defaultLocale,
-    locales: space.locales,
+    locales,
   }
 }
 

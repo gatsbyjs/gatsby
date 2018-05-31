@@ -54,7 +54,12 @@ For example, I defined a `PostTemplate` which will be used to render pages for a
 import React from "react";
 
 export default function PostTemplate({
-  data: { markdownRemark: { frontmatter: { title, date }, html } },
+  data: {
+    markdownRemark: {
+      frontmatter: { title, date },
+      html,
+    },
+  },
 }) {
   return (
     <div>

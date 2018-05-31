@@ -173,7 +173,7 @@ const processFile = (file, jobs, cb, reporter) => {
               ],
             })
             .then(imageminBuffer => {
-              fs.writeFile(job.outputPath, imageminBuffer, onFinish)
+              fs.writeFile(job.buildPath, imageminBuffer, onFinish)
             })
             .catch(onFinish)
         )
@@ -191,14 +191,14 @@ const processFile = (file, jobs, cb, reporter) => {
               plugins: [imageminWebp({ quality: args.quality })],
             })
             .then(imageminBuffer => {
-              fs.writeFile(job.outputPath, imageminBuffer, onFinish)
+              fs.writeFile(job.buildPath, imageminBuffer, onFinish)
             })
             .catch(onFinish)
         )
         .catch(onFinish)
       // any other format (jpeg, tiff) - don't compress it just handle output
     } else {
-      clonedPipeline.toFile(job.outputPath, onFinish)
+      clonedPipeline.toFile(job.buildPath, onFinish)
     }
   })
 }
@@ -210,7 +210,7 @@ const q = queue((task, callback) => {
 
 const queueJob = (job, reporter) => {
   const inputFileKey = job.file.absolutePath.replace(/\./g, `%2E`)
-  const outputFileKey = job.outputPath.replace(/\./g, `%2E`)
+  const outputFileKey = job.buildPath.replace(/\./g, `%2E`)
   const jobPath = `${inputFileKey}.${outputFileKey}`
 
   // Check if the job has already been queued. If it has, there's nothing
@@ -220,7 +220,7 @@ const queueJob = (job, reporter) => {
   }
 
   // Check if the output file already exists so we don't redo work.
-  if (fs.existsSync(job.outputPath)) {
+  if (fs.existsSync(job.buildPath)) {
     return
   }
 
@@ -304,7 +304,8 @@ function queueImageResizing({ file, args = {}, reporter }) {
   const imgSrc = `/${file.name}-${
     file.internal.contentDigest
   }-${argsDigestShort}.${fileExtension}`
-  const filePath = path.join(process.cwd(), `public`, `static`, imgSrc)
+  const buildDirectory = process.env.GATSBY_BUILD_DIR || `public`
+  const filePath = path.join(process.cwd(), buildDirectory, `static`, imgSrc)
 
   // Create function to call when the image is finished.
   let outsideResolve, outsideReject
@@ -342,7 +343,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
     outsideResolve,
     outsideReject,
     inputPath: file.absolutePath,
-    outputPath: filePath,
+    buildPath: filePath,
   }
 
   queueJob(job, reporter)
@@ -658,6 +659,7 @@ async function resolutions({ file, args = {}, reporter }) {
 
 async function notMemoizedtraceSVG({ file, args, fileArgs, reporter }) {
   const potrace = require(`potrace`)
+  const svgToMiniDataURI = require(`mini-svg-data-uri`)
   const trace = Promise.promisify(potrace.trace)
   const defaultArgs = {
     color: `lightgray`,
@@ -730,7 +732,7 @@ async function notMemoizedtraceSVG({ file, args, fileArgs, reporter }) {
 
   return trace(tmpFilePath, optionsSVG)
     .then(svg => optimize(svg))
-    .then(svg => encodeOptimizedSVGDataUri(svg))
+    .then(svg => svgToMiniDataURI(svg))
 }
 
 const memoizedTraceSVG = _.memoize(
@@ -740,19 +742,6 @@ const memoizedTraceSVG = _.memoize(
 
 async function traceSVG(args) {
   return await memoizedTraceSVG(args)
-}
-
-// https://codepen.io/tigt/post/optimizing-svgs-in-data-uris
-function encodeOptimizedSVGDataUri(svgString) {
-  var uriPayload = encodeURIComponent(svgString) // encode URL-unsafe characters
-    .replace(/%0A/g, ``) // remove newlines
-    .replace(/%20/g, ` `) // put spaces back in
-    .replace(/%3D/g, `=`) // ditto equals signs
-    .replace(/%3A/g, `:`) // ditto colons
-    .replace(/%2F/g, `/`) // ditto slashes
-    .replace(/%22/g, `'`) // replace quotes with apostrophes (may break certain SVGs)
-
-  return `data:image/svg+xml,` + uriPayload
 }
 
 const optimize = svg => {
@@ -780,3 +769,4 @@ exports.responsiveSizes = responsiveSizes
 exports.responsiveResolution = resolutions
 exports.sizes = responsiveSizes
 exports.resolutions = resolutions
+exports.getImageSize = getImageSize

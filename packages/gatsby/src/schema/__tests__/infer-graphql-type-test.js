@@ -6,7 +6,7 @@ const {
 } = require(`graphql`)
 const path = require(`path`)
 const normalizePath = require(`normalize-path`)
-
+const { clearTypeExampleValues } = require(`../data-tree-utils`)
 const { inferObjectStructureFromNodes } = require(`../infer-graphql-type`)
 
 function queryResult(nodes, fragment, { types = [] } = {}) {
@@ -47,6 +47,10 @@ function queryResult(nodes, fragment, { types = [] } = {}) {
     { path: `/` }
   )
 }
+
+beforeEach(() => {
+  clearTypeExampleValues()
+})
 
 describe(`GraphQL type inferance`, () => {
   const nodes = [

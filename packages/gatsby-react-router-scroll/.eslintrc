@@ -1,4 +1,0 @@
-env:
-  browser: true
-globals:
-  __DEV__: false

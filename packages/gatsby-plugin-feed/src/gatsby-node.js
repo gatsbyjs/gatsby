@@ -3,7 +3,8 @@ import RSS from "rss"
 import merge from "lodash.merge"
 import { defaultOptions, runQuery, writeFile } from "./internals"
 
-const publicPath = `./public`
+const buildDirectory = process.env.GATSBY_BUILD_DIR || `public`
+const publicPath = `./${buildDirectory}`
 
 // A default function to transform query data into feed entries.
 const serialize = ({ query: { site, allMarkdownRemark } }) =>

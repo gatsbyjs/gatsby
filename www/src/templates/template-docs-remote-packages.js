@@ -4,7 +4,9 @@ import PackageReadme from "../components/package-readme"
 
 class DocsRemotePackagesTemplate extends React.Component {
   render() {
-    const { data: { npmPackage, markdownRemark } } = this.props
+    const {
+      data: { npmPackage, markdownRemark },
+    } = this.props
     return (
       <PackageReadme
         page={markdownRemark}

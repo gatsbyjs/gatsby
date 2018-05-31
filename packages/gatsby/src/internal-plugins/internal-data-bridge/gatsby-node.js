@@ -156,6 +156,10 @@ exports.onCreatePage = ({ page, boundActionCreators }) => {
         .createHash(`md5`)
         .update(JSON.stringify(page))
         .digest(`hex`),
+      description:
+        page.pluginCreatorId === `Plugin default-site-plugin`
+          ? `Your site's "gatsby-node.js"`
+          : page.pluginCreatorId,
     },
   })
 }

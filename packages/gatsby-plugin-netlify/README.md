@@ -76,7 +76,7 @@ An example:
 Link paths are specially handed by this plugin. Since most files are processed
 and cache-busted through Gatsby (with a file hash), the plugin will transform
 any base file names to the hashed variants. If the file is not hashed, it will
-ensure the path is valid relative to the output `public` folder. You should be
+ensure the path is valid relative to the build `public` folder. You should be
 able to reference assets imported through javascript in the `static` folder.
 
 Do not specify the public path in the config, as the plugin will provide it for

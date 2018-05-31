@@ -22,6 +22,7 @@ See the [list of official and community plugins](/docs/plugins/)
 
 ## Podcasts
 
+* [2018-04-17 Gatsby.js w/Jason Lengstorf](https://spec.fm/podcasts/toolsday/134337)
 * [2018-02-28 syntax.fm on Static Site Generators (lots of Gatsby love)](https://syntax.fm/show/034/why-static-site-generators-are-awesome)
 * [2017-09-21 Kyle Mathews on JAMSTACK radio on "Static Site Generation with GatsbyJS](https://www.heavybit.com/library/podcasts/jamstack-radio/ep-22-static-site-generation-with-gatsbyjs/)
 * [2017-07-21 Kyle Mathews on Web of Tomorrow](https://www.orbit.fm/weboftomorrow/39/)
@@ -52,3 +53,5 @@ See the [list of official and community plugins](/docs/plugins/)
 * [Construye y Publica Tu Blog Personal con Gatsby y Netlify](https://medium.com/@n370/construye-y-publica-tu-blog-personal-con-gatsby-y-netlify-parte-1-89804ba63625)
 * [Ultra-schnellen Blog mit React und Gatsby erstellen](https://www.lekoarts.de/blog/ultra-schnellen-blog-mit-react-und-gatsby-erstellen)
 * [styled-components in Gatsby nutzen](https://www.lekoarts.de/blog/styled-components-in-gatsby-nutzen)
+* [Build your own blog CMS with Gatsby and Airtable](https://blog.airtable.com/build-your-own-custom-blog-cms-with-airtable-and-gatsbyjs/)
+* [Gatsby JS Crash Course](https://www.youtube.com/watch?v=6YhqQ2ZW1sc)

@@ -1,0 +1,41 @@
+.form {
+  margin: 1rem 0;
+}
+
+.form__label {
+  display: block;
+  font-size: 67.5%;
+  letter-spacing: 0.125em;
+  text-transform: uppercase;
+}
+
+.form__label + .form__label {
+  margin-top: 0.5rem;
+}
+
+.form__input {
+  display: block;
+  font-size: 1rem;
+  padding: 0.25rem;
+}
+
+.form__button {
+  background-color: rebeccapurple;
+  border: 0;
+  color: white;
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-top: 0.5rem;
+  padding: 0.25rem 1rem;
+  transition: background-color 150ms linear;
+}
+
+.form__button:hover {
+  cursor: pointer;
+}
+
+.form__button:hover,
+.form__button:active,
+.form__button:focus {
+  background-color: color(rebeccapurple lightness(-20%));
+}

@@ -26,7 +26,7 @@ We are using prefix paths because our website is inside a folder `http://usernam
 }
 ```
 
-When you run `npm run deploy` all contents of `public` folder will be moved to your repositorys `gh-pages` branch.
+When you run `npm run deploy` all contents of `public` folder will be moved to your repositories `gh-pages` branch.
 
 ## GitHub Organization or User page
 
@@ -47,4 +47,4 @@ After running `npm run deploy` you should see your website at `http://username.g
 
 ## Custom domains
 
-If you use a [custom domain](https://help.github.com/articles/using-a-custom-domain-with-github-pages/), don't add a `pathPrefix` as it will break navigation on your site. Path prefixing is only necessary when the site is _not_ at the root of the domain like with repository sites.
+If you use a [custom domain](https://help.github.com/articles/using-a-custom-domain-with-github-pages/), don't add a `pathPrefix` as it will break navigation on your site. Path prefixing is only necessary when the site is _not_ at the root of the domain like with repository sites. Also don't forget to add your [CNAME](https://help.github.com/articles/troubleshooting-custom-domains/#github-repository-setup-errors) file to the `static` directory.

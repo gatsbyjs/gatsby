@@ -31,6 +31,7 @@ class PostDetail extends React.Component {
         }}
       >
         <img
+          data-testid="post-detail-avatar"
           src={avatar}
           alt={username}
           css={{
@@ -42,6 +43,7 @@ class PostDetail extends React.Component {
           }}
         />
         <h5
+          data-testid="post-detail-username"
           css={{
             lineHeight: rhythm(1),
             marginBottom: rhythm(3 / 4),
@@ -66,6 +68,7 @@ class PostDetail extends React.Component {
           }}
         >
           <strong
+            data-testid="post-detail-likes"
             css={{
               float: `left`,
             }}
@@ -81,7 +84,7 @@ class PostDetail extends React.Component {
             {weeksAgo}w
           </strong>
         </div>
-        <div>
+        <div data-testid="post-detail-text">
           <strong>{username}</strong> {text}
         </div>
       </div>

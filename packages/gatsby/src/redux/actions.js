@@ -477,7 +477,7 @@ const typeOwners = {}
  * @param {string} node.id The node's ID. Must be globally unique.
  * @param {string} node.parent The ID of the parent's node. If the node is
  * derived from another node, set that node as the parent. Otherwise it can
- * just be an empty string.
+ * just be `null`.
  * @param {Array} node.children An array of children node IDs. If you're
  * creating the children nodes while creating the parent node, add the
  * children node IDs here directly. If you're adding a child node to a
@@ -505,6 +505,10 @@ const typeOwners = {}
  * @param {string} node.internal.contentDigest the digest for the content
  * of this node. Helps Gatsby avoid doing extra work on data that hasn't
  * changed.
+ * @param {string} node.internal.description An optional field. Human
+ * readable description of what this node represent / its source. It will
+ * be displayed when type conflicts are found, making it easier to find
+ * and correct type conflicts.
  * @example
  * createNode({
  *   // Data for the node.
@@ -525,6 +529,7 @@ const typeOwners = {}
  *       .digest(`hex`),
  *     mediaType: `text/markdown`, // optional
  *     content: JSON.stringify(fieldData), // optional
+ *     description: `Cool Service: "Title of entry"`, // optional
  *   }
  * })
  */
@@ -743,8 +748,15 @@ actions.createNodeField = (
     node.fields = {}
   }
 
+  /**
+   * Normalized name of the field that will be used in schema
+   */
+  const schemaFieldName = _.includes(name, `___NODE`)
+    ? name.split(`___`)[0]
+    : name
+
   // Check that this field isn't owned by another plugin.
-  const fieldOwner = node.internal.fieldOwners[name]
+  const fieldOwner = node.internal.fieldOwners[schemaFieldName]
   if (fieldOwner && fieldOwner !== plugin.name) {
     throw new Error(
       stripIndent`
@@ -760,7 +772,7 @@ actions.createNodeField = (
 
   // Update node
   node.fields[name] = value
-  node.internal.fieldOwners[name] = plugin.name
+  node.internal.fieldOwners[schemaFieldName] = plugin.name
 
   return {
     type: `ADD_FIELD_TO_NODE`,
