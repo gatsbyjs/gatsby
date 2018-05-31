@@ -64,11 +64,26 @@ module.exports = (
     return filePath
   }
 
+  const getMultipleFilesPaths = (urls, protocol, directory) => (
+    urls.replace(protocol, ``).split(`,`).map((url) => {
+      if (!url.endsWith(`.js`) && !url.endsWith(`.css`)) {
+        url += `.js`
+      }
+      
+      return {
+        fileName: url.split(`/`).slice(-1)[0],  // filename itself
+        filePath: normalizePath(join(directory, url)),  // absolute path
+      }
+    })
+  )
+
   const verifyFile = path => {
     if (!fs.existsSync(path)) {
       throw Error(`Invalid REPL link specified; no such file "${path}"`)
     }
   }
+
+  const verifyMultipleFiles = paths => paths.forEach((path) => verifyFile(path.filePath))
 
   map(markdownAST, (node, index, parent) => {
     if (node.type === `link`) {
@@ -94,11 +109,8 @@ module.exports = (
 
         convertNodeToLink(node, text, href, target)
       } else if (node.url.startsWith(PROTOCOL_CODE_SANDBOX)) {
-        const filePath = getFilePath(node.url, PROTOCOL_CODE_SANDBOX, directory)
-
-        verifyFile(filePath)
-
-        const code = fs.readFileSync(filePath, `utf8`)
+        const filesPaths = getMultipleFilesPaths(node.url, PROTOCOL_CODE_SANDBOX, directory)
+        verifyMultipleFiles(filesPaths)
 
         // CodeSandbox GET API requires a list of "files" keyed by name
         let parameters = {
@@ -114,16 +126,21 @@ module.exports = (
                   }
                   return map
                 }, {}),
+                main: filesPaths[0].fileName,
               },
-            },
-            "index.js": {
-              content: code,
             },
             "index.html": {
               content: html,
             },
           },
         }
+
+        filesPaths.forEach((path, i) => {
+          const code = fs.readFileSync(path.filePath, `utf8`)
+          parameters.files[path.fileName] = {
+            content: code,
+          }
+        })
 
         // This config JSON must then be lz-string compressed
         parameters = compress(JSON.stringify(parameters))
