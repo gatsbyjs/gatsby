@@ -38,7 +38,7 @@ function makeNullable(type: GraphQLInputType): GraphQLNullableInputType<any> {
 
 function convertToInputType(
   type: GraphQLType,
-  typeMap: Set
+  typeMap: Set<GraphQLType>
 ): ?GraphQLInputType {
   // track types already processed in current tree, to avoid infinite recursion
   if (typeMap.has(type)) {

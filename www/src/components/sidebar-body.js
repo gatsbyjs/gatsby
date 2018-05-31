@@ -159,7 +159,7 @@ const SectionLink = props => {
 
   return (
     <li key={item.title} css={linkStyle}>
-      {item.link.charAt(0) == `#` ? (
+      {item.link.charAt(0) === `#` ? (
         <a href={item.link} className="nav-link">
           {title}
         </a>
@@ -228,6 +228,10 @@ class SidebarBody extends React.Component {
           },
           "::-webkit-scrollbar-track": {
             background: colors.ui.light,
+          },
+          display: `none`,
+          [presets.Tablet]: {
+            display: `block`,
           },
           [presets.Desktop]: {
             width: rhythm(12),

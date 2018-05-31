@@ -3,8 +3,8 @@
   "version": "2.0.1-7",
   "author": "Jason Quense <monastic.panic@gmail.com>",
   "devDependencies": {
-    "@babel/cli": "7.0.0-beta.47",
-    "@babel/core": "7.0.0-beta.47"
+    "@babel/cli": "7.0.0-beta.49",
+    "@babel/core": "7.0.0-beta.49"
   },
   "license": "MIT",
   "main": "index.js",

@@ -1,4 +1,4 @@
-## The Gatsby Way™ of rendering images 
+## The Gatsby Way™ of rendering images
 
 Using images pulled from a WordPress demo CMS
 
@@ -6,7 +6,7 @@ Using images pulled from a WordPress demo CMS
 
 In this tutorial, you will install the several image plugins and components in order to pull image data from a WordPress account into your Gatsby site and render that data. This [Gatsby + Wordpress demo site](https://using-wordpress.gatsbyjs.org/sample-post-1) shows you a sample of what you’re going to be building in this tutorial, although in this tutorial you’ll just focus on adding images.
 
-### Why go through this tutorial? 
+### Why go through this tutorial?
 
 Images are one of the most beautiful and striking ways to communicate to people, and are a key part of creating an effective and positive user experience; at the same time, high quality images can load slowly and cause text boxes to jump around, both of which make it difficult for people to be patient with visiting your website.
 
@@ -28,7 +28,7 @@ Install the `gatsby-source-wordpress` plugin. For extra reading on the plugin’
 npm install --save gatsby-source-wordpress
 ```
 
-Add the `gatsby-source-wordpress` plugin to `gatsby-config.js` using the following code, which you can also find in the [demo site’s source code](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-wordpress/gatsby-config.js). 
+Add the `gatsby-source-wordpress` plugin to `gatsby-config.js` using the following code, which you can also find in the [demo site’s source code](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-wordpress/gatsby-config.js).
 
 ```javascript{32-58}
  module.exports = {
@@ -123,7 +123,7 @@ Run:
 gatsby develop
 ```
 
-Open localhost:8000 and localhost:8000/___graphql. 
+Open localhost:8000 and localhost:8000/___graphql.
 
 Here’s an example of creating specific widths and heights for images:
 
@@ -142,7 +142,7 @@ Here’s an example of creating specific widths and heights for images:
                   # like "src". In your site's code, remove them
                   # and use the fragments provided by Gatsby.
                   src
-                  
+
                   # This fragment won't work in the GraphQL
                   # explorer, but you can use it in your site.
                   # ...GatsbyImageSharpResolutions_withWebp
@@ -170,15 +170,15 @@ Here’s an example query for generating different sizes of an image:
             localFile {
               childImageSharp {
                 # Try editing the "maxWidth" value to generate resized images.
-                sizes(maxWidth: 500) {
+                fluid(maxWidth: 500) {
                   # In the GraphQL explorer, use field names
                   # like "src". In your site's code, remove them
                   # and use the fragments provided by Gatsby.
                   src
-                  
+
                   # This fragment won't work in the GraphQL
                   # explorer, but you can use it in your site
-                  # ...GatsbyImageSharpSizes_withWebp
+                  # ...GatsbyImageSharpFluid_withWebp
                 }
               }
             }
@@ -259,4 +259,4 @@ Open your browser console and change the network speed to something slower. In C
 
 ![Slow 3G](./images/slow-3g.png)
 
- 
+
