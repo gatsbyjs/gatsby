@@ -66,6 +66,8 @@
       link: /docs/api-proxy/
     - title: Search Engine Optimization (SEO)
       link: /docs/seo/
+    - title: Source Plugin Tutorial
+      link: /docs/source-plugin-tutorial/
     - title: Using CSS-in-JS Library Glamor
       link: /docs/glamor/
     - title: Using CSS-in-JS Library Styled Components
@@ -80,6 +82,8 @@
       link: /docs/adding-search/
     - title: Working With Images in Gatsby
       link: /docs/working-with-images/
+    - title: Wordpress Source Plugin Tutorial
+      link: /docs/wordpress-source-plugin-tutorial/
     - title: Creating Dynamically-Rendered Navigation*
       link: /docs/creating-dynamically-rendered-navigation/
     - title: Dropping Images into Static Folders*
