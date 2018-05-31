@@ -6,6 +6,7 @@ import Functions from "../../components/function-list"
 import { rhythm, scale } from "../../utils/typography"
 import Layout from "../../components/layout"
 import Container from "../../components/container"
+import docsSidebar from "../../pages/docs/doc-links.yaml"
 
 class SSRAPIs extends React.Component {
   render() {
@@ -14,7 +15,7 @@ class SSRAPIs extends React.Component {
       func => func.name
     )
     return (
-      <Layout location={this.props.location}>
+      <Layout location={this.props.location} sidebarYaml={docsSidebar}>
         <Container>
           <Helmet>
             <title>SSR APIs</title>

@@ -4,6 +4,7 @@ import Helmet from "react-helmet"
 import presets from "../utils/presets"
 import Navigation from "../components/navigation"
 import MobileNavigation from "../components/navigation-mobile"
+import PageWithSidebar from "../components/page-with-sidebar"
 import "../css/prism-coy.css"
 
 // Import Futura PT typeface
@@ -19,6 +20,9 @@ import "typeface-space-mono"
 class DefaultLayout extends React.Component {
   render() {
     const isHomepage = this.props.location.pathname === `/`
+
+    // SEE: template-docs-markdown for why this.props.isSidebarDisabled is here
+    const isSidebarDisabled = this.props.isSidebarDisabled || !this.props.sidebarYaml
 
     return (
       <div className={isHomepage ? `is-homepage` : ``}>
@@ -43,7 +47,11 @@ class DefaultLayout extends React.Component {
             },
           }}
         >
-          {this.props.children}
+          <PageWithSidebar
+            disable={isSidebarDisabled}
+            yaml={this.props.sidebarYaml}
+            renderContent={() => this.props.children}
+          />
         </div>
         <MobileNavigation />
       </div>
