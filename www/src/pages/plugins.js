@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import Layout from "../components/layout"
 import Container from "../components/container"
-import PageWithSearchBar from "../components/page-with-searchbar"
+import PageWithPluginSearchBar from "../components/page-with-plugin-searchbar"
 import { Link } from "gatsby"
 import logo from "../monogram.svg"
 import { rhythm, options } from "../utils/typography"
@@ -11,7 +11,7 @@ class Plugins extends Component {
   render() {
     return (
       <Layout location={this.props.location}>
-        <PageWithSearchBar history={this.props.history} isPluginsIndex>
+        <PageWithPluginSearchBar history={this.props.history} isPluginsIndex>
           <Container
             css={{
               alignItems: `center`,
@@ -65,7 +65,7 @@ class Plugins extends Component {
               </p>
             </div>
           </Container>
-        </PageWithSearchBar>
+        </PageWithPluginSearchBar>
       </Layout>
     )
   }

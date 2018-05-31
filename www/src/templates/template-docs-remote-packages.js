@@ -1,7 +1,7 @@
 import React from "react"
 
 import Layout from "../components/layout"
-import PageWithSearchBar from "../components/page-with-searchbar"
+import PageWithPluginSearchBar from "../components/page-with-plugin-searchbar"
 import PackageReadme from "../components/package-readme"
 
 class DocsRemotePackagesTemplate extends React.Component {
@@ -11,7 +11,7 @@ class DocsRemotePackagesTemplate extends React.Component {
     } = this.props
     return (
       <Layout location={this.props.location}>
-        <PageWithSearchBar history={this.props.history}>
+        <PageWithPluginSearchBar history={this.props.history}>
           <PackageReadme
             page={markdownRemark}
             packageName={npmPackage.name}
@@ -27,7 +27,7 @@ class DocsRemotePackagesTemplate extends React.Component {
             keywords={npmPackage.keywords}
             lastPublisher={npmPackage.lastPublisher}
           />
-        </PageWithSearchBar>
+        </PageWithPluginSearchBar>
       </Layout>
     )
   }

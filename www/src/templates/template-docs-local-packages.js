@@ -2,7 +2,7 @@ import React from "react"
 import _ from "lodash"
 
 import Layout from "../components/layout"
-import PageWithSearchBar from "../components/page-with-searchbar"
+import PageWithPluginSearchBar from "../components/page-with-plugin-searchbar"
 import PackageReadme from "../components/package-readme"
 
 class DocsLocalPackagesTemplate extends React.Component {
@@ -29,7 +29,7 @@ class DocsLocalPackagesTemplate extends React.Component {
 
     return (
       <Layout location={this.props.location}>
-        <PageWithSearchBar history={this.props.history}>
+        <PageWithPluginSearchBar history={this.props.history}>
           <PackageReadme
             page={markdownRemark ? _.pick(markdownRemark, `parent`) : false}
             packageName={
@@ -67,7 +67,7 @@ class DocsLocalPackagesTemplate extends React.Component {
                 : npmPackageNotFound.lastPublisher
             }
           />
-        </PageWithSearchBar>
+        </PageWithPluginSearchBar>
       </Layout>
     )
   }

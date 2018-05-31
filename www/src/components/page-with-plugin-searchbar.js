@@ -1,9 +1,9 @@
 import React, { Component, Fragment } from "react"
-import SearchBar from "./searchbar-body"
+import PluginSearchBar from "./plugin-searchbar-body"
 import { rhythm } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
 
-class PageWithSearchBar extends Component {
+class PageWithPluginSearchBar extends Component {
   render() {
     const searchbarWidth = rhythm(17)
 
@@ -37,7 +37,7 @@ class PageWithSearchBar extends Component {
         <div
           css={{
             ...styles,
-            // mobile: hide SearchBar when on gatsbyjs.org/packages/foo, aka package README page
+            // mobile: hide PluginSearchBar when on gatsbyjs.org/packages/foo, aka package README page
             display: `${!this.props.isPluginsIndex && `none`}`,
             [presets.Tablet]: {
               ...tabletStyles,
@@ -45,7 +45,7 @@ class PageWithSearchBar extends Component {
             },
           }}
         >
-          <SearchBar history={this.props.history} />
+          <PluginSearchBar history={this.props.history} />
         </div>
         <div
           css={{
@@ -64,4 +64,4 @@ class PageWithSearchBar extends Component {
   }
 }
 
-export default PageWithSearchBar
+export default PageWithPluginSearchBar
