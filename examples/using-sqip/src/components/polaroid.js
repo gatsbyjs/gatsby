@@ -81,8 +81,8 @@ const Polaroid = ({ image }) => {
     >
       <div style={{ position: `relative` }}>
         <Image
-          sizes={{
-            ...image.childImageSharp.sizes,
+          fluid={{
+            ...image.childImageSharp.fluid,
             base64: image.childImageSharp.sqip.dataURI,
           }}
         />
@@ -94,7 +94,7 @@ const Polaroid = ({ image }) => {
             background: `linear-gradient(120deg, rgba(255, 255, 255, 0.5), transparent 60%, rgba(0, 0, 0, 0.4) 99%)`,
             boxShadow: `inset 4px 5px 10px 0 rgba(0,0,0,0.05)`,
             width: `100%`,
-            height: `100%`
+            height: `100%`,
           }}
         />
       </div>
