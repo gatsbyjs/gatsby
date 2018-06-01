@@ -8,7 +8,7 @@ In this tutorial, you’ll learn how to use Gatsby to build the UI for a basic e
 * Blazing fast performance when your pages are converted from React into static files
 * Easy to host
 
-You can see the working demo hosted here: https://gatsby-eccomerce.netlify.com/
+You can see the working demo hosted here: https://gatsby-ecommerce.netlify.com/
 
 
 # Background on Stripe
