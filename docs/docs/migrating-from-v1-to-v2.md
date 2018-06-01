@@ -168,6 +168,76 @@ export default props => (
 ## Rename `pathContext` to `pageContext`
 Similar to `boundActionCreators` above, `pathContext` is deprecated in favor of `pageContext`.
 
+## Rename responsive image queries
+
+The `sizes` and `resolutions` queries are deprecated in v2. These queries have been renamed to `fluid` and `fixed` to make them easier to understand.
+
+Before:
+
+```jsx
+const Example = ({ data }) => {
+  <div>
+    <Img sizes={data.foo.childImageSharp.sizes} />
+    <Img resolutions={data.bar.childImageSharp.resolutions} />
+  </div>
+}
+
+export default Example
+
+export const pageQuery = graphql`
+  query IndexQuery {
+    foo: file(relativePath: { regex: "/foo.jpg/" }) {
+      childImageSharp {
+        sizes(maxWidth: 700) {
+          ...GatsbyImageSharpSizes_tracedSVG
+        }
+      }
+    }
+    bar: file(relativePath: { regex: "/bar.jpg/" }) {
+      childImageSharp {
+        resolutions(width: 500) {
+          ...GatsbyImageSharpResolutions_withWebp
+        }
+      }
+    }
+  }
+`
+```
+
+After:
+
+```jsx{2-3,13-14,20-21}
+const Example = ({ data }) => {
+  <div>
+    <Img fluid={data.foo.childImageSharp.fluid} />
+    <Img fixed={data.bar.childImageSharp.fixed} />
+  </div>
+}
+
+export default Example
+
+export const pageQuery = graphql`
+  query IndexQuery {
+    foo: file(relativePath: { regex: "/foo.jpg/" }) {
+      childImageSharp {
+        fluid(maxWidth: 700) {
+          ...GatsbyImageSharpFluid_tracedSVG
+        }
+      }
+    }
+    bar: file(relativePath: { regex: "/bar.jpg/" }) {
+      childImageSharp {
+        fixed(width: 500) {
+          ...GatsbyImageSharpFixed_withWebp
+        }
+      }
+    }
+  }
+`
+```
+
+Further examples can be found in the [Gatsby Image docs](https://github.com/gatsbyjs/gatsby/tree/d0e29272ed7b009dae18d35d41a45e700cdcab0d/packages/gatsby-image).
+
 <!--
 Taken from: https://github.com/gatsbyjs/gatsby/blob/v2/Breaking%20Changes.md
 * [] Remove postcss plugins (cssnext, cssimport) from default css loader config
