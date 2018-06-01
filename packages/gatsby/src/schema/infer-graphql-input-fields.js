@@ -219,7 +219,7 @@ export function inferInputObjectStructureFromNodes({
 
   prefix = isRoot ? typeName : prefix
   if (exampleValue === null) {
-    exampleValue = getExampleValues(nodes)
+    exampleValue = getExampleValues({ nodes, typeName })
   }
 
   _.each(exampleValue, (v, k) => {
@@ -243,7 +243,7 @@ export function inferInputObjectStructureFromNodes({
         )
         value = getExampleValues({
           nodes: relatedNodes,
-          type: linkedNode.internal.type,
+          typeName: linkedNode.internal.type,
         })
         value = recursiveOmitBy(value, (_v, _k) => _.includes(_k, `___NODE`))
         linkedNodeCache[linkedNode.internal.type] = value
