@@ -9,12 +9,19 @@ const {
 const qs = require(`qs`)
 const base64Img = require(`base64-img`)
 const _ = require(`lodash`)
+const Debug = require(`debug`)
+const { tmpdir } = require(`os`)
+
 
 const {
   ImageFormatType,
   ImageResizingBehavior,
   ImageCropFocusType,
 } = require(`./schemes`)
+
+
+const TMP_DIR = tmpdir()
+const debug = Debug(`gatsby-source-contentful`)
 
 const isImage = image =>
   _.includes(
@@ -265,6 +272,86 @@ exports.extendNodeType = ({ type }) => {
     return {}
   }
 
+  const getTracedSVG = async (args) =>
+  {
+    const { extname, resolve } = require(`path`)
+    const axios = require(`axios`)
+    const { pathExists, createWriteStream } = require(`fs-extra`)
+    const {
+      traceSVG,
+    } = require(`gatsby-plugin-sharp`)
+
+    const { image, options } = args
+    const { id, file: { url, fileName } } = image
+    const { maxWidth, maxHeight, width, height, resizingBehavior, cropFocus, background } = options
+
+    // Downloading small version of the image with same aspect ratio
+    const assetWidth = maxWidth || width
+    const assetHeight = maxHeight || height
+    let aspectRatio = image.aspectRatio
+    if (assetWidth && assetHeight) {
+      aspectRatio = assetHeight / assetWidth
+    }
+
+    const uniqueId = [
+      id,
+      aspectRatio,
+      resizingBehavior,
+      cropFocus,
+      background,
+    ]
+      .filter(Boolean)
+      .join(`-`)
+
+    const extension = extname(fileName)
+    const absolutePath = resolve(TMP_DIR, `${uniqueId}${extension}`)
+
+    const alreadyExists = await pathExists(absolutePath)
+
+    if (!alreadyExists) {
+      const previewWidth = 500
+      const previewHeight = Math.floor(previewWidth * aspectRatio)
+
+      const params = [`w=${previewWidth}`, `h=${previewHeight}`]
+      if (resizingBehavior) {
+        params.push(`fit=${resizingBehavior}`)
+      }
+      if (cropFocus) {
+        params.push(`crop=${cropFocus}`)
+      }
+      if (background) {
+        params.push(`bg=${background}`)
+      }
+
+      const previewUrl = `http:${url}?${params.join(`&`)}`
+
+      debug(`Downloading: ${previewUrl}`)
+
+      const response = await axios({
+        method: `get`,
+        url: previewUrl,
+        responseType: `stream`,
+      })
+
+      await new Promise((resolve, reject) => {
+        const file = createWriteStream(absolutePath)
+        response.data.pipe(file)
+        file.on(`finish`, resolve)
+        file.on(`error`, reject)
+      })
+    }
+
+    return traceSVG({
+      file: {
+        internal: image.internal,
+        name: image.file.fileName,
+        extension,
+        absolutePath,
+      },
+      args: { toFormat: `` },
+      fileArgs: options,
+    })}
+
   return {
     resolutions: {
       type: new GraphQLObjectType({
@@ -275,6 +362,10 @@ exports.extendNodeType = ({ type }) => {
             resolve(imageProps) {
               return getBase64Image(imageProps)
             },
+          },
+          tracedSVG: {
+            type: GraphQLString,
+            resolve: getTracedSVG,
           },
           aspectRatio: { type: GraphQLFloat },
           width: { type: GraphQLFloat },
@@ -366,6 +457,10 @@ exports.extendNodeType = ({ type }) => {
             resolve(imageProps) {
               return getBase64Image(imageProps)
             },
+          },
+          tracedSVG: {
+            type: GraphQLString,
+            resolve: getTracedSVG,
           },
           aspectRatio: { type: GraphQLFloat },
           src: { type: GraphQLString },
@@ -459,6 +554,10 @@ exports.extendNodeType = ({ type }) => {
               return getBase64Image(imageProps)
             },
           },
+          tracedSVG: {
+            type: GraphQLString,
+            resolve: getTracedSVG,
+          },
           aspectRatio: { type: GraphQLFloat },
           width: { type: GraphQLFloat },
           height: { type: GraphQLFloat },
@@ -508,6 +607,10 @@ exports.extendNodeType = ({ type }) => {
             resolve(imageProps) {
               return getBase64Image(imageProps)
             },
+          },
+          tracedSVG: {
+            type: GraphQLString,
+            resolve: getTracedSVG,
           },
           aspectRatio: { type: GraphQLFloat },
           src: { type: GraphQLString },
@@ -559,6 +662,10 @@ exports.extendNodeType = ({ type }) => {
             resolve(imageProps) {
               return getBase64Image(imageProps)
             },
+          },
+          tracedSVG: {
+            type: GraphQLString,
+            resolve: getTracedSVG,
           },
           src: { type: GraphQLString },
           width: { type: GraphQLInt },
