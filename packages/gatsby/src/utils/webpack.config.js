@@ -85,20 +85,20 @@ module.exports = async (
       program.ssl ? `https` : `http`
     }://${
       program.host
-    }:${webpackPort}/`;
+    }:${webpackPort}/`
 
-    const hmrSuffix = '__webpack_hmr&reload=true&overlay=false';
+    const hmrSuffix = `__webpack_hmr&reload=true&overlay=false`
 
     if (process.env.GATSBY_WEBPACK_PUBLICPATH) {
-      const pubPath = process.env.GATSBY_WEBPACK_PUBLICPATH;
-      if (pubPath.substr(-1) === '/') {
-        hmrBasePath = pubPath;
+      const pubPath = process.env.GATSBY_WEBPACK_PUBLICPATH
+      if (pubPath.substr(-1) === `/`) {
+        hmrBasePath = pubPath
       } else {
-        hmrBasePath = `${pubPath}/`;
+        hmrBasePath = `${pubPath}/`
       }
     }
 
-    return hmrBasePath + hmrSuffix;
+    return hmrBasePath + hmrSuffix
   }
 
   debug(`Loading webpack config for stage "${stage}"`)
