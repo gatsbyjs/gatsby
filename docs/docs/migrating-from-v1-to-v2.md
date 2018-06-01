@@ -9,22 +9,10 @@ In v1, React and ReactDOM were magically resolved. This “feature” has been r
 npm i react react-dom
 ```
 
-or
-
-```bash
-yarn add react react-dom
-```
-
 Depending on the plugins you use, there may be more dependencies you need to install. For example: if you use typography.js, you now also need to install its dependencies.
 
 ```bash
 npm i typography react-typography
-```
-
-or
-
-```bash
-yarn add typography react-typography
 ```
 
 Search for the plugins that you use in [Gatsby’s plugins page](/plugins) and check their installation instructions.
