@@ -6,9 +6,11 @@ author: "Shannon Soper"
 
 In April and May, we hosted 2-day Gatsby workshops in both San Francisco and NYC and want to share what we learned and resources you can use to host your own Gatsby workshops. A big thank you to all the developers who came to these workshops, and another big thank you to Ryan Florence for organizing the workshop logistics; check out his company's website at [workshop.me](https://workshop.me/). Ryan has been an awesome supporter of Gatsby and a longtime fan, so yes, the workshop.me site is built on Gatsby :).
 
+We will keep improving these workshops and hope you'll help us do that! Share your ideas and report how these workshops go for you in the [Open source repo](https://github.com/gatsbyjs/gatsby) through issues and PRs (if you ran into problems with the workshops and/or have ideas of how to improve them) or [Twitter](https://twitter.com/gatsbyjs) if you want to share an upcoming workshops you're running.
+
 # What we learned in the first few workshops
 
-Here is a photo of how many notes I took during our first workshop in San Francisco:
+Here is a photo of how many notes I took during our first workshop in San Francisco (I crossed out notes as I converted them to issues in GitHub):
 
 ![Photo of my workshop outline with notes scribbled all over it](./workshop-notes.JPG)
 
@@ -58,4 +60,6 @@ If you'd like to contribute to making workshops and tutorials more awesome, here
 * *Good first issue*: Make it clear in tutorial part 0 and workshops that all instructions are built assuming that you have installed [VS Code and Prettier](https://github.com/gatsbyjs/gatsby/issues/5610) because those work well with React
 * [Add a copy button to code examples](https://github.com/gatsbyjs/gatsby/issues/5030) because people often missed backticks if their screen resolution didn’t make the ticks very visible
 
-We loved hosting workshops and plan to keep developing the resources as we learn. We’re so grateful for the workshop attendees and their feedback. It is helping the Gatsby community grow!
+We loved hosting workshops and plan to keep developing the resources as we learn. We’re so grateful for the workshop attendees and their feedback. 
+
+And just as a reminder: we will keep improving these workshops and hope you'll help us do that! Share your ideas and report how these workshops go for you in the [Open source repo](https://github.com/gatsbyjs/gatsby) through issues and PRs (if you ran into problems with the workshops and/or have ideas of how to improve them) or [Twitter](https://twitter.com/gatsbyjs) if you want to share an upcoming workshops you're running.
