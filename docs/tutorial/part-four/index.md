@@ -145,7 +145,7 @@ const container = css`
   padding-top: ${rhythm(1.5)};
 `
 
-const heading = css`
+const siteTitle = css`
   margin-bottom: ${rhythm(2)};
   display: inline-block;
   font-style: normal;
@@ -158,7 +158,7 @@ const link = css`
 export default ({ children }) => (
   <div className={container}>
     <Link to={`/`}>
-      <h3 className={heading}>Pandas Eating Lots</h3>
+      <h3 className={siteTitle}>Pandas Eating Lots</h3>
     </Link>
     <Link className={link} to={`/about/`}>
       About
@@ -286,7 +286,7 @@ const container = css`
   padding-top: ${rhythm(1.5)};
 `
 
-const heading = css`
+const siteTitle = css`
   margin-bottom: ${rhythm(2)};
   display: inline-block;
   font-style: normal;
@@ -310,7 +310,7 @@ export default ({ children }) => (
     render={data => (
       <div className={container}>
         <Link to={`/`}>
-          <h3 className={heading}>{data.site.siteMetadata.title}</h3>
+          <h3 className={siteTitle}>{data.site.siteMetadata.title}</h3>
         </Link>
         <Link className={link} to={`/about/`}>
           About
