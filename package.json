@@ -39,8 +39,7 @@
     "rimraf": "^2.6.1"
   },
   "engines": {
-    "yarn": "^1.2.1",
-    "node": ">=6.11.5"
+    "yarn": "^1.2.1"
   },
   "eslintIgnore": [
     "interfaces",
