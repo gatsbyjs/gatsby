@@ -257,6 +257,8 @@ export default IndexPage
 ```
 
 If you go back to localhost:8000 in your browser and you have `gatsby develop` running, you should have a big, enticing button on a card where the filler text used to be.
+
+
 # Setting Up Your Stripe Account
 Stripe requires an account to use the API. To register for a Stripe account, go to the Stripe registration page. Once you have an account, you can view your API credentials by logging into your account, and then going to Developers > API Keys. 
 
@@ -267,6 +269,7 @@ a publishable key
 a secret key
 
 While testing, you can use the keys that begins with pk_test_ and sk_test_. For production code, you will want to use the keys that don’t say test. As the names imply, your publishable key may be included in code that you share publicly (for example, in GitHub), whereas your secret key should not be shared with anyone or committed to any public repo. It’s important to restrict access to this secret key because anyone who has it could potentially read or send requests from your Stripe account and see information about charges or purchases or even refund customers.
+
 
 ## Configuring Stripe in Gatsby
 
@@ -289,14 +292,17 @@ componentDidMount() {
 ```
 After you replace `pk_test_YOUR_KEY_HERE` with your actual pk_test key and save the change, your button should launch the Stripe Checkout modal and allow you to enter in payment information. You can try and submit a payment, but it will fail because you haven’t set up your serverless function yet. Your Gatsby site is almost ready!
 
+
 # Setting up a Serverless Function in AWS Lambda
 Lambda is a service offered through Amazon Web Services that allows you to run code that would normally run on a server without having to provision or manage servers. For a simple function like a Stripe charge, Lambda will suit your use case nicely. AWS offers many options for configurations; you are going to use the Serverless Framework to help you minimize the steps to deployment, and also allow you to deploy to other cloud providers if needed.
 
 > **NOTE**: You can follow an adaptation of these steps using this tutorial and Serverless’ docs as a reference if you want to deploy your serverless function to a different provider like Google Cloud or Azure.
 
+
 ## Set up an account through AWS
 
 Before you can set up a serverless function in AWS Lambda, you need an account through AWS. If you don’t already have an account there that you’d like to use, follow these instructions to create an account through AWS. The free tier allows 1 million requests per month. 
+
 
 ## Set up a separate repo
 
@@ -317,16 +323,18 @@ Then you need to run `npm install` to install the dependencies in the `package.j
 npm install
 ```
 
+
 ## What did you just do?
 
 By running `npm install`, you’ve created a node_modules folder that you’ll upload to AWS along with your code to make a charge. All of the code in this file will be hosted online by Amazon, and you need to provide it with the libraries you utilize in your project. By making this repository separate from our Gatsby project, we can decouple it from our site making it easier to switch to a different cloud hosting provider, and greatly decreasing the size of the files we upload to Amazon’s servers.
+
 
 ## Edit your new repo
 
 Open gatsby-stripe-serverless-backend in your code editor.
 
-Rename the `secrets.example.json` file to `secrets.json`.
-Replace the string that says "sk_test_STRIPE_SECRET_KEY" in `secrets.json` with your secret key from your Stripe account, and keep the quotation marks around it
+* Rename the `secrets.example.json` file to `secrets.json`.
+* Replace the string that says "sk_test_STRIPE_SECRET_KEY" in `secrets.json` with your secret key from your Stripe account, and keep the quotation marks around it
 
 Your secret key can be included here if you don’t upload this file to a version control system. The .gitignore file in the project includes a line that will tell any git commands you run in this folder not to keep track of your secrets file as long as it is named `secrets.json`.
 
@@ -345,6 +353,7 @@ module.exports.handler = (event, context, callback) => {
 .
 .
 ```
+
 Stripe is being initialized here, this time with your secret key. You’ll notice it is referencing the variable `STRIPE_SECRET_KEY` from `process.env`, because after you upload your code to AWS, your environment variables like API keys are available in that manner. 
 
 The next line exports `handler`, a function that will handle your checkout logic.
