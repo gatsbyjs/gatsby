@@ -162,6 +162,39 @@ describe(`Gatsby data tree utils`, () => {
     example = getExampleValues([{ foo: [() => {}] }])
     expect(example.foo).not.toBeDefined()
   })
+
+  it(`prefers float when multiple number types`, () => {
+    let example
+
+    // nodes starting with integer
+    example = getExampleValues({ nodes: [{ number: 5 }, { number: 2.5 }] })
+    expect(example.number).toBeDefined()
+    expect(example.number).toEqual(2.5)
+
+    // with node not containing number field
+    example = getExampleValues({ nodes: [{ number: 5 }, {}, { number: 2.5 }] })
+    expect(example.number).toBeDefined()
+    expect(example.number).toEqual(2.5)
+
+    // nodes starting with float
+    example = getExampleValues({ nodes: [{ number: 2.5 }, { number: 5 }] })
+    expect(example.number).toBeDefined()
+    expect(example.number).toEqual(2.5)
+
+    // array of numbers - starting with integer
+    example = getExampleValues({ nodes: [{ numbers: [2.5, 5] }] })
+    expect(example.numbers).toBeDefined()
+    expect(Array.isArray(example.numbers)).toBe(true)
+    expect(example.numbers.length).toBe(1)
+    expect(example.numbers[0]).toBe(2.5)
+
+    // array of numbers - starting with float
+    example = getExampleValues({ nodes: [{ numbers: [5, 2.5] }] })
+    expect(example.numbers).toBeDefined()
+    expect(Array.isArray(example.numbers)).toBe(true)
+    expect(example.numbers.length).toBe(1)
+    expect(example.numbers[0]).toBe(2.5)
+  })
 })
 
 describe(`Type conflicts`, () => {

@@ -56,8 +56,8 @@ const getExampleScalarFromArray = values =>
     values,
     (value, nextValue) => {
       // Prefer floats over ints as they're more specific.
-      if (value && _.isNumber(value) && !_.isInteger(value)) {
-        return value
+      if (nextValue && _.isNumber(nextValue) && !_.isInteger(nextValue)) {
+        return nextValue
       } else if (value === null) {
         return nextValue
       } else {
