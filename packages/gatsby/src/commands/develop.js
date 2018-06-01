@@ -397,7 +397,7 @@ module.exports = async (program: any) => {
       program.host,
       program.port
     )
-    const isSuccessful = !messages.errors.length && !messages.warnings.length
+    const isSuccessful = !messages.errors.length
     // if (isSuccessful) {
     // console.log(chalk.green(`Compiled successfully!`))
     // }
