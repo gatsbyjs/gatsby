@@ -319,3 +319,37 @@ Note usage of the new [`setBabelPlugin` action](/docs/actions/#setBabelPlugins).
 
 See [Gatsby's babel docs for more details](/docs/babel) about configuring babel.
 
+## Change `modifyWebpackConfig` to `onCreateWebpackConfig`
+
+`modifyWebpackConfig` was renamed to [`onCreateWebpackConfig`](/docs/node-apis/#onCreateWebpackConfig) to bring it in line with the rest of Gatsby's API names.
+
+Before:
+
+```js
+exports.modifyWebpackConfig = ({ config, stage }) => {
+  switch (stage) {
+    case `build-javascript`:
+      config.plugin(`Foo`, webpackFooPlugin, null)
+      break
+  }
+  return config
+}
+```
+
+
+After:
+
+```js
+exports.onCreateWebpackConfig = ({ stage, actions }) => {
+  switch (stage) {
+    case `build-javascript`:
+      actions.setWebpackConfig({
+        plugins: [webpackFooPlugin],
+      })
+  }
+}
+```
+
+Note usage of the new [`setWebpackConfig` action](/docs/actions/#setWebpackConfig).
+
+See [Gatsby's webpack docs for more details](/docs/add-custom-webpack-config) about configuring webpack.
