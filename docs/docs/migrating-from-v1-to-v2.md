@@ -238,6 +238,13 @@ export const pageQuery = graphql`
 
 Further examples can be found in the [Gatsby Image docs](https://github.com/gatsbyjs/gatsby/tree/d0e29272ed7b009dae18d35d41a45e700cdcab0d/packages/gatsby-image).
 
+## Manually specify postcss plugins
+
+Gatsby v2 removed `postcss-cssnext` and `postcss-import` from the default postcss setup.
+
+Use `modifyWebpackConfig` to specify your postcss plugins.
+
+Note: there will be a `postcss` plugin that allows you to configure postcss from a standard postcss config file. [Follow this discussion on issue 3284](https://github.com/gatsbyjs/gatsby/issues/3284).
 <!--
 Taken from: https://github.com/gatsbyjs/gatsby/blob/v2/Breaking%20Changes.md
 * [] Remove postcss plugins (cssnext, cssimport) from default css loader config
