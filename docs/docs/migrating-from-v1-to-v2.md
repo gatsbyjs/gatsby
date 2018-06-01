@@ -277,3 +277,12 @@ Mixing `import` and `module.exports` is not ok:
 import foo from "foo"
 module.exports = foo;
 ```
+
+## Don't query nodes by ID
+
+Source and transformer plugins now use UUIDs for IDs. If you used glob or regex to query nodes by id then you'll need to query something else.
+
+[See the Pull Request that implemented this change](https://github.com/gatsbyjs/gatsby/pull/3807/files)
+
+> TODO: add example
+
