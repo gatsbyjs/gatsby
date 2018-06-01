@@ -245,3 +245,35 @@ Gatsby v2 removed `postcss-cssnext` and `postcss-import` from the default postcs
 Use `modifyWebpackConfig` to specify your postcss plugins.
 
 Note: there will be a `postcss` plugin that allows you to configure postcss from a standard postcss config file. [Follow this discussion on issue 3284](https://github.com/gatsbyjs/gatsby/issues/3284).
+
+## Files mixing CommonJS with ES6 modules won't compile
+
+Gatsby v2 uses a version 7 of [babel](https://babeljs.io/) which is stricter about parsing files with mixed JS styles.
+
+> TODO: link to babel docs here?
+
+ES6 Modules are ok:
+
+```js
+import foo from "foo"
+export default foo
+```
+
+CommonJS is ok:
+
+```js
+const foo = require('foo');
+module.exports = foo;
+```
+
+Mixing `requires` and `export` is not ok:
+```js
+const foo = require('foo');
+export default foo
+```
+
+Mixing `import` and `module.exports` is not ok:
+```js
+import foo from "foo"
+module.exports = foo;
+```
