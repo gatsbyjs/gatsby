@@ -200,6 +200,11 @@ class Image extends React.Component {
     const imagePlaceholderStyle = {
       opacity: this.state.imgLoaded ? 0 : 1,
       transitionDelay: `0.25s`,
+      filter: `blur(12px)`,
+      WebkitFilter: `blur(12px)`,
+      MozFilter: `blur(12px)`,
+      msFilter: `blur(12px`,
+      OFilter: `blur(12px)`,
       ...imgStyle,
     }
 
