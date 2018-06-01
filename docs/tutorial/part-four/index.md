@@ -138,29 +138,32 @@ import { Link } from "gatsby"
 
 import { rhythm } from "../utils/typography"
 
-const container = css`
-  margin: 0 auto;
-  max-width: 700px;
-  padding: ${rhythm(2)};
-  padding-top: ${rhythm(1.5)};
-`
-
-const siteTitle = css`
-  margin-bottom: ${rhythm(2)};
-  display: inline-block;
-  font-style: normal;
-`
-
-const link = css`
-  float: right;
-`
-
 export default ({ children }) => (
-  <div className={container}>
+  <div
+    className={css`
+      margin: 0 auto;
+      max-width: 700px;
+      padding: ${rhythm(2)};
+      padding-top: ${rhythm(1.5)};
+    `}
+  >
     <Link to={`/`}>
-      <h3 className={siteTitle}>Pandas Eating Lots</h3>
+      <h3
+        className={css`
+          margin-bottom: ${rhythm(2)};
+          display: inline-block;
+          font-style: normal;
+        `}
+      >
+        Pandas Eating Lots
+      </h3>
     </Link>
-    <Link className={link} to={`/about/`}>
+    <Link
+      to={`/about/`}
+      className={css`
+        float: right;
+      `}
+    >
       About
     </Link>
     {children}
@@ -272,29 +275,12 @@ export const query = graphql`
 
 `src/components/layout.js`
 
-```jsx{3,25-35,38}
+```jsx{3,8-18,35}
 import React from "react"
 import { css } from "react-emotion"
 import { StaticQuery, Link } from "gatsby"
 
 import { rhythm } from "../utils/typography"
-
-const container = css`
-  margin: 0 auto;
-  max-width: 700px;
-  padding: ${rhythm(2)};
-  padding-top: ${rhythm(1.5)};
-`
-
-const siteTitle = css`
-  margin-bottom: ${rhythm(2)};
-  display: inline-block;
-  font-style: normal;
-`
-
-const link = css`
-  float: right;
-`
 
 export default ({ children }) => (
   <StaticQuery
@@ -308,11 +294,31 @@ export default ({ children }) => (
       }
     `}
     render={data => (
-      <div className={container}>
+      <div
+        className={css`
+          margin: 0 auto;
+          max-width: 700px;
+          padding: ${rhythm(2)};
+          padding-top: ${rhythm(1.5)};
+        `}
+      >
         <Link to={`/`}>
-          <h3 className={siteTitle}>{data.site.siteMetadata.title}</h3>
+          <h3
+            className={css`
+              margin-bottom: ${rhythm(2)};
+              display: inline-block;
+              font-style: normal;
+            `}
+          >
+            {data.site.siteMetadata.title}
+          </h3>
         </Link>
-        <Link className={link} to={`/about/`}>
+        <Link
+          to={`/about/`}
+          className={css`
+            float: right;
+          `}
+        >
           About
         </Link>
         {children}
