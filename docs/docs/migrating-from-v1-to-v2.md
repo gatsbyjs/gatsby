@@ -248,9 +248,7 @@ Note: there will be a `postcss` plugin that allows you to configure postcss from
 
 ## Files mixing CommonJS with ES6 modules won't compile
 
-Gatsby v2 uses a version 7 of [babel](https://babeljs.io/) which is stricter about parsing files with mixed JS styles.
-
-> TODO: link to babel docs here?
+Gatsby v2 uses babel 7 which is stricter about parsing files with mixed JS styles.
 
 ES6 Modules are ok:
 
@@ -278,6 +276,8 @@ import foo from "foo"
 module.exports = foo;
 ```
 
+See [Gatsby's babel docs for more details](/docs/babel).
+
 ## Don't query nodes by ID
 
 Source and transformer plugins now use UUIDs for IDs. If you used glob or regex to query nodes by id then you'll need to query something else.
@@ -286,3 +286,6 @@ Source and transformer plugins now use UUIDs for IDs. If you used glob or regex 
 
 > TODO: add example
 
+## Remove explicit polyfills
+
+If your Gatsby v1 site included any polyfills, you can remove them. Gatsby v2 ships with babel 7 and is configured to automatically include polyfills for your code. See [Gatsby's babel docs for more details](/docs/babel).
