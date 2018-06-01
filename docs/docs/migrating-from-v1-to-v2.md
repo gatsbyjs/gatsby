@@ -226,7 +226,7 @@ export const pageQuery = graphql`
 
 After:
 
-```jsx{2-3,13-14,20-21}
+```jsx{3-4,14-15,21-22}
 const Example = ({ data }) => {
   <div>
     <Img fluid={data.foo.childImageSharp.fluid} />
