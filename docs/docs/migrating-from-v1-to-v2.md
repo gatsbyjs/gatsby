@@ -353,3 +353,9 @@ exports.onCreateWebpackConfig = ({ stage, actions }) => {
 Note usage of the new [`setWebpackConfig` action](/docs/actions/#setWebpackConfig).
 
 See [Gatsby's webpack docs for more details](/docs/add-custom-webpack-config) about configuring webpack.
+
+## CSS is inlined automatically
+
+Gatsby v2 automatically inlines CSS. Gatsby v1 required you to create a [custom `html.js` file](/docs/custom-html) to do this. You can remove any custom CSS inlining from your custom `html.js`, in many cases this allows you to completely remove your `html.js` file.
+
+See an example in [this PR that upgrades the `using-remark` site to Gatsby v2](https://github.com/gatsbyjs/gatsby/commit/765b679cbc222fd5f527690427ee431cca7ccd61#diff-637c76e3c059ed8efacedf6e30de2d61).
