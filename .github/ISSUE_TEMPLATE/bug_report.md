@@ -31,7 +31,10 @@ What happened.
 
 ### Environment
 
-<!-- Required. Run `gatsby info --clipboard` in your gatsby project directory and paste its contents here. -->
+<!--
+  Required. Run `gatsby info --clipboard` in your gatsby project directory and paste its contents here.
+  Not working? You may need to update your global gatsby-cli - `npm install -g gatsby-cli`
+-->
 
 ### File contents (if changed)
 
