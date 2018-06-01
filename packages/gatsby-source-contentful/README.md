@@ -88,7 +88,7 @@ like the following:
         id
         productName
         image {
-          resolutions(width: 100) {
+          fixed(width: 100) {
             width
             height
             src

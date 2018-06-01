@@ -22,7 +22,7 @@ class ContributorPageTemplate extends React.Component {
           >
             <div>
               <Img
-                resolutions={contributor.avatar.childImageSharp.resolutions}
+                fixed={contributor.avatar.childImageSharp.fixed}
                 css={{
                   height: rhythm(2.3),
                   width: rhythm(2.3),
@@ -90,13 +90,13 @@ export const pageQuery = graphql`
       twitter
       avatar {
         childImageSharp {
-          resolutions(
+          fixed(
             width: 63
             height: 63
             quality: 75
             traceSVG: { turdSize: 10, background: "#f6f2f8", color: "#e0d6eb" }
           ) {
-            ...GatsbyImageSharpResolutions_tracedSVG
+            ...GatsbyImageSharpFixed_tracedSVG
           }
         }
       }

@@ -209,7 +209,7 @@ import Img from "gatsby-image"
 export default ({ data }) => (
   <div>
     <h1>Hello gatsby-image</h1>
-    <Img resolutions={data.file.childImageSharp.resolutions} />
+    <Img fixed={data.file.childImageSharp.fixed} />
   </div>
 )
 ```
@@ -255,7 +255,7 @@ import Img from "gatsby-image"
 export default ({ data }) => (
   <div>
     <h1>Hello gatsby-image</h1>
-    <Img resolutions={data.file.childImageSharp.resolutions} />
+    <Img fixed={data.file.childImageSharp.fixed} />
   </div>
 )
 
@@ -263,7 +263,7 @@ export const query = graphql`
   query GatsbyImageSampleQuery {
     file(relativePath: { eq: "images/an-image.jpeg" }) {
       childImageSharp {
-        resolutions(width: l25, height: 125) {
+        fixed(width: l25, height: 125) {
           src
           srcSet
           width

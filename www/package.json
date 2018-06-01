@@ -50,6 +50,7 @@
     "react-dom": "^16.2.0",
     "react-helmet": "^5.2.0",
     "react-icons": "^2.2.7",
+    "react-instantsearch": "^4.5.1",
     "react-typography": "^0.16.13",
     "slash": "^1.0.0",
     "typeface-space-mono": "^0.0.54",

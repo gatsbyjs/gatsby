@@ -89,7 +89,7 @@ import Img from "gatsby-image"
 export default ({ data }) => (
   <div>
     <h1>Hello gatsby-image</h1>
-    <Img resolutions={data.file.childImageSharp.resolutions} />
+    <Img fixed={data.file.childImageSharp.fixed} />
   </div>
 )
 
@@ -99,8 +99,8 @@ export const query = graphql`
       childImageSharp {
         # Specify the image processing specifications right in the query.
         # Makes it trivial to update as your page's design changes.
-        resolutions(width: 125, height: 125) {
-          ...GatsbyImageSharpResolutions
+        fixed(width: 125, height: 125) {
+          ...GatsbyImageSharpFixed
         }
       }
     }
@@ -115,12 +115,12 @@ For another explanation of how to get started with gatsby-image, see this blog p
 There are two types of responsive images supported by gatsby-image.
 
 1.  Images that have a _fixed_ width and height
-2.  Images that stretch across a fluid container
+2.  Images that stretch across a _fluid_ container
 
 In the first scenario, you want to vary the image's size for different screen
-_resolutions_ -- in other words, create retina images.
+resolutions -- in other words, create retina images.
 
-For the second scenario, you want to create multiple _sizes_ of thumbnails for
+For the second scenario, you want to create multiple sizes of thumbnails for
 devices with widths stretching from smartphone to wide desktop monitors.
 
 To decide between the two, ask yourself: "do I know the exact size this image
@@ -128,9 +128,9 @@ will be?" If yes, it's the first type. If no and its width and/or height need to
 vary depending on the size of the screen, then it's the second type.
 
 In Gatsby's GraphQL implementation, you query for the first type by querying a
-child object of an image called `resolutions` — which you can see in the sample
+child object of an image called `fixed` — which you can see in the sample
 component above. For the second type, you do a similar query but for a child
-object called `sizes`.
+object called `fluid`.
 
 ## Fragments
 
@@ -151,36 +151,36 @@ Their fragments are:
 
 ### gatsby-transformer-sharp
 
-* `GatsbyImageSharpResolutions`
-* `GatsbyImageSharpResolutions_noBase64`
-* `GatsbyImageSharpResolutions_tracedSVG`
-* `GatsbyImageSharpResolutions_withWebp`
-* `GatsbyImageSharpResolutions_withWebp_noBase64`
-* `GatsbyImageSharpResolutions_withWebp_tracedSVG`
-* `GatsbyImageSharpSizes`
-* `GatsbyImageSharpSizes_noBase64`
-* `GatsbyImageSharpSizes_tracedSVG`
-* `GatsbyImageSharpSizes_withWebp`
-* `GatsbyImageSharpSizes_withWebp_noBase64`
-* `GatsbyImageSharpSizes_withWebp_tracedSVG`
+* `GatsbyImageSharpFixed`
+* `GatsbyImageSharpFixed_noBase64`
+* `GatsbyImageSharpFixed_tracedSVG`
+* `GatsbyImageSharpFixed_withWebp`
+* `GatsbyImageSharpFixed_withWebp_noBase64`
+* `GatsbyImageSharpFixed_withWebp_tracedSVG`
+* `GatsbyImageSharpFluid`
+* `GatsbyImageSharpFluid_noBase64`
+* `GatsbyImageSharpFluid_tracedSVG`
+* `GatsbyImageSharpFluid_withWebp`
+* `GatsbyImageSharpFluid_withWebp_noBase64`
+* `GatsbyImageSharpFluid_withWebp_tracedSVG`
 
 ### gatsby-source-contentful
 
-* `GatsbyContentfulResolutions`
-* `GatsbyContentfulResolutions_noBase64`
-* `GatsbyContentfulResolutions_withWebp`
-* `GatsbyContentfulResolutions_withWebp_noBase64`
-* `GatsbyContentfulSizes`
-* `GatsbyContentfulSizes_noBase64`
-* `GatsbyContentfulSizes_withWebp`
-* `GatsbyContentfulSizes_withWebp_noBase64`
+* `GatsbyContentfulFixed`
+* `GatsbyContentfulFixed_noBase64`
+* `GatsbyContentfulFixed_withWebp`
+* `GatsbyContentfulFixed_withWebp_noBase64`
+* `GatsbyContentfulFluid`
+* `GatsbyContentfulFluid_noBase64`
+* `GatsbyContentfulFluid_withWebp`
+* `GatsbyContentfulFluid_withWebp_noBase64`
 
 ### gatsby-source-datocms
 
-* `GatsbyDatoCmsResolutions`
-* `GatsbyDatoCmsResolutions_noBase64`
-* `GatsbyDatoCmsSizes`
-* `GatsbyDatoCmsSizes_noBase64`
+* `GatsbyDatoCmsFixed`
+* `GatsbyDatoCmsFixed_noBase64`
+* `GatsbyDatoCmsFluid`
+* `GatsbyDatoCmsFluid_noBase64`
 
 If you don't want to use the blur-up effect, choose the fragment with `noBase64`
 at the end. If you want to use the traced placeholder SVGs, choose the fragment
@@ -195,12 +195,12 @@ _Please see the
 documentation for more information on `tracedSVG` and its configuration
 options._
 
-## "Resolutions" queries
+## "Fixed" queries
 
 ### Component
 
-Pass in the data returned from the `resolutions` object in your query via the
-`resolutions` prop. e.g. `<Img resolutions={resolutions} />`
+Pass in the data returned from the `fixed` object in your query via the
+`fixed` prop. e.g. `<Img fixed={fixed} />`
 
 ### Query
 
@@ -209,20 +209,20 @@ Pass in the data returned from the `resolutions` object in your query via the
   imageSharp {
     # Other options include height (set both width and height to crop),
     # grayscale, duotone, rotate, etc.
-    resolutions(width: 400) {
+    fixed(width: 400) {
       # Choose either the fragment including a small base64ed image, a traced placeholder SVG, or one without.
-      ...GatsbyImageSharpResolutions
+      ...GatsbyImageSharpFixed
     }
   }
 }
 ```
 
-## "Sizes" queries
+## "Fluid" queries
 
 ### Component
 
-Pass in the data returned from the `sizes` object in your query via the `sizes`
-prop. e.g. `<Img sizes={sizes} />`
+Pass in the data returned from the `fluid` object in your query via the `fluid`
+prop. e.g. `<Img fluid={fluid} />`
 
 ### Query
 
@@ -233,9 +233,9 @@ prop. e.g. `<Img sizes={sizes} />`
     #
     # Other options include maxHeight (set both maxWidth and maxHeight to crop),
     # grayscale, duotone, rotate, etc.
-    sizes(maxWidth: 700) {
+    fluid(maxWidth: 700) {
       # Choose either the fragment including a small base64ed image, a traced placeholder SVG, or one without.
-      ...GatsbyImageSharpSizes_noBase64
+      ...GatsbyImageSharpFluid_noBase64
     }
   }
 }
@@ -245,8 +245,8 @@ prop. e.g. `<Img sizes={sizes} />`
 
 | Name                    | Type                | Description                                                                                                                 |
 | ----------------------- | ------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| `resolutions`           | `object`            | Data returned from the `resolutions` query                                                                                  |
-| `sizes`                 | `object`            | Data returned from the `sizes` query                                                                                        |
+| `fixed`           | `object`            | Data returned from the `fixed` query                                                                                  |
+| `fluid`                 | `object`            | Data returned from the `fluid` query                                                                                        |
 | `fadeIn`                | `bool`              | Defaults to fading in the image on load                                                                                     |
 | `title`                 | `string`            | Passed to the `img` element                                                                                                 |
 | `alt`                   | `string`            | Passed to the `img` element                                                                                                 |
@@ -266,7 +266,7 @@ prop. e.g. `<Img sizes={sizes} />`
 
 ## Some other stuff to be aware of
 
-* If you want to set `display: none;` on a component using a `resolutions` prop,
+* If you want to set `display: none;` on a component using a `fixed` prop,
   you need to also pass in to the style prop `{ display: 'inherit' }`.\* Images
   don't load until JavaScript is loaded. Gatsby's automatic code splitting
   generally makes this fine but if images seem slow coming in on a page, check

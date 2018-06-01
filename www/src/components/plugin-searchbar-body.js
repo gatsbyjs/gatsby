@@ -165,7 +165,7 @@ glam.insert(`
   }
 `)
 
-// Search shows a list of "hits", and is a child of the SearchBar component
+// Search shows a list of "hits", and is a child of the PluginSearchBar component
 class Search extends Component {
   constructor(props, context) {
     super(props)
@@ -391,7 +391,7 @@ const Result = ({ hit, pathname, search }) => {
 }
 
 // the search bar holds the Search component in the InstantSearch widget
-class SearchBar extends Component {
+class PluginSearchBar extends Component {
   constructor(props) {
     super(props)
     this.state = { searchState: { query: this.urlToSearch(), page: 1 } }
@@ -432,4 +432,4 @@ class SearchBar extends Component {
   }
 }
 
-export default SearchBar
+export default PluginSearchBar

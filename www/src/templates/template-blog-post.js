@@ -134,8 +134,8 @@ class BlogPostTemplate extends React.Component {
               }}
             >
               <Img
-                resolutions={
-                  post.frontmatter.author.avatar.childImageSharp.resolutions
+                fixed={
+                  post.frontmatter.author.avatar.childImageSharp.fixed
                 }
                 css={{
                   height: rhythm(2.3),
@@ -196,7 +196,7 @@ class BlogPostTemplate extends React.Component {
                   marginBottom: rhythm(1),
                 }}
               >
-                <Img sizes={post.frontmatter.image.childImageSharp.sizes} />
+                <Img fluid={post.frontmatter.image.childImageSharp.fluid} />
                 {post.frontmatter.imageAuthor &&
                   post.frontmatter.imageAuthorLink && (
                     <em>
@@ -315,8 +315,8 @@ export const pageQuery = graphql`
             resize(width: 1500, height: 1500) {
               src
             }
-            sizes(maxWidth: 786) {
-              ...GatsbyImageSharpSizes
+            fluid(maxWidth: 786) {
+              ...GatsbyImageSharpFluid
             }
           }
         }
@@ -330,7 +330,7 @@ export const pageQuery = graphql`
           twitter
           avatar {
             childImageSharp {
-              resolutions(
+              fixed(
                 width: 63
                 height: 63
                 quality: 75
@@ -340,7 +340,7 @@ export const pageQuery = graphql`
                   color: "#e0d6eb"
                 }
               ) {
-                ...GatsbyImageSharpResolutions_tracedSVG
+                ...GatsbyImageSharpFixed_tracedSVG
               }
             }
           }
