@@ -262,6 +262,43 @@ export default props => {
           }}
         />
       </pre>
+      <h2>Traced SVG previews</h2>
+      <p>
+        You can show a traced SVG preview to your users. This works equivalent
+        to the responsive sizes feature except that you have to use the
+        GatsbyContentfulSizes_tracedSVG fragment
+      </p>
+      {assets.map(({ node: { title, traced } }) => (
+        <Img
+          key={traced.src}
+          alt={title}
+          sizes={traced}
+          style={{
+            marginRight: rhythm(1 / 2),
+            marginBottom: rhythm(1 / 2),
+            border: `1px solid tomato`,
+          }}
+        />
+      ))}
+      <h4>GraphQL query</h4>
+      <pre style={{ background: `#efeded`, padding: rhythm(3 / 4) }}>
+        <code
+          dangerouslySetInnerHTML={{
+            __html: `{
+  allContentfulAsset {
+    edges {
+      node {
+        title
+        sizes(maxWidth: 614) {
+          ...GatsbyContentfulSizes_tracedSVG
+        }
+      }
+    }
+  }
+}`,
+          }}
+        />
+      </pre>
     </div>
   )
 }
@@ -288,6 +325,9 @@ export const pageQuery = graphql`
           }
           sizes(maxWidth: 613) {
             ...GatsbyContentfulSizes_noBase64
+          }
+          traced: sizes(maxWidth: 614) {
+            ...GatsbyContentfulSizes_tracedSVG
           }
         }
       }
