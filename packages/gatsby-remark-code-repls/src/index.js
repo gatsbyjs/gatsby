@@ -57,7 +57,7 @@ module.exports = (
 
   const getFilePath = (url, protocol, directory) => {
     let filePath = url.replace(protocol, ``)
-    if (!filePath.endsWith(`.js`)) {
+    if (!filePath.endsWith(`.js`) && !filePath.endsWith(`.css`)) {
       filePath += `.js`
     }
     filePath = normalizePath(join(directory, filePath))
@@ -71,26 +71,29 @@ module.exports = (
       }
       
       return {
-        fileName: url.split(`/`).slice(-1)[0],  // filename itself
+        url,  // filename itself
         filePath: normalizePath(join(directory, url)),  // absolute path
       }
     })
   )
 
-  const verifyFile = path => {
+  const verifyFile = (path, protocol) => {
+    if (protocol !== PROTOCOL_CODE_SANDBOX && path.split(`,`).length > 1) {
+      throw Error(`Code example path should only contain a single file, but found more than one: ${path.replace(directory, ``)}`)
+    }
     if (!fs.existsSync(path)) {
       throw Error(`Invalid REPL link specified; no such file "${path}"`)
     }
   }
 
-  const verifyMultipleFiles = paths => paths.forEach((path) => verifyFile(path.filePath))
+  const verifyMultipleFiles = (paths, protocol) => paths.forEach((path) => verifyFile(path.filePath, protocol))
 
   map(markdownAST, (node, index, parent) => {
     if (node.type === `link`) {
       if (node.url.startsWith(PROTOCOL_BABEL)) {
         const filePath = getFilePath(node.url, PROTOCOL_BABEL, directory)
 
-        verifyFile(filePath)
+        verifyFile(filePath, PROTOCOL_BABEL)
 
         const code = compress(fs.readFileSync(filePath, `utf8`))
         const href = `https://babeljs.io/repl/#?presets=react&code_lz=${code}`
@@ -101,7 +104,7 @@ module.exports = (
       } else if (node.url.startsWith(PROTOCOL_CODEPEN)) {
         const filePath = getFilePath(node.url, PROTOCOL_CODEPEN, directory)
 
-        verifyFile(filePath)
+        verifyFile(filePath, PROTOCOL_CODEPEN)
 
         const href = node.url.replace(PROTOCOL_CODEPEN, `/redirect-to-codepen/`)
         const text =
@@ -110,7 +113,7 @@ module.exports = (
         convertNodeToLink(node, text, href, target)
       } else if (node.url.startsWith(PROTOCOL_CODE_SANDBOX)) {
         const filesPaths = getMultipleFilesPaths(node.url, PROTOCOL_CODE_SANDBOX, directory)
-        verifyMultipleFiles(filesPaths)
+        verifyMultipleFiles(filesPaths, PROTOCOL_CODE_SANDBOX)
 
         // CodeSandbox GET API requires a list of "files" keyed by name
         let parameters = {
@@ -126,7 +129,7 @@ module.exports = (
                   }
                   return map
                 }, {}),
-                main: filesPaths[0].fileName,
+                main: filesPaths[0].url,
               },
             },
             "index.html": {
@@ -137,7 +140,7 @@ module.exports = (
 
         filesPaths.forEach((path, i) => {
           const code = fs.readFileSync(path.filePath, `utf8`)
-          parameters.files[path.fileName] = {
+          parameters.files[path.url] = {
             content: code,
           }
         })
@@ -153,7 +156,7 @@ module.exports = (
       } else if (node.url.startsWith(PROTOCOL_RAMDA)) {
         const filePath = getFilePath(node.url, PROTOCOL_RAMDA, directory)
 
-        verifyFile(filePath)
+        verifyFile(filePath, PROTOCOL_RAMDA)
 
         // Don't use `compress()` as the Ramda REPL won't understand the output.
         // It uses URI to encode the code for its urls, so we do the same.
