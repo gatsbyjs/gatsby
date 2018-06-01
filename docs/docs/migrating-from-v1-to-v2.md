@@ -2,7 +2,16 @@
 title: Migrating from v1 to v2
 ---
 
+> This document is a work in progress. Have you upgraded your site and run into something that's not covered here? Add your changes on GitHub!
+
+## Introduction
+
+This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While there's a lot covered here, you probably won't need to do everything for your site.
+
+Let's start with the most important two steps - install React and update your layout components:
+
 ## Install React, ReactDOM, and each plugins’ peer dependencies manually
+
 In v1, React and ReactDOM were magically resolved. This “feature” has been removed and you are now required to install them manually.
 
 ```bash
@@ -18,6 +27,7 @@ npm i typography react-typography
 Search for the plugins that you use in [Gatsby’s plugins page](/plugins) and check their installation instructions.
 
 ## Layout component
+
 The special layout component (`src/layouts/index.js`) that Gatsby v1 used to wrap every page has been removed. If the layout of your site appears to be broken, this is most likely the reason why.
 
 To learn more about the considerations behind this removal, read the [Gatsby RFC](https://github.com/gatsbyjs/rfcs/blob/master/text/0002-remove-special-layout-components.md).
@@ -25,9 +35,10 @@ To learn more about the considerations behind this removal, read the [Gatsby RFC
 The following is the recommended migration path:
 
 ### 1. Convert children from function to normal prop (required)
+
 In v1, the `children` prop passed to layout was a function and needed to be executed. In v2, this is no longer the case.
 
-`layout in v1`
+Before:
 
 ```jsx
 import React from "react"
@@ -39,7 +50,7 @@ export default ({ children }) => (
 )
 ```
 
-`layout in v2`
+After:
 
 ```jsx{5}
 import React from "react"
@@ -52,11 +63,13 @@ export default ({ children }) => (
 ```
 
 ### 2. Move `layout/index.js` to `src/components/layout.js` (optional, but recommended)
+
 ```bash
 git mv src/layouts/index.js src/components/layout.js
 ```
 
 ### 3. Import and wrap pages with layout component
+
 Adhering to normal React composition model, you import the layout component and use it to wrap the content of the page.
 
 `src/pages/index.js`
@@ -75,10 +88,12 @@ export default () => (
 Repeat for every page and template that needs this layout.
 
 ### 4. Change query to use `StaticQuery`
-<!-- TODO: link StaticQuery text to StaticQuery doc page (if one will be made) -->
+
 Since layout is no longer special, you now need to make use of v2’s StaticQuery feature.
 
-`Query with layout in v1`
+> TODO: document StaticQuery and link to it from here
+
+Before:
 
 ```jsx
 import React, { Fragment } from "react"
@@ -104,7 +119,7 @@ export const query = graphql`
 `
 ```
 
-`StaticQuery with layout in v2`
+After:
 
 ```jsx
 import React, { Fragment } from "react"
@@ -134,6 +149,7 @@ export default ({ children }) => (
 ```
 
 ### 5. Pass `history`, `location`, and `match` props to layout
+
 In v1, layout component had access to `history`, `location`, and `match` props. In v2, only pages have access to these props; pass them to your layout component as needed.
 
 `layout`
@@ -163,9 +179,13 @@ export default props => (
 ```
 
 ## Rename `boundActionCreators` to `actions`
+
 `boundActionCreators` is deprecated in v2. You can continue using it, but it’s recommended that you rename it to `actions`.
 
+> TODO: document new actions - see [actions](/docs/actions)
+
 ## Rename `pathContext` to `pageContext`
+
 Similar to `boundActionCreators` above, `pathContext` is deprecated in favor of `pageContext`.
 
 ## Rename responsive image queries
