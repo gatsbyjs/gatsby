@@ -12,7 +12,7 @@ Let's start with the most important two steps - install React and update your la
 
 ## Install React, ReactDOM, and each plugins’ peer dependencies manually
 
-In v1, The `react` and `react-dom` packages were included as part of the `gatsby` package. They are now `peerDependencies` so you are required to install them into your project.
+In v1, the `react` and `react-dom` packages were included as part of the `gatsby` package. They are now `peerDependencies` so you are required to install them into your project.
 
 ```bash
 npm i react react-dom
