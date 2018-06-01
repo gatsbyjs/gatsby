@@ -49,3 +49,11 @@ site.
 
 At the root of a Gatsby site run `gatsby serve` to serve the production build of
 the site for testing.
+
+## Breaking changes history
+
+<!-- Please keep the breaking changes list ordered with the newest change at the top -->
+
+### v2.0.0
+
+- Bump minimum supported Node.js up to version 6
