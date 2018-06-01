@@ -289,3 +289,33 @@ Source and transformer plugins now use UUIDs for IDs. If you used glob or regex 
 ## Remove explicit polyfills
 
 If your Gatsby v1 site included any polyfills, you can remove them. Gatsby v2 ships with babel 7 and is configured to automatically include polyfills for your code. See [Gatsby's babel docs for more details](/docs/babel).
+
+## Change `modifyBabelrc` to `onCreateBabelConfig`
+
+`modifyBabelrc` was renamed to [`onCreateBabelConfig`](/docs/node-apis/#modifyBabelrc) to bring it in line with the rest of Gatsby's API names.
+
+Before:
+
+```js
+exports.modifyBabelrc = ({ babelrc }) => {
+  return {
+    ...babelrc,
+    plugins: babelrc.plugins.concat([`foo`]),
+  }
+}
+```
+
+After:
+
+```js
+exports.onCreateBabelConfig = ({ actions }) => {
+  actions.setBabelPlugin({
+    name: `babel-plugin-foo`,
+  })
+}
+```
+
+Note usage of the new [`setBabelPlugin` action](/docs/actions/#setBabelPlugins).
+
+See [Gatsby's babel docs for more details](/docs/babel) about configuring babel.
+
