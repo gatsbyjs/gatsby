@@ -89,6 +89,7 @@ describe(`Gatsby data tree utils`, () => {
       },
       context: {
         nestedObject: {
+          name: `Inner name`,
           someOtherProperty: 3,
         },
       },
@@ -96,15 +97,15 @@ describe(`Gatsby data tree utils`, () => {
   ]
 
   it(`builds field examples from an array of nodes`, () => {
-    expect(getExampleValues(nodes)).toMatchSnapshot()
+    expect(getExampleValues({ nodes })).toMatchSnapshot()
   })
 
   it(`skips null fields`, () => {
-    expect(getExampleValues(nodes).iAmNull).not.toBeDefined()
+    expect(getExampleValues({ nodes }).iAmNull).not.toBeDefined()
   })
 
   it(`should not mutate the nodes`, () => {
-    getExampleValues(nodes)
+    getExampleValues({ nodes })
     expect(nodes[0].context.nestedObject).toBeNull()
     expect(nodes[1].context.nestedObject.someOtherProperty).toEqual(1)
     expect(nodes[2].context.nestedObject.someOtherProperty).toEqual(2)
@@ -112,44 +113,53 @@ describe(`Gatsby data tree utils`, () => {
   })
 
   it(`skips empty or sparse arrays`, () => {
-    expect(getExampleValues(nodes).emptyArray).not.toBeDefined()
-    expect(getExampleValues(nodes).hair).toBeDefined()
+    expect(getExampleValues({ nodes }).emptyArray).not.toBeDefined()
+    expect(getExampleValues({ nodes }).hair).toBeDefined()
+  })
+
+  it(`skips ignoredFields at the top level`, () => {
+    const example = getExampleValues({
+      nodes,
+      ignoreFields: [`name`, `anArray`],
+    })
+
+    expect(example.name).not.toBeDefined()
+    expect(example.anArray).not.toBeDefined()
+    expect(example.hair).toBeDefined()
+    expect(example.context.nestedObject.name).toBeDefined()
   })
 
   it(`build enum values for fields from array on nodes`, () => {
-    expect(buildFieldEnumValues(nodes)).toMatchSnapshot()
+    expect(buildFieldEnumValues({ nodes })).toMatchSnapshot()
   })
 
   it(`turns polymorphic fields null`, () => {
-    let example = getExampleValues([
-      { foo: null },
-      { foo: [1] },
-      { foo: { field: 1 } },
-    ])
+    let example = getExampleValues({
+      nodes: [{ foo: null }, { foo: [1] }, { foo: { field: 1 } }],
+    })
     expect(example.foo).toBe(INVALID_VALUE)
   })
 
   it(`handles polymorphic arrays`, () => {
-    let example = getExampleValues([
-      { foo: [[`foo`, `bar`]] },
-      { foo: [{ field: 1 }] },
-    ])
+    let example = getExampleValues({
+      nodes: [{ foo: [[`foo`, `bar`]] }, { foo: [{ field: 1 }] }],
+    })
     expect(example.foo).toBe(INVALID_VALUE)
   })
 
   it(`doesn't confuse empty fields for polymorhpic ones`, () => {
-    let example = getExampleValues([
-      { foo: { bar: 1 } },
-      { foo: null },
-      { foo: { field: 1 } },
-    ])
+    let example = getExampleValues({
+      nodes: [{ foo: { bar: 1 } }, { foo: null }, { foo: { field: 1 } }],
+    })
     expect(example.foo).toEqual({ field: 1, bar: 1 })
 
-    example = getExampleValues([
-      { foo: [{ bar: 1 }] },
-      { foo: null },
-      { foo: [{ field: 1 }, { baz: 1 }] },
-    ])
+    example = getExampleValues({
+      nodes: [
+        { foo: [{ bar: 1 }] },
+        { foo: null },
+        { foo: [{ field: 1 }, { baz: 1 }] },
+      ],
+    })
     expect(example.foo).toEqual([{ field: 1, bar: 1, baz: 1 }])
   })
 
@@ -232,7 +242,7 @@ describe(`Type conflicts`, () => {
       },
     ]
 
-    getExampleValues({ nodes, type: `NoConflict` })
+    getExampleValues({ nodes, typeName: `NoConflict` })
 
     expect(addConflictExampleSpy).not.toBeCalled()
   })
@@ -255,7 +265,7 @@ describe(`Type conflicts`, () => {
       },
     ]
 
-    getExampleValues({ nodes, type: `Conflict_1` })
+    getExampleValues({ nodes, typeName: `Conflict_1` })
 
     expect(addConflictSpy).toBeCalled()
     expect(addConflictSpy).toBeCalledWith(
@@ -263,7 +273,6 @@ describe(`Type conflicts`, () => {
       expect.any(Array)
     )
 
-    // expect(addConflictExampleSpy).toBeCalled()
     expect(addConflictExampleSpy).toHaveBeenCalledTimes(2)
     expect(addConflictExampleSpy).toBeCalledWith(
       expect.objectContaining({
@@ -289,7 +298,7 @@ describe(`Type conflicts`, () => {
       },
     ]
 
-    getExampleValues({ nodes, type: `Conflict_2` })
+    getExampleValues({ nodes, typeName: `Conflict_2` })
     expect(addConflictSpy).toBeCalled()
     expect(addConflictSpy).toBeCalledWith(
       `Conflict_2.arrayOfMixedType`,
@@ -305,5 +314,31 @@ describe(`Type conflicts`, () => {
         parent: nodes[0],
       })
     )
+  })
+
+  it(`Doesn't report ignored fields`, () => {
+    const nodes = [
+      {
+        id: `id1`,
+        stringOrNumber: `string`,
+        other: 1,
+      },
+      {
+        id: `id2`,
+        stringOrNumber: 5,
+        other: `foo`,
+      },
+    ]
+
+    getExampleValues({
+      nodes,
+      typeName: `Conflict_3`,
+      ignoreFields: [`stringOrNumber`],
+    })
+
+    expect(addConflictSpy).toBeCalled()
+    expect(addConflictSpy).toBeCalledWith(`Conflict_3.other`, expect.any(Array))
+    expect(addConflictSpy).not.toBeCalledWith(`Conflict_3.stringOrNumber`)
+    expect(addConflictExampleSpy).toBeCalled()
   })
 })
