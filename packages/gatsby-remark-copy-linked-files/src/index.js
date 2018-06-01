@@ -215,11 +215,9 @@ module.exports = (
           .attr(`src`)
           .split(`.`)
           .pop()
-        if (options.ignoreFileExtensions.includes(ext)) {
-          return
+        if (!options.ignoreFileExtensions.includes(ext)) {
+          generateImagesAndUpdateNode(thisImg, node)
         }
-
-        generateImagesAndUpdateNode(thisImg, node)
       } catch (err) {
         // Ignore
       }
@@ -243,18 +241,16 @@ module.exports = (
           .attr(`src`)
           .split(`.`)
           .pop()
-        if (options.ignoreFileExtensions.includes(ext)) {
-          return
+        if (!options.ignoreFileExtensions.includes(ext)) {
+          // The link object will be modified to the new location so we'll
+          // use that data to update our ref
+          const link = { url: thisVideo.attr(`src`) }
+          visitor(link)
+          node.value = node.value.replace(
+            new RegExp(thisVideo.attr(`src`), `g`),
+            link.url
+          )
         }
-
-        // The link object will be modified to the new location so we'll
-        // use that data to update our ref
-        const link = { url: thisVideo.attr(`src`) }
-        visitor(link)
-        node.value = node.value.replace(
-          new RegExp(thisVideo.attr(`src`), `g`),
-          link.url
-        )
       } catch (err) {
         // Ignore
       }
@@ -278,16 +274,14 @@ module.exports = (
           .attr(`src`)
           .split(`.`)
           .pop()
-        if (options.ignoreFileExtensions.includes(ext)) {
-          return
+        if (!options.ignoreFileExtensions.includes(ext)) {
+          const link = { url: thisAudio.attr(`src`) }
+          visitor(link)
+          node.value = node.value.replace(
+            new RegExp(thisAudio.attr(`src`), `g`),
+            link.url
+          )
         }
-
-        const link = { url: thisAudio.attr(`src`) }
-        visitor(link)
-        node.value = node.value.replace(
-          new RegExp(thisAudio.attr(`src`), `g`),
-          link.url
-        )
       } catch (err) {
         // Ignore
       }
@@ -311,17 +305,15 @@ module.exports = (
           .attr(`href`)
           .split(`.`)
           .pop()
-        if (options.ignoreFileExtensions.includes(ext)) {
-          return
+        if (!options.ignoreFileExtensions.includes(ext)) {
+          const link = { url: thisATag.attr(`href`) }
+          visitor(link)
+
+          node.value = node.value.replace(
+            new RegExp(thisATag.attr(`href`), `g`),
+            link.url
+          )
         }
-
-        const link = { url: thisATag.attr(`href`) }
-        visitor(link)
-
-        node.value = node.value.replace(
-          new RegExp(thisATag.attr(`href`), `g`),
-          link.url
-        )
       } catch (err) {
         // Ignore
       }
