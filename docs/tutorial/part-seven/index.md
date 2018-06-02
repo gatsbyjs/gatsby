@@ -286,7 +286,7 @@ Visit one of them and you see:
 Which is a bit boring and not what you want. Let's pull in data from your markdown post. Change
 `src/templates/blog-post.js` to:
 
-```jsx
+```jsx{4-5,8-11,14-25}
 import React from "react"
 import Layout from "../components/layout"
 
