@@ -6,6 +6,9 @@ typora-copy-images-to: ./
 Welcome to Part Four of the tutorial! Halfway through! Hope things are starting
 to feel pretty comfortable 😀
 
+> _Note: this is the first of a 4-part tutorial through tutorial #7.  
+Tutorial #5, #6, and #7 will only make sense if you start here and progress in order._
+
 ## Recap of first half of the tutorial
 
 So far, we've been learning how to use React.js—how powerful it is to be able to

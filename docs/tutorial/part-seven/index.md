@@ -18,6 +18,10 @@ ways to use it for the remainder of the tutorial.
 
 Let's get started.
 
+> _Note: this is the last of a 4-part tutorial (tutorial #4 through #7).  
+If you have skipped any of the previous parts, you should go back and complete them first.  
+Click to go back to the [first (#4)](/tutorial/part-four/), [second (#5)](/tutorial/part-five/), or [third (#6)](/tutorial/part-six/) part._
+
 ## Creating slugs for pages
 
 Creating new pages has two steps:
