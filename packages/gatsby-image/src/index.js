@@ -1,5 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
+import * as types from "./types"
 
 // Handle legacy names for image queries.
 const convertProps = props => {
@@ -425,10 +426,10 @@ Image.defaultProps = {
 }
 
 Image.propTypes = {
-  resolutions: PropTypes.object,
-  sizes: PropTypes.object,
-  fixed: PropTypes.object,
-  fluid: PropTypes.object,
+  resolutions: types.anyFixed,
+  sizes: types.anyFluid,
+  fixed: types.anyFixed,
+  fluid: types.anyFluid,
   fadeIn: PropTypes.bool,
   title: PropTypes.string,
   alt: PropTypes.string,
