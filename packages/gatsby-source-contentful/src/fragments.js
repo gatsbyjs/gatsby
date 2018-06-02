@@ -83,7 +83,7 @@ export const contentfulAssetFluidPreferWebpNoBase64 = graphql`
   }
 `
 
-// TODO for v3: Remove these legacy fragments
+// TODO: in v3 remove these legacy fragments
 export const contentfulAssetResolutions = graphql`
   fragment GatsbyContentfulResolutions on ContentfulResolutions {
     base64
