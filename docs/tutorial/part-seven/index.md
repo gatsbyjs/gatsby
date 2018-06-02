@@ -18,6 +18,13 @@ ways to use it for the remainder of the tutorial.
 
 Let's get started.
 
+> _Note: this tutorial is a 4-part series (Part 4 through 7). It will make sense only if completed in order._
+
+1.  [Part 4: Querying for data in a blog](/tutorial/part-four/)
+2.  [Part 5: Source plugins and rendering queried data](/tutorial/part-five/)
+3.  [Part 6: Transformer plugins](/tutorial/part-six/)
+4.  Part 7: Programmatically create pages from data — you are here
+
 ## Creating slugs for pages
 
 Creating new pages has two steps:

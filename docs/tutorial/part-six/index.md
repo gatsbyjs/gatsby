@@ -7,6 +7,13 @@ typora-copy-images-to: ./
 
 The previous tutorial showed how source plugins bring data _into_ Gatsby’s data system. In this tutorial, you'll learn how transformer plugins _transform_ the raw content brought by source plugins. The combination of source plugins and transformer plugins can handle all data sourcing and data transformation you might need when building a Gatsby site.
 
+> _Note: this tutorial is a 4-part series (Part 4 through 7). It will make sense only if completed in order._
+
+1.  [Part 4: Querying for data in a blog](/tutorial/part-four/)
+2.  [Part 5: Source plugins and rendering queried data](/tutorial/part-five/)
+3.  Part 6: Transformer plugins — you are here
+4.  [Part 7: Programmatically create pages from data](/tutorial/part-seven/)
+
 ## Transformer plugins
 
 Often, the format of the data we get from source plugins isn't what you want to

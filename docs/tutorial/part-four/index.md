@@ -6,6 +6,13 @@ typora-copy-images-to: ./
 Welcome to Part Four of the tutorial! Halfway through! Hope things are starting
 to feel pretty comfortable 😀
 
+> _Note: this tutorial is a 4-part series (Part 4 through 7). The rest will make sense only if completed in order._
+
+1.  Part 4: Querying for data in a blog — you are here
+2.  [Part 5: Source plugins and rendering queried data](/tutorial/part-five/)
+3.  [Part 6: Transformer plugins](/tutorial/part-six/)
+4.  [Part 7: Programmatically create pages from data](/tutorial/part-seven/)
+
 ## Recap of first half of the tutorial
 
 So far, we've been learning how to use React.js—how powerful it is to be able to
