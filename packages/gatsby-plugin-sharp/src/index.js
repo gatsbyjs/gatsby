@@ -6,6 +6,7 @@ const Promise = require(`bluebird`)
 const fs = require(`fs`)
 const ProgressBar = require(`progress`)
 const imagemin = require(`imagemin`)
+const imageminMozjpeg = require(`imagemin-mozjpeg`)
 const imageminPngquant = require(`imagemin-pngquant`)
 const imageminWebp = require(`imagemin-webp`)
 const queue = require(`async/queue`)
@@ -103,8 +104,6 @@ const processFile = (file, jobs, cb, reporter) => {
         force: args.toFormat === `png`,
       })
       .jpeg({
-        quality: args.quality,
-        progressive: args.jpegProgressive,
         force: args.toFormat === `jpg`,
       })
       .webp({
@@ -178,6 +177,25 @@ const processFile = (file, jobs, cb, reporter) => {
             .catch(onFinish)
         )
         .catch(onFinish)
+      // Compress jpeg
+    } else if (
+      (job.file.extension === `jpg` && args.toFormat === ``) ||
+      (job.file.extension === `jpeg` && args.toFormat === ``) ||
+      args.toFormat === `jpg`
+    ) {
+      clonedPipeline
+        .toBuffer()
+        .then(sharpBuffer =>
+          imagemin
+            .buffer(sharpBuffer, {
+              plugins: [imageminMozjpeg({ quality: args.quality, progressive: args.jpegProgressive })],
+            })
+            .then(imageminBuffer => {
+              fs.writeFile(job.outputPath, imageminBuffer, onFinish)
+            })
+            .catch(onFinish)
+        )
+        .catch(onFinish)
       // Compress webp
     } else if (
       (job.file.extension === `webp` && args.toFormat === ``) ||
@@ -196,7 +214,7 @@ const processFile = (file, jobs, cb, reporter) => {
             .catch(onFinish)
         )
         .catch(onFinish)
-      // any other format (jpeg, tiff) - don't compress it just handle output
+      // any other format (tiff) - don't compress it just handle output
     } else {
       clonedPipeline.toFile(job.outputPath, onFinish)
     }
