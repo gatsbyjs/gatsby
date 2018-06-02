@@ -192,8 +192,8 @@ pages.
 
 As mentioned in the intro to this part of the tutorial, the steps to programmatically creating pages are:
 
-1. Query data with GraphQL
-2. Map the query results to pages
+1.  Query data with GraphQL
+2.  Map the query results to pages
 
 The above code is the first step for creating pages from your markdown as you're
 using the supplied `graphql` function to query the markdown slugs you created.
@@ -210,9 +210,14 @@ Create a directory at `src/templates` and then add the following in a file named
 
 ```jsx
 import React from "react"
+import Layout from "../components/layout"
 
 export default () => {
-  return <div>Hello blog post</div>
+  return (
+    <Layout>
+      <div>Hello blog post</div>
+    </Layout>
+  )
 }
 ```
 
@@ -283,14 +288,17 @@ Which is a bit boring and not what you want. Let's pull in data from your markdo
 
 ```jsx
 import React from "react"
+import Layout from "../components/layout"
 
 export default ({ data }) => {
   const post = data.markdownRemark
   return (
-    <div>
-      <h1>{post.frontmatter.title}</h1>
-      <div dangerouslySetInnerHTML={{ __html: post.html }} />
-    </div>
+    <Layout>
+      <div>
+        <h1>{post.frontmatter.title}</h1>
+        <div dangerouslySetInnerHTML={{ __html: post.html }} />
+      </div>
+    </Layout>
   )
 }
 
