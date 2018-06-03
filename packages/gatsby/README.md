@@ -102,7 +102,7 @@ const IndexLayout = ({ children, location }) => {
   return (
     <div>
       <h1>Welcome {isHomepage ? "home" : "aboard"}!</h1>
-      {children()}
+      {children}
     </div>
   )
 }
