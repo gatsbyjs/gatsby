@@ -432,7 +432,7 @@ const fixedObject = PropTypes.shape({
   base64: PropTypes.string,
   tracedSVG: PropTypes.string,
   srcWebp: PropTypes.string,
-  srcSetWepb: PropTypes.string,
+  srcSetWebp: PropTypes.string,
 })
 
 const fluidObject = PropTypes.shape({
@@ -443,7 +443,7 @@ const fluidObject = PropTypes.shape({
   base64: PropTypes.string,
   tracedSVG: PropTypes.string,
   srcWebp: PropTypes.string,
-  srcSetWepb: PropTypes.string,
+  srcSetWebp: PropTypes.string,
 })
 
 Image.propTypes = {
