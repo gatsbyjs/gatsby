@@ -1,6 +1,5 @@
 import React from "react"
 import PropTypes from "prop-types"
-import * as types from "./types"
 
 // Handle legacy names for image queries.
 const convertProps = props => {
@@ -425,11 +424,33 @@ Image.defaultProps = {
   Tag: `div`,
 }
 
+const fixedObject = PropTypes.shape({
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+  src: PropTypes.string.isRequired,
+  srcSet: PropTypes.string.isRequired,
+  base64: PropTypes.string,
+  tracedSVG: PropTypes.string,
+  srcWebp: PropTypes.string,
+  srcSetWepb: PropTypes.string,
+})
+
+const fluidObject = PropTypes.shape({
+  aspectRatio: PropTypes.number.isRequired,
+  src: PropTypes.string.isRequired,
+  srcSet: PropTypes.string.isRequired,
+  sizes: PropTypes.string.isRequired,
+  base64: PropTypes.string,
+  tracedSVG: PropTypes.string,
+  srcWebp: PropTypes.string,
+  srcSetWepb: PropTypes.string,
+})
+
 Image.propTypes = {
-  resolutions: types.anyFixed,
-  sizes: types.anyFluid,
-  fixed: types.anyFixed,
-  fluid: types.anyFluid,
+  resolutions: fixedObject,
+  sizes: fluidObject,
+  fixed: fixedObject,
+  fluid: fluidObject,
   fadeIn: PropTypes.bool,
   title: PropTypes.string,
   alt: PropTypes.string,
