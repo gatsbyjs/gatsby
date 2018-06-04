@@ -33,8 +33,8 @@ For this tutorial, you’ll use a serverless function (through AWS Lambda, thoug
 Create a new Gatsby project by running the `gatsby new` command in the terminal and change directories into the new project you just started:
 
 ```shell
-gatsby new ecommerce-gatsby-tutorial https://github.com/gatsbyjs/gatsby-starter-default
-cd [name of project]
+gatsby new ecommerce-gatsby-tutorial
+cd ecommerce-gatsby-tutorial
 ```
 
 
@@ -46,7 +46,7 @@ You can extend the functionality of this default starter with plugins. One such 
 npm install gatsby-plugin-stripe-checkout
 ```
 
-Open the root site directory in a text editor and navigate to `gatsby-config.js` and add stripe-checkout plugin to `gatsby-config.js` in the plugins section. Your `gatsby-config.js` should look like the following code example:
+Open the root site directory in a text editor and navigate to `gatsby-config.js` and add the Stripe Checkout plugin to `gatsby-config.js` in the plugins section. Your `gatsby-config.js` should look like the following code example:
 
 ```jsx
 module.exports = {
@@ -60,9 +60,9 @@ module.exports = {
 
 ## See your site hot reload in the browser!
 
-Run `gatsby develop` in the terminal, which starts a development server and reloads changes you make to your site so you can preview them in the browser (you can turn off the server by pressing Ctrl + C). Open up your browser to localhost:8000 and you should see a default homepage.
+Run `gatsby develop` in the terminal, which starts a development server and reloads changes you make to your site so you can preview them in the browser. Open up your browser to [localhost:8000](localhost:8000) and you should see a default homepage.
 
-> **NOTE**: If you have already started your gatsby development server using `gatsby develop` you will need to restart the server by pressing CTRL + C and running the command again to see changes in your gatsby.config reflected on localhost***
+> **NOTE**: If you have already started your gatsby development server using `gatsby develop`, you will need to restart the server by pressing CTRL + C in the terminal where the command was run and running `gatsby develop` again to see changes in your `gatsby-config.js` reflected on [localhost:8000](localhost:8000)
 
 
 ## How does the plugin work?
@@ -75,7 +75,20 @@ Stripe Checkout processes payments with information we send it, you can read mor
 
 to the end of the `<body>` tag across all of your pages in your Gatsby project, allowing you to call the Stripe checkout methods from Stripe’s API to create charges.
 
-If you’d like more extensive access to Stripe data, explore more Gatsby / Stripe plugins.
+If you want to further customise the checkout process or pull Stripe data into your site, check out [Gatsby's plugin library for more Stripe plugins](https://www.gatsbyjs.org/plugins/?=stripe).
+
+
+## Sequence of events
+
+`configure()` sets up Stripe and automatically runs every time the page loads. Then you run `open()` when the buy button is clicked, which then triggers the Stripe payment overlay to open.
+
+Essentially, this is the sequence of events:
+
+- _page load_ -> `configure()`
+- _some time passes..._
+- _user clicks button_ -> `open()`
+
+The next section describes how to setup these events.
 
 
 ## Creating a button
@@ -203,7 +216,7 @@ export default Checkout
 
 ## What did you just do?
 
-You imported React, set a default price for your product, added some styles, and introduced some React functions. The componentDidMount() and openStripeCheckout() functions are most important for the Stripe functionality. The componentDidMount() function is a React lifecycle method that launches when the component is first mounted to the DOM, making it a good place to configure the Stripe Checkout handler. It looks like this:
+You imported React, set a default price for your product, added some styles, and introduced some React functions. The `componentDidMount()` and `openStripeCheckout()` functions are most important for the Stripe functionality. The `componentDidMount()` function is a React lifecycle method that launches when the component is first mounted to the DOM, making it a good place to configure the Stripe Checkout handler. It looks like this:
 
 ```js{39-46}
  componentDidMount() {
@@ -218,30 +231,17 @@ You imported React, set a default price for your product, added some styles, and
 
 This gives Stripe our key, and tells Stripe to call the Checkout component’s resetButton() method when the Stripe modal is closed. 
 
-The openStripeCheckout() function gives additional information to Stripe as a user launches the checkout modal, and will send the information they input to our serverless function once we create it.
+The `openStripeCheckout()` function gives additional information to Stripe as a user launches the checkout modal, and will send the information they input to our serverless function once we create it.
 
-The tags in the render() function define the structure of HTML elements that lay out how the component is structured.
+The tags in the `render()` function define the structure of HTML elements that lay out how the component is structured.
+
 
 ## Import checkout component into homepage
 
-Now go to your `src/pages/index.js` file. This is your homepage that shows at the root URL. Import your new checkout component in the file underneath the other two imports:
+Now go to your `src/pages/index.js` file. This is your homepage that shows at the root URL. Import your new checkout component in the file underneath the other two imports and replace the tags inside the first `<div>` tag with a `<Checkout />` tag. Your `index.js` file should now look like this: 
 
 ```
-javascript{3}
-import React from 'react'
-import Link from 'gatsby-link'
-import Checkout from '../components/checkout'
-
-const IndexPage = () => (
-.
-.
-.
-```
-
-This includes the component you just made in this file so you can use it on your homepage. Replace the tags inside the first `<div>` tag with a `<Checkout />` tag. Your `index.js` file should now look like this: 
-
-```
-javascript{6-11}
+javascript{3,6-11}
 import React from 'react'
 import Link from 'gatsby-link'
 import Checkout from '../components/checkout'
@@ -253,20 +253,20 @@ const IndexPage = () => (
 )
 
 export default IndexPage
-
 ```
 
-If you go back to localhost:8000 in your browser and you have `gatsby develop` running, you should have a big, enticing button on a card where the filler text used to be.
+If you go back to [localhost:8000](localhost:8000) in your browser and you have `gatsby develop` running, you should have a big, enticing button on a card where the filler text used to be.
 
 
 # Setting Up Your Stripe Account
+
 Stripe requires an account to use the API. To register for a Stripe account, go to the Stripe registration page. Once you have an account, you can view your API credentials by logging into your account, and then going to Developers > API Keys. 
 
 ![Stripe public test key location in Stripe account](stripe-public-test-key.png)
 
 You have 2 keys in both test mode and production mode: 
-a publishable key
-a secret key
+* a publishable key
+* a secret key
 
 While testing, you can use the keys that begins with pk_test_ and sk_test_. For production code, you will want to use the keys that don’t say test. As the names imply, your publishable key may be included in code that you share publicly (for example, in GitHub), whereas your secret key should not be shared with anyone or committed to any public repo. It’s important to restrict access to this secret key because anyone who has it could potentially read or send requests from your Stripe account and see information about charges or purchases or even refund customers.
 
@@ -334,7 +334,7 @@ By running `npm install`, you’ve created a node_modules folder that you’ll u
 Open gatsby-stripe-serverless-backend in your code editor.
 
 * Rename the `secrets.example.json` file to `secrets.json`.
-* Replace the string that says "sk_test_STRIPE_SECRET_KEY" in `secrets.json` with your secret key from your Stripe account, and keep the quotation marks around it
+* Replace the string that says "sk_test_STRIPE_SECRET_KEY" in `secrets.json` with your secret test key from your Stripe account, and keep the quotation marks around it (using the test keys allows orders to go through without needing real credit card details, which is useful for testing)
 
 Your secret key can be included here if you don’t upload this file to a version control system. The .gitignore file in the project includes a line that will tell any git commands you run in this folder not to keep track of your secrets file as long as it is named `secrets.json`.
 
@@ -417,7 +417,7 @@ return stripe.charges
    });
 ```
 
-A few things happen with stripe.charges.create(): it takes an object as an argument that tells the amount to charge, the unique token made by stripe that hides all the credit card information from us, as well as other information like currency to provide more information about the transaction. 
+A few things happen with `stripe.charges.create()`: it takes an object as an argument that tells the amount to charge, the unique token made by stripe that hides all the credit card information from us, as well as other information like currency to provide more information about the transaction. 
 
 If the charge was successful, the code continues into the `then` block and prepares a successful response. If something went wrong, an error response is made and then that response (whether successful or not) is returned in the callback.
 
@@ -480,12 +480,9 @@ serverless config credentials --provider aws --key AAAAAAAEXAMPLE --secret aaaaa
 
 Where `AAAAAAAEXAMPLE` is your key and `aaaaaaaa/BBBBBBB/CCCdddEXAMPLEKEY` your secret.
 
-If you have trouble finding your way around AWS to get your keys, you can follow these steps taken from the Serverless AWS Credentials docs:
+> **NOTE:** If you have trouble finding your way around AWS to get your keys, you can follow the [steps from the Serverless AWS Credentials docs](https://serverless.com/framework/docs/providers/aws/guide/credentials#creating-aws-access-keys).
 
-* Create or login to your Amazon Web Services Account and go to the Identity & Access Management (IAM) page.
-* Click on Users and then Add user. Enter a name in the first field to remind you this User is the Framework, like serverless-admin. Enable Programmatic access by clicking the checkbox. Click Next to go through to the Permissions page. Click on Attach existing policies directly. Search for and select AdministratorAccess then click Next: Review. Check everything looks good and click Create user. Later, you can create different IAM Users for different apps and different stages of those apps. That is, if you use the same AWS account for stages/apps, which is more common than using separate accounts.
-* View and copy the API Key & Secret to a temporary place and place them into the command at the beginning of this section of the tutorial before running the command.
-* In the gatsby-stripe-serverless-backend project, run `serverless deploy` and your function will be packaged up and uploaded to AWS.
+In the gatsby-stripe-serverless-backend project, run `serverless deploy` and your function will be packaged up and uploaded to AWS.
 
 The output of `serverless deploy` should look something like this in your terminal: 
 
