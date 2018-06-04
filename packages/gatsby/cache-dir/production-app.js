@@ -151,16 +151,11 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   const AltRouter = apiRunner(`replaceRouterComponent`, { history })[0]
 
   loader.getResourcesForPathname(window.location.pathname, () => {
-    let pathPrefix = `/`
-    if (__PREFIX_PATHS__) {
-      pathPrefix = `${__PATH_PREFIX__}/`
-    }
-
     const Root = () =>
       createElement(
         AltRouter ? AltRouter : Router,
         {
-          basename: pathPrefix.slice(0, -1),
+          basename: __PATH_PREFIX__,
           history: !AltRouter ? history : undefined,
         },
         createElement(

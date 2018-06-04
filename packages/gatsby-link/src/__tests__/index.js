@@ -4,7 +4,6 @@ import { MemoryRouter } from "react-router-dom"
 
 const getInstance = (props, pathPrefix = ``) => {
   Object.assign(global.window, {
-    __PREFIX_PATHS__: pathPrefix ? true : false,
     __PATH_PREFIX__: pathPrefix,
   })
 
@@ -24,14 +23,13 @@ const getNavigateTo = () => {
 
 const getWithPrefix = (pathPrefix = ``) => {
   Object.assign(global.window, {
-    __PREFIX_PATHS__: pathPrefix ? true : false,
     __PATH_PREFIX__: pathPrefix,
   })
   return require(`../`).withPrefix
 }
 
 describe(`<Link />`, () => {
-  it(`does not fail to initialize when __PREFIX_PATHS__ is not defined`, () => {
+  it(`does not fail to initialize without --prefix-paths`, () => {
     expect(() => {
       const context = { router: { history: {} } }
       const Link = require(`../`).default
@@ -52,7 +50,7 @@ describe(`<Link />`, () => {
     /*
      * Running _both_ of these tests causes the globals to be cached or something
      */
-    it.skip(`will use __PATH_PREFIX__ if __PREFIX_PATHS__ defined`, () => {
+    it.skip(`will use __PATH_PREFIX__ with --prefix-paths`, () => {
       const to = `/path`
       const pathPrefix = `/blog`
       const instance = getInstance({ to }, pathPrefix)

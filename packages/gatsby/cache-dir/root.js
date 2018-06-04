@@ -118,18 +118,13 @@ const navigateTo = to => {
 
 window.___navigateTo = navigateTo
 
-let pathPrefix = `/`
-if (__PREFIX_PATHS__) {
-  pathPrefix = `${__PATH_PREFIX__}/`
-}
-
 const AltRouter = apiRunner(`replaceRouterComponent`, { history })[0]
 
 const Root = () =>
   createElement(
     AltRouter ? AltRouter : Router,
     {
-      basename: pathPrefix.slice(0, -1),
+      basename: __PATH_PREFIX__,
       history: !AltRouter ? history : undefined,
     },
     createElement(

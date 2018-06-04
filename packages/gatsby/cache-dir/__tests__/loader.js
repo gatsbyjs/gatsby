@@ -3,13 +3,6 @@ import loader from "../loader.js"
 describe(`Loader`, () => {
   beforeEach(() => {
     global.__PATH_PREFIX__ = ``
-    global.__PREFIX_PATHS__ = false
-
-    // Workaround for Node 6 issue: https://github.com/facebook/jest/issues/5159
-    if (global.hasOwnProperty(`__PATH_PREFIX__`))
-      global.__PATH_PREFIX__ = ``
-    if (global.hasOwnProperty(`__PREFIX_PATHS__`))
-      global.__PREFIX_PATHS__ = false
 
     loader.empty()
     loader.addPagesArray([
@@ -96,13 +89,6 @@ describe(`Loader path prefixing`, () => {
 
   beforeEach(() => {
     global.__PATH_PREFIX__ = ``
-    global.__PREFIX_PATHS__ = false
-
-    // Workaround for Node 6 issue: https://github.com/facebook/jest/issues/5159
-    if (global.hasOwnProperty(`__PATH_PREFIX__`))
-      global.__PATH_PREFIX__ = ``
-    if (global.hasOwnProperty(`__PREFIX_PATHS__`))
-      global.__PREFIX_PATHS__ = false
 
     pagesArray = [
       {
@@ -122,29 +108,10 @@ describe(`Loader path prefixing`, () => {
 
   test(`Path prefix present and enabled`, () => {
     global.__PATH_PREFIX__ = `/foo`
-    global.__PREFIX_PATHS__ = true
 
     loader.addPagesArray(pagesArray)
     loader.enqueue(`/foo/about/`)
 
-    expect(loader.___resources()).toEqual([
-      `about.json`,
-      `page-component---src-pages-test-js`,
-    ])
-  })
-
-  test(`Path prefix present but not enabled`, () => {
-    global.__PATH_PREFIX__ = `/foo`
-    global.__PREFIX_PATHS__ = false
-
-    loader.addPagesArray(pagesArray)
-
-    // do not enqueue prefixed paths
-    loader.enqueue(`/foo/about/`)
-    expect(loader.___resources()).toEqual([])
-
-    // do enqueue unprefixed paths
-    loader.enqueue(`/about/`)
     expect(loader.___resources()).toEqual([
       `about.json`,
       `page-component---src-pages-test-js`,
@@ -153,7 +120,6 @@ describe(`Loader path prefixing`, () => {
 
   test(`Path prefix missing but enabled`, () => {
     global.__PATH_PREFIX__ = ``
-    global.__PREFIX_PATHS__ = true
 
     loader.addPagesArray(pagesArray)
 
