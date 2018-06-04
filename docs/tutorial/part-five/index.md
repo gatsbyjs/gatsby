@@ -59,7 +59,7 @@ module.exports = {
         path: `${__dirname}/src/`,
       },
     },
-    `gatsby-plugin-glamor`,
+    `gatsby-plugin-emotion`,
     {
       resolve: `gatsby-plugin-typography`,
       options: {
@@ -112,7 +112,11 @@ import Layout from "../components/layout"
 
 export default ({ data }) => {
   console.log(data)
-  return <Layout><div>Hello world</div></Layout>
+  return (
+    <Layout>
+      <div>Hello world</div>
+    </Layout>
+  )
 }
 
 export const query = graphql`
@@ -144,46 +148,38 @@ The shape of the data matches the shape of the query.
 
 Let's add some code to your component to print out the File data.
 
-```jsx{7-39}
+```jsx{8-30}
 import React from "react"
 import Layout from "../components/layout"
 
 export default ({ data }) => {
   console.log(data)
   return (
-  <Layout>
-    <div>
-      <h1>My Site's Files</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>relativePath</th>
-            <th>prettySize</th>
-            <th>extension</th>
-            <th>birthTime</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.allFile.edges.map(({ node }, index) =>
-            <tr key={index}>
-              <td>
-                {node.relativePath}
-              </td>
-              <td>
-                {node.prettySize}
-              </td>
-              <td>
-                {node.extension}
-              </td>
-              <td>
-                {node.birthTime}
-              </td>
+    <Layout>
+      <div>
+        <h1>My Site's Files</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>relativePath</th>
+              <th>prettySize</th>
+              <th>extension</th>
+              <th>birthTime</th>
             </tr>
-          )}
-        </tbody>
-      </table>
-    </div>
-   </Layout>
+          </thead>
+          <tbody>
+            {data.allFile.edges.map(({ node }, index) => (
+              <tr key={index}>
+                <td>{node.relativePath}</td>
+                <td>{node.prettySize}</td>
+                <td>{node.extension}</td>
+                <td>{node.birthTime}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </Layout>
   )
 }
 

@@ -192,8 +192,8 @@ pages.
 
 As mentioned in the intro to this part of the tutorial, the steps to programmatically creating pages are:
 
-1. Query data with GraphQL
-2. Map the query results to pages
+1.  Query data with GraphQL
+2.  Map the query results to pages
 
 The above code is the first step for creating pages from your markdown as you're
 using the supplied `graphql` function to query the markdown slugs you created.
@@ -210,9 +210,14 @@ Create a directory at `src/templates` and then add the following in a file named
 
 ```jsx
 import React from "react"
+import Layout from "../components/layout"
 
 export default () => {
-  return <div>Hello blog post</div>
+  return (
+    <Layout>
+      <div>Hello blog post</div>
+    </Layout>
+  )
 }
 ```
 
@@ -281,16 +286,19 @@ Visit one of them and you see:
 Which is a bit boring and not what you want. Let's pull in data from your markdown post. Change
 `src/templates/blog-post.js` to:
 
-```jsx
+```jsx{4-5,8-11,14-25}
 import React from "react"
+import Layout from "../components/layout"
 
 export default ({ data }) => {
   const post = data.markdownRemark
   return (
-    <div>
-      <h1>{post.frontmatter.title}</h1>
-      <div dangerouslySetInnerHTML={{ __html: post.html }} />
-    </div>
+    <Layout>
+      <div>
+        <h1>{post.frontmatter.title}</h1>
+        <div dangerouslySetInnerHTML={{ __html: post.html }} />
+      </div>
+    </Layout>
   )
 }
 
@@ -317,39 +325,55 @@ The last step is to link to your new pages from the index page.
 Return to `src/pages/index.js` and let's query for your markdown slugs and create
 links.
 
-```jsx{3,18-19,29,47-49}
+```jsx{3,23-29,45,64-66}
 import React from "react"
-import g from "glamorous"
+import { css } from "react-emotion"
 import { Link } from "gatsby"
-
 import { rhythm } from "../utils/typography"
+import Layout from "../components/layout"
 
 export default ({ data }) => {
   return (
-    <div>
-      <g.H1 display={"inline-block"} borderBottom={"1px solid"}>
-        Amazing Pandas Eating Things
-      </g.H1>
-      <h4>
-        {data.allMarkdownRemark.totalCount} Posts
-      </h4>
-      {data.allMarkdownRemark.edges.map(({ node }) =>
-        <div key={node.id}>
-          <Link
-            to={node.fields.slug}
-            css={{ textDecoration: `none`, color: `inherit` }}
-          >
-            <g.H3 marginBottom={rhythm(1 / 4)}>
-              {node.frontmatter.title}{" "}
-              <g.Span color="#BBB">— {node.frontmatter.date}</g.Span>
-            </g.H3>
-            <p>
-              {node.excerpt}
-            </p>
-          </Link>
-        </div>
-      )}
-    </div>
+    <Layout>
+      <div>
+        <h1
+          className={css`
+            display: inline-block;
+            border-bottom: 1px solid;
+          `}
+        >
+          Amazing Pandas Eating Things
+        </h1>
+        <h4>{data.allMarkdownRemark.totalCount} Posts</h4>
+        {data.allMarkdownRemark.edges.map(({ node }) => (
+          <div key={node.id}>
+            <Link
+              to={node.fields.slug}
+              className={css`
+                text-decoration: none;
+                color: inherit;
+              `}
+            >
+              <h3
+                className={css`
+                  margin-bottom: ${rhythm(1 / 4)};
+                `}
+              >
+                {node.frontmatter.title}{" "}
+                <span
+                  className={css`
+                    color: #bbb;
+                  `}
+                >
+                  — {node.frontmatter.date}
+                </span>
+              </h3>
+              <p>{node.excerpt}</p>
+            </Link>
+          </div>
+        ))}
+      </div>
+    </Layout>
   )
 }
 

@@ -83,10 +83,11 @@ cd tutorial-part-four
 
 Then install some other needed dependencies at the root of the project. You'll use the Typography theme
 Kirkham + you'll try out a CSS-in-JS library
-[Glamorous](https://glamorous.rocks/):
+[Emotion](https://emotion.sh/):
 
 ```shell
-npm install --save gatsby-plugin-typography react-typography typography gatsby-plugin-glamor glamorous typography-theme-kirkham
+npm install --save gatsby-plugin-typography typography react-typography typography-theme-kirkham
+gatsby-plugin-emotion emotion react-emotion emotion-server
 ```
 
 Let's set up a site similar to what you ended with in Part Three. This site will have a layout
@@ -132,35 +133,41 @@ export default () => (
 
 ```jsx
 import React from "react"
-import g from "glamorous"
-import { css } from "glamor"
+import { css } from "react-emotion"
 import { Link } from "gatsby"
 
 import { rhythm } from "../utils/typography"
 
-const linkStyle = css({ float: `right` })
-
 export default ({ children }) => (
-  <g.Div
-    margin={`0 auto`}
-    maxWidth={700}
-    padding={rhythm(2)}
-    paddingTop={rhythm(1.5)}
+  <div
+    className={css`
+      margin: 0 auto;
+      max-width: 700px;
+      padding: ${rhythm(2)};
+      padding-top: ${rhythm(1.5)};
+    `}
   >
     <Link to={`/`}>
-      <g.H3
-        marginBottom={rhythm(2)}
-        display={`inline-block`}
-        fontStyle={`normal`}
+      <h3
+        className={css`
+          margin-bottom: ${rhythm(2)};
+          display: inline-block;
+          font-style: normal;
+        `}
       >
         Pandas Eating Lots
-      </g.H3>
+      </h3>
     </Link>
-    <Link className={linkStyle} to={`/about/`}>
+    <Link
+      to={`/about/`}
+      className={css`
+        float: right;
+      `}
+    >
       About
     </Link>
     {children}
-  </g.Div>
+  </div>
 )
 ```
 
@@ -181,7 +188,7 @@ export const rhythm = typography.rhythm
 ```javascript
 module.exports = {
   plugins: [
-    `gatsby-plugin-glamor`,
+    `gatsby-plugin-emotion`,
     {
       resolve: `gatsby-plugin-typography`,
       options: {
@@ -224,7 +231,7 @@ module.exports = {
     title: `Blah Blah Fake Title`,
   },
   plugins: [
-    `gatsby-plugin-glamor`,
+    `gatsby-plugin-emotion`,
     {
       resolve: `gatsby-plugin-typography`,
       options: {
@@ -241,15 +248,13 @@ Then edit the two components:
 
 `src/pages/about.js`
 
-```jsx{4,6-8,15-24}
+```jsx{4,6,13-22}
 import React from "react"
 import Layout from "../components/layout"
 
 export default ({ data }) => (
   <Layout>
-    <h1>
-      About {data.site.siteMetadata.title}
-    </h1>
+    <h1>About {data.site.siteMetadata.title}</h1>
     <p>
       We're the only site running on your computer dedicated to showing the best
       photos and videos of pandas eating lots of food.
@@ -270,15 +275,12 @@ export const query = graphql`
 
 `src/components/layout.js`
 
-```jsx{4,11-21,34,42-43}
+```jsx{3,8-18,35}
 import React from "react"
-import g from "glamorous"
-import { css } from "glamor"
+import { css } from "react-emotion"
 import { StaticQuery, Link } from "gatsby"
 
 import { rhythm } from "../utils/typography"
-
-const linkStyle = css({ float: `right` })
 
 export default ({ children }) => (
   <StaticQuery
@@ -292,26 +294,35 @@ export default ({ children }) => (
       }
     `}
     render={data => (
-      <g.Div
-        margin={`0 auto`}
-        maxWidth={700}
-        padding={rhythm(2)}
-        paddingTop={rhythm(1.5)}
+      <div
+        className={css`
+          margin: 0 auto;
+          max-width: 700px;
+          padding: ${rhythm(2)};
+          padding-top: ${rhythm(1.5)};
+        `}
       >
         <Link to={`/`}>
-          <g.H3
-            marginBottom={rhythm(2)}
-            display={`inline-block`}
-            fontStyle={`normal`}
+          <h3
+            className={css`
+              margin-bottom: ${rhythm(2)};
+              display: inline-block;
+              font-style: normal;
+            `}
           >
             {data.site.siteMetadata.title}
-          </g.H3>
+          </h3>
         </Link>
-        <Link className={linkStyle} to={`/about/`}>
+        <Link
+          to={`/about/`}
+          className={css`
+            float: right;
+          `}
+        >
           About
         </Link>
         {children}
-      </g.Div>
+      </div>
     )}
   />
 )
