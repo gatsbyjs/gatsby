@@ -430,7 +430,7 @@ Full example:
 }
 ```
 
-### Image processing
+## Image processing
 
 To use image processing you need `gatsby-transformer-sharp`, `gatsby-plugin-sharp` and their
 dependencies `gatsby-image` and `gatsby-source-filesystem` in your `gatsby-config.js`.
@@ -508,12 +508,12 @@ To learn more about image processing check
 * source code of [image processing example
   site](https://github.com/gatsbyjs/gatsby/tree/master/examples/image-processing).
   
-### Using a custom normalizer
+## Using a custom normalizer
 
 The plugin uses the concept of normalizers to transform the json data from WordPress into 
 GraphQL nodes. You can extend the normalizers by passing a custom function to your `gatsby-config.js`.
 
-#### Example:
+### Example:
 
 You have a custom post type `movie` and a related custom taxonomy `genre` in your WordPress site. Since 
 `gatsby-source-wordpress` doesn't know about the relation of the two, we can build an additional normalizer function to map the movie GraphQL nodes to the genre nodes: 
