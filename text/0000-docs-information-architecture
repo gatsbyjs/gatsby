@@ -54,10 +54,12 @@ Reference docs
 - Fundamentals
     - Setting up dev environment   
         - Gatsby on Windows
+        - Gatsby on Macs
     - Customizing site structure
         - html.js
         - webpack config
         - Environment variables (right place for this??)
+        - ENV
     - Adding content 
         - Images
         - Markdown pages
@@ -85,7 +87,6 @@ Reference docs
 - Migration Guides
     - v0 to v1
     - v1 to v2*
-    - v0 to v2 (good idea??)*
 
    
 
