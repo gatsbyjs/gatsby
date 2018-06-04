@@ -669,3 +669,52 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
   });
 };
 ```
+
+## Troubleshooting
+
+### GraphQL Error - Unknown Field on ACF
+
+ACF returns `false` in cases where there is no data to be returned. This can cause conflicting data types in GraphQL and often leads to the error: `GraphQL Error Unknown field {field} on type {type}`.
+
+To solve this, you can use the [acf/format_value filter](https://www.advancedcustomfields.com/resources/acf-format_value/). There are 2 possible ways to use this:
+
+* `acf/format_value` – filter for every field
+* `acf/format_value/type={$field_type}` – filter for a specific field based on it’s type
+
+Using the following function, you can check for an empty field and if it's empty return `null`.
+
+```
+if (!function_exists('acf_nullify_empty')) {
+    /**
+     * Return `null` if an empty value is returned from ACF.
+     *
+     * @param mixed $value
+     * @param mixed $post_id
+     * @param array $field
+     *
+     * @return mixed
+     */
+    function acf_nullify_empty($value, $post_id, $field) {
+        if (empty($value)) {
+            return null;
+        }
+        return $value;
+    }
+}
+```
+
+You can then apply this function to all ACF fields using the following code snippet:
+
+```
+add_filter('acf/format_value', 'acf_nullify_empty', 100, 3);
+```
+
+Or if you would prefer to target specific fields, you can use the `acf/format_value/type={$field_type}` filter. Here are some examples:
+
+```
+add_filter('acf/format_value/type=image', 'acf_nullify_empty', 100, 3);
+add_filter('acf/format_value/type=gallery', 'acf_nullify_empty', 100, 3);
+add_filter('acf/format_value/type=repeater', 'acf_nullify_empty', 100, 3);
+```
+
+This code should be added as a plugin (recommended), or within the `functions.php` of a theme.
