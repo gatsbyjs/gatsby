@@ -10,10 +10,9 @@
     "Noah Lange <noahrlange@gmail.com>"
   ],
   "dependencies": {
+    "@babel/preset-typescript": "7.0.0-beta.47",
     "@babel/runtime": "7.0.0-beta.47",
-    "babel-plugin-remove-graphql-queries": "^2.0.1-9",
-    "ts-loader": "^2.0.3",
-    "typescript": "^2.7.2"
+    "babel-plugin-remove-graphql-queries": "^2.0.1-9"
   },
   "devDependencies": {
     "@babel/cli": "7.0.0-beta.47",
