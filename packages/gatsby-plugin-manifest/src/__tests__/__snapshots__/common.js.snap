@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`gatsby-plugin-manifest defaultIcons includes all icon sizes 1`] = `
+Array [
+  Object {
+    "sizes": "48x48",
+    "src": "icons/icon-48x48.png",
+    "type": "image/png",
+  },
+  Object {
+    "sizes": "72x72",
+    "src": "icons/icon-72x72.png",
+    "type": "image/png",
+  },
+  Object {
+    "sizes": "96x96",
+    "src": "icons/icon-96x96.png",
+    "type": "image/png",
+  },
+  Object {
+    "sizes": "144x144",
+    "src": "icons/icon-144x144.png",
+    "type": "image/png",
+  },
+  Object {
+    "sizes": "192x192",
+    "src": "icons/icon-192x192.png",
+    "type": "image/png",
+  },
+  Object {
+    "sizes": "256x256",
+    "src": "icons/icon-256x256.png",
+    "type": "image/png",
+  },
+  Object {
+    "sizes": "384x384",
+    "src": "icons/icon-384x384.png",
+    "type": "image/png",
+  },
+  Object {
+    "sizes": "512x512",
+    "src": "icons/icon-512x512.png",
+    "type": "image/png",
+  },
+]
+`;
