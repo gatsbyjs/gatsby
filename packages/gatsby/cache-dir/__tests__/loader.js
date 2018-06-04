@@ -95,8 +95,8 @@ describe(`Loader path prefixing`, () => {
   let pagesArray
 
   beforeEach(() => {
-    delete global.__PATH_PREFIX__
-    delete global.__PREFIX_PATHS__
+    global.__PATH_PREFIX__ = ``
+    global.__PREFIX_PATHS__ = false
 
     // Workaround for Node 6 issue: https://github.com/facebook/jest/issues/5159
     if (global.hasOwnProperty(`__PATH_PREFIX__`))
@@ -123,6 +123,7 @@ describe(`Loader path prefixing`, () => {
   test(`Path prefix present and enabled`, () => {
     global.__PATH_PREFIX__ = `/foo`
     global.__PREFIX_PATHS__ = true
+
     loader.addPagesArray(pagesArray)
     loader.enqueue(`/foo/about/`)
 
@@ -134,9 +135,7 @@ describe(`Loader path prefixing`, () => {
 
   test(`Path prefix present but not enabled`, () => {
     global.__PATH_PREFIX__ = `/foo`
-    delete global.__PREFIX_PATHS__
-    if (global.hasOwnProperty(`__PREFIX_PATHS__`))
-      global.__PREFIX_PATHS__ = false
+    global.__PREFIX_PATHS__ = false
 
     loader.addPagesArray(pagesArray)
 
@@ -153,10 +152,8 @@ describe(`Loader path prefixing`, () => {
   })
 
   test(`Path prefix missing but enabled`, () => {
-    delete global.__PATH_PREFIX__
+    global.__PATH_PREFIX__ = ``
     global.__PREFIX_PATHS__ = true
-    if (global.hasOwnProperty(`__PATH_PREFIX__`))
-      global.__PATH_PREFIX__ = ``
 
     loader.addPagesArray(pagesArray)
 
