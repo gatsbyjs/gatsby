@@ -8,7 +8,24 @@ title: Migrating from v1 to v2
 
 This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While there's a lot covered here, you probably won't need to do everything for your site.
 
-Let's start with a few of the most important steps - install peer dependencies and update your layout components.
+## What we'll cover
+
+* [Manually install React](/docs/migrating-from-v1-to-v2/#manually-install-react)
+* [Manually install plugins’ peer dependencies](/docs/migrating-from-v1-to-v2/manually-install-plugins-peer-dependencies)
+* [Update layout component](/docs/migrating-from-v1-to-v2/#update-layout-component)
+* [Rename `boundActionCreators` to `actions`](/docs/migrating-from-v1-to-v2/rename-boundactioncreators-to-actions)
+* [Rename `pathContext` to `pageContext`](/docs/migrating-from-v1-to-v2/#rename-pathcontext-to-pagecontext)
+* [Rename responsive image queries](/docs/migrating-from-v1-to-v2/#rename-responsive-image-queries)
+* [Manually specify PostCSS plugins](/docs/migrating-from-v1-to-v2/#manually-specify-postcss-plugins)
+* [Convert to either pure CommonJS or pure ES6](/docs/migrating-from-v1-to-v2/#convert-to-either-pure-commonjs-or-pure-es6)
+* [Don't query nodes by ID](/docs/migrating-from-v1-to-v2/#dont-query-nodes-by-id)
+* [Remove explicit polyfills](/docs/migrating-from-v1-to-v2/#remove-explicit-polyfills)
+* [Change `modifyBabelrc` to `onCreateBabelConfig`](/docs/migrating-from-v1-to-v2/#change-modifybabelrc-to-oncreatebabelconfig)
+* [Change `modifyWebpackConfig` to `onCreateWebpackConfig`](/docs/migrating-from-v1-to-v2/#change-modifywebpackconfig-to-oncreatewebpackconfig)
+* [Remove inlined CSS in `html.js`](/docs/migrating-from-v1-to-v2/#remove-inlined-css-in-htmljs)
+
+
+You can start with a few of the most important steps - install peer dependencies and update your layout components.
 
 ## Manually install React
 
@@ -28,7 +45,7 @@ npm i typography react-typography
 
 Search for the plugins that you use in [Gatsby’s plugins page](/plugins) and check their installation instructions.
 
-## Layout component
+## Update layout component
 
 The special layout component (`src/layouts/index.js`) that Gatsby v1 used to wrap every page has been removed. If the layout of your site appears to be broken, this is most likely the reason why.
 
@@ -260,7 +277,7 @@ export const pageQuery = graphql`
 
 Further examples can be found in the [Gatsby Image docs](https://github.com/gatsbyjs/gatsby/tree/d0e29272ed7b009dae18d35d41a45e700cdcab0d/packages/gatsby-image).
 
-## Manually specify postcss plugins
+## Manually specify PostCSS plugins
 
 Gatsby v2 removed `postcss-cssnext` and `postcss-import` from the default postcss setup.
 
