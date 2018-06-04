@@ -209,7 +209,7 @@ Similar to `boundActionCreators` above, `pathContext` is deprecated in favor of 
 
 ## Rename responsive image queries
 
-The `sizes` and `resolutions` queries are deprecated in v2. These queries have been renamed to `fluid` and `fixed` to make them easier to understand.
+The `sizes` and `resolutions` queries are deprecated in v2. These queries have been renamed to `fluid` and `fixed` to make them easier to understand. You can continue using the deprecated query names, but it's recommended that you update them.
 
 Before:
 
