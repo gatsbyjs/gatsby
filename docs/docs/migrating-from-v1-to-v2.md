@@ -325,9 +325,27 @@ See [Gatsby's babel docs for more details](/docs/babel).
 
 Source and transformer plugins now use UUIDs for IDs. If you used glob or regex to query nodes by id then you'll need to query something else.
 
-[See the Pull Request that implemented this change](https://github.com/gatsbyjs/gatsby/pull/3807/files)
+Here's an example querying an image:
 
-> TODO: add example
+```diff
+  query MyImageQuery {
+    allImageSharp(filter: {
+-     id: {regex: "/default.jpg/"}
++     sizes: {originalName: {regex: "/default.jpg/"}}
+    }) {
+      edges {
+        node {
+          id
+          sizes(maxWidth: 660) {
+            src
+          }
+        }
+      }
+    }
+  }
+```
+
+[See the Pull Request that implemented this change](https://github.com/gatsbyjs/gatsby/pull/3807/files)
 
 ## Remove explicit polyfills
 
