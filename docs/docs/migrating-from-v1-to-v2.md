@@ -57,26 +57,14 @@ The following is the recommended migration path:
 
 In v1, the `children` prop passed to layout was a function and needed to be executed. In v2, this is no longer the case.
 
-Before:
 
-```jsx
+```diff
 import React from "react"
 
 export default ({ children }) => (
   <div>
-    {children()}
-  </div>
-)
-```
-
-After:
-
-```jsx{5}
-import React from "react"
-
-export default ({ children }) => (
-  <div>
-    {children}
+-    {children()}
++    {children}
   </div>
 )
 ```
@@ -112,59 +100,51 @@ Since layout is no longer special, you now need to make use of v2’s StaticQuer
 
 > TODO: document StaticQuery and link to it from here
 
-Before:
+Replacing a layout's query with `StaticQuery`:
 
-```jsx
+```diff
 import React, { Fragment } from "react"
 import Helmet from "react-helmet"
 
-export default ({ children, data }) => (
-  <>
-    <Helmet titleTemplate={`%s | ${data.site.siteMetadata.title}`} defaultTitle={data.site.siteMetadata.title} />
-    <div>
-      {children()}
-    </div>
-  </>
-)
-
-export const query = graphql`
-  query LayoutQuery {
-    site {
-      siteMetadata {
-        title
-      }
-    }
-  }
-`
-```
-
-After:
-
-```jsx
-import React, { Fragment } from "react"
-import { StaticQuery } from "gatsby"
-
-export default ({ children }) => (
-  <StaticQuery
-    query={graphql`
-      query LayoutQuery {
-        site {
-          siteMetadata {
-            title
-          }
-        }
-      }
-    `}
-    render={data => (
-      <>
-        <Helmet titleTemplate={`%s | ${data.site.siteMetadata.title}`} defaultTitle={data.site.siteMetadata.title} />
-        <div>
-          {children}
-        </div>
-      </>
-    )}
-  />
-)
+- export default ({ children, data }) => (
+-   <>
+-     <Helmet titleTemplate={`%s | ${data.site.siteMetadata.title}`} defaultTitle={data.site.siteMetadata.title} />
+-     <div>
+-       {children()}
+-     </div>
+-   </>
+- )
+-
+- export const query = graphql`
+-   query LayoutQuery {
+-     site {
+-       siteMetadata {
+-         title
+-       }
+-     }
+-   }
+- `
++ export default ({ children }) => (
++   <StaticQuery
++     query={graphql`
++       query LayoutQuery {
++         site {
++           siteMetadata {
++             title
++           }
++         }
++       }
++     `}
++     render={data => (
++       <>
++         <Helmet titleTemplate={`%s | ${data.site.siteMetadata.title}`} defaultTitle={data.site.siteMetadata.title} />
++         <div>
++           {children}
++         </div>
++       </>
++     )}
++   />
++ )
 ```
 
 ### 5. Pass `history`, `location`, and `match` props to layout
@@ -211,13 +191,15 @@ Similar to `boundActionCreators` above, `pathContext` is deprecated in favor of 
 
 The `sizes` and `resolutions` queries are deprecated in v2. These queries have been renamed to `fluid` and `fixed` to make them easier to understand. You can continue using the deprecated query names, but it's recommended that you update them.
 
-Before:
+Update image query and fragment names:
 
-```jsx
+```diff
 const Example = ({ data }) => {
   <div>
-    <Img sizes={data.foo.childImageSharp.sizes} />
-    <Img resolutions={data.bar.childImageSharp.resolutions} />
+-    <Img sizes={data.foo.childImageSharp.sizes} />
+-    <Img resolutions={data.bar.childImageSharp.resolutions} />
++    <Img fluid={data.foo.childImageSharp.fluid} />
++    <Img fixed={data.bar.childImageSharp.fixed} />
   </div>
 }
 
@@ -227,47 +209,19 @@ export const pageQuery = graphql`
   query IndexQuery {
     foo: file(relativePath: { regex: "/foo.jpg/" }) {
       childImageSharp {
-        sizes(maxWidth: 700) {
-          ...GatsbyImageSharpSizes_tracedSVG
+-        sizes(maxWidth: 700) {
+-          ...GatsbyImageSharpSizes_tracedSVG
++        fluid(maxWidth: 700) {
++          ...GatsbyImageSharpFluid_tracedSVG
         }
       }
     }
     bar: file(relativePath: { regex: "/bar.jpg/" }) {
       childImageSharp {
-        resolutions(width: 500) {
-          ...GatsbyImageSharpResolutions_withWebp
-        }
-      }
-    }
-  }
-`
-```
-
-After:
-
-```jsx{3-4,14-15,21-22}
-const Example = ({ data }) => {
-  <div>
-    <Img fluid={data.foo.childImageSharp.fluid} />
-    <Img fixed={data.bar.childImageSharp.fixed} />
-  </div>
-}
-
-export default Example
-
-export const pageQuery = graphql`
-  query IndexQuery {
-    foo: file(relativePath: { regex: "/foo.jpg/" }) {
-      childImageSharp {
-        fluid(maxWidth: 700) {
-          ...GatsbyImageSharpFluid_tracedSVG
-        }
-      }
-    }
-    bar: file(relativePath: { regex: "/bar.jpg/" }) {
-      childImageSharp {
-        fixed(width: 500) {
-          ...GatsbyImageSharpFixed_withWebp
+-        resolutions(width: 500) {
+-          ...GatsbyImageSharpResolutions_withWebp
++        fixed(width: 500) {
++          ...GatsbyImageSharpFixed_withWebp
         }
       }
     }
@@ -355,24 +309,18 @@ If your Gatsby v1 site included any polyfills, you can remove them. Gatsby v2 sh
 
 `modifyBabelrc` was renamed to [`onCreateBabelConfig`](/docs/node-apis/#modifyBabelrc) to bring it in line with the rest of Gatsby's API names.
 
-Before:
+Use `onCreateBabelConfig`:
 
-```js
-exports.modifyBabelrc = ({ babelrc }) => {
-  return {
-    ...babelrc,
-    plugins: babelrc.plugins.concat([`foo`]),
-  }
-}
-```
-
-After:
-
-```js
-exports.onCreateBabelConfig = ({ actions }) => {
-  actions.setBabelPlugin({
-    name: `babel-plugin-foo`,
-  })
+```diff
+- exports.modifyBabelrc = ({ babelrc }) => {
+-   return {
+-     ...babelrc,
+-     plugins: babelrc.plugins.concat([`foo`]),
+-   }
++ exports.onCreateBabelConfig = ({ actions }) => {
++   actions.setBabelPlugin({
++     name: `babel-plugin-foo`,
++   })
 }
 ```
 
@@ -384,32 +332,24 @@ See [Gatsby's babel docs for more details](/docs/babel) about configuring babel.
 
 `modifyWebpackConfig` was renamed to [`onCreateWebpackConfig`](/docs/node-apis/#onCreateWebpackConfig) to bring it in line with the rest of Gatsby's API names.
 
-Before:
+Use `onCreateWebpackConfig`:
 
-```js
-exports.modifyWebpackConfig = ({ config, stage }) => {
+```diff
+- exports.modifyWebpackConfig = ({ config, stage }) => {
++ exports.onCreateWebpackConfig = ({ stage, actions }) => {
   switch (stage) {
     case `build-javascript`:
-      config.plugin(`Foo`, webpackFooPlugin, null)
-      break
-  }
-  return config
+-       config.plugin(`Foo`, webpackFooPlugin, null)
+-       break
+-   }
+-   return config
++       actions.setWebpackConfig({
++         plugins: [webpackFooPlugin],
++       })
++   }
 }
 ```
 
-
-After:
-
-```js
-exports.onCreateWebpackConfig = ({ stage, actions }) => {
-  switch (stage) {
-    case `build-javascript`:
-      actions.setWebpackConfig({
-        plugins: [webpackFooPlugin],
-      })
-  }
-}
-```
 
 Note usage of the new [`setWebpackConfig` action](/docs/actions/#setWebpackConfig).
 
