@@ -9,6 +9,9 @@ import Layout from "../components/layout"
 import Img from "gatsby-image"
 
 import MdArrowUpward from "react-icons/lib/md/arrow-upward"
+import FeaturedIcon from "../assets/featured-detailpage-featuredicon.svg"
+import FeatherIcon from "../assets/showcase-feather.svg"
+import GithubIcon from "../assets/showcase-github.svg"
 
 const cleanUrl = mainUrl => {
   const parsed = url.parse(mainUrl)
@@ -181,15 +184,17 @@ class ShowcaseTemplate extends React.Component {
           </Link>
         }
       >
+        <div css={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <div>
           <Helmet>
             <title>{data.sitesYaml.title}</title>
           </Helmet>
-          <div css={{ padding: `20px`, paddingTop: `1px` }}>
+          <div css={{ padding: `20px`, paddingTop: `1px`, borderBottom: '1px solid #F5F3F7', paddingBottom: 15 }}>
             <h1>{data.sitesYaml.title}</h1>
             <a href={data.sitesYaml.main_url}>
               {cleanUrl(data.sitesYaml.main_url)}
             </a>
+
             {data.sitesYaml.built_by && (
               <span>
                 {` `}
@@ -204,14 +209,28 @@ class ShowcaseTemplate extends React.Component {
               </span>
             )}
           </div>
-          {data.sitesYaml.featured && <div>Featured</div>}
-          {data.sitesYaml.source_url && (
-            <div>
-              <a href={data.sitesYaml.source_url}>
-                Browse site source on GitHub
-              </a>
-            </div>
-          )}
+          <div css={{display: 'flex', borderBottom: '1px solid #F5F3F7'}}>
+            {data.sitesYaml.featured && <div css={{padding: '20px', display: 'flex', borderRight: '1px solid #F5F3F7'}}>
+              <img src={FeaturedIcon} alt="icon" css={{marginBottom: 0, marginRight: 10}} />
+              Featured
+              </div>}
+            {data.sitesYaml.source_url && (
+              <div  css={{padding: '20px', display: 'flex', borderRight: '1px solid #F5F3F7'}}>
+                <img src={GithubIcon} alt="icon" css={{marginBottom: 0, marginRight: 10}} />
+                <a href={data.sitesYaml.source_url}>
+                  Source
+                </a>
+              </div>
+            )}
+            {false && ( // TODO: NOT IMPLEMENTED YET!!!
+              <div  css={{padding: '20px', display: 'flex', borderRight: '1px solid #F5F3F7'}}>
+                <img src={FeatherIcon} alt="icon" css={{marginBottom: 0, marginRight: 10}} />
+                <a href={data.sitesYaml.source_url}>
+                  Case Study
+                </a>
+              </div>
+            )}
+          </div>
           <Img
             resolutions={
               data.sitesYaml.childScreenshot.screenshotFile.childImageSharp
@@ -227,12 +246,71 @@ class ShowcaseTemplate extends React.Component {
             <div>{data.sitesYaml.categories.join(`, `)}</div>
           </div>
         </div>
+        </div>
+        <PermalinkPageFooter
+          nextSite={nextSite}
+          previousSite={previousSite}
+          isModal={isModal}
+        />
       </Layout>
     )
   }
 }
 
 export default ShowcaseTemplate
+
+
+// TODO: the image dimensions here are 100x100, but the design calls for much larger. do we do it?
+function PermalinkPageFooter({nextSite, previousSite, isModal}) {
+  if (isModal) return null
+  return (
+    <div
+      css={{
+        display: 'flex',
+        borderTop: '1px solid #F5F3F7',
+        padding: 50,
+        paddingTop: 15
+      }}
+    >
+      <div css={{flex: 1}}>
+        <div css={{color: '#9B9B9B'}}>Previous</div>
+        <div css={{padding: '20px 0px'}}>
+          <Link to={{ pathname: previousSite.fields.slug, state: { isModal: false } }}>← {previousSite.title}</Link>
+        </div>
+        <Img
+            css={{
+              boxShadow: `0px 0px 38px -8px ${colors.gatsby}`,
+              width: '100%',
+              height: '100%',
+            }}
+            resolutions={
+              previousSite.childScreenshot.screenshotFile.childImageSharp
+                .resolutions
+            }
+            alt=""
+          />
+      </div>
+      <div css={{flex: 1}}>
+        <div css={{color: '#9B9B9B'}}>Next</div>
+        <div css={{padding: '20px 0px'}}>
+          <Link to={{ pathname: nextSite.fields.slug, state: { isModal: false } }}>{nextSite.title} →</Link>
+        </div>
+        <Img
+            css={{
+              boxShadow: `0px 0px 38px -8px ${colors.gatsby}`,
+              width: '100%',
+              height: '100%',
+            }}
+            resolutions={
+              nextSite.childScreenshot.screenshotFile.childImageSharp
+                .resolutions
+            }
+            alt=""
+          />
+      </div>
+    </div>
+  )
+}
 
 export const pageQuery = graphql`
   query TemplateShowcasePage($slug: String!) {
