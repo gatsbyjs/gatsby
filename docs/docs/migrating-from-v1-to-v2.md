@@ -8,17 +8,19 @@ title: Migrating from v1 to v2
 
 This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While there's a lot covered here, you probably won't need to do everything for your site.
 
-Let's start with the most important two steps - install React and update your layout components:
+Let's start with a few of the most important steps - install peer dependencies and update your layout components.
 
-## Install React, ReactDOM, and each plugins’ peer dependencies manually
+## Manually install React
 
-In v1, React and ReactDOM were magically resolved. This “feature” has been removed and you are now required to install them manually.
+In v1, React and ReactDOM were magically resolved. This “feature” has been removed and you are now required to install them manually:
 
 ```bash
 npm i react react-dom
 ```
 
-Depending on the plugins you use, there may be more dependencies you need to install. For example: if you use typography.js, you now also need to install its dependencies.
+## Manually install plugins’ peer dependencies
+
+Depending on the plugins you use, there may be more dependencies you need to install. For example: if you use [`gatsby-plugin-typography`](https://www.gatsbyjs.org/packages/gatsby-plugin-typography/), you now also need to install its dependencies:
 
 ```bash
 npm i typography react-typography
