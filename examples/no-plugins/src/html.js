@@ -41,4 +41,4 @@ class Html extends Component {
 
 Html.propTypes = propTypes
 
-module.exports = Html
+export default Html

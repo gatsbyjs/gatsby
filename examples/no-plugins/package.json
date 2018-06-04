@@ -5,8 +5,10 @@
   "version": "1.0.0",
   "author": "Scotty Eckenthal <scott.eckenthal@gmail.com>",
   "dependencies": {
-    "gatsby": "latest",
+    "gatsby": "next",
     "lodash": "^4.16.4",
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0",
     "slash": "^1.0.0"
   },
   "keywords": [
