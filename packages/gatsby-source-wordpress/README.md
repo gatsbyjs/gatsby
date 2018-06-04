@@ -97,6 +97,10 @@ plugins: [
       // Example:  `["/*/*/comments", "/yoast/**"]` will exclude routes ending in `comments` and
       // all routes that begin with `yoast` from fetch.
       excludedRoutes: ["/*/*/comments", "/yoast/**"],
+      // use a custom normalizer which is applied after the built-in ones.
+      normalizer: function({ entities }) {
+        return entities;
+      },
     },
   },
 ];
@@ -503,6 +507,55 @@ To learn more about image processing check
 * documentation of [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/),
 * source code of [image processing example
   site](https://github.com/gatsbyjs/gatsby/tree/master/examples/image-processing).
+  
+### Using a custom normalizer
+
+The plugin uses the concept of normalizers to transform the json data from WordPress into 
+GraphQL nodes. You can extend the normalizers by passing a custom function to your `gatsby-config.js`.
+
+#### Example:
+
+You have a custom post type `movie` and a related custom taxonomy `genre` in your WordPress site. Since 
+`gatsby-source-wordpress` doesn't know about the relation of the two, we can build an additional normalizer function to map the movie GraphQL nodes to the genre nodes: 
+
+```javascript
+function mapMoviesToGenres({ entities }) {
+  const genres = entities.filter(e => e.__type === `wordpress__wp_genre`);
+
+  return entities.map(e => {
+    if (e.__type === `wordpress__wp_movie`) {
+      let hasGenres = e.genres && Array.isArray(e.genres) && e.categories.length;
+      // Replace genres with links to their nodes.
+      if (hasGenres) {
+        e.genres___NODE = e.genres.map(c => genres.find(gObj => c === gObj.wordpress_id).id);
+        delete e.genres;
+      }
+    }
+    return e;
+  });
+  
+  return entities;
+}
+```
+
+In your `gatsby-config.js` you can then pass the function to the plugin options:
+
+```javascript
+module.exports = {
+  plugins: [
+    {
+      resolve: 'gatsby-source-wordpress',
+      options: {
+        // ...
+        normalizer: mapMoviesToGenres,
+      },
+    },
+  ],
+};
+```
+
+Next to the entities, the object passed to the custom normalizer function also contains other helpful Gatsby functions 
+and also your `wordpress-source-plugin` options from `gatsby-config.js`. To learn more about the passed object see the [source code](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/src/gatsby-node.js).
 
 ## Site's `gatsby-node.js` example
 
