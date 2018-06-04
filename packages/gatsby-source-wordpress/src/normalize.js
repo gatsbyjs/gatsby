@@ -56,17 +56,6 @@ function getValidKey({ key, verbose = false }) {
 
 exports.getValidKey = getValidKey
 
-// Append wordpress_id to wp settings object
-const normalizeWpSettings = entities =>
-  entities.map(e => {
-    if (e.__type === `wordpress__wp_settings`) {
-      e.wordpress_id = 1
-    }
-    return e
-  })
-
-exports.normalizeWpSettings = normalizeWpSettings
-
 // Remove the ACF key from the response when it's not an object
 const normalizeACF = entities =>
   entities.map(e => {
@@ -149,11 +138,15 @@ exports.liftRenderedField = entities =>
 
 // Exclude entities of unknown shape
 exports.excludeUnknownEntities = entities =>
-  entities.filter(e => e.wordpress_id) // Excluding entities without ID
+  entities.filter(e => e.wordpress_id || e.__type === `wordpress__wp_settings`) // Excluding entities without ID, or WP Settings
 
 exports.createGatsbyIds = (createNodeId, entities) =>
   entities.map(e => {
-    e.id = createNodeId(`${e.__type}-${e.wordpress_id.toString()}`)
+    if (e.wordpress_id) {
+      e.id = createNodeId(`${e.__type}-${e.wordpress_id.toString()}`)
+    } else {
+      e.id = createNodeId(e.__type)
+    }
     return e
   })
 

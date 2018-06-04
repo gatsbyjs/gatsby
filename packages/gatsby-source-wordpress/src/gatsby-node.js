@@ -60,9 +60,6 @@ exports.sourceNodes = async (
 
   // Normalize data & create nodes
 
-  // Append wordpress_id to wp settings object
-  entities = normalize.normalizeWpSettings(entities)
-
   // Remove ACF key if it's not an object
   entities = normalize.normalizeACF(entities)
 
