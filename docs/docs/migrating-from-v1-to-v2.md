@@ -292,6 +292,7 @@ Gatsby v2 uses babel 7 which is stricter about parsing files with mixed JS style
 ES6 Modules are ok:
 
 ```js
+// GOOD: ES modules syntax works
 import foo from "foo"
 export default foo
 ```
@@ -299,18 +300,21 @@ export default foo
 CommonJS is ok:
 
 ```js
+// GOOD: CommonJS syntax works
 const foo = require('foo');
 module.exports = foo;
 ```
 
 Mixing `requires` and `export` is not ok:
 ```js
+// BAD: Mixed ES and CommonJS module syntax will cause failures
 const foo = require('foo');
 export default foo
 ```
 
 Mixing `import` and `module.exports` is not ok:
 ```js
+// BAD: Mixed ES and CommonJS module syntax will cause failures
 import foo from "foo"
 module.exports = foo;
 ```
