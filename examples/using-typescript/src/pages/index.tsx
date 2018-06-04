@@ -23,13 +23,12 @@ export const pageQuery = graphql`
 `
 
 export default ({ data }: IndexPageProps) => {
-  const { siteName } = data.site.siteMetadata;
+  const { siteName } = data.site.siteMetadata
   return (
     <Layout>
       <h1>Hello Typescript world!</h1>
       <p>
-        This site is named{" "}
-        <strong>{siteName}</strong>
+        This site is named <strong>{siteName}</strong>
       </p>
     </Layout>
   )
