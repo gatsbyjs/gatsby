@@ -1,23 +1,21 @@
 jest.mock(`../resolve`, () => module => `/resolved/path/${module}`)
 
-const babelPluginRemoveQueries = require(`babel-plugin-remove-graphql-queries`)
-  .default
 const {
   resolvableExtensions,
-  onCreateWebpackConfig
+  onCreateWebpackConfig,
 } = require(`../gatsby-node`)
 const { tsPresetsFromJsPresets } = require(`../`)
 const tsPresetPath = `/resolved/path/@babel/preset-typescript`
 const jsOptions = {
   options: {
     presets: [
-      ["@babel/preset-env"],
-      ["@babel/preset-react"],
-      ["@babel/preset-flow"],
+      [`@babel/preset-env`],
+      [`@babel/preset-react`],
+      [`@babel/preset-flow`],
     ],
-    plugins: ["babel-plugin-remove-graphql-queries"],
+    plugins: [`babel-plugin-remove-graphql-queries`],
   },
-  loader: "/resolved/path/babel-loader",
+  loader: `/resolved/path/babel-loader`,
 }
 
 describe(`tsPresetsFromJsPresets`, () => {
@@ -26,11 +24,11 @@ describe(`tsPresetsFromJsPresets`, () => {
     expect(tsPresetsFromJsPresets(presets)).toEqual([tsPresetPath])
   })
   it(`replaces preset-flow if it's last`, () => {
-    const presets = ["@babel/preset-flow"]
+    const presets = [`@babel/preset-flow`]
     expect(tsPresetsFromJsPresets(presets)).toEqual([tsPresetPath])
   })
   it(`appends if preset-flow is not last`, () => {
-    const presets = [["@babel/preset-flow"], ["@babel/preset-foo"]]
+    const presets = [[`@babel/preset-flow`], [`@babel/preset-foo`]]
     expect(tsPresetsFromJsPresets(presets)).toEqual(
       presets.concat([tsPresetPath])
     )
@@ -39,11 +37,6 @@ describe(`tsPresetsFromJsPresets`, () => {
 
 describe(`gatsby-plugin-typescript`, () => {
   let args
-
-  function getLoader() {
-    const call = args.actions.setWebpackConfig.mock.calls[0]
-    return call[0].module.rules[0]
-  }
 
   beforeEach(() => {
     const actions = {

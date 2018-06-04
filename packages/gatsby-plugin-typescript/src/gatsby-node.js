@@ -1,9 +1,6 @@
-const resolve = require(`./resolve`)
 const { tsPresetsFromJsPresets } = require(`./`)
 
-const resolvableExtensions = () => {
-  return [`.ts`, `.tsx`]
-}
+const resolvableExtensions = () => [`.ts`, `.tsx`]
 
 function onCreateWebpackConfig({ actions, loaders, stage }) {
   const jsLoader = loaders.js()
@@ -15,7 +12,7 @@ function onCreateWebpackConfig({ actions, loaders, stage }) {
       jsLoader.options.presets
     )
   ) {
-    return undefined
+    return
   }
   actions.setWebpackConfig({
     module: {
