@@ -2,7 +2,30 @@
 title: "Gatsby E-Commerce Tutorial"
 ---
 
+# Table of Contents
+1. [What this tutorial includes](#what-this-tutorial-includes)
+2. [Prerequisites](#prerequisites)
+3. [How does Gatsby work with Stripe and AWS?](#how-does-gatsby-work-with-stripe-and-AWS)
+4. [Setting up a Gatsby site](#setting-up-a-gatsby-site)
+5. [Extending Gatsby through an e-commerce plugin](#extending-gatsby-through-an-ecommerce-plugin)
+6. [See your site hot reload in the browser!](#see-your-site-hot-reload-in-the-browser)
+7. [How does the plugin work?](#how-does-the-plugin-work)
+8. [Sequence of events](#sequence-of-events)
+9. [Creating a button](#creating-a-button)
+10. [Get Your Stripe Test Keys](#get-your-stripe-test-keys)
+11. [Configuring Stripe in Gatsby](#configuring-stripe-in-gatsby)
+13. [Setting up a Serverless Function in AWS Lambda](#setting-up-a-serverless-function-in-aws-lambda)
+14. [Setup a separate repo](#setup-a-separate-repo)
+15. [Edit your new repo](#edit-your-new-repo)
+16. [Push code to AWS](#push-code-to-AWS)
+17. [Testing Payments](#testing-payments)
+
+
+
+
+
 # What this tutorial includes
+
 In this tutorial, you’ll learn how to use Gatsby to build the UI for a basic e-commerce site that can accept payments, with Stripe as the backend for processing payments. Benefits of using Gatsby for e-commerce sites include the following:
 * Security inherent in static sites
 * Blazing fast performance when your pages are converted from React into static files
@@ -10,8 +33,13 @@ In this tutorial, you’ll learn how to use Gatsby to build the UI for a basic e
 
 You can see the working demo hosted here: https://gatsby-ecommerce.netlify.com/
 
+# Prerequisites
 
-# Background on Stripe
+* Stripe account: [register for an account here](https://dashboard.stripe.com/register)
+* AWS account (free tier that covers anywhere from several thousand to a million requests per month): [register for an account here](https://aws.amazon.com/free/?sc_channel=PS&sc_campaign=acquisition_US&sc_publisher=google&sc_medium=cloud_computing_b&sc_content=aws_account_e_control_q32016&sc_detail=create%20an%20aws%20account&sc_category=cloud_computing&sc_segment=102882721242&sc_matchtype=e&sc_country=US&s_kwcid=AL!4422!3!102882721242!e!!g!!create%20an%20aws%20account&ef_id=Wd_k7wAAAVgVBk9m:20180604172833:s)
+
+
+# How does Gatsby work with Stripe and AWS?
 
 Stripe is a payment processing service that allows you to securely collect and process payment information from your customers. To try out Stripe for yourself, go to [Stripe’s Quick Start Guide](https://stripe.com/docs/quickstart).
 
@@ -22,10 +50,6 @@ Stripe requires a server to process the information to make a charge, so you’l
 That function can be set up a number of different ways. To set up that function from scratch, you could:
 * Write your own simple server and deploy it somewhere, making it accessible via an endpoint
 * Write and deploy a hosted serverless function through a service like AWS Lambda or Google Cloud
-
-For this tutorial, you’ll use a serverless function (through AWS Lambda, though the steps in this tutorial will allow you to deploy to other cloud services in almost the same way). You also benefit from not having to keep a server running, because you only pay for the server time you use. Many companies that provide the ability to deploy serverless functions have a free tier that covers anywhere from several thousand to a million requests per month.
-
-[Insert a diagram showing a request flowing from Your static Gatsby site ===> Your serverless function ===> Stripe's servers and back again]
 
 
 # Setting up a Gatsby site
@@ -38,7 +62,7 @@ cd ecommerce-gatsby-tutorial
 ```
 
 
-## Extending Gatsby through an e-commerce plugin
+# Extending Gatsby through an e-commerce plugin
 
 You can extend the functionality of this default starter with plugins. One such plugin is `gatsby-plugin-stripe-checkout`, which you’ll install in this project:
 
@@ -58,14 +82,14 @@ module.exports = {
 ```
 
 
-## See your site hot reload in the browser!
+# See your site hot reload in the browser!
 
 Run `gatsby develop` in the terminal, which starts a development server and reloads changes you make to your site so you can preview them in the browser. Open up your browser to [localhost:8000](localhost:8000) and you should see a default homepage.
 
 > **NOTE**: If you have already started your gatsby development server using `gatsby develop`, you will need to restart the server by pressing CTRL + C in the terminal where the command was run and running `gatsby develop` again to see changes in your `gatsby-config.js` reflected on [localhost:8000](localhost:8000)
 
 
-## How does the plugin work?
+# How does the plugin work?
 
 Stripe Checkout processes payments with information we send it, you can read more about how it works in Stripe’s docs. The Gatsby plugin, `gatsby-plugin-stripe-checkout`, will add this snippet:
 
@@ -78,7 +102,7 @@ to the end of the `<body>` tag across all of your pages in your Gatsby project, 
 If you want to further customise the checkout process or pull Stripe data into your site, check out [Gatsby's plugin library for more Stripe plugins](https://www.gatsbyjs.org/plugins/?=stripe).
 
 
-## Sequence of events
+# Sequence of events
 
 `configure()` sets up Stripe and automatically runs every time the page loads. Then you run `open()` when the buy button is clicked, which then triggers the Stripe payment overlay to open.
 
@@ -91,7 +115,7 @@ Essentially, this is the sequence of events:
 The next section describes how to setup these events.
 
 
-## Creating a button
+# Creating a button
 
 There is a default checkout modal that is available through the plugin we’re using, shown in the image below. When we call the `.open()` method through Stripe Checkout, the rest of the screen is darkened and a modal appears over the top, directing the user’s attention to the checkout form. You’ll need to create a button component that calls this method or triggers Stripe from your site.
 
@@ -236,7 +260,7 @@ The `openStripeCheckout()` function gives additional information to Stripe as a 
 The tags in the `render()` function define the structure of HTML elements that lay out how the component is structured.
 
 
-## Import checkout component into homepage
+# Import checkout component into homepage
 
 Now go to your `src/pages/index.js` file. This is your homepage that shows at the root URL. Import your new checkout component in the file underneath the other two imports and replace the tags inside the first `<div>` tag with a `<Checkout />` tag. Your `index.js` file should now look like this: 
 
@@ -258,9 +282,9 @@ export default IndexPage
 If you go back to [localhost:8000](localhost:8000) in your browser and you have `gatsby develop` running, you should have a big, enticing button on a card where the filler text used to be.
 
 
-# Setting Up Your Stripe Account
+# Get Your Stripe Test Keys
 
-Stripe requires an account to use the API. To register for a Stripe account, go to the Stripe registration page. Once you have an account, you can view your API credentials by logging into your account, and then going to Developers > API Keys. 
+View your API credentials by logging into your Stripe account, and then going to Developers > API Keys. 
 
 ![Stripe public test key location in Stripe account](stripe-public-test-key.png)
 
@@ -271,7 +295,7 @@ You have 2 keys in both test mode and production mode:
 While testing, you can use the keys that begins with pk_test_ and sk_test_. For production code, you will want to use the keys that don’t say test. As the names imply, your publishable key may be included in code that you share publicly (for example, in GitHub), whereas your secret key should not be shared with anyone or committed to any public repo. It’s important to restrict access to this secret key because anyone who has it could potentially read or send requests from your Stripe account and see information about charges or purchases or even refund customers.
 
 
-## Configuring Stripe in Gatsby
+# Configuring Stripe in Gatsby
 
 Add your Stripe publishable key to `src/components/checkout.js`.
 
@@ -294,21 +318,15 @@ After you replace `pk_test_YOUR_KEY_HERE` with your actual pk_test key and save 
 
 
 # Setting up a Serverless Function in AWS Lambda
+
 Lambda is a service offered through Amazon Web Services that allows you to run code that would normally run on a server without having to provision or manage servers. For a simple function like a Stripe charge, Lambda will suit your use case nicely. AWS offers many options for configurations; you are going to use the Serverless Framework to help you minimize the steps to deployment, and also allow you to deploy to other cloud providers if needed.
 
 > **NOTE**: You can follow an adaptation of these steps using this tutorial and Serverless’ docs as a reference if you want to deploy your serverless function to a different provider like Google Cloud or Azure.
 
 
-## Set up an account through AWS
+# Setup a separate repo
 
-Before you can set up a serverless function in AWS Lambda, you need an account through AWS. If you don’t already have an account there that you’d like to use, follow these instructions to create an account through AWS. The free tier allows 1 million requests per month. 
-
-
-## Set up a separate repo
-
-You’ll be setting up a separate repo for the code that you’ll deploy to Lambda. To look through the example repo, inspect the code in GitHub.
-
- 
+You’ll be setting up a separate repo for the code that you’ll deploy to Lambda. To look through the example repo, [inspect the code in GitHub](https://github.com/gillkyle/gatsby-stripe-serverless-backend).
 
 Clone the code to a new location on your computer and then change directories into this new folder: 
 
@@ -329,7 +347,7 @@ npm install
 By running `npm install`, you’ve created a node_modules folder that you’ll upload to AWS along with your code to make a charge. All of the code in this file will be hosted online by Amazon, and you need to provide it with the libraries you utilize in your project. By making this repository separate from our Gatsby project, we can decouple it from our site making it easier to switch to a different cloud hosting provider, and greatly decreasing the size of the files we upload to Amazon’s servers.
 
 
-## Edit your new repo
+# Edit your new repo
 
 Open gatsby-stripe-serverless-backend in your code editor.
 
@@ -422,7 +440,7 @@ A few things happen with `stripe.charges.create()`: it takes an object as an arg
 If the charge was successful, the code continues into the `then` block and prepares a successful response. If something went wrong, an error response is made and then that response (whether successful or not) is returned in the callback.
 
 
-## Push code to AWS
+# Push code to AWS
 
 Now you need to push your code up to AWS so we can hook it up to your Gatsby site.
 
@@ -432,41 +450,6 @@ Serverless is a CLI tool that helps speed up the development of serverless funct
 
 You can read more about the configurations you’ll use in the `serverless.yml` file in the repo you just cloned or in the Serverless docs. 
 
-`Serverless.yml`
-```
-# Welcome to serverless. Read the docs
-# https://serverless.com/framework/docs/
-
-# Serverless.yml is the configuration the CLI
-# uses to deploy your code to your provider of choice
-
-# The `service` block is the name of the service
-service: gatsby-serverless-stripe
-
-# Configuration variables
-custom:
- secrets: ${file(secrets.json)}
-
-# The `provider` block defines where your service will be deployed
-provider:
- name: aws
- runtime: nodejs6.10
- stage: dev
- environment:
-   STRIPE_SECRET_KEY: ${self:custom.secrets.stripeSecretKey} # Stripe secret API key
-
-# The `functions` block defines what code to deploy
-functions:
- checkout:
-   handler: checkout.handler
-   # The `events` block defines how to trigger the handler.createCharge code
-   events:
-     - http:
-         path: checkout
-         method: post
-         cors: true
-
-```
 
 ## Configure serverless with your AWS credentials
 
@@ -543,6 +526,7 @@ openStripeCheckout(event) {
 Now you have all the pieces in place!
 
 # Testing Payments
+
 You can test that your function is working by using this test credit card number offered by Stripe specifically for testing: 4242 4242 4242 4242, with any future date of expiration, any email, and any 3 digit CVC code.
 
 Logs of the Stripe code can be viewed in the terminal. In your `gatsby-stripe-serverless-backend` project, run the command `serverless logs -f <function-name> -t` with the name of your function instead of <function-name>. If you didn’t change anything in the `serverless.yml` file your function should be called checkout, like so: `serverless logs -f checkout -t`.
