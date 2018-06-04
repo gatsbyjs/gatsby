@@ -35,7 +35,7 @@ module.exports = async (
   const rawHtmlNodes = select(markdownAST, `html`)
 
   const generateImagesAndUpdateNode = async function(node, resolve) {
-    // Ingonre if it is not contentful image
+    // Ignore if it is not contentful image
     if (node.url.indexOf(`images.ctfassets.net`) === -1) {
       return resolve()
     }
@@ -67,6 +67,7 @@ module.exports = async (
     const presentationWidth = responsiveSizesResult.presentationWidth
 
     // Generate default alt tag
+    const originalImg = node.url
     const srcSplit = node.url.split(`/`)
     const fileName = srcSplit[srcSplit.length - 1]
     const fileNameNoExt = fileName.replace(/\.[^/.]+$/, ``)
@@ -100,6 +101,30 @@ module.exports = async (
     </span>
   </span>
   `
+   // Make linking to original image optional.
+   if (options.linkImagesToOriginal) {
+    rawHTML = `
+<a
+  class="gatsby-resp-image-link"
+  href="${originalImg}"
+  style="display: block"
+  target="_blank"
+  rel="noopener"
+>
+${rawHTML}
+</a>
+  `
+  }
+
+  // Wrap in figure and use title as caption
+
+  if (options.showCaptions && node.title) {
+    rawHTML = `
+<figure class="gatsby-resp-image-figure">
+${rawHTML}
+<figcaption class="gatsby-resp-image-figcaption">${node.title}</figcaption>
+</figure>`
+  }
     return rawHTML
   }
   return Promise.all(
@@ -107,8 +132,6 @@ module.exports = async (
     markdownImageNodes.map(
       node =>
         new Promise(async (resolve, reject) => {
-          // Ignore gifs as we can't process them,
-          // svgs as they are already responsive by definition
           if (node.url.indexOf(`images.ctfassets.net`) !== -1) {
             const rawHTML = await generateImagesAndUpdateNode(node, resolve)
 
