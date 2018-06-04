@@ -10,6 +10,7 @@ This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While t
 
 ## What we'll cover
 
+* [Update Gatsby version](/docs/migrating-from-v1-to-v2/#update-gatsby-version)
 * [Manually install React](/docs/migrating-from-v1-to-v2/#manually-install-react)
 * [Manually install plugins’ peer dependencies](/docs/migrating-from-v1-to-v2/manually-install-plugins-peer-dependencies)
 * [Update layout component](/docs/migrating-from-v1-to-v2/#update-layout-component)
@@ -24,7 +25,23 @@ This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While t
 * [Change `modifyWebpackConfig` to `onCreateWebpackConfig`](/docs/migrating-from-v1-to-v2/#change-modifywebpackconfig-to-oncreatewebpackconfig)
 * [Remove inlined CSS in `html.js`](/docs/migrating-from-v1-to-v2/#remove-inlined-css-in-htmljs)
 
-You can start with a few of the most important steps - install peer dependencies and update your layout components.
+You can start with a few of the most important steps - install Gatsby v2 dependencies and update your layout components.
+
+## Update Gatsby version
+
+Update your `package.json` to use the pre-release versions of Gatsby and any related packages.
+
+package.json:
+
+```json
+"dependencies": {
+  "gatsby": "next",
+  "gatsby-image": "next",
+  "gatsby-plugin-sharp": "next"
+}
+```
+
+> Note: Gatsby v2 is in pre-release so you may encounter further breaking changes.
 
 ## Manually install React
 
