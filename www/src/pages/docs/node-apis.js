@@ -6,7 +6,7 @@ import Functions from "../../components/function-list"
 import { rhythm, scale } from "../../utils/typography"
 import Layout from "../../components/layout"
 import Container from "../../components/container"
-import docsSidebar from "../../pages/docs/doc-links.yaml"
+import docsSidebar from "../../data/sidebars/doc-links.yaml"
 
 class NodeAPIDocs extends React.Component {
   render() {
@@ -24,16 +24,16 @@ class NodeAPIDocs extends React.Component {
             Gatsby Node APIs
           </h1>
           <p>
-            Gatsby gives plugins and site builders many APIs for controlling your
-            site.
+            Gatsby gives plugins and site builders many APIs for controlling
+            your site.
           </p>
           <h3>Async plugins</h3>
           <p>
             If your plugin performs async operations (disk I/O, database access,
-            calling remote APIs, etc.) you must either return a promise or use the
-            callback passed to the 3rd argument. Gatsby needs to know when plugins
-            are finished as some APIs, to work correctly, require previous APIs to
-            be complete first.
+            calling remote APIs, etc.) you must either return a promise or use
+            the callback passed to the 3rd argument. Gatsby needs to know when
+            plugins are finished as some APIs, to work correctly, require
+            previous APIs to be complete first.
           </p>
           <pre>
             <code

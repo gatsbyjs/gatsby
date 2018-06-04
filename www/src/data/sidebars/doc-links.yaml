@@ -58,6 +58,8 @@
       link: /docs/netlify-cms/
     - title: How Gatsby Works with GitHub Pages
       link: /docs/how-gatsby-works-with-github-pages/
+    - title: Migrating from v1 to v2
+      link: /docs/migrating-from-v1-to-v2/
     - title: Migrating from v0 to v1
       link: /docs/migrating-from-v0-to-v1/
     - title: Path Prefix

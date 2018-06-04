@@ -6,7 +6,7 @@ import Functions from "../../components/function-list"
 import { rhythm, scale } from "../../utils/typography"
 import Layout from "../../components/layout"
 import Container from "../../components/container"
-import docsSidebar from "../../pages/docs/doc-links.yaml"
+import docsSidebar from "../../data/sidebars/doc-links.yaml"
 
 class ActionCreatorsDocs extends React.Component {
   render() {

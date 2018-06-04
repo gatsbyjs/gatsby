@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-fullstory",
-  "version": "1.0.4-6",
+  "version": "1.0.4-7",
   "description": "Plugin to add the tracking code for Fullstory.com",
   "main": "index.js",
   "scripts": {
@@ -23,11 +23,11 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@babel/runtime": "7.0.0-beta.49"
+    "@babel/runtime": "7.0.0-beta.47"
   },
   "devDependencies": {
-    "@babel/cli": "7.0.0-beta.49",
-    "@babel/core": "7.0.0-beta.49",
+    "@babel/cli": "7.0.0-beta.47",
+    "@babel/core": "7.0.0-beta.47",
     "cross-env": "^5.1.4"
   }
 }
