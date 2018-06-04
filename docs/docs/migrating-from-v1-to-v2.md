@@ -268,7 +268,7 @@ Use [`onCreateWebpackConfig`](/docs/add-custom-webpack-config) to specify your p
 
 Note: there will be a `postcss` plugin that allows you to configure postcss from a standard postcss config file. [Follow this discussion on issue 3284](https://github.com/gatsbyjs/gatsby/issues/3284).
 
-## Files mixing CommonJS with ES6 modules won't compile
+## Convert to either pure CommonJS or pure ES6
 
 Gatsby v2 uses babel 7 which is stricter about parsing files with mixed JS styles.
 
@@ -376,7 +376,7 @@ Note usage of the new [`setWebpackConfig` action](/docs/actions/#setWebpackConfi
 
 See [Gatsby's webpack docs for more details](/docs/add-custom-webpack-config) about configuring webpack.
 
-## CSS is inlined automatically
+## Remove inlined CSS in `html.js`
 
 Gatsby v2 automatically inlines CSS. Gatsby v1 required you to create a [custom `html.js` file](/docs/custom-html) to do this. You can remove any custom CSS inlining from your custom `html.js`, in many cases this allows you to completely remove your `html.js` file.
 
