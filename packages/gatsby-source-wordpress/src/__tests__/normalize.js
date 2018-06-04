@@ -57,6 +57,16 @@ describe(`Process WordPress data`, () => {
       { id: 2, acf: {} },
     ])
   })
+  it(`Append wordpress_id to wp settings object`, () => {
+    let dummyEntities = [
+      { wordpress_id: 1, __type: `wordpress__POST` },
+      { __type: `wordpress__wp_settings` },
+    ]
+    expect(normalize.normalizeWpSettings(dummyEntities)).toEqual([
+      { wordpress_id: 1, __type: `wordpress__POST` },
+      { wordpress_id: 1, __type: `wordpress__wp_settings` },
+    ])
+  })
 
   // Actually let's not test this since it's a bit tricky to mock
   // as it needs access to the store/cache + would download file.
