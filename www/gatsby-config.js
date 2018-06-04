@@ -102,6 +102,12 @@ module.exports = {
       },
     },
     {
+      resolve: `gatsby-plugin-google-analytics`,
+      options: {
+        trackingId: `UA-93349937-5`,
+      },
+    },
+    {
       resolve: `gatsby-plugin-fullstory`,
       options: {
         fs_org: `B2TRP`,
