@@ -119,12 +119,12 @@ import React, { Fragment } from "react"
 import Helmet from "react-helmet"
 
 export default ({ children, data }) => (
-  <Fragment>
+  <>
     <Helmet titleTemplate={`%s | ${data.site.siteMetadata.title}`} defaultTitle={data.site.siteMetadata.title} />
     <div>
       {children()}
     </div>
-  </Fragment>
+  </>
 )
 
 export const query = graphql`
@@ -156,12 +156,12 @@ export default ({ children }) => (
       }
     `}
     render={data => (
-      <Fragment>
+      <>
         <Helmet titleTemplate={`%s | ${data.site.siteMetadata.title}`} defaultTitle={data.site.siteMetadata.title} />
         <div>
           {children}
         </div>
-      </Fragment>
+      </>
     )}
   />
 )
