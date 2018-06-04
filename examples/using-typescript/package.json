@@ -10,10 +10,17 @@
     "build": "gatsby build"
   },
   "dependencies": {
-    "@types/node": "^8.0.7",
-    "@types/react": "15.0.21",
-    "@types/react-dom": "0.14.23",
-    "gatsby": "latest",
-    "gatsby-plugin-typescript": "latest"
+    "@babel/preset-typescript": "7.0.0-beta.47",
+    "@types/node": "^10.1.4",
+    "@types/react": "16.3.14",
+    "@types/react-dom": "16.0.5",
+    "gatsby": "file:./../../packages/gatsby",
+    "gatsby-plugin-typography": "file:./../../packages/gatsby-plugin-typography",
+    "gatsby-plugin-typescript": "file:./../../packages/gatsby-plugin-typescript",
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0",
+    "react-typography": "^0.16.13",
+    "typography": "^0.16.17",
+    "typography-theme-bootstrap": "^0.16.7"
   }
 }

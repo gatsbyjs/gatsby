@@ -5,7 +5,7 @@
     ],
     "jsRules": {},
     "rules": {
-        "interface-name": [ "never-prefix" ],
+        "interface-name": false,
         "member-access": [
             false
         ],
@@ -15,7 +15,8 @@
         "no-console": [
             false
         ],
-        "no-var-requires": false
+        "no-var-requires": false,
+        "quotemark": [true, "single", "jsx-double"],
     },
     "rulesDirectory": []
 }
