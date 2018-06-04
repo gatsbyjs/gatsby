@@ -5,6 +5,7 @@ import { Link } from "gatsby"
 import Img from "gatsby-image"
 
 import Layout from "../components/layout"
+import SearchIcon from "../components/search-icon"
 //import FuturaParagraph from "../components/futura-paragraph"
 //import Container from "../components/container"
 import { /* options, rhythm, */ scale } from "../utils/typography"
@@ -14,6 +15,7 @@ import FaAngleDown from "react-icons/lib/fa/angle-down"
 import FaAngleUp from "react-icons/lib/fa/angle-up"
 
 import Fuse from "fuse.js"
+import FeaturedSitesIcon from "../assets/featured-sites-icons.svg"
 
 // TODO: make sure to use colors
 
@@ -55,7 +57,7 @@ const ShowcaseList = ({ items, count }) => {
 
   return (
     <div css={{ display: `flex`, flexWrap: `wrap` }}>
-      {items.map(({ node }) => (
+      {items.map(({ node }) => node.fields && ( // have to filter out null fields from bad data
         <Link
           key={node.id}
           to={{ pathname: node.fields.slug, state: { isModal: true } }}
@@ -84,6 +86,8 @@ const ShowcaseList = ({ items, count }) => {
             <div
               css={{
                 ...scale(-2 / 5),
+                color: '#9B9B9B',
+                fontWeight: 'normal'
               }}
             >
               {node.categories && node.categories.join(`, `)}
@@ -115,11 +119,11 @@ class Collapsible extends Component {
         <div
           css={{
             overflow: `hidden`,
-            height: this.state.collapsed ? `0px` : `250px`,
+            height: this.state.collapsed ? `0px` : `500px`,
             transition: `height 0.2s`,
           }}
         >
-          <div css={{ overflow: `scroll`, height: `250px` }}>{children}</div>
+          <div css={{ overflow: `scroll`, height: `500px` }}>{children}</div>
         </div>
       </div>
     )
@@ -228,7 +232,7 @@ class FilteredShowcase extends Component {
           </Collapsible>
         </div>
         <div>
-          <div css={{ display: `flex` }}>
+          <div css={{ display: `flex`, alignItems: 'center' }}>
             <h2 css={{ flexGrow: 1 }} id="search-heading">
               {this.state.search.length === 0 ? (
                 filters.size === 0 ? (
@@ -250,27 +254,57 @@ class FilteredShowcase extends Component {
               )}
             </h2>
             <div>
-              <input
-                type="text"
-                value={this.state.search}
-                onChange={e =>
-                  this.setState({
-                    search: e.target.value,
-                  })
-                }
-                placeholder="search"
-              />
+              <label css={{ position: `relative` }}>
+                <input
+                  css={{
+                    paddingLeft: '1.4rem'
+                  }}
+                  type="text"
+                  value={this.state.search}
+                  onChange={e =>
+                    this.setState({
+                      search: e.target.value,
+                    })
+                  }
+                  placeholder="Search"
+                />
+                <SearchIcon
+                  overrideCSS={{
+                    // ...iconStyles,
+                    // fill: focussed && colors.gatsby,
+                    position: `absolute`,
+                    left: `5px`,
+                    top: `50%`,
+                    width: `16px`,
+                    height: `16px`,
+                    pointerEvents: `none`,
+                    // transition: `fill ${speedDefault} ${curveDefault}`,
+                    transform: `translateY(-50%)`,
+
+                    // [presets.Hd]: {
+                    //   fill: focussed && isHomepage && colors.gatsby,
+                    // },
+                  }}
+                />
+              </label>
             </div>
           </div>
           <ShowcaseList items={items} count={this.state.sitesToShow} />
           {this.state.sitesToShow < items.length && (
             <button
+              css={{
+                backgroundColor: '#663399',
+                color: 'white',
+                padding: '5px 10px',
+                marginTop: 15
+              }}
               onClick={() => {
                 this.setState({ sitesToShow: this.state.sitesToShow + 9 })
               }}
             >
-              Load moarrr v
-            </button>
+              Load More
+              <div css={{marginLeft: '5px', display: 'inline'}}>↓</div>
+          </button>
           )}
         </div>
       </div>
@@ -289,11 +323,29 @@ class ShowcasePage extends Component {
 
     return (
       <Layout location={location}>
-        <div>
+        <div css={{margin: '20px 30px'}}>
           <Helmet>
             <title>Showcase</title>
           </Helmet>
-          <h2>Featured Sites</h2>
+          <div css={{
+            display: 'flex',
+            alignItems: 'center',
+            color: '#9D7CBF',
+            marginBottom: 30
+          }}>
+            <img src={FeaturedSitesIcon} alt="icon" css={{marginBottom: 0}} />
+            <span css={{fontWeight: 'bold', fontSize: 24, marginRight: 30, marginLeft: 15}}>Featured Sites</span>
+            <div>View all</div>
+            <div css={{marginLeft: '5px'}}>→</div>
+            <div css={{flex: 1}}>{''}</div>
+            <div css={{marginRight: 15}}>Want to get featured?</div>
+            {/* TODO: maybe have a site submission issue template */}
+            <a href="https://github.com/gatsbyjs/gatsby/issues/new?template=feature_request.md" target="_blank">
+              <div css={{backgroundColor: '#663399', color: 'white', padding: '5px 10px', fontWeight: 'normal'}}>Submit your Site
+                <div css={{marginLeft: '5px', display: 'inline'}}>→</div>
+              </div>
+            </a>
+          </div>
           <div css={{ position: `relative` }}>
             <div
               css={{
@@ -307,7 +359,7 @@ class ShowcasePage extends Component {
                   key={node.id}
                   css={{
                     display: `block`,
-                    margin: `15px`,
+                    marginRight: `30px`,
                     borderBottom: `none !important`,
                     boxShadow: `none !important`,
                   }}
