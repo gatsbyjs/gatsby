@@ -24,12 +24,12 @@ This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While t
 * [Change `modifyWebpackConfig` to `onCreateWebpackConfig`](/docs/migrating-from-v1-to-v2/#change-modifywebpackconfig-to-oncreatewebpackconfig)
 * [Remove inlined CSS in `html.js`](/docs/migrating-from-v1-to-v2/#remove-inlined-css-in-htmljs)
 
-
 You can start with a few of the most important steps - install peer dependencies and update your layout components.
 
 ## Manually install React
 
-In v1, React and ReactDOM were magically resolved. This “feature” has been removed and you are now required to install them manually:
+In v1, the `react` and `react-dom` packages were included as part of the `gatsby` package. They are now `peerDependencies` so you are required to install them into your project.
+
 
 ```bash
 npm i react react-dom
@@ -37,19 +37,19 @@ npm i react react-dom
 
 ## Manually install plugins’ peer dependencies
 
-Depending on the plugins you use, there may be more dependencies you need to install. For example: if you use [`gatsby-plugin-typography`](https://www.gatsbyjs.org/packages/gatsby-plugin-typography/), you now also need to install its dependencies:
+Some plugins had dependencies that were also made peerDependencies. For example, if you use [`gatsby-plugin-typography`](https://www.gatsbyjs.org/packages/gatsby-plugin-typography/), you now need to install:
 
 ```bash
 npm i typography react-typography
 ```
 
-Search for the plugins that you use in [Gatsby’s plugins page](/plugins) and check their installation instructions.
+Search for the plugins that you use in the [plugin library](/plugins) and check their installation instructions for additional packages that now need installed.
 
 ## Update layout component
 
 The special layout component (`src/layouts/index.js`) that Gatsby v1 used to wrap every page has been removed. If the layout of your site appears to be broken, this is most likely the reason why.
 
-To learn more about the considerations behind this removal, read the [Gatsby RFC](https://github.com/gatsbyjs/rfcs/blob/master/text/0002-remove-special-layout-components.md).
+To learn more about the considerations behind this removal, read the [RFC for removing the special layout component](https://github.com/gatsbyjs/rfcs/blob/master/text/0002-remove-special-layout-components.md).
 
 The following is the recommended migration path:
 
