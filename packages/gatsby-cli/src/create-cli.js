@@ -3,6 +3,7 @@ const resolveCwd = require(`resolve-cwd`)
 const yargs = require(`yargs`)
 const report = require(`./reporter`)
 const fs = require(`fs`)
+const envinfo = require(`envinfo`)
 
 const DEFAULT_BROWSERS = [`> 1%`, `last 2 versions`, `IE >= 9`]
 
@@ -172,6 +173,38 @@ function buildLocalCommands(cli, isLocalSite) {
         }),
 
     handler: getCommandHandler(`serve`),
+  })
+
+  cli.command({
+    command: `info`,
+    desc: `Get environment information for debugging and issue reporting`,
+    builder: _ =>
+      _.option(`C`, {
+        alias: `clipboard`,
+        type: `boolean`,
+        default: false,
+        describe: `Automagically copy environment information to clipboard`,
+      }),
+    handler: args => {
+      try {
+        envinfo.run(
+          {
+            System: [`OS`, `CPU`, `Shell`],
+            Binaries: [`Node`, `npm`, `Yarn`],
+            Browsers: [`Chrome`, `Edge`, `Firefox`, `Safari`],
+            npmPackages: `gatsby*`,
+            npmGlobalPackages: `gatsby*`,
+          },
+          {
+            console: true,
+            clipboard: args.clipboard,
+          }
+        )
+      } catch (err) {
+        console.log(`Error: unable to print environment info`)
+        console.log(err)
+      }
+    },
   })
 }
 
