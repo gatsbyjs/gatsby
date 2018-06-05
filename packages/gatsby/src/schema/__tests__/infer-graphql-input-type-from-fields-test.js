@@ -25,6 +25,7 @@ function isIntInput(type) {
     lte: { name: `lte`, type: GraphQLInt },
     gt: { name: `gt`, type: GraphQLInt },
     gte: { name: `gte`, type: GraphQLInt },
+    exists: { name: `exists`, type: GraphQLBoolean },
   })
 }
 
@@ -43,6 +44,7 @@ function isStringInput(type) {
     ne: { name: `ne`, type: GraphQLString },
     regex: { name: `regex`, type: GraphQLString },
     glob: { name: `glob`, type: GraphQLString },
+    exists: { name: `exists`, type: GraphQLBoolean },
   })
 }
 
@@ -97,6 +99,7 @@ describe(`GraphQL Input args from fields, test-only`, () => {
       lte: { name: `lte`, type: GraphQLFloat },
       gt: { name: `gt`, type: GraphQLFloat },
       gte: { name: `gte`, type: GraphQLFloat },
+      exists: { name: `exists`, type: GraphQLBoolean },
     })
 
     const string = inferredFields.scal_string.type
@@ -109,6 +112,7 @@ describe(`GraphQL Input args from fields, test-only`, () => {
     expect(bool.getFields()).toEqual({
       eq: { name: `eq`, type: GraphQLBoolean },
       ne: { name: `ne`, type: GraphQLBoolean },
+      exists: { name: `exists`, type: GraphQLBoolean },
     })
 
     expect(inferredFields).not.toHaveProperty(`scal_odd_unknown`)
@@ -306,6 +310,7 @@ describe(`GraphQL Input args from fields, test-only`, () => {
       lt: { name: `lt`, type: GraphQLFloat },
       lte: { name: `lte`, type: GraphQLFloat },
       in: { name: `in`, type: new GraphQLList(GraphQLFloat) },
+      exists: { name: `exists`, type: GraphQLBoolean },
     })
   })
 
