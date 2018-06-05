@@ -5,6 +5,7 @@
   "version": "1.0.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
+    "babel-plugin-styled-components": "^1.5.1",
     "gatsby": "next",
     "gatsby-plugin-google-analytics": "next",
     "gatsby-plugin-offline": "next",
@@ -12,6 +13,8 @@
     "gatsby-plugin-styled-components": "next",
     "gatsby-plugin-typography": "^1.7.18",
     "lodash": "^4.16.4",
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0",
     "react-helmet": "^5.2.0",
     "react-typography": "^0.16.13",
     "slash": "^1.0.0",
