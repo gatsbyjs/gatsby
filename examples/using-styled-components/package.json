@@ -2,7 +2,7 @@
   "name": "gatsby-example-using-styled-components",
   "private": true,
   "description": "Gatsby example site using the styled components plugin",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "babel-plugin-styled-components": "^1.5.1",
