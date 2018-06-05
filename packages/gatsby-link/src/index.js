@@ -5,14 +5,12 @@ import { Link, NavLink } from "react-router-dom"
 import { polyfill } from "react-lifecycles-compat"
 import { createLocation, createPath } from "history"
 
-const pathPrefix = `${__PATH_PREFIX__}/`
-
 export function withPrefix(path) {
-  return normalizePath(pathPrefix + path)
+  return normalizePath(`${__PATH_PREFIX__}/${path}`)
 }
 
 function normalizePath(path) {
-  return path.replace(/^\/\//g, `/`)
+  return path.replace(/\/+/g, `/`)
 }
 
 const NavLinkPropTypes = {
