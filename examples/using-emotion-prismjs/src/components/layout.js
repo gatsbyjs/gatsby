@@ -2,6 +2,7 @@ import React from "react"
 import { Link } from "gatsby"
 import PropTypes from "prop-types"
 import { css } from "react-emotion"
+import Helmet from "react-helmet"
 
 import { rhythm } from "../utils/typography"
 import "../prism-styles"
@@ -22,14 +23,24 @@ class Layout extends React.Component {
   render() {
     const HeadingTag = this.props.isIndex ? `h1` : `h3`
     return (
-      <div className={indexContainer}>
-        <HeadingTag>
-          <Link className={link} to={`/`}>
-            Using Gatsby with Emotion and PrismJS
-          </Link>
-        </HeadingTag>
-        {this.props.children}
-      </div>
+      <>
+        <Helmet>
+          <title>Gatsby Emotion + PrismJS</title>
+          <meta
+            name="description"
+            content="Gatsby example site using Emotion and PrismJS"
+          />
+          <meta name="referrer" content="origin" />
+        </Helmet>
+        <div className={indexContainer}>
+          <HeadingTag>
+            <Link className={link} to={`/`}>
+              Using Gatsby with Emotion and PrismJS
+            </Link>
+          </HeadingTag>
+          {this.props.children}
+        </div>
+      </>
     )
   }
 }
