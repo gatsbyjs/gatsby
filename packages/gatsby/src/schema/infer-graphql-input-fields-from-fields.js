@@ -89,6 +89,7 @@ const scalarFilterMap = {
     gte: { type: GraphQLInt },
     lt: { type: GraphQLInt },
     lte: { type: GraphQLInt },
+    exists: { type: GraphQLBoolean },
   },
   Float: {
     eq: { type: GraphQLFloat },
@@ -97,6 +98,7 @@ const scalarFilterMap = {
     gte: { type: GraphQLFloat },
     lt: { type: GraphQLFloat },
     lte: { type: GraphQLFloat },
+    exists: { type: GraphQLBoolean },
   },
   ID: {
     eq: { type: GraphQLID },
@@ -107,10 +109,12 @@ const scalarFilterMap = {
     ne: { type: GraphQLString },
     regex: { type: GraphQLString },
     glob: { type: GraphQLString },
+    exists: { type: GraphQLBoolean },
   },
   Boolean: {
     eq: { type: GraphQLBoolean },
     ne: { type: GraphQLBoolean },
+    exists: { type: GraphQLBoolean },
   },
 }
 

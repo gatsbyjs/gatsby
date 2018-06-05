@@ -406,6 +406,41 @@ describe(`GraphQL Input args`, () => {
     expect(result.data.allNode.edges[1].node.hair).toEqual(2)
   })
 
+  it(`handles exists operator with true`, async () => {
+    let result = await queryResult(
+      nodes,
+      `
+        {
+          allNode(filter: { boolean: { exists: true }}) {
+            edges { node { boolean }}
+          }
+        }
+      `
+    )
+
+    expect(result.errors).not.toBeDefined()
+    expect(result.data.allNode.edges.length).toEqual(2)
+    expect(result.data.allNode.edges[0].node.boolean).toEqual(true)
+    expect(result.data.allNode.edges[1].node.boolean).toEqual(false)
+  })
+
+  it(`handles exists operator with false`, async () => {
+    let result = await queryResult(
+      nodes,
+      `
+        {
+          allNode(filter: { boolean: { exists: false }}) {
+            edges { node { boolean }}
+          }
+        }
+      `
+    )
+
+    expect(result.errors).not.toBeDefined()
+    expect(result.data.allNode.edges.length).toEqual(1)
+    expect(result.data.allNode.edges[0].node.boolean).toEqual(null)
+  })
+
   it(`handles the regex operator`, async () => {
     let result = await queryResult(
       nodes,
