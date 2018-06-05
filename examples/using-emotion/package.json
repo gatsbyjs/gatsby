@@ -10,9 +10,11 @@
     "gatsby-plugin-emotion": "next",
     "gatsby-plugin-google-analytics": "next",
     "gatsby-plugin-offline": "next",
+    "gatsby-plugin-react-helmet": "^2.0.12-7",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
-    "react-emotion": "^9.1.3"
+    "react-emotion": "^9.1.3",
+    "react-helmet": "^5.2.0"
   },
   "license": "MIT",
   "main": "n/a",
