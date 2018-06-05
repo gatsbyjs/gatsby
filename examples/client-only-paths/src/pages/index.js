@@ -4,7 +4,7 @@ import ReactCSSTransitionGroup from "react-addons-css-transition-group"
 import { Route, Redirect } from "react-router-dom"
 
 import "./main.css"
-import Layout from "../layouts"
+import Layout from "../components/layout"
 
 class AnimationExample extends React.Component {
   render() {

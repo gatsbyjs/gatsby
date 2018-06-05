@@ -424,11 +424,33 @@ Image.defaultProps = {
   Tag: `div`,
 }
 
+const fixedObject = PropTypes.shape({
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+  src: PropTypes.string.isRequired,
+  srcSet: PropTypes.string.isRequired,
+  base64: PropTypes.string,
+  tracedSVG: PropTypes.string,
+  srcWebp: PropTypes.string,
+  srcSetWebp: PropTypes.string,
+})
+
+const fluidObject = PropTypes.shape({
+  aspectRatio: PropTypes.number.isRequired,
+  src: PropTypes.string.isRequired,
+  srcSet: PropTypes.string.isRequired,
+  sizes: PropTypes.string.isRequired,
+  base64: PropTypes.string,
+  tracedSVG: PropTypes.string,
+  srcWebp: PropTypes.string,
+  srcSetWebp: PropTypes.string,
+})
+
 Image.propTypes = {
-  resolutions: PropTypes.object,
-  sizes: PropTypes.object,
-  fixed: PropTypes.object,
-  fluid: PropTypes.object,
+  resolutions: fixedObject,
+  sizes: fluidObject,
+  fixed: fixedObject,
+  fluid: fluidObject,
   fadeIn: PropTypes.bool,
   title: PropTypes.string,
   alt: PropTypes.string,

@@ -5,8 +5,8 @@
   "version": "1.0.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "gatsby": "canary",
-    "gatsby-plugin-typography": "canary",
+    "gatsby": "next",
+    "gatsby-plugin-typography": "next",
     "lodash": "^4.16.4",
     "react": "^16.3.1",
     "react-addons-css-transition-group": "^15.5.2",

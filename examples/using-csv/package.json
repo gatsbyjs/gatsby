@@ -4,11 +4,16 @@
   "description": "Gatsby example site using using-csv",
   "author": "Sonal Saldanha <sonal.saldanha@gmail.com>",
   "dependencies": {
-    "gatsby": "latest",
-    "gatsby-plugin-google-analytics": "latest",
-    "gatsby-source-filesystem": "latest",
-    "gatsby-transformer-csv": "latest"
+    "gatsby": "next",
+    "gatsby-plugin-google-analytics": "next",
+    "gatsby-source-filesystem": "next",
+    "gatsby-transformer-csv": "next",
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0"
   },
+  "keywords": [
+    "gatsby"
+  ],
   "license": "MIT",
   "main": "n/a",
   "scripts": {
