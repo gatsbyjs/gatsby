@@ -3,6 +3,8 @@ import { css } from "emotion"
 import get from "lodash/get"
 import { rhythm, scale } from "../utils/typography"
 
+import Layout from '../components/layout'
+
 const postContainer = css`
   max-width: ${rhythm(30)};
   margin: auto;
@@ -23,12 +25,14 @@ class BlogPostTemplate extends React.Component {
     const siteTitle = get(this.props, `data.site.siteMetadata.title`)
 
     return (
-      <div className={postContainer}>
-        <h1>{post.frontmatter.title}</h1>
-        <p className={postDate}>{post.frontmatter.date}</p>
-        <div dangerouslySetInnerHTML={{ __html: post.html }} />
-        <hr />
-      </div>
+      <Layout>
+        <div className={postContainer}>
+          <h1>{post.frontmatter.title}</h1>
+          <p className={postDate}>{post.frontmatter.date}</p>
+          <div dangerouslySetInnerHTML={{ __html: post.html }} />
+          <hr />
+        </div>
+      </Layout>
     )
   }
 }

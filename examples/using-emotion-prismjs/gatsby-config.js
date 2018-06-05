@@ -1,6 +1,6 @@
 module.exports = {
   siteMetadata: {
-    title: `Gatsby with emotion and Prismjs`,
+    title: `Gatsby with Emotion and Prismjs`,
   },
   plugins: [
     {
