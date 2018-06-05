@@ -36,7 +36,7 @@ exports[`contentful extend node type resolveFluid generates fluid sizes data for
 Object {
   "aspectRatio": 1.1278195488721805,
   "baseUrl": "//images.contentful.com/ubriaw6jfhm1/10TkaLheGeQG6qQGqWYqUI/5421d3108cbb699561acabd594fa2cb0/ryugj83mqwa1asojwtwb.jpg",
-  "fluid": "(max-width: 450px) 100vw, 450px",
+  "sizes": "(max-width: 450px) 100vw, 450px",
   "src": "//images.contentful.com/ubriaw6jfhm1/10TkaLheGeQG6qQGqWYqUI/5421d3108cbb699561acabd594fa2cb0/ryugj83mqwa1asojwtwb.jpg?w=450&h=399&q=50&bg=rgb%3A000000",
   "srcSet": "//images.contentful.com/ubriaw6jfhm1/10TkaLheGeQG6qQGqWYqUI/5421d3108cbb699561acabd594fa2cb0/ryugj83mqwa1asojwtwb.jpg?w=113&h=100&q=50&bg=rgb%3A000000 113w,
 //images.contentful.com/ubriaw6jfhm1/10TkaLheGeQG6qQGqWYqUI/5421d3108cbb699561acabd594fa2cb0/ryugj83mqwa1asojwtwb.jpg?w=225&h=200&q=50&bg=rgb%3A000000 225w,
@@ -52,7 +52,7 @@ exports[`contentful extend node type resolveFluid generates responsive size data
 Object {
   "aspectRatio": 0.75,
   "baseUrl": "//images.contentful.com/ubriaw6jfhm1/10TkaLheGeQG6qQGqWYqUI/5421d3108cbb699561acabd594fa2cb0/ryugj83mqwa1asojwtwb.jpg",
-  "fluid": "(max-width: 400px) 100vw, 400px",
+  "sizes": "(max-width: 400px) 100vw, 400px",
   "src": "//images.contentful.com/ubriaw6jfhm1/10TkaLheGeQG6qQGqWYqUI/5421d3108cbb699561acabd594fa2cb0/ryugj83mqwa1asojwtwb.jpg?w=400",
   "srcSet": "//images.contentful.com/ubriaw6jfhm1/10TkaLheGeQG6qQGqWYqUI/5421d3108cbb699561acabd594fa2cb0/ryugj83mqwa1asojwtwb.jpg?w=100&h=133 100w,
 //images.contentful.com/ubriaw6jfhm1/10TkaLheGeQG6qQGqWYqUI/5421d3108cbb699561acabd594fa2cb0/ryugj83mqwa1asojwtwb.jpg?w=200&h=267 200w,
