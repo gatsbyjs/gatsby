@@ -1,45 +1,22 @@
-import path from "path"
 import { codeFrameColumns } from "@babel/code-frame"
-import * as types from "babel-types"
-import { parse, defaultHandlers, resolver } from "react-docgen"
+import { parse, resolver, handlers } from "react-docgen"
 import { ERROR_MISSING_DEFINITION } from "react-docgen/dist/parse"
 
 import { cleanDoclets, parseDoclets, applyPropDoclets } from "./Doclets"
+import displayNameHandler from "./displayNameHandler"
 
-function getAssignedIdenifier(path) {
-  let property = path.parentPath
-  while (property) {
-    if (types.isVariableDeclarator(property.node)) return property.node.id.name
-    property = property.parentPath
-  }
-  return null
-}
+const defaultHandlers = [
+  handlers.propTypeHandler,
+  handlers.propTypeCompositionHandler,
+  handlers.propDocBlockHandler,
+  handlers.flowTypeHandler,
+  handlers.defaultPropsHandler,
+  handlers.componentDocblockHandler,
+  handlers.componentMethodsHandler,
+  handlers.componentMethodsJsDocHandler,
+]
 
 let fileCount = 0
-function nameHandler(filePath) {
-  let defaultName = path.basename(filePath, path.extname(filePath))
-  let componentCount = 0
-
-  return (docs, nodePath) => {
-    let displayName = docs.get(`displayName`)
-    if (displayName) return
-
-    if (
-      types.isArrowFunctionExpression(nodePath.node) ||
-      types.isFunctionExpression(nodePath.node) ||
-      types.isObjectExpression(nodePath.node)
-    ) {
-      displayName = getAssignedIdenifier(nodePath)
-    } else if (
-      types.isFunctionDeclaration(nodePath.node) ||
-      types.isClassDeclaration(nodePath.node)
-    ) {
-      displayName = nodePath.node.id.name
-    }
-
-    docs.set(`displayName`, displayName || `${defaultName}${++componentCount}`)
-  }
-}
 
 /**
  * Wrap handlers to pass in additional arguments such as the File node
@@ -47,7 +24,7 @@ function nameHandler(filePath) {
 function makeHandlers(node, handlers) {
   handlers = (handlers || []).map(h => (...args) => h(...args, node))
   return [
-    nameHandler(node.absolutePath || `/UnknownComponent${++fileCount}`),
+    displayNameHandler(node.absolutePath || `/UnknownComponent${++fileCount}`),
     ...handlers,
   ]
 }

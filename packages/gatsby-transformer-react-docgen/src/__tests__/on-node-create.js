@@ -62,14 +62,22 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
     await run(node)
 
     let types = groupBy(createdNodes, n => n.internal.type)
-    expect(types.ComponentMetadata).toHaveLength(5)
+    expect(types.ComponentMetadata).toHaveLength(6)
   })
 
   it(`should give all components a name`, async () => {
     await run(node)
 
     let types = groupBy(createdNodes, `internal.type`)
-    expect(types.ComponentMetadata.every(c => c.displayName)).toBe(true)
+
+    expect(types.ComponentMetadata.map(c => c.displayName)).toEqual([
+      `Baz`,
+      `Buz`,
+      `Foo`,
+      `Baz.Foo`,
+      `Bar`,
+      `Qux`,
+    ])
   })
 
   it(`should infer a name`, async () => {
@@ -125,7 +133,7 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
     })
     it(`should add flow type info`, async () => {
       await run(node)
-      expect(createdNodes[1].flowType).toEqual({
+      expect(createdNodes[0].flowType).toEqual({
         name: `number`,
       })
     })
