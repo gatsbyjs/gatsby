@@ -4,12 +4,7 @@ import PageRenderer from "./page-renderer"
 import { StaticQueryContext } from "gatsby"
 import socketIo, { getStaticQueryData, getPageQueryData } from "./socketIo"
 
-const getPathFromProps = props =>
-  props.pageResources
-    ? props.pageResources.page
-      ? props.pageResources.page.path
-      : undefined
-    : undefined
+const getPathFromProps = props => props.pageResources?.page?.path
 
 class JSONStore extends React.Component {
   constructor(props) {
@@ -47,10 +42,9 @@ class JSONStore extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate() {
     const { path } = this.state
-    const newPath = getPathFromProps(nextProps)
-
+    const newPath = getPathFromProps(this.props)
     if (path !== newPath) {
       this.unregisterPath(path)
       this.registerPath(newPath)
@@ -72,7 +66,7 @@ class JSONStore extends React.Component {
   }
 
   render() {
-    const data = this.state.pageQueryData[this.state.path]
+    const data = this.state.pageQueryData[getPathFromProps(this.props)]
     // eslint-disable-next-line
     const { pages, ...propsWithoutPages } = this.props
     if (!data) {

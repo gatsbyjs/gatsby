@@ -139,6 +139,7 @@
     "cross-env": "^5.1.4",
     "jest": "^22.4.3",
     "lerna": "^2.9.0",
+    "npm-run-all": "4.1.2",
     "nyc": "^7.0.0",
     "rimraf": "^2.6.1"
   },
@@ -175,13 +176,16 @@
     "graphql": "^0.13.2"
   },
   "scripts": {
-    "build": "rimraf dist && npm run build:src && npm run build:internal-plugins && npm run build:rawfiles",
+    "build": "rimraf dist && rimraf cache-dir && npm-run-all -p build:*",
+    "build:cache-dir": "babel src/cache-dir --out-dir cache-dir",
     "build:internal-plugins": "copyfiles -u 1 src/internal-plugins/**/package.json dist",
     "build:rawfiles": "copyfiles -u 1 src/internal-plugins/**/raw_* dist",
-    "build:src": "babel src --out-dir dist --source-maps --ignore **/gatsby-cli.js,**/raw_*,**/__tests__",
+    "build:src": "babel src --out-dir dist --source-maps --ignore **/gatsby-cli.js,**/raw_*,**/__tests__,**/cache-dir",
     "clean-test-bundles": "find test/ -type f -name bundle.js* -exec rm -rf {} +",
     "prepublish": "cross-env NODE_ENV=production npm run build",
     "test-coverage": "node_modules/.bin/nyc --reporter=lcov --reporter=text npm test",
-    "watch": "rimraf dist && mkdir dist && npm run build:internal-plugins && npm run build:rawfiles && npm run build:src -- --watch"
+    "watch": "rimraf dist && rimraf cache-dir && mkdir dist && npm run build:internal-plugins && npm run build:rawfiles && npm-run-all -p watch:*",
+    "watch:cache-dir": "npm run build:cache-dir -- --watch",
+    "watch:src": "npm run build:src -- --watch"
   }
 }
