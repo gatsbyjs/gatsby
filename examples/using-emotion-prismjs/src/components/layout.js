@@ -1,5 +1,5 @@
 import React from "react"
-import { Link } from "gatsby"
+import { Link, StaticQuery } from "gatsby"
 import PropTypes from "prop-types"
 import { css } from "react-emotion"
 import Helmet from "react-helmet"
@@ -22,10 +22,13 @@ const link = css`
 class Layout extends React.Component {
   render() {
     const HeadingTag = this.props.isIndex ? `h1` : `h3`
+    const { siteTitle, pageTitle } = this.props
+    const title = pageTitle ? `${pageTitle} — ${siteTitle}` : `${siteTitle}`
+
     return (
       <>
         <Helmet>
-          <title>Gatsby Emotion + PrismJS</title>
+          <title>{title}</title>
           <meta
             name="description"
             content="Gatsby example site using Emotion and PrismJS"
@@ -46,8 +49,25 @@ class Layout extends React.Component {
 }
 
 Layout.propTypes = {
+  siteTitle: PropTypes.string.isRequired,
+  pageTitle: PropTypes.string,
   isIndex: PropTypes.bool,
   children: PropTypes.node.isRequired,
 }
 
-export default Layout
+export default props => (
+  <StaticQuery
+    query={graphql`
+      query LayoutQuery {
+        site {
+          siteMetadata {
+            title
+          }
+        }
+      }
+    `}
+    render={data => (
+      <Layout siteTitle={data.site.siteMetadata.title} {...props} />
+    )}
+  />
+)

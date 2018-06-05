@@ -21,7 +21,7 @@ class BlogPostTemplate extends React.Component {
     const post = this.props.data.markdownRemark
 
     return (
-      <Layout>
+      <Layout pageTitle={post.frontmatter.title}>
         <div className={postContainer}>
           <h1>{post.frontmatter.title}</h1>
           <p className={postDate}>{post.frontmatter.date}</p>
