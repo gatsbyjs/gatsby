@@ -5,8 +5,7 @@ const _ = require(`lodash`)
 
 exports.sourceNodes = (
   { boundActionCreators, getNode, hasNodeChanged },
-  pluginOptions,
-  done
+  pluginOptions
 ) => {
   const { createNode } = boundActionCreators
 
@@ -19,42 +18,30 @@ exports.sourceNodes = (
   if (pluginOptions.auth)
     authUrlPart = `${pluginOptions.auth.user}:${pluginOptions.auth.password}@`
 
-  MongoClient.connect(
-    `mongodb://${authUrlPart}${serverOptions.address}:${
-      serverOptions.port
-    }/${dbName}`,
-    function(err, db) {
-      // Establish connection to db
-      if (err) {
-        console.warn(err)
-        return
-      }
-      let collection = pluginOptions.collection || `documents`
+  const connectionURL = `mongodb://${authUrlPart}${serverOptions.address}:${
+    serverOptions.port
+  }/${dbName}`
+
+  return MongoClient.connect(connectionURL)
+    .then(db => {
+      let collection = pluginOptions.collection || [`documents`]
       if (!_.isArray(collection)) {
         collection = [collection]
       }
 
-      const promises = []
-      for (const col of collection) {
-        const promise = createNodes(db, pluginOptions, dbName, createNode, col)
-        promises.push(promise)
-      }
-
-      Promise.all(promises)
-        .then(() => done())
-        .catch((e) => console.warn(e))
-    }
-  )
+      return Promise.all(
+        collection.map(col =>
+          createNodes(db, pluginOptions, dbName, createNode, col)
+        )
+      )
+    })
+    .catch(err => {
+      console.warn(err)
+      return err
+    })
 }
 
-function createNodes(
-  db,
-  pluginOptions,
-  dbName,
-  createNode,
-  collectionName
-) {
-
+function createNodes(db, pluginOptions, dbName, createNode, collectionName) {
   return new Promise((resolve, reject) => {
     let collection = db.collection(collectionName)
     let cursor = collection.find()
