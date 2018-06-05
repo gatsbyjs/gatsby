@@ -2,73 +2,98 @@
 title: Migrating from v1 to v2
 ---
 
-## Install React, ReactDOM, and each plugins’ peer dependencies manually
-In v1, React and ReactDOM were magically resolved. This “feature” has been removed and you are now required to install them manually.
+> This document is a work in progress. Have you upgraded your site and run into something that's not covered here? [Add your changes on GitHub](https://github.com/gatsbyjs/gatsby/blob/v2/docs/docs/migrating-from-v1-to-v2.md)!
+
+## Introduction
+
+This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While there's a lot covered here, you probably won't need to do everything for your site.
+
+## What we'll cover
+
+* [Update Gatsby version](/docs/migrating-from-v1-to-v2/#update-gatsby-version)
+* [Manually install React](/docs/migrating-from-v1-to-v2/#manually-install-react)
+* [Manually install plugins’ peer dependencies](/docs/migrating-from-v1-to-v2/manually-install-plugins-peer-dependencies)
+* [Update layout component](/docs/migrating-from-v1-to-v2/#update-layout-component)
+* [Rename `boundActionCreators` to `actions`](/docs/migrating-from-v1-to-v2/rename-boundactioncreators-to-actions)
+* [Rename `pathContext` to `pageContext`](/docs/migrating-from-v1-to-v2/#rename-pathcontext-to-pagecontext)
+* [Rename responsive image queries](/docs/migrating-from-v1-to-v2/#rename-responsive-image-queries)
+* [Manually specify PostCSS plugins](/docs/migrating-from-v1-to-v2/#manually-specify-postcss-plugins)
+* [Convert to either pure CommonJS or pure ES6](/docs/migrating-from-v1-to-v2/#convert-to-either-pure-commonjs-or-pure-es6)
+* [Don't query nodes by ID](/docs/migrating-from-v1-to-v2/#dont-query-nodes-by-id)
+* [Remove explicit polyfills](/docs/migrating-from-v1-to-v2/#remove-explicit-polyfills)
+* [Change `modifyBabelrc` to `onCreateBabelConfig`](/docs/migrating-from-v1-to-v2/#change-modifybabelrc-to-oncreatebabelconfig)
+* [Change `modifyWebpackConfig` to `onCreateWebpackConfig`](/docs/migrating-from-v1-to-v2/#change-modifywebpackconfig-to-oncreatewebpackconfig)
+* [Remove inlined CSS in `html.js`](/docs/migrating-from-v1-to-v2/#remove-inlined-css-in-htmljs)
+
+You can start with a few of the most important steps - install Gatsby v2 dependencies and update your layout components.
+
+## Update Gatsby version
+
+Update your `package.json` to use the pre-release versions of Gatsby and any related packages.
+
+package.json:
+
+```json
+"dependencies": {
+  "gatsby": "next",
+  "gatsby-image": "next",
+  "gatsby-plugin-sharp": "next"
+}
+```
+
+> Note: Gatsby v2 is in pre-release so you may encounter further breaking changes.
+
+## Manually install React
+
+In v1, the `react` and `react-dom` packages were included as part of the `gatsby` package. They are now `peerDependencies` so you are required to install them into your project.
+
 
 ```bash
 npm i react react-dom
 ```
 
-or
+## Manually install plugins’ peer dependencies
 
-```bash
-yarn add react react-dom
-```
-
-Depending on the plugins you use, there may be more dependencies you need to install. For example: if you use typography.js, you now also need to install its dependencies.
+Some plugins had dependencies that were also made peerDependencies. For example, if you use [`gatsby-plugin-typography`](https://www.gatsbyjs.org/packages/gatsby-plugin-typography/), you now need to install:
 
 ```bash
 npm i typography react-typography
 ```
 
-or
+Search for the plugins that you use in the [plugin library](/plugins) and check their installation instructions for additional packages that now need installed.
 
-```bash
-yarn add typography react-typography
-```
+## Update layout component
 
-Search for the plugins that you use in [Gatsby’s plugins page](/plugins) and check their installation instructions.
-
-## Layout component
 The special layout component (`src/layouts/index.js`) that Gatsby v1 used to wrap every page has been removed. If the layout of your site appears to be broken, this is most likely the reason why.
 
-To learn more about the considerations behind this removal, read the [Gatsby RFC](https://github.com/gatsbyjs/rfcs/blob/master/text/0002-remove-special-layout-components.md).
+To learn more about the considerations behind this removal, read the [RFC for removing the special layout component](https://github.com/gatsbyjs/rfcs/blob/master/text/0002-remove-special-layout-components.md).
 
 The following is the recommended migration path:
 
 ### 1. Convert children from function to normal prop (required)
+
 In v1, the `children` prop passed to layout was a function and needed to be executed. In v2, this is no longer the case.
 
-`layout in v1`
 
-```jsx
+```diff
 import React from "react"
 
 export default ({ children }) => (
   <div>
-    {children()}
-  </div>
-)
-```
-
-`layout in v2`
-
-```jsx{5}
-import React from "react"
-
-export default ({ children }) => (
-  <div>
-    {children}
+-    {children()}
++    {children}
   </div>
 )
 ```
 
 ### 2. Move `layout/index.js` to `src/components/layout.js` (optional, but recommended)
+
 ```bash
 git mv src/layouts/index.js src/components/layout.js
 ```
 
 ### 3. Import and wrap pages with layout component
+
 Adhering to normal React composition model, you import the layout component and use it to wrap the content of the page.
 
 `src/pages/index.js`
@@ -87,65 +112,60 @@ export default () => (
 Repeat for every page and template that needs this layout.
 
 ### 4. Change query to use `StaticQuery`
-<!-- TODO: link StaticQuery text to StaticQuery doc page (if one will be made) -->
+
 Since layout is no longer special, you now need to make use of v2’s StaticQuery feature.
 
-`Query with layout in v1`
+> TODO: document StaticQuery and link to it from here
 
-```jsx
+Replacing a layout's query with `StaticQuery`:
+
+```diff
 import React, { Fragment } from "react"
 import Helmet from "react-helmet"
 
-export default ({ children, data }) => (
-  <Fragment>
-    <Helmet titleTemplate={`%s | ${data.site.siteMetadata.title}`} defaultTitle={data.site.siteMetadata.title} />
-    <div>
-      {children()}
-    </div>
-  </Fragment>
-)
-
-export const query = graphql`
-  query LayoutQuery {
-    site {
-      siteMetadata {
-        title
-      }
-    }
-  }
-`
-```
-
-`StaticQuery with layout in v2`
-
-```jsx
-import React, { Fragment } from "react"
-import { StaticQuery } from "gatsby"
-
-export default ({ children }) => (
-  <StaticQuery
-    query={graphql`
-      query LayoutQuery {
-        site {
-          siteMetadata {
-            title
-          }
-        }
-      }
-    `}
-    render={data => (
-      <Fragment>
-        <Helmet titleTemplate={`%s | ${data.site.siteMetadata.title}`} defaultTitle={data.site.siteMetadata.title} />
-        <div>
-          {children}
-        </div>
-      </Fragment>
-    )}
-  />
-)
+- export default ({ children, data }) => (
+-   <>
+-     <Helmet titleTemplate={`%s | ${data.site.siteMetadata.title}`} defaultTitle={data.site.siteMetadata.title} />
+-     <div>
+-       {children()}
+-     </div>
+-   </>
+- )
+-
+- export const query = graphql`
+-   query LayoutQuery {
+-     site {
+-       siteMetadata {
+-         title
+-       }
+-     }
+-   }
+- `
++ export default ({ children }) => (
++   <StaticQuery
++     query={graphql`
++       query LayoutQuery {
++         site {
++           siteMetadata {
++             title
++           }
++         }
++       }
++     `}
++     render={data => (
++       <>
++         <Helmet titleTemplate={`%s | ${data.site.siteMetadata.title}`} defaultTitle={data.site.siteMetadata.title} />
++         <div>
++           {children}
++         </div>
++       </>
++     )}
++   />
++ )
 ```
 
 ### 5. Pass `history`, `location`, and `match` props to layout
+
 In v1, layout component had access to `history`, `location`, and `match` props. In v2, only pages have access to these props; pass them to your layout component as needed.
 
 `layout`
@@ -175,22 +195,187 @@ export default props => (
 ```
 
 ## Rename `boundActionCreators` to `actions`
+
 `boundActionCreators` is deprecated in v2. You can continue using it, but it’s recommended that you rename it to `actions`.
 
+> TODO: document new actions - see [actions](/docs/actions)
+
 ## Rename `pathContext` to `pageContext`
+
 Similar to `boundActionCreators` above, `pathContext` is deprecated in favor of `pageContext`.
 
-<!--
-Taken from: https://github.com/gatsbyjs/gatsby/blob/v2/Breaking%20Changes.md
-* [] Remove postcss plugins (cssnext, cssimport) from default css loader config
-* [x] boundActionCreators => actions
-* [x] pathContext => pageContext
-* [] Source & transformer plugins now use UUIDs for ids. If you used glob or regex to query nodes by id then you'll need to query something else.
-* [] Mixed commonjs/es6 modules fail
-* [] Remove explicit polyfill and use the new builtins: usage support in babel 7.
-* [] Changed modifyBabelrc to onCreateBabelConfig
-* [] Changed modifyWebpackConfig to onCreateWebpackConfig
-* [] Inlining CSS changed — remove it from any custom html.js as done automatically by core now.
-* [x] Manually install react and react-dom, along with any dependencies required by your plugins.
-* [x] Layouts have been removed. To achieve the same behavior as v1, you have to wrap your pages and page templates with your own Layout component. Since Layout is a non-page component, making query has to be done with StaticQuery.
--->
+## Rename responsive image queries
+
+The `sizes` and `resolutions` queries are deprecated in v2. These queries have been renamed to `fluid` and `fixed` to make them easier to understand. You can continue using the deprecated query names, but it's recommended that you update them.
+
+Update image query and fragment names:
+
+```diff
+const Example = ({ data }) => {
+  <div>
+-    <Img sizes={data.foo.childImageSharp.sizes} />
+-    <Img resolutions={data.bar.childImageSharp.resolutions} />
++    <Img fluid={data.foo.childImageSharp.fluid} />
++    <Img fixed={data.bar.childImageSharp.fixed} />
+  </div>
+}
+
+export default Example
+
+export const pageQuery = graphql`
+  query IndexQuery {
+    foo: file(relativePath: { regex: "/foo.jpg/" }) {
+      childImageSharp {
+-        sizes(maxWidth: 700) {
+-          ...GatsbyImageSharpSizes_tracedSVG
++        fluid(maxWidth: 700) {
++          ...GatsbyImageSharpFluid_tracedSVG
+        }
+      }
+    }
+    bar: file(relativePath: { regex: "/bar.jpg/" }) {
+      childImageSharp {
+-        resolutions(width: 500) {
+-          ...GatsbyImageSharpResolutions_withWebp
++        fixed(width: 500) {
++          ...GatsbyImageSharpFixed_withWebp
+        }
+      }
+    }
+  }
+`
+```
+
+Further examples can be found in the [Gatsby Image docs](https://github.com/gatsbyjs/gatsby/tree/d0e29272ed7b009dae18d35d41a45e700cdcab0d/packages/gatsby-image).
+
+## Manually specify PostCSS plugins
+
+Gatsby v2 removed `postcss-cssnext` and `postcss-import` from the default postcss setup.
+
+Use [`onCreateWebpackConfig`](/docs/add-custom-webpack-config) to specify your postcss plugins.
+
+Note: there will be a `postcss` plugin that allows you to configure postcss from a standard postcss config file. [Follow this discussion on issue 3284](https://github.com/gatsbyjs/gatsby/issues/3284).
+
+## Convert to either pure CommonJS or pure ES6
+
+Gatsby v2 uses babel 7 which is stricter about parsing files with mixed JS styles.
+
+ES6 Modules are ok:
+
+```js
+// GOOD: ES modules syntax works
+import foo from "foo"
+export default foo
+```
+
+CommonJS is ok:
+
+```js
+// GOOD: CommonJS syntax works
+const foo = require('foo');
+module.exports = foo;
+```
+
+Mixing `requires` and `export` is not ok:
+```js
+// BAD: Mixed ES and CommonJS module syntax will cause failures
+const foo = require('foo');
+export default foo
+```
+
+Mixing `import` and `module.exports` is not ok:
+```js
+// BAD: Mixed ES and CommonJS module syntax will cause failures
+import foo from "foo"
+module.exports = foo;
+```
+
+See [Gatsby's babel docs for more details](/docs/babel).
+
+## Don't query nodes by ID
+
+Source and transformer plugins now use UUIDs for IDs. If you used glob or regex to query nodes by id then you'll need to query something else.
+
+Here's an example querying an image:
+
+```diff
+  query MyImageQuery {
+    allImageSharp(filter: {
+-     id: {regex: "/default.jpg/"}
++     sizes: {originalName: {regex: "/default.jpg/"}}
+    }) {
+      edges {
+        node {
+          id
+          sizes(maxWidth: 660) {
+            src
+          }
+        }
+      }
+    }
+  }
+```
+
+[See the Pull Request that implemented this change](https://github.com/gatsbyjs/gatsby/pull/3807/files)
+
+## Remove explicit polyfills
+
+If your Gatsby v1 site included any polyfills, you can remove them. Gatsby v2 ships with babel 7 and is configured to automatically include polyfills for your code. See [Gatsby's babel docs for more details](/docs/babel).
+
+> Note: This works for your own code, but is not yet implemented for code imported from `node_modules`. Track progress of this feature at [bullet 5 of this issue](https://github.com/gatsbyjs/gatsby/issues/3870).
+
+## Change `modifyBabelrc` to `onCreateBabelConfig`
+
+`modifyBabelrc` was renamed to [`onCreateBabelConfig`](/docs/node-apis/#modifyBabelrc) to bring it in line with the rest of Gatsby's API names.
+
+Use `onCreateBabelConfig`:
+
+```diff
+- exports.modifyBabelrc = ({ babelrc }) => {
+-   return {
+-     ...babelrc,
+-     plugins: babelrc.plugins.concat([`foo`]),
+-   }
++ exports.onCreateBabelConfig = ({ actions }) => {
++   actions.setBabelPlugin({
++     name: `babel-plugin-foo`,
++   })
+}
+```
+
+Note usage of the new [`setBabelPlugin` action](/docs/actions/#setBabelPlugins).
+
+See [Gatsby's babel docs for more details](/docs/babel) about configuring babel.
+
+## Change `modifyWebpackConfig` to `onCreateWebpackConfig`
+
+`modifyWebpackConfig` was renamed to [`onCreateWebpackConfig`](/docs/node-apis/#onCreateWebpackConfig) to bring it in line with the rest of Gatsby's API names.
+
+Use `onCreateWebpackConfig`:
+
+```diff
+- exports.modifyWebpackConfig = ({ config, stage }) => {
++ exports.onCreateWebpackConfig = ({ stage, actions }) => {
+  switch (stage) {
+    case `build-javascript`:
+-       config.plugin(`Foo`, webpackFooPlugin, null)
+-       break
+-   }
+-   return config
++       actions.setWebpackConfig({
++         plugins: [webpackFooPlugin],
++       })
++   }
+}
+```
+
+
+Note usage of the new [`setWebpackConfig` action](/docs/actions/#setWebpackConfig).
+
+See [Gatsby's webpack docs for more details](/docs/add-custom-webpack-config) about configuring webpack.
+
+## Remove inlined CSS in `html.js`
+
+Gatsby v2 automatically inlines CSS. Gatsby v1 required you to create a [custom `html.js` file](/docs/custom-html) to do this. You can remove any custom CSS inlining from your custom `html.js`, in many cases this allows you to completely remove your `html.js` file.
+
+See an example in [this PR that upgrades the `using-remark` site to Gatsby v2](https://github.com/gatsbyjs/gatsby/commit/765b679cbc222fd5f527690427ee431cca7ccd61#diff-637c76e3c059ed8efacedf6e30de2d61).
