@@ -1,5 +1,5 @@
 import React from "react"
-import { Link, withPrefix } from "gatsby"
+import { Link } from "gatsby"
 import { Container } from "react-responsive-grid"
 
 import { rhythm, scale } from "../utils/typography"
@@ -11,9 +11,7 @@ class Template extends React.Component {
     const { location, children } = this.props
     let header
 
-    const rootPath = withPrefix(`/`)
-
-    if (location.pathname === rootPath) {
+    if (location.pathname === `/`) {
       header = (
         <h1
           style={{
