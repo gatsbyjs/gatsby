@@ -1,4 +1,3 @@
-/* eslint-disable */
 const MongoClient = require(`mongodb`).MongoClient
 const crypto = require(`crypto`)
 const prepareMappingChildNode = require(`./mapping`)
