@@ -224,7 +224,7 @@ const resolveFluid = (image, options) => {
       height: options.maxHeight,
     }),
     srcSet,
-    fluid: options.sizes,
+    sizes: options.sizes,
   }
 }
 exports.resolveFluid = resolveFluid
