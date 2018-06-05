@@ -5,7 +5,7 @@ date: "2017-10-17T14:12:03.284Z"
 path: /code-example/
 ---
 
-This post contains a code snippet with synatax hightlighting. The highlight
+This post contains a code snippet with syntax hightlighting. The highlight
 theme and is the same one used in the official React documentation.
 
 ```jsx
