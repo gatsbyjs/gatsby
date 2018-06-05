@@ -153,18 +153,11 @@ export default (pagePath, callback) => {
   }
 
   // Create paths to scripts
-  let runtimeScript
   const scriptsAndStyles = flatten(
     [`app`, page.componentChunkName].map(s => {
       const fetchKey = `assetsByChunkName[${s}]`
 
       let chunks = get(stats, fetchKey)
-
-      // Remove the runtime as we always inline that instead
-      // of loading it.
-      if (s === `app`) {
-        runtimeScript = chunks[0]
-      }
 
       if (!chunks) {
         return null
@@ -194,11 +187,6 @@ export default (pagePath, callback) => {
     styles,
     pathPrefix,
   })
-
-  const runtimeRaw = fs.readFileSync(
-    join(process.cwd(), `public`, runtimeScript),
-    `utf-8`
-  )
 
   scripts
     .slice(0)

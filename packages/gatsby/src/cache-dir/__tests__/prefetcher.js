@@ -3,7 +3,7 @@ let fetchNextResource
 let fetches
 
 const getDeferred = (result) => {
-  let resolve;
+  let resolve
   let promise = new Promise(r => {
     resolve = () => r(result)
   })
