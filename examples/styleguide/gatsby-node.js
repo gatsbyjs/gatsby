@@ -7,8 +7,8 @@ const componentPageTemplate = path.resolve(
 )
 const tableOfContentsTemplate = path.resolve(`src/templates/TOC/index.js`)
 
-exports.createPages = ({ graphql, boundActionCreators }) => {
-  const { createPage } = boundActionCreators
+exports.createPages = ({ graphql, actions }) => {
+  const { createPage } = actions
 
   return new Promise((resolve, reject) => {
     resolve(
