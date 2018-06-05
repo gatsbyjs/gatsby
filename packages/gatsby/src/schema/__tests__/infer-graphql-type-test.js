@@ -7,9 +7,10 @@ const {
 const path = require(`path`)
 const normalizePath = require(`normalize-path`)
 const { clearTypeExampleValues } = require(`../data-tree-utils`)
+const { typeConflictReporter } = require(`../type-conflict-reporter`)
 const { inferObjectStructureFromNodes } = require(`../infer-graphql-type`)
 
-function queryResult(nodes, fragment, { types = [] } = {}) {
+function queryResult(nodes, fragment, { types = [], ignoreFields } = {}) {
   const schema = new GraphQLSchema({
     query: new GraphQLObjectType({
       name: `RootQueryType`,
@@ -22,6 +23,7 @@ function queryResult(nodes, fragment, { types = [] } = {}) {
                 name: `Test`,
                 fields: inferObjectStructureFromNodes({
                   nodes,
+                  ignoreFields,
                   types: [{ name: `Test` }, ...types],
                 }),
               })
@@ -725,4 +727,45 @@ describe(`GraphQL type inferance`, () => {
         }
     `
     ).then(result => expect(result).toMatchSnapshot()))
+
+  describe(`type conflicts`, () => {
+    let addConflictSpy = jest.spyOn(typeConflictReporter, `addConflict`)
+
+    beforeEach(() => {
+      addConflictSpy.mockReset()
+    })
+
+    it(`catches conflicts and removes field`, async () => {
+      let result = await queryResult(
+        [{ foo: `foo`, number: 1.1 }, { foo: `bar`, number: `1` }],
+        `
+          foo
+          number
+        `
+      )
+      expect(addConflictSpy).toHaveBeenCalledTimes(1)
+
+      expect(result.errors.length).toEqual(1)
+      expect(result.errors[0].message).toMatch(
+        `Cannot query field "number" on type "Test".`
+      )
+    })
+
+    it(`does not warn about provided types`, async () => {
+      let result = await queryResult(
+        [{ foo: `foo`, number: 1.1 }, { foo: `bar`, number: `1` }],
+        `
+          foo
+          number
+        `,
+        { ignoreFields: [`number`] }
+      )
+      expect(addConflictSpy).not.toHaveBeenCalled()
+
+      expect(result.errors.length).toEqual(1)
+      expect(result.errors[0].message).toMatch(
+        `Cannot query field "number" on type "Test".`
+      )
+    })
+  })
 })

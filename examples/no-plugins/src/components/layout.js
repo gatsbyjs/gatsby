@@ -19,7 +19,7 @@ class DefaultLayout extends React.Component {
             <Link to="/c/">c</Link>
           </li>
         </ul>
-        {this.props.children()}
+        {this.props.children}
       </div>
     )
   }

@@ -4,7 +4,7 @@ import {
   TABLET_MEDIA_QUERY,
 } from "typography-breakpoint-constants"
 
-const options = {
+const theme = {
   baseFontSize: `18px`,
   baseLineHeight: 1.45,
   blockMarginBottom: 0.75,
@@ -30,11 +30,12 @@ const options = {
   },
 }
 
-const typography = new Typography(options)
+const typography = new Typography(theme)
 
-// Hot reload typography in development.
-if (process.env.NODE_ENV !== `production`) {
-  typography.injectStyles()
-}
 
+// Back out the below once Typography is upgraded for es6
 export default typography
+
+export const rhythm = typography.rhythm
+export const scale = typography.scale
+export const options = typography.options

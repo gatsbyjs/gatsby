@@ -64,7 +64,7 @@ export const query = graphql`
         date(formatString: "DD MMMM, YYYY")
         cover {
           childImageSharp {
-            resolutions(width: 1200) {
+            fixed(width: 1200) {
               src
             }
           }

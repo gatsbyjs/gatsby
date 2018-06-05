@@ -220,7 +220,7 @@ export const pageQuery = graphql`
   query Index {
     file(relativePath: { eq: "gatsby-explanation.png" }) {
       childImageSharp {
-        sizes(maxWidth: 870) {
+        fluid(maxWidth: 870) {
           src
           srcSet
           sizes

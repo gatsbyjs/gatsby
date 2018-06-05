@@ -178,7 +178,7 @@ import Img from "gatsby-image"
 export default ({ data }) => (
   <div>
     <h1>Hello gatsby-image</h1>
-    <Img resolutions={data.file.childImageSharp.resolutions} />
+    <Img fixed={data.file.childImageSharp.fixed} />
   </div>
 )
 
@@ -188,8 +188,8 @@ export const query = graphql`
       childImageSharp {
         # Specify the image processing specifications right in the query.
         # Makes it trivial to update as your page's design changes.
-        resolutions(width: 125, height: 125) {
-          ...GatsbyImageSharpResolutions
+        fixed(width: 125, height: 125) {
+          ...GatsbyImageSharpFixed
         }
       }
     }
@@ -206,7 +206,7 @@ See also the following blog posts:
 
 ### Fragments
 
-Notice that in the above example for [querying images](#images), we used `...GatsbyImageSharpResolutions`, which is a GraphQL Fragment, a reusable set of fields for query composition. You can read more about them [here](http://graphql.org/learn/queries/#fragments).
+Notice that in the above example for [querying images](#images), we used `...GatsbyImageSharpFixed`, which is a GraphQL Fragment, a reusable set of fields for query composition. You can read more about them [here](http://graphql.org/learn/queries/#fragments).
 
 If you wish to define your own fragments for use in your application, you can use named exports to export them in any Javascript file, and they will be automatically processed by Gatsby for use in your GraphQL queries.
 

@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 import { Link } from "gatsby"
 import Helmet from "react-helmet"
 
-import "./index.css"
+import "./layout.css"
 import "./selected.css"
 
 const Header = () => (
@@ -55,13 +55,13 @@ const TemplateWrapper = ({ children }) => (
         paddingTop: 0,
       }}
     >
-      {children()}
+      {children}
     </div>
   </div>
 )
 
 TemplateWrapper.propTypes = {
-  children: PropTypes.func,
+  children: PropTypes.node.isRequired,
 }
 
 export default TemplateWrapper
