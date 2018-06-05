@@ -137,9 +137,13 @@ exports.liftRenderedField = entities =>
   })
 
 // Exclude entities of unknown shape
+// Assume all entities contain a wordpress_id, except for whitelisted type wp_settings
 exports.excludeUnknownEntities = entities =>
   entities.filter(e => e.wordpress_id || e.__type === `wordpress__wp_settings`) // Excluding entities without ID, or WP Settings
 
+// Create node ID from known entities
+// excludeUnknownEntities whitelisted types don't contain a wordpress_id
+// we create the node ID based upon type if the wordpress_id doesn't exist
 exports.createGatsbyIds = (createNodeId, entities) =>
   entities.map(e => {
     if (e.wordpress_id) {
