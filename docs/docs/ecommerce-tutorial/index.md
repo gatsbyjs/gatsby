@@ -21,7 +21,7 @@ title: "Gatsby E-Commerce Tutorial"
 
 # Why use Gatsby for an e-commerce site?
 
-In this tutorial, you’ll learn how to use Gatsby to build the UI for a basic e-commerce site that can accept payments, with Stripe as the backend for processing payments. Benefits of using Gatsby for e-commerce sites include the following:
+In this advanced tutorial, you’ll learn how to use Gatsby to build the UI for a basic e-commerce site that can accept payments, with Stripe as the backend for processing payments. Benefits of using Gatsby for e-commerce sites include the following:
 * Security inherent in static sites
 * Blazing fast performance when your pages are converted from React into static files
 * Easy to host
@@ -30,8 +30,10 @@ You can see the working demo hosted here: https://gatsby-ecommerce.netlify.com/
 
 # Prerequisites
 
+* Since this is a more advanced tutorial, building a site with Gatsby before will likely make this tutorial less time-consuming ([see main tutorial here](/tutorial/))
 * Stripe account: [register for an account here](https://dashboard.stripe.com/register)
 * AWS account (free tier that covers anywhere from several thousand to a million requests per month): [register for an account here](https://aws.amazon.com/free/?sc_channel=PS&sc_campaign=acquisition_US&sc_publisher=google&sc_medium=cloud_computing_b&sc_content=aws_account_e_control_q32016&sc_detail=create%20an%20aws%20account&sc_category=cloud_computing&sc_segment=102882721242&sc_matchtype=e&sc_country=US&s_kwcid=AL!4422!3!102882721242!e!!g!!create%20an%20aws%20account&ef_id=Wd_k7wAAAVgVBk9m:20180604172833:s)
+* Willingness to navigate around janky AWS UIs
 
 
 ## How does Gatsby work with Stripe and AWS?
