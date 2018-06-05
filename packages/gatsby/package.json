@@ -147,8 +147,10 @@
   },
   "files": [
     "./cache-dir",
-    "./dist"
+    "./dist",
+    "./index.d.ts"
   ],
+  "types": "index.d.ts",
   "homepage": "https://github.com/gatsbyjs/gatsby#readme",
   "keywords": [
     "blog",
