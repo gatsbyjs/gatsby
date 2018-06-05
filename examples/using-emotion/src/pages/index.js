@@ -1,4 +1,5 @@
 import React from "react"
+import Helmet from "react-helmet"
 import { injectGlobal } from "emotion"
 import styled from "react-emotion"
 
@@ -57,17 +58,24 @@ const Subtitle = styled.p`
 `
 
 const IndexPage = () => (
-  <Wrapper>
-    <Title>
-      Hello World, this is my first component styled with{` `}
-      <a href="https://emotion.sh/">emotion</a>!
-    </Title>
-    <Subtitle>
-      <a href="https://www.gatsbyjs.org/packages/gatsby-plugin-emotion/">
-        gatsby-plugin-emotion docs
-      </a>
-    </Subtitle>
-  </Wrapper>
+  <>
+    <Helmet>
+      <title>Gatsby Emotion</title>
+      <meta name="description" content="Gatsby example site using Emotion" />
+      <meta name="referrer" content="origin" />
+    </Helmet>
+    <Wrapper>
+      <Title>
+        Hello World, this is my first component styled with{` `}
+        <a href="https://emotion.sh/">emotion</a>!
+      </Title>
+      <Subtitle>
+        <a href="https://www.gatsbyjs.org/packages/gatsby-plugin-emotion/">
+          gatsby-plugin-emotion docs
+        </a>
+      </Subtitle>
+    </Wrapper>
+  </>
 )
 
 export default IndexPage
