@@ -11,12 +11,9 @@
     "gatsby-plugin-offline": "next",
     "glamor": "^2.20.40",
     "lodash": "^4.16.4",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
-    "react-typography": "^0.16.13",
-    "slash": "^1.0.0",
-    "typography": "^0.16.6",
-    "typography-breakpoint-constants": "^0.15.10"
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0",
+    "slash": "^1.0.0"
   },
   "keywords": [
     "gatsby"
