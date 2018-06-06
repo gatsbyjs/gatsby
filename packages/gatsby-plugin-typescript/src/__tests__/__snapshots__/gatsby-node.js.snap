@@ -8,17 +8,21 @@ Array [
         Object {
           "test": /\\\\\\.tsx\\?\\$/,
           "use": Array [
-            "babel-loader",
             Object {
-              "loader": "/resolved/path/ts-loader",
+              "loader": "/resolved/path/babel-loader",
               "options": Object {
-                "compilerOptions": Object {
-                  "experimentalDecorators": true,
-                  "jsx": "react",
-                  "module": "es6",
-                  "target": "esnext",
-                },
-                "transpileOnly": true,
+                "plugins": Array [
+                  "babel-plugin-remove-graphql-queries",
+                ],
+                "presets": Array [
+                  Array [
+                    "@babel/preset-env",
+                  ],
+                  Array [
+                    "@babel/preset-react",
+                  ],
+                  "/resolved/path/@babel/preset-typescript",
+                ],
               },
             },
           ],
@@ -27,17 +31,6 @@ Array [
     },
   },
 ]
-`;
-
-exports[`gatsby-plugin-typescript pre-processing transforms .ts files 1`] = `
-"const now = moment().format('HH:MM:ss');
-"
-`;
-
-exports[`gatsby-plugin-typescript pre-processing transforms JSX files 1`] = `
-"import * as React from 'react';
-export default () => React.createElement(\\"h1\\", null, \\"Hello World\\");
-"
 `;
 
 exports[`gatsby-plugin-typescript returns correct extensions 1`] = `
