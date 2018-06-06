@@ -10,20 +10,20 @@ This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While t
 
 ## What we'll cover
 
-* [Update Gatsby version](/docs/migrating-from-v1-to-v2/#update-gatsby-version)
-* [Manually install React](/docs/migrating-from-v1-to-v2/#manually-install-react)
-* [Manually install plugins’ peer dependencies](/docs/migrating-from-v1-to-v2/manually-install-plugins-peer-dependencies)
-* [Update layout component](/docs/migrating-from-v1-to-v2/#update-layout-component)
-* [Rename `boundActionCreators` to `actions`](/docs/migrating-from-v1-to-v2/rename-boundactioncreators-to-actions)
-* [Rename `pathContext` to `pageContext`](/docs/migrating-from-v1-to-v2/#rename-pathcontext-to-pagecontext)
-* [Rename responsive image queries](/docs/migrating-from-v1-to-v2/#rename-responsive-image-queries)
-* [Manually specify PostCSS plugins](/docs/migrating-from-v1-to-v2/#manually-specify-postcss-plugins)
-* [Convert to either pure CommonJS or pure ES6](/docs/migrating-from-v1-to-v2/#convert-to-either-pure-commonjs-or-pure-es6)
-* [Don't query nodes by ID](/docs/migrating-from-v1-to-v2/#dont-query-nodes-by-id)
-* [Remove explicit polyfills](/docs/migrating-from-v1-to-v2/#remove-explicit-polyfills)
-* [Change `modifyBabelrc` to `onCreateBabelConfig`](/docs/migrating-from-v1-to-v2/#change-modifybabelrc-to-oncreatebabelconfig)
-* [Change `modifyWebpackConfig` to `onCreateWebpackConfig`](/docs/migrating-from-v1-to-v2/#change-modifywebpackconfig-to-oncreatewebpackconfig)
-* [Remove inlined CSS in `html.js`](/docs/migrating-from-v1-to-v2/#remove-inlined-css-in-htmljs)
+* [Update Gatsby version](#update-gatsby-version)
+* [Manually install React](#manually-install-react)
+* [Manually install plugins’ peer dependencies](#manually-install-plugins-peer-dependencies)
+* [Update layout component](#update-layout-component)
+* [Rename `boundActionCreators` to `actions`](#rename-boundactioncreators-to-actions)
+* [Rename `pathContext` to `pageContext`](#rename-pathcontext-to-pagecontext)
+* [Rename responsive image queries](#rename-responsive-image-queries)
+* [Manually specify PostCSS plugins](#manually-specify-postcss-plugins)
+* [Convert to either pure CommonJS or pure ES6](#convert-to-either-pure-commonjs-or-pure-es6)
+* [Don't query nodes by ID](#dont-query-nodes-by-id)
+* [Remove explicit polyfills](#remove-explicit-polyfills)
+* [Change `modifyBabelrc` to `onCreateBabelConfig`](#change-modifybabelrc-to-oncreatebabelconfig)
+* [Change `modifyWebpackConfig` to `onCreateWebpackConfig`](#change-modifywebpackconfig-to-oncreatewebpackconfig)
+* [Remove inlined CSS in `html.js`](#remove-inlined-css-in-htmljs)
 
 You can start with a few of the most important steps - install Gatsby v2 dependencies and update your layout components.
 
