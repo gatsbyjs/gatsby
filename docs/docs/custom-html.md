@@ -13,7 +13,7 @@ tree by running:
 cp .cache/default-html.js src/html.js
 ```
 
-And then making modifications as needed.
+And then make modifications as needed.
 
 ### Required props
 
@@ -22,7 +22,7 @@ Note: the various props that are rendered into pages _are_ required e.g.
 
 ### React Helmet
 
-Also anything you render in the `html.js` component will _not_ be made "live" in
+Also, anything you render in the `html.js` component will _not_ be made "live" in
 the client like other components. If you want to dynamically update your
 `<head>` we recommend using
 [React Helmet](/packages/gatsby-plugin-react-helmet/)

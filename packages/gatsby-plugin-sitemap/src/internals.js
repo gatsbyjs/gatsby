@@ -15,19 +15,18 @@ export const runQuery = (handler, query, excludes, pathPrefix) =>
 
     // Removing excluded paths
     r.data.allSitePage.edges = r.data.allSitePage.edges.filter(
-      page => !excludes.some(
-        excludedRoute => minimatch(withoutTrailingSlash(page.node.path), excludedRoute)
-      )
+      page =>
+        !excludes.some(excludedRoute =>
+          minimatch(withoutTrailingSlash(page.node.path), excludedRoute)
+        )
     )
 
     // Add path prefix
-    r.data.allSitePage.edges = r.data.allSitePage.edges.map(
-      page => {
-        // uses `normalizePath` logic from `gatsby-link`
-        page.node.path = (pathPrefix + page.node.path).replace(/^\/\//g, `/`)
-        return page
-      }
-    )
+    r.data.allSitePage.edges = r.data.allSitePage.edges.map(page => {
+      // uses `normalizePath` logic from `gatsby-link`
+      page.node.path = (pathPrefix + page.node.path).replace(/^\/\//g, `/`)
+      return page
+    })
 
     return r.data
   })

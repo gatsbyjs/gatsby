@@ -1,10 +1,9 @@
 import React from "react"
 import { rhythm, options } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
-import jsonp from "jsonp"
-import { validate } from "email-validator"
 import { css } from "glamor"
 import hex2rgba from "hex2rgba"
+import addToMailchimp from 'gatsby-plugin-mailchimp'
 
 let stripeAnimation = css.keyframes({
   "0%": { backgroundPosition: `0 0` },
@@ -28,12 +27,6 @@ const formInputDefaultStyles = {
   },
 }
 
-// Mailchimp endpoint
-// From: https://us17.admin.mailchimp.com/lists/integration/embeddedcode?id=XXXXXX
-// Where `XXXXXX` is the MC list ID
-// Note: we change `/post` to `/post-json`
-const MAILCHIMP_URL = `https://gatsbyjs.us17.list-manage.com/subscribe/post-json?u=1dc33f19eb115f7ebe4afe5ee&amp;id=f366064ba7`
-
 class EmailCaptureForm extends React.Component {
   constructor() {
     super()
@@ -47,64 +40,46 @@ class EmailCaptureForm extends React.Component {
     this.setState({ email: e.target.value })
   }
 
-  // Using jsonp, post to MC server & handle its response
-  _postEmailToMailchimp = url => {
-    // jsonp lib takes an `endpoint`, {options}, & callback
-    jsonp(url, { param: `c` }, (err, data) => {
-      // network failures, timeouts, etc
-      if (err) {
+  // Post to MC server & handle its response
+  _postEmailToMailchimp = (email, attributes) => {
+    addToMailchimp(email, attributes)
+    .then(result => {
+      // Mailchimp always returns a 200 response
+      // So we check the result for MC errors & failures
+      if (result.result !== `success`) {
         this.setState({
           status: `error`,
-          msg: err,
+          msg: result.msg,
         })
-
-        // Mailchimp errors & failures
-      } else if (data.result !== `success`) {
-        this.setState({
-          status: `error`,
-          msg: data.msg,
-        })
-
-        // Posted email successfully to Mailchimp
       } else {
+        // Email address succesfully subcribed to Mailchimp
         this.setState({
           status: `success`,
-          msg: data.msg,
+          msg: result.msg,
         })
       }
     })
+    .catch(err => {
+      // Network failures, timeouts, etc
+      this.setState({
+        status: `error`,
+        msg: err,
+      })
+    })
   }
 
-  // On form submit, validate email
-  // then jsonp to Mailchimp, and update state
   _handleFormSubmit = e => {
     e.preventDefault()
     e.stopPropagation()
 
-    // If email is not valid, break early
-    if (!validate(this.state.email)) {
-      this.setState({
-        status: `error`,
-        msg: `"${this.state.email}" is not a valid email address`,
-      })
-      return
-    }
-
-    // Construct the url for our jsonp request
-    // Query params must be in CAPS
-    // Capture pathname for better email targeting
-    const url = `${MAILCHIMP_URL}
-      &EMAIL=${encodeURIComponent(this.state.email)}
-      &PATHNAME=${window.location.pathname}
-    `
-
-    this.setState(
-      {
-        msg: null,
+    this.setState({
         status: `sending`,
+        msg: null,
       },
-      // jsonp request as setState callback
-      this._postEmailToMailchimp(url)
+      // setState callback (subscribe email to MC)
+      this._postEmailToMailchimp(this.state.email, {
+        pathname: document.location.pathname,
+      })
     )
   }
 

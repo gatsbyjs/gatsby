@@ -8,12 +8,12 @@ To add tags to your blog posts, you will first want to have your site set up to 
 
 The process will essentially look like this:
 
-1. Add tags to your `markdown` files
-2. Write a query to get all tags for your posts
-3. Make a tags page template (for `/tags/{tag}`)
-4. Modify `gatsby-node.js` to render pages using that template
-5. Make a tags index page (`/tags`) that renders a list of all tags
-6. _(optional)_ Render tags inline with your blog posts
+1.  Add tags to your `markdown` files
+2.  Write a query to get all tags for your posts
+3.  Make a tags page template (for `/tags/{tag}`)
+4.  Modify `gatsby-node.js` to render pages using that template
+5.  Make a tags index page (`/tags`) that renders a list of all tags
+6.  _(optional)_ Render tags inline with your blog posts
 
 ## Add tags to your `markdown` files
 
@@ -244,7 +244,12 @@ import Helmet from "react-helmet";
 import Link from "gatsby-link";
 
 const TagsPage = ({
-  data: { allMarkdownRemark: { group }, site: { siteMetadata: { title } } },
+  data: {
+    allMarkdownRemark: { group },
+    site: {
+      siteMetadata: { title },
+    },
+  },
 }) => (
   <div>
     <Helmet title={title} />

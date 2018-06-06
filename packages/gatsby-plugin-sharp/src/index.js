@@ -658,6 +658,7 @@ async function resolutions({ file, args = {}, reporter }) {
 
 async function notMemoizedtraceSVG({ file, args, fileArgs, reporter }) {
   const potrace = require(`potrace`)
+  const svgToMiniDataURI = require(`mini-svg-data-uri`)
   const trace = Promise.promisify(potrace.trace)
   const defaultArgs = {
     color: `lightgray`,
@@ -730,7 +731,7 @@ async function notMemoizedtraceSVG({ file, args, fileArgs, reporter }) {
 
   return trace(tmpFilePath, optionsSVG)
     .then(svg => optimize(svg))
-    .then(svg => encodeOptimizedSVGDataUri(svg))
+    .then(svg => svgToMiniDataURI(svg))
 }
 
 const memoizedTraceSVG = _.memoize(
@@ -740,19 +741,6 @@ const memoizedTraceSVG = _.memoize(
 
 async function traceSVG(args) {
   return await memoizedTraceSVG(args)
-}
-
-// https://codepen.io/tigt/post/optimizing-svgs-in-data-uris
-function encodeOptimizedSVGDataUri(svgString) {
-  var uriPayload = encodeURIComponent(svgString) // encode URL-unsafe characters
-    .replace(/%0A/g, ``) // remove newlines
-    .replace(/%20/g, ` `) // put spaces back in
-    .replace(/%3D/g, `=`) // ditto equals signs
-    .replace(/%3A/g, `:`) // ditto colons
-    .replace(/%2F/g, `/`) // ditto slashes
-    .replace(/%22/g, `'`) // replace quotes with apostrophes (may break certain SVGs)
-
-  return `data:image/svg+xml,` + uriPayload
 }
 
 const optimize = svg => {
@@ -780,3 +768,4 @@ exports.responsiveSizes = responsiveSizes
 exports.responsiveResolution = resolutions
 exports.sizes = responsiveSizes
 exports.resolutions = resolutions
+exports.getImageSize = getImageSize

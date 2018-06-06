@@ -130,7 +130,7 @@ export function shouldInfer(nodes, selector, value) {
 function createType(fileNodeRootType, isArray) {
   if (!fileNodeRootType) return null
 
-  return {
+  return Object.freeze({
     type: isArray ? new GraphQLList(fileNodeRootType) : fileNodeRootType,
     resolve: (node, args, { path }, { fieldName }) => {
       let fieldValue = node[fieldName]
@@ -173,7 +173,7 @@ function createType(fileNodeRootType, isArray) {
         return findLinkedFileNode(fieldValue)
       }
     },
-  }
+  })
 }
 
 export function getType() {

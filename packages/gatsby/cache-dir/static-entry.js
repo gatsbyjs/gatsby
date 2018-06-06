@@ -196,13 +196,12 @@ module.exports = (locals, callback) => {
   )
 
   // Add script loader for page scripts to the end of body element (after webpack manifest).
-  // Taken from https://www.html5rocks.com/en/tutorials/speed/script-loading/
   const scriptsString = scripts.map(s => `"${s}"`).join(`,`)
   postBodyComponents.push(
     <script
       key={`script-loader`}
       dangerouslySetInnerHTML={{
-        __html: `/*<![CDATA[*/!function(e,t,r){function n(){for(;d[0]&&"loaded"==d[0][f];)c=d.shift(),c[o]=!i.parentNode.insertBefore(c,i)}for(var s,a,c,d=[],i=e.scripts[0],o="onreadystatechange",f="readyState";s=r.shift();)a=e.createElement(t),"async"in i?(a.async=!1,e.head.appendChild(a)):i[f]?(d.push(a),a[o]=n):e.write("<"+t+' src="'+s+'" defer></'+t+">"),a.src=s}(document,"script",[${scriptsString}])/*]]>*/`,
+        __html: `/*<![CDATA[*/[${scriptsString}].forEach(function(s){document.write('<script src="'+s+'" defer></'+'script>')})/*]]>*/`,
       }}
     />
   )

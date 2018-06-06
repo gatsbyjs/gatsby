@@ -334,6 +334,78 @@ describe(`GraphQL Input args`, () => {
     expect(result.data.allNode.edges[0].node.hair).toEqual(1)
   })
 
+  it(`handles lt operator`, async () => {
+    let result = await queryResult(
+      nodes,
+      `
+        {
+          allNode(filter: {hair: { lt: 2 }}) {
+            edges { node { hair }}
+          }
+        }
+      `
+    )
+
+    expect(result.errors).not.toBeDefined()
+    expect(result.data.allNode.edges.length).toEqual(2)
+    expect(result.data.allNode.edges[0].node.hair).toEqual(1)
+    expect(result.data.allNode.edges[1].node.hair).toEqual(0)
+  })
+
+  it(`handles lte operator`, async () => {
+    let result = await queryResult(
+      nodes,
+      `
+        {
+          allNode(filter: {hair: { lte: 1 }}) {
+            edges { node { hair }}
+          }
+        }
+      `
+    )
+
+    expect(result.errors).not.toBeDefined()
+    expect(result.data.allNode.edges.length).toEqual(2)
+    expect(result.data.allNode.edges[0].node.hair).toEqual(1)
+    expect(result.data.allNode.edges[1].node.hair).toEqual(0)
+  })
+
+  it(`handles gt operator`, async () => {
+    let result = await queryResult(
+      nodes,
+      `
+        {
+          allNode(filter: {hair: { gt: 0 }}) {
+            edges { node { hair }}
+          }
+        }
+      `
+    )
+
+    expect(result.errors).not.toBeDefined()
+    expect(result.data.allNode.edges.length).toEqual(2)
+    expect(result.data.allNode.edges[0].node.hair).toEqual(1)
+    expect(result.data.allNode.edges[1].node.hair).toEqual(2)
+  })
+
+  it(`handles gte operator`, async () => {
+    let result = await queryResult(
+      nodes,
+      `
+        {
+          allNode(filter: {hair: { gte: 1 }}) {
+            edges { node { hair }}
+          }
+        }
+      `
+    )
+
+    expect(result.errors).not.toBeDefined()
+    expect(result.data.allNode.edges.length).toEqual(2)
+    expect(result.data.allNode.edges[0].node.hair).toEqual(1)
+    expect(result.data.allNode.edges[1].node.hair).toEqual(2)
+  })
+
   it(`handles the regex operator`, async () => {
     let result = await queryResult(
       nodes,

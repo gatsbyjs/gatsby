@@ -2,7 +2,7 @@ const fs = require(`fs`)
 const path = require(`path`)
 const Promise = require(`bluebird`)
 const sharp = require(`sharp`)
-const defaultIcons = require(`./common.js`).defaultIcons
+const { defaultIcons, doesIconExist } = require(`./common.js`)
 
 sharp.simd(true)
 
@@ -14,13 +14,12 @@ function generateIcons(icons, srcIcon) {
     return sharp(srcIcon)
       .resize(size)
       .toFile(imgPath)
-      .then(() => {
-      })
+      .then(() => {})
   })
 }
 
 exports.onPostBuild = (args, pluginOptions) =>
-  new Promise(resolve => {
+  new Promise((resolve, reject) => {
     const { icon } = pluginOptions
     const manifest = { ...pluginOptions }
 
@@ -34,23 +33,33 @@ exports.onPostBuild = (args, pluginOptions) =>
     }
 
     // Determine destination path for icons.
-    const iconPath = path.join(`public`, manifest.icons[0].src.substring(0, manifest.icons[0].src.lastIndexOf(`/`)))
+    const iconPath = path.join(
+      `public`,
+      manifest.icons[0].src.substring(0, manifest.icons[0].src.lastIndexOf(`/`))
+    )
 
     //create destination directory if it doesn't exist
-    if (!fs.existsSync(iconPath)){
+    if (!fs.existsSync(iconPath)) {
       fs.mkdirSync(iconPath)
     }
 
-    fs.writeFileSync(path.join(`public`, `manifest.json`), JSON.stringify(manifest))
+    fs.writeFileSync(
+      path.join(`public`, `manifest.webmanifest`),
+      JSON.stringify(manifest)
+    )
 
     // Only auto-generate icons if a src icon is defined.
     if (icon !== undefined) {
-        generateIcons(manifest.icons, icon).then(() => {
-            //images have been generated
-            console.log(`done`)
-            resolve()
-        })
-    } else {
+      // Check if the icon exists
+      if (!doesIconExist(icon)) {
+        reject(`icon (${icon}) does not exist as defined in gatsby-config.js. Make sure the file exists relative to the root of the site.`)
+      }
+      generateIcons(manifest.icons, icon).then(() => {
+        //images have been generated
+        console.log(`done generating icons for manifest`)
         resolve()
+      })
+    } else {
+      resolve()
     }
   })

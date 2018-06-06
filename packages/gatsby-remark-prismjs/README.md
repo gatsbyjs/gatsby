@@ -5,7 +5,7 @@ Adds syntax highlighting to code blocks in markdown files using
 
 ## Install
 
-`npm install --save gatsby-transformer-remark gatsby-remark-prismjs`
+`npm install --save gatsby-transformer-remark gatsby-remark-prismjs prismjs`
 
 ## How to use
 
@@ -211,18 +211,3 @@ to facilitate the desired line highlight behavior.
 [5]: https://github.com/PrismJS/prism/tree/1d5047df37aacc900f8270b1c6215028f6988eb1/themes
 [6]: http://prismjs.com/
 
-## Contributing Notes
-
-We vendor the `prismjs` components file in `prism-language-dependencies.js`. We use the `prism-language-dependencies.js` file to tell `gatsby-remark-prismjs` which languages it can syntax highlight. Thus, when the `prismjs` library is updated, we need to update the our `prism-language-dependencies.js` file. To do this, we have created a script at `scripts/get-prism-language-dependencies.js`. To run this script:
-
-* Move into the `gatsby/packages/gatsby-remark-prismjs/scripts` dir
-
-  ```bash
-  cd gatsby/packages/gatsby-remark-prismjs/scripts
-  ```
-
-* Run the script
-
-  ```bash
-  node get-prism-language-dependencies.js
-  ```

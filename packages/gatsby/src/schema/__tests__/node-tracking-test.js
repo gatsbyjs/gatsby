@@ -31,7 +31,9 @@ describe(`Track root nodes`, () => {
   const { findRootNodeAncestor } = require(`../node-tracking`)
   const runSift = require(`../run-sift`)
   const buildNodeTypes = require(`../build-node-types`)
-  const { boundActionCreators: { createNode } } = require(`../../redux/actions`)
+  const {
+    boundActionCreators: { createNode },
+  } = require(`../../redux/actions`)
 
   createNode(
     {

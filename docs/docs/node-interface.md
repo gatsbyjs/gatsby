@@ -18,7 +18,7 @@ internal: {
   // Optional media type (https://en.wikipedia.org/wiki/Media_type) to indicate
   // to transformer plugins this node has data they can futher process.
   mediaType: String,
-  // A globally unique node type choosen by the plugin owner.
+  // A globally unique node type chosen by the plugin owner.
   type: String,
   // The plugin which created this node.
   owner: String,

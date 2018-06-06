@@ -110,10 +110,10 @@ Strapi APIs are based on a data structure called Content Types (equivalent of mo
 
 Add some articles in the database. To do so, follow these instructions:
 
-1. Visit the [articles list page](http://localhost:1337/admin/plugins/content-type-builder/models/article).
-2. Click on `Add New Article`.
-3. Insert values, link to an author and submit the form.
-4. Create two other articles.
+1.  Visit the [articles list page](http://localhost:1337/admin/plugins/content-type-builder/models/article).
+2.  Click on `Add New Article`.
+3.  Insert values, link to an author and submit the form.
+4.  Create two other articles.
 
 ![Tutorial](strapi-content-manager.png)
 

@@ -15,7 +15,7 @@ From October 2017 to February 2018, I conducted over 60 interviews with Gatsby u
 
 ## Jobs to be done
 
-After compiling data from the interviews, I drew what’s called an “empathy map” to put myself in the shoes of Gatsby users. This map describes what a Gatsby users usually experienced when searching for plugins.
+After compiling data from the interviews, I drew what’s called an “empathy map” to put myself in the shoes of Gatsby users. This map describes what Gatsby users usually experienced when searching for plugins.
 
 ![Empathy map](empathy-map.png)
 
@@ -23,10 +23,10 @@ This map reflects how it took most people a lot of time browsing through the plu
 
 With the empathy map and the interviews as our guide, we learned that most people want to:
 
-1. Find the best, most recent, and relevant plugin, library, or component for their site.
-2. Learn how to build a plugin.
-3. Preview plugin functionality before installation.
-4. Share plugins with others.
+1.  Find the best, most recent, and relevant plugin, library, or component for their site.
+2.  Learn how to build a plugin.
+3.  Preview plugin functionality before installation.
+4.  Share plugins with others.
 
 ## Learning from other plugin libraries
 

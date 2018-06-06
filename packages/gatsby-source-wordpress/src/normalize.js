@@ -137,12 +137,20 @@ exports.liftRenderedField = entities =>
   })
 
 // Exclude entities of unknown shape
+// Assume all entities contain a wordpress_id, except for whitelisted type wp_settings
 exports.excludeUnknownEntities = entities =>
-  entities.filter(e => e.wordpress_id) // Excluding entities without ID
+  entities.filter(e => e.wordpress_id || e.__type === `wordpress__wp_settings`) // Excluding entities without ID, or WP Settings
 
+// Create node ID from known entities
+// excludeUnknownEntities whitelisted types don't contain a wordpress_id
+// we create the node ID based upon type if the wordpress_id doesn't exist
 exports.createGatsbyIds = (createNodeId, entities) =>
   entities.map(e => {
-    e.id = createNodeId(`${e.__type}-${e.wordpress_id.toString()}`)
+    if (e.wordpress_id) {
+      e.id = createNodeId(`${e.__type}-${e.wordpress_id.toString()}`)
+    } else {
+      e.id = createNodeId(e.__type)
+    }
     return e
   })
 
@@ -192,21 +200,21 @@ exports.mapPostsToTagsCategories = entities => {
   const categories = entities.filter(e => e.__type === `wordpress__CATEGORY`)
 
   return entities.map(e => {
-    if (e.__type === `wordpress__POST`) {
+    let hasCategories = (e.categories && Array.isArray(e.categories) && e.categories.length)
+    let hasTags = (e.tags && Array.isArray(e.tags) && e.tags.length)
       // Replace tags & categories with links to their nodes.
-      if (tags && e.tags.length) {
+      if (tags && hasTags) {
         e.tags___NODE = e.tags.map(
           t => tags.find(tObj => t === tObj.wordpress_id).id
         )
         delete e.tags
       }
-      if (categories && e.categories.length) {
+      if (categories && hasCategories) {
         e.categories___NODE = e.categories.map(
           c => categories.find(cObj => c === cObj.wordpress_id).id
         )
         delete e.categories
       }
-    }
     return e
   })
 }
@@ -227,9 +235,12 @@ exports.mapElementsToParent = entities =>
   entities.map(e => {
     if (e.wordpress_parent) {
       // Create parent_element with a link to the parent node of type.
-      e.parent_element___NODE = entities.find(
+      const parentElement = entities.find(
         t => t.wordpress_id === e.wordpress_parent && t.__type === e.__type
-      ).id
+      )
+      if (parentElement) {
+        e.parent_element___NODE = parentElement.id
+      }
     }
     return e
   })

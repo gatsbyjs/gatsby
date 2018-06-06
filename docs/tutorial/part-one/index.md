@@ -97,10 +97,10 @@ should change within a second (tip: you will always need to save changes before 
 
 Try some other tricks, like the ones below:
 
-1. Gatsby lets you add "inline styles" via a JavaScript style "prop" (we'll
-   learn about other styling options later).
+1.  Gatsby lets you add "inline styles" via a JavaScript style "prop" (we'll
+    learn about other styling options later).
 
-   Try replacing your page component with this:
+    Try replacing your page component with this:
 
 ```jsx
 import React from "react";
@@ -110,7 +110,7 @@ export default () => <div style={{ color: `blue` }}>Hello Gatsby!</div>;
 
 Change the color to "pink". Then to "tomato".
 
-2. Add some paragraph text.
+2.  Add some paragraph text.
 
 ```jsx{5-6}
 import React from "react";
@@ -122,7 +122,7 @@ export default () =>
  </div>
 ```
 
-3. Add an image (in this case, a random one from Unsplash)
+3.  Add an image (in this case, a random one from Unsplash)
 
 ```jsx{7}
 import React from "react";

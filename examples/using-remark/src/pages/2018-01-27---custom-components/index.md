@@ -11,7 +11,7 @@ tags:
 
 What if you want custom UI interactions embedded in your Markdown?
 
-By using `rehype-react` with the `htmlAst` field, you can write custom React components and then reference them from your Markdown files.
+By using `rehype-react` with the `htmlAst` field, you can write custom React components and then reference them from your Markdown files, or map generic HTML elements like `<ul>` or `<h2>` to your own components. 
 
 _Note: this functionality was added in version 1.7.31 of gatsby-transformer-remark_
 
@@ -67,61 +67,61 @@ export default class Counter extends React.Component {
 
 In order to display this component within a Markdown file, you'll need to add a reference to the component in the template that renders your Markdown content. There are five parts to this:
 
-1. Install `rehype-react` as a dependency
+1.  Install `rehype-react` as a dependency
 
-   ```bash
-   # If you use Yarn
-   yarn add rehype-react
+    ```bash
+    # If you use Yarn
+    yarn add rehype-react
 
-   # If you use npm
-   npm install --save rehype-react
-   ```
+    # If you use npm
+    npm install --save rehype-react
+    ```
 
-2. Import `rehype-react` and whichever components you wish to use
+2.  Import `rehype-react` and whichever components you wish to use
 
-   ```js
-   import rehypeReact from "rehype-react";
-   import Counter from "../components/Counter";
-   ```
+    ```js
+    import rehypeReact from "rehype-react";
+    import Counter from "../components/Counter";
+    ```
 
-3. Create a render function with references to your custom components
+3.  Create a render function with references to your custom components
 
-   ```js
-   const renderAst = new rehypeReact({
-     createElement: React.createElement,
-     components: { "interactive-counter": Counter },
-   }).Compiler;
-   ```
+    ```js
+    const renderAst = new rehypeReact({
+      createElement: React.createElement,
+      components: { "interactive-counter": Counter },
+    }).Compiler;
+    ```
 
-   I prefer to use hyphenated names to make it clear that it's a custom component.
+    I prefer to use hyphenated names to make it clear that it's a custom component.
 
-4. Render your content using `htmlAst` instead of `html`
+4.  Render your content using `htmlAst` instead of `html`
 
-   This will look different depending on how you were previously referring to the post object retrieved from GraphQL, but in general you'll want to replace this:
+    This will look different depending on how you were previously referring to the post object retrieved from GraphQL, but in general you'll want to replace this:
 
-   ```js
-   <div dangerouslySetInnerHTML={{ __html: post.html }} />
-   ```
+    ```js
+    <div dangerouslySetInnerHTML={{ __html: post.html }} />
+    ```
 
-   with this:
+    with this:
 
-   ```js
-   {
-     renderAst(post.htmlAst);
-   }
-   ```
+    ```js
+    {
+      renderAst(post.htmlAst)
+    }
+    ```
 
-5. Change `html` to `htmlAst` in your `pageQuery`
+5.  Change `html` to `htmlAst` in your `pageQuery`
 
-   ```graphql
-   # ...
-   markdownRemark(fields: { slug: { eq: $slug } }) {
-     htmlAst # previously `html`
+    ```graphql
+    # ...
+    markdownRemark(fields: { slug: { eq: $slug } }) {
+      htmlAst # previously `html`
 
-     # other fields...
-   }
-   # ...
-   ```
+      # other fields...
+    }
+    # ...
+    ```
 
 ## Using the component
 
@@ -142,6 +142,39 @@ In addition, you can also pass attributes, which can be used as props in your co
 ```
 
 <interactive-counter initialvalue="10"></interactive-counter>
+
+## Mapping from generic HTML elements
+
+You can also map a generic HTML element to one of your own components. This can be particularly useful if you are using something like styled-components as it allows you to share these primitives between markdown content and the rest of your site. It also means the author of the Markdown doesn't need to use any custom markup - just standard markdown.
+
+For example if you have a series of header components:
+
+```javascript
+const PrimaryTitle = styled.h1`…`
+const SecondaryTitle styled.h2`…`
+const TertiaryTitle styled.h3`…`
+```
+
+You can map headers defined in markdown to these components:
+
+```js
+const renderAst = new rehypeReact({
+  createElement: React.createElement,
+  components: { 
+    "h1": PrimaryTitle,
+    "h2": SecondaryTitle,
+    "h3": TertiaryTitle,
+   },
+}).Compiler;
+```
+
+And headers defined in markdown will be rendered as your components instead of generic HTML elements:
+
+```markdown
+# This will be rendered as a PrimaryTitle component
+## This will be rendered as a SecondaryTitle component
+### This will be rendered as a TertiaryTitle component
+```
 
 ## Caveats
 
