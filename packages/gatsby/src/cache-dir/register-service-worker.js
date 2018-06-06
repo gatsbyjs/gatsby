@@ -1,13 +1,8 @@
 import emitter from "./emitter"
 
-let pathPrefix = `/`
-if (__PREFIX_PATHS__) {
-  pathPrefix = `${__PATH_PREFIX__}/`
-}
-
 if (`serviceWorker` in navigator) {
   navigator.serviceWorker
-    .register(`${pathPrefix}sw.js`)
+    .register(`${__PATH_PREFIX__}/sw.js`)
     .then(function(reg) {
       reg.addEventListener(`updatefound`, () => {
         // The updatefound event implies that reg.installing is set; see

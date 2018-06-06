@@ -143,12 +143,12 @@ module.exports = async (
       plugins.moment(),
 
       // Add a few global variables. Set NODE_ENV to production (enables
-      // optimizations for React) and whether prefixing links is enabled
-      // (__PREFIX_PATHS__) and what the link prefix is (__PATH_PREFIX__).
+      // optimizations for React) and what the link prefix is (__PATH_PREFIX__).
       plugins.define({
         "process.env": processEnv(stage, `development`),
-        __PREFIX_PATHS__: program.prefixPaths,
-        __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
+        __PATH_PREFIX__: JSON.stringify(
+          program.prefixPaths ? store.getState().config.pathPrefix : ``
+        ),
       }),
     ]
 
