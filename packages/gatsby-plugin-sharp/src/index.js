@@ -75,7 +75,7 @@ const generalArgs = {
 }
 
 const healOptions = (args, defaultArgs) => {
-  let options = _.defaults(args, defaultArgs, generalArgs)
+  let options = _.defaults({}, args, defaultArgs, generalArgs)
   options.width = parseInt(options.width, 10)
   options.maxWidth = parseInt(options.maxWidth, 10)
   options.quality = parseInt(options.quality, 10)
