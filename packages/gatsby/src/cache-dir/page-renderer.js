@@ -15,34 +15,30 @@ class PageRenderer extends React.Component {
     let location = props.location
 
     // Set the pathname for 404 pages.
-    if (!loader.getPage(location.pathname)) {
-      location = { ...location, pathname: `/404.html` }
-    }
+    const pathname = this.getPathName(location)
 
     this.state = {
-      location,
-      pageResources: loader.getResourcesForPathname(location.pathname),
+      lastPathname: location.pathname,
+      pageResources: loader.getResourcesForPathname(pathname),
     }
   }
 
   static getDerivedStateFromProps({ pageResources, location }, prevState) {
-    let nextState = {}
+    let nextState = { lastPathname: location.pathname }
 
     if (
       process.env.NODE_ENV !== `production` &&
       pageResources &&
       pageResources.json
     ) {
-      nextState = { pageResources }
+      nextState.pageResources = pageResources
     }
 
-    if (prevState.location.pathname !== location.pathname) {
+    if (prevState.lastPathname !== location.pathname) {
       const pageResources = loader.getResourcesForPathname(location.pathname)
 
       if (pageResources) {
-        nextState = { location, pageResources }
-      } else if (!loader.getPage(location.pathname)) {
-        nextState.location = { ...location, pathname: `/404.html` }
+        nextState.pageResources = pageResources
       }
     }
 
@@ -54,26 +50,31 @@ class PageRenderer extends React.Component {
     // This is only useful on delayed transitions as the page will get rendered
     // without the necessary page resources and then re-render once those come in.
     emitter.on(`onPostLoadPageResources`, e => {
-      if (
-        loader.getPage(this.state.location.pathname) &&
-        e.page.path === loader.getPage(this.state.location.pathname).path
-      ) {
+      const page = loader.getPage(this.props.location.pathname)
+
+      if (page && e.page.path === page.path) {
         this.setState({ pageResources: e.pageResources })
       }
     })
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     if (prevProps === this.props) return
 
-    const { location } = this.state
-    if (!loader.getResourcesForPathname(location.pathname))
+    const { location } = this.props
+    const pathName = this.getPathName(location)
+
+    if (!loader.getResourcesForPathname(pathName))
       // Page resources won't be set in cases where the browser back button
       // or forward button is pushed as we can't wait as normal for resources
       // to load before changing the page.
-      loader.getResourcesForPathname(location.pathname, pageResources => {
+      loader.getResourcesForPathname(pathName, pageResources => {
+        // The page may have changed since we started this, in which case doesn't update
+        if (this.props.location.pathname !== location.pathname) {
+          return
+        }
+
         this.setState({
-          location,
           pageResources,
         })
       })
@@ -101,7 +102,7 @@ class PageRenderer extends React.Component {
     // Check if location has changed on a page using internal routing
     // via matchPath configuration.
     if (
-      this.state.location.key !== nextState.location.key &&
+      this.props.location.key !== nextProps.location.key &&
       nextState.pageResources.page &&
       (nextState.pageResources.page.matchPath ||
         nextState.pageResources.page.path)
@@ -110,6 +111,10 @@ class PageRenderer extends React.Component {
     }
 
     return shallowCompare(this, nextProps, nextState)
+  }
+
+  getPathName(location) {
+    return !loader.getPage(location.pathname) ? `/404.html` : location.pathname
   }
 
   render() {
