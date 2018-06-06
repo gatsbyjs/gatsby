@@ -120,14 +120,14 @@ exports.onCreatePage = true
  * to add new fields to the types created from data nodes. It will be called
  * separately for each type.
  * 
- * This function should return object in the shape of 
+ * This function should return an object in the shape of 
  * [GraphQLFieldConfigMap](https://graphql.org/graphql-js/type/#graphqlobjecttype)
  * which will be appended to fields inferred by Gatsby from data nodes.
  * 
- * *Note:* Import graphql types from `gatsby/graphql` and don't add `graphql`
+ * *Note:* Import GraphQL types from `gatsby/graphql` and don't add the `graphql`
  * package to your project/plugin dependencies to avoid `Schema must
  * contain unique named types but contains multiple types named` errors.
- * `gatsby/graphql` exports all builtin graphql types as well as `graphQLJSON` 
+ * `gatsby/graphql` exports all builtin GraphQL types as well as `graphQLJSON` 
  * type.
  * 
  * Many transformer plugins use this to add fields that take arguments.
