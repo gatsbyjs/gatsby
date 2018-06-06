@@ -6,7 +6,7 @@ path: /code-example-line-highlighting/
 ---
 
 This post contains the same code snippet with syntax highlighting from the
-previous post, but now includes highlighted lines. The highlight theme and is
+previous post, but now includes highlighted lines. The highlight theme is
 still same one used in the official React documentation.
 
 ```jsx{1,4-6}
