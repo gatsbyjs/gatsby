@@ -133,7 +133,9 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
     })
     it(`should add flow type info`, async () => {
       await run(node)
-      expect(createdNodes[0].flowType).toEqual({
+      const created = createdNodes.find(f => !!f.flowType)
+
+      expect(created.flowType).toEqual({
         name: `number`,
       })
     })
