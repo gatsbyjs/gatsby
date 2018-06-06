@@ -23,7 +23,6 @@
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
     "react-helmet": "^5.2.0",
-    "react-responsive-grid": "^0.3.3",
     "react-typography": "^0.16.13",
     "typeface-merriweather": "^0.0.35",
     "typeface-montserrat": "^0.0.37",
