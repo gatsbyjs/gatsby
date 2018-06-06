@@ -172,14 +172,14 @@ module.exports = (locals, callback) => {
         return null
       }
 
-      return prefixedScript
+      return { rel: `preload`, prefixedScript }
     })
     .filter(s => isString(s))
 
-  scripts.forEach(script => {
+  scripts.forEach(({ rel, prefixedScript }) => {
     // Add preload <link>s for scripts.
     headComponents.unshift(
-      <link rel="preload" key={script} href={script} as="script" />
+      <link rel={rel} key={prefixedScript} href={prefixedScript} as="script" />
     )
   })
 
