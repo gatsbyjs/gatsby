@@ -5,6 +5,7 @@ exports.buildResponsiveSizes = ({ metadata, imageUrl, options = {} }) => {
     options.sizeByPixelDensity && typeof density === `number` && density > 0
       ? density / 72
       : 1
+    
   const presentationWidth = Math.min(
     options.maxWidth,
     Math.round(width / pixelRatio)

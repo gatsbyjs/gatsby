@@ -26,7 +26,6 @@ module.exports = async (
     pathPrefix,
   }
 
-  const options = _.defaults(pluginOptions, defaults)
 
   // This will only work for markdown syntax image tags
   const markdownImageNodes = select(markdownAST, `image`)
@@ -36,10 +35,12 @@ module.exports = async (
 
   const generateImagesAndUpdateNode = async function(node, resolve) {
     // Ignore if it is not contentful image
+
     if (node.url.indexOf(`images.ctfassets.net`) === -1) {
       return resolve()
     }
 
+    const options = _.defaults(pluginOptions, defaults)
     const metaReader = sharp()
 
     const response = await axios({
