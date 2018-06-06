@@ -229,3 +229,243 @@ false,nope",
   ],
 ]
 `;
+
+exports[`Process  nodes correctly correctly keeps GraphQL disallowed characters in field values when using {noheaders: true} 1`] = `
+Array [
+  Array [
+    Object {
+      "children": Array [],
+      "field1": "blue dogs",
+      "field2": "funny/cats",
+      "field3": "who&is it?",
+      "id": "whatever [0] >>> CSV",
+      "internal": Object {
+        "contentDigest": "1f6435fbab05bc6779122ea0484c2fc9",
+        "type": "TestCsv",
+      },
+      "parent": "whatever",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "field1": "true",
+      "field2": "yup",
+      "field3": "me",
+      "id": "whatever [1] >>> CSV",
+      "internal": Object {
+        "contentDigest": "8362ed8fd481e89e2d866a95c11406b0",
+        "type": "TestCsv",
+      },
+      "parent": "whatever",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "field1": "false",
+      "field2": "nope",
+      "field3": "you",
+      "id": "whatever [2] >>> CSV",
+      "internal": Object {
+        "contentDigest": "b142d00d714d1ffb37950ddda9b64f46",
+        "type": "TestCsv",
+      },
+      "parent": "whatever",
+    },
+  ],
+]
+`;
+
+exports[`Process  nodes correctly correctly keeps GraphQL disallowed characters in field values when using {noheaders: true} 2`] = `
+Array [
+  Array [
+    Object {
+      "child": Object {
+        "children": Array [],
+        "field1": "blue dogs",
+        "field2": "funny/cats",
+        "field3": "who&is it?",
+        "id": "whatever [0] >>> CSV",
+        "internal": Object {
+          "contentDigest": "1f6435fbab05bc6779122ea0484c2fc9",
+          "type": "TestCsv",
+        },
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "\\"blue dogs\\",\\"funny/cats\\",\\"who&is it?\\"
+true,\\"yup\\",\\"me\\"
+false,\\"nope\\",\\"you\\"",
+        "extension": "csv",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/csv",
+        },
+        "name": "test",
+        "parent": "SOURCE",
+      },
+    },
+  ],
+  Array [
+    Object {
+      "child": Object {
+        "children": Array [],
+        "field1": "true",
+        "field2": "yup",
+        "field3": "me",
+        "id": "whatever [1] >>> CSV",
+        "internal": Object {
+          "contentDigest": "8362ed8fd481e89e2d866a95c11406b0",
+          "type": "TestCsv",
+        },
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "\\"blue dogs\\",\\"funny/cats\\",\\"who&is it?\\"
+true,\\"yup\\",\\"me\\"
+false,\\"nope\\",\\"you\\"",
+        "extension": "csv",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/csv",
+        },
+        "name": "test",
+        "parent": "SOURCE",
+      },
+    },
+  ],
+  Array [
+    Object {
+      "child": Object {
+        "children": Array [],
+        "field1": "false",
+        "field2": "nope",
+        "field3": "you",
+        "id": "whatever [2] >>> CSV",
+        "internal": Object {
+          "contentDigest": "b142d00d714d1ffb37950ddda9b64f46",
+          "type": "TestCsv",
+        },
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "\\"blue dogs\\",\\"funny/cats\\",\\"who&is it?\\"
+true,\\"yup\\",\\"me\\"
+false,\\"nope\\",\\"you\\"",
+        "extension": "csv",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/csv",
+        },
+        "name": "test",
+        "parent": "SOURCE",
+      },
+    },
+  ],
+]
+`;
+
+exports[`Process  nodes correctly correctly replaces disallowed characters with _ in fieldnames to maintain compatibility with GraphQL syntax 1`] = `
+Array [
+  Array [
+    Object {
+      "blue_dogs": "true",
+      "children": Array [],
+      "funny_cats": "yup",
+      "id": "whatever [0] >>> CSV",
+      "internal": Object {
+        "contentDigest": "52451d0eee2e719a9b6fd244e335ecf1",
+        "type": "TestCsv",
+      },
+      "parent": "whatever",
+      "who_is_it_": "me",
+    },
+  ],
+  Array [
+    Object {
+      "blue_dogs": "false",
+      "children": Array [],
+      "funny_cats": "nope",
+      "id": "whatever [1] >>> CSV",
+      "internal": Object {
+        "contentDigest": "21b6ba1089933f370b5b8cb905a7a7c7",
+        "type": "TestCsv",
+      },
+      "parent": "whatever",
+      "who_is_it_": "you",
+    },
+  ],
+]
+`;
+
+exports[`Process  nodes correctly correctly replaces disallowed characters with _ in fieldnames to maintain compatibility with GraphQL syntax 2`] = `
+Array [
+  Array [
+    Object {
+      "child": Object {
+        "blue_dogs": "true",
+        "children": Array [],
+        "funny_cats": "yup",
+        "id": "whatever [0] >>> CSV",
+        "internal": Object {
+          "contentDigest": "52451d0eee2e719a9b6fd244e335ecf1",
+          "type": "TestCsv",
+        },
+        "parent": "whatever",
+        "who_is_it_": "me",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "\\"blue dogs\\",\\"funny/cats\\",\\"who&is it?\\"
+true,\\"yup\\",\\"me\\"
+false,\\"nope\\",\\"you\\"",
+        "extension": "csv",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/csv",
+        },
+        "name": "test",
+        "parent": "SOURCE",
+      },
+    },
+  ],
+  Array [
+    Object {
+      "child": Object {
+        "blue_dogs": "false",
+        "children": Array [],
+        "funny_cats": "nope",
+        "id": "whatever [1] >>> CSV",
+        "internal": Object {
+          "contentDigest": "21b6ba1089933f370b5b8cb905a7a7c7",
+          "type": "TestCsv",
+        },
+        "parent": "whatever",
+        "who_is_it_": "you",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "\\"blue dogs\\",\\"funny/cats\\",\\"who&is it?\\"
+true,\\"yup\\",\\"me\\"
+false,\\"nope\\",\\"you\\"",
+        "extension": "csv",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/csv",
+        },
+        "name": "test",
+        "parent": "SOURCE",
+      },
+    },
+  ],
+]
+`;
