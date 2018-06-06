@@ -2,13 +2,14 @@
 title: Another Blog Post with Code Example Including Highlighted Lines
 description: "Post containing a code example with syntax highlighting"
 date: "2017-10-17T14:12:03.284Z"
-path: /code-example/
+path: /code-example-line-highlighting/
 ---
 
-This post contains a code snippet with synatax hightlighting. The highlight
-theme and is the same one used in the official React documentation.
+This post contains the same code snippet with syntax highlighting from the
+previous post, but now includes highlighted lines. The highlight theme is
+still same one used in the official React documentation.
 
-```jsx
+```jsx{1,4-6}
 function NumberList(props) {
   const numbers = props.numbers
   const listItems = numbers.map(number => (

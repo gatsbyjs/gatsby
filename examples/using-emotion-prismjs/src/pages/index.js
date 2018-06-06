@@ -2,8 +2,9 @@ import React from "react"
 import { Link } from "gatsby"
 import { css } from "emotion"
 import get from "lodash/get"
-
 import { rhythm, scale } from "../utils/typography"
+
+import Layout from '../components/layout'
 
 const indexContainer = css`
   max-width: ${rhythm(30)};
@@ -44,38 +45,40 @@ class BlogIndex extends React.Component {
     const posts = get(this, `props.data.allMarkdownRemark.edges`)
 
     return (
-      <div className={indexContainer}>
-        <h2>
-          Enjoy the nicely highlighted code snippets in the posts below styled
-          with the{` `}
-          {` `}
-          <a href="https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs">
-            Gatsby PrismJS plugin
-          </a>
-          {` `}
-          and
-          {` `}
-          <a href="https://emotion.sh/">emotion</a>!
-        </h2>
-        {posts.map(post => {
-          if (post.node.path !== `/404/`) {
-            return (
-              <div key={post.node.frontmatter.path} className={postContainer}>
-                <div className={titleContainer}>
-                  <h3 className={postTitle}>
-                    <Link className={link} to={post.node.frontmatter.path}>
-                      {post.node.frontmatter.title}
-                    </Link>
-                  </h3>
-                  <span className={postDate}>{post.node.frontmatter.date}</span>
+      <Layout isIndex>
+        <div className={indexContainer}>
+          <h2>
+            Enjoy the nicely highlighted code snippets in the posts below styled
+            with the{` `}
+            {` `}
+            <a href="https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs">
+              Gatsby PrismJS plugin
+            </a>
+            {` `}
+            and
+            {` `}
+            <a href="https://emotion.sh/">emotion</a>!
+          </h2>
+          {posts.map(post => {
+            if (post.node.path !== `/404/`) {
+              return (
+                <div key={post.node.frontmatter.path} className={postContainer}>
+                  <div className={titleContainer}>
+                    <h3 className={postTitle}>
+                      <Link className={link} to={post.node.frontmatter.path}>
+                        {post.node.frontmatter.title}
+                      </Link>
+                    </h3>
+                    <span className={postDate}>{post.node.frontmatter.date}</span>
+                  </div>
+                  <p dangerouslySetInnerHTML={{ __html: post.node.excerpt }} />
                 </div>
-                <p dangerouslySetInnerHTML={{ __html: post.node.excerpt }} />
-              </div>
-            )
-          }
-          return null
-        })}
-      </div>
+              )
+            }
+            return null
+          })}
+        </div>
+      </Layout>
     )
   }
 }
