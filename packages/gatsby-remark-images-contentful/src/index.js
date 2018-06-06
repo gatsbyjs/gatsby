@@ -1,3 +1,4 @@
+const crypto = require(`crypto`)
 const select = require(`unist-util-select`)
 const sharp = require(`sharp`)
 const axios = require(`axios`)
@@ -14,7 +15,7 @@ const { buildResponsiveSizes } = require(`./utils`)
 // 5. Set the html w/ aspect ratio helper.
 
 module.exports = async (
-  { files, markdownNode, markdownAST, pathPrefix, getNode, reporter },
+  { files, markdownNode, markdownAST, pathPrefix, getNode, reporter, cache },
   pluginOptions
 ) => {
   const defaults = {
@@ -25,7 +26,6 @@ module.exports = async (
     showCaptions: false,
     pathPrefix,
   }
-
 
   // This will only work for markdown syntax image tags
   const markdownImageNodes = select(markdownAST, `image`)
@@ -40,7 +40,21 @@ module.exports = async (
       return resolve()
     }
 
+    const srcSplit = node.url.split(`/`)
+    const fileName = srcSplit[srcSplit.length - 1]
     const options = _.defaults(pluginOptions, defaults)
+
+    const optionsHash = crypto
+      .createHash(`md5`)
+      .update(JSON.stringify(options))
+      .digest(`hex`)
+
+    const cacheKey = `remark-images-ctf-${fileName}-${optionsHash}`
+    let cahedRawHTML = await cache.get(cacheKey)
+
+    if (cahedRawHTML) {
+      return cahedRawHTML
+    }
     const metaReader = sharp()
 
     const response = await axios({
@@ -69,8 +83,6 @@ module.exports = async (
 
     // Generate default alt tag
     const originalImg = node.url
-    const srcSplit = node.url.split(`/`)
-    const fileName = srcSplit[srcSplit.length - 1]
     const fileNameNoExt = fileName.replace(/\.[^/.]+$/, ``)
     const defaultAlt = fileNameNoExt.replace(/[^A-Z0-9]/gi, ` `)
 
@@ -126,6 +138,7 @@ ${rawHTML}
 <figcaption class="gatsby-resp-image-figcaption">${node.title}</figcaption>
 </figure>`
   }
+  await cache.set(cacheKey, rawHTML)
     return rawHTML
   }
   return Promise.all(

@@ -42,6 +42,7 @@ const createPluginOptions = (content, imagePaths = `/`) => {
     }),
     markdownNode: createNode(content),
     markdownAST: remark.parse(content),
+    cache: { get: jest.fn(), set: jest.fn() },
     getNode: () => {
       return {
         dir: dirName,
