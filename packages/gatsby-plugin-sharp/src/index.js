@@ -74,18 +74,16 @@ const generalArgs = {
   sizeByPixelDensity: false,
 }
 
-
 const healOptions = (args, defaultArgs) => {
-  let options = _.defaults(args, defaultArgs, generalArgs);
-  options.width = parseInt(options.width, 10);
-  options.maxWidth = parseInt(options.maxWidth, 10);
-  options.quality = parseInt(options.quality, 10);
-  options.pngCompressionLevel = parseInt(options.pngCompressionLevel, 10);
-  options.toFormat = options.toFormat.toLowerCase();
+  let options = _.defaults(args, defaultArgs, generalArgs)
+  options.width = parseInt(options.width, 10)
+  options.maxWidth = parseInt(options.maxWidth, 10)
+  options.quality = parseInt(options.quality, 10)
+  options.pngCompressionLevel = parseInt(options.pngCompressionLevel, 10)
+  options.toFormat = options.toFormat.toLowerCase()
 
-  return options;
+  return options
 }
-
 
 let totalJobs = 0
 const processFile = (file, jobs, cb, reporter) => {
@@ -379,7 +377,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
 }
 
 async function notMemoizedbase64({ file, args = {}, reporter }) {
-  const options = healOptions(args, {width: 20})
+  const options = healOptions(args, { width: 20 })
   let pipeline
   try {
     pipeline = sharp(file.absolutePath).rotate()
