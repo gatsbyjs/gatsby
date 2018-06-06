@@ -6,7 +6,7 @@ path: /code-example/
 ---
 
 This post contains a code snippet with syntax highlighting. The highlight
-theme and is the same one used in the official React documentation.
+theme is the same one used in the official React documentation.
 
 ```jsx
 function NumberList(props) {
