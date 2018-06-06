@@ -118,7 +118,7 @@ exports.onCreatePage = true
 /**
  * Called during the creation of the GraphQL schema. Allows plugins
  * to add new fields to the types created from data nodes. It will be called
- * separetely for each type.
+ * separately for each type.
  * 
  * This function should return object in the shape of 
  * [GraphQLFieldConfigMap](https://graphql.org/graphql-js/type/#graphqlobjecttype)
