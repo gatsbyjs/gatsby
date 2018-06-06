@@ -3,8 +3,8 @@ import { Link } from "gatsby"
 import get from "lodash/get"
 import Helmet from "react-helmet"
 
+import Layout from "../components/layout"
 import Bio from "../components/Bio"
-import Layout from '../components/layout'
 import typography from "../utils/typography"
 
 const { rhythm } = typography
