@@ -7,11 +7,11 @@ Welcome to Part Four of the tutorial! Halfway through! Hope things are starting
 to feel pretty comfortable 😀
 
 > _Note: this tutorial is a 4-part series (Part 4 through 7). The rest will make sense only if completed in order._
-
-1.  Part 4: Querying for data in a blog — you are here
-2.  [Part 5: Source plugins and rendering queried data](/tutorial/part-five/)
-3.  [Part 6: Transformer plugins](/tutorial/part-six/)
-4.  [Part 7: Programmatically create pages from data](/tutorial/part-seven/)
+>
+> 1.  Part 4: Querying for data in a blog — you are here
+> 2.  [Part 5: Source plugins and rendering queried data](/tutorial/part-five/)
+> 3.  [Part 6: Transformer plugins](/tutorial/part-six/)
+> 4.  [Part 7: Programmatically create pages from data](/tutorial/part-seven/)
 
 ## Recap of first half of the tutorial
 
@@ -102,7 +102,7 @@ component and two page components:
 `src/pages/index.js`
 
 ```jsx
-import React from "react";
+import React from "react"
 
 export default () => (
   <div>
@@ -114,13 +114,13 @@ export default () => (
       />
     </div>
   </div>
-);
+)
 ```
 
 `src/pages/about.js`
 
 ```jsx
-import React from "react";
+import React from "react"
 
 export default () => (
   <div>
@@ -130,20 +130,20 @@ export default () => (
       photos and videos of pandas eating lots of food.
     </p>
   </div>
-);
+)
 ```
 
 `src/layouts/index.js`
 
 ```jsx
-import React from "react";
-import g from "glamorous";
-import { css } from "glamor";
-import Link from "gatsby-link";
+import React from "react"
+import g from "glamorous"
+import { css } from "glamor"
+import Link from "gatsby-link"
 
-import { rhythm } from "../utils/typography";
+import { rhythm } from "../utils/typography"
 
-const linkStyle = css({ float: `right` });
+const linkStyle = css({ float: `right` })
 
 export default ({ children }) => (
   <g.Div
@@ -166,18 +166,18 @@ export default ({ children }) => (
     </Link>
     {children()}
   </g.Div>
-);
+)
 ```
 
 `src/utils/typography.js`
 
 ```javascript
-import Typography from "typography";
-import kirkhamTheme from "typography-theme-kirkham";
+import Typography from "typography"
+import kirkhamTheme from "typography-theme-kirkham"
 
-const typography = new Typography(kirkhamTheme);
+const typography = new Typography(kirkhamTheme)
 
-export default typography;
+export default typography
 ```
 
 `gatsby-config.js` (must be in the root of your project, not under src)
@@ -193,7 +193,7 @@ module.exports = {
       },
     },
   ],
-};
+}
 ```
 
 Add the above files and then run `gatsby develop` like normal and you should see

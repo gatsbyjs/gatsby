@@ -8,11 +8,11 @@ typora-copy-images-to: ./
 The previous tutorial showed how source plugins bring data _into_ Gatsby’s data system. In this tutorial, you'll learn how transformer plugins _transform_ the raw content brought by source plugins. The combination of source plugins and transformer plugins can handle all data sourcing and data transformation you might need when building a Gatsby site.
 
 > _Note: this tutorial is a 4-part series (Part 4 through 7). It will make sense only if completed in order._
-
-1.  [Part 4: Querying for data in a blog](/tutorial/part-four/)
-2.  [Part 5: Source plugins and rendering queried data](/tutorial/part-five/)
-3.  Part 6: Transformer plugins — you are here
-4.  [Part 7: Programmatically create pages from data](/tutorial/part-seven/)
+>
+> 1.  [Part 4: Querying for data in a blog](/tutorial/part-four/)
+> 2.  [Part 5: Source plugins and rendering queried data](/tutorial/part-five/)
+> 3.  Part 6: Transformer plugins — you are here
+> 4.  [Part 7: Programmatically create pages from data](/tutorial/part-seven/)
 
 ## Transformer plugins
 
@@ -110,13 +110,13 @@ Like with the `src/pages/my-files.js` page, replace `src/pages/index.js` with
 the following to add a query with some initial HTML and styling.
 
 ```jsx
-import React from "react";
-import g from "glamorous";
+import React from "react"
+import g from "glamorous"
 
-import { rhythm } from "../utils/typography";
+import { rhythm } from "../utils/typography"
 
 export default ({ data }) => {
-  console.log(data);
+  console.log(data)
   return (
     <div>
       <g.H1 display={"inline-block"} borderBottom={"1px solid"}>
@@ -133,8 +133,8 @@ export default ({ data }) => {
         </div>
       ))}
     </div>
-  );
-};
+  )
+}
 
 export const query = graphql`
   query IndexQuery {
@@ -152,7 +152,7 @@ export const query = graphql`
       }
     }
   }
-`;
+`
 ```
 
 Now the frontpage should look like:
