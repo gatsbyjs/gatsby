@@ -60,6 +60,31 @@ const reportError = (message, err, reporter) => {
   }
 }
 
+const generalArgs = {
+  width: 400,
+  maxWidth: 800,
+  quality: 50,
+  jpegProgressive: true,
+  pngCompressionLevel: 9,
+  base64: false,
+  grayscale: false,
+  duotone: false,
+  pathPrefix: ``,
+  toFormat: ``,
+  sizeByPixelDensity: false,
+}
+
+const healOptions = (args, defaultArgs) => {
+  let options = _.defaults({}, args, defaultArgs, generalArgs)
+  options.width = parseInt(options.width, 10)
+  options.maxWidth = parseInt(options.maxWidth, 10)
+  options.quality = parseInt(options.quality, 10)
+  options.pngCompressionLevel = parseInt(options.pngCompressionLevel, 10)
+  options.toFormat = options.toFormat.toLowerCase()
+
+  return options
+}
+
 let totalJobs = 0
 const processFile = (file, jobs, cb, reporter) => {
   // console.log("totalJobs", totalJobs)
@@ -264,17 +289,7 @@ const queueJob = (job, reporter) => {
 }
 
 function queueImageResizing({ file, args = {}, reporter }) {
-  const defaultArgs = {
-    width: 400,
-    quality: 50,
-    jpegProgressive: true,
-    pngCompressionLevel: 9,
-    grayscale: false,
-    duotone: false,
-    pathPrefix: ``,
-    toFormat: ``,
-  }
-  const options = _.defaults(args, defaultArgs)
+  const options = healOptions(args, {})
   // Filter out false args, and args not for this extension and put width at
   // end (for the file path)
   const pairedArgs = _.toPairs(args)
@@ -362,16 +377,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
 }
 
 async function notMemoizedbase64({ file, args = {}, reporter }) {
-  const defaultArgs = {
-    width: 20,
-    quality: 50,
-    jpegProgressive: true,
-    pngCompressionLevel: 9,
-    grayscale: false,
-    duotone: false,
-    toFormat: ``,
-  }
-  const options = _.defaults(args, defaultArgs)
+  const options = healOptions(args, { width: 20 })
   let pipeline
   try {
     pipeline = sharp(file.absolutePath).rotate()
@@ -431,19 +437,7 @@ async function base64(args) {
 }
 
 async function responsiveSizes({ file, args = {}, reporter }) {
-  const defaultArgs = {
-    maxWidth: 800,
-    quality: 50,
-    jpegProgressive: true,
-    pngCompressionLevel: 9,
-    grayscale: false,
-    duotone: false,
-    pathPrefix: ``,
-    toFormat: ``,
-    sizeByPixelDensity: false,
-  }
-  const options = _.defaults({}, args, defaultArgs)
-  options.maxWidth = parseInt(options.maxWidth, 10)
+  const options = healOptions(args, {})
 
   // Account for images with a high pixel density. We assume that these types of
   // images are intended to be displayed at their native resolution.
@@ -520,6 +514,7 @@ async function responsiveSizes({ file, args = {}, reporter }) {
     duotone: options.duotone,
     grayscale: options.grayscale,
     rotate: options.rotate,
+    toFormat: options.toFormat,
     width: base64Width,
     height: base64Height,
   }
@@ -552,18 +547,7 @@ async function responsiveSizes({ file, args = {}, reporter }) {
 }
 
 async function resolutions({ file, args = {}, reporter }) {
-  const defaultArgs = {
-    width: 400,
-    quality: 50,
-    jpegProgressive: true,
-    pngCompressionLevel: 9,
-    grayscale: false,
-    duotone: false,
-    pathPrefix: ``,
-    toFormat: ``,
-  }
-  const options = _.defaults({}, args, defaultArgs)
-  options.width = parseInt(options.width, 10)
+  const options = healOptions(args, {})
 
   // Create sizes for different resolutions — we do 1x, 1.5x, 2x, and 3x.
   const sizes = []
@@ -615,6 +599,7 @@ async function resolutions({ file, args = {}, reporter }) {
     duotone: options.duotone,
     grayscale: options.grayscale,
     rotate: options.rotate,
+    toFormat: options.toFormat,
   }
 
   // Get base64 version
@@ -667,17 +652,7 @@ async function notMemoizedtraceSVG({ file, args, fileArgs, reporter }) {
     turnPolicy: potrace.Potrace.TURNPOLICY_MAJORITY,
   }
   const optionsSVG = _.defaults(args, defaultArgs)
-
-  const defaultFileResizeArgs = {
-    width: 400,
-    quality: 50,
-    jpegProgressive: true,
-    pngCompressionLevel: 9,
-    grayscale: false,
-    duotone: false,
-    toFormat: ``,
-  }
-  const options = _.defaults(fileArgs, defaultFileResizeArgs)
+  const options = healOptions(fileArgs, {})
   let pipeline
   try {
     pipeline = sharp(file.absolutePath).rotate()
