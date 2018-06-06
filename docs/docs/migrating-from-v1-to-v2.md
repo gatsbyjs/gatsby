@@ -10,20 +10,20 @@ This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While t
 
 ## What we'll cover
 
-* [Update Gatsby version](/docs/migrating-from-v1-to-v2/#update-gatsby-version)
-* [Manually install React](/docs/migrating-from-v1-to-v2/#manually-install-react)
-* [Manually install plugins’ peer dependencies](/docs/migrating-from-v1-to-v2/manually-install-plugins-peer-dependencies)
-* [Update layout component](/docs/migrating-from-v1-to-v2/#update-layout-component)
-* [Rename `boundActionCreators` to `actions`](/docs/migrating-from-v1-to-v2/rename-boundactioncreators-to-actions)
-* [Rename `pathContext` to `pageContext`](/docs/migrating-from-v1-to-v2/#rename-pathcontext-to-pagecontext)
-* [Rename responsive image queries](/docs/migrating-from-v1-to-v2/#rename-responsive-image-queries)
-* [Manually specify PostCSS plugins](/docs/migrating-from-v1-to-v2/#manually-specify-postcss-plugins)
-* [Convert to either pure CommonJS or pure ES6](/docs/migrating-from-v1-to-v2/#convert-to-either-pure-commonjs-or-pure-es6)
-* [Don't query nodes by ID](/docs/migrating-from-v1-to-v2/#dont-query-nodes-by-id)
-* [Remove explicit polyfills](/docs/migrating-from-v1-to-v2/#remove-explicit-polyfills)
-* [Change `modifyBabelrc` to `onCreateBabelConfig`](/docs/migrating-from-v1-to-v2/#change-modifybabelrc-to-oncreatebabelconfig)
-* [Change `modifyWebpackConfig` to `onCreateWebpackConfig`](/docs/migrating-from-v1-to-v2/#change-modifywebpackconfig-to-oncreatewebpackconfig)
-* [Remove inlined CSS in `html.js`](/docs/migrating-from-v1-to-v2/#remove-inlined-css-in-htmljs)
+- [Update Gatsby version](#update-gatsby-version)
+- [Manually install React](#manually-install-react)
+- [Manually install plugins’ peer dependencies](#manually-install-plugins-peer-dependencies)
+- [Update layout component](#update-layout-component)
+- [Rename `boundActionCreators` to `actions`](#rename-boundactioncreators-to-actions)
+- [Rename `pathContext` to `pageContext`](#rename-pathcontext-to-pagecontext)
+- [Rename responsive image queries](#rename-responsive-image-queries)
+- [Manually specify PostCSS plugins](#manually-specify-postcss-plugins)
+- [Convert to either pure CommonJS or pure ES6](#convert-to-either-pure-commonjs-or-pure-es6)
+- [Don't query nodes by ID](#dont-query-nodes-by-id)
+- [Remove explicit polyfills](#remove-explicit-polyfills)
+- [Change `modifyBabelrc` to `onCreateBabelConfig`](#change-modifybabelrc-to-oncreatebabelconfig)
+- [Change `modifyWebpackConfig` to `onCreateWebpackConfig`](#change-modifywebpackconfig-to-oncreatewebpackconfig)
+- [Remove inlined CSS in `html.js`](#remove-inlined-css-in-htmljs)
 
 You can start with a few of the most important steps - install Gatsby v2 dependencies and update your layout components.
 
@@ -46,7 +46,6 @@ package.json:
 ## Manually install React
 
 In v1, the `react` and `react-dom` packages were included as part of the `gatsby` package. They are now `peerDependencies` so you are required to install them into your project.
-
 
 ```bash
 npm i react react-dom
@@ -73,7 +72,6 @@ The following is the recommended migration path:
 ### 1. Convert children from function to normal prop (required)
 
 In v1, the `children` prop passed to layout was a function and needed to be executed. In v2, this is no longer the case.
-
 
 ```diff
 import React from "react"
@@ -272,22 +270,24 @@ CommonJS is ok:
 
 ```js
 // GOOD: CommonJS syntax works
-const foo = require('foo');
-module.exports = foo;
+const foo = require("foo")
+module.exports = foo
 ```
 
 Mixing `requires` and `export` is not ok:
+
 ```js
 // BAD: Mixed ES and CommonJS module syntax will cause failures
-const foo = require('foo');
+const foo = require("foo")
 export default foo
 ```
 
 Mixing `import` and `module.exports` is not ok:
+
 ```js
 // BAD: Mixed ES and CommonJS module syntax will cause failures
 import foo from "foo"
-module.exports = foo;
+module.exports = foo
 ```
 
 See [Gatsby's babel docs for more details](/docs/babel).
@@ -368,7 +368,6 @@ Use `onCreateWebpackConfig`:
 +   }
 }
 ```
-
 
 Note usage of the new [`setWebpackConfig` action](/docs/actions/#setWebpackConfig).
 
