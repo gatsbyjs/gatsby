@@ -172,7 +172,7 @@ exports.mapTypes = entities => {
 exports.mapAuthorsToUsers = entities => {
   const users = entities.filter(e => e.__type === `wordpress__wp_users`)
   return entities.map(e => {
-    if (e.author) {
+    if (users.length && e.author) {
       // Find the user
       const user = users.find(u => u.wordpress_id === e.author)
       if (user) {
@@ -200,21 +200,24 @@ exports.mapPostsToTagsCategories = entities => {
   const categories = entities.filter(e => e.__type === `wordpress__CATEGORY`)
 
   return entities.map(e => {
-    let hasCategories = (e.categories && Array.isArray(e.categories) && e.categories.length)
-    let hasTags = (e.tags && Array.isArray(e.tags) && e.tags.length)
-      // Replace tags & categories with links to their nodes.
-      if (hasTags) {
-        e.tags___NODE = e.tags.map(
-          t => tags.find(tObj => t === tObj.wordpress_id).id
-        )
-        delete e.tags
-      }
-      if (hasCategories) {
-        e.categories___NODE = e.categories.map(
-          c => categories.find(cObj => c === cObj.wordpress_id).id
-        )
-        delete e.categories
-      }
+    // Replace tags & categories with links to their nodes.
+
+    let entityHasTags = (e.tags && Array.isArray(e.tags) && e.tags.length)
+    if (tags.length && entityHasTags) {
+      e.tags___NODE = e.tags.map(
+        t => tags.find(tObj => t === tObj.wordpress_id).id
+      )
+      delete e.tags
+    }
+
+    let entityHasCategories = (e.categories && Array.isArray(e.categories) && e.categories.length)
+    if (categories.length && entityHasCategories) {
+      e.categories___NODE = e.categories.map(
+        c => categories.find(cObj => c === cObj.wordpress_id).id
+      )
+      delete e.categories
+    }
+
     return e
   })
 }
