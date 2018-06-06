@@ -11,7 +11,6 @@ let hasFetched = Object.create(null)
 let syncRequires = {}
 let asyncRequires = {}
 let jsonDataPaths = {}
-let pathPrefix = `/`
 let fetchHistory = []
 let fetchingPageResourceMapPromise = null
 let fetchedPageResourceMap = false
@@ -53,7 +52,7 @@ const fetchResource = resourceName => {
         if (resourceName in jsonStore) {
           resolve(jsonStore[resourceName])
         } else {
-          const url = `${pathPrefix}static/d/${
+          const url = `${__PATH_PREFIX__}/static/d/${
             jsonDataPaths[resourceName]
           }.json`
           var req = new XMLHttpRequest()
@@ -170,14 +169,10 @@ const queue = {
   empty: () => {
     resourcesCount = Object.create(null)
     resourcesArray = []
-    pathPrefix = `/`
   },
 
   addPagesArray: newPages => {
-    if (typeof __PREFIX_PATHS__ !== `undefined`) {
-      pathPrefix = typeof __PATH_PREFIX__ !== `undefined` ? `${__PATH_PREFIX__}/` : `/`
-    }
-    findPage = pageFinderFactory(newPages, pathPrefix.slice(0, -1))
+    findPage = pageFinderFactory(newPages, __PATH_PREFIX__)
   },
   addDevRequires: devRequires => {
     syncRequires = devRequires
@@ -193,11 +188,11 @@ const queue = {
   // click on it soon so let's start prefetching resources for this
   // pathname.
   hovering: rawPath => {
-    const path = stripPrefix(rawPath, pathPrefix.slice(0, -1))
+    const path = stripPrefix(rawPath, __PATH_PREFIX__)
     queue.getResourcesForPathname(path)
   },
   enqueue: rawPath => {
-    const path = stripPrefix(rawPath, pathPrefix.slice(0, -1))
+    const path = stripPrefix(rawPath, __PATH_PREFIX__)
 
     // Tell plugins with custom prefetching logic that they should start
     // prefetching this path.

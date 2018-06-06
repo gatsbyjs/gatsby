@@ -53,10 +53,7 @@ const getPage = path => pages.find(page => page.path === path)
 const createElement = React.createElement
 
 export default (pagePath, callback) => {
-  let pathPrefix = `/`
-  if (__PREFIX_PATHS__) {
-    pathPrefix = `${__PATH_PREFIX__}/`
-  }
+  const pathPrefix = `${__PATH_PREFIX__}/`
 
   let bodyHtml = ``
   let headComponents = []
