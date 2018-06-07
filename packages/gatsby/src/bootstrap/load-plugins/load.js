@@ -163,7 +163,7 @@ module.exports = async (config = {}) => {
   plugins.push(processPlugin({
     resolve: `gatsby-plugin-page-creator`,
     options: {
-      path: path.join(program.directory, `src/pages`),
+      path: slash(path.join(program.directory, `src/pages`)),
       pathCheck: false,
     },
   }))
