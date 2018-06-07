@@ -43,8 +43,31 @@ Possible future enhancements:
 
 Here is a possible restructure of the current docs information architecture (with the inclusion of many docs we still need to write):
 
+Introduction to the docs (use Django’s docs landing page), perhaps some featured docs*
+
+Quick start/download/installing
+
+Basic hardware and software requirements*
+- Backwards compatibility*
+- Upgrading*
+- Uninstall*
+
+Versions/Changelog/Release Notes
+- v0*
+- v1*
+- v2*
+
+Gatsby core concepts/How Gatsby works (Gatsby tutorials will frequently refer to this section)
+- The Gatsby core philosophy*
+- Basic structure of a Gatsby site (includes config.js)*
+- How Gatsby works with GraphQL (includes Node interface and how GraphQL works)*
+- How Gatsby works with React (API specification)*
+- How Gatsby works with Redux (bound action creators)*
+- How Gatsby works with plugins
+- PRPL pattern
+- Lifecycle APIs
+
 Tutorials
-- Quick Start
 - Build and deploy a site
     - Introduction
     - 0. Setting up the development environment
@@ -62,24 +85,16 @@ Tutorials
 - E-commerce*
 - User authentication*
 
+Commands (Gatsby CLI)
+
 Reference docs
-- How Gatsby works (Gatsby tutorials will frequently refer to this section)
-    - The Gatsby core philosophy*
-    - Basic structure of a Gatsby site (includes config.js)*
-    - How Gatsby works with GraphQL (includes Node interface and how GraphQL works)*
-    - How Gatsby works with React (API specification)*
-    - How Gatsby works with Redux (bound action creators)*
-    - How Gatsby works with plugins
-    - PRPL pattern
-    - Lifecycle APIs
 - API references
     - @jlengstorf this idea is from you, don't know how to fill this in...*
     - API specification
     - Gatsby Browser APIs
     - Gatsby Node APIs
     - Gatsby SSR APIs 
-- Gatsby CLI commands (Part 0 of tutorials will refer to this)
-- Fundamentals
+- Guides/Fundamentals
     - Setting up dev environment   
         - Gatsby on Windows
         - Gatsby on Macs
@@ -112,12 +127,6 @@ Reference docs
         - Search Engine Optimization (SEO)
         - Browser 
         - Setting up proper HTTP caching
-- Migration Guides
-    - v0 to v1
-    - v1 to v2*
-
-   
-
 
 Plugins
 - Plugin Authoring Guides
@@ -129,6 +138,9 @@ Plugins
     - All other plugins
     - How to get your plugin to show up in the Plugin Library*
 
+Community
+- Code of Conduct
+- Where to participate in the community
 
 Contributing
 - Welcome to Gatsby's open source community!
