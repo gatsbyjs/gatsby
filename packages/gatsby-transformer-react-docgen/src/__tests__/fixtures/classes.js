@@ -11,6 +11,8 @@ function Foo() {
   return <div />
 }
 
+Baz.Foo = () => <div />
+
 /**
  * Description!
  *

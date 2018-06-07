@@ -7,11 +7,13 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
+    "@babel/code-frame": "^7.0.0-beta.49",
     "@babel/runtime": "7.0.0-beta.47",
     "@babel/types": "7.0.0-beta.47",
     "common-tags": "^1.4.0",
     "graphql-type-json": "^0.1.4",
-    "react-docgen": "^2.20.1"
+    "react-docgen": "3.0.0-beta12",
+    "react-docgen-displayname-handler": " ^2.1.0"
   },
   "devDependencies": {
     "@babel/cli": "7.0.0-beta.47",
@@ -19,16 +21,13 @@
     "cross-env": "^5.1.4",
     "lodash": "^4.17.4"
   },
-  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-react-docgen#readme",
-  "keywords": [
-    "gatsby",
-    "gatsby-plugin",
-    "react",
-    "react-docgen"
-  ],
+  "homepage":
+    "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-react-docgen#readme",
+  "keywords": ["gatsby", "gatsby-plugin", "react", "react-docgen"],
   "license": "MIT",
   "main": "index.js",
-  "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-react-docgen",
+  "repository":
+    "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-react-docgen",
   "scripts": {
     "build": "babel src --out-dir . --ignore **/__tests__",
     "prepublish": "cross-env NODE_ENV=production npm run build",

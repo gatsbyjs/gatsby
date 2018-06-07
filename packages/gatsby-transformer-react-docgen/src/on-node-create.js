@@ -63,8 +63,8 @@ function createPropNodes(node, component, actions, createNodeId) {
   return node
 }
 
-export default function onCreateNode(
-  { node, loadNodeContent, actions, createNodeId },
+export default async function onCreateNode(
+  { node, loadNodeContent, actions, createNodeId, reporter },
   pluginOptions
 ) {
   const { createNode, createParentChildLink } = actions
@@ -73,44 +73,53 @@ export default function onCreateNode(
     node.internal.mediaType !== `application/javascript` &&
     node.internal.mediaType !== `text/jsx`
   )
-    return null
+    return
 
-  return loadNodeContent(node)
-    .then(content => {
-      const components = parseMetadata(content, node, pluginOptions)
+  const content = await loadNodeContent(node)
 
-      components.forEach(component => {
-        const strContent = JSON.stringify(component)
-        const contentDigest = digest(strContent)
-        const nodeId = `${node.id}--${component.displayName}--ComponentMetadata`
+  let components
+  try {
+    components = parseMetadata(content, node, pluginOptions)
+  } catch (err) {
+    reporter.error(
+      `There was a problem parsing component metadata for file: "${
+        node.relativePath
+      }"`,
+      err
+    )
+    return
+  }
 
-        let metadataNode = {
-          ...component,
-          props: null, // handled by the prop node creation
-          id: createNodeId(nodeId),
-          children: [],
-          parent: node.id,
-          internal: {
-            contentDigest,
-            type: `ComponentMetadata`,
-          },
-        }
+  components.forEach(component => {
+    const strContent = JSON.stringify(component)
+    const contentDigest = digest(strContent)
+    const nodeId = `${node.id}--${component.displayName}--ComponentMetadata`
 
-        createParentChildLink({ parent: node, child: metadataNode })
-        metadataNode = createPropNodes(
-          metadataNode,
-          component,
-          actions,
-          createNodeId
-        )
-        metadataNode = createDescriptionNode(
-          metadataNode,
-          component,
-          actions,
-          createNodeId
-        )
-        createNode(metadataNode)
-      })
-    })
-    .catch(err => console.log(err))
+    let metadataNode = {
+      ...component,
+      props: null, // handled by the prop node creation
+      id: createNodeId(nodeId),
+      children: [],
+      parent: node.id,
+      internal: {
+        contentDigest,
+        type: `ComponentMetadata`,
+      },
+    }
+
+    createParentChildLink({ parent: node, child: metadataNode })
+    metadataNode = createPropNodes(
+      metadataNode,
+      component,
+      actions,
+      createNodeId
+    )
+    metadataNode = createDescriptionNode(
+      metadataNode,
+      component,
+      actions,
+      createNodeId
+    )
+    createNode(metadataNode)
+  })
 }
