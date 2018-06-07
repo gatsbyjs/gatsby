@@ -14,7 +14,7 @@ describe(`define-asset-script`, () => {
       fetchedScript = isArray(fetchedScript) ? fetchedScript[0] : fetchedScript
       return defineAssetScript(fetchedEntryPoints, fetchedScript, { rel: `preload`, prefixedScript: fetchedScript })
     })
-    // expect(linkComponent).toEqual()
+
     linkComponent.forEach(({ rel, prefixedScript }) => {
       if(prefixedScript === `ChartBar.js`) {
         expect(rel).toBe(`prefetch`)
