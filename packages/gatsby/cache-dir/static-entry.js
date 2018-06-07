@@ -1,7 +1,7 @@
 import React from "react"
 import { renderToString, renderToStaticMarkup } from "react-dom/server"
 import { StaticRouter, Route, withRouter } from "react-router-dom"
-import { kebabCase, get, merge, isArray, isString } from "lodash"
+import { kebabCase, get, merge, isArray, isObject } from "lodash"
 
 import apiRunner from "./api-runner-ssr"
 import pages from "./pages.json"
@@ -155,9 +155,29 @@ module.exports = (locals, callback) => {
   ]
     .map(s => {
       const fetchKey = `assetsByChunkName[${s}]`
+      const fetchedEntryPoints = get(stats, `entrypoints`)
+
+      // NOTE: this function mutate the data argument object.
+      // The behavior of this function is finding the `childAssets` object and check script
+      // has exists in the array of webpack magic comment action. If exists. It mutate data.rel.
+      function defineAssetScript(entryPoint, chunkFileName, data) {
+        for (const objKey in entryPoint) {
+          if (typeof entryPoint[objKey] == typeof {}) {
+            if (objKey === `childAssets`) {
+              Object.entries(entryPoint[objKey]).forEach(([key, value]) => {
+                if (value.includes(chunkFileName)) {
+                  data.rel = key
+                }
+              })
+            } else {
+              defineAssetScript(entryPoint[objKey], chunkFileName, data)
+            }
+          }
+        }
+        return data
+      }
 
       let fetchedScript = get(stats, fetchKey)
-
       if (!fetchedScript) {
         return null
       }
@@ -172,9 +192,9 @@ module.exports = (locals, callback) => {
         return null
       }
 
-      return { rel: `preload`, prefixedScript }
+      return defineAssetScript(fetchedEntryPoints, fetchedScript, { rel: `preload`, prefixedScript })
     })
-    .filter(s => isString(s))
+    .filter(isObject)
 
   scripts.forEach(({ rel, prefixedScript }) => {
     // Add preload <link>s for scripts.
