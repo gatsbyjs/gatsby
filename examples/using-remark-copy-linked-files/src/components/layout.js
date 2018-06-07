@@ -1,8 +1,9 @@
 import React from "react"
 import { Link } from "gatsby"
-import { Container } from "react-responsive-grid"
 
-import { rhythm, scale } from "../utils/typography"
+import typography from "../utils/typography"
+
+const { rhythm, scale } = typography
 
 require(`prismjs/themes/prism-solarizedlight.css`)
 
@@ -55,15 +56,17 @@ class Template extends React.Component {
       )
     }
     return (
-      <Container
+      <div
         style={{
+          marginLeft: 'auto',
+          marginRight: 'auto',
           maxWidth: rhythm(24),
           padding: `${rhythm(1.5)} ${rhythm(3 / 4)}`,
         }}
       >
         {header}
-        {children()}
-      </Container>
+        {children}
+      </div>
     )
   }
 }
