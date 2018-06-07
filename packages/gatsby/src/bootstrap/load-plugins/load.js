@@ -164,6 +164,7 @@ module.exports = async (config = {}) => {
     resolve: `gatsby-plugin-page-creator`,
     options: {
       path: path.join(program.directory, `src/pages`),
+      pathCheck: false,
     },
   }))
 

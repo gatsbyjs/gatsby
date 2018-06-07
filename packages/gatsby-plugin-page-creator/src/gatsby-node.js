@@ -17,14 +17,14 @@ const validatePath = require(`./validate-path`)
 // takes control of that page component in gatsby-node.
 exports.createPagesStatefully = async (
   { store, boundActionCreators, reporter },
-  pluginOptions,
+  { path: pagesPath, pathCheck = true },
   doneCb
 ) => {
   const { createPage, deletePage } = boundActionCreators
   const program = store.getState().program
   const exts = program.extensions.map(e => `${e.slice(1)}`).join(`,`)
 
-  if (!(pluginOptions && pluginOptions.path)) {
+  if (!pagesPath) {
     reporter.panic(
       `
       "path" is a required option for gatsby-plugin-page-creator
@@ -35,19 +35,19 @@ exports.createPagesStatefully = async (
   }
 
   // Validate that the path exists.
-  if (!fs.existsSync(pluginOptions.path)) {
+  if (pathCheck && !fs.existsSync(pagesPath)) {
     reporter.panic(
       `
       The path passed to gatsby-plugin-page-creator does not exist on your file system:
 
-      ${pluginOptions.path}
+      ${pagesPath}
 
       Please pick a path to an existing directory.
       `
     )
   }
 
-  const pagesDirectory = systemPath.posix.join(pluginOptions.path)
+  const pagesDirectory = systemPath.posix.join(pagesPath)
   const pagesGlob = `${pagesDirectory}/**/*.{${exts}}`
 
   // Get initial list of files.
