@@ -15,6 +15,8 @@ In this tutorial, I'm going to show you how to create a simple but blazing fast 
 
 [Check out the demo.](https://cosmicjs.com/apps/gatsby-blog)
 
+[Check out the Cosmic JS Source Plugin for Gatsby.](https://github.com/cosmicjs/gatsby-source-cosmicjs)
+
 ## Prerequisites
 You will be required to install Node.js, npm, and Gastby CLI before starting. Make sure you already have them installed.
 
