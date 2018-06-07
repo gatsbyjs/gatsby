@@ -24,6 +24,7 @@ This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While t
 - [Change `modifyBabelrc` to `onCreateBabelConfig`](#change-modifybabelrc-to-oncreatebabelconfig)
 - [Change `modifyWebpackConfig` to `onCreateWebpackConfig`](#change-modifywebpackconfig-to-oncreatewebpackconfig)
 - [Remove inlined CSS in `html.js`](#remove-inlined-css-in-htmljs)
+- [Only allow defined keys on node.internal object](#only-allow-defined-keys-on-the-node-internal-object)
 
 You can start with a few of the most important steps - install Gatsby v2 dependencies and update your layout components.
 
@@ -378,3 +379,8 @@ See [Gatsby's webpack docs for more details](/docs/add-custom-webpack-config) ab
 Gatsby v2 automatically inlines CSS. You can remove any custom CSS inlining from your custom `html.js`.
 
 See an example in [this PR that upgrades the `using-remark` site to Gatsby v2](https://github.com/gatsbyjs/gatsby/commit/765b679cbc222fd5f527690427ee431cca7ccd61#diff-637c76e3c059ed8efacedf6e30de2d61).
+
+## Only allow defined keys on the node internal object
+
+The node internal object isn't meant for adding node data. Those should be added to the top-level object. We
+didn't document this in v1 nor validate against it but are now for v2.
