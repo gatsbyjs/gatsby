@@ -4,8 +4,13 @@
   "description": "Gatsby example site using using-path-prefix",
   "author": "Kyle Mathews &lt;mathews.kyle@gmail.com&gt;",
   "dependencies": {
-    "gatsby": "latest"
+    "gatsby": "next",
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0"
   },
+  "keywords": [
+    "gatsby"
+  ],
   "license": "MIT",
   "main": "n/a",
   "scripts": {
