@@ -23,6 +23,7 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
         loadNodeContent,
         actions,
         createNodeId,
+        reporter: { error: console.error },
       },
       opts
     )
@@ -45,10 +46,10 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
     }
   })
 
-  it(`should only process javascript and jsx nodes`, () => {
+  it(`should only process javascript and jsx nodes`, async () => {
     loadNodeContent = jest.fn(() => new Promise(() => {}))
 
-    expect(run({ internal: { mediaType: `text/x-foo` } })).toBeNull()
+    expect(await run({ internal: { mediaType: `text/x-foo` } })).toBeUndefined()
     expect(
       run({ internal: { mediaType: `application/javascript` } })
     ).toBeDefined()
@@ -61,14 +62,22 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
     await run(node)
 
     let types = groupBy(createdNodes, n => n.internal.type)
-    expect(types.ComponentMetadata).toHaveLength(5)
+    expect(types.ComponentMetadata).toHaveLength(6)
   })
 
   it(`should give all components a name`, async () => {
     await run(node)
 
     let types = groupBy(createdNodes, `internal.type`)
-    expect(types.ComponentMetadata.every(c => c.displayName)).toBe(true)
+
+    expect(types.ComponentMetadata.map(c => c.displayName)).toEqual([
+      `Baz`,
+      `Buz`,
+      `Foo`,
+      `Baz.Foo`,
+      `Bar`,
+      `Qux`,
+    ])
   })
 
   it(`should infer a name`, async () => {
@@ -124,7 +133,9 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
     })
     it(`should add flow type info`, async () => {
       await run(node)
-      expect(createdNodes[1].flowType).toEqual({
+      const created = createdNodes.find(f => !!f.flowType)
+
+      expect(created.flowType).toEqual({
         name: `number`,
       })
     })

@@ -1,26 +1,48 @@
 jest.mock(`../resolve`, () => module => `/resolved/path/${module}`)
 
-const babelPluginRemoveQueries = require(`babel-plugin-remove-graphql-queries`)
-  .default
 const {
   resolvableExtensions,
   onCreateWebpackConfig,
-  preprocessSource,
 } = require(`../gatsby-node`)
+const { tsPresetsFromJsPresets } = require(`../`)
+const tsPresetPath = `/resolved/path/@babel/preset-typescript`
+const jsOptions = {
+  options: {
+    presets: [
+      [`@babel/preset-env`],
+      [`@babel/preset-react`],
+      [`@babel/preset-flow`],
+    ],
+    plugins: [`babel-plugin-remove-graphql-queries`],
+  },
+  loader: `/resolved/path/babel-loader`,
+}
+
+describe(`tsPresetsFromJsPresets`, () => {
+  it(`handles empty presets`, () => {
+    const presets = []
+    expect(tsPresetsFromJsPresets(presets)).toEqual([tsPresetPath])
+  })
+  it(`replaces preset-flow if it's last`, () => {
+    const presets = [`@babel/preset-flow`]
+    expect(tsPresetsFromJsPresets(presets)).toEqual([tsPresetPath])
+  })
+  it(`appends if preset-flow is not last`, () => {
+    const presets = [[`@babel/preset-flow`], [`@babel/preset-foo`]]
+    expect(tsPresetsFromJsPresets(presets)).toEqual(
+      presets.concat([tsPresetPath])
+    )
+  })
+})
 
 describe(`gatsby-plugin-typescript`, () => {
   let args
-
-  function getLoader() {
-    const call = args.actions.setWebpackConfig.mock.calls[0]
-    return call[0].module.rules[0]
-  }
 
   beforeEach(() => {
     const actions = {
       setWebpackConfig: jest.fn(),
     }
-    const loaders = { js: jest.fn(() => `babel-loader`) }
+    const loaders = { js: jest.fn(() => jsOptions) }
     args = { actions, loaders }
   })
 
@@ -42,129 +64,5 @@ describe(`gatsby-plugin-typescript`, () => {
     expect(args.actions.setWebpackConfig).toHaveBeenCalledTimes(1)
     const lastCall = args.actions.setWebpackConfig.mock.calls.pop()
     expect(lastCall).toMatchSnapshot()
-  })
-
-  // TODO: re-enable this test
-  it.skip(`adds the remove graphql queries plugin`, () => {
-    onCreateWebpackConfig(args, { compilerOptions: {} })
-
-    expect(args.loaders.js).toHaveBeenCalledTimes(1)
-    const lastCall = args.loaders.js.mock.calls.pop()
-
-    expect(lastCall[0]).toEqual({
-      plugins: [babelPluginRemoveQueries],
-    })
-  })
-
-  it(`passes the configuration to the ts-loader plugin`, () => {
-    const babelConfig = { plugins: [``] }
-    const config = {
-      loader: jest.fn(),
-    }
-    const options = { compilerOptions: { foo: `bar` }, transpileOnly: false }
-
-    onCreateWebpackConfig({ config, babelConfig, ...args }, options)
-
-    const expectedOptions = {
-      compilerOptions: {
-        target: `esnext`,
-        experimentalDecorators: true,
-        jsx: `react`,
-        foo: `bar`,
-        module: `es6`,
-      },
-      transpileOnly: false,
-    }
-
-    expect(getLoader()).toEqual({
-      test: /\.tsx?$/,
-      use: [
-        `babel-loader`,
-        {
-          loader: `/resolved/path/ts-loader`,
-          options: expectedOptions,
-        },
-      ],
-    })
-  })
-
-  it(`uses default configuration for the ts-loader plugin when no config is provided`, () => {
-    const babelConfig = { plugins: [``] }
-    const config = {
-      loader: jest.fn(),
-    }
-    onCreateWebpackConfig(
-      { config, babelConfig, ...args },
-      { compilerOptions: {} }
-    )
-
-    const expectedOptions = {
-      compilerOptions: {
-        target: `esnext`,
-        experimentalDecorators: true,
-        jsx: `react`,
-        module: `es6`,
-      },
-      transpileOnly: true,
-    }
-
-    expect(getLoader()).toEqual({
-      test: /\.tsx?$/,
-      use: [
-        `babel-loader`,
-        {
-          loader: `/resolved/path/ts-loader`,
-          options: expectedOptions,
-        },
-      ],
-    })
-  })
-
-  describe(`pre-processing`, () => {
-    const opts = { compilerOptions: {} }
-    it(`leaves non-tsx? files alone`, () => {
-      expect(
-        preprocessSource(
-          {
-            contents: `alert('hello');`,
-            filename: `test.js`,
-          },
-          opts
-        )
-      ).toBeNull()
-    })
-
-    it(`transforms .ts files`, () => {
-      const js = preprocessSource(
-        {
-          filename: `index.ts`,
-          contents: `
-          declare let moment: any;
-
-          const now: string = moment().format('HH:MM:ss');
-        `,
-        },
-        opts
-      )
-      expect(js).not.toBeNull()
-      expect(js).toMatchSnapshot()
-    })
-
-    it(`transforms JSX files`, () => {
-      const js = preprocessSource(
-        {
-          filename: `tags.ts`,
-          contents: `
-          import * as React from 'react';
-
-          export default () => <h1>Hello World</h1>;
-        `,
-        },
-        opts
-      )
-
-      expect(js).not.toBeNull()
-      expect(js).toMatchSnapshot()
-    })
   })
 })

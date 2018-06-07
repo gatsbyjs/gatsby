@@ -4,7 +4,6 @@ import { MemoryRouter } from "react-router-dom"
 
 const getInstance = (props, pathPrefix = ``) => {
   Object.assign(global.window, {
-    __PREFIX_PATHS__: pathPrefix ? true : false,
     __PATH_PREFIX__: pathPrefix,
   })
 
@@ -24,44 +23,30 @@ const getNavigateTo = () => {
 
 const getWithPrefix = (pathPrefix = ``) => {
   Object.assign(global.window, {
-    __PREFIX_PATHS__: pathPrefix ? true : false,
     __PATH_PREFIX__: pathPrefix,
   })
   return require(`../`).withPrefix
 }
 
 describe(`<Link />`, () => {
-  it(`does not fail to initialize when __PREFIX_PATHS__ is not defined`, () => {
+  it(`does not fail to initialize without --prefix-paths`, () => {
     expect(() => {
-      const context = { router: { history: {} } }
-      const Link = require(`../`).default
-      const link = new Link({}, context) //eslint-disable-line no-unused-vars
+      getInstance({})
     }).not.toThrow()
   })
 
   describe(`path prefixing`, () => {
-    it(`does not include path prefix by default`, () => {
-      const to = `/path`
-      const instance = getInstance({
-        to,
-      })
-
-      expect(instance.state.to.pathname).toEqual(to)
-    })
-
-    /*
-     * Running _both_ of these tests causes the globals to be cached or something
-     */
-    it.skip(`will use __PATH_PREFIX__ if __PREFIX_PATHS__ defined`, () => {
+    it(`does not include path prefix`, () => {
       const to = `/path`
       const pathPrefix = `/blog`
       const instance = getInstance({ to }, pathPrefix)
-      expect(instance.state.to).toEqual(`${pathPrefix}${to}`)
+
+      expect(instance.state.to.pathname).toEqual(to)
     })
   })
 
   describe(`the location to link to`, () => {
-    global.___loader = {
+    global.window.___loader = {
       enqueue: jest.fn(),
     }
 
@@ -135,7 +120,7 @@ describe(`<Link />`, () => {
   })
 })
 
-describe(`withRouter`, () => {
+describe(`withPrefix`, () => {
   describe(`works with default prefix`, () => {
     it(`default prefix does not return "//"`, () => {
       const to = `/`
@@ -143,11 +128,7 @@ describe(`withRouter`, () => {
       expect(root).toEqual(to)
     })
 
-    /*
-     * Same as above, setting a path prefix does not work because the
-     * link module sets variables on first import
-     */
-    it.skip(`respects path prefix`, () => {
+    it(`respects path prefix`, () => {
       const to = `/abc/`
       const pathPrefix = `/blog`
       const root = getWithPrefix(pathPrefix)(to)

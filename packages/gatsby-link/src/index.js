@@ -1,21 +1,16 @@
-/*global __PREFIX_PATHS__, __PATH_PREFIX__ */
+/*global __PATH_PREFIX__ */
 import PropTypes from "prop-types"
 import React from "react"
 import { Link, NavLink } from "react-router-dom"
 import { polyfill } from "react-lifecycles-compat"
 import { createLocation, createPath } from "history"
 
-let pathPrefix = `/`
-if (typeof __PREFIX_PATHS__ !== `undefined` && __PREFIX_PATHS__) {
-  pathPrefix = __PATH_PREFIX__
-}
-
 export function withPrefix(path) {
-  return normalizePath(pathPrefix + path)
+  return normalizePath(`${__PATH_PREFIX__}/${path}`)
 }
 
 function normalizePath(path) {
-  return path.replace(/^\/\//g, `/`)
+  return path.replace(/\/+/g, `/`)
 }
 
 const NavLinkPropTypes = {

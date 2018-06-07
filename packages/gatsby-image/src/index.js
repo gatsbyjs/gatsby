@@ -92,7 +92,7 @@ const noscriptImg = props => {
   // HTML validation issues caused by empty values like width="" and height=""
   const src = props.src ? `src="${props.src}" ` : `src="" ` // required attribute
   const srcSet = props.srcSet ? `srcset="${props.srcSet}" ` : ``
-  const fluid = props.fluid ? `fluid="${props.fluid}" ` : ``
+  const sizes = props.sizes ? `sizes="${props.sizes}" ` : ``
   const title = props.title ? `title="${props.title}" ` : ``
   const alt = props.alt ? `alt="${props.alt}" ` : `alt="" ` // required attribute
   const width = props.width ? `width="${props.width}" ` : ``
@@ -100,7 +100,7 @@ const noscriptImg = props => {
   const opacity = props.opacity ? props.opacity : `1`
   const transitionDelay = props.transitionDelay ? props.transitionDelay : `0.5s`
 
-  return `<img ${width}${height}${src}${srcSet}${alt}${title}${fluid}style="position:absolute;top:0;left:0;transition:opacity 0.5s;transition-delay:${transitionDelay};opacity:${opacity};width:100%;height:100%;object-fit:cover;object-position:center"/>`
+  return `<img ${width}${height}${src}${srcSet}${alt}${title}${sizes}style="position:absolute;top:0;left:0;transition:opacity 0.5s;transition-delay:${transitionDelay};opacity:${opacity};width:100%;height:100%;object-fit:cover;object-position:center"/>`
 }
 
 const Img = props => {
@@ -289,7 +289,7 @@ class Image extends React.Component {
                 title={title}
                 srcSet={image.srcSet}
                 src={image.src}
-                fluid={image.fluid}
+                sizes={image.sizes}
                 style={imageStyle}
                 onLoad={() => {
                   this.state.IOSupported && this.setState({ imgLoaded: true })

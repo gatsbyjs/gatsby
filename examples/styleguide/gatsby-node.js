@@ -7,8 +7,8 @@ const componentPageTemplate = path.resolve(
 )
 const tableOfContentsTemplate = path.resolve(`src/templates/TOC/index.js`)
 
-exports.createPages = ({ graphql, boundActionCreators }) => {
-  const { createPage } = boundActionCreators
+exports.createPages = ({ graphql, actions }) => {
+  const { createPage } = actions
 
   return new Promise((resolve, reject) => {
     resolve(
@@ -65,15 +65,15 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
           const allComponents = docgenResult.data.allComponentMetadata.edges.map(
             (edge, i) =>
               Object.assign({}, edge.node, {
-                path: `/components/${edge.node.displayName.toLowerCase()}/`,
+                filePath: `/components/${edge.node.displayName.toLowerCase()}/`,
                 html: markdownResult.data.allMarkdownRemark.edges[i].node.html,
               })
           )
 
           const exportFileContents =
             allComponents
-              .reduce((accumulator, { id, displayName }) => {
-                const absolutePath = id.replace(/ absPath of.*$/, ``)
+              .reduce((accumulator, { displayName, filePath }) => {
+                const absolutePath = path.resolve(path.join('src', filePath, displayName))
                 accumulator.push(
                   `export { default as ${displayName} } from "${absolutePath}"`
                 )
@@ -87,12 +87,12 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
           )
 
           allComponents.forEach(data => {
-            const { path } = data
+            const { filePath } = data
             const context = Object.assign({}, data, {
               allComponents,
             })
             createPage({
-              path,
+              path: filePath,
               component: componentPageTemplate,
               context,
             })

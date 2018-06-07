@@ -7,13 +7,27 @@
   "scripts": {
     "start": "gatsby develop",
     "develop": "gatsby develop",
-    "build": "gatsby build"
+    "build": "gatsby build",
+    "type-check": "tsc --noEmit",
+    "lint": "tslint --project ."
   },
   "dependencies": {
-    "@types/node": "^8.0.7",
-    "@types/react": "15.0.21",
-    "@types/react-dom": "0.14.23",
-    "gatsby": "latest",
-    "gatsby-plugin-typescript": "latest"
+    "@types/node": "^10.3.1",
+    "@types/react": "16.3.16",
+    "@types/react-dom": "16.0.6",
+    "gatsby": "next",
+    "gatsby-plugin-typescript": "next",
+    "gatsby-plugin-typography": "next",
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0",
+    "react-typography": "^0.16.13",
+    "typography": "^0.16.17",
+    "typography-theme-bootstrap": "^0.16.7"
+  },
+  "devDependencies": {
+    "tslint": "^5.10.0",
+    "tslint-config-prettier": "^1.13.0",
+    "tslint-react": "^3.6.0",
+    "typescript": "^2.9.1"
   }
 }
