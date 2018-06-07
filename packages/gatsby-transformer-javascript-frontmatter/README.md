@@ -13,8 +13,8 @@ To use this plugin you also need [gatsby-source-filesystem](https://github.com/g
 ```javascript
 // In your gatsby-config.js
 module.exports = {
-  plugins: [`gatsby-transformer-javascript-frontmatter`]
-}
+  plugins: [`gatsby-transformer-javascript-frontmatter`],
+};
 ```
 
 ## Parsing algorithm

@@ -194,9 +194,7 @@ export default ({ data }) => {
           {trick.node.exampleOfTheCommandInAction && (
             <img src={trick.node.exampleOfTheCommandInAction[0].file.url} />
           )}
-          {trick.node.exampleOfTheCommandInAction && (
-            <p>{trick.node.exampleOfTheCommandInAction[0].description}</p>
-          )}
+          {trick.node.exampleOfTheCommandInAction && <p>{trick.node.exampleOfTheCommandInAction[0].description}</p>}
         </div>
       ))}
     </div>

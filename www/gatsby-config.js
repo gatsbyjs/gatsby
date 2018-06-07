@@ -82,18 +82,7 @@ module.exports = {
         background_color: `#ffffff`,
         theme_color: `#663399`,
         display: `minimal-ui`,
-        icons: [
-          {
-            src: `/android-chrome-192x192.png`,
-            sizes: `192x192`,
-            type: `image/png`,
-          },
-          {
-            src: `/android-chrome-512x512.png`,
-            sizes: `512x512`,
-            type: `image/png`,
-          },
-        ],
+        icon: `src/assets/gatsby-icon.png`,
       },
     },
     {
@@ -154,7 +143,11 @@ module.exports = {
               }
             `,
             output: `/blog/rss.xml`,
-            setup: ({ query: { site: { siteMetadata } } }) => {
+            setup: ({
+              query: {
+                site: { siteMetadata },
+              },
+            }) => {
               return {
                 title: siteMetadata.title,
                 description: siteMetadata.description,
@@ -179,5 +172,11 @@ module.exports = {
       },
     },
     `gatsby-plugin-netlify`,
+    {
+      resolve: `gatsby-plugin-mailchimp`,
+      options: {
+          endpoint: `https://gatsbyjs.us17.list-manage.com/subscribe/post?u=1dc33f19eb115f7ebe4afe5ee&amp;id=f366064ba7`,
+      },
+    },
   ],
 }

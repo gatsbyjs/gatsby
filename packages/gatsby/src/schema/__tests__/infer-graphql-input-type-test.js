@@ -15,6 +15,7 @@ const {
   inferInputObjectStructureFromNodes,
 } = require(`../infer-graphql-input-fields`)
 const createSortField = require(`../create-sort-field`)
+const { clearTypeExampleValues } = require(`../data-tree-utils`)
 
 function queryResult(nodes, query, { types = [] } = {}) {
   const nodeType = new GraphQLObjectType({
@@ -29,7 +30,7 @@ function queryResult(nodes, query, { types = [] } = {}) {
     nodeType,
     connectionFields: () =>
       buildConnectionFields({
-        name: `Test`,
+        name,
         nodes,
         nodeObjectType: nodeType,
       }),
@@ -74,6 +75,10 @@ function queryResult(nodes, query, { types = [] } = {}) {
 
   return graphql(schema, query)
 }
+
+beforeEach(() => {
+  clearTypeExampleValues()
+})
 
 describe(`GraphQL Input args`, () => {
   const nodes = [
@@ -327,6 +332,78 @@ describe(`GraphQL Input args`, () => {
     expect(result.errors).not.toBeDefined()
     expect(result.data.allNode.edges.length).toEqual(2)
     expect(result.data.allNode.edges[0].node.hair).toEqual(1)
+  })
+
+  it(`handles lt operator`, async () => {
+    let result = await queryResult(
+      nodes,
+      `
+        {
+          allNode(filter: {hair: { lt: 2 }}) {
+            edges { node { hair }}
+          }
+        }
+      `
+    )
+
+    expect(result.errors).not.toBeDefined()
+    expect(result.data.allNode.edges.length).toEqual(2)
+    expect(result.data.allNode.edges[0].node.hair).toEqual(1)
+    expect(result.data.allNode.edges[1].node.hair).toEqual(0)
+  })
+
+  it(`handles lte operator`, async () => {
+    let result = await queryResult(
+      nodes,
+      `
+        {
+          allNode(filter: {hair: { lte: 1 }}) {
+            edges { node { hair }}
+          }
+        }
+      `
+    )
+
+    expect(result.errors).not.toBeDefined()
+    expect(result.data.allNode.edges.length).toEqual(2)
+    expect(result.data.allNode.edges[0].node.hair).toEqual(1)
+    expect(result.data.allNode.edges[1].node.hair).toEqual(0)
+  })
+
+  it(`handles gt operator`, async () => {
+    let result = await queryResult(
+      nodes,
+      `
+        {
+          allNode(filter: {hair: { gt: 0 }}) {
+            edges { node { hair }}
+          }
+        }
+      `
+    )
+
+    expect(result.errors).not.toBeDefined()
+    expect(result.data.allNode.edges.length).toEqual(2)
+    expect(result.data.allNode.edges[0].node.hair).toEqual(1)
+    expect(result.data.allNode.edges[1].node.hair).toEqual(2)
+  })
+
+  it(`handles gte operator`, async () => {
+    let result = await queryResult(
+      nodes,
+      `
+        {
+          allNode(filter: {hair: { gte: 1 }}) {
+            edges { node { hair }}
+          }
+        }
+      `
+    )
+
+    expect(result.errors).not.toBeDefined()
+    expect(result.data.allNode.edges.length).toEqual(2)
+    expect(result.data.allNode.edges[0].node.hair).toEqual(1)
+    expect(result.data.allNode.edges[1].node.hair).toEqual(2)
   })
 
   it(`handles the regex operator`, async () => {

@@ -6,7 +6,7 @@ Parses Excel files into JSON arrays.
 
 `npm install --save gatsby-transformer-excel`
 
-Note: You generally will use this plugin together with the [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/) plugin. `gatsby-source-filesystem` reads in the files then this plugin *transforms* the files into data you can query.
+Note: You generally will use this plugin together with the [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/) plugin. `gatsby-source-filesystem` reads in the files then this plugin _transforms_ the files into data you can query.
 
 ## How to use
 
@@ -15,7 +15,7 @@ If you put your Excel's files in `./src/data`:
 ```javascript
 // In your gatsby-config.js
 module.exports = {
-  plugins: [ 
+  plugins: [
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -25,7 +25,7 @@ module.exports = {
     },
     `gatsby-transformer-excel`,
   ],
-}
+};
 ```
 
 You can see an example project at https://github.com/gatsbyjs/gatsby/tree/master/examples/using-excel.
@@ -108,3 +108,24 @@ Which would return:
   }
 }
 ```
+
+## Troubleshooting
+### Field Type Conflicts
+If your columns have different data types, e.g. numbers and strings graphql will omit these values and provide you with a field type conflicts warning during build.
+To solve this, you can set the rawOutput option of the plugin to false. This will convert all values to strings.
+
+```javascript
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-transformer-excel`,
+      options: {
+        rawOutput: false,
+      }
+    }
+  ],
+};
+```
+
+This will make sure, that all field types are converted to strings.

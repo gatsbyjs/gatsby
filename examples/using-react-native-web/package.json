@@ -1,0 +1,25 @@
+{
+  "name": "using-react-native-web",
+  "private": true,
+  "description": "Example usage of gatsby-plugin-react-native-web",
+  "author": "Sebastien Lorber <lorber.sebastien@gmail.com>",
+  "dependencies": {
+    "gatsby": "^1.9.255",
+    "gatsby-link": "^1.6.41",
+    "gatsby-plugin-google-analytics": "1.0.31",
+    "gatsby-plugin-react-native-web": "^0.3.0",
+    "gatsby-plugin-react-next": "^1.0.11",
+    "react": "^16.3.2",
+    "react-art": "^16.3.2",
+    "react-dom": "^16.3.2",
+    "react-native-web": "^0.6.1"
+  },
+  "devDependencies": {
+    "babel-plugin-react-native-web": "^0.6.1"
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "gatsby build",
+    "develop": "gatsby develop"
+  }
+}

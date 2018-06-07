@@ -89,7 +89,7 @@ createFilePath({
 
 #### Example usage
 
-The following is taken from [Gatsby Tutorial, Part Four](https://www.gatsbyjs.org/tutorial/part-four/#programmatically-creating-pages-from-data) and is used to create URL slugs for markdown pages.
+The following is taken from [Gatsby Tutorial, Part Seven](https://www.gatsbyjs.org/tutorial/part-seven/) and is used to create URL slugs for markdown pages.
 
 ```javascript
 const { createFilePath } = require(`gatsby-source-filesystem`);
@@ -117,7 +117,7 @@ exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
 
 ### createRemoteFileNode
 
-When building source plugins for remote data sources such as headless CMSs, their data will often link to files stored remotely that are often convenient to download so you can work with locally.
+When building source plugins for remote data sources such as headless CMSs, their data will often link to files stored remotely that are often convenient to download so you can work with them locally.
 
 The `createRemoteFileNode` helper makes it easy to download remote files and add them to your site's GraphQL schema.
 
@@ -175,3 +175,5 @@ exports.downloadMediaFiles = ({ nodes, store, cache, createNode, _auth }) => {
   });
 };
 ```
+
+The file node can then be queried using GraphQL. See an example of this in the [gatsby-source-wordpress README](/packages/gatsby-source-wordpress/#image-processing) where downloaded images are queried using [gatsby-transformer-sharp](/packages/gatsby-transformer-sharp/) to use in the component [gatsby-image](/packages/gatsby-image/).

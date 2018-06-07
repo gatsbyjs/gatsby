@@ -14,7 +14,7 @@ const typeOf = require(`type-of`)
 const createTypeName = require(`./create-type-name`)
 const createKey = require(`./create-key`)
 const {
-  extractFieldExamples,
+  getExampleValues,
   extractFieldNames,
   isEmptyObjectOrArray,
 } = require(`./data-tree-utils`)
@@ -45,11 +45,19 @@ function typeFields(type): GraphQLInputFieldConfigMap {
       return {
         eq: { type: GraphQLInt },
         ne: { type: GraphQLInt },
+        gt: { type: GraphQLInt },
+        gte: { type: GraphQLInt },
+        lt: { type: GraphQLInt },
+        lte: { type: GraphQLInt },
       }
     case `float`:
       return {
         eq: { type: GraphQLFloat },
         ne: { type: GraphQLFloat },
+        gt: { type: GraphQLFloat },
+        gte: { type: GraphQLFloat },
+        lt: { type: GraphQLFloat },
+        lte: { type: GraphQLFloat },
       }
   }
   return {}
@@ -212,12 +220,15 @@ export function inferInputObjectStructureFromNodes({
   nodes,
   typeName = ``,
   prefix = ``,
-  exampleValue = extractFieldExamples(nodes),
+  exampleValue = null,
 }: InferInputOptions): Object {
   const inferredFields = {}
   const isRoot = !prefix
 
   prefix = isRoot ? typeName : prefix
+  if (exampleValue === null) {
+    exampleValue = getExampleValues({ nodes, typeName })
+  }
 
   _.each(exampleValue, (v, k) => {
     let value = v
@@ -238,7 +249,10 @@ export function inferInputObjectStructureFromNodes({
         const relatedNodes = getNodes().filter(
           node => node.internal.type === linkedNode.internal.type
         )
-        value = extractFieldExamples(relatedNodes)
+        value = getExampleValues({
+          nodes: relatedNodes,
+          typeName: linkedNode.internal.type,
+        })
         value = recursiveOmitBy(value, (_v, _k) => _.includes(_k, `___NODE`))
         linkedNodeCache[linkedNode.internal.type] = value
       }

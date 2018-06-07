@@ -43,9 +43,13 @@ exports.resolvableExtensions = true
  *         result.data.allMarkdownRemark.edges.forEach(edge => {
  *             createPage({
  *               path: `${edge.node.fields.slug}`, // required
- *               component: slash(blogPostTemplate),
+ *               component: blogPostTemplate,
  *               context: {
- *                 slug: edge.node.fields.slug,
+ *                 // Add optional context data. Data can be used as
+ *                 // arguments to the page GraphQL query.
+ *                 //
+ *                 // The page "path" is always available as a GraphQL
+ *                 // argument.
  *               },
  *             })
  *         })

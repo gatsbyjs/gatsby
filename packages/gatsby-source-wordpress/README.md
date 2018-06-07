@@ -56,10 +56,10 @@ plugins: [
       // The protocol. This can be http or https.
       protocol: "http",
       // Indicates whether the site is hosted on wordpress.com.
-      // If false, then the asumption is made that the site is self hosted.
+      // If false, then the assumption is made that the site is self hosted.
       // If true, then the plugin will source its content on wordpress.com using the JSON REST API V2.
       // If your site is hosted on wordpress.org, then set this to false.
-      hostingWPCOM: true,
+      hostingWPCOM: false,
       // If useACF is true, then the source plugin will try to import the Wordpress ACF Plugin contents.
       // This feature is untested for sites hosted on Wordpress.com.
       // Defaults to true.
@@ -97,6 +97,10 @@ plugins: [
       // Example:  `["/*/*/comments", "/yoast/**"]` will exclude routes ending in `comments` and
       // all routes that begin with `yoast` from fetch.
       excludedRoutes: ["/*/*/comments", "/yoast/**"],
+      // use a custom normalizer which is applied after the built-in ones.
+      normalizer: function({ entities }) {
+        return entities;
+      },
     },
   },
 ];
@@ -138,11 +142,17 @@ plugins.
 
 Set `hostingWPCOM: true`.
 
-You will need to provide an (API
-Key)[https://en.support.wordpress.com/api-keys/].
+You will need to provide an [API
+Key](https://en.support.wordpress.com/api-keys/).
 
 Note : you don't need this for Wordpress.org hosting in which your WordPress
 will behave like a self-hosted instance.
+
+## Test your WordPress API
+
+Before you run your first query, ensure the WordPress JSON API is working correctly by visiting /wp-json at your WordPress install. The result should be similar to the [WordPress demo API](https://demo.wp-api.org/wp-json/).
+
+If you see a page on your site, rather than the JSON output, check if your permalink settings are set to “Plain”. After changing this to any of the other settings, the JSON API should be accessible.
 
 ## How to query
 
@@ -154,6 +164,7 @@ GraphQL model.
 ### Query posts
 
 ```graphql
+{
   allWordpressPost {
     edges {
       node {
@@ -167,11 +178,13 @@ GraphQL model.
       }
     }
   }
+}
 ```
 
 ### Query pages
 
 ```graphql
+{
   allWordpressPage {
     edges {
       node {
@@ -186,6 +199,7 @@ GraphQL model.
       }
     }
   }
+}
 ```
 
 Same thing for other type of entity (tag, media, categories, ...).
@@ -213,6 +227,7 @@ For example the following URL:
 * Final GraphQL Type : AllWordpressWpApiMenusMenuLocations
 
 ```graphql
+{
   allWordpress${Manufacturer}${Endpoint} {
     edges {
       node {
@@ -222,6 +237,7 @@ For example the following URL:
       }
     }
   }
+}
 ```
 
 ### Query posts with the child ACF Fields Node
@@ -229,6 +245,7 @@ For example the following URL:
 Mention the apparition of `childWordpressAcfField` in the query below :
 
 ```graphql
+{
   allWordpressPost {
     edges {
       node {
@@ -250,6 +267,7 @@ Mention the apparition of `childWordpressAcfField` in the query below :
       }
     }
   }
+}
 ```
 
 ### Query pages with the child ACF Fields Node
@@ -257,6 +275,7 @@ Mention the apparition of `childWordpressAcfField` in the query below :
 Mention the apparition of `childWordpressAcfField` in the query below :
 
 ```graphql
+{
   allWordpressPage {
     edges {
       node {
@@ -276,6 +295,7 @@ Mention the apparition of `childWordpressAcfField` in the query below :
       }
     }
   }
+}
 ```
 
 ### Query with ACF Flexible Content
@@ -293,6 +313,7 @@ require you to know types of nodes. The easiest way to get the types of nodes is
 `___GraphiQL` debugger and run the below query (adjust post type and field name):
 
 ```graphQL
+{
   allWordpressPage {
     edges {
       node {
@@ -305,6 +326,7 @@ require you to know types of nodes. The easiest way to get the types of nodes is
       }
     }
   }
+}
 ```
 
 When you have node type names, you can use them to create inline fragments.
@@ -312,6 +334,7 @@ When you have node type names, you can use them to create inline fragments.
 Full example:
 
 ```graphQL
+{
   allWordpressPage {
     edges {
       node {
@@ -342,11 +365,13 @@ Full example:
       }
     }
   }
+}
 ```
 
 ### Query posts with the WPML Fields Node
 
 ```graphql
+{
   allWordpressPost {
     edges {
       node {
@@ -372,11 +397,13 @@ Full example:
       }
     }
   }
+}
 ```
 
 ### Query pages with the WPML Fields Node
 
 ```graphql
+{
   allWordpressPage {
     edges {
       node {
@@ -400,9 +427,10 @@ Full example:
       }
     }
   }
+}
 ```
 
-### Image processing
+## Image processing
 
 To use image processing you need `gatsby-transformer-sharp`, `gatsby-plugin-sharp` and their
 dependencies `gatsby-image` and `gatsby-source-filesystem` in your `gatsby-config.js`.
@@ -420,10 +448,12 @@ currently not supported.
 To access image processing in your queries you need to use this pattern:
 
 ```
-imageFieldName {
-  localFile {
-    childImageSharp {
-      ...
+{
+  imageFieldName {
+    localFile {
+      childImageSharp {
+        ...ImageFragment
+      }
     }
   }
 }
@@ -432,6 +462,7 @@ imageFieldName {
 Full example:
 
 ```graphql
+{
   allWordpressPost {
     edges {
       node {
@@ -468,6 +499,7 @@ Full example:
       }
     }
   }
+}
 ```
 
 To learn more about image processing check
@@ -475,6 +507,55 @@ To learn more about image processing check
 * documentation of [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/),
 * source code of [image processing example
   site](https://github.com/gatsbyjs/gatsby/tree/master/examples/image-processing).
+  
+## Using a custom normalizer
+
+The plugin uses the concept of normalizers to transform the json data from WordPress into 
+GraphQL nodes. You can extend the normalizers by passing a custom function to your `gatsby-config.js`.
+
+### Example:
+
+You have a custom post type `movie` and a related custom taxonomy `genre` in your WordPress site. Since 
+`gatsby-source-wordpress` doesn't know about the relation of the two, we can build an additional normalizer function to map the movie GraphQL nodes to the genre nodes: 
+
+```javascript
+function mapMoviesToGenres({ entities }) {
+  const genres = entities.filter(e => e.__type === `wordpress__wp_genre`);
+
+  return entities.map(e => {
+    if (e.__type === `wordpress__wp_movie`) {
+      let hasGenres = e.genres && Array.isArray(e.genres) && e.categories.length;
+      // Replace genres with links to their nodes.
+      if (hasGenres) {
+        e.genres___NODE = e.genres.map(c => genres.find(gObj => c === gObj.wordpress_id).id);
+        delete e.genres;
+      }
+    }
+    return e;
+  });
+  
+  return entities;
+}
+```
+
+In your `gatsby-config.js` you can then pass the function to the plugin options:
+
+```javascript
+module.exports = {
+  plugins: [
+    {
+      resolve: 'gatsby-source-wordpress',
+      options: {
+        // ...
+        normalizer: mapMoviesToGenres,
+      },
+    },
+  ],
+};
+```
+
+Next to the entities, the object passed to the custom normalizer function also contains other helpful Gatsby functions 
+and also your `wordpress-source-plugin` options from `gatsby-config.js`. To learn more about the passed object see the [source code](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/src/gatsby-node.js).
 
 ## Site's `gatsby-node.js` example
 
@@ -588,3 +669,52 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
   });
 };
 ```
+
+## Troubleshooting
+
+### GraphQL Error - Unknown Field on ACF
+
+ACF returns `false` in cases where there is no data to be returned. This can cause conflicting data types in GraphQL and often leads to the error: `GraphQL Error Unknown field {field} on type {type}`.
+
+To solve this, you can use the [acf/format_value filter](https://www.advancedcustomfields.com/resources/acf-format_value/). There are 2 possible ways to use this:
+
+* `acf/format_value` – filter for every field
+* `acf/format_value/type={$field_type}` – filter for a specific field based on it’s type
+
+Using the following function, you can check for an empty field and if it's empty return `null`.
+
+```
+if (!function_exists('acf_nullify_empty')) {
+    /**
+     * Return `null` if an empty value is returned from ACF.
+     *
+     * @param mixed $value
+     * @param mixed $post_id
+     * @param array $field
+     *
+     * @return mixed
+     */
+    function acf_nullify_empty($value, $post_id, $field) {
+        if (empty($value)) {
+            return null;
+        }
+        return $value;
+    }
+}
+```
+
+You can then apply this function to all ACF fields using the following code snippet:
+
+```
+add_filter('acf/format_value', 'acf_nullify_empty', 100, 3);
+```
+
+Or if you would prefer to target specific fields, you can use the `acf/format_value/type={$field_type}` filter. Here are some examples:
+
+```
+add_filter('acf/format_value/type=image', 'acf_nullify_empty', 100, 3);
+add_filter('acf/format_value/type=gallery', 'acf_nullify_empty', 100, 3);
+add_filter('acf/format_value/type=repeater', 'acf_nullify_empty', 100, 3);
+```
+
+This code should be added as a plugin (recommended), or within the `functions.php` of a theme.

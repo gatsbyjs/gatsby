@@ -1,21 +1,34 @@
 {
   "name": "gatsby-plugin-styletron",
   "description": "A Gatsby plugin for styletron with built-in server-side rendering support",
-  "version": "2.0.4",
-  "author": "Nadiia Dmytrenko &lt;nadiia.dmytrenko@gmail.com&gt;",
+  "version": "2.0.9",
+  "author": "Nadiia Dmytrenko <nadiia.dmytrenko@gmail.com>",
+  "authors": [
+    "Nadiia Dmytrenko <nadiia.dmytrenko@gmail.com>",
+    "Peter T Bosse II <ptb@ioutime.com> (http://ptb2.me/)"
+  ],
+  "babel": {
+    "plugins": [
+      "babel-plugin-transform-object-rest-spread"
+    ],
+    "presets": [
+      "env"
+    ]
+  },
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "babel-runtime": "^6.26.0",
     "styletron-engine-atomic": "^1",
     "styletron-react": "^4",
     "styletron-react-core": "^1",
     "styletron-standard": "^1"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "cross-env": "^5.0.5"
+    "babel-cli": "^6",
+    "babel-plugin-transform-object-rest-spread": "latest",
+    "babel-preset-env": "latest",
+    "cross-env": "^5"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-styletron#readme",
   "keywords": [
@@ -25,12 +38,12 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "gatsby": "^1.0.0"
+    "gatsby": "^1"
   },
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-styletron",
   "scripts": {
     "build": "babel src --out-dir . --ignore __tests__",
-    "prepublish": "cross-env NODE_ENV=production npm run build",
+    "prepare": "cross-env NODE_ENV=production npm run build",
     "watch": "babel -w src --out-dir . --ignore __tests__"
   }
 }
