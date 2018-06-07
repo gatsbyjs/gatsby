@@ -39,14 +39,16 @@ export const nodeSchema = Joi.object()
           `"parent" must be the "id" of another node or if there is no parent (common), "null"`
       ),
     fields: Joi.object(),
-    internal: Joi.object().keys({
-      contentDigest: Joi.string().required(),
-      mediaType: Joi.string(),
-      type: Joi.string().required(),
-      owner: Joi.string().required(),
-      fieldOwners: Joi.array(),
-      content: Joi.string().allow(``),
-      description: Joi.string(),
-    }),
+    internal: Joi.object()
+      .keys({
+        contentDigest: Joi.string().required(),
+        mediaType: Joi.string(),
+        type: Joi.string().required(),
+        owner: Joi.string().required(),
+        fieldOwners: Joi.array(),
+        content: Joi.string().allow(``),
+        description: Joi.string(),
+      })
+      .unknown({ allow: false }), // Don't allow non-standard fields
   })
   .unknown()
