@@ -7,6 +7,7 @@ import apiRunner from "./api-runner-ssr"
 import pages from "./pages.json"
 import syncRequires from "./sync-requires"
 import testRequireError from "./test-require-error"
+import defineAssetScript from "./define-asset-script"
 
 let Html
 try {
@@ -156,26 +157,6 @@ module.exports = (locals, callback) => {
     .map(s => {
       const fetchKey = `assetsByChunkName[${s}]`
       const fetchedEntryPoints = get(stats, `entrypoints`)
-
-      // NOTE: this function mutate the data argument object.
-      // The behavior of this function is finding the `childAssets` object and check script
-      // has exists in the array of webpack magic comment action. If exists. It mutate data.rel.
-      function defineAssetScript(entryPoint, chunkFileName, data) {
-        for (const objKey in entryPoint) {
-          if (typeof entryPoint[objKey] == typeof {}) {
-            if (objKey === `childAssets`) {
-              Object.entries(entryPoint[objKey]).forEach(([key, value]) => {
-                if (value.includes(chunkFileName)) {
-                  data.rel = key
-                }
-              })
-            } else {
-              defineAssetScript(entryPoint[objKey], chunkFileName, data)
-            }
-          }
-        }
-        return data
-      }
 
       let fetchedScript = get(stats, fetchKey)
       if (!fetchedScript) {
