@@ -2,21 +2,40 @@
   items:
     - title: Introduction
       link: /tutorial/
-    - title: 0. Programming basics
+    - title: 0. Set up your development environment
       link: /tutorial/part-zero/
-    - title: 1. Introduction to Gatsby basics
+      items:
+        - title: Core Technologies
+          link: /tutorial/part-zero/#core-technologies
+        - title: Command Line
+          link: /tutorial/part-zero/#command-line
+        - title: Node.js
+          link: /tutorial/part-zero/#nodejs
+        - title: npm
+          link: /tutorial/part-zero/#npm
+        - title: Gatsby CLI
+          link: /tutorial/part-zero/#gatsby-cli
+        - title: Generate a new site with “Hello World”
+          link: /tutorial/part-zero/#generate-a-new-site-with-hello-world
+        - title: Code Editor
+          link: /tutorial/part-zero/#code-editor
+    - title: 1. Get to know Gatsby building blocks
       link: /tutorial/part-one/
       items:
-        - title: Check environment
-          link: /tutorial/part-one/#check-your-development-environment
-        - title: Install the "Hello World" starter
-          link: /tutorial/part-one/#install-the-hello-world-starter
-        - title: Linking between pages
-          link: /tutorial/part-one/#linking-between-pages
-        - title: Interactive page
-          link: /tutorial/part-one/#interactive-page
-        - title: Deploying Gatsby.js websites
-          link: /tutorial/part-one/#deploying-gatsbyjs-websites
+        - title: Gatsby's default starter
+          link: /tutorial/part-one/#gatsbys-default-starter
+        - title: Gatsby's project structure
+          link: /tutorial/part-one/#gatsbys-project-structure
+        - title: Meet pages
+          link: /tutorial/part-one/#meet-pages-the-starter-homepage
+        - title: Meet components
+          link: /tutorial/part-one/#meet-components-the-starter-header
+        - title: Meet layouts
+          link: /tutorial/part-one/#meet-layouts-the-starter-default-layout
+        - title: What are React “props”?
+          link: /tutorial/part-one/#what-are-react-props
+        - title: What are React "children"?
+          link: /tutorial/part-one/#what-are-react-children
     - title: 2. Introduction to using CSS in Gatsby
       link: /tutorial/part-two/
       items:
