@@ -44,11 +44,11 @@ module.exports = (locals, callback) => {
   if (__PREFIX_PATHS__) {
     pathPrefix = `${__PATH_PREFIX__}/`
   }
-
+  const is404 = pathChunkName(locals.path).indexOf('path---404') > -1
   let bodyHtml = ``
   let headComponents = []
   let htmlAttributes = {}
-  let bodyAttributes = {}
+  let bodyAttributes = !is404 ? {} : { id: 'is404' }
   let preBodyComponents = []
   let postBodyComponents = []
   let bodyProps = {}
