@@ -15,7 +15,7 @@ includes this plugin automatically in all sites for creating pages from componen
 module.exports = {
   plugins: [
     // You can have multiple instances of this plugin
-    // to create pages from components in different directories.
+    // to create pages from React components in different directories.
     //
     // The following sets up the pattern of having multiple
     // "pages" directories in your project
