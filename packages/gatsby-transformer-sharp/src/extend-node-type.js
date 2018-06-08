@@ -5,7 +5,7 @@ const {
   GraphQLString,
   GraphQLInt,
   GraphQLFloat,
-} = require(`graphql`)
+} = require(`gatsby/graphql`)
 const {
   queueImageResizing,
   base64,

@@ -4,7 +4,7 @@ const {
   GraphQLObjectType,
   GraphQLList,
   GraphQLSchema,
-} = require(`graphql`)
+} = require(`gatsby/graphql`)
 const { onCreateNode } = require(`../gatsby-node`)
 const {
   inferObjectStructureFromNodes,

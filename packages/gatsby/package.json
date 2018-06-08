@@ -68,6 +68,7 @@
     "graphql": "^0.13.2",
     "graphql-relay": "^0.5.5",
     "graphql-skip-limit": "^2.0.0-alpha.7",
+    "graphql-type-json": "^0.2.1",
     "history": "^4.6.2",
     "invariant": "^2.2.4",
     "is-relative": "^1.0.0",
@@ -149,6 +150,7 @@
   "files": [
     "./cache-dir",
     "./dist",
+    "./graphql.js",
     "./index.d.ts"
   ],
   "types": "index.d.ts",

@@ -25,6 +25,7 @@ This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While t
 - [Change `modifyWebpackConfig` to `onCreateWebpackConfig`](#change-modifywebpackconfig-to-oncreatewebpackconfig)
 - [Remove inlined CSS in `html.js`](#remove-inlined-css-in-htmljs)
 - [Only allow defined keys on node.internal object](#only-allow-defined-keys-on-the-node-internal-object)
+- [Import `graphql` types from `gatsby/graphql`](#import-graphql-types-from-gatsbygraphql)
 
 You can start with a few of the most important steps - install Gatsby v2 dependencies and update your layout components.
 
@@ -384,3 +385,12 @@ See an example in [this PR that upgrades the `using-remark` site to Gatsby v2](h
 
 The node internal object isn't meant for adding node data. Those should be added to the top-level object. We
 didn't document this in v1 nor validate against it but are now for v2.
+
+## Import `graphql` types from `gatsby/graphql`
+
+Import graphql types from `gatsby/graphql` to prevent `Schema must contain unique named types but contains multiple types named "<typename>"` errors. `gatsby/graphql` exports all builtin GraphQL types as well as `graphQLJSON` type.
+
+```diff
+-const { GraphQLString } = require(`graphql`)
++const { GraphQLString } = require(`gatsby/graphql`)
+```
