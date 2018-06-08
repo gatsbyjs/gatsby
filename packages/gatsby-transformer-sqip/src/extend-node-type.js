@@ -20,7 +20,8 @@ const generateSqip = require(`./generate-sqip`)
 
 const debug = Debug(`gatsby-transformer-sqip`)
 const SUPPORTED_NODES = [`ImageSharp`, `ContentfulAsset`]
-const CACHE_DIR = resolve(process.cwd(), `public`, `static`)
+const buildDirectory = process.env.GATSBY_BUILD_DIR || `public`
+const CACHE_DIR = resolve(process.cwd(), buildDirectory, `static`)
 
 module.exports = async args => {
   const {
@@ -135,7 +136,13 @@ async function sqipContentful({ type, cache }) {
 
   return {
     sqip: {
-      type: GraphQLString,
+      type: new GraphQLObjectType({
+        name: `Sqip`,
+        fields: {
+          svg: { type: GraphQLString },
+          dataURI: { type: GraphQLString },
+        },
+      }),
       args: {
         blur: {
           type: GraphQLInt,
@@ -242,7 +249,7 @@ async function sqipContentful({ type, cache }) {
 
         return generateSqip({
           cache,
-          CACHE_DIR,
+          cacheDir: CACHE_DIR,
           absolutePath,
           numberOfPrimitives,
           blur,

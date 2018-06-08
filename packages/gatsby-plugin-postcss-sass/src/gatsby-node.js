@@ -1,5 +1,5 @@
-const ExtractTextPlugin = require(`extract-text-webpack-plugin`)
 const { cssModulesConfig } = require(`gatsby-1-config-css-modules`)
+const { extractTextPlugin } = require(`gatsby-1-config-extract-plugin`)
 
 exports.modifyWebpackConfig = ({ config, stage }, options) => {
   // Pass in plugins regardless of stage.
@@ -33,7 +33,7 @@ exports.modifyWebpackConfig = ({ config, stage }, options) => {
       config.loader(`sass`, {
         test: sassFiles,
         exclude: sassModulesFiles,
-        loader: ExtractTextPlugin.extract([
+        loader: extractTextPlugin(stage).extract([
           `css?minimize`,
           `postcss`,
           sassLoader,
@@ -42,7 +42,7 @@ exports.modifyWebpackConfig = ({ config, stage }, options) => {
 
       config.loader(`sassModules`, {
         test: sassModulesFiles,
-        loader: ExtractTextPlugin.extract(`style`, [
+        loader: extractTextPlugin(stage).extract(`style`, [
           cssModulesConfig(stage),
           `postcss`,
           sassLoader,
@@ -60,7 +60,7 @@ exports.modifyWebpackConfig = ({ config, stage }, options) => {
 
       config.loader(`sassModules`, {
         test: sassModulesFiles,
-        loader: ExtractTextPlugin.extract(`style`, [
+        loader: extractTextPlugin(stage).extract(`style`, [
           cssModulesConfig(stage),
           `postcss`,
           sassLoader,
@@ -77,7 +77,7 @@ exports.modifyWebpackConfig = ({ config, stage }, options) => {
 
       config.loader(`sassModules`, {
         test: sassModulesFiles,
-        loader: ExtractTextPlugin.extract(`style`, [
+        loader: extractTextPlugin(stage).extract(`style`, [
           cssModulesConfig(stage),
           sassLoader,
         ]),

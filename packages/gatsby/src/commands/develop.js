@@ -248,9 +248,7 @@ async function startServer(program) {
 module.exports = async (program: any) => {
   const detect = require(`detect-port`)
   const port =
-    typeof program.port === `string`
-      ? parseInt(program.port, 10)
-      : program.port
+    typeof program.port === `string` ? parseInt(program.port, 10) : program.port
 
   // In order to enable custom ssl, --cert-file --key-file and -https flags must all be
   // used together
@@ -399,7 +397,7 @@ module.exports = async (program: any) => {
       program.host,
       program.port
     )
-    const isSuccessful = !messages.errors.length && !messages.warnings.length
+    const isSuccessful = !messages.errors.length
     // if (isSuccessful) {
     // console.log(chalk.green(`Compiled successfully!`))
     // }

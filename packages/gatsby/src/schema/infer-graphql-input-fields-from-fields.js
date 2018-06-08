@@ -38,7 +38,7 @@ function makeNullable(type: GraphQLInputType): GraphQLNullableInputType<any> {
 
 function convertToInputType(
   type: GraphQLType,
-  typeMap: Set
+  typeMap: Set<GraphQLType>
 ): ?GraphQLInputType {
   // track types already processed in current tree, to avoid infinite recursion
   if (typeMap.has(type)) {
@@ -85,10 +85,18 @@ const scalarFilterMap = {
   Int: {
     eq: { type: GraphQLInt },
     ne: { type: GraphQLInt },
+    gt: { type: GraphQLInt },
+    gte: { type: GraphQLInt },
+    lt: { type: GraphQLInt },
+    lte: { type: GraphQLInt },
   },
   Float: {
     eq: { type: GraphQLFloat },
     ne: { type: GraphQLFloat },
+    gt: { type: GraphQLFloat },
+    gte: { type: GraphQLFloat },
+    lt: { type: GraphQLFloat },
+    lte: { type: GraphQLFloat },
   },
   ID: {
     eq: { type: GraphQLID },
