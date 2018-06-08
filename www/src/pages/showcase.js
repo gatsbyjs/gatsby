@@ -76,12 +76,12 @@ const ShowcaseList = ({ items, count }) => {
                 alt={`Screenshot of ${node.title}`}
               />
             ) : (
-              <div
-                css={{ width: 282, height: 211, backgroundColor: `#d999e7` }}
-              >
-                missing
+                <div
+                  css={{ width: 282, height: 211, backgroundColor: `#d999e7` }}
+                >
+                  missing
               </div>
-            )}
+              )}
             {node.title}
             <div
               css={{
@@ -241,17 +241,17 @@ class FilteredShowcase extends Component {
                     Sites
                   </span>
                 ) : (
-                  <span>
-                    {items.length}
-                    {` `}
-                    {filters.size === 1 && filters.values()[0]}
-                    {` `}
-                    Sites
+                    <span>
+                      {items.length}
+                      {` `}
+                      {filters.size === 1 && filters.values()[0]}
+                      {` `}
+                      Sites
                   </span>
-                )
+                  )
               ) : (
-                <span>{items.length} search results</span>
-              )}
+                  <span>{items.length} search results</span>
+                )}
             </h2>
             <div>
               <label css={{ position: `relative` }}>
@@ -303,8 +303,8 @@ class FilteredShowcase extends Component {
               }}
             >
               Load More
-              <div css={{marginLeft: '5px', display: 'inline'}}>↓</div>
-          </button>
+              <div css={{ marginLeft: '5px', display: 'inline' }}>↓</div>
+            </button>
           )}
         </div>
       </div>
@@ -323,7 +323,7 @@ class ShowcasePage extends Component {
 
     return (
       <Layout location={location}>
-        <div css={{margin: '20px 30px'}}>
+        <div css={{ margin: '20px 30px' }}>
           <Helmet>
             <title>Showcase</title>
           </Helmet>
@@ -333,16 +333,16 @@ class ShowcasePage extends Component {
             color: '#9D7CBF',
             marginBottom: 30
           }}>
-            <img src={FeaturedSitesIcon} alt="icon" css={{marginBottom: 0}} />
-            <span css={{fontWeight: 'bold', fontSize: 24, marginRight: 30, marginLeft: 15}}>Featured Sites</span>
+            <img src={FeaturedSitesIcon} alt="icon" css={{ marginBottom: 0 }} />
+            <span css={{ fontWeight: 'bold', fontSize: 24, marginRight: 30, marginLeft: 15 }}>Featured Sites</span>
             <div>View all</div>
-            <div css={{marginLeft: '5px'}}>→</div>
-            <div css={{flex: 1}}>{''}</div>
-            <div css={{marginRight: 15}}>Want to get featured?</div>
+            <div css={{ marginLeft: '5px' }}>→</div>
+            <div css={{ flex: 1 }}>{''}</div>
+            <div css={{ marginRight: 15 }}>Want to get featured?</div>
             {/* TODO: maybe have a site submission issue template */}
             <a href="https://github.com/gatsbyjs/gatsby/issues/new?template=feature_request.md" target="_blank">
-              <div css={{backgroundColor: '#663399', color: 'white', padding: '5px 10px', fontWeight: 'normal'}}>Submit your Site
-                <div css={{marginLeft: '5px', display: 'inline'}}>→</div>
+              <div css={{ backgroundColor: '#663399', color: 'white', padding: '5px 10px', fontWeight: 'normal' }}>Submit your Site
+                <div css={{ marginLeft: '5px', display: 'inline' }}>→</div>
               </div>
             </a>
           </div>
