@@ -1,3 +1,5 @@
+const path = require(`path`)
+
 const _ = require(`lodash`)
 const fs = require(`fs-extra`)
 
@@ -179,6 +181,12 @@ exports.sourceNodes = async (
   })
 
   return
+}
+
+exports.onPreBootstrap = async ({ store }) => {
+  const program = store.getState().program
+  const CACHE_DIR = path.resolve(`${program.directory}/.cache/contentful/assets/`)
+  await fs.ensureDir(CACHE_DIR)
 }
 
 // Check if there are any ContentfulAsset nodes and if gatsby-image is installed. If so,

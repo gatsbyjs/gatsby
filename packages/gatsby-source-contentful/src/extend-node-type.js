@@ -9,19 +9,15 @@ const {
 const qs = require(`qs`)
 const base64Img = require(`base64-img`)
 const _ = require(`lodash`)
-const Debug = require(`debug`)
-const { tmpdir } = require(`os`)
+const path = require(`path`)
 
+const cacheImage = require(`./cache-image`)
 
 const {
   ImageFormatType,
   ImageResizingBehavior,
   ImageCropFocusType,
 } = require(`./schemes`)
-
-
-const TMP_DIR = tmpdir()
-const debug = Debug(`gatsby-source-contentful`)
 
 const isImage = image =>
   _.includes(
@@ -267,79 +263,28 @@ const resolveResize = (image, options) => {
 
 exports.resolveResize = resolveResize
 
-exports.extendNodeType = ({ type }) => {
+exports.extendNodeType = ({ type, store }) => {
   if (type.name !== `ContentfulAsset`) {
     return {}
   }
 
   const getTracedSVG = async (args) =>
   {
-    const { extname, resolve } = require(`path`)
-    const axios = require(`axios`)
-    const { pathExists, createWriteStream } = require(`fs-extra`)
     const {
       traceSVG,
     } = require(`gatsby-plugin-sharp`)
 
     const { image, options } = args
-    const { id, file: { url, fileName } } = image
-    const { maxWidth, maxHeight, width, height, resizingBehavior, cropFocus, background } = options
+    const {
+      file: { contentType },
+    } = image
 
-    // Downloading small version of the image with same aspect ratio
-    const assetWidth = maxWidth || width
-    const assetHeight = maxHeight || height
-    let aspectRatio = image.aspectRatio
-    if (assetWidth && assetHeight) {
-      aspectRatio = assetHeight / assetWidth
+    if (contentType.indexOf(`image/`) !== 0) {
+      return null
     }
 
-    const uniqueId = [
-      id,
-      aspectRatio,
-      resizingBehavior,
-      cropFocus,
-      background,
-    ]
-      .filter(Boolean)
-      .join(`-`)
-
-    const extension = extname(fileName)
-    const absolutePath = resolve(TMP_DIR, `${uniqueId}${extension}`)
-
-    const alreadyExists = await pathExists(absolutePath)
-
-    if (!alreadyExists) {
-      const previewWidth = 500
-      const previewHeight = Math.floor(previewWidth * aspectRatio)
-
-      const params = [`w=${previewWidth}`, `h=${previewHeight}`]
-      if (resizingBehavior) {
-        params.push(`fit=${resizingBehavior}`)
-      }
-      if (cropFocus) {
-        params.push(`crop=${cropFocus}`)
-      }
-      if (background) {
-        params.push(`bg=${background}`)
-      }
-
-      const previewUrl = `http:${url}?${params.join(`&`)}`
-
-      debug(`Downloading: ${previewUrl}`)
-
-      const response = await axios({
-        method: `get`,
-        url: previewUrl,
-        responseType: `stream`,
-      })
-
-      await new Promise((resolve, reject) => {
-        const file = createWriteStream(absolutePath)
-        response.data.pipe(file)
-        file.on(`finish`, resolve)
-        file.on(`error`, reject)
-      })
-    }
+    const absolutePath = await cacheImage(store, image, options)
+    const extension = path.extname(absolutePath)
 
     return traceSVG({
       file: {
