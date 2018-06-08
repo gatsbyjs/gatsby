@@ -8,7 +8,7 @@ author: "Tony Spiro"
 
 > _This article originally appears on [the Cosmic JS website](https://cosmicjs.com/articles/build-a-gatsby-blog-using-the-cosmic-js-source-plugin-jhzwvr45)_.
 
-In this tutorial, I'm going to show you how to create a simple but blazing fast blog using React, Gatsby, and [Cosmic JS](https://cosmicjs.com). Let’s get started.
+In this tutorial, I'm going to show you how to create a simple but blazing fast blog using React, Gatsby, and [Cosmic JS](https://cosmicjs.com).
 
 ## TL;DR
 [Download the GitHub repo.](https://github.com/cosmicjs/gatsby-blog-cosmicjs)
@@ -18,57 +18,64 @@ In this tutorial, I'm going to show you how to create a simple but blazing fast 
 [Check out the Cosmic JS Source Plugin for Gatsby.](https://github.com/cosmicjs/gatsby-source-cosmicjs)
 
 ## Prerequisites
-You will be required to install Node.js, npm, and Gastby CLI before starting. Make sure you already have them installed.
-
-## What is Gatsby?
-![Gatsby](./gatsby.jpg)
-[Gatsby](https://www.gatsbyjs.org/) is a blazing-fast website framework for React. It allows developers to build React based websites within minutes. Whether you want to develop a blog or a business website, Gatsby will be a good option.
-
-Because it is based on React, the website pages are never reloaded and also it will generate static pages which make the generated website super fast.  
+This tutorial requires Node.js and npm. Make sure you already have them installed.
 
 ## Blog Development
-We have to set up the environment in order to start working on the blog.
 
-#### Install Gatsby
-First, install Gatsby CLI:
+In order to start working on the blog, we first have to set up the environment.
+
+### Install Gatsby and Set Up Your Site
+
+First, install the Gatsby CLI:
 
 ```bash
 npm install --global gatsby-cli
 ```
 
-Scaffold a Gatsby Template
+Create a new site based on the Gatsby CosmicJS starter:
+
 ```bash
 gatsby new gatsby-blog-cosmicjs
 ```
+
 Enter in your project's folder:
+
 ```bash
 cd gatsby-blog-cosmicjs
 ```
+
 Start the server:
+
 ```bash
 gatsby develop
 ```
-At this point, you should already be able to get access to your Gatsby JS blog website at this address: [http://localhost:8000](http://localhost:8000).
+
+At this point, you can access your Gatsby website by visiting [http://localhost:8000](http://localhost:8000).
 
 
 ## Install the Cosmic JS Source Plugin
-In Static Blog, your data can be consumed from different sources: Markdown files, HTML files, External API (WordPress, Cosmic JS, etc).
 
-Therefore, Gatsby implemented independent layer: the data layer. Which is powered by GraphQL. Very exciting stuff!
+In a static website, data can be consumed from multiple different sources, for example Markdown files, HTML files, and/or an eternal API (WordPress, Cosmic JS, etc).
 
-To connect this Data Layer with different Data Providers, you need to integrate a Source Plugin. Fortunately, there are many Source Plugins available to fulfill most of the needs.
+To make consuming data simpler, Gatsby implements a data layer powered by GraphQL. Very exciting stuff!
 
-In our case, we are using [Cosmic JS](https://cosmicjs.com). Obviously, we need to integrate the Source Plugin for Cosmic JS. Good news: Cosmic JS has implemented [their Source Plugin](https://github.com/cosmicjs/gatsby-source-cosmicjs)!
+To connect this data layer with different data providers, you need to integrate a source plugin. Fortunately, there are many source plugins available for common data sources, and [an API available to create your own](/docs/create-source-plugin/) if necessary.
 
-Let's install:
+In our case, we are using [Cosmic JS](https://cosmicjs.com). We need a source plugin to connect data from Cosmic JS to our Gatsby site. Good news: there's already a [source plugin for Cosmic JS](https://github.com/cosmicjs/gatsby-source-cosmicjs)!
+
+Install the source plugin with the following command:
+
 ```bash
 npm install --save gatsby-source-cosmicjs
 ```
-We need to install some other plugins also. Let's do that also
+
+We're going to use a couple other plugins later, so let's install them here:
+
 ```bash
 npm install --save gatsby-plugin-offline gatsby-source-filesystem
 ```
-These plugins need some configurations. So, replace the content of `gatsby-config.js` with:
+
+These plugins need some configuration, so let's replace the content of `gatsby-config.js` with:
 
 ```javascript
 module.exports = {
@@ -85,8 +92,8 @@ module.exports = {
     {
       resolve: 'gatsby-source-cosmicjs',
       options: {
-        bucketSlug: 'gatsby-blog-cosmic-js', // Bucket Slug
-        objectTypes: ['posts','settings'], // List of the Object Types you want to be able to request from Gatsby.
+        bucketSlug: 'gatsby-blog-cosmic-js', // Your CosmicJS bucket slug
+        objectTypes: ['posts','settings'], // List of the object types you want to be able to request from Gatsby.
         apiAccess: {
           read_key: '',
         }
@@ -96,12 +103,12 @@ module.exports = {
 }
 ```
 
-Then, restart the server to let Gatsby consider these updates.
+Then, restart the server to apply the updates.
 
-Posts List & Settings
-First, we want to display the list of posts on the homepage. To do so, add the following content to the existing homepage file:
+## Posts List & Settings
 
-Path: `src/pages/index.js`
+First, we want to display the list of posts on the homepage. To do so, add the following content to `src/pages/index.js`:
+
 ```javascript
 import React from 'react'
 import Link from 'gatsby-link'
@@ -174,19 +181,21 @@ export const pageQuery = graphql`
 `
 ```
 
-Explanation:
+### Explanation:
+
 At the end of `index.js` file, we exported `pageQuery`. These are GraphQL queries which are used to fetch important information about settings and list of posts.
 
-Then, we pass the `{ data }` destructed object as parameter of `IndexPage` and loop on its `allCosmicjsPosts` & `cosmicjsSettings` object to display the data.
+Then, we pass the `{ data }` destructured object as parameter of `IndexPage` and loop on its `allCosmicjsPosts` & `cosmicjsSettings` object to display the data.
+
 ![Gatsby Cosmic Screenshot](./gatsby-cosmic-screenshot-1.png)
 
 
 ## Single Post Layout
-Till now we have integrated Cosmic JS source plugin with Gatsby and it's look like a Blog. Now we will work on blog post's details page.
 
-Let's create the template:
+Till now we have integrated Cosmic JS source plugin with Gatsby and it's looking like a blog. Now we will work on adding a details page for individual blog posts.
 
-Path: `src/templates/blog-post.js`
+Create the template at `src/templates/blog-post.js`:
+
 ```javascript
 import React from 'react'
 import Helmet from 'react-helmet'
@@ -330,7 +339,7 @@ export const pageQuery = graphql`
 `
 ```
 
-That looks fine, but at this point, Gatsby does not know when this template should be displayed. Each post needs a specific URL. So, we are going to inform Gatsby about the new URLs we need thanks to the `createPage` function.
+That looks fine, but at this point, Gatsby does not know when this template should be displayed. Each post needs a specific URL. So, we are going to inform Gatsby about the new URLs we need using the [`createPages` API](https://www.gatsbyjs.org/docs/node-apis/#createPages).
 
 Path: `gatsby-node.js`
 
@@ -392,28 +401,20 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
 }
 ```
 
-Restart the Gatsby server.
+Restart the Gatsby server, then visit the detail page by clicking on URLs displayed on the homepage.
 
-From now on, you should be able to visit the detail page by clicking on URLs displayed on the homepage.
 ![Gatsby Cosmic Screenshot](./gatsby-cosmic-screenshot-2.png)
 
 ### Extra Stuff!
-In addition to this, We also implemented `src/components/Bio.js` to display Author information & `src/layouts/index.js` to create a generic layout for the blog. 
 
-The source code is available [on GitHub](https://github.com/cosmicjs/gatsby-blog-cosmicjs). To see it live, clone the repository, and run (`cd gatsby-blog-cosmicjs && npm i && npm run develop`).
+In addition to the code covered in this tutorial, we also implemented `src/components/Bio.js` to display author information & `src/layouts/index.js` to [create a generic layout](/tutorial/part-three/#our-first-layout-component) for the blog. 
 
-Finally, restart the server and visit the website. It will look awesome!
+The source code for this tutorial is available [on GitHub](https://github.com/cosmicjs/gatsby-blog-cosmicjs). To see it live, clone the repository, and run (`cd gatsby-blog-cosmicjs && npm i && npm run develop`) or check out the [demo on Netlify](https://gatsby-blog-cosmicjs.netlify.com/).
 
-The static website generated by Gatsby can easily be published on storage providers: Netlify, S3/Cloudfront, GitHub pages, GitLab pages, Heroku, etc.
-
-Note: Check out the [demo is deployed on Netlify](https://gatsby-blog-cosmicjs.netlify.com/).
+The static website generated by Gatsby can easily be published on services like Netlify, S3/CloudFront, GitHub Pages, GitLab pages, Heroku, etc.
 
 ![Gatsby Cosmic Screenshot](./gatsby-cosmic-screenshot-3.png)
 
+### Conclusion
 
-
-
-
-
-### Conclusion 
 Congrats! You’ve successfully built a super fast and easy-to-maintain blog! Feel free to continue this project to discover both Gatsby and Cosmic JS advantages. 
