@@ -159,6 +159,7 @@ class FilteredShowcase extends Component {
 
   render() {
     const { data, filters } = this.props
+    const isDesktop = window.innerWidth > 750
 
     let items = data.allSitesYaml.edges
 
@@ -172,67 +173,69 @@ class FilteredShowcase extends Component {
 
     return (
       <div css={{ display: `flex` }}>
-        <div css={{ flexBasis: `18rem`, minWidth: `18rem` }}>
-          <h3>
-            Filter & Refine <MdFilterList />
-          </h3>
-          <Collapsible heading="Category">
-            {Array.from(
-              count(data.allSitesYaml.edges.map(({ node }) => node.categories))
-            )
-              .sort(([a], [b]) => {
-                if (a < b) return -1
-                if (a > b) return 1
-                return 0
-              })
-              .map(([c, count]) => (
-                <ul key={c}>
-                  <button
-                    className={filters.has(c) ? `selected` : ``}
-                    onClick={() => {
-                      if (filters.has(c)) {
-                        filters.delete(c)
-                        this.props.setFilters(filters)
-                      } else {
-                        this.props.setFilters(filters.add(c))
-                      }
-                    }}
-                    css={{
-                      display: `flex`,
-                      justifyContent: `space-between`,
-                      width: `100%`,
-                      border: `none`,
-                      background: `none`,
-                      cursor: `pointer`,
-                      ":hover": {
-                        color: colors.gatsby,
-                        "& .rule": { visibility: `visible` },
-                      },
-                      "&.selected": {
-                        color: colors.gatsby,
-                        "& .rule": { visibility: `visible` },
-                      },
-                    }}
-                  >
-                    <div>{c}</div>
-                    <div
-                      className="rule"
-                      css={{
-                        visibility: `hidden`,
-                        backgroundColor: colors.gatsby,
-                        width: `100%`,
-                        height: `1px`,
-                        margin: `10px`,
+        {isDesktop &&
+          <div css={{ flexBasis: `18rem`, minWidth: `18rem` }}>
+            <h3>
+              Filter & Refine <MdFilterList />
+            </h3>
+            <Collapsible heading="Category">
+              {Array.from(
+                count(data.allSitesYaml.edges.map(({ node }) => node.categories))
+              )
+                .sort(([a], [b]) => {
+                  if (a < b) return -1
+                  if (a > b) return 1
+                  return 0
+                })
+                .map(([c, count]) => (
+                  <ul key={c}>
+                    <button
+                      className={filters.has(c) ? `selected` : ``}
+                      onClick={() => {
+                        if (filters.has(c)) {
+                          filters.delete(c)
+                          this.props.setFilters(filters)
+                        } else {
+                          this.props.setFilters(filters.add(c))
+                        }
                       }}
-                    />
-                    <div>{count}</div>
-                  </button>
-                </ul>
-              ))}
-          </Collapsible>
-        </div>
+                      css={{
+                        display: `flex`,
+                        justifyContent: `space-between`,
+                        width: `100%`,
+                        border: `none`,
+                        background: `none`,
+                        cursor: `pointer`,
+                        ":hover": {
+                          color: colors.gatsby,
+                          "& .rule": { visibility: `visible` },
+                        },
+                        "&.selected": {
+                          color: colors.gatsby,
+                          "& .rule": { visibility: `visible` },
+                        },
+                      }}
+                    >
+                      <div>{c}</div>
+                      <div
+                        className="rule"
+                        css={{
+                          visibility: `hidden`,
+                          backgroundColor: colors.gatsby,
+                          width: `100%`,
+                          height: `1px`,
+                          margin: `10px`,
+                        }}
+                      />
+                      <div>{count}</div>
+                    </button>
+                  </ul>
+                ))}
+            </Collapsible>
+          </div>
+        }
         <div>
-          <div css={{ display: `flex`, alignItems: 'center' }}>
+          <div css={{ display: `flex`, alignItems: 'center', flexDirection: isDesktop ? 'row' : 'column' }}>
             <h2 css={{ flexGrow: 1 }} id="search-heading">
               {this.state.search.length === 0 ? (
                 filters.size === 0 ? (
@@ -296,7 +299,10 @@ class FilteredShowcase extends Component {
                 backgroundColor: '#663399',
                 color: 'white',
                 padding: '5px 10px',
-                marginTop: 15
+                marginTop: 15,
+                marginBottom: 60,
+                width: !isDesktop && '100%',
+                padding: !isDesktop && '15px'
               }}
               onClick={() => {
                 this.setState({ sitesToShow: this.state.sitesToShow + 9 })
@@ -320,7 +326,7 @@ class ShowcasePage extends Component {
   render() {
     const data = this.props.data
     const location = this.props.location
-
+    const isDesktop = window.innerWidth > 750
     return (
       <Layout location={location}>
         <div css={{ margin: '20px 30px' }}>
@@ -334,10 +340,14 @@ class ShowcasePage extends Component {
             marginBottom: 30
           }}>
             <img src={FeaturedSitesIcon} alt="icon" css={{ marginBottom: 0 }} />
-            <span css={{ fontWeight: 'bold', fontSize: 24, marginRight: 30, marginLeft: 15 }}>Featured Sites</span>
-            <div>View all</div>
-            <div css={{ marginLeft: '5px' }}>→</div>
-            <div css={{ flex: 1 }}>{''}</div>
+            {isDesktop &&
+              <>
+                <span css={{ fontWeight: 'bold', fontSize: 24, marginRight: 30, marginLeft: 15 }}>Featured Sites</span>
+                <div>View all</div>
+                <div css={{ marginLeft: '5px' }}>→</div>
+                <div css={{ flex: 1 }}>{''}</div>
+              </>
+            }
             <div css={{ marginRight: 15 }}>Want to get featured?</div>
             {/* TODO: maybe have a site submission issue template */}
             <a href="https://github.com/gatsbyjs/gatsby/issues/new?template=feature_request.md" target="_blank">
@@ -346,71 +356,73 @@ class ShowcasePage extends Component {
               </div>
             </a>
           </div>
-          <div css={{ position: `relative` }}>
-            <div
-              css={{
-                display: `flex`,
-                overflow: `scroll`,
-                position: `relative`,
-              }}
-            >
-              {data.featured.edges.slice(0, 9).map(({ node }) => (
-                <Link
-                  key={node.id}
-                  css={{
-                    display: `block`,
-                    marginRight: `30px`,
-                    borderBottom: `none !important`,
-                    boxShadow: `none !important`,
-                  }}
-                  to={{ pathname: node.fields.slug, state: { isModal: true } }}
-                >
-                  {node.childScreenshot && (
-                    <Img
-                      resolutions={
-                        node.childScreenshot.screenshotFile.childImageSharp
-                          .resolutions
-                      }
-                      alt={node.title}
-                    />
-                  )}
-                  {node.title}
-                  <div>{node.categories && node.categories.join(`, `)}</div>
-                  {node.built_by && <div>Built by {node.built_by}</div>}
-                </Link>
-              ))}
-              <div css={{ margin: `15px` }}>
-                <a
-                  href="#search-heading"
-                  css={{
-                    display: `block`,
-                    width: `512px`,
-                    height: `288px`,
-                    textAlign: `center`,
-                    padding: 0,
-                    background: `none`,
-                    border: `none`,
-                    cursor: `pointer`,
-                  }}
-                  onClick={() =>
-                    this.setState({ filters: new Set([`Featured`]) })
-                  }
-                >
-                  See More Featured Sites
+          {isDesktop &&
+            <div css={{ position: `relative` }}>
+              <div
+                css={{
+                  display: `flex`,
+                  overflow: `scroll`,
+                  position: `relative`,
+                }}
+              >
+                {data.featured.edges.slice(0, 9).map(({ node }) => (
+                  <Link
+                    key={node.id}
+                    css={{
+                      display: `block`,
+                      marginRight: `30px`,
+                      borderBottom: `none !important`,
+                      boxShadow: `none !important`,
+                    }}
+                    to={{ pathname: node.fields.slug, state: { isModal: true } }}
+                  >
+                    {node.childScreenshot && (
+                      <Img
+                        resolutions={
+                          node.childScreenshot.screenshotFile.childImageSharp
+                            .resolutions
+                        }
+                        alt={node.title}
+                      />
+                    )}
+                    {node.title}
+                    <div>{node.categories && node.categories.join(`, `)}</div>
+                    {node.built_by && <div>Built by {node.built_by}</div>}
+                  </Link>
+                ))}
+                <div css={{ margin: `15px` }}>
+                  <a
+                    href="#search-heading"
+                    css={{
+                      display: `block`,
+                      width: `512px`,
+                      height: `288px`,
+                      textAlign: `center`,
+                      padding: 0,
+                      background: `none`,
+                      border: `none`,
+                      cursor: `pointer`,
+                    }}
+                    onClick={() =>
+                      this.setState({ filters: new Set([`Featured`]) })
+                    }
+                  >
+                    See More Featured Sites
                 </a>
+                </div>
               </div>
+              <div
+                css={{
+                  position: `absolute`,
+                  top: `0`,
+                  bottom: `0`,
+                  right: `0`,
+                  width: `60px`,
+                  background: `linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(255,255,255,1) 100%)`,
+                }}
+              />
             </div>
-            <div
-              css={{
-                position: `absolute`,
-                top: `0`,
-                bottom: `0`,
-                right: `0`,
-                width: `60px`,
-                background: `linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(255,255,255,1) 100%)`,
-              }}
-            />
-          </div>
+          }
           <FilteredShowcase
             data={data}
             filters={this.state.filters}
