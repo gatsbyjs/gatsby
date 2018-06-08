@@ -24,7 +24,8 @@ Expand top (and potentially second-level) navigation items that do not belong to
 - [ ] create new categories of docs. When clicked, the only thing that happens is that sub-items become visible and the active page remains the same as it was before clicking the category name until a sub-item is clicked. So essentially, clicking on a sub-item is the only way to see a new active page.
 - [ ] create stub articles for the ones we don’t have yet
 
-Nice to have:
+Phase 2:
+- [ ] Find a place for starter and site showcases
 - [ ] publish templates for each category of docs to facilitate contributions and contract work
 - [ ] mobile menu that you can access w/o scrolling to bottom of screen (see Flo’s notes below on Reactjs.com’s mobile version vs. Stripe’s docs which ignore small screens)
     - Currently https://www.gatsbyjs.org/docs/ is the only way on Mobile to access the Desktop sidebar content
@@ -34,7 +35,7 @@ Nice to have:
 - [ ] Sidebar collapsed view
     - Make the sidebar togglable so that people who are distracted by the persistent display of the sidebar on large screens can hide it on demand (fk: I’d label this “nice to have” clearly, even if this goes hand-in-hand with the implementation of the Mobile navigation)
 
-Possible future enhancements:
+Phase 3:
 - [ ] API on top level nav
 - [ ] versions of the docs
 - [ ] Way to test APIs. Ask devs for their favorite ones. 
