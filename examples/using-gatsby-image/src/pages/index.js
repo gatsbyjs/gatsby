@@ -13,7 +13,7 @@ class IndexComponent extends React.Component {
         <Img
           css={{ top: 0, left: 0, right: 0, zIndex: -1 }}
           style={{ position: `absolute` }}
-          sizes={this.props.data.file.childImageSharp.sizes}
+          fluid={this.props.data.file.childImageSharp.fluid}
         />
         <div
           css={{
@@ -123,8 +123,8 @@ export const query = graphql`
   query FrontPageQuery {
     file(relativePath: { regex: "/ng-55646/" }) {
       childImageSharp {
-        sizes(maxWidth: 1500, rotate: 180) {
-          ...GatsbyImageSharpSizes
+        fluid(maxWidth: 1500, rotate: 180) {
+          ...GatsbyImageSharpFluid
         }
       }
     }

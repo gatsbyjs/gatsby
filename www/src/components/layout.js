@@ -7,6 +7,7 @@ import { navigateTo, PageRenderer } from "gatsby"
 import presets, { colors } from "../utils/presets"
 import Navigation from "../components/navigation"
 import MobileNavigation from "../components/navigation-mobile"
+import PageWithSidebar from "../components/page-with-sidebar"
 import "../css/prism-coy.css"
 
 import mousetrap from "mousetrap"
@@ -108,6 +109,9 @@ class DefaultLayout extends React.Component {
       )
     }
 
+    // SEE: template-docs-markdown for why this.props.isSidebarDisabled is here
+    const isSidebarDisabled = this.props.isSidebarDisabled || !this.props.sidebarYaml
+
     return (
       <div className={isHomepage ? `is-homepage` : ``}>
         <Helmet defaultTitle={`GatsbyJS`} titleTemplate={`%s | GatsbyJS`}>
@@ -131,7 +135,11 @@ class DefaultLayout extends React.Component {
             },
           }}
         >
-          {this.props.children}
+          <PageWithSidebar
+            disable={isSidebarDisabled}
+            yaml={this.props.sidebarYaml}
+            renderContent={() => this.props.children}
+          />
         </div>
         <MobileNavigation />
       </div>

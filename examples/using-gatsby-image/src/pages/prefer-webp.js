@@ -20,7 +20,7 @@ const PreferWebp = ({ data, location }) => (
         },
       }}
       title={`Photo by Redd Angelo on Unsplash`}
-      resolutions={data.reddImageMobile.childImageSharp.resolutions}
+      fixed={data.reddImageMobile.childImageSharp.fixed}
     />
     <Img
       style={{ display: `inherit` }}
@@ -34,7 +34,7 @@ const PreferWebp = ({ data, location }) => (
         },
       }}
       title={`Photo by Redd Angelo on Unsplash`}
-      resolutions={data.reddImage.childImageSharp.resolutions}
+      fixed={data.reddImage.childImageSharp.fixed}
     />
     <p>
       Lorem markdownum nocens, est aut tergo, inmansuetique bella. Neve illud
@@ -66,7 +66,7 @@ const PreferWebp = ({ data, location }) => (
       <li>Constitit nomine senta suspirat et signis genuisse</li>
     </ol>
     <Img
-      sizes={data.kenImage.childImageSharp.sizes}
+      fluid={data.kenImage.childImageSharp.fluid}
       title={`Photo by Ken Treloar on Unsplash`}
     />
     <h2>Levia mihi</h2>
@@ -91,22 +91,22 @@ export const query = graphql`
   query PreferWebpQuery {
     reddImageMobile: file(relativePath: { regex: "/redd/" }) {
       childImageSharp {
-        resolutions(width: 125) {
-          ...GatsbyImageSharpResolutions_withWebp
+        fixed(width: 125) {
+          ...GatsbyImageSharpFixed_withWebp
         }
       }
     }
     reddImage: file(relativePath: { regex: "/redd/" }) {
       childImageSharp {
-        resolutions(width: 200) {
-          ...GatsbyImageSharpResolutions_withWebp
+        fixed(width: 200) {
+          ...GatsbyImageSharpFixed_withWebp
         }
       }
     }
     kenImage: file(relativePath: { regex: "/ken-treloar/" }) {
       childImageSharp {
-        sizes(maxWidth: 600) {
-          ...GatsbyImageSharpSizes_withWebp
+        fluid(maxWidth: 600) {
+          ...GatsbyImageSharpFluid_withWebp
         }
       }
     }

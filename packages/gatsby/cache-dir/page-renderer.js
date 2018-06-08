@@ -1,9 +1,10 @@
 import React, { createElement } from "react"
 import PropTypes from "prop-types"
-import loader from "./loader"
+import loader, { publicLoader } from "./loader"
 import emitter from "./emitter"
 import { polyfill } from "react-lifecycles-compat"
 import shallowCompare from "shallow-compare"
+import { apiRunner } from "./api-runner-browser"
 
 // Pass pathname in as prop.
 // component will try fetching resources. If they exist,
@@ -15,9 +16,7 @@ class PageRenderer extends React.Component {
 
     // Set the pathname for 404 pages.
     if (!loader.getPage(location.pathname)) {
-      location = Object.assign({}, location, {
-        pathname: `/404.html`,
-      })
+      location = { ...location, pathname: `/404.html` }
     }
 
     this.state = {
@@ -26,48 +25,28 @@ class PageRenderer extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    // During development, always pass a component's JSON through so graphql
-    // updates go through.
-    if (process.env.NODE_ENV !== `production`) {
-      if (
-        nextProps &&
-        nextProps.pageResources &&
-        nextProps.pageResources.json
-      ) {
-        this.setState({ pageResources: nextProps.pageResources })
+  static getDerivedStateFromProps({ pageResources, location }, prevState) {
+    let nextState = {}
+
+    if (
+      process.env.NODE_ENV !== `production` &&
+      pageResources &&
+      pageResources.json
+    ) {
+      nextState = { pageResources }
+    }
+
+    if (prevState.location.pathname !== location.pathname) {
+      const pageResources = loader.getResourcesForPathname(location.pathname)
+
+      if (pageResources) {
+        nextState = { location, pageResources }
+      } else if (!loader.getPage(location.pathname)) {
+        nextState.location = { ...location, pathname: `/404.html` }
       }
     }
-    if (this.state.location.pathname !== nextProps.location.pathname) {
-      const pageResources = loader.getResourcesForPathname(
-        nextProps.location.pathname
-      )
-      if (!pageResources) {
-        let location = nextProps.location
 
-        // Set the pathname for 404 pages.
-        if (!loader.getPage(location.pathname)) {
-          location = Object.assign({}, location, {
-            pathname: `/404.html`,
-          })
-        }
-
-        // Page resources won't be set in cases where the browser back button
-        // or forward button is pushed as we can't wait as normal for resources
-        // to load before changing the page.
-        loader.getResourcesForPathname(location.pathname, pageResources => {
-          this.setState({
-            location,
-            pageResources,
-          })
-        })
-      } else {
-        this.setState({
-          location: nextProps.location,
-          pageResources,
-        })
-      }
-    }
+    return nextState
   }
 
   componentDidMount() {
@@ -82,6 +61,22 @@ class PageRenderer extends React.Component {
         this.setState({ pageResources: e.pageResources })
       }
     })
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps === this.props) return
+
+    const { location } = this.state
+    if (!loader.getResourcesForPathname(location.pathname))
+      // Page resources won't be set in cases where the browser back button
+      // or forward button is pushed as we can't wait as normal for resources
+      // to load before changing the page.
+      loader.getResourcesForPathname(location.pathname, pageResources => {
+        this.setState({
+          location,
+          pageResources,
+        })
+      })
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -120,15 +115,26 @@ class PageRenderer extends React.Component {
   render() {
     if (!this.state.pageResources) return null
 
-    const pathContext = process.env.NODE_ENV !== `production`
-      ? this.props.pageContext 
-      : this.state.pageResources.json.pageContext
+    const pathContext =
+      process.env.NODE_ENV !== `production`
+        ? this.props.pageContext
+        : this.state.pageResources.json.pageContext
 
-    return createElement(this.state.pageResources.component, {
+    const props = {
       ...this.props,
       ...this.state.pageResources.json,
       pathContext,
+    }
+
+    const [replacementComponent] = apiRunner(`replaceComponentRenderer`, {
+      props,
+      loader: publicLoader,
     })
+
+    return createElement(
+      replacementComponent || this.state.pageResources.component,
+      props
+    )
   }
 }
 
