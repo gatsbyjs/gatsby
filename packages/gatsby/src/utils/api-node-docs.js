@@ -127,7 +127,7 @@ exports.onCreatePage = true
  * *Note:* Import GraphQL types from `gatsby/graphql` and don't add the `graphql`
  * package to your project/plugin dependencies to avoid `Schema must
  * contain unique named types but contains multiple types named` errors.
- * `gatsby/graphql` exports all builtin GraphQL types as well as `graphQLJSON` 
+ * `gatsby/graphql` exports all builtin GraphQL types as well as the `graphQLJSON` 
  * type.
  * 
  * Many transformer plugins use this to add fields that take arguments.
