@@ -11,7 +11,7 @@ const webpack = require(`webpack`)
 const webpackConfig = require(`../utils/webpack.config`)
 const bootstrap = require(`../bootstrap`)
 const { store } = require(`../redux`)
-const copyStaticDirectory = require(`../utils/copy-static-directory`)
+const syncStaticDirectory = require(`../utils/sync-static-directory`)
 const developHtml = require(`./develop-html`)
 const { withBasePath } = require(`../utils/path`)
 const report = require(`gatsby-cli/lib/reporter`)
@@ -28,7 +28,7 @@ const getSslCert = require(`../utils/get-ssl-cert`)
 // changed. Wait 10 seconds so copying doesn't interfer with the regular
 // bootstrap.
 setTimeout(() => {
-  copyStaticDirectory()
+  syncStaticDirectory()
 }, 10000)
 
 const rlInterface = rl.createInterface({
