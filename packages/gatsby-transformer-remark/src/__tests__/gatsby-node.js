@@ -8,7 +8,7 @@ const {
   GraphQLObjectType,
   GraphQLList,
   GraphQLSchema,
-} = require(`graphql`)
+} = require(`gatsby/graphql`)
 const {
   inferObjectStructureFromNodes,
 } = require(`../../../gatsby/src/schema/infer-graphql-type`)

@@ -11,7 +11,6 @@
     "@babel/runtime": "7.0.0-beta.47",
     "@babel/types": "7.0.0-beta.47",
     "common-tags": "^1.4.0",
-    "graphql-type-json": "^0.1.4",
     "react-docgen": "3.0.0-beta12",
     "react-docgen-displayname-handler": " ^2.1.0"
   },

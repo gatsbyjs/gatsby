@@ -496,7 +496,7 @@ we add custom fields. Example:
 
 ```js
 // gatsby-node.js
-const { GraphQLString } = require("graphql")
+const { GraphQLString } = require("gatsby/graphql")
 
 const getURL = node => {
   /* See the source link below for implementation */

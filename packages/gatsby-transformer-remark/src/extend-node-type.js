@@ -4,7 +4,8 @@ const {
   GraphQLString,
   GraphQLInt,
   GraphQLEnumType,
-} = require(`graphql`)
+  GraphQLJSON,
+} = require(`gatsby/graphql`)
 const Remark = require(`remark`)
 const select = require(`unist-util-select`)
 const sanitizeHTML = require(`sanitize-html`)
@@ -20,7 +21,6 @@ const parse = require(`remark-parse`)
 const stringify = require(`remark-stringify`)
 const english = require(`retext-english`)
 const remark2retext = require(`remark-retext`)
-const GraphQlJson = require(`graphql-type-json`)
 const stripPosition = require(`unist-util-remove-position`)
 const hastReparseRaw = require(`hast-util-raw`)
 
@@ -328,7 +328,7 @@ module.exports = (
         },
       },
       htmlAst: {
-        type: GraphQlJson,
+        type: GraphQLJSON,
         resolve(markdownNode) {
           return getHTMLAst(markdownNode).then(ast => {
             const strippedAst = stripPosition(_.clone(ast), true)

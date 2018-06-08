@@ -13,7 +13,7 @@ const {
   GraphQLString,
   GraphQLInt,
   GraphQLBoolean,
-} = require(`graphql`)
+} = require(`gatsby/graphql`)
 const sharp = require(`sharp`)
 
 const generateSqip = require(`./generate-sqip`)
