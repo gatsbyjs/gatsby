@@ -25,7 +25,21 @@ class BlogPostPreviewItem extends React.Component {
             marginBottom: rhythm(2),
           }}
         >
-          <Img
+          <Link
+            to={post.frontmatter.author.fields.slug}
+            css={{
+              boxShadow: `none !important`,
+              borderBottom: `0 !important`,
+              position: `relative`,
+              zIndex: 1,
+              "&&": {
+                fontWeight: `normal`,
+                ":hover": {
+                  background: `transparent`,
+                },
+              },
+            }}
+          ><Img
             alt=""
             resolutions={avatar}
             css={{
@@ -37,7 +51,7 @@ class BlogPostPreviewItem extends React.Component {
               // prevents image twitch in Chrome when hovering the card
               transform: `translateZ(0)`,
             }}
-          />
+          /></Link>
           <div
             css={{
               display: `inline-block`,
@@ -56,15 +70,14 @@ class BlogPostPreviewItem extends React.Component {
               <Link
                 to={post.frontmatter.author.fields.slug}
                 css={{
-                  boxShadow: `none !important`,
-                  borderBottom: `0 !important`,
+                  color: `${colors.gatsby} !important`,
+                  fontSize: `102%`,
                   position: `relative`,
                   zIndex: 1,
                   "&&": {
-                    fontWeight: `normal`,
+                    fontWeight: `bold`,
                     ":hover": {
-                      color: colors.gatsby,
-                      background: `transparent`,
+                      background: colors.ui.bright,
                     },
                   },
                 }}

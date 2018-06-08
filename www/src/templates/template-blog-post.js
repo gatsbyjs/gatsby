@@ -135,7 +135,7 @@ class BlogPostTemplate extends React.Component {
                 flex: `0 0 auto`,
               }}
             >
-              <Img
+              <Link to={post.frontmatter.author.fields.slug}><Img
                 resolutions={
                   post.frontmatter.author.avatar.childImageSharp.resolutions
                 }
@@ -147,7 +147,7 @@ class BlogPostTemplate extends React.Component {
                   display: `inline-block`,
                   verticalAlign: `middle`,
                 }}
-              />
+              /></Link>
             </div>
             <div
               css={{
@@ -161,9 +161,22 @@ class BlogPostTemplate extends React.Component {
                     ...scale(0),
                     fontWeight: 400,
                     margin: 0,
+                    color: `${colors.gatsby} !important`,
+                    fontSize: `102%`,
+                    fontWeight: `bold`,
                   }}
                 >
-                  {post.frontmatter.author.id}
+                  <span css={{
+                      borderBottom: `1px solid ${colors.ui.bright}`,
+                      boxShadow: `inset 0 -2px 0 0 ${colors.ui.bright}`,
+                      transition: `all ${presets.animation.speedFast} ${
+                        presets.animation.curveDefault
+                      }`,
+                      "&:hover": {
+                        background: colors.ui.bright,
+                      },
+                    }}
+                  >{post.frontmatter.author.id}</span>
                 </h4>
               </Link>
               <BioLine>{post.frontmatter.author.bio}</BioLine>
