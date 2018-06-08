@@ -60,7 +60,7 @@ class DefaultLayout extends React.Component {
       isModal = true
     }
 
-    if (isModal) {
+    if (isModal && window.innerWidth > 750) {
       return (
         <React.Fragment>
           <PageRenderer
@@ -102,9 +102,9 @@ class DefaultLayout extends React.Component {
               backgroundColor: `#ffffff`,
               boxShadow: `0px 0px 90px -24px ${colors.gatsby}`
             }}>
-            {this.props.children}
-            {this.props.modalPreviousLink}
-            {this.props.modalNextLink}
+              {this.props.children}
+              {this.props.modalPreviousLink}
+              {this.props.modalNextLink}
             </div>
           </Modal>
         </React.Fragment>

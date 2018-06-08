@@ -185,67 +185,75 @@ class ShowcaseTemplate extends React.Component {
         }
       >
         <div css={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <div>
-          <Helmet>
-            <title>{data.sitesYaml.title}</title>
-          </Helmet>
-          <div css={{ padding: `20px`, paddingTop: `1px`, borderBottom: '1px solid #F5F3F7', paddingBottom: 15 }}>
-            <h1>{data.sitesYaml.title}</h1>
-            <a href={data.sitesYaml.main_url}>
-              {cleanUrl(data.sitesYaml.main_url)}
-            </a>
+          <div>
+            <Helmet>
+              <title>{data.sitesYaml.title}</title>
+            </Helmet>
+            <div css={{ padding: `20px`, paddingTop: `1px`, borderBottom: '1px solid #F5F3F7', paddingBottom: 15 }}>
+              <h1>{data.sitesYaml.title}</h1>
+              <a href={data.sitesYaml.main_url}>
+                {cleanUrl(data.sitesYaml.main_url)}
+              </a>
 
-            {data.sitesYaml.built_by && (
-              <span>
-                {` `}
-                / Built by{` `}
-                {data.sitesYaml.built_by_url ? (
-                  <a href={data.sitesYaml.built_by_url}>
-                    {data.sitesYaml.built_by}
-                  </a>
-                ) : (
-                  data.sitesYaml.built_by
-                )}
-              </span>
-            )}
-          </div>
-          <div css={{display: 'flex', borderBottom: '1px solid #F5F3F7'}}>
-            {data.sitesYaml.featured && <div css={{padding: '20px', display: 'flex', borderRight: '1px solid #F5F3F7'}}>
-              <img src={FeaturedIcon} alt="icon" css={{marginBottom: 0, marginRight: 10}} />
-              Featured
+              {data.sitesYaml.built_by && (
+                <span>
+                  {` `}
+                  / Built by{` `}
+                  {data.sitesYaml.built_by_url ? (
+                    <a href={data.sitesYaml.built_by_url}>
+                      {data.sitesYaml.built_by}
+                    </a>
+                  ) : (
+                      data.sitesYaml.built_by
+                    )}
+                </span>
+              )}
+            </div>
+            <div css={{ display: 'flex', borderBottom: '1px solid #F5F3F7' }}>
+              {data.sitesYaml.featured && <div css={{ padding: '20px', display: 'flex', borderRight: '1px solid #F5F3F7' }}>
+                <img src={FeaturedIcon} alt="icon" css={{ marginBottom: 0, marginRight: 10 }} />
+                Featured
               </div>}
-            {data.sitesYaml.source_url && (
-              <div  css={{padding: '20px', display: 'flex', borderRight: '1px solid #F5F3F7'}}>
-                <img src={GithubIcon} alt="icon" css={{marginBottom: 0, marginRight: 10}} />
-                <a href={data.sitesYaml.source_url}>
-                  Source
+              {data.sitesYaml.source_url && (
+                <div css={{ padding: '20px', display: 'flex', borderRight: '1px solid #F5F3F7' }}>
+                  <img src={GithubIcon} alt="icon" css={{ marginBottom: 0, marginRight: 10 }} />
+                  <a href={data.sitesYaml.source_url}>
+                    Source
                 </a>
-              </div>
-            )}
-            {false && ( // TODO: NOT IMPLEMENTED YET!!!
-              <div  css={{padding: '20px', display: 'flex', borderRight: '1px solid #F5F3F7'}}>
-                <img src={FeatherIcon} alt="icon" css={{marginBottom: 0, marginRight: 10}} />
-                <a href={data.sitesYaml.source_url}>
-                  Case Study
+                </div>
+              )}
+              {false && ( // TODO: NOT IMPLEMENTED YET!!!
+                <div css={{ padding: '20px', display: 'flex', borderRight: '1px solid #F5F3F7' }}>
+                  <img src={FeatherIcon} alt="icon" css={{ marginBottom: 0, marginRight: 10 }} />
+                  <a href={data.sitesYaml.source_url}>
+                    Case Study
                 </a>
-              </div>
-            )}
+                </div>
+              )}
+            </div>
+            <Img
+              // resolutions={
+              //   data.sitesYaml.childScreenshot.screenshotFile.childImageSharp
+              //     .resolutions
+              // }
+
+              sizes={
+                data.sitesYaml.childScreenshot.screenshotFile.childImageSharp
+                  .sizes
+              }
+              alt={`Screenshot of ${data.sitesYaml.title}`}
+            />
+            <p css={{
+              // width: `500px`, // disabled, not responsive
+              padding: `20px`
+            }}>
+              {data.sitesYaml.description}
+            </p>
+            <div css={{ display: `flex`, padding: `20px` }}>
+              <div css={{ paddingRight: `20px` }}>Categories</div>
+              <div>{data.sitesYaml.categories.join(`, `)}</div>
+            </div>
           </div>
-          <Img
-            resolutions={
-              data.sitesYaml.childScreenshot.screenshotFile.childImageSharp
-                .resolutions
-            }
-            alt={`Screenshot of ${data.sitesYaml.title}`}
-          />
-          <p css={{ width: `500px`, padding: `20px` }}>
-            {data.sitesYaml.description}
-          </p>
-          <div css={{ display: `flex`, padding: `20px` }}>
-            <div css={{ paddingRight: `20px` }}>Categories</div>
-            <div>{data.sitesYaml.categories.join(`, `)}</div>
-          </div>
-        </div>
         </div>
         <PermalinkPageFooter
           nextSite={nextSite}
@@ -261,8 +269,8 @@ export default ShowcaseTemplate
 
 
 // TODO: the image dimensions here are 100x100, but the design calls for much larger. do we do it?
-function PermalinkPageFooter({nextSite, previousSite, isModal}) {
-  if (isModal) return null
+function PermalinkPageFooter({ nextSite, previousSite, isModal }) {
+  if (isModal && window.innerWidth > 750) return null
   return (
     <div
       css={{
@@ -272,41 +280,41 @@ function PermalinkPageFooter({nextSite, previousSite, isModal}) {
         paddingTop: 15
       }}
     >
-      <div css={{flex: 1}}>
-        <div css={{color: '#9B9B9B'}}>Previous</div>
-        <div css={{padding: '20px 0px'}}>
+      <div css={{ flex: 1 }}>
+        <div css={{ color: '#9B9B9B' }}>Previous</div>
+        <div css={{ padding: '20px 0px' }}>
           <Link to={{ pathname: previousSite.fields.slug, state: { isModal: false } }}>← {previousSite.title}</Link>
         </div>
         <Img
-            css={{
-              boxShadow: `0px 0px 38px -8px ${colors.gatsby}`,
-              width: '100%',
-              height: '100%',
-            }}
-            resolutions={
-              previousSite.childScreenshot.screenshotFile.childImageSharp
-                .resolutions
-            }
-            alt=""
-          />
+          css={{
+            boxShadow: `0px 0px 38px -8px ${colors.gatsby}`,
+            width: '100%',
+            height: '100%',
+          }}
+          resolutions={
+            previousSite.childScreenshot.screenshotFile.childImageSharp
+              .resolutions
+          }
+          alt=""
+        />
       </div>
-      <div css={{flex: 1}}>
-        <div css={{color: '#9B9B9B'}}>Next</div>
-        <div css={{padding: '20px 0px'}}>
+      <div css={{ flex: 1 }}>
+        <div css={{ color: '#9B9B9B' }}>Next</div>
+        <div css={{ padding: '20px 0px' }}>
           <Link to={{ pathname: nextSite.fields.slug, state: { isModal: false } }}>{nextSite.title} →</Link>
         </div>
         <Img
-            css={{
-              boxShadow: `0px 0px 38px -8px ${colors.gatsby}`,
-              width: '100%',
-              height: '100%',
-            }}
-            resolutions={
-              nextSite.childScreenshot.screenshotFile.childImageSharp
-                .resolutions
-            }
-            alt=""
-          />
+          css={{
+            boxShadow: `0px 0px 38px -8px ${colors.gatsby}`,
+            width: '100%',
+            height: '100%',
+          }}
+          resolutions={
+            nextSite.childScreenshot.screenshotFile.childImageSharp
+              .resolutions
+          }
+          alt=""
+        />
       </div>
     </div>
   )
@@ -329,6 +337,9 @@ export const pageQuery = graphql`
           childImageSharp {
             resolutions(width: 750, height: 563) {
               ...GatsbyImageSharpResolutions
+            }
+            sizes(maxWidth: 700) {
+              ...GatsbyImageSharpSizes
             }
           }
         }
