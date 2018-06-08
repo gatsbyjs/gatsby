@@ -1,12 +1,13 @@
 import React from "react"
 import { renderToString, renderToStaticMarkup } from "react-dom/server"
 import { StaticRouter, Route, withRouter } from "react-router-dom"
-import { kebabCase, get, merge, isArray, isString } from "lodash"
+import { kebabCase, get, merge, isArray, isObject } from "lodash"
 
 import apiRunner from "./api-runner-ssr"
 import pages from "./pages.json"
 import syncRequires from "./sync-requires"
 import testRequireError from "./test-require-error"
+import defineAssetScript from "./define-asset-script"
 
 let Html
 try {
@@ -155,9 +156,9 @@ module.exports = (locals, callback) => {
   ]
     .map(s => {
       const fetchKey = `assetsByChunkName[${s}]`
+      const fetchedEntryPoints = get(stats, `entrypoints`)
 
       let fetchedScript = get(stats, fetchKey)
-
       if (!fetchedScript) {
         return null
       }
@@ -172,14 +173,14 @@ module.exports = (locals, callback) => {
         return null
       }
 
-      return prefixedScript
+      return defineAssetScript(fetchedEntryPoints, fetchedScript, { rel: `preload`, prefixedScript })
     })
-    .filter(s => isString(s))
+    .filter(isObject)
 
-  scripts.forEach(script => {
+  scripts.forEach(({ rel, prefixedScript }) => {
     // Add preload <link>s for scripts.
     headComponents.unshift(
-      <link rel="preload" key={script} href={script} as="script" />
+      <link rel={rel} key={prefixedScript} href={prefixedScript} as="script" />
     )
   })
 

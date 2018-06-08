@@ -1,0 +1,74 @@
+{
+    "assetsByChunkName": {
+        "About": [
+            "About.js",
+            "About.js.map"
+        ],
+        "ChartBar": [
+            "ChartBar.js",
+            "ChartBar.js.map"
+        ],
+        "foo": [
+            "foo.js",
+            "foo.js.map"
+        ],
+        "main": [
+            "main.js",
+            "main.js.map"
+        ]
+    },
+    "entrypoints": {
+        "main": {
+            "chunks": [
+                3
+            ],
+            "assets": [
+                "main.js",
+                "main.js.map"
+            ],
+            "children": {
+                "preload": [{
+                    "name": "About",
+                    "chunks": [
+                        0
+                    ],
+                    "assets": [
+                        "About.js",
+                        "About.js.map"
+                    ]
+                }],
+                "prefetch": [{
+                    "name": "ChartBar",
+                    "chunks": [
+                        1
+                    ],
+                    "assets": [
+                        "ChartBar.js",
+                        "ChartBar.js.map"
+                    ]
+                }]
+            },
+            "childAssets": {
+                "preload": [
+                    "About.js",
+                    "About.js.map"
+                ],
+                "prefetch": [
+                    "ChartBar.js",
+                    "ChartBar.js.map"
+                ]
+            }
+        },
+        "foo": {
+            "chunks": [
+                2
+            ],
+            "assets": [
+                "foo.js",
+                "foo.js.map"
+            ],
+            "children": {},
+            "childAssets": {}
+        }
+    }
+}
