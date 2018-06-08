@@ -29,7 +29,7 @@ exports.createPagesStatefully = async (
       `
       "path" is a required option for gatsby-plugin-page-creator
 
-      See docs here - https://www.gatsbyjs.org/packages/gatsby-plugin-page-creator/
+      See docs here - https://www.gatsbyjs.org/plugins/gatsby-plugin-page-creator/
       `
     )
   }
