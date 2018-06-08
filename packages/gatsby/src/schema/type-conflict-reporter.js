@@ -5,6 +5,18 @@ const typeOf = require(`type-of`)
 const util = require(`util`)
 const { findRootNodeAncestor } = require(`./node-tracking`)
 
+export type TypeConflictExample = {
+  value: mixed,
+  parent: {},
+  type: string,
+  arrayTypes: string[],
+}
+
+type TypeConflict = {
+  value: mixed,
+  description: string,
+}
+
 const isNodeWithDescription = node =>
   node && node.internal && node.internal.description
 
@@ -49,21 +61,24 @@ const formatValue = value => {
 }
 
 class TypeConflictEntry {
-  constructor(selector) {
+  selector: string
+  types: Map<string, TypeConflict>
+
+  constructor(selector: string) {
     this.selector = selector
-    this.types = {}
+    this.types = new Map()
   }
 
-  addExample({ value, type, parent }) {
-    this.types[type] = {
+  addExample({ value, type, parent }: TypeConflictExample) {
+    this.types.set(type, {
       value,
       description: findNodeDescription(parent),
-    }
+    })
   }
 
   printEntry() {
     const sortedByTypeName = _.sortBy(
-      _.entries(this.types),
+      this.types.entries(),
       ([typeName, value]) => typeName
     )
 
@@ -81,25 +96,28 @@ class TypeConflictEntry {
 }
 
 class TypeConflictReporter {
+  entries: Map<string, TypeConflictEntry>
+
   constructor() {
-    this.clearConflicts()
+    this.entries = new Map()
   }
 
   clearConflicts() {
-    this.entries = {}
+    this.entries.clear()
   }
 
-  getFromSelector(selector) {
-    if (this.entries[selector]) {
-      return this.entries[selector]
+  getEntryFromSelector(selector: string): TypeConflictEntry {
+    let dataEntry = this.entries.get(selector)
+
+    if (!dataEntry) {
+      dataEntry = new TypeConflictEntry(selector)
+      this.entries.set(selector, dataEntry)
     }
 
-    const dataEntry = new TypeConflictEntry(selector)
-    this.entries[selector] = dataEntry
     return dataEntry
   }
 
-  addConflict(selector, examples) {
+  addConflict(selector: string, examples: TypeConflictExample[]) {
     if (selector.substring(0, 11) === `SitePlugin.`) {
       // Don't store and print out type conflicts in plugins.
       // This is out of user control so he can't do anything
@@ -107,19 +125,18 @@ class TypeConflictReporter {
       return
     }
 
-    const entry = this.getFromSelector(selector)
+    const entry = this.getEntryFromSelector(selector)
     examples
       .filter(example => example.value != null)
       .forEach(example => entry.addExample(example))
   }
 
   printConflicts() {
-    const entries = _.values(this.entries)
-    if (entries.length > 0) {
+    if (this.entries.size > 0) {
       report.warn(
         `There are conflicting field types in your data. GraphQL schema will omit those fields.`
       )
-      entries.forEach(entry => entry.printEntry())
+      this.entries.forEach(entry => entry.printEntry())
     }
   }
 }

@@ -26,7 +26,7 @@ We are using prefix paths because our website is inside a folder `http://usernam
 }
 ```
 
-When you run `npm run deploy` all contents of `public` folder will be moved to your repositories `gh-pages` branch.
+When you run `npm run deploy` all contents of the `public` folder will be moved to your repository's `gh-pages` branch.  Make sure that your repository's settings has the `gh-pages` branch set as the source.
 
 ## GitHub Organization or User page
 

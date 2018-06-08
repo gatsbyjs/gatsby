@@ -267,6 +267,35 @@ Community:
   * React Overdrive transitions
   * Create your projects in Markdown
   * And other good stuff (SEO, Offline Support, WebApp Manifest Support)
+  
+* [gatsby-starter-portfolio-bella](https://github.com/LeKoArts/gatsby-starter-portfolio-bella)
+  [(demo)](https://portfolio-bella.netlify.com/)
+  
+  The target audience are designers and photographers.
+
+  Features:
+  
+  * Big typography & images
+  * White theme
+  * Prismic.io as CMS
+  * Emotion for styling
+  * One-page layout with sub-pages for case studies
+  * Easily configurable
+  * And other good stuff (SEO, Offline Support, WebApp Manifest Support)
+  
+* [gatsby-starter-portfolio-cara](https://github.com/LeKoArts/gatsby-starter-portfolio-cara)
+  [(demo)](https://portfolio-cara.netlify.com/)
+  
+  The target audience are designers and photographers.
+
+  Features:
+  
+  * Gatsby v2
+  * React Spring
+  * TailwindCSS & Emotion
+  * Playful & Colorful One-Page website with Parallax effect
+  * Easily configurable
+  * And other good stuff (SEO, Responsive images, Offline Support, WebApp Manifest Support)
 
 * [gatsby-starter-bootstrap-netlify](https://github.com/konsumer/gatsby-starter-bootstrap-netlify)
   [(demo)](https://gatsby-starter-bootstrap-netlify.netlify.com)

@@ -1101,3 +1101,11 @@
   featured: false
 - title: 伊撒尔の窝
   featured: false
+- title: 杨二小的博客
+  main_url: 'https://blog.yangerxiao.com/'
+  url: 'https://blog.yangerxiao.com/'
+  source_url: 'https://github.com/zerosoul/blog.yangerxiao.com'
+  featured: false
+  categories:
+    - Blog
+    - Portfolio

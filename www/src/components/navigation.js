@@ -20,7 +20,7 @@ const navItemStyles = {
   textTransform: `uppercase`,
   letterSpacing: `0.03em`,
   lineHeight: `calc(${presets.headerHeight} - 6px)`,
-  padding: `6px ${rhythm(1 / 2)} 0`,
+  padding: `6px ${rhythm(1 / 4)} 0 ${rhythm(1 / 2)}`,
   position: `relative`,
   top: 0,
   transition: `color .15s ease-out`,
@@ -179,7 +179,6 @@ export default ({ pathname }) => {
           >
             <GithubIcon style={{ verticalAlign: `text-top` }} />
           </OutboundLink>
-
           <div
             css={{
               display: `none`,
@@ -203,12 +202,22 @@ export default ({ pathname }) => {
               css={{
                 ...navItemStyles,
                 ...socialIconsStyles,
-                paddingRight: 0,
               }}
             >
               <TwitterIcon style={{ verticalAlign: `text-top` }} />
             </OutboundLink>
           </div>
+          <OutboundLink
+            href="https://www.gatsbyjs.com"
+            title="gatsbyjs.com"
+            css={{
+              ...navItemStyles,
+              ...socialIconsStyles,
+              paddingRight: 0,
+            }}
+          >
+            .com
+          </OutboundLink>
         </div>
       </div>
     </div>

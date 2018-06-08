@@ -80,6 +80,27 @@ module.exports = async (
     return Object.assign(envObject, gatsbyVarObject)
   }
 
+  function getHmrPath () {
+    let hmrBasePath = `${
+      program.ssl ? `https` : `http`
+    }://${
+      program.host
+    }:${webpackPort}/`
+
+    const hmrSuffix = `__webpack_hmr&reload=true&overlay=false`
+
+    if (process.env.GATSBY_WEBPACK_PUBLICPATH) {
+      const pubPath = process.env.GATSBY_WEBPACK_PUBLICPATH
+      if (pubPath.substr(-1) === `/`) {
+        hmrBasePath = pubPath
+      } else {
+        hmrBasePath = `${pubPath}/`
+      }
+    }
+
+    return hmrBasePath + hmrSuffix
+  }
+
   debug(`Loading webpack config for stage "${stage}"`)
   function output() {
     switch (stage) {
@@ -135,11 +156,7 @@ module.exports = async (
         return {
           commons: [
             require.resolve(`react-hot-loader/patch`),
-            `${require.resolve(`webpack-hot-middleware/client`)}?path=${
-              program.ssl ? `https` : `http`
-            }://${
-              program.host
-            }:${webpackPort}/__webpack_hmr&reload=true&overlay=false`,
+            `${require.resolve(`webpack-hot-middleware/client`)}?path=${getHmrPath()}`,
             directoryPath(`.cache/app`),
           ],
         }

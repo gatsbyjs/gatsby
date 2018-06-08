@@ -2,7 +2,7 @@ const fs = require(`fs`)
 const path = require(`path`)
 const Promise = require(`bluebird`)
 const sharp = require(`sharp`)
-const defaultIcons = require(`./common.js`).defaultIcons
+const { defaultIcons, doesIconExist } = require(`./common.js`)
 
 sharp.simd(true)
 
@@ -19,11 +19,11 @@ function generateIcons(icons, srcIcon) {
 }
 
 exports.onPostBuild = (args, pluginOptions) =>
-  new Promise(resolve => {
+  new Promise((resolve, reject) => {
     const { icon } = pluginOptions
     const manifest = { ...pluginOptions }
 
-    // Delete options we won't pass to the manifest.json.
+    // Delete options we won't pass to the manifest.webmanifest.
     delete manifest.plugins
     delete manifest.icon
 
@@ -50,9 +50,13 @@ exports.onPostBuild = (args, pluginOptions) =>
 
     // Only auto-generate icons if a src icon is defined.
     if (icon !== undefined) {
+      // Check if the icon exists
+      if (!doesIconExist(icon)) {
+        reject(`icon (${icon}) does not exist as defined in gatsby-config.js. Make sure the file exists relative to the root of the site.`)
+      }
       generateIcons(manifest.icons, icon).then(() => {
         //images have been generated
-        console.log(`done`)
+        console.log(`done generating icons for manifest`)
         resolve()
       })
     } else {
