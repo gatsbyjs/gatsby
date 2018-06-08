@@ -528,6 +528,7 @@
     - Marketing
 - title: Jason Lengstorf
   main_url: 'https://lengstorf.com'
+  url: 'https://lengstorf.com'
   source_url: 'https://github.com/jlengstorf/lengstorf.com'
   featured: false
   date_added: Apr 10
@@ -640,6 +641,7 @@
     - Open Source
 - title: Santa Compañía Creativa
   main_url: 'https://santacc.es/'
+  url: 'https://santacc.es/'
   source_url: 'https://github.com/DesarrolloWebSantaCC/santacc-web'
   featured: false
   categories:

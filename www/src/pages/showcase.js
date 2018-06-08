@@ -57,44 +57,51 @@ const ShowcaseList = ({ items, count }) => {
 
   return (
     <div css={{ display: `flex`, flexWrap: `wrap` }}>
-      {items.map(({ node }) => node.fields && ( // have to filter out null fields from bad data
-        <Link
-          key={node.id}
-          to={{ pathname: node.fields.slug, state: { isModal: true } }}
-          css={{
-            borderBottom: `none !important`,
-            boxShadow: `none !important`,
-          }}
-        >
-          <div css={{ margin: `12px` }}>
-            {node.childScreenshot ? (
-              <Img
-                resolutions={
-                  node.childScreenshot.screenshotFile.childImageSharp
-                    .resolutions
-                }
-                alt={`Screenshot of ${node.title}`}
-              />
-            ) : (
-                <div
-                  css={{ width: 282, height: 211, backgroundColor: `#d999e7` }}
-                >
-                  missing
-              </div>
-              )}
-            {node.title}
-            <div
+      {items.map(
+        ({ node }) =>
+          node.fields && ( // have to filter out null fields from bad data
+            <Link
+              key={node.id}
+              to={{ pathname: node.fields.slug, state: { isModal: true } }}
               css={{
-                ...scale(-2 / 5),
-                color: '#9B9B9B',
-                fontWeight: 'normal'
+                borderBottom: `none !important`,
+                boxShadow: `none !important`,
               }}
             >
-              {node.categories && node.categories.join(`, `)}
-            </div>
-          </div>
-        </Link>
-      ))}
+              <div css={{ margin: `12px` }}>
+                {node.childScreenshot ? (
+                  <Img
+                    resolutions={
+                      node.childScreenshot.screenshotFile.childImageSharp
+                        .resolutions
+                    }
+                    alt={`Screenshot of ${node.title}`}
+                  />
+                ) : (
+                  <div
+                    css={{
+                      width: 282,
+                      height: 211,
+                      backgroundColor: `#d999e7`,
+                    }}
+                  >
+                    missing
+                  </div>
+                )}
+                {node.title}
+                <div
+                  css={{
+                    ...scale(-2 / 5),
+                    color: `#9B9B9B`,
+                    fontWeight: `normal`,
+                  }}
+                >
+                  {node.categories && node.categories.join(`, `)}
+                </div>
+              </div>
+            </Link>
+          )
+      )}
     </div>
   )
 }
@@ -159,7 +166,13 @@ class FilteredShowcase extends Component {
 
   render() {
     const { data, filters } = this.props
-    const isDesktop = window.innerWidth > 750
+
+    let windowWidth
+    if (typeof window !== `undefined`) {
+      windowWidth = window.innerWidth
+    }
+
+    const isDesktop = windowWidth > 750
 
     let items = data.allSitesYaml.edges
 
@@ -173,14 +186,16 @@ class FilteredShowcase extends Component {
 
     return (
       <div css={{ display: `flex` }}>
-        {isDesktop &&
+        {isDesktop && (
           <div css={{ flexBasis: `18rem`, minWidth: `18rem` }}>
             <h3>
               Filter & Refine <MdFilterList />
             </h3>
             <Collapsible heading="Category">
               {Array.from(
-                count(data.allSitesYaml.edges.map(({ node }) => node.categories))
+                count(
+                  data.allSitesYaml.edges.map(({ node }) => node.categories)
+                )
               )
                 .sort(([a], [b]) => {
                   if (a < b) return -1
@@ -233,9 +248,15 @@ class FilteredShowcase extends Component {
                 ))}
             </Collapsible>
           </div>
-        }
+        )}
         <div>
-          <div css={{ display: `flex`, alignItems: 'center', flexDirection: isDesktop ? 'row' : 'column' }}>
+          <div
+            css={{
+              display: `flex`,
+              alignItems: `center`,
+              flexDirection: isDesktop ? `row` : `column`,
+            }}
+          >
             <h2 css={{ flexGrow: 1 }} id="search-heading">
               {this.state.search.length === 0 ? (
                 filters.size === 0 ? (
@@ -244,23 +265,23 @@ class FilteredShowcase extends Component {
                     Sites
                   </span>
                 ) : (
-                    <span>
-                      {items.length}
-                      {` `}
-                      {filters.size === 1 && filters.values()[0]}
-                      {` `}
-                      Sites
+                  <span>
+                    {items.length}
+                    {` `}
+                    {filters.size === 1 && filters.values()[0]}
+                    {` `}
+                    Sites
                   </span>
-                  )
+                )
               ) : (
-                  <span>{items.length} search results</span>
-                )}
+                <span>{items.length} search results</span>
+              )}
             </h2>
             <div>
               <label css={{ position: `relative` }}>
                 <input
                   css={{
-                    paddingLeft: '1.4rem'
+                    paddingLeft: `1.4rem`,
                   }}
                   type="text"
                   value={this.state.search}
@@ -296,20 +317,19 @@ class FilteredShowcase extends Component {
           {this.state.sitesToShow < items.length && (
             <button
               css={{
-                backgroundColor: '#663399',
-                color: 'white',
-                padding: '5px 10px',
+                backgroundColor: `#663399`,
+                color: `white`,
                 marginTop: 15,
                 marginBottom: 60,
-                width: !isDesktop && '100%',
-                padding: !isDesktop && '15px'
+                width: !isDesktop && `100%`,
+                padding: !isDesktop && `15px`,
               }}
               onClick={() => {
                 this.setState({ sitesToShow: this.state.sitesToShow + 9 })
               }}
             >
               Load More
-              <div css={{ marginLeft: '5px', display: 'inline' }}>↓</div>
+              <div css={{ marginLeft: `5px`, display: `inline` }}>↓</div>
             </button>
           )}
         </div>
@@ -326,37 +346,61 @@ class ShowcasePage extends Component {
   render() {
     const data = this.props.data
     const location = this.props.location
-    const isDesktop = window.innerWidth > 750
+
+    let windowWidth
+    if (typeof window !== `undefined`) {
+      windowWidth = window.innerWidth
+    }
+
+    const isDesktop = windowWidth > 750
     return (
       <Layout location={location}>
-        <div css={{ margin: '20px 30px' }}>
+        <div css={{ margin: `20px 30px` }}>
           <Helmet>
             <title>Showcase</title>
           </Helmet>
-          <div css={{
-            display: 'flex',
-            alignItems: 'center',
-            color: '#9D7CBF',
-            marginBottom: 30
-          }}>
+          <div
+            css={{
+              display: `flex`,
+              alignItems: `center`,
+              color: `#9D7CBF`,
+              marginBottom: 30,
+            }}
+          >
             <img src={FeaturedSitesIcon} alt="icon" css={{ marginBottom: 0 }} />
-            {isDesktop &&
-              <>
-                <span css={{ fontWeight: 'bold', fontSize: 24, marginRight: 30, marginLeft: 15 }}>Featured Sites</span>
-                <div>View all</div>
-                <div css={{ marginLeft: '5px' }}>→</div>
-                <div css={{ flex: 1 }}>{''}</div>
-              </>
-            }
+            {isDesktop && (
+              <>`               `<span
+                  css={{
+                    fontWeight: `bold`,
+                    fontSize: 24,
+                    marginRight: 30,
+                    marginLeft: 15,
+                  }}
+                >
+                  Featured Sites
+                </span>`               `<div>View all</div>`               `<div css={{ marginLeft: `5px` }}>→</div>`               `<div css={{ flex: 1 }}>{``}</div>`             `</>
+            )}
             <div css={{ marginRight: 15 }}>Want to get featured?</div>
             {/* TODO: maybe have a site submission issue template */}
-            <a href="https://github.com/gatsbyjs/gatsby/issues/new?template=feature_request.md" target="_blank">
-              <div css={{ backgroundColor: '#663399', color: 'white', padding: '5px 10px', fontWeight: 'normal' }}>Submit your Site
-                <div css={{ marginLeft: '5px', display: 'inline' }}>→</div>
+            <a
+              href="https://github.com/gatsbyjs/gatsby/issues/new?template=feature_request.md"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <div
+                css={{
+                  backgroundColor: `#663399`,
+                  color: `white`,
+                  padding: `5px 10px`,
+                  fontWeight: `normal`,
+                }}
+              >
+                Submit your Site
+                <div css={{ marginLeft: `5px`, display: `inline` }}>→</div>
               </div>
             </a>
           </div>
-          {isDesktop &&
+          {isDesktop && (
             <div css={{ position: `relative` }}>
               <div
                 css={{
@@ -374,7 +418,10 @@ class ShowcasePage extends Component {
                       borderBottom: `none !important`,
                       boxShadow: `none !important`,
                     }}
-                    to={{ pathname: node.fields.slug, state: { isModal: true } }}
+                    to={{
+                      pathname: node.fields.slug,
+                      state: { isModal: true },
+                    }}
                   >
                     {node.childScreenshot && (
                       <Img
@@ -408,7 +455,7 @@ class ShowcasePage extends Component {
                     }
                   >
                     See More Featured Sites
-                </a>
+                  </a>
                 </div>
               </div>
               <div
@@ -422,7 +469,7 @@ class ShowcasePage extends Component {
                 }}
               />
             </div>
-          }
+          )}
           <FilteredShowcase
             data={data}
             filters={this.state.filters}

@@ -22,7 +22,7 @@ const Icon = ({ icon, alt, href }) => (
     <a
       href={href}
       target="_blank"
-      rel="noopener"
+      rel="noopener noreferrer"
       css={{
         borderBottom: `0 !important`,
         boxShadow: `none !important`,
