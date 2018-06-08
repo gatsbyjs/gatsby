@@ -231,7 +231,7 @@ export function inferInputObjectStructureFromNodes({
     // so extract type from first node
     exampleValue = getExampleValues({
       nodes, 
-      typeName: nodes && nodes.length && nodes[0].internal.type, 
+      typeName: nodes && nodes[0] && nodes[0].internal && nodes[0].internal.type,
     })
   }
 
