@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-manifest",
-  "description": "Gatsby plugin which adds a manifest.json to make sites progressive web apps",
+  "description": "Gatsby plugin which adds a manifest.webmanifest to make sites progressive web apps",
   "version": "1.0.25",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
@@ -21,7 +21,7 @@
     "gatsby-plugin",
     "favicon",
     "icons",
-    "manifest.json",
+    "manifest.webmanifest",
     "progressive-web-app",
     "pwa"
   ],
