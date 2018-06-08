@@ -33,7 +33,7 @@ You can start with a few of the most important steps - install Gatsby v2 depende
 
 Update your `package.json` to use the pre-release versions of Gatsby and any related packages.
 
-package.json:
+`package.json`
 
 ```json
 "dependencies": {
@@ -119,6 +119,8 @@ Since layout is no longer special, you now need to make use of v2’s StaticQuer
 
 Replacing a layout's query with `StaticQuery`:
 
+`layout.js`
+
 ```diff
 import React, { Fragment } from "react"
 import Helmet from "react-helmet"
@@ -168,7 +170,7 @@ import Helmet from "react-helmet"
 
 In v1, layout component had access to `history`, `location`, and `match` props. In v2, only pages have access to these props; pass them to your layout component as needed.
 
-`layout`
+`layout.js`
 
 ```jsx
 import React from "react"
@@ -304,12 +306,12 @@ Here's an example querying an image:
   query MyImageQuery {
     allImageSharp(filter: {
 -     id: {regex: "/default.jpg/"}
-+     sizes: {originalName: {regex: "/default.jpg/"}}
++     fluid: {originalName: {regex: "/default.jpg/"}}
     }) {
       edges {
         node {
           id
-          sizes(maxWidth: 660) {
+          fluid(maxWidth: 660) {
             src
           }
         }
