@@ -63,6 +63,8 @@ class EvaluationTable extends Component {
                 },
               }}
             >
+            {/* jsx-a11y really wants us to change this to a button */}
+            {/* eslint-disable-next-line */}
               <a
                 css={{
                   "&&": {

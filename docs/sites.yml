@@ -253,12 +253,6 @@
   featured: false
   categories:
     - Web Dev
-- title: Adnan Fajlur Portfolio
-  main_url: 'https://adnanfajlur.xyz/'
-  url: 'https://adnanfajlur.xyz/'
-  featured: false
-  categories:
-    - Nonprofit
 - title: API Platform
   main_url: 'https://api-platform.com/'
   url: 'https://api-platform.com/'
@@ -534,6 +528,7 @@
     - Marketing
 - title: Jason Lengstorf
   main_url: 'https://lengstorf.com'
+  url: 'https://lengstorf.com'
   source_url: 'https://github.com/jlengstorf/lengstorf.com'
   featured: false
   date_added: Apr 10
@@ -646,6 +641,7 @@
     - Open Source
 - title: Santa Compañía Creativa
   main_url: 'https://santacc.es/'
+  url: 'https://santacc.es/'
   source_url: 'https://github.com/DesarrolloWebSantaCC/santacc-web'
   featured: false
   categories:
@@ -749,12 +745,6 @@
   categories:
     - Blog
     - Web Dev
-- title: Flooring Factories Outlets
-  main_url: 'https://www.flooringfactoriesoutlets.com/'
-  url: 'https://www.flooringfactoriesoutlets.com/'
-  featured: false
-  categories:
-    - Marketing
 - title: Gabriel Adorf's Portfolio
   main_url: 'https://www.gabrieladorf.com/'
   url: 'https://www.gabrieladorf.com/'
