@@ -39,6 +39,12 @@ plugins: [
             // the language "sh" which will highlight using the
             // bash highlighter.
             aliases: {},
+            // This toggles the display of line numbers alongside the code.
+            // To use it, add the following line in src/layouts/index.js
+            // right after importing the prism color scheme:
+            //  `require("prismjs/plugins/line-numbers/prism-line-numbers.css");`
+            // Defaults to false.
+            showLineNumbers: false
           },
         },
       ],

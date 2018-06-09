@@ -2,10 +2,11 @@ const visit = require(`unist-util-visit`)
 
 const parseLineNumberRange = require(`./parse-line-number-range`)
 const highlightCode = require(`./highlight-code`)
+const addLineNumbers = require(`./add-line-numbers`)
 
 module.exports = (
   { markdownAST },
-  { classPrefix = `language-`, inlineCodeMarker = null, aliases = {} } = {}
+  { classPrefix = `language-`, inlineCodeMarker = null, aliases = {}, showLineNumbers = false } = {}
 ) => {
   const normalizeLanguage = lang => {
     const lower = lang.toLowerCase()
@@ -39,11 +40,11 @@ module.exports = (
     // 100% width highlighted code lines work
     node.type = `html`
     node.value = `<div class="gatsby-highlight" data-language="${languageName}">
-      <pre class="${className}"><code class="${className}">${highlightCode(
+      <pre class="${className}${showLineNumbers ? ` line-numbers` : ``}"><code class="${className}">${highlightCode(
       language,
       node.value,
       highlightLines
-    )}</code></pre>
+    )}${showLineNumbers ? addLineNumbers(node.value) : ``}</code></pre>
       </div>`
   })
 
