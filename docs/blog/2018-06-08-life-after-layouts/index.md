@@ -4,7 +4,7 @@ date: 2018-06-08
 author: "Jason Lengstorf"
 ---
 
-So the Gatsby V2 beta is out, and [layouts are going away](#tktk-link-to-migration-guide). What does this mean for your projects?
+So the Gatsby V2 beta is out, and [layouts are going away](https://github.com/gatsbyjs/rfcs/blob/master/text/0002-remove-special-layout-components.md). What does this mean for your projects?
 
 This article will dive into the Gatsby V2's approach to layouts, talk about what changed and why, and walk through the migration process to get your existing projects updated to V2.
 
@@ -73,14 +73,46 @@ Once we've made these changes, we can run `yarn develop` and see the updated lay
 
 ![Screenshot of the updated layout in the browser.](simple-layout-v2.png)
 
+Check out the [`v2-layout` branch of the demo repo](https://github.com/jlengstorf/life-after-layouts) to see this in action, or see [the diff](https://github.com/jlengstorf/life-after-layouts/compare/v1-layout...v2-layout) for details on exactly what changed.
+
 ## Why change the layouts?
 
-TKTK
+Looking at the difference in code, it might be tempting to think, "Doesn't that just create _more work_ for developers who want to use layouts?"
+
+In short, the decision to remove layouts was part of an effort to reduce _mystery issues_ in Gatsby projects.
+
+### What are mystery issues?
+
+In V1, if something breaks on your page, you'd likely go to the page, look through the code, and try to spot the bug. But what if the bug is in the magic layout component? That component isn't referenced anywhere on the page, and if you don't _already know_ that Gatsby V1 wraps pages with layouts, it's pretty difficult to figure out what's going on.
+
+Because Gatsby is doing things in the background, out of site of the developers building the site, we're creating a mystery: where the hell did this bug come from if all the code I can see doesn't have the bug?
+
+By removing the magic and making layouts an explicity dependency in V2, that same bug would be much easier to spot because there's a clear link between our page code and the layout.
 
 ### Why is this better?
 
-TKTK
+Our goal at Gatsby is to make building great apps more fun and less frustrating — and _very few things_ are more frustrating than mystery bugs.
 
-## What’s next?
+This change reduces the number of mysteries in your Gatsby projects, and makes debugging a little simpler.
 
-TKTK
+## What else is changing?
+
+Removing layouts isn't the only improvement coming in Gatsby V2. We're really excited to introduce a lot of new and exciting features, such as:
+
+* Much faster hot reloading, which enables Ludicrous Mode
+
+  <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Coming soon to Gatsby v2: Ludicrous mode data hot reloading ;-)<a href="https://t.co/by1PyOYXc0">https://t.co/by1PyOYXc0</a><br><br>(note, this gif is not sped up at all) <a href="https://t.co/hFIYMbpalN">pic.twitter.com/hFIYMbpalN</a></p>&mdash; Gatsby (@gatsbyjs) <a href="https://twitter.com/gatsbyjs/status/974507205121617920?ref_src=twsrc%5Etfw">March 16, 2018</a></blockquote>
+
+* We can make GraphQL queries anywhere in our app using [`StaticQuery`](#tktk-link-to-staticquery-docs)
+* Upgraded to the latest versions of React, Babel, Webpack, and other libraries Gatsby depends on
+* Better support for CSS inlining and splitting, which will boost performance
+
+For a full list of what's new, check out our [V2 migration guide](https://v2--gatsbyjs.netlify.com/docs/migrating-from-v1-to-v2/) and [_What’s New in Gatsby V2?_](#tktk-write-this-post).
+
+## What's next?
+
+TKTK how to start using the beta now? (Can't seem to install a starter from a branch.)
+
+You can also [see the V2 roadmap](https://github.com/gatsbyjs/gatsby/projects/2), help us squash any V2 bugs by opening [issues](https://github.com/gatsbyjs/gatsby/issues) or sending [pull requests](https://github.com/gatsbyjs/gatsby/pulls), or [follow along with our progress on Twitter](https://twitter.com/gatsbyjs).
+
+We can't wait to see what you build with this new and improved version of Gatsby!
