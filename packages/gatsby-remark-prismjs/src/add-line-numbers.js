@@ -14,7 +14,7 @@ module.exports = (code = []) => {
   // Relevant code in the Prism Line Numbers plugin can be found here:
   // https://github.com/PrismJS/prism/blob/f356dfe71bf126e6dc060c03f3e042de28a9bec4/plugins/line-numbers/prism-line-numbers.js#L99-L115
   const lineNumbersWrapper =
-    `<span aria-hidden="true" class="line-numbers-rows" style="white-space: normal;">`
+    `<span aria-hidden="true" class="line-numbers-rows" style="white-space: normal; top:1em; left:0;">`
     + `${generateSpans(numberOfLines)}`
     + `</span>`
   return lineNumbersWrapper

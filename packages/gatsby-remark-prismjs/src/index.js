@@ -44,7 +44,7 @@ module.exports = (
       language,
       node.value,
       highlightLines
-    )}${showLineNumbers ? addLineNumbers(node.value) : ``}</code></pre>
+    )}</code>${showLineNumbers ? addLineNumbers(node.value) : ``}</pre>
       </div>`
   })
 
