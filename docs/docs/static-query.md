@@ -79,4 +79,6 @@ Header.propTypes = {
 
 ## How it differs from page query
 
-StaticQuery can do most of the things that page query can, including fragments. The only difference is you can’t pass arguments to the query (hence the name StaticQuery).
+StaticQuery can do most of the things that page query can, including fragments.
+
+You can’t, however, pass **Query Variables** to `StaticQuery`, like you can in page query through `pageContext`.
