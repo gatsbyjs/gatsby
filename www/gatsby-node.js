@@ -76,7 +76,7 @@ exports.createPages = ({ graphql, actions }) => {
             allMarkdownRemark(
               sort: { order: DESC, fields: [frontmatter___date] }
               limit: 1000
-              filter: { fileAbsolutePath: { ne: null } }
+              filter: { fileAbsolutePath: { regex: "/^((?!startersData).)*$/", ne: null } }
             ) {
               edges {
                 node {
@@ -230,7 +230,7 @@ exports.createPages = ({ graphql, actions }) => {
 }
 
 // Create slugs for files.
-exports.onCreateNode = ({ node, actions, getNode }) => {
+exports.onCreateNode = ({ node, actions, getNode, boundActionCreators }) => {
   const { createNodeField } = actions
   let slug
   if (node.internal.type === `File`) {
@@ -276,14 +276,22 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
       })
       createNodeField({ node, name: `package`, value: true })
     }
+    if (
+      fileNode.sourceInstanceName === `StarterShowcaseData` &&
+      parsedFilePath.name !== `README`
+    ) {
+      createNodesForStarterShowcase({ node, getNode, boundActionCreators })
+    }
     if (slug) {
       createNodeField({ node, name: `anchor`, value: slugToAnchor(slug) })
       createNodeField({ node, name: `slug`, value: slug })
     }
+
   } else if (node.internal.type === `AuthorYaml`) {
     slug = `/contributors/${slugify(node.id)}/`
     createNodeField({ node, name: `slug`, value: slug })
   }
+
 }
 
 exports.onPostBuild = () => {
@@ -292,3 +300,48 @@ exports.onPostBuild = () => {
     `./public/gatsbygram.mp4`
   )
 }
+
+// Starter Showcase related code
+const { createFilePath } = require(`gatsby-source-filesystem`)
+const gitFolder = './src/data/StarterShowcase/generatedGithubData'
+function createNodesForStarterShowcase({ node, getNode, boundActionCreators }) {
+  const { createNodeField } = boundActionCreators
+  if (node.internal.type === `MarkdownRemark`) {
+    const slug = createFilePath({
+      node,
+      getNode,
+      basePath: `startersData`,
+    })
+    // preprocessing
+    const stub = slug.replace(/\//gi, '')
+    var fromPath = path.join(gitFolder, `${stub}.json`)
+    var data = fs.readFileSync(fromPath, 'utf8')
+    const ghdata = JSON.parse(data)
+    const { repoMetadata, dependencies = [], devDependencies = [] } = ghdata
+    const allDependencies = Object.entries(dependencies).concat(
+      Object.entries(devDependencies)
+    )
+    // make an object to stick into a Field
+    const starterShowcaseFields = {
+      slug,
+      stub,
+      date: new Date(node.frontmatter.date),
+      githubData: ghdata,
+      // nice-to-have destructures of githubData
+      description: ghdata.description,
+      stars: repoMetadata.stargazers_count,
+      lastUpdated: repoMetadata.created_at,
+      owner: repoMetadata.owner,
+      githubFullName: repoMetadata.full_name,
+      allDependencies,
+      gatsbyDependencies: allDependencies
+        .filter(
+          ([key, _]) => !['gatsby', 'gatsby-cli', 'gatsby-link'].includes(key)
+        )
+        .filter(([key, _]) => key.includes('gatsby')),
+      miscDependencies: allDependencies.filter(([key, _]) => !key.includes('gatsby')),
+    }
+    createNodeField({ node, name: `starterShowcase`, value: starterShowcaseFields })
+  }
+}
+// End Starter Showcase related code
