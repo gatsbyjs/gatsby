@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-stylus",
   "description": "Gatsby support for Stylus",
-  "version": "1.1.16-12",
+  "version": "1.1.16-13",
   "author": "Ian Sinnott <ian@iansinnott.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
