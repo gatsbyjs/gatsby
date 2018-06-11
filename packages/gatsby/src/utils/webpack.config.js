@@ -176,10 +176,6 @@ module.exports = async (
     switch (stage) {
       case `develop`:
         configPlugins = configPlugins.concat([
-          plugins.extractText({
-            filename: `[name].css`,
-            chunkFilename: `[name].css`,
-          }),
           plugins.hotModuleReplacement(),
           plugins.noEmitOnErrors(),
 
