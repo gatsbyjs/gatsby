@@ -40,7 +40,7 @@ exports.resolvableExtensions = true
  *         // Create blog post pages.
  *         result.data.allMarkdownRemark.edges.forEach(edge => {
  *             createPage({
- *               path: `edge.node.fields.slug`, // required
+ *               path: `${edge.node.fields.slug}`, // required
  *               component: blogPostTemplate,
  *               context: {
  *                 // Add optional context data. Data can be used as
@@ -119,17 +119,17 @@ exports.onCreatePage = true
  * Called during the creation of the GraphQL schema. Allows plugins
  * to add new fields to the types created from data nodes. It will be called
  * separately for each type.
- * 
- * This function should return an object in the shape of 
+ *
+ * This function should return an object in the shape of
  * [GraphQLFieldConfigMap](https://graphql.org/graphql-js/type/#graphqlobjecttype)
  * which will be appended to fields inferred by Gatsby from data nodes.
- * 
+ *
  * *Note:* Import GraphQL types from `gatsby/graphql` and don't add the `graphql`
  * package to your project/plugin dependencies to avoid `Schema must
  * contain unique named types but contains multiple types named` errors.
- * `gatsby/graphql` exports all builtin GraphQL types as well as the `graphQLJSON` 
+ * `gatsby/graphql` exports all builtin GraphQL types as well as the `graphQLJSON`
  * type.
- * 
+ *
  * Many transformer plugins use this to add fields that take arguments.
  *
  * * [`gatsby-transformer-remark`](/packages/gatsby-transformer-remark/)
@@ -137,13 +137,13 @@ exports.onCreatePage = true
  * how many characters to prune the markdown source to.
  * * [`gatsby-transformer-sharp`](/packages/gatsby-transformer-sharp/) exposes
  * many image transformation options as GraphQL fields.
- * 
+ *
  * @param {object} $0
  * @param {object} $0.type Object containing `name` and `nodes`
  * @param {array} $0.allNodes array of all nodes
  * @example
  * import { GraphlQLString } from "gatsby/graphql"
- * 
+ *
  * exports.setFieldsOnGraphQLNodeType = ({ type }) => {
  *   if (type.name === `File`) {
  *     return {
@@ -155,13 +155,13 @@ exports.onCreatePage = true
   *          }
  *         }
  *         resolve: (source, fieldArgs) => {
- *           return `Id of this node is ${source.id}. 
+ *           return `Id of this node is ${source.id}.
  *                   Field was called with argument: ${fieldArgs.myArgument}`
  *         }
  *       }
  *     }
  *   }
- * 
+ *
  *   // by default return empty object
  *   return {}
  * }

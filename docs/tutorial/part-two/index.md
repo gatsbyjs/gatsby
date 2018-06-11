@@ -347,7 +347,18 @@ Gatsby works out of the box with CSS Modules.
 
 Let's build a page using CSS Modules.
 
-First create a new component page by creating a file at
+First, let's create a new `Container` component which we'll use for each of the
+CSS-in-JS examples. Create a new directory at `src/components` and then, in this new directory, create a file named `container.js` and paste the following:
+
+```javascript
+import React from "react";
+
+export default ({ children }) => (
+  <div style={{ margin: "3rem auto", maxWidth: 600 }}>{children}</div>
+);
+```
+
+Then, create a new component page by creating a file at
 `src/pages/about-css-modules.js`:
 
 ```javascript
@@ -442,10 +453,12 @@ directory. But, if it's used only in one file, create it inline.
 
 Modify `about-css-modules.js` so it looks like the following:
 
-```jsx{5-17,20,23-32}
-import React from "react"
-import styles from "./about-css-modules.module.css"
-console.log(styles)
+```jsx{7-19,25-34}
+import React from "react";
+import styles from "./about-css-modules.module.css";
+console.log(styles);
+
+import Container from "../components/container";
 
 const User = props => (
   <div className={styles.user}>

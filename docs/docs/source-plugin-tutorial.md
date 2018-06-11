@@ -1,5 +1,5 @@
 ---
-title: "Source plugin tutorial"
+title: "Source Plugin Tutorial"
 ---
 
 Creating your own source plugin.

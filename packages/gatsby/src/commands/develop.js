@@ -258,6 +258,14 @@ module.exports = async (program: any) => {
     )
   }
 
+  // In order to enable custom ssl, --cert-file --key-file and -https flags must all be
+  // used together
+  if ((program[`cert-file`] || program[`key-file`]) && !program.https) {
+    report.panic(
+      `for custom ssl --https, --cert-file, and --key-file must be used together`
+    )
+  }
+
   // Check if https is enabled, then create or get SSL cert.
   // Certs are named after `name` inside the project's package.json.
   if (program.https) {
@@ -430,7 +438,7 @@ module.exports = async (program: any) => {
       program.host,
       program.port
     )
-    const isSuccessful = !messages.errors.length && !messages.warnings.length
+    const isSuccessful = !messages.errors.length
     // if (isSuccessful) {
     // console.log(chalk.green(`Compiled successfully!`))
     // }

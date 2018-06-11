@@ -21,6 +21,8 @@ type QueryJob = {
   isPage: Boolean,
 }
 
+const indentString = string => string.replace(/\n/g, `\n  `)
+
 // Run query
 module.exports = async (queryJob: QueryJob, component: Any) => {
   const { schema, program } = store.getState()
@@ -41,22 +43,19 @@ module.exports = async (queryJob: QueryJob, component: Any) => {
   // If there's a graphql error then log the error. If we're building, also
   // quit.
   if (result && result.errors) {
-    report.log(
-      report.stripIndent`
-        The GraphQL query from ${component.componentPath} failed.
+    report.log(`
+The GraphQL query from ${component.componentPath} failed.
 
-        Errors:
-          ${result.errors || []}
-        URL path:
-          ${queryJob.path}
-        Context:
-          ${JSON.stringify(queryJob.context, null, 4)}
-        Plugin:
-          ${queryJob.pluginCreatorId || `none`}
-        Query:
-          ${component.query}
-      `
-    )
+Errors:
+  ${result.errors || []}
+URL path:
+  ${queryJob.path}
+Context:
+  ${indentString(JSON.stringify(queryJob.context, null, 2))}
+Plugin:
+  ${queryJob.pluginCreatorId || `none`}
+Query:
+  ${indentString(component.query)}`)
 
     // Perhaps this isn't the best way to see if we're building?
     if (program._name === `build`) {

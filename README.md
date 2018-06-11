@@ -215,6 +215,18 @@ Websites built with Gatsby:
 * [Workshop In The Woods](https://www.workshop-in-the-woods.com/) ([source](https://github.com/ryanwiemer/workshop))
 * [Steven Koerts - Portfolio](http://stevenkoerts.nl/)([source](https://github.com/Steven24K/Steven24K.github.io))
 * [Ray Gesualdo - Personal Website](http://www.raygesualdo.com/) ([source](https://github.com/raygesualdo/raygesualdo.com))
+* [10M GmbH](https://10m.de)
+* [Edge Database](https://edgedb.com/)
+* [Rolling Stone: The New Classics](https://www.rollingstone.com/the-new-classics)
+* [Jacob Bolda - Personal Website](https://www.jacobbolda.com/)
+* [Apideck](https://apideck.com)
+* [GDPR Checklist](https://gdprchecklist.io) ([source](https://github.com/privacyradius/gdpr-checklist))
+* [GDPR Tracker](https://gdprtracker.io)
+* [GDPR Form](https://gdprform.io)
+* [Josh Palacios - Personal Website](https://joshpalacios.com) ([source](https://github.com/jshwa/joshpalacios-site))
+* [Cup of Data](https://cupofdata.com) ([source](https://github.com/cupofdata/cupofdata.com))
+* [Natalia Acevedo - Personal Website](https://nataliaacevedo.com) ([source](https://github.com/yeion7/nataliaacevedo.com))
+* [Airbnb Cereal](https://airbnb.design/cereal/)
 
 ## Docs
 

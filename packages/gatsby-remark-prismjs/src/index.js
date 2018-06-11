@@ -38,7 +38,7 @@ module.exports = (
     // Replace the node with the markup we need to make
     // 100% width highlighted code lines work
     node.type = `html`
-    node.value = `<div class="gatsby-highlight">
+    node.value = `<div class="gatsby-highlight" data-language="${languageName}">
       <pre class="${className}"><code class="${className}">${highlightCode(
       language,
       node.value,

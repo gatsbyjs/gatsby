@@ -15,5 +15,14 @@ npm install --save gatsby-plugin-emotion emotion emotion-server react-emotion
 Add the plugin to your `gatsby-config.js`.
 
 ```js
-plugins: ["gatsby-plugin-emotion"]
+module.exports = {
+    plugins: [
+        {
+            resolve: `gatsby-plugin-emotion`,
+            options: {
+                // Accepts all options defined by `babel-plugin-emotion` plugin.
+            }
+        }
+    ]
+];
 ```

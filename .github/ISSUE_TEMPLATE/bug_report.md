@@ -30,12 +30,14 @@ What should happen?
 What happened.
 
 ### Environment
-* Gatsby version (`npm list gatsby`):
-* gatsby-cli version (`gatsby --version`):
-* Node.js version:
-* Operating System:
+
+<!--
+  Required. Run `gatsby info --clipboard` in your gatsby project directory and paste its contents here.
+  Not working? You may need to update your global gatsby-cli - `npm install -g gatsby-cli`
+-->
 
 ### File contents (if changed)
+
 `gatsby-config.js`: N/A <!-- Please use a code block or just leave it as is if wasn't changed -->
 `package.json`: N/A <!-- Please use a code block or just leave it as is if wasn't changed -->
 `gatsby-node.js`: N/A <!-- Please use a code block or just leave it as is if wasn't changed -->

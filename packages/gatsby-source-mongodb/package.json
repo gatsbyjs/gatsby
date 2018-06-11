@@ -1,6 +1,6 @@
 {
   "name": "gatsby-source-mongodb",
-  "description": "Stub description for gatsby-source-mongodb",
+  "description": "Source plugin for pulling data into Gatsby from MongoDB collections",
   "version": "1.5.16-10",
   "author": "jhermans85@hotmail.com",
   "bugs": {

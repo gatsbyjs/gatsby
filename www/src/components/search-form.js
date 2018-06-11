@@ -332,7 +332,7 @@ class SearchForm extends Component {
               [presets.Desktop]: {
                 backgroundColor: !isHomepage && `#fff`,
                 color: colors.gatsby,
-                width: !isHomepage && rhythm(5),
+                width: !isHomepage && rhythm(3.5),
                 ":focus": {
                   backgroundColor: colors.ui.light,
                   color: colors.gatsby,
@@ -342,12 +342,12 @@ class SearchForm extends Component {
               [presets.Hd]: {
                 backgroundColor: isHomepage && colors.lilac,
                 color: isHomepage && colors.ui.light,
-                width: isHomepage && rhythm(5),
+                width: isHomepage && rhythm(3.5),
               },
             }}
             type="search"
-            placeholder="Search docs"
-            aria-label="Search docs"
+            placeholder="Search"
+            aria-label="Search"
             title="Hit 's' to search docs"
             onFocus={() => this.setState({ focussed: true })}
             onBlur={() => this.setState({ focussed: false })}

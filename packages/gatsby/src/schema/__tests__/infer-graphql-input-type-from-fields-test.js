@@ -21,6 +21,10 @@ function isIntInput(type) {
   expect(type.getFields()).toEqual({
     eq: { name: `eq`, type: GraphQLInt },
     ne: { name: `ne`, type: GraphQLInt },
+    lt: { name: `lt`, type: GraphQLInt },
+    lte: { name: `lte`, type: GraphQLInt },
+    gt: { name: `gt`, type: GraphQLInt },
+    gte: { name: `gte`, type: GraphQLInt },
   })
 }
 
@@ -89,6 +93,10 @@ describe(`GraphQL Input args from fields, test-only`, () => {
     expect(float.getFields()).toEqual({
       eq: { name: `eq`, type: GraphQLFloat },
       ne: { name: `ne`, type: GraphQLFloat },
+      lt: { name: `lt`, type: GraphQLFloat },
+      lte: { name: `lte`, type: GraphQLFloat },
+      gt: { name: `gt`, type: GraphQLFloat },
+      gte: { name: `gte`, type: GraphQLFloat },
     })
 
     const string = inferredFields.scal_string.type
@@ -293,6 +301,10 @@ describe(`GraphQL Input args from fields, test-only`, () => {
     expect(list.getFields()).toEqual({
       eq: { name: `eq`, type: GraphQLFloat },
       ne: { name: `ne`, type: GraphQLFloat },
+      gt: { name: `gt`, type: GraphQLFloat },
+      gte: { name: `gte`, type: GraphQLFloat },
+      lt: { name: `lt`, type: GraphQLFloat },
+      lte: { name: `lte`, type: GraphQLFloat },
       in: { name: `in`, type: new GraphQLList(GraphQLFloat) },
     })
   })
