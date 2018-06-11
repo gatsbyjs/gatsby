@@ -1,7 +1,7 @@
 {
   "name": "gatsby-transformer-pdfimages",
   "description": "Gatsby transformer plugin for extracting images from PDFs",
-  "version": "1.0.6-9",
+  "version": "1.0.6-10",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
