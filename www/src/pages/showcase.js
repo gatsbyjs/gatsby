@@ -109,6 +109,7 @@ const ShowcaseList = ({ items, count }) => {
 class Collapsible extends Component {
   state = {
     collapsed: false,
+    windowWidth: null,
   }
 
   handleClick = () => {
@@ -164,15 +165,15 @@ class FilteredShowcase extends Component {
     this.fuse = new Fuse(props.data.allSitesYaml.edges, options)
   }
 
+  componentDidMount() {
+    // cache the window width
+    this.setState({ windowWidth: window.innerWidth })
+  }
+
   render() {
     const { data, filters } = this.props
 
-    let windowWidth
-    if (typeof window !== `undefined`) {
-      windowWidth = window.innerWidth
-    }
-
-    const isDesktop = windowWidth > 750
+    const isDesktop = !this.state.windowWidth || this.state.windowWidth > 750
 
     let items = data.allSitesYaml.edges
 
@@ -341,18 +342,18 @@ class FilteredShowcase extends Component {
 class ShowcasePage extends Component {
   state = {
     filters: new Set([]),
+    windowWidth: null,
+  }
+
+  componentDidMount() {
+    this.setState({ windowWidth: window.innerWidth })
   }
 
   render() {
     const data = this.props.data
     const location = this.props.location
 
-    let windowWidth
-    if (typeof window !== `undefined`) {
-      windowWidth = window.innerWidth
-    }
-
-    const isDesktop = windowWidth > 750
+    const isDesktop = !this.state.windowWidth || this.state.windowWidth > 750
     return (
       <Layout location={location}>
         <div css={{ margin: `20px 30px` }}>
@@ -369,7 +370,8 @@ class ShowcasePage extends Component {
           >
             <img src={FeaturedSitesIcon} alt="icon" css={{ marginBottom: 0 }} />
             {isDesktop && (
-              <>`               `<span
+              <>
+                <span
                   css={{
                     fontWeight: `bold`,
                     fontSize: 24,
@@ -378,7 +380,11 @@ class ShowcasePage extends Component {
                   }}
                 >
                   Featured Sites
-                </span>`               `<div>View all</div>`               `<div css={{ marginLeft: `5px` }}>→</div>`               `<div css={{ flex: 1 }}>{``}</div>`             `</>
+                </span>
+                <div>View all</div>
+                <div css={{ marginLeft: `5px` }}>→</div>
+                <div css={{ flex: 1 }}>{``}</div>
+              </>
             )}
             <div css={{ marginRight: 15 }}>Want to get featured?</div>
             {/* TODO: maybe have a site submission issue template */}

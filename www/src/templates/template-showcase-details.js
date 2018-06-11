@@ -22,9 +22,7 @@ const cleanUrl = mainUrl => {
 
 class ShowcaseTemplate extends React.Component {
   findCurrentIndex() {
-    const {
-      data: { allSitesYaml },
-    } = this.props
+    const { data: { allSitesYaml } } = this.props
     for (let i = 0; i < allSitesYaml.edges.length; i++) {
       const site = allSitesYaml.edges[i].node
       if (site.fields.slug === this.props.location.pathname) {
@@ -36,9 +34,7 @@ class ShowcaseTemplate extends React.Component {
   }
 
   getNext() {
-    const {
-      data: { allSitesYaml },
-    } = this.props
+    const { data: { allSitesYaml } } = this.props
 
     const currentIndex = this.findCurrentIndex()
     return allSitesYaml.edges[(currentIndex + 1) % allSitesYaml.edges.length]
@@ -59,9 +55,7 @@ class ShowcaseTemplate extends React.Component {
   }
 
   getPrevious() {
-    const {
-      data: { allSitesYaml },
-    } = this.props
+    const { data: { allSitesYaml } } = this.props
 
     const currentIndex = this.findCurrentIndex()
     let index = currentIndex - 1
@@ -80,8 +74,6 @@ class ShowcaseTemplate extends React.Component {
       },
     })
   }
-
-  componentWillMount() {}
 
   render() {
     const { data } = this.props
@@ -315,70 +307,78 @@ class ShowcaseTemplate extends React.Component {
 export default ShowcaseTemplate
 
 // TODO: the image dimensions here are 100x100, but the design calls for much larger. do we do it?
-function PermalinkPageFooter({ nextSite, previousSite, isModal }) {
-  let windowWidth
-
-  if (!windowWidth && typeof window !== `undefined`) {
-    windowWidth = window.innerWidth
+class PermalinkPageFooter extends React.Component {
+  state = {
+    windowWidth: null,
   }
-  if (isModal && windowWidth > 750) return null
-  return (
-    <div
-      css={{
-        display: `flex`,
-        borderTop: `1px solid #F5F3F7`,
-        padding: 50,
-        paddingTop: 15,
-      }}
-    >
-      <div css={{ flex: 1 }}>
-        <div css={{ color: `#9B9B9B` }}>Previous</div>
-        <div css={{ padding: `20px 0px` }}>
-          <Link
-            to={{
-              pathname: previousSite.fields.slug,
-              state: { isModal: false },
+
+  componentDidMount() {
+    this.setState({ windowWidth: window.innerWidth })
+  }
+
+  render() {
+    const { nextSite, previousSite, isModal } = this.props
+
+    if (isModal && this.state.windowWidth > 750) return null
+    return (
+      <div
+        css={{
+          display: `flex`,
+          borderTop: `1px solid #F5F3F7`,
+          padding: 50,
+          paddingTop: 15,
+        }}
+      >
+        <div css={{ flex: 1 }}>
+          <div css={{ color: `#9B9B9B` }}>Previous</div>
+          <div css={{ padding: `20px 0px` }}>
+            <Link
+              to={{
+                pathname: previousSite.fields.slug,
+                state: { isModal: false },
+              }}
+            >
+              ← {previousSite.title}
+            </Link>
+          </div>
+          <Img
+            css={{
+              boxShadow: `0px 0px 38px -8px ${colors.gatsby}`,
+              width: `100%`,
+              height: `100%`,
             }}
-          >
-            ← {previousSite.title}
-          </Link>
+            resolutions={
+              previousSite.childScreenshot.screenshotFile.childImageSharp
+                .resolutions
+            }
+            alt=""
+          />
         </div>
-        <Img
-          css={{
-            boxShadow: `0px 0px 38px -8px ${colors.gatsby}`,
-            width: `100%`,
-            height: `100%`,
-          }}
-          resolutions={
-            previousSite.childScreenshot.screenshotFile.childImageSharp
-              .resolutions
-          }
-          alt=""
-        />
-      </div>
-      <div css={{ flex: 1 }}>
-        <div css={{ color: `#9B9B9B` }}>Next</div>
-        <div css={{ padding: `20px 0px` }}>
-          <Link
-            to={{ pathname: nextSite.fields.slug, state: { isModal: false } }}
-          >
-            {nextSite.title} →
-          </Link>
+        <div css={{ flex: 1 }}>
+          <div css={{ color: `#9B9B9B` }}>Next</div>
+          <div css={{ padding: `20px 0px` }}>
+            <Link
+              to={{ pathname: nextSite.fields.slug, state: { isModal: false } }}
+            >
+              {nextSite.title} →
+            </Link>
+          </div>
+          <Img
+            css={{
+              boxShadow: `0px 0px 38px -8px ${colors.gatsby}`,
+              width: `100%`,
+              height: `100%`,
+            }}
+            resolutions={
+              nextSite.childScreenshot.screenshotFile.childImageSharp
+                .resolutions
+            }
+            alt=""
+          />
         </div>
-        <Img
-          css={{
-            boxShadow: `0px 0px 38px -8px ${colors.gatsby}`,
-            width: `100%`,
-            height: `100%`,
-          }}
-          resolutions={
-            nextSite.childScreenshot.screenshotFile.childImageSharp.resolutions
-          }
-          alt=""
-        />
       </div>
-    </div>
-  )
+    )
+  }
 }
 
 export const pageQuery = graphql`
