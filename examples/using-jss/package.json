@@ -7,6 +7,9 @@
   "dependencies": {
     "gatsby": "next",
     "gatsby-plugin-jss": "next",
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0",
+    "react-jss": "^8.5.0"
   },
   "keywords": [
     "gatsby"
