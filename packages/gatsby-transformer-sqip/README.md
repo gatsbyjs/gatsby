@@ -1,16 +1,46 @@
 # Gatsby SQIP plugin
 
-Generates vectorized primitive version of images to be used as preview thumbnails.
+<p align="center">
+  <a href="https://www.npmjs.com/package/gatsby-transformer-sqip">
+    <img src="https://img.shields.io/npm/v/gatsby-transformer-sqip.svg" alt="NPM">
+  </a>
+  &nbsp;
+  <a href="http://npm-stat.com/charts.html?package=gatsby-transformer-sqip">
+    <img src="https://img.shields.io/npm/dm/gatsby-transformer-sqip.svg" alt="NPM downloads">
+  </a>
+</p>
+
+<p align="center">
+  <a href="demo.mp4">
+    <img src="demo.gif" alt="SQIP demo" />
+  </a>
+</p>
+
+> Generates vectorized primitive version of images to be used as preview thumbnails.
 
 
-@todo add some example gif
+## Disclaimer
 
+This project can create beautiful results, but this comes with the cost of processing power. It may take several seconds on your machine to generate the preview. **Make sure to invest some time and to cache your `public` folder to avoid regeneration of the previews on every build.**
 
-## :information_source: Disclaimer
+Netlify users might use [gatsby-plugin-netlify-cache](https://github.com/axe312ger/gatsby-plugin-netlify-cache).
 
-This project can create beautiful results, but this comes with the cost of processing power. It may take several seconds on your machine to generate the preview. Make sure to invest some time and to cache your `public` folder to avoid regeneration of the previews on every build.
+<details>
+<summary><strong>Table of contents:</strong></summary>
 
-## :hand: Usage
+- [Usage](#usage)
+  - [Configuring and getting the previews](#configuring-and-getting-the-previews)
+    - [Options](#options)
+    - [Sharp](#sharp)
+    - [Contentful](#contentful)
+  - [Displaying the previews](#displaying-the-previews)
+    - [Pure JSX](#pure-jsx)
+    - [Gatsby Image](#gatsby-image)
+- [Configuration recommendations](#configuration-recommendations)
+
+</details>
+
+## Usage
 
 ### Configuring and getting the previews
 
@@ -25,7 +55,7 @@ image {
 }
 ```
 
-With `gatsby-transformer-contentful`:
+With `gatsby-source-contentful`:
 
 ```graphql
 image {
@@ -36,7 +66,7 @@ image {
 }
 ```
 
-#### :gear: Options
+#### Options
 
 ##### `numberOfPrimitives`: Integer, default: `10`
 
@@ -101,7 +131,7 @@ See: https://www.contentful.com/developers/docs/references/images-api/#/referenc
 
 See: https://www.contentful.com/developers/docs/references/images-api/#/reference/image-manipulation/background-color
 
-### :framed_picture: Displaying the previews
+### Displaying the previews
 
 #### Pure JSX
 
@@ -176,7 +206,7 @@ const Img = require(`gatsby-image`)
 * Images fade in all the time, even when the image is already in the browser cache
 
 
-## :books: Settings recommendations
+## Configuration recommendations
 
 The plugin offers a wide variety of settings, which affect the size of the resulting preview image.
 
