@@ -69,7 +69,7 @@ module.exports = async (
 
     response.data.destroy()
 
-    const responsiveSizesResult = buildResponsiveSizes({
+    const responsiveSizesResult = await buildResponsiveSizes({
       metadata,
       imageUrl: `https:${node.url}`,
       options,

@@ -1,4 +1,6 @@
-exports.buildResponsiveSizes = ({ metadata, imageUrl, options = {} }) => {
+const axios = require(`axios`)
+
+exports.buildResponsiveSizes = async ({ metadata, imageUrl, options = {} }) => {
   const { width, height, density } = metadata
   const aspectRatio = width / height
   const pixelRatio =
@@ -28,13 +30,22 @@ exports.buildResponsiveSizes = ({ metadata, imageUrl, options = {} }) => {
   const filteredSizes = images.filter(size => size < width)
 
   filteredSizes.push(width)
+  const response  = await axios (
+    {
+      method: 'GET',
+      responseType: 'arraybuffer',
+      url:`${imageUrl}?w=40`
+    }
+  )
+
+  const base64Img = `data:${response.headers["content-type"]};base64,${new Buffer(response.data).toString('base64')}`;
 
   const srcSet = filteredSizes
     .map(size => `${imageUrl}?w=${Math.round(size)} ${Math.round(size)}w`)
     .join(`,\n`)
 
   return {
-    base64: `${imageUrl}?w=40`,
+    base64: base64Img,
     aspectRatio,
     srcSet,
     src: imageUrl,
