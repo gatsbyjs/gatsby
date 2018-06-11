@@ -131,7 +131,7 @@ class PageRenderer extends React.Component {
       pathContext,
     }
 
-    const replacementComponent = apiRunner(`replaceComponentRenderer`, {
+    const [replacementComponent] = apiRunner(`replaceComponentRenderer`, {
       props,
       loader: publicLoader,
     })
