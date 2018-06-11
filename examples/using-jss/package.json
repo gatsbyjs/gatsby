@@ -5,8 +5,8 @@
   "version": "1.0.0",
   "author": "Vladimir Guguiev <wizardzloy@gmail.com>",
   "dependencies": {
-    "gatsby": "latest",
-    "gatsby-plugin-jss": "latest"
+    "gatsby": "next",
+    "gatsby-plugin-jss": "next",
   },
   "keywords": [
     "gatsby"
