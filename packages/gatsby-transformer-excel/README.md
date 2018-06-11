@@ -108,3 +108,24 @@ Which would return:
   }
 }
 ```
+
+## Troubleshooting
+### Field Type Conflicts
+If your columns have different data types, e.g. numbers and strings graphql will omit these values and provide you with a field type conflicts warning during build.
+To solve this, you can set the rawOutput option of the plugin to false. This will convert all values to strings.
+
+```javascript
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-transformer-excel`,
+      options: {
+        rawOutput: false,
+      }
+    }
+  ],
+};
+```
+
+This will make sure, that all field types are converted to strings.

@@ -53,9 +53,8 @@ The usual contributing steps are:
   to Gatsby packages and copy them into the site. For more detailed instructions
   see the [gatsby-dev-cli README](/packages/gatsby-dev-cli/)
 * Add tests and code for your changes.
-* Once you're done, make sure all tests still pass: `yarn test`
-* Commit with a ["Signed-off-by"](#developer-certificate-of-origin) line appended
-  to your commit message and push to your fork.
+* Once you're done, make sure all tests still pass: `yarn test`.
+* Commit and push to your fork.
 * Create a pull request from your branch.
 
 ### Contributing to the documentation.
@@ -79,8 +78,7 @@ a pull request.
 * The Markdown files for the documentation live in `/docs` folder. Make
   additions or modifications here.
 * Make sure to double check your grammar and capitalise correctly.
-* Commit with a ["Signed-off-by"](#developer-certificate-of-origin) line appended
-  to your commit message and push to your fork.
+* Commit and push to your fork.
 * Create a pull request from your branch.
 
 ## Development tools

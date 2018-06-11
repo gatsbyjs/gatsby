@@ -184,6 +184,7 @@ class Image extends React.Component {
       outerWrapperClassName,
       style = {},
       imgStyle = {},
+      placeholderStyle = {},
       fluid,
       fixed,
       backgroundColor,
@@ -201,6 +202,7 @@ class Image extends React.Component {
       opacity: this.state.imgLoaded ? 0 : 1,
       transitionDelay: `0.25s`,
       ...imgStyle,
+      ...placeholderStyle,
     }
 
     const imageStyle = {
@@ -461,6 +463,7 @@ Image.propTypes = {
   ]),
   style: PropTypes.object,
   imgStyle: PropTypes.object,
+  placeholderStyle: PropTypes.object,
   position: PropTypes.string,
   backgroundColor: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   onLoad: PropTypes.func,

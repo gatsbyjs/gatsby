@@ -268,6 +268,21 @@ Community:
   * Create your projects in Markdown
   * And other good stuff (SEO, Offline Support, WebApp Manifest Support)
 
+* [gatsby-starter-portfolio-bella](https://github.com/LeKoArts/gatsby-starter-portfolio-bella)
+  [(demo)](https://portfolio-bella.netlify.com/)
+
+  The target audience are designers and photographers.
+
+  Features:
+
+  * Big typography & images
+  * White theme
+  * Prismic.io as CMS
+  * Emotion for styling
+  * One-page layout with sub-pages for case studies
+  * Easily configurable
+  * And other good stuff (SEO, Offline Support, WebApp Manifest Support)
+
 * [gatsby-starter-bootstrap-netlify](https://github.com/konsumer/gatsby-starter-bootstrap-netlify)
   [(demo)](https://gatsby-starter-bootstrap-netlify.netlify.com)
 
@@ -340,7 +355,7 @@ Community:
   * PWA (manifes.json, offline support, favicons)
   * Google Analytics
   * Favicons generator (node script)
-  * Components leazy loading with AsyncComponent (social sharing, info box)
+  * Components lazy loading with AsyncComponent (social sharing, info box)
   * ESLint (google config)
   * Prettier code styling
   * Custom webpack CommonsChunkPlugin settings
@@ -688,3 +703,30 @@ Community:
   * Integration with [Visual Studio Code](https://code.visualstudio.com)
     * Pre-configured auto-formatting on file save
   * Based on [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default)
+
+* [gatsby-starter-hero-blog](https://github.com/greglobinski/gatsby-starter-hero-blog)
+  [(demo)](https://gatsby-starter-hero-blog.greglobinski.com/)
+
+  Features:
+
+  * Easy editable content in Markdown files (posts, pages and parts)
+  * CSS with `styled-jsx` and `PostCSS`
+  * SEO (sitemap generation, robot.txt, meta and OpenGraph Tags)
+  * Social sharing (Twitter, Facebook, Google, LinkedIn)
+  * Comments (Facebook)
+  * Images lazy loading and `webp` support (gatsby-image)
+  * Post categories (category based post list)
+  * Full text searching (Algolia)
+  * Contact form (Netlify form handling)
+  * Form elements and validation with `ant-design`
+  * RSS feed
+  * 100% PWA (manifest.webmanifest, offline support, favicons)
+  * Google Analytics
+  * App favicons generator (node script)
+  * Easy customizable base styles via `theme` object generated from `yaml` file (fonts, colors, sizes)
+  * React v.16.3 (gatsby-plugin-react-next)
+  * Components lazy loading (social sharing)
+  * ESLint (google config)
+  * Prettier code styling
+  * Webpack `BundleAnalyzerPlugin`
+  * [README](https://github.com/greglobinski/gatsby-starter-hero-blog) / [DEMO](https://gatsby-starter-hero-blog.greglobinski.com/)

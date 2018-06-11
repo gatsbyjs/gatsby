@@ -45,11 +45,19 @@ function typeFields(type): GraphQLInputFieldConfigMap {
       return {
         eq: { type: GraphQLInt },
         ne: { type: GraphQLInt },
+        gt: { type: GraphQLInt },
+        gte: { type: GraphQLInt },
+        lt: { type: GraphQLInt },
+        lte: { type: GraphQLInt },
       }
     case `float`:
       return {
         eq: { type: GraphQLFloat },
         ne: { type: GraphQLFloat },
+        gt: { type: GraphQLFloat },
+        gte: { type: GraphQLFloat },
+        lt: { type: GraphQLFloat },
+        lte: { type: GraphQLFloat },
       }
   }
   return {}

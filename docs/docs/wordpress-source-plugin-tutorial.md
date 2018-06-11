@@ -1,10 +1,14 @@
-## How to create a site with data pulled from WordPress 
+---
+title: "Wordpress Source Plugin Tutorial"
+---
+
+## How to create a site with data pulled from WordPress
 
 ### What this tutorial covers:
 
-In this tutorial, you will install the `gatsby-source-wordpress` plugin in order to pull blog and image data from a WordPress install into your Gatsby site and render that data. This [Gatsby + Wordpress demo site](https://using-wordpress.gatsbyjs.org/) shows you a sample of what you’re going to be building in this tutorial., although it’s missing the cool images you’ll be adding :D
+In this tutorial, you will install the `gatsby-source-wordpress` plugin in order to pull blog and image data from a WordPress install into your Gatsby site and render that data. This [Gatsby + Wordpress demo site](https://using-wordpress.gatsbyjs.org/) shows you a sample of what you’re going to be building in this tutorial, although it’s missing the cool images you’ll be adding :D
 
-### Why go through this tutorial? 
+### Why go through this tutorial?
 
 While each source plugin may operate differently from others, it’s worth going through this tutorial because you will almost definitely be using a source plugin in most Gatsby sites you build. This tutorial will walk you through the basics of connecting your Gatsby site to a CMS, pulling in data, and using React to render that data in beautiful ways on your site.
 
@@ -25,9 +29,9 @@ Install the `gatsby-source-wordpress` plugin. For extra reading on the plugin’
 npm install --save gatsby-source-wordpress
 ```
 
-Add the `gatsby-source-wordpress` plugin to `gatsby-config.js` using the following code, which you can also find in the [demo site’s source code](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-wordpress/gatsby-config.js). 
+Add the `gatsby-source-wordpress` plugin to `gatsby-config.js` using the following code, which you can also find in the [demo site’s source code](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-wordpress/gatsby-config.js).
 
-```javascript{32-58}
+```js{32-58}
  module.exports = {
   siteMetadata: {
     title: 'Gatsby Wordpress Tutorial',
@@ -72,9 +76,9 @@ Run:
 gatsby develop
 ```
 
-Open localhost:8000 and localhost:8000/___graphql. 
+In your browser, open localhost:8000 to see your site, and open localhost:8000/___graphql so that you can create your GraphQL queries.
 
-This query will pull in the blogpost content from WordPress:
+As an exercise, try re-creating the following queries in your GraphiQL explorer. This first query will pull in the blogpost content from WordPress:
 
 ```graphql
 query {
@@ -93,7 +97,7 @@ query {
 ```
 
 
-This query will pull in a sorted list of those blogposts:
+This next query will pull in a sorted list of the blogposts:
 
 ```graphql
 {
@@ -112,7 +116,7 @@ This query will pull in a sorted list of those blogposts:
 
 ### Rendering the blogposts to `index.js`
 
-Here is what your `index.js` should look like:
+Now that you've created GraphQL queries that pull in the data you want, we'll use that second query to create a list of sorted blogpost titles on your site's homepage. Here is what your `index.js` should look like:
 
 ```jsx
 import React from 'react'
@@ -147,8 +151,9 @@ export const pageQuery = graphql`
  }
 `
 ```
+Save these changes and look at localhost:8000 to see your new homepage with list of sorted blogposts!
 
-[Note to editors: it would be useful to insert a screenshot of the final result here]
+> **NOTE:** to future editors: it would be useful to also have examples of how to load blogposts to their own individual pages. And helpful to insert a screenshot of the final result here
 
-### Create slugs for each blogpost and link to them from `index.js`
+### Create slugs for each blogpost
 [Part 7](/tutorial/part-seven/) of the foundational tutorial goes through this process.

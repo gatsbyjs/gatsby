@@ -137,12 +137,20 @@ exports.liftRenderedField = entities =>
   })
 
 // Exclude entities of unknown shape
+// Assume all entities contain a wordpress_id, except for whitelisted type wp_settings
 exports.excludeUnknownEntities = entities =>
-  entities.filter(e => e.wordpress_id) // Excluding entities without ID
+  entities.filter(e => e.wordpress_id || e.__type === `wordpress__wp_settings`) // Excluding entities without ID, or WP Settings
 
+// Create node ID from known entities
+// excludeUnknownEntities whitelisted types don't contain a wordpress_id
+// we create the node ID based upon type if the wordpress_id doesn't exist
 exports.createGatsbyIds = (createNodeId, entities) =>
   entities.map(e => {
-    e.id = createNodeId(`${e.__type}-${e.wordpress_id.toString()}`)
+    if (e.wordpress_id) {
+      e.id = createNodeId(`${e.__type}-${e.wordpress_id.toString()}`)
+    } else {
+      e.id = createNodeId(e.__type)
+    }
     return e
   })
 
@@ -164,7 +172,7 @@ exports.mapTypes = entities => {
 exports.mapAuthorsToUsers = entities => {
   const users = entities.filter(e => e.__type === `wordpress__wp_users`)
   return entities.map(e => {
-    if (e.author) {
+    if (users.length && e.author) {
       // Find the user
       const user = users.find(u => u.wordpress_id === e.author)
       if (user) {
@@ -192,21 +200,24 @@ exports.mapPostsToTagsCategories = entities => {
   const categories = entities.filter(e => e.__type === `wordpress__CATEGORY`)
 
   return entities.map(e => {
-    if (e.__type === `wordpress__POST`) {
-      // Replace tags & categories with links to their nodes.
-      if (e.tags.length) {
-        e.tags___NODE = e.tags.map(
-          t => tags.find(tObj => t === tObj.wordpress_id).id
-        )
-        delete e.tags
-      }
-      if (e.categories.length) {
-        e.categories___NODE = e.categories.map(
-          c => categories.find(cObj => c === cObj.wordpress_id).id
-        )
-        delete e.categories
-      }
+    // Replace tags & categories with links to their nodes.
+
+    let entityHasTags = (e.tags && Array.isArray(e.tags) && e.tags.length)
+    if (tags.length && entityHasTags) {
+      e.tags___NODE = e.tags.map(
+        t => tags.find(tObj => t === tObj.wordpress_id).id
+      )
+      delete e.tags
     }
+
+    let entityHasCategories = (e.categories && Array.isArray(e.categories) && e.categories.length)
+    if (categories.length && entityHasCategories) {
+      e.categories___NODE = e.categories.map(
+        c => categories.find(cObj => c === cObj.wordpress_id).id
+      )
+      delete e.categories
+    }
+
     return e
   })
 }

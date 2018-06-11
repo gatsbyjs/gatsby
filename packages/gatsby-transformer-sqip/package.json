@@ -8,7 +8,9 @@
   },
   "dependencies": {
     "@babel/runtime": "7.0.0-beta.47",
+    "axios": "^0.18.0",
     "fs-extra": "^4.0.2",
+    "gatsby-plugin-sharp": "next",
     "mini-svg-data-uri": "^1.0.0",
     "p-queue": "^2.3.0",
     "sqip": "^0.3.0"
