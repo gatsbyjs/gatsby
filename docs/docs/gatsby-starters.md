@@ -25,23 +25,24 @@ There are several starters that have been created. Create a PR to include yours!
 Official:
 
 * [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default)
-  [(demo)](http://gatsbyjs.github.io/gatsby-starter-default/)
+  [(demo)](http://gatsbyjs.github.io/gatsby-starter-default/)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/gatsbyjs/gatsby-starter-default)
 * [gatsby-starter-blog](https://github.com/gatsbyjs/gatsby-starter-blog)
-  [(demo)](http://gatsbyjs.github.io/gatsby-starter-blog/)
+  [(demo)](http://gatsbyjs.github.io/gatsby-starter-blog/)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/gatsbyjs/gatsby-starter-blog)
 * [gatsby-starter-hello-world](https://github.com/gatsbyjs/gatsby-starter-hello-world)
-  [(demo)](https://aberrant-fifth.surge.sh/)
+  [(demo)](https://aberrant-fifth.surge.sh/)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/gatsbyjs/gatsby-starter-hello-world)
 
 Community:
 
+
 * [gatsby-starter-blog-no-styles](https://github.com/noahg/gatsby-starter-blog-no-styles)
-  [(demo)](http://capricious-spring.surge.sh/)
+  [(demo)](http://capricious-spring.surge.sh/)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/noahg/gatsby-starter-blog-no-styles)
 
   Features:
 
   * Same as official gatsby-starter-blog but with all styling removed
 
 * [gatsby-material-starter](https://github.com/Vagr9K/gatsby-material-starter)
-  [(demo)](https://vagr9k.github.io/gatsby-material-starter/)
+  [(demo)](https://vagr9k.github.io/gatsby-material-starter/)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/Vagr9K/gatsby-material-starter)
 
   Features:
 
@@ -57,7 +58,7 @@ Community:
   * [Full list here!](https://github.com/Vagr9K/gatsby-material-starter#features)
 
 * [gatsby-typescript-starter](https://github.com/fabien0102/gatsby-starter)
-  [(demo)](https://fabien0102-gatsby-starter.netlify.com/)
+  [(demo)](https://fabien0102-gatsby-starter.netlify.com/)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/fabien0102/gatsby-starter)
 
   Features:
 
@@ -71,7 +72,7 @@ Community:
   * [Full list here!](https://github.com/fabien0102/gatsby-starter#whats-inside)
 
 * [gatsby-starter-bootstrap](https://github.com/jaxx2104/gatsby-starter-bootstrap)
-  [(demo)](https://jaxx2104.github.io/gatsby-starter-bootstrap/)
+  [(demo)](https://jaxx2104.github.io/gatsby-starter-bootstrap/)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/jaxx2104/gatsby-starter-bootstrap)
 
   Features:
 
@@ -80,7 +81,7 @@ Community:
   * Basic components: SiteNavi, SitePost, SitePage
 
 * [gatsby-blog-starter-kit](https://github.com/dschau/gatsby-blog-starter-kit)
-  [(demo)](https://dschau.github.io/gatsby-blog-starter-kit/)
+  [(demo)](https://dschau.github.io/gatsby-blog-starter-kit/)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/dschau/gatsby-blog-starter-kit)
 
   Features:
 
@@ -89,7 +90,7 @@ Community:
   * Tags and tag navigation
 
 * [gatsby-starter-casper](https://github.com/haysclark/gatsby-starter-casper)
-  [(demo)](https://haysclark.github.io/gatsby-starter-casper/)
+  [(demo)](https://haysclark.github.io/gatsby-starter-casper/)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/haysclark/gatsby-starter-casper)
 
   Features:
 
@@ -103,7 +104,7 @@ Community:
   * [Full list here!](https://github.com/haysclark/gatsby-starter-casper#features)
 
 * [gatsby-advanced-starter](https://github.com/Vagr9K/gatsby-advanced-starter)
-  [(demo)](https://vagr9k.github.io/gatsby-advanced-starter/)
+  [(demo)](https://vagr9k.github.io/gatsby-advanced-starter/)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/Vagr9K/gatsby-advanced-starter)
 
   Features:
 
@@ -120,7 +121,7 @@ Community:
   * [Full list here!](https://github.com/Vagr9K/gatsby-advanced-starter#features)
 
 * [glitch-gatsby-starter-blog](https://github.com/100ideas/glitch-gatsby-starter-blog/)
-  ([demo](https://gatsby-starter-blog.glitch.me))
+  ([demo](https://gatsby-starter-blog.glitch.me))[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/100ideas/glitch-gatsby-starter-blog/)
 
   Features:
 
@@ -141,7 +142,7 @@ Community:
     * server can't install certain gatsby plugins (`sharp`-based; out of mem?)
 
 * [gatsby-starter-grommet](https://github.com/alampros/gatsby-starter-grommet)
-  [(demo)](https://alampros.github.io/gatsby-starter-grommet/)
+  [(demo)](https://alampros.github.io/gatsby-starter-grommet/)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/alampros/gatsby-starter-grommet)
 
   Features:
 
@@ -150,7 +151,7 @@ Community:
   * Uses Sass (with CSS modules support)
 
 * [gatsby-starter-basic](https://github.com/PrototypeInteractive/gatsby-react-boilerplate)
-  [(demo)](https://prototypeinteractive.github.io/gatsby-react-boilerplate/)
+  [(demo)](https://prototypeinteractive.github.io/gatsby-react-boilerplate/)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/PrototypeInteractive/gatsby-react-boilerplate)
 
   Features:
 
@@ -162,14 +163,14 @@ Community:
   * Contains Node.js server code for easy, secure, and fast hosting
 
 * [gatsby-starter-typescript](https://github.com/haysclark/gatsby-starter-typescript)
-  [(demo)](https://haysclark.github.io/gatsby-starter-typescript/)
+  [(demo)](https://haysclark.github.io/gatsby-starter-typescript/)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/haysclark/gatsby-starter-typescript)
 
   Features:
 
   * TypeScript
 
 * [gatsby-starter-bulma-storybook](https://github.com/gvaldambrini/gatsby-starter-bulma-storybook)
-  [(demo)](http://gatsby-bulma-storybook.surge.sh/)
+  [(demo)](http://gatsby-bulma-storybook.surge.sh/)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/gvaldambrini/gatsby-starter-bulma-storybook)
 
   Features:
 
@@ -180,14 +181,14 @@ Community:
   * Jest
 
 * [gatsby-starter-default-i18n](https://github.com/angeloocana/gatsby-starter-default-i18n)
-  [(demo)](https://gatsby-starter-default-i18n.netlify.com)
+  [(demo)](https://gatsby-starter-default-i18n.netlify.com)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/angeloocana/gatsby-starter-default-i18n)
 
   Features:
 
   * localization (Multilanguage)
  
 * [gatsby-starter-datocms](https://github.com/datocms/gatsby-portfolio)
-  [(demo)](http://cranky-edison-12166d.netlify.com/)
+  [(demo)](http://cranky-edison-12166d.netlify.com/)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/datocms/gatsby-portfolio)
 
   Features:
   
@@ -196,7 +197,7 @@ Community:
   * Custom sass style
   * SEO
 
-* [gatsby-starter-contentful-i18n](https://github.com/mccrodp/gatsby-starter-contentful-i18n) [(demo)](https://gatsby-starter-contentful-i18n.netlify.com/)
+* [gatsby-starter-contentful-i18n](https://github.com/mccrodp/gatsby-starter-contentful-i18n) [(demo)](https://gatsby-starter-contentful-i18n.netlify.com/)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/mccrodp/gatsby-starter-contentful-i18n)
 
   Features:
 
@@ -205,7 +206,7 @@ Community:
   * Integrates [i18n plugin starter](https://github.com/angeloocana/gatsby-starter-default-i18n) and [using-contentful](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-contentful) repos
 
 * [gatsby-starter-gatsbythemes](https://github.com/saschajullmann/gatsby-starter-gatsbythemes)
-  [(demo)](https://themes.gatsbythemes.com/gatsby-starter/)
+  [(demo)](https://themes.gatsbythemes.com/gatsby-starter/)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/saschajullmann/gatsby-starter-gatsbythemes)
 
   Features:
 
@@ -227,7 +228,7 @@ Community:
   * Font styles taken from [Tachyons](http://tachyons.io/).
 
 * [gatsby-starter-netlify-cms](https://github.com/AustinGreen/gatsby-starter-netlify-cms)
-  [(demo)](https://gatsby-netlify-cms.netlify.com/)
+  [(demo)](https://gatsby-netlify-cms.netlify.com/)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/AustinGreen/gatsby-starter-netlify-cms)
 
   Features:
 
@@ -238,7 +239,7 @@ Community:
     to learn how to set up authentication, and begin modeling your content.
 
 * [gatsby-starter-portfolio-emma](https://github.com/LeKoArts/gatsby-starter-portfolio-emma)
-  [(demo)](https://portfolio-emma.netlify.com/)
+  [(demo)](https://portfolio-emma.netlify.com/)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/LeKoArts/gatsby-starter-portfolio-emma)
 
   The target audience are designers and photographers.
 
@@ -253,7 +254,7 @@ Community:
   * And other good stuff (SEO, Offline Support, WebApp Manifest Support)
 
 * [gatsby-starter-portfolio-emilia](https://github.com/LeKoArts/gatsby-starter-portfolio-emilia)
-  [(demo)](https://portfolio-emilia.netlify.com/)
+  [(demo)](https://portfolio-emilia.netlify.com/)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/LeKoArts/gatsby-starter-portfolio-emilia)
 
   The target audience are designers and photographers.
 
@@ -269,7 +270,7 @@ Community:
   * And other good stuff (SEO, Offline Support, WebApp Manifest Support)
   
 * [gatsby-starter-portfolio-bella](https://github.com/LeKoArts/gatsby-starter-portfolio-bella)
-  [(demo)](https://portfolio-bella.netlify.com/)
+  [(demo)](https://portfolio-bella.netlify.com/)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/LeKoArts/gatsby-starter-portfolio-bella)
   
   The target audience are designers and photographers.
 
@@ -284,7 +285,7 @@ Community:
   * And other good stuff (SEO, Offline Support, WebApp Manifest Support)
   
 * [gatsby-starter-portfolio-cara](https://github.com/LeKoArts/gatsby-starter-portfolio-cara)
-  [(demo)](https://portfolio-cara.netlify.com/)
+  [(demo)](https://portfolio-cara.netlify.com/)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/LeKoArts/gatsby-starter-portfolio-cara)
   
   The target audience are designers and photographers.
 
@@ -298,7 +299,7 @@ Community:
   * And other good stuff (SEO, Responsive images, Offline Support, WebApp Manifest Support)
 
 * [gatsby-starter-bootstrap-netlify](https://github.com/konsumer/gatsby-starter-bootstrap-netlify)
-  [(demo)](https://gatsby-starter-bootstrap-netlify.netlify.com)
+  [(demo)](https://gatsby-starter-bootstrap-netlify.netlify.com)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/konsumer/gatsby-starter-bootstrap-netlify)
 
   Features:
 
@@ -308,7 +309,7 @@ Community:
     Bootstrap/Bootswatch instead of bulma
 
 * [open-crowd-fund](https://github.com/rwieruch/open-crowd-fund)
-  [(demo)](https://www.roadtolearnreact.com/)
+  [(demo)](https://www.roadtolearnreact.com/)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/rwieruch/open-crowd-fund)
 
   Features:
 
@@ -318,7 +319,7 @@ Community:
   * Storing of funding information in Firebase
 
 * [gatsby-starter-dimension](https://github.com/ChangoMan/gatsby-starter-dimension)
-  [(demo)](http://gatsby-dimension.surge.sh/)
+  [(demo)](http://gatsby-dimension.surge.sh/)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/ChangoMan/gatsby-starter-dimension)
 
   Features:
 
@@ -329,7 +330,7 @@ Community:
   * Styling with SCSS
 
 * [gatsby-starter-docs](https://github.com/ericwindmill/gatsby-starter-docs)
-  [(demo)](https://gatsby-docs-starter.netlify.com/)
+  [(demo)](https://gatsby-docs-starter.netlify.com/)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/ericwindmill/gatsby-starter-docs)
 
   Features:
 
@@ -346,7 +347,7 @@ Community:
   * React Icons
 
 * [gatsby-starter-personal-blog](https://github.com/greglobinski/gatsby-starter-personal-blog)
-  [(demo)](https://gatsby-starter-personal-blog.greglobinski.com/)
+  [(demo)](https://gatsby-starter-personal-blog.greglobinski.com/)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/greglobinski/gatsby-starter-personal-blog)
 
   Features:
 
@@ -377,7 +378,7 @@ Community:
   * [README](https://github.com/greglobinski/gatsby-starter-personal-blog) / [DEMO](https://gatsby-starter-personal-blog.greglobinski.com/)
 
 * [gatsby-starter-deck](https://github.com/fabe/gatsby-starter-deck)
-  [(demo)](https://gatsby-deck.netlify.com/)
+  [(demo)](https://gatsby-deck.netlify.com/)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/fabe/gatsby-starter-deck)
 
   Features:
 
@@ -386,7 +387,7 @@ Community:
   * Page transitions.
 
 * [gatsby-starter-forty](https://github.com/ChangoMan/gatsby-starter-forty)
-  [(demo)](http://gatsby-forty.surge.sh/)
+  [(demo)](http://gatsby-forty.surge.sh/)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/ChangoMan/gatsby-starter-forty)
 
   Features:
 
@@ -396,7 +397,7 @@ Community:
   * Many elements are available, including buttons, forms, tables, and pagination.
   * Styling with SCSS
 
-* [gatsby-firebase-authentication](https://github.com/rwieruch/gatsby-firebase-authentication) [(demo)](https://react-firebase-authentication.wieruch.com/)
+* [gatsby-firebase-authentication](https://github.com/rwieruch/gatsby-firebase-authentication) [(demo)](https://react-firebase-authentication.wieruch.com/)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/rwieruch/gatsby-firebase-authentication)
 
   Features:
 
@@ -406,7 +407,7 @@ Community:
   * Protected Routes with Authorization
   * Realtime Database with Users
 
-* [gatsby-starter-ceevee](https://github.com/amandeepmittal/gatsby-starter-ceevee) [(demo)](http://gatsby-starter-ceevee.surge.sh/)
+* [gatsby-starter-ceevee](https://github.com/amandeepmittal/gatsby-starter-ceevee) [(demo)](http://gatsby-starter-ceevee.surge.sh/)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/amandeepmittal/gatsby-starter-ceevee)
 
   Features:
 
@@ -417,7 +418,7 @@ Community:
   * FontAwsome Library for icons
   * Responsive Design, optimized for Mobile devices
 
-- [gatsby-starter-product-guy](https://github.com/amandeepmittal/gatsby-starter-product-guy) [(demo)](http://gatsby-starter-product-guy.surge.sh/)
+- [gatsby-starter-product-guy](https://github.com/amandeepmittal/gatsby-starter-product-guy) [(demo)](http://gatsby-starter-product-guy.surge.sh/)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/amandeepmittal/gatsby-starter-product-guy)
 
   Features:
 
@@ -428,7 +429,7 @@ Community:
   * Responsive Design, optimized for Mobile devices
 
 * [gatsby-starter-strata](https://github.com/ChangoMan/gatsby-starter-strata)
-  [(demo)](http://gatsby-strata.surge.sh/)
+  [(demo)](http://gatsby-strata.surge.sh/)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/ChangoMan/gatsby-starter-strata)
 
   Features:
 
@@ -440,7 +441,7 @@ Community:
   * Styling with SCSS
 
 * [verious](https://github.com/cpinnix/verious-boilerplate)
-  [(demo)](https://www.verious.io/)
+  [(demo)](https://www.verious.io/)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/cpinnix/verious-boilerplate)
 
   Features:
 
@@ -452,7 +453,7 @@ Community:
   * One font to rule them all: Helvetica.
 
 * [gatsby-starter-lumen](https://github.com/alxshelepenok/gatsby-starter-lumen)
-  [(demo)](https://lumen.netlify.com/)
+  [(demo)](https://lumen.netlify.com/)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/alxshelepenok/gatsby-starter-lumen)
 
   Features:
 
@@ -470,7 +471,7 @@ Community:
   * Disqus Comments support.
 
 * [gatsby-starter-strict](https://github.com/kripod/gatsby-starter-strict)
-  [(demo)](https://gatsby-starter-strict.netlify.com)
+  [(demo)](https://gatsby-starter-strict.netlify.com)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/kripod/gatsby-starter-strict)
 
   Features:
 
@@ -485,7 +486,7 @@ Community:
   * Based on [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default)
 
 * [gatsby-hampton-theme](https://github.com/davad/gatsby-hampton-theme)
-  [(demo)](http://dmwl.net/gatsby-hampton-theme)
+  [(demo)](http://dmwl.net/gatsby-hampton-theme)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/davad/gatsby-hampton-theme)
 
   Features:
 
@@ -496,7 +497,7 @@ Community:
   * Based on [gatsby-starter-gatsbytheme](https://github.com/saschajullmann/gatsby-starter-gatsbythemes)
 
 * [gatsby-wordpress-starter](https://github.com/ericwindmill/gatsby-starter-wordpress)
-  [(demo)](https://gatsby-wordpress-starter.netlify.com/)
+  [(demo)](https://gatsby-wordpress-starter.netlify.com/)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/ericwindmill/gatsby-starter-wordpress)
 
   Features:
 
@@ -510,7 +511,7 @@ Community:
   * Styled Components
 
 * [gatsby-starter-simple-landing](https://github.com/greglobinski/gatsby-starter-simple-landing)
-  [(demo)](https://gssl.greglobinski.com/)
+  [(demo)](https://gssl.greglobinski.com/)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/greglobinski/gatsby-starter-simple-landing)
 
   Features:
 
@@ -522,7 +523,7 @@ Community:
   * webfonts with [webfontloader](https://github.com/typekit/webfontloader)
 
 * [gatsby-starter-typescript-plus](https://github.com/resir014/gatsby-starter-typescript-plus)
-  [(demo)](https://gatsby-starter-typescript-plus.netlify.com/)
+  [(demo)](https://gatsby-starter-typescript-plus.netlify.com/)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/resir014/gatsby-starter-typescript-plus)
 
   Features:
 
@@ -533,14 +534,14 @@ Community:
   * Styling with [styled-components](https://www.styled-components.com/)
 
 * [gatsby-orga](https://github.com/xiaoxinghu/gatsby-orga)
-  [(demo)](https://xiaoxinghu.github.io/gatsby-orga/)
+  [(demo)](https://xiaoxinghu.github.io/gatsby-orga/)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/xiaoxinghu/gatsby-orga)
 
   Features:
 
   * Parses [org-mode](http://orgmode.org) files with [Orga](https://github.com/xiaoxinghu/orgajs).
 
 * [gatsby-starter-minimal-blog](https://github.com/LeKoArts/gatsby-starter-minimal-blog)
-  [(demo)](https://minimal-blog.netlify.com/)
+  [(demo)](https://minimal-blog.netlify.com/)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/LeKoArts/gatsby-starter-minimal-blog)
 
   Features:
 
@@ -551,7 +552,7 @@ Community:
   * Part of a german tutorial series on Gatsby. The starter will change over time to use more advanced stuff (feel free to express your ideas)
 
 * [gatsby-starter-redux](https://github.com/caki0915/gatsby-starter-redux)
-  [(demo)](https://caki0915.github.io/gatsby-starter-redux/)
+  [(demo)](https://caki0915.github.io/gatsby-starter-redux/)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/caki0915/gatsby-starter-redux)
 
   Features:
 
@@ -560,7 +561,7 @@ Community:
   * [Typography.js](https://kyleamathews.github.io/typography.js/)
   * Eslint rules based on [Prettier](https://prettier.io/) and [Airbnb](https://www.npmjs.com/package/eslint-config-airbnb)
 
-* [gatsby-contentful-starter](https://github.com/contentful-userland/gatsby-contentful-starter) [(demo)](https://contentful-userland.github.io/gatsby-contentful-starter/)
+* [gatsby-contentful-starter](https://github.com/contentful-userland/gatsby-contentful-starter) [(demo)](https://contentful-userland.github.io/gatsby-contentful-starter/)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/contentful-userland/gatsby-contentful-starter)
 
   Features:
 
@@ -568,7 +569,7 @@ Community:
   * [Includes Contentful Delivery API for production build](https://www.contentful.com/developers/docs/references/content-delivery-api/)
   * [Includes Contentful Preview API for development](https://www.contentful.com/developers/docs/references/content-preview-api/)
 
-* [gatsby-starter-gcn](https://github.com/ryanwiemer/gatsby-starter-gcn) [(demo)](https://gcn.netlify.com/)
+* [gatsby-starter-gcn](https://github.com/ryanwiemer/gatsby-starter-gcn) [(demo)](https://gcn.netlify.com/)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/ryanwiemer/gatsby-starter-gcn)
 
   Features:
 
@@ -579,7 +580,7 @@ Community:
   * Styled components
   * SEO friendly
 
-* [gatsby-starter-timeline-theme](https://github.com/amandeepmittal/gatsby-portfolio-v3) [(Demo)](http://portfolio-v3.surge.sh/)
+* [gatsby-starter-timeline-theme](https://github.com/amandeepmittal/gatsby-portfolio-v3) [(Demo)](http://portfolio-v3.surge.sh/)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/amandeepmittal/gatsby-portfolio-v3)
 
   Features:
 
@@ -591,7 +592,7 @@ Community:
   * Uses Flexbox
 
 * [gatsby-starter-stellar](https://github.com/codebushi/gatsby-starter-stellar)
-  [(demo)](http://gatsby-stellar.surge.sh/)
+  [(demo)](http://gatsby-stellar.surge.sh/)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/codebushi/gatsby-starter-stellar)
 
   Features:
 
@@ -603,7 +604,7 @@ Community:
   * Styling with SCSS
 
 * [gatsby-starter-tailwind](https://github.com/taylorbryant/gatsby-starter-tailwind)
-  [(demo)](https://quizzical-mcclintock-0226ac.netlify.com/)
+  [(demo)](https://quizzical-mcclintock-0226ac.netlify.com/)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/taylorbryant/gatsby-starter-tailwind)
 
   Features:
 
@@ -613,7 +614,7 @@ Community:
   * Includes responsive navigation and form examples
 
 * [gatsby-starter-bloomer](https://github.com/Cethy/gatsby-starter-bloomer)
-  [(demo)](https://gatsby-starter-bloomer.netlify.com/)
+  [(demo)](https://gatsby-starter-bloomer.netlify.com/)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/Cethy/gatsby-starter-bloomer)
 
   Features:
 
@@ -623,7 +624,7 @@ Community:
   * Includes a simple fullscreen hero w/ footer example
 
 * [gatsby-starter-i18n-lingui](https://github.com/dcroitoru/gatsby-starter-i18n-lingui)
-  [(demo)](https://gatsby-starter-i18n-lingui.netlify.com/)
+  [(demo)](https://gatsby-starter-i18n-lingui.netlify.com/)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/dcroitoru/gatsby-starter-i18n-lingui)
 
   Features:
 
@@ -633,7 +634,7 @@ Community:
   * Possibility of translated paths
 
 * [gatsby-starter-photon](https://github.com/codebushi/gatsby-starter-photon)
-  [(demo)](http://gatsby-photon.surge.sh/)
+  [(demo)](http://gatsby-photon.surge.sh/)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/codebushi/gatsby-starter-photon)
 
   Features:
 
@@ -644,7 +645,7 @@ Community:
   * Styling with SCSS
 
 * [gatsby-starter-business](https://github.com/v4iv/gatsby-starter-business)
-  [(demo)](https://gatsby-starter-business.netlify.com/)
+  [(demo)](https://gatsby-starter-business.netlify.com/)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/v4iv/gatsby-starter-business)
 
   Features:
 
@@ -657,7 +658,7 @@ Community:
   * Disqus and Share Support
 
 * [gatsby-advanced-blog](https://github.com/wonism/gatsby-advanced-blog)
-  [(demo)](https://wonism.github.io/)
+  [(demo)](https://wonism.github.io/)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/wonism/gatsby-advanced-blog)
 
   Features:
 
@@ -671,7 +672,7 @@ Community:
   * Redux for managing statement (with redux-saga / reselect)
 
 * [gatsby-starter-procyon](https://github.com/danielmahon/gatsby-starter-procyon)
-  [(demo)](https://gatsby-starter-procyon.netlify.com/)
+  [(demo)](https://gatsby-starter-procyon.netlify.com/)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/danielmahon/gatsby-starter-procyon)
 
   Features:
 
@@ -690,7 +691,7 @@ Community:
   * [Google Fonts](https://fonts.google.com/)
 
 * [gatsby-starter-2column-portfolio](https://github.com/praagyajoshi/gatsby-starter-2column-portfolio)
-  [(demo)](http://2column-portfolio.surge.sh/)
+  [(demo)](http://2column-portfolio.surge.sh/)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/praagyajoshi/gatsby-starter-2column-portfolio)
 
   Features:
 
@@ -703,7 +704,7 @@ Community:
   * Prerendered Open Graph tags for rich sharing
 
 * [gatsby-starter-modern](https://github.com/kripod/gatsby-starter-modern)
-  [(demo)](https://gatsby-starter-modern-demo.netlify.com/)
+  [(demo)](https://gatsby-starter-modern-demo.netlify.com/)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/kripod/gatsby-starter-modern)
 
   Features:
 
@@ -719,7 +720,7 @@ Community:
   * Based on [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default)
   
 * [gatsby-starter-hero-blog](https://github.com/greglobinski/gatsby-starter-hero-blog)
-  [(demo)](https://gatsby-starter-hero-blog.greglobinski.com/)
+  [(demo)](https://gatsby-starter-hero-blog.greglobinski.com/)[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height="15" width="75">](https://app.netlify.com/start/deploy?repository=https://github.com/greglobinski/gatsby-starter-hero-blog)
 
   Features:
 
