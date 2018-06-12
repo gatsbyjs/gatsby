@@ -206,9 +206,7 @@ const options = {
 
 const typography = new Typography(options)
 
-// Hot reload typography in development.
-if (process.env.NODE_ENV !== `production`) {
-  typography.injectStyles()
-}
-
 export default typography
+
+export const scale = typography.scale
+export const rhythm = typography.rhythm
