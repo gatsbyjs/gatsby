@@ -3,6 +3,7 @@ import Helmet from "react-helmet"
 
 import { Link } from "gatsby"
 import Img from "gatsby-image"
+import { style } from "glamor"
 
 import Layout from "../components/layout"
 import SearchIcon from "../components/search-icon"
@@ -16,6 +17,7 @@ import FaAngleUp from "react-icons/lib/fa/angle-up"
 
 import Fuse from "fuse.js"
 import FeaturedSitesIcon from "../assets/featured-sites-icons.svg"
+import { ShowcaseIcon } from "../assets/mobile-nav-icons"
 
 // TODO: make sure to use colors
 
@@ -480,12 +482,19 @@ class ShowcasePage extends Component {
                     <Link
                       key={node.id}
                       css={{
-                        display: `block`,
+                        ...styles.featuredSitesCard,
                         marginRight: `30px`,
                         marginBottom: rhythm(options.blockMarginBottom * 4),
                         "&&": {
                           borderBottom: `none`,
                           boxShadow: `none`,
+                          transition: `color ${
+                            presets.animation.speedDefault
+                          } ${presets.animation.curveDefault}`,
+                          "&:hover": {
+                            background: `none`,
+                            color: colors.gatsby,
+                          },
                         },
                       }}
                       to={{
@@ -495,38 +504,91 @@ class ShowcasePage extends Component {
                     >
                       {node.childScreenshot && (
                         <Img
-                          resolutions={
+                          sizes={
                             node.childScreenshot.screenshotFile.childImageSharp
-                              .resolutions
+                              .sizes
                           }
                           alt={node.title}
                         />
                       )}
                       {node.title}
-                      <div>{node.categories && node.categories.join(`, `)}</div>
-                      {node.built_by && <div>Built by {node.built_by}</div>}
+                      <div
+                        css={{
+                          ...scale(-1 / 6),
+                          color: colors.gray.calm,
+                          fontWeight: `normal`,
+                          [presets.Desktop]: {
+                            marginTop: `auto`,
+                          },
+                        }}
+                      >
+                        {node.built_by && <div>Built by {node.built_by}</div>}
+                        {node.categories && node.categories.join(`, `)}
+                      </div>
                     </Link>
                   ))}
-                  <div css={{ margin: `15px` }}>
-                    <a
-                      href="#search-heading"
+                  <a
+                    href="#search-heading"
+                    css={{
+                      ...styles.featuredSitesCard,
+                      display: `block`,
+                      textAlign: `center`,
+                      padding: 0,
+                      background: `none`,
+                      border: `none`,
+                      cursor: `pointer`,
+                      "&&": {
+                        boxShadow: `none`,
+                        borderBottom: 0,
+                      },
+                    }}
+                    onClick={() =>
+                      this.setState({ filters: new Set([`Featured`]) })
+                    }
+                  >
+                    <div
                       css={{
-                        display: `block`,
-                        width: `512px`,
-                        height: `288px`,
-                        textAlign: `center`,
-                        padding: 0,
-                        background: `none`,
-                        border: `none`,
-                        cursor: `pointer`,
+                        margin: 20,
+                        background: colors.ui.whisper,
+                        height: `100%`,
+                        display: `flex`,
+                        alignItems: `center`,
+                        position: `relative`,
                       }}
-                      onClick={() =>
-                        this.setState({ filters: new Set([`Featured`]) })
-                      }
                     >
-                      See More Featured Sites
-                    </a>
-                  </div>
+                      <img
+                        src={ShowcaseIcon}
+                        css={{
+                          position: `absolute`,
+                          height: `100%`,
+                          width: `auto`,
+                          display: `block`,
+                          margin: `0 auto 20px`,
+                          opacity: 0.1,
+                        }}
+                        alt=""
+                      />
+
+                      <span
+                        css={{
+                          margin: `0 auto`,
+                          color: colors.gatsby,
+                        }}
+                      >
+                        <img
+                          src={ShowcaseIcon}
+                          css={{
+                            height: 74,
+                            width: `auto`,
+                            display: `block`,
+                            margin: `0 auto 20px`,
+                          }}
+                          alt=""
+                        />
+                        View all Featured Sites
+                      </span>
+                    </div>
+                  </a>
                 </div>
                 <div
                   css={{
@@ -571,8 +633,8 @@ export const showcaseQuery = graphql`
           childScreenshot {
             screenshotFile {
               childImageSharp {
-                resolutions(width: 512, height: 288) {
-                  ...GatsbyImageSharpResolutions
+                sizes(maxWidth: 512) {
+                  ...GatsbyImageSharpSizes
                 }
               }
             }
@@ -611,3 +673,26 @@ export const showcaseQuery = graphql`
     }
   }
 `
+
+const styles = {
+  featuredSitesCard: {
+    display: `block`,
+    flexShrink: 0,
+    flexGrow: 0,
+    width: 282,
+    [presets.Tablet]: {
+      width: 380,
+      height: 380,
+      display: `flex`,
+      flexDirection: `column`,
+    },
+    [presets.Desktop]: {
+      width: 420,
+      height: 420,
+    },
+    [presets.VHd]: {
+      height: 512,
+      width: 512,
+    },
+  },
+}
