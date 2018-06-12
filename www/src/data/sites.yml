@@ -1109,3 +1109,10 @@
   categories:
     - Blog
     - Portfolio
+- title: mottox2 blog
+  main_url: 'https://mottox2.com'
+  url: 'https://mottox2.com'
+  featured: false
+  categories:
+    - Blog
+    - Portfolio
