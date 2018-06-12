@@ -3046,12 +3046,12 @@ caniuse-api@^1.5.2:
     lodash.uniq "^4.5.0"
 
 caniuse-db@^1.0.30000529, caniuse-db@^1.0.30000634, caniuse-db@^1.0.30000639:
-  version "1.0.30000851"
-  resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000851.tgz#8a0d3ca4dde72068560acc98bacf75a359e8d3e3"
+  version "1.0.30000852"
+  resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000852.tgz#c37a706048f8d81f87946a7c13f39ed636876659"
 
 caniuse-lite@^1.0.30000792, caniuse-lite@^1.0.30000805, caniuse-lite@^1.0.30000844:
-  version "1.0.30000851"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000851.tgz#3b498aebf9f92cf6cff4ab54d13b557c0b590533"
+  version "1.0.30000852"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000852.tgz#8b7510cec030cac7842e52beca2bf292af65f935"
 
 capture-exit@^1.2.0:
   version "1.2.0"
@@ -3475,12 +3475,16 @@ collection-visit@^1.0.0:
     object-visit "^1.0.0"
 
 color-convert@^1.3.0, color-convert@^1.9.0, color-convert@^1.9.1:
-  version "1.9.1"
-  resolved "https://registry.yarnpkg.com/color-convert/-/color-convert-1.9.1.tgz#c1261107aeb2f294ebffec9ed9ecad529a6097ed"
+  version "1.9.2"
+  resolved "https://registry.yarnpkg.com/color-convert/-/color-convert-1.9.2.tgz#49881b8fba67df12a96bdf3f56c0aab9e7913147"
   dependencies:
-    color-name "^1.1.1"
+    color-name "1.1.1"
 
-color-name@^1.0.0, color-name@^1.1.1:
+color-name@1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/color-name/-/color-name-1.1.1.tgz#4b1415304cf50028ea81643643bd82ea05803689"
+
+color-name@^1.0.0:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/color-name/-/color-name-1.1.3.tgz#a7d0558bd89c42f795dd42328f740831ca53bc25"
 
@@ -5767,8 +5771,8 @@ fb-watchman@^2.0.0:
     bser "^2.0.0"
 
 fbjs@^0.8.14, fbjs@^0.8.16, fbjs@^0.8.9:
-  version "0.8.16"
-  resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-0.8.16.tgz#5e67432f550dc41b572bf55847b8aca64e5337db"
+  version "0.8.17"
+  resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-0.8.17.tgz#c4d598ead6949112653d6588b01a5cdcd9f90fdd"
   dependencies:
     core-js "^1.0.0"
     isomorphic-fetch "^2.1.1"
@@ -5776,7 +5780,7 @@ fbjs@^0.8.14, fbjs@^0.8.16, fbjs@^0.8.9:
     object-assign "^4.1.0"
     promise "^7.1.1"
     setimmediate "^1.0.5"
-    ua-parser-js "^0.7.9"
+    ua-parser-js "^0.7.18"
 
 fd-slicer@~1.1.0:
   version "1.1.0"
@@ -6204,8 +6208,8 @@ fuzzy@^0.1.1:
   resolved "https://registry.yarnpkg.com/fuzzy/-/fuzzy-0.1.3.tgz#4c76ec2ff0ac1a36a9dccf9a00df8623078d4ed8"
 
 gatsby-plugin-sharp@next:
-  version "2.0.0-alpha.19"
-  resolved "https://registry.yarnpkg.com/gatsby-plugin-sharp/-/gatsby-plugin-sharp-2.0.0-alpha.19.tgz#59a3397ce37b8b9c5d1e684d287e4d6cab990efb"
+  version "2.0.0-alpha.21"
+  resolved "https://registry.yarnpkg.com/gatsby-plugin-sharp/-/gatsby-plugin-sharp-2.0.0-alpha.21.tgz#27c536ab0acddb41d21dc9cf535f9fc9ac0fde07"
   dependencies:
     "@babel/runtime" "7.0.0-beta.47"
     async "^2.1.2"
@@ -6222,8 +6226,8 @@ gatsby-plugin-sharp@next:
     svgo "^0.7.2"
 
 gatsby-source-filesystem@next:
-  version "2.0.0-alpha.16"
-  resolved "https://registry.yarnpkg.com/gatsby-source-filesystem/-/gatsby-source-filesystem-2.0.0-alpha.16.tgz#d5d18ea20393f3ee4faec28b0eb42cf292dcb724"
+  version "2.0.0-alpha.18"
+  resolved "https://registry.yarnpkg.com/gatsby-source-filesystem/-/gatsby-source-filesystem-2.0.0-alpha.18.tgz#e59a486e6922e6c514672165d51ca4e793a9f14e"
   dependencies:
     "@babel/runtime" "7.0.0-beta.47"
     better-queue "^3.8.7"
@@ -6715,8 +6719,8 @@ gulp-decompress@^1.2.0:
     readable-stream "^2.0.2"
 
 gulp-rename@^1.2.0:
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/gulp-rename/-/gulp-rename-1.2.3.tgz#37b75298e9d3e6c0fe9ac4eac13ce3be5434646b"
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/gulp-rename/-/gulp-rename-1.3.0.tgz#2e789d8f563ab0c924eeb62967576f37ff4cb826"
 
 gulp-sourcemaps@1.6.0:
   version "1.6.0"
@@ -6881,8 +6885,8 @@ hash-base@^3.0.0:
     safe-buffer "^5.0.1"
 
 hash.js@^1.0.0, hash.js@^1.0.3:
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/hash.js/-/hash.js-1.1.3.tgz#340dedbe6290187151c1ea1d777a3448935df846"
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/hash.js/-/hash.js-1.1.4.tgz#8b50e1f35d51bd01e5ed9ece4dbe3549ccfa0a3c"
   dependencies:
     inherits "^2.0.3"
     minimalistic-assert "^1.0.0"
@@ -7063,8 +7067,8 @@ hoek@4.x.x:
   resolved "https://registry.yarnpkg.com/hoek/-/hoek-4.2.1.tgz#9634502aa12c445dd5a7c5734b572bb8738aacbb"
 
 hoist-non-react-statics@^2.1.0, hoist-non-react-statics@^2.5.0:
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.5.0.tgz#d2ca2dfc19c5a91c5a6615ce8e564ef0347e2a40"
+  version "2.5.4"
+  resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.5.4.tgz#fc3b1ac05d2ae3abedec84eba846511b0d4fcc4f"
 
 home-or-tmp@^2.0.0:
   version "2.0.0"
@@ -14628,7 +14632,7 @@ typescript@^2.5.1:
   version "2.9.1"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.9.1.tgz#fdb19d2c67a15d11995fd15640e373e09ab09961"
 
-ua-parser-js@^0.7.9:
+ua-parser-js@^0.7.18:
   version "0.7.18"
   resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.18.tgz#a7bfd92f56edfb117083b69e31d2aa8882d4b1ed"
 

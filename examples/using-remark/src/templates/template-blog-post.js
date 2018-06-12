@@ -6,10 +6,9 @@ import rehypeReact from "rehype-react"
 import styles from "../styles"
 import Counter from "../components/Counter"
 import Layout from "../layouts"
-import typography from "../utils/typography"
+import { rhythm, scale } from "../utils/typography"
 
 import "katex/dist/katex.min.css"
-const { rhythm, scale } = typography
 
 const renderAst = new rehypeReact({
   createElement: React.createElement,
