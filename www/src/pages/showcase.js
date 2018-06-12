@@ -59,7 +59,7 @@ const ShowcaseList = ({ items, count }) => {
     <div css={{ display: `flex`, flexWrap: `wrap` }}>
       {items.map(
         ({ node }) =>
-          node.fields && ( // have to filter out null fields from bad data
+          node.fields && node.fields.slug && ( // have to filter out null fields from bad data
             <Link
               key={node.id}
               to={{ pathname: node.fields.slug, state: { isModal: true } }}
@@ -425,7 +425,7 @@ class ShowcasePage extends Component {
                       boxShadow: `none !important`,
                     }}
                     to={{
-                      pathname: node.fields.slug,
+                      pathname: node.fields && node.fields.slug,
                       state: { isModal: true },
                     }}
                   >
