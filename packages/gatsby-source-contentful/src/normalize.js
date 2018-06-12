@@ -169,11 +169,11 @@ function prepareTextNode(node, key, text) {
   return textNode
 }
 
-function prepareJSONNode(node, key, content) {
+function prepareJSONNode(node, key, content, i = ``) {
   const str = JSON.stringify(content)
   const JSONNode = {
     ...content,
-    id: `${node.id}${key}JSONNode`,
+    id: `${node.id}${key}${i}JSONNode`,
     parent: node.id,
     children: [],
     internal: {
@@ -360,7 +360,8 @@ exports.createContentTypeNodes = ({
             const jsonNode = prepareJSONNode(
               entryNode,
               entryItemFieldKey,
-              obj
+              obj,
+              i
             )
 
             childrenNodes.push(jsonNode)
