@@ -113,9 +113,7 @@ Repeat for every page and template that needs this layout.
 
 ### 4. Change query to use `StaticQuery`
 
-Since layout is no longer special, you now need to make use of v2’s StaticQuery feature.
-
-> TODO: document StaticQuery and link to it from here
+Since layout is no longer special, you now need to make use of v2’s [StaticQuery feature](/docs/static-query/).
 
 Replacing a layout's query with `StaticQuery`:
 

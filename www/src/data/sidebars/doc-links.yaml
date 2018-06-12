@@ -72,6 +72,8 @@
       link: /docs/plugin-authoring/
     - title: Proxying API Requests
       link: /docs/api-proxy/
+    - title: Querying data with StaticQuery
+      link: /docs/static-query/
     - title: Search Engine Optimization (SEO)
       link: /docs/seo/
     - title: Source Plugin Tutorial
