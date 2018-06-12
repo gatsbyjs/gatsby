@@ -55,8 +55,8 @@
     "gatsby-module-loader": "^1.0.11",
     "gatsby-react-router-scroll": "^1.0.17",
     "glob": "^7.1.1",
-    "graphql": "^0.11.7",
-    "graphql-relay": "^0.5.1",
+    "graphql": "^0.13.2",
+    "graphql-relay": "^0.5.5",
     "graphql-skip-limit": "^1.0.11",
     "history": "^4.6.2",
     "invariant": "^2.2.2",
@@ -146,7 +146,7 @@
     "url": "git+https://github.com/gatsbyjs/gatsby.git"
   },
   "resolutions": {
-    "graphql": "^0.11.7"
+    "graphql": "^0.13.2"
   },
   "scripts": {
     "build": "rimraf dist && npm run build:src && npm run build:internal-plugins && npm run build:rawfiles",
