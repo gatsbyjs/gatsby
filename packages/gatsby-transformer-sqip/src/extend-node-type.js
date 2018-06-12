@@ -1,4 +1,4 @@
-const { extname, resolve } = require(`path`)
+const { resolve } = require(`path`)
 
 const {
   DuotoneGradientType,
@@ -15,13 +15,12 @@ const {
   GraphQLBoolean,
 } = require(`graphql`)
 const sharp = require(`sharp`)
+const { ensureDir } = require(`fs-extra`)
 
 const generateSqip = require(`./generate-sqip`)
 
 const debug = Debug(`gatsby-transformer-sqip`)
 const SUPPORTED_NODES = [`ImageSharp`, `ContentfulAsset`]
-const buildDirectory = process.env.GATSBY_BUILD_DIR || `public`
-const CACHE_DIR = resolve(process.cwd(), buildDirectory, `static`)
 
 module.exports = async args => {
   const {
@@ -42,7 +41,12 @@ module.exports = async args => {
   return {}
 }
 
-async function sqipSharp({ type, cache, getNodeAndSavePathDependency }) {
+async function sqipSharp({ type, cache, getNodeAndSavePathDependency, store }) {
+  const program = store.getState().program
+  const cacheDir = resolve(`${program.directory}/.cache/sqip/`)
+
+  await ensureDir(cacheDir)
+
   return {
     sqip: {
       type: new GraphQLObjectType({
@@ -115,7 +119,7 @@ async function sqipSharp({ type, cache, getNodeAndSavePathDependency }) {
 
         return generateSqip({
           cache,
-          cacheDir: CACHE_DIR,
+          cacheDir,
           absolutePath,
           numberOfPrimitives,
           blur,
@@ -126,13 +130,17 @@ async function sqipSharp({ type, cache, getNodeAndSavePathDependency }) {
   }
 }
 
-async function sqipContentful({ type, cache }) {
-  const { createWriteStream } = require(`fs`)
-  const axios = require(`axios`)
-
+async function sqipContentful({ type, cache, store }) {
   const {
     schemes: { ImageResizingBehavior, ImageCropFocusType },
   } = require(`gatsby-source-contentful`)
+
+  const cacheImage = require(`gatsby-source-contentful/cache-image`)
+
+  const program = store.getState().program
+  const cacheDir = resolve(`${program.directory}/.cache/sqip/`)
+
+  await ensureDir(cacheDir)
 
   return {
     sqip: {
@@ -177,79 +185,46 @@ async function sqipContentful({ type, cache }) {
       },
       async resolve(asset, fieldArgs, context) {
         const {
-          id,
-          file: { url, fileName, details, contentType },
+          file: { contentType },
         } = asset
-        const {
-          blur,
-          numberOfPrimitives,
-          mode,
-          width,
-          height,
-          resizingBehavior,
-          cropFocus,
-          background,
-        } = fieldArgs
 
         if (contentType.indexOf(`image/`) !== 0) {
           return null
         }
 
-        // Downloading small version of the image with same aspect ratio
-        const assetWidth = width || details.image.width
-        const assetHeight = height || details.image.height
-        const aspectRatio = assetHeight / assetWidth
-        const previewWidth = 256
-        const previewHeight = Math.floor(previewWidth * aspectRatio)
-
-        const params = [`w=${previewWidth}`, `h=${previewHeight}`]
-        if (resizingBehavior) {
-          params.push(`fit=${resizingBehavior}`)
-        }
-        if (cropFocus) {
-          params.push(`crop=${cropFocus}`)
-        }
-        if (background) {
-          params.push(`bg=${background}`)
-        }
-
-        const uniqueId = [
-          id,
-          aspectRatio,
+        const {
+          blur,
+          numberOfPrimitives,
+          mode,
           resizingBehavior,
           cropFocus,
           background,
-        ]
-          .filter(Boolean)
-          .join(`-`)
+        } = fieldArgs
 
-        const extension = extname(fileName)
-        const absolutePath = resolve(CACHE_DIR, `${uniqueId}${extension}`)
+        let {
+          width,
+          height,
+        } = fieldArgs
 
-        const alreadyExists = await fs.pathExists(absolutePath)
-
-        if (!alreadyExists) {
-          const previewUrl = `http:${url}?${params.join(`&`)}`
-
-          debug(`Downloading: ${previewUrl}`)
-
-          const response = await axios({
-            method: `get`,
-            url: previewUrl,
-            responseType: `stream`,
-          })
-
-          await new Promise((resolve, reject) => {
-            const file = createWriteStream(absolutePath)
-            response.data.pipe(file)
-            file.on(`finish`, resolve)
-            file.on(`error`, reject)
-          })
+        if (width && height) {
+          const aspectRatio = height / width
+          width = 256
+          height = height * aspectRatio
         }
+
+        const options = {
+          width: 256,
+          height,
+          resizingBehavior,
+          cropFocus,
+          background,
+        }
+
+        const absolutePath = await cacheImage(store, asset, options)
 
         return generateSqip({
           cache,
-          cacheDir: CACHE_DIR,
+          cacheDir,
           absolutePath,
           numberOfPrimitives,
           blur,
