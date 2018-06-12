@@ -6,8 +6,6 @@ const remark = new Remark().data(`settings`, {
   pedantic: true,
 })
 
-const { buildResponsiveSizes } = require(`../utils/`)
-
 jest.mock(`../utils/`, () => {
   return {
     getBase64Img: jest.fn().mockReturnValue(`data:image;`),

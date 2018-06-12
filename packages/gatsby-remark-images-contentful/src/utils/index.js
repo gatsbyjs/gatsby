@@ -45,7 +45,7 @@ const buildResponsiveSizes = async ({ metadata, imageUrl, options = {} }) => {
 
   filteredSizes.push(width)
 
-  base64Img = await getBase64Img(`${imageUrl}?w=40`)
+  const base64Img = await getBase64Img(`${imageUrl}?w=40`)
 
   const srcSet = filteredSizes
     .map(size => `${imageUrl}?w=${Math.round(size)} ${Math.round(size)}w`)
