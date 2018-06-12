@@ -182,6 +182,11 @@ exports.modifyBabelrc = true
 exports.modifyWebpackConfig = true
 
 /**
+ * Called before the config is validated and the cache is initialized.
+ */
+exports.onPreInit = true
+
+/**
  * Called at the start of the bootstrap process before any other extension APIs are called.
  */
 exports.onPreBootstrap = true

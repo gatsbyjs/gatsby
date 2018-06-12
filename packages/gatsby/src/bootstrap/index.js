@@ -57,6 +57,12 @@ module.exports = async (args: BootstrapArgs) => {
     payload: program,
   })
 
+  // onPreInit
+  activity = report.activityTimer(`onPreInit`)
+  activity.start()
+  await apiRunnerNode(`onPreInit`)
+  activity.end()
+
   // Delete html and css files from the public directory as we don't want
   // deleted pages and styles from previous builds to stick around.
   let activity = report.activityTimer(
