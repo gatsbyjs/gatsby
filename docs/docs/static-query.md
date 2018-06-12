@@ -36,7 +36,7 @@ Using `StaticQuery`, you can colocate a component with its data. No longer is it
 
 ## Typechecking
 
-With above pattern, you lose the ability to typecheck with PropTypes. To regain typechecking while achieving the same result, you can change the component to:
+With the above pattern, you lose the ability to typecheck with PropTypes. To regain typechecking while achieving the same result, you can change the component to:
 
 ```jsx
 import React from "react"
@@ -81,4 +81,4 @@ Header.propTypes = {
 
 StaticQuery can do most of the things that page query can, including fragments.
 
-You can’t, however, pass **Query Variables** to `StaticQuery`, like you can in page query through `pageContext`.
+You can’t, however, pass **Query Variables** to `StaticQuery`, like you can in page queries through `pageContext`.
