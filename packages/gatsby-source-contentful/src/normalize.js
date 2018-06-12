@@ -184,11 +184,11 @@ function prepareTextNode(node, key, text) {
   return textNode
 }
 
-function prepareJSONNode(node, key, content) {
+function prepareJSONNode(node, key, content, i = ``) {
   const str = JSON.stringify(content)
   const JSONNode = {
     ...content,
-    id: `${node.id}${key}JSONNode`,
+    id: `${node.id}${key}${i}JSONNode`,
     parent: node.id,
     children: [],
     internal: {
@@ -362,7 +362,7 @@ exports.createContentTypeNodes = ({
           entryItemFields[`${entryItemFieldKey}___NODE`] = textNode.id
 
           delete entryItemFields[entryItemFieldKey]
-        } else if (fieldType === `Object`) {
+        } else if (fieldType === `Object` && _.isPlainObject(entryItemFields[entryItemFieldKey])) {
           const jsonNode = prepareJSONNode(
             entryNode,
             entryItemFieldKey,
@@ -371,6 +371,22 @@ exports.createContentTypeNodes = ({
 
           childrenNodes.push(jsonNode)
           entryItemFields[`${entryItemFieldKey}___NODE`] = jsonNode.id
+
+          delete entryItemFields[entryItemFieldKey]
+        } else if (fieldType === `Object` && _.isArray(entryItemFields[entryItemFieldKey])) {
+          entryItemFields[`${entryItemFieldKey}___NODE`] = []
+
+          entryItemFields[entryItemFieldKey].forEach((obj, i) => {
+            const jsonNode = prepareJSONNode(
+              entryNode,
+              entryItemFieldKey,
+              obj,
+              i
+            )
+
+            childrenNodes.push(jsonNode)
+            entryItemFields[`${entryItemFieldKey}___NODE`].push(jsonNode.id)
+          })
 
           delete entryItemFields[entryItemFieldKey]
         }
