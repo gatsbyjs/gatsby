@@ -3,7 +3,7 @@ const Promise = require(`bluebird`)
 const path = require(`path`)
 const slash = require(`slash`)
 
-const webpackLodashPlugin = require(`lodash-webpack-plugin`)
+const LodashModuleReplacementPlugin = require(`lodash-webpack-plugin`)
 
 exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions
@@ -106,7 +106,7 @@ exports.onCreateWebpackConfig = ({ stage, actions }) => {
   switch (stage) {
     case `build-javascript`:
       actions.setWebpackConfig({
-        plugins: [webpackLodashPlugin],
+        plugins: [new LodashModuleReplacementPlugin],
       })
   }
 }
