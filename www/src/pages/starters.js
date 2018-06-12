@@ -9,7 +9,10 @@ import { /*presets,*/ colors } from "../utils/presets"
 import MdFilterList from "react-icons/lib/md/filter-list"
 import FaAngleDown from "react-icons/lib/fa/angle-down"
 import FaAngleUp from "react-icons/lib/fa/angle-up"
-import FeaturedSitesIcon from "../assets/featured-sites-icons.svg"
+import FaExtLink from "react-icons/lib/fa/external-link"
+import FaGithub from "react-icons/lib/fa/github"
+import FaClipboard from "react-icons/lib/fa/clipboard"
+// import FeaturedSitesIcon from "../assets/featured-sites-icons.svg"
 
 // main components
 
@@ -17,61 +20,19 @@ class StarterShowcasePage extends Component {
   render() {
     const data = this.props.data
     const location = this.props.location
+    console.log({ location })
+    // let windowWidth
+    // if (typeof window !== `undefined`) {
+    //   windowWidth = window.innerWidth
+    // }
 
-    let windowWidth
-    if (typeof window !== `undefined`) {
-      windowWidth = window.innerWidth
-    }
-
-    const isDesktop = windowWidth > 750
+    // const isDesktop = windowWidth > 750
     return (
       <Layout location={location}>
         <div css={{ margin: `20px 30px` }}>
           <Helmet>
             <title>Showcase</title>
           </Helmet>
-          <div
-            css={{
-              display: `flex`,
-              alignItems: `center`,
-              color: `#9D7CBF`,
-              marginBottom: 30,
-            }}
-          >
-            <img src={FeaturedSitesIcon} alt="icon" css={{ marginBottom: 0 }} />
-            {isDesktop && (
-              <><span
-                css={{
-                  fontWeight: `bold`,
-                  fontSize: 24,
-                  marginRight: 30,
-                  marginLeft: 15,
-                }}
-              >
-                Gatsby Starters (<Link to="/docs/gatsby-starters/">docs</Link>)
-                </span>
-                <div css={{ flex: 1 }}>{``}</div></>
-            )}
-            <div css={{ marginRight: 15 }}>Want to get featured?</div>
-            {/* TODO: maybe have a site submission issue template */}
-            <a
-              href="https://github.com/gatsbyjs/gatsby/issues/new?template=feature_request.md"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <div
-                css={{
-                  backgroundColor: `#663399`,
-                  color: `white`,
-                  padding: `5px 10px`,
-                  fontWeight: `normal`,
-                }}
-              >
-                Submit your Starter
-                <div css={{ marginLeft: `5px`, display: `inline` }}>→</div>
-              </div>
-            </a>
-          </div>
           <FilteredShowcase data={data} />
         </div>
       </Layout>
@@ -113,6 +74,10 @@ query ShowcaseQuery {
             githubData {
               repoMetadata {
                 full_name
+                name
+                owner {
+                  login
+                }
               }
             }
             stars
@@ -192,11 +157,11 @@ class FilteredShowcase extends Component {
               flexDirection: isDesktop ? `row` : `column`,
             }}
           >
-            <h2 css={{ flexGrow: 1 }} id="search-heading">
+            <h5 css={{ flexGrow: 1 }} id="search-heading">
               {this.state.search.length === 0 ? (
                 filters.size === 0 ? (
                   <span>
-                    All {data.allMarkdownRemark.edges.length} Starters
+                    {data.allMarkdownRemark.edges.length} Starters to jump-start your new website
                   </span>
                 ) : (
                     <span>
@@ -210,7 +175,25 @@ class FilteredShowcase extends Component {
               ) : (
                   <span>{items.length} search results</span>
                 )}
-            </h2>
+            </h5>
+            {/* TODO: maybe have a site submission issue template */}
+            <a
+              href="https://github.com/gatsbyjs/gatsby/issues/new?template=feature_request.md"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <div
+                css={{
+                  backgroundColor: `#663399`,
+                  color: `white`,
+                  padding: `5px 10px`,
+                  fontWeight: `normal`,
+                }}
+              >
+                Submit your Starter
+                <div css={{ marginLeft: `5px`, display: `inline` }}>→</div>
+              </div>
+            </a>
             <div>
               <label css={{ position: `relative` }}>
                 <input
@@ -365,21 +348,27 @@ class Collapsible extends Component {
 
 const ShowcaseList = ({ items, count }) => {
   if (count) items = items.slice(0, count)
-
   return (
-    <div css={{ display: `flex`, flexWrap: `wrap` }}>
+    <div css={{ display: `grid`, gridGap: 30, gridTemplateColumns: `repeat(3, minmax(282px, 1fr))` }}>
       {items.map(
         ({ node }) => {
+          const {
+            githubData,
+            description,
+            stars,
+            lastUpdated,
+            githubFullName
+          } = node.fields.starterShowcase
+          const repo = githubData.repoMetadata
           return node.fields && ( // have to filter out null fields from bad data
-            <Link
-              key={node.id}
-              to={{ pathname: `${node.fields.starterShowcase.stub}`, state: { isModal: true } }}
-              css={{
-                borderBottom: `none !important`,
-                boxShadow: `none !important`,
-              }}
-            >
-              <div css={{ margin: `12px` }}>
+            <div key={node.id} css={{ margin: `12px` }}>
+              <Link
+                to={{ pathname: `${node.fields.starterShowcase.stub}`, state: { isModal: true } }}
+                css={{
+                  borderBottom: `none !important`,
+                  boxShadow: `none !important`,
+                }}
+              >
                 {node.fields.starterShowcase ? (
                   <img
                     src={`/StarterShowcase/generatedScreenshots/${node.fields.starterShowcase.stub}.png`}
@@ -398,18 +387,26 @@ const ShowcaseList = ({ items, count }) => {
                       missing
                   </div>
                   )}
-                {node.title}
-                <div
-                  css={{
-                    ...scale(-2 / 5),
-                    color: `#9B9B9B`,
-                    fontWeight: `normal`,
-                  }}
-                >
-                  {node.frontmatter && node.frontmatter.tags.join(`, `)}
+              </Link>
+              <div
+                css={{
+                  ...scale(-2 / 5),
+                  color: `#9B9B9B`,
+                  fontWeight: `normal`,
+                }}
+              >
+                <div css={{ display: 'flex', justifyContent: 'space-between' }}>{repo.owner && repo.owner.login} /
+                  <span>
+                    <a onClick={() => copyToClipboard(`gatsby new https://github.com/${githubFullName}`)}><FaClipboard /> </a>
+                    <a href={node.frontmatter.demo} target="_blank" rel="noopener noreferrer"><FaExtLink /> </a>
+                    <a href={`https://github.com/${githubFullName}`} target="_blank" rel="noopener noreferrer"><FaGithub /> </a>
+                  </span>
                 </div>
+                <h5 css={{ margin: 0 }}><strong>{repo.name}</strong></h5>
+                <div css={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>{description}</div>
+                <div><span role="img" aria-label="star">⭐</span>{stars} Updated {(new Date(lastUpdated)).toLocaleDateString()}</div>
               </div>
-            </Link>
+            </div>
           )
         }
       )}
@@ -419,6 +416,27 @@ const ShowcaseList = ({ items, count }) => {
 
 
 // utility functions
+
+// https://hackernoon.com/copying-text-to-clipboard-with-javascript-df4d4988697f
+const copyToClipboard = str => {
+  const el = document.createElement('textarea');  // Create a <textarea> element
+  el.value = str;                                 // Set its value to the string that you want copied
+  el.setAttribute('readonly', '');                // Make it readonly to be tamper-proof
+  el.style.position = 'absolute';
+  el.style.left = '-9999px';                      // Move outside the screen to make it invisible
+  document.body.appendChild(el);                  // Append the <textarea> element to the HTML document
+  const selected =
+    document.getSelection().rangeCount > 0        // Check if there is any content selected previously
+      ? document.getSelection().getRangeAt(0)     // Store selection if found
+      : false;                                    // Mark as false to know no selection existed before
+  el.select();                                    // Select the <textarea> content
+  document.execCommand('copy');                   // Copy - only works as a result of a user action (e.g. click events)
+  document.body.removeChild(el);                  // Remove the <textarea> element
+  if (selected) {                                 // If a selection existed before copying
+    document.getSelection().removeAllRanges();    // Unselect everything on the HTML document
+    document.getSelection().addRange(selected);   // Restore the original selection
+  }
+};
 
 function count(arrays) {
   let counts = new Map()
@@ -440,14 +458,11 @@ function count(arrays) {
 
 function filterByCategories(list, categories) {
   let items = list
-
   items = items.filter(
     ({ node }) =>
       node.frontmatter &&
       isSuperset(node.frontmatter.tags, categories)
-    // node.frontmatter.tags.filter(c => categories.has(c)).length > 0
   )
-
   return items
 }
 function filterByDependencies(list, categories) {
