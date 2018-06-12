@@ -97,11 +97,17 @@ describe(`Gets field value based on current locale`, () => {
     de: `Playsam Streamliner Klassisches Auto, Espresso`,
     "en-US": `Playsam Streamliner Classic Car, Espresso`,
   }
+  const locales = [
+    { code: `en-US` },
+    { code: `de`, fallbackCode: `en-US` },
+    { code: `gsw_CH`, fallbackCode: `de` },
+  ]
+  const localesFallback = normalize.buildFallbackChain(locales)
   it(`Gets the specified locale`, () => {
     expect(
       normalize.getLocalizedField({
         field,
-        defaultLocale: `en-US`,
+        localesFallback,
         locale: {
           code: `en-US`,
         },
@@ -110,7 +116,7 @@ describe(`Gets field value based on current locale`, () => {
     expect(
       normalize.getLocalizedField({
         field,
-        defaultLocale: `en-US`,
+        localesFallback,
         locale: {
           code: `de`,
         },
@@ -125,7 +131,7 @@ describe(`Gets field value based on current locale`, () => {
     expect(
       normalize.getLocalizedField({
         field: falseyField,
-        defaultLocale: `en-US`,
+        localesFallback,
         locale: {
           code: `en-US`,
         },
@@ -135,7 +141,7 @@ describe(`Gets field value based on current locale`, () => {
     expect(
       normalize.getLocalizedField({
         field: falseyField,
-        defaultLocale: `en-US`,
+        localesFallback,
         locale: {
           code: `de`,
         },
@@ -146,7 +152,7 @@ describe(`Gets field value based on current locale`, () => {
     expect(
       normalize.getLocalizedField({
         field,
-        defaultLocale: `en-US`,
+        localesFallback,
         locale: {
           code: `gsw_CH`,
           fallbackCode: `de`,
@@ -158,7 +164,7 @@ describe(`Gets field value based on current locale`, () => {
     expect(
       normalize.getLocalizedField({
         field,
-        defaultLocale: `en-US`,
+        localesFallback,
         locale: {
           code: `es-US`,
           fallbackCode: `null`,

@@ -26,7 +26,7 @@ const MastheadContent = () => (
         paddingRight: 0,
       },
       [presets.Tablet]: {
-        paddingTop: rhythm(4),
+        paddingTop: rhythm(5),
       },
       [presets.Desktop]: {
         paddingTop: rhythm(5),

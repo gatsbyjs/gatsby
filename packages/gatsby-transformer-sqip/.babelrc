@@ -1,0 +1,10 @@
+{
+  "presets": [
+    [
+      "../../.babelrc.js",
+      {
+        "browser": true
+      }
+    ]
+  ]
+}

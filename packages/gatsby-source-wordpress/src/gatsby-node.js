@@ -18,6 +18,7 @@ let _auth
 let _perPage
 let _concurrentRequests
 let _excludedRoutes
+let _normalizer
 
 exports.sourceNodes = async (
   { boundActionCreators, getNode, store, cache, createNodeId },
@@ -32,6 +33,7 @@ exports.sourceNodes = async (
     searchAndReplaceContentUrls = {},
     concurrentRequests = 10,
     excludedRoutes = [],
+    normalizer,
   }
 ) => {
   const { createNode, touchNode } = boundActionCreators
@@ -43,6 +45,7 @@ exports.sourceNodes = async (
   _perPage = perPage
   _concurrentRequests = concurrentRequests
   _excludedRoutes = excludedRoutes
+  _normalizer = normalizer
 
   let entities = await fetch({
     baseUrl,
@@ -111,6 +114,32 @@ exports.sourceNodes = async (
     entities,
     searchAndReplaceContentUrls,
   })
+
+  // apply custom normalizer
+  if (typeof _normalizer === `function`) {
+    entities = _normalizer({
+      entities,
+      store,
+      cache,
+      createNode,
+      createNodeId,
+      touchNode,
+      getNode,
+      typePrefix,
+      refactoredEntityTypes,
+      baseUrl,
+      protocol,
+      _siteURL,
+      hostingWPCOM,
+      useACF,
+      auth,
+      verboseOutput,
+      perPage,
+      searchAndReplaceContentUrls,
+      concurrentRequests,
+      excludedRoutes,
+    })
+  }
 
   // creates nodes for each entry
   normalize.createNodesFromEntities({ entities, createNode })
