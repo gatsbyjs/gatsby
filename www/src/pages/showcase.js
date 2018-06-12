@@ -4,6 +4,7 @@ import Helmet from "react-helmet"
 import { Link } from "gatsby"
 import Img from "gatsby-image"
 import { style } from "glamor"
+import hex2rgba from "hex2rgba"
 
 import Layout from "../components/layout"
 import SearchIcon from "../components/search-icon"
@@ -170,13 +171,6 @@ class FilteredShowcase extends Component {
   render() {
     const { data, filters } = this.props
 
-    let windowWidth
-    if (typeof window !== `undefined`) {
-      windowWidth = window.innerWidth
-    }
-
-    const isDesktop = windowWidth > 750
-
     let items = data.allSitesYaml.edges
 
     if (this.state.search.length > 0) {
@@ -189,75 +183,83 @@ class FilteredShowcase extends Component {
 
     return (
       <div css={{ display: `flex` }}>
-        {isDesktop && (
-          <div css={{ flexBasis: `18rem`, minWidth: `18rem` }}>
-            <h3>
-              Filter & Refine <MdFilterList />
-            </h3>
-            <Collapsible heading="Category">
-              {Array.from(
-                count(
-                  data.allSitesYaml.edges.map(({ node }) => node.categories)
-                )
-              )
-                .sort(([a], [b]) => {
-                  if (a < b) return -1
-                  if (a > b) return 1
-                  return 0
-                })
-                .map(([c, count]) => (
-                  <ul key={c}>
-                    <button
-                      className={filters.has(c) ? `selected` : ``}
-                      onClick={() => {
-                        if (filters.has(c)) {
-                          filters.delete(c)
-                          this.props.setFilters(filters)
-                        } else {
-                          this.props.setFilters(filters.add(c))
-                        }
-                      }}
+        <div
+          css={{
+            display: `none`,
+            [presets.Desktop]: {
+              display: `block`,
+              flexBasis: `18rem`,
+              minWidth: `18rem`,
+            },
+          }}
+        >
+          <h3>
+            Filter & Refine <MdFilterList />
+          </h3>
+          <Collapsible heading="Category">
+            {Array.from(
+              count(data.allSitesYaml.edges.map(({ node }) => node.categories))
+            )
+              .sort(([a], [b]) => {
+                if (a < b) return -1
+                if (a > b) return 1
+                return 0
+              })
+              .map(([c, count]) => (
+                <ul key={c}>
+                  <button
+                    className={filters.has(c) ? `selected` : ``}
+                    onClick={() => {
+                      if (filters.has(c)) {
+                        filters.delete(c)
+                        this.props.setFilters(filters)
+                      } else {
+                        this.props.setFilters(filters.add(c))
+                      }
+                    }}
+                    css={{
+                      display: `flex`,
+                      justifyContent: `space-between`,
+                      width: `100%`,
+                      border: `none`,
+                      background: `none`,
+                      cursor: `pointer`,
+                      ":hover": {
+                        color: colors.gatsby,
+                        "& .rule": { visibility: `visible` },
+                      },
+                      "&.selected": {
+                        color: colors.gatsby,
+                        "& .rule": { visibility: `visible` },
+                      },
+                    }}
+                  >
+                    <div>{c}</div>
+                    <div
+                      className="rule"
                       css={{
-                        display: `flex`,
-                        justifyContent: `space-between`,
+                        visibility: `hidden`,
+                        backgroundColor: colors.gatsby,
                         width: `100%`,
-                        border: `none`,
-                        background: `none`,
-                        cursor: `pointer`,
-                        ":hover": {
-                          color: colors.gatsby,
-                          "& .rule": { visibility: `visible` },
-                        },
-                        "&.selected": {
-                          color: colors.gatsby,
-                          "& .rule": { visibility: `visible` },
-                        },
+                        height: `1px`,
+                        margin: `10px`,
                       }}
-                    >
-                      <div>{c}</div>
-                      <div
-                        className="rule"
-                        css={{
-                          visibility: `hidden`,
-                          backgroundColor: colors.gatsby,
-                          width: `100%`,
-                          height: `1px`,
-                          margin: `10px`,
-                        }}
-                      />
-                      <div>{count}</div>
-                    </button>
-                  </ul>
-                ))}
-            </Collapsible>
-          </div>
-        )}
+                    />
+                    <div>{count}</div>
+                  </button>
+                </ul>
+              ))}
+          </Collapsible>
+        </div>
         <div>
           <div
             css={{
               display: `flex`,
               alignItems: `center`,
-              flexDirection: isDesktop ? `row` : `column`,
+              flexDirection: `column`,
+              [presets.Desktop]: {
+                flexDirection: `row`,
+              },
             }}
           >
             <h2 css={{ flexGrow: 1 }} id="search-heading">
@@ -320,12 +322,10 @@ class FilteredShowcase extends Component {
           {this.state.sitesToShow < items.length && (
             <button
               css={{
-                backgroundColor: `#663399`,
+                backgroundColor: colors.gatsby,
                 color: `white`,
                 marginTop: 15,
                 marginBottom: 60,
-                width: !isDesktop && `100%`,
-                padding: !isDesktop && `15px`,
               }}
               onClick={() => {
                 this.setState({ sitesToShow: this.state.sitesToShow + 9 })
@@ -350,20 +350,17 @@ class ShowcasePage extends Component {
     const data = this.props.data
     const location = this.props.location
 
-    let windowWidth
-    if (typeof window !== `undefined`) {
-      windowWidth = window.innerWidth
-    }
-
-    const isDesktop = windowWidth > 750
     return (
       <Layout location={location}>
-        <div css={{ margin: `20px ${rhythm(3 / 4)}` }}>
+        <div
+          css={{
+            margin: `${rhythm(options.blockMarginBottom)} ${rhythm(3 / 4)}`,
+          }}
+        >
           <Helmet>
             <title>Showcase</title>
           </Helmet>
           <div
-            className="featured-sites"
             css={{
               position: `relative`,
             }}
@@ -378,16 +375,18 @@ class ShowcasePage extends Component {
                 height: `100%`,
                 width: `100%`,
                 left: -100,
-                opacity: 0.05,
+                opacity: 0.02,
                 top: 0,
                 zIndex: -1,
               }}
             />
             <div
               css={{
-                display: `flex`,
-                alignItems: `center`,
-                marginBottom: 30,
+                marginBottom: rhythm(options.blockMarginBottom * 2),
+                [presets.Tablet]: {
+                  display: `flex`,
+                  alignItems: `center`,
+                },
               }}
             >
               <img
@@ -395,41 +394,39 @@ class ShowcasePage extends Component {
                 alt="icon"
                 css={{ marginBottom: 0 }}
               />
-              {isDesktop && (
-                <Fragment>
-                  <span
-                    css={{
-                      color: colors.gatsby,
+              <Fragment>
+                <span
+                  css={{
+                    color: colors.gatsby,
+                    fontFamily: options.headerFontFamily.join(`,`),
+                    fontWeight: `bold`,
+                    fontSize: 24,
+                    marginRight: 30,
+                    marginLeft: 15,
+                  }}
+                >
+                  Featured Sites
+                </span>
+                <a
+                  href="#search-heading"
+                  css={{
+                    "&&": {
+                      ...scale(-1 / 6),
+                      boxShadow: `none`,
+                      borderBottom: 0,
+                      color: colors.lilac,
+                      cursor: `pointer`,
                       fontFamily: options.headerFontFamily.join(`,`),
-                      fontWeight: `bold`,
-                      fontSize: 24,
-                      marginRight: 30,
-                      marginLeft: 15,
-                    }}
-                  >
-                    Featured Sites
-                  </span>
-                  <a
-                    href="#search-heading"
-                    css={{
-                      "&&": {
-                        ...scale(-1 / 6),
-                        boxShadow: `none`,
-                        borderBottom: 0,
-                        color: colors.lilac,
-                        cursor: `pointer`,
-                        fontFamily: options.headerFontFamily.join(`,`),
-                        fontWeight: `normal`,
-                      },
-                    }}
-                    onClick={() =>
-                      this.setState({ filters: new Set([`Featured`]) })
-                    }
-                  >
-                    View all&nbsp;<span css={{ marginLeft: `5px` }}>→</span>
-                  </a>
-                </Fragment>
-              )}
+                      fontWeight: `normal`,
+                    },
+                  }}
+                  onClick={() =>
+                    this.setState({ filters: new Set([`Featured`]) })
+                  }
+                >
+                  View all&nbsp;<span css={{ marginLeft: `5px` }}>→</span>
+                </a>
+              </Fragment>
               <div
                 css={{
                   color: colors.gray.calm,
@@ -464,143 +461,150 @@ class ShowcasePage extends Component {
                 </div>
               </a>
             </div>
-            {isDesktop && (
+            <div
+              css={{
+                position: `relative`,
+              }}
+            >
               <div
                 css={{
+                  display: `flex`,
+                  overflowX: `scroll`,
                   position: `relative`,
+                  margin: `0 -${rhythm(3 / 4)}`,
+                  padding: `0 ${rhythm(3 / 4)}`,
                 }}
               >
-                <div
-                  css={{
-                    display: `flex`,
-                    overflow: `scroll`,
-                    position: `relative`,
-                  }}
-                >
-                  {data.featured.edges.slice(0, 9).map(({ node }) => (
-                    <Link
-                      key={node.id}
-                      css={{
-                        ...styles.featuredSitesCard,
-                        marginRight: `30px`,
-                        marginBottom: rhythm(options.blockMarginBottom * 4),
-                        "&&": {
-                          borderBottom: `none`,
-                          boxShadow: `none`,
-                          transition: `color ${
-                            presets.animation.speedDefault
-                          } ${presets.animation.curveDefault}`,
-                          "&:hover": {
-                            background: `none`,
-                            color: colors.gatsby,
-                          },
-                        },
-                      }}
-                      to={{
-                        pathname: node.fields && node.fields.slug,
-                        state: { isModal: true },
-                      }}
-                    >
-                      {node.childScreenshot && (
-                        <Img
-                          sizes={
-                            node.childScreenshot.screenshotFile.childImageSharp
-                              .sizes
-                          }
-                          alt={node.title}
-                        />
-                      )}
-                      {node.title}
-                      <div
-                        css={{
-                          ...scale(-1 / 6),
-                          color: colors.gray.calm,
-                          fontWeight: `normal`,
-                          [presets.Desktop]: {
-                            marginTop: `auto`,
-                          },
-                        }}
-                      >
-                        {node.built_by && <div>Built by {node.built_by}</div>}
-                        {node.categories && node.categories.join(`, `)}
-                      </div>
-                    </Link>
-                  ))}
-                  <a
-                    href="#search-heading"
+                {data.featured.edges.slice(0, 9).map(({ node }) => (
+                  <Link
+                    key={node.id}
                     css={{
                       ...styles.featuredSitesCard,
-                      display: `block`,
-                      textAlign: `center`,
-                      padding: 0,
-                      background: `none`,
-                      border: `none`,
-                      cursor: `pointer`,
+                      marginRight: `30px`,
+                      marginBottom: rhythm(options.blockMarginBottom * 4),
                       "&&": {
+                        borderBottom: `none`,
                         boxShadow: `none`,
-                        borderBottom: 0,
+                        transition: `color ${presets.animation.speedDefault} ${
+                          presets.animation.curveDefault
+                        }`,
+                        "&:hover": {
+                          background: `none`,
+                          color: colors.gatsby,
+                        },
                       },
                     }}
-                    onClick={() =>
-                      this.setState({ filters: new Set([`Featured`]) })
-                    }
+                    to={{
+                      pathname: node.fields && node.fields.slug,
+                      state: { isModal: true },
+                    }}
                   >
+                    {node.childScreenshot && (
+                      <Img
+                        sizes={
+                          node.childScreenshot.screenshotFile.childImageSharp
+                            .sizes
+                        }
+                        alt={node.title}
+                        css={{
+                          boxShadow: `0 4px 10px ${hex2rgba(
+                            colors.gatsby,
+                            0.1
+                          )}`,
+                          marginBottom: rhythm(options.blockMarginBottom / 2),
+                        }}
+                      />
+                    )}
+                    {node.title}
                     <div
                       css={{
-                        margin: 20,
-                        background: colors.ui.whisper,
+                        ...scale(-1 / 6),
+                        color: colors.gray.calm,
+                        fontWeight: `normal`,
+                        [presets.Desktop]: {
+                          marginTop: `auto`,
+                        },
+                      }}
+                    >
+                      {node.built_by && <div>Built by {node.built_by}</div>}
+                      {node.categories && node.categories.join(`, `)}
+                    </div>
+                  </Link>
+                ))}
+                <a
+                  href="#search-heading"
+                  css={{
+                    ...styles.featuredSitesCard,
+                    display: `block`,
+                    textAlign: `center`,
+                    cursor: `pointer`,
+                    "&&": {
+                      boxShadow: `none`,
+                      borderBottom: 0,
+                    },
+                  }}
+                  onClick={() =>
+                    this.setState({ filters: new Set([`Featured`]) })
+                  }
+                >
+                  <div
+                    css={{
+                      margin: 20,
+                      background: colors.ui.whisper,
+                      height: `100%`,
+                      display: `flex`,
+                      alignItems: `center`,
+                      position: `relative`,
+                    }}
+                  >
+                    <img
+                      src={ShowcaseIcon}
+                      css={{
+                        position: `absolute`,
                         height: `100%`,
-                        display: `flex`,
-                        alignItems: `center`,
-                        position: `relative`,
+                        width: `auto`,
+                        display: `block`,
+                        margin: `0`,
+                        opacity: 0.04,
+                      }}
+                      alt=""
+                    />
+
+                    <span
+                      css={{
+                        margin: `0 auto`,
+                        color: colors.gatsby,
                       }}
                     >
                       <img
                         src={ShowcaseIcon}
                         css={{
-                          position: `absolute`,
-                          height: `100%`,
+                          height: 44,
                           width: `auto`,
                           display: `block`,
                           margin: `0 auto 20px`,
-                          opacity: 0.1,
+                          [presets.Tablet]: {
+                            height: 74,
+                          },
                         }}
                         alt=""
                       />
-
-                      <span
-                        css={{
-                          margin: `0 auto`,
-                          color: colors.gatsby,
-                        }}
-                      >
-                        <img
-                          src={ShowcaseIcon}
-                          css={{
-                            height: 74,
-                            width: `auto`,
-                            display: `block`,
-                            margin: `0 auto 20px`,
-                          }}
-                          alt=""
-                        />
-                        View all Featured Sites
-                      </span>
-                    </div>
-                  </a>
-                </div>
-                <div
-                  css={{
-                    position: `absolute`,
-                    top: `0`,
-                    bottom: `0`,
-                    right: `0`,
-                    width: `60px`,
-                    background: `linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(255,255,255,1) 100%)`,
-                  }}
-                />
+                      View all Featured Sites
+                    </span>
+                  </div>
+                </a>
               </div>
-            )}
+              <div
+                css={{
+                  position: `absolute`,
+                  top: `0`,
+                  bottom: `0`,
+                  right: `-${rhythm(3 / 4)}`,
+                  width: `60px`,
+                  background: `linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(255,255,255,1) 100%)`,
+                }}
+              />
+            </div>
           </div>
           <FilteredShowcase
             data={data}
@@ -679,6 +683,7 @@ const styles = {
     flexShrink: 0,
     flexGrow: 0,
     width: 282,
+    height: 282,
     [presets.Tablet]: {
       width: 380,
       height: 380,
