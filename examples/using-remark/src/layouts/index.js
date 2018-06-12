@@ -56,7 +56,7 @@ class Layout extends React.Component {
                   }}
                 >
                   powered by{` `}
-                  <a target="_blank" href={homepage}>
+                  <a target="_blank" rel="noopener noreferrer" href={homepage}>
                     {author}
                   </a>
                 </div>
