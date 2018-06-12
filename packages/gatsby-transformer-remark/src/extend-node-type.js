@@ -118,6 +118,7 @@ module.exports = (
                     files,
                     getNode,
                     reporter,
+                    cache,
                   },
                   plugin.pluginOptions
                 )
@@ -185,6 +186,7 @@ module.exports = (
                       files,
                       pathPrefix,
                       reporter,
+                      cache,
                     },
                     plugin.pluginOptions
                   )
