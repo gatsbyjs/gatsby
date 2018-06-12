@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React, { Component, Fragment } from "react"
 import Helmet from "react-helmet"
 
 import { Link } from "gatsby"
@@ -8,8 +8,8 @@ import Layout from "../components/layout"
 import SearchIcon from "../components/search-icon"
 //import FuturaParagraph from "../components/futura-paragraph"
 //import Container from "../components/container"
-import { /* options, rhythm, */ scale } from "../utils/typography"
-import { /*presets,*/ colors } from "../utils/presets"
+import { options, /* rhythm, */ scale, rhythm } from "../utils/typography"
+import presets, { colors } from "../utils/presets"
 import MdFilterList from "react-icons/lib/md/filter-list"
 import FaAngleDown from "react-icons/lib/fa/angle-down"
 import FaAngleUp from "react-icons/lib/fa/angle-up"
@@ -59,7 +59,8 @@ const ShowcaseList = ({ items, count }) => {
     <div css={{ display: `flex`, flexWrap: `wrap` }}>
       {items.map(
         ({ node }) =>
-          node.fields && node.fields.slug && ( // have to filter out null fields from bad data
+          node.fields &&
+          node.fields.slug && ( // have to filter out null fields from bad data
             <Link
               key={node.id}
               to={{ pathname: node.fields.slug, state: { isModal: true } }}
@@ -356,126 +357,190 @@ class ShowcasePage extends Component {
     const isDesktop = !this.state.windowWidth || this.state.windowWidth > 750
     return (
       <Layout location={location}>
-        <div css={{ margin: `20px 30px` }}>
+        <div css={{ margin: `20px ${rhythm(3 / 4)}` }}>
           <Helmet>
             <title>Showcase</title>
           </Helmet>
           <div
+            className="featured-sites"
             css={{
-              display: `flex`,
-              alignItems: `center`,
-              color: `#9D7CBF`,
-              marginBottom: 30,
+              position: `relative`,
             }}
           >
-            <img src={FeaturedSitesIcon} alt="icon" css={{ marginBottom: 0 }} />
-            {isDesktop && (
-              <>
-                <span
-                  css={{
-                    fontWeight: `bold`,
-                    fontSize: 24,
-                    marginRight: 30,
-                    marginLeft: 15,
-                  }}
-                >
-                  Featured Sites
-                </span>
-                <div>View all</div>
-                <div css={{ marginLeft: `5px` }}>→</div>
-                <div css={{ flex: 1 }}>{``}</div>
-              </>
-            )}
-            <div css={{ marginRight: 15 }}>Want to get featured?</div>
-            {/* TODO: maybe have a site submission issue template */}
-            <a
-              href="https://github.com/gatsbyjs/gatsby/issues/new?template=feature_request.md"
-              target="_blank"
-              rel="noopener noreferrer"
+            <div
+              className="featured-sites"
+              css={{
+                background: `url(${FeaturedSitesIcon})`,
+                backgroundRepeat: `no-repeat`,
+                backgroundSize: `contain`,
+                position: `absolute`,
+                height: `100%`,
+                width: `100%`,
+                left: -100,
+                opacity: 0.05,
+                top: 0,
+                zIndex: -1,
+              }}
+            />
+            <div
+              css={{
+                display: `flex`,
+                alignItems: `center`,
+                marginBottom: 30,
+              }}
             >
-              <div
-                css={{
-                  backgroundColor: `#663399`,
-                  color: `white`,
-                  padding: `5px 10px`,
-                  fontWeight: `normal`,
-                }}
-              >
-                Submit your Site
-                <div css={{ marginLeft: `5px`, display: `inline` }}>→</div>
-              </div>
-            </a>
-          </div>
-          {isDesktop && (
-            <div css={{ position: `relative` }}>
-              <div
-                css={{
-                  display: `flex`,
-                  overflow: `scroll`,
-                  position: `relative`,
-                }}
-              >
-                {data.featured.edges.slice(0, 9).map(({ node }) => (
-                  <Link
-                    key={node.id}
+              <img
+                src={FeaturedSitesIcon}
+                alt="icon"
+                css={{ marginBottom: 0 }}
+              />
+              {isDesktop && (
+                <Fragment>
+                  <span
                     css={{
-                      display: `block`,
-                      marginRight: `30px`,
-                      borderBottom: `none !important`,
-                      boxShadow: `none !important`,
-                    }}
-                    to={{
-                      pathname: node.fields && node.fields.slug,
-                      state: { isModal: true },
+                      color: colors.gatsby,
+                      fontFamily: options.headerFontFamily.join(`,`),
+                      fontWeight: `bold`,
+                      fontSize: 24,
+                      marginRight: 30,
+                      marginLeft: 15,
                     }}
                   >
-                    {node.childScreenshot && (
-                      <Img
-                        resolutions={
-                          node.childScreenshot.screenshotFile.childImageSharp
-                            .resolutions
-                        }
-                        alt={node.title}
-                      />
-                    )}
-                    {node.title}
-                    <div>{node.categories && node.categories.join(`, `)}</div>
-                    {node.built_by && <div>Built by {node.built_by}</div>}
-                  </Link>
-                ))}
-                <div css={{ margin: `15px` }}>
+                    Featured Sites
+                  </span>
                   <a
                     href="#search-heading"
                     css={{
-                      display: `block`,
-                      width: `512px`,
-                      height: `288px`,
-                      textAlign: `center`,
-                      padding: 0,
-                      background: `none`,
-                      border: `none`,
-                      cursor: `pointer`,
+                      "&&": {
+                        ...scale(-1 / 6),
+                        boxShadow: `none`,
+                        borderBottom: 0,
+                        color: colors.lilac,
+                        cursor: `pointer`,
+                        fontFamily: options.headerFontFamily.join(`,`),
+                        fontWeight: `normal`,
+                      },
                     }}
                     onClick={() =>
                       this.setState({ filters: new Set([`Featured`]) })
                     }
                   >
-                    See More Featured Sites
+                    View all&nbsp;<span css={{ marginLeft: `5px` }}>→</span>
                   </a>
-                </div>
-              </div>
+                </Fragment>
+              )}
               <div
                 css={{
-                  position: `absolute`,
-                  top: `0`,
-                  bottom: `0`,
-                  right: `0`,
-                  width: `60px`,
-                  background: `linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(255,255,255,1) 100%)`,
+                  color: colors.gray.calm,
+                  marginRight: 15,
+                  marginLeft: `auto`,
+                  fontFamily: options.headerFontFamily.join(`,`),
                 }}
-              />
+              >
+                Want to get featured?
+              </div>
+              {/* TODO: maybe have a site submission issue template */}
+              <a
+                href="https://github.com/gatsbyjs/gatsby/issues/new?template=feature_request.md"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <div
+                  css={{
+                    backgroundColor: colors.gatsby,
+                    borderRadius: presets.radius,
+                    color: `white`,
+                    padding: `5px 20px`,
+                    fontWeight: `normal`,
+                    "&&": {
+                      borderBottom: `none`,
+                      boxShadow: `none`,
+                    },
+                  }}
+                >
+                  Submit your Site
+                  <div css={{ marginLeft: `5px`, display: `inline` }}>→</div>
+                </div>
+              </a>
             </div>
-          )}
+            {isDesktop && (
+              <div
+                css={{
+                  position: `relative`,
+                }}
+              >
+                <div
+                  css={{
+                    display: `flex`,
+                    overflow: `scroll`,
+                    position: `relative`,
+                  }}
+                >
+                  {data.featured.edges.slice(0, 9).map(({ node }) => (
+                    <Link
+                      key={node.id}
+                      css={{
+                        display: `block`,
+                        marginRight: `30px`,
+                        marginBottom: rhythm(options.blockMarginBottom * 4),
+                        "&&": {
+                          borderBottom: `none`,
+                          boxShadow: `none`,
+                        },
+                      }}
+                      to={{
+                        pathname: node.fields && node.fields.slug,
+                        state: { isModal: true },
+                      }}
+                    >
+                      {node.childScreenshot && (
+                        <Img
+                          resolutions={
+                            node.childScreenshot.screenshotFile.childImageSharp
+                              .resolutions
+                          }
+                          alt={node.title}
+                        />
+                      )}
+                      {node.title}
+                      <div>{node.categories && node.categories.join(`, `)}</div>
+                      {node.built_by && <div>Built by {node.built_by}</div>}
+                    </Link>
+                  ))}
+                  <div css={{ margin: `15px` }}>
+                    <a
+                      href="#search-heading"
+                      css={{
+                        display: `block`,
+                        width: `512px`,
+                        height: `288px`,
+                        textAlign: `center`,
+                        padding: 0,
+                        background: `none`,
+                        border: `none`,
+                        cursor: `pointer`,
+                      }}
+                      onClick={() =>
+                        this.setState({ filters: new Set([`Featured`]) })
+                      }
+                    >
+                      See More Featured Sites
+                    </a>
+                  </div>
+                </div>
+                <div
+                  css={{
+                    position: `absolute`,
+                    top: `0`,
+                    bottom: `0`,
+                    right: `0`,
+                    width: `60px`,
+                    background: `linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(255,255,255,1) 100%)`,
+                  }}
+                />
+              </div>
+            )}
+          </div>
           <FilteredShowcase
             data={data}
             filters={this.state.filters}
