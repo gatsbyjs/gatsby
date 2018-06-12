@@ -7,7 +7,7 @@ exports.buildResponsiveSizes = async ({ metadata, imageUrl, options = {} }) => {
     options.sizeByPixelDensity && typeof density === `number` && density > 0
       ? density / 72
       : 1
-    
+
   const presentationWidth = Math.min(
     options.maxWidth,
     Math.round(width / pixelRatio)
@@ -30,15 +30,15 @@ exports.buildResponsiveSizes = async ({ metadata, imageUrl, options = {} }) => {
   const filteredSizes = images.filter(size => size < width)
 
   filteredSizes.push(width)
-  const response  = await axios (
-    {
-      method: 'GET',
-      responseType: 'arraybuffer',
-      url:`${imageUrl}?w=40`
-    }
-  )
+  const response = await axios({
+    method: `GET`,
+    responseType: `arraybuffer`,
+    url: `${imageUrl}?w=40`,
+  })
 
-  const base64Img = `data:${response.headers["content-type"]};base64,${new Buffer(response.data).toString('base64')}`;
+  const base64Img = `data:${
+    response.headers[`content-type`]
+  };base64,${new Buffer(response.data).toString(`base64`)}`
 
   const srcSet = filteredSizes
     .map(size => `${imageUrl}?w=${Math.round(size)} ${Math.round(size)}w`)

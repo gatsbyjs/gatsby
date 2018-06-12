@@ -75,7 +75,7 @@ module.exports = async (
       options,
     })
     // Calculate the paddingBottom %
-    const ratio = `${(1 / responsiveSizesResult.aspectRatio) * 100}%`
+    const ratio = `${1 / responsiveSizesResult.aspectRatio * 100}%`
 
     const fallbackSrc = `https${node.url}`
     const srcSet = responsiveSizesResult.srcSet
@@ -114,9 +114,9 @@ module.exports = async (
     </span>
   </span>
   `
-   // Make linking to original image optional.
-   if (options.linkImagesToOriginal) {
-    rawHTML = `
+    // Make linking to original image optional.
+    if (options.linkImagesToOriginal) {
+      rawHTML = `
 <a
   class="gatsby-resp-image-link"
   href="${originalImg}"
@@ -127,18 +127,18 @@ module.exports = async (
 ${rawHTML}
 </a>
   `
-  }
+    }
 
-  // Wrap in figure and use title as caption
+    // Wrap in figure and use title as caption
 
-  if (options.showCaptions && node.title) {
-    rawHTML = `
+    if (options.showCaptions && node.title) {
+      rawHTML = `
 <figure class="gatsby-resp-image-figure">
 ${rawHTML}
 <figcaption class="gatsby-resp-image-figcaption">${node.title}</figcaption>
 </figure>`
-  }
-  await cache.set(cacheKey, rawHTML)
+    }
+    await cache.set(cacheKey, rawHTML)
     return rawHTML
   }
   return Promise.all(
