@@ -3,6 +3,7 @@ const resolveCwd = require(`resolve-cwd`)
 const yargs = require(`yargs`)
 const report = require(`./reporter`)
 const fs = require(`fs`)
+const envinfo = require(`envinfo`)
 
 const DEFAULT_BROWSERS = [`> 1%`, `last 2 versions`, `IE >= 9`]
 
@@ -31,7 +32,7 @@ function buildLocalCommands(cli, isLocalSite) {
       report.verbose(`current directory: ${directory}`)
       return report.panic(
         `gatsby <${command}> can only be run for a gatsby site. \n` +
-          `Either the current working directory does not contain a package.json or ` +
+          `Either the current working directory does not contain a valid package.json or ` +
           `'gatsby' is not specified as a dependency`
       )
     }
@@ -102,7 +103,19 @@ function buildLocalCommands(cli, isLocalSite) {
         .option(`S`, {
           alias: `https`,
           type: `boolean`,
-          describe: `Use HTTPS. See https://www.gatsbyjs.org/docs/local-https/ for an initial setup guide`,
+          describe: `Use HTTPS. See https://www.gatsbyjs.org/docs/local-https/ as a guide`,
+        })
+        .option(`c`, {
+          alias: `cert-file`,
+          type: `string`,
+          default: ``,
+          describe: `Custom HTTPS cert file (relative path; also required: --https, --key-file). See https://www.gatsbyjs.org/docs/local-https/`,
+        })
+        .option(`k`, {
+          alias: `key-file`,
+          type: `string`,
+          default: ``,
+          describe: `Custom HTTPS key file (relative path; also required: --https, --cert-file). See https://www.gatsbyjs.org/docs/local-https/`,
         }),
     handler: handlerP(
       getCommandHandler(`develop`, (args, cmd) => {
@@ -161,6 +174,38 @@ function buildLocalCommands(cli, isLocalSite) {
 
     handler: getCommandHandler(`serve`),
   })
+
+  cli.command({
+    command: `info`,
+    desc: `Get environment information for debugging and issue reporting`,
+    builder: _ =>
+      _.option(`C`, {
+        alias: `clipboard`,
+        type: `boolean`,
+        default: false,
+        describe: `Automagically copy environment information to clipboard`,
+      }),
+    handler: args => {
+      try {
+        envinfo.run(
+          {
+            System: [`OS`, `CPU`, `Shell`],
+            Binaries: [`Node`, `npm`, `Yarn`],
+            Browsers: [`Chrome`, `Edge`, `Firefox`, `Safari`],
+            npmPackages: `gatsby*`,
+            npmGlobalPackages: `gatsby*`,
+          },
+          {
+            console: true,
+            clipboard: args.clipboard,
+          }
+        )
+      } catch (err) {
+        console.log(`Error: unable to print environment info`)
+        console.log(err)
+      }
+    },
+  })
 }
 
 function isLocalGatsbySite() {
@@ -184,9 +229,7 @@ module.exports = (argv, handlers) => {
 
   cli
     .usage(`Usage: $0 <command> [options]`)
-    .help(`h`)
     .alias(`h`, `help`)
-    .version()
     .alias(`v`, `version`)
     .option(`verbose`, {
       default: false,

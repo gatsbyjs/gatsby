@@ -1,3 +1,5 @@
+const fs = require(`fs`)
+
 // default icons for generating icons
 exports.defaultIcons = [
   {
@@ -41,3 +43,20 @@ exports.defaultIcons = [
     type: `image/png`,
   },
 ]
+
+/**
+ * Check if the icon exists on the filesystem
+ *
+ * @param {String} srcIcon Path of the icon
+ */
+exports.doesIconExist = function doesIconExist(srcIcon) {
+  try {
+    return fs.statSync(srcIcon).isFile()
+  } catch (e) {
+    if (e.code === `ENOENT`) {
+      return false
+    } else {
+      throw e
+    }
+  }
+}

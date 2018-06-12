@@ -15,6 +15,9 @@ module.exports = {
     `gatsby-transformer-remark`,
     {
       resolve: `gatsby-plugin-sitemap`,
+      options: {
+        exclude: [`/secret`],
+      },
     },
   ],
 }

@@ -5,6 +5,9 @@ Object {
   "anArray": Object {
     "field": "anArray",
   },
+  "context___nestedObject___name": Object {
+    "field": "context___nestedObject___name",
+  },
   "context___nestedObject___someOtherProperty": Object {
     "field": "context___nestedObject___someOtherProperty",
   },
@@ -51,11 +54,11 @@ Object {
   ],
   "context": Object {
     "nestedObject": Object {
+      "name": "Inner name",
       "someOtherProperty": 1,
     },
   },
   "date": "2006-07-22T22:39:53.000Z",
-  "emptyArray": null,
   "frontmatter": Object {
     "blue": 100,
     "circle": "happy",
@@ -64,7 +67,6 @@ Object {
     "title": "The world of dash and adventure",
   },
   "hair": 1,
-  "iAmNull": null,
   "key-with..unsupported-values": true,
   "name": "The Mad Max",
   "nestedArrays": Array [

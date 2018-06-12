@@ -168,6 +168,17 @@ Community:
 
   * TypeScript
 
+* [gatsby-starter-bulma-storybook](https://github.com/gvaldambrini/gatsby-starter-bulma-storybook)
+  [(demo)](http://gatsby-bulma-storybook.surge.sh/)
+
+  Features:
+
+  * Storybook for developing components in isolation
+  * Bulma and Sass support for styling
+  * CSS modules
+  * Prettier & eslint to format & check the code
+  * Jest
+
 * [gatsby-starter-default-i18n](https://github.com/angeloocana/gatsby-starter-default-i18n)
   [(demo)](https://gatsby-starter-default-i18n.netlify.com)
 
@@ -256,6 +267,35 @@ Community:
   * React Overdrive transitions
   * Create your projects in Markdown
   * And other good stuff (SEO, Offline Support, WebApp Manifest Support)
+  
+* [gatsby-starter-portfolio-bella](https://github.com/LeKoArts/gatsby-starter-portfolio-bella)
+  [(demo)](https://portfolio-bella.netlify.com/)
+  
+  The target audience are designers and photographers.
+
+  Features:
+  
+  * Big typography & images
+  * White theme
+  * Prismic.io as CMS
+  * Emotion for styling
+  * One-page layout with sub-pages for case studies
+  * Easily configurable
+  * And other good stuff (SEO, Offline Support, WebApp Manifest Support)
+  
+* [gatsby-starter-portfolio-cara](https://github.com/LeKoArts/gatsby-starter-portfolio-cara)
+  [(demo)](https://portfolio-cara.netlify.com/)
+  
+  The target audience are designers and photographers.
+
+  Features:
+  
+  * Gatsby v2
+  * React Spring
+  * TailwindCSS & Emotion
+  * Playful & Colorful One-Page website with Parallax effect
+  * Easily configurable
+  * And other good stuff (SEO, Responsive images, Offline Support, WebApp Manifest Support)
 
 * [gatsby-starter-bootstrap-netlify](https://github.com/konsumer/gatsby-starter-bootstrap-netlify)
   [(demo)](https://gatsby-starter-bootstrap-netlify.netlify.com)
@@ -329,7 +369,7 @@ Community:
   * PWA (manifes.json, offline support, favicons)
   * Google Analytics
   * Favicons generator (node script)
-  * Components leazy loading with AsyncComponent (social sharing, info box)
+  * Components lazy loading with AsyncComponent (social sharing, info box)
   * ESLint (google config)
   * Prettier code styling
   * Custom webpack CommonsChunkPlugin settings
@@ -661,3 +701,46 @@ Community:
   * Google Analytics integration
   * Open Sans font using Google Fonts
   * Prerendered Open Graph tags for rich sharing
+
+* [gatsby-starter-modern](https://github.com/kripod/gatsby-starter-modern)
+  [(demo)](https://gatsby-starter-modern-demo.netlify.com/)
+
+  Features:
+
+  * Built on the upcoming version of Gatsby
+  * A set of strict linting rules (based on the [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript))
+    * `lint` script
+  * Encourage automatic code formatting
+    * `format` script
+  * Prefer using [Yarn](https://yarnpkg.com) for package management
+  * Use [EditorConfig](http://editorconfig.org) to maintain consistent coding styles between different editors and IDEs
+  * Integration with [Visual Studio Code](https://code.visualstudio.com)
+    * Pre-configured auto-formatting on file save
+  * Based on [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default)
+  
+* [gatsby-starter-hero-blog](https://github.com/greglobinski/gatsby-starter-hero-blog)
+  [(demo)](https://gatsby-starter-hero-blog.greglobinski.com/)
+
+  Features:
+
+  * Easy editable content in Markdown files (posts, pages and parts)
+  * CSS with `styled-jsx` and `PostCSS`
+  * SEO (sitemap generation, robot.txt, meta and OpenGraph Tags)
+  * Social sharing (Twitter, Facebook, Google, LinkedIn)
+  * Comments (Facebook)
+  * Images lazy loading and `webp` support (gatsby-image)
+  * Post categories (category based post list)
+  * Full text searching (Algolia)
+  * Contact form (Netlify form handling)
+  * Form elements and validation with `ant-design`
+  * RSS feed
+  * 100% PWA (manifest.webmanifest, offline support, favicons)
+  * Google Analytics
+  * App favicons generator (node script)
+  * Easy customizable base styles via `theme` object generated from `yaml` file (fonts, colors, sizes)
+  * React v.16.3 (gatsby-plugin-react-next)
+  * Components lazy loading (social sharing)
+  * ESLint (google config)
+  * Prettier code styling
+  * Webpack `BundleAnalyzerPlugin`
+  * [README](https://github.com/greglobinski/gatsby-starter-hero-blog) / [DEMO](https://gatsby-starter-hero-blog.greglobinski.com/)

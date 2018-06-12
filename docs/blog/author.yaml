@@ -59,7 +59,7 @@
   avatar: avatars/arden-de-raaij.jpg
   twitter: "@ardennl"
 - id: Shannon Soper
-  bio: Lives and works in Provo, UT doing UX research for GatsbyJS, music teaching / performance, and keeping up with her dog’s Instagram fans @dgtrwatson. Her background is in persuasive writing & speaking and she enjoys teaching college-level writing courses on the side.
+  bio: UX researcher and educational psychology fan. Teaches piano and keeps up with her dog's Instagram fans @dgtrwatson.
   avatar: avatars/shannon-soper.jpg
   twitter: "@shannonb_ux"
 - id: Sam Bhagwat
@@ -117,7 +117,19 @@
   bio: Developer and Diet Coke enthusiast in Brooklyn, NY
   avatar: avatars/sarah-mogin.jpg
   twitter: "@sarahmogin"
+- id: Dan Kass
+  bio: Co-founder and engineering lead at JustFix.nyc
+  avatar: avatars/dan-kass.jpg
+  twitter: "@JustFixNYC"
 - id: Gatsby Central
   bio: The community for gatsby developers
   avatar: avatars/gatsby-central.jpg
   twitter: "@GatsbyCentral"
+- id: Ray Gesualdo
+  bio: UI Engineer at SalesLoft. Full-stack JavaScript-er. Speaker. Mentor. Writer. - https://www.raygesualdo.com
+  avatar: avatars/ray-gesualdo.jpg
+  twitter: "@RayGesualdo"
+- id: Michelle Barker
+  bio: Front end developer at Mud, CSS obsessive and blogger at https://css-irl.info
+  avatar: avatars/michelle-barker.jpg
+  twitter: "@CSSInRealLife"
