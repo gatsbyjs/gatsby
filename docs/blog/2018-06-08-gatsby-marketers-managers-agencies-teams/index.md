@@ -16,7 +16,7 @@ Gatsby sites scale quickly and easily because they live on the edge. There are n
 
 Last week, I was on a long plane flight and decided to pay the $30 for in-flight wifi (yes, $30 for wifi. United- seriously?). It was a terrible connection and I couldn’t get any websites to load...except Gatsby. Gatsby loaded effortlessly and quickly while all other sites timed out. It was like a smooth magic carpet ride, flying from one page to the other. Amazing.
 
-So I’ve become a fan girl for Gatsby. It’s blazing-fast, secure, serverless, and lets me use the tools (CMS) that I already love. And this [new one-page overview]((/gatsby-one-pager.pdf) is great in positioning Gatsby to the marketer, manager, agency, or team. The overview is perfect for:
+So I’ve become a fan girl for Gatsby. It’s blazing-fast, secure, serverless, and lets me use the tools (CMS) that I already love. And this [new one-page overview](/gatsby-one-pager.pdf) is great in positioning Gatsby to the marketer, manager, agency, or team. The overview is perfect for:
 
 - An agency or individual freelancer trying to help a client understand the benefits of this new technology
 - An engineering manager trying to help less-technical stakeholders such as marketers or senior leadership understand why choosing Gatsby makes sense
