@@ -1,11 +1,27 @@
 const Remark = require(`remark`)
-
 const plugin = require(`../`)
-
 const remark = new Remark().data(`settings`, {
   commonmark: true,
   footnotes: true,
   pedantic: true,
+})
+
+const { buildResponsiveSizes } = require(`../utils/`)
+
+jest.mock(`../utils/`, () => {
+  return {
+    getBase64Img: jest.fn().mockReturnValue(`data:image;`),
+    buildResponsiveSizes: jest.fn().mockReturnValue({
+      base64: `data:image;` ,
+      aspectRatio: 1,
+      srcSet: 'srcSet',
+      src:`imageUrl`,
+      sizes: [`128px`, `250px`],
+      density: 140,
+      presentationWidth: 600,
+      presentationHeight: 450,
+    })
+  }
 })
 
 const createNode = content => {
@@ -51,6 +67,7 @@ const createPluginOptions = (content, imagePaths = `/`) => {
   }
 }
 
+
 jest.mock(`axios`, () => () =>
   Promise.resolve({
     data: {
@@ -59,7 +76,7 @@ jest.mock(`axios`, () => () =>
     },
   })
 )
-
+ 
 jest.mock(`sharp`, () => () => {
   return {
     metadata: jest.fn(() => {
