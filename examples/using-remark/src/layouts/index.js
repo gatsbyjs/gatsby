@@ -1,14 +1,12 @@
 import React from "react"
 import { Link, StaticQuery } from "gatsby"
-import typography from "../utils/typography"
+import { scale } from "../utils/typography"
 import styles from "../styles"
 
 import "typeface-space-mono"
 import "typeface-spectral"
 
 import "prismjs/themes/prism-solarizedlight.css"
-
-const { scale } = typography
 
 class Layout extends React.Component {
   render() {

@@ -13,6 +13,7 @@
     "gatsby-plugin-catch-links": "next",
     "gatsby-plugin-glamor": "next",
     "gatsby-plugin-sharp": "next",
+    "gatsby-plugin-typography": "^1.7.18",
     "gatsby-remark-autolink-headers": "next",
     "gatsby-remark-copy-linked-files": "next",
     "gatsby-remark-images": "next",
@@ -31,12 +32,12 @@
     "prismjs": "^1.13.0",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
-    "react-typography": "^0.15.10",
+    "react-typography": "^0.16.13",
     "rehype-react": "^3.0.2",
     "slash": "^1.0.0",
     "typeface-space-mono": "^0.0.22",
     "typeface-spectral": "^0.0.29",
-    "typography": "^0.15.10"
+    "typography": "^0.16.17"
   },
   "license": "MIT",
   "main": "index.js",

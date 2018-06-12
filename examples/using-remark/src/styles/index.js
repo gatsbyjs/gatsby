@@ -1,8 +1,7 @@
 import { style } from "glamor"
-import typography from "../utils/typography"
+import { rhythm } from "../utils/typography"
 import styleColors from "./colors"
 
-const { rhythm } = typography
 const { colors } = styleColors
 
 const animations = {

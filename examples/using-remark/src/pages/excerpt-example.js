@@ -2,9 +2,7 @@ import React from "react"
 import { Link } from "gatsby"
 import styles from "../styles"
 import presets from "../utils/presets"
-import typography from "../utils/typography"
-
-const { rhythm, scale } = typography
+import { rhythm, scale } from "../utils/typography"
 
 class Index extends React.Component {
   render() {
