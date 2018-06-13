@@ -75,6 +75,7 @@ const ShowcaseList = ({ items, count }) => {
               to={{ pathname: node.fields.slug, state: { isModal: true } }}
               css={{
                 margin: rhythm(3 / 4),
+                width: 280,
                 "&&": {
                   borderBottom: `none`,
                   boxShadow: `none`,
