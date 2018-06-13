@@ -132,6 +132,7 @@ class Collapsible extends Component {
             cursor: `pointer`,
             fontWeight: `normal`,
             fontSize: scale(-2 / 5).fontSize,
+            marginTop: rhythm(options.blockMarginBottom),
             letterSpacing: `.15em`,
             textTransform: `uppercase`,
             "&:hover": {
@@ -215,7 +216,8 @@ class FilteredShowcase extends Component {
     }
 
     return (
-      <div
+      <section
+        className="showcase"
         css={{
           display: `flex`,
         }}
@@ -225,32 +227,46 @@ class FilteredShowcase extends Component {
             display: `none`,
             [presets.Desktop]: {
               display: `block`,
-              flexBasis: `18rem`,
-              minWidth: `18rem`,
+              flexBasis: `15rem`,
+              minWidth: `15rem`,
+              ...styles.sticky,
+              paddingTop: 0,
+              borderRight: `1px solid ${colors.ui.light}`,
+              // background: colors.ui.whisper,
+              height: `calc(100vh - ${presets.headerHeight})`,
             },
           }}
         >
-          <div
+          <h3
             css={{
+              margin: 0,
               [presets.Desktop]: {
-                ...styles.sticky,
-                borderRight: `1px solid ${colors.ui.light}`,
-                background: colors.ui.whisper,
-                height: `calc(100vh - ${presets.headerHeight})`,
+                ...scale(1 / 8),
+                lineHeight: 1,
+                height: presets.headerHeight,
+                margin: 0,
+                color: colors.gray.calm,
+                fontWeight: `normal`,
+                display: `flex`,
+                flexShrink: 0,
+                paddingLeft: rhythm(3 / 4),
+                paddingRight: rhythm(3 / 4),
+                paddingTop: rhythm(options.blockMarginBottom),
+                paddingBottom: rhythm(options.blockMarginBottom),
+                borderBottom: `1px solid ${colors.ui.light}`,
               },
             }}
           >
-            <h3
-              css={{
-                margin: 0,
-                [presets.Desktop]: {
-                  ...scale(1 / 8),
-                  color: colors.gray.copy,
-                },
-              }}
-            >
-              Filter & Refine <MdFilterList />
-            </h3>
+            Filter & Refine{` `}
+            <span css={{ marginLeft: `auto`, opacity: 0.5 }}>
+              <MdFilterList />
+            </span>
+          </h3>
+          <div
+            css={{
+              paddingLeft: rhythm(3 / 4),
+            }}
+          >
             <Collapsible heading="Category">
               {Array.from(
                 count(
@@ -322,20 +338,28 @@ class FilteredShowcase extends Component {
               alignItems: `center`,
               flexDirection: `column`,
               [presets.Desktop]: {
+                height: presets.headerHeight,
                 flexDirection: `row`,
                 alignItems: `center`,
                 ...styles.sticky,
                 background: `rgba(255,255,255,0.98)`,
                 paddingLeft: `${rhythm(3 / 4)}`,
                 paddingRight: `${rhythm(3 / 4)}`,
-                paddingBottom: rhythm(3 / 4),
+                paddingBottom: rhythm(options.blockMarginBottom),
                 zIndex: 1,
                 borderBottom: `1px solid ${colors.ui.light}`,
               },
             }}
             id="search-heading"
           >
-            <h2 css={{ flexGrow: 1, margin: 0, ...scale(1 / 3) }}>
+            <h2
+              css={{
+                color: colors.gatsby,
+                margin: 0,
+                ...scale(1 / 5),
+                lineHeight: 1,
+              }}
+            >
               {this.state.search.length === 0 ? (
                 filters.size === 0 ? (
                   <span>
@@ -354,7 +378,7 @@ class FilteredShowcase extends Component {
                 <span>{items.length} search results</span>
               )}
             </h2>
-            <div>
+            <div css={{ marginLeft: `auto` }}>
               <label css={{ position: `relative` }}>
                 <input
                   css={{
@@ -363,7 +387,7 @@ class FilteredShowcase extends Component {
                     color: colors.gatsby,
                     fontFamily: options.headerFontFamily.join(`,`),
                     paddingTop: rhythm(1 / 8),
-                    paddingRight: rhythm(1 / 4),
+                    paddingRight: rhythm(1 / 5),
                     paddingBottom: rhythm(1 / 8),
                     paddingLeft: rhythm(1),
                     ":focus": {
@@ -427,7 +451,7 @@ class FilteredShowcase extends Component {
             </button>
           )}
         </div>
-      </div>
+      </section>
     )
   }
 }
@@ -452,291 +476,279 @@ class ShowcasePage extends Component {
 >>>>>>> Abandon window.width in favor of CSS media queries
     return (
       <Layout location={location}>
-        <div
+        <Helmet>
+          <title>Showcase</title>
+        </Helmet>
+        <section
+          className="featured-sites"
           css={{
             margin: `${rhythm(options.blockMarginBottom)} ${rhythm(3 / 4)} 0`,
+            position: `relative`,
           }}
         >
-          <Helmet>
-            <title>Showcase</title>
-          </Helmet>
+          <div
+            css={{
+              background: `url(${FeaturedSitesIcon})`,
+              backgroundRepeat: `no-repeat`,
+              backgroundSize: `contain`,
+              position: `absolute`,
+              height: `100%`,
+              width: `100%`,
+              left: -100,
+              opacity: 0.02,
+              top: 0,
+              zIndex: -1,
+            }}
+          />
+          <div
+            css={{
+              marginBottom: rhythm(options.blockMarginBottom * 2),
+              [presets.Mobile]: {
+                display: `flex`,
+                alignItems: `center`,
+              },
+            }}
+          >
+            <img src={FeaturedSitesIcon} alt="icon" css={{ marginBottom: 0 }} />
+            <h1
+              css={{
+                ...scale(1 / 5),
+                color: colors.gatsby,
+                fontFamily: options.headerFontFamily.join(`,`),
+                fontWeight: `bold`,
+                marginRight: 30,
+                marginLeft: 15,
+                marginTop: 0,
+                marginBottom: 0,
+              }}
+            >
+              Featured Sites
+            </h1>
+            <a
+              href="#search-heading"
+              css={{
+                "&&": {
+                  ...scale(-1 / 6),
+                  boxShadow: `none`,
+                  borderBottom: 0,
+                  color: colors.lilac,
+                  cursor: `pointer`,
+                  fontFamily: options.headerFontFamily.join(`,`),
+                  fontWeight: `normal`,
+                },
+              }}
+              onClick={() => this.setState({ filters: new Set([`Featured`]) })}
+            >
+              View all&nbsp;<span css={{ marginLeft: `5px` }}>→</span>
+            </a>
+            <div
+              css={{
+                display: `flex`,
+                alignItems: `center`,
+                marginLeft: `auto`,
+              }}
+            >
+              <div
+                css={{
+                  ...scale(-1 / 6),
+                  color: colors.gray.calm,
+                  marginRight: 15,
+                  fontFamily: options.headerFontFamily.join(`,`),
+                  display: `none`,
+                  [presets.Tablet]: {
+                    display: `block`,
+                  },
+                }}
+              >
+                Want to get featured?
+              </div>
+              {/* TODO: maybe have a site submission issue template */}
+              <a
+                href="https://github.com/gatsbyjs/gatsby/issues/new?template=feature_request.md"
+                target="_blank"
+                rel="noopener noreferrer"
+                css={{
+                  ...styles.button,
+                }}
+              >
+                Submit{` `}
+                <span
+                  css={{
+                    display: `none`,
+                    [presets.Desktop]: {
+                      display: `inline`,
+                    },
+                  }}
+                >
+                  your{` `}
+                </span>Site
+                <div css={{ marginLeft: `5px`, display: `inline` }}>→</div>
+              </a>
+            </div>
+          </div>
           <div
             css={{
               position: `relative`,
             }}
           >
             <div
-              className="featured-sites"
               css={{
-                background: `url(${FeaturedSitesIcon})`,
-                backgroundRepeat: `no-repeat`,
-                backgroundSize: `contain`,
-                position: `absolute`,
-                height: `100%`,
-                width: `100%`,
-                left: -100,
-                opacity: 0.02,
-                top: 0,
-                zIndex: -1,
-              }}
-            />
-            <div
-              css={{
-                marginBottom: rhythm(options.blockMarginBottom * 2),
-                [presets.Mobile]: {
-                  display: `flex`,
-                  alignItems: `center`,
-                },
+                display: `flex`,
+                overflowX: `scroll`,
+                flexShrink: 0,
+                margin: `0 -${rhythm(3 / 4)}`,
+                padding: `4px ${rhythm(3 / 4)} 0`,
+                ...styles.scrollbar,
               }}
             >
-              <img
-                src={FeaturedSitesIcon}
-                alt="icon"
-                css={{ marginBottom: 0 }}
-              />
-              <Fragment>
-                <h3
+              {data.featured.edges.slice(0, 9).map(({ node }) => (
+                <Link
+                  key={node.id}
                   css={{
-                    color: colors.gatsby,
-                    fontFamily: options.headerFontFamily.join(`,`),
-                    fontWeight: `bold`,
-                    marginRight: 30,
-                    marginLeft: 15,
-                    marginTop: 0,
-                  }}
-                >
-                  Featured Sites
-                </h3>
-                <a
-                  href="#search-heading"
-                  css={{
+                    ...styles.featuredSitesCard,
                     "&&": {
-                      ...scale(-1 / 6),
+                      borderBottom: `none`,
                       boxShadow: `none`,
-                      borderBottom: 0,
-                      color: colors.lilac,
-                      cursor: `pointer`,
-                      fontFamily: options.headerFontFamily.join(`,`),
-                      fontWeight: `normal`,
+                      transition: `box-shadow .3s cubic-bezier(.4,0,.2,1), transform .3s cubic-bezier(.4,0,.2,1)`,
+                      "&:hover": {
+                        background: `none`,
+                        color: colors.gatsby,
+                        transform: `translateY(-4px)`,
+                        "& .gatsby-image-wrapper": {
+                          boxShadow: `0 8px 20px ${hex2rgba(
+                            colors.lilac,
+                            0.5
+                          )}`,
+                        },
+                      },
                     },
                   }}
-                  onClick={() =>
-                    this.setState({ filters: new Set([`Featured`]) })
-                  }
+                  to={{
+                    pathname: node.fields && node.fields.slug,
+                    state: { isModal: true },
+                  }}
                 >
-                  View all&nbsp;<span css={{ marginLeft: `5px` }}>→</span>
-                </a>
-              </Fragment>
-              <div
+                  {node.childScreenshot && (
+                    <Img
+                      sizes={
+                        node.childScreenshot.screenshotFile.childImageSharp
+                          .sizes
+                      }
+                      alt={node.title}
+                      css={{
+                        borderRadius: presets.radius,
+                        boxShadow: `0 4px 10px ${hex2rgba(colors.gatsby, 0.1)}`,
+                        marginBottom: rhythm(options.blockMarginBottom / 2),
+                        transition: `all ${presets.animation.speedDefault} ${
+                          presets.animation.curveDefault
+                        }`,
+                      }}
+                    />
+                  )}
+                  {node.title}
+                  <div
+                    css={{
+                      ...scale(-1 / 6),
+                      color: colors.gray.calm,
+                      fontWeight: `normal`,
+                      [presets.Desktop]: {
+                        marginTop: `auto`,
+                      },
+                    }}
+                  >
+                    {node.built_by && <div>Built by {node.built_by}</div>}
+                    <div css={{ opacity: 0.5 }}>
+                      {node.categories && node.categories.join(`, `)}
+                    </div>
+                  </div>
+                </Link>
+              ))}
+              <a
+                href="#search-heading"
                 css={{
-                  display: `flex`,
-                  alignItems: `center`,
-                  marginLeft: `auto`,
+                  ...styles.featuredSitesCard,
+                  textAlign: `center`,
+                  border: `1px solid ${hex2rgba(colors.lilac, 0.2)}`,
+                  borderRadius: presets.radius,
+                  "&&": {
+                    boxShadow: `none`,
+                    transition: `all ${presets.animation.speedDefault} ${
+                      presets.animation.curveDefault
+                    }`,
+                    "&:hover": {
+                      backgroundColor: hex2rgba(colors.ui.light, 0.25),
+                      transform: `translateY(-4px)`,
+                      boxShadow: `0 8px 20px ${hex2rgba(colors.lilac, 0.5)}`,
+                    },
+                  },
+                }}
+                onClick={() => {
+                  this.setState({ filters: new Set([`Featured`]) })
                 }}
               >
                 <div
                   css={{
-                    ...scale(-1 / 6),
-                    color: colors.gray.calm,
-                    marginRight: 15,
-                    fontFamily: options.headerFontFamily.join(`,`),
-                    display: `none`,
-                    [presets.Tablet]: {
+                    margin: rhythm(1),
+                    background: colors.ui.whisper,
+                    display: `flex`,
+                    alignItems: `center`,
+                    position: `relative`,
+                    flexBasis: `100%`,
+                  }}
+                >
+                  <img
+                    src={ShowcaseIcon}
+                    css={{
+                      position: `absolute`,
+                      height: `100%`,
+                      width: `auto`,
                       display: `block`,
-                    },
-                  }}
-                >
-                  Want to get featured?
-                </div>
-                {/* TODO: maybe have a site submission issue template */}
-                <a
-                  href="https://github.com/gatsbyjs/gatsby/issues/new?template=feature_request.md"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  css={{
-                    ...styles.button,
-                  }}
-                >
-                  Submit{` `}
+                      margin: `0`,
+                      opacity: 0.04,
+                    }}
+                    alt=""
+                  />
                   <span
                     css={{
-                      display: `none`,
-                      [presets.Desktop]: {
-                        display: `inline`,
-                      },
-                    }}
-                  >
-                    your{` `}
-                  </span>Site
-                  <div css={{ marginLeft: `5px`, display: `inline` }}>→</div>
-                </a>
-              </div>
-            </div>
-            <div
-              css={{
-                position: `relative`,
-              }}
-            >
-              <div
-                css={{
-                  display: `flex`,
-                  overflowX: `scroll`,
-                  flexShrink: 0,
-                  margin: `0 -${rhythm(3 / 4)}`,
-                  padding: `4px ${rhythm(3 / 4)} 0`,
-                  ...styles.scrollbar,
-                }}
-              >
-                {data.featured.edges.slice(0, 9).map(({ node }) => (
-                  <Link
-                    key={node.id}
-                    css={{
-                      ...styles.featuredSitesCard,
-                      "&&": {
-                        borderBottom: `none`,
-                        boxShadow: `none`,
-                        transition: `box-shadow .3s cubic-bezier(.4,0,.2,1), transform .3s cubic-bezier(.4,0,.2,1)`,
-                        "&:hover": {
-                          background: `none`,
-                          color: colors.gatsby,
-                          transform: `translateY(-4px)`,
-                          "& .gatsby-image-wrapper": {
-                            boxShadow: `0 8px 20px ${hex2rgba(
-                              colors.lilac,
-                              0.5
-                            )}`,
-                          },
-                        },
-                      },
-                    }}
-                    to={{
-                      pathname: node.fields && node.fields.slug,
-                      state: { isModal: true },
-                    }}
-                  >
-                    {node.childScreenshot && (
-                      <Img
-                        sizes={
-                          node.childScreenshot.screenshotFile.childImageSharp
-                            .sizes
-                        }
-                        alt={node.title}
-                        css={{
-                          borderRadius: presets.radius,
-                          boxShadow: `0 4px 10px ${hex2rgba(
-                            colors.gatsby,
-                            0.1
-                          )}`,
-                          marginBottom: rhythm(options.blockMarginBottom / 2),
-                          transition: `all ${presets.animation.speedDefault} ${
-                            presets.animation.curveDefault
-                          }`,
-                        }}
-                      />
-                    )}
-                    {node.title}
-                    <div
-                      css={{
-                        ...scale(-1 / 6),
-                        color: colors.gray.calm,
-                        fontWeight: `normal`,
-                        [presets.Desktop]: {
-                          marginTop: `auto`,
-                        },
-                      }}
-                    >
-                      {node.built_by && <div>Built by {node.built_by}</div>}
-                      {node.categories && node.categories.join(`, `)}
-                    </div>
-                  </Link>
-                ))}
-                <a
-                  href="#search-heading"
-                  css={{
-                    ...styles.featuredSitesCard,
-                    textAlign: `center`,
-                    border: `1px solid ${hex2rgba(colors.lilac, 0.2)}`,
-                    borderRadius: presets.radius,
-                    "&&": {
-                      boxShadow: `none`,
-                      transition: `all ${presets.animation.speedDefault} ${
-                        presets.animation.curveDefault
-                      }`,
-                      "&:hover": {
-                        backgroundColor: hex2rgba(colors.ui.light, 0.25),
-                        transform: `translateY(-4px)`,
-                        boxShadow: `0 8px 20px ${hex2rgba(colors.lilac, 0.5)}`,
-                      },
-                    },
-                  }}
-                  onClick={() => {
-                    this.setState({ filters: new Set([`Featured`]) })
-                  }}
-                >
-                  <div
-                    css={{
-                      margin: rhythm(1),
-                      background: colors.ui.whisper,
-                      display: `flex`,
-                      alignItems: `center`,
-                      position: `relative`,
-                      flexBasis: `100%`,
+                      margin: `0 auto`,
+                      color: colors.gatsby,
                     }}
                   >
                     <img
                       src={ShowcaseIcon}
                       css={{
-                        position: `absolute`,
-                        height: `100%`,
+                        height: 44,
                         width: `auto`,
                         display: `block`,
-                        margin: `0`,
-                        opacity: 0.04,
+                        margin: `0 auto 20px`,
+                        [presets.Desktop]: {
+                          height: 74,
+                        },
                       }}
                       alt=""
                     />
-                    <span
-                      css={{
-                        margin: `0 auto`,
-                        color: colors.gatsby,
-                      }}
-                    >
-                      <img
-                        src={ShowcaseIcon}
-                        css={{
-                          height: 44,
-                          width: `auto`,
-                          display: `block`,
-                          margin: `0 auto 20px`,
-                          [presets.Desktop]: {
-                            height: 74,
-                          },
-                        }}
-                        alt=""
-                      />
-                      View all Featured Sites
-                    </span>
-                  </div>
-                </a>
-              </div>
-              <div
-                css={{
-                  position: `absolute`,
-                  top: `0`,
-                  bottom: `0`,
-                  right: `-${rhythm(3 / 4)}`,
-                  width: `60px`,
-                  background: `linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(255,255,255,1) 100%)`,
-                }}
-              />
+                    View all Featured Sites
+                  </span>
+                </div>
+              </a>
             </div>
+            <div
+              css={{
+                position: `absolute`,
+                top: `0`,
+                bottom: `0`,
+                right: `-${rhythm(3 / 4)}`,
+                width: `60px`,
+                background: `linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(255,255,255,1) 100%)`,
+              }}
+            />
           </div>
-          <FilteredShowcase
-            data={data}
-            filters={this.state.filters}
-            setFilters={filters => this.setState({ filters })}
-          />
-        </div>
+        </section>
+        <FilteredShowcase
+          data={data}
+          filters={this.state.filters}
+          setFilters={filters => this.setState({ filters })}
+        />
       </Layout>
     )
   }
@@ -824,7 +836,7 @@ const styles = {
     cursor: `pointer`,
     fontFamily: options.headerFontFamily.join(`,`),
     fontWeight: `bold`,
-    padding: `${rhythm(1 / 4)} ${rhythm(2 / 3)}`,
+    padding: `${rhythm(1 / 5)} ${rhythm(2 / 3)}`,
     WebkitFontSmoothing: `antialiased`,
     "&&": {
       backgroundColor: colors.gatsby,
