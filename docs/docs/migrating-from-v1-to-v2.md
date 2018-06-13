@@ -26,6 +26,7 @@ This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While t
 - [Remove inlined CSS in `html.js`](#remove-inlined-css-in-htmljs)
 - [Only allow defined keys on node.internal object](#only-allow-defined-keys-on-the-node-internal-object)
 - [Import `graphql` types from `gatsby/graphql`](#import-graphql-types-from-gatsbygraphql)
+- [Move Babel Configuration`](#move-babel-configuration)
 
 You can start with a few of the most important steps - install Gatsby v2 dependencies and update your layout components.
 
@@ -394,3 +395,10 @@ Import graphql types from `gatsby/graphql` to prevent `Schema must contain uniqu
 -const { GraphQLString } = require(`graphql`)
 +const { GraphQLString } = require(`gatsby/graphql`)
 ```
+
+## Move Babel Configuration
+The latest version of Gatsby uses Babel 7, which introduced [a new behavior for configuration lookup / resolution](https://github.com/babel/babel/issues/6766).  In the case where a _.babelrc_ file might have been used at the root of the project, like for configuring Jest, moving that Babel configuration into _jest.config.json_ will avoid any conflicts.
+
+[This GitHub comment](https://github.com/facebook/jest/issues/1468#issuecomment-361260279) documents the steps needed to do that.
+
+More information on Gatsby and Babel configuration available [here](https://v2--gatsbyjs.netlify.com/docs/babel/#how-to-use-a-custom-babelrc-file). 
