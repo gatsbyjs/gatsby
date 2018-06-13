@@ -13,7 +13,9 @@ module.exports = directory => {
     // not sure what we should do here...
   }
 
-  const eslintFiles = glob.sync(`.eslintrc*`, { cwd: directory })
+  const eslintFiles = glob.sync(`.eslintrc?(.js|.json|.yaml|.yml)`, {
+    cwd: directory,
+  })
 
   if (eslintFiles.length) {
     hasEslintConfig = true
