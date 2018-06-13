@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react"
+import React, { Component } from "react"
 import Helmet from "react-helmet"
 
 import { Link } from "gatsby"
@@ -15,6 +15,7 @@ import presets, { colors } from "../utils/presets"
 import MdFilterList from "react-icons/lib/md/filter-list"
 import FaAngleDown from "react-icons/lib/fa/angle-down"
 import FaAngleUp from "react-icons/lib/fa/angle-up"
+import MdClear from "react-icons/lib/md/clear"
 
 import Fuse from "fuse.js"
 import FeaturedSitesIcon from "../assets/featured-sites-icons.svg"
@@ -48,7 +49,7 @@ const filterByCategories = (list, categories) => {
   items = items.filter(
     ({ node }) =>
       node.categories &&
-      node.categories.filter(c => categories.has(c)).length > 0
+      node.categories.filter(c => categories.has(c)).length === categories.size
   )
 
   return items
@@ -282,6 +283,8 @@ class FilteredShowcase extends Component {
               paddingLeft: rhythm(3 / 4),
             }}
           >
+            {/* TODO: design and CSS for "Clear all filters" */}
+            {filters.size > 0 && <button onClick={() => {this.props.setFilters([])}}><MdClear /> Clear all filters</button>}
             <Collapsible heading="Category">
               {Array.from(
                 count(
@@ -321,7 +324,6 @@ class FilteredShowcase extends Component {
                         paddingTop: rhythm(options.blockMarginBottom / 8),
                         ":hover": {
                           color: colors.gatsby,
-                          "& .rule": { visibility: `visible` },
                         },
                         "&.selected": {
                           color: colors.gatsby,
