@@ -31,6 +31,7 @@ module.exports = {
     curveDefault: `cubic-bezier(0.4, 0, 0.2, 1)`,
     speedDefault: `250ms`,
     speedFast: `100ms`,
+    speedSlow: `350ms`,
   },
   logoOffset: 1.8,
   headerHeight: `3.5rem`,
