@@ -1,5 +1,5 @@
 const path = require(`path`)
-const isOnline = require('is-online')
+const isOnline = require(`is-online`)
 const _ = require(`lodash`)
 const fs = require(`fs-extra`)
 

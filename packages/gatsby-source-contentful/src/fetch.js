@@ -1,10 +1,6 @@
 const contentful = require(`contentful`)
 const _ = require(`lodash`)
-const fs = require(`fs-extra`)
-const path = require(`path`)
 const normalize = require(`./normalize`)
-
-const cacheFilename = `contentful-result.json`
 
 module.exports = async ({ spaceId, accessToken, host, syncToken, cacheDir, environment }) => {
   // Fetch articles.
