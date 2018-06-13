@@ -3,7 +3,7 @@ import Helmet from "react-helmet"
 
 import { Link } from "gatsby"
 import Img from "gatsby-image"
-import { style } from "glamor"
+// import { style } from "glamor"
 import hex2rgba from "hex2rgba"
 
 import Layout from "../components/layout"
@@ -59,7 +59,9 @@ const ShowcaseList = ({ items, count }) => {
   if (count) items = items.slice(0, count)
 
   return (
-    <div css={{ display: `flex`, flexWrap: `wrap` }}>
+    <div
+      css={{ display: `flex`, flexWrap: `wrap`, padding: `0 ${rhythm(3 / 4)}` }}
+    >
       {items.map(
         ({ node }) =>
           node.fields &&
@@ -84,8 +86,7 @@ const ShowcaseList = ({ items, count }) => {
                 ) : (
                   <div
                     css={{
-                      width: 282,
-                      height: 211,
+                      width: 320,
                       backgroundColor: `#d999e7`,
                     }}
                   >
@@ -125,7 +126,20 @@ class Collapsible extends Component {
     return (
       <div>
         {/* TODO: onClick should be on a link or something */}
-        <h4 css={{ color: colors.lilac }} onClick={this.handleClick}>
+        <h4
+          css={{
+            color: colors.lilac,
+            cursor: `pointer`,
+            fontWeight: `normal`,
+            fontSize: scale(-2 / 5).fontSize,
+            letterSpacing: `.15em`,
+            textTransform: `uppercase`,
+            "&:hover": {
+              color: colors.gatsby,
+            },
+          }}
+          onClick={this.handleClick}
+        >
           {heading} {this.state.collapsed ? <FaAngleDown /> : <FaAngleUp />}
         </h4>
         <div
@@ -135,7 +149,15 @@ class Collapsible extends Component {
             transition: `height 0.2s`,
           }}
         >
-          <div css={{ overflow: `scroll`, height: `500px` }}>{children}</div>
+          <div
+            css={{
+              overflowY: `scroll`,
+              height: `500px`,
+              ...styles.scrollbar,
+            }}
+          >
+            {children}
+          </div>
         </div>
       </div>
     )
@@ -193,7 +215,11 @@ class FilteredShowcase extends Component {
     }
 
     return (
-      <div css={{ display: `flex` }}>
+      <div
+        css={{
+          display: `flex`,
+        }}
+      >
         <div
           css={{
             display: `none`,
@@ -204,63 +230,90 @@ class FilteredShowcase extends Component {
             },
           }}
         >
-          <h3>
-            Filter & Refine <MdFilterList />
-          </h3>
-          <Collapsible heading="Category">
-            {Array.from(
-              count(data.allSitesYaml.edges.map(({ node }) => node.categories))
-            )
-              .sort(([a], [b]) => {
-                if (a < b) return -1
-                if (a > b) return 1
-                return 0
-              })
-              .map(([c, count]) => (
-                <ul key={c}>
-                  <button
-                    className={filters.has(c) ? `selected` : ``}
-                    onClick={() => {
-                      if (filters.has(c)) {
-                        filters.delete(c)
-                        this.props.setFilters(filters)
-                      } else {
-                        this.props.setFilters(filters.add(c))
-                      }
-                    }}
-                    css={{
-                      display: `flex`,
-                      justifyContent: `space-between`,
-                      width: `100%`,
-                      border: `none`,
-                      background: `none`,
-                      cursor: `pointer`,
-                      ":hover": {
-                        color: colors.gatsby,
-                        "& .rule": { visibility: `visible` },
-                      },
-                      "&.selected": {
-                        color: colors.gatsby,
-                        "& .rule": { visibility: `visible` },
-                      },
-                    }}
-                  >
-                    <div>{c}</div>
-                    <div
-                      className="rule"
-                      css={{
-                        visibility: `hidden`,
-                        backgroundColor: colors.gatsby,
-                        width: `100%`,
-                        height: `1px`,
-                        margin: `10px`,
+          <div
+            css={{
+              [presets.Desktop]: {
+                ...styles.sticky,
+                borderRight: `1px solid ${colors.ui.light}`,
+                background: colors.ui.whisper,
+                height: `calc(100vh - ${presets.headerHeight})`,
+              },
+            }}
+          >
+            <h3
+              css={{
+                margin: 0,
+                [presets.Desktop]: {
+                  ...scale(1 / 8),
+                  color: colors.gray.copy,
+                },
+              }}
+            >
+              Filter & Refine <MdFilterList />
+            </h3>
+            <Collapsible heading="Category">
+              {Array.from(
+                count(
+                  data.allSitesYaml.edges.map(({ node }) => node.categories)
+                )
+              )
+                .sort(([a], [b]) => {
+                  if (a < b) return -1
+                  if (a > b) return 1
+                  return 0
+                })
+                .map(([c, count]) => (
+                  <ul key={c} css={{ margin: 0 }}>
+                    <button
+                      className={filters.has(c) ? `selected` : ``}
+                      onClick={() => {
+                        if (filters.has(c)) {
+                          filters.delete(c)
+                          this.props.setFilters(filters)
+                        } else {
+                          this.props.setFilters(filters.add(c))
+                        }
                       }}
-                    />
-                    <div>{count}</div>
-                  </button>
-                </ul>
-              ))}
-          </Collapsible>
+                      css={{
+                        background: `none`,
+                        border: `none`,
+                        cursor: `pointer`,
+                        display: `flex`,
+                        fontFamily: options.headerFontFamily.join(`,`),
+                        ...scale(-1 / 6),
+                        justifyContent: `space-between`,
+                        width: `100%`,
+                        padding: 0,
+                        paddingRight: rhythm(1),
+                        paddingBottom: rhythm(options.blockMarginBottom / 4),
+                        paddingTop: rhythm(options.blockMarginBottom / 4),
+                        ":hover": {
+                          color: colors.gatsby,
+                          "& .rule": { visibility: `visible` },
+                        },
+                        "&.selected": {
+                          color: colors.gatsby,
+                          "& .rule": { visibility: `visible` },
+                        },
+                      }}
+                    >
+                      <div>{c}</div>
+                      <div
+                        className="rule"
+                        css={{
+                          visibility: `hidden`,
+                          backgroundColor: colors.gatsby,
+                          width: `100%`,
+                          height: `1px`,
+                          margin: `10px`,
+                        }}
+                      />
+                      <div css={{ color: colors.gray.calm }}>{count}</div>
+                    </button>
+                  </ul>
+                ))}
+            </Collapsible>
+          </div>
         </div>
         <div>
           <div
@@ -270,15 +323,23 @@ class FilteredShowcase extends Component {
               flexDirection: `column`,
               [presets.Desktop]: {
                 flexDirection: `row`,
+                alignItems: `center`,
+                ...styles.sticky,
+                background: `rgba(255,255,255,0.98)`,
+                paddingLeft: `${rhythm(3 / 4)}`,
+                paddingRight: `${rhythm(3 / 4)}`,
+                paddingBottom: rhythm(3 / 4),
+                zIndex: 1,
+                borderBottom: `1px solid ${colors.ui.light}`,
               },
             }}
+            id="search-heading"
           >
-            <h2 css={{ flexGrow: 1 }} id="search-heading">
+            <h2 css={{ flexGrow: 1, margin: 0, ...scale(1 / 3) }}>
               {this.state.search.length === 0 ? (
                 filters.size === 0 ? (
                   <span>
-                    All {data.allSitesYaml.edges.length} (blazing fast) Showcase
-                    Sites
+                    All {data.allSitesYaml.edges.length} Showcase Sites
                   </span>
                 ) : (
                   <span>
@@ -297,7 +358,24 @@ class FilteredShowcase extends Component {
               <label css={{ position: `relative` }}>
                 <input
                   css={{
-                    paddingLeft: `1.4rem`,
+                    border: 0,
+                    borderRadius: presets.radiusLg,
+                    color: colors.gatsby,
+                    fontFamily: options.headerFontFamily.join(`,`),
+                    paddingTop: rhythm(1 / 8),
+                    paddingRight: rhythm(1 / 4),
+                    paddingBottom: rhythm(1 / 8),
+                    paddingLeft: rhythm(1),
+                    ":focus": {
+                      outline: 0,
+                      backgroundColor: colors.ui.light,
+                      borderRadius: presets.radiusLg,
+                      transition: `width ${presets.animation.speedDefault} ${
+                        presets.animation.curveDefault
+                      }, background-color ${presets.animation.speedDefault} ${
+                        presets.animation.curveDefault
+                      }`,
+                    },
                   }}
                   type="text"
                   value={this.state.search}
@@ -306,12 +384,13 @@ class FilteredShowcase extends Component {
                       search: e.target.value,
                     })
                   }
-                  placeholder="Search"
+                  placeholder="Search sites"
+                  aria-label="Search sites"
                 />
                 <SearchIcon
                   overrideCSS={{
                     // ...iconStyles,
-                    // fill: focussed && colors.gatsby,
+                    fill: colors.lilac,
                     position: `absolute`,
                     left: `5px`,
                     top: `50%`,
@@ -333,13 +412,14 @@ class FilteredShowcase extends Component {
           {this.state.sitesToShow < items.length && (
             <button
               css={{
-                backgroundColor: colors.gatsby,
-                color: `white`,
-                marginTop: 15,
-                marginBottom: 60,
+                ...styles.button,
+                marginBottom: rhythm(options.blockMarginBottom * 5),
+                marginLeft: rhythm(3 / 4),
+                marginRight: rhythm(3 / 4),
+                marginTop: rhythm(options.blockMarginBottom * 2),
               }}
               onClick={() => {
-                this.setState({ sitesToShow: this.state.sitesToShow + 9 })
+                this.setState({ sitesToShow: this.state.sitesToShow + 15 })
               }}
             >
               Load More
@@ -374,7 +454,7 @@ class ShowcasePage extends Component {
       <Layout location={location}>
         <div
           css={{
-            margin: `${rhythm(options.blockMarginBottom)} ${rhythm(3 / 4)}`,
+            margin: `${rhythm(options.blockMarginBottom)} ${rhythm(3 / 4)} 0`,
           }}
         >
           <Helmet>
@@ -403,7 +483,7 @@ class ShowcasePage extends Component {
             <div
               css={{
                 marginBottom: rhythm(options.blockMarginBottom * 2),
-                [presets.Tablet]: {
+                [presets.Mobile]: {
                   display: `flex`,
                   alignItems: `center`,
                 },
@@ -415,18 +495,18 @@ class ShowcasePage extends Component {
                 css={{ marginBottom: 0 }}
               />
               <Fragment>
-                <span
+                <h3
                   css={{
                     color: colors.gatsby,
                     fontFamily: options.headerFontFamily.join(`,`),
                     fontWeight: `bold`,
-                    fontSize: 24,
                     marginRight: 30,
                     marginLeft: 15,
+                    marginTop: 0,
                   }}
                 >
                   Featured Sites
-                </span>
+                </h3>
                 <a
                   href="#search-heading"
                   css={{
@@ -449,37 +529,48 @@ class ShowcasePage extends Component {
               </Fragment>
               <div
                 css={{
-                  color: colors.gray.calm,
-                  marginRight: 15,
+                  display: `flex`,
+                  alignItems: `center`,
                   marginLeft: `auto`,
-                  fontFamily: options.headerFontFamily.join(`,`),
                 }}
-              >
-                Want to get featured?
-              </div>
-              {/* TODO: maybe have a site submission issue template */}
-              <a
-                href="https://github.com/gatsbyjs/gatsby/issues/new?template=feature_request.md"
-                target="_blank"
-                rel="noopener noreferrer"
               >
                 <div
                   css={{
-                    backgroundColor: colors.gatsby,
-                    borderRadius: presets.radius,
-                    color: `white`,
-                    padding: `5px 20px`,
-                    fontWeight: `normal`,
-                    "&&": {
-                      borderBottom: `none`,
-                      boxShadow: `none`,
+                    ...scale(-1 / 6),
+                    color: colors.gray.calm,
+                    marginRight: 15,
+                    fontFamily: options.headerFontFamily.join(`,`),
+                    display: `none`,
+                    [presets.Tablet]: {
+                      display: `block`,
                     },
                   }}
                 >
-                  Submit your Site
-                  <div css={{ marginLeft: `5px`, display: `inline` }}>→</div>
+                  Want to get featured?
                 </div>
-              </a>
+                {/* TODO: maybe have a site submission issue template */}
+                <a
+                  href="https://github.com/gatsbyjs/gatsby/issues/new?template=feature_request.md"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  css={{
+                    ...styles.button,
+                  }}
+                >
+                  Submit{` `}
+                  <span
+                    css={{
+                      display: `none`,
+                      [presets.Desktop]: {
+                        display: `inline`,
+                      },
+                    }}
+                  >
+                    your{` `}
+                  </span>Site
+                  <div css={{ marginLeft: `5px`, display: `inline` }}>→</div>
+                </a>
+              </div>
             </div>
             <div
               css={{
@@ -490,9 +581,10 @@ class ShowcasePage extends Component {
                 css={{
                   display: `flex`,
                   overflowX: `scroll`,
-                  position: `relative`,
+                  flexShrink: 0,
                   margin: `0 -${rhythm(3 / 4)}`,
-                  padding: `0 ${rhythm(3 / 4)}`,
+                  padding: `4px ${rhythm(3 / 4)} 0`,
+                  ...styles.scrollbar,
                 }}
               >
                 {data.featured.edges.slice(0, 9).map(({ node }) => (
@@ -500,17 +592,20 @@ class ShowcasePage extends Component {
                     key={node.id}
                     css={{
                       ...styles.featuredSitesCard,
-                      marginRight: `30px`,
-                      marginBottom: rhythm(options.blockMarginBottom * 4),
                       "&&": {
                         borderBottom: `none`,
                         boxShadow: `none`,
-                        transition: `color ${presets.animation.speedDefault} ${
-                          presets.animation.curveDefault
-                        }`,
+                        transition: `box-shadow .3s cubic-bezier(.4,0,.2,1), transform .3s cubic-bezier(.4,0,.2,1)`,
                         "&:hover": {
                           background: `none`,
                           color: colors.gatsby,
+                          transform: `translateY(-4px)`,
+                          "& .gatsby-image-wrapper": {
+                            boxShadow: `0 8px 20px ${hex2rgba(
+                              colors.lilac,
+                              0.5
+                            )}`,
+                          },
                         },
                       },
                     }}
@@ -527,11 +622,15 @@ class ShowcasePage extends Component {
                         }
                         alt={node.title}
                         css={{
+                          borderRadius: presets.radius,
                           boxShadow: `0 4px 10px ${hex2rgba(
                             colors.gatsby,
                             0.1
                           )}`,
                           marginBottom: rhythm(options.blockMarginBottom / 2),
+                          transition: `all ${presets.animation.speedDefault} ${
+                            presets.animation.curveDefault
+                          }`,
                         }}
                       />
                     )}
@@ -555,26 +654,33 @@ class ShowcasePage extends Component {
                   href="#search-heading"
                   css={{
                     ...styles.featuredSitesCard,
-                    display: `block`,
                     textAlign: `center`,
-                    cursor: `pointer`,
+                    border: `1px solid ${hex2rgba(colors.lilac, 0.2)}`,
+                    borderRadius: presets.radius,
                     "&&": {
                       boxShadow: `none`,
-                      borderBottom: 0,
+                      transition: `all ${presets.animation.speedDefault} ${
+                        presets.animation.curveDefault
+                      }`,
+                      "&:hover": {
+                        backgroundColor: hex2rgba(colors.ui.light, 0.25),
+                        transform: `translateY(-4px)`,
+                        boxShadow: `0 8px 20px ${hex2rgba(colors.lilac, 0.5)}`,
+                      },
                     },
                   }}
-                  onClick={() =>
+                  onClick={() => {
                     this.setState({ filters: new Set([`Featured`]) })
-                  }
+                  }}
                 >
                   <div
                     css={{
-                      margin: 20,
+                      margin: rhythm(1),
                       background: colors.ui.whisper,
-                      height: `100%`,
                       display: `flex`,
                       alignItems: `center`,
                       position: `relative`,
+                      flexBasis: `100%`,
                     }}
                   >
                     <img
@@ -589,7 +695,6 @@ class ShowcasePage extends Component {
                       }}
                       alt=""
                     />
-
                     <span
                       css={{
                         margin: `0 auto`,
@@ -603,7 +708,7 @@ class ShowcasePage extends Component {
                           width: `auto`,
                           display: `block`,
                           margin: `0 auto 20px`,
-                          [presets.Tablet]: {
+                          [presets.Desktop]: {
                             height: 74,
                           },
                         }}
@@ -699,24 +804,54 @@ export const showcaseQuery = graphql`
 
 const styles = {
   featuredSitesCard: {
-    display: `block`,
-    flexShrink: 0,
+    display: `flex`,
+    flexDirection: `column`,
     flexGrow: 0,
-    width: 282,
-    height: 282,
-    [presets.Tablet]: {
-      width: 380,
-      height: 380,
-      display: `flex`,
-      flexDirection: `column`,
-    },
-    [presets.Desktop]: {
-      width: 420,
-      height: 420,
+    flexShrink: 0,
+    width: 320,
+    marginBottom: rhythm(options.blockMarginBottom * 2),
+    marginRight: rhythm(1),
+    [presets.Hd]: {
+      width: 360,
     },
     [presets.VHd]: {
-      height: 512,
-      width: 512,
+      width: 400,
+    },
+  },
+  button: {
+    border: 0,
+    borderRadius: presets.radius,
+    cursor: `pointer`,
+    fontFamily: options.headerFontFamily.join(`,`),
+    fontWeight: `bold`,
+    padding: `${rhythm(1 / 4)} ${rhythm(2 / 3)}`,
+    WebkitFontSmoothing: `antialiased`,
+    "&&": {
+      backgroundColor: colors.gatsby,
+      borderBottom: `none`,
+      boxShadow: `none`,
+      color: `white`,
+      "&:hover": {
+        backgroundColor: colors.gatsby,
+      },
+    },
+  },
+  sticky: {
+    paddingTop: rhythm(options.blockMarginBottom),
+    position: `sticky`,
+    top: `calc(${presets.headerHeight} - 1px)`,
+  },
+  scrollbar: {
+    WebkitOverflowScrolling: `touch`,
+    "&::-webkit-scrollbar": {
+      width: `6px`,
+      height: `6px`,
+    },
+    "&::-webkit-scrollbar-thumb": {
+      background: colors.ui.bright,
+    },
+    "&::-webkit-scrollbar-track": {
+      background: colors.ui.light,
     },
   },
 }
