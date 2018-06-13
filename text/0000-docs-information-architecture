@@ -25,7 +25,8 @@ Expand top (and potentially second-level) navigation items that do not belong to
 - [ ] create stub articles for the ones we don’t have yet
 
 Phase 2:
-- [ ] Find a place for starter and site showcases
+- [ ] Find a place for starter showcase in top nav
+- [ ] Add issue submission form at bottom of each doc
 - [ ] publish templates for each category of docs to facilitate contributions and contract work
 - [ ] mobile menu that you can access w/o scrolling to bottom of screen (see Flo’s notes below on Reactjs.com’s mobile version vs. Stripe’s docs which ignore small screens)
     - Currently https://www.gatsbyjs.org/docs/ is the only way on Mobile to access the Desktop sidebar content
@@ -90,7 +91,6 @@ Commands (Gatsby CLI)
 
 Reference docs
 - API references
-    - @jlengstorf this idea is from you, don't know how to fill this in...*
     - API specification
     - Gatsby Browser APIs
     - Gatsby Node APIs
@@ -164,34 +164,34 @@ Contributing
 
 
 
-What we may not need to include in the docs:
-- Starters and the Awesome Gatsby stuff will appear in a starter library and a site showcase, so will no longer need to be in docs fairly soon.
-- Integration tutorials and guides (such as Gatsby + Netlify, Gatsby + Contentful). 
-    - Reasons to exclude these from docs: imho, we don't have the time to maintain the potentially infinite number of tutorials this could include. Also, perhaps we don't want to show preference for any company over another? Do we just make sure all the plugin READme files are really high quality?
-    - Reasons to still include them in docs or somewhere else (like a blog): tons and tons of people would use them.
-
 # Drawbacks
 
 Why should we *not* do this? Please consider:
 
-- I'm not sure what the code complexity of changing the URL structure of pages includes
-- The side bar might be able to remain the same size or structure. Not sure.
-- Could this break links people have to current docs?
-
+- Redesigning the side bar could take a lot of work.
 
 # Alternatives
 
-I'm not aware of any other designs we've considered. Anyone? The potential benefits of doing this outweight the negatives, imho. Especially because docs are only going to keep growing. The current hierarchy doesn't allow for much more growth.
+I'm not aware of any other designs we've considered. The potential benefits of doing this outweight the negatives, imo. Especially because docs are only going to keep growing. The current hierarchy doesn't allow for much more growth.
 
 # Adoption strategy
 
-I don't think this would be hard for people to adopt, hopefully.
+If the design is intuitive, it will be easier to adopt than the current design. See # How we teach this below, which includes blogging about it and then creating a landing page for the docs that introduces the IA.
 
 # How we teach this
 
-If it's really good information architecture, it won't need to be taught ;). We would redesign it if we find that we have to explain it to people. We could write an initial blogpost with a tour of the docs structure for those who want to understand the change and see an overview, and then this overview could be included in an intro to the docs.
+If it's really good information architecture, it won't need to be taught ;). If we find that we have to explain it to people, we would redesign it. We could write an initial blogpost with a tour of the docs structure for those who want to understand the change and see an overview, and then this overview could be included in an intro to the docs.
 
 # Unresolved questions
 
-- Number of levels of hierarchy. I want to keep it to 3 at the most. Suggestions or reasons to only do 2, or to do more, like 4?
-- How to handle change in all the URLs
+None.
+
+# Resolved questions
+
+- How many levels of nav? We'll try 3 levels of nav and adapt if that doesn't work.
+- What is the code complexity of changing the URL structure of pages? We'll need to make a list of old urls and new urls, then the site can be configured to send people from old to new. e.g.
+/docs/add-404-page/ changes to /docs/basic-tasks/adding-content/add-404-page
+- Could these plans break links people have to current docs? In many cases yes, but adding redirects is easy.
+- Should we include integration tutorials and guides (such as Gatsby + Netlify, Gatsby + Contentful)? Yes, we'll encourage these contributions and encourage people to submit edits / report issues just like with any other doc and see how it goes.
+- Where did Awesome Gatsby and Starter list go? Those will be their own separate landing pages accessible from main .org nav very soon!
+
