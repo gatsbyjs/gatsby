@@ -301,6 +301,7 @@ class FilteredShowcase extends Component {
                       css={{
                         background: `none`,
                         border: `none`,
+                        color: colors.gray.text,
                         cursor: `pointer`,
                         display: `flex`,
                         fontFamily: options.headerFontFamily.join(`,`),
@@ -309,8 +310,8 @@ class FilteredShowcase extends Component {
                         width: `100%`,
                         padding: 0,
                         paddingRight: rhythm(1),
-                        paddingBottom: rhythm(options.blockMarginBottom / 4),
-                        paddingTop: rhythm(options.blockMarginBottom / 4),
+                        paddingBottom: rhythm(options.blockMarginBottom / 8),
+                        paddingTop: rhythm(options.blockMarginBottom / 8),
                         ":hover": {
                           color: colors.gatsby,
                           "& .rule": { visibility: `visible` },
@@ -819,6 +820,7 @@ const styles = {
     marginRight: rhythm(3 / 4),
     [presets.Hd]: {
       width: 360,
+      marginRight: rhythm(6 / 4),
     },
     [presets.VHd]: {
       width: 400,
