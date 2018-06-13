@@ -31,7 +31,7 @@ Phase 2:
     - Currently https://www.gatsbyjs.org/docs/ is the only way on Mobile to access the Desktop sidebar content
     - https://reactjs.org/ is an excellent example of a Mobile navigation for our sidebar content, but the button position conflicts with our current mobile navigation
     - Noteworthy: the equally excellent https://stripe.com/docs/quickstart and https://stripe.com/docs/api completely ignore smaller screens
-- [ ] Way to copy and paste code easily 
+- [ ] Way to copy and paste code easily Ref. gatsbyjs/gatsby#5030
 - [ ] Sidebar collapsed view
     - Make the sidebar togglable so that people who are distracted by the persistent display of the sidebar on large screens can hide it on demand (fk: I’d label this “nice to have” clearly, even if this goes hand-in-hand with the implementation of the Mobile navigation)
 
