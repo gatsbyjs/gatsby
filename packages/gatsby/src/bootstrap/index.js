@@ -57,28 +57,8 @@ module.exports = async (args: BootstrapArgs) => {
     payload: program,
   })
 
-  // onPreInit
-  activity = report.activityTimer(`onPreInit`)
-  activity.start()
-  await apiRunnerNode(`onPreInit`)
-  activity.end()
-
-  // Delete html and css files from the public directory as we don't want
-  // deleted pages and styles from previous builds to stick around.
-  let activity = report.activityTimer(
-    `delete html and css files from previous builds`
-  )
-  activity.start()
-  await del([
-    `public/*.{html,css}`,
-    `public/**/*.{html,css}`,
-    `!public/static`,
-    `!public/static/**/*.{html,css}`,
-  ])
-  activity.end()
-
   // Try opening the site's gatsby-config.js file.
-  activity = report.activityTimer(`open and validate gatsby-config`)
+  let activity = report.activityTimer(`open and validate gatsby-config`)
   activity.start()
   const config = await preferDefault(
     getConfigFile(program.directory, `gatsby-config`)
@@ -92,6 +72,26 @@ module.exports = async (args: BootstrapArgs) => {
   activity.end()
 
   const flattenedPlugins = await loadPlugins(config)
+
+  // onPreInit
+  activity = report.activityTimer(`onPreInit`)
+  activity.start()
+  await apiRunnerNode(`onPreInit`)
+  activity.end()
+
+  // Delete html and css files from the public directory as we don't want
+  // deleted pages and styles from previous builds to stick around.
+  activity = report.activityTimer(
+    `delete html and css files from previous builds`
+  )
+  activity.start()
+  await del([
+    `public/*.{html,css}`,
+    `public/**/*.{html,css}`,
+    `!public/static`,
+    `!public/static/**/*.{html,css}`,
+  ])
+  activity.end()
 
   // Check if any plugins have been updated since our last run. If so
   // we delete the cache is there's likely been changes

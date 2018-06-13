@@ -182,7 +182,7 @@ exports.modifyBabelrc = true
 exports.modifyWebpackConfig = true
 
 /**
- * Called at the beginning of Gatsby execution: before config validation, cache initialization, and bootstrap preparation.
+ * Called at the beginning of Gatsby execution: after config validation, before cache initialization, and bootstrap preparation.
  */
 exports.onPreInit = true
 
