@@ -60,7 +60,11 @@ const ShowcaseList = ({ items, count }) => {
 
   return (
     <div
-      css={{ display: `flex`, flexWrap: `wrap`, padding: `0 ${rhythm(3 / 4)}` }}
+      css={{
+        display: `flex`,
+        flexWrap: `wrap`,
+        padding: rhythm(3 / 4),
+      }}
     >
       {items.map(
         ({ node }) =>
@@ -70,39 +74,54 @@ const ShowcaseList = ({ items, count }) => {
               key={node.id}
               to={{ pathname: node.fields.slug, state: { isModal: true } }}
               css={{
-                borderBottom: `none !important`,
-                boxShadow: `none !important`,
+                margin: rhythm(3 / 4),
+                "&&": {
+                  borderBottom: `none`,
+                  boxShadow: `none`,
+                  transition: `all ${presets.animation.speedDefault} ${
+                    presets.animation.curveDefault
+                  }`,
+                  "&:hover": {
+                    background: `transparent`,
+                    color: colors.gatsby,
+                    transform: `translateY(-4px)`,
+                    "& .gatsby-image-wrapper": {
+                      boxShadow: `0 8px 20px ${hex2rgba(colors.lilac, 0.5)}`,
+                    },
+                  },
+                },
               }}
             >
-              <div css={{ margin: `12px` }}>
-                {node.childScreenshot ? (
-                  <Img
-                    resolutions={
-                      node.childScreenshot.screenshotFile.childImageSharp
-                        .resolutions
-                    }
-                    alt={`Screenshot of ${node.title}`}
-                  />
-                ) : (
-                  <div
-                    css={{
-                      width: 320,
-                      backgroundColor: `#d999e7`,
-                    }}
-                  >
-                    missing
-                  </div>
-                )}
-                {node.title}
+              {node.childScreenshot ? (
+                <Img
+                  resolutions={
+                    node.childScreenshot.screenshotFile.childImageSharp
+                      .resolutions
+                  }
+                  alt={`Screenshot of ${node.title}`}
+                  css={{
+                    ...styles.screenshot,
+                  }}
+                />
+              ) : (
                 <div
                   css={{
-                    ...scale(-2 / 5),
-                    color: `#9B9B9B`,
-                    fontWeight: `normal`,
+                    width: 320,
+                    backgroundColor: `#d999e7`,
                   }}
                 >
-                  {node.categories && node.categories.join(`, `)}
+                  missing
                 </div>
+              )}
+              {node.title}
+              <div
+                css={{
+                  ...scale(-2 / 5),
+                  color: `#9B9B9B`,
+                  fontWeight: `normal`,
+                }}
+              >
+                {node.categories && node.categories.join(`, `)}
               </div>
             </Link>
           )
@@ -636,12 +655,7 @@ class ShowcasePage extends Component {
                       }
                       alt={node.title}
                       css={{
-                        borderRadius: presets.radius,
-                        boxShadow: `0 4px 10px ${hex2rgba(colors.gatsby, 0.1)}`,
-                        marginBottom: rhythm(options.blockMarginBottom / 2),
-                        transition: `all ${presets.animation.speedDefault} ${
-                          presets.animation.curveDefault
-                        }`,
+                        ...styles.screenshot,
                       }}
                     />
                   )}
@@ -822,7 +836,7 @@ const styles = {
     flexShrink: 0,
     width: 320,
     marginBottom: rhythm(options.blockMarginBottom * 2),
-    marginRight: rhythm(1),
+    marginRight: rhythm(3 / 4),
     [presets.Hd]: {
       width: 360,
     },
@@ -865,5 +879,13 @@ const styles = {
     "&::-webkit-scrollbar-track": {
       background: colors.ui.light,
     },
+  },
+  screenshot: {
+    borderRadius: presets.radius,
+    boxShadow: `0 4px 10px ${hex2rgba(colors.gatsby, 0.1)}`,
+    marginBottom: rhythm(options.blockMarginBottom / 2),
+    transition: `all ${presets.animation.speedDefault} ${
+      presets.animation.curveDefault
+    }`,
   },
 }
