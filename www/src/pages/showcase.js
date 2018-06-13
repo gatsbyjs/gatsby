@@ -734,6 +734,7 @@ class ShowcasePage extends Component {
                 bottom: `0`,
                 right: `-${rhythm(3 / 4)}`,
                 width: `60px`,
+                pointerEvents: `none`,
                 background: `linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(255,255,255,1) 100%)`,
               }}
             />
