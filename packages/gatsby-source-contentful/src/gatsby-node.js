@@ -77,7 +77,7 @@ exports.sourceNodes = async (
   // are "updated" so will get the now deleted reference removed.
 
   function deleteContentfulNode (node) {
-    const id = normalize.fixId(node.sys.id)
+    const id = node.sys.id
     const localizedIds = locales.map((locale) => normalize.makeId({ id, currentLocale: locale.code, defaultLocale }))
     localizedIds.forEach(id => deleteNode(id, getNode(id)))
   }
