@@ -751,7 +751,7 @@ class ShowcasePage extends Component {
               css={{
                 position: `absolute`,
                 top: `0`,
-                bottom: `0`,
+                bottom: rhythm(options.blockMarginBottom),
                 right: `-${rhythm(3 / 4)}`,
                 width: `60px`,
                 pointerEvents: `none`,
