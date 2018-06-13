@@ -82,12 +82,7 @@ const ShowcaseList = ({ items, count }) => {
                     presets.animation.curveDefault
                   }`,
                   "&:hover": {
-                    background: `transparent`,
-                    color: colors.gatsby,
-                    transform: `translateY(-4px)`,
-                    "& .gatsby-image-wrapper": {
-                      boxShadow: `0 8px 20px ${hex2rgba(colors.lilac, 0.5)}`,
-                    },
+                    ...styles.screenshotHover,
                   },
                 },
               }}
@@ -597,7 +592,7 @@ class ShowcasePage extends Component {
                 overflowX: `scroll`,
                 flexShrink: 0,
                 margin: `0 -${rhythm(3 / 4)}`,
-                padding: `4px ${rhythm(3 / 4)} 0`,
+                padding: `3px ${rhythm(3 / 4)} 0`,
                 ...styles.scrollbar,
               }}
             >
@@ -611,15 +606,7 @@ class ShowcasePage extends Component {
                       boxShadow: `none`,
                       transition: `box-shadow .3s cubic-bezier(.4,0,.2,1), transform .3s cubic-bezier(.4,0,.2,1)`,
                       "&:hover": {
-                        background: `none`,
-                        color: colors.gatsby,
-                        transform: `translateY(-4px)`,
-                        "& .gatsby-image-wrapper": {
-                          boxShadow: `0 8px 20px ${hex2rgba(
-                            colors.lilac,
-                            0.5
-                          )}`,
-                        },
+                        ...styles.screenshotHover,
                       },
                     },
                   }}
@@ -672,7 +659,7 @@ class ShowcasePage extends Component {
                     }`,
                     "&:hover": {
                       backgroundColor: hex2rgba(colors.ui.light, 0.25),
-                      transform: `translateY(-4px)`,
+                      transform: `translateY(-3px)`,
                       boxShadow: `0 8px 20px ${hex2rgba(colors.lilac, 0.5)}`,
                     },
                   },
@@ -715,9 +702,12 @@ class ShowcasePage extends Component {
                         height: 44,
                         width: `auto`,
                         display: `block`,
-                        margin: `0 auto 20px`,
-                        [presets.Desktop]: {
-                          height: 74,
+                        margin: `0 auto ${rhythm(options.blockMarginBottom)}`,
+                        [presets.Tablet]: {
+                          height: 64,
+                        },
+                        [presets.Hd]: {
+                          height: 72,
                         },
                       }}
                       alt=""
@@ -870,5 +860,13 @@ const styles = {
     transition: `all ${presets.animation.speedDefault} ${
       presets.animation.curveDefault
     }`,
+  },
+  screenshotHover: {
+    background: `transparent`,
+    color: colors.gatsby,
+    "& .gatsby-image-wrapper": {
+      transform: `translateY(-3px)`,
+      boxShadow: `0 8px 20px ${hex2rgba(colors.lilac, 0.5)}`,
+    },
   },
 }
