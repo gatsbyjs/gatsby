@@ -232,7 +232,7 @@ Websites built with Gatsby:
 
 **[View the docs on gatsbyjs.org](https://www.gatsbyjs.org/docs/)**
 
-[Migrating from v1 to v2?](https://www.gatsbyjs.org/docs/migrating-from-v1-to-v2/)
+[Migrating from v1 to v2?](https://v2--gatsbyjs.netlify.com/docs/migrating-from-v1-to-v2/)
 
 [Migrating from v0 to v1?](https://www.gatsbyjs.org/docs/migrating-from-v0-to-v1/)
 
