@@ -52,8 +52,8 @@ exports.sourceNodes = async (
     process.env.ACTIVE_ENV !== `production`
   ) {
 
-    _.values(store.getState().nodes)
-      .filter(n => n.internal.type === `gatsby-source-contentful`)
+    _.values(store.getState().getNodes())
+      .filter(n => n.internal.owner === `gatsby-source-contentful`)
       .forEach(n => touchNode(n.id))
 
     console.log(`Using Contentful Offline cache ⚠️`)
@@ -87,7 +87,6 @@ exports.sourceNodes = async (
     accessToken,
     host,
     environment,
-    cacheDir: `${store.getState().program.directory}/.cache`,
   })
 
   const entryList = normalize.buildEntryList({
