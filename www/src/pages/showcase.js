@@ -541,7 +541,8 @@ class ShowcasePage extends Component {
     this.setState({ windowWidth: window.innerWidth })
   }
 
-  onClickHandler = target => target.current
+  onClickHandler = target =>
+    target.current
       ? scrollToAnchor(target.current, () => {
           this.setState({ filters: new Set([`Featured`]) })
         })
