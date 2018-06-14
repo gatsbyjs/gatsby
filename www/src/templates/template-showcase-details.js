@@ -11,6 +11,8 @@ import Layout from "../components/layout"
 import Img from "gatsby-image"
 
 import MdArrowUpward from "react-icons/lib/md/arrow-upward"
+import MdArrowForward from "react-icons/lib/md/arrow-forward"
+import MdArrowBack from "react-icons/lib/md/arrow-back"
 import MdLaunch from "react-icons/lib/md/launch"
 import FeaturedIcon from "../assets/featured-detailpage-featuredicon.svg"
 import FeatherIcon from "../assets/showcase-feather.svg"
@@ -417,7 +419,6 @@ class ShowcaseTemplate extends React.Component {
 
 export default ShowcaseTemplate
 
-// TODO: the image dimensions here are 100x100, but the design calls for much larger. do we do it?
 class PermalinkPageFooter extends React.Component {
   state = {
     windowWidth: null,
@@ -434,9 +435,8 @@ class PermalinkPageFooter extends React.Component {
     return (
       <div
         css={{
-          display: `flex`,
           borderTop: `1px solid ${colors.ui.light}`,
-          padding: 50,
+          display: `flex`,
           paddingTop: 15,
         }}
       >
@@ -448,17 +448,12 @@ class PermalinkPageFooter extends React.Component {
               state: { isModal: false },
             }}
           >
-            ← {previousSite.title}
+            <MdArrowBack style={{ marginRight: 4, verticalAlign: `sub` }} />
+            {previousSite.title}
           </Link>
           <Img
-            css={{
-              boxShadow: `0px 0px 38px -8px ${colors.gatsby}`,
-              width: `100%`,
-              height: `100%`,
-            }}
-            resolutions={
-              previousSite.childScreenshot.screenshotFile.childImageSharp
-                .resolutions
+            sizes={
+              previousSite.childScreenshot.screenshotFile.childImageSharp.sizes
             }
             alt=""
           />
@@ -468,17 +463,13 @@ class PermalinkPageFooter extends React.Component {
           <Link
             to={{ pathname: nextSite.fields.slug, state: { isModal: false } }}
           >
-            {nextSite.title} →
+            {nextSite.title}&nbsp;<MdArrowForward
+              style={{ marginLeft: 4, verticalAlign: `sub` }}
+            />
           </Link>
           <Img
-            css={{
-              boxShadow: `0px 0px 38px -8px ${colors.gatsby}`,
-              width: `100%`,
-              height: `100%`,
-            }}
-            resolutions={
-              nextSite.childScreenshot.screenshotFile.childImageSharp
-                .resolutions
+            sizes={
+              nextSite.childScreenshot.screenshotFile.childImageSharp.sizes
             }
             alt=""
           />
@@ -529,6 +520,9 @@ export const pageQuery = graphql`
               childImageSharp {
                 resolutions(width: 100, height: 100) {
                   ...GatsbyImageSharpResolutions
+                }
+                sizes(maxWidth: 800) {
+                  ...GatsbyImageSharpSizes
                 }
               }
             }
