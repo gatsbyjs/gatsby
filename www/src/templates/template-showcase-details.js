@@ -21,6 +21,8 @@ const cleanUrl = mainUrl => {
   return parsed.hostname + path
 }
 
+const gutter = 40
+
 class ShowcaseTemplate extends React.Component {
   findCurrentIndex() {
     const {
@@ -205,8 +207,8 @@ class ShowcaseTemplate extends React.Component {
               css={{
                 borderBottom: `1px solid #F5F3F7`,
                 fontFamily: options.headerFontFamily.join(`,`),
-                padding: 40,
-                paddingBottom: 20,
+                padding: gutter,
+                paddingBottom: gutter / 2,
               }}
             >
               <h1 css={{ margin: 0 }}>{data.sitesYaml.title}</h1>
@@ -325,16 +327,23 @@ class ShowcaseTemplate extends React.Component {
               }
               alt={`Screenshot of ${data.sitesYaml.title}`}
             />
-            <p
+            <div
               css={{
-                padding: 20,
+                padding: gutter,
               }}
             >
-              {data.sitesYaml.description}
-            </p>
-            <div css={{ display: `flex`, padding: 20 }}>
-              <div css={{ paddingRight: 20 }}>Categories</div>
-              <div>{categories.join(`, `)}</div>
+              <p>{data.sitesYaml.description}</p>
+              <div
+                css={{
+                  display: `flex`,
+                  fontFamily: options.headerFontFamily.join(`,`),
+                }}
+              >
+                <div css={{ color: colors.gray.calm, paddingRight: 20 }}>
+                  Categories
+                </div>
+                <div>{categories.join(`, `)}</div>
+              </div>
             </div>
           </div>
         </div>
