@@ -63,6 +63,7 @@ class EvaluationTable extends Component {
                 },
               }}
             >
+              {/* eslint-disable jsx-a11y/anchor-is-valid */}
               <a
                 css={{
                   "&&": {
@@ -76,6 +77,7 @@ class EvaluationTable extends Component {
               >
                 {renderText(text)}
               </a>
+              {/* eslint-enable */}
             </div>
           )
         }
