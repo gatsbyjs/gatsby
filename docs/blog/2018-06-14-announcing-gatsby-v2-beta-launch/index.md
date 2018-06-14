@@ -11,11 +11,11 @@ We’re excited to announce that today we shipped the first beta for Gatsby v2! 
 
 Gatsby v2 builds on the foundations of v1 to introduce a range of improvements:
 
-- Out With Layouts, In With StaticQuery
+- Out With Gatsby Layout Components, In With StaticQuery
 
-  Layouts were a common source of confusion in v1. After an RFC and [informative community discussion](https://github.com/gatsbyjs/rfcs/blob/master/text/0002-remove-special-layout-components.md), we decided to remove them and create `StaticQuery` which allows GraphQL queries to be added to any component. For more information on migrating your layouts, check out our Life After Layouts post (coming soon).
+  Gatby's special layout components were a common source of confusion in v1. After an RFC and [informative community discussion](https://github.com/gatsbyjs/rfcs/blob/master/text/0002-remove-special-layout-components.md), we decided to remove them and create `StaticQuery` which allows GraphQL queries to be added to any component. For more information on migrating your layouts, check out our Life After Layouts post (coming soon).
 
-- More consistent APIs
+- Improve APIs
 
   We’ve renamed `sizes` and `resolutions` to `fluid` and `fixed`, `boundActionCreators` to `actions`, as well as other changes intended to make API names more consistent and prevent common gotchas.
 
@@ -23,11 +23,11 @@ Gatsby v2 builds on the foundations of v1 to introduce a range of improvements:
 
 - Hotter Hot Reloading
 
-  Previously, hot reload had been dependent on new webpack builds. On larger sites, that could take ten or fifteen seconds -- more like lukewarm reloading, really. With [_ludicrous mode_](https://twitter.com/gatsbyjs/status/974507205121617920) we’ve decoupled webpack so that hot reloading is always instantaneous.
+  Previously, hot reloading of code and data had been dependent on new webpack builds. On larger sites, that could take ten or fifteen seconds -- more like lukewarm reloading, really. With [_ludicrous mode_](https://twitter.com/gatsbyjs/status/974507205121617920) we’ve decoupled data updates from webpack so that updating your site's content is always instantaneous.
 
 - Upgraded Dependencies
 
-  These are the some of the least obvious but most important changes. Our dependency upgrades help us take advantage of hundreds of other engineers’ work across the incredible modern JS ecosystem.
+  Gatsby is built on top of amazing JavaScript libraries. In this beta we're delighted to ship the latest improvements from webpack, Babel, and React to you.
 
   Key upgrades include:
 
