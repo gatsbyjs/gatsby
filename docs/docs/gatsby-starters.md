@@ -38,7 +38,8 @@ Community:
 
   Features:
 
-  * Dynamic content from Cosmic JS
+  * Same as Gatsby starter default with dynamic content from [Cosmic JS](https://cosmicjs.com)
+  * Install and set up CMS in seconds [via the command line](https://github.com/cosmicjs/gatsby-starter)
   
 * [gatsby-starter-blog-no-styles](https://github.com/noahg/gatsby-starter-blog-no-styles)
   [(demo)](http://capricious-spring.surge.sh/)
