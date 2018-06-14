@@ -3,7 +3,7 @@ import Helmet from "react-helmet"
 
 import { Link } from "gatsby"
 import Img from "gatsby-image"
-// import { style } from "glamor"
+import { style } from "glamor"
 import hex2rgba from "hex2rgba"
 import MdFilterList from "react-icons/lib/md/filter-list"
 import FaAngleDown from "react-icons/lib/fa/angle-down"
@@ -79,6 +79,7 @@ const ShowcaseList = ({ items, count }) => {
             <Link
               key={node.id}
               to={{ pathname: node.fields.slug, state: { isModal: true } }}
+              {...styles.withTitleHover}
               css={{
                 margin: rhythm(3 / 4),
                 width: 280,
@@ -115,7 +116,9 @@ const ShowcaseList = ({ items, count }) => {
                   missing
                 </div>
               )}
-              {node.title}
+              <div>
+                <span className="title">{node.title}</span>
+              </div>
               <div
                 css={{
                   ...scale(-2 / 5),
@@ -588,6 +591,7 @@ class ShowcasePage extends Component {
             </h1>
             <a
               href="#showcase"
+              {...styles.withTitleHover}
               css={{
                 "&&": {
                   ...scale(-1 / 6),
@@ -605,7 +609,7 @@ class ShowcasePage extends Component {
               }}
               onClick={this.onClickHandler(this.showcase)}
             >
-              View all&nbsp;<MdArrowForward
+              <span className="title">View all</span>&nbsp;<MdArrowForward
                 style={{ marginLeft: 4, verticalAlign: `sub` }}
               />
             </a>
@@ -674,8 +678,9 @@ class ShowcasePage extends Component {
               {data.featured.edges.slice(0, 9).map(({ node }) => (
                 <Link
                   key={node.id}
+                  {...styles.featuredSitesCard}
+                  {...styles.withTitleHover}
                   css={{
-                    ...styles.featuredSitesCard,
                     "&&": {
                       borderBottom: `none`,
                       boxShadow: `none`,
@@ -702,7 +707,9 @@ class ShowcasePage extends Component {
                       }}
                     />
                   )}
-                  {node.title}
+                  <div>
+                    <span className="title">{node.title}</span>
+                  </div>
                   <div
                     css={{
                       ...scale(-1 / 6),
@@ -727,8 +734,8 @@ class ShowcasePage extends Component {
               >
                 <a
                   href="#showcase"
+                  {...styles.featuredSitesCard}
                   css={{
-                    ...styles.featuredSitesCard,
                     marginRight: `${rhythm(3 / 4)} !important`,
                     border: `1px solid ${hex2rgba(colors.lilac, 0.2)}`,
                     borderRadius: presets.radius,
@@ -886,7 +893,7 @@ export const showcaseQuery = graphql`
 `
 
 const styles = {
-  featuredSitesCard: {
+  featuredSitesCard: style({
     display: `flex`,
     flexDirection: `column`,
     flexGrow: 0,
@@ -901,7 +908,16 @@ const styles = {
     [presets.VHd]: {
       width: 400,
     },
-  },
+  }),
+  withTitleHover: style({
+    "& .title": {
+      transition: `box-shadow .3s cubic-bezier(.4,0,.2,1), transform .3s cubic-bezier(.4,0,.2,1)`,
+      boxShadow: `inset 0 0px 0px 0px ${colors.ui.whisper}`,
+    },
+    "&:hover .title": {
+      boxShadow: `inset 0 -3px 0px 0px ${colors.ui.bright}`,
+    },
+  }),
   button: {
     border: 0,
     borderRadius: presets.radius,
