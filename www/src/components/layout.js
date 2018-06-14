@@ -89,7 +89,7 @@ class DefaultLayout extends React.Component {
                 minWidth: `100%`,
                 zIndex: 10,
                 overflowY: `auto`,
-                backgroundColor: `rgba(255, 255, 255, 0.9)`,
+                backgroundColor: `rgba(255, 255, 255, 0.95)`,
               },
             }}
             onRequestClose={() => navigateTo(this.props.modalBackgroundPath)}
