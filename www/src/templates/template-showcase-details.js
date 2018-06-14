@@ -1,6 +1,7 @@
 import React from "react"
 import Helmet from "react-helmet"
 import url from "url"
+import hex2rgba from "hex2rgba"
 
 import presets, { colors } from "../utils/presets"
 import { options, scale, rhythm } from "../utils/typography"
@@ -208,7 +209,6 @@ class ShowcaseTemplate extends React.Component {
             </Helmet>
             <div
               css={{
-                borderBottom: `1px solid #F5F3F7`,
                 fontFamily: options.headerFontFamily.join(`,`),
                 padding: gutter,
                 paddingBottom: gutter / 2,
@@ -260,18 +260,20 @@ class ShowcaseTemplate extends React.Component {
             <div
               css={{
                 display: `flex`,
-                borderBottom: `1px solid #F5F3F7`,
+                borderTop: `1px solid ${colors.ui.light}`,
                 fontFamily: options.headerFontFamily.join(`,`),
+                margin: `0 ${gutter}px`,
               }}
             >
               {data.sitesYaml.featured && (
                 <div
                   css={{
-                    borderRight: `1px solid #F5F3F7`,
+                    borderRight: `1px solid ${colors.ui.light}`,
                     color: colors.gatsby,
                     display: `flex`,
                     fontWeight: `bold`,
                     padding: 20,
+                    paddingLeft: 0,
                     [presets.Desktop]: {
                       ...scale(-1 / 6),
                     },
@@ -289,8 +291,9 @@ class ShowcaseTemplate extends React.Component {
                 <div
                   css={{
                     padding: 20,
+                    paddingLeft: data.sitesYaml.featured ? false : 0,
                     display: `flex`,
-                    borderRight: `1px solid #F5F3F7`,
+                    borderRight: `1px solid ${colors.ui.light}`,
                     [presets.Desktop]: {
                       ...scale(-1 / 6),
                     },
@@ -311,7 +314,7 @@ class ShowcaseTemplate extends React.Component {
                   css={{
                     padding: 20,
                     display: `flex`,
-                    borderRight: `1px solid #F5F3F7`,
+                    borderRight: `1px solid ${colors.ui.light}`,
                   }}
                 >
                   <img
@@ -325,6 +328,7 @@ class ShowcaseTemplate extends React.Component {
             </div>
             <div
               css={{
+                borderTop: `1px solid ${colors.ui.light}`,
                 position: `relative`,
               }}
             >
@@ -364,6 +368,11 @@ class ShowcaseTemplate extends React.Component {
                     .sizes
                 }
                 alt={`Screenshot of ${data.sitesYaml.title}`}
+                css={{
+                  boxShadow: isModal
+                    ? false
+                    : `0 4px 10px ${hex2rgba(colors.gatsby, 0.1)}`,
+                }}
               />
             </div>
             <div
@@ -416,23 +425,21 @@ class PermalinkPageFooter extends React.Component {
       <div
         css={{
           display: `flex`,
-          borderTop: `1px solid #F5F3F7`,
+          borderTop: `1px solid ${colors.ui.light}`,
           padding: 50,
           paddingTop: 15,
         }}
       >
         <div css={{ flex: 1 }}>
-          <div css={{ color: `#9B9B9B` }}>Previous</div>
-          <div css={{ padding: `20px 0px` }}>
-            <Link
-              to={{
-                pathname: previousSite.fields.slug,
-                state: { isModal: false },
-              }}
-            >
-              ← {previousSite.title}
-            </Link>
-          </div>
+          <div css={{ ...styles.prevNextPermalinkLabel }}>Previous</div>
+          <Link
+            to={{
+              pathname: previousSite.fields.slug,
+              state: { isModal: false },
+            }}
+          >
+            ← {previousSite.title}
+          </Link>
           <Img
             css={{
               boxShadow: `0px 0px 38px -8px ${colors.gatsby}`,
@@ -447,14 +454,12 @@ class PermalinkPageFooter extends React.Component {
           />
         </div>
         <div css={{ flex: 1 }}>
-          <div css={{ color: `#9B9B9B` }}>Next</div>
-          <div css={{ padding: `20px 0px` }}>
-            <Link
-              to={{ pathname: nextSite.fields.slug, state: { isModal: false } }}
-            >
-              {nextSite.title} →
-            </Link>
-          </div>
+          <div css={{ ...styles.prevNextPermalinkLabel }}>Next</div>
+          <Link
+            to={{ pathname: nextSite.fields.slug, state: { isModal: false } }}
+          >
+            {nextSite.title} →
+          </Link>
           <Img
             css={{
               boxShadow: `0px 0px 38px -8px ${colors.gatsby}`,
@@ -547,5 +552,9 @@ const styles = {
   prevNextImage: {
     borderRadius: presets.radius,
     boxShadow: `0px 0px 38px -8px ${colors.gatsby}`,
+  },
+  prevNextPermalinkLabel: {
+    color: colors.gray.calm,
+    fontFamily: options.headerFontFamily.join(`,`),
   },
 }
