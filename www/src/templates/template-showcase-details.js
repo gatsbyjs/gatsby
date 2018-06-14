@@ -3,13 +3,14 @@ import Helmet from "react-helmet"
 import url from "url"
 
 import presets, { colors } from "../utils/presets"
-import { options, scale } from "../utils/typography"
+import { options, scale, rhythm } from "../utils/typography"
 import { navigateTo, Link } from "gatsby"
 import Layout from "../components/layout"
 
 import Img from "gatsby-image"
 
 import MdArrowUpward from "react-icons/lib/md/arrow-upward"
+import MdLaunch from "react-icons/lib/md/launch"
 import FeaturedIcon from "../assets/featured-detailpage-featuredicon.svg"
 import FeatherIcon from "../assets/showcase-feather.svg"
 import GithubIcon from "../assets/showcase-github.svg"
@@ -322,13 +323,49 @@ class ShowcaseTemplate extends React.Component {
                 </div>
               )}
             </div>
-            <Img
-              sizes={
-                data.sitesYaml.childScreenshot.screenshotFile.childImageSharp
-                  .sizes
-              }
-              alt={`Screenshot of ${data.sitesYaml.title}`}
-            />
+            <div
+              css={{
+                position: `relative`,
+              }}
+            >
+              <a
+                href={data.sitesYaml.main_url}
+                css={{
+                  color: colors.gatsby,
+                  fontFamily: options.headerFontFamily.join(`,`),
+                  left: `auto`,
+                  position: `absolute`,
+                  right: gutter / 2,
+                  top: gutter / 2,
+                  zIndex: 1,
+                  textDecoration: `none`,
+                  border: 0,
+                  borderRadius: presets.radius,
+                  fontFamily: options.headerFontFamily.join(`,`),
+                  fontWeight: `bold`,
+                  padding: `${rhythm(1 / 5)} ${rhythm(2 / 3)}`,
+                  WebkitFontSmoothing: `antialiased`,
+                  "&&": {
+                    backgroundColor: colors.gatsby,
+                    borderBottom: `none`,
+                    boxShadow: `none`,
+                    color: `white`,
+                    "&:hover": {
+                      backgroundColor: colors.gatsby,
+                    },
+                  },
+                }}
+              >
+                <MdLaunch style={{ verticalAlign: `sub` }} /> Visit site
+              </a>
+              <Img
+                sizes={
+                  data.sitesYaml.childScreenshot.screenshotFile.childImageSharp
+                    .sizes
+                }
+                alt={`Screenshot of ${data.sitesYaml.title}`}
+              />
+            </div>
             <div
               css={{
                 padding: gutter,
