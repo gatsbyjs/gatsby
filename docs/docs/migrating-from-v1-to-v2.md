@@ -123,6 +123,7 @@ Replacing a layout's query with `StaticQuery`:
 ```diff
 import React, { Fragment } from "react"
 import Helmet from "react-helmet"
++ import { StaticQuery } from "gatsby"
 
 - export default ({ children, data }) => (
 -   <>
