@@ -341,20 +341,19 @@ class ShowcaseTemplate extends React.Component {
               <a
                 href={data.sitesYaml.main_url}
                 css={{
+                  border: 0,
+                  borderRadius: presets.radius,
                   color: colors.gatsby,
                   fontFamily: options.headerFontFamily.join(`,`),
+                  fontWeight: `bold`,
                   left: `auto`,
+                  padding: `${rhythm(1 / 5)} ${rhythm(2 / 3)}`,
                   position: `absolute`,
                   right: gutter,
                   top: gutter,
-                  zIndex: 1,
                   textDecoration: `none`,
-                  border: 0,
-                  borderRadius: presets.radius,
-                  fontFamily: options.headerFontFamily.join(`,`),
-                  fontWeight: `bold`,
-                  padding: `${rhythm(1 / 5)} ${rhythm(2 / 3)}`,
                   WebkitFontSmoothing: `antialiased`,
+                  zIndex: 1,
                   "&&": {
                     backgroundColor: colors.gatsby,
                     borderBottom: `none`,
