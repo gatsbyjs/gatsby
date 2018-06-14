@@ -6,11 +6,11 @@
 
 ## Docs
 
-**[View the docs on gatsbyjs.org](https://www.gatsbyjs.org/docs/)**
+**[View the docs on gatsbyjs.org](https://next.gatsbyjs.org/docs/)**
 
-[Migrating from v0 to v1?](https://www.gatsbyjs.org/docs/migrating-from-v0-to-v1/)
+[Migrating from v1 to v2?](/docs/migrating-from-v1-to-v2/)
 
-[v0 docs](/v0-README.md)
+[Migrating from v0 to v1?](/docs/migrating-from-v0-to-v1/)
 
 ## Link component
 
