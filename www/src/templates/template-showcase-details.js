@@ -23,7 +23,8 @@ const cleanUrl = mainUrl => {
   return parsed.hostname + path
 }
 
-const gutter = 40
+const gutter = rhythm(3 / 4)
+const gutterDesktop = rhythm(6 / 4)
 
 class ShowcaseTemplate extends React.Component {
   findCurrentIndex() {
@@ -211,7 +212,11 @@ class ShowcaseTemplate extends React.Component {
               css={{
                 fontFamily: options.headerFontFamily.join(`,`),
                 padding: gutter,
-                paddingBottom: gutter / 2,
+                paddingBottom: rhythm(1.5 / 4),
+                [presets.Desktop]: {
+                  padding: gutterDesktop,
+                  paddingBottom: rhythm(3 / 4),
+                },
               }}
             >
               <h1 css={{ margin: 0 }}>{data.sitesYaml.title}</h1>
@@ -262,7 +267,10 @@ class ShowcaseTemplate extends React.Component {
                 display: `flex`,
                 borderTop: `1px solid ${colors.ui.light}`,
                 fontFamily: options.headerFontFamily.join(`,`),
-                margin: `0 ${gutter}px`,
+                margin: `0 ${gutter}`,
+                [presets.Desktop]: {
+                  margin: `0 ${gutter}px`,
+                },
               }}
             >
               {data.sitesYaml.featured && (
@@ -339,8 +347,8 @@ class ShowcaseTemplate extends React.Component {
                   fontFamily: options.headerFontFamily.join(`,`),
                   left: `auto`,
                   position: `absolute`,
-                  right: gutter / 2,
-                  top: gutter / 2,
+                  right: gutter,
+                  top: gutter,
                   zIndex: 1,
                   textDecoration: `none`,
                   border: 0,
@@ -378,6 +386,9 @@ class ShowcaseTemplate extends React.Component {
             <div
               css={{
                 padding: gutter,
+                [presets.Desktop]: {
+                  padding: gutterDesktop,
+                },
               }}
             >
               <p>{data.sitesYaml.description}</p>
