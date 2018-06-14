@@ -9,9 +9,11 @@
     "gatsby-plugin-sharp": "^1.6.43",
     "gatsby-source-filesystem": "^1.5.34",
     "gatsby-transformer-sharp": "^1.6.23",
-    "gatsby-transformer-sqip": "*"
+    "gatsby-transformer-sqip": "0.0.6"
   },
-  "keywords": ["gatsby"],
+  "keywords": [
+    "gatsby"
+  ],
   "license": "MIT",
   "scripts": {
     "build": "gatsby build",

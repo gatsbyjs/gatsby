@@ -26,7 +26,7 @@ Array [
                     "size": 2977,
                   },
                   "fileName": "1418244847_Streamline-18-256.png",
-                  "url": "//images.contentful.com/rocybtov1ozk/6m5AJ9vMPKc8OUoQeoCS4o/e782e3b291ff2b0287546a563af4683c/1418244847_Streamline-18-256.png",
+                  "url": "//images.ctfassets.net/rocybtov1ozk/6m5AJ9vMPKc8OUoQeoCS4o/e782e3b291ff2b0287546a563af4683c/1418244847_Streamline-18-256.png",
                 },
               },
               "title": Object {
@@ -35,6 +35,13 @@ Array [
             },
             "sys": Object {
               "createdAt": "2017-06-27T09:35:36.172Z",
+              "environment": Object {
+                "sys": Object {
+                  "id": "master",
+                  "linkType": "Environment",
+                  "type": "Link",
+                },
+              },
               "id": "c6m5AJ9vMPKc8OUoQeoCS4o",
               "revision": 1,
               "space": Object {
@@ -62,7 +69,15 @@ Array [
             "type": "Link",
           },
         },
+        "contentful_id": "7LAnCobuuWYSqks6wAwY2a",
         "createdAt": "2017-06-27T09:35:44.000Z",
+        "environment": Object {
+          "sys": Object {
+            "id": "master",
+            "linkType": "Environment",
+            "type": "Link",
+          },
+        },
         "id": "c7LAnCobuuWYSqks6wAwY2a",
         "revision": 2,
         "space": Object {
@@ -99,7 +114,7 @@ Array [
                     "size": 6744,
                   },
                   "fileName": "toys_512pxGREY.png",
-                  "url": "//images.contentful.com/rocybtov1ozk/6t4HKjytPi0mYgs240wkG/6e730b1e6c2a46929239019240c037e6/toys_512pxGREY.png",
+                  "url": "//images.ctfassets.net/rocybtov1ozk/6t4HKjytPi0mYgs240wkG/6e730b1e6c2a46929239019240c037e6/toys_512pxGREY.png",
                 },
               },
               "title": Object {
@@ -108,6 +123,13 @@ Array [
             },
             "sys": Object {
               "createdAt": "2017-06-27T09:35:36.633Z",
+              "environment": Object {
+                "sys": Object {
+                  "id": "master",
+                  "linkType": "Environment",
+                  "type": "Link",
+                },
+              },
               "id": "c6t4HKjytPi0mYgs240wkG",
               "revision": 1,
               "space": Object {
@@ -135,7 +157,15 @@ Array [
             "type": "Link",
           },
         },
+        "contentful_id": "24DPGBDeGEaYy8ms4Y8QMQ",
         "createdAt": "2017-06-27T09:35:44.992Z",
+        "environment": Object {
+          "sys": Object {
+            "id": "master",
+            "linkType": "Environment",
+            "type": "Link",
+          },
+        },
         "id": "c24DPGBDeGEaYy8ms4Y8QMQ",
         "revision": 2,
         "space": Object {
@@ -180,7 +210,7 @@ Array [
                     "size": 12302,
                   },
                   "fileName": "zJYzDlGk.jpeg",
-                  "url": "//images.contentful.com/rocybtov1ozk/3wtvPBbBjiMKqKKga8I2Cu/c65cb9cce1107c2e7e63c17072fe7932/zJYzDlGk.jpeg",
+                  "url": "//images.ctfassets.net/rocybtov1ozk/3wtvPBbBjiMKqKKga8I2Cu/c65cb9cce1107c2e7e63c17072fe7932/zJYzDlGk.jpeg",
                 },
               },
               "title": Object {
@@ -189,6 +219,13 @@ Array [
             },
             "sys": Object {
               "createdAt": "2017-06-27T09:35:37.178Z",
+              "environment": Object {
+                "sys": Object {
+                  "id": "master",
+                  "linkType": "Environment",
+                  "type": "Link",
+                },
+              },
               "id": "c3wtvPBbBjiMKqKKga8I2Cu",
               "revision": 1,
               "space": Object {
@@ -223,7 +260,15 @@ Array [
             "type": "Link",
           },
         },
+        "contentful_id": "651CQ8rLoIYCeY6G0QG22q",
         "createdAt": "2017-06-27T09:35:43.997Z",
+        "environment": Object {
+          "sys": Object {
+            "id": "master",
+            "linkType": "Environment",
+            "type": "Link",
+          },
+        },
         "id": "c651CQ8rLoIYCeY6G0QG22q",
         "revision": 2,
         "space": Object {
@@ -286,7 +331,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                     "size": 7149,
                   },
                   "fileName": "lemnos-logo.jpg",
-                  "url": "//images.contentful.com/rocybtov1ozk/2Y8LhXLnYAYqKCGEWG4EKI/eb29ab3c817906993f65e221523ef252/lemnos-logo.jpg",
+                  "url": "//images.ctfassets.net/rocybtov1ozk/2Y8LhXLnYAYqKCGEWG4EKI/eb29ab3c817906993f65e221523ef252/lemnos-logo.jpg",
                 },
               },
               "title": Object {
@@ -295,6 +340,13 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
             },
             "sys": Object {
               "createdAt": "2017-06-27T09:35:37.012Z",
+              "environment": Object {
+                "sys": Object {
+                  "id": "master",
+                  "linkType": "Environment",
+                  "type": "Link",
+                },
+              },
               "id": "c2Y8LhXLnYAYqKCGEWG4EKI",
               "revision": 1,
               "space": Object {
@@ -326,7 +378,15 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
             "type": "Link",
           },
         },
+        "contentful_id": "4LgMotpNF6W20YKmuemW0a",
         "createdAt": "2017-06-27T09:35:44.396Z",
+        "environment": Object {
+          "sys": Object {
+            "id": "master",
+            "linkType": "Environment",
+            "type": "Link",
+          },
+        },
         "id": "c4LgMotpNF6W20YKmuemW0a",
         "revision": 2,
         "space": Object {
@@ -366,7 +426,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                     "size": 7003,
                   },
                   "fileName": "playsam.jpg",
-                  "url": "//images.contentful.com/rocybtov1ozk/4zj1ZOfHgQ8oqgaSKm4Qo2/5d967c9c48d67eabff71a9a0232d4378/playsam.jpg",
+                  "url": "//images.ctfassets.net/rocybtov1ozk/4zj1ZOfHgQ8oqgaSKm4Qo2/5d967c9c48d67eabff71a9a0232d4378/playsam.jpg",
                 },
               },
               "title": Object {
@@ -375,6 +435,13 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
             },
             "sys": Object {
               "createdAt": "2017-06-27T09:35:36.168Z",
+              "environment": Object {
+                "sys": Object {
+                  "id": "master",
+                  "linkType": "Environment",
+                  "type": "Link",
+                },
+              },
               "id": "c4zj1ZOfHgQ8oqgaSKm4Qo2",
               "revision": 1,
               "space": Object {
@@ -401,7 +468,15 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
             "type": "Link",
           },
         },
+        "contentful_id": "JrePkDVYomE8AwcuCUyMi",
         "createdAt": "2017-06-27T09:35:44.988Z",
+        "environment": Object {
+          "sys": Object {
+            "id": "master",
+            "linkType": "Environment",
+            "type": "Link",
+          },
+        },
         "id": "JrePkDVYomE8AwcuCUyMi",
         "revision": 2,
         "space": Object {
@@ -446,7 +521,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                           "size": 7003,
                         },
                         "fileName": "playsam.jpg",
-                        "url": "//images.contentful.com/rocybtov1ozk/4zj1ZOfHgQ8oqgaSKm4Qo2/5d967c9c48d67eabff71a9a0232d4378/playsam.jpg",
+                        "url": "//images.ctfassets.net/rocybtov1ozk/4zj1ZOfHgQ8oqgaSKm4Qo2/5d967c9c48d67eabff71a9a0232d4378/playsam.jpg",
                       },
                     },
                     "title": Object {
@@ -455,6 +530,13 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                   },
                   "sys": Object {
                     "createdAt": "2017-06-27T09:35:36.168Z",
+                    "environment": Object {
+                      "sys": Object {
+                        "id": "master",
+                        "linkType": "Environment",
+                        "type": "Link",
+                      },
+                    },
                     "id": "c4zj1ZOfHgQ8oqgaSKm4Qo2",
                     "revision": 1,
                     "space": Object {
@@ -482,6 +564,13 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                 },
               },
               "createdAt": "2017-06-27T09:35:44.988Z",
+              "environment": Object {
+                "sys": Object {
+                  "id": "master",
+                  "linkType": "Environment",
+                  "type": "Link",
+                },
+              },
               "id": "JrePkDVYomE8AwcuCUyMi",
               "revision": 2,
               "space": Object {
@@ -521,7 +610,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                             "size": 6744,
                           },
                           "fileName": "toys_512pxGREY.png",
-                          "url": "//images.contentful.com/rocybtov1ozk/6t4HKjytPi0mYgs240wkG/6e730b1e6c2a46929239019240c037e6/toys_512pxGREY.png",
+                          "url": "//images.ctfassets.net/rocybtov1ozk/6t4HKjytPi0mYgs240wkG/6e730b1e6c2a46929239019240c037e6/toys_512pxGREY.png",
                         },
                       },
                       "title": Object {
@@ -530,6 +619,13 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                     },
                     "sys": Object {
                       "createdAt": "2017-06-27T09:35:36.633Z",
+                      "environment": Object {
+                        "sys": Object {
+                          "id": "master",
+                          "linkType": "Environment",
+                          "type": "Link",
+                        },
+                      },
                       "id": "c6t4HKjytPi0mYgs240wkG",
                       "revision": 1,
                       "space": Object {
@@ -558,6 +654,13 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                   },
                 },
                 "createdAt": "2017-06-27T09:35:44.992Z",
+                "environment": Object {
+                  "sys": Object {
+                    "id": "master",
+                    "linkType": "Environment",
+                    "type": "Link",
+                  },
+                },
                 "id": "c24DPGBDeGEaYy8ms4Y8QMQ",
                 "revision": 2,
                 "space": Object {
@@ -591,7 +694,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                       "size": 27187,
                     },
                     "fileName": "quwowooybuqbl6ntboz3.jpg",
-                    "url": "//images.contentful.com/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg",
+                    "url": "//images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg",
                   },
                 },
                 "title": Object {
@@ -600,6 +703,13 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
               },
               "sys": Object {
                 "createdAt": "2017-06-27T09:35:36.037Z",
+                "environment": Object {
+                  "sys": Object {
+                    "id": "master",
+                    "linkType": "Environment",
+                    "type": "Link",
+                  },
+                },
                 "id": "wtrHxeu3zEoEce2MokCSi",
                 "revision": 1,
                 "space": Object {
@@ -660,7 +770,15 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
             "type": "Link",
           },
         },
+        "contentful_id": "5KsDBWseXY6QegucYAoacS",
         "createdAt": "2017-06-27T09:35:43.996Z",
+        "environment": Object {
+          "sys": Object {
+            "id": "master",
+            "linkType": "Environment",
+            "type": "Link",
+          },
+        },
         "id": "c5KsDBWseXY6QegucYAoacS",
         "revision": 2,
         "space": Object {
@@ -706,7 +824,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                           "size": 12302,
                         },
                         "fileName": "zJYzDlGk.jpeg",
-                        "url": "//images.contentful.com/rocybtov1ozk/3wtvPBbBjiMKqKKga8I2Cu/c65cb9cce1107c2e7e63c17072fe7932/zJYzDlGk.jpeg",
+                        "url": "//images.ctfassets.net/rocybtov1ozk/3wtvPBbBjiMKqKKga8I2Cu/c65cb9cce1107c2e7e63c17072fe7932/zJYzDlGk.jpeg",
                       },
                     },
                     "title": Object {
@@ -715,6 +833,13 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                   },
                   "sys": Object {
                     "createdAt": "2017-06-27T09:35:37.178Z",
+                    "environment": Object {
+                      "sys": Object {
+                        "id": "master",
+                        "linkType": "Environment",
+                        "type": "Link",
+                      },
+                    },
                     "id": "c3wtvPBbBjiMKqKKga8I2Cu",
                     "revision": 1,
                     "space": Object {
@@ -750,6 +875,13 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                 },
               },
               "createdAt": "2017-06-27T09:35:43.997Z",
+              "environment": Object {
+                "sys": Object {
+                  "id": "master",
+                  "linkType": "Environment",
+                  "type": "Link",
+                },
+              },
               "id": "c651CQ8rLoIYCeY6G0QG22q",
               "revision": 2,
               "space": Object {
@@ -789,7 +921,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                             "size": 2977,
                           },
                           "fileName": "1418244847_Streamline-18-256.png",
-                          "url": "//images.contentful.com/rocybtov1ozk/6m5AJ9vMPKc8OUoQeoCS4o/e782e3b291ff2b0287546a563af4683c/1418244847_Streamline-18-256.png",
+                          "url": "//images.ctfassets.net/rocybtov1ozk/6m5AJ9vMPKc8OUoQeoCS4o/e782e3b291ff2b0287546a563af4683c/1418244847_Streamline-18-256.png",
                         },
                       },
                       "title": Object {
@@ -798,6 +930,13 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                     },
                     "sys": Object {
                       "createdAt": "2017-06-27T09:35:36.172Z",
+                      "environment": Object {
+                        "sys": Object {
+                          "id": "master",
+                          "linkType": "Environment",
+                          "type": "Link",
+                        },
+                      },
                       "id": "c6m5AJ9vMPKc8OUoQeoCS4o",
                       "revision": 1,
                       "space": Object {
@@ -826,6 +965,13 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                   },
                 },
                 "createdAt": "2017-06-27T09:35:44.000Z",
+                "environment": Object {
+                  "sys": Object {
+                    "id": "master",
+                    "linkType": "Environment",
+                    "type": "Link",
+                  },
+                },
                 "id": "c7LAnCobuuWYSqks6wAwY2a",
                 "revision": 2,
                 "space": Object {
@@ -859,7 +1005,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                       "size": 48751,
                     },
                     "fileName": "jqvtazcyfwseah9fmysz.jpg",
-                    "url": "//images.contentful.com/rocybtov1ozk/Xc0ny7GWsMEMCeASWO2um/af8e29320c04af689798afe96e2345c7/jqvtazcyfwseah9fmysz.jpg",
+                    "url": "//images.ctfassets.net/rocybtov1ozk/Xc0ny7GWsMEMCeASWO2um/af8e29320c04af689798afe96e2345c7/jqvtazcyfwseah9fmysz.jpg",
                   },
                 },
                 "title": Object {
@@ -868,6 +1014,13 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
               },
               "sys": Object {
                 "createdAt": "2017-06-27T09:35:37.027Z",
+                "environment": Object {
+                  "sys": Object {
+                    "id": "master",
+                    "linkType": "Environment",
+                    "type": "Link",
+                  },
+                },
                 "id": "Xc0ny7GWsMEMCeASWO2um",
                 "revision": 1,
                 "space": Object {
@@ -926,7 +1079,15 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
             "type": "Link",
           },
         },
+        "contentful_id": "3DVqIYj4dOwwcKu6sgqOgg",
         "createdAt": "2017-06-27T09:35:44.006Z",
+        "environment": Object {
+          "sys": Object {
+            "id": "master",
+            "linkType": "Environment",
+            "type": "Link",
+          },
+        },
         "id": "c3DVqIYj4dOwwcKu6sgqOgg",
         "revision": 2,
         "space": Object {
@@ -972,7 +1133,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                           "size": 12302,
                         },
                         "fileName": "zJYzDlGk.jpeg",
-                        "url": "//images.contentful.com/rocybtov1ozk/3wtvPBbBjiMKqKKga8I2Cu/c65cb9cce1107c2e7e63c17072fe7932/zJYzDlGk.jpeg",
+                        "url": "//images.ctfassets.net/rocybtov1ozk/3wtvPBbBjiMKqKKga8I2Cu/c65cb9cce1107c2e7e63c17072fe7932/zJYzDlGk.jpeg",
                       },
                     },
                     "title": Object {
@@ -981,6 +1142,13 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                   },
                   "sys": Object {
                     "createdAt": "2017-06-27T09:35:37.178Z",
+                    "environment": Object {
+                      "sys": Object {
+                        "id": "master",
+                        "linkType": "Environment",
+                        "type": "Link",
+                      },
+                    },
                     "id": "c3wtvPBbBjiMKqKKga8I2Cu",
                     "revision": 1,
                     "space": Object {
@@ -1016,6 +1184,13 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                 },
               },
               "createdAt": "2017-06-27T09:35:43.997Z",
+              "environment": Object {
+                "sys": Object {
+                  "id": "master",
+                  "linkType": "Environment",
+                  "type": "Link",
+                },
+              },
               "id": "c651CQ8rLoIYCeY6G0QG22q",
               "revision": 2,
               "space": Object {
@@ -1055,7 +1230,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                             "size": 2977,
                           },
                           "fileName": "1418244847_Streamline-18-256.png",
-                          "url": "//images.contentful.com/rocybtov1ozk/6m5AJ9vMPKc8OUoQeoCS4o/e782e3b291ff2b0287546a563af4683c/1418244847_Streamline-18-256.png",
+                          "url": "//images.ctfassets.net/rocybtov1ozk/6m5AJ9vMPKc8OUoQeoCS4o/e782e3b291ff2b0287546a563af4683c/1418244847_Streamline-18-256.png",
                         },
                       },
                       "title": Object {
@@ -1064,6 +1239,13 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                     },
                     "sys": Object {
                       "createdAt": "2017-06-27T09:35:36.172Z",
+                      "environment": Object {
+                        "sys": Object {
+                          "id": "master",
+                          "linkType": "Environment",
+                          "type": "Link",
+                        },
+                      },
                       "id": "c6m5AJ9vMPKc8OUoQeoCS4o",
                       "revision": 1,
                       "space": Object {
@@ -1092,6 +1274,13 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                   },
                 },
                 "createdAt": "2017-06-27T09:35:44.000Z",
+                "environment": Object {
+                  "sys": Object {
+                    "id": "master",
+                    "linkType": "Environment",
+                    "type": "Link",
+                  },
+                },
                 "id": "c7LAnCobuuWYSqks6wAwY2a",
                 "revision": 2,
                 "space": Object {
@@ -1125,7 +1314,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                       "size": 28435,
                     },
                     "fileName": "ryugj83mqwa1asojwtwb.jpg",
-                    "url": "//images.contentful.com/rocybtov1ozk/10TkaLheGeQG6qQGqWYqUI/f997e8e13c8c83c145e976d0905e64b7/ryugj83mqwa1asojwtwb.jpg",
+                    "url": "//images.ctfassets.net/rocybtov1ozk/10TkaLheGeQG6qQGqWYqUI/f997e8e13c8c83c145e976d0905e64b7/ryugj83mqwa1asojwtwb.jpg",
                   },
                 },
                 "title": Object {
@@ -1134,6 +1323,13 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
               },
               "sys": Object {
                 "createdAt": "2017-06-27T09:35:36.032Z",
+                "environment": Object {
+                  "sys": Object {
+                    "id": "master",
+                    "linkType": "Environment",
+                    "type": "Link",
+                  },
+                },
                 "id": "c10TkaLheGeQG6qQGqWYqUI",
                 "revision": 1,
                 "space": Object {
@@ -1194,7 +1390,15 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
             "type": "Link",
           },
         },
+        "contentful_id": "6dbjWqNd9SqccegcqYq224",
         "createdAt": "2017-06-27T09:35:44.049Z",
+        "environment": Object {
+          "sys": Object {
+            "id": "master",
+            "linkType": "Environment",
+            "type": "Link",
+          },
+        },
         "id": "c6dbjWqNd9SqccegcqYq224",
         "revision": 2,
         "space": Object {
@@ -1260,7 +1464,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                           "size": 7149,
                         },
                         "fileName": "lemnos-logo.jpg",
-                        "url": "//images.contentful.com/rocybtov1ozk/2Y8LhXLnYAYqKCGEWG4EKI/eb29ab3c817906993f65e221523ef252/lemnos-logo.jpg",
+                        "url": "//images.ctfassets.net/rocybtov1ozk/2Y8LhXLnYAYqKCGEWG4EKI/eb29ab3c817906993f65e221523ef252/lemnos-logo.jpg",
                       },
                     },
                     "title": Object {
@@ -1269,6 +1473,13 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                   },
                   "sys": Object {
                     "createdAt": "2017-06-27T09:35:37.012Z",
+                    "environment": Object {
+                      "sys": Object {
+                        "id": "master",
+                        "linkType": "Environment",
+                        "type": "Link",
+                      },
+                    },
                     "id": "c2Y8LhXLnYAYqKCGEWG4EKI",
                     "revision": 1,
                     "space": Object {
@@ -1301,6 +1512,13 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                 },
               },
               "createdAt": "2017-06-27T09:35:44.396Z",
+              "environment": Object {
+                "sys": Object {
+                  "id": "master",
+                  "linkType": "Environment",
+                  "type": "Link",
+                },
+              },
               "id": "c4LgMotpNF6W20YKmuemW0a",
               "revision": 2,
               "space": Object {
@@ -1340,7 +1558,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                             "size": 2977,
                           },
                           "fileName": "1418244847_Streamline-18-256.png",
-                          "url": "//images.contentful.com/rocybtov1ozk/6m5AJ9vMPKc8OUoQeoCS4o/e782e3b291ff2b0287546a563af4683c/1418244847_Streamline-18-256.png",
+                          "url": "//images.ctfassets.net/rocybtov1ozk/6m5AJ9vMPKc8OUoQeoCS4o/e782e3b291ff2b0287546a563af4683c/1418244847_Streamline-18-256.png",
                         },
                       },
                       "title": Object {
@@ -1349,6 +1567,13 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                     },
                     "sys": Object {
                       "createdAt": "2017-06-27T09:35:36.172Z",
+                      "environment": Object {
+                        "sys": Object {
+                          "id": "master",
+                          "linkType": "Environment",
+                          "type": "Link",
+                        },
+                      },
                       "id": "c6m5AJ9vMPKc8OUoQeoCS4o",
                       "revision": 1,
                       "space": Object {
@@ -1377,6 +1602,13 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                   },
                 },
                 "createdAt": "2017-06-27T09:35:44.000Z",
+                "environment": Object {
+                  "sys": Object {
+                    "id": "master",
+                    "linkType": "Environment",
+                    "type": "Link",
+                  },
+                },
                 "id": "c7LAnCobuuWYSqks6wAwY2a",
                 "revision": 2,
                 "space": Object {
@@ -1410,7 +1642,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                       "size": 66927,
                     },
                     "fileName": "soso.clock.jpg",
-                    "url": "//images.contentful.com/rocybtov1ozk/KTRF62Q4gg60q6WCsWKw8/a8b2e93ac83fbbbb7bf9fba9f92b018e/soso.clock.jpg",
+                    "url": "//images.ctfassets.net/rocybtov1ozk/KTRF62Q4gg60q6WCsWKw8/a8b2e93ac83fbbbb7bf9fba9f92b018e/soso.clock.jpg",
                   },
                 },
                 "title": Object {
@@ -1419,6 +1651,13 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
               },
               "sys": Object {
                 "createdAt": "2017-06-27T09:35:37.064Z",
+                "environment": Object {
+                  "sys": Object {
+                    "id": "master",
+                    "linkType": "Environment",
+                    "type": "Link",
+                  },
+                },
                 "id": "KTRF62Q4gg60q6WCsWKw8",
                 "revision": 1,
                 "space": Object {
@@ -1479,7 +1718,15 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
             "type": "Link",
           },
         },
+        "contentful_id": "4BqrajvA8E6qwgkieoqmqO",
         "createdAt": "2017-06-27T09:35:44.130Z",
+        "environment": Object {
+          "sys": Object {
+            "id": "master",
+            "linkType": "Environment",
+            "type": "Link",
+          },
+        },
         "id": "c4BqrajvA8E6qwgkieoqmqO",
         "revision": 2,
         "space": Object {
@@ -1500,13 +1747,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
         "jsonTest": Object {
           "en-US": Object {
             "devDependencies": Object {
-              "@babel/cli": "7.0.0-beta.47",
-              "@babel/core": "7.0.0-beta.47",
-              "@babel/preset-env": "7.0.0-beta.47",
-              "@babel/preset-flow": "7.0.0-beta.47",
-              "@babel/preset-react": "7.0.0-beta.47",
-              "@babel/register": "7.0.0-beta.47",
-              "@babel/runtime": "7.0.0-beta.47",
+              "babel-cli": "^6.26.0",
               "babel-eslint": "^7.2.3",
               "babel-jest": "^20.0.3",
               "babel-plugin-add-module-exports": "^0.2.1",
@@ -1514,7 +1755,12 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
               "babel-plugin-transform-async-to-generator": "^6.24.1",
               "babel-plugin-transform-flow-strip-types": "^6.22.0",
               "babel-plugin-transform-runtime": "^6.23.0",
+              "babel-preset-env": "^1.6.0",
+              "babel-preset-flow": "^6.23.0",
+              "babel-preset-react": "^6.24.1",
               "babel-preset-stage-0": "^6.24.1",
+              "babel-register": "^6.26.0",
+              "babel-runtime": "^6.26.0",
               "chokidar": "^1.7.0",
               "cross-env": "^5.0.5",
               "eslint": "^4.5.0",
@@ -1583,8 +1829,79 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
             "type": "Link",
           },
         },
+        "contentful_id": "71mfnH4QKsSsQmgoaQuq6O",
         "createdAt": "2017-11-28T02:16:10.604Z",
+        "environment": Object {
+          "sys": Object {
+            "id": "master",
+            "linkType": "Environment",
+            "type": "Link",
+          },
+        },
         "id": "c71mfnH4QKsSsQmgoaQuq6O",
+        "revision": 3,
+        "space": Object {
+          "sys": Object {
+            "id": "rocybtov1ozk",
+            "linkType": "Space",
+            "type": "Link",
+          },
+        },
+        "type": "Entry",
+        "updatedAt": "2018-06-11T14:18:54.392Z",
+      },
+    },
+  ],
+  Array [
+    Object {
+      "fields": Object {
+        "content": Object {
+          "en-US": "## Toys
+
+![Toys](//images.ctfassets.net/rocybtov1ozk/6t4HKjytPi0mYgs240wkG/6e730b1e6c2a46929239019240c037e6/toys_512pxGREY.png) 
+
+## Chive
+
+![Chive logo](//images.ctfassets.net/rocybtov1ozk/1MgbdJNTsMWKI0W68oYqkU/ad0200fe320b85ecdd823c711161c2f6/9ef190c59f0d375c0dea58b58a4bc1f0.jpeg) 
+
+## Playsam Streamliner
+
+![Playsam Streamliner](//images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg) 
+
+## Whisk beaters
+
+![Whisk beaters](//images.ctfassets.net/rocybtov1ozk/10TkaLheGeQG6qQGqWYqUI/f997e8e13c8c83c145e976d0905e64b7/ryugj83mqwa1asojwtwb.jpg) 
+
+## SoSo Wall Clock
+
+![SoSo Wall Clock](//images.ctfassets.net/rocybtov1ozk/KTRF62Q4gg60q6WCsWKw8/a8b2e93ac83fbbbb7bf9fba9f92b018e/soso.clock.jpg) 
+
+## Hudson Wall Cup
+
+![Hudson Wall Cup ](//images.ctfassets.net/rocybtov1ozk/Xc0ny7GWsMEMCeASWO2um/af8e29320c04af689798afe96e2345c7/jqvtazcyfwseah9fmysz.jpg)",
+        },
+        "title": Object {
+          "en-US": "Contentful images inlined in Markdown",
+        },
+      },
+      "sys": Object {
+        "contentType": Object {
+          "sys": Object {
+            "id": "remarkTest",
+            "linkType": "ContentType",
+            "type": "Link",
+          },
+        },
+        "contentful_id": "4L2GhTsJtCseMYM8Wia64i",
+        "createdAt": "2018-05-28T08:49:06.230Z",
+        "environment": Object {
+          "sys": Object {
+            "id": "master",
+            "linkType": "Environment",
+            "type": "Link",
+          },
+        },
+        "id": "c4L2GhTsJtCseMYM8Wia64i",
         "revision": 1,
         "space": Object {
           "sys": Object {
@@ -1594,7 +1911,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
           },
         },
         "type": "Entry",
-        "updatedAt": "2017-11-28T02:16:10.604Z",
+        "updatedAt": "2018-05-28T08:49:06.230Z",
       },
     },
   ],
@@ -1714,6 +2031,7 @@ Set {
   "c6dbjWqNd9SqccegcqYq224",
   "c4BqrajvA8E6qwgkieoqmqO",
   "c71mfnH4QKsSsQmgoaQuq6O",
+  "c4L2GhTsJtCseMYM8Wia64i",
   "c3wtvPBbBjiMKqKKga8I2Cu",
   "KTRF62Q4gg60q6WCsWKw8",
   "Xc0ny7GWsMEMCeASWO2um",
@@ -1744,11 +2062,11 @@ Array [
           "size": 12302,
         },
         "fileName": "zJYzDlGk.jpeg",
-        "url": "//images.contentful.com/rocybtov1ozk/3wtvPBbBjiMKqKKga8I2Cu/c65cb9cce1107c2e7e63c17072fe7932/zJYzDlGk.jpeg",
+        "url": "//images.ctfassets.net/rocybtov1ozk/3wtvPBbBjiMKqKKga8I2Cu/c65cb9cce1107c2e7e63c17072fe7932/zJYzDlGk.jpeg",
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "75139d025020af40d19af84d66b251df",
+        "contentDigest": "2024479d728f9130f5a6eefb28d89f65",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
@@ -1770,11 +2088,11 @@ Array [
           "size": 12302,
         },
         "fileName": "zJYzDlGk.jpeg",
-        "url": "//images.contentful.com/rocybtov1ozk/3wtvPBbBjiMKqKKga8I2Cu/c65cb9cce1107c2e7e63c17072fe7932/zJYzDlGk.jpeg",
+        "url": "//images.ctfassets.net/rocybtov1ozk/3wtvPBbBjiMKqKKga8I2Cu/c65cb9cce1107c2e7e63c17072fe7932/zJYzDlGk.jpeg",
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "ad7cfc82ac78847086bd811528bb01a7",
+        "contentDigest": "3392b4440d3c91cb486b5b6c68e3bb1e",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
@@ -1796,11 +2114,11 @@ Array [
           "size": 66927,
         },
         "fileName": "soso.clock.jpg",
-        "url": "//images.contentful.com/rocybtov1ozk/KTRF62Q4gg60q6WCsWKw8/a8b2e93ac83fbbbb7bf9fba9f92b018e/soso.clock.jpg",
+        "url": "//images.ctfassets.net/rocybtov1ozk/KTRF62Q4gg60q6WCsWKw8/a8b2e93ac83fbbbb7bf9fba9f92b018e/soso.clock.jpg",
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "7b92549e5c428ba0e140da1144afc73c",
+        "contentDigest": "3a7957ae63ae0cda1078d5fca401faae",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
@@ -1822,11 +2140,11 @@ Array [
           "size": 66927,
         },
         "fileName": "soso.clock.jpg",
-        "url": "//images.contentful.com/rocybtov1ozk/KTRF62Q4gg60q6WCsWKw8/a8b2e93ac83fbbbb7bf9fba9f92b018e/soso.clock.jpg",
+        "url": "//images.ctfassets.net/rocybtov1ozk/KTRF62Q4gg60q6WCsWKw8/a8b2e93ac83fbbbb7bf9fba9f92b018e/soso.clock.jpg",
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "40379f0a5dd13b974ce13e5e498b30c0",
+        "contentDigest": "f1229d259f36861c2b7d8b81366492e8",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
@@ -1848,11 +2166,11 @@ Array [
           "size": 48751,
         },
         "fileName": "jqvtazcyfwseah9fmysz.jpg",
-        "url": "//images.contentful.com/rocybtov1ozk/Xc0ny7GWsMEMCeASWO2um/af8e29320c04af689798afe96e2345c7/jqvtazcyfwseah9fmysz.jpg",
+        "url": "//images.ctfassets.net/rocybtov1ozk/Xc0ny7GWsMEMCeASWO2um/af8e29320c04af689798afe96e2345c7/jqvtazcyfwseah9fmysz.jpg",
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "ea45014163a1d7fe2644947b1d067967",
+        "contentDigest": "8c5ffd7925d4fdb24a1631f04541fd13",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
@@ -1874,11 +2192,11 @@ Array [
           "size": 48751,
         },
         "fileName": "jqvtazcyfwseah9fmysz.jpg",
-        "url": "//images.contentful.com/rocybtov1ozk/Xc0ny7GWsMEMCeASWO2um/af8e29320c04af689798afe96e2345c7/jqvtazcyfwseah9fmysz.jpg",
+        "url": "//images.ctfassets.net/rocybtov1ozk/Xc0ny7GWsMEMCeASWO2um/af8e29320c04af689798afe96e2345c7/jqvtazcyfwseah9fmysz.jpg",
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "b9d79764ae4839cebfe3077630f59a5e",
+        "contentDigest": "5502bbb6461c9a31fb238b8e8546e47a",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
@@ -1900,11 +2218,11 @@ Array [
           "size": 7149,
         },
         "fileName": "lemnos-logo.jpg",
-        "url": "//images.contentful.com/rocybtov1ozk/2Y8LhXLnYAYqKCGEWG4EKI/eb29ab3c817906993f65e221523ef252/lemnos-logo.jpg",
+        "url": "//images.ctfassets.net/rocybtov1ozk/2Y8LhXLnYAYqKCGEWG4EKI/eb29ab3c817906993f65e221523ef252/lemnos-logo.jpg",
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "ab47d0c9e7c6c24b3ad1301097a5fc58",
+        "contentDigest": "19d49c506794012b826a0a2a9b0f3b0b",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
@@ -1926,11 +2244,11 @@ Array [
           "size": 7149,
         },
         "fileName": "lemnos-logo.jpg",
-        "url": "//images.contentful.com/rocybtov1ozk/2Y8LhXLnYAYqKCGEWG4EKI/eb29ab3c817906993f65e221523ef252/lemnos-logo.jpg",
+        "url": "//images.ctfassets.net/rocybtov1ozk/2Y8LhXLnYAYqKCGEWG4EKI/eb29ab3c817906993f65e221523ef252/lemnos-logo.jpg",
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "de5f69c2ad1b766ea55089811a23b1cc",
+        "contentDigest": "c4456421bdc406b0f283e79aa88a5eb1",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
@@ -1952,11 +2270,11 @@ Array [
           "size": 6744,
         },
         "fileName": "toys_512pxGREY.png",
-        "url": "//images.contentful.com/rocybtov1ozk/6t4HKjytPi0mYgs240wkG/6e730b1e6c2a46929239019240c037e6/toys_512pxGREY.png",
+        "url": "//images.ctfassets.net/rocybtov1ozk/6t4HKjytPi0mYgs240wkG/6e730b1e6c2a46929239019240c037e6/toys_512pxGREY.png",
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "537daa7608a39e3e32fdfa2246525470",
+        "contentDigest": "1972b8886a590294f24aeec43567b48c",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
@@ -1978,11 +2296,11 @@ Array [
           "size": 6744,
         },
         "fileName": "toys_512pxGREY.png",
-        "url": "//images.contentful.com/rocybtov1ozk/6t4HKjytPi0mYgs240wkG/6e730b1e6c2a46929239019240c037e6/toys_512pxGREY.png",
+        "url": "//images.ctfassets.net/rocybtov1ozk/6t4HKjytPi0mYgs240wkG/6e730b1e6c2a46929239019240c037e6/toys_512pxGREY.png",
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "098fae2420a940db905931a246ad604b",
+        "contentDigest": "e1acc294b5b1d1c60a1d83ece78161c5",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
@@ -2004,11 +2322,11 @@ Array [
           "size": 44089,
         },
         "fileName": "9ef190c59f0d375c0dea58b58a4bc1f0.jpeg",
-        "url": "//images.contentful.com/rocybtov1ozk/1MgbdJNTsMWKI0W68oYqkU/ad0200fe320b85ecdd823c711161c2f6/9ef190c59f0d375c0dea58b58a4bc1f0.jpeg",
+        "url": "//images.ctfassets.net/rocybtov1ozk/1MgbdJNTsMWKI0W68oYqkU/ad0200fe320b85ecdd823c711161c2f6/9ef190c59f0d375c0dea58b58a4bc1f0.jpeg",
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "02c1358b7488cc54050b075fb232deb6",
+        "contentDigest": "5059d353be1bac4c06a753c7b42d71c5",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
@@ -2030,11 +2348,11 @@ Array [
           "size": 44089,
         },
         "fileName": "9ef190c59f0d375c0dea58b58a4bc1f0.jpeg",
-        "url": "//images.contentful.com/rocybtov1ozk/1MgbdJNTsMWKI0W68oYqkU/ad0200fe320b85ecdd823c711161c2f6/9ef190c59f0d375c0dea58b58a4bc1f0.jpeg",
+        "url": "//images.ctfassets.net/rocybtov1ozk/1MgbdJNTsMWKI0W68oYqkU/ad0200fe320b85ecdd823c711161c2f6/9ef190c59f0d375c0dea58b58a4bc1f0.jpeg",
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "1216bbfd8bc4352e38e19d9020cf2dec",
+        "contentDigest": "f439bcacaaec96ae09c43edf4d42d498",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
@@ -2056,11 +2374,11 @@ Array [
           "size": 2977,
         },
         "fileName": "1418244847_Streamline-18-256.png",
-        "url": "//images.contentful.com/rocybtov1ozk/6m5AJ9vMPKc8OUoQeoCS4o/e782e3b291ff2b0287546a563af4683c/1418244847_Streamline-18-256.png",
+        "url": "//images.ctfassets.net/rocybtov1ozk/6m5AJ9vMPKc8OUoQeoCS4o/e782e3b291ff2b0287546a563af4683c/1418244847_Streamline-18-256.png",
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "770b70ecb7aa0448e53a57486e936759",
+        "contentDigest": "160c60023250c0e35f6f0a757989a9ac",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
@@ -2082,11 +2400,11 @@ Array [
           "size": 2977,
         },
         "fileName": "1418244847_Streamline-18-256.png",
-        "url": "//images.contentful.com/rocybtov1ozk/6m5AJ9vMPKc8OUoQeoCS4o/e782e3b291ff2b0287546a563af4683c/1418244847_Streamline-18-256.png",
+        "url": "//images.ctfassets.net/rocybtov1ozk/6m5AJ9vMPKc8OUoQeoCS4o/e782e3b291ff2b0287546a563af4683c/1418244847_Streamline-18-256.png",
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "113034424b490a8af220af7ad1df35bf",
+        "contentDigest": "626faa183d1c209b3705c35efd449a7b",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
@@ -2108,11 +2426,11 @@ Array [
           "size": 7003,
         },
         "fileName": "playsam.jpg",
-        "url": "//images.contentful.com/rocybtov1ozk/4zj1ZOfHgQ8oqgaSKm4Qo2/5d967c9c48d67eabff71a9a0232d4378/playsam.jpg",
+        "url": "//images.ctfassets.net/rocybtov1ozk/4zj1ZOfHgQ8oqgaSKm4Qo2/5d967c9c48d67eabff71a9a0232d4378/playsam.jpg",
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "1595f607390fd44c988e4c32641cee57",
+        "contentDigest": "b5e748b808c2e914f95f22b85698ee69",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
@@ -2134,11 +2452,11 @@ Array [
           "size": 7003,
         },
         "fileName": "playsam.jpg",
-        "url": "//images.contentful.com/rocybtov1ozk/4zj1ZOfHgQ8oqgaSKm4Qo2/5d967c9c48d67eabff71a9a0232d4378/playsam.jpg",
+        "url": "//images.ctfassets.net/rocybtov1ozk/4zj1ZOfHgQ8oqgaSKm4Qo2/5d967c9c48d67eabff71a9a0232d4378/playsam.jpg",
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "f97d87fcfd9430b4b10f3adf77d4b032",
+        "contentDigest": "59a0fa2823b13dfd61ba168af0d64d9f",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
@@ -2160,11 +2478,11 @@ Array [
           "size": 27187,
         },
         "fileName": "quwowooybuqbl6ntboz3.jpg",
-        "url": "//images.contentful.com/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg",
+        "url": "//images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg",
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "7e06912a351f19870f091f4f08265f32",
+        "contentDigest": "7a128b72c470086f65127423e06d2c1c",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
@@ -2186,11 +2504,11 @@ Array [
           "size": 27187,
         },
         "fileName": "quwowooybuqbl6ntboz3.jpg",
-        "url": "//images.contentful.com/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg",
+        "url": "//images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg",
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "358e66348792674fc9a783148bb1a767",
+        "contentDigest": "c9f99cac382777dbdd0f200ec6df2cdd",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
@@ -2212,11 +2530,11 @@ Array [
           "size": 28435,
         },
         "fileName": "ryugj83mqwa1asojwtwb.jpg",
-        "url": "//images.contentful.com/rocybtov1ozk/10TkaLheGeQG6qQGqWYqUI/f997e8e13c8c83c145e976d0905e64b7/ryugj83mqwa1asojwtwb.jpg",
+        "url": "//images.ctfassets.net/rocybtov1ozk/10TkaLheGeQG6qQGqWYqUI/f997e8e13c8c83c145e976d0905e64b7/ryugj83mqwa1asojwtwb.jpg",
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "747af7ae5947fe584f2d78156536f479",
+        "contentDigest": "c9c930bacc6d354ed7c6626b52bf1c23",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
@@ -2238,11 +2556,11 @@ Array [
           "size": 28435,
         },
         "fileName": "ryugj83mqwa1asojwtwb.jpg",
-        "url": "//images.contentful.com/rocybtov1ozk/10TkaLheGeQG6qQGqWYqUI/f997e8e13c8c83c145e976d0905e64b7/ryugj83mqwa1asojwtwb.jpg",
+        "url": "//images.ctfassets.net/rocybtov1ozk/10TkaLheGeQG6qQGqWYqUI/f997e8e13c8c83c145e976d0905e64b7/ryugj83mqwa1asojwtwb.jpg",
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "392d3a389d00439e190d0e0355e300d8",
+        "contentDigest": "1ce83ba45d499820e9e5b7e03ebc9bc0",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
@@ -2264,11 +2582,11 @@ Array [
           "size": 4244,
         },
         "fileName": "1418244847_Streamline-18-256 (1).png",
-        "url": "//images.contentful.com/rocybtov1ozk/6s3iG2OVmoUcosmA8ocqsG/286ac4c1be74e05d2e7e11bc5a55bc83/1418244847_Streamline-18-256__1_.png",
+        "url": "//images.ctfassets.net/rocybtov1ozk/6s3iG2OVmoUcosmA8ocqsG/286ac4c1be74e05d2e7e11bc5a55bc83/1418244847_Streamline-18-256__1_.png",
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "5a095aac57b7b1993aff95da49dbdc01",
+        "contentDigest": "e8cf0751f0fd103bc88049a11aebeaa8",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
@@ -2290,11 +2608,11 @@ Array [
           "size": 4244,
         },
         "fileName": "1418244847_Streamline-18-256 (1).png",
-        "url": "//images.contentful.com/rocybtov1ozk/6s3iG2OVmoUcosmA8ocqsG/286ac4c1be74e05d2e7e11bc5a55bc83/1418244847_Streamline-18-256__1_.png",
+        "url": "//images.ctfassets.net/rocybtov1ozk/6s3iG2OVmoUcosmA8ocqsG/286ac4c1be74e05d2e7e11bc5a55bc83/1418244847_Streamline-18-256__1_.png",
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "d9799d32b91186e135d961caf1a49843",
+        "contentDigest": "81e0040ddb8b946c56f2cab7a449e345",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
@@ -3544,26 +3862,20 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "createdAt": "2017-11-28T02:16:10.604Z",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "4da6aaab54ff1a4961bc6c03cd0f59f5",
+        "contentDigest": "daa3cbf338cd5864d9703b6e42f0a5e8",
         "type": "ContentfulJsonTest",
       },
       "jsonTest___NODE": "uuid-from-gatsby",
       "node_locale": "en-US",
       "parent": "JSON-test",
-      "updatedAt": "2017-11-28T02:16:10.604Z",
+      "updatedAt": "2018-06-11T14:18:54.392Z",
     },
   ],
   Array [
     Object {
       "children": Array [],
       "devDependencies": Object {
-        "@babel/cli": "7.0.0-beta.47",
-        "@babel/core": "7.0.0-beta.47",
-        "@babel/preset-env": "7.0.0-beta.47",
-        "@babel/preset-flow": "7.0.0-beta.47",
-        "@babel/preset-react": "7.0.0-beta.47",
-        "@babel/register": "7.0.0-beta.47",
-        "@babel/runtime": "7.0.0-beta.47",
+        "babel-cli": "^6.26.0",
         "babel-eslint": "^7.2.3",
         "babel-jest": "^20.0.3",
         "babel-plugin-add-module-exports": "^0.2.1",
@@ -3571,7 +3883,12 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "babel-plugin-transform-async-to-generator": "^6.24.1",
         "babel-plugin-transform-flow-strip-types": "^6.22.0",
         "babel-plugin-transform-runtime": "^6.23.0",
+        "babel-preset-env": "^1.6.0",
+        "babel-preset-flow": "^6.23.0",
+        "babel-preset-react": "^6.24.1",
         "babel-preset-stage-0": "^6.24.1",
+        "babel-register": "^6.26.0",
+        "babel-runtime": "^6.26.0",
         "chokidar": "^1.7.0",
         "cross-env": "^5.0.5",
         "eslint": "^4.5.0",
@@ -3603,8 +3920,8 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       ],
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "content": "{\\"engines\\":{\\"yarn\\":\\"^1.2.1\\"},\\"private\\":true,\\"scripts\\":{\\"jest\\":\\"jest\\",\\"lint\\":\\"eslint --ext .js,.jsx packages/**/src\\",\\"plop\\":\\"plop\\",\\"test\\":\\"yarn lint && yarn jest\\",\\"lerna\\":\\"lerna\\",\\"watch\\":\\"lerna run watch --no-sort --stream --concurrency 999\\",\\"format\\":\\"npm run format-packages && npm run format-cache-dir && npm run format-www && npm run format-examples && npm run format-scripts\\",\\"publish\\":\\"lerna publish\\",\\"bootstrap\\":\\"yarn && npm run check-versions && lerna run prepublish\\",\\"lint:flow\\":\\"babel-node scripts/flow-check.js\\",\\"remotedev\\":\\"remotedev --hostname=localhost --port=19999\\",\\"test_bkup\\":\\"npm run lint && npm run test-node && npm run test-integration\\",\\"format-www\\":\\"prettier-eslint --write \\\\\\"www/*.js\\\\\\" \\\\\\"www/src/**/*.js\\\\\\"\\",\\"test:watch\\":\\"jest --watch\\",\\"test:update\\":\\"jest --updateSnapshot\\",\\"publish-next\\":\\"lerna publish --npm-tag=next\\",\\"check-versions\\":\\"babel-node scripts/check-versions.js\\",\\"format-scripts\\":\\"prettier-eslint --write \\\\\\"scripts/**/*.js\\\\\\"\\",\\"publish-canary\\":\\"lerna publish --canary --yes\\",\\"format-examples\\":\\"prettier-eslint --write \\\\\\"examples/**/gatsby-node.js\\\\\\" \\\\\\"examples/**/gatsby-config.js\\\\\\" \\\\\\"examples/**/src/**/*.js\\\\\\"\\",\\"format-packages\\":\\"prettier-eslint --write \\\\\\"packages/*/src/**/*.js\\\\\\"\\",\\"format-cache-dir\\":\\"prettier-eslint --write \\\\\\"packages/gatsby/cache-dir/*.js\\\\\\"\\"},\\"workspaces\\":[\\"packages/*\\"],\\"eslintIgnore\\":[\\"interfaces\\",\\"**/__tests__/fixtures/\\"],\\"devDependencies\\":{\\"glob\\":\\"^7.1.1\\",\\"jest\\":\\"^20.0.4\\",\\"plop\\":\\"^1.8.1\\",\\"lerna\\":\\"^2.1.1\\",\\"eslint\\":\\"^4.5.0\\",\\"rimraf\\":\\"^2.6.1\\",\\"chokidar\\":\\"^1.7.0\\",\\"flow-bin\\":\\"^0.42.0\\",\\"jest-cli\\":\\"^20.0.4\\",\\"prettier\\":\\"^1.7.0\\",\\"@babel/cli\\":\\"7.0.0-beta.47\\",\\"@babel/core\\":\\"7.0.0-beta.47\\",\\"cross-env\\":\\"^5.0.5\\",\\"babel-jest\\":\\"^20.0.3\\",\\"babel-eslint\\":\\"^7.2.3\\",\\"@babel/runtime\\":\\"7.0.0-beta.47\\",\\"@babel/register\\":\\"7.0.0-beta.47\\",\\"@babel/preset-env\\":\\"7.0.0-beta.47\\",\\"remotedev-server\\":\\"^0.2.3\\",\\"@babel/preset-flow\\":\\"7.0.0-beta.47\\",\\"@babel/preset-react\\":\\"7.0.0-beta.47\\",\\"babel-plugin-lodash\\":\\"^3.2.11\\",\\"eslint-plugin-react\\":\\"^7.3.0\\",\\"prettier-eslint-cli\\":\\"4.2.x\\",\\"babel-preset-stage-0\\":\\"^6.24.1\\",\\"eslint-config-google\\":\\"^0.9.1\\",\\"eslint-plugin-import\\":\\"^2.7.0\\",\\"eslint-config-prettier\\":\\"^2.5.0\\",\\"eslint-plugin-flowtype\\":\\"^2.35.0\\",\\"eslint-plugin-jsx-a11y\\":\\"^6.0.2\\",\\"eslint-plugin-prettier\\":\\"^2.2.0\\",\\"eslint-plugin-flow-vars\\":\\"^0.5.0\\",\\"babel-plugin-transform-runtime\\":\\"^6.23.0\\",\\"babel-plugin-add-module-exports\\":\\"^0.2.1\\",\\"babel-plugin-transform-flow-strip-types\\":\\"^6.22.0\\",\\"babel-plugin-transform-async-to-generator\\":\\"^6.24.1\\"}}",
-        "contentDigest": "44e380ab90d679a447eb5e1350bf19ed",
+        "content": "{\\"engines\\":{\\"yarn\\":\\"^1.2.1\\"},\\"private\\":true,\\"scripts\\":{\\"jest\\":\\"jest\\",\\"lint\\":\\"eslint --ext .js,.jsx packages/**/src\\",\\"plop\\":\\"plop\\",\\"test\\":\\"yarn lint && yarn jest\\",\\"lerna\\":\\"lerna\\",\\"watch\\":\\"lerna run watch --no-sort --stream --concurrency 999\\",\\"format\\":\\"npm run format-packages && npm run format-cache-dir && npm run format-www && npm run format-examples && npm run format-scripts\\",\\"publish\\":\\"lerna publish\\",\\"bootstrap\\":\\"yarn && npm run check-versions && lerna run prepublish\\",\\"lint:flow\\":\\"babel-node scripts/flow-check.js\\",\\"remotedev\\":\\"remotedev --hostname=localhost --port=19999\\",\\"test_bkup\\":\\"npm run lint && npm run test-node && npm run test-integration\\",\\"format-www\\":\\"prettier-eslint --write \\\\\\"www/*.js\\\\\\" \\\\\\"www/src/**/*.js\\\\\\"\\",\\"test:watch\\":\\"jest --watch\\",\\"test:update\\":\\"jest --updateSnapshot\\",\\"publish-next\\":\\"lerna publish --npm-tag=next\\",\\"check-versions\\":\\"babel-node scripts/check-versions.js\\",\\"format-scripts\\":\\"prettier-eslint --write \\\\\\"scripts/**/*.js\\\\\\"\\",\\"publish-canary\\":\\"lerna publish --canary --yes\\",\\"format-examples\\":\\"prettier-eslint --write \\\\\\"examples/**/gatsby-node.js\\\\\\" \\\\\\"examples/**/gatsby-config.js\\\\\\" \\\\\\"examples/**/src/**/*.js\\\\\\"\\",\\"format-packages\\":\\"prettier-eslint --write \\\\\\"packages/*/src/**/*.js\\\\\\"\\",\\"format-cache-dir\\":\\"prettier-eslint --write \\\\\\"packages/gatsby/cache-dir/*.js\\\\\\"\\"},\\"workspaces\\":[\\"packages/*\\"],\\"eslintIgnore\\":[\\"interfaces\\",\\"**/__tests__/fixtures/\\"],\\"devDependencies\\":{\\"glob\\":\\"^7.1.1\\",\\"jest\\":\\"^20.0.4\\",\\"plop\\":\\"^1.8.1\\",\\"lerna\\":\\"^2.1.1\\",\\"eslint\\":\\"^4.5.0\\",\\"rimraf\\":\\"^2.6.1\\",\\"chokidar\\":\\"^1.7.0\\",\\"flow-bin\\":\\"^0.42.0\\",\\"jest-cli\\":\\"^20.0.4\\",\\"prettier\\":\\"^1.7.0\\",\\"babel-cli\\":\\"^6.26.0\\",\\"cross-env\\":\\"^5.0.5\\",\\"babel-jest\\":\\"^20.0.3\\",\\"babel-eslint\\":\\"^7.2.3\\",\\"babel-runtime\\":\\"^6.26.0\\",\\"babel-register\\":\\"^6.26.0\\",\\"babel-preset-env\\":\\"^1.6.0\\",\\"remotedev-server\\":\\"^0.2.3\\",\\"babel-preset-flow\\":\\"^6.23.0\\",\\"babel-preset-react\\":\\"^6.24.1\\",\\"babel-plugin-lodash\\":\\"^3.2.11\\",\\"eslint-plugin-react\\":\\"^7.3.0\\",\\"prettier-eslint-cli\\":\\"4.2.x\\",\\"babel-preset-stage-0\\":\\"^6.24.1\\",\\"eslint-config-google\\":\\"^0.9.1\\",\\"eslint-plugin-import\\":\\"^2.7.0\\",\\"eslint-config-prettier\\":\\"^2.5.0\\",\\"eslint-plugin-flowtype\\":\\"^2.35.0\\",\\"eslint-plugin-jsx-a11y\\":\\"^6.0.2\\",\\"eslint-plugin-prettier\\":\\"^2.2.0\\",\\"eslint-plugin-flow-vars\\":\\"^0.5.0\\",\\"babel-plugin-transform-runtime\\":\\"^6.23.0\\",\\"babel-plugin-add-module-exports\\":\\"^0.2.1\\",\\"babel-plugin-transform-flow-strip-types\\":\\"^6.22.0\\",\\"babel-plugin-transform-async-to-generator\\":\\"^6.24.1\\"}}",
+        "contentDigest": "2555b7857c70c4293f9c6f3258dff561",
         "mediaType": "application/json",
         "type": "contentfulJsonTestJsonTestJsonNode",
       },
@@ -3662,26 +3979,20 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "createdAt": "2017-11-28T02:16:10.604Z",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "8945ca8e1a18a7d6c6b644157ef41d41",
+        "contentDigest": "62a962f097c57cf89c7795c6dc0bf8a1",
         "type": "ContentfulJsonTest",
       },
       "jsonTest___NODE": "uuid-from-gatsby",
       "node_locale": "de",
       "parent": "JSON-test",
-      "updatedAt": "2017-11-28T02:16:10.604Z",
+      "updatedAt": "2018-06-11T14:18:54.392Z",
     },
   ],
   Array [
     Object {
       "children": Array [],
       "devDependencies": Object {
-        "@babel/cli": "7.0.0-beta.47",
-        "@babel/core": "7.0.0-beta.47",
-        "@babel/preset-env": "7.0.0-beta.47",
-        "@babel/preset-flow": "7.0.0-beta.47",
-        "@babel/preset-react": "7.0.0-beta.47",
-        "@babel/register": "7.0.0-beta.47",
-        "@babel/runtime": "7.0.0-beta.47",
+        "babel-cli": "^6.26.0",
         "babel-eslint": "^7.2.3",
         "babel-jest": "^20.0.3",
         "babel-plugin-add-module-exports": "^0.2.1",
@@ -3689,7 +4000,12 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "babel-plugin-transform-async-to-generator": "^6.24.1",
         "babel-plugin-transform-flow-strip-types": "^6.22.0",
         "babel-plugin-transform-runtime": "^6.23.0",
+        "babel-preset-env": "^1.6.0",
+        "babel-preset-flow": "^6.23.0",
+        "babel-preset-react": "^6.24.1",
         "babel-preset-stage-0": "^6.24.1",
+        "babel-register": "^6.26.0",
+        "babel-runtime": "^6.26.0",
         "chokidar": "^1.7.0",
         "cross-env": "^5.0.5",
         "eslint": "^4.5.0",
@@ -3721,8 +4037,8 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       ],
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "content": "{\\"engines\\":{\\"yarn\\":\\"^1.2.1\\"},\\"private\\":true,\\"scripts\\":{\\"jest\\":\\"jest\\",\\"lint\\":\\"eslint --ext .js,.jsx packages/**/src\\",\\"plop\\":\\"plop\\",\\"test\\":\\"yarn lint && yarn jest\\",\\"lerna\\":\\"lerna\\",\\"watch\\":\\"lerna run watch --no-sort --stream --concurrency 999\\",\\"format\\":\\"npm run format-packages && npm run format-cache-dir && npm run format-www && npm run format-examples && npm run format-scripts\\",\\"publish\\":\\"lerna publish\\",\\"bootstrap\\":\\"yarn && npm run check-versions && lerna run prepublish\\",\\"lint:flow\\":\\"babel-node scripts/flow-check.js\\",\\"remotedev\\":\\"remotedev --hostname=localhost --port=19999\\",\\"test_bkup\\":\\"npm run lint && npm run test-node && npm run test-integration\\",\\"format-www\\":\\"prettier-eslint --write \\\\\\"www/*.js\\\\\\" \\\\\\"www/src/**/*.js\\\\\\"\\",\\"test:watch\\":\\"jest --watch\\",\\"test:update\\":\\"jest --updateSnapshot\\",\\"publish-next\\":\\"lerna publish --npm-tag=next\\",\\"check-versions\\":\\"babel-node scripts/check-versions.js\\",\\"format-scripts\\":\\"prettier-eslint --write \\\\\\"scripts/**/*.js\\\\\\"\\",\\"publish-canary\\":\\"lerna publish --canary --yes\\",\\"format-examples\\":\\"prettier-eslint --write \\\\\\"examples/**/gatsby-node.js\\\\\\" \\\\\\"examples/**/gatsby-config.js\\\\\\" \\\\\\"examples/**/src/**/*.js\\\\\\"\\",\\"format-packages\\":\\"prettier-eslint --write \\\\\\"packages/*/src/**/*.js\\\\\\"\\",\\"format-cache-dir\\":\\"prettier-eslint --write \\\\\\"packages/gatsby/cache-dir/*.js\\\\\\"\\"},\\"workspaces\\":[\\"packages/*\\"],\\"eslintIgnore\\":[\\"interfaces\\",\\"**/__tests__/fixtures/\\"],\\"devDependencies\\":{\\"glob\\":\\"^7.1.1\\",\\"jest\\":\\"^20.0.4\\",\\"plop\\":\\"^1.8.1\\",\\"lerna\\":\\"^2.1.1\\",\\"eslint\\":\\"^4.5.0\\",\\"rimraf\\":\\"^2.6.1\\",\\"chokidar\\":\\"^1.7.0\\",\\"flow-bin\\":\\"^0.42.0\\",\\"jest-cli\\":\\"^20.0.4\\",\\"prettier\\":\\"^1.7.0\\",\\"@babel/cli\\":\\"7.0.0-beta.47\\",\\"@babel/core\\":\\"7.0.0-beta.47\\",\\"cross-env\\":\\"^5.0.5\\",\\"babel-jest\\":\\"^20.0.3\\",\\"babel-eslint\\":\\"^7.2.3\\",\\"@babel/runtime\\":\\"7.0.0-beta.47\\",\\"@babel/register\\":\\"7.0.0-beta.47\\",\\"@babel/preset-env\\":\\"7.0.0-beta.47\\",\\"remotedev-server\\":\\"^0.2.3\\",\\"@babel/preset-flow\\":\\"7.0.0-beta.47\\",\\"@babel/preset-react\\":\\"7.0.0-beta.47\\",\\"babel-plugin-lodash\\":\\"^3.2.11\\",\\"eslint-plugin-react\\":\\"^7.3.0\\",\\"prettier-eslint-cli\\":\\"4.2.x\\",\\"babel-preset-stage-0\\":\\"^6.24.1\\",\\"eslint-config-google\\":\\"^0.9.1\\",\\"eslint-plugin-import\\":\\"^2.7.0\\",\\"eslint-config-prettier\\":\\"^2.5.0\\",\\"eslint-plugin-flowtype\\":\\"^2.35.0\\",\\"eslint-plugin-jsx-a11y\\":\\"^6.0.2\\",\\"eslint-plugin-prettier\\":\\"^2.2.0\\",\\"eslint-plugin-flow-vars\\":\\"^0.5.0\\",\\"babel-plugin-transform-runtime\\":\\"^6.23.0\\",\\"babel-plugin-add-module-exports\\":\\"^0.2.1\\",\\"babel-plugin-transform-flow-strip-types\\":\\"^6.22.0\\",\\"babel-plugin-transform-async-to-generator\\":\\"^6.24.1\\"}}",
-        "contentDigest": "44e380ab90d679a447eb5e1350bf19ed",
+        "content": "{\\"engines\\":{\\"yarn\\":\\"^1.2.1\\"},\\"private\\":true,\\"scripts\\":{\\"jest\\":\\"jest\\",\\"lint\\":\\"eslint --ext .js,.jsx packages/**/src\\",\\"plop\\":\\"plop\\",\\"test\\":\\"yarn lint && yarn jest\\",\\"lerna\\":\\"lerna\\",\\"watch\\":\\"lerna run watch --no-sort --stream --concurrency 999\\",\\"format\\":\\"npm run format-packages && npm run format-cache-dir && npm run format-www && npm run format-examples && npm run format-scripts\\",\\"publish\\":\\"lerna publish\\",\\"bootstrap\\":\\"yarn && npm run check-versions && lerna run prepublish\\",\\"lint:flow\\":\\"babel-node scripts/flow-check.js\\",\\"remotedev\\":\\"remotedev --hostname=localhost --port=19999\\",\\"test_bkup\\":\\"npm run lint && npm run test-node && npm run test-integration\\",\\"format-www\\":\\"prettier-eslint --write \\\\\\"www/*.js\\\\\\" \\\\\\"www/src/**/*.js\\\\\\"\\",\\"test:watch\\":\\"jest --watch\\",\\"test:update\\":\\"jest --updateSnapshot\\",\\"publish-next\\":\\"lerna publish --npm-tag=next\\",\\"check-versions\\":\\"babel-node scripts/check-versions.js\\",\\"format-scripts\\":\\"prettier-eslint --write \\\\\\"scripts/**/*.js\\\\\\"\\",\\"publish-canary\\":\\"lerna publish --canary --yes\\",\\"format-examples\\":\\"prettier-eslint --write \\\\\\"examples/**/gatsby-node.js\\\\\\" \\\\\\"examples/**/gatsby-config.js\\\\\\" \\\\\\"examples/**/src/**/*.js\\\\\\"\\",\\"format-packages\\":\\"prettier-eslint --write \\\\\\"packages/*/src/**/*.js\\\\\\"\\",\\"format-cache-dir\\":\\"prettier-eslint --write \\\\\\"packages/gatsby/cache-dir/*.js\\\\\\"\\"},\\"workspaces\\":[\\"packages/*\\"],\\"eslintIgnore\\":[\\"interfaces\\",\\"**/__tests__/fixtures/\\"],\\"devDependencies\\":{\\"glob\\":\\"^7.1.1\\",\\"jest\\":\\"^20.0.4\\",\\"plop\\":\\"^1.8.1\\",\\"lerna\\":\\"^2.1.1\\",\\"eslint\\":\\"^4.5.0\\",\\"rimraf\\":\\"^2.6.1\\",\\"chokidar\\":\\"^1.7.0\\",\\"flow-bin\\":\\"^0.42.0\\",\\"jest-cli\\":\\"^20.0.4\\",\\"prettier\\":\\"^1.7.0\\",\\"babel-cli\\":\\"^6.26.0\\",\\"cross-env\\":\\"^5.0.5\\",\\"babel-jest\\":\\"^20.0.3\\",\\"babel-eslint\\":\\"^7.2.3\\",\\"babel-runtime\\":\\"^6.26.0\\",\\"babel-register\\":\\"^6.26.0\\",\\"babel-preset-env\\":\\"^1.6.0\\",\\"remotedev-server\\":\\"^0.2.3\\",\\"babel-preset-flow\\":\\"^6.23.0\\",\\"babel-preset-react\\":\\"^6.24.1\\",\\"babel-plugin-lodash\\":\\"^3.2.11\\",\\"eslint-plugin-react\\":\\"^7.3.0\\",\\"prettier-eslint-cli\\":\\"4.2.x\\",\\"babel-preset-stage-0\\":\\"^6.24.1\\",\\"eslint-config-google\\":\\"^0.9.1\\",\\"eslint-plugin-import\\":\\"^2.7.0\\",\\"eslint-config-prettier\\":\\"^2.5.0\\",\\"eslint-plugin-flowtype\\":\\"^2.35.0\\",\\"eslint-plugin-jsx-a11y\\":\\"^6.0.2\\",\\"eslint-plugin-prettier\\":\\"^2.2.0\\",\\"eslint-plugin-flow-vars\\":\\"^0.5.0\\",\\"babel-plugin-transform-runtime\\":\\"^6.23.0\\",\\"babel-plugin-add-module-exports\\":\\"^0.2.1\\",\\"babel-plugin-transform-flow-strip-types\\":\\"^6.22.0\\",\\"babel-plugin-transform-async-to-generator\\":\\"^6.24.1\\"}}",
+        "contentDigest": "2555b7857c70c4293f9c6f3258dff561",
         "mediaType": "application/json",
         "type": "contentfulJsonTestJsonTestJsonNode",
       },
@@ -3755,6 +4071,188 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "workspaces": Array [
         "packages/*",
       ],
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "description": "",
+      "displayField": "title",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "2a9e145ee8bb6530af09e010f31a397c",
+        "type": "ContentfulContentType",
+      },
+      "name": "Remark Test",
+      "parent": null,
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [
+        "uuid-from-gatsby",
+      ],
+      "content___NODE": "uuid-from-gatsby",
+      "contentful_id": "c4L2GhTsJtCseMYM8Wia64i",
+      "createdAt": "2018-05-28T08:49:06.230Z",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "b3c92d41abbfa4e83bd0d2856f6eab56",
+        "type": "ContentfulRemarkTest",
+      },
+      "node_locale": "en-US",
+      "parent": "Remark Test",
+      "title": "Contentful images inlined in Markdown",
+      "updatedAt": "2018-05-28T08:49:06.230Z",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "content": "## Toys
+
+![Toys](//images.ctfassets.net/rocybtov1ozk/6t4HKjytPi0mYgs240wkG/6e730b1e6c2a46929239019240c037e6/toys_512pxGREY.png) 
+
+## Chive
+
+![Chive logo](//images.ctfassets.net/rocybtov1ozk/1MgbdJNTsMWKI0W68oYqkU/ad0200fe320b85ecdd823c711161c2f6/9ef190c59f0d375c0dea58b58a4bc1f0.jpeg) 
+
+## Playsam Streamliner
+
+![Playsam Streamliner](//images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg) 
+
+## Whisk beaters
+
+![Whisk beaters](//images.ctfassets.net/rocybtov1ozk/10TkaLheGeQG6qQGqWYqUI/f997e8e13c8c83c145e976d0905e64b7/ryugj83mqwa1asojwtwb.jpg) 
+
+## SoSo Wall Clock
+
+![SoSo Wall Clock](//images.ctfassets.net/rocybtov1ozk/KTRF62Q4gg60q6WCsWKw8/a8b2e93ac83fbbbb7bf9fba9f92b018e/soso.clock.jpg) 
+
+## Hudson Wall Cup
+
+![Hudson Wall Cup ](//images.ctfassets.net/rocybtov1ozk/Xc0ny7GWsMEMCeASWO2um/af8e29320c04af689798afe96e2345c7/jqvtazcyfwseah9fmysz.jpg)",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "content": "## Toys
+
+![Toys](//images.ctfassets.net/rocybtov1ozk/6t4HKjytPi0mYgs240wkG/6e730b1e6c2a46929239019240c037e6/toys_512pxGREY.png) 
+
+## Chive
+
+![Chive logo](//images.ctfassets.net/rocybtov1ozk/1MgbdJNTsMWKI0W68oYqkU/ad0200fe320b85ecdd823c711161c2f6/9ef190c59f0d375c0dea58b58a4bc1f0.jpeg) 
+
+## Playsam Streamliner
+
+![Playsam Streamliner](//images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg) 
+
+## Whisk beaters
+
+![Whisk beaters](//images.ctfassets.net/rocybtov1ozk/10TkaLheGeQG6qQGqWYqUI/f997e8e13c8c83c145e976d0905e64b7/ryugj83mqwa1asojwtwb.jpg) 
+
+## SoSo Wall Clock
+
+![SoSo Wall Clock](//images.ctfassets.net/rocybtov1ozk/KTRF62Q4gg60q6WCsWKw8/a8b2e93ac83fbbbb7bf9fba9f92b018e/soso.clock.jpg) 
+
+## Hudson Wall Cup
+
+![Hudson Wall Cup ](//images.ctfassets.net/rocybtov1ozk/Xc0ny7GWsMEMCeASWO2um/af8e29320c04af689798afe96e2345c7/jqvtazcyfwseah9fmysz.jpg)",
+        "contentDigest": "af0b4f957e8e4bd750eb406f1dfc453d",
+        "mediaType": "text/markdown",
+        "type": "contentfulRemarkTestContentTextNode",
+      },
+      "parent": "uuid-from-gatsby",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "description": "",
+      "displayField": "title",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "2a9e145ee8bb6530af09e010f31a397c",
+        "type": "ContentfulContentType",
+      },
+      "name": "Remark Test",
+      "parent": null,
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [
+        "uuid-from-gatsby",
+      ],
+      "content___NODE": "uuid-from-gatsby",
+      "contentful_id": "c4L2GhTsJtCseMYM8Wia64i",
+      "createdAt": "2018-05-28T08:49:06.230Z",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "33bfe0ebcae9be73b61c2e929b8d6f1b",
+        "type": "ContentfulRemarkTest",
+      },
+      "node_locale": "de",
+      "parent": "Remark Test",
+      "title": "Contentful images inlined in Markdown",
+      "updatedAt": "2018-05-28T08:49:06.230Z",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "content": "## Toys
+
+![Toys](//images.ctfassets.net/rocybtov1ozk/6t4HKjytPi0mYgs240wkG/6e730b1e6c2a46929239019240c037e6/toys_512pxGREY.png) 
+
+## Chive
+
+![Chive logo](//images.ctfassets.net/rocybtov1ozk/1MgbdJNTsMWKI0W68oYqkU/ad0200fe320b85ecdd823c711161c2f6/9ef190c59f0d375c0dea58b58a4bc1f0.jpeg) 
+
+## Playsam Streamliner
+
+![Playsam Streamliner](//images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg) 
+
+## Whisk beaters
+
+![Whisk beaters](//images.ctfassets.net/rocybtov1ozk/10TkaLheGeQG6qQGqWYqUI/f997e8e13c8c83c145e976d0905e64b7/ryugj83mqwa1asojwtwb.jpg) 
+
+## SoSo Wall Clock
+
+![SoSo Wall Clock](//images.ctfassets.net/rocybtov1ozk/KTRF62Q4gg60q6WCsWKw8/a8b2e93ac83fbbbb7bf9fba9f92b018e/soso.clock.jpg) 
+
+## Hudson Wall Cup
+
+![Hudson Wall Cup ](//images.ctfassets.net/rocybtov1ozk/Xc0ny7GWsMEMCeASWO2um/af8e29320c04af689798afe96e2345c7/jqvtazcyfwseah9fmysz.jpg)",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "content": "## Toys
+
+![Toys](//images.ctfassets.net/rocybtov1ozk/6t4HKjytPi0mYgs240wkG/6e730b1e6c2a46929239019240c037e6/toys_512pxGREY.png) 
+
+## Chive
+
+![Chive logo](//images.ctfassets.net/rocybtov1ozk/1MgbdJNTsMWKI0W68oYqkU/ad0200fe320b85ecdd823c711161c2f6/9ef190c59f0d375c0dea58b58a4bc1f0.jpeg) 
+
+## Playsam Streamliner
+
+![Playsam Streamliner](//images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg) 
+
+## Whisk beaters
+
+![Whisk beaters](//images.ctfassets.net/rocybtov1ozk/10TkaLheGeQG6qQGqWYqUI/f997e8e13c8c83c145e976d0905e64b7/ryugj83mqwa1asojwtwb.jpg) 
+
+## SoSo Wall Clock
+
+![SoSo Wall Clock](//images.ctfassets.net/rocybtov1ozk/KTRF62Q4gg60q6WCsWKw8/a8b2e93ac83fbbbb7bf9fba9f92b018e/soso.clock.jpg) 
+
+## Hudson Wall Cup
+
+![Hudson Wall Cup ](//images.ctfassets.net/rocybtov1ozk/Xc0ny7GWsMEMCeASWO2um/af8e29320c04af689798afe96e2345c7/jqvtazcyfwseah9fmysz.jpg)",
+        "contentDigest": "af0b4f957e8e4bd750eb406f1dfc453d",
+        "mediaType": "text/markdown",
+        "type": "contentfulRemarkTestContentTextNode",
+      },
+      "parent": "uuid-from-gatsby",
     },
   ],
 ]

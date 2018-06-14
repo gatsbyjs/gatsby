@@ -32,20 +32,6 @@ Array [
   },
   Object {
     "browserAPIs": Array [],
-    "id": "Plugin component-page-creator",
-    "name": "component-page-creator",
-    "nodeAPIs": Array [
-      "createPagesStatefully",
-    ],
-    "pluginOptions": Object {
-      "plugins": Array [],
-    },
-    "resolve": "",
-    "ssrAPIs": Array [],
-    "version": "1.0.0",
-  },
-  Object {
-    "browserAPIs": Array [],
     "id": "Plugin internal-data-bridge",
     "name": "internal-data-bridge",
     "nodeAPIs": Array [
@@ -99,6 +85,22 @@ Array [
     "ssrAPIs": Array [],
     "version": "d41d8cd98f00b204e9800998ecf8427e",
   },
+  Object {
+    "browserAPIs": Array [],
+    "id": "Plugin gatsby-plugin-page-creator",
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "pluginOptions": Object {
+      "path": "/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [],
+    "version": "1.0.1",
+  },
 ]
 `;
 
@@ -124,20 +126,6 @@ Array [
     "name": "load-babel-config",
     "nodeAPIs": Array [
       "onCreateBabelConfig",
-    ],
-    "pluginOptions": Object {
-      "plugins": Array [],
-    },
-    "resolve": "",
-    "ssrAPIs": Array [],
-    "version": "1.0.0",
-  },
-  Object {
-    "browserAPIs": Array [],
-    "id": "Plugin component-page-creator",
-    "name": "component-page-creator",
-    "nodeAPIs": Array [
-      "createPagesStatefully",
     ],
     "pluginOptions": Object {
       "plugins": Array [],
@@ -210,6 +198,22 @@ Array [
     "resolve": "",
     "ssrAPIs": Array [],
     "version": "d41d8cd98f00b204e9800998ecf8427e",
+  },
+  Object {
+    "browserAPIs": Array [],
+    "id": "Plugin gatsby-plugin-page-creator",
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "pluginOptions": Object {
+      "path": "/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [],
+    "version": "1.0.1",
   },
 ]
 `;

@@ -68,8 +68,13 @@ following command:
 gatsby develop
 ```
 
-You should shortly see some text, close to the bottom, that says <code>You can now view <strong>gatsby-starter-hello-world</strong> in the browser</code> [http://localhost:8000](http://localhost:8000). Open that address in your
-browser and...
+You should shortly see some text, close to the bottom, that says:
+
+`You can now view gatsby-starter-hello-world in the browser.`
+
+[http://localhost:8000/](http://localhost:8000).
+
+Open that address in your browser and...
 
 ![Gatsby.js hello world](hello-world.png)
 
