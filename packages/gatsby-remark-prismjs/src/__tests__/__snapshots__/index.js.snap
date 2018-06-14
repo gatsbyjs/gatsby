@@ -23,8 +23,15 @@ Object {
       },
       "type": "html",
       "value": "<div class=\\"gatsby-highlight\\" data-language=\\"js\\">
-      <pre class=\\"custom-js\\"><code class=\\"custom-js\\"><span class=\\"token comment\\">// Fake</span></code></pre>
-      </div>",
+      <pre
+        
+        class=\\"custom-js\\"
+      >
+        <code class=\\"custom-js\\"><span class=\\"token comment\\">// Fake</span>
+        </code>
+        
+      </pre>
+    </div>",
     },
   ],
   "position": Object {
@@ -66,8 +73,15 @@ Object {
       },
       "type": "html",
       "value": "<div class=\\"gatsby-highlight\\" data-language=\\"javascript\\">
-      <pre class=\\"language-javascript\\"><code class=\\"language-javascript\\">// Fake</code></pre>
-      </div>",
+      <pre
+        
+        class=\\"language-javascript\\"
+      >
+        <code class=\\"language-javascript\\">// Fake
+        </code>
+        
+      </pre>
+    </div>",
     },
   ],
   "position": Object {
@@ -109,8 +123,15 @@ Object {
       },
       "type": "html",
       "value": "<div class=\\"gatsby-highlight\\" data-language=\\"js\\">
-      <pre class=\\"language-js\\"><code class=\\"language-js\\"><span class=\\"token comment\\">// Fake</span></code></pre>
-      </div>",
+      <pre
+        
+        class=\\"language-js\\"
+      >
+        <code class=\\"language-js\\"><span class=\\"token comment\\">// Fake</span>
+        </code>
+        
+      </pre>
+    </div>",
     },
   ],
   "position": Object {

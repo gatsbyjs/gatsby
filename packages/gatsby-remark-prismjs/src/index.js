@@ -6,7 +6,7 @@ const addLineNumbers = require(`./add-line-numbers`)
 
 module.exports = (
   { markdownAST },
-  { classPrefix = `language-`, inlineCodeMarker = null, aliases = {}, showLineNumbers = false } = {}
+  { classPrefix = `language-`, inlineCodeMarker = null, aliases = {} } = {}
 ) => {
   const normalizeLanguage = lang => {
     const lower = lang.toLowerCase()
@@ -15,7 +15,7 @@ module.exports = (
 
   visit(markdownAST, `code`, node => {
     let language = node.lang
-    let { splitLanguage, highlightLines } = parseLineNumberRange(language)
+    let { splitLanguage, highlightLines, numberLines, numberLinesStartAt } = parseLineNumberRange(language)
     language = splitLanguage
 
     // PrismJS's theme styles are targeting pre[class*="language-"]
@@ -35,17 +35,27 @@ module.exports = (
     // re-process our already-highlighted markup.
     // @see https://github.com/gatsbyjs/gatsby/issues/1486
     const className = `${classPrefix}${languageName}`
-
+    
     // Replace the node with the markup we need to make
     // 100% width highlighted code lines work
     node.type = `html`
     node.value = `<div class="gatsby-highlight" data-language="${languageName}">
-      <pre class="${className}${showLineNumbers ? ` line-numbers` : ``}"><code class="${className}">${highlightCode(
-      language,
-      node.value,
-      highlightLines
-    )}</code>${showLineNumbers ? addLineNumbers(node.value) : ``}</pre>
-      </div>`
+      <pre
+        ${numberLines
+          ? ` style="counter-reset: linenumber ${numberLinesStartAt - 1}"`
+          : ``
+        }
+        class="${className}${numberLines ? ` line-numbers` : ``}"
+      >
+        <code class="${className}">${highlightCode(
+          language,
+          node.value,
+          highlightLines
+          )}
+        </code>
+        ${numberLines ? addLineNumbers(node.value) : ``}
+      </pre>
+    </div>`
   })
 
   visit(markdownAST, `inlineCode`, node => {

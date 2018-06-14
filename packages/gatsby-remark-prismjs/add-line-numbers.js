@@ -1,6 +1,7 @@
 "use strict";
 
 module.exports = (code = []) => {
+
   // Generate as many `<span></span>` as there are code lines
   const generateSpans = numberOfLines => {
     let spans = ``;
