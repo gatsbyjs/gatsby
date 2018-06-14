@@ -33,6 +33,13 @@ Official:
 
 Community:
 
+* [gatsby-starter-cosmicjs](https://github.com/cosmicjs/gatsby-starter)
+  [(demo)](https://cosmicjs-gatsby-starter.netlify.com)
+
+  Features:
+
+  * Dynamic content from Cosmic JS
+  
 * [gatsby-starter-blog-no-styles](https://github.com/noahg/gatsby-starter-blog-no-styles)
   [(demo)](http://capricious-spring.surge.sh/)
 
