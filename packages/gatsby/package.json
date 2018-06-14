@@ -1,7 +1,7 @@
 {
   "name": "gatsby",
   "description": "React.js Static Site Generator",
-  "version": "2.0.0-alpha.56",
+  "version": "2.0.0-alpha.57",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "./dist/bin/gatsby.js"
@@ -63,7 +63,7 @@
     "fs-extra": "^5.0.0",
     "gatsby-cli": "^1.1.41-13",
     "gatsby-link": "^1.6.38-15",
-    "gatsby-plugin-page-creator": "^1.0.1",
+    "gatsby-plugin-page-creator": "^1.0.2-0",
     "gatsby-react-router-scroll": "^1.0.12-12",
     "glob": "^7.1.1",
     "graphql": "^0.13.2",
