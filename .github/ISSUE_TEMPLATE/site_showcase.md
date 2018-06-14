@@ -4,22 +4,24 @@ about: Want to submit a site to the site showcase? This is the place to submit i
 ---
 
 <!--
-  To make sure your site gets submitted to the showcase, please follow the suggested format below.
+  To add your site to the showcase, please follow the suggested format below.
 
-  Before submitting a site to the site showcase, please make sure no on else has already submitted it by searching existing PRs: https://github.com/gatsbyjs/gatsby/pulls
+  Before submitting a site to the site showcase, please make sure no on else has already submitted it by searching existing PRs (if there is a chance that someone else could have submitted it): https://github.com/gatsbyjs/gatsby/pulls
 -->
 
 ## Steps
 
-1. Create a branch in master called site-showcase-submission
-2. In that branch, edit gatsby/docs/sites.yml by adding your submission to the bottom of the list of sites in the following format:
+There is only one major step :)
 
+1. Edit gatsby/docs/sites.yml by adding your submission to the bottom of the list of sites in the following format:
+
+```shell
 - title: Title of the Site
   main_url: 'http://titleofthesite.com/' //this is the URL that the screenshot comes from//
   url: 'http://titleofthesite.co.uk/'
   featured: false
   description: >-
-    This description ought to be 70 characters or less and include a description of the site. It will appear in the modal detail view and permalink views for your site.
+    This description will appear in the modal detail view and permalink views for your site.
   categories:
     - Relevant category 1
     - Relevant category 2
@@ -27,10 +29,11 @@ about: Want to submit a site to the site showcase? This is the place to submit i
     - // If you'd like to create a new category, simply list it here //
   built_by: Name of creator(s) or team/agency/business that created the site
   built_by_url: 'https://twitter.com/creatorname' //this could also be the URL to the site of your portfolio, your agency or company's site, etc.//
+```
 
 ## Categories
 
-Categories currently include both type of site (structure) and the content/purpose of the site. You will place all these under "categories" in your submission for now. The reason these are in two separate lists here is to show that you can have a school's marketing site (type of site would be marketing, and content would be education) or a site that delivers online learning about marketing (type of site would be education and content would be marketing).
+Categories currently include both *type of site* (structure) and the *content of the site*. You will place all these under "categories" in your submission for now. The reason these are in two separate lists here is to show that you can have a school's marketing site (type of site would be marketing, and content would be education) or a site that delivers online learning about marketing (type of site would be education and content would be marketing).
 
 ### Type of site
 - Blog
@@ -76,7 +79,7 @@ A few notes on site content: a common question is this: "aren't all Gatsby sites
 
 Featured sites are chosen the first week of every quarter based on the following criteria:
 * wide-reach (site is very popular)
-* prestige (site accomplishes something very important)
+* prestige (creator, content, or company is very well-known)
 * unique use case
 * unique design
 
@@ -93,4 +96,4 @@ categories:
 
 ## Change your mind / need to edit your submission?
 
-If you want to edit anything in your site submission later, simply submit another PR.
+If you want to edit anything in your site submission later, simply edit the .yaml file by submitting another PR.
