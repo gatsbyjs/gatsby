@@ -547,8 +547,8 @@ const styles = {
     color: colors.lilac,
     fontFamily: options.headerFontFamily.join(`,`),
     position: `absolute`,
-    top: `280px`,
-    width: `300px`,
+    top: 280,
+    width: 300,
     transform: `translateX(-75px) rotate(90deg)`,
     [presets.Desktop]: {
       ...scale(-1 / 6),
@@ -560,7 +560,7 @@ const styles = {
   },
   prevNextImage: {
     borderRadius: presets.radius,
-    boxShadow: `0px 0px 38px -8px ${colors.gatsby}`,
+    boxShadow: `0 0 38px -8px ${colors.gatsby}`,
   },
   prevNextPermalinkLabel: {
     color: colors.gray.calm,
