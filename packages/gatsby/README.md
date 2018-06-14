@@ -8,9 +8,7 @@
 
 **[View the docs on gatsbyjs.org](https://www.gatsbyjs.org/docs/)**
 
-[Migrating from v0 to v1?](https://www.gatsbyjs.org/docs/migrating-from-v0-to-v1/)
-
-[v0 docs](/v0-README.md)
+[Migrating from v1 to v2?](https://next.gatsbyjs.org/docs/migrating-from-v1-to-v2/)
 
 ## Link component
 
