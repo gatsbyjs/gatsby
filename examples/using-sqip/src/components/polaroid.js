@@ -27,12 +27,12 @@ const data = {
     url: `https://unsplash.com/photos/HhOo98Iygps`,
   },
   'igor-ovsyannykov-307432-unsplash-2000px': {
-    style: { right: `27vw`, bottom: `3vw` },
+    style: { right: `27vw`, bottom: `4vw` },
     author: `Igor Ovsyannykov`,
     url: `https://unsplash.com/photos/uzd2UEDdQJ8`,
   },
   'quino-al-101314-unsplash-2000px': {
-    style: { right: `28vw`, bottom: `27vw` },
+    style: { right: `26vw`, bottom: `27vw` },
     author: `Quino Al`,
     url: `https://unsplash.com/photos/vBxlL1xpSdc`,
   },
@@ -48,24 +48,10 @@ const data = {
   },
 }
 
-function generateStyle(imageData) {
+function generateDynamicStyle(imageData) {
   const rotation = Math.floor(Math.random() * 26) - 13
   return {
-    boxSizing: `content-box`,
-
-    display: `block`,
-    position: `absolute`,
-
-    width: `18vw`,
-
-    padding: `0.8vw 0.4vw 0`,
-    background: `linear-gradient(120deg, #fff, #eee 60%)`,
-
-    color: `inherit`,
-
-    boxShadow: `2px 2px 7px 0px rgba(0,0,0,0.4), rgba(0, 0, 0, 0.1) 1px 1px 3px 0px inset`,
     transform: `rotate(${rotation}deg)`,
-
     ...imageData.style,
   }
 }
@@ -77,34 +63,18 @@ const Polaroid = ({ image }) => {
     <a
       href={imageData.url}
       title={`by ${imageData.author}`}
-      style={generateStyle(imageData)}
+      className="polaroid"
+      style={generateDynamicStyle(imageData)}
     >
-      <div style={{ position: `relative` }}>
+      <div className="polaroid-image-wrapper">
         <Image
           sizes={{
             ...image.childImageSharp.sizes,
             base64: image.childImageSharp.sqip.dataURI,
           }}
         />
-        <div
-          style={{
-            position: `absolute`,
-            top: 0,
-            left: 0,
-            background: `linear-gradient(120deg, rgba(255, 255, 255, 0.5), transparent 60%, rgba(0, 0, 0, 0.4) 99%)`,
-            boxShadow: `inset 4px 5px 10px 0 rgba(0,0,0,0.05)`,
-            width: `100%`,
-            height: `100%`
-          }}
-        />
       </div>
-      <div
-        style={{
-          lineHeight: `4vw`,
-          textAlign: `center`,
-          fontSize: `1.6vw`,
-        }}
-      >{`📷 ${imageData.author}`}</div>
+      <div className="polaroid-author">{`📷 ${imageData.author}`}</div>
     </a>
   )
 }

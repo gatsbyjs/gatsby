@@ -168,10 +168,12 @@ Their fragments are:
 
 * `GatsbyContentfulResolutions`
 * `GatsbyContentfulResolutions_noBase64`
+* `GatsbyContentfulResolutions_tracedSVG`
 * `GatsbyContentfulResolutions_withWebp`
 * `GatsbyContentfulResolutions_withWebp_noBase64`
 * `GatsbyContentfulSizes`
 * `GatsbyContentfulSizes_noBase64`
+* `GatsbyContentfulSizes_tracedSVG`
 * `GatsbyContentfulSizes_withWebp`
 * `GatsbyContentfulSizes_withWebp_noBase64`
 

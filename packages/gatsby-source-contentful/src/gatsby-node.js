@@ -1,3 +1,5 @@
+const path = require(`path`)
+
 const _ = require(`lodash`)
 const fs = require(`fs-extra`)
 
@@ -75,12 +77,17 @@ exports.sourceNodes = async (
   // Remove deleted entries & assets.
   // TODO figure out if entries referencing now deleted entries/assets
   // are "updated" so will get the now deleted reference removed.
+
+  function deleteContentfulNode (node) {
+    const id = node.sys.id
+    const localizedIds = locales.map((locale) => normalize.makeId({ id, currentLocale: locale.code, defaultLocale }))
+    localizedIds.forEach(id => deleteNode(id, getNode(id)))
+  }
+
   currentSyncData.deletedEntries
-    .map(e => e.sys.id)
-    .forEach(id => deleteNode(id, getNode(id)))
+    .forEach(deleteContentfulNode)
   currentSyncData.deletedAssets
-    .map(e => e.sys.id)
-    .forEach(id => deleteNode(id, getNode(id)))
+    .forEach(deleteContentfulNode)
 
   const existingNodes = getNodes().filter(
     n => n.internal.owner === `gatsby-source-contentful`
@@ -179,6 +186,12 @@ exports.sourceNodes = async (
   })
 
   return
+}
+
+exports.onPreBootstrap = async ({ store }) => {
+  const program = store.getState().program
+  const CACHE_DIR = path.resolve(`${program.directory}/.cache/contentful/assets/`)
+  await fs.ensureDir(CACHE_DIR)
 }
 
 // Check if there are any ContentfulAsset nodes and if gatsby-image is installed. If so,

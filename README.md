@@ -227,6 +227,8 @@ Websites built with Gatsby:
 * [Cup of Data](https://cupofdata.com) ([source](https://github.com/cupofdata/cupofdata.com))
 * [Natalia Acevedo - Personal Website](https://nataliaacevedo.com) ([source](https://github.com/yeion7/nataliaacevedo.com))
 * [Airbnb Cereal](https://airbnb.design/cereal/)
+* [mottox2 blog](https://mottox2.com)
+* [Tiger Facility Services](https://www.tigerfacilityservices.com/)
 
 ## Docs
 
