@@ -23,7 +23,7 @@
   "main": "index.js",
   "peerDependencies": {
     "babel-plugin-styled-components": ">1.5.0",
-    "gatsby": ">2.0.0",
+    "gatsby": ">2.0.0-alpha",
     "styled-components": ">= 2.0.0"
   },
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-styled-components",
