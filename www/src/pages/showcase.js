@@ -302,19 +302,22 @@ class FilteredShowcase extends Component {
               >
                 <button
                   css={{
-                    background: `transparent`,
+                    ...scale(-1 / 6),
+                    alignItems: `center`,
+                    background: colors.ui.light,
+                    border: 0,
+                    borderRadius: presets.radius,
                     color: colors.gatsby,
                     cursor: `pointer`,
-                    fontFamily: options.headerFontFamily.join(`,`),
-                    ...scale(-1 / 6),
-                    textAlign: `left`,
-                    border: `1px solid ${colors.ui.bright}`,
-                    borderRadius: presets.radius,
-                    paddingRight: rhythm(3 / 4),
-                    marginTop: rhythm(options.blockMarginBottom),
                     display: `flex`,
-                    alignItems: `center`,
-                    width: `100%`,
+                    fontFamily: options.headerFontFamily.join(`,`),
+                    marginTop: rhythm(options.blockMarginBottom),
+                    paddingRight: rhythm(3 / 4),
+                    textAlign: `left`,
+                    "&:hover": {
+                      background: colors.gatsby,
+                      color: `#fff`,
+                    },
                   }}
                   onClick={() => {
                     this.props.setFilters([])
