@@ -191,6 +191,8 @@ class ShowcaseTemplate extends React.Component {
             alignItems: `center`,
             display: `flex`,
             flexDirection: `column`,
+            maxWidth: isModal ? false : 1080,
+            margin: isModal ? false : `0 auto`,
           }}
         >
           <div
