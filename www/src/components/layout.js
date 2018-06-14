@@ -97,11 +97,13 @@ class DefaultLayout extends React.Component {
             onRequestClose={() => navigateTo(this.props.modalBackgroundPath)}
             contentLabel="Site Details Modal"
           >
-            <div css={{
-              position: 'relative',
-              backgroundColor: `#ffffff`,
-              boxShadow: `0px 0px 90px -24px ${colors.gatsby}`
-            }}>
+            <div
+              css={{
+                position: `relative`,
+                backgroundColor: `#ffffff`,
+                boxShadow: `0 0 90px -24px ${colors.gatsby}`,
+              }}
+            >
               {this.props.children}
               {this.props.modalPreviousLink}
               {this.props.modalNextLink}
@@ -110,6 +112,10 @@ class DefaultLayout extends React.Component {
         </React.Fragment>
       )
     }
+
+    // SEE: template-docs-markdown for why this.props.isSidebarDisabled is here
+    const isSidebarDisabled =
+      this.props.isSidebarDisabled || !this.props.sidebarYaml
 
     return (
       <div className={isHomepage ? `is-homepage` : ``}>
