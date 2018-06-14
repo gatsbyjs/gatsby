@@ -5,6 +5,8 @@ author: "Mike Allanson"
 tags: ["v2", "gatsby"]
 ---
 
+![](astronaut-v2.jpg)
+
 We’re excited to announce that today we shipped the first beta for Gatsby v2! 36 contributors have made over 300 commits to v2 since Gatsby v1 was released in July 2017.
 
 ## What's coming in v2?
