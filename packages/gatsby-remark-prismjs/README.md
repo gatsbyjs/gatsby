@@ -120,7 +120,6 @@ CSS along your PrismJS theme and the styles for `.gatsby-highlight-code-line`:
 .gatsby-highlight pre[class*="language-"] {
   background-color: transparent;
   margin: 0;
-  padding: 0;
   overflow: initial;
   float: left; /* 1 */
   min-width: 100%; /* 2 */

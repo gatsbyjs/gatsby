@@ -134,7 +134,6 @@ const options = {
         backgroundColor: `transparent`,
         borderRadius: 0,
         margin: 0,
-        padding: 0,
         overflow: `initial`,
         float: `left`,
         minWidth: `100%`,

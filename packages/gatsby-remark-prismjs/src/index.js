@@ -39,23 +39,14 @@ module.exports = (
     // Replace the node with the markup we need to make
     // 100% width highlighted code lines work
     node.type = `html`
-    node.value = `<div class="gatsby-highlight" data-language="${languageName}">
-      <pre
-        ${numberLines
+    node.value = `<div class="gatsby-highlight" data-language="${languageName}"><pre ${numberLines
           ? ` style="counter-reset: linenumber ${numberLinesStartAt - 1}"`
           : ``
-        }
-        class="${className}${numberLines ? ` line-numbers` : ``}"
-      >
-        <code class="${className}">${highlightCode(
+        } class="${className}${numberLines ? ` line-numbers` : ``}"><code class="${className}">${highlightCode(
           language,
           node.value,
           highlightLines
-          )}
-        </code>
-        ${numberLines ? addLineNumbers(node.value) : ``}
-      </pre>
-    </div>`
+          )}</code>${numberLines ? addLineNumbers(node.value) : ``}</pre></div>`
   })
 
   visit(markdownAST, `inlineCode`, node => {

@@ -7,6 +7,7 @@ import "typeface-space-mono"
 import "typeface-spectral"
 
 import "prismjs/themes/prism-solarizedlight.css"
+import "prismjs/plugins/line-numbers/prism-line-numbers.css"
 
 class Layout extends React.Component {
   render() {
