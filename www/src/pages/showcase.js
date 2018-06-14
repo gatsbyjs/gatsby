@@ -5,13 +5,6 @@ import { Link } from "gatsby"
 import Img from "gatsby-image"
 // import { style } from "glamor"
 import hex2rgba from "hex2rgba"
-
-import Layout from "../components/layout"
-import SearchIcon from "../components/search-icon"
-//import FuturaParagraph from "../components/futura-paragraph"
-//import Container from "../components/container"
-import { options, /* rhythm, */ scale, rhythm } from "../utils/typography"
-import presets, { colors } from "../utils/presets"
 import MdFilterList from "react-icons/lib/md/filter-list"
 import FaAngleDown from "react-icons/lib/fa/angle-down"
 import FaAngleUp from "react-icons/lib/fa/angle-up"
@@ -20,6 +13,14 @@ import MdCheckboxBlank from "react-icons/lib/md/check-box-outline-blank"
 import MdCheckbox from "react-icons/lib/md/check-box"
 import MdArrowDownward from "react-icons/lib/md/arrow-downward"
 import MdArrowForward from "react-icons/lib/md/arrow-forward"
+
+import Layout from "../components/layout"
+import SearchIcon from "../components/search-icon"
+//import FuturaParagraph from "../components/futura-paragraph"
+//import Container from "../components/container"
+import { options, /* rhythm, */ scale, rhythm } from "../utils/typography"
+import presets, { colors } from "../utils/presets"
+import scrollToAnchor from "../utils/scroll-to-anchor"
 
 import Fuse from "fuse.js"
 import FeaturedSitesIcon from "../assets/featured-sites-icons.svg"
@@ -418,7 +419,6 @@ class FilteredShowcase extends Component {
                 borderBottom: `1px solid ${colors.ui.light}`,
               },
             }}
-            id="search-heading"
           >
             <h2
               css={{
@@ -526,6 +526,12 @@ class FilteredShowcase extends Component {
 }
 
 class ShowcasePage extends Component {
+  constructor(props) {
+    super(props)
+    this.showcase = React.createRef()
+    this.onClickHandler = this.onClickHandler.bind(this)
+  }
+
   state = {
     filters: new Set([]),
     windowWidth: null,
@@ -534,6 +540,12 @@ class ShowcasePage extends Component {
   componentDidMount() {
     this.setState({ windowWidth: window.innerWidth })
   }
+
+  onClickHandler = target => target.current
+      ? scrollToAnchor(target.current, () => {
+          this.setState({ filters: new Set([`Featured`]) })
+        })
+      : () => {}
 
   render() {
     const data = this.props.data
@@ -594,7 +606,7 @@ class ShowcasePage extends Component {
               Featured Sites
             </h1>
             <a
-              href="#search-heading"
+              href="#showcase"
               css={{
                 "&&": {
                   ...scale(-1 / 6),
@@ -610,7 +622,7 @@ class ShowcasePage extends Component {
                   },
                 },
               }}
-              onClick={() => this.setState({ filters: new Set([`Featured`]) })}
+              onClick={this.onClickHandler(this.showcase)}
             >
               View all&nbsp;<MdArrowForward
                 style={{ marginLeft: 4, verticalAlign: `sub` }}
@@ -728,7 +740,7 @@ class ShowcasePage extends Component {
                 </Link>
               ))}
               <a
-                href="#search-heading"
+                href="#showcase"
                 css={{
                   ...styles.featuredSitesCard,
                   textAlign: `center`,
@@ -746,9 +758,7 @@ class ShowcasePage extends Component {
                     },
                   },
                 }}
-                onClick={() => {
-                  this.setState({ filters: new Set([`Featured`]) })
-                }}
+                onClick={this.onClickHandler(this.showcase)}
               >
                 <div
                   css={{
@@ -812,6 +822,11 @@ class ShowcasePage extends Component {
             />
           </div>
         </section>
+        <div
+          id="showcase"
+          css={{ position: `relative`, top: presets.headerHeight, height: 1 }}
+          ref={this.showcase}
+        />
         <FilteredShowcase
           data={data}
           filters={this.state.filters}
