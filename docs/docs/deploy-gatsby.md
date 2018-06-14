@@ -88,6 +88,8 @@ Now run `npm run deploy`. Preview changes in your GitHub page
 `https://username.github.io/project-name/`. You can also find the link to your
 site on GitHub under `Settings` > `GitHub Pages`.
 
+If this is not successful, make sure that `gh-pages` is set as the source branch in your repository's `Settings` > `GitHub Pages` and then re-run `npm run deploy`.
+
 ### Deploying a user/organization site
 
 Unlike project pages, user/organization sites on GitHub live in a special

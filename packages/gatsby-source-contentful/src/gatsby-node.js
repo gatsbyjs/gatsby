@@ -1,3 +1,5 @@
+const path = require(`path`)
+
 const _ = require(`lodash`)
 const fs = require(`fs-extra`)
 
@@ -30,7 +32,7 @@ exports.setFieldsOnGraphQLNodeType = require(`./extend-node-type`).extendNodeTyp
  */
 
 exports.sourceNodes = async (
-  { actions, getNodes, createNodeId, hasNodeChanged, store },
+  { actions, getNode, getNodes, createNodeId, hasNodeChanged, store },
   { spaceId, accessToken, host, environment }
 ) => {
   const { createNode, deleteNode, touchNode, setPluginStatus } = actions
@@ -70,8 +72,16 @@ exports.sourceNodes = async (
   // Remove deleted entries & assets.
   // TODO figure out if entries referencing now deleted entries/assets
   // are "updated" so will get the now deleted reference removed.
-  currentSyncData.deletedEntries.forEach(e => deleteNode({ node: e.sys }))
-  currentSyncData.deletedAssets.forEach(e => deleteNode({ node: e.sys }))
+
+  function deleteContentfulNode (node) {
+    const localizedNodes = locales.map((locale) => getNode(normalize.makeId({ id: node.sys.id, currentLocale: locale.code, defaultLocale }))
+    localizedNodes.forEach(node => deleteNode({ node }))
+  }
+
+  currentSyncData.deletedEntries
+    .forEach(deleteContentfulNode)
+  currentSyncData.deletedAssets
+    .forEach(deleteContentfulNode)
 
   const existingNodes = getNodes().filter(
     n => n.internal.owner === `gatsby-source-contentful`
@@ -172,6 +182,12 @@ exports.sourceNodes = async (
   })
 
   return
+}
+
+exports.onPreBootstrap = async ({ store }) => {
+  const program = store.getState().program
+  const CACHE_DIR = path.resolve(`${program.directory}/.cache/contentful/assets/`)
+  await fs.ensureDir(CACHE_DIR)
 }
 
 // Check if there are any ContentfulAsset nodes and if gatsby-image is installed. If so,

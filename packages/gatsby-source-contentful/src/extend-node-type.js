@@ -9,6 +9,9 @@ const {
 const qs = require(`qs`)
 const base64Img = require(`base64-img`)
 const _ = require(`lodash`)
+const path = require(`path`)
+
+const cacheImage = require(`./cache-image`)
 
 const {
   ImageFormatType,
@@ -260,7 +263,7 @@ const resolveResize = (image, options) => {
 
 exports.resolveResize = resolveResize
 
-const fixedNodeType = ({ name }) => {
+const fixedNodeType = ({ name, getTracedSVG }) => {
   return {
     type: new GraphQLObjectType({
       name: name,
@@ -270,6 +273,10 @@ const fixedNodeType = ({ name }) => {
           resolve(imageProps) {
             return getBase64Image(imageProps)
           },
+        },
+        tracedSVG: {
+          type: GraphQLString,
+          resolve: getTracedSVG,
         },
         aspectRatio: { type: GraphQLFloat },
         width: { type: GraphQLFloat },
@@ -354,7 +361,7 @@ const fixedNodeType = ({ name }) => {
   }
 }
 
-const fluidNodeType = ({ name }) => {
+const fluidNodeType = ({ name, getTracedSVG }) => {
   return {
     type: new GraphQLObjectType({
       name: name,
@@ -364,6 +371,10 @@ const fluidNodeType = ({ name }) => {
           resolve(imageProps) {
             return getBase64Image(imageProps)
           },
+        },
+        tracedSVG: {
+          type: GraphQLString,
+          resolve: getTracedSVG,
         },
         aspectRatio: { type: GraphQLFloat },
         src: { type: GraphQLString },
@@ -448,18 +459,47 @@ const fluidNodeType = ({ name }) => {
   }
 }
 
-exports.extendNodeType = ({ type }) => {
+exports.extendNodeType = ({ type, store }) => {
   if (type.name !== `ContentfulAsset`) {
     return {}
   }
 
+  const getTracedSVG = async (args) =>
+  {
+    const {
+      traceSVG,
+    } = require(`gatsby-plugin-sharp`)
+
+    const { image, options } = args
+    const {
+      file: { contentType },
+    } = image
+
+    if (contentType.indexOf(`image/`) !== 0) {
+      return null
+    }
+
+    const absolutePath = await cacheImage(store, image, options)
+    const extension = path.extname(absolutePath)
+
+    return traceSVG({
+      file: {
+        internal: image.internal,
+        name: image.file.fileName,
+        extension,
+        absolutePath,
+      },
+      args: { toFormat: `` },
+      fileArgs: options,
+    })}
+
   // TODO: Remove resolutionsNode and sizesNode for Gatsby v3
-  const fixedNode = fixedNodeType({ name: `ContentfulFixed` })
-  const resolutionsNode = fixedNodeType({ name: `ContentfulResolutions` })
+  const fixedNode = fixedNodeType({ name: `ContentfulFixed`, getTracedSVG })
+  const resolutionsNode = fixedNodeType({ name: `ContentfulResolutions`, getTracedSVG })
   resolutionsNode.deprecationReason = `Resolutions was deprecated in Gatsby v2. It's been renamed to "fixed" https://example.com/write-docs-and-fix-this-example-link`
 
-  const fluidNode = fluidNodeType({ name: `ContentfulFluid` })
-  const sizesNode = fluidNodeType({ name: `ContentfulSizes` })
+  const fluidNode = fluidNodeType({ name: `ContentfulFluid`, getTracedSVG })
+  const sizesNode = fluidNodeType({ name: `ContentfulSizes`, getTracedSVG })
   sizesNode.deprecationReason = `Sizes was deprecated in Gatsby v2. It's been renamed to "fluid" https://example.com/write-docs-and-fix-this-example-link`
 
   return {
@@ -476,6 +516,10 @@ exports.extendNodeType = ({ type }) => {
             resolve(imageProps) {
               return getBase64Image(imageProps)
             },
+          },
+          tracedSVG: {
+            type: GraphQLString,
+            resolve: getTracedSVG,
           },
           src: { type: GraphQLString },
           width: { type: GraphQLInt },
