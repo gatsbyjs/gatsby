@@ -1,6 +1,6 @@
 ---
 name: Site Showcase Submission
-about: Want to submit a site to the site showcase? This is the place to submit it.
+about: Want to submit a site to the site showcase? Follow these instructions.
 ---
 
 <!--
