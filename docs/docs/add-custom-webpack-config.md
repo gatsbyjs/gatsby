@@ -36,7 +36,9 @@ e.g. [Sass](/packages/gatsby-plugin-sass/),
 [Typescript](/packages/gatsby-plugin-typescript/),
 [Glamor](/packages/gatsby-plugin-glamor/), and many more!
 
-## Example
+## Examples
+
+### Flexboxgrid
 
 Here is an example that configures **flexboxgrid** when processing css files. Add this in `gatsby-node.js`:
 
@@ -77,3 +79,19 @@ exports.onCreateWebpackConfig = ({
   })
 }
 ```
+
+### Absolute imports
+
+Instead of writing `import Header from '../../components/Header'` over and over again you can just write `import Header from 'components/Header'` with absolute imports:
+
+```js
+exports.onCreateWebpackConfig = ({ stage, actions }) => {
+  actions.setWebpackConfig({
+    resolve: {
+      modules: [path.resolve(__dirname, 'src'), 'node_modules'],
+    },
+  });
+};
+```
+
+You can always find more information on *resolve* and other options in the offical [Webpack docs](https://webpack.js.org/concepts/).
