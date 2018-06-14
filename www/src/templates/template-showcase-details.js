@@ -126,7 +126,11 @@ class ShowcaseTemplate extends React.Component {
                 alt=""
               />
             </div>
-            <div css={{ ...styles.prevNextLink }}>
+            <div
+              css={{
+                ...styles.prevNextLink,
+              }}
+            >
               <MdArrowUpward />
               <div>Next Site in Showcase</div>
               <div css={{ ...styles.prevNextLinkSiteTitle }}>
@@ -208,6 +212,7 @@ class ShowcaseTemplate extends React.Component {
                 href={data.sitesYaml.main_url}
                 css={{
                   ...styles.link,
+                  fontWeight: `bold`,
                   [presets.Desktop]: {
                     ...scale(-1 / 6),
                   },
@@ -232,7 +237,10 @@ class ShowcaseTemplate extends React.Component {
                   {data.sitesYaml.built_by_url ? (
                     <a
                       href={data.sitesYaml.built_by_url}
-                      css={{ ...styles.link }}
+                      css={{
+                        ...styles.link,
+                        fontWeight: `bold`,
+                      }}
                     >
                       {data.sitesYaml.built_by}
                     </a>
@@ -257,6 +265,9 @@ class ShowcaseTemplate extends React.Component {
                     display: `flex`,
                     fontWeight: `bold`,
                     padding: 20,
+                    [presets.Desktop]: {
+                      ...scale(-1 / 6),
+                    },
                   }}
                 >
                   <img
@@ -273,6 +284,9 @@ class ShowcaseTemplate extends React.Component {
                     padding: 20,
                     display: `flex`,
                     borderRight: `1px solid #F5F3F7`,
+                    [presets.Desktop]: {
+                      ...scale(-1 / 6),
+                    },
                   }}
                 >
                   <img
@@ -280,7 +294,9 @@ class ShowcaseTemplate extends React.Component {
                     alt="icon"
                     css={{ marginBottom: 0, marginRight: 10 }}
                   />
-                  <a href={data.sitesYaml.source_url}>Source</a>
+                  <a href={data.sitesYaml.source_url} css={{ ...styles.link }}>
+                    Source
+                  </a>
                 </div>
               )}
               {false && ( // TODO: NOT IMPLEMENTED YET!!!
@@ -461,7 +477,6 @@ export const pageQuery = graphql`
 const styles = {
   link: {
     color: colors.gatsby,
-    fontWeight: `bold`,
     textDecoration: `none`,
   },
   prevNextLink: {
@@ -471,6 +486,9 @@ const styles = {
     top: `280px`,
     width: `300px`,
     transform: `translateX(-75px) rotate(90deg)`,
+    [presets.Desktop]: {
+      ...scale(-1 / 6),
+    },
   },
   prevNextLinkSiteTitle: {
     color: colors.gatsby,
