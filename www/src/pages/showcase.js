@@ -16,6 +16,10 @@ import MdFilterList from "react-icons/lib/md/filter-list"
 import FaAngleDown from "react-icons/lib/fa/angle-down"
 import FaAngleUp from "react-icons/lib/fa/angle-up"
 import MdClear from "react-icons/lib/md/clear"
+import MdCheckboxBlank from "react-icons/lib/md/check-box-outline-blank"
+import MdCheckbox from "react-icons/lib/md/check-box"
+import MdArrowDownward from "react-icons/lib/md/arrow-downward"
+import MdArrowForward from "react-icons/lib/md/arrow-forward"
 
 import Fuse from "fuse.js"
 import FeaturedSitesIcon from "../assets/featured-sites-icons.svg"
@@ -145,9 +149,12 @@ class Collapsible extends Component {
           css={{
             color: colors.lilac,
             cursor: `pointer`,
+            display: `flex`,
+            alignItems: `center`,
             fontWeight: `normal`,
             fontSize: scale(-2 / 5).fontSize,
             marginTop: rhythm(options.blockMarginBottom),
+            marginRight: rhythm(5 / 4),
             letterSpacing: `.15em`,
             textTransform: `uppercase`,
             "&:hover": {
@@ -156,7 +163,11 @@ class Collapsible extends Component {
           }}
           onClick={this.handleClick}
         >
-          {heading} {this.state.collapsed ? <FaAngleDown /> : <FaAngleUp />}
+          {heading}
+          {` `}
+          <span css={{ marginLeft: `auto` }}>
+            {this.state.collapsed ? <FaAngleDown /> : <FaAngleUp />}
+          </span>
         </h4>
         <div
           css={{
@@ -272,8 +283,37 @@ class FilteredShowcase extends Component {
               paddingLeft: rhythm(3 / 4),
             }}
           >
-            {/* TODO: design and CSS for "Clear all filters" */}
-            {filters.size > 0 && <button onClick={() => {this.props.setFilters([])}}><MdClear /> Clear all filters</button>}
+            {filters.size > 0 && (
+              <div
+                css={{
+                  marginRight: rhythm(3 / 4),
+                }}
+              >
+                <button
+                  css={{
+                    background: `transparent`,
+                    color: colors.gatsby,
+                    cursor: `pointer`,
+                    fontFamily: options.headerFontFamily.join(`,`),
+                    ...scale(-1 / 6),
+                    textAlign: `left`,
+                    border: `1px solid ${colors.ui.bright}`,
+                    borderRadius: presets.radius,
+                    paddingRight: rhythm(3 / 4),
+                    marginTop: rhythm(options.blockMarginBottom),
+                    display: `flex`,
+                    alignItems: `center`,
+                    width: `100%`,
+                  }}
+                  onClick={() => {
+                    this.props.setFilters([])
+                  }}
+                >
+                  <MdClear style={{ marginRight: rhythm(1 / 4) }} /> Reset all
+                  Filters
+                </button>
+              </div>
+            )}
             <Collapsible heading="Category">
               {Array.from(
                 count(
@@ -298,39 +338,46 @@ class FilteredShowcase extends Component {
                         }
                       }}
                       css={{
+                        ...scale(-1 / 6),
+                        alignItems: `flex-start`,
                         background: `none`,
                         border: `none`,
                         color: colors.gray.text,
                         cursor: `pointer`,
                         display: `flex`,
                         fontFamily: options.headerFontFamily.join(`,`),
-                        ...scale(-1 / 6),
                         justifyContent: `space-between`,
-                        width: `100%`,
+                        outline: `none`,
                         padding: 0,
                         paddingRight: rhythm(1),
                         paddingBottom: rhythm(options.blockMarginBottom / 8),
                         paddingTop: rhythm(options.blockMarginBottom / 8),
+                        width: `100%`,
+                        textAlign: `left`,
                         ":hover": {
                           color: colors.gatsby,
                         },
-                        "&.selected": {
-                          color: colors.gatsby,
-                          "& .rule": { visibility: `visible` },
-                        },
                       }}
                     >
-                      <div>{c}</div>
                       <div
-                        className="rule"
                         css={{
-                          visibility: `hidden`,
-                          backgroundColor: colors.gatsby,
-                          width: `100%`,
-                          height: `1px`,
-                          margin: `10px`,
+                          color: filters.has(c)
+                            ? colors.gatsby
+                            : colors.ui.bright,
+                          ...scale(0),
+                          marginRight: 8,
                         }}
-                      />
+                      >
+                        {filters.has(c) ? <MdCheckbox /> : <MdCheckboxBlank />}
+                      </div>
+                      <div
+                        css={{
+                          color: filters.has(c) ? colors.gatsby : false,
+                          marginRight: `auto`,
+                        }}
+                      >
+                        {c}
+                      </div>
                       <div css={{ color: colors.gray.calm }}>{count}</div>
                     </button>
                   </ul>
@@ -338,7 +385,7 @@ class FilteredShowcase extends Component {
             </Collapsible>
           </div>
         </div>
-        <div>
+        <div css={{ width: `100%` }}>
           <div
             css={{
               display: `flex`,
@@ -397,6 +444,7 @@ class FilteredShowcase extends Component {
                     paddingRight: rhythm(1 / 5),
                     paddingBottom: rhythm(1 / 8),
                     paddingLeft: rhythm(1),
+                    width: rhythm(5),
                     ":focus": {
                       outline: 0,
                       backgroundColor: colors.ui.light,
@@ -454,7 +502,7 @@ class FilteredShowcase extends Component {
               }}
             >
               Load More
-              <div css={{ marginLeft: `5px`, display: `inline` }}>↓</div>
+              <MdArrowDownward style={{ marginLeft: 4 }} />
             </button>
           )}
         </div>
@@ -533,11 +581,17 @@ class ShowcasePage extends Component {
                   cursor: `pointer`,
                   fontFamily: options.headerFontFamily.join(`,`),
                   fontWeight: `normal`,
+                  "&:hover": {
+                    background: `transparent`,
+                    color: colors.gatsby,
+                  },
                 },
               }}
               onClick={() => this.setState({ filters: new Set([`Featured`]) })}
             >
-              View all&nbsp;<span css={{ marginLeft: `5px` }}>→</span>
+              View all&nbsp;<MdArrowForward
+                style={{ marginLeft: 4, verticalAlign: `sub` }}
+              />
             </a>
             <div
               css={{
@@ -580,7 +634,9 @@ class ShowcasePage extends Component {
                 >
                   your{` `}
                 </span>Site
-                <div css={{ marginLeft: `5px`, display: `inline` }}>→</div>
+                <MdArrowForward
+                  style={{ marginLeft: 4, verticalAlign: `sub` }}
+                />
               </a>
             </div>
           </div>
