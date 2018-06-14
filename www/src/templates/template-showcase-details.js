@@ -2,7 +2,8 @@ import React from "react"
 import Helmet from "react-helmet"
 import url from "url"
 
-import { colors } from "../utils/presets"
+import presets, { colors } from "../utils/presets"
+import { options, scale } from "../utils/typography"
 import { navigateTo, Link } from "gatsby"
 import Layout from "../components/layout"
 
@@ -22,7 +23,9 @@ const cleanUrl = mainUrl => {
 
 class ShowcaseTemplate extends React.Component {
   findCurrentIndex() {
-    const { data: { allSitesYaml } } = this.props
+    const {
+      data: { allSitesYaml },
+    } = this.props
     for (let i = 0; i < allSitesYaml.edges.length; i++) {
       const site = allSitesYaml.edges[i].node
       if (site.fields.slug === this.props.location.pathname) {
@@ -34,7 +37,9 @@ class ShowcaseTemplate extends React.Component {
   }
 
   getNext() {
-    const { data: { allSitesYaml } } = this.props
+    const {
+      data: { allSitesYaml },
+    } = this.props
 
     const currentIndex = this.findCurrentIndex()
     return allSitesYaml.edges[(currentIndex + 1) % allSitesYaml.edges.length]
@@ -55,7 +60,9 @@ class ShowcaseTemplate extends React.Component {
   }
 
   getPrevious() {
-    const { data: { allSitesYaml } } = this.props
+    const {
+      data: { allSitesYaml },
+    } = this.props
 
     const currentIndex = this.findCurrentIndex()
     let index = currentIndex - 1
@@ -110,7 +117,7 @@ class ShowcaseTemplate extends React.Component {
             >
               <Img
                 css={{
-                  boxShadow: `0px 0px 38px -8px ${colors.gatsby}`,
+                  ...styles.prevNextImage,
                 }}
                 resolutions={
                   nextSite.childScreenshot.screenshotFile.childImageSharp
@@ -119,18 +126,12 @@ class ShowcaseTemplate extends React.Component {
                 alt=""
               />
             </div>
-            <div
-              css={{
-                position: `absolute`,
-                top: `280px`,
-                width: `300px`,
-                color: colors.gatsby,
-                transform: `translateX(-75px) rotate(90deg)`,
-              }}
-            >
+            <div css={{ ...styles.prevNextLink }}>
               <MdArrowUpward />
               <div>Next Site in Showcase</div>
-              <div css={{ fontWeight: `bold` }}>{nextSite.title}</div>
+              <div css={{ ...styles.prevNextLinkSiteTitle }}>
+                {nextSite.title}
+              </div>
             </div>
           </Link>
         }
@@ -154,7 +155,7 @@ class ShowcaseTemplate extends React.Component {
             >
               <Img
                 css={{
-                  boxShadow: `0px 0px 90px -24px ${colors.gatsby}`,
+                  ...styles.prevNextImage,
                 }}
                 resolutions={
                   previousSite.childScreenshot.screenshotFile.childImageSharp
@@ -165,51 +166,74 @@ class ShowcaseTemplate extends React.Component {
             </div>
             <div
               css={{
-                position: `absolute`,
-                top: `280px`,
-                width: `300px`,
-                color: colors.gatsby,
+                ...styles.prevNextLink,
                 transform: `translateX(-75px) rotate(-90deg)`,
                 textAlign: `right`,
               }}
             >
               <MdArrowUpward />
               <div>Previous Site in Showcase</div>
-              <div css={{ fontWeight: `bold` }}>{previousSite.title}</div>
+              <div css={{ ...styles.prevNextLinkSiteTitle }}>
+                {previousSite.title}
+              </div>
             </div>
           </Link>
         }
       >
         <div
           css={{
+            alignItems: `center`,
             display: `flex`,
             flexDirection: `column`,
-            alignItems: `center`,
           }}
         >
-          <div>
+          <div
+            css={{
+              width: `100%`,
+            }}
+          >
             <Helmet>
               <title>{data.sitesYaml.title}</title>
             </Helmet>
             <div
               css={{
-                padding: `20px`,
-                paddingTop: `1px`,
                 borderBottom: `1px solid #F5F3F7`,
-                paddingBottom: 15,
+                fontFamily: options.headerFontFamily.join(`,`),
+                padding: 40,
+                paddingBottom: 20,
               }}
             >
-              <h1>{data.sitesYaml.title}</h1>
-              <a href={data.sitesYaml.main_url}>
+              <h1 css={{ margin: 0 }}>{data.sitesYaml.title}</h1>
+              <a
+                href={data.sitesYaml.main_url}
+                css={{
+                  ...styles.link,
+                  [presets.Desktop]: {
+                    ...scale(-1 / 6),
+                  },
+                }}
+              >
                 {cleanUrl(data.sitesYaml.main_url)}
               </a>
 
               {data.sitesYaml.built_by && (
-                <span>
+                <span
+                  css={{
+                    color: colors.gray.calm,
+                    [presets.Desktop]: {
+                      ...scale(-1 / 6),
+                    },
+                  }}
+                >
                   {` `}
-                  / Built by{` `}
+                  <span css={{ paddingRight: 8, paddingLeft: 8 }}>/</span>
+                  {` `}
+                  Built by{` `}
                   {data.sitesYaml.built_by_url ? (
-                    <a href={data.sitesYaml.built_by_url}>
+                    <a
+                      href={data.sitesYaml.built_by_url}
+                      css={{ ...styles.link }}
+                    >
                       {data.sitesYaml.built_by}
                     </a>
                   ) : (
@@ -218,13 +242,21 @@ class ShowcaseTemplate extends React.Component {
                 </span>
               )}
             </div>
-            <div css={{ display: `flex`, borderBottom: `1px solid #F5F3F7` }}>
+            <div
+              css={{
+                display: `flex`,
+                borderBottom: `1px solid #F5F3F7`,
+                fontFamily: options.headerFontFamily.join(`,`),
+              }}
+            >
               {data.sitesYaml.featured && (
                 <div
                   css={{
-                    padding: `20px`,
-                    display: `flex`,
                     borderRight: `1px solid #F5F3F7`,
+                    color: colors.gatsby,
+                    display: `flex`,
+                    fontWeight: `bold`,
+                    padding: 20,
                   }}
                 >
                   <img
@@ -238,7 +270,7 @@ class ShowcaseTemplate extends React.Component {
               {data.sitesYaml.source_url && (
                 <div
                   css={{
-                    padding: `20px`,
+                    padding: 20,
                     display: `flex`,
                     borderRight: `1px solid #F5F3F7`,
                   }}
@@ -254,7 +286,7 @@ class ShowcaseTemplate extends React.Component {
               {false && ( // TODO: NOT IMPLEMENTED YET!!!
                 <div
                   css={{
-                    padding: `20px`,
+                    padding: 20,
                     display: `flex`,
                     borderRight: `1px solid #F5F3F7`,
                   }}
@@ -269,11 +301,6 @@ class ShowcaseTemplate extends React.Component {
               )}
             </div>
             <Img
-              // resolutions={
-              //   data.sitesYaml.childScreenshot.screenshotFile.childImageSharp
-              //     .resolutions
-              // }
-
               sizes={
                 data.sitesYaml.childScreenshot.screenshotFile.childImageSharp
                   .sizes
@@ -282,14 +309,13 @@ class ShowcaseTemplate extends React.Component {
             />
             <p
               css={{
-                // width: `500px`, // disabled, not responsive
-                padding: `20px`,
+                padding: 20,
               }}
             >
               {data.sitesYaml.description}
             </p>
-            <div css={{ display: `flex`, padding: `20px` }}>
-              <div css={{ paddingRight: `20px` }}>Categories</div>
+            <div css={{ display: `flex`, padding: 20 }}>
+              <div css={{ paddingRight: 20 }}>Categories</div>
               <div>{categories.join(`, `)}</div>
             </div>
           </div>
@@ -431,3 +457,27 @@ export const pageQuery = graphql`
     }
   }
 `
+
+const styles = {
+  link: {
+    color: colors.gatsby,
+    fontWeight: `bold`,
+    textDecoration: `none`,
+  },
+  prevNextLink: {
+    color: colors.lilac,
+    fontFamily: options.headerFontFamily.join(`,`),
+    position: `absolute`,
+    top: `280px`,
+    width: `300px`,
+    transform: `translateX(-75px) rotate(90deg)`,
+  },
+  prevNextLinkSiteTitle: {
+    color: colors.gatsby,
+    fontWeight: `bold`,
+  },
+  prevNextImage: {
+    borderRadius: presets.radius,
+    boxShadow: `0px 0px 38px -8px ${colors.gatsby}`,
+  },
+}
