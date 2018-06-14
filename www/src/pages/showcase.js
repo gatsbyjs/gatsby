@@ -739,75 +739,82 @@ class ShowcasePage extends Component {
                   </div>
                 </Link>
               ))}
-              <a
-                href="#showcase"
+              <div
                 css={{
-                  ...styles.featuredSitesCard,
-                  textAlign: `center`,
-                  border: `1px solid ${hex2rgba(colors.lilac, 0.2)}`,
-                  borderRadius: presets.radius,
-                  "&&": {
-                    boxShadow: `none`,
-                    transition: `all ${presets.animation.speedDefault} ${
-                      presets.animation.curveDefault
-                    }`,
-                    "&:hover": {
-                      backgroundColor: hex2rgba(colors.ui.light, 0.25),
-                      transform: `translateY(-3px)`,
-                      boxShadow: `0 8px 20px ${hex2rgba(colors.lilac, 0.5)}`,
-                    },
-                  },
+                  display: `flex`,
                 }}
-                onClick={this.onClickHandler(this.showcase)}
               >
-                <div
+                <a
+                  href="#showcase"
                   css={{
-                    margin: rhythm(1),
-                    background: colors.ui.whisper,
-                    display: `flex`,
-                    alignItems: `center`,
-                    position: `relative`,
-                    flexBasis: `100%`,
+                    ...styles.featuredSitesCard,
+                    marginRight: `${rhythm(3 / 4)} !important`,
+                    border: `1px solid ${hex2rgba(colors.lilac, 0.2)}`,
+                    borderRadius: presets.radius,
+                    textAlign: `center`,
+                    "&&": {
+                      boxShadow: `none`,
+                      transition: `all ${presets.animation.speedDefault} ${
+                        presets.animation.curveDefault
+                      }`,
+                      "&:hover": {
+                        backgroundColor: hex2rgba(colors.ui.light, 0.25),
+                        transform: `translateY(-3px)`,
+                        boxShadow: `0 8px 20px ${hex2rgba(colors.lilac, 0.5)}`,
+                      },
+                    },
                   }}
+                  onClick={this.onClickHandler(this.showcase)}
                 >
-                  <img
-                    src={ShowcaseIcon}
+                  <div
                     css={{
-                      position: `absolute`,
-                      height: `100%`,
-                      width: `auto`,
-                      display: `block`,
-                      margin: `0`,
-                      opacity: 0.04,
-                    }}
-                    alt=""
-                  />
-                  <span
-                    css={{
-                      margin: `0 auto`,
-                      color: colors.gatsby,
+                      margin: rhythm(1),
+                      background: colors.ui.whisper,
+                      display: `flex`,
+                      alignItems: `center`,
+                      position: `relative`,
+                      flexBasis: `100%`,
                     }}
                   >
                     <img
                       src={ShowcaseIcon}
                       css={{
-                        height: 44,
+                        position: `absolute`,
+                        height: `100%`,
                         width: `auto`,
                         display: `block`,
-                        margin: `0 auto ${rhythm(options.blockMarginBottom)}`,
-                        [presets.Tablet]: {
-                          height: 64,
-                        },
-                        [presets.Hd]: {
-                          height: 72,
-                        },
+                        margin: `0`,
+                        opacity: 0.04,
                       }}
                       alt=""
                     />
-                    View all Featured Sites
-                  </span>
-                </div>
-              </a>
+                    <span
+                      css={{
+                        margin: `0 auto`,
+                        color: colors.gatsby,
+                      }}
+                    >
+                      <img
+                        src={ShowcaseIcon}
+                        css={{
+                          height: 44,
+                          width: `auto`,
+                          display: `block`,
+                          margin: `0 auto ${rhythm(options.blockMarginBottom)}`,
+                          [presets.Tablet]: {
+                            height: 64,
+                          },
+                          [presets.Hd]: {
+                            height: 72,
+                          },
+                        }}
+                        alt=""
+                      />
+                      View all Featured Sites
+                    </span>
+                  </div>
+                </a>
+              </div>
             </div>
             <div
               css={{
@@ -815,7 +822,7 @@ class ShowcasePage extends Component {
                 top: `0`,
                 bottom: rhythm(options.blockMarginBottom),
                 right: `-${rhythm(3 / 4)}`,
-                width: `60px`,
+                width: 60,
                 pointerEvents: `none`,
                 background: `linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(255,255,255,1) 100%)`,
               }}
