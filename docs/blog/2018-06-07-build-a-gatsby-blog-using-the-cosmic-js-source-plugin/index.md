@@ -2,6 +2,7 @@
 title: Build a Gatsby Blog using the Cosmic JS source plugin
 date: "2018-06-07"
 author: "Tony Spiro"
+canonicalLink: https://cosmicjs.com/articles/build-a-gatsby-blog-using-the-cosmic-js-source-plugin-jhzwvr45
 ---
 
 ![Cosmic JS Gatsby](./gatsby-cosmic.jpg)
