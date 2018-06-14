@@ -1,6 +1,7 @@
 import React from "react"
 import Modal from "react-modal"
 import Helmet from "react-helmet"
+import MdClose from "react-icons/lib/md/close"
 
 import { navigateTo, PageRenderer } from "gatsby"
 
@@ -25,6 +26,15 @@ import "typeface-space-mono"
 let windowWidth
 
 class DefaultLayout extends React.Component {
+  constructor() {
+    super()
+    this.handleCloseModal = this.handleCloseModal.bind(this)
+  }
+
+  handleCloseModal() {
+    navigateTo(this.props.modalBackgroundPath)
+  }
+
   componentDidMount() {
     Modal.setAppElement(`#___gatsby`)
 
@@ -102,6 +112,27 @@ class DefaultLayout extends React.Component {
                 boxShadow: `0 0 90px -24px ${colors.gatsby}`,
               }}
             >
+              <button
+                onClick={this.handleCloseModal}
+                css={{
+                  background: colors.ui.bright,
+                  border: 0,
+                  borderRadius: `0 ${presets.radius} 0 ${presets.radius}`,
+                  color: colors.gatsby,
+                  cursor: `pointer`,
+                  position: `absolute`,
+                  left: `auto`,
+                  right: 0,
+                  height: 40,
+                  width: 40,
+                  "&:hover": {
+                    background: colors.gatsby,
+                    color: `#fff`,
+                  },
+                }}
+              >
+                <MdClose />
+              </button>
               {this.props.children}
               {this.props.modalPreviousLink}
               {this.props.modalNextLink}
