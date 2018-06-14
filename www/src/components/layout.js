@@ -107,9 +107,10 @@ class DefaultLayout extends React.Component {
           >
             <div
               css={{
-                position: `relative`,
                 backgroundColor: `#ffffff`,
+                borderRadius: presets.radius,
                 boxShadow: `0 0 90px -24px ${colors.gatsby}`,
+                position: `relative`,
               }}
             >
               <button
@@ -117,7 +118,8 @@ class DefaultLayout extends React.Component {
                 css={{
                   background: colors.ui.bright,
                   border: 0,
-                  borderRadius: `0 ${presets.radius} 0 ${presets.radius}`,
+                  borderBottomLeftRadius: presets.radius,
+                  borderTopRightRadius: presets.radius,
                   color: colors.gatsby,
                   cursor: `pointer`,
                   position: `absolute`,
