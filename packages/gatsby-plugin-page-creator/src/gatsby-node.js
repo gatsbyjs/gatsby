@@ -3,6 +3,7 @@ const Promise = require(`bluebird`)
 const _ = require(`lodash`)
 const chokidar = require(`chokidar`)
 const systemPath = require(`path`)
+const fs = require(`fs`)
 
 const glob = Promise.promisify(globCB)
 
@@ -15,14 +16,38 @@ const validatePath = require(`./validate-path`)
 // underscored. Then create url w/ our path algorithm *unless* user
 // takes control of that page component in gatsby-node.
 exports.createPagesStatefully = async (
-  { store, boundActionCreators },
-  options,
+  { store, boundActionCreators, reporter },
+  { path: pagesPath, pathCheck = true },
   doneCb
 ) => {
   const { createPage, deletePage } = boundActionCreators
   const program = store.getState().program
   const exts = program.extensions.map(e => `${e.slice(1)}`).join(`,`)
-  const pagesDirectory = systemPath.posix.join(program.directory, `/src/pages`)
+
+  if (!pagesPath) {
+    reporter.panic(
+      `
+      "path" is a required option for gatsby-plugin-page-creator
+
+      See docs here - https://www.gatsbyjs.org/plugins/gatsby-plugin-page-creator/
+      `
+    )
+  }
+
+  // Validate that the path exists.
+  if (pathCheck && !fs.existsSync(pagesPath)) {
+    reporter.panic(
+      `
+      The path passed to gatsby-plugin-page-creator does not exist on your file system:
+
+      ${pagesPath}
+
+      Please pick a path to an existing directory.
+      `
+    )
+  }
+
+  const pagesDirectory = systemPath.posix.join(pagesPath)
   const pagesGlob = `${pagesDirectory}/**/*.{${exts}}`
 
   // Get initial list of files.

@@ -169,7 +169,7 @@ emitter.on(`CREATE_PAGE`, () => {
   // we can ignore them until CREATE_PAGE_END is called.
   //
   // After bootstrap, we need to listen for this as stateful page
-  // creators e.g. the internal plugin "component-page-creator"
+  // creators e.g. the plugin "gatsby-plugin-page-creator"
   // calls createPage directly so CREATE_PAGE_END won't get fired.
   if (bootstrapFinished) {
     debouncedWritePages()

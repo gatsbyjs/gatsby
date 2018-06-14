@@ -4,6 +4,7 @@ const fs = require(`fs`)
 const path = require(`path`)
 const crypto = require(`crypto`)
 const glob = require(`glob`)
+const { store } = require(`../../redux`)
 
 function createFileContentHash(root, globPattern) {
   const hash = crypto.createHash(`md5`)
@@ -130,7 +131,6 @@ module.exports = async (config = {}) => {
   // Add internal plugins
   const internalPlugins = [
     `../../internal-plugins/dev-404-page`,
-    `../../internal-plugins/component-page-creator`,
     `../../internal-plugins/component-layout-creator`,
     `../../internal-plugins/internal-data-bridge`,
     `../../internal-plugins/prod-404`,
@@ -158,6 +158,15 @@ module.exports = async (config = {}) => {
       plugins: [],
     },
   })
+
+  const program = store.getState().program
+  plugins.push(processPlugin({
+    resolve: `gatsby-plugin-page-creator`,
+    options: {
+      path: slash(path.join(program.directory, `src/pages`)),
+      pathCheck: false,
+    },
+  }))
 
   return plugins
 }
