@@ -10,6 +10,4 @@ export interface GatsbyLinkProps extends NavLinkProps {
 
 export const navigateTo: (to: LocationDescriptor) => void;
 
-export const withPrefix: (path: string) => string;
-
 export default class GatsbyLink extends React.Component<GatsbyLinkProps, any> { }

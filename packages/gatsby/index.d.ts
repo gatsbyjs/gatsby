@@ -12,3 +12,7 @@ export interface StaticQueryProps {
 }
 
 export class StaticQuery extends React.Component<Partial<StaticQueryProps>> {}
+
+export function stripPrefix(str: string, prefix?: string): string
+
+export function withPrefix(path: string): string

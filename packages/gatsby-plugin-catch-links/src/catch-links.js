@@ -1,4 +1,4 @@
-import { withPrefix } from "gatsby-link"
+import { withPrefix } from "gatsby"
 
 module.exports = function(root, cb) {
   root.addEventListener(`click`, function(ev) {

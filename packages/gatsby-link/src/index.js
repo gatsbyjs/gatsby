@@ -1,17 +1,8 @@
-/*global __PATH_PREFIX__ */
 import PropTypes from "prop-types"
 import React from "react"
 import { Link, NavLink } from "react-router-dom"
 import { polyfill } from "react-lifecycles-compat"
 import { createLocation, createPath } from "history"
-
-export function withPrefix(path) {
-  return normalizePath(`${__PATH_PREFIX__}/${path}`)
-}
-
-function normalizePath(path) {
-  return path.replace(/\/+/g, `/`)
-}
 
 const NavLinkPropTypes = {
   activeClassName: PropTypes.string,

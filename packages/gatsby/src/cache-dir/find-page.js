@@ -1,6 +1,6 @@
 // TODO add tests especially for handling prefixed links.
 import { matchPath } from "react-router-dom"
-import stripPrefix from "./strip-prefix"
+import { stripPrefix } from "./prefix"
 
 const pageCache = {}
 

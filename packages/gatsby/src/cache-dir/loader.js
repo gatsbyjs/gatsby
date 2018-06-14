@@ -1,6 +1,6 @@
 import pageFinderFactory from "./find-page"
 import emitter from "./emitter"
-import stripPrefix from "./strip-prefix"
+import { stripPrefix } from "./prefix"
 import { apiRunner } from "./api-runner-browser"
 
 const preferDefault = m => (m && m.default) || m

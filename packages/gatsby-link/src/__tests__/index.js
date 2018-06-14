@@ -21,13 +21,6 @@ const getNavigateTo = () => {
   return require(`../`).navigateTo
 }
 
-const getWithPrefix = (pathPrefix = ``) => {
-  Object.assign(global.window, {
-    __PATH_PREFIX__: pathPrefix,
-  })
-  return require(`../`).withPrefix
-}
-
 describe(`<Link />`, () => {
   it(`does not fail to initialize without --prefix-paths`, () => {
     expect(() => {
@@ -117,22 +110,5 @@ describe(`<Link />`, () => {
     getNavigateTo()(`/some-path`)
 
     expect(global.window.___navigateTo).toHaveBeenCalledWith(`/some-path`)
-  })
-})
-
-describe(`withPrefix`, () => {
-  describe(`works with default prefix`, () => {
-    it(`default prefix does not return "//"`, () => {
-      const to = `/`
-      const root = getWithPrefix()(to)
-      expect(root).toEqual(to)
-    })
-
-    it(`respects path prefix`, () => {
-      const to = `/abc/`
-      const pathPrefix = `/blog`
-      const root = getWithPrefix(pathPrefix)(to)
-      expect(root).toEqual(`${pathPrefix}${to}`)
-    })
   })
 })

@@ -1,9 +1,10 @@
 import React from "react"
 import PropTypes from "prop-types"
-import Link, { withPrefix, navigateTo } from "gatsby-link"
+import Link, { navigateTo } from "gatsby-link"
 import pages from "./pages.json"
 import loader from "./loader"
 import JSONStore from "./json-store"
+import { withPrefix } from "./prefix"
 
 const PageRenderer = ({ location }) => {
   const pageResources = loader.getResourcesForPathname(location.pathname)
@@ -47,8 +48,8 @@ StaticQuery.propTypes = {
 
 export {
   Link,
-  withPrefix,
   navigateTo,
+  withPrefix,
   StaticQueryContext,
   StaticQuery,
   PageRenderer,
