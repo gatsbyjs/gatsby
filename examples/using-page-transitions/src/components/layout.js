@@ -1,9 +1,9 @@
-import React from "react"
-import PropTypes from "prop-types"
-import { Link } from "gatsby"
-import Helmet from "react-helmet"
+import React from 'react'
+import PropTypes from 'prop-types'
+import { Link } from 'gatsby'
+import Helmet from 'react-helmet'
 
-import "./index.css"
+import './index.css'
 
 const Header = () => (
   <div
@@ -52,13 +52,13 @@ const TemplateWrapper = ({ children }) => (
         paddingTop: 0,
       }}
     >
-      {children()}
+      {children}
     </div>
   </div>
 )
 
 TemplateWrapper.propTypes = {
-  children: PropTypes.func,
+  children: PropTypes.element.isRequired,
 }
 
 export default TemplateWrapper
