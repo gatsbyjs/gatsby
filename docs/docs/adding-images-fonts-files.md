@@ -51,7 +51,7 @@ production so you don’t need to worry about long-term caching of assets.
 
 Please be advised that this is also a custom feature of Webpack.
 
-Two alternative ways of handling static assets is described in the next sections.
+Two alternative ways of handling static assets are described in the next sections.
 
 ## Query for `File` in GraphQL queries using gatsby-source-filesystem
 

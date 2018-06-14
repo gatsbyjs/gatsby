@@ -69,8 +69,8 @@ exports.createPages = true
  * page information as Gatsby's data changes but those implementing
  * `createPagesStatefully` will not.
  *
- * An example of a plugin that uses this extension point is the internal plugin
- * [component-page-creator](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby/src/internal-plugins/component-page-creator)
+ * An example of a plugin that uses this extension point is the plugin
+ * [gatsby-plugin-page-creator](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-page-creator)
  * which monitors the `src/pages` directory for the adding and removal of JS
  * pages. As its source of truth, files in the pages directory, is not known by
  * Gatsby, it needs to keep its own state about its world to know when to

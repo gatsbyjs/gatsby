@@ -1,14 +1,15 @@
 {
   "name": "gatsby-transformer-documentationjs",
   "description": "Gatsby transformer plugin which uses Documentation.js to extract JavaScript documentation",
-  "version": "1.4.10-12",
+  "version": "1.4.10-13",
   "author": "Kyle Mathews",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
     "@babel/runtime": "7.0.0-beta.47",
-    "documentation": "^7.1.0"
+    "documentation": "^7.1.0",
+    "prismjs": "^1.14.0"
   },
   "devDependencies": {
     "@babel/cli": "7.0.0-beta.47",

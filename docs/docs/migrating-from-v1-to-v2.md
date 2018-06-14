@@ -14,6 +14,7 @@ This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While t
 - [Manually install React](#manually-install-react)
 - [Manually install plugins’ peer dependencies](#manually-install-plugins-peer-dependencies)
 - [Update layout component](#update-layout-component)
+- [Import Link from Gatsby](#import-link-from-gatsby)
 - [Rename `boundActionCreators` to `actions`](#rename-boundactioncreators-to-actions)
 - [Rename `pathContext` to `pageContext`](#rename-pathcontext-to-pagecontext)
 - [Rename responsive image queries](#rename-responsive-image-queries)
@@ -26,6 +27,7 @@ This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While t
 - [Remove inlined CSS in `html.js`](#remove-inlined-css-in-htmljs)
 - [Only allow defined keys on node.internal object](#only-allow-defined-keys-on-the-node-internal-object)
 - [Import `graphql` types from `gatsby/graphql`](#import-graphql-types-from-gatsbygraphql)
+- [Move Babel Configuration`](#move-babel-configuration)
 
 You can start with a few of the most important steps - install Gatsby v2 dependencies and update your layout components.
 
@@ -122,6 +124,7 @@ Replacing a layout's query with `StaticQuery`:
 ```diff
 import React, { Fragment } from "react"
 import Helmet from "react-helmet"
++ import { StaticQuery } from "gatsby"
 
 - export default ({ children, data }) => (
 -   <>
@@ -192,6 +195,31 @@ export default props => (
     <div>Hello World</div>
   </Layout>
 )
+```
+
+## Import Link from Gatsby
+
+All components and utility functions from `gatsby-link` are now exported from `gatsby` package. Therefore you should import it directly from `gatsby`.
+
+```diff
+import React from "react"
+- import Link from "gatsby-link"
++ import { Link } from "gatsby"
+
+export default props => (
+  <Link to="/">Home</Link>
+)
+```
+
+Furthermore you can remove the package from the `package.json`.
+
+```diff
+"dependencies": {
+  "gatsby": "next",
+  "gatsby-image": "next",
+  "gatsby-plugin-sharp": "next",
+- "gatsby-link": "^1.6.39" 
+}
 ```
 
 ## Rename `boundActionCreators` to `actions`
@@ -394,3 +422,10 @@ Import graphql types from `gatsby/graphql` to prevent `Schema must contain uniqu
 -const { GraphQLString } = require(`graphql`)
 +const { GraphQLString } = require(`gatsby/graphql`)
 ```
+
+## Move Babel Configuration
+The latest version of Gatsby uses Babel 7, which introduced [a new behavior for configuration lookup / resolution](https://github.com/babel/babel/issues/6766).  In the case where a _.babelrc_ file might have been used at the root of the project, like for configuring Jest, moving that Babel configuration into _jest.config.json_ will avoid any conflicts.
+
+[This GitHub comment](https://github.com/facebook/jest/issues/1468#issuecomment-361260279) documents the steps needed to do that.
+
+More information on Gatsby and Babel configuration available [here](/docs/babel/#how-to-use-a-custom-babelrc-file).
