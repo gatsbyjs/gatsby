@@ -401,4 +401,4 @@ The latest version of Gatsby uses Babel 7, which introduced [a new behavior for 
 
 [This GitHub comment](https://github.com/facebook/jest/issues/1468#issuecomment-361260279) documents the steps needed to do that.
 
-More information on Gatsby and Babel configuration available [here](https://v2--gatsbyjs.netlify.com/docs/babel/#how-to-use-a-custom-babelrc-file). 
+More information on Gatsby and Babel configuration available [here](/docs/babel/#how-to-use-a-custom-babelrc-file).
