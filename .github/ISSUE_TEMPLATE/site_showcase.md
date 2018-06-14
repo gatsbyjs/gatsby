@@ -9,7 +9,7 @@ about: Want to submit a site to the site showcase? Follow these instructions.
   Before submitting a site to the site showcase, please make sure no on else has already submitted it by searching existing PRs (if there is a chance that someone else could have submitted it): https://github.com/gatsbyjs/gatsby/pulls
 -->
 
-## Steps
+# Steps
 
 There is only one major step :)
 
@@ -30,6 +30,9 @@ There is only one major step :)
   built_by: Name of creator(s) or team/agency/business that created the site
   built_by_url: 'https://twitter.com/creatorname' //this could also be the URL to the site of your portfolio, your agency or company's site, etc.//
 ```
+
+
+# Helpful information
 
 ## Categories
 
