@@ -401,10 +401,8 @@ class FilteredShowcase extends Component {
             css={{
               display: `flex`,
               alignItems: `center`,
-              flexDirection: `column`,
               height: presets.headerHeight,
               flexDirection: `row`,
-              alignItems: `center`,
               ...styles.sticky,
               background: `rgba(255,255,255,0.98)`,
               paddingLeft: `${rhythm(3 / 4)}`,
