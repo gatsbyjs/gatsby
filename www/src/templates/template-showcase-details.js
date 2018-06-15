@@ -209,6 +209,20 @@ class ShowcaseTemplate extends React.Component {
           >
             <Helmet>
               <title>{data.sitesYaml.title}</title>
+              <meta
+                name="og:image"
+                content={`https://gatsbyjs.org${
+                  data.sitesYaml.childScreenshot.screenshotFile.childImageSharp
+                    .resize.src
+                }`}
+              />
+              <meta
+                name="twitter:image"
+                content={`https://gatsbyjs.org${
+                  data.sitesYaml.childScreenshot.screenshotFile.childImageSharp
+                    .resize.src
+                }`}
+              />
             </Helmet>
             <div
               css={{
@@ -499,6 +513,14 @@ export const pageQuery = graphql`
             }
             sizes(maxWidth: 700) {
               ...GatsbyImageSharpSizes
+            }
+            resize(
+              width: 1500
+              height: 1500
+              cropFocus: CENTER
+              toFormat: JPG
+            ) {
+              src
             }
           }
         }
