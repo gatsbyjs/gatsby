@@ -5,10 +5,9 @@ const _ = require(`lodash`)
 const { bindActionCreators } = require(`redux`)
 const { stripIndent } = require(`common-tags`)
 const report = require(`gatsby-cli/lib/reporter`)
-const glob = require(`glob`)
 const path = require(`path`)
 const fs = require(`fs`)
-const { joinPath } = require(`../utils/path`)
+const kebabHash = require(`kebab-hash`)
 const { hasNodeChanged, getNode } = require(`./index`)
 const { trackInlineObjectsInRootNode } = require(`../schema/node-tracking`)
 const { store } = require(`./index`)
@@ -38,14 +37,6 @@ type Job = {
 type PageInput = {
   path: string,
   component: string,
-  layout?: string,
-  context?: Object,
-}
-type LayoutInput = {
-  id?: string,
-  machineId?: string,
-  component: string,
-  layout?: string,
   context?: Object,
 }
 
@@ -57,19 +48,7 @@ type Page = {
   internalComponentName: string,
   jsonName: string,
   componentChunkName: string,
-  layout: ?string,
   updatedAt: number,
-}
-
-type Layout = {
-  id: any,
-  context: Object,
-  component: string,
-  componentWrapperPath: string,
-  componentChunkName: string,
-  internalComponentName: string,
-  jsonName: string,
-  isLayout: true,
 }
 
 type Plugin = {
@@ -99,17 +78,13 @@ const hasWarnedForPageComponent = new Set()
  * @param {Object} page a page object
  * @param {string} page.path Any valid URL. Must start with a forward slash
  * @param {string} page.component The absolute path to the component for this page
- * @param {string} page.layout The name of the layout for this page. By default
- * `'index'` layout is used
  * @param {Object} page.context Context data for this page. Passed as props
- * to the component `this.props.pathContext` as well as to the graphql query
+ * to the component `this.props.pageContext` as well as to the graphql query
  * as graphql arguments.
  * @example
  * createPage({
  *   path: `/my-sweet-new-page/`,
  *   component: path.resolve(`./src/templates/my-sweet-new-page.js`),
- *   // If you have a layout component at src/layouts/blog-layout.js
- *   layout: `blog-layout`,
  *   // The context is passed as props to the component as well
  *   // as into the component's GraphQL query.
  *   context: {
@@ -229,26 +204,15 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     process.exit(1)
   }
 
-  let jsonName = `${_.kebabCase(page.path)}.json`
+  let jsonName = `${kebabHash(page.path)}`
   let internalComponentName = `Component${pascalCase(page.path)}`
 
-  if (jsonName === `.json`) {
-    jsonName = `index.json`
+  if (jsonName === ``) {
+    jsonName = `index`
     internalComponentName = `ComponentIndex`
-  }
-  let layout = page.layout || null
-  // If no layout is set we try fallback to `/src/layouts/index`.
-  if (
-    !layout &&
-    glob.sync(
-      joinPath(store.getState().program.directory, `src/layouts/index.*`)
-    ).length
-  ) {
-    layout = `index`
   }
 
   let internalPage: Page = {
-    layout,
     jsonName,
     internalComponentName,
     path: page.path,
@@ -329,89 +293,29 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
 }
 
 /**
- * Delete a layout
- * @param {string} layout a layout object with at least the name set
- * @example
- * deleteLayout(layout)
- */
-actions.deleteLayout = (layout: Layout, plugin?: Plugin) => {
-  return {
-    type: `DELETE_LAYOUT`,
-    payload: layout,
-  }
-}
-
-/**
- * Create a layout. Generally layouts are created automatically by placing a
- * React component in the `src/layouts/` directory. This action should be used
- * if loading layouts from an NPM package or from a non-standard location.
- * @param {Object} layout a layout object
- * @param {string} layout.component The absolute path to the component for this layout
- * @example
- * createLayout({
- *   component: path.resolve(`./src/templates/myNewLayout.js`),
- *   id: 'custom-id', // If no id is provided, the filename will be used as id.
- *   context: {
- *     title: `My New Layout`
- *   }
- * })
- */
-actions.createLayout = (
-  layout: LayoutInput,
-  plugin?: Plugin,
-  traceId?: string
-) => {
-  let id = layout.id || path.parse(layout.component).name
-  // Add a "machine" id as a universal ID to differentiate layout from
-  // page components.
-  const machineId = `layout---${id}`
-  let componentWrapperPath = joinPath(
-    store.getState().program.directory,
-    `.cache`,
-    `layouts`,
-    `${id}.js`
-  )
-
-  let internalLayout: Layout = {
-    id,
-    machineId,
-    componentWrapperPath,
-    isLayout: true,
-    jsonName: `layout-${_.kebabCase(id)}.json`,
-    internalComponentName: `Component-layout-${pascalCase(id)}`,
-    component: layout.component,
-    componentChunkName: generateComponentChunkName(layout.component),
-    // Ensure the page has a context object
-    context: layout.context || {},
-  }
-
-  const result = Joi.validate(internalLayout, joiSchemas.layoutSchema)
-
-  if (result.error) {
-    console.log(
-      chalk.blue.bgYellow(`The upserted layout didn't pass validation`)
-    )
-    console.log(chalk.bold.red(result.error))
-    console.log(internalLayout)
-    return null
-  }
-
-  return {
-    type: `CREATE_LAYOUT`,
-    plugin,
-    traceId,
-    payload: internalLayout,
-  }
-}
-
-/**
  * Delete a node
- * @param {string} nodeId a node id
- * @param {object} node the node object
+ * @param {object} $0
+ * @param {object} $0.node the node object
  * @example
- * deleteNode(node.id, node)
+ * deleteNode({node: node})
  */
-actions.deleteNode = (nodeId: string, node: any, plugin: Plugin) => {
+actions.deleteNode = (options: any, plugin: Plugin, ...args) => {
+  let node = _.get(options, `node`)
+
+  // Check if using old method signature. Warn about incorrect usage but get
+  // node from nodeID anyway.
+  if (typeof options === `string`) {
+    console.warn(
+      `Calling "deleteNode" with a nodeId is deprecated. Please pass an object containing a full node instead: deleteNode({ node })`
+    )
+
+    if (args[0] && args[0].name) { // `plugin` used to be the third argument
+      console.log(`"deleteNode" was called by ${args[0].name}`)
+    }
+
+    node = getNode(options)
+  }
+
   let deleteDescendantsActions
   // It's possible the file node was never created as sometimes tools will
   // write and then immediately delete temporary files to the file system.
@@ -420,7 +324,7 @@ actions.deleteNode = (nodeId: string, node: any, plugin: Plugin) => {
     const descendantNodes = findChildrenRecursively(node.children)
     if (descendantNodes.length > 0) {
       deleteDescendantsActions = descendantNodes.map(n =>
-        actions.deleteNode(n, getNode(n), plugin)
+        actions.deleteNode({ node: getNode(n) }, plugin)
       )
     }
   }
@@ -428,8 +332,7 @@ actions.deleteNode = (nodeId: string, node: any, plugin: Plugin) => {
   const deleteAction = {
     type: `DELETE_NODE`,
     plugin,
-    node,
-    payload: nodeId,
+    payload: node,
   }
 
   if (deleteDescendantsActions) {
@@ -446,6 +349,13 @@ actions.deleteNode = (nodeId: string, node: any, plugin: Plugin) => {
  * deleteNodes([`node1`, `node2`])
  */
 actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
+  console.log(
+    `The "deleteNodes" action is now deprecated and will be removed in Gatsby v3. Please use "deleteNode" instead.`
+  )
+  if (plugin && plugin.name) {
+    console.log(`"deleteNodes" was called by ${plugin.name}`)
+  }
+
   // Also delete any nodes transformed from these.
   const descendantNodes = _.flatten(
     nodes.map(n => findChildrenRecursively(getNode(n).children))
@@ -453,7 +363,7 @@ actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
   let deleteDescendantsActions
   if (descendantNodes.length > 0) {
     deleteDescendantsActions = descendantNodes.map(n =>
-      actions.deleteNode(n, getNode(n), plugin)
+      actions.deleteNode({ node: getNode(n) }, plugin)
     )
   }
 
@@ -678,11 +588,27 @@ actions.createNode = (node: any, plugin?: Plugin, traceId?: string) => {
  * nodes from a remote system that can return only nodes that have
  * updated. The source plugin then touches all the nodes that haven't
  * updated but still exist so Gatsby knows to keep them.
- * @param {string} nodeId The id of a node.
+ * @param {Object} $0
+ * @param {string} $0.nodeId The id of a node
  * @example
- * touchNode(`a-node-id`)
+ * touchNode({ nodeId: `a-node-id` })
  */
-actions.touchNode = (nodeId: string, plugin?: Plugin) => {
+actions.touchNode = (options: any, plugin?: Plugin) => {
+  let nodeId = _.get(options, `nodeId`)
+
+  // Check if using old method signature. Warn about incorrect usage
+  if (typeof options === `string`) {
+    console.warn(
+      `Calling "touchNode" with a nodeId is deprecated. Please pass an object containing a nodeId instead: touchNode({ nodeId: 'a-node-id' })`
+    )
+
+    if (plugin && plugin.name) {
+      console.log(`"touchNode" was called by ${plugin.name}`)
+    }
+
+    nodeId = options
+  }
+
   return {
     type: `TOUCH_NODE`,
     plugin,
@@ -853,7 +779,7 @@ actions.deleteComponentsDependencies = (paths: string[]) => {
 }
 
 /**
- * When the query watcher extracts a graphq query, it calls
+ * When the query watcher extracts a GraphQL query, it calls
  * this to store the query with its component.
  * @private
  */
@@ -870,6 +796,163 @@ actions.replaceComponentQuery = ({
       query,
       componentPath,
     },
+  }
+}
+
+/**
+ * When the query watcher extracts a "static" GraphQL query from <StaticQuery>
+ * components, it calls this to store the query with its component.
+ * @private
+ */
+actions.replaceStaticQuery = (args: any, plugin?: ?Plugin = null) => {
+  return {
+    type: `REPLACE_STATIC_QUERY`,
+    plugin,
+    payload: args,
+  }
+}
+
+/**
+ * Merge additional configuration into the current webpack config. A few
+ * configurations options will be ignored if set, in order to try prevent accidental breakage.
+ * Specifically, any change to `entry`, `output`, `target`, or `resolveLoaders` will be ignored.
+ *
+ * For full control over the webpack config, use `replaceWebpackConfig()`.
+ *
+ * @param {Object} config partial webpack config, to be merged into the current one
+ */
+actions.setWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
+  return {
+    type: `SET_WEBPACK_CONFIG`,
+    plugin,
+    payload: config,
+  }
+}
+
+/**
+ * Completely replace the webpack config for the current stage. This can be
+ * dangerous and break Gatsby if certain configuration options are changed.
+ *
+ * Generally only useful for cases where you need to handle config merging logic
+ * yourself, in which case consider using `webpack-merge`.
+ *
+ * @param {Object} config complete webpack config
+ */
+actions.replaceWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
+  return {
+    type: `REPLACE_WEBPACK_CONFIG`,
+    plugin,
+    payload: config,
+  }
+}
+
+/**
+ * Set top-level Babel options. Plugins and presets will be ignored. Use
+ * setBabelPlugin and setBabelPreset for this.
+ * @param {Object} config An options object in the shape of a normal babelrc javascript object
+ * @example
+ * setBabelOptions({
+ *   sourceMaps: `inline`,
+ * })
+ */
+actions.setBabelOptions = (options: Object, plugin?: ?Plugin = null) => {
+  // Validate
+  let name = `The plugin "${plugin.name}"`
+  if (plugin.name === `default-site-plugin`) {
+    name = `Your site's "gatsby-node.js"`
+  }
+  if (!_.isObject(options)) {
+    console.log(`${name} must pass an object to "setBabelOptions"`)
+    console.log(JSON.stringify(options, null, 4))
+    if (process.env.NODE_ENV !== `test`) {
+      process.exit(1)
+    }
+  }
+
+  if (!_.isObject(options.options)) {
+    console.log(`${name} must pass options to "setBabelOptions"`)
+    console.log(JSON.stringify(options, null, 4))
+    if (process.env.NODE_ENV !== `test`) {
+      process.exit(1)
+    }
+  }
+
+  return {
+    type: `SET_BABEL_OPTIONS`,
+    plugin,
+    payload: options,
+  }
+}
+
+/**
+ * Add new plugins or merge options into existing Babel plugins.
+ * @param {Object} config A config object describing the Babel plugin to be added.
+ * @param {string} config.name The name of the Babel plugin
+ * @param {Object} config.options Options to pass to the Babel plugin.
+ * @example
+ * setBabelPlugin({
+ *   name:  `babel-plugin-emotion`,
+ *   options: {
+ *     sourceMap: true,
+ *   },
+ * })
+ */
+actions.setBabelPlugin = (config: Object, plugin?: ?Plugin = null) => {
+  // Validate
+  let name = `The plugin "${plugin.name}"`
+  if (plugin.name === `default-site-plugin`) {
+    name = `Your site's "gatsby-node.js"`
+  }
+  if (!config.name) {
+    console.log(`${name} must set the name of the Babel plugin`)
+    console.log(JSON.stringify(config, null, 4))
+    if (process.env.NODE_ENV !== `test`) {
+      process.exit(1)
+    }
+  }
+  if (!config.options) {
+    config.options = {}
+  }
+  return {
+    type: `SET_BABEL_PLUGIN`,
+    plugin,
+    payload: config,
+  }
+}
+
+/**
+ * Add new presets or merge options into existing Babel presets.
+ * @param {Object} config A config object describing the Babel plugin to be added.
+ * @param {string} config.name The name of the Babel preset.
+ * @param {Object} config.options Options to pass to the Babel preset.
+ * @example
+ * setBabelPreset({
+ *   name: `@babel/preset-react`,
+ *   options: {
+ *     pragma: `Glamor.createElement`,
+ *   },
+ * })
+ */
+actions.setBabelPreset = (config: Object, plugin?: ?Plugin = null) => {
+  // Validate
+  let name = `The plugin "${plugin.name}"`
+  if (plugin.name === `default-site-plugin`) {
+    name = `Your site's "gatsby-node.js"`
+  }
+  if (!config.name) {
+    console.log(`${name} must set the name of the Babel preset`)
+    console.log(JSON.stringify(config, null, 4))
+    if (process.env.NODE_ENV !== `test`) {
+      process.exit(1)
+    }
+  }
+  if (!config.options) {
+    config.options = {}
+  }
+  return {
+    type: `SET_BABEL_PRESET`,
+    plugin,
+    payload: config,
   }
 }
 

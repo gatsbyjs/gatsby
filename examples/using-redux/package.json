@@ -5,12 +5,15 @@
   "version": "1.0.0",
   "author": "Scotty Eckenthal <scott.eckenthal@gmail.com>",
   "dependencies": {
-    "gatsby": "latest",
-    "gatsby-link": "latest",
+    "gatsby": "next",
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0",
     "react-redux": "5.0.5",
     "redux": "3.6.0"
   },
-  "keywords": ["gatsby"],
+  "keywords": [
+    "gatsby"
+  ],
   "license": "MIT",
   "main": "n/a",
   "scripts": {

@@ -1,9 +1,8 @@
 import React from "react"
-import Link from "gatsby-link"
-import TwitterIcon from "react-icons/lib/fa/twitter"
-import GithubIcon from "react-icons/lib/go/mark-github"
+import { Link } from "gatsby"
 import { OutboundLink } from "gatsby-plugin-google-analytics"
-
+import GithubIcon from "react-icons/lib/go/mark-github"
+import TwitterIcon from "react-icons/lib/fa/twitter"
 import SearchForm from "../components/search-form"
 import DiscordIcon from "../components/discord"
 import logo from "../logo.svg"
@@ -42,8 +41,8 @@ const NavItem = ({ linkTo, children }) => (
 )
 
 export default ({ pathname }) => {
-  const isHomepage = pathname == `/`
-  const isBlog = pathname == `/blog/`
+  const isHomepage = pathname === `/`
+  const isBlog = pathname === `/blog/`
   let styles = {}
   if (isHomepage) {
     styles.backgroundColor = `rgba(255,255,255,0)`

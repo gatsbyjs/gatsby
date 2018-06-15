@@ -1,29 +1,30 @@
 {
   "name": "gatsby-plugin-sharp",
   "description": "Wrapper of the Sharp image manipulation library for Gatsby plugins",
-  "version": "1.6.47",
+  "version": "2.0.0-alpha.21",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
+    "@babel/runtime": "7.0.0-beta.47",
     "async": "^2.1.2",
-    "babel-runtime": "^6.26.0",
     "bluebird": "^3.5.0",
     "imagemin": "^5.2.2",
-    "imagemin-pngquant": "5.0.1",
+    "imagemin-pngquant": "^5.1.0",
     "imagemin-webp": "^4.0.0",
     "lodash": "^4.17.4",
     "mini-svg-data-uri": "^1.0.0",
     "potrace": "^2.1.1",
     "probe-image-size": "^4.0.0",
     "progress": "^1.1.8",
-    "sharp": "^0.20.0",
+    "sharp": "^0.20.2",
     "svgo": "^0.7.2"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "cross-env": "^5.0.5"
+    "@babel/cli": "7.0.0-beta.47",
+    "@babel/core": "7.0.0-beta.47",
+    "cross-env": "^5.1.4"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp#readme",
   "keywords": [
@@ -35,12 +36,12 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "gatsby": "^1.0.0"
+    "gatsby": ">2.0.0"
   },
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp",
   "scripts": {
-    "build": "babel src --out-dir . --ignore __tests__",
+    "build": "babel src --out-dir . --ignore **/__tests__",
     "prepublish": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir . --ignore __tests__"
+    "watch": "babel -w src --out-dir . --ignore **/__tests__"
   }
 }

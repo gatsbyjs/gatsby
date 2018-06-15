@@ -8,7 +8,7 @@ import {
   MIN_LARGER_DISPLAY_MEDIA_QUERY,
 } from "typography-breakpoint-constants"
 
-const options = {
+const _options = {
   headerFontFamily: [
     `Futura PT`,
     `-apple-system`,
@@ -78,7 +78,7 @@ const options = {
       hr: {
         backgroundColor: colors.ui.light,
       },
-      "tt,code": {
+      "tt,code,kbd": {
         // background: `hsla(23, 60%, 97%, 1)`,
         background: colors.a[0],
         fontFamily: options.monospaceFontFamily.join(`,`),
@@ -215,12 +215,6 @@ const options = {
           boxShadow: `inset 0 1px 0 0 #faede5, inset 0 -1px 0 0 #faede5`,
         },
       },
-      [`${presets.Tablet} and (max-width:980px)`]: {
-        ".has-sidebar .gatsby-highlight": {
-          marginLeft: 0,
-          marginRight: 0,
-        },
-      },
       video: {
         width: `100%`,
         marginBottom: rhythm(options.blockMarginBottom),
@@ -297,6 +291,7 @@ const options = {
   },
 }
 
-const typography = new Typography(options)
+const typography = new Typography(_options)
 
+export const { scale, rhythm, options } = typography
 export default typography

@@ -5,18 +5,20 @@
   "version": "1.0.0",
   "author": "Marcus Ericsson <mericsson@gmail.com> (mericsson.com)",
   "dependencies": {
-    "gatsby": "latest",
-    "gatsby-image": "^1.0.5",
-    "gatsby-link": "latest",
-    "gatsby-plugin-google-analytics": "latest",
-    "gatsby-plugin-offline": "latest",
-    "gatsby-source-contentful": "latest",
-    "gatsby-transformer-remark": "latest",
+    "gatsby": "next",
+    "gatsby-image": "next",
+    "gatsby-plugin-google-analytics": "next",
+    "gatsby-plugin-offline": "next",
+    "gatsby-plugin-typography": "next",
+    "gatsby-source-contentful": "next",
+    "gatsby-transformer-remark": "next",
     "lodash": "^4.16.4",
-    "react-typography": "^0.15.0",
-    "slash": "^1.0.0",
-    "typography": "^0.15.8",
-    "typography-breakpoint-constants": "^0.14.0"
+    "react": "^16.3.1",
+    "react-dom": "^16.3.1",
+    "react-typography": "^0.16.3",
+    "slash": "^2.0.0",
+    "typography": "^0.16.7",
+    "typography-breakpoint-constants": "^0.15.0"
   },
   "keywords": [
     "gatsby"

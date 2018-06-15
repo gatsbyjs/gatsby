@@ -1,13 +1,13 @@
 {
   "name": "gatsby-transformer-pdfimages",
   "description": "Gatsby transformer plugin for extracting images from PDFs",
-  "version": "1.0.6",
+  "version": "1.0.6-10",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "babel-runtime": "^6.26.0"
+    "@babel/runtime": "7.0.0-beta.47"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-pdfimages#readme",
   "keywords": [

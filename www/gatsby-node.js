@@ -18,8 +18,8 @@ const slugToAnchor = slug =>
     .filter(item => item !== ``) // remove empty values
     .pop() // take last item
 
-exports.createPages = ({ graphql, boundActionCreators }) => {
-  const { createPage, createRedirect } = boundActionCreators
+exports.createPages = ({ graphql, actions }) => {
+  const { createPage, createRedirect } = actions
 
   // Random redirects
   createRedirect({
@@ -53,6 +53,21 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
     const remotePackageTemplate = path.resolve(
       `src/templates/template-docs-remote-packages.js`
     )
+
+    createRedirect({
+      fromPath: `/docs/bound-action-creators/`,
+      isPermanent: true,
+      redirectInBrowser: true,
+      toPath: `/docs/actions/`,
+    })
+
+    createRedirect({
+      fromPath: `/docs/bound-action-creators`,
+      isPermanent: true,
+      redirectInBrowser: true,
+      toPath: `/docs/actions`,
+    })
+
     // Query for markdown nodes to use in creating pages.
     resolve(
       graphql(
@@ -215,8 +230,8 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
 }
 
 // Create slugs for files.
-exports.onCreateNode = ({ node, boundActionCreators, getNode }) => {
-  const { createNodeField } = boundActionCreators
+exports.onCreateNode = ({ node, actions, getNode }) => {
+  const { createNodeField } = actions
   let slug
   if (node.internal.type === `File`) {
     const parsedFilePath = parseFilepath(node.relativePath)

@@ -1,5 +1,5 @@
 import React from "react"
-import Link from "gatsby-link"
+import { Link } from "gatsby"
 import s from "./css-modules.module.styl"
 
 class CssModules extends React.Component {
@@ -7,7 +7,7 @@ class CssModules extends React.Component {
     return (
       <div>
         <header className={s.header}>
-          <h1 className={s[`the-stylus-class`]}>Hi stylish friends</h1>
+          <h1 className={s.theStylusClass}>Hi stylish friends</h1>
           <p>
             All the styles for this page are written using{` `}
             <a href="https://github.com/stylus/stylus">Stylus</a>
@@ -20,16 +20,19 @@ class CssModules extends React.Component {
           </Link>
         </header>
         <section className={s.main}>
-          <div className={s[`stylus-nav-example`]}>
+          <div className={s.stylusNavExample}>
             <h2>Nav example</h2>
             <ul>
               <li>
+                { /* eslint-disable-next-line jsx-a11y/anchor-is-valid */ }
                 <a href="#">Store</a>
               </li>
               <li>
+                { /* eslint-disable-next-line jsx-a11y/anchor-is-valid */ }
                 <a href="#">Help</a>
               </li>
               <li>
+                { /* eslint-disable-next-line jsx-a11y/anchor-is-valid */ }
                 <a href="#">Logout</a>
               </li>
             </ul>

@@ -1,11 +1,12 @@
 import React from "react"
 import Helmet from "react-helmet"
-import Link from "gatsby-link"
+import { Link } from "gatsby"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import ArrowBackIcon from "react-icons/lib/md/arrow-back"
 import Img from "gatsby-image"
 import { OutboundLink } from "gatsby-plugin-google-analytics"
 
+import Layout from "../components/layout"
 import presets, { colors } from "../utils/presets"
 import typography, { rhythm, scale, options } from "../utils/typography"
 import Container from "../components/container"
@@ -15,8 +16,8 @@ import TagsSection from "../components/tags-section"
 class BlogPostTemplate extends React.Component {
   render() {
     const post = this.props.data.markdownRemark
-    const prev = this.props.pathContext.prev
-    const next = this.props.pathContext.next
+    const prev = this.props.pageContext.prev
+    const next = this.props.pageContext.next
     const prevNextLinkStyles = {
       "&&": {
         boxShadow: `none`,
@@ -59,11 +60,8 @@ class BlogPostTemplate extends React.Component {
     }
 
     return (
-      <div>
-        <Container
-          className="post"
-          css={{ paddingTop: rhythm(3), paddingBottom: `0 !important` }}
-        >
+      <Layout location={this.props.location}>
+        <Container className="post" css={{ paddingBottom: `0 !important` }}>
           {/* Add long list of social meta tags */}
           <Helmet>
             <title>{post.frontmatter.title}</title>
@@ -136,8 +134,8 @@ class BlogPostTemplate extends React.Component {
               }}
             >
               <Img
-                resolutions={
-                  post.frontmatter.author.avatar.childImageSharp.resolutions
+                fixed={
+                  post.frontmatter.author.avatar.childImageSharp.fixed
                 }
                 css={{
                   height: rhythm(2.3),
@@ -198,7 +196,7 @@ class BlogPostTemplate extends React.Component {
                   marginBottom: rhythm(1),
                 }}
               >
-                <Img sizes={post.frontmatter.image.childImageSharp.sizes} />
+                <Img fluid={post.frontmatter.image.childImageSharp.fluid} />
                 {post.frontmatter.imageAuthor &&
                   post.frontmatter.imageAuthorLink && (
                     <em>
@@ -288,7 +286,7 @@ class BlogPostTemplate extends React.Component {
             </div>
           </Container>
         </div>
-      </div>
+      </Layout>
     )
   }
 }
@@ -317,8 +315,8 @@ export const pageQuery = graphql`
             resize(width: 1500, height: 1500) {
               src
             }
-            sizes(maxWidth: 786) {
-              ...GatsbyImageSharpSizes
+            fluid(maxWidth: 786) {
+              ...GatsbyImageSharpFluid
             }
           }
         }
@@ -332,7 +330,7 @@ export const pageQuery = graphql`
           twitter
           avatar {
             childImageSharp {
-              resolutions(
+              fixed(
                 width: 63
                 height: 63
                 quality: 75
@@ -342,7 +340,7 @@ export const pageQuery = graphql`
                   color: "#e0d6eb"
                 }
               ) {
-                ...GatsbyImageSharpResolutions_tracedSVG
+                ...GatsbyImageSharpFixed_tracedSVG
               }
             }
           }

@@ -1,18 +1,9 @@
-exports.modifyBabelrc = ({ babelrc }, pluginOptions) => {
-  if (process.env.NODE_ENV !== `production`) {
-    return {
-      plugins: [
-        [
-          require.resolve(`babel-plugin-emotion`),
-          {
-            sourceMap: true,
-            ...(pluginOptions ? pluginOptions : {}),
-          },
-        ],
-      ].concat(babelrc.plugins),
-    }
-  }
-  return {
-    plugins: [require.resolve(`babel-plugin-emotion`)].concat(babelrc.plugins),
-  }
+exports.onCreateBabelConfig = ({ actions }, pluginOptions) => {
+  actions.setBabelPlugin({
+    name: `babel-plugin-emotion`,
+    options: {
+      sourceMap: process.env.NODE_ENV === `production` ? false : true,
+      ...(pluginOptions ? pluginOptions : {}),
+    },
+  })
 }

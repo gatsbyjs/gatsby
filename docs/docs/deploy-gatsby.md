@@ -10,6 +10,7 @@ title: "Deploying Gatsby"
 * [GitLab Pages](/docs/deploy-gatsby/#gitlab-pages)
 * [Heroku](/docs/deploy-gatsby/#heroku)
 * [Now](/docs/deploy-gatsby/#now)
+* [Aerobatic](/docs/deploy-gatsby/#aerobatic)
 
 ## Netlify
 
@@ -306,3 +307,42 @@ not caused by Gatsby. React uses HTML comments to help identify locations of
 components that do not render anything. If you are using a CDN that minifies
 your HTML, it will eliminate the HTML comments used by React to take control of
 the page on the client. Cloudflare is a CDN that minifies HTML by default.
+
+## Aerobatic
+
+[Aerobatic](https://www.aerobatic.com) is a specialized static site host. You can easily deploy your Gatsby site to Aerobatic with the following steps:
+
+1. Install the Aerobatic CLI:
+
+`npm install aerobatic-cli -g`
+
+2. Create a new Aerobatic site at the root of your Gatsby project:
+
+`aero create --name <your-site-name>`
+
+3. Deploy your Gatsby build output:
+
+`aero deploy --directory public`
+
+Your site will be ready on our CDN at https://<your-site-name>.aerobaticapp.com in a matter of seconds.
+
+There are some additional HTTP header optimizations you can configure in your `aerobatic.yml` file:
+
+```yaml
+deploy:
+  # Note with below setting it is not neccessary to pass --directory to aero deploy command
+  directory: public
+  # Turn off the Aerobatic asset fingerprinting since Gatsby already does this
+  optimizer:
+    fingerprintAssets: false
+
+plugins:
+  # Force aggressive 1yr max-age header for all .js and .js.map requests
+  - name: http-headers
+    path: ['/*.js', '/*.js.map']
+    options:
+      "Cache-Control": "public, max-age=31536000"
+  - name: webpage
+```
+
+Learn more about Gatsy and Aerobatic at https://www.aerobatic.com/docs/static-site-generators/#react

@@ -436,7 +436,7 @@ async function base64(args) {
   return await memoizedBase64(args)
 }
 
-async function responsiveSizes({ file, args = {}, reporter }) {
+async function fluid({ file, args = {}, reporter }) {
   const options = healOptions(args, {})
 
   // Account for images with a high pixel density. We assume that these types of
@@ -460,7 +460,8 @@ async function responsiveSizes({ file, args = {}, reporter }) {
   )
   const presentationHeight = Math.round(presentationWidth * (height / width))
 
-  // If the users didn't set a default sizes, we'll make one.
+
+  // If the users didn't set default sizes, we'll make one.
   if (!options.sizes) {
     options.sizes = `(max-width: ${presentationWidth}px) 100vw, ${presentationWidth}px`
   }
@@ -473,14 +474,14 @@ async function responsiveSizes({ file, args = {}, reporter }) {
   // device size / screen resolution while (hopefully) not requiring too much
   // image processing time (Sharp has optimizations thankfully for creating
   // multiple sizes of the same input file)
-  const sizes = []
-  sizes.push(options.maxWidth / 4)
-  sizes.push(options.maxWidth / 2)
-  sizes.push(options.maxWidth)
-  sizes.push(options.maxWidth * 1.5)
-  sizes.push(options.maxWidth * 2)
-  sizes.push(options.maxWidth * 3)
-  const filteredSizes = sizes.filter(size => size < width)
+  const fluidSizes = []
+  fluidSizes.push(options.maxWidth / 4)
+  fluidSizes.push(options.maxWidth / 2)
+  fluidSizes.push(options.maxWidth)
+  fluidSizes.push(options.maxWidth * 1.5)
+  fluidSizes.push(options.maxWidth * 2)
+  fluidSizes.push(options.maxWidth * 3)
+  const filteredSizes = fluidSizes.filter(size => size < width)
 
   // Add the original image to ensure the largest image possible
   // is available for small images. Also so we can link to
@@ -546,7 +547,7 @@ async function responsiveSizes({ file, args = {}, reporter }) {
   }
 }
 
-async function resolutions({ file, args = {}, reporter }) {
+async function fixed({ file, args = {}, reporter }) {
   const options = healOptions(args, {})
 
   // Create sizes for different resolutions — we do 1x, 1.5x, 2x, and 3x.
@@ -559,7 +560,7 @@ async function resolutions({ file, args = {}, reporter }) {
 
   const filteredSizes = sizes.filter(size => size <= dimensions.width)
 
-  // If there's no sizes after filtering (e.g. image is smaller than what's
+  // If there's no fluid images after filtering (e.g. image is smaller than what's
   // requested, add back the original so there's at least something)
   if (filteredSizes.length === 0) {
     filteredSizes.push(dimensions.width)
@@ -575,7 +576,7 @@ async function resolutions({ file, args = {}, reporter }) {
     )
   }
 
-  // Sort sizes for prettiness.
+  // Sort images for prettiness.
   const sortedSizes = _.sortBy(filteredSizes)
 
   const images = sortedSizes.map(size => {
@@ -583,7 +584,7 @@ async function resolutions({ file, args = {}, reporter }) {
       ...options,
       width: Math.round(size),
     }
-    // Queue sizes for processing.
+    // Queue images for processing.
     if (options.height) {
       arrrgs.height = Math.round(size * (options.height / options.width))
     }
@@ -739,8 +740,8 @@ function toArray(buf) {
 exports.queueImageResizing = queueImageResizing
 exports.base64 = base64
 exports.traceSVG = traceSVG
-exports.responsiveSizes = responsiveSizes
-exports.responsiveResolution = resolutions
-exports.sizes = responsiveSizes
-exports.resolutions = resolutions
+exports.sizes = fluid
+exports.resolutions = fixed
+exports.fluid = fluid
+exports.fixed = fixed
 exports.getImageSize = getImageSize

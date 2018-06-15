@@ -14,6 +14,7 @@ describe(`build-node-types`, () => {
 
   beforeEach(async () => {
     ;({ store } = require(`../../redux`))
+    store.dispatch({ type: `DELETE_CACHE` })
     ;[
       {
         id: `p1`,

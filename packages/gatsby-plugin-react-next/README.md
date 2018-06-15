@@ -7,12 +7,12 @@ site is drop-in upgrade to React 16.
 
 ## Install
 
-`npm install --save gatsby-plugin-react-next`
+`npm install --save gatsby-plugin-react-next react react-dom`
 
 ## How to use
 
 Add the plugin to your `gatsby-config.js`.
 
 ```javascript
-plugins: [`gatsby-plugin-react-next`];
+plugins: [`gatsby-plugin-react-next`]
 ```

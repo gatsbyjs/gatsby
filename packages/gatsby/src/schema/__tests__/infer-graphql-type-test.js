@@ -293,6 +293,8 @@ describe(`GraphQL type inferance`, () => {
     beforeAll(() => {
       ;({ store } = require(`../../redux`))
 
+      store.dispatch({ type: `DELETE_CACHE` })
+
       store.dispatch({
         type: `CREATE_NODE`,
         payload: {

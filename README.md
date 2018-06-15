@@ -8,9 +8,15 @@
 
 <img alt="Gatsby" src="https://www.gatsbyjs.org/monogram.svg" width="100">
 
-# Gatsby
+# Gatsby V2 Beta
 
-⚛️📄🚀 Blazing-fast static site generator for React
+⚛️📄🚀 Blazing-fast site generator for React
+
+**NOTE:** This branch is the beta version of Gatsby V2. You can find documentation at [v2--gatsbyjs.netlify.com/](https://v2--gatsbyjs.netlify.com/). (TODO: update this URL once the `next` subdomain is ready.)
+
+For `gatsby@1`, please see [the v1 branch](https://github.com/gatsbyjs/gatsby/tree/v1).
+
+**Are you using V1? Check out [our V1 => V2 migration guide](https://v2--gatsbyjs.netlify.com/docs/migrating-from-v1-to-v2/).** (TODO: update this URL once the `next` subdomain is ready.)
 
 ## Showcase
 
@@ -233,6 +239,8 @@ Websites built with Gatsby:
 ## Docs
 
 **[View the docs on gatsbyjs.org](https://www.gatsbyjs.org/docs/)**
+
+[Migrating from v1 to v2?](https://www.gatsbyjs.org/docs/migrating-from-v1-to-v2/)
 
 [Migrating from v0 to v1?](https://www.gatsbyjs.org/docs/migrating-from-v0-to-v1/)
 

@@ -9,11 +9,12 @@ const get = query =>
   )
 
 exports.sourceNodes = async ({
-  boundActionCreators,
+  actions,
   getNode,
+  createNodeId,
   hasNodeChanged,
 }) => {
-  const { createNode } = boundActionCreators
+  const { createNode } = actions
 
   // Do the initial fetch
   console.time(`fetch HN data`)
@@ -100,6 +101,7 @@ fragment commentsFragment on HackerNewsItem {
 
     const storyNode = {
       ...kidLessStory,
+      id: createNodeId(kidLessStory.id),
       children: kids.kids.map(k => k.id),
       parent: `__SOURCE__`,
       content: storyStr,
@@ -131,6 +133,7 @@ fragment commentsFragment on HackerNewsItem {
         }
         let commentNode = {
           ..._.omit(comment, `kids`),
+          id: createNodeId(comment.id),
           children: comment.kids.map(k => k.id),
           parent,
           internal: {
@@ -154,12 +157,12 @@ fragment commentsFragment on HackerNewsItem {
         createNode(commentNode)
 
         if (comment.kids.length > 0) {
-          createCommentNodes(comment.kids, comment.id, depth + 1)
+          createCommentNodes(comment.kids, commentNode.id, depth + 1)
         }
       })
     }
 
-    createCommentNodes(kids.kids, story.id)
+    createCommentNodes(kids.kids, storyNode.id)
   })
 
   return

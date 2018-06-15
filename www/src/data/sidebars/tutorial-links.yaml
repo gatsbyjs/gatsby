@@ -1,0 +1,80 @@
+- title: Tutorial
+  items:
+    - title: Introduction
+      link: /tutorial/
+    - title: 0. Programming basics
+      link: /tutorial/part-zero/
+    - title: 1. Introduction to Gatsby basics
+      link: /tutorial/part-one/
+      items:
+        - title: Check environment
+          link: /tutorial/part-one/#check-your-development-environment
+        - title: Install the "Hello World" starter
+          link: /tutorial/part-one/#install-the-hello-world-starter
+        - title: Linking between pages
+          link: /tutorial/part-one/#linking-between-pages
+        - title: Interactive page
+          link: /tutorial/part-one/#interactive-page
+        - title: Deploying Gatsby.js websites
+          link: /tutorial/part-one/#deploying-gatsbyjs-websites
+    - title: 2. Introduction to using CSS in Gatsby
+      link: /tutorial/part-two/
+      items:
+        - title: Building with components
+          link: /tutorial/part-two/#building-with-components
+        - title: Creating Global Styles
+          link: /tutorial/part-two/#creating-global-styles
+        - title: Typography.js
+          link: /tutorial/part-two/#typographyjs
+        - title: Gatsby Plugins
+          link: /tutorial/part-two/#gatsby-plugins
+        - title: Component CSS
+          link: /tutorial/part-two/#component-css
+        - title: CSS Modules
+          link: /tutorial/part-two/#css-modules
+    - title: 3. Creating nested layout components
+      link: /tutorial/part-three/
+      items:
+        - title: Our first layout component
+          link: /tutorial/part-three/#our-first-layout-component
+    - title: 4. Querying for data in a blog
+      link: /tutorial/part-four/
+      items:
+        - title: Recap of the first half of the tutorial
+          link: /tutorial/part-four/#recap-of-first-half-of-the-tutorial
+        - title: Data in Gatsby
+          link: /tutorial/part-four/#data-in-gatsby
+        - title: How Gatsby's data layer uses GraphQL to pull data into components
+          link: /tutorial/part-four/#how-gatsbys-data-layer-uses-graphql-to-pull-data-into-components
+        - title: Our first GraphQL query
+          link: /tutorial/part-four/#our-first-graphql-query
+    - title: 5. Source plugins and rendering queried data
+      link: /tutorial/part-five/
+      items:
+        - title: Introducing GraphiQL
+          link: /tutorial/part-five/#introducing-graphiql
+        - title: Source Plugins
+          link: /tutorial/part-five/#source-plugins
+        - title: Build a page with a GraphQL query
+          link: /tutorial/part-five/#build-a-page-with-a-graphql-query
+    - title: 6. Transformer plugins
+      link: /tutorial/part-six/
+      items:
+        - title: Transformer plugins
+          link: /tutorial/part-six/#transformer-plugins
+        - title: Create a list of our site's markdown files
+          link: /tutorial/part-six/#create-a-list-of-our-sites-markdown-files-in-srcpagesindexjs
+    - title: 7. Programmatically create pages from data
+      link: /tutorial/part-seven/
+      items:
+        - title: Creating slugs for pages
+          link: /tutorial/part-seven/#creating-slugs-for-pages
+        - title: Creating pages
+          link: /tutorial/part-seven/#creating-pages
+    - title: 8. Preparing a site to go live
+      link: /tutorial/part-eight/
+      items:
+        - title: Creating slugs for pages
+          link: /tutorial/part-eight/#creating-slugs-for-pages
+        - title: Creating pages
+          link: /tutorial/part-eight/#creating-pages

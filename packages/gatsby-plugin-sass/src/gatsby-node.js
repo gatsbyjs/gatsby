@@ -1,63 +1,60 @@
-const { cssModulesConfig } = require(`gatsby-1-config-css-modules`)
-const { extractTextPlugin } = require(`gatsby-1-config-extract-plugin`)
+import resolve from "./resolve"
 
-exports.modifyWebpackConfig = ({ config, stage }, options) => {
-  const sassFiles = /\.s[ac]ss$/
-  const sassModulesFiles = /\.module\.s[ac]ss$/
-  const sassLoader = `sass?${JSON.stringify(options)}`
+exports.onCreateWebpackConfig = (
+  { actions, stage, rules, plugins, loaders },
+  { postCssPlugins, ...sassOptions }
+) => {
+  const { setWebpackConfig } = actions
+  const PRODUCTION = stage !== `develop`
+  const isSSR = stage.includes(`html`)
+
+  const sassLoader = {
+    loader: resolve(`sass-loader`),
+    options: {
+      sourceMap: !PRODUCTION,
+      ...sassOptions,
+    },
+  }
+
+  const sassRule = {
+    test: /\.s(a|c)ss$/,
+    use: isSSR
+      ? [loaders.null()]
+      : [
+          loaders.miniCssExtract(),
+          loaders.css({ importLoaders: 1 }),
+          loaders.postcss({ plugins: postCssPlugins }),
+          sassLoader,
+        ],
+  }
+  const sassRuleModules = {
+    test: /\.module\.s(a|c)ss$/,
+    use: [
+      loaders.miniCssExtract(),
+      loaders.css({ modules: true, importLoaders: 1 }),
+      loaders.postcss({ plugins: postCssPlugins }),
+      sassLoader,
+    ],
+  }
+
+  let configRules = []
 
   switch (stage) {
-    case `develop`: {
-      config.loader(`sass`, {
-        test: sassFiles,
-        exclude: sassModulesFiles,
-        loaders: [`style`, `css`, sassLoader],
-      })
-
-      config.loader(`sassModules`, {
-        test: sassModulesFiles,
-        loaders: [`style`, cssModulesConfig(stage), sassLoader],
-      })
-      return config
-    }
-    case `build-css`: {
-      config.loader(`sass`, {
-        test: sassFiles,
-        exclude: sassModulesFiles,
-        loader: extractTextPlugin(stage).extract([`css?minimize`, sassLoader]),
-      })
-
-      config.loader(`sassModules`, {
-        test: sassModulesFiles,
-        loader: extractTextPlugin(stage).extract(`style`, [
-          cssModulesConfig(stage),
-          sassLoader,
-        ]),
-      })
-
-      return config
-    }
-    case `develop-html`:
+    case `develop`:
+    case `build-javascript`:
     case `build-html`:
-    case `build-javascript`: {
-      config.loader(`sass`, {
-        test: sassFiles,
-        exclude: sassModulesFiles,
-        loader: `null`,
-      })
-
-      config.loader(`sassModules`, {
-        test: sassModulesFiles,
-        loader: extractTextPlugin(stage).extract(`style`, [
-          cssModulesConfig(stage),
-          sassLoader,
-        ]),
-      })
-
-      return config
-    }
-    default: {
-      return config
-    }
+    case `develop-html`:
+      configRules = configRules.concat([
+        {
+          oneOf: [sassRuleModules, sassRule],
+        },
+      ])
+      break
   }
+
+  setWebpackConfig({
+    module: {
+      rules: configRules,
+    },
+  })
 }

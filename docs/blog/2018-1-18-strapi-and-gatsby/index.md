@@ -200,7 +200,7 @@ module.exports = {
       },
     },
   ],
-};
+}
 ```
 
 Then, restart the server to let Gatsby consider these updates.
@@ -212,8 +212,8 @@ First, we want to display the list of articles. To do so, add the following cont
 _Path: `src/pages/index.js`_
 
 ```jsx
-import React from "react";
-import Link from "gatsby-link";
+import React from "react"
+import { Link } from "gatsby"
 
 const IndexPage = ({ data }) => (
   <div>
@@ -232,9 +232,9 @@ const IndexPage = ({ data }) => (
     </ul>
     <Link to="/page-2/">Go to page 2</Link>
   </div>
-);
+)
 
-export default IndexPage;
+export default IndexPage
 
 export const pageQuery = graphql`
   query IndexQuery {
@@ -248,7 +248,7 @@ export const pageQuery = graphql`
       }
     }
   }
-`;
+`
 ```
 
 #### What are we doing here?
@@ -272,8 +272,8 @@ Let's create the template, containing a specific GraphQL request and defining th
 _Path: `src/templates/article.js`_
 
 ```jsx
-import React from "react";
-import Link from "gatsby-link";
+import React from "react"
+import { Link } from "gatsby"
 
 const ArticleTemplate = ({ data }) => (
   <div>
@@ -286,9 +286,9 @@ const ArticleTemplate = ({ data }) => (
     </p>
     <p>{data.strapiArticle.content}</p>
   </div>
-);
+)
 
-export default ArticleTemplate;
+export default ArticleTemplate
 
 export const query = graphql`
   query ArticleTemplate($id: String!) {
@@ -301,7 +301,7 @@ export const query = graphql`
       }
     }
   }
-`;
+`
 ```
 
 That looks fine, but at this point, Gatsby does not know when this template should be displayed. Each article needs a specific URL. So, we are going to inform Gatsby about the new URLs we need thanks to the [`createPage` function](https://www.gatsbyjs.org/docs/creating-and-modifying-pages).
@@ -311,7 +311,7 @@ First, we are going to code a new function called `makeRequest` to execute the G
 _Path: `gatsby-node.js`_
 
 ```jsx
-const path = require(`path`);
+const path = require(`path`)
 
 const makeRequest = (graphql, request) =>
   new Promise((resolve, reject) => {
@@ -319,18 +319,18 @@ const makeRequest = (graphql, request) =>
     resolve(
       graphql(request).then(result => {
         if (result.errors) {
-          reject(result.errors);
+          reject(result.errors)
         }
 
-        return result;
+        return result
       })
-    );
-  });
+    )
+  })
 
 // Implement the Gatsby API “createPages”. This is called once the
 // data layer is bootstrapped to let plugins create pages from data.
 exports.createPages = ({ boundActionCreators, graphql }) => {
-  const { createPage } = boundActionCreators;
+  const { createPage } = boundActionCreators
 
   const getArticles = makeRequest(
     graphql,
@@ -354,13 +354,13 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
         context: {
           id: node.id,
         },
-      });
-    });
-  });
+      })
+    })
+  })
 
   // Query for articles nodes to use in creating pages.
-  return getArticles;
-};
+  return getArticles
+}
 ```
 
 Restart the Gatsby server.
@@ -378,8 +378,8 @@ The processes for creating author views and article pages are very similar. Firs
 _Path: `src/templates/user.js`_
 
 ```jsx
-import React from "react";
-import Link from "gatsby-link";
+import React from "react"
+import { Link } from "gatsby"
 
 const UserTemplate = ({ data }) => (
   <div>
@@ -395,9 +395,9 @@ const UserTemplate = ({ data }) => (
       ))}
     </ul>
   </div>
-);
+)
 
-export default UserTemplate;
+export default UserTemplate
 
 export const query = graphql`
   query UserTemplate($id: String!) {
@@ -411,7 +411,7 @@ export const query = graphql`
       }
     }
   }
-`;
+`
 ```
 
 Second, we update the `gatsby-node.js` file to create the URLs:
@@ -419,7 +419,7 @@ Second, we update the `gatsby-node.js` file to create the URLs:
 _Path: `gatsby-node.js`_
 
 ```jsx
-const path = require(`path`);
+const path = require(`path`)
 
 const makeRequest = (graphql, request) =>
   new Promise((resolve, reject) => {
@@ -427,18 +427,18 @@ const makeRequest = (graphql, request) =>
     resolve(
       graphql(request).then(result => {
         if (result.errors) {
-          reject(result.errors);
+          reject(result.errors)
         }
 
-        return result;
+        return result
       })
-    );
-  });
+    )
+  })
 
 // Implement the Gatsby API “createPages”. This is called once the
 // data layer is bootstrapped to let plugins create pages from data.
 exports.createPages = ({ boundActionCreators, graphql }) => {
-  const { createPage } = boundActionCreators;
+  const { createPage } = boundActionCreators
 
   const getArticles = makeRequest(
     graphql,
@@ -462,9 +462,9 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
         context: {
           id: node.id,
         },
-      });
-    });
-  });
+      })
+    })
+  })
 
   const getAuthors = makeRequest(
     graphql,
@@ -488,13 +488,13 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
         context: {
           id: node.id,
         },
-      });
-    });
-  });
+      })
+    })
+  })
 
   // Queries for articles and authors nodes to use in creating pages.
-  return Promise.all([getArticles, getAuthors]);
-};
+  return Promise.all([getArticles, getAuthors])
+}
 ```
 
 Finally, restart the server and visit the author page from the article view's links.

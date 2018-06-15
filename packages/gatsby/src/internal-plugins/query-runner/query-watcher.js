@@ -10,6 +10,7 @@
 
 const _ = require(`lodash`)
 const chokidar = require(`chokidar`)
+const path = require(`path`)
 
 const { store } = require(`../../redux/`)
 const { boundActionCreators } = require(`../../redux/actions`)
@@ -20,8 +21,9 @@ const report = require(`gatsby-cli/lib/reporter`)
 
 exports.extractQueries = () => {
   const state = store.getState()
-  const pagesAndLayouts = [...state.pages, ...state.layouts]
-  const components = _.uniq(pagesAndLayouts.map(p => normalize(p.component)))
+  const pages = [...state.pages]
+  const components = _.uniq(pages.map(p => normalize(p.component)))
+  const staticQueryComponents = []
   const queryCompilerPromise = queryCompiler().then(queries => {
     let queryWillNotRun = false
 
@@ -30,6 +32,17 @@ exports.extractQueries = () => {
         boundActionCreators.replaceComponentQuery({
           query: query && query.text,
           componentPath: component,
+        })
+        // Add action / reducer + watch staticquery files
+      } else if (query.isStaticQuery) {
+        staticQueryComponents.push(query.path)
+        boundActionCreators.replaceStaticQuery({
+          name: query.name,
+          componentPath: query.path,
+          id: query.jsonName,
+          jsonName: query.jsonName,
+          query: query.text,
+          hash: query.hash,
         })
       } else {
         report.warn(
@@ -41,9 +54,9 @@ exports.extractQueries = () => {
 
     if (queryWillNotRun) {
       report.log(report.stripIndent`
-        Queries are only executed for Page or Layout components. Instead of a query,
+        Queries are only executed for Page components. Instead of a query,
         co-locate a GraphQL fragment and compose that fragment into the query (or other
-        fragment) of the top-level page or layout that renders this component. For more
+        fragment) of the top-level page that renders this component. For more
         info on fragments and composition see: http://graphql.org/learn/queries/#fragments
       `)
     }
@@ -54,10 +67,13 @@ exports.extractQueries = () => {
   // During development start watching files to recompile & run
   // queries on the fly.
   if (process.env.NODE_ENV !== `production`) {
-    watch()
+    watch(state.program.directory)
 
     // Ensure every component is being watched.
     components.forEach(component => {
+      watcher.add(component)
+    })
+    staticQueryComponents.forEach(component => {
       watcher.add(component)
     })
   }
@@ -65,28 +81,45 @@ exports.extractQueries = () => {
   return queryCompilerPromise
 }
 
-const runQueriesForComponent = componentPath => {
+const runQueriesForPageComponent = componentPath => {
   const pages = getPagesForComponent(componentPath)
-  // Remove page & layout data dependencies before re-running queries because
+  // Remove page data dependencies before re-running queries because
   // the changing of the query could have changed the data dependencies.
   // Re-running the queries will add back data dependencies.
   boundActionCreators.deleteComponentsDependencies(
     pages.map(p => p.path || p.id)
   )
   pages.forEach(page =>
-    queue.push({ ...page, _id: page.id, id: page.jsonName })
+    queue.push({
+      id: page.path,
+      jsonName: page.jsonName,
+      query: store.getState().components[componentPath].query,
+      isPage: true,
+      context: {
+        ...page,
+        ...page.context,
+      },
+    })
   )
+}
 
-  return new Promise(resolve => {
-    queue.on(`drain`, () => resolve())
+const runQueriesForStaticComponent = ({
+  query,
+  hash,
+  jsonName,
+  componentPath,
+}) => {
+  queue.push({
+    id: hash,
+    jsonName,
+    query,
+    context: { path: jsonName },
   })
 }
 
 const getPagesForComponent = componentPath => {
   const state = store.getState()
-  return [...state.pages, ...state.layouts].filter(
-    p => p.componentPath === componentPath
-  )
+  return [...state.pages].filter(p => p.componentPath === componentPath)
 }
 
 let watcher
@@ -115,30 +148,48 @@ const watch = rootDir => {
           query: ``,
           componentPath,
         })
-        runQueriesForComponent(componentPath)
+        runQueriesForPageComponent(componentPath)
       })
 
       // Update the store with the new queries and re-run queries that were
       // changed.
-      queries.forEach(({ text }, id) => {
-        // Queries can be parsed from non page/layout components
-        // e.g. components with fragments so ignore those.
-        //
-        // If the query has changed, set the new query in the
-        // store and run its queries.
-        if (components[id] && text !== components[id].query) {
-          boundActionCreators.replaceComponentQuery({
-            query: text,
-            componentPath: id,
-          })
-          runQueriesForComponent(id)
+      queries.forEach(
+        ({ text, path, name, hash, jsonName, isStaticQuery }, id) => {
+          const componentPath = id
+          if (isStaticQuery) {
+            boundActionCreators.replaceStaticQuery({
+              query: text,
+              hash,
+              id: jsonName,
+              jsonName,
+              componentPath: id,
+            })
+            runQueriesForStaticComponent({
+              query: text,
+              hash,
+              jsonName,
+              componentPath: id,
+            })
+          }
+          // Queries can be parsed from non page components
+          // e.g. components with fragments so ignore those.
+          //
+          // If the query has changed, set the new query in the
+          // store and run its queries.
+          if (components[id] && text !== components[id].query) {
+            boundActionCreators.replaceComponentQuery({
+              query: text,
+              componentPath: id,
+            })
+            runQueriesForPageComponent(componentPath)
+          }
         }
-      })
+      )
     })
   }, 100)
 
   watcher = chokidar
-    .watch(`${rootDir}/src/**/*.{js,jsx,ts,tsx}`)
+    .watch(path.join(rootDir, `/src/**/*.{js,jsx,ts,tsx}`))
     .on(`change`, path => {
       debounceCompile()
     })

@@ -3,10 +3,10 @@ const crypto = require(`crypto`)
 const _ = require(`lodash`)
 
 module.exports = async function onCreateNode(
-  { node, getNode, loadNodeContent, boundActionCreators },
+  { node, getNode, loadNodeContent, actions, createNodeId },
   pluginOptions
 ) {
-  const { createNode, createParentChildLink } = boundActionCreators
+  const { createNode, createParentChildLink } = actions
 
   // We only care about markdown content.
   if (
@@ -32,11 +32,11 @@ module.exports = async function onCreateNode(
   }
 
   const markdownNode = {
-    id: `${node.id} >>> MarkdownRemark`,
+    id: createNodeId(`${node.id} >>> MarkdownRemark`),
     children: [],
     parent: node.id,
     internal: {
-      content,
+      content: data.content,
       type: `MarkdownRemark`,
     },
   }
@@ -45,9 +45,6 @@ module.exports = async function onCreateNode(
     title: ``, // always include a title
     ...data.data,
     _PARENT: node.id,
-    // TODO Depreciate this at v2 as much larger chance of conflicting with a
-    // user supplied field.
-    parent: node.id,
   }
 
   markdownNode.excerpt = data.excerpt

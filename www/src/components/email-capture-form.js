@@ -3,7 +3,7 @@ import { rhythm, options } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
 import { css } from "glamor"
 import hex2rgba from "hex2rgba"
-import addToMailchimp from 'gatsby-plugin-mailchimp'
+import addToMailchimp from "gatsby-plugin-mailchimp"
 
 let stripeAnimation = css.keyframes({
   "0%": { backgroundPosition: `0 0` },
@@ -43,43 +43,44 @@ class EmailCaptureForm extends React.Component {
   // Post to MC server & handle its response
   _postEmailToMailchimp = (email, attributes) => {
     addToMailchimp(email, attributes)
-    .then(result => {
-      // Mailchimp always returns a 200 response
-      // So we check the result for MC errors & failures
-      if (result.result !== `success`) {
+      .then(result => {
+        // Mailchimp always returns a 200 response
+        // So we check the result for MC errors & failures
+        if (result.result !== `success`) {
+          this.setState({
+            status: `error`,
+            msg: result.msg,
+          })
+        } else {
+          // Email address succesfully subcribed to Mailchimp
+          this.setState({
+            status: `success`,
+            msg: result.msg,
+          })
+        }
+      })
+      .catch(err => {
+        // Network failures, timeouts, etc
         this.setState({
           status: `error`,
-          msg: result.msg,
+          msg: err,
         })
-      } else {
-        // Email address succesfully subcribed to Mailchimp
-        this.setState({
-          status: `success`,
-          msg: result.msg,
-        })
-      }
-    })
-    .catch(err => {
-      // Network failures, timeouts, etc
-      this.setState({
-        status: `error`,
-        msg: err,
       })
-    })
   }
 
   _handleFormSubmit = e => {
     e.preventDefault()
     e.stopPropagation()
 
-    this.setState({
+    this.setState(
+      {
         status: `sending`,
         msg: null,
-      },
+      }
       // setState callback (subscribe email to MC)
-      this._postEmailToMailchimp(this.state.email, {
-        pathname: document.location.pathname,
-      })
+      // this._postEmailToMailchimp(this.state.email, {
+      // pathname: document.location.pathname,
+      // })
     )
   }
 

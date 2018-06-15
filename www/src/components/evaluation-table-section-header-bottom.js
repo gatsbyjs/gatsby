@@ -18,10 +18,10 @@ const subHeaderTitleStyles = {
 
 const subHeaderTitles = [
   ``,
-  <img src={logo} key="0" css={subHeaderTitleStyles} />,
-  <img src={jekyll} key="1" css={subHeaderTitleStyles} />,
-  <img src={wordpress} key="2" css={subHeaderTitleStyles} />,
-  <img src={squarespace} key="3" css={subHeaderTitleStyles} />,
+  <img src={logo} key="0" css={subHeaderTitleStyles} alt={`Gatsby Logo`} />,
+  <img src={jekyll} key="1" css={subHeaderTitleStyles} alt={`Jekyll Logo`} />,
+  <img src={wordpress} key="2" css={subHeaderTitleStyles} alt={`WordPress Logo`} />,
+  <img src={squarespace} key="3" css={subHeaderTitleStyles} alt={`Squarespace Logo`} />,
 ]
 
 const renderSubHeader = props => (
