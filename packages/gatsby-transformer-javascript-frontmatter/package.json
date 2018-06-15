@@ -4,9 +4,9 @@
   "version": "1.0.6-11",
   "author": "Jacob Bolda <me@jacobbolda.com>",
   "dependencies": {
+    "@babel/parser": "7.0.0-beta.51",
     "@babel/runtime": "7.0.0-beta.51",
     "@babel/traverse": "7.0.0-beta.51",
-    "babylon": "7.0.0-beta.51",
     "bluebird": "^3.5.0"
   },
   "devDependencies": {

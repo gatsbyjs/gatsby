@@ -19,7 +19,7 @@ module.exports = {
 
 ## Parsing algorithm
 
-This plugin uses babylon and traverse (from the babel family of code) to
+This plugin uses @babel/parser and traverse (from the babel family of code) to
 statically read the frontmatter exports.
 
 In a .js file, export a frontmatter object to set your metadata variables, like so:
