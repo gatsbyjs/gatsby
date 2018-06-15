@@ -647,9 +647,8 @@ class ShowcasePage extends Component {
               >
                 Want to get featured?
               </div>
-              {/* TODO: maybe have a site submission issue template */}
               <a
-                href="https://github.com/gatsbyjs/gatsby/issues/new?template=feature_request.md"
+                href="https://next.gatsbyjs.org/docs/site-showcase-submissions/"
                 target="_blank"
                 rel="noopener noreferrer"
                 css={{
