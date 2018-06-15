@@ -1,5 +1,5 @@
 ---
-title: Site Showcase Submission
+title: Site Showcase Submissions
 ---
 Want to submit a site to the site showcase? Follow these instructions.
 
@@ -9,7 +9,7 @@ There are only two major steps :)
 
 1. If there is a chance that someone else could have already submitted the site, please make sure no one else has already submitted it by searching existing PRs: https://github.com/gatsbyjs/gatsby/pulls
 
-2. Edit [gatsby/www/src/data/sites.yml](gatsby/www/src/data/sites.yml) by adding your submission to the bottom of the list of sites in the following format:
+2. Edit [this `sites.yml` file](https://github.com/gatsbyjs/gatsby/blob/v2/www/src/data/sites.yml) (note: link will change once v2 beta is merged) by adding your submission to the bottom of the list of sites in the following format:
 
 ```shell
 - title: Title of the Site
@@ -95,4 +95,4 @@ categories:
 
 ## Change your mind / need to edit your submission?
 
-If you want to edit anything in your site submission later, simply edit the .yaml file by submitting another PR.
+If you want to edit anything in your site submission later, simply edit the .yml file by submitting another PR.
