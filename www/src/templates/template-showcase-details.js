@@ -472,40 +472,55 @@ class PermalinkPageFooter extends React.Component {
           },
         }}
       >
-        <div css={{ flex: 1 }}>
-          <div css={{ ...styles.prevNextPermalinkLabel }}>Previous</div>
+        <div css={{ ...styles.prevNextPermalinkContainer }}>
           <Link
             to={{
               pathname: previousSite.fields.slug,
               state: { isModal: false },
             }}
           >
-            <MdArrowBack style={{ marginRight: 4, verticalAlign: `sub` }} />
-            {previousSite.title}
+            <div css={{ ...styles.prevNextPermalinkMeta }}>
+              <div css={{ ...styles.prevNextPermalinkMetaInner }}>
+                <div css={{ ...styles.prevNextPermalinkLabel }}>Previous</div>
+                <div css={{ ...styles.prevNextPermalinkTitle }}>
+                  <MdArrowBack style={{ ...styles.prevNextPermalinkArrow }} />
+                  <span css={{ ...styles.truncate }}>{previousSite.title}</span>
+                </div>
+              </div>
+            </div>
             <Img
               sizes={
                 previousSite.childScreenshot.screenshotFile.childImageSharp
                   .sizes
               }
               alt=""
+              style={{ ...styles.prevNextPermalinkImage }}
             />
           </Link>
         </div>
-        <div css={{ flex: 1 }}>
-          <div css={{ ...styles.prevNextPermalinkLabel }}>Next</div>
+        <div css={{ ...styles.prevNextPermalinkContainer }}>
           <Link
             to={{ pathname: nextSite.fields.slug, state: { isModal: false } }}
           >
-            {nextSite.title}&nbsp;<MdArrowForward
-              style={{ marginLeft: 4, verticalAlign: `sub` }}
-            />
+            <div
+              css={{
+                marginLeft: rhythm(6 / 4),
+                marginRight: rhythm(6 / 4),
+              }}
+            >
+              <div css={{ ...styles.prevNextPermalinkLabel }}>Next</div>
+              <div css={{ ...styles.prevNextPermalinkTitle }}>
+                <span css={{ ...styles.truncate }}>{nextSite.title}</span>
+                <MdArrowForward style={{ ...styles.prevNextPermalinkArrow }} />
+              </div>
+            </div>
             <Img
               sizes={
                 nextSite.childScreenshot.screenshotFile.childImageSharp.sizes
               }
               alt=""
               style={{
-                marginBottom: 0,
+                ...styles.prevNextPermalinkImage,
               }}
             />
           </Link>
@@ -604,5 +619,46 @@ const styles = {
   prevNextPermalinkLabel: {
     color: colors.gray.calm,
     fontFamily: options.headerFontFamily.join(`,`),
+    fontWeight: `normal`,
+  },
+  prevNextPermalinkImage: {
+    marginBottom: 0,
+    marginTop: rhythm(options.blockMarginBottom),
+  },
+  prevNextPermalinkTitle: {
+    color: colors.gatsby,
+    display: `block`,
+    position: `relative`,
+  },
+  prevNextPermalinkContainer: {
+    width: `50%`,
+  },
+  truncate: {
+    whiteSpace: `nowrap`,
+    overflow: `hidden`,
+    textOverflow: `ellipsis`,
+    display: `block`,
+    width: `100%`,
+  },
+  prevNextPermalinkArrow: {
+    color: colors.lilac,
+    marginRight: 4,
+    verticalAlign: `sub`,
+    position: `absolute`,
+    left: `-${rhythm(3 / 4)}`,
+    top: `50%`,
+    transform: `translateY(-50%)`,
+  },
+  prevNextPermalinkMeta: {
+    marginLeft: rhythm(6 / 4),
+    display: `flex`,
+    flexDirection: `row`,
+    justifyContent: `flex-end`,
+  },
+  prevNextPermalinkMetaInner: {
+    flexBasis: 540,
+    flexGrow: 0,
+    flexShrink: 1,
+    minWidth: 0,
   },
 }
