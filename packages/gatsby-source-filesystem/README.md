@@ -137,8 +137,8 @@ createRemoteFileNode({
 
   // OPTIONAL
   // Adds htaccess authentication to the download request if passed in.
-  auth: { user: `USER`, password: `PASSWORD` },
-})
+  auth: { htaccess_user: `USER`, htaccess_pass: `PASSWORD` },
+});
 ```
 
 #### Example usage
