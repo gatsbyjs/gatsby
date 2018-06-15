@@ -558,7 +558,7 @@ export const pageQuery = graphql`
                 resolutions(width: 100, height: 100) {
                   ...GatsbyImageSharpResolutions
                 }
-                sizes(maxWidth: 800) {
+                sizes(maxWidth: 800, maxHeight: 800) {
                   ...GatsbyImageSharpSizes
                 }
               }
