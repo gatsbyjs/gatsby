@@ -155,21 +155,30 @@ export default (pagePath, callback) => {
       const fetchKey = `assetsByChunkName[${s}]`
 
       let chunks = get(stats, fetchKey)
+      let fetchedEntryPoints = get(stats, `entrypoints`)
 
       if (!chunks) {
         return null
       }
 
-      return chunks.map(chunk => {
+      chunks = chunks.map(chunk => {
         if (chunk === `/`) {
           return null
         }
         return chunk
       })
+
+      console.log(`ChunkName: ${s}`)
+      console.log(fetchedEntryPoints)
+      console.log(chunks)
+      // return defineAssetScript(fetchedEntryPoints, chunks, { rel: `preload`, prefixedScript: chunks })
+      return chunks
     })
   ).filter(s => isString(s))
-  const scripts = scriptsAndStyles.filter(s => s.endsWith(`.js`))
-  const styles = scriptsAndStyles.filter(s => s.endsWith(`.css`))
+  const scripts = scriptsAndStyles.filter(script => script.endsWith(`.js`))
+  const styles = scriptsAndStyles.filter(script => script.endsWith(`.css`))
+  console.log(scripts)
+  console.log(styles)
 
   apiRunner(`onRenderBody`, {
     setHeadComponents,
