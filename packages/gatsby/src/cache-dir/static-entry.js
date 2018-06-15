@@ -3,7 +3,7 @@ const fs = require(`fs`)
 const { join } = require(`path`)
 const { renderToString, renderToStaticMarkup } = require(`react-dom/server`)
 const { StaticRouter, Route } = require(`react-router-dom`)
-const { get, merge, isString, flatten } = require(`lodash`)
+const { get, merge, isObject, flatten } = require(`lodash`)
 
 const apiRunner = require(`./api-runner-ssr`)
 const syncRequires = require(`./sync-requires`)
@@ -155,7 +155,7 @@ export default (pagePath, callback) => {
       const fetchKey = `assetsByChunkName[${s}]`
 
       let chunks = get(stats, fetchKey)
-      let fetchedEntryPoints = get(stats, `entrypoints`)
+      let namedChunkGroups = get(stats, `namedChunkGroups`)
 
       if (!chunks) {
         return null
@@ -165,20 +165,22 @@ export default (pagePath, callback) => {
         if (chunk === `/`) {
           return null
         }
-        return chunk
+        return { rel: `preload`, name: chunk }
       })
 
-      console.log(`ChunkName: ${s}`)
-      console.log(fetchedEntryPoints)
-      console.log(chunks)
-      // return defineAssetScript(fetchedEntryPoints, chunks, { rel: `preload`, prefixedScript: chunks })
+      const childAssets = namedChunkGroups[s].childAssets
+      for (const rel in childAssets) {
+        chunks = merge(chunks, childAssets[rel].map(chunk => {
+          return { rel, name: chunk }
+        }))
+      }
+
       return chunks
     })
-  ).filter(s => isString(s))
-  const scripts = scriptsAndStyles.filter(script => script.endsWith(`.js`))
-  const styles = scriptsAndStyles.filter(script => script.endsWith(`.css`))
-  console.log(scripts)
-  console.log(styles)
+  ).filter(s => isObject(s))
+
+  const scripts = scriptsAndStyles.filter(script => script.name && script.name.endsWith(`.js`))
+  const styles = scriptsAndStyles.filter(style => style.name && style.name.endsWith(`.css`))
 
   apiRunner(`onRenderBody`, {
     setHeadComponents,
@@ -202,9 +204,9 @@ export default (pagePath, callback) => {
       headComponents.push(
         <link
           as="script"
-          rel="preload"
-          key={script}
-          href={urlJoin(pathPrefix, script)}
+          rel={script.rel}
+          key={script.name}
+          href={urlJoin(pathPrefix, script.name)}
         />
       )
     })
@@ -230,13 +232,22 @@ export default (pagePath, callback) => {
     .reverse()
     .forEach(style => {
       // Add <link>s for styles.
+      headComponents.push(
+        <link
+          as="style"
+          rel={style.rel}
+          key={style.name}
+          href={urlJoin(pathPrefix, style.name)}
+        />
+      )
+
       headComponents.unshift(
         <style
           type="text/css"
-          data-href={urlJoin(pathPrefix, style)}
+          data-href={urlJoin(pathPrefix, style.name)}
           dangerouslySetInnerHTML={{
             __html: fs.readFileSync(
-              join(process.cwd(), `public`, style),
+              join(process.cwd(), `public`, style.name),
               `utf-8`
             ),
           }}
