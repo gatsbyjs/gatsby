@@ -18,20 +18,6 @@ Array [
   },
   Object {
     "browserAPIs": Array [],
-    "id": "Plugin component-page-creator",
-    "name": "component-page-creator",
-    "nodeAPIs": Array [
-      "createPagesStatefully",
-    ],
-    "pluginOptions": Object {
-      "plugins": Array [],
-    },
-    "resolve": "",
-    "ssrAPIs": Array [],
-    "version": "1.0.0",
-  },
-  Object {
-    "browserAPIs": Array [],
     "id": "Plugin component-layout-creator",
     "name": "component-layout-creator",
     "nodeAPIs": Array [
@@ -98,7 +84,23 @@ Array [
     },
     "resolve": "",
     "ssrAPIs": Array [],
-    "version": "d41d8cd98f00b204e9800998ecf8427e",
+    "version": "1.0.0",
+  },
+  Object {
+    "browserAPIs": Array [],
+    "id": "Plugin gatsby-plugin-page-creator",
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "pluginOptions": Object {
+      "path": "/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [],
+    "version": "1.0.0",
   },
 ]
 `;
@@ -109,20 +111,6 @@ Array [
     "browserAPIs": Array [],
     "id": "Plugin dev-404-page",
     "name": "dev-404-page",
-    "nodeAPIs": Array [
-      "createPagesStatefully",
-    ],
-    "pluginOptions": Object {
-      "plugins": Array [],
-    },
-    "resolve": "",
-    "ssrAPIs": Array [],
-    "version": "1.0.0",
-  },
-  Object {
-    "browserAPIs": Array [],
-    "id": "Plugin component-page-creator",
-    "name": "component-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",
     ],
@@ -200,6 +188,7 @@ Array [
     },
     "resolve": "",
     "ssrAPIs": Array [],
+    "version": "1.0.0",
   },
   Object {
     "browserAPIs": Array [],
@@ -211,7 +200,23 @@ Array [
     },
     "resolve": "",
     "ssrAPIs": Array [],
-    "version": "d41d8cd98f00b204e9800998ecf8427e",
+    "version": "1.0.0",
+  },
+  Object {
+    "browserAPIs": Array [],
+    "id": "Plugin gatsby-plugin-page-creator",
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "pluginOptions": Object {
+      "path": "/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [],
+    "version": "1.0.0",
   },
 ]
 `;
