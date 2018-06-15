@@ -506,6 +506,9 @@ class PermalinkPageFooter extends React.Component {
                 nextSite.childScreenshot.screenshotFile.childImageSharp.sizes
               }
               alt=""
+              style={{
+                marginBottom: 0,
+              }}
             />
           </Link>
         </div>
