@@ -162,8 +162,6 @@ class BlogPostTemplate extends React.Component {
                     fontWeight: 400,
                     margin: 0,
                     color: `${colors.gatsby} !important`,
-                    fontSize: `102%`,
-                    fontWeight: `bold`,
                   }}
                 >
                   <span css={{
