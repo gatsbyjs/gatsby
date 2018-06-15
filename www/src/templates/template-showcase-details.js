@@ -7,6 +7,7 @@ import presets, { colors } from "../utils/presets"
 import { options, scale, rhythm } from "../utils/typography"
 import { navigateTo, Link } from "gatsby"
 import Layout from "../components/layout"
+import ShareMenu from "../components/share-menu"
 
 import Img from "gatsby-image"
 
@@ -356,35 +357,50 @@ class ShowcaseTemplate extends React.Component {
                 position: `relative`,
               }}
             >
-              <a
-                href={data.sitesYaml.main_url}
+              <div
                 css={{
-                  border: 0,
-                  borderRadius: presets.radius,
-                  color: colors.gatsby,
-                  fontFamily: options.headerFontFamily.join(`,`),
-                  fontWeight: `bold`,
-                  left: `auto`,
-                  padding: `${rhythm(1 / 5)} ${rhythm(2 / 3)}`,
                   position: `absolute`,
                   right: gutter,
                   top: gutter,
-                  textDecoration: `none`,
-                  WebkitFontSmoothing: `antialiased`,
+                  left: `auto`,
                   zIndex: 1,
-                  "&&": {
-                    backgroundColor: colors.gatsby,
-                    borderBottom: `none`,
-                    boxShadow: `none`,
-                    color: `white`,
-                    "&:hover": {
-                      backgroundColor: colors.gatsby,
-                    },
-                  },
+                  display: `flex`,
                 }}
               >
-                <MdLaunch style={{ verticalAlign: `sub` }} /> Visit site
-              </a>
+                <a
+                  href={data.sitesYaml.main_url}
+                  css={{
+                    border: 0,
+                    borderRadius: presets.radius,
+                    color: colors.gatsby,
+                    fontFamily: options.headerFontFamily.join(`,`),
+                    fontWeight: `bold`,
+                    marginRight: rhythm(3 / 4),
+                    padding: `${rhythm(1 / 5)} ${rhythm(2 / 3)}`,
+                    textDecoration: `none`,
+                    WebkitFontSmoothing: `antialiased`,
+                    "&&": {
+                      backgroundColor: colors.gatsby,
+                      borderBottom: `none`,
+                      boxShadow: `none`,
+                      color: `white`,
+                      "&:hover": {
+                        backgroundColor: colors.gatsby,
+                      },
+                    },
+                  }}
+                >
+                  <MdLaunch style={{ verticalAlign: `sub` }} /> Visit site
+                </a>
+                <ShareMenu
+                  url={data.sitesYaml.main_url}
+                  title={data.sitesYaml.title}
+                  image={`https://gatsbyjs.org${
+                    data.sitesYaml.childScreenshot.screenshotFile
+                      .childImageSharp.resize.src
+                  }`}
+                />
+              </div>
               <Img
                 sizes={
                   data.sitesYaml.childScreenshot.screenshotFile.childImageSharp
