@@ -71,11 +71,10 @@ class BlogPostPreviewItem extends React.Component {
                 to={post.frontmatter.author.fields.slug}
                 css={{
                   color: `${colors.gatsby} !important`,
-                  fontSize: `102%`,
                   position: `relative`,
                   zIndex: 1,
                   "&&": {
-                    fontWeight: `bold`,
+                    fontWeight: `normal`,
                     ":hover": {
                       background: colors.ui.bright,
                     },
