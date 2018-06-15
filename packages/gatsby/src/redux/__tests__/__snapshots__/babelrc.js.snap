@@ -162,7 +162,6 @@ Object {
             "loose": true,
             "modules": false,
             "shippedProposals": true,
-            "sourceType": "unambiguous",
             "targets": Object {
               "browsers": Array [
                 "> 1%",
@@ -219,7 +218,6 @@ Object {
             "loose": true,
             "modules": false,
             "shippedProposals": true,
-            "sourceType": "unambiguous",
             "targets": Object {
               "browsers": Array [
                 "> 1%",
@@ -276,7 +274,6 @@ Object {
             "loose": true,
             "modules": false,
             "shippedProposals": true,
-            "sourceType": "unambiguous",
             "targets": Object {
               "browsers": Array [
                 "> 1%",
@@ -333,7 +330,6 @@ Object {
             "loose": true,
             "modules": false,
             "shippedProposals": true,
-            "sourceType": "unambiguous",
             "targets": Object {
               "browsers": Array [
                 "> 1%",
