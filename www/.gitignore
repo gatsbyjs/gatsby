@@ -30,3 +30,4 @@ node_modules
 /public
 /yarn.lock
 src/cache
+/package-lock.json

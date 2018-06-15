@@ -14,6 +14,7 @@ This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While t
 - [Manually install React](#manually-install-react)
 - [Manually install plugins’ peer dependencies](#manually-install-plugins-peer-dependencies)
 - [Update layout component](#update-layout-component)
+- [Import Link from Gatsby](#import-link-from-gatsby)
 - [Rename `boundActionCreators` to `actions`](#rename-boundactioncreators-to-actions)
 - [Rename `pathContext` to `pageContext`](#rename-pathcontext-to-pagecontext)
 - [Rename responsive image queries](#rename-responsive-image-queries)
@@ -194,6 +195,31 @@ export default props => (
     <div>Hello World</div>
   </Layout>
 )
+```
+
+## Import Link from Gatsby
+
+All components and utility functions from `gatsby-link` are now exported from `gatsby` package. Therefore you should import it directly from `gatsby`.
+
+```diff
+import React from "react"
+- import Link from "gatsby-link"
++ import { Link } from "gatsby"
+
+export default props => (
+  <Link to="/">Home</Link>
+)
+```
+
+Furthermore you can remove the package from the `package.json`.
+
+```diff
+"dependencies": {
+  "gatsby": "next",
+  "gatsby-image": "next",
+  "gatsby-plugin-sharp": "next",
+- "gatsby-link": "^1.6.39" 
+}
 ```
 
 ## Rename `boundActionCreators` to `actions`
