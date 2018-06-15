@@ -375,7 +375,7 @@ class ShowcaseTemplate extends React.Component {
                     color: colors.gatsby,
                     fontFamily: options.headerFontFamily.join(`,`),
                     fontWeight: `bold`,
-                    marginRight: rhythm(3 / 4),
+                    marginRight: rhythm(1.5 / 4),
                     padding: `${rhythm(1 / 5)} ${rhythm(2 / 3)}`,
                     textDecoration: `none`,
                     WebkitFontSmoothing: `antialiased`,
@@ -467,7 +467,7 @@ class PermalinkPageFooter extends React.Component {
         css={{
           borderTop: `1px solid ${colors.ui.light}`,
           display: `flex`,
-          paddingTop: 15,
+          paddingTop: rhythm(options.blockMarginBottom * 2),
         }}
       >
         <div css={{ flex: 1 }}>
