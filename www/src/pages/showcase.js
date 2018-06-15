@@ -554,6 +554,10 @@ class ShowcasePage extends Component {
           css={{
             margin: `${rhythm(options.blockMarginBottom)} ${rhythm(3 / 4)} 0`,
             position: `relative`,
+            display: "none",
+            [presets.Desktop]: {
+              display: "block"
+            }
           }}
         >
           <div
