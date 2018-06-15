@@ -468,6 +468,10 @@ class PermalinkPageFooter extends React.Component {
           borderTop: `1px solid ${colors.ui.light}`,
           display: `flex`,
           paddingTop: rhythm(options.blockMarginBottom * 2),
+          paddingBottom: 58,
+          [presets.Tablet]: {
+            paddingBottom: 0,
+          },
         }}
       >
         <div css={{ flex: 1 }}>
