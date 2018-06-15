@@ -84,7 +84,7 @@ Array [
     },
     "resolve": "",
     "ssrAPIs": Array [],
-    "version": "d41d8cd98f00b204e9800998ecf8427e",
+    "version": "1.0.0",
   },
   Object {
     "browserAPIs": Array [],
@@ -188,6 +188,7 @@ Array [
     },
     "resolve": "",
     "ssrAPIs": Array [],
+    "version": "1.0.0",
   },
   Object {
     "browserAPIs": Array [],
@@ -199,7 +200,7 @@ Array [
     },
     "resolve": "",
     "ssrAPIs": Array [],
-    "version": "d41d8cd98f00b204e9800998ecf8427e",
+    "version": "1.0.0",
   },
   Object {
     "browserAPIs": Array [],
