@@ -210,14 +210,14 @@ class ShowcaseTemplate extends React.Component {
               <title>{data.sitesYaml.title}</title>
               <meta
                 name="og:image"
-                content={`https://gatsbyjs.org${
+                content={`https://next.gatsbyjs.org${
                   data.sitesYaml.childScreenshot.screenshotFile.childImageSharp
                     .resize.src
                 }`}
               />
               <meta
                 name="twitter:image"
-                content={`https://gatsbyjs.org${
+                content={`https://next.gatsbyjs.org${
                   data.sitesYaml.childScreenshot.screenshotFile.childImageSharp
                     .resize.src
                 }`}
@@ -393,7 +393,7 @@ class ShowcaseTemplate extends React.Component {
                 <ShareMenu
                   url={data.sitesYaml.main_url}
                   title={data.sitesYaml.title}
-                  image={`https://gatsbyjs.org${
+                  image={`https://next.gatsbyjs.org${
                     data.sitesYaml.childScreenshot.screenshotFile
                       .childImageSharp.resize.src
                   }`}
