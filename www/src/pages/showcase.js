@@ -839,7 +839,11 @@ class ShowcasePage extends Component {
         </section>
         <div
           id="showcase"
-          css={{ position: `relative`, top: presets.headerHeight, height: 1 }}
+          css={{
+            position: `relative`,
+            top: `calc(-${presets.headerHeight} + 1px)`,
+            height: 1,
+          }}
           ref={this.showcase}
         />
         <FilteredShowcase
