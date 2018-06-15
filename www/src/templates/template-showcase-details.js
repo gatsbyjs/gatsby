@@ -7,10 +7,13 @@ import presets, { colors } from "../utils/presets"
 import { options, scale, rhythm } from "../utils/typography"
 import { navigateTo, Link } from "gatsby"
 import Layout from "../components/layout"
+import ShareMenu from "../components/share-menu"
 
 import Img from "gatsby-image"
 
 import MdArrowUpward from "react-icons/lib/md/arrow-upward"
+import MdArrowForward from "react-icons/lib/md/arrow-forward"
+import MdArrowBack from "react-icons/lib/md/arrow-back"
 import MdLaunch from "react-icons/lib/md/launch"
 import FeaturedIcon from "../assets/featured-detailpage-featuredicon.svg"
 import FeatherIcon from "../assets/showcase-feather.svg"
@@ -205,6 +208,20 @@ class ShowcaseTemplate extends React.Component {
           >
             <Helmet>
               <title>{data.sitesYaml.title}</title>
+              <meta
+                name="og:image"
+                content={`https://gatsbyjs.org${
+                  data.sitesYaml.childScreenshot.screenshotFile.childImageSharp
+                    .resize.src
+                }`}
+              />
+              <meta
+                name="twitter:image"
+                content={`https://gatsbyjs.org${
+                  data.sitesYaml.childScreenshot.screenshotFile.childImageSharp
+                    .resize.src
+                }`}
+              />
             </Helmet>
             <div
               css={{
@@ -338,36 +355,50 @@ class ShowcaseTemplate extends React.Component {
                 position: `relative`,
               }}
             >
-              <a
-                href={data.sitesYaml.main_url}
+              <div
                 css={{
-                  color: colors.gatsby,
-                  fontFamily: options.headerFontFamily.join(`,`),
-                  left: `auto`,
                   position: `absolute`,
                   right: gutter,
                   top: gutter,
+                  left: `auto`,
                   zIndex: 1,
-                  textDecoration: `none`,
-                  border: 0,
-                  borderRadius: presets.radius,
-                  fontFamily: options.headerFontFamily.join(`,`),
-                  fontWeight: `bold`,
-                  padding: `${rhythm(1 / 5)} ${rhythm(2 / 3)}`,
-                  WebkitFontSmoothing: `antialiased`,
-                  "&&": {
-                    backgroundColor: colors.gatsby,
-                    borderBottom: `none`,
-                    boxShadow: `none`,
-                    color: `white`,
-                    "&:hover": {
-                      backgroundColor: colors.gatsby,
-                    },
-                  },
+                  display: `flex`,
                 }}
               >
-                <MdLaunch style={{ verticalAlign: `sub` }} /> Visit site
-              </a>
+                <a
+                  href={data.sitesYaml.main_url}
+                  css={{
+                    border: 0,
+                    borderRadius: presets.radius,
+                    color: colors.gatsby,
+                    fontFamily: options.headerFontFamily.join(`,`),
+                    fontWeight: `bold`,
+                    marginRight: rhythm(3 / 4),
+                    padding: `${rhythm(1 / 5)} ${rhythm(2 / 3)}`,
+                    textDecoration: `none`,
+                    WebkitFontSmoothing: `antialiased`,
+                    "&&": {
+                      backgroundColor: colors.gatsby,
+                      borderBottom: `none`,
+                      boxShadow: `none`,
+                      color: `white`,
+                      "&:hover": {
+                        backgroundColor: colors.gatsby,
+                      },
+                    },
+                  }}
+                >
+                  <MdLaunch style={{ verticalAlign: `sub` }} /> Visit site
+                </a>
+                <ShareMenu
+                  url={data.sitesYaml.main_url}
+                  title={data.sitesYaml.title}
+                  image={`https://gatsbyjs.org${
+                    data.sitesYaml.childScreenshot.screenshotFile
+                      .childImageSharp.resize.src
+                  }`}
+                />
+              </div>
               <Img
                 sizes={
                   data.sitesYaml.childScreenshot.screenshotFile.childImageSharp
@@ -416,7 +447,6 @@ class ShowcaseTemplate extends React.Component {
 
 export default ShowcaseTemplate
 
-// TODO: the image dimensions here are 100x100, but the design calls for much larger. do we do it?
 class PermalinkPageFooter extends React.Component {
   state = {
     windowWidth: null,
@@ -433,9 +463,8 @@ class PermalinkPageFooter extends React.Component {
     return (
       <div
         css={{
-          display: `flex`,
           borderTop: `1px solid ${colors.ui.light}`,
-          padding: 50,
+          display: `flex`,
           paddingTop: 15,
         }}
       >
@@ -447,17 +476,12 @@ class PermalinkPageFooter extends React.Component {
               state: { isModal: false },
             }}
           >
-            ← {previousSite.title}
+            <MdArrowBack style={{ marginRight: 4, verticalAlign: `sub` }} />
+            {previousSite.title}
           </Link>
           <Img
-            css={{
-              boxShadow: `0px 0px 38px -8px ${colors.gatsby}`,
-              width: `100%`,
-              height: `100%`,
-            }}
-            resolutions={
-              previousSite.childScreenshot.screenshotFile.childImageSharp
-                .resolutions
+            sizes={
+              previousSite.childScreenshot.screenshotFile.childImageSharp.sizes
             }
             alt=""
           />
@@ -467,17 +491,13 @@ class PermalinkPageFooter extends React.Component {
           <Link
             to={{ pathname: nextSite.fields.slug, state: { isModal: false } }}
           >
-            {nextSite.title} →
+            {nextSite.title}&nbsp;<MdArrowForward
+              style={{ marginLeft: 4, verticalAlign: `sub` }}
+            />
           </Link>
           <Img
-            css={{
-              boxShadow: `0px 0px 38px -8px ${colors.gatsby}`,
-              width: `100%`,
-              height: `100%`,
-            }}
-            resolutions={
-              nextSite.childScreenshot.screenshotFile.childImageSharp
-                .resolutions
+            sizes={
+              nextSite.childScreenshot.screenshotFile.childImageSharp.sizes
             }
             alt=""
           />
@@ -508,6 +528,14 @@ export const pageQuery = graphql`
             sizes(maxWidth: 700) {
               ...GatsbyImageSharpSizes
             }
+            resize(
+              width: 1500
+              height: 1500
+              cropFocus: CENTER
+              toFormat: JPG
+            ) {
+              src
+            }
           }
         }
       }
@@ -529,6 +557,9 @@ export const pageQuery = graphql`
                 resolutions(width: 100, height: 100) {
                   ...GatsbyImageSharpResolutions
                 }
+                sizes(maxWidth: 800) {
+                  ...GatsbyImageSharpSizes
+                }
               }
             }
           }
@@ -547,8 +578,8 @@ const styles = {
     color: colors.lilac,
     fontFamily: options.headerFontFamily.join(`,`),
     position: `absolute`,
-    top: `280px`,
-    width: `300px`,
+    top: 280,
+    width: 300,
     transform: `translateX(-75px) rotate(90deg)`,
     [presets.Desktop]: {
       ...scale(-1 / 6),
@@ -560,7 +591,7 @@ const styles = {
   },
   prevNextImage: {
     borderRadius: presets.radius,
-    boxShadow: `0px 0px 38px -8px ${colors.gatsby}`,
+    boxShadow: `0 0 38px -8px ${colors.gatsby}`,
   },
   prevNextPermalinkLabel: {
     color: colors.gray.calm,
