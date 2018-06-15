@@ -1,19 +1,15 @@
 ---
-name: Site Showcase Submission
-about: Want to submit a site to the site showcase? Follow these instructions.
+title: Site Showcase Submission
 ---
-
-<!--
-  To add your site to the showcase, please follow the suggested format below.
-
-  Before submitting a site to the site showcase, please make sure no on else has already submitted it by searching existing PRs (if there is a chance that someone else could have submitted it): https://github.com/gatsbyjs/gatsby/pulls
--->
+Want to submit a site to the site showcase? Follow these instructions.
 
 # Steps
 
-There is only one major step :)
+There are only two major steps :)
 
-1. Edit gatsby/docs/sites.yml by adding your submission to the bottom of the list of sites in the following format:
+1. If there is a chance that someone else could have already submitted the site, please make sure no one else has already submitted it by searching existing PRs: https://github.com/gatsbyjs/gatsby/pulls
+
+2. Edit [gatsby/www/src/data/sites.yml](gatsby/www/src/data/sites.yml) by adding your submission to the bottom of the list of sites in the following format:
 
 ```shell
 - title: Title of the Site
