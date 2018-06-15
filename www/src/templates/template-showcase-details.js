@@ -480,13 +480,14 @@ class PermalinkPageFooter extends React.Component {
           >
             <MdArrowBack style={{ marginRight: 4, verticalAlign: `sub` }} />
             {previousSite.title}
+            <Img
+              sizes={
+                previousSite.childScreenshot.screenshotFile.childImageSharp
+                  .sizes
+              }
+              alt=""
+            />
           </Link>
-          <Img
-            sizes={
-              previousSite.childScreenshot.screenshotFile.childImageSharp.sizes
-            }
-            alt=""
-          />
         </div>
         <div css={{ flex: 1 }}>
           <div css={{ ...styles.prevNextPermalinkLabel }}>Next</div>
@@ -496,13 +497,13 @@ class PermalinkPageFooter extends React.Component {
             {nextSite.title}&nbsp;<MdArrowForward
               style={{ marginLeft: 4, verticalAlign: `sub` }}
             />
+            <Img
+              sizes={
+                nextSite.childScreenshot.screenshotFile.childImageSharp.sizes
+              }
+              alt=""
+            />
           </Link>
-          <Img
-            sizes={
-              nextSite.childScreenshot.screenshotFile.childImageSharp.sizes
-            }
-            alt=""
-          />
         </div>
       </div>
     )
