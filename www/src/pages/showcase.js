@@ -401,10 +401,8 @@ class FilteredShowcase extends Component {
             css={{
               display: `flex`,
               alignItems: `center`,
-              flexDirection: `column`,
               height: presets.headerHeight,
               flexDirection: `row`,
-              alignItems: `center`,
               ...styles.sticky,
               background: `rgba(255,255,255,0.98)`,
               paddingLeft: `${rhythm(3 / 4)}`,
@@ -556,6 +554,10 @@ class ShowcasePage extends Component {
           css={{
             margin: `${rhythm(options.blockMarginBottom)} ${rhythm(3 / 4)} 0`,
             position: `relative`,
+            display: "none",
+            [presets.Desktop]: {
+              display: "block"
+            }
           }}
         >
           <div
@@ -645,9 +647,8 @@ class ShowcasePage extends Component {
               >
                 Want to get featured?
               </div>
-              {/* TODO: maybe have a site submission issue template */}
               <a
-                href="https://github.com/gatsbyjs/gatsby/issues/new?template=feature_request.md"
+                href="https://next.gatsbyjs.org/docs/site-showcase-submissions/"
                 target="_blank"
                 rel="noopener noreferrer"
                 css={{
