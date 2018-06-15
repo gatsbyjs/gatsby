@@ -70,6 +70,10 @@ const ShowcaseList = ({ items, count }) => {
         display: `flex`,
         flexWrap: `wrap`,
         padding: rhythm(3 / 4),
+        justifyContent: `center`,
+        [presets.Desktop]: {
+          justifyContent: `flex-start`,
+        },
       }}
     >
       {items.map(
@@ -398,18 +402,16 @@ class FilteredShowcase extends Component {
               display: `flex`,
               alignItems: `center`,
               flexDirection: `column`,
-              [presets.Desktop]: {
-                height: presets.headerHeight,
-                flexDirection: `row`,
-                alignItems: `center`,
-                ...styles.sticky,
-                background: `rgba(255,255,255,0.98)`,
-                paddingLeft: `${rhythm(3 / 4)}`,
-                paddingRight: `${rhythm(3 / 4)}`,
-                paddingBottom: rhythm(options.blockMarginBottom),
-                zIndex: 1,
-                borderBottom: `1px solid ${colors.ui.light}`,
-              },
+              height: presets.headerHeight,
+              flexDirection: `row`,
+              alignItems: `center`,
+              ...styles.sticky,
+              background: `rgba(255,255,255,0.98)`,
+              paddingLeft: `${rhythm(3 / 4)}`,
+              paddingRight: `${rhythm(3 / 4)}`,
+              paddingBottom: rhythm(options.blockMarginBottom),
+              zIndex: 1,
+              borderBottom: `1px solid ${colors.ui.light}`,
             }}
           >
             <h2
@@ -498,10 +500,15 @@ class FilteredShowcase extends Component {
             <button
               css={{
                 ...styles.button,
+                display: `block`,
                 marginBottom: rhythm(options.blockMarginBottom * 5),
-                marginLeft: rhythm(3 / 4),
-                marginRight: rhythm(3 / 4),
                 marginTop: rhythm(options.blockMarginBottom * 2),
+                marginLeft: `auto`,
+                marginRight: `auto`,
+                [presets.Desktop]: {
+                  marginLeft: rhythm(6 / 4),
+                  marginRight: rhythm(6 / 4),
+                },
               }}
               onClick={() => {
                 this.setState({ sitesToShow: this.state.sitesToShow + 15 })
@@ -568,10 +575,10 @@ class ShowcasePage extends Component {
           <div
             css={{
               marginBottom: rhythm(options.blockMarginBottom * 2),
-              [presets.Mobile]: {
-                display: `flex`,
-                alignItems: `center`,
-              },
+              display: `flex`,
+              alignItems: `center`,
+              flexWrap: `wrap`,
+              [presets.Mobile]: {},
             }}
           >
             <img src={FeaturedSitesIcon} alt="icon" css={{ marginBottom: 0 }} />
@@ -593,6 +600,10 @@ class ShowcasePage extends Component {
               href="#showcase"
               {...styles.withTitleHover}
               css={{
+                display: `none`,
+                [presets.Phablet]: {
+                  display: `block`,
+                },
                 "&&": {
                   ...scale(-1 / 6),
                   boxShadow: `none`,
@@ -943,7 +954,10 @@ const styles = {
   sticky: {
     paddingTop: rhythm(options.blockMarginBottom),
     position: `sticky`,
-    top: `calc(${presets.headerHeight} - 1px)`,
+    top: 0,
+    [presets.Desktop]: {
+      top: `calc(${presets.headerHeight} - 1px)`,
+    },
   },
   scrollbar: {
     WebkitOverflowScrolling: `touch`,
