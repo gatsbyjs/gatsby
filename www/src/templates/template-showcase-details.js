@@ -284,7 +284,7 @@ class ShowcaseTemplate extends React.Component {
                 fontFamily: options.headerFontFamily.join(`,`),
                 margin: `0 ${gutter}`,
                 [presets.Desktop]: {
-                  margin: `0 ${gutter}px`,
+                  margin: `0 ${gutterDesktop}`,
                 },
               }}
             >
