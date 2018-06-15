@@ -36,7 +36,6 @@ to root of your site and modifying it per your needs.
         "loose": true,
         "modules": false,
         "useBuiltIns": "usage",
-        "sourceType": "unambiguous",
         "shippedProposals": true,
         "targets": {
           "browsers": [ ">0.25%", "not dead"]
