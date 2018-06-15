@@ -3,7 +3,7 @@ const fs = require(`fs`)
 const { join } = require(`path`)
 const { renderToString, renderToStaticMarkup } = require(`react-dom/server`)
 const { StaticRouter, Route } = require(`react-router-dom`)
-const { get, merge, isObject, flatten } = require(`lodash`)
+const { get, merge, isObject, flatten, uniqBy } = require(`lodash`)
 
 const apiRunner = require(`./api-runner-ssr`)
 const syncRequires = require(`./sync-requires`)
@@ -150,7 +150,7 @@ export default (pagePath, callback) => {
   }
 
   // Create paths to scripts
-  const scriptsAndStyles = flatten(
+  let scriptsAndStyles = flatten(
     [`app`, page.componentChunkName].map(s => {
       const fetchKey = `assetsByChunkName[${s}]`
 
@@ -178,6 +178,9 @@ export default (pagePath, callback) => {
       return chunks
     })
   ).filter(s => isObject(s))
+  .sort((s1, s2) => s1.rel == `preload` ? -1 : 1)   // given priority to preload
+
+  scriptsAndStyles = uniqBy(scriptsAndStyles, item => item.name)
 
   const scripts = scriptsAndStyles.filter(script => script.name && script.name.endsWith(`.js`))
   const styles = scriptsAndStyles.filter(style => style.name && style.name.endsWith(`.css`))
