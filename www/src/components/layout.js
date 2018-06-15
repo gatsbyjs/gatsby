@@ -55,8 +55,8 @@ class DefaultLayout extends React.Component {
           <OutboundLink
             href="https://gatsbyjs.org/"
           >
-            View the v1 docs
-          </OutboundLink>!
+            View the v1 docs instead
+          </OutboundLink>.
         </div>
         <Navigation pathname={this.props.location.pathname} />
         <div
@@ -69,7 +69,7 @@ class DefaultLayout extends React.Component {
             },
           }}
         >
-          <PageWithSidebar
+  <PageWithSidebar
             disable={isSidebarDisabled}
             yaml={this.props.sidebarYaml}
             renderContent={() => this.props.children}
