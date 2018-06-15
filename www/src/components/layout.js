@@ -53,7 +53,7 @@ class DefaultLayout extends React.Component {
         >
           You're viewing the docs for Gatsby v2 beta.{` `}
           <OutboundLink
-            href="https://gatsbyjs.org/"
+            href="https://v1.gatsbyjs.org/"
           >
             View the v1 docs instead
           </OutboundLink>.
