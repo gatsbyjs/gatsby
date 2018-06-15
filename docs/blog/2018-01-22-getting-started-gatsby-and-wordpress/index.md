@@ -29,7 +29,7 @@ module.exports = {
     title: "Gatsby Default Starter",
   },
   plugins: ["gatsby-plugin-react-helmet"],
-};
+}
 ```
 
 See the [docs page on gatsby-config.js](/docs/gatsby-config/) for more.
@@ -95,7 +95,7 @@ I used the `gatsby-node.js` file from the plugin demo to get started. For my pur
 For example, below is the part of the demo `gatsby-node.js` file that iterates over all the WordPress post data.
 
 ```javascript
-const postTemplate = path.resolve(`./src/templates/post.js`);
+const postTemplate = path.resolve(`./src/templates/post.js`)
 
 _.each(result.data.allWordpressPost.edges, edge => {
   createPage({
@@ -108,8 +108,8 @@ _.each(result.data.allWordpressPost.edges, edge => {
     context: {
       id: edge.node.id,
     },
-  });
-});
+  })
+})
 ```
 
 The [docs define a Gatsby page](/docs/api-specification/#concepts) as "a site page with a pathname, a template component, and optional graphql query and layout component." See the docs on the [createPage bound action creator](/docs/bound-action-creators/#createPage) and [guide on creating and modifying pages for more detail](/docs/creating-and-modifying-pages/).

@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-typescript",
-  "description": "Adds TypeScript support for Gatsby layouts and pages.",
-  "version": "1.4.20",
+  "description": "Adds TypeScript support to Gatsby",
+  "version": "2.0.0-alpha.5",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -10,13 +10,14 @@
     "Noah Lange <noahrlange@gmail.com>"
   ],
   "dependencies": {
-    "babel-runtime": "^6.26.0",
-    "ts-loader": "^2.0.3",
-    "typescript": "^2.2.1"
+    "@babel/preset-typescript": "7.0.0-beta.47",
+    "@babel/runtime": "7.0.0-beta.47",
+    "babel-plugin-remove-graphql-queries": "^2.0.1-12"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "cross-env": "^5.0.5"
+    "@babel/cli": "7.0.0-beta.47",
+    "@babel/core": "7.0.0-beta.47",
+    "cross-env": "^5.1.4"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typescript#readme",
   "keywords": [
@@ -31,8 +32,8 @@
   },
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typescript",
   "scripts": {
-    "build": "babel src --out-dir .",
+    "build": "babel src --out-dir . --ignore **/__tests__",
     "prepublish": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir ."
+    "watch": "babel -w src --out-dir . --ignore **/__tests__"
   }
 }

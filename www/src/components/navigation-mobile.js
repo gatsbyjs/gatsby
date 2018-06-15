@@ -1,9 +1,8 @@
 import React from "react"
-import Link from "gatsby-link"
+import { Link } from "gatsby"
 
 import {
   BlogIcon,
-  CommunityIcon,
   DocsIcon,
   TutorialIcon,
   PluginsIcon,
@@ -26,7 +25,7 @@ const MobileNavItem = ({ linkTo, label, icon }) => (
       textAlign: `center`,
     }}
   >
-    <img src={icon} css={{ height: 32, display: `block`, margin: `0 auto` }} />
+    <img src={icon} css={{ height: 32, display: `block`, margin: `0 auto` }} alt={`${label} Icon`} />
     <div>{label}</div>
   </Link>
 )

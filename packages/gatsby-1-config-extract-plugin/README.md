@@ -26,13 +26,13 @@ for most use cases.
 
 ```javascript
 // in gatsby-node.js
-const { extractTextPlugin } = require(`gatsby-1-config-extract-plugin`);
+const { extractTextPlugin } = require(`gatsby-1-config-extract-plugin`)
 
 exports.modifyWebpackConfig = ({ config, stage }) => {
   switch (stage) {
     case `build-css`: {
-      loader: extractTextPlugin(stage).extract(`style`, `css`);
+      loader: extractTextPlugin(stage).extract(`style`, `css`)
     }
   }
-};
+}
 ```

@@ -1,11 +1,12 @@
 import React from "react"
 import Img from "gatsby-image"
+import Layout from "../layouts"
 import { rhythm } from "../utils/typography"
 
-export default props => {
+const ImageAPI = props => {
   const assets = props.data.allContentfulAsset.edges
   return (
-    <div>
+    <Layout>
       <h1>Image API examples</h1>
       <p>
         Gatsby offers rich integration with{` `}
@@ -54,9 +55,9 @@ export default props => {
         />
       </pre>
 
-      <h2>Responsive Resolution</h2>
+      <h2>Fixed</h2>
       <p>
-        If you make queries with <code>resolutions</code> then Gatsby
+        If you make queries with <code>fixed</code> then Gatsby
         automatically generates images with 1x, 1.5x, 2x, and 3x versions so
         your images look great on whatever screen resolution of device they're
         on.
@@ -68,12 +69,12 @@ export default props => {
       <p>
         You should prefer this operator over <code>resize</code>.
       </p>
-      {assets.map(({ node: { title, resolutions } }) => (
-        <div key={resolutions.src} style={{ display: `inline-block` }}>
+      {assets.map(({ node: { title, fixed } }) => (
+        <div key={fixed.src} style={{ display: `inline-block` }}>
           <Img
-            key={resolutions.src}
+            key={fixed.src}
             alt={title}
-            resolutions={resolutions}
+            fixed={fixed}
             backgroundColor
             style={{
               marginRight: rhythm(1 / 2),
@@ -93,7 +94,7 @@ export default props => {
     edges {
       node {
         title
-        resolutions(width: 100) {
+        fixed(width: 100) {
           width
           height
           src
@@ -109,7 +110,7 @@ export default props => {
 
       <h2>Resizing</h2>
       <p>
-        On both resize and resolutions you can also add a{` `}
+        On both resize and fixed you can also add a{` `}
         <code>height</code>
         {` `}
         argument to the GraphQL argument to crop the image to a certain size.
@@ -129,7 +130,7 @@ export default props => {
         <div key={resizing.src} style={{ display: `inline-block` }}>
           <Img
             alt={title}
-            resolutions={resizing}
+            fixed={resizing}
             style={{
               marginRight: rhythm(1 / 2),
               marginBottom: rhythm(1 / 2),
@@ -147,7 +148,7 @@ export default props => {
     edges {
       node {
         title
-        resolutions(width: 100, height: 100) {
+        fixed(width: 100, height: 100) {
           width
           height
           src
@@ -161,7 +162,7 @@ export default props => {
         />
       </pre>
 
-      <h2>Responsive Sizes</h2>
+      <h2>Fluid</h2>
       <p>
         This GraphQL option allows you to generate responsive images that
         automatically respond to different device screen resolution and widths.
@@ -169,15 +170,15 @@ export default props => {
         desktop device.
       </p>
       <p>
-        Instead of specifying a width and height, with sizes you specify a{` `}
+        Instead of specifying a width and height, with <code>fluid</code> you specify a{` `}
         <code>maxWidth</code>, the max width the container of the images
         reaches.
       </p>
-      {assets.map(({ node: { title, sizes } }) => (
+      {assets.map(({ node: { title, fluid } }) => (
         <Img
-          key={sizes.src}
+          key={fluid.src}
           alt={title}
-          sizes={sizes}
+          fluid={fluid}
           style={{
             marginRight: rhythm(1 / 2),
             marginBottom: rhythm(1 / 2),
@@ -194,7 +195,7 @@ export default props => {
     edges {
       node {
         title
-        sizes(maxWidth: 613) {
+        fluid(maxWidth: 613) {
           sizes
           src
           srcSet
@@ -211,7 +212,7 @@ export default props => {
         WebP is an image format that provides lossy and lossless compression
         that may be better than JPEG or PNG. The <code>srcWebp</code> and{` `}
         <code>srcSetWebp</code> fields are available for{` `}
-        <code>resolutions</code> and <code>sizes</code> queries.
+        <code>fixed</code> and <code>fluid</code> queries.
       </p>
       <p>
         WebP is currently only supported in{` `}
@@ -229,7 +230,7 @@ export default props => {
           <Img
             key={webp.src}
             alt={title}
-            resolutions={webp}
+            fixed={webp}
             style={{
               marginRight: rhythm(1 / 2),
               marginBottom: rhythm(1 / 2),
@@ -247,7 +248,7 @@ export default props => {
     edges {
       node {
         title
-        resolutions(width: 100) {
+        fixed(width: 100) {
           width
           height
           src
@@ -262,9 +263,11 @@ export default props => {
           }}
         />
       </pre>
-    </div>
+    </Layout>
   )
 }
+
+export default ImageAPI
 
 export const pageQuery = graphql`
   query ImageAPIExamples {
@@ -277,17 +280,17 @@ export const pageQuery = graphql`
             width
             height
           }
-          resolutions(width: 100) {
-            ...GatsbyContentfulResolutions_noBase64
+          fixed(width: 100) {
+            ...GatsbyContentfulFixed_noBase64
           }
-          resizing: resolutions(width: 100, height: 100) {
-            ...GatsbyContentfulResolutions_noBase64
+          resizing: fixed(width: 100, height: 100) {
+            ...GatsbyContentfulFixed_noBase64
           }
-          webp: resolutions(width: 100) {
-            ...GatsbyContentfulResolutions_withWebp_noBase64
+          webp: fixed(width: 100) {
+            ...GatsbyContentfulFixed_withWebp_noBase64
           }
-          sizes(maxWidth: 613) {
-            ...GatsbyContentfulSizes_noBase64
+          fluid(maxWidth: 613) {
+            ...GatsbyContentfulFluid_noBase64
           }
         }
       }

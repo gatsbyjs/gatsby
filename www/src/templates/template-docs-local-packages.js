@@ -1,6 +1,8 @@
 import React from "react"
 import _ from "lodash"
 
+import Layout from "../components/layout"
+import PageWithPluginSearchBar from "../components/page-with-plugin-searchbar"
 import PackageReadme from "../components/package-readme"
 
 class DocsLocalPackagesTemplate extends React.Component {
@@ -26,43 +28,47 @@ class DocsLocalPackagesTemplate extends React.Component {
     }
 
     return (
-      <PackageReadme
-        page={markdownRemark ? _.pick(markdownRemark, `parent`) : false}
-        packageName={
-          markdownRemark
-            ? markdownRemark.fields.title
-            : markdownRemarkNotFound.fields.title
-        }
-        excerpt={
-          markdownRemark
-            ? markdownRemark.excerpt
-            : markdownRemarkNotFound.excerpt
-        }
-        html={
-          markdownRemark ? markdownRemark.html : markdownRemarkNotFound.html
-        }
-        githubUrl={`https://github.com/gatsbyjs/gatsby/tree/master/packages/${
-          markdownRemark
-            ? markdownRemark.fields.title
-            : markdownRemarkNotFound.fields.title
-        }`}
-        timeToRead={
-          markdownRemark
-            ? markdownRemark.timeToRead
-            : markdownRemarkNotFound.timeToRead
-        }
-        modified={
-          npmPackage ? npmPackage.modified : npmPackageNotFound.modified
-        }
-        keywords={
-          npmPackage ? npmPackage.keywords : npmPackageNotFound.keywords
-        }
-        lastPublisher={
-          npmPackage
-            ? npmPackage.lastPublisher
-            : npmPackageNotFound.lastPublisher
-        }
-      />
+      <Layout location={this.props.location}>
+        <PageWithPluginSearchBar history={this.props.history}>
+          <PackageReadme
+            page={markdownRemark ? _.pick(markdownRemark, `parent`) : false}
+            packageName={
+              markdownRemark
+                ? markdownRemark.fields.title
+                : markdownRemarkNotFound.fields.title
+            }
+            excerpt={
+              markdownRemark
+                ? markdownRemark.excerpt
+                : markdownRemarkNotFound.excerpt
+            }
+            html={
+              markdownRemark ? markdownRemark.html : markdownRemarkNotFound.html
+            }
+            githubUrl={`https://github.com/gatsbyjs/gatsby/tree/master/packages/${
+              markdownRemark
+                ? markdownRemark.fields.title
+                : markdownRemarkNotFound.fields.title
+            }`}
+            timeToRead={
+              markdownRemark
+                ? markdownRemark.timeToRead
+                : markdownRemarkNotFound.timeToRead
+            }
+            modified={
+              npmPackage ? npmPackage.modified : npmPackageNotFound.modified
+            }
+            keywords={
+              npmPackage ? npmPackage.keywords : npmPackageNotFound.keywords
+            }
+            lastPublisher={
+              npmPackage
+                ? npmPackage.lastPublisher
+                : npmPackageNotFound.lastPublisher
+            }
+          />
+        </PageWithPluginSearchBar>
+      </Layout>
     )
   }
 }

@@ -28,3 +28,7 @@ node_modules
 
 decls
 dist
+cache-dir
+
+# Never ignore the src cache-dir (https://github.com/gatsbyjs/gatsby/pull/5863)
+!/src/cache-dir

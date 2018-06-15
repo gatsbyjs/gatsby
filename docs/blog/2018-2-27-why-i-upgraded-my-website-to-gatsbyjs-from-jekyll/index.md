@@ -51,7 +51,7 @@ For example, I defined a `PostTemplate` which will be used to render pages for a
 ```jsx
 // src/templates/Post.jsx
 
-import React from "react";
+import React from "react"
 
 export default function PostTemplate({
   data: {
@@ -67,7 +67,7 @@ export default function PostTemplate({
       <small>{date}</small>
       <div dangerouslySetInnerHTML={{ __html: html }} />
     </div>
-  );
+  )
 }
 
 export const pageQuery = graphql`
@@ -80,7 +80,7 @@ export const pageQuery = graphql`
       }
     }
   }
-`;
+`
 ```
 
 When the `<PostTemplate />` component needs to be rendered into a page, the accompanying exported `pageQuery`, a GraphQL query is made, and the results are passed in as props into the component.

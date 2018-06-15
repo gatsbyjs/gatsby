@@ -1,57 +1,99 @@
 # gatsby-plugin-less
 
-Adds the ability to load and parse Less-flavored CSS.
+Provides drop-in support for Less stylesheets
 
 ## Install
 
-`npm install --save gatsby-plugin-less`
+`npm install --save less gatsby-plugin-less`
 
 ## How to use
 
-Add the plugin to your `gatsby-config.js`.
+1.  Include the plugin in your `gatsby-config.js` file.
+2.  Write your stylesheets in Less and require or import them as normal.
 
 ```javascript
-module.exports = {
-  plugins: [`gatsby-plugin-less`],
-};
+// in gatsby-config.js
+plugins: [`gatsby-plugin-less`]
 ```
 
-By default this plugin will compile `*.less` and `*.module.less` files. The plugin can also be used with `modifyVars` as it is explained [here](http://lesscss.org/usage/). By defining a javascript object you can overwrite less-variables. This can be useful when using a component library like [antd](https://ant.design/docs/react/introduce).
+If you need to pass options to Less use the plugins options; see [less-loader](https://github.com/webpack-contrib/less-loader)
+for all available options.
 
 ```javascript
-module.exports = {
-  plugins: [
-    {
-      resolve: `gatsby-plugin-less`,
-      options: {
-        theme: {
-          "text-color": `#fff`,
-        },
-      },
+// in gatsby-config.js
+plugins: [
+  {
+    resolve: `gatsby-plugin-less`,
+    options: {
+      strictMath: true,
     },
-  ],
-};
+  },
+]
 ```
 
-Or you can specify a file which exports a object in the same form.
+### With CSS Modules
+
+Using CSS modules requires no additional configuration. Simply prepend `.module` to the extension. For example: `App.less` -> `App.module.less`.
+Any file with the `module` extension will use CSS modules.
+
+### PostCSS plugins
+
+PostCSS is also included to handle some default optimizations like autoprefixing a
+and common cross-browser flexbox bugs. Normally you don't need to think about it, but if
+you'd prefer to add additional postprocessing to your Less output you can sepecify plugins
+in the plugin options
 
 ```javascript
-module.exports = {
-  plugins: [
-    {
-      resolve: `gatsby-plugin-less`,
-      options: {
-        theme: `./src/theme.js`,
-      },
+// in gatsby-config.js
+plugins: [
+  {
+    resolve: `gatsby-plugin-less`,
+    options: {
+      postCssPlugins: [somePostCssPlugin()],
     },
-  ],
-};
+  },
+]
 ```
 
-In file `./src/theme.js`:
+## Breaking changes history
 
-```javascript
-module.exports = {
-  "text-color": `#fff`,
-};
+<!-- Please keep the breaking changes list ordered with the newest change at the top -->
+
+### v2.0.0
+
+- `less` is moved to a peer dependency. Installing the package
+alongside `gatsby-plugin-less` is now required. Use `npm install --save less`
+
+- support Gatsby v2 only
+
+- `theme` option has been removed. You can pass configuration object to less-loader:
+
+```diff
+plugins: [
+  {
+    resolve: `gatsby-plugin-less`,
+    options: {
+-      theme: {
+-        "text-color": `#fff`,
+-      }
++      modifyVars: {
++        "text-color": `#fff`,
++      }
+    },
+  },
+]
 ```
+
+```diff
+plugins: [
+  {
+    resolve: `gatsby-plugin-less`,
+    options: {
+-      theme: `./src/theme.js`,
++      modifyVars: require(`./src/theme.js`),
+    },
+  },
+]
+```
+
+

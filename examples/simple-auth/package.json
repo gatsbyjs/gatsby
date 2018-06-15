@@ -4,22 +4,23 @@
   "version": "1.0.0",
   "author": "Jason Lengstorf <jason@lengstorf.com>",
   "dependencies": {
-    "gatsby": "latest",
-    "gatsby-link": "latest",
-    "gatsby-plugin-react-helmet": "latest",
+    "gatsby": "next",
+    "gatsby-link": "next",
+    "gatsby-plugin-react-helmet": "next",
     "prop-types": "^15.6.1",
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0",
     "react-helmet": "^5.2.0",
     "react-router-dom": "^4.2.2"
   },
-  "keywords": ["gatsby"],
+  "keywords": [
+    "gatsby"
+  ],
   "license": "MIT",
   "scripts": {
     "build": "gatsby build",
     "develop": "gatsby develop",
     "format": "prettier --write 'src/**/*.js'",
     "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "devDependencies": {
-    "prettier": "^1.11.1"
   }
 }

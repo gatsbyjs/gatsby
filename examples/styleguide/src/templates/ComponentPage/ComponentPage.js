@@ -6,7 +6,7 @@ import Example from "./components/Example"
 
 class ComponentPage extends React.Component {
   render() {
-    const { displayName, props, html, description } = this.props.pathContext
+    const { displayName, props, html, description } = this.props.pageContext
 
     return (
       <div>
@@ -43,7 +43,7 @@ class ComponentPage extends React.Component {
 }
 
 ComponentPage.propTypes = {
-  pathContext: PropTypes.shape({
+  pageContext: PropTypes.shape({
     displayName: PropTypes.string.isRequired,
     props: PropTypes.array.isRequired,
     html: PropTypes.string.isRequired,

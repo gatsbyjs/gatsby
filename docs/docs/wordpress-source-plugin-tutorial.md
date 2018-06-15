@@ -2,19 +2,19 @@
 title: "Wordpress Source Plugin Tutorial"
 ---
 
-## How to create a site with data pulled from WordPress 
+## How to create a site with data pulled from WordPress
 
-## What this tutorial covers:
+### What this tutorial covers:
 
-In this tutorial, you will install the `gatsby-source-wordpress` plugin in order to pull blog and image data from a WordPress install into your Gatsby site and render that data. This [Gatsby + Wordpress demo site](https://using-wordpress.gatsbyjs.org/) shows you a sample of what you’re going to be building in this tutorial., although it’s missing the cool images you’ll be adding :D
+In this tutorial, you will install the `gatsby-source-wordpress` plugin in order to pull blog and image data from a WordPress install into your Gatsby site and render that data. This [Gatsby + Wordpress demo site](https://using-wordpress.gatsbyjs.org/) shows you a sample of what you’re going to be building in this tutorial, although it’s missing the cool images you’ll be adding :D
 
-## Why go through this tutorial? 
+### Why go through this tutorial?
 
 While each source plugin may operate differently from others, it’s worth going through this tutorial because you will almost definitely be using a source plugin in most Gatsby sites you build. This tutorial will walk you through the basics of connecting your Gatsby site to a CMS, pulling in data, and using React to render that data in beautiful ways on your site.
 
 If you’d like to look at the growing number source plugins available to you, search for “source” in the [Gatsby plugin library](/plugins/?=source).
 
-## Creating a site with the `gatsby-source-wordpress` plugin
+### Creating a site with the `gatsby-source-wordpress` plugin
 
 Create a new Gatsby project and change directories into the new project you just created:
 
@@ -29,7 +29,7 @@ Install the `gatsby-source-wordpress` plugin. For extra reading on the plugin’
 npm install --save gatsby-source-wordpress
 ```
 
-Add the `gatsby-source-wordpress` plugin to `gatsby-config.js` using the following code, which you can also find in the [demo site’s source code](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-wordpress/gatsby-config.js). 
+Add the `gatsby-source-wordpress` plugin to `gatsby-config.js` using the following code, which you can also find in the [demo site’s source code](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-wordpress/gatsby-config.js).
 
 ```js{32-58}
  module.exports = {
@@ -66,7 +66,7 @@ Add the `gatsby-source-wordpress` plugin to `gatsby-config.js` using the followi
 }
 ```
 
-## Creating GraphQL queries that pull data from WordPress
+### Creating GraphQL queries that pull data from WordPress
 
 Now you are ready to create a GraphQL query to pull in some data from the WordPress site. You will create a query that pulls in the title of the blogposts, date they were posted, and blogpost content.
 
@@ -76,7 +76,7 @@ Run:
 gatsby develop
 ```
 
-In your browser, open localhost:8000 to see your site, and open localhost:8000/___graphql iso that you can create your GraphQL queries. 
+In your browser, open localhost:8000 to see your site, and open localhost:8000/___graphql so that you can create your GraphQL queries.
 
 As an exercise, try re-creating the following queries in your GraphiQL explorer. This first query will pull in the blogpost content from WordPress:
 
@@ -114,7 +114,7 @@ This next query will pull in a sorted list of the blogposts:
 ```
 
 
-## Rendering the blogposts to `index.js`
+### Rendering the blogposts to `index.js`
 
 Now that you've created GraphQL queries that pull in the data you want, we'll use that second query to create a list of sorted blogpost titles on your site's homepage. Here is what your `index.js` should look like:
 
@@ -155,5 +155,5 @@ Save these changes and look at localhost:8000 to see your new homepage with list
 
 > **NOTE:** to future editors: it would be useful to also have examples of how to load blogposts to their own individual pages. And helpful to insert a screenshot of the final result here
 
-## Create slugs for each blogpost
+### Create slugs for each blogpost
 [Part 7](/tutorial/part-seven/) of the foundational tutorial goes through this process.

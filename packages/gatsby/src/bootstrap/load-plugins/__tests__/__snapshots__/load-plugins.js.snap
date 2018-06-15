@@ -18,24 +18,10 @@ Array [
   },
   Object {
     "browserAPIs": Array [],
-    "id": "Plugin component-page-creator",
-    "name": "component-page-creator",
+    "id": "Plugin load-babel-config",
+    "name": "load-babel-config",
     "nodeAPIs": Array [
-      "createPagesStatefully",
-    ],
-    "pluginOptions": Object {
-      "plugins": Array [],
-    },
-    "resolve": "",
-    "ssrAPIs": Array [],
-    "version": "1.0.0",
-  },
-  Object {
-    "browserAPIs": Array [],
-    "id": "Plugin component-layout-creator",
-    "name": "component-layout-creator",
-    "nodeAPIs": Array [
-      "createLayouts",
+      "onCreateBabelConfig",
     ],
     "pluginOptions": Object {
       "plugins": Array [],
@@ -79,7 +65,6 @@ Array [
     "name": "query-runner",
     "nodeAPIs": Array [
       "onCreatePage",
-      "onCreateLayout",
     ],
     "pluginOptions": Object {
       "plugins": Array [],
@@ -98,7 +83,23 @@ Array [
     },
     "resolve": "",
     "ssrAPIs": Array [],
-    "version": "d41d8cd98f00b204e9800998ecf8427e",
+    "version": "1.0.0",
+  },
+  Object {
+    "browserAPIs": Array [],
+    "id": "Plugin gatsby-plugin-page-creator",
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "pluginOptions": Object {
+      "path": "/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [],
+    "version": "1.0.0",
   },
 ]
 `;
@@ -121,24 +122,10 @@ Array [
   },
   Object {
     "browserAPIs": Array [],
-    "id": "Plugin component-page-creator",
-    "name": "component-page-creator",
+    "id": "Plugin load-babel-config",
+    "name": "load-babel-config",
     "nodeAPIs": Array [
-      "createPagesStatefully",
-    ],
-    "pluginOptions": Object {
-      "plugins": Array [],
-    },
-    "resolve": "",
-    "ssrAPIs": Array [],
-    "version": "1.0.0",
-  },
-  Object {
-    "browserAPIs": Array [],
-    "id": "Plugin component-layout-creator",
-    "name": "component-layout-creator",
-    "nodeAPIs": Array [
-      "createLayouts",
+      "onCreateBabelConfig",
     ],
     "pluginOptions": Object {
       "plugins": Array [],
@@ -182,7 +169,6 @@ Array [
     "name": "query-runner",
     "nodeAPIs": Array [
       "onCreatePage",
-      "onCreateLayout",
     ],
     "pluginOptions": Object {
       "plugins": Array [],
@@ -200,6 +186,7 @@ Array [
     },
     "resolve": "",
     "ssrAPIs": Array [],
+    "version": "1.0.0",
   },
   Object {
     "browserAPIs": Array [],
@@ -211,7 +198,23 @@ Array [
     },
     "resolve": "",
     "ssrAPIs": Array [],
-    "version": "d41d8cd98f00b204e9800998ecf8427e",
+    "version": "1.0.0",
+  },
+  Object {
+    "browserAPIs": Array [],
+    "id": "Plugin gatsby-plugin-page-creator",
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "pluginOptions": Object {
+      "path": "/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [],
+    "version": "1.0.0",
   },
 ]
 `;

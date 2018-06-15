@@ -1,5 +1,4 @@
 /* @flow */
-const Promise = require(`bluebird`)
 
 const _ = require(`lodash`)
 const slash = require(`slash`)
@@ -57,17 +56,15 @@ module.exports = async (args: BootstrapArgs) => {
     payload: program,
   })
 
-  // Delete html and css files from the public directory as we don't want
-  // deleted pages and styles from previous builds to stick around.
-  let activity = report.activityTimer(
-    `delete html and css files from previous builds`
-  )
+  // Delete html files from the public directory as we don't want deleted
+  // pages from previous builds to stick around.
+  let activity = report.activityTimer(`delete html files from previous builds`)
   activity.start()
   await del([
-    `public/*.{html,css}`,
-    `public/**/*.{html,css}`,
+    `public/*.htm}`,
+    `public/**/*.html`,
     `!public/static`,
-    `!public/static/**/*.{html,css}`,
+    `!public/static/**/*.html`,
   ])
   activity.end()
 
@@ -77,6 +74,12 @@ module.exports = async (args: BootstrapArgs) => {
   const config = await preferDefault(
     getConfigFile(program.directory, `gatsby-config`)
   )
+
+  if (config && config.polyfill) {
+    report.warn(
+      `Support for custom Promise polyfills has been removed in Gatsby v2. We only support Babel 7's new automatic polyfilling behavior.`
+    )
+  }
 
   store.dispatch({
     type: `SET_SITE_CONFIG`,
@@ -149,7 +152,7 @@ module.exports = async (args: BootstrapArgs) => {
   initCache()
 
   // Ensure the public/static directory is created.
-  await fs.ensureDirSync(`${program.directory}/public/static`)
+  await fs.ensureDirSync(`${program.directory}/public/static/d`)
 
   // Copy our site files to the root of the site.
   activity = report.activityTimer(`copy gatsby files`)
@@ -163,7 +166,6 @@ module.exports = async (args: BootstrapArgs) => {
       clobber: true,
     })
     await fs.ensureDirSync(`${program.directory}/.cache/json`)
-    await fs.ensureDirSync(`${program.directory}/.cache/layouts`)
 
     // Ensure .cache/fragments exists and is empty. We want fragments to be
     // added on every run in response to data as fragments can only be added if
@@ -206,17 +208,6 @@ module.exports = async (args: BootstrapArgs) => {
     plugin => plugin.resolve
   )
 
-  let browserAPIRunner = ``
-
-  try {
-    browserAPIRunner = fs.readFileSync(
-      `${siteDir}/api-runner-browser.js`,
-      `utf-8`
-    )
-  } catch (err) {
-    report.panic(`Failed to read ${siteDir}/api-runner-browser.js`, err)
-  }
-
   const browserPluginsRequires = browserPlugins
     .map(
       plugin =>
@@ -227,7 +218,7 @@ module.exports = async (args: BootstrapArgs) => {
     )
     .join(`,`)
 
-  browserAPIRunner = `var plugins = [${browserPluginsRequires}]\n${browserAPIRunner}`
+  const browserAPIRunner = `module.exports = [${browserPluginsRequires}]\n`
 
   let sSRAPIRunner = ``
 
@@ -249,7 +240,7 @@ module.exports = async (args: BootstrapArgs) => {
   sSRAPIRunner = `var plugins = [${ssrPluginsRequires}]\n${sSRAPIRunner}`
 
   fs.writeFileSync(
-    `${siteDir}/api-runner-browser.js`,
+    `${siteDir}/api-runner-browser-plugins.js`,
     browserAPIRunner,
     `utf-8`
   )
@@ -295,16 +286,6 @@ module.exports = async (args: BootstrapArgs) => {
     const schema = store.getState().schema
     return graphql(schema, query, context, context, context)
   }
-
-  // Collect layouts.
-  activity = report.activityTimer(`createLayouts`)
-  activity.start()
-  await apiRunnerNode(`createLayouts`, {
-    graphql: graphqlRunner,
-    traceId: `initial-createLayouts`,
-    waitForCascadingActions: true,
-  })
-  activity.end()
 
   // Collect pages.
   activity = report.activityTimer(`createPages`)
@@ -402,6 +383,7 @@ module.exports = async (args: BootstrapArgs) => {
     report.log(``)
     report.info(`bootstrap finished - ${process.uptime()} s`)
     report.log(``)
+    emitter.emit(`BOOTSTRAP_FINISHED`)
     return { graphqlRunner }
   } else {
     return new Promise(resolve => {

@@ -5,13 +5,45 @@ const crypto = require(`crypto`)
 // Traverse is a es6 module...
 import traverse from "babel-traverse"
 const babylon = require(`babylon`)
-
+const getGraphQLTag = require(`babel-plugin-remove-graphql-queries`)
+  .getGraphQLTag
 const report = require(`gatsby-cli/lib/reporter`)
-const { getGraphQLTag } = require(`../../utils/babel-plugin-extract-graphql`)
 
 import type { DocumentNode, DefinitionNode } from "graphql"
 
 const apiRunnerNode = require(`../../utils/api-runner-node`)
+
+const BABYLON_OPTIONS = {
+  allowImportExportEverywhere: true,
+  allowReturnOutsideFunction: true,
+  allowSuperOutsideMethod: true,
+  sourceType: `unambigious`,
+  sourceFilename: true,
+  plugins: [
+    `jsx`,
+    `flow`,
+    `doExpressions`,
+    `objectRestSpread`,
+    `decorators`,
+    `classProperties`,
+    `classPrivateProperties`,
+    `classPrivateMethods`,
+    `exportDefaultFrom`,
+    `exportNamespaceFrom`,
+    `asyncGenerators`,
+    `functionBind`,
+    `functionSent`,
+    `dynamicImport`,
+    `numericSeparator`,
+    `optionalChaining`,
+    `importMeta`,
+    `bigInt`,
+    `optionalCatchBinding`,
+    `throwExpressions`,
+    `pipelineOperator`,
+    `nullishCoalescingOperator`,
+  ],
+}
 
 const getMissingNameErrorMessage = file => report.stripIndent`
   GraphQL definitions must be "named".
@@ -44,10 +76,7 @@ async function parseToAst(filePath, fileStr) {
   if (transpiled && transpiled.length) {
     for (const item of transpiled) {
       try {
-        const tmp = babylon.parse(item, {
-          sourceType: `module`,
-          plugins: [`*`],
-        })
+        const tmp = babylon.parse(item, BABYLON_OPTIONS)
         ast = tmp
         break
       } catch (error) {
@@ -60,17 +89,13 @@ async function parseToAst(filePath, fileStr) {
     }
   } else {
     try {
-      ast = babylon.parse(fileStr, {
-        sourceType: `module`,
-        sourceFilename: true,
-        plugins: [`*`],
-      })
+      ast = babylon.parse(fileStr, BABYLON_OPTIONS)
     } catch (error) {
       report.error(
         `There was a problem parsing "${filePath}"; any GraphQL ` +
           `fragments or queries in this file were not processed. \n` +
           `This may indicate a syntax error in the code, or it may be a file type ` +
-          `That Gatsby does not know how to parse.`
+          `that Gatsby does not know how to parse.`
       )
     }
   }
@@ -88,11 +113,45 @@ async function findGraphQLTags(file, text): Promise<Array<DefinitionNode>> {
           return
         }
 
+        // Look for queries in <StaticQuery /> elements.
+        traverse(ast, {
+          TaggedTemplateExpression(path) {
+            if (
+              (`descendant of query`,
+              path?.parentPath?.parentPath?.node?.name?.name !== `query`)
+            ) {
+              return
+            }
+            if (
+              path.parentPath?.parentPath?.parentPath?.node?.name?.name !==
+              `StaticQuery`
+            ) {
+              return
+            }
+            const { ast: gqlAst, text, hash } = getGraphQLTag(path)
+            if (gqlAst) {
+              gqlAst.definitions.forEach(def => {
+                if (!def.name || !def.name.value) {
+                  report.panic(getMissingNameErrorMessage(file))
+                }
+              })
+            }
+            const definitions = [...gqlAst.definitions].map(d => {
+              d.isStaticQuery = true
+              d.text = text
+              d.hash = hash
+              return d
+            })
+            queries.push(...definitions)
+          },
+        })
+
+        // Look for exported page queries
         traverse(ast, {
           ExportNamedDeclaration(path, state) {
             path.traverse({
               TaggedTemplateExpression(innerPath) {
-                const gqlAst = getGraphQLTag(innerPath)
+                const { ast: gqlAst } = getGraphQLTag(innerPath)
                 if (gqlAst) {
                   gqlAst.definitions.forEach(def => {
                     if (!def.name || !def.name.value) {

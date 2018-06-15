@@ -32,15 +32,10 @@ exports.setFieldsOnGraphQLNodeType = require(`./extend-node-type`).extendNodeTyp
  */
 
 exports.sourceNodes = async (
-  { boundActionCreators, getNode, getNodes, hasNodeChanged, store },
+  { actions, getNode, getNodes, createNodeId, hasNodeChanged, store },
   { spaceId, accessToken, host, environment }
 ) => {
-  const {
-    createNode,
-    deleteNode,
-    touchNode,
-    setPluginStatus,
-  } = boundActionCreators
+  const { createNode, deleteNode, touchNode, setPluginStatus } = actions
 
   host = host || `cdn.contentful.com`
   environment = environment || `master` // default is always master
@@ -77,17 +72,27 @@ exports.sourceNodes = async (
   // Remove deleted entries & assets.
   // TODO figure out if entries referencing now deleted entries/assets
   // are "updated" so will get the now deleted reference removed.
+
+  function deleteContentfulNode (node) {
+    const localizedNodes = locales
+      .map((locale) => {
+        const nodeId = createNodeId(normalize.makeId({ id: node.sys.id, currentLocale: locale.code, defaultLocale }))
+        return getNode(nodeId)
+      })
+      .filter(node => node)
+
+    localizedNodes.forEach(node => deleteNode({ node }))
+  }
+
   currentSyncData.deletedEntries
-    .map(e => e.sys.id)
-    .forEach(id => deleteNode(id, getNode(id)))
+    .forEach(deleteContentfulNode)
   currentSyncData.deletedAssets
-    .map(e => e.sys.id)
-    .forEach(id => deleteNode(id, getNode(id)))
+    .forEach(deleteContentfulNode)
 
   const existingNodes = getNodes().filter(
     n => n.internal.owner === `gatsby-source-contentful`
   )
-  existingNodes.forEach(n => touchNode(n.id))
+  existingNodes.forEach(n => touchNode({ nodeId: n.id }))
 
   const assets = currentSyncData.assets
 
@@ -164,6 +169,7 @@ exports.sourceNodes = async (
       conflictFieldPrefix,
       entries: entryList[i],
       createNode,
+      createNodeId,
       resolvable,
       foreignReferenceMap,
       defaultLocale,
@@ -175,6 +181,7 @@ exports.sourceNodes = async (
     normalize.createAssetNodes({
       assetItem,
       createNode,
+      createNodeId,
       defaultLocale,
       locales,
     })
@@ -192,11 +199,7 @@ exports.onPreBootstrap = async ({ store }) => {
 // Check if there are any ContentfulAsset nodes and if gatsby-image is installed. If so,
 // add fragments for ContentfulAsset and gatsby-image. The fragment will cause an error
 // if there's not ContentfulAsset nodes and without gatsby-image, the fragment is useless.
-exports.onPreExtractQueries = async ({
-  store,
-  getNodes,
-  boundActionCreators,
-}) => {
+exports.onPreExtractQueries = async ({ store, getNodes }) => {
   const program = store.getState().program
 
   const nodes = getNodes()

@@ -1,4 +1,4 @@
-import colors from "./colors"
+const colors = require(`./colors`).default
 
 module.exports = {
   colors: colors,

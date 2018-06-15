@@ -71,8 +71,8 @@ const makeId = ({ id, currentLocale, defaultLocale }) =>
 
 exports.makeId = makeId
 
-const makeMakeId = ({ currentLocale, defaultLocale }) => id =>
-  makeId({ id, currentLocale, defaultLocale })
+const makeMakeId = ({ currentLocale, defaultLocale, createNodeId }) => id =>
+  createNodeId(makeId({ id, currentLocale, defaultLocale }))
 
 exports.buildEntryList = ({ contentTypeItems, currentSyncData }) =>
   contentTypeItems.map(contentType =>
@@ -164,10 +164,10 @@ exports.buildForeignReferenceMap = ({
   return foreignReferenceMap
 }
 
-function prepareTextNode(node, key, text) {
+function prepareTextNode(node, key, text, createNode, createNodeId) {
   const str = _.isString(text) ? text : ` `
   const textNode = {
-    id: `${node.id}${key}TextNode`,
+    id: createNodeId(`${node.id}${key}TextNode`),
     parent: node.id,
     children: [],
     [key]: str,
@@ -184,11 +184,11 @@ function prepareTextNode(node, key, text) {
   return textNode
 }
 
-function prepareJSONNode(node, key, content, i = ``) {
+function prepareJSONNode(node, key, content, createNodeId, i = ``) {
   const str = JSON.stringify(content)
   const JSONNode = {
     ...content,
-    id: `${node.id}${key}${i}JSONNode`,
+    id: createNodeId(`${node.id}${key}${i}JSONNode`),
     parent: node.id,
     children: [],
     internal: {
@@ -210,6 +210,7 @@ exports.createContentTypeNodes = ({
   conflictFieldPrefix,
   entries,
   createNode,
+  createNodeId,
   resolvable,
   foreignReferenceMap,
   defaultLocale,
@@ -218,7 +219,11 @@ exports.createContentTypeNodes = ({
   const contentTypeItemId = contentTypeItem.name
   locales.forEach(locale => {
     const localesFallback = buildFallbackChain(locales)
-    const mId = makeMakeId({ currentLocale: locale.code, defaultLocale })
+    const mId = makeMakeId({
+      currentLocale: locale.code,
+      defaultLocale,
+      createNodeId,
+    })
     const getField = makeGetLocalizedField({
       locale,
       localesFallback,
@@ -355,7 +360,9 @@ exports.createContentTypeNodes = ({
           const textNode = prepareTextNode(
             entryNode,
             entryItemFieldKey,
-            entryItemFields[entryItemFieldKey]
+            entryItemFields[entryItemFieldKey],
+            createNode,
+            createNodeId
           )
 
           childrenNodes.push(textNode)
@@ -366,7 +373,8 @@ exports.createContentTypeNodes = ({
           const jsonNode = prepareJSONNode(
             entryNode,
             entryItemFieldKey,
-            entryItemFields[entryItemFieldKey]
+            entryItemFields[entryItemFieldKey],
+            createNodeId
           )
 
           childrenNodes.push(jsonNode)
@@ -381,6 +389,7 @@ exports.createContentTypeNodes = ({
               entryNode,
               entryItemFieldKey,
               obj,
+              createNodeId,
               i
             )
 
@@ -404,7 +413,7 @@ exports.createContentTypeNodes = ({
 
     // Create a node for each content type
     const contentTypeNode = {
-      id: contentTypeItemId,
+      id: createNodeId(contentTypeItemId),
       parent: null,
       children: [],
       name: contentTypeItem.name,
@@ -433,12 +442,17 @@ exports.createContentTypeNodes = ({
 exports.createAssetNodes = ({
   assetItem,
   createNode,
+  createNodeId,
   defaultLocale,
   locales,
 }) => {
   locales.forEach(locale => {
     const localesFallback = buildFallbackChain(locales)
-    const mId = makeMakeId({ currentLocale: locale.code, defaultLocale })
+    const mId = makeMakeId({
+      currentLocale: locale.code,
+      defaultLocale,
+      createNodeId,
+    })
     const getField = makeGetLocalizedField({
       locale,
       localesFallback,

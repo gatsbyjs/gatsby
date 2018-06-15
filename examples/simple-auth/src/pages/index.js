@@ -1,10 +1,11 @@
 import React from "react"
-import Link from "gatsby-link"
+import { Link } from "gatsby"
+import Layout from "../components/Layout"
 import View from "../components/View"
 import Status from "../components/Status"
 
 const Index = () => (
-  <div>
+  <Layout>
     <Status />
     <View title="Simple Authentication Example">
       <p>
@@ -21,7 +22,7 @@ const Index = () => (
         <Link to="/app/profile">your profile</Link>.
       </p>
     </View>
-  </div>
+  </Layout>
 )
 
 export default Index

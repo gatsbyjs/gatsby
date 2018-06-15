@@ -1,0 +1,613 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Babelrc actions/reducer allows adding a new plugin 1`] = `
+Object {
+  "stages": Object {
+    "build-html": Object {
+      "options": Object {
+        "babelrc": false,
+        "cacheDirectory": true,
+        "sourceType": "unambiguous",
+      },
+      "plugins": Array [
+        Object {
+          "name": "test-babel-plugin",
+          "options": Object {},
+        },
+      ],
+      "presets": Array [],
+    },
+    "build-javascript": Object {
+      "options": Object {
+        "babelrc": false,
+        "cacheDirectory": true,
+        "sourceType": "unambiguous",
+      },
+      "plugins": Array [
+        Object {
+          "name": "test-babel-plugin",
+          "options": Object {},
+        },
+      ],
+      "presets": Array [],
+    },
+    "develop": Object {
+      "options": Object {
+        "babelrc": false,
+        "cacheDirectory": true,
+        "sourceType": "unambiguous",
+      },
+      "plugins": Array [
+        Object {
+          "name": "test-babel-plugin",
+          "options": Object {},
+        },
+      ],
+      "presets": Array [],
+    },
+    "develop-html": Object {
+      "options": Object {
+        "babelrc": false,
+        "cacheDirectory": true,
+        "sourceType": "unambiguous",
+      },
+      "plugins": Array [
+        Object {
+          "name": "test-babel-plugin",
+          "options": Object {},
+        },
+      ],
+      "presets": Array [],
+    },
+  },
+}
+`;
+
+exports[`Babelrc actions/reducer allows adding a new preset 1`] = `
+Object {
+  "stages": Object {
+    "build-html": Object {
+      "options": Object {
+        "babelrc": false,
+        "cacheDirectory": true,
+        "sourceType": "unambiguous",
+      },
+      "plugins": Array [],
+      "presets": Array [
+        Object {
+          "name": "test-babel-preset",
+          "options": Object {},
+        },
+      ],
+    },
+    "build-javascript": Object {
+      "options": Object {
+        "babelrc": false,
+        "cacheDirectory": true,
+        "sourceType": "unambiguous",
+      },
+      "plugins": Array [],
+      "presets": Array [
+        Object {
+          "name": "test-babel-preset",
+          "options": Object {},
+        },
+      ],
+    },
+    "develop": Object {
+      "options": Object {
+        "babelrc": false,
+        "cacheDirectory": true,
+        "sourceType": "unambiguous",
+      },
+      "plugins": Array [],
+      "presets": Array [
+        Object {
+          "name": "test-babel-preset",
+          "options": Object {},
+        },
+      ],
+    },
+    "develop-html": Object {
+      "options": Object {
+        "babelrc": false,
+        "cacheDirectory": true,
+        "sourceType": "unambiguous",
+      },
+      "plugins": Array [],
+      "presets": Array [
+        Object {
+          "name": "test-babel-preset",
+          "options": Object {},
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`Babelrc actions/reducer handles custom .babelrc files 1`] = `
+Object {
+  "stages": Object {
+    "build-html": Object {
+      "options": Object {
+        "babelrc": false,
+        "cacheDirectory": true,
+        "sourceType": "unambiguous",
+      },
+      "plugins": Array [
+        Object {
+          "name": "@babel/plugin-proposal/class-properties",
+          "options": Object {
+            "loose": true,
+          },
+        },
+        Object {
+          "name": "@babel/plugin-syntax-dynamic-import",
+          "options": Object {},
+        },
+        Object {
+          "name": "@babel/plugin-transform-runtime",
+          "options": Object {
+            "helpers": true,
+            "polyfill": false,
+            "regenerator": true,
+          },
+        },
+      ],
+      "presets": Array [
+        Object {
+          "name": "@babel/preset-env",
+          "options": Object {
+            "loose": true,
+            "modules": false,
+            "shippedProposals": true,
+            "sourceType": "unambiguous",
+            "targets": Object {
+              "browsers": Array [
+                "> 1%",
+                "IE >= 9",
+                "last 2 versions",
+              ],
+            },
+            "useBuiltIns": "usage",
+          },
+        },
+        Object {
+          "name": "@babel/preset-react",
+          "options": Object {
+            "pragma": "React.createElement",
+            "useBuiltIns": true,
+          },
+        },
+        Object {
+          "name": "@babel/preset-flow",
+          "options": Object {},
+        },
+      ],
+    },
+    "build-javascript": Object {
+      "options": Object {
+        "babelrc": false,
+        "cacheDirectory": true,
+        "sourceType": "unambiguous",
+      },
+      "plugins": Array [
+        Object {
+          "name": "@babel/plugin-proposal/class-properties",
+          "options": Object {
+            "loose": true,
+          },
+        },
+        Object {
+          "name": "@babel/plugin-syntax-dynamic-import",
+          "options": Object {},
+        },
+        Object {
+          "name": "@babel/plugin-transform-runtime",
+          "options": Object {
+            "helpers": true,
+            "polyfill": false,
+            "regenerator": true,
+          },
+        },
+      ],
+      "presets": Array [
+        Object {
+          "name": "@babel/preset-env",
+          "options": Object {
+            "loose": true,
+            "modules": false,
+            "shippedProposals": true,
+            "sourceType": "unambiguous",
+            "targets": Object {
+              "browsers": Array [
+                "> 1%",
+                "IE >= 9",
+                "last 2 versions",
+              ],
+            },
+            "useBuiltIns": "usage",
+          },
+        },
+        Object {
+          "name": "@babel/preset-react",
+          "options": Object {
+            "pragma": "React.createElement",
+            "useBuiltIns": true,
+          },
+        },
+        Object {
+          "name": "@babel/preset-flow",
+          "options": Object {},
+        },
+      ],
+    },
+    "develop": Object {
+      "options": Object {
+        "babelrc": false,
+        "cacheDirectory": true,
+        "sourceType": "unambiguous",
+      },
+      "plugins": Array [
+        Object {
+          "name": "@babel/plugin-proposal/class-properties",
+          "options": Object {
+            "loose": true,
+          },
+        },
+        Object {
+          "name": "@babel/plugin-syntax-dynamic-import",
+          "options": Object {},
+        },
+        Object {
+          "name": "@babel/plugin-transform-runtime",
+          "options": Object {
+            "helpers": true,
+            "polyfill": false,
+            "regenerator": true,
+          },
+        },
+      ],
+      "presets": Array [
+        Object {
+          "name": "@babel/preset-env",
+          "options": Object {
+            "loose": true,
+            "modules": false,
+            "shippedProposals": true,
+            "sourceType": "unambiguous",
+            "targets": Object {
+              "browsers": Array [
+                "> 1%",
+                "IE >= 9",
+                "last 2 versions",
+              ],
+            },
+            "useBuiltIns": "usage",
+          },
+        },
+        Object {
+          "name": "@babel/preset-react",
+          "options": Object {
+            "pragma": "React.createElement",
+            "useBuiltIns": true,
+          },
+        },
+        Object {
+          "name": "@babel/preset-flow",
+          "options": Object {},
+        },
+      ],
+    },
+    "develop-html": Object {
+      "options": Object {
+        "babelrc": false,
+        "cacheDirectory": true,
+        "sourceType": "unambiguous",
+      },
+      "plugins": Array [
+        Object {
+          "name": "@babel/plugin-proposal/class-properties",
+          "options": Object {
+            "loose": true,
+          },
+        },
+        Object {
+          "name": "@babel/plugin-syntax-dynamic-import",
+          "options": Object {},
+        },
+        Object {
+          "name": "@babel/plugin-transform-runtime",
+          "options": Object {
+            "helpers": true,
+            "polyfill": false,
+            "regenerator": true,
+          },
+        },
+      ],
+      "presets": Array [
+        Object {
+          "name": "@babel/preset-env",
+          "options": Object {
+            "loose": true,
+            "modules": false,
+            "shippedProposals": true,
+            "sourceType": "unambiguous",
+            "targets": Object {
+              "browsers": Array [
+                "> 1%",
+                "IE >= 9",
+                "last 2 versions",
+              ],
+            },
+            "useBuiltIns": "usage",
+          },
+        },
+        Object {
+          "name": "@babel/preset-react",
+          "options": Object {
+            "pragma": "React.createElement",
+            "useBuiltIns": true,
+          },
+        },
+        Object {
+          "name": "@babel/preset-flow",
+          "options": Object {},
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`Babelrc actions/reducer sets default presets/plugins if there's no userland babelrc 1`] = `
+Object {
+  "stages": Object {
+    "build-html": Object {
+      "options": Object {
+        "babelrc": false,
+        "cacheDirectory": true,
+        "sourceType": "unambiguous",
+      },
+      "plugins": Array [
+        Object {
+          "name": "@babel/plugin-proposal-class-properties",
+          "options": Object {
+            "loose": true,
+          },
+          "stage": "build-html",
+        },
+        Object {
+          "name": "@babel/plugin-syntax-dynamic-import",
+          "options": Object {},
+          "stage": "build-html",
+        },
+        Object {
+          "name": "@babel/plugin-transform-runtime",
+          "options": Object {
+            "helpers": true,
+            "polyfill": false,
+            "regenerator": true,
+          },
+          "stage": "build-html",
+        },
+      ],
+      "presets": Array [
+        Object {
+          "name": "@babel/preset-env",
+          "options": Object {
+            "loose": true,
+            "modules": false,
+            "targets": Object {
+              "node": "current",
+            },
+            "useBuiltIns": "usage",
+          },
+          "stage": "build-html",
+        },
+        Object {
+          "name": "@babel/preset-react",
+          "options": Object {
+            "development": false,
+            "pragma": "React.createElement",
+            "useBuiltIns": true,
+          },
+          "stage": "build-html",
+        },
+        Object {
+          "name": "@babel/preset-flow",
+          "options": Object {},
+          "stage": "build-html",
+        },
+      ],
+    },
+    "build-javascript": Object {
+      "options": Object {
+        "babelrc": false,
+        "cacheDirectory": true,
+        "sourceType": "unambiguous",
+      },
+      "plugins": Array [],
+      "presets": Array [],
+    },
+    "develop": Object {
+      "options": Object {
+        "babelrc": false,
+        "cacheDirectory": true,
+        "sourceType": "unambiguous",
+      },
+      "plugins": Array [
+        Object {
+          "name": "@babel/plugin-proposal-class-properties",
+          "options": Object {
+            "loose": true,
+          },
+          "stage": "develop",
+        },
+        Object {
+          "name": "@babel/plugin-syntax-dynamic-import",
+          "options": Object {},
+          "stage": "develop",
+        },
+        Object {
+          "name": "@babel/plugin-transform-runtime",
+          "options": Object {
+            "helpers": true,
+            "polyfill": false,
+            "regenerator": true,
+          },
+          "stage": "develop",
+        },
+      ],
+      "presets": Array [
+        Object {
+          "name": "@babel/preset-env",
+          "options": Object {
+            "loose": true,
+            "modules": false,
+            "targets": Object {
+              "browsers": Object {},
+            },
+            "useBuiltIns": "usage",
+          },
+          "stage": "develop",
+        },
+        Object {
+          "name": "@babel/preset-react",
+          "options": Object {
+            "development": true,
+            "pragma": "React.createElement",
+            "useBuiltIns": true,
+          },
+          "stage": "develop",
+        },
+        Object {
+          "name": "@babel/preset-flow",
+          "options": Object {},
+          "stage": "develop",
+        },
+      ],
+    },
+    "develop-html": Object {
+      "options": Object {
+        "babelrc": false,
+        "cacheDirectory": true,
+        "sourceType": "unambiguous",
+      },
+      "plugins": Array [],
+      "presets": Array [],
+    },
+  },
+}
+`;
+
+exports[`Babelrc actions/reducer sets default presets/plugins if there's no userland babelrc 2`] = `
+Object {
+  "babelrc": false,
+  "cacheDirectory": true,
+  "plugins": Array [
+    "/path/to/module/babel-plugin-remove-graphql-queries",
+    "/path/to/module/react-hot-loader/babel",
+    Array [
+      "/path/to/module/@babel/plugin-proposal-class-properties",
+      Object {
+        "loose": true,
+      },
+    ],
+    Array [
+      "/path/to/module/@babel/plugin-syntax-dynamic-import",
+      Object {},
+    ],
+    Array [
+      "/path/to/module/@babel/plugin-transform-runtime",
+      Object {
+        "helpers": true,
+        "polyfill": false,
+        "regenerator": true,
+      },
+    ],
+  ],
+  "presets": Array [
+    Array [
+      "/path/to/module/@babel/preset-env",
+      Object {
+        "loose": true,
+        "modules": false,
+        "targets": Object {
+          "browsers": Object {},
+        },
+        "useBuiltIns": "usage",
+      },
+    ],
+    Array [
+      "/path/to/module/@babel/preset-react",
+      Object {
+        "development": true,
+        "pragma": "React.createElement",
+        "useBuiltIns": true,
+      },
+    ],
+    Array [
+      "/path/to/module/@babel/preset-flow",
+      Object {},
+    ],
+  ],
+  "sourceType": "unambiguous",
+}
+`;
+
+exports[`Babelrc actions/reducer sets default presets/plugins if there's no userland babelrc 3`] = `
+Object {
+  "babelrc": false,
+  "cacheDirectory": true,
+  "plugins": Array [
+    "/path/to/module/babel-plugin-remove-graphql-queries",
+    "/path/to/module/babel-plugin-dynamic-import-node",
+    Array [
+      "/path/to/module/@babel/plugin-proposal-class-properties",
+      Object {
+        "loose": true,
+      },
+    ],
+    Array [
+      "/path/to/module/@babel/plugin-syntax-dynamic-import",
+      Object {},
+    ],
+    Array [
+      "/path/to/module/@babel/plugin-transform-runtime",
+      Object {
+        "helpers": true,
+        "polyfill": false,
+        "regenerator": true,
+      },
+    ],
+  ],
+  "presets": Array [
+    Array [
+      "/path/to/module/@babel/preset-env",
+      Object {
+        "loose": true,
+        "modules": false,
+        "targets": Object {
+          "browsers": Object {},
+        },
+        "useBuiltIns": "usage",
+      },
+    ],
+    Array [
+      "/path/to/module/@babel/preset-react",
+      Object {
+        "development": true,
+        "pragma": "React.createElement",
+        "useBuiltIns": true,
+      },
+    ],
+    Array [
+      "/path/to/module/@babel/preset-flow",
+      Object {},
+    ],
+  ],
+  "sourceType": "unambiguous",
+}
+`;

@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import PropTypes from "prop-types"
-import { navigateTo } from "gatsby-link"
+import { navigateTo } from "gatsby"
 import { rhythm } from "../utils/typography"
 
 import presets, { colors } from "../utils/presets"

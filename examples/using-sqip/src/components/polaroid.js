@@ -68,8 +68,8 @@ const Polaroid = ({ image }) => {
     >
       <div className="polaroid-image-wrapper">
         <Image
-          sizes={{
-            ...image.childImageSharp.sizes,
+          fluid={{
+            ...image.childImageSharp.fluid,
             base64: image.childImageSharp.sqip.dataURI,
           }}
         />

@@ -1,109 +1,55 @@
 describe(`gatsby-plugin-stylus`, () => {
-  jest.mock(`gatsby-1-config-extract-plugin`, () => {
-    return {
-      extractTextPlugin: () => {
-        return {
-          extract: (...args) => {
-            return { extractTextCalledWithArgs: args }
-          },
-        }
-      },
-    }
+  jest.mock(`../resolve`, () => module => `/resolved/path/${module}`)
+
+  const actions = {
+    setWebpackConfig: jest.fn(),
+  }
+
+  // loaders "mocks"
+  const loaders = {
+    miniCssExtract: () => `miniCssExtract`,
+    css: args => `css(${JSON.stringify(args)})`,
+    postcss: args => `postcss(${JSON.stringify(args)})`,
+  }
+
+  const {
+    onCreateWebpackConfig,
+  } = require(`../gatsby-node`)
+
+  beforeEach(() => {
+    actions.setWebpackConfig.mockReset()
   })
-  const { modifyWebpackConfig } = require(`../gatsby-node`)
-  const cssLoader = expect.stringMatching(/^css/)
+
   const stylusPlugin = jest.fn().mockReturnValue(`foo`)
-  ;[
-    {
-      stages: [`develop`],
-      loaderKeys: [`stylus`, `stylusModules`],
-      loaderConfig(stylusLoader) {
-        return {
-          loaders: expect.arrayContaining([cssLoader, stylusLoader]),
-        }
+
+  const tests = {
+    stages: [`develop`, `build-javascript`, `develop-html`, `build-html`],
+    options: {
+      "No options": {},
+      "Stylus options #1": {
+        use: [stylusPlugin()],
+      },
+      "Stylus options #2": {
+        use: [stylusPlugin()],
+        import: [`file.js`, `file2.js`],
+      },
+      "PostCss plugins": {
+        postCssPlugins: [`test1`],
       },
     },
-    {
-      stages: [`build-css`],
-      loaderKeys: [`stylus`, `stylusModules`],
-      loaderConfig(stylusLoader) {
-        return {
-          loader: {
-            extractTextCalledWithArgs: expect.arrayContaining([
-              expect.arrayContaining([cssLoader, stylusLoader]),
-            ]),
-          },
-        }
-      },
-    },
-    {
-      stages: [`develop-html`, `build-html`, `build-javascript`],
-      loaderKeys: [`stylusModules`],
-      loaderConfig(stylusLoader) {
-        return {
-          loader: {
-            extractTextCalledWithArgs: expect.arrayContaining([
-              expect.arrayContaining([cssLoader, stylusLoader]),
-            ]),
-          },
-        }
-      },
-    },
-  ].forEach(({ stages, loaderKeys, loaderConfig }) => {
-    stages.forEach(stage => {
-      describe(`stage: ${stage}`, () => {
-        ;[
-          { options: {}, stylusLoader: `stylus` },
-          {
-            options: { use: [ stylusPlugin() ] },
-            stylusLoader: `stylus`,
-          },
-          {
-            options: { import: [ `file.js`, `file2.js` ] },
-            stylusLoader: `stylus`,
-          },
-          {
-            options: { use: [ stylusPlugin() ], import: [ `file.js`, `file2.js` ] },
-            stylusLoader: `stylus`,
-          },
-          {
-            options: { use: stylusPlugin() },
-            stylusLoader: `stylus`,
-          },
-          {
-            options: { import: `file.js` },
-            stylusLoader: `stylus`,
-          },
-        ].forEach(({ options, stylusLoader }) => {
-          const stringified = JSON.stringify(options)
+  }
 
-          it(`modifies webpack config for ${stringified}`, () => {
-            const config = {
-              loader: jest.fn(),
-              merge: jest.fn(),
-            }
-
-            if ((options.use && !Array.isArray(options.use)) || (options.import && !Array.isArray(options.import))) {
-              expect(() => {
-                modifyWebpackConfig({ config, stage }, options)
-              }).toThrowError()
-            } else {
-              const modified = modifyWebpackConfig({ config, stage }, options)
-
-              expect(modified).toBe(config)
-
-              loaderKeys.forEach(loaderKey => {
-                expect(config.loader).toBeCalledWith(
-                  loaderKey,
-                  expect.objectContaining(loaderConfig(stylusLoader))
-                )
-
-                expect(config.merge).toHaveBeenCalledTimes(Object.keys(options).length)
-              })
-            }
-          })
-        })
+  tests.stages.forEach(stage => {
+    for (let label in tests.options) {
+      const options = tests.options[label]
+      it(`Stage: ${stage} / ${label}`, () => {
+        onCreateWebpackConfig({
+          actions,
+          loaders,
+          stage: `develop`,
+        }, options)
+        expect(actions.setWebpackConfig).toMatchSnapshot()
       })
-    })
+    }
   })
 })

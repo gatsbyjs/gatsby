@@ -2,8 +2,8 @@ const parseXml = require(`xml-parser`)
 const crypto = require(`crypto`)
 const _ = require(`lodash`)
 
-async function onCreateNode({ node, boundActionCreators, loadNodeContent }) {
-  const { createNode, createParentChildLink } = boundActionCreators
+async function onCreateNode({ node, actions, loadNodeContent, createNodeId }) {
+  const { createNode, createParentChildLink } = actions
 
   // We only care about XML content.
   if (![`application/xml`, `text/xml`].includes(node.internal.mediaType)) {
@@ -23,7 +23,9 @@ async function onCreateNode({ node, boundActionCreators, loadNodeContent }) {
     }
     return {
       ...obj,
-      id: obj.attributes.id ? obj.attributes.id : `${node.id} [${i}] >>> XML`,
+      id: obj.attributes.id
+        ? obj.attributes.id
+        : createNodeId(`${node.id} [${i}] >>> XML`),
       parent: node.id,
       children: [],
       internal: {

@@ -55,10 +55,7 @@ function createErrorFromString(errorStr: string = ``, sourceMapFile: string) {
   // pull the message from the first line then remove the `Error:` prefix
   // FIXME: when https://github.com/AriaMinaei/pretty-error/pull/49 is merged
 
-  message = message
-    .split(`:`)
-    .slice(1)
-    .join(`:`)
+  message = message.replace(/^(Error:)/,``)
 
   let error = new Error(message)
 

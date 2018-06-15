@@ -1,15 +1,16 @@
 const _ = require(`lodash`)
 const crypto = require(`crypto`)
 const babylon = require(`babylon`)
-const traverse = require(`babel-traverse`).default
+const traverse = require(`@babel/traverse`).default
 
 async function onCreateNode({
   node,
   getNode,
-  boundActionCreators,
+  actions,
   loadNodeContent,
+  createNodeId,
 }) {
-  const { createNode, createParentChildLink } = boundActionCreators
+  const { createNode, createParentChildLink } = actions
 
   // This only processes javascript files.
   if (node.internal.mediaType !== `application/javascript`) {
@@ -18,20 +19,31 @@ async function onCreateNode({
 
   const code = await loadNodeContent(node)
   const options = {
-    sourceType: `module`,
+    sourceType: `unambigious`,
     allowImportExportEverywhere: true,
     plugins: [
       `jsx`,
+      `flow`,
       `doExpressions`,
       `objectRestSpread`,
       `decorators`,
       `classProperties`,
-      `exportExtensions`,
+      `classPrivateProperties`,
+      `classPrivateMethods`,
+      `exportDefaultFrom`,
+      `exportNamespaceFrom`,
       `asyncGenerators`,
       `functionBind`,
       `functionSent`,
       `dynamicImport`,
-      `flow`,
+      `numericSeparator`,
+      `optionalChaining`,
+      `importMeta`,
+      `bigInt`,
+      `optionalCatchBinding`,
+      `throwExpressions`,
+      `pipelineOperator`,
+      `nullishCoalescingOperator`,
     ],
   }
 
@@ -116,7 +128,7 @@ async function onCreateNode({
       .digest(`hex`)
 
     const nodeData = {
-      id: `${node.id} >>> JSFrontmatter`,
+      id: createNodeId(`${node.id} >>> JSFrontmatter`),
       children: [],
       parent: node.id,
       node: { ...node },

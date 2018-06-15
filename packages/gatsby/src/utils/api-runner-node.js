@@ -1,6 +1,7 @@
 const Promise = require(`bluebird`)
 const glob = require(`glob`)
 const _ = require(`lodash`)
+
 const mapSeries = require(`async/mapSeries`)
 
 const reporter = require(`gatsby-cli/lib/reporter`)
@@ -22,8 +23,8 @@ const doubleBind = (boundActionCreators, api, plugin, { traceId }) => {
       const boundActionCreator = boundActionCreators[key]
       if (typeof boundActionCreator === `function`) {
         doubleBoundActionCreators[key] = (...args) => {
-          // Let action callers override who the plugin is. Shouldn't be used
-          // that often.
+          // Let action callers override who the plugin is. Shouldn't be
+          // used that often.
           if (args.length === 1) {
             boundActionCreator(args[0], plugin, traceId)
           } else if (args.length === 2) {
@@ -43,6 +44,7 @@ const runAPI = (plugin, api, args) => {
   let pathPrefix = ``
   const {
     store,
+    emitter,
     loadNodeContent,
     getNodes,
     getNode,
@@ -71,8 +73,10 @@ const runAPI = (plugin, api, args) => {
         ...args,
         pathPrefix,
         boundActionCreators: doubleBoundActionCreators,
+        actions: doubleBoundActionCreators,
         loadNodeContent,
         store,
+        emitter,
         getNodes,
         getNode,
         hasNodeChanged,

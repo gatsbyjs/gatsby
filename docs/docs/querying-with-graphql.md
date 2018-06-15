@@ -55,14 +55,14 @@ Which returns this:
 A basic page component with a GraphQL query might look like this:
 
 ```jsx
-import React from "react";
+import React from "react"
 
 export default ({ data }) => (
   <div>
     <h1>About {data.site.siteMetadata.title}</h1>
     <p>We're a very cool website you should return to often.</p>
   </div>
-);
+)
 
 export const query = graphql`
   query AboutQuery {
@@ -72,7 +72,7 @@ export const query = graphql`
       }
     }
   }
-`;
+`
 ```
 
 The result of the query is automatically inserted into your React component
@@ -172,15 +172,15 @@ Combined with a special Gatsby image component, [gatsby-image](/packages/gatsby-
 This is what a component using `gatsby-image` looks like:
 
 ```jsx
-import React from "react";
-import Img from "gatsby-image";
+import React from "react"
+import Img from "gatsby-image"
 
 export default ({ data }) => (
   <div>
     <h1>Hello gatsby-image</h1>
-    <Img resolutions={data.file.childImageSharp.resolutions} />
+    <Img fixed={data.file.childImageSharp.fixed} />
   </div>
-);
+)
 
 export const query = graphql`
   query GatsbyImageSampleQuery {
@@ -188,13 +188,13 @@ export const query = graphql`
       childImageSharp {
         # Specify the image processing specifications right in the query.
         # Makes it trivial to update as your page's design changes.
-        resolutions(width: 125, height: 125) {
-          ...GatsbyImageSharpResolutions
+        fixed(width: 125, height: 125) {
+          ...GatsbyImageSharpFixed
         }
       }
     }
   }
-`;
+`
 ```
 
 See also the following blog posts:
@@ -206,7 +206,7 @@ See also the following blog posts:
 
 ### Fragments
 
-Notice that in the above example for [querying images](#images), we used `...GatsbyImageSharpResolutions`, which is a GraphQL Fragment, a reusable set of fields for query composition. You can read more about them [here](http://graphql.org/learn/queries/#fragments).
+Notice that in the above example for [querying images](#images), we used `...GatsbyImageSharpFixed`, which is a GraphQL Fragment, a reusable set of fields for query composition. You can read more about them [here](http://graphql.org/learn/queries/#fragments).
 
 If you wish to define your own fragments for use in your application, you can use named exports to export them in any Javascript file, and they will be automatically processed by Gatsby for use in your GraphQL queries.
 
@@ -223,7 +223,7 @@ export const markdownFrontmatterFragment = graphql`
       date(formatString: "MMMM DD, YYYY")
     }
   }
-`;
+`
 ```
 
 They can then be used in any GraphQL query after that!
@@ -241,7 +241,7 @@ It’s good practice for your helper components to define and export a fragment 
 ```jsx
 // src/pages/index.jsx
 
-import React from "react";
+import React from "react"
 
 export default ({ data }) => {
   return (
@@ -256,8 +256,8 @@ export default ({ data }) => {
         </div>
       ))}
     </div>
-  );
-};
+  )
+}
 
 export const query = graphql`
   query IndexQuery {
@@ -274,7 +274,7 @@ export const query = graphql`
       }
     }
   }
-`;
+`
 ```
 
 If the index component becomes too large, you might want to refactor it into smaller components.
@@ -282,7 +282,7 @@ If the index component becomes too large, you might want to refactor it into sma
 ```jsx
 // src/components/IndexPost.jsx
 
-import React from "react";
+import React from "react"
 
 export default ({ frontmatter: { title, date } }) => (
   <div>
@@ -290,7 +290,7 @@ export default ({ frontmatter: { title, date } }) => (
       {title} <span>— {date}</span>
     </h3>
   </div>
-);
+)
 
 export const query = graphql`
   fragment IndexPostFragment on MarkdownRemark {
@@ -299,7 +299,7 @@ export const query = graphql`
       date(formatString: "MMMM DD, YYYY")
     }
   }
-`;
+`
 ```
 
 Now, we can use the component together with the exported fragment in our index page.
