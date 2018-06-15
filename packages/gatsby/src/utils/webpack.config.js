@@ -214,7 +214,7 @@ module.exports = async (
                 (stats, done) => {
                   fs.writeFile(
                     path.join(`public`, `webpack.stats.json`),
-                    JSON.stringify(stats.toJson()),
+                    JSON.stringify(stats.toJson({ all: false, assets: true, chunkGroups: true })),
                     done
                   )
                 }
