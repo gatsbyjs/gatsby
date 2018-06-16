@@ -1,6 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
-import Link, { withPrefix, navigateTo } from "gatsby-link"
+import Link, { withPrefix, push, replace, navigateTo } from "gatsby-link"
 import pages from "./pages.json"
 import loader from "./loader"
 import JSONStore from "./json-store"
@@ -48,7 +48,9 @@ StaticQuery.propTypes = {
 export {
   Link,
   withPrefix,
-  navigateTo,
+  push,
+  replace,
+  navigateTo, // TODO: remove navigateTo for v3
   StaticQueryContext,
   StaticQuery,
   PageRenderer,
