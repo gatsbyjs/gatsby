@@ -235,11 +235,6 @@ class FilteredShowcase extends Component {
   render() {
     const { data, filters } = this.props
 
-<<<<<<< HEAD
-    const isDesktop = !this.state.windowWidth || this.state.windowWidth > 750
-
-=======
->>>>>>> Abandon window.width in favor of CSS media queries
     let items = data.allSitesYaml.edges
 
     if (this.state.search.length > 0) {
@@ -560,10 +555,6 @@ class ShowcasePage extends Component {
     const data = this.props.data
     const location = this.props.location
 
-<<<<<<< HEAD
-    const isDesktop = !this.state.windowWidth || this.state.windowWidth > 750
-=======
->>>>>>> Abandon window.width in favor of CSS media queries
     return (
       <Layout location={location}>
         <Helmet>

@@ -56,7 +56,7 @@ class DocsLocalPackagesTemplate extends React.Component {
                 : markdownRemarkNotFound.timeToRead
             }
             modified={
-              npmPackage ? npmPackage.modified : npmPackageNotFound.modified
+              npmPackage && npmPackage.modified ? npmPackage.modified : npmPackageNotFound.modified
             }
             keywords={
               npmPackage ? npmPackage.keywords : npmPackageNotFound.keywords
@@ -93,7 +93,6 @@ export const pageQuery = graphql`
         name
         avatar
       }
-      modified
     }
   }
 `
