@@ -1,10 +1,10 @@
 import React from "react"
 import Modal from "react-modal"
 import Helmet from "react-helmet"
+import { OutboundLink } from "gatsby-plugin-google-analytics"
+import { rhythm, options } from "../utils/typography"
 import MdClose from "react-icons/lib/md/close"
-
 import { push, PageRenderer } from "gatsby"
-
 import presets, { colors } from "../utils/presets"
 import Navigation from "../components/navigation"
 import MobileNavigation from "../components/navigation-mobile"
@@ -159,18 +159,38 @@ class DefaultLayout extends React.Component {
           />
           <html lang="en" />
         </Helmet>
+        <div
+          css={{
+            width: `100%`,
+            padding: rhythm(1 / 2),
+            background: presets.colors.ui.bright,
+            color: presets.colors.gatsby,
+            fontFamily: options.headerFontFamily.join(`,`),
+            textAlign: `center`,
+            boxShadow: `inset 0px -3px 2px 0px ${presets.colors.ui.bright}`,
+            zIndex: `3`,
+            position: `fixed`,
+          }}
+        >
+          You're viewing the docs for Gatsby v2 beta.{` `}
+          <OutboundLink
+            href="https://gatsbyjs.org/"
+          >
+            View the v1 docs instead
+          </OutboundLink>.
+        </div>
         <Navigation pathname={this.props.location.pathname} />
         <div
           className={`main-body`}
           css={{
-            paddingTop: 0,
+            paddingTop: `2.8rem`,
             [presets.Tablet]: {
               margin: `0 auto`,
-              paddingTop: isHomepage ? 0 : presets.headerHeight,
+              paddingTop: isHomepage ? `2.8rem` : `calc(2.8rem + ${presets.headerHeight})`,
             },
           }}
         >
-          <PageWithSidebar
+  <PageWithSidebar
             disable={isSidebarDisabled}
             yaml={this.props.sidebarYaml}
             renderContent={() => this.props.children}

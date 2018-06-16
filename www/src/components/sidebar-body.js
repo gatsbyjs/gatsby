@@ -215,9 +215,9 @@ class SidebarBody extends React.Component {
           )}`,
           width: rhythm(10),
           position: `fixed`,
-          top: `calc(${presets.headerHeight} - 1px)`,
+          top: `calc(${presets.headerHeight} + 2.8rem - 1px)`,
           overflowY: `auto`,
-          height: `calc(100vh - ${presets.headerHeight} + 1px)`,
+          height: `calc(100vh - ${presets.headerHeight} - 2.8rem + 1px)`,
           WebkitOverflowScrolling: `touch`,
           "::-webkit-scrollbar": {
             width: `6px`,
