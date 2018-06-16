@@ -146,10 +146,6 @@ class DefaultLayout extends React.Component {
       )
     }
 
-    // SEE: template-docs-markdown for why this.props.isSidebarDisabled is here
-    const isSidebarDisabled =
-      this.props.isSidebarDisabled || !this.props.sidebarYaml
-
     return (
       <div className={isHomepage ? `is-homepage` : ``}>
         <Helmet defaultTitle={`GatsbyJS`} titleTemplate={`%s | GatsbyJS`}>
