@@ -55,4 +55,4 @@ To conclude, Gatsby may not be the perfect solution for your project, but for ou
 
 # Narative
 
-[Narative][https://narative.co] is a digital studio co-founded by designers, engineers and strategists with decades of experience at Canada's most successful startups. We merge best practices in design, engineering, and growth marketing to create narratives that empowers your brand and product.
+[Narative](https://narative.co) is a digital studio co-founded by designers, engineers and strategists with decades of experience at Canada's most successful startups. We merge best practices in design, engineering, and growth marketing to create narratives that empowers your brand and product.
