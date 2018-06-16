@@ -216,7 +216,6 @@ module.exports = async (
                 `gatsby-webpack-stats-extractor`,
                 (stats, done) => {
                   let assets = {}
-
                   for (let chunkGroup of stats.compilation.chunkGroups) {
                     if (chunkGroup.name) {
                       let files = []
@@ -229,11 +228,14 @@ module.exports = async (
                     }
                   }
 
+                  const webpackStats = {
+                    ...stats.toJson({ all: false, chunkGroups: true }),
+                    assetsByChunkName: assets,
+                  }
+
                   fs.writeFile(
                     path.join(`public`, `webpack.stats.json`),
-                    JSON.stringify({
-                      assetsByChunkName: assets,
-                    }),
+                    JSON.stringify(webpackStats),
                     done
                   )
                 }
