@@ -31,7 +31,6 @@ function preset(context, options = {}) {
             debug: !!debug,
             useBuiltIns: "entry",
             shippedProposals: true,
-            sourceType: "unambiguous",
             modules: "commonjs",
           },
           browser ? browserConfig : nodeConfig
