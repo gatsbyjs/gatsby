@@ -48,7 +48,6 @@ export const pageQuery = graphql`
         name
         avatar
       }
-      modified
       repository {
         url
       }

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>icons/featured</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M10,0 C4.5,0 0,4.5 0,10 C0,14.4 2.85,18.15 6.85,19.5 C7.35,19.6 7.5,19.25 7.5,19 C7.5,18.75 7.5,18 7.5,17.15 C4.75,17.75 4.15,15.95 4.15,15.95 C3.7,14.8 3.05,14.5 3.05,14.5 C2.1,13.9 3.1,13.9 3.1,13.9 C4.1,13.95 4.65,14.95 4.65,14.95 C5.5,16.45 6.95,16 7.55,15.75 C7.65,15.1 7.9,14.65 8.2,14.4 C5.95,14.15 3.6,13.3 3.6,9.5 C3.6,8.4 4,7.5 4.65,6.8 C4.55,6.55 4.2,5.5 4.75,4.15 C4.75,4.15 5.6,3.9 7.5,5.15 C8.3,4.95 9.15,4.85 10,4.85 C10.85,4.85 11.7,4.95 12.5,5.2 C14.4,3.9 15.25,4.15 15.25,4.15 C15.8,5.55 15.45,6.55 15.35,6.8 C16,7.5 16.4,8.4 16.4,9.5 C16.4,13.3 14.05,14.15 11.8,14.4 C12.15,14.7 12.5,15.35 12.5,16.25 C12.5,17.6 12.5,18.7 12.5,19 C12.5,19.3 12.65,19.6 13.15,19.5 C17.15,18.15 20,14.4 20,10 C20,4.5 15.5,3.55271368e-15 10,0 Z" id="path-1"></path>
+    </defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="detail/header" transform="translate(-154.000000, -115.000000)">
+            <g id="Group" transform="translate(154.000000, 114.000000)">
+                <g id="icons/github" transform="translate(0.000000, 1.000000)">
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <use id="Shape" fill="#000000" fill-rule="nonzero" xlink:href="#path-1"></use>
+                    <g id="colors/gatsby" mask="url(#mask-2)" fill="#663399" fill-rule="evenodd">
+                        <rect id="Rectangle-4" x="0" y="0" width="20" height="20"></rect>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
