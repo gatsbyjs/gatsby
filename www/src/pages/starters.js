@@ -363,7 +363,7 @@ const ShowcaseList = ({ items, count }) => {
           return node.fields && ( // have to filter out null fields from bad data
             <div key={node.id} css={{ margin: `12px` }}>
               <Link
-                to={{ pathname: `${node.fields.starterShowcase.stub}`, state: { isModal: true } }}
+                to={{ pathname: `/starters/${node.fields.starterShowcase.stub}`, state: { isModal: true } }}
                 css={{
                   borderBottom: `none !important`,
                   boxShadow: `none !important`,

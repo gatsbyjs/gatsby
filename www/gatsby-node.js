@@ -76,7 +76,7 @@ exports.createPages = ({ graphql, actions }) => {
             allMarkdownRemark(
               sort: { order: DESC, fields: [frontmatter___date] }
               limit: 1000
-              filter: { fileAbsolutePath: { regex: "/^((?!startersData).)*$/", ne: null } }
+              filter: { fileAbsolutePath: { ne: null } }
             ) {
               edges {
                 node {
@@ -180,6 +180,33 @@ exports.createPages = ({ graphql, actions }) => {
             },
           })
         })
+
+
+        // Create starters.
+        const starters = _.filter(
+          result.data.allMarkdownRemark.edges,
+          edge => {
+            const slug = _.get(edge, `node.fields.starterShowcase.slug`)
+            const sluggy = _.get(edge, `node.fields.slug`)
+            if (!_.includes(sluggy, `/blog/`) && !_.includes(sluggy, `/packages/`)) {
+              console.log('******starters', edge.node)
+            }
+            if (!slug) return null
+            else return edge
+          }
+        )
+        const starterTemplate = path.resolve(`src/templates/template-starter-showcase.js`)
+        
+        starters.forEach((edge, index) => {
+          createPage({
+            path: `/starters/${edge.node.fields.starterShowcase.slug}`, // required
+            component: slash(starterTemplate),
+            context: {
+              slug: edge.node.fields.starterShowcase.slug,
+            },
+          })
+        })
+        // END Create starters.
 
         // Create docs pages.
         result.data.allMarkdownRemark.edges.forEach(edge => {
