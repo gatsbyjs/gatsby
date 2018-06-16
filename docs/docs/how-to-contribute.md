@@ -81,6 +81,23 @@ a pull request.
 * Commit and push to your fork.
 * Create a pull request from your branch.
 
+### Contributing to the blog.
+
+If you want to contribute to the Gatsby blog follow the steps below.
+
+* Clone the repo and navigate to `/docs`
+* Run `yarn` to install all of the website's dependencies.
+* Run `gatsby develop` to preview the website blog in `http://localhost:8000/blog`.
+* The Markdown files for the blog live in `/docs/blog` folder. Make
+  additions or modifications here.
+* Add an avatar to `/avatars`
+* Add an author to `/author.yml`
+* Add a new folder following the pattern `yyyy-mm-dd-title`. Within this newly created folder add an `index.md`. It is required to add a `title`, `date`, `author`, and `excerpt` in your post's `index.md` to format it correctly and link an author.
+* If you blog post contains images add them to your blog post folder and reference them in your post's `index.md`.
+* Make sure to double check your grammar and capitalise correctly.
+* Commit and push to your fork.
+* Create a pull request from your branch.
+
 ## Development tools
 
 ### Redux devtools
