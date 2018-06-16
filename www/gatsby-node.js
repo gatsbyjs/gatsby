@@ -5,6 +5,7 @@ const parseFilepath = require(`parse-filepath`)
 const fs = require(`fs-extra`)
 const slash = require(`slash`)
 const slugify = require(`limax`)
+const url = require(`url`)
 
 const localPackages = `../packages`
 const localPackagesArr = []
@@ -53,6 +54,9 @@ exports.createPages = ({ graphql, actions }) => {
     const remotePackageTemplate = path.resolve(
       `src/templates/template-docs-remote-packages.js`
     )
+    const showcaseTemplate = path.resolve(
+      `src/templates/template-showcase-details.js`
+    )
 
     createRedirect({
       fromPath: `/docs/bound-action-creators/`,
@@ -95,6 +99,15 @@ exports.createPages = ({ graphql, actions }) => {
               }
             }
             allAuthorYaml {
+              edges {
+                node {
+                  fields {
+                    slug
+                  }
+                }
+              }
+            }
+            allSitesYaml {
               edges {
                 node {
                   fields {
@@ -175,6 +188,18 @@ exports.createPages = ({ graphql, actions }) => {
           createPage({
             path: `${edge.node.fields.slug}`,
             component: slash(contributorPageTemplate),
+            context: {
+              slug: edge.node.fields.slug,
+            },
+          })
+        })
+
+        result.data.allSitesYaml.edges.forEach(edge => {
+          if (!edge.node.fields) return
+          if (!edge.node.fields.slug) return
+          createPage({
+            path: `${edge.node.fields.slug}`,
+            component: slash(showcaseTemplate),
             context: {
               slug: edge.node.fields.slug,
             },
@@ -282,6 +307,11 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
     }
   } else if (node.internal.type === `AuthorYaml`) {
     slug = `/contributors/${slugify(node.id)}/`
+    createNodeField({ node, name: `slug`, value: slug })
+  } else if (node.internal.type === `SitesYaml` && node.main_url) {
+    const parsed = url.parse(node.main_url)
+    const cleaned = parsed.hostname + parsed.pathname
+    slug = `/showcase/${slugify(cleaned)}`
     createNodeField({ node, name: `slug`, value: slug })
   }
 }

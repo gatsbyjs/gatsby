@@ -21,7 +21,8 @@ const fetchNodesFromSearch = ({ query, limit = 15 }) =>
     })
   )
 
-const getMetaData = name => axios(
+const getMetaData = name =>
+  axios(
     apiBase +
       querystring.stringify({
         action: `query`,
@@ -55,7 +56,8 @@ const getMetaData = name => axios(
       }
     })
 
-const search = ({ query, limit }) => axios(
+const search = ({ query, limit }) =>
+  axios(
     apiBase +
       querystring.stringify({
         action: `opensearch`,
@@ -66,15 +68,18 @@ const search = ({ query, limit }) => axios(
       })
   )
     .then(r => r.data)
-    .then(([term, pageTitles, descriptions, urls]) => pageTitles.map((title, i) => {
+    .then(([term, pageTitles, descriptions, urls]) =>
+      pageTitles.map((title, i) => {
         return {
           title,
           description: descriptions[i],
           id: /en.wikipedia.org\/wiki\/(.+)$/.exec(urls[i])[1],
         }
-      }))
+      })
+    )
 
-const getArticle = name => axios(viewBase + name + `?action=render`).then(r =>
+const getArticle = name =>
+  axios(viewBase + name + `?action=render`).then(r =>
     r.data.replace(/\/\/en\.wikipedia\.org\/wiki\//g, `/wiki/`)
   )
 

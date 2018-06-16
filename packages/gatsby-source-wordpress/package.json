@@ -1,14 +1,14 @@
 {
   "name": "gatsby-source-wordpress",
   "description": "Gatsby source plugin for building websites using the Wordpress CMS as a data source.",
-  "version": "2.0.57-17",
+  "version": "3.0.0-alpha.2",
   "author": "Sebastien Fichot <fichot.sebastien@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "bundleDependencies": false,
   "dependencies": {
-    "@babel/runtime": "7.0.0-beta.47",
+    "@babel/runtime": "7.0.0-beta.51",
     "axios": "^0.18.0",
     "better-queue": "^3.8.6",
     "bluebird": "^3.5.0",
@@ -22,8 +22,8 @@
   },
   "deprecated": false,
   "devDependencies": {
-    "@babel/cli": "7.0.0-beta.47",
-    "@babel/core": "7.0.0-beta.47",
+    "@babel/cli": "7.0.0-beta.51",
+    "@babel/core": "7.0.0-beta.51",
     "cross-env": "^5.1.4"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress#readme",
@@ -33,6 +33,9 @@
     "gatsby-source-plugin"
   ],
   "license": "MIT",
+  "peerDependencies": {
+    "gatsby": ">2.0.0-alpha"
+  },
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress",
   "scripts": {
     "build": "babel src --out-dir . --ignore **/__tests__",

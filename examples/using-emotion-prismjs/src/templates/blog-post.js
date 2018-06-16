@@ -2,7 +2,7 @@ import React from "react"
 import { css } from "emotion"
 import { rhythm, scale } from "../utils/typography"
 
-import Layout from '../components/layout'
+import Layout from "../components/layout"
 
 const postContainer = css`
   max-width: ${rhythm(30)};

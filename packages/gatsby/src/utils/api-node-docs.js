@@ -152,7 +152,7 @@ exports.onCreatePage = true
  *         args: {
  *           myArgument: {
  *             type: GraphlQLString,
-  *          }
+ *          }
  *         }
  *         resolve: (source, fieldArgs) => {
  *           return `Id of this node is ${source.id}.

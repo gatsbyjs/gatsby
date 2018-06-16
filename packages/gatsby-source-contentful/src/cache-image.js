@@ -4,11 +4,21 @@ const { resolve, parse } = require(`path`)
 const axios = require(`axios`)
 const { pathExists, createWriteStream } = require(`fs-extra`)
 
-module.exports = async function cacheImage (store, image, options) {
+module.exports = async function cacheImage(store, image, options) {
   const program = store.getState().program
   const CACHE_DIR = resolve(`${program.directory}/.cache/contentful/assets/`)
-  const { file: { url, fileName, details } } = image
-  const { width, height, maxWidth, maxHeight, resizingBehavior, cropFocus, background } = options
+  const {
+    file: { url, fileName, details },
+  } = image
+  const {
+    width,
+    height,
+    maxWidth,
+    maxHeight,
+    resizingBehavior,
+    cropFocus,
+    background,
+  } = options
   const userWidth = maxWidth || width
   const userHeight = maxHeight || height
 
@@ -29,10 +39,7 @@ module.exports = async function cacheImage (store, image, options) {
 
   const optionsHash = crypto
     .createHash(`md5`)
-    .update(JSON.stringify([
-      url,
-      ...params,
-    ]))
+    .update(JSON.stringify([url, ...params]))
     .digest(`hex`)
 
   const { name, ext } = parse(fileName)

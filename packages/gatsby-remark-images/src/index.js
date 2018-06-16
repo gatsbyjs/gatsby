@@ -69,7 +69,7 @@ module.exports = (
     }
 
     // Calculate the paddingBottom %
-    const ratio = `${1 / fluidResult.aspectRatio * 100}%`
+    const ratio = `${(1 / fluidResult.aspectRatio) * 100}%`
 
     const originalImg = fluidResult.originalImg
     const fallbackSrc = fluidResult.src

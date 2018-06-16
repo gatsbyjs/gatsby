@@ -63,8 +63,8 @@ You can query file nodes like the following:
 
 `gatsby-source-filesystem` exports two helper functions:
 
-* `createFilePath`
-* `createRemoteFileNode`
+- `createFilePath`
+- `createRemoteFileNode`
 
 ### createFilePath
 
@@ -138,7 +138,7 @@ createRemoteFileNode({
   // OPTIONAL
   // Adds htaccess authentication to the download request if passed in.
   auth: { htaccess_user: `USER`, htaccess_pass: `PASSWORD` },
-});
+})
 ```
 
 #### Example usage

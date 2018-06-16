@@ -1,21 +1,21 @@
 {
   "name": "gatsby-source-drupal",
   "description": "Gatsby source plugin for building websites using the Drupal CMS as a data source",
-  "version": "2.1.0-alpha.17",
+  "version": "2.2.0-alpha.2",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "7.0.0-beta.47",
+    "@babel/runtime": "7.0.0-beta.51",
     "axios": "^0.18.0",
     "bluebird": "^3.5.0",
     "gatsby-source-filesystem": "next",
     "lodash": "^4.17.4"
   },
   "devDependencies": {
-    "@babel/cli": "7.0.0-beta.47",
-    "@babel/core": "7.0.0-beta.47",
+    "@babel/cli": "7.0.0-beta.51",
+    "@babel/core": "7.0.0-beta.51",
     "cross-env": "^5.1.4"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal#readme",
@@ -25,6 +25,9 @@
     "gatsby-source-plugin"
   ],
   "license": "MIT",
+  "peerDependencies": {
+    "gatsby": ">2.0.0-alpha"
+  },
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal",
   "scripts": {
     "build": "babel src --out-dir . --ignore **/__tests__",

@@ -26,10 +26,7 @@ const Product = ({ node }) => (
       >
         <div style={{ marginRight: rhythm(1 / 2) }}>
           {node.image[0].fixed.src && (
-            <Img
-              style={{ margin: 0 }}
-              fixed={node.image[0].fixed}
-            />
+            <Img style={{ margin: 0 }} fixed={node.image[0].fixed} />
           )}
         </div>
         <div style={{ flex: 1 }}>{node.productName.productName}</div>
@@ -57,10 +54,10 @@ class IndexPage extends React.Component {
             products localized into both English and German.
           </p>
           <p>
-            An entry and asset node are created for each locale following fallback
-            rules for missing localization. In addition, each node has an
-            additional field added, <code>node_locale</code> so you can select for
-            nodes from a single locale
+            An entry and asset node are created for each locale following
+            fallback rules for missing localization. In addition, each node has
+            an additional field added, <code>node_locale</code> so you can
+            select for nodes from a single locale
           </p>
           <h3>en-US</h3>
           {usProductEdges.map(({ node }, i) => (

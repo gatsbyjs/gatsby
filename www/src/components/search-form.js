@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import PropTypes from "prop-types"
-import { navigateTo } from "gatsby"
+import { push } from "gatsby"
 import { rhythm } from "../utils/typography"
 
 import presets, { colors } from "../utils/presets"
@@ -253,7 +253,7 @@ class SearchForm extends Component {
     const a = document.createElement(`a`)
     a.href = e._args[0].url
     this.searchInput.blur()
-    navigateTo(`${a.pathname}${a.hash}`)
+    push(`${a.pathname}${a.hash}`)
   }
 
   componentDidMount() {

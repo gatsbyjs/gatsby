@@ -127,16 +127,16 @@ but I noticed that from time to time it’d go down, so I’m now testing
 
 Some key points:
 
-* Node instead of Ruby
-* Much faster development workflow e.g. hot reload out of the box
-* I can query the data I need and transform it before using it. (I'm looking
+- Node instead of Ruby
+- Much faster development workflow e.g. hot reload out of the box
+- I can query the data I need and transform it before using it. (I'm looking
   into the [`gatsby-plugin-feed`](/packages/gatsby-plugin-feed/) to recreate the
   Atom Feed)
-* React and GraphQL for free with Gatsby
-* Since I am confident with the Node ecosystem I'm able to contribute: First
+- React and GraphQL for free with Gatsby
+- Since I am confident with the Node ecosystem I'm able to contribute: First
   pull request to Gatsby:
   [https://github.com/gatsbyjs/gatsby/pull/2569](https://github.com/gatsbyjs/gatsby/pull/2569)
-* Netlify vs GitLab Pages (hopefully 100% uptime)
+- Netlify vs GitLab Pages (hopefully 100% uptime)
 
 ## Final thoughts
 

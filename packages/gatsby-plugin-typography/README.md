@@ -44,5 +44,5 @@ module.exports = {
 
 ## Options
 
-* `pathToConfigModule`: (string) The path to the file in which you export your typography configuration.
-* `omitGoogleFont`: (boolean, default: `false`) Typography includes [a helper](https://github.com/KyleAMathews/typography.js/blob/e7e71c82f63c7a146eb1b5ac7017695359dd9cba/packages/react-typography/src/GoogleFont.js) that makes a request to Google's font CDN for the fonts you need. You might, however, want to inject the fonts into JS or use a CDN of your choosing. Setting this value to `true` will make `gatsby-plugin-typography` skip the inclusion of this helper. **You will have to include the appropriate fonts yourself.**
+- `pathToConfigModule`: (string) The path to the file in which you export your typography configuration.
+- `omitGoogleFont`: (boolean, default: `false`) Typography includes [a helper](https://github.com/KyleAMathews/typography.js/blob/e7e71c82f63c7a146eb1b5ac7017695359dd9cba/packages/react-typography/src/GoogleFont.js) that makes a request to Google's font CDN for the fonts you need. You might, however, want to inject the fonts into JS or use a CDN of your choosing. Setting this value to `true` will make `gatsby-plugin-typography` skip the inclusion of this helper. **You will have to include the appropriate fonts yourself.**

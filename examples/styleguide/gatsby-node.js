@@ -73,7 +73,9 @@ exports.createPages = ({ graphql, actions }) => {
           const exportFileContents =
             allComponents
               .reduce((accumulator, { displayName, filePath }) => {
-                const absolutePath = path.resolve(path.join('src', filePath, displayName))
+                const absolutePath = path.resolve(
+                  path.join(`src`, filePath, displayName)
+                )
                 accumulator.push(
                   `export { default as ${displayName} } from "${absolutePath}"`
                 )

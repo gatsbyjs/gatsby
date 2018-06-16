@@ -246,9 +246,7 @@ async function startServer(program) {
 module.exports = async (program: any) => {
   const detect = require(`detect-port`)
   const port =
-    typeof program.port === `string`
-      ? parseInt(program.port, 10)
-      : program.port
+    typeof program.port === `string` ? parseInt(program.port, 10) : program.port
 
   // In order to enable custom ssl, --cert-file --key-file and -https flags must all be
   // used together
@@ -401,13 +399,15 @@ module.exports = async (program: any) => {
     const deprecatedLocations = {}
     deprecatedApis.forEach(api => (deprecatedLocations[api] = []))
 
-    glob.sync(`{,!(node_modules|public)/**/}*.js`, { nodir: true }).forEach(file => {
-      const fileText = fs.readFileSync(file)
-      const matchingApis = deprecatedApis.filter(
-        api => fileText.indexOf(api) !== -1
-      )
-      matchingApis.forEach(api => deprecatedLocations[api].push(file))
-    })
+    glob
+      .sync(`{,!(node_modules|public)/**/}*.js`, { nodir: true })
+      .forEach(file => {
+        const fileText = fs.readFileSync(file)
+        const matchingApis = deprecatedApis.filter(
+          api => fileText.indexOf(api) !== -1
+        )
+        matchingApis.forEach(api => deprecatedLocations[api].push(file))
+      })
 
     deprecatedApis.forEach(api => {
       if (deprecatedLocations[api].length) {

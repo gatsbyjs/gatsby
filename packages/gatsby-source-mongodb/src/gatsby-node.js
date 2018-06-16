@@ -41,7 +41,14 @@ exports.sourceNodes = (
     })
 }
 
-function createNodes(db, pluginOptions, dbName, createNode, createNodeId, collectionName) {
+function createNodes(
+  db,
+  pluginOptions,
+  dbName,
+  createNode,
+  createNodeId,
+  collectionName
+) {
   return new Promise((resolve, reject) => {
     let collection = db.collection(collectionName)
     let cursor = collection.find()

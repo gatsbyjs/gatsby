@@ -10,12 +10,12 @@ from a given page.
 
 The plugin uses this information to do two things.
 
-* When generating HTML pages, it automatically adds `<link prefetch>` for resources on pages
-the user is likely to visit. This means that as soon as a person visits your site, their browser
-will immediately start downloading in the background code and data for links they'll likely click on which
-can dramatically improve the site performance.
-* Once the person has loaded your site and visits additional pages, the plugin will continue to predict
-which pages will be visited and prefetch their resources as well.
+- When generating HTML pages, it automatically adds `<link prefetch>` for resources on pages
+  the user is likely to visit. This means that as soon as a person visits your site, their browser
+  will immediately start downloading in the background code and data for links they'll likely click on which
+  can dramatically improve the site performance.
+- Once the person has loaded your site and visits additional pages, the plugin will continue to predict
+  which pages will be visited and prefetch their resources as well.
 
 ## Demo
 
@@ -46,3 +46,4 @@ module.exports = {
     },
   ],
 }
+```

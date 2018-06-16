@@ -12,6 +12,7 @@ const { withBasePath } = require(`./path`)
 
 const apiRunnerNode = require(`./api-runner-node`)
 const createUtils = require(`./webpack-utils`)
+const hasLocalEslint = require(`./local-eslint-config-finder`)
 
 // Four stages or modes:
 //   1) develop: for `gatsby develop` command, hot reload and CSS injection into page
@@ -66,10 +67,8 @@ module.exports = async (
     return Object.assign(envObject, gatsbyVarObject)
   }
 
-  function getHmrPath () {
-    let hmrBasePath = `${
-      program.ssl ? `https` : `http`
-    }://${
+  function getHmrPath() {
+    let hmrBasePath = `${program.ssl ? `https` : `http`}://${
       program.host
     }:${webpackPort}/`
 
@@ -97,9 +96,11 @@ module.exports = async (
           // Add /* filename */ comments to generated require()s in the output.
           pathinfo: true,
           // Point sourcemap entries to original disk location (format as URL on Windows)
-          publicPath: process.env.GATSBY_WEBPACK_PUBLICPATH || `${program.ssl ? `https` : `http`}://${
-            program.host
-          }:${webpackPort}/`,
+          publicPath:
+            process.env.GATSBY_WEBPACK_PUBLICPATH ||
+            `${program.ssl ? `https` : `http`}://${
+              program.host
+            }:${webpackPort}/`,
           devtoolModuleFilenameTemplate: info =>
             path.resolve(info.absoluteResourcePath).replace(/\\/g, `/`),
         }
@@ -138,7 +139,9 @@ module.exports = async (
         return {
           commons: [
             require.resolve(`react-hot-loader/patch`),
-            `${require.resolve(`webpack-hot-middleware/client`)}?path=${getHmrPath()}`,
+            `${require.resolve(
+              `webpack-hot-middleware/client`
+            )}?path=${getHmrPath()}`,
             directoryPath(`.cache/app`),
           ],
         }
@@ -213,7 +216,6 @@ module.exports = async (
                 `gatsby-webpack-stats-extractor`,
                 (stats, done) => {
                   let assets = {}
-
                   for (let chunkGroup of stats.compilation.chunkGroups) {
                     if (chunkGroup.name) {
                       let files = []
@@ -226,11 +228,14 @@ module.exports = async (
                     }
                   }
 
+                  const webpackStats = {
+                    ...stats.toJson({ all: false, chunkGroups: true }),
+                    assetsByChunkName: assets,
+                  }
+
                   fs.writeFile(
                     path.join(`public`, `webpack.stats.json`),
-                    JSON.stringify({
-                      assetsByChunkName: assets,
-                    }),
+                    JSON.stringify(webpackStats),
                     done
                   )
                 }
@@ -274,7 +279,6 @@ module.exports = async (
   }
 
   function getModule(config) {
-    const { schema } = store.getState()
     // Common config for every env.
     // prettier-ignore
     let configRules = [
@@ -285,15 +289,23 @@ module.exports = async (
       rules.audioVideo(),
     ]
     switch (stage) {
-      case `develop`:
+      case `develop`: {
+        // get schema to pass to eslint config and program for directory
+        const { schema, program } = store.getState()
+
+        // if no local eslint config, then add gatsby config
+        if (!hasLocalEslint(program.directory)) {
+          configRules = configRules.concat([rules.eslint(schema)])
+        }
+
         configRules = configRules.concat([
-          rules.eslint(schema),
           {
             oneOf: [rules.cssModules(), rules.css()],
           },
         ])
-        break
 
+        break
+      }
       case `build-html`:
       case `develop-html`:
         // We don't deal with CSS at all when building the HTML.
@@ -354,7 +366,7 @@ module.exports = async (
       // part of your site.
       modules: [
         directoryPath(path.join(`src`, `node_modules`)),
-        directoryPath(`node_modules`),
+        `node_modules`,
       ],
       alias: {
         gatsby$: directoryPath(path.join(`.cache`, `gatsby-browser-entry.js`)),

@@ -130,7 +130,7 @@ plugins: [
 
 Let's do something crazy and add a list with another code example:
 
-* **A list item**
+- **A list item**
 
   …and a paragraph! In my younger and more vulnerable years my father gave me
   some advice that I’ve been turning over in my mind ever since.
@@ -140,7 +140,7 @@ Let's do something crazy and add a list with another code example:
       that all the people in this world haven’t had the advantages that you’ve
       had.”
 
-* Roger that, now back to topic: _Highlighted code blocks work here, too:_
+- Roger that, now back to topic: _Highlighted code blocks work here, too:_
 
   ```css{10,13}
   .clearfix:after {
@@ -172,7 +172,7 @@ Let's do something crazy and add a list with another code example:
 
   Source: https://en.wikipedia.org/wiki/Internet_Explorer_for_Mac
 
-* **The last list item** –- no more list items after this one, pinky swear!
+- **The last list item** –- no more list items after this one, pinky swear!
 
 [1]: https://www.gatsbyjs.org/packages/gatsby-remark-prismjs/
 [2]: http://prismjs.com/

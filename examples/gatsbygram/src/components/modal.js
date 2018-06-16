@@ -6,7 +6,7 @@ import Close from "react-icons/lib/md/close"
 import findIndex from "lodash/findIndex"
 import mousetrap from "mousetrap"
 import * as PropTypes from "prop-types"
-import { navigateTo, StaticQuery } from "gatsby"
+import { push, StaticQuery } from "gatsby"
 
 import { rhythm } from "../utils/typography"
 
@@ -55,7 +55,7 @@ class GatsbyGramModal extends React.Component {
       } else {
         nextPost = posts[currentIndex + 1]
       }
-      navigateTo(`/${nextPost.id}/`)
+      push(`/${nextPost.id}/`)
     }
   }
 
@@ -72,7 +72,7 @@ class GatsbyGramModal extends React.Component {
       } else {
         previousPost = posts[currentIndex - 1]
       }
-      navigateTo(`/${previousPost.id}/`)
+      push(`/${previousPost.id}/`)
     }
   }
 
@@ -97,7 +97,7 @@ class GatsbyGramModal extends React.Component {
           return (
             <Modal
               isOpen={this.props.isOpen}
-              onRequestClose={() => navigateTo(`/`)}
+              onRequestClose={() => push(`/`)}
               style={{
                 overlay: {
                   position: `fixed`,
@@ -123,7 +123,7 @@ class GatsbyGramModal extends React.Component {
               contentLabel="Modal"
             >
               <div
-                onClick={() => navigateTo(`/`)}
+                onClick={() => push(`/`)}
                 css={{
                   display: `flex`,
                   position: `relative`,
@@ -164,7 +164,7 @@ class GatsbyGramModal extends React.Component {
                 </div>
                 <Close
                   data-testid="modal-close"
-                  onClick={() => navigateTo(`/`)}
+                  onClick={() => push(`/`)}
                   css={{
                     cursor: `pointer`,
                     color: `rgba(255,255,255,0.8)`,

@@ -2,7 +2,7 @@
 title: Migrating from v1 to v2
 ---
 
-> This document is a work in progress. Have you upgraded your site and run into something that's not covered here? [Add your changes on GitHub](https://github.com/gatsbyjs/gatsby/edit/v2/docs/docs/migrating-from-v1-to-v2.md)!
+> This document is a work in progress. Have you upgraded your site and run into something that's not covered here? [Add your changes on GitHub](https://github.com/gatsbyjs/gatsby/edit/master/docs/docs/migrating-from-v1-to-v2.md)!
 
 ## Introduction
 
@@ -24,6 +24,7 @@ This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While t
 - [Remove explicit polyfills](#remove-explicit-polyfills)
 - [Change `modifyBabelrc` to `onCreateBabelConfig`](#change-modifybabelrc-to-oncreatebabelconfig)
 - [Change `modifyWebpackConfig` to `onCreateWebpackConfig`](#change-modifywebpackconfig-to-oncreatewebpackconfig)
+- [Change `navigateTo` to `push`](#change-navigateto-to-push)
 - [Remove inlined CSS in `html.js`](#remove-inlined-css-in-htmljs)
 - [Only allow defined keys on node.internal object](#only-allow-defined-keys-on-the-node-internal-object)
 - [Import `graphql` types from `gatsby/graphql`](#import-graphql-types-from-gatsbygraphql)
@@ -218,7 +219,7 @@ Furthermore you can remove the package from the `package.json`.
   "gatsby": "next",
   "gatsby-image": "next",
   "gatsby-plugin-sharp": "next",
-- "gatsby-link": "^1.6.39" 
+- "gatsby-link": "^1.6.39"
 }
 ```
 
@@ -403,6 +404,26 @@ Note usage of the new [`setWebpackConfig` action](/docs/actions/#setWebpackConfi
 
 See [Gatsby's webpack docs for more details](/docs/add-custom-webpack-config) about configuring webpack.
 
+## Change `navigateTo` to `push`
+
+The `navigateTo` method in `gatsby-link` was renamed to `push` so as to mirror the browser history function. We also
+added support for using `replace` as well.
+
+In addition to the name change, `gatsby-link` is now directly exported from the `gatsby` package.
+
+```diff
+import React from "react"
+- import { navigateTo } from "gatsby-link"
++ import { push } from "gatsby"
+
+// Don't use push with an onClick btw :-)
+// Generally just use the `<Link>` component.
+export default props => (
+-  <div onClick={() => navigateTo(`/`)}>Click to go to home</div>
++  <div onClick={() => push(`/`)}>Click to go to home</div>
+)
+```
+
 ## Remove inlined CSS in `html.js`
 
 Gatsby v2 automatically inlines CSS. You can remove any custom CSS inlining from your custom `html.js`.
@@ -424,7 +445,8 @@ Import graphql types from `gatsby/graphql` to prevent `Schema must contain uniqu
 ```
 
 ## Move Babel Configuration
-The latest version of Gatsby uses Babel 7, which introduced [a new behavior for configuration lookup / resolution](https://github.com/babel/babel/issues/6766).  In the case where a _.babelrc_ file might have been used at the root of the project, like for configuring Jest, moving that Babel configuration into _jest.config.json_ will avoid any conflicts.
+
+The latest version of Gatsby uses Babel 7, which introduced [a new behavior for configuration lookup / resolution](https://github.com/babel/babel/issues/6766). In the case where a _.babelrc_ file might have been used at the root of the project, like for configuring Jest, moving that Babel configuration into _jest.config.json_ will avoid any conflicts.
 
 [This GitHub comment](https://github.com/facebook/jest/issues/1468#issuecomment-361260279) documents the steps needed to do that.
 

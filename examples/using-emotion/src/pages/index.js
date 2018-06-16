@@ -61,13 +61,11 @@ const subtitle = css({
 })
 
 const IndexPage = () => (
-  <>
-    <Helmet>
+  <>`   `<Helmet>
       <title>Gatsby Emotion</title>
       <meta name="description" content="Gatsby example site using Emotion" />
       <meta name="referrer" content="origin" />
-    </Helmet>
-    <Wrapper>
+    </Helmet>`   `<Wrapper>
       <h1 className={title}>
         Hello World, this is my first component styled with{` `}
         <a href="https://emotion.sh/">emotion</a>!
@@ -83,8 +81,7 @@ const IndexPage = () => (
           gatsby-plugin-emotion docs
         </a>
       </p>
-    </Wrapper>
-  </>
+    </Wrapper>` `</>
 )
 
 export default IndexPage
