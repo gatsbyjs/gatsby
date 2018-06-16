@@ -153,7 +153,7 @@ class GatsbyLink extends React.Component {
             // loaded before continuing.
             if (process.env.NODE_ENV === `production`) {
               e.preventDefault()
-              window.___navigateTo(this.state.to)
+              window.___push(this.state.to)
             }
           }
 
@@ -180,6 +180,18 @@ GatsbyLink.contextTypes = {
 
 export default polyfill(GatsbyLink)
 
+export const push = to => {
+  window.___push(to)
+}
+
+export const replace = to => {
+  window.___replace(to)
+}
+
+// TODO: Remove navigateTo for Gatsby v3
 export const navigateTo = to => {
-  window.___navigateTo(to)
+  console.warn(
+    `The "navigateTo" method is now deprecated and will be removed in Gatsby v3. Please use "push" instead.`
+  )
+  return push(to)
 }

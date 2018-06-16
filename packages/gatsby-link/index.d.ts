@@ -8,6 +8,10 @@ export interface GatsbyLinkProps extends NavLinkProps {
   style?:any;
 }
 
+export const push: (to: LocationDescriptor) => void;
+export const replace: (to: LocationDescriptor) => void;
+
+// TODO: Remove navigateTo for Gatsby v3
 export const navigateTo: (to: LocationDescriptor) => void;
 
 export const withPrefix: (path: string) => string;
