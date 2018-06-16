@@ -51,7 +51,7 @@ With the empathy map and the interviews as our guide, we created a list of jobs 
  
 ### Defining the MVP
 
-We thought the following features were important to include; you'll notice that the boxes are all checked, thanks to the hard work of many people!
+We thought the following features were important to include; you'll notice that the boxes are all checked, thanks to the hard work of many people, including @ThatOtherPerson, @fk, @tsiq-swyx, @gillkyle, @LeKoArts, @davidluhr, @daydream05, @m-allanson, @pieh, @calcsam and more (GitHub names).
 
 Users should be able to:
 - [x] See screenshots of sites built with Gatsby (Landing page)
