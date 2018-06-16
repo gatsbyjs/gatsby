@@ -7,6 +7,13 @@ typora-copy-images-to: ./
 
 In this tutorial, you'll be learning about how to pull data into your Gatsby site using GraphQL and source plugins. Before you learn about these plugins, however, you'll want to know how to use something called Graph_i_QL, a tool that helps you structure your queries correctly.
 
+> _Note: this tutorial is a 4-part series (Part 4 through 7). It will make sense only if completed in order._
+>
+> 1.  [Part 4: Querying for data in a blog](/tutorial/part-four/)
+> 2.  Part 5: Source plugins and rendering queried data — you are here
+> 3.  [Part 6: Transformer plugins](/tutorial/part-six/)
+> 4.  [Part 7: Programmatically create pages from data](/tutorial/part-seven/)
+
 ## Introducing Graph_i_QL
 
 Graph_i_QL is the GraphQL integrated development environment (IDE). It's a powerful (and all-around awesome) tool

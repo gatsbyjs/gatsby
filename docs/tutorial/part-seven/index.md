@@ -18,6 +18,13 @@ ways to use it for the remainder of the tutorial.
 
 Let's get started.
 
+> _Note: this tutorial is a 4-part series (Part 4 through 7). It will make sense only if completed in order._
+>
+> 1.  [Part 4: Querying for data in a blog](/tutorial/part-four/)
+> 2.  [Part 5: Source plugins and rendering queried data](/tutorial/part-five/)
+> 3.  [Part 6: Transformer plugins](/tutorial/part-six/)
+> 4.  Part 7: Programmatically create pages from data — you are here
+
 ## Creating slugs for pages
 
 Creating new pages has two steps:
@@ -39,8 +46,8 @@ Gatsby whenever a new node is created (or updated).
 
 ```javascript
 exports.onCreateNode = ({ node }) => {
-  console.log(node.internal.type);
-};
+  console.log(node.internal.type)
+}
 ```
 
 Stop and restart the development server. As you do, you'll see quite a few newly
@@ -201,11 +208,11 @@ Create a directory at `src/templates` and then add the following in a file named
 `src/templates/blog-post.js`.
 
 ```jsx
-import React from "react";
+import React from "react"
 
 export default () => {
-  return <div>Hello blog post</div>;
-};
+  return <div>Hello blog post</div>
+}
 ```
 
 Then update `gatsby-node.js`
@@ -273,17 +280,17 @@ Which is a bit boring. Let's pull in data from our Markdown post. Change
 `src/templates/blog-post.js` to:
 
 ```jsx
-import React from "react";
+import React from "react"
 
 export default ({ data }) => {
-  const post = data.markdownRemark;
+  const post = data.markdownRemark
   return (
     <div>
       <h1>{post.frontmatter.title}</h1>
       <div dangerouslySetInnerHTML={{ __html: post.html }} />
     </div>
-  );
-};
+  )
+}
 
 export const query = graphql`
   query BlogPostQuery($slug: String!) {
@@ -294,7 +301,7 @@ export const query = graphql`
       }
     }
   }
-`;
+`
 ```
 
 And…
@@ -385,8 +392,8 @@ The next step is to try the instructions above on your own with a new set of pag
 
 Now that you've built a Gatsby site, where do you go next?
 
-* Share your Gatsby site on Twitter and see what other people have created by searching for #gatsbytutorial! Make sure to mention @gatsbyjs in your Tweet, and include the hashtag #gatsbytutorial :)
-* You could take a look at some [example sites](https://github.com/gatsbyjs/gatsby/tree/master/examples#gatsby-example-websites)
-* Explore more [plugins](/docs/plugins/)
-* See what [other people are building with Gatsby](https://github.com/gatsbyjs/gatsby/#showcase)
-* Check out the documentation on [Gatsby's APIs](/docs/api-specification/), [nodes](/docs/node-interface/) or [GraphQL](/docs/graphql-reference/)
+- Share your Gatsby site on Twitter and see what other people have created by searching for #gatsbytutorial! Make sure to mention @gatsbyjs in your Tweet, and include the hashtag #gatsbytutorial :)
+- You could take a look at some [example sites](https://github.com/gatsbyjs/gatsby/tree/master/examples#gatsby-example-websites)
+- Explore more [plugins](/docs/plugins/)
+- See what [other people are building with Gatsby](https://github.com/gatsbyjs/gatsby/#showcase)
+- Check out the documentation on [Gatsby's APIs](/docs/api-specification/), [nodes](/docs/node-interface/) or [GraphQL](/docs/graphql-reference/)
