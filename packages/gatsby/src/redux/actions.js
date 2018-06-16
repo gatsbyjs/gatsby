@@ -204,12 +204,14 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     process.exit(1)
   }
 
-  let jsonName = `${kebabHash(page.path)}`
-  let internalComponentName = `Component${pascalCase(page.path)}`
-
-  if (jsonName === ``) {
+  let jsonName
+  let internalComponentName
+  if (page.path === `/`) {
     jsonName = `index`
     internalComponentName = `ComponentIndex`
+  } else {
+    jsonName = `${kebabHash(page.path)}`
+    internalComponentName = `Component${pascalCase(page.path)}`
   }
 
   let internalPage: Page = {
@@ -309,7 +311,8 @@ actions.deleteNode = (options: any, plugin: Plugin, ...args) => {
       `Calling "deleteNode" with a nodeId is deprecated. Please pass an object containing a full node instead: deleteNode({ node })`
     )
 
-    if (args[0] && args[0].name) { // `plugin` used to be the third argument
+    if (args[0] && args[0].name) {
+      // `plugin` used to be the third argument
       console.log(`"deleteNode" was called by ${args[0].name}`)
     }
 
