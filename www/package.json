@@ -49,25 +49,13 @@
     "mitt": "^1.1.3",
     "mousetrap": "^1.6.1",
     "parse-filepath": "^1.0.2",
-<<<<<<< HEAD
-    "prismjs": "^1.13.0",
-=======
     "prismjs": "^1.14.0",
->>>>>>> Make mobile sizing work correctly
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-helmet": "^5.2.0",
     "react-icons": "^2.2.7",
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "react-instantsearch": "^4.5.1",
-=======
-    "react-modal": "^3.4.4",
->>>>>>> Current work on showcase against v2
-=======
     "react-instantsearch": "^4.5.1",
     "react-modal": "^3.4.4",
->>>>>>> Make mobile sizing work correctly
     "react-typography": "^0.16.13",
     "slash": "^1.0.0",
     "typeface-space-mono": "^0.0.54",
