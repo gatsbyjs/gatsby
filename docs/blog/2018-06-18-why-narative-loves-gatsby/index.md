@@ -11,13 +11,13 @@ canonicalLink: "https://medium.com/narative/why-narative-loves-gatsbyjs-825b6b3b
 
 To understand why we love Gatsby you have to understand what we do at Narative. Narative is a digital studio that focuses on creating the best brands and products in the world. Our team works on everything from page based websites to complex web apps. The core of our engineering team works in the React ecosystem and has experience from some of the best startups in Canada.
 
-Traditionally, building page based websites, such as marketing websites, landing pages, or blogs would require a vastly different skillset from building interactive web apps. There are popular tools such as WordPress or Drupal that are written in their own flavour of PHP or static site generators such as Jekyll, Hugo, and Middleman that leverage templating to build static websites. The problem we've found with these tools is that there is very little overlap between web app development and page based development. Within the last couple years, React has taken over web app development and popularized an intuitive API for building user interfaces. React has also created an astonishing community of developers that are focused on creating amazing tools to accelerate and improve UI development.
+Traditionally, building page based websites, such as marketing websites, landing pages, or blogs, would require a vastly different skillset from building interactive web apps. There are popular tools such as WordPress or Drupal that are written in their own flavour of PHP or static site generators such as Jekyll, Hugo, and Middleman that leverage templating to build static websites. _The problem we've found with these tools is that there is very little overlap between web app development and page based development_. Within the last couple years, React has taken over web app development and popularized an intuitive API for building user interfaces. React has also created an astonishing community of developers that are focused on creating amazing tools to accelerate and improve UI development.
 
 Part of our mission at Narative is to provide technical excellence through an engineering team that is proud and cohesive. To help accomplish this, we need a team that can share its knowledge, tools, and skills amongst itself and with the community around it.
 
 # The beauty of Gatsby
 
-Gatsby allows our team to use the powerful React API when creating page based websites with almost no drawbacks. All the principles and techniques we've learned from using React for the last few years can be leveraged with Gatsby. This has enabled us to create a team that is extremely dynamic and cohesive without the worry of creating silos or losing knowledge across teams. Our team is able to learn once, write everywhere. With an engineering team that's familiar with React and Gatsby we're able to tackle more problems faster, which is highly beneficial to our partners and the services we offer.
+Gatsby allows our team to use the powerful React API when creating page based websites with almost no drawbacks. _All the principles and techniques we've learned from using React for the last few years can be leveraged with Gatsby_. This has enabled us to create a team that is extremely dynamic and cohesive without the worry of creating silos or losing knowledge across teams. _Our team is able to learn once, write everywhere_. With an engineering team that's familiar with React and Gatsby we're able to tackle more problems faster, which is highly beneficial to our partners and the services we offer.
 
 One concern we had when adopting Gatsby is that page based websites are not the same as web apps. Even though we're using similar tools to build them there are different principles that drive each type of development. Luckily, our team doesn't have to worry about that problem, because the team behind Gatsby is focused on delivering the perfect experience to end users for us. The Gatsby team has baked in all the necessary features to make our websites fast and up to standard.
 
@@ -25,7 +25,7 @@ One concern we had when adopting Gatsby is that page based websites are not the 
 
 Gatsby handles a lot of the complexity of delivering a fast website for you. There are new performance standards built into it; we don't have to worry about code splitting, service workers / progress web app capabilities, server side rendering, asset optimization, and basic security.
 
-Out of the box, the performance is a huge win. Our team does not have to focus on these optimizations anymore. Instead, we focus on telling the story and building the values of our partners into our websites and web apps.
+Great performance out-of-the-box is a huge win. Our team does not have to focus on these optimizations anymore. Instead, we focus on telling the story and building the values of our partners into our websites and web apps.
 
 # Developing with Gatsby is fast, really fast
 
@@ -35,7 +35,7 @@ Gatsby does not only allow us to deliver fast websites, it has also sped up our 
 
 Many popular CMS tools are tightly coupled to their source of data. Gatsby offers a clear separation between the data and view layer building on top of the Headless CMS principles. The advantage for Narative is that we can develop without CMS lock-in such as WordPress. If our team decides to go with a new view layer the migration would be less painful than migrating all the data as well. Often times flexibility in software means more complexity to manage but in this case the flexibility is in the right spots where it reduces complexity.
 
-We pass this flexibility on to our partners. They are able to manage their data while our team is able to deliver an excellent product on top of their existing infrastructure. This has made our solutions to revamping legacy projects even stronger than before.
+We pass this flexibility on to our partners. They are able to manage their data while _our team is able to deliver an excellent product on top of their existing infrastructure. This has made our solutions to revamping legacy projects even stronger than before_.
 
 # Plugins and integrations
 
@@ -47,7 +47,7 @@ Beyond all the plugins, Gatsby provides integrations into today's popular tools.
 
 # Conclusion
 
-Narative strives for technical excellence for all its products, which can be achieved with React, Gatsby, and GraphQL for us. We've landed on a solution that allows our team to stay cohesive and flexible. Thanks to the popularization of React and the principles behind it Narative has been able to build page based websites and web apps with the same expertise. In the past, it was hard to share knowledge and tools between page based websites and web apps but now there's very little difference.
+Narative strives for technical excellence for all its products, which can be achieved with React, Gatsby, and GraphQL for us. We've landed on a solution that allows our team to stay cohesive and flexible. Thanks to the popularization of React and the principles behind it _Narative has been able to build page based websites and web apps with the same expertise. In the past, it was hard to share knowledge and tools between page based websites and web apps but now there's very little difference_.
 
 Gatsby streamlines our process with an excellent developer experience and all the features you could ask for in 2018. The heavy lifting of delivering a technically sound website with performance that users will love has slowly shifted towards frameworks such as Gatsby, which has freed up our team to focus on even better experiences and products.
 
