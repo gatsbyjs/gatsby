@@ -1,4 +1,5 @@
-import typography, { rhythm, scale, options } from "../utils/typography"
+import React from "react"
+import typography, { rhythm, scale } from "../utils/typography"
 import presets from "../utils/presets"
 import { vP, vPHd, vPVHd, vPVVHd } from "../components/gutters"
 import { FormidableIcon, FabricIcon, SegmentIcon } from "../assets/logos"
@@ -21,14 +22,14 @@ const Icon = ({ icon, alt, href }) => (
     <a
       href={href}
       target="_blank"
-      rel="noopener"
+      rel="noopener noreferrer"
       css={{
         borderBottom: `0 !important`,
         boxShadow: `none !important`,
         background: `none !important`,
         transition: `opacity ${presets.animation.speedFast} ${
           presets.animation.curveDefault
-        }`,
+          }`,
         opacity: 0.9,
         ":hover": {
           opacity: 1,
@@ -67,7 +68,7 @@ const UsedBy = () => (
       marginBottom: rhythm(3),
       transition: `padding-top ${presets.animation.speedFast} ${
         presets.animation.curveDefault
-      }`,
+        }`,
       order: `3`,
       flexGrow: `1`,
       transform: `translateZ(0)`,

@@ -149,18 +149,18 @@ the site's
 [`gatsby-node.js` file](https://github.com/gatsbyjs/gatsby/blob/master/examples/gatsbygram/gatsby-node.js):
 
 ```javascript
-const _ = require(`lodash`);
-const Promise = require(`bluebird`);
-const path = require(`path`);
-const slug = require(`slug`);
-const slash = require(`slash`);
+const _ = require(`lodash`)
+const Promise = require(`bluebird`)
+const path = require(`path`)
+const slug = require(`slug`)
+const slash = require(`slash`)
 
 // Implement the Gatsby API “createPages”. This is
 // called after the Gatsby bootstrap is finished so you have
 // access to any information necessary to programmatically
 // create pages.
 exports.createPages = ({ graphql, boundActionCreators }) => {
-  const { createPage } = boundActionCreators;
+  const { createPage } = boundActionCreators
 
   return new Promise((resolve, reject) => {
     // The “graphql” function allows us to run arbitrary
@@ -188,11 +188,11 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
         `
       ).then(result => {
         if (result.errors) {
-          reject(new Error(result.errors));
+          reject(new Error(result.errors))
         }
 
         // Create image post pages.
-        const postTemplate = path.resolve(`src/templates/post-page.js`);
+        const postTemplate = path.resolve(`src/templates/post-page.js`)
         // We want to create a detailed page for each
         // Instagram post. Since the scrapped Instagram data
         // already includes an ID field, we just use that for
@@ -211,14 +211,14 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
             context: {
               id: edge.node.id,
             },
-          });
-        });
+          })
+        })
 
-        return;
+        return
       })
-    );
-  });
-};
+    )
+  })
+}
 ```
 
 ## Using templates
@@ -237,8 +237,8 @@ we pass the id to the post. Below we use that id to query our `GraphQL` schema
 and return a fully formed page:
 
 ```jsx
-import React from "react";
-import PostDetail from "../components/post-detail";
+import React from "react"
+import PostDetail from "../components/post-detail"
 
 class PostTemplate extends React.Component {
   render() {
@@ -246,11 +246,11 @@ class PostTemplate extends React.Component {
       // PostDetail is used for this detail page and
       // also in the modal.
       <PostDetail post={this.props.data.posts} />
-    );
+    )
   }
 }
 
-export default PostTemplate;
+export default PostTemplate
 
 // The post template's GraphQL query. Notice the “id”
 // variable which is passed in. We set this on the page
@@ -282,7 +282,7 @@ export const pageQuery = `
             # thumbnails are created. This makes iterating on
             # designs effortless as we simply change the args
             # for the query and we get new thumbnails.
-            big: sizes(maxWidth: 640) {
+            big: fluid(maxWidth: 640) {
               src
               srcSet
             }
@@ -291,7 +291,7 @@ export const pageQuery = `
       }
     }
   }
-`;
+`
 ```
 
 ## Creating React.js component pages
@@ -328,8 +328,8 @@ loading your site from a service worker.
 A small layout component might look something like this.
 
 ```jsx
-import React from "react";
-import Link from "gatsby-link";
+import React from "react"
+import { Link } from "gatsby"
 
 class Layout extends React.Component {
   render() {
@@ -340,11 +340,11 @@ class Layout extends React.Component {
         {/* Render children pages */}
         {this.props.children()}
       </div>
-    );
+    )
   }
 }
 
-export default Layout;
+export default Layout
 ```
 
 Every page will be rendered as children of the `Layout` component:
@@ -374,7 +374,7 @@ generates all the configuration for you.
 
 Normally page resources are pre-cached with a service worker. But as several
 browsers (Safari/Microsoft Edge) still don't support Service Workers, the
-[Gatsby `<Link>` component](/packages/gatsby-link/) pre-caches resources for
+[Gatsby `<Link>` component](/packages/gatsby/) pre-caches resources for
 pages it links to by loading them into memory.
 
 ## Plugins
@@ -459,7 +459,7 @@ module.exports = {
       },
     },
   ],
-};
+}
 ```
 
 ## Styles

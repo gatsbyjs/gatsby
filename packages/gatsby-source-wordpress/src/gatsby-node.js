@@ -21,7 +21,7 @@ let _excludedRoutes
 let _normalizer
 
 exports.sourceNodes = async (
-  { boundActionCreators, getNode, store, cache, createNodeId },
+  { actions, getNode, store, cache, createNodeId },
   {
     baseUrl,
     protocol,
@@ -36,7 +36,7 @@ exports.sourceNodes = async (
     normalizer,
   }
 ) => {
-  const { createNode, touchNode } = boundActionCreators
+  const { createNode, touchNode } = actions
   _verbose = verboseOutput
   _siteURL = `${protocol}://${baseUrl}`
   _useACF = useACF
@@ -102,6 +102,7 @@ exports.sourceNodes = async (
     store,
     cache,
     createNode,
+    createNodeId,
     touchNode,
     _auth,
   })

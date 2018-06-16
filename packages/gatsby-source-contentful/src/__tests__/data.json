@@ -10,49 +10,10 @@
                             "id": "rocybtov1ozk"
                         }
                     },
-                    "id": "c4L2GhTsJtCseMYM8Wia64i",
-                    "type": "Entry",
-                    "createdAt": "2018-05-28T08:49:06.230Z",
-                    "updatedAt": "2018-05-28T08:49:06.230Z",
-                    "environment": {
-                        "sys": {
-                            "id": "master",
-                            "type": "Link",
-                            "linkType": "Environment"
-                        }
-                    },
-                    "revision": 1,
-                    "contentType": {
-                        "sys": {
-                            "type": "Link",
-                            "linkType": "ContentType",
-                            "id": "remarkTest"
-                        }
-                    },
-                    "contentful_id": "4L2GhTsJtCseMYM8Wia64i"
-                },
-                "fields": {
-                    "title": {
-                        "en-US": "Contentful images inlined in Markdown"
-                    },
-                    "content": {
-                        "en-US": "## Toys\n\n![Toys](//images.ctfassets.net/rocybtov1ozk/6t4HKjytPi0mYgs240wkG/6e730b1e6c2a46929239019240c037e6/toys_512pxGREY.png) \n\n## Chive\n\n![Chive logo](//images.ctfassets.net/rocybtov1ozk/1MgbdJNTsMWKI0W68oYqkU/ad0200fe320b85ecdd823c711161c2f6/9ef190c59f0d375c0dea58b58a4bc1f0.jpeg) \n\n## Playsam Streamliner\n\n![Playsam Streamliner](//images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg) \n\n## Whisk beaters\n\n![Whisk beaters](//images.ctfassets.net/rocybtov1ozk/10TkaLheGeQG6qQGqWYqUI/f997e8e13c8c83c145e976d0905e64b7/ryugj83mqwa1asojwtwb.jpg) \n\n## SoSo Wall Clock\n\n![SoSo Wall Clock](//images.ctfassets.net/rocybtov1ozk/KTRF62Q4gg60q6WCsWKw8/a8b2e93ac83fbbbb7bf9fba9f92b018e/soso.clock.jpg) \n\n## Hudson Wall Cup\n\n![Hudson Wall Cup ](//images.ctfassets.net/rocybtov1ozk/Xc0ny7GWsMEMCeASWO2um/af8e29320c04af689798afe96e2345c7/jqvtazcyfwseah9fmysz.jpg)"
-                    }
-                }
-            },
-            {
-                "sys": {
-                    "space": {
-                        "sys": {
-                            "type": "Link",
-                            "linkType": "Space",
-                            "id": "rocybtov1ozk"
-                        }
-                    },
                     "id": "c71mfnH4QKsSsQmgoaQuq6O",
                     "type": "Entry",
                     "createdAt": "2017-11-28T02:16:10.604Z",
-                    "updatedAt": "2017-11-28T02:16:10.604Z",
+                    "updatedAt": "2018-06-11T14:18:54.392Z",
                     "environment": {
                         "sys": {
                             "id": "master",
@@ -60,7 +21,7 @@
                             "linkType": "Environment"
                         }
                     },
-                    "revision": 1,
+                    "revision": 3,
                     "contentType": {
                         "sys": {
                             "type": "Link",
@@ -146,6 +107,45 @@
                                 "babel-plugin-transform-async-to-generator": "^6.24.1"
                             }
                         }
+                    }
+                }
+            },
+            {
+                "sys": {
+                    "space": {
+                        "sys": {
+                            "type": "Link",
+                            "linkType": "Space",
+                            "id": "rocybtov1ozk"
+                        }
+                    },
+                    "id": "c4L2GhTsJtCseMYM8Wia64i",
+                    "type": "Entry",
+                    "createdAt": "2018-05-28T08:49:06.230Z",
+                    "updatedAt": "2018-05-28T08:49:06.230Z",
+                    "environment": {
+                        "sys": {
+                            "id": "master",
+                            "type": "Link",
+                            "linkType": "Environment"
+                        }
+                    },
+                    "revision": 1,
+                    "contentType": {
+                        "sys": {
+                            "type": "Link",
+                            "linkType": "ContentType",
+                            "id": "remarkTest"
+                        }
+                    },
+                    "contentful_id": "4L2GhTsJtCseMYM8Wia64i"
+                },
+                "fields": {
+                    "title": {
+                        "en-US": "Contentful images inlined in Markdown"
+                    },
+                    "content": {
+                        "en-US": "## Toys\n\n![Toys](//images.ctfassets.net/rocybtov1ozk/6t4HKjytPi0mYgs240wkG/6e730b1e6c2a46929239019240c037e6/toys_512pxGREY.png) \n\n## Chive\n\n![Chive logo](//images.ctfassets.net/rocybtov1ozk/1MgbdJNTsMWKI0W68oYqkU/ad0200fe320b85ecdd823c711161c2f6/9ef190c59f0d375c0dea58b58a4bc1f0.jpeg) \n\n## Playsam Streamliner\n\n![Playsam Streamliner](//images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg) \n\n## Whisk beaters\n\n![Whisk beaters](//images.ctfassets.net/rocybtov1ozk/10TkaLheGeQG6qQGqWYqUI/f997e8e13c8c83c145e976d0905e64b7/ryugj83mqwa1asojwtwb.jpg) \n\n## SoSo Wall Clock\n\n![SoSo Wall Clock](//images.ctfassets.net/rocybtov1ozk/KTRF62Q4gg60q6WCsWKw8/a8b2e93ac83fbbbb7bf9fba9f92b018e/soso.clock.jpg) \n\n## Hudson Wall Cup\n\n![Hudson Wall Cup ](//images.ctfassets.net/rocybtov1ozk/Xc0ny7GWsMEMCeASWO2um/af8e29320c04af689798afe96e2345c7/jqvtazcyfwseah9fmysz.jpg)"
                     }
                 }
             },
@@ -2353,7 +2353,7 @@
         ],
         "deletedEntries": [],
         "deletedAssets": [],
-        "nextSyncToken": "w5ZGw6JFwqZmVcKsE8Kow4grw45QdybCuW0vwojDgsK-IEzCg8OBw74LLTjDu8KCwrjCvivDnkpTGsKvw7BfKxhBwqDCkh3CvMO7VcK3M8KfQxZzw5Qyw5zClzFqc1dtwoM4VcObXVhmw4Z4w7lLDAIj"
+        "nextSyncToken": "w5ZGw6JFwqZmVcKsE8Kow4grw45QdybCg8OQw7LCvi7Cvl_DkXTCk3kywq1iw5NUwoXDvcOmaMOgwqRcbjfCtwxUeRXCllhTOWhED8Klw7pCwqfCncK5SV1nJ8OhwokyWsOJNU9dbMK1wo_CjW1uLw3DnQ"
     },
     "contentTypeItems": [
         {
@@ -2680,7 +2680,7 @@
                 "id": "jsonTest",
                 "type": "ContentType",
                 "createdAt": "2017-11-28T02:15:46.221Z",
-                "updatedAt": "2017-11-28T02:15:46.221Z",
+                "updatedAt": "2018-06-11T14:10:07.651Z",
                 "environment": {
                     "sys": {
                         "id": "master",
@@ -2688,7 +2688,7 @@
                         "linkType": "Environment"
                     }
                 },
-                "revision": 1,
+                "revision": 2,
                 "contentful_id": "jsonTest"
             },
             "displayField": null,
@@ -2698,6 +2698,15 @@
                 {
                     "id": "jsonTest",
                     "name": "json-test",
+                    "type": "Object",
+                    "localized": false,
+                    "required": false,
+                    "disabled": false,
+                    "omitted": false
+                },
+                {
+                    "id": "jsonArrayTest",
+                    "name": "json-array-test",
                     "type": "Object",
                     "localized": false,
                     "required": false,

@@ -79,7 +79,7 @@ Where each of `a.json`, `b.json` and `c.json` look like:
 Then the following three nodes would be created:
 
 ```javascript
-[
+;[
   {
     value: "a",
   },
@@ -89,7 +89,7 @@ Then the following three nodes would be created:
   {
     value: "c",
   },
-];
+]
 ```
 
 ## How to query
@@ -130,7 +130,7 @@ Which would return:
           value: "c",
         },
       },
-    ];
+    ]
   }
 }
 ```

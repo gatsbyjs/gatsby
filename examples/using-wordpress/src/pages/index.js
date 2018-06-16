@@ -1,10 +1,8 @@
 import React, { Component } from "react"
-import PropTypes from "prop-types"
-import Link from "gatsby-link"
+import { Link } from "gatsby"
 import ClockIcon from "react-icons/lib/fa/clock-o"
-import TagIcon from "react-icons/lib/fa/tag"
-import OpenIcon from "react-icons/lib/fa/folder-open"
 
+import Layout from "../layouts"
 import PostIcons from "../components/PostIcons"
 
 import { rhythm } from "../utils/typography"
@@ -14,7 +12,7 @@ class Home extends Component {
     const data = this.props.data
 
     return (
-      <div>
+      <Layout>
         <div css={{ marginBottom: rhythm(1) }}>
           <h1>Pages</h1>
           {data.allWordpressPage.edges.map(({ node }) => (
@@ -45,7 +43,7 @@ class Home extends Component {
             <PostIcons node={node} />
           </div>
         ))}
-      </div>
+      </Layout>
     )
   }
 }

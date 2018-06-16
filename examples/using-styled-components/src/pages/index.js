@@ -1,4 +1,5 @@
 import React from "react"
+import Helmet from "react-helmet"
 import styled from "styled-components"
 
 // Create a Title component that'll render an <h1> tag with some styles
@@ -17,24 +18,34 @@ const Wrapper = styled.section`
 class IndexPage extends React.Component {
   render() {
     return (
-      <div
-        style={{
-          margin: `0 auto`,
-          marginTop: `3rem`,
-          padding: `1.5rem`,
-          maxWidth: 800,
-          color: `red`,
-        }}
-      >
-        <Wrapper>
-          <Title>Hello World, this is my first styled component!</Title>
-          <p>
-            <a href="https://www.gatsbyjs.org/packages/gatsby-plugin-styled-components/">
-              gatsby-plugin-styled-component docs
-            </a>
-          </p>
-        </Wrapper>
-      </div>
+      <>
+        <Helmet>
+          <title>Gatsby Styled Components</title>
+          <meta
+            name="description"
+            content="Gatsby example site using Styled Components"
+          />
+          <meta name="referrer" content="origin" />
+        </Helmet>
+        <div
+          style={{
+            margin: `0 auto`,
+            marginTop: `3rem`,
+            padding: `1.5rem`,
+            maxWidth: 800,
+            color: `red`,
+          }}
+        >
+          <Wrapper>
+            <Title>Hello World, this is my first styled component!</Title>
+            <p>
+              <a href="https://www.gatsbyjs.org/packages/gatsby-plugin-styled-components/">
+                gatsby-plugin-styled-component docs
+              </a>
+            </p>
+          </Wrapper>
+        </div>
+      </>
     )
   }
 }

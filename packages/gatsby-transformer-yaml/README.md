@@ -28,7 +28,7 @@ module.exports = {
       },
     },
   ],
-};
+}
 ```
 
 Where the _source folder_ `./src/data/` contains the `.yaml` files.
@@ -59,7 +59,7 @@ So if your project has a `letters.yaml` which looks like:
 Then the following three nodes would be created.
 
 ```javascript
-[
+;[
   {
     character: "a",
   },
@@ -69,7 +69,7 @@ Then the following three nodes would be created.
   {
     character: "c",
   },
-];
+]
 ```
 
 ### Single Object
@@ -105,7 +105,7 @@ character: c
 Then the following three nodes would be created.
 
 ```javascript
-[
+;[
   {
     character: "a",
   },
@@ -115,7 +115,7 @@ Then the following three nodes would be created.
   {
     character: "c",
   },
-];
+]
 ```
 
 ## How to query
@@ -158,7 +158,7 @@ Which would return:
           character: "c",
         },
       },
-    ];
+    ]
   }
 }
 ```

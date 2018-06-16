@@ -10,7 +10,7 @@ Parses XML files. It supports also attributes
 
 ```javascript
 // In your gatsby-config.js
-plugins: [`gatsby-transformer-xml`];
+plugins: [`gatsby-transformer-xml`]
 ```
 
 ## Parsing algorithm
