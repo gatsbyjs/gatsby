@@ -276,7 +276,7 @@ export default (pagePath, callback) => {
   )
 
   const bodyScripts = scripts.map(s => {
-    const scriptPath = `${pathPrefix}${JSON.stringify(s).slice(1, -1)}`
+    const scriptPath = `${pathPrefix}${JSON.stringify(s.name).slice(1, -1)}`
     return <script key={scriptPath} src={scriptPath} async />
   })
 
