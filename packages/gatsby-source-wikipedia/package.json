@@ -1,6 +1,6 @@
 {
   "name": "gatsby-source-wikipedia",
-  "version": "1.0.0-alpha.9",
+  "version": "2.0.0-alpha.0",
   "description": "Gatsby source plugin for pulling articles from Wikipedia",
   "main": "index.js",
   "scripts": {
@@ -19,6 +19,9 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wikipedia#readme",
+  "peerDependencies": {
+    "gatsby": ">2.0.0-alpha"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby.git"

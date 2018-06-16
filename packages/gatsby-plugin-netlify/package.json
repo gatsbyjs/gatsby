@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-netlify",
   "description": "A Gatsby plugin which generates a _headers file for netlify",
-  "version": "1.0.19-14",
+  "version": "2.0.0-alpha.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -34,7 +34,7 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "gatsby": "^1.0.0 || >2.0.0-alph"
+    "gatsby": ">2.0.0-alpha"
   },
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify",
   "scripts": {

@@ -12,7 +12,7 @@
   "dependencies": {
     "@babel/preset-typescript": "7.0.0-beta.47",
     "@babel/runtime": "7.0.0-beta.47",
-    "babel-plugin-remove-graphql-queries": "^2.0.1-12"
+    "babel-plugin-remove-graphql-queries": "2.0.2-alpha.0"
   },
   "devDependencies": {
     "@babel/cli": "7.0.0-beta.47",
@@ -28,7 +28,7 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "gatsby": "^1.0.0"
+    "gatsby": ">2.0.0-alpha"
   },
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typescript",
   "scripts": {

@@ -1,7 +1,7 @@
 {
   "name": "gatsby-source-lever",
   "description": "Gatsby source plugin for building websites using the Lever.co Recruitment Software as a data source.",
-  "version": "1.0.9-13",
+  "version": "2.0.0-alpha.0",
   "author": "Sebastien Fichot <fichot.sebastien@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -29,6 +29,9 @@
     "gatsby-source-plugin"
   ],
   "license": "MIT",
+  "peerDependencies": {
+    "gatsby": ">2.0.0-alpha"
+  },
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-lever",
   "scripts": {
     "build": "babel src --out-dir . --ignore **/__tests__",

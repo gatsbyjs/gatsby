@@ -1,7 +1,7 @@
 {
   "name": "gatsby-transformer-excel",
   "description": "Gatsby transformer plugin for Excel spreadsheets",
-  "version": "2.0.1-12",
+  "version": "2.1.1-alpha.0",
   "author": "SheetJS <dev@sheetjs.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -23,6 +23,9 @@
   ],
   "license": "MIT",
   "main": "index.js",
+  "peerDependencies": {
+    "gatsby": ">2.0.0-alpha"
+  },
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-excel",
   "scripts": {
     "build": "babel src --out-dir . --ignore **/__tests__",
