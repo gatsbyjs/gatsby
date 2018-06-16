@@ -57,10 +57,9 @@ const ImageAPI = props => {
 
       <h2>Fixed</h2>
       <p>
-        If you make queries with <code>fixed</code> then Gatsby
-        automatically generates images with 1x, 1.5x, 2x, and 3x versions so
-        your images look great on whatever screen resolution of device they're
-        on.
+        If you make queries with <code>fixed</code> then Gatsby automatically
+        generates images with 1x, 1.5x, 2x, and 3x versions so your images look
+        great on whatever screen resolution of device they're on.
       </p>
       <p>
         If you're on a retina class screen, notice how much sharper these images
@@ -170,7 +169,8 @@ const ImageAPI = props => {
         desktop device.
       </p>
       <p>
-        Instead of specifying a width and height, with <code>fluid</code> you specify a{` `}
+        Instead of specifying a width and height, with <code>fluid</code> you
+        specify a{` `}
         <code>maxWidth</code>, the max width the container of the images
         reaches.
       </p>

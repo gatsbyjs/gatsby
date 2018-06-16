@@ -218,7 +218,7 @@ Furthermore you can remove the package from the `package.json`.
   "gatsby": "next",
   "gatsby-image": "next",
   "gatsby-plugin-sharp": "next",
-- "gatsby-link": "^1.6.39" 
+- "gatsby-link": "^1.6.39"
 }
 ```
 
@@ -424,7 +424,8 @@ Import graphql types from `gatsby/graphql` to prevent `Schema must contain uniqu
 ```
 
 ## Move Babel Configuration
-The latest version of Gatsby uses Babel 7, which introduced [a new behavior for configuration lookup / resolution](https://github.com/babel/babel/issues/6766).  In the case where a _.babelrc_ file might have been used at the root of the project, like for configuring Jest, moving that Babel configuration into _jest.config.json_ will avoid any conflicts.
+
+The latest version of Gatsby uses Babel 7, which introduced [a new behavior for configuration lookup / resolution](https://github.com/babel/babel/issues/6766). In the case where a _.babelrc_ file might have been used at the root of the project, like for configuring Jest, moving that Babel configuration into _jest.config.json_ will avoid any conflicts.
 
 [This GitHub comment](https://github.com/facebook/jest/issues/1468#issuecomment-361260279) documents the steps needed to do that.
 

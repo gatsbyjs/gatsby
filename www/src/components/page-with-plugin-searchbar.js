@@ -50,7 +50,7 @@ class PageWithPluginSearchBar extends Component {
         <div
           css={{
             // mobile: hide README on gatsbyjs.org/plugins index page
-            display: `${this.props.isPluginsIndex && `none` }`,
+            display: `${this.props.isPluginsIndex && `none`}`,
             [presets.Tablet]: {
               display: `block`,
               paddingLeft: `${searchbarWidth}`,

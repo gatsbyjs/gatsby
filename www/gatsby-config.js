@@ -174,7 +174,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-mailchimp`,
       options: {
-          endpoint: `https://gatsbyjs.us17.list-manage.com/subscribe/post?u=1dc33f19eb115f7ebe4afe5ee&amp;id=f366064ba7`,
+        endpoint: `https://gatsbyjs.us17.list-manage.com/subscribe/post?u=1dc33f19eb115f7ebe4afe5ee&amp;id=f366064ba7`,
       },
     },
     `gatsby-transformer-screenshot`,

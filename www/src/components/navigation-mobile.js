@@ -26,7 +26,11 @@ const MobileNavItem = ({ linkTo, label, icon }) => (
       textAlign: `center`,
     }}
   >
-    <img src={icon} css={{ height: 32, display: `block`, margin: `0 auto` }} alt={`${label} Icon`} />
+    <img
+      src={icon}
+      css={{ height: 32, display: `block`, margin: `0 auto` }}
+      alt={`${label} Icon`}
+    />
     <div>{label}</div>
   </Link>
 )

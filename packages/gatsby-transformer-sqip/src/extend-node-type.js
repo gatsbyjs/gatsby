@@ -201,10 +201,7 @@ async function sqipContentful({ type, cache, store }) {
           background,
         } = fieldArgs
 
-        let {
-          width,
-          height,
-        } = fieldArgs
+        let { width, height } = fieldArgs
 
         if (width && height) {
           const aspectRatio = height / width

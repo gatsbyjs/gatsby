@@ -5,13 +5,13 @@ typora-copy-images-to: ./
 
 Wow! You've come a long way! You've learned how to:
 
-* create new Gatsby sites
-* create pages and components
-* style components
-* add plugins to a site
-* source & transform data
-* use GraphQL to query data for pages
-* programmatically create pages from your data
+- create new Gatsby sites
+- create pages and components
+- style components
+- add plugins to a site
+- source & transform data
+- use GraphQL to query data for pages
+- programmatically create pages from your data
 
 All the voices in your head are super proud of you (as am I, the anonymous tutorial instructor)! They rise in great applause! Feel free to take a moment to bow and acknolwedge their admiration 🙇
 
@@ -23,7 +23,7 @@ In this final tutorial, we're going to walk through some common steps for prepar
 
 Quoting from the Lighthouse website:
 
->Lighthouse is an open-source, automated tool for improving the quality of web pages. You can run it against any web page, public or requiring authentication. It has audits for performance, accessibility, progressive web apps, and more.
+> Lighthouse is an open-source, automated tool for improving the quality of web pages. You can run it against any web page, public or requiring authentication. It has audits for performance, accessibility, progressive web apps, and more.
 
 Lighthouse is included as part of Chrome DevTools. Running its audit and fixing problems it finds is a great way to prepare your site to go live because it helps give you confidence that your site is as fast and accessible as possible.
 
@@ -58,6 +58,6 @@ As you can see, Gatsby's performance is excellent out of the box but we're missi
 
 Let's go through them.
 
-* gatsby-plugin-manifest
-* gatsby-plugin-offline
-* add html/title/description.
+- gatsby-plugin-manifest
+- gatsby-plugin-offline
+- add html/title/description.

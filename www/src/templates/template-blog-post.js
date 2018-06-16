@@ -134,9 +134,7 @@ class BlogPostTemplate extends React.Component {
               }}
             >
               <Img
-                fixed={
-                  post.frontmatter.author.avatar.childImageSharp.fixed
-                }
+                fixed={post.frontmatter.author.avatar.childImageSharp.fixed}
                 css={{
                   height: rhythm(2.3),
                   width: rhythm(2.3),

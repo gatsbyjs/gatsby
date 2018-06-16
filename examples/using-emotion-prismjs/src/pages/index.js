@@ -4,7 +4,7 @@ import { css } from "emotion"
 import get from "lodash/get"
 import { rhythm, scale } from "../utils/typography"
 
-import Layout from '../components/layout'
+import Layout from "../components/layout"
 
 const indexContainer = css`
   max-width: ${rhythm(30)};
@@ -69,7 +69,9 @@ class BlogIndex extends React.Component {
                         {post.node.frontmatter.title}
                       </Link>
                     </h3>
-                    <span className={postDate}>{post.node.frontmatter.date}</span>
+                    <span className={postDate}>
+                      {post.node.frontmatter.date}
+                    </span>
                   </div>
                   <p dangerouslySetInnerHTML={{ __html: post.node.excerpt }} />
                 </div>

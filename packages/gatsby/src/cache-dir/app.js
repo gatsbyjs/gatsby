@@ -41,7 +41,11 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     Root = Root.default
   }
 
-  const renderer = apiRunner(`replaceHydrateFunction`, undefined, ReactDOM.render)[0]
+  const renderer = apiRunner(
+    `replaceHydrateFunction`,
+    undefined,
+    ReactDOM.render
+  )[0]
 
   domReady(() => {
     renderer(<Root />, rootElement, () => {

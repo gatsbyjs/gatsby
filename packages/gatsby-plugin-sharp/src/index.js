@@ -460,7 +460,6 @@ async function fluid({ file, args = {}, reporter }) {
   )
   const presentationHeight = Math.round(presentationWidth * (height / width))
 
-
   // If the users didn't set default sizes, we'll make one.
   if (!options.sizes) {
     options.sizes = `(max-width: ${presentationWidth}px) 100vw, ${presentationWidth}px`
@@ -510,7 +509,7 @@ async function fluid({ file, args = {}, reporter }) {
   })
 
   const base64Width = 20
-  const base64Height = Math.max(1, Math.round(base64Width * height / width))
+  const base64Height = Math.max(1, Math.round((base64Width * height) / width))
   const base64Args = {
     duotone: options.duotone,
     grayscale: options.grayscale,

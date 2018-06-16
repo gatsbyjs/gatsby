@@ -60,7 +60,6 @@ plugins: [
 ]
 ```
 
-
 ## Breaking changes history
 
 <!-- Please keep the breaking changes list ordered with the newest change at the top -->
@@ -68,6 +67,6 @@ plugins: [
 ### v2.0.0
 
 - `node-sass` is moved to a peer dependency. Installing the package
-alongside `gatsby-plugin-sass` is now required. Use `npm install --save node-sass`
+  alongside `gatsby-plugin-sass` is now required. Use `npm install --save node-sass`
 
 - support Gatsby v2 only

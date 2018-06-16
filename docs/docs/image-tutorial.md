@@ -17,6 +17,7 @@ The Gatsby Way™ of creating images describes a set of best practices that help
 First you’ll need to install the `gatsby-source-wordpress` plugin that has images ready for you to pull into your site.
 
 Create a new Gatsby project and change directories into the new project you just created:
+
 ```shell
 gatsby new images-tutorial-site
 cd images-tutorial-site
@@ -66,6 +67,7 @@ Add the `gatsby-source-wordpress` plugin to `gatsby-config.js` using the followi
 ```
 
 ### Installing plugins to help with images
+
 Now you’ll configure gatsby-source-filesystem to load the image directory, add a GraphQL query to a page, add an image to the page, and then view the result in the browser.
 First, you’ll need to install a few plugins and their dependencies:
 
@@ -123,7 +125,7 @@ Run:
 gatsby develop
 ```
 
-Open localhost:8000 and localhost:8000/___graphql.
+Open localhost:8000 and localhost:8000/\_\_\_graphql.
 
 Here’s an example of creating specific widths and heights for images:
 
@@ -155,7 +157,6 @@ Here’s an example of creating specific widths and heights for images:
   }
 }
 ```
-
 
 Here’s an example query for generating different sizes of an image:
 
@@ -196,9 +197,9 @@ In either case, you can add traced SVG support by adding `_tracedSVG` to the end
 Here is what your `index.js` should look like with the query added:
 
 ```jsx
-import React from 'react'
-import Link from 'gatsby-link'
-import Img from 'gatsby-image'
+import React from "react"
+import Link from "gatsby-link"
+import Img from "gatsby-image"
 
 const IndexPage = ({ data }) => {
   const imagesResolutions = data.allWordpressPost.edges.map(
@@ -250,6 +251,7 @@ Your demo site should look something like this:
 ![Demo site example](./images/wordpress-image-tutorial.gif)
 
 ### Testing your image loading speed and effects
+
 It is useful and can be fun to purposefully slow down your browser to see image effects animate more slowly.
 
 Open your browser console and change the network speed to something slower. In Chrome, you can click on the “network” tab, then on the drop down arrow next to the word “Online.” Then click “Slow 3G.” Now, reload your page and watch the blur-up and SVG effects in action. The network tab also shows statistics on when each image loaded and how much time it took them to load.
@@ -257,4 +259,3 @@ Open your browser console and change the network speed to something slower. In C
 ![Network](./images/network.png)
 
 ![Slow 3G](./images/slow-3g.png)
-

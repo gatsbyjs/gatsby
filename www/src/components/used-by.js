@@ -29,7 +29,7 @@ const Icon = ({ icon, alt, href }) => (
         background: `none !important`,
         transition: `opacity ${presets.animation.speedFast} ${
           presets.animation.curveDefault
-          }`,
+        }`,
         opacity: 0.9,
         ":hover": {
           opacity: 1,
@@ -68,7 +68,7 @@ const UsedBy = () => (
       marginBottom: rhythm(3),
       transition: `padding-top ${presets.animation.speedFast} ${
         presets.animation.curveDefault
-        }`,
+      }`,
       order: `3`,
       flexGrow: `1`,
       transform: `translateZ(0)`,

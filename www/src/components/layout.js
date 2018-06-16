@@ -61,7 +61,8 @@ class DefaultLayout extends React.Component {
     const isHomepage = this.props.location.pathname === `/`
 
     // SEE: template-docs-markdown for why this.props.isSidebarDisabled is here
-    const isSidebarDisabled = this.props.isSidebarDisabled || !this.props.sidebarYaml
+    const isSidebarDisabled =
+      this.props.isSidebarDisabled || !this.props.sidebarYaml
     let isModal = false
     if (!windowWidth && typeof window !== `undefined`) {
       windowWidth = window.innerWidth

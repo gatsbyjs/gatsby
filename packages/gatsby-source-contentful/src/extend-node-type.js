@@ -348,16 +348,14 @@ const fixedNodeType = ({ name, getTracedSVG }) => {
       },
     },
     resolve: (image, options, context) =>
-      Promise.resolve(resolveFixed(image, options)).then(
-        node => {
-          return {
-            ...node,
-            image,
-            options,
-            context,
-          }
+      Promise.resolve(resolveFixed(image, options)).then(node => {
+        return {
+          ...node,
+          image,
+          options,
+          context,
         }
-      ),
+      }),
   }
 }
 
@@ -464,11 +462,8 @@ exports.extendNodeType = ({ type, store }) => {
     return {}
   }
 
-  const getTracedSVG = async (args) =>
-  {
-    const {
-      traceSVG,
-    } = require(`gatsby-plugin-sharp`)
+  const getTracedSVG = async args => {
+    const { traceSVG } = require(`gatsby-plugin-sharp`)
 
     const { image, options } = args
     const {
@@ -491,11 +486,15 @@ exports.extendNodeType = ({ type, store }) => {
       },
       args: { toFormat: `` },
       fileArgs: options,
-    })}
+    })
+  }
 
   // TODO: Remove resolutionsNode and sizesNode for Gatsby v3
   const fixedNode = fixedNodeType({ name: `ContentfulFixed`, getTracedSVG })
-  const resolutionsNode = fixedNodeType({ name: `ContentfulResolutions`, getTracedSVG })
+  const resolutionsNode = fixedNodeType({
+    name: `ContentfulResolutions`,
+    getTracedSVG,
+  })
   resolutionsNode.deprecationReason = `Resolutions was deprecated in Gatsby v2. It's been renamed to "fixed" https://example.com/write-docs-and-fix-this-example-link`
 
   const fluidNode = fluidNodeType({ name: `ContentfulFluid`, getTracedSVG })

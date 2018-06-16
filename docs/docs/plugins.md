@@ -41,27 +41,27 @@ Plugins can take options. Examples:
 module.exports = {
   plugins: [
     // Shortcut for adding plugins without options.
-    'gatsby-plugin-react-helmet',
+    "gatsby-plugin-react-helmet",
     {
       // Standard plugin with options example
       resolve: `gatsby-source-filesystem`,
       options: {
         path: `${__dirname}/src/data/`,
-        name: 'data',
+        name: "data",
       },
     },
-    { 
-      resolve: 'gatsby-plugin-offline', 
+    {
+      resolve: "gatsby-plugin-offline",
       // Blank options, equivalent to string-only plugin
       options: {
-        plugins: [], 
+        plugins: [],
       },
     },
     {
       resolve: `gatsby-transformer-remark`,
       options: {
         // plugins inside plugins
-        plugins: [`gatsby-remark-smartypants`], 
+        plugins: [`gatsby-remark-smartypants`],
       },
     },
   ],

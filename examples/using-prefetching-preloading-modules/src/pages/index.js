@@ -17,14 +17,15 @@ const Wrapper = styled.section`
   background: papayawhip;
 `
 
-
 class IndexPage extends React.Component {
   handleClick = () => {
     console.log(`Sync-Click!`)
-    import(/* webpackChunkName: "async-alert", webpackPrefetch: true */ `../utils/async-alert`).then(module => {
-      const asyncAlert = module.default
-      asyncAlert(`Async-Click!`)
-    })
+    import(/* webpackChunkName: "async-alert", webpackPrefetch: true */ `../utils/async-alert`).then(
+      module => {
+        const asyncAlert = module.default
+        asyncAlert(`Async-Click!`)
+      }
+    )
   }
 
   render() {
@@ -48,11 +49,11 @@ class IndexPage extends React.Component {
           }}
         >
           <Wrapper>
-            <Title>Hello World, this is my first prefetching/preloading component!</Title>
+            <Title>
+              Hello World, this is my first prefetching/preloading component!
+            </Title>
             <p>
-              <button onClick={this.handleClick}>
-                Dynamic Alert!
-              </button>
+              <button onClick={this.handleClick}>Dynamic Alert!</button>
               <DynamicComponent />
             </p>
           </Wrapper>

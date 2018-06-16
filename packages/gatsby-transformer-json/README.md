@@ -13,6 +13,7 @@ points to your files.
 ## How to use
 
 In your `gatsby-config.js`:
+
 ```javascript
 module.exports = {
   plugins: [
@@ -24,7 +25,7 @@ module.exports = {
       },
     },
   ],
-};
+}
 ```
 
 ## Parsing algorithm
@@ -39,11 +40,7 @@ The algorithm for arrays is to convert each item in the array into a node.
 So if your project has a `letters.json` with `[{ "value": "a" }, { "value": "b" }, { "value": "c" }]` then the following three nodes would be created:
 
 ```javascript
-[
-  { value: "a" },
-  { value: "b" },
-  { value: "c" },
-];
+;[{ value: "a" }, { value: "b" }, { value: "c" }]
 ```
 
 ### Single Object

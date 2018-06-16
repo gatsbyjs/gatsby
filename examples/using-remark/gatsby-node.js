@@ -106,7 +106,7 @@ exports.onCreateWebpackConfig = ({ stage, actions }) => {
   switch (stage) {
     case `build-javascript`:
       actions.setWebpackConfig({
-        plugins: [new LodashModuleReplacementPlugin],
+        plugins: [new LodashModuleReplacementPlugin()],
       })
   }
 }

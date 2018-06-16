@@ -88,10 +88,10 @@ Instead of writing `import Header from '../../components/Header'` over and over 
 exports.onCreateWebpackConfig = ({ stage, actions }) => {
   actions.setWebpackConfig({
     resolve: {
-      modules: [path.resolve(__dirname, 'src'), 'node_modules'],
+      modules: [path.resolve(__dirname, "src"), "node_modules"],
     },
-  });
-};
+  })
+}
 ```
 
-You can always find more information on *resolve* and other options in the offical [Webpack docs](https://webpack.js.org/concepts/).
+You can always find more information on _resolve_ and other options in the offical [Webpack docs](https://webpack.js.org/concepts/).
