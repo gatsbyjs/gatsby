@@ -66,13 +66,13 @@ render () {
 ### Programmatic navigation
 
 For cases when you can only use event handlers for navigation, you can use
-`navigateTo`:
+`push` (which uses `history.push`) or `replace` (which uses `history.replace`):
 
 ```jsx
-import { navigateTo } from "gatsby"
+import { push } from "gatsby"
 
 render () {
-  <div onClick={ () => navigateTo('/example')}>
+  <div onClick={ () => push('/example')}>
     <p>Example</p>
   </div>
 }

@@ -13,12 +13,20 @@ const getInstance = (props, pathPrefix = ``) => {
   return new Link(props, context)
 }
 
-const getNavigateTo = () => {
+const getPush = () => {
   Object.assign(global.window, {
-    ___navigateTo: jest.fn(),
+    ___push: jest.fn(),
   })
 
-  return require(`../`).navigateTo
+  return require(`../`).push
+}
+
+const getReplace = () => {
+  Object.assign(global.window, {
+    ___replace: jest.fn(),
+  })
+
+  return require(`../`).replace
 }
 
 const getWithPrefix = (pathPrefix = ``) => {
@@ -113,10 +121,16 @@ describe(`<Link />`, () => {
     })
   })
 
-  it(`navigateTo is called with correct args`, () => {
-    getNavigateTo()(`/some-path`)
+  it(`push is called with correct args`, () => {
+    getPush()(`/some-path`)
 
-    expect(global.window.___navigateTo).toHaveBeenCalledWith(`/some-path`)
+    expect(global.window.___push).toHaveBeenCalledWith(`/some-path`)
+  })
+
+  it(`replace is called with correct args`, () => {
+    getReplace()(`/some-path`)
+
+    expect(global.window.___replace).toHaveBeenCalledWith(`/some-path`)
   })
 })
 

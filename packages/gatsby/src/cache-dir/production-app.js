@@ -52,7 +52,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     require(`./register-service-worker`)
   }
 
-  const navigateTo = to => {
+  const navigate = (to, replace) => {
     const location = createLocation(to, null, null, history.location)
     let { pathname } = location
     const redirect = redirectMap[pathname]
@@ -73,13 +73,17 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       return
     }
 
+    const historyNavigateFunc = replace
+      ? window.___history.replace
+      : window.___history.push
+
     // Listen to loading events. If page resources load before
     // a second, navigate immediately.
     function eventHandler(e) {
       if (e.page.path === loader.getPage(pathname).path) {
         emitter.off(`onPostLoadPageResources`, eventHandler)
         clearTimeout(timeoutId)
-        window.___history.push(location)
+        historyNavigateFunc(location)
       }
     }
 
@@ -88,13 +92,13 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     const timeoutId = setTimeout(() => {
       emitter.off(`onPostLoadPageResources`, eventHandler)
       emitter.emit(`onDelayedLoadPageResources`, { pathname })
-      window.___history.push(location)
+      historyNavigateFunc(location)
     }, 1000)
 
     if (loader.getResourcesForPathname(pathname)) {
       // The resources are already loaded so off we go.
       clearTimeout(timeoutId)
-      window.___history.push(location)
+      historyNavigateFunc(location)
     } else {
       // They're not loaded yet so let's add a listener for when
       // they finish loading.
@@ -103,7 +107,8 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   }
 
   // window.___loadScriptsForPath = loadScriptsForPath
-  window.___navigateTo = navigateTo
+  window.___push = to => navigate(to, false)
+  window.___replace = to => navigate(to, true)
 
   // Call onRouteUpdate on the initial page load.
   apiRunner(`onRouteUpdate`, {
