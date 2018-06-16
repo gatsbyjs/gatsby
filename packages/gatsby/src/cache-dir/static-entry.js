@@ -3,7 +3,7 @@ const fs = require(`fs`)
 const { join } = require(`path`)
 const { renderToString, renderToStaticMarkup } = require(`react-dom/server`)
 const { StaticRouter, Route } = require(`react-router-dom`)
-const { get, merge, isString, flatten } = require(`lodash`)
+const { get, merge, isObject, flatten, uniqBy } = require(`lodash`)
 
 const apiRunner = require(`./api-runner-ssr`)
 const syncRequires = require(`./sync-requires`)
@@ -150,26 +150,40 @@ export default (pagePath, callback) => {
   }
 
   // Create paths to scripts
-  const scriptsAndStyles = flatten(
+  let scriptsAndStyles = flatten(
     [`app`, page.componentChunkName].map(s => {
       const fetchKey = `assetsByChunkName[${s}]`
 
       let chunks = get(stats, fetchKey)
+      let namedChunkGroups = get(stats, `namedChunkGroups`)
 
       if (!chunks) {
         return null
       }
 
-      return chunks.map(chunk => {
+      chunks = chunks.map(chunk => {
         if (chunk === `/`) {
           return null
         }
-        return chunk
+        return { rel: `preload`, name: chunk }
       })
+
+      const childAssets = namedChunkGroups[s].childAssets
+      for (const rel in childAssets) {
+        chunks = merge(chunks, childAssets[rel].map(chunk => {
+          return { rel, name: chunk }
+        }))
+      }
+
+      return chunks
     })
-  ).filter(s => isString(s))
-  const scripts = scriptsAndStyles.filter(s => s.endsWith(`.js`))
-  const styles = scriptsAndStyles.filter(s => s.endsWith(`.css`))
+  ).filter(s => isObject(s))
+  .sort((s1, s2) => s1.rel == `preload` ? -1 : 1)   // given priority to preload
+
+  scriptsAndStyles = uniqBy(scriptsAndStyles, item => item.name)
+
+  const scripts = scriptsAndStyles.filter(script => script.name && script.name.endsWith(`.js`))
+  const styles = scriptsAndStyles.filter(style => style.name && style.name.endsWith(`.css`))
 
   apiRunner(`onRenderBody`, {
     setHeadComponents,
@@ -189,23 +203,20 @@ export default (pagePath, callback) => {
     .slice(0)
     .reverse()
     .forEach(script => {
-      // Add preload <link>s for scripts.
+      // Add preload/prefetch <link>s for scripts.
       headComponents.push(
         <link
           as="script"
-          rel="preload"
-          key={script}
-          href={urlJoin(pathPrefix, script)}
+          rel={script.rel}
+          key={script.name}
+          href={urlJoin(pathPrefix, script.name)}
         />
       )
     })
 
   if (page.jsonName in dataPaths) {
     const dataPath = `${pathPrefix}static/d/${dataPaths[page.jsonName]}.json`
-    // Insert json data path after commons and app
-    headComponents.splice(
-      1,
-      0,
+    headComponents.push(
       <link
         rel="preload"
         key={dataPath}
@@ -221,13 +232,22 @@ export default (pagePath, callback) => {
     .reverse()
     .forEach(style => {
       // Add <link>s for styles.
+      headComponents.push(
+        <link
+          as="style"
+          rel={style.rel}
+          key={style.name}
+          href={urlJoin(pathPrefix, style.name)}
+        />
+      )
+
       headComponents.unshift(
         <style
           type="text/css"
-          data-href={urlJoin(pathPrefix, style)}
+          data-href={urlJoin(pathPrefix, style.name)}
           dangerouslySetInnerHTML={{
             __html: fs.readFileSync(
-              join(process.cwd(), `public`, style),
+              join(process.cwd(), `public`, style.name),
               `utf-8`
             ),
           }}
@@ -235,7 +255,7 @@ export default (pagePath, callback) => {
       )
     })
 
-  // Add script loader for page scripts to the end of body element (after webpack manifest).
+  // Add page metadata for the current page
   const windowData = `/*<![CDATA[*/window.page=${JSON.stringify(page)};${
     page.jsonName in dataPaths
       ? `window.dataPath="${dataPaths[page.jsonName]}";`
@@ -252,8 +272,10 @@ export default (pagePath, callback) => {
     />
   )
 
-  const bodyScripts = scripts.map(s => {
-    const scriptPath = `${pathPrefix}${JSON.stringify(s).slice(1, -1)}`
+  // Filter out prefetched bundles as adding them as a script tag
+  // would force high priority fetching.
+  const bodyScripts = scripts.filter(s => s.rel !== `prefetch`).map(s => {
+    const scriptPath = `${pathPrefix}${JSON.stringify(s.name).slice(1, -1)}`
     return <script key={scriptPath} src={scriptPath} async />
   })
 
