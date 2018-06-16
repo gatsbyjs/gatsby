@@ -1,7 +1,7 @@
 {
   "name": "gatsby-source-faker",
   "description": "A gatsby plugin to get fake data for testing",
-  "version": "2.0.0-alpha.0",
+  "version": "2.0.0-alpha.1",
   "author": "Pavithra Kodmad<pavithra.kodmad@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
