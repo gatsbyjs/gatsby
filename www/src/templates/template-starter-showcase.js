@@ -11,12 +11,14 @@ import Container from "../components/container"
 class StarterTemplate extends React.Component {
   render() {
 
+    const { data } = this.props
+    const { markdownRemark } = data
     return (
       <Layout location={this.props.location}>
         <Container className="post" css={{ paddingBottom: `0 !important` }}>
           {/* Add long list of social meta tags */}
           <Helmet>
-            <title>{post.frontmatter.title}</title>
+            <title>{markdownRemark.frontmatter.title}</title>
             {/* <link
               rel="author"
               href={`https://gatsbyjs.org${
@@ -167,9 +169,9 @@ export default StarterTemplate
 
 export const pageQuery = graphql`
   query TemplateStarter($slug: String!) {
-    markdownRemark(fields: { 
+    markdownRemark(fields: {
         starterShowcase: {
-          slug: { eq: $slug } 
+          slug: { eq: $slug }
         }
       }) {
         frontmatter {

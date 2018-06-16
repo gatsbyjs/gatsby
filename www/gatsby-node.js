@@ -83,6 +83,9 @@ exports.createPages = ({ graphql, actions }) => {
                   fields {
                     slug
                     package
+                    starterShowcase {
+                      slug
+                    }
                   }
                   frontmatter {
                     title
@@ -187,19 +190,15 @@ exports.createPages = ({ graphql, actions }) => {
           result.data.allMarkdownRemark.edges,
           edge => {
             const slug = _.get(edge, `node.fields.starterShowcase.slug`)
-            const sluggy = _.get(edge, `node.fields.slug`)
-            if (!_.includes(sluggy, `/blog/`) && !_.includes(sluggy, `/packages/`)) {
-              console.log('******starters', edge.node)
-            }
             if (!slug) return null
             else return edge
           }
         )
         const starterTemplate = path.resolve(`src/templates/template-starter-showcase.js`)
-        
+
         starters.forEach((edge, index) => {
           createPage({
-            path: `/starters/${edge.node.fields.starterShowcase.slug}`, // required
+            path: `/starters${edge.node.fields.starterShowcase.slug}`, // required
             component: slash(starterTemplate),
             context: {
               slug: edge.node.fields.starterShowcase.slug,
@@ -307,7 +306,7 @@ exports.onCreateNode = ({ node, actions, getNode, boundActionCreators }) => {
       fileNode.sourceInstanceName === `StarterShowcaseData` &&
       parsedFilePath.name !== `README`
     ) {
-      createNodesForStarterShowcase({ node, getNode, boundActionCreators })
+      createNodesForStarterShowcase({ node, getNode, createNodeField })
     }
     if (slug) {
       createNodeField({ node, name: `anchor`, value: slugToAnchor(slug) })
@@ -331,8 +330,7 @@ exports.onPostBuild = () => {
 // Starter Showcase related code
 const { createFilePath } = require(`gatsby-source-filesystem`)
 const gitFolder = './src/data/StarterShowcase/generatedGithubData'
-function createNodesForStarterShowcase({ node, getNode, boundActionCreators }) {
-  const { createNodeField } = boundActionCreators
+function createNodesForStarterShowcase({ node, getNode, createNodeField }) {
   if (node.internal.type === `MarkdownRemark`) {
     const slug = createFilePath({
       node,
