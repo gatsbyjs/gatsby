@@ -5,7 +5,7 @@ import hex2rgba from "hex2rgba"
 
 import presets, { colors } from "../utils/presets"
 import { options, scale, rhythm } from "../utils/typography"
-import { navigateTo, Link } from "gatsby"
+import { push, Link } from "gatsby"
 import Layout from "../components/layout"
 import ShareMenu from "../components/share-menu"
 
@@ -59,7 +59,7 @@ class ShowcaseTemplate extends React.Component {
 
     const nextSite = this.getNext()
 
-    navigateTo({
+    push({
       pathname: nextSite.fields.slug,
       state: {
         isModal: location.state.isModal,
@@ -82,7 +82,7 @@ class ShowcaseTemplate extends React.Component {
     const { location } = this.props
 
     const previousSite = this.getPrevious()
-    navigateTo({
+    push({
       pathname: previousSite.fields.slug,
       state: {
         isModal: location.state.isModal,
