@@ -108,95 +108,97 @@ class EvaluationTable extends Component {
           overflowX: `scroll`,
         }}
       >
-        {flatten(
-          sections.map((section, s) =>
-            [
-              <SectionTitle text={sectionHeaders[s]} />,
-              <SectionHeaderTop />,
-            ].concat(
-              flatten(
-                section.map((row, i) =>
-                  [].concat([
-                    <SectionHeaderBottom
-                      display={row.node.Subcategory}
-                      category={row.node.Subcategory}
-                    />,
-                    <div
-                      dangerouslySetInnerHTML={{
-                        __html: `<span id="${row.node.Feature.toLowerCase()
-                          .split(` `)
-                          .join(`-`)}"></span>`,
-                      }}
-                    />,
-                    <tr>
-                      {headers.map((header, j) => (
-                        <td
-                          key={j}
-                          css={{
-                            display: `table-cell`,
-                            "&:hover": {
-                              cursor: j >= 0 ? `pointer` : `inherit`,
-                            },
-                            borderBottom: !showTooltip(s, i)
-                              ? `1px solid ${colors.ui.light}`
-                              : `none`,
-                            minWidth: 40,
-                            paddingRight: 0,
-                            paddingLeft: 0,
-                            textAlign: `left`,
-                            verticalAlign: `middle`,
-                            fontSize: `90%`,
-                            lineHeight: `${rhythm(3 / 4)}`,
-                          }}
-                          onClick={() => {
-                            this.setState({
-                              [`${s},${i}`]: !showTooltip(s, i),
-                            })
-                          }}
-                        >
-                          {renderCell(row.node[header], j)}
-                        </td>
-                      ))}
-                    </tr>,
-                    <tr
-                      style={{
-                        display: showTooltip(s, i) ? `table-row` : `none`,
-                      }}
-                    >
-                      <td
-                        css={{
-                          fontFamily: options.headerFontFamily.join(`,`),
-                          paddingBottom: `calc(${rhythm(1)} - 1px)`,
-                          "&&": {
-                            paddingRight: `${rhythm(1 / 4)}`,
-                            paddingLeft: `${rhythm(1 / 4)}`,
-                            [presets.Mobile]: {
-                              paddingRight: `${rhythm(1 / 2)}`,
-                              paddingLeft: `${rhythm(1 / 2)}`,
-                            },
-                            [presets.Phablet]: {
-                              paddingRight: `${rhythm(2)}`,
-                              paddingLeft: `${rhythm(2)}`,
-                            },
-                          },
+        <tbody>
+          {flatten(
+            sections.map((section, s) =>
+              [
+                <SectionTitle text={sectionHeaders[s]} />,
+                <SectionHeaderTop />,
+              ].concat(
+                flatten(
+                  section.map((row, i) =>
+                    [].concat([
+                      <SectionHeaderBottom
+                        display={row.node.Subcategory}
+                        category={row.node.Subcategory}
+                      />,
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: `<span id="${row.node.Feature.toLowerCase()
+                            .split(` `)
+                            .join(`-`)}"></span>`,
                         }}
-                        colSpan="5"
-                      >
-                        {
-                          <span
-                            dangerouslySetInnerHTML={{
-                              __html: row.node.Description,
+                      />,
+                      <tr>
+                        {headers.map((header, j) => (
+                          <td
+                            key={j}
+                            css={{
+                              display: `table-cell`,
+                              "&:hover": {
+                                cursor: j >= 0 ? `pointer` : `inherit`,
+                              },
+                              borderBottom: !showTooltip(s, i)
+                                ? `1px solid ${colors.ui.light}`
+                                : `none`,
+                              minWidth: 40,
+                              paddingRight: 0,
+                              paddingLeft: 0,
+                              textAlign: `left`,
+                              verticalAlign: `middle`,
+                              fontSize: `90%`,
+                              lineHeight: `${rhythm(3 / 4)}`,
                             }}
-                          />
-                        }
-                      </td>
-                    </tr>,
-                  ])
+                            onClick={() => {
+                              this.setState({
+                                [`${s},${i}`]: !showTooltip(s, i),
+                              })
+                            }}
+                          >
+                            {renderCell(row.node[header], j)}
+                          </td>
+                        ))}
+                      </tr>,
+                      <tr
+                        style={{
+                          display: showTooltip(s, i) ? `table-row` : `none`,
+                        }}
+                      >
+                        <td
+                          css={{
+                            fontFamily: options.headerFontFamily.join(`,`),
+                            paddingBottom: `calc(${rhythm(1)} - 1px)`,
+                            "&&": {
+                              paddingRight: `${rhythm(1 / 4)}`,
+                              paddingLeft: `${rhythm(1 / 4)}`,
+                              [presets.Mobile]: {
+                                paddingRight: `${rhythm(1 / 2)}`,
+                                paddingLeft: `${rhythm(1 / 2)}`,
+                              },
+                              [presets.Phablet]: {
+                                paddingRight: `${rhythm(2)}`,
+                                paddingLeft: `${rhythm(2)}`,
+                              },
+                            },
+                          }}
+                          colSpan="5"
+                        >
+                          {
+                            <span
+                              dangerouslySetInnerHTML={{
+                                __html: row.node.Description,
+                              }}
+                            />
+                          }
+                        </td>
+                      </tr>,
+                    ])
+                  )
                 )
               )
             )
-          )
-        )}
+          )}
+        </tbody>
       </div>
     )
   }
