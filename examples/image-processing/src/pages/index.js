@@ -13,8 +13,7 @@ class Index extends React.Component {
     const cropBottomLeft = data.cropBottomLeft.childImageSharp.resize
     const cropEntropy = data.cropEntropy.childImageSharp.resize
     const cropCenter = data.cropCenter.childImageSharp.resize
-    const fluidDuotoneOriginal = data.fluidDuotoneOriginal
-      .childImageSharp.fluid
+    const fluidDuotoneOriginal = data.fluidDuotoneOriginal.childImageSharp.fluid
     const fluidDuotone25 = data.fluidDuotone25.childImageSharp.fluid
     const fluidDuotone50 = data.fluidDuotone50.childImageSharp.fluid
     const fluidDuotone75 = data.fluidDuotone75.childImageSharp.fluid
@@ -98,7 +97,10 @@ class Index extends React.Component {
         <ul style={{ ...styles.ul, ...styles.row }}>
           {images.map(image => (
             <li style={styles.column20} key={image.node.resize.src}>
-              <img src={image.node.resize.src} alt={image.node.resize.originalName}/>
+              <img
+                src={image.node.resize.src}
+                alt={image.node.resize.originalName}
+              />
             </li>
           ))}
         </ul>
@@ -127,10 +129,18 @@ class Index extends React.Component {
 
         <ul style={{ ...styles.ul, ...styles.row }}>
           <li style={styles.column25}>
-            <img src={cropDefault.src} alt={`File ${cropDefault.originalName} with a default crop`} />
+            <img
+              src={cropDefault.src}
+              alt={`File ${cropDefault.originalName} with a default crop`}
+            />
           </li>
           <li style={styles.column25}>
-            <img src={cropBottomLeft.src} alt={`File ${cropBottomLeft.originalName} cropped to the bottom left`} />
+            <img
+              src={cropBottomLeft.src}
+              alt={`File ${
+                cropBottomLeft.originalName
+              } cropped to the bottom left`}
+            />
             <p>
               <small>
                 <code>cropFocus: SOUTHWEST</code>
@@ -138,7 +148,10 @@ class Index extends React.Component {
             </p>
           </li>
           <li style={styles.column25}>
-            <img src={cropEntropy.src} alt={`File ${cropEntropy.originalName} with an "entropy" crop`} />
+            <img
+              src={cropEntropy.src}
+              alt={`File ${cropEntropy.originalName} with an "entropy" crop`}
+            />
             <p>
               <small>
                 <code>cropFocus: ENTROPY</code>
@@ -146,7 +159,10 @@ class Index extends React.Component {
             </p>
           </li>
           <li style={styles.column25}>
-            <img src={cropCenter.src} alt={`File ${cropCenter.originalName} cropped to the centre`} />
+            <img
+              src={cropCenter.src}
+              alt={`File ${cropCenter.originalName} cropped to the centre`}
+            />
             <p>
               <small>
                 <code>cropFocus: CENTER</code>
@@ -175,8 +191,8 @@ class Index extends React.Component {
         </p>
         <p>
           If the max width of the container for the rendered markdown file is
-          800px, the fluid sizes would then be: 200, 400, 800, 1200, 1600, 2400 –
-          enough to provide close to the optimal image size for every device
+          800px, the fluid sizes would then be: 200, 400, 800, 1200, 1600, 2400
+          – enough to provide close to the optimal image size for every device
           size / screen resolution.
         </p>
         <p>
@@ -365,7 +381,9 @@ export const pageQuery = graphql`
         }
       }
     }
-    fluidImages: file(relativePath: { regex: "/fecolormatrix-kanye-west.jpg/" }) {
+    fluidImages: file(
+      relativePath: { regex: "/fecolormatrix-kanye-west.jpg/" }
+    ) {
       childImageSharp {
         fluid(
           duotone: { highlight: "#f00e2e", shadow: "#192550" }

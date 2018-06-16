@@ -17,14 +17,14 @@ This piece will walk you through getting your GatsbyJS website up and running wi
 
 Here’s an overview of what’s involved:
 
-* Create a free Contentful account
-* Clone a sample repo
-* Create a space on Contentful to store content
-* Generate your Content Management and Content Delivery API access tokens
-* Import data into your space
-* Tweak your configuration file
-* Preview a production build
-* Publish and go live
+- Create a free Contentful account
+- Clone a sample repo
+- Create a space on Contentful to store content
+- Generate your Content Management and Content Delivery API access tokens
+- Import data into your space
+- Tweak your configuration file
+- Preview a production build
+- Publish and go live
 
 ###Getting started
 
@@ -60,9 +60,9 @@ Create a new empty space by opening the sidebar menu and adding a Space. Give th
 
 Before getting to the exciting part of setting up your website, you first need to generate three access tokens to get your Contentful-powered website up and running by fetching data from the API.
 
-* [Content Management API](https://www.contentful.com/developers/docs/references/content-management-api/)
-* [Content Delivery API](https://www.contentful.com/developers/docs/references/content-delivery-api/)
-* [Content Preview API](https://www.contentful.com/developers/docs/references/content-preview-api/)
+- [Content Management API](https://www.contentful.com/developers/docs/references/content-management-api/)
+- [Content Delivery API](https://www.contentful.com/developers/docs/references/content-delivery-api/)
+- [Content Preview API](https://www.contentful.com/developers/docs/references/content-preview-api/)
 
 Head over to your Space Settings dropdown menu and navigate to the APIs section. From there, navigate to the tab for the API token you would like to generate.
 

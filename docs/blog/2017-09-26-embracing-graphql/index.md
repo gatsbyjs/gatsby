@@ -12,10 +12,10 @@ site generator.
 
 I had a few criteria in mind.
 
-* Fast (hopefully a given for a static site)
-* Easy to use
-* React-based
-* Easy to update
+- Fast (hopefully a given for a static site)
+- Easy to use
+- React-based
+- Easy to update
 
 Gatsby at the time was still pre-1.0 but its workflow met my needs. I loved that
 I could drop my existing Markdown files into a `pages` directory and Gatsby

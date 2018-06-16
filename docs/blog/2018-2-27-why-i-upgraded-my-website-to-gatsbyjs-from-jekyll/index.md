@@ -95,7 +95,7 @@ Because of the APIs exposed by Gatsby for interfacing with its internals, powerf
 
 #### Node.js APIs
 
-* Can be extended with a `gatsby-node.js` file in the root of the project
+- Can be extended with a `gatsby-node.js` file in the root of the project
 
 The [Node.js APIs](https://www.gatsbyjs.org/docs/node-apis/) let plugins extend or modify the heavy lifting performed by the Node.js process when compiling the application. Your gatsby-node.js file can export functions which modify the GraphQL data that is provided to React components when they are rendered. The APIs are also used by plugins to extend the internals of Gatsby e.g. the default webpack config can also be customized here.
 
@@ -103,13 +103,13 @@ Take the example of what happens during the processing of markdown files into pa
 
 #### Server-side Rendering APIs
 
-* Can be extended with a `gatsby-ssr.js` file in the root of the project
+- Can be extended with a `gatsby-ssr.js` file in the root of the project
 
 The [server side rendering APIs](https://www.gatsbyjs.org/docs/ssr-apis/) allow hooks to be defined to modify the rendering process of the application. For example, the [Typography.js Plugin](/packages/gatsby-plugin-typography) uses this to [inline the styles](https://github.com/gatsbyjs/gatsby/blob/ab1d7f50adcff5b7085e6236973b8c30083aa523/packages/gatsby-plugin-typography/src/gatsby-ssr.js#L11-L14) required into the DOM head when rendering.
 
 #### Browser APIs
 
-* Can be extended with a `gatsby-browser.js` file in the root of the project
+- Can be extended with a `gatsby-browser.js` file in the root of the project
 
 Finally, the [browser APIs](https://www.gatsbyjs.org/docs/browser-apis/) allows plugins to run code on lifecycle events while Gatsby is running in the browser. The [Google Analytics Plugin](/packages/gatsby-plugin-google-analytics) [uses these APIs](https://github.com/gatsbyjs/gatsby/blob/a3fea82b4d4b4c644156e841401821933e8d694a/packages/gatsby-plugin-google-analytics/src/gatsby-browser.js#L4-L5) to track the location of the user on route changes.
 

@@ -136,9 +136,9 @@ class PageRenderer extends React.Component {
       loader: publicLoader,
     })
 
-    return replacementComponent || createElement(
-      this.state.pageResources.component,
-      props
+    return (
+      replacementComponent ||
+      createElement(this.state.pageResources.component, props)
     )
   }
 }

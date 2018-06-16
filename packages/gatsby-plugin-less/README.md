@@ -62,7 +62,7 @@ plugins: [
 ### v2.0.0
 
 - `less` is moved to a peer dependency. Installing the package
-alongside `gatsby-plugin-less` is now required. Use `npm install --save less`
+  alongside `gatsby-plugin-less` is now required. Use `npm install --save less`
 
 - support Gatsby v2 only
 
@@ -95,5 +95,3 @@ plugins: [
   },
 ]
 ```
-
-

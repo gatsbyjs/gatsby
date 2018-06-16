@@ -26,7 +26,7 @@ module.exports = {
 
 ## Options
 
-* `offsetY`: Signed integer, vertical offset value in pixels, e.g.
+- `offsetY`: Signed integer, vertical offset value in pixels, e.g.
 
 ```javascript
 // In your gatsby-config.js
@@ -41,17 +41,17 @@ module.exports = {
             options: {
               offsetY: `100`,
             },
-          }
+          },
         ],
       },
     },
   ],
-};
+}
 ```
 
 ## Options
 
-* `offsetY`: Signed integer, vertical offset value in pixels, e.g.
+- `offsetY`: Signed integer, vertical offset value in pixels, e.g.
 
 ```javascript
 // In your gatsby-config.js
@@ -66,10 +66,10 @@ module.exports = {
             options: {
               offsetY: `100`,
             },
-          }
+          },
         ],
       },
     },
   ],
-};
+}
 ```

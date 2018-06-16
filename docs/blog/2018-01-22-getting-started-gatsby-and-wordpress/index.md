@@ -36,7 +36,7 @@ See the [docs page on gatsby-config.js](/docs/gatsby-config/) for more.
 
 For the curious:
 
-* `gatsby-plugin-react-helmet` is a plugin the starter includes. It's a [document head manager for React](/packages/gatsby-plugin-react-helmet/).
+- `gatsby-plugin-react-helmet` is a plugin the starter includes. It's a [document head manager for React](/packages/gatsby-plugin-react-helmet/).
 
 ##gatsby-node.js
 

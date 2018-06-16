@@ -69,8 +69,8 @@ render() {
 
 Reserved environment variables:
 
-* `NODE_ENV`
-* `PUBLIC_DIR`
+- `NODE_ENV`
+- `PUBLIC_DIR`
 
 ## Additional Environments (Staging, Test, etc)
 

@@ -13,6 +13,7 @@ publishedAt: "Cosmic JS"
 In this tutorial, I'm going to show you how to create a simple but blazing fast blog using React, Gatsby, and [Cosmic JS](https://cosmicjs.com).
 
 ## TL;DR
+
 [Download the GitHub repo.](https://github.com/cosmicjs/gatsby-blog-cosmicjs)
 
 [Check out the demo.](https://cosmicjs.com/apps/gatsby-blog)
@@ -20,6 +21,7 @@ In this tutorial, I'm going to show you how to create a simple but blazing fast 
 [Check out the Cosmic JS Source Plugin for Gatsby.](https://github.com/cosmicjs/gatsby-source-cosmicjs)
 
 ## Prerequisites
+
 This tutorial requires Node.js and npm. Make sure you already have them installed.
 
 ## Blog Development
@@ -54,7 +56,6 @@ gatsby develop
 
 At this point, you can access your Gatsby website by visiting [http://localhost:8000](http://localhost:8000).
 
-
 ## Install the Cosmic JS Source Plugin
 
 In a static website, data can be consumed from multiple different sources, for example Markdown files, HTML files, and/or an eternal API (WordPress, Cosmic JS, etc).
@@ -88,26 +89,28 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         path: `${__dirname}/src/pages`,
-        name: 'pages',
+        name: "pages",
       },
     },
     {
-      resolve: 'gatsby-source-cosmicjs',
+      resolve: "gatsby-source-cosmicjs",
       options: {
-        bucketSlug: 'gatsby-blog-cosmic-js', // Your CosmicJS bucket slug
-        objectTypes: ['posts','settings'], // List of the object types you want to be able to request from Gatsby.
+        bucketSlug: "gatsby-blog-cosmic-js", // Your CosmicJS bucket slug
+        objectTypes: ["posts", "settings"], // List of the object types you want to be able to request from Gatsby.
         apiAccess: {
-          read_key: '',
-        }
-      }
+          read_key: "",
+        },
+      },
     },
   ],
 }
 ```
+
 ### A couple of notes on this config:
-1. Notice `bucketSlug` is set to `gatsby-blog-cosmic-js`. This is a demo Bucket that includes pre-populated content, so when you [download the GitHub repo](https://github.com/cosmicjs/gatsby-blog-cosmicjs) and start the app, it will display demo content right out of the box.  You can also import this demo content into your own Cosmic JS Bucket by going to `Your Cosmic JS Bucket Dashboard > Settings > Apps`, then find and install the Gatsby Blog.
-2. The API read key is optional and can be set after you login to Cosmic JS at:
-`Your Cosmic JS Bucket Dashboard > Settings > Basic Settings`
+
+1.  Notice `bucketSlug` is set to `gatsby-blog-cosmic-js`. This is a demo Bucket that includes pre-populated content, so when you [download the GitHub repo](https://github.com/cosmicjs/gatsby-blog-cosmicjs) and start the app, it will display demo content right out of the box. You can also import this demo content into your own Cosmic JS Bucket by going to `Your Cosmic JS Bucket Dashboard > Settings > Apps`, then find and install the Gatsby Blog.
+2.  The API read key is optional and can be set after you login to Cosmic JS at:
+    `Your Cosmic JS Bucket Dashboard > Settings > Basic Settings`
 
 Now restart the server to apply the updates.
 
@@ -116,26 +119,29 @@ Now restart the server to apply the updates.
 First, we want to display the list of posts on the homepage. To do so, add the following content to `src/pages/index.js`:
 
 ```javascript
-import React from 'react'
-import Link from 'gatsby-link'
-import get from 'lodash/get'
-import Helmet from 'react-helmet'
+import React from "react"
+import Link from "gatsby-link"
+import get from "lodash/get"
+import Helmet from "react-helmet"
 
-import Bio from '../components/Bio'
-import { rhythm } from '../utils/typography'
+import Bio from "../components/Bio"
+import { rhythm } from "../utils/typography"
 
 class BlogIndex extends React.Component {
   render() {
-    const siteTitle = get(this, 'props.data.cosmicjsSettings.metadata.site_title')
-    const posts = get(this, 'props.data.allCosmicjsPosts.edges')
-    const author = get(this, 'props.data.cosmicjsSettings.metadata')
+    const siteTitle = get(
+      this,
+      "props.data.cosmicjsSettings.metadata.site_title"
+    )
+    const posts = get(this, "props.data.allCosmicjsPosts.edges")
+    const author = get(this, "props.data.cosmicjsSettings.metadata")
 
     return (
       <div>
         <Helmet title={siteTitle} />
-        <Bio settings={author}/>
+        <Bio settings={author} />
         {posts.map(({ node }) => {
-          const title = get(node, 'title') || node.slug
+          const title = get(node, "title") || node.slug
           return (
             <div key={node.slug}>
               <h3
@@ -143,12 +149,14 @@ class BlogIndex extends React.Component {
                   marginBottom: rhythm(1 / 4),
                 }}
               >
-                <Link style={{ boxShadow: 'none' }} to={`posts/${node.slug}`}>
+                <Link style={{ boxShadow: "none" }} to={`posts/${node.slug}`}>
                   {title}
                 </Link>
               </h3>
               <small>{node.created}</small>
-              <p dangerouslySetInnerHTML={{ __html: node.metadata.description }} />
+              <p
+                dangerouslySetInnerHTML={{ __html: node.metadata.description }}
+              />
             </div>
           )
         })}
@@ -164,7 +172,7 @@ export const pageQuery = graphql`
     allCosmicjsPosts(sort: { fields: [created], order: DESC }, limit: 1000) {
       edges {
         node {
-          metadata{
+          metadata {
             description
           }
           slug
@@ -173,8 +181,8 @@ export const pageQuery = graphql`
         }
       }
     }
-    cosmicjsSettings(slug: {eq: "general"}){
-      metadata{
+    cosmicjsSettings(slug: { eq: "general" }) {
+      metadata {
         site_title
         author_name
         author_bio
@@ -195,7 +203,6 @@ Then, we pass the `{ data }` destructured object as parameter of `IndexPage` and
 
 ![Gatsby Cosmic Screenshot](./gatsby-cosmic-screenshot-1.png)
 
-
 ## Single Post Layout
 
 Till now we have integrated Cosmic JS source plugin with Gatsby and it's looking like a blog. Now we will work on adding a details page for individual blog posts.
@@ -203,25 +210,29 @@ Till now we have integrated Cosmic JS source plugin with Gatsby and it's looking
 Create the template at `src/templates/blog-post.js`:
 
 ```javascript
-import React from 'react'
-import Helmet from 'react-helmet'
-import Link from 'gatsby-link'
-import get from 'lodash/get'
+import React from "react"
+import Helmet from "react-helmet"
+import Link from "gatsby-link"
+import get from "lodash/get"
 
-import Bio from '../components/Bio'
-import { rhythm, scale } from '../utils/typography'
-import { relative } from 'path';
+import Bio from "../components/Bio"
+import { rhythm, scale } from "../utils/typography"
+import { relative } from "path"
 
 class BlogPostTemplate extends React.Component {
   render() {
     const post = this.props.data.cosmicjsPosts
-    const siteTitle = get(this.props, 'data.cosmicjsSettings.metadata.site_title')
-    const author = get(this, 'props.data.cosmicjsSettings.metadata')
+    const siteTitle = get(
+      this.props,
+      "data.cosmicjsSettings.metadata.site_title"
+    )
+    const author = get(this, "props.data.cosmicjsSettings.metadata")
     const { previous, next } = this.props.pathContext
 
     return (
       <div>
-        <style>{`
+        <style>
+          {`
           .post-content {
             text-align: justify;
           }
@@ -232,8 +243,8 @@ class BlogPostTemplate extends React.Component {
           }
           @media (max-width: ${rhythm(32)}) {
             .post-hero {
-              width: calc(100% + ${rhythm((3/4) * 2)});
-              margin-left: ${rhythm(-3/4)};
+              width: calc(100% + ${rhythm((3 / 4) * 2)});
+              margin-left: ${rhythm(-3 / 4)};
               height: ${rhythm(13)};
             }
           }
@@ -245,10 +256,7 @@ class BlogPostTemplate extends React.Component {
             marginTop: rhythm(1.4),
           }}
         >
-          <Link
-            to="/">
-            ← Back to Posts
-          </Link>
+          <Link to="/">← Back to Posts</Link>
         </div>
         <h1
           style={{
@@ -260,7 +268,7 @@ class BlogPostTemplate extends React.Component {
         <p
           style={{
             ...scale(-1 / 5),
-            display: 'block',
+            display: "block",
             marginBottom: rhythm(0.6),
             marginTop: rhythm(-0.6),
           }}
@@ -272,13 +280,16 @@ class BlogPostTemplate extends React.Component {
           style={{
             backgroundColor: "#007ACC",
             backgroundImage: `url("${post.metadata.hero.imgix_url}?w=2000")`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
+            backgroundSize: "cover",
+            backgroundPosition: "center",
             marginBottom: rhythm(0.6),
-            position: 'relative',
+            position: "relative",
           }}
-        ></div>
-        <div className="post-content" dangerouslySetInnerHTML={{ __html: post.content }} />
+        />
+        <div
+          className="post-content"
+          dangerouslySetInnerHTML={{ __html: post.content }}
+        />
         <hr
           style={{
             marginBottom: rhythm(1),
@@ -288,10 +299,10 @@ class BlogPostTemplate extends React.Component {
 
         <ul
           style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            justifyContent: 'space-between',
-            listStyle: 'none',
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "space-between",
+            listStyle: "none",
             padding: 0,
           }}
         >
@@ -325,14 +336,14 @@ export const pageQuery = graphql`
       content
       title
       created(formatString: "MMMM DD, YYYY")
-      metadata{
-        hero{
+      metadata {
+        hero {
           imgix_url
         }
       }
     }
-    cosmicjsSettings(slug: {eq: "general"}){
-      metadata{
+    cosmicjsSettings(slug: { eq: "general" }) {
+      metadata {
         site_title
         author_name
         author_bio
@@ -350,28 +361,31 @@ That looks fine, but at this point, Gatsby does not know when this template shou
 Path: `gatsby-node.js`
 
 ```javascript
-const _ = require('lodash')
-const Promise = require('bluebird')
-const path = require('path')
+const _ = require("lodash")
+const Promise = require("bluebird")
+const path = require("path")
 
 exports.createPages = ({ graphql, boundActionCreators }) => {
   const { createPage } = boundActionCreators
-  const indexPage = path.resolve('./src/pages/index.js')
+  const indexPage = path.resolve("./src/pages/index.js")
   createPage({
     path: `posts`,
     component: indexPage,
   })
 
   return new Promise((resolve, reject) => {
-    const blogPost = path.resolve('./src/templates/blog-post.js')
+    const blogPost = path.resolve("./src/templates/blog-post.js")
     resolve(
       graphql(
         `
           {
-            allCosmicjsPosts(sort: { fields: [created], order: DESC }, limit: 1000) {
+            allCosmicjsPosts(
+              sort: { fields: [created], order: DESC }
+              limit: 1000
+            ) {
               edges {
                 node {
-                  slug,
+                  slug
                   title
                 }
               }
@@ -385,11 +399,11 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
         }
 
         // Create blog posts pages.
-        const posts = result.data.allCosmicjsPosts.edges;
+        const posts = result.data.allCosmicjsPosts.edges
 
         _.each(posts, (post, index) => {
-          const next = index === posts.length - 1 ? null : posts[index + 1].node;
-          const previous = index === 0 ? null : posts[index - 1].node;
+          const next = index === posts.length - 1 ? null : posts[index + 1].node
+          const previous = index === 0 ? null : posts[index - 1].node
 
           createPage({
             path: `posts/${post.node.slug}`,
@@ -413,7 +427,7 @@ Restart the Gatsby server, then visit the detail page by clicking on URLs displa
 
 ### Extra Stuff!
 
-In addition to the code covered in this tutorial, we also implemented `src/components/Bio.js` to display author information & `src/layouts/index.js` to [create a generic layout](/tutorial/part-three/#our-first-layout-component) for the blog. 
+In addition to the code covered in this tutorial, we also implemented `src/components/Bio.js` to display author information & `src/layouts/index.js` to [create a generic layout](/tutorial/part-three/#our-first-layout-component) for the blog.
 
 The source code for this tutorial is available [on GitHub](https://github.com/cosmicjs/gatsby-blog-cosmicjs). To see it live, clone the repository, and run (`cd gatsby-blog-cosmicjs && npm i && npm run develop`) or check out the [demo on Netlify](https://gatsby-blog-cosmicjs.netlify.com/).
 
@@ -423,4 +437,4 @@ The static website generated by Gatsby can easily be published on services like 
 
 ### Conclusion
 
-Congrats! You’ve successfully built a super fast and easy-to-maintain blog! Feel free to continue this project to discover both Gatsby and Cosmic JS advantages. 
+Congrats! You’ve successfully built a super fast and easy-to-maintain blog! Feel free to continue this project to discover both Gatsby and Cosmic JS advantages.

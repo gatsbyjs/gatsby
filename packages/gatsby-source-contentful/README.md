@@ -43,6 +43,7 @@ plugins: [
   },
 ]
 ```
+
 ### Configuration options
 
 **`spaceId`** [string][required]

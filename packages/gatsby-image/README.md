@@ -23,15 +23,15 @@ Large, unoptimized images dramatically slow down your site.
 But creating optimized images for websites has long been a thorny problem.
 Ideally you would:
 
-* Resize large images to the size needed by your design
-* Generate multiple smaller images so smartphones and tablets don't download
+- Resize large images to the size needed by your design
+- Generate multiple smaller images so smartphones and tablets don't download
   desktop-sized images
-* Strip all unnecessary metadata and optimize JPEG and PNG compression
-* Efficiently lazy load images to speed initial page load and save bandwidth
-* Use the "blur-up" technique or a
+- Strip all unnecessary metadata and optimize JPEG and PNG compression
+- Efficiently lazy load images to speed initial page load and save bandwidth
+- Use the "blur-up" technique or a
   "[traced placeholder](https://github.com/gatsbyjs/gatsby/issues/2435)" SVG to
   show a preview of the image while it loads
-* Hold the image position so your page doesn't jump while images load
+- Hold the image position so your page doesn't jump while images load
 
 Doing this consistently across a site feels like sisyphean labor. You manually
 optimize your images and then… several images are swapped in at the last minute
@@ -151,38 +151,38 @@ Their fragments are:
 
 ### gatsby-transformer-sharp
 
-* `GatsbyImageSharpFixed`
-* `GatsbyImageSharpFixed_noBase64`
-* `GatsbyImageSharpFixed_tracedSVG`
-* `GatsbyImageSharpFixed_withWebp`
-* `GatsbyImageSharpFixed_withWebp_noBase64`
-* `GatsbyImageSharpFixed_withWebp_tracedSVG`
-* `GatsbyImageSharpFluid`
-* `GatsbyImageSharpFluid_noBase64`
-* `GatsbyImageSharpFluid_tracedSVG`
-* `GatsbyImageSharpFluid_withWebp`
-* `GatsbyImageSharpFluid_withWebp_noBase64`
-* `GatsbyImageSharpFluid_withWebp_tracedSVG`
+- `GatsbyImageSharpFixed`
+- `GatsbyImageSharpFixed_noBase64`
+- `GatsbyImageSharpFixed_tracedSVG`
+- `GatsbyImageSharpFixed_withWebp`
+- `GatsbyImageSharpFixed_withWebp_noBase64`
+- `GatsbyImageSharpFixed_withWebp_tracedSVG`
+- `GatsbyImageSharpFluid`
+- `GatsbyImageSharpFluid_noBase64`
+- `GatsbyImageSharpFluid_tracedSVG`
+- `GatsbyImageSharpFluid_withWebp`
+- `GatsbyImageSharpFluid_withWebp_noBase64`
+- `GatsbyImageSharpFluid_withWebp_tracedSVG`
 
 ### gatsby-source-contentful
 
-* `GatsbyContentfulFixed`
-* `GatsbyContentfulFixed_noBase64`
-* `GatsbyContentfulFixed_tracedSVG`
-* `GatsbyContentfulFixed_withWebp`
-* `GatsbyContentfulFixed_withWebp_noBase64`
-* `GatsbyContentfulFluid`
-* `GatsbyContentfulFluid_noBase64`
-* `GatsbyContentfulFluid_tracedSVG`
-* `GatsbyContentfulFluid_withWebp`
-* `GatsbyContentfulFluid_withWebp_noBase64`
+- `GatsbyContentfulFixed`
+- `GatsbyContentfulFixed_noBase64`
+- `GatsbyContentfulFixed_tracedSVG`
+- `GatsbyContentfulFixed_withWebp`
+- `GatsbyContentfulFixed_withWebp_noBase64`
+- `GatsbyContentfulFluid`
+- `GatsbyContentfulFluid_noBase64`
+- `GatsbyContentfulFluid_tracedSVG`
+- `GatsbyContentfulFluid_withWebp`
+- `GatsbyContentfulFluid_withWebp_noBase64`
 
 ### gatsby-source-datocms
 
-* `GatsbyDatoCmsFixed`
-* `GatsbyDatoCmsFixed_noBase64`
-* `GatsbyDatoCmsFluid`
-* `GatsbyDatoCmsFluid_noBase64`
+- `GatsbyDatoCmsFixed`
+- `GatsbyDatoCmsFixed_noBase64`
+- `GatsbyDatoCmsFluid`
+- `GatsbyDatoCmsFluid_noBase64`
 
 If you don't want to use the blur-up effect, choose the fragment with `noBase64`
 at the end. If you want to use the traced placeholder SVGs, choose the fragment
@@ -247,7 +247,7 @@ prop. e.g. `<Img fluid={fluid} />`
 
 | Name                    | Type                | Description                                                                                                                 |
 | ----------------------- | ------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| `fixed`           | `object`            | Data returned from the `fixed` query                                                                                  |
+| `fixed`                 | `object`            | Data returned from the `fixed` query                                                                                        |
 | `fluid`                 | `object`            | Data returned from the `fluid` query                                                                                        |
 | `fadeIn`                | `bool`              | Defaults to fading in the image on load                                                                                     |
 | `title`                 | `string`            | Passed to the `img` element                                                                                                 |
@@ -268,7 +268,7 @@ prop. e.g. `<Img fluid={fluid} />`
 
 ## Some other stuff to be aware of
 
-* If you want to set `display: none;` on a component using a `fixed` prop,
+- If you want to set `display: none;` on a component using a `fixed` prop,
   you need to also pass in to the style prop `{ display: 'inherit' }`.\* Images
   don't load until JavaScript is loaded. Gatsby's automatic code splitting
   generally makes this fine but if images seem slow coming in on a page, check

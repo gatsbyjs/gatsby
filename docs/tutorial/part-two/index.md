@@ -351,11 +351,11 @@ First, let's create a new `Container` component which we'll use for each of the
 CSS-in-JS examples. Create a new directory at `src/components` and then, in this new directory, create a file named `container.js` and paste the following:
 
 ```javascript
-import React from "react";
+import React from "react"
 
 export default ({ children }) => (
   <div style={{ margin: "3rem auto", maxWidth: 600 }}>{children}</div>
-);
+)
 ```
 
 Then, create a new component page by creating a file at
@@ -502,11 +502,11 @@ Gatsby supports almost every possible styling option (if there isn't a plugin
 yet for your favorite CSS option,
 [please contribute one!](/docs/how-to-contribute/))
 
-* [Sass](/packages/gatsby-plugin-sass/)
-* [Emotion](/packages/gatsby-plugin-emotion/)
-* [JSS](/packages/gatsby-plugin-jss/)
-* [Stylus](/packages/gatsby-plugin-stylus/)
-* and more!
+- [Sass](/packages/gatsby-plugin-sass/)
+- [Emotion](/packages/gatsby-plugin-emotion/)
+- [JSS](/packages/gatsby-plugin-jss/)
+- [Stylus](/packages/gatsby-plugin-stylus/)
+- and more!
 
 ## What's coming next?
 

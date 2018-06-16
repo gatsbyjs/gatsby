@@ -32,13 +32,12 @@ You can pass options to the plugin, see the [Styled Components docs](https://www
 For example, to disable the `displayName` option:
 
 ```js
-  options: {
-    displayName: false
-  }
+options: {
+  displayName: false
+}
 ```
 
 Note: The `ssr` option will be ignored. Gatsby will apply it automatically when needed.
-
 
 ### Breaking changes history
 

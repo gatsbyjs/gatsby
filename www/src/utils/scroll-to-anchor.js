@@ -21,7 +21,7 @@ const getScrollableElement = () =>
  * @return {Number}         the new position based on the easing formula
  */
 const easeInOutSine = (elapsed, start, change, length) =>
-  -change / 2 * (Math.cos(Math.PI * elapsed / length) - 1) + start
+  (-change / 2) * (Math.cos((Math.PI * elapsed) / length) - 1) + start
 
 // Sets up a loop that executes for the length of time set in duration
 const animateScroll = (

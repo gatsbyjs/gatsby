@@ -27,7 +27,9 @@ async function onCreateNode(
   let wb = XLSX.read(content, { type: `binary`, cellDates: true })
   wb.SheetNames.forEach((n, idx) => {
     let ws = wb.Sheets[n]
-    let parsedContent = XLSX.utils.sheet_to_json(ws, { raw: options && `rawOutput` in options ? options.rawOutput : true })
+    let parsedContent = XLSX.utils.sheet_to_json(ws, {
+      raw: options && `rawOutput` in options ? options.rawOutput : true,
+    })
 
     if (_.isArray(parsedContent)) {
       const csvArray = parsedContent.map((obj, i) => {

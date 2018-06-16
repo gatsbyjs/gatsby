@@ -32,20 +32,20 @@ Gatsby means no more compromising between developers, designers, and authors.
 
 In the last year, Gatsby community and usage have exploded. Milestones reached:
 
-* 196 code contributors on GitHub (with many more helping in
+- 196 code contributors on GitHub (with many more helping in
   [our chat room on Discord](https://discord.gg/0ZcbPKXt5bVoxkfV)).
-* 10,000 stars on GitHub
-* 1000 followers on Twitter
-* 500,000 NPM downloads (100,000 in the last month!!)
+- 10,000 stars on GitHub
+- 1000 followers on Twitter
+- 500,000 NPM downloads (100,000 in the last month!!)
 
 ![Gatsby npm downloads year over year](./images/gatsby-npm-downloads.png)
 
 ## Cool sites built with Gatsby
 
-* Segment [relaunched their blog on Gatsby](https://segment.com/blog/)
-* The life insurance startup Fabric built their
+- Segment [relaunched their blog on Gatsby](https://segment.com/blog/)
+- The life insurance startup Fabric built their
   [marketing site _and_ web app using Gatsby](https://meetfabric.com/)
-* JavaScript consultancy
+- JavaScript consultancy
   [Formidable built their website on Gatsby](https://formidable.com/)
 
 ![screenshots of above sites](images/site-screenshots.png)
@@ -102,12 +102,12 @@ projects and for contributing back to Gatsby.
 
 Plugins can:
 
-* add support for webpack loaders such as Sass, Less
-* add drop-in support for lightweight React-compatible frameworks
+- add support for webpack loaders such as Sass, Less
+- add drop-in support for lightweight React-compatible frameworks
   [Preact](https://preactjs.com/) and [Inferno](https://infernojs.org/)
-* add a sitemap or RSS feed
-* add [Google Analytics](/packages/gatsby-plugin-google-analytics/)
-* ...and much more!
+- add a sitemap or RSS feed
+- add [Google Analytics](/packages/gatsby-plugin-google-analytics/)
+- ...and much more!
 
 ## GraphQL-based data processing layer
 
@@ -248,9 +248,9 @@ the first time are developing their websites using these techniques.
 
 Read Google's case studies on:
 
-* [Flipkart (India)](https://developers.google.com/web/showcase/2016/flipkart)
-* [Konga (Nigeria)](https://developers.google.com/web/showcase/2016/konga)
-* [Housing.com (India)](https://developers.google.com/web/showcase/2016/housing)
+- [Flipkart (India)](https://developers.google.com/web/showcase/2016/flipkart)
+- [Konga (Nigeria)](https://developers.google.com/web/showcase/2016/konga)
+- [Housing.com (India)](https://developers.google.com/web/showcase/2016/housing)
 
 ## Service worker and offline support
 

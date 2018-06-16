@@ -17,13 +17,13 @@ const theme = {
       [TABLET_MEDIA_QUERY]: {
         // Make baseFontSize on mobile 17px.
         html: {
-          fontSize: `${17 / 16 * 100}%`,
+          fontSize: `${(17 / 16) * 100}%`,
         },
       },
       [MOBILE_MEDIA_QUERY]: {
         // Make baseFontSize on mobile 16px.
         html: {
-          fontSize: `${16 / 16 * 100}%`,
+          fontSize: `${(16 / 16) * 100}%`,
         },
       },
     }
@@ -31,7 +31,6 @@ const theme = {
 }
 
 const typography = new Typography(theme)
-
 
 // Back out the below once Typography is upgraded for es6
 export default typography
