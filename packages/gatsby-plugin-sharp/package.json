@@ -36,7 +36,7 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "gatsby": ">2.0.0"
+    "gatsby": ">2.0.0-alpha"
   },
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp",
   "scripts": {

@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-canonical-urls",
   "description": "Stub description for gatsby-plugin-canonical-urls",
-  "version": "1.0.14-12",
+  "version": "2.0.0-alpha.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -22,7 +22,7 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "gatsby": "^1.0.0"
+    "gatsby": ">2.0.0-alpha"
   },
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-canonical-urls",
   "scripts": {

@@ -1,7 +1,7 @@
 {
   "name": "gatsby-transformer-xml",
   "description": "Gatsby plugin for parsing XML files. It supports also attributes",
-  "version": "1.0.16-9",
+  "version": "2.0.0-alpha.0",
   "author": "Kyle Mathews <matthews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -24,6 +24,9 @@
   ],
   "license": "MIT",
   "main": "index.js",
+  "peerDependencies": {
+    "gatsby": ">2.0.0-alpha"
+  },
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-xml",
   "scripts": {
     "build": "babel src --out-dir . --ignore **/__tests__",

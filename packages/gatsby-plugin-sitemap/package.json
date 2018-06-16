@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-sitemap",
   "description": "Gatsby plugin that automatically creates a sitemap for your site",
-  "version": "1.2.14-12",
+  "version": "2.0.0-alpha.0",
   "author": "Nicholas Young &lt;nicholas@nicholaswyoung.com&gt;",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -23,7 +23,7 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "gatsby": ">1.0.0 || >2.0.0-alpha"
+    "gatsby": ">2.0.0-alpha"
   },
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sitemap",
   "scripts": {

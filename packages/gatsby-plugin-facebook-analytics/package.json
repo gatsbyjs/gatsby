@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-facebook-analytics",
   "description": "Gatsby plugin to add facebook analytics  onto a site",
-  "version": "1.0.4-9",
+  "version": "2.0.0-alpha.0",
   "author": "Yeison Daza <jahir045@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -24,7 +24,7 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "gatsby": "^1.0.0"
+    "gatsby": ">2.0.0-alpha"
   },
   "repository": {
     "type": "git",
