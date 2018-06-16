@@ -6,9 +6,9 @@ Before we go through the steps for adding search to your Gatsby website, let's e
 
 There are three required components for adding search to your Gatsby website:
 
-1. index
-2. engine
-3. UI
+1.  index
+2.  engine
+3.  UI
 
 ## Site search components
 
@@ -48,14 +48,14 @@ Another option is to use an external search engine. This solution is much more s
 
 There are many available both open source that you can host yourself and commercial hosted options.
 
-* [ElasticSearch](https://www.elastic.co/products/elasticsearch) — OSS and has commercial hosting available
-* [Solr](http://lucene.apache.org/solr/) — OSS and has commercial hosting available
-* [Algolia](https://www.algolia.com/) — Commercial
+- [ElasticSearch](https://www.elastic.co/products/elasticsearch) — OSS and has commercial hosting available
+- [Solr](http://lucene.apache.org/solr/) — OSS and has commercial hosting available
+- [Algolia](https://www.algolia.com/) — Commercial
 
 If you're building a documentation website you can use [Algolia's DocSearch feature](https://community.algolia.com/docsearch/). It will automatically create a search index from the content of your pages.
 
 If your website does not qualify as documentation, you need to collect the search index at build time and upload it using [`gatsby-plugin-algolia`](https://github.com/algolia/gatsby-plugin-algolia).
 
-When using Algolia, they host the search index and search engine for you. Your search queries will be sent to their servers which will respond with any results.  You'll need to implement your own UI; Algolia provides a [React library](https://github.com/algolia/react-instantsearch) which may have components you'd like to use.
+When using Algolia, they host the search index and search engine for you. Your search queries will be sent to their servers which will respond with any results. You'll need to implement your own UI; Algolia provides a [React library](https://github.com/algolia/react-instantsearch) which may have components you'd like to use.
 
 Elasticsearch has several React component libraries for search e.g. https://github.com/appbaseio/reactivesearch

@@ -160,13 +160,15 @@ module.exports = async (config = {}) => {
   })
 
   const program = store.getState().program
-  plugins.push(processPlugin({
-    resolve: `gatsby-plugin-page-creator`,
-    options: {
-      path: slash(path.join(program.directory, `src/pages`)),
-      pathCheck: false,
-    },
-  }))
+  plugins.push(
+    processPlugin({
+      resolve: `gatsby-plugin-page-creator`,
+      options: {
+        path: slash(path.join(program.directory, `src/pages`)),
+        pathCheck: false,
+      },
+    })
+  )
 
   return plugins
 }

@@ -32,7 +32,7 @@ elkGlenTheme.overrideThemeStyles = ({ rhythm, scale }, options) => {
     },
     "@media (min-width: 640px)": {
       html: {
-        fontSize: `${21 / 17 * 100}%`,
+        fontSize: `${(21 / 17) * 100}%`,
       },
     },
   }

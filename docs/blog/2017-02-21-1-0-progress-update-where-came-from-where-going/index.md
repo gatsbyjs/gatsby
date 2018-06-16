@@ -13,24 +13,24 @@ as you develop, ship, and maintain sites.
 
 This framework would have to be:
 
-* **universal**, work for all types of sites from simple brocurewares to complex
+- **universal**, work for all types of sites from simple brocurewares to complex
   web-apps.
-* **simple**, not requiring any setup to start using and with thoughtful APIs to
+- **simple**, not requiring any setup to start using and with thoughtful APIs to
   extend the framework.
-* **fast**, doesn't lose customers to slow page loads. Takes advantage of
+- **fast**, doesn't lose customers to slow page loads. Takes advantage of
   HTTP/2, browser caching, service workers, inlined critical css, and code
   splitting so your site always loads incredibly fast—no matter what you build.
-* **JavaScript-driven**, the web is huge and intensely competitive. Sites that
+- **JavaScript-driven**, the web is huge and intensely competitive. Sites that
   win are fast and richly interactive. Your framework must make it trivial to
   use advanced JavaScript.
-* **team ready**, use industry standard collaboration tools like NPM, Git, and
+- **team ready**, use industry standard collaboration tools like NPM, Git, and
   continuous deployment, so your team is always on the same page and shipping
   new features is easy.
-* **modular**, allows for cleanly separated features so fixing bugs and adding
+- **modular**, allows for cleanly separated features so fixing bugs and adding
   new features is easy and complexity is contained.
-* **internet scale**, launch your site to millions without crashing your site
+- **internet scale**, launch your site to millions without crashing your site
   (or your wallet).
-* **secure**, doesn't put your your users' data at risk of hacking.
+- **secure**, doesn't put your your users' data at risk of hacking.
 
 I believe that Gatsby fulfills these requirements. After several years of
 working on the project and seeing it used successfully by many people on a wide
@@ -57,9 +57,9 @@ including blogs, marketing sites, documentation sites, and e-commerce.
 It wraps three of the most popular web app tools into a cohesive website
 framework:
 
-* [React](https://facebook.github.io/react/) from Facebook for building UIs
-* [Webpack](https://webpack.js.org/) for bundling JavaScript and CSS
-* [GraphQL](http://graphql.org/) from Facebook for declarative data queries
+- [React](https://facebook.github.io/react/) from Facebook for building UIs
+- [Webpack](https://webpack.js.org/) for bundling JavaScript and CSS
+- [GraphQL](http://graphql.org/) from Facebook for declarative data queries
 
 While designing Gatsby, I wanted a synthesis of two of my favorite developer
 experiences. The simplicity of building sites with markdown and static site
@@ -210,12 +210,12 @@ plugins for internal projects and as open source projects published on NPM.
 
 Plugins can:
 
-* add support for webpack loaders such as Sass, Less
-* add drop-in support for lightweight React-compatible frameworks
+- add support for webpack loaders such as Sass, Less
+- add drop-in support for lightweight React-compatible frameworks
   [Preact](https://preactjs.com/) and [Inferno](https://infernojs.org/)
-* add a sitemap or RSS feed
-* add [Google Analytics](/packages/gatsby-plugin-google-analytics/)
-* ...and many more!
+- add a sitemap or RSS feed
+- add [Google Analytics](/packages/gatsby-plugin-google-analytics/)
+- ...and many more!
 
 Plugins also drive the new GraphQL data processing layer.
 

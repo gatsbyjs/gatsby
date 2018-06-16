@@ -184,19 +184,19 @@ Please note that we do _not_ use PrismJS's
 [line highlighting plugin](http://prismjs.com/plugins/line-highlight/). Here's
 why:
 
-* [PrismJS plugins][3] assume you're running things client side, but we are
+- [PrismJS plugins][3] assume you're running things client side, but we are
   _build-time folks_.
-* PrismJS's line highlighting plugin [implementation][1] does not allow for
+- PrismJS's line highlighting plugin [implementation][1] does not allow for
   solid background colors or 100% wide backgrounds that are drawn beyond the
   _visible part_ of the container when content is overflowing.
 
 Our approach follows the [Pygments-based][2] implementation of the [React
 Tutorial/Documentation][4] for line highlights:
 
-* It uses a wrapper element `<div class="gatsby-highlight">` around the
+- It uses a wrapper element `<div class="gatsby-highlight">` around the
   PrismJS-formatted `<pre><code>`-blocks.
-* Highlighted lines are wrapped in `<span class="gatsby-highlight-code-line">`.
-* We insert a linebreak before the closing tag of `.gatsby-highlight-code-line`
+- Highlighted lines are wrapped in `<span class="gatsby-highlight-code-line">`.
+- We insert a linebreak before the closing tag of `.gatsby-highlight-code-line`
   so it ends up at the start of the follwing line.
 
 With all of this in place, we can apply `float:left; min-width:100%` to `<pre>`,
@@ -210,4 +210,3 @@ to facilitate the desired line highlight behavior.
 [4]: https://facebook.github.io/react/tutorial/tutorial.html
 [5]: https://github.com/PrismJS/prism/tree/1d5047df37aacc900f8270b1c6215028f6988eb1/themes
 [6]: http://prismjs.com/
-

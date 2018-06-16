@@ -170,20 +170,28 @@ export default (pagePath, callback) => {
 
       const childAssets = namedChunkGroups[s].childAssets
       for (const rel in childAssets) {
-        chunks = merge(chunks, childAssets[rel].map(chunk => {
-          return { rel, name: chunk }
-        }))
+        chunks = merge(
+          chunks,
+          childAssets[rel].map(chunk => {
+            return { rel, name: chunk }
+          })
+        )
       }
 
       return chunks
     })
-  ).filter(s => isObject(s))
-  .sort((s1, s2) => s1.rel == `preload` ? -1 : 1)   // given priority to preload
+  )
+    .filter(s => isObject(s))
+    .sort((s1, s2) => (s1.rel == `preload` ? -1 : 1)) // given priority to preload
 
   scriptsAndStyles = uniqBy(scriptsAndStyles, item => item.name)
 
-  const scripts = scriptsAndStyles.filter(script => script.name && script.name.endsWith(`.js`))
-  const styles = scriptsAndStyles.filter(style => style.name && style.name.endsWith(`.css`))
+  const scripts = scriptsAndStyles.filter(
+    script => script.name && script.name.endsWith(`.js`)
+  )
+  const styles = scriptsAndStyles.filter(
+    style => style.name && style.name.endsWith(`.css`)
+  )
 
   apiRunner(`onRenderBody`, {
     setHeadComponents,

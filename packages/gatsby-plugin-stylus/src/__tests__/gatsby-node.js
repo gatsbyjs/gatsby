@@ -12,9 +12,7 @@ describe(`gatsby-plugin-stylus`, () => {
     postcss: args => `postcss(${JSON.stringify(args)})`,
   }
 
-  const {
-    onCreateWebpackConfig,
-  } = require(`../gatsby-node`)
+  const { onCreateWebpackConfig } = require(`../gatsby-node`)
 
   beforeEach(() => {
     actions.setWebpackConfig.mockReset()
@@ -43,11 +41,14 @@ describe(`gatsby-plugin-stylus`, () => {
     for (let label in tests.options) {
       const options = tests.options[label]
       it(`Stage: ${stage} / ${label}`, () => {
-        onCreateWebpackConfig({
-          actions,
-          loaders,
-          stage: `develop`,
-        }, options)
+        onCreateWebpackConfig(
+          {
+            actions,
+            loaders,
+            stage: `develop`,
+          },
+          options
+        )
         expect(actions.setWebpackConfig).toMatchSnapshot()
       })
     }

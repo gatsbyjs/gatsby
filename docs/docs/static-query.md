@@ -60,9 +60,7 @@ export default props => (
         }
       }
     `}
-    render={data => (
-      <Header data={data} {...props} />
-    )}
+    render={data => <Header data={data} {...props} />}
   />
 )
 

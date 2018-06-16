@@ -70,8 +70,7 @@ exports.get = key =>
  */
 exports.set = (key, value) =>
   new Promise((resolve, reject) => {
-    db
-      .get(`keys`)
+    db.get(`keys`)
       .upsert({ id: key, value })
       .write()
     save()

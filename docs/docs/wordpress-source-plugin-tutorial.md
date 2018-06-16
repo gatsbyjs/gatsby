@@ -76,7 +76,7 @@ Run:
 gatsby develop
 ```
 
-In your browser, open localhost:8000 to see your site, and open localhost:8000/___graphql so that you can create your GraphQL queries.
+In your browser, open localhost:8000 to see your site, and open localhost:8000/\_\_\_graphql so that you can create your GraphQL queries.
 
 As an exercise, try re-creating the following queries in your GraphiQL explorer. This first query will pull in the blogpost content from WordPress:
 
@@ -96,7 +96,6 @@ query {
 }
 ```
 
-
 This next query will pull in a sorted list of the blogposts:
 
 ```graphql
@@ -113,47 +112,48 @@ This next query will pull in a sorted list of the blogposts:
 }
 ```
 
-
 ### Rendering the blogposts to `index.js`
 
 Now that you've created GraphQL queries that pull in the data you want, we'll use that second query to create a list of sorted blogpost titles on your site's homepage. Here is what your `index.js` should look like:
 
 ```jsx
-import React from 'react'
+import React from "react"
 
 export default ({ data }) => {
- console.log(data)
- return (
-   <div>
-     <h1>My WordPress Blog</h1>
-     <h4>Posts</h4>
-     {data.allWordpressPost.edges.map(({ node }) => (
-       <div>
-         <p>{node.title}</p>
-         <div dangerouslySetInnerHTML={{__html: node.excerpt}}/>
-       </div>
-     ))}
-   </div>
- )
+  console.log(data)
+  return (
+    <div>
+      <h1>My WordPress Blog</h1>
+      <h4>Posts</h4>
+      {data.allWordpressPost.edges.map(({ node }) => (
+        <div>
+          <p>{node.title}</p>
+          <div dangerouslySetInnerHTML={{ __html: node.excerpt }} />
+        </div>
+      ))}
+    </div>
+  )
 }
 
 export const pageQuery = graphql`
- query MyFiles {
-   allWordpressPost(sort: { fields: [date] }) {
-     edges {
-       node {
-         title
-         excerpt
-         slug
-       }
-     }
-   }
- }
+  query MyFiles {
+    allWordpressPost(sort: { fields: [date] }) {
+      edges {
+        node {
+          title
+          excerpt
+          slug
+        }
+      }
+    }
+  }
 `
 ```
+
 Save these changes and look at localhost:8000 to see your new homepage with list of sorted blogposts!
 
 > **NOTE:** to future editors: it would be useful to also have examples of how to load blogposts to their own individual pages. And helpful to insert a screenshot of the final result here
 
 ### Create slugs for each blogpost
+
 [Part 7](/tutorial/part-seven/) of the foundational tutorial goes through this process.

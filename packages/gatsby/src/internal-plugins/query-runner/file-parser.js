@@ -151,7 +151,7 @@ async function findGraphQLTags(file, text): Promise<Array<DefinitionNode>> {
           ExportNamedDeclaration(path, state) {
             path.traverse({
               TaggedTemplateExpression(innerPath) {
-                const { ast: gqlAst } = getGraphQLTag(innerPath)
+                const { ast: gqlAst, text, hash } = getGraphQLTag(innerPath)
                 if (gqlAst) {
                   gqlAst.definitions.forEach(def => {
                     if (!def.name || !def.name.value) {

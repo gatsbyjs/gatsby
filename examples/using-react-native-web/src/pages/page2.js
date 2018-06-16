@@ -1,8 +1,5 @@
 import React from "react"
-import {
-  View,
-  Text,
-} from "react-native"
+import { View, Text } from "react-native"
 
 const IndexPage = () => (
   <View>
