@@ -203,7 +203,7 @@ export default (pagePath, callback) => {
     .slice(0)
     .reverse()
     .forEach(script => {
-      // Add preload <link>s for scripts.
+      // Add preload/prefetch <link>s for scripts.
       headComponents.push(
         <link
           as="script"
@@ -216,10 +216,7 @@ export default (pagePath, callback) => {
 
   if (page.jsonName in dataPaths) {
     const dataPath = `${pathPrefix}static/d/${dataPaths[page.jsonName]}.json`
-    // Insert json data path after commons and app
-    headComponents.splice(
-      1,
-      0,
+    headComponents.push(
       <link
         rel="preload"
         key={dataPath}
@@ -258,7 +255,7 @@ export default (pagePath, callback) => {
       )
     })
 
-  // Add script loader for page scripts to the end of body element (after webpack manifest).
+  // Add page metadata for the current page
   const windowData = `/*<![CDATA[*/window.page=${JSON.stringify(page)};${
     page.jsonName in dataPaths
       ? `window.dataPath="${dataPaths[page.jsonName]}";`
@@ -275,7 +272,9 @@ export default (pagePath, callback) => {
     />
   )
 
-  const bodyScripts = scripts.map(s => {
+  // Filter out prefetched bundles as adding them as a script tag
+  // would force high priority fetching.
+  const bodyScripts = scripts.filter(s => s.rel !== `prefetch`).map(s => {
     const scriptPath = `${pathPrefix}${JSON.stringify(s.name).slice(1, -1)}`
     return <script key={scriptPath} src={scriptPath} async />
   })
