@@ -744,3 +744,20 @@ Community:
   * Prettier code styling
   * Webpack `BundleAnalyzerPlugin`
   * [README](https://github.com/greglobinski/gatsby-starter-hero-blog) / [DEMO](https://gatsby-starter-hero-blog.greglobinski.com/)
+  
+
+* [gatsby-starter-ecommerce](https://github.com/parmsang/gatsby-starter-ecommerce)
+  [(demo)](https://parmsang.github.io/gatsby-starter-ecommerce/)
+
+  Features:
+
+  * Uses the [Moltin eCommerce Api ](https://moltin.com/)
+  * React 16 (gatsby-plugin-react-next)
+  * Stripe checkout
+  * Semantic-UI
+  * Styled components
+  * Google Analytics - (you enter the tracking-id)
+  * [React-headroom](https://github.com/KyleAMathews/react-headroom)
+  * Eslint & Prettier. Uses [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript)
+  * Authentication via Moltin (Login and Register)
+  * [More info here](https://github.com/parmsang/gatsby-starter-ecommerce)
