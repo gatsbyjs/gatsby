@@ -24,6 +24,7 @@ This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While t
 - [Remove explicit polyfills](#remove-explicit-polyfills)
 - [Change `modifyBabelrc` to `onCreateBabelConfig`](#change-modifybabelrc-to-oncreatebabelconfig)
 - [Change `modifyWebpackConfig` to `onCreateWebpackConfig`](#change-modifywebpackconfig-to-oncreatewebpackconfig)
+- [Change `navigateTo` to `push`](#change-navigateto-to-push)
 - [Remove inlined CSS in `html.js`](#remove-inlined-css-in-htmljs)
 - [Only allow defined keys on node.internal object](#only-allow-defined-keys-on-the-node-internal-object)
 - [Import `graphql` types from `gatsby/graphql`](#import-graphql-types-from-gatsbygraphql)
@@ -402,6 +403,26 @@ Use `onCreateWebpackConfig`:
 Note usage of the new [`setWebpackConfig` action](/docs/actions/#setWebpackConfig).
 
 See [Gatsby's webpack docs for more details](/docs/add-custom-webpack-config) about configuring webpack.
+
+## Change `navigateTo` to `push`
+
+The `navigateTo` method in `gatsby-link` was renamed to `push` so as to mirror the browser history function. We also
+added support for using `replace` as well.
+
+In addition to the name change, `gatsby-link` is now directly exported from the `gatsby` package.
+
+```diff
+import React from "react"
+- import { navigateTo } from "gatsby-link"
++ import { push } from "gatsby"
+
+// Don't use push with an onClick btw :-)
+// Generally just use the `<Link>` component.
+export default props => (
+-  <div onClick={() => navigateTo(`/`)}>Click to go to home</div>
++  <div onClick={() => push(`/`)}>Click to go to home</div>
+)
+```
 
 ## Remove inlined CSS in `html.js`
 
