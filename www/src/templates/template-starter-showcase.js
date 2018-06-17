@@ -4,13 +4,14 @@ import Helmet from "react-helmet"
 // import { OutboundLink } from "gatsby-plugin-google-analytics"
 
 import url from "url"
-// import hex2rgba from "hex2rgba"
+import hex2rgba from "hex2rgba"
 import Layout from "../components/layout"
 import ShareMenu from "../components/share-menu-starters"
 import presets, { colors } from "../utils/presets"
 import /*typography, */ { rhythm, scale, options } from "../utils/typography"
 // import Container from "../components/container"
 import MdLaunch from "react-icons/lib/md/launch"
+import GithubIcon from "react-icons/lib/fa/github"
 
 const cleanUrl = mainUrl => {
   const parsed = url.parse(mainUrl)
@@ -23,13 +24,24 @@ const gutter = rhythm(3 / 4)
 const gutterDesktop = rhythm(6 / 4)
 
 class StarterTemplate extends React.Component {
+  state = {
+    showAllDeps: false
+  }
   render() {
 
     const { data } = this.props
     const { markdownRemark } = data
-    const { fields,
-      // frontmatter
+    const { fields: { starterShowcase },
+      frontmatter
     } = markdownRemark
+
+    // preprocessing of dependencies
+    const { miscDependencies = [], gatsbyDependencies = [] } = starterShowcase
+    const allDeps = [...gatsbyDependencies.map(([name, ver]) => name), ...miscDependencies.map(([name, ver]) => name)]
+    const shownDeps = this.state.showAllDeps ? allDeps : allDeps.slice(0, 15)
+    const showMore = !this.state.showAllDeps && allDeps.length - shownDeps.length > 0
+
+    // plug for now
     const isModal = false
     return (
       <Layout
@@ -52,21 +64,15 @@ class StarterTemplate extends React.Component {
             }}
           >
             <Helmet>
-              <title>{fields.githubFullName}</title>
-              {/* <meta
+              <title>Gatsby Starter: {starterShowcase.stub}</title>
+              <meta
                 name="og:image"
-                content={`https://next.gatsbyjs.org${
-                  markdownRemark.childScreenshot.screenshotFile.childImageSharp
-                    .resize.src
-                }`}
+                content={`https://next.gatsbyjs.org/StarterShowcase/generatedScreenshots/${starterShowcase.stub}.png`}
               />
               <meta
                 name="twitter:image"
-                content={`https://next.gatsbyjs.org${
-                  markdownRemark.childScreenshot.screenshotFile.childImageSharp
-                    .resize.src
-                }`}
-              /> */}
+                content={`https://next.gatsbyjs.org/StarterShowcase/generatedScreenshots/${starterShowcase.stub}.png`}
+              />
             </Helmet>
             <div
               css={{
@@ -79,9 +85,8 @@ class StarterTemplate extends React.Component {
                 },
               }}
             >
-              <h1 css={{ margin: 0 }}>{markdownRemark.title}</h1>
               <a
-                href={markdownRemark.main_url}
+                href={frontmatter.repo}
                 css={{
                   ...styles.link,
                   fontWeight: `bold`,
@@ -90,38 +95,14 @@ class StarterTemplate extends React.Component {
                   },
                 }}
               >
-                {/* {cleanUrl(markdownRemark.main_url)} */}
-                cleanUrl(markdownRemark.main_url)
-              </a>
-
-              {markdownRemark.built_by && (
-                <span
-                  css={{
-                    color: colors.gray.calm,
-                    [presets.Desktop]: {
-                      ...scale(-1 / 6),
-                    },
-                  }}
-                >
-                  {` `}
-                  <span css={{ paddingRight: 8, paddingLeft: 8 }}>/</span>
-                  {` `}
-                  Built by{` `}
-                  {markdownRemark.built_by_url ? (
-                    <a
-                      href={markdownRemark.built_by_url}
-                      css={{
-                        ...styles.link,
-                        fontWeight: `bold`,
-                      }}
-                    >
-                      {markdownRemark.built_by}
-                    </a>
-                  ) : (
-                      markdownRemark.built_by
-                    )}
-                </span>
-              )}
+                {starterShowcase.owner.login}
+              </a> <span>/</span>
+              <div>
+                <h1 css={{ margin: 0, display: 'inline-block' }}>
+                  {starterShowcase.stub}
+                </h1>
+                <span css={{ marginLeft: 20 }}>⭐ {starterShowcase.stars}</span>
+              </div>
             </div>
             <div
               css={{
@@ -134,29 +115,7 @@ class StarterTemplate extends React.Component {
                 },
               }}
             >
-              {markdownRemark.featured && (
-                <div
-                  css={{
-                    borderRight: `1px solid ${colors.ui.light}`,
-                    color: colors.gatsby,
-                    display: `flex`,
-                    fontWeight: `bold`,
-                    padding: 20,
-                    paddingLeft: 0,
-                    [presets.Desktop]: {
-                      ...scale(-1 / 6),
-                    },
-                  }}
-                >
-                  {/* <img
-                    src={FeaturedIcon}
-                    alt="icon"
-                    css={{ marginBottom: 0, marginRight: 10 }}
-                  /> */}
-                  Featured
-                </div>
-              )}
-              {markdownRemark.source_url && (
+              {frontmatter.repo && (
                 <div
                   css={{
                     padding: 20,
@@ -168,32 +127,40 @@ class StarterTemplate extends React.Component {
                     },
                   }}
                 >
-                  {/* <img
-                    src={GithubIcon}
-                    alt="icon"
-                    css={{ marginBottom: 0, marginRight: 10 }}
-                  /> */}
-                  <a href={markdownRemark.source_url} css={{ ...styles.link }}>
+                  <GithubIcon
+                    css={{ marginBottom: 0, marginRight: 10, height: 26, width: 20 }}
+                  />
+                  <a href={frontmatter.repo} css={{ ...styles.link }}>
                     Source
                   </a>
                 </div>
               )}
-              {false && ( // TODO: NOT IMPLEMENTED YET!!!
-                <div
-                  css={{
-                    padding: 20,
-                    display: `flex`,
-                    borderRight: `1px solid ${colors.ui.light}`,
-                  }}
-                >
-                  {/* <img
-                    src={FeatherIcon}
-                    alt="icon"
-                    css={{ marginBottom: 0, marginRight: 10 }}
-                  /> */}
-                  <a href={markdownRemark.source_url}>Case Study</a>
+
+              <div
+                css={{
+                  padding: 20,
+                  paddingLeft: 0,
+                  display: `flex`,
+                  borderRight: `1px solid ${colors.ui.light}`,
+                  [presets.Desktop]: {
+                    ...scale(-1 / 6),
+                  },
+                }}
+              >
+                Try this starter on replit codesandbox deploy to netlify
                 </div>
-              )}
+              <div
+                css={{
+                  padding: 20,
+                  paddingLeft: 0,
+                  display: `flex`,
+                  [presets.Desktop]: {
+                    ...scale(-1 / 6),
+                  },
+                }}
+              >
+                added/updated
+                </div>
             </div>
             <div
               css={{
@@ -212,7 +179,7 @@ class StarterTemplate extends React.Component {
                 }}
               >
                 <a
-                  href={markdownRemark.main_url}
+                  href={frontmatter.repo}
                   css={{
                     border: 0,
                     borderRadius: presets.radius,
@@ -239,10 +206,7 @@ class StarterTemplate extends React.Component {
                 <ShareMenu
                   url={markdownRemark.main_url}
                   title={markdownRemark.title}
-                // image={`https://next.gatsbyjs.org${
-                //   markdownRemark.childScreenshot.screenshotFile
-                //     .childImageSharp.resize.src
-                //   }`}
+                  image={`https://next.gatsbyjs.org/StarterShowcase/generatedScreenshots/${starterShowcase.stub}.png`}
                 />
               </div>
               {/* <Img
@@ -257,7 +221,16 @@ class StarterTemplate extends React.Component {
                     : `0 4px 10px ${hex2rgba(colors.gatsby, 0.1)}`,
                 }}
               /> */}
-              Img
+
+              <img
+                alt={`Screenshot of ${starterShowcase.githubFullName}`}
+                src={`/StarterShowcase/generatedScreenshots/${starterShowcase.stub}.png`}
+                css={{
+                  boxShadow: isModal
+                    ? false
+                    : `0 4px 10px ${hex2rgba(colors.gatsby, 0.1)}`,
+                }}
+              />
             </div>
             <div
               css={{
@@ -265,21 +238,51 @@ class StarterTemplate extends React.Component {
                 [presets.Desktop]: {
                   padding: gutterDesktop,
                 },
+                display: `grid`,
+                gridTemplateColumns: 'auto 1fr',
+                gridRowGap: '20px'
               }}
             >
-              <p>{markdownRemark.description}</p>
-              <div
-                css={{
-                  display: `flex`,
-                  fontFamily: options.headerFontFamily.join(`,`),
-                }}
-              >
-                <div css={{ color: colors.gray.calm, paddingRight: 20 }}>
-                  Categories
+              <div css={{ color: colors.gray.calm, fontFamily: options.headerFontFamily.join(`,`), paddingRight: 20 }}>
+                Tags
                 </div>
-                {/* <div>{categories.join(`, `)}</div> */}
-                <div>categories</div>
+              <div>{frontmatter.tags.join(`, `)}</div>
+
+              <div css={{ color: colors.gray.calm, fontFamily: options.headerFontFamily.join(`,`), paddingRight: 20 }}>
+                Description
+                </div>
+              <div>{frontmatter.description}</div>
+
+              <div css={{ color: colors.gray.calm, fontFamily: options.headerFontFamily.join(`,`), paddingRight: 20 }}>
+                Features
+                </div>
+              <div>
+                {frontmatter.features ?
+                  <ul css={{ marginTop: 0 }}>{frontmatter.features.map((f, i) => <li key={i}>{f}</li>)}</ul> :
+                  "n/a"
+                }
               </div>
+
+              <div css={{ color: colors.gray.calm, fontFamily: options.headerFontFamily.join(`,`), paddingRight: 20 }}>
+                Dependencies
+                </div>
+
+              <div>
+                <div css={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(3, 1fr)',
+                  gridColumnGap: 20
+                }}>
+                  {/* const shownDeps = this.state.showAllDeps ? allDeps : allDeps.slice(0,15) */}
+                  {shownDeps && shownDeps.map(dep => <div key={dep} css={{
+                    ...styles.truncate,
+                    marginBottom: '1rem'
+                  }}>{dep}</div>)}
+                </div>
+                {showMore &&
+                  <a onClick={() => this.setState({ showAllDeps: true })}>{`Show ${allDeps.length - shownDeps.length} more`}</a>}
+              </div>
+
             </div>
           </div>
         </div>
@@ -312,19 +315,17 @@ export const pageQuery = graphql`
             slug
             date
             gatsbyDependencies
+            miscDependencies
             lastUpdated
             description
             githubFullName
             owner {
-              avatar_url
+              login
             }
             githubData {
               repoMetadata {
                 full_name
                 name
-                owner {
-                  login
-                }
               }
             }
             stars

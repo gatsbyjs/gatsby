@@ -198,7 +198,7 @@ exports.createPages = ({ graphql, actions }) => {
 
         starters.forEach((edge, index) => {
           createPage({
-            path: `/starter${edge.node.fields.starterShowcase.slug}`, // required
+            path: `/starters${edge.node.fields.starterShowcase.slug}`, // required
             component: slash(starterTemplate),
             context: {
               slug: edge.node.fields.starterShowcase.slug,
