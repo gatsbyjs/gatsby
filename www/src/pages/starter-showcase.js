@@ -15,6 +15,7 @@ import MdCheckboxBlank from "react-icons/lib/md/check-box-outline-blank"
 import MdCheckbox from "react-icons/lib/md/check-box"
 import MdArrowDownward from "react-icons/lib/md/arrow-downward"
 import MdArrowForward from "react-icons/lib/md/arrow-forward"
+import MdSort from "react-icons/lib/md/sort"
 // import FeaturedSitesIcon from "../assets/featured-sites-icons.svg"
 import { options, /* rhythm, */ scale, rhythm } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
@@ -38,7 +39,7 @@ class StarterShowcasePage extends Component {
   }
 }
 
-export default RRSM({ s: '', c: [], d: [] })(StarterShowcasePage)
+export default RRSM({ s: '', c: [], d: [], sort: 'recent' })(StarterShowcasePage)
 
 export const showcaseQuery = graphql`
 query ShowcaseQuery {
@@ -72,6 +73,7 @@ query ShowcaseQuery {
             githubData {
               repoMetadata {
                 full_name
+                updated_at
                 name
                 owner {
                   login
@@ -95,20 +97,15 @@ class FilteredShowcase extends Component {
   }
   setFiltersCategory = filtersCategory => this.props.setURLState({ c: Array.from(filtersCategory) })
   setFiltersDependency = filtersDependency => this.props.setURLState({ d: Array.from(filtersDependency) })
+  toggleSort = () => this.props.setURLState({ sort: this.props.urlState.sort === 'recent' ? 'stars' : 'recent' })
   resetFilters = () => this.props.setURLState({ c: null, d: null })
   render() {
     const { data, urlState, setURLState } = this.props
-    const { setFiltersCategory, setFiltersDependency, resetFilters } = this
+    const { setFiltersCategory, setFiltersDependency, resetFilters, toggleSort } = this
     const filtersCategory = new Set(Array.isArray(urlState.c) ? urlState.c : [urlState.c])
     const filtersDependency = new Set(Array.isArray(urlState.d) ? urlState.d : [urlState.d])
     // https://stackoverflow.com/a/32001444/1106414
     const filters = new Set([].concat(...[filtersCategory, filtersDependency].map(set => Array.from(set))))
-    let windowWidth
-    if (typeof window !== `undefined`) {
-      windowWidth = window.innerWidth
-    }
-
-    const isDesktop = windowWidth > 750
 
     let items = data.allMarkdownRemark.edges
 
@@ -145,7 +142,6 @@ class FilteredShowcase extends Component {
               ...styles.sticky,
               paddingTop: 0,
               borderRight: `1px solid ${colors.ui.light}`,
-              // background: colors.ui.whisper,
               height: `calc(100vh - ${presets.headerHeight})`,
             },
           }}
@@ -247,7 +243,7 @@ class FilteredShowcase extends Component {
               {urlState.s.length === 0 ? (
                 filters.size === 0 ? (
                   <span>
-                    All {data.allMarkdownRemark.edges.length} Showcase Sites
+                    {data.allMarkdownRemark.edges.length} Starters for your new website
                   </span>
                 ) : (
                     <span>
@@ -263,6 +259,36 @@ class FilteredShowcase extends Component {
                 )}
             </h2>
             <div css={{ marginLeft: `auto` }}>
+              <label css={{
+                color: colors.gatsby,
+                border: 0,
+                borderRadius: presets.radiusLg,
+                fontFamily: options.headerFontFamily.join(`,`),
+                paddingTop: rhythm(1 / 8),
+                paddingRight: rhythm(1 / 5),
+                paddingBottom: rhythm(1 / 8),
+                paddingLeft: rhythm(1),
+                width: rhythm(5),
+              }}>
+                <MdArrowForward css={{ marginRight: 8 }} />
+                Submit your starter
+              </label>
+              <label css={{
+                color: colors.gatsby,
+                border: 0,
+                borderRadius: presets.radiusLg,
+                fontFamily: options.headerFontFamily.join(`,`),
+                paddingTop: rhythm(1 / 8),
+                paddingRight: rhythm(1 / 5),
+                paddingBottom: rhythm(1 / 8),
+                // paddingLeft: rhythm(1),
+                width: rhythm(5),
+              }}
+                onClick={toggleSort}
+              >
+                <MdSort css={{ marginRight: 8 }} />
+                {urlState.sort === 'recent' ? 'Most recent' : 'Most stars'}
+              </label>
               <label css={{ position: `relative` }}>
                 <input
                   css={{
@@ -312,9 +338,10 @@ class FilteredShowcase extends Component {
                   }}
                 />
               </label>
+
             </div>
           </div>
-          <ShowcaseList items={items} count={this.state.sitesToShow} />
+          <ShowcaseList sortRecent={urlState.sort === 'recent'} items={items} count={this.state.sitesToShow} />
           {this.state.sitesToShow < items.length && (
             <button
               css={{
@@ -339,122 +366,6 @@ class FilteredShowcase extends Component {
           )}
         </div>
       </section>
-      // <div css={{ display: `flex` }}>
-      //   {isDesktop && (
-      //     <div css={{ flexBasis: `18rem`, minWidth: `18rem` }}>
-      //       <h3>
-      //         Filter & Refine <MdFilterList />
-      //       </h3>
-      //       <LHSFilter heading="Categories" data={Array.from(
-      //         count(data.allMarkdownRemark.edges.map(({ node }) => node.frontmatter && node.frontmatter.tags))
-      //       )} filters={filtersCategory} setFilters={setFiltersCategory} />
-      //       <LHSFilter heading="Gatsby Dependencies" data={Array.from(
-      //         count(data.allMarkdownRemark.edges.map(({ node }) => node.fields && node.fields.starterShowcase.gatsbyDependencies.map(str => str[0])))
-      //       )} filters={filtersDependency} setFilters={setFiltersDependency} />
-      //     </div>
-      //   )}
-      //   <div>
-      //     <div
-      //       css={{
-      //         display: `flex`,
-      //         alignItems: `center`,
-      //         flexDirection: isDesktop ? `row` : `column`,
-      //       }}
-      //     >
-      //       <h5 css={{ flexGrow: 1 }} id="search-heading">
-      //         {this.state.search.length === 0 ? (
-      //           filters.size === 0 ? (
-      //             <span>
-      //               {data.allMarkdownRemark.edges.length} Starters to jump-start your new website
-      //             </span>
-      //           ) : (
-      //               <span>
-      //                 {items.length}
-      //                 {` `}
-      //                 {filters.size === 1 && filters.values()[0]}
-      //                 {` `}
-      //                 Starters
-      //             </span>
-      //             )
-      //         ) : (
-      //             <span>{items.length} search results</span>
-      //           )}
-      //       </h5>
-      //       {/* TODO: maybe have a site submission issue template */}
-      //       <a
-      //         href="https://github.com/gatsbyjs/gatsby/issues/new?template=feature_request.md"
-      //         target="_blank"
-      //         rel="noopener noreferrer"
-      //       >
-      //         <div
-      //           css={{
-      //             backgroundColor: `#663399`,
-      //             color: `white`,
-      //             padding: `5px 10px`,
-      //             fontWeight: `normal`,
-      //           }}
-      //         >
-      //           Submit your Starter
-      //           <div css={{ marginLeft: `5px`, display: `inline` }}>→</div>
-      //         </div>
-      //       </a>
-      //       <div>
-      //         <label css={{ position: `relative` }}>
-      //           <input
-      //             css={{
-      //               paddingLeft: `1.4rem`,
-      //             }}
-      //             type="text"
-      //             value={this.state.search}
-      //             onChange={e =>
-      //               this.setState({
-      //                 search: e.target.value,
-      //               })
-      //             }
-      //             placeholder="Search"
-      //           />
-      //           <SearchIcon
-      //             overrideCSS={{
-      //               // ...iconStyles,
-      //               // fill: focussed && colors.gatsby,
-      //               position: `absolute`,
-      //               left: `5px`,
-      //               top: `50%`,
-      //               width: `16px`,
-      //               height: `16px`,
-      //               pointerEvents: `none`,
-      //               // transition: `fill ${speedDefault} ${curveDefault}`,
-      //               transform: `translateY(-50%)`,
-
-      //               // [presets.Hd]: {
-      //               //   fill: focussed && isHomepage && colors.gatsby,
-      //               // },
-      //             }}
-      //           />
-      //         </label>
-      //       </div>
-      //     </div>
-      //     <ShowcaseList items={items} count={this.state.sitesToShow} />
-      //     {this.state.sitesToShow < items.length && (
-      //       <button
-      //         css={{
-      //           backgroundColor: `#663399`,
-      //           color: `white`,
-      //           marginTop: 15,
-      //           marginBottom: 60,
-      //           width: !isDesktop && `100%`,
-      //           padding: !isDesktop && `15px`,
-      //         }}
-      //         onClick={() => {
-      //           this.setState({ sitesToShow: this.state.sitesToShow + 9 })
-      //         }}
-      //       >
-      //         Load More
-      //         <div css={{ marginLeft: `5px`, display: `inline` }}>↓</div>
-      //       </button>
-      //     )}
-      //   </div>
-      // </div>
     )
   }
 }
@@ -562,8 +473,15 @@ class Collapsible extends Component {
 }
 
 
-const ShowcaseList = ({ items, count }) => {
-  if (count) items = items.slice(0, count)
+const ShowcaseList = ({ items, count, sortRecent }) => {
+  if (count) items = items
+    .sort(({ node: nodeA }, { node: nodeB }) => {
+      const safewrap = obj => sortRecent ? new Date(obj.githubData.repoMetadata.updated_at) : obj['stars']
+      const metricA = safewrap(nodeA.fields.starterShowcase)
+      const metricB = safewrap(nodeB.fields.starterShowcase)
+      return metricB - metricA
+    })
+    .slice(0, count)
   return (
     <div
       css={{
@@ -576,99 +494,103 @@ const ShowcaseList = ({ items, count }) => {
         },
       }}
     >
-      {items.map(
-        ({ node }) => {
-          const {
-            githubData,
-            description,
-            stars,
-            lastUpdated,
-            githubFullName
-          } = node.fields.starterShowcase
-          const repo = githubData.repoMetadata
-          return node.fields && ( // have to filter out null fields from bad data
-            <div key={node.id}
-              css={{
-                margin: rhythm(3 / 4),
-                width: 280,
-              }}
-              {...styles.withTitleHover}
-            >
-              <Link
-                to={{ pathname: `/starters/${node.fields.starterShowcase.stub}`, state: { isModal: true } }}
+      {items
+        .map(
+          ({ node }) => {
+            const {
+              githubData,
+              description,
+              stars,
+              githubFullName
+            } = node.fields.starterShowcase
+            const repo = githubData.repoMetadata
+            const { updated_at } = repo
+            return node.fields && ( // have to filter out null fields from bad data
+              <div key={node.id}
                 css={{
-                  "&&": {
-                    borderBottom: `none`,
-                    boxShadow: `none`,
+                  margin: rhythm(3 / 4),
+                  width: 280,
+                }}
+                {...styles.withTitleHover}
+              >
+                <Link
+                  to={{ pathname: `/starters/${node.fields.starterShowcase.stub}`, state: { isModal: true } }}
+                  css={{
+                    "&&": {
+                      borderBottom: `none`,
+                      boxShadow: `none`,
+                      transition: `all ${presets.animation.speedDefault} ${
+                        presets.animation.curveDefault
+                        }`,
+                      "&:hover": {
+                        ...styles.screenshotHover,
+                        // manual patch for hover
+                        boxShadow: '0 8px 20px rgba(157,124,191,0.5)',
+                        transform: 'translateY(-3px)'
+                      },
+                    },
+                  }}
+                >
+                  <div className="gatsby-image-wrapper" css={{
                     transition: `all ${presets.animation.speedDefault} ${
                       presets.animation.curveDefault
-                      }`,
-                    "&:hover": {
-                      ...styles.screenshotHover,
-                      // manual patch for hover
-                      boxShadow: '0 8px 20px rgba(157,124,191,0.5)',
-                      transform: 'translateY(-3px)'
-                    },
-                  },
-                }}
-              >
-                <div className="gatsby-image-wrapper" css={{
-                  transition: `all ${presets.animation.speedDefault} ${
-                    presets.animation.curveDefault
-                    }`
-                }}>
-                  {node.fields.starterShowcase ? (
-                    <img
-                      src={`/StarterShowcase/generatedScreenshots/${node.fields.starterShowcase.stub}.png`}
-                      width={282}
-                      height={211}
-                      alt={`Screenshot of ${node.fields.starterShowcase.stub}`}
-                      css={{
-                        ...styles.screenshot,
-                        marginBottom: 0
-                      }}
-                    />
-                  ) : (
-                      <div
+                      }`
+                  }}>
+                    {node.fields.starterShowcase ? (
+                      <img
+                        src={`/StarterShowcase/generatedScreenshots/${node.fields.starterShowcase.stub}.png`}
+                        width={282}
+                        height={211}
+                        alt={`Screenshot of ${node.fields.starterShowcase.stub}`}
                         css={{
-                          width: 320,
-                          backgroundColor: `#d999e7`,
+                          ...styles.screenshot,
+                          marginBottom: 0
                         }}
-                      >
-                        missing
+                      />
+                    ) : (
+                        <div
+                          css={{
+                            width: 320,
+                            backgroundColor: `#d999e7`,
+                          }}
+                        >
+                          missing
                   </div>
-                    )}
-                </div>
-              </Link>
-              <div
-                css={{
-                  ...scale(-2 / 5),
-                  color: `#9B9B9B`,
-                  fontWeight: `normal`,
-                }}
-              >
-                <div css={{ display: 'flex', justifyContent: 'space-between' }}>{repo.owner && repo.owner.login} /
+                      )}
+                  </div>
+                </Link>
+                <div
+                  css={{
+                    ...scale(-2 / 5),
+                    color: `#9B9B9B`,
+                    fontWeight: `normal`,
+                  }}
+                >
+                  <div css={{ display: 'flex', justifyContent: 'space-between' }}>{repo.owner && repo.owner.login} /
                   <span>
-                    <a href="#copy-to-clipboard" onClick={() => copyToClipboard(`https://github.com/${githubFullName}`)}><FaClipboard /> </a>
-                    <a href={node.frontmatter.demo} target="_blank" rel="noopener noreferrer"><FaExtLink /> </a>
-                    <a href={`https://github.com/${githubFullName}`} target="_blank" rel="noopener noreferrer"><FaGithub /> </a>
-                  </span>
-                </div>
-                <div>
-                  <span className="title">
-                    {/* <Link
+                      <a href="#copy-to-clipboard" onClick={() => copyToClipboard(`https://github.com/${githubFullName}`)}><FaClipboard /> </a>
+                      <a href={node.frontmatter.demo} target="_blank" rel="noopener noreferrer"><FaExtLink /> </a>
+                      <a href={`https://github.com/${githubFullName}`} target="_blank" rel="noopener noreferrer"><FaGithub /> </a>
+                    </span>
+                  </div>
+                  <div>
+                    <span className="title">
+                      {/* <Link
                       to={{ pathname: `/starters/${node.fields.starterShowcase.stub}`, state: { isModal: true } }}> */}
-                    <h5 css={{ margin: 0 }}><strong>{repo.name}</strong></h5>
-                    {/* </Link> */}
-                  </span>
+                      <h5 css={{ margin: 0 }}><strong>{repo.name}</strong></h5>
+                      {/* </Link> */}
+                    </span>
+                  </div>
+                  <div css={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>{description}</div>
+                  <div css={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <div css={{ display: 'inline-block' }}><span role="img" aria-label="star">⭐</span>{stars}</div>
+                    <div css={{ display: 'inline-block' }}>Updated {(new Date(updated_at)).toLocaleDateString()}</div>
+                  </div>
                 </div>
-                <div css={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>{description}</div>
-                <div><span role="img" aria-label="star">⭐</span>{stars} Updated {(new Date(lastUpdated)).toLocaleDateString()}</div>
               </div>
-            </div>
-          )
-        }
-      )}
+            )
+          }
+        )}
     </div>
   )
 }

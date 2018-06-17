@@ -1,24 +1,15 @@
 import React from "react"
 import Helmet from "react-helmet"
-// import { Link } from "gatsby"
 // import { OutboundLink } from "gatsby-plugin-google-analytics"
 
-import url from "url"
 import hex2rgba from "hex2rgba"
 import Layout from "../components/layout"
 import ShareMenu from "../components/share-menu-starters"
 import presets, { colors } from "../utils/presets"
 import /*typography, */ { rhythm, scale, options } from "../utils/typography"
-// import Container from "../components/container"
 import MdLaunch from "react-icons/lib/md/launch"
 import GithubIcon from "react-icons/lib/fa/github"
 
-const cleanUrl = mainUrl => {
-  const parsed = url.parse(mainUrl)
-  let path = parsed.pathname
-  if (path[path.length - 1] === `/`) path = path.slice(0, path.length - 1)
-  return parsed.hostname + path
-}
 
 const gutter = rhythm(3 / 4)
 const gutterDesktop = rhythm(6 / 4)
@@ -64,7 +55,7 @@ class StarterTemplate extends React.Component {
             }}
           >
             <Helmet>
-              <title>Gatsby Starter: {starterShowcase.stub}</title>
+              <title>{`Gatsby Starter: ${starterShowcase.githubData.repoMetadata.name}`}</title>
               <meta
                 name="og:image"
                 content={`https://next.gatsbyjs.org/StarterShowcase/generatedScreenshots/${starterShowcase.stub}.png`}
@@ -101,7 +92,7 @@ class StarterTemplate extends React.Component {
                 <h1 css={{ margin: 0, display: 'inline-block' }}>
                   {starterShowcase.stub}
                 </h1>
-                <span css={{ marginLeft: 20 }}>⭐ {starterShowcase.stars}</span>
+                <span css={{ marginLeft: 20 }}><span role="img" aria-label="star">⭐</span> {starterShowcase.stars}</span>
               </div>
             </div>
             <div
@@ -181,7 +172,7 @@ class StarterTemplate extends React.Component {
                   css={{ color: colors.gray.calm, fontFamily: options.headerFontFamily.join(`,`), paddingRight: 20 }}
                 >Added/updated</span>
                 {showDate(starterShowcase.date)} /{" "}
-                {showDate(starterShowcase.lastUpdated)}
+                {showDate(starterShowcase.githubData.repoMetadata.updated_at)}
               </div>
             </div>
             <div
@@ -302,7 +293,7 @@ class StarterTemplate extends React.Component {
                   }}>{dep}</div>)}
                 </div>
                 {showMore &&
-                  <a onClick={() => this.setState({ showAllDeps: true })}>{`Show ${allDeps.length - shownDeps.length} more`}</a>}
+                  <a href="#showmore" onClick={() => this.setState({ showAllDeps: true })}>{`Show ${allDeps.length - shownDeps.length} more`}</a>}
               </div>
 
             </div>
@@ -346,6 +337,7 @@ export const pageQuery = graphql`
             }
             githubData {
               repoMetadata {
+                updated_at
                 full_name
                 name
               }
