@@ -247,6 +247,7 @@ Websites built with Gatsby:
 - [Airbnb Cereal](https://airbnb.design/cereal/)
 - [mottox2 blog](https://mottox2.com)
 - [Tiger Facility Services](https://www.tigerfacilityservices.com/)
+- [Jersey Watch](https://www.jerseywatch.com/)
 
 ## Docs
 
