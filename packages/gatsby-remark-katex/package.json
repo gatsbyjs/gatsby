@@ -1,7 +1,7 @@
 {
   "name": "gatsby-remark-katex",
   "description": "Transform math nodes to html markup",
-  "version": "2.0.0-alpha.2",
+  "version": "2.0.0-beta.0",
   "author": "Jeffrey Xiao <jeffrey.xiao1998@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
