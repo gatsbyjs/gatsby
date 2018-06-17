@@ -98,7 +98,7 @@ class FilteredShowcase extends Component {
   setFiltersCategory = filtersCategory => this.props.setURLState({ c: Array.from(filtersCategory) })
   setFiltersDependency = filtersDependency => this.props.setURLState({ d: Array.from(filtersDependency) })
   toggleSort = () => this.props.setURLState({ sort: this.props.urlState.sort === 'recent' ? 'stars' : 'recent' })
-  resetFilters = () => this.props.setURLState({ c: null, d: null })
+  resetFilters = () => this.props.setURLState({ c: null, d: null, s: '' })
   render() {
     const { data, urlState, setURLState } = this.props
     const { setFiltersCategory, setFiltersDependency, resetFilters, toggleSort } = this
@@ -176,44 +176,46 @@ class FilteredShowcase extends Component {
               paddingLeft: rhythm(3 / 4),
             }}
           >
-            {filters.size > 0 && (
-              <div
-                css={{
-                  marginRight: rhythm(3 / 4),
-                }}
-              >
-                <button
+            {(filters.size > 0 ||
+              urlState.s.length > 0) && // search is a filter too https://gatsbyjs.slack.com/archives/CB4V648ET/p1529224551000008
+              (
+                <div
                   css={{
-                    ...scale(-1 / 6),
-                    alignItems: `center`,
-                    background: colors.ui.light,
-                    border: 0,
-                    borderRadius: presets.radius,
-                    color: colors.gatsby,
-                    cursor: `pointer`,
-                    display: `flex`,
-                    fontFamily: options.headerFontFamily.join(`,`),
-                    marginTop: rhythm(options.blockMarginBottom),
-                    paddingRight: rhythm(3 / 4),
-                    textAlign: `left`,
-                    "&:hover": {
-                      background: colors.gatsby,
-                      color: `#fff`,
-                    },
+                    marginRight: rhythm(3 / 4),
                   }}
-                  onClick={resetFilters}
                 >
-                  <MdClear style={{ marginRight: rhythm(1 / 4) }} /> Reset all
-                  Filters
+                  <button
+                    css={{
+                      ...scale(-1 / 6),
+                      alignItems: `center`,
+                      background: colors.ui.light,
+                      border: 0,
+                      borderRadius: presets.radius,
+                      color: colors.gatsby,
+                      cursor: `pointer`,
+                      display: `flex`,
+                      fontFamily: options.headerFontFamily.join(`,`),
+                      marginTop: rhythm(options.blockMarginBottom),
+                      paddingRight: rhythm(3 / 4),
+                      textAlign: `left`,
+                      "&:hover": {
+                        background: colors.gatsby,
+                        color: `#fff`,
+                      },
+                    }}
+                    onClick={resetFilters}
+                  >
+                    <MdClear style={{ marginRight: rhythm(1 / 4) }} /> Reset all
+                    Filters
                 </button>
-              </div>
-            )}
+                </div>
+              )}
             <LHSFilter heading="Categories" data={Array.from(
               count(data.allMarkdownRemark.edges.map(({ node }) => node.frontmatter && node.frontmatter.tags))
-            )} filters={filtersCategory} setFilters={setFiltersCategory} />
+            )} filters={filtersCategory} setFilters={setFiltersCategory} sortRecent={urlState.sort === 'recent'} />
             <LHSFilter heading="Gatsby Dependencies" data={Array.from(
               count(data.allMarkdownRemark.edges.map(({ node }) => node.fields && node.fields.starterShowcase.gatsbyDependencies.map(str => str[0])))
-            )} filters={filtersDependency} setFilters={setFiltersDependency} />
+            )} filters={filtersDependency} setFilters={setFiltersDependency} sortRecent={urlState.sort === 'recent'} />
           </div>
         </div>
         <div css={{ width: `100%` }}>
@@ -370,14 +372,18 @@ class FilteredShowcase extends Component {
   }
 }
 
-function LHSFilter({ heading, data, filters, setFilters }) {
+function LHSFilter({ sortRecent, heading, data, filters, setFilters }) {
   return (
     <Collapsible heading={heading}>
       {data
-        .sort(([a], [b]) => {
-          if (a < b) return -1
-          if (a > b) return 1
-          return 0
+        .sort(([a, anum], [b, bnum]) => {
+          if (sortRecent) {
+            if (a < b) return -1
+            if (a > b) return 1
+            return 0
+          } else {
+            return bnum - anum
+          }
         })
         .map(([c, count]) => (
           <ul key={c} css={{ margin: 0 }}>

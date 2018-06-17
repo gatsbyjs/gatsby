@@ -5,7 +5,7 @@ repo: https://github.com/mccrodp/gatsby-starter-contentful-i18n
 description: n/a
 tags:
 - i18n
-- contentful
+- Contentful
 features:
 - Localization (Multilanguage)
 - Dynamic content from Contentful CMS

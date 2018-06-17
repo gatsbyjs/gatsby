@@ -4,7 +4,7 @@ demo: https://contentful-userland.github.io/gatsby-contentful-starter/
 repo: https://github.com/contentful-userland/gatsby-contentful-starter
 description: n/a
 tags:
-- Blog
+- blog
 - Contentful
 features:
 - Based on the Gatsby Starter Blog
