@@ -21,15 +21,15 @@ Gatsby v2 builds on the foundations of v1 to introduce a range of improvements:
 
   We’ve renamed `sizes` and `resolutions` to `fluid` and `fixed`, `boundActionCreators` to `actions`, as well as other changes intended to make API names more consistent and prevent common gotchas.
 
-  To see the full list of renamings, take a look at [image queries](https://next.gatsbyjs.com/docs/migrating-from-v1-to-v2/#rename-responsive-image-queries), [actions](https://next.gatsbyjs.com/docs/migrating-from-v1-to-v2/#rename-code-classlanguage-textboundactioncreatorscode-to-code-classlanguage-textactionscode) and the [babel](https://next.gatsbyjs.com/docs/migrating-from-v1-to-v2/#change-code-classlanguage-textmodifybabelrccode-to-code-classlanguage-textoncreatebabelconfigcode) and [webpack](https://next.gatsbyjs.com/docs/migrating-from-v1-to-v2/#change-code-classlanguage-textmodifywebpackconfigcode-to-code-classlanguage-textoncreatewebpackconfigcode) API hooks.
+  To see the full list of renamings, take a look at the upgrade guide for [image queries](https://next.gatsbyjs.com/docs/migrating-from-v1-to-v2/#rename-responsive-image-queries), [actions](https://next.gatsbyjs.com/docs/migrating-from-v1-to-v2/#rename-code-classlanguage-textboundactioncreatorscode-to-code-classlanguage-textactionscode) and the [babel](https://next.gatsbyjs.com/docs/migrating-from-v1-to-v2/#change-code-classlanguage-textmodifybabelrccode-to-code-classlanguage-textoncreatebabelconfigcode) and [webpack](https://next.gatsbyjs.com/docs/migrating-from-v1-to-v2/#change-code-classlanguage-textmodifywebpackconfigcode-to-code-classlanguage-textoncreatewebpackconfigcode) API hooks.
 
 - Hotter Hot Reloading
 
-  Previously, hot reloading of code and data had been dependent on new webpack builds. On larger sites, that could take ten or fifteen seconds -- more like lukewarm reloading, really. With [_ludicrous mode_](https://twitter.com/gatsbyjs/status/974507205121617920) we’ve decoupled data updates from webpack so that updating your site's content is always instantaneous.
+  Previously, hot reloading of code and data had been dependent on new webpack builds. On larger sites, that could take ten or fifteen seconds -- more like lukewarm reloading, really. With [_ludicrous mode_](https://twitter.com/gatsbyjs/status/974507205121617920) we’ve decoupled data updates from webpack so changes you make to your content show up on your site at blistering speeds.
 
 - Upgraded Dependencies
 
-  Gatsby is built on top of amazing JavaScript libraries. In this beta we're delighted to ship the latest improvements from webpack, Babel, and React to you.
+  Gatsby is built on top of amazing JavaScript libraries. In this beta, we're delighted to ship the latest improvements from webpack, Babel, and React to you.
 
   Key upgrades include:
 
@@ -41,7 +41,7 @@ Gatsby v2 builds on the foundations of v1 to introduce a range of improvements:
 
 ## Should I switch over to v2?
 
-Yes! We’ve built [gatsbyjs.com](https://www.gatsbyjs.com) with v2 and the Gatsby community is [converting over the example sites](https://github.com/gatsbyjs/gatsby/issues/5598). While individual sites may vary, we’ve noticed significant build speedups in Gatsby v2 versus v1 and would love you to dig in and try it.
+Yes! We’ve built [gatsbyjs.com](https://www.gatsbyjs.com) with v2 and the Gatsby community is [converting over the example sites](https://github.com/gatsbyjs/gatsby/issues/5598). While individual sites may vary, we’ve noticed significant build speedups in Gatsby v2 versus v1 and would love you to dig in and try it. We're working hard on refining Gatsby v2 for full release and would love your help!
 
 ## What's coming next?
 
