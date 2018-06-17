@@ -144,6 +144,7 @@ Here’s an example of creating specific widths and heights for images:
                   # like "src". In your site's code, remove them
                   # and use the fragments provided by Gatsby.
                   src
+
                   # This fragment won't work in the GraphQL
                   # explorer, but you can use it in your site.
                   # ...GatsbyImageSharpResolutions_withWebp
@@ -198,7 +199,7 @@ Here is what your `index.js` should look like with the query added:
 
 ```jsx
 import React from "react"
-import Link from "gatsby-link"
+import { Link } from "gatsby"
 import Img from "gatsby-image"
 
 const IndexPage = ({ data }) => {
@@ -206,7 +207,7 @@ const IndexPage = ({ data }) => {
     edge =>
       edge.node.childWordPressAcfPostPhoto.photo.localFile.childImageSharp
         .resolutions
-  )
+  );
   return (
     <div>
       <h1>Hi people</h1>
@@ -217,10 +218,10 @@ const IndexPage = ({ data }) => {
       ))}
       <Link to="/page-2/">Go to page 2</Link>
     </div>
-  )
-}
+  );
+};
 
-export default IndexPage
+export default IndexPage;
 
 export const query = graphql`
   query ImageQuery {
@@ -243,7 +244,7 @@ export const query = graphql`
       }
     }
   }
-`
+`;
 ```
 
 Your demo site should look something like this:

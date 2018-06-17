@@ -103,7 +103,7 @@ module.exports = {
       },
     },
   ],
-}
+};
 ```
 
 ### A couple of notes on this config:
@@ -119,29 +119,29 @@ Now restart the server to apply the updates.
 First, we want to display the list of posts on the homepage. To do so, add the following content to `src/pages/index.js`:
 
 ```javascript
-import React from "react"
-import Link from "gatsby-link"
-import get from "lodash/get"
-import Helmet from "react-helmet"
+import React from "react";
+import Link from "gatsby-link";
+import get from "lodash/get";
+import Helmet from "react-helmet";
 
-import Bio from "../components/Bio"
-import { rhythm } from "../utils/typography"
+import Bio from "../components/Bio";
+import { rhythm } from "../utils/typography";
 
 class BlogIndex extends React.Component {
   render() {
     const siteTitle = get(
       this,
       "props.data.cosmicjsSettings.metadata.site_title"
-    )
-    const posts = get(this, "props.data.allCosmicjsPosts.edges")
-    const author = get(this, "props.data.cosmicjsSettings.metadata")
+    );
+    const posts = get(this, "props.data.allCosmicjsPosts.edges");
+    const author = get(this, "props.data.cosmicjsSettings.metadata");
 
     return (
       <div>
         <Helmet title={siteTitle} />
         <Bio settings={author} />
         {posts.map(({ node }) => {
-          const title = get(node, "title") || node.slug
+          const title = get(node, "title") || node.slug;
           return (
             <div key={node.slug}>
               <h3
@@ -158,14 +158,14 @@ class BlogIndex extends React.Component {
                 dangerouslySetInnerHTML={{ __html: node.metadata.description }}
               />
             </div>
-          )
+          );
         })}
       </div>
-    )
+    );
   }
 }
 
-export default BlogIndex
+export default BlogIndex;
 
 export const pageQuery = graphql`
   query IndexQuery {
@@ -192,7 +192,7 @@ export const pageQuery = graphql`
       }
     }
   }
-`
+`;
 ```
 
 ### Explanation:
@@ -210,24 +210,24 @@ Till now we have integrated Cosmic JS source plugin with Gatsby and it's looking
 Create the template at `src/templates/blog-post.js`:
 
 ```javascript
-import React from "react"
-import Helmet from "react-helmet"
-import Link from "gatsby-link"
-import get from "lodash/get"
+import React from "react";
+import Helmet from "react-helmet";
+import Link from "gatsby-link";
+import get from "lodash/get";
 
-import Bio from "../components/Bio"
-import { rhythm, scale } from "../utils/typography"
-import { relative } from "path"
+import Bio from "../components/Bio";
+import { rhythm, scale } from "../utils/typography";
+import { relative } from "path";
 
 class BlogPostTemplate extends React.Component {
   render() {
-    const post = this.props.data.cosmicjsPosts
+    const post = this.props.data.cosmicjsPosts;
     const siteTitle = get(
       this.props,
       "data.cosmicjsSettings.metadata.site_title"
-    )
-    const author = get(this, "props.data.cosmicjsSettings.metadata")
-    const { previous, next } = this.props.pathContext
+    );
+    const author = get(this, "props.data.cosmicjsSettings.metadata");
+    const { previous, next } = this.props.pathContext;
 
     return (
       <div>
@@ -323,11 +323,11 @@ class BlogPostTemplate extends React.Component {
           )}
         </ul>
       </div>
-    )
+    );
   }
 }
 
-export default BlogPostTemplate
+export default BlogPostTemplate;
 
 export const pageQuery = graphql`
   query BlogPostBySlug($slug: String!) {
@@ -353,7 +353,7 @@ export const pageQuery = graphql`
       }
     }
   }
-`
+`;
 ```
 
 That looks fine, but at this point, Gatsby does not know when this template should be displayed. Each post needs a specific URL. So, we are going to inform Gatsby about the new URLs we need using the [`createPages` API](https://www.gatsbyjs.org/docs/node-apis/#createPages).
@@ -361,20 +361,20 @@ That looks fine, but at this point, Gatsby does not know when this template shou
 Path: `gatsby-node.js`
 
 ```javascript
-const _ = require("lodash")
-const Promise = require("bluebird")
-const path = require("path")
+const _ = require("lodash");
+const Promise = require("bluebird");
+const path = require("path");
 
 exports.createPages = ({ graphql, boundActionCreators }) => {
-  const { createPage } = boundActionCreators
-  const indexPage = path.resolve("./src/pages/index.js")
+  const { createPage } = boundActionCreators;
+  const indexPage = path.resolve("./src/pages/index.js");
   createPage({
     path: `posts`,
     component: indexPage,
-  })
+  });
 
   return new Promise((resolve, reject) => {
-    const blogPost = path.resolve("./src/templates/blog-post.js")
+    const blogPost = path.resolve("./src/templates/blog-post.js");
     resolve(
       graphql(
         `
@@ -394,16 +394,17 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
         `
       ).then(result => {
         if (result.errors) {
-          console.log(result.errors)
-          reject(result.errors)
+          console.log(result.errors);
+          reject(result.errors);
         }
 
         // Create blog posts pages.
         const posts = result.data.allCosmicjsPosts.edges
 
         _.each(posts, (post, index) => {
-          const next = index === posts.length - 1 ? null : posts[index + 1].node
-          const previous = index === 0 ? null : posts[index - 1].node
+          const next =
+            index === posts.length - 1 ? null : posts[index + 1].node;
+          const previous = index === 0 ? null : posts[index - 1].node;
 
           createPage({
             path: `posts/${post.node.slug}`,
@@ -413,12 +414,12 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
               previous,
               next,
             },
-          })
-        })
+          });
+        });
       })
-    )
-  })
-}
+    );
+  });
+};
 ```
 
 Restart the Gatsby server, then visit the detail page by clicking on URLs displayed on the homepage.

@@ -107,7 +107,7 @@ In order to display this component within a Markdown file, you'll need to add a 
 
     ```js
     {
-      renderAst(post.htmlAst)
+      renderAst(post.htmlAst);
     }
     ```
 

@@ -65,7 +65,7 @@ module.exports = {
       },
     },
   ],
-}
+};
 ```
 
 Note that plugin options will be stringified by Gatsby, so they cannot be functions.
