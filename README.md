@@ -16,7 +16,7 @@
 
 For `gatsby@1`, please see [the v1 branch](https://github.com/gatsbyjs/gatsby/tree/v1).
 
-**Are you using V1 and want to try upgrading and help prepare Gatsby for v2? Check out [our V1 => V2 migration guide](https://next.gatsbyjs.org//docs/migrating-from-v1-to-v2/).**
+**Are you using V1 and want to try upgrading and help prepare Gatsby for v2? Check out [our V1 => V2 migration guide](https://next.gatsbyjs.org/docs/migrating-from-v1-to-v2/).**
 
 **How are pull requests being handled during the v2 beta?**
 
