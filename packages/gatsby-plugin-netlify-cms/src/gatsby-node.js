@@ -62,10 +62,16 @@ function module(config, stage) {
   }
 }
 
-exports.modifyWebpackConfig = ({ config, stage }, { modulePath }) => {
+exports.modifyWebpackConfig = ({ config, stage }, { modulePath, enableIdentityWidget = true }) => {
+  const entryPaths = [
+    `${__dirname}/cms.js`,
+    enableIdentityWidget && `${__dirname}/cms-identity.js`,
+    modulePath,
+  ]
+
   config.merge({
     entry: {
-      cms: [`${__dirname}/cms.js`, modulePath].filter(p => p),
+      cms: entryPaths.filter(p => p),
     },
     plugins: plugins(stage),
   })
