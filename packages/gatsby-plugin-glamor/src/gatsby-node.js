@@ -1,20 +1,22 @@
-const webpack = require(`webpack`)
-
 // Add Glamor support
-exports.modifyWebpackConfig = ({ config }) =>
-  config.plugin(`Glamor`, webpack.ProvidePlugin, [
-    {
-      Glamor: `glamor/react`,
+exports.onCreateWebpackConfig = ({ actions, plugins }) =>
+  actions.setWebpackConfig({
+    plugins: [
+      plugins.provide({
+        Glamor: `glamor/react`,
+      }),
+    ],
+  })
+
+// Add Glamor babel plugin
+exports.onCreateBabelConfig = ({ actions }) => {
+  actions.setBabelPlugin({
+    name: `glamor/babel-hoist`,
+  })
+  actions.setBabelPreset({
+    name: `@babel/preset-react`,
+    options: {
+      pragma: `Glamor.createElement`,
     },
-  ])
-
-// Add Glamor support
-exports.modifyBabelrc = ({ babelrc }) => {
-  return {
-    ...babelrc,
-    plugins: babelrc.plugins.concat([
-      [`transform-react-jsx`, { pragma: `Glamor.createElement` }],
-      `glamor/babel-hoist`,
-    ]),
-  }
+  })
 }

@@ -34,7 +34,7 @@ plugins: [
       name: "markdown-pages",
     },
   },
-];
+]
 ```
 
 Now that we've "sourced" the markdown files from the filesystem, we can now "transform" the markdown to HTML and the YAML frontmatter to JSON.
@@ -57,7 +57,7 @@ plugins: [
     },
   },
   `gatsby-transformer-remark`,
-];
+]
 ```
 
 #### Note on creating markdown files.
@@ -78,13 +78,13 @@ Create a folder in the `/src` directory of your Gatsby application called `templ
 Now create a `blogTemplate.js` inside it with the following content.
 
 ```jsx
-import React from "react";
+import React from "react"
 
 export default function Template({
   data, // this prop will be injected by the GraphQL query below.
 }) {
-  const { markdownRemark } = data; // data.markdownRemark holds our post data
-  const { frontmatter, html } = markdownRemark;
+  const { markdownRemark } = data // data.markdownRemark holds our post data
+  const { frontmatter, html } = markdownRemark
   return (
     <div className="blog-post-container">
       <div className="blog-post">
@@ -96,7 +96,7 @@ export default function Template({
         />
       </div>
     </div>
-  );
+  )
 }
 
 export const pageQuery = graphql`
@@ -110,7 +110,7 @@ export const pageQuery = graphql`
       }
     }
   }
-`;
+`
 ```
 
 Two things are important in the file above.
@@ -126,12 +126,12 @@ Gatsby exposes a powerful Node.js API, which allows for functionality such as cr
 Gatsby calls the `createPages` API (if present) at build time with injected parameters, `boundActionCreators` and `graphql`. Use the `graphql` to query Markdown file data as below. Next use `createPage` action creator to create a page for each of the Markdown files using the `blogTemplate.js` we created in the previous step.
 
 ```javascript
-const path = require("path");
+const path = require("path")
 
 exports.createPages = ({ boundActionCreators, graphql }) => {
-  const { createPage } = boundActionCreators;
+  const { createPage } = boundActionCreators
 
-  const blogPostTemplate = path.resolve(`src/templates/blogTemplate.js`);
+  const blogPostTemplate = path.resolve(`src/templates/blogTemplate.js`)
 
   return graphql(`
     {
@@ -150,7 +150,7 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
     }
   `).then(result => {
     if (result.errors) {
-      return Promise.reject(result.errors);
+      return Promise.reject(result.errors)
     }
 
     result.data.allMarkdownRemark.edges.forEach(({ node }) => {
@@ -158,10 +158,10 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
         path: node.frontmatter.path,
         component: blogPostTemplate,
         context: {}, // additional data can be passed via context
-      });
-    });
-  });
-};
+      })
+    })
+  })
+}
 ```
 
 This should get you started on some basic markdown power in your Gatsby site. You can further customise the `frontmatter` and the template file to get desired effects!

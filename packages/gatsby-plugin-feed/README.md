@@ -52,8 +52,8 @@ plugins: [
                 url: site.siteMetadata.siteUrl + edge.node.fields.slug,
                 guid: site.siteMetadata.siteUrl + edge.node.fields.slug,
                 custom_elements: [{ "content:encoded": edge.node.html }],
-              });
-            });
+              })
+            })
           },
           query: `
             {
@@ -81,7 +81,7 @@ plugins: [
       ],
     },
   },
-];
+]
 ```
 
 NOTE: This plugin only generates the `/rss.xml` file when run in `production` mode! To test your feed, run: `gatsby build && gatsby serve`.

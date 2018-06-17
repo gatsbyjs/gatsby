@@ -19,118 +19,74 @@
  *   },
  * ],
  */
-const { extractTextPlugin } = require(`gatsby-1-config-extract-plugin`)
-const { cssModulesConfig } = require(`gatsby-1-config-css-modules`)
 
-exports.modifyWebpackConfig = ({ config, stage }, options = {}) => {
-  // Pass in stylus options regardless of stage.
-  if (Array.isArray(options.use)) {
-    config.merge(current => {
-      current.stylus = {
-        use: options.use,
-      }
-      return current
-    })
-  } else if (options.use) {
-    throw new Error(
-      `gatsby-plugin-stylus "use" option passed with ${
-        options.use
-      }. Pass an array of stylus plugins instead`
-    )
-  }
-  if (Array.isArray(options.import)) {
-    config.merge(current => {
-      current.stylus = {
-        import: options.import,
-      }
-      return current
-    })
-  } else if (options.import) {
-    throw new Error(
-      `gatsby-plugin-stylus "import" option passed with ${
-        options.import
-      }. Pass an array of filenames instead`
-    )
+const resolve = require(`./resolve`)
+
+exports.onCreateWebpackConfig = (
+  { actions, stage, rules, plugins, loaders },
+  { postCssPlugins, ...stylusOptions }
+) => {
+  const { setWebpackConfig } = actions
+  const PRODUCTION = stage !== `develop`
+
+  const stylusLoader = {
+    loader: resolve(`stylus-loader`),
+    options: {
+      sourceMap: !PRODUCTION,
+      ...stylusOptions,
+    },
   }
 
-  const stylusFiles = /\.styl$/
-  const stylusModulesFiles = /\.module\.styl$/
+  const stylusRule = {
+    test: /\.styl$/,
+    exclude: /\.module\.styl$/,
+    use: [
+      loaders.miniCssExtract(),
+      loaders.css({ importLoaders: 1 }),
+      loaders.postcss({ plugins: postCssPlugins }),
+      stylusLoader,
+    ],
+  }
+
+  const stylusRuleModules = {
+    test: /\.module\.styl$/,
+    use: [
+      loaders.miniCssExtract(),
+      loaders.css({ modules: true, importLoaders: 1 }),
+      loaders.postcss({ plugins: postCssPlugins }),
+      stylusLoader,
+    ],
+  }
+
+  let configRules = []
 
   switch (stage) {
-    case `develop`: {
-      config.loader(`stylus`, {
-        test: stylusFiles,
-        exclude: stylusModulesFiles,
-        loaders: [`style`, `css`, `postcss`, `stylus`],
-      })
-      config.loader(`stylusModules`, {
-        test: stylusModulesFiles,
-        loaders: [`style`, cssModulesConfig(stage), `postcss`, `stylus`],
-      })
-      return config
-    }
+    case `develop`:
+    case `build-javascript`:
+      configRules = configRules.concat([
+        { oneOf: [stylusRule, stylusRuleModules] },
+      ])
+      break
 
-    case `build-css`: {
-      config.loader(`stylus`, {
-        test: stylusFiles,
-        exclude: stylusModulesFiles,
-        loader: extractTextPlugin(stage).extract(`style`, [
-          `css?minimize`,
-          `postcss`,
-          `stylus`,
-        ]),
-      })
-      config.loader(`stylusModules`, {
-        test: stylusModulesFiles,
-        loader: extractTextPlugin(stage).extract(`style`, [
-          cssModulesConfig(stage),
-          `postcss`,
-          `stylus`,
-        ]),
-      })
-      return config
-    }
-
+    case `build-html`:
     case `develop-html`:
-    case `build-html`: {
-      const moduleLoader = extractTextPlugin(stage).extract(`style`, [
-        cssModulesConfig(stage),
-        `postcss`,
-        `stylus`,
+      configRules = configRules.concat([
+        {
+          oneOf: [
+            {
+              ...stylusRule,
+              use: [loaders.null()],
+            },
+            stylusRuleModules,
+          ],
+        },
       ])
-
-      config.loader(`stylus`, {
-        test: stylusFiles,
-        exclude: stylusModulesFiles,
-        loader: `null`,
-      })
-      config.loader(`stylusModules`, {
-        test: stylusModulesFiles,
-        loader: moduleLoader,
-      })
-      return config
-    }
-
-    case `build-javascript`: {
-      const moduleLoader = extractTextPlugin(stage).extract(`style`, [
-        cssModulesConfig(stage),
-        `stylus`,
-      ])
-      config.loader(`stylus`, {
-        test: stylusFiles,
-        exclude: stylusModulesFiles,
-        loader: `null`,
-      })
-      config.loader(`stylusModules`, {
-        test: stylusModulesFiles,
-        loader: moduleLoader,
-      })
-
-      return config
-    }
-
-    default: {
-      return config
-    }
+      break
   }
+
+  setWebpackConfig({
+    module: {
+      rules: configRules,
+    },
+  })
 }

@@ -11,7 +11,7 @@ Source plugin for pulling data into Gatsby from the
 
 ```javascript
 // In your gatsby-config.js
-plugins: [`gatsby-source-hacker-news`];
+plugins: [`gatsby-source-hacker-news`]
 ```
 
 ## How to query

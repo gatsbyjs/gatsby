@@ -1,28 +1,8 @@
 import React from "react"
 import colors from "./utils/colors"
 
-let stylesStr
-if (process.env.NODE_ENV === `production`) {
-  try {
-    stylesStr = require(`!raw-loader!../public/styles.css`)
-  } catch (e) {
-    console.log(e)
-  }
-}
-
 export default class HTML extends React.Component {
   render() {
-    let css
-    if (process.env.NODE_ENV === `production`) {
-      css = (
-        <style
-          id="gatsby-inlined-css"
-          key="gatsby-inlined-css"
-          dangerouslySetInnerHTML={{ __html: stylesStr }}
-        />
-      )
-    }
-
     return (
       <html {...this.props.htmlAttributes}>
         <head>
@@ -75,8 +55,6 @@ export default class HTML extends React.Component {
           />
           <meta name="msapplication-config" content={`/browserconfig.xml`} />
           <script src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js" />
-
-          {css}
         </head>
         <body {...this.props.bodyAttributes}>
           <div

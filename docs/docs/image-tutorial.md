@@ -2,7 +2,7 @@
 title: "Adding Images to a WordPress Site"
 ---
 
-## What this tutorial covers:
+### What this tutorial covers:
 
 In this tutorial, you will install the several image plugins and components in order to pull image data from a WordPress account into your Gatsby site and render that data. This [Gatsby + Wordpress demo site](https://using-wordpress.gatsbyjs.org/sample-post-1) shows you a sample of what you’re going to be building in this tutorial, although in this tutorial you’ll just focus on adding images.
 
@@ -171,7 +171,7 @@ Here’s an example query for generating different sizes of an image:
             localFile {
               childImageSharp {
                 # Try editing the "maxWidth" value to generate resized images.
-                sizes(maxWidth: 500) {
+                fluid(maxWidth: 500) {
                   # In the GraphQL explorer, use field names
                   # like "src". In your site's code, remove them
                   # and use the fragments provided by Gatsby.
@@ -179,7 +179,7 @@ Here’s an example query for generating different sizes of an image:
 
                   # This fragment won't work in the GraphQL
                   # explorer, but you can use it in your site
-                  # ...GatsbyImageSharpSizes_withWebp
+                  # ...GatsbyImageSharpFluid_withWebp
                 }
               }
             }
@@ -198,9 +198,9 @@ In either case, you can add traced SVG support by adding `_tracedSVG` to the end
 Here is what your `index.js` should look like with the query added:
 
 ```jsx
-import React from "react";
-import Link from "gatsby-link";
-import Img from "gatsby-image";
+import React from "react"
+import { Link } from "gatsby"
+import Img from "gatsby-image"
 
 const IndexPage = ({ data }) => {
   const imagesResolutions = data.allWordpressPost.edges.map(

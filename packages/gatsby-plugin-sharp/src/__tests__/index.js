@@ -1,9 +1,15 @@
 const path = require(`path`)
 
+jest.mock(`async/queue`, () => () => {
+  return {
+    push: jest.fn(),
+  }
+})
+
 const {
   base64,
-  responsiveSizes,
-  resolutions,
+  fluid,
+  fixed,
   queueImageResizing,
   getImageSize,
 } = require(`../`)
@@ -31,16 +37,16 @@ describe(`gatsby-plugin-sharp`, () => {
     })
   })
 
-  describe(`responsiveSizes`, () => {
+  describe(`fluid`, () => {
     it(`includes responsive image properties, e.g. sizes, srcset, etc.`, async () => {
-      const result = await responsiveSizes({ file })
+      const result = await fluid({ file })
 
       expect(result).toMatchSnapshot()
     })
 
     it(`adds pathPrefix if defined`, async () => {
       const pathPrefix = `/blog`
-      const result = await responsiveSizes({
+      const result = await fluid({
         file,
         args: {
           pathPrefix,
@@ -52,7 +58,7 @@ describe(`gatsby-plugin-sharp`, () => {
     })
 
     it(`keeps original file name`, async () => {
-      const result = await responsiveSizes({
+      const result = await fluid({
         file,
       })
 
@@ -61,7 +67,7 @@ describe(`gatsby-plugin-sharp`, () => {
     })
 
     it(`accounts for pixel density`, async () => {
-      const result = await responsiveSizes({
+      const result = await fluid({
         file: getFileObject(path.join(__dirname, `images/144-density.png`)),
         args: {
           sizeByPixelDensity: true,
@@ -72,7 +78,7 @@ describe(`gatsby-plugin-sharp`, () => {
     })
 
     it(`can optionally ignore pixel density`, async () => {
-      const result = await responsiveSizes({
+      const result = await fluid({
         file: getFileObject(path.join(__dirname, `images/144-density.png`)),
         args: {
           sizeByPixelDensity: false,
@@ -84,7 +90,7 @@ describe(`gatsby-plugin-sharp`, () => {
 
     it(`does not change the arguments object it is given`, async () => {
       const args = { maxWidth: 400 }
-      await responsiveSizes({
+      await fluid({
         file,
         args,
       })
@@ -93,7 +99,7 @@ describe(`gatsby-plugin-sharp`, () => {
     })
   })
 
-  describe(`resolutions`, () => {
+  describe(`fixed`, () => {
     console.warn = jest.fn()
 
     beforeEach(() => {
@@ -107,7 +113,7 @@ describe(`gatsby-plugin-sharp`, () => {
     it(`does not warn when the requested width is equal to the image width`, async () => {
       const args = { width: 1 }
 
-      const result = await resolutions({
+      const result = await fixed({
         file,
         args,
       })
@@ -119,7 +125,7 @@ describe(`gatsby-plugin-sharp`, () => {
     it(`warns when the requested width is greater than the image width`, async () => {
       const args = { width: 2 }
 
-      const result = await resolutions({
+      const result = await fixed({
         file,
         args,
       })

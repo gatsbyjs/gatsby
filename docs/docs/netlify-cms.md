@@ -46,7 +46,7 @@ if it's not already there, and add the following to register the Netlify CMS plu
 ```javascript
 module.exports = {
   plugins: [`gatsby-plugin-netlify-cms`],
-};
+}
 ```
 
 Finally, you'll need to add a configuration file for the CMS itself. The plugin you just installed

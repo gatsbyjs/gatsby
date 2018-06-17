@@ -1,16 +1,17 @@
 {
   "name": "gatsby-plugin-styled-components",
   "description": "Gatsby plugin to add support for styled components",
-  "version": "2.0.11",
+  "version": "3.0.0-alpha.11",
   "author": "Guten Ye <ywzhaifei@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "babel-runtime": "^6.26.0"
+    "@babel/runtime": "7.0.0-beta.51"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0"
+    "@babel/cli": "7.0.0-beta.51",
+    "@babel/core": "7.0.0-beta.51"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-styled-components#readme",
   "keywords": [
@@ -22,7 +23,7 @@
   "main": "index.js",
   "peerDependencies": {
     "babel-plugin-styled-components": ">1.5.0",
-    "gatsby": "^1.0.0",
+    "gatsby": ">2.0.0-alpha",
     "styled-components": ">= 2.0.0"
   },
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-styled-components",

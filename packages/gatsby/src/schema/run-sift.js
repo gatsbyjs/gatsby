@@ -137,6 +137,7 @@ module.exports = ({
       )
     })
   ).then(myNodes => {
+    myNodes = myNodes.map(trackInlineObjectsInRootNode)
     if (!connection) {
       const index = _.isEmpty(siftArgs)
         ? 0

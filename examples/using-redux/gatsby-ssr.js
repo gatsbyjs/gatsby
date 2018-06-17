@@ -4,8 +4,7 @@ import { renderToString } from 'react-dom/server'
 
 import createStore from './src/state/createStore'
 
-exports.replaceRenderer = ({ bodyComponent, replaceBodyHTMLString }) => {
-
+export const replaceRenderer = ({ bodyComponent, replaceBodyHTMLString }) => {
     const store = createStore()
 
     const ConnectedBody = () => (

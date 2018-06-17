@@ -21,7 +21,7 @@ module.exports = {
       },
     },
   ],
-};
+}
 ```
 
 ## Options
@@ -46,5 +46,30 @@ module.exports = {
       },
     },
   ],
-};
+}
+```
+
+## Options
+
+- `offsetY`: Signed integer, vertical offset value in pixels, e.g.
+
+```javascript
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-transformer-remark`,
+      options: {
+        plugins: [
+          {
+            resolve: `gatsby-remark-autolink-headers`,
+            options: {
+              offsetY: `100`,
+            },
+          },
+        ],
+      },
+    },
+  ],
+}
 ```

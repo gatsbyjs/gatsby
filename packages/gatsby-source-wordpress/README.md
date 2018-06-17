@@ -99,11 +99,11 @@ plugins: [
       excludedRoutes: ["/*/*/comments", "/yoast/**"],
       // use a custom normalizer which is applied after the built-in ones.
       normalizer: function({ entities }) {
-        return entities;
+        return entities
       },
     },
   },
-];
+]
 ```
 
 ## WordPress Plugins
@@ -353,8 +353,8 @@ Full example:
               image {
                 localFile {
                   childImageSharp {
-                    sizes(maxWidth: 800) {
-                      ...GatsbyImageSharpSizes_withWebp
+                    fluid(maxWidth: 800) {
+                      ...GatsbyImageSharpFluid_withWebp
                     }
                   }
                 }
@@ -470,8 +470,8 @@ Full example:
         featured_media {
           localFile {
             childImageSharp {
-              resolutions(width: 500, height: 300) {
-                ...GatsbyImageSharpResolutions_withWebp
+              fixed(width: 500, height: 300) {
+                ...GatsbyImageSharpFixed_withWebp
               }
             }
           }
@@ -480,8 +480,8 @@ Full example:
           image {
             localFile {
               childImageSharp {
-                sizes(maxWidth: 500) {
-                  ...GatsbyImageSharpSizes_withWebp
+                fluid(maxWidth: 500) {
+                  ...GatsbyImageSharpFluid_withWebp
                 }
               }
             }
@@ -520,24 +520,23 @@ You have a custom post type `movie` and a related custom taxonomy `genre` in you
 
 ```javascript
 function mapMoviesToGenres({ entities }) {
-  const genres = entities.filter(e => e.__type === `wordpress__wp_genre`);
+  const genres = entities.filter(e => e.__type === `wordpress__wp_genre`)
 
   return entities.map(e => {
     if (e.__type === `wordpress__wp_movie`) {
-      let hasGenres =
-        e.genres && Array.isArray(e.genres) && e.categories.length;
+      let hasGenres = e.genres && Array.isArray(e.genres) && e.categories.length
       // Replace genres with links to their nodes.
       if (hasGenres) {
         e.genres___NODE = e.genres.map(
           c => genres.find(gObj => c === gObj.wordpress_id).id
-        );
-        delete e.genres;
+        )
+        delete e.genres
       }
     }
-    return e;
-  });
+    return e
+  })
 
-  return entities;
+  return entities
 }
 ```
 
@@ -554,7 +553,7 @@ module.exports = {
       },
     },
   ],
-};
+}
 ```
 
 Next to the entities, the object passed to the custom normalizer function also contains other helpful Gatsby functions
@@ -563,10 +562,10 @@ and also your `wordpress-source-plugin` options from `gatsby-config.js`. To lear
 ## Site's `gatsby-node.js` example
 
 ```javascript
-const _ = require(`lodash`);
-const Promise = require(`bluebird`);
-const path = require(`path`);
-const slash = require(`slash`);
+const _ = require(`lodash`)
+const Promise = require(`bluebird`)
+const path = require(`path`)
+const slash = require(`slash`)
 
 // Implement the Gatsby API “createPages”. This is
 // called after the Gatsby bootstrap is finished so you have
@@ -575,7 +574,7 @@ const slash = require(`slash`);
 // Will create pages for WordPress pages (route : /{slug})
 // Will create pages for WordPress posts (route : /post/{slug})
 exports.createPages = ({ graphql, boundActionCreators }) => {
-  const { createPage } = boundActionCreators;
+  const { createPage } = boundActionCreators
   return new Promise((resolve, reject) => {
     // The “graphql” function allows us to run arbitrary
     // queries against the local WordPress graphql schema. Think of
@@ -601,12 +600,12 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
     )
       .then(result => {
         if (result.errors) {
-          console.log(result.errors);
-          reject(result.errors);
+          console.log(result.errors)
+          reject(result.errors)
         }
 
         // Create Page pages.
-        const pageTemplate = path.resolve("./src/templates/page.js");
+        const pageTemplate = path.resolve("./src/templates/page.js")
         // We want to create a detailed page for each
         // page node. We'll just use the WordPress Slug for the slug.
         // The Page ID is prefixed with 'PAGE_'
@@ -624,8 +623,8 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
             context: {
               id: edge.node.id,
             },
-          });
-        });
+          })
+        })
       })
       // ==== END PAGES ====
 
@@ -649,10 +648,10 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
           `
         ).then(result => {
           if (result.errors) {
-            console.log(result.errors);
-            reject(result.errors);
+            console.log(result.errors)
+            reject(result.errors)
           }
-          const postTemplate = path.resolve("./src/templates/post.js");
+          const postTemplate = path.resolve("./src/templates/post.js")
           // We want to create a detailed page for each
           // post node. We'll just use the WordPress Slug for the slug.
           // The Post ID is prefixed with 'POST_'
@@ -663,14 +662,14 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
               context: {
                 id: edge.node.id,
               },
-            });
-          });
-          resolve();
-        });
-      });
+            })
+          })
+          resolve()
+        })
+      })
     // ==== END POSTS ====
-  });
-};
+  })
+}
 ```
 
 ## Troubleshooting
