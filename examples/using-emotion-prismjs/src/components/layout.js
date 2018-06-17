@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Fragment } from "react"
 import { Link, StaticQuery } from "gatsby"
 import PropTypes from "prop-types"
 import { css } from "react-emotion"
@@ -26,7 +26,8 @@ class Layout extends React.Component {
     const title = pageTitle ? `${pageTitle} — ${siteTitle}` : `${siteTitle}`
 
     return (
-      <>`        \` `<Helmet>
+      <Fragment>
+        <Helmet>
           <title>{title}</title>
           <meta
             name="description"
@@ -40,8 +41,8 @@ class Layout extends React.Component {
             </Link>
           </HeadingTag>
           {this.props.children}
-        </div>` `
-      </>
+        </div>
+      </Fragment>
     )
   }
 }

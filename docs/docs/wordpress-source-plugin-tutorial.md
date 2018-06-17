@@ -76,7 +76,7 @@ Run:
 gatsby develop
 ```
 
-In your browser, open localhost:8000 to see your site, and open localhost:8000/\_\_\_graphql iso that you can create your GraphQL queries.
+In your browser, open localhost:8000 to see your site, and open localhost:8000/\_\_\_graphql so that you can create your GraphQL queries.
 
 As an exercise, try re-creating the following queries in your GraphiQL explorer. This first query will pull in the blogpost content from WordPress:
 
