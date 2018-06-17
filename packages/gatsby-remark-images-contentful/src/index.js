@@ -75,7 +75,7 @@ module.exports = async (
       options,
     })
     // Calculate the paddingBottom %
-    const ratio = `${1 / responsiveSizesResult.aspectRatio * 100}%`
+    const ratio = `${(1 / responsiveSizesResult.aspectRatio) * 100}%`
 
     const fallbackSrc = `https${node.url}`
     const srcSet = responsiveSizesResult.srcSet

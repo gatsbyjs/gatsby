@@ -6,10 +6,10 @@ Gatsby makes it easy to programmatically control your pages.
 
 Pages can be created in three ways:
 
-* In your site's gatsby-node.js by implementing the API
+- In your site's gatsby-node.js by implementing the API
   [`createPages`](/docs/node-apis/#createPages)
-* Gatsby core automatically turns React components in `src/pages` into pages
-* Plugins can also implement `createPages` and create pages for you
+- Gatsby core automatically turns React components in `src/pages` into pages
+- Plugins can also implement `createPages` and create pages for you
 
 You can also implement the API [`onCreatePage`](/docs/node-apis/#onCreatePage)
 to modify pages created in core or plugins or to create [client-only routes](/docs/building-apps-with-gatsby/).

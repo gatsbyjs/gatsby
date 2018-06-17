@@ -20,18 +20,19 @@ about: Usage question or discussion about Gatsby.
 
 ## Summary
 
-
 ## Relevant information
+
 <!-- Provide as much useful information as you can -->
 
-
 ### Environment (if relevant)
-* Gatsby version (`npm list gatsby`):
-* gatsby-cli version (`gatsby --version`):
-* Node.js version:
-* Operating System:
+
+- Gatsby version (`npm list gatsby`):
+- gatsby-cli version (`gatsby --version`):
+- Node.js version:
+- Operating System:
 
 ### File contents (if changed)
+
 `gatsby-config.js`: N/A <!-- Please use a code block or just leave it as is if wasn't changed -->
 `package.json`: N/A <!-- Please use a code block or just leave it as is if wasn't changed -->
 `gatsby-node.js`: N/A <!-- Please use a code block or just leave it as is if wasn't changed -->

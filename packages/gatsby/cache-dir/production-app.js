@@ -189,7 +189,11 @@ apiRunnerAsync(`onClientEntry`).then(() => {
 
     const NewRoot = apiRunner(`wrapRootComponent`, { Root }, Root)[0]
 
-    const renderer = apiRunner(`replaceHydrateFunction`, undefined, ReactDOM.render)[0]
+    const renderer = apiRunner(
+      `replaceHydrateFunction`,
+      undefined,
+      ReactDOM.render
+    )[0]
 
     domReady(() =>
       renderer(

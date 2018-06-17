@@ -70,9 +70,9 @@ gatsby develop
 
 You should shortly see some text, close to the bottom, that says:
 
-`You can now view gatsby-starter-hello-world in the browser.` 
+`You can now view gatsby-starter-hello-world in the browser.`
 
-[http://localhost:8000/](http://localhost:8000). 
+[http://localhost:8000/](http://localhost:8000).
 
 Open that address in your browser and...
 

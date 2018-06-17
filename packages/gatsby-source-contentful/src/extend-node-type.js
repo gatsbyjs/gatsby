@@ -268,11 +268,8 @@ exports.extendNodeType = ({ type, store }) => {
     return {}
   }
 
-  const getTracedSVG = async (args) =>
-  {
-    const {
-      traceSVG,
-    } = require(`gatsby-plugin-sharp`)
+  const getTracedSVG = async args => {
+    const { traceSVG } = require(`gatsby-plugin-sharp`)
 
     const { image, options } = args
     const {
@@ -295,7 +292,8 @@ exports.extendNodeType = ({ type, store }) => {
       },
       args: { toFormat: `` },
       fileArgs: options,
-    })}
+    })
+  }
 
   return {
     resolutions: {

@@ -63,8 +63,8 @@ You can query file nodes like the following:
 
 `gatsby-source-filesystem` exports two helper functions:
 
-* `createFilePath`
-* `createRemoteFileNode`
+- `createFilePath`
+- `createRemoteFileNode`
 
 ### createFilePath
 

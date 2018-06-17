@@ -31,19 +31,19 @@ plugins: [`gatsby-plugin-sharp`];
 
 #### Parameters
 
-* `width` (int, default: 400)
-* `height` (int)
-* `quality` (int, default: 50)
-* `jpegProgressive` (bool, default: true)
-* `pngCompressionLevel` (int, default: 9)
-* `base64`(bool, default: false)
+- `width` (int, default: 400)
+- `height` (int)
+- `quality` (int, default: 50)
+- `jpegProgressive` (bool, default: true)
+- `pngCompressionLevel` (int, default: 9)
+- `base64`(bool, default: false)
 
 #### Returns
 
-* `src` (string)
-* `width` (int)
-* `height` (int)
-* `aspectRatio` (float)
+- `src` (string)
+- `width` (int)
+- `height` (int)
+- `aspectRatio` (float)
 
 ### responsiveResolution
 
@@ -52,18 +52,18 @@ Automatically create sizes for different resolutions — we do 1x, 1.5x, 2x, and
 
 #### Parameters
 
-* `width` (int, default: 400)
-* `height` (int)
-* `quality` (int, default: 50)
+- `width` (int, default: 400)
+- `height` (int)
+- `quality` (int, default: 50)
 
 #### Returns
 
-* `base64` (string)
-* `aspectRatio` (float)
-* `width` (float)
-* `height` (float)
-* `src` (string)
-* `srcSet` (string)
+- `base64` (string)
+- `aspectRatio` (float)
+- `width` (float)
+- `height` (float)
+- `src` (string)
+- `srcSet` (string)
 
 ### responsiveSizes
 
@@ -79,29 +79,29 @@ plugin for Markdown content as gatsby-remark-images).
 
 #### Parameters
 
-* `maxWidth` (int, default: 800)
-* `maxHeight` (int)
-* `quality` (int, default: 50)
-* `sizeByPixelDensity` (bool, default: false)
+- `maxWidth` (int, default: 800)
+- `maxHeight` (int)
+- `quality` (int, default: 50)
+- `sizeByPixelDensity` (bool, default: false)
 
 #### Returns
 
-* `base64` (string)
-* `aspectRatio` (float)
-* `src` (string)
-* `srcSet` (string)
-* `sizes` (string)
-* `originalImg` (string)
+- `base64` (string)
+- `aspectRatio` (float)
+- `src` (string)
+- `srcSet` (string)
+- `sizes` (string)
+- `originalImg` (string)
 
 ### Shared Options
 
 In addition to their individual parameters, all methods above share the
 following:
 
-* `grayscale` (bool, default: false)
-* `duotone` (bool|obj, default: false)
-* `toFormat` (string, default: '')
-* `cropFocus` (string, default: '[sharp.strategy.attention][6]')
+- `grayscale` (bool, default: false)
+- `duotone` (bool|obj, default: false)
+- `toFormat` (string, default: '')
+- `cropFocus` (string, default: '[sharp.strategy.attention][6]')
 
 #### toFormat
 

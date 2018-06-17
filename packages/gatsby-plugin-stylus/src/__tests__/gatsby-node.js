@@ -55,15 +55,15 @@ describe(`gatsby-plugin-stylus`, () => {
         ;[
           { options: {}, stylusLoader: `stylus` },
           {
-            options: { use: [ stylusPlugin() ] },
+            options: { use: [stylusPlugin()] },
             stylusLoader: `stylus`,
           },
           {
-            options: { import: [ `file.js`, `file2.js` ] },
+            options: { import: [`file.js`, `file2.js`] },
             stylusLoader: `stylus`,
           },
           {
-            options: { use: [ stylusPlugin() ], import: [ `file.js`, `file2.js` ] },
+            options: { use: [stylusPlugin()], import: [`file.js`, `file2.js`] },
             stylusLoader: `stylus`,
           },
           {
@@ -83,7 +83,10 @@ describe(`gatsby-plugin-stylus`, () => {
               merge: jest.fn(),
             }
 
-            if ((options.use && !Array.isArray(options.use)) || (options.import && !Array.isArray(options.import))) {
+            if (
+              (options.use && !Array.isArray(options.use)) ||
+              (options.import && !Array.isArray(options.import))
+            ) {
               expect(() => {
                 modifyWebpackConfig({ config, stage }, options)
               }).toThrowError()
@@ -98,7 +101,9 @@ describe(`gatsby-plugin-stylus`, () => {
                   expect.objectContaining(loaderConfig(stylusLoader))
                 )
 
-                expect(config.merge).toHaveBeenCalledTimes(Object.keys(options).length)
+                expect(config.merge).toHaveBeenCalledTimes(
+                  Object.keys(options).length
+                )
               })
             }
           })
