@@ -343,7 +343,7 @@ class FilteredShowcase extends Component {
 
             </div>
           </div>
-          <ShowcaseList sortRecent={urlState.sort === 'recent'} items={items} count={this.state.sitesToShow} />
+          <ShowcaseList urlState={urlState} sortRecent={urlState.sort === 'recent'} items={items} count={this.state.sitesToShow} />
           {this.state.sitesToShow < items.length && (
             <button
               css={{
@@ -479,7 +479,30 @@ class Collapsible extends Component {
 }
 
 
-const ShowcaseList = ({ items, count, sortRecent }) => {
+const ShowcaseList = ({ urlState, items, count, sortRecent }) => {
+  if (!items.length) { // empty state!
+    console.log('urlState.d', urlState.d)
+    const emptyStateReason = urlState.s !== '' ? urlState.s : ( // if theres a search term
+      urlState.d && !Array.isArray(urlState.d) ? urlState.d : // if theres a single dependency
+        'matching' // if no search term or single dependency
+    )
+    return (
+      <div css={{
+        display: 'grid',
+        height: '80%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        textAlign: 'center'
+      }}>
+        <h1>
+          No {`${emptyStateReason}`} starters found!
+          <div css={{ color: colors.gatsby }}>
+            <small>Maybe you should write one and <a href="https://github.com/gatsbyjs/gatsby/issues/new?template=feature_request.md">submit it</a>?</small>
+          </div>
+        </h1>
+      </div>
+    )
+  }
   if (count) items = items
     .sort(({ node: nodeA }, { node: nodeB }) => {
       const safewrap = obj => sortRecent ? new Date(obj.githubData.repoMetadata.updated_at) : obj['stars']
