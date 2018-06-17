@@ -4,7 +4,7 @@ demo: https://fabien0102-gatsby-starter.netlify.com/
 repo: https://github.com/fabien0102/gatsby-starter
 description: n/a
 tags:
-- typescript
+- Typescript
 - Styling:Semantic
 features:
 - Semantic-ui for styling

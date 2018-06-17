@@ -6,7 +6,7 @@ description: n/a
 tags:
 - blog
 - Styling:Bulma
-- netlifyCMS
+- NetlifyCMS
 features:
 - A simple blog built with Netlify CMS
 - Basic directory organization

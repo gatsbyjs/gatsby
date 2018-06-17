@@ -5,7 +5,7 @@ repo: https://github.com/ryanwiemer/gatsby-starter-gcn
 description: n/a
 tags:
 - Contentful
-- NetlifyForm
+- Netlify Form
 - Styling:CSS-in-JS
 features:
 - Inspired by gatsby-contentful-starter

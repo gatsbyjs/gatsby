@@ -4,8 +4,8 @@ demo: https://wonism.github.io/
 repo: https://github.com/wonism/gatsby-advanced-blog
 description: n/a
 tags:
-- Portfolio
-- redux
+- portfolio
+- Redux
 features:
 - Blog post listing with previews (image + summary) for each blog post
 - Categories and tags for blog posts with pagination
