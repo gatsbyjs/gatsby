@@ -2,7 +2,7 @@ const select = require(`unist-util-select`)
 const path = require(`path`)
 const isRelativeUrl = require(`is-relative-url`)
 const _ = require(`lodash`)
-const { sizes } = require(`gatsby-plugin-sharp`)
+const { fluid } = require(`gatsby-plugin-sharp`)
 const Promise = require(`bluebird`)
 const cheerio = require(`cheerio`)
 const slash = require(`slash`)
@@ -10,7 +10,7 @@ const slash = require(`slash`)
 // If the image is relative (not hosted elsewhere)
 // 1. Find the image file
 // 2. Find the image's size
-// 3. Filter out any responsive image sizes that are greater than the image's width
+// 3. Filter out any responsive image fluid sizes that are greater than the image's width
 // 4. Create the responsive images.
 // 5. Set the html w/ aspect ratio helper.
 module.exports = (
@@ -58,23 +58,23 @@ module.exports = (
       return resolve()
     }
 
-    let responsiveSizesResult = await sizes({
+    let fluidResult = await fluid({
       file: imageNode,
       args: options,
       reporter,
     })
 
-    if (!responsiveSizesResult) {
+    if (!fluidResult) {
       return resolve()
     }
 
     // Calculate the paddingBottom %
-    const ratio = `${(1 / responsiveSizesResult.aspectRatio) * 100}%`
+    const ratio = `${(1 / fluidResult.aspectRatio) * 100}%`
 
-    const originalImg = responsiveSizesResult.originalImg
-    const fallbackSrc = responsiveSizesResult.src
-    const srcSet = responsiveSizesResult.srcSet
-    const presentationWidth = responsiveSizesResult.presentationWidth
+    const originalImg = fluidResult.originalImg
+    const fallbackSrc = fluidResult.src
+    const srcSet = fluidResult.srcSet
+    const presentationWidth = fluidResult.presentationWidth
 
     // Generate default alt tag
     const srcSplit = node.url.split(`/`)
@@ -97,7 +97,7 @@ module.exports = (
     <span
       class="gatsby-resp-image-background-image"
       style="padding-bottom: ${ratio}; position: relative; bottom: 0; left: 0; background-image: url('${
-      responsiveSizesResult.base64
+      fluidResult.base64
     }'); background-size: cover; display: block;"
     >
       <img
@@ -109,7 +109,7 @@ module.exports = (
         title="${node.title ? node.title : ``}"
         src="${fallbackSrc}"
         srcset="${srcSet}"
-        sizes="${responsiveSizesResult.sizes}"
+        sizes="${fluidResult.sizes}"
       />
     </span>
   </span>

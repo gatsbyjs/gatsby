@@ -1,23 +1,25 @@
 {
   "name": "gatsby-remark-prismjs",
   "description": "Adds syntax highlighting to code blocks at build time using PrismJS",
-  "version": "2.0.4",
+  "version": "3.0.0-alpha.2",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "babel-runtime": "^6.26.0",
-    "parse-numeric-range": "0.0.2",
+    "@babel/runtime": "7.0.0-beta.51",
+    "parse-numeric-range": "^0.0.2",
     "unist-util-visit": "^1.3.0"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "cross-env": "^5.1.3",
+    "@babel/cli": "7.0.0-beta.51",
+    "@babel/core": "7.0.0-beta.51",
+    "cross-env": "^5.1.4",
     "prismjs": "^1.13.0",
-    "remark": "^7.0.1"
+    "remark": "^9.0.0"
   },
   "peerDependencies": {
+    "gatsby": ">2.0.0-alpha",
     "prismjs": "^1.13.0"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs#readme",
@@ -31,8 +33,8 @@
   "main": "index.js",
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs",
   "scripts": {
-    "build": "babel src --out-dir . --ignore __tests__",
+    "build": "babel src --out-dir . --ignore **/__tests__",
     "prepublish": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir . --ignore __tests__"
+    "watch": "babel -w src --out-dir . --ignore **/__tests__"
   }
 }

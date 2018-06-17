@@ -27,7 +27,7 @@ module.exports = {
       },
     },
   ],
-};
+}
 ```
 
 ## `<OutboundLink>` component

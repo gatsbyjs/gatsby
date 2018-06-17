@@ -408,6 +408,7 @@ exports.downloadMediaFiles = async ({
   store,
   cache,
   createNode,
+  createNodeId,
   touchNode,
   _auth,
 }) =>
@@ -422,7 +423,7 @@ exports.downloadMediaFiles = async ({
         // previously created file node to not try to redownload
         if (cacheMediaData && e.modified === cacheMediaData.modified) {
           fileNodeID = cacheMediaData.fileNodeID
-          touchNode(cacheMediaData.fileNodeID)
+          touchNode({ nodeId: cacheMediaData.fileNodeID })
         }
 
         // If we don't have cached data, download the file
@@ -433,6 +434,7 @@ exports.downloadMediaFiles = async ({
               store,
               cache,
               createNode,
+              createNodeId,
               auth: _auth,
             })
 

@@ -1,93 +1,60 @@
-import ExtractTextPlugin from "extract-text-webpack-plugin"
-import { cssModulesConfig } from "gatsby-1-config-css-modules"
-import path from "path"
+import resolve from "./resolve"
 
-exports.modifyWebpackConfig = ({ config, stage }, { theme }) => {
-  const lessFiles = /\.less$/
-  const lessModulesFiles = /\.module\.less$/
+exports.onCreateWebpackConfig = (
+  { actions, stage, rules, plugins, loaders },
+  { postCssPlugins, ...lessOptions }
+) => {
+  const { setWebpackConfig } = actions
+  const PRODUCTION = stage !== `develop`
+  const isSSR = stage.includes(`html`)
 
-  let themeJson = ``
-
-  if (typeof theme === `string` && theme !== ``) {
-    try {
-      const themeFile = require(path.resolve(theme))
-      themeJson = JSON.stringify(themeFile)
-    } catch (err) {
-      throw new Error(
-        `Couldn't convert js to json object at path: '${theme}'\n${err}`
-      )
-    }
-  } else if (typeof theme === `object`) {
-    try {
-      themeJson = JSON.stringify(theme)
-    } catch (err) {
-      throw new Error(
-        `Couldn't convert javascript object to json object.\n${err}`
-      )
-    }
+  const lessLoader = {
+    loader: resolve(`less-loader`),
+    options: {
+      sourceMap: !PRODUCTION,
+      ...lessOptions,
+    },
   }
 
-  let lessLoaderDev = ``
-  let lessLoaderProd = ``
-
-  if (themeJson) {
-    lessLoaderDev = `less?{"sourceMap":true,"modifyVars":${themeJson}}`
-    lessLoaderProd = `less?{"modifyVars":${themeJson}}`
-  } else {
-    lessLoaderDev = `less?{"sourceMap":true}`
-    lessLoaderProd = `less`
+  const lessRule = {
+    test: /\.less$/,
+    use: isSSR
+      ? [loaders.null()]
+      : [
+          loaders.miniCssExtract(),
+          loaders.css({ importLoaders: 1 }),
+          loaders.postcss({ plugins: postCssPlugins }),
+          lessLoader,
+        ],
   }
+  const lessRuleModules = {
+    test: /\.module\.less$/,
+    use: [
+      loaders.miniCssExtract(),
+      loaders.css({ modules: true, importLoaders: 1 }),
+      loaders.postcss({ plugins: postCssPlugins }),
+      lessLoader,
+    ],
+  }
+
+  let configRules = []
 
   switch (stage) {
-    case `develop`: {
-      config.loader(`less`, {
-        test: lessFiles,
-        exclude: lessModulesFiles,
-        loaders: [`style`, `css`, lessLoaderDev],
-      })
-
-      config.loader(`lessModules`, {
-        test: lessModulesFiles,
-        loaders: [`style`, cssModulesConfig(stage), lessLoaderDev],
-      })
-      return config
-    }
-    case `build-css`: {
-      config.loader(`less`, {
-        test: lessFiles,
-        exclude: lessModulesFiles,
-        loader: ExtractTextPlugin.extract([`css?minimize`, lessLoaderProd]),
-      })
-
-      config.loader(`lessModules`, {
-        test: lessModulesFiles,
-        loader: ExtractTextPlugin.extract(`style`, [
-          cssModulesConfig(stage),
-          lessLoaderProd,
-        ]),
-      })
-      return config
-    }
-    case `develop-html`:
+    case `develop`:
+    case `build-javascript`:
     case `build-html`:
-    case `build-javascript`: {
-      config.loader(`less`, {
-        test: lessFiles,
-        exclude: lessModulesFiles,
-        loader: `null`,
-      })
-
-      config.loader(`lessModules`, {
-        test: lessModulesFiles,
-        loader: ExtractTextPlugin.extract(`style`, [
-          cssModulesConfig(stage),
-          lessLoaderProd,
-        ]),
-      })
-      return config
-    }
-    default: {
-      return config
-    }
+    case `develop-html`:
+      configRules = configRules.concat([
+        {
+          oneOf: [lessRuleModules, lessRule],
+        },
+      ])
+      break
   }
+
+  setWebpackConfig({
+    module: {
+      rules: configRules,
+    },
+  })
 }

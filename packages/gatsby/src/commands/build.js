@@ -1,7 +1,6 @@
 /* @flow */
 
 const report = require(`gatsby-cli/lib/reporter`)
-const buildCSS = require(`./build-css`)
 const buildHTML = require(`./build-html`)
 const buildProductionBundle = require(`./build-javascript`)
 const bootstrap = require(`../bootstrap`)
@@ -31,14 +30,9 @@ module.exports = async function build(program: BuildArgs) {
   copyStaticDirectory()
 
   let activity
-  activity = report.activityTimer(`Building CSS`)
-  activity.start()
-  await buildCSS(program).catch(err => {
-    reportFailure(`Generating CSS failed`, err)
-  })
-  activity.end()
-
-  activity = report.activityTimer(`Building production JavaScript bundles`)
+  activity = report.activityTimer(
+    `Building production JavaScript and CSS bundles`
+  )
   activity.start()
   await buildProductionBundle(program).catch(err => {
     reportFailure(`Generating JavaScript bundles failed`, err)

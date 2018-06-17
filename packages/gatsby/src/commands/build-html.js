@@ -1,11 +1,12 @@
 /* @flow */
 const webpack = require(`webpack`)
 const fs = require(`fs`)
+const debug = require(`debug`)(`gatsby:html`)
+
 const webpackConfig = require(`../utils/webpack.config`)
 const { store } = require(`../redux`)
 const { createErrorFromString } = require(`gatsby-cli/lib/reporter/errors`)
-
-const debug = require(`debug`)(`gatsby:html`)
+const renderHTML = require(`../utils/html-renderer`)
 
 module.exports = async (program: any) => {
   const { directory } = program
@@ -19,12 +20,11 @@ module.exports = async (program: any) => {
     program,
     directory,
     `build-html`,
-    null,
-    pages
+    null
   )
 
   return new Promise((resolve, reject) => {
-    webpack(compilerConfig.resolve()).run((e, stats) => {
+    webpack(compilerConfig).run((e, stats) => {
       if (e) {
         return reject(e)
       }
@@ -41,14 +41,20 @@ module.exports = async (program: any) => {
         )
       }
 
-      // Remove the temp JS bundle file built for the static-site-generator-plugin
-      try {
-        fs.unlinkSync(outputFile)
-        fs.unlinkSync(`${outputFile}.map`)
-      } catch (e) {
-        // This function will fail on Windows with no further consequences.
-      }
-      return resolve(null, stats)
+      return renderHTML(require(outputFile), pages)
+        .then(() => {
+          // Remove the temp JS bundle file built for the static-site-generator-plugin
+          try {
+            fs.unlinkSync(outputFile)
+            fs.unlinkSync(`${outputFile}.map`)
+          } catch (e) {
+            // This function will fail on Windows with no further consequences.
+          }
+          return resolve(null, stats)
+        })
+        .catch(e => {
+          console.log(e)
+        })
     })
   })
 }

@@ -58,10 +58,10 @@ range of lines to highlight, relative to a `highlight-range` comment.
 #### JavaScript example
 
 ```js
-import React from "react";
-import ReactDOM from "react-dom";
+import React from "react"
+import ReactDOM from "react-dom"
 
-const name = "Brian"; // highlight-line
+const name = "Brian" // highlight-line
 
 ReactDOM.render(
   <div>
@@ -69,7 +69,7 @@ ReactDOM.render(
     <h1>Hello, ${name}!</h1>
   </div>,
   document.getElementById("root")
-);
+)
 ```
 
 #### CSS example
@@ -160,5 +160,5 @@ module.exports = {
       },
     },
   ],
-};
+}
 ```

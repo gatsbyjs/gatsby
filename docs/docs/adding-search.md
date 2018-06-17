@@ -2,6 +2,8 @@
 title: "Adding search to your Gatsby website"
 ---
 
+Before we go through the steps for adding search to your Gatsby website, let's examine the components needed for adding search to a website.
+
 There are three required components for adding search to your Gatsby website:
 
 1.  index

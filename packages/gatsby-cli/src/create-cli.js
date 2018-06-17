@@ -5,7 +5,7 @@ const report = require(`./reporter`)
 const fs = require(`fs`)
 const envinfo = require(`envinfo`)
 
-const DEFAULT_BROWSERS = [`> 1%`, `last 2 versions`, `IE >= 9`]
+const DEFAULT_BROWSERS = [`>0.25%`, `not dead`]
 
 const handlerP = fn => (...args) => {
   Promise.resolve(fn(...args)).then(

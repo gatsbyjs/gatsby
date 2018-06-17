@@ -1,11 +1,12 @@
+const fs = require(`fs`)
 const precache = require(`sw-precache`)
 const path = require(`path`)
 const slash = require(`slash`)
 const _ = require(`lodash`)
 
-exports.createPages = ({ boundActionCreators }) => {
+exports.createPages = ({ actions }) => {
   if (process.env.NODE_ENV === `production`) {
-    const { createPage } = boundActionCreators
+    const { createPage } = actions
     createPage({
       path: `/offline-plugin-app-shell-fallback/`,
       component: slash(path.resolve(`${__dirname}/app-shell.js`)),
@@ -13,19 +14,43 @@ exports.createPages = ({ boundActionCreators }) => {
   }
 }
 
+let s
+const readStats = () => {
+  if (s) {
+    return s
+  } else {
+    s = JSON.parse(
+      fs.readFileSync(`${process.cwd()}/public/webpack.stats.json`, `utf-8`)
+    )
+    return s
+  }
+}
+
+const getAssetsForChunks = (chunks, rootDir) =>
+  _.flatten(chunks.map(chunk => readStats().assetsByChunkName[chunk])).map(
+    assetFileName => `${rootDir}/${assetFileName}`
+  )
+
 exports.onPostBuild = (args, pluginOptions) => {
   const rootDir = `public`
 
+  // Get exact asset filenames for app and offline app shell chunks
+  const files = getAssetsForChunks(
+    [
+      `app`,
+      `webpack-runtime`,
+      `component---node-modules-gatsby-plugin-offline-app-shell-js`,
+    ],
+    rootDir
+  )
+
   const options = {
-    staticFileGlobs: [
-      `${rootDir}/**/*.{woff2}`,
-      `${rootDir}/commons-*js`,
-      `${rootDir}/app-*js`,
+    staticFileGlobs: files.concat([
       `${rootDir}/index.html`,
       `${rootDir}/manifest.json`,
       `${rootDir}/manifest.webmanifest`,
       `${rootDir}/offline-plugin-app-shell-fallback/index.html`,
-    ],
+    ]),
     stripPrefix: rootDir,
     // If `pathPrefix` is configured by user, we should replace
     // the `public` prefix with `pathPrefix`.
@@ -42,9 +67,8 @@ exports.onPostBuild = (args, pluginOptions) => {
     // Regex from http://stackoverflow.com/a/18017805
     navigateFallbackWhitelist: [/^.*([^.]{5}|.html)$/],
     cacheId: `gatsby-plugin-offline`,
-    // Do cache bust JS URLs until can figure out how to make Webpack's
-    // URLs truely content-addressed.
-    dontCacheBustUrlsMatching: /(.\w{8}.woff2)/, // |-\w{20}.js)/,
+    // Don't cache-bust JS files and anything in the static directory
+    dontCacheBustUrlsMatching: /(.*js$|\/static\/)/,
     runtimeCaching: [
       {
         // Add runtime caching of images.

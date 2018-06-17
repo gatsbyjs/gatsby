@@ -529,7 +529,7 @@ export const pageQuery = `
     }
   }
 }
-`;
+`
 ```
 
 You must now write:
@@ -545,7 +545,7 @@ export const pageQuery = graphql`
       }
     }
   }
-`;
+`
 ```
 
 ## [1.0.0-alpha10] - 2016-11-17

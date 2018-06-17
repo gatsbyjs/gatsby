@@ -20,20 +20,20 @@ If the final image is of a fixed size, optimization relies on having multiple re
 
 You can also use arguments in your query to specify exact, minimum, and maximum dimensions. See the [Gatsby Image documentation for complete options](/packages/gatsby-image/#two-types-of-responsive-images).
 
-This example is for an image gallery where images stretch when the page is resized. It uses the `sizes` method and the size fragment to grab the right data to use in `gatsby-image` component and arguments to set the maximum width as 400px and maximum height as 250px.
+This example is for an image gallery where images stretch when the page is resized. It uses the `fluid` method and the fluid fragment to grab the right data to use in `gatsby-image` component and arguments to set the maximum width as 400px and maximum height as 250px.
 
 ```jsx
 export const query = graphql`
   query indexQuery {
     fileName: file(relativePath: { eq: "images/myimage.jpg" }) {
       childImageSharp {
-        sizes(maxWidth: 400, maxHeight: 250) {
-          ...GatsbyImageSharpSizes
+        fluid(maxWidth: 400, maxHeight: 250) {
+          ...GatsbyImageSharpFluid
         }
       }
     }
   }
-`;
+`
 ```
 
 ## Optimizing Images With Gatsby Image
@@ -50,7 +50,7 @@ export const query = graphql`
 Here is an image component that uses the query from the previous example:
 
 ```
-<Img sizes={data.fileName.childImageSharp.sizes}  />
+<Img fluid={data.fileName.childImageSharp.fluid}  />
 ```
 
 ## Using Fragments To Standardize Formatting
@@ -63,8 +63,8 @@ A custom fragment is an easy way to standardize formatting and re-use it on mult
 export const squareImage = graphql`
 fragment squareImage on File {
       childImageSharp {
-        sizes(maxWidth: 200, maxHeight: 200) {
-          ...GatsbyImageSharpSizes
+        fluid(maxWidth: 200, maxHeight: 200) {
+          ...GatsbyImageSharpFluid
         }
       }
 }

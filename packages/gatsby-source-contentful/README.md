@@ -25,7 +25,7 @@ plugins: [
       accessToken: `your_access_token`,
     },
   },
-];
+]
 ```
 
 ### Using Preview API
@@ -41,7 +41,7 @@ plugins: [
       host: `preview.contentful.com`,
     },
   },
-];
+]
 ```
 
 ### Configuration options
@@ -106,7 +106,7 @@ like the following:
         id
         productName
         image {
-          resolutions(width: 100) {
+          fixed(width: 100) {
             width
             height
             src

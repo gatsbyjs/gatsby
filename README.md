@@ -8,9 +8,27 @@
 
 <img alt="Gatsby" src="https://www.gatsbyjs.org/monogram.svg" width="100">
 
-# Gatsby
+# Gatsby V2 Beta
 
-⚛️📄🚀 Blazing-fast static site generator for React
+⚛️📄🚀 Blazing-fast site generator for React
+
+**NOTE:** This branch is the beta version of Gatsby V2. You can find documentation at [next.gatsbyjs.org](https://next.gatsbyjs.org/).
+
+For `gatsby@1`, please see [the v1 branch](https://github.com/gatsbyjs/gatsby/tree/v1).
+
+**Are you using V1 and want to try upgrading and help prepare Gatsby for v2? Check out [our V1 => V2 migration guide](https://next.gatsbyjs.org//docs/migrating-from-v1-to-v2/).**
+
+**How are pull requests being handled during the v2 beta?**
+
+The following policy will be in place during the v2 beta:
+
+- We will only accept _bug fixes_ for Gatsby v1. Any PRs opened against v1 that are not bug fixes will be closed
+
+- If the bug fix is applicable to v2, we will open an additional issue to track porting the change to v2
+
+- All _new features_ should be opened as pull requests against v2 (the `master` branch)
+
+We're using this policy as the Gatsby team currently spends a significant amount of time maintaining two active branches - the v1 branch and the v2 branch - we'd like to limit this work to focus on getting v2 released and start working on oft-requested new features like schema snapshots and schema stitching.
 
 ## Showcase
 
@@ -234,6 +252,8 @@ Websites built with Gatsby:
 ## Docs
 
 **[View the docs on gatsbyjs.org](https://www.gatsbyjs.org/docs/)**
+
+[Migrating from v1 to v2?](https://www.gatsbyjs.org/docs/migrating-from-v1-to-v2/)
 
 [Migrating from v0 to v1?](https://www.gatsbyjs.org/docs/migrating-from-v0-to-v1/)
 

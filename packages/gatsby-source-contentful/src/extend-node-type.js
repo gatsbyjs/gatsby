@@ -5,7 +5,7 @@ const {
   GraphQLString,
   GraphQLInt,
   GraphQLFloat,
-} = require(`graphql`)
+} = require(`gatsby/graphql`)
 const qs = require(`qs`)
 const base64Img = require(`base64-img`)
 const _ = require(`lodash`)
@@ -74,7 +74,7 @@ const createUrl = (imgUrl, options = {}) => {
 }
 exports.createUrl = createUrl
 
-const resolveResponsiveResolution = (image, options) => {
+const resolveFixed = (image, options) => {
   if (!isImage(image)) return null
 
   const { baseUrl, width, aspectRatio } = getBasicImageProps(image, options)
@@ -100,15 +100,15 @@ const resolveResponsiveResolution = (image, options) => {
   //
   // This is enough sizes to provide close to the optimal image size for every
   // device size / screen resolution
-  let sizes = []
-  sizes.push(options.width)
-  sizes.push(options.width * 1.5)
-  sizes.push(options.width * 2)
-  sizes.push(options.width * 3)
-  sizes = sizes.map(Math.round)
+  let fixedSizes = []
+  fixedSizes.push(options.width)
+  fixedSizes.push(options.width * 1.5)
+  fixedSizes.push(options.width * 2)
+  fixedSizes.push(options.width * 3)
+  fixedSizes = fixedSizes.map(Math.round)
 
   // Filter out sizes larger than the image's width.
-  const filteredSizes = sizes.filter(size => size < width)
+  const filteredSizes = fixedSizes.filter(size => size < width)
 
   // Sort sizes for prettiness.
   const sortedSizes = _.sortBy(filteredSizes)
@@ -160,9 +160,9 @@ const resolveResponsiveResolution = (image, options) => {
     srcSet,
   }
 }
-exports.resolveResponsiveResolution = resolveResponsiveResolution
+exports.resolveFixed = resolveFixed
 
-const resolveResponsiveSizes = (image, options) => {
+const resolveFluid = (image, options) => {
   if (!isImage(image)) return null
 
   const { baseUrl, width, aspectRatio } = getBasicImageProps(image, options)
@@ -187,17 +187,17 @@ const resolveResponsiveSizes = (image, options) => {
   //
   // This is enough sizes to provide close to the optimal image size for every
   // device size / screen resolution
-  let sizes = []
-  sizes.push(options.maxWidth / 4)
-  sizes.push(options.maxWidth / 2)
-  sizes.push(options.maxWidth)
-  sizes.push(options.maxWidth * 1.5)
-  sizes.push(options.maxWidth * 2)
-  sizes.push(options.maxWidth * 3)
-  sizes = sizes.map(Math.round)
+  let fluidSizes = []
+  fluidSizes.push(options.maxWidth / 4)
+  fluidSizes.push(options.maxWidth / 2)
+  fluidSizes.push(options.maxWidth)
+  fluidSizes.push(options.maxWidth * 1.5)
+  fluidSizes.push(options.maxWidth * 2)
+  fluidSizes.push(options.maxWidth * 3)
+  fluidSizes = fluidSizes.map(Math.round)
 
   // Filter out sizes larger than the image's maxWidth.
-  const filteredSizes = sizes.filter(size => size < width)
+  const filteredSizes = fluidSizes.filter(size => size < width)
 
   // Add the original image to ensure the largest image possible
   // is available for small images.
@@ -230,7 +230,7 @@ const resolveResponsiveSizes = (image, options) => {
     sizes: options.sizes,
   }
 }
-exports.resolveResponsiveSizes = resolveResponsiveSizes
+exports.resolveFluid = resolveFluid
 
 const resolveResize = (image, options) => {
   if (!isImage(image)) return null
@@ -262,6 +262,200 @@ const resolveResize = (image, options) => {
 }
 
 exports.resolveResize = resolveResize
+
+const fixedNodeType = ({ name, getTracedSVG }) => {
+  return {
+    type: new GraphQLObjectType({
+      name: name,
+      fields: {
+        base64: {
+          type: GraphQLString,
+          resolve(imageProps) {
+            return getBase64Image(imageProps)
+          },
+        },
+        tracedSVG: {
+          type: GraphQLString,
+          resolve: getTracedSVG,
+        },
+        aspectRatio: { type: GraphQLFloat },
+        width: { type: GraphQLFloat },
+        height: { type: GraphQLFloat },
+        src: { type: GraphQLString },
+        srcSet: { type: GraphQLString },
+        srcWebp: {
+          type: GraphQLString,
+          resolve({ image, options, context }) {
+            if (
+              _.get(image, `file.contentType`) === `image/webp` ||
+              options.toFormat === `webp`
+            ) {
+              return null
+            }
+
+            const fixed = resolveFixed(image, {
+              ...options,
+              toFormat: `webp`,
+            })
+            return _.get(fixed, `src`)
+          },
+        },
+        srcSetWebp: {
+          type: GraphQLString,
+          resolve({ image, options, context }) {
+            if (
+              _.get(image, `file.contentType`) === `image/webp` ||
+              options.toFormat === `webp`
+            ) {
+              return null
+            }
+
+            const fixed = resolveFixed(image, {
+              ...options,
+              toFormat: `webp`,
+            })
+            return _.get(fixed, `srcSet`)
+          },
+        },
+      },
+    }),
+    args: {
+      width: {
+        type: GraphQLInt,
+        defaultValue: 400,
+      },
+      height: {
+        type: GraphQLInt,
+      },
+      quality: {
+        type: GraphQLInt,
+        defaultValue: 50,
+      },
+      toFormat: {
+        type: ImageFormatType,
+        defaultValue: ``,
+      },
+      resizingBehavior: {
+        type: ImageResizingBehavior,
+      },
+      cropFocus: {
+        type: ImageCropFocusType,
+        defaultValue: null,
+      },
+      background: {
+        type: GraphQLString,
+        defaultValue: null,
+      },
+    },
+    resolve: (image, options, context) =>
+      Promise.resolve(resolveFixed(image, options)).then(node => {
+        return {
+          ...node,
+          image,
+          options,
+          context,
+        }
+      }),
+  }
+}
+
+const fluidNodeType = ({ name, getTracedSVG }) => {
+  return {
+    type: new GraphQLObjectType({
+      name: name,
+      fields: {
+        base64: {
+          type: GraphQLString,
+          resolve(imageProps) {
+            return getBase64Image(imageProps)
+          },
+        },
+        tracedSVG: {
+          type: GraphQLString,
+          resolve: getTracedSVG,
+        },
+        aspectRatio: { type: GraphQLFloat },
+        src: { type: GraphQLString },
+        srcSet: { type: GraphQLString },
+        srcWebp: {
+          type: GraphQLString,
+          resolve({ image, options, context }) {
+            if (
+              _.get(image, `file.contentType`) === `image/webp` ||
+              options.toFormat === `webp`
+            ) {
+              return null
+            }
+
+            const fluid = resolveFluid(image, {
+              ...options,
+              toFormat: `webp`,
+            })
+            return _.get(fluid, `src`)
+          },
+        },
+        srcSetWebp: {
+          type: GraphQLString,
+          resolve({ image, options, context }) {
+            if (
+              _.get(image, `file.contentType`) === `image/webp` ||
+              options.toFormat === `webp`
+            ) {
+              return null
+            }
+
+            const fluid = resolveFluid(image, {
+              ...options,
+              toFormat: `webp`,
+            })
+            return _.get(fluid, `srcSet`)
+          },
+        },
+        sizes: { type: GraphQLString },
+      },
+    }),
+    args: {
+      maxWidth: {
+        type: GraphQLInt,
+        defaultValue: 800,
+      },
+      maxHeight: {
+        type: GraphQLInt,
+      },
+      quality: {
+        type: GraphQLInt,
+        defaultValue: 50,
+      },
+      toFormat: {
+        type: ImageFormatType,
+        defaultValue: ``,
+      },
+      resizingBehavior: {
+        type: ImageResizingBehavior,
+      },
+      cropFocus: {
+        type: ImageCropFocusType,
+        defaultValue: null,
+      },
+      background: {
+        type: GraphQLString,
+        defaultValue: null,
+      },
+      sizes: {
+        type: GraphQLString,
+      },
+    },
+    resolve: (image, options, context) =>
+      Promise.resolve(resolveFluid(image, options)).then(node => {
+        return {
+          ...node,
+          image,
+          options,
+          context,
+        }
+      }),
+  }
+}
 
 exports.extendNodeType = ({ type, store }) => {
   if (type.name !== `ContentfulAsset`) {
@@ -295,307 +489,23 @@ exports.extendNodeType = ({ type, store }) => {
     })
   }
 
+  // TODO: Remove resolutionsNode and sizesNode for Gatsby v3
+  const fixedNode = fixedNodeType({ name: `ContentfulFixed`, getTracedSVG })
+  const resolutionsNode = fixedNodeType({
+    name: `ContentfulResolutions`,
+    getTracedSVG,
+  })
+  resolutionsNode.deprecationReason = `Resolutions was deprecated in Gatsby v2. It's been renamed to "fixed" https://example.com/write-docs-and-fix-this-example-link`
+
+  const fluidNode = fluidNodeType({ name: `ContentfulFluid`, getTracedSVG })
+  const sizesNode = fluidNodeType({ name: `ContentfulSizes`, getTracedSVG })
+  sizesNode.deprecationReason = `Sizes was deprecated in Gatsby v2. It's been renamed to "fluid" https://example.com/write-docs-and-fix-this-example-link`
+
   return {
-    resolutions: {
-      type: new GraphQLObjectType({
-        name: `ContentfulResolutions`,
-        fields: {
-          base64: {
-            type: GraphQLString,
-            resolve(imageProps) {
-              return getBase64Image(imageProps)
-            },
-          },
-          tracedSVG: {
-            type: GraphQLString,
-            resolve: getTracedSVG,
-          },
-          aspectRatio: { type: GraphQLFloat },
-          width: { type: GraphQLFloat },
-          height: { type: GraphQLFloat },
-          src: { type: GraphQLString },
-          srcSet: { type: GraphQLString },
-          srcWebp: {
-            type: GraphQLString,
-            resolve({ image, options, context }) {
-              if (
-                _.get(image, `file.contentType`) === `image/webp` ||
-                options.toFormat === `webp`
-              ) {
-                return null
-              }
-
-              const resolutions = resolveResponsiveResolution(image, {
-                ...options,
-                toFormat: `webp`,
-              })
-              return _.get(resolutions, `src`)
-            },
-          },
-          srcSetWebp: {
-            type: GraphQLString,
-            resolve({ image, options, context }) {
-              if (
-                _.get(image, `file.contentType`) === `image/webp` ||
-                options.toFormat === `webp`
-              ) {
-                return null
-              }
-
-              const resolutions = resolveResponsiveResolution(image, {
-                ...options,
-                toFormat: `webp`,
-              })
-              return _.get(resolutions, `srcSet`)
-            },
-          },
-        },
-      }),
-      args: {
-        width: {
-          type: GraphQLInt,
-          defaultValue: 400,
-        },
-        height: {
-          type: GraphQLInt,
-        },
-        quality: {
-          type: GraphQLInt,
-          defaultValue: 50,
-        },
-        toFormat: {
-          type: ImageFormatType,
-          defaultValue: ``,
-        },
-        resizingBehavior: {
-          type: ImageResizingBehavior,
-        },
-        cropFocus: {
-          type: ImageCropFocusType,
-          defaultValue: null,
-        },
-        background: {
-          type: GraphQLString,
-          defaultValue: null,
-        },
-      },
-      resolve: (image, options, context) =>
-        Promise.resolve(resolveResponsiveResolution(image, options)).then(
-          node => {
-            return {
-              ...node,
-              image,
-              options,
-              context,
-            }
-          }
-        ),
-    },
-    sizes: {
-      type: new GraphQLObjectType({
-        name: `ContentfulSizes`,
-        fields: {
-          base64: {
-            type: GraphQLString,
-            resolve(imageProps) {
-              return getBase64Image(imageProps)
-            },
-          },
-          tracedSVG: {
-            type: GraphQLString,
-            resolve: getTracedSVG,
-          },
-          aspectRatio: { type: GraphQLFloat },
-          src: { type: GraphQLString },
-          srcSet: { type: GraphQLString },
-          srcWebp: {
-            type: GraphQLString,
-            resolve({ image, options, context }) {
-              if (
-                _.get(image, `file.contentType`) === `image/webp` ||
-                options.toFormat === `webp`
-              ) {
-                return null
-              }
-
-              const sizes = resolveResponsiveSizes(image, {
-                ...options,
-                toFormat: `webp`,
-              })
-              return _.get(sizes, `src`)
-            },
-          },
-          srcSetWebp: {
-            type: GraphQLString,
-            resolve({ image, options, context }) {
-              if (
-                _.get(image, `file.contentType`) === `image/webp` ||
-                options.toFormat === `webp`
-              ) {
-                return null
-              }
-
-              const sizes = resolveResponsiveSizes(image, {
-                ...options,
-                toFormat: `webp`,
-              })
-              return _.get(sizes, `srcSet`)
-            },
-          },
-          sizes: { type: GraphQLString },
-        },
-      }),
-      args: {
-        maxWidth: {
-          type: GraphQLInt,
-          defaultValue: 800,
-        },
-        maxHeight: {
-          type: GraphQLInt,
-        },
-        quality: {
-          type: GraphQLInt,
-          defaultValue: 50,
-        },
-        toFormat: {
-          type: ImageFormatType,
-          defaultValue: ``,
-        },
-        resizingBehavior: {
-          type: ImageResizingBehavior,
-        },
-        cropFocus: {
-          type: ImageCropFocusType,
-          defaultValue: null,
-        },
-        background: {
-          type: GraphQLString,
-          defaultValue: null,
-        },
-        sizes: {
-          type: GraphQLString,
-        },
-      },
-      resolve: (image, options, context) =>
-        Promise.resolve(resolveResponsiveSizes(image, options)).then(node => {
-          return {
-            ...node,
-            image,
-            options,
-            context,
-          }
-        }),
-    },
-    responsiveResolution: {
-      deprecationReason: `We dropped the "responsive" part of the name to make it shorter https://github.com/gatsbyjs/gatsby/pull/2320/`,
-      type: new GraphQLObjectType({
-        name: `ContentfulResponsiveResolution`,
-        fields: {
-          base64: {
-            type: GraphQLString,
-            resolve(imageProps) {
-              return getBase64Image(imageProps)
-            },
-          },
-          tracedSVG: {
-            type: GraphQLString,
-            resolve: getTracedSVG,
-          },
-          aspectRatio: { type: GraphQLFloat },
-          width: { type: GraphQLFloat },
-          height: { type: GraphQLFloat },
-          src: { type: GraphQLString },
-          srcSet: { type: GraphQLString },
-        },
-      }),
-      args: {
-        width: {
-          type: GraphQLInt,
-          defaultValue: 400,
-        },
-        height: {
-          type: GraphQLInt,
-        },
-        quality: {
-          type: GraphQLInt,
-          defaultValue: 50,
-        },
-        toFormat: {
-          type: ImageFormatType,
-          defaultValue: ``,
-        },
-        resizingBehavior: {
-          type: ImageResizingBehavior,
-        },
-        cropFocus: {
-          type: ImageCropFocusType,
-          defaultValue: null,
-        },
-        background: {
-          type: GraphQLString,
-          defaultValue: null,
-        },
-      },
-      resolve(image, options, context) {
-        return resolveResponsiveResolution(image, options)
-      },
-    },
-    responsiveSizes: {
-      deprecationReason: `We dropped the "responsive" part of the name to make it shorter https://github.com/gatsbyjs/gatsby/pull/2320/`,
-      type: new GraphQLObjectType({
-        name: `ContentfulResponsiveSizes`,
-        fields: {
-          base64: {
-            type: GraphQLString,
-            resolve(imageProps) {
-              return getBase64Image(imageProps)
-            },
-          },
-          tracedSVG: {
-            type: GraphQLString,
-            resolve: getTracedSVG,
-          },
-          aspectRatio: { type: GraphQLFloat },
-          src: { type: GraphQLString },
-          srcSet: { type: GraphQLString },
-          sizes: { type: GraphQLString },
-        },
-      }),
-      args: {
-        maxWidth: {
-          type: GraphQLInt,
-          defaultValue: 800,
-        },
-        maxHeight: {
-          type: GraphQLInt,
-        },
-        quality: {
-          type: GraphQLInt,
-          defaultValue: 50,
-        },
-        toFormat: {
-          type: ImageFormatType,
-          defaultValue: ``,
-        },
-        resizingBehavior: {
-          type: ImageResizingBehavior,
-        },
-        cropFocus: {
-          type: ImageCropFocusType,
-          defaultValue: null,
-        },
-        sizes: {
-          type: GraphQLString,
-        },
-        background: {
-          type: GraphQLString,
-          defaultValue: null,
-        },
-      },
-      resolve(image, options, context) {
-        return resolveResponsiveSizes(image, options)
-      },
-    },
+    fixed: fixedNode,
+    resolutions: resolutionsNode,
+    fluid: fluidNode,
+    sizes: sizesNode,
     resize: {
       type: new GraphQLObjectType({
         name: `ContentfulResize`,

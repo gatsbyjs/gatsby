@@ -2,6 +2,7 @@ import React, { Component } from "react"
 import PropTypes from "prop-types"
 import PostIcons from "../components/PostIcons"
 import Img from "gatsby-image"
+import Layout from "../layouts"
 
 import { rhythm } from "../utils/typography"
 
@@ -10,7 +11,7 @@ class PostTemplate extends Component {
     const post = this.props.data.wordpressPost
 
     return (
-      <div>
+      <Layout>
         <h1 dangerouslySetInnerHTML={{ __html: post.title }} />
         <PostIcons node={post} css={{ marginBottom: rhythm(1 / 2) }} />
         <div dangerouslySetInnerHTML={{ __html: post.content }} />
@@ -22,12 +23,12 @@ class PostTemplate extends Component {
                 <div key={`${i} image-gallery`}>
                   <h2>ACF Image Gallery</h2>
                   {layout.pictures.map(({ picture }) => {
-                    const img = picture.localFile.childImageSharp.sizes
+                    const img = picture.localFile.childImageSharp.fluid
                     return (
                       <Img
                         css={{ marginBottom: rhythm(1) }}
                         key={img.src}
-                        sizes={img}
+                        fluid={img}
                       />
                     )
                   })}
@@ -35,25 +36,24 @@ class PostTemplate extends Component {
               )
             }
             if (layout.__typename === `WordPressAcf_post_photo`) {
-              const img = layout.photo.localFile.childImageSharp.sizes
+              const img = layout.photo.localFile.childImageSharp.fluid
               return (
                 <div key={`${i}-photo`}>
                   <h2>ACF Post Photo</h2>
                   <Img
                     css={{ marginBottom: rhythm(1) }}
                     src={img.src}
-                    sizes={img}
+                    fluid={img}
                   />
                 </div>
               )
             }
             return null
           })}
-      </div>
+      </Layout>
     )
   }
 }
-//<img src={post.image.sizes.thumbnail} />
 
 PostTemplate.propTypes = {
   data: PropTypes.object.isRequired,
@@ -75,8 +75,8 @@ export const pageQuery = graphql`
             photo {
               localFile {
                 childImageSharp {
-                  sizes(maxWidth: 680) {
-                    ...GatsbyImageSharpSizes
+                  fluid(maxWidth: 680) {
+                    ...GatsbyImageSharpFluid
                   }
                 }
               }
@@ -87,8 +87,8 @@ export const pageQuery = graphql`
               picture {
                 localFile {
                   childImageSharp {
-                    sizes(maxWidth: 680) {
-                      ...GatsbyImageSharpSizes
+                    fluid(maxWidth: 680) {
+                      ...GatsbyImageSharpFluid
                     }
                   }
                 }

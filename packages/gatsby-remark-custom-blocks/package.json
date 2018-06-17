@@ -1,18 +1,19 @@
 {
   "name": "gatsby-remark-custom-blocks",
   "description": "Gatsby remark plugin for adding custom blocks in markdown",
-  "version": "1.0.4",
+  "version": "2.0.0-alpha.2",
   "author": "Mohammad Asad Mohammad <m91.alahmadi@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "babel-runtime": "^6.26.0",
-    "remark-custom-blocks": "^1.0.6"
+    "@babel/runtime": "7.0.0-beta.51",
+    "remark-custom-blocks": "^2.1.2"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "cross-env": "^5.0.5",
+    "@babel/cli": "7.0.0-beta.51",
+    "@babel/core": "7.0.0-beta.51",
+    "cross-env": "^5.1.4",
     "rimraf": "^2.6.2",
     "unist-util-find": "^1.0.1"
   },
@@ -29,11 +30,14 @@
   ],
   "license": "MIT",
   "main": "index.js",
+  "peerDependencies": {
+    "gatsby": ">2.0.0-alpha"
+  },
   "private": false,
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-custom-blocks",
   "scripts": {
-    "build": "babel --out-dir . --ignore __tests__ src",
+    "build": "babel --out-dir . --ignore **/__tests__ src",
     "prepublish": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir . --ignore __tests__"
+    "watch": "babel -w src --out-dir . --ignore **/__tests__"
   }
 }

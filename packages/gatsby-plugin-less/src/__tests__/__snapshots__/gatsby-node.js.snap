@@ -1,0 +1,809 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`gatsby-plugin-less Stage: build-html / Less options #1 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "module": Object {
+          "rules": Array [
+            Object {
+              "oneOf": Array [
+                Object {
+                  "test": /\\\\\\.module\\\\\\.less\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css({\\"modules\\":true,\\"importLoaders\\":1})",
+                    "postcss({})",
+                    Object {
+                      "loader": "/resolved/path/less-loader",
+                      "options": Object {
+                        "modifyVars": Object {
+                          "text-color": "#fff",
+                        },
+                        "sourceMap": true,
+                        "strictMath": true,
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.less\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css({\\"importLoaders\\":1})",
+                    "postcss({})",
+                    Object {
+                      "loader": "/resolved/path/less-loader",
+                      "options": Object {
+                        "modifyVars": Object {
+                          "text-color": "#fff",
+                        },
+                        "sourceMap": true,
+                        "strictMath": true,
+                      },
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      },
+    ],
+  ],
+}
+`;
+
+exports[`gatsby-plugin-less Stage: build-html / Less options #2 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "module": Object {
+          "rules": Array [
+            Object {
+              "oneOf": Array [
+                Object {
+                  "test": /\\\\\\.module\\\\\\.less\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css({\\"modules\\":true,\\"importLoaders\\":1})",
+                    "postcss({})",
+                    Object {
+                      "loader": "/resolved/path/less-loader",
+                      "options": Object {
+                        "modifyVars": Object {
+                          "text-color": "#fff",
+                        },
+                        "sourceMap": true,
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.less\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css({\\"importLoaders\\":1})",
+                    "postcss({})",
+                    Object {
+                      "loader": "/resolved/path/less-loader",
+                      "options": Object {
+                        "modifyVars": Object {
+                          "text-color": "#fff",
+                        },
+                        "sourceMap": true,
+                      },
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      },
+    ],
+  ],
+}
+`;
+
+exports[`gatsby-plugin-less Stage: build-html / No options 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "module": Object {
+          "rules": Array [
+            Object {
+              "oneOf": Array [
+                Object {
+                  "test": /\\\\\\.module\\\\\\.less\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css({\\"modules\\":true,\\"importLoaders\\":1})",
+                    "postcss({})",
+                    Object {
+                      "loader": "/resolved/path/less-loader",
+                      "options": Object {
+                        "sourceMap": true,
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.less\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css({\\"importLoaders\\":1})",
+                    "postcss({})",
+                    Object {
+                      "loader": "/resolved/path/less-loader",
+                      "options": Object {
+                        "sourceMap": true,
+                      },
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      },
+    ],
+  ],
+}
+`;
+
+exports[`gatsby-plugin-less Stage: build-html / PostCss plugins 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "module": Object {
+          "rules": Array [
+            Object {
+              "oneOf": Array [
+                Object {
+                  "test": /\\\\\\.module\\\\\\.less\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css({\\"modules\\":true,\\"importLoaders\\":1})",
+                    "postcss({\\"plugins\\":[\\"test1\\"]})",
+                    Object {
+                      "loader": "/resolved/path/less-loader",
+                      "options": Object {
+                        "sourceMap": true,
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.less\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css({\\"importLoaders\\":1})",
+                    "postcss({\\"plugins\\":[\\"test1\\"]})",
+                    Object {
+                      "loader": "/resolved/path/less-loader",
+                      "options": Object {
+                        "sourceMap": true,
+                      },
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      },
+    ],
+  ],
+}
+`;
+
+exports[`gatsby-plugin-less Stage: build-javascript / Less options #1 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "module": Object {
+          "rules": Array [
+            Object {
+              "oneOf": Array [
+                Object {
+                  "test": /\\\\\\.module\\\\\\.less\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css({\\"modules\\":true,\\"importLoaders\\":1})",
+                    "postcss({})",
+                    Object {
+                      "loader": "/resolved/path/less-loader",
+                      "options": Object {
+                        "modifyVars": Object {
+                          "text-color": "#fff",
+                        },
+                        "sourceMap": true,
+                        "strictMath": true,
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.less\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css({\\"importLoaders\\":1})",
+                    "postcss({})",
+                    Object {
+                      "loader": "/resolved/path/less-loader",
+                      "options": Object {
+                        "modifyVars": Object {
+                          "text-color": "#fff",
+                        },
+                        "sourceMap": true,
+                        "strictMath": true,
+                      },
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      },
+    ],
+  ],
+}
+`;
+
+exports[`gatsby-plugin-less Stage: build-javascript / Less options #2 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "module": Object {
+          "rules": Array [
+            Object {
+              "oneOf": Array [
+                Object {
+                  "test": /\\\\\\.module\\\\\\.less\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css({\\"modules\\":true,\\"importLoaders\\":1})",
+                    "postcss({})",
+                    Object {
+                      "loader": "/resolved/path/less-loader",
+                      "options": Object {
+                        "modifyVars": Object {
+                          "text-color": "#fff",
+                        },
+                        "sourceMap": true,
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.less\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css({\\"importLoaders\\":1})",
+                    "postcss({})",
+                    Object {
+                      "loader": "/resolved/path/less-loader",
+                      "options": Object {
+                        "modifyVars": Object {
+                          "text-color": "#fff",
+                        },
+                        "sourceMap": true,
+                      },
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      },
+    ],
+  ],
+}
+`;
+
+exports[`gatsby-plugin-less Stage: build-javascript / No options 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "module": Object {
+          "rules": Array [
+            Object {
+              "oneOf": Array [
+                Object {
+                  "test": /\\\\\\.module\\\\\\.less\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css({\\"modules\\":true,\\"importLoaders\\":1})",
+                    "postcss({})",
+                    Object {
+                      "loader": "/resolved/path/less-loader",
+                      "options": Object {
+                        "sourceMap": true,
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.less\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css({\\"importLoaders\\":1})",
+                    "postcss({})",
+                    Object {
+                      "loader": "/resolved/path/less-loader",
+                      "options": Object {
+                        "sourceMap": true,
+                      },
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      },
+    ],
+  ],
+}
+`;
+
+exports[`gatsby-plugin-less Stage: build-javascript / PostCss plugins 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "module": Object {
+          "rules": Array [
+            Object {
+              "oneOf": Array [
+                Object {
+                  "test": /\\\\\\.module\\\\\\.less\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css({\\"modules\\":true,\\"importLoaders\\":1})",
+                    "postcss({\\"plugins\\":[\\"test1\\"]})",
+                    Object {
+                      "loader": "/resolved/path/less-loader",
+                      "options": Object {
+                        "sourceMap": true,
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.less\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css({\\"importLoaders\\":1})",
+                    "postcss({\\"plugins\\":[\\"test1\\"]})",
+                    Object {
+                      "loader": "/resolved/path/less-loader",
+                      "options": Object {
+                        "sourceMap": true,
+                      },
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      },
+    ],
+  ],
+}
+`;
+
+exports[`gatsby-plugin-less Stage: develop / Less options #1 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "module": Object {
+          "rules": Array [
+            Object {
+              "oneOf": Array [
+                Object {
+                  "test": /\\\\\\.module\\\\\\.less\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css({\\"modules\\":true,\\"importLoaders\\":1})",
+                    "postcss({})",
+                    Object {
+                      "loader": "/resolved/path/less-loader",
+                      "options": Object {
+                        "modifyVars": Object {
+                          "text-color": "#fff",
+                        },
+                        "sourceMap": true,
+                        "strictMath": true,
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.less\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css({\\"importLoaders\\":1})",
+                    "postcss({})",
+                    Object {
+                      "loader": "/resolved/path/less-loader",
+                      "options": Object {
+                        "modifyVars": Object {
+                          "text-color": "#fff",
+                        },
+                        "sourceMap": true,
+                        "strictMath": true,
+                      },
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      },
+    ],
+  ],
+}
+`;
+
+exports[`gatsby-plugin-less Stage: develop / Less options #2 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "module": Object {
+          "rules": Array [
+            Object {
+              "oneOf": Array [
+                Object {
+                  "test": /\\\\\\.module\\\\\\.less\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css({\\"modules\\":true,\\"importLoaders\\":1})",
+                    "postcss({})",
+                    Object {
+                      "loader": "/resolved/path/less-loader",
+                      "options": Object {
+                        "modifyVars": Object {
+                          "text-color": "#fff",
+                        },
+                        "sourceMap": true,
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.less\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css({\\"importLoaders\\":1})",
+                    "postcss({})",
+                    Object {
+                      "loader": "/resolved/path/less-loader",
+                      "options": Object {
+                        "modifyVars": Object {
+                          "text-color": "#fff",
+                        },
+                        "sourceMap": true,
+                      },
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      },
+    ],
+  ],
+}
+`;
+
+exports[`gatsby-plugin-less Stage: develop / No options 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "module": Object {
+          "rules": Array [
+            Object {
+              "oneOf": Array [
+                Object {
+                  "test": /\\\\\\.module\\\\\\.less\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css({\\"modules\\":true,\\"importLoaders\\":1})",
+                    "postcss({})",
+                    Object {
+                      "loader": "/resolved/path/less-loader",
+                      "options": Object {
+                        "sourceMap": true,
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.less\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css({\\"importLoaders\\":1})",
+                    "postcss({})",
+                    Object {
+                      "loader": "/resolved/path/less-loader",
+                      "options": Object {
+                        "sourceMap": true,
+                      },
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      },
+    ],
+  ],
+}
+`;
+
+exports[`gatsby-plugin-less Stage: develop / PostCss plugins 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "module": Object {
+          "rules": Array [
+            Object {
+              "oneOf": Array [
+                Object {
+                  "test": /\\\\\\.module\\\\\\.less\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css({\\"modules\\":true,\\"importLoaders\\":1})",
+                    "postcss({\\"plugins\\":[\\"test1\\"]})",
+                    Object {
+                      "loader": "/resolved/path/less-loader",
+                      "options": Object {
+                        "sourceMap": true,
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.less\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css({\\"importLoaders\\":1})",
+                    "postcss({\\"plugins\\":[\\"test1\\"]})",
+                    Object {
+                      "loader": "/resolved/path/less-loader",
+                      "options": Object {
+                        "sourceMap": true,
+                      },
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      },
+    ],
+  ],
+}
+`;
+
+exports[`gatsby-plugin-less Stage: develop-html / Less options #1 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "module": Object {
+          "rules": Array [
+            Object {
+              "oneOf": Array [
+                Object {
+                  "test": /\\\\\\.module\\\\\\.less\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css({\\"modules\\":true,\\"importLoaders\\":1})",
+                    "postcss({})",
+                    Object {
+                      "loader": "/resolved/path/less-loader",
+                      "options": Object {
+                        "modifyVars": Object {
+                          "text-color": "#fff",
+                        },
+                        "sourceMap": true,
+                        "strictMath": true,
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.less\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css({\\"importLoaders\\":1})",
+                    "postcss({})",
+                    Object {
+                      "loader": "/resolved/path/less-loader",
+                      "options": Object {
+                        "modifyVars": Object {
+                          "text-color": "#fff",
+                        },
+                        "sourceMap": true,
+                        "strictMath": true,
+                      },
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      },
+    ],
+  ],
+}
+`;
+
+exports[`gatsby-plugin-less Stage: develop-html / Less options #2 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "module": Object {
+          "rules": Array [
+            Object {
+              "oneOf": Array [
+                Object {
+                  "test": /\\\\\\.module\\\\\\.less\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css({\\"modules\\":true,\\"importLoaders\\":1})",
+                    "postcss({})",
+                    Object {
+                      "loader": "/resolved/path/less-loader",
+                      "options": Object {
+                        "modifyVars": Object {
+                          "text-color": "#fff",
+                        },
+                        "sourceMap": true,
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.less\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css({\\"importLoaders\\":1})",
+                    "postcss({})",
+                    Object {
+                      "loader": "/resolved/path/less-loader",
+                      "options": Object {
+                        "modifyVars": Object {
+                          "text-color": "#fff",
+                        },
+                        "sourceMap": true,
+                      },
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      },
+    ],
+  ],
+}
+`;
+
+exports[`gatsby-plugin-less Stage: develop-html / No options 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "module": Object {
+          "rules": Array [
+            Object {
+              "oneOf": Array [
+                Object {
+                  "test": /\\\\\\.module\\\\\\.less\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css({\\"modules\\":true,\\"importLoaders\\":1})",
+                    "postcss({})",
+                    Object {
+                      "loader": "/resolved/path/less-loader",
+                      "options": Object {
+                        "sourceMap": true,
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.less\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css({\\"importLoaders\\":1})",
+                    "postcss({})",
+                    Object {
+                      "loader": "/resolved/path/less-loader",
+                      "options": Object {
+                        "sourceMap": true,
+                      },
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      },
+    ],
+  ],
+}
+`;
+
+exports[`gatsby-plugin-less Stage: develop-html / PostCss plugins 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "module": Object {
+          "rules": Array [
+            Object {
+              "oneOf": Array [
+                Object {
+                  "test": /\\\\\\.module\\\\\\.less\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css({\\"modules\\":true,\\"importLoaders\\":1})",
+                    "postcss({\\"plugins\\":[\\"test1\\"]})",
+                    Object {
+                      "loader": "/resolved/path/less-loader",
+                      "options": Object {
+                        "sourceMap": true,
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.less\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css({\\"importLoaders\\":1})",
+                    "postcss({\\"plugins\\":[\\"test1\\"]})",
+                    Object {
+                      "loader": "/resolved/path/less-loader",
+                      "options": Object {
+                        "sourceMap": true,
+                      },
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      },
+    ],
+  ],
+}
+`;

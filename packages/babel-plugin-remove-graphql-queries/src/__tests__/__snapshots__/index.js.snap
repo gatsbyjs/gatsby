@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Transforms queries in <StaticQuery> 1`] = `
+"import staticQueryData from \\"public/static/d/2626356014.json\\";
+import React from 'react';
+import { StaticQuery } from 'gatsby';
+export default (() => React.createElement(StaticQuery, {
+  query: \\"2626356014\\",
+  render: data => React.createElement(\\"div\\", null, data.site.siteMetadata.title),
+  data: staticQueryData
+}));"
+`;
+
+exports[`Transforms queries in page components 1`] = `
+"import React from 'react';
+export default (() => React.createElement(\\"div\\", null, data.site.siteMetadata.title));
+export const query = \\"3227941719\\";"
+`;

@@ -7,19 +7,19 @@ See it in action in the [Tutorial](https://www.gatsbyjs.org/tutorial/part-two/)
 
 ## Install
 
-`npm install --save gatsby-plugin-typography`
+`npm install --save gatsby-plugin-typography react-typography typography`
 
 ## Why to use
 
 A typical `typography.js` file utilizing one of its themes might look like this:
 
 ```javascript
-import Typography from "typography";
-import grandViewTheme from "typography-theme-grand-view";
+import Typography from "typography"
+import grandViewTheme from "typography-theme-grand-view"
 
-const typography = new Typography(grandViewTheme);
+const typography = new Typography(grandViewTheme)
 
-export default typography;
+export default typography
 ```
 
 You then have to take the exported stylesheets and inline them in your entry file. Since a theme comes with two fonts, you also have to make sure you have the fonts available somehow.
@@ -39,7 +39,7 @@ module.exports = {
       },
     },
   ],
-};
+}
 ```
 
 ## Options

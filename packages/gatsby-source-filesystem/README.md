@@ -38,7 +38,7 @@ module.exports = {
       },
     },
   ],
-};
+}
 ```
 
 ## How to query
@@ -92,10 +92,10 @@ createFilePath({
 The following is taken from [Gatsby Tutorial, Part Seven](https://www.gatsbyjs.org/tutorial/part-seven/) and is used to create URL slugs for markdown pages.
 
 ```javascript
-const { createFilePath } = require(`gatsby-source-filesystem`);
+const { createFilePath } = require(`gatsby-source-filesystem`)
 
 exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
-  const { createNodeField } = boundActionCreators;
+  const { createNodeField } = boundActionCreators
   // Ensures we are processing only markdown files
   if (node.internal.type === "MarkdownRemark") {
     // Use `createFilePath` to turn markdown files in our `data/faqs` directory into `/faqs/slug`
@@ -103,16 +103,16 @@ exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
       node,
       getNode,
       basePath: "data/faqs/",
-    });
+    })
 
     // Creates new query'able field with name of 'slug'
     createNodeField({
       node,
       name: "slug",
       value: `/faqs${relativeFilePath}`,
-    });
+    })
   }
-};
+}
 ```
 
 ### createRemoteFileNode
@@ -138,7 +138,7 @@ createRemoteFileNode({
   // OPTIONAL
   // Adds htaccess authentication to the download request if passed in.
   auth: { htaccess_user: `USER`, htaccess_pass: `PASSWORD` },
-});
+})
 ```
 
 #### Example usage
@@ -146,11 +146,11 @@ createRemoteFileNode({
 The following example is pulled from [gatsby-source-wordpress](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress). Downloaded files are created as `File` nodes and then linked to the WordPress Media node, so it can be queried both as a regular `File` node and from the `localFile` field in the Media node.
 
 ```javascript
-const { createRemoteFileNode } = require(`gatsby-source-filesystem`);
+const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 
 exports.downloadMediaFiles = ({ nodes, store, cache, createNode, _auth }) => {
   nodes.map(async node => {
-    let fileNode;
+    let fileNode
     // Ensures we are only processing Media Files
     // `wordpress__wp_media` is the media file type name for Wordpress
     if (node.__type === `wordpress__wp_media`) {
@@ -161,7 +161,7 @@ exports.downloadMediaFiles = ({ nodes, store, cache, createNode, _auth }) => {
           cache,
           createNode,
           auth: _auth,
-        });
+        })
       } catch (e) {
         // Ignore
       }
@@ -170,10 +170,10 @@ exports.downloadMediaFiles = ({ nodes, store, cache, createNode, _auth }) => {
     // Adds a field `localFile` to the node
     // ___NODE appendix tells Gatsby that this field will link to another node
     if (fileNode) {
-      node.localFile___NODE = fileNode.id;
+      node.localFile___NODE = fileNode.id
     }
-  });
-};
+  })
+}
 ```
 
 The file node can then be queried using GraphQL. See an example of this in the [gatsby-source-wordpress README](/packages/gatsby-source-wordpress/#image-processing) where downloaded images are queried using [gatsby-transformer-sharp](/packages/gatsby-transformer-sharp/) to use in the component [gatsby-image](/packages/gatsby-image/).

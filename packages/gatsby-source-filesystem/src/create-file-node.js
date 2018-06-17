@@ -7,14 +7,11 @@ const prettyBytes = require(`pretty-bytes`)
 const md5File = require(`bluebird`).promisify(require(`md5-file`))
 const crypto = require(`crypto`)
 
-const createId = path => {
-  const slashed = slash(path)
-  return `${slashed} absPath of file`
-}
-
-exports.createId = createId
-
-exports.createFileNode = async (pathToFile, pluginOptions = {}) => {
+exports.createFileNode = async (
+  pathToFile,
+  createNodeId,
+  pluginOptions = {}
+) => {
   const slashed = slash(pathToFile)
   const parsedSlashed = path.parse(slashed)
   const slashedFile = {
@@ -43,22 +40,22 @@ exports.createFileNode = async (pathToFile, pluginOptions = {}) => {
     }
   } else {
     const contentDigest = await md5File(slashedFile.absolutePath)
+    const mediaType = mime.getType(slashedFile.ext)
     internal = {
       contentDigest,
-      mediaType: mime.lookup(slashedFile.ext),
       type: `File`,
+      mediaType: mediaType ? mediaType : `application/octet-stream`,
       description: `File "${path.relative(process.cwd(), slashed)}"`,
     }
   }
 
-  // console.log('createFileNode:stat', slashedFile.absolutePath)
   // Stringify date objects.
   return JSON.parse(
     JSON.stringify({
       // Don't actually make the File id the absolute path as otherwise
       // people will use the id for that and ids shouldn't be treated as
       // useful information.
-      id: createId(pathToFile),
+      id: createNodeId(pathToFile),
       children: [],
       parent: `___SOURCE___`,
       internal,
