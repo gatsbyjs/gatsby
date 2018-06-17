@@ -125,6 +125,7 @@ class StarterTemplate extends React.Component {
                     [presets.Desktop]: {
                       ...scale(-1 / 6),
                     },
+                    alignItems: 'center'
                   }}
                 >
                   <GithubIcon
@@ -140,27 +141,48 @@ class StarterTemplate extends React.Component {
                 css={{
                   padding: 20,
                   paddingLeft: 0,
+                  flex: 1,
+                  justifyContent: 'center',
                   display: `flex`,
                   borderRight: `1px solid ${colors.ui.light}`,
                   [presets.Desktop]: {
                     ...scale(-1 / 6),
                   },
+                  alignItems: 'center'
                 }}
               >
-                Try this starter on replit codesandbox deploy to netlify
-                </div>
+                <span css={{ marginRight: 20 }}>Try this starter</span>
+                <a href={`https://app.netlify.com/start/deploy?repository=${frontmatter.repo}`}
+                  style={{
+                    borderBottom: 'none',
+                    boxShadow: 'none',
+                  }}>
+                  <img src="https://www.netlify.com/img/deploy/button.svg"
+                    alt="Deploy to Netlify"
+                    css={{ marginBottom: 0 }}
+                  />
+                </a>
+
+              </div>
               <div
                 css={{
                   padding: 20,
                   paddingLeft: 0,
+                  flex: 1,
                   display: `flex`,
                   [presets.Desktop]: {
                     ...scale(-1 / 6),
                   },
+                  alignItems: 'center',
+                  justifyContent: 'space-around',
                 }}
               >
-                added/updated
-                </div>
+                <span
+                  css={{ color: colors.gray.calm, fontFamily: options.headerFontFamily.join(`,`), paddingRight: 20 }}
+                >Added/updated</span>
+                {showDate(starterShowcase.date)} /{" "}
+                {showDate(starterShowcase.lastUpdated)}
+              </div>
             </div>
             <div
               css={{
@@ -405,4 +427,9 @@ const styles = {
     flexShrink: 1,
     minWidth: 0,
   },
+}
+
+function showDate(dt) {
+  const date = new Date(dt)
+  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
 }
