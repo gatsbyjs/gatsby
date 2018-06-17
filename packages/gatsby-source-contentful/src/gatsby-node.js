@@ -33,23 +33,21 @@ exports.setFieldsOnGraphQLNodeType = require(`./extend-node-type`).extendNodeTyp
 
 exports.sourceNodes = async (
   { actions, getNode, getNodes, createNodeId, hasNodeChanged, store },
-  { spaceId, accessToken, host, environment }
+  options
 ) => {
   const { createNode, deleteNode, touchNode, setPluginStatus } = actions
 
-  host = host || `cdn.contentful.com`
-  environment = environment || `master` // default is always master
+  options.host = options.host || `cdn.contentful.com`
+  options.environment = options.environment || `master` // default is always master
   // Get sync token if it exists.
   let syncToken
   if (
     store.getState().status.plugins &&
     store.getState().status.plugins[`gatsby-source-contentful`] &&
-    store.getState().status.plugins[`gatsby-source-contentful`][
-      `${spaceId}-${environment}`
-    ]
+    store.getState().status.plugins[`gatsby-source-contentful`][`${options.spaceId}-${options.environment}`]
   ) {
     syncToken = store.getState().status.plugins[`gatsby-source-contentful`][
-      `${spaceId}-${environment}`
+      `${options.spaceId}-${options.environment}`
     ]
   }
 
@@ -60,10 +58,7 @@ exports.sourceNodes = async (
     locales,
   } = await fetchData({
     syncToken,
-    spaceId,
-    accessToken,
-    environment,
-    host,
+    ...options,
   })
 
   const entryList = normalize.buildEntryList({
@@ -114,9 +109,9 @@ exports.sourceNodes = async (
   // Store our sync state for the next sync.
   // TODO: we do not store the token if we are using preview, since only initial sync is possible there
   // This might change though
-  if (host !== `preview.contentful.com`) {
+  if (options.host !== `preview.contentful.com`) {
     const newState = {}
-    newState[`${spaceId}-${environment}`] = nextSyncToken
+    newState[`${options.spaceId}-${options.environment}`] = nextSyncToken
     setPluginStatus(newState)
   }
 
