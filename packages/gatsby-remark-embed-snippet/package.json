@@ -1,20 +1,21 @@
 {
   "name": "gatsby-remark-embed-snippet",
   "description": "Gatsby plugin to embed formatted code snippets within markdown",
-  "version": "2.0.2",
+  "version": "3.0.0-alpha.2",
   "author": "Brian Vaughn <brian.david.vaughn@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "babel-runtime": "^6.26.0",
+    "@babel/runtime": "7.0.0-beta.51",
     "normalize-path": "^2.1.1",
     "parse-numeric-range": "^0.0.2",
     "unist-util-map": "^1.0.3"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "cross-env": "^5.0.5"
+    "@babel/cli": "7.0.0-beta.51",
+    "@babel/core": "7.0.0-beta.51",
+    "cross-env": "^5.1.4"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-embed-snippet#readme",
   "keywords": [
@@ -24,14 +25,15 @@
     "remark"
   ],
   "peerDependencies": {
-    "gatsby-remark-prismjs": "^2.0.3"
+    "gatsby": ">2.0.0-alpha",
+    "gatsby-remark-prismjs": ">3.0.0-alpha"
   },
   "license": "MIT",
   "main": "index.js",
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-embed-snippet",
   "scripts": {
-    "build": "babel src --out-dir . --ignore __tests__",
+    "build": "babel src --out-dir . --ignore **/__tests__",
     "prepublish": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir . --ignore __tests__"
+    "watch": "babel -w src --out-dir . --ignore **/__tests__"
   }
 }

@@ -74,7 +74,7 @@ module.exports = {
     title: "Gatsby Default Starter",
   },
   plugins: ["gatsby-plugin-react-helmet", "gatsby-plugin-stripe-checkout"],
-};
+}
 ```
 
 ## See your site hot reload in the browser!
@@ -120,7 +120,7 @@ In order to launch the Stripe Checkout modal (shown above), you need to call the
 Create a new file at `src/components/checkout.js`. Your `checkout.js` file should look like this:
 
 ```jsx
-import React from "react";
+import React from "react"
 
 // hardcoded amount (in US cents) to charge users
 // you could set this variable dynamically to charge different amounts
@@ -135,7 +135,7 @@ const cardStyles = {
   backgroundColor: "#fff",
   borderRadius: "6px",
   maxWidth: "400px",
-};
+}
 const buttonStyles = {
   fontSize: "13px",
   textAlign: "center",
@@ -146,7 +146,7 @@ const buttonStyles = {
   backgroundColor: "rgb(255, 178, 56)",
   borderRadius: "6px",
   letterSpacing: "1.5px",
-};
+}
 
 // Below is where the checkout component is defined.
 // It has several functions, and some default state variables.
@@ -155,10 +155,10 @@ const Checkout = class extends React.Component {
     disabled: false,
     buttonText: "BUY NOW",
     paymentMessage: "",
-  };
+  }
 
   resetButton() {
-    this.setState({ disabled: false, buttonText: "BUY NOW" });
+    this.setState({ disabled: false, buttonText: "BUY NOW" })
   }
 
   componentDidMount() {
@@ -167,14 +167,14 @@ const Checkout = class extends React.Component {
       // key: 'pk_test_STRIPE_PUBLISHABLE_KEY',
       key: "pk_test_kuhbxb0MMZsp6fj6aTNDnxUu",
       closed: () => {
-        this.resetButton();
+        this.resetButton()
       },
-    });
+    })
   }
 
   openStripeCheckout(event) {
-    event.preventDefault();
-    this.setState({ disabled: true, buttonText: "WAITING..." });
+    event.preventDefault()
+    this.setState({ disabled: true, buttonText: "WAITING..." })
     this.stripeHandler.open({
       name: "Demo Product",
       amount: amount,
@@ -191,17 +191,17 @@ const Checkout = class extends React.Component {
           }),
         })
           .then(res => {
-            console.log("Transaction processed successfully");
-            this.resetButton();
-            this.setState({ paymentMessage: "Payment Successful!" });
-            return res.json();
+            console.log("Transaction processed successfully")
+            this.resetButton()
+            this.setState({ paymentMessage: "Payment Successful!" })
+            return res.json()
           })
           .catch(error => {
-            console.error("Error:", error);
-            this.setState({ paymentMessage: "Payment Failed" });
-          });
+            console.error("Error:", error)
+            this.setState({ paymentMessage: "Payment Failed" })
+          })
       },
-    });
+    })
   }
 
   render() {
@@ -221,11 +221,11 @@ const Checkout = class extends React.Component {
         </button>
         {this.state.paymentMessage}
       </div>
-    );
+    )
   }
-};
+}
 
-export default Checkout;
+export default Checkout
 ```
 
 ## What did you just do?

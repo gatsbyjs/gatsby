@@ -26,11 +26,11 @@ Errors while building static HTML files generally happen for two reasons.
 ```javascript
 // Requiring function causes error during builds
 // as the code tries to reference window
-const module = require("module"); // Error
+const module = require("module") // Error
 
 // Wrap the require in check for window
 if (typeof window !== `undefined`) {
-  const module = require("module");
+  const module = require("module")
 }
 ```
 
@@ -47,12 +47,18 @@ rendering.
 `gatsby-node.js` in the project root:
 
 ```js
-exports.modifyWebpackConfig = ({ config, stage }) => {
+exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
   if (stage === "build-html") {
-    config.loader("null", {
-      test: /bad-module/,
-      loader: "null-loader",
-    });
+    actions.setWebpackConfig({
+      module: {
+        rules: [
+          {
+            test: /bad-module/,
+            use: loaders.null(),
+          },
+        ],
+      },
+    })
   }
-};
+}
 ```

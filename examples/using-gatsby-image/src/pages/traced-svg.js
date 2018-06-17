@@ -5,6 +5,7 @@ import numeral from "numeral"
 import Lorem from "../components/lorem"
 import Ipsum from "../components/ipsum"
 import { rhythm, options, scale } from "../utils/typography"
+import Layout from "../layouts"
 
 numeral.locale(`en`)
 
@@ -65,7 +66,7 @@ const UnsplashMasonry = edges => (
             },
           }}
         >
-          <Img sizes={image.node.sizes} />
+          <Img fluid={image.node.childImageSharp.fluid} />
           <span
             css={{
               ...scale(-1),
@@ -84,7 +85,10 @@ const UnsplashMasonry = edges => (
             <span css={{ color: options.headerColor }}>SVG</span>
             {` `}
             {numeral(
-              Buffer.byteLength(image.node.sizes.tracedSVG, `utf8`)
+              Buffer.byteLength(
+                image.node.childImageSharp.fluid.tracedSVG,
+                `utf8`
+              )
             ).format()}
             {` `}
             B
@@ -99,7 +103,7 @@ class TracedSVG extends React.Component {
   render() {
     const data = this.props.data
     return (
-      <div>
+      <Layout location={this.props.location}>
         <h2>Traced SVG Placeholders</h2>
         <Img
           style={{ display: `inherit` }}
@@ -114,7 +118,7 @@ class TracedSVG extends React.Component {
             },
           }}
           title={`Photo by Redd Angelo on Unsplash`}
-          resolutions={data.reddImageMobile.resolutions}
+          fixed={data.reddImageMobile.childImageSharp.fixed}
         />
         <Img
           style={{ display: `inherit` }}
@@ -128,7 +132,7 @@ class TracedSVG extends React.Component {
             },
           }}
           title={`Photo by Redd Angelo on Unsplash`}
-          resolutions={data.reddImage.resolutions}
+          fixed={data.reddImage.childImageSharp.fixed}
         />
         <Lorem />
 
@@ -138,10 +142,10 @@ class TracedSVG extends React.Component {
         <Ipsum />
 
         <Img
-          sizes={data.kenImage.sizes}
+          fluid={data.kenImage.childImageSharp.fluid}
           title={`Photo by Ken Treloar on Unsplash`}
         />
-      </div>
+      </Layout>
     )
   }
 }
@@ -150,30 +154,38 @@ export default TracedSVG
 
 export const query = graphql`
   query TracedSVGQuery {
-    reddImageMobile: imageSharp(id: { regex: "/redd/" }) {
-      resolutions(width: 125) {
-        ...GatsbyImageSharpResolutions_tracedSVG
+    reddImageMobile: file(relativePath: { regex: "/redd/" }) {
+      childImageSharp {
+        fixed(width: 125) {
+          ...GatsbyImageSharpFixed_tracedSVG
+        }
       }
     }
-    reddImage: imageSharp(id: { regex: "/redd/" }) {
-      resolutions(width: 200) {
-        ...GatsbyImageSharpResolutions_tracedSVG
+    reddImage: file(relativePath: { regex: "/redd/" }) {
+      childImageSharp {
+        fixed(width: 200) {
+          ...GatsbyImageSharpFixed_tracedSVG
+        }
       }
     }
-    kenImage: imageSharp(id: { regex: "/ken-treloar/" }) {
-      sizes(maxWidth: 600) {
-        ...GatsbyImageSharpSizes_tracedSVG
+    kenImage: file(relativePath: { regex: "/ken-treloar/" }) {
+      childImageSharp {
+        fluid(maxWidth: 600) {
+          ...GatsbyImageSharpFluid_tracedSVG
+        }
       }
     }
-    unsplashImages: allImageSharp(filter: { id: { regex: "/unsplash/" } }) {
+    unsplashImages: allFile(filter: { relativePath: { regex: "/unsplash/" } }) {
       edges {
         node {
-          sizes(
-            maxWidth: 430
-            quality: 80
-            traceSVG: { background: "#f2f8f3", color: "#d6ebd9" }
-          ) {
-            ...GatsbyImageSharpSizes_tracedSVG
+          childImageSharp {
+            fluid(
+              maxWidth: 430
+              quality: 80
+              traceSVG: { background: "#f2f8f3", color: "#d6ebd9" }
+            ) {
+              ...GatsbyImageSharpFluid_tracedSVG
+            }
           }
         }
       }

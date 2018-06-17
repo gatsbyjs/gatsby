@@ -20,7 +20,7 @@ plugins: [
       plugins: [`gatsby-remark-responsive-iframe`],
     },
   },
-];
+]
 ```
 
 ### Usage in Markdown

@@ -31,6 +31,18 @@ If you create a loader or plugin, we would <3 for you to open source it and put 
 Gatsby uses a "monorepo" pattern to manage its many dependencies and relies on
 lerna and yarn to configure the repository for active development.
 
+We're currently gearing up to release a new major version, v2.
+
+During this time, please choose the correct branch for your pull request:
+
+- `master` branch for Gatsby version 2 bug fixes `master` branch for any new
+- features (these will be released in the Gatsby v2 betas) `v1` branch for
+- updates to the `www` and `docs` directories `v1` branch for Gatsby version
+- 1 bug fixes
+
+Note: We will _not_ accept new features for Gatsby v1, only bug fixes,
+documentation and updates to gatsbyjs.org.
+
 You can install the latest version of Gatsby by following these steps:
 
 - Clone the repo, navigate to its directory.

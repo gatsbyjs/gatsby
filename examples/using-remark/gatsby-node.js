@@ -2,12 +2,11 @@ const _ = require(`lodash`)
 const Promise = require(`bluebird`)
 const path = require(`path`)
 const slash = require(`slash`)
-const { createFilePath } = require(`gatsby-source-filesystem`)
 
-const webpackLodashPlugin = require(`lodash-webpack-plugin`)
+const LodashModuleReplacementPlugin = require(`lodash-webpack-plugin`)
 
-exports.createPages = ({ graphql, boundActionCreators }) => {
-  const { createPage } = boundActionCreators
+exports.createPages = ({ graphql, actions }) => {
+  const { createPage } = actions
 
   return new Promise((resolve, reject) => {
     const blogPostTemplate = path.resolve(`src/templates/template-blog-post.js`)
@@ -75,8 +74,8 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
 }
 
 // Add custom url pathname for blog posts.
-exports.onCreateNode = ({ node, boundActionCreators, getNode }) => {
-  const { createNodeField } = boundActionCreators
+exports.onCreateNode = ({ node, actions, getNode }) => {
+  const { createNodeField } = actions
 
   if (node.internal.type === `File`) {
     const parsedFilePath = path.parse(node.absolutePath)
@@ -103,13 +102,11 @@ exports.onCreateNode = ({ node, boundActionCreators, getNode }) => {
 }
 
 // Sass and Lodash.
-exports.modifyWebpackConfig = ({ config, stage }) => {
+exports.onCreateWebpackConfig = ({ stage, actions }) => {
   switch (stage) {
     case `build-javascript`:
-      config.plugin(`Lodash`, webpackLodashPlugin, null)
-
-      break
+      actions.setWebpackConfig({
+        plugins: [new LodashModuleReplacementPlugin()],
+      })
   }
-
-  return config
 }

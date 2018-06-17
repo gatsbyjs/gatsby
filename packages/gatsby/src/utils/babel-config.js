@@ -1,195 +1,51 @@
 /* @flow */
-import resolve from "babel-core/lib/helpers/resolve"
-import fs from "fs"
-import path from "path"
-import json5 from "json5"
-import _ from "lodash"
-import invariant from "invariant"
-import apiRunnerNode from "./api-runner-node"
 
-// TODO update this to store Babelrc config in Redux store.
+const apiRunnerNode = require(`./api-runner-node`)
+const { store } = require(`../redux`)
 
-/**
- * Uses babel-core helpers to resolve the plugin given its name. It
- * resolves plugins in the following order:
- *
- * 1. Adding babel-type prefix and checking user's local modules
- * 2. Adding babel-type prefix and checking Gatsby's modules
- * 3. Checking users's modules without prefix
- * 4. Checking Gatsby's modules without prefix
- *
- */
-function resolvePlugin(pluginName, directory, type) {
-  // When a plugin is specified with options in babelrc, the pluginName contains
-  // the array with [name, options]. In that case we extract the name.
-  pluginName = Array.isArray(pluginName) ? pluginName[0] : pluginName
-
-  const gatsbyPath = path.resolve(__dirname, `..`, `..`)
-  const plugin =
-    resolve(`babel-${type}-${pluginName}`, directory) ||
-    resolve(`babel-${type}-${pluginName}`, gatsbyPath) ||
-    resolve(pluginName, directory) ||
-    resolve(pluginName, gatsbyPath)
-
-  const name = _.startsWith(pluginName, `babel`)
-    ? pluginName
-    : `babel-${type}-${pluginName}`
-  const pluginInvariantMessage = `
-  You are trying to use a Babel plugin or preset which Gatsby cannot find: ${pluginName}
-
-  You can install it using "npm install --save ${name}".
-
-  You can use any of the Gatsby provided plugins without installing them:
-    - babel-plugin-add-module-exports
-    - babel-plugin-transform-object-assign
-    - babel-preset-es2015
-    - babel-preset-react
-    - babel-preset-stage-0
-  `
-
-  invariant(plugin !== null, pluginInvariantMessage)
-  return plugin
-}
-
-/**
- * Normalizes a Babel config object to include only absolute paths.
- * This way babel-loader will correctly resolve Babel plugins
- * regardless of where they are located.
- */
-function normalizeConfig(config, directory) {
-  const normalizedConfig = {
+const buildConfig = (abstractConfig, stage, resolve = require.resolve) => {
+  let babelrc = {
+    ...abstractConfig.options,
     presets: [],
     plugins: [],
   }
 
-  const presets = config.presets || []
-  const plugins = config.plugins || []
-
-  const normalize = (value, name) => {
-    let normalized
-
-    if (_.isArray(value)) {
-      normalized = [resolvePlugin(value[0], directory, name), value[1]]
-    } else {
-      normalized = resolvePlugin(value, directory, name)
-    }
-
-    return normalized
-  }
-
-  presets.forEach(preset =>
-    normalizedConfig.presets.push(normalize(preset, `preset`))
+  abstractConfig.presets.forEach(p =>
+    babelrc.presets.push([resolve(p.name), p.options])
   )
-  plugins.forEach(plugin =>
-    normalizedConfig.plugins.push(normalize(plugin, `plugin`))
+  abstractConfig.plugins.forEach(p =>
+    babelrc.plugins.push([resolve(p.name), p.options])
   )
-
-  return Object.assign({}, config, normalizedConfig)
-}
-
-/**
- * Locates a .babelrc in the Gatsby site root directory. Parses it using
- * json5 (what Babel uses). It throws an error if the users's .babelrc is
- * not parseable.
- */
-function findBabelrc(directory) {
-  try {
-    const babelrc = fs.readFileSync(path.join(directory, `.babelrc`), `utf-8`)
-    return json5.parse(babelrc)
-  } catch (error) {
-    if (error.code === `ENOENT`) {
-      return null
-    } else {
-      throw error
-    }
-  }
-}
-
-/**
- * Reads the user's package.json and returns the "babel" section. It will
- * return undefined when the "babel" section does not exist.
- */
-function findBabelPackage(directory) {
-  try {
-    // $FlowIssue - https://github.com/facebook/flow/issues/1975
-    const packageJson = require(path.join(directory, `package.json`))
-    return packageJson.babel
-  } catch (error) {
-    if (error.code === `MODULE_NOT_FOUND`) {
-      return null
-    } else {
-      throw error
-    }
-  }
-}
-
-/**
- * Returns a normalized Babel config to use with babel-loader. All of
- * the paths will be absolute so that Babel behaves as expected.
- */
-module.exports = async function babelConfig(program, stage) {
-  const { directory, noUglify } = program
-
-  let babelrc = findBabelrc(directory) || findBabelPackage(directory)
-
-  // If user doesn't have a custom babelrc, add defaults.
-  if (!babelrc) {
-    babelrc = {}
-  }
-  if (!babelrc.plugins) {
-    babelrc.plugins = []
-  }
-  if (!babelrc.presets) {
-    babelrc.presets = []
-  }
-
-  // Add default plugins and presets.
-  ;[
-    [
-      require.resolve(`babel-preset-env`),
-      {
-        loose: true,
-        uglify: !noUglify,
-        modules: `commonjs`,
-        targets: {
-          browsers: program.browserslist,
-        },
-        exclude: [`transform-regenerator`, `transform-es2015-typeof-symbol`],
-      },
-    ],
-    `stage-0`,
-    `react`,
-  ].forEach(preset => {
-    babelrc.presets.push(preset)
-  })
-  ;[`add-module-exports`, `transform-object-assign`].forEach(plugin => {
-    babelrc.plugins.push(plugin)
-  })
-
-  if (stage === `develop`) {
-    babelrc.plugins.unshift(`transform-react-jsx-source`)
-    babelrc.plugins.unshift(`react-hot-loader/babel`)
-  }
-
-  babelrc.plugins.unshift(require.resolve(`./babel-plugin-extract-graphql`))
 
   if (!babelrc.hasOwnProperty(`cacheDirectory`)) {
     babelrc.cacheDirectory = true
   }
 
-  const normalizedConfig = normalizeConfig(babelrc, directory)
-  let modifiedConfig = await apiRunnerNode(`modifyBabelrc`, {
-    stage,
-    babelrc: normalizedConfig,
-  })
-  if (modifiedConfig.length > 0) {
-    modifiedConfig = _.merge({}, ...modifiedConfig)
-    // Otherwise this means no plugin changed the babel config.
-  } else {
-    modifiedConfig = {}
+  if (stage === `develop`) {
+    // TODO: maybe this should be left to the user?
+    babelrc.plugins.unshift(resolve(`react-hot-loader/babel`))
   }
 
-  // Merge all together.
-  const merged = _.defaultsDeep(modifiedConfig, normalizedConfig)
-  return merged
+  // Make dynamic imports work during SSR.
+  if (stage === `build-html` || stage === `develop-html`) {
+    babelrc.plugins.unshift(resolve(`babel-plugin-dynamic-import-node`))
+  }
+
+  babelrc.plugins.unshift(resolve(`babel-plugin-remove-graphql-queries`))
+
+  return babelrc
+}
+
+exports.buildConfig = buildConfig
+
+/**
+ * Returns a normalized Babel config to use with babel-loader. All of
+ * the paths will be absolute so that Babel behaves as expected.
+ */
+exports.createBabelConfig = async function babelConfig(program, stage) {
+  await apiRunnerNode(`onCreateBabelConfig`, { stage })
+  const babelrcState = store.getState().babelrc
+  let babelrc = buildConfig(babelrcState.stages[stage], stage)
+
+  return babelrc
 }

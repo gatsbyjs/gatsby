@@ -6,16 +6,17 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "flat": "^2.0.1",
-    "gatsby": "latest",
-    "gatsby-link": "latest",
-    "gatsby-plugin-google-analytics": "latest",
-    "gatsby-plugin-manifest": "latest",
-    "gatsby-plugin-offline": "latest",
-    "gatsby-source-hacker-news": "latest",
+    "gatsby": "canary",
+    "gatsby-plugin-manifest": "^2.1.0-alpha.76793cd8",
+    "gatsby-source-hacker-news": "canary",
     "lodash": "^4.16.4",
+    "react": "^16.3.1",
+    "react-dom": "^16.3.1",
     "slash": "^1.0.0"
   },
-  "keywords": ["gatsby"],
+  "keywords": [
+    "gatsby"
+  ],
   "license": "MIT",
   "main": "n/a",
   "scripts": {

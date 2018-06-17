@@ -1,17 +1,19 @@
 {
   "name": "gatsby-source-faker",
   "description": "A gatsby plugin to get fake data for testing",
-  "version": "1.0.9",
+  "version": "2.0.0-alpha.2",
   "author": "Pavithra Kodmad<pavithra.kodmad@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "babel-runtime": "^6.26.0",
+    "@babel/runtime": "7.0.0-beta.51",
     "faker": "^4.1.0"
   },
   "devDependencies": {
-    "cross-env": "^5.0.5"
+    "@babel/cli": "7.0.0-beta.51",
+    "@babel/core": "7.0.0-beta.51",
+    "cross-env": "^5.1.4"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-faker#readme",
   "keywords": [
@@ -21,10 +23,13 @@
   ],
   "license": "MIT",
   "main": "index.js",
+  "peerDependencies": {
+    "gatsby": ">2.0.0-alpha"
+  },
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-faker",
   "scripts": {
-    "build": "babel src --out-dir . --ignore __tests__",
+    "build": "babel src --out-dir . --ignore **/__tests__",
     "prepublish": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir . --ignore __tests__"
+    "watch": "babel -w src --out-dir . --ignore **/__tests__"
   }
 }

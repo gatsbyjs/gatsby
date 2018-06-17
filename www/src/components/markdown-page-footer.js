@@ -5,7 +5,7 @@ import CrossIcon from "react-icons/lib/md/thumb-down"
 import { GraphQLClient } from "graphql-request"
 
 import { rhythm, scale } from "../utils/typography"
-import presets, { colors } from "../utils/presets"
+import { colors } from "../utils/presets"
 
 const client = new GraphQLClient(
   `https://api.graph.cool/relay/v1/cj8xuo77f0a3a0164y7jketkr`

@@ -51,7 +51,7 @@ npm install --global gatsby-cli
 Once that's installed, open a new terminal window and run the following commands to create a new Gatsby site in a directory called `tutorial-part-one` and then move to this new directory:
 
 ```sh
-gatsby new tutorial-part-one https://github.com/gatsbyjs/gatsby-starter-hello-world
+gatsby new tutorial-part-one https://github.com/gatsbyjs/gatsby-starter-hello-world#v2
 cd tutorial-part-one
 ```
 
@@ -83,7 +83,7 @@ Yeah! It's working!!!
 Too cool 😎
 
 Gatsby's development server is a "hot reloading" server, meaning any change you
-make to your React.js page components (and later we'll learn, your data files)
+make to your React.js page components (and later you'll learn, your data files)
 will be immediately visible and/or loaded in the browser.
 
 This is huge because it makes development so much faster and fun.
@@ -102,42 +102,44 @@ should change within a second (tip: you will always need to save changes before 
 
 Try some other tricks, like the ones below:
 
-1.  Gatsby lets you add "inline styles" via a JavaScript style "prop" (we'll
+1.  Gatsby lets you add "inline styles" via a JavaScript style "prop" (you'll
     learn about other styling options later).
 
     Try replacing your page component with this:
 
 ```jsx
-import React from "react";
+import React from "react"
 
-export default () => <div style={{ color: `blue` }}>Hello Gatsby!</div>;
+export default () => <div style={{ color: `blue` }}>Hello Gatsby!</div>
 ```
 
 Change the color to "pink". Then to "tomato".
 
 2.  Add some paragraph text.
 
-```jsx{5-6}
-import React from "react";
+```jsx{3,5-6,8}
+import React from "react"
 
-export default () =>
- <div style={{ color: `tomato` }}>
-   <h1>Hello Gatsby!</h1>
-   <p>What a world.</p>
- </div>
+export default () => (
+  <div style={{ color: `tomato` }}>
+    <h1>Hello Gatsby!</h1>
+    <p>What a world.</p>
+  </div>
+)
 ```
 
 3.  Add an image (in this case, a random one from Unsplash)
 
 ```jsx{7}
-import React from "react";
+import React from "react"
 
-export default () =>
- <div style={{ color: `tomato` }}>
-   <h1>Hello Gatsby!</h1>
-   <p>What a world.</p>
-   <img src="https://source.unsplash.com/random/400x200" alt="" />
- </div>
+export default () => (
+  <div style={{ color: `tomato` }}>
+    <h1>Hello Gatsby!</h1>
+    <p>What a world.</p>
+    <img src="https://source.unsplash.com/random/400x200" alt="" />
+  </div>
+)
 ```
 
 Now your screen should look something like this:
@@ -146,25 +148,25 @@ Now your screen should look something like this:
 
 ## Linking between pages
 
-Websites are pages and links between pages. While we've now got a pretty sweet
+Websites are pages and links between pages. While you've now got a pretty sweet
 first page—one page and no links doesn't feel very webby. So let's create a new
 page.
 
 First create the link to the new page.
 
-To do that, import the `<Link>` component from the `gatsby-link` package that
+To do that, import the `<Link>` component from the `gatsby` package that
 was installed along with the starter.
 
-Unlike the normal HTML `<a>` element, Gatsby's `Link` component uses `to` for
+Unlike the normal HTML `<a>` element, Gatsby's `Link` component uses the "`to`" prop for
 specifying the page you want to link to. Let's link to a page with the pathname
 of `/page-2/`. Try adding that. Once you're done, the page component should look
 like:
 
 ```jsx{2,9-12}
-import React from "react";
-import Link from "gatsby-link";
+import React from "react"
+import { Link } from "gatsby"
 
-export default () =>
+export default () => (
   <div style={{ color: `tomato` }}>
     <h1>Hello Gatsby!</h1>
     <p>What a world.</p>
@@ -174,6 +176,7 @@ export default () =>
       <Link to="/page-2/">Link</Link>
     </div>
   </div>
+)
 ```
 
 If you click on that link in the browser you should see:
@@ -186,15 +189,15 @@ and create a React.js page component at `src/pages/page-2.js`.
 Make the second page component look something like:
 
 ```jsx
-import React from "react";
-import Link from "gatsby-link";
+import React from "react"
+import { Link } from "gatsby"
 
 export default () => (
   <div>
     <p>Hello world from my second Gatsby page</p>
     <Link to="/">back home</Link>
   </div>
-);
+)
 ```
 
 Save that and now you should be able to click back and forth between the two
@@ -209,19 +212,19 @@ _Challenge_: Using the instructions above as hints, see if you can create a thir
 
 ## Interactive page
 
-One nice thing about using Gatsby for building websites vs. other tools is that itʼs easier to add interactivity to your pages. React.js was designed for
+One nice thing about using Gatsby for building websites vs. other tools is that itʼs simple to add interactivity to your pages. Since Gatsby uses React for everything, it's no extra setup work to go beyond normal content templates to rich client interactivity. React excels at building applications as it was designed for
 Facebook.com and is used on many other world-class web applications.
 
-Let's see how to add interactive elements to our pages. Let's start with a counter.
+Let's see how to add interactivity to your pages. Let's start with a counter.
 
-We'll start by creating a new link to a page at `/counter`/ from our original
+You'll start by creating a new link to a page at `/counter`/ from your original
 `index.js` page component `<Link to="/counter/">Counter</Link>`.
 
 ```jsx{13-15}
-import React from "react";
-import Link from "gatsby-link";
+import React from "react"
+import { Link } from "gatsby"
 
-export default () =>
+export default () => (
   <div style={{ color: `tomato` }}>
     <h1>Hello Gatsby!</h1>
     <p>What a world.</p>
@@ -234,32 +237,33 @@ export default () =>
       <Link to="/counter/">Counter</Link>
     </div>
   </div>
+)
 ```
 
-Add that link, click on it, and then we'll create a "Hello World" page component
+Add that link, click on it, and then you'll create a "Hello World" page component
 for `/counter/` as before. But instead of using the "functional component" form
-as we did before, this time we'll create a "class" component at `src/pages/counter.js`.
+as you did before, this time you'll create a "class" component at `src/pages/counter.js`.
 
 ```jsx
-import React from "react";
+import React from "react"
 
 class Counter extends React.Component {
   render() {
-    return <div>Hello Class Component</div>;
+    return <div>Hello Class Component</div>
   }
 }
 
-export default Counter;
+export default Counter
 ```
 
-The class form of React allows us to have component state. We'll need that for
-our counter.
+The class form of React allows you to have component state. You'll need that for
+your counter.
 
-Let's continue to flesh out our counter. Let's add two buttons. One to increment
+Let's continue to flesh out your counter. Let's add two buttons. One to increment
 and one to decrement the count of the counter.
 
 ```jsx{5-12}
-import React from "react";
+import React from "react"
 
 class Counter extends React.Component {
   render() {
@@ -277,12 +281,12 @@ class Counter extends React.Component {
 export default Counter
 ```
 
-Now we have everything we need to make a nice counter. Let's make it live.
+Now you have everything you need to make a nice counter. Let's make it live.
 
-First we'll set up the component state.
+First you'll set up the component state.
 
 ```jsx{4-7,13}
-import React from "react";
+import React from "react"
 
 class Counter extends React.Component {
   constructor() {
@@ -305,12 +309,12 @@ class Counter extends React.Component {
 export default Counter
 ```
 
-We're now rendering the current count from the component state.
+You're now rendering the current count from the component state.
 
-Let's now change the state when we click on our buttons.
+Let's now change the state when you click on your buttons.
 
-```jsx{14-19}
-import React from "react";
+```jsx{14-31}
+import React from "react"
 
 class Counter extends React.Component {
   constructor() {
@@ -323,11 +327,23 @@ class Counter extends React.Component {
       <div>
         <h1>Counter</h1>
         <p>current count: {this.state.count}</p>
-        <button onClick={() => this.setState({ count: this.state.count +
-          1 })}>plus
+        <button
+          onClick={() =>
+            this.setState({
+              count: this.state.count + 1,
+            })
+          }
+        >
+          plus
         </button>
-        <button onClick={() => this.setState({ count: this.state.count -
-          1 })}>minus
+        <button
+          onClick={() =>
+            this.setState({
+              count: this.state.count - 1,
+            })
+          }
+        >
+          minus
         </button>
       </div>
     )
@@ -339,6 +355,8 @@ export default Counter
 
 There you go! A working React.js counter inside your static website 👌
 
+Because Gatsby is just React, it's easy to add web app features to your Gatsby sites as needed e.g. talk to APIs, add logged-in features, etc.
+
 _Bonus challenge_: One fun thing is that hot reloading isn't just for content and styles; it
 works on code as well. Currently, when you click the buttons on the counter, the numbers go up and down in increments of 1. Try to make the counter go up and down in a different increments (for example, 5).
 
@@ -348,7 +366,7 @@ Gatsby.js is a _static site generator_, which means there are no servers to setu
 deploy. Instead, the Gatsby `build` command produces a directory of static HTML
 and JavaScript files which you can deploy to a static site hosting service.
 
-Let's try using [Surge](http://surge.sh/) for deploying our first Gatsby
+Let's try using [Surge](http://surge.sh/) for deploying your first Gatsby
 website. Surge is one of many "static site hosts" which make it possible to
 deploy Gatsby sites.
 
@@ -367,7 +385,7 @@ Next, build your site by running the following command in the terminal at the ro
 gatsby build
 ```
 
-Building should take 15-30 seconds. At this point, it's useful to take a look at the files that the `gatsby build` command just prepared to deploy. Take a look at a list of the generated files by typing in the following terminal command into the root of your site, which will let you look at the `public` directory:
+Building should take 15-30 seconds. Once the build is finished, it's interesting to take a look at the files that the `gatsby build` command just prepared to deploy. Take a look at a list of the generated files by typing in the following terminal command into the root of your site, which will let you look at the `public` directory:
 
 ```bash
 ls public
@@ -384,7 +402,7 @@ Once this finishes running, you should see in your terminal something like:
 ![Screenshot of publishing Gatsby site with Surge](surge-deployment.png)
 
 Open the web address listed on the bottom line (`lowly-pain.surge.sh` in this
-case) and you'll see your newly published site! Good work!
+case) and you'll see your newly published site! Great work!
 
 ## What's coming next?
 
