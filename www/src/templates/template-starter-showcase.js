@@ -1,163 +1,287 @@
 import React from "react"
 import Helmet from "react-helmet"
-import { Link } from "gatsby"
-import { OutboundLink } from "gatsby-plugin-google-analytics"
+// import { Link } from "gatsby"
+// import { OutboundLink } from "gatsby-plugin-google-analytics"
 
+import url from "url"
+// import hex2rgba from "hex2rgba"
 import Layout from "../components/layout"
+import ShareMenu from "../components/share-menu-starters"
 import presets, { colors } from "../utils/presets"
-import typography, { rhythm, scale, options } from "../utils/typography"
-import Container from "../components/container"
+import /*typography, */ { rhythm, scale, options } from "../utils/typography"
+// import Container from "../components/container"
+import MdLaunch from "react-icons/lib/md/launch"
+
+const cleanUrl = mainUrl => {
+  const parsed = url.parse(mainUrl)
+  let path = parsed.pathname
+  if (path[path.length - 1] === `/`) path = path.slice(0, path.length - 1)
+  return parsed.hostname + path
+}
+
+const gutter = rhythm(3 / 4)
+const gutterDesktop = rhythm(6 / 4)
 
 class StarterTemplate extends React.Component {
   render() {
 
     const { data } = this.props
     const { markdownRemark } = data
+    const { fields,
+      // frontmatter
+    } = markdownRemark
+    const isModal = false
     return (
-      <Layout location={this.props.location}>
-        <Container className="post" css={{ paddingBottom: `0 !important` }}>
-          {/* Add long list of social meta tags */}
-          <Helmet>
-            <title>{markdownRemark.frontmatter.title}</title>
-            {/* <link
-              rel="author"
-              href={`https://gatsbyjs.org${
-                post.frontmatter.author.fields.slug
-              }`}
-            />
-            <meta
-              name="description"
-              content={
-                post.frontmatter.excerpt
-                  ? post.frontmatter.excerpt
-                  : post.excerpt
-              }
-            />
-
-            <meta name="og:description" content={post.excerpt} />
-            <meta name="twitter:description" content={post.excerpt} />
-            <meta name="og:title" content={post.frontmatter.title} />
-            {post.frontmatter.image && (
-              <meta
-                name="og:image"
-                content={`https://gatsbyjs.org${
-                  post.frontmatter.image.childImageSharp.resize.src
-                }`}
-              />
-            )}
-            {post.frontmatter.image && (
-              <meta
-                name="twitter:image"
-                content={`https://gatsbyjs.org${
-                  post.frontmatter.image.childImageSharp.resize.src
-                }`}
-              />
-            )}
-            <meta name="og:type" content="article" />
-            <meta name="article:author" content={post.frontmatter.author.id} />
-            <meta
-              name="twitter:creator"
-              content={post.frontmatter.author.twitter}
-            />
-            <meta name="author" content={post.frontmatter.author.id} />
-            <meta name="twitter:label1" content="Reading time" />
-            <meta
-              name="twitter:data1"
-              content={`${post.timeToRead} min read`}
-            />
-            <meta
-              name="article:published_time"
-              content={post.frontmatter.rawDate}
-            />
-            {canonicalLink} */}
-          </Helmet>
-          <header
-            css={{
-              display: `flex`,
-              marginTop: rhythm(-1 / 4),
-              marginBottom: rhythm(1),
-              [presets.Tablet]: {
-                marginTop: rhythm(1 / 2),
-                marginBottom: rhythm(2),
-              },
-            }}
-          >
-            <div
-              css={{
-                flex: `0 0 auto`,
-              }}
-            >
-              img
-            </div>
-            <div
-              css={{
-                flex: `1 1 auto`,
-                marginLeft: rhythm(1 / 2),
-              }}
-            >
-              Link
-              BioLine
-            </div>
-          </header>
-          <h1
-            css={{
-              marginTop: 0,
-              [presets.Desktop]: {
-                marginBottom: rhythm(5 / 4),
-              },
-            }}
-          >
-            h1
-          </h1>
-          img
-          <div
-            className="post-body"
-            dangerouslySetInnerHTML={{
-              __html: this.props.data.markdownRemark.html,
-            }}
-          />
-          TagsSection
-        </Container>
+      <Layout
+        location={this.props.location}
+        isModal={isModal}
+        modalBackgroundPath="/showcase"
+      >
         <div
           css={{
-            borderTop: `1px solid ${colors.ui.light}`,
-            marginTop: rhythm(2),
-            [presets.Tablet]: {
-              marginTop: rhythm(2),
-              paddingBottom: rhythm(1),
-              paddingTop: rhythm(1),
-            },
-            [presets.Desktop]: {
-              marginTop: rhythm(3),
-              paddingBottom: rhythm(2),
-              paddingTop: rhythm(2),
-            },
+            alignItems: `center`,
+            display: `flex`,
+            flexDirection: `column`,
+            maxWidth: isModal ? false : 1080,
+            margin: isModal ? false : `0 auto`,
           }}
         >
-          <Container>
+          <div
+            css={{
+              width: `100%`,
+            }}
+          >
+            <Helmet>
+              <title>{fields.githubFullName}</title>
+              {/* <meta
+                name="og:image"
+                content={`https://next.gatsbyjs.org${
+                  markdownRemark.childScreenshot.screenshotFile.childImageSharp
+                    .resize.src
+                }`}
+              />
+              <meta
+                name="twitter:image"
+                content={`https://next.gatsbyjs.org${
+                  markdownRemark.childScreenshot.screenshotFile.childImageSharp
+                    .resize.src
+                }`}
+              /> */}
+            </Helmet>
             <div
-              css={{ [presets.Phablet]: { display: `flex`, width: `100%` } }}
+              css={{
+                fontFamily: options.headerFontFamily.join(`,`),
+                padding: gutter,
+                paddingBottom: rhythm(1.5 / 4),
+                [presets.Desktop]: {
+                  padding: gutterDesktop,
+                  paddingBottom: rhythm(3 / 4),
+                },
+              }}
             >
-              <div
+              <h1 css={{ margin: 0 }}>{markdownRemark.title}</h1>
+              <a
+                href={markdownRemark.main_url}
                 css={{
-                  [presets.Phablet]: {
-                    width: `50%`,
+                  ...styles.link,
+                  fontWeight: `bold`,
+                  [presets.Desktop]: {
+                    ...scale(-1 / 6),
                   },
                 }}
               >
-                previous
-              </div>
+                {/* {cleanUrl(markdownRemark.main_url)} */}
+                cleanUrl(markdownRemark.main_url)
+              </a>
+
+              {markdownRemark.built_by && (
+                <span
+                  css={{
+                    color: colors.gray.calm,
+                    [presets.Desktop]: {
+                      ...scale(-1 / 6),
+                    },
+                  }}
+                >
+                  {` `}
+                  <span css={{ paddingRight: 8, paddingLeft: 8 }}>/</span>
+                  {` `}
+                  Built by{` `}
+                  {markdownRemark.built_by_url ? (
+                    <a
+                      href={markdownRemark.built_by_url}
+                      css={{
+                        ...styles.link,
+                        fontWeight: `bold`,
+                      }}
+                    >
+                      {markdownRemark.built_by}
+                    </a>
+                  ) : (
+                      markdownRemark.built_by
+                    )}
+                </span>
+              )}
+            </div>
+            <div
+              css={{
+                display: `flex`,
+                borderTop: `1px solid ${colors.ui.light}`,
+                fontFamily: options.headerFontFamily.join(`,`),
+                margin: `0 ${gutter}`,
+                [presets.Desktop]: {
+                  margin: `0 ${gutterDesktop}`,
+                },
+              }}
+            >
+              {markdownRemark.featured && (
+                <div
+                  css={{
+                    borderRight: `1px solid ${colors.ui.light}`,
+                    color: colors.gatsby,
+                    display: `flex`,
+                    fontWeight: `bold`,
+                    padding: 20,
+                    paddingLeft: 0,
+                    [presets.Desktop]: {
+                      ...scale(-1 / 6),
+                    },
+                  }}
+                >
+                  {/* <img
+                    src={FeaturedIcon}
+                    alt="icon"
+                    css={{ marginBottom: 0, marginRight: 10 }}
+                  /> */}
+                  Featured
+                </div>
+              )}
+              {markdownRemark.source_url && (
+                <div
+                  css={{
+                    padding: 20,
+                    paddingLeft: markdownRemark.featured ? false : 0,
+                    display: `flex`,
+                    borderRight: `1px solid ${colors.ui.light}`,
+                    [presets.Desktop]: {
+                      ...scale(-1 / 6),
+                    },
+                  }}
+                >
+                  {/* <img
+                    src={GithubIcon}
+                    alt="icon"
+                    css={{ marginBottom: 0, marginRight: 10 }}
+                  /> */}
+                  <a href={markdownRemark.source_url} css={{ ...styles.link }}>
+                    Source
+                  </a>
+                </div>
+              )}
+              {false && ( // TODO: NOT IMPLEMENTED YET!!!
+                <div
+                  css={{
+                    padding: 20,
+                    display: `flex`,
+                    borderRight: `1px solid ${colors.ui.light}`,
+                  }}
+                >
+                  {/* <img
+                    src={FeatherIcon}
+                    alt="icon"
+                    css={{ marginBottom: 0, marginRight: 10 }}
+                  /> */}
+                  <a href={markdownRemark.source_url}>Case Study</a>
+                </div>
+              )}
+            </div>
+            <div
+              css={{
+                borderTop: `1px solid ${colors.ui.light}`,
+                position: `relative`,
+              }}
+            >
               <div
                 css={{
-                  textAlign: `right`,
-                  marginTop: rhythm(1),
-                  [presets.Phablet]: { marginTop: 0, width: `50%` },
+                  position: `absolute`,
+                  right: gutter,
+                  top: gutter,
+                  left: `auto`,
+                  zIndex: 1,
+                  display: `flex`,
                 }}
               >
-                next
+                <a
+                  href={markdownRemark.main_url}
+                  css={{
+                    border: 0,
+                    borderRadius: presets.radius,
+                    color: colors.gatsby,
+                    fontFamily: options.headerFontFamily.join(`,`),
+                    fontWeight: `bold`,
+                    marginRight: rhythm(1.5 / 4),
+                    padding: `${rhythm(1 / 5)} ${rhythm(2 / 3)}`,
+                    textDecoration: `none`,
+                    WebkitFontSmoothing: `antialiased`,
+                    "&&": {
+                      backgroundColor: colors.gatsby,
+                      borderBottom: `none`,
+                      boxShadow: `none`,
+                      color: `white`,
+                      "&:hover": {
+                        backgroundColor: colors.gatsby,
+                      },
+                    },
+                  }}
+                >
+                  <MdLaunch style={{ verticalAlign: `sub` }} /> Visit site
+                </a>
+                <ShareMenu
+                  url={markdownRemark.main_url}
+                  title={markdownRemark.title}
+                // image={`https://next.gatsbyjs.org${
+                //   markdownRemark.childScreenshot.screenshotFile
+                //     .childImageSharp.resize.src
+                //   }`}
+                />
+              </div>
+              {/* <Img
+                sizes={
+                  markdownRemark.childScreenshot.screenshotFile.childImageSharp
+                    .sizes
+                }
+                alt={`Screenshot of ${markdownRemark.title}`}
+                css={{
+                  boxShadow: isModal
+                    ? false
+                    : `0 4px 10px ${hex2rgba(colors.gatsby, 0.1)}`,
+                }}
+              /> */}
+              Img
+            </div>
+            <div
+              css={{
+                padding: gutter,
+                [presets.Desktop]: {
+                  padding: gutterDesktop,
+                },
+              }}
+            >
+              <p>{markdownRemark.description}</p>
+              <div
+                css={{
+                  display: `flex`,
+                  fontFamily: options.headerFontFamily.join(`,`),
+                }}
+              >
+                <div css={{ color: colors.gray.calm, paddingRight: 20 }}>
+                  Categories
+                </div>
+                {/* <div>{categories.join(`, `)}</div> */}
+                <div>categories</div>
               </div>
             </div>
-          </Container>
+          </div>
         </div>
       </Layout>
     )
@@ -209,3 +333,75 @@ export const pageQuery = graphql`
     }
   }
 `
+
+
+const styles = {
+  link: {
+    color: colors.gatsby,
+    textDecoration: `none`,
+  },
+  prevNextLink: {
+    color: colors.lilac,
+    fontFamily: options.headerFontFamily.join(`,`),
+    position: `absolute`,
+    top: 280,
+    width: 300,
+    transform: `translateX(-75px) rotate(90deg)`,
+    [presets.Desktop]: {
+      ...scale(-1 / 6),
+    },
+  },
+  prevNextLinkSiteTitle: {
+    color: colors.gatsby,
+    fontWeight: `bold`,
+  },
+  prevNextImage: {
+    borderRadius: presets.radius,
+    boxShadow: `0 0 38px -8px ${colors.gatsby}`,
+  },
+  prevNextPermalinkLabel: {
+    color: colors.gray.calm,
+    fontFamily: options.headerFontFamily.join(`,`),
+    fontWeight: `normal`,
+  },
+  prevNextPermalinkImage: {
+    marginBottom: 0,
+    marginTop: rhythm(options.blockMarginBottom),
+  },
+  prevNextPermalinkTitle: {
+    color: colors.gatsby,
+    display: `block`,
+    position: `relative`,
+  },
+  prevNextPermalinkContainer: {
+    width: `50%`,
+  },
+  truncate: {
+    whiteSpace: `nowrap`,
+    overflow: `hidden`,
+    textOverflow: `ellipsis`,
+    display: `block`,
+    width: `100%`,
+  },
+  prevNextPermalinkArrow: {
+    color: colors.lilac,
+    marginRight: 4,
+    verticalAlign: `sub`,
+    position: `absolute`,
+    left: `-${rhythm(3 / 4)}`,
+    top: `50%`,
+    transform: `translateY(-50%)`,
+  },
+  prevNextPermalinkMeta: {
+    marginLeft: rhythm(6 / 4),
+    display: `flex`,
+    flexDirection: `row`,
+    justifyContent: `flex-end`,
+  },
+  prevNextPermalinkMetaInner: {
+    flexBasis: 540,
+    flexGrow: 0,
+    flexShrink: 1,
+    minWidth: 0,
+  },
+}
