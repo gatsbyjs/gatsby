@@ -28,7 +28,7 @@ This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While t
 - [Remove inlined CSS in `html.js`](#remove-inlined-css-in-htmljs)
 - [Only allow defined keys on node.internal object](#only-allow-defined-keys-on-the-node-internal-object)
 - [Import `graphql` types from `gatsby/graphql`](#import-graphql-types-from-gatsbygraphql)
-- [Move Babel Configuration`](#move-babel-configuration)
+- [Move Babel Configuration](#move-babel-configuration)
 
 You can start with a few of the most important steps - install Gatsby v2 dependencies and update your layout components.
 
