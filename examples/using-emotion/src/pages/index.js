@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Fragment } from "react"
 import Helmet from "react-helmet"
 import { injectGlobal } from "emotion"
 import styled, { css } from "react-emotion"
@@ -61,7 +61,8 @@ const subtitle = css({
 })
 
 const IndexPage = () => (
-  <>`    \` `<Helmet>
+  <Fragment>
+    <Helmet>
       <title>Gatsby Emotion</title>
       <meta name="description" content="Gatsby example site using Emotion" />
       <meta name="referrer" content="origin" />
@@ -81,8 +82,8 @@ const IndexPage = () => (
           gatsby-plugin-emotion docs
         </a>
       </p>
-    </Wrapper>` `
-  </>
+    </Wrapper>
+  </Fragment>
 )
 
 export default IndexPage
