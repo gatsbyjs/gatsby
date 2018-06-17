@@ -27,7 +27,7 @@ class StarterShowcasePage extends Component {
   render() {
     const data = this.props.data
     const location = this.props.location
-    console.log({ location })
+    console.log('page props', this.props)
     // let windowWidth
     // if (typeof window !== `undefined`) {
     //   windowWidth = window.innerWidth
