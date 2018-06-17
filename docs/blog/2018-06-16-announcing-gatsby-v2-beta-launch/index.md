@@ -39,9 +39,9 @@ Gatsby v2 builds on the foundations of v1 to introduce a range of improvements:
 
   These updates allow Gatsby to take advantage of the [performance](https://medium.com/webpack/webpack-4-released-today-6cdb994702d4) [improvements](https://reactjs.org/blog/2017/09/26/react-v16.0.html#better-server-side-rendering) and [new features](https://github.com/gatsbyjs/gatsby/pull/5709) of these tools.
 
-## Should I switch over to v2?
+## Can I upgrade now to v2?
 
-Yes! We’ve built [gatsbyjs.com](https://www.gatsbyjs.com) with v2 and the Gatsby community is [converting over the example sites](https://github.com/gatsbyjs/gatsby/issues/5598). While individual sites may vary, we’ve noticed significant build speedups in Gatsby v2 versus v1 and would love you to dig in and try it. We're working hard on refining Gatsby v2 for full release and would love your help!
+Yes! We’ve built [gatsbyjs.com](https://www.gatsbyjs.com) with v2 and the Gatsby community is [converting over the example sites](https://github.com/gatsbyjs/gatsby/issues/5598). While the effort to migrate individual sites may vary, we’ve noticed significant build speedups in Gatsby v2 versus v1 and would love you to dig in and try it. We're working hard on refining Gatsby v2 for full release and would love your help!
 
 ## What's coming next?
 
