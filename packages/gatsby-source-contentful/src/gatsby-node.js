@@ -44,7 +44,9 @@ exports.sourceNodes = async (
   if (
     store.getState().status.plugins &&
     store.getState().status.plugins[`gatsby-source-contentful`] &&
-    store.getState().status.plugins[`gatsby-source-contentful`][`${options.spaceId}-${options.environment}`]
+    store.getState().status.plugins[`gatsby-source-contentful`][
+      `${options.spaceId}-${options.environment}`
+    ]
   ) {
     syncToken = store.getState().status.plugins[`gatsby-source-contentful`][
       `${options.spaceId}-${options.environment}`
