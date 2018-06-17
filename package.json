@@ -46,7 +46,7 @@
   ],
   "private": true,
   "scripts": {
-    "bootstrap": "npm run lerna-prepare",
+    "bootstrap": "npm-run-all -s check-versions lerna-prepare",
     "check-versions": "babel-node scripts/check-versions.js",
     "format": "npm-run-all -p format-packages format-cache-dir format-www format-examples format-scripts format-markdown",
     "format-cache-dir": "prettier-eslint --write \"packages/gatsby/cache-dir/*.js\"",
