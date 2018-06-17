@@ -62,7 +62,7 @@
     "front-matter": "^2.1.0",
     "fs-extra": "^5.0.0",
     "gatsby-cli": "^2.0.0-alpha.2",
-    "gatsby-link": "^2.0.0-alpha.3",
+    "gatsby-link": "2.0.0-alpha.3",
     "gatsby-plugin-page-creator": "^2.0.0-alpha.3",
     "gatsby-react-router-scroll": "^2.0.0-alpha.2",
     "glob": "^7.1.1",
