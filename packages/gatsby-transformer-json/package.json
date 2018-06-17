@@ -1,7 +1,7 @@
 {
   "name": "gatsby-transformer-json",
   "description": "Gatsby transformer plugin for JSON files",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
