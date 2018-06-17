@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Fragment } from "react"
 import { Link, StaticQuery } from "gatsby"
 import PropTypes from "prop-types"
 import { css } from "react-emotion"
@@ -26,21 +26,23 @@ class Layout extends React.Component {
     const title = pageTitle ? `${pageTitle} — ${siteTitle}` : `${siteTitle}`
 
     return (
-      <>`       `<Helmet>
+      <Fragment>
+        <Helmet>
           <title>{title}</title>
           <meta
             name="description"
             content="Gatsby example site using Emotion and PrismJS"
           />
           <meta name="referrer" content="origin" />
-        </Helmet>`       `<div className={indexContainer}>
+        </Helmet>` `<div className={indexContainer}>
           <HeadingTag>
             <Link className={link} to={`/`}>
               Using Gatsby with Emotion and PrismJS
             </Link>
           </HeadingTag>
           {this.props.children}
-        </div>`     `</>
+        </div>
+      </Fragment>
     )
   }
 }

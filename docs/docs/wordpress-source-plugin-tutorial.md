@@ -8,7 +8,7 @@ title: "Wordpress Source Plugin Tutorial"
 
 In this tutorial, you will install the `gatsby-source-wordpress` plugin in order to pull blog and image data from a WordPress install into your Gatsby site and render that data. This [Gatsby + Wordpress demo site](https://using-wordpress.gatsbyjs.org/) shows you a sample of what you’re going to be building in this tutorial, although it’s missing the cool images you’ll be adding :D
 
-### Why go through this tutorial?
+## Why go through this tutorial?
 
 While each source plugin may operate differently from others, it’s worth going through this tutorial because you will almost definitely be using a source plugin in most Gatsby sites you build. This tutorial will walk you through the basics of connecting your Gatsby site to a CMS, pulling in data, and using React to render that data in beautiful ways on your site.
 
@@ -112,7 +112,7 @@ This next query will pull in a sorted list of the blogposts:
 }
 ```
 
-### Rendering the blogposts to `index.js`
+## Rendering the blogposts to `index.js`
 
 Now that you've created GraphQL queries that pull in the data you want, we'll use that second query to create a list of sorted blogpost titles on your site's homepage. Here is what your `index.js` should look like:
 

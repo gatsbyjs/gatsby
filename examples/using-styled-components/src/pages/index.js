@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Fragment } from "react"
 import Helmet from "react-helmet"
 import styled from "styled-components"
 
@@ -18,14 +18,15 @@ const Wrapper = styled.section`
 class IndexPage extends React.Component {
   render() {
     return (
-      <>`       `<Helmet>
+      <Fragment>
+        <Helmet>
           <title>Gatsby Styled Components</title>
           <meta
             name="description"
             content="Gatsby example site using Styled Components"
           />
           <meta name="referrer" content="origin" />
-        </Helmet>`       `<div
+        </Helmet>` `<div
           style={{
             margin: `0 auto`,
             marginTop: `3rem`,
@@ -42,7 +43,8 @@ class IndexPage extends React.Component {
               </a>
             </p>
           </Wrapper>
-        </div>`     `</>
+        </div>
+      </Fragment>
     )
   }
 }

@@ -144,6 +144,7 @@ Here’s an example of creating specific widths and heights for images:
                   # like "src". In your site's code, remove them
                   # and use the fragments provided by Gatsby.
                   src
+
                   # This fragment won't work in the GraphQL
                   # explorer, but you can use it in your site.
                   # ...GatsbyImageSharpResolutions_withWebp
@@ -198,7 +199,7 @@ Here is what your `index.js` should look like with the query added:
 
 ```jsx
 import React from "react"
-import Link from "gatsby-link"
+import { Link } from "gatsby"
 import Img from "gatsby-image"
 
 const IndexPage = ({ data }) => {
