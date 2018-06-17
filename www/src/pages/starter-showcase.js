@@ -20,32 +20,25 @@ import { options, /* rhythm, */ scale, rhythm } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
 import { style } from "glamor"
 import hex2rgba from "hex2rgba"
+import RRSM from '../utils/react-router-state-manager'
 
 // main components
 
 class StarterShowcasePage extends Component {
   render() {
-    const data = this.props.data
-    const location = this.props.location
-    console.log('page props', this.props)
-    // let windowWidth
-    // if (typeof window !== `undefined`) {
-    //   windowWidth = window.innerWidth
-    // }
-
-    // const isDesktop = windowWidth > 750
+    const { data, location, urlState, setURLState } = this.props
     return (
       <Layout location={location}>
         <Helmet>
           <title>Showcase</title>
         </Helmet>
-        <FilteredShowcase data={data} />
+        <FilteredShowcase data={data} urlState={urlState} setURLState={setURLState} />
       </Layout>
     )
   }
 }
 
-export default StarterShowcasePage
+export default RRSM({ s: '' })(StarterShowcasePage)
 
 export const showcaseQuery = graphql`
 query ShowcaseQuery {
@@ -94,13 +87,10 @@ query ShowcaseQuery {
 }
 `
 
-
-
 // smaller components
 
 class FilteredShowcase extends Component {
   state = {
-    search: ``,
     sitesToShow: 9,
     filtersCategory: new Set([]),
     filtersDependency: new Set([]),
@@ -112,7 +102,7 @@ class FilteredShowcase extends Component {
     filtersDependency: new Set([]),
   })
   render() {
-    const { data } = this.props
+    const { data, urlState, setURLState } = this.props
     const { filtersCategory, filtersDependency } = this.state
     const { setFiltersCategory, setFiltersDependency, resetFilters } = this
     // https://stackoverflow.com/a/32001444/1106414
@@ -126,12 +116,12 @@ class FilteredShowcase extends Component {
 
     let items = data.allMarkdownRemark.edges
 
-    if (this.state.search.length > 0) {
+    if (urlState.s.length > 0) {
       items = items.filter(node => {
         // TODO: SWYX: very very simple object search algorithm, i know, sorry
         const { fields, frontmatter } = node.node
         if (fields) frontmatter.fields = fields.starterShowcase
-        return JSON.stringify(frontmatter).toLowerCase().includes(this.state.search)
+        return JSON.stringify(frontmatter).toLowerCase().includes(urlState.s)
       })
     }
 
@@ -258,7 +248,7 @@ class FilteredShowcase extends Component {
                 lineHeight: 1,
               }}
             >
-              {this.state.search.length === 0 ? (
+              {urlState.s.length === 0 ? (
                 filters.size === 0 ? (
                   <span>
                     All {data.allMarkdownRemark.edges.length} Showcase Sites
@@ -301,12 +291,9 @@ class FilteredShowcase extends Component {
                     },
                   }}
                   type="text"
-                  value={this.state.search}
-                  onChange={e =>
-                    this.setState({
-                      search: e.target.value,
-                    })
-                  }
+                  value={urlState.s}
+                  // TODO: SWYX: i know this is spammy, we can finetune history vs search later
+                  onChange={e => setURLState({ s: e.target.value })}
                   placeholder="Search sites"
                   aria-label="Search sites"
                 />

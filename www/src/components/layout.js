@@ -19,7 +19,10 @@ import "typeface-space-mono"
 
 class DefaultLayout extends React.Component {
   render() {
-    const isHomepage = this.props.location.pathname === `/`
+    const { location = {
+      pathname: '/starter-showcase'
+    } } = this.props // location will be undefined if on 'starter-showcase'
+    const isHomepage = location.pathname === `/`
 
     // SEE: template-docs-markdown for why this.props.isSidebarDisabled is here
     const isSidebarDisabled = this.props.isSidebarDisabled || !this.props.sidebarYaml
@@ -32,11 +35,11 @@ class DefaultLayout extends React.Component {
           <meta name="og:site_name" content="GatsbyJS" />
           <link
             rel="canonical"
-            href={`https://gatsbyjs.org${this.props.location.pathname}`}
+            href={`https://gatsbyjs.org${location.pathname}`}
           />
           <html lang="en" />
         </Helmet>
-        <Navigation pathname={this.props.location.pathname} />
+        <Navigation pathname={location.pathname} />
         <div
           className={`main-body`}
           css={{
