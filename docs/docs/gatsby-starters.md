@@ -2,8 +2,9 @@
 title: 'Gatsby Starters'
 ---
 
-The Gatsby CLI tool lets you install "starters". These are partially built sites
-preconfigured to help you get moving faster on creating a certain type of site.
+The Gatsby CLI tool lets you install “starters”. These are boilerplate Gatsby sites maintained by the community.
+`gatsby new` helps you start your project by cloning the boilerplate, installing dependencies, and clearing git history.
+If you are familiar with `git` this is the same as `git clone <boilerplate> && rm -rf .git/ && yarn` (or `npm i`).
 
 When creating a new site, you can optionally specify a starter to base your new
 site on e.g.
@@ -185,12 +186,12 @@ Community:
   Features:
 
   * localization (Multilanguage)
- 
+
 * [gatsby-starter-datocms](https://github.com/datocms/gatsby-portfolio)
   [(demo)](http://cranky-edison-12166d.netlify.com/)
 
   Features:
-  
+
   * Simple portfolio to quick start a site with DatoCMS
   * Contents and media from DatoCMS
   * Custom sass style
@@ -267,14 +268,14 @@ Community:
   * React Overdrive transitions
   * Create your projects in Markdown
   * And other good stuff (SEO, Offline Support, WebApp Manifest Support)
-  
+
 * [gatsby-starter-portfolio-bella](https://github.com/LeKoArts/gatsby-starter-portfolio-bella)
   [(demo)](https://portfolio-bella.netlify.com/)
-  
+
   The target audience are designers and photographers.
 
   Features:
-  
+
   * Big typography & images
   * White theme
   * Prismic.io as CMS
@@ -282,14 +283,14 @@ Community:
   * One-page layout with sub-pages for case studies
   * Easily configurable
   * And other good stuff (SEO, Offline Support, WebApp Manifest Support)
-  
+
 * [gatsby-starter-portfolio-cara](https://github.com/LeKoArts/gatsby-starter-portfolio-cara)
   [(demo)](https://portfolio-cara.netlify.com/)
-  
+
   The target audience are designers and photographers.
 
   Features:
-  
+
   * Gatsby v2
   * React Spring
   * TailwindCSS & Emotion
@@ -717,7 +718,7 @@ Community:
   * Integration with [Visual Studio Code](https://code.visualstudio.com)
     * Pre-configured auto-formatting on file save
   * Based on [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default)
-  
+
 * [gatsby-starter-hero-blog](https://github.com/greglobinski/gatsby-starter-hero-blog)
   [(demo)](https://gatsby-starter-hero-blog.greglobinski.com/)
 
@@ -744,7 +745,7 @@ Community:
   * Prettier code styling
   * Webpack `BundleAnalyzerPlugin`
   * [README](https://github.com/greglobinski/gatsby-starter-hero-blog) / [DEMO](https://gatsby-starter-hero-blog.greglobinski.com/)
-  
+
 
 * [gatsby-starter-ecommerce](https://github.com/parmsang/gatsby-starter-ecommerce)
   [(demo)](https://parmsang.github.io/gatsby-starter-ecommerce/)
