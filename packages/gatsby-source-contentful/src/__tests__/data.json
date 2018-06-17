@@ -47,7 +47,7 @@
                                 "watch": "lerna run watch --no-sort --stream --concurrency 999",
                                 "format": "npm run format-packages && npm run format-cache-dir && npm run format-www && npm run format-examples && npm run format-scripts",
                                 "publish": "lerna publish",
-                                "bootstrap": "yarn && npm run check-versions && lerna run prepublish",
+                                "bootstrap": "yarn && npm run check-versions && lerna run prepare",
                                 "lint:flow": "babel-node scripts/flow-check.js",
                                 "remotedev": "remotedev --hostname=localhost --port=19999",
                                 "test_bkup": "npm run lint && npm run test-node && npm run test-integration",

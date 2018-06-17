@@ -32,7 +32,7 @@
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli",
   "scripts": {
     "build": "babel src --out-dir dist",
-    "prepublish": "cross-env NODE_ENV=production npm run build",
+    "prepare": "cross-env NODE_ENV=production npm run build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "babel -w src --out-dir dist"
   }

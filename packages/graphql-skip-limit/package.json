@@ -25,7 +25,7 @@
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/graphql-skip-limit",
   "scripts": {
     "build": "babel src --out-dir dist",
-    "prepublish": "cross-env NODE_ENV=production npm run build",
+    "prepare": "cross-env NODE_ENV=production npm run build",
     "watch": "babel -w src --out-dir dist"
   }
 }
