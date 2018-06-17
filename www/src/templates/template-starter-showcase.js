@@ -1,7 +1,9 @@
 import React from "react"
 import Helmet from "react-helmet"
 // import { OutboundLink } from "gatsby-plugin-google-analytics"
+import { Link } from 'gatsby'
 
+import FaExtLink from "react-icons/lib/fa/external-link"
 import hex2rgba from "hex2rgba"
 import Layout from "../components/layout"
 import ShareMenu from "../components/share-menu-starters"
@@ -284,13 +286,16 @@ class StarterTemplate extends React.Component {
                 <div css={{
                   display: 'grid',
                   gridTemplateColumns: 'repeat(3, 1fr)',
-                  gridColumnGap: 20
+                  gridColumnGap: 20,
+                  gridAutoRows: '50px'
                 }}>
-                  {/* const shownDeps = this.state.showAllDeps ? allDeps : allDeps.slice(0,15) */}
-                  {shownDeps && shownDeps.map(dep => <div key={dep} css={{
-                    ...styles.truncate,
-                    marginBottom: '1rem'
-                  }}>{dep}</div>)}
+                  {shownDeps && shownDeps.map(dep => /^gatsby-/.test(dep) ?
+                    <div><Link to={`/packages/${dep}`} key={dep}>{dep}</Link></div> :
+                    <div key={dep} css={{
+                      ...styles.truncate,
+                      marginBottom: '1rem'
+                    }}> <a href={`https://npm.im/${dep}`}><FaExtLink /></a> {dep}</div>
+                  )}
                 </div>
                 {showMore &&
                   <a href="#showmore" onClick={() => this.setState({ showAllDeps: true })}>{`Show ${allDeps.length - shownDeps.length} more`}</a>}
