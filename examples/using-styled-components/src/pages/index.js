@@ -18,14 +18,14 @@ const Wrapper = styled.section`
 class IndexPage extends React.Component {
   render() {
     return (
-      <>`       `<Helmet>
+      <>`        \` `<Helmet>
           <title>Gatsby Styled Components</title>
           <meta
             name="description"
             content="Gatsby example site using Styled Components"
           />
           <meta name="referrer" content="origin" />
-        </Helmet>`       `<div
+        </Helmet>` `<div
           style={{
             margin: `0 auto`,
             marginTop: `3rem`,
@@ -42,7 +42,8 @@ class IndexPage extends React.Component {
               </a>
             </p>
           </Wrapper>
-        </div>`     `</>
+        </div>` `
+      </>
     )
   }
 }

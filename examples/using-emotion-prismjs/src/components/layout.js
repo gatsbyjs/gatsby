@@ -26,21 +26,22 @@ class Layout extends React.Component {
     const title = pageTitle ? `${pageTitle} — ${siteTitle}` : `${siteTitle}`
 
     return (
-      <>`       `<Helmet>
+      <>`        \` `<Helmet>
           <title>{title}</title>
           <meta
             name="description"
             content="Gatsby example site using Emotion and PrismJS"
           />
           <meta name="referrer" content="origin" />
-        </Helmet>`       `<div className={indexContainer}>
+        </Helmet>` `<div className={indexContainer}>
           <HeadingTag>
             <Link className={link} to={`/`}>
               Using Gatsby with Emotion and PrismJS
             </Link>
           </HeadingTag>
           {this.props.children}
-        </div>`     `</>
+        </div>` `
+      </>
     )
   }
 }
