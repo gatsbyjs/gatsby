@@ -46,7 +46,7 @@
   ],
   "private": true,
   "scripts": {
-    "bootstrap": "npm-run-all -s check-versions lerna-prepublish",
+    "bootstrap": "npm run lerna-prepare",
     "check-versions": "babel-node scripts/check-versions.js --allow-next",
     "format": "npm-run-all -p format-packages format-cache-dir format-www format-examples format-scripts format-markdown",
     "format-cache-dir": "prettier-eslint --write \"packages/gatsby/cache-dir/*.js\"",
@@ -57,7 +57,7 @@
     "format-www": "prettier-eslint --write \"www/*.js\" \"www/src/**/*.js\"",
     "jest": "jest",
     "lerna": "lerna",
-    "lerna-prepublish": "lerna run prepublish",
+    "lerna-prepare": "lerna run prepare",
     "lint": "eslint --ext .js,.jsx packages/**/src",
     "lint:flow": "babel-node scripts/flow-check.js",
     "plop": "plop",
