@@ -185,7 +185,7 @@
     "build:rawfiles": "copyfiles -u 1 src/internal-plugins/**/raw_* dist",
     "build:src": "babel src --out-dir dist --source-maps --ignore **/gatsby-cli.js,**/raw_*,**/__tests__,**/cache-dir",
     "clean-test-bundles": "find test/ -type f -name bundle.js* -exec rm -rf {} +",
-    "prepublish": "cross-env NODE_ENV=production npm run build",
+    "prepare": "cross-env NODE_ENV=production npm run build",
     "test-coverage": "node_modules/.bin/nyc --reporter=lcov --reporter=text npm test",
     "watch": "rimraf dist && rimraf cache-dir && mkdir dist && npm run build:internal-plugins && npm run build:rawfiles && npm-run-all -p watch:*",
     "watch:cache-dir": "npm run build:cache-dir -- --watch",
