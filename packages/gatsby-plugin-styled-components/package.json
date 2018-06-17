@@ -29,6 +29,6 @@
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-styled-components",
   "scripts": {
     "build": "babel src --out-dir .",
-    "prepublish": "npm run build"
+    "prepare": "npm run build"
   }
 }
