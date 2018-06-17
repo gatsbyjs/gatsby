@@ -40,8 +40,8 @@ or as single objects spread across multiple files.
 
 The _source folder_ can contain either the following:
 
-* **Array of Objects**: Where each file represents a collection. (_you probably want this one_)
-* **Single Object**: Where each _subfolder_ represents a collection; each files represents one "record".
+- **Array of Objects**: Where each file represents a collection. (_you probably want this one_)
+- **Single Object**: Where each _subfolder_ represents a collection; each files represents one "record".
 
 ### Array of Objects
 

@@ -37,9 +37,9 @@ Thanks to its extensible plugin system, it provides a large set of built-in feat
 
 Unlike others CMSs, **Strapi is 100% open-source**, which means:
 
-* **Strapi is completely free**.
-* You can **host it on your own servers**, so you own the data.
-* It is entirely **customisable and extensible**, thanks to the plugin system.
+- **Strapi is completely free**.
+- You can **host it on your own servers**, so you own the data.
+- It is entirely **customisable and extensible**, thanks to the plugin system.
 
 ## API Setup
 

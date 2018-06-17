@@ -187,7 +187,7 @@ const options = {
       // Increase base font-size for phablet and desktop.
       [presets.Phablet]: {
         html: {
-          fontSize: `${18 / 16 * 100}%`,
+          fontSize: `${(18 / 16) * 100}%`,
         },
         h1: {
           ...scale(7 / 5),
@@ -195,7 +195,7 @@ const options = {
       },
       [presets.Desktop]: {
         html: {
-          fontSize: `${20 / 16 * 100}%`,
+          fontSize: `${(20 / 16) * 100}%`,
         },
       },
     }

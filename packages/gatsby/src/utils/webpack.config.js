@@ -80,10 +80,8 @@ module.exports = async (
     return Object.assign(envObject, gatsbyVarObject)
   }
 
-  function getHmrPath () {
-    let hmrBasePath = `${
-      program.ssl ? `https` : `http`
-    }://${
+  function getHmrPath() {
+    let hmrBasePath = `${program.ssl ? `https` : `http`}://${
       program.host
     }:${webpackPort}/`
 
@@ -108,9 +106,11 @@ module.exports = async (
         return {
           path: directory,
           filename: `[name].js`,
-          publicPath: process.env.GATSBY_WEBPACK_PUBLICPATH || `${program.ssl ? `https` : `http`}://${
-            program.host
-          }:${webpackPort}/`,
+          publicPath:
+            process.env.GATSBY_WEBPACK_PUBLICPATH ||
+            `${program.ssl ? `https` : `http`}://${
+              program.host
+            }:${webpackPort}/`,
           devtoolModuleFilenameTemplate: info =>
             path.resolve(info.absoluteResourcePath).replace(/\\/g, `/`),
         }
@@ -156,7 +156,9 @@ module.exports = async (
         return {
           commons: [
             require.resolve(`react-hot-loader/patch`),
-            `${require.resolve(`webpack-hot-middleware/client`)}?path=${getHmrPath()}`,
+            `${require.resolve(
+              `webpack-hot-middleware/client`
+            )}?path=${getHmrPath()}`,
             directoryPath(`.cache/app`),
           ],
         }

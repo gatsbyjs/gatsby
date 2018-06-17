@@ -63,8 +63,8 @@ The difference in Time to Interactivity (TTI) (measure of how long before the
 user can actually interact with the page e.g. click on a link) between the sites
 is just as dramatic. Gatsbygram's TTI is 6.1s vs 14.1s for Instagram.
 
-* [Gatsbygram's webpagetest results](http://www.webpagetest.org/result/170310_XP_11AS/)
-* [Instagram's webpagetest results](http://www.webpagetest.org/result/170310_PC_11AZ/)
+- [Gatsbygram's webpagetest results](http://www.webpagetest.org/result/170310_XP_11AS/)
+- [Instagram's webpagetest results](http://www.webpagetest.org/result/170310_PC_11AZ/)
 
 ### Gatsby is built for the next billion internet users
 
@@ -89,9 +89,9 @@ the first time are developing their websites using these techniques.
 
 Read Google's case studies on:
 
-* [Flipkart (India)](https://developers.google.com/web/showcase/2016/flipkart)
-* [Konga (Nigeria)](https://developers.google.com/web/showcase/2016/konga)
-* [Housing.com (India)](https://developers.google.com/web/showcase/2016/housing)
+- [Flipkart (India)](https://developers.google.com/web/showcase/2016/flipkart)
+- [Konga (Nigeria)](https://developers.google.com/web/showcase/2016/konga)
+- [Housing.com (India)](https://developers.google.com/web/showcase/2016/housing)
 
 ### Gatsby is simple
 
@@ -560,8 +560,8 @@ gatsby develop
 While writing this post I scrapped a few accounts and published their resulting
 "Gatsbygram" sites:
 
-* https://iceland-gatsbygram.netlify.com
-* https://tinyhouses-gatsbygram.netlify.com
+- https://iceland-gatsbygram.netlify.com
+- https://tinyhouses-gatsbygram.netlify.com
 
 _With thanks to Sam Bhagwatt, Sunil Pai, Nolan Lawson, Nik Graf, Jeff Posnick,
 and Addy Osmani for their reviews._

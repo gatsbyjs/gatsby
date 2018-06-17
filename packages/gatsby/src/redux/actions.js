@@ -91,7 +91,10 @@ actions.deletePage = (page: PageInput) => {
   }
 }
 
-const pascalCase = _.flow(_.camelCase, _.upperFirst)
+const pascalCase = _.flow(
+  _.camelCase,
+  _.upperFirst
+)
 const hasWarnedForPageComponent = new Set()
 /**
  * Create a page. See [the guide on creating and modifying pages](/docs/creating-and-modifying-pages/)

@@ -49,7 +49,9 @@ exports.sourceNodes = async (
   if (
     store.getState().status.plugins &&
     store.getState().status.plugins[`gatsby-source-contentful`] &&
-    store.getState().status.plugins[`gatsby-source-contentful`][`${spaceId}-${environment}`]
+    store.getState().status.plugins[`gatsby-source-contentful`][
+      `${spaceId}-${environment}`
+    ]
   ) {
     syncToken = store.getState().status.plugins[`gatsby-source-contentful`][
       `${spaceId}-${environment}`
@@ -78,16 +80,16 @@ exports.sourceNodes = async (
   // TODO figure out if entries referencing now deleted entries/assets
   // are "updated" so will get the now deleted reference removed.
 
-  function deleteContentfulNode (node) {
+  function deleteContentfulNode(node) {
     const id = node.sys.id
-    const localizedIds = locales.map((locale) => normalize.makeId({ id, currentLocale: locale.code, defaultLocale }))
+    const localizedIds = locales.map(locale =>
+      normalize.makeId({ id, currentLocale: locale.code, defaultLocale })
+    )
     localizedIds.forEach(id => deleteNode(id, getNode(id)))
   }
 
-  currentSyncData.deletedEntries
-    .forEach(deleteContentfulNode)
-  currentSyncData.deletedAssets
-    .forEach(deleteContentfulNode)
+  currentSyncData.deletedEntries.forEach(deleteContentfulNode)
+  currentSyncData.deletedAssets.forEach(deleteContentfulNode)
 
   const existingNodes = getNodes().filter(
     n => n.internal.owner === `gatsby-source-contentful`
@@ -190,7 +192,9 @@ exports.sourceNodes = async (
 
 exports.onPreBootstrap = async ({ store }) => {
   const program = store.getState().program
-  const CACHE_DIR = path.resolve(`${program.directory}/.cache/contentful/assets/`)
+  const CACHE_DIR = path.resolve(
+    `${program.directory}/.cache/contentful/assets/`
+  )
   await fs.ensureDir(CACHE_DIR)
 }
 

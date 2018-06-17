@@ -7,13 +7,14 @@ describe(`Load plugins`, () => {
    * Version can be updated (we use external plugin in default config).
    * Both will cause snapshots to differ.
    */
-  const replaceFieldsThatCanVary = plugins => plugins.map(plugin => {
-    return {
-      ...plugin,
-      resolve: ``,
-      version: `1.0.0`,
-    }
-  })
+  const replaceFieldsThatCanVary = plugins =>
+    plugins.map(plugin => {
+      return {
+        ...plugin,
+        resolve: ``,
+        version: `1.0.0`,
+      }
+    })
 
   it(`Load plugins for a site`, async () => {
     let plugins = await loadPlugins({ plugins: [] })

@@ -23,15 +23,15 @@ Large, unoptimized images dramatically slow down your site.
 But creating optimized images for websites has long been a thorny problem.
 Ideally you would:
 
-* Resize large images to the size needed by your design
-* Generate multiple smaller images so smartphones and tablets don't download
+- Resize large images to the size needed by your design
+- Generate multiple smaller images so smartphones and tablets don't download
   desktop-sized images
-* Strip all unnecessary metadata and optimize JPEG and PNG compression
-* Efficiently lazy load images to speed initial page load and save bandwidth
-* Use the "blur-up" technique or a
+- Strip all unnecessary metadata and optimize JPEG and PNG compression
+- Efficiently lazy load images to speed initial page load and save bandwidth
+- Use the "blur-up" technique or a
   "[traced placeholder](https://github.com/gatsbyjs/gatsby/issues/2435)" SVG to
   show a preview of the image while it loads
-* Hold the image position so your page doesn't jump while images load
+- Hold the image position so your page doesn't jump while images load
 
 Doing this consistently across a site feels like sisyphean labor. You manually
 optimize your images and then… several images are swapped in at the last minute
@@ -151,38 +151,38 @@ Their fragments are:
 
 ### gatsby-transformer-sharp
 
-* `GatsbyImageSharpResolutions`
-* `GatsbyImageSharpResolutions_noBase64`
-* `GatsbyImageSharpResolutions_tracedSVG`
-* `GatsbyImageSharpResolutions_withWebp`
-* `GatsbyImageSharpResolutions_withWebp_noBase64`
-* `GatsbyImageSharpResolutions_withWebp_tracedSVG`
-* `GatsbyImageSharpSizes`
-* `GatsbyImageSharpSizes_noBase64`
-* `GatsbyImageSharpSizes_tracedSVG`
-* `GatsbyImageSharpSizes_withWebp`
-* `GatsbyImageSharpSizes_withWebp_noBase64`
-* `GatsbyImageSharpSizes_withWebp_tracedSVG`
+- `GatsbyImageSharpResolutions`
+- `GatsbyImageSharpResolutions_noBase64`
+- `GatsbyImageSharpResolutions_tracedSVG`
+- `GatsbyImageSharpResolutions_withWebp`
+- `GatsbyImageSharpResolutions_withWebp_noBase64`
+- `GatsbyImageSharpResolutions_withWebp_tracedSVG`
+- `GatsbyImageSharpSizes`
+- `GatsbyImageSharpSizes_noBase64`
+- `GatsbyImageSharpSizes_tracedSVG`
+- `GatsbyImageSharpSizes_withWebp`
+- `GatsbyImageSharpSizes_withWebp_noBase64`
+- `GatsbyImageSharpSizes_withWebp_tracedSVG`
 
 ### gatsby-source-contentful
 
-* `GatsbyContentfulResolutions`
-* `GatsbyContentfulResolutions_noBase64`
-* `GatsbyContentfulResolutions_tracedSVG`
-* `GatsbyContentfulResolutions_withWebp`
-* `GatsbyContentfulResolutions_withWebp_noBase64`
-* `GatsbyContentfulSizes`
-* `GatsbyContentfulSizes_noBase64`
-* `GatsbyContentfulSizes_tracedSVG`
-* `GatsbyContentfulSizes_withWebp`
-* `GatsbyContentfulSizes_withWebp_noBase64`
+- `GatsbyContentfulResolutions`
+- `GatsbyContentfulResolutions_noBase64`
+- `GatsbyContentfulResolutions_tracedSVG`
+- `GatsbyContentfulResolutions_withWebp`
+- `GatsbyContentfulResolutions_withWebp_noBase64`
+- `GatsbyContentfulSizes`
+- `GatsbyContentfulSizes_noBase64`
+- `GatsbyContentfulSizes_tracedSVG`
+- `GatsbyContentfulSizes_withWebp`
+- `GatsbyContentfulSizes_withWebp_noBase64`
 
 ### gatsby-source-datocms
 
-* `GatsbyDatoCmsResolutions`
-* `GatsbyDatoCmsResolutions_noBase64`
-* `GatsbyDatoCmsSizes`
-* `GatsbyDatoCmsSizes_noBase64`
+- `GatsbyDatoCmsResolutions`
+- `GatsbyDatoCmsResolutions_noBase64`
+- `GatsbyDatoCmsSizes`
+- `GatsbyDatoCmsSizes_noBase64`
 
 If you don't want to use the blur-up effect, choose the fragment with `noBase64`
 at the end. If you want to use the traced placeholder SVGs, choose the fragment
@@ -268,7 +268,7 @@ prop. e.g. `<Img sizes={sizes} />`
 
 ## Some other stuff to be aware of
 
-* If you want to set `display: none;` on a component using a `resolutions` prop,
+- If you want to set `display: none;` on a component using a `resolutions` prop,
   you need to also pass in to the style prop `{ display: 'inherit' }`.\* Images
   don't load until JavaScript is loaded. Gatsby's automatic code splitting
   generally makes this fine but if images seem slow coming in on a page, check

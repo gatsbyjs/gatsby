@@ -25,11 +25,11 @@ module.exports = {
 
 It recognizes files with the following extensions as images.
 
-* jpeg
-* jpg
-* png
-* webp
-* tif
-* tiff
+- jpeg
+- jpg
+- png
+- webp
+- tif
+- tiff
 
 Each image file is parsed into a node of type `ImageSharp`.

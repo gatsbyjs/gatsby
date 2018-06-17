@@ -498,11 +498,11 @@ Gatsby supports almost every possible styling option (if there isn't a plugin
 yet for your favorite CSS option,
 [please contribute one!](/docs/how-to-contribute/))
 
-* [Sass](/packages/gatsby-plugin-sass/)
-* [Emotion](/packages/gatsby-plugin-emotion/)
-* [JSS](/packages/gatsby-plugin-jss/)
-* [Stylus](/packages/gatsby-plugin-stylus/)
-* and more!
+- [Sass](/packages/gatsby-plugin-sass/)
+- [Emotion](/packages/gatsby-plugin-emotion/)
+- [JSS](/packages/gatsby-plugin-jss/)
+- [Stylus](/packages/gatsby-plugin-stylus/)
+- and more!
 
 ## What's coming next?
 

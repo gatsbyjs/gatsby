@@ -114,11 +114,11 @@ wanted. I'd highly recommend [Gatsby](/tutorial/) for
 anyone who has started getting acquainted with React. Before I started this
 project I didn't know a lot about:
 
-* Static site generation/JAMstack
-* Creating a Progressive Web App (PWA) and what qualifies as one
-* React Router
-* GraphQL
-* WordPress REST API
+- Static site generation/JAMstack
+- Creating a Progressive Web App (PWA) and what qualifies as one
+- React Router
+- GraphQL
+- WordPress REST API
 
 Moving forward with Gatsby, I'd like to extend my site to include pagination
 within the blog, use [Styled Components](https://www.styled-components.com/) and

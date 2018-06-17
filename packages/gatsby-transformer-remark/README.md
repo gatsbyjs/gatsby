@@ -22,14 +22,14 @@ There are many Gatsby Remark plugins which you can install to customize how Mark
 
 It recognizes files with the following extensions as Markdown:
 
-* md
-* rmd
-* mkd
-* mkdn
-* mdwn
-* mdown
-* litcoffee
-* markdown
+- md
+- rmd
+- mkd
+- mkdn
+- mdwn
+- mdown
+- litcoffee
+- markdown
 
 Each Markdown file is parsed into a node of type `MarkdownRemark`.
 

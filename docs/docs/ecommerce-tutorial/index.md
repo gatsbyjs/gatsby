@@ -3,38 +3,38 @@ title: "Gatsby E-Commerce Tutorial"
 ---
 
 # Table of Contents
-1. [Why use Gatsby for an e-commerce site?](#why-use-gatsby-for-an-e-commerce-site)
-2. [Prerequisites](#prerequisites)
-3. [Setting up a Gatsby site](#setting-up-a-gatsby-site)
-4. [Installing Stripe Checkout plugin](#installing-stripe-checkout-plugin)
-5. [Creating a button](#creating-a-button)
-6. [Importing checkout component into homepage](#importing-checkout-component-into-homepage)
-7. [Getting Your Stripe test keys](#getting-your-stripe-test-keys)
-8. [Configuring Stripe in Gatsby](#configuring-stripe-in-gatsby)
-9. [Setting up a serverless function in AWS Lambda](#setting-up-a-serverless-function-in-aws-lambda)
+
+1.  [Why use Gatsby for an e-commerce site?](#why-use-gatsby-for-an-e-commerce-site)
+2.  [Prerequisites](#prerequisites)
+3.  [Setting up a Gatsby site](#setting-up-a-gatsby-site)
+4.  [Installing Stripe Checkout plugin](#installing-stripe-checkout-plugin)
+5.  [Creating a button](#creating-a-button)
+6.  [Importing checkout component into homepage](#importing-checkout-component-into-homepage)
+7.  [Getting Your Stripe test keys](#getting-your-stripe-test-keys)
+8.  [Configuring Stripe in Gatsby](#configuring-stripe-in-gatsby)
+9.  [Setting up a serverless function in AWS Lambda](#setting-up-a-serverless-function-in-aws-lambda)
 10. [Setting up a separate repo](#setting-up-a-separate-repo)
 11. [Editing your new repo](#editing-your-new-repo)
 12. [Pushing code to AWS](#pushing-code-to-aws)
 13. [Configuring serverless with your AWS credentials](#configuring-serverless-with-your-aws-credentials)
 14. [Testing Payments](#testing-payments)
 
-
 # Why use Gatsby for an e-commerce site?
 
 In this advanced tutorial, you’ll learn how to use Gatsby to build the UI for a basic e-commerce site that can accept payments, with Stripe as the backend for processing payments. Benefits of using Gatsby for e-commerce sites include the following:
-* Security inherent in static sites
-* Blazing fast performance when your pages are converted from React into static files
-* Easy to host
+
+- Security inherent in static sites
+- Blazing fast performance when your pages are converted from React into static files
+- Easy to host
 
 You can see the working demo hosted here: https://gatsby-ecommerce.netlify.com/
 
 # Prerequisites
 
-* Since this is a more advanced tutorial, building a site with Gatsby before will likely make this tutorial less time-consuming ([see main tutorial here](/tutorial/))
-* Stripe account: [register for an account here](https://dashboard.stripe.com/register)
-* AWS account (free tier that covers anywhere from several thousand to a million requests per month): [register for an account here](https://aws.amazon.com/free/?sc_channel=PS&sc_campaign=acquisition_US&sc_publisher=google&sc_medium=cloud_computing_b&sc_content=aws_account_e_control_q32016&sc_detail=create%20an%20aws%20account&sc_category=cloud_computing&sc_segment=102882721242&sc_matchtype=e&sc_country=US&s_kwcid=AL!4422!3!102882721242!e!!g!!create%20an%20aws%20account&ef_id=Wd_k7wAAAVgVBk9m:20180604172833:s)
-* Willingness to navigate around janky AWS UIs
-
+- Since this is a more advanced tutorial, building a site with Gatsby before will likely make this tutorial less time-consuming ([see main tutorial here](/tutorial/))
+- Stripe account: [register for an account here](https://dashboard.stripe.com/register)
+- AWS account (free tier that covers anywhere from several thousand to a million requests per month): [register for an account here](https://aws.amazon.com/free/?sc_channel=PS&sc_campaign=acquisition_US&sc_publisher=google&sc_medium=cloud_computing_b&sc_content=aws_account_e_control_q32016&sc_detail=create%20an%20aws%20account&sc_category=cloud_computing&sc_segment=102882721242&sc_matchtype=e&sc_country=US&s_kwcid=AL!4422!3!102882721242!e!!g!!create%20an%20aws%20account&ef_id=Wd_k7wAAAVgVBk9m:20180604172833:s)
+- Willingness to navigate around janky AWS UIs
 
 ## How does Gatsby work with Stripe and AWS?
 
@@ -45,9 +45,9 @@ There are alternatives to Stripe, like Square and Braintree, and their setup is 
 Stripe requires a server to process the information to make a charge, so you’ll need more than just static pages. Gatsby builds the pages for your front-end, but it won’t be able to handle the server logic that Stripe requires to process payments. That means you’ll need to set up a simple function that your Gatsby project can POST to in order to handle a payment.
 
 That function can be set up a number of different ways. To set up that function from scratch, you could:
-* Write your own simple server and deploy it somewhere, making it accessible via an endpoint
-* Write and deploy a hosted serverless function through a service like AWS Lambda or Google Cloud
 
+- Write your own simple server and deploy it somewhere, making it accessible via an endpoint
+- Write and deploy a hosted serverless function through a service like AWS Lambda or Google Cloud
 
 # Setting up a Gatsby site
 
@@ -57,7 +57,6 @@ Create a new Gatsby project by running the `gatsby new` command in the terminal 
 gatsby new ecommerce-gatsby-tutorial
 cd ecommerce-gatsby-tutorial
 ```
-
 
 # Installing Stripe Checkout plugin
 
@@ -71,20 +70,18 @@ Open the root site directory in a text editor and navigate to `gatsby-config.js`
 
 ```jsx
 module.exports = {
- siteMetadata: {
-   title: 'Gatsby Default Starter',
- },
- plugins: ['gatsby-plugin-react-helmet', 'gatsby-plugin-stripe-checkout'],
-}
+  siteMetadata: {
+    title: "Gatsby Default Starter",
+  },
+  plugins: ["gatsby-plugin-react-helmet", "gatsby-plugin-stripe-checkout"],
+};
 ```
-
 
 ## See your site hot reload in the browser!
 
 Run `gatsby develop` in the terminal, which starts a development server and reloads changes you make to your site so you can preview them in the browser. Open up your browser to [localhost:8000](http://localhost8000.com/) and you should see a default homepage.
 
 > **NOTE**: If you have already started your gatsby development server using `gatsby develop`, you will need to restart the server by pressing CTRL + C in the terminal where the command was run and running `gatsby develop` again to see changes in your `gatsby-config.js` reflected on [localhost:8000](http://localhost8000.com/)
-
 
 ## How does the Stripe Checkout plugin work?
 
@@ -97,7 +94,6 @@ Stripe Checkout processes payments with information we send it, you can read mor
 to the end of the `<body>` tag across all of your pages in your Gatsby project, allowing you to call the Stripe checkout methods from Stripe’s API to create charges.
 
 If you want to further customise the checkout process or pull Stripe data into your site, check out [Gatsby's plugin library for more Stripe plugins](https://www.gatsbyjs.org/plugins/?=stripe).
-
 
 # Creating a button
 
@@ -117,119 +113,119 @@ There is a default checkout modal that is available through the plugin we’re u
 
 ![Stripe card payments modal](card-payments-modal.png)
 
-> Notice the input fields for email and credit card information—this design is already made by Stripe for you to use without styling anything. 
+> Notice the input fields for email and credit card information—this design is already made by Stripe for you to use without styling anything.
 
 In order to launch the Stripe Checkout modal (shown above), you need to call the `.configure()` method from Stripe Checkout in your Gatsby site. The only information you are required to provide is your publishable API key so that Stripe knows what account on their platform to send payments to. You can read about other recommended and optional configurations like currency or shipping information in the Stripe Checkout Reference. You are going to make a `checkout.js` file that handles this configuration.
 
 Create a new file at `src/components/checkout.js`. Your `checkout.js` file should look like this:
 
 ```jsx
-import React from 'react'
+import React from "react";
 
 // hardcoded amount (in US cents) to charge users
 // you could set this variable dynamically to charge different amounts
-const amount = 2500
+const amount = 2500;
 const cardStyles = {
- display: 'flex',
- flexDirection: 'column',
- justifyContent: 'space-around',
- alignItems: 'flex-start',
- padding: '3rem',
- boxShadow: '5px 5px 25px 0 rgba(46,61,73,.2)',
- backgroundColor: '#fff',
- borderRadius: '6px',
- maxWidth: '400px',
-}
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-around",
+  alignItems: "flex-start",
+  padding: "3rem",
+  boxShadow: "5px 5px 25px 0 rgba(46,61,73,.2)",
+  backgroundColor: "#fff",
+  borderRadius: "6px",
+  maxWidth: "400px",
+};
 const buttonStyles = {
- fontSize: '13px',
- textAlign: 'center',
- color: '#fff',
- outline: 'none',
- padding: '12px 60px',
- boxShadow: '2px 5px 10px rgba(0,0,0,.1)',
- backgroundColor: 'rgb(255, 178, 56)',
- borderRadius: '6px',
- letterSpacing: '1.5px',
-}
+  fontSize: "13px",
+  textAlign: "center",
+  color: "#fff",
+  outline: "none",
+  padding: "12px 60px",
+  boxShadow: "2px 5px 10px rgba(0,0,0,.1)",
+  backgroundColor: "rgb(255, 178, 56)",
+  borderRadius: "6px",
+  letterSpacing: "1.5px",
+};
 
-// Below is where the checkout component is defined. 
+// Below is where the checkout component is defined.
 // It has several functions, and some default state variables.
 const Checkout = class extends React.Component {
- state = {
-   disabled: false,
-   buttonText: 'BUY NOW',
-   paymentMessage: '',
- }
+  state = {
+    disabled: false,
+    buttonText: "BUY NOW",
+    paymentMessage: "",
+  };
 
- resetButton() {
-   this.setState({ disabled: false, buttonText: 'BUY NOW' })
- }
+  resetButton() {
+    this.setState({ disabled: false, buttonText: "BUY NOW" });
+  }
 
- componentDidMount() {
-   this.stripeHandler = StripeCheckout.configure({
-     // You’ll need to add your own Stripe public key to the `checkout.js` file.
-     // key: 'pk_test_STRIPE_PUBLISHABLE_KEY',
-     key: 'pk_test_kuhbxb0MMZsp6fj6aTNDnxUu',
-     closed: () => {
-       this.resetButton()
-     },
-   })
- }
+  componentDidMount() {
+    this.stripeHandler = StripeCheckout.configure({
+      // You’ll need to add your own Stripe public key to the `checkout.js` file.
+      // key: 'pk_test_STRIPE_PUBLISHABLE_KEY',
+      key: "pk_test_kuhbxb0MMZsp6fj6aTNDnxUu",
+      closed: () => {
+        this.resetButton();
+      },
+    });
+  }
 
- openStripeCheckout(event) {
-   event.preventDefault()
-   this.setState({ disabled: true, buttonText: 'WAITING...' })
-   this.stripeHandler.open({
-     name: 'Demo Product',
-     amount: amount,
-     description: 'A product well worth your time',
-     token: token => {
-       fetch(`AWS_LAMBDA_URL`, {
-         method: 'POST',
-         body: JSON.stringify({
-           token,
-           amount,
-         }),
-         headers: new Headers({
-           'Content-Type': 'application/json',
-         }),
-       })
-         .then(res => {
-           console.log('Transaction processed successfully')
-           this.resetButton()
-           this.setState({ paymentMessage: 'Payment Successful!' })
-           return res.json()
-         })
-         .catch(error => {
-           console.error('Error:', error)
-           this.setState({ paymentMessage: 'Payment Failed' })
-         })
-     },
-   })
- }
+  openStripeCheckout(event) {
+    event.preventDefault();
+    this.setState({ disabled: true, buttonText: "WAITING..." });
+    this.stripeHandler.open({
+      name: "Demo Product",
+      amount: amount,
+      description: "A product well worth your time",
+      token: token => {
+        fetch(`AWS_LAMBDA_URL`, {
+          method: "POST",
+          body: JSON.stringify({
+            token,
+            amount,
+          }),
+          headers: new Headers({
+            "Content-Type": "application/json",
+          }),
+        })
+          .then(res => {
+            console.log("Transaction processed successfully");
+            this.resetButton();
+            this.setState({ paymentMessage: "Payment Successful!" });
+            return res.json();
+          })
+          .catch(error => {
+            console.error("Error:", error);
+            this.setState({ paymentMessage: "Payment Failed" });
+          });
+      },
+    });
+  }
 
- render() {
-   return (
-     <div style={cardStyles}>
-       <h4>Spend your Money!</h4>
-       <p>
-         Use any email, 4242 4242 4242 4242 as the credit card number, any 3
-         digit number, and any future date of expiration.
-       </p>
-       <button
-         style={buttonStyles}
-         onClick={event => this.openStripeCheckout(event)}
-         disabled={this.state.disabled}
-       >
-         {this.state.buttonText}
-       </button>
-       {this.state.paymentMessage}
-     </div>
-   )
- }
-}
+  render() {
+    return (
+      <div style={cardStyles}>
+        <h4>Spend your Money!</h4>
+        <p>
+          Use any email, 4242 4242 4242 4242 as the credit card number, any 3
+          digit number, and any future date of expiration.
+        </p>
+        <button
+          style={buttonStyles}
+          onClick={event => this.openStripeCheckout(event)}
+          disabled={this.state.disabled}
+        >
+          {this.state.buttonText}
+        </button>
+        {this.state.paymentMessage}
+      </div>
+    );
+  }
+};
 
-export default Checkout
+export default Checkout;
 ```
 
 ## What did you just do?
@@ -247,16 +243,15 @@ You imported React, set a default price for your product, added some styles, and
  }
 ```
 
-This gives Stripe our key, and tells Stripe to call the Checkout component’s resetButton() method when the Stripe modal is closed. 
+This gives Stripe our key, and tells Stripe to call the Checkout component’s resetButton() method when the Stripe modal is closed.
 
 The `openStripeCheckout()` function gives additional information to Stripe as a user launches the checkout modal, and will send the information they input to our serverless function once we create it.
 
 The tags in the `render()` function define the structure of HTML elements that lay out how the component is structured.
 
-
 # Importing checkout component into homepage
 
-Now go to your `src/pages/index.js` file. This is your homepage that shows at the root URL. Import your new checkout component in the file underneath the other two imports and replace the tags inside the first `<div>` tag with a `<Checkout />` tag. Your `index.js` file should now look like this: 
+Now go to your `src/pages/index.js` file. This is your homepage that shows at the root URL. Import your new checkout component in the file underneath the other two imports and replace the tags inside the first `<div>` tag with a `<Checkout />` tag. Your `index.js` file should now look like this:
 
 ```
 javascript{3,6-11}
@@ -275,19 +270,18 @@ export default IndexPage
 
 If you go back to [localhost:8000](http://localhost8000.com/) in your browser and you have `gatsby develop` running, you should have a big, enticing button on a card where the filler text used to be.
 
-
 # Getting your Stripe test keys
 
-View your API credentials by logging into your Stripe account, and then going to Developers > API Keys. 
+View your API credentials by logging into your Stripe account, and then going to Developers > API Keys.
 
 ![Stripe public test key location in Stripe account](stripe-public-test-key.png)
 
-You have 2 keys in both test mode and production mode: 
-* a publishable key
-* a secret key
+You have 2 keys in both test mode and production mode:
 
-While testing, you can use the keys that begins with pk_test_ and sk_test_. For production code, you will want to use the keys that don’t say test. As the names imply, your publishable key may be included in code that you share publicly (for example, in GitHub), whereas your secret key should not be shared with anyone or committed to any public repo. It’s important to restrict access to this secret key because anyone who has it could potentially read or send requests from your Stripe account and see information about charges or purchases or even refund customers.
+- a publishable key
+- a secret key
 
+While testing, you can use the keys that begins with pk*test* and sk*test*. For production code, you will want to use the keys that don’t say test. As the names imply, your publishable key may be included in code that you share publicly (for example, in GitHub), whereas your secret key should not be shared with anyone or committed to any public repo. It’s important to restrict access to this secret key because anyone who has it could potentially read or send requests from your Stripe account and see information about charges or purchases or even refund customers.
 
 # Configuring Stripe in Gatsby
 
@@ -306,10 +300,9 @@ componentDidMount() {
      },
    })
  }
-
 ```
-After you replace `pk_test_YOUR_KEY_HERE` with your actual pk_test key and save the change, your button should launch the Stripe Checkout modal and allow you to enter in payment information. You can try and submit a payment, but it will fail because you haven’t set up your serverless function yet. Your Gatsby site is almost ready!
 
+After you replace `pk_test_YOUR_KEY_HERE` with your actual pk_test key and save the change, your button should launch the Stripe Checkout modal and allow you to enter in payment information. You can try and submit a payment, but it will fail because you haven’t set up your serverless function yet. Your Gatsby site is almost ready!
 
 # Setting up a Serverless Function in AWS Lambda
 
@@ -317,12 +310,11 @@ Lambda is a service offered through Amazon Web Services that allows you to run c
 
 > **NOTE**: You can follow an adaptation of these steps using this tutorial and Serverless’ docs as a reference if you want to deploy your serverless function to a different provider like Google Cloud or Azure.
 
-
 # Setting up a separate repo
 
 You’ll be setting up a separate repo for the code that you’ll deploy to Lambda. To look through the example repo, [inspect the code in GitHub](https://github.com/gillkyle/gatsby-stripe-serverless-backend).
 
-Clone the code to a new location on your computer and then change directories into this new folder: 
+Clone the code to a new location on your computer and then change directories into this new folder:
 
 ```shell
 `git clone https://github.com/gillkyle/gatsby-stripe-serverless-backend.git`
@@ -335,21 +327,18 @@ Then you need to run `npm install` to install the dependencies in the `package.j
 npm install
 ```
 
-
 ## What did you just do?
 
 By running `npm install`, you’ve created a node_modules folder that you’ll upload to AWS along with your code to make a charge. All of the code in this file will be hosted online by Amazon, and you need to provide it with the libraries you utilize in your project. By making this repository separate from our Gatsby project, we can decouple it from our site making it easier to switch to a different cloud hosting provider, and greatly decreasing the size of the files we upload to Amazon’s servers.
-
 
 # Editing your new repo
 
 Open gatsby-stripe-serverless-backend in your code editor.
 
-* Rename the `secrets.example.json` file to `secrets.json`.
-* Replace the string that says "sk_test_STRIPE_SECRET_KEY" in `secrets.json` with your secret test key from your Stripe account, and keep the quotation marks around it (using the test keys allows orders to go through without needing real credit card details, which is useful for testing)
+- Rename the `secrets.example.json` file to `secrets.json`.
+- Replace the string that says "sk_test_STRIPE_SECRET_KEY" in `secrets.json` with your secret test key from your Stripe account, and keep the quotation marks around it (using the test keys allows orders to go through without needing real credit card details, which is useful for testing)
 
 Your secret key can be included here if you don’t upload this file to a version control system. The .gitignore file in the project includes a line that will tell any git commands you run in this folder not to keep track of your secrets file as long as it is named `secrets.json`.
-
 
 ## How does the code work in this site?
 
@@ -366,7 +355,7 @@ module.exports.handler = (event, context, callback) => {
 .
 ```
 
-Stripe is being initialized here, this time with your secret key. You’ll notice it is referencing the variable `STRIPE_SECRET_KEY` from `process.env`, because after you upload your code to AWS, your environment variables like API keys are available in that manner. 
+Stripe is being initialized here, this time with your secret key. You’ll notice it is referencing the variable `STRIPE_SECRET_KEY` from `process.env`, because after you upload your code to AWS, your environment variables like API keys are available in that manner.
 
 The next line exports `handler`, a function that will handle your checkout logic.
 
@@ -429,10 +418,9 @@ return stripe.charges
    });
 ```
 
-A few things happen with `stripe.charges.create()`: it takes an object as an argument that tells the amount to charge, the unique token made by stripe that hides all the credit card information from us, as well as other information like currency to provide more information about the transaction. 
+A few things happen with `stripe.charges.create()`: it takes an object as an argument that tells the amount to charge, the unique token made by stripe that hides all the credit card information from us, as well as other information like currency to provide more information about the transaction.
 
 If the charge was successful, the code continues into the `then` block and prepares a successful response. If something went wrong, an error response is made and then that response (whether successful or not) is returned in the callback.
-
 
 # Pushing code to AWS
 
@@ -442,15 +430,14 @@ Install the serverless framework globally on your computer with this command: `n
 
 Serverless is a CLI tool that helps speed up the development of serverless functions and connects the dots between writing the code and making the necessary configurations on different hosting providers.
 
-You can read more about the configurations you’ll use in the `serverless.yml` file in the repo you just cloned or in the Serverless docs. 
-
+You can read more about the configurations you’ll use in the `serverless.yml` file in the repo you just cloned or in the Serverless docs.
 
 # Configuring serverless with your AWS credentials
 
-Configure serverless with your AWS credentials so you can make updates on AWS through the serverless tools with this command: 
+Configure serverless with your AWS credentials so you can make updates on AWS through the serverless tools with this command:
 
 > **NOTE**: It’s helpful to edit this command somewhere other than the terminal as you replace the dummy keys with your real keys, or else it might run halfway through your editing process
- 
+
 ```shell
 serverless config credentials --provider aws --key AAAAAAAEXAMPLE --secret aaaaaaaa/BBBBBBB/CCCdddEXAMPLEKEY
 ```
@@ -461,7 +448,7 @@ Where `AAAAAAAEXAMPLE` is your key and `aaaaaaaa/BBBBBBB/CCCdddEXAMPLEKEY` your 
 
 In the gatsby-stripe-serverless-backend project, run `serverless deploy` and your function will be packaged up and uploaded to AWS.
 
-The output of `serverless deploy` should look something like this in your terminal: 
+The output of `serverless deploy` should look something like this in your terminal:
 
 ```shell
 Serverless: Packaging service...
@@ -517,6 +504,7 @@ openStripeCheckout(event) {
 .
 .
 ```
+
 Now you have all the pieces in place!
 
 # Testing Payments

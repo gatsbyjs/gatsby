@@ -6,17 +6,17 @@ title: How to Contribute
 
 We want contributing to Gatsby to be fun, enjoyable, and educational for anyone and everyone. Contributions go far beyond pull requests and commits; we are thrilled to receive a variety of other contributions including the following:
 
-* Blogging, speaking about, or creating tutorials about one of Gatsby's many features. Mention @gatsbyjs on Twitter and/or email shannon [at] gatsbyjs [dot] com so we can give pointers and tips (if you want them :) and help you spread the word. Please add your blog posts and videos of talks to our [Awesome Gatsby](/docs/awesome-gatsby/) page.
-* [Submit new feature ideas through an RFC](/blog/2018-04-06-introducing-gatsby-rfc-process/)
-* Submitting new documentation; titles in _italics_ on gatsbyjs.org are stubs and need contributions
-* Tweeting about things you build with @gatsbyjs (make sure to @ mention us!)
-* Submitting documentation updates, enhancements, designs, or bugfixes
-* Submitting spelling or grammar fixes
-* Adding unit or functional tests
-* Triaging [GitHub issues](https://github.com/gatsbyjs/gatsby/issues) -- especially determining whether an issue still persists or is reproducible
-* [Reporting bugs or issues](/docs/how-to-file-an-issue/)
-* Searching for Gatsby on Discord or Spectrum and helping someone else who needs help
-* Teaching others how to contribute to Gatsby's repo!
+- Blogging, speaking about, or creating tutorials about one of Gatsby's many features. Mention @gatsbyjs on Twitter and/or email shannon [at] gatsbyjs [dot] com so we can give pointers and tips (if you want them :) and help you spread the word. Please add your blog posts and videos of talks to our [Awesome Gatsby](/docs/awesome-gatsby/) page.
+- [Submit new feature ideas through an RFC](/blog/2018-04-06-introducing-gatsby-rfc-process/)
+- Submitting new documentation; titles in _italics_ on gatsbyjs.org are stubs and need contributions
+- Tweeting about things you build with @gatsbyjs (make sure to @ mention us!)
+- Submitting documentation updates, enhancements, designs, or bugfixes
+- Submitting spelling or grammar fixes
+- Adding unit or functional tests
+- Triaging [GitHub issues](https://github.com/gatsbyjs/gatsby/issues) -- especially determining whether an issue still persists or is reproducible
+- [Reporting bugs or issues](/docs/how-to-file-an-issue/)
+- Searching for Gatsby on Discord or Spectrum and helping someone else who needs help
+- Teaching others how to contribute to Gatsby's repo!
 
 If you are worried or don't know where to start, you can always reach out to Shannon Soper(@shannonb_ux) on Twitter or simply submit an issue and a maintainer can help give you guidance!
 
@@ -33,29 +33,29 @@ lerna and yarn to configure the repository for active development.
 
 You can install the latest version of Gatsby by following these steps:
 
-* Clone the repo, navigate to its directory.
-* ensure you have the latest version of yarn installed (>= 1.0.2)
+- Clone the repo, navigate to its directory.
+- ensure you have the latest version of yarn installed (>= 1.0.2)
   https://yarnpkg.com/en/docs/install
-* Install dependencies using `yarn run bootstrap` in the root of the repo.
+- Install dependencies using `yarn run bootstrap` in the root of the repo.
 
 The usual contributing steps are:
 
-* Fork the [official repository](https://github.com/gatsbyjs/gatsby).
-* Clone your fork: `git clone https://github.com/<your-username>/gatsby.git`
-* Setup up repo and install dependencies: `yarn run bootstrap`
-* Make sure tests are passing for you: `yarn test`
-* Create a topic branch: `git checkout -b topics/new-feature-name`
-* Run `npm run watch` from the root of the repo to watch for changes to packages' source code and compile these changes on-the-fly as you work. Note that the watch command can be resource intensive. To limit it to the packages you're working on, add a scope flag, like `npm run watch -- --scope={gatsby,gatsby-cli}`. To watch just one package, run `npm run watch -- --scope=gatsby`.
-* Install [gatsby-dev-cli](/packages/gatsby-dev-cli/) globally: `yarn global add gatsby-dev-cli`
-* Run `yarn install` in each of the sites you're testing.
-* For each of your Gatsby test sites, run the `gatsby-dev` command there to copy
+- Fork the [official repository](https://github.com/gatsbyjs/gatsby).
+- Clone your fork: `git clone https://github.com/<your-username>/gatsby.git`
+- Setup up repo and install dependencies: `yarn run bootstrap`
+- Make sure tests are passing for you: `yarn test`
+- Create a topic branch: `git checkout -b topics/new-feature-name`
+- Run `npm run watch` from the root of the repo to watch for changes to packages' source code and compile these changes on-the-fly as you work. Note that the watch command can be resource intensive. To limit it to the packages you're working on, add a scope flag, like `npm run watch -- --scope={gatsby,gatsby-cli}`. To watch just one package, run `npm run watch -- --scope=gatsby`.
+- Install [gatsby-dev-cli](/packages/gatsby-dev-cli/) globally: `yarn global add gatsby-dev-cli`
+- Run `yarn install` in each of the sites you're testing.
+- For each of your Gatsby test sites, run the `gatsby-dev` command there to copy
   the built files from your cloned copy of Gatsby. It'll watch for your changes
   to Gatsby packages and copy them into the site. For more detailed instructions
   see the [gatsby-dev-cli README](/packages/gatsby-dev-cli/)
-* Add tests and code for your changes.
-* Once you're done, make sure all tests still pass: `yarn test`.
-* Commit and push to your fork.
-* Create a pull request from your branch.
+- Add tests and code for your changes.
+- Once you're done, make sure all tests still pass: `yarn test`.
+- Commit and push to your fork.
+- Create a pull request from your branch.
 
 ### Contributing to the documentation.
 
@@ -72,14 +72,14 @@ layouts, add sections/pages, follow the steps below. You can then spin up your
 own instance of the Gatsby website and make/preview your changes before raising
 a pull request.
 
-* Clone the repo and navigate to `/www`
-* Run `yarn` to install all of the website's dependencies.
-* Run `gatsby develop` to preview the website in `http://localhost:8000`
-* The Markdown files for the documentation live in `/docs` folder. Make
+- Clone the repo and navigate to `/www`
+- Run `yarn` to install all of the website's dependencies.
+- Run `gatsby develop` to preview the website in `http://localhost:8000`
+- The Markdown files for the documentation live in `/docs` folder. Make
   additions or modifications here.
-* Make sure to double check your grammar and capitalise correctly.
-* Commit and push to your fork.
-* Create a pull request from your branch.
+- Make sure to double check your grammar and capitalise correctly.
+- Commit and push to your fork.
+- Create a pull request from your branch.
 
 ## Development tools
 

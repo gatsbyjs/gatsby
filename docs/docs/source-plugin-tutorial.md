@@ -42,9 +42,9 @@ Take the above URL and paste it in to a browser to see Pixabay's response to you
 
 Your plugin will have the following behavior:
 
-* Accept config options like a Pixabay API key and a search query
-* Make an API request using the provided config options
-* Convert the data in the API response to Gatsby's node system
+- Accept config options like a Pixabay API key and a search query
+- Make an API request using the provided config options
+- Convert the data in the API response to Gatsby's node system
 
 ### Setup a new Gatsby site
 
@@ -373,10 +373,10 @@ You've built a local plugin for your project, but what if you want to share it w
 
 You've written a local Gatsby plugin that:
 
-* can be configured with an entry in your `gatsby-config.js` file
-* requests data from a third-party API
-* pulls the API data into Gatsby's node system
-* allows the data to be queried with GraphQL
+- can be configured with an entry in your `gatsby-config.js` file
+- requests data from a third-party API
+- pulls the API data into Gatsby's node system
+- allows the data to be queried with GraphQL
 
 Congratulations!
 

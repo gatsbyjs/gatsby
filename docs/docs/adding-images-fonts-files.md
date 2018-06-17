@@ -59,7 +59,7 @@ You can query the `publicURL` field of `File` nodes found in your data layer to 
 
 Examples:
 
-* Copy all `.pdf` files you have in your data layer to your build directory and return URLs to them:
+- Copy all `.pdf` files you have in your data layer to your build directory and return URLs to them:
 
 ```graphql
 {
@@ -73,7 +73,7 @@ Examples:
 }
 ```
 
-* Copy post attachments defined in your Markdown files:
+- Copy post attachments defined in your Markdown files:
 
   Link to your attachments in the markdown frontmatter:
 
@@ -113,10 +113,10 @@ You can also add other assets to a `static` folder at the root of your project.
 Note that we normally encourage you to `import` assets in JavaScript files
 instead. This mechanism provides a number of benefits:
 
-* Scripts and stylesheets get minified and bundled together to avoid extra
+- Scripts and stylesheets get minified and bundled together to avoid extra
   network requests.
-* Missing files cause compilation errors instead of 404 errors for your users.
-* Result filenames include content hashes so you don’t need to worry about
+- Missing files cause compilation errors instead of 404 errors for your users.
+- Result filenames include content hashes so you don’t need to worry about
   browsers caching their old versions.
 
 However there is an **escape hatch** that you can use to add an asset outside of
@@ -143,10 +143,10 @@ render() {
 
 Keep in mind the downsides of this approach:
 
-* None of the files in `static` folder get post-processed or minified.
-* Missing files will not be called at compilation time, and will cause 404
+- None of the files in `static` folder get post-processed or minified.
+- Missing files will not be called at compilation time, and will cause 404
   errors for your users.
-* Result filenames won’t include content hashes so you’ll need to add query
+- Result filenames won’t include content hashes so you’ll need to add query
   arguments or rename them every time they change.
 
 ### When to Use the `static` Folder
@@ -155,11 +155,11 @@ Normally we recommend importing [stylesheets](#adding-a-stylesheet),
 [images, and fonts](#adding-images-and-fonts) from JavaScript. The `static`
 folder is useful as a workaround for a number of less common cases:
 
-* You need a file with a specific name in the build output, such as
+- You need a file with a specific name in the build output, such as
   [`manifest.webmanifest`](https://developer.mozilla.org/en-US/docs/Web/Manifest).
-* You have thousands of images and need to dynamically reference their paths.
-* You want to include a small script like
+- You have thousands of images and need to dynamically reference their paths.
+- You want to include a small script like
   [`pace.js`](http://github.hubspot.com/pace/docs/welcome/) outside of the
   bundled code.
-* Some library may be incompatible with Webpack and you have no other option but
+- Some library may be incompatible with Webpack and you have no other option but
   to include it as a `<script>` tag.

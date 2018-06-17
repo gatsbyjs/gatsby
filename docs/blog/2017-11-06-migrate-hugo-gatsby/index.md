@@ -18,13 +18,13 @@ decided to take a different route—building it from scratch.
 I focused on the process, looking for ways to make site building more generic
 and reusable.
 
-* Content migration
-* Programatic page creation in Gatsby
-* Manage styles with
+- Content migration
+- Programatic page creation in Gatsby
+- Manage styles with
   [`Typography.js`](http://kyleamathews.github.io/typography.js/)
-* Automatic pagination
-* Tag pages
-* Add an admin panel with [NetlifyCMS](https://www.netlifycms.org/)
+- Automatic pagination
+- Tag pages
+- Add an admin panel with [NetlifyCMS](https://www.netlifycms.org/)
 
 This article will highlight lessons learned from the process, with the aim to
 provide high-level guidelines about patterns which can be applied in migrations

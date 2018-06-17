@@ -164,7 +164,9 @@ class DefaultLayout extends React.Component {
               [presets.Tablet]: {
                 display: isPackageSearchPage
                   ? `block`
-                  : isPackageSearchPage && isPackageReadme ? `block` : `none`,
+                  : isPackageSearchPage && isPackageReadme
+                    ? `block`
+                    : `none`,
                 width: packageSidebarWidth,
                 position: `fixed`,
                 background: colors.ui.whisper,

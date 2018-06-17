@@ -509,7 +509,7 @@ async function responsiveSizes({ file, args = {}, reporter }) {
   })
 
   const base64Width = 20
-  const base64Height = Math.max(1, Math.round(base64Width * height / width))
+  const base64Height = Math.max(1, Math.round((base64Width * height) / width))
   const base64Args = {
     duotone: options.duotone,
     grayscale: options.grayscale,

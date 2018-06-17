@@ -9,10 +9,14 @@ exports.onRenderBody = (
     process.env.NODE_ENV === `production` ||
     pluginOptions.includeInDevelopment
   ) {
-
-    const environmentParamStr = (pluginOptions.gtmAuth && pluginOptions.gtmPreview) ? oneLine`
-      &gtm_auth=${pluginOptions.gtmAuth}&gtm_preview=${pluginOptions.gtmPreview}&gtm_cookies_win=x
-    ` : ``
+    const environmentParamStr =
+      pluginOptions.gtmAuth && pluginOptions.gtmPreview
+        ? oneLine`
+      &gtm_auth=${pluginOptions.gtmAuth}&gtm_preview=${
+            pluginOptions.gtmPreview
+          }&gtm_cookies_win=x
+    `
+        : ``
 
     setHeadComponents([
       <script
@@ -36,9 +40,7 @@ exports.onRenderBody = (
             <iframe
               src="https://www.googletagmanager.com/ns.html?id=${
                 pluginOptions.id
-              }${
-                environmentParamStr
-              }"
+              }${environmentParamStr}"
               height="0"
               width="0"
               style="display: none; visibility: hidden"

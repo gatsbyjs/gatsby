@@ -21,10 +21,10 @@ the browser when needed by your components.
 
 ## Why is GraphQL so cool?
 
-* Eliminate frontend data boilerplate — no need to worry about requesting & waiting for data. Just ask for the data you need with a GraphQL query and it'll show up when you need it
-* Push frontend complexity into queries — many data transformations can be done at _build-time_ within your GraphQL queries
-* It's the perfect data querying language for the often complex/nested data dependencies of modern applications
-* Improve performance by removing data bloat — GraphQL is a big part of why Gatsby is so fast as it enables lazy-loading the exact data in the exact form each view needs
+- Eliminate frontend data boilerplate — no need to worry about requesting & waiting for data. Just ask for the data you need with a GraphQL query and it'll show up when you need it
+- Push frontend complexity into queries — many data transformations can be done at _build-time_ within your GraphQL queries
+- It's the perfect data querying language for the often complex/nested data dependencies of modern applications
+- Improve performance by removing data bloat — GraphQL is a big part of why Gatsby is so fast as it enables lazy-loading the exact data in the exact form each view needs
 
 ## What does a GraphQL query look like?
 
@@ -89,8 +89,8 @@ as we do and find it useful for all your projects.
 
 When starting out with GraphQL, we recommend the following two tutorials:
 
-* https://www.howtographql.com/
-* http://graphql.org/learn/
+- https://www.howtographql.com/
+- http://graphql.org/learn/
 
 [The official Gatsby tutorial](/tutorial/part-four/) also includes an introduction to using GraphQL specifically with Gatsby.
 
@@ -199,8 +199,8 @@ export const query = graphql`
 
 See also the following blog posts:
 
-* [Making Website Building Fun](/blog/2017-10-16-making-website-building-fun/)
-* [Image Optimization Made Easy with Gatsby.js](https://medium.com/@kyle.robert.gill/ridiculously-easy-image-optimization-with-gatsby-js-59d48e15db6e)
+- [Making Website Building Fun](/blog/2017-10-16-making-website-building-fun/)
+- [Image Optimization Made Easy with Gatsby.js](https://medium.com/@kyle.robert.gill/ridiculously-easy-image-optimization-with-gatsby-js-59d48e15db6e)
 
 ## Advanced
 
@@ -342,13 +342,13 @@ export const query = graphql`
 
 ### Getting started with GraphQL
 
-* http://graphql.org/learn/
-* https://www.howtographql.com/
-* https://reactjs.org/blog/2015/05/01/graphql-introduction.html
-* https://services.github.com/on-demand/graphql/
+- http://graphql.org/learn/
+- https://www.howtographql.com/
+- https://reactjs.org/blog/2015/05/01/graphql-introduction.html
+- https://services.github.com/on-demand/graphql/
 
 ### Advanced readings on GraphQL
 
-* [GraphQL specification](https://facebook.github.io/graphql/October2016/)
-* [Interfaces and Unions](https://medium.com/the-graphqlhub/graphql-tour-interfaces-and-unions-7dd5be35de0d)
-* [Relay Compiler (which Gatsby uses to process queries)](https://facebook.github.io/relay/docs/en/compiler-architecture.html)
+- [GraphQL specification](https://facebook.github.io/graphql/October2016/)
+- [Interfaces and Unions](https://medium.com/the-graphqlhub/graphql-tour-interfaces-and-unions-7dd5be35de0d)
+- [Relay Compiler (which Gatsby uses to process queries)](https://facebook.github.io/relay/docs/en/compiler-architecture.html)

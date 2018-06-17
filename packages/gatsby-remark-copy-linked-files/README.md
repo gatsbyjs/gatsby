@@ -97,12 +97,12 @@ markdown HTML will be modified to point to it.
 
 ### Supported Markdown tags
 
-* img
-* link
+- img
+- link
 
 ### Supported HTML tags
 
-* `<img />`
-* `<video />`
-* `<audio />`
-* `<a />`
+- `<img />`
+- `<video />`
+- `<audio />`
+- `<a />`

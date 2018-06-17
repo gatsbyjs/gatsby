@@ -123,8 +123,8 @@ const options = {
         marginRight: `${rhythm(-options.blockMarginBottom)}`,
         marginLeft: `${rhythm(-options.blockMarginBottom)}`,
         paddingRight: rhythm(options.blockMarginBottom),
-        paddingLeft: `${rhythm(options.blockMarginBottom / 5 * 4)}`,
-        borderLeft: `${rhythm(options.blockMarginBottom / 5 * 1)} solid ${
+        paddingLeft: `${rhythm((options.blockMarginBottom / 5) * 4)}`,
+        borderLeft: `${rhythm((options.blockMarginBottom / 5) * 1)} solid ${
           colors.a[3]
         }`,
         display: `block`,
@@ -231,12 +231,12 @@ const options = {
       [MOBILE_MEDIA_QUERY]: {
         // Make baseFontSize on mobile 16px.
         html: {
-          fontSize: `${16 / 16 * 100}%`,
+          fontSize: `${(16 / 16) * 100}%`,
         },
       },
       [TABLET_MEDIA_QUERY]: {
         html: {
-          fontSize: `${17 / 16 * 100}%`,
+          fontSize: `${(17 / 16) * 100}%`,
         },
       },
       [MIN_DEFAULT_MEDIA_QUERY]: {
@@ -252,13 +252,15 @@ const options = {
           marginRight: `${rhythm(-options.blockMarginBottom * 1.5)}`,
           marginLeft: `${rhythm(-options.blockMarginBottom * 1.5)}`,
           paddingRight: rhythm(options.blockMarginBottom * 1.5),
-          paddingLeft: `${rhythm(options.blockMarginBottom * 1.5 / 5 * 4)}`,
-          borderLeftWidth: `${rhythm(options.blockMarginBottom * 1.5 / 5 * 1)}`,
+          paddingLeft: `${rhythm(((options.blockMarginBottom * 1.5) / 5) * 4)}`,
+          borderLeftWidth: `${rhythm(
+            ((options.blockMarginBottom * 1.5) / 5) * 1
+          )}`,
         },
       },
       [MIN_LARGER_DISPLAY_MEDIA_QUERY]: {
         html: {
-          fontSize: `${21 / 16 * 100}%`,
+          fontSize: `${(21 / 16) * 100}%`,
         },
       },
       ".token.comment,.token.block-comment,.token.prolog,.token.doctype,.token.cdata": {
