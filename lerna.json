@@ -1,9 +1,21 @@
 {
-  "lerna": "2.5.1",
-  "npmClient": "yarn",
+  "command": {
+    "create": {
+      "license": "MIT"
+    },
+    "publish": {
+      "allowBranch": "master",
+      "cdVersion": "prerelease",
+      "conventionalCommits": true,
+      "message": "chore(release): Publish",
+      "preid": "beta"
+    }
+  },
+  "loglevel": "success",
   "packages": [
     "packages/*"
   ],
   "version": "independent",
+  "npmClient": "yarn",
   "useWorkspaces": true
 }
