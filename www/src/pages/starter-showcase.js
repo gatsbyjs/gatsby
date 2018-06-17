@@ -38,7 +38,7 @@ class StarterShowcasePage extends Component {
   }
 }
 
-export default RRSM({ s: '' })(StarterShowcasePage)
+export default RRSM({ s: '', c: [], d: [] })(StarterShowcasePage)
 
 export const showcaseQuery = graphql`
 query ShowcaseQuery {
@@ -92,19 +92,15 @@ query ShowcaseQuery {
 class FilteredShowcase extends Component {
   state = {
     sitesToShow: 9,
-    filtersCategory: new Set([]),
-    filtersDependency: new Set([]),
   }
-  setFiltersCategory = filtersCategory => this.setState({ filtersCategory })
-  setFiltersDependency = filtersDependency => this.setState({ filtersDependency })
-  resetFilters = () => this.setState({
-    filtersCategory: new Set([]),
-    filtersDependency: new Set([]),
-  })
+  setFiltersCategory = filtersCategory => this.props.setURLState({ c: Array.from(filtersCategory) })
+  setFiltersDependency = filtersDependency => this.props.setURLState({ d: Array.from(filtersDependency) })
+  resetFilters = () => this.props.setURLState({ c: null, d: null })
   render() {
     const { data, urlState, setURLState } = this.props
-    const { filtersCategory, filtersDependency } = this.state
     const { setFiltersCategory, setFiltersDependency, resetFilters } = this
+    const filtersCategory = new Set(Array.isArray(urlState.c) ? urlState.c : [urlState.c])
+    const filtersDependency = new Set(Array.isArray(urlState.d) ? urlState.d : [urlState.d])
     // https://stackoverflow.com/a/32001444/1106414
     const filters = new Set([].concat(...[filtersCategory, filtersDependency].map(set => Array.from(set))))
     let windowWidth
