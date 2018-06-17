@@ -1,10 +1,10 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import Image from 'gatsby-image'
+import React from "react"
+import PropTypes from "prop-types"
+import Image from "gatsby-image"
 
-import Polaroid from '../components/polaroid'
+import Polaroid from "../components/polaroid"
 
-import './index.css'
+import "./index.css"
 
 const Layout = ({ children, data }) => {
   const images = data.images.edges.map(image => (
