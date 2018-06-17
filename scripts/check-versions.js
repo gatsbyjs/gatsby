@@ -19,8 +19,6 @@ collectPackages(process.cwd()).then(packages => {
   const graph = new PackageGraph(packages, `allDependencies`, true)
   
   graph.forEach((pkgNode, name) => {
-    // const outdated = []
-
     let outdated = Array.from(pkgNode.localDependencies.values())
       .filter(localDep => !semver.satisfies(graph.get(localDep.name).version, localDep.fetchSpec))
     
