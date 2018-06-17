@@ -36,6 +36,7 @@ class StarterTemplate extends React.Component {
 
     // plug for now
     const isModal = false
+    const repoName = starterShowcase.githubData.repoMetadata.name
     return (
       <Layout
         location={this.props.location}
@@ -57,7 +58,7 @@ class StarterTemplate extends React.Component {
             }}
           >
             <Helmet>
-              <title>{`Gatsby Starter: ${starterShowcase.githubData.repoMetadata.name}`}</title>
+              <title>{`Gatsby Starter: ${repoName}`}</title>
               <meta
                 name="og:image"
                 content={`https://next.gatsbyjs.org/StarterShowcase/generatedScreenshots/${starterShowcase.stub}.png`}
@@ -66,6 +67,13 @@ class StarterTemplate extends React.Component {
                 name="twitter:image"
                 content={`https://next.gatsbyjs.org/StarterShowcase/generatedScreenshots/${starterShowcase.stub}.png`}
               />
+              <meta name="description" content={`Gatsby Starter: ${repoName}`} />
+              <meta name="og:description" content={`Gatsby Starter: ${repoName}`} />
+              <meta name="twitter:description" content={`Gatsby Starter: ${repoName}`} />
+              <meta name="og:title" content={repoName} />
+              <meta name="og:type" content="article" />
+              <meta name="twitter.label1" content="Reading time" />
+              <meta name="twitter:data1" content={`1 min read`} />
             </Helmet>
             <div
               css={{
