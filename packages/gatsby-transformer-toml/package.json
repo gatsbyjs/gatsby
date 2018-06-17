@@ -1,7 +1,7 @@
 {
   "name": "gatsby-transformer-toml",
   "description": "Gatsby transformer plugin for toml",
-  "version": "2.1.1-alpha.2",
+  "version": "2.1.1-beta.0",
   "author": "Ruben Harutyunyan <vagr9k@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
