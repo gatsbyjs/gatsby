@@ -148,7 +148,7 @@ const buttonStyles = {
   letterSpacing: "1.5px",
 }
 
-// Below is where the checkout component is defined. 
+// Below is where the checkout component is defined.
 ==== BASE ====
 // It has several functions, and some default state variables.
 const Checkout = class extends React.Component {

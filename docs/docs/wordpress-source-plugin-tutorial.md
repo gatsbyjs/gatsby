@@ -117,7 +117,7 @@ This next query will pull in a sorted list of the blogposts:
 Now that you've created GraphQL queries that pull in the data you want, we'll use that second query to create a list of sorted blogpost titles on your site's homepage. Here is what your `index.js` should look like:
 
 ```jsx
-import React from "react";
+import React from "react"
 
 export default ({ data }) => {
   console.log(data)
