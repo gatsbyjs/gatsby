@@ -4,7 +4,7 @@ const {
   GraphQLObjectType,
   GraphQLList,
   GraphQLSchema,
-} = require(`graphql`)
+} = require(`gatsby/graphql`)
 const { onCreateNode } = require(`../gatsby-node`)
 const {
   inferObjectStructureFromNodes,
@@ -89,12 +89,15 @@ Where oh where is my little pony?
       })
     }
     const createParentChildLink = jest.fn()
-    const boundActionCreators = { createNode, createParentChildLink }
+    const actions = { createNode, createParentChildLink }
+    const createNodeId = jest.fn()
+    createNodeId.mockReturnValue(`uuid-from-gatsby`)
 
     await onCreateNode({
       node,
       loadNodeContent,
-      boundActionCreators,
+      actions,
+      createNodeId,
     })
   })
 })

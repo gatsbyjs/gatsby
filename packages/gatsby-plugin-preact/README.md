@@ -8,11 +8,11 @@ React.
 
 ## Install
 
-`npm install --save gatsby-plugin-preact`
+`npm install --save gatsby-plugin-preact preact preact-compat`
 
 ## How to use
 
 ```javascript
 // In your gatsby-config.js
-plugins: [`gatsby-plugin-preact`];
+plugins: [`gatsby-plugin-preact`]
 ```

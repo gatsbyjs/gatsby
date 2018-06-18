@@ -26,4 +26,4 @@ The `cache-control` header should be `cache-control: public, max-age=0, must-rev
 
 How you setup caching depends on how you're hosting your site. We encourage people to create Gatsby plugins which automate the creation of caching headers for Gatsby sites. The following plugins have been created:
 
-* [gatsby-plugin-netlify](/packages/gatsby-plugin-netlify/)
+- [gatsby-plugin-netlify](/packages/gatsby-plugin-netlify/)
