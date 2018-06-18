@@ -198,7 +198,7 @@ Your site should now look like this:
 
 Let's make a quick improvement. Many sites have a single column of text centered
 in the middle of the page. To create this, add the following styles to the
-`<div>` in `src/pages/index.js`.
+`<Container>` in `src/pages/index.js`.
 
 ```jsx{4,25}
 import React from "react"
@@ -364,11 +364,13 @@ Then, create a new component page by creating a file at
 ```javascript
 import React from "react"
 
+import Container from "../components/container"
+
 export default () => (
-  <div>
+  <Container>
     <h1>About CSS Modules</h1>
     <p>CSS Modules are cool</p>
-  </div>
+  </Container>
 )
 ```
 
@@ -387,11 +389,6 @@ that this CSS file should be processed as CSS modules.
 Paste the following into the file:
 
 ```css
-.container {
-  margin: 3rem auto;
-  max-width: 600px;
-}
-
 .user {
   display: flex;
   align-items: center;
@@ -475,7 +472,7 @@ const User = props => (
 )
 
 export default () => (
-  <div className={styles.container}>
+  <Container>
     <h1>About CSS Modules</h1>
     <p>CSS Modules are cool</p>
     <User
@@ -488,7 +485,7 @@ export default () => (
       avatar="https://s3.amazonaws.com/uifaces/faces/twitter/vladarbatov/128.jpg"
       excerpt="I'm Bob smith, a vertically aligned type of guy. Lorem ipsum dolor sit amet, consectetur adipisicing elit."
     />
-  </div>
+  </Container>
 )
 ```
 
