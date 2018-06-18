@@ -12,8 +12,6 @@ import ShareMenu from "../components/share-menu"
 import Img from "gatsby-image"
 
 import MdArrowUpward from "react-icons/lib/md/arrow-upward"
-import MdArrowForward from "react-icons/lib/md/arrow-forward"
-import MdArrowBack from "react-icons/lib/md/arrow-back"
 import MdLaunch from "react-icons/lib/md/launch"
 import FeaturedIcon from "../assets/featured-detailpage-featuredicon.svg"
 import FeatherIcon from "../assets/showcase-feather.svg"
@@ -126,6 +124,7 @@ class ShowcaseTemplate extends React.Component {
               }}
             >
               <Img
+                key={nextSite.id}
                 css={{
                   ...styles.prevNextImage,
                 }}
@@ -168,6 +167,7 @@ class ShowcaseTemplate extends React.Component {
               }}
             >
               <Img
+                key={previousSite.id}
                 css={{
                   ...styles.prevNextImage,
                 }}
@@ -402,6 +402,7 @@ class ShowcaseTemplate extends React.Component {
                 />
               </div>
               <Img
+                key={data.sitesYaml.id}
                 sizes={
                   data.sitesYaml.childScreenshot.screenshotFile.childImageSharp
                     .sizes
@@ -437,100 +438,12 @@ class ShowcaseTemplate extends React.Component {
             </div>
           </div>
         </div>
-        <PermalinkPageFooter
-          nextSite={nextSite}
-          previousSite={previousSite}
-          isModal={isModal}
-        />
       </Layout>
     )
   }
 }
 
 export default ShowcaseTemplate
-
-class PermalinkPageFooter extends React.Component {
-  state = {
-    windowWidth: null,
-  }
-
-  componentDidMount() {
-    this.setState({ windowWidth: window.innerWidth })
-  }
-
-  render() {
-    const { nextSite, previousSite, isModal } = this.props
-
-    if (isModal && this.state.windowWidth > 750) return null
-    return (
-      <div
-        css={{
-          borderTop: `1px solid ${colors.ui.light}`,
-          display: `flex`,
-          paddingTop: rhythm(options.blockMarginBottom * 2),
-          paddingBottom: 58,
-          [presets.Tablet]: {
-            paddingBottom: 0,
-          },
-        }}
-      >
-        <div css={{ ...styles.prevNextPermalinkContainer }}>
-          <Link
-            to={{
-              pathname: previousSite.fields.slug,
-              state: { isModal: false },
-            }}
-          >
-            <div css={{ ...styles.prevNextPermalinkMeta }}>
-              <div css={{ ...styles.prevNextPermalinkMetaInner }}>
-                <div css={{ ...styles.prevNextPermalinkLabel }}>Previous</div>
-                <div css={{ ...styles.prevNextPermalinkTitle }}>
-                  <MdArrowBack style={{ ...styles.prevNextPermalinkArrow }} />
-                  <span css={{ ...styles.truncate }}>{previousSite.title}</span>
-                </div>
-              </div>
-            </div>
-            <Img
-              sizes={
-                previousSite.childScreenshot.screenshotFile.childImageSharp
-                  .sizes
-              }
-              alt=""
-              style={{ ...styles.prevNextPermalinkImage }}
-            />
-          </Link>
-        </div>
-        <div css={{ ...styles.prevNextPermalinkContainer }}>
-          <Link
-            to={{ pathname: nextSite.fields.slug, state: { isModal: false } }}
-          >
-            <div
-              css={{
-                marginLeft: rhythm(6 / 4),
-                marginRight: rhythm(6 / 4),
-              }}
-            >
-              <div css={{ ...styles.prevNextPermalinkLabel }}>Next</div>
-              <div css={{ ...styles.prevNextPermalinkTitle }}>
-                <span css={{ ...styles.truncate }}>{nextSite.title}</span>
-                <MdArrowForward style={{ ...styles.prevNextPermalinkArrow }} />
-              </div>
-            </div>
-            <Img
-              sizes={
-                nextSite.childScreenshot.screenshotFile.childImageSharp.sizes
-              }
-              alt=""
-              style={{
-                ...styles.prevNextPermalinkImage,
-              }}
-            />
-          </Link>
-        </div>
-      </div>
-    )
-  }
-}
 
 export const pageQuery = graphql`
   query TemplateShowcasePage($slug: String!) {
@@ -547,9 +460,6 @@ export const pageQuery = graphql`
       childScreenshot {
         screenshotFile {
           childImageSharp {
-            resolutions(width: 750, height: 563) {
-              ...GatsbyImageSharpResolutions
-            }
             sizes(maxWidth: 700) {
               ...GatsbyImageSharpSizes
             }
@@ -572,6 +482,8 @@ export const pageQuery = graphql`
     allSitesYaml(filter: { fields: { slug: { ne: null } } }) {
       edges {
         node {
+          id
+          url
           title
           fields {
             slug
@@ -581,9 +493,6 @@ export const pageQuery = graphql`
               childImageSharp {
                 resolutions(width: 100, height: 100) {
                   ...GatsbyImageSharpResolutions
-                }
-                sizes(maxWidth: 800, maxHeight: 800) {
-                  ...GatsbyImageSharpSizes
                 }
               }
             }
