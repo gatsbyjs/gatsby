@@ -358,7 +358,7 @@ export default ({ children }) => (
 )
 ```
 
-Then, create a new component page by creating a file at
+Then, create a new page component by creating a file at
 `src/pages/about-css-modules.js`:
 
 ```javascript
