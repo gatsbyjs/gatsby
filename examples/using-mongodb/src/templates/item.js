@@ -1,5 +1,4 @@
 import React from "react"
-import { Link } from "gatsby"
 
 class Item extends React.Component {
   render() {
