@@ -5,7 +5,7 @@ import hex2rgba from "hex2rgba"
 
 import presets, { colors } from "../utils/presets"
 import { options, scale, rhythm } from "../utils/typography"
-import { push, Link } from "gatsby"
+import { push, Link, StaticQuery } from "gatsby"
 import Layout from "../components/layout"
 import ShareMenu from "../components/share-menu"
 
@@ -42,11 +42,7 @@ class ShowcaseTemplate extends React.Component {
     return 0
   }
 
-  getNext() {
-    const {
-      data: { allSitesYaml },
-    } = this.props
-
+  getNext(allSitesYaml) {
     const currentIndex = this.findCurrentIndex()
     return allSitesYaml.edges[(currentIndex + 1) % allSitesYaml.edges.length]
       .node
@@ -65,11 +61,7 @@ class ShowcaseTemplate extends React.Component {
     })
   }
 
-  getPrevious() {
-    const {
-      data: { allSitesYaml },
-    } = this.props
-
+  getPrevious(allSitesYaml) {
     const currentIndex = this.findCurrentIndex()
     let index = currentIndex - 1
     if (index < 0) index = allSitesYaml.edges.length - 1
@@ -96,408 +88,440 @@ class ShowcaseTemplate extends React.Component {
     const isModal =
       this.props.location.state && this.props.location.state.isModal
 
-    const nextSite = this.getNext()
-    const previousSite = this.getPrevious()
-
     const categories = data.sitesYaml.categories || []
 
     return (
-      <Layout
-        location={this.props.location}
-        isModal={isModal}
-        modalBackgroundPath="/showcase"
-        modalNext={this.next}
-        modalPrevious={this.previous}
-        modalNextLink={
-          <Link
-            to={{
-              pathname: nextSite.fields.slug,
-              state: {
-                isModal: true,
-              },
-            }}
-            css={{
-              display: `block`,
-              position: `fixed`,
-              top: `150px`,
-              transform: `translateX(750px)`,
-            }}
-          >
-            <div
-              css={{
-                margin: `25px`,
-              }}
-            >
-              <Img
-                key={nextSite.id}
-                css={{
-                  ...styles.prevNextImage,
-                }}
-                backgroundColor
-                resolutions={{
-                  srcSet: ``,
-                  src:
-                    nextSite.childScreenshot.screenshotFile.childImageSharp
-                      .resize.src,
-                  width: 100,
-                  height: 100,
-                }}
-                alt=""
-              />
-            </div>
-            <div
-              css={{
-                ...styles.prevNextLink,
-              }}
-            >
-              <MdArrowUpward />
-              <div> Next Site in Showcase </div>
-              <div
-                css={{
-                  ...styles.prevNextLinkSiteTitle,
-                }}
-              >
-                {nextSite.title}
-              </div>
-            </div>
-          </Link>
-        }
-        modalPreviousLink={
-          <Link
-            to={{
-              pathname: previousSite.fields.slug,
-              state: {
-                isModal: true,
-              },
-            }}
-            css={{
-              display: `block`,
-              position: `fixed`,
-              top: `150px`,
-              transform: `translateX(-100%)`,
-            }}
-          >
-            <div
-              css={{
-                margin: `25px`,
-              }}
-            >
-              <Img
-                key={previousSite.id}
-                css={{
-                  ...styles.prevNextImage,
-                }}
-                backgroundColor
-                resolutions={{
-                  srcSet: ``,
-                  src:
-                    previousSite.childScreenshot.screenshotFile.childImageSharp
-                      .resize.src,
-                  width: 100,
-                  height: 100,
-                }}
-                alt=""
-              />
-            </div>
-            <div
-              css={{
-                ...styles.prevNextLink,
-                transform: `translateX(-75px) rotate(-90deg)`,
-                textAlign: `right`,
-              }}
-            >
-              <MdArrowUpward />
-              <div> Previous Site in Showcase </div>
-              <div
-                css={{
-                  ...styles.prevNextLinkSiteTitle,
-                }}
-              >
-                {previousSite.title}
-              </div>
-            </div>
-          </Link>
-        }
-      >
-        <div
-          css={{
-            alignItems: `center`,
-            display: `flex`,
-            flexDirection: `column`,
-            maxWidth: isModal ? false : 1080,
-            margin: isModal ? false : `0 auto`,
-          }}
-        >
-          <div
-            css={{
-              width: `100%`,
-            }}
-          >
-            <Helmet>
-              <title> {data.sitesYaml.title} </title>
-              <meta
-                name="og:image"
-                content={`https://next.gatsbyjs.org${
-                  data.sitesYaml.childScreenshot.screenshotFile.childImageSharp
-                    .resize.src
-                }`}
-              />
-              <meta
-                name="twitter:image"
-                content={`https://next.gatsbyjs.org${
-                  data.sitesYaml.childScreenshot.screenshotFile.childImageSharp
-                    .resize.src
-                }`}
-              />
-            </Helmet>
-            <div
-              css={{
-                fontFamily: options.headerFontFamily.join(`,`),
-                padding: gutter,
-                paddingBottom: rhythm(1.5 / 4),
-                [presets.Desktop]: {
-                  padding: gutterDesktop,
-                  paddingBottom: rhythm(3 / 4),
-                },
-              }}
-            >
-              <h1
-                css={{
-                  margin: 0,
-                }}
-              >
-                {data.sitesYaml.title}
-              </h1>
-              <a
-                href={data.sitesYaml.main_url}
-                css={{
-                  ...styles.link,
-                  fontWeight: `bold`,
-                  [presets.Desktop]: {
-                    ...scale(-1 / 6),
-                  },
-                }}
-              >
-                {cleanUrl(data.sitesYaml.main_url)}
-              </a>
-              {data.sitesYaml.built_by && (
-                <span
-                  css={{
-                    color: colors.gray.calm,
-                    [presets.Desktop]: {
-                      ...scale(-1 / 6),
+      <StaticQuery
+        query={graphql`
+          query allSitesYamlTemplateShowcase {
+            allSitesYaml(filter: { fields: { slug: { ne: null } } }) {
+              edges {
+                node {
+                  id
+                  url
+                  title
+                  fields {
+                    slug
+                  }
+                  childScreenshot {
+                    screenshotFile {
+                      childImageSharp {
+                        resize(width: 200, height: 200) {
+                          src
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        `}
+        render={staticData => {
+          const allSitesYaml = staticData.allSitesYaml
+          const nextSite = this.getNext(allSitesYaml)
+          const previousSite = this.getPrevious(allSitesYaml)
+
+          return (
+            <Layout
+              location={this.props.location}
+              isModal={isModal}
+              modalBackgroundPath="/showcase"
+              modalNext={() => this.next(allSitesYaml)}
+              modalPrevious={() => this.previous(allSitesYaml)}
+              modalNextLink={
+                <Link
+                  to={{
+                    pathname: nextSite.fields.slug,
+                    state: {
+                      isModal: true,
                     },
                   }}
+                  css={{
+                    display: `block`,
+                    position: `fixed`,
+                    top: `150px`,
+                    transform: `translateX(750px)`,
+                  }}
                 >
-                  <span
+                  <div
                     css={{
-                      paddingRight: 8,
-                      paddingLeft: 8,
+                      margin: `25px`,
                     }}
                   >
-                    /
-                  </span>
-                  Built by {` `}
-                  {data.sitesYaml.built_by_url ? (
+                    <Img
+                      key={nextSite.id}
+                      css={{
+                        ...styles.prevNextImage,
+                      }}
+                      backgroundColor
+                      resolutions={{
+                        srcSet: ``,
+                        src:
+                          nextSite.childScreenshot.screenshotFile
+                            .childImageSharp.resize.src,
+                        width: 100,
+                        height: 100,
+                      }}
+                      alt=""
+                    />
+                  </div>
+                  <div
+                    css={{
+                      ...styles.prevNextLink,
+                    }}
+                  >
+                    <MdArrowUpward />
+                    <div> Next Site in Showcase </div>
+                    <div
+                      css={{
+                        ...styles.prevNextLinkSiteTitle,
+                      }}
+                    >
+                      {nextSite.title}
+                    </div>
+                  </div>
+                </Link>
+              }
+              modalPreviousLink={
+                <Link
+                  to={{
+                    pathname: previousSite.fields.slug,
+                    state: {
+                      isModal: true,
+                    },
+                  }}
+                  css={{
+                    display: `block`,
+                    position: `fixed`,
+                    top: `150px`,
+                    transform: `translateX(-100%)`,
+                  }}
+                >
+                  <div
+                    css={{
+                      margin: `25px`,
+                    }}
+                  >
+                    <Img
+                      key={previousSite.id}
+                      css={{
+                        ...styles.prevNextImage,
+                      }}
+                      backgroundColor
+                      resolutions={{
+                        srcSet: ``,
+                        src:
+                          previousSite.childScreenshot.screenshotFile
+                            .childImageSharp.resize.src,
+                        width: 100,
+                        height: 100,
+                      }}
+                      alt=""
+                    />
+                  </div>
+                  <div
+                    css={{
+                      ...styles.prevNextLink,
+                      transform: `translateX(-75px) rotate(-90deg)`,
+                      textAlign: `right`,
+                    }}
+                  >
+                    <MdArrowUpward />
+                    <div> Previous Site in Showcase </div>
+                    <div
+                      css={{
+                        ...styles.prevNextLinkSiteTitle,
+                      }}
+                    >
+                      {previousSite.title}
+                    </div>
+                  </div>
+                </Link>
+              }
+            >
+              <div
+                css={{
+                  alignItems: `center`,
+                  display: `flex`,
+                  flexDirection: `column`,
+                  maxWidth: isModal ? false : 1080,
+                  margin: isModal ? false : `0 auto`,
+                }}
+              >
+                <div
+                  css={{
+                    width: `100%`,
+                  }}
+                >
+                  <Helmet>
+                    <title> {data.sitesYaml.title} </title>
+                    <meta
+                      name="og:image"
+                      content={`https://next.gatsbyjs.org${
+                        data.sitesYaml.childScreenshot.screenshotFile
+                          .childImageSharp.resize.src
+                      }`}
+                    />
+                    <meta
+                      name="twitter:image"
+                      content={`https://next.gatsbyjs.org${
+                        data.sitesYaml.childScreenshot.screenshotFile
+                          .childImageSharp.resize.src
+                      }`}
+                    />
+                  </Helmet>
+                  <div
+                    css={{
+                      fontFamily: options.headerFontFamily.join(`,`),
+                      padding: gutter,
+                      paddingBottom: rhythm(1.5 / 4),
+                      [presets.Desktop]: {
+                        padding: gutterDesktop,
+                        paddingBottom: rhythm(3 / 4),
+                      },
+                    }}
+                  >
+                    <h1
+                      css={{
+                        margin: 0,
+                      }}
+                    >
+                      {data.sitesYaml.title}
+                    </h1>
                     <a
-                      href={data.sitesYaml.built_by_url}
+                      href={data.sitesYaml.main_url}
                       css={{
                         ...styles.link,
                         fontWeight: `bold`,
+                        [presets.Desktop]: {
+                          ...scale(-1 / 6),
+                        },
                       }}
                     >
-                      {data.sitesYaml.built_by}
+                      {cleanUrl(data.sitesYaml.main_url)}
                     </a>
-                  ) : (
-                    data.sitesYaml.built_by
-                  )}
-                </span>
-              )}
-            </div>
-            <div
-              css={{
-                display: `flex`,
-                borderTop: `1px solid ${colors.ui.light}`,
-                fontFamily: options.headerFontFamily.join(`,`),
-                margin: `0 ${gutter}`,
-                [presets.Desktop]: {
-                  margin: `0 ${gutterDesktop}`,
-                },
-              }}
-            >
-              {data.sitesYaml.featured && (
-                <div
-                  css={{
-                    borderRight: `1px solid ${colors.ui.light}`,
-                    color: colors.gatsby,
-                    display: `flex`,
-                    fontWeight: `bold`,
-                    padding: 20,
-                    paddingLeft: 0,
-                    [presets.Desktop]: {
-                      ...scale(-1 / 6),
-                    },
-                  }}
-                >
-                  <img
-                    src={FeaturedIcon}
-                    alt="icon"
+                    {data.sitesYaml.built_by && (
+                      <span
+                        css={{
+                          color: colors.gray.calm,
+                          [presets.Desktop]: {
+                            ...scale(-1 / 6),
+                          },
+                        }}
+                      >
+                        <span
+                          css={{
+                            paddingRight: 8,
+                            paddingLeft: 8,
+                          }}
+                        >
+                          /
+                        </span>
+                        Built by {` `}
+                        {data.sitesYaml.built_by_url ? (
+                          <a
+                            href={data.sitesYaml.built_by_url}
+                            css={{
+                              ...styles.link,
+                              fontWeight: `bold`,
+                            }}
+                          >
+                            {data.sitesYaml.built_by}
+                          </a>
+                        ) : (
+                          data.sitesYaml.built_by
+                        )}
+                      </span>
+                    )}
+                  </div>
+                  <div
                     css={{
-                      marginBottom: 0,
-                      marginRight: 10,
-                    }}
-                  />
-                  Featured{` `}
-                </div>
-              )}
-              {data.sitesYaml.source_url && (
-                <div
-                  css={{
-                    padding: 20,
-                    paddingLeft: data.sitesYaml.featured ? false : 0,
-                    display: `flex`,
-                    borderRight: `1px solid ${colors.ui.light}`,
-                    [presets.Desktop]: {
-                      ...scale(-1 / 6),
-                    },
-                  }}
-                >
-                  <img
-                    src={GithubIcon}
-                    alt="icon"
-                    css={{
-                      marginBottom: 0,
-                      marginRight: 10,
-                    }}
-                  />
-                  <a
-                    href={data.sitesYaml.source_url}
-                    css={{
-                      ...styles.link,
+                      display: `flex`,
+                      borderTop: `1px solid ${colors.ui.light}`,
+                      fontFamily: options.headerFontFamily.join(`,`),
+                      margin: `0 ${gutter}`,
+                      [presets.Desktop]: {
+                        margin: `0 ${gutterDesktop}`,
+                      },
                     }}
                   >
-                    Source{` `}
-                  </a>
-                </div>
-              )}
-              {false && ( // TODO: NOT IMPLEMENTED YET!!!
-                <div
-                  css={{
-                    padding: 20,
-                    display: `flex`,
-                    borderRight: `1px solid ${colors.ui.light}`,
-                  }}
-                >
-                  <img
-                    src={FeatherIcon}
-                    alt="icon"
+                    {data.sitesYaml.featured && (
+                      <div
+                        css={{
+                          borderRight: `1px solid ${colors.ui.light}`,
+                          color: colors.gatsby,
+                          display: `flex`,
+                          fontWeight: `bold`,
+                          padding: 20,
+                          paddingLeft: 0,
+                          [presets.Desktop]: {
+                            ...scale(-1 / 6),
+                          },
+                        }}
+                      >
+                        <img
+                          src={FeaturedIcon}
+                          alt="icon"
+                          css={{
+                            marginBottom: 0,
+                            marginRight: 10,
+                          }}
+                        />
+                        Featured{` `}
+                      </div>
+                    )}
+                    {data.sitesYaml.source_url && (
+                      <div
+                        css={{
+                          padding: 20,
+                          paddingLeft: data.sitesYaml.featured ? false : 0,
+                          display: `flex`,
+                          borderRight: `1px solid ${colors.ui.light}`,
+                          [presets.Desktop]: {
+                            ...scale(-1 / 6),
+                          },
+                        }}
+                      >
+                        <img
+                          src={GithubIcon}
+                          alt="icon"
+                          css={{
+                            marginBottom: 0,
+                            marginRight: 10,
+                          }}
+                        />
+                        <a
+                          href={data.sitesYaml.source_url}
+                          css={{
+                            ...styles.link,
+                          }}
+                        >
+                          Source{` `}
+                        </a>
+                      </div>
+                    )}
+                    {false && ( // TODO: NOT IMPLEMENTED YET!!!
+                      <div
+                        css={{
+                          padding: 20,
+                          display: `flex`,
+                          borderRight: `1px solid ${colors.ui.light}`,
+                        }}
+                      >
+                        <img
+                          src={FeatherIcon}
+                          alt="icon"
+                          css={{
+                            marginBottom: 0,
+                            marginRight: 10,
+                          }}
+                        />
+                        <a href={data.sitesYaml.source_url}> Case Study </a>
+                      </div>
+                    )}
+                  </div>
+                  <div
                     css={{
-                      marginBottom: 0,
-                      marginRight: 10,
+                      borderTop: `1px solid ${colors.ui.light}`,
+                      position: `relative`,
                     }}
-                  />
-                  <a href={data.sitesYaml.source_url}> Case Study </a>
-                </div>
-              )}
-            </div>
-            <div
-              css={{
-                borderTop: `1px solid ${colors.ui.light}`,
-                position: `relative`,
-              }}
-            >
-              <div
-                css={{
-                  position: `absolute`,
-                  right: gutter,
-                  top: gutter,
-                  left: `auto`,
-                  zIndex: 1,
-                  display: `flex`,
-                }}
-              >
-                <a
-                  href={data.sitesYaml.main_url}
-                  css={{
-                    border: 0,
-                    borderRadius: presets.radius,
-                    color: colors.gatsby,
-                    fontFamily: options.headerFontFamily.join(`,`),
-                    fontWeight: `bold`,
-                    marginRight: rhythm(1.5 / 4),
-                    padding: `${rhythm(1 / 5)} ${rhythm(2 / 3)}`,
-                    textDecoration: `none`,
-                    WebkitFontSmoothing: `antialiased`,
-                    "&&": {
-                      backgroundColor: colors.gatsby,
-                      borderBottom: `none`,
-                      boxShadow: `none`,
-                      color: `white`,
-                      "&:hover": {
-                        backgroundColor: colors.gatsby,
+                  >
+                    <div
+                      css={{
+                        position: `absolute`,
+                        right: gutter,
+                        top: gutter,
+                        left: `auto`,
+                        zIndex: 1,
+                        display: `flex`,
+                      }}
+                    >
+                      <a
+                        href={data.sitesYaml.main_url}
+                        css={{
+                          border: 0,
+                          borderRadius: presets.radius,
+                          color: colors.gatsby,
+                          fontFamily: options.headerFontFamily.join(`,`),
+                          fontWeight: `bold`,
+                          marginRight: rhythm(1.5 / 4),
+                          padding: `${rhythm(1 / 5)} ${rhythm(2 / 3)}`,
+                          textDecoration: `none`,
+                          WebkitFontSmoothing: `antialiased`,
+                          "&&": {
+                            backgroundColor: colors.gatsby,
+                            borderBottom: `none`,
+                            boxShadow: `none`,
+                            color: `white`,
+                            "&:hover": {
+                              backgroundColor: colors.gatsby,
+                            },
+                          },
+                        }}
+                      >
+                        <MdLaunch
+                          style={{
+                            verticalAlign: `sub`,
+                          }}
+                        />
+                        Visit site{` `}
+                      </a>
+                      <ShareMenu
+                        url={data.sitesYaml.main_url}
+                        title={data.sitesYaml.title}
+                        image={`https://next.gatsbyjs.org${
+                          data.sitesYaml.childScreenshot.screenshotFile
+                            .childImageSharp.resize.src
+                        }`}
+                      />
+                    </div>
+                    <Img
+                      key={data.sitesYaml.id}
+                      sizes={
+                        data.sitesYaml.childScreenshot.screenshotFile
+                          .childImageSharp.sizes
+                      }
+                      alt={`Screenshot of ${data.sitesYaml.title}`}
+                      css={{
+                        boxShadow: isModal
+                          ? false
+                          : `0 4px 10px ${hex2rgba(colors.gatsby, 0.1)}`,
+                      }}
+                    />
+                  </div>
+                  <div
+                    css={{
+                      padding: gutter,
+                      [presets.Desktop]: {
+                        padding: gutterDesktop,
                       },
-                    },
-                  }}
-                >
-                  <MdLaunch
-                    style={{
-                      verticalAlign: `sub`,
                     }}
-                  />
-                  Visit site{` `}
-                </a>
-                <ShareMenu
-                  url={data.sitesYaml.main_url}
-                  title={data.sitesYaml.title}
-                  image={`https://next.gatsbyjs.org${
-                    data.sitesYaml.childScreenshot.screenshotFile
-                      .childImageSharp.resize.src
-                  }`}
-                />
-              </div>
-              <Img
-                key={data.sitesYaml.id}
-                sizes={
-                  data.sitesYaml.childScreenshot.screenshotFile.childImageSharp
-                    .sizes
-                }
-                alt={`Screenshot of ${data.sitesYaml.title}`}
-                css={{
-                  boxShadow: isModal
-                    ? false
-                    : `0 4px 10px ${hex2rgba(colors.gatsby, 0.1)}`,
-                }}
-              />
-            </div>
-            <div
-              css={{
-                padding: gutter,
-                [presets.Desktop]: {
-                  padding: gutterDesktop,
-                },
-              }}
-            >
-              <p> {data.sitesYaml.description} </p>
-              <div
-                css={{
-                  display: `flex`,
-                  fontFamily: options.headerFontFamily.join(`,`),
-                }}
-              >
-                <div
-                  css={{
-                    color: colors.gray.calm,
-                    paddingRight: 20,
-                  }}
-                >
-                  Categories{` `}
+                  >
+                    <p> {data.sitesYaml.description} </p>
+                    <div
+                      css={{
+                        display: `flex`,
+                        fontFamily: options.headerFontFamily.join(`,`),
+                      }}
+                    >
+                      <div
+                        css={{
+                          color: colors.gray.calm,
+                          paddingRight: 20,
+                        }}
+                      >
+                        Categories{` `}
+                      </div>
+                      <div> {categories.join(`, `)} </div>
+                    </div>
+                  </div>
                 </div>
-                <div> {categories.join(`, `)} </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </Layout>
+            </Layout>
+          )
+        }}
+      />
     )
   }
 }
@@ -535,28 +559,6 @@ export const pageQuery = graphql`
       }
       fields {
         slug
-      }
-    }
-
-    allSitesYaml(filter: { fields: { slug: { ne: null } } }) {
-      edges {
-        node {
-          id
-          url
-          title
-          fields {
-            slug
-          }
-          childScreenshot {
-            screenshotFile {
-              childImageSharp {
-                resize(width: 200, height: 200) {
-                  src
-                }
-              }
-            }
-          }
-        }
       }
     }
   }
