@@ -73,10 +73,10 @@ module.exports = async (args: BootstrapArgs) => {
 
   const flattenedPlugins = await loadPlugins(config)
 
-  // onPreInit
-  activity = report.activityTimer(`onPreInit`)
+  // onPreBootstrap
+  activity = report.activityTimer(`onPreBootstrap`)
   activity.start()
-  await apiRunnerNode(`onPreInit`)
+  await apiRunnerNode(`onPreBootstrap`)
   activity.end()
 
   // Delete html and css files from the public directory as we don't want
@@ -265,12 +265,6 @@ module.exports = async (args: BootstrapArgs) => {
   /**
    * Start the main bootstrap processes.
    */
-
-  // onPreBootstrap
-  activity = report.activityTimer(`onPreBootstrap`)
-  activity.start()
-  await apiRunnerNode(`onPreBootstrap`)
-  activity.end()
 
   // Source nodes
   activity = report.activityTimer(`source and transform nodes`)
