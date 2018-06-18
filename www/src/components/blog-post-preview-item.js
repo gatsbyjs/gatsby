@@ -28,11 +28,11 @@ class BlogPostPreviewItem extends React.Component {
           <Link
             to={post.frontmatter.author.fields.slug}
             css={{
-              boxShadow: `none !important`,
-              borderBottom: `0 !important`,
               position: `relative`,
               zIndex: 1,
               "&&": {
+                boxShadow: `none !important`,
+                borderBottom: `0 !important`,
                 fontWeight: `normal`,
                 ":hover": {
                   background: `transparent`,
@@ -70,10 +70,10 @@ class BlogPostPreviewItem extends React.Component {
               <Link
                 to={post.frontmatter.author.fields.slug}
                 css={{
-                  color: `${colors.gatsby} !important`,
                   position: `relative`,
                   zIndex: 1,
                   "&&": {
+                    color: `${colors.gatsby} !important`,
                     fontWeight: `normal`,
                     ":hover": {
                       background: colors.ui.bright,
