@@ -1,4 +1,10 @@
+[build]
+base = "www/"
+publish = "www/public/"
+command = "yarn run build"
+
 [build.environment]
   NODE_VERSION = "8"
+  NODE_ENV = "production"
   YARN_VERSION = "1.8.0"
   YARN_FLAGS = "--pure-lockfile --verbose"
