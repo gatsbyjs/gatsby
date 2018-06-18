@@ -1,73 +1,73 @@
 - title: Tutorial
   items:
     - title: Introduction
-      link: /tutorial/
+      link: /
     - title: 0. Programming basics
-      link: /tutorial/part-zero/
+      link: /part-zero/
     - title: 1. Introduction to Gatsby basics
-      link: /tutorial/part-one/
-      items:
+      link: /part-one/
+      subitems:
         - title: Check environment
-          link: /tutorial/part-one/#check-your-development-environment
+          link: /part-one/#check-your-development-environment
         - title: Install the "Hello World" starter
-          link: /tutorial/part-one/#install-the-hello-world-starter
+          link: /part-one/#install-the-hello-world-starter
         - title: Linking between pages
-          link: /tutorial/part-one/#linking-between-pages
+          link: /part-one/#linking-between-pages
         - title: Interactive page
-          link: /tutorial/part-one/#interactive-page
+          link: /part-one/#interactive-page
         - title: Deploying Gatsby.js websites
-          link: /tutorial/part-one/#deploying-gatsbyjs-websites
+          link: /part-one/#deploying-gatsbyjs-websites
     - title: 2. Introduction to using CSS in Gatsby
-      link: /tutorial/part-two/
-      items:
+      link: /part-two/
+      subitems:
         - title: Building with components
-          link: /tutorial/part-two/#building-with-components
+          link: /part-two/#building-with-components
         - title: Creating Global Styles
-          link: /tutorial/part-two/#creating-global-styles
+          link: /part-two/#creating-global-styles
         - title: Typography.js
-          link: /tutorial/part-two/#typographyjs
+          link: /part-two/#typographyjs
         - title: Gatsby Plugins
-          link: /tutorial/part-two/#gatsby-plugins
+          link: /part-two/#gatsby-plugins
         - title: Component CSS
-          link: /tutorial/part-two/#component-css
+          link: /part-two/#component-css
         - title: CSS Modules
-          link: /tutorial/part-two/#css-modules
+          link: /part-two/#css-modules
     - title: 3. Building nested layouts in Gatsby
-      link: /tutorial/part-three/
-      items:
+      link: /part-three/
+      subitems:
         - title: Our first layout component
-          link: /tutorial/part-three/#our-first-layout-component
+          link: /part-three/#our-first-layout-component
     - title: 4. Querying for data in a blog
-      link: /tutorial/part-four/
-      items:
+      link: /part-four/
+      subitems:
         - title: Recap of the first half of the tutorial
-          link: /tutorial/part-four/#recap-of-first-half-of-the-tutorial
+          link: /part-four/#recap-of-first-half-of-the-tutorial
         - title: Data in Gatsby
-          link: /tutorial/part-four/#data-in-gatsby
+          link: /part-four/#data-in-gatsby
         - title: How Gatsby's data layer uses GraphQL to pull data into components
-          link: /tutorial/part-four/#how-gatsbys-data-layer-uses-graphql-to-pull-data-into-components
+          link: /part-four/#how-gatsbys-data-layer-uses-graphql-to-pull-data-into-components
         - title: Our first GraphQL query
-          link: /tutorial/part-four/#our-first-graphql-query
+          link: /part-four/#our-first-graphql-query
     - title: 5. Source plugins and rendering queried data
-      link: /tutorial/part-five/
-      items:
+      link: /part-five/
+      subitems:
         - title: Introducing GraphiQL
-          link: /tutorial/part-five/#introducing-graphiql
+          link: /part-five/#introducing-graphiql
         - title: Source Plugins
-          link: /tutorial/part-five/#source-plugins
+          link: /part-five/#source-plugins
         - title: Build a page with a GraphQL query
-          link: /tutorial/part-five/#build-a-page-with-a-graphql-query
+          link: /part-five/#build-a-page-with-a-graphql-query
     - title: 6. Transformer plugins
-      link: /tutorial/part-six/
-      items:
+      link: /part-six/
+      subitems:
         - title: Transformer plugins
-          link: /tutorial/part-six/#transformer-plugins
+          link: /part-six/#transformer-plugins
         - title: Create a list of our site's markdown files
-          link: /tutorial/part-six/#create-a-list-of-our-sites-markdown-files-in-srcpagesindexjs
+          link: /part-six/#create-a-list-of-our-sites-markdown-files-in-srcpagesindexjs
     - title: 7. Programmatically create pages from data
-      link: /tutorial/part-seven/
-      items:
+      link: /part-seven/
+      subitems:
         - title: Creating slugs for pages
-          link: /tutorial/part-seven/#creating-slugs-for-pages
+          link: /part-seven/#creating-slugs-for-pages
         - title: Creating pages
-          link: /tutorial/part-seven/#creating-pages
+          link: /part-seven/#creating-pages

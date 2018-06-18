@@ -1,122 +1,123 @@
 - title: Quick Start
   items:
     - title: Getting Started
-      link: /docs/
+      link: /
     - title: Starters
-      link: /docs/gatsby-starters/
+      link: /gatsby-starters/
     - title: Deploying
-      link: /docs/deploy-gatsby/
+      link: /deploy-gatsby/
     - title: Community
-      link: /docs/community/
-    - title: Awesome Gatsby
-      link: /docs/awesome-gatsby/
+      link: /community/
+      subitems:
+      - title: Awesome Gatsby
+        link: /awesome-gatsby/
 - title: Core Concepts
   items:
     - title: Building with Components
-      link: /docs/building-with-components/
+      link: /building-with-components/
     - title: Lifecycle APIs
-      link: /docs/gatsby-lifecycle-apis/
+      link: /gatsby-lifecycle-apis/
     - title: Plugins
-      link: /docs/plugins/
+      link: /plugins/
     - title: PRPL Pattern
-      link: /docs/prpl-pattern/
+      link: /prpl-pattern/
     - title: Querying Data with GraphQL
-      link: /docs/querying-with-graphql/
+      link: /querying-with-graphql/
 - title: Guides
   items:
     - title: Adding a 404 Page
-      link: /docs/add-404-page/
+      link: /add-404-page/
     - title: Adding Images, Fonts, and Files
-      link: /docs/adding-images-fonts-files/
+      link: /adding-images-fonts-files/
     - title: Adding Images to a WordPress Site
-      link: /docs/image-tutorial/
+      link: /image-tutorial/
     - title: Browser Support
-      link: /docs/browser-support/
+      link: /browser-support/
     - title: Building Apps with Gatsby
-      link: /docs/building-apps-with-gatsby/
+      link: /building-apps-with-gatsby/
     - title: Caching
-      link: /docs/caching/
+      link: /caching/
     - title: Creating and Modifying Pages
-      link: /docs/creating-and-modifying-pages/
+      link: /creating-and-modifying-pages/
     - title: Create a Source Plugin
-      link: /docs/create-source-plugin/
+      link: /create-source-plugin/
     - title: Custom webpack config
-      link: /docs/add-custom-webpack-config/
+      link: /add-custom-webpack-config/
     - title: Customizing html.js
-      link: /docs/custom-html/
+      link: /custom-html/
     - title: Debugging HTML Builds
-      link: /docs/debugging-html-builds/
+      link: /debugging-html-builds/
     - title: Debugging Replace Renderer API
-      link: /docs/debugging-replace-renderer-api/
+      link: /debugging-replace-renderer-api/
     - title: E-commerce Tutorial
-      link: /docs/ecommerce-tutorial/
+      link: /ecommerce-tutorial/
     - title: Environment Variables
-      link: /docs/environment-variables/
+      link: /environment-variables/
     - title: Gatsby on Windows
-      link: /docs/gatsby-on-windows/
+      link: /gatsby-on-windows/
     - title: Local HTTPS
-      link: /docs/local-https/
+      link: /local-https/
     - title: Managing Content with Netlify CMS
-      link: /docs/netlify-cms/
+      link: /netlify-cms/
     - title: How Gatsby Works with GitHub Pages
-      link: /docs/how-gatsby-works-with-github-pages/
+      link: /how-gatsby-works-with-github-pages/
     - title: Migrating from v0 to v1
-      link: /docs/migrating-from-v0-to-v1/
+      link: /migrating-from-v0-to-v1/
     - title: Path Prefix
-      link: /docs/path-prefix/
+      link: /path-prefix/
     - title: Plugin Authoring
-      link: /docs/plugin-authoring/
+      link: /plugin-authoring/
     - title: Proxying API Requests
-      link: /docs/api-proxy/
+      link: /api-proxy/
     - title: Search Engine Optimization (SEO)
-      link: /docs/seo/
+      link: /seo/
     - title: Source Plugin Tutorial
-      link: /docs/source-plugin-tutorial/
+      link: /source-plugin-tutorial/
     - title: Using CSS-in-JS Library Glamor
-      link: /docs/glamor/
+      link: /glamor/
     - title: Using CSS-in-JS Library Styled Components
-      link: /docs/styled-components/
+      link: /styled-components/
     - title: Adding Markdown Pages
-      link: /docs/adding-markdown-pages/
+      link: /adding-markdown-pages/
     - title: Adding a List of Markdown Blog Posts
-      link: /docs/adding-a-list-of-markdown-blog-posts/
+      link: /adding-a-list-of-markdown-blog-posts/
     - title: Adding Tags and Categories to Blog Posts
-      link: /docs/adding-tags-and-categories-to-blog-posts/
+      link: /adding-tags-and-categories-to-blog-posts/
     - title: Adding search to your Gatsby website
-      link: /docs/adding-search/
+      link: /adding-search/
     - title: Working With Images in Gatsby
-      link: /docs/working-with-images/
+      link: /working-with-images/
     - title: Wordpress Source Plugin Tutorial
-      link: /docs/wordpress-source-plugin-tutorial/
+      link: /wordpress-source-plugin-tutorial/
     - title: Creating Dynamically-Rendered Navigation*
-      link: /docs/creating-dynamically-rendered-navigation/
+      link: /creating-dynamically-rendered-navigation/
     - title: Dropping Images into Static Folders*
-      link: /docs/dropping-images-into-static-folders/
+      link: /dropping-images-into-static-folders/
 - title: Reference
   items:
     - title: Node Interface
-      link: /docs/node-interface/
+      link: /node-interface/
     - title: API Specification
-      link: /docs/api-specification/
+      link: /api-specification/
     - title: Bound Action Creators
-      link: /docs/bound-action-creators/
+      link: /bound-action-creators/
     - title: Gatsby Browser APIs
-      link: /docs/browser-apis/
+      link: /browser-apis/
     - title: Gatsby Node APIs
-      link: /docs/node-apis/
+      link: /node-apis/
     - title: Gatsby SSR APIs
-      link: /docs/ssr-apis/
+      link: /ssr-apis/
     - title: Gatsby Config
-      link: /docs/gatsby-config/
+      link: /gatsby-config/
     - title: GraphQL Reference
-      link: /docs/graphql-reference/
+      link: /graphql-reference/
 - title: Contributing
   items:
     - title: How to Contribute
-      link: /docs/how-to-contribute/
+      link: /how-to-contribute/
     - title: How to File an Issue
-      link: /docs/how-to-file-an-issue/
+      link: /how-to-file-an-issue/
     - title: Gatsby Style Guide
-      link: /docs/gatsby-style-guide/
+      link: /gatsby-style-guide/
     - title: Design Principles*
-      link: /docs/design-principles/
+      link: /design-principles/

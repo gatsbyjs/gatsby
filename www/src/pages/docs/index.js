@@ -2,8 +2,6 @@ import React from "react"
 import Link from "gatsby-link"
 import Helmet from "react-helmet"
 
-import SidebarBody from "../../components/sidebar-body"
-import docsSidebar from "./doc-links.yaml"
 import Container from "../../components/container"
 import presets from "../../utils/presets"
 
@@ -77,17 +75,6 @@ class IndexRoute extends React.Component {
           {` `}
           <Link to="/tutorial/">Go to the tutorial</Link>.
         </p>
-        <div
-          css={{
-            display: `block`,
-            [presets.Tablet]: {
-              display: `none`,
-            },
-          }}
-        >
-          <h2>Documentation</h2>
-          <SidebarBody inline yaml={docsSidebar} />
-        </div>
       </Container>
     )
   }
