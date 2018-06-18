@@ -20,10 +20,10 @@ You can access it when your site's development server is running—normally at
   <p>Your browser does not support the video element.</p>
 </video>
 
-Here we poke around the built-in `Site` "type" and see what fields are available
-on it—including the `siteMetadata` object we queried earlier. Try opening
+Here you poke around the built-in `Site` "type" and see what fields are available
+on it—including the `siteMetadata` object you queried earlier. Try opening
 Graph_i_QL and play with your data! Press <kbd>Ctrl + Space</kbd> to bring up
-the autocomplete window and <kbd>Ctrl + Enter</kbd> to run the query. We'll be
+the autocomplete window and <kbd>Ctrl + Enter</kbd> to run the query. You'll be
 using Graph_i_QL a lot more through the remainder of the tutorial.
 
 ## Source plugins
@@ -59,7 +59,7 @@ module.exports = {
         path: `${__dirname}/src/`,
       },
     },
-    `gatsby-plugin-glamor`,
+    `gatsby-plugin-emotion`,
     {
       resolve: `gatsby-plugin-typography`,
       options: {
@@ -67,7 +67,7 @@ module.exports = {
       },
     },
   ],
-};
+}
 ```
 
 Save that and restart the gatsby development server. Then open up Graph_i_QL
@@ -93,7 +93,7 @@ each time to re-run the query. You'll see something like this:
 ![allfile-query](allfile-query.png)
 
 The result is an array of File "nodes" (node is a fancy name for an object in a
-"graph"). Each File object has the fields we queried for.
+"graph"). Each File object has the fields you queried for.
 
 ## Build a page with a GraphQL query
 
@@ -103,15 +103,20 @@ to start building the UI.
 
 Let's try this.
 
-Create a new file at `src/pages/my-files.js` with the `allFile` query we just
+Create a new file at `src/pages/my-files.js` with the `allFile` query you just
 created:
 
-```jsx{4}
+```jsx{5}
 import React from "react"
+import Layout from "../components/layout"
 
 export default ({ data }) => {
   console.log(data)
-  return <div>Hello world</div>
+  return (
+    <Layout>
+      <div>Hello world</div>
+    </Layout>
+  )
 }
 
 export const query = graphql`
@@ -134,52 +139,47 @@ The `console.log(data)` line is highlighted above. It's often helpful when
 creating a new component to console out the data you're getting from the query
 so you can explore the data in your browser console while building the UI.
 
-If you visit the new page at `/my-files/` and open up your browser console you
-will see:
+If you visit the new page at `/my-files/` and open up your browser console
+you will see something like:
 
 ![data-in-console](data-in-console.png)
 
 The shape of the data matches the shape of the query.
 
-Let's add some code to our component to print out the File data.
+Let's add some code to your component to print out the File data.
 
-```jsx{5-37}
+```jsx{8-30}
 import React from "react"
+import Layout from "../components/layout"
 
 export default ({ data }) => {
   console.log(data)
   return (
-    <div>
-      <h1>My Site's Files</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>relativePath</th>
-            <th>prettySize</th>
-            <th>extension</th>
-            <th>birthTime</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.allFile.edges.map(({ node }, index) =>
-            <tr key={index}>
-              <td>
-                {node.relativePath}
-              </td>
-              <td>
-                {node.prettySize}
-              </td>
-              <td>
-                {node.extension}
-              </td>
-              <td>
-                {node.birthTime}
-              </td>
+    <Layout>
+      <div>
+        <h1>My Site's Files</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>relativePath</th>
+              <th>prettySize</th>
+              <th>extension</th>
+              <th>birthTime</th>
             </tr>
-          )}
-        </tbody>
-      </table>
-    </div>
+          </thead>
+          <tbody>
+            {data.allFile.edges.map(({ node }, index) => (
+              <tr key={index}>
+                <td>{node.relativePath}</td>
+                <td>{node.prettySize}</td>
+                <td>{node.extension}</td>
+                <td>{node.birthTime}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </Layout>
   )
 }
 

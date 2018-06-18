@@ -2,11 +2,12 @@ import React from "react"
 import Img from "gatsby-image"
 import Lorem from "../components/lorem"
 import Ipsum from "../components/ipsum"
+import Layout from "../layouts"
 
 import { rhythm, options } from "../utils/typography"
 
-const BlurUp = ({ data }) => (
-  <div>
+const BlurUp = ({ data, location }) => (
+  <Layout location={location}>
     <h2>Blur Up</h2>
     <Img
       style={{ display: `inherit` }}
@@ -21,7 +22,7 @@ const BlurUp = ({ data }) => (
         },
       }}
       title={`Photo by Redd Angelo on Unsplash`}
-      resolutions={data.reddImageMobile.resolutions}
+      fixed={data.reddImageMobile.childImageSharp.fixed}
     />
     <Img
       style={{ display: `inherit` }}
@@ -35,34 +36,40 @@ const BlurUp = ({ data }) => (
         },
       }}
       title={`Photo by Redd Angelo on Unsplash`}
-      resolutions={data.reddImage.resolutions}
+      fixed={data.reddImage.childImageSharp.fixed}
     />
     <Lorem />
     <Img
-      sizes={data.kenImage.sizes}
+      fluid={data.kenImage.childImageSharp.fluid}
       title={`Photo by Ken Treloar on Unsplash`}
     />
     <Ipsum />
-  </div>
+  </Layout>
 )
 
 export default BlurUp
 
 export const query = graphql`
   query BlurUpQuery {
-    reddImageMobile: imageSharp(id: { regex: "/redd/" }) {
-      resolutions(width: 125) {
-        ...GatsbyImageSharpResolutions
+    reddImageMobile: file(relativePath: { regex: "/redd/" }) {
+      childImageSharp {
+        fixed(width: 125) {
+          ...GatsbyImageSharpFixed
+        }
       }
     }
-    reddImage: imageSharp(id: { regex: "/redd/" }) {
-      resolutions(width: 200) {
-        ...GatsbyImageSharpResolutions
+    reddImage: file(relativePath: { regex: "/redd/" }) {
+      childImageSharp {
+        fixed(width: 200) {
+          ...GatsbyImageSharpFixed
+        }
       }
     }
-    kenImage: imageSharp(id: { regex: "/ken-treloar/" }) {
-      sizes(maxWidth: 600) {
-        ...GatsbyImageSharpSizes
+    kenImage: file(relativePath: { regex: "/ken-treloar/" }) {
+      childImageSharp {
+        fluid(maxWidth: 600) {
+          ...GatsbyImageSharpFluid
+        }
       }
     }
   }

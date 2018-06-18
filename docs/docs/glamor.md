@@ -28,7 +28,7 @@ And then add it to your site's `gatsby-config.js`:
 ```javascript
 module.exports = {
   plugins: [`gatsby-plugin-glamor`],
-};
+}
 ```
 
 Then in your terminal run `gatsby develop` to start the Gatsby development server.
@@ -36,16 +36,16 @@ Then in your terminal run `gatsby develop` to start the Gatsby development serve
 Now let's create a sample Glamor page at `src/pages/index.js`
 
 ```jsx
-import React from "react";
+import React from "react"
 
-const Container = ({ children }) => <div>{children}</div>;
+const Container = ({ children }) => <div>{children}</div>
 
 export default () => (
   <Container>
     <h1>About Glamor</h1>
     <p>Glamor is cool</p>
   </Container>
-);
+)
 ```
 
 Let's add css styles to `Container` and add a inline `User` component using Glamor's `css` prop.

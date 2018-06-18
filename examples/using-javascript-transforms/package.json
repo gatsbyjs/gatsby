@@ -27,7 +27,6 @@
     "bulma": "0.4.2",
     "d3": "4.9.1",
     "gatsby": "latest",
-    "gatsby-link": "latest",
     "gatsby-plugin-sass": "^1.0.16",
     "gatsby-remark-prismjs": "latest",
     "gatsby-source-filesystem": "latest",
@@ -35,6 +34,7 @@
     "gatsby-transformer-remark": "latest",
     "moment": "^2.14.1",
     "normalize.css": "^7.0.0",
+    "prismjs": "^1.13.0",
     "prop-types": "^15.5.8",
     "react-helmet": "^5.2.0"
   }

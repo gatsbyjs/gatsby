@@ -44,12 +44,14 @@ module.exports = Object.assign(reporter, {
     this.error(...args)
     process.exit(1)
   },
-  /**
-   * Log error messages to console.
-   * If one argument is passed it is assumed to be an Error object.
-   * @param {object|string} message - A message string or Error object.
-   * @param {object} error - Error object.
-   */
+
+  panicOnBuild(...args) {
+    this.error(...args)
+    if (process.env.gatsby_executing_command !== `build`) {
+      process.exit(1)
+    }
+  },
+
   error(message, error) {
     if (arguments.length === 1 && typeof message !== `string`) {
       error = message

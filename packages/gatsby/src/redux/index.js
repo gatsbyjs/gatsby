@@ -62,6 +62,7 @@ const saveState = _.debounce(state => {
     `nodes`,
     `status`,
     `componentDataDependencies`,
+    `jsonDataPaths`,
   ])
   fs.writeFile(
     `${process.cwd()}/.cache/redux-state.json`,

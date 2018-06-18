@@ -52,6 +52,8 @@ describe(`Process contentful data`, () => {
 
   it(`creates nodes for each entry`, () => {
     const createNode = jest.fn()
+    const createNodeId = jest.fn()
+    createNodeId.mockReturnValue(`uuid-from-gatsby`)
     contentTypeItems.forEach((contentTypeItem, i) => {
       normalize.createContentTypeNodes({
         contentTypeItem,
@@ -59,6 +61,7 @@ describe(`Process contentful data`, () => {
         conflictFieldPrefix,
         entries: entryList[i].map(normalize.fixIds),
         createNode,
+        createNodeId,
         resolvable,
         foreignReferenceMap,
         defaultLocale,
@@ -70,11 +73,14 @@ describe(`Process contentful data`, () => {
 
   it(`creates nodes for each asset`, () => {
     const createNode = jest.fn()
+    const createNodeId = jest.fn()
+    createNodeId.mockReturnValue(`uuid-from-gatsby`)
     const assets = currentSyncData.assets
     assets.forEach(assetItem => {
       normalize.createAssetNodes({
         assetItem,
         createNode,
+        createNodeId,
         defaultLocale,
         locales,
       })

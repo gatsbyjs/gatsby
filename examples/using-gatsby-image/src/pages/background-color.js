@@ -2,11 +2,12 @@ import React from "react"
 import Img from "gatsby-image"
 import Lorem from "../components/lorem"
 import Ipsum from "../components/ipsum"
+import Layout from "../layouts"
 
 import { rhythm, options } from "../utils/typography"
 
-const BlurUp = ({ data }) => (
-  <div>
+const BlurUp = ({ data, location }) => (
+  <Layout location={location}>
     <h2>Background color</h2>
     <Img
       backgroundColor
@@ -20,7 +21,7 @@ const BlurUp = ({ data }) => (
         },
       }}
       title={`Photo by Redd Angelo on Unsplash`}
-      resolutions={data.reddImageMobile.resolutions}
+      fixed={data.reddImageMobile.childImageSharp.fixed}
     />
     <Img
       backgroundColor
@@ -35,35 +36,41 @@ const BlurUp = ({ data }) => (
         },
       }}
       title={`Photo by Redd Angelo on Unsplash`}
-      resolutions={data.reddImage.resolutions}
+      fixed={data.reddImage.childImageSharp.fixed}
     />
     <Lorem />
     <Img
-      sizes={data.kenImage.sizes}
+      fluid={data.kenImage.childImageSharp.fluid}
       backgroundColor
       title={`Photo by Ken Treloar on Unsplash`}
     />
     <Ipsum />
-  </div>
+  </Layout>
 )
 
 export default BlurUp
 
 export const query = graphql`
   query BackgroundColorQuery {
-    reddImageMobile: imageSharp(id: { regex: "/redd/" }) {
-      resolutions(width: 126) {
-        ...GatsbyImageSharpResolutions_noBase64
+    reddImageMobile: file(relativePath: { regex: "/redd/" }) {
+      childImageSharp {
+        fixed(width: 126) {
+          ...GatsbyImageSharpFixed_noBase64
+        }
       }
     }
-    reddImage: imageSharp(id: { regex: "/redd/" }) {
-      resolutions(width: 201) {
-        ...GatsbyImageSharpResolutions_noBase64
+    reddImage: file(relativePath: { regex: "/redd/" }) {
+      childImageSharp {
+        fixed(width: 201) {
+          ...GatsbyImageSharpFixed_noBase64
+        }
       }
     }
-    kenImage: imageSharp(id: { regex: "/ken-treloar/" }) {
-      sizes(maxWidth: 599) {
-        ...GatsbyImageSharpSizes_noBase64
+    kenImage: file(relativePath: { regex: "/ken-treloar/" }) {
+      childImageSharp {
+        fluid(maxWidth: 599) {
+          ...GatsbyImageSharpFluid_noBase64
+        }
       }
     }
   }

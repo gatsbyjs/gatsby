@@ -13,7 +13,7 @@ const {
   GraphQLString,
   GraphQLInt,
   GraphQLBoolean,
-} = require(`graphql`)
+} = require(`gatsby/graphql`)
 const sharp = require(`sharp`)
 const { ensureDir } = require(`fs-extra`)
 
@@ -201,10 +201,7 @@ async function sqipContentful({ type, cache, store }) {
           background,
         } = fieldArgs
 
-        let {
-          width,
-          height,
-        } = fieldArgs
+        let { width, height } = fieldArgs
 
         if (width && height) {
           const aspectRatio = height / width

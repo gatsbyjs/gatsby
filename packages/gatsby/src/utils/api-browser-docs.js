@@ -53,16 +53,18 @@ exports.registerServiceWorker = true
 exports.replaceRouterComponent = true
 
 /**
- * Allow a plugin to replace the page and layout component renderer. This api runner can be used to
+ * Allow a plugin to replace the page component renderer. This api runner can be used to
  * implement page transitions. See https://github.com/gatsbyjs/gatsby/tree/master/examples/using-page-transitions for an example of this.
  * @param {object} $0
- * @param {object} $0.props The props of the page or layout.
+ * @param {object} $0.props The props of the page.
  * @param {object} $0.loader The gatsby loader.
  */
 exports.replaceComponentRenderer = true
 
 /**
  * Allow a plugin to replace the history object.
+ * @param {object} $0
+ * @param {object} $0.basename The base URL of the app.
  */
 exports.replaceHistory = true
 
@@ -74,6 +76,20 @@ exports.replaceHistory = true
 exports.wrapRootComponent = true
 
 /**
+ * Called when prefetching for a pathname is triggered. Allows
+ * for plugins with custom prefetching logic.
+ * @param {object} $0
+ * @param {object} $0.pathname The pathname whose resources should now be prefetched
+ */
+exports.onPrefetchPathname = true
+
+/**
+ * Plugins can take over prefetching logic. If they do, they should call this
+ * to disable the now duplicate core prefetching logic.
+ */
+exports.disableCorePrefetching = true
+
+/*
  * Allow a plugin to replace the ReactDOM.render function call by a custom renderer.
  * This method takes no param and should return a function with same signature as ReactDOM.render()
  * Note it's very important to call the callback after rendering, otherwise Gatsby will not be able to call `onInitialClientRender`
