@@ -887,7 +887,7 @@ export const showcaseQuery = graphql`
         }
       }
     }
-    allSitesYaml(filter: { main_url: { ne: null } }) {
+    allSitesYaml(limit: 20, filter: { main_url: { ne: null } }) {
       edges {
         node {
           id
