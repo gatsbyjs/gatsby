@@ -45,9 +45,16 @@ StaticQuery.propTypes = {
   render: PropTypes.func.isRequired,
 }
 
+function graphql() {
+  throw new Error(
+    `Runtime evaluation of a Gatsby graphql call. Graphql queries and fragments must be evaluated at build time, perhaps your configuration is messed up?`
+  )
+}
+
 export {
   Link,
   withPrefix,
+  graphql,
   push,
   replace,
   navigateTo, // TODO: remove navigateTo for v3

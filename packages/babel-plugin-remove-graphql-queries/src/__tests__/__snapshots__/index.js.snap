@@ -1,5 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Leves other graphql tags alone 1`] = `
+"import React from 'react';
+import { graphql } from 'relay';
+export default (() => React.createElement(\\"div\\", null, data.site.siteMetadata.title));
+export const query = graphql\`
+     {
+       site { siteMetadata { title }}
+     }
+  \`;"
+`;
+
 exports[`Transforms queries in <StaticQuery> 1`] = `
 "import staticQueryData from \\"public/static/d/2626356014.json\\";
 import React from 'react';

@@ -4,7 +4,7 @@ const plugin = require(`../`)
 
 var staticQuery = `
 import React from 'react'
-import { StaticQuery } from 'gatsby'
+import { graphql, StaticQuery } from 'gatsby'
 
 export default () => (
   <StaticQuery
@@ -16,6 +16,7 @@ export default () => (
 
 var pageComponent = `
 import React from 'react'
+import { graphql } from 'gatsby'
 
 export default () => (
   <div>{data.site.siteMetadata.title}</div>
@@ -41,5 +42,29 @@ it(`Transforms queries in page components`, () => {
     presets: [reactPreset],
     plugins: [plugin],
   })
+  expect(code).toMatchSnapshot()
+})
+
+it(`Leves other graphql tags alone`, () => {
+  const { code } = babel.transform(
+    `
+  import React from 'react'
+  import { graphql } from 'relay'
+
+  export default () => (
+    <div>{data.site.siteMetadata.title}</div>
+  )
+
+  export const query = graphql\`
+     {
+       site { siteMetadata { title }}
+     }
+  \`
+  `,
+    {
+      presets: [reactPreset],
+      plugins: [plugin],
+    }
+  )
   expect(code).toMatchSnapshot()
 })

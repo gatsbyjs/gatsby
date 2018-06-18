@@ -5,7 +5,12 @@ const nodePath = require(`path`)
 
 function getGraphQLTag(path) {
   const tag = path.get(`tag`)
-  if (!tag.isIdentifier({ name: `graphql` })) return {}
+
+  if (
+    !tag.isIdentifier({ name: `graphql` }) ||
+    !path.get(`tag`).referencesImport(`gatsby`)
+  )
+    return {}
 
   const quasis = path.node.quasi.quasis
 
@@ -44,7 +49,8 @@ export default function({ types: t }) {
           JSXIdentifier(path2) {
             if (
               [`production`, `test`].includes(process.env.NODE_ENV) &&
-              path2.isJSXIdentifier({ name: `StaticQuery` })
+              path2.isJSXIdentifier({ name: `StaticQuery` }) &&
+              path2.referencesImport(`gatsby`)
             ) {
               const identifier = t.identifier(`staticQueryData`)
               const filename = state.file.opts.filename
@@ -85,6 +91,23 @@ export default function({ types: t }) {
 
             const queryHash = hash.toString()
             const query = text
+
+            const tag = path2.get(`tag`)
+            const binding = tag.scope.getBinding(tag.node.name)
+            if (binding && binding.kind === `module`) {
+              const importPath = binding.path
+
+              if (importPath.isImportSpecifier()) {
+                const parent = importPath.parentPath
+
+                // remove the runtime import, or if there are no other gatsby imports remove the entire import
+                if (parent.node.specifiers.length === 1) {
+                  parent.remove()
+                } else {
+                  importPath.remove()
+                }
+              }
+            }
 
             // Replace the query with the hash of the query.
             path2.replaceWith(t.StringLiteral(queryHash))
