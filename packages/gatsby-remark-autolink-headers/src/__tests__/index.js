@@ -13,7 +13,7 @@ describe(`gatsby-remark-autolink-headers`, () => {
   it(`adds id to a markdown header`, () => {
     const markdownAST = remark.parse(`# Heading Uno`)
 
-    const transformed = plugin({ markdownAST })
+    const transformed = plugin({ markdownAST }, {})
 
     visit(transformed, `heading`, node => {
       expect(node.data.id).toBeDefined()
@@ -31,7 +31,7 @@ describe(`gatsby-remark-autolink-headers`, () => {
 ### Heading Three
     `)
 
-    const transformed = plugin({ markdownAST })
+    const transformed = plugin({ markdownAST }, {})
 
     visit(transformed, `heading`, node => {
       expect(node.data.id).toBeDefined()
