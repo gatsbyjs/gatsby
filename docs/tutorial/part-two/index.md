@@ -198,7 +198,7 @@ Your site should now look like this:
 
 Let's make a quick improvement. Many sites have a single column of text centered
 in the middle of the page. To create this, add the following styles to the
-`<Container>` in `src/pages/index.js`.
+`<div>` in `src/pages/index.js`.
 
 ```jsx{4,25}
 import React from "react"
