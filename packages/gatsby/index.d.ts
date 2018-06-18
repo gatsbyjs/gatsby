@@ -1,6 +1,7 @@
 import * as React from "react"
 
 export {
+  default as Link,
   GatsbyLinkProps,
   navigateTo,
   push,
