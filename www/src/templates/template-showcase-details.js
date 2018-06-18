@@ -110,7 +110,12 @@ class ShowcaseTemplate extends React.Component {
         modalPrevious={this.previous}
         modalNextLink={
           <Link
-            to={{ pathname: nextSite.fields.slug, state: { isModal: true } }}
+            to={{
+              pathname: nextSite.fields.slug,
+              state: {
+                isModal: true,
+              },
+            }}
             css={{
               display: `block`,
               position: `fixed`,
@@ -128,10 +133,15 @@ class ShowcaseTemplate extends React.Component {
                 css={{
                   ...styles.prevNextImage,
                 }}
-                resolutions={
-                  nextSite.childScreenshot.screenshotFile.childImageSharp
-                    .resolutions
-                }
+                backgroundColor
+                resolutions={{
+                  srcSet: ``,
+                  src:
+                    nextSite.childScreenshot.screenshotFile.childImageSharp
+                      .resize.src,
+                  width: 100,
+                  height: 100,
+                }}
                 alt=""
               />
             </div>
@@ -141,8 +151,12 @@ class ShowcaseTemplate extends React.Component {
               }}
             >
               <MdArrowUpward />
-              <div>Next Site in Showcase</div>
-              <div css={{ ...styles.prevNextLinkSiteTitle }}>
+              <div> Next Site in Showcase </div>
+              <div
+                css={{
+                  ...styles.prevNextLinkSiteTitle,
+                }}
+              >
                 {nextSite.title}
               </div>
             </div>
@@ -152,7 +166,9 @@ class ShowcaseTemplate extends React.Component {
           <Link
             to={{
               pathname: previousSite.fields.slug,
-              state: { isModal: true },
+              state: {
+                isModal: true,
+              },
             }}
             css={{
               display: `block`,
@@ -171,10 +187,15 @@ class ShowcaseTemplate extends React.Component {
                 css={{
                   ...styles.prevNextImage,
                 }}
-                resolutions={
-                  previousSite.childScreenshot.screenshotFile.childImageSharp
-                    .resolutions
-                }
+                backgroundColor
+                resolutions={{
+                  srcSet: ``,
+                  src:
+                    previousSite.childScreenshot.screenshotFile.childImageSharp
+                      .resize.src,
+                  width: 100,
+                  height: 100,
+                }}
                 alt=""
               />
             </div>
@@ -186,8 +207,12 @@ class ShowcaseTemplate extends React.Component {
               }}
             >
               <MdArrowUpward />
-              <div>Previous Site in Showcase</div>
-              <div css={{ ...styles.prevNextLinkSiteTitle }}>
+              <div> Previous Site in Showcase </div>
+              <div
+                css={{
+                  ...styles.prevNextLinkSiteTitle,
+                }}
+              >
                 {previousSite.title}
               </div>
             </div>
@@ -209,7 +234,7 @@ class ShowcaseTemplate extends React.Component {
             }}
           >
             <Helmet>
-              <title>{data.sitesYaml.title}</title>
+              <title> {data.sitesYaml.title} </title>
               <meta
                 name="og:image"
                 content={`https://next.gatsbyjs.org${
@@ -236,7 +261,13 @@ class ShowcaseTemplate extends React.Component {
                 },
               }}
             >
-              <h1 css={{ margin: 0 }}>{data.sitesYaml.title}</h1>
+              <h1
+                css={{
+                  margin: 0,
+                }}
+              >
+                {data.sitesYaml.title}
+              </h1>
               <a
                 href={data.sitesYaml.main_url}
                 css={{
@@ -249,7 +280,6 @@ class ShowcaseTemplate extends React.Component {
               >
                 {cleanUrl(data.sitesYaml.main_url)}
               </a>
-
               {data.sitesYaml.built_by && (
                 <span
                   css={{
@@ -259,10 +289,15 @@ class ShowcaseTemplate extends React.Component {
                     },
                   }}
                 >
-                  {` `}
-                  <span css={{ paddingRight: 8, paddingLeft: 8 }}>/</span>
-                  {` `}
-                  Built by{` `}
+                  <span
+                    css={{
+                      paddingRight: 8,
+                      paddingLeft: 8,
+                    }}
+                  >
+                    /
+                  </span>
+                  Built by {` `}
                   {data.sitesYaml.built_by_url ? (
                     <a
                       href={data.sitesYaml.built_by_url}
@@ -307,9 +342,12 @@ class ShowcaseTemplate extends React.Component {
                   <img
                     src={FeaturedIcon}
                     alt="icon"
-                    css={{ marginBottom: 0, marginRight: 10 }}
+                    css={{
+                      marginBottom: 0,
+                      marginRight: 10,
+                    }}
                   />
-                  Featured
+                  Featured{` `}
                 </div>
               )}
               {data.sitesYaml.source_url && (
@@ -327,10 +365,18 @@ class ShowcaseTemplate extends React.Component {
                   <img
                     src={GithubIcon}
                     alt="icon"
-                    css={{ marginBottom: 0, marginRight: 10 }}
+                    css={{
+                      marginBottom: 0,
+                      marginRight: 10,
+                    }}
                   />
-                  <a href={data.sitesYaml.source_url} css={{ ...styles.link }}>
-                    Source
+                  <a
+                    href={data.sitesYaml.source_url}
+                    css={{
+                      ...styles.link,
+                    }}
+                  >
+                    Source{` `}
                   </a>
                 </div>
               )}
@@ -345,9 +391,12 @@ class ShowcaseTemplate extends React.Component {
                   <img
                     src={FeatherIcon}
                     alt="icon"
-                    css={{ marginBottom: 0, marginRight: 10 }}
+                    css={{
+                      marginBottom: 0,
+                      marginRight: 10,
+                    }}
                   />
-                  <a href={data.sitesYaml.source_url}>Case Study</a>
+                  <a href={data.sitesYaml.source_url}> Case Study </a>
                 </div>
               )}
             </div>
@@ -390,7 +439,12 @@ class ShowcaseTemplate extends React.Component {
                     },
                   }}
                 >
-                  <MdLaunch style={{ verticalAlign: `sub` }} /> Visit site
+                  <MdLaunch
+                    style={{
+                      verticalAlign: `sub`,
+                    }}
+                  />
+                  Visit site{` `}
                 </a>
                 <ShareMenu
                   url={data.sitesYaml.main_url}
@@ -423,17 +477,22 @@ class ShowcaseTemplate extends React.Component {
                 },
               }}
             >
-              <p>{data.sitesYaml.description}</p>
+              <p> {data.sitesYaml.description} </p>
               <div
                 css={{
                   display: `flex`,
                   fontFamily: options.headerFontFamily.join(`,`),
                 }}
               >
-                <div css={{ color: colors.gray.calm, paddingRight: 20 }}>
-                  Categories
+                <div
+                  css={{
+                    color: colors.gray.calm,
+                    paddingRight: 20,
+                  }}
+                >
+                  Categories{` `}
                 </div>
-                <div>{categories.join(`, `)}</div>
+                <div> {categories.join(`, `)} </div>
               </div>
             </div>
           </div>
@@ -491,8 +550,8 @@ export const pageQuery = graphql`
           childScreenshot {
             screenshotFile {
               childImageSharp {
-                resolutions(width: 100, height: 100) {
-                  ...GatsbyImageSharpResolutions
+                resize(width: 200, height: 200) {
+                  src
                 }
               }
             }
