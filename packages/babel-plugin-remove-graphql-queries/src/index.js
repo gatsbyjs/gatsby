@@ -6,11 +6,10 @@ const nodePath = require(`path`)
 function getGraphQLTag(path) {
   const tag = path.get(`tag`)
 
-  if (
-    !tag.isIdentifier({ name: `graphql` }) ||
-    !path.get(`tag`).referencesImport(`gatsby`)
-  )
-    return {}
+  if (!tag.isIdentifier({ name: `graphql` })) return {}
+
+  const isGlobal = tag.scope.hasGlobal(`graphql`)
+  if (!isGlobal && !tag.referencesImport(`gatsby`)) return {}
 
   const quasis = path.node.quasi.quasis
 
@@ -31,7 +30,7 @@ function getGraphQLTag(path) {
     if (ast.definitions.length === 0) {
       throw new Error(`BabelPluginRemoveGraphQL: Unexpected empty graphql tag.`)
     }
-    return { ast, text, hash }
+    return { ast, text, hash, isGlobal }
   } catch (err) {
     throw new Error(
       `BabelPluginRemoveGraphQLQueries: GraphQL syntax error in query:\n\n${text}\n\nmessage:\n\n${
@@ -85,7 +84,7 @@ export default function({ types: t }) {
 
         path.traverse({
           TaggedTemplateExpression(path2, state) {
-            const { ast, text, hash } = getGraphQLTag(path2)
+            const { ast, text, hash, isGlobal } = getGraphQLTag(path2)
 
             if (!ast) return null
 
@@ -94,7 +93,7 @@ export default function({ types: t }) {
 
             const tag = path2.get(`tag`)
             const binding = tag.scope.getBinding(tag.node.name)
-            if (binding && binding.kind === `module`) {
+            if (!isGlobal && binding && binding.kind === `module`) {
               const importPath = binding.path
 
               if (importPath.isImportSpecifier()) {

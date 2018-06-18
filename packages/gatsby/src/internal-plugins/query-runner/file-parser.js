@@ -103,6 +103,13 @@ async function parseToAst(filePath, fileStr) {
   return ast
 }
 
+const warnForGlobalTag = file =>
+  report.warn(
+    `Using the global \`graphql\` tag is deprecated, and will not be supported in v3.\n` +
+      `Import it instead like:  import { graphql } from 'gatsby' in file:\n` +
+      file
+  )
+
 async function findGraphQLTags(file, text): Promise<Array<DefinitionNode>> {
   return new Promise((resolve, reject) => {
     parseToAst(file, text)
@@ -128,14 +135,17 @@ async function findGraphQLTags(file, text): Promise<Array<DefinitionNode>> {
             ) {
               return
             }
-            const { ast: gqlAst, text, hash } = getGraphQLTag(path)
-            if (gqlAst) {
-              gqlAst.definitions.forEach(def => {
-                if (!def.name || !def.name.value) {
-                  report.panic(getMissingNameErrorMessage(file))
-                }
-              })
-            }
+            const { ast: gqlAst, text, hash, isGlobal } = getGraphQLTag(path)
+            if (!gqlAst) return
+
+            if (isGlobal) warnForGlobalTag(file)
+
+            gqlAst.definitions.forEach(def => {
+              if (!def.name || !def.name.value) {
+                report.panic(getMissingNameErrorMessage(file))
+              }
+            })
+
             const definitions = [...gqlAst.definitions].map(d => {
               d.isStaticQuery = true
               d.text = text
@@ -151,16 +161,18 @@ async function findGraphQLTags(file, text): Promise<Array<DefinitionNode>> {
           ExportNamedDeclaration(path, state) {
             path.traverse({
               TaggedTemplateExpression(innerPath) {
-                const { ast: gqlAst } = getGraphQLTag(innerPath)
-                if (gqlAst) {
-                  gqlAst.definitions.forEach(def => {
-                    if (!def.name || !def.name.value) {
-                      report.panic(getMissingNameErrorMessage(file))
-                    }
-                  })
+                const { ast: gqlAst, isGlobal } = getGraphQLTag(innerPath)
+                if (!gqlAst) return
 
-                  queries.push(...gqlAst.definitions)
-                }
+                if (isGlobal) warnForGlobalTag(file)
+
+                gqlAst.definitions.forEach(def => {
+                  if (!def.name || !def.name.value) {
+                    report.panic(getMissingNameErrorMessage(file))
+                  }
+                })
+
+                queries.push(...gqlAst.definitions)
               },
             })
           },
