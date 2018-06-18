@@ -37,7 +37,7 @@
     "yargs": "^10.0.3"
   },
   "engines": {
-    "yarn": "^1.2.1",
+    "yarn": "^1.8.0",
     "node": ">=6.11.5"
   },
   "eslintIgnore": [
