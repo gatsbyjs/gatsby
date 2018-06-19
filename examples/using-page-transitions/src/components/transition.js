@@ -22,10 +22,11 @@ class Transition extends React.Component {
     window.removeEventListener(historyExitingEventType, this.listenerHandler)
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    if (this.state.exiting) {
-      this.setState({ exiting: false })
+  static getDerivedStateFromProps({ exiting }) {
+    if (exiting) {
+      return { exiting: false }
     }
+    return null
   }
 
   render() {
