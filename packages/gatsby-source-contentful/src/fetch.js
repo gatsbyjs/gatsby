@@ -2,8 +2,15 @@ const contentful = require(`contentful`)
 const _ = require(`lodash`)
 const normalize = require(`./normalize`)
 
-module.exports = async ({ spaceId, accessToken, host, syncToken, cacheDir, environment }) => {
-  // Fetch articles.
+
+module.exports = async ({
+  spaceId,
+  accessToken,
+  host,
+  syncToken,
+  environment,
+}) => {
+  // Fetch entries.
   console.time(`Fetch Contentful data`)
 
 

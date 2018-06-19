@@ -25,7 +25,7 @@ plugins: [
       accessToken: `your_access_token`,
     },
   },
-];
+]
 ```
 
 ### Using Preview API
@@ -41,11 +41,13 @@ plugins: [
       host: `preview.contentful.com`,
     },
   },
-];
+]
 ```
+
 ### Offline
 
 If you don't have internet connection you can add `export GATSBY_CONTENTFUL_OFFLINE=true` to tell the plugin to fallback to the cached data, if there is any.
+
 
 ### Configuration options
 
@@ -109,7 +111,7 @@ like the following:
         id
         productName
         image {
-          resolutions(width: 100) {
+          fixed(width: 100) {
             width
             height
             src

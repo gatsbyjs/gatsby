@@ -5,7 +5,7 @@ Array [
   Array [
     Object {
       "children": Array [],
-      "id": "whatever >> ImageSharp",
+      "id": "uuid-from-gatsby",
       "internal": Object {
         "contentDigest": "whatever",
         "type": "ImageSharp",
@@ -22,7 +22,7 @@ Array [
     Object {
       "child": Object {
         "children": Array [],
-        "id": "whatever >> ImageSharp",
+        "id": "uuid-from-gatsby",
         "internal": Object {
           "contentDigest": "whatever",
           "type": "ImageSharp",

@@ -6,21 +6,21 @@ be stored along side of, and revisioned with, your website content.
 
 It currently supports:
 
-* [Babel](https://babeljs.io/repl/)
-* [Codepen](https://codepen.io/)
-* [CodeSandbox](https://codesandbox.io/)
-* [Ramda](http://ramdajs.com/repl)
+- [Babel](https://babeljs.io/repl/)
+- [Codepen](https://codepen.io/)
+- [CodeSandbox](https://codesandbox.io/)
+- [Ramda](http://ramdajs.com/repl)
 
 This plug-in was created to solve a couple of problems the React team has faced
 with [reactjs.org](https://github.com/reactjs/reactjs.org):
 
-* Examples were stored separately from documentation (eg in Codepen) which made
+- Examples were stored separately from documentation (eg in Codepen) which made
   it more difficult to coordinate updates. (It was easy to forget to update an
   example when an API changes.)
-* Examples (eg Codepens) were owned by a single author, so the community
+- Examples (eg Codepens) were owned by a single author, so the community
   couldn't contribute PRs to update them without forking and fragmenting
   ownership.
-* It was easy to create invalid links (eg Babel REPL links that \_don't quite
+- It was easy to create invalid links (eg Babel REPL links that \_don't quite
   work).
 
 ## Overview

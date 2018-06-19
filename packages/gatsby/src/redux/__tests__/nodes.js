@@ -1,9 +1,15 @@
-const { actions, boundActionCreators } = require(`../actions`)
+const { actions } = require(`../actions`)
 const { store, getNode } = require(`../index`)
 const nodeReducer = require(`../reducers/nodes`)
 const nodeTouchedReducer = require(`../reducers/nodes-touched`)
 
 describe(`Create and update nodes`, () => {
+  beforeEach(() => {
+    store.dispatch({
+      type: `DELETE_CACHE`,
+    })
+  })
+
   it(`allows creating nodes`, () => {
     const action = actions.createNode(
       {
@@ -16,7 +22,9 @@ describe(`Create and update nodes`, () => {
         },
         pickle: true,
       },
-      { name: `tests` }
+      {
+        name: `tests`,
+      }
     )
     expect(action).toMatchSnapshot()
     expect(nodeReducer(undefined, action)).toMatchSnapshot()
@@ -34,10 +42,18 @@ describe(`Create and update nodes`, () => {
         },
         pickle: true,
         deep: {
-          array: [0, 1, { boom: true }],
+          array: [
+            0,
+            1,
+            {
+              boom: true,
+            },
+          ],
         },
       },
-      { name: `tests` }
+      {
+        name: `tests`,
+      }
     )
     const updateAction = actions.createNode(
       {
@@ -56,7 +72,9 @@ describe(`Create and update nodes`, () => {
           boom: `foo`,
         },
       },
-      { name: `tests` }
+      {
+        name: `tests`,
+      }
     )
     let state = nodeReducer(undefined, action)
     state = nodeReducer(state, updateAction)
@@ -66,215 +84,282 @@ describe(`Create and update nodes`, () => {
   })
 
   it(`deletes previously transformed children nodes when the parent node is updated`, () => {
-    store.dispatch({ type: `DELETE_CACHE` })
-    boundActionCreators.createNode(
-      {
-        id: `hi`,
-        children: [],
-        parent: null,
-        internal: {
-          contentDigest: `hasdfljds`,
-          type: `Test`,
+    store.dispatch(
+      actions.createNode(
+        {
+          id: `hi`,
+          children: [],
+          parent: null,
+          internal: {
+            contentDigest: `hasdfljds`,
+            type: `Test`,
+          },
         },
-      },
-      { name: `tests` }
+        {
+          name: `tests`,
+        }
+      )
     )
 
-    boundActionCreators.createNode(
-      {
-        id: `hi-1`,
-        children: [],
-        parent: `hi`,
-        internal: {
-          contentDigest: `hasdfljds-1`,
-          type: `Test-1`,
+    store.dispatch(
+      actions.createNode(
+        {
+          id: `hi-1`,
+          children: [],
+          parent: `hi`,
+          internal: {
+            contentDigest: `hasdfljds-1`,
+            type: `Test-1`,
+          },
         },
-      },
-      { name: `tests` }
+        {
+          name: `tests`,
+        }
+      )
     )
 
-    boundActionCreators.createParentChildLink(
-      {
-        parent: store.getState().nodes[`hi`],
-        child: store.getState().nodes[`hi-1`],
-      },
-      { name: `tests` }
-    )
-
-    boundActionCreators.createNode(
-      {
-        id: `hi-1-1`,
-        children: [],
-        parent: `hi-1`,
-        internal: {
-          contentDigest: `hasdfljds-1-1`,
-          type: `Test-1-1`,
+    store.dispatch(
+      actions.createParentChildLink(
+        {
+          parent: store.getState().nodes[`hi`],
+          child: store.getState().nodes[`hi-1`],
         },
-      },
-      { name: `tests` }
+        {
+          name: `tests`,
+        }
+      )
     )
 
-    boundActionCreators.createParentChildLink(
-      {
-        parent: store.getState().nodes[`hi-1`],
-        child: store.getState().nodes[`hi-1-1`],
-      },
-      { name: `tests` }
-    )
-
-    boundActionCreators.createNode(
-      {
-        id: `hi`,
-        children: [],
-        parent: `test`,
-        internal: {
-          contentDigest: `hasdfljds2`,
-          type: `Test`,
+    store.dispatch(
+      actions.createNode(
+        {
+          id: `hi-1-1`,
+          children: [],
+          parent: `hi-1`,
+          internal: {
+            contentDigest: `hasdfljds-1-1`,
+            type: `Test-1-1`,
+          },
         },
-      },
-      { name: `tests` }
+        {
+          name: `tests`,
+        }
+      )
+    )
+
+    store.dispatch(
+      actions.createParentChildLink(
+        {
+          parent: store.getState().nodes[`hi-1`],
+          child: store.getState().nodes[`hi-1-1`],
+        },
+        {
+          name: `tests`,
+        }
+      )
+    )
+
+    store.dispatch(
+      actions.createNode(
+        {
+          id: `hi`,
+          children: [],
+          parent: `test`,
+          internal: {
+            contentDigest: `hasdfljds2`,
+            type: `Test`,
+          },
+        },
+        {
+          name: `tests`,
+        }
+      )
     )
     expect(Object.keys(store.getState().nodes).length).toEqual(1)
   })
 
   it(`deletes previously transformed children nodes when the parent node is deleted`, () => {
-    store.dispatch({ type: `DELETE_CACHE` })
-    boundActionCreators.createNode(
-      {
-        id: `hi`,
-        children: [],
-        parent: `test`,
-        internal: {
-          contentDigest: `hasdfljds`,
-          type: `Test`,
+    store.dispatch(
+      actions.createNode(
+        {
+          id: `hi`,
+          children: [],
+          parent: `test`,
+          internal: {
+            contentDigest: `hasdfljds`,
+            type: `Test`,
+          },
         },
-      },
-      { name: `tests` }
+        {
+          name: `tests`,
+        }
+      )
     )
-
-    boundActionCreators.createNode(
-      {
-        id: `hi2`,
-        children: [],
-        parent: `test`,
-        internal: {
-          contentDigest: `hasdfljds`,
-          type: `Test`,
+    store.dispatch(
+      actions.createNode(
+        {
+          id: `hi2`,
+          children: [],
+          parent: `test`,
+          internal: {
+            contentDigest: `hasdfljds`,
+            type: `Test`,
+          },
         },
-      },
-      { name: `tests` }
+        {
+          name: `tests`,
+        }
+      )
     )
-
-    boundActionCreators.createNode(
-      {
-        id: `hi-1`,
-        children: [],
-        parent: `hi`,
-        internal: {
-          contentDigest: `hasdfljds-1`,
-          type: `Test-1`,
+    store.dispatch(
+      actions.createNode(
+        {
+          id: `hi-1`,
+          children: [],
+          parent: `hi`,
+          internal: {
+            contentDigest: `hasdfljds-1`,
+            type: `Test-1`,
+          },
         },
-      },
-      { name: `tests` }
+        {
+          name: `tests`,
+        }
+      )
     )
-
-    boundActionCreators.createParentChildLink(
-      {
-        parent: store.getState().nodes[`hi`],
-        child: getNode(`hi-1`),
-      },
-      { name: `tests` }
-    )
-
-    boundActionCreators.createNode(
-      {
-        id: `hi-1-1`,
-        children: [],
-        parent: `hi-1`,
-        internal: {
-          contentDigest: `hasdfljds-1-1`,
-          type: `Test-1-1`,
+    store.dispatch(
+      actions.createParentChildLink(
+        {
+          parent: store.getState().nodes[`hi`],
+          child: getNode(`hi-1`),
         },
-      },
-      { name: `tests` }
+        {
+          name: `tests`,
+        }
+      )
+    )
+    store.dispatch(
+      actions.createNode(
+        {
+          id: `hi-1-1`,
+          children: [],
+          parent: `hi-1`,
+          internal: {
+            contentDigest: `hasdfljds-1-1`,
+            type: `Test-1-1`,
+          },
+        },
+        {
+          name: `tests`,
+        }
+      )
+    )
+    store.dispatch(
+      actions.createParentChildLink(
+        {
+          parent: getNode(`hi-1`),
+          child: getNode(`hi-1-1`),
+        },
+        {
+          name: `tests`,
+        }
+      )
     )
 
-    boundActionCreators.createParentChildLink(
-      {
-        parent: getNode(`hi-1`),
-        child: getNode(`hi-1-1`),
-      },
-      { name: `tests` }
+    store.dispatch(
+      actions.deleteNode(
+        {
+          node: getNode(`hi`),
+        },
+        {
+          name: `tests`,
+        }
+      )
     )
-
-    boundActionCreators.deleteNode(`hi`, getNode(`hi`), { name: `tests` })
     expect(Object.keys(store.getState().nodes).length).toEqual(1)
   })
 
   it(`deletes previously transformed children nodes when parent nodes are deleted`, () => {
-    store.dispatch({ type: `DELETE_CACHE` })
-    boundActionCreators.createNode(
-      {
-        id: `hi`,
-        children: [],
-        parent: `test`,
-        internal: {
-          contentDigest: `hasdfljds`,
-          type: `Test`,
+    store.dispatch(
+      actions.createNode(
+        {
+          id: `hi`,
+          children: [],
+          parent: `test`,
+          internal: {
+            contentDigest: `hasdfljds`,
+            type: `Test`,
+          },
         },
-      },
-      { name: `tests` }
+        {
+          name: `tests`,
+        }
+      )
     )
-
-    boundActionCreators.createNode(
-      {
-        id: `hi-1`,
-        children: [],
-        parent: `hi`,
-        internal: {
-          contentDigest: `hasdfljds-1`,
-          type: `Test-1`,
+    store.dispatch(
+      actions.createNode(
+        {
+          id: `hi-1`,
+          children: [],
+          parent: `hi`,
+          internal: {
+            contentDigest: `hasdfljds-1`,
+            type: `Test-1`,
+          },
         },
-      },
-      { name: `tests` }
+        {
+          name: `tests`,
+        }
+      )
     )
-
-    boundActionCreators.createParentChildLink(
-      {
-        parent: getNode(`hi`),
-        child: getNode(`hi-1`),
-      },
-      { name: `tests` }
-    )
-
-    boundActionCreators.createNode(
-      {
-        id: `hi-1-1`,
-        children: [],
-        parent: `hi-1`,
-        internal: {
-          contentDigest: `hasdfljds-1-1`,
-          type: `Test-1-1`,
+    store.dispatch(
+      actions.createParentChildLink(
+        {
+          parent: getNode(`hi`),
+          child: getNode(`hi-1`),
         },
-      },
-      { name: `tests` }
+        {
+          name: `tests`,
+        }
+      )
     )
-
-    boundActionCreators.createParentChildLink(
-      {
-        parent: getNode(`hi-1`),
-        child: getNode(`hi-1-1`),
-      },
-      { name: `tests` }
+    store.dispatch(
+      actions.createNode(
+        {
+          id: `hi-1-1`,
+          children: [],
+          parent: `hi-1`,
+          internal: {
+            contentDigest: `hasdfljds-1-1`,
+            type: `Test-1-1`,
+          },
+        },
+        {
+          name: `tests`,
+        }
+      )
     )
-
-    boundActionCreators.deleteNodes([`hi`], { name: `tests` })
+    store.dispatch(
+      actions.createParentChildLink(
+        {
+          parent: getNode(`hi-1`),
+          child: getNode(`hi-1-1`),
+        },
+        {
+          name: `tests`,
+        }
+      )
+    )
+    store.dispatch(
+      actions.deleteNodes([`hi`], {
+        name: `tests`,
+      })
+    )
     expect(Object.keys(store.getState().nodes).length).toEqual(0)
   })
 
   it(`allows deleting nodes`, () => {
-    store.dispatch({ type: `DELETE_CACHE` })
-    boundActionCreators.createNode(
+    actions.createNode(
       {
         id: `hi`,
         children: [],
@@ -285,14 +370,57 @@ describe(`Create and update nodes`, () => {
         },
         pickle: true,
         deep: {
-          array: [0, 1, { boom: true }],
+          array: [
+            0,
+            1,
+            {
+              boom: true,
+            },
+          ],
         },
       },
-      { name: `tests` }
+      {
+        name: `tests`,
+      }
     )
-    boundActionCreators.deleteNode(`hi`, getNode(`hi`))
+    actions.deleteNode({
+      node: getNode(`hi`),
+    })
+    expect(getNode(`hi`)).toBeUndefined()
+  })
+
+  it(`warns when using old deleteNode signature `, () => {
+    console.warn = jest.fn()
+    store.dispatch(
+      actions.createNode(
+        {
+          id: `hi`,
+          children: [],
+          parent: `test`,
+          internal: {
+            contentDigest: `hasdfljds`,
+            type: `Test`,
+          },
+        },
+        {
+          name: `tests`,
+        }
+      )
+    )
+
+    expect(getNode(`hi`)).toMatchSnapshot()
+    store.dispatch(
+      actions.deleteNode(`hi`, getNode(`hi`), {
+        name: `tests`,
+      })
+    )
 
     expect(getNode(`hi`)).toBeUndefined()
+
+    const deprecationNotice = `Calling "deleteNode" with a nodeId is deprecated. Please pass an object containing a full node instead: deleteNode({ node })`
+    expect(console.warn).toHaveBeenCalledWith(deprecationNotice)
+
+    console.warn.mockRestore()
   })
 
   it(`nodes that are added are also "touched"`, () => {
@@ -307,7 +435,9 @@ describe(`Create and update nodes`, () => {
         },
         pickle: true,
       },
-      { name: `tests` }
+      {
+        name: `tests`,
+      }
     )
     let state = nodeTouchedReducer(undefined, action)
     expect(state[`hi`]).toBe(true)
@@ -325,7 +455,9 @@ describe(`Create and update nodes`, () => {
         },
         pickle: true,
       },
-      { name: `tests` }
+      {
+        name: `tests`,
+      }
     )
     let state = nodeReducer(undefined, action)
 
@@ -335,7 +467,9 @@ describe(`Create and update nodes`, () => {
         name: `joy`,
         value: `soul's delight`,
       },
-      { name: `test` }
+      {
+        name: `test`,
+      }
     )
     state = nodeReducer(state, addFieldAction)
     expect(state).toMatchSnapshot()
@@ -353,7 +487,9 @@ describe(`Create and update nodes`, () => {
         },
         pickle: true,
       },
-      { name: `tests` }
+      {
+        name: `tests`,
+      }
     )
     let state = nodeReducer(undefined, action)
 
@@ -363,7 +499,9 @@ describe(`Create and update nodes`, () => {
         name: `joy`,
         value: `soul's delight`,
       },
-      { name: `test` }
+      {
+        name: `test`,
+      }
     )
     state = nodeReducer(state, addFieldAction)
 
@@ -374,7 +512,9 @@ describe(`Create and update nodes`, () => {
           name: `joy`,
           value: `soul's delight`,
         },
-        { name: `test2` }
+        {
+          name: `test2`,
+        }
       )
     }
     expect(callActionCreator).toThrowErrorMatchingSnapshot()
@@ -392,7 +532,9 @@ describe(`Create and update nodes`, () => {
         },
         pickle: true,
       },
-      { name: `pluginA` }
+      {
+        name: `pluginA`,
+      }
     )
 
     function callActionCreator() {
@@ -407,7 +549,9 @@ describe(`Create and update nodes`, () => {
           },
           pickle: true,
         },
-        { name: `pluginB` }
+        {
+          name: `pluginB`,
+        }
       )
     }
 
@@ -430,7 +574,9 @@ describe(`Create and update nodes`, () => {
           },
           pickle: true,
         },
-        { name: `pluginA` }
+        {
+          name: `pluginA`,
+        }
       )
     }
 
@@ -438,7 +584,9 @@ describe(`Create and update nodes`, () => {
   })
 
   it(`does not crash when delete node is called on undefined`, () => {
-    boundActionCreators.deleteNode(undefined, undefined, { name: `tests` })
+    actions.deleteNode(undefined, {
+      name: `tests`,
+    })
     expect(Object.keys(store.getState().nodes).length).toEqual(0)
   })
 })

@@ -23,24 +23,24 @@ To gather more feedback, we also added a question at the bottom of each doc and 
 
 In interviews, I ask open-ended questions that are intended to gather candid feedback:
 
-* What is your name and where do you live?
-* How did you hear about Gatsby and why did you get interested in it?
-* What is your role / job?
-* Tell me about what you're building with Gatsby, and what's the building process like? Or, if you haven’t finished building it yet, what do you hope to build and where are you at in the process, and what has it been like so far?
+- What is your name and where do you live?
+- How did you hear about Gatsby and why did you get interested in it?
+- What is your role / job?
+- Tell me about what you're building with Gatsby, and what's the building process like? Or, if you haven’t finished building it yet, what do you hope to build and where are you at in the process, and what has it been like so far?
 
 Often I ask more pointed questions like the following:
 
-* What do you like about Gatsby so far?
-* What obstacles have you run into when building your site with Gatsby? Were you able to overcome them? If so, how?
-* What things (if any) helped make the process easier?
-* What do you think could be improved in the tutorials or the whole experience of building with Gatsby?
+- What do you like about Gatsby so far?
+- What obstacles have you run into when building your site with Gatsby? Were you able to overcome them? If so, how?
+- What things (if any) helped make the process easier?
+- What do you think could be improved in the tutorials or the whole experience of building with Gatsby?
 
 After several interviews, I added these questions to reflect recurring comments from interviewees:
 
-* What else do you think you might build with Gatsby in the future?
-* What could we do to make those future projects easier for you?
-* Did you use any plugins? Starters? If so, how did you find them?
-* Have you built any plugins or starters? If so, what was that process like?
+- What else do you think you might build with Gatsby in the future?
+- What could we do to make those future projects easier for you?
+- Did you use any plugins? Starters? If so, how did you find them?
+- Have you built any plugins or starters? If so, what was that process like?
 
 ## What we found out
 
@@ -94,17 +94,17 @@ Everyone is using plugins and many awesome users are building them. Building a p
 
 Some specific problems with searching for plugins that interviewees described to me:
 
-* Your site breaks because you installed a plugin that wasn’t compatible with the current version of Gatsby.
-* You are working after hours trying to build a plugin to help some CMS play nicely with Gatsby and you’re having trouble finding a good plugin to imitate.
-* Your fingers are super tired from scrolling up and down the plugin list and you don’t have enough Advil to support this activity and now you’re stuck on the couch with a cramped hand. (_Ok, no one actually said this, but they were thinking it, I’m sure_).
+- Your site breaks because you installed a plugin that wasn’t compatible with the current version of Gatsby.
+- You are working after hours trying to build a plugin to help some CMS play nicely with Gatsby and you’re having trouble finding a good plugin to imitate.
+- Your fingers are super tired from scrolling up and down the plugin list and you don’t have enough Advil to support this activity and now you’re stuck on the couch with a cramped hand. (_Ok, no one actually said this, but they were thinking it, I’m sure_).
 
 ## Until next time
 
 We’re working on the final prototypes for the plugin search tool and welcome contributions from the community. Here are ways you can contribute:
 
-* Follow the plugin search tool’s progress and contribute to it on the [Github issue](https://github.com/gatsbyjs/gatsby/issues/3003).
-* [Contact me here](https://twitter.com/shannonb_ux/status/938551014956732418) if you have feedback that differs from or provides deeper insight into any of the pain points this article mentions
-* Follow us on [Twitter](https://twitter.com/gatsbyjs)
-* Contribute to issues in the [Github repo](https://github.com/gatsbyjs/gatsby/issues)
+- Follow the plugin search tool’s progress and contribute to it on the [Github issue](https://github.com/gatsbyjs/gatsby/issues/3003).
+- [Contact me here](https://twitter.com/shannonb_ux/status/938551014956732418) if you have feedback that differs from or provides deeper insight into any of the pain points this article mentions
+- Follow us on [Twitter](https://twitter.com/gatsbyjs)
+- Contribute to issues in the [Github repo](https://github.com/gatsbyjs/gatsby/issues)
 
 Again, many thanks to all the community members who have contributed to this research and to making Gatsby awesome. Stay tuned for updates on the plugin search tool and future Gatsby UX research projects!

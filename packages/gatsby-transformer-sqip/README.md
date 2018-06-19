@@ -18,7 +18,6 @@
 
 > Generates vectorized primitive version of images to be used as preview thumbnails.
 
-
 ## Disclaimer
 
 This project can create beautiful results, but this comes with the cost of processing power. It may take several seconds on your machine to generate the preview. **Make sure to invest some time and to cache your `public` folder to avoid regeneration of the previews on every build.**
@@ -76,15 +75,15 @@ Number of primitive shapes of the image. This has a strong impact on the resulti
 
 Determines which type of shapes are used to generate the image.
 
-* 0: Combo
-* 1: Triangles
-* 2: Rectangles
-* 3: Ellipses
-* 4: Circles
-* 5: Rotated Rectangles
-* 6: Bezier Curves
-* 7: Rotated Ellipses
-* 8: Polygons
+- 0: Combo
+- 1: Triangles
+- 2: Rectangles
+- 3: Ellipses
+- 4: Circles
+- 5: Rotated Rectangles
+- 6: Bezier Curves
+- 7: Rotated Ellipses
+- 8: Polygons
 
 ##### `blur`: Integer, default: `1`
 
@@ -107,6 +106,7 @@ Uses Sharp's greyscale to convert the source image to 8-bit greyscale, 256 shade
 See: https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp#grayscale
 
 ##### `duotone`: DuotoneGradientType, default: `false`
+
 See: https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp#duotone
 
 ##### `cropFocus`: ImageCropFocusType, default: `sharp.strategy.attention`
@@ -164,12 +164,12 @@ See: https://www.contentful.com/developers/docs/references/images-api/#/referenc
 
 **Pros:**
 
-* No client-side JavaScript required
-* Browser cache ensures previews are not shown when a user visits the page a second time
+- No client-side JavaScript required
+- Browser cache ensures previews are not shown when a user visits the page a second time
 
 **Cons:**
 
-* All images are loaded, no matter if they are in the viewport or not
+- All images are loaded, no matter if they are in the viewport or not
 
 #### Gatsby Image
 
@@ -197,14 +197,13 @@ const Img = require(`gatsby-image`)
 
 **Pros:**
 
-* Nice fade-in effect
-* Only images within the viewport are loaded
+- Nice fade-in effect
+- Only images within the viewport are loaded
 
 **Cons:**
 
-* Requires client-side JavaScript
-* Images fade in all the time, even when the image is already in the browser cache
-
+- Requires client-side JavaScript
+- Images fade in all the time, even when the image is already in the browser cache
 
 ## Configuration recommendations
 
@@ -212,10 +211,10 @@ The plugin offers a wide variety of settings, which affect the size of the resul
 
 The maximum size of your previews really depend on your current html payload size and your personal limits.
 
-* Smaller thumbnails should range between 500-1000byte
-* A single header image or a full sized hero might take 1-10kb
-* For frequent previews like article teasers or image gallery thumbnails I’d recommend 15-25 shapes
-* For header and hero images you may go up to 50-200 shapes
+- Smaller thumbnails should range between 500-1000byte
+- A single header image or a full sized hero might take 1-10kb
+- For frequent previews like article teasers or image gallery thumbnails I’d recommend 15-25 shapes
+- For header and hero images you may go up to 50-200 shapes
 
 **Generally:** Keep it as small as possible and test the impact of your image previews via [webpagetest.org](https://www.webpagetest.org/) on a 3G connection.
 

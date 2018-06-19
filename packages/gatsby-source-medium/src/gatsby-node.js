@@ -25,8 +25,8 @@ const convertTimestamps = (nextObj, prevObj, prevKey) => {
 
 const strip = payload => payload.replace(prefix, ``)
 
-exports.sourceNodes = async ({ boundActionCreators }, { username }) => {
-  const { createNode } = boundActionCreators
+exports.sourceNodes = async ({ actions, createNodeId }, { username }) => {
+  const { createNode } = actions
 
   try {
     const result = await fetch(username)
@@ -84,7 +84,7 @@ exports.sourceNodes = async ({ boundActionCreators }, { username }) => {
       const node = Object.assign(
         resource,
         {
-          id: resource.id ? resource.id : resource.userId,
+          id: createNodeId(resource.id ? resource.id : resource.userId),
           parent: `__SOURCE__`,
           children: [],
           internal: {
