@@ -18,7 +18,7 @@ const failedPaths = {}
 const failedResources = {}
 const MAX_HISTORY = 5
 
-const jsonStore = {}
+const jsonPromiseStore = {}
 
 /**
  * Fetch resource map (pages data and paths to json files with results of
@@ -47,11 +47,11 @@ const fetchResource = resourceName => {
   if (resourceName.slice(0, 12) === `component---`) {
     resourceFunction = asyncRequires.components[resourceName]
   } else {
-    resourceFunction = () =>
-      new Promise((resolve, reject) => {
-        if (resourceName in jsonStore) {
-          resolve(jsonStore[resourceName])
-        } else {
+    if (resourceName in jsonPromiseStore) {
+      resourceFunction = () => jsonPromiseStore[resourceName]
+    } else {
+      resourceFunction = () => {
+        const fetchPromise = new Promise((resolve, reject) => {
           const url = `${__PATH_PREFIX__}/static/d/${
             jsonDataPaths[resourceName]
           }.json`
@@ -61,17 +61,18 @@ const fetchResource = resourceName => {
           req.onreadystatechange = () => {
             if (req.readyState == 4) {
               if (req.status === 200) {
-                resolve(
-                  (jsonStore[resourceName] = JSON.parse(req.responseText))
-                )
+                resolve(JSON.parse(req.responseText))
               } else {
                 reject()
               }
             }
           }
           req.send(null)
-        }
-      })
+        })
+        jsonPromiseStore[resourceName] = fetchPromise
+        return fetchPromise
+      }
+    }
   }
 
   // Download the resource
