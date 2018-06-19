@@ -101,7 +101,10 @@ export default ({ parent, data, isModal, categories }) => (
   <StaticQuery
     query={graphql`
       query allSitesYamlTemplateShowcase {
-        allSitesYaml(limit: 10, filter: { fields: { slug: { ne: null } } }) {
+        allSitesYaml(
+          limit: 10
+          filter: { featured: { eq: true }, main_url: { ne: null } }
+        ) {
           edges {
             node {
               id
