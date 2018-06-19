@@ -2,7 +2,6 @@ const contentful = require(`contentful`)
 const _ = require(`lodash`)
 const normalize = require(`./normalize`)
 
-
 module.exports = async ({
   spaceId,
   accessToken,
@@ -12,7 +11,6 @@ module.exports = async ({
 }) => {
   // Fetch entries.
   console.time(`Fetch Contentful data`)
-
 
   console.log(`Starting to fetch data from Contentful`)
 
