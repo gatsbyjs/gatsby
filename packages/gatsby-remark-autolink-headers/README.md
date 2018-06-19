@@ -26,8 +26,8 @@ module.exports = {
 
 ## Options
 
-- `offsetY`: Signed integer, vertical offset value in pixels, e.g.
-- `icon`: Use your own svg icon
+- `offsetY`: Signed integer. Vertical offset value in pixels (optional)
+- `icon`: SVG shape inside a template literal. Set your own svg icon (optional)
 
 ```javascript
 // In your gatsby-config.js
