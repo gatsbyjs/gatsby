@@ -2,6 +2,7 @@ const MongoClient = require(`mongodb`).MongoClient
 const crypto = require(`crypto`)
 const prepareMappingChildNode = require(`./mapping`)
 const _ = require(`lodash`)
+const queryString = require(`query-string`)
 
 exports.sourceNodes = (
   { actions, getNode, createNodeId, hasNodeChanged },
@@ -18,10 +19,10 @@ exports.sourceNodes = (
   if (pluginOptions.auth)
     authUrlPart = `${pluginOptions.auth.user}:${pluginOptions.auth.password}@`
 
-  let connectionSuffix = getConnectionExtraParams(pluginOptions) ;
+  let connectionExtraParams = getConnectionExtraParams(pluginOptions.extraParams);
   const connectionURL = `mongodb://${authUrlPart}${serverOptions.address}:${
     serverOptions.port
-  }/${dbName}${connectionSuffix}`
+  }/${dbName}${connectionExtraParams}`
 
   return MongoClient.connect(connectionURL)
     .then(db => {
@@ -121,22 +122,11 @@ function caps(s) {
   return s.replace(/\b\w/g, l => l.toUpperCase())
 }
 
-function getConnectionExtraParams(pluginOptions) {
+function getConnectionExtraParams(extraParams) {
   var connectionSuffix;
-  if (pluginOptions.replicaSet) {
-    connectionSuffix = "replicaSet=" + pluginOptions.replicaSet;
-  }
-  if (pluginOptions.ssl) {
-    connectionSuffix = (connectionSuffix ? connectionSuffix + "&ssl=" : "ssl=") + pluginOptions.ssl;
-  }
-  if (pluginOptions.authSource) {
-    connectionSuffix =  (connectionSuffix ? connectionSuffix + "&authSource=" : "authSource=") + pluginOptions.authSource;
+  if (extraParams) {
+    connectionSuffix = queryString.stringify(extraParams, {sort: false});
   }
 
-  if(connectionSuffix) {
-    return "?" + connectionSuffix;
-  }
-  
-  return "";
-
+  return connectionSuffix ? "?" + connectionSuffix : "";
 }

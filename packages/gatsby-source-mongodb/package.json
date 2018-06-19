@@ -9,7 +9,8 @@
   "dependencies": {
     "@babel/runtime": "7.0.0-beta.51",
     "lodash": "^4.17.4",
-    "mongodb": "^2.2.30"
+    "mongodb": "^2.2.30",
+    "query-string": "^6.1.0"
   },
   "devDependencies": {
     "@babel/cli": "7.0.0-beta.51",
