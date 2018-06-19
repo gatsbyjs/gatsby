@@ -2,7 +2,6 @@
 import React from "react"
 import { Link } from "gatsby"
 import TemplateWrapper from "../components/layout"
-import Transition from "../components/layout"
 
 const Cat = () => (
   <TemplateWrapper>
