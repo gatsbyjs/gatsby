@@ -108,7 +108,7 @@ exports.createPages = ({ graphql, actions }) => {
               }
             }
             allSitesYaml(
-              limit: 10
+              limit: 20
               filter: { featured: { eq: true }, main_url: { ne: null } }
             ) {
               edges {

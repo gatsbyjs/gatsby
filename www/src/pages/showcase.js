@@ -863,7 +863,7 @@ export default ShowcasePage
 
 export const showcaseQuery = graphql`
   query ShowcaseQuery {
-    featured: allSitesYaml(limit: 1, filter: { featured: { eq: true } }) {
+    featured: allSitesYaml(limit: 20, filter: { featured: { eq: true } }) {
       edges {
         node {
           id
