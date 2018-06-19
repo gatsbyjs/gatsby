@@ -1,9 +1,10 @@
 import React from "react"
-import PropTypes from "prop-types"
 import { Link } from "gatsby"
 import Helmet from "react-helmet"
 
-import "./index.css"
+import "./layout.css"
+
+import Transition from "./transition"
 
 const Header = () => (
   <div
@@ -52,13 +53,11 @@ const TemplateWrapper = ({ children }) => (
         paddingTop: 0,
       }}
     >
-      {children()}
+      <Transition>
+        {children}
+      </Transition>
     </div>
   </div>
 )
-
-TemplateWrapper.propTypes = {
-  children: PropTypes.func,
-}
 
 export default TemplateWrapper
