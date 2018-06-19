@@ -29,3 +29,25 @@ plugins: [
   },
 ]
 ```
+
+Use the following Markdown syntax to create blocks in your file:
+
+```
+[[danger]]
+| content
+
+[[info]]
+| content
+```
+
+This will wrap your contents in `div`s with the corresponding classes:
+
+```html
+<div class="custom-block-danger">
+  <p>content</p>
+</div>
+
+<div class="custom-block-info">
+  <p>content</p>
+</div>
+```
