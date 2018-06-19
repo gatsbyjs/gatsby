@@ -2,10 +2,10 @@
 import React from "react"
 import { Link } from "gatsby"
 import TemplateWrapper from "../components/layout"
+import Transition from "../components/layout"
 
-const Cat = ({ transition }) => (
+const Cat = () => (
   <TemplateWrapper>
-    <div style={transition && transition.style}>
       <h1>meow</h1>
       <div>
         <Link to="/">Go to home</Link>
@@ -16,7 +16,6 @@ const Cat = ({ transition }) => (
       <div>
         <Link to="/long-page/">Go to long page</Link>
       </div>
-    </div>
   </TemplateWrapper>
 )
 
