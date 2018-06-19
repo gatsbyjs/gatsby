@@ -1,4 +1,4 @@
-import React, { createElement } from "react"
+import React from "react"
 import { Transition as ReactTransition } from "react-transition-group"
 import getTransitionStyle from "../utils/getTransitionStyle"
 import { historyExitingEventType, timeout } from "../../gatsby-browser"
@@ -22,7 +22,7 @@ class Transition extends React.Component {
     window.removeEventListener(historyExitingEventType, this.listenerHandler)
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.state.exiting) {
       this.setState({ exiting: false })
     }
