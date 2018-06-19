@@ -19,7 +19,7 @@ const getUserConfirmation = (pathname, callback) => {
 const history = createHistory({ getUserConfirmation })
 // block must return a string to conform
 history.block((location, action) => location.pathname)
-exports.replaceHistory = () => history
+export let replaceHistory = () => history
 
 class ReplaceComponentRenderer extends React.Component {
   constructor(props) {
@@ -80,7 +80,7 @@ class ReplaceComponentRenderer extends React.Component {
 }
 
 // eslint-disable-next-line react/display-name
-exports.replaceComponentRenderer = ({ props, loader }) => {
+export let replaceComponentRenderer = ({ props, loader }) => {
   if (props.layout) {
     return undefined
   }
