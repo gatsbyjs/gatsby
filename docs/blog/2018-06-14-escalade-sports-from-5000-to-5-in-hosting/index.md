@@ -8,13 +8,13 @@ author: "Sam Bhagwat"
 
 Headquartered in Evansville, Indiana, USA, Escalade sells its equipment direct-to-consumers online, as well as through a network of local and regional distributors and specialty stores.
 
-Escalade recently started migrating its sites to Gatsby. They choose to migrate first one of their  e-commerce brands, [cajunbowfishing.com](cajunbowfishing.com) and recently relaunched it on Gatsby. Next they’ll be migrating the Escalade Sports homepage, and then other brand sites.
+Escalade recently started migrating its sites to Gatsby. They first chose to migrate one of their e-commerce brands, [cajunbowfishing.com](cajunbowfishing.com) and recently relaunched it on Gatsby. Next they’ll be migrating the Escalade Sports homepage and then other brand sites.
 
 ![cajunbowfishing.com homepage](./cajun-bowfishing-homepage.jpg)
 
 # Making the decision to migrate to Gatsby
 
-When lead developer Kennedy Rose took responsibility for Escalade’s web stack, the first challenge he confronted were stability issues.
+When lead developer Kennedy Rose took responsibility for Escalade’s web stack, the first challenges he confronted were stability issues.
 
 “When I started, all of our sites were on Drupal,” said Rose. “The problem was that it wasn’t stable. The sites all shared a core, and when the core went down, everything went down.”
 
