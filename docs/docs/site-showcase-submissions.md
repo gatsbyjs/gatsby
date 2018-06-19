@@ -10,7 +10,7 @@ There are only two major steps :)
 
 1.  If there is a chance that someone else could have already submitted the site, please make sure no one else has already submitted it by searching existing PRs: https://github.com/gatsbyjs/gatsby/pulls
 
-2.  Edit [this `sites.yml` file](https://github.com/gatsbyjs/gatsby/blob/master/www/src/data/sites.yml) by adding your submission to the bottom of the list of sites in the following format:
+2.  Edit [this `sites.yml` file](https://github.com/gatsbyjs/gatsby/blob/master/docs/sites.yml) by adding your submission to the bottom of the list of sites in the following format:
 
 ```shell
 - title: Title of the Site
