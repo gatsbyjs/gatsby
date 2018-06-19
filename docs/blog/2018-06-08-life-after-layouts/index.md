@@ -1,6 +1,6 @@
 ---
 title: Life After Layouts
-date: 2018-06-08
+date: 2018-06-19
 author: "Jason Lengstorf"
 ---
 
@@ -48,7 +48,7 @@ This ultimately boils down to two breaking changes and one recommendation:
 2.  **BREAKING CHANGE:** The `children` prop in our layout components is no longer a function (unless you explicitly provide a function).
 3.  We now recommend moving your layout components alongside the rest of your components (e.g. into `src/components/`).
 
-If we upgrade our simplified app by running `yarn add gatsby@next react react-dom` (see [the V1 => V2 migration guide](#tktk-link-to-migration-guide) for more information on why we need to install React here), we need to upgrade our layout by moving `src/layouts/index.js` to `src/components/layout.js` and changing `children` from a function to a regular prop:
+If we upgrade our simplified app by running `yarn add gatsby@next react react-dom` (see [the V1 => V2 migration guide](https://next.gatsbyjs.org/docs/migrating-from-v1-to-v2/) for more information on why we need to install React here), we need to upgrade our layout by moving `src/layouts/index.js` to `src/components/layout.js` and changing `children` from a function to a regular prop:
 
 ```jsx
 import React from "react"
@@ -85,7 +85,7 @@ In short, the decision to remove layouts was part of an effort to reduce _myster
 
 In V1, if something breaks on your page, you'd likely go to the page, look through the code, and try to spot the bug. But what if the bug is in the magic layout component? That component isn't referenced anywhere on the page, and if you don't _already know_ that Gatsby V1 wraps pages with layouts, it's pretty difficult to figure out what's going on.
 
-Because Gatsby is doing things in the background, out of site of the developers building the site, we're creating a mystery: where the hell did this bug come from if all the code I can see doesn't have the bug?
+Because Gatsby is doing things in the background, out of sight of the developers building the site, we're creating a mystery: where the hell did this bug come from if all the code I can see doesn't have the bug?
 
 By removing the magic and making layouts an explicity dependency in V2, that same bug would be much easier to spot because there's a clear link between our page code and the layout.
 
@@ -103,11 +103,11 @@ Removing layouts isn't the only improvement coming in Gatsby V2. We're really ex
 
   <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Coming soon to Gatsby v2: Ludicrous mode data hot reloading ;-)<a href="https://t.co/by1PyOYXc0">https://t.co/by1PyOYXc0</a><br><br>(note, this gif is not sped up at all) <a href="https://t.co/hFIYMbpalN">pic.twitter.com/hFIYMbpalN</a></p>&mdash; Gatsby (@gatsbyjs) <a href="https://twitter.com/gatsbyjs/status/974507205121617920?ref_src=twsrc%5Etfw">March 16, 2018</a></blockquote>
 
-* We can make GraphQL queries anywhere in our app using [`StaticQuery`](#tktk-link-to-staticquery-docs)
+* We can make GraphQL queries anywhere in our app using [`StaticQuery`](https://next.gatsbyjs.org/docs/static-query/)
 * Upgraded to the latest versions of React, Babel, Webpack, and other libraries Gatsby depends on
 * Better support for CSS inlining and splitting, which will boost performance
 
-For a full list of what's new, check out our [V2 migration guide](https://v2--gatsbyjs.netlify.com/docs/migrating-from-v1-to-v2/) and [_What’s New in Gatsby V2?_](#tktk-write-this-post).
+For a full list of what's new, check out our [V2 migration guide](https://next.gatsbyjs.org/docs/migrating-from-v1-to-v2/) and [_What’s New in Gatsby V2?_](#tktk-write-this-post).
 
 ## What's next?
 
