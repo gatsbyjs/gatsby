@@ -18,7 +18,7 @@ const failedPaths = {}
 const failedResources = {}
 const MAX_HISTORY = 5
 
-const jsonStore = {}
+const jsonPromiseStore = {}
 
 /**
  * Fetch resource map (pages data and paths to json files with results of
@@ -47,11 +47,11 @@ const fetchResource = resourceName => {
   if (resourceName.slice(0, 12) === `component---`) {
     resourceFunction = asyncRequires.components[resourceName]
   } else {
-    resourceFunction = () =>
-      new Promise((resolve, reject) => {
-        if (resourceName in jsonStore) {
-          resolve(jsonStore[resourceName])
-        } else {
+    if (resourceName in jsonPromiseStore) {
+      resourceFunction = () => jsonPromiseStore[resourceName]
+    } else {
+      resourceFunction = () => {
+        const fetchPromise = new Promise((resolve, reject) => {
           const url = `${__PATH_PREFIX__}/static/d/${
             jsonDataPaths[resourceName]
           }.json`
@@ -61,17 +61,18 @@ const fetchResource = resourceName => {
           req.onreadystatechange = () => {
             if (req.readyState == 4) {
               if (req.status === 200) {
-                resolve(
-                  (jsonStore[resourceName] = JSON.parse(req.responseText))
-                )
+                resolve(JSON.parse(req.responseText))
               } else {
                 reject()
               }
             }
           }
           req.send(null)
-        }
-      })
+        })
+        jsonPromiseStore[resourceName] = fetchPromise
+        return fetchPromise
+      }
+    }
   }
 
   // Download the resource
@@ -342,50 +343,12 @@ const queue = {
           page,
           pageResources: pathScriptsCache[path],
         })
-        cb(pathScriptsCache[path])
-        return pathScriptsCache[path]
       })
-
-      emitter.emit(`onPreLoadPageResources`, { path })
-      // Nope, we need to load resource(s)
-      let component
-      let json
-      // Load the component/json in parallel and call this function when
-      // they're done loading. When both are loaded, we move on.
-      const done = () => {
-        if (component && json) {
-          pathScriptsCache[path] = { component, json, page }
-          const pageResources = { component, json, page }
-          cb(pageResources)
-          emitter.emit(`onPostLoadPageResources`, {
-            page,
-            pageResources,
-          })
-        }
-      }
-      getResourceModule(page.componentChunkName, (err, c) => {
-        if (err) {
-          handleResourceLoadError(
-            page.path,
-            `Loading the component for ${page.path} failed`
-          )
-        }
-        component = c
-        done()
-      })
-      getResourceModule(page.jsonName, (err, j) => {
-        if (err) {
-          handleResourceLoadError(
-            page.path,
-            `Loading the JSON for ${page.path} failed`
-          )
-        }
-        json = j
-        done()
-      })
-      cb(pathScriptsCache[path])
       return pathScriptsCache[path]
     }
+
+    emitter.emit(`onPreLoadPageResources`, { path })
+    // Nope, we need to load resource(s)
 
     Promise.all([
       getResourceModule(page.componentChunkName),
