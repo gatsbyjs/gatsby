@@ -16,9 +16,14 @@ const getUserConfirmation = (pathname, callback) => {
     callback(true)
   }, timeout)
 }
-const history = createHistory({ getUserConfirmation })
-// block must return a string to conform
-history.block((location, action) => location.pathname)
+
+let history
+if (typeof document !== 'undefined') {
+  history = createHistory({ getUserConfirmation })
+  // block must return a string to conform
+  history.block((location, action) => location.pathname)
+}
+
 export let replaceHistory = () => history
 
 class ReplaceComponentRenderer extends React.Component {
