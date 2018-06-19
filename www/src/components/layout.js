@@ -159,6 +159,24 @@ class DefaultLayout extends React.Component {
           />
           <html lang="en" />
         </Helmet>
+        <div
+          css={{
+            width: `100%`,
+            padding: rhythm(1 / 2),
+            background: presets.colors.ui.bright,
+            color: presets.colors.gatsby,
+            fontFamily: options.headerFontFamily.join(`,`),
+            textAlign: `center`,
+            boxShadow: `inset 0px -3px 2px 0px ${presets.colors.ui.bright}`,
+            zIndex: `3`,
+            position: `fixed`,
+          }}
+        >
+          You're viewing the docs for Gatsby v2 beta.{` `}
+          <OutboundLink href="https://gatsbyjs.org/">
+            View the v1 docs instead
+          </OutboundLink>.
+        </div>
         <Navigation pathname={this.props.location.pathname} />
         <div
           className={`main-body`}
@@ -166,7 +184,9 @@ class DefaultLayout extends React.Component {
             paddingTop: 0,
             [presets.Tablet]: {
               margin: `0 auto`,
-              paddingTop: isHomepage ? 0 : presets.headerHeight,
+              paddingTop: isHomepage
+                ? `2.8rem`
+                : `calc(2.8rem + ${presets.headerHeight})`,
             },
           }}
         >
