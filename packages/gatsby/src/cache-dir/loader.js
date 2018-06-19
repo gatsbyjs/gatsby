@@ -342,50 +342,12 @@ const queue = {
           page,
           pageResources: pathScriptsCache[path],
         })
-        cb(pathScriptsCache[path])
-        return pathScriptsCache[path]
       })
-
-      emitter.emit(`onPreLoadPageResources`, { path })
-      // Nope, we need to load resource(s)
-      let component
-      let json
-      // Load the component/json in parallel and call this function when
-      // they're done loading. When both are loaded, we move on.
-      const done = () => {
-        if (component && json) {
-          pathScriptsCache[path] = { component, json, page }
-          const pageResources = { component, json, page }
-          cb(pageResources)
-          emitter.emit(`onPostLoadPageResources`, {
-            page,
-            pageResources,
-          })
-        }
-      }
-      getResourceModule(page.componentChunkName, (err, c) => {
-        if (err) {
-          handleResourceLoadError(
-            page.path,
-            `Loading the component for ${page.path} failed`
-          )
-        }
-        component = c
-        done()
-      })
-      getResourceModule(page.jsonName, (err, j) => {
-        if (err) {
-          handleResourceLoadError(
-            page.path,
-            `Loading the JSON for ${page.path} failed`
-          )
-        }
-        json = j
-        done()
-      })
-      cb(pathScriptsCache[path])
       return pathScriptsCache[path]
     }
+
+    emitter.emit(`onPreLoadPageResources`, { path })
+    // Nope, we need to load resource(s)
 
     Promise.all([
       getResourceModule(page.componentChunkName),
