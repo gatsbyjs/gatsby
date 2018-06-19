@@ -5,6 +5,8 @@ import Helmet from "react-helmet"
 
 import "./layout.css"
 
+import Transition from "./transition"
+
 const Header = () => (
   <div
     style={{
@@ -52,7 +54,9 @@ const TemplateWrapper = ({ children }) => (
         paddingTop: 0,
       }}
     >
-      {children}
+      <Transition>
+        {children}
+      </Transition>
     </div>
   </div>
 )

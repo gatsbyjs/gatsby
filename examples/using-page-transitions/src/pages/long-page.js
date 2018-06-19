@@ -2,9 +2,9 @@ import React from "react"
 import { Link } from "gatsby"
 import TemplateWrapper from "../components/layout"
 
-export default ({ transition }) => (
+export default () => (
   <TemplateWrapper>
-    <div style={transition && transition.style}>
+    <div>
       <h1>Links at bottom of page</h1>
       <p>
         <strong>Pellentesque habitant morbi tristique</strong> senectus et netus
