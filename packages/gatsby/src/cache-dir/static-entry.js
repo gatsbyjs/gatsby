@@ -239,28 +239,32 @@ export default (pagePath, callback) => {
     .slice(0)
     .reverse()
     .forEach(style => {
-      // Add <link>s for styles.
-      headComponents.push(
-        <link
-          as="style"
-          rel={style.rel}
-          key={style.name}
-          href={urlJoin(pathPrefix, style.name)}
-        />
-      )
+      // Add <link>s for styles that should be prefetched
+      // otherwise, inline as a <style> tag
 
-      headComponents.unshift(
-        <style
-          type="text/css"
-          data-href={urlJoin(pathPrefix, style.name)}
-          dangerouslySetInnerHTML={{
-            __html: fs.readFileSync(
-              join(process.cwd(), `public`, style.name),
-              `utf-8`
-            ),
-          }}
-        />
-      )
+      if(style.rel === `prefetch`) {
+        headComponents.push(
+          <link
+            as="style"
+            rel={style.rel}
+            key={style.name}
+            href={urlJoin(pathPrefix, style.name)}
+          />
+        )
+      } else {
+        headComponents.unshift(
+          <style
+            type="text/css"
+            data-href={urlJoin(pathPrefix, style.name)}
+            dangerouslySetInnerHTML={{
+              __html: fs.readFileSync(
+                join(process.cwd(), `public`, style.name),
+                `utf-8`
+              ),
+            }}
+          />
+        )
+      }
     })
 
   // Add page metadata for the current page
