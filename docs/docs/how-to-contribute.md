@@ -85,14 +85,14 @@ a pull request.
 
 If you want to contribute to the Gatsby blog follow the steps below.
 
-* Clone the repo and navigate to `/docs`
+* Clone the repo and navigate to `/www`
 * Run `yarn` to install all of the website's dependencies.
 * Run `gatsby develop` to preview the website blog in `http://localhost:8000/blog`.
 * The Markdown files for the blog live in `/docs/blog` folder. Make
   additions or modifications here.
 * Add an avatar to `/avatars`
 * Add an author to `/author.yml`
-* Add a new folder following the pattern `yyyy-mm-dd-title`. Within this newly created folder add an `index.md`. It is required to add a `title`, `date`, `author`, and `excerpt` in your post's `index.md` to format it correctly and link an author.
+* Add a new folder following the pattern `yyyy-mm-dd-title`. Within this newly created folder add an `index.md`. It is required to add a `title`, `date`, `author`, and `tags` ([view existing tags](https://www.gatsbyjs.org/blog/tags/) or add new one) in your post's `index.md` to format it correctly and link an author. If you are cross posting your post you can add `canonicalLink` for SEO benefits.
 * If you blog post contains images add them to your blog post folder and reference them in your post's `index.md`.
 * Make sure to double check your grammar and capitalise correctly.
 * Commit and push to your fork.
