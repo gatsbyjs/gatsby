@@ -205,6 +205,154 @@ describe(`Gatsby data tree utils`, () => {
     expect(example.numbers.length).toBe(1)
     expect(example.numbers[0]).toBe(2.5)
   })
+
+  it(`handles mix of date strings and date objects`, () => {
+    let example
+
+    // should be valid
+    example = getExampleValues({
+      nodes: [
+        { date: new Date(`2017-12-01T14:59:45.600Z`) },
+        { date: `2017-01-12T18:13:38.326Z` },
+      ],
+    })
+    expect(example.date).not.toBe(INVALID_VALUE)
+
+    // should be invalid (string is not a date)
+    example = getExampleValues({
+      nodes: [
+        { date: new Date(`2017-12-01T14:59:45.600Z`) },
+        { date: `This is not a date!!!!!!` },
+      ],
+    })
+    expect(example.date).toBe(INVALID_VALUE)
+
+    // should be valid - reversed order
+    example = getExampleValues({
+      nodes: [
+        { date: `2017-01-12T18:13:38.326Z` },
+        { date: new Date(`2017-12-01T14:59:45.600Z`) },
+      ],
+    })
+    expect(example.date).not.toBe(INVALID_VALUE)
+
+    // should be invalid (string is not a date) - reversed order
+    example = getExampleValues({
+      nodes: [
+        { date: `This is not a date!!!!!!` },
+        { date: new Date(`2017-12-01T14:59:45.600Z`) },
+      ],
+    })
+    expect(example.date).toBe(INVALID_VALUE)
+  })
+
+  it(`handles arrays with mix of date strings and date objects`, () => {
+    let example
+
+    // should be valid - separate arrays of unique types
+    example = getExampleValues({
+      nodes: [
+        { dates: [new Date(`2017-12-01T14:59:45.600Z`)] },
+        { dates: [`2017-01-12T18:13:38.326Z`] },
+      ],
+    })
+    expect(example.dates).not.toBe(INVALID_VALUE)
+
+    // should be invalid - separate arrays of unique types (string is not a date)
+    example = getExampleValues({
+      nodes: [
+        { dates: [new Date(`2017-12-01T14:59:45.600Z`)] },
+        { dates: [`This is not a date!!!!!!`] },
+      ],
+    })
+    expect(example.dates).toBe(INVALID_VALUE)
+
+    // should be valid - single array of mixed types
+    example = getExampleValues({
+      nodes: [
+        {
+          dates: [
+            new Date(`2017-12-01T14:59:45.600Z`),
+            `2017-01-12T18:13:38.326Z`,
+          ],
+        },
+      ],
+    })
+    expect(example.dates).not.toBe(INVALID_VALUE)
+
+    // should be invalid - single array of mixed types (string is not a date)
+    example = getExampleValues({
+      nodes: [
+        {
+          dates: [
+            new Date(`2017-12-01T14:59:45.600Z`),
+            `This is not a date!!!!!!`,
+          ],
+        },
+      ],
+    })
+    expect(example.dates).toBe(INVALID_VALUE)
+
+    // should be valid - separate arrays of both unique types and mixed types
+    example = getExampleValues({
+      nodes: [
+        {
+          dates: [
+            new Date(`2017-12-01T14:59:45.600Z`),
+            `2017-01-12T18:13:38.326Z`,
+          ],
+        },
+        { dates: [new Date(`2017-12-01T14:59:45.600Z`)] },
+        { dates: [`2017-01-12T18:13:38.326Z`] },
+      ],
+    })
+    expect(example.dates).not.toBe(INVALID_VALUE)
+
+    // should be valid - separate arrays of both unique types and mixed types (string is not a date) #1
+    example = getExampleValues({
+      nodes: [
+        {
+          dates: [
+            new Date(`2017-12-01T14:59:45.600Z`),
+            `This is not a date!!!!!!`,
+          ],
+        },
+        { dates: [new Date(`2017-12-01T14:59:45.600Z`)] },
+        { dates: [`2017-01-12T18:13:38.326Z`] },
+      ],
+    })
+    expect(example.dates).toBe(INVALID_VALUE)
+
+    // should be valid - separate arrays of both unique types and mixed types (string is not a date) #2
+    example = getExampleValues({
+      nodes: [
+        {
+          dates: [
+            new Date(`2017-12-01T14:59:45.600Z`),
+            `2017-01-12T18:13:38.326Z`,
+          ],
+        },
+        { dates: [new Date(`2017-12-01T14:59:45.600Z`)] },
+        { dates: [`This is not a date!!!!!!`] },
+      ],
+    })
+    expect(example.dates).toBe(INVALID_VALUE)
+
+    // should be valid - separate arrays of both unique types and mixed types (string is not a date) #2
+    example = getExampleValues({
+      nodes: [
+        {
+          dates: [
+            new Date(`2017-12-01T14:59:45.600Z`),
+            `This is not a date!!!!!!`,
+          ],
+        },
+        { dates: [new Date(`2017-12-01T14:59:45.600Z`)] },
+        { dates: [`This is not a date!!!!!!`] },
+      ],
+    })
+    expect(example.dates).toBe(INVALID_VALUE)
+  })
 })
 
 describe(`Type conflicts`, () => {
