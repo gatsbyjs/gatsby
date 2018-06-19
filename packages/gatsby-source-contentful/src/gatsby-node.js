@@ -44,12 +44,12 @@ exports.sourceNodes = async (
   if (
     !online &&
     process.env.GATSBY_CONTENTFUL_OFFLINE === `true` &&
-    process.env.ACTIVE_ENV !== `production`
+    process.env.NODE_ENV !== `production`
   ) {
 
-    _.values(store.getState().getNodes())
+    getNodes()
       .filter(n => n.internal.owner === `gatsby-source-contentful`)
-      .forEach(n => touchNode(n.id))
+      .forEach(n => touchNode({ nodeId: n.id } ))
 
     console.log(`Using Contentful Offline cache ⚠️`)
     console.log(`Cache may be invalidated if you edit package.json, gatsby-node.js or gatsby-config.js files`)
