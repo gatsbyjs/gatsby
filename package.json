@@ -46,8 +46,8 @@
   ],
   "private": true,
   "scripts": {
-    "bootstrap": "npm run lerna-prepare",
-    "check-versions": "babel-node scripts/check-versions.js --allow-next",
+    "bootstrap": "npm-run-all -s check-versions lerna-prepare",
+    "check-versions": "babel-node scripts/check-versions.js",
     "format": "npm-run-all -p format-packages format-cache-dir format-www format-examples format-scripts format-markdown",
     "format-cache-dir": "prettier-eslint --write \"packages/gatsby/cache-dir/*.js\"",
     "format-examples": "prettier-eslint --write \"examples/**/gatsby-node.js\" \"examples/**/gatsby-config.js\" \"examples/**/src/**/*.js\"",
