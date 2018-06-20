@@ -71,7 +71,6 @@ module.exports = {
     `gatsby-plugin-glamor`,
     `gatsby-plugin-sharp`,
     `gatsby-plugin-catch-links`,
-    `gatsby-plugin-react-next`,
     `gatsby-plugin-lodash`,
     {
       resolve: `gatsby-plugin-manifest`,
@@ -172,11 +171,13 @@ module.exports = {
       },
     },
     `gatsby-plugin-netlify`,
+    `gatsby-plugin-netlify-cache`,
     {
       resolve: `gatsby-plugin-mailchimp`,
       options: {
-          endpoint: `https://gatsbyjs.us17.list-manage.com/subscribe/post?u=1dc33f19eb115f7ebe4afe5ee&amp;id=f366064ba7`,
+        endpoint: `https://gatsbyjs.us17.list-manage.com/subscribe/post?u=1dc33f19eb115f7ebe4afe5ee&amp;id=f366064ba7`,
       },
     },
+    `gatsby-transformer-screenshot`,
   ],
 }

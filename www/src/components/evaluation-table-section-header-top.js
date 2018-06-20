@@ -1,6 +1,6 @@
 import React from "react"
 import presets, { colors } from "../utils/presets"
-import { scale, rhythm, options } from "../utils/typography"
+import { scale, rhythm } from "../utils/typography"
 
 const superHeaderTitles = [
   `Feature`,

@@ -1,5 +1,6 @@
 import React from "react"
-import Link from "gatsby-link"
+import { Link } from "gatsby"
+import hex2rgba from "hex2rgba"
 
 import { rhythm, scale, options } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
@@ -158,7 +159,7 @@ const SectionLink = props => {
 
   return (
     <li key={item.title} css={linkStyle}>
-      {item.link.charAt(0) == `#` ? (
+      {item.link.charAt(0) === `#` ? (
         <a href={item.link} className="nav-link">
           {title}
         </a>
@@ -200,6 +201,42 @@ class SidebarBody extends React.Component {
     return (
       <div
         css={{
+          borderRight: `1px solid ${colors.ui.light}`,
+          backgroundColor: colors.ui.whisper,
+          boxShadow: `inset 0 4px 5px 0 ${hex2rgba(
+            colors.gatsby,
+            presets.shadowKeyPenumbraOpacity
+          )}, inset 0 1px 10px 0 ${hex2rgba(
+            colors.lilac,
+            presets.shadowAmbientShadowOpacity
+          )}, inset 0 2px 4px -1px ${hex2rgba(
+            colors.lilac,
+            presets.shadowKeyUmbraOpacity
+          )}`,
+          width: rhythm(10),
+          position: `fixed`,
+          top: `calc(${presets.headerHeight} + 2.8rem - 1px)`,
+          overflowY: `auto`,
+          height: `calc(100vh - ${presets.headerHeight} - 2.8rem + 1px)`,
+          WebkitOverflowScrolling: `touch`,
+          "::-webkit-scrollbar": {
+            width: `6px`,
+            height: `6px`,
+          },
+          "::-webkit-scrollbar-thumb": {
+            background: colors.ui.bright,
+          },
+          "::-webkit-scrollbar-track": {
+            background: colors.ui.light,
+          },
+          display: `none`,
+          [presets.Tablet]: {
+            display: `block`,
+          },
+          [presets.Desktop]: {
+            width: rhythm(12),
+            padding: rhythm(1),
+          },
           padding: isInline ? 0 : rhythm(3 / 4),
         }}
         className="docSearch-sidebar"

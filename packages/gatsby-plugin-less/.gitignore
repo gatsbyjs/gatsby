@@ -1,2 +1,3 @@
 /*.js
 !index.js
+yarn.lock
