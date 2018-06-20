@@ -102,7 +102,7 @@ export default ({ parent, data, isModal, categories }) => (
     query={graphql`
       query allSitesYamlTemplateShowcase {
         allSitesYaml(
-          limit: 1
+          limit: 40
           filter: { featured: { eq: true }, main_url: { ne: null } }
         ) {
           edges {
