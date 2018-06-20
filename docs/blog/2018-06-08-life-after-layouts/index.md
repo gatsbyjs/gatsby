@@ -117,8 +117,14 @@ For a full list of what's new, check out our [V2 migration guide](https://next.g
 
 ## What's next?
 
-TKTK how to start using the beta now? (Can't seem to install a starter from a branch.)
+*   You can get started using Gatsby V2 right now by installing our V2 default starter:
 
-You can also [see the V2 roadmap](https://github.com/gatsbyjs/gatsby/projects/2), help us squash any V2 bugs by opening [issues](https://github.com/gatsbyjs/gatsby/issues) or sending [pull requests](https://github.com/gatsbyjs/gatsby/pulls), or [follow along with our progress on Twitter](https://twitter.com/gatsbyjs).
+    ```
+    gatsby new my-gatsby-v2-site https://github.com/gatsbyjs/gatsby-starter-default#v2
+    ```
+
+    Huge thanks to [Yuki Takemoto](https://github.com/mottox2) for upgrading the starter to V2!
+
+*   You can also [see the V2 roadmap](https://github.com/gatsbyjs/gatsby/projects/2), help us squash any V2 bugs by opening [issues](https://github.com/gatsbyjs/gatsby/issues) or sending [pull requests](https://github.com/gatsbyjs/gatsby/pulls), or [follow along with our progress on Twitter](https://twitter.com/gatsbyjs).
 
 We can't wait to see what you build with this new and improved version of Gatsby!
