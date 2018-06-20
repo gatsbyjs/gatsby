@@ -47,7 +47,10 @@ StaticQuery.propTypes = {
 
 function graphql() {
   throw new Error(
-    `Runtime evaluation of a Gatsby graphql call. Graphql queries and fragments must be evaluated at build time, perhaps your configuration is messed up?`
+    `It appears like Gatsby is misconfigured. Gatsby related \`graphql\` calls ` +
+      `are supposed to only be evaluated at compile time, and then compiled away,. ` +
+      `Unfortunately, something went wrong and the query was left in the compiled code.\n\n.` +
+      `Unless your site has a complex or custom babel/Gatsby configuration this is likely a bug in Gatsby.`
   )
 }
 
