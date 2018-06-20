@@ -10,7 +10,7 @@ This article will dive into the Gatsby V2's approach to layouts, talk about what
 
 ## What changed?
 
-In Gatsby V1, layouts were a special kind of component that automagically wrapped generated templates. They were stored in `src/layouts/`, and received a prop called `children` that needed to be executed as a function.
+In Gatsby V1, layouts were a special kind of component that automagically wrapped generated page components. They were stored in `src/layouts/`, and received a prop called `children` that needed to be executed as a function.
 
 ### How it works in Gatsby V1
 
@@ -44,7 +44,7 @@ In V2, layouts are no longer automatically applied to our pages (more on _why_ t
 
 This ultimately boils down to two breaking changes and one recommendation:
 
-1.  **BREAKING CHANGE:** Components at `src/layouts/` are no longer automagically wrapped around page templates.
+1.  **BREAKING CHANGE:** Components at `src/layouts/` are no longer automagically wrapped around page components.
 2.  **BREAKING CHANGE:** The `children` prop in our layout components is no longer a function (unless you explicitly provide a function).
 3.  We now recommend moving your layout components alongside the rest of your components (e.g. into `src/components/`).
 
