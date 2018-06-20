@@ -4,7 +4,7 @@ date: 2018-06-19
 author: "Jason Lengstorf"
 ---
 
-So the Gatsby V2 beta is out, and [layouts are going away](https://github.com/gatsbyjs/rfcs/blob/master/text/0002-remove-special-layout-components.md). What does this mean for your projects?
+So the Gatsby V2 beta is out, and Gatsby's [layout components are going away](https://github.com/gatsbyjs/rfcs/blob/master/text/0002-remove-special-layout-components.md). What does this mean for your projects?
 
 This article will dive into the Gatsby V2's approach to layouts, talk about what changed and why, and walk through the migration process to get your existing projects updated to V2.
 
@@ -109,7 +109,7 @@ Removing layouts isn't the only improvement coming in Gatsby V2. We're really ex
 
   <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Coming soon to Gatsby v2: Ludicrous mode data hot reloading ;-)<a href="https://t.co/by1PyOYXc0">https://t.co/by1PyOYXc0</a><br><br>(note, this gif is not sped up at all) <a href="https://t.co/hFIYMbpalN">pic.twitter.com/hFIYMbpalN</a></p>&mdash; Gatsby (@gatsbyjs) <a href="https://twitter.com/gatsbyjs/status/974507205121617920?ref_src=twsrc%5Etfw">March 16, 2018</a></blockquote>
 
-* We can make GraphQL queries anywhere in our app using [`StaticQuery`](https://next.gatsbyjs.org/docs/static-query/)
+* We can now add GraphQL queries to any component in our app (not just page components) using [`StaticQuery`](https://next.gatsbyjs.org/docs/static-query/)
 * Upgraded to the latest versions of React, Babel, Webpack, and other libraries Gatsby depends on
 * Better support for CSS inlining and splitting, which will boost performance
 
