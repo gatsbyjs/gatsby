@@ -53,9 +53,7 @@ const TemplateWrapper = ({ children }) => (
         paddingTop: 0,
       }}
     >
-      <Transition>
-        {children}
-      </Transition>
+      <Transition>{children}</Transition>
     </div>
   </div>
 )
