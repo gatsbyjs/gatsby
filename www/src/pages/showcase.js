@@ -863,18 +863,16 @@ export default ShowcasePage
 
 export const showcaseQuery = graphql`
   query ShowcaseQuery {
-    featured: allSitesYaml(limit: 1, filter: { featured: { eq: true } }) {
+    featured: allSitesYaml(limit: 40, filter: { featured: { eq: true } }) {
       edges {
         node {
           id
           title
           categories
           built_by
-
           fields {
             slug
           }
-
           childScreenshot {
             screenshotFile {
               childImageSharp {
@@ -887,23 +885,17 @@ export const showcaseQuery = graphql`
         }
       }
     }
-    allSitesYaml(
-      limit: 1
-      filter: { featured: { eq: true }, main_url: { ne: null } }
-    ) {
+    allSitesYaml(limit: 40, filter: { main_url: { ne: null } }) {
       edges {
         node {
           id
           featured
-
           title
           categories
           built_by
           description
-
           main_url
           built_by_url
-
           childScreenshot {
             screenshotFile {
               childImageSharp {
