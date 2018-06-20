@@ -29,7 +29,7 @@ const StaticQuery = props => (
         props.data ||
         (staticQueryData[props.query] && staticQueryData[props.query].data)
       ) {
-        return props.render(
+        return (props.render || props.children)(
           props.data ? props.data.data : staticQueryData[props.query].data
         )
       } else {
@@ -42,7 +42,8 @@ const StaticQuery = props => (
 StaticQuery.propTypes = {
   data: PropTypes.object,
   query: PropTypes.string.isRequired,
-  render: PropTypes.func.isRequired,
+  render: PropTypes.func,
+  children: PropTypes.func,
 }
 
 export {

@@ -1,24 +1,26 @@
 import React from "react"
-import { Link } from "gatsby"
+import Layout from "../layouts"
 
 class Item extends React.Component {
   render() {
     const story = this.props.data.mongodbCloudDocuments
 
     return (
-      <div>
-        <a href={story.url} className="itemlink">
-          {story.name}
-        </a>
-        <p>
-          <div
-            dangerouslySetInnerHTML={{
-              __html: story.description.childMarkdownRemark.html,
-            }}
-            className="story"
-          />
-        </p>
-      </div>
+      <Layout>
+        <div>
+          <a href={story.url} className="itemlink">
+            {story.name}
+          </a>
+          <p>
+            <div
+              dangerouslySetInnerHTML={{
+                __html: story.description.childMarkdownRemark.html,
+              }}
+              className="story"
+            />
+          </p>
+        </div>
+      </Layout>
     )
   }
 }
