@@ -58,7 +58,7 @@ Query:
   ${indentString(component.query)}`)
 
     // Perhaps this isn't the best way to see if we're building?
-    if (program._name === `build`) {
+    if (program._[0] === `build`) {
       process.exit(1)
     }
   }
