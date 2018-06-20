@@ -20,6 +20,8 @@ async function fetch({
   _auth,
   _perPage,
   _concurrentRequests,
+  _routeListType,
+  _includedRoutes,
   _excludedRoutes,
   typePrefix,
   refactoredEntityTypes,
@@ -85,6 +87,8 @@ Mama Route URL: ${url}
       _useACF,
       _acfOptionPageIds,
       _hostingWPCOM,
+      _routeListType,
+      _includedRoutes,
       _excludedRoutes,
       typePrefix,
       refactoredEntityTypes,
@@ -344,6 +348,28 @@ Pages to be requested : ${totalPages}`
 }
 
 /**
+ * Check a route against the whitelist or blacklist
+ * to determine validity.
+ *
+ * @param {any} routePath
+ * @param {Array} routeList
+ * @param {any} routeListType
+ * @returns {boolean}
+ */
+function checkRouteList({ routePath, routeList, routeListType }) {
+  const whitelist = routeListType === 'whitelist'
+  if (
+    routeList.some(route =>
+      minimatch(routePath, route)
+    )
+  ) {
+    return (whitelist ? true : false)
+  } else {
+    return (whitelist ? false : true)
+  }
+}
+
+/**
  * Extract valid routes and format its data.
  *
  * @param {any} allRoutes
@@ -359,6 +385,8 @@ function getValidRoutes({
   _useACF,
   _acfOptionPageIds,
   _hostingWPCOM,
+  _routeListType,
+  _includedRoutes,
   _excludedRoutes,
   typePrefix,
   refactoredEntityTypes,
@@ -387,27 +415,19 @@ function getValidRoutes({
       ]
 
       const routePath = getRoutePath(url, route._links.self)
-      if (excludedTypes.includes(entityType)) {
-        // Grab ACF Version from routes
-        acfRestVersion =
-          key === `/acf/${entityType}` ? entityType.substr(1) : acfRestVersion
-        if (_verbose)
-          console.log(
-            colorized.out(`Invalid route.`, colorized.color.Font.FgRed)
-          )
-      } else if (
-        _excludedRoutes.some(excludedRoute =>
-          minimatch(routePath, excludedRoute)
-        )
-      ) {
-        if (_verbose)
-          console.log(
-            colorized.out(
-              `Excluded route from excludedRoutes pattern.`,
-              colorized.color.Font.FgYellow
-            )
-          )
+
+      if (_routeListType === 'whitelist') {
+        const routeList = _includedRoutes
       } else {
+        const routeList = [...excludedTypes, ..._excludedRoutes]
+      }
+      const validRoute = checkRouteList(
+        routePath,
+        routeList,
+        _routeListType,
+      );
+
+      if (validRoute) {
         if (_verbose)
           console.log(
             colorized.out(
@@ -445,6 +465,11 @@ function getValidRoutes({
             break
         }
         validRoutes.push({ url: route._links.self, type: validType })
+      } else {
+        if (_verbose)
+          console.log(
+            colorized.out(`Invalid route.`, colorized.color.Font.FgRed)
+          )
       }
     } else {
       if (_verbose)

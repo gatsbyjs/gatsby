@@ -99,10 +99,16 @@ plugins: [
       },
       // Set how many simultaneous requests are sent at once.
       concurrentRequests: 10,
-      // Exclude specific routes using glob parameters
-      // See: https://github.com/isaacs/minimatch
-      // Example:  `["/*/*/comments", "/yoast/**"]` will exclude routes ending in `comments` and
+      // Set whether WP REST API routes should be whitelisted
+      // or blacklisted using glob parameters.
+      // Defaults to blacklist for backwards compatability.
+      // See: https://github.com/isaacs/minimatc
+      // Example:  `["/*/*/comments", "/yoast/**"]` will either // include or exclude routes ending in `comments` and
       // all routes that begin with `yoast` from fetch.
+      routeListType: "whitelist",
+      // Whitelisted routes using glob parameters
+      includedRoutes: ["/*/*/posts", "/*/*/pages", "/*/*/media"],
+      // Blacklisted routes using glob parameters
       excludedRoutes: ["/*/*/comments", "/yoast/**"],
       // use a custom normalizer which is applied after the built-in ones.
       normalizer: function({ entities }) {
