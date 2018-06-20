@@ -760,8 +760,7 @@ Community:
   - Eslint & Prettier. Uses [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript)
   - Authentication via Moltin (Login and Register)
   - [More info here](https://github.com/parmsang/gatsby-starter-ecommerce)
-  
-  
+
 - [gatsby-starter-tachyons](https://github.com/pixelsign/gatsby-starter-tachyons)
   [(demo)](https://gatsby-tachyons.netlify.com/)
 
