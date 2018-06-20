@@ -20,5 +20,5 @@ Check out the [_Using Remark_ example](https://github.com/gatsbyjs/gatsby/tree/m
 
 ```javascript
 // In your gatsby-config.js
-plugins: [`gatsby-plugin-catch-links`];
+plugins: [`gatsby-plugin-catch-links`]
 ```

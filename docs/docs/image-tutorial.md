@@ -207,7 +207,7 @@ const IndexPage = ({ data }) => {
     edge =>
       edge.node.childWordPressAcfPostPhoto.photo.localFile.childImageSharp
         .resolutions
-  );
+  )
   return (
     <div>
       <h1>Hi people</h1>
@@ -218,10 +218,10 @@ const IndexPage = ({ data }) => {
       ))}
       <Link to="/page-2/">Go to page 2</Link>
     </div>
-  );
-};
+  )
+}
 
-export default IndexPage;
+export default IndexPage
 
 export const query = graphql`
   query ImageQuery {
@@ -244,7 +244,7 @@ export const query = graphql`
       }
     }
   }
-`;
+`
 ```
 
 Your demo site should look something like this:
