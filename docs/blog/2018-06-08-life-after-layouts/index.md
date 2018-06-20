@@ -79,7 +79,13 @@ Check out the [`v2-layout` branch of the demo repo](https://github.com/jlengstor
 
 Looking at the difference in code, it might be tempting to think, "Doesn't that just create _more work_ for developers who want to use layouts?"
 
-In short, the decision to remove layouts was part of an effort to reduce _mystery issues_ in Gatsby projects.
+In short, the decision to remove layouts was part of an effort to reduce unnecessary complexity and mystery issues in Gatsby projects.
+
+### What was the unnecessary complexity?
+
+Because layouts in V1 were applied under the hood, it made it _really hard_ to pass data between the layout the pages it wrapped.
+
+In short, layouts in V1 broke React's compositional model, and that made things unnecessarily hard to implement. By going back to the standard React way of importing components and using them directly, we're able to easily pass data between the layout and pages without any confusing, complicated, or otherwise unwieldy workarounds.
 
 ### What are mystery issues?
 
@@ -107,7 +113,7 @@ Removing layouts isn't the only improvement coming in Gatsby V2. We're really ex
 * Upgraded to the latest versions of React, Babel, Webpack, and other libraries Gatsby depends on
 * Better support for CSS inlining and splitting, which will boost performance
 
-For a full list of what's new, check out our [V2 migration guide](https://next.gatsbyjs.org/docs/migrating-from-v1-to-v2/) and [_What’s New in Gatsby V2?_](#tktk-write-this-post).
+For a full list of what's new, check out our [V2 migration guide](https://next.gatsbyjs.org/docs/migrating-from-v1-to-v2/) and [_What’s New in Gatsby V2?_](https://www.gatsbyjs.org/blog/2018-06-16-announcing-gatsby-v2-beta-launch/).
 
 ## What's next?
 
