@@ -1,5 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Leaves other graphql tags alone 1`] = `
+"import React from 'react';
+import { graphql } from 'relay';
+export default (() => React.createElement(\\"div\\", null, data.site.siteMetadata.title));
+export const query = graphql\`
+     {
+       site { siteMetadata { title }}
+     }
+  \`;"
+`;
+
 exports[`Transforms queries in <StaticQuery> 1`] = `
 "import staticQueryData from \\"public/static/d/2626356014.json\\";
 import React from 'react';
@@ -11,8 +22,14 @@ export default (() => React.createElement(StaticQuery, {
 }));"
 `;
 
-exports[`Transforms queries in page components 1`] = `
-"import React from 'react';
-export default (() => React.createElement(\\"div\\", null, data.site.siteMetadata.title));
-export const query = \\"3227941719\\";"
-`;
+exports[`Transforms queries in page components 1`] = `"export const query = \\"3687030656\\";"`;
+
+exports[`allows the global tag 1`] = `"export const query = \\"3687030656\\";"`;
+
+exports[`handles import aliasing 1`] = `"export const query = \\"3687030656\\";"`;
+
+exports[`handles require 1`] = `"export const query = \\"3687030656\\";"`;
+
+exports[`handles require alias 1`] = `"export const query = \\"3687030656\\";"`;
+
+exports[`handles require namespace 1`] = `"export const query = \\"3687030656\\";"`;
