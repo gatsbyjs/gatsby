@@ -51,6 +51,7 @@ const handleIntersection = (el, cb) => {
   io.observe(el)
 }
 
+/* eslint-disable react/no-deprecated */
 class GatsbyLink extends React.Component {
   constructor(props, context) {
     super()
@@ -170,6 +171,7 @@ class GatsbyLink extends React.Component {
     )
   }
 }
+/* eslint-enable */
 
 GatsbyLink.propTypes = {
   ...NavLinkPropTypes,

@@ -16,6 +16,7 @@ const contextTypes = {
   scrollBehavior: PropTypes.object,
 }
 
+/* eslint-disable react/no-deprecated */
 class ScrollContainer extends React.Component {
   constructor(props, context) {
     super(props, context)
@@ -80,6 +81,7 @@ class ScrollContainer extends React.Component {
     return this.props.children
   }
 }
+/* eslint-enable */
 
 ScrollContainer.propTypes = propTypes
 ScrollContainer.contextTypes = contextTypes
