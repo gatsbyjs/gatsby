@@ -101,6 +101,13 @@ module.exports = {
       },
     },
     {
+      resolve: `gatsby-plugin-google-tagmanager`,
+      options: {
+        id: `GTM-KLZLVML`,
+      },
+    },
+
+    {
       resolve: `gatsby-plugin-fullstory`,
       options: {
         fs_org: `B2TRP`,
