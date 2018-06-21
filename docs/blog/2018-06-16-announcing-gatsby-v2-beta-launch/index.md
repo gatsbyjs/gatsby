@@ -42,6 +42,8 @@ Gatsby v2 builds on the foundations of v1 to introduce a range of improvements:
 
 Yes! We’ve built [gatsbyjs.com](https://www.gatsbyjs.com) with v2 and the Gatsby community is [converting over the example sites](https://github.com/gatsbyjs/gatsby/issues/5598). While the effort to migrate individual sites may vary, we’ve noticed significant build speedups in Gatsby v2 versus v1 and would love you to dig in and try it. We're working hard on refining Gatsby v2 for full release and would love your help!
 
+The official starters are also v2 ready, learn how to use them in the [starters documentation](https://next.gatsbyjs.org/docs/gatsby-starters#using-gatsby-v2-with-the-official-starters).
+
 ## What's coming next?
 
 The [v2 roadmap](https://github.com/gatsbyjs/gatsby/projects/2) details everything else we're planning for v2. Improvements include:
