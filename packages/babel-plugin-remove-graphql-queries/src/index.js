@@ -3,9 +3,93 @@ const graphql = require(`gatsby/graphql`)
 const murmurhash = require(`./murmur`)
 const nodePath = require(`path`)
 
+function getTagImport(tag) {
+  const name = tag.node.name
+  const binding = tag.scope.getBinding(name)
+
+  if (!binding) return null
+
+  const path = binding.path
+  const parent = path.parentPath
+
+  if (
+    binding.kind === `module` &&
+    parent.isImportDeclaration() &&
+    parent.node.source.value === `gatsby`
+  )
+    return path
+
+  if (
+    path.isVariableDeclarator() &&
+    path.get(`init`).isCallExpression() &&
+    path.get(`init.callee`).isIdentifier({ name: `require` }) &&
+    path.get(`init`).node.arguments[0].value === `gatsby`
+  ) {
+    const id = path.get(`id`)
+    if (id.isObjectPattern()) {
+      return id
+        .get(`properties`)
+        .find(path => path.get(`value`).node.name === name)
+    }
+    return id
+  }
+  return null
+}
+
+function isGraphqlTag(tag) {
+  const isExpression = tag.isMemberExpression()
+  const identifier = isExpression ? tag.get(`object`) : tag
+
+  const importPath = getTagImport(identifier)
+  if (!importPath)
+    return (
+      tag.scope.hasGlobal(`graphql`) && tag.isIdentifier({ name: `graphql` })
+    )
+
+  if (
+    isExpression &&
+    (importPath.isImportNamespaceSpecifier() || importPath.isIdentifier())
+  ) {
+    return tag.get(`property`).node.name === `graphql`
+  }
+
+  if (importPath.isImportSpecifier())
+    return importPath.node.imported.name === `graphql`
+
+  if (importPath.isObjectProperty())
+    return importPath.get(`key`).node.name === `graphql`
+
+  return false
+}
+
+function removeImport(tag) {
+  const isExpression = tag.isMemberExpression()
+  const identifier = isExpression ? tag.get(`object`) : tag
+  const importPath = getTagImport(identifier)
+
+  if (!importPath) return
+
+  const parent = importPath.parentPath
+
+  if (importPath.isImportSpecifier()) {
+    if (parent.node.specifiers.length === 1) parent.remove()
+    else importPath.remove()
+  }
+  if (importPath.isObjectProperty()) {
+    if (parent.node.properties.length === 1)
+      importPath.findParent(p => p.isVariableDeclaration())?.remove()
+    else importPath.remove()
+  }
+  if (importPath.isIdentifier()) {
+    importPath.findParent(p => p.isVariableDeclaration())?.remove()
+  }
+}
+
 function getGraphQLTag(path) {
   const tag = path.get(`tag`)
-  if (!tag.isIdentifier({ name: `graphql` })) return {}
+  const isGlobal = tag.scope.hasGlobal(`graphql`)
+
+  if (!isGlobal && !isGraphqlTag(tag)) return {}
 
   const quasis = path.node.quasi.quasis
 
@@ -26,7 +110,7 @@ function getGraphQLTag(path) {
     if (ast.definitions.length === 0) {
       throw new Error(`BabelPluginRemoveGraphQL: Unexpected empty graphql tag.`)
     }
-    return { ast, text, hash }
+    return { ast, text, hash, isGlobal }
   } catch (err) {
     throw new Error(
       `BabelPluginRemoveGraphQLQueries: GraphQL syntax error in query:\n\n${text}\n\nmessage:\n\n${
@@ -44,7 +128,8 @@ export default function({ types: t }) {
           JSXIdentifier(path2) {
             if (
               [`production`, `test`].includes(process.env.NODE_ENV) &&
-              path2.isJSXIdentifier({ name: `StaticQuery` })
+              path2.isJSXIdentifier({ name: `StaticQuery` }) &&
+              path2.referencesImport(`gatsby`)
             ) {
               const identifier = t.identifier(`staticQueryData`)
               const filename = state.file.opts.filename
@@ -79,12 +164,15 @@ export default function({ types: t }) {
 
         path.traverse({
           TaggedTemplateExpression(path2, state) {
-            const { ast, text, hash } = getGraphQLTag(path2)
+            const { ast, text, hash, isGlobal } = getGraphQLTag(path2)
 
             if (!ast) return null
 
             const queryHash = hash.toString()
             const query = text
+
+            const tag = path2.get(`tag`)
+            if (!isGlobal) removeImport(tag)
 
             // Replace the query with the hash of the query.
             path2.replaceWith(t.StringLiteral(queryHash))
