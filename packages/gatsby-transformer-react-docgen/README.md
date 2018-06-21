@@ -17,7 +17,7 @@ Add a plugin-entry to your `gatsby-config.js`
 module.exports = {
   // ...,
   plugins: [...`gatsby-transformer-react-docgen`],
-};
+}
 ```
 
 You'll also need to include a source-plugin, such as

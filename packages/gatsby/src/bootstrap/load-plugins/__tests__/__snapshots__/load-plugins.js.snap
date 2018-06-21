@@ -18,10 +18,10 @@ Array [
   },
   Object {
     "browserAPIs": Array [],
-    "id": "Plugin component-layout-creator",
-    "name": "component-layout-creator",
+    "id": "Plugin load-babel-config",
+    "name": "load-babel-config",
     "nodeAPIs": Array [
-      "createLayouts",
+      "onCreateBabelConfig",
     ],
     "pluginOptions": Object {
       "plugins": Array [],
@@ -65,7 +65,6 @@ Array [
     "name": "query-runner",
     "nodeAPIs": Array [
       "onCreatePage",
-      "onCreateLayout",
     ],
     "pluginOptions": Object {
       "plugins": Array [],
@@ -123,10 +122,10 @@ Array [
   },
   Object {
     "browserAPIs": Array [],
-    "id": "Plugin component-layout-creator",
-    "name": "component-layout-creator",
+    "id": "Plugin load-babel-config",
+    "name": "load-babel-config",
     "nodeAPIs": Array [
-      "createLayouts",
+      "onCreateBabelConfig",
     ],
     "pluginOptions": Object {
       "plugins": Array [],
@@ -170,7 +169,6 @@ Array [
     "name": "query-runner",
     "nodeAPIs": Array [
       "onCreatePage",
-      "onCreateLayout",
     ],
     "pluginOptions": Object {
       "plugins": Array [],

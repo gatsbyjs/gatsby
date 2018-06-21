@@ -1,33 +1,19 @@
 // Add Babel plugin
-let babelPluginExists = false
 try {
   require.resolve(`babel-plugin-styled-components`)
-  babelPluginExists = true
 } catch (e) {
-  // Ignore
+  throw new Error(
+    `'babel-plugin-styled-components' is not installed which is needed by plugin 'gatsby-plugin-styled-components'`
+  )
 }
 
-exports.modifyBabelrc = ({ babelrc, stage }) => {
-  if (babelPluginExists) {
-    if (stage === `build-html`) {
-      return {
-        ...babelrc,
-        plugins: babelrc.plugins.concat([
-          [
-            `babel-plugin-styled-components`,
-            {
-              ssr: true,
-            },
-          ],
-        ]),
-      }
-    }
-
-    return {
-      ...babelrc,
-      plugins: babelrc.plugins.concat([`babel-plugin-styled-components`]),
-    }
-  }
-
-  return babelrc
+exports.onCreateBabelConfig = ({ stage, actions }, pluginOptions) => {
+  actions.setBabelPlugin({
+    name: `babel-plugin-styled-components`,
+    stage,
+    options: {
+      ...pluginOptions,
+      ssr: stage === `build-html`,
+    },
+  })
 }

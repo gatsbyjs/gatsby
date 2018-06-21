@@ -21,7 +21,7 @@ config.
 // In your gatsby-config.js
 plugins: [
   `gatsby-plugin-netlify`, // make sure to put last in the array
-];
+]
 ```
 
 ## Configuration
@@ -45,7 +45,7 @@ plugins: [
       generateMatchPathRewrites: true, // boolean to turn off automatic creation of redirect rules for client only paths
     },
   },
-];
+]
 ```
 
 ### Headers
@@ -114,8 +114,8 @@ You can create redirects using the [`createRedirect`](/docs/bound-action-creator
 An example:
 
 ```javascript
-createRedirect({ fromPath: "/old-url", toPath: "/new-url", isPermanent: true });
-createRedirect({ fromPath: "/url", toPath: "/zn-CH/url", Language: "zn" });
+createRedirect({ fromPath: "/old-url", toPath: "/new-url", isPermanent: true })
+createRedirect({ fromPath: "/url", toPath: "/zn-CH/url", Language: "zn" })
 ```
 
 You can also create a `_redirects` file in the `static` folder for the same affect. Any programmatically created redirects will be appended to the file.

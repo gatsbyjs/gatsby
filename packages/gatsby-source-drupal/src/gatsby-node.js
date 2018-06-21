@@ -13,10 +13,10 @@ const createContentDigest = obj =>
     .digest(`hex`)
 
 exports.sourceNodes = async (
-  { boundActionCreators, getNode, hasNodeChanged, store, cache },
+  { actions, getNode, hasNodeChanged, store, cache, createNodeId },
   { baseUrl, apiBase }
 ) => {
-  const { createNode } = boundActionCreators
+  const { createNode } = actions
 
   // Default apiBase to `jsonapi`
   apiBase = apiBase || `jsonapi`
@@ -24,7 +24,7 @@ exports.sourceNodes = async (
   // Touch existing Drupal nodes so Gatsby doesn't garbage collect them.
   // _.values(store.getState().nodes)
   // .filter(n => n.internal.type.slice(0, 8) === `drupal__`)
-  // .forEach(n => touchNode(n.id))
+  // .forEach(n => touchNode({ nodeId: n.id }))
 
   // Fetch articles.
   // console.time(`fetch Drupal data`)
@@ -90,7 +90,10 @@ exports.sourceNodes = async (
             if (!backRefs[v.data.id]) {
               backRefs[v.data.id] = []
             }
-            backRefs[v.data.id].push({ id: datum.id, type: datum.type })
+            backRefs[v.data.id].push({
+              id: datum.id,
+              type: datum.type,
+            })
           }
         })
       }
@@ -103,7 +106,7 @@ exports.sourceNodes = async (
     if (!contentType) return
 
     _.each(contentType.data, datum => {
-      const node = nodeFromData(datum)
+      const node = nodeFromData(datum, createNodeId)
 
       // Add relationships
       if (datum.relationships) {
@@ -111,12 +114,15 @@ exports.sourceNodes = async (
         _.each(datum.relationships, (v, k) => {
           if (!v.data) return
           if (ids[v.data.id]) {
-            node.relationships[`${k}___NODE`] = v.data.id
+            node.relationships[`${k}___NODE`] = createNodeId(v.data.id)
           }
           // Add back reference relationships.
           if (backRefs[datum.id]) {
             backRefs[datum.id].forEach(
-              ref => (node.relationships[`${ref.type}___NODE`] = ref.id)
+              ref =>
+                (node.relationships[`${ref.type}___NODE`] = createNodeId(
+                  ref.id
+                ))
             )
           }
         })
@@ -142,6 +148,7 @@ exports.sourceNodes = async (
             store,
             cache,
             createNode,
+            createNodeId,
           })
         } catch (e) {
           // Ignore

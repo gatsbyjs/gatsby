@@ -1,7 +1,7 @@
 import * as PropTypes from "prop-types"
 import React from "react"
 import HeartIcon from "react-icons/lib/fa/heart"
-import Link from "gatsby-link"
+import { Link } from "gatsby"
 import Img from "gatsby-image"
 
 import { rhythm, scale } from "../utils/typography"
@@ -66,7 +66,7 @@ class Post extends React.Component {
           }}
         >
           <Img
-            sizes={{ ...small }}
+            fluid={{ ...small }}
             css={{
               margin: 0,
               height: `100%`,
@@ -132,7 +132,7 @@ export const postFragment = graphql`
     likes
     smallImage: image {
       childImageSharp {
-        small: sizes(maxWidth: 292, maxHeight: 292) {
+        small: fluid(maxWidth: 292, maxHeight: 292) {
           src
           srcSet
           aspectRatio

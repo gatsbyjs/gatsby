@@ -1,6 +1,6 @@
 // @flow
 const fs = require(`fs`)
-const babylon = require(`babylon`)
+const babylon = require(`@babel/parser`)
 const traverse = require(`babel-traverse`).default
 const get = require(`lodash/get`)
 

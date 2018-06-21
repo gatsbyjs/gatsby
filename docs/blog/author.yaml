@@ -133,10 +133,22 @@
   bio: Front end developer at Mud, CSS obsessive and blogger at https://css-irl.info
   avatar: avatars/michelle-barker.jpg
   twitter: "@CSSInRealLife"
+- id: Jason Lengstorf
+  bio: Developer. Occasional designer. Process and culture architect. Mediocre bartender. Blogs at lengstorf.com
+  avatar: avatars/jason-lengstorf.jpg
+  twitter: "@jlengstorf"
+- id: Mike Allanson
+  bio: Building tools and riding bicycles in London, UK
+  avatar: avatars/mike-allanson.jpg
+  twitter: "@mdashallanson"
 - id: Linda Watkins
   bio: Marketing execution machine. I think critically, adjust often, and find creative solutions to problems.
   avatar: avatars/linda-watkins.jpg
   twitter: "@lindawatkins"
+- id: Dennis Brotzky
+  bio: Co-founder at Narative, driving Product and Engineering forward.
+  avatar: avatars/dennis-brotzky.jpg
+  twitter: "@_brotzky"
 - id: Tony Spiro
   bio: Cosmic JS Co-founder. Building (blazing fast) apps faster @ https://cosmicjs.com
   avatar: avatars/tony-spiro.jpg

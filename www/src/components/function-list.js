@@ -53,7 +53,7 @@ const Param = (param, depth = 0) => {
 
 export default ({ functions }) => (
   <div>
-    {functions.map(({ node }, i) => (
+    {functions.map((node, i) => (
       <div
         id={node.name}
         key={`reference list ${node.name}`}

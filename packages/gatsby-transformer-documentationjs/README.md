@@ -16,7 +16,7 @@ https://www.gatsbyjs.org/docs/node-apis/
 Add the plugin to your `gatsby-config.js`.
 
 ```javascript
-plugins: [`gatsby-transformer-documentationjs`];
+plugins: [`gatsby-transformer-documentationjs`]
 ```
 
 Ensure that there's an instance of `gatsby-source-filesystem` that's pointed at
@@ -32,7 +32,7 @@ plugins: [
       path: `${__dirname}/../src/`,
     },
   },
-];
+]
 ```
 
 Then you can write GraphQL queries pulling out JSDoc comments like:

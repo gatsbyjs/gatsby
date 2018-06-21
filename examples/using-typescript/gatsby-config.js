@@ -3,7 +3,13 @@ module.exports = {
     siteName: `Using Typescript Example`,
   },
   plugins: [
-    // Add typescript stack into webpack
     `gatsby-plugin-typescript`,
+    {
+      resolve: `gatsby-plugin-typography`,
+      options: {
+        pathToConfigModule: `src/utils/typography.js`,
+        omitGoogleFont: true,
+      },
+    },
   ],
 }

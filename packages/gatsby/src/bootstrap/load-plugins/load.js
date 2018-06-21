@@ -131,7 +131,7 @@ module.exports = async (config = {}) => {
   // Add internal plugins
   const internalPlugins = [
     `../../internal-plugins/dev-404-page`,
-    `../../internal-plugins/component-layout-creator`,
+    `../../internal-plugins/load-babel-config`,
     `../../internal-plugins/internal-data-bridge`,
     `../../internal-plugins/prod-404`,
     `../../internal-plugins/query-runner`,
@@ -160,13 +160,15 @@ module.exports = async (config = {}) => {
   })
 
   const program = store.getState().program
-  plugins.push(processPlugin({
-    resolve: `gatsby-plugin-page-creator`,
-    options: {
-      path: slash(path.join(program.directory, `src/pages`)),
-      pathCheck: false,
-    },
-  }))
+  plugins.push(
+    processPlugin({
+      resolve: `gatsby-plugin-page-creator`,
+      options: {
+        path: slash(path.join(program.directory, `src/pages`)),
+        pathCheck: false,
+      },
+    })
+  )
 
   return plugins
 }

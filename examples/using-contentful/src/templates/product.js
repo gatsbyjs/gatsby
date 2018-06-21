@@ -1,9 +1,8 @@
 import React from "react"
-import Link from "gatsby-link"
+import { Link } from "gatsby"
 import * as PropTypes from "prop-types"
 import Img from "gatsby-image"
-
-import { rhythm } from "../utils/typography"
+import Layout from "../layouts"
 
 const propTypes = {
   data: PropTypes.object.isRequired,
@@ -21,14 +20,14 @@ class ProductTemplate extends React.Component {
       categories,
     } = product
     return (
-      <div>
+      <Layout>
         <div
           style={{
             display: `flex`,
             alignItems: `center`,
           }}
         >
-          <Img resolutions={image[0].resolutions} />
+          <Img fixed={image[0].fixed} />
           <h4>{productName}</h4>
         </div>
         <h1>{productName}</h1>
@@ -53,7 +52,7 @@ class ProductTemplate extends React.Component {
             </ul>
           </div>
         </div>
-      </div>
+      </Layout>
     )
   }
 }
@@ -75,7 +74,7 @@ export const pageQuery = graphql`
       }
       price
       image {
-        resolutions(width: 50, height: 50) {
+        fixed(width: 50, height: 50) {
           base64
           src
           srcSet

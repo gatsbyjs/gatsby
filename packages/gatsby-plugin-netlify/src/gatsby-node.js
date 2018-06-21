@@ -10,14 +10,12 @@ import { DEFAULT_OPTIONS, BUILD_HTML_STAGE, BUILD_CSS_STAGE } from "./constants"
 let assetsManifest = {}
 
 // Inject a webpack plugin to get the file manifests so we can translate all link headers
-exports.modifyWebpackConfig = ({ config, stage }) => {
+exports.onCreateWebpackConfig = ({ actions, stage }) => {
   if (stage !== BUILD_HTML_STAGE && stage !== BUILD_CSS_STAGE) {
-    return config
+    return
   }
 
-  // Using merge, as webpack-configurator is broken with strict mode classes
-  // which WebpackAssetsManifest uses.
-  config.merge({
+  actions.setWebpackConfig({
     plugins: [
       new WebpackAssetsManifest({
         assets: assetsManifest, // mutates object with entries
@@ -25,8 +23,6 @@ exports.modifyWebpackConfig = ({ config, stage }) => {
       }),
     ],
   })
-
-  return config
 }
 
 exports.onPostBuild = async ({ store, pathPrefix }, userPluginOptions) => {

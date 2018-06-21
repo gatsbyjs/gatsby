@@ -31,8 +31,7 @@ class choroplethBase extends React.Component {
        we begin drawing here, grab the data and use it to draw
       */
 
-    d3
-      .queue()
+    d3.queue()
       .defer(d3.json, stateDataURL)
       .defer(d3.csv, statisticsDataURL)
       .awaitAll(function(error, results) {
@@ -168,8 +167,7 @@ let mouseOver = d => {
 }
 
 let mouseOut = () => {
-  d3
-    .select(`#tooltip`)
+  d3.select(`#tooltip`)
     .transition()
     .duration(500)
     .style(`opacity`, 0)
