@@ -3,14 +3,20 @@ import Helmet from "react-helmet"
 
 import Navigation from "../components/navigation"
 import MobileNavigation from "../components/navigation-mobile"
-import SidebarBody from "../components/sidebar-body"
+import Sidebar from "../components/sidebar/sidebar"
 import SearchBar from "../components/searchbar-body"
-import tutorialSidebar from "../pages/docs/tutorial-links.yml"
-import docsSidebar from "../pages/docs/doc-links.yaml"
-import featuresSidebar from "../pages/docs/features-links.yaml"
 import { rhythm } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
-import hex2rgba from "hex2rgba"
+import findSectionForPath from "../utils/sidebar/find-section-for-path"
+import {
+  sectionListDocs,
+  sectionListFeatures,
+  sectionListTutorial,
+} from "../utils/sidebar/section-list"
+import {
+  createLinkDocs,
+  createLinkTutorial,
+} from "../utils/sidebar/create-link"
 import "../css/prism-coy.css"
 
 // Import Futura PT typeface
@@ -25,21 +31,21 @@ import "typeface-space-mono"
 
 class DefaultLayout extends React.Component {
   render() {
-    const isHomepage = this.props.location.pathname == `/`
-    const isBlog = this.props.location.pathname.slice(0, 6) === `/blog/`
-    const isBlogLanding = this.props.location.pathname === `/blog/`
-    const isDoc = this.props.location.pathname.slice(0, 6) === `/docs/`
-    const isTutorial =
-      this.props.location.pathname.slice(0, 10) === `/tutorial/`
-    const isFeature = this.props.location.pathname.slice(0, 9) === `/features`
+    const { location } = this.props
+    const isHomepage = location.pathname == `/`
+    const isBlog = location.pathname.slice(0, 6) === `/blog/`
+    const isDoc = location.pathname.slice(0, 6) === `/docs/`
+    const isTutorial = location.pathname.slice(0, 10) === `/tutorial/`
+    const isFeature = location.pathname.slice(0, 9) === `/features`
     const isPackageSearchPage =
-      this.props.location.pathname.slice(0, 8) === `/plugins` ||
-      this.props.location.pathname.slice(0, 9) === `/packages`
+      location.pathname.slice(0, 8) === `/plugins` ||
+      location.pathname.slice(0, 9) === `/packages`
     const isPackageReadme =
-      this.props.location.pathname.slice(0, 16) === `/packages/gatsby`
+      location.pathname.slice(0, 16) === `/packages/gatsby`
 
     const hasSidebar =
       isDoc || isTutorial || isFeature || isPackageSearchPage || isPackageReadme
+    const hasDocSidebar = isDoc || isTutorial || isFeature
     const isSearchSource = hasSidebar || isBlog
 
     const packageSidebarWidth = rhythm(17)
@@ -51,6 +57,28 @@ class DefaultLayout extends React.Component {
         return rhythm(rhythmSize)
       } else {
         return 0
+      }
+    }
+
+    let sidebarConfig
+
+    if (isDoc) {
+      sidebarConfig = {
+        sectionList: sectionListDocs,
+        createLink: createLinkDocs,
+        enableScrollSync: false,
+      }
+    } else if (isFeature) {
+      sidebarConfig = {
+        sectionList: sectionListFeatures,
+        createLink: createLinkTutorial,
+        enableScrollSync: true,
+      }
+    } else if (isTutorial) {
+      sidebarConfig = {
+        sectionList: sectionListTutorial,
+        createLink: createLinkTutorial,
+        enableScrollSync: true,
       }
     }
 
@@ -73,13 +101,6 @@ class DefaultLayout extends React.Component {
       },
       "::-webkit-scrollbar-track": {
         background: colors.ui.light,
-      },
-    }
-
-    const sidebarStylesDesktop = {
-      [presets.Desktop]: {
-        width: rhythm(12),
-        padding: rhythm(1),
       },
     }
 
@@ -128,11 +149,11 @@ class DefaultLayout extends React.Component {
           <meta name="og:site_name" content="GatsbyJS" />
           <link
             rel="canonical"
-            href={`https://gatsbyjs.org${this.props.location.pathname}`}
+            href={`https://gatsbyjs.org${location.pathname}`}
           />
           <html lang="en" />
         </Helmet>
-        <Navigation pathname={this.props.location.pathname} />
+        <Navigation pathname={location.pathname} />
         <div
           className={hasSidebar ? `main-body has-sidebar` : `main-body`}
           css={{
@@ -143,19 +164,20 @@ class DefaultLayout extends React.Component {
             },
           }}
         >
-          {/* TODO Move this under docs/index.js once Gatsby supports multiple levels
-               of layouts */}
-          <div
-            css={{
-              ...sidebarStyles,
-              [presets.Tablet]: {
-                display: isDoc ? `block` : `none`,
-              },
-              ...sidebarStylesDesktop,
-            }}
-          >
-            <SidebarBody yaml={docsSidebar} />
-          </div>
+          {hasDocSidebar && (
+            <Sidebar
+              sidebarStyles={sidebarStyles}
+              location={location}
+              sectionList={sidebarConfig.sectionList}
+              createLink={sidebarConfig.createLink}
+              defaultActiveSection={findSectionForPath(
+                location.pathname,
+                sidebarConfig.sectionList
+              )}
+              enableScrollSync={sidebarConfig.enableScrollSync}
+              key={location.pathname}
+            />
+          )}
 
           {/* This is for the searchbar template */}
           <div
@@ -175,31 +197,6 @@ class DefaultLayout extends React.Component {
             }}
           >
             <SearchBar history={this.props.history} />
-          </div>
-
-          {/* TODO Move this under docs/tutorial/index.js once Gatsby supports multiple levels
-               of layouts */}
-          <div
-            css={{
-              ...sidebarStyles,
-              [presets.Tablet]: {
-                display: isTutorial ? `block` : `none`,
-              },
-              ...sidebarStylesDesktop,
-            }}
-          >
-            <SidebarBody yaml={tutorialSidebar} />
-          </div>
-          <div
-            css={{
-              ...sidebarStyles,
-              [presets.Tablet]: {
-                display: isFeature ? `block` : `none`,
-              },
-              ...sidebarStylesDesktop,
-            }}
-          >
-            <SidebarBody yaml={featuresSidebar} />
           </div>
 
           <div
