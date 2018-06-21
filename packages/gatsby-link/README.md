@@ -53,9 +53,7 @@ render () {
 
 ## Programmatic navigation
 
-For cases when you can only use event handlers for navigation, you can use
-`navigateTo`, `push`, or `replace`. `push` and `navigateTo` are identical and
-use `history.push`, while `replace` uses `history.replace`.
+For cases when you can only use event handlers for navigation, you can use `push` or `replace`. `push` is a wrapper for `history.push` and `replace` wraps `history.replace`.
 
 ```jsx
 import { navigateTo } from "gatsby-link"
