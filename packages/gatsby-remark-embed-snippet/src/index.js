@@ -53,9 +53,27 @@ module.exports = (
         throw Error(`Invalid snippet specified; no such file "${path}"`)
       }
 
-      // This method removes lines that contain only highlight directives,
-      // eg 'highlight-next-line' or 'highlight-range' comments.
+      // This method removes lines that contain only highlight or hideline directives,
+      // eg 'highlight-next-line', 'highlight-range' or 'hideline-range' comments.
       function filterDirectives(line, index) {
+        if (line.includes(`hideline-range`)) {
+          const match = line.match(/hideline-range{([^}]+)}/)
+          if (!match) {
+            console.warn(`Invalid match specified: "${line.trim()}"`)
+            return false
+          }
+
+          const range = match[1] && match[1].replace(/\s/g, ``)
+          // hideline line numbers are 1-based but so are offsets.
+          // Remember that the current line (index) will be removed.
+          rangeParser.parse(range).forEach(offset => {
+            hiddenLines.push(index + offset)
+          })
+
+          // Strip lines that contain hideline-range comments.
+          return false
+        }
+
         if (line.includes(`highlight-next-line`)) {
           // Although we're highlighting the next line,
           // We can use the current index since we also filter this lines.
@@ -96,6 +114,7 @@ module.exports = (
       // The order if these operations is important!
       // Filtering next-line comments impacts line-numbers for same-line comments.
       const highlightLines = []
+      const hiddenLines = []
       const code = fs
         .readFileSync(path, `utf8`)
         .split(`\n`)
@@ -108,6 +127,7 @@ module.exports = (
 
           return returnValue
         })
+        .filter((line, index) => !hiddenLines.includes(index + 1)) // hide line numbers are 1-based.
         .map((line, index) => {
           if (line.includes(`highlight-line`)) {
             // Mark this line for highlighting.

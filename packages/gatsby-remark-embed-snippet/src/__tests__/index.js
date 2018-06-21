@@ -149,6 +149,31 @@ describe(`gatsby-remark-embed-snippet`, () => {
 
       expect(transformed).toMatchSnapshot()
     })
+
+    it(`should support hideline-range markers`, () => {
+      fs.readFileSync.mockReturnValue(
+        `
+        html {
+          /* hideline-range{1,2} */
+          height: 100%;
+          width: 100%;
+          padding: 50px;
+        }
+      `
+          .replace(/^ +/gm, ``)
+          .trim()
+      )
+
+      const markdownAST = remark.parse(`\`embed:hello-world.css\``)
+      const transformed = plugin(
+        { markdownAST },
+        {
+          directory: `examples`,
+        }
+      )
+
+      expect(transformed).toMatchSnapshot()
+    })
   })
 
   describe(`HTML files`, () => {
@@ -203,6 +228,38 @@ describe(`gatsby-remark-embed-snippet`, () => {
             <p>
               highlighted
             </p>
+          </body>
+        </html>
+      `
+          .replace(/^ +/gm, ``)
+          .trim()
+      )
+
+      const markdownAST = remark.parse(`\`embed:hello-world.html\``)
+      const transformed = plugin(
+        { markdownAST },
+        {
+          directory: `examples`,
+        }
+      )
+
+      expect(transformed).toMatchSnapshot()
+    })
+
+    it(`should support hideline-range markers`, () => {
+      fs.readFileSync.mockReturnValue(
+        `
+        <!-- hideline-range{4,8-9} -->
+        <html>
+          <body>
+            <p>
+              hidden
+              <span>not hidden</span>
+            </p>
+            <ul>
+              <li>hidden</li>
+              <li>hidden</li>
+            </ul>
           </body>
         </html>
       `
@@ -360,6 +417,42 @@ describe(`gatsby-remark-embed-snippet`, () => {
         // highlight-range{2}
         notHighlighted = 3;
         highlighted = 4;
+      `
+          .replace(/^ +/gm, ``)
+          .trim()
+      )
+
+      const markdownAST = remark.parse(`\`embed:hello-world.js\``)
+      const transformed = plugin(
+        { markdownAST },
+        {
+          directory: `examples`,
+        }
+      )
+
+      expect(transformed).toMatchSnapshot()
+    })
+
+    it(`should support hideline-range markers`, () => {
+      fs.readFileSync.mockReturnValue(
+        `
+        // hideline-range{1-2, 9-11, 16}
+        import React from 'react'
+        import { render } from "react-dom"
+        ReactDOM.render(
+          <div>
+            <ul>
+              <li>Not hidden</li>
+              <li>Not hidden</li>
+              <li>Not hidden</li>
+              <li>Hidden</li>
+              <li>Hidden</li>
+              <li>Hidden</li>
+            </ul>
+          </div>,
+          document.getElementById('root')
+        );
+        console.log('Hidden')
       `
           .replace(/^ +/gm, ``)
           .trim()
