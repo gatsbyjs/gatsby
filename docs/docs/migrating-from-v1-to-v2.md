@@ -14,7 +14,7 @@ Before diving in to the upgrade guide, here's a brief section on starting a new 
 
 If you're a _start from scratch_ kind of person, you can install the Gatsby beta and React like this: `npm install gatsby@next react react-dom`
 
-If you'd rather use one of the official starters, you're in luck, there's a v2 edition for each of them. You can install each one using the Gatsby CLI.
+If you'd rather use one of the official starters, you're in luck, there's a v2 edition for each of them. Install your favourite one with the Gatsby CLI.
 
 `gatsby-starter-default` with v2:
 
