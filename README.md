@@ -18,6 +18,29 @@ For `gatsby@1`, please see [the v1 branch](https://github.com/gatsbyjs/gatsby/tr
 
 **Are you using V1 and want to try upgrading and help prepare Gatsby for v2? Check out [our V1 => V2 migration guide](https://next.gatsbyjs.org/docs/migrating-from-v1-to-v2/).**
 
+**Starting a new project with Gatsby v2**
+If you'd like to start a new project with Gatsby v2 you can use the v2 edition of any offical starter. Install your favourite one with the Gatsby CLI.
+
+`gatsby-starter-default` with v2:
+
+```
+gatsby new my-default-project https://github.com/gatsbyjs/gatsby-starter-default#v2
+```
+
+`gatsby-starter-hello-world` with v2:
+
+```
+gatsby new my-hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world#v2
+```
+
+`gatsby-starter-blog` with v2:
+
+```
+gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
+```
+
+If you're a _start from scratch_ kind of person, you can install the Gatsby beta and React like this: `npm install gatsby@next react react-dom`
+
 **How are pull requests being handled during the v2 beta?**
 
 The following policy will be in place during the v2 beta:
