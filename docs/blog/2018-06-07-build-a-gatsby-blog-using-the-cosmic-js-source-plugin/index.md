@@ -103,7 +103,7 @@ module.exports = {
       },
     },
   ],
-};
+}
 ```
 
 ### A couple of notes on this config:
@@ -158,14 +158,14 @@ class BlogIndex extends React.Component {
                 dangerouslySetInnerHTML={{ __html: node.metadata.description }}
               />
             </div>
-          );
+          )
         })}
       </div>
-    );
+    )
   }
 }
 
-export default BlogIndex;
+export default BlogIndex
 
 export const pageQuery = graphql`
   query IndexQuery {
@@ -192,7 +192,7 @@ export const pageQuery = graphql`
       }
     }
   }
-`;
+`
 ```
 
 ### Explanation:
@@ -323,11 +323,11 @@ class BlogPostTemplate extends React.Component {
           )}
         </ul>
       </div>
-    );
+    )
   }
 }
 
-export default BlogPostTemplate;
+export default BlogPostTemplate
 
 export const pageQuery = graphql`
   query BlogPostBySlug($slug: String!) {
@@ -353,7 +353,7 @@ export const pageQuery = graphql`
       }
     }
   }
-`;
+`
 ```
 
 That looks fine, but at this point, Gatsby does not know when this template should be displayed. Each post needs a specific URL. So, we are going to inform Gatsby about the new URLs we need using the [`createPages` API](https://www.gatsbyjs.org/docs/node-apis/#createPages).
@@ -371,7 +371,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
   createPage({
     path: `posts`,
     component: indexPage,
-  });
+  })
 
   return new Promise((resolve, reject) => {
     const blogPost = path.resolve("./src/templates/blog-post.js")
@@ -394,8 +394,8 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
         `
       ).then(result => {
         if (result.errors) {
-          console.log(result.errors);
-          reject(result.errors);
+          console.log(result.errors)
+          reject(result.errors)
         }
 
         // Create blog posts pages.
@@ -413,12 +413,12 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
               previous,
               next,
             },
-          });
-        });
+          })
+        })
       })
-    );
-  });
-};
+    )
+  })
+}
 ```
 
 Restart the Gatsby server, then visit the detail page by clicking on URLs displayed on the homepage.

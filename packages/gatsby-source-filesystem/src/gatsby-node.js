@@ -15,58 +15,57 @@ const { createFileNode } = require(`./create-file-node`)
  * while Gatsby is processing, we queue them until the system returns to an
  * "idle" state.
  */
-const fsMachine = Machine({
-  key: `emitFSEvents`,
-  parallel: true,
-  strict: true,
-  states: {
-    CHOKIDAR: {
-      initial: `CHOKIDAR_NOT_READY`,
-      states: {
-        CHOKIDAR_NOT_READY: {
-          on: {
-            CHOKIDAR_READY: `CHOKIDAR_WATCHING`,
-            BOOTSTRAP_FINISHED: `CHOKIDAR_WATCHING_BOOTSTRAP_FINISHED`,
+const createFSMachine = () =>
+  Machine({
+    key: `emitFSEvents`,
+    parallel: true,
+    strict: true,
+    states: {
+      CHOKIDAR: {
+        initial: `CHOKIDAR_NOT_READY`,
+        states: {
+          CHOKIDAR_NOT_READY: {
+            on: {
+              CHOKIDAR_READY: `CHOKIDAR_WATCHING`,
+              BOOTSTRAP_FINISHED: `CHOKIDAR_WATCHING_BOOTSTRAP_FINISHED`,
+            },
+          },
+          CHOKIDAR_WATCHING: {
+            on: {
+              BOOTSTRAP_FINISHED: `CHOKIDAR_WATCHING_BOOTSTRAP_FINISHED`,
+              CHOKIDAR_READY: `CHOKIDAR_WATCHING`,
+            },
+          },
+          CHOKIDAR_WATCHING_BOOTSTRAP_FINISHED: {
+            on: {
+              CHOKIDAR_READY: `CHOKIDAR_WATCHING_BOOTSTRAP_FINISHED`,
+            },
           },
         },
-        CHOKIDAR_WATCHING: {
-          on: {
-            BOOTSTRAP_FINISHED: `CHOKIDAR_WATCHING_BOOTSTRAP_FINISHED`,
-            CHOKIDAR_READY: `CHOKIDAR_WATCHING`,
+      },
+      PROCESSING: {
+        initial: `BOOTSTRAPPING`,
+        states: {
+          BOOTSTRAPPING: {
+            on: {
+              BOOTSTRAP_FINISHED: `IDLE`,
+            },
           },
-        },
-        CHOKIDAR_WATCHING_BOOTSTRAP_FINISHED: {
-          on: {
-            CHOKIDAR_READY: `CHOKIDAR_WATCHING_BOOTSTRAP_FINISHED`,
+          IDLE: {
+            on: {
+              EMIT_FS_EVENT: `PROCESSING`,
+            },
+          },
+          PROCESSING: {
+            on: {
+              QUERY_QUEUE_DRAINED: `IDLE`,
+              TOUCH_NODE: `IDLE`,
+            },
           },
         },
       },
     },
-    PROCESSING: {
-      initial: `BOOTSTRAPPING`,
-      states: {
-        BOOTSTRAPPING: {
-          on: {
-            BOOTSTRAP_FINISHED: `IDLE`,
-          },
-        },
-        IDLE: {
-          on: {
-            EMIT_FS_EVENT: `PROCESSING`,
-          },
-        },
-        PROCESSING: {
-          on: {
-            QUERY_QUEUE_DRAINED: `IDLE`,
-            TOUCH_NODE: `IDLE`,
-          },
-        },
-      },
-    },
-  },
-})
-
-let currentState = fsMachine.initialState
+  })
 
 exports.sourceNodes = (
   { actions, getNode, createNodeId, hasNodeChanged, reporter, emitter },
@@ -86,6 +85,9 @@ Please pick a path to an existing directory.
 See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
       `)
   }
+
+  const fsMachine = createFSMachine()
+  let currentState = fsMachine.initialState
   let fileNodeQueue = new Map()
 
   // Once bootstrap is finished, we only let one File node update go through

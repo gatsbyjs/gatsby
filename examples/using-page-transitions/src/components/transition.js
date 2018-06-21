@@ -36,20 +36,20 @@ class Transition extends React.Component {
         exit: timeout,
       },
       appear: true,
-      in: !this.state.exiting
+      in: !this.state.exiting,
     }
 
     return (
       <ReactTransition {...transitionProps}>
-        {
-          (status) => (
-            <div style={{
-              ...getTransitionStyle({ status, timeout })
-            }}>
-              {this.props.children}
-            </div>
-          )
-        }
+        {status => (
+          <div
+            style={{
+              ...getTransitionStyle({ status, timeout }),
+            }}
+          >
+            {this.props.children}
+          </div>
+        )}
       </ReactTransition>
     )
   }
