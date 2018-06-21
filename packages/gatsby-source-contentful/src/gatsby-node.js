@@ -1,5 +1,5 @@
 const path = require(`path`)
-
+const isOnline = require(`is-online`)
 const _ = require(`lodash`)
 const fs = require(`fs-extra`)
 
@@ -37,6 +37,27 @@ exports.sourceNodes = async (
 ) => {
   const { createNode, deleteNode, touchNode, setPluginStatus } = actions
 
+  const online = await isOnline()
+
+  // If the user knows they are offline, serve them cached result
+  // For prod builds though always fail if we can't get the latest data
+  if (
+    !online &&
+    process.env.GATSBY_CONTENTFUL_OFFLINE === `true` &&
+    process.env.NODE_ENV !== `production`
+  ) {
+    getNodes()
+      .filter(n => n.internal.owner === `gatsby-source-contentful`)
+      .forEach(n => touchNode({ nodeId: n.id }))
+
+    console.log(`Using Contentful Offline cache ⚠️`)
+    console.log(
+      `Cache may be invalidated if you edit package.json, gatsby-node.js or gatsby-config.js files`
+    )
+
+    return
+  }
+
   host = host || `cdn.contentful.com`
   environment = environment || `master` // default is always master
   // Get sync token if it exists.
@@ -62,8 +83,8 @@ exports.sourceNodes = async (
     syncToken,
     spaceId,
     accessToken,
-    environment,
     host,
+    environment,
   })
 
   const entryList = normalize.buildEntryList({
