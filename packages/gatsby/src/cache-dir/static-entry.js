@@ -168,6 +168,10 @@ export default (pagePath, callback) => {
         return { rel: `preload`, name: chunk }
       })
 
+      namedChunkGroups[s].assets.forEach(asset =>
+        chunks.push({ rel: `preload`, name: asset })
+      )
+
       const childAssets = namedChunkGroups[s].childAssets
       for (const rel in childAssets) {
         chunks = merge(
@@ -242,7 +246,7 @@ export default (pagePath, callback) => {
       // Add <link>s for styles that should be prefetched
       // otherwise, inline as a <style> tag
 
-      if(style.rel === `prefetch`) {
+      if (style.rel === `prefetch`) {
         headComponents.push(
           <link
             as="style"
