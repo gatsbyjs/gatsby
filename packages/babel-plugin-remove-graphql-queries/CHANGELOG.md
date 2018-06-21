@@ -1,0 +1,46 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+<a name="2.0.2-beta.4"></a>
+## [2.0.2-beta.4](https://github.com/gatsbyjs/gatsby/compare/babel-plugin-remove-graphql-queries@2.0.2-beta.3...babel-plugin-remove-graphql-queries@2.0.2-beta.4) (2018-06-21)
+
+
+### Bug Fixes
+
+* fix bad global check for graphql tag ([#6075](https://github.com/gatsbyjs/gatsby/issues/6075)) ([39a2607](https://github.com/gatsbyjs/gatsby/commit/39a2607))
+
+
+
+
+
+<a name="2.0.2-beta.3"></a>
+## [2.0.2-beta.3](https://github.com/gatsbyjs/gatsby/compare/babel-plugin-remove-graphql-queries@2.0.2-beta.2...babel-plugin-remove-graphql-queries@2.0.2-beta.3) (2018-06-21)
+
+**Note:** Version bump only for package babel-plugin-remove-graphql-queries
+
+
+
+
+
+<a name="2.0.2-beta.2"></a>
+## [2.0.2-beta.2](https://github.com/gatsbyjs/gatsby/compare/babel-plugin-remove-graphql-queries@2.0.2-beta.1...babel-plugin-remove-graphql-queries@2.0.2-beta.2) (2018-06-20)
+
+**Note:** Version bump only for package babel-plugin-remove-graphql-queries
+
+
+
+
+
+<a name="2.0.2-beta.1"></a>
+
+## [2.0.2-beta.1](https://github.com/gatsbyjs/gatsby/compare/babel-plugin-remove-graphql-queries@2.0.2-beta.0...babel-plugin-remove-graphql-queries@2.0.2-beta.1) (2018-06-17)
+
+**Note:** Version bump only for package babel-plugin-remove-graphql-queries
+
+<a name="2.0.2-beta.0"></a>
+
+## 2.0.2-beta.0 (2018-06-17)
+
+**Note:** Version bump only for package babel-plugin-remove-graphql-queries

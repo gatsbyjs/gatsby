@@ -1,10 +1,11 @@
 import React from "react"
 import Img from "gatsby-image"
 
+import Layout from "../layouts"
 import { rhythm, options } from "../utils/typography"
 
-const PreferWebp = ({ data }) => (
-  <div>
+const PreferWebp = ({ data, location }) => (
+  <Layout location={location}>
     <h2>Prefer WebP</h2>
     <Img
       style={{ display: `inherit` }}
@@ -19,7 +20,7 @@ const PreferWebp = ({ data }) => (
         },
       }}
       title={`Photo by Redd Angelo on Unsplash`}
-      resolutions={data.reddImageMobile.resolutions}
+      fixed={data.reddImageMobile.childImageSharp.fixed}
     />
     <Img
       style={{ display: `inherit` }}
@@ -33,7 +34,7 @@ const PreferWebp = ({ data }) => (
         },
       }}
       title={`Photo by Redd Angelo on Unsplash`}
-      resolutions={data.reddImage.resolutions}
+      fixed={data.reddImage.childImageSharp.fixed}
     />
     <p>
       Lorem markdownum nocens, est aut tergo, inmansuetique bella. Neve illud
@@ -65,7 +66,7 @@ const PreferWebp = ({ data }) => (
       <li>Constitit nomine senta suspirat et signis genuisse</li>
     </ol>
     <Img
-      sizes={data.kenImage.sizes}
+      fluid={data.kenImage.childImageSharp.fluid}
       title={`Photo by Ken Treloar on Unsplash`}
     />
     <h2>Levia mihi</h2>
@@ -81,26 +82,32 @@ const PreferWebp = ({ data }) => (
       Antimachumque tulit fusile. Fieri qui que prosit equidem, meis praescia
       monebat cacumina tergo acerbo saepe nullaque.
     </p>
-  </div>
+  </Layout>
 )
 
 export default PreferWebp
 
 export const query = graphql`
   query PreferWebpQuery {
-    reddImageMobile: imageSharp(id: { regex: "/redd/" }) {
-      resolutions(width: 125) {
-        ...GatsbyImageSharpResolutions_withWebp
+    reddImageMobile: file(relativePath: { regex: "/redd/" }) {
+      childImageSharp {
+        fixed(width: 125) {
+          ...GatsbyImageSharpFixed_withWebp
+        }
       }
     }
-    reddImage: imageSharp(id: { regex: "/redd/" }) {
-      resolutions(width: 200) {
-        ...GatsbyImageSharpResolutions_withWebp
+    reddImage: file(relativePath: { regex: "/redd/" }) {
+      childImageSharp {
+        fixed(width: 200) {
+          ...GatsbyImageSharpFixed_withWebp
+        }
       }
     }
-    kenImage: imageSharp(id: { regex: "/ken-treloar/" }) {
-      sizes(maxWidth: 600) {
-        ...GatsbyImageSharpSizes_withWebp
+    kenImage: file(relativePath: { regex: "/ken-treloar/" }) {
+      childImageSharp {
+        fluid(maxWidth: 600) {
+          ...GatsbyImageSharpFluid_withWebp
+        }
       }
     }
   }

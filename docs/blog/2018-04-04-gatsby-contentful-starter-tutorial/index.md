@@ -32,21 +32,21 @@ This guide assumes that you have [GatsbyJS installed](/docs/) and, optionally, a
 
 Start by using this with the Gatsby CLI:
 
-~~~bash
+```bash
 gatsby new contentful-starter https://github.com/contentful-userland/gatsby-contentful-starter
-~~~
+```
 
 Alternatively, you can also clone a sample repo from Github:
 
-~~~bash
+```bash
 git clone git@github.com:contentful-userland/gatsby-contentful-starter.git
-~~~
+```
 
 And go into the directory and install the required dependencies with:
 
-~~~bash
+```bash
 npm install
-~~~
+```
 
 ###Create a new space to store content
 
@@ -55,8 +55,6 @@ npm install
 Create a new empty space by opening the sidebar menu and adding a Space. Give the space an apt name and click "Create" to go ahead with making it.
 
 ![create a new space](new_space.png)
-
-
 
 ###Generate access tokens
 
@@ -84,20 +82,19 @@ Start setting things up with the npm run setup command, which first prompts you 
 
 After that, it writes the credentials you provided into a file named .contentful.json into lines of code that look like so:
 
-
-~~~json
-{  
-   "development":{  
-      "host":"preview.contentful.com",
-      "spaceId":"...",
-      "accessToken":"..."
-   },
-   "production":{  
-      "spaceId":"...",
-      "accessToken":"..."
-   }
+```json
+{
+  "development": {
+    "host": "preview.contentful.com",
+    "spaceId": "...",
+    "accessToken": "..."
+  },
+  "production": {
+    "spaceId": "...",
+    "accessToken": "..."
+  }
 }
-~~~
+```
 
 Using the credentials in the .contentful.json file, [content can now be imported](https://www.contentful.com/developers/docs/tutorials/general/import-and-export/) into your space to being displayed on your website via our API.
 
@@ -119,6 +116,6 @@ Contentful ensures your website and its users can access your content quickly an
 
 That’s a quick overview of how to get your website up and running from scratch using Contentful and GatsbyJS.
 
-Contentful's platform offers speed, flexibility, and ease of integration with your code, supporting any stack you use with SDKs for common languages like [Javascript](https://www.contentful.com/developers/docs/javascript/sdks/), [Python](https://www.contentful.com/developers/docs/python/sdks/), and [PHP](https://www.contentful.com/developers/docs/php/sdks/). Unlike a CMS, Contentful provides you with separation between content and presentation, allowing you to focus on developing your website and leave content delivery to Contentful. 
+Contentful's platform offers speed, flexibility, and ease of integration with your code, supporting any stack you use with SDKs for common languages like [Javascript](https://www.contentful.com/developers/docs/javascript/sdks/), [Python](https://www.contentful.com/developers/docs/python/sdks/), and [PHP](https://www.contentful.com/developers/docs/php/sdks/). Unlike a CMS, Contentful provides you with separation between content and presentation, allowing you to focus on developing your website and leave content delivery to Contentful.
 
-If you're curious to learn more about Contentful, you can check out the Contentful [Developer Center](https://www.contentful.com/developers/docs/) to learn more on how the technology works, or head over to the [Guides and tutorials](https://www.contentful.com/guides/) section. 
+If you're curious to learn more about Contentful, you can check out the Contentful [Developer Center](https://www.contentful.com/developers/docs/) to learn more on how the technology works, or head over to the [Guides and tutorials](https://www.contentful.com/guides/) section.

@@ -10,7 +10,7 @@ Parses Markdown files using [Remark](http://remark.js.org/).
 
 ```javascript
 // In your gatsby-config.js
-plugins: [`gatsby-transformer-remark`];
+plugins: [`gatsby-transformer-remark`]
 ```
 
 A full explanation of how to use markdown in Gatsby can be found here:
@@ -22,14 +22,14 @@ There are many Gatsby Remark plugins which you can install to customize how Mark
 
 It recognizes files with the following extensions as Markdown:
 
-* md
-* rmd
-* mkd
-* mkdn
-* mdwn
-* mdown
-* litcoffee
-* markdown
+- md
+- rmd
+- mkd
+- mkdn
+- mdwn
+- mdown
+- litcoffee
+- markdown
 
 Each Markdown file is parsed into a node of type `MarkdownRemark`.
 

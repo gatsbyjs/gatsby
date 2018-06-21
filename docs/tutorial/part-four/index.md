@@ -8,14 +8,14 @@ to feel pretty comfortable 😀
 
 ## Recap of first half of the tutorial
 
-So far, we've been learning how to use React.js—how powerful it is to be able to
-create our _own_ components to act as custom building blocks for websites.
+So far, you've been learning how to use React.js—how powerful it is to be able to
+create your _own_ components to act as custom building blocks for websites.
 
-We’ve also explored styling components using CSS Modules.
+You’ve also explored styling components using CSS Modules.
 
 ## What's in this tutorial?
 
-In the next four parts of the tutorial (including this one), we'll be diving into the Gatsby data layer, which is a powerful feature of Gatsby that lets you easily build sites from Markdown, WordPress, headless CMSs, and other data sources of all flavors.
+In the next four parts of the tutorial (including this one), you'll be diving into the Gatsby data layer, which is a powerful feature of Gatsby that lets you easily build sites from Markdown, WordPress, headless CMSs, and other data sources of all flavors.
 
 **NOTE:** Gatsby’s data layer is powered by GraphQL. For an in-depth tutorial on
 GraphQL, we recommend [How to GraphQL](https://www.howtographql.com/).
@@ -34,7 +34,7 @@ integers (`42`), objects (`{ pizza: true }`), etc.
 For the purpose of working in Gatsby, however, a more useful answer is
 "everything that lives outside a React component".
 
-So far, we've been writing text and adding images _directly_ in components.
+So far, you've been writing text and adding images _directly_ in components.
 Which is an _excellent_ way to build many websites. But, often you want to store
 data _outside_ components and then bring the data _into_ the component as
 needed.
@@ -47,8 +47,8 @@ needed, into your components.
 Data can also live in file types like Markdown, CSV, etc. as well as databases
 and APIs of all sorts.
 
-**Gatsby's data layer lets us pull data from these (and any other source)
-directly into our components**—in the shape and form we want.
+**Gatsby's data layer lets you pull data from these (and any other source)
+directly into your components**—in the shape and form you want.
 
 ## How Gatsby's data layer uses GraphQL to pull data into components
 
@@ -66,39 +66,41 @@ to you.
 
 Gatsby uses GraphQL to enable components to declare the data they need.
 
-## Our first GraphQL query
+## Your first GraphQL query
 
 Let's create another new site for this part of the tutorial like in the previous
-parts. We're going to build a Markdown blog called "Pandas Eating Lots".
+parts. You're going to build a Markdown blog called "Pandas Eating Lots".
 It's dedicated to showing off the best pictures & videos of Pandas eating lots
-of food. Along the way we'll be dipping our toes into GraphQL and Gatsby's
+of food. Along the way you'll be dipping your toes into GraphQL and Gatsby's
 Markdown support.
 
 Open a new terminal window and run the following commands to create a new Gatsby site in a directory called `tutorial-part-four`. Then change to this new directory:
 
 ```shell
-gatsby new tutorial-part-four https://github.com/gatsbyjs/gatsby-starter-hello-world
+gatsby new tutorial-part-four https://github.com/gatsbyjs/gatsby-starter-hello-world#v2
 cd tutorial-part-four
 ```
 
-Then install some other needed dependencies at the root of the project. We'll use the Typography theme
-Kirkham + we'll try out a CSS-in-JS library
-[Glamorous](https://glamorous.rocks/):
+Then install some other needed dependencies at the root of the project. You'll use the Typography theme
+Kirkham + you'll try out a CSS-in-JS library
+[Emotion](https://emotion.sh/):
 
 ```shell
-npm install --save gatsby-plugin-typography gatsby-plugin-glamor glamorous typography-theme-kirkham
+npm install --save gatsby-plugin-typography typography react-typography typography-theme-kirkham
+gatsby-plugin-emotion emotion react-emotion emotion-server
 ```
 
-Let's set up a site similar to what we ended with in Part Three. This site will have a layout
+Let's set up a site similar to what you ended with in Part Three. This site will have a layout
 component and two page components:
 
 `src/pages/index.js`
 
 ```jsx
-import React from "react";
+import React from "react"
+import Layout from "../components/layout"
 
 export default () => (
-  <div>
+  <Layout>
     <h1>Amazing Pandas Eating Things</h1>
     <div>
       <img
@@ -106,71 +108,79 @@ export default () => (
         alt="Group of pandas eating bamboo"
       />
     </div>
-  </div>
-);
+  </Layout>
+)
 ```
 
 `src/pages/about.js`
 
 ```jsx
-import React from "react";
+import React from "react"
+import Layout from "../components/layout"
 
 export default () => (
-  <div>
+  <Layout>
     <h1>About Pandas Eating Lots</h1>
     <p>
       We're the only site running on your computer dedicated to showing the best
       photos and videos of pandas eating lots of food.
     </p>
-  </div>
-);
+  </Layout>
+)
 ```
 
-`src/layouts/index.js`
+`src/components/layout.js`
 
 ```jsx
-import React from "react";
-import g from "glamorous";
-import { css } from "glamor";
-import Link from "gatsby-link";
+import React from "react"
+import { css } from "react-emotion"
+import { Link } from "gatsby"
 
-import { rhythm } from "../utils/typography";
-
-const linkStyle = css({ float: `right` });
+import { rhythm } from "../utils/typography"
 
 export default ({ children }) => (
-  <g.Div
-    margin={`0 auto`}
-    maxWidth={700}
-    padding={rhythm(2)}
-    paddingTop={rhythm(1.5)}
+  <div
+    className={css`
+      margin: 0 auto;
+      max-width: 700px;
+      padding: ${rhythm(2)};
+      padding-top: ${rhythm(1.5)};
+    `}
   >
     <Link to={`/`}>
-      <g.H3
-        marginBottom={rhythm(2)}
-        display={`inline-block`}
-        fontStyle={`normal`}
+      <h3
+        className={css`
+          margin-bottom: ${rhythm(2)};
+          display: inline-block;
+          font-style: normal;
+        `}
       >
         Pandas Eating Lots
-      </g.H3>
+      </h3>
     </Link>
-    <Link className={linkStyle} to={`/about/`}>
+    <Link
+      to={`/about/`}
+      className={css`
+        float: right;
+      `}
+    >
       About
     </Link>
-    {children()}
-  </g.Div>
-);
+    {children}
+  </div>
+)
 ```
 
 `src/utils/typography.js`
 
 ```javascript
-import Typography from "typography";
-import kirkhamTheme from "typography-theme-kirkham";
+import Typography from "typography"
+import kirkhamTheme from "typography-theme-kirkham"
 
-const typography = new Typography(kirkhamTheme);
+const typography = new Typography(kirkhamTheme)
 
-export default typography;
+export default typography
+export const rhythm = typography.rhythm
 ```
 
 `gatsby-config.js` (must be in the root of your project, not under src)
@@ -178,7 +188,7 @@ export default typography;
 ```javascript
 module.exports = {
   plugins: [
-    `gatsby-plugin-glamor`,
+    `gatsby-plugin-emotion`,
     {
       resolve: `gatsby-plugin-typography`,
       options: {
@@ -186,7 +196,7 @@ module.exports = {
       },
     },
   ],
-};
+}
 ```
 
 Add the above files and then run `gatsby develop` like normal and you should see
@@ -194,7 +204,7 @@ the following:
 
 ![start](start.png)
 
-We have another small site with a layout and two pages.
+You have another small site with a layout and two pages.
 
 Now let's start querying 😋
 
@@ -202,16 +212,16 @@ Now let's start querying 😋
 
 When building sites, it's common to want to reuse common bits of data across the
 site. Like the _site title_ for example. Look at the `/about/` page. You'll
-notice that we have the site title in both the layout component (the site
-header) as well as in the title of the About page. But what if we want to change
-the site title at some point in the future? We'd have to search across all our
+notice that you have the site title in both the layout component (the site
+header) as well as in the title of the About page. But what if you want to change
+the site title at some point in the future? You'd have to search across all your
 components for spots using the site title and edit each instance of the title. This process is both cumbersome and
 error-prone, especially as sites get larger and more complex. It's much better to
 store the title in one place and then _pull_ that title into components whenever
-we need it.
+you need it.
 
-To solve this, we can add site "metadata" — like page title or description — to the `gatsby-config.js` file. Let's add our site title to
-`gatsby-config.js` file and then query it from our layout and about page!
+To solve this, you can add site "metadata" — like page title or description — to the `gatsby-config.js` file. Let's add your site title to
+`gatsby-config.js` file and then query it from your layout and about page!
 
 Edit your `gatsby-config.js`:
 
@@ -221,7 +231,7 @@ module.exports = {
     title: `Blah Blah Fake Title`,
   },
   plugins: [
-    `gatsby-plugin-glamor`,
+    `gatsby-plugin-emotion`,
     {
       resolve: `gatsby-plugin-typography`,
       options: {
@@ -229,7 +239,7 @@ module.exports = {
       },
     },
   ],
-};
+}
 ```
 
 Restart the development server.
@@ -238,19 +248,19 @@ Then edit the two components:
 
 `src/pages/about.js`
 
-```jsx{3,5-7,14-23}
-import React from "react";
+```jsx{4,6,13-22}
+import React from "react"
+import Layout from "../components/layout"
 
-export default ({ data }) =>
-  <div>
-    <h1>
-      About {data.site.siteMetadata.title}
-    </h1>
+export default ({ data }) => (
+  <Layout>
+    <h1>About {data.site.siteMetadata.title}</h1>
     <p>
       We're the only site running on your computer dedicated to showing the best
       photos and videos of pandas eating lots of food.
     </p>
-  </div>
+  </Layout>
+)
 
 export const query = graphql`
   query AboutQuery {
@@ -263,45 +273,59 @@ export const query = graphql`
 `
 ```
 
-`src/layouts/index.js`
+`src/components/layout.js`
 
-```jsx{10,19,28-33}
-import React from "react";
-import g from "glamorous";
-import { css } from "glamor";
-import Link from "gatsby-link";
+```jsx{3,8-18,35}
+import React from "react"
+import { css } from "react-emotion"
+import { StaticQuery, Link } from "gatsby"
 
-import { rhythm } from "../utils/typography";
+import { rhythm } from "../utils/typography"
 
-const linkStyle = css({ float: `right` })
-
-export default ({ children, data }) =>
-  <g.Div
-    margin={`0 auto`}
-    maxWidth={700}
-    padding={rhythm(2)}
-    paddingTop={rhythm(1.5)}
-  >
-    <Link to={`/`}>
-      <g.H3 marginBottom={rhythm(2)} display={`inline-block`}>
-        {data.site.siteMetadata.title}
-      </g.H3>
-    </Link>
-    <Link className={linkStyle} to={`/about/`}>
-      About
-    </Link>
-    {children()}
-  </g.Div>
-
-export const query = graphql`
-  query LayoutQuery {
-    site {
-      siteMetadata {
-        title
+export default ({ children }) => (
+  <StaticQuery
+    query={graphql`
+      query LayoutQuery {
+        site {
+          siteMetadata {
+            title
+          }
+        }
       }
-    }
-  }
-`
+    `}
+    render={data => (
+      <div
+        className={css`
+          margin: 0 auto;
+          max-width: 700px;
+          padding: ${rhythm(2)};
+          padding-top: ${rhythm(1.5)};
+        `}
+      >
+        <Link to={`/`}>
+          <h3
+            className={css`
+              margin-bottom: ${rhythm(2)};
+              display: inline-block;
+              font-style: normal;
+            `}
+          >
+            {data.site.siteMetadata.title}
+          </h3>
+        </Link>
+        <Link
+          to={`/about/`}
+          className={css`
+            float: right;
+          `}
+        >
+          About
+        </Link>
+        {children}
+      </div>
+    )}
+  />
+)
 ```
 
 It worked!! 🎉
@@ -310,8 +334,8 @@ It worked!! 🎉
 
 But let's restore the real title.
 
-One of the core principles of Gatsby is creators need an immediate connection to
-what they're creating
+One of the core principles of Gatsby is _creators need an immediate connection to
+what they're creating_
 ([hat tip to Bret Victor](http://blog.ezyang.com/2012/02/transcript-of-inventing-on-principleb/)).
 Or, in other words, when you make any change to code you should immediately see
 the effect of that change. You manipulate an input of Gatsby and you see the new
@@ -324,25 +348,25 @@ Lots". The change should show up very quickly in your browser.
 
 ## Wait — where did the graphql tag come from?
 
-You may have noticed that we used a
+You may have noticed that you used a
 [tag function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#Tagged_template_literals)
-called `graphql`, but we never actually _import_ a `graphql` tag. So... how does
+called `graphql`, but you never actually _import_ a `graphql` tag. So... how does
 this not throw an error?
 
 The short answer is this: during the Gatsby build process, GraphQL queries are
 pulled out of the original source for parsing.
 
 The longer answer is a little more involved: Gatsby borrows a technique from
-[Relay](https://facebook.github.io/relay/) that converts our source code into an
+[Relay](https://facebook.github.io/relay/) that converts your source code into an
 [abstract syntax tree (AST)](https://en.wikipedia.org/wiki/Abstract_syntax_tree)
 during the build step. All `graphql`-tagged templates are found in
-[`file-parser.js`](https://github.com/gatsbyjs/gatsby/blob/v1.6.3/packages/gatsby/src/internal-plugins/query-runner/file-parser.js#L63)
+[`file-parser.js`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/file-parser.js)
 and
-[`query-compiler.js`](https://github.com/gatsbyjs/gatsby/blob/v1.6.3/packages/gatsby/src/internal-plugins/query-runner/query-compiler.js),
+[`query-compiler.js`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/query-compiler.js),
 which effectively removes them from the original source code. This means that
-the `graphql` tag isn’t executed the way that we might expect, which is why
-there’s no error, despite the fact that we’re technically using an undefined tag
-in our source.
+the `graphql` tag isn’t executed the way that you might expect, which is why
+there’s no error, despite the fact that you’re technically using an undefined tag
+in your source.
 
 ## What's coming next?
 

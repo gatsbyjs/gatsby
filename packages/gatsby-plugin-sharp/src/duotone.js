@@ -82,7 +82,7 @@ async function overlayDuotone(duotoneImage, originalImage, duotone, format) {
     .metadata()
     .then(info => info)
   // see https://github.com/lovell/sharp/issues/859#issuecomment-311319149
-  const percentGrey = Math.round(duotone.opacity / 100 * 255)
+  const percentGrey = Math.round((duotone.opacity / 100) * 255)
   const percentTransparency = Buffer.alloc(
     info.width * info.height,
     percentGrey

@@ -8,7 +8,7 @@ const {
   GraphQLObjectType,
   GraphQLList,
   GraphQLSchema,
-} = require(`graphql`)
+} = require(`gatsby/graphql`)
 const {
   inferObjectStructureFromNodes,
 } = require(`../../../gatsby/src/schema/infer-graphql-type`)
@@ -38,12 +38,15 @@ Where oh where is my little pony?
 
       const createNode = jest.fn()
       const createParentChildLink = jest.fn()
-      const boundActionCreators = { createNode, createParentChildLink }
+      const actions = { createNode, createParentChildLink }
+      const createNodeId = jest.fn()
+      createNodeId.mockReturnValue(`uuid-from-gatsby`)
 
       await onCreateNode({
         node,
         loadNodeContent,
-        boundActionCreators,
+        actions,
+        createNodeId,
       }).then(() => {
         expect(createNode.mock.calls).toMatchSnapshot()
         expect(
@@ -77,13 +80,16 @@ Sed bibendum sem iaculis, pellentesque leo sed, imperdiet ante. Sed consequat ma
 
       const createNode = jest.fn()
       const createParentChildLink = jest.fn()
-      const boundActionCreators = { createNode, createParentChildLink }
+      const actions = { createNode, createParentChildLink }
+      const createNodeId = jest.fn()
+      createNodeId.mockReturnValue(`uuid-from-gatsby`)
 
       await onCreateNode(
         {
           node,
           loadNodeContent,
-          boundActionCreators,
+          actions,
+          createNodeId,
         },
         { excerpt_separator: `<!-- end -->` }
       ).then(() => {
@@ -185,13 +191,16 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
         })
 
       const createParentChildLink = jest.fn()
-      const boundActionCreators = { createNode, createParentChildLink }
+      const actions = { createNode, createParentChildLink }
+      const createNodeId = jest.fn()
+      createNodeId.mockReturnValue(`uuid-from-gatsby`)
 
       onCreateNode(
         {
           node,
           loadNodeContent,
-          boundActionCreators,
+          actions,
+          createNodeId,
         },
         { excerpt_separator: `<!-- end -->` }
       )
@@ -238,12 +247,15 @@ Sed bibendum sem iaculis, pellentesque leo sed, imperdiet ante. Sed consequat ma
         })
 
       const createParentChildLink = jest.fn()
-      const boundActionCreators = { createNode, createParentChildLink }
+      const actions = { createNode, createParentChildLink }
+      const createNodeId = jest.fn()
+      createNodeId.mockReturnValue(`uuid-from-gatsby`)
 
       onCreateNode({
         node,
         loadNodeContent,
-        boundActionCreators,
+        actions,
+        createNodeId,
       })
     })
   })

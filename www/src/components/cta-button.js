@@ -1,4 +1,5 @@
-import Link from "gatsby-link"
+import React from "react"
+import { Link } from "gatsby"
 import { rhythm, scale, options } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
 import hex2rgba from "hex2rgba"

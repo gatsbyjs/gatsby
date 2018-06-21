@@ -118,9 +118,9 @@ Prismic has a similar pricing structure to Contentful - but has a few more optio
 
 Cockpit also seems to share a lot of the same features except for two big differences:
 
-* It’s open source - anyone can download it, anyone can contribute to the git repository and improve it, meaning it’s fully free and will be available - in one form or another - forever. I could see an issue with Contentful if the service ever stopped working. They have backups on AWS and create nightly backups on their premium plans, but the actual interface may become unavailable. Because Cockpit is open source they could go out of business or go offline for a night or just stop working altogether, and there’s a repo available with your CMS on.
+- It’s open source - anyone can download it, anyone can contribute to the git repository and improve it, meaning it’s fully free and will be available - in one form or another - forever. I could see an issue with Contentful if the service ever stopped working. They have backups on AWS and create nightly backups on their premium plans, but the actual interface may become unavailable. Because Cockpit is open source they could go out of business or go offline for a night or just stop working altogether, and there’s a repo available with your CMS on.
 
-* It’s self-hosted - this ties into the last point and if it did all come crashing down, as long as your site is still active so will your CMS be. Great news for the tech-paranoid!
+- It’s self-hosted - this ties into the last point and if it did all come crashing down, as long as your site is still active so will your CMS be. Great news for the tech-paranoid!
 
 ---
 

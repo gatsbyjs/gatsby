@@ -93,7 +93,9 @@ colorStr
       case `c`:
         pointer = `a`
         break
+      default:
+        break
     }
   })
 
-module.exports = colors
+export default colors

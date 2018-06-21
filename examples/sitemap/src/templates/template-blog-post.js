@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react"
 
 class BlogPost extends React.Component {
   render() {
@@ -26,7 +26,7 @@ export const PageQuery = graphql`
     }
     site {
       siteMetadata {
-        title 
+        title
       }
     }
   }

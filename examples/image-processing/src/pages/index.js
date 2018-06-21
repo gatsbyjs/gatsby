@@ -1,26 +1,26 @@
 import React from "react"
 import Img from "gatsby-image"
-
+import Layout from "../layouts"
 import { rhythm } from "../utils/typography"
 
 class Index extends React.Component {
   render() {
-    const images = this.props.data.allImageSharp.edges
-    const sizes = this.props.data.sizes.childImageSharp.sizes
-    const resolutions = this.props.data.resolution.childImageSharp.resolutions
-    const cropDefault = this.props.data.cropDefault.childImageSharp.resize
-    const cropBottomLeft = this.props.data.cropBottomLeft.childImageSharp.resize
-    const cropEntropy = this.props.data.cropEntropy.childImageSharp.resize
-    const cropCenter = this.props.data.cropCenter.childImageSharp.resize
-    const sizesDuotoneOriginal = this.props.data.sizesDuotoneOriginal
-      .childImageSharp.sizes
-    const sizesDuotone25 = this.props.data.sizesDuotone25.childImageSharp.sizes
-    const sizesDuotone50 = this.props.data.sizesDuotone50.childImageSharp.sizes
-    const sizesDuotone75 = this.props.data.sizesDuotone75.childImageSharp.sizes
-    const sizesDuotone = this.props.data.sizesDuotone.childImageSharp.sizes
+    const data = this.props.data
+    const images = data.allImageSharp.edges
+    const fluid = data.fluidImages.childImageSharp.fluid
+    const fixed = data.fixedImages.childImageSharp.fixed
+    const cropDefault = data.cropDefault.childImageSharp.resize
+    const cropBottomLeft = data.cropBottomLeft.childImageSharp.resize
+    const cropEntropy = data.cropEntropy.childImageSharp.resize
+    const cropCenter = data.cropCenter.childImageSharp.resize
+    const fluidDuotoneOriginal = data.fluidDuotoneOriginal.childImageSharp.fluid
+    const fluidDuotone25 = data.fluidDuotone25.childImageSharp.fluid
+    const fluidDuotone50 = data.fluidDuotone50.childImageSharp.fluid
+    const fluidDuotone75 = data.fluidDuotone75.childImageSharp.fluid
+    const fluidDuotone = data.fluidDuotone.childImageSharp.fluid
 
     return (
-      <div>
+      <Layout>
         <p>
           <a href="https://www.gatsbyjs.org/packages/gatsby-transformer-sharp/">
             <code>gatsby-transformer-sharp</code>
@@ -97,11 +97,13 @@ class Index extends React.Component {
         <ul style={{ ...styles.ul, ...styles.row }}>
           {images.map(image => (
             <li style={styles.column20} key={image.node.resize.src}>
-              <img src={image.node.resize.src} />
+              <img
+                src={image.node.resize.src}
+                alt={image.node.resize.originalName}
+              />
             </li>
           ))}
         </ul>
-
         <p
           style={{
             clear: `left`,
@@ -127,10 +129,18 @@ class Index extends React.Component {
 
         <ul style={{ ...styles.ul, ...styles.row }}>
           <li style={styles.column25}>
-            <img src={cropDefault.src} />
+            <img
+              src={cropDefault.src}
+              alt={`File ${cropDefault.originalName} with a default crop`}
+            />
           </li>
           <li style={styles.column25}>
-            <img src={cropBottomLeft.src} />
+            <img
+              src={cropBottomLeft.src}
+              alt={`File ${
+                cropBottomLeft.originalName
+              } cropped to the bottom left`}
+            />
             <p>
               <small>
                 <code>cropFocus: SOUTHWEST</code>
@@ -138,7 +148,10 @@ class Index extends React.Component {
             </p>
           </li>
           <li style={styles.column25}>
-            <img src={cropEntropy.src} />
+            <img
+              src={cropEntropy.src}
+              alt={`File ${cropEntropy.originalName} with an "entropy" crop`}
+            />
             <p>
               <small>
                 <code>cropFocus: ENTROPY</code>
@@ -146,7 +159,10 @@ class Index extends React.Component {
             </p>
           </li>
           <li style={styles.column25}>
-            <img src={cropCenter.src} />
+            <img
+              src={cropCenter.src}
+              alt={`File ${cropCenter.originalName} cropped to the centre`}
+            />
             <p>
               <small>
                 <code>cropFocus: CENTER</code>
@@ -161,9 +177,9 @@ class Index extends React.Component {
             paddingTop: rhythm(2),
           }}
         >
-          <a href="https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/#responsivesizes">
+          <a href="https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/#fluid">
             <code>
-              <strong>sizes</strong>
+              <strong>fluid</strong>
             </code>
           </a>
         </h2>
@@ -175,12 +191,12 @@ class Index extends React.Component {
         </p>
         <p>
           If the max width of the container for the rendered markdown file is
-          800px, the sizes would then be: 200, 400, 800, 1200, 1600, 2400 –
-          enough to provide close to the optimal image size for every device
+          800px, the fluid sizes would then be: 200, 400, 800, 1200, 1600, 2400
+          – enough to provide close to the optimal image size for every device
           size / screen resolution.
         </p>
         <p>
-          On top of that, <code>sizes</code>
+          On top of that, <code>fluid</code>
           {` `}
           returns everything else (namely
           {` `}
@@ -236,18 +252,18 @@ class Index extends React.Component {
 
         <h3>
           <small>
-            sizes(duotone:
+            fluid(duotone:
             {` `}
             {`{ `}
             highlight: "#f00e2e", shadow: "#192550" {`}`}, toFormat: PNG)
           </small>
         </h3>
 
-        <Img sizes={sizes} />
+        <Img fluid={fluid} />
 
         <h3 style={{ marginTop: rhythm(2) }}>
           <small>
-            sizes(duotone:
+            fluid(duotone:
             {` `}
             {`{ `}
             highlight: "#0ec4f1", shadow: "#192550", opacity: 50 {`}`})
@@ -256,19 +272,19 @@ class Index extends React.Component {
 
         <div style={styles.row}>
           <div style={styles.column20}>
-            <Img sizes={sizesDuotoneOriginal} />
+            <Img fluid={fluidDuotoneOriginal} />
           </div>
           <div style={styles.column20}>
-            <Img sizes={sizesDuotone25} />
+            <Img fluid={fluidDuotone25} />
           </div>
           <div style={styles.column20}>
-            <Img sizes={sizesDuotone50} />
+            <Img fluid={fluidDuotone50} />
           </div>
           <div style={styles.column20}>
-            <Img sizes={sizesDuotone75} />
+            <Img fluid={fluidDuotone75} />
           </div>
           <div style={styles.column20}>
-            <Img sizes={sizesDuotone} />
+            <Img fluid={fluidDuotone} />
           </div>
         </div>
 
@@ -285,8 +301,8 @@ class Index extends React.Component {
             paddingTop: rhythm(2),
           }}
         >
-          <a href="https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/#responsiveresolution">
-            <code>resolutions</code>
+          <a href="https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/#fixed">
+            <code>fixed</code>
           </a>
         </h2>
         <p>
@@ -313,8 +329,8 @@ class Index extends React.Component {
           to convert the source image to 8-bit greyscale, 256 shades of grey.
         </p>
 
-        <Img resolutions={resolutions} />
-      </div>
+        <Img fixed={fixed} />
+      </Layout>
     )
   }
 }
@@ -365,9 +381,11 @@ export const pageQuery = graphql`
         }
       }
     }
-    sizes: file(relativePath: { regex: "/fecolormatrix-kanye-west.jpg/" }) {
+    fluidImages: file(
+      relativePath: { regex: "/fecolormatrix-kanye-west.jpg/" }
+    ) {
       childImageSharp {
-        sizes(
+        fluid(
           duotone: { highlight: "#f00e2e", shadow: "#192550" }
           traceSVG: {
             color: "#f00e2e"
@@ -376,75 +394,75 @@ export const pageQuery = graphql`
           }
           toFormat: PNG
         ) {
-          ...GatsbyImageSharpSizes_tracedSVG
+          ...GatsbyImageSharpFluid_tracedSVG
         }
       }
     }
-    sizesDuotone: file(
+    fluidDuotone: file(
       relativePath: { regex: "/fecolormatrix-kanye-west.jpg/" }
     ) {
       childImageSharp {
-        sizes(
+        fluid(
           maxWidth: 120
           duotone: { highlight: "#0ec4f1", shadow: "#192550" }
           traceSVG: { color: "#1E2151" }
         ) {
-          ...GatsbyImageSharpSizes_tracedSVG
+          ...GatsbyImageSharpFluid_tracedSVG
         }
       }
     }
-    sizesDuotone50: file(
+    fluidDuotone50: file(
       relativePath: { regex: "/fecolormatrix-kanye-west.jpg/" }
     ) {
       childImageSharp {
-        sizes(
+        fluid(
           maxWidth: 120
           duotone: { highlight: "#0ec4f1", shadow: "#192550", opacity: 50 }
           traceSVG: { color: "#A7DEF6" }
         ) {
-          ...GatsbyImageSharpSizes_tracedSVG
+          ...GatsbyImageSharpFluid_tracedSVG
         }
       }
     }
-    sizesDuotone75: file(
+    fluidDuotone75: file(
       relativePath: { regex: "/fecolormatrix-kanye-west.jpg/" }
     ) {
       childImageSharp {
-        sizes(
+        fluid(
           maxWidth: 120
           duotone: { highlight: "#0ec4f1", shadow: "#192550", opacity: 75 }
           traceSVG: { color: "#0ec4f1" }
         ) {
-          ...GatsbyImageSharpSizes_tracedSVG
+          ...GatsbyImageSharpFluid_tracedSVG
         }
       }
     }
-    sizesDuotone25: file(
+    fluidDuotone25: file(
       relativePath: { regex: "/fecolormatrix-kanye-west.jpg/" }
     ) {
       childImageSharp {
-        sizes(
+        fluid(
           maxWidth: 120
           traceSVG: { color: "#D1EFFB" }
           duotone: { highlight: "#0ec4f1", shadow: "#192550", opacity: 25 }
         ) {
-          ...GatsbyImageSharpSizes_tracedSVG
+          ...GatsbyImageSharpFluid_tracedSVG
         }
       }
     }
-    sizesDuotoneOriginal: file(
+    fluidDuotoneOriginal: file(
       relativePath: { regex: "/fecolormatrix-kanye-west.jpg/" }
     ) {
       childImageSharp {
-        sizes(maxWidth: 120, traceSVG: { color: "#e7f7fe" }, toFormat: PNG) {
-          ...GatsbyImageSharpSizes_tracedSVG
+        fluid(maxWidth: 120, traceSVG: { color: "#e7f7fe" }, toFormat: PNG) {
+          ...GatsbyImageSharpFluid_tracedSVG
         }
       }
     }
-    resolution: file(relativePath: { regex: "/lol.jpg/" }) {
+    fixedImages: file(relativePath: { regex: "/lol.jpg/" }) {
       childImageSharp {
-        resolutions(grayscale: true, width: 500) {
-          ...GatsbyImageSharpResolutions_withWebp
+        fixed(grayscale: true, width: 500) {
+          ...GatsbyImageSharpFixed_withWebp
         }
       }
     }

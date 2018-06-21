@@ -1,7 +1,7 @@
 /* @flow */
 const levenshtein = require(`fast-levenshtein`)
 const fs = require(`fs-extra`)
-const testRequireError = require(`../utils/test-require-error`)
+const testRequireError = require(`../utils/test-require-error`).default
 const report = require(`gatsby-cli/lib/reporter`)
 const chalk = require(`chalk`)
 const path = require(`path`)

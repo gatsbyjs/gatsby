@@ -1,47 +1,37 @@
-const { transpileModule } = require(`typescript`)
+const { tsPresetsFromJsPresets } = require(`./`)
 
-const test = /\.tsx?$/
-const compilerDefaults = {
-  target: `esnext`,
-  experimentalDecorators: true,
-  jsx: `react`,
-}
+const resolvableExtensions = () => [`.ts`, `.tsx`]
 
-module.exports.resolvableExtensions = () => [`.ts`, `.tsx`]
-
-module.exports.modifyWebpackConfig = (
-  { config, babelConfig },
-  { compilerOptions, transpileOnly = true }
-) => {
-  // CommonJS to keep Webpack happy.
-  const copts = Object.assign({}, compilerDefaults, compilerOptions, {
-    module: `commonjs`,
+function onCreateWebpackConfig({ actions, loaders, stage }) {
+  const jsLoader = loaders.js()
+  if (
+    !(
+      jsLoader &&
+      jsLoader.loader &&
+      jsLoader.options &&
+      jsLoader.options.presets
+    )
+  ) {
+    return
+  }
+  actions.setWebpackConfig({
+    module: {
+      rules: [
+        {
+          test: /\.tsx?$/,
+          use: [
+            {
+              loader: jsLoader.loader,
+              options: {
+                ...jsLoader.options,
+                presets: tsPresetsFromJsPresets(jsLoader.options.presets),
+              },
+            },
+          ],
+        },
+      ],
+    },
   })
-
-  // React-land is rather undertyped; nontrivial TS projects will most likely
-  // error (i.e., not build) at something or other.
-  const opts = { compilerOptions: copts, transpileOnly }
-
-  config.loader(`typescript`, {
-    test,
-    loaders: [
-      `babel?${JSON.stringify(babelConfig)}`,
-      `ts-loader?${JSON.stringify(opts)}`,
-    ],
-  })
 }
-
-module.exports.preprocessSource = (
-  { contents, filename },
-  { compilerOptions }
-) => {
-  // overwrite defaults with custom compiler options
-  const copts = Object.assign({}, compilerDefaults, compilerOptions, {
-    target: `esnext`,
-    module: `es6`,
-  })
-  // return the transpiled source if it's TypeScript, otherwise null
-  return test.test(filename)
-    ? transpileModule(contents, { compilerOptions: copts }).outputText
-    : null
-}
+exports.onCreateWebpackConfig = onCreateWebpackConfig
+exports.resolvableExtensions = resolvableExtensions
