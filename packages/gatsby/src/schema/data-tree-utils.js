@@ -6,6 +6,7 @@ const invariant = require(`invariant`)
 
 const createKey = require(`./create-key`)
 const { typeConflictReporter } = require(`./type-conflict-reporter`)
+const DateType = require(`./types/type-date`)
 
 import type { TypeEntry } from "./type-conflict-reporter"
 
@@ -56,6 +57,62 @@ const extractTypes = value => {
   }
 }
 
+const isMixOfDateObjectsAndDateStrings = (
+  values: any[],
+  uniqueTypes: string[]
+): boolean => {
+  if (
+    uniqueTypes.length === 2 &&
+    uniqueTypes.includes(`string`) &&
+    uniqueTypes.includes(`date`)
+  ) {
+    const allValuesAreDates = values.every(value => {
+      if (typeOf(value) === `date`) return true
+
+      // use infer checker to determine if string is a date
+      return DateType.shouldInfer(value)
+    })
+
+    return allValuesAreDates
+  }
+
+  return false
+}
+
+const conflictIsValidSpecialCase = (
+  entries: TypeEntry[],
+  entriesOfUniqueType: TypeEntry[]
+): boolean => {
+  const isConsistentlyScalarOrArray = entriesOfUniqueType.every(
+    entry =>
+      entry.arrayTypes.length > 0 ===
+      entriesOfUniqueType[0].arrayTypes.length > 0
+  )
+  if (isConsistentlyScalarOrArray) {
+    // Get values and run them through special cases, to see if there actually
+    // is a conflict. This is done so late in process, because those checks
+    // would be expensive to do earlier during extraction, so we do them
+    // only when we have potential conflict.
+
+    let uniqueTypes: string[]
+    let values: any[]
+    const isArray = entriesOfUniqueType[0].arrayTypes.length > 0
+
+    if (isArray) {
+      values = _.flatten(entries.map(entry => entry.value))
+      uniqueTypes = _.uniq(
+        _.flatten(entriesOfUniqueType.map(entry => entry.arrayTypes))
+      )
+    } else {
+      values = entries.map(entry => entry.value)
+      uniqueTypes = entriesOfUniqueType.map(entry => entry.type)
+    }
+
+    return isMixOfDateObjectsAndDateStrings(values, uniqueTypes)
+  }
+  return false
+}
+
 const getExampleScalarFromArray = values =>
   _.reduce(
     values,
@@ -87,10 +144,13 @@ const extractFromEntries = (
     entriesOfUniqueType[0].arrayTypes.length > 1
   ) {
     // there is multiple types or array of multiple types
-    if (selector) {
-      typeConflictReporter.addConflict(selector, entriesOfUniqueType)
+    // that aren't handled by any special case
+    if (!conflictIsValidSpecialCase(entries, entriesOfUniqueType)) {
+      if (selector) {
+        typeConflictReporter.addConflict(selector, entriesOfUniqueType)
+      }
+      return INVALID_VALUE
     }
-    return INVALID_VALUE
   }
 
   // Now we have entries of single type, we can merge them
