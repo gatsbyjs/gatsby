@@ -353,7 +353,7 @@ First, let's create a new `Container` component. Create a new directory at
 
 ```javascript
 import React from "react"
-import containerStyles from './container.module.css'
+import containerStyles from "./container.module.css"
 
 export default ({ children }) => (
   <div className={containerStyles.container}>{children}</div>
@@ -365,11 +365,11 @@ You'll notice we imported a css modules file named `container.module.css`. Let's
 In the same directory, create the `container.module.css` file and paste in it:
 
 ```css
-.container {		
-  margin: 3rem auto;		
-  max-width: 600px;		
+.container {
+  margin: 3rem auto;
+  max-width: 600px;
 }
- ```
+```
 
 Then, create a new page component by creating a file at
 `src/pages/about-css-modules.js`:

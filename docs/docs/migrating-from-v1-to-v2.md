@@ -8,6 +8,34 @@ title: Migrating from v1 to v2
 
 This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While there's a lot covered here, you probably won't need to do everything for your site.
 
+# Starting a new project with Gatsby v2
+
+Before diving in to the upgrade guide, here's a brief section on starting a new project with Gatsby v2 instead of upgrading an existing project.
+
+If you're a _start from scratch_ kind of person, you can install the Gatsby beta and React like this: `npm install gatsby@next react react-dom`
+
+If you'd rather use one of the official starters, you're in luck, there's a v2 edition for each of them. You can install each one using the Gatsby CLI.
+
+`gatsby-starter-default` with v2:
+
+```
+gatsby new my-default-project https://github.com/gatsbyjs/gatsby-starter-default#v2
+```
+
+`gatsby-starter-hello-world` with v2:
+
+```
+gatsby new my-hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world#v2
+```
+
+`gatsby-starter-blog` with v2:
+
+```
+gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
+```
+
+Read on for a detailed guide on what's new in version 2!
+
 ## What we'll cover
 
 - [Update Gatsby version](#update-gatsby-version)

@@ -685,7 +685,7 @@ To solve this, you can use the [acf/format_value filter](https://www.advancedcus
 
 Using the following function, you can check for an empty field and if it's empty return `null`.
 
-```
+```php
 if (!function_exists('acf_nullify_empty')) {
     /**
      * Return `null` if an empty value is returned from ACF.
@@ -707,16 +707,26 @@ if (!function_exists('acf_nullify_empty')) {
 
 You can then apply this function to all ACF fields using the following code snippet:
 
-```
+```php
 add_filter('acf/format_value', 'acf_nullify_empty', 100, 3);
 ```
 
 Or if you would prefer to target specific fields, you can use the `acf/format_value/type={$field_type}` filter. Here are some examples:
 
-```
+```php
 add_filter('acf/format_value/type=image', 'acf_nullify_empty', 100, 3);
 add_filter('acf/format_value/type=gallery', 'acf_nullify_empty', 100, 3);
 add_filter('acf/format_value/type=repeater', 'acf_nullify_empty', 100, 3);
 ```
 
 This code should be added as a plugin (recommended), or within the `functions.php` of a theme.
+
+### Self-signed certificates
+
+When running locally, or in other situations that may involve self-signed certificates, you may run into the error: `The request failed with error code "DEPTH_ZERO_SELF_SIGNED_CERT"`.
+
+To solve this, you can disable Node.js' rejection of unauthorized certificates by adding the following to `gatsby-node.js`:
+
+```javascript
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
+```

@@ -2,8 +2,8 @@
 title: 'Gatsby Starters'
 ---
 
-The Gatsby CLI tool lets you install "starters". These are partially built sites
-preconfigured to help you get moving faster on creating a certain type of site.
+The Gatsby CLI tool lets you install “starters”. These are boilerplate Gatsby sites maintained by the community.
+`gatsby new` helps you start your project by cloning the boilerplate, installing dependencies, and clearing git history.
 
 When creating a new site, you can optionally specify a starter to base your new
 site on e.g.
@@ -760,3 +760,12 @@ Community:
   - Eslint & Prettier. Uses [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript)
   - Authentication via Moltin (Login and Register)
   - [More info here](https://github.com/parmsang/gatsby-starter-ecommerce)
+
+- [gatsby-starter-tachyons](https://github.com/pixelsign/gatsby-starter-tachyons)
+  [(demo)](https://gatsby-tachyons.netlify.com/)
+
+  Features:
+
+  - Based on [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default)
+  - Using [Tachyons](https://github.com/tachyons-css/tachyons/) for CSS. [Read the tachyons docs](http://tachyons.io/docs/)
+  - Find out about the tachyons open source component library [here](http://tachyons.io/components/) to get you going.

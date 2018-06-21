@@ -44,6 +44,11 @@ plugins: [
 ]
 ```
 
+### Offline
+
+If you don't have internet connection you can add `export GATSBY_CONTENTFUL_OFFLINE=true` to tell the plugin to fallback to the cached data, if there is any.
+
+
 ### Configuration options
 
 **`spaceId`** [string][required]

@@ -186,10 +186,10 @@ module.exports = async (
             clearConsole: false,
             compilationSuccessInfo: {
               messages: [
-                `You can now view your site in the browser running at http://${
+                `You can now view your site in the browser running at ${program.ssl ? `https` : `http`}://${
                   program.host
                 }:${program.port}`,
-                `Your graphql debugger is running at http://${program.host}:${
+                `Your graphql debugger is running at ${program.ssl ? `https` : `http`}://${program.host}:${
                   program.port
                 }/___graphql`,
               ],

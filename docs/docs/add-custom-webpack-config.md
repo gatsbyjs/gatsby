@@ -38,9 +38,7 @@ e.g. [Sass](/packages/gatsby-plugin-sass/),
 
 ## Examples
 
-### Flexboxgrid
-
-Here is an example that configures **flexboxgrid** when processing css files. Add this in `gatsby-node.js`:
+Here is an example adding an additional global variable via the `DefinePlugin` and the `less-loader`:
 
 ```js
 exports.onCreateWebpackConfig = ({
@@ -55,19 +53,17 @@ exports.onCreateWebpackConfig = ({
       rules: [
         {
           test: /\.less$/,
-          // We don't need to add the matching ExtractText plugin
-          // because gatsby already includes it and makes sure its only
-          // run at the appropriate stages, e.g. not in development
-          use: plugins.extractText.extract({
-            fallback: loaders.style(),
-            use: [
-              loaders.css({ importLoaders: 1 }),
-              // the postcss loader comes with some nice defaults
-              // including autoprefixer for our configured browsers
-              loaders.postcss(),
-              `less-loader`,
-            ],
-          }),
+          use: [
+            // We don't need to add the matching ExtractText plugin
+            // because gatsby already includes it and makes sure its only
+            // run at the appropriate stages, e.g. not in development
+            loaders.miniCssExtract(),
+            loaders.css({ importLoaders: 1 }),
+            // the postcss loader comes with some nice defaults
+            // including autoprefixer for our configured browsers
+            loaders.postcss(),
+            `less-loader`,
+          ],
         },
       ],
     },
