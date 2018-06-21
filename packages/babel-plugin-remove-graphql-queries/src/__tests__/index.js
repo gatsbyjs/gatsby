@@ -48,6 +48,44 @@ it(`allows the global tag`, () => {
   )
 })
 
+it(`distinguishes between the right tags`, () => {
+  matchesSnapshot(
+    `
+  const foo = styled('div')\`
+     {
+       $\{foo}
+     }
+  \`
+
+  const pulse = keyframes\`
+    0% {
+      transform: scale(1);
+      animation-timing-function: ease-in;
+    }
+    25% {
+      animation-timing-function: ease-out;
+      transform: scale(1.05);
+    }
+    50% {
+      transform: scale(1.12);
+      animation-timing-function: ease-in;
+    }
+    to {
+      transform: scale(1);
+      animation-timing-function: ease-out;
+    }
+  \`;
+
+
+  export const query = graphql\`
+     {
+       site { siteMetadata { title }}
+     }
+  \`
+  `
+  )
+})
+
 it(`handles import aliasing`, () => {
   matchesSnapshot(
     `

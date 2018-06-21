@@ -3,6 +3,9 @@ const graphql = require(`gatsby/graphql`)
 const murmurhash = require(`./murmur`)
 const nodePath = require(`path`)
 
+const isGlobalIdentifier = tag =>
+  tag.isIdentifier({ name: `graphql` }) && tag.scope.hasGlobal(`graphql`)
+
 function getTagImport(tag) {
   const name = tag.node.name
   const binding = tag.scope.getBinding(name)
@@ -41,10 +44,7 @@ function isGraphqlTag(tag) {
   const identifier = isExpression ? tag.get(`object`) : tag
 
   const importPath = getTagImport(identifier)
-  if (!importPath)
-    return (
-      tag.scope.hasGlobal(`graphql`) && tag.isIdentifier({ name: `graphql` })
-    )
+  if (!importPath) return isGlobalIdentifier(tag)
 
   if (
     isExpression &&
@@ -87,7 +87,7 @@ function removeImport(tag) {
 
 function getGraphQLTag(path) {
   const tag = path.get(`tag`)
-  const isGlobal = tag.scope.hasGlobal(`graphql`)
+  const isGlobal = isGlobalIdentifier(tag)
 
   if (!isGlobal && !isGraphqlTag(tag)) return {}
 

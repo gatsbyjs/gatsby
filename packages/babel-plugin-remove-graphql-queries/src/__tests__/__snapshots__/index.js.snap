@@ -26,6 +26,33 @@ exports[`Transforms queries in page components 1`] = `"export const query = \\"3
 
 exports[`allows the global tag 1`] = `"export const query = \\"3687030656\\";"`;
 
+exports[`distinguishes between the right tags 1`] = `
+"const foo = styled('div')\`
+     {
+       \${foo}
+     }
+  \`;
+const pulse = keyframes\`
+    0% {
+      transform: scale(1);
+      animation-timing-function: ease-in;
+    }
+    25% {
+      animation-timing-function: ease-out;
+      transform: scale(1.05);
+    }
+    50% {
+      transform: scale(1.12);
+      animation-timing-function: ease-in;
+    }
+    to {
+      transform: scale(1);
+      animation-timing-function: ease-out;
+    }
+  \`;
+export const query = \\"3687030656\\";"
+`;
+
 exports[`handles import aliasing 1`] = `"export const query = \\"3687030656\\";"`;
 
 exports[`handles require 1`] = `"export const query = \\"3687030656\\";"`;
