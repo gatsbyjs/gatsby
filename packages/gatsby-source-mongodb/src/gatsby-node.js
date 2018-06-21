@@ -19,7 +19,7 @@ exports.sourceNodes = (
   if (pluginOptions.auth)
     authUrlPart = `${pluginOptions.auth.user}:${pluginOptions.auth.password}@`
 
-  let connectionExtraParams = getConnectionExtraParams(pluginOptions.extraParams);
+  let connectionExtraParams = getConnectionExtraParams(pluginOptions.extraParams)
   const connectionURL = `mongodb://${authUrlPart}${serverOptions.address}:${
     serverOptions.port
   }/${dbName}${connectionExtraParams}`
@@ -123,10 +123,10 @@ function caps(s) {
 }
 
 function getConnectionExtraParams(extraParams) {
-  var connectionSuffix;
+  var connectionSuffix
   if (extraParams) {
-    connectionSuffix = queryString.stringify(extraParams, {sort: false});
+    connectionSuffix = queryString.stringify(extraParams, { sort: false })
   }
 
-  return connectionSuffix ? "?" + connectionSuffix : "";
+  return connectionSuffix ? `?` + connectionSuffix : ``
 }
