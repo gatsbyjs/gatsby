@@ -55,6 +55,14 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
 
 ## Community starters
 
+- [gatsby-starter-cosmicjs](https://github.com/cosmicjs/gatsby-starter)
+  [(demo)](https://cosmicjs-gatsby-starter.netlify.com)
+
+  Features:
+
+  - Same as `gatsby-starter-default` with dynamic content from [Cosmic JS](https://cosmicjs.com)
+  - Install and set up CMS in seconds [via the command line](https://github.com/cosmicjs/gatsby-starter)
+  
 - [gatsby-starter-blog-no-styles](https://github.com/noahg/gatsby-starter-blog-no-styles)
   [(demo)](http://capricious-spring.surge.sh/)
 
