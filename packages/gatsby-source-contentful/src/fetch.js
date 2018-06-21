@@ -2,23 +2,15 @@ const contentful = require(`contentful`)
 const _ = require(`lodash`)
 const normalize = require(`./normalize`)
 
-module.exports = async ({
-  spaceId,
-  accessToken,
-  host,
-  syncToken,
-  environment,
-}) => {
-  // Fetch entries.
+module.exports = async ({ spaceId, host, syncToken, ...options }) => {
+  // Fetch articles.
   console.time(`Fetch Contentful data`)
 
   console.log(`Starting to fetch data from Contentful`)
 
   const client = contentful.createClient({
     space: spaceId,
-    accessToken,
-    environment,
-    host: host || `cdn.contentful.com`,
+    ...options,
   })
 
   // The sync API puts the locale in all fields in this format { fieldName:
