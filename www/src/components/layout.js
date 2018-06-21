@@ -1,10 +1,10 @@
 import React from "react"
 import Modal from "react-modal"
 import Helmet from "react-helmet"
+import { OutboundLink } from "gatsby-plugin-google-analytics"
+import { rhythm, options } from "../utils/typography"
 import MdClose from "react-icons/lib/md/close"
-
 import { push, PageRenderer } from "gatsby"
-
 import presets, { colors } from "../utils/presets"
 import Navigation from "../components/navigation"
 import MobileNavigation from "../components/navigation-mobile"
@@ -181,7 +181,7 @@ class DefaultLayout extends React.Component {
         <div
           className={`main-body`}
           css={{
-            paddingTop: 0,
+            paddingTop: `2.8rem`,
             [presets.Tablet]: {
               margin: `0 auto`,
               paddingTop: isHomepage
