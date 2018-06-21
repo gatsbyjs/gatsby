@@ -20,7 +20,6 @@ async function fetch({
   _auth,
   _perPage,
   _concurrentRequests,
-  _routeListType,
   _includedRoutes,
   _excludedRoutes,
   typePrefix,
@@ -87,7 +86,6 @@ Mama Route URL: ${url}
       _useACF,
       _acfOptionPageIds,
       _hostingWPCOM,
-      _routeListType,
       _includedRoutes,
       _excludedRoutes,
       typePrefix,
@@ -353,19 +351,17 @@ Pages to be requested : ${totalPages}`
  *
  * @param {any} routePath
  * @param {Array} routeList
- * @param {any} routeListType
  * @returns {boolean}
  */
-function checkRouteList({ routePath, routeList, routeListType }) {
-  const whitelist = routeListType === 'whitelist'
+function checkRouteList({ routePath, routeList }) {
   if (
     routeList.some(route =>
       minimatch(routePath, route)
     )
   ) {
-    return (whitelist ? true : false)
+    return true
   } else {
-    return (whitelist ? false : true)
+    return false
   }
 }
 
@@ -385,7 +381,6 @@ function getValidRoutes({
   _useACF,
   _acfOptionPageIds,
   _hostingWPCOM,
-  _routeListType,
   _includedRoutes,
   _excludedRoutes,
   typePrefix,
@@ -415,17 +410,13 @@ function getValidRoutes({
       ]
 
       const routePath = getRoutePath(url, route._links.self)
-
-      if (_routeListType === 'whitelist') {
-        const routeList = _includedRoutes
-      } else {
-        const routeList = [...excludedTypes, ..._excludedRoutes]
-      }
-      const validRoute = checkRouteList(
-        routePath,
-        routeList,
-        _routeListType,
-      );
+      const whiteList = _includedRoutes
+      const blackList = [...excludedTypes, ..._excludedRoutes]
+      let validRoute;
+      // Check whitelist first
+      validRoute = checkRouteList(routePath, whiteList);
+      // Then blacklist
+      validRoute = !checkRouteList(routePath, blackList);
 
       if (validRoute) {
         if (_verbose)

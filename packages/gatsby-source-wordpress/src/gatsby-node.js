@@ -18,7 +18,6 @@ let _hostingWPCOM
 let _auth
 let _perPage
 let _concurrentRequests
-let _routeListType
 let _includedRoutes
 let _excludedRoutes
 let _normalizer
@@ -36,8 +35,14 @@ exports.sourceNodes = async (
     perPage = 100,
     searchAndReplaceContentUrls = {},
     concurrentRequests = 10,
-    routeListType = 'blacklist',
-    includedRoutes = ["/*/*/posts", "/*/*/pages", "/*/*/media"],
+    includedRoutes = [
+      "/*/*/categories",
+      "/*/*/posts",
+      "/*/*/pages",
+      "/*/*/media",
+      "/*/*/tags",
+      "/*/*/users",
+    ],
     excludedRoutes = [],
     normalizer,
   }
@@ -51,7 +56,6 @@ exports.sourceNodes = async (
   _auth = auth
   _perPage = perPage
   _concurrentRequests = concurrentRequests
-  _routeListType = routeListType
   _includedRoutes = includedRoutes
   _excludedRoutes = excludedRoutes
   _normalizer = normalizer
@@ -66,7 +70,6 @@ exports.sourceNodes = async (
     _auth,
     _perPage,
     _concurrentRequests,
-    _routeListType,
     _includedRoutes,
     _excludedRoutes,
     typePrefix,
