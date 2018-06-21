@@ -4,11 +4,11 @@ date: "2018-06-21"
 author: "Sam Bhagwat"
 ---
 
-[Escalade Sports](www.escaladesports.com) is a sports equipment company with a portfolio of 40 brands across a wide variety of sports—from Goalrilla basketball hoops to Bear Archery bows to Onix pickleball paddles.
+[Escalade Sports](https://www.escaladesports.com/) is a sports equipment company with a portfolio of 40 brands across a wide variety of sports—from Goalrilla basketball hoops to Bear Archery bows to Onix pickleball paddles.
 
 Headquartered in Evansville, Indiana, USA, Escalade sells its equipment direct-to-consumers online, as well as through a network of local and regional distributors and specialty stores.
 
-Escalade recently started migrating its sites to Gatsby. They first chose to migrate one of their e-commerce brands, [cajunbowfishing.com](cajunbowfishing.com) and recently relaunched it on Gatsby. Next they’ll be migrating the Escalade Sports homepage and then other brand sites.
+Escalade recently started migrating its sites to Gatsby. They first chose to migrate one of their e-commerce brands, [cajunbowfishing.com](https://cajunbowfishing.com/) and recently relaunched it on Gatsby. Next they’ll be migrating the Escalade Sports homepage and then other brand sites.
 
 ![cajunbowfishing.com homepage](./cajun-bowfishing-homepage.jpg)
 
