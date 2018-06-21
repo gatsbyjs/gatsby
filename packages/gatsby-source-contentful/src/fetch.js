@@ -1,6 +1,5 @@
 const contentful = require(`contentful`)
 const _ = require(`lodash`)
-
 const normalize = require(`./normalize`)
 
 module.exports = async ({
@@ -10,8 +9,9 @@ module.exports = async ({
   syncToken,
   environment,
 }) => {
-  // Fetch articles.
+  // Fetch entries.
   console.time(`Fetch Contentful data`)
+
   console.log(`Starting to fetch data from Contentful`)
 
   const client = contentful.createClient({
@@ -36,9 +36,10 @@ module.exports = async ({
     console.log(
       `Accessing your Contentful space failed. Perhaps you're offline or the spaceId/accessToken is incorrect.`
     )
-    // TODO perhaps continue if there's cached data? That would let
-    // someone develop a contentful site even if not connected to the internet.
-    // For prod builds though always fail if we can't get the latest data.
+    console.log(
+      `Try running setting GATSBY_CONTENTFUL_OFFLINE=true to see if we can serve from cache.`
+    )
+
     process.exit(1)
   }
 
@@ -91,12 +92,14 @@ module.exports = async ({
     return null
   })
 
-  return {
+  const result = {
     currentSyncData,
     contentTypeItems,
     defaultLocale,
     locales,
   }
+
+  return result
 }
 
 /**
