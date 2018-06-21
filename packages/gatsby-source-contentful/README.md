@@ -67,6 +67,8 @@ The base host for all the API requests, by default it's 'cdn.contentful.com', if
 
 The environment to pull the content from, for more info on environments check out this [Guide](https://www.contentful.com/developers/docs/concepts/multiple-environments/).
 
+You can pass in any other options available in the [contentful.js SDK](https://github.com/contentful/contentful.js#configuration).
+
 ## Notes on Contentful Content Models
 
 There are currently some things to keep in mind when building your content models at contentful.
