@@ -8,15 +8,15 @@
 
 <img alt="Gatsby" src="https://www.gatsbyjs.org/monogram.svg" width="100">
 
-# Gatsby V2 Beta
+# Gatsby v2 Beta
 
 ⚛️📄🚀 Blazing-fast site generator for React
 
-**NOTE:** This branch is the beta version of Gatsby V2. You can find documentation at [next.gatsbyjs.org](https://next.gatsbyjs.org/).
+**NOTE:** This branch is the beta version of Gatsby v2. You can find documentation at [next.gatsbyjs.org](https://next.gatsbyjs.org/).
 
 For `gatsby@1`, please see [the v1 branch](https://github.com/gatsbyjs/gatsby/tree/v1).
 
-**Are you using V1 and want to try upgrading and help prepare Gatsby for v2? Check out [our V1 => V2 migration guide](https://next.gatsbyjs.org/docs/migrating-from-v1-to-v2/).**
+**Are you using v1 and want to upgrade to the Gatsby v2 Beta? Check out [our v1 => v2 migration guide](https://next.gatsbyjs.org/docs/migrating-from-v1-to-v2/).**
 
 **Starting a new project with Gatsby v2**
 If you'd like to start a new project with Gatsby v2 you can use the v2 edition of any offical starter. Install your favourite one with the Gatsby CLI.
