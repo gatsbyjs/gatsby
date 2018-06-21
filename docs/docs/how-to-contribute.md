@@ -95,6 +95,8 @@ a pull request.
 
 ### Contributing to the blog
 
+Note: Before adding a blog post ensure you have approval from a member of the Gatsby team. You can do this by [opening an issue](https://github.com/gatsbyjs/gatsby/issues/new/choose) or contacting [@gatsbyjs on Twitter](https://twitter.com/gatsbyjs).
+
 To add a new blog post to the gatsbyjs.org blog:
 
 * Clone [the Gatsby repo](https://github.com/gatsbyjs/gatsby/) and navigate to `/www`
