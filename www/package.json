@@ -13,6 +13,7 @@
     "gatsby-plugin-fullstory": "^1.0.3",
     "gatsby-plugin-glamor": "^1.6.13",
     "gatsby-plugin-google-analytics": "^1.0.28",
+    "gatsby-plugin-google-tagmanager": "^1.0.19",
     "gatsby-plugin-lodash": "^1.0.11",
     "gatsby-plugin-mailchimp": "^2.2.2",
     "gatsby-plugin-manifest": "^1.0.19",
