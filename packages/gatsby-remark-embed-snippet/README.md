@@ -110,6 +110,30 @@ baz: "highlighted"
 quz: "highlighted"
 ```
 
+### Hide Lines
+
+Also is possible specify a range of lines to be hide.
+
+#### JavaScript example
+
+```js
+// hideline-range{1-3,9-11}
+import React from "react"
+import ReactDOM from "react-dom"
+
+function App() {
+  return (
+    <h1>Hello world!</h1>
+  )
+}
+
+const rootElement = document.getElementById("root")
+ReactDOM.render(<App />, rootElement)
+```
+
+Will produce something like this:
+![screenshot from 2018-06-21 20-21-58](https://user-images.githubusercontent.com/5726140/41750161-cdf430cc-7590-11e8-9ccb-8829bcce0f14.png)
+
 ## Installation
 
 `npm install --save gatsby-remark-embed-snippet`
