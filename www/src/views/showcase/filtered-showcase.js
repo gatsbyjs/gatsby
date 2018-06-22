@@ -16,14 +16,17 @@ import presets, { colors } from "../../utils/presets"
 import URLQuery from "../../components/url-query"
 
 const filterByCategories = (list, categories) => {
-  let items = list
+  const items = list.reduce((aggregated, edge) => {
+    if (edge.node.categories) {
+      if (edge.node.categories.filter(c => categories.includes(c)).length) {
+        aggregated.push(edge)
+      }
 
-  items = items.filter(
-    ({ node }) =>
-      node.categories &&
-      node.categories.filter(c => categories.includes(c)).length ===
-        categories.length
-  )
+      return aggregated
+    }
+
+    return aggregated
+  }, [])
 
   return items
 }
