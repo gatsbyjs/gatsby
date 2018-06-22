@@ -11,10 +11,10 @@ class URLQuery extends Component {
       location: { search },
     } = this.props
 
-    this.updateFilters(search)
+    this.getDerivedStateFromQuery(search)
 
     this.unlisten = history.listen(({ search }) => {
-      this.updateFilters(search)
+      this.getDerivedStateFromQuery(search)
     })
   }
 
@@ -22,7 +22,7 @@ class URLQuery extends Component {
     this.unlisten()
   }
 
-  updateFilters = search => {
+  getDerivedStateFromQuery = search => {
     const { filters } = qs.parse(search.replace(`?`, ``))
 
     this.setState(() => {
