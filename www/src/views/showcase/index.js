@@ -13,18 +13,17 @@ import { ShowcaseIcon } from "../../assets/mobile-nav-icons"
 import { options, scale, rhythm } from "../../utils/typography"
 import presets, { colors } from "../../utils/presets"
 import scrollToAnchor from "../../utils/scroll-to-anchor"
+import URLQuery from "../../components/url-query"
 
 class ShowcaseView extends Component {
-  state = {
-    filters: new Set([]),
-  }
-
   showcase = React.createRef()
 
-  onClickHandler = target =>
+  onClickHandler = (target, updateQuery) =>
     target.current
       ? scrollToAnchor(target.current, () => {
-          this.setState({ filters: new Set([`Featured`]) })
+          updateQuery(({ filters }) => {
+            return { filters: [`Featured`] }
+          })
         })
       : () => {}
 
@@ -85,34 +84,38 @@ class ShowcaseView extends Component {
             >
               Featured Sites
             </h1>
-            <a
-              href="#showcase"
-              {...styles.withTitleHover}
-              css={{
-                display: `none`,
-                [presets.Phablet]: {
-                  display: `block`,
-                },
-                "&&": {
-                  ...scale(-1 / 6),
-                  boxShadow: `none`,
-                  borderBottom: 0,
-                  color: colors.lilac,
-                  cursor: `pointer`,
-                  fontFamily: options.headerFontFamily.join(`,`),
-                  fontWeight: `normal`,
-                  "&:hover": {
-                    background: `transparent`,
-                    color: colors.gatsby,
-                  },
-                },
-              }}
-              onClick={this.onClickHandler(this.showcase)}
-            >
-              <span className="title">View all</span>&nbsp;<MdArrowForward
-                style={{ marginLeft: 4, verticalAlign: `sub` }}
-              />
-            </a>
+            <URLQuery>
+              {(_, updateQuery) => (
+                <a
+                  href="#showcase"
+                  {...styles.withTitleHover}
+                  css={{
+                    display: `none`,
+                    [presets.Phablet]: {
+                      display: `block`,
+                    },
+                    "&&": {
+                      ...scale(-1 / 6),
+                      boxShadow: `none`,
+                      borderBottom: 0,
+                      color: colors.lilac,
+                      cursor: `pointer`,
+                      fontFamily: options.headerFontFamily.join(`,`),
+                      fontWeight: `normal`,
+                      "&:hover": {
+                        background: `transparent`,
+                        color: colors.gatsby,
+                      },
+                    },
+                  }}
+                  onClick={this.onClickHandler(this.showcase, updateQuery)}
+                >
+                  <span className="title">View all</span>&nbsp;<MdArrowForward
+                    style={{ marginLeft: 4, verticalAlign: `sub` }}
+                  />
+                </a>
+              )}
+            </URLQuery>
             <div
               css={{
                 display: `flex`,
@@ -231,76 +234,85 @@ class ShowcaseView extends Component {
                   display: `flex`,
                 }}
               >
-                <a
-                  href="#showcase"
-                  {...styles.featuredSitesCard}
-                  css={{
-                    marginRight: `${rhythm(3 / 4)} !important`,
-                    border: `1px solid ${hex2rgba(colors.lilac, 0.2)}`,
-                    borderRadius: presets.radius,
-                    textAlign: `center`,
-                    "&&": {
-                      boxShadow: `none`,
-                      transition: `all ${presets.animation.speedDefault} ${
-                        presets.animation.curveDefault
-                      }`,
-                      "&:hover": {
-                        backgroundColor: hex2rgba(colors.ui.light, 0.25),
-                        transform: `translateY(-3px)`,
-                        boxShadow: `0 8px 20px ${hex2rgba(colors.lilac, 0.5)}`,
-                      },
-                    },
-                  }}
-                  onClick={this.onClickHandler(this.showcase)}
-                >
-                  <div
-                    css={{
-                      margin: rhythm(1),
-                      background: colors.ui.whisper,
-                      display: `flex`,
-                      alignItems: `center`,
-                      position: `relative`,
-                      flexBasis: `100%`,
-                    }}
-                  >
-                    <img
-                      src={ShowcaseIcon}
+                <URLQuery>
+                  {(_, updateQuery) => (
+                    <a
+                      href="#showcase"
+                      {...styles.featuredSitesCard}
                       css={{
-                        position: `absolute`,
-                        height: `100%`,
-                        width: `auto`,
-                        display: `block`,
-                        margin: `0`,
-                        opacity: 0.04,
+                        marginRight: `${rhythm(3 / 4)} !important`,
+                        border: `1px solid ${hex2rgba(colors.lilac, 0.2)}`,
+                        borderRadius: presets.radius,
+                        textAlign: `center`,
+                        "&&": {
+                          boxShadow: `none`,
+                          transition: `all ${presets.animation.speedDefault} ${
+                            presets.animation.curveDefault
+                          }`,
+                          "&:hover": {
+                            backgroundColor: hex2rgba(colors.ui.light, 0.25),
+                            transform: `translateY(-3px)`,
+                            boxShadow: `0 8px 20px ${hex2rgba(
+                              colors.lilac,
+                              0.5
+                            )}`,
+                          },
+                        },
                       }}
-                      alt=""
-                    />
-                    <span
-                      css={{
-                        margin: `0 auto`,
-                        color: colors.gatsby,
-                      }}
+                      onClick={this.onClickHandler(this.showcase, updateQuery)}
                     >
-                      <img
-                        src={ShowcaseIcon}
+                      <div
                         css={{
-                          height: 44,
-                          width: `auto`,
-                          display: `block`,
-                          margin: `0 auto ${rhythm(options.blockMarginBottom)}`,
-                          [presets.Tablet]: {
-                            height: 64,
-                          },
-                          [presets.Hd]: {
-                            height: 72,
-                          },
+                          margin: rhythm(1),
+                          background: colors.ui.whisper,
+                          display: `flex`,
+                          alignItems: `center`,
+                          position: `relative`,
+                          flexBasis: `100%`,
                         }}
-                        alt=""
-                      />
-                      View all Featured Sites
-                    </span>
-                  </div>
-                </a>
+                      >
+                        <img
+                          src={ShowcaseIcon}
+                          css={{
+                            position: `absolute`,
+                            height: `100%`,
+                            width: `auto`,
+                            display: `block`,
+                            margin: `0`,
+                            opacity: 0.04,
+                          }}
+                          alt=""
+                        />
+                        <span
+                          css={{
+                            margin: `0 auto`,
+                            color: colors.gatsby,
+                          }}
+                        >
+                          <img
+                            src={ShowcaseIcon}
+                            css={{
+                              height: 44,
+                              width: `auto`,
+                              display: `block`,
+                              margin: `0 auto ${rhythm(
+                                options.blockMarginBottom
+                              )}`,
+                              [presets.Tablet]: {
+                                height: 64,
+                              },
+                              [presets.Hd]: {
+                                height: 72,
+                              },
+                            }}
+                            alt=""
+                          />
+                          View all Featured Sites
+                        </span>
+                      </div>
+                    </a>
+                  )}
+                </URLQuery>
               </div>
             </div>
             <div
@@ -325,11 +337,7 @@ class ShowcaseView extends Component {
           }}
           ref={this.showcase}
         />
-        <FilteredShowcase
-          data={data}
-          filters={this.state.filters}
-          setFilters={filters => this.setState({ filters })}
-        />
+        <FilteredShowcase data={data} />
       </Layout>
     )
   }

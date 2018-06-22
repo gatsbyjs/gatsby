@@ -13,24 +13,7 @@ import Collapsible from "./collabsible"
 import SearchIcon from "../../components/search-icon"
 import { options, scale, rhythm } from "../../utils/typography"
 import presets, { colors } from "../../utils/presets"
-
-const count = arrays => {
-  let counts = new Map()
-
-  for (let categories of arrays) {
-    if (!categories) continue
-
-    for (let category of categories) {
-      if (!counts.has(category)) {
-        counts.set(category, 0)
-      }
-
-      counts.set(category, counts.get(category) + 1)
-    }
-  }
-
-  return counts
-}
+import URLQuery from "../../components/url-query"
 
 const filterByCategories = (list, categories) => {
   let items = list
@@ -38,7 +21,8 @@ const filterByCategories = (list, categories) => {
   items = items.filter(
     ({ node }) =>
       node.categories &&
-      node.categories.filter(c => categories.has(c)).length === categories.size
+      node.categories.filter(c => categories.includes(c)).length ===
+        categories.length
   )
 
   return items
@@ -72,291 +56,333 @@ class FilteredShowcase extends Component {
   }
 
   render() {
-    const { data, filters } = this.props
-
-    let items = data.allSitesYaml.edges
-
-    if (this.state.search.length > 0) {
-      items = this.fuse.search(this.state.search)
-    }
-
-    if (filters.size > 0) {
-      items = filterByCategories(items, filters)
-    }
+    const { data } = this.props
 
     return (
-      <section
-        className="showcase"
-        css={{
-          display: `flex`,
-        }}
-      >
-        <div
-          css={{
-            display: `none`,
-            [presets.Desktop]: {
-              display: `block`,
-              flexBasis: `15rem`,
-              minWidth: `15rem`,
-              ...styles.sticky,
-              paddingTop: 0,
-              borderRight: `1px solid ${colors.ui.light}`,
-              // background: colors.ui.whisper,
-              height: `calc(100vh - ${presets.headerHeight})`,
+      <URLQuery>
+        {({ filters = [] }, updateQuery) => {
+          let items = data.allSitesYaml.edges
+
+          if (this.state.search.length > 0) {
+            items = this.fuse.search(this.state.search)
+          }
+
+          if (filters && filters.length > 0) {
+            items = filterByCategories(items, filters)
+          }
+
+          // create map of categories with totals
+          const aggregatedCategories = data.allSitesYaml.edges.reduce(
+            (categories, edge) => {
+              edge.node.categories.forEach(category => {
+                // if we already have the category recorded, increase count
+                if (categories[category]) {
+                  categories[category] = categories[category] + 1
+                } else {
+                  // record first encounter of category
+                  categories[category] = 1
+                }
+              })
+
+              return { ...categories }
             },
-          }}
-        >
-          <h3
-            css={{
-              margin: 0,
-              [presets.Desktop]: {
-                ...scale(1 / 8),
-                lineHeight: 1,
-                height: presets.headerHeight,
-                margin: 0,
-                color: colors.gray.calm,
-                fontWeight: `normal`,
+            {}
+          )
+
+          // get sorted set of categories to generate list with
+          const categoryKeys = Object.keys(aggregatedCategories).sort(
+            (a, b) => {
+              if (a < b) return -1
+              if (a > b) return 1
+              return 0
+            }
+          )
+
+          return (
+            <section
+              className="showcase"
+              css={{
                 display: `flex`,
-                flexShrink: 0,
-                paddingLeft: rhythm(3 / 4),
-                paddingRight: rhythm(3 / 4),
-                paddingTop: rhythm(options.blockMarginBottom),
-                paddingBottom: rhythm(options.blockMarginBottom),
-                borderBottom: `1px solid ${colors.ui.light}`,
-              },
-            }}
-          >
-            Filter & Refine{` `}
-            <span css={{ marginLeft: `auto`, opacity: 0.5 }}>
-              <MdFilterList />
-            </span>
-          </h3>
-          <div
-            css={{
-              paddingLeft: rhythm(3 / 4),
-            }}
-          >
-            {filters.size > 0 && (
+              }}
+            >
               <div
                 css={{
-                  marginRight: rhythm(3 / 4),
+                  display: `none`,
+                  [presets.Desktop]: {
+                    display: `block`,
+                    flexBasis: `15rem`,
+                    minWidth: `15rem`,
+                    ...styles.sticky,
+                    paddingTop: 0,
+                    borderRight: `1px solid ${colors.ui.light}`,
+                    // background: colors.ui.whisper,
+                    height: `calc(100vh - ${presets.headerHeight})`,
+                  },
                 }}
               >
-                <button
+                <h3
                   css={{
-                    ...scale(-1 / 6),
-                    alignItems: `center`,
-                    background: colors.ui.light,
-                    border: 0,
-                    borderRadius: presets.radius,
-                    color: colors.gatsby,
-                    cursor: `pointer`,
-                    display: `flex`,
-                    fontFamily: options.headerFontFamily.join(`,`),
-                    marginTop: rhythm(options.blockMarginBottom),
-                    paddingRight: rhythm(3 / 4),
-                    textAlign: `left`,
-                    "&:hover": {
-                      background: colors.gatsby,
-                      color: `#fff`,
+                    margin: 0,
+                    [presets.Desktop]: {
+                      ...scale(1 / 8),
+                      lineHeight: 1,
+                      height: presets.headerHeight,
+                      margin: 0,
+                      color: colors.gray.calm,
+                      fontWeight: `normal`,
+                      display: `flex`,
+                      flexShrink: 0,
+                      paddingLeft: rhythm(3 / 4),
+                      paddingRight: rhythm(3 / 4),
+                      paddingTop: rhythm(options.blockMarginBottom),
+                      paddingBottom: rhythm(options.blockMarginBottom),
+                      borderBottom: `1px solid ${colors.ui.light}`,
                     },
-                  }}
-                  onClick={() => {
-                    this.props.setFilters([])
                   }}
                 >
-                  <MdClear style={{ marginRight: rhythm(1 / 4) }} /> Reset all
-                  Filters
-                </button>
-              </div>
-            )}
-            <Collapsible heading="Category">
-              {Array.from(
-                count(
-                  data.allSitesYaml.edges.map(({ node }) => node.categories)
-                )
-              )
-                .sort(([a], [b]) => {
-                  if (a < b) return -1
-                  if (a > b) return 1
-                  return 0
-                })
-                .map(([c, count]) => (
-                  <ul key={c} css={{ margin: 0 }}>
-                    <button
-                      className={filters.has(c) ? `selected` : ``}
-                      onClick={() => {
-                        if (filters.has(c)) {
-                          filters.delete(c)
-                          this.props.setFilters(filters)
-                        } else {
-                          this.props.setFilters(filters.add(c))
-                        }
-                      }}
+                  Filter & Refine{` `}
+                  <span css={{ marginLeft: `auto`, opacity: 0.5 }}>
+                    <MdFilterList />
+                  </span>
+                </h3>
+                <div
+                  css={{
+                    paddingLeft: rhythm(3 / 4),
+                  }}
+                >
+                  {filters.length > 0 && (
+                    <div
                       css={{
-                        ...scale(-1 / 6),
-                        alignItems: `flex-start`,
-                        background: `none`,
-                        border: `none`,
-                        color: colors.gray.text,
-                        cursor: `pointer`,
-                        display: `flex`,
-                        fontFamily: options.headerFontFamily.join(`,`),
-                        justifyContent: `space-between`,
-                        outline: `none`,
-                        padding: 0,
-                        paddingRight: rhythm(1),
-                        paddingBottom: rhythm(options.blockMarginBottom / 8),
-                        paddingTop: rhythm(options.blockMarginBottom / 8),
-                        width: `100%`,
-                        textAlign: `left`,
-                        ":hover": {
-                          color: colors.gatsby,
-                        },
+                        marginRight: rhythm(3 / 4),
                       }}
                     >
-                      <div
+                      <button
                         css={{
-                          color: filters.has(c)
-                            ? colors.gatsby
-                            : colors.ui.bright,
-                          ...scale(0),
-                          marginRight: 8,
+                          ...scale(-1 / 6),
+                          alignItems: `center`,
+                          background: colors.ui.light,
+                          border: 0,
+                          borderRadius: presets.radius,
+                          color: colors.gatsby,
+                          cursor: `pointer`,
+                          display: `flex`,
+                          fontFamily: options.headerFontFamily.join(`,`),
+                          marginTop: rhythm(options.blockMarginBottom),
+                          paddingRight: rhythm(3 / 4),
+                          textAlign: `left`,
+                          "&:hover": {
+                            background: colors.gatsby,
+                            color: `#fff`,
+                          },
+                        }}
+                        onClick={() => {
+                          updateQuery(() => {
+                            return { filters: [] }
+                          })
                         }}
                       >
-                        {filters.has(c) ? <MdCheckbox /> : <MdCheckboxBlank />}
-                      </div>
-                      <div
-                        css={{
-                          color: filters.has(c) ? colors.gatsby : false,
-                          marginRight: `auto`,
-                        }}
-                      >
-                        {c}
-                      </div>
-                      <div css={{ color: colors.gray.calm }}>{count}</div>
-                    </button>
-                  </ul>
-                ))}
-            </Collapsible>
-          </div>
-        </div>
-        <div css={{ width: `100%` }}>
-          <div
-            css={{
-              display: `flex`,
-              alignItems: `center`,
-              height: presets.headerHeight,
-              flexDirection: `row`,
-              ...styles.sticky,
-              background: `rgba(255,255,255,0.98)`,
-              paddingLeft: `${rhythm(3 / 4)}`,
-              paddingRight: `${rhythm(3 / 4)}`,
-              paddingBottom: rhythm(options.blockMarginBottom),
-              zIndex: 1,
-              borderBottom: `1px solid ${colors.ui.light}`,
-            }}
-          >
-            <h2
-              css={{
-                color: colors.gatsby,
-                margin: 0,
-                ...scale(1 / 5),
-                lineHeight: 1,
-              }}
-            >
-              {this.state.search.length === 0 ? (
-                filters.size === 0 ? (
-                  <span>
-                    All {data.allSitesYaml.edges.length} Showcase Sites
-                  </span>
-                ) : (
-                  <span>
-                    {items.length}
-                    {` `}
-                    {filters.size === 1 && filters.values()[0]}
-                    {` `}
-                    Sites
-                  </span>
-                )
-              ) : (
-                <span>{items.length} search results</span>
-              )}
-            </h2>
-            <div css={{ marginLeft: `auto` }}>
-              <label css={{ position: `relative` }}>
-                <input
+                        <MdClear style={{ marginRight: rhythm(1 / 4) }} /> Reset
+                        all Filters
+                      </button>
+                    </div>
+                  )}
+                  <Collapsible heading="Category">
+                    {categoryKeys.map(c => (
+                      <ul key={c} css={{ margin: 0 }}>
+                        <button
+                          className={filters.includes(c) ? `selected` : ``}
+                          onClick={() => {
+                            if (filters.includes(c)) {
+                              updateQuery(() => {
+                                return { filters: filters.filter(f => f !== c) }
+                              })
+                            } else {
+                              updateQuery(() => {
+                                return { filters: [...filters, c] }
+                              })
+                            }
+                          }}
+                          css={{
+                            ...scale(-1 / 6),
+                            alignItems: `flex-start`,
+                            background: `none`,
+                            border: `none`,
+                            color: colors.gray.text,
+                            cursor: `pointer`,
+                            display: `flex`,
+                            fontFamily: options.headerFontFamily.join(`,`),
+                            justifyContent: `space-between`,
+                            outline: `none`,
+                            padding: 0,
+                            paddingRight: rhythm(1),
+                            paddingBottom: rhythm(
+                              options.blockMarginBottom / 8
+                            ),
+                            paddingTop: rhythm(options.blockMarginBottom / 8),
+                            width: `100%`,
+                            textAlign: `left`,
+                            ":hover": {
+                              color: colors.gatsby,
+                            },
+                          }}
+                        >
+                          <div
+                            css={{
+                              color: filters.includes(c)
+                                ? colors.gatsby
+                                : colors.ui.bright,
+                              ...scale(0),
+                              marginRight: 8,
+                            }}
+                          >
+                            {filters.includes(c) ? (
+                              <MdCheckbox />
+                            ) : (
+                              <MdCheckboxBlank />
+                            )}
+                          </div>
+                          <div
+                            css={{
+                              color: filters.includes(c)
+                                ? colors.gatsby
+                                : false,
+                              marginRight: `auto`,
+                            }}
+                          >
+                            {c}
+                          </div>
+                          <div css={{ color: colors.gray.calm }}>
+                            {aggregatedCategories[c]}
+                          </div>
+                        </button>
+                      </ul>
+                    ))}
+                  </Collapsible>
+                </div>
+              </div>
+              <div css={{ width: `100%` }}>
+                <div
                   css={{
-                    border: 0,
-                    borderRadius: presets.radiusLg,
-                    color: colors.gatsby,
-                    fontFamily: options.headerFontFamily.join(`,`),
-                    paddingTop: rhythm(1 / 8),
-                    paddingRight: rhythm(1 / 5),
-                    paddingBottom: rhythm(1 / 8),
-                    paddingLeft: rhythm(1),
-                    width: rhythm(5),
-                    ":focus": {
-                      outline: 0,
-                      backgroundColor: colors.ui.light,
-                      borderRadius: presets.radiusLg,
-                      transition: `width ${presets.animation.speedDefault} ${
-                        presets.animation.curveDefault
-                      }, background-color ${presets.animation.speedDefault} ${
-                        presets.animation.curveDefault
-                      }`,
-                    },
+                    display: `flex`,
+                    alignItems: `center`,
+                    height: presets.headerHeight,
+                    flexDirection: `row`,
+                    ...styles.sticky,
+                    background: `rgba(255,255,255,0.98)`,
+                    paddingLeft: `${rhythm(3 / 4)}`,
+                    paddingRight: `${rhythm(3 / 4)}`,
+                    paddingBottom: rhythm(options.blockMarginBottom),
+                    zIndex: 1,
+                    borderBottom: `1px solid ${colors.ui.light}`,
                   }}
-                  type="text"
-                  value={this.state.search}
-                  onChange={e =>
-                    this.setState({
-                      search: e.target.value,
-                    })
-                  }
-                  placeholder="Search sites"
-                  aria-label="Search sites"
-                />
-                <SearchIcon
-                  overrideCSS={{
-                    fill: colors.lilac,
-                    position: `absolute`,
-                    left: `5px`,
-                    top: `50%`,
-                    width: `16px`,
-                    height: `16px`,
-                    pointerEvents: `none`,
-                    transform: `translateY(-50%)`,
-                  }}
-                />
-              </label>
-            </div>
-          </div>
-          <ShowcaseList items={items} count={this.state.sitesToShow} />
-          {this.state.sitesToShow < items.length && (
-            <button
-              css={{
-                ...styles.button,
-                display: `block`,
-                marginBottom: rhythm(options.blockMarginBottom * 5),
-                marginTop: rhythm(options.blockMarginBottom * 2),
-                marginLeft: `auto`,
-                marginRight: `auto`,
-                [presets.Desktop]: {
-                  marginLeft: rhythm(6 / 4),
-                  marginRight: rhythm(6 / 4),
-                },
-              }}
-              onClick={() => {
-                this.setState({ sitesToShow: this.state.sitesToShow + 15 })
-              }}
-            >
-              Load More
-              <MdArrowDownward style={{ marginLeft: 4 }} />
-            </button>
-          )}
-        </div>
-      </section>
+                >
+                  <h2
+                    css={{
+                      color: colors.gatsby,
+                      margin: 0,
+                      ...scale(1 / 5),
+                      lineHeight: 1,
+                    }}
+                  >
+                    {this.state.search.length === 0 ? (
+                      filters.length === 0 ? (
+                        <span>
+                          All {data.allSitesYaml.edges.length} Showcase Sites
+                        </span>
+                      ) : (
+                        <span>
+                          {items.length}
+                          {` `}
+                          {filters.length === 1 && filters.values()[0]}
+                          {` `}
+                          Sites
+                        </span>
+                      )
+                    ) : (
+                      <span>{items.length} search results</span>
+                    )}
+                  </h2>
+                  <div css={{ marginLeft: `auto` }}>
+                    <label css={{ position: `relative` }}>
+                      <input
+                        css={{
+                          border: 0,
+                          borderRadius: presets.radiusLg,
+                          color: colors.gatsby,
+                          fontFamily: options.headerFontFamily.join(`,`),
+                          paddingTop: rhythm(1 / 8),
+                          paddingRight: rhythm(1 / 5),
+                          paddingBottom: rhythm(1 / 8),
+                          paddingLeft: rhythm(1),
+                          width: rhythm(5),
+                          ":focus": {
+                            outline: 0,
+                            backgroundColor: colors.ui.light,
+                            borderRadius: presets.radiusLg,
+                            transition: `width ${
+                              presets.animation.speedDefault
+                            } ${
+                              presets.animation.curveDefault
+                            }, background-color ${
+                              presets.animation.speedDefault
+                            } ${presets.animation.curveDefault}`,
+                          },
+                        }}
+                        type="text"
+                        value={this.state.search}
+                        onChange={e =>
+                          this.setState({
+                            search: e.target.value,
+                          })
+                        }
+                        placeholder="Search sites"
+                        aria-label="Search sites"
+                      />
+                      <SearchIcon
+                        overrideCSS={{
+                          fill: colors.lilac,
+                          position: `absolute`,
+                          left: `5px`,
+                          top: `50%`,
+                          width: `16px`,
+                          height: `16px`,
+                          pointerEvents: `none`,
+                          transform: `translateY(-50%)`,
+                        }}
+                      />
+                    </label>
+                  </div>
+                </div>
+                <ShowcaseList items={items} count={this.state.sitesToShow} />
+                {this.state.sitesToShow < items.length && (
+                  <button
+                    css={{
+                      ...styles.button,
+                      display: `block`,
+                      marginBottom: rhythm(options.blockMarginBottom * 5),
+                      marginTop: rhythm(options.blockMarginBottom * 2),
+                      marginLeft: `auto`,
+                      marginRight: `auto`,
+                      [presets.Desktop]: {
+                        marginLeft: rhythm(6 / 4),
+                        marginRight: rhythm(6 / 4),
+                      },
+                    }}
+                    onClick={() => {
+                      this.setState({
+                        sitesToShow: this.state.sitesToShow + 15,
+                      })
+                    }}
+                  >
+                    Load More
+                    <MdArrowDownward style={{ marginLeft: 4 }} />
+                  </button>
+                )}
+              </div>
+            </section>
+          )
+        }}
+      </URLQuery>
     )
   }
 }
