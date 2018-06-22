@@ -3,10 +3,12 @@ const glob = require(`glob`)
 
 const pkgs = glob.sync(`./packages/*`).map(p => p.replace(/^\./, `<rootDir>`))
 
-const distDirs = pkgs.map(p => path.join(p, `dist`))
+const reGatsby = /gatsby$/
+const gatsbyDir = pkgs.find(p => reGatsby.exec(p))
+const gatsbyBuildDirs = [`dist`, `cache-dir`].map(dir => path.join(gatsbyDir, dir))
 const builtTestsDirs = pkgs.map(p => path.join(p, `__tests__`))
 
-const ignoreDirs = [].concat(distDirs, builtTestsDirs)
+const ignoreDirs = [].concat(gatsbyBuildDirs, builtTestsDirs)
 
 module.exports = {
   notify: true,
