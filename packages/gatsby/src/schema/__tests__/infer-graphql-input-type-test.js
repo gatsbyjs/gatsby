@@ -266,6 +266,21 @@ describe(`GraphQL Input args`, () => {
     expect(Object.keys(fields.foo.type.getFields())).toHaveLength(2)
   })
 
+  it(`infers number types`, () => {
+    const fields = inferInputObjectStructureFromNodes({
+      nodes: [
+        {
+          int32: 42,
+          float: 2.5,
+          longint: 3000000000,
+        },
+      ],
+    }).inferredFields
+    expect(fields.int32.type.name.endsWith(`Integer`)).toBe(true)
+    expect(fields.float.type.name.endsWith(`Float`)).toBe(true)
+    expect(fields.longint.type.name.endsWith(`Float`)).toBe(true)
+  })
+
   it(`handles eq operator`, async () => {
     let result = await queryResult(
       nodes,
