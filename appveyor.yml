@@ -59,6 +59,12 @@ install:
   - node --version
   - yarn global add gatsby-dev-cli@canary
   - yarn run bootstrap
+  # TODO: remove this once babel ignores work correctly on Windows
+  # Workaround for https://github.com/gatsbyjs/gatsby/issues/6087
+  # Delete incorrectly babelified test files
+  - git add .
+  - git reset --hard HEAD
+  # end TODO
   - node --version
   - yarn test
 
