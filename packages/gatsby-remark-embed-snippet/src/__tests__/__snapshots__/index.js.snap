@@ -611,6 +611,72 @@ Object {
 }
 `;
 
+exports[`gatsby-remark-embed-snippet JavaScript files should support hideline-range and highlight markers 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "position": Position {
+            "end": Object {
+              "column": 23,
+              "line": 1,
+              "offset": 22,
+            },
+            "indent": Array [],
+            "start": Object {
+              "column": 1,
+              "line": 1,
+              "offset": 0,
+            },
+          },
+          "type": "html",
+          "value": "<div class=\\"gatsby-highlight\\">
+        <pre class=\\"language-jsx\\"><code><span class=\\"gatsby-highlight-code-line\\">ReactDOM<span class=\\"token punctuation\\">.</span><span class=\\"token function\\">render</span><span class=\\"token punctuation\\">(</span>
+</span><span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;</span>div</span><span class=\\"token punctuation\\">></span></span>
+<span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;</span>ul</span><span class=\\"token punctuation\\">></span></span>
+<span class=\\"gatsby-highlight-code-line\\"><span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;</span>li</span><span class=\\"token punctuation\\">></span></span>Not hidden<span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;/</span>li</span><span class=\\"token punctuation\\">></span></span>
+</span><span class=\\"gatsby-highlight-code-line\\"><span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;</span>li</span><span class=\\"token punctuation\\">></span></span>Not hidden<span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;/</span>li</span><span class=\\"token punctuation\\">></span></span>
+</span><span class=\\"gatsby-highlight-code-line\\"><span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;</span>li</span><span class=\\"token punctuation\\">></span></span>Not hidden<span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;/</span>li</span><span class=\\"token punctuation\\">></span></span>
+</span><span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;/</span>ul</span><span class=\\"token punctuation\\">></span></span>
+<span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;/</span>div</span><span class=\\"token punctuation\\">></span></span><span class=\\"token punctuation\\">,</span>
+document<span class=\\"token punctuation\\">.</span><span class=\\"token function\\">getElementById</span><span class=\\"token punctuation\\">(</span><span class=\\"token string\\">'root'</span><span class=\\"token punctuation\\">)</span>
+<span class=\\"token punctuation\\">)</span><span class=\\"token punctuation\\">;</span></code></pre>
+        </div>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 23,
+          "line": 1,
+          "offset": 22,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 23,
+      "line": 1,
+      "offset": 22,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
 exports[`gatsby-remark-embed-snippet JavaScript files should support hideline-range markers 1`] = `
 Object {
   "children": Array [

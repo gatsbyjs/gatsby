@@ -153,8 +153,8 @@ describe(`gatsby-remark-embed-snippet`, () => {
     it(`should support hideline-range markers`, () => {
       fs.readFileSync.mockReturnValue(
         `
+        /* hideline-range{2-3} */
         html {
-          /* hideline-range{1,2} */
           height: 100%;
           width: 100%;
           padding: 50px;
@@ -436,7 +436,7 @@ describe(`gatsby-remark-embed-snippet`, () => {
     it(`should support hideline-range markers`, () => {
       fs.readFileSync.mockReturnValue(
         `
-        // hideline-range{1-2, 9-11, 16}
+        // hideline-range{1-2,9-11,16}
         import React from 'react'
         import { render } from "react-dom"
         ReactDOM.render(
@@ -450,6 +450,44 @@ describe(`gatsby-remark-embed-snippet`, () => {
               <li>Hidden</li>
             </ul>
           </div>,
+          document.getElementById('root')
+        );
+        console.log('Hidden')
+      `
+          .replace(/^ +/gm, ``)
+          .trim()
+      )
+
+      const markdownAST = remark.parse(`\`embed:hello-world.js\``)
+      const transformed = plugin(
+        { markdownAST },
+        {
+          directory: `examples`,
+        }
+      )
+
+      expect(transformed).toMatchSnapshot()
+    })
+
+    it(`should support hideline-range and highlight markers`, () => {
+      fs.readFileSync.mockReturnValue(
+        `
+        // hideline-range{1-2,9-11,16}
+        // highlight-range{1,4-6}
+        import React from 'react'
+        import { render } from "react-dom"
+        ReactDOM.render(
+          <div>
+            <ul>
+              <li>Not hidden</li>
+              <li>Not hidden</li>
+              <li>Not hidden</li>
+              <li>Hidden</li>
+              <li>Hidden</li>
+              <li>Hidden</li>
+            </ul>
+          </div>,
+          // highlight-next-line
           document.getElementById('root')
         );
         console.log('Hidden')
