@@ -1,5 +1,5 @@
 const path = require(`path`)
-
+const isOnline = require(`is-online`)
 const _ = require(`lodash`)
 const fs = require(`fs-extra`)
 
@@ -33,23 +33,44 @@ exports.setFieldsOnGraphQLNodeType = require(`./extend-node-type`).extendNodeTyp
 
 exports.sourceNodes = async (
   { actions, getNode, getNodes, createNodeId, hasNodeChanged, store },
-  { spaceId, accessToken, host, environment }
+  options
 ) => {
   const { createNode, deleteNode, touchNode, setPluginStatus } = actions
 
-  host = host || `cdn.contentful.com`
-  environment = environment || `master` // default is always master
+  const online = await isOnline()
+
+  // If the user knows they are offline, serve them cached result
+  // For prod builds though always fail if we can't get the latest data
+  if (
+    !online &&
+    process.env.GATSBY_CONTENTFUL_OFFLINE === `true` &&
+    process.env.NODE_ENV !== `production`
+  ) {
+    getNodes()
+      .filter(n => n.internal.owner === `gatsby-source-contentful`)
+      .forEach(n => touchNode({ nodeId: n.id }))
+
+    console.log(`Using Contentful Offline cache ⚠️`)
+    console.log(
+      `Cache may be invalidated if you edit package.json, gatsby-node.js or gatsby-config.js files`
+    )
+
+    return
+  }
+
+  options.host = options.host || `cdn.contentful.com`
+  options.environment = options.environment || `master` // default is always master
   // Get sync token if it exists.
   let syncToken
   if (
     store.getState().status.plugins &&
     store.getState().status.plugins[`gatsby-source-contentful`] &&
     store.getState().status.plugins[`gatsby-source-contentful`][
-      `${spaceId}-${environment}`
+      `${options.spaceId}-${options.environment}`
     ]
   ) {
     syncToken = store.getState().status.plugins[`gatsby-source-contentful`][
-      `${spaceId}-${environment}`
+      `${options.spaceId}-${options.environment}`
     ]
   }
 
@@ -60,10 +81,7 @@ exports.sourceNodes = async (
     locales,
   } = await fetchData({
     syncToken,
-    spaceId,
-    accessToken,
-    environment,
-    host,
+    ...options,
   })
 
   const entryList = normalize.buildEntryList({
@@ -114,9 +132,9 @@ exports.sourceNodes = async (
   // Store our sync state for the next sync.
   // TODO: we do not store the token if we are using preview, since only initial sync is possible there
   // This might change though
-  if (host !== `preview.contentful.com`) {
+  if (options.host !== `preview.contentful.com`) {
     const newState = {}
-    newState[`${spaceId}-${environment}`] = nextSyncToken
+    newState[`${options.spaceId}-${options.environment}`] = nextSyncToken
     setPluginStatus(newState)
   }
 

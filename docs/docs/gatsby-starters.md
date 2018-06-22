@@ -2,8 +2,8 @@
 title: 'Gatsby Starters'
 ---
 
-The Gatsby CLI tool lets you install "starters". These are partially built sites
-preconfigured to help you get moving faster on creating a certain type of site.
+The Gatsby CLI tool lets you install “starters”. These are boilerplate Gatsby sites maintained by the community.
+`gatsby new` helps you start your project by cloning the boilerplate, installing dependencies, and clearing git history.
 
 When creating a new site, you can optionally specify a starter to base your new
 site on e.g.
@@ -22,7 +22,7 @@ If you don't specify a custom starter, your site will be created from the
 
 There are several starters that have been created. Create a PR to include yours!
 
-Official:
+## Official starters
 
 - [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default)
   [(demo)](http://gatsbyjs.github.io/gatsby-starter-default/)
@@ -31,8 +31,38 @@ Official:
 - [gatsby-starter-hello-world](https://github.com/gatsbyjs/gatsby-starter-hello-world)
   [(demo)](https://aberrant-fifth.surge.sh/)
 
-Community:
+### Using Gatsby v2 with the official starters
 
+If you'd like to get started with Gatsby v2 you're in luck, there's a v2 edition for each of the offical starters. Install your favourite one with the Gatsby CLI.
+
+`gatsby-starter-default` with v2:
+
+```
+gatsby new my-default-project https://github.com/gatsbyjs/gatsby-starter-default#v2
+```
+
+`gatsby-starter-hello-world` with v2:
+
+```
+gatsby new my-hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world#v2
+```
+
+`gatsby-starter-blog` with v2:
+
+```
+gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
+```
+
+## Community starters
+
+- [gatsby-starter-cosmicjs](https://github.com/cosmicjs/gatsby-starter)
+  [(demo)](https://cosmicjs-gatsby-starter.netlify.com)
+
+  Features:
+
+  - Same as `gatsby-starter-default` with dynamic content from [Cosmic JS](https://cosmicjs.com)
+  - Install and set up CMS in seconds [via the command line](https://github.com/cosmicjs/gatsby-starter)
+  
 - [gatsby-starter-blog-no-styles](https://github.com/noahg/gatsby-starter-blog-no-styles)
   [(demo)](http://capricious-spring.surge.sh/)
 
@@ -760,3 +790,12 @@ Community:
   - Eslint & Prettier. Uses [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript)
   - Authentication via Moltin (Login and Register)
   - [More info here](https://github.com/parmsang/gatsby-starter-ecommerce)
+
+- [gatsby-starter-tachyons](https://github.com/pixelsign/gatsby-starter-tachyons)
+  [(demo)](https://gatsby-tachyons.netlify.com/)
+
+  Features:
+
+  - Based on [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default)
+  - Using [Tachyons](https://github.com/tachyons-css/tachyons/) for CSS. [Read the tachyons docs](http://tachyons.io/docs/)
+  - Find out about the tachyons open source component library [here](http://tachyons.io/components/) to get you going.

@@ -9,15 +9,12 @@ export {
   withPrefix
 } from "gatsby-link"
 
-interface StaticQueryRenderProps {
-  data: any
-}
-
-type RenderCallback = (props: StaticQueryRenderProps) => JSX.Element
+type RenderCallback = (data: any) => React.ReactNode
 
 export interface StaticQueryProps {
   query: any
-  render: RenderCallback
+  render?: RenderCallback
+  children?: RenderCallback
 }
 
 export class StaticQuery extends React.Component<StaticQueryProps> {}
