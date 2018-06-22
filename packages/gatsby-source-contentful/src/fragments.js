@@ -1,4 +1,5 @@
-/* eslint-disable */
+import { graphql } from "gatsby"
+
 export const contentfulAssetFixed = graphql`
   fragment GatsbyContentfulFixed on ContentfulFixed {
     base64
