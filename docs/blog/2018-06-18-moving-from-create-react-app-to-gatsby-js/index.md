@@ -22,7 +22,7 @@ If you came across [Gatsby](https://github.com/gatsbyjs/gatsby) you will notice 
 
 ![gatsby-logo](https://images.ctfassets.net/4x6byznv2pet/4OW1X9ex1mImko8G4w4WAK/a16fceab310b718c7f375a760c4e1e16/logo-gatsby-0603eb9dd6bdfec9599dbc7590f891be-347ea.jpg)
 
-Gatsby is a blazing fast static site generator for [React](https://github.com/facebook/react). Actually, it is more than that. Think of it as a PWA (Progressive Web App) Framework with best practices backed in. For example: you get code and data splitting out-of-the-box.
+Gatsby is a blazing fast static site generator for [React](https://github.com/facebook/react). Actually, it is more than that. Think of it as a PWA (Progressive Web App) framework with best practices backed in. For example: you get code and data splitting out-of-the-box.
 
 ## Why Move to Gatsby?
 
@@ -32,7 +32,7 @@ Gatsby lets you use a modern web stack without the setup headache. With its flex
 
 When you build your Gatsby website you will end up with static files. They are easy to deploy on a lot of services like [Netlify](https://netlify.com), [Amazon S3](https://aws.amazon.com/s3/) and more.
 
-Gatsby provides code and data splitting out-of-the-box. It loads your critical HTML and CSS first. Once that's loaded it prefetches resources for other pages. That way clicking around feels so fast.
+Gatsby provides code and data splitting out-of-the-box. It loads your critical HTML and CSS first. Once that's loaded it prefetches resources for other pages. That's why clicking around feels so fast.
 
 Gatsby uses React components as a view layer so you can share and reuse them across pages/projects. Once it loads the page's javascript code, your website becomes a full React app.
 
@@ -64,10 +64,10 @@ Gatsby uses [GraphQL](https://graphql.org/learn/) to share data across pages. Yo
 
 There are two types of routes:
 
-- static - when you know all the part that will define your route, like `/home`
+- static - when you know all the parts that will define your route, like `/home`
 - dynamic - when part of your route is only known at runtime like, `blog/:slug`
 
-Let's assume you have the following static routes in your create-react-app project:
+Let's assume you have the following static routes in your `create-react-app` project:
 
 ```js
 
@@ -76,8 +76,7 @@ Let's assume you have the following static routes in your create-react-app proje
 <Route path='/contact' component={Contact}/>
 
 ```
-
-In Gatsby, to have these routes you need to create a component with the name like the route path in the pages folder. It will create the routes for you. The good news is the React components are already created so it is a matter of copying/pasting them. Except for the home page you need to name it index.js.  You will end up with something like this:
+Gatsby will create these routes automatically based on files you create in your `pages` folder. The good news is you've already created the React components so it's a matter of copying them to the right place. The exception is the home page which should be named `index.js`.  You will end up with something like this:
 
 ```sh
 
@@ -144,11 +143,11 @@ class BlogPost extends Component {
 
 ```
 
-To create pages dynamically in Gatsby you need to write some logic in the `gatsby-node.js`  file. To get an idea on what is possible to do at build time checkout [Gatsby's node API docs](/docs/node-apis).
+To create pages dynamically in Gatsby you need to write some logic in the `gatsby-node.js` file. To get an idea on what is possible to do at build time check out [Gatsby's node API docs](/docs/node-apis).
 
 We will use the [createPages node API](/docs/node-apis/#createPages).
 
-Following out Contentful example we need to create a page for each article. To do that first we need to get a list of all blog posts and create pages for them based on their unique slug.
+Following our Contentful example we need to create a page for each article. To do that first we need to get a list of all blog posts and then create pages for them based on their unique slug.
 
 Your `gatsby-node.js` file will look like this:
 
@@ -196,7 +195,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
 }
 ```
 
-Since you already have the BlogPost component from your React project move it to `src/template/blog-post.js`.
+Since you already have the `BlogPost` component from your React project move it to `src/template/blog-post.js`.
 
 Your Gatbsy project will look like this:
 
@@ -221,7 +220,7 @@ Your Gatbsy project will look like this:
 
 ```
 
-You need to make some slight modifications to your Blogpost component.
+You need to make some slight modifications to your `BlogPost` component.
 
 `src/templates/blog-post.js`:
 
@@ -266,7 +265,7 @@ Gatsby will pick the exported `pageQuery` const and will know it's a GraphQL que
 
 ![files-1614223 1280](https://images.ctfassets.net/4x6byznv2pet/xodXA1B5OCGKW6eAkqi8e/47789915812c2ab95512f97efb1fcb79/files-1614223_1280.jpg)
 
-I will not go in depth with how to manage state with React since there are a lot of ways to achieve that. There is the new [React 16 Context API](https://reactjs.org/docs/context.html) or using [Redux](https://github.com/reduxjs/react-redux) etc... Using Gatsby you can request the data you need using the GraphQL data layer as shown in the previous example. This option is only available in the root components. This will change in [Gatsby v2 using static queries feature](https://next.gatsbyjs.org/docs/static-query/). You can still use [Redux with Gatsby](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-redux) if you need to.
+I will not go in depth with how to manage state with React since there are a lot of ways to achieve that. There is the new [React 16 Context API](https://reactjs.org/docs/context.html) or you can use other state libraries such as [Redux](https://github.com/reduxjs/react-redux). Using Gatsby you can request the data you need using the GraphQL data layer as shown in the previous example. This option is only available in the root components. This will change in [Gatsby v2 with the new `StaticQuery` feature](https://next.gatsbyjs.org/docs/static-query/). You can still use [Redux with Gatsby](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-redux) if you need to.
 
 ## Deployment
 
