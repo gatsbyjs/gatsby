@@ -43,6 +43,7 @@ Read on for a detailed guide on what's new in version 2!
 - [Manually install plugins’ peer dependencies](#manually-install-plugins-peer-dependencies)
 - [Update layout component](#update-layout-component)
 - [Import Link from Gatsby](#import-link-from-gatsby)
+- [Import graphql from Gatsby](#import-graphql-from-gatsby)
 - [Rename `boundActionCreators` to `actions`](#rename-boundactioncreators-to-actions)
 - [Rename `pathContext` to `pageContext`](#rename-pathcontext-to-pagecontext)
 - [Rename responsive image queries](#rename-responsive-image-queries)
@@ -153,7 +154,7 @@ Replacing a layout's query with `StaticQuery`:
 ```diff
 import React, { Fragment } from "react"
 import Helmet from "react-helmet"
-+ import { StaticQuery } from "gatsby"
++ import { StaticQuery, graphql } from "gatsby"
 
 - export default ({ children, data }) => (
 -   <>
@@ -249,6 +250,29 @@ Furthermore you can remove the package from the `package.json`.
   "gatsby-plugin-sharp": "next",
 - "gatsby-link": "^1.6.39"
 }
+```
+
+## Import graphql from Gatsby
+
+The `graphql` tag function that Gatsby v1 auto-supports is deprecated in v2. Gatsby will throw deprecation warning unless you explicitly import it from the `gatsby` package.
+
+```diff
+import React from "react"
++ import { graphql } from "gatsby"
+
+export default ({ data }) => (
+  <h1>{data.site.siteMetadata.title}</h1>
+)
+
+export const query = graphql`
+  query HomeQuery {
+    site {
+      siteMetadata {
+        title
+      }
+    }
+  }
+`
 ```
 
 ## Rename `boundActionCreators` to `actions`
