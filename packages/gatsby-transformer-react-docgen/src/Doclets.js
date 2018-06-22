@@ -19,7 +19,7 @@ export const cleanDoclets = desc => {
 }
 
 /**
- * Given a string, this functions returns an object with doclet names as keys
+ * Given a string, this function returns an object with doclet names as keys
  * and their "content" as values.
  *
  * Adapted from https://github.com/reactjs/react-docgen/blob/ee8a5359c478b33a6954f4546637312764798d6b/src/utils/docblock.js#L62
