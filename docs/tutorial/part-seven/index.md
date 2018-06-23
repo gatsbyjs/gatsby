@@ -60,7 +60,7 @@ exports.onCreateNode = ({ node }) => {
 ```
 
 We want to use each Markdown file name to create the page slug. So
-`pandas-and-bananas.md"` will become `/pandas-and-bananas/`. But how do we get
+`pandas-and-bananas.md` will become `/pandas-and-bananas/`. But how do we get
 the file name from the `MarkdownRemark` node? To get it, we need to _traverse_
 the "node graph" to its _parent_ `File` node, as `File` nodes contain data we
 need about files on disk. To do that, modify our function again:
