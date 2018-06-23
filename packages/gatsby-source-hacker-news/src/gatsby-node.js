@@ -98,12 +98,13 @@ fragment commentsFragment on HackerNewsItem {
       kids.kids = []
     }
     const kidLessStory = _.omit(story, `kids`)
+    const childIds = kids.kids.map(k => createNodeId(k.id))
 
     const storyNode = {
       ...kidLessStory,
       id: createNodeId(kidLessStory.id),
-      children: kids.kids.map(k => k.id),
-      parent: `__SOURCE__`,
+      children: childIds,
+      parent: null,
       content: storyStr,
       internal: {
         type: `HNStory`,
@@ -122,7 +123,6 @@ fragment commentsFragment on HackerNewsItem {
       .digest(`hex`)
 
     storyNode.internal.contentDigest = contentDigest
-
     createNode(storyNode)
 
     // Recursively create comment nodes.
@@ -131,10 +131,11 @@ fragment commentsFragment on HackerNewsItem {
         if (!comment.kids) {
           comment.kids = []
         }
+        let commentChildIds = comment.kids.map(k => createNodeId(k.id))
         let commentNode = {
           ..._.omit(comment, `kids`),
           id: createNodeId(comment.id),
-          children: comment.kids.map(k => k.id),
+          children: commentChildIds,
           parent,
           internal: {
             type: `HNComment`,

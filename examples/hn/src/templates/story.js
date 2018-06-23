@@ -1,5 +1,6 @@
 import React from "react"
-import { Link } from "gatsby"
+import Layout from "../components/layout"
+import { Link, graphql } from "gatsby"
 
 import StoryComment from "../components/story-comment"
 
@@ -10,7 +11,6 @@ class Story extends React.Component {
       width = window.innerWidth
     }
 
-    console.log(this.props)
     const story = this.props.data.hnStory
     // Flatten comments tree.
     const seenComments = {}
@@ -42,52 +42,56 @@ class Story extends React.Component {
     console.timeEnd(`recursion man`)
 
     return (
-      <div>
+      <Layout>
         <table style={{ paddingLeft: 20 }} border="0">
-          <tr className="athing" id={story.id}>
-            <td className="title">
-              <a href={story.url} className="storylink">
-                {story.title}
-              </a>
-              <span className="sitebit comhead">
-                {` `}(
-                <span className="sitestr">{story.domain}</span>
-                )
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td className="subtext">
-              <span className="score">{story.score} points</span>
-              {` `}
-              by
-              {` `}
-              <a href="" className="hnuser">
-                {story.by}
-              </a>
-              {` `}
-              <span className="age">
-                <Link to={`/item/${story.id}/`}>{story.timeISO}</Link>
-              </span>
-              {` `}
-              |
-              {` `}
-              <Link to={`/item/${story.id}/`}>
-                {story.descendants ? story.descendants : 0} comments
-              </Link>
-              {` `}
-            </td>
-          </tr>
-          <tr style={{ height: `10px` }} />
+          <tbody>
+            <tr className="athing" id={story.id}>
+              <td className="title">
+                <a href={story.url} className="storylink">
+                  {story.title}
+                </a>
+                <span className="sitebit comhead">
+                  {` `}(
+                  <span className="sitestr">{story.domain}</span>
+                  )
+                </span>
+              </td>
+            </tr>
+            <tr>
+              <td className="subtext">
+                <span className="score">{story.score} points</span>
+                {` `}
+                by
+                {` `}
+                <a href="" className="hnuser">
+                  {story.by}
+                </a>
+                {` `}
+                <span className="age">
+                  <Link to={`/item/${story.id}/`}>{story.timeISO}</Link>
+                </span>
+                {` `}
+                |
+                {` `}
+                <Link to={`/item/${story.id}/`}>
+                  {story.descendants ? story.descendants : 0} comments
+                </Link>
+                {` `}
+              </td>
+            </tr>
+            <tr style={{ height: `10px` }} />
+          </tbody>
         </table>
         <table border="0" className="comment-tree">
-          <tr className="athing comtr " id="14174940">
-            {flatComemnts.map(comment => (
-              <StoryComment comment={comment} width={width} />
-            ))}
-          </tr>
+          <tbody>
+            <tr className="athing comtr " id="14174940">
+              {flatComemnts.map(comment => (
+                <StoryComment key={comment.id} comment={comment} width={width} />
+              ))}
+            </tr>
+          </tbody>
         </table>
-      </div>
+      </Layout>
     )
   }
 }
