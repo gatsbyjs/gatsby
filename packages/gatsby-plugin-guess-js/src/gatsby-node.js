@@ -1,10 +1,10 @@
-const { GuessPlugin } = require(`guess-webpack`);
+const { GuessPlugin } = require(`guess-webpack`)
 
-let guessPlugin;
+let guessPlugin
 exports.onPreBootstrap = (_, pluginOptions) => {
-  const { period, jwt, GAViewID, reportProvider } = pluginOptions;
-  period.startDate = new Date(period.startDate);
-  period.endDate = new Date(period.endDate);
+  const { period, jwt, GAViewID, reportProvider } = pluginOptions
+  period.startDate = new Date(period.startDate)
+  period.endDate = new Date(period.endDate)
   guessPlugin = new GuessPlugin({
     // GA view ID.
     GA: GAViewID,
@@ -16,7 +16,7 @@ exports.onPreBootstrap = (_, pluginOptions) => {
     // Hints Guess to not perform prefetching and delegate this logic to
     // its consumer.
     runtime: {
-      delegate: true
+      delegate: true,
     },
 
     // Since Gatsby already has the required metadata for pre-fetching,
@@ -30,13 +30,13 @@ exports.onPreBootstrap = (_, pluginOptions) => {
       ? period
       : {
           startDate: new Date(`2018-1-1`),
-          endDate: new Date()
-        }
-  });
-};
+          endDate: new Date(),
+        },
+  })
+}
 
 exports.onCreateWebpackConfig = ({ actions }) => {
   actions.setWebpackConfig({
-    plugins: [guessPlugin]
-  });
-};
+    plugins: [guessPlugin],
+  })
+}
