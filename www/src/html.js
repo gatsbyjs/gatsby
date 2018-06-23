@@ -54,7 +54,7 @@ export default class HTML extends React.Component {
             color={colors.gatsby}
           />
           <meta name="msapplication-config" content={`/browserconfig.xml`} />
-          <script src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js" />
+          <script src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js" defer />
         </head>
         <body {...this.props.bodyAttributes}>
           <div
@@ -63,6 +63,7 @@ export default class HTML extends React.Component {
           />
           {this.props.postBodyComponents}
           <link
+            rel="preload"
             rel="stylesheet"
             href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css"
           />
