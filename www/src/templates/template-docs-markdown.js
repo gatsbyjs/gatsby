@@ -1,6 +1,6 @@
 import React from "react"
 import Helmet from "react-helmet"
-
+import { graphql } from 'gatsby'
 import Layout from "../components/layout"
 import docsSidebar from "../data/sidebars/doc-links.yaml"
 import tutorialSidebar from "../data/sidebars/tutorial-links.yaml"

@@ -87,6 +87,9 @@ exports.createPages = ({ graphql, actions }) => {
                   fields {
                     slug
                     package
+                    starterShowcase {
+                      slug
+                    }
                   }
                   frontmatter {
                     title
@@ -183,6 +186,28 @@ exports.createPages = ({ graphql, actions }) => {
           })
         })
 
+        // Create starters.
+        const starters = _.filter(
+          result.data.allMarkdownRemark.edges,
+          edge => {
+            const slug = _.get(edge, `node.fields.starterShowcase.slug`)
+            if (!slug) return null
+            else return edge
+          }
+        )
+        const starterTemplate = path.resolve(`src/templates/template-starter-showcase.js`)
+ 
+        starters.forEach((edge, index) => {
+          createPage({
+            path: `/starters${edge.node.fields.starterShowcase.slug}`, // required
+            component: slash(starterTemplate),
+            context: {
+              slug: edge.node.fields.starterShowcase.slug,
+            },
+          })
+        })
+        // END Create starters.
+
         // Create contributor pages.
         result.data.allAuthorYaml.edges.forEach(edge => {
           createPage({
@@ -255,7 +280,12 @@ exports.createPages = ({ graphql, actions }) => {
 }
 
 // Create slugs for files.
-exports.onCreateNode = ({ node, actions, getNode }) => {
+exports.onCreateNode = ({ node, actions, getNode, getNodes }) => {
+  // debug
+  // if (node.absolutePath && node.absolutePath.includes('StarterShowcase')) {
+  //   console.log('Type: ', node.internal.type)
+  //   console.log('absolutePath: ', node.absolutePath)
+  // }
   const { createNodeField } = actions
   let slug
   if (node.internal.type === `File`) {
@@ -301,6 +331,12 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
       })
       createNodeField({ node, name: `package`, value: true })
     }
+    if ( // starter showcase
+      fileNode.sourceInstanceName === `StarterShowcaseData` &&
+      parsedFilePath.name !== `README`
+    ) {
+      createNodesForStarterShowcase({ node, getNode, getNodes, actions })
+    } // end starter showcase
     if (slug) {
       createNodeField({ node, name: `anchor`, value: slugToAnchor(slug) })
       createNodeField({ node, name: `slug`, value: slug })
@@ -322,3 +358,73 @@ exports.onPostBuild = () => {
     `./public/gatsbygram.mp4`
   )
 }
+
+
+// Starter Showcase related code
+const { createFilePath } = require(`gatsby-source-filesystem`)
+const gitFolder = './src/data/StarterShowcase/generatedGithubData'
+function createNodesForStarterShowcase({ node, getNode, getNodes, actions }) {
+  const { createNodeField, createParentChildLink } = actions
+  if (node.internal.type === `MarkdownRemark`) {
+    const slug = createFilePath({
+      node,
+      getNode,
+      basePath: `startersData`,
+    })
+    // preprocessing
+    const stub = slug.replace(/\//gi, '')
+    var fromPath = path.join(gitFolder, `${stub}.json`)
+    var data = fs.readFileSync(fromPath, 'utf8')
+    const ghdata = JSON.parse(data)
+    if (ghdata.repository.url) ghdata.repository = ghdata.repository.url // flatten a potential object into a string. weird quirk.
+    const { repoMetadata, dependencies = [], devDependencies = [] } = ghdata
+    const allDependencies = Object.entries(dependencies).concat(
+      Object.entries(devDependencies)
+    )
+    // make an object to stick into a Field
+    const starterShowcaseFields = {
+      slug,
+      stub,
+      date: new Date(node.frontmatter.date),
+      githubData: ghdata,
+      // nice-to-have destructures of githubData
+      description: ghdata.description,
+      stars: repoMetadata.stargazers_count,
+      lastUpdated: repoMetadata.created_at,
+      owner: repoMetadata.owner,
+      githubFullName: repoMetadata.full_name,
+      allDependencies,
+      gatsbyDependencies: allDependencies
+        .filter(
+          ([key, _]) => !['gatsby', 'gatsby-cli', 'gatsby-link'].includes(key)
+        )
+        .filter(([key, _]) => key.includes('gatsby')),
+      miscDependencies: allDependencies.filter(([key, _]) => !key.includes('gatsby')),
+    }
+    createNodeField({ node, name: `starterShowcase`, value: starterShowcaseFields })
+
+    // add images https://github.com/gatsbyjs/gatsby/issues/2995
+    const fileNode = getNodes().find(n => 
+      n.absolutePath &&  // many nodes dont have it
+      n.absolutePath.includes('generatedScreenshots') && // just the screenshots
+      n.name === stub // assumes screenshots have same name as stub
+    )
+
+    // if (relatedimage) createParentChildLink({ parent: node, child: relatedimage })
+    // if (relatedimage) createNodeField({ node, name: `starterScreenshot`, value: relatedimage })
+    // else console.log('relatedimage fail', n.name, stub)
+
+    if (fileNode != null) {
+      // Find ImageSharp node corresponding to the File node
+      const imageSharpNodeId = fileNode.children[0];
+      if (imageSharpNodeId) {
+        const imageSharpNode = getNodes().find(n => n.id === imageSharpNodeId);
+        // console.log('imageSharpNode success', stub ) // , fileNode, imageSharpNode)
+        // Add ImageSharp node as child
+        // if (imageSharpNode) createParentChildLink({ parent: node, child: imageSharpNode });
+        if (imageSharpNode) createNodeField({ node, name: `starterScreenshot`, value: imageSharpNode })
+      } else console.log('no imageSharpNodeId found for ' + stub, fileNode)
+    }
+  }
+}
+// End Starter Showcase related code 
