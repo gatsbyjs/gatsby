@@ -72,16 +72,6 @@ export default class HTML extends React.Component {
             dangerouslySetInnerHTML={{ __html: this.props.body }}
           />
           {this.props.postBodyComponents}
-         <script type="text/javascript">
-          (function() {
-            var path = 'https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css';
-            var link = document.createElement('link');
-            link.setAttribute('rel', 'stylesheet');
-            link.setAttribute('type', 'text/css');
-            link.setAttribute('href', path);
-            document.querySelector('head').appendChild(link);
-          })();
-         </script>
         </body>
       </html>
     )
