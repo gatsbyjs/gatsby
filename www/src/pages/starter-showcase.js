@@ -253,10 +253,10 @@ class FilteredShowcase extends Component {
                 </div>
               )}
             <LHSFilter heading="Categories" data={Array.from(
-              count(data.allMarkdownRemark.edges.map(({ node }) => node.frontmatter && node.frontmatter.tags))
+              count(items.map(({ node }) => node.frontmatter && node.frontmatter.tags))
             )} filters={filtersCategory} setFilters={setFiltersCategory} sortRecent={urlState.sort === 'recent'} />
             <LHSFilter heading="Gatsby Dependencies" data={Array.from(
-              count(data.allMarkdownRemark.edges.map(({ node }) => node.fields && node.fields.starterShowcase.gatsbyDependencies.map(str => str[0])))
+              count(items.map(({ node }) => node.fields && node.fields.starterShowcase.gatsbyDependencies.map(str => str[0])))
             )} filters={filtersDependency} setFilters={setFiltersDependency} sortRecent={urlState.sort === 'recent'} />
           </div>
         </div>
