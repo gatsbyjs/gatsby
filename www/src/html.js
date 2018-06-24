@@ -64,7 +64,10 @@ export default class HTML extends React.Component {
             color={colors.gatsby}
           />
           <meta name="msapplication-config" content={`/browserconfig.xml`} />
-          <script src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js" defer />
+          <script
+            src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"
+            defer
+          />
         </head>
         <body {...this.props.bodyAttributes}>
           <div
