@@ -201,7 +201,7 @@ class StarterTemplate extends React.Component {
                 }}
               >
                 <a
-                  href={frontmatter.repo}
+                  href={frontmatter.demo}
                   css={{
                     border: 0,
                     borderRadius: presets.radius,
