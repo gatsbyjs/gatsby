@@ -5,7 +5,6 @@ import { Link, graphql } from 'gatsby'
 import Img from "gatsby-image"
 
 import FaExtLink from "react-icons/lib/fa/external-link"
-import hex2rgba from "hex2rgba"
 import Layout from "../components/layout"
 import ShareMenu from "../components/share-menu"
 import presets, { colors } from "../utils/presets"
@@ -24,7 +23,6 @@ class StarterTemplate extends React.Component {
   render() {
 
     const { data } = this.props
-    console.log({ data }, this.props)
     const { markdownRemark, file: imageSharp } = data
     const { fields: { starterShowcase },
       frontmatter

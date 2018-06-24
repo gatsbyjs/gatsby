@@ -66,8 +66,8 @@ query SiteShowcaseQuery {
       node {
         name
         childImageSharp {
-          fixed(width: 282, height: 211) {
-            ...GatsbyImageSharpFixed
+          fluid(maxWidth: 280, maxHeight: 230) {
+            ...GatsbyImageSharpFluid
           }
         }
       }
@@ -118,17 +118,6 @@ query SiteShowcaseQuery {
   }
 }
 `
-
-function mergeImages(data) {
-  data.allMarkdownRemark.edges = data.allMarkdownRemark.edges
-    .map(edge => {
-      const stub = edge.node.fields.starterShowcase.stub
-      const imageEdge = data.allFile.edges.find(el => stub === el.node.name)
-      edge.node.image = imageEdge.childImageSharp
-      return edge
-    })
-  return data
-}
 
 // smaller components
 
@@ -609,7 +598,7 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
                   }}>
                     {imgsharp ? (
                       <Img
-                        fixed={imgsharp.childImageSharp.fixed}
+                        fluid={imgsharp.childImageSharp.fluid}
                         alt={`Screenshot of ${imgsharp.name}`}
                         css={{
                           ...styles.screenshot,
@@ -619,8 +608,8 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
                     ) : (
                         <div
                           css={{
-                            height: 211,
-                            width: 282, //320,
+                            // height: 230,
+                            width: 320,
                             backgroundColor: `#d999e7`,
                           }}
                         >
@@ -637,18 +626,15 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
                   }}
                 >
                   <div css={{ display: 'flex', justifyContent: 'space-between' }}>{repo.owner && repo.owner.login} /
-                  <span>
-                      <a href="#copy-to-clipboard" onClick={() => copyToClipboard(`https://github.com/${githubFullName}`)}><FaClipboard /> </a>
-                      <a href={node.frontmatter.demo} target="_blank" rel="noopener noreferrer"><FaExtLink /> </a>
-                      <a href={`https://github.com/${githubFullName}`} target="_blank" rel="noopener noreferrer"><FaGithub /> </a>
+                    <span>
+                      <a href="#copy-to-clipboard" onClick={() => copyToClipboard(`https://github.com/${githubFullName}`)} css={{ ...styles.noLinkUnderline }}><FaClipboard /> </a>
+                      <a href={node.frontmatter.demo} target="_blank" rel="noopener noreferrer" css={{ ...styles.noLinkUnderline }}><FaExtLink /> </a>
+                      <a href={`https://github.com/${githubFullName}`} target="_blank" rel="noopener noreferrer" css={{ ...styles.noLinkUnderline }}><FaGithub /> </a>
                     </span>
                   </div>
                   <div>
                     <span className="title">
-                      {/* <Link
-                      to={{ pathname: `/starters/${node.fields.starterShowcase.stub}`, state: { isModal: true } }}> */}
                       <h5 css={{ margin: 0 }}><strong>{repo.name}</strong></h5>
-                      {/* </Link> */}
                     </span>
                   </div>
                   <div css={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>{description}</div>
@@ -824,4 +810,8 @@ const styles = {
       boxShadow: `0 8px 20px ${hex2rgba(colors.lilac, 0.5)}`,
     },
   },
+  noLinkUnderline: {
+    borderBottom: 'none !important', // i know i know
+    boxShadow: 'none !important', // but people really want this
+  }
 }
