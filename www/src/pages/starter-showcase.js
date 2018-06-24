@@ -635,14 +635,18 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
                 >
                   <div css={{ display: 'flex', justifyContent: 'space-between' }}>{repo.owner && repo.owner.login} /
                     <span>
-                      <a href="#copy-to-clipboard" onClick={() => copyToClipboard(`https://github.com/${githubFullName}`)} css={{ ...styles.noLinkUnderline }}><FaClipboard /> </a>
+                      <a href="#copy-to-clipboard" onClick={() => alert(`copied ${githubFullName} to clipboard`) || copyToClipboard(`https://github.com/${githubFullName}`)} css={{ ...styles.noLinkUnderline }}><FaClipboard /> </a>
                       <a href={node.frontmatter.demo} target="_blank" rel="noopener noreferrer" css={{ ...styles.noLinkUnderline }}><FaExtLink /> </a>
                       <a href={`https://github.com/${githubFullName}`} target="_blank" rel="noopener noreferrer" css={{ ...styles.noLinkUnderline }}><FaGithub /> </a>
                     </span>
                   </div>
                   <div>
                     <span className="title">
-                      <h5 css={{ margin: 0 }}><strong>{repo.name}</strong></h5>
+                      <h5 css={{ margin: 0 }}>
+                        <Link to={{ pathname: `/starters/${stub}`, state: { isModal: true } }}>
+                          <strong>{repo.name}</strong>
+                        </Link>
+                      </h5>
                     </span>
                     {isGatsbyVersionWarning ?
                       <span css={{ fontStyle: 'italic', color: 'red' }}>Outdated Version: {minorVersion}</span> :
