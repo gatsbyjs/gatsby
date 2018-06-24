@@ -564,10 +564,12 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
               gatsbyDependencies
             } = node.fields.starterShowcase
             const gatsbyVersion = gatsbyDependencies.find(([k, v]) => k === 'gatsby')[1]
-            const match = gatsbyVersion.match(/([0-9]+)([.])([0-9]+)/)
-            const minorVersion = match ? match[0] : gatsbyVersion
-            console.log({ minorVersion })
-            const isGatsbyVersionWarning = !RegExp('(2..+|next)', 'g').test(minorVersion)
+            const match = gatsbyVersion
+              .match(/([0-9]+)([.])([0-9]+)/) // we just want x.x
+            const minorVersion = match ?
+              match[0] : gatsbyVersion // default to version if no match
+            const isGatsbyVersionWarning =
+              !/(2..+|next)/g.test(minorVersion) // either 2.x or 'next
             const imgsharp = imgsFilter(imgs, stub)
             const repo = githubData.repoMetadata
             const { pushed_at } = repo

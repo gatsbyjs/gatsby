@@ -87,7 +87,7 @@ class StarterTemplate extends React.Component {
               }}
             >
               <a
-                href={frontmatter.repo}
+                href={`https://github.com/${starterShowcase.owner.login}`}
                 css={{
                   ...styles.link,
                   fontWeight: `bold`,
