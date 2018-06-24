@@ -2,7 +2,8 @@ import React from "react"
 import Helmet from "react-helmet"
 // import { OutboundLink } from "gatsby-plugin-google-analytics"
 import { Link, graphql } from 'gatsby'
- 
+import Img from "gatsby-image"
+
 import FaExtLink from "react-icons/lib/fa/external-link"
 import hex2rgba from "hex2rgba"
 import Layout from "../components/layout"
@@ -11,29 +12,30 @@ import presets, { colors } from "../utils/presets"
 import /*typography, */ { rhythm, scale, options } from "../utils/typography"
 import MdLaunch from "react-icons/lib/md/launch"
 import GithubIcon from "react-icons/lib/fa/github"
- 
- 
+
+
 const gutter = rhythm(3 / 4)
 const gutterDesktop = rhythm(6 / 4)
- 
+
 class StarterTemplate extends React.Component {
   state = {
     showAllDeps: false
   }
   render() {
- 
+
     const { data } = this.props
-    const { markdownRemark } = data
+    console.log({ data }, this.props)
+    const { markdownRemark, file: imageSharp } = data
     const { fields: { starterShowcase },
       frontmatter
     } = markdownRemark
- 
+
     // preprocessing of dependencies
     const { miscDependencies = [], gatsbyDependencies = [] } = starterShowcase
     const allDeps = [...gatsbyDependencies.map(([name, ver]) => name), ...miscDependencies.map(([name, ver]) => name)]
     const shownDeps = this.state.showAllDeps ? allDeps : allDeps.slice(0, 15)
     const showMore = !this.state.showAllDeps && allDeps.length - shownDeps.length > 0
- 
+
     // plug for now
     const isModal = false
     const repoName = starterShowcase.githubData.repoMetadata.name
@@ -137,7 +139,7 @@ class StarterTemplate extends React.Component {
                   </a>
                 </div>
               )}
- 
+
               <div
                 css={{
                   padding: 20,
@@ -163,7 +165,7 @@ class StarterTemplate extends React.Component {
                     css={{ marginBottom: 0 }}
                   />
                 </a>
- 
+
               </div>
               <div
                 css={{
@@ -232,28 +234,15 @@ class StarterTemplate extends React.Component {
                   image={`https://next.gatsbyjs.org/StarterShowcase/generatedScreenshots/${starterShowcase.stub}.png`}
                 />
               </div>
-              {/* <Img
-                sizes={
-                  markdownRemark.childScreenshot.screenshotFile.childImageSharp
-                    .sizes
-                }
-                alt={`Screenshot of ${markdownRemark.title}`}
-                css={{
-                  boxShadow: isModal
-                    ? false
-                    : `0 4px 10px ${hex2rgba(colors.gatsby, 0.1)}`,
-                }}
-              /> */}
- 
-              <img
-                alt={`Screenshot of ${starterShowcase.githubFullName}`}
-                src={`/StarterShowcase/generatedScreenshots/${starterShowcase.stub}.png`}
-                css={{
-                  boxShadow: isModal
-                    ? false
-                    : `0 4px 10px ${hex2rgba(colors.gatsby, 0.1)}`,
-                }}
-              />
+              {imageSharp && (
+                <Img
+                  fluid={imageSharp.childImageSharp.fluid}
+                  alt={`Screenshot of ${imageSharp.name}`}
+                  css={{
+                    ...styles.screenshot,
+                  }}
+                />
+              )}
             </div>
             <div
               css={{
@@ -270,12 +259,12 @@ class StarterTemplate extends React.Component {
                 Tags
                 </div>
               <div>{frontmatter.tags.join(`, `)}</div>
- 
+
               <div css={{ color: colors.gray.calm, fontFamily: options.headerFontFamily.join(`,`), paddingRight: 20 }}>
                 Description
                 </div>
               <div>{frontmatter.description}</div>
- 
+
               <div css={{ color: colors.gray.calm, fontFamily: options.headerFontFamily.join(`,`), paddingRight: 20 }}>
                 Features
                 </div>
@@ -285,11 +274,11 @@ class StarterTemplate extends React.Component {
                   "n/a"
                 }
               </div>
- 
+
               <div css={{ color: colors.gray.calm, fontFamily: options.headerFontFamily.join(`,`), paddingRight: 20 }}>
                 Dependencies
                 </div>
- 
+
               <div>
                 <div css={{
                   display: 'grid',
@@ -298,7 +287,7 @@ class StarterTemplate extends React.Component {
                   gridAutoRows: '50px'
                 }}>
                   {shownDeps && shownDeps.map(dep => /^gatsby-/.test(dep) ?
-                    <div><Link to={`/packages/${dep}`} key={dep}>{dep}</Link></div> :
+                    <div key={dep}><Link to={`/packages/${dep}`}>{dep}</Link></div> :
                     <div key={dep} css={{
                       ...styles.truncate,
                       marginBottom: '1rem'
@@ -308,7 +297,7 @@ class StarterTemplate extends React.Component {
                 {showMore &&
                   <a href="#showmore" onClick={() => this.setState({ showAllDeps: true })}>{`Show ${allDeps.length - shownDeps.length} more`}</a>}
               </div>
- 
+
             </div>
           </div>
         </div>
@@ -316,12 +305,28 @@ class StarterTemplate extends React.Component {
     )
   }
 }
- 
- 
+
+
 export default StarterTemplate
- 
+
 export const pageQuery = graphql`
-  query TemplateStarter($slug: String!) {
+  query TemplateStarter($slug: String!, $stub: String!) {
+    file(name: {eq: $stub }) {
+      name
+      childImageSharp {
+        fluid(maxWidth: 700) {
+          ...GatsbyImageSharpFluid
+        }
+        resize(
+          width: 1500
+          height: 1500
+          cropFocus: CENTER
+          toFormat: JPG
+        ) {
+          src
+        }
+      }
+    }
     markdownRemark(fields: {
         starterShowcase: {
           slug: { eq: $slug }
@@ -361,8 +366,8 @@ export const pageQuery = graphql`
     }
   }
 `
- 
- 
+
+
 const styles = {
   link: {
     color: colors.gatsby,
@@ -433,8 +438,8 @@ const styles = {
     minWidth: 0,
   },
 }
- 
+
 function showDate(dt) {
   const date = new Date(dt)
   return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
-} 
+}

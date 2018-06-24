@@ -87,8 +87,8 @@ module.exports = {
       },
     },
     `gatsby-plugin-glamor`,
-    `gatsby-plugin-sharp`,
     `gatsby-transformer-sharp`,
+    `gatsby-plugin-sharp`,
     `gatsby-plugin-catch-links`,
     `gatsby-plugin-lodash`,
     {

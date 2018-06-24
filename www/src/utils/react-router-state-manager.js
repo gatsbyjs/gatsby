@@ -1,9 +1,9 @@
 import React from 'react'
 import queryString from "query-string"
- 
+
 // manage your state entirely within the router, so that it's copiable
 // https://gist.github.com/sw-yx/efd9ee71669413bca6a895d87e30742f
- 
+
 export default defaultURLState => Component => props => {
   const { history, location } = props
   const urlState = { ...defaultURLState, ...queryString.parse(location.search) }
@@ -21,7 +21,6 @@ export default defaultURLState => Component => props => {
     });
     return history.push({ search: `?${queryString.stringify(finalState)}` })
   }
-  console.log('RRSM****')
   return <Component
     setURLState={setURLState} // use this instead of `setState`
     urlState={urlState} // easier to read state from this instead of `location`

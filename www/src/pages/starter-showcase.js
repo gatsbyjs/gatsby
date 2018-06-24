@@ -22,9 +22,9 @@ import presets, { colors } from "../utils/presets"
 import { style } from "glamor"
 import hex2rgba from "hex2rgba"
 import RRSM from '../utils/react-router-state-manager'
- 
+
 // main components
- 
+
 class StarterShowcasePage extends Component {
 
   shouldComponentUpdate(nextProps) {
@@ -54,13 +54,13 @@ class StarterShowcasePage extends Component {
     )
   }
 }
- 
+
 export default RRSM({ s: '', c: [], d: [], sort: 'recent' })(StarterShowcasePage)
- 
+
 export const showcaseQuery = graphql`
 query SiteShowcaseQuery {
   allFile(
-    filter: { relativePath:{ regex: "/generatedScreenshots/" }
+    filter: { absolutePath:{ regex: "/generatedScreenshots/" }
   }) {
     edges {
       node {
@@ -131,7 +131,7 @@ function mergeImages(data) {
 }
 
 // smaller components
- 
+
 class FilteredShowcase extends Component {
   state = {
     sitesToShow: 9,
@@ -147,11 +147,10 @@ class FilteredShowcase extends Component {
     const filtersDependency = new Set(Array.isArray(urlState.d) ? urlState.d : [urlState.d])
     // https://stackoverflow.com/a/32001444/1106414
     const filters = new Set([].concat(...[filtersCategory, filtersDependency].map(set => Array.from(set))))
- 
-    console.log('data', this.props.data.allFile, this.props.data.allMarkdownRemark)
+
     let items = data.allMarkdownRemark.edges,
-        imgs = data.allFile.edges
-    
+      imgs = data.allFile.edges
+
     if (urlState.s.length > 0) {
       items = items.filter(node => {
         // TODO: SWYX: very very simple object search algorithm, i know, sorry
@@ -160,14 +159,14 @@ class FilteredShowcase extends Component {
         return JSON.stringify(frontmatter).toLowerCase().includes(urlState.s)
       })
     }
- 
+
     if (filtersCategory.size > 0) {
       items = filterByCategories(items, filtersCategory)
     }
     if (filtersDependency.size > 0) {
       items = filterByDependencies(items, filtersDependency)
     }
- 
+
     return (
       <section
         className="showcase"
@@ -376,14 +375,14 @@ class FilteredShowcase extends Component {
                     pointerEvents: `none`,
                     // transition: `fill ${speedDefault} ${curveDefault}`,
                     transform: `translateY(-50%)`,
- 
+
                     // [presets.Hd]: {
                     //   fill: focussed && isHomepage && colors.gatsby,
                     // },
                   }}
                 />
               </label>
- 
+
             </div>
           </div>
           <ShowcaseList urlState={urlState} sortRecent={urlState.sort === 'recent'} items={items} imgs={imgs} count={this.state.sitesToShow} />
@@ -414,7 +413,7 @@ class FilteredShowcase extends Component {
     )
   }
 }
- 
+
 function LHSFilter({ sortRecent, heading, data, filters, setFilters }) {
   return (
     <Collapsible heading={heading}>
@@ -488,17 +487,17 @@ function LHSFilter({ sortRecent, heading, data, filters, setFilters }) {
     </Collapsible>
   )
 }
- 
- 
+
+
 class Collapsible extends Component {
   state = {
     collapsed: false,
   }
- 
+
   handleClick = () => {
     this.setState({ collapsed: !this.state.collapsed })
   }
- 
+
   render() {
     const { heading, children } = this.props
     return (
@@ -520,10 +519,8 @@ class Collapsible extends Component {
     )
   }
 }
- 
- 
+
 const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
-  console.log({imgs})
   if (!items.length) { // empty state!
     const emptyStateReason = urlState.s !== '' ? urlState.s : ( // if theres a search term
       urlState.d && !Array.isArray(urlState.d) ? urlState.d : // if theres a single dependency
@@ -573,8 +570,10 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
               githubData,
               description,
               stars,
-              githubFullName
+              githubFullName,
+              stub
             } = node.fields.starterShowcase
+            const imgsharp = imgsFilter(imgs, stub)
             const repo = githubData.repoMetadata
             const { updated_at } = repo
             return node.fields && ( // have to filter out null fields from bad data
@@ -586,7 +585,7 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
                 {...styles.withTitleHover}
               >
                 <Link
-                  to={{ pathname: `/starters/${node.fields.starterShowcase.stub}`, state: { isModal: true } }}
+                  to={{ pathname: `/starters/${stub}`, state: { isModal: true } }}
                   css={{
                     "&&": {
                       borderBottom: `none`,
@@ -608,29 +607,20 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
                       presets.animation.curveDefault
                       }`
                   }}>
-                    {node.image ? (
-                      // <img
-                      //   src={`/StarterShowcase/generatedScreenshots/${node.fields.starterShowcase.stub}.png`}
-                      //   width={282}
-                      //   height={211}
-                      //   alt={`Screenshot of ${node.fields.starterShowcase.stub}`}
-                      //   css={{
-                      //     ...styles.screenshot,
-                      //     marginBottom: 0
-                      //   }}
-                      // />
+                    {imgsharp ? (
                       <Img
-                        fixed={node.image.fixed}
-                        alt={`Screenshot of ${node.title}`}
+                        fixed={imgsharp.childImageSharp.fixed}
+                        alt={`Screenshot of ${imgsharp.name}`}
                         css={{
                           ...styles.screenshot,
                           marginBottom: 0
                         }}
-                    />
+                      />
                     ) : (
                         <div
                           css={{
-                            width: 320,
+                            height: 211,
+                            width: 282, //320,
                             backgroundColor: `#d999e7`,
                           }}
                         >
@@ -674,10 +664,10 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
     </div>
   )
 }
- 
- 
+
+
 // utility functions
- 
+
 // https://hackernoon.com/copying-text-to-clipboard-with-javascript-df4d4988697f
 const copyToClipboard = str => {
   const el = document.createElement('textarea');  // Create a <textarea> element
@@ -698,25 +688,25 @@ const copyToClipboard = str => {
     document.getSelection().addRange(selected);   // Restore the original selection
   }
 };
- 
+
 function count(arrays) {
   let counts = new Map()
- 
+
   for (let categories of arrays) {
     if (!categories) continue
- 
+
     for (let category of categories) {
       if (!counts.has(category)) {
         counts.set(category, 0)
       }
- 
+
       counts.set(category, counts.get(category) + 1)
     }
   }
- 
+
   return counts
 }
- 
+
 function filterByCategories(list, categories) {
   let items = list
   items = items.filter(
@@ -728,17 +718,17 @@ function filterByCategories(list, categories) {
 }
 function filterByDependencies(list, categories) {
   let items = list
- 
+
   items = items.filter(
     ({ node }) =>
       node.fields &&
       isSuperset(node.fields.starterShowcase.gatsbyDependencies.map(c => c[0]), categories)
     // node.fields.starterShowcase.gatsbyDependencies.filter(c => categories.has(c[0])).length > 0
   )
- 
+
   return items
 }
- 
+
 function isSuperset(set, subset) {
   for (var elem of subset) {
     if (!set.includes(elem)) {
@@ -747,8 +737,12 @@ function isSuperset(set, subset) {
   }
   return true;
 }
- 
- 
+
+function imgsFilter(imgs, stub) {
+  const result = imgs.filter(img => img.node.name === stub)
+  return result.length ? result[0].node : null
+}
+
 const styles = {
   featuredSitesCard: style({
     display: `flex`,
