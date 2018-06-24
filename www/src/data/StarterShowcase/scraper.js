@@ -31,13 +31,13 @@ fs.readdir(srcFolder, function (err, files) {
       const { demo, repo } = attributes
       const stub = file.split('.')[0]
       // *************** screenshot the demo if its available. comment in if you want to run it
-      if (demo) {
-        webshot(demo, path.join(desFolder, `${stub}.png`), function (err) {
-          // screenshot now saved
-          if (err) { console.error('webshot err happened with ', fromPath, err) }
-          // console.log('Proceeding...')
-        })
-      }
+      // if (demo) {
+      //   webshot(demo, path.join(desFolder, `${stub}.png`), function (err) {
+      //     // screenshot now saved
+      //     if (err) { console.error('webshot err happened with ', fromPath, err) }
+      //     // console.log('Proceeding...')
+      //   })
+      // }
       // *************** get details from github repo. comment in if you want to run it
       // const jsonpath = path.join(gitFolder, `${stub}.json`)
       // if (repo) {

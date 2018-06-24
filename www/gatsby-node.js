@@ -393,7 +393,7 @@ function createNodesForStarterShowcase({ node, getNode, getNodes, actions }) {
       allDependencies,
       gatsbyDependencies: allDependencies
         .filter(
-          ([key, _]) => !['gatsby', 'gatsby-cli', 'gatsby-link'].includes(key)
+          ([key, _]) => !['gatsby-cli', 'gatsby-link'].includes(key) // remove stuff everyone has
         )
         .filter(([key, _]) => key.includes('gatsby')),
       miscDependencies: allDependencies.filter(([key, _]) => !key.includes('gatsby')),

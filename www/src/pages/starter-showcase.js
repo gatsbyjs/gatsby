@@ -560,8 +560,11 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
               description,
               stars,
               githubFullName,
-              stub
+              stub,
+              gatsbyDependencies
             } = node.fields.starterShowcase
+            const gatsbyVersion = gatsbyDependencies.find(([k, v]) => k === 'gatsby')[1]
+            const isGatsbyVersionWarning = !RegExp('(2..+..+|next)', 'g').test(gatsbyVersion)
             const imgsharp = imgsFilter(imgs, stub)
             const repo = githubData.repoMetadata
             const { updated_at } = repo
@@ -636,6 +639,10 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
                     <span className="title">
                       <h5 css={{ margin: 0 }}><strong>{repo.name}</strong></h5>
                     </span>
+                    {isGatsbyVersionWarning ?
+                      <span css={{ fontStyle: 'italic', color: 'red' }}>Outdated Version: {gatsbyVersion}</span> :
+                      <span css={{ fontStyle: 'italic', color: 'green' }}>Gatsby Version: {gatsbyVersion}</span>
+                    }
                   </div>
                   <div css={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>{description}</div>
                   <div css={{ display: 'flex', justifyContent: 'space-between' }}>
