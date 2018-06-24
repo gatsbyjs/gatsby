@@ -569,7 +569,7 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
             const minorVersion = match ?
               match[0] : gatsbyVersion // default to version if no match
             const isGatsbyVersionWarning =
-              !/(2..+|next)/g.test(minorVersion) // either 2.x or 'next
+              !/(2..+|next|latest)/g.test(minorVersion) // either 2.x or next or latest
             const imgsharp = imgsFilter(imgs, stub)
             const repo = githubData.repoMetadata
             const { pushed_at } = repo
