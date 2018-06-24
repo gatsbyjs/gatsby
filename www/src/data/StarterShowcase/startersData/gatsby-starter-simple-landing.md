@@ -1,6 +1,6 @@
 ---
 date: January 3, 2018
-demo: https://gssl.greglobinski.com/
+demo: https://gatsby-starter-simple-landing.greglobinski.com/
 repo: https://github.com/greglobinski/gatsby-starter-simple-landing
 description: n/a
 tags:

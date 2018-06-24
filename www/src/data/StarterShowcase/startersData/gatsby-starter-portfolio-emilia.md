@@ -5,6 +5,9 @@ repo: https://github.com/LeKoArts/gatsby-starter-portfolio-emilia
 description: The target audience are designers and photographers.
 tags:
 - portfolio
+- onepage
+- PWA
+- transitions
 - markdown
 features:
 - Focus on big images (with gatsby-image)

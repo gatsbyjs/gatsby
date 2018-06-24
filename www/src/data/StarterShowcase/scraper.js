@@ -11,12 +11,9 @@ var getpkgjson = require('get-package-json-from-github')
 const gh = new GitHub()
 
 var srcFolder = './startersData'
-var desFolder = '../../../static/StarterShowcase/generatedScreenshots'
+var desFolder = './generatedScreenshots'
 var gitFolder = './generatedGithubData'
 
-// loop breaker.
-// for debugging, make this 0 so you dont get a ton of snapshots. if normal, set this to -10000 or something
-let count = -100000
 
 // Loop through all the files in the temp directory
 fs.readdir(srcFolder, function (err, files) {
@@ -32,38 +29,32 @@ fs.readdir(srcFolder, function (err, files) {
       if (err) throw err
       const { attributes } = fm(data)
       const { demo, repo } = attributes
-      // const stub = getStub(repo) // not good because the file name can diverge from the repo noame
-      const stub = file.split('.')[0] // not good because the file name can diverge from the repo noame
-      // *************** screenshot the demo if its available
-      // if (demo
-      //   // && count++ < 2
-      // ) {
-      //   webshot(demo, path.join(desFolder, `${stub}.png`), function (err) {
-      //     // screenshot now saved
-      //     if (err) { console.error('webshot err happened with ', fromPath, err) }
-      //     console.log('Proceeding...')
-      //   })
-      // }
-      // *************** get details from github repo
-      const jsonpath = path.join(gitFolder, `${stub}.json`)
-      if (repo
-        // && !fs.existsSync(jsonpath)
-        // && count++ < 2
-      ) {
-        getpkgjson(repo)
-          .then(pkgjson => {
-            const repodata = gh.getRepo(getUser(repo), getStub(repo))
-            repodata.getDetails((err, res) => {
-              if (err) throw err
-              pkgjson.repoMetadata = res
-              var json = JSON.stringify(pkgjson)
-              fs.writeFile(jsonpath, json, 'utf8', err => {
-                if (err) throw err
-              })
-            })
-          })
-          .catch(err => console.error(err) || console.log(repo))
+      const stub = file.split('.')[0]
+      // *************** screenshot the demo if its available. comment in if you want to run it
+      if (demo) {
+        webshot(demo, path.join(desFolder, `${stub}.png`), function (err) {
+          // screenshot now saved
+          if (err) { console.error('webshot err happened with ', fromPath, err) }
+          // console.log('Proceeding...')
+        })
       }
+      // *************** get details from github repo. comment in if you want to run it
+      // const jsonpath = path.join(gitFolder, `${stub}.json`)
+      // if (repo) {
+      //   getpkgjson(repo)
+      //     .then(pkgjson => {
+      //       const repodata = gh.getRepo(getUser(repo), getStub(repo))
+      //       repodata.getDetails((err, res) => {
+      //         if (err) throw err
+      //         pkgjson.repoMetadata = res
+      //         var json = JSON.stringify(pkgjson)
+      //         fs.writeFile(jsonpath, json, 'utf8', err => {
+      //           if (err) throw err
+      //         })
+      //       })
+      //     })
+      //     .catch(err => console.error(err) || console.log(repo))
+      // }
     })
   })
 })

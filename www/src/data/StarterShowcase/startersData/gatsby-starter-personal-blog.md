@@ -6,7 +6,7 @@ description: n/a
 tags:
 - blog
 - markdown
-- algolia
+- Algolia
 - Netlify Form
 - Styling:Material
 features:

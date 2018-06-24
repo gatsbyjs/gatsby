@@ -6,6 +6,7 @@ description: The target audience are designers and photographers.
 tags:
 - portfolio
 - markdown
+- PWA
 features:
 - Full-width photo grid-layout (with gatsby-image)
 - Minimalistic light theme with large images
