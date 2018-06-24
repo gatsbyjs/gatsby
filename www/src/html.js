@@ -74,8 +74,8 @@ export default class HTML extends React.Component {
           {this.props.postBodyComponents}
          <script type="text/javascript">
           (function() {
-            const path = 'https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css';
-            const link = document.createElement('link');
+            var path = 'https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css';
+            var link = document.createElement('link');
             link.setAttribute('rel', 'stylesheet');
             link.setAttribute('type', 'text/css');
             link.setAttribute('href', path);
