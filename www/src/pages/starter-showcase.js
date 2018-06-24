@@ -103,7 +103,7 @@ query SiteShowcaseQuery {
             githubData {
               repoMetadata {
                 full_name
-                updated_at
+                pushed_at
                 name
                 owner {
                   login
@@ -534,7 +534,7 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
   }
   if (count) items = items
     .sort(({ node: nodeA }, { node: nodeB }) => {
-      const safewrap = obj => sortRecent ? new Date(obj.githubData.repoMetadata.updated_at) : obj['stars']
+      const safewrap = obj => sortRecent ? new Date(obj.githubData.repoMetadata.pushed_at) : obj['stars']
       const metricA = safewrap(nodeA.fields.starterShowcase)
       const metricB = safewrap(nodeB.fields.starterShowcase)
       return metricB - metricA
@@ -564,10 +564,13 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
               gatsbyDependencies
             } = node.fields.starterShowcase
             const gatsbyVersion = gatsbyDependencies.find(([k, v]) => k === 'gatsby')[1]
-            const isGatsbyVersionWarning = !RegExp('(2..+..+|next)', 'g').test(gatsbyVersion)
+            const match = gatsbyVersion.match(/([0-9]+)([.])([0-9]+)/)
+            const minorVersion = match ? match[0] : gatsbyVersion
+            console.log({ minorVersion })
+            const isGatsbyVersionWarning = !RegExp('(2..+|next)', 'g').test(minorVersion)
             const imgsharp = imgsFilter(imgs, stub)
             const repo = githubData.repoMetadata
-            const { updated_at } = repo
+            const { pushed_at } = repo
             return node.fields && ( // have to filter out null fields from bad data
               <div key={node.id}
                 css={{
@@ -640,14 +643,14 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
                       <h5 css={{ margin: 0 }}><strong>{repo.name}</strong></h5>
                     </span>
                     {isGatsbyVersionWarning ?
-                      <span css={{ fontStyle: 'italic', color: 'red' }}>Outdated Version: {gatsbyVersion}</span> :
-                      <span css={{ fontStyle: 'italic', color: 'green' }}>Gatsby Version: {gatsbyVersion}</span>
+                      <span css={{ fontStyle: 'italic', color: 'red' }}>Outdated Version: {minorVersion}</span> :
+                      <span css={{ fontStyle: 'italic', color: 'green' }}>Gatsby Version: {minorVersion}</span>
                     }
                   </div>
                   <div css={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>{description}</div>
                   <div css={{ display: 'flex', justifyContent: 'space-between' }}>
                     <div css={{ display: 'inline-block' }}><span role="img" aria-label="star">⭐</span>{stars}</div>
-                    <div css={{ display: 'inline-block' }}>Updated {(new Date(updated_at)).toLocaleDateString()}</div>
+                    <div css={{ display: 'inline-block' }}>Updated {(new Date(pushed_at)).toLocaleDateString()}</div>
                   </div>
                 </div>
               </div>
