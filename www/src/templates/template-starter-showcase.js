@@ -58,14 +58,14 @@ class StarterTemplate extends React.Component {
             }}
           >
             <Helmet>
-              <title>{`Gatsby Starter: ${repoName}`}</title>
+              <title>{`${repoName}: Gatsby Starter`}</title>
               <meta
                 name="og:image"
-                content={`https://next.gatsbyjs.org/StarterShowcase/generatedScreenshots/${starterShowcase.stub}.png`}
+                content={imageSharp.childImageSharp.fluid.src}
               />
               <meta
                 name="twitter:image"
-                content={`https://next.gatsbyjs.org/StarterShowcase/generatedScreenshots/${starterShowcase.stub}.png`}
+                content={imageSharp.childImageSharp.fluid.src}
               />
               <meta name="description" content={`Gatsby Starter: ${repoName}`} />
               <meta name="og:description" content={`Gatsby Starter: ${repoName}`} />
@@ -180,8 +180,7 @@ class StarterTemplate extends React.Component {
               >
                 <span
                   css={{ color: colors.gray.calm, fontFamily: options.headerFontFamily.join(`,`), paddingRight: 20 }}
-                >Added/updated</span>
-                {showDate(starterShowcase.date)} /{" "}
+                >Last Updated</span>
                 {showDate(starterShowcase.githubData.repoMetadata.updated_at)}
               </div>
             </div>
@@ -227,9 +226,9 @@ class StarterTemplate extends React.Component {
                   <MdLaunch style={{ verticalAlign: `sub` }} /> Visit site
                 </a>
                 <ShareMenu
-                  url={markdownRemark.main_url}
-                  title={markdownRemark.title}
-                  image={`https://next.gatsbyjs.org/StarterShowcase/generatedScreenshots/${starterShowcase.stub}.png`}
+                  url={`https://github.com/${starterShowcase.githubFullName}`}
+                  title={`Check out ${repoName} on the @Gatsby Starter Showcase!`}
+                  image={imageSharp.childImageSharp.fluid.src}
                 />
               </div>
               {imageSharp && (
