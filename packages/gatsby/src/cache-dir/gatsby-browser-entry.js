@@ -1,24 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import Link, { withPrefix, push, replace, navigateTo } from "gatsby-link"
-import pages from "./pages.json"
-import loader from "./loader"
-import JSONStore from "./json-store"
-
-const PageRenderer = ({ location }) => {
-  const pageResources = loader.getResourcesForPathname(location.pathname)
-  return React.createElement(JSONStore, {
-    pages,
-    location,
-    pageResources,
-  })
-}
-
-PageRenderer.propTypes = {
-  location: PropTypes.shape({
-    pathname: PropTypes.string.isRequired,
-  }).isRequired,
-}
+import PageRenderer from "./public-page-renderer"
 
 const StaticQueryContext = React.createContext({})
 
