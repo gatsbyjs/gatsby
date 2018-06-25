@@ -38,26 +38,34 @@ Read on for a detailed guide on what's new in version 2!
 
 ## What we'll cover
 
-- [Update Gatsby version](#update-gatsby-version)
-- [Manually install React](#manually-install-react)
-- [Manually install plugins’ peer dependencies](#manually-install-plugins-peer-dependencies)
-- [Update layout component](#update-layout-component)
-- [Import Link from Gatsby](#import-link-from-gatsby)
-- [Import graphql from Gatsby](#import-graphql-from-gatsby)
-- [Rename `boundActionCreators` to `actions`](#rename-boundactioncreators-to-actions)
-- [Rename `pathContext` to `pageContext`](#rename-pathcontext-to-pagecontext)
-- [Rename responsive image queries](#rename-responsive-image-queries)
-- [Manually specify PostCSS plugins](#manually-specify-postcss-plugins)
-- [Convert to either pure CommonJS or pure ES6](#convert-to-either-pure-commonjs-or-pure-es6)
-- [Don't query nodes by ID](#dont-query-nodes-by-id)
-- [Remove explicit polyfills](#remove-explicit-polyfills)
-- [Change `modifyBabelrc` to `onCreateBabelConfig`](#change-modifybabelrc-to-oncreatebabelconfig)
-- [Change `modifyWebpackConfig` to `onCreateWebpackConfig`](#change-modifywebpackconfig-to-oncreatewebpackconfig)
-- [Change `navigateTo` to `push`](#change-navigateto-to-push)
-- [Remove inlined CSS in `html.js`](#remove-inlined-css-in-htmljs)
-- [Only allow defined keys on node.internal object](#only-allow-defined-keys-on-the-node-internal-object)
-- [Import `graphql` types from `gatsby/graphql`](#import-graphql-types-from-gatsbygraphql)
-- [Move Babel Configuration`](#move-babel-configuration)
+- [Starting a new project with Gatsby v2](#starting-a-new-project-with-gatsby-v2)
+  - [What we'll cover](#what-well-cover)
+  - [Update Gatsby version](#update-gatsby-version)
+  - [Manually install React](#manually-install-react)
+  - [Manually install plugins’ peer dependencies](#manually-install-plugins%E2%80%99-peer-dependencies)
+  - [Update layout component](#update-layout-component)
+    - [1. Convert children from function to normal prop (required)](#1-convert-children-from-function-to-normal-prop-required)
+    - [2. Move `layout/index.js` to `src/components/layout.js` (optional, but recommended)](#2-move-layoutindexjs-to-srccomponentslayoutjs-optional-but-recommended)
+    - [3. Import and wrap pages with layout component](#3-import-and-wrap-pages-with-layout-component)
+    - [4. Change query to use `StaticQuery`](#4-change-query-to-use-staticquery)
+    - [5. Pass `history`, `location`, and `match` props to layout](#5-pass-history-location-and-match-props-to-layout)
+  - [Import Link from Gatsby](#import-link-from-gatsby)
+  - [Import graphql from Gatsby](#import-graphql-from-gatsby)
+  - [Rename `boundActionCreators` to `actions`](#rename-boundactioncreators-to-actions)
+  - [Rename `pathContext` to `pageContext`](#rename-pathcontext-to-pagecontext)
+  - [Rename responsive image queries](#rename-responsive-image-queries)
+  - [Manually specify PostCSS plugins](#manually-specify-postcss-plugins)
+  - [Convert to either pure CommonJS or pure ES6](#convert-to-either-pure-commonjs-or-pure-es6)
+  - [Don't query nodes by ID](#dont-query-nodes-by-id)
+  - [Remove explicit polyfills](#remove-explicit-polyfills)
+  - [Change `modifyBabelrc` to `onCreateBabelConfig`](#change-modifybabelrc-to-oncreatebabelconfig)
+  - [Change `modifyWebpackConfig` to `onCreateWebpackConfig`](#change-modifywebpackconfig-to-oncreatewebpackconfig)
+  - [Change `navigateTo` to `push`](#change-navigateto-to-push)
+  - [Remove inlined CSS in `html.js`](#remove-inlined-css-in-htmljs)
+  - [Only allow defined keys on the node internal object](#only-allow-defined-keys-on-the-node-internal-object)
+  - [Import `graphql` types from `gatsby/graphql`](#import-graphql-types-from-gatsbygraphql)
+  - [Move Babel Configuration](#move-babel-configuration)
+  - [Plugin specific changes](#plugin-specific-changes)
 
 You can start with a few of the most important steps - install Gatsby v2 dependencies and update your layout components.
 
@@ -503,3 +511,19 @@ The latest version of Gatsby uses Babel 7, which introduced [a new behavior for 
 [This GitHub comment](https://github.com/facebook/jest/issues/1468#issuecomment-361260279) documents the steps needed to do that.
 
 More information on Gatsby and Babel configuration available [here](/docs/babel/#how-to-use-a-custom-babelrc-file).
+
+## Plugin specific changes
+
+Some plugins require additional changes before your site will compile.
+For example, if you use [`gatsby-plugin-typography`](https://www.gatsbyjs.org/packages/gatsby-plugin-typography/), you now need to explicitly export `scale` and `rhythm` as named exports.
+
+`src/utils/typography.js`
+
+```diff
+- const typography = new Typography();
+- export default typography;
+
++ const typography = new Typography();
++ const { rhythm, scale } = typography;
++ export { rhythm, scale, typography as default };
+```
