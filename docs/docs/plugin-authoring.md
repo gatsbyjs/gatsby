@@ -65,3 +65,12 @@ Like all `gatsby-*` files, the code is not processed by Babel. If you want
 to use JavaScript syntax which isn't supported by your version of Node.js, you
 can place the files in a `src` subfolder and build them to the plugin folder
 root.
+
+## What don't you need plugins for?
+
+Most third-party functionality you want to add to your website will follow standard Javascript and React.js patterns for importing packages and composing UIs. These do not require a Gatsby plugin!
+
+Some examples: 
+* Importing Javascript packages that provide general functionality, such as `lodash` or `axios`
+* Using React components or component libraries you want to include in your UI, such as `Ant Design`, `Material UI`, or the typeahead from your component library.
+* Integrating visualization libraries, such as `Highcharts` or `d3`.
