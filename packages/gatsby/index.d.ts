@@ -18,3 +18,5 @@ export interface StaticQueryProps {
 }
 
 export class StaticQuery extends React.Component<StaticQueryProps> {}
+
+export const graphql: (query: TemplateStringsArray) => void
