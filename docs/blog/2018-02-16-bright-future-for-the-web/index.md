@@ -10,7 +10,7 @@ _This article was originally published on
 [Medium](https://medium.com/@ryanwiemer/gatsby-and-the-jam-stack-91e31508f364)
 on January 31, 2018._
 
-Recently I relaunched my wife’s photography portfolio, [KNW Photography](https://www.knw.io/), using a combination of Gatsby, [Contentful](https://www.contentful.com/) and [Netlify](https://www.netlify.com/). This particular group of tools represents a new and exciting web development architecture known as the [JAMstack](https://jamstack.org/) (Javascript, APIs and Markup). In this post I will be sharing my personal thoughts on each of these new tools and why together they represent the “holy grail” of the static website world.
+Recently I relaunched my wife’s photography portfolio, [KNW Photography](https://www.knw.io/), using a combination of Gatsby, [Contentful](https://www.contentful.com/) and [Netlify](https://www.netlify.com/). This particular group of tools represents a new and exciting web development architecture known as the [JAMstack](https://jamstack.org/) (JavaScript, APIs and Markup). In this post I will be sharing my personal thoughts on each of these new tools and why together they represent the “holy grail” of the static website world.
 
 ## Why Other Static Site Generators Didn’t Work For Me
 
