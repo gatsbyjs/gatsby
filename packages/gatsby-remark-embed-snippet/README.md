@@ -132,7 +132,7 @@ ReactDOM.render(<App />, rootElement)
 ```
 
 Will produce something like this:
-![screenshot from 2018-06-21 20-21-58](https://user-images.githubusercontent.com/5726140/41750161-cdf430cc-7590-11e8-9ccb-8829bcce0f14.png)
+![screenshot from 2018-06-21 20-21-58](https://i.imgur.com/cYlAKZg.png)
 
 ## Installation
 
