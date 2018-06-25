@@ -107,7 +107,7 @@ exports.createPages = ({ graphql, actions }) => {
                 }
               }
             }
-            allSitesYaml {
+            allSitesYaml(limit: 40, filter: { main_url: { ne: null } }) {
               edges {
                 node {
                   fields {

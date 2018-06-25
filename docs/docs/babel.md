@@ -53,7 +53,7 @@ to root of your site and modifying it per your needs.
   ],
   plugins: [
     [
-      "@babel/plugin-proposal/class-properties",
+      "@babel/plugin-proposal-class-properties",
       {
         loose: true,
       },

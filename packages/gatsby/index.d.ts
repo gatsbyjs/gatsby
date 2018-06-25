@@ -1,14 +1,22 @@
 import * as React from "react"
 
-interface StaticQueryRenderProps {
-  data: any
-}
+export {
+  default as Link,
+  GatsbyLinkProps,
+  navigateTo,
+  push,
+  replace,
+  withPrefix
+} from "gatsby-link"
 
-type RenderCallback = (props: StaticQueryRenderProps) => JSX.Element
+type RenderCallback = (data: any) => React.ReactNode
 
 export interface StaticQueryProps {
   query: any
-  render: RenderCallback
+  render?: RenderCallback
+  children?: RenderCallback
 }
 
-export class StaticQuery extends React.Component<Partial<StaticQueryProps>> {}
+export class StaticQuery extends React.Component<StaticQueryProps> {}
+
+export const graphql: (query: TemplateStringsArray) => void

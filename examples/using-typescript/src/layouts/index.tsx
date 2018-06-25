@@ -2,7 +2,7 @@ import * as React from "react"
 
 import { rhythm } from "../utils/typography"
 
-const MainLayout = ({ children }: { children: any }) => (
+const MainLayout: React.SFC = ({ children }) => (
   <div
     style={{
       margin: `0 auto`,

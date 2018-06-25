@@ -12,7 +12,7 @@ Add a `deploy` script to `package.json`
 
 ```
     {
-        scripts: {
+        "scripts": {
             "deploy": "gatsby build --prefix-paths && gh-pages -d public",
         }
     }
@@ -21,7 +21,7 @@ Add a `deploy` script to `package.json`
 We are using prefix paths because our website is inside a folder `http://username.github.io/reponame/` so we need to add pathPrefix to `gatsby-config.js`
 
 ```
-{
+module.exports = {
     pathPrefix: "/reponame"
 }
 ```

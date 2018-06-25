@@ -347,28 +347,43 @@ Gatsby works out of the box with CSS Modules.
 
 Let's build a page using CSS Modules.
 
-First, let's create a new `Container` component which we'll use for each of the
-CSS-in-JS examples. Create a new directory at `src/components` and then, in this new directory, create a file named `container.js` and paste the following:
+First, let's create a new `Container` component. Create a new directory at
+`src/components` and then, in this new directory, create a file named
+`container.js` and paste the following:
 
 ```javascript
 import React from "react"
+import containerStyles from "./container.module.css"
 
 export default ({ children }) => (
-  <div style={{ margin: "3rem auto", maxWidth: 600 }}>{children}</div>
+  <div className={containerStyles.container}>{children}</div>
 )
 ```
 
-Then, create a new component page by creating a file at
+You'll notice we imported a css modules file named `container.module.css`. Let's make that.
+
+In the same directory, create the `container.module.css` file and paste in it:
+
+```css
+.container {
+  margin: 3rem auto;
+  max-width: 600px;
+}
+```
+
+Then, create a new page component by creating a file at
 `src/pages/about-css-modules.js`:
 
 ```javascript
 import React from "react"
 
+import Container from "../components/container"
+
 export default () => (
-  <div>
+  <Container>
     <h1>About CSS Modules</h1>
     <p>CSS Modules are cool</p>
-  </div>
+  </Container>
 )
 ```
 
@@ -387,11 +402,6 @@ that this CSS file should be processed as CSS modules.
 Paste the following into the file:
 
 ```css
-.container {
-  margin: 3rem auto;
-  max-width: 600px;
-}
-
 .user {
   display: flex;
   align-items: center;
@@ -475,7 +485,7 @@ const User = props => (
 )
 
 export default () => (
-  <div className={styles.container}>
+  <Container>
     <h1>About CSS Modules</h1>
     <p>CSS Modules are cool</p>
     <User
@@ -488,7 +498,7 @@ export default () => (
       avatar="https://s3.amazonaws.com/uifaces/faces/twitter/vladarbatov/128.jpg"
       excerpt="I'm Bob smith, a vertically aligned type of guy. Lorem ipsum dolor sit amet, consectetur adipisicing elit."
     />
-  </div>
+  </Container>
 )
 ```
 

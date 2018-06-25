@@ -124,6 +124,20 @@ describe(`GraphQL type inferance`, () => {
     )
   })
 
+  it(`doesn't throw errors at ints longer than 32-bit`, async () => {
+    const result = await queryResult(
+      [
+        { 
+          longint: 3000000000,
+        },
+      ],
+      `
+        longint
+      `
+    )
+    expect(result.errors).toBeUndefined()
+  })
+
   it(`prefers float when multiple number types`, async () => {
     let result = await queryResult(
       [{ number: 1.1 }, { number: 1 }],
@@ -197,6 +211,21 @@ describe(`GraphQL type inferance`, () => {
 
     expect(Object.keys(fields)).toHaveLength(2)
     expect(Object.keys(fields.foo.type.getFields())).toHaveLength(4)
+  })
+
+  it(`infers number types`, () => {
+    const fields = inferObjectStructureFromNodes({
+      nodes: [
+        {
+          int32: 42,
+          float: 2.5,
+          longint: 3000000000,
+        },
+      ],
+    })
+    expect(fields.int32.type.name).toEqual(`Int`)
+    expect(fields.float.type.name).toEqual(`Float`)
+    expect(fields.longint.type.name).toEqual(`Float`)
   })
 
   it(`Handle invalid graphql field names`, async () => {

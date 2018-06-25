@@ -64,3 +64,68 @@ Object {
   "type": "heading",
 }
 `;
+
+exports[`gatsby-remark-autolink-headers adds id to a markdown header with custom svg icon 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "data": Object {
+        "hChildren": Array [
+          Object {
+            "type": "raw",
+            "value": "<svg width=\\"400\\" height=\\"110\\"><rect width=\\"300\\" height=\\"100\\" /></svg>",
+          },
+        ],
+        "hProperties": Object {
+          "aria-hidden": true,
+          "class": "anchor",
+        },
+      },
+      "title": null,
+      "type": "link",
+      "url": "#heading-uno",
+    },
+    Object {
+      "position": Position {
+        "end": Object {
+          "column": 14,
+          "line": 1,
+          "offset": 13,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 3,
+          "line": 1,
+          "offset": 2,
+        },
+      },
+      "type": "text",
+      "value": "Heading Uno",
+    },
+  ],
+  "data": Object {
+    "hProperties": Object {
+      "id": "heading-uno",
+    },
+    "htmlAttributes": Object {
+      "id": "heading-uno",
+    },
+    "id": "heading-uno",
+  },
+  "depth": 1,
+  "position": Position {
+    "end": Object {
+      "column": 14,
+      "line": 1,
+      "offset": 13,
+    },
+    "indent": Array [],
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "heading",
+}
+`;

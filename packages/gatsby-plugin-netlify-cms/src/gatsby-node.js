@@ -62,8 +62,8 @@ function module(config, stage) {
   }
 }
 
-exports.onCreateWebpackConfig = ({ config, stage }, { modulePath }) => {
-  config.merge({
+exports.onCreateWebpackConfig = ({ actions, stage }, { modulePath }) => {
+  const config = actions.setWebpackConfig({
     entry: {
       cms: [`${__dirname}/cms.js`, modulePath].filter(p => p),
     },
@@ -71,6 +71,4 @@ exports.onCreateWebpackConfig = ({ config, stage }, { modulePath }) => {
   })
 
   module(config, stage)
-
-  return config
 }

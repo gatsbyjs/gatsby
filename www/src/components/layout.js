@@ -173,9 +173,7 @@ class DefaultLayout extends React.Component {
           }}
         >
           You're viewing the docs for Gatsby v2 beta.{` `}
-          <OutboundLink
-            href="https://gatsbyjs.org/"
-          >
+          <OutboundLink href="https://gatsbyjs.org/">
             View the v1 docs instead
           </OutboundLink>.
         </div>
@@ -186,11 +184,13 @@ class DefaultLayout extends React.Component {
             paddingTop: `2.8rem`,
             [presets.Tablet]: {
               margin: `0 auto`,
-              paddingTop: isHomepage ? `2.8rem` : `calc(2.8rem + ${presets.headerHeight})`,
+              paddingTop: isHomepage
+                ? `2.8rem`
+                : `calc(2.8rem + ${presets.headerHeight})`,
             },
           }}
         >
-  <PageWithSidebar
+          <PageWithSidebar
             disable={isSidebarDisabled}
             yaml={this.props.sidebarYaml}
             renderContent={() => this.props.children}
