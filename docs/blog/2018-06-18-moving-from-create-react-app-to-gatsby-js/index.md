@@ -126,7 +126,7 @@ class BlogPost extends Component {
   componentDidMount() {
     getBlogPost(this.props.match.slug)
       .then((data) => this.setState({ data }))
-      .catch((error) => this.setState({ state: 'error' }))
+      .catch((error) => this.setState({ status: 'error' }))
   }
   render() {
     if (!this.state.status === 'error') {
