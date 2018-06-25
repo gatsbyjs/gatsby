@@ -123,7 +123,7 @@ function caps(s) {
 }
 
 function getConnectionExtraParams(extraParams) {
-  var connectionSuffix
+  let connectionSuffix
   if (extraParams) {
     connectionSuffix = queryString.stringify(extraParams, { sort: false })
   }
