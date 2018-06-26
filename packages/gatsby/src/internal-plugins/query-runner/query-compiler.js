@@ -185,7 +185,7 @@ class Runner {
         name,
         text,
         originalText: nameDefMap.get(name).text,
-        path: path.join(this.baseDir, filePath),
+        path: filePath,
         isStaticQuery: nameDefMap.get(name).isStaticQuery,
         hash: nameDefMap.get(name).hash,
       }
