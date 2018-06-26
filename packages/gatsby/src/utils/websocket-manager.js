@@ -126,9 +126,9 @@ class WebsocketManager {
     this.pageResults.set(data.id, data)
   }
   emitQueryError(data) {
-    this.pageErrors.set(data.id, data.errors)
+    this.pageErrors.set(data.id, data)
     if (this.isInitialised) {
-      this.websocket.send({ type: `pageQueryError`, payload: data.errors })
+      this.websocket.send({ type: `pageQueryError`, payload: data })
     }
   }
 }

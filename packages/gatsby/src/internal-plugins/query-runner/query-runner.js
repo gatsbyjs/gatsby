@@ -44,23 +44,25 @@ module.exports = async (queryJob: QueryJob, component: Any) => {
   // If there's a graphql error then log the error. If we're building, also
   // quit.
   if (result && result.errors) {
-    report.log(`
-The GraphQL query from ${component.componentPath} failed.
+    const queryError = `
+      The GraphQL query from ${component.componentPath} failed.
 
-Errors:
-  ${result.errors || []}
-URL path:
-  ${queryJob.path}
-Context:
-  ${indentString(JSON.stringify(queryJob.context, null, 2))}
-Plugin:
-  ${queryJob.pluginCreatorId || `none`}
-Query:
-  ${indentString(component.query)}`)
+      Errors:
+        ${result.errors || []}
+      URL path:
+        ${queryJob.path}
+      Context:
+        ${indentString(JSON.stringify(queryJob.context, null, 2))}
+      Plugin:
+        ${queryJob.pluginCreatorId || `none`}
+      Query:
+        ${indentString(component.query)}
+    `
+    report.log(queryError)
 
     if (programType === `develop`) {
       websocketManager.emitQueryError({
-        errors: result.errors,
+        error: queryError,
         id: queryJob.id,
       })
     // Perhaps this isn't the best way to see if we're building?

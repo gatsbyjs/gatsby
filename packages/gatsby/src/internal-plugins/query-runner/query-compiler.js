@@ -76,9 +76,10 @@ class Runner {
     if (process.env.NODE_ENV === `production`) {
       report.panic(`${report.format.red(`GraphQL Error`)} ${message}`)
     } else {
-      report.log(`${report.format.red(`GraphQL Error`)} ${message}`)
+      const queryError = `${report.format.red(`GraphQL Error`)} ${message}`
+      report.log(queryError)
       websocketManager.emitQueryError({
-        errors: [new Error(`${report.format.red(`GraphQL Error`)} ${message}`)],
+        error: queryError,
       })
     }
   }

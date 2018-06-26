@@ -30,7 +30,7 @@ export default function socketIo() {
             }
           }
           if (msg.type === `pageQueryError`) {
-            // console.error queryError
+            console.error(msg.payload.error)
           }
           if (msg.type && msg.payload) {
             ___emitter.emit(msg.type, msg.payload)
