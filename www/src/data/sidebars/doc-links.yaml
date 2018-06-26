@@ -105,7 +105,7 @@
       link: /node-interface/
     - title: API Specification
       link: /api-specification/
-    - title: Bound Action Creators
+    - title: Actions
       link: /actions/
     - title: Gatsby Browser APIs
       link: /browser-apis/
