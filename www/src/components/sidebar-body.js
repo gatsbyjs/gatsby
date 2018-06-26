@@ -203,21 +203,13 @@ class SidebarBody extends React.Component {
         css={{
           borderRight: `1px solid ${colors.ui.light}`,
           backgroundColor: colors.ui.whisper,
-          boxShadow: `inset 0 4px 5px 0 ${hex2rgba(
-            colors.gatsby,
-            presets.shadowKeyPenumbraOpacity
-          )}, inset 0 1px 10px 0 ${hex2rgba(
-            colors.lilac,
-            presets.shadowAmbientShadowOpacity
-          )}, inset 0 2px 4px -1px ${hex2rgba(
-            colors.lilac,
-            presets.shadowKeyUmbraOpacity
-          )}`,
           width: rhythm(10),
           position: `fixed`,
-          top: `calc(${presets.headerHeight} + 2.8rem - 1px)`,
+          top: `calc(${presets.headerHeight} + ${presets.bannerHeight} - 1px)`,
           overflowY: `auto`,
-          height: `calc(100vh - ${presets.headerHeight} - 2.8rem + 1px)`,
+          height: `calc(100vh - ${presets.headerHeight} - ${
+            presets.bannerHeight
+          } + 1px)`,
           WebkitOverflowScrolling: `touch`,
           "::-webkit-scrollbar": {
             width: `6px`,
