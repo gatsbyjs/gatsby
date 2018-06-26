@@ -8,6 +8,7 @@ const websocketManager = require(`../../utils/websocket-manager`)
 const path = require(`path`)
 const { store } = require(`../../redux`)
 const { generatePathChunkName } = require(`../../utils/js-chunk-names`)
+const { formatErrorDetails } = require(`./utils`)
 
 const resultHashes = {}
 
@@ -20,16 +21,6 @@ type QueryJob = {
   context: Object,
   isPage: Boolean,
 }
-
-const indentString = string => string.replace(/\n/g, `\n  `)
-
-const formatErrorDetails = errorDetails =>
-  Array.from(errorDetails.entries())
-    .map(
-      ([name, details]) => `${name}:
-  ${indentString(details.toString())}`
-    )
-    .join(`\n`)
 
 // Run query
 module.exports = async (queryJob: QueryJob, component: Any) => {
