@@ -115,7 +115,7 @@ class WebsocketManager {
     if (this.isInitialised) {
       this.websocket.send({ type: `pageQueryResult`, payload: data })
     }
-    this.pageResults.set(data.path, data)
+    this.pageResults.set(data.id, data)
   }
 }
 
