@@ -15,7 +15,7 @@ I ran this card sort through [OptimalSort](https://www.optimalworkshop.com/), a 
 
 ## How did participants categorize the docs?
 
-Most people sorted the docs into the following categories (I included multiple names when the some category names were equally popular):
+People sorted the docs into the following categories:
 * Get Started / Welcome to Gatsby / Intro
 * Development environment
 * Releases & Migration
@@ -25,23 +25,18 @@ Most people sorted the docs into the following categories (I included multiple n
 * Tutorials / Examples
 * Contributing
 
-These categories weren’t too surprising. However, upon further digging into the data, I discovered some unexpected results that further refine how we might categorize the docs and even write new docs.
+These categories weren’t too surprising (I included multiple names when the some category names were equally popular). However, upon further digging into the data, I discovered some unexpected results that further refine how we might categorize the docs, write new docs, and change how we think and talk about Gatsby.
 
-## Unexpected results
+## PWA
 
-Some of the results surprised me, and they have significant implications for not just how we organize the docs but also how we think about and talk about Gatsby.
-
-### PWA
-
-No one seems to know what to do with the doc titled “Building apps with Gatsby”. In the similarity matrix data visualization, 41% of people associated it with the “Authentication tutorial” doc and the “Progressive web app” doc (second association pictured below), which was its strongest association with any other doc (and 41% isn’t *very* strong). Essentially, this means participants didn’t think it “fit” very snugly alongside any other docs. 
+No one seems to know what to do with the doc titled “Building apps with Gatsby”. In the similarity matrix data visualization, 41% of people associated it with the “Authentication tutorial” doc and 41% also associated it with the “Progressive web app” doc. A 41% isn’t *very* strong. Essentially, this means participants didn’t think it “fit” very snugly alongside any other docs. 
 
 ![Building apps with Gatsby is weakly associated with other docs](building-apps-with-gatsby.png)
 
 This could mean several things:
-1. We don’t have very many docs about how Gatsby can be used to build dynamic apps.
-2. Perhaps people don’t think of Gatsby as a tool they’d use to build apps with
-3. Maybe the title of the doc is too broad or too vague
-4. Another reason I haven’t thought of yet
+1. We don’t have very many docs about how Gatsby can be used to build dynamic apps
+2. People don’t think of Gatsby as a tool they’d use to build apps with
+3. The title of the doc is too broad or too vague
 
 Without interviewing each participant I can’t be sure, but I’m inclined to think a combination of all three factors means people don’t know where to put that doc in the navigation. This might mean we need clarity in how we present what Gatsby *is* in all our informational material and marketing and that we build more docs about Gatsby being more than a static site generator.
 
