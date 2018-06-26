@@ -1,9 +1,13 @@
 import React from "react"
 import Helmet from "react-helmet"
+import { graphql } from "gatsby"
 
 import Layout from "../components/layout"
-import docsSidebar from "../data/sidebars/doc-links.yaml"
-import tutorialSidebar from "../data/sidebars/tutorial-links.yaml"
+import {
+  createLinkDocs,
+  createLinkTutorial,
+} from "../utils/sidebar/create-link"
+import { sectionListDocs, sectionListTutorial } from "../utils/sidebar/section-list"
 import MarkdownPageFooter from "../components/markdown-page-footer"
 import DocSearchContent from "../components/docsearch-content"
 
@@ -13,18 +17,14 @@ import { rhythm } from "../utils/typography"
 class DocsTemplate extends React.Component {
   render() {
     const page = this.props.data.markdownRemark
+    const isDocsPage = this.props.location.pathname.slice(0, 5) === `/docs`
     return (
       <Layout
-        location={this.props.location}
-        isSidebarDisabled={
-          this.props.location.pathname === `/community/` ||
-          this.props.location.pathname === `/code-of-conduct/`
-        }
-        sidebarYaml={
-          this.props.location.pathname.slice(0, 5) === `/docs`
-            ? docsSidebar
-            : tutorialSidebar
-        }
+        location={ this.props.location }
+        isSidebarDisabled={ this.props.location.pathname === `/code-of-conduct/` }
+        sectionList={ isDocsPage ? sectionListDocs : sectionListTutorial }
+        createLink={ isDocsPage ? createLinkDocs : createLinkTutorial }
+        enableScrollSync={ isDocsPage ? false : true }
       >
         <DocSearchContent>
           <Container>
