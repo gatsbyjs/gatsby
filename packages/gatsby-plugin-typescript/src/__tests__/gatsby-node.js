@@ -4,7 +4,7 @@ const {
   resolvableExtensions,
   onCreateWebpackConfig,
 } = require(`../gatsby-node`)
-const { tsPresetsFromJsPresets } = require(`../`)
+const { compile, tsPresetsFromJsPresets } = require(`../`)
 const tsPresetPath = `/resolved/path/@babel/preset-typescript`
 const jsOptions = {
   options: {
@@ -17,6 +17,14 @@ const jsOptions = {
   },
   loader: `/resolved/path/babel-loader`,
 }
+
+describe(`compile`, () => {
+  it(`compiles typescript`, () => {
+    const ts = `const a: string = 'hello'`
+    const js = `var a = 'hello';`
+    expect(compile(ts, `test.ts`)).toEqual(js)
+  })
+})
 
 describe(`tsPresetsFromJsPresets`, () => {
   it(`handles empty presets`, () => {

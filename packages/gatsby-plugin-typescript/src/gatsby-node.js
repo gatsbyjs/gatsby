@@ -1,8 +1,9 @@
-const { tsPresetsFromJsPresets } = require(`./`)
+import { compile, tsPresetsFromJsPresets } from "./"
 
-const resolvableExtensions = () => [`.ts`, `.tsx`]
+const TS = /\.tsx?$/
+export const resolvableExtensions = () => [`.ts`, `.tsx`]
 
-function onCreateWebpackConfig({ actions, loaders, stage }) {
+export function onCreateWebpackConfig({ actions, loaders, stage }) {
   const jsLoader = loaders.js()
   if (
     !(
@@ -18,7 +19,7 @@ function onCreateWebpackConfig({ actions, loaders, stage }) {
     module: {
       rules: [
         {
-          test: /\.tsx?$/,
+          test: TS,
           use: [
             {
               loader: jsLoader.loader,
@@ -33,5 +34,16 @@ function onCreateWebpackConfig({ actions, loaders, stage }) {
     },
   })
 }
-exports.onCreateWebpackConfig = onCreateWebpackConfig
-exports.resolvableExtensions = resolvableExtensions
+
+/**
+ * Gatsby uses preprocessSource when it parses
+ * GraphQL queries during build. Unfortunately
+ * with the current API there is no way to affect
+ * the Babel plugins which are used during that parsing.
+ */
+export function preprocessSource({ filename, contents }, pluginOptions) {
+  if (TS.test(filename)) {
+    return compile(contents, filename)
+  }
+  return null
+}
