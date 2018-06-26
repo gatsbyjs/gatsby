@@ -26,6 +26,7 @@ const indentString = string => string.replace(/\n/g, `\n  `)
 // Run query
 module.exports = async (queryJob: QueryJob, component: Any) => {
   const { schema, program } = store.getState()
+  const programType = program._[0]
 
   const graphql = (query, context) =>
     graphqlFunction(schema, query, context, context, context)
@@ -57,8 +58,13 @@ Plugin:
 Query:
   ${indentString(component.query)}`)
 
+    if (programType === `develop`) {
+      websocketManager.emitQueryError({
+        errors: result.errors,
+        id: queryJob.id,
+      })
     // Perhaps this isn't the best way to see if we're building?
-    if (program._[0] === `build`) {
+    } else if (programType === `build`) {
       process.exit(1)
     }
   }
@@ -84,8 +90,6 @@ Query:
   } else {
     dataPath = queryJob.hash
   }
-
-  const programType = program._[0]
 
   if (programType === `develop`) {
     if (queryJob.isPage) {

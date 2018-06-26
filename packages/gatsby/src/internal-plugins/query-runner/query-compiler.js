@@ -20,6 +20,7 @@ import {
   multipleRootQueriesError,
 } from "./graphql-errors"
 import report from "gatsby-cli/lib/reporter"
+const websocketManager = require(`../../utils/websocket-manager`)
 
 import type { DocumentNode, GraphQLSchema } from "graphql"
 
@@ -76,6 +77,9 @@ class Runner {
       report.panic(`${report.format.red(`GraphQL Error`)} ${message}`)
     } else {
       report.log(`${report.format.red(`GraphQL Error`)} ${message}`)
+      websocketManager.emitQueryError({
+        errors: [new Error(`${report.format.red(`GraphQL Error`)} ${message}`)],
+      })
     }
   }
 

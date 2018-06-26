@@ -29,6 +29,9 @@ export default function socketIo() {
                 .result,
             }
           }
+          if (msg.type === `pageQueryError`) {
+            // console.error queryError
+          }
           if (msg.type && msg.payload) {
             ___emitter.emit(msg.type, msg.payload)
           }

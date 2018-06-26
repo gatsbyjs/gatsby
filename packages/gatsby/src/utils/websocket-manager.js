@@ -29,6 +29,7 @@ class WebsocketManager {
     this.activePaths = new Set()
     this.pageResults = new Map()
     this.staticQueryResults = new Map()
+    this.pageErrors = new Map()
     this.websocket
     this.programDir
 
@@ -36,6 +37,7 @@ class WebsocketManager {
     this.getSocket = this.getSocket.bind(this)
     this.emitPageData = this.emitPageData.bind(this)
     this.emitStaticQueryData = this.emitStaticQueryData.bind(this)
+    this.emitQueryError = this.emitQueryError.bind(this)
   }
 
   init({ server, directory }) {
@@ -52,10 +54,16 @@ class WebsocketManager {
           payload: { id, result },
         })
       })
-      this.pageResults.forEach((result, path) => {
+      this.pageResults.forEach((result, id) => {
         this.websocket.send({
           type: `pageQueryResult`,
           payload: result,
+        })
+      })
+      this.pageErrors.forEach((error, id) => {
+        this.websocket.send({
+          type: `pageQueryError`,
+          payload: error,
         })
       })
 
@@ -115,7 +123,13 @@ class WebsocketManager {
     if (this.isInitialised) {
       this.websocket.send({ type: `pageQueryResult`, payload: data })
     }
-    this.pageResults.set(data.path, data)
+    this.pageResults.set(data.id, data)
+  }
+  emitQueryError(data) {
+    this.pageErrors.set(data.id, data.errors)
+    if (this.isInitialised) {
+      this.websocket.send({ type: `pageQueryError`, payload: data.errors })
+    }
   }
 }
 
