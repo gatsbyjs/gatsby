@@ -93,7 +93,7 @@ In V1, if something breaks on your page, you'd likely go to the page, look throu
 
 Because Gatsby is doing things in the background, out of sight of the developers building the site, we're creating a mystery: where the hell did this bug come from if all the code I can see doesn't have the bug?
 
-By removing the magic and making layouts an explicity dependency in V2, that same bug would be much easier to spot because there's a clear link between our page code and the layout.
+By removing the magic and making layouts an explicit dependency in V2, that same bug would be much easier to spot because there's a clear link between our page code and the layout.
 
 ### Why is this better?
 
