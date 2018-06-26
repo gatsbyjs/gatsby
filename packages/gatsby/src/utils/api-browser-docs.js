@@ -18,6 +18,30 @@ exports.onClientEntry = true
 exports.onInitialClientRender = true
 
 /**
+ * Called when changing location is started.
+ * @param {object} $0
+ * @param {object} $0.location A location object
+ * @param {object} $0.action The "action" that caused the route change
+ * @example
+ * exports.onPreRouteUpdate = ({ location }) => {
+ *   console.log("Gatsby started to change location", location.pathname)
+ * }
+ */
+exports.onPreRouteUpdate = true
+
+/**
+ * Called when changing location is longer than 1 second.
+ * @param {object} $0
+ * @param {object} $0.location A location object
+ * @param {object} $0.action The "action" that caused the route change
+ * @example
+ * exports.onRouteUpdateDelayed = () => {
+ *   console.log("We can show loading indicator now")
+ * }
+ */
+exports.onRouteUpdateDelayed = true
+
+/**
  * Called when the user changes routes
  * @param {object} $0
  * @param {object} $0.location A location object
