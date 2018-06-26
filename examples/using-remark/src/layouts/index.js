@@ -1,5 +1,5 @@
 import React from "react"
-import { Link, StaticQuery } from "gatsby"
+import { Link, StaticQuery, graphql } from "gatsby"
 import { scale } from "../utils/typography"
 import styles from "../styles"
 
