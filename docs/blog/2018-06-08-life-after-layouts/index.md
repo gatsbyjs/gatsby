@@ -83,7 +83,7 @@ In short, the decision to remove layouts was part of an effort to reduce unneces
 
 ### What was the unnecessary complexity?
 
-Because layouts in V1 were applied under the hood, it made it _really hard_ to pass data between the layout the pages it wrapped.
+Because layouts in V1 were applied under the hood, it made it _really hard_ to pass data between the layout and the pages it wrapped.
 
 In short, layouts in V1 broke React's compositional model, and that made things unnecessarily hard to implement. By going back to the standard React way of importing components and using them directly, we're able to easily pass data between the layout and pages without any confusing, complicated, or otherwise unwieldy workarounds.
 
