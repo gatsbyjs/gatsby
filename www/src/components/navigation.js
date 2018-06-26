@@ -95,7 +95,7 @@ export default ({ pathname }) => {
         zIndex: `2`,
         left: 0,
         right: 0,
-        top: `calc(2.8rem - 1px)`,
+        top: `calc(${presets.bannerHeight} - 1px)`,
         [presets.Tablet]: {
           position: isHomepage || isBlog ? `absolute` : `fixed`,
         },
