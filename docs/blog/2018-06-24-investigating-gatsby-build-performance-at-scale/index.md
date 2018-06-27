@@ -22,7 +22,7 @@ _Site tests_
 
 In order to measure the “build performance cost” of each of these three factors, we’ve benchmarked Gatsby build times for two different sites, one image-heavy and one markdown-page heavy.
 
-The first site is [FreeCodeCamp’s Guide](https://github.com/freeCodeCamp/guide), one of the largest open-source Gatsby sites with around 3,000 pages. The second site is an official example, using-gatsby-image, copied into its own repo. We’ve run two different versions of this: first, with around 25 images and second, with around 250 images. Both sites are running on Gatsby v2.
+The first site is [FreeCodeCamp’s Guide](https://github.com/freeCodeCamp/guide), one of the largest open-source Gatsby sites with around 3,000 pages. The second site is the using-gatsby-image official example [copied into its own repo](https://github.com/calcsam/gatsby-image-performance-benchmarking). We’ve run two different versions of this: first, with around 25 images and second, with around 250 images. Both sites are running on Gatsby v2.
 
 Note that **using gatsby-image is not a requirement to use Gatsby**. If you have enough images that image-processing-driven build times is impeding project goals or team workflows, consider simply removing (or not implementing) gatsby-image.
 
