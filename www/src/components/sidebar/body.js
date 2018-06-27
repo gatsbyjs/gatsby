@@ -94,6 +94,7 @@ class SidebarBody extends React.Component {
             hideSectionTitle={singleSection}
             activeItemHash={activeItemHash}
             isScrollSync={enableScrollSync}
+            singleSection={singleSection}
           />
         ))}
       </div>

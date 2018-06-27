@@ -160,6 +160,7 @@ class DefaultLayout extends React.Component {
           <html lang="en" />
         </Helmet>
         <div
+          className="banner"
           css={{
             width: `100%`,
             padding: rhythm(1 / 2),

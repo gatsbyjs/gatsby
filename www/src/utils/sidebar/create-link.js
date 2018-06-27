@@ -62,10 +62,10 @@ const createLinkTutorial = ({
 
 const bulletOffset = {
   left: `-1rem`,
-  top: `.3rem`,
+  top: `.2rem`,
 }
 
-const bulletSize = 7
+const bulletSize = 8
 
 const styles = {
   draft: {
@@ -97,6 +97,7 @@ const styles = {
   },
   link: {
     position: `relative`,
+    zIndex: 1,
     "&&": {
       border: 0,
       boxShadow: `none`,
@@ -112,27 +113,27 @@ const styles = {
       },
     },
     "&:before": {
+      ...bulletOffset,
       borderRadius: `100%`,
       content: ` `,
       fontWeight: `normal`,
       height: bulletSize,
       position: `absolute`,
-      width: bulletSize,
-      ...bulletOffset,
       transform: `scale(0.1)`,
       transition: `all ${presets.animation.speedDefault} ${
         presets.animation.curveDefault
       }`,
+      width: bulletSize,
     },
     "&:after": {
+      ...bulletOffset,
       background: colors.gatsby,
       borderRadius: 4,
       content: ` `,
       height: bulletSize,
-      position: `absolute`,
+      left: `-0.6rem`,
       opacity: 0,
-      ...bulletOffset,
-      left: `-0.75rem`,
+      position: `absolute`,
       transform: `translateX(-200px)`,
       transition: `all ${presets.animation.speedDefault} ${
         presets.animation.curveDefault
@@ -141,15 +142,15 @@ const styles = {
     },
   },
   subsectionLink: {
+    ...bulletOffset,
     background: `#fff`,
-    border: `1px solid ${colors.lilac}`,
+    border: `1px solid ${colors.ui.bright}`,
     borderRadius: `100%`,
     display: `block`,
     fontWeight: `normal`,
     height: bulletSize,
-    width: bulletSize,
-    ...bulletOffset,
     position: `absolute`,
+    width: bulletSize,
     zIndex: -1,
   },
 }

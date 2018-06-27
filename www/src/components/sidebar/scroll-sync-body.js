@@ -87,12 +87,23 @@ const _getItemIds = sectionList => {
   return [].concat(...list)
 }
 
-const _getElementTopOffsetsById = ids =>
-  ids
+const _getElementTopOffsetsById = ids => {
+  const banner = document.getElementsByClassName(`banner`)
+  const navigation = document.getElementsByClassName(`navigation`)
+  const bannerHeight = banner[0].offsetHeight || 0
+  const navigationHeight = navigation[0].offsetHeight || 0
+
+  return ids
     .map(hash => {
       const element = document.getElementById(hash)
-      return element ? { hash, offsetTop: element.offsetTop - 103 } : null
+      return element
+        ? {
+            hash,
+            offsetTop: element.offsetTop - bannerHeight - navigationHeight,
+          }
+        : null
     })
     .filter(item => item)
+}
 
 export default ScrollSyncSection

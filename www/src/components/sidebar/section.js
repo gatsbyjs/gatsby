@@ -1,5 +1,4 @@
 import React from "react"
-import hex2rgba from "hex2rgba"
 
 import getActiveItem from "../../utils/sidebar/get-active-item"
 import presets, { colors } from "../../utils/presets"
@@ -7,6 +6,9 @@ import { scale, rhythm } from "../../utils/typography"
 
 import SectionTitle from "./section-title"
 import ChevronSvg from "./chevron-svg"
+
+const horizontalPadding = rhythm(3 / 4)
+const horizonalPaddingDesktop = rhythm(3 / 2)
 
 const ToggleSectionButton = ({
   title,
@@ -30,11 +32,11 @@ const ToggleSectionButton = ({
       {title}
       <ChevronSvg
         cssProps={{
-          marginLeft: 7,
+          color: colors.gray.light,
+          marginLeft: `auto`,
           transform: isActive ? `rotateX(180deg)` : `rotateX(0deg)`,
           transition: `transform 0.2s ease`,
           display: `none`,
-
           [presets.Tablet]: {
             display: `inline-block`,
           },
@@ -47,8 +49,12 @@ const ToggleSectionButton = ({
 const Title = ({ title }) => (
   <div
     css={{
-      paddingLeft: rhythm(1),
-      paddingRight: rhythm(1),
+      paddingLeft: horizontalPadding,
+      paddingRight: horizontalPadding,
+      [presets.Desktop]: {
+        paddingLeft: horizonalPaddingDesktop,
+        paddingRight: horizonalPaddingDesktop,
+      },
     }}
   >
     <SectionTitle>{title}</SectionTitle>
@@ -77,6 +83,7 @@ class Section extends React.Component {
       onSectionTitleClick,
       section,
       hideSectionTitle,
+      singleSection,
     } = this.props
     const uid = `section_` + this.state.uid
     const activeItemId = getActiveItem(section, location, activeItemHash)
@@ -102,19 +109,36 @@ class Section extends React.Component {
           id={uid}
           css={{
             ...styles.ul,
+            position: `relative`,
+            paddingBottom: rhythm(3 / 4),
+            "&:after": {
+              background: colors.ui.light,
+              bottom: 0,
+              content: ` `,
+              display: singleSection ? `none` : `block`,
+              height: 1,
+              position: `absolute`,
+              right: 0,
+              left: 40,
+            },
             "& li": {
               lineHeight: 1.3,
+              margin: 0,
               paddingTop: rhythm(1 / 8),
               paddingBottom: rhythm(1 / 8),
-              paddingLeft: rhythm(1),
-              paddingRight: rhythm(1),
-              margin: 0,
+              paddingLeft: horizontalPadding,
+              paddingRight: horizontalPadding,
             },
-
             [presets.Tablet]: {
               display: isActive ? `block` : `none`,
               "& li": {
                 fontSize: scale(-4 / 10).fontSize,
+              },
+            },
+            [presets.Desktop]: {
+              "& li": {
+                paddingLeft: horizonalPaddingDesktop,
+                paddingRight: horizonalPaddingDesktop,
               },
             },
           }}
@@ -147,6 +171,12 @@ class Section extends React.Component {
                   css={{
                     ...styles.ul,
                     paddingTop: rhythm(1 / 2),
+                    [presets.Desktop]: {
+                      "&& li": {
+                        paddingLeft: rhythm(3 / 4),
+                        paddingRight: rhythm(3 / 4),
+                      },
+                    },
                     ...(section.directory === `tutorial`
                       ? { ...styles.tutorialSubsection }
                       : {}),
@@ -185,16 +215,12 @@ const styles = {
   },
   tutorialSubsection: {
     "&:before": {
-      content: ` `,
-      position: `absolute`,
-      height: `100%`,
-      width: 1,
-      left: `.6rem`,
       background: colors.ui.bright,
-      zIndex: -2,
-      [presets.Tablet]: {
-        left: `.55rem`,
-      },
+      content: ` `,
+      height: `100%`,
+      left: `.275rem`,
+      position: `absolute`,
+      width: 1,
     },
   },
   button: {
@@ -202,15 +228,22 @@ const styles = {
     border: 0,
     cursor: `pointer`,
     padding: 0,
-    paddingLeft: rhythm(1),
-    paddingRight: rhythm(1),
+    paddingLeft: horizontalPadding,
+    paddingRight: horizontalPadding,
+    position: `relative`,
     textAlign: `left`,
     width: `100%`,
+    [presets.Desktop]: {
+      paddingLeft: horizonalPaddingDesktop,
+      paddingRight: horizonalPaddingDesktop,
+    },
   },
   liActive: {
     background: colors.ui.light,
-    paddingTop: `${rhythm(1 / 2)} !important`,
-    marginTop: `${rhythm(1 / 2)} !important`,
-    marginBottom: `${rhythm(1)} !important`,
+    "&&": {
+      marginTop: rhythm(1 / 2),
+      marginBottom: rhythm(1),
+      paddingTop: rhythm(1 / 2),
+    },
   },
 }

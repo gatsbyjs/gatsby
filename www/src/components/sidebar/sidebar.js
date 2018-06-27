@@ -32,6 +32,9 @@ class StickyResponsiveSidebar extends Component {
     const menuOpacity = open ? 1 : 0
     const menuOffset = open ? 0 : rhythm(10)
 
+    const horizontalPadding = rhythm(3 / 4)
+    const horizonalPaddingDesktop = rhythm(3 / 2)
+
     return (
       <React.Fragment>
         <div
@@ -41,38 +44,37 @@ class StickyResponsiveSidebar extends Component {
           }}
           css={{
             ...sidebarStyles,
-            top: 0,
-            height: `100vh`,
-            display: `block`,
-            zIndex: 10,
-            pointerEvents: open ? `auto` : `none`,
-            boxShadow: `0 0 20px rgba(0, 0, 0, 0.15)`,
-            border: 0,
-            width: 320,
             background: `#fff`,
+            border: 0,
+            boxShadow: `0 0 20px rgba(0, 0, 0, 0.15)`,
+            display: `block`,
+            height: `100vh`,
+            paddingTop: horizontalPadding,
+            paddingBottom: horizontalPadding,
+            pointerEvents: open ? `auto` : `none`,
+            top: 0,
+            width: 320,
+            zIndex: 10,
             [presets.Tablet]: {
-              opacity: `1 !important`,
-              top: `calc(${presets.headerHeight} + ${
-                presets.bannerHeight
-              } - 1px)`,
+              backgroundColor: colors.ui.whisper,
+              borderRight: `1px solid ${colors.ui.light}`,
+              boxShadow: `none`,
               height: `calc(100vh - ${presets.headerHeight} - ${
                 presets.bannerHeight
               } + 1px)`,
-              zIndex: 2,
-              pointerEvents: `auto`,
-              boxShadow: `none`,
-              borderRight: `1px solid ${colors.ui.light}`,
-              width: rhythm(10),
               maxWidth: `none`,
-              backgroundColor: colors.ui.whisper,
+              opacity: `1 !important`,
+              pointerEvents: `auto`,
+              top: `calc(${presets.headerHeight} + ${
+                presets.bannerHeight
+              } - 1px)`,
+              width: rhythm(10),
+              zIndex: 2,
             },
             [presets.Desktop]: {
+              paddingTop: horizonalPaddingDesktop,
+              paddingBottom: horizonalPaddingDesktop,
               width: rhythm(12),
-            },
-            "&&": {
-              padding: `0`,
-              paddingTop: `${rhythm(3 / 4)}`,
-              paddingBottom: `${rhythm(3 / 4)}`,
             },
           }}
         >
