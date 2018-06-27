@@ -1,8 +1,8 @@
 const axios = require(`axios`)
 const crypto = require(`crypto`)
 
-const fetch = username => {
-  const url = `https://medium.com/${username}/latest?format=json`
+const fetch = (username, limit = 100) => {
+  const url = `https://medium.com/${username}/latest?format=json&limit=${limit}`
   return axios.get(url)
 }
 
@@ -25,11 +25,11 @@ const convertTimestamps = (nextObj, prevObj, prevKey) => {
 
 const strip = payload => payload.replace(prefix, ``)
 
-exports.sourceNodes = async ({ actions, createNodeId }, { username }) => {
+exports.sourceNodes = async ({ actions, createNodeId }, { username, limit }) => {
   const { createNode } = actions
 
   try {
-    const result = await fetch(username)
+    const result = await fetch(username, limit)
     const json = JSON.parse(strip(result.data))
 
     let importableResources = []
