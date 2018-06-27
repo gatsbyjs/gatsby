@@ -140,6 +140,7 @@
     "@babel/preset-react": "7.0.0-beta.51",
     "@babel/runtime": "7.0.0-beta.51",
     "cross-env": "^5.1.4",
+    "flow-remove-types": "^1.2.3",
     "jest": "^22.4.3",
     "lerna": "^2.9.0",
     "npm-run-all": "4.1.2",
@@ -180,7 +181,7 @@
   },
   "scripts": {
     "build": "rimraf dist && rimraf cache-dir && npm-run-all -p build:*",
-    "build:cache-dir": "babel src/cache-dir --out-dir cache-dir",
+    "build:cache-dir": "flow-remove-types src/cache-dir/ -d cache-dir/ --pretty --quiet",
     "build:internal-plugins": "copyfiles -u 1 src/internal-plugins/**/package.json dist",
     "build:rawfiles": "copyfiles -u 1 src/internal-plugins/**/raw_* dist",
     "build:src": "babel src --out-dir dist --source-maps --ignore **/gatsby-cli.js,**/raw_*,**/__tests__,**/cache-dir",
