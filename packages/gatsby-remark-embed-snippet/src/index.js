@@ -127,7 +127,19 @@ module.exports = (
 
           return returnValue
         })
-        .filter((line, index) => !hiddenLines.includes(index + 1)) // hide line numbers are 1-based.
+        .filter((line, index) => {
+          // (Hide and highlight line numbers are 1-based).
+          const isHiddenLine = hiddenLines.includes(index + 1)
+          const isHighlightedLine = highlightLines.includes(index + 1)
+          // check if hidden and highlighted lines overlap
+          const hasIntersection = isHiddenLine && isHighlightedLine
+
+          if (hasIntersection) {
+            throw `There can be no intersection between hidden lines and highlighted lines`
+          }
+
+          return !isHiddenLine
+        }) 
         .map((line, index) => {
           if (line.includes(`highlight-line`)) {
             // Mark this line for highlighting.

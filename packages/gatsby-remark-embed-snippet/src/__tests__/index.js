@@ -473,15 +473,15 @@ describe(`gatsby-remark-embed-snippet`, () => {
       fs.readFileSync.mockReturnValue(
         `
         // hideline-range{1-2,9-11,16}
-        // highlight-range{1,4-6}
+        // highlight-range{6-8}
         import React from 'react'
         import { render } from "react-dom"
         ReactDOM.render(
           <div>
             <ul>
-              <li>Not hidden</li>
-              <li>Not hidden</li>
-              <li>Not hidden</li>
+              <li>Not hidden and highlighted</li>
+              <li>Not hidden and highlighted</li>
+              <li>Not hidden and highlighted</li>
               <li>Hidden</li>
               <li>Hidden</li>
               <li>Hidden</li>
@@ -505,6 +505,40 @@ describe(`gatsby-remark-embed-snippet`, () => {
       )
 
       expect(transformed).toMatchSnapshot()
+    })
+
+    it(`should throw error when hidden and highlighted lines overlap`, () => {
+      fs.readFileSync.mockReturnValue(
+        `
+        // hideline-range{1-2,6}
+        // highlight-range{5-7,9}
+        import React from 'react'
+        import { render } from "react-dom"
+        ReactDOM.render(
+          <div>
+            <ul>
+              <li>Maybe hidden</li>
+            </ul>
+          </div>,
+          // highlight-next-line
+          document.getElementById('root')
+        );
+      `
+          .replace(/^ +/gm, ``)
+          .trim()
+      )
+
+      const markdownAST = remark.parse(`\`embed:hello-world.js\``)
+      try {
+        plugin(
+          { markdownAST },
+          {
+            directory: `examples`,
+          }
+        )
+      } catch (e) {
+        expect(e).toMatchSnapshot()
+      }
     })
   })
 
