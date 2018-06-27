@@ -70,7 +70,7 @@ class ScrollSyncSection extends Component {
 const _getItemIds = sectionList => {
   let list = []
 
-  sectionList.map(section => {
+  sectionList.forEach(section => {
     let sectionItems = section.items
       .map(item => {
         let subItemIds = []
