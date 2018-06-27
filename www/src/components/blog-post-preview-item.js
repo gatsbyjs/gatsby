@@ -31,27 +31,29 @@ class BlogPostPreviewItem extends React.Component {
               position: `relative`,
               zIndex: 1,
               "&&": {
-                boxShadow: `none !important`,
-                borderBottom: `0 !important`,
+                boxShadow: `none`,
+                borderBottom: `0`,
                 fontWeight: `normal`,
                 ":hover": {
                   background: `transparent`,
                 },
               },
             }}
-          ><Img
-            alt=""
-            fixed={avatar}
-            css={{
-              borderRadius: `100%`,
-              display: `inline-block`,
-              marginRight: rhythm(1 / 2),
-              marginBottom: 0,
-              verticalAlign: `top`,
-              // prevents image twitch in Chrome when hovering the card
-              transform: `translateZ(0)`,
-            }}
-          /></Link>
+          >
+            <Img
+              alt=""
+              fixed={avatar}
+              css={{
+                borderRadius: `100%`,
+                display: `inline-block`,
+                marginRight: rhythm(1 / 2),
+                marginBottom: 0,
+                verticalAlign: `top`,
+                // prevents image twitch in Chrome when hovering the card
+                transform: `translateZ(0)`,
+              }}
+            />
+          </Link>
           <div
             css={{
               display: `inline-block`,
@@ -73,7 +75,7 @@ class BlogPostPreviewItem extends React.Component {
                   position: `relative`,
                   zIndex: 1,
                   "&&": {
-                    color: `${colors.gatsby} !important`,
+                    color: `${colors.gatsby}`,
                     fontWeight: `normal`,
                     ":hover": {
                       background: colors.ui.bright,
