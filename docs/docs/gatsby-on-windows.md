@@ -59,3 +59,6 @@ further instructions and contact the `node-gyp`team on
 Note 1 : the Visual Studio Community 2017 surely contains the package too but we
 weren't able to find it. If you found it, run `npm config set msvs_version 2017`
 instead and report it here with a screenshot!
+
+## gatsby-plugin-sharp requires Node x64
+Some plugins which depend on native NPM dependencies require the Node x64 build of Node.js. If you're struggling to install gatsby-plugin-sharp, try installing Node x64 and removing `node_modules` and running `npm install`.
