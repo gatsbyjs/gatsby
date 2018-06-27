@@ -7,7 +7,7 @@ import socketIo, { getStaticQueryData, getPageQueryData } from "./socketIo"
 const getPathFromProps = props =>
   props.pageResources && props.pageResources.page
     ? props.pageResources.page.path
-    : null
+    : undefined
 
 class JSONStore extends React.Component {
   constructor(props) {
