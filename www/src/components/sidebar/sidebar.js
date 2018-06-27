@@ -52,8 +52,12 @@ class StickyResponsiveSidebar extends Component {
             background: `#fff`,
             [presets.Tablet]: {
               opacity: `1 !important`,
-              top: `calc(${presets.headerHeight} + 2.8rem)`,
-              height: `calc(100vh - ${presets.headerHeight} - 2.8rem)`,
+              top: `calc(${presets.headerHeight} + ${
+                presets.bannerHeight
+              } - 1px)`,
+              height: `calc(100vh - ${presets.headerHeight} - ${
+                presets.bannerHeight
+              } + 1px)`,
               zIndex: 2,
               pointerEvents: `auto`,
               boxShadow: `none`,
