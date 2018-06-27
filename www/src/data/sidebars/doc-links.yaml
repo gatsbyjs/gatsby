@@ -8,9 +8,8 @@
       link: /deploy-gatsby/
     - title: Community
       link: /community/
-      subitems:
-      - title: Awesome Gatsby
-        link: /awesome-gatsby/
+    - title: Awesome Gatsby
+      link: /awesome-gatsby/
 - title: Core Concepts
   items:
     - title: Building with Components
