@@ -47,7 +47,7 @@ There was a lot of disagreement about where docs about deployment should go. For
 ![Deployment categories](deployment-categories.png)
 ![Deployment categories 2](deployment-categories-2.png)
 
-The three most common categories it was placed under are “Getting Started”, “Tutorials,” and “Deployment.” Other categories include “Examples,” “Guides,” and “Production.” Here are the deployment docs that need to find a place to call home.
+The three most common categories it was placed under are “Getting Started”, “Tutorials,” and “Deployment.” Other categories include “Examples,” “Guides,” and “Production.” Here are the deployment docs that need to find a place to call home:
 * Build and deploy a site
 * Preparing site for deployment
 * Deploying a site live online
@@ -58,7 +58,7 @@ One solution that occurred to me is to bring Deployment & Hosting to top level n
 
 ### Core Concepts vs. Advanced Guides
 
-There was quite a bit of overlap in the docs people assigned to these two categories. This is probably because the two categories have a close relationship with each other; they work in harmony to help Gatsby users build at an advanced level. For example, if you read about how Gatsby works with GraphQL in “Core Concepts,” there is a high chance you’ll want to start playing with GraphQL queries and find examples of these in “Advanced Guides.” I’m not entirely sure how to reflect this close relationship in the docs; the most straightforward way is probably for each doc in “Core Concepts” to have a list of relevant links in Advanced Guides, and visa versa.
+There was quite a bit of overlap in the docs people assigned to these two categories. This is probably because the two categories have a close relationship with each other; they work in harmony to help Gatsby users build at an advanced level. For example, if you read about how Gatsby works with GraphQL in “Core Concepts,” there is a high chance you’ll want to start playing with GraphQL queries and find examples of these in “Advanced Guides.” I’m not entirely sure how to reflect this close relationship in the docs; the most straightforward way is probably for each doc in “Core Concepts” to have a list of relevant links in Advanced Guides, and vice versa.
 
 Here’s a sampling of docs that people associate with both categories:
 * Search engine optimization (SEO) 
