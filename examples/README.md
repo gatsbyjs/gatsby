@@ -15,8 +15,8 @@ Complex/complete websites are for studying how to build more complex websites.
 
 ## Checklist for building an example website
 
-* Free of errors
-* Has Google Analytics setup
-* Notifications setup to ping PRs on success/failure of build
-* For `using-x` websites, link to the site from the the plugin README and to the
+- Free of errors
+- Has Google Analytics setup
+- Notifications setup to ping PRs on success/failure of build
+- For `using-x` websites, link to the site from the the plugin README and to the
   plugin(s) from the website.

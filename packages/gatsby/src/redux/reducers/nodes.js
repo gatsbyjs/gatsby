@@ -22,7 +22,7 @@ module.exports = (state = {}, action) => {
       return newState
 
     case `DELETE_NODE`: {
-      newState = _.omit(state, action.payload)
+      newState = _.omit(state, action.payload.id)
       return newState
     }
 

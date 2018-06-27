@@ -202,7 +202,7 @@ exports.mapPostsToTagsCategories = entities => {
   return entities.map(e => {
     // Replace tags & categories with links to their nodes.
 
-    let entityHasTags = (e.tags && Array.isArray(e.tags) && e.tags.length)
+    let entityHasTags = e.tags && Array.isArray(e.tags) && e.tags.length
     if (tags.length && entityHasTags) {
       e.tags___NODE = e.tags.map(
         t => tags.find(tObj => t === tObj.wordpress_id).id
@@ -210,7 +210,8 @@ exports.mapPostsToTagsCategories = entities => {
       delete e.tags
     }
 
-    let entityHasCategories = (e.categories && Array.isArray(e.categories) && e.categories.length)
+    let entityHasCategories =
+      e.categories && Array.isArray(e.categories) && e.categories.length
     if (categories.length && entityHasCategories) {
       e.categories___NODE = e.categories.map(
         c => categories.find(cObj => c === cObj.wordpress_id).id
@@ -407,6 +408,7 @@ exports.downloadMediaFiles = async ({
   store,
   cache,
   createNode,
+  createNodeId,
   touchNode,
   _auth,
 }) =>
@@ -421,7 +423,7 @@ exports.downloadMediaFiles = async ({
         // previously created file node to not try to redownload
         if (cacheMediaData && e.modified === cacheMediaData.modified) {
           fileNodeID = cacheMediaData.fileNodeID
-          touchNode(cacheMediaData.fileNodeID)
+          touchNode({ nodeId: cacheMediaData.fileNodeID })
         }
 
         // If we don't have cached data, download the file
@@ -432,6 +434,7 @@ exports.downloadMediaFiles = async ({
               store,
               cache,
               createNode,
+              createNodeId,
               auth: _auth,
             })
 

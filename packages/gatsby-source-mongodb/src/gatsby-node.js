@@ -2,12 +2,13 @@ const MongoClient = require(`mongodb`).MongoClient
 const crypto = require(`crypto`)
 const prepareMappingChildNode = require(`./mapping`)
 const _ = require(`lodash`)
+const queryString = require(`query-string`)
 
 exports.sourceNodes = (
-  { boundActionCreators, getNode, hasNodeChanged },
+  { actions, getNode, createNodeId, hasNodeChanged },
   pluginOptions
 ) => {
-  const { createNode } = boundActionCreators
+  const { createNode } = actions
 
   let serverOptions = pluginOptions.server || {
     address: `localhost`,
@@ -18,9 +19,10 @@ exports.sourceNodes = (
   if (pluginOptions.auth)
     authUrlPart = `${pluginOptions.auth.user}:${pluginOptions.auth.password}@`
 
+  let connectionExtraParams = getConnectionExtraParams(pluginOptions.extraParams)
   const connectionURL = `mongodb://${authUrlPart}${serverOptions.address}:${
     serverOptions.port
-  }/${dbName}`
+  }/${dbName}${connectionExtraParams}`
 
   return MongoClient.connect(connectionURL)
     .then(db => {
@@ -31,7 +33,7 @@ exports.sourceNodes = (
 
       return Promise.all(
         collection.map(col =>
-          createNodes(db, pluginOptions, dbName, createNode, col)
+          createNodes(db, pluginOptions, dbName, createNode, createNodeId, col)
         )
       )
     })
@@ -41,7 +43,14 @@ exports.sourceNodes = (
     })
 }
 
-function createNodes(db, pluginOptions, dbName, createNode, collectionName) {
+function createNodes(
+  db,
+  pluginOptions,
+  dbName,
+  createNode,
+  createNodeId,
+  collectionName
+) {
   return new Promise((resolve, reject) => {
     let collection = db.collection(collectionName)
     let cursor = collection.find()
@@ -60,7 +69,7 @@ function createNodes(db, pluginOptions, dbName, createNode, collectionName) {
         var node = {
           // Data for the node.
           ...item,
-          id: `${id}`,
+          id: createNodeId(`${id}`),
           parent: `__${collectionName}__`,
           children: [],
           internal: {
@@ -111,4 +120,13 @@ function createNodes(db, pluginOptions, dbName, createNode, collectionName) {
 
 function caps(s) {
   return s.replace(/\b\w/g, l => l.toUpperCase())
+}
+
+function getConnectionExtraParams(extraParams) {
+  let connectionSuffix
+  if (extraParams) {
+    connectionSuffix = queryString.stringify(extraParams, { sort: false })
+  }
+
+  return connectionSuffix ? `?` + connectionSuffix : ``
 }

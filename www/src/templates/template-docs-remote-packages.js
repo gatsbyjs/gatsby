@@ -1,5 +1,7 @@
 import React from "react"
 
+import Layout from "../components/layout"
+import PageWithPluginSearchBar from "../components/page-with-plugin-searchbar"
 import PackageReadme from "../components/package-readme"
 
 class DocsRemotePackagesTemplate extends React.Component {
@@ -8,21 +10,25 @@ class DocsRemotePackagesTemplate extends React.Component {
       data: { npmPackage, markdownRemark },
     } = this.props
     return (
-      <PackageReadme
-        page={markdownRemark}
-        packageName={npmPackage.name}
-        excerpt={npmPackage.readme.childMarkdownRemark.excerpt}
-        html={npmPackage.readme.childMarkdownRemark.html}
-        githubUrl={
-          npmPackage.repository !== null
-            ? npmPackage.repository.url
-            : `https://github.com/search?q=${npmPackage.name}`
-        }
-        modified={npmPackage.modified}
-        timeToRead={npmPackage.readme.childMarkdownRemark.timeToRead}
-        keywords={npmPackage.keywords}
-        lastPublisher={npmPackage.lastPublisher}
-      />
+      <Layout location={this.props.location}>
+        <PageWithPluginSearchBar history={this.props.history}>
+          <PackageReadme
+            page={markdownRemark}
+            packageName={npmPackage.name}
+            excerpt={npmPackage.readme.childMarkdownRemark.excerpt}
+            html={npmPackage.readme.childMarkdownRemark.html}
+            githubUrl={
+              npmPackage.repository !== null
+                ? npmPackage.repository.url
+                : `https://github.com/search?q=${npmPackage.name}`
+            }
+            modified={npmPackage.modified}
+            timeToRead={npmPackage.readme.childMarkdownRemark.timeToRead}
+            keywords={npmPackage.keywords}
+            lastPublisher={npmPackage.lastPublisher}
+          />
+        </PageWithPluginSearchBar>
+      </Layout>
     )
   }
 }
@@ -42,7 +48,6 @@ export const pageQuery = graphql`
         name
         avatar
       }
-      modified
       repository {
         url
       }

@@ -1,7 +1,8 @@
 import { style } from "glamor"
 import { rhythm } from "../utils/typography"
-import { colors } from "./colors"
-import presets from "../utils/presets"
+import styleColors from "./colors"
+
+const { colors } = styleColors
 
 const animations = {
   animationCurveFastOutSlowIn: `cubic-bezier(0.4, 0, 0.2, 1)`,

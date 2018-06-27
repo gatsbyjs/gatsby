@@ -1,31 +1,21 @@
 import React from "react"
 import colors from "./utils/colors"
 
-let stylesStr
-if (process.env.NODE_ENV === `production`) {
-  try {
-    stylesStr = require(`!raw-loader!../public/styles.css`)
-  } catch (e) {
-    console.log(e)
-  }
-}
-
 export default class HTML extends React.Component {
   render() {
-    let css
-    if (process.env.NODE_ENV === `production`) {
-      css = (
-        <style
-          id="gatsby-inlined-css"
-          key="gatsby-inlined-css"
-          dangerouslySetInnerHTML={{ __html: stylesStr }}
-        />
-      )
-    }
-
     return (
       <html {...this.props.htmlAttributes}>
         <head>
+          <link
+            rel="preload"
+            href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"
+            as="script"
+          />
+          <link
+            rel="preload"
+            href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css"
+            as="style"
+          />
           <link
             rel="preload"
             href="/static/ftn45-webfont.c2439033.woff2"
@@ -74,9 +64,10 @@ export default class HTML extends React.Component {
             color={colors.gatsby}
           />
           <meta name="msapplication-config" content={`/browserconfig.xml`} />
-          <script src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js" />
-
-          {css}
+          <script
+            src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"
+            defer
+          />
         </head>
         <body {...this.props.bodyAttributes}>
           <div
@@ -84,10 +75,6 @@ export default class HTML extends React.Component {
             dangerouslySetInnerHTML={{ __html: this.props.body }}
           />
           {this.props.postBodyComponents}
-          <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css"
-          />
         </body>
       </html>
     )

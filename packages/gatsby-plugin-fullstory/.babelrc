@@ -1,5 +1,3 @@
 {
-  "presets": [
-    ["../../.babelrc.js", { "browser": true }]
-  ]
+  "presets": [["../../.babel-preset.js", { "browser": true }]]
 }

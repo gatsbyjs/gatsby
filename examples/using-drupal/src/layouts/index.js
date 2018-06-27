@@ -1,5 +1,5 @@
 import React from "react"
-import Link from "gatsby-link"
+import { Link } from "gatsby"
 import gray from "gray-percentage"
 import SearchIcon from "react-icons/lib/md/search"
 import "typeface-rochester"
@@ -97,7 +97,7 @@ class DefaultLayout extends React.Component {
             </Link>
           </div>
         </Container>
-        {this.props.children()}
+        {this.props.children}
         <footer css={{ background: constants.paleYellow }}>
           <Container>
             <div css={{ maxWidth: `50%`, float: `left` }}>

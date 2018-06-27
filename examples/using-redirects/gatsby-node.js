@@ -2,11 +2,11 @@
 
 // Implement the Gatsby API “createPages”. This is called once the
 // data layer is bootstrapped to let plugins create pages from data.
-exports.createPages = ({ boundActionCreators, graphql }) => {
-  // need createRedirect action in boundActionCreators collection
+exports.createPages = ({ actions, graphql }) => {
+  // need createRedirect action in actions collection
   // to make the redirection magic happen.
   // https://www.gatsbyjs.org/docs/bound-action-creators/
-  const { createRedirect } = boundActionCreators
+  const { createRedirect } = actions
 
   // Let’s set up some string consts to use thoroughout the following.
   // MDN > JavaScript reference > Statements and declarations

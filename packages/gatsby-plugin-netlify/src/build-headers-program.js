@@ -1,5 +1,6 @@
 import _ from "lodash"
 import { writeFile, existsSync } from "fs-extra"
+import kebabHash from "kebab-hash"
 import { HEADER_COMMENT } from "./constants"
 
 import {
@@ -28,7 +29,7 @@ function linkTemplate(assetPath, type = `script`) {
 }
 
 function pathChunkName(path) {
-  const name = path === `/` ? `index` : _.kebabCase(path)
+  const name = path === `/` ? `index` : kebabHash(path)
   return `path---${name}`
 }
 
@@ -63,7 +64,6 @@ function preloadHeadersByPage(pages, manifest, pathPrefix) {
       ...COMMON_BUNDLES,
       pathChunkName(page.path),
       page.componentChunkName,
-      page.layoutComponentChunkName,
     ]
 
     const pathKey = headersPath(pathPrefix, page.path)

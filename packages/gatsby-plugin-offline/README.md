@@ -16,7 +16,7 @@ in the service worker.
 
 ```javascript
 // In your gatsby-config.js
-plugins: [`gatsby-plugin-offline`];
+plugins: [`gatsby-plugin-offline`]
 ```
 
 ## Overriding options
@@ -58,5 +58,5 @@ const options = {
     },
   ],
   skipWaiting: false,
-};
+}
 ```

@@ -111,9 +111,9 @@ In this example, leading and trailing spaces are shown with with dots: ⋅
 ```no-highlight
 1. First ordered list item
 2. Another item
-⋅⋅⋅* Unordered sub-list.
+⋅⋅⋅⋅* Unordered sub-list.
 1. Actual numbers don't matter, just that it's a number
-⋅⋅⋅1. Ordered sub-list
+⋅⋅⋅⋅1. Ordered sub-list
 4. And another item.
 
 ⋅⋅⋅You can have properly indented paragraphs within list items. Notice the blank line above, and the leading spaces (at least one, but we'll use three here to also align the raw Markdown).
@@ -128,7 +128,7 @@ In this example, leading and trailing spaces are shown with with dots: ⋅
 
 1.  First ordered list item
 2.  Another item
-    * Unordered sub-list.
+    - Unordered sub-list.
 3.  Actual numbers don't matter, just that it's a number
     1.  Ordered sub-list
 4.  And another item.
@@ -141,11 +141,11 @@ To have a line break without a paragraph, you will need to use two trailing
 spaces.\
  Note that this line is separate, but within the same paragraph.
 
-* Unordered list can use asterisks
+- Unordered list can use asterisks
 
-- Or minuses
+* Or minuses
 
-* Or pluses
+- Or pluses
 
 <a name="links"></a>
 

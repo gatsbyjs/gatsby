@@ -1,18 +1,19 @@
 import React from "react"
-import Link from "gatsby-link"
+import { Link } from "gatsby"
 import Img from "gatsby-image"
 import Navigation from "../components/navigation"
+import Layout from "../layouts"
 
 import { rhythm, options } from "../utils/typography"
 
 class IndexComponent extends React.Component {
   render() {
     return (
-      <div>
+      <Layout location={this.props.location}>
         <Img
           css={{ top: 0, left: 0, right: 0, zIndex: -1 }}
           style={{ position: `absolute` }}
-          sizes={this.props.data.imageSharp.sizes}
+          fluid={this.props.data.file.childImageSharp.fluid}
         />
         <div
           css={{
@@ -111,7 +112,7 @@ class IndexComponent extends React.Component {
             </a>
           </p>
         </div>
-      </div>
+      </Layout>
     )
   }
 }
@@ -120,9 +121,11 @@ export default IndexComponent
 
 export const query = graphql`
   query FrontPageQuery {
-    imageSharp(id: { regex: "/ng-55646/" }) {
-      sizes(maxWidth: 1500, rotate: 180) {
-        ...GatsbyImageSharpSizes
+    file(relativePath: { regex: "/ng-55646/" }) {
+      childImageSharp {
+        fluid(maxWidth: 1500, rotate: 180) {
+          ...GatsbyImageSharpFluid
+        }
       }
     }
   }
