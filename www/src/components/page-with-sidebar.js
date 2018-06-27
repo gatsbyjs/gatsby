@@ -1,8 +1,9 @@
 import React from "react"
 
-import SidebarBody from "./sidebar-body"
+import Sidebar from "./sidebar/sidebar"
 import presets from "../utils/presets"
 import { rhythm } from "../utils/typography"
+import findSectionForPath from "../utils/sidebar/find-section-for-path"
 
 export default props => {
   if (props.disable) {
@@ -24,7 +25,17 @@ export default props => {
         >
           {props.renderContent()}
         </div>
-        <SidebarBody yaml={props.yaml} />
+        <Sidebar
+          location={props.location}
+          sectionList={props.sectionList}
+          createLink={props.createLink}
+          defaultActiveSection={findSectionForPath(
+            props.location.pathname,
+            props.sectionList
+          )}
+          enableScrollSync={props.enableScrollSync}
+          key={props.location.pathname}
+        />
       </div>
     )
   }

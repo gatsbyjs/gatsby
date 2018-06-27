@@ -87,6 +87,7 @@ export default ({ pathname }) => {
   return (
     <div
       role="navigation"
+      className="navigation"
       css={{
         borderBottom: `1px solid ${colors.ui.light}`,
         backgroundColor: `rgba(255,255,255,0.975)`,
