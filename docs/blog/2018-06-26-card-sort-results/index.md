@@ -45,7 +45,6 @@ Without interviewing each participant I can’t be sure, but I’m inclined to t
 There was a lot of disagreement about where docs about deployment should go. For example, card sort participants placed the “Build and deploy a live site” doc in 28 unique categories. Here’s a sample of the categories:
 
 ![Deployment categories](deployment-categories.png)
-![Deployment categories 2](deployment-categories-2.png)
 
 The three most common categories it was placed under are “Getting Started”, “Tutorials,” and “Deployment.” Other categories include “Examples,” “Guides,” and “Production.” Here are the deployment docs that need to find a place to call home:
 * Build and deploy a site
@@ -54,11 +53,11 @@ The three most common categories it was placed under are “Getting Started”, 
 
 One solution that occurred to me is to bring Deployment & Hosting to top level navigation as their own category, since there was so little agreement on where to put them.
 
-> ***NOTE*** If you look at the data, the number of unique categorizations isn’t always a useful number, because Optimal Sort considers “getting started” and “get started” to be different categories even though a human eye can see they are essentially the same. In the case of these deployment docs, however, the 28 categories are almost all *truly unique*.
+> ***NOTE:*** If you look at the data, the number of unique categorizations isn’t always a useful number, because Optimal Sort considers “getting started” and “get started” to be different categories even though a human eye can see they are essentially the same. However, in the case of these deployment docs, there were 28 categories and many of them are *truly unique*.
 
 ### Core Concepts vs. Advanced Guides
 
-There was quite a bit of overlap in the docs people assigned to these two categories. This is probably because the two categories have a close relationship with each other; they work in harmony to help Gatsby users build at an advanced level. For example, if you read about how Gatsby works with GraphQL in “Core Concepts,” there is a high chance you’ll want to start playing with GraphQL queries and find examples of these in “Advanced Guides.” I’m not entirely sure how to reflect this close relationship in the docs; the most straightforward way is probably for each doc in “Core Concepts” to have a list of relevant links in Advanced Guides, and vice versa.
+There was quite a bit of overlap in the docs people assigned to these two categories. This is probably because the two categories have a close relationship with each other; they work in harmony to help Gatsby users build at an advanced level. For example, if you read about how Gatsby works with GraphQL in “Core Concepts,” there is a high chance you’ll want to start playing with GraphQL queries and find examples of these in “Advanced Guides.” I’m not entirely sure how to reflect this close relationship in the docs; the most straightforward way is probably for each doc in “Core Concepts” to have a list of relevant links in "Advanced Guides," and vice versa.
 
 Here’s a sampling of docs that people associate with both categories:
 * Search engine optimization (SEO) 
@@ -72,20 +71,21 @@ List of other lonely docs that didn’t find a solid home through the card sort:
 
 ## Dendogram adventures
 
-These screenshots that show a portion of the dendogram show that the clearest category, in which the category name and the contents of the category are consistent, was Contributing.
+These screenshots that show a portion of the dendogram show that the clearest category was "Contributing", clear because the category name and the contents of the category are consistent:
 
-#### Contributing
 ![Contributing dendogram](contributing-dendogram.png)
 
-So Gatsby users are in agreement on what that category ought to be called and what docs it should contain :)
+Gatsby users are in agreement on what that category ought to be called and what docs it should contain :)
 
 ## Next steps
 
-### Current category names for usability testing
+### Usability testing
 
-I’ve already conducted 4 usability tests with several more coming (5-7 produces reliable data in conventional UX research practices) and I’m seeing more ways to improve what we place in these categories as well as many ways I can improve my usability testing :). Many thanks to all those participants who have been enthusiastic and willing to give feedback, including Korey Boone, Shannon Smith, Peter Wiebe, Abhishek Vishwakarma, Ria Carmin, and Hugo Marques. There are quite a few more people meeting with me in the upcoming week.
+The next step is to conduct usability testing on a new design of the .org site. I’ve already conducted 8 usability tests with several more coming (5-7 produces reliable data in conventional UX research practices) and I’m seeing more ways to improve what we place in these categories as well as many ways I can improve my usability testing :). 
 
-Here are the categories I’ve used for usability testing so far:
+Many thanks to all those participants who have been enthusiastic and willing to give feedback, including Korey Boone, Shannon Smith, Peter Wiebe, Abhishek Vishwakarma, Ria Carmin, and Hugo Marques, Bogdan Lazar, Cameron Steele, and Simon Koelewijn. There are quite a few more people meeting with me in the upcoming week.
+
+These are the docs categories I’ve used for usability testing so far:
 * Get Started
 * Core Concepts
 * Releases
@@ -95,11 +95,13 @@ Here are the categories I’ve used for usability testing so far:
 * Contributing
 
 Here are a few realizations from usability testing already: 
-* the search bar is far away from the menu and sometimes people don’t see it
-* when searching for something in the docs or to solve an error, many people go to google first, before using docs navigation or the .org search bar
-* the category name “Recipes” isn’t resonating with most people, although once they see the contents of the category, most people tend to like it. 
-* the usability testing has validated one of the card sort results, which is that the Core Concepts and Recipes and Tutorials are all closely related
+* sometimes people don’t see the search bar on the .org site
+* when searching for something in the docs or to solve an error, many people do a google search before using docs navigation or the .org search bar
+* the category name “Recipes” was unclear to most people, although once they see the contents of the category, most people tend to like it 
+* the usability testing validated one of the card sort results, which is that some docs kind of fit in three categories: "Core Concepts" and "Recipes" and "Tutorials". These categories are all closely related and will need to link to each other often
 
 ### What’s next
 
-Stay tuned for the results of the usability test and the new sidebar menu of the .org site, which will likely get released together :D Please read and comment on the [Doc Redesign RFC](https://github.com/gatsbyjs/rfcs/pull/5) if you have more ideas on how we can redesign the docs!
+Stay tuned for the results of the usability test and the new sidebar menu of the .org site, which will likely get released together :D 
+
+And please read and comment on the [Doc Redesign RFC](https://github.com/gatsbyjs/rfcs/pull/5) if you have more ideas on how we can redesign the docs!
