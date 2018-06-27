@@ -15,7 +15,7 @@ This is all possible because Cassie (@ThatOtherPerson) and Shawn (@sw-yx) put in
 
 ## Submitting your site
 
-If you’d like to submit a site to the showcase, please follow the [instructions in this document](https://github.com/gatsbyjs/gatsby/blob/v2/docs/docs/site-showcase-submissions.md).
+If you’d like to submit a site to the showcase, please follow the [instructions in this document](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/site-showcase-submissions.md).
  
 ## Why build a site showcase?
 
@@ -68,7 +68,7 @@ Users should be able to:
 
 ### Next steps for the site showcase
 
-* If you created a site with Gatsby or know someone who did and would like it to appear in the site showcase, [follow these instructions to add it](https://github.com/gatsbyjs/gatsby/blob/v2/docs/docs/site-showcase-submissions.md).
+* If you created a site with Gatsby or know someone who did and would like it to appear in the site showcase, [follow these instructions to add it](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/site-showcase-submissions.md).
 * If you see a site with no description and you know who built it, kindly remind them to update it!
 * If you’d like to help us automate the process of contacting site creators, we're [looking for help with issue #5928](https://github.com/gatsbyjs/gatsby/issues/5928) to do just that
 * Help solve [issue #5929
