@@ -25,19 +25,35 @@ class BlogPostPreviewItem extends React.Component {
             marginBottom: rhythm(2),
           }}
         >
-          <Img
-            alt=""
-            fixed={avatar}
+          <Link
+            to={post.frontmatter.author.fields.slug}
             css={{
-              borderRadius: `100%`,
-              display: `inline-block`,
-              marginRight: rhythm(1 / 2),
-              marginBottom: 0,
-              verticalAlign: `top`,
-              // prevents image twitch in Chrome when hovering the card
-              transform: `translateZ(0)`,
+              position: `relative`,
+              zIndex: 1,
+              "&&": {
+                boxShadow: `none`,
+                borderBottom: `0`,
+                fontWeight: `normal`,
+                ":hover": {
+                  background: `transparent`,
+                },
+              },
             }}
-          />
+          >
+            <Img
+              alt=""
+              fixed={avatar}
+              css={{
+                borderRadius: `100%`,
+                display: `inline-block`,
+                marginRight: rhythm(1 / 2),
+                marginBottom: 0,
+                verticalAlign: `top`,
+                // prevents image twitch in Chrome when hovering the card
+                transform: `translateZ(0)`,
+              }}
+            />
+          </Link>
           <div
             css={{
               display: `inline-block`,
@@ -56,15 +72,13 @@ class BlogPostPreviewItem extends React.Component {
               <Link
                 to={post.frontmatter.author.fields.slug}
                 css={{
-                  boxShadow: `none !important`,
-                  borderBottom: `0 !important`,
                   position: `relative`,
                   zIndex: 1,
                   "&&": {
+                    color: `${colors.gatsby}`,
                     fontWeight: `normal`,
                     ":hover": {
-                      color: colors.gatsby,
-                      background: `transparent`,
+                      background: colors.ui.bright,
                     },
                   },
                 }}
