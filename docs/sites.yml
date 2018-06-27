@@ -1114,3 +1114,15 @@
     - Retail
     - Food
     - Blog
+- title: Michael Uloth
+  main_url: 'https://www.michaeluloth.com'
+  url: 'https://www.michaeluloth.com'
+  featured: false
+  description: >-
+    Michael Uloth is an opera singer and web developer based in Toronto.
+  categories:
+    - Portfolio
+    - Music
+    - Web Dev
+  built_by: Michael Uloth
+  built_by_url: 'https://www.michaeluloth.com'
