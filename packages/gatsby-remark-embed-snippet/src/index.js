@@ -135,7 +135,7 @@ module.exports = (
           const hasIntersection = isHiddenLine && isHighlightedLine
 
           if (hasIntersection) {
-            throw Error(`There can be no intersection between hidden lines and highlighted lines - "${path}"`)
+            throw Error(`The range number of hide-lines and highlight-lines cannot be intersected. Check the file: ${path}.`)
           }
 
           return !isHiddenLine
