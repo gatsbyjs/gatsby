@@ -22,7 +22,7 @@ If you came across [Gatsby](https://github.com/gatsbyjs/gatsby) you will notice 
 
 ![gatsby-logo](https://images.ctfassets.net/4x6byznv2pet/4OW1X9ex1mImko8G4w4WAK/a16fceab310b718c7f375a760c4e1e16/logo-gatsby-0603eb9dd6bdfec9599dbc7590f891be-347ea.jpg)
 
-Gatsby is a blazing fast static site generator for [React](https://github.com/facebook/react). Actually, it is more than that. Think of it as a PWA (Progressive Web App) framework with best practices backed in. For example: you get code and data splitting out-of-the-box.
+Gatsby is a blazing fast static site generator for [React](https://github.com/facebook/react). Actually, it is more than that. Think of it as a PWA (Progressive Web App) framework with best practices baked in. For example: you get code and data splitting out-of-the-box.
 
 ## Why Move to Gatsby?
 
