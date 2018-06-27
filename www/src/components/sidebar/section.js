@@ -91,10 +91,7 @@ class Section extends React.Component {
       ? Title
       : ToggleSectionButton
 
-    let { isActive } = this.props
-    if (section.disableAccordions) {
-      isActive = true
-    }
+    const isActive = this.props.isActive || section.disableAccordions
 
     return (
       <div>
