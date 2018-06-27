@@ -1129,7 +1129,7 @@
 - title: NYC Pride 2019 | WorldPride NYC | Stonewall50
   main_url: 'https://2019-worldpride-stonewall50.nycpride.org/'
   url: 'https://2019-worldpride-stonewall50.nycpride.org/'
-  featured: true
+  featured: false
   description: >-
     Join us in 2019 for NYC Pride, as we welcome WorldPride and mark the 50th Anniversary of the Stonewall Uprising and a half-century of LGBTQ+ liberation.
   categories:
