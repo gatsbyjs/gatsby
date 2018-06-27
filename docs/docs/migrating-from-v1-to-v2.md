@@ -508,7 +508,7 @@ More information on Gatsby and Babel configuration available [here](/docs/babel/
 ## Plugin specific changes
 
 Some plugins require additional changes before your site will compile.
-For example, if you use [`gatsby-plugin-typography`](https://www.gatsbyjs.org/packages/gatsby-plugin-typography/), you now need to explicitly export `scale` and `rhythm` as named exports.
+For example, if you use [`gatsby-plugin-typography`](https://www.gatsbyjs.org/packages/gatsby-plugin-typography/), you now need to explicitly export `scale` and `rhythm` as named exports from your typography config module.
 
 `src/utils/typography.js`
 
