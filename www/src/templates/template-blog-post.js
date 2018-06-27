@@ -61,7 +61,7 @@ class BlogPostTemplate extends React.Component {
 
     return (
       <Layout location={this.props.location}>
-        <Container className="post" css={{ paddingBottom: `0 !important` }}>
+        <Container className="post" css={{ paddingBottom: `0` }}>
           {/* Add long list of social meta tags */}
           <Helmet>
             <title>{post.frontmatter.title}</title>
@@ -133,17 +133,19 @@ class BlogPostTemplate extends React.Component {
                 flex: `0 0 auto`,
               }}
             >
-              <Img
-                fixed={post.frontmatter.author.avatar.childImageSharp.fixed}
-                css={{
-                  height: rhythm(2.3),
-                  width: rhythm(2.3),
-                  margin: 0,
-                  borderRadius: `100%`,
-                  display: `inline-block`,
-                  verticalAlign: `middle`,
-                }}
-              />
+              <Link to={post.frontmatter.author.fields.slug}>
+                <Img
+                  fixed={post.frontmatter.author.avatar.childImageSharp.fixed}
+                  css={{
+                    height: rhythm(2.3),
+                    width: rhythm(2.3),
+                    margin: 0,
+                    borderRadius: `100%`,
+                    display: `inline-block`,
+                    verticalAlign: `middle`,
+                  }}
+                />
+              </Link>
             </div>
             <div
               css={{
@@ -157,9 +159,23 @@ class BlogPostTemplate extends React.Component {
                     ...scale(0),
                     fontWeight: 400,
                     margin: 0,
+                    color: `${colors.gatsby}`,
                   }}
                 >
-                  {post.frontmatter.author.id}
+                  <span
+                    css={{
+                      borderBottom: `1px solid ${colors.ui.bright}`,
+                      boxShadow: `inset 0 -2px 0 0 ${colors.ui.bright}`,
+                      transition: `all ${presets.animation.speedFast} ${
+                        presets.animation.curveDefault
+                      }`,
+                      "&:hover": {
+                        background: colors.ui.bright,
+                      },
+                    }}
+                  >
+                    {post.frontmatter.author.id}
+                  </span>
                 </h4>
               </Link>
               <BioLine>{post.frontmatter.author.bio}</BioLine>
