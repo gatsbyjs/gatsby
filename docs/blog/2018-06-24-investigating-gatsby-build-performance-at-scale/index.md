@@ -22,7 +22,7 @@ _Site tests_
 
 In order to measure the “build performance cost” of each of these three factors, we’ve benchmarked Gatsby build times for two different sites, one image-heavy and one markdown-page heavy.
 
-The first site is FreeCodeCamp’s Guide, one of the largest open-source Gatsby sites with around 3,000 pages. The second site is an official example, using-gatsby-image, copied into its own repo. We’ve run two different versions of this: first, with around 25 images and second, with around 250 images. Both sites are running on Gatsby v2.
+The first site is [FreeCodeCamp’s Guide](https://github.com/freeCodeCamp/guide), one of the largest open-source Gatsby sites with around 3,000 pages. The second site is an official example, using-gatsby-image, copied into its own repo. We’ve run two different versions of this: first, with around 25 images and second, with around 250 images. Both sites are running on Gatsby v2.
 
 Note that **using gatsby-image is not a requirement to use Gatsby**. If you have enough images that image-processing-driven build times is impeding project goals or team workflows, consider simply removing (or not implementing) gatsby-image.
 
@@ -36,7 +36,7 @@ Tests were run both with (“warm start) and without (“cold start”) a pre-ex
 
 In most cases when code changes and all cases when content changes, Gatsby will preserve the cache from your previous build, giving you a warm start. The cache is only invalidated in rare instances, for example when the plugin changes.
 
-Whether you’re able to access the cache from previous builds depends on your CI setup, but many CI providers such as Netlify offer the option of preserving the previous build cache.
+Whether you’re able to access the cache from previous builds depends on your CI setup, but many CI providers offer the option of preserving the previous build cache.
 
 # Results
 
