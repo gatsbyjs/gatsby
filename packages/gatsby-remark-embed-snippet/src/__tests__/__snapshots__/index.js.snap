@@ -996,7 +996,7 @@ notHighlighted <span class=\\"token operator\\">=</span> <span class=\\"token nu
 }
 `;
 
-exports[`gatsby-remark-embed-snippet JavaScript files should throw error when hidden and highlighted lines overlap 1`] = `"There can be no intersection between hidden lines and highlighted lines"`;
+exports[`gatsby-remark-embed-snippet JavaScript files should throw error when hidden and highlighted lines overlap 1`] = `[Error: There can be no intersection between hidden lines and highlighted lines - "examples/hello-world.js"]`;
 
 exports[`gatsby-remark-embed-snippet Markdown files should extract the correct Prism language 1`] = `
 Object {
