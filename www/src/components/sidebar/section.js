@@ -208,7 +208,7 @@ const styles = {
     width: `100%`,
   },
   liActive: {
-    background: hex2rgba(colors.ui.bright, 0.35),
+    background: colors.ui.light,
     paddingTop: `${rhythm(1 / 2)} !important`,
     marginTop: `${rhythm(1 / 2)} !important`,
     marginBottom: `${rhythm(1)} !important`,
