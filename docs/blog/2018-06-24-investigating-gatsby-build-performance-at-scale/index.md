@@ -18,9 +18,9 @@ The three most memory-intensive operations that scale with site size are **proce
 
 # Benchmark Parameters
 
-_Sites tests_
+_Site tests_
 
-In order to measure the “build performance cost” of each of these three factors, we’ve benchmarked Gatsby build times two different sites, one image-heavy and one markdown-page heavy.
+In order to measure the “build performance cost” of each of these three factors, we’ve benchmarked Gatsby build times for two different sites, one image-heavy and one markdown-page heavy.
 
 The first site is FreeCodeCamp’s Guide, one of the largest open-source Gatsby sites with around 3,000 pages. The second site is an official example, using-gatsby-image, copied into its own repo. We’ve run two different versions of this: first, with around 25 images and second, with around 250 images. Both sites are running on Gatsby v2.
 
@@ -48,7 +48,7 @@ Full results are [linked](https://docs.google.com/spreadsheets/d/1ki5PwVTnIyycsk
 
 # Next steps
 
-Gatsby users report that gatsby builds fail due to running against hard Node.js process memory limits somewhere around 10,000 to 15,000 pages on v1.
+Gatsby users report that Gatsby builds fail due to running against hard Node.js process memory limits somewhere around 10,000 to 15,000 pages on v1.
 
 Since v2 has improved memory usage, we want to update this number, as well as further quantify the boundary so that teams considering migrating larger sites to Gatsby have more information for their decision-making.
 
