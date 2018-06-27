@@ -65,9 +65,6 @@ class StickyResponsiveSidebar extends Component {
             [presets.Desktop]: {
               width: rhythm(12),
             },
-            [presets.Hd]: {
-              width: rhythm(14),
-            },
             "&&": {
               padding: `0`,
               paddingTop: `${rhythm(3 / 4)}`,

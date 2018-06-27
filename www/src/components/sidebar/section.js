@@ -117,11 +117,6 @@ class Section extends React.Component {
                 fontSize: scale(-4 / 10).fontSize,
               },
             },
-            [presets.Hd]: {
-              "& li": {
-                fontSize: scale(-3 / 10).fontSize,
-              },
-            },
           }}
         >
           {section.items.map(item => (
