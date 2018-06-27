@@ -33,7 +33,9 @@ Remember that if you are fetching a user, prepend your username with `@`.
 
 #### Limit
 
-Limit is optional and will default to 100. You must set a higher limit if you want more than 100 posts. If you want fewer, you can either use this setting, or add a limit parameter to your graphql query.
+Limit is optional and will default to 100. **Note:** it only affects requests for users and not publications.
+
+You must set a higher limit if you want more than 100 posts. If you want fewer, you can either use this setting, or add a limit parameter to your graphql query.
 
 
 ## How to query
