@@ -8,6 +8,7 @@ const websocketManager = require(`../../utils/websocket-manager`)
 const path = require(`path`)
 const { store } = require(`../../redux`)
 const { generatePathChunkName } = require(`../../utils/js-chunk-names`)
+const { formatErrorDetails } = require(`./utils`)
 
 const resultHashes = {}
 
@@ -20,8 +21,6 @@ type QueryJob = {
   context: Object,
   isPage: Boolean,
 }
-
-const indentString = string => string.replace(/\n/g, `\n  `)
 
 // Run query
 module.exports = async (queryJob: QueryJob, component: Any) => {
@@ -43,19 +42,22 @@ module.exports = async (queryJob: QueryJob, component: Any) => {
   // If there's a graphql error then log the error. If we're building, also
   // quit.
   if (result && result.errors) {
-    report.log(`
-The GraphQL query from ${component.componentPath} failed.
+    const errorDetails = new Map()
+    errorDetails.set(`Errors`, result.errors || [])
+    if (queryJob.isPage) {
+      errorDetails.set(`URL path`, queryJob.context.path)
+      errorDetails.set(
+        `Context`,
+        JSON.stringify(queryJob.context.context, null, 2)
+      )
+    }
+    errorDetails.set(`Plugin`, queryJob.pluginCreatorId || `none`)
+    errorDetails.set(`Query`, queryJob.query)
 
-Errors:
-  ${result.errors || []}
-URL path:
-  ${queryJob.path}
-Context:
-  ${indentString(JSON.stringify(queryJob.context, null, 2))}
-Plugin:
-  ${queryJob.pluginCreatorId || `none`}
-Query:
-  ${indentString(component.query)}`)
+    report.log(`
+The GraphQL query from ${queryJob.componentPath} failed.
+
+${formatErrorDetails(errorDetails)}`)
 
     // Perhaps this isn't the best way to see if we're building?
     if (program._[0] === `build`) {
