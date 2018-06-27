@@ -4,7 +4,10 @@ import PageRenderer from "./page-renderer"
 import { StaticQueryContext } from "gatsby"
 import socketIo, { getStaticQueryData, getPageQueryData } from "./socketIo"
 
-const getPathFromProps = props => props.pageResources && props.pageResources.page ? props.pageResources.page.path : null
+const getPathFromProps = props =>
+  props.pageResources && props.pageResources.page
+    ? props.pageResources.page.path
+    : null
 
 class JSONStore extends React.Component {
   constructor(props) {
