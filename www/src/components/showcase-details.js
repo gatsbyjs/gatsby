@@ -101,7 +101,7 @@ const cleanUrl = mainUrl => {
 export default ({ parent, data, isModal, categories }) => (
   <StaticQuery
     query={graphql`
-      query allSitesYamlTemplateShowcase {
+      query {
         allSitesYaml(
           limit: 40
           filter: { featured: { eq: true }, main_url: { ne: null } }

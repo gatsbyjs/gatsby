@@ -105,7 +105,7 @@ class BlogPostsIndex extends React.Component {
 export default BlogPostsIndex
 
 export const pageQuery = graphql`
-  query BlogPostsIndexQuery {
+  query {
     allMarkdownRemark(
       sort: { order: DESC, fields: [frontmatter___date] }
       filter: {
