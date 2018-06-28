@@ -1,4 +1,5 @@
 import React from "react"
+import { graphql } from "gatsby"
 import Img from "gatsby-image"
 import { OutboundLink } from "gatsby-plugin-google-analytics"
 

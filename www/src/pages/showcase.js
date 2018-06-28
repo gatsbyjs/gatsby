@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import Helmet from "react-helmet"
 
-import { Link } from "gatsby"
+import { Link, graphql } from "gatsby"
 import Img from "gatsby-image"
 import { style } from "glamor"
 import hex2rgba from "hex2rgba"
