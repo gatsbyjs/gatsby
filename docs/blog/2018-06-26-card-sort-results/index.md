@@ -7,7 +7,7 @@ tags: ["documentation"]
 
 ## What is a card sort?
 
-Recently, 36 Gatsby users completed an open card sort to help make [next.gatsbyjs.org](https://next.gatsbyjs.org/) easier to use. Without any outside input or help, they each sorted 90 cards into categories that made sense to them and then named those categories.
+Recently, 36 Gatsby users completed an open card sort to help make our docs here on gatsbyjs.org easier to use. Without any outside input or help, they each sorted 90 cards into categories that made sense to them and then named those categories.
 
 ### Raw & beautified data
 
