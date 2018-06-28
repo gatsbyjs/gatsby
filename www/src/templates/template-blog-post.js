@@ -1,6 +1,6 @@
 import React from "react"
 import Helmet from "react-helmet"
-import { Link } from "gatsby"
+import { Link, graphql } from "gatsby"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import ArrowBackIcon from "react-icons/lib/md/arrow-back"
 import Img from "gatsby-image"

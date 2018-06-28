@@ -1,5 +1,5 @@
 import React from "react"
-import { push } from "gatsby"
+import { push, graphql } from "gatsby"
 
 import ShowcaseDetails from "../components/showcase-details"
 
