@@ -5,8 +5,6 @@ it(`Builds cache-dir with minimal config`, done => {
   const args = [
     require.resolve(`@babel/cli/bin/babel.js`),
     path.join(__dirname, `..`),
-    `--out-dir`,
-    `d:/dev/out-dir`, // <- bleh, just to get demo running
     `--config-file`,
     path.join(__dirname, `.babelrc`),
   ]
@@ -26,9 +24,7 @@ it(`Builds cache-dir with minimal config`, done => {
 
   spawn.on(`close`, function () {
     expect(stderr).toEqual(``)
-    expect(stdout).toEqual(
-      expect.stringMatching(`Successfully compiled`),
-    )
+    expect(stdout).not.toEqual(``)
     done()
   })
 }, 30000)
