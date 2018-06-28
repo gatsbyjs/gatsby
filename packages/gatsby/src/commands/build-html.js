@@ -53,7 +53,7 @@ module.exports = async (program: any) => {
           return resolve(null, stats)
         })
         .catch(e => {
-          console.log(e)
+          reject(createErrorFromString(e.stack, `${outputFile}.map`))
         })
     })
   })

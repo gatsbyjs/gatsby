@@ -3,7 +3,7 @@
  */
 
 const { readFileSync } = require(`fs`)
-const babelCodeFrame = require(`@babel/code-frame`)
+const { codeFrameColumns } = require(`@babel/code-frame`)
 const stackTrace = require(`stack-trace`)
 const { SourceMapConsumer } = require(`source-map`)
 
@@ -28,10 +28,14 @@ function getErrorSource(map, topFrame) {
   let source = map.sourceContentFor(topFrame.getFileName(), true)
   return (
     source &&
-    babelCodeFrame(
+    codeFrameColumns(
       source,
-      topFrame.getLineNumber(),
-      topFrame.getColumnNumber(),
+      {
+        start: {
+          line: topFrame.getLineNumber(),
+          column: topFrame.getColumnNumber(),
+        },
+      },
       {
         highlightCode: true,
       }
