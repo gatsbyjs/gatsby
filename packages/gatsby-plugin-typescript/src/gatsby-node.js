@@ -1,8 +1,9 @@
-const { tsPresetsFromJsPresets } = require(`./`)
+import { tsPresetsFromJsPresets, PARSER_OPTIONS } from "./"
 
-const resolvableExtensions = () => [`.ts`, `.tsx`]
+const TS = /\.tsx?$/
+export const resolvableExtensions = () => [`.ts`, `.tsx`]
 
-function onCreateWebpackConfig({ actions, loaders, stage }) {
+export function onCreateWebpackConfig({ actions, loaders, stage }) {
   const jsLoader = loaders.js()
   if (
     !(
@@ -33,5 +34,14 @@ function onCreateWebpackConfig({ actions, loaders, stage }) {
     },
   })
 }
-exports.onCreateWebpackConfig = onCreateWebpackConfig
-exports.resolvableExtensions = resolvableExtensions
+
+/**
+ * Gatsby uses preprocessSource when it parses
+ * GraphQL queries during build.
+ */
+export function preprocessSource({ filename, contents }, pluginOptions) {
+  if (TS.test(filename)) {
+    return PARSER_OPTIONS
+  }
+  return null
+}
