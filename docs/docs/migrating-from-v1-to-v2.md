@@ -64,7 +64,7 @@ You can start with a few of the most important steps - install Gatsby v2 depende
 
 ## Update Gatsby version
 
-Update your `package.json` to use the pre-release versions of Gatsby and any related packages.
+Update your `package.json` to use the pre-release versions of Gatsby.
 
 `package.json`
 
@@ -77,6 +77,20 @@ Update your `package.json` to use the pre-release versions of Gatsby and any rel
 ```
 
 > Note: Gatsby v2 is in pre-release so you may encounter further breaking changes.
+
+## Update Gatsby related packages
+
+Update your `package.json` to use the pre-release versions of Gatsby related packages. Any package name that starts with `gatsby-` should be upgraded to use the `next` version. For example:
+
+`package.json`
+
+```json
+"dependencies": {
+    "gatsby-plugin-google-analytics": "next",
+    "gatsby-plugin-netlify": "next",
+    "gatsby-plugin-sass": "next",
+}
+```
 
 ## Manually install React
 
