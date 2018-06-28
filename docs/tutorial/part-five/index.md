@@ -106,8 +106,9 @@ Let's try this.
 Create a new file at `src/pages/my-files.js` with the `allFile` query you just
 created:
 
-```jsx{5}
+```jsx{6}
 import React from "react"
+import { graphql } from "gatsby"
 import Layout from "../components/layout"
 
 export default ({ data }) => {
@@ -148,8 +149,9 @@ The shape of the data matches the shape of the query.
 
 Let's add some code to your component to print out the File data.
 
-```jsx{8-30}
+```jsx{9-31}
 import React from "react"
+import { graphql } from "gatsby"
 import Layout from "../components/layout"
 
 export default ({ data }) => {
