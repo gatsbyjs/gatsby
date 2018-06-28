@@ -58,6 +58,7 @@ Read on for a detailed guide on what's new in version 2!
 - [Only allow defined keys on node.internal object](#only-allow-defined-keys-on-the-node-internal-object)
 - [Import `graphql` types from `gatsby/graphql`](#import-graphql-types-from-gatsbygraphql)
 - [Move Babel Configuration`](#move-babel-configuration)
+- [Plugin specific changes](#plugin-specific-changes)
 
 You can start with a few of the most important steps - install Gatsby v2 dependencies and update your layout components.
 
@@ -503,3 +504,19 @@ The latest version of Gatsby uses Babel 7, which introduced [a new behavior for 
 [This GitHub comment](https://github.com/facebook/jest/issues/1468#issuecomment-361260279) documents the steps needed to do that.
 
 More information on Gatsby and Babel configuration available [here](/docs/babel/#how-to-use-a-custom-babelrc-file).
+
+## Plugin specific changes
+
+Some plugins require additional changes before your site will compile.
+For example, if you use [`gatsby-plugin-typography`](https://www.gatsbyjs.org/packages/gatsby-plugin-typography/), you now need to explicitly export `scale` and `rhythm` as named exports from your typography config module.
+
+`src/utils/typography.js`
+
+```diff
+- const typography = new Typography();
+- export default typography;
+
++ const typography = new Typography();
++ const { rhythm, scale } = typography;
++ export { rhythm, scale, typography as default };
+```

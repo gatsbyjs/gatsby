@@ -1,4 +1,5 @@
 import React from "react"
+import { graphql } from "gatsby"
 import Helmet from "react-helmet"
 import sortBy from "lodash/sortBy"
 
@@ -6,7 +7,8 @@ import Functions from "../../components/function-list"
 import { rhythm, scale } from "../../utils/typography"
 import Layout from "../../components/layout"
 import Container from "../../components/container"
-import docsSidebar from "../../data/sidebars/doc-links.yaml"
+import { sectionListDocs } from "../../utils/sidebar/section-list"
+import { createLinkDocs } from "../../utils/sidebar/create-link"
 
 class SSRAPIs extends React.Component {
   render() {
@@ -15,7 +17,11 @@ class SSRAPIs extends React.Component {
       func => func.name
     )
     return (
-      <Layout location={this.props.location} sidebarYaml={docsSidebar}>
+      <Layout
+        location={this.props.location}
+        createLink={createLinkDocs}
+        sectionList={sectionListDocs}
+      >
         <Container>
           <Helmet>
             <title>SSR APIs</title>

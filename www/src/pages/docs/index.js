@@ -3,7 +3,8 @@ import { Link } from "gatsby"
 import Helmet from "react-helmet"
 
 import Layout from "../../components/layout"
-import docsSidebar from "../../data/sidebars/doc-links.yaml"
+import { sectionListDocs } from "../../utils/sidebar/section-list"
+import { createLinkDocs } from "../../utils/sidebar/create-link"
 import Container from "../../components/container"
 import DocSearchContent from "../../components/docsearch-content"
 import presets from "../../utils/presets"
@@ -11,7 +12,11 @@ import presets from "../../utils/presets"
 class IndexRoute extends React.Component {
   render() {
     return (
-      <Layout location={this.props.location} sidebarYaml={docsSidebar}>
+      <Layout
+        location={this.props.location}
+        createLink={createLinkDocs}
+        sectionList={sectionListDocs}
+      >
         <DocSearchContent>
           <Container>
             <Helmet>

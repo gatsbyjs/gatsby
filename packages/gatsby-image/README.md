@@ -264,12 +264,12 @@ prop. e.g. `<Img fluid={fluid} />`
 ## Image processing arguments
 
 [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp) supports many additional arguments for transforming your images like
-`quality`,`sizeByPixelDensity`,`pngCompressionLevel`,`cropFocus`,`greyscale` and many more. See its documentation for more.
+`quality`, `sizeByPixelDensity`, `pngCompressionLevel`, `cropFocus`, `greyscale` and many more. See its documentation for more.
 
 ## Some other stuff to be aware of
 
 - If you want to set `display: none;` on a component using a `fixed` prop,
-  you need to also pass in to the style prop `{ display: 'inherit' }`.\* Images
-  don't load until JavaScript is loaded. Gatsby's automatic code splitting
-  generally makes this fine but if images seem slow coming in on a page, check
-  how much JavaScript is being loaded there.
+  you need to also pass in to the style prop `{ display: 'inherit' }`.
+- Images don't load until JavaScript is loaded. Gatsby's automatic code
+  splitting generally makes this fine but if images seem slow coming in on a
+  page, check how much JavaScript is being loaded there.
