@@ -1,10 +1,9 @@
 import React from "react"
-import moment from "moment"
 import BlogPostChrome from "../components/BlogPostChrome"
 
 class mdBlogPost extends React.Component {
   render() {
-    const { html, frontmatter } = this.props.data.markdownRemark
+    const { html } = this.props.data.markdownRemark
 
     return (
       <BlogPostChrome
