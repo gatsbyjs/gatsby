@@ -1,16 +1,12 @@
 {
   "name": "gatsby-example-using-javascript-transforms",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "example site and blog",
   "main": "index.js",
   "scripts": {
-    "develop": "node_modules/.bin/gatsby develop",
-    "dev:hard": "rm -rf .cache && rm -rf public && npm run develop",
-    "build": "npm run clean & .\\node_modules\\.bin\\gatsby build",
-    "serve": "node_modules/.bin/gatsby serve",
-    "clean:public": "rm -rf public & mkdir public",
-    "clean": "npm run clean:public",
-    "lint": "./node_modules/.bin/eslint --ext .js,.jsx --ignore-pattern public .",
+    "develop": "gatsby develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
