@@ -3,6 +3,7 @@ const glob = require(`glob`)
 const _ = require(`lodash`)
 
 const mapSeries = require(`async/mapSeries`)
+const opentracing = require(`opentracing`)
 
 const reporter = require(`gatsby-cli/lib/reporter`)
 const cache = require(`./cache`)
@@ -12,7 +13,8 @@ const createNodeId = require(`./create-node-id`)
 // Bind action creators per plugin so we can auto-add
 // metadata to actions they create.
 const boundPluginActionCreators = {}
-const doubleBind = (boundActionCreators, api, plugin, { traceId }) => {
+const doubleBind = (boundActionCreators, api, plugin, actionOptions) => {
+  const { traceId } = actionOptions
   if (boundPluginActionCreators[plugin.name + api + traceId]) {
     return boundPluginActionCreators[plugin.name + api + traceId]
   } else {
@@ -26,9 +28,9 @@ const doubleBind = (boundActionCreators, api, plugin, { traceId }) => {
           // Let action callers override who the plugin is. Shouldn't be
           // used that often.
           if (args.length === 1) {
-            boundActionCreator(args[0], plugin, traceId)
+            boundActionCreator(args[0], plugin, actionOptions)
           } else if (args.length === 2) {
-            boundActionCreator(args[0], args[1], traceId)
+            boundActionCreator(args[0], args[1], actionOptions)
           }
         }
       }
@@ -41,6 +43,14 @@ const doubleBind = (boundActionCreators, api, plugin, { traceId }) => {
 }
 
 const runAPI = (plugin, api, args) => {
+
+  const tracer = opentracing.globalTracer()
+  const apiSpan = args && args.apiSpan
+  const spanOptions = apiSpan ? { parentSpan: apiSpan } : {}
+  const pluginSpan = tracer.startSpan(`run-plugin`, spanOptions)
+  pluginSpan.setTag(`api`, api)
+  pluginSpan.setTag(`plugin`, plugin.name)
+
   let pathPrefix = ``
   const {
     store,
@@ -91,11 +101,16 @@ const runAPI = (plugin, api, args) => {
     // If the plugin is using a callback use that otherwise
     // expect a Promise to be returned.
     if (gatsbyNode[api].length === 3) {
-      return Promise.fromCallback(callback =>
-        gatsbyNode[api](...apiCallArgs, callback)
-      )
+      return Promise.fromCallback(callback => {
+        const cb = (err, val) => {
+          pluginSpan.finish()
+          callback(err, val)
+        }
+        gatsbyNode[api](...apiCallArgs, cb)
+      })
     } else {
       const result = gatsbyNode[api](...apiCallArgs)
+      pluginSpan.finish()
       return Promise.resolve(result)
     }
   }
@@ -111,6 +126,13 @@ let waitingForCasacadeToFinish = []
 
 module.exports = async (api, args = {}, pluginSource) =>
   new Promise(resolve => {
+
+    const tracer = opentracing.globalTracer()
+
+    const apiSpanArgs = args.parentSpan ? { parentSpan: args.parentSpan } : {}
+    const apiSpan = tracer.startSpan(`run-api`, apiSpanArgs)
+    apiSpan.setTag(`api`, api)
+
     // Check that the API is documented.
     if (!apiList[api]) {
       reporter.error(`api: "${api}" is not a valid Gatsby api`)
@@ -161,7 +183,7 @@ module.exports = async (api, args = {}, pluginSource) =>
         } else {
           pluginName = `Plugin ${plugin.name}`
         }
-        Promise.resolve(runAPI(plugin, api, args)).asCallback(callback)
+        Promise.resolve(runAPI(plugin, api, {parentSpan: apiSpan, ...args})).asCallback(callback)
       },
       (err, results) => {
         if (err) {
@@ -180,6 +202,8 @@ module.exports = async (api, args = {}, pluginSource) =>
 
         // Filter empty results
         apiRunInstance.results = results.filter(result => !_.isEmpty(result))
+
+        apiSpan.finish()
 
         // Filter out empty responses and return if the
         // api caller isn't waiting for cascading actions to finish.

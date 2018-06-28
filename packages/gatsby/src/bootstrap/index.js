@@ -90,7 +90,7 @@ module.exports = async (args: BootstrapArgs) => {
     parentSpan: bootstrapSpan
   })
   activity.start()
-  await apiRunnerNode(`onPreBootstrap`)
+  await apiRunnerNode(`onPreBootstrap`, { parentSpan: activity.span },)
   activity.end()
 
   // Delete html and css files from the public directory as we don't want
@@ -294,6 +294,7 @@ module.exports = async (args: BootstrapArgs) => {
   // for adding extensions.
   const apiResults = await apiRunnerNode(`resolvableExtensions`, {
     traceId: `initial-resolvableExtensions`,
+    parentSpan: bootstrapSpan,
   })
 
   store.dispatch({
@@ -315,6 +316,7 @@ module.exports = async (args: BootstrapArgs) => {
     graphql: graphqlRunner,
     traceId: `initial-createPages`,
     waitForCascadingActions: true,
+    parentSpan: activity.span,
   })
   activity.end()
 
@@ -330,6 +332,7 @@ module.exports = async (args: BootstrapArgs) => {
     graphql: graphqlRunner,
     traceId: `initial-createPagesStatefully`,
     waitForCascadingActions: true,
+    parentSpan: activity.span,
   })
   activity.end()
 
@@ -337,7 +340,7 @@ module.exports = async (args: BootstrapArgs) => {
     parentSpan: bootstrapSpan
   })
   activity.start()
-  await apiRunnerNode(`onPreExtractQueries`)
+  await apiRunnerNode(`onPreExtractQueries`, { parentSpan: activity.span })
   activity.end()
 
   // Update Schema for SitePage.
@@ -403,7 +406,7 @@ module.exports = async (args: BootstrapArgs) => {
         parentSpan: bootstrapSpan
       })
       activity.start()
-      apiRunnerNode(`onPostBootstrap`).then(() => {
+      apiRunnerNode(`onPostBootstrap`, { parentSpan: activity.span }).then(() => {
         activity.end()
         bootstrapSpan.finish()
         resolve({ graphqlRunner })
@@ -419,7 +422,7 @@ module.exports = async (args: BootstrapArgs) => {
       parentSpan: bootstrapSpan
     })
     activity.start()
-    await apiRunnerNode(`onPostBootstrap`)
+    await apiRunnerNode(`onPostBootstrap`, { parentSpan: activity.span })
     activity.end()
 
     report.log(``)
