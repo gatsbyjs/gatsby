@@ -80,7 +80,7 @@ Update your `package.json` to use the pre-release versions of Gatsby.
 
 ## Update Gatsby related packages
 
-Update your `package.json` to use the pre-release versions of Gatsby related packages. Any package name that starts with `gatsby-` should be upgraded to use the `next` version. For example:
+Update your `package.json` to use the pre-release versions of Gatsby related packages. Any package name that starts with `gatsby-` should be upgraded to use the `next` version. Note, this only applies to plugins managed in the gatsbyjs/gatsby repo. If you're using community plugins, they might not be upgraded yet. Check their repo for the status. Many plugins won't actually need upgraded so they very well might keep working. For example:
 
 `package.json`
 
