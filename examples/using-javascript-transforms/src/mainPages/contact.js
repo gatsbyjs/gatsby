@@ -3,7 +3,7 @@ import Helmet from "react-helmet"
 import SiteLinks from "../components/SiteLinks"
 import InsetPageLayout from "../components/Layouts/insetPage"
 
-exports.frontmatter = {
+export const frontmatter = {
   layoutType: `page`,
   path: `/contact/`,
 }

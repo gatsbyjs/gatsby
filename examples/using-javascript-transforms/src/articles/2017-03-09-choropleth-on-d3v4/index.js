@@ -4,7 +4,7 @@ import { findDOMNode } from "react-dom"
 var d3 = require(`d3`)
 
 // this is one method to export data and make it usable elsewhere
-exports.frontmatter = {
+export const frontmatter = {
   title: `Choropleth on d3v4`,
   written: `2017-03-09`,
   updated: `2017-04-28`,

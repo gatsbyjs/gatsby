@@ -5,7 +5,7 @@ import sortBy from "lodash/sortBy"
 import moment from "moment"
 import InsetPageLayout from "../components/Layouts/insetPage"
 
-exports.frontmatter = {
+export const frontmatter = {
   layoutType: `page`,
   path: `/`,
 }
@@ -116,7 +116,6 @@ export const pageQuery = graphql`
             title
             path
             layoutType
-            parent
             written
             updated
             category
