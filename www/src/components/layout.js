@@ -62,7 +62,7 @@ class DefaultLayout extends React.Component {
 
     // SEE: template-docs-markdown for why this.props.isSidebarDisabled is here
     const isSidebarDisabled =
-      this.props.isSidebarDisabled || !this.props.sidebarYaml
+      this.props.isSidebarDisabled || !this.props.sectionList
     let isModal = false
     if (!windowWidth && typeof window !== `undefined`) {
       windowWidth = window.innerWidth
@@ -160,6 +160,7 @@ class DefaultLayout extends React.Component {
           <html lang="en" />
         </Helmet>
         <div
+          className="banner"
           css={{
             width: `100%`,
             padding: rhythm(1 / 2),
@@ -208,7 +209,10 @@ class DefaultLayout extends React.Component {
         >
           <PageWithSidebar
             disable={isSidebarDisabled}
-            yaml={this.props.sidebarYaml}
+            createLink={this.props.createLink}
+            sectionList={this.props.sectionList}
+            location={this.props.location}
+            enableScrollSync={this.props.enableScrollSync}
             renderContent={() => this.props.children}
           />
         </div>

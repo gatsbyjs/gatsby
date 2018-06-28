@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import Helmet from "react-helmet"
 
-import { Link } from "gatsby"
+import { Link, graphql } from "gatsby"
 import Img from "gatsby-image"
 import { style } from "glamor"
 import hex2rgba from "hex2rgba"
@@ -263,7 +263,9 @@ class FilteredShowcase extends Component {
               paddingTop: 0,
               borderRight: `1px solid ${colors.ui.light}`,
               // background: colors.ui.whisper,
-              height: `calc(100vh - ${presets.headerHeight})`,
+              height: `calc(100vh - ${presets.headerHeight} - ${
+                presets.bannerHeight
+              })`,
             },
           }}
         >
@@ -963,7 +965,7 @@ const styles = {
     position: `sticky`,
     top: 0,
     [presets.Desktop]: {
-      top: `calc(${presets.headerHeight} - 1px)`,
+      top: `calc(${presets.headerHeight} + ${presets.bannerHeight} - 1px)`,
     },
   },
   scrollbar: {

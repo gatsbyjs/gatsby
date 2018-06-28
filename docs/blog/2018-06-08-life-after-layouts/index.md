@@ -83,7 +83,7 @@ In short, the decision to remove layouts was part of an effort to reduce unneces
 
 ### What was the unnecessary complexity?
 
-Because layouts in V1 were applied under the hood, it made it _really hard_ to pass data between the layout the pages it wrapped.
+Because layouts in V1 were applied under the hood, it made it _really hard_ to pass data between the layout and the pages it wrapped.
 
 In short, layouts in V1 broke React's compositional model, and that made things unnecessarily hard to implement. By going back to the standard React way of importing components and using them directly, we're able to easily pass data between the layout and pages without any confusing, complicated, or otherwise unwieldy workarounds.
 
@@ -93,7 +93,7 @@ In V1, if something breaks on your page, you'd likely go to the page, look throu
 
 Because Gatsby is doing things in the background, out of sight of the developers building the site, we're creating a mystery: where the hell did this bug come from if all the code I can see doesn't have the bug?
 
-By removing the magic and making layouts an explicity dependency in V2, that same bug would be much easier to spot because there's a clear link between our page code and the layout.
+By removing the magic and making layouts an explicit dependency in V2, that same bug would be much easier to spot because there's a clear link between our page code and the layout.
 
 ### Why is this better?
 

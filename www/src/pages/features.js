@@ -1,11 +1,13 @@
 import React, { Component } from "react"
+import { graphql } from "gatsby"
 import Helmet from "react-helmet"
 
 import Layout from "../components/layout"
 import EvaluationTable from "../components/evaluation-table"
 import EvaluationCell from "../components/evaluation-cell"
 import FuturaParagraph from "../components/futura-paragraph"
-import featuresSidebar from "../data/sidebars/features-links.yaml"
+import { createLinkTutorial } from "../utils/sidebar/create-link"
+import { sectionListFeatures } from "../utils/sidebar/section-list"
 import Container from "../components/container"
 import { options, rhythm } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
@@ -201,7 +203,12 @@ class FeaturesPage extends Component {
     )
 
     return (
-      <Layout location={this.props.location} sidebarYaml={featuresSidebar}>
+      <Layout
+        location={this.props.location}
+        createLink={createLinkTutorial}
+        sectionList={sectionListFeatures}
+        enableScrollSync={true}
+      >
         <Container>
           <FeaturesHeader />
           <EvaluationTable
