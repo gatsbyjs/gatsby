@@ -96,7 +96,7 @@ open the folder on your computer called "tutorial-part-one," which was
 automatically created in the location you chose when you ran the `gatsby new` terminal command above.
 
 Once you've opened the "tutorial-part-one" folder in your code editing
-software, it's time to edit your website. You'll see groups of directories and files; find the file in this location: `src/pages/index.js`. Once you open that file, try changing "Hello
+software, it's time to edit your website. You'll see groups of directories and files; find the file in this location: **`📂 src/pages/index.js`**. Once you open that file, try changing "Hello
 world!" in the page component to "Hello Gatsby!". Once you save that change, the text in your browser
 should change within a second (tip: you will always need to save changes before they appear in your browser).
 
@@ -184,7 +184,7 @@ If you click on that link in the browser you should see:
 ![Gatsby.js development 404 page](dev-404.png)
 
 What you're seeing is the Gatsby.js development 404 page. Let's do what it says
-and create a React.js page component at `src/pages/page-2.js`.
+and create a React.js page component at **`📂 src/pages/page-2.js`**.
 
 Make the second page component look something like:
 
@@ -242,7 +242,7 @@ export default () => (
 
 Add that link, click on it, and then you'll create a "Hello World" page component
 for `/counter/` as before. But instead of using the "functional component" form
-as you did before, this time you'll create a "class" component at `src/pages/counter.js`.
+as you did before, this time you'll create a "class" component at **`📂 src/pages/counter.js`**.
 
 ```jsx
 import React from "react"
