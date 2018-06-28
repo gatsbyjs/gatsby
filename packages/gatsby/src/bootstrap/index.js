@@ -15,6 +15,7 @@ const loadPlugins = require(`./load-plugins`)
 const { initCache } = require(`../utils/cache`)
 const report = require(`gatsby-cli/lib/reporter`)
 const getConfigFile = require(`./get-config-file`)
+const opentracing = require(`opentracing`)
 
 // Show stack trace on unhandled promises.
 process.on(`unhandledRejection`, (reason, p) => {
@@ -45,6 +46,10 @@ type BootstrapArgs = {
 }
 
 module.exports = async (args: BootstrapArgs) => {
+  const tracer = opentracing.globalTracer()
+
+  const bootstrapSpan = tracer.startSpan('boostrap')
+
   const program = {
     ...args,
     // Fix program directory path for windows env.
@@ -57,7 +62,9 @@ module.exports = async (args: BootstrapArgs) => {
   })
 
   // Try opening the site's gatsby-config.js file.
-  let activity = report.activityTimer(`open and validate gatsby-config`)
+  let activity = report.activityTimer(`open and validate gatsby-config`, {
+    parentSpan: bootstrapSpan
+  })
   activity.start()
   const config = await preferDefault(
     getConfigFile(program.directory, `gatsby-config`)
@@ -79,7 +86,9 @@ module.exports = async (args: BootstrapArgs) => {
   const flattenedPlugins = await loadPlugins(config)
 
   // onPreBootstrap
-  activity = report.activityTimer(`onPreBootstrap`)
+  activity = report.activityTimer(`onPreBootstrap`, {
+    parentSpan: bootstrapSpan
+  })
   activity.start()
   await apiRunnerNode(`onPreBootstrap`)
   activity.end()
@@ -87,7 +96,9 @@ module.exports = async (args: BootstrapArgs) => {
   // Delete html and css files from the public directory as we don't want
   // deleted pages and styles from previous builds to stick around.
   activity = report.activityTimer(
-    `delete html and css files from previous builds`
+    `delete html and css files from previous builds`, {
+      parentSpan: bootstrapSpan
+    }
   )
   activity.start()
   await del([
@@ -163,7 +174,9 @@ module.exports = async (args: BootstrapArgs) => {
   await fs.ensureDirSync(`${program.directory}/public/static/d`)
 
   // Copy our site files to the root of the site.
-  activity = report.activityTimer(`copy gatsby files`)
+  activity = report.activityTimer(`copy gatsby files`, {
+    parentSpan: bootstrapSpan
+  })
   activity.start()
   const srcDir = `${__dirname}/../../cache-dir`
   const siteDir = `${program.directory}/.cache`
@@ -260,13 +273,17 @@ module.exports = async (args: BootstrapArgs) => {
    */
 
   // Source nodes
-  activity = report.activityTimer(`source and transform nodes`)
+  activity = report.activityTimer(`source and transform nodes`, {
+    parentSpan: bootstrapSpan
+  })
   activity.start()
   await require(`../utils/source-nodes`)()
   activity.end()
 
   // Create Schema.
-  activity = report.activityTimer(`building schema`)
+  activity = report.activityTimer(`building schema`, {
+    parentSpan: bootstrapSpan
+  })
   activity.start()
   await require(`../schema`)()
   activity.end()
@@ -290,7 +307,9 @@ module.exports = async (args: BootstrapArgs) => {
   }
 
   // Collect pages.
-  activity = report.activityTimer(`createPages`)
+  activity = report.activityTimer(`createPages`, {
+    parentSpan: bootstrapSpan
+  })
   activity.start()
   await apiRunnerNode(`createPages`, {
     graphql: graphqlRunner,
@@ -303,7 +322,9 @@ module.exports = async (args: BootstrapArgs) => {
   // have full control over adding/removing pages. The normal
   // "createPages" API is called every time (during development)
   // that data changes.
-  activity = report.activityTimer(`createPagesStatefully`)
+  activity = report.activityTimer(`createPagesStatefully`, {
+    parentSpan: bootstrapSpan
+  })
   activity.start()
   await apiRunnerNode(`createPagesStatefully`, {
     graphql: graphqlRunner,
@@ -312,13 +333,17 @@ module.exports = async (args: BootstrapArgs) => {
   })
   activity.end()
 
-  activity = report.activityTimer(`onPreExtractQueries`)
+  activity = report.activityTimer(`onPreExtractQueries`, {
+    parentSpan: bootstrapSpan
+  })
   activity.start()
   await apiRunnerNode(`onPreExtractQueries`)
   activity.end()
 
   // Update Schema for SitePage.
-  activity = report.activityTimer(`update schema`)
+  activity = report.activityTimer(`update schema`, {
+    parentSpan: bootstrapSpan
+  })
   activity.start()
   await require(`../schema`)()
   activity.end()
@@ -326,7 +351,9 @@ module.exports = async (args: BootstrapArgs) => {
   require(`../schema/type-conflict-reporter`).printConflicts()
 
   // Extract queries
-  activity = report.activityTimer(`extract queries from components`)
+  activity = report.activityTimer(`extract queries from components`, {
+    parentSpan: bootstrapSpan
+  })
   activity.start()
   await extractQueries()
   activity.end()
@@ -337,13 +364,17 @@ module.exports = async (args: BootstrapArgs) => {
   }
 
   // Run queries
-  activity = report.activityTimer(`run graphql queries`)
+  activity = report.activityTimer(`run graphql queries`, {
+    parentSpan: bootstrapSpan
+  })
   activity.start()
   await runQueries()
   activity.end()
 
   // Write out files.
-  activity = report.activityTimer(`write out page data`)
+  activity = report.activityTimer(`write out page data`, {
+    parentSpan: bootstrapSpan
+  })
   activity.start()
   try {
     await writePages()
@@ -353,7 +384,9 @@ module.exports = async (args: BootstrapArgs) => {
   activity.end()
 
   // Write out redirects.
-  activity = report.activityTimer(`write out redirect data`)
+  activity = report.activityTimer(`write out redirect data`, {
+    parentSpan: bootstrapSpan
+  })
   activity.start()
   await writeRedirects()
   activity.end()
@@ -366,18 +399,25 @@ module.exports = async (args: BootstrapArgs) => {
       report.log(``)
 
       // onPostBootstrap
-      activity = report.activityTimer(`onPostBootstrap`)
+      activity = report.activityTimer(`onPostBootstrap`, {
+        parentSpan: bootstrapSpan
+      })
       activity.start()
       apiRunnerNode(`onPostBootstrap`).then(() => {
         activity.end()
+        bootstrapSpan.finish()
         resolve({ graphqlRunner })
       })
     }
   }, 100)
 
+  bootstrapSpan.finish()
+
   if (store.getState().jobs.active.length === 0) {
     // onPostBootstrap
-    activity = report.activityTimer(`onPostBootstrap`)
+    activity = report.activityTimer(`onPostBootstrap`, {
+      parentSpan: bootstrapSpan
+    })
     activity.start()
     await apiRunnerNode(`onPostBootstrap`)
     activity.end()

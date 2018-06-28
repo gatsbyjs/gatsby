@@ -3,6 +3,7 @@
 const { createReporter } = require(`yurnalist`)
 const { stripIndent } = require(`common-tags`)
 const convertHrtime = require(`convert-hrtime`)
+const opentracing = require(`opentracing`)
 const { getErrorFormatter } = require(`./errors`)
 
 const VERBOSE = process.env.gatsby_log_level === `verbose`
@@ -10,6 +11,11 @@ const VERBOSE = process.env.gatsby_log_level === `verbose`
 const errorFormatter = getErrorFormatter()
 const reporter = createReporter({ emoji: true, verbose: VERBOSE })
 const base = Object.getPrototypeOf(reporter)
+const tracer = opentracing.globalTracer()
+
+type ActivityArgs = {
+  parentSpan: Object
+}
 
 /* Reporter module.
  * @module reporter
@@ -70,9 +76,10 @@ module.exports = Object.assign(reporter, {
   /**
    * Time an activity.
    * @param {string} name - Name of activity.
+   * @param {activityArgs} activityArgs - optional object with tracer parentSpan
    * @returns {string} The elapsed time of activity.
    */
-  activityTimer(name) {
+  activityTimer(name, activityArgs: ActivityArgs) {
     const spinner = reporter.activity()
     const start = process.hrtime()
 
@@ -81,14 +88,21 @@ module.exports = Object.assign(reporter, {
       return `${convertHrtime(elapsed)[`seconds`].toFixed(3)} s`
     }
 
+    const parentSpan = activityArgs && activityArgs.parentSpan
+    const spanArgs = parentSpan ? { childOf: parentSpan } : {}
+    const span = tracer.startSpan(name, spanArgs)
+    span.setTag('activity', true)
+
     return {
       start: () => {
         spinner.tick(name)
       },
       end: () => {
+        span.finish()
         reporter.success(`${name} — ${elapsedTime()}`)
         spinner.end()
       },
+      span: span,
     }
   },
 })
