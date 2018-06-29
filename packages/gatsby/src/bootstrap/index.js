@@ -48,7 +48,7 @@ type BootstrapArgs = {
 module.exports = async (args: BootstrapArgs) => {
   const tracer = opentracing.globalTracer()
 
-  const bootstrapSpan = tracer.startSpan('boostrap')
+  const bootstrapSpan = tracer.startSpan(`bootstrap`)
 
   const program = {
     ...args,
@@ -277,7 +277,7 @@ module.exports = async (args: BootstrapArgs) => {
     parentSpan: bootstrapSpan
   })
   activity.start()
-  await require(`../utils/source-nodes`)()
+  await require(`../utils/source-nodes`)({ parentSpan: bootstrapSpan, })
   activity.end()
 
   // Create Schema.

@@ -46,10 +46,16 @@ const runAPI = (plugin, api, args) => {
 
   const tracer = opentracing.globalTracer()
   const apiSpan = args && args.apiSpan
-  const spanOptions = apiSpan ? { parentSpan: apiSpan } : {}
+  const spanOptions = apiSpan ? { childOf: apiSpan } : {}
   const pluginSpan = tracer.startSpan(`run-plugin`, spanOptions)
-  pluginSpan.setTag(`api`, api)
-  pluginSpan.setTag(`plugin`, plugin.name)
+
+  // zipkin-javascript-opentracing doesn't allow arbitrary
+  // tags. Comment out until
+  // https://github.com/DanielMSchmidt/zipkin-javascript-opentracing/issues/67
+  // is addressed
+  //
+  // pluginSpan.setTag(`api`, api)
+  // pluginSpan.setTag(`plugin`, plugin.name)
 
   let pathPrefix = ``
   const {
@@ -129,9 +135,16 @@ module.exports = async (api, args = {}, pluginSource) =>
 
     const tracer = opentracing.globalTracer()
 
-    const apiSpanArgs = args.parentSpan ? { parentSpan: args.parentSpan } : {}
+    const parentSpan = args && args.parentSpan
+    const apiSpanArgs = parentSpan ? { childOf: parentSpan } : {}
     const apiSpan = tracer.startSpan(`run-api`, apiSpanArgs)
-    apiSpan.setTag(`api`, api)
+
+    // zipkin-javascript-opentracing doesn't allow arbitrary
+    // tags. Comment out until
+    // https://github.com/DanielMSchmidt/zipkin-javascript-opentracing/issues/67
+    // is addressed
+    //
+    // apiSpan.setTag(`api`, api)
 
     // Check that the API is documented.
     if (!apiList[api]) {
