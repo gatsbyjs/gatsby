@@ -21,7 +21,7 @@ const getCachedPageData = (pagePath, directory) => {
   
   return {
     result: readCachedResults(dataPath, directory),
-    path: pagePath,
+    id: pagePath,
   }
 }
 
