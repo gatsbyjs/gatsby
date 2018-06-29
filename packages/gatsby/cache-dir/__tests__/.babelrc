@@ -28,7 +28,8 @@
         loose: true,
       },
     ],
-    "@babel/plugin-syntax-dynamic-import", [
+    "@babel/plugin-syntax-dynamic-import",
+    [
       "@babel/plugin-transform-runtime",
       {
         helpers: true,
