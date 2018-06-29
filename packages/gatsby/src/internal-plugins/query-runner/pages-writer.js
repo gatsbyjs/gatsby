@@ -12,6 +12,7 @@ let lastHash = null
 const writePages = async () => {
   bootstrapFinished = true
   let { program, jsonDataPaths, pages } = store.getState()
+  pages = [...pages.values()]
 
   const pagesComponentDependencies = {}
 

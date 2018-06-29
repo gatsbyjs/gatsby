@@ -67,8 +67,20 @@ ${formatErrorDetails(errorDetails)}`)
 
   // Add the page context onto the results.
   if (queryJob?.isPage) {
-    result[`pageContext`] = queryJob.context
+    result[`pageContext`] = { ...queryJob.context }
   }
+
+  // Delete internal data from pageContext
+  delete result.pageContext.jsonName
+  delete result.pageContext.path
+  delete result.pageContext.internalComponentName
+  delete result.pageContext.component
+  delete result.pageContext.componentChunkName
+  delete result.pageContext.updatedAt
+  delete result.pageContext.pluginCreator___NODE
+  delete result.pageContext.pluginCreatorId
+  delete result.pageContext.componentPath
+  delete result.pageContext.context
 
   const resultJSON = JSON.stringify(result)
   const resultHash = require(`crypto`)
@@ -115,7 +127,9 @@ ${formatErrorDetails(errorDetails)}`)
       `${dataPath}.json`
     )
 
-    await fs.writeFile(resultPath, resultJSON)
+    if (resultJSON !== ``) {
+      await fs.writeFile(resultPath, resultJSON)
+    }
 
     store.dispatch({
       type: `SET_JSON_DATA_PATH`,

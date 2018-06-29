@@ -139,6 +139,7 @@ module.exports = async (api, args = {}, pluginSource) =>
 
     const apiRunInstance = {
       api,
+      start: process.hrtime(),
       args,
       pluginSource,
       resolve,
@@ -184,6 +185,11 @@ module.exports = async (api, args = {}, pluginSource) =>
         // Filter out empty responses and return if the
         // api caller isn't waiting for cascading actions to finish.
         if (!args.waitForCascadingActions) {
+          // console.log({ name: apiRunInstance.api })
+          global._PROFILE({
+            start: apiRunInstance.start,
+            name: `nodeAPI/${apiRunInstance.api}`,
+          })
           resolve(apiRunInstance.results)
         }
 

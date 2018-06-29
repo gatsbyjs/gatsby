@@ -11,6 +11,8 @@ const kebabHash = require(`kebab-hash`)
 const { hasNodeChanged, getNode } = require(`./index`)
 const { trackInlineObjectsInRootNode } = require(`../schema/node-tracking`)
 const { store } = require(`./index`)
+const profile = require(`../utils/profile`)
+const fileExistsSync = require(`fs-exists-cached`).sync
 import * as joiSchemas from "../joi-schemas/joi"
 import { generateComponentChunkName } from "../utils/js-chunk-names"
 
@@ -95,7 +97,9 @@ const hasWarnedForPageComponent = new Set()
  *   },
  * })
  */
+const fileOkCache = {}
 actions.createPage = (page: PageInput, plugin?: Plugin, traceId?: string) => {
+  const start = process.hrtime()
   let noPageOrComponent = false
   let name = `The plugin "${plugin.name}"`
   if (plugin.name === `default-site-plugin`) {
@@ -174,7 +178,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   // Don't check if the component exists during tests as we use a lot of fake
   // component paths.
   if (process.env.NODE_ENV !== `test`) {
-    if (!fs.existsSync(page.component)) {
+    if (!fileExistsSync(page.component)) {
       const message = `${name} created a page with a component that doesn't exist`
       console.log(``)
       console.log(chalk.bold.red(message))
@@ -234,17 +238,15 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     internalPage.path = `/${internalPage.path}`
   }
 
-  const result = Joi.validate(internalPage, joiSchemas.pageSchema)
-  if (result.error) {
-    console.log(chalk.blue.bgYellow(`The upserted page didn't pass validation`))
-    console.log(chalk.bold.red(result.error))
-    console.log(internalPage)
-    return null
-  }
-
   // Validate that the page component imports React and exports something
   // (hopefully a component).
-  if (!internalPage.component.includes(`/.cache/`)) {
+  //
+  // Only run validation once during builds.
+  if (
+    !internalPage.component.includes(`/.cache/`) &&
+    (process.env.NODE_ENV === `production` &&
+      !fileOkCache[internalPage.component])
+  ) {
     const fileContent = fs.readFileSync(internalPage.component, `utf-8`)
     let notEmpty = true
     let includesDefaultExport = true
@@ -287,8 +289,11 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       // TODO actually do die during builds.
       // process.exit(1)
     }
+
+    fileOkCache[internalPage.component] = true
   }
 
+  profile({ start, name: `actions_createPage`, parent: `site createPages` })
   return {
     type: `CREATE_PAGE`,
     plugin,

@@ -21,7 +21,7 @@ const report = require(`gatsby-cli/lib/reporter`)
 
 exports.extractQueries = () => {
   const state = store.getState()
-  const pages = [...state.pages]
+  const pages = [...state.pages.values()]
   const components = _.uniq(pages.map(p => normalize(p.component)))
   const staticQueryComponents = []
   const queryCompilerPromise = queryCompiler().then(queries => {

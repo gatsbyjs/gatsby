@@ -1,11 +1,13 @@
 const _ = require(`lodash`)
 const normalize = require(`normalize-path`)
+const profile = require(`../../utils/profile`)
 
 module.exports = (state = {}, action) => {
   switch (action.type) {
     case `DELETE_CACHE`:
       return {}
     case `CREATE_PAGE`:
+      const start = process.hrtime()
       action.payload.componentPath = normalize(action.payload.component)
       state[action.payload.componentPath] = _.merge(
         { query: `` },
@@ -14,6 +16,11 @@ module.exports = (state = {}, action) => {
           componentPath: action.payload.componentPath,
         }
       )
+      profile({
+        start,
+        name: `reducers/components`,
+        parent: `site createPages`,
+      })
       return state
     case `DELETE_PAGE`:
       action.payload.componentPath = normalize(action.payload.component)
