@@ -134,11 +134,17 @@ const addNotFoundRoute = () => {
   }
 }
 
-const navigateTo = to => {
+const push = (to) => {
   window.___history.push(to)
 }
 
-window.___navigateTo = navigateTo
+const replace = (to) => {
+  window.___history.replace(to)
+}
+
+window.___push = push
+window.___replace = replace
+window.___navigateTo = push
 
 const AltRouter = apiRunner(`replaceRouterComponent`, { history })[0]
 const DefaultRouter = ({ children }) => (

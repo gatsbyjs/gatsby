@@ -53,18 +53,19 @@ render () {
 
 ## Programmatic navigation
 
-For cases when you can only use event handlers for navigation, you can use
-`navigateTo`:
+For cases when you can only use event handlers for navigation, you can use `push` or `replace`. `push` is a wrapper for `history.push` and `replace` wraps `history.replace`.
 
 ```jsx
-import { navigateTo } from "gatsby-link"
+import { push } from "gatsby-link"
 
 render () {
-  <div onClick={ () => navigateTo('/example')}>
+  <div onClick={ () => push('/example')}>
     <p>Example</p>
   </div>
 }
 ```
+
+Note that `push` was previously named `navigateTo`. `navigateTo` will be deprecated in Gatsby v2.
 
 ## Prefixed paths helper
 
