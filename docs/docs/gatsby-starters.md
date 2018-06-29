@@ -799,3 +799,16 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
   - Based on [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default)
   - Using [Tachyons](https://github.com/tachyons-css/tachyons/) for CSS. [Read the tachyons docs](http://tachyons.io/docs/)
   - Find out about the tachyons open source component library [here](http://tachyons.io/components/) to get you going.
+  
+- 💀[gatsby-starter-skeleton](https://github.com/Undistraction/gatsby-starter-skeleton) ([Demo](https://undistraction.github.io/gatsby-starter-skeleton/))
+
+  Features:
+  
+  - Full-featured site for developer or small company
+  - Includes Articles and Projects
+  - Includes Tags and Categores
+  - Minimal but stylish default theme
+  - Styled Components and CSSAPI for styles
+  - Configure many of the site's features from a separate site config files
+  - Extended Markdown support, responsive embeds, solid inline code support and lots of other goodness
+  - Well commented and documented

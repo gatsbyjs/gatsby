@@ -42,7 +42,7 @@ exports.onCreateWebpackConfig = (
     exclude: /\.module\.styl$/,
     use: [
       loaders.miniCssExtract(),
-      loaders.css({ importLoaders: 1 }),
+      loaders.css({ importLoaders: 2 }),
       loaders.postcss({ plugins: postCssPlugins }),
       stylusLoader,
     ],
@@ -52,7 +52,7 @@ exports.onCreateWebpackConfig = (
     test: /\.module\.styl$/,
     use: [
       loaders.miniCssExtract(),
-      loaders.css({ modules: true, importLoaders: 1 }),
+      loaders.css({ modules: true, importLoaders: 2 }),
       loaders.postcss({ plugins: postCssPlugins }),
       stylusLoader,
     ],

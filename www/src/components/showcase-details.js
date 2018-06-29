@@ -1,4 +1,5 @@
 import React from "react"
+import { graphql } from "gatsby"
 import Helmet from "react-helmet"
 import url from "url"
 import hex2rgba from "hex2rgba"

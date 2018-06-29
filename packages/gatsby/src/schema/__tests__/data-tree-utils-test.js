@@ -176,34 +176,50 @@ describe(`Gatsby data tree utils`, () => {
   it(`prefers float when multiple number types`, () => {
     let example
 
-    // nodes starting with integer
+    // nodes starting with 32-bit integer ("big" ints are float)
     example = getExampleValues({ nodes: [{ number: 5 }, { number: 2.5 }] })
     expect(example.number).toBeDefined()
     expect(example.number).toEqual(2.5)
+    example = getExampleValues({ nodes: [{ number: 5 }, { number: 3000000000 }] })
+    expect(example.number).toBeDefined()
+    expect(example.number).toEqual(3000000000)
 
     // with node not containing number field
     example = getExampleValues({ nodes: [{ number: 5 }, {}, { number: 2.5 }] })
     expect(example.number).toBeDefined()
     expect(example.number).toEqual(2.5)
 
-    // nodes starting with float
+    // nodes starting with float ("big" ints are float)
     example = getExampleValues({ nodes: [{ number: 2.5 }, { number: 5 }] })
     expect(example.number).toBeDefined()
     expect(example.number).toEqual(2.5)
+    example = getExampleValues({ nodes: [{ number: 3000000000 }, { number: 5 }] })
+    expect(example.number).toBeDefined()
+    expect(example.number).toEqual(3000000000)
 
-    // array of numbers - starting with integer
+    // array of numbers - starting with float
     example = getExampleValues({ nodes: [{ numbers: [2.5, 5] }] })
     expect(example.numbers).toBeDefined()
     expect(Array.isArray(example.numbers)).toBe(true)
     expect(example.numbers.length).toBe(1)
     expect(example.numbers[0]).toBe(2.5)
+    example = getExampleValues({ nodes: [{ numbers: [3000000000, 5] }] })
+    expect(example.numbers).toBeDefined()
+    expect(Array.isArray(example.numbers)).toBe(true)
+    expect(example.numbers.length).toBe(1)
+    expect(example.numbers[0]).toBe(3000000000)
 
-    // array of numbers - starting with float
+    // array of numbers - starting with 32-bit integer
     example = getExampleValues({ nodes: [{ numbers: [5, 2.5] }] })
     expect(example.numbers).toBeDefined()
     expect(Array.isArray(example.numbers)).toBe(true)
     expect(example.numbers.length).toBe(1)
     expect(example.numbers[0]).toBe(2.5)
+    example = getExampleValues({ nodes: [{ numbers: [5, 3000000000] }] })
+    expect(example.numbers).toBeDefined()
+    expect(Array.isArray(example.numbers)).toBe(true)
+    expect(example.numbers.length).toBe(1)
+    expect(example.numbers[0]).toBe(3000000000)
   })
 
   it(`handles mix of date strings and date objects`, () => {

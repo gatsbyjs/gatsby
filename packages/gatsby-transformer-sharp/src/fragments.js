@@ -1,4 +1,6 @@
 /* eslint-disable */
+import { graphql } from "gatsby"
+
 export const gatsbyImageSharpFixed = graphql`
   fragment GatsbyImageSharpFixed on ImageSharpFixed {
     base64

@@ -12,11 +12,13 @@ into site-specific plugins.
 Gatsby has a large and growing set of plugins. To search/browse official and
 community plugins and their documentation, visit the [Plugin Library](/packages/).
 
-For information on building your own plugin, see the [Plugin Authoring page](/docs/plugin-authoring/).
+For documentation on the different types of plugins and the functionality provided by each, see the [Plugin Authoring page](/docs/plugin-authoring/).
+
+For a walkthrough of how to build and publish your own plugin, see the [Source Plugin Tutorial](/docs/source-plugin-tutorial/)
 
 ## How to use Gatsby plugins?
 
-Gatsby plugins are just Node.js packages meaning you install them like anything else in
+Gatsby plugins are Node.js packages, so you can install them like other packages in
 node using NPM.
 
 For example, `gatsby-transformer-json` is a package which adds support for JSON

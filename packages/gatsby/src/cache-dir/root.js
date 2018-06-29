@@ -67,6 +67,7 @@ function attachToHistory(history) {
 
     history.listen((location, action) => {
       if (!maybeRedirect(location.pathname)) {
+        apiRunner(`onPreRouteUpdate`, { location, action })
         apiRunner(`onRouteUpdate`, { location, action })
       }
     })
