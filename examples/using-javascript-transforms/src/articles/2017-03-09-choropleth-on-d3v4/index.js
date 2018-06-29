@@ -1,10 +1,9 @@
 import React from "react"
 import BlogPostChrome from "../../components/BlogPostChrome"
-import { findDOMNode } from "react-dom"
 var d3 = require(`d3`)
 
 // this is one method to export data and make it usable elsewhere
-exports.frontmatter = {
+export const frontmatter = {
   title: `Choropleth on d3v4`,
   written: `2017-03-09`,
   updated: `2017-04-28`,
@@ -15,10 +14,6 @@ exports.frontmatter = {
 }
 
 class choroplethBase extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
   componentDidMount() {
     this.d3Node = d3.select(`div#states`)
     let measurements = {
@@ -127,7 +122,7 @@ average: tooltip, path fill
 
   let states = svg.selectAll(`path.states`).data(data)
 
-  let drawStates = states
+  states
     .enter()
     .append(`path`)
     .attr(`class`, `state`)
@@ -173,6 +168,7 @@ let mouseOut = () => {
     .style(`opacity`, 0)
 }
 
+// eslint-disable-next-line no-unused-vars
 function scale(scaleFactor, width, height) {
   return d3.geoTransform({
     point: function(x, y) {
