@@ -2,11 +2,7 @@ const path = require(`path`)
 const { store } = require(`../redux`)
 const fs = require(`fs`)
 
-const getCachedPageData = (pagePath, directory) => {
-  const { jsonDataPaths, pages } = store.getState()
-  const page = pages.find(p => p.path === pagePath)
-  const dataPath = jsonDataPaths[page.jsonName]
-  if (typeof dataPath === `undefined`) return undefined
+const readCachedResults = (dataPath, directory) => {
   const filePath = path.join(
     directory,
     `public`,
@@ -14,11 +10,31 @@ const getCachedPageData = (pagePath, directory) => {
     `d`,
     `${dataPath}.json`
   )
-  const result = JSON.parse(fs.readFileSync(filePath, `utf-8`))
+  return JSON.parse(fs.readFileSync(filePath, `utf-8`))
+}
+
+const getCachedPageData = (pagePath, directory) => {
+  const { jsonDataPaths, pages } = store.getState()
+  const page = pages.find(p => p.path === pagePath)
+  const dataPath = jsonDataPaths[page.jsonName]
+  if (typeof dataPath === `undefined`) return undefined
+  
   return {
-    result,
+    result: readCachedResults(dataPath, directory),
     path: pagePath,
   }
+}
+
+const addCachedStaticQueryResults = (resultsMap, directory) => {
+  const { staticQueryComponents, jsonDataPaths } = store.getState()
+  staticQueryComponents.forEach(staticQueryComponent => {
+    // Don't read from file if results were already passed from query runner
+    if (resultsMap.has(staticQueryComponent.hash)) return
+
+    const dataPath = jsonDataPaths[staticQueryComponent.jsonName]
+    if (typeof dataPath === `undefined`) return
+    resultsMap.set(staticQueryComponent.hash, readCachedResults(dataPath, directory))
+  })
 }
 
 const getRoomNameFromPath = path => `path-${path}`
@@ -41,6 +57,7 @@ class WebsocketManager {
   init({ server, directory }) {
     this.programDir = directory
     this.websocket = require(`socket.io`)(server)
+    addCachedStaticQueryResults(this.staticQueryResults, this.programDir)
 
     this.websocket.on(`connection`, s => {
       let activePath = null
