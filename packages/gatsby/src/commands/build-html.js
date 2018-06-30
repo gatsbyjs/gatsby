@@ -13,7 +13,7 @@ module.exports = async (program: any) => {
 
   debug(`generating static HTML`)
   // Reduce pages objects to an array of paths.
-  const pages = [...store.getState().pages.values()].map(page => page.path)
+  const pages = Array.from(store.getState().pages.values(), page => page.path)
 
   // Static site generation.
   const compilerConfig = await webpackConfig(

@@ -18,6 +18,11 @@ try {
   initialState = JSON.parse(
     fs.readFileSync(`${process.cwd()}/.cache/redux-state.json`)
   )
+  const nodes = new Map()
+  Object.keys(initialState.nodes).forEach(key => {
+    nodes.set(key, initialState.nodes[key])
+  })
+  initialState.nodes = nodes
 } catch (e) {
   // ignore errors.
 }
@@ -92,10 +97,9 @@ exports.store = store
  * @returns {Array}
  */
 exports.getNodes = () => {
-  let nodes = _.values(store.getState().nodes)
-  return nodes ? nodes : []
+  return Array.from(store.getState().nodes.values())
 }
-const getNode = id => store.getState().nodes[id]
+const getNode = id => store.getState().nodes.get(id)
 
 /** Get node by id from store.
  *

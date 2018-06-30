@@ -84,7 +84,7 @@ const findIdsWithoutDataDependencies = () => {
   // paths.
   const notTrackedIds = _.difference(
     [
-      ...[...state.pages.values()].map(p => p.path),
+      ...Array.from(state.pages.values(), p => p.path),
       ...[...state.staticQueryComponents.values()].map(c => c.jsonName),
     ],
     [...allTrackedIds, ...seenIdsWithoutDataDependencies]
@@ -123,12 +123,10 @@ const runQueriesForPathnames = pathnames => {
     queue.push(queryJob)
     global._PROFILE({ start: start2, name: `queue static query` })
   })
-  console.log(`boo 2`)
 
   const start3 = process.hrtime()
-  const pages = [...state.pages.values()]
+  const pages = Array.from(state.pages.values())
   let didNotQueueItems = true
-  console.log(`boo 3`)
   pageQueries.forEach(id => {
     const page = pages.find(pl => pl.path === id)
     if (page) {
@@ -149,12 +147,10 @@ const runQueriesForPathnames = pathnames => {
     }
   })
   global._PROFILE({ start: start3, name: `queue page queries` })
-  console.log(`boo 4`)
 
   if (didNotQueueItems || !pathnames || pathnames.length === 0) {
     return Promise.resolve()
   }
-  console.log(`boo 5`)
 
   return new Promise(resolve => {
     queue.on(`drain`, () => {
