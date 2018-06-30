@@ -21,27 +21,21 @@ let active = false
 // Afterwards we listen "API_RUNNING_QUEUE_EMPTY" and check
 // for dirty nodes before running queries.
 exports.runQueries = async () => {
-  console.log(`inside runQueries`)
   // Run queued dirty nodes now that we're active.
   let start = process.hrtime()
   queuedDirtyActions = _.uniq(queuedDirtyActions, a => a.payload.id)
   global._PROFILE({ start, name: `uniq queuedDirtyActions` })
-  console.log(`hi`)
   const dirtyIds = findDirtyIds(queuedDirtyActions)
-  console.log(`hi 2`)
   await runQueriesForPathnames(dirtyIds)
-  console.log(`hi 3`)
 
   queuedDirtyActions = []
 
   // Find ids without data dependencies (i.e. no queries have been run for
   // them before) and run them.
   const cleanIds = findIdsWithoutDataDependencies()
-  console.log(`hi 4`)
 
   // Run these pages
   await runQueriesForPathnames(cleanIds)
-  console.log(`hi 5`)
 
   active = true
   return
@@ -108,14 +102,12 @@ const findIdsWithoutDataDependencies = () => {
 }
 
 const runQueriesForPathnames = pathnames => {
-  console.log(`pathnames count`, pathnames.length)
   const start = process.hrtime()
   const blah = process.hrtime()
   const staticQueries = pathnames.filter(p => p.slice(0, 4) === `sq--`)
   const pageQueries = pathnames.filter(p => p.slice(0, 4) !== `sq--`)
   const state = store.getState()
   global._PROFILE({ start: blah, name: `filter paths for running` })
-  console.log(`boo`)
 
   staticQueries.forEach(id => {
     const start2 = process.hrtime()

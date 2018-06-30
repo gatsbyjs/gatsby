@@ -4,6 +4,7 @@ const _ = require(`lodash`)
 const chokidar = require(`chokidar`)
 const systemPath = require(`path`)
 const fs = require(`fs`)
+const existsSync = require(`fs-exists-cached`).sync
 
 const glob = Promise.promisify(globCB)
 
@@ -35,7 +36,7 @@ exports.createPagesStatefully = async (
   }
 
   // Validate that the path exists.
-  if (pathCheck && !fs.existsSync(pagesPath)) {
+  if (pathCheck && !existsSync(pagesPath)) {
     reporter.panic(
       `
       The path passed to gatsby-plugin-page-creator does not exist on your file system:

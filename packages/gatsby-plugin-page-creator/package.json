@@ -21,6 +21,7 @@
     "@babel/runtime": "7.0.0-beta.51",
     "bluebird": "^3.5.0",
     "chokidar": "^1.7.0",
+    "fs-exists-cached": "^1.0.0",
     "glob": "^7.1.1",
     "lodash": "^4.17.4",
     "parse-filepath": "^1.0.1",
