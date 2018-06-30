@@ -120,6 +120,8 @@
   items:
     - title: How to Contribute
       link: /how-to-contribute/
+    - title: Free Swag for Contributors
+      link: /contributor-swag/
     - title: How to File an Issue
       link: /how-to-file-an-issue/
     - title: Gatsby Style Guide
