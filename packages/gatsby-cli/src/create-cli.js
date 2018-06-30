@@ -2,7 +2,6 @@ const path = require(`path`)
 const resolveCwd = require(`resolve-cwd`)
 const yargs = require(`yargs`)
 const report = require(`./reporter`)
-const fs = require(`fs`)
 const envinfo = require(`envinfo`)
 const existsSync = require(`fs-exists-cached`).sync
 

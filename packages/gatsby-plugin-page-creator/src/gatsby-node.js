@@ -3,7 +3,6 @@ const Promise = require(`bluebird`)
 const _ = require(`lodash`)
 const chokidar = require(`chokidar`)
 const systemPath = require(`path`)
-const fs = require(`fs`)
 const existsSync = require(`fs-exists-cached`).sync
 
 const glob = Promise.promisify(globCB)

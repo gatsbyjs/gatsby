@@ -1,7 +1,6 @@
 const convertHrtime = require(`convert-hrtime`)
 const _ = require(`lodash`)
 const treeify = require(`treeify`)
-const deepMapKeys = require(`deep-map-keys`)
 
 let root = {
   ROOT: process.hrtime(),
@@ -31,15 +30,14 @@ const profile = ({ name, start, parent }) => {
 global._PROFILE = profile
 module.exports = profile
 
-const labelify = (object, rootValue) => {
-  return _.mapKeys(object, (value, key, o) => {
+const labelify = (object, rootValue) =>
+  _.mapKeys(object, (value, key, o) => {
     const currentValue = _.isObject(value) ? value.ROOT : value
     return `${key}: ${currentValue}ms | ${(
       (currentValue / rootValue) *
       100
-    ).toFixed(2) + "%"}`
+    ).toFixed(2) + `%`}`
   })
-}
 
 process.on(`exit`, () => {
   root.ROOT = convertHrtime(process.hrtime(root.ROOT)).milliseconds
