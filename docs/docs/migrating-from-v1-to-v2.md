@@ -43,6 +43,7 @@ Read on for a detailed guide on what's new in version 2!
 - [Manually install plugins’ peer dependencies](#manually-install-plugins-peer-dependencies)
 - [Update layout component](#update-layout-component)
 - [Import Link from Gatsby](#import-link-from-gatsby)
+- [Import graphql from Gatsby](#import-graphql-from-gatsby)
 - [Rename `boundActionCreators` to `actions`](#rename-boundactioncreators-to-actions)
 - [Rename `pathContext` to `pageContext`](#rename-pathcontext-to-pagecontext)
 - [Rename responsive image queries](#rename-responsive-image-queries)
@@ -57,12 +58,13 @@ Read on for a detailed guide on what's new in version 2!
 - [Only allow defined keys on node.internal object](#only-allow-defined-keys-on-the-node-internal-object)
 - [Import `graphql` types from `gatsby/graphql`](#import-graphql-types-from-gatsbygraphql)
 - [Move Babel Configuration`](#move-babel-configuration)
+- [Plugin specific changes](#plugin-specific-changes)
 
 You can start with a few of the most important steps - install Gatsby v2 dependencies and update your layout components.
 
 ## Update Gatsby version
 
-Update your `package.json` to use the pre-release versions of Gatsby and any related packages.
+Update your `package.json` to use the pre-release versions of Gatsby.
 
 `package.json`
 
@@ -75,6 +77,20 @@ Update your `package.json` to use the pre-release versions of Gatsby and any rel
 ```
 
 > Note: Gatsby v2 is in pre-release so you may encounter further breaking changes.
+
+## Update Gatsby related packages
+
+Update your `package.json` to use the pre-release versions of Gatsby related packages. Any package name that starts with `gatsby-` should be upgraded to use the `next` version. Note, this only applies to plugins managed in the gatsbyjs/gatsby repo. If you're using community plugins, they might not be upgraded yet. Check their repo for the status. Many plugins won't actually need upgraded so they very well might keep working. For example:
+
+`package.json`
+
+```json
+"dependencies": {
+    "gatsby-plugin-google-analytics": "next",
+    "gatsby-plugin-netlify": "next",
+    "gatsby-plugin-sass": "next",
+}
+```
 
 ## Manually install React
 
@@ -117,7 +133,7 @@ export default ({ children }) => (
 )
 ```
 
-### 2. Move `layout/index.js` to `src/components/layout.js` (optional, but recommended)
+### 2. Move `layouts/index.js` to `src/components/layout.js` (optional, but recommended)
 
 ```bash
 git mv src/layouts/index.js src/components/layout.js
@@ -153,7 +169,7 @@ Replacing a layout's query with `StaticQuery`:
 ```diff
 import React, { Fragment } from "react"
 import Helmet from "react-helmet"
-+ import { StaticQuery } from "gatsby"
++ import { StaticQuery, graphql } from "gatsby"
 
 - export default ({ children, data }) => (
 -   <>
@@ -249,6 +265,29 @@ Furthermore you can remove the package from the `package.json`.
   "gatsby-plugin-sharp": "next",
 - "gatsby-link": "^1.6.39"
 }
+```
+
+## Import graphql from Gatsby
+
+The `graphql` tag function that Gatsby v1 auto-supports is deprecated in v2. Gatsby will throw deprecation warning unless you explicitly import it from the `gatsby` package.
+
+```diff
+import React from "react"
++ import { graphql } from "gatsby"
+
+export default ({ data }) => (
+  <h1>{data.site.siteMetadata.title}</h1>
+)
+
+export const query = graphql`
+  query HomeQuery {
+    site {
+      siteMetadata {
+        title
+      }
+    }
+  }
+`
 ```
 
 ## Rename `boundActionCreators` to `actions`
@@ -479,3 +518,19 @@ The latest version of Gatsby uses Babel 7, which introduced [a new behavior for 
 [This GitHub comment](https://github.com/facebook/jest/issues/1468#issuecomment-361260279) documents the steps needed to do that.
 
 More information on Gatsby and Babel configuration available [here](/docs/babel/#how-to-use-a-custom-babelrc-file).
+
+## Plugin specific changes
+
+Some plugins require additional changes before your site will compile.
+For example, if you use [`gatsby-plugin-typography`](https://www.gatsbyjs.org/packages/gatsby-plugin-typography/), you now need to explicitly export `scale` and `rhythm` as named exports from your typography config module.
+
+`src/utils/typography.js`
+
+```diff
+- const typography = new Typography();
+- export default typography;
+
++ const typography = new Typography();
++ const { rhythm, scale } = typography;
++ export { rhythm, scale, typography as default };
+```

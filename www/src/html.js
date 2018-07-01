@@ -8,6 +8,16 @@ export default class HTML extends React.Component {
         <head>
           <link
             rel="preload"
+            href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"
+            as="script"
+          />
+          <link
+            rel="preload"
+            href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css"
+            as="style"
+          />
+          <link
+            rel="preload"
             href="/static/ftn45-webfont.c2439033.woff2"
             as="font"
             crossOrigin="anonymous"
@@ -54,7 +64,10 @@ export default class HTML extends React.Component {
             color={colors.gatsby}
           />
           <meta name="msapplication-config" content={`/browserconfig.xml`} />
-          <script src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js" />
+          <script
+            src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"
+            defer
+          />
         </head>
         <body {...this.props.bodyAttributes}>
           <div
@@ -62,10 +75,6 @@ export default class HTML extends React.Component {
             dangerouslySetInnerHTML={{ __html: this.props.body }}
           />
           {this.props.postBodyComponents}
-          <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css"
-          />
         </body>
       </html>
     )

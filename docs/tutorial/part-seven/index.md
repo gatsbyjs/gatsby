@@ -62,7 +62,7 @@ exports.onCreateNode = ({ node }) => {
 ```
 
 You want to use each markdown file name to create the page slug. So
-`pandas-and-bananas.md"` will become `/pandas-and-bananas/`. But how do you get
+`pandas-and-bananas.md` will become `/pandas-and-bananas/`. But how do you get
 the file name from the `MarkdownRemark` node? To get it, you need to _traverse_
 the "node graph" to its _parent_ `File` node, as `File` nodes contain data you
 need about files on disk. To do that, modify your function again:
@@ -187,7 +187,7 @@ exports.createPages = ({ graphql, actions }) => {
 ```
 
 You've added an implementation of the
-[`createPages`](/docs/node-apis/#createPages) API which API Gatsby calls so plugins can add
+[`createPages`](/docs/node-apis/#createPages) API which Gatsby calls so plugins can add
 pages.
 
 As mentioned in the intro to this part of the tutorial, the steps to programmatically creating pages are:
@@ -286,8 +286,9 @@ Visit one of them and you see:
 Which is a bit boring and not what you want. Let's pull in data from your markdown post. Change
 `src/templates/blog-post.js` to:
 
-```jsx{4-5,8-11,14-25}
+```jsx{5-6,9-12,15-26}
 import React from "react"
+import { graphql } from "gatsby"
 import Layout from "../components/layout"
 
 export default ({ data }) => {
@@ -328,7 +329,7 @@ links.
 ```jsx{3,23-29,45,64-66}
 import React from "react"
 import { css } from "react-emotion"
-import { Link } from "gatsby"
+import { Link, graphql } from "gatsby"
 import { rhythm } from "../utils/typography"
 import Layout from "../components/layout"
 

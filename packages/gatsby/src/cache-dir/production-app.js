@@ -52,6 +52,8 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     require(`./register-service-worker`)
   }
 
+  let lastNavigateToLocationString = null
+
   const navigate = (to, replace) => {
     const location = createLocation(to, null, null, history.location)
     let { pathname } = location
@@ -77,33 +79,36 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       ? window.___history.replace
       : window.___history.push
 
-    // Listen to loading events. If page resources load before
-    // a second, navigate immediately.
-    function eventHandler(e) {
-      if (e.page.path === loader.getPage(pathname).path) {
-        emitter.off(`onPostLoadPageResources`, eventHandler)
+    const historyNavigateAction = replace
+      ? `REPLACE`
+      : `PUSH`
+
+    // Start a timer to wait for a second before transitioning and showing a
+    // loader in case resources aren't around yet.
+    const timeoutId = setTimeout(() => {
+      emitter.emit(`onDelayedLoadPageResources`, { pathname })
+      apiRunner(`onRouteUpdateDelayed`, { location, action: historyNavigateAction })
+    }, 1000)
+
+    lastNavigateToLocationString = `${location.pathname}${location.search}${
+      location.hash
+    }`
+
+    apiRunner(`onPreRouteUpdate`, { location, action: historyNavigateAction })
+
+    const loaderCallback = pageResources => {
+      if (!pageResources) {
+        // We fetch resources for 404 page in page-renderer.js. Calling it
+        // here is to ensure that we have needed resouces to render page 
+        // before navigating to it
+        loader.getResourcesForPathname(`/404.html`, loaderCallback)
+      } else {
         clearTimeout(timeoutId)
         historyNavigateFunc(location)
       }
     }
 
-    // Start a timer to wait for a second before transitioning and showing a
-    // loader in case resources aren't around yet.
-    const timeoutId = setTimeout(() => {
-      emitter.off(`onPostLoadPageResources`, eventHandler)
-      emitter.emit(`onDelayedLoadPageResources`, { pathname })
-      historyNavigateFunc(location)
-    }, 1000)
-
-    if (loader.getResourcesForPathname(pathname)) {
-      // The resources are already loaded so off we go.
-      clearTimeout(timeoutId)
-      historyNavigateFunc(location)
-    } else {
-      // They're not loaded yet so let's add a listener for when
-      // they finish loading.
-      emitter.on(`onPostLoadPageResources`, eventHandler)
-    }
+    loader.getResourcesForPathname(pathname, loaderCallback)
   }
 
   // window.___loadScriptsForPath = loadScriptsForPath
@@ -124,6 +129,14 @@ apiRunnerAsync(`onClientEntry`).then(() => {
 
       history.listen((location, action) => {
         if (!maybeRedirect(location.pathname)) {
+          // Check if we already ran onPreRouteUpdate API
+          // in navigateTo function
+          if (
+            lastNavigateToLocationString !==
+            `${location.pathname}${location.search}${location.hash}`
+          ) {
+            apiRunner(`onPreRouteUpdate`, { location, action })
+          }
           // Make sure React has had a chance to flush to DOM first.
           setTimeout(() => {
             apiRunner(`onRouteUpdate`, { location, action })

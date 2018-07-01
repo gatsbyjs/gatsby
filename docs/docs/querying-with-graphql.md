@@ -208,7 +208,7 @@ See also the following blog posts:
 
 Notice that in the above example for [querying images](#images), we used `...GatsbyImageSharpFixed`, which is a GraphQL Fragment, a reusable set of fields for query composition. You can read more about them [here](http://graphql.org/learn/queries/#fragments).
 
-If you wish to define your own fragments for use in your application, you can use named exports to export them in any Javascript file, and they will be automatically processed by Gatsby for use in your GraphQL queries.
+If you wish to define your own fragments for use in your application, you can use named exports to export them in any JavaScript file, and they will be automatically processed by Gatsby for use in your GraphQL queries.
 
 For example if I put a fragment in a helper component, I can use that fragment in any other query:
 

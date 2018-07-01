@@ -6,14 +6,6 @@ exports.onClientEntry = (a, pluginOptions = {}) => {
   // Merge default options with user defined options in `gatsby-config.js`
   const options = { ...defaultOptions, ...pluginOptions }
 
-  window.___emitter.on(`onDelayedLoadPageResources`, () => {
-    NProgress.configure(options)
-    NProgress.start()
-  })
-  window.___emitter.on(`onPostLoadPageResources`, () => {
-    NProgress.done()
-  })
-
   // Inject styles.
   const styles = `
     #nprogress {
@@ -88,4 +80,14 @@ exports.onClientEntry = (a, pluginOptions = {}) => {
   node.id = `nprogress-styles`
   node.innerHTML = styles
   document.head.appendChild(node)
+
+  NProgress.configure(options)
+}
+
+exports.onRouteUpdateDelayed = () => {
+  NProgress.start()
+}
+
+exports.onRouteUpdate = () => {
+  NProgress.done()
 }

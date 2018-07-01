@@ -2,7 +2,7 @@ import React from "react"
 import Modal from "react-modal"
 import Helmet from "react-helmet"
 import { OutboundLink } from "gatsby-plugin-google-analytics"
-import { rhythm, options } from "../utils/typography"
+import { rhythm, options, scale } from "../utils/typography"
 import MdClose from "react-icons/lib/md/close"
 import { push, PageRenderer } from "gatsby"
 import presets, { colors } from "../utils/presets"
@@ -62,7 +62,7 @@ class DefaultLayout extends React.Component {
 
     // SEE: template-docs-markdown for why this.props.isSidebarDisabled is here
     const isSidebarDisabled =
-      this.props.isSidebarDisabled || !this.props.sidebarYaml
+      this.props.isSidebarDisabled || !this.props.sectionList
     let isModal = false
     if (!windowWidth && typeof window !== `undefined`) {
       windowWidth = window.innerWidth
@@ -160,39 +160,59 @@ class DefaultLayout extends React.Component {
           <html lang="en" />
         </Helmet>
         <div
+          className="banner"
           css={{
             width: `100%`,
             padding: rhythm(1 / 2),
-            background: presets.colors.ui.bright,
-            color: presets.colors.gatsby,
+            background: isHomepage ? `#402060` : colors.gatsby,
+            color: colors.ui.bright,
             fontFamily: options.headerFontFamily.join(`,`),
-            textAlign: `center`,
-            boxShadow: `inset 0px -3px 2px 0px ${presets.colors.ui.bright}`,
+            fontSize: scale(-1 / 5).fontSize,
             zIndex: `3`,
             position: `fixed`,
+            WebkitFontSmoothing: `antialiased`,
           }}
         >
-          You're viewing the docs for Gatsby v2 beta.{` `}
-          <OutboundLink href="https://gatsbyjs.org/">
-            View the v1 docs instead
+          These are the docs for v2 beta.{` `}
+          <OutboundLink
+            href="https://gatsbyjs.org/"
+            css={{
+              color: `#fff`,
+            }}
+          >
+            View the v1 docs
+            <span
+              css={{
+                display: `none`,
+                [presets.Mobile]: {
+                  display: `inline`,
+                },
+              }}
+            >
+              {` `}
+              instead
+            </span>
           </OutboundLink>.
         </div>
         <Navigation pathname={this.props.location.pathname} />
         <div
           className={`main-body`}
           css={{
-            paddingTop: `2.8rem`,
+            paddingTop: presets.bannerHeight,
             [presets.Tablet]: {
               margin: `0 auto`,
               paddingTop: isHomepage
-                ? `2.8rem`
-                : `calc(2.8rem + ${presets.headerHeight})`,
+                ? presets.bannerHeight
+                : `calc(${presets.bannerHeight} + ${presets.headerHeight})`,
             },
           }}
         >
           <PageWithSidebar
             disable={isSidebarDisabled}
-            yaml={this.props.sidebarYaml}
+            createLink={this.props.createLink}
+            sectionList={this.props.sectionList}
+            location={this.props.location}
+            enableScrollSync={this.props.enableScrollSync}
             renderContent={() => this.props.children}
           />
         </div>

@@ -21,6 +21,7 @@ const {
 
 const { findLinkedNode } = require(`./infer-graphql-type`)
 const { getNodes } = require(`../redux`)
+const is32BitInteger = require(`../utils/is-32-bit-integer`)
 
 import type {
   GraphQLInputFieldConfig,
@@ -76,7 +77,7 @@ function inferGraphQLInputFields({
       let headType = typeOf(headValue)
 
       if (headType === `number`)
-        headType = _.isInteger(headValue) ? `int` : `float`
+        headType = is32BitInteger(headValue) ? `int` : `float`
 
       // Determine type for in operator.
       let inType
@@ -165,7 +166,7 @@ function inferGraphQLInputFields({
       }
     }
     case `number`: {
-      if (value % 1 === 0) {
+      if (is32BitInteger(value)) {
         return {
           type: new GraphQLInputObjectType({
             name: createTypeName(`${prefix}QueryInteger`),
