@@ -32,7 +32,7 @@ compiler is not involved, the following applies:
 > const, which makes it available at runtime.
 >
 > Does not support export = and import =, because those
-> cannot be compile to ES.next. Workaround: Convert
+> cannot be compiled to ES.next. Workaround: Convert
 > to using export default and export const,
 > and import x, {y} from "z".
 
