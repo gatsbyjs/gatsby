@@ -1,128 +1,214 @@
-- title: Quick Start
+- title: Getting Started
   items:
-    - title: Getting Started
+    - title: Basic hardware and software requirements
+      link: /dropping-images-into-static-folders/
+    - title: Gatsby on  Macs
+      link: /dropping-images-into-static-folders/
+    - title: Gatsby on Windows
+      link: /dropping-images-into-static-folders/
+    - title:
+      link: /dropping-images-into-static-folders/
+    - title: Quick start
       link: /
-    - title: Starters
-      link: /gatsby-starters/
+    - title: Overview of the Docs
+      link: /dropping-images-into-static-folders/
+    - title: Structure of Gatsby default starter
+      link: /dropping-images-into-static-folders/
+    - title: Main Tutorial (step-by-step)
+      link: ../tutorial/
+- title: Deploying & Hosting
+  items:
+    - title: Preparing site for deployment
+      link: /dropping-images-into-static-folders/
     - title: Deploying
       link: /deploy-gatsby/
-    - title: Community
-      link: /community/
-    - title: Awesome Gatsby
-      link: /awesome-gatsby/
-- title: Core Concepts
+- title: Releases & Migration
   items:
-    - title: Building with Components
-      link: /building-with-components/
-    - title: Lifecycle APIs
-      link: /gatsby-lifecycle-apis/
-    - title: Plugins
-      link: /plugins/
-    - title: PRPL Pattern
-      link: /prpl-pattern/
-    - title: Querying Data with GraphQL
-      link: /querying-with-graphql/
-- title: Guides
+    - title: v2 release notes
+      link: /dropping-images-into-static-folders/
+    - title: v1 release notes
+      link: /dropping-images-into-static-folders/
+    - title: v0 release notes
+      link: /dropping-images-into-static-folders/
+    - title: Migrating from v1 to v2
+      link: /migrating-from-v1-to-v2/
+    - title: Migrating from v0 to v1
+      link: /migrating-from-v0-to-v1/
+- title: How-to Guides
   items:
     - title: Adding a 404 Page
       link: /add-404-page/
     - title: Adding Images, Fonts, and Files
       link: /adding-images-fonts-files/
-    - title: Adding Images to a WordPress Site
-      link: /image-tutorial/
+    - title: Adding Markdown pages
+      link: /adding-markdown-pages/
+    - title: Adding a list of Markdown blog posts
+      link: /adding-a-list-of-markdown-blog-posts/
+    - title: Adding search to your Gatsby website
+      link: /adding-search/    
+    - title: Adding tags and categories to blog posts
+      link: /adding-tags-and-categories-to-blog-posts/
+    - title: Authentication
+      link: //
     - title: Babel.js
       link: /babel/
     - title: Browser Support
       link: /browser-support/
+    - title: Build a page with a GraphQL query
+      link: //
     - title: Building Apps with Gatsby
       link: /building-apps-with-gatsby/
+    - title: Building with components
+      link: //
     - title: Caching
       link: /caching/
-    - title: Creating and Modifying Pages
+    - title: Creating Global Styles
+      link: //
+    - title: Component CSS
+      link: //
+    - title: Create a list of our site's markdown files
+      link: //
+    - title: Creating and modifying Pages
       link: /creating-and-modifying-pages/
-    - title: Create a Source Plugin
-      link: /create-source-plugin/
+    - title: Creating Dynamically-Rendered Navigation*
+      link: /creating-dynamically-rendered-navigation/
+    - title: Creating slugs for pages
+      link: //
+    - title: CSS Modules
+      link: //
     - title: Custom webpack config
       link: /add-custom-webpack-config/
     - title: Customizing html.js
       link: /custom-html/
-    - title: Debugging HTML Builds
+    - title: Debugging HTML builds
       link: /debugging-html-builds/
     - title: Debugging Replace Renderer API
       link: /debugging-replace-renderer-api/
-    - title: E-commerce Tutorial
-      link: /ecommerce-tutorial/
-    - title: Environment Variables
+    - title: Dropping Images into Static Folders*
+      link: /dropping-images-into-static-folders/
+    - title: E-commerce
+      link: /dropping-images-into-static-folders/
+    - title: Environment variables
       link: /environment-variables/
-    - title: Gatsby on Windows
-      link: /gatsby-on-windows/
+    - title: How Gatsby Works with GitHub pages
+      link: /how-gatsby-works-with-github-pages/
+    - title: Interactive page
+      link: //
+    - title: Introducing GraphiQL
+      link: //
+    - title: Lighthouse audit
+      link: /dropping-images-into-static-folders/
+    - title: Linking between pages
+      link: //
     - title: Local HTTPS
       link: /local-https/
     - title: Managing Content with Netlify CMS
       link: /netlify-cms/
-    - title: How Gatsby Works with GitHub Pages
-      link: /how-gatsby-works-with-github-pages/
-    - title: Migrating from v1 to v2
-      link: /migrating-from-v1-to-v2/
-    - title: Migrating from v0 to v1
-      link: /migrating-from-v0-to-v1/
     - title: Path Prefix
       link: /path-prefix/
-    - title: Plugin Authoring
+    - title: Plugin authoring
       link: /plugin-authoring/
-    - title: Proxying API Requests
+    - title: Post CSS*
+      link: /dropping-images-into-static-folders/
+    - title: Programmatically create pages from data
+      link: /dropping-images-into-static-folders/
+    - title: Progressive web app (PWA)
+      link: /dropping-images-into-static-folders/
+    - title: Proxying API requests
       link: /api-proxy/
     - title: Querying data with StaticQuery
       link: /static-query/
     - title: Search Engine Optimization (SEO)
       link: /seo/
-    - title: Source Plugin Tutorial
-      link: /source-plugin-tutorial/
-    - title: Using CSS-in-JS Library Glamor
+    - title: Typography.js
+      link: //
+    - title: Using CSS-in-JS library Glamor
       link: /glamor/
-    - title: Using CSS-in-JS Library Styled Components
+    - title: Using CSS-in-JS library styled components
       link: /styled-components/
-    - title: Adding Markdown Pages
-      link: /adding-markdown-pages/
-    - title: Adding a List of Markdown Blog Posts
-      link: /adding-a-list-of-markdown-blog-posts/
-    - title: Adding Tags and Categories to Blog Posts
-      link: /adding-tags-and-categories-to-blog-posts/
-    - title: Adding search to your Gatsby website
-      link: /adding-search/
     - title: Working With Images in Gatsby
       link: /working-with-images/
-    - title: Wordpress Source Plugin Tutorial
-      link: /wordpress-source-plugin-tutorial/
-    - title: Creating Dynamically-Rendered Navigation*
-      link: /creating-dynamically-rendered-navigation/
-    - title: Dropping Images into Static Folders*
-      link: /dropping-images-into-static-folders/
-- title: Reference
+- title: Commands (Gatsby CLI)
+  link: /dropping-images-into-static-folders/
+- title: API Reference
   items:
-    - title: Node Interface
-      link: /node-interface/
-    - title: API Specification
-      link: /api-specification/
-    - title: Actions
-      link: /actions/
-    - title: Gatsby Browser APIs
-      link: /browser-apis/
+    - title: API reference
+      link: /dropping-images-into-static-folders/
     - title: Gatsby Node APIs
       link: /node-apis/
+    - title: Gatsby Browser APIs
+      link: /browser-apis/
     - title: Gatsby SSR APIs
       link: /ssr-apis/
-    - title: Gatsby Config
+    - title: Gatsby config
       link: /gatsby-config/
-    - title: GraphQL Reference
+    - title: Actions
+      link: /actions/
+    - title: GraphQL reference
       link: /graphql-reference/
+    - title: Node interface
+      link: /node-interface/
+    - title: API format specification
+      link: /api-specification/
+- title: Advanced Tutorials
+  items:
+    - title: Making a site with user authentication
+      link: //
+    - title: Making an e-commerce Gatsby site
+      link: /ecommerce-tutorial/
+    - title: Creating a source plugin
+      link: /create-source-plugin/
+    - title: Using the WordPress source plugin
+      link: /wordpress-source-plugin-tutorial/
+    - title: Adding images to a WordPress site
+      link: /image-tutorial/
+- title: Core Concepts
+  items:
+    - title: The Gatsby core philosophy
+      link: //
+    - title: Life and times of a Gatsby build
+      link: //
+    - title: Building with components
+      link: /building-with-components/
+    - title: Lifecycle APIs
+      link: /gatsby-lifecycle-apis/
+    - title: Plugins
+      link: /plugins/
+    - title: PRPL pattern
+      link: /prpl-pattern/
+    - title: Querying data with GraphQL
+      link: /querying-with-graphql/
 - title: Contributing
   items:
-    - title: How to Contribute
+    - title: Community
+      link: /community/
+    - title: Code of Conduct
+      link: /dropping-images-into-static-folders/
+    - title: How to contribute
       link: /how-to-contribute/
-    - title: How to File an Issue
+    - title: How to file an issue
       link: /how-to-file-an-issue/
-    - title: Gatsby Style Guide
+    - link: How to submit a PR
+      link: /dropping-images-into-static-folders/
+    - title: Gatsby style guide
       link: /gatsby-style-guide/
-    - title: Design Principles*
+    - title: Design principles*
       link: /design-principles/
+    - title: RFC process
+      link: /dropping-images-into-static-folders/
+    - title: Templates
+      link: /dropping-images-into-static-folders/
+    - title: How to run a Gatsby workshop
+      link: /dropping-images-into-static-folders/
+    - title: How to pitch Gatsby
+      link: /dropping-images-into-static-folders/
+    - title: Submit a blogpost
+      link: //
+    - title: Submit to Site Showcase
+      link: /dropping-images-into-static-folders/
+    - title: Submit to Starter Showcase
+      link: /dropping-images-into-static-folders/
+    - title: Submit to Plugin Library
+      link: /dropping-images-into-static-folders/
+- title: Glossary
+  link: /dropping-images-into-static-folders/

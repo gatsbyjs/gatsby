@@ -1,4 +1,6 @@
-- title: Tutorial
+- title: Quick start
+  link: /docs/
+- title: Tutorial (step-by-step)
   items:
     - title: Introduction
       link: /
@@ -73,8 +75,4 @@
           link: /part-seven/#creating-pages
     - title: 8. Preparing a site to go live
       link: /part-eight/
-      subitems:
-        - title: Creating slugs for pages
-          link: /part-eight/#creating-slugs-for-pages
-        - title: Creating pages
-          link: /part-eight/#creating-pages
+          
