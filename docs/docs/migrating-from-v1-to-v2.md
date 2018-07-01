@@ -133,7 +133,7 @@ export default ({ children }) => (
 )
 ```
 
-### 2. Move `layout/index.js` to `src/components/layout.js` (optional, but recommended)
+### 2. Move `layouts/index.js` to `src/components/layout.js` (optional, but recommended)
 
 ```bash
 git mv src/layouts/index.js src/components/layout.js
