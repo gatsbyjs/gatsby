@@ -48,7 +48,10 @@ const getCachedStaticQueryResults = (resultsMap, directory) => {
     }
     cachedStaticQueryResults.set(
       staticQueryComponent.hash,
-      readCachedResults(dataPath, directory)
+      {
+        result: readCachedResults(dataPath, directory),
+        id: staticQueryComponent.hash,
+      }
     )
   })
   return cachedStaticQueryResults
@@ -89,13 +92,13 @@ class WebsocketManager {
       let activePath = null
 
       // Send already existing static query results
-      this.staticQueryResults.forEach((result, id) => {
+      this.staticQueryResults.forEach(result => {
         this.websocket.send({
           type: `staticQueryResult`,
-          payload: { id, result },
+          payload: result,
         })
       })
-      this.pageResults.forEach((result, path) => {
+      this.pageResults.forEach(result => {
         this.websocket.send({
           type: `pageQueryResult`,
           payload: result,
@@ -149,7 +152,7 @@ class WebsocketManager {
   }
 
   emitStaticQueryData(data) {
-    this.staticQueryResults.set(data.id, data.result)
+    this.staticQueryResults.set(data.id, data)
     if (this.isInitialised) {
       this.websocket.send({ type: `staticQueryResult`, payload: data })
     }
