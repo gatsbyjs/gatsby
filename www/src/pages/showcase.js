@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import Helmet from "react-helmet"
 
-import { Link } from "gatsby"
+import { Link, graphql } from "gatsby"
 import Img from "gatsby-image"
 import { style } from "glamor"
 import hex2rgba from "hex2rgba"
@@ -263,7 +263,9 @@ class FilteredShowcase extends Component {
               paddingTop: 0,
               borderRight: `1px solid ${colors.ui.light}`,
               // background: colors.ui.whisper,
-              height: `calc(100vh - ${presets.headerHeight})`,
+              height: `calc(100vh - ${presets.headerHeight} - ${
+                presets.bannerHeight
+              })`,
             },
           }}
         >
@@ -863,18 +865,16 @@ export default ShowcasePage
 
 export const showcaseQuery = graphql`
   query ShowcaseQuery {
-    featured: allSitesYaml(filter: { featured: { eq: true } }) {
+    featured: allSitesYaml(limit: 40, filter: { featured: { eq: true } }) {
       edges {
         node {
           id
           title
           categories
           built_by
-
           fields {
             slug
           }
-
           childScreenshot {
             screenshotFile {
               childImageSharp {
@@ -887,20 +887,17 @@ export const showcaseQuery = graphql`
         }
       }
     }
-    allSitesYaml(filter: { main_url: { ne: null } }) {
+    allSitesYaml(limit: 40, filter: { main_url: { ne: null } }) {
       edges {
         node {
           id
           featured
-
           title
           categories
           built_by
           description
-
           main_url
           built_by_url
-
           childScreenshot {
             screenshotFile {
               childImageSharp {
@@ -968,7 +965,7 @@ const styles = {
     position: `sticky`,
     top: 0,
     [presets.Desktop]: {
-      top: `calc(${presets.headerHeight} - 1px)`,
+      top: `calc(${presets.headerHeight} + ${presets.bannerHeight} - 1px)`,
     },
   },
   scrollbar: {

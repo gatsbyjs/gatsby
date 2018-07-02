@@ -4,7 +4,6 @@ date: "2018-06-16"
 author: "Mike Allanson"
 tags: ["v2", "gatsby"]
 image: 'astronaut-v2.jpg'
-showImageInArticle: false
 ---
 
 We’re excited to announce that today we shipped the first beta for Gatsby v2! 36 contributors have made over 300 commits to v2 since Gatsby v1 was released in July 2017.
@@ -15,7 +14,7 @@ Gatsby v2 builds on the foundations of v1 to introduce a range of improvements:
 
 - Out With Gatsby Layout Components, In With StaticQuery
 
-  Gatby's special layout components were a common source of confusion in v1. After an RFC and [informative community discussion](https://github.com/gatsbyjs/rfcs/blob/master/text/0002-remove-special-layout-components.md), we decided to remove them and create `StaticQuery` which allows GraphQL queries to be added to any component. For more information on migrating your layouts, check out our Life After Layouts post (coming soon).
+  Gatby's special layout components were a common source of confusion in v1. After an RFC and [informative community discussion](https://github.com/gatsbyjs/rfcs/blob/master/text/0002-remove-special-layout-components.md), we decided to remove them and create `StaticQuery` which allows GraphQL queries to be added to any component. For more information on migrating your layouts, check out our [Life After Layouts post](/blog/2018-06-08-life-after-layouts/).
 
 - Improve APIs
 
@@ -39,9 +38,9 @@ Gatsby v2 builds on the foundations of v1 to introduce a range of improvements:
 
   These updates allow Gatsby to take advantage of the [performance](https://medium.com/webpack/webpack-4-released-today-6cdb994702d4) [improvements](https://reactjs.org/blog/2017/09/26/react-v16.0.html#better-server-side-rendering) and [new features](https://github.com/gatsbyjs/gatsby/pull/5709) of these tools.
 
-## Should I switch over to v2?
+## Can I upgrade now to v2?
 
-Yes! We’ve built [gatsbyjs.com](https://www.gatsbyjs.com) with v2 and the Gatsby community is [converting over the example sites](https://github.com/gatsbyjs/gatsby/issues/5598). While individual sites may vary, we’ve noticed significant build speedups in Gatsby v2 versus v1 and would love you to dig in and try it. We're working hard on refining Gatsby v2 for full release and would love your help!
+Yes! We’ve built [gatsbyjs.com](https://www.gatsbyjs.com) with v2 and the Gatsby community is [converting over the example sites](https://github.com/gatsbyjs/gatsby/issues/5598). While the effort to migrate individual sites may vary, we’ve noticed significant build speedups in Gatsby v2 versus v1 and would love you to dig in and try it. We're working hard on refining Gatsby v2 for full release and would love your help!
 
 ## What's coming next?
 

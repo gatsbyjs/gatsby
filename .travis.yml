@@ -52,6 +52,6 @@ jobs:
           before_install:
             - chmod +x scripts/www-graphql-docker-push.sh
           script:
-            - ./scripts/www-graphql-docker-push.sh
+            - travis_wait 30 ./scripts/www-graphql-docker-push.sh
 
 

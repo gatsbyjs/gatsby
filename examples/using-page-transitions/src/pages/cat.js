@@ -1,9 +1,10 @@
 /* eslint-disable react/prop-types */
 import React from "react"
 import { Link } from "gatsby"
+import TemplateWrapper from "../components/layout"
 
-const Cat = ({ transition }) => (
-  <div style={transition && transition.style}>
+const Cat = () => (
+  <TemplateWrapper>
     <h1>meow</h1>
     <div>
       <Link to="/">Go to home</Link>
@@ -14,7 +15,7 @@ const Cat = ({ transition }) => (
     <div>
       <Link to="/long-page/">Go to long page</Link>
     </div>
-  </div>
+  </TemplateWrapper>
 )
 
 export default Cat

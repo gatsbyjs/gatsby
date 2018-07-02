@@ -127,6 +127,7 @@ const runQueriesForPathnames = pathnames => {
           jsonName: page.jsonName,
           query: store.getState().components[page.componentPath].query,
           isPage: true,
+          componentPath: page.componentPath,
           context: {
             ...page,
             ...page.context,

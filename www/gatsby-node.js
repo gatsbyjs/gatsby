@@ -4,7 +4,7 @@ const path = require(`path`)
 const parseFilepath = require(`parse-filepath`)
 const fs = require(`fs-extra`)
 const slash = require(`slash`)
-const slugify = require(`limax`)
+const slugify = require(`slugify`)
 const url = require(`url`)
 
 const localPackages = `../packages`
@@ -107,7 +107,7 @@ exports.createPages = ({ graphql, actions }) => {
                 }
               }
             }
-            allSitesYaml {
+            allSitesYaml(limit: 40, filter: { main_url: { ne: null } }) {
               edges {
                 node {
                   fields {
@@ -306,7 +306,9 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
       createNodeField({ node, name: `slug`, value: slug })
     }
   } else if (node.internal.type === `AuthorYaml`) {
-    slug = `/contributors/${slugify(node.id)}/`
+    slug = `/contributors/${slugify(node.id, {
+      lower: true,
+    })}/`
     createNodeField({ node, name: `slug`, value: slug })
   } else if (node.internal.type === `SitesYaml` && node.main_url) {
     const parsed = url.parse(node.main_url)
