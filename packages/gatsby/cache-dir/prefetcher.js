@@ -1,10 +1,4 @@
-// @flow
-
-type PrefetcherOptions = {
-  fetchNextResource: () => ?Promise,
-}
-
-module.exports = ({ fetchNextResource }: PrefetcherOptions) => {
+module.exports = ({ fetchNextResource }) => {
   let pagesLoading = []
   let current = null
   const clearCurrent = () => {
