@@ -6,7 +6,7 @@ const fs = require(`fs`)
 
 type QueryResult = {
   id: string,
-  result: object
+  result: object,
 }
 
 type QueryResultsMap = Map<string, QueryResult>
@@ -32,7 +32,10 @@ const readCachedResults = (dataFileName: string, directory: string): object => {
  * @param {string} pagePath Path to a page.
  * @param {string} directory Root directory of current project.
  */
-const getCachedPageData = (pagePath: string, directory: string): QueryResult => {
+const getCachedPageData = (
+  pagePath: string,
+  directory: string
+): QueryResult => {
   const { jsonDataPaths, pages } = store.getState()
   const page = pages.find(p => p.path === pagePath)
   const dataPath = jsonDataPaths[page.jsonName]
@@ -54,7 +57,10 @@ const getCachedPageData = (pagePath: string, directory: string): QueryResult => 
  * @param {QueryResultsMap} resultsMap Already stored results for queries that don't need to be read from files.
  * @param {string} directory Root directory of current project.
  */
-const getCachedStaticQueryResults = (resultsMap: QueryResultsMap, directory: string): QueryResultsMap => {
+const getCachedStaticQueryResults = (
+  resultsMap: QueryResultsMap,
+  directory: string
+): QueryResultsMap => {
   const cachedStaticQueryResults = new Map()
   const { staticQueryComponents, jsonDataPaths } = store.getState()
   staticQueryComponents.forEach(staticQueryComponent => {
@@ -70,13 +76,10 @@ const getCachedStaticQueryResults = (resultsMap: QueryResultsMap, directory: str
       )
       return
     }
-    cachedStaticQueryResults.set(
-      staticQueryComponent.hash,
-      {
-        result: readCachedResults(dataPath, directory),
-        id: staticQueryComponent.hash,
-      }
-    )
+    cachedStaticQueryResults.set(staticQueryComponent.hash, {
+      result: readCachedResults(dataPath, directory),
+      id: staticQueryComponent.hash,
+    })
   })
   return cachedStaticQueryResults
 }
