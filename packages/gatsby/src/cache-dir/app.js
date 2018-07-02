@@ -1,6 +1,7 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import domReady from "domready"
+import * as ErrorOverlay from "react-error-overlay"
 
 import socketIo from "./socketIo"
 import emitter from "./emitter"
@@ -51,6 +52,11 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     renderer(<Root />, rootElement, () => {
       apiRunner(`onInitialClientRender`)
     })
+  })
+
+  emitter.on(`pageQueryError`, (payload) => {
+    console.error(new Error(payload.error))
+    ErrorOverlay.reportBuildError(payload.error)
   })
 })
 
