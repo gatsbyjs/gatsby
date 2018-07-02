@@ -18,8 +18,7 @@ const getCachedPageData = (pagePath, directory) => {
   const page = pages.find(p => p.path === pagePath)
   const dataPath = jsonDataPaths[page.jsonName]
   if (typeof dataPath === `undefined`) {
-    console.log(`Something wrong
-Page query in "${pagePath} didn't run and wasn't cached before.`)
+    console.log(`Error loading a result for the page query in "${pagePath}". Query was not run and no cached result was found.`)
     return undefined
   }
   
@@ -37,8 +36,7 @@ const addCachedStaticQueryResults = (resultsMap, directory) => {
 
     const dataPath = jsonDataPaths[staticQueryComponent.jsonName]
     if (typeof dataPath === `undefined`) {
-      console.log(`Something wrong
-Static query in "${staticQueryComponent.componentPath} didn't run and wasn't cached before.`)
+      console.log(`Error loading a result for the StaticQuery in "${staticQueryComponent.componentPath}". Query was not run and no cached result was found.`)
       return
     }
     resultsMap.set(staticQueryComponent.hash, readCachedResults(dataPath, directory))
