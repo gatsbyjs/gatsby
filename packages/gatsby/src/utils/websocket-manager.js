@@ -18,17 +18,20 @@ const getCachedPageData = (pagePath, directory) => {
   const page = pages.find(p => p.path === pagePath)
   const dataPath = jsonDataPaths[page.jsonName]
   if (typeof dataPath === `undefined`) {
-    console.log(`Error loading a result for the page query in "${pagePath}". Query was not run and no cached result was found.`)
+    console.log(
+      `Error loading a result for the page query in "${pagePath}". Query was not run and no cached result was found.`
+    )
     return undefined
   }
-  
+
   return {
     result: readCachedResults(dataPath, directory),
     id: pagePath,
   }
 }
 
-const addCachedStaticQueryResults = (resultsMap, directory) => {
+const getCachedStaticQueryResults = (resultsMap, directory) => {
+  const cachedStaticQueryResults = new Map()
   const { staticQueryComponents, jsonDataPaths } = store.getState()
   staticQueryComponents.forEach(staticQueryComponent => {
     // Don't read from file if results were already passed from query runner
@@ -36,11 +39,19 @@ const addCachedStaticQueryResults = (resultsMap, directory) => {
 
     const dataPath = jsonDataPaths[staticQueryComponent.jsonName]
     if (typeof dataPath === `undefined`) {
-      console.log(`Error loading a result for the StaticQuery in "${staticQueryComponent.componentPath}". Query was not run and no cached result was found.`)
+      console.log(
+        `Error loading a result for the StaticQuery in "${
+          staticQueryComponent.componentPath
+        }". Query was not run and no cached result was found.`
+      )
       return
     }
-    resultsMap.set(staticQueryComponent.hash, readCachedResults(dataPath, directory))
+    cachedStaticQueryResults.set(
+      staticQueryComponent.hash,
+      readCachedResults(dataPath, directory)
+    )
   })
+  return cachedStaticQueryResults
 }
 
 const getRoomNameFromPath = path => `path-${path}`
@@ -62,8 +73,17 @@ class WebsocketManager {
 
   init({ server, directory }) {
     this.programDir = directory
+
+    const cachedStaticQueryResults = getCachedStaticQueryResults(
+      this.staticQueryResults,
+      this.programDir
+    )
+    this.staticQueryResults = new Map([
+      ...this.staticQueryResults,
+      ...cachedStaticQueryResults,
+    ])
+
     this.websocket = require(`socket.io`)(server)
-    addCachedStaticQueryResults(this.staticQueryResults, this.programDir)
 
     this.websocket.on(`connection`, s => {
       let activePath = null
