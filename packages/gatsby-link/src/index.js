@@ -137,7 +137,9 @@ class GatsbyLink extends React.Component {
                 .split(`#`)
                 .slice(1)
                 .join(`#`)
-              const element = hashFragment ? document.getElementById(hashFragment) : null
+              const element = hashFragment
+                ? document.getElementById(hashFragment)
+                : null
               if (element !== null) {
                 element.scrollIntoView()
                 return true
@@ -153,7 +155,11 @@ class GatsbyLink extends React.Component {
             // loaded before continuing.
             if (process.env.NODE_ENV === `production`) {
               e.preventDefault()
-              window.___push(this.state.to)
+              if (window.GATSBY_SW_UPDATED) {
+                window.location = this.state.to
+              } else {
+                window.___push(this.state.to)
+              }
             }
           }
 

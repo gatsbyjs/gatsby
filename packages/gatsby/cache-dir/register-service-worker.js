@@ -17,7 +17,7 @@ if (`serviceWorker` in navigator) {
                 // have been added to the cache.
                 // We reload immediately so the user sees the new content.
                 // This could/should be made configurable in the future.
-                window.location.reload()
+                window.GATSBY_SW_UPDATED = true
               } else {
                 // At this point, everything has been precached.
                 // It's the perfect time to display a "Content is cached for offline use." message.
