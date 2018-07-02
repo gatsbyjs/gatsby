@@ -114,6 +114,7 @@ plugins: [
         "/*/*/pages",
         "/*/*/media",
         "/*/*/tags",
+        "/*/*/taxonomies",
         "/*/*/users",
       ],
       // Blacklisted routes using glob parameters

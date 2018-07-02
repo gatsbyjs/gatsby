@@ -41,6 +41,7 @@ exports.sourceNodes = async (
       "/*/*/pages",
       "/*/*/media",
       "/*/*/tags",
+      "/*/*/taxonomies",
       "/*/*/users",
     ],
     excludedRoutes = [],

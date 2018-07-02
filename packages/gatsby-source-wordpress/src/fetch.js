@@ -353,7 +353,7 @@ Pages to be requested : ${totalPages}`
  * @param {Array} routeList
  * @returns {boolean}
  */
-function checkRouteList({ routePath, routeList }) {
+function checkRouteList( routePath, routeList ) {
   if (
     routeList.some(route =>
       minimatch(routePath, route)
@@ -398,7 +398,6 @@ function getValidRoutes({
 
       // Excluding the "technical" API Routes
       const excludedTypes = [
-        undefined,
         `v2`,
         `v3`,
         `1.0`,
@@ -406,17 +405,18 @@ function getValidRoutes({
         `embed`,
         `proxy`,
         ``,
-        baseUrl,
+        `${baseUrl}**`,
       ]
 
       const routePath = getRoutePath(url, route._links.self)
       const whiteList = _includedRoutes
       const blackList = [...excludedTypes, ..._excludedRoutes]
-      let validRoute;
+
       // Check whitelist first
-      validRoute = checkRouteList(routePath, whiteList);
+      const inWhiteList = checkRouteList(routePath, whiteList);
       // Then blacklist
-      validRoute = !checkRouteList(routePath, blackList);
+      const inBlackList = checkRouteList(routePath, blackList);
+      const validRoute = inWhiteList && !inBlackList
 
       if (validRoute) {
         if (_verbose)
