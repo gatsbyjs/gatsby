@@ -35,8 +35,8 @@
     - title: 3. Creating nested layout components
       link: /part-three/
       subitems:
-        - title: Our first layout component
-          link: /part-three/#our-first-layout-component
+        - title: Your first layout component
+          link: /part-three/#your-first-layout-component
     - title: 4. Querying for data in a blog
       link: /part-four/
       subitems:
@@ -46,8 +46,8 @@
           link: /part-four/#data-in-gatsby
         - title: How Gatsby's data layer uses GraphQL to pull data into components
           link: /part-four/#how-gatsbys-data-layer-uses-graphql-to-pull-data-into-components
-        - title: Our first GraphQL query
-          link: /part-four/#our-first-graphql-query
+        - title: Your first GraphQL query
+          link: /part-four/#your-first-graphql-query
     - title: 5. Source plugins and rendering queried data
       link: /part-five/
       subitems:
