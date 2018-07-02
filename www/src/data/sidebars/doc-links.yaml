@@ -6,8 +6,6 @@
       link: /dropping-images-into-static-folders/
     - title: Gatsby on Windows
       link: /dropping-images-into-static-folders/
-    - title:
-      link: /dropping-images-into-static-folders/
     - title: Quick start
       link: /
     - title: Overview of the Docs
@@ -129,7 +127,9 @@
     - title: Working With Images in Gatsby
       link: /working-with-images/
 - title: Commands (Gatsby CLI)
-  link: /dropping-images-into-static-folders/
+  items:
+    - title: Commands (Gatsby CLI)
+      link: /dropping-images-into-static-folders/
 - title: API Reference
   items:
     - title: API reference
@@ -211,4 +211,6 @@
     - title: Submit to Plugin Library
       link: /dropping-images-into-static-folders/
 - title: Glossary
-  link: /dropping-images-into-static-folders/
+  items:
+    - title: Glossary
+      link: /dropping-images-into-static-folders/

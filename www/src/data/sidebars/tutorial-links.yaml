@@ -1,5 +1,7 @@
 - title: Quick start
-  link: /docs/
+  items:
+    - title: Quick start
+      link: /docs/
 - title: Tutorial (step-by-step)
   items:
     - title: Introduction
