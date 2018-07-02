@@ -93,6 +93,7 @@ describe(`GraphQL Input args`, () => {
       },
       anotherKey: {
         withANested: {
+          nestedKey: `foo`,
           emptyArray: [],
           anotherEmptyArray: [],
         },
@@ -553,6 +554,27 @@ describe(`GraphQL Input args`, () => {
     expect(result.data.allNode.anArray[0].fieldValue).toEqual(`1`)
     expect(result.data.allNode.anArray[0].field).toEqual(`anArray`)
     expect(result.data.allNode.anArray[0].totalCount).toEqual(2)
+  })
+
+  it(`handles the nested group connection field`, async () => {
+    let result = await queryResult(
+      nodes,
+      ` {
+        allNode {
+          nestedKey: group(field: anotherKey___withANested___nestedKey) {
+            field
+            fieldValue
+            totalCount
+          }
+        }
+      }`
+    )
+
+    expect(result.errors).not.toBeDefined()
+    expect(result.data.allNode.nestedKey).toHaveLength(2)
+    expect(result.data.allNode.nestedKey[0].fieldValue).toEqual(`foo`)
+    expect(result.data.allNode.nestedKey[0].field).toEqual(`anotherKey.withANested.nestedKey`)
+    expect(result.data.allNode.nestedKey[0].totalCount).toEqual(1)
   })
 
   it(`can query object arrays`, async () => {
