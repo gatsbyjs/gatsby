@@ -1,5 +1,5 @@
 import React from "react"
-import { Link } from "gatsby"
+import { Link, graphql } from "gatsby"
 import Img from "gatsby-image"
 import Navigation from "../components/navigation"
 import Layout from "../layouts"

@@ -1,4 +1,5 @@
 import React from "react"
+import { graphql } from "gatsby"
 import Img from "gatsby-image"
 import Lorem from "../components/lorem"
 import Ipsum from "../components/ipsum"
