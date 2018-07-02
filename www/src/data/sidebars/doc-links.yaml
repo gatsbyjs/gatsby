@@ -45,7 +45,7 @@
     - title: Adding a list of Markdown blog posts
       link: /adding-a-list-of-markdown-blog-posts/
     - title: Adding search to your Gatsby website
-      link: /adding-search/    
+      link: /adding-search/
     - title: Adding tags and categories to blog posts
       link: /adding-tags-and-categories-to-blog-posts/
     - title: Authentication
@@ -188,7 +188,7 @@
       link: /how-to-contribute/
     - title: How to file an issue
       link: /how-to-file-an-issue/
-    - link: How to submit a PR
+    - title: How to submit a PR
       link: /dropping-images-into-static-folders/
     - title: Gatsby style guide
       link: /gatsby-style-guide/
