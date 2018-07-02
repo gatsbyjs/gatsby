@@ -1,0 +1,35 @@
+{
+  "name": "gatsby-plugin-aphrodite",
+  "description": "Adds SSR support for Aphrodite",
+  "version": "3.0.1-beta.2",
+  "author": "Ben Williams <ben@719ben.com>",
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "dependencies": {
+    "@babel/runtime": "7.0.0-beta.51"
+  },
+  "devDependencies": {
+    "@babel/cli": "7.0.0-beta.51",
+    "@babel/core": "7.0.0-beta.51",
+    "cross-env": "^5.1.4"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-aphrodite#readme",
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "aphrodite"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "peerDependencies": {
+    "gatsby": ">2.0.0-alpha",
+    "aphrodite": "^2.2.2"
+  },
+  "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-aphrodite",
+  "scripts": {
+    "build": "babel src --out-dir . --ignore **/__tests__",
+    "prepare": "cross-env NODE_ENV=production npm run build",
+    "watch": "babel -w src --out-dir . --ignore **/__tests__"
+  }
+}
