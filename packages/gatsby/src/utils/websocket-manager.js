@@ -1,8 +1,17 @@
+// @flow
+
 const path = require(`path`)
 const { store } = require(`../redux`)
 const fs = require(`fs`)
 
-const readCachedResults = (dataPath, directory) => {
+type QueryResult = {
+  id: string,
+  result: object
+}
+
+type QueryResultsMap = Map<string, QueryResult>
+
+const readCachedResults = (dataPath: string, directory: string): object => {
   const filePath = path.join(
     directory,
     `public`,
@@ -13,7 +22,7 @@ const readCachedResults = (dataPath, directory) => {
   return JSON.parse(fs.readFileSync(filePath, `utf-8`))
 }
 
-const getCachedPageData = (pagePath, directory) => {
+const getCachedPageData = (pagePath: string, directory: string): QueryResult => {
   const { jsonDataPaths, pages } = store.getState()
   const page = pages.find(p => p.path === pagePath)
   const dataPath = jsonDataPaths[page.jsonName]
@@ -30,7 +39,7 @@ const getCachedPageData = (pagePath, directory) => {
   }
 }
 
-const getCachedStaticQueryResults = (resultsMap, directory) => {
+const getCachedStaticQueryResults = (resultsMap: QueryResultsMap, directory: string): QueryResultsMap => {
   const cachedStaticQueryResults = new Map()
   const { staticQueryComponents, jsonDataPaths } = store.getState()
   staticQueryComponents.forEach(staticQueryComponent => {
@@ -57,9 +66,15 @@ const getCachedStaticQueryResults = (resultsMap, directory) => {
   return cachedStaticQueryResults
 }
 
-const getRoomNameFromPath = path => `path-${path}`
+const getRoomNameFromPath = (path: string): string => `path-${path}`
 
 class WebsocketManager {
+  pageResults: QueryResultsMap
+  staticQueryResults: QueryResultsMap
+  isInitialised: boolean
+  activePaths: Set<string>
+  programDir: string
+
   constructor() {
     this.isInitialised = false
     this.activePaths = new Set()
@@ -147,13 +162,13 @@ class WebsocketManager {
     return this.isInitialised && this.websocket
   }
 
-  emitStaticQueryData(data) {
+  emitStaticQueryData(data: QueryResult) {
     this.staticQueryResults.set(data.id, data)
     if (this.isInitialised) {
       this.websocket.send({ type: `staticQueryResult`, payload: data })
     }
   }
-  emitPageData(data) {
+  emitPageData(data: QueryResult) {
     if (this.isInitialised) {
       this.websocket.send({ type: `pageQueryResult`, payload: data })
     }
