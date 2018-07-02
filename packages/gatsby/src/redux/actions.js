@@ -245,7 +245,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   // Validate that the page component imports React and exports something
   // (hopefully a component).
   if (!internalPage.component.includes(`/.cache/`)) {
-    const fileContent = fs.readFileSync(internalPage.component, `utf-8`)
+    const fileName = internalPage.component
+    const fileContent = fs.readFileSync(fileName, `utf-8`)
     let notEmpty = true
     let includesDefaultExport = true
 
@@ -263,7 +264,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     if (!notEmpty || !includesDefaultExport) {
       const relativePath = path.relative(
         store.getState().program.directory,
-        internalPage.component
+        fileName
       )
 
       if (!notEmpty) {
@@ -279,7 +280,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       if (!includesDefaultExport) {
         console.log(``)
         console.log(
-          `The page component must export a React component for it to be valid`
+          `[${fileName}] The page component must export a React component for it to be valid`
         )
         console.log(``)
       }
