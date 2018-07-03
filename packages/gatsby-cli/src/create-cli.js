@@ -15,7 +15,9 @@ const handlerP = fn => (...args) => {
 }
 
 function buildLocalCommands(cli, isLocalSite) {
-  const defaultHost = `localhost`
+  const defaultHost = process.env.HOST || `localhost`
+  const defaultDevelopPort = process.env.PORT || `8000`
+  const defaultServePort = process.env.PORT || `9000`
   const directory = path.resolve(`.`)
 
   let siteInfo = { directory, browserslist: DEFAULT_BROWSERS }
@@ -92,8 +94,8 @@ function buildLocalCommands(cli, isLocalSite) {
         .option(`p`, {
           alias: `port`,
           type: `string`,
-          default: `8000`,
-          describe: `Set port. Defaults to 8000`,
+          default: defaultDevelopPort,
+          describe: `Set port. Defaults to ${defaultDevelopPort}`,
         })
         .option(`o`, {
           alias: `open`,
@@ -163,8 +165,8 @@ function buildLocalCommands(cli, isLocalSite) {
         .option(`p`, {
           alias: `port`,
           type: `string`,
-          default: `9000`,
-          describe: `Set port. Defaults to 9000`,
+          default: defaultServePort,
+          describe: `Set port. Defaults to ${defaultServePort}`,
         })
         .option(`o`, {
           alias: `open`,
