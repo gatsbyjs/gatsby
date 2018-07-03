@@ -8,7 +8,7 @@ import SectionTitle from "./section-title"
 import ChevronSvg from "./chevron-svg"
 
 const horizontalPadding = rhythm(3 / 4)
-const horizonalPaddingDesktop = rhythm(3 / 2)
+const horizontalPaddingDesktop = rhythm(3 / 2)
 
 const ToggleSectionButton = ({
   title,
@@ -52,8 +52,8 @@ const Title = ({ title }) => (
       paddingLeft: horizontalPadding,
       paddingRight: horizontalPadding,
       [presets.Desktop]: {
-        paddingLeft: horizonalPaddingDesktop,
-        paddingRight: horizonalPaddingDesktop,
+        paddingLeft: horizontalPaddingDesktop,
+        paddingRight: horizontalPaddingDesktop,
       },
     }}
   >
@@ -116,15 +116,19 @@ class Section extends React.Component {
               height: 1,
               position: `absolute`,
               right: 0,
-              left: 40,
+              left: horizontalPadding,
             },
             "& li": {
               lineHeight: 1.3,
               margin: 0,
-              paddingTop: rhythm(1 / 8),
-              paddingBottom: rhythm(1 / 8),
               paddingLeft: horizontalPadding,
               paddingRight: horizontalPadding,
+              fontSize: scale(-1 / 10).fontSize,
+            },
+            [presets.Phablet]: {
+              "& li": {
+                fontSize: scale(-2 / 10).fontSize,
+              },
             },
             [presets.Tablet]: {
               display: isActive ? `block` : `none`,
@@ -133,9 +137,12 @@ class Section extends React.Component {
               },
             },
             [presets.Desktop]: {
+              "&:after": {
+                left: horizontalPaddingDesktop,
+              },
               "& li": {
-                paddingLeft: horizonalPaddingDesktop,
-                paddingRight: horizonalPaddingDesktop,
+                paddingLeft: horizontalPaddingDesktop,
+                paddingRight: horizontalPaddingDesktop,
               },
             },
           }}
@@ -211,13 +218,24 @@ const styles = {
     position: `relative`,
   },
   tutorialSubsection: {
-    "&:before": {
+    paddingBottom: 10,
+    "&:after": {
       background: colors.ui.bright,
+      content: ` `,
+      left: `.275rem`,
+      top: `1.5rem`,
+      bottom: `1.5rem`,
+      position: `absolute`,
+      width: 1,
+    },
+    "&:before": {
       content: ` `,
       height: `100%`,
       left: `.275rem`,
       position: `absolute`,
-      width: 1,
+      bottom: 0,
+      width: 0,
+      borderLeft: `1px dashed ${colors.ui.bright}`,
     },
   },
   button: {
@@ -231,15 +249,15 @@ const styles = {
     textAlign: `left`,
     width: `100%`,
     [presets.Desktop]: {
-      paddingLeft: horizonalPaddingDesktop,
-      paddingRight: horizonalPaddingDesktop,
+      paddingLeft: horizontalPaddingDesktop,
+      paddingRight: horizontalPaddingDesktop,
     },
   },
   liActive: {
     background: colors.ui.light,
     "&&": {
       marginTop: rhythm(1 / 2),
-      marginBottom: rhythm(1),
+      marginBottom: rhythm(1 / 2),
       paddingTop: rhythm(1 / 2),
     },
   },
