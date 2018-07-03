@@ -32,9 +32,6 @@ class StickyResponsiveSidebar extends Component {
     const menuOpacity = open ? 1 : 0
     const menuOffset = open ? 0 : rhythm(10)
 
-    const horizontalPadding = rhythm(3 / 4)
-    const horizonalPaddingDesktop = rhythm(3 / 2)
-
     return (
       <React.Fragment>
         <div
@@ -43,39 +40,10 @@ class StickyResponsiveSidebar extends Component {
             transition: `opacity 0.5s ease`,
           }}
           css={{
-            ...sidebarStyles,
-            background: `#fff`,
-            border: 0,
-            boxShadow: `0 0 20px rgba(0, 0, 0, 0.15)`,
-            display: `block`,
-            height: `100vh`,
-            paddingTop: horizontalPadding,
-            paddingBottom: horizontalPadding,
+            ...styles.sidebar,
             pointerEvents: open ? `auto` : `none`,
-            top: 0,
-            width: 320,
-            zIndex: 10,
-            [presets.Tablet]: {
-              backgroundColor: colors.ui.whisper,
-              borderRight: `1px solid ${colors.ui.light}`,
-              boxShadow: `none`,
-              height: `calc(100vh - ${presets.headerHeight} - ${
-                presets.bannerHeight
-              } + 1px)`,
-              maxWidth: `none`,
-              opacity: `1 !important`,
-              pointerEvents: `auto`,
-              top: `calc(${presets.headerHeight} + ${
-                presets.bannerHeight
-              } - 1px)`,
-              width: rhythm(10),
-              zIndex: 2,
-            },
-            [presets.Desktop]: {
-              paddingTop: horizonalPaddingDesktop,
-              paddingBottom: horizonalPaddingDesktop,
-              width: rhythm(12),
-            },
+            [presets.Tablet]: { ...styles.sidebarLargeScreen },
+            [presets.Desktop]: { ...styles.sidebarLargerScreen },
           }}
         >
           <div
@@ -96,42 +64,29 @@ class StickyResponsiveSidebar extends Component {
           </div>
         </div>
         <div
-          css={{
-            backgroundColor: colors.gatsby,
-            bottom: 44, // iOS Safari's inert "bottom 44px"
-            display: `block`, // gets overriden at small screen sizes
-            cursor: `pointer`,
-            position: `fixed`,
-            right: 20,
-            width: 60,
-            zIndex: 20,
-            borderRadius: `50%`,
-            border: `1px solid rgba(255, 255, 255, 0.1)`,
-            boxShadow: `0 0 20px rgba(0, 0, 0, 0.3)`,
-            [presets.Tablet]: { display: `none` },
-          }}
+          css={{ ...styles.button }}
           onClick={this._openNavMenu}
           role="button"
           tabIndex={0}
         >
           <div
             css={{
+              alignItems: `center`,
               display: `flex`,
               flexDirection: `row`,
-              alignItems: `center`,
               height: 60,
-              width: `100%`,
               justifyContent: `space-around`,
+              width: `100%`,
             }}
           >
             <div
               css={{
-                width: 20,
-                height: 20,
                 alignSelf: `center`,
+                color: `#fff`,
                 display: `flex`,
                 flexDirection: `column`,
-                color: `#fff`,
+                height: 20,
+                width: 20,
               }}
             >
               <ChevronSvg
@@ -158,19 +113,66 @@ class StickyResponsiveSidebar extends Component {
 
 export default StickyResponsiveSidebar
 
-const sidebarStyles = {
-  width: rhythm(10),
-  position: `fixed`,
-  overflowY: `auto`,
-  WebkitOverflowScrolling: `touch`,
-  "::-webkit-scrollbar": {
-    width: `6px`,
-    height: `6px`,
+const horizontalPadding = rhythm(3 / 4)
+const horizontalPaddingDesktop = rhythm(3 / 2)
+
+const styles = {
+  sidebar: {
+    background: `#fff`,
+    border: 0,
+    boxShadow: `0 0 20px rgba(0, 0, 0, 0.15)`,
+    display: `block`,
+    height: `100vh`,
+    paddingTop: horizontalPadding,
+    paddingBottom: horizontalPadding,
+    position: `fixed`,
+    overflowY: `auto`,
+    top: 0,
+    WebkitOverflowScrolling: `touch`,
+    width: 320,
+    zIndex: 10,
+    "::-webkit-scrollbar": {
+      width: `6px`,
+      height: `6px`,
+    },
+    "::-webkit-scrollbar-thumb": {
+      background: colors.ui.bright,
+    },
+    "::-webkit-scrollbar-track": {
+      background: colors.ui.light,
+    },
   },
-  "::-webkit-scrollbar-thumb": {
-    background: colors.ui.bright,
+  sidebarLargeScreen: {
+    backgroundColor: colors.ui.whisper,
+    borderRight: `1px solid ${colors.ui.light}`,
+    boxShadow: `none`,
+    height: `calc(100vh - ${presets.headerHeight} - ${
+      presets.bannerHeight
+    } + 1px)`,
+    maxWidth: `none`,
+    opacity: `1 !important`,
+    pointerEvents: `auto`,
+    top: `calc(${presets.headerHeight} + ${presets.bannerHeight} - 1px)`,
+    width: rhythm(10),
+    zIndex: 2,
   },
-  "::-webkit-scrollbar-track": {
-    background: colors.ui.light,
+  sidebarLargerScreen: {
+    paddingTop: horizontalPaddingDesktop,
+    paddingBottom: horizontalPaddingDesktop,
+    width: rhythm(12),
+  },
+  button: {
+    backgroundColor: colors.gatsby,
+    bottom: 44, // iOS Safari's inert "bottom 44px"
+    border: `1px solid rgba(255, 255, 255, 0.1)`,
+    borderRadius: `50%`,
+    boxShadow: `0 0 20px rgba(0, 0, 0, 0.3)`,
+    cursor: `pointer`,
+    display: `block`,
+    position: `fixed`,
+    right: 20,
+    width: 60,
+    zIndex: 20,
+    [presets.Tablet]: { display: `none` },
   },
 }
