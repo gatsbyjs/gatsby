@@ -155,11 +155,7 @@ class GatsbyLink extends React.Component {
             // loaded before continuing.
             if (process.env.NODE_ENV === `production`) {
               e.preventDefault()
-              if (window.GATSBY_SW_UPDATED) {
-                window.location = this.state.to
-              } else {
-                window.___push(this.state.to)
-              }
+              window.___push(this.state.to)
             }
           }
 
