@@ -14,7 +14,28 @@ describe(`gatsby-plugin-postcss`, () => {
     module: {
       rules: [
         {
-          oneOf: [`postcss-loader`],
+          oneOf: [
+            {
+              test: /\.css$/,
+              loaders: [`css-loader`, `postcss-loader`],
+            },
+            {
+              test: /\.module\.css$/,
+              loaders: [`css-loader`, `postcss-loader`],
+            },
+          ],
+        },
+        {
+          oneOf: [
+            {
+              test: /\.scss$/,
+              loaders: [`css-loader`, `postcss-loader`, `sass-loader`],
+            },
+            {
+              test: /\.module\.scss$/,
+              loaders: [`css-loader`, `postcss-loader`, `sass-loader`],
+            },
+          ],
         },
         {
           test: /\.js/,

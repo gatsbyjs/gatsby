@@ -1,3 +1,11 @@
+const CSS_PATTERN = /\.css$/
+const MODULE_CSS_PATTERN = /\.module\.css$/
+
+const isBuiltInCssRule = rule =>
+  rule.test &&
+  (rule.test.toString() === CSS_PATTERN.toString() ||
+    rule.test.toString() === MODULE_CSS_PATTERN.toString())
+
 exports.onCreateWebpackConfig = (
   { actions, stage, loaders, getConfig },
   { postcss: postcssOptions = {} } = {}
@@ -6,13 +14,12 @@ exports.onCreateWebpackConfig = (
   const isSSR = stage.includes(`html`)
   const originalConfig = getConfig()
 
-  originalConfig.module.rules = originalConfig.module.rules.filter(rule => {
-    if (Array.isArray(rule.oneOf)) {
-      return JSON.stringify(rule).indexOf(`postcss-loader`) === -1
-    }
-
-    return true
-  })
+  originalConfig.module.rules = originalConfig.module.rules.filter(
+    rule =>
+      Array.isArray(rule.oneOf)
+        ? rule.oneOf.every(x => !isBuiltInCssRule(x))
+        : true
+  )
 
   actions.replaceWebpackConfig(originalConfig)
 
@@ -22,7 +29,7 @@ exports.onCreateWebpackConfig = (
   }
 
   const postcssRule = {
-    test: /\.css$/,
+    test: CSS_PATTERN,
     use: isSSR
       ? [loaders.null()]
       : [
@@ -33,7 +40,7 @@ exports.onCreateWebpackConfig = (
   }
 
   const postcssModule = {
-    test: /\.module\.css$/,
+    test: MODULE_CSS_PATTERN,
     use: [
       loaders.miniCssExtract(),
       loaders.css({ modules: true, importLoaders: 1 }),
