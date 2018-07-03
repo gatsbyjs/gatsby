@@ -11,6 +11,7 @@
 const _ = require(`lodash`)
 const chokidar = require(`chokidar`)
 const path = require(`path`)
+const slash = require(`slash`)
 
 const { store } = require(`../../redux/`)
 const { boundActionCreators } = require(`../../redux/actions`)
@@ -189,7 +190,7 @@ const watch = rootDir => {
   }, 100)
 
   watcher = chokidar
-    .watch(path.join(rootDir, `/src/**/*.{js,jsx,ts,tsx}`))
+    .watch(slash(path.join(rootDir, `/src/**/*.{js,jsx,ts,tsx}`)))
     .on(`change`, path => {
       debounceCompile()
     })

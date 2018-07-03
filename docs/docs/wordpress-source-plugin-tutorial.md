@@ -6,7 +6,7 @@ title: "Wordpress Source Plugin Tutorial"
 
 ### What this tutorial covers:
 
-In this tutorial, you will install the `gatsby-source-wordpress` plugin in order to pull blog and image data from a WordPress install into your Gatsby site and render that data. This [Gatsby + Wordpress demo site](https://using-wordpress.gatsbyjs.org/) shows you a sample of what you’re going to be building in this tutorial, although it’s missing the cool images you’ll be adding :D
+In this tutorial, you will install the `gatsby-source-wordpress` plugin in order to pull blog and image data from a WordPress install into your Gatsby site and render that data. This [Gatsby + Wordpress demo site](https:/github.com/gatsbyjs/gatsby/tree/master/examples/using-wordpress) shows you the source code for an example site similar to what you’re going to be building in this tutorial, although it’s missing the cool images you’ll be adding in the next part of this tutorial, [Adding Images to a WordPress Site](/docs/image-tutorial/). :D
 
 ## Why go through this tutorial?
 
@@ -31,7 +31,7 @@ npm install --save gatsby-source-wordpress
 
 Add the `gatsby-source-wordpress` plugin to `gatsby-config.js` using the following code, which you can also find in the [demo site’s source code](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-wordpress/gatsby-config.js).
 
-```js{32-58}
+```js{11-30}
  module.exports = {
   siteMetadata: {
     title: 'Gatsby Wordpress Tutorial',

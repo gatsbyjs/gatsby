@@ -57,7 +57,7 @@ Read on for a detailed guide on what's new in version 2!
 - [Remove inlined CSS in `html.js`](#remove-inlined-css-in-htmljs)
 - [Only allow defined keys on node.internal object](#only-allow-defined-keys-on-the-node-internal-object)
 - [Import `graphql` types from `gatsby/graphql`](#import-graphql-types-from-gatsbygraphql)
-- [Move Babel Configuration`](#move-babel-configuration)
+- [Move `Babel Configuration`](#move-babel-configuration)
 - [Plugin specific changes](#plugin-specific-changes)
 
 You can start with a few of the most important steps - install Gatsby v2 dependencies and update your layout components.
@@ -133,7 +133,7 @@ export default ({ children }) => (
 )
 ```
 
-### 2. Move `layout/index.js` to `src/components/layout.js` (optional, but recommended)
+### 2. Move `layouts/index.js` to `src/components/layout.js` (optional, but recommended)
 
 ```bash
 git mv src/layouts/index.js src/components/layout.js

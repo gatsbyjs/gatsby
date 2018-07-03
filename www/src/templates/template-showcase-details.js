@@ -53,8 +53,6 @@ class ShowcaseTemplate extends React.Component {
     })
   }
 
-  UNSAFE_componentWillMount() {}
-
   render() {
     const { data } = this.props
 
