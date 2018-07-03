@@ -1,10 +1,14 @@
 import React from "react"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
+import RotatingText from "react-rotating-text"
+//import "react-rotating-text/src/ReactRotatingText.css"
 
 import { rhythm, scale } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
 import CtaButton from "./cta-button"
 import { vP, vPHd, vPVHd, vPVVHd } from "../components/gutters"
+import "./slider.css"
+
 
 const MastheadContent = () => (
   <div
@@ -62,15 +66,15 @@ const MastheadContent = () => (
           },
           [presets.Tablet]: {
             fontSize: scale(1.1).fontSize,
-            width: rhythm(12),
+            width: rhythm(14),
           },
           [presets.Hd]: {
             fontSize: scale(1.4).fontSize,
-            width: rhythm(14),
+            width: rhythm(16),
           },
           [presets.VHd]: {
             fontSize: scale(1.5).fontSize,
-            width: rhythm(16),
+            width: rhythm(18),
           },
           [presets.VVHd]: {
             fontSize: scale(1.6).fontSize,
@@ -78,7 +82,16 @@ const MastheadContent = () => (
           },
         }}
       >
-        Blazing-fast static site generator for React
+        <span css={{ display: `block`, marginBottom: rhythm(0.5) }}>
+          <span css={{ marginRight: rhythm(0.25) }}>Build</span>
+          <div class="slidingVertical">
+            <span>blazing fast</span>
+            <span>modern</span>
+            <span>beautiful</span>
+            <span>secure</span>
+          </div>
+        </span>
+        websites with React
       </h1>
       <CtaButton to="/docs/">
         <span css={{ verticalAlign: `middle` }}>Get Started</span>
