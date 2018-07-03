@@ -4,6 +4,35 @@ import Section from "./section"
 import presets, { colors } from "../../utils/presets"
 import { options, rhythm, scale } from "../../utils/typography"
 
+const ExpandAllButton = ({ onClick }) => (
+  <div
+    css={{
+      display: `none`,
+      marginLeft: rhythm(1),
+      marginRight: rhythm(1),
+      textAlign: `right`,
+      // [presets.Tablet]: {
+      //   display: `block`,
+      // },
+    }}
+  >
+    <button
+      onClick={onClick}
+      css={{
+        ...scale(-2 / 3),
+        background: `transparent`,
+        border: `1px solid ${colors.ui.bright}`,
+        borderRadius: presets.radius,
+        color: colors.gatsby,
+        cursor: `pointer`,
+        fontFamily: options.systemFontFamily.join(`,`),
+      }}
+    >
+      Expand All
+    </button>
+  </div>
+)
+
 class SidebarBody extends React.Component {
   constructor(props, context) {
     super(props, context)
@@ -55,31 +84,7 @@ class SidebarBody extends React.Component {
     return (
       <div className="docSearch-sidebar">
         {sectionList.length > 1 && (
-          <div
-            css={{
-              display: `none`,
-              marginLeft: rhythm(1),
-              marginRight: rhythm(1),
-              textAlign: `right`,
-              // [presets.Tablet]: {
-              //   display: `block`,
-              // },
-            }}
-          >
-            <button
-              onClick={this._expandAll}
-              css={{
-                ...scale(-2 / 3),
-                background: `transparent`,
-                border: `1px solid ${colors.ui.bright}`,
-                borderRadius: presets.radius,
-                color: colors.gatsby,
-                fontFamily: options.systemFontFamily.join(`,`),
-              }}
-            >
-              Expand All
-            </button>
-          </div>
+          <ExpandAllButton onClick={this._expandAll} />
         )}
         {sectionList.map((section, index) => (
           <Section
