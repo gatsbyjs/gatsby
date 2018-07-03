@@ -1141,7 +1141,7 @@
 - title: Spacetime
   main_url: 'https://www.heyspacetime.com/'
   url: 'https://www.heyspacetime.com/'
-  featured: true
+  featured: false
   description: >-
     Spacetime is a Dallas-based digital experience agency specializing in web, app, startup, and digital experience creation.
   categories:
