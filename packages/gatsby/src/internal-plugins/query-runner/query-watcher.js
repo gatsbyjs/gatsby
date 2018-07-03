@@ -62,22 +62,22 @@ exports.extractQueries = () => {
       `)
     }
 
+    // During development start watching files to recompile & run
+    // queries on the fly.
+    if (process.env.NODE_ENV !== `production`) {
+      watch(state.program.directory)
+
+      // Ensure every component is being watched.
+      components.forEach(component => {
+        watcher.add(component)
+      })
+      staticQueryComponents.forEach(component => {
+        watcher.add(component)
+      })
+    }
+
     return
   })
-
-  // During development start watching files to recompile & run
-  // queries on the fly.
-  if (process.env.NODE_ENV !== `production`) {
-    watch(state.program.directory)
-
-    // Ensure every component is being watched.
-    components.forEach(component => {
-      watcher.add(component)
-    })
-    staticQueryComponents.forEach(component => {
-      watcher.add(component)
-    })
-  }
 
   return queryCompilerPromise
 }
