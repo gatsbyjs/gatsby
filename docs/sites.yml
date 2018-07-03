@@ -1138,3 +1138,17 @@
     - Nonprofit
   built_by: Canvas United
   built_by_url: 'https://www.canvasunited.com/'
+- title: Spacetime
+  main_url: 'https://www.heyspacetime.com/'
+  url: 'https://www.heyspacetime.com/'
+  featured: false
+  description: >-
+    Spacetime is a Dallas-based digital experience agency specializing in web, app, startup, and digital experience creation.
+  categories:
+    - Marketing
+    - Portfolio
+    - Agency
+    - Creative
+    - Featured
+  built_by: Spacetime
+  built_by_url: 'https://www.heyspacetime.com/'
