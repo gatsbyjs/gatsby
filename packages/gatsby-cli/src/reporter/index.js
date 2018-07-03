@@ -92,12 +92,7 @@ module.exports = Object.assign(reporter, {
     const spanArgs = parentSpan ? { childOf: parentSpan, } : {}
     const span = tracer.startSpan(name, spanArgs)
 
-    // zipkin-javascript-opentracing doesn't allow arbitrary
-    // tags. Comment out until
-    // https://github.com/DanielMSchmidt/zipkin-javascript-opentracing/issues/67
-    // is addressed
-    //
-    // span.setTag('activity', true)
+    span.setTag(`activity`, `true`)
 
     return {
       start: () => {
