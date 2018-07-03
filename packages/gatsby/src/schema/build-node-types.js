@@ -34,7 +34,10 @@ module.exports = async ({ parentSpan }) => {
   const spanArgs = parentSpan ? { childOf: parentSpan } : {}
   const span = tracer.startSpan(`build schema`, spanArgs)
 
-  const types = _.groupBy(getNodes(), node => node.internal.type)
+  const types = _.groupBy(
+    getNodes().filter(node => node.internal && !node.internal.ignoreType),
+    node => node.internal.type
+  )
   const processedTypes: TypeMap = {}
 
   clearTypeExampleValues()
