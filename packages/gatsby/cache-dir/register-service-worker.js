@@ -15,9 +15,8 @@ if (`serviceWorker` in navigator) {
               if (navigator.serviceWorker.controller) {
                 // At this point, the old content will have been purged and the fresh content will
                 // have been added to the cache.
-                // We reload immediately so the user sees the new content.
-                // This could/should be made configurable in the future.
-                window.location.reload()
+                // We set a flag so Gatsby Link knows to refresh the page on next navigation attempt
+                window.GATSBY_SW_UPDATED = true
               } else {
                 // At this point, everything has been precached.
                 // It's the perfect time to display a "Content is cached for offline use." message.

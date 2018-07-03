@@ -64,6 +64,12 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     if (redirect) {
       pathname = redirect.toPath
     }
+
+    // If we had a service worker update, no matter the path, reload window
+    if (window.GATSBY_SW_UPDATED) {
+      window.location = pathname
+    }
+
     const wl = window.location
 
     // If we're already at this location, do nothing.
@@ -79,15 +85,16 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       ? window.___history.replace
       : window.___history.push
 
-    const historyNavigateAction = replace
-      ? `REPLACE`
-      : `PUSH`
+    const historyNavigateAction = replace ? `REPLACE` : `PUSH`
 
     // Start a timer to wait for a second before transitioning and showing a
     // loader in case resources aren't around yet.
     const timeoutId = setTimeout(() => {
       emitter.emit(`onDelayedLoadPageResources`, { pathname })
-      apiRunner(`onRouteUpdateDelayed`, { location, action: historyNavigateAction })
+      apiRunner(`onRouteUpdateDelayed`, {
+        location,
+        action: historyNavigateAction,
+      })
     }, 1000)
 
     lastNavigateToLocationString = `${location.pathname}${location.search}${
@@ -99,7 +106,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     const loaderCallback = pageResources => {
       if (!pageResources) {
         // We fetch resources for 404 page in page-renderer.js. Calling it
-        // here is to ensure that we have needed resouces to render page 
+        // here is to ensure that we have needed resouces to render page
         // before navigating to it
         loader.getResourcesForPathname(`/404.html`, loaderCallback)
       } else {
