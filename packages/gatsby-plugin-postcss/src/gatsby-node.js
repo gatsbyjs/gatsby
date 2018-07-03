@@ -22,22 +22,25 @@ const getOptions = pluginOptions => {
   return options
 }
 
-exports.onCreateWebpackConfig = (
-  { actions, stage, loaders, getConfig },
-  pluginOptions
-) => {
-  const isProduction = stage !== `develop`
-  const isSSR = stage.includes(`html`)
-  const originalConfig = getConfig()
-
-  originalConfig.module.rules = originalConfig.module.rules.filter(
+const removeBuiltInCssLoaders = config => {
+  config.module.rules = config.module.rules.filter(
     rule =>
       Array.isArray(rule.oneOf)
         ? rule.oneOf.every(x => !isBuiltInCssRule(x))
         : true
   )
 
-  actions.replaceWebpackConfig(originalConfig)
+  return config
+}
+
+exports.onCreateWebpackConfig = (
+  { actions, stage, loaders, getConfig },
+  pluginOptions
+) => {
+  const isProduction = stage !== `develop`
+  const isSSR = stage.includes(`html`)
+
+  actions.replaceWebpackConfig(removeBuiltInCssLoaders(getConfig()))
 
   const postcssOptions = getOptions(pluginOptions)
 
