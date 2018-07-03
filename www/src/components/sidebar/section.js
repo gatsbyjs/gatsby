@@ -8,7 +8,7 @@ import SectionTitle from "./section-title"
 import ChevronSvg from "./chevron-svg"
 
 const horizontalPadding = rhythm(3 / 4)
-const horizonalPaddingDesktop = rhythm(3 / 2)
+const horizontalPaddingDesktop = rhythm(3 / 2)
 
 const ToggleSectionButton = ({
   title,
@@ -52,8 +52,8 @@ const Title = ({ title }) => (
       paddingLeft: horizontalPadding,
       paddingRight: horizontalPadding,
       [presets.Desktop]: {
-        paddingLeft: horizonalPaddingDesktop,
-        paddingRight: horizonalPaddingDesktop,
+        paddingLeft: horizontalPaddingDesktop,
+        paddingRight: horizontalPaddingDesktop,
       },
     }}
   >
@@ -116,7 +116,7 @@ class Section extends React.Component {
               height: 1,
               position: `absolute`,
               right: 0,
-              left: 40,
+              left: horizontalPadding,
             },
             "& li": {
               lineHeight: 1.3,
@@ -133,9 +133,12 @@ class Section extends React.Component {
               },
             },
             [presets.Desktop]: {
+              "&:after": {
+                left: horizontalPaddingDesktop,
+              },
               "& li": {
-                paddingLeft: horizonalPaddingDesktop,
-                paddingRight: horizonalPaddingDesktop,
+                paddingLeft: horizontalPaddingDesktop,
+                paddingRight: horizontalPaddingDesktop,
               },
             },
           }}
@@ -231,8 +234,8 @@ const styles = {
     textAlign: `left`,
     width: `100%`,
     [presets.Desktop]: {
-      paddingLeft: horizonalPaddingDesktop,
-      paddingRight: horizonalPaddingDesktop,
+      paddingLeft: horizontalPaddingDesktop,
+      paddingRight: horizontalPaddingDesktop,
     },
   },
   liActive: {
