@@ -79,8 +79,5 @@
     "develop": "gatsby develop",
     "serve": "gatsby serve",
     "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "devDependencies": {
-    "core-js": "^2.5.7"
   }
 }
