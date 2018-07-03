@@ -81,7 +81,6 @@ Mama Route URL: ${url}
     let validRoutes = getValidRoutes({
       allRoutes,
       url,
-      baseUrl,
       _verbose,
       _useACF,
       _acfOptionPageIds,
@@ -370,13 +369,11 @@ function checkRouteList( routePath, routeList ) {
  *
  * @param {any} allRoutes
  * @param {any} url
- * @param {any} baseUrl
  * @returns
  */
 function getValidRoutes({
   allRoutes,
   url,
-  baseUrl,
   _verbose,
   _useACF,
   _acfOptionPageIds,
@@ -398,14 +395,13 @@ function getValidRoutes({
 
       // Excluding the "technical" API Routes
       const excludedTypes = [
-        `v2`,
-        `v3`,
-        `1.0`,
-        `2.0`,
-        `embed`,
-        `proxy`,
-        ``,
-        `${baseUrl}**`,
+        "/v2/**",
+        "/v3/**",
+        "**/1.0",
+        "**/2.0",
+        "**/embed",
+        "**/proxy",
+        "/",
       ]
 
       const routePath = getRoutePath(url, route._links.self)
@@ -457,14 +453,16 @@ function getValidRoutes({
         }
         validRoutes.push({ url: route._links.self, type: validType })
       } else {
-        if (_verbose)
+        if (_verbose) {
+          const invalidType = inBlackList ? `blacklisted` : `not whitelisted`
           console.log(
-            colorized.out(`Invalid route.`, colorized.color.Font.FgRed)
+            colorized.out(`Excluded route: ${invalidType}`, colorized.color.Font.FgYellow)
           )
+        }
       }
     } else {
       if (_verbose)
-        console.log(colorized.out(`Invalid route.`, colorized.color.Font.FgRed))
+        console.log(colorized.out(`Invalid route: detail route`, colorized.color.Font.FgRed))
     }
   }
 
