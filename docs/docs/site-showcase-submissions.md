@@ -16,7 +16,7 @@ There are only two major steps :)
 - title: Title of the Site
   main_url: 'http://titleofthesite.com/' //this is the URL that the screenshot comes from//
   url: 'http://titleofthesite.co.uk/'
-  featured: false
+  featured: false //leave as false, the Gatsby team will choose featured sites quarterly//
   description: >-
     This description will appear in the modal detail view and permalink views for your site.
   categories:
@@ -86,15 +86,16 @@ Featured sites are chosen the first week of every quarter based on the following
 - unique use case
 - unique design
 
-Please mention here if you think the site you're submitting ought to be featured and why (which of the above criteria apply). If, during the quarterly review process, your site gets selected to be featured, you'll need to change the fields below:
+### How to Set a Site as Featured
+_Note: the Gatsby team will choose featured sites, leave as `featured: false` when first posting_
 
 1.  Change `featured: false` to `featured: true`
 
-2.  Add "featured" as a category:
+2.  Add `featured` as a category:
 
 ```shell
 categories:
-- featured
+  - featured
 ```
 
 ## Change your mind / need to edit your submission?
