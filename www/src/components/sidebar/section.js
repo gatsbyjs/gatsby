@@ -121,10 +121,14 @@ class Section extends React.Component {
             "& li": {
               lineHeight: 1.3,
               margin: 0,
-              paddingTop: rhythm(1 / 8),
-              paddingBottom: rhythm(1 / 8),
               paddingLeft: horizontalPadding,
               paddingRight: horizontalPadding,
+              fontSize: scale(-1 / 10).fontSize,
+            },
+            [presets.Phablet]: {
+              "& li": {
+                fontSize: scale(-2 / 10).fontSize,
+              },
             },
             [presets.Tablet]: {
               display: isActive ? `block` : `none`,
@@ -214,13 +218,24 @@ const styles = {
     position: `relative`,
   },
   tutorialSubsection: {
-    "&:before": {
+    paddingBottom: 10,
+    "&:after": {
       background: colors.ui.bright,
+      content: ` `,
+      left: `.275rem`,
+      top: `1.5rem`,
+      bottom: `1.5rem`,
+      position: `absolute`,
+      width: 1,
+    },
+    "&:before": {
       content: ` `,
       height: `100%`,
       left: `.275rem`,
       position: `absolute`,
-      width: 1,
+      bottom: 0,
+      width: 0,
+      borderLeft: `1px dashed ${colors.ui.bright}`,
     },
   },
   button: {
@@ -242,7 +257,7 @@ const styles = {
     background: colors.ui.light,
     "&&": {
       marginTop: rhythm(1 / 2),
-      marginBottom: rhythm(1),
+      marginBottom: rhythm(1 / 2),
       paddingTop: rhythm(1 / 2),
     },
   },
