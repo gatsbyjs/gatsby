@@ -6,9 +6,25 @@ const isBuiltInCssRule = rule =>
   (rule.test.toString() === CSS_PATTERN.toString() ||
     rule.test.toString() === MODULE_CSS_PATTERN.toString())
 
+const getOptions = pluginOptions => {
+  const options = { ...pluginOptions }
+
+  delete options.plugins
+
+  const postcssPlugins = options.postcssPlugins
+
+  if (postcssPlugins) {
+    options.plugins = postcssPlugins
+  }
+
+  delete options.postcssPlugins
+
+  return options
+}
+
 exports.onCreateWebpackConfig = (
   { actions, stage, loaders, getConfig },
-  { postcss: postcssOptions = {} } = {}
+  pluginOptions
 ) => {
   const isProduction = stage !== `develop`
   const isSSR = stage.includes(`html`)
@@ -22,6 +38,8 @@ exports.onCreateWebpackConfig = (
   )
 
   actions.replaceWebpackConfig(originalConfig)
+
+  const postcssOptions = getOptions(pluginOptions)
 
   const postcssLoader = {
     loader: `postcss-loader`,

@@ -54,7 +54,8 @@ describe(`gatsby-plugin-postcss`, () => {
     options: {
       "No options": {},
       "PostCss options": {
-        postcss: { plugins: [`autoprefixer`], sourceMap: false },
+        postcssPlugins: [`autoprefixer`],
+        sourceMap: false,
       },
     },
   }
