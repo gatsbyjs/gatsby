@@ -133,7 +133,7 @@ class PageRenderer extends React.Component {
 
     const [replacementComponent] = apiRunner(`replaceComponentRenderer`, {
       props,
-      loader: publicLoader,
+      component: this.state.pageResources.component,
     })
 
     return (
