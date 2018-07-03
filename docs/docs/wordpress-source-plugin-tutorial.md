@@ -31,7 +31,7 @@ npm install --save gatsby-source-wordpress
 
 Add the `gatsby-source-wordpress` plugin to `gatsby-config.js` using the following code, which you can also find in the [demo site’s source code](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-wordpress/gatsby-config.js).
 
-```js{32-58}
+```js{11-30}
  module.exports = {
   siteMetadata: {
     title: 'Gatsby Wordpress Tutorial',
