@@ -104,16 +104,16 @@ para hablar con el servidor <tt>remote</tt>.
 
 Primero abra las herramientas remotas (<tt>remote devtools</tt>).
 
-![Como abrir el servidor de remote redux extension](./images/open-remote-dev-tools.png)
+![Como abrir el servidor de remote redux extension](../../docs/docs/images/open-remote-dev-tools.png)
 
 A continuación, haga clic en configuración en el menú inferior y configure el <tt>host</tt> y el puerto.
 
-![cómo configurar el host/puerto para el remote devtools extension para conectarse en Gatsby](./images/remote-dev-settings.png)
+![cómo configurar el host/puerto para el remote devtools extension para conectarse en Gatsby](../../docs/docs/images/remote-dev-settings.png)
 
 Luego de esto, el devtools extension _debería_ conectarse al <tt>remote server</tt>
 y verás que las acciones comienzan a aparecer.
 
-![gatsby redux remote devtools](./images/running-redux-devtools.png)
+![gatsby redux remote devtools](.../../docs/docs/images/running-redux-devtools.png)
 
 **¡¡Advertencia!! Un montón de errores**. Si bien tener esto disponible es extremadamente
 útil, esta configuración es muy defectuosa y frágil. Hay una pérdida de memoria en la extensión que se activa,
