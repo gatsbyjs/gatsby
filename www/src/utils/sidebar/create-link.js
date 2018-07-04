@@ -1,7 +1,7 @@
 import Link from "gatsby-link"
 import React from "react"
 import presets, { colors } from "../presets"
-import { options } from "../typography"
+import { options, rhythm } from "../typography"
 
 const _getTitle = (title, isDraft) => (isDraft ? title.slice(0, -1) : title)
 const _isDraft = title => title.slice(-1) === `*`
@@ -61,8 +61,13 @@ const createLinkTutorial = ({
 }
 
 const bulletOffset = {
-  left: `-1rem`,
-  top: `.2rem`,
+  default: {
+    left: `-1rem`,
+    top: `.6em`,
+  },
+  desktop: {
+    top: `.55em`,
+  },
 }
 
 const bulletSize = 8
@@ -96,6 +101,9 @@ const styles = {
     },
   },
   link: {
+    display: `block`,
+    paddingTop: rhythm(1 / 8),
+    paddingBottom: rhythm(1 / 8),
     position: `relative`,
     zIndex: 1,
     "&&": {
@@ -113,7 +121,7 @@ const styles = {
       },
     },
     "&:before": {
-      ...bulletOffset,
+      ...bulletOffset.default,
       borderRadius: `100%`,
       content: ` `,
       fontWeight: `normal`,
@@ -124,9 +132,12 @@ const styles = {
         presets.animation.curveDefault
       }`,
       width: bulletSize,
+      [presets.Tablet]: {
+        ...bulletOffset.desktop,
+      },
     },
     "&:after": {
-      ...bulletOffset,
+      ...bulletOffset.default,
       background: colors.gatsby,
       borderRadius: 4,
       content: ` `,
@@ -139,10 +150,14 @@ const styles = {
         presets.animation.curveDefault
       }`,
       width: 1,
+      [presets.Tablet]: {
+        ...bulletOffset.desktop,
+        left: `-0.6rem`,
+      },
     },
   },
   subsectionLink: {
-    ...bulletOffset,
+    ...bulletOffset.default,
     background: `#fff`,
     border: `1px solid ${colors.ui.bright}`,
     borderRadius: `100%`,
@@ -152,6 +167,9 @@ const styles = {
     position: `absolute`,
     width: bulletSize,
     zIndex: -1,
+    [presets.Tablet]: {
+      ...bulletOffset.desktop,
+    },
   },
 }
 

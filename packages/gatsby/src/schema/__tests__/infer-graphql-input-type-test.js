@@ -93,6 +93,7 @@ describe(`GraphQL Input args`, () => {
       },
       anotherKey: {
         withANested: {
+          nestedKey: `foo`,
           emptyArray: [],
           anotherEmptyArray: [],
         },
@@ -113,6 +114,11 @@ describe(`GraphQL Input args`, () => {
       name: `The Mad Wax`,
       hair: 2,
       anArray: [1, 2, 5, 4],
+      anotherKey: {
+        withANested: {
+          nestedKey: `foo`,
+        },
+      },
       frontmatter: {
         date: `2006-07-22T22:39:53.000Z`,
         title: `The world of slash and adventure`,
@@ -126,6 +132,11 @@ describe(`GraphQL Input args`, () => {
       name: `The Mad Wax`,
       hair: 0,
       date: `2006-07-29T22:39:53.000Z`,
+      anotherKey: {
+        withANested: {
+          nestedKey: `bar`,
+        },
+      },
       frontmatter: {
         date: `2006-07-22T22:39:53.000Z`,
         title: `The world of shave and adventure`,
@@ -520,10 +531,12 @@ describe(`GraphQL Input args`, () => {
             blue: distinct(field: frontmatter___blue)
             # Only one node has this field
             circle: distinct(field: frontmatter___circle)
+            nestedField: distinct(field: anotherKey___withANested___nestedKey)
           }
         }
       `
     )
+
     expect(result.errors).not.toBeDefined()
 
     expect(result.data.allNode.names.length).toEqual(2)
@@ -537,6 +550,10 @@ describe(`GraphQL Input args`, () => {
 
     expect(result.data.allNode.circle.length).toEqual(1)
     expect(result.data.allNode.circle[0]).toEqual(`happy`)
+
+    expect(result.data.allNode.nestedField.length).toEqual(2)
+    expect(result.data.allNode.nestedField[0]).toEqual(`bar`)
+    expect(result.data.allNode.nestedField[1]).toEqual(`foo`)
   })
 
   it(`handles the group connection field`, async () => {
@@ -568,6 +585,34 @@ describe(`GraphQL Input args`, () => {
     expect(result.data.allNode.anArray[0].fieldValue).toEqual(`1`)
     expect(result.data.allNode.anArray[0].field).toEqual(`anArray`)
     expect(result.data.allNode.anArray[0].totalCount).toEqual(2)
+  })
+
+  it(`handles the nested group connection field`, async () => {
+    let result = await queryResult(
+      nodes,
+      ` {
+        allNode {
+          nestedKey: group(field: anotherKey___withANested___nestedKey) {
+            field
+            fieldValue
+            totalCount
+          }
+        }
+      }`
+    )
+
+    expect(result.errors).not.toBeDefined()
+    expect(result.data.allNode.nestedKey).toHaveLength(2)
+    expect(result.data.allNode.nestedKey[0].fieldValue).toEqual(`bar`)
+    expect(result.data.allNode.nestedKey[0].field).toEqual(
+      `anotherKey.withANested.nestedKey`
+    )
+    expect(result.data.allNode.nestedKey[0].totalCount).toEqual(1)
+    expect(result.data.allNode.nestedKey[1].fieldValue).toEqual(`foo`)
+    expect(result.data.allNode.nestedKey[1].field).toEqual(
+      `anotherKey.withANested.nestedKey`
+    )
+    expect(result.data.allNode.nestedKey[1].totalCount).toEqual(2)
   })
 
   it(`can query object arrays`, async () => {

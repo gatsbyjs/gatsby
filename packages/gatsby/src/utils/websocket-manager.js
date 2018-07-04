@@ -1,29 +1,98 @@
+// @flow
+
 const path = require(`path`)
 const { store } = require(`../redux`)
 const fs = require(`fs`)
 
-const getCachedPageData = (pagePath, directory) => {
-  const { jsonDataPaths, pages } = store.getState()
-  const page = pages.find(p => p.path === pagePath)
-  const dataPath = jsonDataPaths[page.jsonName]
-  if (typeof dataPath === `undefined`) return undefined
+type QueryResult = {
+  id: string,
+  result: object,
+}
+
+type QueryResultsMap = Map<string, QueryResult>
+
+/**
+ * Get cached query result for given data path.
+ * @param {string} dataFileName Cached query result filename.
+ * @param {string} directory Root directory of current project.
+ */
+const readCachedResults = (dataFileName: string, directory: string): object => {
   const filePath = path.join(
     directory,
     `public`,
     `static`,
     `d`,
-    `${dataPath}.json`
+    `${dataFileName}.json`
   )
-  const result = JSON.parse(fs.readFileSync(filePath, `utf-8`))
+  return JSON.parse(fs.readFileSync(filePath, `utf-8`))
+}
+
+/**
+ * Get cached page query result for given page path.
+ * @param {string} pagePath Path to a page.
+ * @param {string} directory Root directory of current project.
+ */
+const getCachedPageData = (
+  pagePath: string,
+  directory: string
+): QueryResult => {
+  const { jsonDataPaths, pages } = store.getState()
+  const page = pages.find(p => p.path === pagePath)
+  const dataPath = jsonDataPaths[page.jsonName]
+  if (typeof dataPath === `undefined`) {
+    console.log(
+      `Error loading a result for the page query in "${pagePath}". Query was not run and no cached result was found.`
+    )
+    return undefined
+  }
+
   return {
-    result,
-    path: pagePath,
+    result: readCachedResults(dataPath, directory),
+    id: pagePath,
   }
 }
 
-const getRoomNameFromPath = path => `path-${path}`
+/**
+ * Get cached StaticQuery results for components that Gatsby didn't run query yet.
+ * @param {QueryResultsMap} resultsMap Already stored results for queries that don't need to be read from files.
+ * @param {string} directory Root directory of current project.
+ */
+const getCachedStaticQueryResults = (
+  resultsMap: QueryResultsMap,
+  directory: string
+): QueryResultsMap => {
+  const cachedStaticQueryResults = new Map()
+  const { staticQueryComponents, jsonDataPaths } = store.getState()
+  staticQueryComponents.forEach(staticQueryComponent => {
+    // Don't read from file if results were already passed from query runner
+    if (resultsMap.has(staticQueryComponent.hash)) return
+
+    const dataPath = jsonDataPaths[staticQueryComponent.jsonName]
+    if (typeof dataPath === `undefined`) {
+      console.log(
+        `Error loading a result for the StaticQuery in "${
+          staticQueryComponent.componentPath
+        }". Query was not run and no cached result was found.`
+      )
+      return
+    }
+    cachedStaticQueryResults.set(staticQueryComponent.hash, {
+      result: readCachedResults(dataPath, directory),
+      id: staticQueryComponent.hash,
+    })
+  })
+  return cachedStaticQueryResults
+}
+
+const getRoomNameFromPath = (path: string): string => `path-${path}`
 
 class WebsocketManager {
+  pageResults: QueryResultsMap
+  staticQueryResults: QueryResultsMap
+  isInitialised: boolean
+  activePaths: Set<string>
+  programDir: string
+
   constructor() {
     this.isInitialised = false
     this.activePaths = new Set()
@@ -40,19 +109,29 @@ class WebsocketManager {
 
   init({ server, directory }) {
     this.programDir = directory
+
+    const cachedStaticQueryResults = getCachedStaticQueryResults(
+      this.staticQueryResults,
+      this.programDir
+    )
+    this.staticQueryResults = new Map([
+      ...this.staticQueryResults,
+      ...cachedStaticQueryResults,
+    ])
+
     this.websocket = require(`socket.io`)(server)
 
     this.websocket.on(`connection`, s => {
       let activePath = null
 
       // Send already existing static query results
-      this.staticQueryResults.forEach((result, id) => {
+      this.staticQueryResults.forEach(result => {
         this.websocket.send({
           type: `staticQueryResult`,
-          payload: { id, result },
+          payload: result,
         })
       })
-      this.pageResults.forEach((result, path) => {
+      this.pageResults.forEach(result => {
         this.websocket.send({
           type: `pageQueryResult`,
           payload: result,
@@ -74,19 +153,15 @@ class WebsocketManager {
         activePath = path
         this.activePaths.add(path)
 
-        if (this.pageResults.has(path)) {
-          this.websocket.send({
-            type: `pageQueryResult`,
-            payload: this.pageResults.get(path),
-          })
-        } else {
+        if (!this.pageResults.has(path)) {
           const result = getCachedPageData(path, this.programDir)
           this.pageResults.set(path, result)
-          this.websocket.send({
-            type: `pageQueryResult`,
-            payload: this.pageResults.get(path),
-          })
         }
+
+        this.websocket.send({
+          type: `pageQueryResult`,
+          payload: this.pageResults.get(path),
+        })
       })
 
       s.on(`disconnect`, s => {
@@ -105,13 +180,13 @@ class WebsocketManager {
     return this.isInitialised && this.websocket
   }
 
-  emitStaticQueryData(data) {
-    this.staticQueryResults.set(data.id, data.result)
+  emitStaticQueryData(data: QueryResult) {
+    this.staticQueryResults.set(data.id, data)
     if (this.isInitialised) {
       this.websocket.send({ type: `staticQueryResult`, payload: data })
     }
   }
-  emitPageData(data) {
+  emitPageData(data: QueryResult) {
     if (this.isInitialised) {
       this.websocket.send({ type: `pageQueryResult`, payload: data })
     }
