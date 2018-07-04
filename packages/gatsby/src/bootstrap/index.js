@@ -93,8 +93,6 @@ module.exports = async (args: BootstrapArgs) => {
   await del([
     `public/*.{html,css}`,
     `public/**/*.{html,css}`,
-    `public/scripts`,
-    `public/styles`,
     `!public/static`,
     `!public/static/**/*.{html,css}`,
   ])
