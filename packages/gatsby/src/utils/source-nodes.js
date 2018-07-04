@@ -1,4 +1,5 @@
 const _ = require(`lodash`)
+const opentracing = require(`opentracing`)
 const report = require(`gatsby-cli/lib/reporter`)
 
 const apiRunner = require(`./api-runner-node`)
@@ -27,6 +28,9 @@ function discoverPluginsWithoutNodes(storeState) {
 }
 
 module.exports = async ( { parentSpan }) => {
+
+  console.log(`parentSpan: ${JSON.stringify(parentSpan)}`)
+
   await apiRunner(`sourceNodes`, {
     traceId: `initial-sourceNodes`,
     waitForCascadingActions: true,

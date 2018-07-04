@@ -274,10 +274,10 @@ module.exports = async (args: BootstrapArgs) => {
 
   // Source nodes
   activity = report.activityTimer(`source and transform nodes`, {
-    parentSpan: bootstrapSpan
+    parentSpan: bootstrapSpan,
   })
   activity.start()
-  await require(`../utils/source-nodes`)({ parentSpan: bootstrapSpan, })
+  await require(`../utils/source-nodes`)({ parentSpan: activity.span, })
   activity.end()
 
   // Create Schema.
@@ -285,7 +285,7 @@ module.exports = async (args: BootstrapArgs) => {
     parentSpan: bootstrapSpan
   })
   activity.start()
-  await require(`../schema`)()
+  await require(`../schema`)({ parentSpan: activity.span, })
   activity.end()
 
   // Collect resolvable extensions and attach to program.
@@ -348,7 +348,7 @@ module.exports = async (args: BootstrapArgs) => {
     parentSpan: bootstrapSpan
   })
   activity.start()
-  await require(`../schema`)()
+  await require(`../schema`)({ parentSpan: bootstrapSpan, })
   activity.end()
 
   require(`../schema/type-conflict-reporter`).printConflicts()

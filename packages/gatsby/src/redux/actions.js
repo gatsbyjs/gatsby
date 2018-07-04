@@ -55,6 +55,12 @@ type Plugin = {
   name: string,
 }
 
+type ActionOptions = {
+  traceId: ?string,
+  parentSpan: ?Object,
+  followsSpan: ?Object,
+}
+
 /**
  * Delete a page
  * @param {Object} page a page object with at least the path set
@@ -95,7 +101,7 @@ const hasWarnedForPageComponent = new Set()
  *   },
  * })
  */
-actions.createPage = (page: PageInput, plugin?: Plugin, traceId?: string) => {
+actions.createPage = (page: PageInput, plugin?: Plugin, actionOptions?: ActionOptions) => {
   let noPageOrComponent = false
   let name = `The plugin "${plugin.name}"`
   if (plugin.name === `default-site-plugin`) {
@@ -290,9 +296,9 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   }
 
   return {
+    ...actionOptions,
     type: `CREATE_PAGE`,
     plugin,
-    traceId,
     payload: internalPage,
   }
 }
@@ -449,7 +455,7 @@ const typeOwners = {}
  *   }
  * })
  */
-actions.createNode = (node: any, plugin?: Plugin, traceId?: string) => {
+actions.createNode = (node: any, plugin?: Plugin, actionOptions?: ActionOptions) => {
   if (!_.isObject(node)) {
     return console.log(
       chalk.bold.red(
@@ -553,6 +559,11 @@ actions.createNode = (node: any, plugin?: Plugin, traceId?: string) => {
     }
   }
 
+  if (actionOptions.parentSpan) {
+    actionOptions.parentSpan.setTag('nodeId', node.id)
+    actionOptions.parentSpan.setTag('nodeType', node.id)
+  }
+
   let deleteAction
   let updateNodeAction
   // Check if the node has already been processed.
@@ -560,7 +571,7 @@ actions.createNode = (node: any, plugin?: Plugin, traceId?: string) => {
     updateNodeAction = {
       type: `TOUCH_NODE`,
       plugin,
-      traceId,
+      ...actionOptions,
       payload: node.id,
     }
   } else {
@@ -576,7 +587,7 @@ actions.createNode = (node: any, plugin?: Plugin, traceId?: string) => {
     updateNodeAction = {
       type: `CREATE_NODE`,
       plugin,
-      traceId,
+      ...actionOptions,
       payload: node,
     }
   }
@@ -654,7 +665,7 @@ type CreateNodeInput = {
 actions.createNodeField = (
   { node, name, value, fieldName, fieldValue }: CreateNodeInput,
   plugin: Plugin,
-  traceId?: string
+  actionOptions?: ActionOptions
 ) => {
   if (fieldName) {
     console.warn(
@@ -709,7 +720,7 @@ actions.createNodeField = (
   return {
     type: `ADD_FIELD_TO_NODE`,
     plugin,
-    traceId,
+    ...actionOptions,
     payload: node,
   }
 }

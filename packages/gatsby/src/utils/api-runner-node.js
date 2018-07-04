@@ -44,41 +44,43 @@ const doubleBind = (boundActionCreators, api, plugin, actionOptions) => {
 
 const runAPI = (plugin, api, args) => {
 
-  const tracer = opentracing.globalTracer()
-  const apiSpan = args && args.apiSpan
-  const spanOptions = apiSpan ? { childOf: apiSpan } : {}
-  const pluginSpan = tracer.startSpan(`run-plugin`, spanOptions)
-
-  pluginSpan.setTag(`api`, api)
-  pluginSpan.setTag(`plugin`, plugin.name)
-
-  let pathPrefix = ``
-  const {
-    store,
-    emitter,
-    loadNodeContent,
-    getNodes,
-    getNode,
-    hasNodeChanged,
-    getNodeAndSavePathDependency,
-  } = require(`../redux`)
-  const { boundActionCreators } = require(`../redux/actions`)
-
-  const doubleBoundActionCreators = doubleBind(
-    boundActionCreators,
-    api,
-    plugin,
-    args
-  )
-
-  if (store.getState().program.prefixPaths) {
-    pathPrefix = store.getState().config.pathPrefix
-  }
-
-  const namespacedCreateNodeId = id => createNodeId(id, plugin.name)
 
   const gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
   if (gatsbyNode[api]) {
+
+    const tracer = opentracing.globalTracer()
+    const parentSpan = args && args.parentSpan
+    const spanOptions = parentSpan ? { childOf: parentSpan } : {}
+    const pluginSpan = tracer.startSpan(`run-plugin`, spanOptions)
+
+    pluginSpan.setTag(`api`, api)
+    pluginSpan.setTag(`plugin`, plugin.name)
+
+    let pathPrefix = ``
+    const {
+      store,
+      emitter,
+      loadNodeContent,
+      getNodes,
+      getNode,
+      hasNodeChanged,
+      getNodeAndSavePathDependency,
+    } = require(`../redux`)
+    const { boundActionCreators } = require(`../redux/actions`)
+
+    const doubleBoundActionCreators = doubleBind(
+      boundActionCreators,
+      api,
+      plugin,
+      {parentSpan: pluginSpan, ...args}
+    )
+
+    if (store.getState().program.prefixPaths) {
+      pathPrefix = store.getState().config.pathPrefix
+    }
+
+    const namespacedCreateNodeId = id => createNodeId(id, plugin.name)
+    
     const apiCallArgs = [
       {
         ...args,
@@ -111,7 +113,7 @@ const runAPI = (plugin, api, args) => {
       })
     } else {
       const result = gatsbyNode[api](...apiCallArgs)
-      pluginSpan.finish()
+      // pluginSpan.finish()
       return Promise.resolve(result)
     }
   }
@@ -129,13 +131,15 @@ module.exports = async (api, args = {}, pluginSource) =>
   new Promise(resolve => {
 
     const tracer = opentracing.globalTracer()
-
     const parentSpan = args && args.parentSpan
     const apiSpanArgs = parentSpan ? { childOf: parentSpan } : {}
     const apiSpan = tracer.startSpan(`run-api`, apiSpanArgs)
 
     apiSpan.setTag(`api`, api)
-
+    _.forEach(args.traceTags, (value, key) => {
+      apiSpan.setTag(key, value)
+    })
+    
     // Check that the API is documented.
     if (!apiList[api]) {
       reporter.error(`api: "${api}" is not a valid Gatsby api`)
@@ -187,6 +191,7 @@ module.exports = async (api, args = {}, pluginSource) =>
           pluginName = `Plugin ${plugin.name}`
         }
         Promise.resolve(runAPI(plugin, api, {parentSpan: apiSpan, ...args})).asCallback(callback)
+        // Promise.resolve(runAPI(plugin, api, args)).asCallback(callback)
       },
       (err, results) => {
         if (err) {
@@ -222,6 +227,7 @@ module.exports = async (api, args = {}, pluginSource) =>
               instance.resolve(instance.results)
               return false
             } else {
+              apiSpan.finish()
               return true
             }
           }

@@ -6,6 +6,7 @@ const {
   GraphQLID,
   GraphQLList,
 } = require(`graphql`)
+const opentracing = require(`opentracing`)
 
 const apiRunner = require(`../utils/api-runner-node`)
 const { inferObjectStructureFromNodes } = require(`./infer-graphql-type`)
@@ -25,7 +26,12 @@ import type { ProcessedNodeType } from "./infer-graphql-type"
 
 type TypeMap = { [typeName: string]: ProcessedNodeType }
 
-module.exports = async () => {
+module.exports = async ({ parentSpan }) => {
+
+  const tracer = opentracing.globalTracer()
+  const spanArgs = parentSpan ? { childOf: parentSpan } : {}
+  const span = tracer.startSpan(`build schema`, spanArgs)
+
   const types = _.groupBy(getNodes(), node => node.internal.type)
   const processedTypes: TypeMap = {}
 
@@ -135,6 +141,7 @@ module.exports = async () => {
       type: intermediateType,
       allNodes: getNodes(),
       traceId: `initial-setFieldsOnGraphQLNodeType`,
+      parentSpan: span,
     })
 
     const mergedFieldsFromPlugins = _.merge(...fieldsFromPlugins)
