@@ -141,6 +141,9 @@ function buildLocalCommands(cli, isLocalSite) {
         type: `boolean`,
         default: false,
         describe: `Build site without uglifying JS bundles (for debugging).`,
+      }).option(`open-tracing-config-file`, {
+        type: `string`,
+        describe: `js file that should export a function that creates a new open tracing compatible Tracer`,
       }),
     handler: handlerP(
       getCommandHandler(`build`, (args, cmd) => {

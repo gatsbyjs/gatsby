@@ -6,6 +6,10 @@ const buildProductionBundle = require(`./build-javascript`)
 const bootstrap = require(`../bootstrap`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const copyStaticDirectory = require(`../utils/copy-static-directory`)
+const slash = require(`slash`)
+const fs = require(`fs`)
+const path = require(`path`)
+const opentracing = require(`opentracing`)
 
 function reportFailure(msg, err: Error) {
   report.log(``)
@@ -18,9 +22,33 @@ type BuildArgs = {
   browserslist: string[],
   prefixPaths: boolean,
   noUglify: boolean,
+  openTracingConfigFile: string,
+}
+
+function loadTracer(tracerFile) {
+  let tracer
+  if (tracerFile) {
+    console.log(tracerFile)
+    const resolvedPath = slash(path.resolve(tracerFile))
+    const createTracer = require(resolvedPath)
+    tracer = createTracer()
+  } else {
+    console.log('using noop tracer')
+    tracer = new opentracing.Tracer() // Noop
+  }
+
+  return tracer
 }
 
 module.exports = async function build(program: BuildArgs) {
+
+  const tracer = loadTracer(program.openTracingConfigFile)
+  opentracing.initGlobalTracer(tracer)
+  // const tracer = opentracing.globalTracer()
+  // const buildSpan = tracer.startSpan(`build`)
+  // buildSpan.setTag(`directory`, program.directory)
+  // program.span = buildSpan
+
   const { graphqlRunner } = await bootstrap(program)
 
   await apiRunnerNode(`onPreBuild`, { graphql: graphqlRunner })
@@ -56,4 +84,7 @@ module.exports = async function build(program: BuildArgs) {
   await apiRunnerNode(`onPostBuild`, { graphql: graphqlRunner })
 
   report.info(`Done building in ${process.uptime()} sec`)
+
+  // buildSpan.finish()
+  // jaegerTracer.close(() => process.exit())
 }
