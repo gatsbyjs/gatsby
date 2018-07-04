@@ -87,6 +87,25 @@ module.exports = async (
     return hmrBasePath + hmrSuffix
   }
 
+  function getOutputPaths() {
+    const path = program.groupFiles
+      ? directoryPath(`public/scripts`)
+      : directoryPath(`public`)
+
+    let publicPath = program.prefixPaths
+      ? `${store.getState().config.pathPrefix}/`
+      : `/`
+
+    if (program.groupFiles) {
+      publicPath = `${publicPath}scripts/`
+    }
+
+    return {
+      path,
+      publicPath,
+    }
+  }
+
   debug(`Loading webpack config for stage "${stage}"`)
   function getOutput() {
     switch (stage) {
@@ -115,19 +134,15 @@ module.exports = async (
           library: `lib`,
           umdNamedDefine: true,
           globalObject: `this`,
-          path: directoryPath(`public/scripts`),
-          publicPath: program.prefixPaths
-            ? `/scripts${store.getState().config.pathPrefix}/`
-            : `/scripts/`,
+          path: getOutputPaths().path,
+          publicPath: getOutputPaths().publicPath,
         }
       case `build-javascript`:
         return {
           filename: `[name]-[chunkhash].js`,
           chunkFilename: `[name]-[chunkhash].js`,
-          path: directoryPath(`public/scripts`),
-          publicPath: program.prefixPaths
-            ? `/scripts${store.getState().config.pathPrefix}/`
-            : `/scripts/`,
+          path: getOutputPaths().path,
+          publicPath: getOutputPaths().publicPath,
         }
       default:
         throw new Error(`The state requested ${stage} doesn't exist.`)
@@ -168,12 +183,14 @@ module.exports = async (
       plugins.moment(),
 
       // Add a few global variables. Set NODE_ENV to production (enables
-      // optimizations for React) and what the link prefix is (__PATH_PREFIX__).
+      // optimizations for React), what the link prefix is (__PATH_PREFIX__),
+      // and __GROUP_FILES__ to organize output files.
       plugins.define({
         "process.env": processEnv(stage, `development`),
         __PATH_PREFIX__: JSON.stringify(
           program.prefixPaths ? store.getState().config.pathPrefix : ``
         ),
+        __GROUP_FILES__: !!program.groupFiles,
       }),
     ]
 

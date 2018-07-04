@@ -4,6 +4,7 @@
   },
   "globals": {
     "__PATH_PREFIX__": false,
+    "__GROUP_FILES__": false,
     "___emitter": false
   }
 }
