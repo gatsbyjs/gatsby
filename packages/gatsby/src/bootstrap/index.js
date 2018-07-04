@@ -159,8 +159,13 @@ module.exports = async (args: BootstrapArgs) => {
   // directory.
   initCache()
 
-  // Ensure the public/static directory is created.
-  await fs.ensureDirSync(`${program.directory}/public/static/d`)
+  // Ensure the public/static directory and data subdirectories are created.
+  await fs.ensureDir(`${program.directory}/public/static`)
+  await Promise.all(
+    _.range(0, 999).map(i =>
+      fs.ensureDir(`${program.directory}/public/static/d/${i}`)
+    )
+  )
 
   // Copy our site files to the root of the site.
   activity = report.activityTimer(`copy gatsby files`)

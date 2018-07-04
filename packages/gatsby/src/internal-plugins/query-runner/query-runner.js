@@ -9,6 +9,7 @@ const path = require(`path`)
 const { store } = require(`../../redux`)
 const { generatePathChunkName } = require(`../../utils/js-chunk-names`)
 const { formatErrorDetails } = require(`./utils`)
+const mod = require(`hash-mod`)(999)
 
 const resultHashes = {}
 
@@ -66,8 +67,8 @@ ${formatErrorDetails(errorDetails)}`)
   }
 
   // Add the page context onto the results.
-  if (queryJob?.isPage) {
-    result[`pageContext`] = { ...queryJob.context }
+  if (queryJob && queryJob.isPage) {
+    result[`pageContext`] = Object.assign({}, queryJob.context)
   }
 
   // Delete internal data from pageContext
@@ -95,7 +96,7 @@ ${formatErrorDetails(errorDetails)}`)
     .replace(/[^a-zA-Z0-9-_]/g, ``)
 
   let dataPath
-  if (queryJob?.isPage) {
+  if (queryJob.isPage) {
     dataPath = `${generatePathChunkName(queryJob.jsonName)}-${resultHash}`
   } else {
     dataPath = queryJob.hash
@@ -119,6 +120,7 @@ ${formatErrorDetails(errorDetails)}`)
 
   if (resultHashes[queryJob.id] !== resultHash) {
     resultHashes[queryJob.id] = resultHash
+    const modInt = mod(dataPath).toString()
 
     // Always write file to public/static/d/ folder.
     const resultPath = path.join(
@@ -126,13 +128,17 @@ ${formatErrorDetails(errorDetails)}`)
       `public`,
       `static`,
       `d`,
+      modInt,
       `${dataPath}.json`
     )
+
+    dataPath = `${modInt}/${dataPath}`
 
     await fs.writeFile(resultPath, resultJSON)
 
     store.dispatch({
-      type: `SET_JSON_DATA_PATH`,
+      type: `
+      SET_JSON_DATA_PATH `,
       payload: {
         [queryJob.jsonName]: dataPath,
       },
