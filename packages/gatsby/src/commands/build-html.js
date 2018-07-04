@@ -9,7 +9,7 @@ const { createErrorFromString } = require(`gatsby-cli/lib/reporter/errors`)
 const renderHTML = require(`../utils/html-renderer`)
 
 module.exports = async (program: any) => {
-  const { directory } = program
+  const { directory, groupFiles } = program
 
   debug(`generating static HTML`)
   // Reduce pages objects to an array of paths.
@@ -28,7 +28,11 @@ module.exports = async (program: any) => {
       if (e) {
         return reject(e)
       }
-      const outputFile = `${directory}/public/scripts/render-page.js`
+
+      const outputFile = groupFiles
+        ? `${directory}/public/scripts/render-page.js`
+        : `${directory}/public/render-page.js`
+
       if (stats.hasErrors()) {
         let webpackErrors = stats.toJson().errors.filter(Boolean)
         return reject(
