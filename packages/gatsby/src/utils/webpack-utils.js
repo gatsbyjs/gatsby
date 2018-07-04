@@ -64,7 +64,7 @@ export type LoaderUtils = {
   imports: LoaderResolver<*>,
   exports: LoaderResolver<*>,
 
-  eslint: LaoderResolver<*>,
+  eslint: LoaderResolver<*>,
 }
 
 /**
