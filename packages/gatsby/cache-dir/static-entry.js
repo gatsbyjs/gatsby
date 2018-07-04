@@ -193,6 +193,7 @@ export default (pagePath, callback) => {
   const scripts = scriptsAndStyles.filter(
     script => script.name && script.name.endsWith(`.js`)
   )
+
   const styles = scriptsAndStyles.filter(
     style => style.name && style.name.endsWith(`.css`)
   )
@@ -221,7 +222,7 @@ export default (pagePath, callback) => {
           as="script"
           rel={script.rel}
           key={script.name}
-          href={urlJoin(pathPrefix, script.name)}
+          href={urlJoin(`scripts`, pathPrefix, script.name)}
         />
       )
     })
@@ -252,7 +253,7 @@ export default (pagePath, callback) => {
             as="style"
             rel={style.rel}
             key={style.name}
-            href={urlJoin(pathPrefix, style.name)}
+            href={urlJoin(`styles`, pathPrefix, style.name)}
           />
         )
       } else {
@@ -262,7 +263,7 @@ export default (pagePath, callback) => {
             data-href={urlJoin(pathPrefix, style.name)}
             dangerouslySetInnerHTML={{
               __html: fs.readFileSync(
-                join(process.cwd(), `public`, style.name),
+                join(process.cwd(), `public`, `styles`, style.name),
                 `utf-8`
               ),
             }}
@@ -291,7 +292,10 @@ export default (pagePath, callback) => {
   // Filter out prefetched bundles as adding them as a script tag
   // would force high priority fetching.
   const bodyScripts = scripts.filter(s => s.rel !== `prefetch`).map(s => {
-    const scriptPath = `${pathPrefix}${JSON.stringify(s.name).slice(1, -1)}`
+    const scriptPath = `/scripts${pathPrefix}${JSON.stringify(s.name).slice(
+      1,
+      -1
+    )}`
     return <script key={scriptPath} src={scriptPath} async />
   })
 
