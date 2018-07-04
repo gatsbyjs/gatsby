@@ -249,9 +249,14 @@ export default (pagePath, callback) => {
     .slice(0)
     .reverse()
     .forEach(style => {
+      // Cleaning up style path for grouping option
+      let dataHrefStyleName = style.name
+      if (style.name.substr(0, 3) === `../`) {
+        dataHrefStyleName = style.name.slice(2)
+      }
+
       // Add <link>s for styles that should be prefetched
       // otherwise, inline as a <style> tag
-
       if (style.rel === `prefetch`) {
         headComponents.push(
           <link
@@ -265,7 +270,7 @@ export default (pagePath, callback) => {
         headComponents.unshift(
           <style
             type="text/css"
-            data-href={urlJoin(pathPrefix, style.name)}
+            data-href={urlJoin(pathPrefix, dataHrefStyleName)}
             dangerouslySetInnerHTML={{
               __html: fs.readFileSync(
                 join(process.cwd(), `public`, pathToGroupStyles, style.name),
