@@ -109,24 +109,24 @@ module.exports = async (
         // A temp file required by static-site-generator-plugin. See plugins() below.
         // Deleted by build-html.js, since it's not needed for production.
         return {
-          path: directoryPath(`public`),
           filename: `render-page.js`,
           libraryTarget: `umd`,
           library: `lib`,
           umdNamedDefine: true,
           globalObject: `this`,
+          path: directoryPath(`public/scripts`),
           publicPath: program.prefixPaths
-            ? `${store.getState().config.pathPrefix}/`
-            : `/`,
+            ? `/scripts${store.getState().config.pathPrefix}/`
+            : `/scripts/`,
         }
       case `build-javascript`:
         return {
           filename: `[name]-[chunkhash].js`,
           chunkFilename: `[name]-[chunkhash].js`,
-          path: directoryPath(`public`),
+          path: directoryPath(`public/scripts`),
           publicPath: program.prefixPaths
-            ? `${store.getState().config.pathPrefix}/`
-            : `/`,
+            ? `/scripts${store.getState().config.pathPrefix}/`
+            : `/scripts/`,
         }
       default:
         throw new Error(`The state requested ${stage} doesn't exist.`)
@@ -186,12 +186,12 @@ module.exports = async (
             clearConsole: false,
             compilationSuccessInfo: {
               messages: [
-                `You can now view your site in the browser running at ${program.ssl ? `https` : `http`}://${
-                  program.host
-                }:${program.port}`,
-                `Your graphql debugger is running at ${program.ssl ? `https` : `http`}://${program.host}:${
-                  program.port
-                }/___graphql`,
+                `You can now view your site in the browser running at ${
+                  program.ssl ? `https` : `http`
+                }://${program.host}:${program.port}`,
+                `Your graphql debugger is running at ${
+                  program.ssl ? `https` : `http`
+                }://${program.host}:${program.port}/___graphql`,
               ],
             },
           }),
@@ -227,7 +227,6 @@ module.exports = async (
                       )
                     }
                   }
-
                   const webpackStats = {
                     ...stats.toJson({ all: false, chunkGroups: true }),
                     assetsByChunkName: assets,
