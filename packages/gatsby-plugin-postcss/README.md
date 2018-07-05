@@ -57,7 +57,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-postcss`,
       options: {
-        postcssPlugins: [require(`postcss-preset-env`)({ stage: 0 })],
+        postCssPlugins: [require(`postcss-preset-env`)({ stage: 0 })],
       },
     },
   ],

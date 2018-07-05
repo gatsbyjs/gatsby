@@ -11,7 +11,7 @@ const getOptions = pluginOptions => {
 
   delete options.plugins
 
-  const postcssPlugins = options.postcssPlugins
+  const postcssPlugins = options.postCssPlugins
 
   if (postcssPlugins) {
     options.plugins = postcssPlugins
