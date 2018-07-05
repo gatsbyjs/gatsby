@@ -3,6 +3,7 @@ const precache = require(`sw-precache`)
 const path = require(`path`)
 const slash = require(`slash`)
 const _ = require(`lodash`)
+const cheerio = require(`cheerio`)
 
 exports.createPages = ({ actions }) => {
   if (process.env.NODE_ENV === `production`) {
@@ -44,12 +45,30 @@ exports.onPostBuild = (args, pluginOptions) => {
     rootDir
   )
 
+  // load index.html to pull scripts/links necessary for proper offline reload
+  const html = fs.readFileSync(
+    path.resolve(`${process.cwd()}/${rootDir}/index.html`)
+  )
+
+  // party like it's 2006
+  const $ = cheerio.load(html)
+
+  const criticalScripts = $(`script`)
+    .filter((_, elem) => $(elem).attr(`src`) !== undefined)
+    .map((_, elem) => `${rootDir}${$(elem).attr(`src`)}`)
+
+  const criticalLinks = $(`link`)
+    .filter((_, elem) => $(elem).attr(`as`) !== `script`)
+    .map((_, elem) => `${rootDir}${$(elem).attr(`href`)}`)
+
   const options = {
     staticFileGlobs: files.concat([
       `${rootDir}/index.html`,
       `${rootDir}/manifest.json`,
       `${rootDir}/manifest.webmanifest`,
       `${rootDir}/offline-plugin-app-shell-fallback/index.html`,
+      ...criticalScripts,
+      ...criticalLinks,
     ]),
     stripPrefix: rootDir,
     // If `pathPrefix` is configured by user, we should replace
