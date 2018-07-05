@@ -29,14 +29,12 @@ const extendSectionList = sectionList => {
 const sectionListDocs = extendSectionList(docsSidebar).map(item => {
   return {
     ...item,
-    directory: `docs`,
   }
 })
 
 const sectionListFeatures = extendSectionList(featuresSidebar).map(item => {
   return {
     ...item,
-    directory: `features`,
     disableAccordions: true,
   }
 })
@@ -44,7 +42,6 @@ const sectionListFeatures = extendSectionList(featuresSidebar).map(item => {
 const sectionListTutorial = extendSectionList(tutorialSidebar).map(item => {
   return {
     ...item,
-    directory: `tutorial`,
   }
 })
 

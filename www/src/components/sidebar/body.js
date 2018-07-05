@@ -1,6 +1,6 @@
 import React from "react"
 
-import Section from "./section"
+import Item from "./item"
 import presets, { colors } from "../../utils/presets"
 import { options, rhythm, scale } from "../../utils/typography"
 
@@ -86,16 +86,16 @@ class SidebarBody extends React.Component {
         {sectionList.length > 1 && (
           <ExpandAllButton onClick={this._expandAll} />
         )}
-        {sectionList.map((section, index) => (
-          <Section
+        {sectionList.map((item, index) => (
+          <Item
             createLink={createLink}
-            isActive={openSectionHash[section.title] || singleSection}
+            isActive={openSectionHash[item.title] || singleSection}
             key={index}
-            name={section.title}
+            name={item.title}
             location={location}
             onLinkClick={closeParentMenu}
-            onSectionTitleClick={() => this._toggleSection(section)}
-            section={section}
+            onSectionTitleClick={() => this._toggleSection(item)}
+            section={item}
             hideSectionTitle={singleSection}
             activeItemHash={activeItemHash}
             isScrollSync={enableScrollSync}

@@ -1,8 +1,7 @@
 import React from "react"
 
-import getActiveItem from "../../utils/sidebar/get-active-item"
 import presets, { colors } from "../../utils/presets"
-import { scale, rhythm } from "../../utils/typography"
+import { rhythm } from "../../utils/typography"
 
 import SectionTitle from "./section-title"
 import ChevronSvg from "./chevron-svg"
@@ -61,13 +60,15 @@ const Title = ({ title }) => (
   </div>
 )
 
-class Section extends React.Component {
+class Accordion extends React.Component {
   state = { uid: (`` + Math.random()).replace(/\D/g, ``) }
 
-  _isChildItemActive = (item, activeItemId) => {
+  _isChildItemActive = (item, activeItemLink) => {
     if (item.subitems) {
       const matches = item.subitems.filter(function(subitem) {
-        return subitem.link === activeItemId && item.link === subitem.parentLink
+        return (
+          subitem.link === activeItemLink && item.link === subitem.parentLink
+        )
       })
 
       return matches.length >= 1
@@ -76,7 +77,6 @@ class Section extends React.Component {
 
   render() {
     const {
-      activeItemHash,
       createLink,
       location,
       onLinkClick,
@@ -84,14 +84,14 @@ class Section extends React.Component {
       section,
       hideSectionTitle,
       singleSection,
+      activeItemLink,
+      itemStyles,
+      isActive,
     } = this.props
     const uid = `section_` + this.state.uid
-    const activeItemId = getActiveItem(section, location, activeItemHash)
     const SectionTitleComponent = section.disableAccordions
       ? Title
       : ToggleSectionButton
-
-    const isActive = this.props.isActive || section.disableAccordions
 
     return (
       <div>
@@ -106,44 +106,14 @@ class Section extends React.Component {
           id={uid}
           css={{
             ...styles.ul,
+            ...(!singleSection && { ...styles.ulHorizontalDivider }),
             position: `relative`,
             paddingBottom: rhythm(3 / 4),
-            "&:after": {
-              background: colors.ui.light,
-              bottom: 0,
-              content: ` `,
-              display: singleSection ? `none` : `block`,
-              height: 1,
-              position: `absolute`,
-              right: 0,
-              left: horizontalPadding,
-            },
             "& li": {
-              lineHeight: 1.3,
-              margin: 0,
-              paddingLeft: horizontalPadding,
-              paddingRight: horizontalPadding,
-              fontSize: scale(-1 / 10).fontSize,
-            },
-            [presets.Phablet]: {
-              "& li": {
-                fontSize: scale(-2 / 10).fontSize,
-              },
+              ...itemStyles.item,
             },
             [presets.Tablet]: {
               display: isActive ? `block` : `none`,
-              "& li": {
-                fontSize: scale(-4 / 10).fontSize,
-              },
-            },
-            [presets.Desktop]: {
-              "&:after": {
-                left: horizontalPaddingDesktop,
-              },
-              "& li": {
-                paddingLeft: horizontalPaddingDesktop,
-                paddingRight: horizontalPaddingDesktop,
-              },
             },
           }}
         >
@@ -151,45 +121,39 @@ class Section extends React.Component {
             <li
               key={item.link}
               css={{
-                ...((item.subitems && item.link === activeItemId) ||
-                this._isChildItemActive(item, activeItemId)
+                ...((item.subitems && item.link === activeItemLink) ||
+                this._isChildItemActive(item, activeItemLink)
                   ? { ...styles.liActive }
                   : {}),
               }}
             >
               {createLink({
                 isActive:
-                  item.link === activeItemId ||
-                  this._isChildItemActive(item, activeItemId),
+                  item.link === activeItemLink ||
+                  this._isChildItemActive(item, activeItemLink),
                 item,
                 section,
                 location,
                 onLinkClick,
                 isParentOfActiveItem: this._isChildItemActive(
                   item,
-                  activeItemId
+                  activeItemLink
                 ),
               })}
               {item.subitems && (
                 <ul
                   css={{
                     ...styles.ul,
-                    paddingTop: rhythm(1 / 2),
-                    [presets.Desktop]: {
-                      "&& li": {
-                        paddingLeft: rhythm(3 / 4),
-                        paddingRight: rhythm(3 / 4),
-                      },
-                    },
-                    ...(section.directory === `tutorial`
-                      ? { ...styles.tutorialSubsection }
-                      : {}),
+                    ...styles.ulSubitems,
+                    ...(item.ui === `steps` && {
+                      ...styles.tutorialSubsection,
+                    }),
                   }}
                 >
                   {item.subitems.map(subitem => (
                     <li key={subitem.link}>
                       {createLink({
-                        isActive: subitem.link === activeItemId,
+                        isActive: subitem.link === activeItemLink,
                         item: subitem,
                         location,
                         onLinkClick,
@@ -208,7 +172,7 @@ class Section extends React.Component {
   }
 }
 
-export default Section
+export default Accordion
 
 const styles = {
   ul: {
@@ -259,6 +223,29 @@ const styles = {
       marginTop: rhythm(1 / 2),
       marginBottom: rhythm(1 / 2),
       paddingTop: rhythm(1 / 2),
+    },
+  },
+  ulSubitems: {
+    paddingTop: rhythm(1 / 2),
+    [presets.Desktop]: {
+      "&& li": {
+        paddingLeft: rhythm(3 / 4),
+        paddingRight: rhythm(3 / 4),
+      },
+    },
+  },
+  ulHorizontalDivider: {
+    "&:after": {
+      background: colors.ui.light,
+      bottom: 0,
+      content: ` `,
+      height: 1,
+      position: `absolute`,
+      right: 0,
+      left: horizontalPadding,
+      [presets.Desktop]: {
+        left: horizontalPaddingDesktop,
+      },
     },
   },
 }
