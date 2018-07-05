@@ -63,7 +63,6 @@ ${formatErrorDetails(errorDetails)}`)
     if (programType === `develop`) {
       websocketManager.emitQueryError({
         error: errorDetails,
-        id: queryJob.id,
       })
     // Perhaps this isn't the best way to see if we're building?
     } else if (programType === `build`) {
