@@ -82,8 +82,8 @@ const MastheadContent = () => (
           },
         }}
       >
-        <span css={{ display: `block`, marginBottom: rhythm(0.5) }}>
-          <span css={{ marginRight: rhythm(0.25) }}>Build</span>
+        <span css={{ display: `block` }}>
+          <span css={{ marginRight: rhythm(0.125) }}>Build</span>
           <div class="slidingVertical">
             <span>blazing fast</span>
             <span>modern</span>
