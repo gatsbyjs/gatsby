@@ -1,11 +1,11 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import domReady from "domready"
-import * as ErrorOverlay from "react-error-overlay"
 
 import socketIo from "./socketIo"
 import emitter from "./emitter"
 import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
+import { reportQueryErrorOverlay } from './error-overlay-handler'
 
 window.___emitter = emitter
 
@@ -55,12 +55,11 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   })
 
   emitter.on(`pageQueryError`, (payload) => {
-    if (!payload.length) {
-      ErrorOverlay.dismissBuildError()
-      return
-    }
-    ErrorOverlay.reportBuildError(payload[0].error)
-    console.error(new Error(payload[0].error))
+    const error = payload && payload.length ? payload[0].error : ``
+    reportQueryErrorOverlay(error, {
+      clearCondition: !payload.length,
+      callback: () => console.error(new Error(error)),
+    })
   })
 })
 
