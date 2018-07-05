@@ -55,8 +55,12 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   })
 
   emitter.on(`pageQueryError`, (payload) => {
-    console.error(new Error(payload.error))
-    ErrorOverlay.reportBuildError(payload.error)
+    if (!payload.length) {
+      ErrorOverlay.dismissBuildError()
+      return
+    }
+    ErrorOverlay.reportBuildError(payload[0].error)
+    console.error(new Error(payload[0].error))
   })
 })
 

@@ -60,11 +60,9 @@ class WebsocketManager {
           payload: result,
         })
       })
-      this.pageErrors.forEach((resultError, id) => {
-        this.websocket.send({
-          type: `pageQueryError`,
-          payload: resultError,
-        })
+      this.websocket.send({
+        type: `pageQueryError`,
+        payload: this.pageErrors,
       })
 
       const leaveRoom = path => {
@@ -134,7 +132,7 @@ class WebsocketManager {
   emitQueryError(data) {
     this.pageErrors.push(data)
     if (this.isInitialised) {
-      this.websocket.send({ type: `pageQueryError`, payload: data })
+      this.websocket.send({ type: `pageQueryError`, payload: this.pageErrors })
     }
   }
 }
