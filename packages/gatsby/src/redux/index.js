@@ -12,11 +12,24 @@ const emitter = mitt()
 // Reducers
 const reducers = require(`./reducers`)
 
+const objectToMap = obj => new Map(Object.entries(obj))
+
+const mapToObject = map => {
+  const obj = {}
+  for (let [key, value] of map) {
+    obj[key] = value
+  }
+  return obj
+}
+
 // Read from cache the old node data.
 let initialState = {}
 try {
   initialState = JSON.parse(
     fs.readFileSync(`${process.cwd()}/.cache/redux-state.json`)
+  )
+  initialState.staticQueryComponents = objectToMap(
+    initialState.staticQueryComponents
   )
 } catch (e) {
   // ignore errors.
@@ -63,7 +76,13 @@ const saveState = _.debounce(state => {
     `status`,
     `componentDataDependencies`,
     `jsonDataPaths`,
+    `components`,
+    `staticQueryComponents`,
   ])
+
+  pickedState.staticQueryComponents = mapToObject(
+    pickedState.staticQueryComponents
+  )
   fs.writeFile(
     `${process.cwd()}/.cache/redux-state.json`,
     stringify(pickedState, null, 2),
