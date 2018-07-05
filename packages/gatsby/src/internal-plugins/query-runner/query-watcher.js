@@ -115,6 +115,7 @@ const runQueriesForStaticComponent = ({
     jsonName,
     query,
     context: { path: jsonName },
+    componentPath,
   })
 }
 
