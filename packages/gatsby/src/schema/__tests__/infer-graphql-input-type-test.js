@@ -143,6 +143,74 @@ describe(`GraphQL Input args`, () => {
         blue: 10010,
         circle: `happy`,
       },
+      data: {
+        tags: [
+          {
+            tag: {
+              document: [
+                {
+                  data: {
+                    tag: `Design System`,
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      index: 3,
+      name: `Prismic Stress Test`,
+      date: `2018-07-04T18:34:44+0000`,
+      data: {
+        title: {
+          text: `Create your design system with Gatsby`,
+        },
+        body: [
+          {
+            slice_type: `text`,
+            primary: {
+              text: {
+                text: `Content of this slice`,
+              },
+            },
+          },
+        ],
+        category: {
+          document: [
+            {
+              data: {
+                category: `Coding`,
+              },
+            },
+          ],
+        },
+        tags: [
+          {
+            tag: {
+              document: [
+                {
+                  data: {
+                    tag: `Gatsby`,
+                  },
+                },
+              ],
+            },
+          },
+          {
+            tag: {
+              document: [
+                {
+                  data: {
+                    tag: `Design System`,
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
     },
   ]
 
@@ -637,6 +705,21 @@ describe(`GraphQL Input args`, () => {
     expect(result.errors).not.toBeDefined()
 
     expect(result).toMatchSnapshot()
+  })
+
+  it(`can filter for Prismic tags`, async () => {
+    let result = await queryResult(
+      nodes,
+      `
+        {
+          allNode(filter: {data: {tags: {in: {tag: {document: {data: {tag: {eq: "Gatsby"}}}}}}}}) {
+            edges { node { name }}
+          }
+        }
+      `
+    )
+    expect(result.errors).not.toBeDefined()
+    expect(result.data.allNode.edges[0].node.name).toEqual(`Prismic Stress Test`)
   })
 })
 
