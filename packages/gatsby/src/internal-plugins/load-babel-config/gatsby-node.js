@@ -157,7 +157,7 @@ const addDefaultPluginsPresets = (
     stage,
     options: {
       loose: true,
-      modules: false,
+      modules: `commonjs`,
       useBuiltIns: `usage`,
       targets,
     },
