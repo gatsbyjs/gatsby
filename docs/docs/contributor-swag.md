@@ -17,7 +17,7 @@ If you’ve contributed in other ways, such as giving talks about Gatsby, teachi
 ### Details about free swag
 
 - We will send one item from our swag store to each Gatsby contributor.
-- Not all items are eligible due to high cost to create the swag, but we’ll make it clear when that's the case.
+- Not all items are eligible due to high cost to create the swag. We’ll make it clear which items are not eligible.
 - There’s a limit of one free swag item per contributor.
 - Shipping is free worldwide.
 
