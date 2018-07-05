@@ -34,9 +34,20 @@ module.exports = () => ({
 })
 ```
 
-## Options
+If you need to pass options to PostCSS use the plugins options; see [postcss-loader](https://github.com/postcss/postcss-loader)
+for all available options.
 
-You can use any allowed [`postcss-loader`](https://github.com/postcss/postcss-loader#options) options using `postcss` property:
+### With CSS Modules
+
+Using CSS modules requires no additional configuration. Simply prepend `.module` to the extension. For example: `App.css` -> `App.module.css`.
+Any file with the `module` extension will use CSS modules.
+
+### PostCSS plugins
+
+PostCSS is also included to handle some default optimizations like autoprefixing a
+and common cross-browser flexbox bugs. Normally you don't need to think about it, but if
+you'd prefer to add additional postprocessing to your PostCSS output you can sepecify plugins
+in the plugin options
 
 `gatsby-config.js`
 
