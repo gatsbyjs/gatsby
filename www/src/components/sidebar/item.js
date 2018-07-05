@@ -1,7 +1,6 @@
 import React from "react"
 
 import Accordion from "./accordion"
-import getActiveItem from "../../utils/sidebar/get-active-item"
 import presets from "../../utils/presets"
 import { scale, rhythm } from "../../utils/typography"
 
@@ -16,8 +15,8 @@ class Item extends React.Component {
       section,
       hideSectionTitle,
       singleSection,
+      activeItemLink,
     } = this.props
-    const activeItemLink = getActiveItem(section, location, activeItemHash)
 
     return (
       <div>

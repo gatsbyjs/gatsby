@@ -30,22 +30,24 @@ const isItemActive = (location, item, activeItemHash) => {
 }
 
 const getActiveItem = (sectionList, location, activeItemHash) => {
-  if (sectionList.items) {
-    for (let item of sectionList.items) {
-      if (isItemActive(location, item, activeItemHash)) {
-        return item.link
-      }
-      if (item.subitems) {
-        for (let subitem of item.subitems) {
-          if (isItemActive(location, subitem, activeItemHash)) {
-            return subitem.link
+  for (let item of sectionList) {
+    if (item.items) {
+      for (let subitem of item.items) {
+        if (isItemActive(location, subitem, activeItemHash)) {
+          return subitem.link
+        }
+        if (subitem.items) {
+          for (let subsubitem of subitem.items) {
+            if (isItemActive(location, subsubitem, activeItemHash)) {
+              return subsubitem.link
+            }
           }
         }
       }
-    }
-  } else {
-    if (isItemActive(location, sectionList, activeItemHash)) {
-      return sectionList.link
+    } else {
+      if (isItemActive(location, item, activeItemHash)) {
+        return item.link
+      }
     }
   }
 

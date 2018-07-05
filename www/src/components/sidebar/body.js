@@ -1,6 +1,7 @@
 import React from "react"
 
 import Item from "./item"
+import getActiveItem from "../../utils/sidebar/get-active-item"
 import presets, { colors } from "../../utils/presets"
 import { options, rhythm, scale } from "../../utils/typography"
 
@@ -80,6 +81,7 @@ class SidebarBody extends React.Component {
     } = this.props
     let { openSectionHash } = this.state
     const singleSection = sectionList.length === 1
+    const activeItemLink = getActiveItem(sectionList, location, activeItemHash)
 
     return (
       <div className="docSearch-sidebar">
@@ -98,6 +100,7 @@ class SidebarBody extends React.Component {
             section={item}
             hideSectionTitle={singleSection}
             activeItemHash={activeItemHash}
+            activeItemLink={activeItemLink}
             isScrollSync={enableScrollSync}
             singleSection={singleSection}
           />

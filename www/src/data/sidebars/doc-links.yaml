@@ -6,7 +6,7 @@
       link: /docs/gatsby-starters/
     - title: Deploying
       link: /docs/deploy-gatsby/
-      subitems:
+      items:
         - title: Community
           link: /docs/community/
 - title: Awesome Gatsby

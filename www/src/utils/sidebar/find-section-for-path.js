@@ -6,8 +6,7 @@ const findSectionForPath = (pathname, sections) => {
       const match = section.items.some(
         item =>
           `${item.link}` === pathname ||
-          (item.subitems &&
-            item.subitems.some(subitem => pathname === subitem.link))
+          (item.items && item.items.some(subitem => pathname === subitem.link))
       )
       if (match) {
         activeSection = section

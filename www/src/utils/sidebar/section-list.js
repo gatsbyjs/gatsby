@@ -13,8 +13,8 @@ const extendSectionList = sectionList => {
       section.items.forEach((item, index) => {
         let parent = index
         item.hash = createId(item.link)
-        if (item.subitems) {
-          item.subitems.forEach(subitem => {
+        if (item.items) {
+          item.items.forEach(subitem => {
             subitem.hash = createId(subitem.link)
             subitem.parentLink = section.items[parent].link
           })

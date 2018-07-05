@@ -64,8 +64,8 @@ class Accordion extends React.Component {
   state = { uid: (`` + Math.random()).replace(/\D/g, ``) }
 
   _isChildItemActive = (item, activeItemLink) => {
-    if (item.subitems) {
-      const matches = item.subitems.filter(function(subitem) {
+    if (item.items) {
+      const matches = item.items.filter(function(subitem) {
         return (
           subitem.link === activeItemLink && item.link === subitem.parentLink
         )
@@ -121,7 +121,7 @@ class Accordion extends React.Component {
             <li
               key={item.link}
               css={{
-                ...((item.subitems && item.link === activeItemLink) ||
+                ...((item.items && item.link === activeItemLink) ||
                 this._isChildItemActive(item, activeItemLink)
                   ? { ...styles.liActive }
                   : {}),
@@ -140,7 +140,7 @@ class Accordion extends React.Component {
                   activeItemLink
                 ),
               })}
-              {item.subitems && (
+              {item.items && (
                 <ul
                   css={{
                     ...styles.ul,
@@ -150,7 +150,7 @@ class Accordion extends React.Component {
                     }),
                   }}
                 >
-                  {item.subitems.map(subitem => (
+                  {item.items.map(subitem => (
                     <li key={subitem.link}>
                       {createLink({
                         isActive: subitem.link === activeItemLink,
