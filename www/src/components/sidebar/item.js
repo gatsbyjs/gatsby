@@ -5,7 +5,7 @@ import getActiveItem from "../../utils/sidebar/get-active-item"
 import presets from "../../utils/presets"
 import { scale, rhythm } from "../../utils/typography"
 
-class Section extends React.Component {
+class Item extends React.Component {
   render() {
     const {
       activeItemHash,
@@ -53,7 +53,7 @@ class Section extends React.Component {
   }
 }
 
-export default Section
+export default Item
 
 const horizontalPadding = rhythm(3 / 4)
 const horizontalPaddingDesktop = rhythm(3 / 2)
