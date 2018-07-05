@@ -1,15 +1,19 @@
-const { onCreateWebpackConfig } = require(`../gatsby-node`)
-
 describe(`gatsby-plugin-postcss`, () => {
+  jest.mock(`../resolve`, () => module => `/resolved/path/${module}`)
+
   const actions = {
     setWebpackConfig: jest.fn(),
     replaceWebpackConfig: jest.fn(),
   }
+
   const loaders = {
     miniCssExtract: () => `miniCssExtract`,
     null: () => `null-loader`,
     css: args => `css-loader(${JSON.stringify(args)})`,
   }
+
+  const { onCreateWebpackConfig } = require(`../gatsby-node`)
+
   const getConfig = jest.fn().mockReturnValue({
     module: {
       rules: [

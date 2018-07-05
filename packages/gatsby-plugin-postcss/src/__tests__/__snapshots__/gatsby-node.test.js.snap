@@ -15,7 +15,7 @@ exports[`gatsby-plugin-postcss Stage: build-html / No options 1`] = `
                     "miniCssExtract",
                     "css-loader({\\"modules\\":true,\\"importLoaders\\":1})",
                     Object {
-                      "loader": "postcss-loader",
+                      "loader": "/resolved/path/postcss-loader",
                       "options": Object {
                         "sourceMap": false,
                       },
@@ -53,11 +53,8 @@ exports[`gatsby-plugin-postcss Stage: build-html / PostCss options 1`] = `
                     "miniCssExtract",
                     "css-loader({\\"modules\\":true,\\"importLoaders\\":1})",
                     Object {
-                      "loader": "postcss-loader",
+                      "loader": "/resolved/path/postcss-loader",
                       "options": Object {
-                        "plugins": Array [
-                          "autoprefixer",
-                        ],
                         "sourceMap": false,
                       },
                     },
@@ -94,7 +91,7 @@ exports[`gatsby-plugin-postcss Stage: build-javascript / No options 1`] = `
                     "miniCssExtract",
                     "css-loader({\\"modules\\":true,\\"importLoaders\\":1})",
                     Object {
-                      "loader": "postcss-loader",
+                      "loader": "/resolved/path/postcss-loader",
                       "options": Object {
                         "sourceMap": false,
                       },
@@ -107,7 +104,7 @@ exports[`gatsby-plugin-postcss Stage: build-javascript / No options 1`] = `
                     "miniCssExtract",
                     "css-loader({\\"importLoaders\\":1})",
                     Object {
-                      "loader": "postcss-loader",
+                      "loader": "/resolved/path/postcss-loader",
                       "options": Object {
                         "sourceMap": false,
                       },
@@ -139,11 +136,8 @@ exports[`gatsby-plugin-postcss Stage: build-javascript / PostCss options 1`] = `
                     "miniCssExtract",
                     "css-loader({\\"modules\\":true,\\"importLoaders\\":1})",
                     Object {
-                      "loader": "postcss-loader",
+                      "loader": "/resolved/path/postcss-loader",
                       "options": Object {
-                        "plugins": Array [
-                          "autoprefixer",
-                        ],
                         "sourceMap": false,
                       },
                     },
@@ -155,11 +149,8 @@ exports[`gatsby-plugin-postcss Stage: build-javascript / PostCss options 1`] = `
                     "miniCssExtract",
                     "css-loader({\\"importLoaders\\":1})",
                     Object {
-                      "loader": "postcss-loader",
+                      "loader": "/resolved/path/postcss-loader",
                       "options": Object {
-                        "plugins": Array [
-                          "autoprefixer",
-                        ],
                         "sourceMap": false,
                       },
                     },
@@ -190,7 +181,7 @@ exports[`gatsby-plugin-postcss Stage: develop / No options 1`] = `
                     "miniCssExtract",
                     "css-loader({\\"modules\\":true,\\"importLoaders\\":1})",
                     Object {
-                      "loader": "postcss-loader",
+                      "loader": "/resolved/path/postcss-loader",
                       "options": Object {
                         "sourceMap": true,
                       },
@@ -203,7 +194,7 @@ exports[`gatsby-plugin-postcss Stage: develop / No options 1`] = `
                     "miniCssExtract",
                     "css-loader({\\"importLoaders\\":1})",
                     Object {
-                      "loader": "postcss-loader",
+                      "loader": "/resolved/path/postcss-loader",
                       "options": Object {
                         "sourceMap": true,
                       },
@@ -235,11 +226,8 @@ exports[`gatsby-plugin-postcss Stage: develop / PostCss options 1`] = `
                     "miniCssExtract",
                     "css-loader({\\"modules\\":true,\\"importLoaders\\":1})",
                     Object {
-                      "loader": "postcss-loader",
+                      "loader": "/resolved/path/postcss-loader",
                       "options": Object {
-                        "plugins": Array [
-                          "autoprefixer",
-                        ],
                         "sourceMap": false,
                       },
                     },
@@ -251,11 +239,8 @@ exports[`gatsby-plugin-postcss Stage: develop / PostCss options 1`] = `
                     "miniCssExtract",
                     "css-loader({\\"importLoaders\\":1})",
                     Object {
-                      "loader": "postcss-loader",
+                      "loader": "/resolved/path/postcss-loader",
                       "options": Object {
-                        "plugins": Array [
-                          "autoprefixer",
-                        ],
                         "sourceMap": false,
                       },
                     },
@@ -286,7 +271,7 @@ exports[`gatsby-plugin-postcss Stage: develop-html / No options 1`] = `
                     "miniCssExtract",
                     "css-loader({\\"modules\\":true,\\"importLoaders\\":1})",
                     Object {
-                      "loader": "postcss-loader",
+                      "loader": "/resolved/path/postcss-loader",
                       "options": Object {
                         "sourceMap": false,
                       },
@@ -324,11 +309,8 @@ exports[`gatsby-plugin-postcss Stage: develop-html / PostCss options 1`] = `
                     "miniCssExtract",
                     "css-loader({\\"modules\\":true,\\"importLoaders\\":1})",
                     Object {
-                      "loader": "postcss-loader",
+                      "loader": "/resolved/path/postcss-loader",
                       "options": Object {
-                        "plugins": Array [
-                          "autoprefixer",
-                        ],
                         "sourceMap": false,
                       },
                     },

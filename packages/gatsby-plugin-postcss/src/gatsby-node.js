@@ -1,3 +1,5 @@
+import resolve from "./resolve"
+
 const CSS_PATTERN = /\.css$/
 const MODULE_CSS_PATTERN = /\.module\.css$/
 
@@ -45,7 +47,7 @@ exports.onCreateWebpackConfig = (
   const postcssOptions = getOptions(pluginOptions)
 
   const postcssLoader = {
-    loader: `postcss-loader`,
+    loader: resolve(`postcss-loader`),
     options: { sourceMap: !isProduction, ...postcssOptions },
   }
 
