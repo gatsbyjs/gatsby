@@ -370,9 +370,9 @@ module.exports = async (
       ],
       alias: {
         gatsby$: directoryPath(path.join(`.cache`, `gatsby-browser-entry.js`)),
-        'core-js': path.dirname(require.resolve('core-js/package.json')),
-        'react-hot-loader': path.dirname(
-          require.resolve('react-hot-loader/package.json'),
+        `core-js`: path.dirname(require.resolve(`core-js/package.json`)),
+        `react-hot-loader`: path.dirname(
+          require.resolve(`react-hot-loader/package.json`),
         ),
       },
     }
