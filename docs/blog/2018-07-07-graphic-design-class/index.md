@@ -2,7 +2,7 @@
 title: Learning how to code with Gatsby
 date: "2018-07-07"
 author: "Shannon Soper"
-tags: ["college", "case study"]
+tags: ["college", "case study", "design", "getting-started"]
 ---
 
 ## Phil Howley's Graphic Design class
