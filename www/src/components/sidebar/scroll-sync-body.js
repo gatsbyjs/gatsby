@@ -74,8 +74,8 @@ const _getItemIds = sectionList => {
     let sectionItems = section.items
       .map(item => {
         let subItemIds = []
-        if (item.subitems) {
-          subItemIds = item.subitems.map(subitem => subitem.hash)
+        if (item.items) {
+          subItemIds = item.items.map(subitem => subitem.hash)
         }
         return [item.hash, ...subItemIds]
       })

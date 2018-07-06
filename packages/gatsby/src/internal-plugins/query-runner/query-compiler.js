@@ -103,7 +103,7 @@ class Runner {
     // run babel on code in node_modules). Otherwise the component will throw
     // an error in the browser of "graphql is not defined".
     files = files.concat(
-      Object.keys(store.getState().components).map(c => normalize(c))
+      Array.from(store.getState().components.keys(), c => normalize(c))
     )
     files = _.uniq(files)
 

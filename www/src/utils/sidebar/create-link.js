@@ -7,11 +7,11 @@ const _getTitle = (title, isDraft) => (isDraft ? title.slice(0, -1) : title)
 const _isDraft = title => title.slice(-1) === `*`
 
 const createLinkDocs = ({
-  isActive,
   item,
-  section,
+  isActive,
   onLinkClick,
   isParentOfActiveItem,
+  stepsUI,
 }) => {
   const isDraft = _isDraft(item.title)
   const title = _getTitle(item.title, isDraft)
@@ -25,20 +25,20 @@ const createLinkDocs = ({
         isParentOfActiveItem && styles.parentOfActiveLink,
       ]}
       onClick={onLinkClick}
-      to={`/${section.directory}${item.link}`}
+      to={`${item.link}`}
     >
+      {stepsUI && <span css={{ ...styles.subsectionLink }} />}
       {title}
     </Link>
   )
 }
 
 const createLinkTutorial = ({
-  isActive,
   item,
-  section,
   onLinkClick,
+  isActive,
   isParentOfActiveItem,
-  isSubsectionLink,
+  stepsUI,
 }) => {
   const isDraft = _isDraft(item.title)
   const title = _getTitle(item.title, isDraft)
@@ -52,9 +52,9 @@ const createLinkTutorial = ({
         isParentOfActiveItem && styles.parentOfActiveLink,
       ]}
       onClick={onLinkClick}
-      to={`/${section.directory}${item.link}`}
+      to={`${item.link}`}
     >
-      {isSubsectionLink && <span css={{ ...styles.subsectionLink }} />}
+      {stepsUI && <span css={{ ...styles.subsectionLink }} />}
       {title}
     </Link>
   )
