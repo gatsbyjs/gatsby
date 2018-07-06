@@ -125,10 +125,10 @@ const runQueriesForPathnames = pathnames => {
   })
 
   const start3 = process.hrtime()
-  const pages = Array.from(state.pages.values())
+  const pages = state.pages
   let didNotQueueItems = true
   pageQueries.forEach(id => {
-    const page = pages.find(pl => pl.path === id)
+    const page = pages.get(id)
     if (page) {
       didNotQueueItems = false
       queue.push(
