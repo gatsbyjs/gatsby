@@ -97,7 +97,7 @@ class SidebarBody extends React.Component {
             location={location}
             onLinkClick={closeParentMenu}
             onSectionTitleClick={() => this._toggleSection(item)}
-            section={item}
+            item={item}
             hideSectionTitle={singleSection}
             activeItemHash={activeItemHash}
             activeItemLink={activeItemLink}

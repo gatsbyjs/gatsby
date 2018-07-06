@@ -11,7 +11,7 @@ class Item extends React.Component {
       location,
       onLinkClick,
       onSectionTitleClick,
-      section,
+      item,
       hideSectionTitle,
       singleSection,
       activeItemLink,
@@ -21,14 +21,14 @@ class Item extends React.Component {
 
     return (
       <Fragment>
-        {section.items ? (
+        {item.items ? (
           <Accordion
             itemStyles={styles}
-            isActive={this.props.isActive || section.disableAccordions}
+            isActive={this.props.isActive || item.disableAccordions}
             onSectionTitleClick={onSectionTitleClick}
             hideSectionTitle={hideSectionTitle}
             singleSection={singleSection}
-            section={section}
+            item={item}
             activeItemLink={activeItemLink}
             createLink={createLink}
             location={location}
@@ -43,9 +43,9 @@ class Item extends React.Component {
             }}
           >
             {createLink({
-              isActive: section.link === activeItemLink,
-              item: section,
-              section,
+              isActive: item.link === activeItemLink,
+              item: item,
+              item,
               location,
               onLinkClick,
             })}

@@ -83,7 +83,7 @@ class Accordion extends React.Component {
       location,
       onLinkClick,
       onSectionTitleClick,
-      section,
+      item: section,
       hideSectionTitle,
       activeItemLink,
       itemStyles,
