@@ -76,7 +76,7 @@
     - title: 8. Preparing a site to go live
       link: /tutorial/part-eight/
       items:
-        - title: Creating slugs for pages	
-          link: /part-eight/#creating-slugs-for-pages	
+        - title: Creating slugs for pages
+          link: /tutorial/part-eight/#creating-slugs-for-pages	
         - title: Creating pages	
-          link: /part-eight/#creating-pages
+          link: /tutorial/part-eight/#creating-pages
