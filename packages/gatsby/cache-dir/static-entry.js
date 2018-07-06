@@ -57,8 +57,8 @@ export default (pagePath, callback) => {
 
   // If enabled, group files in their respective folders otherwise generated
   // non-static files will be left in the root of the output directory.
-  const pathToGroupStyles = __GROUP_FILES__ ? `styles/` : ``
-  const pathToGroupScripts = __GROUP_FILES__ ? `scripts/` : ``
+  const pathToGroupStyles = __GROUP_FILES__ ? `css/` : ``
+  const pathToGroupScripts = __GROUP_FILES__ ? `js/` : ``
 
   let bodyHtml = ``
   let headComponents = []

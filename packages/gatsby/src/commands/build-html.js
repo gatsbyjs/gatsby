@@ -30,7 +30,7 @@ module.exports = async (program: any) => {
       }
 
       const outputFile = groupFiles
-        ? `${directory}/public/scripts/render-page.js`
+        ? `${directory}/public/js/render-page.js`
         : `${directory}/public/render-page.js`
 
       if (stats.hasErrors()) {
