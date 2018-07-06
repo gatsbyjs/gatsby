@@ -9,11 +9,11 @@ tags: ["college", "case study", "design", "getting-started"]
 
 Recently, a Gatsby fan named Phil Howley starting teaching Gatsby in an Emerging Technologies class at the Art Institute (AI) in North Hollywood and I got to interview him.
 
-In his 10 years of teaching over 50 web development/design classes at (AI) (his other job is with [https://ironcovesolutions.com](https://ironcovesolutions.com) which is built on Gatsby!), he’s observed that graphic design students tend to come to class less as the class gets more focused on coding.
+In his 10 years of teaching over 50 web development/design classes at (AI) (his other job is with [Iron Cove Solutions](https://ironcovesolutions.com) which is built on Gatsby!), he’s observed that graphic design students tend to come to class less as the class gets more focused on coding.
 
 However, in his current class _nobody has dropped out_. And every single one of his students turned in the MVP and at least one extra credit feature for their final portfolio project, which has never happened when he previously taught this class. The reason? He taught them to create their portfolios using Gatsby.
 
-## Here are some of the student’s repos and final sites:
+## Here are some of the student’s final sites:
 
 [![Image of graphic designer's site](graphic-design-1.png)](http://mmd-site.netlify.com/)
 
@@ -79,7 +79,7 @@ One thing they wanted more of:
 
 They suggest that a link be added to the home page of Gatsby pointing to it and all sites with git repos should be searchable first.
 
-> _NOTE_: His students are in luck! The [Starter Showcase](https://dreamy-shannon-191f15.netlify.com/starter-showcase/?sort=stars) (see [PR 6113](https://github.com/gatsbyjs/gatsby/pull/6113) and [Site Showcase](https://next.gatsbyjs.org/showcase/) ([see relevant issues here](https://github.com/gatsbyjs/gatsby/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+site+showcase)) are nearly done.
+> _NOTE_: His students are in luck! The [Starter Showcase](https://dreamy-shannon-191f15.netlify.com/starter-showcase/?sort=stars) (see [PR 6113](https://github.com/gatsbyjs/gatsby/pull/6113)) and [Site Showcase](https://next.gatsbyjs.org/showcase/) ([see relevant issues here](https://github.com/gatsbyjs/gatsby/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+site+showcase)) are nearly done.
 
 ### What do you like about teaching with Gatsby?
 
