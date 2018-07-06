@@ -31,6 +31,7 @@ try {
   initialState.staticQueryComponents = objectToMap(
     initialState.staticQueryComponents
   )
+  initialState.components = objectToMap(initialState.components)
 } catch (e) {
   // ignore errors.
 }
@@ -83,6 +84,7 @@ const saveState = _.debounce(state => {
   pickedState.staticQueryComponents = mapToObject(
     pickedState.staticQueryComponents
   )
+  pickedState.components = mapToObject(pickedState.components)
   fs.writeFile(
     `${process.cwd()}/.cache/redux-state.json`,
     stringify(pickedState, null, 2),
