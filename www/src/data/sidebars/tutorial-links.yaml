@@ -1,4 +1,5 @@
 - title: Tutorial
+  ui: tutorial
   items:
     - title: Introduction
       link: /tutorial/

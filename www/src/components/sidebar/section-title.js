@@ -1,6 +1,6 @@
 import React from "react"
 import presets, { colors } from "../../utils/presets"
-import { scale, options } from "../../utils/typography"
+import { scale, options, rhythm } from "../../utils/typography"
 
 const SectionTitle = ({ children, isActive }) => (
   <h3
@@ -11,10 +11,11 @@ const SectionTitle = ({ children, isActive }) => (
       fontFamily: options.headerFontFamily.join(`,`),
       fontSize: scale(-2 / 5).fontSize,
       fontWeight: `normal`,
-      letterSpacing: `.15em`,
+      letterSpacing: `.1em`,
       margin: 0,
-      lineHeight: 3,
       textTransform: `uppercase`,
+      paddingTop: rhythm(options.blockMarginBottom),
+      paddingBottom: rhythm(options.blockMarginBottom),
       [presets.Tablet]: {
         color: isActive ? colors.gatsby : false,
         ":hover": {

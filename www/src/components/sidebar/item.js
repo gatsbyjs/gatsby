@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Fragment } from "react"
 
 import Accordion from "./accordion"
 import presets from "../../utils/presets"
@@ -7,7 +7,6 @@ import { scale, rhythm } from "../../utils/typography"
 class Item extends React.Component {
   render() {
     const {
-      activeItemHash,
       createLink,
       location,
       onLinkClick,
@@ -16,10 +15,12 @@ class Item extends React.Component {
       hideSectionTitle,
       singleSection,
       activeItemLink,
+      isFirstItem,
+      isLastItem,
     } = this.props
 
     return (
-      <div>
+      <Fragment>
         {section.items ? (
           <Accordion
             itemStyles={styles}
@@ -31,9 +32,12 @@ class Item extends React.Component {
             activeItemLink={activeItemLink}
             createLink={createLink}
             location={location}
+            isFirstItem={isFirstItem}
+            isLastItem={isLastItem}
           />
         ) : (
           <div
+            className="item"
             css={{
               ...styles.item,
             }}
@@ -47,7 +51,7 @@ class Item extends React.Component {
             })}
           </div>
         )}
-      </div>
+      </Fragment>
     )
   }
 }

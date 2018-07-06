@@ -103,6 +103,8 @@ class SidebarBody extends React.Component {
             activeItemLink={activeItemLink}
             isScrollSync={enableScrollSync}
             singleSection={singleSection}
+            isFirstItem={index === 0}
+            isLastItem={index === sectionList.length - 1}
           />
         ))}
       </div>

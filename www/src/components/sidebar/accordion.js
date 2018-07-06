@@ -1,7 +1,9 @@
 import React from "react"
+import hex2rgba from "hex2rgba"
 
 import presets, { colors } from "../../utils/presets"
-import { rhythm } from "../../utils/typography"
+import { rhythm, options, scale } from "../../utils/typography"
+import { css as glam } from "glamor"
 
 import SectionTitle from "./section-title"
 import ChevronSvg from "./chevron-svg"
@@ -83,10 +85,11 @@ class Accordion extends React.Component {
       onSectionTitleClick,
       section,
       hideSectionTitle,
-      singleSection,
       activeItemLink,
       itemStyles,
       isActive,
+      isFirstItem,
+      isLastItem,
     } = this.props
     const uid = `section_` + this.state.uid
     const SectionTitleComponent = section.disableAccordions
@@ -94,7 +97,22 @@ class Accordion extends React.Component {
       : ToggleSectionButton
 
     return (
-      <div>
+      <div
+        className="accordion"
+        css={{
+          position: `relative`,
+          marginTop: isFirstItem ? 0 : rhythm(options.blockMarginBottom / 2),
+          marginBottom: rhythm(options.blockMarginBottom / 2),
+          "&:before": {
+            ...(!isFirstItem && { ...styles.ulHorizontalDivider }),
+          },
+          "&:after": {
+            ...(!isLastItem && { ...styles.ulHorizontalDivider }),
+            top: `auto`,
+            bottom: 0,
+          },
+        }}
+      >
         <SectionTitleComponent
           title={section.title}
           isActive={isActive}
@@ -106,7 +124,6 @@ class Accordion extends React.Component {
           id={uid}
           css={{
             ...styles.ul,
-            ...(!singleSection && { ...styles.ulHorizontalDivider }),
             position: `relative`,
             paddingBottom: rhythm(3 / 4),
             "& li": {
@@ -123,8 +140,14 @@ class Accordion extends React.Component {
               css={{
                 ...((item.items && item.link === activeItemLink) ||
                 this._isChildItemActive(item, activeItemLink)
-                  ? { ...styles.liActive }
+                  ? {
+                      ...styles.liActive,
+                      paddingTop: rhythm(options.blockMarginBottom / 2),
+                    }
                   : {}),
+                ...(section.ui === `tutorial` && {
+                  ...styles.tutorialStuff,
+                }),
               }}
             >
               {createLink({
@@ -146,7 +169,7 @@ class Accordion extends React.Component {
                     ...styles.ul,
                     ...styles.ulSubitems,
                     ...(item.ui === `steps` && {
-                      ...styles.tutorialSubsection,
+                      ...styles.stepsSubsection,
                     }),
                   }}
                 >
@@ -158,7 +181,7 @@ class Accordion extends React.Component {
                         location,
                         onLinkClick,
                         section,
-                        isSubsectionLink: true,
+                        isSubsectionLink: item.ui === `steps`,
                       })}
                     </li>
                   ))}
@@ -174,15 +197,32 @@ class Accordion extends React.Component {
 
 export default Accordion
 
+glam.insert(`
+  .accordion + .accordion {
+    margin: 0;
+  }
+
+  .item ~ .accordion {
+    margin-bottom: 0;
+  }
+
+  .accordion + .item {
+    margin-top: ${rhythm(options.blockMarginBottom / 2)};
+  }
+
+  .accordion + .accordion::before {
+    display: none;
+  }
+`)
+
 const styles = {
   ul: {
     listStyle: `none`,
     margin: 0,
-    marginBottom: rhythm(1 / 2),
     position: `relative`,
   },
-  tutorialSubsection: {
-    paddingBottom: 10,
+  stepsSubsection: {
+    paddingBottom: rhythm(options.blockMarginBottom / 2),
     "&:after": {
       background: colors.ui.bright,
       content: ` `,
@@ -220,13 +260,14 @@ const styles = {
   liActive: {
     background: colors.ui.light,
     "&&": {
-      marginTop: rhythm(1 / 2),
-      marginBottom: rhythm(1 / 2),
-      paddingTop: rhythm(1 / 2),
+      marginTop: rhythm(options.blockMarginBottom / 2),
+      marginBottom: rhythm(options.blockMarginBottom / 2),
+      paddingTop: rhythm(options.blockMarginBottom / 2),
     },
   },
   ulSubitems: {
-    paddingTop: rhythm(1 / 2),
+    paddingTop: rhythm(options.blockMarginBottom / 2),
+    paddingBottom: rhythm(options.blockMarginBottom / 2),
     [presets.Desktop]: {
       "&& li": {
         paddingLeft: rhythm(3 / 4),
@@ -235,16 +276,35 @@ const styles = {
     },
   },
   ulHorizontalDivider: {
-    "&:after": {
-      background: colors.ui.light,
-      bottom: 0,
-      content: ` `,
-      height: 1,
-      position: `absolute`,
-      right: 0,
-      left: horizontalPadding,
-      [presets.Desktop]: {
-        left: horizontalPaddingDesktop,
+    background: hex2rgba(colors.ui.bright, 0.3),
+    top: 0,
+    content: ` `,
+    height: 1,
+    position: `absolute`,
+    right: 0,
+    left: horizontalPadding,
+    [presets.Desktop]: {
+      left: horizontalPaddingDesktop,
+    },
+  },
+  tutorialStuff: {
+    "&&": {
+      marginBottom: `1rem`,
+      "& a": {
+        fontWeight: `bold`,
+        fontFamily: options.headerFontFamily.join(`,`),
+        fontSize: scale(-2 / 10).fontSize,
+      },
+      "& ul a": {
+        fontWeight: `normal`,
+        fontFamily: options.systemFontFamily.join(`,`),
+        fontSize: scale(-1 / 10).fontSize,
+        [presets.Phablet]: {
+          fontSize: scale(-2 / 10).fontSize,
+        },
+        [presets.Tablet]: {
+          fontSize: scale(-4 / 10).fontSize,
+        },
       },
     },
   },

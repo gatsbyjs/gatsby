@@ -11,6 +11,7 @@ const createLinkDocs = ({
   isActive,
   onLinkClick,
   isParentOfActiveItem,
+  isSubsectionLink,
 }) => {
   const isDraft = _isDraft(item.title)
   const title = _getTitle(item.title, isDraft)
@@ -26,6 +27,7 @@ const createLinkDocs = ({
       onClick={onLinkClick}
       to={`${item.link}`}
     >
+      {isSubsectionLink && <span css={{ ...styles.subsectionLink }} />}
       {title}
     </Link>
   )
