@@ -17,17 +17,15 @@ However, in his current class _nobody has dropped out_. And every single one of 
 
 [![Image of graphic designer's site](graphic-design-1.png)](http://mmd-site.netlify.com/)
 
-[http://mmd-site.netlify.com/](http://mmd-site.netlify.com/)
-[(source)], (https://github.com/reguv760/mmd-site)
+[Melany Dierks](http://mmd-site.netlify.com/) ([(source](https://github.com/reguv760/mmd-site))
 
 [![Image of graphic designer's site](graphic-design-2.png)](http://myceevee.netlify.com/)
 
-[http://myceevee.netlify.com/](http://myceevee.netlify.com/),
-[(source)](https://github.com/msergushova/myceevee)
+[Khabarovsk](http://myceevee.netlify.com/) ([source](https://github.com/msergushova/myceevee))
 
 [![Image of graphic designer's site](graphic-design-3.png)](https://trudesignsongatsby.netlify.com/)
 
-[https://trudesignsongatsby.netlify.com/](https://trudesignsongatsby.netlify.com/), [(source)](https://github.com/trudesigns/newStuff)
+[TruDesigns](https://trudesignsongatsby.netlify.com/) ([source](https://github.com/trudesigns/newStuff))
 
 After our initial phone conversation, Phil responded to a series of interview questions via email.
 
