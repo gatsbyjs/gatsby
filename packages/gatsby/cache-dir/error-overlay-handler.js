@@ -5,7 +5,7 @@ export const ERROR_TYPES = {
   QUERY: `QUERY`,
 }
 
-const ERRORS = {
+export const ERRORS = {
   GENERIC: [],
   QUERY: [],
 }
@@ -33,7 +33,7 @@ export function clearErrorOverlay(type, clearCondition = true) {
   return false
 }
 
-export const reportErrorOverlay = (type) => (error, { clearCondition, callback }) => {
+export const reportErrorOverlay = (type) => (error, { clearCondition, callback } = {}) => {
   if (error) {
     ERRORS[type].push(error)
   }
