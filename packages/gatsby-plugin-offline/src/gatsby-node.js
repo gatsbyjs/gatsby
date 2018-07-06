@@ -53,13 +53,20 @@ exports.onPostBuild = (args, pluginOptions) => {
   // party like it's 2006
   const $ = cheerio.load(html)
 
-  const criticalScripts = $(`script`)
-    .filter((_, elem) => $(elem).attr(`src`) !== undefined)
-    .map((_, elem) => `${rootDir}${$(elem).attr(`src`)}`)
+  // holds any paths for scripts and links
+  const criticalFilePaths = []
 
-  const criticalLinks = $(`link`)
+  $(`script`)
+    .filter((_, elem) => $(elem).attr(`src`) !== undefined)
+    .each((_, elem) => {
+      criticalFilePaths.push(`${rootDir}${$(elem).attr(`src`)}`)
+    })
+
+  $(`link`)
     .filter((_, elem) => $(elem).attr(`as`) !== `script`)
-    .map((_, elem) => `${rootDir}${$(elem).attr(`href`)}`)
+    .each((_, elem) => {
+      criticalFilePaths.push(`${rootDir}${$(elem).attr(`href`)}`)
+    })
 
   const options = {
     staticFileGlobs: files.concat([
@@ -67,8 +74,7 @@ exports.onPostBuild = (args, pluginOptions) => {
       `${rootDir}/manifest.json`,
       `${rootDir}/manifest.webmanifest`,
       `${rootDir}/offline-plugin-app-shell-fallback/index.html`,
-      ...criticalScripts,
-      ...criticalLinks,
+      ...criticalFilePaths,
     ]),
     stripPrefix: rootDir,
     // If `pathPrefix` is configured by user, we should replace
