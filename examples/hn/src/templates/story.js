@@ -86,7 +86,11 @@ class Story extends React.Component {
           <tbody>
             <tr className="athing comtr " id="14174940">
               {flatComemnts.map(comment => (
-                <StoryComment key={comment.id} comment={comment} width={width} />
+                <StoryComment
+                  key={comment.id}
+                  comment={comment}
+                  width={width}
+                />
               ))}
             </tr>
           </tbody>
