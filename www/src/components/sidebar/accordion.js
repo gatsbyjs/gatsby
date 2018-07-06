@@ -181,7 +181,7 @@ class Accordion extends React.Component {
                         location,
                         onLinkClick,
                         section,
-                        isSubsectionLink: item.ui === `steps`,
+                        stepsUI: item.ui === `steps`,
                       })}
                     </li>
                   ))}
