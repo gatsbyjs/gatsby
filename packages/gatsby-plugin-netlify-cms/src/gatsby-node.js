@@ -1,7 +1,5 @@
 const HtmlWebpackPlugin = require(`html-webpack-plugin`)
-const ExtractTextPlugin = require(`extract-text-webpack-plugin`)
-
-const extractCmsCss = new ExtractTextPlugin(`cms.css`)
+const MiniCssExtractPlugin = require(`mini-css-extract-plugin`)
 
 function plugins(stage) {
   const commonPlugins = [
@@ -16,7 +14,13 @@ function plugins(stage) {
   if (stage === `develop`) {
     return commonPlugins
   } else if (stage === `build-javascript`) {
-    return [...commonPlugins, extractCmsCss]
+    return [
+      ...commonPlugins,
+
+      new MiniCssExtractPlugin({
+        filename: `cms.css`,
+      }),
+    ]
   }
 
   return []
@@ -30,8 +34,6 @@ function plugins(stage) {
 function excludeFromLoader({ actions, rules, getConfig }) {
   const regex = /\/node_modules\/netlify-cms\//
 
-  const cssRule = { ...rules.css(), exclude: regex }
-
   const prevConfig = getConfig()
 
   actions.replaceWebpackConfig({
@@ -41,8 +43,12 @@ function excludeFromLoader({ actions, rules, getConfig }) {
       ...prevConfig.module,
 
       rules: prevConfig.module.rules.map((rule) => {
+        const { test: cssRuleTest } = rules.css()
+
+        const cssRuleTestAsString = String(cssRuleTest)
+
         const isCssRule = rule.oneOf && (
-          rule.oneOf.some(({ test }) => String(test) === String(cssRule.test))
+          rule.oneOf.some(({ test }) => String(test) === cssRuleTestAsString)
         )
 
         if (isCssRule) {
@@ -84,7 +90,7 @@ function excludeFromLoader({ actions, rules, getConfig }) {
 }
 
 function module(args) {
-  const { stage, getConfig, actions } = args
+  const { stage, getConfig, actions, loaders } = args
 
   if (stage === `build-css`) {
     excludeFromLoader(args)
@@ -108,7 +114,10 @@ function module(args) {
           {
             test: /\.css$/,
             include: [/\/node_modules\/netlify-cms\//],
-            loader: extractCmsCss.extract([`css`]),
+            use: [
+              MiniCssExtractPlugin.loader,
+              loaders.css(),
+            ],
           },
         ],
       },
