@@ -11,7 +11,7 @@ Recently, a Gatsby fan named Phil Howley starting teaching Gatsby in an Emerging
 
 In his 10 years of teaching over 50 web development/design classes at (AI) (his other job is with [https://ironcovesolutions.com](https://ironcovesolutions.com) which is built on Gatsby!), he’s observed that graphic design students tend to come to class less as the class gets more focused on coding.
 
-However, in his current class _nobody has dropped out_. And every single one of his students turned in a portfolio, which is also unheard of in this particular class. The reason? He taught them to create their portfolios using Gatsby.
+However, in his current class _nobody has dropped out_. And every single one of his students turned in the MVP and at least one extra credit feature for their final portfolio project, which has never happened when he previously taught this class. The reason? He taught them to create their portfolios using Gatsby.
 
 ## Here are some of the student’s repos and final sites:
 
@@ -37,7 +37,7 @@ After our initial phone conversation, Phil responded to a series of interview qu
 
 I work for Iron Cove Solutions and the CEO, Patrick Monahan, wanted a new site. He was tired of WordPress and how slow it was, having to update the plugins and the core WP. In addition, the theme wasn’t fun. He also had a separate part of the site built with custom PHP. Overall, the site was slow, the SEO was bad, and all changes took forever.
 
-Patrick wanted me to find a better, more modern solution and that’s where I stumbled upon Gatsby. Once I showed him how fast one of the demo sites was, he gave me the green light. I dug in and here is the URL for Iron Cove’s new “Gatsby” website, [https://ironcovesolutions.com](https://ironcovesolutions.com).
+Patrick wanted me to find a better, more modern solution and that’s where I stumbled upon Gatsby. Once I showed him how fast one of the demo sites was, he gave me the green light. I dug in and here is the URL for Iron Cove’s new “Gatsby” website, [https://ironcovesolutions.com](https://ironcovesolutions.com). Props to [HTML5 Up](https://html5up.net/) for coding the [Gatsby starter](https://github.com/ChangoMan/gatsby-starter-forty) that I used.
 
 The speed is lightning fast. We removed WordPress entirely from the equation and replaced it with the more user-friendly, less of a headache Contentful (https://www.contentful.com/).
 
