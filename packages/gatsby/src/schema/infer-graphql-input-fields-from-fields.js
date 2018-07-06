@@ -89,6 +89,7 @@ const scalarFilterMap = {
     gte: { type: GraphQLInt },
     lt: { type: GraphQLInt },
     lte: { type: GraphQLInt },
+    in: { type: new GraphQLList(GraphQLInt) },
   },
   Float: {
     eq: { type: GraphQLFloat },
@@ -97,20 +98,24 @@ const scalarFilterMap = {
     gte: { type: GraphQLFloat },
     lt: { type: GraphQLFloat },
     lte: { type: GraphQLFloat },
+    in: { type: new GraphQLList(GraphQLFloat) },
   },
   ID: {
     eq: { type: GraphQLID },
     ne: { type: GraphQLID },
+    in: { type: new GraphQLList(GraphQLID) },
   },
   String: {
     eq: { type: GraphQLString },
     ne: { type: GraphQLString },
     regex: { type: GraphQLString },
     glob: { type: GraphQLString },
+    in: { type: new GraphQLList(GraphQLString) },
   },
   Boolean: {
     eq: { type: GraphQLBoolean },
     ne: { type: GraphQLBoolean },
+    in: { type: new GraphQLList(GraphQLBoolean) },
   },
 }
 
