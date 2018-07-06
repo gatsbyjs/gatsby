@@ -37,13 +37,12 @@ We're currently gearing up to release a new major version, v2.
 
 During this time, please choose the correct branch for your pull request:
 
-- `master` branch for Gatsby version 2 bug fixes `master` branch for any new
-- features (these will be released in the Gatsby v2 betas) `v1` branch for
-- updates to the `www` and `docs` directories `v1` branch for Gatsby version
-- 1 bug fixes
+- `master` branch for Gatsby version 2 bug fixes
+- `master` branch for any new features (these will be released in the Gatsby v2 betas)
+- `master` branch for updates to the `www` and `docs` directories
+- `v1` branch for Gatsby version 1 bug fixes
 
-Note: We will _not_ accept new features for Gatsby v1, only bug fixes,
-documentation and updates to gatsbyjs.org.
+Note: We will only accept bug fixes for Gatsby v1. New features should be added to Gatsby v2.
 
 You can install the latest version of Gatsby by following these steps:
 
@@ -123,8 +122,7 @@ Gatsby uses Redux for managing state during development and building. It's often
 helpful to see the flow of actions and built-up state for a site you're working
 on or if adding new functionality to core. We leverage
 [Remote Redux Devtools](https://github.com/zalmoxisus/remote-redux-devtools) and
-[RemoteDev Server](https://github.com/zalmoxisus/remotedev-server) to give you use the Redux
-devtools extension for debugging Gatsby.
+[RemoteDev Server](https://github.com/zalmoxisus/remotedev-server) to help you debug Gatsby.
 
 To use this, first install
 [redux-devtools-extension](https://github.com/zalmoxisus/redux-devtools-extension)

@@ -144,11 +144,13 @@ exports.createPages = ({ graphql, actions }) => {
           edge => {
             const slug = _.get(edge, `node.fields.slug`)
             const draft = _.get(edge, `node.frontmatter.draft`)
-            if (!slug) return
+            if (!slug) return undefined
 
             if (_.includes(slug, `/blog/`) && !draft) {
               return edge
             }
+
+            return undefined
           }
         )
 

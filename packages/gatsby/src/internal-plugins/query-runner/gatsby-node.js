@@ -3,7 +3,7 @@ const { watchComponent } = require(`./query-watcher`)
 let components = {}
 
 exports.onCreatePage = ({ page, store }) => {
-  const component = store.getState().components[page.componentPath]
+  const component = store.getState().components.get(page.componentPath)
 
   if (components[component.componentPath]) {
     return

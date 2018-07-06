@@ -25,7 +25,7 @@ export default function socketIo() {
           if (msg.type === `pageQueryResult`) {
             pageQueryData = {
               ...pageQueryData,
-              [msg.payload.id ? msg.payload.id : msg.payload.path]: msg.payload
+              [msg.payload.id]: msg.payload
                 .result,
             }
           }

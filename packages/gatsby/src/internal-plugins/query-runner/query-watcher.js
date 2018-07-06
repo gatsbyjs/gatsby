@@ -11,6 +11,7 @@
 const _ = require(`lodash`)
 const chokidar = require(`chokidar`)
 const path = require(`path`)
+const slash = require(`slash`)
 
 const { store } = require(`../../redux/`)
 const { boundActionCreators } = require(`../../redux/actions`)
@@ -93,7 +94,7 @@ const runQueriesForPageComponent = componentPath => {
     queue.push({
       id: page.path,
       jsonName: page.jsonName,
-      query: store.getState().components[componentPath].query,
+      query: store.getState().components.get(componentPath).query,
       isPage: true,
       context: {
         ...page,
@@ -140,7 +141,7 @@ const watch = rootDir => {
 
       // If a component previously with a query now doesn't — update the
       // store.
-      const noQueryComponents = Object.values(components).filter(
+      const noQueryComponents = Array.from(components.values()).filter(
         c => c.query !== `` && !queries.has(c.componentPath)
       )
       noQueryComponents.forEach(({ componentPath }) => {
@@ -176,7 +177,7 @@ const watch = rootDir => {
           //
           // If the query has changed, set the new query in the
           // store and run its queries.
-          if (components[id] && text !== components[id].query) {
+          if (components.has(id) && text !== components.get(id).query) {
             boundActionCreators.replaceComponentQuery({
               query: text,
               componentPath: id,
@@ -189,7 +190,7 @@ const watch = rootDir => {
   }, 100)
 
   watcher = chokidar
-    .watch(path.join(rootDir, `/src/**/*.{js,jsx,ts,tsx}`))
+    .watch(slash(path.join(rootDir, `/src/**/*.{js,jsx,ts,tsx}`)))
     .on(`change`, path => {
       debounceCompile()
     })
