@@ -15,17 +15,17 @@ However, in his current class _nobody has dropped out_. And every single one of 
 
 ## Here are some of the student’s repos and final sites:
 
-![Image of graphic designer's site](graphic-design-1.png)
+[![Image of graphic designer's site](graphic-design-1.png)](http://mmd-site.netlify.com/)
 
 [http://mmd-site.netlify.com/](http://mmd-site.netlify.com/)
 [(source)], (https://github.com/reguv760/mmd-site)
 
-![Image of graphic designer's site](graphic-design-2.png)
+[![Image of graphic designer's site](graphic-design-2.png)](http://myceevee.netlify.com/)
 
 [http://myceevee.netlify.com/](http://myceevee.netlify.com/),
 [(source)](https://github.com/msergushova/myceevee)
 
-![Image of graphic designer's site](graphic-design-3.png)
+[![Image of graphic designer's site](graphic-design-3.png)](https://trudesignsongatsby.netlify.com/)
 
 [https://trudesignsongatsby.netlify.com/](https://trudesignsongatsby.netlify.com/), [(source)](https://github.com/trudesigns/newStuff)
 
