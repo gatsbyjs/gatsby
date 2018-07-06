@@ -1,9 +1,10 @@
-import loader from "../loader.js"
+import { apiRunner } from "../api-runner-browser"
+import loader, { setApiRunnerForLoader } from "../loader.js"
 
 describe(`Loader`, () => {
   beforeEach(() => {
     global.__PATH_PREFIX__ = ``
-
+    setApiRunnerForLoader(apiRunner)
     loader.empty()
     loader.addPagesArray([
       {
