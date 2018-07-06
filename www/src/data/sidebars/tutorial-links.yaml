@@ -8,6 +8,7 @@
       link: /tutorial/part-zero/
     - title: 1. Introduction to Gatsby basics
       link: /tutorial/part-one/
+      ui: steps
       items:
         - title: Check environment
           link: /tutorial/part-one/#check-your-development-environment
@@ -21,6 +22,7 @@
           link: /tutorial/part-one/#deploying-gatsbyjs-websites
     - title: 2. Introduction to using CSS in Gatsby
       link: /tutorial/part-two/
+      ui: steps
       items:
         - title: Building with components
           link: /tutorial/part-two/#building-with-components
@@ -36,11 +38,13 @@
           link: /tutorial/part-two/#css-modules
     - title: 3. Creating nested layout components
       link: /tutorial/part-three/
+      ui: steps
       items:
         - title: Our first layout component
           link: /tutorial/part-three/#our-first-layout-component
     - title: 4. Querying for data in a blog
       link: /tutorial/part-four/
+      ui: steps
       items:
         - title: Recap of the first half of the tutorial
           link: /tutorial/part-four/#recap-of-first-half-of-the-tutorial
@@ -52,6 +56,7 @@
           link: /tutorial/part-four/#our-first-graphql-query
     - title: 5. Source plugins and rendering queried data
       link: /tutorial/part-five/
+      ui: steps
       items:
         - title: Introducing GraphiQL
           link: /tutorial/part-five/#introducing-graphiql
@@ -61,6 +66,7 @@
           link: /tutorial/part-five/#build-a-page-with-a-graphql-query
     - title: 6. Transformer plugins
       link: /tutorial/part-six/
+      ui: steps
       items:
         - title: Transformer plugins
           link: /tutorial/part-six/#transformer-plugins
@@ -68,6 +74,7 @@
           link: /tutorial/part-six/#create-a-list-of-our-sites-markdown-files-in-srcpagesindexjs
     - title: 7. Programmatically create pages from data
       link: /tutorial/part-seven/
+      ui: steps
       items:
         - title: Creating slugs for pages
           link: /tutorial/part-seven/#creating-slugs-for-pages
@@ -75,6 +82,7 @@
           link: /tutorial/part-seven/#creating-pages
     - title: 8. Preparing a site to go live
       link: /tutorial/part-eight/
+      ui: steps
       items:
         - title: Creating slugs for pages
           link: /tutorial/part-eight/#creating-slugs-for-pages	
