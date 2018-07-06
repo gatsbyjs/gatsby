@@ -146,7 +146,7 @@ class Accordion extends React.Component {
                     }
                   : {}),
                 ...(section.ui === `tutorial` && {
-                  ...styles.tutorialStuff,
+                  ...styles.liTutorial,
                 }),
               }}
             >
@@ -169,7 +169,7 @@ class Accordion extends React.Component {
                     ...styles.ul,
                     ...styles.ulSubitems,
                     ...(item.ui === `steps` && {
-                      ...styles.stepsSubsection,
+                      ...styles.ulStepsUI,
                     }),
                   }}
                 >
@@ -221,7 +221,7 @@ const styles = {
     margin: 0,
     position: `relative`,
   },
-  stepsSubsection: {
+  ulStepsUI: {
     paddingBottom: rhythm(options.blockMarginBottom / 2),
     "&:after": {
       background: colors.ui.bright,
@@ -287,7 +287,7 @@ const styles = {
       left: horizontalPaddingDesktop,
     },
   },
-  tutorialStuff: {
+  liTutorial: {
     "&&": {
       marginBottom: `1rem`,
       "& a": {
