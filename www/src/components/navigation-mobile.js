@@ -17,10 +17,11 @@ const MobileNavItem = ({ linkTo, label, icon }) => (
     css={{
       color: colors.gatsby,
       fontSize: scale(-1 / 2).fontSize,
+      flexShrink: 0,
       letterSpacing: `0.0075rem`,
       lineHeight: 1,
       padding: `${rhythm(options.blockMarginBottom / 4)} ${rhythm(
-        options.blockMarginBottom
+        options.blockMarginBottom / 2
       )} ${rhythm(options.blockMarginBottom / 2)} `,
       textDecoration: `none`,
       textAlign: `center`,

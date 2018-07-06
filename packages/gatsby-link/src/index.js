@@ -137,7 +137,9 @@ class GatsbyLink extends React.Component {
                 .split(`#`)
                 .slice(1)
                 .join(`#`)
-              const element = hashFragment ? document.getElementById(hashFragment) : null
+              const element = hashFragment
+                ? document.getElementById(hashFragment)
+                : null
               if (element !== null) {
                 element.scrollIntoView()
                 return true
