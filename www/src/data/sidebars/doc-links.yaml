@@ -157,11 +157,11 @@
       link: /docs/api-specification/
 - title: Releases & Migration
   items:
-    - title: v2 release notes
+    - title: v2 release notes*
       link: /docs/v2-release-notes/
-    - title: v1 release notes
+    - title: v1 release notes*
       link: /docs/v1-release-notes/
-    - title: v0 release notes
+    - title: v0 release notes*
       link: /docs/v0-release-notes/
     - title: Migrating from v1 to v2
       link: /docs/migrating-from-v1-to-v2/
@@ -169,9 +169,9 @@
       link: /docs/migrating-from-v0-to-v1/
 - title: Conceptual Guide
   items:
-    - title: The Gatsby core philosophy
+    - title: The Gatsby core philosophy*
       link: /docs/gatsby-core-philosophy/
-    - title: Life and times of a Gatsby build
+    - title: Life and times of a Gatsby build*
       link: /docs/life-and-times-of-a-gatsby-build/
     - title: Building with components
       link: /docs/building-with-components/
@@ -187,35 +187,35 @@
   items:
     - title: Community
       link: /docs/community/
-    - title: Code of Conduct
+    - title: Code of Conduct*
       link: /docs/code-of-conduct/
     - title: How to contribute
       link: /docs/how-to-contribute/
     - title: How to file an issue
       link: /docs/how-to-file-an-issue/
-    - title: How to submit a PR
+    - title: How to submit a PR*
       link: /docs/how-to-submit-a-pr/
     - title: Gatsby style guide
       link: /docs/gatsby-style-guide/
     - title: Design principles*
       link: /docs/design-principles/
-    - title: RFC process
+    - title: RFC process*
       link: /docs/rfc-process/
-    - title: Templates
+    - title: Docs templates*
       link: /docs/templates/
-    - title: How to run a Gatsby workshop
+    - title: How to run a Gatsby workshop*
       link: /docs/how-to-run-a-gatsby-workshop/
-    - title: How to pitch Gatsby
+    - title: How to pitch Gatsby*
       link: /docs/how-to-pitch-gatsby/
-    - title: Submit a blogpost
+    - title: Submit a blogpost*
       link: /docs/submit-a-blogpost/
-    - title: Submit to Site Showcase
+    - title: Submit to Site Showcase*
       link: /docs/submit-to-site-showcase/
-    - title: Submit to Starter Showcase
+    - title: Submit to Starter Showcase*
       link: /docs/submit-to-starter-showcase/
-    - title: Submit to Plugin Library
+    - title: Submit to Plugin Library*
       link: /docs/submit-to-plugin-library/
-- title: Glossary
+- title: Glossary*
   link: /docs/glossary/
-- title: Commands (Gatsby CLI)
+- title: Commands (Gatsby CLI)*
   link: /docs/gatsby-cli/
