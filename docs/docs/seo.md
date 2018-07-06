@@ -1,4 +1,6 @@
-# SEO with Gatsby
+---
+title: SEO with Gatsby
+---
 
 Gatsby helps your site place better in search engines. Some advantages come out of the box and some require configuration.
 
