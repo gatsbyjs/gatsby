@@ -120,8 +120,7 @@ Gatsby uses Redux for managing state during development and building. It's often
 helpful to see the flow of actions and built-up state for a site you're working
 on or if adding new functionality to core. We leverage
 [Remote Redux Devtools](https://github.com/zalmoxisus/remote-redux-devtools) and
-[RemoteDev Server](https://github.com/zalmoxisus/remotedev-server) to give you use the Redux
-devtools extension for debugging Gatsby.
+[RemoteDev Server](https://github.com/zalmoxisus/remotedev-server) to help you debug Gatsby.
 
 To use this, first install
 [redux-devtools-extension](https://github.com/zalmoxisus/redux-devtools-extension)
