@@ -429,7 +429,7 @@ module.exports = async ({
    * includes some reasonable defaults
    */
   plugins.extractText = options => {
-    const pathToGroupStyles = program.groupFiles ? `../styles/` : ``
+    const pathToGroupStyles = program.groupFiles ? `../css/` : ``
 
     return new MiniCssExtractPlugin({
       filename: `${pathToGroupStyles}[name].[contenthash].css`,

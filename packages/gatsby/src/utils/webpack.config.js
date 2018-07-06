@@ -89,7 +89,7 @@ module.exports = async (
 
   function getOutputPaths() {
     const path = program.groupFiles
-      ? directoryPath(`public/scripts`)
+      ? directoryPath(`public/js`)
       : directoryPath(`public`)
 
     let publicPath = program.prefixPaths
@@ -97,7 +97,7 @@ module.exports = async (
       : `/`
 
     if (program.groupFiles) {
-      publicPath = `${publicPath}scripts/`
+      publicPath = `${publicPath}js/`
     }
 
     return {
