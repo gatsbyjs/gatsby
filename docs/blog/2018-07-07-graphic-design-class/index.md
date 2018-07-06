@@ -2,32 +2,30 @@
 title: Learning how to code with Gatsby
 date: "2018-07-07"
 author: "Shannon Soper"
-tags: ["college", "case study"]
+tags: ["college", "case study", "design", "getting-started"]
 ---
 
 ## Phil Howley's Graphic Design class
 
 Recently, a Gatsby fan named Phil Howley starting teaching Gatsby in an Emerging Technologies class at the Art Institute (AI) in North Hollywood and I got to interview him.
 
-In his 10 years of teaching over 50 web development/design classes at (AI) (his other job is with [https://ironcovesolutions.com](https://ironcovesolutions.com) which is built on Gatsby!), he’s observed that graphic design students tend to come to class less as the class gets more focused on coding.
+In his 10 years of teaching over 50 web development/design classes at (AI) (his other job is with [Iron Cove Solutions](https://ironcovesolutions.com) which is built on Gatsby!), he’s observed that graphic design students tend to come to class less as the class gets more focused on coding.
 
 However, in his current class _nobody has dropped out_. And every single one of his students turned in the MVP and at least one extra credit feature for their final portfolio project, which has never happened when he previously taught this class. The reason? He taught them to create their portfolios using Gatsby.
 
-## Here are some of the student’s repos and final sites:
+## Here are some of the student’s final sites:
 
 [![Image of graphic designer's site](graphic-design-1.png)](http://mmd-site.netlify.com/)
 
-[http://mmd-site.netlify.com/](http://mmd-site.netlify.com/)
-[(source)], (https://github.com/reguv760/mmd-site)
+[Melany Dierks](http://mmd-site.netlify.com/) ([source](https://github.com/reguv760/mmd-site))
 
 [![Image of graphic designer's site](graphic-design-2.png)](http://myceevee.netlify.com/)
 
-[http://myceevee.netlify.com/](http://myceevee.netlify.com/),
-[(source)](https://github.com/msergushova/myceevee)
+[Khabarovsk](http://myceevee.netlify.com/) ([source](https://github.com/msergushova/myceevee))
 
 [![Image of graphic designer's site](graphic-design-3.png)](https://trudesignsongatsby.netlify.com/)
 
-[https://trudesignsongatsby.netlify.com/](https://trudesignsongatsby.netlify.com/), [(source)](https://github.com/trudesigns/newStuff)
+[TruDesigns](https://trudesignsongatsby.netlify.com/) ([source](https://github.com/trudesigns/newStuff))
 
 After our initial phone conversation, Phil responded to a series of interview questions via email.
 
@@ -37,13 +35,13 @@ After our initial phone conversation, Phil responded to a series of interview qu
 
 I work for Iron Cove Solutions and the CEO, Patrick Monahan, wanted a new site. He was tired of WordPress and how slow it was, having to update the plugins and the core WP. In addition, the theme wasn’t fun. He also had a separate part of the site built with custom PHP. Overall, the site was slow, the SEO was bad, and all changes took forever.
 
-Patrick wanted me to find a better, more modern solution and that’s where I stumbled upon Gatsby. Once I showed him how fast one of the demo sites was, he gave me the green light. I dug in and here is the URL for Iron Cove’s new “Gatsby” website, [https://ironcovesolutions.com](https://ironcovesolutions.com). Props to [HTML5 Up](https://html5up.net/) for coding the [Gatsby starter](https://github.com/ChangoMan/gatsby-starter-forty) that I used.
+Patrick wanted me to find a better, more modern solution and that’s where I stumbled upon Gatsby. Once I showed him how fast one of the demo sites was, he gave me the green light. I dug in and here is the URL for [Iron Cove’s new “Gatsby” website](https://ironcovesolutions.com). Props to [HTML5 Up](https://html5up.net/) for coding the [Gatsby starter](https://github.com/ChangoMan/gatsby-starter-forty) that I used.
 
-The speed is lightning fast. We removed WordPress entirely from the equation and replaced it with the more user-friendly, less of a headache Contentful (https://www.contentful.com/).
+The speed is lightning fast. We removed WordPress entirely from the equation and replaced it with the more user-friendly, less of a headache [Contentful](https://www.contentful.com/).
 
-He also liked the cost-effectiveness of Godaddy but when things broke, it was a huge time suck to repair. We swapped Godaddy with Netlify (https://netlify.com) and used Netlify to automatically run production builds from our Github repo. We wired Contentful to Netlify using a hook and to GatsbyJS using API keys and now Iron Cove’s site was fast and super simple to update. A win-win all around.
+He also liked the cost-effectiveness of Godaddy but when things broke, it was a huge time suck to repair. We swapped Godaddy with [Netlify](https://netlify.com) and used Netlify to automatically run production builds from our Github repo. We wired Contentful to Netlify using a hook and to GatsbyJS using API keys and now Iron Cove’s site was fast and super simple to update. A win-win all around.
 
-Patrick loved Gatsby so much he created a new product line where he is actively looking to help companies build sites using Gatsby JS and all the other tools he used on his current site.
+Patrick loved Gatsby so much he created a new product line where he is actively looking to help companies build sites using GatsbyJS and all the other tools he used on his current site.
 
 ### What do you teach?
 
@@ -81,7 +79,7 @@ One thing they wanted more of:
 
 They suggest that a link be added to the home page of Gatsby pointing to it and all sites with git repos should be searchable first.
 
-> _NOTE_: His students are in luck! The [Starter Showcase](https://dreamy-shannon-191f15.netlify.com/starter-showcase/?sort=stars) (see [PR 6113](https://github.com/gatsbyjs/gatsby/pull/6113) and [Site Showcase](https://next.gatsbyjs.org/showcase/) ([see relevant issues here](https://github.com/gatsbyjs/gatsby/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+site+showcase)) are nearly done.
+> _NOTE_: His students are in luck! The [Starter Showcase](https://dreamy-shannon-191f15.netlify.com/starter-showcase/?sort=stars) (see [PR 6113](https://github.com/gatsbyjs/gatsby/pull/6113)) and [Site Showcase](https://next.gatsbyjs.org/showcase/) ([see relevant issues here](https://github.com/gatsbyjs/gatsby/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+site+showcase)) are nearly done.
 
 ### What do you like about teaching with Gatsby?
 
