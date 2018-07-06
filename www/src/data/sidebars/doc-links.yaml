@@ -1,34 +1,15 @@
-- title: Getting Started
-  link: /docs/
-- title: Fake Introduction
-  link: /docs/fake-intro/
 - title: Quick Start
   items:
+    - title: Getting Started
+      link: /docs/
     - title: Starters
       link: /docs/gatsby-starters/
     - title: Deploying
       link: /docs/deploy-gatsby/
-      ui: steps
-      items:
-        - title: A bunch of fake…
-          link: /docs/a-bunch/
-        - title: Sidebar items…
-          link: /docs/of-dummy/
-        - title: To test stuff! Bullet point stuff is opt-in ✨
-          link: /docs/sidebar-items/
     - title: Community
       link: /docs/community/
-      items:
-        - title: A bunch of fake…
-          link: /docs/a-bunch/
-        - title: Sidebar items…
-          link: /docs/of-dummy/
-        - title: To test stuff! Bullet point stuff is opt-in ✨
-          link: /docs/sidebar-items/
     - title: Awesome Gatsby
       link: /docs/awesome-gatsby/
-- title: Tutorial
-  link: /tutorial/
 - title: Core Concepts
   items:
     - title: Building with Components
@@ -145,5 +126,3 @@
       link: /docs/gatsby-style-guide/
     - title: Design Principles*
       link: /docs/design-principles/
-- title: Gatsby CLI
-  link: /gatsby-cli/
