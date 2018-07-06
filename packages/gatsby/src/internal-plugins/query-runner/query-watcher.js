@@ -27,7 +27,7 @@ const getQueriesSnapshot = () => {
   const state = store.getState()
 
   const snapshot = {
-    components: { ...state.components },
+    components: new Map(state.components),
     staticQueryComponents: new Map(state.staticQueryComponents),
   }
 
@@ -40,16 +40,15 @@ const handleComponentsWithRemovedQueries = (
 ) => {
   // If a component previously with a query now doesn't — update the
   // store.
-  const noQueryComponents = Object.values(components).filter(
-    c => c.query !== `` && !queries.has(c.componentPath)
-  )
-  noQueryComponents.forEach(({ componentPath }) => {
-    debug(`Page query was removed from ${componentPath}`)
-    boundActionCreators.replaceComponentQuery({
-      query: ``,
-      componentPath,
-    })
-    queueQueriesForPageComponent(componentPath)
+  components.forEach(c => {
+    if (c.query !== `` && !queries.has(c.componentPath)) {
+      debug(`Page query was removed from ${c.componentPath}`)
+      boundActionCreators.replaceComponentQuery({
+        query: ``,
+        componentPath: c.componentPath,
+      })
+      queueQueriesForPageComponent(c.componentPath)
+    }
   })
 
   // If a component had static query and it doesn't have it
@@ -72,8 +71,8 @@ const handleQuery = (
   component
 ) => {
   // If this is page query
-  if (components[component]) {
-    if (components[component].query !== query.text) {
+  if (components.has(component)) {
+    if (components.get(component).query !== query.text) {
       boundActionCreators.replaceComponentQuery({
         query: query.text,
         componentPath: component,
@@ -81,7 +80,9 @@ const handleQuery = (
 
       debug(
         `Page query in ${component} ${
-          components[component].query.length === 0 ? `was added` : `has changed`
+          components.get(component).query.length === 0
+            ? `was added`
+            : `has changed`
         }.`
       )
       queueQueriesForPageComponent(component)
