@@ -76,7 +76,11 @@ async function parseToAst(filePath, fileStr) {
   if (transpiled && transpiled.length) {
     for (const item of transpiled) {
       try {
-        const tmp = babylon.parse(item, BABYLON_OPTIONS)
+        // 'item' can be preprocessed code in a string or an object with
+        // custom @babel/parser options
+        const [code, options] =
+          typeof item === `string` ? [item, BABYLON_OPTIONS] : [fileStr, item]
+        const tmp = babylon.parse(code, options)
         ast = tmp
         break
       } catch (error) {
