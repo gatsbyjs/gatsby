@@ -2,7 +2,7 @@ import React from "react"
 import presets, { colors } from "../../utils/presets"
 import { scale, options, rhythm } from "../../utils/typography"
 
-const SectionTitle = ({ children, isActive }) => (
+const SectionTitle = ({ children, isActive, disabled }) => (
   <h3
     css={{
       alignItems: `center`,
@@ -18,8 +18,8 @@ const SectionTitle = ({ children, isActive }) => (
       paddingBottom: rhythm(options.blockMarginBottom),
       [presets.Tablet]: {
         color: isActive ? colors.gatsby : false,
-        ":hover": {
-          color: colors.gatsby,
+        "&:hover": {
+          color: disabled ? false : colors.gatsby,
         },
       },
     }}

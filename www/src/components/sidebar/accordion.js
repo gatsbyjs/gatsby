@@ -58,7 +58,7 @@ const Title = ({ title }) => (
       },
     }}
   >
-    <SectionTitle>{title}</SectionTitle>
+    <SectionTitle disabled>{title}</SectionTitle>
   </div>
 )
 
