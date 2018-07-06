@@ -353,10 +353,10 @@ You may have noticed that you used a [tag function](https://developer.mozilla.or
 
 The short answer is this: during the Gatsby build process, GraphQL queries are pulled out of the original source for parsing.
 
-The longer answer is a little more involved: Gatsby borrows a technique from	
-[Relay](https://facebook.github.io/relay/) that converts your source code into an	[abstract syntax tree (AST)](https://en.wikipedia.org/wiki/Abstract_syntax_tree) during the build step. [`file-parser.js`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/file-parser.js)	and [`query-compiler.js`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/query-compiler.js) pick out your `graphql`-tagged templates and effectively remove them from the original source code. 
+The longer answer is a little more involved: Gatsby borrows a technique from
+[Relay](https://facebook.github.io/relay/) that converts your source code into an [abstract syntax tree (AST)](https://en.wikipedia.org/wiki/Abstract_syntax_tree) during the build step. [`file-parser.js`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/file-parser.js) and [`query-compiler.js`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/query-compiler.js) pick out your `graphql`-tagged templates and effectively remove them from the original source code.
 
-This means that	the `graphql` tag isn’t executed the way that you might expect. For example, you cannot use [expression interpolation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#Expression_interpolation) with Gatsby's `graphql` tag.
+This means that the `graphql` tag isn’t executed the way that you might expect. For example, you cannot use [expression interpolation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#Expression_interpolation) with Gatsby's `graphql` tag.
 
 ## What's coming next?
 

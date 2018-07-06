@@ -87,6 +87,7 @@ Featured sites are chosen the first week of every quarter based on the following
 - unique design
 
 ### How to Set a Site as Featured
+
 _Note: the Gatsby team will choose featured sites, leave as `featured: false` when first posting_
 
 1.  Change `featured: false` to `featured: true`
