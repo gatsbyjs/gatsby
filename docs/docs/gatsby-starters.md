@@ -62,7 +62,7 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
 
   - Same as `gatsby-starter-default` with dynamic content from [Cosmic JS](https://cosmicjs.com)
   - Install and set up CMS in seconds [via the command line](https://github.com/cosmicjs/gatsby-starter)
-  
+
 - [gatsby-starter-blog-no-styles](https://github.com/noahg/gatsby-starter-blog-no-styles)
   [(demo)](http://capricious-spring.surge.sh/)
 
@@ -799,11 +799,11 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
   - Based on [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default)
   - Using [Tachyons](https://github.com/tachyons-css/tachyons/) for CSS. [Read the tachyons docs](http://tachyons.io/docs/)
   - Find out about the tachyons open source component library [here](http://tachyons.io/components/) to get you going.
-  
+
 - 💀[gatsby-starter-skeleton](https://github.com/Undistraction/gatsby-starter-skeleton) ([Demo](https://undistraction.github.io/gatsby-starter-skeleton/))
 
   Features:
-  
+
   - Full-featured site for developer or small company
   - Includes Articles and Projects
   - Includes Tags and Categores

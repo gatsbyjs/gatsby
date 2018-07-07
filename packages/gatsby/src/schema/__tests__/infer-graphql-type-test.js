@@ -127,7 +127,7 @@ describe(`GraphQL type inferance`, () => {
   it(`doesn't throw errors at ints longer than 32-bit`, async () => {
     const result = await queryResult(
       [
-        { 
+        {
           longint: 3000000000,
         },
       ],

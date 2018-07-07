@@ -1,6 +1,6 @@
 // @flow
 
-const indentString = (string: string): string => string.replace(/\n/g, `\n  `) 
+const indentString = (string: string): string => string.replace(/\n/g, `\n  `)
 
 const formatErrorDetails = (errorDetails: Map<string, any>): string =>
   Array.from(errorDetails.entries())

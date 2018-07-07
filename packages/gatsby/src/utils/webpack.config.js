@@ -63,6 +63,7 @@ module.exports = async (
     // Don't allow overwriting of NODE_ENV, PUBLIC_DIR as to not break gatsby things
     envObject.NODE_ENV = JSON.stringify(env)
     envObject.PUBLIC_DIR = JSON.stringify(`${process.cwd()}/public`)
+    envObject.BUILD_STAGE = JSON.stringify(stage)
 
     return Object.assign(envObject, gatsbyVarObject)
   }
@@ -186,12 +187,12 @@ module.exports = async (
             clearConsole: false,
             compilationSuccessInfo: {
               messages: [
-                `You can now view your site in the browser running at ${program.ssl ? `https` : `http`}://${
-                  program.host
-                }:${program.port}`,
-                `Your graphql debugger is running at ${program.ssl ? `https` : `http`}://${program.host}:${
-                  program.port
-                }/___graphql`,
+                `You can now view your site in the browser running at ${
+                  program.ssl ? `https` : `http`
+                }://${program.host}:${program.port}`,
+                `Your graphql debugger is running at ${
+                  program.ssl ? `https` : `http`
+                }://${program.host}:${program.port}/___graphql`,
               ],
             },
           }),

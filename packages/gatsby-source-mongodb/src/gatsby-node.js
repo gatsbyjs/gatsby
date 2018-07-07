@@ -19,7 +19,9 @@ exports.sourceNodes = (
   if (pluginOptions.auth)
     authUrlPart = `${pluginOptions.auth.user}:${pluginOptions.auth.password}@`
 
-  let connectionExtraParams = getConnectionExtraParams(pluginOptions.extraParams)
+  let connectionExtraParams = getConnectionExtraParams(
+    pluginOptions.extraParams
+  )
   const connectionURL = `mongodb://${authUrlPart}${serverOptions.address}:${
     serverOptions.port
   }/${dbName}${connectionExtraParams}`
@@ -70,6 +72,7 @@ function createNodes(
           // Data for the node.
           ...item,
           id: createNodeId(`${id}`),
+          mongodb_id: id,
           parent: `__${collectionName}__`,
           children: [],
           internal: {
