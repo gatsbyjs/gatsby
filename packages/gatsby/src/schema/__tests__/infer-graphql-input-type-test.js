@@ -126,6 +126,22 @@ describe(`GraphQL Input args`, () => {
         circle: `happy`,
       },
       boolean: false,
+      data: {
+        tags: [
+          {
+            tag: {
+              document: [
+                {
+                  data: {
+                    tag: `Design System`,
+                  },
+                  number: 3,
+                },
+              ],
+            },
+          },
+        ],
+      },
     },
     {
       index: 2,
@@ -150,48 +166,6 @@ describe(`GraphQL Input args`, () => {
               document: [
                 {
                   data: {
-                    tag: `Design System`,
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-    {
-      index: 3,
-      name: `Prismic Stress Test`,
-      date: `2018-07-04T18:34:44+0000`,
-      data: {
-        title: {
-          text: `Create your design system with Gatsby`,
-        },
-        body: [
-          {
-            slice_type: `text`,
-            primary: {
-              text: {
-                text: `Content of this slice`,
-              },
-            },
-          },
-        ],
-        category: {
-          document: [
-            {
-              data: {
-                category: `Coding`,
-              },
-            },
-          ],
-        },
-        tags: [
-          {
-            tag: {
-              document: [
-                {
-                  data: {
                     tag: `Gatsby`,
                   },
                 },
@@ -205,6 +179,7 @@ describe(`GraphQL Input args`, () => {
                   data: {
                     tag: `Design System`,
                   },
+                  number: 5,
                 },
               ],
             },
@@ -532,16 +507,43 @@ describe(`GraphQL Input args`, () => {
     expect(result.data.allNode.edges[0].node.name).toEqual(`The Mad Wax`)
   })
 
-  it(`handles the glob operator`, async () => {
+  it(`handles the in operator for array of objects`, async () => {
     let result = await queryResult(
       nodes,
       `
         {
-          allNode(limit: 10, filter: {name: { glob: "*Wax" }}) {
-            edges { node { name }}
+          test1:allNode(filter: {data: {tags: {in: {tag: {document: {in: {data: {tag: {eq: "Gatsby"}}}}}}}}}) {
+            edges { node { index }}
+          }
+          test2:allNode(filter: {data: {tags: {in: {tag: {document: {in: {data: {tag: {eq: "Design System"}}}}}}}}}) {
+            edges { node { index }}
+          }
+          test3:allNode(filter: {data: {tags: {in: {tag: {document: {in: {number: {lt: 4}}}}}}}}) {
+            edges { node { index }}
           }
         }
       `
+    )
+    expect(result.errors).not.toBeDefined()
+    expect(result.data.test1.edges.length).toEqual(1)
+    expect(result.data.test1.edges[0].node.index).toEqual(2)
+    expect(result.data.test2.edges.length).toEqual(2)
+    expect(result.data.test2.edges[0].node.index).toEqual(1)
+    expect(result.data.test2.edges[1].node.index).toEqual(2)
+    expect(result.data.test3.edges.length).toEqual(1)
+    expect(result.data.test3.edges[0].node.index).toEqual(1)
+  })
+
+  it(`handles the glob operator`, async () => {
+    let result = await queryResult(
+      nodes,
+      `
+          {
+            allNode(limit: 10, filter: {name: { glob: "*Wax" }}) {
+              edges { node { name }}
+            }
+          }
+        `
     )
     expect(result.errors).not.toBeDefined()
     expect(result.data.allNode.edges.length).toEqual(2)
@@ -705,21 +707,6 @@ describe(`GraphQL Input args`, () => {
     expect(result.errors).not.toBeDefined()
 
     expect(result).toMatchSnapshot()
-  })
-
-  it(`can filter for Prismic tags`, async () => {
-    let result = await queryResult(
-      nodes,
-      `
-        {
-          allNode(filter: {data: {tags: {in: {tag: {document: {data: {tag: {eq: "Gatsby"}}}}}}}}) {
-            edges { node { name }}
-          }
-        }
-      `
-    )
-    expect(result.errors).not.toBeDefined()
-    expect(result.data.allNode.edges[0].node.name).toEqual(`Prismic Stress Test`)
   })
 })
 
