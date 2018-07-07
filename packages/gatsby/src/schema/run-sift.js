@@ -43,7 +43,7 @@ module.exports = ({
   const siftifyArgs = object => {
     const newObject = {}
     _.each(object, (v, k) => {
-      if (_.isObject(v) && !_.isArray(v)) {
+      if (_.isPlainObject(v)) {
         newObject[k] = siftifyArgs(v)
       } else {
         // Compile regex first.
@@ -53,6 +53,8 @@ module.exports = ({
           const Minimatch = require(`minimatch`).Minimatch
           const mm = new Minimatch(v)
           newObject[`$regex`] = mm.makeRe()
+        } else if (k === `in` && Array.isArray(v) && _.isPlainObject(v[0])) {
+          newObject[`$elemMatch`] = siftifyArgs(v[0])
         } else {
           newObject[`$${k}`] = v
         }
@@ -64,7 +66,7 @@ module.exports = ({
   // Build an object that excludes the innermost leafs,
   // this avoids including { eq: x } when resolving fields.
   function extractFieldsToSift(prekey, key, preobj, obj, val) {
-    if (_.isObject(val) && !_.isArray(val)) {
+    if (_.isPlainObject(val)) {
       _.forEach((val: any), (v, k) => {
         preobj[prekey] = obj
         extractFieldsToSift(key, k, obj, {}, v)
