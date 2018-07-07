@@ -40,9 +40,7 @@ Gatsby uses [GraphQL](https://graphql.org/learn/) to share data across pages. Yo
 
 ## Gatsby project folder structure
 
-
 ```sh
-
 ├── LICENSE
 ├── README.md
 ├── gatsby-config.js
@@ -55,7 +53,6 @@ Gatsby uses [GraphQL](https://graphql.org/learn/) to share data across pages. Yo
 │   ├── pages
 │   └── templates
 └── static
-
 ```
 
 ## From React Routes to Gatsby Pages
@@ -70,16 +67,14 @@ There are two types of routes:
 Let's assume you have the following static routes in your `create-react-app` project:
 
 ```js
-
 <Route exact path='/' component={Home}/>
 <Route path='/blog' component={Blog}/>
 <Route path='/contact' component={Contact}/>
-
 ```
+
 Gatsby will create these routes automatically based on files you create in your `pages` folder. The good news is you've already created the React components so it's a matter of copying them to the right place. The exception is the home page which should be named `index.js`.  You will end up with something like this:
 
 ```sh
-
 ├── LICENSE
 ├── README.md
 ├── gatsby-config.js
@@ -95,7 +90,6 @@ Gatsby will create these routes automatically based on files you create in your 
 │   │    ├──  contact.js
 │   └── templates
 └── static
-
 ```
 
 Now that you've converted your static routes let's tackle the dynamic routes.
@@ -105,42 +99,40 @@ I will take an example of blog posts in this case loaded from Contentful. Every 
 In a normal React app the route will look something like this.
 
 ```js
-
-<Route path='/blog/:slug' component={BlogPost}/>
-
+<Route path="/blog/:slug" component={BlogPost} />
 ```
 
 And your `BlogPost` component will look something like this:
 
 ```js
 // a function that requests a blog post from Contentful's API
-import { getBlogPost } from './contentful-service'
-import marked from 'marked'
+import { getBlogPost } from "./contentful-service"
+import marked from "marked"
 
 class BlogPost extends Component {
-
   constructor(...args) {
     super(args)
-    this.state = { status: 'loading', data: null }
+    this.state = { status: "loading", data: null }
   }
   componentDidMount() {
     getBlogPost(this.props.match.slug)
-      .then((data) => this.setState({ data }))
-      .catch((error) => this.setState({ status: 'error' }))
+      .then(data => this.setState({ data }))
+      .catch(error => this.setState({ status: "error" }))
   }
   render() {
-    if (!this.state.status === 'error') {
+    if (!this.state.status === "error") {
       return <div>Sorry, but the blog post was not found</div>
     }
     return (
       <div>
         <h1>{this.state.data.title}</h1>
-        <div dangerouslySetInnerHTML={{ __html: marked(this.state.data.content) }} />
+        <div
+          dangerouslySetInnerHTML={{ __html: marked(this.state.data.content) }}
+        />
       </div>
     )
   }
 }
-
 ```
 
 To create pages dynamically in Gatsby you need to write some logic in the `gatsby-node.js` file. To get an idea on what is possible to do at build time check out [Gatsby's node API docs](/docs/node-apis).
@@ -152,7 +144,7 @@ Following our Contentful example we need to create a page for each article. To d
 Your `gatsby-node.js` file will look like this:
 
 ```js
-const path = require("path");
+const path = require("path")
 
 exports.createPages = ({ graphql, boundActionCreators }) => {
   const { createPage } = boundActionCreators
@@ -162,16 +154,16 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
     resolve(
       graphql(
         `
-     {
-       allContentfulBlogPost(limit: 1000) {
-         edges {
-           node {
-               slug
-           }
-         }
-       }
-     }
-   `
+          {
+            allContentfulBlogPost(limit: 1000) {
+              edges {
+                node {
+                  slug
+                }
+              }
+            }
+          }
+        `
       ).then(result => {
         if (result.errors) {
           reject(result.errors)
@@ -183,7 +175,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
             path: `${edge.node.slug}`, // required
             component: blogPostTemplate,
             context: {
-              slug: edge.node.slug // in react this will be the `:slug` part
+              slug: edge.node.slug, // in react this will be the `:slug` part
             },
           })
         })
@@ -200,7 +192,6 @@ Since you already have the `BlogPost` component from your React project move it 
 Your Gatbsy project will look like this:
 
 ```sh
-
 ├── LICENSE
 ├── README.md
 ├── gatsby-config.js
@@ -217,7 +208,6 @@ Your Gatbsy project will look like this:
 │   └── templates
 │   │    ├──  blog-post.js
 └── static
-
 ```
 
 You need to make some slight modifications to your `BlogPost` component.
@@ -225,18 +215,22 @@ You need to make some slight modifications to your `BlogPost` component.
 `src/templates/blog-post.js`:
 
 ```js
-import React from "react";
+import React from "react"
 
 class BlogPost extends React.Component {
   render() {
-    const post = this.props.data.contentfulBlogPost;
+    const post = this.props.data.contentfulBlogPost
 
     return (
       <div>
         <h1>{post.title}</h1>
-        <div dangerouslySetInnerHTML={{ __html: post.content.childMarkdownRemark.html }} />
+        <div
+          dangerouslySetInnerHTML={{
+            __html: post.content.childMarkdownRemark.html,
+          }}
+        />
       </div>
-    );
+    )
   }
 }
 
@@ -254,7 +248,6 @@ export const pageQuery = graphql`
    }
  }
 `
-
 ```
 
 Note the `$slug` part that's passed through the context when creating the page to be able to use it in the GraphQL query.
@@ -275,6 +268,6 @@ Since Gatsby builds "static" files you can host them on tons of services. One of
 
 ## Resources
 
-* [Contentful tutorials](https://howtocontentful.com/)
-* [Contentful's Gatsby video series](https://www.contentful.com/blog/2018/02/28/contentful-gatsby-video-tutorials/)
-* [Gatsby Getting Started docs](/docs/)
+- [Contentful tutorials](https://howtocontentful.com/)
+- [Contentful's Gatsby video series](https://www.contentful.com/blog/2018/02/28/contentful-gatsby-video-tutorials/)
+- [Gatsby Getting Started docs](/docs/)

@@ -19,7 +19,9 @@ exports.sourceNodes = (
   if (pluginOptions.auth)
     authUrlPart = `${pluginOptions.auth.user}:${pluginOptions.auth.password}@`
 
-  let connectionExtraParams = getConnectionExtraParams(pluginOptions.extraParams)
+  let connectionExtraParams = getConnectionExtraParams(
+    pluginOptions.extraParams
+  )
   const connectionURL = `mongodb://${authUrlPart}${serverOptions.address}:${
     serverOptions.port
   }/${dbName}${connectionExtraParams}`

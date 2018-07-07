@@ -4,6 +4,7 @@ date: "2018-06-24"
 author: "Sam Bhagwat"
 tags: ["scalability", "builds"]
 ---
+
 When website teams are deciding whether to migrate an existing site over to Gatsby, one consideration is how long it takes to rebuild each site when code or content changes.
 
 In order to help teams evaluate this, we’re publishing a set of build time benchmarks.

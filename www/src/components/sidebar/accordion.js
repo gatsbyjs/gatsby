@@ -1,8 +1,9 @@
 import React from "react"
+import hex2rgba from "hex2rgba"
 
-import getActiveItem from "../../utils/sidebar/get-active-item"
 import presets, { colors } from "../../utils/presets"
-import { scale, rhythm } from "../../utils/typography"
+import { rhythm, options, scale } from "../../utils/typography"
+import { css as glam } from "glamor"
 
 import SectionTitle from "./section-title"
 import ChevronSvg from "./chevron-svg"
@@ -57,17 +58,19 @@ const Title = ({ title }) => (
       },
     }}
   >
-    <SectionTitle>{title}</SectionTitle>
+    <SectionTitle disabled>{title}</SectionTitle>
   </div>
 )
 
-class Section extends React.Component {
+class Accordion extends React.Component {
   state = { uid: (`` + Math.random()).replace(/\D/g, ``) }
 
-  _isChildItemActive = (item, activeItemId) => {
-    if (item.subitems) {
-      const matches = item.subitems.filter(function(subitem) {
-        return subitem.link === activeItemId && item.link === subitem.parentLink
+  _isChildItemActive = (item, activeItemLink) => {
+    if (item.items) {
+      const matches = item.items.filter(function(subitem) {
+        return (
+          subitem.link === activeItemLink && item.link === subitem.parentLink
+        )
       })
 
       return matches.length >= 1
@@ -76,25 +79,40 @@ class Section extends React.Component {
 
   render() {
     const {
-      activeItemHash,
       createLink,
       location,
       onLinkClick,
       onSectionTitleClick,
-      section,
+      item: section,
       hideSectionTitle,
-      singleSection,
+      activeItemLink,
+      itemStyles,
+      isActive,
+      isFirstItem,
+      isLastItem,
     } = this.props
     const uid = `section_` + this.state.uid
-    const activeItemId = getActiveItem(section, location, activeItemHash)
     const SectionTitleComponent = section.disableAccordions
       ? Title
       : ToggleSectionButton
 
-    const isActive = this.props.isActive || section.disableAccordions
-
     return (
-      <div>
+      <div
+        className="accordion"
+        css={{
+          position: `relative`,
+          marginTop: isFirstItem ? 0 : rhythm(options.blockMarginBottom / 2),
+          marginBottom: rhythm(options.blockMarginBottom / 2),
+          "&:before": {
+            ...(!isFirstItem && { ...styles.ulHorizontalDivider }),
+          },
+          "&:after": {
+            ...(!isLastItem && { ...styles.ulHorizontalDivider }),
+            top: `auto`,
+            bottom: 0,
+          },
+        }}
+      >
         <SectionTitleComponent
           title={section.title}
           isActive={isActive}
@@ -108,42 +126,11 @@ class Section extends React.Component {
             ...styles.ul,
             position: `relative`,
             paddingBottom: rhythm(3 / 4),
-            "&:after": {
-              background: colors.ui.light,
-              bottom: 0,
-              content: ` `,
-              display: singleSection ? `none` : `block`,
-              height: 1,
-              position: `absolute`,
-              right: 0,
-              left: horizontalPadding,
-            },
             "& li": {
-              lineHeight: 1.3,
-              margin: 0,
-              paddingLeft: horizontalPadding,
-              paddingRight: horizontalPadding,
-              fontSize: scale(-1 / 10).fontSize,
-            },
-            [presets.Phablet]: {
-              "& li": {
-                fontSize: scale(-2 / 10).fontSize,
-              },
+              ...itemStyles.item,
             },
             [presets.Tablet]: {
               display: isActive ? `block` : `none`,
-              "& li": {
-                fontSize: scale(-4 / 10).fontSize,
-              },
-            },
-            [presets.Desktop]: {
-              "&:after": {
-                left: horizontalPaddingDesktop,
-              },
-              "& li": {
-                paddingLeft: horizontalPaddingDesktop,
-                paddingRight: horizontalPaddingDesktop,
-              },
             },
           }}
         >
@@ -151,50 +138,50 @@ class Section extends React.Component {
             <li
               key={item.link}
               css={{
-                ...((item.subitems && item.link === activeItemId) ||
-                this._isChildItemActive(item, activeItemId)
-                  ? { ...styles.liActive }
+                ...((item.items && item.link === activeItemLink) ||
+                this._isChildItemActive(item, activeItemLink)
+                  ? {
+                      ...styles.liActive,
+                      paddingTop: rhythm(options.blockMarginBottom / 2),
+                    }
                   : {}),
+                ...(section.ui === `tutorial` && {
+                  ...styles.liTutorial,
+                }),
               }}
             >
               {createLink({
                 isActive:
-                  item.link === activeItemId ||
-                  this._isChildItemActive(item, activeItemId),
+                  item.link === activeItemLink ||
+                  this._isChildItemActive(item, activeItemLink),
                 item,
                 section,
                 location,
                 onLinkClick,
                 isParentOfActiveItem: this._isChildItemActive(
                   item,
-                  activeItemId
+                  activeItemLink
                 ),
               })}
-              {item.subitems && (
+              {item.items && (
                 <ul
                   css={{
                     ...styles.ul,
-                    paddingTop: rhythm(1 / 2),
-                    [presets.Desktop]: {
-                      "&& li": {
-                        paddingLeft: rhythm(3 / 4),
-                        paddingRight: rhythm(3 / 4),
-                      },
-                    },
-                    ...(section.directory === `tutorial`
-                      ? { ...styles.tutorialSubsection }
-                      : {}),
+                    ...styles.ulSubitems,
+                    ...(item.ui === `steps` && {
+                      ...styles.ulStepsUI,
+                    }),
                   }}
                 >
-                  {item.subitems.map(subitem => (
+                  {item.items.map(subitem => (
                     <li key={subitem.link}>
                       {createLink({
-                        isActive: subitem.link === activeItemId,
+                        isActive: subitem.link === activeItemLink,
                         item: subitem,
                         location,
                         onLinkClick,
                         section,
-                        isSubsectionLink: true,
+                        stepsUI: item.ui === `steps`,
                       })}
                     </li>
                   ))}
@@ -208,17 +195,34 @@ class Section extends React.Component {
   }
 }
 
-export default Section
+export default Accordion
+
+glam.insert(`
+  .accordion + .accordion {
+    margin: 0;
+  }
+
+  .item ~ .accordion {
+    margin-bottom: 0;
+  }
+
+  .accordion + .item {
+    margin-top: ${rhythm(options.blockMarginBottom / 2)};
+  }
+
+  .accordion + .accordion::before {
+    display: none;
+  }
+`)
 
 const styles = {
   ul: {
     listStyle: `none`,
     margin: 0,
-    marginBottom: rhythm(1 / 2),
     position: `relative`,
   },
-  tutorialSubsection: {
-    paddingBottom: 10,
+  ulStepsUI: {
+    paddingBottom: rhythm(options.blockMarginBottom / 2),
     "&:after": {
       background: colors.ui.bright,
       content: ` `,
@@ -256,9 +260,52 @@ const styles = {
   liActive: {
     background: colors.ui.light,
     "&&": {
-      marginTop: rhythm(1 / 2),
-      marginBottom: rhythm(1 / 2),
-      paddingTop: rhythm(1 / 2),
+      marginTop: rhythm(options.blockMarginBottom / 2),
+      marginBottom: rhythm(options.blockMarginBottom / 2),
+      paddingTop: rhythm(options.blockMarginBottom / 2),
+    },
+  },
+  ulSubitems: {
+    paddingTop: rhythm(options.blockMarginBottom / 2),
+    paddingBottom: rhythm(options.blockMarginBottom / 2),
+    [presets.Desktop]: {
+      "&& li": {
+        paddingLeft: rhythm(3 / 4),
+        paddingRight: rhythm(3 / 4),
+      },
+    },
+  },
+  ulHorizontalDivider: {
+    background: hex2rgba(colors.ui.bright, 0.3),
+    top: 0,
+    content: ` `,
+    height: 1,
+    position: `absolute`,
+    right: 0,
+    left: horizontalPadding,
+    [presets.Desktop]: {
+      left: horizontalPaddingDesktop,
+    },
+  },
+  liTutorial: {
+    "&&": {
+      marginBottom: `1rem`,
+      "& a": {
+        fontWeight: `bold`,
+        fontFamily: options.headerFontFamily.join(`,`),
+        fontSize: scale(-2 / 10).fontSize,
+      },
+      "& ul a": {
+        fontWeight: `normal`,
+        fontFamily: options.systemFontFamily.join(`,`),
+        fontSize: scale(-1 / 10).fontSize,
+        [presets.Phablet]: {
+          fontSize: scale(-2 / 10).fontSize,
+        },
+        [presets.Tablet]: {
+          fontSize: scale(-4 / 10).fontSize,
+        },
+      },
     },
   },
 }
