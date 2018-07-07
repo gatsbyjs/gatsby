@@ -1,89 +1,90 @@
 ---
-title: Announcing Gatsby Manor, themes for Gatsby 🎉🎊
-date: "2018-02-09"
-image: "gatsbymanor.jpg"
+title: Automatically create pages from components in any directory
+date: "2018-07-07"
+image: "gatsbymanor.jpg" # change this to the npm package stats
 author: "Steven Natera"
-tags: ["themes"]
+tags: ["themes", "starters", "gatsby-manor"]
 ---
 
-I am proud to announce [Gatsby Manor](https://www.gatsbymanor.com/), a gallery
-of themes for Gatsby. After 5 months of
-development, Gatsby Manor is now in public alpha. Check out our
-[themes](https://www.gatsbymanor.com/themes) then use our [getting started](https://www.gatsbymanor.com/docs/quick-start/getting-started) guide to
-kickstart your Gatsby project.
+![Gatsby plugin page creator in the plugin library](plugin-library-page-creator.png)
 
-## Overview
+In this article we will talk about a new plugin that let’s you auto create
+pages from components in any folder within your Gatsby project! We will chat about the
+problem that sparked the creation of this plugin. Afterwards, we'll talk about how you can
+use this plugin to auto create pages without having to place your components in the **src/pages** directory.
 
-Gatsby Manor is built on top of Gatsby to provide a painless way of building
-websites with reusable React components we call themes. We even have a
-cleverly named npm module for theme management called
-[Jay](https://github.com/gatsbymanor/gatsby-jay) 😄.
+# The problem with static values
+Here's how it all got started. The goal with [Gatsby Manor](https://gatsbymanor.com)
+is to create professional designed Gatsby starters
+to give your site a clean, modern look the moment you create a new project.
+While creating our newest starter
+[gatsby-starter-eventually](https://gatsbymanor/demo/eventually),
+I wanted to organize the directory structure of the project to better fit my
+workflow.
 
-With Jay you can download a theme from our collection, and mount it as a default
-theme. Styles are applied instantly without server restarts or additional lines
-of code. Because of React, interactivity is supported out of the box.
+Gatsby core automatically turns React components in **src/pages** into pages.
+Prior to this plugin, that functionality was only available to Gatsby core
+as an internal plugin. There was no way to have a different folder
+automatically create pages from components because the default **src/pages**
+path was hardcoded. The side effect of this behavior
+is that you have a hard time creating folder structures that best fit your needs.
+If you wanted all your javascript to live in a single folder, you would
+lose the ability to automatically create pages.
 
-Want to switch themes? No problem. Jay can archive themes for later use in a
-themes folder in your local directory. Edit and swap themes as often as you want
-and Jay will manage the process. Want to learn more? Read our
-[docs](https://www.gatsbymanor.com/docs/cli/)!
+# The community asks for a solution
+After searching the repo issues for a solution, I found other people
+having the same problem and asking for a solution. A user in
+[#2424](https://github.com/gatsbyjs/gatsby/issues/2424) wanted to move their
+components into a render folder. Another wanted to keep their gatsby code
+near non-gatsby related code but under a different directory name.
 
-## How it all started
+One [issue](https://github.com/gatsbyjs/gatsby/issues/2514) raised how
+uncommon this pattern might be when handing a project over to other
+client that are less technical. Each issue focused on a valid concern, with
+many community members in support of a better convention. With this data,
+I set out to determine a solution for this problem.
 
-The idea began when I decided to update my personal website. I wanted a way to
-rebuild my website with ease however the approaches were less than exciting.
+# The great pull request
+![Pull request for gatsby plugin page creator](page-creator-pull-request.png)
 
-Building a new site myself would require a lot of time. My imagination often
-runs wild when it comes to web design and what is supposed take a day of work
-turns into weeks of site iterations. The joys of web development often causes me
-to over-engineer simple websites. Not to mention that building a development
-environment alone is the biggest requirement when starting from scratch.
-Therefore another option needed to be explored.
+With the help of Kyle Matthews, he directed me to the location of the
+internal plugin responsible for the hardcoded behavior. To support the desired
+functionality, we would have to extract the internal plugin so
+any project could download the plugin from npm.
 
-[Wordpress](https://wordpress.org/) would be the fastest solution to build a
-website but I wanted to be able to rapidly prototype on customs themes.
-Unfortunately, understanding the architecture to develop themes on this stack
-would require additional time. Not to mention I dislike PHP (#sorryNotSorry 😅)
-therefore this option was a clear loser. I tried [Hugo](https://gohugo.io/) and
-[Jekyll](https://jekyllrb.com/). They gave me the right mix of speed and
-control. But their templating languages were unappealing as long term options.
+The next step would be to add a path option that takes a directory path string
+to denote the directory of components we want to use for
+automatic page creation. With a development plan in place, I started
+coding a solution. After a few days of coding, I opened a pull request to
+add a gatsby-plugin-page-creator to the gatsby plugin
+library. After a few weeks of code reviews the
+[pull request](https://github.com/gatsbyjs/gatsby/pull/4490) was merged!
 
-When I stumbled onto Gatsby, I found the golden goose. I already worked with
-React before, therefore I could prototype rapidly. The development environment
-gave me a tight feedback loop out of the box. And I had all the control in the
-world for enhanced interactive features.
+# How you can use this plugin
+You can find the
+[gatsby-plugin-page-creator](https://www.gatsbyjs.org/packages/gatsby-plugin-page-creator/?=page-creator)
+in the plugin library. Use `yarn add gatsby-plugin-page-creator` to add this
+into your project. In `gatsby-config.js`, use a json object to use the
+plugin, making sure to add the required path option with your desired directory
+path.
 
-## The development process
+If you need to designate another location for auto page creation, add another entry of the
+plugin with a different path. You can have unlimited directories responsible for
+auto page creation. The result is you can keep your project well organized without
+having to give up on the most powerful out-of-the-box feature.
 
-Once settled on Gatsby, I started working on my personal website. Within 2
-hours I wanted to prototype with different design elements because I found
-inspiration from [html5up](https://html5up.net/) templates. However I did not
-want to discard my work so far.
+# Community reception
+![NPM stats for gatsby plugin page creator](npm-stats.png)
 
-I decided to make a new directory to store my outdated work, like a true digital
-hoarder. A few more hours passed and I found myself yarning for
-my original design choice because the new design was too complex. I knew this
-situation would occur again (sometimes I can be indecisive 😅) so I decided to build
-a small cli tool to switch between themes easily. But first I needed a name, and
-Jay seemed the most clever since I was working with Gatsby.
+This plugin has by far been the most impactful open source contribution I have made
+to date. As of writing, the newly published Gatsby plugin has been
+[downloaded more than 50k+ times](https://npm-stat.com/charts.html?package=gatsby-plugin-page-creator&from=2018-06-01&to=2018-07-18)
+in less than a month!
 
-As I was debugging code one day, I stumbled onto a feature request for a
-[theme system](https://github.com/gatsbyjs/gatsby/issues/2662). At that moment,
-I decided I was going to build a theme solution for the community. Five
-months later, Gatsby Manor was born.
+I am happy this plugin is being used by so many developers. What brings me even more joy is that this small contribution will help the Gatsby community continue to deliver an amazing open source tool.
 
-## Final notes
-
-Gatsby Manor is in public alpha stage. There are plenty of
-[Github](https://github.com/gatsbymanor) contributions to go around. To get
-started, try out a Gatsby Manor theme using our tutorial on [getting started](https://www.gatsbymanor.com/docs/quick-start/getting-started). Open an
-issue if you see an area of improvement. Follow and send us positive vibes on
-Twitter using [@TheGatsbyManor](https://twitter.com/TheGatsbyManor).
-
-TL;DR [Gatsby Manor](https://www.gatsbymanor.com/) is a place to get themes for
-your Gatsby project. Use our [getting started](https://www.gatsbymanor.com/docs/quick-start/getting-started) tutorial to use
-a [theme](https://www.gatsbymanor.com/themes) in your Gatsby project today.
-
-Cheers! 🎉🎊
-
-[@StevenNatera](https://twitter.com/stevennatera).
+# Gatsby Manor
+[Gatsby Manor](https://gatsbymanor.com) builds professional design
+Gatsby starters. We make starters to meet your project needs, with new starters
+added monthly. Can't find a starter you like? Message us and we'll
+build a starter project for you.
