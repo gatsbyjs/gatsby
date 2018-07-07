@@ -20,7 +20,7 @@ or
 
 `npm install --save gatsby-plugin-robots-txt`
 
-## How to Use
+## How To Use
 
 `gatsby-config.js`
 
@@ -41,9 +41,7 @@ This plugin uses [`generate-robotstxt`](https://github.com/itgalaxy/generate-rob
 | :-------: | :--------: | :-----------------------------------: | :--------------------: |
 |  `host`   |  `String`  |       `${siteMetadata.siteUrl}`       |   Host of your site    |
 | `sitemap` |  `String`  | `${siteMetadata.siteUrl}/sitemap.xml` | Path to `sitemap.xml`  |
-| `policy`  | `Policy[]` |                 `[]`                  | List of `Policy` rules |
-
-You can specify any allowed [`generate-robotstxt`](https://github.com/itgalaxy/generate-robotstxt#usage) options:
+| `policy`  | `Policy[]` |                 `[]`                  | List of [`Policy`](https://github.com/itgalaxy/generate-robotstxt#usage) rules |
 
 `gatsby-config.js`
 
@@ -62,7 +60,60 @@ module.exports = {
 };
 ```
 
-### Netlify
+### `env`-option
+
+You can use the `env` option to set specific options in specific environment:
+
+```js
+module.exports = {
+  plugins: [
+    {
+      resolve: 'gatsby-plugin-robots-txt',
+      options: {
+        host: 'https://www.example.com',
+        sitemap: 'https://www.example.com/sitemap.xml',
+        env: {
+          development: {
+            policy: [{ userAgent: '*', disallow: ['/'] }]
+          },
+          production: {
+            policy: [{ userAgent: '*', allow: '/' }]
+          }
+        }
+      }
+    }
+  ]
+};
+```
+
+The `env` key will be taken from `process.env.NODE_ENV`, when this is not available then it defaults to `development`.
+
+You can resolve the `env` key by using `resolveEnv` function:
+
+```js
+module.exports = {
+  plugins: [
+    {
+      resolve: 'gatsby-plugin-robots-txt',
+      options: {
+        host: 'https://www.example.com',
+        sitemap: 'https://www.example.com/sitemap.xml',
+        resolveEnv: () => process.env.GATSBY_ENV,
+        env: {
+          development: {
+            policy: [{ userAgent: '*', disallow: ['/'] }]
+          },
+          production: {
+            policy: [{ userAgent: '*', allow: '/' }]
+          }
+        }
+      }
+    }
+  ]
+};
+```
+
+#### Netlify
 
 If you would like to disable crawlers for [deploy-previews](https://www.netlify.com/blog/2016/07/20/introducing-deploy-previews-in-netlify/) you can use the following snippet:
 
@@ -85,13 +136,24 @@ module.exports = {
   plugins: [
     {
       resolve: 'gatsby-plugin-robots-txt',
-      options: isNetlifyProduction
-        ? { policy: [{ userAgent: '*' }] }
-        : {
+      options: {
+        resolveEnv: () => NETLIFY_ENV,
+        env: {
+          production: {
+            policy: [{ userAgent: '*' }]
+          },
+          'branch-deploy': {
+            policy: [{ userAgent: '*', disallow: ['/'] }],
+            sitemap: null,
+            host: null
+          },
+          'deploy-preview': {
             policy: [{ userAgent: '*', disallow: ['/'] }],
             sitemap: null,
             host: null
           }
+        }
+      }
     }
   ]
 };

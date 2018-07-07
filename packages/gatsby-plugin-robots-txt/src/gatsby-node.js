@@ -1,7 +1,7 @@
 import fs from 'fs';
-import url from 'url';
-import path from 'path';
 import robotsTxt from 'generate-robotstxt';
+import path from 'path';
+import url from 'url';
 
 const publicPath = './public';
 const query = `{
@@ -12,6 +12,7 @@ const query = `{
   }
 }
 `;
+const defaultEnv = 'development';
 
 function writeFile(file, data) {
   return new Promise((resolve, reject) => {
@@ -35,10 +36,23 @@ function runQuery(handler, query) {
   });
 }
 
-export async function onPostBuild({ graphql }, pluginOptions) {
-  const userOptions = { ...pluginOptions };
+const getOptions = pluginOptions => {
+  const options = { ...pluginOptions };
 
-  delete userOptions.plugins;
+  delete options.plugins;
+
+  const { env = {}, resolveEnv = () => process.env.NODE_ENV } = options;
+
+  const envOptions = env[resolveEnv()] || env[defaultEnv] || {};
+
+  delete options.env;
+  delete options.resolveEnv;
+
+  return { ...options, envOptions };
+};
+
+export async function onPostBuild({ graphql }, pluginOptions) {
+  const userOptions = getOptions(pluginOptions);
 
   const defaultOptions = {
     output: '/robots.txt'

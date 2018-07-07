@@ -1,5 +1,5 @@
-import path from 'path';
 import MemoryFs from 'memory-fs';
+import path from 'path';
 
 const mockFs = jest.fn(() => new MemoryFs());
 
@@ -33,7 +33,7 @@ describe('onPostBuild', () => {
   });
 
   it('should generate `robots.txt` using options', async () => {
-    const output = './robots1.txt';
+    const output = './robots.txt';
 
     await onPostBuild(
       {
@@ -42,8 +42,8 @@ describe('onPostBuild', () => {
         }
       },
       {
-        host: 'https://www.test1.com',
-        sitemap: 'https://www.test1.com/sitemap.xml',
+        host: 'https://www.test.com',
+        sitemap: 'https://www.test.com/sitemap.xml',
         output
       }
     );
@@ -52,7 +52,7 @@ describe('onPostBuild', () => {
   });
 
   it('should generate `robots.txt` using `graphql` options', async () => {
-    const output = './robots2.txt';
+    const output = './robots-graphql.txt';
 
     await onPostBuild(
       {
@@ -69,7 +69,7 @@ describe('onPostBuild', () => {
   });
 
   it('should not generate `robots.txt` in case of `graphql` errors', async () => {
-    const output = './robots3.txt';
+    const output = './robots-graphql-err.txt';
 
     await expect(
       onPostBuild(
@@ -86,7 +86,7 @@ describe('onPostBuild', () => {
   });
 
   it('should not generate `robots.txt` in case of I/O errors', async () => {
-    const output = './robots4.txt';
+    const output = './robots-io-err.txt';
 
     const spy = jest
       .spyOn(fs, 'writeFile')
@@ -108,5 +108,50 @@ describe('onPostBuild', () => {
     expect(fs.existsSync(contentPath(output))).toBeFalsy();
 
     spy.mockRestore();
+  });
+
+  it('should generate `robots.txt` using `env` options', async () => {
+    const output = './robots-env.txt';
+
+    await onPostBuild(
+      {
+        graphql() {
+          return Promise.resolve({ data: {} });
+        }
+      },
+      {
+        host: 'https://www.test.com',
+        sitemap: 'https://www.test.com/sitemap.xml',
+        output,
+        env: {
+          test: {
+            policy: [{ userAgent: '*', disallow: ['/'] }]
+          }
+        }
+      }
+    );
+
+    expect(readContent(output)).toMatchSnapshot();
+  });
+
+  it('should generate `robots.txt` using `env` options and `resolveEnv` function', async () => {
+    const output = './robots-env-custom.txt';
+
+    await onPostBuild(
+      {
+        graphql() {
+          return Promise.resolve({ data: {} });
+        }
+      },
+      {
+        host: 'https://www.test.com',
+        sitemap: 'https://www.test.com/sitemap.xml',
+        output,
+        resolveEnv: () => 'custom',
+        env: { custom: { policy: [{ userAgent: '*', disallow: ['/'] }] } }
+      }
+    );
+
+    expect(readContent(output)).toMatchSnapshot();
   });
 });

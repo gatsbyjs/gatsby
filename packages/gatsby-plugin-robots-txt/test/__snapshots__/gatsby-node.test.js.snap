@@ -1,5 +1,21 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`onPostBuild should generate \`robots.txt\` using \`env\` options 1`] = `
+"User-agent: *
+Allow: /
+Sitemap: https://www.test.com/sitemap.xml
+Host: https://www.test.com
+"
+`;
+
+exports[`onPostBuild should generate \`robots.txt\` using \`env\` options and \`resolveEnv\` function 1`] = `
+"User-agent: *
+Allow: /
+Sitemap: https://www.test.com/sitemap.xml
+Host: https://www.test.com
+"
+`;
+
 exports[`onPostBuild should generate \`robots.txt\` using \`graphql\` options 1`] = `
 "User-agent: *
 Allow: /
@@ -11,7 +27,7 @@ Host: https://www.test.com
 exports[`onPostBuild should generate \`robots.txt\` using options 1`] = `
 "User-agent: *
 Allow: /
-Sitemap: https://www.test1.com/sitemap.xml
-Host: https://www.test1.com
+Sitemap: https://www.test.com/sitemap.xml
+Host: https://www.test.com
 "
 `;
