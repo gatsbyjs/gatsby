@@ -72,7 +72,7 @@ function createNodes(
           // Data for the node.
           ...item,
           id: createNodeId(`${id}`),
-          mongo_id: id,
+          mongodb_id: id,
           parent: `__${collectionName}__`,
           children: [],
           internal: {
