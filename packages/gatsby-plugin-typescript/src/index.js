@@ -1,6 +1,6 @@
 const resolve = require(`./resolve`)
 
-function tsPresetsFromJsPresets(jsPresets) {
+export function tsPresetsFromJsPresets(jsPresets) {
   const copy = (jsPresets && jsPresets.slice(0)) || []
   if (copy.length > 0) {
     const lastItem = copy[copy.length - 1]
@@ -15,4 +15,34 @@ function tsPresetsFromJsPresets(jsPresets) {
   return copy
 }
 
-exports.tsPresetsFromJsPresets = tsPresetsFromJsPresets
+export const PARSER_OPTIONS = {
+  allowImportExportEverywhere: true,
+  allowReturnOutsideFunction: true,
+  allowSuperOutsideMethod: true,
+  sourceType: `unambigious`,
+  sourceFilename: true,
+  plugins: [
+    `jsx`,
+    `typescript`,
+    `doExpressions`,
+    `objectRestSpread`,
+    `decorators`,
+    `classProperties`,
+    `classPrivateProperties`,
+    `classPrivateMethods`,
+    `exportDefaultFrom`,
+    `exportNamespaceFrom`,
+    `asyncGenerators`,
+    `functionBind`,
+    `functionSent`,
+    `dynamicImport`,
+    `numericSeparator`,
+    `optionalChaining`,
+    `importMeta`,
+    `bigInt`,
+    `optionalCatchBinding`,
+    `throwExpressions`,
+    `pipelineOperator`,
+    `nullishCoalescingOperator`,
+  ],
+}
