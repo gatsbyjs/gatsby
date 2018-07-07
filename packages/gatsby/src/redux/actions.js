@@ -469,12 +469,22 @@ actions.createNode = (node: any, plugin?: Plugin, traceId?: string) => {
     node.internal = {}
   }
 
+  // Ensure the new node has a children array.
+  if (!node.array && !_.isArray(node.children)) {
+    node.children = []
+  }
+
+  // Ensure the new node has a parent field
+  if (!node.parent) {
+    node.parent = null
+  }
+
   // Tell user not to set the owner name themself.
   if (node.internal.owner) {
     console.log(JSON.stringify(node, null, 4))
     console.log(
       chalk.bold.red(
-        `The node internal.owner field is set automatically by Gatsby and not by plugin`
+        `The node internal.owner field is set automatically by Gatsby and not by plugins`
       )
     )
     process.exit(1)

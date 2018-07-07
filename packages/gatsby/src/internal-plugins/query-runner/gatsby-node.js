@@ -5,7 +5,14 @@ let components = {}
 exports.onCreatePage = ({ page, store }) => {
   // In development, watch the component to detect query changes.
   if (process.env.NODE_ENV !== `production`) {
-    const component = store.getState().components[page.componentPath]
+    const component = store.getState().components.get(page.componentPath)
+
+    if (!component) {
+      console.log({ components: store.getState().components })
+      console.log({ page })
+      console.log({ component })
+      process.exit()
+    }
 
     if (components[component.componentPath]) {
       return

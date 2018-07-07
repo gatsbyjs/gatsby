@@ -1,6 +1,7 @@
 const convertHrtime = require(`convert-hrtime`)
 const _ = require(`lodash`)
 const treeify = require(`treeify`)
+const ss = require(`simple-statistics`)
 
 let root = {
   ROOT: process.hrtime(),
@@ -39,6 +40,18 @@ const labelify = (object, rootValue) =>
     ).toFixed(2) + `%`}`
   })
 
+const descriptiveStats = (array, label) => {
+  if (!array || array.length === 0) return
+  console.log(``)
+  console.log(label)
+  console.log(`count:`, array.length)
+  console.log(`min:`, ss.min(array))
+  console.log(`max:`, ss.max(array))
+  console.log(`mean:`, ss.mean(array))
+  console.log(`quantile 25:`, ss.quantile(array, 0.25))
+  console.log(`quantile 75:`, ss.quantile(array, 0.75))
+}
+
 process.on(`exit`, () => {
   root.ROOT = convertHrtime(process.hrtime(root.ROOT)).milliseconds
   root = labelify(root, root.ROOT)
@@ -52,4 +65,15 @@ process.on(`exit`, () => {
   console.log(``)
   console.log(`===PROFILE===`)
   console.log(treeify.asTree(root))
+  descriptiveStats(global.queryRuns, `Query runs`)
+  descriptiveStats(global.actualQuery, `actual query run`)
+  descriptiveStats(global.writeQueryResult, `write query result`)
+  descriptiveStats(global.mdToHTML, `Markdown to HTML`)
+  descriptiveStats(global.runSift, `run-sift`)
+  descriptiveStats(global.trackInline, `track inline in run-sift`)
+  descriptiveStats(
+    global.resolveRecursive,
+    `resolve additional fields on nodes`
+  )
+  descriptiveStats(global.promiseMapTimes, `run-sift map nodes`)
 })

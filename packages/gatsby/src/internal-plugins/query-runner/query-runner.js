@@ -10,6 +10,7 @@ const { store } = require(`../../redux`)
 const { generatePathChunkName } = require(`../../utils/js-chunk-names`)
 const { formatErrorDetails } = require(`./utils`)
 const mod = require(`hash-mod`)(999)
+const convertHrtime = require(`convert-hrtime`)
 
 const resultHashes = {}
 
@@ -23,8 +24,13 @@ type QueryJob = {
   isPage: Boolean,
 }
 
+global.queryRuns = []
+global.actualQuery = []
+global.writeQueryResult = []
+
 // Run query
 module.exports = async (queryJob: QueryJob, component: Any) => {
+  const start = process.hrtime()
   const { schema, program } = store.getState()
 
   const graphql = (query, context) =>
@@ -37,7 +43,11 @@ module.exports = async (queryJob: QueryJob, component: Any) => {
   if (!queryJob.query || queryJob.query === ``) {
     result = {}
   } else {
+    const startQuery = process.hrtime()
     result = await graphql(queryJob.query, queryJob.context)
+    global.actualQuery.push(
+      convertHrtime(process.hrtime(startQuery)).milliseconds
+    )
   }
 
   // If there's a graphql error then log the error. If we're building, also
@@ -134,16 +144,21 @@ ${formatErrorDetails(errorDetails)}`)
 
     dataPath = `${modInt}/${dataPath}`
 
+    const startWriteFile = process.hrtime()
     await fs.writeFile(resultPath, resultJSON)
+    global.writeQueryResult.push(
+      convertHrtime(process.hrtime(startWriteFile)).milliseconds
+    )
 
     store.dispatch({
-      type: `
-      SET_JSON_DATA_PATH `,
+      type: `SET_JSON_DATA_PATH`,
       payload: {
-        [queryJob.jsonName]: dataPath,
+        key: queryJob.jsonName,
+        value: dataPath,
       },
     })
 
+    global.queryRuns.push(convertHrtime(process.hrtime(start)).milliseconds)
     return
   }
 }

@@ -35,7 +35,6 @@ exports.runInitialQueries = async () => {
 const runQueries = async () => {
   // Find paths dependent on dirty nodes
   queuedDirtyActions = _.uniq(queuedDirtyActions, a => a.payload.id)
-  global._PROFILE({ start, name: `uniq queuedDirtyActions` })
   const dirtyIds = findDirtyIds(queuedDirtyActions)
   queuedDirtyActions = []
 

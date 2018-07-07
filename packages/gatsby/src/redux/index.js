@@ -32,6 +32,7 @@ try {
     initialState.staticQueryComponents
   )
   initialState.components = objectToMap(initialState.components)
+  initialState.nodes = objectToMap(initialState.nodes)
 } catch (e) {
   // ignore errors.
 }
