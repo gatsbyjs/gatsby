@@ -55,6 +55,11 @@ const createElement = React.createElement
 export default (pagePath, callback) => {
   const pathPrefix = `${__PATH_PREFIX__}/`
 
+  // If enabled, group files in their respective folders otherwise generated
+  // non-static files will be left in the root of the output directory.
+  const pathToGroupStyles = __GROUP_FILES__ ? `css/` : ``
+  const pathToGroupScripts = __GROUP_FILES__ ? `js/` : ``
+
   let bodyHtml = ``
   let headComponents = []
   let htmlAttributes = {}
@@ -193,6 +198,7 @@ export default (pagePath, callback) => {
   const scripts = scriptsAndStyles.filter(
     script => script.name && script.name.endsWith(`.js`)
   )
+
   const styles = scriptsAndStyles.filter(
     style => style.name && style.name.endsWith(`.css`)
   )
@@ -221,7 +227,7 @@ export default (pagePath, callback) => {
           as="script"
           rel={script.rel}
           key={script.name}
-          href={urlJoin(pathPrefix, script.name)}
+          href={urlJoin(pathPrefix, pathToGroupScripts, script.name)}
         />
       )
     })
@@ -243,26 +249,31 @@ export default (pagePath, callback) => {
     .slice(0)
     .reverse()
     .forEach(style => {
+      // Cleaning up style path for grouping option
+      let dataHrefStyleName = style.name
+      if (style.name.substr(0, 3) === `../`) {
+        dataHrefStyleName = style.name.slice(2)
+      }
+
       // Add <link>s for styles that should be prefetched
       // otherwise, inline as a <style> tag
-
       if (style.rel === `prefetch`) {
         headComponents.push(
           <link
             as="style"
             rel={style.rel}
             key={style.name}
-            href={urlJoin(pathPrefix, style.name)}
+            href={urlJoin(pathPrefix, pathToGroupStyles, style.name)}
           />
         )
       } else {
         headComponents.unshift(
           <style
             type="text/css"
-            data-href={urlJoin(pathPrefix, style.name)}
+            data-href={urlJoin(pathPrefix, dataHrefStyleName)}
             dangerouslySetInnerHTML={{
               __html: fs.readFileSync(
-                join(process.cwd(), `public`, style.name),
+                join(process.cwd(), `public`, pathToGroupStyles, style.name),
                 `utf-8`
               ),
             }}
@@ -291,7 +302,9 @@ export default (pagePath, callback) => {
   // Filter out prefetched bundles as adding them as a script tag
   // would force high priority fetching.
   const bodyScripts = scripts.filter(s => s.rel !== `prefetch`).map(s => {
-    const scriptPath = `${pathPrefix}${JSON.stringify(s.name).slice(1, -1)}`
+    const scriptPath = `${pathPrefix}${pathToGroupScripts}${JSON.stringify(
+      s.name
+    ).slice(1, -1)}`
     return <script key={scriptPath} src={scriptPath} async />
   })
 

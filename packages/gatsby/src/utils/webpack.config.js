@@ -87,6 +87,25 @@ module.exports = async (
     return hmrBasePath + hmrSuffix
   }
 
+  function getOutputPaths() {
+    const path = program.groupFiles
+      ? directoryPath(`public/js`)
+      : directoryPath(`public`)
+
+    let publicPath = program.prefixPaths
+      ? `${store.getState().config.pathPrefix}/`
+      : `/`
+
+    if (program.groupFiles) {
+      publicPath = `${publicPath}js/`
+    }
+
+    return {
+      path,
+      publicPath,
+    }
+  }
+
   debug(`Loading webpack config for stage "${stage}"`)
   function getOutput() {
     switch (stage) {
@@ -110,24 +129,20 @@ module.exports = async (
         // A temp file required by static-site-generator-plugin. See plugins() below.
         // Deleted by build-html.js, since it's not needed for production.
         return {
-          path: directoryPath(`public`),
           filename: `render-page.js`,
           libraryTarget: `umd`,
           library: `lib`,
           umdNamedDefine: true,
           globalObject: `this`,
-          publicPath: program.prefixPaths
-            ? `${store.getState().config.pathPrefix}/`
-            : `/`,
+          path: getOutputPaths().path,
+          publicPath: getOutputPaths().publicPath,
         }
       case `build-javascript`:
         return {
           filename: `[name]-[chunkhash].js`,
           chunkFilename: `[name]-[chunkhash].js`,
-          path: directoryPath(`public`),
-          publicPath: program.prefixPaths
-            ? `${store.getState().config.pathPrefix}/`
-            : `/`,
+          path: getOutputPaths().path,
+          publicPath: getOutputPaths().publicPath,
         }
       default:
         throw new Error(`The state requested ${stage} doesn't exist.`)
@@ -168,12 +183,14 @@ module.exports = async (
       plugins.moment(),
 
       // Add a few global variables. Set NODE_ENV to production (enables
-      // optimizations for React) and what the link prefix is (__PATH_PREFIX__).
+      // optimizations for React), what the link prefix is (__PATH_PREFIX__),
+      // and __GROUP_FILES__ to organize output files.
       plugins.define({
         "process.env": processEnv(stage, `development`),
         __PATH_PREFIX__: JSON.stringify(
           program.prefixPaths ? store.getState().config.pathPrefix : ``
         ),
+        __GROUP_FILES__: !!program.groupFiles,
       }),
     ]
 
@@ -228,7 +245,6 @@ module.exports = async (
                       )
                     }
                   }
-
                   const webpackStats = {
                     ...stats.toJson({ all: false, chunkGroups: true }),
                     assetsByChunkName: assets,

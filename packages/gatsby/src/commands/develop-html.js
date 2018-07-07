@@ -7,7 +7,7 @@ const webpackConfig = require(`../utils/webpack.config`)
 const renderHTML = require(`../utils/html-renderer`)
 
 module.exports = async (program: any) => {
-  const { directory } = program
+  const { directory, groupFiles } = program
 
   debug(`generating static HTML`)
 
@@ -24,7 +24,11 @@ module.exports = async (program: any) => {
       if (e) {
         return reject(e)
       }
-      const outputFile = `${directory}/public/render-page.js`
+
+      const outputFile = groupFiles
+        ? `${directory}/public/js/render-page.js`
+        : `${directory}/public/render-page.js`
+
       if (stats.hasErrors()) {
         let webpackErrors = stats.toJson().errors
         console.log(`here`, webpackErrors[0])
