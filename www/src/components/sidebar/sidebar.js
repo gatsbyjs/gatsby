@@ -114,7 +114,6 @@ class StickyResponsiveSidebar extends Component {
 export default StickyResponsiveSidebar
 
 const horizontalPadding = rhythm(3 / 4)
-const horizontalPaddingDesktop = rhythm(3 / 2)
 
 const styles = {
   sidebar: {
@@ -157,8 +156,8 @@ const styles = {
     zIndex: 2,
   },
   sidebarLargerScreen: {
-    paddingTop: horizontalPaddingDesktop,
-    paddingBottom: horizontalPaddingDesktop,
+    paddingTop: horizontalPadding,
+    paddingBottom: horizontalPadding,
     width: rhythm(12),
   },
   button: {

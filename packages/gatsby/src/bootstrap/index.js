@@ -27,7 +27,7 @@ const {
   extractQueries,
 } = require(`../internal-plugins/query-runner/query-watcher`)
 const {
-  runQueries,
+  runInitialQueries,
 } = require(`../internal-plugins/query-runner/page-query-runner`)
 const { writePages } = require(`../internal-plugins/query-runner/pages-writer`)
 const {
@@ -372,7 +372,7 @@ module.exports = async (args: BootstrapArgs) => {
     parentSpan: bootstrapSpan
   })
   activity.start()
-  await runQueries()
+  await runInitialQueries()
   activity.end()
 
   // Write out files.

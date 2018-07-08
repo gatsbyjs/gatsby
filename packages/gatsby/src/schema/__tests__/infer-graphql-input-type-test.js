@@ -85,6 +85,8 @@ describe(`GraphQL Input args`, () => {
     {
       index: 0,
       name: `The Mad Max`,
+      string: `a`,
+      float: 1.5,
       hair: 1,
       date: `2006-07-22T22:39:53.000Z`,
       anArray: [1, 2, 3, 4],
@@ -112,6 +114,8 @@ describe(`GraphQL Input args`, () => {
     {
       index: 1,
       name: `The Mad Wax`,
+      string: `b`,
+      float: 2.5,
       hair: 2,
       anArray: [1, 2, 5, 4],
       anotherKey: {
@@ -130,6 +134,8 @@ describe(`GraphQL Input args`, () => {
     {
       index: 2,
       name: `The Mad Wax`,
+      string: `c`,
+      float: 3.5,
       hair: 0,
       date: `2006-07-29T22:39:53.000Z`,
       anotherKey: {
@@ -448,7 +454,42 @@ describe(`GraphQL Input args`, () => {
     expect(result.data.allNode.edges[0].node.name).toEqual(`The Mad Wax`)
   })
 
-  it(`handles the in operator`, async () => {
+  it(`handles the in operator for scalars`, async () => {
+    let result = await queryResult(
+      nodes,
+      `
+        {
+          string:allNode(filter: { string: { in: ["b", "c"] }}) {
+            edges { node { index }}
+          }
+          int:allNode(filter: { index: { in: [0, 2] }}) {
+            edges { node { index }}
+          }
+          float:allNode(filter: { float: { in: [1.5, 2.5] }}) {
+            edges { node { index }}
+          }
+          boolean:allNode(filter: { boolean: { in: [true, null] }}) {
+            edges { node { index }}
+          }
+        }
+      `
+    )
+    expect(result.errors).not.toBeDefined()
+    expect(result.data.string.edges.length).toEqual(2)
+    expect(result.data.string.edges[0].node.index).toEqual(1)
+    expect(result.data.string.edges[1].node.index).toEqual(2)
+    expect(result.data.int.edges.length).toEqual(2)
+    expect(result.data.int.edges[0].node.index).toEqual(0)
+    expect(result.data.int.edges[1].node.index).toEqual(2)
+    expect(result.data.float.edges.length).toEqual(2)
+    expect(result.data.float.edges[0].node.index).toEqual(0)
+    expect(result.data.float.edges[1].node.index).toEqual(1)
+    expect(result.data.boolean.edges.length).toEqual(2)
+    expect(result.data.boolean.edges[0].node.index).toEqual(0)
+    expect(result.data.boolean.edges[1].node.index).toEqual(2)
+  })
+
+  it(`handles the in operator for array`, async () => {
     let result = await queryResult(
       nodes,
       `
