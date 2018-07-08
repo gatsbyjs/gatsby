@@ -1,7 +1,8 @@
 const HtmlWebpackPlugin = require(`html-webpack-plugin`)
-const MiniCssExtractPlugin = require(`mini-css-extract-plugin`)
 
-function plugins(stage) {
+function plugins(args) {
+  const { stage, plugins } = args
+
   const commonPlugins = [
     // Output /admin/index.html
     new HtmlWebpackPlugin({
@@ -17,8 +18,9 @@ function plugins(stage) {
     return [
       ...commonPlugins,
 
-      new MiniCssExtractPlugin({
-        filename: `cms.css`,
+      plugins.extractText({
+        filename: `cms.[contenthash].css`,
+        chunkFilename: `cms.[contenthash].css`,
       }),
     ]
   }
@@ -87,7 +89,7 @@ function excludeFromLoader({ actions, rules, getConfig }) {
 }
 
 function module(args) {
-  const { stage, getConfig, actions, loaders } = args
+  const { stage, getConfig, actions, rules } = args
 
   if (stage === `build-css`) {
     excludeFromLoader(args)
@@ -109,9 +111,8 @@ function module(args) {
           ...prevConfig.module.rules,
 
           {
-            test: /\.css$/,
+            ...rules.css(),
             include: [/\/node_modules\/netlify-cms\//],
-            use: [MiniCssExtractPlugin.loader, loaders.css()],
           },
         ],
       },
@@ -133,7 +134,7 @@ exports.onCreateWebpackConfig = (args, { modulePath }) => {
 
         cms: [`${__dirname}/cms.js`, modulePath].filter(p => p),
       },
-      plugins: [...prevConfig.plugins, ...plugins(stage)],
+      plugins: [...prevConfig.plugins, ...plugins(args)],
     })
   }
 
