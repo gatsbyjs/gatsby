@@ -18,6 +18,9 @@ module.exports = {
 }
 ```
 
+If you need to pass options to PostCSS use the plugins options; see [postcss-loader](https://github.com/postcss/postcss-loader)
+for all available options.
+
 2.  Create your own `postcss.config.js`:
 
 `postcss.config.js`
@@ -33,9 +36,6 @@ module.exports = () => ({
   ],
 })
 ```
-
-If you need to pass options to PostCSS use the plugins options; see [postcss-loader](https://github.com/postcss/postcss-loader)
-for all available options.
 
 ### With CSS Modules
 
