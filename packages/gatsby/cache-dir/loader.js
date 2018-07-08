@@ -1,7 +1,6 @@
 import pageFinderFactory from "./find-page"
 import emitter from "./emitter"
 import stripPrefix from "./strip-prefix"
-import { apiRunner } from "./api-runner-browser"
 
 const preferDefault = m => (m && m.default) || m
 
@@ -14,6 +13,7 @@ let jsonDataPaths = {}
 let fetchHistory = []
 let fetchingPageResourceMapPromise = null
 let fetchedPageResourceMap = false
+let apiRunner
 const failedPaths = {}
 const failedResources = {}
 const MAX_HISTORY = 5
@@ -163,15 +163,13 @@ let pathScriptsCache = {}
 let resourcesArray = []
 let mountOrder = 1
 let prefetchTriggered = {}
-
-const disableCorePrefetching = apiRunner(`disableCorePrefetching`)
+let disableCorePrefetching = false
 
 const queue = {
   empty: () => {
     resourcesCount = Object.create(null)
     resourcesArray = []
   },
-
   addPagesArray: newPages => {
     findPage = pageFinderFactory(newPages, __PATH_PREFIX__)
   },
@@ -194,6 +192,8 @@ const queue = {
   },
   enqueue: rawPath => {
     const path = stripPrefix(rawPath, __PATH_PREFIX__)
+    if (!apiRunner)
+      console.error(`Run setApiRunnerForLoader() before enqueing paths`)
 
     // Tell plugins with custom prefetching logic that they should start
     // prefetching this path.
@@ -376,6 +376,11 @@ const queue = {
 
   // for testing
   ___resources: () => resourcesArray.slice().reverse(),
+}
+
+export const setApiRunnerForLoader = runner => {
+  apiRunner = runner
+  disableCorePrefetching = apiRunner(`disableCorePrefetching`)
 }
 
 export const publicLoader = {

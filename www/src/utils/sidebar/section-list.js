@@ -13,8 +13,8 @@ const extendSectionList = sectionList => {
       section.items.forEach((item, index) => {
         let parent = index
         item.hash = createId(item.link)
-        if (item.subitems) {
-          item.subitems.forEach(subitem => {
+        if (item.items) {
+          item.items.forEach(subitem => {
             subitem.hash = createId(subitem.link)
             subitem.parentLink = section.items[parent].link
           })
@@ -29,14 +29,12 @@ const extendSectionList = sectionList => {
 const sectionListDocs = extendSectionList(docsSidebar).map(item => {
   return {
     ...item,
-    directory: `docs`,
   }
 })
 
 const sectionListFeatures = extendSectionList(featuresSidebar).map(item => {
   return {
     ...item,
-    directory: `features`,
     disableAccordions: true,
   }
 })
@@ -44,7 +42,6 @@ const sectionListFeatures = extendSectionList(featuresSidebar).map(item => {
 const sectionListTutorial = extendSectionList(tutorialSidebar).map(item => {
   return {
     ...item,
-    directory: `tutorial`,
   }
 })
 

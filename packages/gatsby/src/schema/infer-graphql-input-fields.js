@@ -34,6 +34,7 @@ function typeFields(type): GraphQLInputFieldConfigMap {
       return {
         eq: { type: GraphQLBoolean },
         ne: { type: GraphQLBoolean },
+        in: { type: new GraphQLList(GraphQLBoolean) },
       }
     case `string`:
       return {
@@ -41,6 +42,7 @@ function typeFields(type): GraphQLInputFieldConfigMap {
         ne: { type: GraphQLString },
         regex: { type: GraphQLString },
         glob: { type: GraphQLString },
+        in: { type: new GraphQLList(GraphQLString) },
       }
     case `int`:
       return {
@@ -50,6 +52,7 @@ function typeFields(type): GraphQLInputFieldConfigMap {
         gte: { type: GraphQLInt },
         lt: { type: GraphQLInt },
         lte: { type: GraphQLInt },
+        in: { type: new GraphQLList(GraphQLInt) },
       }
     case `float`:
       return {
@@ -59,6 +62,7 @@ function typeFields(type): GraphQLInputFieldConfigMap {
         gte: { type: GraphQLFloat },
         lt: { type: GraphQLFloat },
         lte: { type: GraphQLFloat },
+        in: { type: new GraphQLList(GraphQLFloat) },
       }
   }
   return {}

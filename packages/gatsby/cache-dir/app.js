@@ -37,10 +37,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
 
   const rootElement = document.getElementById(`___gatsby`)
 
-  let Root = require(`./root`)
-  if (Root.default) {
-    Root = Root.default
-  }
+  let Root = preferDefault(require(`./root`))
 
   const renderer = apiRunner(
     `replaceHydrateFunction`,
@@ -62,6 +59,8 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     })
   })
 })
+
+const preferDefault = m => (m && m.default) || m
 
 function supportsServiceWorkers(location, navigator) {
   if (location.hostname === `localhost` || location.protocol === `https:`) {

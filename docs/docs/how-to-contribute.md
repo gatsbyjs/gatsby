@@ -35,13 +35,12 @@ We're currently gearing up to release a new major version, v2.
 
 During this time, please choose the correct branch for your pull request:
 
-- `master` branch for Gatsby version 2 bug fixes `master` branch for any new
-- features (these will be released in the Gatsby v2 betas) `v1` branch for
-- updates to the `www` and `docs` directories `v1` branch for Gatsby version
-- 1 bug fixes
+- `master` branch for Gatsby version 2 bug fixes
+- `master` branch for any new features (these will be released in the Gatsby v2 betas)
+- `master` branch for updates to the `www` and `docs` directories
+- `v1` branch for Gatsby version 1 bug fixes
 
-Note: We will _not_ accept new features for Gatsby v1, only bug fixes,
-documentation and updates to gatsbyjs.org.
+Note: We will only accept bug fixes for Gatsby v1. New features should be added to Gatsby v2.
 
 You can install the latest version of Gatsby by following these steps:
 
@@ -99,19 +98,19 @@ Note: Before adding a blog post ensure you have approval from a member of the Ga
 
 To add a new blog post to the gatsbyjs.org blog:
 
-* Clone [the Gatsby repo](https://github.com/gatsbyjs/gatsby/) and navigate to `/www`
-* Run `yarn` to install all of the website's dependencies.
-* Run `gatsby develop` to preview the blog at `http://localhost:8000/blog`.
-* The content for the blog lives in the `/docs/blog` folder. Make additions or modifications here.
-* Add your avatar image to `/docs/blog/avatars`
-* Add your name to `/docs/blog/author.yaml`
-* Add a new folder following the pattern `/docs/blog/yyyy-mm-dd-title`. Within this newly created folder add an `index.md` file. 
-* Add `title`, `date`, `author`, and `tags` ([view existing tags](https://www.gatsbyjs.org/blog/tags/) or add a new one) to the frontmatter of your `index.md`. If you are cross posting your post you can add `canonicalLink` for SEO benefits. You can check the other blog posts in `/docs/blog` for examples.
-* If your blog post contains images add them to your blog post folder and reference them in your post's `index.md`.
-* Ensure any links to gatsbyjs.org are relative links - `/docs/how-to-contribute` instead of `https://gatsbyjs.org/docs/how-to-contribute`
-* Double check your grammar and capitalise correctly
-* Commit and push to your fork
-* Create a pull request from your branch
+- Clone [the Gatsby repo](https://github.com/gatsbyjs/gatsby/) and navigate to `/www`
+- Run `yarn` to install all of the website's dependencies.
+- Run `gatsby develop` to preview the blog at `http://localhost:8000/blog`.
+- The content for the blog lives in the `/docs/blog` folder. Make additions or modifications here.
+- Add your avatar image to `/docs/blog/avatars`
+- Add your name to `/docs/blog/author.yaml`
+- Add a new folder following the pattern `/docs/blog/yyyy-mm-dd-title`. Within this newly created folder add an `index.md` file.
+- Add `title`, `date`, `author`, and `tags` ([view existing tags](https://www.gatsbyjs.org/blog/tags/) or add a new one) to the frontmatter of your `index.md`. If you are cross posting your post you can add `canonicalLink` for SEO benefits. You can check the other blog posts in `/docs/blog` for examples.
+- If your blog post contains images add them to your blog post folder and reference them in your post's `index.md`.
+- Ensure any links to gatsbyjs.org are relative links - `/docs/how-to-contribute` instead of `https://gatsbyjs.org/docs/how-to-contribute`
+- Double check your grammar and capitalise correctly
+- Commit and push to your fork
+- Create a pull request from your branch
 
 ## Development tools
 
@@ -121,8 +120,7 @@ Gatsby uses Redux for managing state during development and building. It's often
 helpful to see the flow of actions and built-up state for a site you're working
 on or if adding new functionality to core. We leverage
 [Remote Redux Devtools](https://github.com/zalmoxisus/remote-redux-devtools) and
-[RemoteDev Server](https://github.com/zalmoxisus/remotedev-server) to give you use the Redux
-devtools extension for debugging Gatsby.
+[RemoteDev Server](https://github.com/zalmoxisus/remotedev-server) to help you debug Gatsby.
 
 To use this, first install
 [redux-devtools-extension](https://github.com/zalmoxisus/redux-devtools-extension)
