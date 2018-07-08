@@ -54,11 +54,8 @@ const createElement = React.createElement
 
 export default (pagePath, callback) => {
   const pathPrefix = `${__PATH_PREFIX__}/`
-
-  // If enabled, group files in their respective folders otherwise generated
-  // non-static files will be left in the root of the output directory.
-  const pathToGroupStyles = __GROUP_FILES__ ? `css/` : ``
-  const pathToGroupScripts = __GROUP_FILES__ ? `js/` : ``
+  const pathToGroupStyles = `css/`
+  const pathToGroupScripts = `js/`
 
   let bodyHtml = ``
   let headComponents = []

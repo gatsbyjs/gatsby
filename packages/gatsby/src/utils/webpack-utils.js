@@ -428,15 +428,12 @@ module.exports = async ({
    * Extracts css requires into a single file;
    * includes some reasonable defaults
    */
-  plugins.extractText = options => {
-    const pathToGroupStyles = program.groupFiles ? `../css/` : ``
-
-    return new MiniCssExtractPlugin({
-      filename: `${pathToGroupStyles}[name].[contenthash].css`,
-      chunkFilename: `${pathToGroupStyles}[name].[contenthash].css`,
+  plugins.extractText = options =>
+    new MiniCssExtractPlugin({
+      filename: `../css/[name].[contenthash].css`,
+      chunkFilename: `../css/[name].[contenthash].css`,
       ...options,
     })
-  }
 
   plugins.moment = () => plugins.ignore(/^\.\/locale$/, /moment$/)
 

@@ -88,17 +88,11 @@ module.exports = async (
   }
 
   function getOutputPaths() {
-    const path = program.groupFiles
-      ? directoryPath(`public/js`)
-      : directoryPath(`public`)
+    const path = directoryPath(`public/js`)
 
     let publicPath = program.prefixPaths
-      ? `${store.getState().config.pathPrefix}/`
-      : `/`
-
-    if (program.groupFiles) {
-      publicPath = `${publicPath}js/`
-    }
+      ? `${store.getState().config.pathPrefix}/js/`
+      : `/js/`
 
     return {
       path,
@@ -183,14 +177,12 @@ module.exports = async (
       plugins.moment(),
 
       // Add a few global variables. Set NODE_ENV to production (enables
-      // optimizations for React), what the link prefix is (__PATH_PREFIX__),
-      // and __GROUP_FILES__ to organize output files.
+      // optimizations for React) and what the link prefix is (__PATH_PREFIX__).
       plugins.define({
         "process.env": processEnv(stage, `development`),
         __PATH_PREFIX__: JSON.stringify(
           program.prefixPaths ? store.getState().config.pathPrefix : ``
         ),
-        __GROUP_FILES__: !!program.groupFiles,
       }),
     ]
 
