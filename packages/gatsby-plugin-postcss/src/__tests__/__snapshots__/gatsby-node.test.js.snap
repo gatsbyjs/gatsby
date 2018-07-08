@@ -288,7 +288,7 @@ exports[`gatsby-plugin-postcss Stage: develop-html / No options 1`] = `
                     Object {
                       "loader": "/resolved/path/postcss-loader",
                       "options": Object {
-                        "sourceMap": false,
+                        "sourceMap": true,
                       },
                     },
                   ],

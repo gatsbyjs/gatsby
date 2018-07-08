@@ -39,7 +39,7 @@ exports.onCreateWebpackConfig = (
   { actions, stage, loaders, getConfig },
   pluginOptions
 ) => {
-  const isProduction = stage !== `develop`
+  const isProduction = !stage.includes(`develop`)
   const isSSR = stage.includes(`html`)
 
   actions.replaceWebpackConfig(removeBuiltInCssLoaders(getConfig()))
