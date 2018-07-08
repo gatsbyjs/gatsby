@@ -1,55 +1,37 @@
 {
   "name": "gatsby-plugin-robots-txt",
-  "files": [
-    "gatsby-*.js*"
-  ],
-  "main": "index.js",
   "description": "Gatsby plugin that automatically creates robots.txt for your site",
-  "scripts": {
-    "clean": "rm -rf gatsby-node.js*",
-    "lint": "eslint --ext js,md ./ --cache",
-    "test": "jest --color",
-    "format": "prettier --write 'src/*.js' 'README.md'",
-    "build": "babel src --out-dir ./ --source-maps",
-    "watch": "babel src --out-dir ./ --source-maps --watch"
-  },
-  "homepage": "https://github.com/mdreizin/gatsby-plugin-robots-txt",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/mdreizin/gatsby-plugin-robots-txt.git"
-  },
-  "bugs": {
-    "url": "https://github.com/mdreizin/gatsby-plugin-robots-txt/issues"
-  },
+  "version": "2.0.0-beta.1",
   "author": "Marat Dreizin <marat.dreizin@gmail.com>",
-  "license": "MIT",
-  "keywords": [
-    "gatsby",
-    "gatsby-plugin"
-  ],
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
   "dependencies": {
-    "babel-runtime": "^6.26.0",
+    "@babel/runtime": "7.0.0-beta.51",
     "generate-robotstxt": "^5.0.5"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-eslint": "^8.2.3",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-env": "^1.6.1",
-    "eslint": "^5.0.0",
-    "eslint-plugin-babel": "^5.1.0",
-    "eslint-plugin-markdown": "^1.0.0-beta.6",
-    "jest": "^22.4.3",
-    "memory-fs": "^0.4.1",
-    "prettier": "^1.12.1",
-    "semantic-release": "^15.1.7",
-    "travis-deploy-once": "^5.0.0"
+    "@babel/cli": "7.0.0-beta.51",
+    "@babel/core": "7.0.0-beta.51",
+    "cross-env": "^5.1.4",
+    "memory-fs": "^0.4.1"
   },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-postcss#readme",
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "robots-txt"
+  ],
+  "license": "MIT",
+  "main": "index.js",
   "peerDependencies": {
-    "gatsby": "^1.0.0"
+    "gatsby": ">2.0.0-alpha"
   },
-  "jest": {
-    "collectCoverage": true
+  "readme": "README.md",
+  "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-robots-txt",
+  "scripts": {
+    "build": "babel src --out-dir . --ignore **/__tests__",
+    "prepare": "cross-env NODE_ENV=production npm run build",
+    "watch": "babel -w src --out-dir . --ignore **/__tests__"
   }
 }

@@ -1,20 +1,5 @@
 {
   "presets": [
-    [
-      "env",
-      {
-        "node": true
-      }
-    ]
-  ],
-  "plugins": [
-    "transform-runtime",
-    [
-      "transform-object-rest-spread",
-      {
-        "useBuiltIns": true
-      }
-    ]
-  ],
-  "only": ["src/", "test/"]
+    ["../../.babel-preset.js"]
+  ]
 }
