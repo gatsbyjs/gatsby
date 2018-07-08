@@ -6,7 +6,7 @@ const {
   GraphQLID,
   GraphQLList,
 } = require(`graphql`)
-const opentracing = require(`opentracing`)
+const tracer = require(`opentracing`).globalTracer()
 
 const apiRunner = require(`../utils/api-runner-node`)
 const { inferObjectStructureFromNodes } = require(`./infer-graphql-type`)
@@ -28,7 +28,6 @@ type TypeMap = { [typeName: string]: ProcessedNodeType }
 
 module.exports = async ({ parentSpan }) => {
 
-  const tracer = opentracing.globalTracer()
   const spanArgs = parentSpan ? { childOf: parentSpan } : {}
   const span = tracer.startSpan(`build schema`, spanArgs)
 

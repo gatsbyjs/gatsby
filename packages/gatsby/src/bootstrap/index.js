@@ -15,7 +15,8 @@ const loadPlugins = require(`./load-plugins`)
 const { initCache } = require(`../utils/cache`)
 const report = require(`gatsby-cli/lib/reporter`)
 const getConfigFile = require(`./get-config-file`)
-const opentracing = require(`opentracing`)
+const tracer = require(`opentracing`).globalTracer()
+
 
 // Show stack trace on unhandled promises.
 process.on(`unhandledRejection`, (reason, p) => {
@@ -46,8 +47,6 @@ type BootstrapArgs = {
 }
 
 module.exports = async (args: BootstrapArgs) => {
-  const tracer = opentracing.globalTracer()
-
   const bootstrapSpan = tracer.startSpan(`bootstrap`)
 
   const program = {
@@ -345,10 +344,10 @@ module.exports = async (args: BootstrapArgs) => {
 
   // Update Schema for SitePage.
   activity = report.activityTimer(`update schema`, {
-    parentSpan: bootstrapSpan
+    parentSpan: bootstrapSpan,
   })
   activity.start()
-  await require(`../schema`)({ parentSpan: bootstrapSpan, })
+  await require(`../schema`)({ parentSpan: activity.span, })
   activity.end()
 
   require(`../schema/type-conflict-reporter`).printConflicts()
@@ -414,8 +413,6 @@ module.exports = async (args: BootstrapArgs) => {
     }
   }, 100)
 
-  bootstrapSpan.finish()
-
   if (store.getState().jobs.active.length === 0) {
     // onPostBootstrap
     activity = report.activityTimer(`onPostBootstrap`, {
@@ -424,6 +421,8 @@ module.exports = async (args: BootstrapArgs) => {
     activity.start()
     await apiRunnerNode(`onPostBootstrap`, { parentSpan: activity.span })
     activity.end()
+
+    bootstrapSpan.finish()
 
     report.log(``)
     report.info(`bootstrap finished - ${process.uptime()} s`)

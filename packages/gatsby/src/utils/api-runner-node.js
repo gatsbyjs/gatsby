@@ -3,7 +3,7 @@ const glob = require(`glob`)
 const _ = require(`lodash`)
 
 const mapSeries = require(`async/mapSeries`)
-const opentracing = require(`opentracing`)
+const tracer = require(`opentracing`).globalTracer()
 
 const reporter = require(`gatsby-cli/lib/reporter`)
 const cache = require(`./cache`)
@@ -48,7 +48,6 @@ const runAPI = (plugin, api, args) => {
   const gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
   if (gatsbyNode[api]) {
 
-    const tracer = opentracing.globalTracer()
     const parentSpan = args && args.parentSpan
     const spanOptions = parentSpan ? { childOf: parentSpan } : {}
     const pluginSpan = tracer.startSpan(`run-plugin`, spanOptions)
@@ -72,7 +71,7 @@ const runAPI = (plugin, api, args) => {
       boundActionCreators,
       api,
       plugin,
-      {parentSpan: pluginSpan, ...args}
+      {...args, parentSpan: pluginSpan}
     )
 
     if (store.getState().program.prefixPaths) {
@@ -113,7 +112,7 @@ const runAPI = (plugin, api, args) => {
       })
     } else {
       const result = gatsbyNode[api](...apiCallArgs)
-      // pluginSpan.finish()
+      pluginSpan.finish()
       return Promise.resolve(result)
     }
   }
@@ -130,7 +129,6 @@ let waitingForCasacadeToFinish = []
 module.exports = async (api, args = {}, pluginSource) =>
   new Promise(resolve => {
 
-    const tracer = opentracing.globalTracer()
     const parentSpan = args && args.parentSpan
     const apiSpanArgs = parentSpan ? { childOf: parentSpan } : {}
     const apiSpan = tracer.startSpan(`run-api`, apiSpanArgs)
@@ -171,6 +169,7 @@ module.exports = async (api, args = {}, pluginSource) =>
       args,
       pluginSource,
       resolve,
+      span: apiSpan,
       startTime: new Date().toJSON(),
       traceId: args.traceId,
     }
@@ -190,7 +189,7 @@ module.exports = async (api, args = {}, pluginSource) =>
         } else {
           pluginName = `Plugin ${plugin.name}`
         }
-        Promise.resolve(runAPI(plugin, api, {parentSpan: apiSpan, ...args})).asCallback(callback)
+        Promise.resolve(runAPI(plugin, api, {...args, parentSpan: apiSpan})).asCallback(callback)
         // Promise.resolve(runAPI(plugin, api, args)).asCallback(callback)
       },
       (err, results) => {
@@ -211,11 +210,10 @@ module.exports = async (api, args = {}, pluginSource) =>
         // Filter empty results
         apiRunInstance.results = results.filter(result => !_.isEmpty(result))
 
-        apiSpan.finish()
-
         // Filter out empty responses and return if the
         // api caller isn't waiting for cascading actions to finish.
         if (!args.waitForCascadingActions) {
+          apiSpan.finish()
           resolve(apiRunInstance.results)
         }
 
@@ -224,10 +222,10 @@ module.exports = async (api, args = {}, pluginSource) =>
           instance => {
             // If none of its trace IDs are running, it's done.
             if (!_.some(apisRunning, a => a.traceId === instance.traceId)) {
+              instance.span.finish()
               instance.resolve(instance.results)
               return false
             } else {
-              apiSpan.finish()
               return true
             }
           }

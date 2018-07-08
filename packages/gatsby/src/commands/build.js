@@ -44,7 +44,6 @@ module.exports = async function build(program: BuildArgs) {
 
   const tracer = loadTracer(program.openTracingConfigFile)
   opentracing.initGlobalTracer(tracer)
-  // const tracer = opentracing.globalTracer()
   // const buildSpan = tracer.startSpan(`build`)
   // buildSpan.setTag(`directory`, program.directory)
   // program.span = buildSpan
