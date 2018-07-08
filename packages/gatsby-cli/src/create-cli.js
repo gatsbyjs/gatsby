@@ -137,17 +137,11 @@ function buildLocalCommands(cli, isLocalSite) {
         type: `boolean`,
         default: false,
         describe: `Build site with link paths prefixed (set prefix in your config).`,
-      })
-        .option(`no-uglify`, {
-          type: `boolean`,
-          default: false,
-          describe: `Build site without uglifying JS bundles (for debugging).`,
-        })
-        .option(`group-files`, {
-          type: `boolean`,
-          default: false,
-          describe: `Build site with grouping of files in subdirectories.`,
-        }),
+      }).option(`no-uglify`, {
+        type: `boolean`,
+        default: false,
+        describe: `Build site without uglifying JS bundles (for debugging).`,
+      }),
     handler: handlerP(
       getCommandHandler(`build`, (args, cmd) => {
         process.env.NODE_ENV = `production`
