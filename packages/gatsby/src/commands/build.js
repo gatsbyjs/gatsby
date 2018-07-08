@@ -44,21 +44,26 @@ module.exports = async function build(program: BuildArgs) {
 
   const tracer = loadTracer(program.openTracingConfigFile)
   opentracing.initGlobalTracer(tracer)
-  // const buildSpan = tracer.startSpan(`build`)
-  // buildSpan.setTag(`directory`, program.directory)
-  // program.span = buildSpan
+  const buildSpan = tracer.startSpan(`build`)
+  buildSpan.setTag(`directory`, program.directory)
 
-  const { graphqlRunner } = await bootstrap(program)
+  const { graphqlRunner } = await bootstrap( { ...program, parentSpan: buildSpan, } )
 
-  await apiRunnerNode(`onPreBuild`, { graphql: graphqlRunner })
+  await apiRunnerNode(`onPreBuild`, { graphql: graphqlRunner, parentSpan: buildSpan, })
 
   // Copy files from the static directory to
   // an equivalent static directory within public.
+  const copyStaticDirectorySpan = tracer.startSpan(
+    `copy static directory`,
+    { childOf: buildSpan, },
+  )
   copyStaticDirectory()
+  copyStaticDirectorySpan.finish()
 
   let activity
   activity = report.activityTimer(
-    `Building production JavaScript and CSS bundles`
+    `Building production JavaScript and CSS bundles`,
+    { parentSpan: buildSpan, },
   )
   activity.start()
   await buildProductionBundle(program).catch(err => {
@@ -66,7 +71,10 @@ module.exports = async function build(program: BuildArgs) {
   })
   activity.end()
 
-  activity = report.activityTimer(`Building static HTML for pages`)
+  activity = report.activityTimer(
+    `Building static HTML for pages`,
+    { parentSpan: buildSpan, },
+  )
   activity.start()
   await buildHTML(program).catch(err => {
     reportFailure(
@@ -80,10 +88,12 @@ module.exports = async function build(program: BuildArgs) {
   })
   activity.end()
 
-  await apiRunnerNode(`onPostBuild`, { graphql: graphqlRunner })
+  await apiRunnerNode(`onPostBuild`, {
+    graphql: graphqlRunner,
+    parentSpan: buildSpan,
+  })
 
   report.info(`Done building in ${process.uptime()} sec`)
 
-  // buildSpan.finish()
-  // jaegerTracer.close(() => process.exit())
+  buildSpan.finish()
 }

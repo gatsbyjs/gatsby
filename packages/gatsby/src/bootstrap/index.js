@@ -44,10 +44,12 @@ const preferDefault = m => (m && m.default) || m
 type BootstrapArgs = {
   directory: string,
   prefixPaths?: boolean,
+  parentSpan: Object,
 }
 
 module.exports = async (args: BootstrapArgs) => {
-  const bootstrapSpan = tracer.startSpan(`bootstrap`)
+  const spanArgs = args.parentSpan ? { childOf: args.parentSpan } : {}
+  const bootstrapSpan = tracer.startSpan(`bootstrap`, spanArgs)
 
   const program = {
     ...args,
