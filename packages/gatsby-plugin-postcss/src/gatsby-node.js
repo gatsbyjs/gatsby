@@ -40,7 +40,6 @@ exports.onCreateWebpackConfig = (
   pluginOptions
 ) => {
   const isProduction = !stage.includes(`develop`)
-  const isSSR = stage.includes(`html`)
 
   actions.replaceWebpackConfig(removeBuiltInCssLoaders(getConfig()))
 
@@ -53,13 +52,11 @@ exports.onCreateWebpackConfig = (
 
   const postcssRule = {
     test: CSS_PATTERN,
-    use: isSSR
-      ? [loaders.null()]
-      : [
-          loaders.miniCssExtract(),
-          loaders.css({ importLoaders: 1 }),
-          postcssLoader,
-        ],
+    use: [
+      loaders.miniCssExtract(),
+      loaders.css({ importLoaders: 1 }),
+      postcssLoader,
+    ],
   }
 
   const postcssModule = {
@@ -76,11 +73,23 @@ exports.onCreateWebpackConfig = (
   switch (stage) {
     case `develop`:
     case `build-javascript`:
+      rules = rules.concat([
+        {
+          oneOf: [postcssModule, postcssRule],
+        },
+      ])
+      break
     case `build-html`:
     case `develop-html`:
       rules = rules.concat([
         {
-          oneOf: [postcssModule, postcssRule],
+          oneOf: [
+            postcssModule,
+            {
+              ...postcssRule,
+              use: [loaders.null()],
+            },
+          ],
         },
       ])
       break
