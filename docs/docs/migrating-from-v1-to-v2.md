@@ -348,9 +348,7 @@ Further examples can be found in the [Gatsby Image docs](https://github.com/gats
 
 Gatsby v2 removed `postcss-cssnext` and `postcss-import` from the default postcss setup.
 
-Use [`onCreateWebpackConfig`](/docs/add-custom-webpack-config) to specify your postcss plugins.
-
-Note: there will be a `postcss` plugin that allows you to configure postcss from a standard postcss config file. [Follow this discussion on issue 3284](https://github.com/gatsbyjs/gatsby/issues/3284).
+Use [`gatsby-plugin-postcss`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-postcss) to specify your particular postcss configuration.
 
 ## Convert to either pure CommonJS or pure ES6
 
