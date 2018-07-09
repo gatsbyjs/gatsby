@@ -2,19 +2,19 @@
 title: "Performance tracing"
 ---
 
-Gatsby allows a build to be traced, enabling you to dive deep to find which plugins or parts of the build are taking the longest. The trace information can be viewed in any [open tracing](http://opentracing.io/) compatible tool such as [https://www.jaegertracing.io/](https://www.jaegertracing.io/). You can also use Zipkin compatible tools such as [Zipkin](https://zipkin.io/) or [Honeycomb](https://www.honeycomb.io/).
+Gatsby allows a build to be traced, enabling you to find which plugins or parts of the build are taking the longest. The trace information can be viewed in any [open tracing](http://opentracing.io/) compatible tool such as [https://www.jaegertracing.io/](https://www.jaegertracing.io/). You can also use Zipkin compatible tools such as [Zipkin](https://zipkin.io/) or [Honeycomb](https://www.honeycomb.io/).
 
 ## Running Gatsby with tracing turned on
 
 Gatsby code is instrumented with Open Tracing, which is a general tracing API that is implementation agnostic. Therefore, you'll need to include and configure an open tracing compatible library in your application, as well as a backend to collect the trace data. 
 
-The steps required to add tracing are below. For an example of how to get tracing workinng with zipkin, see the [example below](/docs/performance-tracing/#local-zipkin-with-docker)
+The steps required to add tracing are below. Including an [example](/docs/performance-tracing/#local-zipkin-with-docker) of how to get tracing working with zipkin locally using docker
 
-### Library dependency
+### 1. Library dependency
 
 Add an [open-tracing compatible library](https://github.com/opentracing) to your site's `package.json` dependencies.
 
-### Library configuration file
+### 2. Library configuration file
 
 Each open tracing library must be configured. For example, what is the URL of the tracing backend? How often should spans be sent to the backend? What service name should the trace be recorded under? Etc.
 
@@ -23,11 +23,11 @@ The configuration file is a javascript file that exports two functions. `create`
 - **create**: Create and return an [open tracing compatible Tracer](https://github.com/opentracing/opentracing-javascript/blob/master/src/tracer.ts). It is called at the start of the build
 - **stop**: Called at the end of the build. Any cleanup required by the tracer should be performed here. Such as clearing out any span queues and sending them to the tracing backend.
 
-### Start Gatsby with tracing turned on
+### 3. Start Gatsby with tracing turned on
 
 The above configuration file can be passed to Gatsby with the `--open-tracing-config-file` command-line option. When Gatsby is started with this option, it will load the supplied tracing configuration file, and call its `create` function. The returned Tracer will be used for tracing the build. Once the build has stopped, the configuration file's `stop` method will be called, allowing the tracing implementation to perform any cleanup.
 
-### Custom instrumentation
+### 4. Custom instrumentation
 
 TODO: Use `parentSpan` to write custom tracing within plugins
 
