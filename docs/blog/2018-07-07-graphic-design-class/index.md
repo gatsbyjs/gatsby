@@ -63,6 +63,7 @@ Here’s a list of what they love about Gatsby:
 
 - _Hot reloading_ gives them instant visual feedback like they get in Illustrator and Photoshop
 - _Coding in React_ is fun. By fun, they mean it's easy to add modules, don’t have to build everything from scratch, and they already knew enough about creating React components from Phil’s teaching to jump into Gatsby
+
 * _Docs:_ While not perfect, the Gatsby tutorial and documentation. was “approachable”
 * _Speed_: They never heard of static site generators or the JAMstack, but the speed immediately impressed them
 * _Built off previous knowledge:_ They were able to use the routing knowledge they gleaned from NextJS
