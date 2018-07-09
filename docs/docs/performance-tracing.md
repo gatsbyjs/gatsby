@@ -27,10 +27,6 @@ The configuration file is a javascript file that exports two functions. `create`
 
 The above configuration file can be passed to Gatsby with the `--open-tracing-config-file` command-line option. When Gatsby is started with this option, it will load the supplied tracing configuration file, and call its `create` function. The returned Tracer will be used for tracing the build. Once the build has stopped, the configuration file's `stop` method will be called, allowing the tracing implementation to perform any cleanup.
 
-### 4. Custom instrumentation
-
-TODO: Use `parentSpan` to write custom tracing within plugins
-
 ## Tracing backend examples
 
 There are many open tracing compatible backends available. Below is an example of how to hook zipkin into Gatsby
