@@ -818,7 +818,7 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
 
   Features:
 
-  - Localization (Multilanguage) provided by [react-intl](https://github.com/yahoo/react-intl). 
+  - Localization (Multilanguage) provided by [react-intl](https://github.com/yahoo/react-intl).
 
   - Automatic redirection based on user's preferred language in browser provided by [browser-lang](https://github.com/wiziple/browser-lang).
 
