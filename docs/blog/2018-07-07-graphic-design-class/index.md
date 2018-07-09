@@ -5,9 +5,9 @@ author: "Shannon Soper"
 tags: ["college", "case study", "design", "getting-started"]
 ---
 
-## Phil Howley's Graphic Design Class
+## Graphic Design Students at the Art Institute
 
-Recently, a Gatsby fan named Phil Howley starting teaching Gatsby in an Emerging Technologies class at the Art Institute (AI) in North Hollywood and I got to interview him.
+Recently, Gatsby fan Phil Howley starting teaching Gatsby in an Emerging Technologies class at the Art Institute (AI) in North Hollywood. I got to interview him.
 
 In his 10 years of teaching over 50 web development/design classes at (AI), he’s observed that graphic design students tend to come to class less as the class gets more focused on coding.
 
