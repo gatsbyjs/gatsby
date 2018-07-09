@@ -14,34 +14,42 @@ This design also proposes a possibly heuristic for determining what we can reaso
 # Detailed design
 
 MVP
-- [ ] add a second (possibly third) level to docs navigation in the sidebar in accordion style menu, e.g. how do we make the sidebar not too long or overwhelming?
+- [x] add a second (possibly third) level to docs navigation in the sidebar in accordion style menu, e.g. how do we make the sidebar not too long or overwhelming?
 Expand top (and potentially second-level) navigation items that do not belong to the current section on user interaction (see e.g. https://reactjs.org/, https://stripe.com/docs/stripe-js for second-level)
-- [ ] Selected state for sidebar items
+- [x] Selected state for sidebar items
     - Maybe the current “bullet point” doesn’t work very well for indented navigation items
     - The current purple doesn’t stand out enough
     - The use of the “bold” Futura may cause the navigation item text to take one more line than the default “normal” Futura state, causing the navigation items below to change their position
     - Digital Ocean does cool selected state and hover state stuff: https://developers.digitalocean.com/documentation/v2/#authentication
-- [ ] create new categories of docs. When clicked, the only thing that happens is that sub-items become visible and the active page remains the same as it was before clicking the category name until a sub-item is clicked. So essentially, clicking on a sub-item is the only way to see a new active page.
-- [ ] create stub articles for the ones we don’t have yet
+- [x] create new categories of docs. When clicked, the only thing that happens is that sub-items become visible and the active page remains the same as it was before clicking the category name until a sub-item is clicked. So essentially, clicking on a sub-item is the only way to see a new active page.
+- [x] create stub articles for the ones we don’t have yet
 
 Phase 2:
-- [ ] Find a place for starter showcase in top nav
-- [ ] Add issue submission form at bottom of each doc
 - [ ] publish templates for each category of docs to facilitate contributions and contract work
+- [x] Find a place for starter showcase in top nav
+- [ ] Add issue submission form at bottom of each doc
+- [ ] Popup/slideout form that asks people: What are you looking for on gatsbyjs.org today? with a rating/form to ask if they found what they're looking for.
 - [ ] mobile menu that you can access w/o scrolling to bottom of screen (see Flo’s notes below on Reactjs.com’s mobile version vs. Stripe’s docs which ignore small screens)
     - Currently https://www.gatsbyjs.org/docs/ is the only way on Mobile to access the Desktop sidebar content
     - https://reactjs.org/ is an excellent example of a Mobile navigation for our sidebar content, but the button position conflicts with our current mobile navigation
     - Noteworthy: the equally excellent https://stripe.com/docs/quickstart and https://stripe.com/docs/api completely ignore smaller screens
 - [ ] Way to copy and paste code easily Ref. gatsbyjs/gatsby#5030
-- [ ] Sidebar collapsed view
-    - Make the sidebar togglable so that people who are distracted by the persistent display of the sidebar on large screens can hide it on demand (fk: I’d label this “nice to have” clearly, even if this goes hand-in-hand with the implementation of the Mobile navigation)
+- [ ] Sidebar toggle all open / all closed button
+- [ ] Fill out stub articles (flat fee for anyone who meets certain base requirements (i.e. follows templates and style guide?)
+- [ ] phase out/change docs that are poorly organized, such as the "Adding Images, Fonts, and Files doc" --> propose we split it up into following docs:
+    - Using the static folder
+    - Importing files into Gatsby
+        - Importing single files
+        - Importing media content
+        - Programmatically importing content using gatsby-source-filesystem.
 
 Phase 3:
 - [ ] API on top level nav
 - [ ] versions of the docs
 - [ ] Way to test APIs. Ask devs for their favorite ones. 
 - [ ] automatically pull in doc prereqs at top of each page (see https://www.cockroachlabs.com/docs/stable/transactions.html as a great example of how to design this. Not sure how to code it)
-- [ ] doc accessibility/design options (changing font type and size or screen and font colors, what about language?)
+- [ ] doc accessibility/design options (changing font type and size or screen and font colors, what about language?), toggle sidebar to disappear, reappear
+- [ ] searchable API reference
 
 Here is a possible restructure of the current docs information architecture (with the inclusion of many docs we still need to write):
 
