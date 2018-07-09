@@ -6,10 +6,8 @@ const buildProductionBundle = require(`./build-javascript`)
 const bootstrap = require(`../bootstrap`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const copyStaticDirectory = require(`../utils/copy-static-directory`)
-const slash = require(`slash`)
-const fs = require(`fs`)
-const path = require(`path`)
-const opentracing = require(`opentracing`)
+const { initTracer } = require(`../utils/tracer`)
+const tracer = require(`opentracing`).globalTracer()
 
 function reportFailure(msg, err: Error) {
   report.log(``)
@@ -25,25 +23,10 @@ type BuildArgs = {
   openTracingConfigFile: string,
 }
 
-function loadTracer(tracerFile) {
-  let tracer
-  if (tracerFile) {
-    console.log(tracerFile)
-    const resolvedPath = slash(path.resolve(tracerFile))
-    const createTracer = require(resolvedPath)
-    tracer = createTracer()
-  } else {
-    console.log('using noop tracer')
-    tracer = new opentracing.Tracer() // Noop
-  }
-
-  return tracer
-}
-
 module.exports = async function build(program: BuildArgs) {
 
-  const tracer = loadTracer(program.openTracingConfigFile)
-  opentracing.initGlobalTracer(tracer)
+  initTracer(program.openTracingConfigFile)
+
   const buildSpan = tracer.startSpan(`build`)
   buildSpan.setTag(`directory`, program.directory)
 

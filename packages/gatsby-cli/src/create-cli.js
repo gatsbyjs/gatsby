@@ -116,7 +116,10 @@ function buildLocalCommands(cli, isLocalSite) {
           type: `string`,
           default: ``,
           describe: `Custom HTTPS key file (relative path; also required: --https, --cert-file). See https://www.gatsbyjs.org/docs/local-https/`,
-        }),
+        }).option(`open-tracing-config-file`, {
+        type: `string`,
+        describe: `js file that should export a function that creates a new open tracing compatible Tracer`,
+      }),
     handler: handlerP(
       getCommandHandler(`develop`, (args, cmd) => {
         process.env.NODE_ENV = process.env.NODE_ENV || `development`
