@@ -6,7 +6,7 @@ const buildProductionBundle = require(`./build-javascript`)
 const bootstrap = require(`../bootstrap`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const copyStaticDirectory = require(`../utils/copy-static-directory`)
-const { initTracer } = require(`../utils/tracer`)
+const { initTracer, stopTracer } = require(`../utils/tracer`)
 const tracer = require(`opentracing`).globalTracer()
 
 function reportFailure(msg, err: Error) {
@@ -74,4 +74,6 @@ module.exports = async function build(program: BuildArgs) {
   report.info(`Done building in ${process.uptime()} sec`)
 
   buildSpan.finish()
+
+  await stopTracer()
 }
