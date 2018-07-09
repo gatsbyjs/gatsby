@@ -29,7 +29,7 @@
         link: /docs/gatsby-on-macs/
       - title: Gatsby on Windows
         link: /docs/gatsby-on-windows/
-    - title: Customization*
+    - title: Custom configuration*
       link: /docs/customization/
       items:
         - title: Babel.js
@@ -42,16 +42,34 @@
           link: /docs/environment-variables/
         - title: Structure of Gatsby default starter*
           link: /docs/gatsby-default-starter-structure/
-    - title: Content*
-      link: /docs/content/
+    - title: Adding Website Functionality*
+      link: /docs/website-functionality/
       items:
         - title: Adding a 404 Page
           link: /docs/add-404-page/
         - title: Adding Images, Fonts, and Files
           link: /docs/adding-images-fonts-files/
+        - title: Static folder*
+          link: /docs/static-folder/
+        - title: Dropping images into static folders*
+          link: /docs/dropping-images-into-static-folders/
+        - title: Importing single files*
+          link: /docs/importing-single-files/
+        - title: Importing media content*
+          link: /docs/importing-media-content/
+        - title: `gatsby-source-filesystem` programmatic import*
+          link: /docs/gatsby-source-filesystem-programmatic-import/
+        - title: Adding search to your Gatsby website
+          link: /docs/adding-search/ 
         - title: Adding tags and categories to blog posts
           link: /docs/adding-tags-and-categories-to-blog-posts/
-        - title: Working With images in Gatsby
+        - title: Creating a sitemap*
+          link: /docs/creating-a-sitemap/
+        - title: Linking between pages*
+          link: /docs/linking-between-pages/
+        - title: Search Engine Optimization (SEO)
+          link: /docs/seo/
+        - title: Working with images in Gatsby
           link: /docs/working-with-images/
     - title: GraphQL*
       link: /docs/graphql/
@@ -75,8 +93,16 @@
     - title: Headless CMS*
       link: /docs/headless-cms/
       items:
-        - title: Managing content with Netlify CMS
+        - title: Netlify CMS
           link: /docs/netlify-cms/
+        - title: WordPress*
+          link: /docs/wordpress/
+        - title: Drupal*
+          link: /docs/drupal/
+        - title: Contentful*
+          link: /docs/contentful/
+        - title: Prose*
+          link: /docs/prose/
     - title: Styling*
       link: /docs/styling/
       items:
@@ -92,7 +118,7 @@
           link: /docs/creating-global-styles/
         - title: Component CSS*
           link: /docs/component-css/
-        - title: Post CSS*
+        - title: PostCSS*
           link: /docs/post-css/
     - title: Debugging*
       link: /docs/debugging/
@@ -119,18 +145,10 @@
           link: /docs/caching/
         - title: Local HTTPS
           link: /docs/local-https/
-        - title: Search Engine Optimization (SEO)
-          link: /docs/seo/
         - title: Lighthouse audit*
-          link: /docs/lighthouse-audit/
-    - title: Adding search to your Gatsby website
-      link: /docs/adding-search/  
-    - title: Dropping Images into Static Folders*
-      link: /docs/dropping-images-into-static-folders/
+          link: /docs/lighthouse-audit/ 
     - title: Interactive pages*
       link: /docs/interactive-pages/
-    - title: Linking between pages*
-      link: /docs/linking-between-pages/
     - title: Proxying API requests
       link: /docs/api-proxy/
 - title: API Reference
