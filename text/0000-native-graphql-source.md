@@ -6,7 +6,8 @@
 
 This RFCs proposes the way to add third-party GraphQL schemas into Gatsby core schema. In addition to a low-level API to add schemas to be stitched, it describes a higher-level API/plugin to integrate third-party APIs into your Gatbsy API.
 
-[Implementation](https://github.com/gatsbyjs/gatsby/tree/graphql/schema-stitching)
+* [Implementation](https://github.com/gatsbyjs/gatsby/tree/graphql/schema-stitching)
+* [Simple example project](https://github.com/freiksenet/gatsby-github-displayer)
 
 # Basic example
 
