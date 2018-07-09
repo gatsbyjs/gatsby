@@ -1,5 +1,4 @@
 const _ = require(`lodash`)
-const opentracing = require(`opentracing`)
 const report = require(`gatsby-cli/lib/reporter`)
 
 const apiRunner = require(`./api-runner-node`)

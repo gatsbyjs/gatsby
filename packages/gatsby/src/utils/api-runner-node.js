@@ -129,7 +129,7 @@ let waitingForCasacadeToFinish = []
 module.exports = async (api, args = {}, pluginSource) =>
   new Promise(resolve => {
 
-    const parentSpan = args && args.parentSpan
+    const { parentSpan } = args
     const apiSpanArgs = parentSpan ? { childOf: parentSpan } : {}
     const apiSpan = tracer.startSpan(`run-api`, apiSpanArgs)
 
@@ -189,8 +189,8 @@ module.exports = async (api, args = {}, pluginSource) =>
         } else {
           pluginName = `Plugin ${plugin.name}`
         }
-        Promise.resolve(runAPI(plugin, api, {...args, parentSpan: apiSpan})).asCallback(callback)
-        // Promise.resolve(runAPI(plugin, api, args)).asCallback(callback)
+        Promise.resolve(runAPI(plugin, api, {...args, parentSpan: apiSpan}))
+          .asCallback(callback)
       },
       (err, results) => {
         if (err) {
