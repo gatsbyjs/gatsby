@@ -123,7 +123,7 @@ module.exports = async ({
 
   const babelConfig = await createBabelConfig(program, stage)
 
-  const isSSR = stage === `build-html`
+  const isSSR = stage.includes(`html`)
 
   const makeExternalOnly = (original: RuleFactory<*>) => (
     options = {}
