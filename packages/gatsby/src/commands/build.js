@@ -53,13 +53,8 @@ module.exports = async function build(program: BuildArgs) {
 
   // Copy files from the static directory to
   // an equivalent static directory within public.
-  const copyStaticDirectorySpan = tracer.startSpan(
-    `copy static directory`,
-    { childOf: buildSpan, },
-  )
   copyStaticDirectory()
-  copyStaticDirectorySpan.finish()
-
+  
   let activity
   activity = report.activityTimer(
     `Building production JavaScript and CSS bundles`,

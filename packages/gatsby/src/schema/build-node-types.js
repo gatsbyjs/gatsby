@@ -206,5 +206,7 @@ module.exports = async ({ parentSpan }) => {
   // Create node types and node fields for nodes that have a resolve function.
   await Promise.all(_.map(types, createType))
 
+  span.finish()
+
   return processedTypes
 }
