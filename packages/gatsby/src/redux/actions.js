@@ -456,7 +456,7 @@ const typeOwners = {}
  *   }
  * })
  */
-actions.createNode = (node: any, plugin?: Plugin, actionOptions?: ActionOptions) => {
+actions.createNode = (node: any, plugin?: Plugin, actionOptions?: ActionOptions = {}) => {
   if (!_.isObject(node)) {
     return console.log(
       chalk.bold.red(
@@ -561,8 +561,8 @@ actions.createNode = (node: any, plugin?: Plugin, actionOptions?: ActionOptions)
   }
 
   if (actionOptions.parentSpan) {
-    actionOptions.parentSpan.setTag('nodeId', node.id)
-    actionOptions.parentSpan.setTag('nodeType', node.id)
+    actionOptions.parentSpan.setTag(`nodeId`, node.id)
+    actionOptions.parentSpan.setTag(`nodeType`, node.id)
   }
 
   let deleteAction

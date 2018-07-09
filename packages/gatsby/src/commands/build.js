@@ -30,9 +30,9 @@ module.exports = async function build(program: BuildArgs) {
   const buildSpan = tracer.startSpan(`build`)
   buildSpan.setTag(`directory`, program.directory)
 
-  const { graphqlRunner } = await bootstrap( { ...program, parentSpan: buildSpan, } )
+  const { graphqlRunner } = await bootstrap( { ...program, parentSpan: buildSpan } )
 
-  await apiRunnerNode(`onPreBuild`, { graphql: graphqlRunner, parentSpan: buildSpan, })
+  await apiRunnerNode(`onPreBuild`, { graphql: graphqlRunner, parentSpan: buildSpan })
 
   // Copy files from the static directory to
   // an equivalent static directory within public.
@@ -41,7 +41,7 @@ module.exports = async function build(program: BuildArgs) {
   let activity
   activity = report.activityTimer(
     `Building production JavaScript and CSS bundles`,
-    { parentSpan: buildSpan, },
+    { parentSpan: buildSpan },
   )
   activity.start()
   await buildProductionBundle(program).catch(err => {
@@ -51,7 +51,7 @@ module.exports = async function build(program: BuildArgs) {
 
   activity = report.activityTimer(
     `Building static HTML for pages`,
-    { parentSpan: buildSpan, },
+    { parentSpan: buildSpan },
   )
   activity.start()
   await buildHTML(program).catch(err => {

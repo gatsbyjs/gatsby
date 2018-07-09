@@ -1,7 +1,7 @@
-const zipkin = require('zipkin')
-const { HttpLogger } = require('zipkin-transport-http')
-const ZipkinTracer = require(`zipkin-javascript-opentracing`)
-const fetch = require(`node-fetch`);
+const zipkin = require(`zipkin`)
+const { HttpLogger } = require(`zipkin-transport-http`)
+const ZipkinTracer = require(`moocar-zipkin-javascript-opentracing`)
+const fetch = require(`node-fetch`)
 
 let logger
 let recorder
@@ -51,9 +51,9 @@ async function stop() {
   // First, write all partial spans to the http logger
   recorder.partialSpans.forEach((span, id) => {
     if (recorder._timedOut(span)) {
-      recorder._writeSpan(id);
+      recorder._writeSpan(id)
     }
-  });
+  })
 
   // Then tell http logger to process all spans in its queue
   return await _processQueue()
@@ -64,28 +64,29 @@ async function stop() {
 // exits. Code is mostly the same as the zipkin processQueue
 // implementation.
 async function _processQueue() {
-  const self = logger;
+  const self = logger
   if (self.queue.length > 0) {
-    const postBody = `[${self.queue.join(',')}]`;
+    const postBody = `[${self.queue.join(`,`)}]`
     return await fetch(self.endpoint, {
-      method: 'POST',
+      method: `POST`,
       body: postBody,
       headers: self.headers,
       timeout: self.timeout,
     }).then((response) => {
       if (response.status !== 202) {
-        const err = 'Unexpected response while sending Zipkin data, status:' +
-              `${response.status}, body: ${postBody}`;
+        const err = `Unexpected response while sending Zipkin data, status:` +
+              `${response.status}, body: ${postBody}`
 
-        if (self.errorListenerSet) self.emit('error', new Error(err));
-        else console.error(err);
+        if (self.errorListenerSet) self.emit(`error`, new Error(err))
+        else console.error(err)
       }
     }).catch((error) => {
-      const err = `Error sending Zipkin data ${error}`;
-      if (self.errorListenerSet) this.emit('error', new Error(err));
-      else console.error(err);
+      const err = `Error sending Zipkin data ${error}`
+      if (self.errorListenerSet) this.emit(`error`, new Error(err))
+      else console.error(err)
     })
   }
+  return true
 }
 
 module.exports = {

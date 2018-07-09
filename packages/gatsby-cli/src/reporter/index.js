@@ -88,7 +88,7 @@ module.exports = Object.assign(reporter, {
     }
 
     const { parentSpan } = activityArgs
-    const spanArgs = parentSpan ? { childOf: parentSpan, } : {}
+    const spanArgs = parentSpan ? { childOf: parentSpan } : {}
     const span = tracer.startSpan(name, spanArgs)
 
     return {

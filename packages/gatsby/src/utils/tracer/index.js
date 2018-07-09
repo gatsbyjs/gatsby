@@ -1,5 +1,4 @@
 const slash = require(`slash`)
-const fs = require(`fs`)
 const path = require(`path`)
 const opentracing = require(`opentracing`)
 

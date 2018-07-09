@@ -64,7 +64,7 @@ module.exports = async (args: BootstrapArgs) => {
 
   // Try opening the site's gatsby-config.js file.
   let activity = report.activityTimer(`open and validate gatsby-config`, {
-    parentSpan: bootstrapSpan
+    parentSpan: bootstrapSpan,
   })
   activity.start()
   const config = await preferDefault(
@@ -88,7 +88,7 @@ module.exports = async (args: BootstrapArgs) => {
 
   // onPreBootstrap
   activity = report.activityTimer(`onPreBootstrap`, {
-    parentSpan: bootstrapSpan
+    parentSpan: bootstrapSpan,
   })
   activity.start()
   await apiRunnerNode(`onPreBootstrap`, { parentSpan: activity.span },)
@@ -98,7 +98,7 @@ module.exports = async (args: BootstrapArgs) => {
   // deleted pages and styles from previous builds to stick around.
   activity = report.activityTimer(
     `delete html and css files from previous builds`, {
-      parentSpan: bootstrapSpan
+      parentSpan: bootstrapSpan,
     }
   )
   activity.start()
@@ -176,7 +176,7 @@ module.exports = async (args: BootstrapArgs) => {
 
   // Copy our site files to the root of the site.
   activity = report.activityTimer(`copy gatsby files`, {
-    parentSpan: bootstrapSpan
+    parentSpan: bootstrapSpan,
   })
   activity.start()
   const srcDir = `${__dirname}/../../cache-dir`
@@ -278,15 +278,15 @@ module.exports = async (args: BootstrapArgs) => {
     parentSpan: bootstrapSpan,
   })
   activity.start()
-  await require(`../utils/source-nodes`)({ parentSpan: activity.span, })
+  await require(`../utils/source-nodes`)({ parentSpan: activity.span })
   activity.end()
 
   // Create Schema.
   activity = report.activityTimer(`building schema`, {
-    parentSpan: bootstrapSpan
+    parentSpan: bootstrapSpan,
   })
   activity.start()
-  await require(`../schema`)({ parentSpan: activity.span, })
+  await require(`../schema`)({ parentSpan: activity.span })
   activity.end()
 
   // Collect resolvable extensions and attach to program.
@@ -310,7 +310,7 @@ module.exports = async (args: BootstrapArgs) => {
 
   // Collect pages.
   activity = report.activityTimer(`createPages`, {
-    parentSpan: bootstrapSpan
+    parentSpan: bootstrapSpan,
   })
   activity.start()
   await apiRunnerNode(`createPages`, {
@@ -326,7 +326,7 @@ module.exports = async (args: BootstrapArgs) => {
   // "createPages" API is called every time (during development)
   // that data changes.
   activity = report.activityTimer(`createPagesStatefully`, {
-    parentSpan: bootstrapSpan
+    parentSpan: bootstrapSpan,
   })
   activity.start()
   await apiRunnerNode(`createPagesStatefully`, {
@@ -338,7 +338,7 @@ module.exports = async (args: BootstrapArgs) => {
   activity.end()
 
   activity = report.activityTimer(`onPreExtractQueries`, {
-    parentSpan: bootstrapSpan
+    parentSpan: bootstrapSpan,
   })
   activity.start()
   await apiRunnerNode(`onPreExtractQueries`, { parentSpan: activity.span })
@@ -349,14 +349,14 @@ module.exports = async (args: BootstrapArgs) => {
     parentSpan: bootstrapSpan,
   })
   activity.start()
-  await require(`../schema`)({ parentSpan: activity.span, })
+  await require(`../schema`)({ parentSpan: activity.span })
   activity.end()
 
   require(`../schema/type-conflict-reporter`).printConflicts()
 
   // Extract queries
   activity = report.activityTimer(`extract queries from components`, {
-    parentSpan: bootstrapSpan
+    parentSpan: bootstrapSpan,
   })
   activity.start()
   await extractQueries()
@@ -369,7 +369,7 @@ module.exports = async (args: BootstrapArgs) => {
 
   // Run queries
   activity = report.activityTimer(`run graphql queries`, {
-    parentSpan: bootstrapSpan
+    parentSpan: bootstrapSpan,
   })
   activity.start()
   await runInitialQueries()
@@ -377,7 +377,7 @@ module.exports = async (args: BootstrapArgs) => {
 
   // Write out files.
   activity = report.activityTimer(`write out page data`, {
-    parentSpan: bootstrapSpan
+    parentSpan: bootstrapSpan,
   })
   activity.start()
   try {
@@ -389,7 +389,7 @@ module.exports = async (args: BootstrapArgs) => {
 
   // Write out redirects.
   activity = report.activityTimer(`write out redirect data`, {
-    parentSpan: bootstrapSpan
+    parentSpan: bootstrapSpan,
   })
   activity.start()
   await writeRedirects()
@@ -404,7 +404,7 @@ module.exports = async (args: BootstrapArgs) => {
 
       // onPostBootstrap
       activity = report.activityTimer(`onPostBootstrap`, {
-        parentSpan: bootstrapSpan
+        parentSpan: bootstrapSpan,
       })
       activity.start()
       apiRunnerNode(`onPostBootstrap`, { parentSpan: activity.span }).then(() => {
@@ -418,7 +418,7 @@ module.exports = async (args: BootstrapArgs) => {
   if (store.getState().jobs.active.length === 0) {
     // onPostBootstrap
     activity = report.activityTimer(`onPostBootstrap`, {
-      parentSpan: bootstrapSpan
+      parentSpan: bootstrapSpan,
     })
     activity.start()
     await apiRunnerNode(`onPostBootstrap`, { parentSpan: activity.span })

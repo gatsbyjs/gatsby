@@ -71,7 +71,7 @@ const runAPI = (plugin, api, args) => {
       boundActionCreators,
       api,
       plugin,
-      {...args, parentSpan: pluginSpan}
+      { ...args, parentSpan: pluginSpan }
     )
 
     if (store.getState().program.prefixPaths) {
@@ -189,7 +189,7 @@ module.exports = async (api, args = {}, pluginSource) =>
         } else {
           pluginName = `Plugin ${plugin.name}`
         }
-        Promise.resolve(runAPI(plugin, api, {...args, parentSpan: apiSpan}))
+        Promise.resolve(runAPI(plugin, api, { ...args, parentSpan: apiSpan }))
           .asCallback(callback)
       },
       (err, results) => {
