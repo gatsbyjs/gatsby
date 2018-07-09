@@ -130,7 +130,13 @@ ${formatErrorDetails(errorDetails)}`)
 
   if (resultHashes[queryJob.id] !== resultHash) {
     resultHashes[queryJob.id] = resultHash
-    const modInt = mod(dataPath).toString()
+    let modInt = ``
+    // We leave StaticQuery results at public/static/d
+    // as the babel plugin has that path hard-coded
+    // for importing static query results.
+    if (queryJob.isPage) {
+      modInt = mod(dataPath).toString()
+    }
 
     // Always write file to public/static/d/ folder.
     const resultPath = path.join(
@@ -142,7 +148,9 @@ ${formatErrorDetails(errorDetails)}`)
       `${dataPath}.json`
     )
 
-    dataPath = `${modInt}/${dataPath}`
+    if (queryJob.isPage) {
+      dataPath = `${modInt}/${dataPath}`
+    }
 
     const startWriteFile = process.hrtime()
     await fs.writeFile(resultPath, resultJSON)
