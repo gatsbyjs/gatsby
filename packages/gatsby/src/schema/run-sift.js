@@ -6,6 +6,7 @@ const { createPageDependency } = require(`../redux/actions/add-page-dependency`)
 const prepareRegex = require(`./prepare-regex`)
 const Promise = require(`bluebird`)
 const { trackInlineObjectsInRootNode } = require(`./node-tracking`)
+const { getNode } = require(`../redux`)
 
 const resolvedNodesCache = new Map()
 const enhancedNodeCache = new Map()
@@ -148,6 +149,28 @@ module.exports = ({
       )
       return myNode
     })
+  }
+
+  // If the the query only has a filter for an "id", then we'll just grab
+  // that ID and return it.
+  if (
+    Object.keys(fieldsToSift).length === 1 &&
+    Object.keys(fieldsToSift)[0] === `id`
+  ) {
+    const node = resolveRecursive(
+      getNode(siftArgs[0].id[`$eq`]),
+      fieldsToSift,
+      type.getFields()
+    )
+
+    if (node) {
+      createPageDependency({
+        path,
+        nodeId: node.id,
+      })
+    }
+
+    return node
   }
 
   const start = process.hrtime()
