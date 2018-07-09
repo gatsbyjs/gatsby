@@ -812,3 +812,16 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
   - Configure many of the site's features from a separate site config files
   - Extended Markdown support, responsive embeds, solid inline code support and lots of other goodness
   - Well commented and documented
+
+- [gatsby-starter-default-intl](https://github.com/wiziple/gatsby-starter-default-intl)
+  [(demo)](https://gatsby-starter-default-intl.netlify.com/)
+
+  Features:
+
+  - Localization (Multilanguage) provided by [react-intl](https://github.com/yahoo/react-intl). 
+
+  - Automatic redirection based on user's preferred language in browser provided by [browser-lang](https://github.com/wiziple/browser-lang).
+
+  - Support multi-language url routes within a single page component. That means you don't have to create separate pages such as `pages/en/index.js` or `pages/ko/index.js`.
+
+  - Based on [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default) with least modification.
