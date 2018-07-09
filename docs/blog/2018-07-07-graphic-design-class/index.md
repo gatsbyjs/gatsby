@@ -5,11 +5,11 @@ author: "Shannon Soper"
 tags: ["college", "case study", "design", "getting-started"]
 ---
 
-## Phil Howley's Graphic Design class
+## Phil Howley's Graphic Design Class
 
 Recently, a Gatsby fan named Phil Howley starting teaching Gatsby in an Emerging Technologies class at the Art Institute (AI) in North Hollywood and I got to interview him.
 
-In his 10 years of teaching over 50 web development/design classes at (AI) (his other job is with [Iron Cove Solutions](https://ironcovesolutions.com) which is built on Gatsby!), he’s observed that graphic design students tend to come to class less as the class gets more focused on coding.
+In his 10 years of teaching over 50 web development/design classes at (AI), he’s observed that graphic design students tend to come to class less as the class gets more focused on coding.
 
 However, in his current class _nobody has dropped out_. And every single one of his students turned in the MVP and at least one extra credit feature for their final portfolio project, which has never happened when he previously taught this class. The reason? He taught them to create their portfolios using Gatsby.
 
@@ -55,15 +55,14 @@ Structure of the class:
 2.  _Taught them NextJS._ They liked how routing was removed from the equation and they could just drop stuff into the pages directory and they would magically work.
 3.  _Taught them Gatsby._ Learning NextJS wasn’t as smooth as I would have liked but once we jumped to learn GatsbyJS, some interesting things happened. A light when on. They were excited.
 
-> “Learning NextJS wasn’t as smooth as I would have liked but once we jumped to learn GatsbyJS, some interesting things happened. A light when on. They were excited.”
+> “Once we jumped to learn GatsbyJS, some interesting things happened. A light when on. They were excited.”
 
 ### What do your students like about Gatsby?
 
 Here’s a list of what they love about Gatsby:
 
 - _Hot reloading_ gives them instant visual feedback like they get in Illustrator and Photoshop
-- _coding in React_ is fun = easy to add modules, don’t have to build everything from scratch, and they already knew enough about creating React components from Phil’s teaching
-
+- _Coding in React_ is fun. By fun, they mean it's easy to add modules, don’t have to build everything from scratch, and they already knew enough about creating React components from Phil’s teaching to jump into Gatsby
 * _Docs:_ While not perfect, the Gatsby tutorial and documentation. was “approachable”
 * _Speed_: They never heard of static site generators or the JAMstack, but the speed immediately impressed them
 * _Built off previous knowledge:_ They were able to use the routing knowledge they gleaned from NextJS
@@ -87,7 +86,7 @@ It wasn’t just Gatsby but the whole collaborative team of Gatsby, Git, Github,
 
 In my next class with Gatsby, I plan on introducing Contentful and GraphCMS to show them CAAS sites.
 
-### Conclusion
+### Phil's final thoughts:
 
 This technological experiment was a huge success.
 
