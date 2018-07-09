@@ -104,6 +104,9 @@ module.exports = async (
             }:${webpackPort}/`,
           devtoolModuleFilenameTemplate: info =>
             path.resolve(info.absoluteResourcePath).replace(/\\/g, `/`),
+          // Avoid React cross-origin errors
+          // See https://reactjs.org/docs/cross-origin-errors.html
+          crossOriginLoading: `anonymous`,
         }
       case `build-html`:
       case `develop-html`:
