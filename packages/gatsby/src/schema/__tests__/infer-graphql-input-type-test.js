@@ -553,13 +553,13 @@ describe(`GraphQL Input args`, () => {
       nodes,
       `
         {
-          test1:allNode(filter: {data: {tags: {in: {tag: {document: {in: {data: {tag: {eq: "Gatsby"}}}}}}}}}) {
+          test1:allNode(filter: {data: {tags: {elemMatch: {tag: {document: {elemMatch: {data: {tag: {eq: "Gatsby"}}}}}}}}}) {
             edges { node { index }}
           }
-          test2:allNode(filter: {data: {tags: {in: {tag: {document: {in: {data: {tag: {eq: "Design System"}}}}}}}}}) {
+          test2:allNode(filter: {data: {tags: {elemMatch: {tag: {document: {elemMatch: {data: {tag: {eq: "Design System"}}}}}}}}}) {
             edges { node { index }}
           }
-          test3:allNode(filter: {data: {tags: {in: {tag: {document: {in: {number: {lt: 4}}}}}}}}) {
+          test3:allNode(filter: {data: {tags: {elemMatch: {tag: {document: {elemMatch: {number: {lt: 4}}}}}}}}) {
             edges { node { index }}
           }
         }

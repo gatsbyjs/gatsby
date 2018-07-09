@@ -44,6 +44,9 @@ module.exports = ({
     const newObject = {}
     _.each(object, (v, k) => {
       if (_.isPlainObject(v)) {
+        if (k === `elemMatch`) {
+          k = `$elemMatch`
+        }
         newObject[k] = siftifyArgs(v)
       } else {
         // Compile regex first.
@@ -53,8 +56,6 @@ module.exports = ({
           const Minimatch = require(`minimatch`).Minimatch
           const mm = new Minimatch(v)
           newObject[`$regex`] = mm.makeRe()
-        } else if (k === `in` && Array.isArray(v) && _.isPlainObject(v[0])) {
-          newObject[`$elemMatch`] = siftifyArgs(v[0])
         } else {
           newObject[`$${k}`] = v
         }
