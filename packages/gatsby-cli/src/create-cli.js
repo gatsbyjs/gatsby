@@ -118,7 +118,7 @@ function buildLocalCommands(cli, isLocalSite) {
           describe: `Custom HTTPS key file (relative path; also required: --https, --cert-file). See https://www.gatsbyjs.org/docs/local-https/`,
         }).option(`open-tracing-config-file`, {
         type: `string`,
-        describe: `js file that should export a function that creates a new open tracing compatible Tracer`,
+        describe: `Tracer configuration file (open tracing compatible). See https://www.gatsbyjs.org/docs/performance-tracing/`,
       }),
     handler: handlerP(
       getCommandHandler(`develop`, (args, cmd) => {
@@ -146,7 +146,7 @@ function buildLocalCommands(cli, isLocalSite) {
         describe: `Build site without uglifying JS bundles (for debugging).`,
       }).option(`open-tracing-config-file`, {
         type: `string`,
-        describe: `js file that should export a function that creates a new open tracing compatible Tracer`,
+        describe: `Tracer configuration file (open tracing compatible). See https://www.gatsbyjs.org/docs/performance-tracing/`,
       }),
     handler: handlerP(
       getCommandHandler(`build`, (args, cmd) => {
