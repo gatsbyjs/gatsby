@@ -92,7 +92,6 @@ Object {
     "id": "test",
     "name": "test",
   },
-  "traceId": undefined,
   "type": "CREATE_PAGE",
 }
 `;
@@ -134,7 +133,6 @@ Object {
     "id": "test",
     "name": "test",
   },
-  "traceId": undefined,
   "type": "CREATE_PAGE",
 }
 `;
@@ -176,7 +174,6 @@ Object {
     "id": "test",
     "name": "test",
   },
-  "traceId": undefined,
   "type": "CREATE_PAGE",
 }
 `;
