@@ -34,7 +34,7 @@ exports.onCreateWebpackConfig = (
       loaders.css({ modules: true, importLoaders: 2 }),
       loaders.postcss({ plugins: postCssPlugins }),
       sassLoader,
-    ],
+    ].filter(Boolean),
   }
 
   let configRules = []
