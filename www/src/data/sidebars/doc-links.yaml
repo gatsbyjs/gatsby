@@ -2,9 +2,9 @@
   items:
     - title: Quick start
       link: /docs/
-    - title: Recipes
+    - title: Recipes*
       link: /recipes/
-    - title: Overview of the Docs*
+    - title: Overview of the docs*
       link: /docs/overview/
     - title: Main Tutorial (step-by-step)
       link: /tutorial/
@@ -45,7 +45,7 @@
         - title: Proxying API requests
           link: /docs/api-proxy/
    - title: Images and files*
-      link: /docs/handling-files/
+      link: /docs/images-and-files/
       items:
         - title: Adding Images, Fonts, and Files
           link: /docs/adding-images-fonts-files/
@@ -93,6 +93,15 @@
           link: /docs/contentful/
         - title: Prose*
           link: /docs/prose/
+    - title: Plugins*
+      link: /docs/plugins
+      items:
+        - title: Plugin authoring
+          link: /docs/plugin-authoring/
+        - title: Submit to Plugin Library*
+          link: /docs/submit-to-plugin-library/
+        - title: Source plugin tutorial
+          link: /tutorial/source-plugin-tutorial/
     - title: Styling*
       link: /docs/styling/
       items:
@@ -156,8 +165,6 @@
           link: /docs/lighthouse-audit/
 - title: API Reference
   items:
-    - title: API reference
-      link: /docs/api-reference/
     - title: Gatsby Node APIs
       link: /docs/node-apis/
     - title: Gatsby Browser APIs
@@ -232,10 +239,6 @@
       link: /docs/submit-to-site-showcase/
     - title: Submit to Starter Showcase*
       link: /docs/submit-to-starter-showcase/
-    - title: Plugin authoring
-      link: /docs/plugin-authoring/
-    - title: Submit to Plugin Library*
-      link: /docs/submit-to-plugin-library/
 - title: Glossary*
   link: /docs/glossary/
 - title: Commands (Gatsby CLI)*
