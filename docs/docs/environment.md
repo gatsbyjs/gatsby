@@ -1,5 +1,5 @@
 ---
-title: Environment
+title: Preparing your environment
 ---
 
 This is a stub. Help our community expand it.
