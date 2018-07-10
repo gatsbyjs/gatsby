@@ -2,7 +2,7 @@
 const webpack = require(`webpack`)
 const fs = require(`fs`)
 const debug = require(`debug`)(`gatsby:html`)
-
+const report = require(`gatsby-cli/lib/reporter`)
 const webpackConfig = require(`../utils/webpack.config`)
 const { store } = require(`../redux`)
 const { createErrorFromString } = require(`gatsby-cli/lib/reporter/errors`)
@@ -40,6 +40,18 @@ module.exports = async (program: any) => {
               )
         )
       }
+
+      let output = ``
+      try {
+        output = fs.readFileSync(`${outputFile}`, `utf-8`)
+      } catch (err) {
+        report.panic(`Failed to read ${outputFile}`, err)
+      }
+      fs.writeFileSync(
+        outputFile,
+        `exports=null;${output}`,
+        `utf-8`
+      )
 
       return renderHTML(require(outputFile), pages)
         .then(() => {
