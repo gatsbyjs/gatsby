@@ -1,5 +1,5 @@
 ---
-title: API reference
+title: Recipes
 ---
 
 This is a stub. Help our community expand it.
