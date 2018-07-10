@@ -138,7 +138,6 @@ class DefaultLayout extends React.Component {
         <div
           css={{
             width: `100%`,
-            padding: rhythm(1 / 2),
             background: isHomepage ? `#402060` : colors.gatsby,
             color: colors.ui.bright,
             fontFamily: options.headerFontFamily.join(`,`),
@@ -153,26 +152,18 @@ class DefaultLayout extends React.Component {
             WebkitFontSmoothing: `antialiased`,
           }}
         >
-          These are the docs for V1.{` `}
+
           <OutboundLink
-            href="https://nextgatsbyjs.org/"
+            href="https://next.gatsbyjs.org"
             css={{
-              color: `#fff`,
+              color: `#fff`, 
+              textDecoration: `none`,
+              display: `block`,
+              textAlign: `center`,
+              padding: rhythm(1 / 2),
             }}
-          >
-            View the v2 docs
-            <span
-              css={{
-                display: `none`,
-                [presets.Mobile]: {
-                  display: `inline`,
-                },
-              }}
-            >
-              {` `}
-              instead
-            </span>
-          </OutboundLink>.
+          >Gatsby v2 is now in beta!
+          </OutboundLink>
         </div>
         <Navigation pathname={this.props.location.pathname} />
         <div
