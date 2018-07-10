@@ -288,7 +288,7 @@ Add your Stripe publishable key to `src/components/checkout.js`.
 
 Inside the `componentDidMount()` function, you are calling configure on `StripeCheckout`. Replace the text in the single quotes with your own public key. This tells Stripe to send any payments through to your account.
 
-```jsx
+```js
 componentDidMount() {
    this.stripeHandler = StripeCheckout.configure({
      // You’ll need to add your own Stripe public test key here.
