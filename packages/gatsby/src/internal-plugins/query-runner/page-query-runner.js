@@ -78,7 +78,6 @@ emitter.on(`API_RUNNING_QUEUE_EMPTY`, runQueuedActions)
 
 let seenIdsWithoutDataDependencies = []
 const findIdsWithoutDataDependencies = () => {
-  const start = process.hrtime()
   const state = store.getState()
   const allTrackedIds = _.uniq(
     _.flatten(
@@ -106,20 +105,15 @@ const findIdsWithoutDataDependencies = () => {
     ...seenIdsWithoutDataDependencies,
   ])
 
-  global._PROFILE({ start, name: `findIdsWithoutDataDependencies` })
   return notTrackedIds
 }
 
 const runQueriesForPathnames = pathnames => {
-  const start = process.hrtime()
-  const blah = process.hrtime()
   const staticQueries = pathnames.filter(p => p.slice(0, 4) === `sq--`)
   const pageQueries = pathnames.filter(p => p.slice(0, 4) !== `sq--`)
   const state = store.getState()
-  global._PROFILE({ start: blah, name: `filter paths for running` })
 
   staticQueries.forEach(id => {
-    const start2 = process.hrtime()
     const staticQueryComponent = store.getState().staticQueryComponents.get(id)
     const queryJob: QueryJob = {
       id: staticQueryComponent.hash,
@@ -130,10 +124,8 @@ const runQueriesForPathnames = pathnames => {
       context: { path: staticQueryComponent.jsonName },
     }
     queue.push(queryJob)
-    global._PROFILE({ start: start2, name: `queue static query` })
   })
 
-  const start3 = process.hrtime()
   const pages = state.pages
   let didNotQueueItems = true
   pageQueries.forEach(id => {
@@ -155,7 +147,6 @@ const runQueriesForPathnames = pathnames => {
       )
     }
   })
-  global._PROFILE({ start: start3, name: `queue page queries` })
 
   if (didNotQueueItems || !pathnames || pathnames.length === 0) {
     return Promise.resolve()
@@ -163,14 +154,12 @@ const runQueriesForPathnames = pathnames => {
 
   return new Promise(resolve => {
     queue.on(`drain`, () => {
-      global._PROFILE({ start, name: `runQueriesForPathnames` })
       resolve()
     })
   })
 }
 
 const findDirtyIds = actions => {
-  const start = process.hrtime()
   const state = store.getState()
   const uniqDirties = _.uniq(
     actions.reduce((dirtyIds, action) => {
@@ -189,6 +178,5 @@ const findDirtyIds = actions => {
       return _.compact(dirtyIds)
     }, [])
   )
-  global._PROFILE({ start, name: `findDirtyIds` })
   return uniqDirties
 }

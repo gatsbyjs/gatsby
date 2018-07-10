@@ -24,8 +24,6 @@ const remark2retext = require(`remark-retext`)
 const stripPosition = require(`unist-util-remove-position`)
 const hastReparseRaw = require(`hast-util-raw`)
 
-global.mdToHTML = []
-
 let pluginsCacheStr = ``
 let pathPrefixCacheStr = ``
 const astCacheKey = node =>
@@ -282,7 +280,6 @@ module.exports = (
       if (cachedHTML) {
         return cachedHTML
       } else {
-        const start = process.hrtime()
         const ast = await getHTMLAst(markdownNode)
         // Save new HTML to cache and return
         const html = hastToHTML(ast, {
@@ -291,9 +288,6 @@ module.exports = (
 
         // Save new HTML to cache and return
         cache.set(htmlCacheKey(markdownNode), html)
-        global.mdToHTML.push(
-          require(`convert-hrtime`)(process.hrtime(start)).milliseconds
-        )
         return html
       }
     }

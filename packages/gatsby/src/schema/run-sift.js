@@ -39,11 +39,6 @@ function awaitSiftField(fields, node, k) {
   return undefined
 }
 
-global.runSift = []
-global.promiseMapTimes = []
-global.resolveRecursive = []
-global.trackInline = []
-
 /*
  * Filters a list of nodes using mongodb-like syntax.
  * Returns a single unwrapped element if connection = false.
@@ -57,7 +52,6 @@ module.exports = ({
   connection = false,
   path = ``,
 }: Object) => {
-  const startSift = process.hrtime()
   // Clone args as for some reason graphql-js removes the constructor
   // from nested objects which breaks a check in sift.js.
   const clonedArgs = JSON.parse(JSON.stringify(args))
@@ -114,7 +108,6 @@ module.exports = ({
 
   // Resolves every field used in the node.
   function resolveRecursive(node, siftFieldsObj, gqFields) {
-    const start = process.hrtime()
     return Promise.all(
       _.keys(siftFieldsObj).map(k =>
         Promise.resolve(awaitSiftField(gqFields, node, k))
@@ -144,9 +137,6 @@ module.exports = ({
         ...node,
       }
       resolvedFields.forEach(([k, v]) => (myNode[k] = v))
-      global.resolveRecursive.push(
-        require(`convert-hrtime`)(process.hrtime(start)).milliseconds
-      )
       return myNode
     })
   }
@@ -173,7 +163,6 @@ module.exports = ({
     return node
   }
 
-  const start = process.hrtime()
   const nodesPromise = () => {
     const nodesCacheKey = JSON.stringify({
       // typeName + count being the same is a pretty good
@@ -200,12 +189,7 @@ module.exports = ({
           const enhancedNodeGenerationPromise = new Promise(resolve => {
             resolveRecursive(node, fieldsToSift, type.getFields()).then(
               resolvedNode => {
-                const startTrack = process.hrtime()
                 trackInlineObjectsInRootNode(resolvedNode)
-                global.trackInline.push(
-                  require(`convert-hrtime`)(process.hrtime(startTrack))
-                    .milliseconds
-                )
                 if (cacheKey) {
                   enhancedNodeCache.set(cacheKey, resolvedNode)
                 }
@@ -279,13 +263,6 @@ module.exports = ({
     }
     return connectionArray
   })
-
-  global.promiseMapTimes.push(
-    require(`convert-hrtime`)(process.hrtime(start)).milliseconds
-  )
-  global.runSift.push(
-    require(`convert-hrtime`)(process.hrtime(startSift)).milliseconds
-  )
 
   return tempPromise
 }
