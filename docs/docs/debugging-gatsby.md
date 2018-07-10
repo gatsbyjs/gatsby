@@ -2,13 +2,15 @@
 title: Debugging Gatsby
 ---
 
-Gatsby is Node.js application and you can debug it using standard tools for Node.js applications.  
+Gatsby's `build` and `develop` steps run as a Node.js application which you can debug using standard tools for Node.js applications.  
 
-In this guide You will learn how to use
+In this guide you will learn how to debug some code using:
+
  - [Chrome DevTools for Node](#chrome-devtools-for-node)
- - [VSCode debugger](#vscode-debugger)
+ - [VS Code debugger](#vs-code-debugger)
 
-As example we will use code snippet below in `gatsby-node.js`:
+As an example let's use the following code snippet in a `gatsby-node.js` file:
+
 ```js
 const { createFilePath } = require('gatsby-source-filesystem')
 
@@ -28,7 +30,7 @@ exports.onCreateNode = args => {
 }
 ```
 
-There is a bug in this code and using it will produce error below:
+There is a bug in this code and using it will produce the error below:
 
 ```
 TypeError: Cannot read property 'internal' of undefined
@@ -41,60 +43,60 @@ TypeError: Cannot read property 'internal' of undefined
 
 ### Running Gatsby with `inspect` flag
 
-In your project directory instead of running `gatsby develop` run below command:
+In your project directory instead of running `gatsby develop` run the following command:
 
 ```shell
 node --inspect-brk --no-lazy node_modules/gatsby/dist/bin/gatsby develop
 ```
 
- - `--inspect-brk` will enable inspector agent which will allow You to connect debugger. It will also pause execution until we connect debugger and resume it.
- - `--no-lazy` - this will force node's V8 to disable lazy compilation and will help with using breakpoints
+ - `--inspect-brk` will enable the inspector agent which will allow you to connect a debugger. It will also pause execution until the debugger is connected and then wait for you to resume it.
+ - `--no-lazy` - this will force Node's V8 to disable lazy compilation and will help with using breakpoints
 
 ### Connecting DevTools
 
-Open `chrome://inspect` in Chrome browser and connect to Remote Target by clicking `inspect` link:
+Open `chrome://inspect` in Chrome browser and connect to a "Remote Target" by clicking the `inspect` link:
 
 ![Chrome inspect page](./images/chrome-devtools-inspect.png)
 
-You should see this Chrome DevTools started and that code execution is paused in `gatsby.js` entry file:
+You should see Chrome DevTools start and that code execution is paused at the start of the `gatsby.js` entry file:
 
 ![Paused Chrome DevTools](./images/chrome-devtools-init.png)
 
 ### Setting up `Sources`
 
-Right now You can't see files in Sources yet. You need to add those using `Add folder to workspace` button and pick directory with code You want to debug. If you want to debug code in Your `gatsby-node.js` or your local plugins, pick Your project directory. If you want debug `gatsby` package You will have to pick `gatsby` directory inside `node_modules`.
+Right now you can't see your files in Sources. You need to add those using the "Add folder to workspace" button and pick the directory with the code you want to debug. If you want to debug code in your `gatsby-node.js` or your local plugins, pick your project directory. If you want debug the `gatsby` package you will have to pick the `gatsby` directory inside `node_modules`.
 
-Example we are using has problematic code in local `gatsby-node.js` file, so let's add directory containing it to sources. You should have directory with your code in left pane:
+This example has problematic code in your local `gatsby-node.js` file, so let's add the directory containing it to Sources. You should have a directory with your code in the left pane:
 
 ![Files added to Sources tab](./images/chrome-devtools-files.png)
 
 ### Using DevTools
 
-Let's go ahead and add breakpoint just before place that error is thrown. To add breakpoint navigate to `gatsby-node.js` and left click on line number:
+Let's go ahead and add a breakpoint just before the place that the error is thrown. To add a breakpoint navigate to `gatsby-node.js` and left click on a line number:
 
 ![Added breakpoint](./images/chrome-devtools-new-breakpoint.png)
 
-Now you can resume code execution by clicking resume icon in DevTools debug toolbar or by pressing F8. Gatsby will start running and pause once it reaches breakpoint allowing you to inspect variables:
+Now you can resume code execution by clicking the "resume" icon in the DevTools debug toolbar (or press F8 on your keyboard). Gatsby will start running and pause once it reaches breakpoint allowing you to inspect variables:
 
 ![Breakpoint hit](./images/chrome-devtools-breakpoint-hit.png)
 
-To inspect variables you can hover mouse over them or go to `Scope` section in right pane (either collapse `Call Stack` section or scroll through it to the bottom).
+To inspect variables you can hover your mouse over them or go to the `Scope` section in the right-hand pane (either collapse the "Call Stack" section or scroll through it to the bottom).
 
-In our example `Node` is `undefined` and to figure out why let's go backward. `Node` is extracted from `args` so let's examine that by hovering `args`:
+In our example `Node` is `undefined` and to figure out why, let's go backwards. `Node` is extracted from `args` so let's examine that by hovering `args`:
 
 ![Examine variable](./images/chrome-devtools-examine-var.png)
 
-We can now see the problem - `args` doesn't contain `Node` - it contains `node`. So this small typographic mistake was causing our code to fail. Adjusting our code to use lowercase `node` fixes the problem and we did that without adding tons of `console.log` output!
+We can now see the problem - `args` doesn't contain `Node` - it contains `node`. So this small typographic mistake was causing our code to fail. Adjusting our code to use a lowercase `node` fixes the problem and we did that without adding tons of `console.log` output!
 
 ### Finishing thoughts
 
-We can succussfully debug our code using Chrome DevTools but using it isn't really that convenient. There's just a lot of steps we need to do manually everytime we want to use debugger so in next section You will learn how to use built-in debugger capabilities of VSCode. 
+We can succussfully debug our code using Chrome DevTools but using it isn't really that convenient. There are a lot of steps we need to do manually everytime we want to use debugger, so in the next section you'll learn how to use the built-in debugging capabilities of VS Code.
 
-## VSCode debugger
+## VS Code debugger
 
-Using builtin debuggers in code editors is very convenient. You will be able to skip a lot of setup needed to use Chrome DevTools. You also will be able to put breakpoints in same view you write your code.
+Using built in debuggers in code editors is very convenient. You will be able to skip a lot of setup needed to use Chrome DevTools. You also will be able to put breakpoints in same view you write your code.
 
-We won't go in depth here about how to debug in VSCode - for that You can check [excellent documentation](https://code.visualstudio.com/docs/editor/debugging) on VSCode page. We will however share launch configuration needed to run and debug Gatsby:
+We won't go in depth here about how to debug in VS Code - for that you can check the [excellent VS Code documentation](https://code.visualstudio.com/docs/editor/debugging). We will however share a launch configuration needed to run and debug Gatsby:
 
 `launch.json`:
 ```json
@@ -125,6 +127,6 @@ We won't go in depth here about how to debug in VSCode - for that You can check 
 }
 ```
 
-After putting breakpoint in `gatsby-node.js` and using `Start debugging` command from vscode we see final result:
+After putting a breakpoint in `gatsby-node.js` and using the `Start debugging` command from VS Code you can see the final result:
 
 ![VSCode breakpoint hit](./images/vscode-debug.png)
