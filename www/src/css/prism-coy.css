@@ -23,9 +23,9 @@
 /* .token.function-name, */
 /* .token.constant, */
 /* .token.symbol, */
-/* .token.deleted { */
-  /* color: #a285d8; */
-/* } */
+.token.deleted {
+  color: #b3568b;
+}
 
 /* .token.selector, */
 /* .token.attr-name, */
@@ -33,9 +33,9 @@
 /* .token.char, */
 /* .token.function, */
 /* .token.builtin, */
-/* .token.inserted { */
-  /* color: #a2466c; */
-/* } */
+.token.inserted {
+  color: #4084a1;
+}
 
 /* .token.operator, .token.entity, .token.url, .token.variable { */
   /* color: #c18b99; */
