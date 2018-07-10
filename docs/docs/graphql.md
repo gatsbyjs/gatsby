@@ -1,5 +1,5 @@
 ---
-title: Graphql
+title: Querying data with GraphQL
 ---
 
 This is a stub. Help our community expand it.

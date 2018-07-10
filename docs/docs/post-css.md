@@ -1,5 +1,5 @@
 ---
-title: Post CSS
+title: PostCSS
 ---
 
 This is a stub. Help our community expand it.
