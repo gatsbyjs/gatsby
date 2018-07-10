@@ -47,7 +47,7 @@ I set out to determine a solution for this problem.
 # The great pull request
 ![Pull request for gatsby plugin page creator](page-creator-pull-request.png)
 
-With the help of Kyle Matthews, he directed me to the location of the
+With the help of Kyle Mathews, he directed me to the location of the
 internal plugin responsible for the hardcoded behavior. To support the desired
 functionality, we would have to extract the internal plugin so
 any project could download the plugin from npm.
