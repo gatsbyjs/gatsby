@@ -585,7 +585,9 @@ actions.createNode = (node: any, plugin?: Plugin, traceId?: string) => {
     if (oldNode) {
       const descendantNodes = findChildrenRecursively(oldNode.children)
       if (descendantNodes.length > 0) {
-        deleteAction = actions.deleteNodes(descendantNodes)
+        deleteAction = descendantNodes.forEach(n =>
+          actions.deleteNode({ node: n })
+        )
       }
     }
 

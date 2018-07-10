@@ -86,6 +86,7 @@ const saveState = _.debounce(state => {
     pickedState.staticQueryComponents
   )
   pickedState.components = mapToObject(pickedState.components)
+  pickedState.nodes = mapToObject(pickedState.nodes)
   fs.writeFile(
     `${process.cwd()}/.cache/redux-state.json`,
     stringify(pickedState, null, 2),
@@ -131,7 +132,7 @@ exports.getNode = getNode
  * @returns {boolean}
  */
 exports.hasNodeChanged = (id, digest) => {
-  const node = store.getState().nodes[id]
+  const node = store.getState().nodes.get(id)
   if (!node) {
     return true
   } else {
