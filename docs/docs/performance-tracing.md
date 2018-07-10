@@ -4,6 +4,8 @@ title: "Performance tracing"
 
 Gatsby allows a build to be traced, enabling you to find which plugins or parts of the build are taking the longest. The trace information can be viewed in any [open tracing](http://opentracing.io/) compatible tool such as [https://www.jaegertracing.io/](https://www.jaegertracing.io/). You can also use Zipkin compatible tools such as [Zipkin](https://zipkin.io/) or [Honeycomb](https://www.honeycomb.io/).
 
+![Example Zipkin Trace](./images/zipkin-trace.png)
+
 ## Running Gatsby with tracing turned on
 
 Gatsby code is instrumented with Open Tracing, which is a general tracing API that is implementation agnostic. Therefore, you'll need to include and configure an open tracing compatible library in your application, as well as a backend to collect the trace data. 
