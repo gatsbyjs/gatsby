@@ -7,7 +7,7 @@ const buildNodeConnections = require(`./build-node-connections`)
 const { store } = require(`../redux`)
 const invariant = require(`invariant`)
 
-module.exports = async ( { parentSpan }) => {
+module.exports = async ({ parentSpan }) => {
   const typesGQL = await buildNodeTypes({ parentSpan })
   const connections = buildNodeConnections(_.values(typesGQL))
 

@@ -245,7 +245,6 @@ async function startServer(program) {
 }
 
 module.exports = async (program: any) => {
-
   initTracer(program.openTracingConfigFile)
 
   const detect = require(`detect-port`)

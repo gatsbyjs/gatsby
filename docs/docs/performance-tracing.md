@@ -8,7 +8,7 @@ Gatsby allows a build to be traced, enabling you to find which plugins or parts 
 
 ## Running Gatsby with tracing turned on
 
-Gatsby code is instrumented with Open Tracing, which is a general tracing API that is implementation agnostic. Therefore, you'll need to include and configure an open tracing compatible library in your application, as well as a backend to collect the trace data. 
+Gatsby code is instrumented with Open Tracing, which is a general tracing API that is implementation agnostic. Therefore, you'll need to include and configure an open tracing compatible library in your application, as well as a backend to collect the trace data.
 
 The steps required to add tracing are below. Including an [example](/docs/performance-tracing/#local-zipkin-with-docker) of how to get tracing working with zipkin locally using docker
 
@@ -37,18 +37,18 @@ There are many open tracing compatible backends available. Below is an example o
 
 [Zipkin](https://zipkin.io/) is an open source Tracing system that can be run locally using docker.
 
-1. Add following dependencies to your site's `package.json`
+1.  Add following dependencies to your site's `package.json`
 
     - [zipkin](https://www.npmjs.com/package/zipkin)
     - [zipkin-javascript-opentracing](https://www.npmjs.com/package/zipkin-javascript-opentracing)
     - [zipkin-transport-http](https://www.npmjs.com/package/zipkin-transport-http)
 
-2. Run Zipkin all-in-one docker instance with `docker run -d -p 9411:9411 openzipkin/zipkin`. See [Zipkin Getting Started](https://zipkin.io/pages/quickstart.html) for more information.
+2.  Run Zipkin all-in-one docker instance with `docker run -d -p 9411:9411 openzipkin/zipkin`. See [Zipkin Getting Started](https://zipkin.io/pages/quickstart.html) for more information.
 
-3. Start Gatsby `build` or `develop` with `--open-tracing-config-file` pointing at the Zipkin configuration file. An example file is provided in the gatsby project under `node_modules/gatsby/dist/utils/tracer/zipkin-local.js` that will send tracing spans to your local docker instance. E.g
+3.  Start Gatsby `build` or `develop` with `--open-tracing-config-file` pointing at the Zipkin configuration file. An example file is provided in the gatsby project under `node_modules/gatsby/dist/utils/tracer/zipkin-local.js` that will send tracing spans to your local docker instance. E.g
 
     ```
     gatsby build --open-tracing-config-file node_modules/gatsby/dist/utils/tracer/zipkin-local.js
     ```
 
-4. Once the build is complete, view your tracing information at [http://localhost:9411](http://localhost:9411)
+4.  Once the build is complete, view your tracing information at [http://localhost:9411](http://localhost:9411)

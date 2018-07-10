@@ -101,7 +101,11 @@ const hasWarnedForPageComponent = new Set()
  *   },
  * })
  */
-actions.createPage = (page: PageInput, plugin?: Plugin, actionOptions?: ActionOptions) => {
+actions.createPage = (
+  page: PageInput,
+  plugin?: Plugin,
+  actionOptions?: ActionOptions
+) => {
   let noPageOrComponent = false
   let name = `The plugin "${plugin.name}"`
   if (plugin.name === `default-site-plugin`) {
@@ -456,7 +460,11 @@ const typeOwners = {}
  *   }
  * })
  */
-actions.createNode = (node: any, plugin?: Plugin, actionOptions?: ActionOptions = {}) => {
+actions.createNode = (
+  node: any,
+  plugin?: Plugin,
+  actionOptions?: ActionOptions = {}
+) => {
   if (!_.isObject(node)) {
     return console.log(
       chalk.bold.red(

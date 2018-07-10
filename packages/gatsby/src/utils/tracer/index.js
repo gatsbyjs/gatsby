@@ -5,7 +5,7 @@ const opentracing = require(`opentracing`)
 let tracerProvider
 
 /**
- * tracerFile should be a js file that exports two functions. 
+ * tracerFile should be a js file that exports two functions.
  *
  * `create` - Create and return an open-tracing compatible tracer. See
  * https://github.com/opentracing/opentracing-javascript/blob/master/src/tracer.ts

@@ -27,7 +27,6 @@ import type { ProcessedNodeType } from "./infer-graphql-type"
 type TypeMap = { [typeName: string]: ProcessedNodeType }
 
 module.exports = async ({ parentSpan }) => {
-
   const spanArgs = parentSpan ? { childOf: parentSpan } : {}
   const span = tracer.startSpan(`build schema`, spanArgs)
 

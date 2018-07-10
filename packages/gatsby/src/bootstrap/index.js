@@ -17,7 +17,6 @@ const report = require(`gatsby-cli/lib/reporter`)
 const getConfigFile = require(`./get-config-file`)
 const tracer = require(`opentracing`).globalTracer()
 
-
 // Show stack trace on unhandled promises.
 process.on(`unhandledRejection`, (reason, p) => {
   report.panic(reason)
@@ -91,13 +90,14 @@ module.exports = async (args: BootstrapArgs) => {
     parentSpan: bootstrapSpan,
   })
   activity.start()
-  await apiRunnerNode(`onPreBootstrap`, { parentSpan: activity.span },)
+  await apiRunnerNode(`onPreBootstrap`, { parentSpan: activity.span })
   activity.end()
 
   // Delete html and css files from the public directory as we don't want
   // deleted pages and styles from previous builds to stick around.
   activity = report.activityTimer(
-    `delete html and css files from previous builds`, {
+    `delete html and css files from previous builds`,
+    {
       parentSpan: bootstrapSpan,
     }
   )
@@ -407,11 +407,13 @@ module.exports = async (args: BootstrapArgs) => {
         parentSpan: bootstrapSpan,
       })
       activity.start()
-      apiRunnerNode(`onPostBootstrap`, { parentSpan: activity.span }).then(() => {
-        activity.end()
-        bootstrapSpan.finish()
-        resolve({ graphqlRunner })
-      })
+      apiRunnerNode(`onPostBootstrap`, { parentSpan: activity.span }).then(
+        () => {
+          activity.end()
+          bootstrapSpan.finish()
+          resolve({ graphqlRunner })
+        }
+      )
     }
   }, 100)
 

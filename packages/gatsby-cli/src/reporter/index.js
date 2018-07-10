@@ -13,7 +13,7 @@ const reporter = createReporter({ emoji: true, verbose: VERBOSE })
 const base = Object.getPrototypeOf(reporter)
 
 type ActivityArgs = {
-  parentSpan: Object
+  parentSpan: Object,
 }
 
 /* Reporter module.

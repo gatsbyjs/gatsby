@@ -11,7 +11,6 @@ let recorder
  * https://github.com/opentracing/opentracing-javascript/blob/master/src/tracer.ts
  */
 function create() {
-
   logger = new HttpLogger({
     // endpoint of local docker zipkin instance
     endpoint: `http://localhost:9411/api/v1/spans`,
@@ -47,7 +46,6 @@ function create() {
  * the queue
  */
 async function stop() {
-
   // First, write all partial spans to the http logger
   recorder.partialSpans.forEach((span, id) => {
     if (recorder._timedOut(span)) {
@@ -72,19 +70,22 @@ async function _processQueue() {
       body: postBody,
       headers: self.headers,
       timeout: self.timeout,
-    }).then((response) => {
-      if (response.status !== 202) {
-        const err = `Unexpected response while sending Zipkin data, status:` +
-              `${response.status}, body: ${postBody}`
-
-        if (self.errorListenerSet) self.emit(`error`, new Error(err))
-        else console.error(err)
-      }
-    }).catch((error) => {
-      const err = `Error sending Zipkin data ${error}`
-      if (self.errorListenerSet) this.emit(`error`, new Error(err))
-      else console.error(err)
     })
+      .then(response => {
+        if (response.status !== 202) {
+          const err =
+            `Unexpected response while sending Zipkin data, status:` +
+            `${response.status}, body: ${postBody}`
+
+          if (self.errorListenerSet) self.emit(`error`, new Error(err))
+          else console.error(err)
+        }
+      })
+      .catch(error => {
+        const err = `Error sending Zipkin data ${error}`
+        if (self.errorListenerSet) this.emit(`error`, new Error(err))
+        else console.error(err)
+      })
   }
   return true
 }

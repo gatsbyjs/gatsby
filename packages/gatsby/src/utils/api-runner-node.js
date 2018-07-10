@@ -43,11 +43,8 @@ const doubleBind = (boundActionCreators, api, plugin, actionOptions) => {
 }
 
 const runAPI = (plugin, api, args) => {
-
-
   const gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
   if (gatsbyNode[api]) {
-
     const parentSpan = args && args.parentSpan
     const spanOptions = parentSpan ? { childOf: parentSpan } : {}
     const pluginSpan = tracer.startSpan(`run-plugin`, spanOptions)
@@ -79,7 +76,7 @@ const runAPI = (plugin, api, args) => {
     }
 
     const namespacedCreateNodeId = id => createNodeId(id, plugin.name)
-    
+
     const apiCallArgs = [
       {
         ...args,
@@ -128,7 +125,6 @@ let waitingForCasacadeToFinish = []
 
 module.exports = async (api, args = {}, pluginSource) =>
   new Promise(resolve => {
-
     const { parentSpan } = args
     const apiSpanArgs = parentSpan ? { childOf: parentSpan } : {}
     const apiSpan = tracer.startSpan(`run-api`, apiSpanArgs)
@@ -137,7 +133,7 @@ module.exports = async (api, args = {}, pluginSource) =>
     _.forEach(args.traceTags, (value, key) => {
       apiSpan.setTag(key, value)
     })
-    
+
     // Check that the API is documented.
     if (!apiList[api]) {
       reporter.error(`api: "${api}" is not a valid Gatsby api`)
@@ -189,8 +185,9 @@ module.exports = async (api, args = {}, pluginSource) =>
         } else {
           pluginName = `Plugin ${plugin.name}`
         }
-        Promise.resolve(runAPI(plugin, api, { ...args, parentSpan: apiSpan }))
-          .asCallback(callback)
+        Promise.resolve(
+          runAPI(plugin, api, { ...args, parentSpan: apiSpan })
+        ).asCallback(callback)
       },
       (err, results) => {
         if (err) {
