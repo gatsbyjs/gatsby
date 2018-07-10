@@ -8,7 +8,7 @@ tags: ["themes", "starters", "gatsby-manor"]
 
 ![Gatsby plugin page creator in the plugin library](plugin-library-page-creator.png)
 
-In this article we will talk about a new plugin that let’s you auto create
+In this article we will talk about a new plugin that lets you auto create
 pages from components in any folder within your Gatsby project! We will chat about the
 problem that sparked the creation of this plugin. Afterwards, we'll talk about how you can
 use this plugin to auto create pages without having to place your components in the **src/pages** directory.
@@ -18,7 +18,7 @@ Here's how it all got started. The goal with [Gatsby Manor](https://gatsbymanor.
 is to create professional designed Gatsby starters
 to give your site a clean, modern look the moment you create a new project. 
 While creating our newest starter
-[gatsby-starter-eventually](https://gatsbymanor/demo/eventually),
+[gatsby-starter-eventually](https://gatsbymanor.com/demo/eventually),
 I wanted to organize the directory structure of the project to better fit my
 workflow.
 
@@ -35,12 +35,12 @@ lose the ability to automatically create pages.
 After searching the repo issues for a solution, I found other people
 having the same problem and asking for a solution. A user in
 [#2424](https://github.com/gatsbyjs/gatsby/issues/2424) wanted to move their
-components into a render folder. Another wanted to keep their gatsby code
-near non-gatsby related code but under a different directory name.
+components into a render folder. Another wanted to keep their Gatsby code
+near non-Gatsby related code but under a different directory name.
 
 One [issue](https://github.com/gatsbyjs/gatsby/issues/2514) raised how
 uncommon this pattern might be when handing a project over to other
-client that are less technical. Each issue focused on a valid concern, with
+clients that are less technical. Each issue focused on a valid concern, with
 many community members in support of a better convention. With this data,
 I set out to determine a solution for this problem.
 
@@ -56,15 +56,15 @@ The next step would be to add a path option that takes a directory path string
 to denote the directory of components we want to use for
 automatic page creation. With a development plan in place, I started
 coding a solution. After a few days of coding, I opened a pull request to
-add a gatsby-plugin-page-creator to the gatsby plugin
-library. After a few weeks of code reviews the
+add a `gatsby-plugin-page-creator` to the Gatsby Plugin
+Library. After a few weeks of code reviews the
 [pull request](https://github.com/gatsbyjs/gatsby/pull/4490) was merged!
 
 # How you can use this plugin
-You can find the
-[gatsby-plugin-page-creator](https://www.gatsbyjs.org/packages/gatsby-plugin-page-creator/?=page-creator)
+You can find
+[`gatsby-plugin-page-creator`](https://www.gatsbyjs.org/packages/gatsby-plugin-page-creator/?=page-creator)
 in the plugin library. Use `yarn add gatsby-plugin-page-creator` to add this
-into your project. In `gatsby-config.js`, use a json object to use the
+into your project. In `gatsby-config.js`, use a JSON object to use the
 plugin, making sure to add the required path option with your desired directory
 path.
 
