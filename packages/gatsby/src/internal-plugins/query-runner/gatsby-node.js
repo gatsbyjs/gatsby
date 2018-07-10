@@ -8,9 +8,6 @@ exports.onCreatePage = ({ page, store }) => {
     const component = store.getState().components.get(page.componentPath)
 
     if (!component) {
-      console.log({ components: store.getState().components })
-      console.log({ page })
-      console.log({ component })
       process.exit()
     }
 

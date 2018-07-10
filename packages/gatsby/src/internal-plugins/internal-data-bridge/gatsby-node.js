@@ -137,3 +137,37 @@ exports.sourceNodes = ({ actions, store }) => {
     }
   })
 }
+
+const createPageId = path => `SitePage ${path}`
+
+exports.onCreatePage = ({ page, actions }) => {
+  const { createNode } = actions
+  // eslint-disable-next-line
+  const { updatedAt, ...pageWithoutUpdated } = page
+
+  // Add page.
+  createNode({
+    ...pageWithoutUpdated,
+    id: createPageId(page.path),
+    parent: `SOURCE`,
+    children: [],
+    internal: {
+      type: `SitePage`,
+      contentDigest: crypto
+        .createHash(`md5`)
+        .update(JSON.stringify(page))
+        .digest(`hex`),
+      description:
+        page.pluginCreatorId === `Plugin default-site-plugin`
+          ? `Your site's "gatsby-node.js"`
+          : page.pluginCreatorId,
+    },
+  })
+}
+
+// Listen for DELETE_PAGE and delete page nodes.
+emitter.on(`DELETE_PAGE`, action => {
+  const nodeId = createPageId(action.payload.path)
+  const node = getNode(nodeId)
+  boundActionCreators.deleteNode({ node })
+})
