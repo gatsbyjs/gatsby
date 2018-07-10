@@ -29,7 +29,7 @@ Phase 2:
 - [x] Find a place for starter showcase in top nav
 - [ ] Add issue submission form at bottom of each doc
 - [ ] Popup/slideout form that asks people: What are you looking for on gatsbyjs.org today? with a rating/form to ask if they found what they're looking for.
-- [ ] mobile menu that you can access w/o scrolling to bottom of screen (see Flo’s notes below on Reactjs.com’s mobile version vs. Stripe’s docs which ignore small screens)
+- [x] mobile menu that you can access w/o scrolling to bottom of screen (see Flo’s notes below on Reactjs.com’s mobile version vs. Stripe’s docs which ignore small screens)
     - Currently https://www.gatsbyjs.org/docs/ is the only way on Mobile to access the Desktop sidebar content
     - https://reactjs.org/ is an excellent example of a Mobile navigation for our sidebar content, but the button position conflicts with our current mobile navigation
     - Noteworthy: the equally excellent https://stripe.com/docs/quickstart and https://stripe.com/docs/api completely ignore smaller screens
