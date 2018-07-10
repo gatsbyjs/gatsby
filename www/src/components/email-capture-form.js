@@ -85,6 +85,65 @@ class EmailCaptureForm extends React.Component {
   }
 
   render() {
+    const { formOnly } = this.props
+
+    const form = (
+      <form id="email-capture" method="post" noValidate css={{ margin: 0 }}>
+        <div>
+          <input
+            type="email"
+            name="email"
+            placeholder="you@email.com"
+            onChange={this._handleEmailChange}
+            css={{
+              ...formInputDefaultStyles,
+              width: `250px`,
+              ":focus": {
+                borderColor: colors.gatsby,
+                outline: 0,
+                boxShadow: `0 0 0 0.2rem ${hex2rgba(colors.lilac, 0.25)}`,
+              },
+            }}
+          />
+          <button
+            type="submit"
+            onClick={this._handleFormSubmit}
+            css={{
+              ...formInputDefaultStyles,
+              borderColor: colors.gatsby,
+              color: colors.gatsby,
+              cursor: `pointer`,
+              fontWeight: `bold`,
+              marginLeft: rhythm(1 / 2),
+              ":hover, &:focus": {
+                backgroundSize: `30px 30px`,
+                backgroundColor: colors.gatsby,
+                backgroundImage: `linear-gradient(45deg, rgba(0,0,0, 0.1) 25%, transparent 25%, transparent 50%, rgba(0,0,0, 0.1) 50%, rgba(0,0,0, 0.1) 75%, transparent 75%, transparent)`,
+                color: `#fff`,
+                animation: `${stripeAnimation} 2.8s linear infinite`,
+              },
+              ":focus": {
+                outline: 0,
+                boxShadow: `0 0 0 0.2rem ${hex2rgba(colors.lilac, 0.25)}`,
+              },
+            }}
+          >
+            Subscribe
+          </button>
+          {this.state.status === `error` && (
+            <div
+              dangerouslySetInnerHTML={{ __html: this.state.msg }}
+              css={{ marginTop: `${rhythm(1 / 2)}` }}
+            />
+          )}
+        </div>
+      </form>
+    )
+
+    if (formOnly) {
+      return form
+    }
+
     return (
       <div
         css={{
@@ -98,61 +157,7 @@ class EmailCaptureForm extends React.Component {
         ) : (
           <div>
             <p>Enjoyed this post? Receive the next one in your inbox!</p>
-            <form
-              id="email-capture"
-              method="post"
-              noValidate
-              css={{ margin: 0 }}
-            >
-              <div>
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="you@email.com"
-                  onChange={this._handleEmailChange}
-                  css={{
-                    ...formInputDefaultStyles,
-                    width: `250px`,
-                    ":focus": {
-                      borderColor: colors.gatsby,
-                      outline: 0,
-                      boxShadow: `0 0 0 0.2rem ${hex2rgba(colors.lilac, 0.25)}`,
-                    },
-                  }}
-                />
-                <button
-                  type="submit"
-                  onClick={this._handleFormSubmit}
-                  css={{
-                    ...formInputDefaultStyles,
-                    borderColor: colors.gatsby,
-                    color: colors.gatsby,
-                    cursor: `pointer`,
-                    fontWeight: `bold`,
-                    marginLeft: rhythm(1 / 2),
-                    ":hover, &:focus": {
-                      backgroundSize: `30px 30px`,
-                      backgroundColor: colors.gatsby,
-                      backgroundImage: `linear-gradient(45deg, rgba(0,0,0, 0.1) 25%, transparent 25%, transparent 50%, rgba(0,0,0, 0.1) 50%, rgba(0,0,0, 0.1) 75%, transparent 75%, transparent)`,
-                      color: `#fff`,
-                      animation: `${stripeAnimation} 2.8s linear infinite`,
-                    },
-                    ":focus": {
-                      outline: 0,
-                      boxShadow: `0 0 0 0.2rem ${hex2rgba(colors.lilac, 0.25)}`,
-                    },
-                  }}
-                >
-                  Subscribe
-                </button>
-                {this.state.status === `error` && (
-                  <div
-                    dangerouslySetInnerHTML={{ __html: this.state.msg }}
-                    css={{ marginTop: `${rhythm(1 / 2)}` }}
-                  />
-                )}
-              </div>
-            </form>
+            {form}
           </div>
         )}
       </div>
