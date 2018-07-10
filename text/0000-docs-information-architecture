@@ -47,6 +47,10 @@ Phase 3:
 - [ ] automatically pull in doc prereqs at top of each page (see https://www.cockroachlabs.com/docs/stable/transactions.html as a great example of how to design this. Not sure how to code it)
 - [ ] doc accessibility/design options (changing font type and size or screen and font colors, what about language?), toggle sidebar to disappear, reappear
 - [ ] searchable API reference
+- [ ] track one ideal "paths" through the docs to see if idea is worth expanding
+- [ ] a breadcrumb trail (like Amazon does) 
+- [ ] suggesting "next steps" at the bottom of docs
+- [ ] vet feasibility/desirability of new project that focuses on enhancing our search results (perhaps pulling in Google search, showing previews, etc)
 
 Here is a possible restructure of the current docs information architecture (with the inclusion of many docs we still need to write):
 
