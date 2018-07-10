@@ -41,7 +41,7 @@ module.exports = async function build(program: BuildArgs) {
 
   activity = report.activityTimer(`Building static HTML for pages`)
   activity.start()
-  await buildHTML(program).catch(err => {
+  await buildHTML(program, activity).catch(err => {
     reportFailure(
       report.stripIndent`
         Building static HTML for pages failed

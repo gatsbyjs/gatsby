@@ -8,7 +8,7 @@ const { store } = require(`../redux`)
 const { createErrorFromString } = require(`gatsby-cli/lib/reporter/errors`)
 const renderHTML = require(`../utils/html-renderer`)
 
-module.exports = async (program: any) => {
+module.exports = async (program: any, activity: any) => {
   const { directory } = program
 
   debug(`generating static HTML`)
@@ -41,7 +41,7 @@ module.exports = async (program: any) => {
         )
       }
 
-      return renderHTML(require(outputFile), pages)
+      return renderHTML(require(outputFile), pages, activity)
         .then(() => {
           // Remove the temp JS bundle file built for the static-site-generator-plugin
           try {
