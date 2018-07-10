@@ -41,7 +41,7 @@
       ui: steps
       items:
         - title: Our first layout component
-          link: /tutorial/part-three/#our-first-layout-component
+          link: /tutorial/part-three/
     - title: 4. Querying for data in a blog
       link: /tutorial/part-four/
       ui: steps
@@ -50,7 +50,7 @@
           link: /tutorial/part-four/#recap-of-first-half-of-the-tutorial
         - title: Data in Gatsby
           link: /tutorial/part-four/#data-in-gatsby
-        - title: How Gatsby's data layer uses GraphQL to pull data into components
+        - title: How Gatsby uses GraphQL
           link: /tutorial/part-four/#how-gatsbys-data-layer-uses-graphql-to-pull-data-into-components
         - title: Our first GraphQL query
           link: /tutorial/part-four/#our-first-graphql-query
@@ -68,7 +68,7 @@
       link: /tutorial/part-six/
       ui: steps
       items:
-        - title: Transformer plugins
+        - title: What are transformer plugins?
           link: /tutorial/part-six/#transformer-plugins
         - title: Create a list of our site's markdown files
           link: /tutorial/part-six/#create-a-list-of-our-sites-markdown-files-in-srcpagesindexjs
@@ -84,16 +84,14 @@
       link: /tutorial/part-eight/
       ui: steps
       items:
-        - title: Creating slugs for pages
-          link: /tutorial/part-eight/#creating-slugs-for-pages	
-        - title: Creating pages	
-          link: /tutorial/part-eight/#creating-pages
+        - title: Lighthouse audit
+          link: /tutorial/part-eight/#lighthouse	
 - title: Advanced Tutorials
   items:
-    - title: Making a site with user authentication
-      link: /tutorial/dropping-images-into-static-folders/
+    - title: Making a site with user authentication*
+      link: /tutorial/authentication-tutorial/
     - title: Making an e-commerce Gatsby site
-      link: /tutorial//ecommerce-tutorial/
+      link: /tutorial/ecommerce-tutorial/
     - title: Creating a source plugin
       link: /tutorial/source-plugin-tutorial/
     - title: Using the WordPress source plugin
