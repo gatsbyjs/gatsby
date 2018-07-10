@@ -8,7 +8,8 @@ import SearchBar from "../components/searchbar-body"
 import tutorialSidebar from "../pages/docs/tutorial-links.yml"
 import docsSidebar from "../pages/docs/doc-links.yaml"
 import featuresSidebar from "../pages/docs/features-links.yaml"
-import { rhythm } from "../utils/typography"
+import { OutboundLink } from "gatsby-plugin-google-analytics"
+import { rhythm, options, scale } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
 import hex2rgba from "hex2rgba"
 import "../css/prism-coy.css"
@@ -60,9 +61,11 @@ class DefaultLayout extends React.Component {
       width: rhythm(10),
       display: `none`,
       position: `fixed`,
-      top: `calc(${presets.headerHeight} - 1px)`,
+      top: `calc(${presets.headerHeight} + ${presets.bannerHeight} - 1px)`,
       overflowY: `auto`,
-      height: `calc(100vh - ${presets.headerHeight} + 1px)`,
+      height: `calc(100vh - ${presets.headerHeight} - ${
+        presets.bannerHeight
+      } + 1px)`,
       WebkitOverflowScrolling: `touch`,
       "::-webkit-scrollbar": {
         width: `6px`,
@@ -132,14 +135,52 @@ class DefaultLayout extends React.Component {
           />
           <html lang="en" />
         </Helmet>
+        <div
+          css={{
+            width: `100%`,
+            padding: rhythm(1 / 2),
+            background: isHomepage ? `#402060` : colors.gatsby,
+            color: colors.ui.bright,
+            fontFamily: options.headerFontFamily.join(`,`),
+            fontSize: scale(-1 / 5).fontSize,
+            zIndex: `3`,
+            [presets.Desktop]: {
+              position: `fixed`,
+            },
+            [presets.Tablet]: {
+              position: `fixed`,
+            },
+            WebkitFontSmoothing: `antialiased`,
+          }}
+        >
+          These are the docs for V1.{` `}
+          <OutboundLink
+            href="https://nextgatsbyjs.org/"
+            css={{
+              color: `#fff`,
+            }}
+          >
+            View the v2 docs
+            <span
+              css={{
+                display: `none`,
+                [presets.Mobile]: {
+                  display: `inline`,
+                },
+              }}
+            >
+              {` `}
+              instead
+            </span>
+          </OutboundLink>.
+        </div>
         <Navigation pathname={this.props.location.pathname} />
         <div
           className={hasSidebar ? `main-body has-sidebar` : `main-body`}
           css={{
-            paddingTop: 0,
             [presets.Tablet]: {
               margin: `0 auto`,
-              paddingTop: isHomepage ? 0 : presets.headerHeight,
+              paddingTop: isHomepage ? presets.bannerHeight : `calc(${presets.bannerHeight} + ${presets.headerHeight})`,
             },
           }}
         >

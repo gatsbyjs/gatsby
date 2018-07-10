@@ -12,7 +12,9 @@ class Plugins extends Component {
         css={{
           alignItems: `center`,
           display: `flex`,
-          minHeight: `calc(100vh - ${presets.headerHeight})`,
+          minHeight: `calc(100vh - (${presets.headerHeight} + ${
+            presets.bannerHeight
+          } - 1px))`,
         }}
       >
         <div
