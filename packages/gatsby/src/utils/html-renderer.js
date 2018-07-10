@@ -40,14 +40,13 @@ module.exports = (htmlComponentRenderer, pages, activity) =>
 
     queue.on(`task_finish`, () => {
       const stats = queue.getStats()
-      // console.log({
-      // stats,
-      // })
-      activity.setStatus(
-        `${stats.total}/${pages.length} ${(
-          stats.total / convertHrtime(process.hrtime(start)).seconds
-        ).toFixed(2)} pages / second`
-      )
+      if (activity) {
+        activity.setStatus(
+          `${stats.total}/${pages.length} ${(
+            stats.total / convertHrtime(process.hrtime(start)).seconds
+          ).toFixed(2)} pages/second`
+        )
+      }
     })
 
     queue.on(`drain`, () => {
