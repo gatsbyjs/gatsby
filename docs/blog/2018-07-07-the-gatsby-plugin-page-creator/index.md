@@ -14,9 +14,9 @@ problem that sparked the creation of this plugin. Afterwards, we'll talk about h
 use this plugin to auto create pages without having to place your components in the **src/pages** directory.
 
 # The problem with static values
-Here's how it all got started. The goal with [Gatsby Manor](https://gatsbymanor.com)
+Here's how it all got started. The goal with [Gatsby Manor](https://gatsbymanor.com) (a separate project, unaffiliated with the Gatsby core team)
 is to create professional designed Gatsby starters
-to give your site a clean, modern look the moment you create a new project.
+to give your site a clean, modern look the moment you create a new project. 
 While creating our newest starter
 [gatsby-starter-eventually](https://gatsbymanor/demo/eventually),
 I wanted to organize the directory structure of the project to better fit my
