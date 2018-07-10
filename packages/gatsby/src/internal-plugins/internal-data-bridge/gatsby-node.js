@@ -41,6 +41,7 @@ function transformPackageJson(json) {
 }
 
 const createPageId = path => `SitePage ${path}`
+
 exports.sourceNodes = ({ actions, store }) => {
   const { createNode } = actions
   const state = store.getState()
@@ -137,8 +138,6 @@ exports.sourceNodes = ({ actions, store }) => {
     }
   })
 }
-
-const createPageId = path => `SitePage ${path}`
 
 exports.onCreatePage = ({ page, actions }) => {
   const { createNode } = actions
