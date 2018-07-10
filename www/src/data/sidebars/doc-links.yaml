@@ -94,7 +94,7 @@
         - title: Prose*
           link: /docs/prose/
     - title: Plugins*
-      link: /docs/plugins
+      link: /docs/plugins/
       items:
         - title: Plugin authoring
           link: /docs/plugin-authoring/
