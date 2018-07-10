@@ -1,5 +1,5 @@
 ---
-title: How to run a gatsby workshop
+title: How to run a Gatsby workshop
 ---
 
 This is a stub. Help our community expand it.
