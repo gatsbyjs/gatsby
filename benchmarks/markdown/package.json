@@ -1,0 +1,20 @@
+{
+  "name": "gatsby-starter-hello-world",
+  "description": "Gatsby hello world starter",
+  "license": "MIT",
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve"
+  },
+  "dependencies": {
+    "fs-exists-cached": "^1.0.0",
+    "gatsby": "next",
+    "gatsby-transformer-remark": "^2.1.1-beta.2",
+    "hash-mod": "^0.0.5",
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2",
+    "simple-statistics": "^6.1.0",
+    "treeify": "^1.1.0"
+  }
+}
