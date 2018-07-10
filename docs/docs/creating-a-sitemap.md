@@ -1,5 +1,5 @@
 ---
-title: Creating a Sitemap
+title: Creating a sitemap
 ---
 
 This is a stub. Help our community expand it.
