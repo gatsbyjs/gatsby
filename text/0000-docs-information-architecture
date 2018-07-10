@@ -34,10 +34,11 @@ Phase 2:
 - [ ] write instructions for contributors to fill out stub articles
 - [ ] choose gold standard examples of docs for contributors to imitate (different gold standard for each type of doc)
 - [ ] publish templates for each category of docs to facilitate contributions and contract work
+- [ ] rename titles of docs to make them more concise and add redirects
+- [ ] Every month (or some amount of time), do a docs sprint for a new section of the docs
 - [ ] Add issue submission form at bottom of each doc
 - [ ] Popup/slideout form that asks people: What are you looking for on gatsbyjs.org today? with a rating/form to ask if they found what they're looking for.
 - [ ] Way to copy and paste code easily Ref. gatsbyjs/gatsby#5030
-- [ ] Fill out stub articles (flat fee for anyone who meets certain base requirements (i.e. follows templates and style guide?)
 
 Phase 3:
 - [ ] API on top level nav
