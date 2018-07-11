@@ -46,7 +46,7 @@ module.exports = {
 - **auth**: the authentication data to login a Mongodb collection, with sub
   properties user and password. ex. auth: { user: `admin`, password: `12345` }
 - **extraParams**: useful to set additional parameters for the connection, like authSource, ssl or replicaSet
-  (needed for connecting to MongoDB Atlas db as a service), ex: extraParams: { replicaSet: `test-shard-0`, ssl: `true`, authSource: `admin` }  
+  (needed for connecting to MongoDB Atlas db as a service), ex: extraParams: { replicaSet: `test-shard-0`, ssl: `true`, authSource: `admin` }
 
 ### Mapping mediatype feature
 

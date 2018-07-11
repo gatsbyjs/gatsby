@@ -75,6 +75,7 @@ module.exports = Object.assign(reporter, {
   activityTimer(name) {
     const spinner = reporter.activity()
     const start = process.hrtime()
+    let status
 
     const elapsedTime = () => {
       var elapsed = process.hrtime(start)
@@ -85,8 +86,15 @@ module.exports = Object.assign(reporter, {
       start: () => {
         spinner.tick(name)
       },
+      setStatus: s => {
+        status = s
+        spinner.tick(`${name} — ${status}`)
+      },
       end: () => {
-        reporter.success(`${name} — ${elapsedTime()}`)
+        const str = status
+          ? `${name} — ${elapsedTime()} — ${status}`
+          : `${name} — ${elapsedTime()}`
+        reporter.success(str)
         spinner.end()
       },
     }

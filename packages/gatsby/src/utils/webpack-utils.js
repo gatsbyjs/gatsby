@@ -61,10 +61,11 @@ export type LoaderUtils = {
   url: LoaderResolver<*>,
   js: LoaderResolver<*>,
 
+  miniCssExtract: LoaderResolver<*>,
   imports: LoaderResolver<*>,
   exports: LoaderResolver<*>,
 
-  eslint: LaoderResolver<*>,
+  eslint: LoaderResolver<*>,
 }
 
 /**
@@ -121,6 +122,8 @@ module.exports = async ({
   const PRODUCTION = !stage.includes(`develop`)
 
   const babelConfig = await createBabelConfig(program, stage)
+
+  const isSSR = stage.includes(`html`)
 
   const makeExternalOnly = (original: RuleFactory<*>) => (
     options = {}
@@ -181,16 +184,16 @@ module.exports = async ({
         options,
         // use MiniCssExtractPlugin only on production builds
         loader: PRODUCTION
-          ? stage === `build-html`
-            ? require.resolve(`./webpack-extract-css-modules-map`)
-            : MiniCssExtractPlugin.loader
+          ? MiniCssExtractPlugin.loader
           : require.resolve(`style-loader`),
       }
     },
 
     css: (options = {}) => {
       return {
-        loader: require.resolve(`css-loader`),
+        loader: isSSR
+          ? require.resolve(`css-loader/locals`)
+          : require.resolve(`css-loader`),
         options: {
           minimize: PRODUCTION,
           sourceMap: !PRODUCTION,
@@ -353,13 +356,15 @@ module.exports = async ({
    */
   {
     const css = ({ browsers, ...options } = {}) => {
+      const use = [
+        loaders.css({ ...options, importLoaders: 1 }),
+        loaders.postcss({ browsers }),
+      ]
+      if (!isSSR) use.unshift(loaders.miniCssExtract())
+
       return {
+        use,
         test: /\.css$/,
-        use: [
-          loaders.miniCssExtract(),
-          loaders.css({ ...options, importLoaders: 1 }),
-          loaders.postcss({ browsers }),
-        ],
       }
     }
 

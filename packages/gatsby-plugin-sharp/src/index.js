@@ -10,6 +10,7 @@ const imageminPngquant = require(`imagemin-pngquant`)
 const imageminWebp = require(`imagemin-webp`)
 const queue = require(`async/queue`)
 const path = require(`path`)
+const existsSync = require(`fs-exists-cached`).sync
 
 const imageSizeCache = new Map()
 const getImageSize = file => {
@@ -245,7 +246,7 @@ const queueJob = (job, reporter) => {
   }
 
   // Check if the output file already exists so we don't redo work.
-  if (fs.existsSync(job.outputPath)) {
+  if (existsSync(job.outputPath)) {
     return
   }
 

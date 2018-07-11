@@ -18,7 +18,7 @@ function discoverPluginsWithoutNodes(storeState) {
   )
   // Find out which plugins own already created nodes
   const nodeOwners = _.uniq(
-    _.values(storeState.nodes).reduce((acc, node) => {
+    Array.from(storeState.nodes.values()).reduce((acc, node) => {
       acc.push(node.internal.owner)
       return acc
     }, [])
@@ -44,7 +44,7 @@ module.exports = async () => {
 
   // Garbage collect stale data nodes
   const touchedNodes = Object.keys(state.nodesTouched)
-  const staleNodes = _.values(state.nodes).filter(node => {
+  const staleNodes = Array.from(state.nodes.values()).filter(node => {
     // Find the root node.
     let rootNode = node
     let whileCount = 0
