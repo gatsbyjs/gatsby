@@ -60,6 +60,10 @@ const MastheadContent = () => (
           [presets.Mobile]: {
             width: rhythm(10),
           },
+          fontSize: scale(3 / 5).fontSize,
+          "@media (min-width: 350px)": {
+            fontSize: scale(4 / 5).fontSize,
+          },          
           "@media (min-width: 650px)": {
             fontSize: scale(1).fontSize,
             width: rhythm(12),
@@ -83,7 +87,11 @@ const MastheadContent = () => (
         }}
       >
         <span css={{ display: `block` }}>
-          <span css={{ marginRight: rhythm(0.125) }}>Build</span>
+          <span css={{ 
+            [presets.Tablet]: {
+              marginRight: rhythm(1 / 8),
+            } 
+          }}>Build</span>
           <div class="slidingVertical">
             <span>blazing fast</span>
             <span>modern</span>
