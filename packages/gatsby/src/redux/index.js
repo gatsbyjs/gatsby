@@ -29,7 +29,7 @@ try {
   // Apparently the file mocking in node-tracking-test.js
   // can override the file reading replacing the mocked string with
   // an already parsed object.
-  if (typeof file === `object`) {
+  if (Buffer.isBuffer(file) || typeof file === `string`) {
     initialState = JSON.parse(file)
   }
   if (initialState.staticQueryComponents) {
