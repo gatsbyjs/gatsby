@@ -91,7 +91,10 @@ const MastheadContent = () => (
               marginRight: rhythm(1 / 8),
             } 
           }}>Build</span>
-          <Slider items={[`blazing fast`, `modern`, `beautiful`, `secure`]} />
+          <Slider 
+            items={[`blazing fast`, `modern`, `beautiful`, `secure`]} 
+            color={colors.lilac}
+          />
         </span>
         websites with React
       </h1>

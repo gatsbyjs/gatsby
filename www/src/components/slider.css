@@ -7,8 +7,8 @@
 .slidingVertical span{
 	animation: topToBottom 10s linear infinite 0s;
 	-ms-animation: topToBottom 10s linear infinite 0s;
-	-webkit-animation: topToBottom 10s linear infinite 0s;
-	color: #9D7CBF;
+    -webkit-animation: topToBottom 10s linear infinite 0s;
+    
 	opacity: 0;
 	overflow: hidden;
 	position: absolute;
