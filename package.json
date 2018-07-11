@@ -70,6 +70,7 @@
     "test:update": "jest --updateSnapshot",
     "test:watch": "jest --watch",
     "test_bkup": "npm-run-all -s lint test-node test-integration",
+    "version": "prettier --write \"**/CHANGELOG.md\" --no-semi",
     "watch": "lerna run watch --no-sort --stream --concurrency 999"
   },
   "workspaces": [

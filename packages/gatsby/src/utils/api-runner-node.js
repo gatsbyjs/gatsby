@@ -2,8 +2,6 @@ const Promise = require(`bluebird`)
 const glob = require(`glob`)
 const _ = require(`lodash`)
 
-const mapSeries = require(`async/mapSeries`)
-
 const reporter = require(`gatsby-cli/lib/reporter`)
 const cache = require(`./cache`)
 const apiList = require(`./api-node-docs`)
@@ -106,7 +104,8 @@ const runAPI = (plugin, api, args) => {
 let filteredPlugins
 const hasAPIFile = plugin => glob.sync(`${plugin.resolve}/gatsby-node*`)[0]
 
-let apisRunning = []
+let apisRunningById = new Map()
+let apisRunningByTraceId = new Map()
 let waitingForCasacadeToFinish = []
 
 module.exports = async (api, args = {}, pluginSource) =>
@@ -145,35 +144,47 @@ module.exports = async (api, args = {}, pluginSource) =>
       startTime: new Date().toJSON(),
       traceId: args.traceId,
     }
+    apiRunInstance.id = `${api}|${apiRunInstance.startTime}|${
+      apiRunInstance.traceId
+    }|${JSON.stringify(args)}`
 
     if (args.waitForCascadingActions) {
       waitingForCasacadeToFinish.push(apiRunInstance)
     }
 
-    apisRunning.push(apiRunInstance)
+    apisRunningById.set(apiRunInstance.id, apiRunInstance)
+    if (apisRunningByTraceId.has(apiRunInstance.traceId)) {
+      const currentCount = apisRunningByTraceId.get(apiRunInstance.traceId)
+      apisRunningByTraceId.set(apiRunInstance.traceId, currentCount + 1)
+    } else {
+      apisRunningByTraceId.set(apiRunInstance.traceId, 1)
+    }
 
     let pluginName = null
-    mapSeries(
-      noSourcePluginPlugins,
-      (plugin, callback) => {
-        if (plugin.name === `default-site-plugin`) {
-          pluginName = `gatsby-node.js`
-        } else {
-          pluginName = `Plugin ${plugin.name}`
-        }
-        Promise.resolve(runAPI(plugin, api, args)).asCallback(callback)
-      },
-      (err, results) => {
+    Promise.mapSeries(noSourcePluginPlugins, plugin => {
+      if (plugin.name === `default-site-plugin`) {
+        pluginName = `gatsby-node.js`
+      } else {
+        pluginName = `Plugin ${plugin.name}`
+      }
+      return Promise.resolve(runAPI(plugin, api, args))
+    })
+      .catch(err => {
         if (err) {
           if (process.env.NODE_ENV === `production`) {
             return reporter.panic(`${pluginName} returned an error`, err)
           }
           return reporter.error(`${pluginName} returned an error`, err)
         }
+        return null
+      })
+      .then(results => {
         // Remove runner instance
-        apisRunning = apisRunning.filter(runner => runner !== apiRunInstance)
+        apisRunningById.delete(apiRunInstance.id)
+        const currentCount = apisRunningByTraceId.get(apiRunInstance.traceId)
+        apisRunningByTraceId.set(apiRunInstance.traceId, currentCount - 1)
 
-        if (apisRunning.length === 0) {
+        if (apisRunningById.size === 0) {
           const { emitter } = require(`../redux`)
           emitter.emit(`API_RUNNING_QUEUE_EMPTY`)
         }
@@ -188,17 +199,20 @@ module.exports = async (api, args = {}, pluginSource) =>
         }
 
         // Check if any of our waiters are done.
-        return (waitingForCasacadeToFinish = waitingForCasacadeToFinish.filter(
+        waitingForCasacadeToFinish = waitingForCasacadeToFinish.filter(
           instance => {
             // If none of its trace IDs are running, it's done.
-            if (!_.some(apisRunning, a => a.traceId === instance.traceId)) {
+            const apisByTraceIdCount = apisRunningByTraceId.get(
+              instance.traceId
+            )
+            if (apisByTraceIdCount === 0) {
               instance.resolve(instance.results)
               return false
             } else {
               return true
             }
           }
-        ))
-      }
-    )
+        )
+        return
+      })
   })

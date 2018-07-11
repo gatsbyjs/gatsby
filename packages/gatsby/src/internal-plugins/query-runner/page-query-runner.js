@@ -92,7 +92,7 @@ const findIdsWithoutDataDependencies = () => {
   // paths.
   const notTrackedIds = _.difference(
     [
-      ...state.pages.map(p => p.path),
+      ...Array.from(state.pages.values(), p => p.path),
       ...[...state.staticQueryComponents.values()].map(c => c.jsonName),
     ],
     [...allTrackedIds, ...seenIdsWithoutDataDependencies]
@@ -126,10 +126,10 @@ const runQueriesForPathnames = pathnames => {
     queue.push(queryJob)
   })
 
-  const pages = [...state.pages]
+  const pages = state.pages
   let didNotQueueItems = true
   pageQueries.forEach(id => {
-    const page = pages.find(pl => pl.path === id)
+    const page = pages.get(id)
     if (page) {
       didNotQueueItems = false
       queue.push(

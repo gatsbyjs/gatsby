@@ -1,6 +1,7 @@
 const Queue = require(`better-queue`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
+const convertHrtime = require(`convert-hrtime`)
 
 // copied from https://github.com/markdalgleish/static-site-generator-webpack-plugin/blob/master/index.js#L161
 const generatePathToOutput = outputPath => {
@@ -13,8 +14,9 @@ const generatePathToOutput = outputPath => {
   return path.join(process.cwd(), `public`, outputFileName)
 }
 
-module.exports = (htmlComponentRenderer, pages) =>
+module.exports = (htmlComponentRenderer, pages, activity) =>
   new Promise((resolve, reject) => {
+    const start = process.hrtime()
     const queue = new Queue(
       (path, callback) => {
         try {
@@ -34,6 +36,17 @@ module.exports = (htmlComponentRenderer, pages) =>
 
     pages.forEach(page => {
       queue.push(page)
+    })
+
+    queue.on(`task_finish`, () => {
+      const stats = queue.getStats()
+      if (activity) {
+        activity.setStatus(
+          `${stats.total}/${pages.length} ${(
+            stats.total / convertHrtime(process.hrtime(start)).seconds
+          ).toFixed(2)} pages/second`
+        )
+      }
     })
 
     queue.on(`drain`, () => {

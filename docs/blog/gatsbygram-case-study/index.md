@@ -557,7 +557,7 @@ node scrape.js INSTAGRAM_USERNAME
 gatsby develop
 ```
 
-While writing this post I scrapped a few accounts and published their resulting
+While writing this post I scraped a few accounts and published their resulting
 "Gatsbygram" sites:
 
 - https://iceland-gatsbygram.netlify.com

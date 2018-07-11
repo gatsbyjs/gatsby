@@ -79,8 +79,8 @@ import PropTypes from "prop-types"
 // Components
 import { Link } from "gatsby"
 
-const Tags = ({ pathContext, data }) => {
-  const { tag } = pathContext
+const Tags = ({ pageContext, data }) => {
+  const { tag } = pageContext
   const { edges, totalCount } = data.allMarkdownRemark
   const tagHeader = `${totalCount} post${
     totalCount === 1 ? "" : "s"
@@ -161,8 +161,8 @@ Now we've got a template. Great! I'll assume you followed the tutorial for [Addi
 ```js
 const path = require("path")
 
-exports.createPages = ({ boundActionCreators, graphql }) => {
-  const { createPage } = boundActionCreators
+exports.createPages = ({ actions, graphql }) => {
+  const { createPage } = actions
 
   const blogPostTemplate = path.resolve("src/templates/blog.js")
   const tagTemplate = path.resolve("src/templates/tags.js")

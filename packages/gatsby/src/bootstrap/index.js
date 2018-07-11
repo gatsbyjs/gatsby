@@ -7,6 +7,7 @@ const md5File = require(`md5-file/promise`)
 const crypto = require(`crypto`)
 const del = require(`del`)
 const path = require(`path`)
+const convertHrtime = require(`convert-hrtime`)
 
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const { graphql } = require(`graphql`)
@@ -27,6 +28,7 @@ const {
 const {
   runInitialQueries,
 } = require(`../internal-plugins/query-runner/page-query-runner`)
+const queryQueue = require(`../internal-plugins/query-runner/query-queue`)
 const { writePages } = require(`../internal-plugins/query-runner/pages-writer`)
 const {
   writeRedirects,
@@ -76,12 +78,15 @@ module.exports = async (args: BootstrapArgs) => {
 
   activity.end()
 
-  const flattenedPlugins = await loadPlugins(config)
-
-  // onPreBootstrap
-  activity = report.activityTimer(`onPreBootstrap`)
+  activity = report.activityTimer(`load plugins`)
   activity.start()
-  await apiRunnerNode(`onPreBootstrap`)
+  const flattenedPlugins = await loadPlugins(config)
+  activity.end()
+
+  // onPreInit
+  activity = report.activityTimer(`onPreInit`)
+  activity.start()
+  await apiRunnerNode(`onPreInit`)
   activity.end()
 
   // Delete html and css files from the public directory as we don't want
@@ -98,6 +103,8 @@ module.exports = async (args: BootstrapArgs) => {
   ])
   activity.end()
 
+  activity = report.activityTimer(`initialize cache`)
+  activity.start()
   // Check if any plugins have been updated since our last run. If so
   // we delete the cache is there's likely been changes
   // since the previous run.
@@ -159,8 +166,14 @@ module.exports = async (args: BootstrapArgs) => {
   // directory.
   initCache()
 
-  // Ensure the public/static directory is created.
-  await fs.ensureDirSync(`${program.directory}/public/static/d`)
+  // Ensure the public/static directory and data subdirectories are created.
+  await fs.ensureDir(`${program.directory}/public/static`)
+  await Promise.all(
+    _.range(0, 999).map(i =>
+      fs.ensureDir(`${program.directory}/public/static/d/${i}`)
+    )
+  )
+  activity.end()
 
   // Copy our site files to the root of the site.
   activity = report.activityTimer(`copy gatsby files`)
@@ -169,7 +182,9 @@ module.exports = async (args: BootstrapArgs) => {
   const siteDir = `${program.directory}/.cache`
   const tryRequire = `${__dirname}/../utils/test-require-error.js`
   try {
-    await fs.copy(srcDir, siteDir, { clobber: true })
+    await fs.copy(srcDir, siteDir, {
+      clobber: true,
+    })
     await fs.copy(tryRequire, `${siteDir}/test-require-error.js`, {
       clobber: true,
     })
@@ -259,6 +274,12 @@ module.exports = async (args: BootstrapArgs) => {
    * Start the main bootstrap processes.
    */
 
+  // onPreBootstrap
+  activity = report.activityTimer(`onPreBootstrap`)
+  activity.start()
+  await apiRunnerNode(`onPreBootstrap`)
+  activity.end()
+
   // Source nodes
   activity = report.activityTimer(`source and transform nodes`)
   activity.start()
@@ -339,7 +360,16 @@ module.exports = async (args: BootstrapArgs) => {
   // Run queries
   activity = report.activityTimer(`run graphql queries`)
   activity.start()
-  await runInitialQueries()
+  const startQueries = process.hrtime()
+  queryQueue.on(`task_finish`, () => {
+    const stats = queryQueue.getStats()
+    activity.setStatus(
+      `${stats.total}/${stats.peak} ${(
+        stats.total / convertHrtime(process.hrtime(startQueries)).seconds
+      ).toFixed(2)} queries/second`
+    )
+  })
+  await runInitialQueries(activity)
   activity.end()
 
   // Write out files.
@@ -370,7 +400,9 @@ module.exports = async (args: BootstrapArgs) => {
       activity.start()
       apiRunnerNode(`onPostBootstrap`).then(() => {
         activity.end()
-        resolve({ graphqlRunner })
+        resolve({
+          graphqlRunner,
+        })
       })
     }
   }, 100)
@@ -386,7 +418,9 @@ module.exports = async (args: BootstrapArgs) => {
     report.info(`bootstrap finished - ${process.uptime()} s`)
     report.log(``)
     emitter.emit(`BOOTSTRAP_FINISHED`)
-    return { graphqlRunner }
+    return {
+      graphqlRunner,
+    }
   } else {
     return new Promise(resolve => {
       // Wait until all side effect jobs are finished.
