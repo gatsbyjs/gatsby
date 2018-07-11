@@ -181,7 +181,7 @@ import Helmet from "react-helmet"
 - )
 -
 - export const query = graphql`
--   query {
+-   query LayoutQuery {
 -     site {
 -       siteMetadata {
 -         title
@@ -192,7 +192,7 @@ import Helmet from "react-helmet"
 + export default ({ children }) => (
 +   <StaticQuery
 +     query={graphql`
-+       query {
++       query LayoutQuery {
 +         site {
 +           siteMetadata {
 +             title
@@ -280,7 +280,7 @@ export default ({ data }) => (
 )
 
 export const query = graphql`
-  query {
+  query HomeQuery {
     site {
       siteMetadata {
         title
@@ -319,7 +319,7 @@ const Example = ({ data }) => {
 export default Example
 
 export const pageQuery = graphql`
-  query {
+  query IndexQuery {
     foo: file(relativePath: { regex: "/foo.jpg/" }) {
       childImageSharp {
 -        sizes(maxWidth: 700) {
@@ -397,7 +397,7 @@ Source and transformer plugins now use UUIDs for IDs. If you used glob or regex 
 Here's an example querying an image:
 
 ```diff
-  query {
+  query MyImageQuery {
     allImageSharp(filter: {
 -     id: {regex: "/default.jpg/"}
 +     fluid: {originalName: {regex: "/default.jpg/"}}
