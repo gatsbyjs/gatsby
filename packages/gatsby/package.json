@@ -94,6 +94,7 @@
     "node-libs-browser": "^2.0.0",
     "normalize-path": "^2.1.1",
     "null-loader": "^0.1.1",
+    "opentracing": "^0.14.3",
     "opn": "^5.3.0",
     "parse-filepath": "^1.0.1",
     "path-exists": "^3.0.0",

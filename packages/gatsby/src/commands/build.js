@@ -6,6 +6,8 @@ const buildProductionBundle = require(`./build-javascript`)
 const bootstrap = require(`../bootstrap`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const copyStaticDirectory = require(`../utils/copy-static-directory`)
+const { initTracer, stopTracer } = require(`../utils/tracer`)
+const tracer = require(`opentracing`).globalTracer()
 
 function reportFailure(msg, err: Error) {
   report.log(``)
@@ -18,12 +20,24 @@ type BuildArgs = {
   browserslist: string[],
   prefixPaths: boolean,
   noUglify: boolean,
+  openTracingConfigFile: string,
 }
 
 module.exports = async function build(program: BuildArgs) {
-  const { graphqlRunner } = await bootstrap(program)
+  initTracer(program.openTracingConfigFile)
 
-  await apiRunnerNode(`onPreBuild`, { graphql: graphqlRunner })
+  const buildSpan = tracer.startSpan(`build`)
+  buildSpan.setTag(`directory`, program.directory)
+
+  const { graphqlRunner } = await bootstrap({
+    ...program,
+    parentSpan: buildSpan,
+  })
+
+  await apiRunnerNode(`onPreBuild`, {
+    graphql: graphqlRunner,
+    parentSpan: buildSpan,
+  })
 
   // Copy files from the static directory to
   // an equivalent static directory within public.
@@ -31,7 +45,8 @@ module.exports = async function build(program: BuildArgs) {
 
   let activity
   activity = report.activityTimer(
-    `Building production JavaScript and CSS bundles`
+    `Building production JavaScript and CSS bundles`,
+    { parentSpan: buildSpan }
   )
   activity.start()
   await buildProductionBundle(program).catch(err => {
@@ -39,7 +54,9 @@ module.exports = async function build(program: BuildArgs) {
   })
   activity.end()
 
-  activity = report.activityTimer(`Building static HTML for pages`)
+  activity = report.activityTimer(`Building static HTML for pages`, {
+    parentSpan: buildSpan,
+  })
   activity.start()
   await buildHTML(program, activity).catch(err => {
     reportFailure(
@@ -53,7 +70,14 @@ module.exports = async function build(program: BuildArgs) {
   })
   activity.end()
 
-  await apiRunnerNode(`onPostBuild`, { graphql: graphqlRunner })
+  await apiRunnerNode(`onPostBuild`, {
+    graphql: graphqlRunner,
+    parentSpan: buildSpan,
+  })
 
   report.info(`Done building in ${process.uptime()} sec`)
+
+  buildSpan.finish()
+
+  await stopTracer()
 }

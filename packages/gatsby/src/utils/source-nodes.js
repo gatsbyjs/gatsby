@@ -26,10 +26,11 @@ function discoverPluginsWithoutNodes(storeState) {
   return _.difference(nodeCreationPlugins, nodeOwners)
 }
 
-module.exports = async () => {
+module.exports = async ({ parentSpan }) => {
   await apiRunner(`sourceNodes`, {
     traceId: `initial-sourceNodes`,
     waitForCascadingActions: true,
+    parentSpan: parentSpan,
   })
 
   const state = store.getState()
