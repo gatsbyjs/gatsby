@@ -1153,9 +1153,9 @@
   built_by: Spacetime
   built_by_url: 'https://www.heyspacetime.com/'
 - title: Eric Jinks
-  main_url: 'https://ericjinks.com/' //this is the URL that the screenshot comes from//
+  main_url: 'https://ericjinks.com/'
   url: 'https://ericjinks.com/'
-  featured: false //leave as false, the Gatsby team will choose featured sites quarterly//
+  featured: false
   description: >-
     Software engineer / web developer from the Gold Coast, Australia.
   categories:
