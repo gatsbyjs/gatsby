@@ -9,6 +9,7 @@ const glob = Promise.promisify(globCB)
 
 const createPath = require(`./create-path`)
 const validatePath = require(`./validate-path`)
+const slash = require(`slash`)
 
 // Path creator.
 // Auto-create pages.
@@ -64,17 +65,17 @@ exports.createPagesStatefully = async (
       }
     })
     .on(`unlink`, path => {
+      path = slash(path)
       // Delete the page for the now deleted component.
-      store
-        .getState()
-        .pages.filter(p => p.component === path)
-        .forEach(page => {
+      store.getState().pages.forEach(page => {
+        if (page.component === path) {
           deletePage({
             path: createPath(pagesDirectory, path),
             component: path,
           })
-          files = files.filter(f => f !== path)
-        })
+        }
+      })
+      files = files.filter(f => f !== path)
     })
     .on(`ready`, () => doneCb())
 }
