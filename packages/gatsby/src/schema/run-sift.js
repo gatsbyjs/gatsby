@@ -6,17 +6,31 @@ const { createPageDependency } = require(`../redux/actions/add-page-dependency`)
 const prepareRegex = require(`./prepare-regex`)
 const Promise = require(`bluebird`)
 const { trackInlineObjectsInRootNode } = require(`./node-tracking`)
+const { getNode } = require(`../redux`)
 
+const resolvedNodesCache = new Map()
 const enhancedNodeCache = new Map()
+const enhancedNodePromiseCache = new Map()
 const enhancedNodeCacheId = ({ node, args }) =>
   node && node.internal && node.internal.contentDigest
-    ? `${node.id}${node.internal.contentDigest}${JSON.stringify(args)}`
+    ? JSON.stringify({
+        nodeid: node.id,
+        digest: node.internal.contentDigest,
+        ...args,
+      })
     : null
 
 function awaitSiftField(fields, node, k) {
   const field = fields[k]
   if (field.resolve) {
-    return field.resolve(node, {}, {}, { fieldName: k })
+    return field.resolve(
+      node,
+      {},
+      {},
+      {
+        fieldName: k,
+      }
+    )
   } else if (node[k] !== undefined) {
     return node[k]
   }
@@ -25,14 +39,15 @@ function awaitSiftField(fields, node, k) {
 }
 
 /*
-* Filters a list of nodes using mongodb-like syntax.
-* Returns a single unwrapped element if connection = false.
-*
-*/
+ * Filters a list of nodes using mongodb-like syntax.
+ * Returns a single unwrapped element if connection = false.
+ *
+ */
 module.exports = ({
   args,
   nodes,
   type,
+  typeName,
   connection = false,
   path = ``,
 }: Object) => {
@@ -81,7 +96,11 @@ module.exports = ({
       // Ignore connection and sorting args.
       if (_.includes([`skip`, `limit`, `sort`], k)) return
 
-      siftArgs.push(siftifyArgs({ [k]: v }))
+      siftArgs.push(
+        siftifyArgs({
+          [k]: v,
+        })
+      )
       extractFieldsToSift(``, k, {}, fieldsToSift, v)
     })
   }
@@ -113,35 +132,92 @@ module.exports = ({
           .then(v => [k, v])
       )
     ).then(resolvedFields => {
-      const myNode = { ...node }
+      const myNode = {
+        ...node,
+      }
       resolvedFields.forEach(([k, v]) => (myNode[k] = v))
       return myNode
     })
   }
 
-  return Promise.all(
-    nodes.map(node => {
-      const cacheKey = enhancedNodeCacheId({ node, args: fieldsToSift })
-      if (cacheKey && enhancedNodeCache.has(cacheKey)) {
-        return Promise.resolve(enhancedNodeCache.get(cacheKey))
-      }
+  // If the the query only has a filter for an "id", then we'll just grab
+  // that ID and return it.
+  if (
+    Object.keys(fieldsToSift).length === 1 &&
+    Object.keys(fieldsToSift)[0] === `id`
+  ) {
+    const node = resolveRecursive(
+      getNode(siftArgs[0].id[`$eq`]),
+      fieldsToSift,
+      type.getFields()
+    )
 
-      return resolveRecursive(node, fieldsToSift, type.getFields()).then(
-        resolvedNode => {
-          trackInlineObjectsInRootNode(resolvedNode)
-          if (cacheKey) {
-            enhancedNodeCache.set(cacheKey, resolvedNode)
-          }
-          return resolvedNode
-        }
-      )
+    if (node) {
+      createPageDependency({
+        path,
+        nodeId: node.id,
+      })
+    }
+
+    return node
+  }
+
+  const nodesPromise = () => {
+    const nodesCacheKey = JSON.stringify({
+      // typeName + count being the same is a pretty good
+      // indication that the nodes are the same.
+      typeName,
+      nodesLength: nodes.length,
+      ...fieldsToSift,
     })
-  ).then(myNodes => {
-    myNodes = myNodes.map(trackInlineObjectsInRootNode)
+    if (
+      process.env.NODE_ENV !== `test` &&
+      resolvedNodesCache.has(nodesCacheKey)
+    ) {
+      return Promise.resolve(resolvedNodesCache.get(nodesCacheKey))
+    } else {
+      return Promise.all(
+        nodes.map(node => {
+          const cacheKey = enhancedNodeCacheId({
+            node,
+            args: fieldsToSift,
+          })
+          if (cacheKey && enhancedNodeCache.has(cacheKey)) {
+            return Promise.resolve(enhancedNodeCache.get(cacheKey))
+          } else if (cacheKey && enhancedNodePromiseCache.has(cacheKey)) {
+            return enhancedNodePromiseCache.get(cacheKey)
+          }
+
+          const enhancedNodeGenerationPromise = new Promise(resolve => {
+            resolveRecursive(node, fieldsToSift, type.getFields()).then(
+              resolvedNode => {
+                trackInlineObjectsInRootNode(resolvedNode)
+                if (cacheKey) {
+                  enhancedNodeCache.set(cacheKey, resolvedNode)
+                }
+                resolve(resolvedNode)
+              }
+            )
+          })
+          enhancedNodePromiseCache.set(cacheKey, enhancedNodeGenerationPromise)
+          return enhancedNodeGenerationPromise
+        })
+      ).then(resolvedNodes => {
+        resolvedNodesCache.set(nodesCacheKey, resolvedNodes)
+        return resolvedNodes
+      })
+    }
+  }
+  const tempPromise = nodesPromise().then(myNodes => {
     if (!connection) {
       const index = _.isEmpty(siftArgs)
         ? 0
-        : sift.indexOf({ $and: siftArgs }, myNodes)
+        : sift.indexOf(
+            {
+              $and: siftArgs,
+            },
+            myNodes
+          )
 
       // If a node is found, create a dependency between the resulting node and
       // the path.
@@ -159,7 +235,12 @@ module.exports = ({
 
     let result = _.isEmpty(siftArgs)
       ? myNodes
-      : sift({ $and: siftArgs }, myNodes)
+      : sift(
+          {
+            $and: siftArgs,
+          },
+          myNodes
+        )
 
     if (!result || !result.length) return null
 
@@ -184,4 +265,6 @@ module.exports = ({
     }
     return connectionArray
   })
+
+  return tempPromise
 }

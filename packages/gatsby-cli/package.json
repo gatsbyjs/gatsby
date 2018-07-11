@@ -18,6 +18,7 @@
     "core-js": "^2.5.0",
     "envinfo": "^5.8.1",
     "execa": "^0.8.0",
+    "fs-exists-cached": "^1.0.0",
     "fs-extra": "^4.0.1",
     "hosted-git-info": "^2.6.0",
     "lodash": "^4.17.4",

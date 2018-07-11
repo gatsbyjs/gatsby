@@ -5,6 +5,7 @@ const path = require(`path`)
 const json5 = require(`json5`)
 const report = require(`gatsby-cli/lib/reporter`)
 const { actionifyBabelrc, addDefaultPluginsPresets } = require(`./utils`)
+const existsSync = require(`fs-exists-cached`).sync
 
 const testRequireError = require(`../../utils/test-require-error`).default
 
@@ -15,7 +16,7 @@ const testRequireError = require(`../../utils/test-require-error`).default
  */
 function findBabelrc(directory) {
   const babelrcPath = path.join(directory, `.babelrc`)
-  if (fs.existsSync(babelrcPath)) {
+  if (existsSync(babelrcPath)) {
     try {
       const babelrc = fs.readFileSync(babelrcPath, `utf-8`)
       return json5.parse(babelrc)
