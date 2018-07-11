@@ -11,6 +11,7 @@ const kebabHash = require(`kebab-hash`)
 const { hasNodeChanged, getNode } = require(`./index`)
 const { trackInlineObjectsInRootNode } = require(`../schema/node-tracking`)
 const { store } = require(`./index`)
+const fileExistsSync = require(`fs-exists-cached`).sync
 import * as joiSchemas from "../joi-schemas/joi"
 import { generateComponentChunkName } from "../utils/js-chunk-names"
 
@@ -95,6 +96,7 @@ const hasWarnedForPageComponent = new Set()
  *   },
  * })
  */
+const fileOkCache = {}
 actions.createPage = (page: PageInput, plugin?: Plugin, traceId?: string) => {
   let noPageOrComponent = false
   let name = `The plugin "${plugin.name}"`
@@ -174,7 +176,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   // Don't check if the component exists during tests as we use a lot of fake
   // component paths.
   if (process.env.NODE_ENV !== `test`) {
-    if (!fs.existsSync(page.component)) {
+    if (!fileExistsSync(page.component)) {
       const message = `${name} created a page with a component that doesn't exist`
       console.log(``)
       console.log(chalk.bold.red(message))
@@ -234,17 +236,15 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     internalPage.path = `/${internalPage.path}`
   }
 
-  const result = Joi.validate(internalPage, joiSchemas.pageSchema)
-  if (result.error) {
-    console.log(chalk.blue.bgYellow(`The upserted page didn't pass validation`))
-    console.log(chalk.bold.red(result.error))
-    console.log(internalPage)
-    return null
-  }
-
   // Validate that the page component imports React and exports something
   // (hopefully a component).
-  if (!internalPage.component.includes(`/.cache/`)) {
+  //
+  // Only run validation once during builds.
+  if (
+    !internalPage.component.includes(`/.cache/`) &&
+    (process.env.NODE_ENV === `production` &&
+      !fileOkCache[internalPage.component])
+  ) {
     const fileName = internalPage.component
     const fileContent = fs.readFileSync(fileName, `utf-8`)
     let notEmpty = true
@@ -288,6 +288,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       // TODO actually do die during builds.
       // process.exit(1)
     }
+
+    fileOkCache[internalPage.component] = true
   }
 
   return {
@@ -464,12 +466,22 @@ actions.createNode = (node: any, plugin?: Plugin, traceId?: string) => {
     node.internal = {}
   }
 
+  // Ensure the new node has a children array.
+  if (!node.array && !_.isArray(node.children)) {
+    node.children = []
+  }
+
+  // Ensure the new node has a parent field
+  if (!node.parent) {
+    node.parent = null
+  }
+
   // Tell user not to set the owner name themself.
   if (node.internal.owner) {
     console.log(JSON.stringify(node, null, 4))
     console.log(
       chalk.bold.red(
-        `The node internal.owner field is set automatically by Gatsby and not by plugin`
+        `The node internal.owner field is set automatically by Gatsby and not by plugins`
       )
     )
     process.exit(1)
@@ -570,7 +582,9 @@ actions.createNode = (node: any, plugin?: Plugin, traceId?: string) => {
     if (oldNode) {
       const descendantNodes = findChildrenRecursively(oldNode.children)
       if (descendantNodes.length > 0) {
-        deleteAction = actions.deleteNodes(descendantNodes)
+        deleteAction = descendantNodes.map(n =>
+          actions.deleteNode({ node: getNode(n) })
+        )
       }
     }
 
