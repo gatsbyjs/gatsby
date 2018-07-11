@@ -65,7 +65,7 @@ export default ({ data }) => (
 )
 
 export const query = graphql`
-  query AboutQuery {
+  query {
     site {
       siteMetadata {
         title
@@ -183,7 +183,7 @@ export default ({ data }) => (
 )
 
 export const query = graphql`
-  query GatsbyImageSampleQuery {
+  query {
     file(relativePath: { eq: "blog/avatars/kyle-mathews.jpeg" }) {
       childImageSharp {
         # Specify the image processing specifications right in the query.
@@ -229,7 +229,7 @@ export const markdownFrontmatterFragment = graphql`
 They can then be used in any GraphQL query after that!
 
 ```graphql
-query PostByPath($path: String!) {
+query($path: String!) {
   markdownRemark(frontmatter: { path: { eq: $path } }) {
     ...MarkdownFrontmatter
   }
@@ -260,7 +260,7 @@ export default ({ data }) => {
 }
 
 export const query = graphql`
-  query IndexQuery {
+  query {
     allMarkdownRemark {
       totalCount
       edges {
@@ -325,7 +325,7 @@ export default ({ data }) => {
 };
 
 export const query = graphql`
-  query IndexQuery {
+  query {
     allMarkdownRemark {
       totalCount
       edges {

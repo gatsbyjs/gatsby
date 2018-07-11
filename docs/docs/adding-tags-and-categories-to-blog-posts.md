@@ -132,7 +132,7 @@ Tags.propTypes = {
 export default Tags
 
 export const pageQuery = graphql`
-  query TagPage($tag: String) {
+  query($tag: String) {
     allMarkdownRemark(
       limit: 2000
       sort: { fields: [frontmatter___date], order: DESC }
@@ -289,7 +289,7 @@ TagsPage.propTypes = {
 export default TagsPage
 
 export const pageQuery = graphql`
-  query TagsQuery {
+  query {
     site {
       siteMetadata {
         title
