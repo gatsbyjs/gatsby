@@ -12,7 +12,13 @@ const emitter = mitt()
 // Reducers
 const reducers = require(`./reducers`)
 
-const objectToMap = obj => new Map(Object.entries(obj))
+const objectToMap = obj => {
+  let map = new Map()
+  Object.keys(obj).forEach(key => {
+    map.set(key, obj[key])
+  })
+  return map
+}
 
 const mapToObject = map => {
   const obj = {}
