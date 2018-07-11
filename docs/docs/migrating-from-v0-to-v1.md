@@ -74,7 +74,7 @@ and a minimal query would look like
 
 ```
 export const pageQuery = graphql`
-  query($slug: String!) {
+  query SiteMetadataLookup($slug: String!) {
     site {
       siteMetadata {
         title
@@ -276,7 +276,7 @@ class BlogPostTemplate extends React.Component {
 export default BlogPostTemplate
 
 export const pageQuery = graphql`
-  query($slug: String!) {
+  query BlogPostBySlug($slug: String!) {
     markdownRemark(fields: { slug: { eq: $slug } }) {
       html
       frontmatter {
