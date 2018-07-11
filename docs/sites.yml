@@ -1152,3 +1152,16 @@
     - Featured
   built_by: Spacetime
   built_by_url: 'https://www.heyspacetime.com/'
+- title: Eric Jinks
+  main_url: 'https://ericjinks.com/'
+  url: 'https://ericjinks.com/'
+  featured: false
+  description: >-
+    Software engineer / web developer from the Gold Coast, Australia.
+  categories:
+    - Portfolio
+    - Blog
+    - Web Dev
+    - Technology
+  built_by: Eric Jinks
+  built_by_url: 'https://ericjinks.com/'
