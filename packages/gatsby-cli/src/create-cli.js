@@ -2,8 +2,8 @@ const path = require(`path`)
 const resolveCwd = require(`resolve-cwd`)
 const yargs = require(`yargs`)
 const report = require(`./reporter`)
-const fs = require(`fs`)
 const envinfo = require(`envinfo`)
+const existsSync = require(`fs-exists-cached`).sync
 
 const DEFAULT_BROWSERS = [`>0.25%`, `not dead`]
 
@@ -19,7 +19,7 @@ function buildLocalCommands(cli, isLocalSite) {
   const directory = path.resolve(`.`)
 
   let siteInfo = { directory, browserslist: DEFAULT_BROWSERS }
-  const useYarn = fs.existsSync(path.join(directory, `yarn.lock`))
+  const useYarn = existsSync(path.join(directory, `yarn.lock`))
   if (isLocalSite) {
     const json = require(path.join(directory, `package.json`))
     siteInfo.sitePackageJson = json

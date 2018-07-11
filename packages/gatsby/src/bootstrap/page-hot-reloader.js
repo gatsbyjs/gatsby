@@ -53,14 +53,15 @@ const runCreatePages = async () => {
   })
 
   // Delete pages that weren't updated when running createPages.
-  store
-    .getState()
-    .pages.filter(p => !_.includes(statefulPlugins, p.pluginCreatorId))
-    .filter(p => p.updatedAt < timestamp)
-    .forEach(page => {
+  store.getState().pages.forEach(page => {
+    if (
+      !_.includes(statefulPlugins, page.pluginCreatorId) &&
+      page.updatedAt < timestamp
+    ) {
       deleteComponentsDependencies([page.path])
       deletePage(page)
-    })
+    }
+  })
 
   emitter.emit(`CREATE_PAGE_END`)
 }

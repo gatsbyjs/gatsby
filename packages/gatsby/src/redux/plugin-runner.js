@@ -4,7 +4,7 @@ const { store, emitter } = require(`./index`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
 
 emitter.on(`CREATE_NODE`, action => {
-  const node = store.getState().nodes[action.payload.id]
+  const node = store.getState().nodes.get(action.payload.id)
   const traceTags = { nodeId: node.id, nodeType: node.internal.type }
   apiRunnerNode(`onCreateNode`, {
     node,

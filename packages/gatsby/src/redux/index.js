@@ -12,7 +12,13 @@ const emitter = mitt()
 // Reducers
 const reducers = require(`./reducers`)
 
-const objectToMap = obj => new Map(Object.entries(obj))
+const objectToMap = obj => {
+  let map = new Map()
+  Object.keys(obj).forEach(key => {
+    map.set(key, obj[key])
+  })
+  return map
+}
 
 const mapToObject = map => {
   const obj = {}
@@ -25,14 +31,28 @@ const mapToObject = map => {
 // Read from cache the old node data.
 let initialState = {}
 try {
-  initialState = JSON.parse(
-    fs.readFileSync(`${process.cwd()}/.cache/redux-state.json`)
-  )
-  initialState.staticQueryComponents = objectToMap(
-    initialState.staticQueryComponents
-  )
-  initialState.components = objectToMap(initialState.components)
+  const file = fs.readFileSync(`${process.cwd()}/.cache/redux-state.json`)
+  // Apparently the file mocking in node-tracking-test.js
+  // can override the file reading replacing the mocked string with
+  // an already parsed object.
+  if (Buffer.isBuffer(file) || typeof file === `string`) {
+    initialState = JSON.parse(file)
+  }
+  if (initialState.staticQueryComponents) {
+    initialState.staticQueryComponents = objectToMap(
+      initialState.staticQueryComponents
+    )
+  }
+  if (initialState.components) {
+    initialState.components = objectToMap(initialState.components)
+  }
+  if (initialState.nodes) {
+    initialState.nodes = objectToMap(initialState.nodes)
+  }
 } catch (e) {
+  if (process.env.NODE_ENV === `test`) {
+    console.log(`error loading initialState`, e)
+  }
   // ignore errors.
 }
 
@@ -85,6 +105,7 @@ const saveState = _.debounce(state => {
     pickedState.staticQueryComponents
   )
   pickedState.components = mapToObject(pickedState.components)
+  pickedState.nodes = mapToObject(pickedState.nodes)
   fs.writeFile(
     `${process.cwd()}/.cache/redux-state.json`,
     stringify(pickedState, null, 2),
@@ -113,10 +134,14 @@ exports.store = store
  * @returns {Array}
  */
 exports.getNodes = () => {
-  let nodes = _.values(store.getState().nodes)
-  return nodes ? nodes : []
+  const nodes = store.getState().nodes
+  if (nodes) {
+    return Array.from(nodes.values())
+  } else {
+    return []
+  }
 }
-const getNode = id => store.getState().nodes[id]
+const getNode = id => store.getState().nodes.get(id)
 
 /** Get node by id from store.
  *
@@ -133,7 +158,7 @@ exports.getNode = getNode
  * @returns {boolean}
  */
 exports.hasNodeChanged = (id, digest) => {
-  const node = store.getState().nodes[id]
+  const node = store.getState().nodes.get(id)
   if (!node) {
     return true
   } else {
