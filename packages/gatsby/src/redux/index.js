@@ -25,9 +25,13 @@ const mapToObject = map => {
 // Read from cache the old node data.
 let initialState = {}
 try {
-  initialState = JSON.parse(
-    fs.readFileSync(`${process.cwd()}/.cache/redux-state.json`)
-  )
+  const file = fs.readFileSync(`${process.cwd()}/.cache/redux-state.json`)
+  // Apparently the file mocking in node-tracking-test.js
+  // can override the file reading replacing the mocked string with
+  // an already parsed object.
+  if (!_.isPlainObject(file)) {
+    initialState = JSON.parse(file)
+  }
   if (initialState.staticQueryComponents) {
     initialState.staticQueryComponents = objectToMap(
       initialState.staticQueryComponents
