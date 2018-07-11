@@ -89,7 +89,7 @@ const PreferWebp = ({ data, location }) => (
 export default PreferWebp
 
 export const query = graphql`
-  query PreferWebpQuery {
+  query {
     reddImageMobile: file(relativePath: { regex: "/redd/" }) {
       childImageSharp {
         fixed(width: 125) {

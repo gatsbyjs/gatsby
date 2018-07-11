@@ -18,7 +18,7 @@ class mdInsetPage extends React.Component {
 export default mdInsetPage
 
 export const pageQuery = graphql`
-  query markdownTemplateBySlug($slug: String!) {
+  query($slug: String!) {
     markdownRemark(fields: { slug: { eq: $slug } }) {
       html
     }

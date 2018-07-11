@@ -80,7 +80,7 @@ IndexPage.propTypes = propTypes
 export default IndexPage
 
 export const pageQuery = graphql`
-  query PageQuery {
+  query {
     us: allContentfulProduct(filter: { node_locale: { eq: "en-US" } }) {
       edges {
         node {

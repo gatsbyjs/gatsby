@@ -87,7 +87,7 @@ class SiteIndex extends React.Component {
 export default SiteIndex
 
 export const pageQuery = graphql`
-  query allPosts {
+  query {
     allJavascriptFrontmatter {
       edges {
         node {
