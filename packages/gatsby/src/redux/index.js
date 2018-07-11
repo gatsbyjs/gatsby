@@ -120,7 +120,14 @@ exports.store = store
  *
  * @returns {Array}
  */
-exports.getNodes = () => Array.from(store.getState().nodes.values())
+exports.getNodes = () => {
+  const nodes = store.getState().nodes
+  if (nodes) {
+    return Array.from(nodes.values())
+  } else {
+    return []
+  }
+}
 const getNode = id => store.getState().nodes.get(id)
 
 /** Get node by id from store.
