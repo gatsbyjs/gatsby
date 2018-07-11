@@ -1,7 +1,5 @@
 import React from "react"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
-import RotatingText from "react-rotating-text"
-//import "react-rotating-text/src/ReactRotatingText.css"
 
 import { rhythm, scale } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
