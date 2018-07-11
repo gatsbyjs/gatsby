@@ -11,7 +11,6 @@ const kebabHash = require(`kebab-hash`)
 const { hasNodeChanged, getNode } = require(`./index`)
 const { trackInlineObjectsInRootNode } = require(`../schema/node-tracking`)
 const { store } = require(`./index`)
-const profile = require(`../utils/profile`)
 const fileExistsSync = require(`fs-exists-cached`).sync
 import * as joiSchemas from "../joi-schemas/joi"
 import { generateComponentChunkName } from "../utils/js-chunk-names"
@@ -99,7 +98,6 @@ const hasWarnedForPageComponent = new Set()
  */
 const fileOkCache = {}
 actions.createPage = (page: PageInput, plugin?: Plugin, traceId?: string) => {
-  const start = process.hrtime()
   let noPageOrComponent = false
   let name = `The plugin "${plugin.name}"`
   if (plugin.name === `default-site-plugin`) {
@@ -294,7 +292,6 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     fileOkCache[internalPage.component] = true
   }
 
-  profile({ start, name: `actions_createPage`, parent: `site createPages` })
   return {
     type: `CREATE_PAGE`,
     plugin,

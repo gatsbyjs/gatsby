@@ -351,7 +351,6 @@ module.exports = async (args: BootstrapArgs) => {
   const startQueries = process.hrtime()
   queryQueue.on(`task_finish`, () => {
     const stats = queryQueue.getStats()
-    // console.log({ stats })
     activity.setStatus(
       `${stats.total}/${stats.peak} ${(
         stats.total / convertHrtime(process.hrtime(startQueries)).seconds

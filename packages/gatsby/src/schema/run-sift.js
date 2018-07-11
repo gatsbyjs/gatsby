@@ -23,7 +23,6 @@ const enhancedNodeCacheId = ({ node, args }) =>
 function awaitSiftField(fields, node, k) {
   const field = fields[k]
   if (field.resolve) {
-    console.log(`resolving`, field)
     return field.resolve(
       node,
       {},
