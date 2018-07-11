@@ -78,12 +78,15 @@ module.exports = async (args: BootstrapArgs) => {
 
   activity.end()
 
-  const flattenedPlugins = await loadPlugins(config)
-
-  // onPreBootstrap
-  activity = report.activityTimer(`onPreBootstrap`)
+  activity = report.activityTimer(`load plugins`)
   activity.start()
-  await apiRunnerNode(`onPreBootstrap`)
+  const flattenedPlugins = await loadPlugins(config)
+  activity.end()
+
+  // onPreInit
+  activity = report.activityTimer(`onPreInit`)
+  activity.start()
+  await apiRunnerNode(`onPreInit`)
   activity.end()
 
   // Delete html and css files from the public directory as we don't want
@@ -100,6 +103,8 @@ module.exports = async (args: BootstrapArgs) => {
   ])
   activity.end()
 
+  activity = report.activityTimer(`initialize cache`)
+  activity.start()
   // Check if any plugins have been updated since our last run. If so
   // we delete the cache is there's likely been changes
   // since the previous run.
@@ -168,6 +173,7 @@ module.exports = async (args: BootstrapArgs) => {
       fs.ensureDir(`${program.directory}/public/static/d/${i}`)
     )
   )
+  activity.end()
 
   // Copy our site files to the root of the site.
   activity = report.activityTimer(`copy gatsby files`)
@@ -267,6 +273,12 @@ module.exports = async (args: BootstrapArgs) => {
   /**
    * Start the main bootstrap processes.
    */
+
+  // onPreBootstrap
+  activity = report.activityTimer(`onPreBootstrap`)
+  activity.start()
+  await apiRunnerNode(`onPreBootstrap`)
+  activity.end()
 
   // Source nodes
   activity = report.activityTimer(`source and transform nodes`)
