@@ -38,7 +38,6 @@ Object {
   "plugin": Object {
     "name": "tests",
   },
-  "traceId": undefined,
   "type": "CREATE_NODE",
 }
 `;
