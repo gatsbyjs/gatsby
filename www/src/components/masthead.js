@@ -7,8 +7,7 @@ import { rhythm, scale } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
 import CtaButton from "./cta-button"
 import { vP, vPHd, vPVHd, vPVVHd } from "../components/gutters"
-import "./slider.css"
-
+import Slider from "./slider"
 
 const MastheadContent = () => (
   <div
@@ -92,12 +91,7 @@ const MastheadContent = () => (
               marginRight: rhythm(1 / 8),
             } 
           }}>Build</span>
-          <div class="slidingVertical">
-            <span>blazing fast</span>
-            <span>modern</span>
-            <span>beautiful</span>
-            <span>secure</span>
-          </div>
+          <Slider items={[`blazing fast`, `modern`, `beautiful`, `secure`]} />
         </span>
         websites with React
       </h1>
