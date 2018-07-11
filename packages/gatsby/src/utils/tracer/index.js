@@ -29,10 +29,8 @@ function initTracer(tracerFile) {
 }
 
 async function stopTracer() {
-  if (tracerProvider) {
-    if (tracerProvider.stop) {
-      await tracerProvider.stop()
-    }
+  if (tracerProvider && tracerProvider.stop) {
+    await tracerProvider.stop()
   }
 }
 
