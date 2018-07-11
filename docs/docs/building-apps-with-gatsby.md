@@ -21,7 +21,7 @@ You can also use your React components to create interactive widgets e.g. allow 
 
 Often you want to create a site with client-only portions that are gated by authentication.
 
-A classic example would be a site that has a landing page, various marketing pages, a login page, and then an app section for logged-in users. The logged-in section doesn't need to be server rendered as all data will be loaded live from your API after the user logs so it makes sense to make this portion of your site client-only.
+A classic example would be a site that has a landing page, various marketing pages, a login page, and then an app section for logged-in users. The logged-in section doesn't need to be server rendered as all data will be loaded live from your API after the user logs in. So it makes sense to make this portion of your site client-only.
 
 Gatsby uses [React Router](https://reacttraining.com/react-router/) under the hood. You should use React Router to create client-only routes.
 
