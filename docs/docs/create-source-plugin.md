@@ -60,8 +60,8 @@ follow this pattern.
 Your `gatsby-node.js` should look something like:
 
 ```javascript
-exports.sourceNodes = async ({ boundActionCreators }) => {
-  const { createNode } = boundActionCreators
+exports.sourceNodes = async ({ actions }) => {
+  const { createNode } = actions
   // Create nodes here, generally by downloading data
   // from a remote API.
   const data = await fetch(REMOTE_API)
