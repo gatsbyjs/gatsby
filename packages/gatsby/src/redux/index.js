@@ -28,11 +28,17 @@ try {
   initialState = JSON.parse(
     fs.readFileSync(`${process.cwd()}/.cache/redux-state.json`)
   )
-  initialState.staticQueryComponents = objectToMap(
-    initialState.staticQueryComponents
-  )
-  initialState.components = objectToMap(initialState.components)
-  initialState.nodes = objectToMap(initialState.nodes)
+  if (initialState.staticQueryComponents) {
+    initialState.staticQueryComponents = objectToMap(
+      initialState.staticQueryComponents
+    )
+  }
+  if (initialState.components) {
+    initialState.components = objectToMap(initialState.components)
+  }
+  if (initialState.nodes) {
+    initialState.nodes = objectToMap(initialState.nodes)
+  }
 } catch (e) {
   // ignore errors.
 }

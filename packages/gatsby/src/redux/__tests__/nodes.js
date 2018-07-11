@@ -351,9 +351,12 @@ describe(`Create and update nodes`, () => {
       )
     )
     store.dispatch(
-      actions.deleteNodes([`hi`], {
-        name: `tests`,
-      })
+      actions.deleteNode(
+        { node: getNode(`hi`) },
+        {
+          name: `tests`,
+        }
+      )
     )
     expect(store.getState().nodes.size).toEqual(0)
   })

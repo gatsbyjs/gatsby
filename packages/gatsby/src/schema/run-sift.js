@@ -170,7 +170,10 @@ module.exports = ({
       nodesLength: nodes.length,
       ...fieldsToSift,
     })
-    if (resolvedNodesCache.has(nodesCacheKey)) {
+    if (
+      process.env.NODE_ENV !== `test` &&
+      resolvedNodesCache.has(nodesCacheKey)
+    ) {
       return Promise.resolve(resolvedNodesCache.get(nodesCacheKey))
     } else {
       return Promise.all(
