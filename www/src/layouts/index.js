@@ -11,6 +11,7 @@ import featuresSidebar from "../pages/docs/features-links.yaml"
 import { OutboundLink } from "gatsby-plugin-google-analytics"
 import { rhythm, options, scale } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
+import Banner from "../components/banner"
 import hex2rgba from "hex2rgba"
 import "../css/prism-coy.css"
 
@@ -135,44 +136,28 @@ class DefaultLayout extends React.Component {
           />
           <html lang="en" />
         </Helmet>
-        <div
-          css={{
-            width: `100%`,
-            background: isHomepage ? `#402060` : colors.gatsby,
-            color: colors.ui.bright,
-            fontFamily: options.headerFontFamily.join(`,`),
-            fontSize: scale(-1 / 5).fontSize,
-            zIndex: `3`,
-            [presets.Desktop]: {
-              position: `fixed`,
-            },
-            [presets.Tablet]: {
-              position: `fixed`,
-            },
-            WebkitFontSmoothing: `antialiased`,
-          }}
-        >
-          Gatsby v2 is now in beta!
+        <Banner background={isHomepage ? `#402060` : false}>
+          Gatsby v2 is now in beta!{` `}
           <OutboundLink
-            href="https://next.gatsbyjs.org"
+            href="https://next.gatsbyjs.org/"
             css={{
-              color: `#fff`, 
-              textDecoration: `none`,
-              display: `block`,
-              textAlign: `center`,
-              padding: rhythm(1 / 2),
+              color: `#fff`,
             }}
           >
-            View the v2 docs.
-          </OutboundLink>
-        </div>
+            View the v2 docs
+          </OutboundLink>.
+        </Banner>
         <Navigation pathname={this.props.location.pathname} />
         <div
           className={hasSidebar ? `main-body has-sidebar` : `main-body`}
           css={{
+            paddingTop: isHomepage
+            ? 0 : presets.bannerHeight,
             [presets.Tablet]: {
               margin: `0 auto`,
-              paddingTop: isHomepage ? presets.bannerHeight : `calc(${presets.bannerHeight} + ${presets.headerHeight})`,
+              paddingTop: isHomepage
+                ? presets.bannerHeight
+                : `calc(${presets.bannerHeight} + ${presets.headerHeight})`,
             },
           }}
         >

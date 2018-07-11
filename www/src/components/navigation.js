@@ -91,12 +91,13 @@ export default ({ pathname }) => {
       css={{
         borderBottom: `1px solid ${colors.ui.light}`,
         backgroundColor: `rgba(255,255,255,0.975)`,
-        position: isHomepage ? `absolute` : false,
+        position: `relative`,
         height: presets.headerHeight,
         zIndex: `2`,
         left: 0,
         right: 0,
         top: `calc(${presets.bannerHeight} - 1px)`,
+        borderBottom: `1px solid rgb(245, 243, 247)`,
         [presets.Tablet]: {
           position: isHomepage || isBlog ? `absolute` : `fixed`,
         },
