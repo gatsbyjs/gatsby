@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`File parser parses files correctly 1`] = `
+exports[`File parser extracts query AST correctly from files 1`] = `
 Map {
   "page-query.js" => Object {
     "definitions": Array [
