@@ -16,29 +16,30 @@ exports.onPreBootstrap = (
   pluginOptions
 ) => {
   const { createNode, touchNode } = actions
+  const screenshotNodes = Array.from(store.getState().nodes.values()).filter(
+    n => n.internal.type === `Screenshot`
+  )
 
   // Check for updated screenshots
   // and prevent Gatsby from garbage collecting remote file nodes
   return Promise.all(
-    _.values(store.getState().nodes)
-      .filter(n => n.internal.type === `Screenshot`)
-      .map(async n => {
-        if (n.expires && new Date() >= new Date(n.expires)) {
-          // Screenshot expired, re-run Lambda
-          await createScreenshotNode({
-            url: n.url,
-            parent: n.parent,
-            store,
-            cache,
-            createNode,
-            createNodeId,
-          })
-        } else {
-          // Screenshot hasn't yet expired, touch the image node
-          // to prevent garbage collection
-          touchNode({ nodeId: n.screenshotFile___NODE })
-        }
-      })
+    screenshotNodes.map(async n => {
+      if (n.expires && new Date() >= new Date(n.expires)) {
+        // Screenshot expired, re-run Lambda
+        await createScreenshotNode({
+          url: n.url,
+          parent: n.parent,
+          store,
+          cache,
+          createNode,
+          createNodeId,
+        })
+      } else {
+        // Screenshot hasn't yet expired, touch the image node
+        // to prevent garbage collection
+        touchNode({ nodeId: n.screenshotFile___NODE })
+      }
+    })
   )
 }
 
