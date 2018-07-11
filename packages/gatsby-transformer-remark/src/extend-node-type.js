@@ -60,7 +60,7 @@ const withPathPrefix = (url, pathPrefix) =>
 const ASTPromiseMap = new Map()
 
 module.exports = (
-  { type, store, pathPrefix, getNode, cache, reporter },
+  { type, store, pathPrefix, getNode, getNodes, cache, reporter },
   pluginOptions
 ) => {
   if (type.name !== `MarkdownRemark`) {
@@ -104,9 +104,7 @@ module.exports = (
         return await ASTPromiseMap.get(cacheKey)
       } else {
         const ASTGenerationPromise = new Promise(async resolve => {
-          const files = _.values(store.getState().nodes).filter(
-            n => n.internal.type === `File`
-          )
+          const files = getNodes().filter(n => n.internal.type === `File`)
           const ast = await new Promise((resolve, reject) => {
             // Use Bluebird's Promise function "each" to run remark plugins serially.
             Promise.each(pluginOptions.plugins, plugin => {
@@ -171,9 +169,7 @@ module.exports = (
               // every node type in DataTree gets a schema type automatically.
               // typegen plugins just modify the auto-generated types to add derived fields
               // as well as computationally expensive fields.
-              const files = _.values(store.getState().nodes).filter(
-                n => n.internal.type === `File`
-              )
+              const files = getNodes().filter(n => n.internal.type === `File`)
               // Use Bluebird's Promise function "each" to run remark plugins serially.
               Promise.each(pluginOptions.plugins, plugin => {
                 const requiredPlugin = require(plugin.resolve)
