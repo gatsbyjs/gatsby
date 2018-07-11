@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import Helmet from "react-helmet"
 import { rhythm } from "../utils/typography"
+import { colors } from "../utils/presets"
 
 import Layout from "../components/layout"
 import Container from "../components/container"
@@ -23,20 +24,23 @@ class NewsLetter extends Component {
           }}
         >
           <h1 id="introduction" style={{ marginTop: 0 }}>
-            NewsLetter
+            Newsletter
           </h1>
           <div>
-            Sign up for the Gatsby newsletter to keep up with the latest news
-            and updates! We promise not to be spammy and you can unsubscribe at
-            any time.
+            Sign up for the Gatsby newsletter to keep up with the latest from
+            the Gatsby community! Hear about new features, tips & tricks, and
+            what people are building.
           </div>
-          <div
-            css={{
+
+          <EmailCaptureForm
+            signupMessage="Sign up for the Gatsby Newsletter"
+            confirmMessage="Success! You have been subscribed to the Gatsby newsletter. Expect to see a newsletter in your inbox each Wednesday (or the equivalent of US Wednesday in your time zone)!"
+            containerCss={{
               marginTop: rhythm(1),
+              paddingTop: rhythm(1 / 2),
+              borderTop: `2px solid ${colors.lilac}`,
             }}
-          >
-            <EmailCaptureForm formOnly />
-          </div>
+          />
         </Container>
       </Layout>
     )
