@@ -262,7 +262,6 @@ export default (pagePath, callback) => {
       } else {
         headComponents.unshift(
           <style
-            type="text/css"
             data-href={urlJoin(pathPrefix, style.name)}
             dangerouslySetInnerHTML={{
               __html: fs.readFileSync(
