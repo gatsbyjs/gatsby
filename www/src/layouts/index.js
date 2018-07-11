@@ -152,7 +152,7 @@ class DefaultLayout extends React.Component {
             WebkitFontSmoothing: `antialiased`,
           }}
         >
-
+          Gatsby v2 is now in beta!
           <OutboundLink
             href="https://next.gatsbyjs.org"
             css={{
@@ -162,7 +162,8 @@ class DefaultLayout extends React.Component {
               textAlign: `center`,
               padding: rhythm(1 / 2),
             }}
-          >Gatsby v2 is now in beta!
+          >
+            View the v2 docs.
           </OutboundLink>
         </div>
         <Navigation pathname={this.props.location.pathname} />
