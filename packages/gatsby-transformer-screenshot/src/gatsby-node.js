@@ -1,6 +1,5 @@
 const crypto = require(`crypto`)
 const axios = require(`axios`)
-const _ = require(`lodash`)
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 
 const SCREENSHOT_ENDPOINT = `https://h7iqvn4842.execute-api.us-east-2.amazonaws.com/prod/screenshot`
@@ -12,11 +11,11 @@ const createContentDigest = obj =>
     .digest(`hex`)
 
 exports.onPreBootstrap = (
-  { store, cache, actions, createNodeId },
+  { store, cache, actions, createNodeId, getNodes },
   pluginOptions
 ) => {
   const { createNode, touchNode } = actions
-  const screenshotNodes = Array.from(store.getState().nodes.values()).filter(
+  const screenshotNodes = getNodes().filter(
     n => n.internal.type === `Screenshot`
   )
 
