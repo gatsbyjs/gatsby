@@ -6,14 +6,5 @@ module.exports.setParserPlugins = options => {
   if (isNil(options) || !has(options, `blocks`)) {
     throw Error(`missing required "blocks" option`)
   }
-  const remarkCustomFormattedBlocks = Object.keys(options.blocks).reduce(
-    (blocks, currentBlock) => {
-      return {
-        ...blocks,
-        [currentBlock]: { classes: options.blocks[currentBlock] },
-      }
-    },
-    {}
-  )
-  return [[remarkCustomBlocks, remarkCustomFormattedBlocks]]
+  return [[remarkCustomBlocks, options.blocks]]
 }

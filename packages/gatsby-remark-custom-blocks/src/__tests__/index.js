@@ -27,15 +27,4 @@ describe(`gatsby-remark-custom-blocks`, () => {
     expect(find(markdownAST, { type: `someTypeCustomBlock` })).toBeTruthy()
     expect(find(markdownAST, { type: `anotherTypeCustomBlock` })).toBeTruthy()
   })
-
-  it(`creates well formatted nodes of blocks given in options`, () => {
-    expect(
-      plugin.setParserPlugins({
-        blocks: {
-          danger: `custom-block-danger`,
-          info: `custom-block-info`,
-        },
-      })
-    ).toMatchSnapshot()
-  })
 })
