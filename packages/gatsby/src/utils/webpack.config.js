@@ -374,6 +374,13 @@ module.exports = async (
       ],
       alias: {
         gatsby$: directoryPath(path.join(`.cache`, `gatsby-browser-entry.js`)),
+        // Using directories for module resolution is mandatory because
+        // relative path imports are used sometimes
+        // See https://stackoverflow.com/a/49455609/6420957 for more details
+        'core-js': path.dirname(require.resolve(`core-js/package.json`)),
+        'react-hot-loader': path.dirname(
+          require.resolve(`react-hot-loader/package.json`),
+        ),
       },
     }
   }
