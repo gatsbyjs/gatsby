@@ -57,7 +57,7 @@ class BrowserAPIDocs extends React.Component {
 export default BrowserAPIDocs
 
 export const pageQuery = graphql`
-  query BrowserAPIDocsQuery {
+  query {
     file(relativePath: { regex: "/src.*api-browser-docs.js/" }) {
       childrenDocumentationJs {
         name

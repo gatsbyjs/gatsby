@@ -369,7 +369,7 @@ styles.column25 = {
 export default Index
 
 export const pageQuery = graphql`
-  query IndexQuery {
+  query {
     allImageSharp {
       edges {
         node {

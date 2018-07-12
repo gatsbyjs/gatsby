@@ -264,7 +264,7 @@ export default ({ data }) => (
 )
 
 export const query = graphql`
-  query AboutQuery {
+  query {
     site {
       siteMetadata {
         title
@@ -286,7 +286,7 @@ import { rhythm } from "../utils/typography"
 export default ({ children }) => (
   <StaticQuery
     query={graphql`
-      query LayoutQuery {
+      query {
         site {
           siteMetadata {
             title

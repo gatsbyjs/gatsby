@@ -22,7 +22,7 @@ class IndexPage extends React.Component {
 export default IndexPage
 
 export const pageQuery = graphql`
-  query allAsciiPages {
+  query {
     allAsciidoc {
       edges {
         node {

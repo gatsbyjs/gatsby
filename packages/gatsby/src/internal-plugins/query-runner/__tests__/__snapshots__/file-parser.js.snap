@@ -1,0 +1,208 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`File parser extracts query AST correctly from files 1`] = `
+Map {
+  "page-query.js" => Object {
+    "definitions": Array [
+      Object {
+        "directives": Array [],
+        "kind": "OperationDefinition",
+        "loc": Object {
+          "end": 30,
+          "start": 1,
+        },
+        "name": Object {
+          "kind": "Name",
+          "loc": Object {
+            "end": 20,
+            "start": 7,
+          },
+          "value": "PageQueryName",
+        },
+        "operation": "query",
+        "selectionSet": Object {
+          "kind": "SelectionSet",
+          "loc": Object {
+            "end": 30,
+            "start": 21,
+          },
+          "selections": Array [
+            Object {
+              "alias": undefined,
+              "arguments": Array [],
+              "directives": Array [],
+              "kind": "Field",
+              "loc": Object {
+                "end": 28,
+                "start": 25,
+              },
+              "name": Object {
+                "kind": "Name",
+                "loc": Object {
+                  "end": 28,
+                  "start": 25,
+                },
+                "value": "foo",
+              },
+              "selectionSet": undefined,
+            },
+          ],
+        },
+        "variableDefinitions": Array [],
+      },
+    ],
+    "kind": "Document",
+  },
+  "page-query-no-name.js" => Object {
+    "definitions": Array [
+      Object {
+        "directives": Array [],
+        "kind": "OperationDefinition",
+        "loc": Object {
+          "end": 16,
+          "start": 1,
+        },
+        "name": Object {
+          "kind": "Name",
+          "value": "pageQueryNoNameJs2538359280",
+        },
+        "operation": "query",
+        "selectionSet": Object {
+          "kind": "SelectionSet",
+          "loc": Object {
+            "end": 16,
+            "start": 7,
+          },
+          "selections": Array [
+            Object {
+              "alias": undefined,
+              "arguments": Array [],
+              "directives": Array [],
+              "kind": "Field",
+              "loc": Object {
+                "end": 14,
+                "start": 11,
+              },
+              "name": Object {
+                "kind": "Name",
+                "loc": Object {
+                  "end": 14,
+                  "start": 11,
+                },
+                "value": "foo",
+              },
+              "selectionSet": undefined,
+            },
+          ],
+        },
+        "variableDefinitions": Array [],
+      },
+    ],
+    "kind": "Document",
+  },
+  "static-query.js" => Object {
+    "definitions": Array [
+      Object {
+        "directives": Array [],
+        "hash": 407706182,
+        "isStaticQuery": true,
+        "kind": "OperationDefinition",
+        "loc": Object {
+          "end": 29,
+          "start": 0,
+        },
+        "name": Object {
+          "kind": "Name",
+          "loc": Object {
+            "end": 21,
+            "start": 6,
+          },
+          "value": "StaticQueryName",
+        },
+        "operation": "query",
+        "selectionSet": Object {
+          "kind": "SelectionSet",
+          "loc": Object {
+            "end": 29,
+            "start": 22,
+          },
+          "selections": Array [
+            Object {
+              "alias": undefined,
+              "arguments": Array [],
+              "directives": Array [],
+              "kind": "Field",
+              "loc": Object {
+                "end": 27,
+                "start": 24,
+              },
+              "name": Object {
+                "kind": "Name",
+                "loc": Object {
+                  "end": 27,
+                  "start": 24,
+                },
+                "value": "foo",
+              },
+              "selectionSet": undefined,
+            },
+          ],
+        },
+        "text": "query StaticQueryName { foo }",
+        "variableDefinitions": Array [],
+      },
+    ],
+    "kind": "Document",
+  },
+  "static-query-no-name.js" => Object {
+    "definitions": Array [
+      Object {
+        "directives": Array [],
+        "hash": 2605331189,
+        "isStaticQuery": true,
+        "kind": "OperationDefinition",
+        "loc": Object {
+          "end": 7,
+          "start": 0,
+        },
+        "name": Object {
+          "kind": "Name",
+          "value": "staticQueryNoNameJs2605331189",
+        },
+        "operation": "query",
+        "selectionSet": Object {
+          "kind": "SelectionSet",
+          "loc": Object {
+            "end": 7,
+            "start": 0,
+          },
+          "selections": Array [
+            Object {
+              "alias": undefined,
+              "arguments": Array [],
+              "directives": Array [],
+              "kind": "Field",
+              "loc": Object {
+                "end": 5,
+                "start": 2,
+              },
+              "name": Object {
+                "kind": "Name",
+                "loc": Object {
+                  "end": 5,
+                  "start": 2,
+                },
+                "value": "foo",
+              },
+              "selectionSet": undefined,
+            },
+          ],
+        },
+        "text": "{ foo }",
+        "variableDefinitions": Array [],
+      },
+    ],
+    "kind": "Document",
+  },
+}
+`;

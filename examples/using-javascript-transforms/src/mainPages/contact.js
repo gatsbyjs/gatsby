@@ -21,7 +21,7 @@ class ContactMe extends React.Component {
 export default ContactMe
 
 export const pageQuery = graphql`
-  query contactUs {
+  query {
     site {
       ...site_sitemetadata
     }
