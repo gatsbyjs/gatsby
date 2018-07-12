@@ -304,7 +304,7 @@ export default ({ data }) => {
 }
 
 export const query = graphql`
-  query BlogPostQuery($slug: String!) {
+  query($slug: String!) {
     markdownRemark(fields: { slug: { eq: $slug } }) {
       html
       frontmatter {
@@ -379,7 +379,7 @@ export default ({ data }) => {
 }
 
 export const query = graphql`
-  query IndexQuery {
+  query {
     allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
       totalCount
       edges {

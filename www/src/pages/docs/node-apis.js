@@ -91,7 +91,7 @@ class NodeAPIDocs extends React.Component {
 export default NodeAPIDocs
 
 export const pageQuery = graphql`
-  query APINodeDocsQuery {
+  query {
     file(relativePath: { regex: "/src.*api-node-docs.js/" }) {
       childrenDocumentationJs {
         name

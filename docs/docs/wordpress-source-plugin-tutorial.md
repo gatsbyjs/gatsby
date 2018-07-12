@@ -142,7 +142,7 @@ export default ({ data }) => {
 }
 
 export const pageQuery = graphql`
-  query MyFiles {
+  query {
     allWordpressPost(sort: { fields: [date] }) {
       edges {
         node {

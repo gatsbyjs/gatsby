@@ -28,7 +28,7 @@ const IndexPage = ({ data }) => {
 export default IndexPage
 
 export const pageQuery = graphql`
-  query IndexQuery {
+  query {
     allMediumPost(limit: 5, sort: { fields: [createdAt], order: DESC }) {
       edges {
         node {

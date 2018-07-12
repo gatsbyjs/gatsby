@@ -62,7 +62,7 @@ ProductTemplate.propTypes = propTypes
 export default ProductTemplate
 
 export const pageQuery = graphql`
-  query productQuery($id: String!) {
+  query($id: String!) {
     contentfulProduct(id: { eq: $id }) {
       productName {
         productName

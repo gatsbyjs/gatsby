@@ -14,7 +14,7 @@ class ShowcasePage extends Component {
 export default ShowcasePage
 
 export const showcaseQuery = graphql`
-  query ShowcaseQuery {
+  query {
     featured: allSitesYaml(limit: 40, filter: { featured: { eq: true } }) {
       edges {
         node {
