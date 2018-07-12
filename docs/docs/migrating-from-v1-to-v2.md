@@ -537,7 +537,7 @@ export const query = graphql`
   }
 ```
 
-You can skip `query` keyword too if You don't use query variables:
+You can also skip the `query` keyword if you don't use query variables:
 
 ```diff
 export const query = graphql`
@@ -551,7 +551,7 @@ export const query = graphql`
   }
 ```
 
-This isn't breaking change. Queries with explicit names will continue to work as they did in v1.
+This isn't a breaking change. Queries with explicit names will continue to work as they did in v1.
 
 ## Plugin specific changes
 
