@@ -1191,3 +1191,15 @@
   source_url: https://github.com/GaiAma/rescue-amazonian-rainforest.com
   built_by: GaiAma
   built_by_url: 'https://www.gaiama.org/'
+- title: Healthcare Logic
+  main_url: 'https://www.healthcarelogic.com/'
+  url: 'https://www.healthcarelogic.com/'
+  featured: false
+  description: >-
+    Revolutionary technology that empowers clinical and managerial leaders to collaborate with clarity.
+  categories:
+    - Marketing
+    - Healthcare
+    - Technology
+  built_by: Thrive
+  built_by_url: 'https://thriveweb.com.au/'

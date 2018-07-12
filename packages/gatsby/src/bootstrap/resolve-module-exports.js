@@ -1,8 +1,8 @@
 // @flow
 const fs = require(`fs`)
-const babylon = require(`@babel/parser`)
 const traverse = require(`babel-traverse`).default
 const get = require(`lodash/get`)
+import { babelParseToAst } from "../utils/babel-parse-to-ast"
 
 /**
  * Given a `require.resolve()` compatible path pointing to a JS module,
@@ -24,25 +24,7 @@ module.exports = (modulePath, resolver = require.resolve) => {
   }
   const code = fs.readFileSync(absPath, `utf8`) // get file contents
 
-  const babylonOpts = {
-    sourceType: `module`,
-    allowImportExportEverywhere: true,
-    plugins: [
-      `jsx`,
-      `doExpressions`,
-      `objectRestSpread`,
-      `decorators`,
-      `classProperties`,
-      `exportExtensions`,
-      `asyncGenerators`,
-      `functionBind`,
-      `functionSent`,
-      `dynamicImport`,
-      `flow`,
-    ],
-  }
-
-  const ast = babylon.parse(code, babylonOpts)
+  const ast = babelParseToAst(code, absPath)
 
   // extract names of exports from file
   traverse(ast, {
