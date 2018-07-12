@@ -42,6 +42,7 @@ const sectionListFeatures = extendSectionList(featuresSidebar).map(item => {
 const sectionListTutorial = extendSectionList(tutorialSidebar).map(item => {
   return {
     ...item,
+    disableAccordions: true,
   }
 })
 
