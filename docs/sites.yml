@@ -1165,6 +1165,32 @@
     - Technology
   built_by: Eric Jinks
   built_by_url: 'https://ericjinks.com/'
+- title: GaiAma - We are wildlife
+  main_url: 'https://www.gaiama.org/'
+  url: 'https://www.gaiama.org/'
+  featured: false
+  description: >-
+    We founded the GaiAma conservation organization to protect wildlife in Perú and to create an example of a permaculture neighborhood, living symbiotically with the forest - because reforestation is just the beginning
+  categories:
+    - Nonprofit
+    - Marketing
+    - Blog
+  source_url: https://github.com/GaiAma/gaiama.org
+  built_by: GaiAma
+  built_by_url: 'https://www.gaiama.org/'
+- title: Rescue Amazonian Rainforest
+  main_url: 'https://www.rescue-amazonian-rainforest.com/'
+  url: 'https://www.rescue-amazonian-rainforest.com/'
+  featured: false
+  description: >-
+    Germany based nonprofit, dedicated to rainforest conservation in Perú.
+  categories:
+    - Nonprofit
+    - Blog
+    - Portfolio
+  source_url: https://github.com/GaiAma/rescue-amazonian-rainforest.com
+  built_by: GaiAma
+  built_by_url: 'https://www.gaiama.org/'
 - title: Healthcare Logic
   main_url: 'https://www.healthcarelogic.com/'
   url: 'https://www.healthcarelogic.com/'
