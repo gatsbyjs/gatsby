@@ -8,6 +8,12 @@ title: "WordPress Source Plugin Tutorial"
 
 In this tutorial, you will install the `gatsby-source-wordpress` plugin in order to pull blog and image data from a WordPress install into your Gatsby site and render that data. This [Gatsby + WordPress demo site](https:/github.com/gatsbyjs/gatsby/tree/master/examples/using-wordpress) shows you the source code for an example site similar to what you’re going to be building in this tutorial, although it’s missing the cool images you’ll be adding in the next part of this tutorial, [Adding Images to a WordPress Site](/docs/image-tutorial/). :D
 
+#### But do you prefer GraphQL?
+
+If you prefer using GraphQL, there's a [wp-graphql](https://github.com/wp-graphql/wp-graphql) plugin to easily expose both default and custom data in WordPress. 
+
+The same authentication schemes supported by the WP-API are supported in wp-graphql, which can be used with the [gatsby-source-graphql](/packages/gatsby-source-graphql/) plugin.
+
 ## Why go through this tutorial?
 
 While each source plugin may operate differently from others, it’s worth going through this tutorial because you will almost definitely be using a source plugin in most Gatsby sites you build. This tutorial will walk you through the basics of connecting your Gatsby site to a CMS, pulling in data, and using React to render that data in beautiful ways on your site.
