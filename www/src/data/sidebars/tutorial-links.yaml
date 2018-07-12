@@ -85,16 +85,4 @@
       ui: steps
       items:
         - title: Lighthouse audit
-          link: /tutorial/part-eight/#lighthouse	
-- title: Advanced Tutorials
-  items:
-    - title: Making a site with user authentication*
-      link: /tutorial/authentication-tutorial/
-    - title: Making an e-commerce Gatsby site
-      link: /tutorial/ecommerce-tutorial/
-    - title: Creating a source plugin
-      link: /tutorial/source-plugin-tutorial/
-    - title: Using the WordPress source plugin
-      link: /tutorial/wordpress-source-plugin-tutorial/
-    - title: Adding images to a WordPress site
-      link: /tutorial/image-tutorial/
+          link: /tutorial/part-eight/#lighthouse

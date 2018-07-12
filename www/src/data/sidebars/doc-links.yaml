@@ -209,6 +209,18 @@
       link: /docs/prpl-pattern/
     - title: Querying data with GraphQL
       link: /docs/querying-with-graphql/
+- title: Advanced Tutorials
+  items:
+    - title: Making a site with user authentication*
+      link: /docs/authentication-tutorial/
+    - title: Making an e-commerce Gatsby site
+      link: /docs/ecommerce-tutorial/
+    - title: Creating a source plugin
+      link: /docs/source-plugin-tutorial/
+    - title: Using the WordPress source plugin
+      link: /docs/wordpress-source-plugin-tutorial/
+    - title: Adding images to a WordPress site
+      link: /docs/image-tutorial/
 - title: Contributing
   items:
     - title: Community
