@@ -44,7 +44,7 @@
           link: /docs/environment-variables/
         - title: Proxying API requests
           link: /docs/api-proxy/
-   - title: Images and files*
+    - title: Images and files*
       link: /docs/images-and-files/
       items:
         - title: Adding Images, Fonts, and Files
