@@ -435,8 +435,8 @@ module.exports = async ({
    */
   plugins.extractText = options =>
     new MiniCssExtractPlugin({
-      filename: `[name].[contenthash].css`,
-      chunkFilename: `[name].[contenthash].css`,
+      filename: `../css/[name].[contenthash].css`,
+      chunkFilename: `../css/[name].[contenthash].css`,
       ...options,
     })
 
