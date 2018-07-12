@@ -58,7 +58,7 @@ Read on for a detailed guide on what's new in version 2!
 - [Only allow defined keys on node.internal object](#only-allow-defined-keys-on-the-node-internal-object)
 - [Import `graphql` types from `gatsby/graphql`](#import-graphql-types-from-gatsbygraphql)
 - [Move `Babel Configuration`](#move-babel-configuration)
-- [Remove explicit query names](#remove-explicit-query-names)
+- [Explicit query names no longer required](#explicit-query-names-no-longer-required)
 - [Plugin specific changes](#plugin-specific-changes)
 
 You can start with a few of the most important steps - install Gatsby v2 dependencies and update your layout components.
@@ -520,7 +520,7 @@ The latest version of Gatsby uses Babel 7, which introduced [a new behavior for 
 
 More information on Gatsby and Babel configuration available [here](/docs/babel/#how-to-use-a-custom-babelrc-file).
 
-## Remove explicit query names
+## Explicit query names no longer required
 
 Gatsby v2 doesn't require explicit query names. You can skip them now:
 
