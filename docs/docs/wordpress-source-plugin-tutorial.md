@@ -12,7 +12,7 @@ In this tutorial, you will install the `gatsby-source-wordpress` plugin in order
 
 If you prefer using GraphQL, there's a [wp-graphql](https://github.com/wp-graphql/wp-graphql) plugin to easily expose both default and custom data in WordPress. 
 
-The same authentication schemes supported by the WP-API are supported in wp-graphql, which can be used with the [gatsby-source-graphql](https://next.gatsbyjs.org/packages/gatsby-source-graphql/) plugin.
+The same authentication schemes supported by the WP-API are supported in wp-graphql, which can be used with the [gatsby-source-graphql](/packages/gatsby-source-graphql/) plugin.
 
 ## Why go through this tutorial?
 
