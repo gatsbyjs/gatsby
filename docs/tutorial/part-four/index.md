@@ -248,7 +248,7 @@ Then edit the two components:
 
 `src/pages/about.js`
 
-```jsx{5,7,14-23}
+```jsx{2,5,7,14-23}
 import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
