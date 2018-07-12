@@ -9,6 +9,10 @@ const apiRunner = require(`./api-runner-ssr`)
 const syncRequires = require(`./sync-requires`)
 const { dataPaths, pages } = require(`./data.json`)
 
+// Speed up looking up pages.
+const pagesObjectMap = new Map()
+pages.forEach(p => pagesObjectMap.set(p.path, p))
+
 const stats = JSON.parse(
   fs.readFileSync(`${process.cwd()}/public/webpack.stats.json`, `utf-8`)
 )
@@ -48,7 +52,7 @@ function urlJoin(...parts) {
   }, ``)
 }
 
-const getPage = path => pages.find(page => page.path === path)
+const getPage = path => pagesObjectMap.get(path)
 
 const createElement = React.createElement
 

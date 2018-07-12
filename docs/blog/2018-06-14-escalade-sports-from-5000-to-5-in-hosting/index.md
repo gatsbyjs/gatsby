@@ -50,7 +50,7 @@ The most challenging piece of the move, Rose said, was helping others understand
 
 ![cajunbowfishing.com products](./cajun-bowfishing-products.jpg)
 
-The Cajun Bowfishing store is a hybrid application, pulling in some data at build time using Gatsby plugins (Salsify, Markdown, custom pricing & stock APIs). Other data is queried live from the client—a shopping cart API and a dealer API for a map-based store locator.  
+The Cajun Bowfishing store is a hybrid application, pulling in some data at build time using Gatsby plugins (Salsify, Markdown, custom pricing & stock APIs). Other data is queried live from the client—a shopping cart API and a dealer API for a map-based store locator.
 
 The trickiest part, Rose said, was communicating what the new stack looks like. “There’s a misconception about these technologies,” he says. “People would ask, ‘If we move away from Drupal does that mean that we don’t have a CMS anymore?’”
 

@@ -728,5 +728,5 @@ When running locally, or in other situations that may involve self-signed certif
 To solve this, you can disable Node.js' rejection of unauthorized certificates by adding the following to `gatsby-node.js`:
 
 ```javascript
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0"
 ```
