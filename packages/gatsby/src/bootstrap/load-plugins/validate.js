@@ -107,7 +107,9 @@ const collatePluginAPIs = ({ apis, flattenedPlugins }) => {
     if (pluginNodeExports.length > 0) {
       plugin.nodeAPIs = _.intersection(pluginNodeExports, apis.node)
       plugin.nodeAPIs.map(nodeAPI => apiToPlugins[nodeAPI].push(plugin.name))
-      badExports.node = getBadExports(plugin, pluginNodeExports, apis.node) // Collate any bad exports
+      badExports.node = badExports.node.concat(
+        getBadExports(plugin, pluginNodeExports, apis.node)
+      ) // Collate any bad exports
     }
 
     if (pluginBrowserExports.length > 0) {
@@ -115,17 +117,17 @@ const collatePluginAPIs = ({ apis, flattenedPlugins }) => {
       plugin.browserAPIs.map(browserAPI =>
         apiToPlugins[browserAPI].push(plugin.name)
       )
-      badExports.browser = getBadExports(
-        plugin,
-        pluginBrowserExports,
-        apis.browser
+      badExports.browser = badExports.browser.concat(
+        getBadExports(plugin, pluginBrowserExports, apis.browser)
       ) // Collate any bad exports
     }
 
     if (pluginSSRExports.length > 0) {
       plugin.ssrAPIs = _.intersection(pluginSSRExports, apis.ssr)
       plugin.ssrAPIs.map(ssrAPI => apiToPlugins[ssrAPI].push(plugin.name))
-      badExports.ssr = getBadExports(plugin, pluginSSRExports, apis.ssr) // Collate any bad exports
+      badExports.ssr = badExports.ssr.concat(
+        getBadExports(plugin, pluginSSRExports, apis.ssr)
+      ) // Collate any bad exports
     }
   })
 

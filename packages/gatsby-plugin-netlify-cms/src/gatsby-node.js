@@ -42,20 +42,20 @@ function excludeFromLoader({ actions, rules, getConfig }) {
     module: {
       ...prevConfig.module,
 
-      rules: prevConfig.module.rules.map((rule) => {
+      rules: prevConfig.module.rules.map(rule => {
         const { test: cssRuleTest } = rules.css()
 
         const cssRuleTestAsString = String(cssRuleTest)
 
-        const isCssRule = rule.oneOf && (
+        const isCssRule =
+          rule.oneOf &&
           rule.oneOf.some(({ test }) => String(test) === cssRuleTestAsString)
-        )
 
         if (isCssRule) {
           const newRule = {
             ...rule,
 
-            oneOf: rule.oneOf.map((rule) => {
+            oneOf: rule.oneOf.map(rule => {
               const { exclude: prevExclude } = rule
 
               if (!prevExclude) {
@@ -66,16 +66,13 @@ function excludeFromLoader({ actions, rules, getConfig }) {
               } else if (Array.isArray(prevExclude)) {
                 return {
                   ...rule,
-                  exclude: [
-                    ...prevExclude,
-                    regex,
-                  ],
+                  exclude: [...prevExclude, regex],
                 }
               }
 
               return {
                 ...rule,
-                exclude: [ prevExclude, regex ],
+                exclude: [prevExclude, regex],
               }
             }),
           }
@@ -114,10 +111,7 @@ function module(args) {
           {
             test: /\.css$/,
             include: [/\/node_modules\/netlify-cms\//],
-            use: [
-              MiniCssExtractPlugin.loader,
-              loaders.css(),
-            ],
+            use: [MiniCssExtractPlugin.loader, loaders.css()],
           },
         ],
       },
@@ -139,11 +133,7 @@ exports.onCreateWebpackConfig = (args, { modulePath }) => {
 
         cms: [`${__dirname}/cms.js`, modulePath].filter(p => p),
       },
-      plugins: [
-        ...prevConfig.plugins,
-
-        ...plugins(stage),
-      ],
+      plugins: [...prevConfig.plugins, ...plugins(stage)],
     })
   }
 

@@ -98,19 +98,19 @@ Note: Before adding a blog post ensure you have approval from a member of the Ga
 
 To add a new blog post to the gatsbyjs.org blog:
 
-* Clone [the Gatsby repo](https://github.com/gatsbyjs/gatsby/) and navigate to `/www`
-* Run `yarn` to install all of the website's dependencies.
-* Run `gatsby develop` to preview the blog at `http://localhost:8000/blog`.
-* The content for the blog lives in the `/docs/blog` folder. Make additions or modifications here.
-* Add your avatar image to `/docs/blog/avatars`
-* Add your name to `/docs/blog/author.yaml`
-* Add a new folder following the pattern `/docs/blog/yyyy-mm-dd-title`. Within this newly created folder add an `index.md` file. 
-* Add `title`, `date`, `author`, and `tags` ([view existing tags](https://www.gatsbyjs.org/blog/tags/) or add a new one) to the frontmatter of your `index.md`. If you are cross posting your post you can add `canonicalLink` for SEO benefits. You can check the other blog posts in `/docs/blog` for examples.
-* If your blog post contains images add them to your blog post folder and reference them in your post's `index.md`.
-* Ensure any links to gatsbyjs.org are relative links - `/docs/how-to-contribute` instead of `https://gatsbyjs.org/docs/how-to-contribute`
-* Double check your grammar and capitalise correctly
-* Commit and push to your fork
-* Create a pull request from your branch
+- Clone [the Gatsby repo](https://github.com/gatsbyjs/gatsby/) and navigate to `/www`
+- Run `yarn` to install all of the website's dependencies.
+- Run `gatsby develop` to preview the blog at `http://localhost:8000/blog`.
+- The content for the blog lives in the `/docs/blog` folder. Make additions or modifications here.
+- Add your avatar image to `/docs/blog/avatars`
+- Add your name to `/docs/blog/author.yaml`
+- Add a new folder following the pattern `/docs/blog/yyyy-mm-dd-title`. Within this newly created folder add an `index.md` file.
+- Add `title`, `date`, `author`, and `tags` ([view existing tags](https://www.gatsbyjs.org/blog/tags/) or add a new one) to the frontmatter of your `index.md`. If you are cross posting your post you can add `canonicalLink` for SEO benefits. You can check the other blog posts in `/docs/blog` for examples.
+- If your blog post contains images add them to your blog post folder and reference them in your post's `index.md`.
+- Ensure any links to gatsbyjs.org are relative links - `/docs/how-to-contribute` instead of `https://gatsbyjs.org/docs/how-to-contribute`
+- Double check your grammar and capitalise correctly
+- Commit and push to your fork
+- Create a pull request from your branch
 
 ## Development tools
 
