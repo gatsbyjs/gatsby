@@ -309,7 +309,7 @@ We're now rendering the current count from the component state.
 
 Let's now change the state when we click on our buttons.
 
-```jsx{14-19}
+```jsx{14-31}
 import React from "react";
 
 class Counter extends React.Component {
@@ -323,11 +323,23 @@ class Counter extends React.Component {
       <div>
         <h1>Counter</h1>
         <p>current count: {this.state.count}</p>
-        <button onClick={() => this.setState({ count: this.state.count +
-          1 })}>plus
+        <button
+          onClick={() =>
+            this.setState(prevState => ({
+              count: prevState.count + 1,
+            }))
+          }
+        >
+          plus
         </button>
-        <button onClick={() => this.setState({ count: this.state.count -
-          1 })}>minus
+        <button
+          onClick={() =>
+            this.setState(prevState => ({
+              count: prevState.count - 1,
+            }))
+          }
+        >
+          minus
         </button>
       </div>
     )
