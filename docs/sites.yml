@@ -1203,3 +1203,16 @@
     - Technology
   built_by: Thrive
   built_by_url: 'https://thriveweb.com.au/'
+- title: Localgov.fyi
+  main_url: 'https://localgov.fyi/'
+  url: 'https://localgov.fyi/'
+  featured: false
+  description: >-
+     Finding local government services made easier.
+  categories:
+    - Directory
+    - Government
+    - Technology
+  source_url: https://github.com/WeOpenly/localgov.fyi
+  built_by: Openly
+  built_by_url: 'https://weopenly.com/'
