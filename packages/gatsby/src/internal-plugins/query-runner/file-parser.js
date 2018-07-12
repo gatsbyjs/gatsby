@@ -4,46 +4,15 @@ const crypto = require(`crypto`)
 
 // Traverse is a es6 module...
 import traverse from "babel-traverse"
-const babylon = require(`@babel/parser`)
 const getGraphQLTag = require(`babel-plugin-remove-graphql-queries`)
   .getGraphQLTag
 const report = require(`gatsby-cli/lib/reporter`)
 
 import type { DocumentNode, DefinitionNode } from "graphql"
+import { babelParseToAst } from '../../utils/babel-parse-to-ast'
 
 const apiRunnerNode = require(`../../utils/api-runner-node`)
 
-const BABYLON_OPTIONS = {
-  allowImportExportEverywhere: true,
-  allowReturnOutsideFunction: true,
-  allowSuperOutsideMethod: true,
-  sourceType: `unambigious`,
-  sourceFilename: true,
-  plugins: [
-    `jsx`,
-    `flow`,
-    `doExpressions`,
-    `objectRestSpread`,
-    `decorators`,
-    `classProperties`,
-    `classPrivateProperties`,
-    `classPrivateMethods`,
-    `exportDefaultFrom`,
-    `exportNamespaceFrom`,
-    `asyncGenerators`,
-    `functionBind`,
-    `functionSent`,
-    `dynamicImport`,
-    `numericSeparator`,
-    `optionalChaining`,
-    `importMeta`,
-    `bigInt`,
-    `optionalCatchBinding`,
-    `throwExpressions`,
-    `pipelineOperator`,
-    `nullishCoalescingOperator`,
-  ],
-}
 
 const getMissingNameErrorMessage = file => report.stripIndent`
   GraphQL definitions must be "named".
@@ -72,11 +41,10 @@ async function parseToAst(filePath, fileStr) {
     filename: filePath,
     contents: fileStr,
   })
-
   if (transpiled && transpiled.length) {
     for (const item of transpiled) {
       try {
-        const tmp = babylon.parse(item, BABYLON_OPTIONS)
+        const tmp = babelParseToAst(item, filePath)
         ast = tmp
         break
       } catch (error) {
@@ -89,7 +57,7 @@ async function parseToAst(filePath, fileStr) {
     }
   } else {
     try {
-      ast = babylon.parse(fileStr, BABYLON_OPTIONS)
+      ast = babelParseToAst(fileStr, filePath)
     } catch (error) {
       report.error(
         `There was a problem parsing "${filePath}"; any GraphQL ` +
