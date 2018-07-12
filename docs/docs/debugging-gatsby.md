@@ -111,7 +111,8 @@ We won't go in depth here about how to debug in VS Code - for that you can check
       "program": "${workspaceRoot}/node_modules/gatsby/dist/bin/gatsby",
       "args": ["develop"],
       "stopOnEntry": false,
-      "runtimeArgs": ["--nolazy"]
+      "runtimeArgs": ["--nolazy"],
+      "sourceMaps": false
     },
     {
       "name": "Gatsby build",
@@ -121,7 +122,8 @@ We won't go in depth here about how to debug in VS Code - for that you can check
       "program": "${workspaceRoot}/node_modules/gatsby/dist/bin/gatsby",
       "args": ["build"],
       "stopOnEntry": false,
-      "runtimeArgs": ["--nolazy"]
+      "runtimeArgs": ["--nolazy"],
+      "sourceMaps": false
     }
   ]
 }
