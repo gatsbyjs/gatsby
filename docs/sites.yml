@@ -1165,3 +1165,15 @@
     - Technology
   built_by: Eric Jinks
   built_by_url: 'https://ericjinks.com/'
+- title: Healthcare Logic
+  main_url: 'https://www.healthcarelogic.com/'
+  url: 'https://www.healthcarelogic.com/'
+  featured: false
+  description: >-
+    Revolutionary technology that empowers clinical and managerial leaders to collaborate with clarity.
+  categories:
+    - Marketing
+    - Healthcare
+    - Technology
+  built_by: Thrive
+  built_by_url: 'https://thriveweb.com.au/'
