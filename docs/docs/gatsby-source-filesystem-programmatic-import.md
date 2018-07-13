@@ -1,5 +1,5 @@
 ---
-title: `gatsby-source-filesystem` programmatic import
+title: gatsby-source-filesystem programmatic import
 ---
 
 This is a stub. Help our community expand it.
