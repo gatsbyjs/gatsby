@@ -115,7 +115,13 @@ module.exports = async ({
   stage: Stage,
   program: any,
 }): Promise<WebpackUtilsOptions> => {
-  const assetRelativeRoot = `static/`
+  /**
+   *  the leading `../` for assetRelativeRoot is required to ensure
+   * the static files extracted by webpack are not part of the
+   * "build-javascript" output path of `/js`. The same technique is
+   * used for CSS
+   */
+  const assetRelativeRoot = `../static/`
   const vendorRegex = /(node_modules|bower_components)/
   const supportedBrowsers = program.browserlist
 
