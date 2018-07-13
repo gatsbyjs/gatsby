@@ -79,7 +79,7 @@ class DocsLocalPackagesTemplate extends React.Component {
 export default DocsLocalPackagesTemplate
 
 export const pageQuery = graphql`
-  query($slug: String!) {
+  query DocsLocalPackagesTemplate($slug: String!) {
     markdownRemark(fields: { slug: { eq: $slug } }) {
       html
       excerpt

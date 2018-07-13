@@ -37,7 +37,7 @@ class DocsRemotePackagesTemplate extends React.Component {
 export default DocsRemotePackagesTemplate
 
 export const pageQuery = graphql`
-  query($slug: String!) {
+  query DocsRemotePackagesTemplate($slug: String!) {
     markdownRemark(fields: { slug: { eq: $slug } }) {
       ...MarkdownPageFooter
     }

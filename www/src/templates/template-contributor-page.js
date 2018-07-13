@@ -84,7 +84,7 @@ class ContributorPageTemplate extends React.Component {
 export default ContributorPageTemplate
 
 export const pageQuery = graphql`
-  query($slug: String!) {
+  query ContributorPageTemplate($slug: String!) {
     authorYaml(fields: { slug: { eq: $slug } }) {
       id
       bio

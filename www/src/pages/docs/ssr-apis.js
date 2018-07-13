@@ -56,7 +56,7 @@ class SSRAPIs extends React.Component {
 export default SSRAPIs
 
 export const pageQuery = graphql`
-  query {
+  query SSRAPIs {
     file(relativePath: { regex: "/api-ssr-docs.js/" }) {
       childrenDocumentationJs {
         name
