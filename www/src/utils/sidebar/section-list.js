@@ -10,11 +10,11 @@ const createId = link => {
 const extendSectionList = sectionList => {
   sectionList.forEach(section => {
     if (section.items) {
-      section.items.forEach((item, index) => {
+      section.items.filter(item => item.link).forEach((item, index) => {
         let parent = index
         item.hash = createId(item.link)
         if (item.items) {
-          item.items.forEach(subitem => {
+          item.items.filter(item => item.link).forEach(subitem => {
             subitem.hash = createId(subitem.link)
             subitem.parentLink = section.items[parent].link
           })
