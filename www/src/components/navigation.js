@@ -130,8 +130,7 @@ export default ({ pathname }) => {
           <img
             src={logo}
             css={{
-              height: 28,
-              width: `auto`,
+              width: 106,
               margin: 0,
             }}
             alt=""
