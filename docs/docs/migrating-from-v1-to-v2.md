@@ -12,9 +12,11 @@ This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While t
 
 Before diving in to the upgrade guide, here's a brief section on starting a new project with Gatsby v2 instead of upgrading an existing project.
 
-If you're a _start from scratch_ kind of person, you can install the Gatsby beta and React like this: `npm install gatsby@next react react-dom`
+*Start from scratch:* If you're a _start from scratch_ kind of person, you can install the Gatsby beta and React like this: `npm install gatsby@next react react-dom`
 
-If you'd rather use one of the official starters, you're in luck, there's a v2 edition for each of them. Install your favourite one with the Gatsby CLI.
+*Tutorial:* If you'd like a step-by-step guide, [follow the tutorial](/tutorial/) to get started with Gatsby v2.
+
+*Starters:* If you'd rather use one of the official starters, you're in luck, there's a v2 edition for each of them. Install your favourite one with the Gatsby CLI.
 
 `gatsby-starter-default` with v2:
 
