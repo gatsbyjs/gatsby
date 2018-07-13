@@ -4,7 +4,7 @@ const webpack = require(`webpack`)
 const { createErrorFromString } = require(`gatsby-cli/lib/reporter/errors`)
 const debug = require(`debug`)(`gatsby:html`)
 const webpackConfig = require(`../utils/webpack.config`)
-const renderHTML = require(`../utils/html-renderer`)
+const renderHTML = require(`../utils/html-renderer-queue`)
 
 module.exports = async (program: any) => {
   const { directory } = program
