@@ -57,7 +57,7 @@
           link: /docs/importing-single-files/
         - title: Importing media content*
           link: /docs/importing-media-content/
-        - title: `gatsby-source-filesystem` programmatic import*
+        - title: gatsby-source-filesystem programmatic import*
           link: /docs/gatsby-source-filesystem-programmatic-import/
         - title: Working with images in Gatsby
           link: /docs/working-with-images/
