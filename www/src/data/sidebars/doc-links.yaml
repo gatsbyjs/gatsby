@@ -22,6 +22,7 @@
       - title: Gatsby on Windows
         link: /docs/gatsby-on-windows/
     - title: Deploying & Hosting
+      link: /docs/deploying-and-hosting/
       items:
         - title: Preparing site for deployment*
           link: /docs/preparing-for-deployment/
