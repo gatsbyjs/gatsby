@@ -1216,3 +1216,14 @@
   source_url: https://github.com/WeOpenly/localgov.fyi
   built_by: Openly
   built_by_url: 'https://weopenly.com/'
+- title: Kata.ai Documentation
+  main_url: 'https://docs.kata.ai/'
+  url: 'https://docs.kata.ai/'
+  source_url: https://github.com/kata-ai/kata-platform-docs
+  featured: false
+  description: >-
+    Documentation website for the Kata Platform, an all-in-one platform for
+    building chatbots using AI technologies.
+  categories:
+    - Documentation
+    - Technology
