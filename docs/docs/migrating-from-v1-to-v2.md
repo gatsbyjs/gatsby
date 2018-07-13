@@ -568,3 +568,10 @@ For example, if you use [`gatsby-plugin-typography`](https://www.gatsbyjs.org/pa
 + const { rhythm, scale } = typography;
 + export { rhythm, scale, typography as default };
 ```
+
+### createRemoteFileNode
+
+The signature for using createRemoteFileNode changed in v2, it now expects a new parameter `createNodeId`.
+
+[See docs for `createRemoteFileNode`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem#createremotefilenode)
+

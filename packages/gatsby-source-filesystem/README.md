@@ -132,8 +132,11 @@ createRemoteFileNode({
   // Gatsby's cache which the helper uses to check if the file has been downloaded already. It's passed to all Node APIs.
   cache,
 
-  // The boundActionCreator used to create nodes
+  // The action used to create nodes
   createNode,
+
+  // A helper function for creating node Ids
+  createNodeId,
 
   // OPTIONAL
   // Adds htaccess authentication to the download request if passed in.
@@ -148,7 +151,7 @@ The following example is pulled from [gatsby-source-wordpress](https://github.co
 ```javascript
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 
-exports.downloadMediaFiles = ({ nodes, store, cache, createNode, _auth }) => {
+exports.downloadMediaFiles = ({ nodes, store, cache, createNode, createNodeId, _auth }) => {
   nodes.map(async node => {
     let fileNode
     // Ensures we are only processing Media Files
@@ -160,6 +163,7 @@ exports.downloadMediaFiles = ({ nodes, store, cache, createNode, _auth }) => {
           store,
           cache,
           createNode,
+          createNodeId,
           auth: _auth,
         })
       } catch (e) {
