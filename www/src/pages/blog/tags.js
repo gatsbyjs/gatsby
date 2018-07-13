@@ -60,7 +60,7 @@ TagsPage.propTypes = {
 export default TagsPage
 
 export const pageQuery = graphql`
-  query TagsPage {
+  query {
     site {
       siteMetadata {
         title
