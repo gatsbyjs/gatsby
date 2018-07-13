@@ -226,7 +226,7 @@
   items:
     - title: Community
       link: /docs/community/
-    - title: Code of Conduct*
+    - title: Code of Conduct
       link: /docs/code-of-conduct/
     - title: How to contribute
       link: /docs/how-to-contribute/
