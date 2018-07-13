@@ -14,7 +14,6 @@ const generatePathToOutput = outputPath => {
 }
 
 export function renderHTML({ htmlComponentRendererPath, paths, concurrency }) {
-  //const streams =
   return Promise.map(paths, path => new Promise((resolve, reject) => {
     const htmlComponentRenderer = require(htmlComponentRendererPath)
     try {

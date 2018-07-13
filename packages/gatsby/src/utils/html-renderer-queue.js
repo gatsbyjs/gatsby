@@ -26,25 +26,3 @@ module.exports = async (htmlComponentRendererPath, pages, activity) => {
     ).toFixed(2)} pages/second`
   )
 }
-  // new Promise((resolve, reject) => {
-  //   const start = process.hrtime()
-
-  //   pages.forEach(page => {
-  //     queue.push(page)
-  //   })
-
-  //   queue.on(`task_finish`, () => {
-  //     const stats = queue.getStats()
-  //     if (activity) {
-  //       activity.setStatus(
-  //         `${stats.total}/${pages.length} ${(
-  //           stats.total / convertHrtime(process.hrtime(start)).seconds
-  //         ).toFixed(2)} pages/second`
-  //       )
-  //     }
-  //   })
-
-  //   queue.on(`drain`, () => {
-  //     resolve()
-  //   })
-  // })
