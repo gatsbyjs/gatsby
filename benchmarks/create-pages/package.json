@@ -9,8 +9,6 @@
   },
   "dependencies": {
     "gatsby": "next",
-    "gatsby-cli": "^1.1.58",
-    "global": "^4.3.2",
     "react": "^16.3.2",
     "react-dom": "^16.3.2"
   }
