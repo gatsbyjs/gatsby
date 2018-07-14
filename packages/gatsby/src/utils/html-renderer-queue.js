@@ -1,6 +1,3 @@
-const Queue = require(`better-queue`)
-const fs = require(`fs-extra`)
-const path = require(`path`)
 const convertHrtime = require(`convert-hrtime`)
 const Worker = require(`jest-worker`).default
 const numWorkers = require(`physical-cpu-count`)
