@@ -77,6 +77,7 @@ module.exports = (types: any) => {
           nodes: latestNodes,
           connection: true,
           path,
+          typeName: typeName,
           type: type.node.type,
         })
       },
