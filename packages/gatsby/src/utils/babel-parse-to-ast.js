@@ -50,5 +50,3 @@ export function getBabelParserOptions(filePath) {
 export function babelParseToAst(contents, filePath) {
   return parser.parse(contents, getBabelParserOptions(filePath))
 }
-
-

@@ -12,11 +12,11 @@ This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While t
 
 Before diving in to the upgrade guide, here's a brief section on starting a new project with Gatsby v2 instead of upgrading an existing project.
 
-*Start from scratch:* If you're a _start from scratch_ kind of person, you can install the Gatsby beta and React like this: `npm install gatsby@next react react-dom`
+_Start from scratch:_ If you're a _start from scratch_ kind of person, you can install the Gatsby beta and React like this: `npm install gatsby@next react react-dom`
 
-*Tutorial:* If you'd like a step-by-step guide, [follow the tutorial](/tutorial/) to get started with Gatsby v2.
+_Tutorial:_ If you'd like a step-by-step guide, [follow the tutorial](/tutorial/) to get started with Gatsby v2.
 
-*Starters:* If you'd rather use one of the official starters, you're in luck, there's a v2 edition for each of them. Install your favourite one with the Gatsby CLI.
+_Starters:_ If you'd rather use one of the official starters, you're in luck, there's a v2 edition for each of them. Install your favourite one with the Gatsby CLI.
 
 `gatsby-starter-default` with v2:
 
@@ -576,4 +576,3 @@ For example, if you use [`gatsby-plugin-typography`](https://www.gatsbyjs.org/pa
 The signature for using createRemoteFileNode changed in v2, it now expects a new parameter `createNodeId`.
 
 [See docs for `createRemoteFileNode`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem#createremotefilenode)
-
