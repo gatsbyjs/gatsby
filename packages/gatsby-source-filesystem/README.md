@@ -151,7 +151,14 @@ The following example is pulled from [gatsby-source-wordpress](https://github.co
 ```javascript
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 
-exports.downloadMediaFiles = ({ nodes, store, cache, createNode, createNodeId, _auth }) => {
+exports.downloadMediaFiles = ({
+  nodes,
+  store,
+  cache,
+  createNode,
+  createNodeId,
+  _auth,
+}) => {
   nodes.map(async node => {
     let fileNode
     // Ensures we are only processing Media Files

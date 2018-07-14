@@ -4,7 +4,8 @@ jest.mock(`fs-extra`, () => {
     __setMockFiles: newMockFiles => {
       mockFiles = Object.assign({}, newMockFiles)
     },
-    readFile: (filePath, parser) => new Promise(resolve  => resolve(mockFiles[filePath])),
+    readFile: (filePath, parser) =>
+      new Promise(resolve => resolve(mockFiles[filePath])),
   }
 })
 jest.mock(`../../../utils/api-runner-node`, () => () => [])
