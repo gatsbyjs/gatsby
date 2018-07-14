@@ -1,6 +1,6 @@
 const fs = require(`fs-extra`)
 const path = require(`path`)
-const Promise = require('bluebird');
+const Promise = require(`bluebird`)
 
 // copied from https://github.com/markdalgleish/static-site-generator-webpack-plugin/blob/master/index.js#L161
 const generatePathToOutput = outputPath => {
@@ -14,14 +14,19 @@ const generatePathToOutput = outputPath => {
 }
 
 export function renderHTML({ htmlComponentRendererPath, paths, concurrency }) {
-  return Promise.map(paths, path => new Promise((resolve, reject) => {
-    const htmlComponentRenderer = require(htmlComponentRendererPath)
-    try {
-      htmlComponentRenderer.default(path, (throwAway, htmlString) => {
-        resolve(fs.outputFile(generatePathToOutput(path), htmlString))
-      })
-    } catch (e) {
-      reject(e)
-    }
-  }), { concurrency })
+  return Promise.map(
+    paths,
+    path =>
+      new Promise((resolve, reject) => {
+        const htmlComponentRenderer = require(htmlComponentRendererPath)
+        try {
+          htmlComponentRenderer.default(path, (throwAway, htmlString) => {
+            resolve(fs.outputFile(generatePathToOutput(path), htmlString))
+          })
+        } catch (e) {
+          reject(e)
+        }
+      }),
+    { concurrency }
+  )
 }

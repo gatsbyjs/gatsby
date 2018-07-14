@@ -60,7 +60,7 @@ const MastheadContent = () => (
           fontSize: scale(3 / 5).fontSize,
           "@media (min-width: 350px)": {
             fontSize: scale(4 / 5).fontSize,
-          },          
+          },
           "@media (min-width: 650px)": {
             fontSize: scale(1).fontSize,
             width: rhythm(12),
@@ -84,13 +84,17 @@ const MastheadContent = () => (
         }}
       >
         <span css={{ display: `block` }}>
-          <span css={{ 
-            [presets.Tablet]: {
-              marginRight: rhythm(1 / 8),
-            } 
-          }}>Build</span>
-          <Slider 
-            items={[`blazing fast`, `modern`, `beautiful`, `secure`]} 
+          <span
+            css={{
+              [presets.Tablet]: {
+                marginRight: rhythm(1 / 8),
+              },
+            }}
+          >
+            Build
+          </span>
+          <Slider
+            items={[`blazing fast`, `modern`, `beautiful`, `secure`]}
             color={colors.lilac}
           />
         </span>
