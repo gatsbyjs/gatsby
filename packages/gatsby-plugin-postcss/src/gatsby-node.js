@@ -3,11 +3,6 @@ import resolve from "./resolve"
 const CSS_PATTERN = /\.css$/
 const MODULE_CSS_PATTERN = /\.module\.css$/
 
-const isBuiltInCssRule = rule =>
-  rule.test &&
-  (rule.test.toString() === CSS_PATTERN.toString() ||
-    rule.test.toString() === MODULE_CSS_PATTERN.toString())
-
 const getOptions = pluginOptions => {
   const options = { ...pluginOptions }
 
@@ -24,32 +19,28 @@ const getOptions = pluginOptions => {
   return options
 }
 
-const removeBuiltInCssLoaders = config => {
-  config.module.rules = config.module.rules.filter(
-    rule =>
-      Array.isArray(rule.oneOf)
-        ? rule.oneOf.every(x => !isBuiltInCssRule(x))
-        : true
-  )
+const isCssRules = rule =>
+  rule.test &&
+  (rule.test.toString() === CSS_PATTERN.toString() ||
+    rule.test.toString() === MODULE_CSS_PATTERN.toString())
 
-  return config
-}
+const findCssRules = config =>
+  config.module.rules.find(
+    rule => Array.isArray(rule.oneOf) && rule.oneOf.every(isCssRules)
+  )
 
 exports.onCreateWebpackConfig = (
   { actions, stage, loaders, getConfig },
   pluginOptions
 ) => {
   const isProduction = !stage.includes(`develop`)
-
-  actions.replaceWebpackConfig(removeBuiltInCssLoaders(getConfig()))
-
+  const config = getConfig()
+  const cssRules = findCssRules(config)
   const postcssOptions = getOptions(pluginOptions)
-
   const postcssLoader = {
     loader: resolve(`postcss-loader`),
     options: { sourceMap: !isProduction, ...postcssOptions },
   }
-
   const postcssRule = {
     test: CSS_PATTERN,
     use: [
@@ -58,7 +49,6 @@ exports.onCreateWebpackConfig = (
       postcssLoader,
     ],
   }
-
   const postcssModule = {
     test: MODULE_CSS_PATTERN,
     use: [
@@ -68,32 +58,32 @@ exports.onCreateWebpackConfig = (
     ],
   }
 
-  let rules = []
+  const postcssRules = { oneOf: [] }
 
   switch (stage) {
     case `develop`:
     case `build-javascript`:
-      rules = rules.concat([
-        {
-          oneOf: [postcssModule, postcssRule],
-        },
-      ])
+      postcssRules.oneOf.push(...[postcssModule, postcssRule])
       break
     case `build-html`:
     case `develop-html`:
-      rules = rules.concat([
-        {
-          oneOf: [
-            postcssModule,
-            {
-              ...postcssRule,
-              use: [loaders.null()],
-            },
-          ],
-        },
-      ])
+      postcssRules.oneOf.push(
+        ...[
+          postcssModule,
+          {
+            ...postcssRule,
+            use: [loaders.null()],
+          },
+        ]
+      )
       break
   }
 
-  actions.setWebpackConfig({ module: { rules } })
+  if (cssRules) {
+    cssRules.oneOf.unshift(...postcssRules.oneOf)
+
+    actions.replaceWebpackConfig(config)
+  } else {
+    actions.setWebpackConfig({ module: { rules: [postcssRules] } })
+  }
 }

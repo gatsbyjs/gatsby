@@ -14,53 +14,49 @@ describe(`gatsby-plugin-postcss`, () => {
 
   const { onCreateWebpackConfig } = require(`../gatsby-node`)
 
-  const getConfig = jest.fn().mockReturnValue({
-    module: {
-      rules: [
-        {
-          oneOf: [
-            {
-              test: /\.css$/,
-              loaders: [`css-loader`, `postcss-loader`],
-            },
-            {
-              test: /\.module\.css$/,
-              loaders: [`css-loader`, `postcss-loader`],
-            },
-          ],
-        },
-        {
-          oneOf: [
-            {
-              test: /\.scss$/,
-              loaders: [`css-loader`, `postcss-loader`, `sass-loader`],
-            },
-            {
-              test: /\.module\.scss$/,
-              loaders: [`css-loader`, `postcss-loader`, `sass-loader`],
-            },
-          ],
-        },
-        {
-          test: /\.js/,
-          use: [`babel-loader`],
-        },
-      ],
-    },
-  })
-
-  beforeEach(() => {
-    actions.setWebpackConfig.mockReset()
-  })
-
   const tests = {
     stages: [`develop`, `build-javascript`, `develop-html`, `build-html`],
     options: {
       "No options": {},
-      "PostCss options": {
-        postCssPlugins: [`autoprefixer`],
-        sourceMap: false,
-      },
+      "PostCss options": { postCssPlugins: [`autoprefixer`], sourceMap: false },
+    },
+    configs: {
+      "No options": jest.fn().mockReturnValue({
+        module: {
+          rules: [
+            {
+              test: /\.js/,
+              use: [`babel-loader`],
+            },
+          ],
+        },
+      }),
+      "PostCss options": jest.fn().mockReturnValue({
+        module: {
+          rules: [
+            {
+              oneOf: [
+                {
+                  test: /\.css$/,
+                  loaders: [`css-loader`],
+                },
+                {
+                  test: /\.module\.css$/,
+                  loaders: [`css-loader`],
+                },
+              ],
+            },
+            {
+              test: /\.js/,
+              use: [`babel-loader`],
+            },
+          ],
+        },
+      }),
+    },
+    actions: {
+      "No options": actions.setWebpackConfig,
+      "PostCss options": actions.replaceWebpackConfig,
     },
   }
 
@@ -69,9 +65,12 @@ describe(`gatsby-plugin-postcss`, () => {
       const options = tests.options[label]
 
       it(`Stage: ${stage} / ${label}`, () => {
+        const getConfig = tests.configs[label]
+        const action = tests.actions[label]
+
         onCreateWebpackConfig({ actions, loaders, stage, getConfig }, options)
 
-        expect(actions.setWebpackConfig).toMatchSnapshot()
+        expect(action).toMatchSnapshot()
       })
     }
   })
