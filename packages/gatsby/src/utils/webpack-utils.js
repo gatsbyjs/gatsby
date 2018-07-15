@@ -229,7 +229,7 @@ module.exports = async ({
               flexbugs,
               autoprefixer({ browsers, flexbox: `no-2009` }),
               ...plugins,
-            ]
+            ].filter(Boolean)
           },
           ...postcssOpts,
         },
