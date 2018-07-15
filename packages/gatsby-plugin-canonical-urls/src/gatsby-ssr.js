@@ -7,7 +7,13 @@ exports.onRenderBody = (
 ) => {
   if (pluginOptions && pluginOptions.siteUrl) {
     const parsedUrl = url.parse(pluginOptions.siteUrl)
-    const myUrl = `${pluginOptions.siteUrl}${pathname}`
+    let myUrl = `${pluginOptions.siteUrl}${pathname}`
+    console.log(`What are plugin options ${JSON.stringify(pluginOptions)}`)
+    if(pluginOptions.requireTrailingSlash || false) {
+      console.log(`Requiring trailing slash on url ${myUrl}`)
+      myUrl = myUrl.replace(/\/$|$/, `/`)
+      console.log(`Finished: ${myUrl}`)
+    }
     setHeadComponents([
       <link
         rel="canonical"
