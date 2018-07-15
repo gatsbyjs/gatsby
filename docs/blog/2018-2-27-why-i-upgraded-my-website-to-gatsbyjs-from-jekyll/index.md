@@ -52,6 +52,7 @@ For example, I defined a `PostTemplate` which will be used to render pages for a
 // src/templates/Post.jsx
 
 import React from "react"
+import { graphql } from "gatsby"
 
 export default function PostTemplate({
   data: {

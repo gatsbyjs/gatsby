@@ -124,6 +124,7 @@ Now that you've created GraphQL queries that pull in the data you want, we'll us
 
 ```jsx
 import React from "react"
+import { graphql } from "gatsby"
 
 export default ({ data }) => {
   console.log(data)

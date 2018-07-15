@@ -77,7 +77,7 @@ import React from "react"
 import PropTypes from "prop-types"
 
 // Components
-import { Link } from "gatsby"
+import { Link, graphql } from "gatsby"
 
 const Tags = ({ pageContext, data }) => {
   const { tag } = pageContext
@@ -241,7 +241,7 @@ import kebabCase from "lodash/kebabCase"
 
 // Components
 import Helmet from "react-helmet"
-import { Link } from "gatsby"
+import { Link, graphql } from "gatsby"
 
 const TagsPage = ({
   data: {

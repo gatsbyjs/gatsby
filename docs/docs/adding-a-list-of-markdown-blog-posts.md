@@ -47,6 +47,7 @@ Second, you need to provide the data to your component with a GraphQL query. Let
 
 ```jsx
 import React from "react"
+import { graphql } from "gatsby"
 import PostLink from "../components/post-link"
 
 const IndexPage = ({
