@@ -55,6 +55,8 @@ export type LoaderUtils = {
   postcss: LoaderResolver<{
     browsers?: string[],
     plugins?: Array<any> | ((loader: any) => Array<any>),
+    minimze?: boolean,
+    cssnano?: any,
   }>,
 
   file: LoaderResolver<*>,
@@ -195,7 +197,6 @@ module.exports = async ({
           ? require.resolve(`css-loader/locals`)
           : require.resolve(`css-loader`),
         options: {
-          minimize: PRODUCTION,
           sourceMap: !PRODUCTION,
           camelCase: `dashesOnly`,
           // https://github.com/webpack-contrib/css-loader/issues/406
@@ -206,7 +207,13 @@ module.exports = async ({
     },
 
     postcss: (options = {}) => {
-      let { plugins, browsers = supportedBrowsers, ...postcssOpts } = options
+      let {
+        cssnano,
+        plugins,
+        browsers = supportedBrowsers,
+        minimze = PRODUCTION,
+        ...postcssOpts
+      } = options
 
       return {
         loader: require.resolve(`postcss-loader`),
@@ -218,6 +225,7 @@ module.exports = async ({
               (typeof plugins === `function` ? plugins(loader) : plugins) || []
 
             return [
+              minimze && require(`cssnano`)(cssnano),
               flexbugs,
               autoprefixer({ browsers, flexbox: `no-2009` }),
               ...plugins,
