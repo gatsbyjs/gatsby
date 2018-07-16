@@ -2,14 +2,12 @@
 title: How to Contribute
 ---
 
-## Contributing
-
 We want contributing to Gatsby to be fun, enjoyable, and educational for anyone and everyone. Contributions go far beyond pull requests and commits; we are thrilled to receive a variety of other contributions including the following:
 
-- Blogging, speaking about, or creating tutorials about one of Gatsby's many features. Mention @gatsbyjs on Twitter and/or email shannon [at] gatsbyjs [dot] com so we can give pointers and tips (if you want them :) and help you spread the word. Please add your blog posts and videos of talks to our [Awesome Gatsby](/docs/awesome-gatsby/) page.
-- [Submit new feature ideas through an RFC](/blog/2018-04-06-introducing-gatsby-rfc-process/)
+- Blogging, speaking about, or creating tutorials about one of Gatsby's many features. Mention [@gatsbyjs on Twitter](https://twitter.com/gatsbyjs) and/or email shannon [at] gatsbyjs [dot] com so we can give pointers and tips (if you want them 😄) and help you spread the word. Please add your blog posts and videos of talks to our [Awesome Gatsby](/docs/awesome-gatsby/) page.
+- [Submitting new feature ideas through an RFC](/blog/2018-04-06-introducing-gatsby-rfc-process/)
 - Submitting new documentation; titles in _italics_ on gatsbyjs.org are stubs and need contributions
-- Tweeting about things you build with @gatsbyjs (make sure to @ mention us!)
+- Tweeting about things you [#buildwithgatsby](https://twitter.com/search?q=%23buildwithgatsby) (make sure to use the hashtag and/or @ mention us!)
 - Submitting documentation updates, enhancements, designs, or bugfixes
 - Submitting spelling or grammar fixes
 - Adding unit or functional tests
@@ -18,9 +16,13 @@ We want contributing to Gatsby to be fun, enjoyable, and educational for anyone 
 - Searching for Gatsby on Discord or Spectrum and helping someone else who needs help
 - Teaching others how to contribute to Gatsby's repo!
 
-If you are worried or don't know where to start, you can always reach out to Shannon Soper(@shannonb_ux) on Twitter or simply submit an issue and a maintainer can help give you guidance!
+As our way of saying “thank you” to our contributors, **_all contributors_ are eligible for [free Gatsby swag](/docs/contributor-swag/)** — whether you’re contributing code, docs, a talk, an article, or something else that helps the Gatby community. [Learn how to claim free swag for contributors.](/docs/contributor-swag/)
 
-Looking to speak about Gatsby? We'd love to review your talk abstract/CFP! You can email it to shannon [at] gatsbyjs [dot] com, and we can give pointers or tips!!!
+### Not sure how to start contributing?
+
+If you are worried or don't know where to start, you can always reach out to [Shannon Soper (@shannonb_ux) on Twitter](https://twitter.com/shannonb_ux) or submit an issue and a maintainer can help give you guidance!
+
+Looking to speak about Gatsby? We'd love to review your talk abstract/CFP! You can email it to shannon [at] gatsbyjs [dot] com, and we can give pointers or tips!
 
 ### Creating your own plugins and loaders
 
