@@ -1,6 +1,6 @@
 const convertHrtime = require(`convert-hrtime`)
 const Worker = require(`jest-worker`).default
-const numWorkers = require(`physical-cpu-count`)
+const numWorkers = require(`physical-cpu-count`) || 1
 const { chunk } = require(`lodash`)
 
 const workerPool = new Worker(require.resolve(`./worker`), {
