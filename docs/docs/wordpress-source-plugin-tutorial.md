@@ -1,12 +1,18 @@
 ---
-title: "Wordpress Source Plugin Tutorial"
+title: "WordPress Source Plugin Tutorial"
 ---
 
 ## How to create a site with data pulled from WordPress
 
 ### What this tutorial covers:
 
-In this tutorial, you will install the `gatsby-source-wordpress` plugin in order to pull blog and image data from a WordPress install into your Gatsby site and render that data. This [Gatsby + Wordpress demo site](https:/github.com/gatsbyjs/gatsby/tree/master/examples/using-wordpress) shows you the source code for an example site similar to what you’re going to be building in this tutorial, although it’s missing the cool images you’ll be adding in the next part of this tutorial, [Adding Images to a WordPress Site](/docs/image-tutorial/). :D
+In this tutorial, you will install the `gatsby-source-wordpress` plugin in order to pull blog and image data from a WordPress install into your Gatsby site and render that data. This [Gatsby + WordPress demo site](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-wordpress) shows you the source code for an example site similar to what you’re going to be building in this tutorial, although it’s missing the cool images you’ll be adding in the next part of this tutorial, [Adding Images to a WordPress Site](/docs/image-tutorial/). :D
+
+#### But do you prefer GraphQL?
+
+If you prefer using GraphQL, there's a [wp-graphql](https://github.com/wp-graphql/wp-graphql) plugin to easily expose both default and custom data in WordPress.
+
+The same authentication schemes supported by the WP-API are supported in wp-graphql, which can be used with the [gatsby-source-graphql](/packages/gatsby-source-graphql/) plugin.
 
 ## Why go through this tutorial?
 
@@ -136,7 +142,7 @@ export default ({ data }) => {
 }
 
 export const pageQuery = graphql`
-  query MyFiles {
+  query {
     allWordpressPost(sort: { fields: [date] }) {
       edges {
         node {

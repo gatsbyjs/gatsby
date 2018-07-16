@@ -1,5 +1,6 @@
-- title: Tutorial
-  ui: tutorial
+- title: Quick start
+  link: /docs/
+- title: Tutorial (step-by-step)
   items:
     - title: Introduction
       link: /tutorial/
@@ -39,8 +40,8 @@
       link: /tutorial/part-three/
       ui: steps
       items:
-        - title: Your first layout component
-          link: /tutorial/part-three/#your-first-layout-component
+        - title: Our first layout component
+          link: /tutorial/part-three/
     - title: 4. Querying for data in a blog
       link: /tutorial/part-four/
       ui: steps
@@ -49,10 +50,10 @@
           link: /tutorial/part-four/#recap-of-first-half-of-the-tutorial
         - title: Data in Gatsby
           link: /tutorial/part-four/#data-in-gatsby
-        - title: How Gatsby's data layer uses GraphQL to pull data into components
+        - title: How Gatsby uses GraphQL
           link: /tutorial/part-four/#how-gatsbys-data-layer-uses-graphql-to-pull-data-into-components
-        - title: Your first GraphQL query
-          link: /tutorial/part-four/#your-first-graphql-query
+        - title: Our first GraphQL query
+          link: /tutorial/part-four/#our-first-graphql-query
     - title: 5. Source plugins and rendering queried data
       link: /tutorial/part-five/
       ui: steps
@@ -67,7 +68,7 @@
       link: /tutorial/part-six/
       ui: steps
       items:
-        - title: Transformer plugins
+        - title: What are transformer plugins?
           link: /tutorial/part-six/#transformer-plugins
         - title: Create a list of our site's markdown files
           link: /tutorial/part-six/#create-a-list-of-our-sites-markdown-files-in-srcpagesindexjs
@@ -83,7 +84,5 @@
       link: /tutorial/part-eight/
       ui: steps
       items:
-        - title: Creating slugs for pages
-          link: /tutorial/part-eight/#creating-slugs-for-pages
-        - title: Creating pages
-          link: /tutorial/part-eight/#creating-pages
+        - title: Lighthouse audit
+          link: /tutorial/part-eight/#lighthouse

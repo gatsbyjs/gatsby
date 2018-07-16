@@ -199,7 +199,7 @@ class Index extends React.Component {
 export default Index
 
 export const pageQuery = graphql`
-  query allImages {
+  query {
     user: allPostsJson(limit: 1) {
       edges {
         node {

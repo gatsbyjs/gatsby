@@ -12,9 +12,11 @@ This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While t
 
 Before diving in to the upgrade guide, here's a brief section on starting a new project with Gatsby v2 instead of upgrading an existing project.
 
-If you're a _start from scratch_ kind of person, you can install the Gatsby beta and React like this: `npm install gatsby@next react react-dom`
+_Start from scratch:_ If you're a _start from scratch_ kind of person, you can install the Gatsby beta and React like this: `npm install gatsby@next react react-dom`
 
-If you'd rather use one of the official starters, you're in luck, there's a v2 edition for each of them. Install your favourite one with the Gatsby CLI.
+_Tutorial:_ If you'd like a step-by-step guide, [follow the tutorial](/tutorial/) to get started with Gatsby v2.
+
+_Starters:_ If you'd rather use one of the official starters, you're in luck, there's a v2 edition for each of them. Install your favourite one with the Gatsby CLI.
 
 `gatsby-starter-default` with v2:
 
@@ -58,6 +60,7 @@ Read on for a detailed guide on what's new in version 2!
 - [Only allow defined keys on node.internal object](#only-allow-defined-keys-on-the-node-internal-object)
 - [Import `graphql` types from `gatsby/graphql`](#import-graphql-types-from-gatsbygraphql)
 - [Move `Babel Configuration`](#move-babel-configuration)
+- [Explicit query names no longer required](#explicit-query-names-no-longer-required)
 - [Plugin specific changes](#plugin-specific-changes)
 
 You can start with a few of the most important steps - install Gatsby v2 dependencies and update your layout components.
@@ -519,6 +522,39 @@ The latest version of Gatsby uses Babel 7, which introduced [a new behavior for 
 
 More information on Gatsby and Babel configuration available [here](/docs/babel/#how-to-use-a-custom-babelrc-file).
 
+## Explicit query names no longer required
+
+Gatsby v2 doesn't require explicit query names. You can skip them now:
+
+```diff
+export const query = graphql`
+-  query ThisIsExplicitQueryName($slug: String!) {
++  query($slug: String!) {
+    markdownRemark(fields: { slug: { eq: $slug } }) {
+      html
+      frontmatter {
+        title
+      }
+    }
+  }
+```
+
+You can also skip the `query` keyword if you don't use query variables:
+
+```diff
+export const query = graphql`
+-  query ThisIsAnotherExplicitQueryName {
++  {
+    site {
+      siteMetadata {
+        title
+      }
+    }
+  }
+```
+
+This isn't a breaking change. Queries with explicit names will continue to work as they did in v1.
+
 ## Plugin specific changes
 
 Some plugins require additional changes before your site will compile.
@@ -534,3 +570,9 @@ For example, if you use [`gatsby-plugin-typography`](https://www.gatsbyjs.org/pa
 + const { rhythm, scale } = typography;
 + export { rhythm, scale, typography as default };
 ```
+
+### createRemoteFileNode
+
+The signature for using createRemoteFileNode changed in v2, it now expects a new parameter `createNodeId`.
+
+[See docs for `createRemoteFileNode`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem#createremotefilenode)

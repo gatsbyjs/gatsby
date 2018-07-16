@@ -17,7 +17,7 @@ class BlogPost extends React.Component {
 export default BlogPost
 
 export const PageQuery = graphql`
-  query blogPostBySlug($slug: String!) {
+  query($slug: String!) {
     markdownRemark(fields: { slug: { eq: $slug } }) {
       html
       frontmatter {

@@ -93,42 +93,6 @@ gatsby-plugin-emotion emotion react-emotion emotion-server
 Let's set up a site similar to what you ended with in Part Three. This site will have a layout
 component and two page components:
 
-`src/pages/index.js`
-
-```jsx
-import React from "react"
-import Layout from "../components/layout"
-
-export default () => (
-  <Layout>
-    <h1>Amazing Pandas Eating Things</h1>
-    <div>
-      <img
-        src="https://2.bp.blogspot.com/-BMP2l6Hwvp4/TiAxeGx4CTI/AAAAAAAAD_M/XlC_mY3SoEw/s1600/panda-group-eating-bamboo.jpg"
-        alt="Group of pandas eating bamboo"
-      />
-    </div>
-  </Layout>
-)
-```
-
-`src/pages/about.js`
-
-```jsx
-import React from "react"
-import Layout from "../components/layout"
-
-export default () => (
-  <Layout>
-    <h1>About Pandas Eating Lots</h1>
-    <p>
-      We're the only site running on your computer dedicated to showing the best
-      photos and videos of pandas eating lots of food.
-    </p>
-  </Layout>
-)
-```
-
 `src/components/layout.js`
 
 ```jsx
@@ -168,6 +132,42 @@ export default ({ children }) => (
     </Link>
     {children}
   </div>
+)
+```
+
+`src/pages/index.js`
+
+```jsx
+import React from "react"
+import Layout from "../components/layout"
+
+export default () => (
+  <Layout>
+    <h1>Amazing Pandas Eating Things</h1>
+    <div>
+      <img
+        src="https://2.bp.blogspot.com/-BMP2l6Hwvp4/TiAxeGx4CTI/AAAAAAAAD_M/XlC_mY3SoEw/s1600/panda-group-eating-bamboo.jpg"
+        alt="Group of pandas eating bamboo"
+      />
+    </div>
+  </Layout>
+)
+```
+
+`src/pages/about.js`
+
+```jsx
+import React from "react"
+import Layout from "../components/layout"
+
+export default () => (
+  <Layout>
+    <h1>About Pandas Eating Lots</h1>
+    <p>
+      We're the only site running on your computer dedicated to showing the best
+      photos and videos of pandas eating lots of food.
+    </p>
+  </Layout>
 )
 ```
 
@@ -248,7 +248,7 @@ Then edit the two components:
 
 `src/pages/about.js`
 
-```jsx{5,7,14-23}
+```jsx{2,5,7,14-23}
 import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
@@ -264,7 +264,7 @@ export default ({ data }) => (
 )
 
 export const query = graphql`
-  query AboutQuery {
+  query {
     site {
       siteMetadata {
         title
@@ -286,7 +286,7 @@ import { rhythm } from "../utils/typography"
 export default ({ children }) => (
   <StaticQuery
     query={graphql`
-      query LayoutQuery {
+      query {
         site {
           siteMetadata {
             title
@@ -353,10 +353,10 @@ You may have noticed that you used a [tag function](https://developer.mozilla.or
 
 The short answer is this: during the Gatsby build process, GraphQL queries are pulled out of the original source for parsing.
 
-The longer answer is a little more involved: Gatsby borrows a technique from	
-[Relay](https://facebook.github.io/relay/) that converts your source code into an	[abstract syntax tree (AST)](https://en.wikipedia.org/wiki/Abstract_syntax_tree) during the build step. [`file-parser.js`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/file-parser.js)	and [`query-compiler.js`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/query-compiler.js) pick out your `graphql`-tagged templates and effectively remove them from the original source code. 
+The longer answer is a little more involved: Gatsby borrows a technique from
+[Relay](https://facebook.github.io/relay/) that converts your source code into an [abstract syntax tree (AST)](https://en.wikipedia.org/wiki/Abstract_syntax_tree) during the build step. [`file-parser.js`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/file-parser.js) and [`query-compiler.js`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/query-compiler.js) pick out your `graphql`-tagged templates and effectively remove them from the original source code.
 
-This means that	the `graphql` tag isn’t executed the way that you might expect. For example, you cannot use [expression interpolation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#Expression_interpolation) with Gatsby's `graphql` tag.
+This means that the `graphql` tag isn’t executed the way that you might expect. For example, you cannot use [expression interpolation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#Expression_interpolation) with Gatsby's `graphql` tag.
 
 ## What's coming next?
 

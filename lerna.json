@@ -8,7 +8,10 @@
       "cdVersion": "prerelease",
       "conventionalCommits": true,
       "message": "chore(release): Publish",
-      "preid": "beta"
+      "preid": "beta",
+      "ignoreChanges": [
+        "CHANGELOG.md"
+      ]
     }
   },
   "loglevel": "success",

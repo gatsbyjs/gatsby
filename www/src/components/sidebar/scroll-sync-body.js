@@ -71,17 +71,19 @@ const _getItemIds = sectionList => {
   let list = []
 
   sectionList.forEach(section => {
-    let sectionItems = section.items
-      .map(item => {
-        let subItemIds = []
-        if (item.items) {
-          subItemIds = item.items.map(subitem => subitem.hash)
-        }
-        return [item.hash, ...subItemIds]
-      })
-      .reduce((prev, current) => prev.concat(current))
+    if (section.items) {
+      let sectionItems = section.items
+        .map(item => {
+          let subItemIds = []
+          if (item.items) {
+            subItemIds = item.items.map(subitem => subitem.hash)
+          }
+          return [item.hash, ...subItemIds]
+        })
+        .reduce((prev, current) => prev.concat(current))
 
-    list.push(sectionItems)
+      list.push(sectionItems)
+    }
   })
 
   return [].concat(...list)

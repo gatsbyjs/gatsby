@@ -63,6 +63,7 @@ module.exports = async (
     // Don't allow overwriting of NODE_ENV, PUBLIC_DIR as to not break gatsby things
     envObject.NODE_ENV = JSON.stringify(env)
     envObject.PUBLIC_DIR = JSON.stringify(`${process.cwd()}/public`)
+    envObject.BUILD_STAGE = JSON.stringify(stage)
 
     return Object.assign(envObject, gatsbyVarObject)
   }
@@ -103,6 +104,9 @@ module.exports = async (
             }:${webpackPort}/`,
           devtoolModuleFilenameTemplate: info =>
             path.resolve(info.absoluteResourcePath).replace(/\\/g, `/`),
+          // Avoid React cross-origin errors
+          // See https://reactjs.org/docs/cross-origin-errors.html
+          crossOriginLoading: `anonymous`,
         }
       case `build-html`:
       case `develop-html`:
@@ -186,12 +190,12 @@ module.exports = async (
             clearConsole: false,
             compilationSuccessInfo: {
               messages: [
-                `You can now view your site in the browser running at ${program.ssl ? `https` : `http`}://${
-                  program.host
-                }:${program.port}`,
-                `Your graphql debugger is running at ${program.ssl ? `https` : `http`}://${program.host}:${
-                  program.port
-                }/___graphql`,
+                `You can now view your site in the browser running at ${
+                  program.ssl ? `https` : `http`
+                }://${program.host}:${program.port}`,
+                `Your graphql debugger is running at ${
+                  program.ssl ? `https` : `http`
+                }://${program.host}:${program.port}/___graphql`,
               ],
             },
           }),
@@ -370,6 +374,13 @@ module.exports = async (
       ],
       alias: {
         gatsby$: directoryPath(path.join(`.cache`, `gatsby-browser-entry.js`)),
+        // Using directories for module resolution is mandatory because
+        // relative path imports are used sometimes
+        // See https://stackoverflow.com/a/49455609/6420957 for more details
+        "core-js": path.dirname(require.resolve(`core-js/package.json`)),
+        "react-hot-loader": path.dirname(
+          require.resolve(`react-hot-loader/package.json`)
+        ),
       },
     }
   }

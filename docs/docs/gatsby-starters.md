@@ -62,7 +62,7 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
 
   - Same as `gatsby-starter-default` with dynamic content from [Cosmic JS](https://cosmicjs.com)
   - Install and set up CMS in seconds [via the command line](https://github.com/cosmicjs/gatsby-starter)
-  
+
 - [gatsby-starter-blog-no-styles](https://github.com/noahg/gatsby-starter-blog-no-styles)
   [(demo)](http://capricious-spring.surge.sh/)
 
@@ -799,11 +799,11 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
   - Based on [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default)
   - Using [Tachyons](https://github.com/tachyons-css/tachyons/) for CSS. [Read the tachyons docs](http://tachyons.io/docs/)
   - Find out about the tachyons open source component library [here](http://tachyons.io/components/) to get you going.
-  
+
 - 💀[gatsby-starter-skeleton](https://github.com/Undistraction/gatsby-starter-skeleton) ([Demo](https://undistraction.github.io/gatsby-starter-skeleton/))
 
   Features:
-  
+
   - Full-featured site for developer or small company
   - Includes Articles and Projects
   - Includes Tags and Categores
@@ -812,3 +812,29 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
   - Configure many of the site's features from a separate site config files
   - Extended Markdown support, responsive embeds, solid inline code support and lots of other goodness
   - Well commented and documented
+
+- [gatsby-starter-default-intl](https://github.com/wiziple/gatsby-starter-default-intl)
+  [(demo)](https://gatsby-starter-default-intl.netlify.com/)
+
+  Features:
+
+  - Localization (Multilanguage) provided by [react-intl](https://github.com/yahoo/react-intl).
+
+  - Automatic redirection based on user's preferred language in browser provided by [browser-lang](https://github.com/wiziple/browser-lang).
+
+  - Support multi-language url routes within a single page component. That means you don't have to create separate pages such as `pages/en/index.js` or `pages/ko/index.js`.
+
+  - Based on [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default) with least modification.
+  
+- [devblog](https://github.com/RyanFitzgerald/devblog)
+  [(demo)](https://ryanfitzgerald.github.io/devblog/)
+
+  Features:
+
+  - Minimalistic blog for developers
+  - Based on ```gatsby-starter-blog```
+  - Server-side rendering
+  - Syntax highlighting via PrismJS
+  - Styled Components
+  - Pagination
+

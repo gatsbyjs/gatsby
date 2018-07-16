@@ -96,7 +96,7 @@ describe(`Add pages`, () => {
       { id: `test`, name: `test` }
     )
     const state = reducer(undefined, action)
-    expect(state[0].path).toEqual(`/hi/`)
+    expect(Array.from(state.values())[0].path).toEqual(`/hi/`)
   })
 
   it(`allows you to add pages with context`, () => {
@@ -150,7 +150,7 @@ describe(`Add pages`, () => {
     let state = reducer(undefined, action)
     state = reducer(state, action2)
     expect(state).toMatchSnapshot()
-    expect(state.length).toEqual(2)
+    expect(state.size).toEqual(2)
   })
 
   it(`allows you to update existing pages (based on path)`, () => {
@@ -175,7 +175,7 @@ describe(`Add pages`, () => {
     let state = reducer(undefined, action)
     state = reducer(state, action2)
     expect(state).toMatchSnapshot()
-    expect(state.length).toEqual(1)
+    expect(state.size).toEqual(1)
   })
 
   it(`allows you to delete paths`, () => {
@@ -192,6 +192,6 @@ describe(`Add pages`, () => {
     let state = reducer(undefined, action)
     state = reducer(state, action2)
     expect(state).toMatchSnapshot()
-    expect(state.length).toEqual(0)
+    expect(state.size).toEqual(0)
   })
 })

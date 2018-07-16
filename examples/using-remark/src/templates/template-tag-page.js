@@ -29,7 +29,7 @@ class TagRoute extends React.Component {
 export default TagRoute
 
 export const pageQuery = graphql`
-  query TagPage($tag: String) {
+  query($tag: String) {
     allMarkdownRemark(
       limit: 1000
       sort: { fields: [frontmatter___date], order: DESC }

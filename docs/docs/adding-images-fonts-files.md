@@ -91,7 +91,7 @@ Hi, this is a great article.
 In the article template component file, you can query for the attachments:
 
 ```graphql
-query TemplateBlogPost($slug: String!) {
+query($slug: String!) {
   markdownRemark(fields: { slug: { eq: $slug } }) {
     html
     frontmatter {

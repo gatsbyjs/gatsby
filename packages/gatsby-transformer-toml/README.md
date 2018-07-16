@@ -38,7 +38,7 @@ userDescription = "Lorem..."
 Then you'll be able to query your data using:
 
 ```graphql
-query MyQuery {
+query {
   userToml {
     userName
     userAvatar

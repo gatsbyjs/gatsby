@@ -52,7 +52,7 @@ export default Home
 
 // Set here the ID of the home page.
 export const pageQuery = graphql`
-  query homePageQuery {
+  query {
     allWordpressPage {
       edges {
         node {
