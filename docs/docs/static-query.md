@@ -13,7 +13,7 @@ import { StaticQuery } from "gatsby"
 const Header = () => (
   <StaticQuery
     query={graphql`
-      query HeaderQuery {
+      query {
         site {
           siteMetadata {
             title
@@ -52,7 +52,7 @@ const Header = ({ data }) => (
 export default props => (
   <StaticQuery
     query={graphql`
-      query HeaderQuery {
+      query {
         site {
           siteMetadata {
             title

@@ -84,7 +84,7 @@ The GraphQL query to get the transformed markdown would look something like
 this.
 
 ```graphql
-query ItemQuery($id: String!) {
+query($id: String!) {
   mongodbCloudDocuments(id: { eq: $id }) {
     id
     name
@@ -105,7 +105,7 @@ Below is a sample query for fetching all MongoDB document nodes from a db named
 **'Cloud'** and a collection named **'documents'**.
 
 ```graphql
-query PageQuery {
+query {
   allMongodbCloudDocuments {
     edges {
       node {

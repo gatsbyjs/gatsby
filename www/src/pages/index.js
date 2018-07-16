@@ -218,7 +218,7 @@ class IndexRoute extends React.Component {
 export default IndexRoute
 
 export const pageQuery = graphql`
-  query Index {
+  query {
     file(relativePath: { eq: "gatsby-explanation.png" }) {
       childImageSharp {
         fluid(maxWidth: 870) {

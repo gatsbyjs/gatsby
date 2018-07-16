@@ -329,18 +329,18 @@ class Counter extends React.Component {
         <p>current count: {this.state.count}</p>
         <button
           onClick={() =>
-            this.setState({
-              count: this.state.count + 1,
-            })
+            this.setState(prevState => ({
+              count: prevState.count + 1,
+            }))
           }
         >
           plus
         </button>
         <button
           onClick={() =>
-            this.setState({
-              count: this.state.count - 1,
-            })
+            this.setState(prevState => ({
+              count: prevState.count - 1,
+            }))
           }
         >
           minus
