@@ -154,4 +154,6 @@ ${formatErrorDetails(errorDetails)}`)
 
     return result
   }
+
+  return result
 }
