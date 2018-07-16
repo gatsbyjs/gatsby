@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.1-beta.7"></a>
+
+## [2.0.1-beta.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/compare/gatsby-remark-images@2.0.1-beta.6...gatsby-remark-images@2.0.1-beta.7) (2018-07-16)
+
+### Features
+
+- **sharp:** move gatsby-plugin-sharp to peerDependencies ([#6487](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/issues/6487)) ([4cdd3bf](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/commit/4cdd3bf))
+
 <a name="2.0.1-beta.6"></a>
 
 ## [2.0.1-beta.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/compare/gatsby-remark-images@2.0.1-beta.5...gatsby-remark-images@2.0.1-beta.6) (2018-07-13)
