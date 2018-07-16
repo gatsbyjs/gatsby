@@ -216,7 +216,7 @@ Format language keywords as code - this is done with the backtick key (located
 to the left of the "1" key on a US keyboard) in GitHub-flavored markdown. For
 example, put backticks around HTML tag names or CSS property names.
 
-## Use clear and hyperlinks
+## Use clear hyperlinks
 
 Hyperlinks should contain the clearest words to indicate where the link will lead you. So instead of linking to the word [here](https://www.gatsbyjs.org/) link to [Gatsby's docs](https://www.gatsbyjs.org/).
 
@@ -283,7 +283,7 @@ to read.
 
 ## Avoid "easy" and "simple"
 
-Avoid using words like "easier" or "simple," because if users have a hard time completing the task that is supposedly "easy," they will question their abilities. Consider using more specific descriptors; for example, when you say the phrase "deployment is easy," what do you really mean? Is it easy because it takes fewer steps than another option? If so, just use the most specific descriptor possible, which in that case would be "this deployment method involves fewer steps than other options."
+Avoid using words like "easy", "simple," and "basic" because if users have a hard time completing the task that is supposedly "easy," they will question their abilities. Consider using more specific descriptors; for example, when you say the phrase "deployment is easy," what do you really mean? Is it easy because it takes fewer steps than another option? If so, just use the most specific descriptor possible, which in that case would be "this deployment method involves fewer steps than other options."
 
 # Adding images to articles
 
@@ -316,7 +316,7 @@ for a grade level of 6. Another tool available is the De-Jargonizer, originally
 designed for scientific communication but might help avoid overspecialized
 wording.
 
-## Ask for and accept help and offer help to others
+## Ask for/accept help & offer help to others
 
 Technical writing, or the literature of science and technology, is difficult
 because it requires you to take a technical (usually abstract) topic and explain
