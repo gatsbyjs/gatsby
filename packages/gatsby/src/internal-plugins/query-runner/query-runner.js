@@ -152,6 +152,6 @@ ${formatErrorDetails(errorDetails)}`)
       },
     })
 
-    return
+    return result
   }
 }
