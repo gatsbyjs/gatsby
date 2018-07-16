@@ -8,11 +8,13 @@ install and configure. For more details, check out the [docs
 site](https://netlifycms.org).
 
 ## Install
+
 ```shell
 npm install --save netlify-cms gatsby-plugin-netlify-cms
 ```
 
 ## How to use
+
 Add the Netlify CMS plugin in your `gatsby-config.js`:
 
 ```javascript
@@ -24,11 +26,13 @@ file](https://www.netlifycms.org/docs/add-to-your-site/#configuration) in
 `static/admin/config.yml`.
 
 ## Options
+
 Netlify CMS can be configured via the plugin options below. You can learn
 about how to pass options to plugins in the [Gatsby
 docs](https://www.gatsbyjs.org/docs/plugins/#how-to-use-gatsby-plugins).
 
 ### `modulePath`
+
 (_optional_, default: `undefined`)
 
 If you need to customize Netlify CMS, e.g. registering [custom
@@ -72,6 +76,7 @@ CMS.registerWidget(`image-gallery`, ImageGalleryWidget, ImageGalleryPreview)
 ```
 
 ### `enableIdentityWidget`
+
 (_optional_, default: `true`)
 
 `enableIdentityWidget` is `true` by default, allowing [Netlify
@@ -92,6 +97,7 @@ plugins: [
 ```
 
 ### `stylesPath`
+
 (_optional_, default: `undefined`)
 
 Gatsby template components can be used as [preview
@@ -106,17 +112,20 @@ that your Gatsby site uses, and the CSS output is automatically registered and
 used in the preview pane.
 
 ### `publicPath`
+
 (_optional_, default: `"admin"`)
 
 Customize the path to Netlify CMS on your Gatsby site.
 
 ### `htmlTitle`
+
 (_optional_, default: `Content Manager`)
 
 Customize the value of the `title` tag in your CMS HTML (shows in the browser
 bar).
 
 ## Example
+
 Here is the plugin with example values for all options (note that no option is
 required):
 
@@ -136,5 +145,6 @@ plugins: [
 ```
 
 ## Support
+
 For help with integrating Netlify CMS with Gatsby, check out the community
 [Gitter](https://gitter.im/netlify/netlifycms).

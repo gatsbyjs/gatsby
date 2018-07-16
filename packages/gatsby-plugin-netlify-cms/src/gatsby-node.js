@@ -40,7 +40,7 @@ exports.onCreateWebpackConfig = (
     publicPath = `admin`,
     enableIdentityWidget = true,
     htmlTitle = `Content Manager`,
-  },
+  }
 ) => {
   if ([`develop`, `build-javascript`].includes(stage)) {
     const gatsbyConfig = getConfig()
@@ -72,7 +72,10 @@ exports.onCreateWebpackConfig = (
          * pass the `styles` entry css path to Netlify CMS.
          */
         rules: deepMap(gatsbyConfig.module.rules, value => {
-          if (typeof get(value, `loader`) === `string` && value.loader.includes(`style-loader`)) {
+          if (
+            typeof get(value, `loader`) === `string` &&
+            value.loader.includes(`style-loader`)
+          ) {
             return { ...value, loader: MiniCssExtractPlugin.loader }
           }
           return value
@@ -83,26 +86,27 @@ exports.onCreateWebpackConfig = (
          * Remove plugins that either attempt to process the core Netlify CMS
          * application, or that we want to replace with our own instance.
          */
-        ...gatsbyConfig.plugins.filter(plugin => ![
-            UglifyJsPlugin,
-            MiniCssExtractPlugin,
-            FriendlyErrorsPlugin,
-          ].find(Plugin => plugin instanceof Plugin)
+        ...gatsbyConfig.plugins.filter(
+          plugin =>
+            ![UglifyJsPlugin, MiniCssExtractPlugin, FriendlyErrorsPlugin].find(
+              Plugin => plugin instanceof Plugin
+            )
         ),
 
         /**
          * Provide a custom message for Netlify CMS compilation success.
          */
-        stage === `develop` && new FriendlyErrorsPlugin({
-          clearConsole: false,
-          compilationSuccessInfo: {
-            messages: [
-              `Netlify CMS is running at ${
-                program.ssl ? `https` : `http`
-              }://${program.host}:${program.port}/${publicPathClean}/`,
-            ],
-          },
-        }),
+        stage === `develop` &&
+          new FriendlyErrorsPlugin({
+            clearConsole: false,
+            compilationSuccessInfo: {
+              messages: [
+                `Netlify CMS is running at ${
+                  program.ssl ? `https` : `http`
+                }://${program.host}:${program.port}/${publicPathClean}/`,
+              ],
+            },
+          }),
 
         /**
          * Use a simple filename with no hash so we can access from source by
