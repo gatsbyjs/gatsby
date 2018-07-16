@@ -6,8 +6,9 @@ exports[`Adds canonical link to head correctly applies a trailing slash to the c
     Array [
       Array [
         <link
-          data-basehost="someurl.com"
-          data-baseprotocol="http:"
+          data-baseHost="someurl.com"
+          data-baseProtocol="http:"
+          data-trailingSlash="true"
           href="http://someurl.com/somepost/"
           rel="canonical"
         />,
@@ -23,8 +24,9 @@ exports[`Adds canonical link to head correctly creates a canonical link if siteU
     Array [
       Array [
         <link
-          data-basehost="someurl.com"
-          data-baseprotocol="http:"
+          data-baseHost="someurl.com"
+          data-baseProtocol="http:"
+          data-trailingSlash="false"
           href="http://someurl.com/somepost"
           rel="canonical"
         />,

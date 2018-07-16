@@ -1,12 +1,16 @@
 exports.onRouteUpdate = ({ location }) => {
   const domElem = document.querySelector(`link[rel='canonical']`)
-  var existingValue = domElem.getAttribute(`href`)
-  var baseProtocol = domElem.getAttribute(`data-baseProtocol`)
-  var baseHost = domElem.getAttribute(`data-baseHost`)
+  const existingValue = domElem.getAttribute(`href`)
+  const baseProtocol = domElem.getAttribute(`data-baseProtocol`)
+  const baseHost = domElem.getAttribute(`data-baseHost`)
+  let pathname = location.pathname
+  if(domElem.getAttribute(`data-requireTrailingSlash`) === `true`) {
+    pathname = pathname.replace(/\/$|$/, `/`)
+  }
   if (existingValue && baseProtocol && baseHost) {
     domElem.setAttribute(
       `href`,
-      `${baseProtocol}//${baseHost}${location.pathname}${location.search}${
+      `${baseProtocol}//${baseHost}${pathname}${location.search}${
         location.hash
       }`
     )
