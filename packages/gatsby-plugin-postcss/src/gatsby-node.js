@@ -34,6 +34,7 @@ exports.onCreateWebpackConfig = (
   pluginOptions
 ) => {
   const isProduction = !stage.includes(`develop`)
+  const isSSR = stage.includes(`html`)
   const config = getConfig()
   const cssRules = findCssRules(config)
   const postcssOptions = getOptions(pluginOptions)
@@ -43,19 +44,24 @@ exports.onCreateWebpackConfig = (
   }
   const postcssRule = {
     test: CSS_PATTERN,
+    use: isSSR
+      ? [loaders.null()]
+      : [loaders.css({ importLoaders: 1 }), postcssLoader],
+  }
+  const postcssRuleModules = {
+    test: MODULE_CSS_PATTERN,
     use: [
-      loaders.miniCssExtract(),
-      loaders.css({ importLoaders: 1 }),
+      loaders.css({
+        modules: true,
+        importLoaders: 1,
+      }),
       postcssLoader,
     ],
   }
-  const postcssModule = {
-    test: MODULE_CSS_PATTERN,
-    use: [
-      loaders.miniCssExtract(),
-      loaders.css({ modules: true, importLoaders: 1 }),
-      postcssLoader,
-    ],
+
+  if (!isSSR) {
+    postcssRule.use.unshift(loaders.miniCssExtract())
+    postcssRuleModules.use.unshift(loaders.miniCssExtract())
   }
 
   const postcssRules = { oneOf: [] }
@@ -63,19 +69,9 @@ exports.onCreateWebpackConfig = (
   switch (stage) {
     case `develop`:
     case `build-javascript`:
-      postcssRules.oneOf.push(...[postcssModule, postcssRule])
-      break
     case `build-html`:
     case `develop-html`:
-      postcssRules.oneOf.push(
-        ...[
-          postcssModule,
-          {
-            ...postcssRule,
-            use: [loaders.null()],
-          },
-        ]
-      )
+      postcssRules.oneOf.push(...[postcssRuleModules, postcssRule])
       break
   }
 
