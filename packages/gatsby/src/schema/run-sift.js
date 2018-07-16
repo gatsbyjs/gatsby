@@ -174,7 +174,7 @@ module.exports = ({
       ...fieldsToSift,
     })
     if (
-      process.env.NODE_ENV !== `test` &&
+      process.env.NODE_ENV === `production` &&
       resolvedNodesCache.has(nodesCacheKey)
     ) {
       return Promise.resolve(resolvedNodesCache.get(nodesCacheKey))
