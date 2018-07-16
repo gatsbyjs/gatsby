@@ -151,8 +151,6 @@ ${formatErrorDetails(errorDetails)}`)
         value: dataPath,
       },
     })
-
-    return result
   }
 
   return result
