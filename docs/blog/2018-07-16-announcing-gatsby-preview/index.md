@@ -28,3 +28,5 @@ While we continue development on this feature, we’re releasing it initially in
 Over the next few months, we’ll be adding features like support for other content management systems like Drupal and Wordpress, as well as moving Hosted Preview into general availability.
 
 Before you go, take a look at a GIF of the Preview feature in action on our own [gatsbyjs.com](gatsbyjs.com) website:
+
+![Gatsby Contentful preview](gatsby-contentful-preview.gif)
