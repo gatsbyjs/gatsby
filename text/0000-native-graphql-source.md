@@ -109,7 +109,7 @@ Low-level API should also enable a more deep customization of Gatsby Schemas, by
 
 Adds a schema to third-party schema list. At schema creation time all the schemas are merged with [schema stitching](https://www.apollographql.com/docs/graphql-tools/schema-stitching.html)
 
-## github-source-graphql
+## gatsby-source-graphql
 
 This is a higher level plugin. Instead of just merging a schema, it allows a more simple way of merging an third-party GraphQL API into the Gatsby schema. It also handles namespacing, both on type and field level. Features:
 
