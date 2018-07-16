@@ -26,7 +26,8 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "gatsby": ">2.0.0-alpha"
+    "gatsby": ">2.0.0-alpha",
+    "gatsby-plugin-sharp": "^2.0.0-beta.3"
   },
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp",
   "scripts": {
