@@ -1,6 +1,6 @@
 ---
 title: Announcing Hosted Preview for Gatsby + Contentful
-date: "2018-07-07"
+date: "2018-07-16"
 author: "Sam Bhagwat"
 tags: ["contentful", "preview", "product"]
 ---
