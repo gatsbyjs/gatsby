@@ -193,7 +193,7 @@ async function fetchData({
   _accessToken,
   _concurrentRequests,
 }) {
-  const { type, url } = route;
+  const { type, url } = route
 
   if (_verbose)
     console.log(
