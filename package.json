@@ -62,7 +62,7 @@
     "lint": "npm-run-all --continue-on-error --parallel lint:js lint:yaml",
     "lint:js": "eslint --ext .js,.jsx packages/**/src",
     "lint:flow": "babel-node scripts/flow-check.js",
-    "lint:yaml": "yamllint '**/*.y?(a)ml' --ignore='**/node_modules/**'",
+    "lint:yaml": "yamllint \"**/*.y?(a)ml\" --ignore=\"**/node_modules/**\"",
     "plop": "plop",
     "prebootstrap": "yarn",
     "publish": "lerna publish",
