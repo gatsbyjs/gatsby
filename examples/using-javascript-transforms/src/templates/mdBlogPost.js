@@ -1,4 +1,5 @@
 import React from "react"
+import { graphql } from "gatsby"
 import BlogPostChrome from "../components/BlogPostChrome"
 
 class mdBlogPost extends React.Component {
