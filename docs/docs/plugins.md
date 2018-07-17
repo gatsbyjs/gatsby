@@ -10,7 +10,7 @@ For larger / complex sites, they let you modularize your site customizations
 into site-specific plugins.
 
 Gatsby has a large and growing set of plugins. To search/browse official and
-community plugins and their documentation, visit the [Plugin Library](/packages/).
+community plugins and their documentation, visit the [Plugin Library](/plugins/).
 
 For documentation on the different types of plugins and the functionality provided by each, see the [Plugin Authoring page](/docs/plugin-authoring/).
 

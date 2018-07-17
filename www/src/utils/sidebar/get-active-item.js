@@ -1,29 +1,28 @@
-import getSlugId from "./get-slug-id"
+const isItemActive = (location, item, activeItemHash) => {
+  const linkMatchesPathname = item.link === location.pathname
+  const linkWithoutHashMatchesPathname =
+    item.link.replace(/#.*/, ``) === location.pathname
+  const activeItemHashFalsy = !activeItemHash || activeItemHash === `NONE`
 
-const isItemActive = (location, item, directory, slugId, activeItemHash) => {
   if (activeItemHash) {
-    if (
-      activeItemHash === `NONE` &&
-      `/${directory}/${getSlugId(item.link)}/` === `${location.pathname}`
-    ) {
+    if (activeItemHash === `NONE` && linkWithoutHashMatchesPathname) {
       return true
     }
 
-    if (
-      `/${directory}${item.link}` === `${location.pathname}#${activeItemHash}`
-    ) {
+    if (item.link === `${location.pathname}#${activeItemHash}`) {
       return true
     }
   }
 
-  if (item.link === `/` && slugId === directory) {
+  if (linkMatchesPathname && !location.hash && activeItemHashFalsy) {
     return true
   }
 
-  if (
-    `/${directory}${item.link}` === `${location.pathname}${location.hash}` &&
-    !activeItemHash
-  ) {
+  if (item.link === `${location.pathname}${location.hash}` && !activeItemHash) {
+    return true
+  }
+
+  if (linkMatchesPathname && !location.hash && !activeItemHash) {
     return true
   }
 
@@ -31,20 +30,23 @@ const isItemActive = (location, item, directory, slugId, activeItemHash) => {
 }
 
 const getActiveItem = (sectionList, location, activeItemHash) => {
-  const directory = sectionList.directory
-  const slugId = getSlugId(location.pathname)
-
-  for (let item of sectionList.items) {
-    if (isItemActive(location, item, directory, slugId, activeItemHash)) {
-      return item.link
-    }
-    if (item.subitems) {
-      for (let subitem of item.subitems) {
-        if (
-          isItemActive(location, subitem, directory, slugId, activeItemHash)
-        ) {
+  for (let item of sectionList) {
+    if (item.items) {
+      for (let subitem of item.items) {
+        if (isItemActive(location, subitem, activeItemHash)) {
           return subitem.link
         }
+        if (subitem.items) {
+          for (let subsubitem of subitem.items) {
+            if (isItemActive(location, subsubitem, activeItemHash)) {
+              return subsubitem.link
+            }
+          }
+        }
+      }
+    } else {
+      if (isItemActive(location, item, activeItemHash)) {
+        return item.link
       }
     }
   }

@@ -2,14 +2,12 @@
 title: How to Contribute
 ---
 
-## Contributing
-
 We want contributing to Gatsby to be fun, enjoyable, and educational for anyone and everyone. Contributions go far beyond pull requests and commits; we are thrilled to receive a variety of other contributions including the following:
 
-- Blogging, speaking about, or creating tutorials about one of Gatsby's many features. Mention @gatsbyjs on Twitter and/or email shannon [at] gatsbyjs [dot] com so we can give pointers and tips (if you want them :) and help you spread the word. Please add your blog posts and videos of talks to our [Awesome Gatsby](/docs/awesome-gatsby/) page.
-- [Submit new feature ideas through an RFC](/blog/2018-04-06-introducing-gatsby-rfc-process/)
+- Blogging, speaking about, or creating tutorials about one of Gatsby's many features. Mention [@gatsbyjs on Twitter](https://twitter.com/gatsbyjs) and/or email shannon [at] gatsbyjs [dot] com so we can give pointers and tips (if you want them 😄) and help you spread the word. Please add your blog posts and videos of talks to our [Awesome Gatsby](/docs/awesome-gatsby/) page.
+- [Submitting new feature ideas through an RFC](/blog/2018-04-06-introducing-gatsby-rfc-process/)
 - Submitting new documentation; titles in _italics_ on gatsbyjs.org are stubs and need contributions
-- Tweeting about things you build with @gatsbyjs (make sure to @ mention us!)
+- Tweeting about things you [#buildwithgatsby](https://twitter.com/search?q=%23buildwithgatsby) (make sure to use the hashtag and/or @ mention us!)
 - Submitting documentation updates, enhancements, designs, or bugfixes
 - Submitting spelling or grammar fixes
 - Adding unit or functional tests
@@ -18,9 +16,13 @@ We want contributing to Gatsby to be fun, enjoyable, and educational for anyone 
 - Searching for Gatsby on Discord or Spectrum and helping someone else who needs help
 - Teaching others how to contribute to Gatsby's repo!
 
-If you are worried or don't know where to start, you can always reach out to Shannon Soper(@shannonb_ux) on Twitter or simply submit an issue and a maintainer can help give you guidance!
+As our way of saying “thank you” to our contributors, **_all contributors_ are eligible for [free Gatsby swag](/docs/contributor-swag/)** — whether you’re contributing code, docs, a talk, an article, or something else that helps the Gatby community. [Learn how to claim free swag for contributors.](/docs/contributor-swag/)
 
-Looking to speak about Gatsby? We'd love to review your talk abstract/CFP! You can email it to shannon [at] gatsbyjs [dot] com, and we can give pointers or tips!!!
+### Not sure how to start contributing?
+
+If you are worried or don't know where to start, you can always reach out to [Shannon Soper (@shannonb_ux) on Twitter](https://twitter.com/shannonb_ux) or submit an issue and a maintainer can help give you guidance!
+
+Looking to speak about Gatsby? We'd love to review your talk abstract/CFP! You can email it to shannon [at] gatsbyjs [dot] com, and we can give pointers or tips!
 
 ### Creating your own plugins and loaders
 
@@ -98,19 +100,19 @@ Note: Before adding a blog post ensure you have approval from a member of the Ga
 
 To add a new blog post to the gatsbyjs.org blog:
 
-* Clone [the Gatsby repo](https://github.com/gatsbyjs/gatsby/) and navigate to `/www`
-* Run `yarn` to install all of the website's dependencies.
-* Run `gatsby develop` to preview the blog at `http://localhost:8000/blog`.
-* The content for the blog lives in the `/docs/blog` folder. Make additions or modifications here.
-* Add your avatar image to `/docs/blog/avatars`
-* Add your name to `/docs/blog/author.yaml`
-* Add a new folder following the pattern `/docs/blog/yyyy-mm-dd-title`. Within this newly created folder add an `index.md` file. 
-* Add `title`, `date`, `author`, and `tags` ([view existing tags](https://www.gatsbyjs.org/blog/tags/) or add a new one) to the frontmatter of your `index.md`. If you are cross posting your post you can add `canonicalLink` for SEO benefits. You can check the other blog posts in `/docs/blog` for examples.
-* If your blog post contains images add them to your blog post folder and reference them in your post's `index.md`.
-* Ensure any links to gatsbyjs.org are relative links - `/docs/how-to-contribute` instead of `https://gatsbyjs.org/docs/how-to-contribute`
-* Double check your grammar and capitalise correctly
-* Commit and push to your fork
-* Create a pull request from your branch
+- Clone [the Gatsby repo](https://github.com/gatsbyjs/gatsby/) and navigate to `/www`
+- Run `yarn` to install all of the website's dependencies.
+- Run `gatsby develop` to preview the blog at `http://localhost:8000/blog`.
+- The content for the blog lives in the `/docs/blog` folder. Make additions or modifications here.
+- Add your avatar image to `/docs/blog/avatars`
+- Add your name to `/docs/blog/author.yaml`
+- Add a new folder following the pattern `/docs/blog/yyyy-mm-dd-title`. Within this newly created folder add an `index.md` file.
+- Add `title`, `date`, `author`, and `tags` ([view existing tags](https://www.gatsbyjs.org/blog/tags/) or add a new one) to the frontmatter of your `index.md`. If you are cross posting your post you can add `canonicalLink` for SEO benefits. You can check the other blog posts in `/docs/blog` for examples.
+- If your blog post contains images add them to your blog post folder and reference them in your post's `index.md`.
+- Ensure any links to gatsbyjs.org are relative links - `/docs/how-to-contribute` instead of `https://gatsbyjs.org/docs/how-to-contribute`
+- Double check your grammar and capitalise correctly
+- Commit and push to your fork
+- Create a pull request from your branch
 
 ## Development tools
 
@@ -120,8 +122,7 @@ Gatsby uses Redux for managing state during development and building. It's often
 helpful to see the flow of actions and built-up state for a site you're working
 on or if adding new functionality to core. We leverage
 [Remote Redux Devtools](https://github.com/zalmoxisus/remote-redux-devtools) and
-[RemoteDev Server](https://github.com/zalmoxisus/remotedev-server) to give you use the Redux
-devtools extension for debugging Gatsby.
+[RemoteDev Server](https://github.com/zalmoxisus/remotedev-server) to help you debug Gatsby.
 
 To use this, first install
 [redux-devtools-extension](https://github.com/zalmoxisus/redux-devtools-extension)

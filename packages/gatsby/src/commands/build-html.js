@@ -6,14 +6,14 @@ const debug = require(`debug`)(`gatsby:html`)
 const webpackConfig = require(`../utils/webpack.config`)
 const { store } = require(`../redux`)
 const { createErrorFromString } = require(`gatsby-cli/lib/reporter/errors`)
-const renderHTML = require(`../utils/html-renderer`)
+const renderHTMLQueue = require(`../utils/html-renderer-queue`)
 
-module.exports = async (program: any) => {
+module.exports = async (program: any, activity: any) => {
   const { directory } = program
 
   debug(`generating static HTML`)
   // Reduce pages objects to an array of paths.
-  const pages = store.getState().pages.map(page => page.path)
+  const pages = Array.from(store.getState().pages.values(), page => page.path)
 
   // Static site generation.
   const compilerConfig = await webpackConfig(
@@ -28,7 +28,9 @@ module.exports = async (program: any) => {
       if (e) {
         return reject(e)
       }
-      const outputFile = `${directory}/public/render-page.js`
+
+      const outputFile = `${directory}/public/js/render-page.js`
+
       if (stats.hasErrors()) {
         let webpackErrors = stats.toJson().errors.filter(Boolean)
         return reject(
@@ -41,7 +43,7 @@ module.exports = async (program: any) => {
         )
       }
 
-      return renderHTML(require(outputFile), pages)
+      return renderHTMLQueue(outputFile, pages, activity)
         .then(() => {
           // Remove the temp JS bundle file built for the static-site-generator-plugin
           try {

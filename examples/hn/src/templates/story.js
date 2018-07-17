@@ -86,7 +86,11 @@ class Story extends React.Component {
           <tbody>
             <tr className="athing comtr " id="14174940">
               {flatComemnts.map(comment => (
-                <StoryComment key={comment.id} comment={comment} width={width} />
+                <StoryComment
+                  key={comment.id}
+                  comment={comment}
+                  width={width}
+                />
               ))}
             </tr>
           </tbody>
@@ -99,7 +103,7 @@ class Story extends React.Component {
 export default Story
 
 export const pageQuery = graphql`
-  query StoryQuery($id: String!) {
+  query($id: String!) {
     hnStory(id: { eq: $id }) {
       id
       title

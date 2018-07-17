@@ -9,6 +9,10 @@ const apiRunner = require(`./api-runner-ssr`)
 const syncRequires = require(`./sync-requires`)
 const { dataPaths, pages } = require(`./data.json`)
 
+// Speed up looking up pages.
+const pagesObjectMap = new Map()
+pages.forEach(p => pagesObjectMap.set(p.path, p))
+
 const stats = JSON.parse(
   fs.readFileSync(`${process.cwd()}/public/webpack.stats.json`, `utf-8`)
 )
@@ -48,12 +52,14 @@ function urlJoin(...parts) {
   }, ``)
 }
 
-const getPage = path => pages.find(page => page.path === path)
+const getPage = path => pagesObjectMap.get(path)
 
 const createElement = React.createElement
 
 export default (pagePath, callback) => {
   const pathPrefix = `${__PATH_PREFIX__}/`
+  const pathToGroupStyles = `css/`
+  const pathToGroupScripts = `js/`
 
   let bodyHtml = ``
   let headComponents = []
@@ -193,6 +199,7 @@ export default (pagePath, callback) => {
   const scripts = scriptsAndStyles.filter(
     script => script.name && script.name.endsWith(`.js`)
   )
+
   const styles = scriptsAndStyles.filter(
     style => style.name && style.name.endsWith(`.css`)
   )
@@ -221,7 +228,7 @@ export default (pagePath, callback) => {
           as="script"
           rel={script.rel}
           key={script.name}
-          href={urlJoin(pathPrefix, script.name)}
+          href={urlJoin(pathPrefix, pathToGroupScripts, script.name)}
         />
       )
     })
@@ -245,24 +252,22 @@ export default (pagePath, callback) => {
     .forEach(style => {
       // Add <link>s for styles that should be prefetched
       // otherwise, inline as a <style> tag
-
       if (style.rel === `prefetch`) {
         headComponents.push(
           <link
             as="style"
             rel={style.rel}
             key={style.name}
-            href={urlJoin(pathPrefix, style.name)}
+            href={urlJoin(pathPrefix, pathToGroupStyles, style.name)}
           />
         )
       } else {
         headComponents.unshift(
           <style
-            type="text/css"
-            data-href={urlJoin(pathPrefix, style.name)}
+            data-href={urlJoin(pathPrefix, style.name.slice(2))}
             dangerouslySetInnerHTML={{
               __html: fs.readFileSync(
-                join(process.cwd(), `public`, style.name),
+                join(process.cwd(), `public`, pathToGroupStyles, style.name),
                 `utf-8`
               ),
             }}
@@ -291,7 +296,9 @@ export default (pagePath, callback) => {
   // Filter out prefetched bundles as adding them as a script tag
   // would force high priority fetching.
   const bodyScripts = scripts.filter(s => s.rel !== `prefetch`).map(s => {
-    const scriptPath = `${pathPrefix}${JSON.stringify(s.name).slice(1, -1)}`
+    const scriptPath = `${pathPrefix}${pathToGroupScripts}${JSON.stringify(
+      s.name
+    ).slice(1, -1)}`
     return <script key={scriptPath} src={scriptPath} async />
   })
 

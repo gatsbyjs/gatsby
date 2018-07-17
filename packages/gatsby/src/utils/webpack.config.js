@@ -63,6 +63,7 @@ module.exports = async (
     // Don't allow overwriting of NODE_ENV, PUBLIC_DIR as to not break gatsby things
     envObject.NODE_ENV = JSON.stringify(env)
     envObject.PUBLIC_DIR = JSON.stringify(`${process.cwd()}/public`)
+    envObject.BUILD_STAGE = JSON.stringify(stage)
 
     return Object.assign(envObject, gatsbyVarObject)
   }
@@ -86,6 +87,19 @@ module.exports = async (
     return hmrBasePath + hmrSuffix
   }
 
+  function getOutputPaths() {
+    const path = directoryPath(`public/js`)
+
+    let publicPath = program.prefixPaths
+      ? `${store.getState().config.pathPrefix}/js/`
+      : `/js/`
+
+    return {
+      path,
+      publicPath,
+    }
+  }
+
   debug(`Loading webpack config for stage "${stage}"`)
   function getOutput() {
     switch (stage) {
@@ -103,30 +117,29 @@ module.exports = async (
             }:${webpackPort}/`,
           devtoolModuleFilenameTemplate: info =>
             path.resolve(info.absoluteResourcePath).replace(/\\/g, `/`),
+          // Avoid React cross-origin errors
+          // See https://reactjs.org/docs/cross-origin-errors.html
+          crossOriginLoading: `anonymous`,
         }
       case `build-html`:
       case `develop-html`:
         // A temp file required by static-site-generator-plugin. See plugins() below.
         // Deleted by build-html.js, since it's not needed for production.
         return {
-          path: directoryPath(`public`),
           filename: `render-page.js`,
           libraryTarget: `umd`,
           library: `lib`,
           umdNamedDefine: true,
           globalObject: `this`,
-          publicPath: program.prefixPaths
-            ? `${store.getState().config.pathPrefix}/`
-            : `/`,
+          path: getOutputPaths().path,
+          publicPath: getOutputPaths().publicPath,
         }
       case `build-javascript`:
         return {
           filename: `[name]-[chunkhash].js`,
           chunkFilename: `[name]-[chunkhash].js`,
-          path: directoryPath(`public`),
-          publicPath: program.prefixPaths
-            ? `${store.getState().config.pathPrefix}/`
-            : `/`,
+          path: getOutputPaths().path,
+          publicPath: getOutputPaths().publicPath,
         }
       default:
         throw new Error(`The state requested ${stage} doesn't exist.`)
@@ -186,12 +199,12 @@ module.exports = async (
             clearConsole: false,
             compilationSuccessInfo: {
               messages: [
-                `You can now view your site in the browser running at ${program.ssl ? `https` : `http`}://${
-                  program.host
-                }:${program.port}`,
-                `Your graphql debugger is running at ${program.ssl ? `https` : `http`}://${program.host}:${
-                  program.port
-                }/___graphql`,
+                `You can now view your site in the browser running at ${
+                  program.ssl ? `https` : `http`
+                }://${program.host}:${program.port}`,
+                `Your graphql debugger is running at ${
+                  program.ssl ? `https` : `http`
+                }://${program.host}:${program.port}/___graphql`,
               ],
             },
           }),
@@ -227,7 +240,6 @@ module.exports = async (
                       )
                     }
                   }
-
                   const webpackStats = {
                     ...stats.toJson({ all: false, chunkGroups: true }),
                     assetsByChunkName: assets,
@@ -370,6 +382,13 @@ module.exports = async (
       ],
       alias: {
         gatsby$: directoryPath(path.join(`.cache`, `gatsby-browser-entry.js`)),
+        // Using directories for module resolution is mandatory because
+        // relative path imports are used sometimes
+        // See https://stackoverflow.com/a/49455609/6420957 for more details
+        "core-js": path.dirname(require.resolve(`core-js/package.json`)),
+        "react-hot-loader": path.dirname(
+          require.resolve(`react-hot-loader/package.json`)
+        ),
       },
     }
   }

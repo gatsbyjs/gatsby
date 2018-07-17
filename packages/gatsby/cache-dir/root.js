@@ -6,7 +6,7 @@ import { apiRunner } from "./api-runner-browser"
 import syncRequires from "./sync-requires"
 import pages from "./pages.json"
 import redirects from "./redirects.json"
-import loader from "./loader"
+import loader, { setApiRunnerForLoader } from "./loader"
 import { hot } from "react-hot-loader"
 import JSONStore from "./json-store"
 
@@ -42,6 +42,7 @@ if (window.__webpack_hot_middleware_reporter__ !== undefined) {
   })
 }
 
+setApiRunnerForLoader(apiRunner)
 loader.addPagesArray(pages)
 loader.addDevRequires(syncRequires)
 window.___loader = loader

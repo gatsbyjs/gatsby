@@ -19,7 +19,7 @@ plugins: [`gatsby-source-hacker-news`]
 You can query nodes created from Hacker News like the following:
 
 ```graphql
-query StoriesQuery {
+query {
   allHnStory(sort: { fields: [order] }) {
     edges {
       node {
