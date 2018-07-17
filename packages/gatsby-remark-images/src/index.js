@@ -160,9 +160,7 @@ module.exports = (
       style="padding-bottom: ${ratio}; position: relative; bottom: 0; left: 0; background-image: url('${
       fluidResult.base64
     }'); background-size: cover; display: block;"
-    >
-      ${imageTag}
-    </span>
+    >${imageTag}</span>
   </span>
   `
 
