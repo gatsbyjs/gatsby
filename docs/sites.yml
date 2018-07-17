@@ -705,10 +705,6 @@
   featured: false
   categories:
     - Marketing
-- title: Beach Hut Poole
-  main_url: 'https://www.beachhutpoole.co.uk/'
-  url: 'https://www.beachhutpoole.co.uk/'
-  featured: false
 - title: Bricolage.io
   main_url: 'https://www.bricolage.io/'
   url: 'https://www.bricolage.io/'
@@ -1035,66 +1031,6 @@
   categories:
     - News
     - Technology
-- title: Smakosh (source)
-  featured: false
-- title: Philipp Czernitzki - Blog/Website
-  featured: false
-- title: WebGazer
-  featured: false
-- title: Joe Seifi's Blog
-  featured: false
-- title: Bartosz Dominiak Blog/Portfolio (source)
-  featured: false
-- title: HBTU MUN 2018 (source)
-  featured: false
-- title: Jamie Henson's Blog (source)
-  featured: false
-- title: Ruben's Blog (source)
-  featured: false
-- title: Thao Am Private Enterprise
-  featured: false
-- title: Bakadono
-  featured: false
-- title: Travellers.cafe
-  featured: false
-- title: Oliver Benns' Portfolio (source)
-  featured: false
-- title: angeloocana.com (source)
-  featured: false
-- title: Overlap.show (source)
-  featured: false
-- title: smartive Company Website
-  featured: false
-- title: Haboba Find Jobs at Phu Quoc Island
-  featured: false
-- title: Song Wang’s website (source)
-  featured: false
-- title: Magicly's blog (source)
-  featured: false
-- title: Phu Quoc Works
-  featured: false
-- title: Kabir Goel's website (source)
-  featured: false
-- title: David James' Portfolio (source)
-  featured: false
-- title: Tic Tac Toe AI (source)
-  featured: false
-- title: Random Screencast
-  featured: false
-- title: Phu Quoc Tea & Coffee Store
-  featured: false
-- title: Steven Natera's blog
-  featured: false
-- title: LekoArts - Graphic Designer
-  featured: false
-- title: Georgi Yanev (source)
-  featured: false
-- title: Hallingdata
-  featured: false
-- title: '@swyx (source)'
-  featured: false
-- title: 伊撒尔の窝
-  featured: false
 - title: 杨二小的博客
   main_url: 'https://blog.yangerxiao.com/'
   url: 'https://blog.yangerxiao.com/'
