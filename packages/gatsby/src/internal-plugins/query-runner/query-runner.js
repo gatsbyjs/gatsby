@@ -142,7 +142,7 @@ ${formatErrorDetails(errorDetails)}`)
       dataPath = `${modInt}/${dataPath}`
     }
 
-    await fs.writeFile(resultPath, resultJSON)
+    await fs.outputFile(resultPath, resultJSON)
 
     store.dispatch({
       type: `SET_JSON_DATA_PATH`,
