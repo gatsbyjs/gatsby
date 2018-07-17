@@ -23,13 +23,13 @@ That’s why today, we’re excited to launch a hosted preview service for teams
 
 With Gatsby Preview, once teams connect their Github repositories and CMS to our service, we’ll provide a live URL where content creators can see their changes _in context_. Curious how the new paragraph header would play with the graphic to the left or the footer below? Take  a look _before_ you hit publish and your changes go live. 
 
-While we continue development on this product, we’re releasing it today in an invite-only alpha. To apply to use the service, fill out this form and we’ll be in touch. There will be no charge for the service while it’s in alpha.
+While we continue development on this product, we’re releasing it today in an invite-only alpha. To [apply to use the service, fill out this form](https://www.gatsbyjs.com/preview/) and we’ll be in touch. There will be no charge for the service while it’s in alpha.
 
 Over the next few months, we’ll be adding integration with other CMSs like Drupal, Wordpress, and other hosted CMSs like Contentful, as well as moving Preview into general availability.
 
 We’re incredibly excited to launch our first commercial service and to continue to push forward the Gatsby experience! We’re looking forward to meeting more of you and working together to push forward the modern web.
 
-Before you go, take a look at a GIF of Gatsby Preview in action on our own [gatsbyjs.com](gatsbyjs.com) website:
+Before you go, take a look at a GIF of Gatsby Preview in action on our own [https://wwww.gatsbyjs.com](gatsbyjs.com) website:
 
 <video controls="controls" autoplay="true" loop="true">
   <source type="video/mp4" src="./gatsby-contentful-preview.mp4"></source>
