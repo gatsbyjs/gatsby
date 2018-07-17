@@ -347,14 +347,18 @@
   categories:
     - Blog
     - Food
-- title: CodeBushi
+- title: Code Bushi
   main_url: 'https://codebushi.com/'
   url: 'https://codebushi.com/'
   featured: false
+  description: >-
+    Web development resources, trends, & techniques to elevate your coding journey.
   categories:
     - Web Dev
     - Open Source
     - Blog
+  built_by: Hunter Chang
+  built_by_url: 'https://hunterchang.com/'
 - title: Daniel Hollcraft
   main_url: 'https://danielhollcraft.com/'
   url: 'https://danielhollcraft.com/'
