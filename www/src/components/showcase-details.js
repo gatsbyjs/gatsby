@@ -104,7 +104,6 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
     query={graphql`
       query {
         allSitesYaml(
-          limit: 40
           filter: { featured: { eq: true }, main_url: { ne: null } }
         ) {
           edges {
