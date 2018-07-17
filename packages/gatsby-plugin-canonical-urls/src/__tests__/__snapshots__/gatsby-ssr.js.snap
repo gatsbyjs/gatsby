@@ -1,13 +1,32 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Adds canonical link to head correctly applies a trailing slash to the canonical link when set 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Array [
+        <link
+          data-baseHost="someurl.com"
+          data-baseProtocol="http:"
+          data-requireTrailingSlash="true"
+          href="http://someurl.com/somepost/"
+          rel="canonical"
+        />,
+      ],
+    ],
+  ],
+}
+`;
+
 exports[`Adds canonical link to head correctly creates a canonical link if siteUrl is set 1`] = `
 [MockFunction] {
   "calls": Array [
     Array [
       Array [
         <link
-          data-basehost="someurl.com"
-          data-baseprotocol="http:"
+          data-baseHost="someurl.com"
+          data-baseProtocol="http:"
+          data-requireTrailingSlash="false"
           href="http://someurl.com/somepost"
           rel="canonical"
         />,

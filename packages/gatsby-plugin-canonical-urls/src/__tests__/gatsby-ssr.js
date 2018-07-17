@@ -36,4 +36,24 @@ describe(`Adds canonical link to head correctly`, () => {
     expect(setHeadComponents).toMatchSnapshot()
     expect(setHeadComponents).toHaveBeenCalledTimes(0)
   })
+
+  it(`applies a trailing slash to the canonical link when set`, async () => {
+    const pluginOptions = {
+      siteUrl: `http://someurl.com`,
+      requireTrailingSlash: true,
+    }
+    const setHeadComponents = jest.fn()
+    const pathname = `/somepost`
+
+    await onRenderBody(
+      {
+        setHeadComponents,
+        pathname,
+      },
+      pluginOptions,
+    )
+
+    expect(setHeadComponents).toMatchSnapshot()
+    expect(setHeadComponents).toHaveBeenCalledTimes(1)
+  })
 })

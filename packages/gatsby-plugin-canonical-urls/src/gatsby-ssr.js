@@ -7,14 +7,19 @@ exports.onRenderBody = (
 ) => {
   if (pluginOptions && pluginOptions.siteUrl) {
     const parsedUrl = url.parse(pluginOptions.siteUrl)
-    const myUrl = `${pluginOptions.siteUrl}${pathname}`
+    const requireTrailingSlash = pluginOptions.requireTrailingSlash || false
+    let myUrl = `${pluginOptions.siteUrl}${pathname}`
+    if(requireTrailingSlash) {
+      myUrl = myUrl.replace(/\/$|$/, `/`)
+    }
     setHeadComponents([
       <link
         rel="canonical"
         key={myUrl}
         href={myUrl}
-        data-baseprotocol={parsedUrl.protocol}
-        data-basehost={parsedUrl.host}
+        data-baseProtocol={parsedUrl.protocol}
+        data-baseHost={parsedUrl.host}
+        data-requireTrailingSlash={`${requireTrailingSlash}`}
       />,
     ])
   }
