@@ -1,4 +1,5 @@
 import React from "react"
+import { graphql } from "gatsby"
 import InsetPageLayout from "../components/Layouts/insetPage"
 
 class mdInsetPage extends React.Component {

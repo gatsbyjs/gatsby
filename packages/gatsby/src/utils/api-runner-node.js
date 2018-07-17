@@ -192,7 +192,9 @@ module.exports = async (api, args = {}, pluginSource) =>
       } else {
         pluginName = `Plugin ${plugin.name}`
       }
-      return Promise.resolve(runAPI(plugin, api, { ...args, parentSpan: apiSpan }))
+      return Promise.resolve(
+        runAPI(plugin, api, { ...args, parentSpan: apiSpan })
+      )
     })
       .catch(err => {
         if (err) {

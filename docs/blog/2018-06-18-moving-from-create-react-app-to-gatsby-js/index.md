@@ -216,6 +216,7 @@ You need to make some slight modifications to your `BlogPost` component.
 
 ```js
 import React from "react"
+import { graphql } from "gatsby"
 
 class BlogPost extends React.Component {
   render() {

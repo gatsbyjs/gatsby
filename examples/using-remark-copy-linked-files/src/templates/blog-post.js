@@ -1,5 +1,6 @@
 import React from "react"
 import Helmet from "react-helmet"
+import { graphql } from "gatsby"
 import get from "lodash/get"
 
 import Layout from "../components/layout"
