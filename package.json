@@ -34,6 +34,7 @@
     "prettier-eslint-cli": "4.7.1",
     "remotedev-server": "^0.2.3",
     "rimraf": "^2.6.1",
+    "yaml-lint": "^1.2.4",
     "yargs": "^10.0.3"
   },
   "engines": {
@@ -58,8 +59,10 @@
     "jest": "jest",
     "lerna": "lerna",
     "lerna-prepare": "lerna run prepare",
-    "lint": "eslint --ext .js,.jsx packages/**/src",
+    "lint": "npm-run-all --continue-on-error --parallel lint:js lint:yaml",
+    "lint:js": "eslint --ext .js,.jsx packages/**/src",
     "lint:flow": "babel-node scripts/flow-check.js",
+    "lint:yaml": "yamllint '**/*.y?(a)ml' --ignore='**/node_modules/**'",
     "plop": "plop",
     "prebootstrap": "yarn",
     "publish": "lerna publish",
