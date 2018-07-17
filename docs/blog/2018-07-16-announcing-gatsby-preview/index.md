@@ -31,4 +31,7 @@ We’re incredibly excited to launch our first commercial service and to continu
 
 Before you go, take a look at a GIF of Gatsby Preview in action on our own [gatsbyjs.com](gatsbyjs.com) website:
 
-![Gatsby Contentful preview](gatsby-contentful-preview.mp4)
+<video controls="controls" autoplay="true" loop="true">
+  <source type="video/mp4" src="./gatsby-contentful-preview.mp4"></source>
+  <p>Your browser does not support the video element.</p>
+</video>
