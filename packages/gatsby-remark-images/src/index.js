@@ -94,15 +94,15 @@ module.exports = (
 
     // Create our base image tag
     let imageTag = `
-    <img
-      class="${imageClass}"
-      style="${imageStyle}"
-      alt="${node.alt ? node.alt : defaultAlt}"
-      title="${node.title ? node.title : ``}"
-      src="${fallbackSrc}"
-      srcset="${srcSet}"
-      sizes="${fluidResult.sizes}"
-    />
+      <img
+        class="${imageClass}"
+        style="${imageStyle}"
+        alt="${node.alt ? node.alt : defaultAlt}"
+        title="${node.title ? node.title : ``}"
+        src="${fallbackSrc}"
+        srcset="${srcSet}"
+        sizes="${fluidResult.sizes}"
+      />
     `
 
     // if options.withWebp is enabled, generate a webp version and change the image tag to a picture tag
