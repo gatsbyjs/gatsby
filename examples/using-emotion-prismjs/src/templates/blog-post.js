@@ -1,5 +1,6 @@
 import React from "react"
 import { css } from "emotion"
+import { graphql } from "gatsby"
 import { rhythm, scale } from "../utils/typography"
 
 import Layout from "../components/layout"
