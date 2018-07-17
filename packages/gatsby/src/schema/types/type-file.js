@@ -28,7 +28,7 @@ export function setFileNodeRootType(fileNodeRootType) {
 function pointsToFile(nodes, key, value) {
   const looksLikeFile =
     _.isString(value) &&
-    mime.getType(value) !== `application/octet-stream` &&
+    mime.getType(value) !== null &&
     // domains ending with .com
     mime.getType(value) !== `application/x-msdownload` &&
     isRelative(value) &&
