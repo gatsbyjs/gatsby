@@ -94,13 +94,13 @@ these steps:
 We've written the following article style guide to help you get started with
 contributing.
 
-## Table of Contents
+### Table of Contents
 
 - [Modularity](#modularity)
 - [Format](#format)
 - [How to write clearly](#how-to-write-clearly)
 
-# Modularity
+## Modularity
 
 Each article should explain exactly one concept, and that concept should be
 apparent from the article's title.
@@ -108,9 +108,9 @@ apparent from the article's title.
 We can reference other articles by linking to them inline or in an "Other
 Resources" section at the end of the article. Our goal is to have many articles that cover a broad range of technical topics rather than smashing too many topics into one article.
 
-# Format
+## Format
 
-## Article title
+### Article title
 
 Article titles should be as short and clear as possible. We want readers to
 quickly find the information they're looking for and the title should reflect
@@ -135,7 +135,7 @@ Note: Just to clarify, you can include special characters in the article title
 but _not_ in the folder name (e.g. Title: What is GraphQL? and Folder Name:
 what-is-graphql).
 
-## Introductory paragraph
+### Introductory paragraph
 
 The introduction paragraph should be a 1-2 sentence explanation of the main
 topic and answer the following questions:
@@ -144,11 +144,11 @@ topic and answer the following questions:
 - What is the purpose of the document?
 - What does the document contain?
 
-## Prerequisites (if any)
+### Prerequisites (if any)
 
 If applicable, list any prerequisites to reading and understanding your article. Does the reader need to read another document first, install a particular plugin, or already know a certain skill? List those things here.
 
-## Body of text
+### Body of text
 
 Keep paragraphs short (around 1-4 sentences). People are more likely to read
 several short paragraphs instead of a huge block of text.
@@ -156,19 +156,19 @@ several short paragraphs instead of a huge block of text.
 Readers will likely use doc articles as a quick reference to look up syntax.
 Articles should have a basic, real-world example that shows common use cases of its syntax.
 
-## Other resources
+### Other resources
 
 If there are other resources you think readers would benefit from or next steps they might want to take after reading your article, add
 them at the bottom in an "Other Resources" section. You can also mention here any resources that helped you write the article (blogposts, outside tutorials, etc.).
 
-# How to Write Clearly
+## How to Write Clearly
 
-## Create an outline
+### Create an outline
 
 Before you begin writing, decide what goal the reader will accomplish by reading your article. What should they know or be able to do afer they have read it? Then, create an outline of the topic and think about any
 coding examples you'll use (if applicable). This helps to organize your thoughts and make the writing process easier.
 
-## Search for content
+### Search for content
 
 Many times, the content that needs to go in your article already exists somewhere in the world. Look through these resources and feel free to use the content to create your own article (just remember to reference where you got the information from if you didn't write it and it was not already official Gatsby content:
 
@@ -180,7 +180,7 @@ Many times, the content that needs to go in your article already exists somewher
 - Dreams
 - Anything else you can think of
 
-## Formatting example code
+### Formatting example code
 
 Here are specific formatting guidelines for any code:
 
@@ -210,32 +210,32 @@ Here are specific formatting guidelines for any code:
   }
   ```
 
-## Format language keywords as code
+### Format language keywords as code
 
 Format language keywords as code - this is done with the backtick key (located
 to the left of the "1" key on a US keyboard) in GitHub-flavored markdown. For
 example, put backticks around HTML tag names or CSS property names.
 
-## Use clear hyperlinks
+### Use clear hyperlinks
 
 Hyperlinks should contain the clearest words to indicate where the link will lead you. So instead of linking to the word [here](https://www.gatsbyjs.org/) link to [Gatsby's docs](https://www.gatsbyjs.org/).
 
 In tutorials that are meant for beginners, use as few hyperlinks as possible to minimize distractions. In docs, it's ok to include as many hyperlinks as necessary to provide relevant and interesting information and resources.
 
-## Begin sentences clearly
+### Indicate when a sentence or section is optional
 
-When a paragraph or sentence offers an optional path, the beginning of the first sentence should indicate optionality. For example, "if you'd like to learn more about xyz, see our reference guide" is clearer than "Go to the reference guide if you'd like to learn more about xyz."
+When a paragraph or sentence offers an optional path, the beginning of the first sentence should indicate that it's optional. For example, "if you'd like to learn more about xyz, see our reference guide" is clearer than "Go to the reference guide if you'd like to learn more about xyz."
 
 This method allows people who would _not_ like to learn more about xyz to stop reading the sentence as early as possible. This method also allows people who _would_ like to learn more about xyz to recognize the opportunity to learn quicker instead of accidentally skipping over the paragraph.
 
-## Define jargon
+### Define jargon
 
 Articles should be written with short, clear sentences, and use as little jargon
 as necessary. All jargon should be defined immediately in plain English. In
 other words, pretend like your readers have very little coding experience; you
 need to define words that beginners might have a hard time understanding.
 
-## Capitalize proper nouns
+### Capitalize proper nouns
 
 Proper nouns should use correct capitalization when possible. Below is a list of words as they should appear in Guide articles.
 
@@ -246,7 +246,7 @@ Front-end development (adjective form with a dash) is when you’re working on t
 front end (noun form with no dash). The same goes with the back end, full stack,
 and many other compound terms.
 
-## Use active voice
+### Use active voice
 
 Use active voice instead of passive voice. Generally, it's a more concise and
 straightforward way to communicate a subject. For example:
@@ -254,13 +254,13 @@ straightforward way to communicate a subject. For example:
 - (Passive) The for loop in JavaScript is used by programmers to...
 - (Active) Programmers use the for loop in JavaScript to...
 
-## Abbreviate terms
+### Abbreviate terms
 
 If you want to abbreviate a term in your article, write it out fully first, then
 put the abbreviation in parentheses. After that, you may use the abbreviation going for the rest of the article. For example, "In computer science, an
 abstract syntax tree (AST) is ..."
 
-## Use "you" as the pronoun
+### Use "you" as the pronoun
 
 Your articles should use the second person ("you") to help to give it a conversational
 tone. This way, the text and instructions seem to speak directly to the person
@@ -268,24 +268,24 @@ reading it. Try to avoid using the first person ("I", "we", "let's", and "us".
 
 Using "you" is also more accurate than saying "we," because typically only one person is reading the tutorial or guide at a time and the person who wrote the tutorial is not actually going through it with them, so "we" would be inaccurate. Finally, some technical documentation uses third person pronouns and nouns like "they" and "the user," which add more distance and feel colder than the conversational and warm "you" and "your."
 
-## Avoid emojis and slang
+### Avoid emojis and slang
 
 Don't use emojis or emoticons in the Guide and idiomatic expressions / slang. Gatsby has a global community, and
 the cultural meaning of an emoji, emoticon, or slang may be different around the world.
 Also, emojis can render differently on different systems.
 
-## Make lists clear with the Oxford Comma
+### Make lists clear with the Oxford Comma
 
 Use the Oxford Comma when possible (it is a comma used after the penultimate
 item in a list of three or more items, before ‘and’ or ‘or’ e.g. an Italian
 painter, sculptor, and architect). It makes things easier, clearer, and prettier
 to read.
 
-## Avoid "easy" and "simple"
+### Avoid "easy" and "simple"
 
 Avoid using words like "easy", "simple," and "basic" because if users have a hard time completing the task that is supposedly "easy," they will question their abilities. Consider using more specific descriptors; for example, when you say the phrase "deployment is easy," what do you really mean? Is it easy because it takes fewer steps than another option? If so, just use the most specific descriptor possible, which in that case would be "this deployment method involves fewer steps than other options."
 
-# Adding images to articles
+### Adding images to articles
 
 You can add diagrams, graphics, or visualizations as necessary. You can also
 embed relevant YouTube videos and interactive [REPL.it](https://repl.it/) code
@@ -301,7 +301,7 @@ Then you'd just need to reference them in your markdown file with this syntax:
 
 Then the images should show up when you click the "preview table" tab.
 
-## Apps that help you edit
+### Apps that help you edit
 
 Use the [Hemingway App](http://www.hemingwayapp.com/). There’s nothing magical
 about this tool, but it will automatically detect widely agreed-upon
@@ -316,7 +316,7 @@ for a grade level of 6. Another tool available is the De-Jargonizer, originally
 designed for scientific communication but might help avoid overspecialized
 wording.
 
-## Ask for/accept help & offer help to others
+### Ask for/accept help & offer help to others
 
 Technical writing, or the literature of science and technology, is difficult
 because it requires you to take a technical (usually abstract) topic and explain
