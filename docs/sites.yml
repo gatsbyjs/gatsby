@@ -1231,3 +1231,17 @@
   categories:
     - Documentation
     - Technology
+- title: goalgetters
+  main_url: 'https://goalgetters.space/'
+  url: 'https://goalgetters.space/'
+  featured: false
+  description: >-
+    goalgetters is a source of inspiration for people who want to change their career.
+    We offer articles, success stories and expert interviews on how to find a new passion and how to implement change.
+  categories:
+    - Blog
+    - Education
+    - Careers
+    - Personal Development
+  built_by: Stephanie Langers (content), Adrian Wenke (development)
+  built_by_url: 'https://twitter.com/AdrianWenke'
