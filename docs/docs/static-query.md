@@ -2,7 +2,7 @@
 title: "Querying data in non-page components using StaticQuery"
 ---
 
-Gatsby v2 introduces `StaticQuery`, a new API that allows non-page components to retrieve data via GraphQL query.
+Gatsby v2 introduces `StaticQuery`, a new API that allows **only non-page components** to retrieve data via GraphQL query. Please note that attempting to use this on a page component will result in the message `Loading (StaticQuery)` showing up on the page, as each and every component is allowed to have *only one* query.
 
 ## Basic example
 
