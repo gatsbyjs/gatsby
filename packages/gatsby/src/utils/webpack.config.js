@@ -87,6 +87,19 @@ module.exports = async (
     return hmrBasePath + hmrSuffix
   }
 
+  function getOutputPaths() {
+    const path = directoryPath(`public/js`)
+
+    let publicPath = program.prefixPaths
+      ? `${store.getState().config.pathPrefix}/js/`
+      : `/js/`
+
+    return {
+      path,
+      publicPath,
+    }
+  }
+
   debug(`Loading webpack config for stage "${stage}"`)
   function getOutput() {
     switch (stage) {
@@ -113,24 +126,20 @@ module.exports = async (
         // A temp file required by static-site-generator-plugin. See plugins() below.
         // Deleted by build-html.js, since it's not needed for production.
         return {
-          path: directoryPath(`public`),
           filename: `render-page.js`,
           libraryTarget: `umd`,
           library: `lib`,
           umdNamedDefine: true,
           globalObject: `this`,
-          publicPath: program.prefixPaths
-            ? `${store.getState().config.pathPrefix}/`
-            : `/`,
+          path: getOutputPaths().path,
+          publicPath: getOutputPaths().publicPath,
         }
       case `build-javascript`:
         return {
           filename: `[name]-[chunkhash].js`,
           chunkFilename: `[name]-[chunkhash].js`,
-          path: directoryPath(`public`),
-          publicPath: program.prefixPaths
-            ? `${store.getState().config.pathPrefix}/`
-            : `/`,
+          path: getOutputPaths().path,
+          publicPath: getOutputPaths().publicPath,
         }
       default:
         throw new Error(`The state requested ${stage} doesn't exist.`)
@@ -231,7 +240,6 @@ module.exports = async (
                       )
                     }
                   }
-
                   const webpackStats = {
                     ...stats.toJson({ all: false, chunkGroups: true }),
                     assetsByChunkName: assets,

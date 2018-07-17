@@ -28,7 +28,9 @@ module.exports = async (program: any, activity: any) => {
       if (e) {
         return reject(e)
       }
-      const outputFile = `${directory}/public/render-page.js`
+
+      const outputFile = `${directory}/public/js/render-page.js`
+
       if (stats.hasErrors()) {
         let webpackErrors = stats.toJson().errors.filter(Boolean)
         return reject(
