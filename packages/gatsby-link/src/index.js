@@ -55,7 +55,7 @@ class GatsbyLink extends React.Component {
 
     this.state = {
       path: createPath(to),
-      hashFragment: "",
+      hashFragment: ``,
       to,
       IOSupported,
       location,
