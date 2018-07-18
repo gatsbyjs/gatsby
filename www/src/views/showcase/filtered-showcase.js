@@ -77,15 +77,17 @@ class FilteredShowcase extends Component {
           // create map of categories with totals
           const aggregatedCategories = data.allSitesYaml.edges.reduce(
             (categories, edge) => {
-              edge.node.categories.forEach(category => {
-                // if we already have the category recorded, increase count
-                if (categories[category]) {
-                  categories[category] = categories[category] + 1
-                } else {
-                  // record first encounter of category
-                  categories[category] = 1
-                }
-              })
+              if (edge.node.categories) {
+                edge.node.categories.forEach(category => {
+                  // if we already have the category recorded, increase count
+                  if (categories[category]) {
+                    categories[category] = categories[category] + 1
+                  } else {
+                    // record first encounter of category
+                    categories[category] = 1
+                  }
+                })
+              }
 
               return { ...categories }
             },
