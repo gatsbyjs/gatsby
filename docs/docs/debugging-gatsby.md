@@ -138,3 +138,8 @@ We won't go in depth here about how to debug in VS Code - for that you can check
 After putting a breakpoint in `gatsby-node.js` and using the `Start debugging` command from VS Code you can see the final result:
 
 ![VSCode breakpoint hit](./images/vscode-debug.png)
+
+## Additional resources
+
+- [Debugging - Getting Started | Node.js](https://nodejs.org/en/docs/guides/debugging-getting-started/)
+- [Debugging with Node.js - Paul Irish talk at Node Summit 2017](https://www.youtube.com/watch?v=Xb_0awoShR8)
