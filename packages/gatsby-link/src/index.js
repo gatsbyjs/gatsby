@@ -55,6 +55,7 @@ class GatsbyLink extends React.Component {
 
     this.state = {
       path: createPath(to),
+      hashFragment: "",
       to,
       IOSupported,
       location,
@@ -66,7 +67,11 @@ class GatsbyLink extends React.Component {
     if (prevState.to === nextProps.to) return null
     const to = createLocation(nextProps.to, null, null, prevState.location)
     const path = createPath(to)
-    return { path, to }
+    const hashFragment = path
+      .split(`#`)
+      .slice(1)
+      .join(`#`)
+    return { path, hashFragment, to }
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -97,14 +102,21 @@ class GatsbyLink extends React.Component {
   render() {
     const { onClick, onMouseEnter, ...rest } = this.props
     let El
+    let otherProps = {}
     if (Object.keys(NavLinkPropTypes).some(propName => this.props[propName])) {
       El = NavLink
+      const { hashFragment } = this.state
+      if (hashFragment)
+        otherProps = {
+          isActive: (_, l) => `#${hashFragment}` === l.hash,
+        }
     } else {
       El = Link
     }
 
     return (
       <El
+        {...otherProps}
         onMouseEnter={e => {
           // eslint-disable-line
           onMouseEnter && onMouseEnter(e)
@@ -133,10 +145,7 @@ class GatsbyLink extends React.Component {
                 .join(``)
             }
             if (pathname === window.location.pathname) {
-              const hashFragment = this.state.path
-                .split(`#`)
-                .slice(1)
-                .join(`#`)
+              const { hashFragment } = this.state
               const element = hashFragment
                 ? document.getElementById(hashFragment)
                 : null
