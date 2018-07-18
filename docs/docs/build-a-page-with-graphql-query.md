@@ -2,9 +2,10 @@
 title: Build a page with a GraphQL query
 ---
 
-Gatsby will create a page for every component located in `src/pages`, with the index (or home) page located at `src/pages/index.js`.
+Gatsby creates pages from components located within `src/pages`. It watches the folder and will create and remove pages as you add and remove components. The pathname for each page is derived from the name of the component. For example, `src/pages/about.js` would be located at `/about/` when published.
 
-In this example, you will query your site metadata for the description in order to display it on your homepage.
+
+In this guide, you will learn how to perform a query of your site's metadata for the description to display on your homepage.
 
 ## Adding `description` to `siteMetadata`
 The first step in displaying the description will be ensuring you have one to begin with.
