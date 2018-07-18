@@ -69,7 +69,7 @@ const HomePage = () => {
 
 The first part of writing our GraphQL query is including the operation (in this case "`query`") and a name.
 
-From [browsing GraphiQL](https://next.gatsbyjs.org/docs/introducting-graphiql/), we can see that one of the fields we can query on is `site`, which in turn has its own `siteMetadata` fields that correspond to the data we provided in `gatsby-config.js`.
+From [browsing GraphiQL](introducting-graphiql/), we can see that one of the fields we can query on is `site`, which in turn has its own `siteMetadata` fields that correspond to the data we provided in `gatsby-config.js`.
 
 Putting this together, our completed query looks like:
 
