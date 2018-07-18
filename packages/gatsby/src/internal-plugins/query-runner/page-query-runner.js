@@ -72,6 +72,9 @@ const runQueuedActions = async () => {
       await runQueries()
     } finally {
       running = false
+      if (queuedDirtyActions.length > 0) {
+        runQueuedActions()
+      }
     }
   }
 }

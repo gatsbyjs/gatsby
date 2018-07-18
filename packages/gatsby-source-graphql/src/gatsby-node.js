@@ -16,14 +16,10 @@ const {
 } = require(`./transforms`)
 
 exports.sourceNodes = async (
-  { boundActionCreators, createNodeId, cache, store },
+  { actions, createNodeId, cache, store },
   options
 ) => {
-  const {
-    addThirdPartySchema,
-    createPageDependency,
-    createNode,
-  } = boundActionCreators
+  const { addThirdPartySchema, createPageDependency, createNode } = actions
   const {
     url,
     typeName,
