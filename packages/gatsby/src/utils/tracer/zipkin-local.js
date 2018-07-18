@@ -1,6 +1,6 @@
 const zipkin = require(`zipkin`)
 const { HttpLogger } = require(`zipkin-transport-http`)
-const ZipkinTracer = require(`moocar-zipkin-javascript-opentracing`)
+const ZipkinTracer = require(`zipkin-javascript-opentracing`)
 const fetch = require(`node-fetch`)
 
 let logger
