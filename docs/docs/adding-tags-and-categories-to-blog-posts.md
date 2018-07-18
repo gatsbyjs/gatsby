@@ -77,7 +77,7 @@ import React from "react"
 import PropTypes from "prop-types"
 
 // Components
-import { Link } from "gatsby"
+import { Link, graphql } from "gatsby"
 
 const Tags = ({ pageContext, data }) => {
   const { tag } = pageContext
@@ -132,7 +132,7 @@ Tags.propTypes = {
 export default Tags
 
 export const pageQuery = graphql`
-  query TagPage($tag: String) {
+  query($tag: String) {
     allMarkdownRemark(
       limit: 2000
       sort: { fields: [frontmatter___date], order: DESC }
@@ -241,7 +241,7 @@ import kebabCase from "lodash/kebabCase"
 
 // Components
 import Helmet from "react-helmet"
-import { Link } from "gatsby"
+import { Link, graphql } from "gatsby"
 
 const TagsPage = ({
   data: {
@@ -289,7 +289,7 @@ TagsPage.propTypes = {
 export default TagsPage
 
 export const pageQuery = graphql`
-  query TagsQuery {
+  query {
     site {
       siteMetadata {
         title

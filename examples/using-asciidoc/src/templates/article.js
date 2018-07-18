@@ -1,4 +1,5 @@
 import React from "react"
+import { graphql } from "gatsby"
 
 import Layout from "../layouts"
 
@@ -17,7 +18,7 @@ class Article extends React.Component {
 export default Article
 
 export const pageQuery = graphql`
-  query asciiHTML($id: String!) {
+  query($id: String!) {
     asciidoc(id: { eq: $id }) {
       html
     }

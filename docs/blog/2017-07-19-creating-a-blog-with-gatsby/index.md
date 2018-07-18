@@ -300,6 +300,7 @@ specified earlier.
 ```javascript{21-32}
 import React from 'react';
 import Helmet from 'react-helmet';
+import { graphql } from 'gatsby';
 
 // import '../css/blog-post.css';
 
@@ -533,7 +534,7 @@ available within the browser and the statically generated site.
 
 ```javascript
 import React from "react"
-import { Link } from "gatsby"
+import { Link, graphql } from "gatsby"
 import Helmet from "react-helmet"
 
 // import '../css/index.css'; // add some style if you want!

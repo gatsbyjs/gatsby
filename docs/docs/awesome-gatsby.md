@@ -59,3 +59,9 @@ See the [list of official and community plugins](/docs/plugins/)
 - [Kategorien & Tags zu Gatsby hinzufügen](https://www.lekoarts.de/blog/kategorien-tags-zu-gatsby-hinzufugen/)
 - [Erstelle dein Design System mit Gatsby](https://www.lekoarts.de/blog/erstelle-dein-design-system-mit-gatsby/)
 - [Upgrade-Guide: Gatsby v2 (German)](https://www.lekoarts.de/blog/upgrade-guide-gatsby-v-2/)
+
+## Other resources
+
+### DEV Community 
+
+[The DEV Community Gatsby tag](https://dev.to/t/gatsbyjs) is a place to share Gatsby projects, articles and tutorials as well as start discussions and ask for feedback on Gatsby-related topics. Developers of all skill-levels are welcome to take part.

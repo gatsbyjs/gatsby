@@ -387,7 +387,7 @@ export default () => (
 )
 ```
 
-If you visit `http://localhost:8001/about-css-modules/`, your page should now look like:
+If you visit `http://localhost:8000/about-css-modules/`, your page should now look like:
 
 ![css-modules-1](css-modules-1.png)
 

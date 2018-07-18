@@ -58,6 +58,8 @@ const createElement = React.createElement
 
 export default (pagePath, callback) => {
   const pathPrefix = `${__PATH_PREFIX__}/`
+  const pathToGroupStyles = `css/`
+  const pathToGroupScripts = `js/`
 
   let bodyHtml = ``
   let headComponents = []
@@ -197,6 +199,7 @@ export default (pagePath, callback) => {
   const scripts = scriptsAndStyles.filter(
     script => script.name && script.name.endsWith(`.js`)
   )
+
   const styles = scriptsAndStyles.filter(
     style => style.name && style.name.endsWith(`.css`)
   )
@@ -225,7 +228,7 @@ export default (pagePath, callback) => {
           as="script"
           rel={script.rel}
           key={script.name}
-          href={urlJoin(pathPrefix, script.name)}
+          href={urlJoin(pathPrefix, pathToGroupScripts, script.name)}
         />
       )
     })
@@ -249,23 +252,22 @@ export default (pagePath, callback) => {
     .forEach(style => {
       // Add <link>s for styles that should be prefetched
       // otherwise, inline as a <style> tag
-
       if (style.rel === `prefetch`) {
         headComponents.push(
           <link
             as="style"
             rel={style.rel}
             key={style.name}
-            href={urlJoin(pathPrefix, style.name)}
+            href={urlJoin(pathPrefix, pathToGroupStyles, style.name)}
           />
         )
       } else {
         headComponents.unshift(
           <style
-            data-href={urlJoin(pathPrefix, style.name)}
+            data-href={urlJoin(pathPrefix, style.name.slice(2))}
             dangerouslySetInnerHTML={{
               __html: fs.readFileSync(
-                join(process.cwd(), `public`, style.name),
+                join(process.cwd(), `public`, pathToGroupStyles, style.name),
                 `utf-8`
               ),
             }}
@@ -294,7 +296,9 @@ export default (pagePath, callback) => {
   // Filter out prefetched bundles as adding them as a script tag
   // would force high priority fetching.
   const bodyScripts = scripts.filter(s => s.rel !== `prefetch`).map(s => {
-    const scriptPath = `${pathPrefix}${JSON.stringify(s.name).slice(1, -1)}`
+    const scriptPath = `${pathPrefix}${pathToGroupScripts}${JSON.stringify(
+      s.name
+    ).slice(1, -1)}`
     return <script key={scriptPath} src={scriptPath} async />
   })
 
