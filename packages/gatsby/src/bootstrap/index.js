@@ -177,6 +177,10 @@ module.exports = async (args: BootstrapArgs) => {
   // Now that we know the .cache directory is safe, initialize the cache
   // directory.
   initCache()
+
+  // Ensure the public/static directory
+  await fs.ensureDir(`${program.directory}/public/static`)
+
   activity.end()
 
   // Copy our site files to the root of the site.
