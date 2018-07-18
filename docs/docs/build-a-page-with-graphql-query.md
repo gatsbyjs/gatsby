@@ -4,10 +4,10 @@ title: Build a page with a GraphQL query
 
 Gatsby will create a page for every component located in `src/pages`, with the index (or home) page located at `src/pages/index.js`.
 
-In this example, we will query our site metadata for the description in order to display it on our homepage.
+In this example, you will query your site metadata for the description in order to display it on your homepage.
 
 ## Adding `description` to `siteMetadata`
-The first step in displaying the description will be ensuring we have one to begin with.
+The first step in displaying the description will be ensuring you have one to begin with.
 
 Inside of `gatsby-config.js`:
 ```js
@@ -51,7 +51,7 @@ const HomePage = () => {
 }
 ```
 
-Below our `HomePage` component declaration, we are going to export a new constant called `query`, and set its value to be a `graphql` [tagged template](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals) with our query between two backticks:
+Below our `HomePage` component declaration, export a new constant called `query`, and set its value to be a `graphql` [tagged template](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals) with the query between two backticks:
 
 ```diff
 const HomePage = () => {
@@ -67,11 +67,11 @@ const HomePage = () => {
 + `
 ```
 
-The first part of writing our GraphQL query is including the operation (in this case "`query`") and a name.
+The first part of writing the GraphQL query is including the operation (in this case "`query`") along with a name.
 
-From [browsing GraphiQL](/docs/introducing-graphiql/), we can see that one of the fields we can query on is `site`, which in turn has its own `siteMetadata` fields that correspond to the data we provided in `gatsby-config.js`.
+From [browsing GraphiQL](/docs/introducing-graphiql/), you'll find that one of the fields that you can query on is `site`, which in turn has its own `siteMetadata` fields that correspond to the data provided in `gatsby-config.js`.
 
-Putting this together, our completed query looks like:
+Putting this together, the completed query looks like:
 
 ```diff
 export const query = graphql`
@@ -87,9 +87,9 @@ export const query = graphql`
 ```
 
 ## Get Data into the `<HomePage />` Component
-To start, we'll update our `HomePage` component to destructure `data` from props.
+To start, update the `HomePage` component to destructure `data` from props.
 
-The `data` prop contains the results of our GraphQL query, and matches the shape we would expect. With this in mind, our updated `HomePage` markup looks like:
+The `data` prop contains the results of the GraphQL query, and matches the shape you would expect. With this in mind, the updated `HomePage` markup looks like:
 
 ```diff
 import React from 'react'
@@ -118,4 +118,4 @@ export const query = graphql`
 export default HomePage
 ```
 
-After restarting `gatsby develop`, our home page will now display "This is where I write my thoughts." from the description we set in `gatsby-config.js`!
+After restarting `gatsby develop`, your home page will now display "This is where I write my thoughts." from the description set in `gatsby-config.js`!
