@@ -88,9 +88,15 @@ In our example `Node` is `undefined` and to figure out why, let's go backwards. 
 
 We can now see the problem - `args` doesn't contain `Node` - it contains `node`. So this small typographic mistake was causing our code to fail. Adjusting our code to use a lowercase `node` fixes the problem and we did that without adding tons of `console.log` output!
 
-### Finishing thoughts
+### Finishing thoughts on DevTools
 
 We can succussfully debug our code using Chrome DevTools but using it isn't really that convenient. There are a lot of steps we need to do manually everytime we want to use debugger, so in the next section you'll learn how to use the built-in debugging capabilities of VS Code.
+
+"Why did we go through all those steps only to find out that there are better options?" you might ask. That's great question and here are couple of reasons:
+
+ - This was introduction to node debugging. Using information from this section you can setup debugging in your code editor or IDE of choice (if it supports node debugging).
+ - You don't *need* code editor or IDE to debug node application. Using Chrome DevTools is usually safe fallback.
+ - Debugging isn't only thing you can do in Chrome DevTools. Once you connect to DevTools you can use CPU or memory profilers. Check `Profiler` and `Memory` tabs in DevTools.
 
 ## VS Code debugger
 
