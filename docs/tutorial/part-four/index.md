@@ -93,42 +93,6 @@ gatsby-plugin-emotion emotion react-emotion emotion-server
 Let's set up a site similar to what you ended with in Part Three. This site will have a layout
 component and two page components:
 
-`src/pages/index.js`
-
-```jsx
-import React from "react"
-import Layout from "../components/layout"
-
-export default () => (
-  <Layout>
-    <h1>Amazing Pandas Eating Things</h1>
-    <div>
-      <img
-        src="https://2.bp.blogspot.com/-BMP2l6Hwvp4/TiAxeGx4CTI/AAAAAAAAD_M/XlC_mY3SoEw/s1600/panda-group-eating-bamboo.jpg"
-        alt="Group of pandas eating bamboo"
-      />
-    </div>
-  </Layout>
-)
-```
-
-`src/pages/about.js`
-
-```jsx
-import React from "react"
-import Layout from "../components/layout"
-
-export default () => (
-  <Layout>
-    <h1>About Pandas Eating Lots</h1>
-    <p>
-      We're the only site running on your computer dedicated to showing the best
-      photos and videos of pandas eating lots of food.
-    </p>
-  </Layout>
-)
-```
-
 `src/components/layout.js`
 
 ```jsx
@@ -168,6 +132,42 @@ export default ({ children }) => (
     </Link>
     {children}
   </div>
+)
+```
+
+`src/pages/index.js`
+
+```jsx
+import React from "react"
+import Layout from "../components/layout"
+
+export default () => (
+  <Layout>
+    <h1>Amazing Pandas Eating Things</h1>
+    <div>
+      <img
+        src="https://2.bp.blogspot.com/-BMP2l6Hwvp4/TiAxeGx4CTI/AAAAAAAAD_M/XlC_mY3SoEw/s1600/panda-group-eating-bamboo.jpg"
+        alt="Group of pandas eating bamboo"
+      />
+    </div>
+  </Layout>
+)
+```
+
+`src/pages/about.js`
+
+```jsx
+import React from "react"
+import Layout from "../components/layout"
+
+export default () => (
+  <Layout>
+    <h1>About Pandas Eating Lots</h1>
+    <p>
+      We're the only site running on your computer dedicated to showing the best
+      photos and videos of pandas eating lots of food.
+    </p>
+  </Layout>
 )
 ```
 
@@ -248,7 +248,7 @@ Then edit the two components:
 
 `src/pages/about.js`
 
-```jsx{5,7,14-23}
+```jsx{2,5,7,14-23}
 import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
@@ -264,7 +264,7 @@ export default ({ data }) => (
 )
 
 export const query = graphql`
-  query AboutQuery {
+  query {
     site {
       siteMetadata {
         title
@@ -286,7 +286,7 @@ import { rhythm } from "../utils/typography"
 export default ({ children }) => (
   <StaticQuery
     query={graphql`
-      query LayoutQuery {
+      query {
         site {
           siteMetadata {
             title

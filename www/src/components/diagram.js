@@ -128,6 +128,7 @@ const SourceItem = ({ children }) => (
       },
       [presets.Phablet]: {
         flex: `1 1 33%`,
+        maxWidth: `33%`
       },
     }}
   >

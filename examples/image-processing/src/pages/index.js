@@ -1,4 +1,5 @@
 import React from "react"
+import { graphql } from "gatsby"
 import Img from "gatsby-image"
 import Layout from "../layouts"
 import { rhythm } from "../utils/typography"
@@ -369,7 +370,7 @@ styles.column25 = {
 export default Index
 
 export const pageQuery = graphql`
-  query IndexQuery {
+  query {
     allImageSharp {
       edges {
         node {

@@ -57,7 +57,7 @@ Layout.propTypes = {
 export default props => (
   <StaticQuery
     query={graphql`
-      query LayoutQuery {
+      query {
         site {
           siteMetadata {
             title

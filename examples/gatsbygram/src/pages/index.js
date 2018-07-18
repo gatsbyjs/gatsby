@@ -1,6 +1,7 @@
 import * as PropTypes from "prop-types"
 import chunk from "lodash/chunk"
 import React from "react"
+import { graphql } from "gatsby"
 
 import { rhythm, scale } from "../utils/typography"
 import presets from "../utils/presets"
@@ -199,7 +200,7 @@ class Index extends React.Component {
 export default Index
 
 export const pageQuery = graphql`
-  query allImages {
+  query {
     user: allPostsJson(limit: 1) {
       edges {
         node {

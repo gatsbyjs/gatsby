@@ -8,12 +8,12 @@ Gatsby v2 introduces `StaticQuery`, a new API that allows non-page components to
 
 ```jsx
 import React from "react"
-import { StaticQuery } from "gatsby"
+import { StaticQuery, graphql } from "gatsby"
 
 const Header = () => (
   <StaticQuery
     query={graphql`
-      query HeaderQuery {
+      query {
         site {
           siteMetadata {
             title
@@ -52,7 +52,7 @@ const Header = ({ data }) => (
 export default props => (
   <StaticQuery
     query={graphql`
-      query HeaderQuery {
+      query {
         site {
           siteMetadata {
             title

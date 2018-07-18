@@ -2,11 +2,6 @@ const { guess } = require(`guess-webpack/api`)
 
 exports.disableCorePrefetching = () => true
 
-const currentPathname = () =>
-  window.location.pathname.slice(-1) === `/`
-    ? window.location.pathname.slice(0, -1)
-    : window.location.pathname
-
 let initialPath
 let notNavigated = true
 exports.onRouteUpdate = ({ location }) => {
@@ -18,7 +13,7 @@ exports.onRouteUpdate = ({ location }) => {
 }
 
 let chunksPromise
-const chunks = pathPrefix => {
+const chunks = () => {
   if (!chunksPromise) {
     chunksPromise = fetch(`${window.location.origin}/webpack.stats.json`).then(
       res => res.json()
@@ -43,17 +38,13 @@ const prefetch = url => {
   parentElement.appendChild(link)
 }
 
-exports.onPrefetchPathname = ({ pathname, pathPrefix }, pluginOptions) => {
+exports.onPrefetchPathname = ({ pathPrefix }, pluginOptions) => {
   if (process.env.NODE_ENV === `production`) {
-    const predictions = guess(currentPathname(), [pathname])
-    const matchedPaths = Object.keys(predictions).filter(
-      match =>
-        // If the prediction is below the minimum threshold for prefetching
-        // we skip.
-        pluginOptions.minimumThreshold &&
-        pluginOptions.minimumThreshold > predictions[match]
-          ? false
-          : true
+    const matchedPaths = Object.keys(
+      guess({
+        path: window.location.pathname,
+        threshold: pluginOptions.minimumThreshold,
+      })
     )
 
     // Don't prefetch from client for the initial path as we did that
@@ -64,7 +55,7 @@ exports.onPrefetchPathname = ({ pathname, pathPrefix }, pluginOptions) => {
 
     if (matchedPaths.length > 0) {
       matchedPaths.forEach(p => {
-        chunks(pathPrefix).then(chunk => {
+        chunks(p).then(chunk => {
           // eslint-disable-next-line
           const page = ___loader.getPage(p)
           if (!page) return

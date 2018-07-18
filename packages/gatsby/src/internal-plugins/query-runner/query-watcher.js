@@ -173,7 +173,9 @@ const queueQueriesForPageComponent = componentPath => {
 
 const getPagesForComponent = componentPath => {
   const state = store.getState()
-  return [...state.pages].filter(p => p.componentPath === componentPath)
+  return [...state.pages.values()].filter(
+    p => p.componentPath === componentPath
+  )
 }
 
 const filesToWatch = new Set()

@@ -94,7 +94,7 @@ export default ({ data }) => (
 )
 
 export const query = graphql`
-  query GatsbyImageSampleQuery {
+  query {
     file(relativePath: { eq: "blog/avatars/kyle-mathews.jpeg" }) {
       childImageSharp {
         # Specify the image processing specifications right in the query.

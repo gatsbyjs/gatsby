@@ -32,7 +32,7 @@ Now that you know the three required components, there are a few ways to approac
 
 Using an open source search engine is always free and allows you to enable offline search for your site. Note that you need to be careful with offline search because the entire search index has to be brought into the client, which can affect the bundle size significantly.
 
-Open source libraries like [`elesticlunr`](https://www.npmjs.com/package/elasticlunr) or [`js-search`](https://github.com/bvaughn/js-search) can be used to enable search for your site.
+Open source libraries like [`elasticlunr`](https://www.npmjs.com/package/elasticlunr) or [`js-search`](https://github.com/bvaughn/js-search) can be used to enable search for your site.
 
 Doing so will require you to create a search index when your site is built. For `elesticlunr`, there is a plugin called [`gatsby-plugin-elasticlunr-search`](https://github.com/andrew-codes/gatsby-plugin-elasticlunr-search) that creates a search index automatically.
 
