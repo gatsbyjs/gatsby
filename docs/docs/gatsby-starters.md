@@ -825,16 +825,15 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
   - Support multi-language url routes within a single page component. That means you don't have to create separate pages such as `pages/en/index.js` or `pages/ko/index.js`.
 
   - Based on [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default) with least modification.
-  
+
 - [devblog](https://github.com/RyanFitzgerald/devblog)
   [(demo)](https://ryanfitzgerald.github.io/devblog/)
 
   Features:
 
   - Minimalistic blog for developers
-  - Based on ```gatsby-starter-blog```
+  - Based on `gatsby-starter-blog`
   - Server-side rendering
   - Syntax highlighting via PrismJS
   - Styled Components
   - Pagination
-
