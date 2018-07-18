@@ -3,7 +3,7 @@
     - title: Quick start
       link: /docs/
     - title: Recipes*
-      link: /recipes/
+      link: /docs/recipes/
     - title: Overview of the docs*
       link: /docs/overview/
     - title: Main Tutorial (step-by-step)
@@ -226,7 +226,7 @@
   items:
     - title: Community
       link: /docs/community/
-    - title: Code of Conduct*
+    - title: Code of Conduct
       link: /docs/code-of-conduct/
     - title: How to contribute
       link: /docs/how-to-contribute/
