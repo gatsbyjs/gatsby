@@ -38,16 +38,33 @@ export default HomePage
 
 ## Adding the GraphQL Query
 The first thing to do is import GraphQL from Gatsby. At the top of `index.js` add:
-```js
-import { graphql } from 'gatsby'
+```diff
+import React from 'react'
++ import { graphql } from 'gatsby'
+
+const HomePage = () => {
+  return (
+    <div>
+      Hello!
+    </div>
+  )
+}
 ```
 
 Below our `HomePage` component declaration, we are going to export a new constant called `query`, and set its value to be a `graphql` [tagged template](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals) with our query between two backticks:
 
-```js
-export const query = graphql`
-  query will go here
-`
+```diff
+const HomePage = () => {
+  return (
+    <div>
+      Hello!
+    </div>
+  )
+}
+
++ export const query = graphql`
++   # query will go here
++ `
 ```
 
 The first part of writing our GraphQL query is including the operation (in this case "`query`") and a name.
@@ -56,7 +73,38 @@ From [browsing GraphiQL](https://next.gatsbyjs.org/docs/introducting-graphiql/),
 
 Putting this together, our completed query looks like:
 
-```js
+```diff
+export const query = graphql`
+- # query will go here
++  query HomePageQuery {
++    site {
++      siteMetadata {
++        description
++      }
++    }
++  }  
+`
+```
+
+## Get Data into the `<HomePage />` Component
+To start, we'll update our `HomePage` component to destructure `data` from props.
+
+The `data` prop contains the results of our GraphQL query, and matches the shape we would expect. With this in mind, our updated `HomePage` markup looks like:
+
+```diff
+import React from 'react'
+import { graphql } from 'gatsby'
+
+- const HomePage = () => {
++ const HomePage = ({data}) => {
+  return (
+    <div>
+-     Hello!
++     {data.site.siteMetadata.description}
+    </div>
+  )
+}
+
 export const query = graphql`
   query HomePageQuery {
     site {
@@ -66,21 +114,8 @@ export const query = graphql`
     }
   }  
 `
+
+export default HomePage
 ```
 
-## Get Data into the `<HomePage />` Component
-To start, we'll update our `HomePage` component to destructure `data` from props.
-
-The `data` prop contains the results of our GraphQL query, and matches the shape we would expect. With this in mind, our updated `HomePage` markup looks like:
-
-```js
-const HomePage = ({data}) => {
-  return (
-    <div>
-      {data.site.siteMetadata.description}
-    </div>
-  )
-}
-```
-
-After restarting `gatsby develop`, our home page will now display our description!
+After restarting `gatsby develop`, our home page will now display "This is where I write my thoughts." from the description we set in `gatsby-config.js`!
