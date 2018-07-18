@@ -42,7 +42,7 @@ function createScriptHeaderGenerator(manifest, pathPrefix) {
     }
 
     // Always add starting slash, as link entries start with slash as relative to deploy root
-    return linkTemplate(`${pathPrefix}/${chunk}`)
+    return linkTemplate(`${pathPrefix}/js/${chunk}`)
   }
 }
 
