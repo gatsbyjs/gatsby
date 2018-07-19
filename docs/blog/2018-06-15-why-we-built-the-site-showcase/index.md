@@ -7,7 +7,7 @@ tags: ["documentation", "launch"]
 
 We recently finished the first phase of the [Site Showcase](https://next.gatsbyjs.org/showcase/), which is a searchable, filterable library of sites built with Gatsby!
 
-We're starting the second phase soon and would love your help! For a list of tasks that need to be done, see [Issue #5927](https://github.com/gatsbyjs/gatsby/issues/5927). Feel free to contribute to that issue!
+We're starting the second phase soon and would love your help! For a list of tasks that need to be done, see [Issue #5927](https://github.com/gatsbyjs/gatsby/issues/5927).
 
 ![Featured Sites](featured-sites.png)
 
@@ -17,15 +17,15 @@ The Site Showcase was developed by Cassie (@ThatOtherPerson) and Shawn (@sw-yx) 
 
 ## Submitting your site
 
-If you’d like to submit a site to the showcase, please follow the [instructions in this document](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/site-showcase-submissions.md).
+If you've built a site with Gatsby and would like it to appear in the Site Showcase, please [submit your site](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/site-showcase-submissions.md).
 
 ## Why build a site showcase?
 
-We built the showcase to make it easier for you to (1) find the source code for open source Gatsby sites and (2) show off Gatsby to clients, coworkers ,friends & family.
+We built the showcase to make it easier for you to (1) find the source code for open source Gatsby sites and (2) show off Gatsby to clients, coworkers, friends & family.
 
 ### Source code
 
-Sometimes, an example is worth 1000 words. That's why we added a GitHub icon next to sites with open source code.
+Sometimes, an example is worth 1000 words. That's why we added a GitHub icon next to sites with open source code (not all sites will have this icon).
 
 ![Site Showcase Source Code Available Icon](site-showcase-source-code.png)
 
@@ -35,7 +35,7 @@ The Site Showcase can help you pitch Gatsby to clients and coworkers as the best
 
 ## UX research process
 
-Here’s where we discussed and built the site showcase if you'd like to go through the discussion that led to this project:
+Many of you contributed to the discussion and development of the site showcase. Here are the intial issue and PR if you'd like to go through the discussion that led to this project:
 
 - [Site Showcase Issue](https://github.com/gatsbyjs/gatsby/issues/4392)
 - [Site Showcase WIP PR](https://github.com/gatsbyjs/gatsby/pull/5524)
@@ -48,7 +48,11 @@ Here’s a summary of what I learned from over 80 interviews with Gatsby users. 
 
 ### User Flow
 
-The empathy map reflects how it took most people a lot of time browsing through the Awesome Gatsby list to find example sites and how many people share their sites through Twitter and there isn’t enough time or room for everyone to get retweeted by the @Gatsbyjs account.
+The empathy map reflects the following pain points:
+
+- the Awesome Gatsby list of sites (used to be part of the READme in the open source repo) was growing long and was not searchable or filterable
+- the Awesome Gatsby list also had no visual indication of what the sites looked like
+- there isn’t enough time or room for everyone's awesome sites to get retweeted by the @Gatsbyjs account
 
 With the empathy map and the interviews as our guide, we created a list of jobs to be done and imagined the typical flow a user would take through the site showcase. We did this to make sure we planned both a sensible information architecture and the necessary functionality to meet user’s main needs.
 
