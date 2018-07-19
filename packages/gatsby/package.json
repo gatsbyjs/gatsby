@@ -98,7 +98,7 @@
     "redux": "^3.6.0",
     "relay-compiler": "1.4.1",
     "remote-redux-devtools": "^0.5.7",
-    "serve": "^6.4.0",
+    "serve": "^9.2.0",
     "shallow-compare": "^1.2.2",
     "sift": "^3.2.6",
     "signal-exit": "^3.0.2",
