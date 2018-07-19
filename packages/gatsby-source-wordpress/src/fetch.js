@@ -352,16 +352,8 @@ Pages to be requested : ${totalPages}`
  * @param {Array} routeList
  * @returns {boolean}
  */
-function checkRouteList( routePath, routeList ) {
-  if (
-    routeList.some(route =>
-      minimatch(routePath, route)
-    )
-  ) {
-    return true
-  } else {
-    return false
-  }
+function checkRouteList(routePath, routeList) {
+  return routeList.some(route => minimatch(routePath, route))
 }
 
 /**
@@ -395,13 +387,13 @@ function getValidRoutes({
 
       // Excluding the "technical" API Routes
       const excludedTypes = [
-        "/v2/**",
-        "/v3/**",
-        "**/1.0",
-        "**/2.0",
-        "**/embed",
-        "**/proxy",
-        "/",
+        `/v2/**`,
+        `/v3/**`,
+        `**/1.0`,
+        `**/2.0`,
+        `**/embed`,
+        `**/proxy`,
+        `/`,
       ]
 
       const routePath = getRoutePath(url, route._links.self)
@@ -409,9 +401,9 @@ function getValidRoutes({
       const blackList = [...excludedTypes, ..._excludedRoutes]
 
       // Check whitelist first
-      const inWhiteList = checkRouteList(routePath, whiteList);
+      const inWhiteList = checkRouteList(routePath, whiteList)
       // Then blacklist
-      const inBlackList = checkRouteList(routePath, blackList);
+      const inBlackList = checkRouteList(routePath, blackList)
       const validRoute = inWhiteList && !inBlackList
 
       if (validRoute) {
@@ -456,13 +448,21 @@ function getValidRoutes({
         if (_verbose) {
           const invalidType = inBlackList ? `blacklisted` : `not whitelisted`
           console.log(
-            colorized.out(`Excluded route: ${invalidType}`, colorized.color.Font.FgYellow)
+            colorized.out(
+              `Excluded route: ${invalidType}`,
+              colorized.color.Font.FgYellow
+            )
           )
         }
       }
     } else {
       if (_verbose)
-        console.log(colorized.out(`Invalid route: detail route`, colorized.color.Font.FgRed))
+        console.log(
+          colorized.out(
+            `Invalid route: detail route`,
+            colorized.color.Font.FgRed
+          )
+        )
     }
   }
 

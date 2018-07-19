@@ -100,14 +100,14 @@ plugins: [
       // Set how many simultaneous requests are sent at once.
       concurrentRequests: 10,
       // Set WP REST API routes whitelists
-      // and blacklists using glob parameters.
+      // and blacklists using glob patterns.
       // Defaults to whitelist the routes shown
       // in the example below.
-      // See: https://github.com/isaacs/minimatc
+      // See: https://github.com/isaacs/minimatch
       // Example:  `["/*/*/comments", "/yoast/**"]`
       // ` will either include or exclude routes ending in `comments` and
       // all routes that begin with `yoast` from fetch.
-      // Whitelisted routes using glob parameters
+      // Whitelisted routes using glob patterns
       includedRoutes: [
         "/*/*/categories",
         "/*/*/posts",
@@ -117,7 +117,7 @@ plugins: [
         "/*/*/taxonomies",
         "/*/*/users",
       ],
-      // Blacklisted routes using glob parameters
+      // Blacklisted routes using glob patterns
       excludedRoutes: ["/*/*/posts/1456"],
       // use a custom normalizer which is applied after the built-in ones.
       normalizer: function({ entities }) {
@@ -127,6 +127,33 @@ plugins: [
   },
 ]
 ```
+
+## Fetching Data: WordPress REST API Route Selection
+
+The `gatsby-source-wordpress` plugin will fetch the most commonly used [WordPress data structures](https://developer.wordpress.org/rest-api/reference/#rest-api-developer-endpoint-reference):
+
+* Posts
+* Pages
+* Media
+* Categories
+* Tags
+* Users
+* Taxonomies
+
+By default, it will ignore all other endpoints listed in the root `/wp-json` endpoint.
+
+To customize the routes fetched, two configuration options are available: `includeRoutes` for whitelisting and `excludeRoutes` for blacklisting. Both options expect an array of glob patterns. Glob matching is done by [minimatch](https://github.com/isaacs/minimatch). To test your glob patterns, [use this tool](http://pthrasher.github.io/minimatch-test/).
+
+If there are
+If an endpoint is whitelisted and not blacklisted, it will be fetched. Otherwise, it will be ignored.
+
+### Migrating from gatsby-source-wordpress v2
+
+All routes were fetched by default in versions 2.x and lower. In versions 3.x, only the routes shown in the `includedRoutes` option in the sample config above will be fetched by default.
+
+If you would like to either add or remove whitelisted routes, add `includedRoutes` to the plugin config in `gatsby-config.js`.
+
+If you had previously been using `excludedRoutes`, it will continue to work as expected, though there's a good chance you don't need it anymore!
 
 ## WordPress Plugins
 
