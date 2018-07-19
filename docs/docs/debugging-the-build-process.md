@@ -41,7 +41,7 @@ TypeError: Cannot read property 'internal' of undefined
 
 ## Chrome DevTools for Node
 
-### Running Gatsby with `inspect` flag
+### Running Gatsby with the `inspect` flag
 
 In your project directory instead of running `gatsby develop` run the following command:
 
@@ -49,8 +49,8 @@ In your project directory instead of running `gatsby develop` run the following 
 node --inspect-brk --no-lazy node_modules/gatsby/dist/bin/gatsby develop
 ```
 
-- `--inspect-brk` will enable the inspector agent which will allow you to connect a debugger. It will also pause execution until the debugger is connected and then wait for you to resume it.
-- `--no-lazy` - this will force Node's V8 to disable lazy compilation and will help with using breakpoints
+- `--inspect-brk` will enable Node's inspector agent which will allow you to connect a debugger. It will also pause execution until the debugger is connected and then wait for you to resume it.
+- `--no-lazy` - this will force Node's V8 engine to disable lazy compilation and will help with using breakpoints.
 
 ### Connecting DevTools
 
@@ -76,13 +76,13 @@ Let's go ahead and add a breakpoint just before the place that the error is thro
 
 ![Added breakpoint](./images/chrome-devtools-new-breakpoint.png)
 
-Now you can resume code execution by clicking the "resume" icon in the DevTools debug toolbar (or press F8 on your keyboard). Gatsby will start running and pause once it reaches breakpoint allowing you to inspect variables:
+Now you can resume code execution by clicking the "resume" icon in the DevTools debug toolbar (or press F8 on your keyboard). Gatsby will start running and pause once it reaches a breakpoint, allowing you to inspect variables:
 
 ![Breakpoint hit](./images/chrome-devtools-breakpoint-hit.png)
 
 To inspect variables you can hover your mouse over them or go to the `Scope` section in the right-hand pane (either collapse the "Call Stack" section or scroll through it to the bottom).
 
-In our example `Node` is `undefined` and to figure out why, let's go backwards. `Node` is extracted from `args` so let's examine that by hovering `args`:
+In the example `Node` is `undefined` and to figure out why, let's go backwards. `Node` is extracted from `args` so let's examine that by hovering `args`:
 
 ![Examine variable](./images/chrome-devtools-examine-var.png)
 
@@ -90,17 +90,17 @@ We can now see the problem - `args` doesn't contain `Node` - it contains `node`.
 
 ### Finishing thoughts on DevTools
 
-We can succussfully debug our code using Chrome DevTools but using it isn't really that convenient. There are a lot of steps we need to do manually everytime we want to use debugger, so in the next section you'll learn how to use the built-in debugging capabilities of VS Code.
+You can succussfully debug your code using Chrome DevTools but using it isn't really that convenient. There are a lot of steps you need to do manually every time you want to use debugger, so in the next section you'll learn how to use the built-in debugging capabilities of VS Code.
 
-"Why did we go through all those steps only to find out that there are better options?" you might ask. That's great question and here are couple of reasons:
+"Why did we go through all those steps only to find out that there are better options?" you might ask. That's a great question and here are couple of reasons:
 
-- This was introduction to node debugging. Using information from this section you can setup debugging in your code editor or IDE of choice (if it supports node debugging).
-- You don't _need_ code editor or IDE to debug node application. Using Chrome DevTools is usually safe fallback.
-- Debugging isn't only thing you can do in Chrome DevTools. Once you connect to DevTools you can use CPU or memory profilers. Check `Profiler` and `Memory` tabs in DevTools.
+- This was an introduction to Node.js debugging. Using information from this section you can setup debugging in your code editor or IDE of choice (if it supports node debugging).
+- You don't _need_ a code editor or IDE to debug Node.js applications. Using Chrome DevTools is usually a safe fallback.
+- Debugging isn't the only thing you can do in Chrome DevTools. Once you connect to DevTools you can use CPU or memory profilers. Check the `Profiler` and `Memory` tabs in DevTools.
 
 ## VS Code debugger
 
-Using built in debuggers in code editors is very convenient. You will be able to skip a lot of setup needed to use Chrome DevTools. You also will be able to put breakpoints in same view you write your code.
+Using built in debuggers in code editors is very convenient. You will be able to skip a lot of setup needed to use Chrome DevTools. You will also be able to put breakpoints in the same view you write your code.
 
 We won't go in depth here about how to debug in VS Code - for that you can check the [excellent VS Code documentation](https://code.visualstudio.com/docs/editor/debugging). We will however share a launch configuration needed to run and debug Gatsby:
 
