@@ -10,7 +10,7 @@ There are only two major steps :)
 
 1.  If there is a chance that someone else could have already submitted the site, please make sure no one else has already submitted it by searching existing PRs: https://github.com/gatsbyjs/gatsby/pulls
 
-2.  Edit [this `sites.yml` file](https://github.com/gatsbyjs/gatsby/blob/master/docs/sites.yml) by adding your submission to the bottom of the list of sites in the following format:
+2.  Edit the [`sites.yml`](https://github.com/gatsbyjs/gatsby/blob/master/docs/sites.yml) file by adding your submission to the bottom of the list of sites in the following format:
 
 ```shell
 - title: Title of the Site
@@ -45,6 +45,7 @@ Categories currently include both _type of site_ (structure) and the _content of
 - Landing
 - Marketing
 - Portfolio
+- [feel free to create new ones after checking to make sure the tag you want doesn't already exist]
 
 ### Content of site:
 
@@ -79,12 +80,10 @@ A few notes on site content: a common question is this: "aren't all Gatsby sites
 
 ## Note on Featured Sites
 
-Featured sites are chosen the first week of every quarter based on the following criteria:
+Featured sites will be chosen quarterly based on the following criteria:
 
-- wide-reach (site is very popular)
-- prestige (creator, content, or company is very well-known)
-- unique use case
-- unique design
+- how the site performs according to a set of criteria TBD by a group (also TBD)
+- voting by the community
 
 ### How to Set a Site as Featured
 
