@@ -8,34 +8,15 @@ Gatsby plugin to handle PostCSS.
 
 ## How to use
 
-1.  Include the plugin in your `gatsby-config.js` file:
+1.  Include the plugin in your `gatsby-config.js` file.
+2.  Write your stylesheets using PostCSS (`.css` files) and require or import them as normal.
 
-`gatsby-config.js`
-
-```js
-module.exports = {
-  plugins: ["gatsby-plugin-postcss"],
-}
+```javascript
+// in gatsby-config.js
+plugins: [`gatsby-plugin-postcss`],
 ```
 
-If you need to pass options to PostCSS use the plugins options; see [postcss-loader](https://github.com/postcss/postcss-loader)
-for all available options.
-
-2.  Create your own `postcss.config.js`:
-
-`postcss.config.js`
-
-```js
-const postcssPresetEnv = require(`postcss-preset-env`)
-
-module.exports = () => ({
-  plugins: [
-    postcssPresetEnv({
-      stage: 0,
-    }),
-  ],
-})
-```
+If you need to pass options to PostCSS use the plugins options; see [postcss-loader](https://github.com/postcss/postcss-loader) for all available options.
 
 ### With CSS Modules
 
@@ -46,17 +27,29 @@ Any file with the `module` extension will use CSS modules.
 
 If you would prefer to add additional postprocessing to your PostCSS output you can specify plugins in the plugin options:
 
-`gatsby-config.js`
-
-```js
-module.exports = {
-  plugins: [
-    {
-      resolve: `gatsby-plugin-postcss`,
-      options: {
-        postCssPlugins: [require(`postcss-preset-env`)({ stage: 0 })],
-      },
+```javascript
+// in gatsby-config.js
+plugins: [
+  {
+    resolve: `gatsby-plugin-postcss`,
+    options: {
+      postCssPlugins: [require(`postcss-preset-env`)({ stage: 0 })],
     },
+  },
+],
+```
+
+Alternatively, you can use `postcss.config.js` to specify your particular PostCSS configuration:
+
+```javascript
+// in postcss.config.js
+const postcssPresetEnv = require(`postcss-preset-env`)
+
+module.exports = () => ({
+  plugins: [
+    postcssPresetEnv({
+      stage: 0,
+    }),
   ],
-}
+})
 ```
