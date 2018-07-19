@@ -116,6 +116,10 @@ To add a new blog post to the gatsbyjs.org blog:
 
 ## Development tools
 
+### Debugging the build process
+
+Check [Debugging the build process](/docs/debugging-the-build-process/) page to learn how to debug Gatsby.
+
 ### Redux devtools
 
 Gatsby uses Redux for managing state during development and building. It's often
