@@ -1121,7 +1121,15 @@
 - title: Steven Natera's blog
   featured: false
 - title: LekoArts - Graphic Designer
+  main_url: 'https://www.lekoarts.de'
+  url: 'https://www.lekoarts.de'
+  source_url: 'https://github.com/LeKoArts/portfolio'
   featured: false
+  description: >-
+    Hi, I'm Lennart — a self-taught and passionate graphic/web designer & frontend developer based in Darmstadt, Germany. I love it to realize complex projects in a creative manner and face new challenges. Since 6 years I do graphic design, my love for frontend development came up 3 years ago. I enjoy acquiring new skills and cementing this knowledge by writing blogposts and creating tutorials.
+  categories:
+    - Portfolio
+    - Blog
 - title: Georgi Yanev (source)
   featured: false
 - title: Hallingdata
