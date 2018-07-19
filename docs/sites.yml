@@ -1,3 +1,11 @@
+- title: ReactJS
+  main_url: 'https://reactjs.org/'
+  url: 'https://reactjs.org/'
+  source_url: 'https://github.com/reactjs/reactjs.org'
+  featured: true
+  categories:
+    - Web Dev
+    - Featured
 - title: NEON
   main_url: 'http://neonrated.com/'
   url: 'http://neonrated.com/'
@@ -16,6 +24,23 @@
   plugins: 'gatsby-plugin-react-helmet, gatsby-plugin-react-next'
   built_by: Studio Lovelock
   built_by_url: 'http://www.studiolovelock.com/'
+- title: Slite
+  main_url: 'https://slite.com/'
+  url: 'https://slite.com/'
+  featured: true
+  categories:
+    - Landing
+    - Marketing
+    - Technology
+    - Featured
+- title: GraphCMS
+  main_url: 'https://graphcms.com/'
+  url: 'https://graphcms.com/'
+  featured: true
+  categories:
+    - Landing
+    - Marketing
+    - Technology
 - title: Bottender Docs
   main_url: 'https://bottender.js.org/'
   url: 'https://bottender.js.org/'
@@ -86,23 +111,6 @@
     - Portfolio
     - Creative
     - Web Dev
-    - Featured
-- title: ReactJS
-  main_url: 'https://reactjs.org/'
-  url: 'https://reactjs.org/'
-  source_url: 'https://github.com/reactjs/reactjs.org'
-  featured: true
-  categories:
-    - Web Dev
-    - Featured
-- title: Slite
-  main_url: 'https://slite.com/'
-  url: 'https://slite.com/'
-  featured: true
-  categories:
-    - Landing
-    - Marketing
-    - Technology
     - Featured
 - title: unrealcpp
   main_url: 'https://unrealcpp.com/'
@@ -440,14 +448,6 @@
   featured: false
   categories:
     - Web Dev
-- title: GraphCMS
-  main_url: 'https://graphcms.com/'
-  url: 'https://graphcms.com/'
-  featured: false
-  categories:
-    - Landing
-    - Marketing
-    - Technology
 - title: The freeCodeCamp Guide
   main_url: 'https://guide.freecodecamp.org/'
   url: 'https://guide.freecodecamp.org/'
