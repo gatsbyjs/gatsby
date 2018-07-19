@@ -76,11 +76,6 @@ exports.replaceStaticRouterComponent = true
  * to the `html.js` component.
  * @param {function} $0.setBodyProps Takes an object of data which
  * is merged with other body props and passed to `html.js` as `bodyProps`.
- * @param {Array} $0.headComponents The current `headComponents` array.
- * @param {function} $0.replaceHeadComponents Takes an array of components as its
- * first argument which replace the `headComponents` array which is passed
- * to the `html.js` component. **WARNING** if multiple plugins implement this
- * API it's the last plugin that "wins".
  * @param {Object} pluginOptions
  * @example
  * import Helmet from "react-helmet"
@@ -103,3 +98,30 @@ exports.replaceStaticRouterComponent = true
  * }
  */
 exports.onRenderBody = true
+
+/**
+ * Called after every page Gatsby server renders while building HTML so you can
+ * replace head components to be rendered in your `html.js`. This is useful if
+ * you need to reorder scripts or styles added by other plugins.
+ * @param {Object} $0
+ * @param {Array} $0.headComponents The current `headComponents` array.
+ * @param {function} $0.replaceHeadComponents Takes an array of components as its
+ * first argument which replace the `headComponents` array which is passed
+ * to the `html.js` component. **WARNING** if multiple plugins implement this
+ * API it's the last plugin that "wins".
+ * @param {Object} pluginOptions
+ * @example
+ * // Move Typography.js styles to the top of the head section so they're loaded first.
+ * exports.onRenderHead = ({ headComponents, replaceHeadComponents }) => {
+ *   headComponents.sort((x, y) => {
+ *     if (x.key === 'TypographyStyle') {
+ *       return -1
+ *     } else if (y.key === 'TypographyStyle') {
+ *       return 1
+ *     }
+ *     return 0
+ *   })
+ *   replaceHeadComponents(headComponents)
+ * }
+ */
+exports.onRenderHead = true

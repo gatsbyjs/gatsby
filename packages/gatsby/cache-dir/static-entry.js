@@ -97,10 +97,6 @@ export default (pagePath, callback) => {
     bodyProps = merge({}, bodyProps, props)
   }
 
-  const replaceHeadComponents = components => {
-    headComponents = components
-  }
-
   const page = getPage(pagePath)
 
   let dataAndContext = {}
@@ -220,8 +216,6 @@ export default (pagePath, callback) => {
     scripts,
     styles,
     pathPrefix,
-    headComponents,
-    replaceHeadComponents,
   })
 
   scripts
@@ -280,6 +274,15 @@ export default (pagePath, callback) => {
           />
         )
       }
+    })
+
+    const replaceHeadComponents = components => {
+      headComponents = components
+    }
+
+    apiRunner(`onRenderHead`, {
+      headComponents,
+      replaceHeadComponents,
     })
 
   // Add page metadata for the current page

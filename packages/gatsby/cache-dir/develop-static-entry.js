@@ -59,19 +59,22 @@ export default (pagePath, callback) => {
     bodyProps = merge({}, bodyProps, props)
   }
 
-  const replaceHeadComponents = components => {
-    headComponents = components
-  }
-
   apiRunner(`onRenderBody`, {
-    headComponents,
     setHeadComponents,
-    replaceHeadComponents,
     setHtmlAttributes,
     setBodyAttributes,
     setPreBodyComponents,
     setPostBodyComponents,
     setBodyProps,
+  })
+
+  const replaceHeadComponents = components => {
+    headComponents = components
+  }
+
+  apiRunner(`onRenderHead`, {
+    headComponents,
+    replaceHeadComponents,
   })
 
   const htmlElement = React.createElement(Html, {
