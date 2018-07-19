@@ -5,13 +5,15 @@ author: Shannon Soper
 tags: ["documentation", "launch"]
 ---
 
-We recently finished the first phase of the [Site Showcase](https://next.gatsbyjs.org/showcase/), which is a searchable, filterable library of sites built with Gatsby! See a list of ways you can help in [Issue #5927](https://github.com/gatsbyjs/gatsby/issues/5927). Feel free to tackle any part of this project and contribute to it or discuss new possibilities!
+We recently finished the first phase of the [Site Showcase](https://next.gatsbyjs.org/showcase/), which is a searchable, filterable library of sites built with Gatsby!
+
+We're starting the second phase soon and would love your help! For a list of tasks that need to be done, see [Issue #5927](https://github.com/gatsbyjs/gatsby/issues/5927). Feel free to contribute to that issue!
 
 ![Featured Sites](featured-sites.png)
 
 ![Filtered Sites](filtered-sites.png)
 
-This is all possible because Cassie (@ThatOtherPerson) and Shawn (@sw-yx) put in a huge effort to get this developed, and Flo (@fk) did an amazing job on design. Many thanks to other people who contributed, including @gillkyle, @LeKoArts, @davidluhr, @daydream05, @m-allanson, @pieh, @calcsam and more (these are all GitHub names).
+The Site Showcase was developed by Cassie (@ThatOtherPerson) and Shawn (@sw-yx) and Flo (@fk) did an amazing job on design. Many thanks to other people who contributed, including @gillkyle, @LeKoArts, @davidluhr, @daydream05, @m-allanson, @pieh, @calcsam and more (these are all GitHub names).
 
 ## Submitting your site
 
