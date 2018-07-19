@@ -2,7 +2,7 @@
 title: Site Showcase Submissions
 ---
 
-Want to submit a site to the site showcase? Follow these instructions.
+Want to submit a site to the [Site Showcase](https://next.gatsbyjs.org/showcase/)? Follow these instructions.
 
 # Steps
 
