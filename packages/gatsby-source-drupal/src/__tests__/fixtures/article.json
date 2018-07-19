@@ -4,6 +4,7 @@
       "type": "node--article",
       "id": "article-1",
       "attributes": {
+        "id": 21,
         "uuid": "article-1",
         "title": "Article #1",
         "body":
@@ -31,6 +32,7 @@
       "type": "node--article",
       "id": "article-2",
       "attributes": {
+        "id": 22,
         "uuid": "article-2",
         "title": "Article #2",
         "body":
@@ -52,6 +54,7 @@
       "type": "node--article",
       "id": "article-3",
       "attributes": {
+        "id": 23,
         "uuid": "article-3",
         "title": "Article #3",
         "body":

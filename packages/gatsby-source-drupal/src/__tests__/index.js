@@ -27,12 +27,26 @@ describe(`gatsby-source-drupal`, () => {
     }
 
     await sourceNodes(args, { baseUrl: `http://fixture` })
-    // console.log({ nodes })
-    console.log(nodes[createNodeId(`tag-2`)])
   })
 
   it(`Generates nodes`, () => {
     expect(Object.keys(nodes).length).not.toEqual(0)
+    expect(nodes[createNodeId(`file-1`)]).toBeDefined()
+    expect(nodes[createNodeId(`tag-1`)]).toBeDefined()
+    expect(nodes[createNodeId(`tag-2`)]).toBeDefined()
+    expect(nodes[createNodeId(`article-1`)]).toBeDefined()
+    expect(nodes[createNodeId(`article-2`)]).toBeDefined()
+    expect(nodes[createNodeId(`article-3`)]).toBeDefined()
+  })
+
+  it(`Nodes contain attributes data`, () => {
+    expect(nodes[createNodeId(`file-1`)].filename).toEqual(`main-image.png`)
+    expect(nodes[createNodeId(`article-2`)].title).toEqual(`Article #2`)
+    expect(nodes[createNodeId(`tag-1`)].langcode).toEqual(`en`)
+  })
+
+  it(`Preserves attributes.id`, () => {
+    expect(nodes[createNodeId(`article-2`)]._attributes_id).toEqual(22)
   })
 
   it(`Handles 1:1 relationship`, () => {
@@ -82,15 +96,6 @@ describe(`gatsby-source-drupal`, () => {
       nodes[createNodeId(`tag-2`)].relationships[`node--article___NODE`]
     ).toEqual(expect.arrayContaining([createNodeId(`article-1`)]))
   })
+
+  // TO-DO: add tests for fetching files
 })
-
-// const { nodeFromData } = require(`../normalize`)
-// const { idOverlayExample } = require(`./data.json`)
-
-// describe(`node completion`, () => {
-//   it(`should correctly generate node from jsonapi`, () => {
-//     const node = nodeFromData(idOverlayExample, id => id)
-//     expect(node.bundle).toEqual(idOverlayExample.attributes.bundle)
-//     expect(node._attributes_id).toEqual(idOverlayExample.attributes.id)
-//   })
-// })
