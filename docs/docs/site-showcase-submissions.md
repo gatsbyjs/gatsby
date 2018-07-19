@@ -12,20 +12,29 @@ There are only two major steps :)
 
 2.  Edit the [`sites.yml`](https://github.com/gatsbyjs/gatsby/blob/master/docs/sites.yml) file by adding your submission to the bottom of the list of sites in the following format:
 
-```shell
+```yaml
 - title: Title of the Site
-  main_url: 'http://titleofthesite.com/' //this is the URL that the screenshot comes from//
-  url: 'http://titleofthesite.co.uk/'
-  featured: false //leave as false, the Gatsby team will choose featured sites quarterly//
-  description: >-
+  description: >
     This description will appear in the modal detail view and permalink views for your site.
+
+  # this URL is used to generate a screenshot
+  main_url: http://titleofthesite.com/
+  
+  # this is the URL that is linked from the showcase
+  url: http://titleofthesite.co.uk/
+
+  # You can list as many categories as you want here. Check list of Categories below in this doc!
+  # If you'd like to create a new category, simply list it here.
   categories:
     - Relevant category 1
     - Relevant category 2
-    - // You can list as many categories as you want here. Check list of Categories below in this doc! //
-    - // If you'd like to create a new category, simply list it here //
-  built_by: Name of creator(s) or team/agency/business that created the site
-  built_by_url: 'https://twitter.com/creatorname' //this could also be the URL to the site of your portfolio, your agency or company's site, etc.//
+  
+  # Add the name (developer or company) and URL (e.g. Twitter, GitHub, portfolio) to be used for attribution
+  built_by: Jane Q. Developer
+  built_by_url: https://example.org
+  
+  # leave as false, the Gatsby site review board will choose featured sites quarterly
+  featured: false
 ```
 
 ## Helpful information
@@ -45,11 +54,11 @@ Categories currently include both _type of site_ (structure) and the _content of
 - Landing
 - Marketing
 - Portfolio
-- [feel free to create new ones after checking to make sure the tag you want doesn't already exist]
+- (feel free to create new ones after checking to make sure the tag you want doesn't already exist)
 
 #### Content of site:
 
-A few notes on site content: a common question is this: "aren't all Gatsby sites technically in the "web dev" category?" Well, no because this category means the _content_ of the site has to be about web development, like [ReactJS](https://reactjs.org/). Also, the difference between technology and web dev is like this. [Cardiiogram](https://cardiogr.am/) is technology, while [ReactJS](https://reactjs.org/) is web dev.
+A few notes on site content: a common question is this: "aren't all Gatsby sites technically in the "web dev" category?" Well, no because this category means the _content_ of the site has to be about web development, like [ReactJS](https://reactjs.org/). Also, the difference between technology and web dev is like this. [Cardiogram](https://cardiogr.am/) is technology, while [ReactJS](https://reactjs.org/) is web dev.
 
 - Agency
 - Corporate
@@ -77,7 +86,7 @@ A few notes on site content: a common question is this: "aren't all Gatsby sites
 - Retail
 - Technology
 - Web Dev
-- [feel free to create new ones after checking to make sure the tag you want doesn't already exist]
+- (feel free to create new ones after checking to make sure the tag you want doesn't already exist)
 
 ### Note on Featured Sites
 
