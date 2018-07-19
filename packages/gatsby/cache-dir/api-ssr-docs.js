@@ -76,6 +76,11 @@ exports.replaceStaticRouterComponent = true
  * to the `html.js` component.
  * @param {function} $0.setBodyProps Takes an object of data which
  * is merged with other body props and passed to `html.js` as `bodyProps`.
+ * @param {Array} $0.headComponents The current `headComponents` array.
+ * @param {function} $0.replaceHeadComponents Takes an array of components as its
+ * first argument which replace the `headComponents` array which is passed
+ * to the `html.js` component. **WARNING** if multiple plugins implement this
+ * API it's the last plugin that "wins".
  * @param {Object} pluginOptions
  * @example
  * import Helmet from "react-helmet"
