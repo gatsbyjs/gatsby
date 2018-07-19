@@ -151,7 +151,7 @@ If an endpoint is whitelisted and not blacklisted, it will be fetched. Otherwise
 
 All routes were fetched by default in versions 2.x and lower. In versions 3.x, only the routes shown in the `includedRoutes` option in the sample config above will be fetched by default.
 
-If you would like to either add or remove whitelisted routes, add `includedRoutes` to the plugin config in `gatsby-config.js`.
+If you would like to either add or remove whitelisted routes, add `includedRoutes` to the plugin config in `gatsby-config.js`. Setting `includedRoutes` to `["**"]` will whitelist all routes, effectively restoring v2 settings.
 
 If you had previously been using `excludedRoutes`, it will continue to work as expected, though there's a good chance you don't need it anymore!
 
