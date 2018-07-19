@@ -349,11 +349,41 @@ Further examples can be found in the [Gatsby Image docs](https://github.com/gats
 
 ## Manually specify PostCSS plugins
 
-Gatsby v2 removed `postcss-cssnext` and `postcss-import` from the default postcss setup.
+Gatsby v2 removed `postcss-cssnext` and `postcss-import` from the default PostCSS setup.
 
-Use [`onCreateWebpackConfig`](/docs/add-custom-webpack-config) to specify your postcss plugins.
+To have the same configuration that you had in v1, you should use [`gatsby-plugin-postcss`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-postcss) and follow the recommended migration path below.
 
-Note: there will be a `postcss` plugin that allows you to configure postcss from a standard postcss config file. [Follow this discussion on issue 3284](https://github.com/gatsbyjs/gatsby/issues/3284).
+### 1. Install the dependencies
+
+`npm install --save gatsby-plugin-postcss postcss-import postcss-cssnext postcss-browser-reporter postcss-reporter`
+
+**NOTE**: `postcss-cssnext` is [deprecated](https://moox.io/blog/deprecating-cssnext/) and it is better to use `postcss-preset-env` now.
+
+### 2. Include `gatsby-plugin-postcss` in your `gatsby-config.js` file
+
+```js
+// in gatsby-config.js
+plugins: [`gatsby-plugin-postcss`],
+```
+
+### 3. Include PostCSS plugins in your `postcss.config.js` file
+
+```js
+// in postcss.config.js
+const postcssImport = require(`postcss-import`);
+const postcssCssNext = require(`postcss-cssnext`);
+const postcssBrowserReporter = require(`postcss-browser-reporter`);
+const postcssReporter = require(`postcss-reporter`);
+
+module.exports = () => ({
+  plugins: [
+    postcssImport(),
+    postcssCssNext(),
+    postcssBrowserReporter(),
+    postcssReporter(),
+  ],
+})
+```
 
 ## Convert to either pure CommonJS or pure ES6
 
