@@ -1,9 +1,10 @@
-import React from "react"
+import React, { Fragment } from "react"
 import { graphql } from "gatsby"
 import Helmet from "react-helmet"
 import url from "url"
 import hex2rgba from "hex2rgba"
 import Img from "gatsby-image"
+import qs from "qs"
 
 import presets, { colors } from "../utils/presets"
 import { options, scale, rhythm } from "../utils/typography"
@@ -98,12 +99,11 @@ const cleanUrl = mainUrl => {
   return parsed.hostname + path
 }
 
-export default ({ parent, data, isModal, categories }) => (
+const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
   <StaticQuery
     query={graphql`
-      query allSitesYamlTemplateShowcase {
+      query {
         allSitesYaml(
-          limit: 40
           filter: { featured: { eq: true }, main_url: { ne: null } }
         ) {
           edges {
@@ -524,7 +524,18 @@ export default ({ parent, data, isModal, categories }) => (
                   >
                     Categories{` `}
                   </div>
-                  <div> {categories.join(`, `)} </div>
+                  <div>
+                    {categories.map((c, i) => (
+                      <Fragment key={c}>
+                        <Link
+                          to={`/showcase?${qs.stringify({ filters: [c] })}`}
+                        >
+                          {c}
+                        </Link>
+                        {i === categories.length - 1 ? `` : `, `}
+                      </Fragment>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
@@ -534,3 +545,5 @@ export default ({ parent, data, isModal, categories }) => (
     }}
   />
 )
+
+export default ShowcaseDetails

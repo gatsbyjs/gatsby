@@ -2,8 +2,8 @@ const path = require(`path`)
 const resolveCwd = require(`resolve-cwd`)
 const yargs = require(`yargs`)
 const report = require(`./reporter`)
-const fs = require(`fs`)
 const envinfo = require(`envinfo`)
+const existsSync = require(`fs-exists-cached`).sync
 
 const DEFAULT_BROWSERS = [`>0.25%`, `not dead`]
 
@@ -19,7 +19,7 @@ function buildLocalCommands(cli, isLocalSite) {
   const directory = path.resolve(`.`)
 
   let siteInfo = { directory, browserslist: DEFAULT_BROWSERS }
-  const useYarn = fs.existsSync(path.join(directory, `yarn.lock`))
+  const useYarn = existsSync(path.join(directory, `yarn.lock`))
   if (isLocalSite) {
     const json = require(path.join(directory, `package.json`))
     siteInfo.sitePackageJson = json
@@ -116,6 +116,10 @@ function buildLocalCommands(cli, isLocalSite) {
           type: `string`,
           default: ``,
           describe: `Custom HTTPS key file (relative path; also required: --https, --cert-file). See https://www.gatsbyjs.org/docs/local-https/`,
+        })
+        .option(`open-tracing-config-file`, {
+          type: `string`,
+          describe: `Tracer configuration file (open tracing compatible). See https://www.gatsbyjs.org/docs/performance-tracing/`,
         }),
     handler: handlerP(
       getCommandHandler(`develop`, (args, cmd) => {
@@ -137,11 +141,16 @@ function buildLocalCommands(cli, isLocalSite) {
         type: `boolean`,
         default: false,
         describe: `Build site with link paths prefixed (set prefix in your config).`,
-      }).option(`no-uglify`, {
-        type: `boolean`,
-        default: false,
-        describe: `Build site without uglifying JS bundles (for debugging).`,
-      }),
+      })
+        .option(`no-uglify`, {
+          type: `boolean`,
+          default: false,
+          describe: `Build site without uglifying JS bundles (for debugging).`,
+        })
+        .option(`open-tracing-config-file`, {
+          type: `string`,
+          describe: `Tracer configuration file (open tracing compatible). See https://www.gatsbyjs.org/docs/performance-tracing/`,
+        }),
     handler: handlerP(
       getCommandHandler(`build`, (args, cmd) => {
         process.env.NODE_ENV = `production`

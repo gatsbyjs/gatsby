@@ -10,7 +10,9 @@ class Index extends React.Component {
       <Layout>
         <table border="0" className="itemlist" cellPadding={0} cellSpacing={0}>
           <tbody>
-            {allHnStory.edges.map(({ node }) => <StoryItem key={node.id} story={node} />)}
+            {allHnStory.edges.map(({ node }) => (
+              <StoryItem key={node.id} story={node} />
+            ))}
             <tr className="morespace" style={{ height: `10px` }} />
             <tr>
               <td style={{ paddingLeft: 36 }} className="title">
@@ -29,7 +31,7 @@ class Index extends React.Component {
 export default Index
 
 export const pageQuery = graphql`
-  query PageQuery {
+  query {
     allHnStory(sort: { fields: [order] }) {
       edges {
         node {

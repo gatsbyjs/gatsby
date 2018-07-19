@@ -121,7 +121,7 @@ export default ({ data }) => {
 }
 
 export const query = graphql`
-  query MyFilesQuery {
+  query {
     allFile {
       edges {
         node {
@@ -186,7 +186,7 @@ export default ({ data }) => {
 }
 
 export const query = graphql`
-  query MyFilesQuery {
+  query {
     allFile {
       edges {
         node {

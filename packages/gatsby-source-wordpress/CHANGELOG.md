@@ -3,23 +3,53 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="3.0.0-beta.10"></a>
+
+# [3.0.0-beta.10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.0-beta.9...gatsby-source-wordpress@3.0.0-beta.10) (2018-07-19)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+<a name="3.0.0-beta.9"></a>
+
+# [3.0.0-beta.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.0-beta.8...gatsby-source-wordpress@3.0.0-beta.9) (2018-07-18)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+<a name="3.0.0-beta.8"></a>
+
+# [3.0.0-beta.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.0-beta.7...gatsby-source-wordpress@3.0.0-beta.8) (2018-07-18)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+<a name="3.0.0-beta.7"></a>
+
+# [3.0.0-beta.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.0-beta.6...gatsby-source-wordpress@3.0.0-beta.7) (2018-07-14)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+<a name="3.0.0-beta.6"></a>
+
+# [3.0.0-beta.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.0-beta.5...gatsby-source-wordpress@3.0.0-beta.6) (2018-07-13)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+<a name="3.0.0-beta.5"></a>
+
+# [3.0.0-beta.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.0-beta.4...gatsby-source-wordpress@3.0.0-beta.5) (2018-07-09)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
 <a name="3.0.0-beta.4"></a>
+
 # [3.0.0-beta.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.0-beta.3...gatsby-source-wordpress@3.0.0-beta.4) (2018-06-21)
 
 **Note:** Version bump only for package gatsby-source-wordpress
 
-
-
-
-
 <a name="3.0.0-beta.3"></a>
+
 # [3.0.0-beta.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.0-beta.2...gatsby-source-wordpress@3.0.0-beta.3) (2018-06-20)
 
 **Note:** Version bump only for package gatsby-source-wordpress
-
-
-
-
 
 <a name="3.0.0-beta.2"></a>
 

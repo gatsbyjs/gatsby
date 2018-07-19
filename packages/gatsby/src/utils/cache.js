@@ -1,10 +1,20 @@
 const Promise = require(`bluebird`)
-const low = require(`lowdb`)
 const fs = require(`fs-extra`)
 const _ = require(`lodash`)
 
+const objectToMap = obj => new Map(Object.entries(obj))
+
+const mapToObject = map => {
+  const obj = {}
+  for (let [key, value] of map) {
+    obj[key] = value
+  }
+  return obj
+}
+
 let db
 let directory
+let save
 
 /**
  * Initialize cache store. Reuse existing store if available.
@@ -16,13 +26,6 @@ exports.initCache = () => {
   } else {
     directory = process.cwd() + `/.cache/cache`
   }
-  db = low(null, {
-    format: {
-      serialize: obj => JSON.stringify(obj),
-      deserialize: str => JSON.parse(str),
-    },
-  })
-  db._.mixin(require(`lodash-id`))
 
   let previousState
   try {
@@ -32,9 +35,9 @@ exports.initCache = () => {
   }
 
   if (previousState) {
-    db.defaults(previousState).write()
+    db = objectToMap(previousState)
   } else {
-    db.defaults({ keys: [] }).write()
+    db = new Map()
   }
 }
 
@@ -45,21 +48,7 @@ exports.initCache = () => {
  */
 exports.get = key =>
   new Promise((resolve, reject) => {
-    let pair
-    try {
-      pair = db
-        .get(`keys`)
-        .getById(key)
-        .value()
-    } catch (e) {
-      // ignore
-    }
-
-    if (pair) {
-      resolve(pair.value)
-    } else {
-      resolve()
-    }
+    resolve(db.get(key))
   })
 
 /**
@@ -70,18 +59,14 @@ exports.get = key =>
  */
 exports.set = (key, value) =>
   new Promise((resolve, reject) => {
-    db.get(`keys`)
-      .upsert({ id: key, value })
-      .write()
+    db.set(key, value)
     save()
     resolve(`Ok`)
   })
 
-let save
-
 if (process.env.NODE_ENV !== `test`) {
   save = _.debounce(() => {
-    fs.writeFile(`${directory}/db.json`, JSON.stringify(db.getState()))
+    fs.writeFile(`${directory}/db.json`, JSON.stringify(mapToObject(db)))
   }, 250)
 } else {
   save = _.noop

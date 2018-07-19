@@ -1,30 +1,29 @@
 const _ = require(`lodash`)
 const normalize = require(`normalize-path`)
 
-module.exports = (state = {}, action) => {
+module.exports = (state = new Map(), action) => {
   switch (action.type) {
     case `DELETE_CACHE`:
-      return {}
+      return new Map()
     case `CREATE_PAGE`:
       action.payload.componentPath = normalize(action.payload.component)
-      state[action.payload.componentPath] = _.merge(
-        { query: `` },
-        state[action.payload.componentPath],
-        {
+      state.set(
+        action.payload.componentPath,
+        _.merge({ query: `` }, state.get(action.payload.componentPath), {
           componentPath: action.payload.componentPath,
-        }
+        })
       )
       return state
     case `DELETE_PAGE`:
       action.payload.componentPath = normalize(action.payload.component)
-      delete state[action.payload.componentPath]
+      state.delete(action.payload.componentPath)
       return state
     case `REPLACE_COMPONENT_QUERY`:
       action.payload.componentPath = normalize(action.payload.componentPath)
-      state[action.payload.componentPath] = {
-        ...state[action.payload.componentPath],
+      state.set(action.payload.componentPath, {
+        ...state.get(action.payload.componentPath),
         query: action.payload.query,
-      }
+      })
       return state
   }
 

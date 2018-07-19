@@ -4,7 +4,7 @@ const webpack = require(`webpack`)
 const { createErrorFromString } = require(`gatsby-cli/lib/reporter/errors`)
 const debug = require(`debug`)(`gatsby:html`)
 const webpackConfig = require(`../utils/webpack.config`)
-const renderHTML = require(`../utils/html-renderer`)
+const renderHTMLQueue = require(`../utils/html-renderer-queue`)
 
 module.exports = async (program: any) => {
   const { directory } = program
@@ -24,7 +24,9 @@ module.exports = async (program: any) => {
       if (e) {
         return reject(e)
       }
-      const outputFile = `${directory}/public/render-page.js`
+
+      const outputFile = `${directory}/public/js/render-page.js`
+
       if (stats.hasErrors()) {
         let webpackErrors = stats.toJson().errors
         console.log(`here`, webpackErrors[0])
@@ -33,7 +35,7 @@ module.exports = async (program: any) => {
         )
       }
 
-      return renderHTML(require(outputFile), [`/`]).then(() => {
+      return renderHTMLQueue(outputFile, [`/`]).then(() => {
         // Remove the temp JS bundle file built for the static-site-generator-plugin
         try {
           fs.unlinkSync(outputFile)

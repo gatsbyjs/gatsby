@@ -118,7 +118,7 @@ createRedirect({ fromPath: "/old-url", toPath: "/new-url", isPermanent: true })
 createRedirect({ fromPath: "/url", toPath: "/zn-CH/url", Language: "zn" })
 ```
 
-You can also create a `_redirects` file in the `static` folder for the same affect. Any programmatically created redirects will be appended to the file.
+You can also create a `_redirects` file in the `static` folder for the same effect. Any programmatically created redirects will be appended to the file.
 
 ```sh
 # my manually set redirects

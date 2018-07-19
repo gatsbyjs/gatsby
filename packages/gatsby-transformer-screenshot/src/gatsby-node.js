@@ -1,6 +1,5 @@
 const crypto = require(`crypto`)
 const axios = require(`axios`)
-const _ = require(`lodash`)
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 
 const SCREENSHOT_ENDPOINT = `https://h7iqvn4842.execute-api.us-east-2.amazonaws.com/prod/screenshot`
@@ -12,33 +11,34 @@ const createContentDigest = obj =>
     .digest(`hex`)
 
 exports.onPreBootstrap = (
-  { store, cache, actions, createNodeId },
+  { store, cache, actions, createNodeId, getNodes },
   pluginOptions
 ) => {
   const { createNode, touchNode } = actions
+  const screenshotNodes = getNodes().filter(
+    n => n.internal.type === `Screenshot`
+  )
 
   // Check for updated screenshots
   // and prevent Gatsby from garbage collecting remote file nodes
   return Promise.all(
-    _.values(store.getState().nodes)
-      .filter(n => n.internal.type === `Screenshot`)
-      .map(async n => {
-        if (n.expires && new Date() >= new Date(n.expires)) {
-          // Screenshot expired, re-run Lambda
-          await createScreenshotNode({
-            url: n.url,
-            parent: n.parent,
-            store,
-            cache,
-            createNode,
-            createNodeId,
-          })
-        } else {
-          // Screenshot hasn't yet expired, touch the image node
-          // to prevent garbage collection
-          touchNode({ nodeId: n.screenshotFile___NODE })
-        }
-      })
+    screenshotNodes.map(async n => {
+      if (n.expires && new Date() >= new Date(n.expires)) {
+        // Screenshot expired, re-run Lambda
+        await createScreenshotNode({
+          url: n.url,
+          parent: n.parent,
+          store,
+          cache,
+          createNode,
+          createNodeId,
+        })
+      } else {
+        // Screenshot hasn't yet expired, touch the image node
+        // to prevent garbage collection
+        touchNode({ nodeId: n.screenshotFile___NODE })
+      }
+    })
   )
 }
 

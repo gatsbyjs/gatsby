@@ -1,4 +1,4 @@
-import { push } from "gatsby-link"
+import { push } from "gatsby"
 
 import catchLinks from "./catch-links"
 

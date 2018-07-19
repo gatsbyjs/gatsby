@@ -55,16 +55,19 @@ export type LoaderUtils = {
   postcss: LoaderResolver<{
     browsers?: string[],
     plugins?: Array<any> | ((loader: any) => Array<any>),
+    minimze?: boolean,
+    cssnano?: any,
   }>,
 
   file: LoaderResolver<*>,
   url: LoaderResolver<*>,
   js: LoaderResolver<*>,
 
+  miniCssExtract: LoaderResolver<*>,
   imports: LoaderResolver<*>,
   exports: LoaderResolver<*>,
 
-  eslint: LaoderResolver<*>,
+  eslint: LoaderResolver<*>,
 }
 
 /**
@@ -114,13 +117,21 @@ module.exports = async ({
   stage: Stage,
   program: any,
 }): Promise<WebpackUtilsOptions> => {
-  const assetRelativeRoot = `static/`
+  /**
+   *  the leading `../` for assetRelativeRoot is required to ensure
+   * the static files extracted by webpack are not part of the
+   * "build-javascript" output path of `/js`. The same technique is
+   * used for CSS
+   */
+  const assetRelativeRoot = `../static/`
   const vendorRegex = /(node_modules|bower_components)/
   const supportedBrowsers = program.browserlist
 
   const PRODUCTION = !stage.includes(`develop`)
 
   const babelConfig = await createBabelConfig(program, stage)
+
+  const isSSR = stage.includes(`html`)
 
   const makeExternalOnly = (original: RuleFactory<*>) => (
     options = {}
@@ -181,18 +192,17 @@ module.exports = async ({
         options,
         // use MiniCssExtractPlugin only on production builds
         loader: PRODUCTION
-          ? stage === `build-html`
-            ? require.resolve(`./webpack-extract-css-modules-map`)
-            : MiniCssExtractPlugin.loader
+          ? MiniCssExtractPlugin.loader
           : require.resolve(`style-loader`),
       }
     },
 
     css: (options = {}) => {
       return {
-        loader: require.resolve(`css-loader`),
+        loader: isSSR
+          ? require.resolve(`css-loader/locals`)
+          : require.resolve(`css-loader`),
         options: {
-          minimize: PRODUCTION,
           sourceMap: !PRODUCTION,
           camelCase: `dashesOnly`,
           // https://github.com/webpack-contrib/css-loader/issues/406
@@ -203,7 +213,13 @@ module.exports = async ({
     },
 
     postcss: (options = {}) => {
-      let { plugins, browsers = supportedBrowsers, ...postcssOpts } = options
+      let {
+        cssnano,
+        plugins,
+        browsers = supportedBrowsers,
+        minimze = PRODUCTION,
+        ...postcssOpts
+      } = options
 
       return {
         loader: require.resolve(`postcss-loader`),
@@ -215,10 +231,11 @@ module.exports = async ({
               (typeof plugins === `function` ? plugins(loader) : plugins) || []
 
             return [
+              minimze && require(`cssnano`)(cssnano),
               flexbugs,
               autoprefixer({ browsers, flexbox: `no-2009` }),
               ...plugins,
-            ]
+            ].filter(Boolean)
           },
           ...postcssOpts,
         },
@@ -353,13 +370,15 @@ module.exports = async ({
    */
   {
     const css = ({ browsers, ...options } = {}) => {
+      const use = [
+        loaders.css({ ...options, importLoaders: 1 }),
+        loaders.postcss({ browsers }),
+      ]
+      if (!isSSR) use.unshift(loaders.miniCssExtract())
+
       return {
+        use,
         test: /\.css$/,
-        use: [
-          loaders.miniCssExtract(),
-          loaders.css({ ...options, importLoaders: 1 }),
-          loaders.postcss({ browsers }),
-        ],
       }
     }
 
@@ -430,8 +449,8 @@ module.exports = async ({
    */
   plugins.extractText = options =>
     new MiniCssExtractPlugin({
-      filename: `[name].[contenthash].css`,
-      chunkFilename: `[name].[contenthash].css`,
+      filename: `../css/[name].[contenthash].css`,
+      chunkFilename: `../css/[name].[contenthash].css`,
       ...options,
     })
 

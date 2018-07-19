@@ -45,7 +45,7 @@ describe(`build-node-types`, () => {
       },
     ].forEach(n => store.dispatch({ type: `CREATE_NODE`, payload: n }))
 
-    types = await buildNodeTypes()
+    types = await buildNodeTypes({})
     schema = new GraphQLSchema({
       query: new GraphQLObjectType({
         name: `RootQueryType`,
