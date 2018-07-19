@@ -112,7 +112,7 @@ exports.onRenderBody = true
  * @param {Object} pluginOptions
  * @example
  * // Move Typography.js styles to the top of the head section so they're loaded first.
- * exports.onRenderHead = ({ headComponents, replaceHeadComponents }) => {
+ * exports.onPreRenderHTML = ({ headComponents, replaceHeadComponents }) => {
  *   headComponents.sort((x, y) => {
  *     if (x.key === 'TypographyStyle') {
  *       return -1
@@ -124,4 +124,4 @@ exports.onRenderBody = true
  *   replaceHeadComponents(headComponents)
  * }
  */
-exports.onRenderHead = true
+exports.onPreRenderHTML = true
