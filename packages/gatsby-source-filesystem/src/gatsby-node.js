@@ -90,14 +90,7 @@ See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
   // Validate that the path is absolute.
   // Absolute paths are required to resolve images correctly.
   if (!path.isAbsolute(pluginOptions.path)) {
-    reporter.warn(`The path passed to gatsby-source-filesystem is relative:
-
-${pluginOptions.path}
-
-It is recommended to use an absolute path.
-
-See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
-    `)
+    pluginOptions.path = path.resolve(process.cwd(), pluginOptions.path)
   }
 
   const fsMachine = createFSMachine()
