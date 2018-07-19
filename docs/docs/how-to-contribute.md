@@ -116,9 +116,9 @@ To add a new blog post to the gatsbyjs.org blog:
 
 ## Development tools
 
-### Debugging gatsby
+### Debugging the build process
 
-Check [Debugging Gatsby](/docs/debugging-gatsby) page to learn how to debug gatsby.
+Check [Debugging the build process](/docs/debugging-the-build-process/) page to learn how to debug Gatsby.
 
 ### Redux devtools
 
