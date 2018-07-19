@@ -66,7 +66,7 @@
       link: /docs/graphql/
       items: 
         - title: Introducing GraphiQL*
-          link: /docs/introducting-graphiql/
+          link: /docs/introducing-graphiql/
         - title: Build a page with a GraphQL query
           link: /docs/build-a-page-with-graphql-query/
         - title: Creating and modifying pages
