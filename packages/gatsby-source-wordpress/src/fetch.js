@@ -15,6 +15,7 @@ async function fetch({
   _verbose,
   _siteURL,
   _useACF,
+  _acfOptionPageIds,
   _hostingWPCOM,
   _auth,
   _perPage,
@@ -105,6 +106,7 @@ async function fetch({
       baseUrl,
       _verbose,
       _useACF,
+      _acfOptionPageIds,
       _hostingWPCOM,
       _excludedRoutes,
       typePrefix,
@@ -231,6 +233,18 @@ async function fetchData({
       routeResponse.__type = type
       entities.push(routeResponse)
     }
+
+    /* assign ACF Option ID instead of { acf: [...data] } */
+    if(route.acfOptionPageId) {
+      entities = Object.keys(routeResponse).map((key) => {
+        return {
+          id: route.acfOptionPageId,
+          acf: routeResponse[key]['acf'],
+          __type: 'wordpress__acf_options'
+        }
+      })
+    }
+
     // WordPress exposes the menu items in meta links.
     if (type == `wordpress__wp_api_menus_menus`) {
       for (let menu of routeResponse) {
@@ -369,6 +383,7 @@ function getValidRoutes({
   baseUrl,
   _verbose,
   _useACF,
+  _acfOptionPageIds,
   _hostingWPCOM,
   _excludedRoutes,
   typePrefix,
@@ -461,11 +476,15 @@ function getValidRoutes({
   }
 
   if (_useACF) {
-    // The OPTIONS ACF API Route is not giving a valid _link so let`s add it manually.
-    validRoutes.push({
-      url: `${url}/acf/v2/options`,
-      type: `${typePrefix}acf_options`,
-    })
+    // The OPTIONS ACF API Route is not giving a valid _link so let`s add it manually
+    // and pass ACF option page ID
+    _acfOptionPageIds.forEach(function(acfOptionPageId) {
+      validRoutes.push({
+        url: `${url}/acf/v3/options/${acfOptionPageId}`,
+        type: `${typePrefix}acf_options`, //_${acfOptionPageId}`,
+        acfOptionPageId
+      })
+    });
     if (_verbose)
       console.log(
         colorized.out(`Added ACF Options route.`, colorized.color.Font.FgGreen)

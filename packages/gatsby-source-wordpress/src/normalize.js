@@ -91,8 +91,6 @@ const normalizeEntities = entities => {
         return acc.concat(mapType(e))
       case `wordpress__wp_taxonomies`:
         return acc.concat(mapType(e))
-      case `wordpress__acf_options`:
-        return acc.concat(mapType(e))
       default:
         return acc.concat(e)
     }
