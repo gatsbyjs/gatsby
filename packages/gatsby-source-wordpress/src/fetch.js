@@ -239,8 +239,8 @@ async function fetchData({
       entities = Object.keys(routeResponse).map((key) => {
         return {
           id: route.acfOptionPageId,
-          acf: routeResponse[key]['acf'],
-          __type: 'wordpress__acf_options'
+          acf: routeResponse[key][`acf`],
+          __type: `wordpress__acf_options`,
         }
       })
     }
@@ -481,10 +481,9 @@ function getValidRoutes({
     _acfOptionPageIds.forEach(function(acfOptionPageId) {
       validRoutes.push({
         url: `${url}/acf/v3/options/${acfOptionPageId}`,
-        type: `${typePrefix}acf_options`, //_${acfOptionPageId}`,
-        acfOptionPageId
+        acfOptionPageId,
       })
-    });
+    })
     if (_verbose)
       console.log(
         colorized.out(`Added ACF Options route.`, colorized.color.Font.FgGreen)
