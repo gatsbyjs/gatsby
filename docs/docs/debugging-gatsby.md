@@ -2,22 +2,22 @@
 title: Debugging Gatsby
 ---
 
-Gatsby's `build` and `develop` steps run as a Node.js application which you can debug using standard tools for Node.js applications.  
+Gatsby's `build` and `develop` steps run as a Node.js application which you can debug using standard tools for Node.js applications.
 
 In this guide you will learn how to debug some code using:
 
- - [Chrome DevTools for Node](#chrome-devtools-for-node)
- - [VS Code debugger](#vs-code-debugger)
+- [Chrome DevTools for Node](#chrome-devtools-for-node)
+- [VS Code debugger](#vs-code-debugger)
 
 As an example let's use the following code snippet in a `gatsby-node.js` file:
 
 ```js
-const { createFilePath } = require('gatsby-source-filesystem')
+const { createFilePath } = require("gatsby-source-filesystem")
 
 exports.onCreateNode = args => {
   const { actions, Node } = args
 
-  if (Node.internal.type === 'MarkdownRemark') {
+  if (Node.internal.type === "MarkdownRemark") {
     const { createNodeField } = actions
 
     const value = createFilePath({ node, getNode })
@@ -49,8 +49,8 @@ In your project directory instead of running `gatsby develop` run the following 
 node --inspect-brk --no-lazy node_modules/gatsby/dist/bin/gatsby develop
 ```
 
- - `--inspect-brk` will enable the inspector agent which will allow you to connect a debugger. It will also pause execution until the debugger is connected and then wait for you to resume it.
- - `--no-lazy` - this will force Node's V8 to disable lazy compilation and will help with using breakpoints
+- `--inspect-brk` will enable the inspector agent which will allow you to connect a debugger. It will also pause execution until the debugger is connected and then wait for you to resume it.
+- `--no-lazy` - this will force Node's V8 to disable lazy compilation and will help with using breakpoints
 
 ### Connecting DevTools
 
@@ -94,9 +94,9 @@ We can succussfully debug our code using Chrome DevTools but using it isn't real
 
 "Why did we go through all those steps only to find out that there are better options?" you might ask. That's great question and here are couple of reasons:
 
- - This was introduction to node debugging. Using information from this section you can setup debugging in your code editor or IDE of choice (if it supports node debugging).
- - You don't *need* code editor or IDE to debug node application. Using Chrome DevTools is usually safe fallback.
- - Debugging isn't only thing you can do in Chrome DevTools. Once you connect to DevTools you can use CPU or memory profilers. Check `Profiler` and `Memory` tabs in DevTools.
+- This was introduction to node debugging. Using information from this section you can setup debugging in your code editor or IDE of choice (if it supports node debugging).
+- You don't _need_ code editor or IDE to debug node application. Using Chrome DevTools is usually safe fallback.
+- Debugging isn't only thing you can do in Chrome DevTools. Once you connect to DevTools you can use CPU or memory profilers. Check `Profiler` and `Memory` tabs in DevTools.
 
 ## VS Code debugger
 
@@ -105,6 +105,7 @@ Using built in debuggers in code editors is very convenient. You will be able to
 We won't go in depth here about how to debug in VS Code - for that you can check the [excellent VS Code documentation](https://code.visualstudio.com/docs/editor/debugging). We will however share a launch configuration needed to run and debug Gatsby:
 
 `launch.json`:
+
 ```json
 {
   "version": "0.2.0",
