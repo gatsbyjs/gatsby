@@ -4,7 +4,7 @@ title: Site Showcase Submissions
 
 Want to submit a site to the [Site Showcase](https://next.gatsbyjs.org/showcase/)? Follow these instructions.
 
-# Steps
+## Steps
 
 There are only two major steps :)
 
@@ -28,13 +28,13 @@ There are only two major steps :)
   built_by_url: 'https://twitter.com/creatorname' //this could also be the URL to the site of your portfolio, your agency or company's site, etc.//
 ```
 
-# Helpful information
+## Helpful information
 
-## Categories
+### Categories
 
 Categories currently include both _type of site_ (structure) and the _content of the site_. You will place all these under "categories" in your submission for now. The reason these are in two separate lists here is to show that you can have a school's marketing site (type of site would be marketing, and content would be education) or a site that delivers online learning about marketing (type of site would be education and content would be marketing).
 
-### Type of site
+#### Type of site
 
 - Blog
 - Directory
@@ -47,7 +47,7 @@ Categories currently include both _type of site_ (structure) and the _content of
 - Portfolio
 - [feel free to create new ones after checking to make sure the tag you want doesn't already exist]
 
-### Content of site:
+#### Content of site:
 
 A few notes on site content: a common question is this: "aren't all Gatsby sites technically in the "web dev" category?" Well, no because this category means the _content_ of the site has to be about web development, like [ReactJS](https://reactjs.org/). Also, the difference between technology and web dev is like this. [Cardiiogram](https://cardiogr.am/) is technology, while [ReactJS](https://reactjs.org/) is web dev.
 
@@ -78,14 +78,14 @@ A few notes on site content: a common question is this: "aren't all Gatsby sites
 - Technology
 - Web Dev
 
-## Note on Featured Sites
+### Note on Featured Sites
 
 Featured sites will be chosen quarterly based on the following criteria:
 
 - how the site performs according to a set of criteria TBD by a group (also TBD)
 - voting by the community
 
-### How to Set a Site as Featured
+#### How to Set a Site as Featured
 
 _Note: the Gatsby team will choose featured sites, leave as `featured: false` when first posting_
 
@@ -98,6 +98,6 @@ categories:
   - featured
 ```
 
-## Change your mind / need to edit your submission?
+### Change your mind / need to edit your submission?
 
 If you want to edit anything in your site submission later, simply edit the .yml file by submitting another PR.
