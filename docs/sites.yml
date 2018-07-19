@@ -709,6 +709,9 @@
   main_url: 'https://www.beachhutpoole.co.uk/'
   url: 'https://www.beachhutpoole.co.uk/'
   featured: false
+  categories:
+    - Travel
+    - Marketing
 - title: Bricolage.io
   main_url: 'https://www.bricolage.io/'
   url: 'https://www.bricolage.io/'
@@ -1035,16 +1038,48 @@
   categories:
     - News
     - Technology
-- title: Smakosh (source)
+- title: Smakosh
+  main_url: 'https://smakosh.com/'
+  url: 'https://smakosh.com/'
+  source_url: 'https://github.com/smakosh/smakosh.com'
   featured: false
+  categories:
+    - Portfolio
+    - Web Dev
+    - Creative
 - title: Philipp Czernitzki - Blog/Website
+  main_url: 'http://philippczernitzki.me/'
+  url: 'http://philippczernitzki.me/'
   featured: false
+  categories:
+    - Portfolio
+    - Web Dev
+    - Blog
 - title: WebGazer
+  main_url: 'https://www.webgazer.io/'
+  url: 'https://www.webgazer.io/'
   featured: false
+  categories:
+    - Marketing
+    - Web Dev
+    - Technology
 - title: Joe Seifi's Blog
+  main_url: 'http://seifi.org/'
+  url: 'http://seifi.org/'
   featured: false
-- title: Bartosz Dominiak Blog/Portfolio (source)
+  categories:
+    - Portfolio
+    - Web Dev
+    - Blog
+- title: Bartosz Dominiak Blog/Portfolio
+  main_url: 'http://bartoszdominiak.com/'
+  url: 'http://bartoszdominiak.com/'
+  source_url: 'https://github.com/bartdominiak/blog'
   featured: false
+  categories:
+    - Portfolio
+    - Web Dev
+    - Blog
 - title: HBTU MUN 2018 (source)
   featured: false
 - title: Jamie Henson's Blog (source)
