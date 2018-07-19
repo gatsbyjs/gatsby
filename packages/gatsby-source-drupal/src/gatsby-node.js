@@ -148,7 +148,7 @@ exports.sourceNodes = async (
             node.relationships[`${ref.type}___NODE`] = []
           }
 
-          node.relationships[`${ref.type}___NODE`].push(ref.id)
+          node.relationships[`${ref.type}___NODE`].push(createNodeId(ref.id))
         })
       }
 
