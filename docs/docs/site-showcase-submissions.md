@@ -22,7 +22,7 @@ There are only two major steps :)
   categories:
     - Relevant category 1
     - Relevant category 2
-    - // You can list as many categories as you want here //
+    - // You can list as many categories as you want here. Check list of Categories below in this doc! //
     - // If you'd like to create a new category, simply list it here //
   built_by: Name of creator(s) or team/agency/business that created the site
   built_by_url: 'https://twitter.com/creatorname' //this could also be the URL to the site of your portfolio, your agency or company's site, etc.//
@@ -77,6 +77,7 @@ A few notes on site content: a common question is this: "aren't all Gatsby sites
 - Retail
 - Technology
 - Web Dev
+- [feel free to create new ones after checking to make sure the tag you want doesn't already exist]
 
 ### Note on Featured Sites
 
