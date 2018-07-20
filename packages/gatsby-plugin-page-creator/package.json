@@ -18,7 +18,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@babel/runtime": "7.0.0-beta.51",
+    "@babel/runtime": "7.0.0-beta.52",
     "bluebird": "^3.5.0",
     "chokidar": "^1.7.0",
     "fs-exists-cached": "^1.0.0",
@@ -28,8 +28,8 @@
     "slash": "^1.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "7.0.0-beta.51",
-    "@babel/core": "7.0.0-beta.51",
+    "@babel/cli": "7.0.0-beta.52",
+    "@babel/core": "7.0.0-beta.52",
     "cross-env": "^5.0.5"
   },
   "peerDependencies": {
