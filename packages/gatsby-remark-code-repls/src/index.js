@@ -57,7 +57,7 @@ module.exports = (
 
   const getFilePath = (url, protocol, directory) => {
     let filePath = url.replace(protocol, ``)
-    if (!filePath.endsWith(`.js`) && !filePath.endsWith(`.css`)) {
+    if (!filePath.indexOf(`.`) > 0) {
       filePath += `.js`
     }
     filePath = normalizePath(join(directory, filePath))
@@ -66,7 +66,7 @@ module.exports = (
 
   const getMultipleFilesPaths = (urls, protocol, directory) => (
     urls.replace(protocol, ``).split(`,`).map((url) => {
-      if (!url.endsWith(`.js`) && !url.endsWith(`.css`)) {
+      if (!url.indexOf(`.`) > 0) {
         url += `.js`
       }
       
@@ -79,7 +79,10 @@ module.exports = (
 
   const verifyFile = (path, protocol) => {
     if (protocol !== PROTOCOL_CODE_SANDBOX && path.split(`,`).length > 1) {
-      throw Error(`Code example path should only contain a single file, but found more than one: ${path.replace(directory, ``)}`)
+      throw Error(
+        `Code example path should only contain a single file, but found more than one: ${path.replace(directory, ``)}. ` +
+          `Only CodeSandbox REPL supports multiple files entries, the protocol prefix of which starts with ${PROTOCOL_CODE_SANDBOX}`
+      )
     }
     if (!fs.existsSync(path)) {
       throw Error(`Invalid REPL link specified; no such file "${path}"`)

@@ -129,8 +129,9 @@ describe(`gatsby-remark-code-repls`, () => {
 
         if (protocol !== PROTOCOL_CODE_SANDBOX) {
           expect(runPlugin).toThrow(
-            `Code example path should only contain a single file, but found more than one: ` +
-              `path/to/nested/file.js,path/to/nested/anotherFile.js,path/to/nested/file.css`
+            `Code example path should only contain a single file, but found more than one: ` + 
+              `path/to/nested/file.js,path/to/nested/anotherFile.js,path/to/nested/file.css. ` +
+              `Only CodeSandbox REPL supports multiple files entries, the protocol prefix of which starts with codesandbox://`
           )
         } else {
           expect(runPlugin).not.toThrow()
