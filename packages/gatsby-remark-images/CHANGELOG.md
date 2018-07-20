@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.1-beta.8"></a>
+
+## [2.0.1-beta.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/compare/gatsby-remark-images@2.0.1-beta.7...gatsby-remark-images@2.0.1-beta.8) (2018-07-20)
+
+### Features
+
+- **remark-images:** Added support for WebP versions in addition to fallbacks. ([#6495](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/issues/6495)) ([65e3a78](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/commit/65e3a78))
+
 <a name="2.0.1-beta.7"></a>
 
 ## [2.0.1-beta.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/compare/gatsby-remark-images@2.0.1-beta.6...gatsby-remark-images@2.0.1-beta.7) (2018-07-16)
