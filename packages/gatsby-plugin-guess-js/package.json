@@ -27,12 +27,12 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@babel/runtime": "7.0.0-beta.51",
+    "@babel/runtime": "7.0.0-beta.52",
     "guess-webpack": "~0.1.3"
   },
   "devDependencies": {
-    "@babel/cli": "7.0.0-beta.51",
-    "@babel/core": "7.0.0-beta.51",
+    "@babel/cli": "7.0.0-beta.52",
+    "@babel/core": "7.0.0-beta.52",
     "cross-env": "^5.0.5"
   },
   "peerDependencies": {
