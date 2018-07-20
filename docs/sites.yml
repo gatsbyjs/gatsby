@@ -1343,3 +1343,16 @@
     - Marketing
   built_by: Bejamas.io
   built_by_url: 'https://bejamas.io/'
+- title: Matthias Kretschmann Portfolio
+  main_url: 'https://matthiaskretschmann.com/'
+  url: 'https://matthiaskretschmann.com/'
+  source_url: 'https://github.com/kremalicious/portfolio'
+  featured: false
+  description: >-
+    Portfolio of designer & developer Matthias Kretschmann.
+  categories:
+    - Portfolio
+    - Web Dev
+    - Creative
+  built_by: Matthias Kretschmann
+  built_by_url: 'https://matthiaskretschmann.com/'
