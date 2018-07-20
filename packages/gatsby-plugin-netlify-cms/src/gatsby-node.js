@@ -40,6 +40,7 @@ exports.onCreateWebpackConfig = (
     publicPath = `admin`,
     enableIdentityWidget = true,
     htmlTitle = `Content Manager`,
+    manualInit = false,
   }
 ) => {
   if ([`develop`, `build-javascript`].includes(stage)) {
@@ -56,6 +57,7 @@ exports.onCreateWebpackConfig = (
        */
       entry: pickBy({
         cms: [
+          manualInit && `${__dirname}/cms-manual-init.js`,
           `${__dirname}/cms.js`,
           modulePath,
           enableIdentityWidget && `${__dirname}/cms-identity.js`,
