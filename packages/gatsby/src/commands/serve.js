@@ -7,11 +7,10 @@ module.exports = program => {
   let { port } = program
   port = typeof port === `string` ? parseInt(port, 10) : port
 
-  let server = http.createServer((request, response) => {
-    return handler(request, response, {
+  let server = http.createServer((request, response) => handler(request, response, {
       "public": `public`,
-    })
-  })
+    }),
+  )
 
   server.listen(port, () => {
     console.log(`gatsby serve running at port: `, port)
