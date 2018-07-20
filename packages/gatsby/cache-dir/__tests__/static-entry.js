@@ -3,25 +3,30 @@ import DevelopStaticEntry from '../develop-static-entry'
 
 jest.mock(`fs`)
 
-jest.mock(`../sync-requires`, () => {
-   return {
-  components: {
-    'page-component---src-pages-test-js': `div`,
+jest.mock(
+  `../sync-requires`,
+  () => {
+    return {
+      components: {
+        'page-component---src-pages-test-js': () => null,
+      },
+    }
   },
-} }, { virtual: true })
+  { virtual: true }
+)
 
 jest.mock(
-  `../data.json`, () => {
+  `../data.json`,
+  () => {
     return {
       dataPaths: [{
-        [`about.json`]: `test`,
+        [`about.json`]: `/400/about`,
       }],
-      pages: [
-        {
+      pages: [{
           path: `/about/`,
           componentChunkName: `page-component---src-pages-test-js`,
           jsonName: `about.json`,
-        }],
+      }],
     }
   },
   { virtual: true }
@@ -62,7 +67,7 @@ describe(`develop-static-entry`, () => {
       reverseHeadersPlugin,
     ]
 
-    DevelopStaticEntry(`test`, (_, html) => {
+    DevelopStaticEntry(`/about/`, (_, html) => {
       expect(html).toMatchSnapshot()
       done()
     })
