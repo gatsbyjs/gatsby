@@ -1365,6 +1365,18 @@
     - Sports
   built_by: Escalade Sports
   built_by_url: 'http://escaladesports.com/'
+- title: Eventos orellana
+  description: >-
+    Somos una empresa dedicada a brindar asesoría personalizada
+    y profesional para la elaboración y coordinación de eventos
+    sociales y empresariales.
+  main_url: 'https://eventosorellana.com/'
+  url: 'https://eventosorellana.com/'
+  featured: false
+  categories:
+    - Gallery
+  built_by: Codedebug
+  built_by_url: 'https://codedebug.co/'
   - title: Moetez Chaabene Portfolio / Blog
   main_url: 'https://moetez.me/'
   url: 'https://moetez.me/'
