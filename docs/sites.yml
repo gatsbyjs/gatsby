@@ -1365,6 +1365,19 @@
     - Sports
   built_by: Escalade Sports
   built_by_url: 'http://escaladesports.com/'
+- title: Nikita
+  description: >-
+    Automation of system deployments in Node.js for applications and infrastructures.
+  main_url: https://nikita.js.org/
+  url: https://nikita.js.org/
+  source_url: 'https://github.com/adaltas/node-nikita'
+  categories:
+    - Documentation
+    - Open Source
+    - Technology
+  built_by: David Worms
+  built_by_url: http://www.adaltas.com
+  featured: false
 - title: Gourav Sood Blog & Portfolio
   main_url: 'https://www.gouravsood.com/'
   url: 'https://www.gouravsood.com/'
