@@ -470,6 +470,7 @@ function getValidRoutes({
   if (_useACF) {
     // The OPTIONS ACF API Route is not giving a valid _link so let`s add it manually
     // and pass ACF option page ID
+    // ACF to REST v3 requires options/options 
     let optionsRoute = _acfRestVersion === 3 ? `options/options/` : `options/`
     validRoutes.push({
       url: `${url}/acf/v${_acfRestVersion}/${optionsRoute}`,

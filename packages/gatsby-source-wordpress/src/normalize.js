@@ -70,13 +70,13 @@ exports.normalizeACF = normalizeACF
 // Combine all ACF Option page data
 exports.combineACF = function(entities) {
  let acfOptionData = {}
- // Map each ACF Options oject keys/data to single object
+ // Map each ACF Options object keys/data to single object
  _.forEach(entities.filter((e) => e.__type === `wordpress__acf_options`), (e) => {
    if(e[`acf`]) {
      Object.keys(e[`acf`]).map((k) => acfOptionData[k] = e[`acf`][k])
    }
  })
- // Remove previous if any
+ // Remove previous ACF Options objects (if any)
  _.pullAll(entities, entities.filter((e) => e.__type === `wordpress__acf_options`))
  // Create single ACF Options object
  entities.push({
