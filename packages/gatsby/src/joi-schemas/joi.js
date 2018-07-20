@@ -34,7 +34,7 @@ export const nodeSchema = Joi.object()
     internal: Joi.object()
       .keys({
         contentDigest: Joi.string().required(),
-        mediaType: Joi.string(),
+        mediaType: Joi.string().allow(null),
         type: Joi.string().required(),
         owner: Joi.string().required(),
         fieldOwners: Joi.array(),
