@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import Body from "./body"
+import SidebarBody from "./sidebar"
 
 class ScrollSyncSection extends Component {
   constructor(props, context) {
@@ -60,9 +60,11 @@ class ScrollSyncSection extends Component {
   render() {
     const { activeItemHash } = this.state
     return (
-      <div css={{ background: `transparent` }}>
-        <Body isScrollSync activeItemHash={activeItemHash} {...this.props} />
-      </div>
+      <SidebarBody
+        isScrollSync
+        activeItemHash={activeItemHash}
+        {...this.props}
+      />
     )
   }
 }
