@@ -1120,11 +1120,13 @@
   featured: false
 - title: Steven Natera's blog
   featured: false
-- title: LekoArts - Graphic Designer
+- title: LekoArts
   main_url: 'https://www.lekoarts.de'
   url: 'https://www.lekoarts.de'
   source_url: 'https://github.com/LeKoArts/portfolio'
   featured: false
+  built_by: LekoArts
+  built_by_url: 'https://github.com/LeKoArts'
   description: >-
     Hi, I'm Lennart — a self-taught and passionate graphic/web designer & frontend developer based in Darmstadt, Germany. I love it to realize complex projects in a creative manner and face new challenges. Since 6 years I do graphic design, my love for frontend development came up 3 years ago. I enjoy acquiring new skills and cementing this knowledge by writing blogposts and creating tutorials.
   categories:
@@ -1303,3 +1305,41 @@
     - Marketing
   built_by: LWB Digital Team
   built_by_url: 'https://twitter.com/LWBAustralia'
+- title: Bejamas - JAM Experts for hire
+  main_url: 'https://bejamas.io/'
+  url: 'https://bejamas.io/'
+  featured: false
+  description: >-
+    We help agencies and companies with JAMStack tools. This includes web development using Static Site Generators, Headless CMS, CI / CD and CDN setup.
+  categories:
+    - Technology
+    - Web Dev
+    - Agency
+    - Creative
+    - Marketing
+  built_by: Bejamas.io
+  built_by_url: 'https://bejamas.io/'
+- title: Zensum
+  main_url: 'https://zensum.se/'
+  url: 'https://zensum.se/'
+  featured: false
+  description: >-
+    Borrow money quickly and safely through Zensum. We compare Sweden's leading banks and credit institutions. Choose from multiple offers and lower your monthly cost. [Translated from Swedish]
+  categories:
+    - Technology
+    - Finance
+    - Corporate
+    - Marketing
+  built_by: Bejamas.io
+  built_by_url: 'https://bejamas.io/'
+- title: StatusHub - Easy to use Hosted Status Page Service
+  main_url: 'https://statushub.com/'
+  url: 'https://statushub.com/'
+  featured: false
+  description: >-
+    Set up your very own service status page in minutes with StatusHub. Allow customers to subscribe to be updated automatically.
+  categories:
+    - Technology
+    - Marketing
+  built_by: Bejamas.io
+  built_by_url: 'https://bejamas.io/'
