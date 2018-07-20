@@ -8,17 +8,16 @@ module.exports = program => {
   let { port, open } = program
   port = typeof port === `string` ? parseInt(port, 10) : port
 
-  let server = http.createServer((request, response) => handler(request, response, {
-      "public": `public`,
-    }),
+  let server = http.createServer((request, response) =>
+    handler(request, response, {
+      public: `public`,
+    })
   )
 
   server.listen(port, () => {
     let openUrlString = `http://localhost:` + port
-    console.log(`gatsby serve running at:`, openUrlString)
     if (open) {
       let openUrlString = `http://localhost:` + port
-      console.log(`Opening browser...`)
       openurl(openUrlString)
     }
   })
