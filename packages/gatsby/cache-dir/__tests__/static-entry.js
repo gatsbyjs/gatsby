@@ -1,6 +1,23 @@
 import React from 'react'
-import DevelopStaticEntry from "../develop-static-entry"
-// import StaticEntry from "../static-entry"
+import DevelopStaticEntry from '../develop-static-entry'
+// jest.mock(`../sync-requires`)
+import StaticEntry from '../static-entry'
+
+jest.mock(`../sync-requires`, () => { return {} }, { virtual: true })
+jest.mock(
+  `../data.json`, () => {
+    return {
+      dataPaths: [],
+      pages: [],
+    }
+  },
+  { virtual: true })
+
+jest.mock(`fs`)
+
+require(`fs`).__setMockFiles({
+  [`${process.cwd()}/public/webpack.stats.json`]: `{}`,
+})
 
 const reverseHeadersPlugin = {
   plugin: {
@@ -35,15 +52,19 @@ describe(`develop-static-entry`, () => {
 })
 
 describe(`static-entry`, () => {
+  beforeEach(() => {
+    global.__PATH_PREFIX__ = ``
+  })
+
   test(`You can replace head components`, (done) => {
     global.plugins = [
       fakeStylesPlugin,
       reverseHeadersPlugin,
     ]
     done()
-    // StaticEntry(`test`, (_, html) => {
-    //   expect(html).toMatchSnapshot()
-    //   done()
-    // })
+    StaticEntry(`test`, (_, html) => {
+      expect(html).toMatchSnapshot()
+      done()
+    })
   })
 })
