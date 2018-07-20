@@ -1356,3 +1356,12 @@
     - Creative
   built_by: Matthias Kretschmann
   built_by_url: 'https://matthiaskretschmann.com/'
+- title: Cajun Bowfishing
+  main_url: 'https://cajunbowfishing.com/'
+  url: 'https://cajunbowfishing.com/'
+  featured: false
+  categories:
+    - eCommerce
+    - Sports
+  built_by: Escalade Sports
+  built_by_url: 'http://escaladesports.com/'
