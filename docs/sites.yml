@@ -1366,11 +1366,13 @@
   built_by: Escalade Sports
   built_by_url: 'http://escaladesports.com/'
 - title: Iron Cove Solutions - Companies consult with us for cloud initiatives
+  description: >-
+  Iron Cove Solutions is a cloud based consulting firm. We help companies deliver a return on cloud usage by applying best practices.
   main_url: 'https://ironcovesolutions.com'
   url: 'https://ironcovesolutions.com'
-  featured: false
   categories:
     - Technology
     - Web Dev
   built_by: Iron Cove Solutions
   built_by_url: 'https://ironcovesolutions.com'
+  featured: false
