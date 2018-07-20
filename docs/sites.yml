@@ -1365,3 +1365,13 @@
     - Sports
   built_by: Escalade Sports
   built_by_url: 'http://escaladesports.com/'
+- title: Gourav Sood Blog & Portfolio
+  main_url: 'https://www.gouravsood.com/'
+  url: 'https://www.gouravsood.com/'
+  featured: false
+  categories:
+    - Blog
+    - Portfolio
+    - Salesforce
+  built_by: Gourav Sood
+  built_by_url: 'https://www.gouravsood.com/'
