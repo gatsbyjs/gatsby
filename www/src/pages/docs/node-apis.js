@@ -8,7 +8,6 @@ import { rhythm, scale } from "../../utils/typography"
 import Layout from "../../components/layout"
 import Container from "../../components/container"
 import { sectionListDocs } from "../../utils/sidebar/section-list"
-import { createLinkDocs } from "../../utils/sidebar/create-link"
 
 class NodeAPIDocs extends React.Component {
   render() {
@@ -17,11 +16,7 @@ class NodeAPIDocs extends React.Component {
       func => func.name
     )
     return (
-      <Layout
-        location={this.props.location}
-        createLink={createLinkDocs}
-        sectionList={sectionListDocs}
-      >
+      <Layout location={this.props.location} sectionList={sectionListDocs}>
         <Container>
           <Helmet>
             <title>Node APIs</title>

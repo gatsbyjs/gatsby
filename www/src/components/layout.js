@@ -196,7 +196,6 @@ class DefaultLayout extends React.Component {
         >
           <PageWithSidebar
             disable={isSidebarDisabled}
-            createLink={this.props.createLink}
             sectionList={this.props.sectionList}
             location={this.props.location}
             enableScrollSync={this.props.enableScrollSync}

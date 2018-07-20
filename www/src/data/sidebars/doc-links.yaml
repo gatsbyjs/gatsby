@@ -1,22 +1,54 @@
 - title: Quick start
+  link: /docs/
   items:
-    - title: Quick start
-      link: /docs/
+    - title: Browser Support
+      link: /docs/browser-support/
     - title: Recipes*
       link: /docs/recipes/
     - title: Overview of the docs*
       link: /docs/overview/
     - title: Main Tutorial (step-by-step)
       link: /tutorial/
+    - title: Apps with Gatsby
+      link: /docs/building-apps-with-gatsby/
+      items:
+        - title: Progressive web app (PWA)
+          link: /docs/progressive-web-app/
+        - title: Creating Dynamically-Rendered Navigation*
+          link: /docs/creating-dynamically-rendered-navigation/
+        - title: Authentication*
+          link: /docs/authentication/
+        - title: E-commerce*
+          link: /docs/e-commerce/
+        - title: Interactive pages*
+          link: /docs/interactive-pages/
+        - title: Plugins*
+          link: /docs/plugins/
+          items:
+            - title: Plugin authoring
+              link: /docs/plugin-authoring/
+            - title: Submit to Plugin Library*
+              link: /docs/submit-to-plugin-library/
+            - title: Source plugin tutorial
+              link: /docs/source-plugin-tutorial/
+            - title: Headless CMS*
+              items:
+                - title: Netlify CMS
+                  link: /docs/netlify-cms/
+                - title: WordPress*
+                  link: /docs/wordpress/
+                - title: Drupal*
+                  link: /docs/drupal/
+                - title: Contentful*
+                  link: /docs/contentful/
+                - title: Prose*
+                  link: /docs/prose/
 - title: Guides
   items:
     - title: Preparing your environment*
-      link: /docs/environment/
       items:
       - title: Basic hardware and software requirements*
         link: /docs/basic-hardware-software-requirements/
-      - title: Browser Support
-        link: /docs/browser-support/
       - title: Gatsby on Macs*
         link: /docs/gatsby-on-macs/
       - title: Gatsby on Windows
@@ -81,28 +113,6 @@
           link: /docs/programmatically-create-pages-from-data/
         - title: Querying data with StaticQuery
           link: /docs/static-query/
-    - title: Headless CMS*
-      link: /docs/headless-cms/
-      items:
-        - title: Netlify CMS
-          link: /docs/netlify-cms/
-        - title: WordPress*
-          link: /docs/wordpress/
-        - title: Drupal*
-          link: /docs/drupal/
-        - title: Contentful*
-          link: /docs/contentful/
-        - title: Prose*
-          link: /docs/prose/
-    - title: Plugins*
-      link: /docs/plugins/
-      items:
-        - title: Plugin authoring
-          link: /docs/plugin-authoring/
-        - title: Submit to Plugin Library*
-          link: /docs/submit-to-plugin-library/
-        - title: Source plugin tutorial
-          link: /docs/source-plugin-tutorial/
     - title: Styling*
       link: /docs/styling/
       items:
@@ -127,19 +137,6 @@
           link: /docs/debugging-html-builds/
         - title: Debugging Replace Renderer API
           link: /docs/debugging-replace-renderer-api/
-    - title: Apps with Gatsby
-      link: /docs/building-apps-with-gatsby/
-      items:
-        - title: Progressive web app (PWA)
-          link: /docs/progressive-web-app/
-        - title: Creating Dynamically-Rendered Navigation*
-          link: /docs/creating-dynamically-rendered-navigation/
-        - title: Authentication*
-          link: /docs/authentication/
-        - title: E-commerce*
-          link: /docs/e-commerce/
-        - title: Interactive pages*
-          link: /docs/interactive-pages/
     - title: Preparing site for launch*
       link: /docs/website-functionality/
       items:
@@ -194,22 +191,6 @@
       link: /docs/migrating-from-v1-to-v2/
     - title: Migrating from v0 to v1
       link: /docs/migrating-from-v0-to-v1/
-- title: Conceptual Guide
-  items:
-    - title: The Gatsby core philosophy*
-      link: /docs/gatsby-core-philosophy/
-    - title: Life and times of a Gatsby build*
-      link: /docs/life-and-times-of-a-gatsby-build/
-    - title: Building with components
-      link: /docs/building-with-components/
-    - title: Lifecycle APIs
-      link: /docs/gatsby-lifecycle-apis/
-    - title: Plugins
-      link: /docs/plugins/
-    - title: PRPL pattern
-      link: /docs/prpl-pattern/
-    - title: Querying data with GraphQL
-      link: /docs/querying-with-graphql/
 - title: Advanced Tutorials
   items:
     - title: Making a site with user authentication*

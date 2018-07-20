@@ -3,11 +3,21 @@ import React, { Fragment } from "react"
 import Accordion from "./accordion"
 import presets from "../../utils/presets"
 import { scale, rhythm } from "../../utils/typography"
+import createLink from "../../utils/sidebar/create-link"
+
+const isItemActive = (activeItemParents, item) => {
+  if (activeItemParents) {
+    for (let parent of activeItemParents) {
+      if (parent === item.title) return true
+    }
+  }
+
+  return false
+}
 
 class Item extends React.Component {
   render() {
     const {
-      createLink,
       location,
       onLinkClick,
       onSectionTitleClick,
@@ -17,6 +27,9 @@ class Item extends React.Component {
       activeItemLink,
       isFirstItem,
       isLastItem,
+      level,
+      activeItemParents,
+      ui,
     } = this.props
 
     return (
@@ -24,7 +37,11 @@ class Item extends React.Component {
         {item.items ? (
           <Accordion
             itemStyles={styles}
-            isActive={this.props.isActive || item.disableAccordions}
+            isActive={
+              item.link === location.pathname ||
+              isItemActive(activeItemParents, item) ||
+              item.disableAccordions
+            }
             onSectionTitleClick={onSectionTitleClick}
             hideSectionTitle={hideSectionTitle}
             singleSection={singleSection}
@@ -34,22 +51,19 @@ class Item extends React.Component {
             location={location}
             isFirstItem={isFirstItem}
             isLastItem={isLastItem}
+            level={level}
+            activeItemParents={activeItemParents}
           />
         ) : (
-          <div
-            className="item"
-            css={{
-              ...styles.item,
-            }}
-          >
+          <li className="item" css={{ ...styles.item, ...this.props.styles }}>
             {createLink({
-              isActive: item.link === activeItemLink,
-              item: item,
+              isActive: item.link === activeItemLink.link,
               item,
               location,
               onLinkClick,
+              stepsUI: ui === `steps`,
             })}
-          </div>
+          </li>
         )}
       </Fragment>
     )
@@ -60,6 +74,7 @@ export default Item
 
 const horizontalPadding = rhythm(3 / 4)
 const horizontalPaddingDesktop = rhythm(3 / 2)
+
 const styles = {
   item: {
     lineHeight: 1.3,

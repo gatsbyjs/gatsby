@@ -1,15 +1,49 @@
-import React from "react"
+import React, { Fragment } from "react"
 import hex2rgba from "hex2rgba"
 
 import presets, { colors } from "../../utils/presets"
 import { rhythm, options, scale } from "../../utils/typography"
 import { css as glam } from "glamor"
 
+import Item from "./item"
 import SectionTitle from "./section-title"
 import ChevronSvg from "./chevron-svg"
 
 const horizontalPadding = rhythm(3 / 4)
 const horizontalPaddingDesktop = rhythm(3 / 2)
+
+const ToggleSectionChevron = ({
+  isActive,
+  uid,
+  hideSectionTitle,
+  onSectionTitleClick,
+}) => (
+  <button
+    aria-expanded={isActive}
+    aria-controls={uid}
+    css={{
+      ...styles.resetButton,
+      marginLeft: `auto`,
+      [presets.Tablet]: {
+        display: hideSectionTitle ? `none` : `inline`,
+      },
+    }}
+    onClick={onSectionTitleClick}
+  >
+    <ChevronSvg
+      cssProps={{
+        color: colors.gray.light,
+        marginLeft: `auto`,
+        transform: isActive ? `rotateX(180deg)` : `rotateX(0deg)`,
+        transition: `transform 0.2s ease`,
+        display: `none`,
+        [presets.Tablet]: {
+          display: `inline-block`,
+        },
+      }}
+    />
+  </button>
+)
 
 const ToggleSectionButton = ({
   title,
@@ -62,23 +96,106 @@ const Title = ({ title }) => (
   </div>
 )
 
+const ItemWithSubitems = ({
+  section,
+  activeItemLink,
+  location,
+  onLinkClick,
+  uid,
+  hideSectionTitle,
+  onSectionTitleClick,
+  itemStyles,
+  createLink,
+  isActive,
+  level,
+}) => {
+  const SectionTitleComponent = section.disableAccordions
+    ? Title
+    : ToggleSectionButton
+
+  return (
+    <Fragment>
+      {section.link ? (
+        <span
+          css={{
+            alignItems: `flex-end`,
+            display: `flex`,
+            position: `relative`,
+            width: `100%`,
+            ...itemStyles.item,
+            paddingLeft: level === 0 ? `40px !important` : `0px !important`,
+          }}
+        >
+          {createLink({
+            isActive: section.link === activeItemLink.link,
+            item: section,
+            section,
+            location,
+            onLinkClick,
+          })}
+          <span
+            css={{
+              paddingBottom: 2,
+              marginLeft: `auto`,
+            }}
+          >
+            <ToggleSectionChevron
+              isActive={isActive}
+              uid={uid}
+              hideSectionTitle={hideSectionTitle}
+              onSectionTitleClick={onSectionTitleClick}
+            />
+          </span>
+        </span>
+      ) : (
+        <SectionTitleComponent
+          title={section.title}
+          isActive={isActive}
+          uid={uid}
+          hideSectionTitle={hideSectionTitle}
+          onSectionTitleClick={onSectionTitleClick}
+        />
+      )}
+    </Fragment>
+  )
+}
+
 class Accordion extends React.Component {
-  state = { uid: (`` + Math.random()).replace(/\D/g, ``) }
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      uid: (`` + Math.random()).replace(/\D/g, ``),
+      collapsed: props.isActive || false,
+    }
+    this.handleClick = this.handleClick.bind(this)
+  }
+
+  handleClick(...args) {
+    this.setState({ collapsed: !this.state.collapsed })
+    if (this.props.onClick) {
+      this.props.onClick(...args)
+    }
+  }
 
   _isChildItemActive = (item, activeItemLink) => {
     if (item.items) {
       const matches = item.items.filter(function(subitem) {
         return (
-          subitem.link === activeItemLink && item.link === subitem.parentLink
+          subitem.link === activeItemLink.link &&
+          item.link === subitem.parentLink
         )
       })
 
       return matches.length >= 1
     }
+
+    return false
   }
 
   render() {
     const {
+      collapsed = this.state.collapsed,
       createLink,
       location,
       onLinkClick,
@@ -87,17 +204,16 @@ class Accordion extends React.Component {
       hideSectionTitle,
       activeItemLink,
       itemStyles,
-      isActive,
       isFirstItem,
       isLastItem,
+      singleSection,
+      level,
+      activeItemParents,
     } = this.props
     const uid = `section_` + this.state.uid
-    const SectionTitleComponent = section.disableAccordions
-      ? Title
-      : ToggleSectionButton
 
     return (
-      <div
+      <li
         className="accordion"
         css={{
           position: `relative`,
@@ -113,84 +229,66 @@ class Accordion extends React.Component {
           },
         }}
       >
-        <SectionTitleComponent
-          title={section.title}
-          isActive={isActive}
+        <ItemWithSubitems
+          section={section}
+          activeItemLink={activeItemLink}
+          location={location}
+          onLinkClick={onLinkClick}
           uid={uid}
           hideSectionTitle={hideSectionTitle}
-          onSectionTitleClick={onSectionTitleClick}
+          onSectionTitleClick={this.handleClick}
+          itemStyles={itemStyles}
+          createLink={createLink}
+          isActive={collapsed}
+          level={level}
+          activeItemParents={activeItemParents}
         />
         <ul
           id={uid}
           css={{
             ...styles.ul,
+            ...styles.ulSubitems,
             position: `relative`,
             paddingBottom: rhythm(3 / 4),
             "& li": {
               ...itemStyles.item,
+              paddingLeft:
+                // blergh ;)
+                level === 0
+                  ? `${level + 1 * 40}px !important`
+                  : `${level + 1 * 20}px !important`,
+              paddingRight: `0 !important`,
             },
             [presets.Tablet]: {
-              display: isActive ? `block` : `none`,
+              display: collapsed ? `block` : `none`,
             },
           }}
         >
           {section.items.map(item => (
-            <li
-              key={item.link}
-              css={{
-                ...((item.items && item.link === activeItemLink) ||
-                this._isChildItemActive(item, activeItemLink)
-                  ? {
-                      ...styles.liActive,
-                      paddingTop: rhythm(options.blockMarginBottom / 2),
-                    }
-                  : {}),
-                ...(section.ui === `tutorial` && {
-                  ...styles.liTutorial,
+            <Item
+              createLink={createLink}
+              location={location}
+              onLinkClick={onLinkClick}
+              onSectionTitleClick={onSectionTitleClick}
+              item={item}
+              hideSectionTitle={hideSectionTitle}
+              singleSection={singleSection}
+              activeItemLink={activeItemLink}
+              isFirstItem={isFirstItem}
+              isLastItem={isLastItem}
+              activeItemParents={activeItemParents}
+              key={item.title}
+              level={level + 1}
+              styles={{
+                ...(section.ui === `steps` && {
+                  ...styles.ulStepsUI,
                 }),
               }}
-            >
-              {createLink({
-                isActive:
-                  item.link === activeItemLink ||
-                  this._isChildItemActive(item, activeItemLink),
-                item,
-                section,
-                location,
-                onLinkClick,
-                isParentOfActiveItem: this._isChildItemActive(
-                  item,
-                  activeItemLink
-                ),
-              })}
-              {item.items && (
-                <ul
-                  css={{
-                    ...styles.ul,
-                    ...styles.ulSubitems,
-                    ...(item.ui === `steps` && {
-                      ...styles.ulStepsUI,
-                    }),
-                  }}
-                >
-                  {item.items.map(subitem => (
-                    <li key={subitem.link}>
-                      {createLink({
-                        isActive: subitem.link === activeItemLink,
-                        item: subitem,
-                        location,
-                        onLinkClick,
-                        section,
-                        stepsUI: item.ui === `steps`,
-                      })}
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </li>
+              ui={section.ui}
+            />
           ))}
         </ul>
-      </div>
+      </li>
     )
   }
 }
@@ -241,6 +339,12 @@ const styles = {
       width: 0,
       borderLeft: `1px dashed ${colors.ui.bright}`,
     },
+  },
+  resetButton: {
+    backgroundColor: `transparent`,
+    border: 0,
+    cursor: `pointer`,
+    padding: 0,
   },
   button: {
     backgroundColor: `transparent`,

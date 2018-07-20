@@ -8,7 +8,6 @@ import { rhythm, scale } from "../../utils/typography"
 import Layout from "../../components/layout"
 import Container from "../../components/container"
 import { sectionListDocs } from "../../utils/sidebar/section-list"
-import { createLinkDocs } from "../../utils/sidebar/create-link"
 
 class BrowserAPIDocs extends React.Component {
   render() {
@@ -18,11 +17,7 @@ class BrowserAPIDocs extends React.Component {
     )
 
     return (
-      <Layout
-        location={this.props.location}
-        createLink={createLinkDocs}
-        sectionList={sectionListDocs}
-      >
+      <Layout location={this.props.location} sectionList={sectionListDocs}>
         <Container>
           <Helmet>
             <title>Browser APIs</title>

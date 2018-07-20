@@ -6,34 +6,7 @@ import { options, rhythm } from "../typography"
 const _getTitle = (title, isDraft) => (isDraft ? title.slice(0, -1) : title)
 const _isDraft = title => title.slice(-1) === `*`
 
-const createLinkDocs = ({
-  item,
-  isActive,
-  onLinkClick,
-  isParentOfActiveItem,
-  stepsUI,
-}) => {
-  const isDraft = _isDraft(item.title)
-  const title = _getTitle(item.title, isDraft)
-
-  return (
-    <Link
-      css={[
-        styles.link,
-        isDraft && styles.draft,
-        isActive && styles.activeLink,
-        isParentOfActiveItem && styles.parentOfActiveLink,
-      ]}
-      onClick={onLinkClick}
-      to={`${item.link}`}
-    >
-      {stepsUI && <span css={{ ...styles.subsectionLink }} />}
-      {title}
-    </Link>
-  )
-}
-
-const createLinkTutorial = ({
+const createLink = ({
   item,
   onLinkClick,
   isActive,
@@ -52,7 +25,7 @@ const createLinkTutorial = ({
         isParentOfActiveItem && styles.parentOfActiveLink,
       ]}
       onClick={onLinkClick}
-      to={`${item.link}`}
+      to={item.link}
     >
       {stepsUI && <span css={{ ...styles.subsectionLink }} />}
       {title}
@@ -80,10 +53,7 @@ const styles = {
     },
   },
   parentOfActiveLink: {
-    "&:after": {
-      display: `none`,
-    },
-    "&:before": {
+    "&:before, &:after": {
       display: `none`,
     },
   },
@@ -120,35 +90,30 @@ const styles = {
         },
       },
     },
-    "&:before": {
+    "&:before, &:after": {
       ...bulletOffset.default,
-      borderRadius: `100%`,
-      content: ` `,
-      fontWeight: `normal`,
       height: bulletSize,
       position: `absolute`,
-      transform: `scale(0.1)`,
       transition: `all ${presets.animation.speedDefault} ${
         presets.animation.curveDefault
       }`,
+    },
+    "&:before": {
+      borderRadius: `100%`,
+      content: ` `,
+      transform: `scale(0.1)`,
       width: bulletSize,
       [presets.Tablet]: {
         ...bulletOffset.desktop,
       },
     },
     "&:after": {
-      ...bulletOffset.default,
       background: colors.gatsby,
       borderRadius: 4,
       content: ` `,
-      height: bulletSize,
       left: `-0.6rem`,
       opacity: 0,
-      position: `absolute`,
       transform: `translateX(-200px)`,
-      transition: `all ${presets.animation.speedDefault} ${
-        presets.animation.curveDefault
-      }`,
       width: 1,
       [presets.Tablet]: {
         ...bulletOffset.desktop,
@@ -173,4 +138,4 @@ const styles = {
   },
 }
 
-export { createLinkDocs, createLinkTutorial }
+export default createLink
