@@ -13,6 +13,7 @@ const refactoredEntityTypes = {
 let _verbose
 let _siteURL
 let _useACF = true
+let _acfRestVersion
 let _acfOptionPageIds
 let _hostingWPCOM
 let _auth
@@ -29,6 +30,7 @@ exports.sourceNodes = async (
     hostingWPCOM,
     useACF = true,
     acfOptionPageIds = [],
+    acfRestVersion = 3,
     auth = {},
     verboseOutput,
     perPage = 100,
@@ -42,6 +44,7 @@ exports.sourceNodes = async (
   _verbose = verboseOutput
   _siteURL = `${protocol}://${baseUrl}`
   _useACF = useACF
+  _acfRestVersion = acfRestVersion
   _acfOptionPageIds = acfOptionPageIds
   _hostingWPCOM = hostingWPCOM
   _auth = auth
@@ -55,6 +58,7 @@ exports.sourceNodes = async (
     _verbose,
     _siteURL,
     _useACF,
+    _acfRestVersion,
     _acfOptionPageIds,
     _hostingWPCOM,
     _auth,
@@ -67,8 +71,11 @@ exports.sourceNodes = async (
 
   // Normalize data & create nodes
 
-  // Remove ACF key if it's not an object
+  // Remove ACF key if it's not an object, combine ACF Options
   entities = normalize.normalizeACF(entities)
+
+  // Combine ACF Option Data entities into one
+  entities = normalize.combineACF(entities)
 
   // Creates entities from object collections of entities
   entities = normalize.normalizeEntities(entities)
@@ -137,6 +144,7 @@ exports.sourceNodes = async (
       _siteURL,
       hostingWPCOM,
       useACF,
+      acfRestVersion,
       acfOptionPageIds,
       auth,
       verboseOutput,

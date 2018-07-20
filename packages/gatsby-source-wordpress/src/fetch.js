@@ -15,6 +15,7 @@ async function fetch({
   _verbose,
   _siteURL,
   _useACF,
+  _acfRestVersion,
   _acfOptionPageIds,
   _hostingWPCOM,
   _auth,
@@ -106,6 +107,7 @@ async function fetch({
       baseUrl,
       _verbose,
       _useACF,
+      _acfRestVersion,
       _acfOptionPageIds,
       _hostingWPCOM,
       _excludedRoutes,
@@ -232,17 +234,6 @@ async function fetchData({
     } else {
       routeResponse.__type = type
       entities.push(routeResponse)
-    }
-
-    /* assign ACF Option ID instead of { acf: [...data] } */
-    if(route.acfOptionPageId) {
-      entities = Object.keys(routeResponse).map((key) => {
-        return {
-          id: route.acfOptionPageId,
-          acf: routeResponse[key][`acf`],
-          __type: `wordpress__acf_options`,
-        }
-      })
     }
 
     // WordPress exposes the menu items in meta links.
@@ -383,6 +374,7 @@ function getValidRoutes({
   baseUrl,
   _verbose,
   _useACF,
+  _acfRestVersion,
   _acfOptionPageIds,
   _hostingWPCOM,
   _excludedRoutes,
@@ -478,15 +470,23 @@ function getValidRoutes({
   if (_useACF) {
     // The OPTIONS ACF API Route is not giving a valid _link so let`s add it manually
     // and pass ACF option page ID
-    _acfOptionPageIds.forEach(function(acfOptionPageId) {
-      validRoutes.push({
-        url: `${url}/acf/v3/options/${acfOptionPageId}`,
-        acfOptionPageId,
-      })
+    let optionsRoute = _acfRestVersion === 3 ? `options/options/` : `options/`
+    validRoutes.push({
+      url: `${url}/acf/v${_acfRestVersion}/${optionsRoute}`,
+      type: `${typePrefix}acf_options`,
     })
+    // ACF to REST V2 does not allow ACF Option Page ID specification
+    if (_acfRestVersion === 3) {
+      _acfOptionPageIds.forEach(function(acfOptionPageId) {
+        validRoutes.push({
+          url: `${url}/acf/v3/options/${acfOptionPageId}`,
+          type: `${typePrefix}acf_options`,
+        })
+      })
+    }
     if (_verbose)
       console.log(
-        colorized.out(`Added ACF Options route.`, colorized.color.Font.FgGreen)
+        colorized.out(`Added ACF Options route(s).`, colorized.color.Font.FgGreen)
       )
     if (_hostingWPCOM) {
       // TODO : Need to test that out with ACF on Wordpress.com hosted site. Need a premium account on wp.com to install extensions.

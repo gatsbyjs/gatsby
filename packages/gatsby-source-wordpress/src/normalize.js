@@ -67,6 +67,26 @@ const normalizeACF = entities =>
 
 exports.normalizeACF = normalizeACF
 
+// Combine all ACF Option page data
+exports.combineACF = function(entities) {
+ let acfOptionData = {}
+ // Map each ACF Options oject keys/data to single object
+ _.forEach(entities.filter((e) => e.__type === `wordpress__acf_options`), (e) => {
+   if(e[`acf`]) {
+     Object.keys(e[`acf`]).map((k) => acfOptionData[k] = e[`acf`][k])
+   }
+ })
+ // Remove previous if any
+ _.pullAll(entities, entities.filter((e) => e.__type === `wordpress__acf_options`))
+ // Create single ACF Options object
+ entities.push({
+   acf: acfOptionData || false,
+   __type: `wordpress__acf_options`,
+ })
+
+ return entities
+}
+
 // Create entities from the few the WordPress API returns as an object for presumably
 // legacy reasons.
 const normalizeEntities = entities => {
@@ -90,6 +110,8 @@ const normalizeEntities = entities => {
       case `wordpress__wp_statuses`:
         return acc.concat(mapType(e))
       case `wordpress__wp_taxonomies`:
+        return acc.concat(mapType(e))
+      case `wordpress__acf_options`:
         return acc.concat(mapType(e))
       default:
         return acc.concat(e)
