@@ -298,6 +298,22 @@ Mention the apparition of `childWordpressAcfField` in the query below :
 }
 ```
 
+### Query with ACF Options
+
+The [ACF Options Page](https://www.advancedcustomfields.com/add-ons/options-page/) is a useful way to store global site content or settings. In order to use the Options Page with Gatsby, _the ACF to REST plugin has to be set to v2 in the WordPress administration area_.
+
+```graphQL
+{
+  allWordpressAcfOptions {
+    edges {
+      node {
+        // use ___GraphiQL debugger and Ctrl+Spacebar to describe your model.
+      }
+    }
+  }
+}
+```
+
 ### Query with ACF Flexible Content
 
 ACF Flexible Content returns an array of objects with different types and are
