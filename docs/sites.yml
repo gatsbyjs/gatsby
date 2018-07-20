@@ -1365,6 +1365,19 @@
     - Sports
   built_by: Escalade Sports
   built_by_url: 'http://escaladesports.com/'
+  - title: Moetez Chaabene Portfolio / Blog
+  main_url: 'https://moetez.me/'
+  url: 'https://moetez.me/'
+  source_url: 'https://github.com/moetezch/moetez.me'
+  featured: false
+  description: >-
+    Portfolio of Moetez Chaabene
+  categories:
+    - Portfolio
+    - Web Dev
+    - Blog
+  built_by: Moetez Chaabene
+built_by_url: 'https://twitter.com/moetezch'
 - title: Nikita
   description: >-
     Automation of system deployments in Node.js for applications and infrastructures.
