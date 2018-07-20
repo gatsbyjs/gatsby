@@ -1,6 +1,6 @@
 ---
 title: Why We Created the Site Showcase
-date: 2018-06-15
+date: 2018-07-20
 author: Shannon Soper
 tags: ["documentation", "launch"]
 ---
