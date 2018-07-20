@@ -1,23 +1,41 @@
 import React from 'react'
 import DevelopStaticEntry from '../develop-static-entry'
-// jest.mock(`../sync-requires`)
-import StaticEntry from '../static-entry'
-
-jest.mock(`../sync-requires`, () => { return {} }, { virtual: true })
-jest.mock(
-  `../data.json`, () => {
-    return {
-      dataPaths: [],
-      pages: [],
-    }
-  },
-  { virtual: true })
 
 jest.mock(`fs`)
 
-require(`fs`).__setMockFiles({
+jest.mock(`../sync-requires`, () => {
+   return {
+  components: {
+    'page-component---src-pages-test-js': `div`,
+  },
+} }, { virtual: true })
+
+jest.mock(
+  `../data.json`, () => {
+    return {
+      dataPaths: [{
+        [`about.json`]: `test`,
+      }],
+      pages: [
+        {
+          path: `/about/`,
+          componentChunkName: `page-component---src-pages-test-js`,
+          jsonName: `about.json`,
+        }],
+    }
+  },
+  { virtual: true }
+)
+
+
+const MOCK_FILE_INFO = {
   [`${process.cwd()}/public/webpack.stats.json`]: `{}`,
-})
+}
+
+require(`fs`).__setMockFiles(MOCK_FILE_INFO)
+
+// Needs to be imported after __setMockFiles is called, and imports get hoisted.
+const StaticEntry = require(`../static-entry`).default
 
 const reverseHeadersPlugin = {
   plugin: {
@@ -38,7 +56,7 @@ const fakeStylesPlugin = {
 }
 
 describe(`develop-static-entry`, () => {
-  test(`You can replace head components`, (done) => {
+  test(`onPreRenderHTML can be used to replace header components`, (done) => {
     global.plugins = [
       fakeStylesPlugin,
       reverseHeadersPlugin,
@@ -56,13 +74,13 @@ describe(`static-entry`, () => {
     global.__PATH_PREFIX__ = ``
   })
 
-  test(`You can replace head components`, (done) => {
+  test(`onPreRenderHTML can be used to replace header components`, (done) => {
     global.plugins = [
       fakeStylesPlugin,
       reverseHeadersPlugin,
     ]
-    done()
-    StaticEntry(`test`, (_, html) => {
+
+    StaticEntry(`/about/`, (_, html) => {
       expect(html).toMatchSnapshot()
       done()
     })
