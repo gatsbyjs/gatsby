@@ -70,27 +70,9 @@ const handleQuery = (
   query,
   component
 ) => {
-  // If this is page query
-  if (components.has(component)) {
-    if (components.get(component).query !== query.text) {
-      boundActionCreators.replaceComponentQuery({
-        query: query.text,
-        componentPath: component,
-      })
-
-      debug(
-        `Page query in ${component} ${
-          components.get(component).query.length === 0
-            ? `was added`
-            : `has changed`
-        }.`
-      )
-      queueQueriesForPageComponent(component)
-    }
-    return true
-
-    // Add action / reducer + watch staticquery files
-  } else if (query.isStaticQuery) {
+  // If this is a static query
+  // Add action / reducer + watch staticquery files
+  if (query.isStaticQuery) {
     const isNewQuery = !staticQueryComponents.has(query.jsonName)
     if (
       isNewQuery ||
@@ -113,6 +95,25 @@ const handleQuery = (
 
       boundActionCreators.deleteComponentsDependencies([query.jsonName])
       queueQueryForPathname(query.jsonName)
+    }
+    return true
+
+    // If this is page query
+  } else if (components.has(component)) {
+    if (components.get(component).query !== query.text) {
+      boundActionCreators.replaceComponentQuery({
+        query: query.text,
+        componentPath: component,
+      })
+
+      debug(
+        `Page query in ${component} ${
+          components.get(component).query.length === 0
+            ? `was added`
+            : `has changed`
+        }.`
+      )
+      queueQueriesForPageComponent(component)
     }
     return true
   }
