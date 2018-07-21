@@ -1376,3 +1376,51 @@
   built_by: Iron Cove Solutions
   built_by_url: 'https://ironcovesolutions.com/'
   featured: false
+- title: Eventos orellana
+  description: >-
+    Somos una empresa dedicada a brindar asesoría personalizada
+    y profesional para la elaboración y coordinación de eventos
+    sociales y empresariales.
+  main_url: 'https://eventosorellana.com/'
+  url: 'https://eventosorellana.com/'
+  featured: false
+  categories:
+    - Gallery
+  built_by: Codedebug
+  built_by_url: 'https://codedebug.co/'
+  - title: Moetez Chaabene Portfolio / Blog
+  main_url: 'https://moetez.me/'
+  url: 'https://moetez.me/'
+  source_url: 'https://github.com/moetezch/moetez.me'
+  featured: false
+  description: >-
+    Portfolio of Moetez Chaabene
+  categories:
+    - Portfolio
+    - Web Dev
+    - Blog
+  built_by: Moetez Chaabene
+built_by_url: 'https://twitter.com/moetezch'
+- title: Nikita
+  description: >-
+    Automation of system deployments in Node.js for applications and infrastructures.
+  main_url: https://nikita.js.org/
+  url: https://nikita.js.org/
+  source_url: 'https://github.com/adaltas/node-nikita'
+  categories:
+    - Documentation
+    - Open Source
+    - Technology
+  built_by: David Worms
+  built_by_url: http://www.adaltas.com
+  featured: false
+- title: Gourav Sood Blog & Portfolio
+  main_url: 'https://www.gouravsood.com/'
+  url: 'https://www.gouravsood.com/'
+  featured: false
+  categories:
+    - Blog
+    - Portfolio
+    - Salesforce
+  built_by: Gourav Sood
+  built_by_url: 'https://www.gouravsood.com/'
