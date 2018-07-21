@@ -168,9 +168,15 @@ module.exports = async (api, args = {}, pluginSource) =>
       startTime: new Date().toJSON(),
       traceId: args.traceId,
     }
-    apiRunInstance.id = `${api}|${apiRunInstance.startTime}|${
-      apiRunInstance.traceId
-    }|${JSON.stringify(args)}`
+    let id
+    if (api === `setFieldsOnGraphQLNodeType`) {
+      id = `${api}${args.type.name}${args.traceId}`
+    } else {
+      id = `${api}|${apiRunInstance.startTime}|${
+        apiRunInstance.traceId
+      }|${JSON.stringify(args)}`
+    }
+    apiRunInstance.id = id
 
     if (args.waitForCascadingActions) {
       waitingForCasacadeToFinish.push(apiRunInstance)
