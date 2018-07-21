@@ -170,6 +170,7 @@ const styles = {
     display: `block`,
     position: `fixed`,
     right: 20,
+    bottom: 100,
     width: 60,
     zIndex: 20,
     [presets.Tablet]: { display: `none` },

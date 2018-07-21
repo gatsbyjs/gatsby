@@ -24,6 +24,7 @@ module.exports = (
     linkImagesToOriginal: true,
     showCaptions: false,
     pathPrefix,
+    withWebp: false,
   }
 
   const options = _.defaults(pluginOptions, defaults)
@@ -86,6 +87,66 @@ module.exports = (
     // Fade in images on load.
     // https://www.perpetual-beta.org/weblog/silky-smooth-image-loading.html
 
+    const imageClass = `gatsby-resp-image-image`
+    const imageStyle = `width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px ${
+      options.backgroundColor
+    };`
+
+    // Create our base image tag
+    let imageTag = `
+      <img
+        class="${imageClass}"
+        style="${imageStyle}"
+        alt="${node.alt ? node.alt : defaultAlt}"
+        title="${node.title ? node.title : ``}"
+        src="${fallbackSrc}"
+        srcset="${srcSet}"
+        sizes="${fluidResult.sizes}"
+      />
+    `
+
+    // if options.withWebp is enabled, generate a webp version and change the image tag to a picture tag
+    if (options.withWebp) {
+      const webpFluidResult = await fluid({
+        file: imageNode,
+        args: _.defaults(
+          { toFormat: `WEBP` },
+          // override options if it's an object, otherwise just pass through defaults
+          options.withWebp === true ? {} : options.withWebp,
+          pluginOptions,
+          defaults
+        ),
+        reporter,
+      })
+
+      if (!webpFluidResult) {
+        return resolve()
+      }
+
+      imageTag = `
+      <picture>
+        <source
+          srcset="${webpFluidResult.srcSet}"
+          sizes="${webpFluidResult.sizes}"
+          type="${webpFluidResult.srcSetType}"
+        />
+        <source
+          srcset="${srcSet}"
+          sizes="${fluidResult.sizes}"
+          type="${fluidResult.srcSetType}"
+        />
+        <img
+          class="${imageClass}"
+          style="${imageStyle}"
+          src="${fallbackSrc}" 
+          alt="${node.alt ? node.alt : defaultAlt}"
+          title="${node.title ? node.title : ``}"
+          src="${fallbackSrc}"
+        />
+      </picture>
+      `
+    }
+
     // Construct new image node w/ aspect ratio placeholder
     let rawHTML = `
   <span
@@ -99,19 +160,7 @@ module.exports = (
       style="padding-bottom: ${ratio}; position: relative; bottom: 0; left: 0; background-image: url('${
       fluidResult.base64
     }'); background-size: cover; display: block;"
-    >
-      <img
-        class="gatsby-resp-image-image"
-        style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px ${
-          options.backgroundColor
-        };"
-        alt="${node.alt ? node.alt : defaultAlt}"
-        title="${node.title ? node.title : ``}"
-        src="${fallbackSrc}"
-        srcset="${srcSet}"
-        sizes="${fluidResult.sizes}"
-      />
-    </span>
+    >${imageTag}</span>
   </span>
   `
 

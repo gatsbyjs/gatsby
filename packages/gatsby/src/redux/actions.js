@@ -1,6 +1,6 @@
 // @flow
-import Joi from "joi"
-import chalk from "chalk"
+const Joi = require(`joi`)
+const chalk = require(`chalk`)
 const _ = require(`lodash`)
 const { bindActionCreators } = require(`redux`)
 const { stripIndent } = require(`common-tags`)
@@ -12,8 +12,8 @@ const { hasNodeChanged, getNode } = require(`./index`)
 const { trackInlineObjectsInRootNode } = require(`../schema/node-tracking`)
 const { store } = require(`./index`)
 const fileExistsSync = require(`fs-exists-cached`).sync
-import * as joiSchemas from "../joi-schemas/joi"
-import { generateComponentChunkName } from "../utils/js-chunk-names"
+const joiSchemas = require(`../joi-schemas/joi`)
+const { generateComponentChunkName } = require(`../utils/js-chunk-names`)
 
 const actions = {}
 

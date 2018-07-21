@@ -117,13 +117,7 @@ module.exports = async ({
   stage: Stage,
   program: any,
 }): Promise<WebpackUtilsOptions> => {
-  /**
-   *  the leading `../` for assetRelativeRoot is required to ensure
-   * the static files extracted by webpack are not part of the
-   * "build-javascript" output path of `/js`. The same technique is
-   * used for CSS
-   */
-  const assetRelativeRoot = `../static/`
+  const assetRelativeRoot = `static/`
   const vendorRegex = /(node_modules|bower_components)/
   const supportedBrowsers = program.browserlist
 
@@ -449,8 +443,8 @@ module.exports = async ({
    */
   plugins.extractText = options =>
     new MiniCssExtractPlugin({
-      filename: `../css/[name].[contenthash].css`,
-      chunkFilename: `../css/[name].[contenthash].css`,
+      filename: `[name].[contenthash].css`,
+      chunkFilename: `[name].[contenthash].css`,
       ...options,
     })
 

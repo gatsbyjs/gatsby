@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.0-beta.6"></a>
+
+# [2.0.0-beta.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.0-beta.5...gatsby-plugin-sharp@2.0.0-beta.6) (2018-07-20)
+
+### Features
+
+- **remark-images:** Added support for WebP versions in addition to fallbacks. ([#6495](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/issues/6495)) ([65e3a78](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/commit/65e3a78))
+
 <a name="2.0.0-beta.5"></a>
 
 # [2.0.0-beta.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.0-beta.4...gatsby-plugin-sharp@2.0.0-beta.5) (2018-07-13)

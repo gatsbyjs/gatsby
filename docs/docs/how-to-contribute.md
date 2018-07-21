@@ -54,7 +54,7 @@ You can install the latest version of Gatsby by following these steps:
 The usual contributing steps are:
 
 - Fork the [official repository](https://github.com/gatsbyjs/gatsby).
-- Clone your fork: `git clone https://github.com/<your-username>/gatsby.git`
+- Clone your fork: `git clone --depth=1 https://github.com/<your-username>/gatsby.git`
 - Setup up repo and install dependencies: `yarn run bootstrap`
 - Make sure tests are passing for you: `yarn test`
 - Create a topic branch: `git checkout -b topics/new-feature-name`
@@ -115,6 +115,10 @@ To add a new blog post to the gatsbyjs.org blog:
 - Create a pull request from your branch
 
 ## Development tools
+
+### Debugging the build process
+
+Check [Debugging the build process](/docs/debugging-the-build-process/) page to learn how to debug Gatsby.
 
 ### Redux devtools
 

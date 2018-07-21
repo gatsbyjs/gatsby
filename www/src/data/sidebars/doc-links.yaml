@@ -3,7 +3,7 @@
     - title: Quick start
       link: /docs/
     - title: Recipes*
-      link: /recipes/
+      link: /docs/recipes/
     - title: Overview of the docs*
       link: /docs/overview/
     - title: Main Tutorial (step-by-step)
@@ -66,8 +66,8 @@
       link: /docs/graphql/
       items: 
         - title: Introducing GraphiQL*
-          link: /docs/introducting-graphiql/
-        - title: Build a page with a GraphQL query*
+          link: /docs/introducing-graphiql/
+        - title: Build a page with a GraphQL query
           link: /docs/build-a-page-with-graphql-query/
         - title: Creating and modifying pages
           link: /docs/creating-and-modifying-pages/
@@ -127,6 +127,8 @@
           link: /docs/debugging-html-builds/
         - title: Debugging Replace Renderer API
           link: /docs/debugging-replace-renderer-api/
+        - title: Debugging the build process
+          link: /docs/debugging-the-build-process/
     - title: Apps with Gatsby
       link: /docs/building-apps-with-gatsby/
       items:
@@ -226,7 +228,7 @@
   items:
     - title: Community
       link: /docs/community/
-    - title: Code of Conduct*
+    - title: Code of Conduct
       link: /docs/code-of-conduct/
     - title: How to contribute
       link: /docs/how-to-contribute/
