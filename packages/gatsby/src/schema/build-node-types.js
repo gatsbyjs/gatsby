@@ -147,7 +147,6 @@ module.exports = async ({ parentSpan }) => {
 
     const fieldsFromPlugins = await apiRunner(`setFieldsOnGraphQLNodeType`, {
       type: intermediateType,
-      allNodes: getNodes(),
       traceId: `initial-setFieldsOnGraphQLNodeType`,
       parentSpan: span,
     })
