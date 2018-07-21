@@ -140,7 +140,6 @@ exports.onCreatePage = true
  *
  * @param {object} $0
  * @param {object} $0.type Object containing `name` and `nodes`
- * @param {array} $0.allNodes array of all nodes
  * @example
  * import { GraphlQLString } from "gatsby/graphql"
  *
