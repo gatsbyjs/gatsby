@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.0-beta.7"></a>
+
+# [2.0.0-beta.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/compare/gatsby-image@2.0.0-beta.6...gatsby-image@2.0.0-beta.7) (2018-07-21)
+
+**Note:** Version bump only for package gatsby-image
+
 <a name="2.0.0-beta.6"></a>
 
 # [2.0.0-beta.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/compare/gatsby-image@2.0.0-beta.5...gatsby-image@2.0.0-beta.6) (2018-07-12)
