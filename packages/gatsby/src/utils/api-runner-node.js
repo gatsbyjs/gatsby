@@ -170,7 +170,15 @@ module.exports = async (api, args = {}, pluginSource) =>
     }
     let id
     if (api === `setFieldsOnGraphQLNodeType`) {
-      id = `${api}${args.type.name}${args.traceId}`
+      id = `${api}${apiRunInstance.startTime}${args.type.name}${args.traceId}`
+    } else if (api === `onCreateNode`) {
+      id = `${api}${apiRunInstance.startTime}${
+        args.node.internal.contentDigest
+      }${args.traceId}`
+    } else if (api === `preprocessSource`) {
+      id = `${api}${apiRunInstance.startTime}${args.filename}${args.traceId}`
+    } else if (api === `onCreatePage`) {
+      id = `${api}${apiRunInstance.startTime}${args.page.path}${args.traceId}`
     } else {
       id = `${api}|${apiRunInstance.startTime}|${
         apiRunInstance.traceId
