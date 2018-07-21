@@ -1388,7 +1388,7 @@
     - Gallery
   built_by: Codedebug
   built_by_url: 'https://codedebug.co/'
-  - title: Moetez Chaabene Portfolio / Blog
+- title: Moetez Chaabene Portfolio / Blog
   main_url: 'https://moetez.me/'
   url: 'https://moetez.me/'
   source_url: 'https://github.com/moetezch/moetez.me'
@@ -1400,7 +1400,7 @@
     - Web Dev
     - Blog
   built_by: Moetez Chaabene
-built_by_url: 'https://twitter.com/moetezch'
+  built_by_url: 'https://twitter.com/moetezch'
 - title: Nikita
   description: >-
     Automation of system deployments in Node.js for applications and infrastructures.
