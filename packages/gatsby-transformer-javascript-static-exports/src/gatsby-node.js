@@ -42,7 +42,7 @@ async function onCreateNode({
       `bigInt`,
       `optionalCatchBinding`,
       `throwExpressions`,
-      `pipelineOperator`,
+      [`pipelineOperator`, { proposal: `minimal` }],
       `nullishCoalescingOperator`,
     ],
   }

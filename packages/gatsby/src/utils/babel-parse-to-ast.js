@@ -28,7 +28,7 @@ const PARSER_OPTIONS = {
     `bigInt`,
     `optionalCatchBinding`,
     `throwExpressions`,
-    `pipelineOperator`,
+    [`pipelineOperator`, { proposal: `minimal` }],
     `nullishCoalescingOperator`,
   ],
 }
