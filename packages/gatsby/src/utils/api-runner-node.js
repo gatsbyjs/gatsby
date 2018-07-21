@@ -168,6 +168,11 @@ module.exports = async (api, args = {}, pluginSource) =>
       startTime: new Date().toJSON(),
       traceId: args.traceId,
     }
+
+    // Generate IDs for api runs. Most IDs we generate from the args
+    // but some API calls can have very large argument objects so we
+    // have special ways of generating IDs for those to avoid stringifying
+    // large objects.
     let id
     if (api === `setFieldsOnGraphQLNodeType`) {
       id = `${api}${apiRunInstance.startTime}${args.type.name}${args.traceId}`
