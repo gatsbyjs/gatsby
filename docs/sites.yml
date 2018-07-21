@@ -1424,3 +1424,16 @@
     - Salesforce
   built_by: Gourav Sood
   built_by_url: 'https://www.gouravsood.com/'
+- title: Lite / Blog
+  description: >-
+    📝 🎨 A clean and delicate theme for blog based on Gatsby.
+  main_url: https://blog.sqrtthree.com/
+  url: https://blog.sqrtthree.com/
+  source_url: https://github.com/sqrthree/lite
+  categories:
+    - Blog
+    - Open Source
+    - Technology
+  built_by: 根号三
+  built_by_url: https://github.com/sqrthree
+  featured: false
