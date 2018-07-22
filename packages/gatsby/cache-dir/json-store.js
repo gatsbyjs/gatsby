@@ -4,6 +4,12 @@ import PageRenderer from "./page-renderer"
 import { StaticQueryContext } from "gatsby"
 import socketIo, { getStaticQueryData, getPageQueryData } from "./socketIo"
 
+if (process.env.NODE_ENV === `production`) {
+  throw new Error(
+    `It appears like Gatsby is misconfigured. JSONStore shouldn't be used in production.`
+  )
+}
+
 const getPathFromProps = props =>
   props.pageResources && props.pageResources.page
     ? props.pageResources.page.path
@@ -17,32 +23,25 @@ class JSONStore extends React.Component {
       pageQueryData: getPageQueryData(),
       path: null,
     }
-    if (process.env.NODE_ENV !== `production`) {
-      this.socket = socketIo()
-    }
+
+    this.socket = socketIo()
   }
 
   handleMittEvent = (type, event) => {
-    if (process.env.NODE_ENV !== `production`) {
-      this.setState({
-        staticQueryData: getStaticQueryData(),
-        pageQueryData: getPageQueryData(),
-      })
-    }
+    this.setState({
+      staticQueryData: getStaticQueryData(),
+      pageQueryData: getPageQueryData(),
+    })
   }
 
   componentDidMount() {
-    if (process.env.NODE_ENV !== `production`) {
-      this.registerPath(getPathFromProps(this.props))
-      ___emitter.on(`*`, this.handleMittEvent)
-    }
+    this.registerPath(getPathFromProps(this.props))
+    ___emitter.on(`*`, this.handleMittEvent)
   }
 
   componentWillUnmount() {
-    if (process.env.NODE_ENV !== `production`) {
-      this.unregisterPath(this.state.path)
-      ___emitter.off(`*`, this.handleMittEvent)
-    }
+    this.unregisterPath(this.state.path)
+    ___emitter.off(`*`, this.handleMittEvent)
   }
 
   componentDidUpdate() {
@@ -55,17 +54,13 @@ class JSONStore extends React.Component {
   }
 
   registerPath(path) {
-    if (process.env.NODE_ENV !== `production`) {
-      this.setState({ path })
-      this.socket.emit(`registerPath`, path)
-    }
+    this.setState({ path })
+    this.socket.emit(`registerPath`, path)
   }
 
   unregisterPath(path) {
-    if (process.env.NODE_ENV !== `production`) {
-      this.setState({ path: null })
-      this.socket.emit(`unregisterPath`, path)
-    }
+    this.setState({ path: null })
+    this.socket.emit(`unregisterPath`, path)
   }
 
   render() {
