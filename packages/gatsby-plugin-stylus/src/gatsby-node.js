@@ -25,9 +25,9 @@ const { cssModulesConfig } = require(`gatsby-1-config-css-modules`)
 exports.modifyWebpackConfig = ({ config, stage }, options = {}) => {
   // Pass in stylus options regardless of stage.
   config.merge(function (current) {
-    current.stylus = options;
-    return current;
-  });
+    current.stylus = options
+    return current
+  })
 
   const stylusFiles = /\.styl$/
   const stylusModulesFiles = /\.module\.styl$/
