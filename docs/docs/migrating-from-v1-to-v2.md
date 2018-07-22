@@ -12,9 +12,11 @@ This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While t
 
 Before diving in to the upgrade guide, here's a brief section on starting a new project with Gatsby v2 instead of upgrading an existing project.
 
-If you're a _start from scratch_ kind of person, you can install the Gatsby beta and React like this: `npm install gatsby@next react react-dom`
+_Start from scratch:_ If you're a _start from scratch_ kind of person, you can install the Gatsby beta and React like this: `npm install gatsby@next react react-dom`
 
-If you'd rather use one of the official starters, you're in luck, there's a v2 edition for each of them. Install your favourite one with the Gatsby CLI.
+_Tutorial:_ If you'd like a step-by-step guide, [follow the tutorial](/tutorial/) to get started with Gatsby v2.
+
+_Starters:_ If you'd rather use one of the official starters, you're in luck, there's a v2 edition for each of them. Install your favourite one with the Gatsby CLI.
 
 `gatsby-starter-default` with v2:
 
@@ -58,6 +60,7 @@ Read on for a detailed guide on what's new in version 2!
 - [Only allow defined keys on node.internal object](#only-allow-defined-keys-on-the-node-internal-object)
 - [Import `graphql` types from `gatsby/graphql`](#import-graphql-types-from-gatsbygraphql)
 - [Move `Babel Configuration`](#move-babel-configuration)
+- [Explicit query names no longer required](#explicit-query-names-no-longer-required)
 - [Plugin specific changes](#plugin-specific-changes)
 
 You can start with a few of the most important steps - install Gatsby v2 dependencies and update your layout components.
@@ -346,11 +349,41 @@ Further examples can be found in the [Gatsby Image docs](https://github.com/gats
 
 ## Manually specify PostCSS plugins
 
-Gatsby v2 removed `postcss-cssnext` and `postcss-import` from the default postcss setup.
+Gatsby v2 removed `postcss-cssnext` and `postcss-import` from the default PostCSS setup.
 
-Use [`onCreateWebpackConfig`](/docs/add-custom-webpack-config) to specify your postcss plugins.
+To have the same configuration that you had in v1, you should use [`gatsby-plugin-postcss`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-postcss) and follow the recommended migration path below.
 
-Note: there will be a `postcss` plugin that allows you to configure postcss from a standard postcss config file. [Follow this discussion on issue 3284](https://github.com/gatsbyjs/gatsby/issues/3284).
+### 1. Install the dependencies
+
+`npm install --save gatsby-plugin-postcss postcss-import postcss-cssnext postcss-browser-reporter postcss-reporter`
+
+**NOTE**: `postcss-cssnext` is [deprecated](https://moox.io/blog/deprecating-cssnext/) and it is better to use `postcss-preset-env` now.
+
+### 2. Include `gatsby-plugin-postcss` in your `gatsby-config.js` file
+
+```js
+// in gatsby-config.js
+plugins: [`gatsby-plugin-postcss`],
+```
+
+### 3. Include PostCSS plugins in your `postcss.config.js` file
+
+```js
+// in postcss.config.js
+const postcssImport = require(`postcss-import`);
+const postcssCssNext = require(`postcss-cssnext`);
+const postcssBrowserReporter = require(`postcss-browser-reporter`);
+const postcssReporter = require(`postcss-reporter`);
+
+module.exports = () => ({
+  plugins: [
+    postcssImport(),
+    postcssCssNext(),
+    postcssBrowserReporter(),
+    postcssReporter(),
+  ],
+})
+```
 
 ## Convert to either pure CommonJS or pure ES6
 
@@ -519,6 +552,39 @@ The latest version of Gatsby uses Babel 7, which introduced [a new behavior for 
 
 More information on Gatsby and Babel configuration available [here](/docs/babel/#how-to-use-a-custom-babelrc-file).
 
+## Explicit query names no longer required
+
+Gatsby v2 doesn't require explicit query names. You can skip them now:
+
+```diff
+export const query = graphql`
+-  query ThisIsExplicitQueryName($slug: String!) {
++  query($slug: String!) {
+    markdownRemark(fields: { slug: { eq: $slug } }) {
+      html
+      frontmatter {
+        title
+      }
+    }
+  }
+```
+
+You can also skip the `query` keyword if you don't use query variables:
+
+```diff
+export const query = graphql`
+-  query ThisIsAnotherExplicitQueryName {
++  {
+    site {
+      siteMetadata {
+        title
+      }
+    }
+  }
+```
+
+This isn't a breaking change. Queries with explicit names will continue to work as they did in v1.
+
 ## Plugin specific changes
 
 Some plugins require additional changes before your site will compile.
@@ -534,3 +600,9 @@ For example, if you use [`gatsby-plugin-typography`](https://www.gatsbyjs.org/pa
 + const { rhythm, scale } = typography;
 + export { rhythm, scale, typography as default };
 ```
+
+### createRemoteFileNode
+
+The signature for using createRemoteFileNode changed in v2, it now expects a new parameter `createNodeId`.
+
+[See docs for `createRemoteFileNode`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem#createremotefilenode)

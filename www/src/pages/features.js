@@ -225,7 +225,7 @@ class FeaturesPage extends Component {
 export default FeaturesPage
 
 export const pageQuery = graphql`
-  query EvaluationTableQuery {
+  query {
     allGatsbySpecsCsv {
       edges {
         node {

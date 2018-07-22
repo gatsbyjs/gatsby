@@ -6,6 +6,7 @@ const fs = require(`fs-extra`)
 const sysPath = require(`path`)
 const report = require(`./reporter`)
 const url = require(`url`)
+const existsSync = require(`fs-exists-cached`).sync
 
 const spawn = (cmd: string) => {
   const [file, ...args] = cmd.split(/\s+/)
@@ -49,7 +50,7 @@ const copy = async (starterPath: string, rootPath: string) => {
   // 493 = parseInt('755', 8)
   await fs.mkdirp(rootPath, { mode: 493 })
 
-  if (!fs.existsSync(starterPath)) {
+  if (!existsSync(starterPath)) {
     throw new Error(`starter ${starterPath} doesn't exist`)
   }
 
@@ -117,7 +118,7 @@ module.exports = async (starter: string, options: InitOptions = {}) => {
     return
   }
 
-  if (fs.existsSync(sysPath.join(rootPath, `package.json`))) {
+  if (existsSync(sysPath.join(rootPath, `package.json`))) {
     report.panic(`Directory ${rootPath} is already an npm project`)
     return
   }

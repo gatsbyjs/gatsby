@@ -2,10 +2,10 @@ import React from "react"
 import Modal from "react-modal"
 import Helmet from "react-helmet"
 import { OutboundLink } from "gatsby-plugin-google-analytics"
-import { rhythm, options, scale } from "../utils/typography"
 import MdClose from "react-icons/lib/md/close"
 import { push, PageRenderer } from "gatsby"
 import presets, { colors } from "../utils/presets"
+import Banner from "../components/banner"
 import Navigation from "../components/navigation"
 import MobileNavigation from "../components/navigation-mobile"
 import PageWithSidebar from "../components/page-with-sidebar"
@@ -159,20 +159,7 @@ class DefaultLayout extends React.Component {
           />
           <html lang="en" />
         </Helmet>
-        <div
-          className="banner"
-          css={{
-            width: `100%`,
-            padding: rhythm(1 / 2),
-            background: isHomepage ? `#402060` : colors.gatsby,
-            color: colors.ui.bright,
-            fontFamily: options.headerFontFamily.join(`,`),
-            fontSize: scale(-1 / 5).fontSize,
-            zIndex: `3`,
-            position: `fixed`,
-            WebkitFontSmoothing: `antialiased`,
-          }}
-        >
+        <Banner background={isHomepage ? `#402060` : false}>
           These are the docs for v2 beta.{` `}
           <OutboundLink
             href="https://gatsbyjs.org/"
@@ -193,7 +180,7 @@ class DefaultLayout extends React.Component {
               instead
             </span>
           </OutboundLink>.
-        </div>
+        </Banner>
         <Navigation pathname={this.props.location.pathname} />
         <div
           className={`main-body`}

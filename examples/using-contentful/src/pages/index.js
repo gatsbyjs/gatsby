@@ -1,5 +1,5 @@
 import React from "react"
-import { Link } from "gatsby"
+import { Link, graphql } from "gatsby"
 import * as PropTypes from "prop-types"
 import Img from "gatsby-image"
 import { rhythm } from "../utils/typography"
@@ -80,7 +80,7 @@ IndexPage.propTypes = propTypes
 export default IndexPage
 
 export const pageQuery = graphql`
-  query PageQuery {
+  query {
     us: allContentfulProduct(filter: { node_locale: { eq: "en-US" } }) {
       edges {
         node {

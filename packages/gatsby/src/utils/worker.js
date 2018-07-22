@@ -1,6 +1,6 @@
-const Queue = require(`better-queue`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
+const Promise = require(`bluebird`)
 
 // copied from https://github.com/markdalgleish/static-site-generator-webpack-plugin/blob/master/index.js#L161
 const generatePathToOutput = outputPath => {
@@ -13,30 +13,20 @@ const generatePathToOutput = outputPath => {
   return path.join(process.cwd(), `public`, outputFileName)
 }
 
-module.exports = (htmlComponentRenderer, pages) =>
-  new Promise((resolve, reject) => {
-    const queue = new Queue(
-      (path, callback) => {
+export function renderHTML({ htmlComponentRendererPath, paths, concurrency }) {
+  return Promise.map(
+    paths,
+    path =>
+      new Promise((resolve, reject) => {
+        const htmlComponentRenderer = require(htmlComponentRendererPath)
         try {
           htmlComponentRenderer.default(path, (throwAway, htmlString) => {
-            fs.outputFile(generatePathToOutput(path), htmlString).then(() => {
-              callback()
-            })
+            resolve(fs.outputFile(generatePathToOutput(path), htmlString))
           })
         } catch (e) {
           reject(e)
         }
-      },
-      {
-        concurrent: 20,
-      }
-    )
-
-    pages.forEach(page => {
-      queue.push(page)
-    })
-
-    queue.on(`drain`, () => {
-      resolve()
-    })
-  })
+      }),
+    { concurrency }
+  )
+}

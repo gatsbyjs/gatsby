@@ -29,7 +29,7 @@ class IndexComponent extends React.Component {
 export default IndexComponent
 
 export const IndexQuery = graphql`
-  query IndexQuery {
+  query {
     allLettersCsv {
       edges {
         node {

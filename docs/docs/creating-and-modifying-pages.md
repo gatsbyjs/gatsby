@@ -52,8 +52,8 @@ of the markdown file.
 ```javascript
 // Implement the Gatsby API “createPages”. This is called once the
 // data layer is bootstrapped to let plugins create pages from data.
-exports.createPages = ({ boundActionCreators, graphql }) => {
-  const { createPage } = boundActionCreators
+exports.createPages = ({ graphql, actions }) => {
+  const { createPage } = actions
 
   return new Promise((resolve, reject) => {
     const blogPostTemplate = path.resolve(`src/templates/blog-post.js`)
@@ -116,8 +116,8 @@ _Note: There's also a plugin that will remove all trailing slashes from pages au
 ```javascript
 // Implement the Gatsby API “onCreatePage”. This is
 // called after every page is created.
-exports.onCreatePage = ({ page, boundActionCreators }) => {
-  const { createPage, deletePage } = boundActionCreators
+exports.onCreatePage = ({ page, actions }) => {
+  const { createPage, deletePage } = actions
   return new Promise(resolve => {
     const oldPage = Object.assign({}, page)
     // Remove trailing slash unless page is /

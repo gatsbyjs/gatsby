@@ -76,7 +76,7 @@ class ActionCreatorsDocs extends React.Component {
 export default ActionCreatorsDocs
 
 export const pageQuery = graphql`
-  query ActionCreatorDocsQuery {
+  query {
     file(relativePath: { eq: "gatsby/src/redux/actions.js" }) {
       childrenDocumentationJs {
         name

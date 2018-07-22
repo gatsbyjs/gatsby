@@ -25,6 +25,7 @@ const sourceNodes = require(`../utils/source-nodes`)
 const websocketManager = require(`../utils/websocket-manager`)
 const getSslCert = require(`../utils/get-ssl-cert`)
 const slash = require(`slash`)
+const { initTracer } = require(`../utils/tracer`)
 
 // const isInteractive = process.stdout.isTTY
 
@@ -244,6 +245,8 @@ async function startServer(program) {
 }
 
 module.exports = async (program: any) => {
+  initTracer(program.openTracingConfigFile)
+
   const detect = require(`detect-port`)
   const port =
     typeof program.port === `string` ? parseInt(program.port, 10) : program.port

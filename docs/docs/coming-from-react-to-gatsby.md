@@ -1,5 +1,5 @@
 ---
-title: Coming from React to Gatsby: What You Need to Know
+title: "Coming from React to Gatsby: What You Need to Know"
 ---
 
 This is a stub. Help our community expand it.

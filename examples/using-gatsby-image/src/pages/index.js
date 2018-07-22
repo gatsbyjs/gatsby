@@ -120,7 +120,7 @@ class IndexComponent extends React.Component {
 export default IndexComponent
 
 export const query = graphql`
-  query FrontPageQuery {
+  query {
     file(relativePath: { regex: "/ng-55646/" }) {
       childImageSharp {
         fluid(maxWidth: 1500, rotate: 180) {

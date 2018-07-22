@@ -34,7 +34,7 @@ exports.onPostBuild = async ({ store, pathPrefix }, userPluginOptions) => {
   let rewrites = []
   if (pluginOptions.generateMatchPathRewrites) {
     const { pages } = store.getState()
-    rewrites = pages
+    rewrites = Array.from(pages.values())
       .filter(page => page.matchPath && page.matchPath !== page.path)
       .map(page => {
         return {

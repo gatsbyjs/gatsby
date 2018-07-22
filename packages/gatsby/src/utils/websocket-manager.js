@@ -37,7 +37,7 @@ const getCachedPageData = (
   directory: string
 ): QueryResult => {
   const { jsonDataPaths, pages } = store.getState()
-  const page = pages.find(p => p.path === pagePath)
+  const page = pages.get(pagePath)
   const dataPath = jsonDataPaths[page.jsonName]
   if (typeof dataPath === `undefined`) {
     console.log(

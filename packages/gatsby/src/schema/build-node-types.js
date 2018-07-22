@@ -6,6 +6,7 @@ const {
   GraphQLID,
   GraphQLList,
 } = require(`graphql`)
+const tracer = require(`opentracing`).globalTracer()
 
 const apiRunner = require(`../utils/api-runner-node`)
 const { inferObjectStructureFromNodes } = require(`./infer-graphql-type`)
@@ -23,9 +24,16 @@ const { clearTypeExampleValues } = require(`./data-tree-utils`)
 
 import type { ProcessedNodeType } from "./infer-graphql-type"
 
-type TypeMap = { [typeName: string]: ProcessedNodeType }
+type TypeMap = {
+  [typeName: string]: ProcessedNodeType,
+}
 
-module.exports = async () => {
+const nodesCache = new Map()
+
+module.exports = async ({ parentSpan }) => {
+  const spanArgs = parentSpan ? { childOf: parentSpan } : {}
+  const span = tracer.startSpan(`build schema`, spanArgs)
+
   const types = _.groupBy(getNodes(), node => node.internal.type)
   const processedTypes: TypeMap = {}
 
@@ -85,7 +93,10 @@ module.exports = async () => {
 
             // Add dependencies for the path
             filteredNodes.forEach(n =>
-              createPageDependency({ path, nodeId: n.id })
+              createPageDependency({
+                path,
+                nodeId: n.id,
+              })
             )
             return filteredNodes
           },
@@ -103,7 +114,10 @@ module.exports = async () => {
 
             if (childNode) {
               // Add dependencies for the path
-              createPageDependency({ path, nodeId: childNode.id })
+              createPageDependency({
+                path,
+                nodeId: childNode.id,
+              })
               return childNode
             }
             return null
@@ -133,8 +147,8 @@ module.exports = async () => {
 
     const fieldsFromPlugins = await apiRunner(`setFieldsOnGraphQLNodeType`, {
       type: intermediateType,
-      allNodes: getNodes(),
       traceId: `initial-setFieldsOnGraphQLNodeType`,
+      parentSpan: span,
     })
 
     const mergedFieldsFromPlugins = _.merge(...fieldsFromPlugins)
@@ -172,17 +186,31 @@ module.exports = async () => {
         args: filterFields,
         resolve(a, args, context) {
           const runSift = require(`./run-sift`)
-          const latestNodes = _.filter(
-            getNodes(),
-            n => n.internal.type === typeName
-          )
+          let latestNodes
+          if (
+            process.env.NODE_ENV === `production` &&
+            nodesCache.has(typeName)
+          ) {
+            latestNodes = nodesCache.get(typeName)
+          } else {
+            latestNodes = _.filter(
+              getNodes(),
+              n => n.internal.type === typeName
+            )
+            nodesCache.set(typeName, latestNodes)
+          }
           if (!_.isObject(args)) {
             args = {}
           }
           return runSift({
-            args: { filter: { ...args } },
+            args: {
+              filter: {
+                ...args,
+              },
+            },
             nodes: latestNodes,
             path: context.path ? context.path : ``,
+            typeName: typeName,
             type: gqlType,
           })
         },
@@ -199,6 +227,8 @@ module.exports = async () => {
 
   // Create node types and node fields for nodes that have a resolve function.
   await Promise.all(_.map(types, createType))
+
+  span.finish()
 
   return processedTypes
 }

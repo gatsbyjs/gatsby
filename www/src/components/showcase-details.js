@@ -102,9 +102,8 @@ const cleanUrl = mainUrl => {
 const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
   <StaticQuery
     query={graphql`
-      query allSitesYamlTemplateShowcase {
+      query {
         allSitesYaml(
-          limit: 40
           filter: { featured: { eq: true }, main_url: { ne: null } }
         ) {
           edges {

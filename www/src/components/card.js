@@ -10,7 +10,7 @@ const Card = ({ children }) => (
       display: `flex`,
       transform: `translateZ(0)`,
       [presets.Tablet]: {
-        flex: `0 0 50%`,
+        flex: `0 0 auto`,
         maxWidth: `50%`,
         boxShadow: `0 1px 0 0 ${colors.ui.light}`,
         "&:nth-child(5),&:nth-child(6)": {
@@ -21,7 +21,7 @@ const Card = ({ children }) => (
         },
       },
       [presets.Hd]: {
-        flex: `0 0 33.33333333%`,
+        flex: `0 0 auto`,
         maxWidth: `33.33333333%`,
         borderLeft: `1px solid ${colors.ui.light}`,
         "&:nth-child(4)": {
