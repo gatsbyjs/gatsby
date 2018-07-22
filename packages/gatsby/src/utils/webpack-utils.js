@@ -339,6 +339,16 @@ module.exports = async ({
   }
 
   /**
+   * Loads pdf assets
+   */
+  rules.pdfs = () => {
+    return {
+      use: [loaders.url()],
+      test: /\.pdf$/,
+    }
+  }
+
+  /**
    * Loads image assets, inlines images via a data URI if they are below
    * the size threshold
    */

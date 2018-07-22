@@ -289,6 +289,7 @@ module.exports = async (
       rules.js(),
       rules.yaml(),
       rules.fonts(),
+      rules.pdfs(),
       rules.images(),
       rules.audioVideo(),
     ]
