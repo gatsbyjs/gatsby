@@ -80,7 +80,7 @@ Sometimes a larger code example would require more than a single file, with vari
 CodesandBox supports code example with multiple files. With this plugin, you can do:
 
 ```html
-[Try it on CodePen](codesandbox://my-example/index.js,my-example/util.js,my-example/index.css)
+[Try it on CodeSandbox](codesandbox://my-example/index.js,my-example/util.js,my-example/index.css)
 ```
 
 > Caveat
@@ -90,9 +90,9 @@ CodesandBox supports code example with multiple files. With this plugin, you can
 And in `index.js`, you could import other files using the ES6 modules syntax:
 
 ```js
-import { foo } from './utils';
+import { foo } from "./utils"
 
-import './index.css';
+import "./index.css"
 ```
 
 ### How does it work?

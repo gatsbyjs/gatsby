@@ -64,23 +64,28 @@ module.exports = (
     return filePath
   }
 
-  const getMultipleFilesPaths = (urls, protocol, directory) => (
-    urls.replace(protocol, ``).split(`,`).map((url) => {
-      if (!url.includes(`.`)) {
-        url += `.js`
-      }
-      
-      return {
-        url,  // filename itself
-        filePath: normalizePath(join(directory, url)),  // absolute path
-      }
-    })
-  )
+  const getMultipleFilesPaths = (urls, protocol, directory) =>
+    urls
+      .replace(protocol, ``)
+      .split(`,`)
+      .map(url => {
+        if (!url.includes(`.`)) {
+          url += `.js`
+        }
+
+        return {
+          url, // filename itself
+          filePath: normalizePath(join(directory, url)), // absolute path
+        }
+      })
 
   const verifyFile = (path, protocol) => {
     if (protocol !== PROTOCOL_CODE_SANDBOX && path.split(`,`).length > 1) {
       throw Error(
-        `Code example path should only contain a single file, but found more than one: ${path.replace(directory, ``)}. ` +
+        `Code example path should only contain a single file, but found more than one: ${path.replace(
+          directory,
+          ``
+        )}. ` +
           `Only CodeSandbox REPL supports multiple files entries, the protocol prefix of which starts with ${PROTOCOL_CODE_SANDBOX}`
       )
     }
@@ -89,7 +94,8 @@ module.exports = (
     }
   }
 
-  const verifyMultipleFiles = (paths, protocol) => paths.forEach((path) => verifyFile(path.filePath, protocol))
+  const verifyMultipleFiles = (paths, protocol) =>
+    paths.forEach(path => verifyFile(path.filePath, protocol))
 
   map(markdownAST, (node, index, parent) => {
     if (node.type === `link`) {
@@ -115,7 +121,11 @@ module.exports = (
 
         convertNodeToLink(node, text, href, target)
       } else if (node.url.startsWith(PROTOCOL_CODE_SANDBOX)) {
-        const filesPaths = getMultipleFilesPaths(node.url, PROTOCOL_CODE_SANDBOX, directory)
+        const filesPaths = getMultipleFilesPaths(
+          node.url,
+          PROTOCOL_CODE_SANDBOX,
+          directory
+        )
         verifyMultipleFiles(filesPaths, PROTOCOL_CODE_SANDBOX)
 
         // CodeSandbox GET API requires a list of "files" keyed by name

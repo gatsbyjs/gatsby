@@ -125,11 +125,12 @@ describe(`gatsby-remark-code-repls`, () => {
         const markdownAST = remark.parse(
           `[](${protocol}path/to/nested/file.js,path/to/nested/anotherFile.js,path/to/nested/file.css)`
         )
-        const runPlugin = () => plugin({ markdownAST }, { directory: `examples` })
+        const runPlugin = () =>
+          plugin({ markdownAST }, { directory: `examples` })
 
         if (protocol !== PROTOCOL_CODE_SANDBOX) {
           expect(runPlugin).toThrow(
-            `Code example path should only contain a single file, but found more than one: ` + 
+            `Code example path should only contain a single file, but found more than one: ` +
               `path/to/nested/file.js,path/to/nested/anotherFile.js,path/to/nested/file.css. ` +
               `Only CodeSandbox REPL supports multiple files entries, the protocol prefix of which starts with codesandbox://`
           )
