@@ -343,7 +343,7 @@ module.exports = async ({
    */
   rules.pdfs = () => {
     return {
-      use: [loaders.url()],
+      use: [loaders.file()],
       test: /\.pdf$/,
     }
   }
