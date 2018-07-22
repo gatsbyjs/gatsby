@@ -57,7 +57,7 @@ module.exports = (
 
   const getFilePath = (url, protocol, directory) => {
     let filePath = url.replace(protocol, ``)
-    if (!filePath.indexOf(`.`) > 0) {
+    if (!filePath.includes(`.`)) {
       filePath += `.js`
     }
     filePath = normalizePath(join(directory, filePath))
@@ -66,7 +66,7 @@ module.exports = (
 
   const getMultipleFilesPaths = (urls, protocol, directory) => (
     urls.replace(protocol, ``).split(`,`).map((url) => {
-      if (!url.indexOf(`.`) > 0) {
+      if (!url.includes(`.`)) {
         url += `.js`
       }
       
