@@ -64,10 +64,7 @@ The usual contributing steps are:
 - For each of your Gatsby test sites, run the `gatsby-dev` command inside the test site's directory to copy
   the built files from your cloned copy of Gatsby. It'll watch for your changes
   to Gatsby packages and copy them into the site. For more detailed instructions
-  see the [gatsby-dev-cli README](/packages/gatsby-dev-cli/) and check out this video:
-
-[![screencap from video showing how to use gatsby-dev-cli in terminal](./images/dev-cli-usage.gif)](https://www.youtube.com/watch?v=D0SwX1MSuas)
-
+  see the [gatsby-dev-cli README](/packages/gatsby-dev-cli/) and check out the [gatsby-dev-cli demo video](https://www.youtube.com/watch?v=D0SwX1MSuas).
 - Add tests and code for your changes.
 - Once you're done, make sure all tests still pass: `yarn test`.
 - Commit and push to your fork.
