@@ -1,0 +1,477 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`gatsby-remark-normalise-headings bumps all headings to the next level 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "position": Position {
+            "end": Object {
+              "column": 14,
+              "line": 2,
+              "offset": 14,
+            },
+            "indent": Array [],
+            "start": Object {
+              "column": 3,
+              "line": 2,
+              "offset": 3,
+            },
+          },
+          "type": "text",
+          "value": "Heading One",
+        },
+      ],
+      "depth": 2,
+      "position": Position {
+        "end": Object {
+          "column": 14,
+          "line": 2,
+          "offset": 14,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 2,
+          "offset": 1,
+        },
+      },
+      "type": "heading",
+    },
+    Object {
+      "children": Array [
+        Object {
+          "position": Position {
+            "end": Object {
+              "column": 8,
+              "line": 4,
+              "offset": 23,
+            },
+            "indent": Array [],
+            "start": Object {
+              "column": 1,
+              "line": 4,
+              "offset": 16,
+            },
+          },
+          "type": "text",
+          "value": "Content",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 8,
+          "line": 4,
+          "offset": 23,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 4,
+          "offset": 16,
+        },
+      },
+      "type": "paragraph",
+    },
+    Object {
+      "children": Array [
+        Object {
+          "position": Position {
+            "end": Object {
+              "column": 15,
+              "line": 6,
+              "offset": 39,
+            },
+            "indent": Array [],
+            "start": Object {
+              "column": 4,
+              "line": 6,
+              "offset": 28,
+            },
+          },
+          "type": "text",
+          "value": "Heading Two",
+        },
+      ],
+      "depth": 3,
+      "position": Position {
+        "end": Object {
+          "column": 15,
+          "line": 6,
+          "offset": 39,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 6,
+          "offset": 25,
+        },
+      },
+      "type": "heading",
+    },
+    Object {
+      "children": Array [
+        Object {
+          "position": Position {
+            "end": Object {
+              "column": 8,
+              "line": 8,
+              "offset": 48,
+            },
+            "indent": Array [],
+            "start": Object {
+              "column": 1,
+              "line": 8,
+              "offset": 41,
+            },
+          },
+          "type": "text",
+          "value": "Content",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 8,
+          "line": 8,
+          "offset": 48,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 8,
+          "offset": 41,
+        },
+      },
+      "type": "paragraph",
+    },
+    Object {
+      "children": Array [
+        Object {
+          "position": Position {
+            "end": Object {
+              "column": 18,
+              "line": 10,
+              "offset": 67,
+            },
+            "indent": Array [],
+            "start": Object {
+              "column": 5,
+              "line": 10,
+              "offset": 54,
+            },
+          },
+          "type": "text",
+          "value": "Heading Three",
+        },
+      ],
+      "depth": 4,
+      "position": Position {
+        "end": Object {
+          "column": 18,
+          "line": 10,
+          "offset": 67,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 10,
+          "offset": 50,
+        },
+      },
+      "type": "heading",
+    },
+    Object {
+      "children": Array [
+        Object {
+          "position": Position {
+            "end": Object {
+              "column": 5,
+              "line": 13,
+              "offset": 81,
+            },
+            "indent": Array [
+              1,
+            ],
+            "start": Object {
+              "column": 1,
+              "line": 12,
+              "offset": 69,
+            },
+          },
+          "type": "text",
+          "value": "Content
+    ",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 5,
+          "line": 13,
+          "offset": 81,
+        },
+        "indent": Array [
+          1,
+        ],
+        "start": Object {
+          "column": 1,
+          "line": 12,
+          "offset": 69,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 5,
+      "line": 13,
+      "offset": 81,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`gatsby-remark-normalise-headings gatsby-remark-normalise-headings leaves headings alone when they're already correct 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "position": Position {
+            "end": Object {
+              "column": 13,
+              "line": 2,
+              "offset": 13,
+            },
+            "indent": Array [],
+            "start": Object {
+              "column": 4,
+              "line": 2,
+              "offset": 4,
+            },
+          },
+          "type": "text",
+          "value": "Heading 2",
+        },
+      ],
+      "depth": 2,
+      "position": Position {
+        "end": Object {
+          "column": 13,
+          "line": 2,
+          "offset": 13,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 2,
+          "offset": 1,
+        },
+      },
+      "type": "heading",
+    },
+    Object {
+      "children": Array [
+        Object {
+          "position": Position {
+            "end": Object {
+              "column": 8,
+              "line": 4,
+              "offset": 22,
+            },
+            "indent": Array [],
+            "start": Object {
+              "column": 1,
+              "line": 4,
+              "offset": 15,
+            },
+          },
+          "type": "text",
+          "value": "Content",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 8,
+          "line": 4,
+          "offset": 22,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 4,
+          "offset": 15,
+        },
+      },
+      "type": "paragraph",
+    },
+    Object {
+      "children": Array [
+        Object {
+          "position": Position {
+            "end": Object {
+              "column": 14,
+              "line": 6,
+              "offset": 37,
+            },
+            "indent": Array [],
+            "start": Object {
+              "column": 5,
+              "line": 6,
+              "offset": 28,
+            },
+          },
+          "type": "text",
+          "value": "Heading 3",
+        },
+      ],
+      "depth": 3,
+      "position": Position {
+        "end": Object {
+          "column": 14,
+          "line": 6,
+          "offset": 37,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 6,
+          "offset": 24,
+        },
+      },
+      "type": "heading",
+    },
+    Object {
+      "children": Array [
+        Object {
+          "position": Position {
+            "end": Object {
+              "column": 8,
+              "line": 8,
+              "offset": 46,
+            },
+            "indent": Array [],
+            "start": Object {
+              "column": 1,
+              "line": 8,
+              "offset": 39,
+            },
+          },
+          "type": "text",
+          "value": "Content",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 8,
+          "line": 8,
+          "offset": 46,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 8,
+          "offset": 39,
+        },
+      },
+      "type": "paragraph",
+    },
+    Object {
+      "children": Array [
+        Object {
+          "position": Position {
+            "end": Object {
+              "column": 15,
+              "line": 10,
+              "offset": 62,
+            },
+            "indent": Array [],
+            "start": Object {
+              "column": 6,
+              "line": 10,
+              "offset": 53,
+            },
+          },
+          "type": "text",
+          "value": "Heading 3",
+        },
+      ],
+      "depth": 4,
+      "position": Position {
+        "end": Object {
+          "column": 15,
+          "line": 10,
+          "offset": 62,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 10,
+          "offset": 48,
+        },
+      },
+      "type": "heading",
+    },
+    Object {
+      "children": Array [
+        Object {
+          "position": Position {
+            "end": Object {
+              "column": 7,
+              "line": 13,
+              "offset": 78,
+            },
+            "indent": Array [
+              1,
+            ],
+            "start": Object {
+              "column": 1,
+              "line": 12,
+              "offset": 64,
+            },
+          },
+          "type": "text",
+          "value": "Content
+      ",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 7,
+          "line": 13,
+          "offset": 78,
+        },
+        "indent": Array [
+          1,
+        ],
+        "start": Object {
+          "column": 1,
+          "line": 12,
+          "offset": 64,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 7,
+      "line": 13,
+      "offset": 78,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
