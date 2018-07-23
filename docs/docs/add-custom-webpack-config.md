@@ -90,4 +90,4 @@ exports.onCreateWebpackConfig = ({ stage, actions }) => {
 }
 ```
 
-You can always find more information on _resolve_ and other options in the offical [Webpack docs](https://webpack.js.org/concepts/).
+You can always find more information on _resolve_ and other options in the official [Webpack docs](https://webpack.js.org/concepts/).

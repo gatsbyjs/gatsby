@@ -16,7 +16,7 @@ We want contributing to Gatsby to be fun, enjoyable, and educational for anyone 
 - Searching for Gatsby on Discord or Spectrum and helping someone else who needs help
 - Teaching others how to contribute to Gatsby's repo!
 
-As our way of saying “thank you” to our contributors, **_all contributors_ are eligible for [free Gatsby swag](/docs/contributor-swag/)** — whether you’re contributing code, docs, a talk, an article, or something else that helps the Gatby community. [Learn how to claim free swag for contributors.](/docs/contributor-swag/)
+As our way of saying “thank you” to our contributors, **_all contributors_ are eligible for [free Gatsby swag](/docs/contributor-swag/)** — whether you’re contributing code, docs, a talk, an article, or something else that helps the Gatsby community. [Learn how to claim free swag for contributors.](/docs/contributor-swag/)
 
 ### Not sure how to start contributing?
 
