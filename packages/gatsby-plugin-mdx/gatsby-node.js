@@ -1,6 +1,7 @@
 const crypto = require(`crypto`);
 const path = require("path");
-const mdxPlugin = require(".");
+//const mdxPlugin = require(".");
+const mdx = require("@mdx-js/mdx");
 
 exports.onCreateNode = async function onCreateNode(
   { node, getNode, loadNodeContent, actions, createNodeId },
@@ -114,4 +115,15 @@ exports.resolvableExtensions = () => [`.mdx`];
        * }); */
     });
   });
+};
+
+exports.preprocessSource = function preprocessSource(
+  { filename, contents },
+  pluginOptions
+) {
+  if (/\.mdx$/.test(filename)) {
+    const code = mdx.sync(contents /*, pluginOptions*/);
+    return code;
+  }
+  return null;
 };
