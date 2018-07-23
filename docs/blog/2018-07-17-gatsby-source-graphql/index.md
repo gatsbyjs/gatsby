@@ -5,7 +5,7 @@ author: "Mikhail Novikov"
 tags: ["gatsby", "graphql", "plugin", "source"]
 ---
 
-Gatsby 2.0 adds support for schema stitching of its internal schema. Schema stitching allows merging multiple GraphQL schemas together. It greatly simplifies working with third-party GraphQL APIs. Along with a low-level support for stiching in general, we are shipping official [gatsby-source-graphql](https://www.gatsbyjs.org/packages/gatsby-source-graphql/) plugin, which allows connecting to arbitrary GraphQL API in just a few lines of a configuration.
+Gatsby 2.0 adds support for schema stitching of its internal schema. Schema stitching allows merging multiple GraphQL schemas together, which greatly simplifies working with third-party GraphQL APIs. Along with low-level support for stitching in general, we are shipping an official [gatsby-source-graphql](https://www.gatsbyjs.org/packages/gatsby-source-graphql/) plugin, which enables connecting to an arbitrary GraphQL API with just a few lines of configuration.
 
 # Getting started
 
