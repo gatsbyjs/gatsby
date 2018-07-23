@@ -1451,4 +1451,14 @@
     - Web Dev
   built_by: Greg Lobinski
   built_by_url: https://github.com/greglobinski
+- title: Insomnia
+  description: >
+    Desktop HTTP and GraphQL client for developers
+  main_url: https://insomnia.rest/
+  url: https://insomnia.rest/
+  categories:
+    - Landing
+    - Blog
+  built_by: Gregory Schier
+  built_by_url: https://schier.co
   featured: false
