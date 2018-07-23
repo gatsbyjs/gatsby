@@ -69,4 +69,4 @@ The actual stitching happens on the Gatsby level. There is now a new action, `ad
 
 # Conclusions
 
-`gatsby-source-graphql` is going to part of Gatsby's 2.0 release. Try it now with the latest Gatsby beta (**_TODO VERSION WHEN IT WILL BE RELEASED_**). [Check out the docs]() (**_TODO link _**) or [a sample project using Github's GraphQL API](https://github.com/freiksenet/gatsby-github-displayer).
+`gatsby-source-graphql` is going to part of Gatsby's 2.0 release. Try it now with the latest Gatsby beta (**_TODO VERSION WHEN IT WILL BE RELEASED_**). [Check out the docs](/docs/third-party-graphql) or [a sample project using Github's GraphQL API](https://github.com/freiksenet/gatsby-github-displayer).
