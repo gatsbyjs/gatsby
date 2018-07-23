@@ -2,7 +2,7 @@
 title: "Using third-party GraphQL APIs"
 ---
 
-Gatsby v2 introduces a simple way to integrate any GraphQL API into Gatsby GraphQL. One can integrate both 3rd party APIs, like Github's, APIs of BaaS-es like GraphCMS or your custom GraphQL API.
+Gatsby v2 introduces a simple way to integrate any GraphQL API into Gatsby's GraphQL. You can integrate both third-party APIs, like Github's, APIs of services like GraphCMS or your custom GraphQL API.
 
 ## Basic example
 
@@ -22,9 +22,9 @@ module.exports = {
       options: {
         // This type will contain remote schema Query type
         typeName: "SWAPI",
-        // This is field under which it's accessible
+        // This is the field under which it's accessible
         fieldName: "swapi",
-        // Url to query from
+        // URL to query from
         url: "https://api.graphcms.com/simple/v1/swapi",
       },
     },
@@ -32,13 +32,13 @@ module.exports = {
 }
 ```
 
-See all configuration options in the [plugin docs](https://next.gatsbyjs.org/packages/gatsby-source-graphql)
+See all configuration options in the [plugin docs](/packages/gatsby-source-graphql)
 
-Third-party API will be available under the `fieldName` specified, so you can query it through it normally.
+Third-party APIs will be available under the `fieldName` specified, so you can query through it normally.
 
 ```graphql
 {
-  # Field name parameter defines how you can access third party api
+  # Field name parameter defines how you can access a third-party API
   swapi {
     allSpecies {
       name
@@ -51,7 +51,7 @@ Note that types of the third-party API will be prefixed with `${typeName}_`. You
 
 ```graphql
 {
-  # Field name parameter defines how you can access third party api
+  # Field name parameter defines how you can access third-party API
   swapi {
     allSpecies {
       ... on SWAPI_Species {
@@ -64,7 +64,7 @@ Note that types of the third-party API will be prefixed with `${typeName}_`. You
 
 ## Creating pages dynamically through third-party APIs
 
-You can also create pages dynamically by adding `createPages` callback in `gatsby-node.js`. For example we can create a page for every Star Wars species.
+You can also create pages dynamically by adding a `createPages` callback in `gatsby-node.js`. For example you can create a page for every Star Wars species.
 
 ```js
 const path = require(`path`)
@@ -95,6 +95,6 @@ exports.createPages = async ({ actions, graphql }) => {
 
 ## Futher reading
 
-- [graphql-source-graphql docs](https://next.gatsbyjs.org/packages/gatsby-source-graphql)
+- [graphql-source-graphql docs](/packages/gatsby-source-graphql)
 - [Example with Github API](https://github.com/freiksenet/gatsby-github-displayer)
 - [Example with GraphCMS](https://github.com/freiksenet/gatsby-graphcms)
