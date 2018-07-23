@@ -4,7 +4,7 @@
   "description": "mdx integration for gatsby",
   "main": "index.js",
   "license": "MIT",
-  "dependencies": {
+  "peerDependencies": {
     "@mdx-js/loader": "^0.15.0-0",
     "@mdx-js/mdx": "^0.15.0-0"
   }
