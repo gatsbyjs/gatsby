@@ -73,11 +73,14 @@ exports.combineACF = function(entities) {
  // Map each ACF Options object keys/data to single object
  _.forEach(entities.filter((e) => e.__type === `wordpress__acf_options`), (e) => {
    if(e[`acf`]) {
-     Object.keys(e[`acf`]).map((k) => acfOptionData[k] = e[`acf`][k])
+     acfOptionData[e.__acfOptionPageId || `options`] = {}
+     Object.keys(e[`acf`]).map((k) => acfOptionData[e.__acfOptionPageId || `options`][k] = e[`acf`][k])
    }
  })
+
  // Remove previous ACF Options objects (if any)
  _.pullAll(entities, entities.filter((e) => e.__type === `wordpress__acf_options`))
+
  // Create single ACF Options object
  entities.push({
    acf: acfOptionData || false,

@@ -15,7 +15,6 @@ async function fetch({
   _verbose,
   _siteURL,
   _useACF,
-  _acfRestVersion,
   _acfOptionPageIds,
   _hostingWPCOM,
   _auth,
@@ -107,7 +106,6 @@ async function fetch({
       baseUrl,
       _verbose,
       _useACF,
-      _acfRestVersion,
       _acfOptionPageIds,
       _hostingWPCOM,
       _excludedRoutes,
@@ -199,6 +197,7 @@ async function fetchData({
 }) {
   const type = route.type
   const url = route.url
+  const acfOptionPageId = route.optionPageId
 
   if (_verbose)
     console.log(
@@ -228,11 +227,18 @@ async function fetchData({
     // Process entities to creating GraphQL Nodes.
     if (Array.isArray(routeResponse)) {
       routeResponse = routeResponse.map(r => {
-        return { ...r, __type: type }
+        return {
+          ...r,
+          ...(acfOptionPageId ? { __acfOptionPageId: acfOptionPageId } : {}),
+          __type: type,
+        }
       })
       entities = entities.concat(routeResponse)
     } else {
       routeResponse.__type = type
+      if(acfOptionPageId) {
+        routeResponse.__acfOptionPageId = acfOptionPageId
+      }
       entities.push(routeResponse)
     }
 
@@ -374,7 +380,6 @@ function getValidRoutes({
   baseUrl,
   _verbose,
   _useACF,
-  _acfRestVersion,
   _acfOptionPageIds,
   _hostingWPCOM,
   _excludedRoutes,
@@ -382,6 +387,7 @@ function getValidRoutes({
   refactoredEntityTypes,
 }) {
   let validRoutes = []
+  let acfRestVersion = 3
   for (let key of Object.keys(allRoutes.data.routes)) {
     if (_verbose) console.log(`Route discovered :`, key)
     let route = allRoutes.data.routes[key]
@@ -404,8 +410,9 @@ function getValidRoutes({
       ]
 
       const routePath = getRoutePath(url, route._links.self)
-
       if (excludedTypes.includes(entityType)) {
+        // Grab ACF Version from routes
+        acfRestVersion = key === `/acf/${entityType}` ? entityType.substr(1) : acfRestVersion
         if (_verbose)
           console.log(
             colorized.out(`Invalid route.`, colorized.color.Font.FgRed)
@@ -467,21 +474,27 @@ function getValidRoutes({
     }
   }
 
+  if (_verbose)
+    console.log(
+      colorized.out(`Detected ACF to REST version: v${acfRestVersion}.`, colorized.color.Font.FgGreen)
+    )
+
   if (_useACF) {
     // The OPTIONS ACF API Route is not giving a valid _link so let`s add it manually
     // and pass ACF option page ID
-    // ACF to REST v3 requires options/options 
-    let optionsRoute = _acfRestVersion === 3 ? `options/options/` : `options/`
+    // ACF to REST v3 requires options/options
+    let optionsRoute = acfRestVersion == 3 ? `options/options/` : `options/`
     validRoutes.push({
-      url: `${url}/acf/v${_acfRestVersion}/${optionsRoute}`,
+      url: `${url}/acf/v${acfRestVersion}/${optionsRoute}`,
       type: `${typePrefix}acf_options`,
     })
     // ACF to REST V2 does not allow ACF Option Page ID specification
-    if (_acfRestVersion === 3) {
+    if (acfRestVersion == 3) {
       _acfOptionPageIds.forEach(function(acfOptionPageId) {
         validRoutes.push({
           url: `${url}/acf/v3/options/${acfOptionPageId}`,
           type: `${typePrefix}acf_options`,
+          optionPageId: acfOptionPageId,
         })
       })
     }
