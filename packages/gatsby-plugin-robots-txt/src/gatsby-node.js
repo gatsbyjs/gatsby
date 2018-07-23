@@ -1,7 +1,7 @@
-import fs from 'fs'
-import robotsTxt from 'generate-robotstxt'
-import path from 'path'
-import url from 'url'
+import fs from "fs"
+import robotsTxt from "generate-robotstxt"
+import path from "path"
+import url from "url"
 
 const publicPath = `./public`
 const query = `{
@@ -48,7 +48,7 @@ const getOptions = pluginOptions => {
   delete options.env
   delete options.resolveEnv
 
-  return { ...options, envOptions }
+  return { ...options, ...envOptions }
 }
 
 export async function onPostBuild({ graphql }, pluginOptions) {
