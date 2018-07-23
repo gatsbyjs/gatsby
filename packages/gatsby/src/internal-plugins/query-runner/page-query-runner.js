@@ -74,7 +74,12 @@ exports.runQueuedActions = runQueuedActions
 // Wait until all plugins have finished running (e.g. various
 // transformer plugins) before running queries so we don't
 // query things in a 1/2 finished state.
-emitter.on(`API_RUNNING_QUEUE_EMPTY`, runQueuedActions)
+emitter.on(`API_RUNNING_QUEUE_EMPTY`, async api => {
+  if (api === `onCreateNode`) {
+    return runQueuedActions()
+  }
+  return null
+})
 
 let seenIdsWithoutDataDependencies = []
 const findIdsWithoutDataDependencies = () => {
