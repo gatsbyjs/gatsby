@@ -1424,10 +1424,20 @@
     - Salesforce
   built_by: Gourav Sood
   built_by_url: 'https://www.gouravsood.com/'
-  - title: Figma
+- title: Figma
   main_url: 'https://www.figma.com/'
   url: 'https://www.figma.com/'
   featured: false
   categories:
     - Marketing
     - Design
+- title: Jonas Tebbe Portfolio
+  description: >
+    Hey, I’m Jonas and I create digital products.
+  main_url: https://jonastebbe.com
+  url: https://jonastebbe.com
+  categories:
+    - Portfolio
+  built_by: Jonas Tebbe
+  built_by_url: http://twitter.com/jonastebbe
+  featured: false
