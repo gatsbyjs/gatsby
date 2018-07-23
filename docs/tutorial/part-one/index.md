@@ -30,7 +30,7 @@ You should see something like:
 
 ![Check if node.js/npm is installed](check-versions.png)
 
-Gatsby supports versions of Node back to v6 and npm to v3.
+Gatsby supports versions of Node back to v7.6 and npm to v3.
 
 If you don't have Node.js installed, go to https://nodejs.org/ and install the
 recommended version for your operating system.
@@ -62,9 +62,10 @@ nothing is happening at first; be patient!
 Now let's try running Gatsby!
 
 Gatsby has a built-in development server. Let's start it up by running the
-following command:
+following commands:
 
 ```sh
+npm install
 gatsby develop
 ```
 
