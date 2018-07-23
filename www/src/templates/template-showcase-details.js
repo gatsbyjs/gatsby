@@ -75,7 +75,7 @@ class ShowcaseTemplate extends React.Component {
 export default ShowcaseTemplate
 
 export const pageQuery = graphql`
-  query TemplateShowcasePage($slug: String!) {
+  query($slug: String!) {
     sitesYaml(fields: { slug: { eq: $slug } }) {
       id
       title

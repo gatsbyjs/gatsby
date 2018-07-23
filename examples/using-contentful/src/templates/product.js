@@ -1,5 +1,5 @@
 import React from "react"
-import { Link } from "gatsby"
+import { Link, graphql } from "gatsby"
 import * as PropTypes from "prop-types"
 import Img from "gatsby-image"
 import Layout from "../layouts"
@@ -62,7 +62,7 @@ ProductTemplate.propTypes = propTypes
 export default ProductTemplate
 
 export const pageQuery = graphql`
-  query productQuery($id: String!) {
+  query($id: String!) {
     contentfulProduct(id: { eq: $id }) {
       productName {
         productName

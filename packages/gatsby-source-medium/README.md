@@ -33,7 +33,7 @@ Remember that if you are fetching a user, prepend your username with `@`.
 Get all posts with the preview image ID and the author's name:
 
 ```graphql
-query StoriesQuery {
+query {
   allMediumPost(sort: { fields: [createdAt], order: DESC }) {
     edges {
       node {
@@ -57,7 +57,7 @@ query StoriesQuery {
 Get all users with their posts:
 
 ```graphql
-query StoriesQuery {
+query {
   allMediumUser {
     edges {
       node {

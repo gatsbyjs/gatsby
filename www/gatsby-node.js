@@ -79,7 +79,7 @@ exports.createPages = ({ graphql, actions }) => {
           query {
             allMarkdownRemark(
               sort: { order: DESC, fields: [frontmatter___date] }
-              limit: 1000
+              limit: 10000
               filter: { fileAbsolutePath: { ne: null } }
             ) {
               edges {
@@ -107,7 +107,7 @@ exports.createPages = ({ graphql, actions }) => {
                 }
               }
             }
-            allSitesYaml(limit: 40, filter: { main_url: { ne: null } }) {
+            allSitesYaml(filter: { main_url: { ne: null } }) {
               edges {
                 node {
                   fields {

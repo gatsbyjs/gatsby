@@ -130,6 +130,22 @@ describe(`GraphQL Input args`, () => {
         circle: `happy`,
       },
       boolean: false,
+      data: {
+        tags: [
+          {
+            tag: {
+              document: [
+                {
+                  data: {
+                    tag: `Design System`,
+                  },
+                  number: 3,
+                },
+              ],
+            },
+          },
+        ],
+      },
     },
     {
       index: 2,
@@ -148,6 +164,33 @@ describe(`GraphQL Input args`, () => {
         title: `The world of shave and adventure`,
         blue: 10010,
         circle: `happy`,
+      },
+      data: {
+        tags: [
+          {
+            tag: {
+              document: [
+                {
+                  data: {
+                    tag: `Gatsby`,
+                  },
+                },
+              ],
+            },
+          },
+          {
+            tag: {
+              document: [
+                {
+                  data: {
+                    tag: `Design System`,
+                  },
+                  number: 5,
+                },
+              ],
+            },
+          },
+        ],
       },
     },
   ]
@@ -505,16 +548,43 @@ describe(`GraphQL Input args`, () => {
     expect(result.data.allNode.edges[0].node.name).toEqual(`The Mad Wax`)
   })
 
-  it(`handles the glob operator`, async () => {
+  it(`handles the in operator for array of objects`, async () => {
     let result = await queryResult(
       nodes,
       `
         {
-          allNode(limit: 10, filter: {name: { glob: "*Wax" }}) {
-            edges { node { name }}
+          test1:allNode(filter: {data: {tags: {elemMatch: {tag: {document: {elemMatch: {data: {tag: {eq: "Gatsby"}}}}}}}}}) {
+            edges { node { index }}
+          }
+          test2:allNode(filter: {data: {tags: {elemMatch: {tag: {document: {elemMatch: {data: {tag: {eq: "Design System"}}}}}}}}}) {
+            edges { node { index }}
+          }
+          test3:allNode(filter: {data: {tags: {elemMatch: {tag: {document: {elemMatch: {number: {lt: 4}}}}}}}}) {
+            edges { node { index }}
           }
         }
       `
+    )
+    expect(result.errors).not.toBeDefined()
+    expect(result.data.test1.edges.length).toEqual(1)
+    expect(result.data.test1.edges[0].node.index).toEqual(2)
+    expect(result.data.test2.edges.length).toEqual(2)
+    expect(result.data.test2.edges[0].node.index).toEqual(1)
+    expect(result.data.test2.edges[1].node.index).toEqual(2)
+    expect(result.data.test3.edges.length).toEqual(1)
+    expect(result.data.test3.edges[0].node.index).toEqual(1)
+  })
+
+  it(`handles the glob operator`, async () => {
+    let result = await queryResult(
+      nodes,
+      `
+          {
+            allNode(limit: 10, filter: {name: { glob: "*Wax" }}) {
+              edges { node { name }}
+            }
+          }
+        `
     )
     expect(result.errors).not.toBeDefined()
     expect(result.data.allNode.edges.length).toEqual(2)

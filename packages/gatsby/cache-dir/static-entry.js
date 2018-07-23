@@ -9,6 +9,10 @@ const apiRunner = require(`./api-runner-ssr`)
 const syncRequires = require(`./sync-requires`)
 const { dataPaths, pages } = require(`./data.json`)
 
+// Speed up looking up pages.
+const pagesObjectMap = new Map()
+pages.forEach(p => pagesObjectMap.set(p.path, p))
+
 const stats = JSON.parse(
   fs.readFileSync(`${process.cwd()}/public/webpack.stats.json`, `utf-8`)
 )
@@ -30,12 +34,7 @@ try {
   if (testRequireError(`../src/html`, err)) {
     Html = require(`./default-html`)
   } else {
-    console.log(
-      `\n\nThere was an error requiring "src/html.js"\n\n`,
-      err,
-      `\n\n`
-    )
-    process.exit()
+    throw err
   }
 }
 
@@ -48,7 +47,7 @@ function urlJoin(...parts) {
   }, ``)
 }
 
-const getPage = path => pages.find(page => page.path === path)
+const getPage = path => pagesObjectMap.get(path)
 
 const createElement = React.createElement
 
@@ -258,7 +257,6 @@ export default (pagePath, callback) => {
       } else {
         headComponents.unshift(
           <style
-            type="text/css"
             data-href={urlJoin(pathPrefix, style.name)}
             dangerouslySetInnerHTML={{
               __html: fs.readFileSync(
