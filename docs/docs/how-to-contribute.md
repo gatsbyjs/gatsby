@@ -16,7 +16,7 @@ We want contributing to Gatsby to be fun, enjoyable, and educational for anyone 
 - Searching for Gatsby on Discord or Spectrum and helping someone else who needs help
 - Teaching others how to contribute to Gatsby's repo!
 
-As our way of saying “thank you” to our contributors, **_all contributors_ are eligible for [free Gatsby swag](/docs/contributor-swag/)** — whether you’re contributing code, docs, a talk, an article, or something else that helps the Gatby community. [Learn how to claim free swag for contributors.](/docs/contributor-swag/)
+As our way of saying “thank you” to our contributors, **_all contributors_ are eligible for [free Gatsby swag](/docs/contributor-swag/)** — whether you’re contributing code, docs, a talk, an article, or something else that helps the Gatsby community. [Learn how to claim free swag for contributors.](/docs/contributor-swag/)
 
 ### Not sure how to start contributing?
 
@@ -54,7 +54,7 @@ You can install the latest version of Gatsby by following these steps:
 The usual contributing steps are:
 
 - Fork the [official repository](https://github.com/gatsbyjs/gatsby).
-- Clone your fork: `git clone https://github.com/<your-username>/gatsby.git`
+- Clone your fork: `git clone --depth=1 https://github.com/<your-username>/gatsby.git`
 - Setup up repo and install dependencies: `yarn run bootstrap`
 - Make sure tests are passing for you: `yarn test`
 - Create a topic branch: `git checkout -b topics/new-feature-name`
@@ -115,6 +115,10 @@ To add a new blog post to the gatsbyjs.org blog:
 - Create a pull request from your branch
 
 ## Development tools
+
+### Debugging the build process
+
+Check [Debugging the build process](/docs/debugging-the-build-process/) page to learn how to debug Gatsby.
 
 ### Redux devtools
 

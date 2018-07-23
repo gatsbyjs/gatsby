@@ -76,28 +76,31 @@ class EmailCaptureForm extends React.Component {
       {
         status: `sending`,
         msg: null,
-      }
+      },
       // setState callback (subscribe email to MC)
-      // this._postEmailToMailchimp(this.state.email, {
-      // pathname: document.location.pathname,
-      // })
+      this._postEmailToMailchimp(this.state.email, {
+        pathname: document.location.pathname,
+      })
     )
   }
 
   render() {
+    const { signupMessage, confirmMessage, containerCss } = this.props
+
     return (
       <div
         css={{
           borderTop: `2px solid ${colors.lilac}`,
           marginTop: rhythm(3),
           paddingTop: `${rhythm(1)}`,
+          ...containerCss,
         }}
       >
         {this.state.status === `success` ? (
-          <div>Thank you! Youʼll receive your first email shortly.</div>
+          <div>{confirmMessage}</div>
         ) : (
           <div>
-            <p>Enjoyed this post? Receive the next one in your inbox!</p>
+            <p>{signupMessage}</p>
             <form
               id="email-capture"
               method="post"
@@ -158,6 +161,12 @@ class EmailCaptureForm extends React.Component {
       </div>
     )
   }
+}
+
+EmailCaptureForm.defaultProps = {
+  signupMessage: "Enjoyed this post? Receive the next one in your inbox!",
+  confirmMessage: "Thank you! Youʼll receive your first email shortly.",
+  containerCss: {},
 }
 
 export default EmailCaptureForm

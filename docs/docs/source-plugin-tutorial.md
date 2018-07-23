@@ -36,7 +36,7 @@ Pixabay's [API documentation](https://pixabay.com/api/docs/#api_search_images) d
 
 Take the above URL and paste it in to a browser to see Pixabay's response to your query. It gives you a list of photos matching the query "yellow flowers" that have received an Editor's Choice award.
 
-> **NOTE:** You should replace <YOUR_API_KEY_HERE> with your Pixabay API key.
+> **NOTE:** You should replace `<YOUR_API_KEY_HERE>` with your Pixabay API key.
 
 ### Plugin behavior
 

@@ -1,0 +1,15 @@
+{
+  "data": [
+    {
+      "type": "file--file",
+      "id": "file-1",
+      "attributes": {
+        "id": 1,
+        "uuid": "file-1",
+        "filename": "main-image.png",
+        "url": "/sites/default/files/main-image.png"
+      }
+    }
+  ],
+  "links": {}
+}

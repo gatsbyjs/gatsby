@@ -91,7 +91,7 @@ if (process.env.REDUX_DEVTOOLS === `true`) {
 }
 
 // Persist state.
-const saveState = _.debounce(state => {
+const saveState = state => {
   const pickedState = _.pick(state, [
     `nodes`,
     `status`,
@@ -106,21 +106,40 @@ const saveState = _.debounce(state => {
   )
   pickedState.components = mapToObject(pickedState.components)
   pickedState.nodes = mapToObject(pickedState.nodes)
+  const stringified = stringify(pickedState, null, 2)
   fs.writeFile(
     `${process.cwd()}/.cache/redux-state.json`,
-    stringify(pickedState, null, 2),
+    stringified,
     () => {}
   )
-}, 1000)
+}
+const saveStateDebounced = _.debounce(saveState, 1000)
 
 store.subscribe(() => {
   const lastAction = store.getState().lastAction
   emitter.emit(lastAction.type, lastAction)
 })
 
-emitter.on(`*`, () => {
-  saveState(store.getState())
-})
+// During development, once bootstrap is finished, persist state on changes.
+let bootstrapFinished = false
+if (process.env.gatsby_executing_command === `develop`) {
+  emitter.on(`BOOTSTRAP_FINISHED`, () => {
+    bootstrapFinished = true
+    saveState(store.getState())
+  })
+  emitter.on(`*`, () => {
+    if (bootstrapFinished) {
+      saveStateDebounced(store.getState())
+    }
+  })
+}
+
+// During builds, persist state once bootstrap has finished.
+if (process.env.gatsby_executing_command === `build`) {
+  emitter.on(`BOOTSTRAP_FINISHED`, () => {
+    saveState(store.getState())
+  })
+}
 
 /** Event emitter */
 exports.emitter = emitter

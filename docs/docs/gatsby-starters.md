@@ -33,7 +33,7 @@ There are several starters that have been created. Create a PR to include yours!
 
 ### Using Gatsby v2 with the official starters
 
-If you'd like to get started with Gatsby v2 you're in luck, there's a v2 edition for each of the offical starters. Install your favourite one with the Gatsby CLI.
+If you'd like to get started with Gatsby v2 you're in luck, there's a v2 edition for each of the official starters. Install your favourite one with the Gatsby CLI.
 
 `gatsby-starter-default` with v2:
 
@@ -396,7 +396,7 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
   - Full screen mode
   - User adjustable articles' body copy font size
   - Social sharing (Twitter, Facebook, Google, LinkedIn)
-  - PWA (manifes.json, offline support, favicons)
+  - PWA (manifest.json, offline support, favicons)
   - Google Analytics
   - Favicons generator (node script)
   - Components lazy loading with AsyncComponent (social sharing, info box)
@@ -444,7 +444,7 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
   - Single Page Resume/Portfolio site
   - Target audience Developers, Designers, etc.
   - Used CSS Modules, easy to manipulate
-  - FontAwsome Library for icons
+  - FontAwesome Library for icons
   - Responsive Design, optimized for Mobile devices
 
 * [gatsby-starter-product-guy](https://github.com/amandeepmittal/gatsby-starter-product-guy) [(demo)](http://gatsby-starter-product-guy.surge.sh/)
@@ -806,7 +806,7 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
 
   - Full-featured site for developer or small company
   - Includes Articles and Projects
-  - Includes Tags and Categores
+  - Includes Tags and Categories
   - Minimal but stylish default theme
   - Styled Components and CSSAPI for styles
   - Configure many of the site's features from a separate site config files
@@ -825,16 +825,33 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
   - Support multi-language url routes within a single page component. That means you don't have to create separate pages such as `pages/en/index.js` or `pages/ko/index.js`.
 
   - Based on [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default) with least modification.
-  
+
 - [devblog](https://github.com/RyanFitzgerald/devblog)
   [(demo)](https://ryanfitzgerald.github.io/devblog/)
 
   Features:
 
   - Minimalistic blog for developers
-  - Based on ```gatsby-starter-blog```
+  - Based on `gatsby-starter-blog`
   - Server-side rendering
   - Syntax highlighting via PrismJS
   - Styled Components
   - Pagination
+ 
+- [lite](https://github.com/sqrthree/lite)
+  [(Live demo)](https://blog.sqrtthree.com/)
+ 
+  > A clean and delicate theme for blog based on Gatsby.
 
+  Features:
+
+  - Ready to use, but easily customizable a fully equipped theme starter
+  - Minimalistic blog for developers
+  - Server-side rendering
+  - Seo Friendly
+  - Syntax highlighting via PrismJS
+  - Google Analytics integration
+  - Social sharing
+  - Pagination
+  - Prettier code styling
+  - [More info here](https://github.com/sqrthree/lite#lite)
