@@ -74,12 +74,13 @@ export async function onPostBuild({ graphql }, pluginOptions) {
     mergedOptions.sitemap = url.resolve(siteUrl, `sitemap.xml`)
   }
 
-  const { policy, sitemap, host, output } = mergedOptions
+  const { policy, sitemap, host, output, configFile } = mergedOptions
 
   const content = await robotsTxt({
     policy,
     sitemap,
     host,
+    configFile,
   })
   const filename = path.join(publicPath, output)
 

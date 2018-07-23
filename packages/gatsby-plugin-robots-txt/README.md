@@ -28,6 +28,7 @@ This plugin uses [`generate-robotstxt`](https://github.com/itgalaxy/generate-rob
 |  `host`   |  `String`  |       `${siteMetadata.siteUrl}`       |   Host of your site    |
 | `sitemap` |  `String`  | `${siteMetadata.siteUrl}/sitemap.xml` | Path to `sitemap.xml`  |
 | `policy`  | `Policy[]` |                 `[]`                  | List of [`Policy`](https://github.com/itgalaxy/generate-robotstxt#usage) rules |
+| `configFile` |  `String`  |              `undefined`              |                          Path to external config file                          |
 
 `gatsby-config.js`
 
@@ -96,6 +97,35 @@ module.exports = {
       }
     }
   ]
+};
+```
+
+### `configFile`-option
+
+You can use the `configFile` option to set specific external configuration:
+
+`gatsby-config.js`
+
+```js
+module.exports = {
+  plugins: [
+    {
+      resolve: 'gatsby-plugin-robots-txt',
+      options: {
+        host: 'https://www.example.com',
+        sitemap: 'https://www.example.com/sitemap.xml',
+        configFile: 'robots-txt.config.js'
+      }
+    }
+  ]
+};
+```
+
+`robots-txt.config.js`
+
+```js
+module.exports = {
+  policy: [{ userAgent: '*' }]
 };
 ```
 
