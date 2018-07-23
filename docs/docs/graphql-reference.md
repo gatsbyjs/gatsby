@@ -78,7 +78,7 @@ To add variables to page component queries, pass these in the `context` object [
 
 ## Group
 
-You can also group values on the basis of a field e.g. the title, date or category and get the field value, the total number of occurences and edges.
+You can also group values on the basis of a field e.g. the title, date or category and get the field value, the total number of occurrences and edges.
 
 The query below gets us all authors (`fieldValue`) who wrote a blogpost and how many blogposts (`totalCount`) they wrote. In addition we're grabbing the `title` and `slug` of the author's articles.
 

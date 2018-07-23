@@ -330,7 +330,7 @@ There are some additional HTTP header optimizations you can configure in your `a
 
 ```yaml
 deploy:
-  # Note with below setting it is not neccessary to pass --directory to aero deploy command
+  # Note with below setting it is not necessary to pass --directory to aero deploy command
   directory: public
   # Turn off the Aerobatic asset fingerprinting since Gatsby already does this
   optimizer:
