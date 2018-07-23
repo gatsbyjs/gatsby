@@ -65,7 +65,7 @@ exports.onCreateWebpackConfig = ({
       rules: [
         {
           test: /\.mdx$/,
-          use: ["babel-loader", "@mdx-js/loader"]
+          use: [loaders.js(), "@mdx-js/loader"]
         }
       ]
     },
@@ -77,7 +77,9 @@ exports.onCreateWebpackConfig = ({
   });
 };
 
-exports.createPages = ({ actions, graphql }) => {
+exports.resolvableExtensions = () => [`.mdx`];
+
+/*exports.createPages =*/ ({ actions, graphql }) => {
   const { createPage } = actions;
 
   return graphql(`
@@ -105,11 +107,11 @@ exports.createPages = ({ actions, graphql }) => {
        *   context: {} // additional data can be passed via context
        * });
        */
-      createPage({
-        path: node.relativePath.slice(0, -4), //node.fileNode.path,
-        component: require.resolve(node.fileAbsolutePath),
-        context: {} // additional data can be passed via context
-      });
+      /* createPage({
+       *   path: node.relativePath.slice(0, -4), //node.fileNode.path,
+       *   component: require.resolve(node.fileAbsolutePath),
+       *   context: {} // additional data can be passed via context
+       * }); */
     });
   });
 };
