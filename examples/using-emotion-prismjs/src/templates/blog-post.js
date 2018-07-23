@@ -1,5 +1,6 @@
 import React from "react"
 import { css } from "emotion"
+import { graphql } from "gatsby"
 import { rhythm, scale } from "../utils/typography"
 
 import Layout from "../components/layout"
@@ -36,7 +37,7 @@ class BlogPostTemplate extends React.Component {
 export default BlogPostTemplate
 
 export const pageQuery = graphql`
-  query BlogPostByPath($path: String!) {
+  query($path: String!) {
     markdownRemark(frontmatter: { path: { eq: $path } }) {
       id
       html

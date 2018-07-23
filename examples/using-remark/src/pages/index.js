@@ -1,5 +1,5 @@
 import React from "react"
-import { Link } from "gatsby"
+import { Link, graphql } from "gatsby"
 import Layout from "../layouts"
 import styles from "../styles"
 import presets from "../utils/presets"
@@ -72,7 +72,7 @@ class Index extends React.Component {
 export default Index
 
 export const pageQuery = graphql`
-  query IndexQuery {
+  query {
     allMarkdownRemark(
       limit: 2000
       sort: { fields: [frontmatter___date], order: DESC }

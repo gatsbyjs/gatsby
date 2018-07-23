@@ -272,12 +272,15 @@ Websites built with Gatsby:
 - [Tiger Facility Services](https://www.tigerfacilityservices.com/)
 - [Jersey Watch](https://www.jerseywatch.com/)
 - [Bench Accounting](https://bench.co/)
+- [杨二的博客](https://blog.yangerxiao.com/)
+- [GaiAma - We are wildlife](https://www.gaiama.org) ([source](https://github.com/GaiAma/gaiama.org))
+- [Rescue Amazonian Rainforest](https://www.rescue-amazonian-rainforest.com/) ([source](https://github.com/GaiAma/rescue-amazonian-rainforest.com))
 
 ## Docs
 
 **[View the docs on gatsbyjs.org](https://www.gatsbyjs.org/docs/)**
 
-[Migrating from v1 to v2?](https://www.gatsbyjs.org/docs/migrating-from-v1-to-v2/)
+[Migrating from v1 to v2?](https://next.gatsbyjs.org/docs/migrating-from-v1-to-v2/)
 
 [Migrating from v0 to v1?](https://www.gatsbyjs.org/docs/migrating-from-v0-to-v1/)
 

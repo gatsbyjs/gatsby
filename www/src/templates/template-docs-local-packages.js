@@ -1,4 +1,5 @@
 import React from "react"
+import { graphql } from "gatsby"
 import _ from "lodash"
 import { graphql } from 'gatsby'
 import Layout from "../components/layout"
@@ -78,7 +79,7 @@ class DocsLocalPackagesTemplate extends React.Component {
 export default DocsLocalPackagesTemplate
 
 export const pageQuery = graphql`
-  query TemplateDocsLocalPackages($slug: String!) {
+  query($slug: String!) {
     markdownRemark(fields: { slug: { eq: $slug } }) {
       html
       excerpt

@@ -1,4 +1,5 @@
 import React from "react"
+import { graphql } from "gatsby"
 import Helmet from "react-helmet"
 
 import Layout from "../../components/layout"
@@ -104,7 +105,7 @@ class BlogPostsIndex extends React.Component {
 export default BlogPostsIndex
 
 export const pageQuery = graphql`
-  query BlogPostsIndexQuery {
+  query {
     allMarkdownRemark(
       sort: { order: DESC, fields: [frontmatter___date] }
       filter: {

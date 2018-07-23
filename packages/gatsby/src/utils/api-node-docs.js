@@ -1,5 +1,5 @@
 /**
- * Let's plugins implementing support for other compile-to-js add to the list
+ * Lets plugins implementing support for other compile-to-js add to the list
  * of "resolvable" file extensions. Gatsby supports `.js` and `.jsx` by default.
  * @returns {Array} array of extensions
  */
@@ -140,7 +140,6 @@ exports.onCreatePage = true
  *
  * @param {object} $0
  * @param {object} $0.type Object containing `name` and `nodes`
- * @param {array} $0.allNodes array of all nodes
  * @example
  * import { GraphlQLString } from "gatsby/graphql"
  *
@@ -219,7 +218,12 @@ exports.onCreateBabelConfig = true
 exports.onCreateWebpackConfig = true
 
 /**
- * Called at the start of the bootstrap process before any other extension APIs are called.
+ * The first API called during Gatsby execution, runs as soon as plugins are loaded, before cache initialization and bootstrap preparation.
+ */
+exports.onPreInit = true
+
+/**
+ * Called once Gatsby has initialized itself and is ready to bootstrap your site.
  */
 exports.onPreBootstrap = true
 

@@ -104,6 +104,7 @@ the following to add a query with some initial HTML and styling.
 
 ```jsx
 import React from "react"
+import { graphql } from "gatsby"
 import { css } from "react-emotion"
 import { rhythm } from "../utils/typography"
 import Layout from "../components/layout"
@@ -147,7 +148,7 @@ export default ({ data }) => {
 }
 
 export const query = graphql`
-  query IndexQuery {
+  query {
     allMarkdownRemark {
       totalCount
       edges {

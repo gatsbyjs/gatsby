@@ -94,7 +94,7 @@ describe(`Track root nodes`, () => {
     let type, nodes
 
     beforeAll(async () => {
-      type = (await buildNodeTypes()).testNode.nodeObjectType
+      type = (await buildNodeTypes({})).testNode.nodeObjectType
       nodes = getNodes()
     })
 

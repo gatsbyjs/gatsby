@@ -2,6 +2,7 @@ const MongoClient = require(`mongodb`).MongoClient
 const crypto = require(`crypto`)
 const prepareMappingChildNode = require(`./mapping`)
 const _ = require(`lodash`)
+const queryString = require(`query-string`)
 
 exports.sourceNodes = (
   { actions, getNode, createNodeId, hasNodeChanged },
@@ -18,9 +19,12 @@ exports.sourceNodes = (
   if (pluginOptions.auth)
     authUrlPart = `${pluginOptions.auth.user}:${pluginOptions.auth.password}@`
 
+  let connectionExtraParams = getConnectionExtraParams(
+    pluginOptions.extraParams
+  )
   const connectionURL = `mongodb://${authUrlPart}${serverOptions.address}:${
     serverOptions.port
-  }/${dbName}`
+  }/${dbName}${connectionExtraParams}`
 
   return MongoClient.connect(connectionURL)
     .then(db => {
@@ -68,6 +72,7 @@ function createNodes(
           // Data for the node.
           ...item,
           id: createNodeId(`${id}`),
+          mongodb_id: id,
           parent: `__${collectionName}__`,
           children: [],
           internal: {
@@ -118,4 +123,13 @@ function createNodes(
 
 function caps(s) {
   return s.replace(/\b\w/g, l => l.toUpperCase())
+}
+
+function getConnectionExtraParams(extraParams) {
+  let connectionSuffix
+  if (extraParams) {
+    connectionSuffix = queryString.stringify(extraParams, { sort: false })
+  }
+
+  return connectionSuffix ? `?` + connectionSuffix : ``
 }

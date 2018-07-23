@@ -1,4 +1,5 @@
 import React from "react"
+import { graphql } from "gatsby"
 import { OutboundLink } from "gatsby-plugin-google-analytics"
 
 import Layout from "../components/layout"
@@ -40,6 +41,7 @@ class IndexRoute extends React.Component {
               css={{
                 padding: rhythm(presets.gutters.default / 2),
                 flex: `0 0 100%`,
+                maxWidth: `100%`,
                 [presets.Hd]: {
                   padding: vP,
                   paddingTop: 0,
@@ -217,7 +219,7 @@ class IndexRoute extends React.Component {
 export default IndexRoute
 
 export const pageQuery = graphql`
-  query Index {
+  query {
     file(relativePath: { eq: "gatsby-explanation.png" }) {
       childImageSharp {
         fluid(maxWidth: 870) {

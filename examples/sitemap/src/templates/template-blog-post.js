@@ -1,4 +1,5 @@
 import React from "react"
+import { graphql } from "gatsby"
 
 class BlogPost extends React.Component {
   render() {
@@ -17,7 +18,7 @@ class BlogPost extends React.Component {
 export default BlogPost
 
 export const PageQuery = graphql`
-  query blogPostBySlug($slug: String!) {
+  query($slug: String!) {
     markdownRemark(fields: { slug: { eq: $slug } }) {
       html
       frontmatter {

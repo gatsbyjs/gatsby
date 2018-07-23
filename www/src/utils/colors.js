@@ -73,6 +73,7 @@ const colors = {
     dark: gray(8, 270),
     copy: gray(12, 270),
     calm: gray(46, 270),
+    light: gray(80, 270),
   },
 }
 

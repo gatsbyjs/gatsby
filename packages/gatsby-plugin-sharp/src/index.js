@@ -10,6 +10,7 @@ const imageminPngquant = require(`imagemin-pngquant`)
 const imageminWebp = require(`imagemin-webp`)
 const queue = require(`async/queue`)
 const path = require(`path`)
+const existsSync = require(`fs-exists-cached`).sync
 
 const imageSizeCache = new Map()
 const getImageSize = file => {
@@ -245,7 +246,7 @@ const queueJob = (job, reporter) => {
   }
 
   // Check if the output file already exists so we don't redo work.
-  if (fs.existsSync(job.outputPath)) {
+  if (existsSync(job.outputPath)) {
     return
   }
 
@@ -449,7 +450,7 @@ async function fluid({ file, args = {}, reporter }) {
     return null
   }
 
-  const { width, height, density } = metadata
+  const { width, height, density, format } = metadata
   const pixelRatio =
     options.sizeByPixelDensity && typeof density === `number` && density > 0
       ? density / 72
@@ -532,11 +533,33 @@ async function fluid({ file, args = {}, reporter }) {
     .join(`,\n`)
   const originalName = file.base
 
+  // figure out the srcSet format
+  let srcSetType = `image/${format}`
+
+  if (options.toFormat) {
+    switch (options.toFormat) {
+      case `png`:
+        srcSetType = `image/png`
+        break
+      case `jpg`:
+        srcSetType = `image/jpeg`
+        break
+      case `webp`:
+        srcSetType = `image/webp`
+        break
+      case ``:
+      case `no_change`:
+      default:
+        break
+    }
+  }
+
   return {
     base64: base64Image.src,
     aspectRatio: images[0].aspectRatio,
     src: fallbackSrc,
     srcSet,
+    srcSetType,
     sizes: options.sizes,
     originalImg: originalImg,
     originalName: originalName,
@@ -737,6 +760,7 @@ function toArray(buf) {
 }
 
 exports.queueImageResizing = queueImageResizing
+exports.resize = queueImageResizing
 exports.base64 = base64
 exports.traceSVG = traceSVG
 exports.sizes = fluid

@@ -1,4 +1,5 @@
 import React from "react"
+import { graphql } from "gatsby"
 import Img from "gatsby-image"
 import numeral from "numeral"
 
@@ -153,7 +154,7 @@ class TracedSVG extends React.Component {
 export default TracedSVG
 
 export const query = graphql`
-  query TracedSVGQuery {
+  query {
     reddImageMobile: file(relativePath: { regex: "/redd/" }) {
       childImageSharp {
         fixed(width: 125) {

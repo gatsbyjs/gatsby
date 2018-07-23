@@ -94,7 +94,7 @@ export default ({ data }) => (
 )
 
 export const query = graphql`
-  query GatsbyImageSampleQuery {
+  query {
     file(relativePath: { eq: "blog/avatars/kyle-mathews.jpeg" }) {
       childImageSharp {
         # Specify the image processing specifications right in the query.
@@ -257,19 +257,19 @@ prop. e.g. `<Img fluid={fluid} />`
 | `style`                 | `object`            | Spread into the default styles in the wrapper element                                                                       |
 | `imgStyle`              | `object`            | Spread into the default styles for the actual `img` element                                                                 |
 | `position`              | `string`            | Defaults to `relative`. Pass in `absolute` to make the component `absolute` positioned                                      |
-| `backgroundColor`       | `string|bool`       | Set a colored background placeholder. If true, uses "lightgray" for the color. You can also pass in any valid color string. |
+| `backgroundColor`       | `string` / `bool`   | Set a colored background placeholder. If true, uses "lightgray" for the color. You can also pass in any valid color string. |
 | `onLoad`                | `func`              | A callback that is called when the full-size image has loaded.                                                              |
 | `Tag`                   | `string`            | Which HTML tag to use for wrapping elements. Defaults to `div`.                                                             |
 
 ## Image processing arguments
 
 [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp) supports many additional arguments for transforming your images like
-`quality`,`sizeByPixelDensity`,`pngCompressionLevel`,`cropFocus`,`greyscale` and many more. See its documentation for more.
+`quality`, `sizeByPixelDensity`, `pngCompressionLevel`, `cropFocus`, `greyscale` and many more. See its documentation for more.
 
 ## Some other stuff to be aware of
 
 - If you want to set `display: none;` on a component using a `fixed` prop,
-  you need to also pass in to the style prop `{ display: 'inherit' }`.\* Images
-  don't load until JavaScript is loaded. Gatsby's automatic code splitting
-  generally makes this fine but if images seem slow coming in on a page, check
-  how much JavaScript is being loaded there.
+  you need to also pass in to the style prop `{ display: 'inherit' }`.
+- Images don't load until JavaScript is loaded. Gatsby's automatic code
+  splitting generally makes this fine but if images seem slow coming in on a
+  page, check how much JavaScript is being loaded there.

@@ -8,6 +8,8 @@ const websocketManager = require(`../../utils/websocket-manager`)
 const path = require(`path`)
 const { store } = require(`../../redux`)
 const { generatePathChunkName } = require(`../../utils/js-chunk-names`)
+const { formatErrorDetails } = require(`./utils`)
+const mod = require(`hash-mod`)(999)
 
 const resultHashes = {}
 
@@ -20,8 +22,6 @@ type QueryJob = {
   context: Object,
   isPage: Boolean,
 }
-
-const indentString = string => string.replace(/\n/g, `\n  `)
 
 // Run query
 module.exports = async (queryJob: QueryJob, component: Any) => {
@@ -43,19 +43,22 @@ module.exports = async (queryJob: QueryJob, component: Any) => {
   // If there's a graphql error then log the error. If we're building, also
   // quit.
   if (result && result.errors) {
-    report.log(`
-The GraphQL query from ${component.componentPath} failed.
+    const errorDetails = new Map()
+    errorDetails.set(`Errors`, result.errors || [])
+    if (queryJob.isPage) {
+      errorDetails.set(`URL path`, queryJob.context.path)
+      errorDetails.set(
+        `Context`,
+        JSON.stringify(queryJob.context.context, null, 2)
+      )
+    }
+    errorDetails.set(`Plugin`, queryJob.pluginCreatorId || `none`)
+    errorDetails.set(`Query`, queryJob.query)
 
-Errors:
-  ${result.errors || []}
-URL path:
-  ${queryJob.path}
-Context:
-  ${indentString(JSON.stringify(queryJob.context, null, 2))}
-Plugin:
-  ${queryJob.pluginCreatorId || `none`}
-Query:
-  ${indentString(component.query)}`)
+    report.log(`
+The GraphQL query from ${queryJob.componentPath} failed.
+
+${formatErrorDetails(errorDetails)}`)
 
     // Perhaps this isn't the best way to see if we're building?
     if (program._[0] === `build`) {
@@ -64,8 +67,22 @@ Query:
   }
 
   // Add the page context onto the results.
-  if (queryJob?.isPage) {
-    result[`pageContext`] = queryJob.context
+  if (queryJob && queryJob.isPage) {
+    result[`pageContext`] = Object.assign({}, queryJob.context)
+  }
+
+  // Delete internal data from pageContext
+  if (result.pageContext) {
+    delete result.pageContext.jsonName
+    delete result.pageContext.path
+    delete result.pageContext.internalComponentName
+    delete result.pageContext.component
+    delete result.pageContext.componentChunkName
+    delete result.pageContext.updatedAt
+    delete result.pageContext.pluginCreator___NODE
+    delete result.pageContext.pluginCreatorId
+    delete result.pageContext.componentPath
+    delete result.pageContext.context
   }
 
   const resultJSON = JSON.stringify(result)
@@ -79,7 +96,7 @@ Query:
     .replace(/[^a-zA-Z0-9-_]/g, ``)
 
   let dataPath
-  if (queryJob?.isPage) {
+  if (queryJob.isPage) {
     dataPath = `${generatePathChunkName(queryJob.jsonName)}-${resultHash}`
   } else {
     dataPath = queryJob.hash
@@ -103,6 +120,13 @@ Query:
 
   if (resultHashes[queryJob.id] !== resultHash) {
     resultHashes[queryJob.id] = resultHash
+    let modInt = ``
+    // We leave StaticQuery results at public/static/d
+    // as the babel plugin has that path hard-coded
+    // for importing static query results.
+    if (queryJob.isPage) {
+      modInt = mod(dataPath).toString()
+    }
 
     // Always write file to public/static/d/ folder.
     const resultPath = path.join(
@@ -110,18 +134,26 @@ Query:
       `public`,
       `static`,
       `d`,
+      modInt,
       `${dataPath}.json`
     )
 
-    await fs.writeFile(resultPath, resultJSON)
+    if (queryJob.isPage) {
+      dataPath = `${modInt}/${dataPath}`
+    }
+
+    await fs.outputFile(resultPath, resultJSON)
 
     store.dispatch({
       type: `SET_JSON_DATA_PATH`,
       payload: {
-        [queryJob.jsonName]: dataPath,
+        key: queryJob.jsonName,
+        value: dataPath,
       },
     })
 
-    return
+    return result
   }
+
+  return result
 }

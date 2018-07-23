@@ -1,5 +1,5 @@
 import React from "react"
-import { Link } from "gatsby"
+import { Link, graphql } from "gatsby"
 import Layout from "../layouts"
 import kebabCase from "lodash/kebabCase"
 
@@ -32,7 +32,7 @@ class TagsPageRoute extends React.Component {
 export default TagsPageRoute
 
 export const pageQuery = graphql`
-  query TagsQuery {
+  query {
     site {
       siteMetadata {
         title

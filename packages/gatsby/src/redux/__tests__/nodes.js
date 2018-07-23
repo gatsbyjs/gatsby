@@ -78,9 +78,9 @@ describe(`Create and update nodes`, () => {
     )
     let state = nodeReducer(undefined, action)
     state = nodeReducer(state, updateAction)
-    expect(state[`hi`].pickle).toEqual(false)
-    expect(state[`hi`].deep.array[0]).toEqual(1)
-    expect(state[`hi`].deep2.boom).toEqual(`foo`)
+    expect(state.get(`hi`).pickle).toEqual(false)
+    expect(state.get(`hi`).deep.array[0]).toEqual(1)
+    expect(state.get(`hi`).deep2.boom).toEqual(`foo`)
   })
 
   it(`deletes previously transformed children nodes when the parent node is updated`, () => {
@@ -121,8 +121,8 @@ describe(`Create and update nodes`, () => {
     store.dispatch(
       actions.createParentChildLink(
         {
-          parent: store.getState().nodes[`hi`],
-          child: store.getState().nodes[`hi-1`],
+          parent: store.getState().nodes.get(`hi`),
+          child: store.getState().nodes.get(`hi-1`),
         },
         {
           name: `tests`,
@@ -150,8 +150,8 @@ describe(`Create and update nodes`, () => {
     store.dispatch(
       actions.createParentChildLink(
         {
-          parent: store.getState().nodes[`hi-1`],
-          child: store.getState().nodes[`hi-1-1`],
+          parent: store.getState().nodes.get(`hi-1`),
+          child: store.getState().nodes.get(`hi-1-1`),
         },
         {
           name: `tests`,
@@ -175,7 +175,7 @@ describe(`Create and update nodes`, () => {
         }
       )
     )
-    expect(Object.keys(store.getState().nodes).length).toEqual(1)
+    expect(store.getState().nodes.size).toEqual(1)
   })
 
   it(`deletes previously transformed children nodes when the parent node is deleted`, () => {
@@ -230,7 +230,7 @@ describe(`Create and update nodes`, () => {
     store.dispatch(
       actions.createParentChildLink(
         {
-          parent: store.getState().nodes[`hi`],
+          parent: store.getState().nodes.get(`hi`),
           child: getNode(`hi-1`),
         },
         {
@@ -276,7 +276,7 @@ describe(`Create and update nodes`, () => {
         }
       )
     )
-    expect(Object.keys(store.getState().nodes).length).toEqual(1)
+    expect(store.getState().nodes.size).toEqual(1)
   })
 
   it(`deletes previously transformed children nodes when parent nodes are deleted`, () => {
@@ -351,11 +351,14 @@ describe(`Create and update nodes`, () => {
       )
     )
     store.dispatch(
-      actions.deleteNodes([`hi`], {
-        name: `tests`,
-      })
+      actions.deleteNode(
+        { node: getNode(`hi`) },
+        {
+          name: `tests`,
+        }
+      )
     )
-    expect(Object.keys(store.getState().nodes).length).toEqual(0)
+    expect(store.getState().nodes.size).toEqual(0)
   })
 
   it(`allows deleting nodes`, () => {
@@ -463,7 +466,7 @@ describe(`Create and update nodes`, () => {
 
     const addFieldAction = actions.createNodeField(
       {
-        node: state[`hi`],
+        node: state.get(`hi`),
         name: `joy`,
         value: `soul's delight`,
       },
@@ -495,7 +498,7 @@ describe(`Create and update nodes`, () => {
 
     const addFieldAction = actions.createNodeField(
       {
-        node: state[`hi`],
+        node: state.get(`hi`),
         name: `joy`,
         value: `soul's delight`,
       },
@@ -508,7 +511,7 @@ describe(`Create and update nodes`, () => {
     function callActionCreator() {
       actions.createNodeField(
         {
-          node: state[`hi`],
+          node: state.get(`hi`),
           name: `joy`,
           value: `soul's delight`,
         },
@@ -587,6 +590,6 @@ describe(`Create and update nodes`, () => {
     actions.deleteNode(undefined, {
       name: `tests`,
     })
-    expect(Object.keys(store.getState().nodes).length).toEqual(0)
+    expect(store.getState().nodes.size).toEqual(0)
   })
 })
