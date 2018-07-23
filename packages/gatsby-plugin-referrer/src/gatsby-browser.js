@@ -1,4 +1,4 @@
-exports.onClientEntry = () => {
+exports.onClientEntry = function() {
   if (document.cookie.indexOf(`gatsbyOriginalReferrer`) < 0) {
     // create cookie
     document.cookie = `gatsbyOriginalReferrer=${
