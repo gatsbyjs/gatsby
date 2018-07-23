@@ -195,9 +195,7 @@ async function fetchData({
   _accessToken,
   _concurrentRequests,
 }) {
-  const type = route.type
-  const url = route.url
-  const acfOptionPageId = route.optionPageId
+  const { type, url, optionPageId } = route
 
   if (_verbose)
     console.log(
@@ -229,15 +227,15 @@ async function fetchData({
       routeResponse = routeResponse.map(r => {
         return {
           ...r,
-          ...(acfOptionPageId ? { __acfOptionPageId: acfOptionPageId } : {}),
+          ...(optionPageId ? { __acfOptionPageId: optionPageId } : {}),
           __type: type,
         }
       })
       entities = entities.concat(routeResponse)
     } else {
       routeResponse.__type = type
-      if(acfOptionPageId) {
-        routeResponse.__acfOptionPageId = acfOptionPageId
+      if(optionPageId) {
+        routeResponse.__acfOptionPageId = optionPageId
       }
       entities.push(routeResponse)
     }
