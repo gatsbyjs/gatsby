@@ -4,7 +4,7 @@ title: Unit testing
 
 Unit testing is a great way to protect against errors in your code before you
 deploy it. While Gatsby does not include support for unit testing out of the
-box, it is quite easy to get up and running. However there are a few quirks of
+box, it is quite easy to get up and running. However there are a few features of
 the Gatsby build process that mean the standard Jest setup doesn't quite work.
 
 ## Setting up your environment
@@ -26,7 +26,7 @@ yarn add -D jest babel-jest react-test-renderer 'babel-core@^7.0.0-0' @babel/cor
 
 Because Gatsby handles its own Babel configuration, you will need to manually
 tell Jest to use `babel-jest`. The easiest way to do this is to add a `"jest"`
-section in your `package.json`. We can set up a new useful defaults at the same
+section in your `package.json`. We can set up some useful defaults at the same
 time:
 
 ```json
@@ -70,15 +70,16 @@ pattern telling Jest which files contain tests. The pattern above matches any
 extension `.test.js` or `.spec.js`. We ignore any tests in the `node_modules` or
 `.cache` directories.
 
-`moduleNameMapper` works a bit like Webpack, and tells Jest how to handle
-imports. We are mainly concerned here with mocking static file imports, which
-Jest can't handle. A mock is a dummy module that is used instead of the real
-module inside tests. It is good when you have something that you can't or don't
-want to test. We have two types that we mock: stylesheets, and everything else.
-For stylesheets we use the package `identity-obj-proxy`. For all other files we
-use a manual mock, which we are calling `fileMock.js`. We need to create this
-ourselves. The convention is to create a directory called `__mocks__` in the
-root directory for this. Note the double underscores in the name.
+The `moduleNameMapper` sectipon works a bit like Webpack rules, and tells Jest
+how to handle imports. We are mainly concerned here with mocking static file
+imports, which Jest can't handle. A mock is a dummy module that is used instead
+of the real module inside tests. It is good when you have something that you
+can't or don't want to test. We have two types that we mock: stylesheets, and
+everything else. For stylesheets we use the package `identity-obj-proxy`. For
+all other files we use a manual mock, which we are calling `fileMock.js`. We
+need to create this ourselves. The convention is to create a directory called
+`__mocks__` in the root directory for this. Note the pair of double underscores
+in the name.
 
 ```js
 // __mocks__/fileMock.js
@@ -166,12 +167,14 @@ fix this easily by creating a new manual mock. Back in our `__mocks__`
 directory, create a file called `typeface-montserrat.js` and another called
 `typeface-merriweather.js`, each with the content `{}`. Any file in the mocks
 folder which has a name that matches that of a node_module is automatically used
-as a mock. Run the tests again now and it should all work! You should get a
-message about the snapshot being written. This is created in a `__snapshots__`
-directory next to your tests. If you take a look at it, you will see that it is
-a JSON representation of the `<Bio />` component. It is recommended that you
-check your snapshot files into your SCM repository so that anyone can see if the
-tests have stopped matching.
+as a mock.
+
+Run the tests again now and it should all work! You should get a message about
+the snapshot being written. This is created in a `__snapshots__` directory next
+to your tests. If you take a look at it, you will see that it is a JSON
+representation of the `<Bio />` component. You should check your snapshot files
+into your SCM repository so that anyone can see if the tests have stopped
+matching.
 
 If you make changes that mean you need to update the snapshot, you can do this
 by running `yarn test -u`.
@@ -185,7 +188,7 @@ config. First install `ts-jest`:
 yarn add -D ts-jest
 ```
 
-Then edit the Jest config in your `package.json` to the following:
+Then edit the Jest config in your `package.json` to match this:
 
 ```json
   "jest": {
@@ -213,7 +216,7 @@ Then edit the Jest config in your `package.json` to the following:
 
 If you need to make changes to your Babel config, you can edit the config in
 `jest-preprocess.js`. You may need to enable some of the plugins used by Gatsby,
-though rememeber you may need to install the Babel 7 versions. See
+though remember you may need to install the Babel 7 versions. See
 [the Gatsby Babel config guide](/docs/babel/) for some examples.
 
 For more information on Jest testing, visit
