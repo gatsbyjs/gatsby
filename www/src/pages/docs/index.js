@@ -33,9 +33,13 @@ class IndexRoute extends React.Component {
             <h2 id="using-the-gatsby-cli">Using the Gatsby CLI</h2>
             <ol>
               <li>
-                Create a new site.
-                {` `}
-                <code>gatsby new gatsby-site</code>
+                <p>Create a new site.</p>
+                <pre>
+                  <code className="language-sh">
+                    gatsby new gatsby-site
+                    https://github.com/gatsbyjs/gatsby-starter-default#v2
+                  </code>
+                </pre>
               </li>
               <li>
                 <code>cd gatsby-site</code>
