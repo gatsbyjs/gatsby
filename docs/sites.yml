@@ -1424,3 +1424,10 @@
     - Salesforce
   built_by: Gourav Sood
   built_by_url: 'https://www.gouravsood.com/'
+  - title: Figma
+  main_url: 'https://www.figma.com/'
+  url: 'https://www.figma.com/'
+  featured: false
+  categories:
+    - Marketing
+    - Design
