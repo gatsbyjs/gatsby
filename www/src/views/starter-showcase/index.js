@@ -14,7 +14,7 @@ class StarterShowcasePage extends Component {
     return JSON.stringify(this.props) !== JSON.stringify(nextProps)
   }
   render() {
-    const { data, location, urlState, setURLState } = this.props
+    const { location, urlState } = this.props
     const filtersApplied = urlState.s !== `` ? urlState.s : ( // if theres a search term
       urlState.d && !Array.isArray(urlState.d) ? urlState.d : // if theres a single dependency
         `Showcase` // if no search term or single dependency
@@ -31,7 +31,7 @@ class StarterShowcasePage extends Component {
           <meta name="twitter.label1" content="Reading time" />
           <meta name="twitter:data1" content={`1 min read`} />
         </Helmet>
-        <FilteredShowcase data={data} urlState={urlState} setURLState={setURLState} />
+        <FilteredShowcase {...this.props} />
       </Layout>
     )
   }
