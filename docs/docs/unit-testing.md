@@ -4,8 +4,8 @@ title: Unit testing
 
 Unit testing is a great way to protect against errors in your code before you
 deploy it. While Gatsby does not include support for unit testing out of the
-box, it is quite easy to get up and running. There are a few quirks of the
-Gatsby build process that mean the standard Jest setup doesn't quite work.
+box, it is quite easy to get up and running. However there are a few quirks of
+the Gatsby build process that mean the standard Jest setup doesn't quite work.
 
 ## Setting up your environment
 
@@ -72,11 +72,11 @@ extension `.test.js` or `.spec.js`. We ignore any tests in the `node_modules` or
 
 `moduleNameMapper` works a bit like Webpack, and tells Jest how to handle
 imports. We are mainly concerned here with mocking static file imports, which
-Jest can't handle. A mock is a module that is used instead of the real module
-inside tests. It is good when you have something that you can't or don't want to
-test. We have two types that we mock: stylesheets, and everything else. For
-stylesheets we use the package `identity-obj-proxy`. For all other files we use
-a manual mock, which we are calling `fileMock.js`. We need to create this
+Jest can't handle. A mock is a dummy module that is used instead of the real
+module inside tests. It is good when you have something that you can't or don't
+want to test. We have two types that we mock: stylesheets, and everything else.
+For stylesheets we use the package `identity-obj-proxy`. For all other files we
+use a manual mock, which we are calling `fileMock.js`. We need to create this
 ourselves. The convention is to create a directory called `__mocks__` in the
 root directory for this. Note the double underscores in the name.
 
@@ -91,10 +91,10 @@ this is because Gastby includes un-transpiled ES6 code. By default Jest doesn't
 try to transform code inside `node_modules`, so you will get an error like this:
 
 ```
-    /my-blog/node_modules/gatsby/cache-dir/gatsby-browser-entry.js:1
-    ({"Object.<anonymous>":function(module,exports,require,__dirname,__filename,global,jest){import React from "react"
-                                                                                             ^^^^^^
-    SyntaxError: Unexpected token import
+/my-blog/node_modules/gatsby/cache-dir/gatsby-browser-entry.js:1
+({"Object.<anonymous>":function(module,exports,require,__dirname,__filename,global,jest){import React from "react"
+                                                                                            ^^^^^^
+SyntaxError: Unexpected token import
 ```
 
 This is because `gatsby-browser-entry.js` isn't being transpiled before running
@@ -123,7 +123,7 @@ describe("Bio", () =>
   it("renders correctly", () => {
     const tree = renderer.create(<Bio />).toJSON()
     expect(tree).toMatchSnapshot()
-  }))``
+  }))
 ```
 
 This is a very simple snapshot test, which uses `react-test-renderer` to render
@@ -181,7 +181,7 @@ by running `yarn test -u`.
 If you are using TypeScript, you need to make a couple of small changes to your
 config. First install `ts-jest`:
 
-```hs
+```sh
 yarn add -D ts-jest
 ```
 
@@ -213,7 +213,7 @@ Then edit the Jest config in your `package.json` to the following:
 
 If you need to make changes to your Babel config, you can edit the config in
 `jest-preprocess.js`. You may need to enable some of the plugins used by Gatsby,
-though rememebr you may need to install the Babel 7 versions. See
+though rememeber you may need to install the Babel 7 versions. See
 [the Gatsby Babel config guide](/docs/babel/) for some examples.
 
 For more information on Jest testing, visit
