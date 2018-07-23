@@ -837,3 +837,21 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
   - Syntax highlighting via PrismJS
   - Styled Components
   - Pagination
+ 
+- [lite](https://github.com/sqrthree/lite)
+  [(Live demo)](https://blog.sqrtthree.com/)
+ 
+  > A clean and delicate theme for blog based on Gatsby.
+
+  Features:
+
+  - Ready to use, but easily customizable a fully equipped theme starter
+  - Minimalistic blog for developers
+  - Server-side rendering
+  - Seo Friendly
+  - Syntax highlighting via PrismJS
+  - Google Analytics integration
+  - Social sharing
+  - Pagination
+  - Prettier code styling
+  - [More info here](https://github.com/sqrthree/lite#lite)
