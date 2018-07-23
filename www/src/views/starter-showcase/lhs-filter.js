@@ -3,8 +3,8 @@ import React from "react"
 // import FaAngleUp from "react-icons/lib/fa/angle-up"
 import MdCheckboxBlank from "react-icons/lib/md/check-box-outline-blank"
 import MdCheckbox from "react-icons/lib/md/check-box"
-import /*presets, */ { colors } from "../utils/presets"
-import { options, /* rhythm, */ scale, rhythm } from "../utils/typography"
+import /*presets, */ { colors } from "../../utils/presets"
+import { options, /* rhythm, */ scale, rhythm } from "../../utils/typography"
 
 import Collapsible from '../shared/collapsible'
 

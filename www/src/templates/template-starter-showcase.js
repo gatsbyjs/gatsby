@@ -140,16 +140,17 @@ class StarterTemplate extends React.Component {
 
               <div
                 css={{
-                  padding: 20,
-                  paddingLeft: 0,
-                  flex: 1,
-                  justifyContent: 'center',
-                  display: `flex`,
-                  borderRight: `1px solid ${colors.ui.light}`,
+                  display: `none`,
                   [presets.Desktop]: {
+                    padding: 20,
+                    paddingLeft: 0,
+                    flex: 1,
+                    justifyContent: 'center',
+                    display: `flex`,
+                    borderRight: `1px solid ${colors.ui.light}`,
                     ...scale(-1 / 6),
+                    alignItems: 'center'
                   },
-                  alignItems: 'center'
                 }}
               >
                 <span css={{ marginRight: 20 }}>Try this starter</span>
@@ -246,10 +247,10 @@ class StarterTemplate extends React.Component {
                 padding: gutter,
                 [presets.Desktop]: {
                   padding: gutterDesktop,
+                  display: `grid`,
+                  gridTemplateColumns: `auto 1fr`,
+                  gridRowGap: `20px`,
                 },
-                display: `grid`,
-                gridTemplateColumns: 'auto 1fr',
-                gridRowGap: '20px'
               }}
             >
               <div css={{ color: colors.gray.calm, fontFamily: options.headerFontFamily.join(`,`), paddingRight: 20 }}>
@@ -268,7 +269,7 @@ class StarterTemplate extends React.Component {
               <div>
                 {frontmatter.features ?
                   <ul css={{ marginTop: 0 }}>{frontmatter.features.map((f, i) => <li key={i}>{f}</li>)}</ul> :
-                  "n/a"
+                  `No features`
                 }
               </div>
 
@@ -278,10 +279,13 @@ class StarterTemplate extends React.Component {
 
               <div>
                 <div css={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(3, 1fr)',
-                  gridColumnGap: 20,
-                  gridAutoRows: '50px'
+                  display: `grid`,
+                  gridAutoRows: `50px`,
+                  marginBottom: rhythm(options.blockMarginBottom * 5),
+                  [presets.Desktop]: {
+                    gridTemplateColumns: `repeat(3, 1fr)`,
+                    gridColumnGap: 20,
+                  },
                 }}>
                   {shownDeps && shownDeps.map(dep => /^gatsby-/.test(dep) ?
                     <div key={dep}><Link to={`/packages/${dep}`}>{dep}</Link></div> :
@@ -290,9 +294,15 @@ class StarterTemplate extends React.Component {
                       marginBottom: '1rem'
                     }}> <a href={`https://npm.im/${dep}`}><FaExtLink /></a> {dep}</div>
                   )}
+                  {showMore &&
+                    <button
+                      css={{ ...styles.button }}
+                      onClick={() => {this.setState({ showAllDeps: true })}}
+                    >
+                      {`Show ${allDeps.length - shownDeps.length} more`}
+                    </button>
+                  }
                 </div>
-                {showMore &&
-                  <a href="#showmore" onClick={() => this.setState({ showAllDeps: true })}>{`Show ${allDeps.length - shownDeps.length} more`}</a>}
               </div>
 
             </div>
@@ -433,6 +443,24 @@ const styles = {
     flexGrow: 0,
     flexShrink: 1,
     minWidth: 0,
+  },
+  button: {
+    border: 0,
+    borderRadius: presets.radius,
+    cursor: `pointer`,
+    fontFamily: options.headerFontFamily.join(`,`),
+    fontWeight: `bold`,
+    padding: `${rhythm(1 / 5)} ${rhythm(2 / 3)}`,
+    WebkitFontSmoothing: `antialiased`,
+    "&&": {
+      backgroundColor: colors.gatsby,
+      borderBottom: `none`,
+      boxShadow: `none`,
+      color: `white`,
+      "&:hover": {
+        backgroundColor: colors.gatsby,
+      },
+    },
   },
 }
 

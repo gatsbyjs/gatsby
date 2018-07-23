@@ -1,13 +1,13 @@
 import React, { Component } from "react"
-import SearchIcon from "../components/search-icon"
+import SearchIcon from "../../components/search-icon"
 import MdFilterList from "react-icons/lib/md/filter-list"
 import MdClear from "react-icons/lib/md/clear"
 import MdArrowDownward from "react-icons/lib/md/arrow-downward"
 import MdArrowForward from "react-icons/lib/md/arrow-forward"
 import MdSort from "react-icons/lib/md/sort"
 
-import { options, /* rhythm, */ scale, rhythm } from "../utils/typography"
-import presets, { colors } from "../utils/presets"
+import { options, /* rhythm, */ scale, rhythm } from "../../utils/typography"
+import presets, { colors } from "../../utils/presets"
 
 import styles from '../shared/styles'
 
@@ -169,7 +169,7 @@ export default class FilteredShowcase extends Component {
               {urlState.s.length === 0 ? (
                 filters.size === 0 ? (
                   <span>
-                    {data.allMarkdownRemark.edges.length} Starters for your new website
+                    All {data.allMarkdownRemark.edges.length} Starters
                   </span>
                 ) : (
                     <span>
@@ -186,29 +186,35 @@ export default class FilteredShowcase extends Component {
             </h2>
             <div css={{ marginLeft: `auto` }}>
               <label css={{
-                color: colors.gatsby,
-                border: 0,
-                borderRadius: presets.radiusLg,
-                fontFamily: options.headerFontFamily.join(`,`),
-                paddingTop: rhythm(1 / 8),
-                paddingRight: rhythm(1 / 5),
-                paddingBottom: rhythm(1 / 8),
-                paddingLeft: rhythm(1),
-                width: rhythm(5),
+                  display: `none`,
+                  [presets.Desktop]: {
+                    color: colors.gatsby,
+                    border: 0,
+                    borderRadius: presets.radiusLg,
+                    fontFamily: options.headerFontFamily.join(`,`),
+                    paddingTop: rhythm(1 / 8),
+                    paddingRight: rhythm(1 / 5),
+                    paddingBottom: rhythm(1 / 8),
+                    paddingLeft: rhythm(1),
+                    width: rhythm(5),
+                  },
               }}>
                 <MdArrowForward css={{ marginRight: 8 }} />
                 Submit your starter
               </label>
               <label css={{
-                color: colors.gatsby,
-                border: 0,
-                borderRadius: presets.radiusLg,
-                fontFamily: options.headerFontFamily.join(`,`),
-                paddingTop: rhythm(1 / 8),
-                paddingRight: rhythm(1 / 5),
-                paddingBottom: rhythm(1 / 8),
-                // paddingLeft: rhythm(1),
-                width: rhythm(5),
+                  display: `none`,
+                  [presets.Desktop]: {
+                    color: colors.gatsby,
+                    border: 0,
+                    borderRadius: presets.radiusLg,
+                    fontFamily: options.headerFontFamily.join(`,`),
+                    paddingTop: rhythm(1 / 8),
+                    paddingRight: rhythm(1 / 5),
+                    paddingBottom: rhythm(1 / 8),
+                    // paddingLeft: rhythm(1),
+                    width: rhythm(5),
+                  },
               }}
                 onClick={toggleSort}
               >

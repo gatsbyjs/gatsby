@@ -1,5 +1,5 @@
-import { options, /* rhythm, scale, */ rhythm } from "../utils/typography"
-import presets, { colors } from "../utils/presets"
+import { options, /* rhythm, scale, */ rhythm } from "../../utils/typography"
+import presets, { colors } from "../../utils/presets"
 import { style } from "glamor"
 import hex2rgba from "hex2rgba"
 

@@ -4,9 +4,9 @@ import Img from "gatsby-image"
 import FaExtLink from "react-icons/lib/fa/external-link"
 import FaGithub from "react-icons/lib/fa/github"
 import FaClipboard from "react-icons/lib/fa/clipboard"
-import { /* options, rhythm, */ scale, rhythm } from "../utils/typography"
-import presets, { colors } from "../utils/presets"
-import copyToClipboard from '../utils/copy-to-clipboard'
+import { /* options, rhythm, */ scale, rhythm } from "../../utils/typography"
+import presets, { colors } from "../../utils/presets"
+import copyToClipboard from '../../utils/copy-to-clipboard'
 import styles from '../shared/styles'
 
 const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
@@ -139,12 +139,12 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
                     <span className="title">
                       <h5 css={{ margin: 0 }}><strong>{repo.name}</strong></h5>
                     </span>
-                    {isGatsbyVersionWarning ?
+                    {/* {isGatsbyVersionWarning ?
                       <span css={{ fontStyle: `italic`, color: `red` }}>Outdated Version: {minorVersion}</span> :
                       <span css={{ fontStyle: `italic`, color: `green` }}>Gatsby Version: {minorVersion}</span>
-                    }
+                    } */}
                   </div>
-                  <div css={{ textOverflow: `ellipsis`, overflow: `hidden`, whiteSpace: `nowrap` }}>{description}</div>
+                  <div css={{ textOverflow: `ellipsis`, overflow: `hidden`, whiteSpace: `nowrap` }}>{description || `No description`}</div>
                   <div css={{ display: `flex`, justifyContent: `space-between` }}>
                     <div css={{ display: `inline-block` }}><span role="img" aria-label="star">⭐</span>{stars}</div>
                     <div css={{ display: `inline-block` }}>Updated {(new Date(pushed_at)).toLocaleDateString()}</div>
