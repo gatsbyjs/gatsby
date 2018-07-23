@@ -77,7 +77,7 @@ Sometimes a larger code example would require more than a single file, with vari
 │   └── index.css
 ```
 
-CodesandBox supports code example with multiple files. With this plugin, you can do:
+CodeSandbox supports code example with multiple files. With this plugin, you can do:
 
 ```html
 [Try it on CodeSandbox](codesandbox://my-example/index.js,my-example/util.js,my-example/index.css)
