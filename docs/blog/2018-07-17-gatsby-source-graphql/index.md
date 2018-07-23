@@ -1,16 +1,15 @@
 ---
 title: Simple GraphQL APIs with Gatsby
 date: "2018-07-17"
-image: "gatsbymanor.jpg" # change this
 author: "Mikhail Novikov"
 tags: ["gatsby", "graphql", "plugin", "source"]
 ---
 
-Gatsby's data model is powered by an internal GraphQL API. It is a great abstraction that allows you to define the data requirements of your app, be it some files in the filesystem or a third-party API. However, including any API required a specialized source plugin. Now, in Gatsby 2.0 you can easily include any GraphQL endpoint into Gatsby's GraphQL with one generic `gatsby-source-graphql` plugin.
+Gatsby 2.0 adds support for schema stitching of its internal schema. Schema stitching allows merging multiple GraphQL schemas together. It greatly simplifies working with third-party GraphQL APIs. Along with a low-level support for stiching in general, we are shipping official [gatsby-source-graphql](https://www.gatsbyjs.org/packages/gatsby-source-graphql/) plugin, which allows connecting to arbitrary GraphQL API in just a few lines of a configuration.
 
 # Getting started
 
-There are so many GraphQL APIs now. Github has one, lots of people use Prisma or GraphQL CMS. It's a pain to write a custom plugin every time you want to use it. Now you don't need to. Add this to your `gatsby-config.js`.
+Gatsby's data model is powered by an internal GraphQL API. It is a great abstraction that allows you to define the data requirements of your app, be it some files in the filesystem or a third-party API. However, including any API required a specialized source plugin. Naturally, it's a pain to write a custom plugin every time you want to use a third-party API. Now you don't need to. Add this to your `gatsby-config.js`.
 
 ```js
 // In your gatsby-config.js
@@ -61,7 +60,7 @@ When there weren't many existing GraphQL APIs in the wild, that wasn't that much
 
 # How does it work?
 
-Instead of creating nodes for all potential items in a third-party API, `gatsby-source-graphql` uses schema stitching to combine the schema of a third-party API with the Gatsby schema. Schema stitching combines multiple GraphQL schemas into one,  [read more about it here](https://www.apollographql.com/docs/graphql-tools/schema-stitching.html).
+Instead of creating nodes for all potential items in a third-party API, `gatsby-source-graphql` uses schema stitching to combine the schema of a third-party API with the Gatsby schema. Schema stitching combines multiple GraphQL schemas into one, [read more about it here](https://www.apollographql.com/docs/graphql-tools/schema-stitching.html).
 
 The plugin puts the full third-party GraphQL API under one field in Gatsby API. This way any types or fields of that API can be queried. There is no need to prefetch that data beforehand to create nodes, because the data will be fetched on-demand as required by the page queries.
 
