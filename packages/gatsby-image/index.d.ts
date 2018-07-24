@@ -1,10 +1,32 @@
 import * as React from "react"
 
+interface FixedObject {
+  width: number
+  height: number
+  src: string
+  srcSet: string
+  base64?: string
+  tracedSVG?: string
+  srcWebp?: string
+  srcSetWebp?: string
+}
+
+interface FluidObject {
+  aspectRatio: number
+  src: string
+  srcSet: string
+  sizes: string
+  base64: string
+  tracedSVG: string
+  srcWebp: string
+  srcSetWebp: string
+}
+
 interface GatsbyImageProps {
-  resolutions?: object
-  sizes?: object
-  fixed?: object
-  fluid?: object
+  resolutions?: FixedObject
+  sizes?: FluidObject
+  fixed?: FixedObject
+  fluid?: FluidObject
   fadeIn?: boolean
   title?: string
   alt?: string
@@ -12,9 +34,10 @@ interface GatsbyImageProps {
   outerWrapperClassName?: string | object
   style?: object
   imgStyle?: object
+  placeholderStyle: object
   position?: string
   backgroundColor?: string | boolean
-  onLoad?: (event: any) => void
+  onLoad?: () => void
   onStartLoad?: () => void
   Tag?: string
 }
