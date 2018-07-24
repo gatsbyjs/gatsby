@@ -1472,3 +1472,16 @@
   built_by: Gregory Schier
   built_by_url: https://schier.co
   featured: false
+- title: Ocean artUp
+  description: >
+    Science outreach site built using styled-components and Contentful. It presents the research project "Ocean artUp" funded by an Advanced Grant of the European Research Council to explore the possible benefits of artificial uplift of nutrient-rich deep water to the ocean’s sunlit surface layer.
+  main_url: https://ocean-artup.eu
+  url: https://ocean-artup.eu
+  source_url: https://github.com/JanoshRiebesell/ocean-artup
+  categories:
+    - Education
+    - Blog
+    - Science
+  built_by: Janosh Riebesell
+  built_by_url: https://janosh.io
+  featured: false
