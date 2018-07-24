@@ -1496,3 +1496,14 @@
   built_by: Janosh Riebesell
   built_by_url: https://janosh.io
   featured: false
+- title: Ryan Fitzgerald
+  description: >
+    Personal portfolio and blog for Ryan Fitzgerald
+  main_url: https://ryanfitzgerald.ca/
+  url: https://ryanfitzgerald.ca/
+  categories:
+    - Web Dev
+    - Portfolio
+  built_by: Ryan Fitzgerald
+  built_by_url: https://github.com/RyanFitzgerald
+  featured: false
