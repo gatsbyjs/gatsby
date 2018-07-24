@@ -130,6 +130,8 @@ exports.replaceHydrateFunction = true
 
 /**
  * Inform plugins when a service worker has been installed.
+ * @param {object} $0
+ * @param {object} $0.serviceWorker The service worker instance.
  */
 exports.onServiceWorkerInstalled = true
 
@@ -142,10 +144,14 @@ exports.onServiceWorkerUpdateFound = true
 
 /**
  * Inform plugins when a service worker has become active.
+ * @param {object} $0
+ * @param {object} $0.serviceWorker The service worker instance.
  */
 exports.onServiceWorkerActive = true
 
 /**
  * Inform plugins when a service worker is redundant.
+ * @param {object} $0
+ * @param {object} $0.serviceWorker The service worker instance.
  */
 exports.onServiceWorkerRedundant = true

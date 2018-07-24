@@ -24,17 +24,17 @@ if (`serviceWorker` in navigator) {
                 console.log(`Content is now available offline!`)
 
                 // post to service worker that install is complete
-                apiRunner(`onServiceWorkerInstalled`)
+                apiRunner(`onServiceWorkerInstalled`, { serviceWorker: reg })
               }
               break
 
             case `redundant`:
               console.error(`The installing service worker became redundant.`)
-              apiRunner(`onServiceWorkerRedundant`)
+              apiRunner(`onServiceWorkerRedundant`, { serviceWorker: reg })
               break
 
             case `active`:
-              apiRunner(`onServiceWorkerActive`)
+              apiRunner(`onServiceWorkerActive`, { serviceWorker: reg })
               break
           }
         })
