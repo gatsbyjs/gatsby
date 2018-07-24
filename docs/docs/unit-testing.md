@@ -22,7 +22,7 @@ First you need to install Jest and some more required packages. You need to
 install Babel 7 as it's required by Jest.
 
 ```sh
-yarn add -D jest babel-jest react-test-renderer 'babel-core@^7.0.0-0' @babel/core identity-obj-proxy @babel/plugin-proposal-class-properties @babel/plugin-proposal-optional-chaining
+npm install --save-dev jest babel-jest react-test-renderer 'babel-core@^7.0.0-0' @babel/core identity-obj-proxy @babel/plugin-proposal-class-properties @babel/plugin-proposal-optional-chaining
 ```
 
 Because Gatsby handles its own Babel configuration, you will need to manually
@@ -147,11 +147,11 @@ script for `test`, which just outputs an error message. Change this to simply
   }
 ```
 
-This means you can now run tests by typing `yarn test` or `npm test`. If you
-want you could also add a script that runs `jest --watchAll` to watch files and
-run tests when they are changed.
+This means you can now run tests by typing `npm test`. If you want you could
+also add a script that runs `jest --watchAll` to watch files and run tests when
+they are changed.
 
-Now, run `yarn test` and you should immediately get an error like this:
+Now, run `npm test` and you should immediately get an error like this:
 
 ```sh
  @font-face {
@@ -179,7 +179,7 @@ into your SCM repository so that anyone can see if the tests have stopped
 matching.
 
 If you make changes that mean you need to update the snapshot, you can do this
-by running `yarn test -u`.
+by running `npm test -- -u`.
 
 ## Using TypeScript
 
@@ -187,7 +187,7 @@ If you are using TypeScript, you need to make a couple of small changes to your
 config. First install `ts-jest`:
 
 ```sh
-yarn add -D ts-jest
+npm install --save-dev ts-jest
 ```
 
 Then edit the Jest config in your `package.json` to match this:
