@@ -135,7 +135,7 @@ module.exports = (
           const hasIntersection = isHiddenLine && isHighlightedLine
 
           if (hasIntersection) {
-            throw Error(`The range number of hide-lines and highlight-lines cannot be intersected. Check the file: ${path}.`)
+            throw Error(`Line ${index + 1} has been marked as both hidden an highlighted for file: ${path}.`)
           }
 
           return !isHiddenLine

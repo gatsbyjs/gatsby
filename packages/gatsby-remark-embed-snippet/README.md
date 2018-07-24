@@ -112,7 +112,7 @@ quz: "highlighted"
 
 ### Hide Lines
 
-Also is possible specify a range of lines to be hide.
+It's also possible to specify a range of lines to be hidden.
 
 #### JavaScript example
 
