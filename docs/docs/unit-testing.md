@@ -212,6 +212,38 @@ Then edit the Jest config in your `package.json` to match this:
   }
 ```
 
+## Other potential issues
+
+If you are using the `Link` component then you may encounter this error when
+testing your component:
+
+```
+    TypeError: Cannot read property 'history' of undefined
+```
+
+This is a `react-router` error, and can be fixed by wrapping your component in a
+`MemoryRouter` from `react-router-dom`. For example:
+
+```js
+import React from "react"
+import renderer from "react-test-renderer"
+import { MemoryRouter } from "react-router-dom"
+
+import Bio from "./Bio"
+
+describe("Bio", () =>
+  it("renders correctly", () => {
+    const tree = renderer
+      .create(
+        <MemoryRouter>
+          <Bio />
+        </MemoryRouter>
+      )
+      .toJSON()
+    expect(tree).toMatchSnapshot()
+  }))
+```
+
 ## More information
 
 If you need to make changes to your Babel config, you can edit the config in
