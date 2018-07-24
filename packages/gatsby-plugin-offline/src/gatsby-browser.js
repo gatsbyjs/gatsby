@@ -4,6 +4,8 @@ let swNotInstalled = true
 const pathnameResources = []
 
 exports.onPrefetchPathname = ({ pathname, getResourcesForPathname }) => {
+  // if SW is not installed, we need to record any prefetches
+  // that happen so we can then add them to SW cache once installed
   if (swNotInstalled && `serviceWorker` in navigator) {
     pathnameResources.push(
       new Promise(resolve => {
@@ -16,6 +18,7 @@ exports.onPrefetchPathname = ({ pathname, getResourcesForPathname }) => {
 }
 
 exports.onServiceWorkerInstalled = () => {
+  // stop recording prefetch events
   swNotInstalled = false
 
   // grab nodes from head of document
@@ -28,6 +31,8 @@ exports.onServiceWorkerInstalled = () => {
     .call(nodes)
     .map(node => (node.src ? node.src : node.href))
 
+  // loop over all resources and fetch the page component and JSON
+  // thereby storing it in SW cache
   Promise.all(pathnameResources).then(pageResources => {
     pageResources.forEach(pageResource => {
       const [script] = scripts.filter(s =>

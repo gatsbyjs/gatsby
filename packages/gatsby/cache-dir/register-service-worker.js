@@ -5,7 +5,7 @@ if (`serviceWorker` in navigator) {
     .register(`${__PATH_PREFIX__}/sw.js`)
     .then(function(reg) {
       reg.addEventListener(`updatefound`, () => {
-        apiRunner(`onServiceWorkerUpdateFound`)
+        apiRunner(`onServiceWorkerUpdateFound`, { serviceWorker: reg })
         // The updatefound event implies that reg.installing is set; see
         // https://w3c.github.io/ServiceWorker/#service-worker-registration-updatefound-event
         const installingWorker = reg.installing

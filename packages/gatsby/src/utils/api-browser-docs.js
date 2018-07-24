@@ -135,6 +135,8 @@ exports.onServiceWorkerInstalled = true
 
 /**
  * Inform plugins of when a service worker has an update available.
+ * @param {object} $0
+ * @param {object} $0.serviceWorker The service worker instance.
  */
 exports.onServiceWorkerUpdateFound = true
 
