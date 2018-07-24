@@ -144,7 +144,6 @@ By default, it will ignore all other endpoints listed in the root `/wp-json` end
 
 To customize the routes fetched, two configuration options are available: `includeRoutes` for whitelisting and `excludeRoutes` for blacklisting. Both options expect an array of glob patterns. Glob matching is done by [minimatch](https://github.com/isaacs/minimatch). To test your glob patterns, [use this tool](http://pthrasher.github.io/minimatch-test/).
 
-If there are
 If an endpoint is whitelisted and not blacklisted, it will be fetched. Otherwise, it will be ignored.
 
 ### Migrating from gatsby-source-wordpress v2
