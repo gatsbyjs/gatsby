@@ -1472,6 +1472,17 @@
   built_by: Gregory Schier
   built_by_url: https://schier.co
   featured: false
+- title: Timeline Theme Portfolio
+  description: >
+    I'm Aman Mittal, a software developer.
+  main_url: http://www.amanhimself.me/
+  url: http://www.amanhimself.me/
+  categories:
+    - Landing
+    - Web Dev
+    - Portfolio
+  built_by: Aman Mittal
+  built_by_url: http://www.amanhimself.me/
 - title: Ocean artUp
   description: >
     Science outreach site built using styled-components and Contentful. It presents the research project "Ocean artUp" funded by an Advanced Grant of the European Research Council to explore the possible benefits of artificial uplift of nutrient-rich deep water to the ocean’s sunlit surface layer.
