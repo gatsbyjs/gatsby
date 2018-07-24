@@ -104,6 +104,7 @@ exports.wrapRootComponent = true
  * for plugins with custom prefetching logic.
  * @param {object} $0
  * @param {object} $0.pathname The pathname whose resources should now be prefetched
+ * @param {object} $0.getResourcesForPathname Function for fetching resources related to pathname
  */
 exports.onPrefetchPathname = true
 
@@ -126,3 +127,23 @@ exports.disableCorePrefetching = true
  * };
  */
 exports.replaceHydrateFunction = true
+
+/**
+ * Inform plugins of when a service worker has been installed.
+ */
+exports.onServiceWorkerInstalled = true
+
+/**
+ * Inform plugins of when a service worker has an update available.
+ */
+exports.onServiceWorkerUpdateFound = true
+
+/**
+ * Inform plugins of when a service worker has become active.
+ */
+exports.onServiceWorkerActive = true
+
+/**
+ * Inform plugins of when a service worker is redundant.
+ */
+exports.onServiceWorkerRedundant = true
