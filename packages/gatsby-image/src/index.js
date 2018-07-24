@@ -171,7 +171,7 @@ class Image extends React.Component {
   }
 
   componentDidMount() {
-    if (this.state.isVisible && typeof this.props.onStartLoad === "function") {
+    if (this.state.isVisible && typeof this.props.onStartLoad === `function`) {
       this.props.onStartLoad()
     }
   }
@@ -179,7 +179,7 @@ class Image extends React.Component {
   handleRef(ref) {
     if (this.state.IOSupported && ref) {
       listenToIntersections(ref, () => {
-        if (typeof this.props.onStartLoad === "function") {
+        if (typeof this.props.onStartLoad === `function`) {
           this.props.onStartLoad()
         }
 
