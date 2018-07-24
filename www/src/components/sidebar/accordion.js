@@ -1,16 +1,47 @@
 import React, { Fragment } from "react"
-import hex2rgba from "hex2rgba"
 
 import presets, { colors } from "../../utils/presets"
 import { rhythm, options, scale } from "../../utils/typography"
-import { css as glam } from "glamor"
 
 import Item from "./item"
 import SectionTitle from "./section-title"
 import ChevronSvg from "./chevron-svg"
 
-const horizontalPadding = rhythm(3 / 4)
-const horizontalPaddingDesktop = rhythm(3 / 2)
+const paddingLeft = level => (level === 0 ? level + 1 * 40 : level + 1 * 20)
+
+const Chevron = ({ isActive }) => (
+  <span
+    css={{
+      display: `none`,
+      [presets.Tablet]: {
+        display: `flex`,
+        width: 40,
+        minHeight: 40,
+        flexBasis: `40px`,
+        flexShrink: 0,
+        alignItems: `center`,
+        marginLeft: `auto`,
+        position: `relative`,
+        "&:before": {
+          ...styles.ulHorizontalDivider,
+          top: `auto`,
+          bottom: 0,
+          left: `0 !important`,
+        },
+      },
+    }}
+  >
+    <ChevronSvg
+      cssProps={{
+        color: isActive ? colors.lilac : colors.ui.bright,
+        transform: isActive ? `rotateX(180deg)` : `rotateX(0deg)`,
+        transition: `transform 0.2s ease`,
+        marginLeft: `auto`,
+        marginRight: `auto`,
+      }}
+    />
+  </span>
+)
 
 const ToggleSectionChevron = ({
   isActive,
@@ -23,25 +54,16 @@ const ToggleSectionChevron = ({
     aria-controls={uid}
     css={{
       ...styles.resetButton,
-      marginLeft: `auto`,
       [presets.Tablet]: {
         display: hideSectionTitle ? `none` : `inline`,
+      },
+      "&:hover": {
+        background: `white`,
       },
     }}
     onClick={onSectionTitleClick}
   >
-    <ChevronSvg
-      cssProps={{
-        color: colors.gray.light,
-        marginLeft: `auto`,
-        transform: isActive ? `rotateX(180deg)` : `rotateX(0deg)`,
-        transition: `transform 0.2s ease`,
-        display: `none`,
-        [presets.Tablet]: {
-          display: `inline-block`,
-        },
-      }}
-    />
+    <Chevron isActive={isActive} />
   </button>
 )
 
@@ -49,6 +71,7 @@ const ToggleSectionButton = ({
   title,
   isActive,
   uid,
+  level,
   hideSectionTitle,
   onSectionTitleClick,
 }) => (
@@ -57,42 +80,39 @@ const ToggleSectionButton = ({
     aria-controls={uid}
     css={{
       ...styles.button,
+      paddingLeft: level === 0 ? 40 : 0,
+      paddingRight: `0 !important`,
       [presets.Tablet]: {
         display: hideSectionTitle ? `none` : `inline`,
+      },
+      "&:before": {
+        ...styles.ulHorizontalDivider,
+        top: `auto`,
+        bottom: 0,
+        left: level === 0 ? 40 : 0,
       },
     }}
     onClick={onSectionTitleClick}
   >
-    <SectionTitle isActive={isActive}>
+    <SectionTitle isActive={isActive} isSplit={true} level={level}>
       {title}
-      <ChevronSvg
-        cssProps={{
-          color: colors.gray.light,
-          marginLeft: `auto`,
-          transform: isActive ? `rotateX(180deg)` : `rotateX(0deg)`,
-          transition: `transform 0.2s ease`,
-          display: `none`,
-          [presets.Tablet]: {
-            display: `inline-block`,
-          },
-        }}
-      />
+      <Chevron isActive={isActive} />
     </SectionTitle>
   </button>
 )
 
-const Title = ({ title }) => (
+const Title = ({ title, level, isActive }) => (
   <div
     css={{
-      paddingLeft: horizontalPadding,
-      paddingRight: horizontalPadding,
-      [presets.Desktop]: {
-        paddingLeft: horizontalPaddingDesktop,
-        paddingRight: horizontalPaddingDesktop,
-      },
+      paddingLeft: paddingLeft(level),
+      minHeight: 40,
+      display: `flex`,
+      alignItems: `center`,
     }}
   >
-    <SectionTitle disabled>{title}</SectionTitle>
+    <SectionTitle disabled isActive={isActive} level={level}>
+      {title}
+    </SectionTitle>
   </div>
 )
 
@@ -104,10 +124,10 @@ const ItemWithSubitems = ({
   uid,
   hideSectionTitle,
   onSectionTitleClick,
-  itemStyles,
   createLink,
   isActive,
   level,
+  isExpanded,
 }) => {
   const SectionTitleComponent = section.disableAccordions
     ? Title
@@ -120,25 +140,27 @@ const ItemWithSubitems = ({
           css={{
             alignItems: `flex-end`,
             display: `flex`,
+            paddingLeft: level === 0 ? 40 : 0,
             position: `relative`,
             width: `100%`,
-            ...itemStyles.item,
-            paddingLeft: level === 0 ? `40px !important` : `0px !important`,
           }}
         >
-          {createLink({
-            isActive: section.link === activeItemLink.link,
-            item: section,
-            section,
-            location,
-            onLinkClick,
-          })}
           <span
             css={{
-              paddingBottom: 2,
-              marginLeft: `auto`,
+              borderRight: `1px solid ${colors.ui.border}`,
+              flexGrow: 1,
+              // background: isExpanded ? `red` : false,
             }}
           >
+            {createLink({
+              isActive: section.link === activeItemLink.link,
+              isExpanded: isExpanded,
+              item: section,
+              location,
+              onLinkClick,
+            })}
+          </span>
+          <span css={{ marginLeft: `auto` }}>
             <ToggleSectionChevron
               isActive={isActive}
               uid={uid}
@@ -152,6 +174,7 @@ const ItemWithSubitems = ({
           title={section.title}
           isActive={isActive}
           uid={uid}
+          level={level}
           hideSectionTitle={hideSectionTitle}
           onSectionTitleClick={onSectionTitleClick}
         />
@@ -166,7 +189,7 @@ class Accordion extends React.Component {
 
     this.state = {
       uid: (`` + Math.random()).replace(/\D/g, ``),
-      collapsed: props.isActive || false,
+      collapsed: props.collapsed || props.isActive || false,
     }
     this.handleClick = this.handleClick.bind(this)
   }
@@ -176,21 +199,6 @@ class Accordion extends React.Component {
     if (this.props.onClick) {
       this.props.onClick(...args)
     }
-  }
-
-  _isChildItemActive = (item, activeItemLink) => {
-    if (item.items) {
-      const matches = item.items.filter(function(subitem) {
-        return (
-          subitem.link === activeItemLink.link &&
-          item.link === subitem.parentLink
-        )
-      })
-
-      return matches.length >= 1
-    }
-
-    return false
   }
 
   render() {
@@ -203,12 +211,12 @@ class Accordion extends React.Component {
       item: section,
       hideSectionTitle,
       activeItemLink,
-      itemStyles,
       isFirstItem,
       isLastItem,
       singleSection,
       level,
       activeItemParents,
+      isActive,
     } = this.props
     const uid = `section_` + this.state.uid
 
@@ -216,17 +224,11 @@ class Accordion extends React.Component {
       <li
         className="accordion"
         css={{
-          position: `relative`,
-          marginTop: isFirstItem ? 0 : rhythm(options.blockMarginBottom / 2),
+          background:
+            collapsed && isActive && level > 0 ? colors.ui.light : false,
           marginBottom: rhythm(options.blockMarginBottom / 2),
-          "&:before": {
-            ...(!isFirstItem && { ...styles.ulHorizontalDivider }),
-          },
-          "&:after": {
-            ...(!isLastItem && { ...styles.ulHorizontalDivider }),
-            top: `auto`,
-            bottom: 0,
-          },
+          marginTop: isFirstItem ? 0 : rhythm(options.blockMarginBottom / 2),
+          position: `relative`,
         }}
       >
         <ItemWithSubitems
@@ -237,9 +239,9 @@ class Accordion extends React.Component {
           uid={uid}
           hideSectionTitle={hideSectionTitle}
           onSectionTitleClick={this.handleClick}
-          itemStyles={itemStyles}
           createLink={createLink}
           isActive={collapsed}
+          isExpanded={isActive}
           level={level}
           activeItemParents={activeItemParents}
         />
@@ -249,15 +251,9 @@ class Accordion extends React.Component {
             ...styles.ul,
             ...styles.ulSubitems,
             position: `relative`,
-            paddingBottom: rhythm(3 / 4),
+            paddingBottom: level === 0 && collapsed ? 40 : false,
             "& li": {
-              ...itemStyles.item,
-              paddingLeft:
-                // blergh ;)
-                level === 0
-                  ? `${level + 1 * 40}px !important`
-                  : `${level + 1 * 20}px !important`,
-              paddingRight: `0 !important`,
+              paddingLeft: paddingLeft(level),
             },
             [presets.Tablet]: {
               display: collapsed ? `block` : `none`,
@@ -277,6 +273,7 @@ class Accordion extends React.Component {
               isFirstItem={isFirstItem}
               isLastItem={isLastItem}
               activeItemParents={activeItemParents}
+              isActive={isActive}
               key={item.title}
               level={level + 1}
               styles={{
@@ -295,36 +292,21 @@ class Accordion extends React.Component {
 
 export default Accordion
 
-glam.insert(`
-  .accordion + .accordion {
-    margin: 0;
-  }
-
-  .item ~ .accordion {
-    margin-bottom: 0;
-  }
-
-  .accordion + .item {
-    margin-top: ${rhythm(options.blockMarginBottom / 2)};
-  }
-
-  .accordion + .accordion::before {
-    display: none;
-  }
-`)
-
 const styles = {
   ul: {
     listStyle: `none`,
     margin: 0,
     position: `relative`,
+    "& li": {
+      marginBottom: 0,
+    },
   },
   ulStepsUI: {
-    paddingBottom: rhythm(options.blockMarginBottom / 2),
+    background: colors.ui.light,
     "&:after": {
       background: colors.ui.bright,
       content: ` `,
-      left: `.275rem`,
+      left: 0,
       top: `1.5rem`,
       bottom: `1.5rem`,
       position: `absolute`,
@@ -333,7 +315,7 @@ const styles = {
     "&:before": {
       content: ` `,
       height: `100%`,
-      left: `.275rem`,
+      left: 0,
       position: `absolute`,
       bottom: 0,
       width: 0,
@@ -345,51 +327,28 @@ const styles = {
     border: 0,
     cursor: `pointer`,
     padding: 0,
+    marginLeft: `auto`,
   },
   button: {
     backgroundColor: `transparent`,
     border: 0,
     cursor: `pointer`,
     padding: 0,
-    paddingLeft: horizontalPadding,
-    paddingRight: horizontalPadding,
     position: `relative`,
     textAlign: `left`,
     width: `100%`,
-    [presets.Desktop]: {
-      paddingLeft: horizontalPaddingDesktop,
-      paddingRight: horizontalPaddingDesktop,
-    },
   },
   liActive: {
     background: colors.ui.light,
-    "&&": {
-      marginTop: rhythm(options.blockMarginBottom / 2),
-      marginBottom: rhythm(options.blockMarginBottom / 2),
-      paddingTop: rhythm(options.blockMarginBottom / 2),
-    },
-  },
-  ulSubitems: {
-    paddingTop: rhythm(options.blockMarginBottom / 2),
-    paddingBottom: rhythm(options.blockMarginBottom / 2),
-    [presets.Desktop]: {
-      "&& li": {
-        paddingLeft: rhythm(3 / 4),
-        paddingRight: rhythm(3 / 4),
-      },
-    },
   },
   ulHorizontalDivider: {
-    background: hex2rgba(colors.ui.bright, 0.3),
+    background: colors.ui.border,
     top: 0,
     content: ` `,
     height: 1,
     position: `absolute`,
     right: 0,
-    left: horizontalPadding,
-    [presets.Desktop]: {
-      left: horizontalPaddingDesktop,
-    },
+    left: 40,
   },
   liTutorial: {
     "&&": {
@@ -401,7 +360,6 @@ const styles = {
       },
       "& ul a": {
         fontWeight: `normal`,
-        fontFamily: options.systemFontFamily.join(`,`),
         fontSize: scale(-1 / 10).fontSize,
         [presets.Phablet]: {
           fontSize: scale(-2 / 10).fontSize,

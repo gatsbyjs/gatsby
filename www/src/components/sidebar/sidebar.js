@@ -4,6 +4,9 @@ import Item from "./item"
 import getActiveItem from "../../utils/sidebar/get-active-item"
 import getActiveItemParents from "../../utils/sidebar/get-active-item-parents"
 
+import presets, { colors } from "../../utils/presets"
+import { scale, options } from "../../utils/typography"
+
 class SidebarBody extends React.Component {
   render() {
     const {
@@ -22,8 +25,37 @@ class SidebarBody extends React.Component {
     )
 
     return (
-      <div className="docSearch-sidebar">
-        <ul css={{ margin: 0 }}>
+      <div className="docSearch-sidebar" css={{ height: `100%` }}>
+        <ul
+          css={{
+            margin: 0,
+            backgroundColor: colors.ui.whisper,
+            borderRight: `1px solid ${colors.ui.border}`,
+            paddingTop: 20,
+            paddingBottom: 20,
+            fontSize: scale(-1 / 10).fontSize,
+            [presets.Phablet]: {
+              fontSize: scale(-2 / 10).fontSize,
+            },
+            [presets.Tablet]: {
+              fontSize: scale(-4 / 10).fontSize,
+            },
+            "& a": {
+              fontFamily: options.systemFontFamily.join(`,`),
+            },
+            "& li": {
+              margin: 0,
+              // "&:hover": {
+              //   background: `linear-gradient( #663399FF 0, ${
+              //     colors.lilac
+              //   }00 1px, ${colors.lilac}00 100% )`,
+              // },
+            },
+            "& > li:last-child > span:before": {
+              display: `none`,
+            },
+          }}
+        >
           {sectionList.map((item, index) => (
             <Item
               activeItemHash={activeItemHash}
