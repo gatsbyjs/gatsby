@@ -41,6 +41,8 @@ const fetchPageResourceMap = () => {
   return fetchingPageResourceMapPromise
 }
 
+const createJsonURL = jsonName => `${__PATH_PREFIX__}/static/d/${jsonName}.json`
+
 const fetchResource = resourceName => {
   // Find resource
   let resourceFunction
@@ -52,9 +54,7 @@ const fetchResource = resourceName => {
     } else {
       resourceFunction = () => {
         const fetchPromise = new Promise((resolve, reject) => {
-          const url = `${__PATH_PREFIX__}/static/d/${
-            jsonDataPaths[resourceName]
-          }.json`
+          const url = createJsonURL(jsonDataPaths[resourceName])
           var req = new XMLHttpRequest()
           req.open(`GET`, url, true)
           req.withCredentials = true
@@ -198,7 +198,10 @@ const queue = {
     // Tell plugins with custom prefetching logic that they should start
     // prefetching this path.
     if (!prefetchTriggered[path]) {
-      apiRunner(`onPrefetchPathname`, { pathname: path })
+      apiRunner(`onPrefetchPathname`, {
+        pathname: path,
+        getResourcesForPathname: queue.getResourcesForPathname,
+      })
       prefetchTriggered[path] = true
     }
 
@@ -355,7 +358,7 @@ const queue = {
       getResourceModule(page.jsonName),
     ]).then(([component, json]) => {
       const pageResources = { component, json, page }
-
+      pageResources.page.jsonURL = createJsonURL(jsonDataPaths[page.jsonName])
       pathScriptsCache[path] = pageResources
       cb(pageResources)
 
