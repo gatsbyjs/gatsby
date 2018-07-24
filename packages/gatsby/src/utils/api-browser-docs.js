@@ -129,21 +129,21 @@ exports.disableCorePrefetching = true
 exports.replaceHydrateFunction = true
 
 /**
- * Inform plugins of when a service worker has been installed.
+ * Inform plugins when a service worker has been installed.
  */
 exports.onServiceWorkerInstalled = true
 
 /**
- * Inform plugins of when a service worker has an update available.
+ * Inform plugins when a service worker has an update available.
  */
 exports.onServiceWorkerUpdateFound = true
 
 /**
- * Inform plugins of when a service worker has become active.
+ * Inform plugins when a service worker has become active.
  */
 exports.onServiceWorkerActive = true
 
 /**
- * Inform plugins of when a service worker is redundant.
+ * Inform plugins when a service worker is redundant.
  */
 exports.onServiceWorkerRedundant = true
