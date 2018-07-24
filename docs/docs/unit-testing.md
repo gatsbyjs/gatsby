@@ -4,8 +4,9 @@ title: Unit testing
 
 Unit testing is a great way to protect against errors in your code before you
 deploy it. While Gatsby does not include support for unit testing out of the
-box, it is quite easy to get up and running. However there are a few features of
-the Gatsby build process that mean the standard Jest setup doesn't quite work.
+box, it only takes a few steps to get up and running. However there are a few
+features of the Gatsby build process that mean the standard Jest setup doesn't
+quite work. This guide shows you how to set it up.
 
 ## Setting up your environment
 
@@ -14,10 +15,10 @@ which was created by Facebook. While Jest is a general purpose JavaScript unit
 testing framework, it has lots of features that make it work particularly well
 with React.
 
-For this guide, we will be starting with `gatsby-starter-blog`, but the concepts
-should be the same or very similar for your site.
+For this guide, you will be starting with `gatsby-starter-blog`, but the
+concepts should be the same or very similar for your site.
 
-First you need to install Jest and some more required packages. We need to
+First you need to install Jest and some more required packages. You need to
 install Babel 7 as it's required by Jest.
 
 ```sh
@@ -26,7 +27,7 @@ yarn add -D jest babel-jest react-test-renderer 'babel-core@^7.0.0-0' @babel/cor
 
 Because Gatsby handles its own Babel configuration, you will need to manually
 tell Jest to use `babel-jest`. The easiest way to do this is to add a `"jest"`
-section in your `package.json`. We can set up some useful defaults at the same
+section in your `package.json`. You can set up some useful defaults at the same
 time:
 
 ```json
@@ -47,9 +48,9 @@ time:
 ```
 
 The `transform` section tells Jest that all `js` or `jsx` files need to be
-transformed using a `jest-preprocess.js` file in the project root. Let's go
-ahead and create this file now. This is where we set up our Babel config. We can
-start with a minimal config.
+transformed using a `jest-preprocess.js` file in the project root. Go ahead and
+create this file now. This is where you set up your Babel config. You can start
+with a minimal config.
 
 ```js
 // jest-preprocess.js
@@ -64,22 +65,22 @@ const babelOptions = {
 module.exports = require("babel-jest").createTransformer(babelOptions)
 ```
 
-Back to our Jest config, we can see the next option is `testRegex`. This is the
+Back to the Jest config, you can see the next option is `testRegex`. This is the
 pattern telling Jest which files contain tests. The pattern above matches any
 `.js` file inside a `__tests__` directory, or any file elsewhere with the
-extension `.test.js` or `.spec.js`. We ignore any tests in the `node_modules` or
-`.cache` directories.
+extension `.test.js` or `.spec.js`. You are telling Jest to ignore any tests in
+the `node_modules` or `.cache` directories.
 
 The `moduleNameMapper` sectipon works a bit like Webpack rules, and tells Jest
-how to handle imports. We are mainly concerned here with mocking static file
+how to handle imports. You are mainly concerned here with mocking static file
 imports, which Jest can't handle. A mock is a dummy module that is used instead
 of the real module inside tests. It is good when you have something that you
-can't or don't want to test. We have two types that we mock: stylesheets, and
-everything else. For stylesheets we use the package `identity-obj-proxy`. For
-all other files we use a manual mock, which we are calling `fileMock.js`. We
-need to create this ourselves. The convention is to create a directory called
-`__mocks__` in the root directory for this. Note the pair of double underscores
-in the name.
+can't or don't want to test. You have two types that you mock: stylesheets, and
+everything else. For stylesheets you need to use the package
+`identity-obj-proxy`. For all other files you need to use a manual mock called
+`fileMock.js`. You need to create this yourself. The convention is to create a
+directory called `__mocks__` in the root directory for this. Note the pair of
+double underscores in the name.
 
 ```js
 // __mocks__/fileMock.js
@@ -87,9 +88,10 @@ module.exports = "test-file-stub"
 ```
 
 The final config setting is `transformIgnorePatterns`. This is very important,
-and is different from what you'll find in other Jest guides. The reason we need
-this is because Gastby includes un-transpiled ES6 code. By default Jest doesn't
-try to transform code inside `node_modules`, so you will get an error like this:
+and is different from what you'll find in other Jest guides. The reason that you
+need this is because Gastby includes un-transpiled ES6 code. By default Jest
+doesn't try to transform code inside `node_modules`, so you will get an error
+like this:
 
 ```
 /my-blog/node_modules/gatsby/cache-dir/gatsby-browser-entry.js:1
@@ -99,19 +101,19 @@ SyntaxError: Unexpected token import
 ```
 
 This is because `gatsby-browser-entry.js` isn't being transpiled before running
-in Jest. We fix this by changing the default `transformIgnorePatterns` to
+in Jest. You can fix this by changing the default `transformIgnorePatterns` to
 exclude the `gatsby` module.
 
 ## Writing tests
 
-A full guide to unit testing is beyond the scope of this guide, but we will
+A full guide to unit testing is beyond the scope of this guide, but you can
 start with a simple snapshot test to check that everything is working.
 
-First we will create the test file. As you remember, we can either put these in
-a `__tests__` directory, or put them elsewhere (usually next to the component
-itself), with the extention `.spec.js` or `.test.js`. The decision comes down to
-your own taste. For this guide we will be testing the `<Bio />` component, so we
-can create a `Bio.test.js` file next to it in `src/components`:
+First, create the test file. You can either put these in a `__tests__`
+directory, or put them elsewhere (usually next to the component itself), with
+the extention `.spec.js` or `.test.js`. The decision comes down to your own
+taste. For this guide you will be testing the `<Bio />` component, so create a
+`Bio.test.js` file next to it in `src/components`:
 
 ```js
 import React from "react"
@@ -136,8 +138,8 @@ learn more about other tests that you can write.
 ## Running tests
 
 If you look inside `package.json` you will probably find that there is already a
-script for `test`, which just outputs an error message. We can change this to
-simply `jest`:
+script for `test`, which just outputs an error message. Change this to simply
+`jest`:
 
 ```json
   "scripts": {
@@ -162,8 +164,8 @@ Now, run `yarn test` and you should immediately get an error like this:
     > 4 | import 'typeface-montserrat'
 ```
 
-This is because our css mock doesn't recognize the `typeface-` modules. We can
-fix this easily by creating a new manual mock. Back in our `__mocks__`
+This is because the CSS mock doesn't recognize the `typeface-` modules. You can
+fix this easily by creating a new manual mock. Back in the `__mocks__`
 directory, create a file called `typeface-montserrat.js` and another called
 `typeface-merriweather.js`, each with the content `{}`. Any file in the mocks
 folder which has a name that matches that of a node_module is automatically used
@@ -244,7 +246,7 @@ describe("Bio", () =>
   }))
 ```
 
-## More information
+## Other resources
 
 If you need to make changes to your Babel config, you can edit the config in
 `jest-preprocess.js`. You may need to enable some of the plugins used by Gatsby,
