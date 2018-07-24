@@ -170,9 +170,19 @@ class Image extends React.Component {
     this.handleRef = this.handleRef.bind(this)
   }
 
+  componentDidMount() {
+    if (this.state.isVisible && typeof this.props.onStartLoad === "function") {
+      this.props.onStartLoad()
+    }
+  }
+
   handleRef(ref) {
     if (this.state.IOSupported && ref) {
       listenToIntersections(ref, () => {
+        if (typeof this.props.onStartLoad === "function") {
+          this.props.onStartLoad()
+        }
+
         this.setState({ isVisible: true, imgLoaded: false })
       })
     }
@@ -472,6 +482,7 @@ Image.propTypes = {
   backgroundColor: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   onLoad: PropTypes.func,
   onError: PropTypes.func,
+  onStartLoad: PropTypes.func,
   Tag: PropTypes.string,
 }
 
