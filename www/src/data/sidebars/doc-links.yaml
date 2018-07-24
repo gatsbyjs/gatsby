@@ -1,8 +1,6 @@
 - title: Quick start
   link: /docs/
   items:
-    - title: Browser Support
-      link: /docs/browser-support/
     - title: Recipes*
       link: /docs/recipes/
     - title: Overview of the docs*
@@ -22,41 +20,34 @@
           link: /docs/e-commerce/
         - title: Interactive pages*
           link: /docs/interactive-pages/
-        - title: Plugins*
-          link: /docs/plugins/
+        - title: Headless CMS*
+          ui: steps
           items:
-            - title: Plugin authoring
-              link: /docs/plugin-authoring/
-            - title: Submit to Plugin Library*
-              link: /docs/submit-to-plugin-library/
-            - title: Source plugin tutorial
-              link: /docs/source-plugin-tutorial/
-            - title: Headless CMS*
-              items:
-                - title: Netlify CMS
-                  link: /docs/netlify-cms/
-                - title: WordPress*
-                  link: /docs/wordpress/
-                - title: Drupal*
-                  link: /docs/drupal/
-                - title: Contentful*
-                  link: /docs/contentful/
-                - title: Prose*
-                  link: /docs/prose/
+            - title: Netlify CMS
+              link: /docs/netlify-cms/
+            - title: WordPress*
+              link: /docs/wordpress/
+            - title: Drupal*
+              link: /docs/drupal/
+            - title: Contentful*
+              link: /docs/contentful/
+            - title: Prose*
+              link: /docs/prose/
 - title: Guides
   items:
-    - title: Preparing your environment*
+    - title: Preparing your environment
       items:
       - title: Basic hardware and software requirements*
         link: /docs/basic-hardware-software-requirements/
+      - title: Browser Support
+        link: /docs/browser-support/
       - title: Gatsby on Macs*
         link: /docs/gatsby-on-macs/
       - title: Gatsby on Windows
         link: /docs/gatsby-on-windows/
-    - title: Deploying & Hosting*
-      link: /docs/deploying-and-hosting/
+    - title: Deploying & Hosting
       items:
-        - title: Preparing site for deployment*
+        - title: Preparing site for deployment
           link: /docs/preparing-for-deployment/
         - title: Deploying
           link: /docs/deploy-gatsby/
@@ -64,8 +55,7 @@
           link: /docs/path-prefix/
         - title: How Gatsby works with GitHub pages
           link: /docs/how-gatsby-works-with-github-pages/
-    - title: Custom configuration*
-      link: /docs/customization/
+    - title: Custom configuration
       items:
         - title: Babel.js
           link: /docs/babel/
@@ -77,12 +67,11 @@
           link: /docs/environment-variables/
         - title: Proxying API requests
           link: /docs/api-proxy/
-    - title: Images and files*
-      link: /docs/images-and-files/
+    - title: Images and files
       items:
         - title: Adding Images, Fonts, and Files
           link: /docs/adding-images-fonts-files/
-        - title: Static folder*
+        - title: Static folder
           link: /docs/static-folder/
         - title: Dropping images into static folders*
           link: /docs/dropping-images-into-static-folders/
@@ -94,7 +83,7 @@
           link: /docs/gatsby-source-filesystem-programmatic-import/
         - title: Working with images in Gatsby
           link: /docs/working-with-images/
-    - title: Querying your data with GraphQL*
+    - title: Querying your data with GraphQL
       link: /docs/graphql/
       items: 
         - title: Introducing GraphiQL*
@@ -113,8 +102,16 @@
           link: /docs/programmatically-create-pages-from-data/
         - title: Querying data with StaticQuery
           link: /docs/static-query/
-    - title: Styling*
-      link: /docs/styling/
+    - title: Plugins
+      link: /docs/plugins/
+      items:
+        - title: Plugin authoring
+          link: /docs/plugin-authoring/
+        - title: Submit to Plugin Library*
+          link: /docs/submit-to-plugin-library/
+        - title: Source plugin tutorial
+          link: /docs/source-plugin-tutorial/
+    - title: Styling
       items:
         - title: CSS Modules*
           link: /docs/css-modules/
@@ -130,15 +127,13 @@
           link: /docs/component-css/
         - title: PostCSS*
           link: /docs/post-css/
-    - title: Debugging*
-      link: /docs/debugging/
+    - title: Debugging
       items:
         - title: Debugging HTML builds
           link: /docs/debugging-html-builds/
         - title: Debugging Replace Renderer API
           link: /docs/debugging-replace-renderer-api/
-    - title: Preparing site for launch*
-      link: /docs/website-functionality/
+    - title: Preparing site for launch
       items:
         - title: Adding a 404 Page
           link: /docs/add-404-page/

@@ -1,23 +1,26 @@
 import React from "react"
 import presets, { colors } from "../../utils/presets"
-import { scale, options, rhythm } from "../../utils/typography"
+import { scale, options } from "../../utils/typography"
 
-const SectionTitle = ({ children, isActive, disabled }) => (
+const SectionTitle = ({ children, isActive, disabled, level }) => (
   <h3
     css={{
       alignItems: `center`,
-      color: colors.lilac,
       display: `flex`,
-      fontFamily: options.headerFontFamily.join(`,`),
-      fontSize: scale(-2 / 5).fontSize,
-      fontWeight: `normal`,
-      letterSpacing: `.1em`,
+      fontFamily: options.systemFontFamily.join(`,`),
+      fontSize: scale(-2 / 6).fontSize,
+      fontWeight: isActive ? `bold` : `normal`,
       margin: 0,
-      textTransform: `uppercase`,
-      paddingTop: rhythm(options.blockMarginBottom),
-      paddingBottom: rhythm(options.blockMarginBottom),
+      ...(level === 0 && {
+        color: colors.lilac,
+        fontFamily: options.headerFontFamily.join(`,`),
+        letterSpacing: `.075em`,
+        textTransform: `uppercase`,
+      }),
+
       [presets.Tablet]: {
         color: isActive ? colors.gatsby : false,
+        // fontWeight: isActive ? `bold` : false,
         "&:hover": {
           color: disabled ? false : colors.gatsby,
         },

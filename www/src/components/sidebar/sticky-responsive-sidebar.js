@@ -40,21 +40,26 @@ class StickyResponsiveSidebar extends Component {
             ...styles.sidebar,
             opacity: menuOpacity,
             pointerEvents: open ? `auto` : `none`,
+            "&:hover": {
+              visibility: `visible`,
+            },
           }}
         >
-          <div
-            css={{
-              transform: `translateX(-${menuOffset})`,
-              transition: `transform 0.5s ease`,
-              [presets.Tablet]: {
-                transform: `none !important`,
-              },
-            }}
-          >
-            <BodyComponent
-              closeParentMenu={this._closeNavMenu}
-              {...this.props}
-            />
+          <div css={{ ...styles.sidebarInner }} className="inner">
+            <div
+              css={{
+                transform: `translateX(-${menuOffset})`,
+                transition: `transform 0.5s ease`,
+                [presets.Tablet]: {
+                  transform: `none !important`,
+                },
+              }}
+            >
+              <BodyComponent
+                closeParentMenu={this._closeNavMenu}
+                {...this.props}
+              />
+            </div>
           </div>
         </div>
         <div
@@ -87,8 +92,6 @@ class StickyResponsiveSidebar extends Component {
 
 export default StickyResponsiveSidebar
 
-const horizontalPadding = rhythm(3 / 4)
-
 const styles = {
   sidebar: {
     background: `#fff`,
@@ -96,15 +99,15 @@ const styles = {
     boxShadow: `0 0 20px rgba(0, 0, 0, 0.15)`,
     display: `block`,
     height: `100vh`,
-    paddingTop: horizontalPadding,
-    paddingBottom: horizontalPadding,
     position: `fixed`,
     overflowY: `auto`,
     top: 0,
+    bottom: 0,
     transition: `opacity 0.5s ease`,
     WebkitOverflowScrolling: `touch`,
     width: 320,
     zIndex: 10,
+    visibility: `hidden`,
     "::-webkit-scrollbar": {
       width: `6px`,
       height: `6px`,
@@ -116,8 +119,6 @@ const styles = {
       background: colors.ui.light,
     },
     [presets.Tablet]: {
-      backgroundColor: colors.ui.whisper,
-      borderRight: `1px solid ${colors.ui.light}`,
       boxShadow: `none`,
       height: `calc(100vh - ${presets.headerHeight} - ${
         presets.bannerHeight
@@ -128,11 +129,30 @@ const styles = {
       top: `calc(${presets.headerHeight} + ${presets.bannerHeight} - 1px)`,
       width: rhythm(10),
       zIndex: 2,
+      "::-webkit-scrollbar-track": {
+        background: `transparent`,
+      },
     },
     [presets.Desktop]: {
-      paddingTop: horizontalPadding,
-      paddingBottom: horizontalPadding,
       width: rhythm(12),
+    },
+  },
+  sidebarInner: {
+    backgroundColor: colors.ui.whisper,
+    visibility: `visible`,
+    height: `100%`,
+    position: `relative`,
+    "&:before": {
+      content: ` `,
+      width: 1,
+      background: colors.ui.border,
+      position: `absolute`,
+      display: `block`,
+      right: 0,
+      left: `auto`,
+      top: 0,
+      height: `100%`,
+      bottom: 0,
     },
   },
   button: {
@@ -147,6 +167,7 @@ const styles = {
     justifyContent: `space-around`,
     position: `fixed`,
     right: 20,
+    visibility: `visible`,
     width: 60,
     zIndex: 20,
     [presets.Tablet]: { display: `none` },
@@ -158,5 +179,6 @@ const styles = {
     flexDirection: `column`,
     height: 20,
     width: 20,
+    visibility: `visible`,
   },
 }
