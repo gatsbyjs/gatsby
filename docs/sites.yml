@@ -1472,3 +1472,15 @@
   built_by: Gregory Schier
   built_by_url: https://schier.co
   featured: false
+- title: Timeline Theme Portfolio
+  description: >
+    I'm Aman Mittal, a software developer.
+  main_url: http://www.amanhimself.me/
+  url: http://www.amanhimself.me/
+  categories:
+    - Landing
+    - Web Dev
+    - Portfolio
+  built_by: Aman Mittal
+  built_by_url: http://www.amanhimself.me/
+  featured: false
