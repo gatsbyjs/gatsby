@@ -179,8 +179,11 @@ class Image extends React.Component {
   handleRef(ref) {
     if (this.state.IOSupported && ref) {
       listenToIntersections(ref, () => {
-        if (typeof this.props.onStartLoad === `function`) {
-          this.props.onStartLoad()
+        if (
+          !this.state.isVisible &&
+          typeof this.props.onStartLoad === `function`
+        ) {
+          this.props.onStartLoad();
         }
 
         this.setState({ isVisible: true, imgLoaded: false })
