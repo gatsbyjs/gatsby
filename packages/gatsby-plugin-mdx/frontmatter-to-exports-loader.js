@@ -7,10 +7,11 @@ module.exports = async function(content) {
 
   const matter = frontmatter(content);
 
-  const code = `export const _frontmatter = ${JSON.stringify(matter.data)};
+  const code = `
+export const _frontmatter = ${JSON.stringify(matter.data)};
 
 ${matter.content}
-  `;
+`;
 
   return callback(null, code);
 };
