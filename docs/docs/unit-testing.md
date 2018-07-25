@@ -71,7 +71,7 @@ pattern telling Jest which files contain tests. The pattern above matches any
 extension `.test.js` or `.spec.js`. You are telling Jest to ignore any tests in
 the `node_modules` or `.cache` directories.
 
-The `moduleNameMapper` sectipon works a bit like Webpack rules, and tells Jest
+The `moduleNameMapper` section works a bit like webpack rules, and tells Jest
 how to handle imports. You are mainly concerned here with mocking static file
 imports, which Jest can't handle. A mock is a dummy module that is used instead
 of the real module inside tests. It is good when you have something that you
@@ -111,7 +111,7 @@ start with a simple snapshot test to check that everything is working.
 
 First, create the test file. You can either put these in a `__tests__`
 directory, or put them elsewhere (usually next to the component itself), with
-the extention `.spec.js` or `.test.js`. The decision comes down to your own
+the extension `.spec.js` or `.test.js`. The decision comes down to your own
 taste. For this guide you will be testing the `<Bio />` component, so create a
 `Bio.test.js` file next to it in `src/components`:
 
