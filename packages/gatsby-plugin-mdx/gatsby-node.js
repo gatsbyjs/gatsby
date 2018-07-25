@@ -75,11 +75,11 @@ exports.onCreateWebpackConfig = (
           use: [
             loaders.js(),
             {
-              loader: "gatsby-mdx/mdx-options-loader",
+              loader: "gatsby-mdx/mdx-loader",
               options: pluginOptions
-            },
+            }
             //            "@mdx-js/loader",
-            "gatsby-mdx/frontmatter-to-exports-loader"
+            //            "gatsby-mdx/frontmatter-to-exports-loader"
           ]
         }
       ]
