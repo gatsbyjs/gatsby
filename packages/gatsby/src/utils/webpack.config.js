@@ -290,7 +290,7 @@ module.exports = async (
       rules.yaml(),
       rules.fonts(),
       rules.images(),
-      rules.audioVideo(),
+      rules.miscAssets(),
     ]
     switch (stage) {
       case `develop`: {
