@@ -5,7 +5,10 @@
   "main": "index.js",
   "license": "MIT",
   "peerDependencies": {
-    "@mdx-js/loader": "^0.15.0-0",
-    "@mdx-js/mdx": "^0.15.0-0"
+    "@mdx-js/mdx": "^0.15.0-0",
+    "@mdx-js/loader": "^0.15.0-0"
+  },
+  "dependencies": {
+    "gray-matter": "^4.0.1"
   }
 }
