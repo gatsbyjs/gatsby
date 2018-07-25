@@ -266,7 +266,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
               }}
             >
               <Helmet>
-                <title> {data.sitesYaml.title} </title>
+                <title>{data.sitesYaml.title}</title>
                 <meta
                   name="og:image"
                   content={`https://next.gatsbyjs.org${
