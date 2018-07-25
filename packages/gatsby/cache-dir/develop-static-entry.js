@@ -59,6 +59,8 @@ export default (pagePath, callback) => {
     bodyProps = merge({}, bodyProps, props)
   }
 
+  const getHeadComponents = components => headComponents
+
   const replaceHeadComponents = components => {
     headComponents = components
   }
@@ -73,7 +75,7 @@ export default (pagePath, callback) => {
   })
 
   apiRunner(`onPreRenderHTML`, {
-    headComponents,
+    getHeadComponents,
     replaceHeadComponents,
   })
 

@@ -44,7 +44,8 @@ const StaticEntry = require(`../static-entry`).default
 
 const reverseHeadersPlugin = {
   plugin: {
-    onPreRenderHTML: ({ headComponents, replaceHeadComponents }) => {
+    onPreRenderHTML: ({ getHeadComponents, replaceHeadComponents }) => {
+      const headComponents = getHeadComponents()
       headComponents.reverse()
       replaceHeadComponents(headComponents)
     },
@@ -56,12 +57,13 @@ const fakeStylesPlugin = {
     onRenderBody: ({ setHeadComponents }) => setHeadComponents([
       <style key="style1">.style1 {}</style>,
       <style key="style2">.style2 {}</style>,
+      <style key="style3">.style3 {}</style>,
     ]),
   },
 }
 
 describe(`develop-static-entry`, () => {
-  test(`onPreRenderHTML can be used to replace header components`, (done) => {
+  test(`onPreRenderHTML can be used to replace head components`, (done) => {
     global.plugins = [
       fakeStylesPlugin,
       reverseHeadersPlugin,
@@ -79,7 +81,7 @@ describe(`static-entry`, () => {
     global.__PATH_PREFIX__ = ``
   })
 
-  test(`onPreRenderHTML can be used to replace header components`, (done) => {
+  test(`onPreRenderHTML can be used to replace head components`, (done) => {
     global.plugins = [
       fakeStylesPlugin,
       reverseHeadersPlugin,

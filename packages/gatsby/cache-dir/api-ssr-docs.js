@@ -104,7 +104,7 @@ exports.onRenderBody = true
  * replace head components to be rendered in your `html.js`. This is useful if
  * you need to reorder scripts or styles added by other plugins.
  * @param {Object} $0
- * @param {Array} $0.headComponents The current `headComponents` array.
+ * @param {Array} $0.getHeadComponents Returns the current `headComponents` array.
  * @param {function} $0.replaceHeadComponents Takes an array of components as its
  * first argument which replace the `headComponents` array which is passed
  * to the `html.js` component. **WARNING** if multiple plugins implement this
@@ -112,7 +112,8 @@ exports.onRenderBody = true
  * @param {Object} pluginOptions
  * @example
  * // Move Typography.js styles to the top of the head section so they're loaded first.
- * exports.onPreRenderHTML = ({ headComponents, replaceHeadComponents }) => {
+ * exports.onPreRenderHTML = ({ getHeadComponents, replaceHeadComponents }) => {
+ *   const headComponents = getHeadComponents()
  *   headComponents.sort((x, y) => {
  *     if (x.key === 'TypographyStyle') {
  *       return -1
