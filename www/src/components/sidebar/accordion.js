@@ -104,10 +104,10 @@ const ToggleSectionButton = ({
 const Title = ({ title, level, isActive }) => (
   <div
     css={{
+      alignItems: `center`,
+      display: `flex`,
       paddingLeft: paddingLeft(level),
       minHeight: 40,
-      display: `flex`,
-      alignItems: `center`,
     }}
   >
     <SectionTitle disabled isActive={isActive} level={level}>
@@ -117,7 +117,7 @@ const Title = ({ title, level, isActive }) => (
 )
 
 const ItemWithSubitems = ({
-  section,
+  item,
   activeItemLink,
   location,
   onLinkClick,
@@ -129,13 +129,13 @@ const ItemWithSubitems = ({
   level,
   isExpanded,
 }) => {
-  const SectionTitleComponent = section.disableAccordions
+  const SectionTitleComponent = item.disableAccordions
     ? Title
     : ToggleSectionButton
 
   return (
     <Fragment>
-      {section.link ? (
+      {item.link ? (
         <span
           css={{
             alignItems: `flex-end`,
@@ -149,13 +149,12 @@ const ItemWithSubitems = ({
             css={{
               borderRight: `1px solid ${colors.ui.border}`,
               flexGrow: 1,
-              // background: isExpanded ? `red` : false,
             }}
           >
             {createLink({
-              isActive: section.link === activeItemLink.link,
+              isActive: item.link === activeItemLink.link,
               isExpanded: isExpanded,
-              item: section,
+              item,
               location,
               onLinkClick,
             })}
@@ -171,7 +170,7 @@ const ItemWithSubitems = ({
         </span>
       ) : (
         <SectionTitleComponent
-          title={section.title}
+          title={item.title}
           isActive={isActive}
           uid={uid}
           level={level}
@@ -208,7 +207,7 @@ class Accordion extends React.Component {
       location,
       onLinkClick,
       onSectionTitleClick,
-      item: section,
+      item,
       hideSectionTitle,
       activeItemLink,
       isFirstItem,
@@ -226,13 +225,11 @@ class Accordion extends React.Component {
         css={{
           background:
             collapsed && isActive && level > 0 ? colors.ui.light : false,
-          marginBottom: rhythm(options.blockMarginBottom / 2),
-          marginTop: isFirstItem ? 0 : rhythm(options.blockMarginBottom / 2),
           position: `relative`,
         }}
       >
         <ItemWithSubitems
-          section={section}
+          item={item}
           activeItemLink={activeItemLink}
           location={location}
           onLinkClick={onLinkClick}
@@ -249,8 +246,6 @@ class Accordion extends React.Component {
           id={uid}
           css={{
             ...styles.ul,
-            ...styles.ulSubitems,
-            position: `relative`,
             paddingBottom: level === 0 && collapsed ? 40 : false,
             "& li": {
               paddingLeft: paddingLeft(level),
@@ -260,13 +255,13 @@ class Accordion extends React.Component {
             },
           }}
         >
-          {section.items.map(item => (
+          {item.items.map(subitem => (
             <Item
               createLink={createLink}
               location={location}
               onLinkClick={onLinkClick}
               onSectionTitleClick={onSectionTitleClick}
-              item={item}
+              item={subitem}
               hideSectionTitle={hideSectionTitle}
               singleSection={singleSection}
               activeItemLink={activeItemLink}
@@ -274,14 +269,14 @@ class Accordion extends React.Component {
               isLastItem={isLastItem}
               activeItemParents={activeItemParents}
               isActive={isActive}
-              key={item.title}
+              key={subitem.title}
               level={level + 1}
               styles={{
-                ...(section.ui === `steps` && {
+                ...(item.ui === `steps` && {
                   ...styles.ulStepsUI,
                 }),
               }}
-              ui={section.ui}
+              ui={item.ui}
             />
           ))}
         </ul>
@@ -302,7 +297,6 @@ const styles = {
     },
   },
   ulStepsUI: {
-    background: colors.ui.light,
     "&:after": {
       background: colors.ui.bright,
       content: ` `,

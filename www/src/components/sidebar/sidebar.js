@@ -45,11 +45,6 @@ class SidebarBody extends React.Component {
             },
             "& li": {
               margin: 0,
-              // "&:hover": {
-              //   background: `linear-gradient( #663399FF 0, ${
-              //     colors.lilac
-              //   }00 1px, ${colors.lilac}00 100% )`,
-              // },
             },
             "& > li:last-child > span:before": {
               display: `none`,
