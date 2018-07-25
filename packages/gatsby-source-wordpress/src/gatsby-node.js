@@ -70,7 +70,7 @@ exports.sourceNodes = async (
   // Remove ACF key if it's not an object, combine ACF Options
   entities = normalize.normalizeACF(entities)
 
-  // Combine ACF Option Data entities into one
+  // Combine ACF Option Data entities into one but split by IDs + options
   entities = normalize.combineACF(entities)
 
   // Creates entities from object collections of entities
