@@ -1531,7 +1531,6 @@
     - Portfolio
     - Web Dev
     - Personal
-    - featured
   built_by: Peter Hironaka
   built_by_url: https://github.com/PHironaka
-  featured: true
+  featured: false
