@@ -2,6 +2,7 @@ const crypto = require(`crypto`);
 const path = require("path");
 //const mdxPlugin = require(".");
 const mdx = require("@mdx-js/mdx");
+const matter = require("gray-matter");
 
 exports.onCreateNode = async function onCreateNode(
   { node, getNode, loadNodeContent, actions, createNodeId },
@@ -18,9 +19,10 @@ exports.onCreateNode = async function onCreateNode(
     return;
   }
 
-  const content = await loadNodeContent(node);
+  const nodeContent = await loadNodeContent(node);
+  const { content, data } = matter(nodeContent);
 
-  const markdownNode = {
+  const mdxNode = {
     id: createNodeId(`${node.id} >>> Mdx`),
     children: [],
     parent: node.id,
@@ -30,7 +32,7 @@ exports.onCreateNode = async function onCreateNode(
     },
     frontmatter: {
       title: ``, // always include a title
-      slug: "as",
+      ...data,
       _PARENT: node.id
     },
     rawBody: content
@@ -38,35 +40,40 @@ exports.onCreateNode = async function onCreateNode(
 
   // Add path to the markdown file path
   if (node.internal.type === `File`) {
-    markdownNode.fileAbsolutePath = node.absolutePath;
-    markdownNode.relativePath = node.relativePath;
-    markdownNode.fileNode = node;
+    mdxNode.fileAbsolutePath = node.absolutePath;
+    mdxNode.relativePath = node.relativePath;
+    mdxNode.fileNode = node;
   }
 
-  markdownNode.internal.contentDigest = crypto
+  mdxNode.internal.contentDigest = crypto
     .createHash(`md5`)
-    .update(JSON.stringify(markdownNode))
+    .update(JSON.stringify(mdxNode))
     .digest(`hex`);
 
-  createNode(markdownNode);
-  createParentChildLink({ parent: node, child: markdownNode });
+  createNode(mdxNode);
+  createParentChildLink({ parent: node, child: mdxNode });
 };
 
 exports.setFieldsOnGraphQLNodeType = require("./src/set-fields-on-graphql-node-type");
 
-exports.onCreateWebpackConfig = ({
-  stage,
-  rules,
-  loaders,
-  plugins,
-  actions
-}) => {
+exports.onCreateWebpackConfig = (
+  { stage, rules, loaders, plugins, actions },
+  pluginOptions
+) => {
   actions.setWebpackConfig({
     module: {
       rules: [
         {
           test: /\.mdx$/,
-          use: [loaders.js(), "@mdx-js/loader"]
+          use: [
+            loaders.js(),
+            {
+              loader: "gatsby-mdx/mdx-options-loader",
+              options: pluginOptions
+            },
+            //            "@mdx-js/loader",
+            "gatsby-mdx/frontmatter-to-exports-loader"
+          ]
         }
       ]
     },
@@ -79,43 +86,6 @@ exports.onCreateWebpackConfig = ({
 };
 
 exports.resolvableExtensions = () => [`.mdx`];
-
-/*exports.createPages =*/ ({ actions, graphql }) => {
-  const { createPage } = actions;
-
-  return graphql(`
-    {
-      allMdx(limit: 1000) {
-        edges {
-          node {
-            code
-            fileAbsolutePath
-            relativePath
-          }
-        }
-      }
-    }
-  `).then(result => {
-    if (result.errors) {
-      return Promise.reject(result.errors);
-    }
-
-    result.data.allMdx.edges.forEach(({ node }) => {
-      console.log(node.relativePath, node.code);
-      /* createPage({
-       *   path: node.relativePath.slice(0, -4), //node.fileNode.path,
-       *   component: mdxPlugin.createComponent(node.relativePath, node.code),
-       *   context: {} // additional data can be passed via context
-       * });
-       */
-      /* createPage({
-       *   path: node.relativePath.slice(0, -4), //node.fileNode.path,
-       *   component: require.resolve(node.fileAbsolutePath),
-       *   context: {} // additional data can be passed via context
-       * }); */
-    });
-  });
-};
 
 exports.preprocessSource = function preprocessSource(
   { filename, contents },
