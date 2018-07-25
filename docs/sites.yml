@@ -1507,3 +1507,18 @@
   built_by: Ryan Fitzgerald
   built_by_url: https://github.com/RyanFitzgerald
   featured: false
+- title: Kaizen
+  description: >
+    Content Marketing, PR & SEO Agency in London
+  main_url: https://www.kaizen.co.uk/
+  url: https://www.kaizen.co.uk/
+  categories:
+    - Agency
+    - Blog
+    - Creative
+    - Design
+    - Web Dev
+    - SEO
+  built_by: Bogdan Stanciu
+  built_by_url: https://github.com/b0gd4n
+  featured: false
