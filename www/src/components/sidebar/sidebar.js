@@ -40,8 +40,10 @@ class SidebarBody extends React.Component {
             [presets.Tablet]: {
               fontSize: scale(-4 / 10).fontSize,
             },
-            "& a": {
-              fontFamily: options.systemFontFamily.join(`,`),
+            "&&": {
+              "& a": {
+                fontFamily: options.systemFontFamily.join(`,`),
+              },
             },
             "& li": {
               margin: 0,
