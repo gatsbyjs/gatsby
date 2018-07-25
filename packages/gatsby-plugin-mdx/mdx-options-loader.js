@@ -19,7 +19,7 @@ module.exports = async function(content) {
 
 export default DefaultLayout
 
-    ${content}`;
+${content}`;
   } else {
     //    console.log("dont inject");
   }
