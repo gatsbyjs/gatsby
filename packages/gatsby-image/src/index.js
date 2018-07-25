@@ -26,12 +26,7 @@ const inImageCache = props => {
     ? convertedProps.fluid.src
     : convertedProps.fixed.src
 
-  if (imageCache[src]) {
-    return true
-  } else {
-    imageCache[src] = true
-    return false
-  }
+  return imageCache[src] || false
 }
 
 let io
@@ -172,7 +167,7 @@ class Image extends React.Component {
 
   componentDidMount() {
     if (this.state.isVisible && typeof this.props.onStartLoad === `function`) {
-      this.props.onStartLoad()
+      this.props.onStartLoad({ wasCached: inImageCache(this.props) })
     }
   }
 
@@ -183,7 +178,7 @@ class Image extends React.Component {
           !this.state.isVisible &&
           typeof this.props.onStartLoad === `function`
         ) {
-          this.props.onStartLoad();
+          this.props.onStartLoad({ wasCached: inImageCache(this.props) })
         }
 
         this.setState({ isVisible: true, imgLoaded: false })
@@ -309,6 +304,7 @@ class Image extends React.Component {
                 sizes={image.sizes}
                 style={imageStyle}
                 onLoad={() => {
+                  imageCache[image.src] = true
                   this.state.IOSupported && this.setState({ imgLoaded: true })
                   this.props.onLoad && this.props.onLoad()
                 }}
@@ -410,6 +406,7 @@ class Image extends React.Component {
                 style={imageStyle}
                 onLoad={() => {
                   this.setState({ imgLoaded: true })
+                  imageCache[image.src] = true
                   this.props.onLoad && this.props.onLoad()
                 }}
                 onError={this.props.onError}
