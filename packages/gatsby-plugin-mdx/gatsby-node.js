@@ -3,19 +3,21 @@ const path = require("path");
 //const mdxPlugin = require(".");
 const mdx = require("@mdx-js/mdx");
 const matter = require("gray-matter");
+const escapeStringRegexp = require('escape-string-regexp');
+
+const defaultExtensions = [".mdx"]
 
 exports.onCreateNode = async function onCreateNode(
   { node, getNode, loadNodeContent, actions, createNodeId },
   pluginOptions
 ) {
+  const extensions = pluginOptions.extensions || defaultExtensions;
   const { createNode, createParentChildLink } = actions;
 
   // We only care about markdown content.
-  if (
-    // replace with mediaType when mime-db is merged
-    //    node.internal.mediaType !== `text/mdx`
-    node.ext !== ".mdx"
-  ) {
+  // replace with mediaType when mime-db is merged
+  //    node.internal.mediaType !== `text/mdx`
+  if (!extensions.includes(node.ext)) {
     return;
   }
 
@@ -60,11 +62,16 @@ exports.onCreateWebpackConfig = (
   { stage, rules, loaders, plugins, actions },
   pluginOptions
 ) => {
+  const extensions = pluginOptions.extensions || defaultExtensions;
+  const testPattern = new RegExp(
+    extensions.map((ext) => `${escapeStringRegexp(ext)}$`).join('|')
+  )
+
   actions.setWebpackConfig({
     module: {
       rules: [
         {
-          test: /\.mdx$/,
+          test: testPattern,
           use: [
             loaders.js(),
             {
@@ -85,13 +92,18 @@ exports.onCreateWebpackConfig = (
   });
 };
 
-exports.resolvableExtensions = () => [`.mdx`];
+exports.resolvableExtensions = (data, pluginOptions) => (
+  pluginOptions.extensions || defaultExtensions
+);
 
 exports.preprocessSource = function preprocessSource(
   { filename, contents },
   pluginOptions
 ) {
-  if (/\.mdx$/.test(filename)) {
+  const extensions = pluginOptions.extensions || defaultExtensions;
+  const ext = path.extname(filename);
+
+  if (extensions.includes(ext)) {
     const code = mdx.sync(contents /*, pluginOptions*/);
     return code;
   }
