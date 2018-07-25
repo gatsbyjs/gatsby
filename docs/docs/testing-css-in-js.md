@@ -2,7 +2,7 @@
 title: "Testing CSS-in-JS"
 ---
 
-Popular CSS-in-JS libraries like [styled-components](https://github.com/styled-components/styled-components) or [emotion](https://github.com/emotion-js/emotion/tree/master/packages/jest-emotion) can also be tested with the help of [jest-styled-components](https://github.com/styled-components/jest-styled-components) or [jest-emotion](https://github.com/emotion-js/emotion/tree/master/packages/jest-emotion) respectively. These packages improve the snapshot testing experience and are a great way to help avoid unintended changes to your website's UI. Please refer to your package's documentation to see if it also offers testing capabilities.
+Popular CSS-in-JS libraries like [styled-components](https://github.com/styled-components/styled-components) or [emotion](https://github.com/emotion-js/emotion) can also be tested with the help of [jest-styled-components](https://github.com/styled-components/jest-styled-components) or [jest-emotion](https://github.com/emotion-js/emotion/tree/master/packages/jest-emotion) respectively. These packages improve the snapshot testing experience and are a great way to help avoid unintended changes to your website's UI. Please refer to your package's documentation to see if it also offers testing capabilities.
 
 By default normal snapshots show the generated class names (which we didn't set) and no styling information. When changing the styles you'll only see the diff of some cryptic class names. That's why we should use the above mentioned *snapshotSerializers*.
 
