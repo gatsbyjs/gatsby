@@ -1,3 +1,4 @@
+const Promise = require(`bluebird`)
 const convertHrtime = require(`convert-hrtime`)
 const Worker = require(`jest-worker`).default
 const numWorkers = require(`physical-cpu-count`) || 1
