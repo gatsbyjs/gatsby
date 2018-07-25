@@ -2,7 +2,7 @@
 title: "Testing CSS-in-JS"
 ---
 
-Popular CSS-in-JS libraries like [styled-components](https://github.com/styled-components/styled-components) or [emotion](https://github.com/emotion-js/emotion/tree/master/packages/jest-emotion) can also be tested with the help of [jest-styled-components](https://github.com/styled-components/jest-styled-components) or [jest-emotion](https://github.com/emotion-js/emotion/tree/master/packages/jest-emotion) respectively. These packages improve the snapshot testing experience and are a great way to help avoid unintended changes to your website's UI.
+Popular CSS-in-JS libraries like [styled-components](https://github.com/styled-components/styled-components) or [emotion](https://github.com/emotion-js/emotion/tree/master/packages/jest-emotion) can also be tested with the help of [jest-styled-components](https://github.com/styled-components/jest-styled-components) or [jest-emotion](https://github.com/emotion-js/emotion/tree/master/packages/jest-emotion) respectively. These packages improve the snapshot testing experience and are a great way to help avoid unintended changes to your website's UI. Please refer to your package's documentation to see if it also offers testing capabilities.
 
 By default normal snapshots show the generated class names (which we didn't set) and no styling information. When changing the styles you'll only see the diff of some cryptic class names. That's why we should use the above mentioned *snapshotSerializers*.
 
@@ -31,7 +31,7 @@ const babelOptions = {
 module.exports = require("babel-jest").createTransformer(babelOptions)
 ```
 
-In order to tell Jest to use the serializer we'll need to create the file `setup-test-env.js` which will be run before every test automatically. Create the file `setup-test-env.js` at the root of your project. Insert this code into it:
+In order to tell Jest to use the serializer we'll need to create the file `setup-test-env.js` which will be run automatically before every test. Create the file `setup-test-env.js` at the root of your project. Insert this code into it:
 
 ```js
 import { createSerializer } from 'jest-emotion';
@@ -50,7 +50,7 @@ Lastly you need to tell Jest where to find this file. Open your `package.json` a
 
 ## Usage
 
-In this example we'll use `react-test-renderer` but you can also use [react-testing-library](docs/react-testing-library).
+In this example we'll use `react-test-renderer` but you can also use [react-testing-library](docs/react-testing-library) or any other library.
 
 ```js
 import React from 'react'
@@ -90,7 +90,7 @@ If your styled component depends on `theme` via `ThemeProvider` you'll have two 
 - Wrap all your components with the `ThemeProvider`
 - Use API helpers (have a look at the library's documentation, e.g. [styled-components](https://github.com/styled-components/jest-styled-components#theming) or [emotion](https://github.com/emotion-js/emotion/tree/master/packages/emotion-theming#createbroadcast-function)
 
-We'll show the first option:
+We'll use the first option:
 
 ```js
 import React from 'react'

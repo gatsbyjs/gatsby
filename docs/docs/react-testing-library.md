@@ -8,6 +8,8 @@ Kent C. Dodds' [react-testing-library](https://github.com/kentcdodds/react-testi
 
 > The more your tests resemble the way your software is used, the more confidence they can give you.
 
+It provides light utility functions on top of `react-dom` and `react-dom/test-utils` and gives you the confidence that refactors of your component in regards to the implementation (but not functionality) don't break your tests.
+
 ## Installation
 
 Install the library as one of your project's `devDependencies`. Optionally you may install `jest-dom` to use its [custom jest matchers](https://github.com/gnapse/jest-dom#custom-matchers).
@@ -25,7 +27,7 @@ import 'jest-dom/extend-expect';
 import 'react-testing-library/cleanup-after-each';
 ```
 
-This file gets run by Jest before every test automatically and therefore you don't need to add the imports to every single test file.
+This file gets run automatically by Jest before every test and therefore you don't need to add the imports to every single test file.
 
 Lastly you need to tell Jest where to find this file. Open your `package.json` and add this entry to your `"jest"` section:
 
@@ -37,16 +39,19 @@ Lastly you need to tell Jest where to find this file. Open your `package.json` a
 
 ## Usage
 
-Let's create a little example test using our newly added library. There are a lot of options when it comes to selectors, we choose `getByTestId` here. We also utilized `toHaveTextContent` from `jest-dom`:
+Let's create a little example test using our newly added library. There are a lot of options when it comes to selectors, we choose `getByTestId` here. We also utilize `toHaveTextContent` from `jest-dom`:
 
 ```js
 import React from 'react'
 import { render } from 'react-testing-library'
 
+// You have to write data-testid
 const Title = () => <h1 data-testid="hero-title">Gatsby is awesome!</h1>
 
 test('Displays the correct title', () => {
   const { getByTestId } = render(<Title />)
+  // Assertion
   expect(getByTestId('hero-title')).toHaveTextContent('Gatsby is awesome!')
+  // --> Test will pass
 })
 ```
