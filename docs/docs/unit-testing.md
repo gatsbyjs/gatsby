@@ -75,9 +75,9 @@ The `moduleNameMapper` sectipon works a bit like Webpack rules, and tells Jest
 how to handle imports. You are mainly concerned here with mocking static file
 imports, which Jest can't handle. A mock is a dummy module that is used instead
 of the real module inside tests. It is good when you have something that you
-can't or don't want to test. You have two types that you mock: stylesheets, and
-everything else. For stylesheets you need to use the package
-`identity-obj-proxy`. For all other files you need to use a manual mock called
+can't or don't want to test. You can mock anything, and here you are mocking
+assets rather than code. For stylesheets you need to use the package
+`identity-obj-proxy`. For all other assets you need to use a manual mock called
 `fileMock.js`. You need to create this yourself. The convention is to create a
 directory called `__mocks__` in the root directory for this. Note the pair of
 double underscores in the name.
@@ -117,9 +117,7 @@ taste. For this guide you will be testing the `<Bio />` component, so create a
 
 ```js
 import React from "react"
-
 import renderer from "react-test-renderer"
-
 import Bio from "./Bio"
 
 describe("Bio", () =>
@@ -147,11 +145,11 @@ script for `test`, which just outputs an error message. Change this to simply
   }
 ```
 
-This means you can now run tests by typing `npm test`. If you want you could
+This means you can now run tests by typing `npm run test`. If you want you could
 also add a script that runs `jest --watchAll` to watch files and run tests when
 they are changed.
 
-Now, run `npm test` and you should immediately get an error like this:
+Now, run `npm run test` and you should immediately get an error like this:
 
 ```sh
  @font-face {
@@ -175,11 +173,13 @@ Run the tests again now and it should all work! You should get a message about
 the snapshot being written. This is created in a `__snapshots__` directory next
 to your tests. If you take a look at it, you will see that it is a JSON
 representation of the `<Bio />` component. You should check your snapshot files
-into your SCM repository so that anyone can see if the tests have stopped
-matching.
+into your SCM repository so that so that any changes are tracked in history.
+This is particularly important to remember if you are using a continuous
+integration system such as Travis to run tests, as these will fail if no
+snapshot is present.
 
 If you make changes that mean you need to update the snapshot, you can do this
-by running `npm test -- -u`.
+by running `npm run test -- -u`.
 
 ## Using TypeScript
 
