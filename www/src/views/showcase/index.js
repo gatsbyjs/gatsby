@@ -6,6 +6,7 @@ import hex2rgba from "hex2rgba"
 import MdArrowForward from "react-icons/lib/md/arrow-forward"
 import { style } from "glamor"
 
+import ShowcaseItemCategories from "./showcase-item-categories"
 import FilteredShowcase from "./filtered-showcase"
 import Layout from "../../components/layout"
 import FeaturedSitesIcon from "../../assets/featured-sites-icons.svg"
@@ -223,9 +224,7 @@ class ShowcaseView extends Component {
                     }}
                   >
                     {node.built_by && <div>Built by {node.built_by}</div>}
-                    <div css={{ opacity: 0.5 }}>
-                      {node.categories && node.categories.join(`, `)}
-                    </div>
+                    <ShowcaseItemCategories categories={node.categories} />
                   </div>
                 </Link>
               ))}
