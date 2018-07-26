@@ -208,7 +208,15 @@ class FeaturedSites extends Component {
                     },
                   }}
                 >
-                  {node.built_by && <div>Built by {node.built_by}</div>}
+                  {node.built_by && (
+                    <div
+                      css={{
+                        fontFamily: options.headerFontFamily.join(`,`),
+                      }}
+                    >
+                      Built by {node.built_by}
+                    </div>
+                  )}
                   <ShowcaseItemCategories
                     categories={node.categories}
                     onClickHandler={this.onClickHandler}
