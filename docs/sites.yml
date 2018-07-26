@@ -1706,7 +1706,6 @@
   description: > 
       The API-based CMS your editors will love
   main_url: https://www.datocms.com/
-  source_url: https://github.com/StateOfJS/StateOfJS
   categories: 
     - CMS
     - API
@@ -1716,7 +1715,6 @@
   description: > 
       Personal website 
   main_url: https://www.halfelectronic.com/
-  source_url: https://github.com/StateOfJS/StateOfJS
   categories: 
     - Blog
     - Electronics
