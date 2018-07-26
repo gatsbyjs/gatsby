@@ -64,6 +64,13 @@ plugins: [
       // This feature is untested for sites hosted on Wordpress.com.
       // Defaults to true.
       useACF: true,
+      // Include specific ACF Option Pages that have a set post ID
+      // Regardless if an ID is set, the default options route will still be retrieved
+      // Must be using V3 of ACF to REST to include these routes     
+      // Example: `["option_page_1", "option_page_2"]` will include the proper ACF option
+      // routes with the ID option_page_1 and option_page_2
+      // Dashes in IDs will be converted to underscores for use in GraphQL
+      acfOptionPageIds = [],
       auth: {
         // If auth.user and auth.pass are filled, then the source plugin will be allowed
         // to access endpoints that are protected with .htaccess.
@@ -240,6 +247,29 @@ For example the following URL:
 }
 ```
 
+### Query ACF Options
+
+Whether you are using V2 or V3 of ACF to REST, the query below will return `options` as the default ACF Options page data.
+
+If you have specified `acfOptionPageIds` in your site's `gatsby-config.js` (ex: `option_page_1`), then they will be accessible by their ID:
+
+```
+{
+  allWordpressAcfOptions {
+    edges {
+      node{
+        option_page_1 {
+          test_acf
+        }
+        options {
+          test_acf
+        }
+      }
+    }
+  }
+}
+```
+
 ### Query posts with the child ACF Fields Node
 
 Mention the apparition of `childWordpressAcfField` in the query below :
@@ -292,22 +322,6 @@ Mention the apparition of `childWordpressAcfField` in the query below :
         acf {
          // use ___GraphiQL debugger and Ctrl+Spacebar to describe your model.
         }
-      }
-    }
-  }
-}
-```
-
-### Query with ACF Options
-
-The [ACF Options Page](https://www.advancedcustomfields.com/add-ons/options-page/) is a useful way to store global site content or settings. In order to use the Options Page with Gatsby, _the ACF to REST plugin has to be set to v2 in the WordPress administration area_.
-
-```graphQL
-{
-  allWordpressAcfOptions {
-    edges {
-      node {
-        // use ___GraphiQL debugger and Ctrl+Spacebar to describe your model.
       }
     }
   }
