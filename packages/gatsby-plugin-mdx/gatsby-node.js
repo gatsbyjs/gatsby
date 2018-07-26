@@ -1,11 +1,14 @@
 const crypto = require("crypto");
 const path = require("path");
 const grayMatter = require("gray-matter");
-const escapeStringRegexp = require('escape-string-regexp');
+const escapeStringRegexp = require("escape-string-regexp");
 const mdx = require("./utils/mdx");
 
-const defaultExtensions = [".mdx"]
+const defaultExtensions = [".mdx"];
 
+/**
+ * Create Mdx nodes from MDX files.
+ */
 exports.onCreateNode = async function onCreateNode(
   { node, getNode, loadNodeContent, actions, createNodeId },
   pluginOptions
@@ -63,7 +66,7 @@ exports.onCreateWebpackConfig = (
 ) => {
   const extensions = pluginOptions.extensions || defaultExtensions;
   const testPattern = new RegExp(
-    extensions.map((ext) => `${escapeStringRegexp(ext)}$`).join('|')
+    extensions.map((ext) => `${escapeStringRegexp(ext)}$`).join("|")
   )
 
   actions.setWebpackConfig({
@@ -89,10 +92,17 @@ exports.onCreateWebpackConfig = (
   });
 };
 
+/**
+ * Add the MDX extensions as resolvable. This is how the page creator
+ * determines which files in the pages/ directory get built as pages.
+ */
 exports.resolvableExtensions = (data, pluginOptions) => (
   pluginOptions.extensions || defaultExtensions
 );
 
+/**
+ * Convert MDX to JSX so that Gatsby can extract the GraphQL queries.
+ */
 exports.preprocessSource = async function preprocessSource(
   { filename, contents },
   pluginOptions
