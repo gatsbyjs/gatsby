@@ -36,7 +36,7 @@ We do our best to make Gatsby APIs simple to implement. To implement an API, you
 with the name of the API from `gatsby-node.js`.
 
 So let's do that. In the root of your site, create a file named
-`gatsby-node.js`. Then add to it the following. This function will be called by
+`gatsby-node.js`. Then add the following to it. This function will be called by
 Gatsby whenever a new node is created (or updated).
 
 ```javascript
