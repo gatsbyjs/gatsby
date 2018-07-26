@@ -2,7 +2,12 @@ import React from "react"
 
 import PageRenderer from "./page-renderer"
 import { StaticQueryContext } from "gatsby"
-import socketIo, { getStaticQueryData, getPageQueryData } from "./socketIo"
+import {
+  getStaticQueryData,
+  getPageQueryData,
+  registerPath as socketRegisterPath,
+  unregisterPath as socketUnregisterPath,
+} from "./socketIo"
 
 if (process.env.NODE_ENV === `production`) {
   throw new Error(
@@ -23,8 +28,6 @@ class JSONStore extends React.Component {
       pageQueryData: getPageQueryData(),
       path: null,
     }
-
-    this.socket = socketIo()
   }
 
   handleMittEvent = (type, event) => {
@@ -35,32 +38,40 @@ class JSONStore extends React.Component {
   }
 
   componentDidMount() {
-    this.registerPath(getPathFromProps(this.props))
+    socketRegisterPath(getPathFromProps(this.props))
     ___emitter.on(`*`, this.handleMittEvent)
   }
 
   componentWillUnmount() {
-    this.unregisterPath(this.state.path)
+    socketUnregisterPath(this.state.path)
     ___emitter.off(`*`, this.handleMittEvent)
   }
 
-  componentDidUpdate() {
-    const { path } = this.state
-    const newPath = getPathFromProps(this.props)
-    if (path !== newPath) {
-      this.unregisterPath(path)
-      this.registerPath(newPath)
+  static getDerivedStateFromProps(props, state) {
+    const newPath = getPathFromProps(props)
+    if (newPath !== state.path) {
+      socketUnregisterPath(state.path)
+      socketRegisterPath(newPath)
+      return {
+        path: newPath,
+      }
     }
+
+    return null
   }
 
-  registerPath(path) {
-    this.setState({ path })
-    this.socket.emit(`registerPath`, path)
-  }
+  shouldComponentUpdate(nextProps, nextState) {
+    // We want to update this component when:
+    // - path changed
+    // - page data for path changed
+    // - static query results changed
 
-  unregisterPath(path) {
-    this.setState({ path: null })
-    this.socket.emit(`unregisterPath`, path)
+    return (
+      this.state.path !== nextState.path ||
+      this.state.pageQueryData[nextState.path] !==
+        nextState.pageQueryData[nextState.path] ||
+      this.state.staticQueryData !== nextState.staticQueryData
+    )
   }
 
   render() {
