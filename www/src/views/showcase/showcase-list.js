@@ -1,6 +1,7 @@
 import React from "react"
 import { Link } from "gatsby"
 import Img from "gatsby-image"
+import qs from "qs"
 import hex2rgba from "hex2rgba"
 import { style } from "glamor"
 
@@ -13,72 +14,85 @@ const ShowcaseList = ({ items, count }) => {
   return (
     <div
       css={{
-        display: `flex`,
-        flexWrap: `wrap`,
-        padding: rhythm(3 / 4),
-        justifyContent: `center`,
-        [presets.Desktop]: {
-          justifyContent: `flex-start`,
-        },
+        ...styles.showcaseList,
       }}
     >
       {items.map(
         ({ node }) =>
           node.fields &&
           node.fields.slug && ( // have to filter out null fields from bad data
-            <Link
+            <div
               key={node.id}
-              to={{ pathname: node.fields.slug, state: { isModal: true } }}
-              {...styles.withTitleHover}
               css={{
-                margin: rhythm(3 / 4),
-                width: 280,
-                "&&": {
-                  borderBottom: `none`,
-                  boxShadow: `none`,
-                  transition: `all ${presets.animation.speedDefault} ${
-                    presets.animation.curveDefault
-                  }`,
-                  "&:hover": {
-                    ...styles.screenshotHover,
-                  },
-                },
+                ...styles.showcaseItem,
               }}
             >
-              {node.childScreenshot ? (
-                <Img
-                  resolutions={
-                    node.childScreenshot.screenshotFile.childImageSharp
-                      .resolutions
-                  }
-                  alt={`Screenshot of ${node.title}`}
-                  css={{
-                    ...styles.screenshot,
-                  }}
-                />
-              ) : (
-                <div
-                  css={{
-                    width: 320,
-                    backgroundColor: `#d999e7`,
-                  }}
-                >
-                  missing
-                </div>
-              )}
-              <div>
-                <span className="title">{node.title}</span>
-              </div>
-              <div
+              <Link
+                to={{ pathname: node.fields.slug, state: { isModal: true } }}
+                {...styles.withTitleHover}
                 css={{
-                  ...scale(-2 / 5),
-                  color: `#9B9B9B`,
-                  fontWeight: `normal`,
+                  "&&": {
+                    borderBottom: `none`,
+                    boxShadow: `none`,
+                    transition: `all ${presets.animation.speedDefault} ${
+                      presets.animation.curveDefault
+                    }`,
+                    "&:hover": {
+                      ...styles.screenshotHover,
+                    },
+                  },
                 }}
               >
-                {node.categories && node.categories.join(`, `)}
+                {node.childScreenshot ? (
+                  <Img
+                    resolutions={
+                      node.childScreenshot.screenshotFile.childImageSharp
+                        .resolutions
+                    }
+                    alt={`Screenshot of ${node.title}`}
+                    css={{
+                      ...styles.screenshot,
+                    }}
+                  />
+                ) : (
+                  <div
+                    css={{
+                      width: 320,
+                      backgroundColor: `#d999e7`,
+                    }}
+                  >
+                    missing
+                  </div>
+                )}
+                <div>
+                  <span className="title">{node.title}</span>
+                </div>
+              </Link>
+              <div
+                css={{
+                  "&&": {
+                    color: `#9B9B9B`,
+                  },
+                }}
+              >
+                {node.categories.map((c, i) => (
+                  <React.Fragment key={c}>
+                    <Link
+                      className="category__link"
+                      css={{
+                        "&&": {
+                          ...styles.categoryLink,
+                        },
+                      }}
+                      to={`/showcase?${qs.stringify({ filters: [c] })}`}
+                    >
+                      {c}
+                    </Link>
+                    {i === node.categories.length - 1 ? `` : `, `}
+                  </React.Fragment>
+                ))}
               </div>
-            </Link>
+            </div>
           )
       )}
     </div>
@@ -112,5 +126,30 @@ const styles = {
       transform: `translateY(-3px)`,
       boxShadow: `0 8px 20px ${hex2rgba(colors.lilac, 0.5)}`,
     },
+  },
+  categoryLink: {
+    ...scale(-2 / 5),
+    fontWeight: `normal`,
+    borderBottom: `none`,
+    boxShadow: `none`,
+    "&:hover": {
+      background: `none`,
+      color: colors.gatsby,
+    },
+  },
+  showcaseList: {
+    display: `flex`,
+    flexWrap: `wrap`,
+    padding: rhythm(3 / 4),
+    justifyContent: `center`,
+    [presets.Desktop]: {
+      justifyContent: `flex-start`,
+    },
+  },
+  showcaseItem: {
+    display: `flex`,
+    flexDirection: `column`,
+    margin: rhythm(3 / 4),
+    width: 280,
   },
 }
