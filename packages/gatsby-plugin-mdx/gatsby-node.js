@@ -1,6 +1,5 @@
 const crypto = require(`crypto`);
 const path = require("path");
-//const mdxPlugin = require(".");
 const mdx = require("@mdx-js/mdx");
 const matter = require("gray-matter");
 const escapeStringRegexp = require('escape-string-regexp');
@@ -56,7 +55,7 @@ exports.onCreateNode = async function onCreateNode(
   createParentChildLink({ parent: node, child: mdxNode });
 };
 
-exports.setFieldsOnGraphQLNodeType = require("./src/set-fields-on-graphql-node-type");
+exports.setFieldsOnGraphQLNodeType = require("./extend-node-type");
 
 exports.onCreateWebpackConfig = (
   { stage, rules, loaders, plugins, actions },
@@ -78,8 +77,6 @@ exports.onCreateWebpackConfig = (
               loader: "gatsby-mdx/mdx-loader",
               options: pluginOptions
             }
-            //            "@mdx-js/loader",
-            //            "gatsby-mdx/frontmatter-to-exports-loader"
           ]
         }
       ]

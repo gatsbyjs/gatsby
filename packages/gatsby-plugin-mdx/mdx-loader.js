@@ -16,15 +16,12 @@ ${matter.content}
   `;
 
   if (!hasDefaultExport(newContent) && !!options.defaultLayout) {
-    //    console.log("inject default export");
     newContent = `import DefaultLayout from "${options.defaultLayout}"
 
 
 export default DefaultLayout
 
 ${newContent}`;
-  } else {
-    //    console.log("dont inject");
   }
 
   const result = await mdx(newContent, options || {});
