@@ -394,7 +394,7 @@ const styles = {
     position: `sticky`,
     top: 0,
     [presets.Desktop]: {
-      top: `calc(${presets.headerHeight} - 1px)`,
+      top: `calc((${presets.headerHeight} + ${presets.bannerHeight}) - 1px)`,
     },
   },
   scrollbar: {
