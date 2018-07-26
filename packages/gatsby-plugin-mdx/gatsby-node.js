@@ -1,4 +1,4 @@
-const crypto = require(`crypto`);
+const crypto = require("crypto");
 const path = require("path");
 const mdx = require("@mdx-js/mdx");
 const matter = require("gray-matter");
