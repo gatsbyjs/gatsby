@@ -1,30 +1,22 @@
 const { getOptions } = require("loader-utils");
-const mdx = require("@mdx-js/mdx");
-const grayMatter = require("gray-matter");
+const mdx = require('./utils/mdx')
 
 const hasDefaultExport = str => /\nexport default/.test(str);
 
-module.exports = async function(content) {
+module.exports = async function(source) {
   const callback = this.async();
   const options = getOptions(this);
 
-  const matter = grayMatter(content);
+  let code = await mdx(source, options);
 
-  let newContent = `export const _frontmatter = ${JSON.stringify(matter.data)};
-
-${matter.content}
-  `;
-
-  if (!hasDefaultExport(newContent) && !!options.defaultLayout) {
-    newContent = `import DefaultLayout from "${options.defaultLayout}"
+  if (!hasDefaultExport(code) && !!options.defaultLayout) {
+    code = `import DefaultLayout from "${options.defaultLayout}"
 
 
 export default DefaultLayout
 
-${newContent}`;
+${code}`;
   }
-
-  const result = await mdx(newContent, options || {});
 
   return callback(
     null,
@@ -32,7 +24,7 @@ ${newContent}`;
 import { MDXTag } from '@mdx-js/tag'
 
 
-${result}
+${code}
   `
   );
 };
