@@ -36,14 +36,15 @@ We do our best to make Gatsby APIs simple to implement. To implement an API, you
 with the name of the API from `gatsby-node.js`.
 
 So let's do that. In the root of your site, create a file named
-`gatsby-node.js`. Then add to it the following. This function will be called by
-Gatsby whenever a new node is created (or updated).
+`gatsby-node.js`. Then add the following. 
 
 ```javascript
 exports.onCreateNode = ({ node }) => {
   console.log(node.internal.type)
 }
 ```
+
+This `onCreateNode` function will be called by Gatsby whenever a new node is created (or updated).
 
 Stop and restart the development server. As you do, you'll see quite a few newly
 created nodes get logged to the terminal console.
