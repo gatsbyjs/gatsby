@@ -8,6 +8,8 @@ import { style } from "glamor"
 import { options, scale, rhythm } from "../../utils/typography"
 import presets, { colors } from "../../utils/presets"
 
+import GithubIcon from "../../assets/showcase-github.svg"
+
 const ShowcaseList = ({ items, count }) => {
   if (count) items = items.slice(0, count)
 
@@ -70,27 +72,53 @@ const ShowcaseList = ({ items, count }) => {
               </Link>
               <div
                 css={{
+                  display: `flex`,
+                  justifyContent: `space-between`,
                   "&&": {
                     color: `#9B9B9B`,
                   },
                 }}
               >
-                {node.categories.map((c, i) => (
-                  <React.Fragment key={c}>
-                    <Link
-                      className="category__link"
+                <div>
+                  {node.categories.map((c, i) => (
+                    <React.Fragment key={c}>
+                      <Link
+                        css={{
+                          "&&": {
+                            ...styles.categoryLink,
+                          },
+                        }}
+                        to={`/showcase?${qs.stringify({ filters: [c] })}`}
+                      >
+                        {c}
+                      </Link>
+
+                      {i === node.categories.length - 1 ? `` : `, `}
+                    </React.Fragment>
+                  ))}
+                </div>
+                {node.source_url && (
+                  <div>
+                    <a
                       css={{
                         "&&": {
                           ...styles.categoryLink,
                         },
                       }}
-                      to={`/showcase?${qs.stringify({ filters: [c] })}`}
+                      href={node.source_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
                     >
-                      {c}
-                    </Link>
-                    {i === node.categories.length - 1 ? `` : `, `}
-                  </React.Fragment>
-                ))}
+                      <img
+                        src={GithubIcon}
+                        alt="icon"
+                        css={{
+                          margin: 6,
+                        }}
+                      />
+                    </a>
+                  </div>
+                )}
               </div>
             </div>
           )
