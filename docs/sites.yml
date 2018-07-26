@@ -1522,3 +1522,18 @@
   built_by: Bogdan Stanciu
   built_by_url: https://github.com/b0gd4n
   featured: false
+- title: HackerOne Platform Documentation
+  description: > 
+    HackerOne's Product Documentation Center!
+  main_url: https://docs.hackerone.com/
+  categories:
+    - Documentation
+    - Security
+  featured: false
+- title: Patreon Partners
+  description: Resources and products to help you do more with Patreon.
+  main_url: https://partners.patreon.com/
+  categories:
+    - Resources
+    - Directory
+  featured: false
