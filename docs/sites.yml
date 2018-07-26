@@ -1531,9 +1531,57 @@
     - Security
   featured: false
 - title: Patreon Partners
-  description: Resources and products to help you do more with Patreon.
+  description: > 
+    Resources and products to help you do more with Patreon.
   main_url: https://partners.patreon.com/
   categories:
     - Resources
     - Directory
+  featured: false
+- title: Bureau Of Meteorology (beta)
+  description: > 
+    Help shape the future of Bureau services 
+  main_url: https://beta.bom.gov.au/
+  categories: 
+    - Meteorology
+    - Research
+    - Services
+  featured: false
+- title: Curbside
+  description: > 
+    Connecting Stores with Mobile Customers
+  main_url: https://curbside.com/
+  categories: 
+    - Mobile Commerce
+    - Software
+  featured: false
+- title: Mux Video
+  description: > 
+    API to video hosting and streaming
+  main_url: https://mux.com/
+  categories: 
+    - Video
+    - Hosting
+    - Streaming
+    - API
+  featured: false
+- title: Swapcard
+  description: > 
+    The easiest way for event organizers to instantly connect people, build a community of attendees and exhibitors, and increase revenue over time
+  main_url: https://www.swapcard.com/
+  categories: 
+    - Event
+    - Community
+    - Services
+  featured: false
+- title: Kalix
+  description: > 
+    Kalix is perfect for healthcare professionals starting out in private practice, to those with an established clinic.
+  main_url: https://www.kalixhealth.com/
+  categories: 
+    - Scheduling
+    - Documentation
+    - Messaging
+    - Billing
+    - Services
   featured: false
