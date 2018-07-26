@@ -1522,6 +1522,18 @@
   built_by: Bogdan Stanciu
   built_by_url: https://github.com/b0gd4n
   featured: false
+- title: Frithir Software Development
+  main_url: 'https://frithir.com/'
+  url: 'https://frithir.com/'
+  featured: false
+  description: >-
+    I DRINK COFFEE, WRITE CODE AND IMPROVE MY DEVELOPMENT SKILLS EVERY DAY.
+  categories:
+    - Creative
+    - Design
+    - Web Dev
+  built_by: Frithir
+  built_by_url: 'https://Frithir.com/'
 - title: Unow
   main_url: https://www.unow.fr/
   url: https://www.unow.fr/
