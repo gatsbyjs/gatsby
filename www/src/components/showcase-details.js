@@ -16,7 +16,7 @@ import MdArrowUpward from "react-icons/lib/md/arrow-upward"
 import MdLaunch from "react-icons/lib/md/launch"
 import FeaturedIcon from "../assets/featured-detailpage-featuredicon.svg"
 import FeatherIcon from "../assets/showcase-feather.svg"
-import GithubIcon from "../assets/showcase-github.svg"
+import GithubIcon from "react-icons/lib/go/mark-github"
 
 const gutter = rhythm(3 / 4)
 const gutterDesktop = rhythm(6 / 4)
@@ -379,7 +379,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                         marginRight: 10,
                       }}
                     />
-                    Featured{` `}
+                    Featured
                   </div>
                 )}
                 {data.sitesYaml.source_url && (
@@ -394,21 +394,20 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                       },
                     }}
                   >
-                    <img
-                      src={GithubIcon}
-                      alt="icon"
-                      css={{
-                        marginBottom: 0,
-                        marginRight: 10,
-                      }}
-                    />
                     <a
                       href={data.sitesYaml.source_url}
                       css={{
                         ...styles.link,
                       }}
                     >
-                      Source{` `}
+                      <GithubIcon
+                        style={{
+                          fontSize: 20,
+                          marginRight: 10,
+                          verticalAlign: `text-bottom`,
+                        }}
+                      />
+                      Source
                     </a>
                   </div>
                 )}

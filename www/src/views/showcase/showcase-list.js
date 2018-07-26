@@ -1,7 +1,6 @@
 import React from "react"
 import { Link } from "gatsby"
 import Img from "gatsby-image"
-import qs from "qs"
 import hex2rgba from "hex2rgba"
 import { style } from "glamor"
 
@@ -9,7 +8,7 @@ import ShowcaseItemCategories from "./showcase-item-categories"
 import { options, rhythm, scale } from "../../utils/typography"
 import presets, { colors } from "../../utils/presets"
 
-import GithubIcon from "../../assets/showcase-github.svg"
+import GithubIcon from "react-icons/lib/go/mark-github"
 
 const ShowcaseList = ({ items, count }) => {
   if (count) items = items.slice(0, count)
@@ -73,6 +72,7 @@ const ShowcaseList = ({ items, count }) => {
               </Link>
               <div
                 css={{
+                  ...scale(-2 / 5),
                   display: `flex`,
                   justifyContent: `space-between`,
                   "&&": {
@@ -80,14 +80,7 @@ const ShowcaseList = ({ items, count }) => {
                   },
                 }}
               >
-                <div
-                  css={{
-                    "&&": {
-                      color: `#9B9B9B`,
-                      ...scale(-2 / 5),
-                    },
-                  }}
-                >
+                <div>
                   <ShowcaseItemCategories categories={node.categories} />
                 </div>
                 {node.source_url && (
@@ -95,20 +88,21 @@ const ShowcaseList = ({ items, count }) => {
                     <a
                       css={{
                         "&&": {
-                          ...styles.categoryLink,
+                          color: colors.gray.bright,
+                          fontWeight: `normal`,
+                          borderBottom: `none`,
+                          boxShadow: `none`,
+                          "&:hover": {
+                            background: `none`,
+                            color: colors.gatsby,
+                          },
                         },
                       }}
                       href={node.source_url}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <img
-                        src={GithubIcon}
-                        alt="icon"
-                        css={{
-                          margin: 6,
-                        }}
-                      />
+                      <GithubIcon style={{ verticalAlign: `text-top` }} />
                     </a>
                   </div>
                 )}
