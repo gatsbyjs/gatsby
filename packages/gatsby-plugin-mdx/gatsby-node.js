@@ -1,8 +1,8 @@
 const crypto = require("crypto");
 const path = require("path");
-const mdx = require("@mdx-js/mdx");
-const matter = require("gray-matter");
+const grayMatter = require("gray-matter");
 const escapeStringRegexp = require('escape-string-regexp');
+const mdx = require("./utils/mdx");
 
 const defaultExtensions = [".mdx"]
 
@@ -21,7 +21,7 @@ exports.onCreateNode = async function onCreateNode(
   }
 
   const nodeContent = await loadNodeContent(node);
-  const { content, data } = matter(nodeContent);
+  const { content, data } = grayMatter(nodeContent);
 
   const mdxNode = {
     id: createNodeId(`${node.id} >>> Mdx`),
@@ -93,7 +93,7 @@ exports.resolvableExtensions = (data, pluginOptions) => (
   pluginOptions.extensions || defaultExtensions
 );
 
-exports.preprocessSource = function preprocessSource(
+exports.preprocessSource = async function preprocessSource(
   { filename, contents },
   pluginOptions
 ) {
@@ -101,7 +101,7 @@ exports.preprocessSource = function preprocessSource(
   const ext = path.extname(filename);
 
   if (extensions.includes(ext)) {
-    const code = mdx.sync(contents /*, pluginOptions*/);
+    const code = await mdx(contents, pluginOptions);
     return code;
   }
   return null;
