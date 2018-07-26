@@ -2,9 +2,9 @@
 title: "Testing CSS-in-JS"
 ---
 
-Popular CSS-in-JS libraries like [styled-components](https://github.com/styled-components/styled-components) or [emotion](https://github.com/emotion-js/emotion) can also be tested with the help of [jest-styled-components](https://github.com/styled-components/jest-styled-components) or [jest-emotion](https://github.com/emotion-js/emotion/tree/master/packages/jest-emotion) respectively. These packages improve the snapshot testing experience and are a great way to help avoid unintended changes to your website's UI. Please refer to your package's documentation to see if it also offers testing capabilities.
+Popular CSS-in-JS libraries like [styled-components](https://github.com/styled-components/styled-components) or [emotion](https://github.com/emotion-js/emotion) can also be tested with the help of [jest-styled-components](https://github.com/styled-components/jest-styled-components) or [jest-emotion](https://github.com/emotion-js/emotion/tree/master/packages/jest-emotion) respectively. These packages improve Jest's built-in snapshot testing experience and are a great way to help avoid unintended changes to your website's UI. Please refer to your package's documentation to see if it also offers testing capabilities.
 
-By default normal snapshots show the generated class names (which we didn't set) and no styling information. When changing the styles you'll only see the diff of some cryptic class names. That's why we should use the above mentioned *snapshotSerializers*.
+By default snapshots show the generated class names (which we didn't set) and no styling information. When changing the styles you'll only see the diff of some cryptic class names. That's why we should use the above mentioned *snapshotSerializers*.
 
 For our example we'll use emotion. The testing utitlities of emotion and glamor are largely based on [jest-styled-components](https://github.com/styled-components/jest-styled-components) so they have a similar usage. Please have a look at the testing section of your library to follow along.
 
@@ -14,9 +14,9 @@ For our example we'll use emotion. The testing utitlities of emotion and glamor 
 npm install --save-dev jest-emotion babel-plugin-emotion
 ```
 
-As Gatsby's emotion [plugin](https://www.gatsbyjs.org/packages/gatsby-plugin-emotion/) is also using the babel-plugin-emotion under the hood we'll also need to install it so that Jest can use it.
+As [Gatsby's emotion plugin](https://www.gatsbyjs.org/packages/gatsby-plugin-emotion/) is using `babel-plugin-emotion` under the hood we'll also need to install it so that Jest can use it.
 
-If you followed along the [Unit testing](docs/unit-testing) guide you'll have the file `jest-preprocess.js` at the root of your project. Open that file and add the plugin:
+If you followed along with the [Unit testing guide](docs/unit-testing) you'll have the file `jest-preprocess.js` at the root of your project. Open that file and add the plugin:
 
 ```diff
 const babelOptions = {
@@ -31,7 +31,7 @@ const babelOptions = {
 module.exports = require("babel-jest").createTransformer(babelOptions)
 ```
 
-In order to tell Jest to use the serializer we'll need to create the file `setup-test-env.js` which will be run automatically before every test. Create the file `setup-test-env.js` at the root of your project. Insert this code into it:
+In order to tell Jest to use the serializer you'll need to create the file `setup-test-env.js` which will be run automatically before every test. Create the file `setup-test-env.js` at the root of your project. Insert this code into it:
 
 ```js
 import { createSerializer } from 'jest-emotion';
@@ -50,7 +50,7 @@ Lastly you need to tell Jest where to find this file. Open your `package.json` a
 
 ## Usage
 
-In this example we'll use `react-test-renderer` but you can also use [react-testing-library](docs/react-testing-library) or any other library.
+In this example you'll use `react-test-renderer` but you can also use [react-testing-library](docs/react-testing-library) or any other appropriate library.
 
 ```js
 import React from 'react'
@@ -87,6 +87,7 @@ exports[`Button renders correctly 1`] = `
 ```
 
 If your styled component depends on `theme` via `ThemeProvider` you'll have two options:
+
 - Wrap all your components with the `ThemeProvider`
 - Use API helpers (have a look at the library's documentation, e.g. [styled-components](https://github.com/styled-components/jest-styled-components#theming) or [emotion](https://github.com/emotion-js/emotion/tree/master/packages/emotion-theming#createbroadcast-function)
 
