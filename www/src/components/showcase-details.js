@@ -509,7 +509,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                   },
                 }}
               >
-                <p> {data.sitesYaml.description} </p>
+                <p>{data.sitesYaml.description}</p>
                 <div
                   css={{
                     display: `flex`,
