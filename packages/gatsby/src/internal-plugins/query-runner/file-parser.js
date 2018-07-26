@@ -137,9 +137,9 @@ async function findGraphQLTags(file, text): Promise<Array<DefinitionNode>> {
                     )
                 )
 
-                uniqueAstDefinitions.forEach(def => {
-                  return generateQueryName({ def, hash, file })
-                })
+                uniqueAstDefinitions.forEach(def =>
+                  generateQueryName({ def, hash, file })
+                )
 
                 queries.push(...uniqueAstDefinitions)
               },
