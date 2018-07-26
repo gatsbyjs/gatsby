@@ -1522,6 +1522,205 @@
   built_by: Bogdan Stanciu
   built_by_url: https://github.com/b0gd4n
   featured: false
+- title: HackerOne Platform Documentation
+  description: > 
+    HackerOne's Product Documentation Center!
+  main_url: https://docs.hackerone.com/
+  categories:
+    - Documentation
+    - Security
+  featured: false
+- title: Patreon Partners
+  description: > 
+    Resources and products to help you do more with Patreon.
+  main_url: https://partners.patreon.com/
+  categories:
+    - Resources
+    - Directory
+  featured: false
+- title: Bureau Of Meteorology (beta)
+  description: > 
+    Help shape the future of Bureau services 
+  main_url: https://beta.bom.gov.au/
+  categories: 
+    - Meteorology
+    - Research
+    - Services
+  featured: false
+- title: Curbside
+  description: > 
+    Connecting Stores with Mobile Customers
+  main_url: https://curbside.com/
+  categories: 
+    - Mobile Commerce
+    - Software
+  featured: false
+- title: Mux Video
+  description: > 
+    API to video hosting and streaming
+  main_url: https://mux.com/
+  categories: 
+    - Video
+    - Hosting
+    - Streaming
+    - API
+  featured: false
+- title: Swapcard
+  description: > 
+    The easiest way for event organizers to instantly connect people, build a community of attendees and exhibitors, and increase revenue over time
+  main_url: https://www.swapcard.com/
+  categories: 
+    - Event
+    - Community
+    - Services
+  featured: false
+- title: Kalix
+  description: > 
+    Kalix is perfect for healthcare professionals starting out in private practice, to those with an established clinic.
+  main_url: https://www.kalixhealth.com/
+  categories: 
+    - Scheduling
+    - Documentation
+    - Messaging
+    - Billing
+    - Services
+  featured: false
+- title: Hubba
+  description: > 
+    Buy wholesale products from thousands of independent, verified Brands.
+  main_url: https://join.hubba.com/
+  categories: 
+    - eCommerce
+    - Retail
+  featured: false
+- title: Airbnb Engineering & Data Science
+  description: > 
+    Creative engineers and data scientists building a world where you can belong anywhere
+  main_url: https://airbnb.io/
+  categories: 
+    - Blog
+    - Gallery
+    - Projects
+  featured: false
+- title: HyperPlay
+  description: > 
+    In Asean's 1st Ever LOL Esports X Music Festival
+  main_url: https://hyperplay.leagueoflegends.com/
+  categories: 
+    - Landing
+  featured: false
+- title: Bad Credit Loans
+  description: > 
+    Get the funds you need, from $250-$5,000
+  main_url: https://www.creditloan.com/
+  categories: 
+    - Loans
+    - Credits
+  featured: false
+- title: Financial Center
+  description: > 
+     Member-owned, not-for-profit, co-operative whose members receive financial benefits in the form of lower loan rates, higher savings rates, and lower fees than banks.
+  main_url: https://fcfcu.com/
+  categories: 
+    - Loans
+    - Credits
+    - Online Banking
+    - Nonprofit
+  featured: false
+- title: Open FDA
+  description: > 
+     Provides APIs and raw download access to a number of high-value, high priority and scalable structured datasets, including adverse events, drug product labeling, and recall enforcement reports.
+  main_url: https://open.fda.gov/
+  categories: 
+    - APIs
+    - Datasets
+    - Reports
+  featured: false
+- title: Office of Institutional Research and Assessment
+  description: > 
+     Good Data, Good Decisions
+  main_url: http://oira.ua.edu/
+  categories: 
+    - Research
+    - Data
+  featured: false
+- title: GM Capital One
+  description: > 
+     Introducing the new online experience for your GM Rewards Credit Card
+  main_url: https://gm.capitalone.com/
+  categories: 
+    - Rewards
+    - Credit Card
+  featured: false
+- title: House Manager
+  description: > 
+     Home service membership that offers proactive and on-demand maintenance for homeowners
+  main_url: https://housemanager.calstate.aaa.com/
+  categories: 
+    - Home
+    - Services
+  featured: false
+- title: Trintellix
+  description: > 
+     It may help make a difference for your depression (MDD).
+  main_url: https://us.trintellix.com/
+  categories: 
+    - Health
+    - Help
+  featured: false
+- title: The Telegraph Premium
+  description: > 
+     Exclusive stories from award-winning journalists
+  main_url: https://premium.telegraph.co.uk/
+  categories: 
+    - Landing
+    - Newspaper
+    - Subscription
+  featured: false
+- title: html2canvas
+  description: > 
+     Screenshots with JavaScript
+  main_url: http://html2canvas.hertzen.com/
+  source_url: https://github.com/niklasvh/html2canvas/tree/master/www
+  categories: 
+    - Tool
+    - Screenshots
+    - JavaScript
+    - Documentation
+  built_by: Niklas von Hertzen
+  built_by_url: http://hertzen.com/
+  featured: false
+- title: The State of JavaScript 2017
+  description: > 
+      Data from over 20,000 developers, asking them questions on topics ranging from front-end frameworks and state management, to build tools and testing libraries.
+  main_url: https://stateofjs.com/
+  source_url: https://github.com/StateOfJS/StateOfJS
+  categories: 
+    - Data
+    - JavaScript
+    - Statistics
+  built_by: StateOfJS
+  built_by_url: https://github.com/StateOfJS/StateOfJS/graphs/contributors
+  featured: false
+- title: Dato CMS
+  description: > 
+      The API-based CMS your editors will love
+  main_url: https://www.datocms.com/
+  categories: 
+    - CMS
+    - API
+    - Tool
+  featured: false
+- title: Half Electronics
+  description: > 
+      Personal website 
+  main_url: https://www.halfelectronic.com/
+  categories: 
+    - Blog
+    - Electronics
+  built_by: Fernando Poumian
+  built_by_url: https://github.com/fpoumian/halfelectronic.com
+  featured: false
 - title: Frithir Software Development
   main_url: 'https://frithir.com/'
   url: 'https://frithir.com/'
