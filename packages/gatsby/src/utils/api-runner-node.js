@@ -232,7 +232,7 @@ module.exports = async (api, args = {}, pluginSource) =>
 
         if (apisRunningById.size === 0) {
           const { emitter } = require(`../redux`)
-          emitter.emit(`API_RUNNING_QUEUE_EMPTY`, api)
+          emitter.emit(`API_RUNNING_QUEUE_EMPTY`)
         }
 
         // Filter empty results
