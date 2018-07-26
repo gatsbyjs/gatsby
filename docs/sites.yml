@@ -1530,3 +1530,14 @@
     - Corporate
     - Marketing
   featured: false
+- title: Peter Hironaka
+  description: >
+    Freelance Web Developer based in Los Angeles.
+  main_url: https://peterhironaka.com/
+  url: https://peterhironaka.com/
+  categories:
+    - Portfolio
+    - Web Dev
+  built_by: Peter Hironaka
+  built_by_url: https://github.com/PHironaka
+  featured: false
