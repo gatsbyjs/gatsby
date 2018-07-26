@@ -1,5 +1,5 @@
 ---
-title: Labelling issues
+title: Labelling Issues
 ---
 
 ## What are issue labels?
@@ -15,7 +15,7 @@ Gatsby is a very active project with many new issues opened each day. Labelling 
 
 - good issues for new contributors to work on
 - reported and confirmed bugs
-- new features
+- feature requests
 - duplicate issues
 - issues that are stalled or blocked
 
@@ -24,6 +24,8 @@ Gatsby is a very active project with many new issues opened each day. Labelling 
 Anyone who's a member of the [Gatsby Maintainers team](https://github.com/orgs/gatsbyjs/teams/maintainers) can label issues.
 
 You can get an invite to the team by having a Pull Request merged into the Gatsby project. Check out the list of [`help wanted`](https://github.com/gatsbyjs/gatsby/labels/%F0%9F%93%8D%20status%3A%20help%20wanted) issues and the [How To Contribute Guide](/docs/how-to-contribute/) to get started.
+
+**NOTE:** If you’ve already had a pull request merged and you have _not_ been invited to the maintainers team, please go to [the dashboard](https://store.gatsbyjs.org/account/dashboard) and request a discount code. You should get an invite to the team — _and you get free Gatsby swag!_ If that doesn’t work, please email team@gatsbyjs.com and we'll get you invited.
 
 ## How to label an issue
 
@@ -35,7 +37,7 @@ The broad steps to labelling an issue are:
 
 - Read an issue
 - Choose the labels that apply to that issue
-- That's it
+- That's it - sit back and relax, maybe take a few moments to enjoy the satisfaction of a job well done
 
 The rest of this document will describe how to choose the right labels for an issue.
 
@@ -65,22 +67,19 @@ Choose an appropriate `type: ` label and you're ready to move on to the next ste
 
 ### Choose a `status: ` label (optional)
 
-Check through the [`📍 status: ` labels (and their descriptions)](https://github.com/gatsbyjs/gatsby/issues/labels), if any apply to this issue add them as necessary.
+Check through the [`status: ` labels (and their descriptions)](https://github.com/gatsbyjs/gatsby/issues/labels), if any apply to this issue add them as necessary.
 
-Examples of applying `📍 status: ` labels might be:
+Examples of applying `status: ` labels might be:
 
-- An issue that depends on an external dependency being changed could be labelled with `📍 status: blocked`
+- An issue that depends on an external dependency being changed could be labelled with `status: blocked`
 
-- An issue with a clear description of how it can be resolved could be labelled `📍 status: help wanted`.
+- An issue with a clear description of how it can be resolved could be labelled `status: help wanted`.
 
-- An issue that's missing information required to help the author could be labelled with `📍 status: needs more info`
+- An issue that's missing information required to help the author could be labelled with `status: needs more info`
 
-- An issue describing a bug without clear steps to reproduce could be labelled with `📍 status: needs reproduction`
+- An issue describing a bug without clear steps to reproduce could be labelled with `status: needs reproduction`
 
-- An issue describing a bug where there's steps to reproduce the bug _and_ you (or someone else) have confirmed that they can reproduce the bug can be labelled `📍 status: confirmed`
-
-### TODO - is there a way to publicly list these people?  https://github.com/orgs/gatsbyjs/teams/admin/members
-- An issue describing a feature can be labelled `📍 status: confirmed` if a member of Gatsby's Admin team has approved the feature
+- An issue describing a bug where there's steps to reproduce the bug _and_ you've run the code locally and seen the error yourself can be labelled `status: confirmed`
 
 ### Choose any other labels
 
@@ -92,7 +91,7 @@ There are a few other labels that can sometimes be applied to an issue. Here are
 
 ### Finish
 
-That's it! You can call it a day or go back to the first step to label another issue.
+And you're done! You can call it a day or go back to the first step to label another issue.
 
 ## Conclusion
 
