@@ -121,7 +121,9 @@ class FilteredShowcase extends Component {
                     paddingTop: 0,
                     borderRight: `1px solid ${colors.ui.light}`,
                     // background: colors.ui.whisper,
-                    height: `calc(100vh - ${presets.headerHeight})`,
+                    height: `calc(100vh - (${presets.headerHeight} + ${
+                      presets.bannerHeight
+                    }))`,
                   },
                 }}
               >
@@ -443,7 +445,7 @@ const styles = {
     position: `sticky`,
     top: 0,
     [presets.Desktop]: {
-      top: `calc(${presets.headerHeight} - 1px)`,
+      top: `calc(${presets.headerHeight} + ${presets.bannerHeight} - 1px)`,
     },
   },
   scrollbar: {
