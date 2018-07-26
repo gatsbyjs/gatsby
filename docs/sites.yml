@@ -1585,3 +1585,95 @@
     - Billing
     - Services
   featured: false
+- title: Hubba
+  description: > 
+    Buy wholesale products from thousands of independent, verified Brands.
+  main_url: https://join.hubba.com/
+  categories: 
+    - eCommerce
+    - Retail
+  featured: false
+- title: Airbnb Engineering & Data Science
+  description: > 
+    Creative engineers and data scientists building a world where you can belong anywhere
+  main_url: https://airbnb.io/
+  categories: 
+    - Blog
+    - Gallery
+    - Projects
+  featured: false
+- title: HyperPlay
+  description: > 
+    In Asean's 1st Ever lol Esports X Music Festival
+  main_url: https://hyperplay.leagueoflegends.com/
+  categories: 
+    - Landing
+  featured: false
+- title: Bad Credit Loans
+  description: > 
+    Get the funds you need, from $250-$5,000
+  main_url: https://www.creditloan.com/bad-credit-loans/
+  categories: 
+    - Loans
+    - Credits
+  featured: false
+- title: Financial Center
+  description: > 
+     Member-owned, not-for-profit, co-operative whose members receive financial benefits in the form of lower loan rates, higher savings rates, and lower fees than banks.
+  main_url: https://fcfcu.com/
+  categories: 
+    - Loans
+    - Credits
+    - Online Banking
+    - Nonprofit
+  featured: false
+- title: Open FDA
+  description: > 
+     Provides APIs and raw download access to a number of high-value, high priority and scalable structured datasets, including adverse events, drug product labeling, and recall enforcement reports.
+  main_url: https://fcfcu.com/
+  categories: 
+    - APIs
+    - Datasets
+    - Reports
+  featured: false
+- title: Office of Institutional Research and Assessment
+  description: > 
+     Good Data, Good Decisions
+  main_url: http://oira.ua.edu/
+  categories: 
+    - Research
+    - Data
+  featured: false
+- title: GM Capital One
+  description: > 
+     Introducing the new online experience for your GM Rewards Credit Card
+  main_url: https://gm.capitalone.com/
+  categories: 
+    - Rewards
+    - Credit Card
+  featured: false
+- title: House Manager
+  description: > 
+     Home service membership that offers proactive and on-demand maintenance for homeowners
+  main_url: https://housemanager.calstate.aaa.com/
+  categories: 
+    - Home
+    - Services
+  featured: false
+- title: Trintellix
+  description: > 
+     It may help make a difference for your depression (MDD).
+  main_url: https://us.trintellix.com/
+  categories: 
+    - Health
+    - Help
+  featured: false
+- title: The Telegraph Premium
+  description: > 
+     Exclusive stories from  award-winning journalists
+  main_url: https://premium.telegraph.co.uk/
+  categories: 
+    - Landing
+    - Newspaper
+    - Subscription
+  featured: false
