@@ -1,11 +1,11 @@
 import React from "react"
 import { Link } from "gatsby"
 import Img from "gatsby-image"
-import qs from "qs"
 import hex2rgba from "hex2rgba"
 import { style } from "glamor"
 
-import { options, scale, rhythm } from "../../utils/typography"
+import ShowcaseItemCategories from "./showcase-item-categories"
+import { options, rhythm, scale } from "../../utils/typography"
 import presets, { colors } from "../../utils/presets"
 
 const ShowcaseList = ({ items, count }) => {
@@ -72,25 +72,11 @@ const ShowcaseList = ({ items, count }) => {
                 css={{
                   "&&": {
                     color: `#9B9B9B`,
+                    ...scale(-2 / 5),
                   },
                 }}
               >
-                {node.categories.map((c, i) => (
-                  <React.Fragment key={c}>
-                    <Link
-                      className="category__link"
-                      css={{
-                        "&&": {
-                          ...styles.categoryLink,
-                        },
-                      }}
-                      to={`/showcase?${qs.stringify({ filters: [c] })}`}
-                    >
-                      {c}
-                    </Link>
-                    {i === node.categories.length - 1 ? `` : `, `}
-                  </React.Fragment>
-                ))}
+                <ShowcaseItemCategories categories={node.categories} />
               </div>
             </div>
           )
@@ -125,16 +111,6 @@ const styles = {
     "& .gatsby-image-wrapper": {
       transform: `translateY(-3px)`,
       boxShadow: `0 8px 20px ${hex2rgba(colors.lilac, 0.5)}`,
-    },
-  },
-  categoryLink: {
-    ...scale(-2 / 5),
-    fontWeight: `normal`,
-    borderBottom: `none`,
-    boxShadow: `none`,
-    "&:hover": {
-      background: `none`,
-      color: colors.gatsby,
     },
   },
   showcaseList: {
