@@ -1677,3 +1677,52 @@
     - Newspaper
     - Subscription
   featured: false
+- title: html2canvas
+  description: > 
+     Screenshots with JavaScript
+  main_url: http://html2canvas.hertzen.com/
+  source_url: https://github.com/niklasvh/html2canvas/tree/master/www
+  categories: 
+    - Tool
+    - Screenshots
+    - JavaScript
+    - Documentation
+  built_by: Niklas von Hertzen
+  built_by_url: http://hertzen.com/
+  featured: false
+- title: The State of JavaScript 2017
+  description: > 
+      Data from over 20,000 developers, asking them questions on topics ranging from front-end frameworks and state management, to build tools and testing libraries.
+  main_url: https://stateofjs.com/
+  source_url: https://github.com/StateOfJS/StateOfJS
+  categories: 
+    - Data
+    - JavaScript
+    - Statistics
+  built_by: StateOfJS
+  built_by_url: https://github.com/StateOfJS/StateOfJS/graphs/contributors
+  featured: false
+- title: Dato CMS
+  description: > 
+      The API-based CMS your editors will love
+  main_url: https://www.datocms.com/
+  source_url: https://github.com/StateOfJS/StateOfJS
+  categories: 
+    - CMS
+    - API
+    - Tool
+  featured: false
+- title: Half Electronics
+  description: > 
+      Personal website 
+  main_url: https://www.halfelectronic.com/
+  source_url: https://github.com/StateOfJS/StateOfJS
+  categories: 
+    - Blog
+    - Electronics
+  built_by: Fernando Poumian
+  built_by_url: https://github.com/fpoumian/halfelectronic.com
+  featured: false
+  
+  
+  
