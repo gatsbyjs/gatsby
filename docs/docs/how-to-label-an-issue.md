@@ -1,5 +1,5 @@
 ---
-title: Labelling Issues
+title: How to label an issue
 ---
 
 ## What are issue labels?
