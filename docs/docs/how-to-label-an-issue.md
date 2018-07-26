@@ -29,7 +29,7 @@ You can get an invite to the team by having a Pull Request merged into the Gatsb
 
 ## How to label an issue
 
-Ideally every issue should have a single `🏷 type:` label applied to it. Optionally a `status: ` label, or other labels may also be applied.
+Ideally every issue should have a single `type:` label applied to it. Optionally a `status: ` label, or other labels may also be applied.
 
 Before continuing, get familiar with [Gatsby's issue labels and their descriptions](https://github.com/gatsbyjs/gatsby/issues/labels).
 
