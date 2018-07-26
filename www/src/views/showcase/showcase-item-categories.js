@@ -2,13 +2,29 @@ import React, { Fragment } from "react"
 import { Link } from "gatsby"
 import qs from "qs"
 
+import URLQuery from "../../components/url-query"
 import { colors } from "../../utils/presets"
 
-const ShowcaseItemCategories = ({ categories }) =>
-  categories.map((c, i) => (
+const ScrollToLink = ({ onClickHandler, category, showcase, ...rest }) => (
+  <URLQuery>
+    {(_, updateQuery) => (
+      <a
+        href="#showcase"
+        onClick={onClickHandler(showcase, updateQuery, category)}
+        {...rest}
+      >
+        {category}
+      </a>
+    )}
+  </URLQuery>
+)
+
+const ShowcaseItemCategories = ({ categories, onClickHandler, showcase }) => {
+  const LinkComponent = onClickHandler ? ScrollToLink : Link
+
+  return categories.map((c, i) => (
     <Fragment key={c}>
-      <Link
-        className="category__link"
+      <LinkComponent
         css={{
           "&&": {
             color: colors.gray.bright,
@@ -24,11 +40,15 @@ const ShowcaseItemCategories = ({ categories }) =>
         to={`/showcase?${qs.stringify({
           filters: [c],
         })}`}
+        onClickHandler={onClickHandler}
+        showcase={showcase}
+        category={c}
       >
         {c}
-      </Link>
+      </LinkComponent>
       {i === categories.length - 1 ? `` : `, `}
     </Fragment>
   ))
+}
 
 export default ShowcaseItemCategories
