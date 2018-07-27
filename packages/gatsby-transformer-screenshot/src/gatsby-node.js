@@ -79,31 +79,35 @@ const createScreenshotNode = async ({
   createNode,
   createNodeId,
 }) => {
-  const screenshotResponse = await axios.post(SCREENSHOT_ENDPOINT, { url })
+  try {
+    const screenshotResponse = await axios.post(SCREENSHOT_ENDPOINT, { url })
 
-  const fileNode = await createRemoteFileNode({
-    url: screenshotResponse.data.url,
-    store,
-    cache,
-    createNode,
-    createNodeId,
-  })
+    const fileNode = await createRemoteFileNode({
+      url: screenshotResponse.data.url,
+      store,
+      cache,
+      createNode,
+      createNodeId,
+    })
 
-  const screenshotNode = {
-    id: `${parent} >>> Screenshot`,
-    url,
-    expires: screenshotResponse.data.expires,
-    parent,
-    children: [],
-    internal: {
-      type: `Screenshot`,
-    },
-    screenshotFile___NODE: fileNode.id,
+    const screenshotNode = {
+      id: `${parent} >>> Screenshot`,
+      url,
+      expires: screenshotResponse.data.expires,
+      parent,
+      children: [],
+      internal: {
+        type: `Screenshot`,
+      },
+      screenshotFile___NODE: fileNode.id,
+    }
+
+    screenshotNode.internal.contentDigest = createContentDigest(screenshotNode)
+
+    createNode(screenshotNode)
+
+    return screenshotNode
+  } catch (e) {
+    throw new Error(`Failed to screenshot ${url}`)
   }
-
-  screenshotNode.internal.contentDigest = createContentDigest(screenshotNode)
-
-  createNode(screenshotNode)
-
-  return screenshotNode
 }
