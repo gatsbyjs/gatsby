@@ -6,6 +6,8 @@ import socketIo from "./socketIo"
 import emitter from "./emitter"
 import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
 import loader from "./loader"
+import syncRequires from "./sync-requires"
+import pages from "./pages.json"
 
 window.___emitter = emitter
 
@@ -42,6 +44,9 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     undefined,
     ReactDOM.render
   )[0]
+
+  loader.addPagesArray(pages)
+  loader.addDevRequires(syncRequires)
 
   loader.getResourcesForPathname(window.location.pathname, () => {
     let Root = preferDefault(require(`./root`))

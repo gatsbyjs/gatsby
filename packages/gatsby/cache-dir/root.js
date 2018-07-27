@@ -46,9 +46,6 @@ if (window.__webpack_hot_middleware_reporter__ !== undefined) {
   })
 }
 
-loader.addPagesArray(pages)
-loader.addDevRequires(syncRequires)
-
 navigationInit()
 
 // Call onRouteUpdate on the initial page load.
