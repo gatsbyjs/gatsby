@@ -8,6 +8,8 @@ import ShowcaseItemCategories from "./showcase-item-categories"
 import { options, rhythm, scale } from "../../utils/typography"
 import presets, { colors } from "../../utils/presets"
 
+import GithubIcon from "react-icons/lib/go/mark-github"
+
 const ShowcaseList = ({ items, count }) => {
   if (count) items = items.slice(0, count)
 
@@ -70,13 +72,40 @@ const ShowcaseList = ({ items, count }) => {
               </Link>
               <div
                 css={{
+                  ...scale(-2 / 5),
+                  display: `flex`,
+                  justifyContent: `space-between`,
                   "&&": {
                     color: `#9B9B9B`,
-                    ...scale(-2 / 5),
                   },
                 }}
               >
-                <ShowcaseItemCategories categories={node.categories} />
+                <div>
+                  <ShowcaseItemCategories categories={node.categories} />
+                </div>
+                {node.source_url && (
+                  <div>
+                    <a
+                      css={{
+                        "&&": {
+                          color: colors.gray.bright,
+                          fontWeight: `normal`,
+                          borderBottom: `none`,
+                          boxShadow: `none`,
+                          "&:hover": {
+                            background: `none`,
+                            color: colors.gatsby,
+                          },
+                        },
+                      }}
+                      href={node.source_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <GithubIcon style={{ verticalAlign: `text-top` }} />
+                    </a>
+                  </div>
+                )}
               </div>
             </div>
           )
