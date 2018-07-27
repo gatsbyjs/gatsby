@@ -6,7 +6,11 @@ const {
   GraphQLEnumType,
   GraphQLJSON
 } = require("gatsby/graphql");
+const _ = require("lodash");
+const remark = require("remark");
 const visit = require("unist-util-visit");
+const remove = require("unist-util-remove");
+const stripMarkdown = require("strip-markdown");
 const grayMatter = require("gray-matter");
 const { createMdxAstCompiler } = require("@mdx-js/mdx");
 const prune = require("underscore.string/prune");
@@ -29,6 +33,23 @@ module.exports = (
   return new Promise((resolve, reject) => {
     async function getAST(mdxNode) {
       return compiler.parse(stripFrontmatter(mdxNode.rawBody));
+    }
+
+    async function getText(mdxNode) {
+      const ast = await getAST(mdxNode);
+
+      // convert the mdxast to back to mdast
+      remove(ast, "import");
+      remove(ast, "export");
+      visit(ast, "jsx", node => {
+        node.type = "html";
+      });
+
+      const textAst = await remark()
+        .use(stripMarkdown)
+        .run(ast);
+
+      return remark().stringify(textAst);
     }
 
     async function getCode(mdxNode) {
@@ -69,6 +90,21 @@ ${code}`;
           });
 
           return prune(excerptNodes.join(" "), pruneLength, "…");
+        }
+      },
+      timeToRead: {
+        type: GraphQLInt,
+        async resolve(mdxNode) {
+          const text = await getText(mdxNode);
+          console.log(text);
+          let timeToRead = 0;
+          const avgWPM = 265;
+          const wordCount = _.words(text).length;
+          timeToRead = Math.round(wordCount / avgWPM);
+          if (timeToRead === 0) {
+            timeToRead = 1;
+          }
+          return timeToRead;
         }
       }
     });
