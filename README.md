@@ -27,9 +27,6 @@
   <a href="https://npmcharts.com/compare/gatsby?minimal=true">
     <img src="https://img.shields.io/npm/dm/gatsby.svg" alt="Downloads per month on npm." />
   </a>
-  <a href="https://spectrum.chat/gatsby-js">
-    <img src="https://withspectrum.github.io/badge/badge.svg" alt="Gatsby support community on Spectrum." />
-  </a>
   <a href="https://next.gatsbyjs.org/docs/how-to-submit-a-pr/">
     <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs welcome!" />
   </a>
@@ -54,6 +51,7 @@
 ## Table of Contents
 
 -   [Get Up and Running in 5 Minutes](#get-up-and-running-in-5-minutes)
+-   [How to Contribute](#how-to-contribute)
 
 
 ## Get Up and Running in 5 Minutes
@@ -79,11 +77,19 @@ You can get a new Gatsby site up and running on your local dev environment in 5 
 
     > **NOTE:** If you prefer npm, you can also run `npm run develop` to start the site.
 
-3.  **Open the source code and start editing! 💪💜**
+3.  **Open the source code and start editing!**
 
     Your site is now running at `http://localhost:8000`. Open the the `my-blazing-fast-site` directory in your code editor of choice and edit `src/pages/index.js`. Save your changes and the browser will update in real time!
 
 At this point, you’ve got a fully functional Gatsby website. For additional information on how you can customize your Gatsby site, see our [plugins](https://next.gatsbyjs.org/plugins/) and [the official tutorial](https://next.gatsbyjs.org/tutorial/).
+
+
+
+## How to Contribute
+
+Whether you're helping us fix bugs, improve the docs, or spread the word, we'd love to have you as part of the Gatsby community! :muscle::purple_heart:
+
+Check out our [contributor onboarding docs](https://next.gatsbyjs.org/docs/how-to-contribute/) for ideas on contributing and setup steps for getting our repos up and running on your local machine.
 
 ---
 
