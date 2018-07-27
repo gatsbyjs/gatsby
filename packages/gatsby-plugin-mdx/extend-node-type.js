@@ -54,7 +54,8 @@ module.exports = (
     }
 
     async function getCode(mdxNode) {
-      const code = await mdx(mdxNode.rawBody);
+      const code = await mdx(mdxNode.rawBody, options);
+
       return `import React from 'react'
 import { MDXTag } from '@mdx-js/tag'
 
