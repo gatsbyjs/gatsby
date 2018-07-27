@@ -44,9 +44,11 @@
   <span> · </span>
   <a href="https://next.gatsbyjs.org/docs/gatsby-starters/">Starters</a>
   <span> · </span>
-  <a href="https://spectrum.chat/gatsby-js">Get Support</a>
-  <span> · </span>
   <a href="https://next.gatsbyjs.org/docs/how-to-contribute/">Contribute</a>
+  <span> · </span>
+  Support: <a href="https://spectrum.chat/gatsby-js">Spectrum</a>
+  <span> & </span>
+  <a href="https://discord.gg/0ZcbPKXt5bVoxkfV">Discord</a>
 </h3>
 
 ## Table of Contents
