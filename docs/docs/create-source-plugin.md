@@ -135,11 +135,15 @@ When an object node is deleted, Gatsby _does not_ delete any referenced entities
 
 *Creating the relationship*
 
-Let's say you want to create a relationship between Posts and Authors. Before you pass the Post object and Author object into `createNode` and create the respective nodes, you need to create a field called `author___NODE`  on the Post object to hold the relationship to Authors. The value of this field should be the node ID of the Author
+Let's say you want to create a relationship between Posts and Authors, and let's say you want to call the field `author`. 
+
+Before you pass the Post object and Author object into `createNode` and create the respective nodes, you need to create a field called `author___NODE`  on the Post object to hold the relationship to Authors. The value of this field should be the node ID of the Author.
 
 *Creating the reverse relationship*
 
-It's often convenient for querying to add to the schema backwards references. For example, you might want to query the Author of a Post but you might also want to query all the posts an author has written. If you also want to create a reverse relationship between object B and A, you can optionally create a field called `posts___NODE` to hold the relationship to Posts. The value of this field should be an array of Post IDs.
+It's often convenient for querying to add to the schema backwards references. For example, you might want to query the Author of a Post but you might also want to query all the posts an author has written. 
+
+If you want to call this field `posts`, you could optionally create a field called `posts___NODE` to hold the relationship to Posts. The value of this field should be an array of Post IDs.
 
 *Example*
 
