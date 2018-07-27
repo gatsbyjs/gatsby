@@ -1,5 +1,5 @@
 const crypto = require("crypto");
-const merge = require("lodash.merge");
+const merge = require("lodash/merge");
 const defaultOptions = require("./utils/default-options");
 const mdx = require("./utils/mdx");
 const extractExports = require("./utils/extract-exports");
