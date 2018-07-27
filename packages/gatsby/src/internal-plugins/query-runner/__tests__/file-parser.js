@@ -53,7 +53,6 @@ query {
 
   it(`extracts query AST correctly from files`, async () => {
     const results = await parser.parseFiles(Object.keys(MOCK_FILE_INFO))
-    console.log(results)
     expect(results).toMatchSnapshot()
   })
 })
