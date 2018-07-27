@@ -41,15 +41,18 @@ module.exports = async (
     internal: {
       content: nodeContent,
       type: `Mdx`
-    },
-    frontmatter: {
-      title: ``, // always include a title
-      ...frontmatter,
-      _PARENT: node.id
-    },
-    exports: nodeExports,
-    rawBody: nodeContent
+    }
   };
+
+  mdxNode.frontmatter = {
+    title: ``, // always include a title
+    ...frontmatter,
+    _PARENT: node.id
+  };
+
+  mdxNode.excerpt = frontmatter.excerpt;
+  mdxNode.exports = nodeExports;
+  mdxNode.rawBody = nodeContent;
 
   // Add path to the markdown file path
   if (node.internal.type === `File`) {
