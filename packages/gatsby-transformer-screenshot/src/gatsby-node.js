@@ -1,8 +1,19 @@
 const crypto = require(`crypto`)
 const axios = require(`axios`)
+const Queue = require(`better-queue`)
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 
 const SCREENSHOT_ENDPOINT = `https://h7iqvn4842.execute-api.us-east-2.amazonaws.com/prod/screenshot`
+const LAMBDA_CONCURRENCY_LIMIT = 50
+
+const screenshotQueue = new Queue(
+  (input, cb) => {
+    createScreenshotNode(input)
+      .then(r => cb(null, r))
+      .catch(e => cb(e))
+  },
+  { concurrent: LAMBDA_CONCURRENCY_LIMIT, maxRetries: 10, retryDelay: 1000 }
+)
 
 const createContentDigest = obj =>
   crypto
@@ -21,25 +32,29 @@ exports.onPreBootstrap = (
 
   // Check for updated screenshots
   // and prevent Gatsby from garbage collecting remote file nodes
-  return Promise.all(
-    screenshotNodes.map(async n => {
-      if (n.expires && new Date() >= new Date(n.expires)) {
-        // Screenshot expired, re-run Lambda
-        await createScreenshotNode({
-          url: n.url,
-          parent: n.parent,
-          store,
-          cache,
-          createNode,
-          createNodeId,
-        })
-      } else {
-        // Screenshot hasn't yet expired, touch the image node
-        // to prevent garbage collection
-        touchNode({ nodeId: n.screenshotFile___NODE })
-      }
+  screenshotNodes.forEach(n => {
+    if (n.expires && new Date() >= new Date(n.expires)) {
+      // Screenshot expired, re-run Lambda
+      screenshotQueue.push({
+        url: n.url,
+        parent: n.parent,
+        store,
+        cache,
+        createNode,
+        createNodeId,
+      })
+    } else {
+      // Screenshot hasn't yet expired, touch the image node
+      // to prevent garbage collection
+      touchNode({ nodeId: n.screenshotFile___NODE })
+    }
+  })
+
+  return new Promise((resolve, reject) => {
+    screenshotQueue.on(`drain`, () => {
+      resolve()
     })
-  )
+  })
 }
 
 exports.onCreateNode = async ({
@@ -56,13 +71,22 @@ exports.onCreateNode = async ({
     return
   }
 
-  const screenshotNode = await createScreenshotNode({
-    url: node.url,
-    parent: node.id,
-    store,
-    cache,
-    createNode,
-    createNodeId,
+  const screenshotNode = await new Promise((resolve, reject) => {
+    screenshotQueue
+      .push({
+        url: node.url,
+        parent: node.id,
+        store,
+        cache,
+        createNode,
+        createNodeId,
+      })
+      .on(`finish`, r => {
+        resolve(r)
+      })
+      .on(`failed`, e => {
+        reject(e)
+      })
   })
 
   createParentChildLink({
@@ -108,6 +132,13 @@ const createScreenshotNode = async ({
 
     return screenshotNode
   } catch (e) {
-    throw new Error(`Failed to screenshot ${url}`)
+    if (e.response) {
+      console.log(`Failed to screenshot ${url}`)
+      process.exit(1)
+    } else if (e.request) {
+      throw e
+    }
+
+    throw e
   }
 }
