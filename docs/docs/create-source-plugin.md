@@ -143,7 +143,9 @@ Before you pass the Post object and Author object into `createNode` and create t
 
 It's often convenient for querying to add to the schema backwards references. For example, you might want to query the Author of a Post but you might also want to query all the posts an author has written. 
 
-If you want to call this field `posts`, you could optionally create a field called `posts___NODE` to hold the relationship to Posts. The value of this field should be an array of Post IDs.
+If you want to call this field `posts`, you could optionally create a field called `posts___NODE` to hold the relationship to Posts. The value of this field should be an array of Post IDs. 
+
+If the array of IDs are all of the same type, the reverse relatioship field will be of this type; if they are of different types; the field will turn into a union type of all types that are linked. 
 
 *Example*
 
