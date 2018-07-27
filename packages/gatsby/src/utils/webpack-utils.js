@@ -7,7 +7,7 @@ const UglifyPlugin = require(`uglifyjs-webpack-plugin`)
 const MiniCssExtractPlugin = require(`mini-css-extract-plugin`)
 
 const builtinPlugins = require(`./webpack-plugins`)
-const { createBabelConfig } = require(`./babel-config`)
+const createBabelLoader = require(`./babel-loader`)
 const eslintConfig = require(`./eslint-config`)
 
 type LoaderSpec = string | { loader: string, options?: Object }
@@ -119,11 +119,14 @@ module.exports = async ({
 }): Promise<WebpackUtilsOptions> => {
   const assetRelativeRoot = `static/`
   const vendorRegex = /(node_modules|bower_components)/
-  const supportedBrowsers = program.browserlist
+  const supportedBrowsers = program.browserslist
 
   const PRODUCTION = !stage.includes(`develop`)
 
-  const babelConfig = await createBabelConfig(program, stage)
+  const babelLoader = await createBabelLoader({
+    stage,
+    browserslist: supportedBrowsers,
+  })
 
   const isSSR = stage.includes(`html`)
 
@@ -257,10 +260,10 @@ module.exports = async ({
       }
     },
 
-    js: (options = babelConfig) => {
+    js: options => {
       return {
         options,
-        loader: require.resolve(`babel-loader`),
+        loader: babelLoader,
       }
     },
 
