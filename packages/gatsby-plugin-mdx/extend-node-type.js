@@ -96,7 +96,6 @@ ${code}`;
         type: GraphQLInt,
         async resolve(mdxNode) {
           const text = await getText(mdxNode);
-          console.log(text);
           let timeToRead = 0;
           const avgWPM = 265;
           const wordCount = _.words(text).length;
