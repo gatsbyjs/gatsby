@@ -1,5 +1,5 @@
 ---
-title: "react-testing-library"
+title: "Testing React components"
 ---
 
 _The recommended testing framework is [Jest](https://jestjs.io/). This guide assumes that you followed the [Unit testing](docs/unit-testing) guide to setup Jest._

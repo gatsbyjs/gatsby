@@ -1,5 +1,5 @@
 ---
-title: "Cypress"
+title: "End-to-end testing"
 ---
 
 [Cypress](https://www.cypress.io/) is one of the options when it comes to end-to-end testing. Setting up and writing tests in Cypress is developer-friendly and easy to learn. You'll profit from the time travel feature or the extensive debugging capabilities with Chrome DevTools. Of course you can also use it with Gatsby and this guide will explain how.
