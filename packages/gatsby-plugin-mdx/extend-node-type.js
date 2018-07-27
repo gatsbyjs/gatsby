@@ -6,7 +6,7 @@ const {
   GraphQLEnumType,
   GraphQLJSON
 } = require(`gatsby/graphql`);
-const mdx = require("@mdx-js/mdx");
+const mdx = require("./utils/mdx");
 
 module.exports = (
   { type, store, pathPrefix, getNode, getNodes, cache, reporter },

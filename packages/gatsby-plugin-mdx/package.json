@@ -9,6 +9,8 @@
   },
   "dependencies": {
     "escape-string-regexp": "^1.0.5",
-    "gray-matter": "^4.0.1"
+    "gray-matter": "^4.0.1",
+    "json5": "^1.0.1",
+    "lodash.merge": "^4.6.1"
   }
 }
