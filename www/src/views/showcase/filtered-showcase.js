@@ -195,74 +195,70 @@ class FilteredShowcase extends Component {
                   )}
                   <Collapsible heading="Category">
                     {categoryKeys.map(c => (
-                      <ul key={c} css={{ margin: 0 }}>
-                        <button
-                          className={filters.includes(c) ? `selected` : ``}
-                          onClick={() => {
-                            if (filters.includes(c)) {
-                              updateQuery(() => {
-                                return { filters: filters.filter(f => f !== c) }
-                              })
-                            } else {
-                              updateQuery(() => {
-                                return { filters: [...filters, c] }
-                              })
-                            }
-                          }}
+                      <button
+                        key={c}
+                        css={{ margin: 0 }}
+                        className={filters.includes(c) ? `selected` : ``}
+                        onClick={() => {
+                          if (filters.includes(c)) {
+                            updateQuery(() => {
+                              return { filters: filters.filter(f => f !== c) }
+                            })
+                          } else {
+                            updateQuery(() => {
+                              return { filters: [...filters, c] }
+                            })
+                          }
+                        }}
+                        css={{
+                          ...scale(-1 / 6),
+                          alignItems: `flex-start`,
+                          background: `none`,
+                          border: `none`,
+                          color: colors.gray.text,
+                          cursor: `pointer`,
+                          display: `flex`,
+                          fontFamily: options.headerFontFamily.join(`,`),
+                          justifyContent: `space-between`,
+                          outline: `none`,
+                          padding: 0,
+                          paddingRight: rhythm(1),
+                          paddingBottom: rhythm(options.blockMarginBottom / 8),
+                          paddingTop: rhythm(options.blockMarginBottom / 8),
+                          width: `100%`,
+                          textAlign: `left`,
+                          ":hover": {
+                            color: colors.gatsby,
+                          },
+                        }}
+                      >
+                        <div
                           css={{
-                            ...scale(-1 / 6),
-                            alignItems: `flex-start`,
-                            background: `none`,
-                            border: `none`,
-                            color: colors.gray.text,
-                            cursor: `pointer`,
-                            display: `flex`,
-                            fontFamily: options.headerFontFamily.join(`,`),
-                            justifyContent: `space-between`,
-                            outline: `none`,
-                            padding: 0,
-                            paddingRight: rhythm(1),
-                            paddingBottom: rhythm(
-                              options.blockMarginBottom / 8
-                            ),
-                            paddingTop: rhythm(options.blockMarginBottom / 8),
-                            width: `100%`,
-                            textAlign: `left`,
-                            ":hover": {
-                              color: colors.gatsby,
-                            },
+                            color: filters.includes(c)
+                              ? colors.gatsby
+                              : colors.ui.bright,
+                            ...scale(0),
+                            marginRight: 8,
                           }}
                         >
-                          <div
-                            css={{
-                              color: filters.includes(c)
-                                ? colors.gatsby
-                                : colors.ui.bright,
-                              ...scale(0),
-                              marginRight: 8,
-                            }}
-                          >
-                            {filters.includes(c) ? (
-                              <MdCheckbox />
-                            ) : (
-                              <MdCheckboxBlank />
-                            )}
-                          </div>
-                          <div
-                            css={{
-                              color: filters.includes(c)
-                                ? colors.gatsby
-                                : false,
-                              marginRight: `auto`,
-                            }}
-                          >
-                            {c}
-                          </div>
-                          <div css={{ color: colors.gray.calm }}>
-                            {aggregatedCategories[c]}
-                          </div>
-                        </button>
-                      </ul>
+                          {filters.includes(c) ? (
+                            <MdCheckbox />
+                          ) : (
+                            <MdCheckboxBlank />
+                          )}
+                        </div>
+                        <div
+                          css={{
+                            color: filters.includes(c) ? colors.gatsby : false,
+                            marginRight: `auto`,
+                          }}
+                        >
+                          {c}
+                        </div>
+                        <div css={{ color: colors.gray.calm }}>
+                          {aggregatedCategories[c]}
+                        </div>
+                      </button>
                     ))}
                   </Collapsible>
                 </div>
