@@ -4,13 +4,13 @@ title: "End-to-end testing"
 
 [Cypress](https://www.cypress.io/) is one of the options when it comes to end-to-end testing. Setting up and writing tests in Cypress is developer-friendly and easy to learn. You'll profit from the time travel feature or the extensive debugging capabilities with Chrome DevTools. Of course you can also use it with Gatsby and this guide will explain how.
 
-In order to run Gatsby's development server and Cypress at the same time we'll use the little helper [start-server-and-test](https://github.com/bahmutov/start-server-and-test). If you're already using [react-testing-library](docs/react-testing-library) you might want to install `cypress-testing-library`, too. Install the following packages to your `devDependencies`:
+In order to run Gatsby's development server and Cypress at the same time you'll use the little helper [start-server-and-test](https://github.com/bahmutov/start-server-and-test). If you're already using [react-testing-library](docs/testing-react-components) you might want to install `cypress-testing-library`, too. Install the following packages to your `devDependencies`:
 
 ```sh
 npm install --save-dev cypress start-server-and-test
 ```
 
-We also want our urls used by `cy.visit()` or `cy.request()` to be prefixed hence we create the file `cypress.json` at the root of our project with the following content:
+We also want the urls used by `cy.visit()` or `cy.request()` to be prefixed hence you have to create the file `cypress.json` at the root of your project with the following content:
 
 ```json
 {
@@ -18,7 +18,7 @@ We also want our urls used by `cy.visit()` or `cy.request()` to be prefixed henc
 }
 ```
 
-Last but not least we add additional scripts to our `package.json` to run Cypress:
+Last but not least you add additional scripts to your `package.json` to run Cypress:
 
 ```json
 {
@@ -47,4 +47,4 @@ If you want to run Cypress in Continuous Integration (CI) you have to use `cypre
 }
 ```
 
-Please read the official [documentation](https://docs.cypress.io/guides/guides/continuous-integration.html) on CI if you want to know how to setup Travis or Gitlab with Cypress.
+Please read the [Cypress' official documentation](https://docs.cypress.io/guides/guides/continuous-integration.html) on CI if you want to know how to setup Travis or Gitlab with Cypress.

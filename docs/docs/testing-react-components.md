@@ -39,7 +39,7 @@ Lastly you need to tell Jest where to find this file. Open your `package.json` a
 
 ## Usage
 
-Let's create a little example test using our newly added library. There are a lot of options when it comes to selectors, we choose `getByTestId` here. We also utilize `toHaveTextContent` from `jest-dom`:
+Let's create a little example test using the newly added library. There are a lot of options when it comes to selectors, this example chooses `getByTestId` here. It also utilizes `toHaveTextContent` from `jest-dom`:
 
 ```js
 import React from 'react'
