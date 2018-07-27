@@ -109,7 +109,7 @@ Gatsby source plugins not only create nodes, they also create relationships betw
 
 There are two ways of adding node relationships in Gatsby: (1) hierarchical (parent-child) or (2) foreign-key based. 
 
-##### Hierarchical relationships
+#### Hierarchical relationships
 
 An example of a hierarchical relationship would be a `transformer` plugin changing a file node's markdown string into a `childMarkdownRemark` node that is attached to that fileNode. The markdown node doesn't make sense outside of the file it belongs to. 
 
@@ -123,7 +123,7 @@ In order to create a parent/child relationship, when calling `createNode` for th
 
 [Here's an example](https://github.com/gatsbyjs/gatsby/blob/1fb19f9ad16618acdac7eda33d295d8ceba7f393/packages/gatsby-transformer-sharp/src/on-node-create.js#L3-L25) from the `gatsby-transformer-sharp` source plugin.  
 
-##### Foreign-key relationships
+#### Foreign-key relationships
 
 An example of a foreign-key relationship would be a Post that has an Author. 
 
