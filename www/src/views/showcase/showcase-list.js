@@ -3,6 +3,7 @@ import { Link } from "gatsby"
 import Img from "gatsby-image"
 import hex2rgba from "hex2rgba"
 import { style } from "glamor"
+import qs from "qs"
 
 import ShowcaseItemCategories from "./showcase-item-categories"
 import { options, rhythm, scale } from "../../utils/typography"
@@ -107,33 +108,26 @@ const ShowcaseList = ({ items, count }) => {
                     </a>
                   </div>
                 )}
-                <button
-                  css={{
-                    position: `absolute`,
-                    top: `0`,
-                    right: `-2px`,
-                    margin: `0`,
-                    padding: `0`,
-                    background: `transparent`,
-                    border: `none`,
-                    cursor: `pointer`,
-                  }}
-                >
-                  <img
-                    src={FeaturedIcon}
-                    alt="icon"
+                {node.featured && (
+                  <Link
                     css={{
-                      padding: `2px 4px`,
-                      margin: 0,
-                      background: `#FFB322`,
-                      display: `block`,
-                      borderRadius: `0 0 0 4px`,
-                      "&:hover": {
-                        background: colors.gatsby,
+                      "&&": {
+                        ...styles.featuredItem,
                       },
                     }}
-                  />
-                </button>
+                    to={`/showcase?${qs.stringify({
+                      filters: `Featured`,
+                    })}`}
+                  >
+                    <img
+                      src={FeaturedIcon}
+                      alt="icon"
+                      css={{
+                        ...styles.featuredIcon,
+                      }}
+                    />
+                  </Link>
+                )}
               </div>
             </div>
           )
@@ -185,5 +179,32 @@ const styles = {
     margin: rhythm(3 / 4),
     width: 280,
     position: `relative`,
+  },
+  featuredItem: {
+    "@media (max-width: 767px)": {
+      display: `none`,
+    },
+    position: `absolute`,
+    top: `0`,
+    right: `-2px`,
+    margin: `0`,
+    padding: `0`,
+    background: `transparent`,
+    border: `none`,
+    cursor: `pointer`,
+    boxShadow: `none`,
+    "&:hover": {
+      background: `transparent`,
+    },
+  },
+  featuredIcon: {
+    padding: `2px 4px`,
+    margin: 0,
+    background: `#FFB322`,
+    borderRadius: `0 0 0 4px`,
+    display: `block`,
+    "&:hover": {
+      background: colors.gatsby,
+    },
   },
 }
