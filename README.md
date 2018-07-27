@@ -1,3 +1,19 @@
+<p align="center">
+  <a href="https://gatsbyjs.org">
+    <img alt="Gatsby" src="https://www.gatsbyjs.org/monogram.svg" width="60" />
+  </a>
+</p>
+<h1 align="center">
+  Gatsby
+</h1>
+
+<div align="center">
+  :muscle:
+</div>
+<div align="center">
+  <strong></strong>
+</div>
+
 [![Travis CI Build Status](https://travis-ci.org/gatsbyjs/gatsby.svg?branch=master)](https://travis-ci.org/gatsbyjs/gatsby)
 [![npm package](https://img.shields.io/npm/v/gatsby.svg?style=flat-square)](https://www.npmjs.org/package/gatsby)
 [![npm package](https://img.shields.io/npm/dm/gatsby.svg)](https://npmcharts.com/compare/gatsby?minimal=true)
@@ -5,8 +21,6 @@
 [![gatsby channel on discord](https://img.shields.io/badge/discord-gatsby%40reactiflux-738bd7.svg?style=flat-square)](https://discord.gg/0ZcbPKXt5bVoxkfV)
 [![Open Source Helpers](https://www.codetriage.com/gatsbyjs/gatsby/badges/users.svg)](https://www.codetriage.com/gatsbyjs/gatsby)
 [![Twitter Follow](https://img.shields.io/twitter/follow/gatsbyjs.svg?style=social)](https://twitter.com/gatsbyjs)
-
-<img alt="Gatsby" src="https://www.gatsbyjs.org/monogram.svg" width="100">
 
 # Gatsby v2 Beta
 
