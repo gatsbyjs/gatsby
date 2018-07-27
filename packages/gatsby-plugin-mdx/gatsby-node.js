@@ -71,3 +71,9 @@ exports.preprocessSource = async function preprocessSource(
   }
   return null;
 };
+
+exports.onCreateBabelConfig = ({ actions }) => {
+  actions.setBabelPlugin({
+    name: `@babel/plugin-proposal-object-rest-spread`
+  });
+};
