@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://gatsbyjs.org">
+  <a href="https://next.gatsbyjs.org">
     <img alt="Gatsby" src="https://www.gatsbyjs.org/monogram.svg" width="60" />
   </a>
 </p>
@@ -11,7 +11,8 @@
   ⚛️ 📄 :rocket:
 </h3>
 <p align="center">
-  <strong>Blazing fast site generator for React</strong>
+  <strong>Blazing fast site generator for React</strong><br>
+  Go beyond static sites: build blogs, ecommerce sites, full-blown apps, and more with Gatsby.
 </p>
 <p align="center">
   <a href="https://github.com/gatsbyjs/gatsby/blob/master/LICENSE">
@@ -33,6 +34,20 @@
     <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs welcome!" />
   </a>
 </p>
+
+<h3 align="center">
+  <a href="https://next.gatsbyjs.org/docs/">Quickstart</a>
+  <span> · </span>
+  <a href="https://next.gatsbyjs.org/tutorial/">Tutorial</a>
+  <span> · </span>
+  <a href="https://next.gatsbyjs.org/plugins/">Plugins</a>
+  <span> · </span>
+  <a href="https://next.gatsbyjs.org/docs/gatsby-starters/">Starters</a>
+  <span> · </span>
+  <a href="https://spectrum.chat/gatsby-js">Get Support</a>
+  <span> · </span>
+  <a href="https://next.gatsbyjs.org/docs/how-to-contribute/">Contribute</a>
+</h3>
 
 **NOTE:** This branch is the beta version of Gatsby v2. You can find documentation at [next.gatsbyjs.org](https://next.gatsbyjs.org/).
 
