@@ -111,17 +111,19 @@ There are two ways of adding node relationships in Gatsby: (1) hierarchical (par
 
 #### Hierarchical relationships
 
-An example of a hierarchical relationship would be a `transformer` plugin changing a file node's markdown string into a `childMarkdownRemark` node that is attached to that fileNode. The markdown node doesn't make sense outside of the file it belongs to. 
+An example of a hierarchical relationship is `the gatsby-transformer-remark` plugin, which transforming a parent `fileNode`'s markdown string into a `MarkdownRemark` node. The transformer plugin adds its newly created child node as a child to the parent node using the action `createParentChildLink`. The markdown node is completely derived from the parent File node so wouldn't ever exist if the parent `fileNode` hadn't been created.
 
-When a parent node is deleted, Gatsby deletes all of the child nodes (and their child nodes, and so on). 
+Because all children nodes are derived from their parent, when a parent node is deleted or changed, when a parent node is deleted, Gatsby deletes all of the child nodes (and their child nodes, and so on). 
 
 *Creating the relationship*
 
 In order to create a parent/child relationship, when calling `createNode` for the child node the object that is passed in should have a `parent` key with the value set to the parent node's `id`. After this, call the `createParentChildLink` function exported inside `actions`.
 
-*Example*
+*Examples*
 
-[Here's an example](https://github.com/gatsbyjs/gatsby/blob/1fb19f9ad16618acdac7eda33d295d8ceba7f393/packages/gatsby-transformer-sharp/src/on-node-create.js#L3-L25) from the `gatsby-transformer-sharp` source plugin.  
+[Here's the above example](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-transformer-remark/src/on-node-create.js#L34-L64) from the `gatsby-transformer-remark` source plugin.
+
+[Here's another example](https://github.com/gatsbyjs/gatsby/blob/1fb19f9ad16618acdac7eda33d295d8ceba7f393/packages/gatsby-transformer-sharp/src/on-node-create.js#L3-L25) from the `gatsby-transformer-sharp` source plugin.  
 
 #### Foreign-key relationships
 
@@ -129,27 +131,17 @@ An example of a foreign-key relationship would be a Post that has an Author.
 
 In this relationship, each object is a distinct entity that exists whether or not the other does, with independent schemas, and field(s) on each entity that reference the other entity -- in this case the Post would have an Author, and the Author might have Posts. The API of a service that allows complex object modelling, for example a CMS, will often allow users to relationships between entities and expose them through the API.
 
-When an object node is deleted, Gatsby _does not_ delete any referenced entities. 
+When an object node is deleted, Gatsby _does not_ delete any referenced entities. When using foreign-key references, it's a source plugin's responsibility to clean up any dangling entity references.
 
 *Creating the relationship*
 
-Let's say you want to create a relationship between two nodes, which we'll call nodes A and B. 
-
-Before you pass Object A and Object B into `createNode` and create the nodes, you need to:
-
-1. create a field on Object A to hold the relationship to Object B. (You may want to name this field `relationships` for clarity). The value of this field should be an object.
-
-2. concatenate node B's id, with the string `___ID` and add as a key to that object. The value of this field should be a new node ID.
+Let's say you want to create a relationship between Posts and Authors. Before you pass the Post object and Author object into `createNode` and create the respective nodes, you need to create a field called `author___NODE`  on the Post object to hold the relationship to Authors. The value of this field should be the node ID of the Author
 
 *Creating the reverse relationship*
 
-If you also want to create a reverse relationship between object B and A, you can optionally follow these additional steps:
-
-3. create a field on Object B to hold the relationship to Object A. (You may want to name this field `reverseRelationships` for clarity). The value of this field should be an object.
-
-4. concatenate node A's id, with the string `___ID` and add as a key to that object. The value of this field should be a new node ID.
+It's often convenient for querying to add to the schema backwards references. For example, you might want to query the Author of a Post but you might also want to query all the posts an author has written. If you also want to create a reverse relationship between object B and A, you can optionally create a field called `posts___NODE` to hold the relationship to Posts. The value of this field should be an array of Post IDs.
 
 *Example*
 
-Here's an example from the [Drupal source plugin](https://github.com/gatsbyjs/gatsby/blob/1fb19f9ad16618acdac7eda33d295d8ceba7f393/packages/gatsby-source-drupal/src/gatsby-node.js#L112-L127).
+Here's an example from the [Wordpress source plugin](https://github.com/gatsbyjs/gatsby/blob/1fb19f9ad16618acdac7eda33d295d8ceba7f393/packages/gatsby-source-wordpress/src/normalize.js#L178-L189).
 
