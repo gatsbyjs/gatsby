@@ -109,6 +109,11 @@ exports.onRenderBody = true
  * first argument which replace the `headComponents` array which is passed
  * to the `html.js` component. **WARNING** if multiple plugins implement this
  * API it's the last plugin that "wins".
+ * @param {Array} $0.getPostBodyComponents Returns the current `postBodyComponents` array.
+ *  @param {function} $0.replacePostBodyComponents Takes an array of components as its
+ * first argument which replace the `postBodyComponents` array which is passed
+ * to the `html.js` component. **WARNING** if multiple plugins implement this
+ * API it's the last plugin that "wins".
  * @param {Object} pluginOptions
  * @example
  * // Move Typography.js styles to the top of the head section so they're loaded first.

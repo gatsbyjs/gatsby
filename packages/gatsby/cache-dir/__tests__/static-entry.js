@@ -62,11 +62,43 @@ const fakeStylesPlugin = {
   },
 }
 
+const reversePostBodyPlugin = {
+  plugin: {
+    onPreRenderHTML: ({ getPostBodyComponents, replacePostBodyComponents }) => {
+      const postBodyComponents = getPostBodyComponents()
+      postBodyComponents.reverse()
+      replacePostBodyComponents(postBodyComponents)
+    },
+  },
+}
+
+const fakeComponentsPlugin = {
+  plugin: {
+    onRenderBody: ({ setPostBodyComponents }) => setPostBodyComponents([
+      <div key="div1">div1</div>,
+      <div key="div2">div2</div>,
+      <div key="div3">div3</div>,
+    ]),
+  },
+}
+
 describe(`develop-static-entry`, () => {
-  test(`onPreRenderHTML can be used to replace head components`, (done) => {
+  test(`onPreRenderHTML can be used to replace headComponents`, (done) => {
     global.plugins = [
       fakeStylesPlugin,
       reverseHeadersPlugin,
+    ]
+
+    DevelopStaticEntry(`/about/`, (_, html) => {
+      expect(html).toMatchSnapshot()
+      done()
+    })
+  })
+
+  test(`onPreRenderHTML can be used to replace postBodyComponents`, (done) => {
+    global.plugins = [
+      fakeComponentsPlugin,
+      reversePostBodyPlugin,
     ]
 
     DevelopStaticEntry(`/about/`, (_, html) => {
@@ -85,6 +117,18 @@ describe(`static-entry`, () => {
     global.plugins = [
       fakeStylesPlugin,
       reverseHeadersPlugin,
+    ]
+
+    StaticEntry(`/about/`, (_, html) => {
+      expect(html).toMatchSnapshot()
+      done()
+    })
+  })
+
+  test(`onPreRenderHTML can be used to replace postBodyComponents`, (done) => {
+    global.plugins = [
+      fakeComponentsPlugin,
+      reversePostBodyPlugin,
     ]
 
     StaticEntry(`/about/`, (_, html) => {

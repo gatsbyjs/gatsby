@@ -59,10 +59,16 @@ export default (pagePath, callback) => {
     bodyProps = merge({}, bodyProps, props)
   }
 
-  const getHeadComponents = components => headComponents
+  const getHeadComponents = () => headComponents
 
   const replaceHeadComponents = components => {
     headComponents = components
+  }
+
+  const getPostBodyComponents = () => postBodyComponents
+
+  const replacePostBodyComponents = components => {
+    postBodyComponents = components
   }
 
   apiRunner(`onRenderBody`, {
@@ -77,6 +83,8 @@ export default (pagePath, callback) => {
   apiRunner(`onPreRenderHTML`, {
     getHeadComponents,
     replaceHeadComponents,
+    getPostBodyComponents,
+    replacePostBodyComponents,
   })
 
   const htmlElement = React.createElement(Html, {
