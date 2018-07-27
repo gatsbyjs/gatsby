@@ -1749,3 +1749,14 @@
   built_by: Michael McQuade
   built_by_url: https://github.com/giraffesyo
   featured: false
+- title: StoutLabs
+  description: >
+    Portfolio of Daniel Stout, freelance web dev in East Tennessee.
+  main_url: https://www.stoutlabs.com/
+  url: https://www.stoutlabs.com/
+  categories:
+    - Web Dev
+    - Portfolio
+  built_by: Daniel Stout
+  built_by_url: https://github.com/stoutlabs
+  featured: false
