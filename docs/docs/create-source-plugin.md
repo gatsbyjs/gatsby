@@ -115,7 +115,11 @@ An example of a hierarchical relationship would be a `transformer` plugin changi
 
 When a parent node is deleted, Gatsby deletes all of the child nodes (and their child nodes, and so on). 
 
+_Creating the relationship_
+
 In order to create a parent/child relationship, when calling `createNode` for the child node the object that is passed in should have a `parent` key with the value set to the parent node's `id`. After this, call the `createParentChildLink` function exported inside `actions`.
+
+_Example_
 
 [Here's an example](https://github.com/gatsbyjs/gatsby/blob/1fb19f9ad16618acdac7eda33d295d8ceba7f393/packages/gatsby-transformer-sharp/src/on-node-create.js#L3-L25) from the `gatsby-transformer-sharp` source plugin.  
 
@@ -127,6 +131,8 @@ In this relationship, each object is a distinct entity that exists whether or no
 
 When an object node is deleted, Gatsby _does not_ delete any referenced entities. 
 
+_Creating the relationship_
+
 Let's say you want to create a relationship between two nodes, which we'll call nodes A and B. 
 
 Before you pass Object A and Object B into `createNode` and create the nodes, you need to:
@@ -135,11 +141,15 @@ Before you pass Object A and Object B into `createNode` and create the nodes, yo
 
 2. concatenate node B's id, with the string `___ID` and add as a key to that object. The value of this field should be a new node ID.
 
+_Creating the relationship_
+
 If you also want to create a reverse relationship between object B and A, you can optionally follow these additional steps:
 
 3. create a field on Object B to hold the relationship to Object A. (You may want to name this field `reverseRelationships` for clarity). The value of this field should be an object.
 
 4. concatenate node A's id, with the string `___ID` and add as a key to that object. The value of this field should be a new node ID.
+
+_Example_
 
 Here's an example from the [Drupal source plugin](https://github.com/gatsbyjs/gatsby/blob/1fb19f9ad16618acdac7eda33d295d8ceba7f393/packages/gatsby-source-drupal/src/gatsby-node.js#L112-L127).
 
