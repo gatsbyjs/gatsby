@@ -4,27 +4,35 @@
   </a>
 </p>
 <h1 align="center">
-  Gatsby
+  Gatsby v2 [beta] · (see <a href="https://github.com/gatsbyjs/gatsby/tree/v1">v1</a>)
 </h1>
 
-<div align="center">
-  :muscle:
-</div>
-<div align="center">
-  <strong></strong>
-</div>
-
-[![Travis CI Build Status](https://travis-ci.org/gatsbyjs/gatsby.svg?branch=master)](https://travis-ci.org/gatsbyjs/gatsby)
-[![npm package](https://img.shields.io/npm/v/gatsby.svg?style=flat-square)](https://www.npmjs.org/package/gatsby)
-[![npm package](https://img.shields.io/npm/dm/gatsby.svg)](https://npmcharts.com/compare/gatsby?minimal=true)
-[![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/gatsby-js)
-[![gatsby channel on discord](https://img.shields.io/badge/discord-gatsby%40reactiflux-738bd7.svg?style=flat-square)](https://discord.gg/0ZcbPKXt5bVoxkfV)
-[![Open Source Helpers](https://www.codetriage.com/gatsbyjs/gatsby/badges/users.svg)](https://www.codetriage.com/gatsbyjs/gatsby)
-[![Twitter Follow](https://img.shields.io/twitter/follow/gatsbyjs.svg?style=social)](https://twitter.com/gatsbyjs)
-
-# Gatsby v2 Beta
-
-⚛️📄🚀 Blazing-fast site generator for React
+<h3 align="center">
+  ⚛️ 📄 :rocket:
+</h3>
+<p align="center">
+  <strong>Blazing fast site generator for React</strong>
+</p>
+<p align="center">
+  <a href="https://github.com/gatsbyjs/gatsby/blob/master/LICENSE">
+    <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="Gatsby is released under the MIT license." />
+  </a>
+  <a href="https://travis-ci.org/gatsbyjs/gatsby">
+    <img src="https://travis-ci.org/gatsbyjs/gatsby.svg?branch=master" alt="Current TravisCI build status." />
+  </a>
+  <a href="https://www.npmjs.org/package/gatsby">
+    <img src="https://img.shields.io/npm/v/gatsby.svg?style=flat-square" alt="Current npm package version." />
+  </a>
+  <a href="https://npmcharts.com/compare/gatsby?minimal=true">
+    <img src="https://img.shields.io/npm/dm/gatsby.svg" alt="Downloads per month on npm." />
+  </a>
+  <a href="https://spectrum.chat/gatsby-js">
+    <img src="https://withspectrum.github.io/badge/badge.svg" alt="Gatsby support community on Spectrum." />
+  </a>
+  <a href="https://next.gatsbyjs.org/docs/how-to-submit-a-pr/">
+    <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs welcome!" />
+  </a>
+</p>
 
 **NOTE:** This branch is the beta version of Gatsby v2. You can find documentation at [next.gatsbyjs.org](https://next.gatsbyjs.org/).
 
@@ -67,230 +75,6 @@ The following policy will be in place during the v2 beta:
 
 We're using this policy as the Gatsby team currently spends a significant amount of time maintaining two active branches - the v1 branch and the v2 branch - we'd like to limit this work to focus on getting v2 released and start working on oft-requested new features like schema snapshots and schema stitching.
 
-## Showcase
-
-Websites built with Gatsby:
-
-- [React](https://reactjs.org/)
-  ([source](https://github.com/reactjs/reactjs.org))
-- [Sourcegraph](https://about.sourcegraph.com)
-- [Simply](https://simply.co.za)
-- [The freeCodeCamp Guide](https://guide.freecodecamp.org)
-  ([source](https://github.com/freeCodeCamp/guides))
-- [Storybook](https://storybook.js.org) ([source](https://github.com/storybooks/storybook))
-- [Learn Storybook](https://learnstorybook.com) ([source](https://github.com/hichroma/learnstorybook.com))
-- [FloydHub's Blog](https://blog.floydhub.com)
-- [mParticle's Documentation](https://docs.mparticle.com)
-- [Segment's Blog](https://segment.com/blog/)
-- [Fabric](https://meetfabric.com/)
-- [Formidable](https://formidable.com/)
-- [Ledgy](https://www.ledgy.com/)
-  ([source](https://github.com/morloy/ledgy.com))
-- [openFDA](https://open.fda.gov/)
-  ([source](https://github.com/FDA/open.fda.gov))
-- [Bricolage.io](https://www.bricolage.io/)
-  ([source](https://github.com/KyleAMathews/blog))
-- [Hack Club](https://hackclub.com/)
-  ([source](https://github.com/hackclub/site))
-- [High School Hackathons](https://hackathons.hackclub.com/)
-  ([source](https://github.com/hackclub/hackathons))
-- [Jamie Henson's Blog](http://jamiehenson.com/)
-  ([source](https://github.com/jamiehenson/jh47-gatsby))
-- [Sean Coker's Blog](https://sean.is/)
-- [Dustin Schau's Blog](https://dustinschau.com/blog/)
-  ([source](https://github.com/dschau/blog))
-- [The Chiedo Companies Website](https://www.chiedo.com)
-- [Damir.io](http://damir.io/)
-  ([source](https://github.com/dvzrd/gatsby-sfiction))
-- [Ruben's Blog](https://vagr9k.me/) ([source](https://github.com/Vagr9K/Blog))
-- [Kostas Bariotis' Blog](https://kostasbariotis.com/)
-  ([source](https://github.com/kbariotis/kostasbariotis.com))
-- [Thao Am Private Enterprise](http://thaoam.com/)
-- [Bakadono](http://bakadono.com/)
-- [Travellers.cafe](https://travellers.cafe/)
-- [Oliver Benns' Portfolio](https://oliverbenns.com)
-  ([source](https://github.com/oliverbenns/oliverbenns.com))
-- [angeloocana.com](https://angeloocana.com)
-  ([source](https://github.com/angeloocana/angeloocana))
-- [knpw.rs](https://knpw.rs) ([source](https://github.com/knpwrs/knpw.rs))
-- [Overlap.show](https://overlap.show)
-  ([source](https://github.com/pouretrebelle/overlap.show))
-- [smartive Company Website](https://smartive.ch)
-- [Haboba Find Jobs at Phu Quoc Island](http://haboba.com)
-- [Charlie Harrington's Blog](https://charlieharrington.com)
-  ([source](https://github.com/whatrocks/blog))
-- [Song Wang’s website](https://songwang.io/)
-  ([source](https://github.com/wangsongiam/songwang.io))
-- [Digital Psychology](http://digitalpsychology.io)
-  ([source](https://github.com/danistefanovic/digitalpsychology.io))
-- [Magicly's blog](https://magicly.me/)
-  ([source](https://github.com/magicly/gatsby-blog))
-- [Dalbinaco's website](http://dalbinaco.com/)
-  ([source](https://github.com/dalbinaco/dalbinaco.github.io))
-- [Phu Quoc Works](http://phuquocworks.net)
-- [Kabir Goel's website](https://kbrgl.github.io)
-  ([source](https://github.com/kbrgl/kbrgl.github.io))
-- [Gabriel Adorf's Portfolio](https://gabrieladorf.com/)
-  ([source](https://github.com/gabdorf/gabriel-adorf-portfolio))
-- [CSS Grid Playground by MozillaDev](https://mozilladevelopers.github.io/playground/)
-  ([source](https://github.com/MozillaDevelopers/playground))
-- [David James' Portfolio](http://dfjames.com)
-  ([source](https://github.com/daviddeejjames/dfjames-gatsby))
-- [Tic Tac Toe AI](https://tic-tac-toe-ai.surge.sh)
-  ([source](https://github.com/angeloocana/tic-tac-toe-ai))
-- [Etcetera Design](https://etcetera.design)
-  ([source](https://github.com/etceteradesign/website))
-- [Azer Koçulu](http://azer.bike)
-- [Random Screencast](https://randomscreencast.com)
-- [Phu Quoc Tea & Coffee Store](http://trasuaphuquoc.com)
-- [Steven Natera's blog](https://www.stevennatera.com)
-- [LekoArts - Graphic Designer Portfolio](https://www.lekoarts.de) ([source](https://github.com/LeKoArts/portfolio))
-- [Georgi Yanev](https://blog.georgi-yanev.com)
-  ([source](https://github.com/jumpalottahigh/blog.georgi-yanev.com))
-- [OnCallogy.com](https://www.oncallogy.com)
-- [doopoll's marketing site](https://doopoll.co)
-- [Design Systems Weekly](https://designsystems.email/)
-- [Slite landing pages](https://slite.com/)
-- [Hallingdata](http://hallingdata.no/)
-- [@swyx](http://swyx.io) ([source](https://github.com/sw-yx/swyxdotio))
-- [Portfolio of Piotr Fedorczyk](https://piotrf.pl)
-- [JavaScript Stuff](https://www.javascriptstuff.com)
-- [GRANDstack - GraphQL, React, Apollo, Neo4j Database](http://grandstack.io/)
-- [GraphCMS's website](https://graphcms.com)
-- [Mannequin.io](https://mannequin.io)
-  ([source](https://github.com/LastCallMedia/Mannequin/tree/master/site))
-- [Calpa's Blog](https://calpa.me) [(source)](https://github.com/calpa/blog)
-- [API Platform](https://api-platform.com)
-  ([source](https://github.com/api-platform/website))
-- [Bottender Docs](https://bottender.js.org/)
-  ([source](https://github.com/bottenderjs/bottenderjs.github.io))
-- [How to GraphQL](https://www.howtographql.com/)
-  ([source](https://github.com/howtographql/howtographql))
-- [greglobinski.com](https://greglobinski.com)
-  ([source](https://github.com/greglobinski/greglobinski-com))
-- [Vibert Thio's Portfolio](https://vibertthio.com/portfolio/)([source](https://github.com/vibertthio/portfolio))
-- [YouFoundRon.com](https://youfoundron.com)
-  ([source](https://github.com/rongierlach/yfr-dot-com))
-- [heml.io](https://heml.io)
-  ([source](https://github.com/SparkPost/heml.io))
-- [伊撒尔の窝](https://www.yisaer.com)
-- [Artivest's Public Website](https://artivest.co)
-- [William Owen UK](http://william-owen.co.uk)
-- [NYC Planning Labs (New York City Department of City Planning)](https://planninglabs.nyc)([source](https://github.com/nycplanning/labs-planninglabs-home))
-- [The State of European Tech 2017](https://2017.stateofeuropeantech.com)
-- [Santa Compañía Creativa](https://santacc.es) ([source](https://github.com/DesarrolloWebSantaCC/santacc-web))
-- [Pravdomil](https://pravdomil.com) ([source](https://github.com/pravdomil/pravdomil.com))
-- [Fabian Schultz' Portfolio](https://fabianschultz.com)
-  ([source](https://github.com/fabe/site))
-- [Caddy smells like trees - Free-folk band official page](https://caddysmellsliketrees.ru)
-  ([source](https://github.com/podabed/caddysmellsliketrees.github.io))
-- [BRIIM](https://bri.im/)
-- [KNW Photography](https://www.knw.io)
-  ([source](https://github.com/ryanwiemer/knw))
-- [NEON](http://neonrated.com)
-- [A4 纸网](http://www.a4z.cn)([source](https://github.com/hiooyUI/hiooyui.github.io))
-- [manu.ninja](https://manu.ninja/) ([source](https://github.com/Lorti/manu.ninja))
-- [Kris Hedstrom's Portfolio](https://k-create.com/) ([source](https://github.com/kristofferh/kristoffer))
-- [Chocolate free website](https://chocolate-free.com/) ([source](https://github.com/Khaledgarbaya/chocolate-free-website))
-- [Charles Pinnix Website](https://www.charlespinnix.com/)
-- [Verious](https://www.verious.io/) ([source](https://github.com/cpinnix/verious))
-- [Developer Ecosystem](https://www.developerecosystem.com/)
-- [Steve Meredith's Portfolio](http://www.steveeeie.io/)
-- [Landing page of Put.io](https://put.io/)
-- [Ryan Wiemer's Portfolio](https://www.ryanwiemer.com)
-  ([source](https://github.com/ryanwiemer/rw))
-- [yerevancoder](https://yerevancoder.com)
-  ([source](https://github.com/yerevancoder/yerevancoder.github.io))
-- [unrealcpp](https://unrealcpp.com/) ([source](https://github.com/Harrison1/unrealcpp-com))
-- [several levels](https://severallevels.io/) ([source](https://github.com/Harrison1/several-levels))
-- [Flooring Factories Outlets](https://www.flooringfactoriesoutlets.com/)
-- [Nortcast](https://nortcast.com/)
-- [VisitGemer](https://visitgemer.sk/)
-- [Nexit](https://nexit.sk/)
-- [ERC dEX](https://ercdex.com)
-- [iContract Blog](https://blog.icontract.co.uk)
-- [Dona Rita](https://donarita.co.uk) ([source](https://github.com/peduarte/dona-rita-website))
-- [Andy Slezak](https://www.aslezak.com) ([source](https://github.com/amslezak))
-- [Odayaka](http://odayaka.net) ([source](https://github.com/odayakanaasa/odayaka))
-- [Ventura Digitalagentur Köln](https://www.ventura-digital.de)
-- [Cardiogram](https://cardiogr.am/)
-- [LaserTime Clinic](https://lasertime.ru) ([source](https://github.com/oleglegun/lasertime))
-- [Gatsby Manor - themes for GatsbyJS](https://gatsbymanor.com)
-- [Darren Britton's Portfolio](https://darrenbritton.com) ([source](https://github.com/darrenbritton/darrenbritton.github.io))
-- [Portfolio / Blog of Preston Richey](https://prestonrichey.com/) ([source](https://github.com/prichey/prestonrichey.com))
-- [Beach Hut Poole](https://www.beachhutpoole.co.uk/)
-- [In Sowerby Bridge](https://www.insowerbybridge.co.uk/)
-- [枫上雾棋的日志](https://fengshangwuqi.github.io/)
-- [Juliette Pretot's Portfolio](https://juliette.sh)
-- [Théâtres Parisiens](http://theatres-parisiens.fr/) ([source](https://github.com/phacks/theatres-parisiens))
-- [Jia Hao's Website / Blog](https://jiahao.codes/) ([source](https://github.com/jiahaog/jiahao.codes))
-- [Orbit FM Podcasts](https://www.orbit.fm/) ([source](https://github.com/agarrharr/orbit.fm))
-- [Michele Mazzucco's Portfolio](https://www.michelemazzucco.it) ([source](https://github.com/michelemazzucco/michelemazzucco.it))
-- [Rung](https://rung.com.br)
-- [Óbuda University - EE Faculty Student Union Website](https://www.kandohok.hu)
-- [Neostack](https://neostack.com)
-- [Prosecco Springs](https://www.proseccosprings.com/)
-- [Fröhlich ∧ Frei](https://www.froehlichundfrei.de/)
-- [Alec Lomas's Portfolio & Blog](https://lowmess.com) ([source](https://github.com/lowmess/lowmess))
-- [Alex Pate - Blog/Portfolio](https://alexpate.uk) ([source](https://github.com/alexpate/alexpate.uk))
-- [Matthias Jordan - Portfolio](https://iammatthias.com) ([source](https://github.com/iammatthias/net))
-- [Daniel Hollcraft](https://danielhollcraft.com) ([source](https://github.com/danielbh/danielhollcraft.com))
-- [Investment Calculator](https://investmentcalculator.io/)
-- [Nikbelikov.ru](http://nikbelikov.ru/)
-- [Watchcards.ru](http://watchcards.ru/)
-- [John Meguerian's Portfolio](https://johnmeguerian.com) ([source](https://github.com/jmegs/portfolio))
-- [Krashna Musika Association Website](https://www.krashna.nl/) ([source](https://github.com/krashnamusika/krashna-site))
-- [Deliveroo.Design](https://www.deliveroo.design/)
-- [The Rick and Morty API](http://rickandmortyapi.com/)
-- [Adnan Fajlur - Portfolio](https://adnanfajlur.xyz/)
-- [Hapticmedia](https://hapticmedia.fr/en/)
-- [Smakosh](https://smakosh.com) ([source](https://github.com/smakosh/smakosh.com))
-- [Philipp Czernitzki - Blog/Website](http://philippczernitzki.me)
-- [CodeBushi](https://codebushi.com/)
-- [WebGazer](https://www.webgazer.io)
-- [Joe Seifi's Blog](http://seifi.org)
-- [Bartosz Dominiak Blog/Portfolio](http://www.bartoszdominiak.com/) ([source](https://github.com/bartdominiak/blog))
-- [The Audacious Project](https://audaciousproject.org/)
-- [upGizmo](https://www.upgizmo.com/)
-- [The Bastion Bot](https://bastionbot.org/ "The Bastion Bot")
-- [Yuuniworks](https://www.yuuniworks.com/) ([source](https://github.com/junkboy0315/yuuni-web))
-- [Chin Loong Tan - Blog/Portfolio](https://chinloongtan.com/)
-- [F1 Vision](https://f1vision.com/)
-- [GraphQL College](https://graphql.college) ([source](https://github.com/GraphQLCollege/graphql-college))
-- [Hyunwoo Kim - Blog/Portfolio](https://devhalloween.com) ([source](https://github.com/khw1031/dev-blog))
-- [Abinav Seelan - Personal Website](https://abinavseelan.com) ([source](https://github.com/abinavseelan/abinavseelan.com))
-- [Dovetail](https://dovetailapp.com)
-- [Bart van der Waerden Blog](http://bartvanderwaerden.com/) ([source](https://github.com/BartvdWaerden/BartvdWaerden.github.io))
-- [Canella Riccardo - Portfolio](https://canellariccardo.it) ([source](https://github.com/thecreazy/canellariccardo.it))
-- [Eviction Free NYC!](https://www.evictionfreenyc.org/) ([source](https://github.com/JustFixNYC/eviction-free-nyc))
-- [Rafael Belliard's Portfolio](https://rafael.do) ([source](https://github.com/rebelliard/rebelliard.github.io))
-- [Tinder Interracial Couple Emoji Project](https://emoji.tinder.com/)
-- [aQuICK](https://aquick.review/)
-  ([source](https://github.com/aQuICK-Review/aQuick))
-- [Workshop In The Woods](https://www.workshop-in-the-woods.com/) ([source](https://github.com/ryanwiemer/workshop))
-- [Steven Koerts - Portfolio](http://stevenkoerts.nl/)([source](https://github.com/Steven24K/Steven24K.github.io))
-- [Ray Gesualdo - Personal Website](http://www.raygesualdo.com/) ([source](https://github.com/raygesualdo/raygesualdo.com))
-- [10M GmbH](https://10m.de)
-- [Edge Database](https://edgedb.com/)
-- [Rolling Stone: The New Classics](https://www.rollingstone.com/the-new-classics)
-- [Jacob Bolda - Personal Website](https://www.jacobbolda.com/)
-- [Apideck](https://apideck.com)
-- [GDPR Checklist](https://gdprchecklist.io) ([source](https://github.com/privacyradius/gdpr-checklist))
-- [GDPR Tracker](https://gdprtracker.io)
-- [GDPR Form](https://gdprform.io)
-- [Josh Palacios - Personal Website](https://joshpalacios.com) ([source](https://github.com/jshwa/joshpalacios-site))
-- [Cup of Data](https://cupofdata.com) ([source](https://github.com/cupofdata/cupofdata.com))
-- [Natalia Acevedo - Personal Website](https://nataliaacevedo.com) ([source](https://github.com/yeion7/nataliaacevedo.com))
-- [Airbnb Cereal](https://airbnb.design/cereal/)
-- [mottox2 blog](https://mottox2.com)
-- [Tiger Facility Services](https://www.tigerfacilityservices.com/)
-- [Jersey Watch](https://www.jerseywatch.com/)
-- [Bench Accounting](https://bench.co/)
-- [杨二的博客](https://blog.yangerxiao.com/)
-- [GaiAma - We are wildlife](https://www.gaiama.org) ([source](https://github.com/GaiAma/gaiama.org))
-- [Rescue Amazonian Rainforest](https://www.rescue-amazonian-rainforest.com/) ([source](https://github.com/GaiAma/rescue-amazonian-rainforest.com))
-- [Michael McQuade - Personal Blog](https://giraffesyo.io) ([source](https://github.com/giraffesyo/giraffesyo.github.io))
-
 ## Docs
 
 **[View the docs on gatsbyjs.org](https://www.gatsbyjs.org/docs/)**
@@ -310,9 +94,9 @@ This repository is a monorepo managed using
 ## Thanks
 
 Thanks to our many contributors and sponsors as well as the companies sponsoring
-our testing and hosting infrastructure, Travis CI, Appveyor, and Netlify.
+our testing and hosting infrastructure: Travis CI, Appveyor, and Netlify.
 
-## Backers
+### Backers
 
 Support us with a monthly donation and help us continue our activities.
 [[Become a backer](https://opencollective.com/gatsby#backer)]
@@ -348,7 +132,7 @@ Support us with a monthly donation and help us continue our activities.
 <a href="https://opencollective.com/gatsby/backer/28/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/28/avatar.svg"></a>
 <a href="https://opencollective.com/gatsby/backer/29/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/29/avatar.svg"></a>
 
-## Sponsors
+### Sponsors
 
 Become a sponsor and get your logo on our README on GitHub with a link to your
 site. [[Become a sponsor](https://opencollective.com/gatsby#sponsor)]
