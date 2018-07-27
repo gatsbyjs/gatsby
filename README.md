@@ -275,6 +275,7 @@ Websites built with Gatsby:
 - [杨二的博客](https://blog.yangerxiao.com/)
 - [GaiAma - We are wildlife](https://www.gaiama.org) ([source](https://github.com/GaiAma/gaiama.org))
 - [Rescue Amazonian Rainforest](https://www.rescue-amazonian-rainforest.com/) ([source](https://github.com/GaiAma/rescue-amazonian-rainforest.com))
+- [Michael McQuade - Personal Blog](https://giraffesyo.io) ([source](https://github.com/giraffesyo/giraffesyo.github.io))
 
 ## Docs
 
