@@ -37,6 +37,12 @@ query {
     render={data => <div>{data.foo}</div>}
   />
 )`,
+    "static-query-named-export.js": `export const Component = () => (
+  <StaticQuery
+    query={graphql\`query StaticQueryName { foo }\`}
+    render={data => <div>{data.doo}</div>}
+  />
+)`,
   }
 
   const parser = new FileParser()
@@ -47,6 +53,7 @@ query {
 
   it(`extracts query AST correctly from files`, async () => {
     const results = await parser.parseFiles(Object.keys(MOCK_FILE_INFO))
+    console.log(results)
     expect(results).toMatchSnapshot()
   })
 })
