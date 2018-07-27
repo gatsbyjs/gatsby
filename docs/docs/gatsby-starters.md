@@ -855,3 +855,23 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
   - Pagination
   - Prettier code styling
   - [More info here](https://github.com/sqrthree/lite#lite)
+
+- [gatsby-universal](https://github.com/fabe/gatsby-universal)
+  [(Live demo)](https://gatsby-universal.netlify.com)
+
+  An *opinionated* starter for using Gatsby v2 with React Context, tag-agnostic styled-components, page transitions, scroll events with `IntersectionObserver`. Made for state-of-the-art marketing sites.
+
+  Features:
+
+  - `styled-components`, tag agnostic if needed
+  - Page Transitions, component-based (with no-js support)
+  - `IntersectionObserver`, component-based (with polyfill)
+  - React Context for global UI state, with SSR
+  - Optimized with Google Lighthouse (99/100)
+  - One config file for site-wide settings
+  - Most social + meta tags in one component
+  - All favicons generated, only one icon file needed
+  - Offline support
+  - Manifest support
+  - Sitemap support
+  - [More info here](https://github.com/fabe/gatsby-universal#readme)
