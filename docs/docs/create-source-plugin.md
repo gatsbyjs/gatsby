@@ -132,11 +132,13 @@ Let's say you want to create a relationship between two nodes, which we'll call 
 Before you pass Object A and Object B into `createNode` and create the nodes, you need to:
 
 (1) create a field on Object A to hold the relationship to Object B. (You may want to name this field `relationships` for clarity). The value of this field should be an object.
+
 (2) concatenate node B's id, with the string `___ID` and add as a key to that object. The value of this field should be a new node ID.
 
 If you also want to create a reverse relationship between object B and A, you can optionally follow these additional steps:
 
 (3) create a field on Object B to hold the relationship to Object A. (You may want to name this field `reverseRelationships` for clarity). The value of this field should be an object.
+
 (4) concatenate node A's id, with the string `___ID` and add as a key to that object. The value of this field should be a new node ID.
 
 Here's an example from the [Drupal source plugin](https://github.com/gatsbyjs/gatsby/blob/1fb19f9ad16618acdac7eda33d295d8ceba7f393/packages/gatsby-source-drupal/src/gatsby-node.js#L112-L127).
