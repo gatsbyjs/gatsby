@@ -8,6 +8,7 @@ const {
 } = require("gatsby/graphql");
 const _ = require("lodash");
 const remark = require("remark");
+const retext = require("retext");
 const visit = require("unist-util-visit");
 const remove = require("unist-util-remove");
 const stripMarkdown = require("strip-markdown");
@@ -104,6 +105,47 @@ ${code}`;
             timeToRead = 1;
           }
           return timeToRead;
+        }
+      },
+      wordCount: {
+        type: new GraphQLObjectType({
+          name: `wordCount`,
+          fields: {
+            paragraphs: {
+              type: GraphQLInt
+            },
+            sentences: {
+              type: GraphQLInt
+            },
+            words: {
+              type: GraphQLInt
+            }
+          }
+        }),
+        async resolve(mdxNode) {
+          let counts = {};
+
+          const text = await getText(mdxNode);
+
+          await retext()
+            .use(count)
+            .process(text);
+
+          return {
+            paragraphs: counts.ParagraphNode,
+            sentences: counts.SentenceNode,
+            words: counts.WordNode
+          };
+
+          function count() {
+            return counter;
+            function counter(tree) {
+              visit(tree, visitor);
+              function visitor(node) {
+                counts[node.type] = (counts[node.type] || 0) + 1;
+              }
+            }
+          }
         }
       }
     });
