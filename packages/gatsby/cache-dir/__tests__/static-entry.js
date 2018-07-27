@@ -113,7 +113,7 @@ describe(`static-entry`, () => {
     global.__PATH_PREFIX__ = ``
   })
 
-  test(`onPreRenderHTML can be used to replace head components`, (done) => {
+  test(`onPreRenderHTML can be used to replace headComponents`, (done) => {
     global.plugins = [
       fakeStylesPlugin,
       reverseHeadersPlugin,
