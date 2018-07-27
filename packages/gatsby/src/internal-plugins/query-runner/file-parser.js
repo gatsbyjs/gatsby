@@ -127,26 +127,20 @@ async function findGraphQLTags(file, text): Promise<Array<DefinitionNode>> {
 
                 if (isGlobal) warnForGlobalTag(file)
 
-                const uniqueAstDefinitions = gqlAst.definitions.filter(
-                  def =>
-                    !queries.find(
-                      query =>
-                        query.name.value == def.name.value &&
-                        query.name.loc.start == def.name.loc.start &&
-                        query.name.loc.end == def.name.loc.end
-                    )
-                )
-
-                uniqueAstDefinitions.forEach(def =>
+                gqlAst.definitions.forEach(def =>
                   generateQueryName({ def, hash, file })
                 )
 
-                queries.push(...uniqueAstDefinitions)
+                queries.push(...gqlAst.definitions)
               },
             })
           },
         })
-        resolve(queries)
+
+        // Remove duplicate queries
+        const uniqueQueries = _.uniqBy(queries, _.isEqual)
+
+        resolve(uniqueQueries)
       })
       .catch(reject)
   })
