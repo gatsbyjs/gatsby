@@ -1752,3 +1752,13 @@
   built_by: Peter Hironaka
   built_by_url: https://github.com/PHironaka
   featured: false
+- title: Michael McQuade
+  description: >
+    Personal website and blog for Michael McQuade
+  main_url: https://giraffesyo.io
+  url: https://giraffesyo.io
+  categories:
+    - Blog
+  built_by: Michael McQuade
+  built_by_url: https://github.com/giraffesyo
+  featured: false
