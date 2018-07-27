@@ -9,6 +9,7 @@ import { options, rhythm, scale } from "../../utils/typography"
 import presets, { colors } from "../../utils/presets"
 
 import GithubIcon from "react-icons/lib/go/mark-github"
+import FeaturedIcon from "../../assets/featured-sites-icons--white.svg"
 
 const ShowcaseList = ({ items, count }) => {
   if (count) items = items.slice(0, count)
@@ -106,6 +107,33 @@ const ShowcaseList = ({ items, count }) => {
                     </a>
                   </div>
                 )}
+                <button
+                  css={{
+                    position: `absolute`,
+                    top: `0`,
+                    right: `-2px`,
+                    margin: `0`,
+                    padding: `0`,
+                    background: `transparent`,
+                    border: `none`,
+                    cursor: `pointer`,
+                  }}
+                >
+                  <img
+                    src={FeaturedIcon}
+                    alt="icon"
+                    css={{
+                      padding: `2px 4px`,
+                      margin: 0,
+                      background: `#FFB322`,
+                      display: `block`,
+                      borderRadius: `0 0 0 4px`,
+                      "&:hover": {
+                        background: colors.gatsby,
+                      },
+                    }}
+                  />
+                </button>
               </div>
             </div>
           )
@@ -156,5 +184,6 @@ const styles = {
     flexDirection: `column`,
     margin: rhythm(3 / 4),
     width: 280,
+    position: `relative`,
   },
 }
