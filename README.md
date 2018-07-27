@@ -49,6 +49,44 @@
   <a href="https://next.gatsbyjs.org/docs/how-to-contribute/">Contribute</a>
 </h3>
 
+## Table of Contents
+
+-   [Get Up and Running in 5 Minutes](#get-up-and-running-in-5-minutes)
+
+
+## Get Up and Running in 5 Minutes
+
+You can get a new Gatsby site up and running on your local dev environment in 5 minutes with these three steps:
+
+1.  **Create a Gatsby site from a Gatsby starter.**
+
+    Get your Gatsby blog set up in a single command:
+
+    ```sh
+    npx gatsby-cli new my-blazing-fast-site https://github.com/gatsbyjs/gatsby-starter-default#v2
+    ```
+
+2.  **Start the site in `develop` mode.**
+
+    Next, move into your new site’s directory and start it up:
+
+    ```sh
+    cd my-blazing-fast-site/
+    yarn develop
+    ```
+
+    > **NOTE:** If you prefer npm, you can also run `npm run develop` to start the site.
+
+3.  **Open the source code and start editing! 💪💜**
+
+    Your site is now running at `http://localhost:8000`. Open the the `my-blazing-fast-site` directory in your code editor of choice and edit `src/pages/index.js`. Save your changes and the browser will update in real time!
+
+At this point, you’ve got a fully functional Gatsby website. For additional information on how you can customize your Gatsby site, see our [plugins](https://next.gatsbyjs.org/plugins/) and [the official tutorial](https://next.gatsbyjs.org/tutorial/).
+
+---
+
+## Previous README
+
 **NOTE:** This branch is the beta version of Gatsby v2. You can find documentation at [next.gatsbyjs.org](https://next.gatsbyjs.org/).
 
 For `gatsby@1`, please see [the v1 branch](https://github.com/gatsbyjs/gatsby/tree/v1).
