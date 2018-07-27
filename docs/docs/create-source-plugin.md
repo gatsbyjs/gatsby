@@ -100,3 +100,33 @@ package provides a set of helper functions to generate Node objects with the
 required fields. This includes automatically generating fields like node IDs
 and the `contentDigest` MD5 hash, keeping your code focused on data gathering,
 not boilerplate.
+
+## Advanced
+
+### Adding relationships between nodes
+
+Gatsby source plugins not only create nodes, they also create relationships between nodes that are exposed to GraphQL queries.
+
+There are two ways of adding node relationships in Gatsby: (1) hierarchical (parent-child) or (2) foreign-key based. 
+
+##### Hierarchical relationships
+
+An example of a hierarchical relationship would be a `transformer` plugin changing a file node's markdown string into a `childMarkdownRemark` node that is attached to that fileNode. The markdown node doesn't make sense outside of the file it belongs to. 
+
+When a parent node is deleted, Gatsby deletes all of the child nodes (and their child nodes, and so on). 
+
+In order to create a parent/child relationship, when calling `createNode` for the child node the object that is passed in should have a `parent` key with the value set to the parent node's `id`. After this, call the `createParentChildLink` function exported inside `actions`.
+
+[Here's an example](https://github.com/gatsbyjs/gatsby/blob/1fb19f9ad16618acdac7eda33d295d8ceba7f393/packages/gatsby-transformer-sharp/src/on-node-create.js#L3-L25) from the `gatsby-transformer-sharp` source plugin.  
+
+##### Foreign-key relationships
+
+An example of a foreign-key relationship would be a Post that has an Author. In this relationship, each object is a distinct entity that exists whether or not the other does, with independent schemas, and field(s) on each entity that reference the other entity -- in this case the Post would have an Author, and the Author might have Posts. A CMS API might expose relationships between entities, and 
+
+In order to add a relationship between nodes A and B, go through the following steps: 
+(1) For terminology, let's say that "Object A" is passed into `createNode` to create node A, and "Object B" is passed into `createNode` to create node B.
+(2) create a field on Object A to hold the relationship to Object B. You may want to name this field `relationships` or `reverseRelationships` for clarity. The value of this field should be an object.
+(3) concatenate node B's id, with the string `___ID` and add as a key to that object. The value of this field should be a new node ID.
+
+Here's an example from the [Drupal source plugin](https://github.com/gatsbyjs/gatsby/blob/1fb19f9ad16618acdac7eda33d295d8ceba7f393/packages/gatsby-source-drupal/src/gatsby-node.js#L112-L127).
+
