@@ -1227,19 +1227,6 @@
   source_url: https://github.com/GaiAma/gaiama.org
   built_by: GaiAma
   built_by_url: 'https://www.gaiama.org/'
-- title: Rescue Amazonian Rainforest
-  main_url: 'https://www.rescue-amazonian-rainforest.com/'
-  url: 'https://www.rescue-amazonian-rainforest.com/'
-  featured: false
-  description: >-
-    Germany based nonprofit, dedicated to rainforest conservation in Perú.
-  categories:
-    - Nonprofit
-    - Blog
-    - Portfolio
-  source_url: https://github.com/GaiAma/rescue-amazonian-rainforest.com
-  built_by: GaiAma
-  built_by_url: 'https://www.gaiama.org/'
 - title: Healthcare Logic
   main_url: 'https://www.healthcarelogic.com/'
   url: 'https://www.healthcarelogic.com/'
