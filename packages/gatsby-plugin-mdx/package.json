@@ -14,6 +14,7 @@
     "json5": "^1.0.1",
     "lodash": "^4.17.10",
     "remark": "^9.0.0",
+    "retext": "^5.0.0",
     "strip-markdown": "^3.0.1",
     "underscore.string": "^3.3.4",
     "unist-util-remove": "^1.0.1",
