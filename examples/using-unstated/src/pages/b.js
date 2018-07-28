@@ -3,7 +3,7 @@ import Layout from "../components/layout"
 
 const B = () => (
   <Layout>
-    <p>B</p>
+    <p>Page B</p>
   </Layout>
 )
 
