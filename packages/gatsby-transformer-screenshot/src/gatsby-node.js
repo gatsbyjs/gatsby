@@ -30,10 +30,17 @@ exports.onPreBootstrap = (
     n => n.internal.type === `Screenshot`
   )
 
+  if (screenshotNodes.length === 0) {
+    return null
+  }
+
+  let anyQueued = false
+
   // Check for updated screenshots
   // and prevent Gatsby from garbage collecting remote file nodes
   screenshotNodes.forEach(n => {
     if (n.expires && new Date() >= new Date(n.expires)) {
+      anyQueued = true
       // Screenshot expired, re-run Lambda
       screenshotQueue.push({
         url: n.url,
@@ -49,6 +56,10 @@ exports.onPreBootstrap = (
       touchNode({ nodeId: n.screenshotFile___NODE })
     }
   })
+
+  if (!anyQueued) {
+    return null
+  }
 
   return new Promise((resolve, reject) => {
     screenshotQueue.on(`drain`, () => {
@@ -114,8 +125,12 @@ const createScreenshotNode = async ({
       createNodeId,
     })
 
+    if (!fileNode) {
+      throw new Error(`Remote file node is null`, screenshotResponse.data.url)
+    }
+
     const screenshotNode = {
-      id: `${parent} >>> Screenshot`,
+      id: createNodeId(`${parent} >>> Screenshot`),
       url,
       expires: screenshotResponse.data.expires,
       parent,
@@ -132,12 +147,7 @@ const createScreenshotNode = async ({
 
     return screenshotNode
   } catch (e) {
-    if (e.response) {
-      console.log(`Failed to screenshot ${url}`)
-      process.exit(1)
-    } else if (e.request) {
-      throw e
-    }
+    console.log(`Failed to screenshot ${url}. Retrying...`)
 
     throw e
   }

@@ -1512,6 +1512,7 @@
 - title: HackerOne Platform Documentation
   description: > 
     HackerOne's Product Documentation Center!
+  url: https://docs.hackerone.com/
   main_url: https://docs.hackerone.com/
   categories:
     - Documentation
@@ -1520,6 +1521,7 @@
 - title: Patreon Partners
   description: > 
     Resources and products to help you do more with Patreon.
+  url: https://partners.patreon.com/
   main_url: https://partners.patreon.com/
   categories:
     - Resources
@@ -1528,6 +1530,7 @@
 - title: Bureau Of Meteorology (beta)
   description: > 
     Help shape the future of Bureau services 
+  url: https://beta.bom.gov.au/
   main_url: https://beta.bom.gov.au/
   categories: 
     - Meteorology
@@ -1538,6 +1541,7 @@
   description: > 
     Connecting Stores with Mobile Customers
   main_url: https://curbside.com/
+  url: https://curbside.com/
   categories: 
     - Mobile Commerce
     - Software
@@ -1546,6 +1550,7 @@
   description: > 
     API to video hosting and streaming
   main_url: https://mux.com/
+  url: https://mux.com/
   categories: 
     - Video
     - Hosting
@@ -1556,6 +1561,7 @@
   description: > 
     The easiest way for event organizers to instantly connect people, build a community of attendees and exhibitors, and increase revenue over time
   main_url: https://www.swapcard.com/
+  url: https://www.swapcard.com/
   categories: 
     - Event
     - Community
@@ -1565,6 +1571,7 @@
   description: > 
     Kalix is perfect for healthcare professionals starting out in private practice, to those with an established clinic.
   main_url: https://www.kalixhealth.com/
+  url: https://www.kalixhealth.com/
   categories: 
     - Scheduling
     - Documentation
@@ -1576,6 +1583,7 @@
   description: > 
     Buy wholesale products from thousands of independent, verified Brands.
   main_url: https://join.hubba.com/
+  url: https://join.hubba.com/
   categories: 
     - eCommerce
     - Retail
@@ -1584,6 +1592,7 @@
   description: > 
     Creative engineers and data scientists building a world where you can belong anywhere
   main_url: https://airbnb.io/
+  url: https://airbnb.io/
   categories: 
     - Blog
     - Gallery
@@ -1593,6 +1602,7 @@
   description: > 
     In Asean's 1st Ever LOL Esports X Music Festival
   main_url: https://hyperplay.leagueoflegends.com/
+  url: https://hyperplay.leagueoflegends.com/
   categories: 
     - Landing
   featured: false
@@ -1600,6 +1610,7 @@
   description: > 
     Get the funds you need, from $250-$5,000
   main_url: https://www.creditloan.com/
+  url: https://www.creditloan.com/
   categories: 
     - Loans
     - Credits
@@ -1608,6 +1619,7 @@
   description: > 
      Member-owned, not-for-profit, co-operative whose members receive financial benefits in the form of lower loan rates, higher savings rates, and lower fees than banks.
   main_url: https://fcfcu.com/
+  url: https://fcfcu.com/
   categories: 
     - Loans
     - Credits
@@ -1618,6 +1630,7 @@
   description: > 
      Provides APIs and raw download access to a number of high-value, high priority and scalable structured datasets, including adverse events, drug product labeling, and recall enforcement reports.
   main_url: https://open.fda.gov/
+  url: https://open.fda.gov/
   categories: 
     - APIs
     - Datasets
@@ -1627,6 +1640,7 @@
   description: > 
      Good Data, Good Decisions
   main_url: http://oira.ua.edu/
+  url: http://oira.ua.edu/
   categories: 
     - Research
     - Data
@@ -1635,6 +1649,7 @@
   description: > 
      Introducing the new online experience for your GM Rewards Credit Card
   main_url: https://gm.capitalone.com/
+  url: https://gm.capitalone.com/
   categories: 
     - Rewards
     - Credit Card
@@ -1643,6 +1658,7 @@
   description: > 
      Home service membership that offers proactive and on-demand maintenance for homeowners
   main_url: https://housemanager.calstate.aaa.com/
+  url: https://housemanager.calstate.aaa.com/
   categories: 
     - Home
     - Services
@@ -1651,6 +1667,7 @@
   description: > 
      It may help make a difference for your depression (MDD).
   main_url: https://us.trintellix.com/
+  url: https://us.trintellix.com/
   categories: 
     - Health
     - Help
@@ -1659,6 +1676,7 @@
   description: > 
      Exclusive stories from award-winning journalists
   main_url: https://premium.telegraph.co.uk/
+  url: https://premium.telegraph.co.uk/
   categories: 
     - Landing
     - Newspaper
@@ -1668,6 +1686,7 @@
   description: > 
      Screenshots with JavaScript
   main_url: http://html2canvas.hertzen.com/
+  url: http://html2canvas.hertzen.com/
   source_url: https://github.com/niklasvh/html2canvas/tree/master/www
   categories: 
     - Tool
@@ -1681,6 +1700,7 @@
   description: > 
       Data from over 20,000 developers, asking them questions on topics ranging from front-end frameworks and state management, to build tools and testing libraries.
   main_url: https://stateofjs.com/
+  url: https://stateofjs.com/
   source_url: https://github.com/StateOfJS/StateOfJS
   categories: 
     - Data
@@ -1693,6 +1713,7 @@
   description: > 
       The API-based CMS your editors will love
   main_url: https://www.datocms.com/
+  url: https://www.datocms.com/
   categories: 
     - CMS
     - API
@@ -1702,6 +1723,7 @@
   description: > 
       Personal website 
   main_url: https://www.halfelectronic.com/
+  url: https://www.halfelectronic.com/
   categories: 
     - Blog
     - Electronics
