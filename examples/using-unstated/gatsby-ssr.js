@@ -1,14 +1,11 @@
 import React from 'react'
-import { Provider } from 'react-redux'
+import { Provider } from 'unstated'
 import { renderToString } from 'react-dom/server'
 
-import createStore from './src/state/createStore'
-
 export const replaceRenderer = ({ bodyComponent, replaceBodyHTMLString }) => {
-    const store = createStore()
 
     const ConnectedBody = () => (
-        <Provider store={store}>
+        <Provider>
             {bodyComponent}
         </Provider>
     )
