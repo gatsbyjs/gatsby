@@ -111,9 +111,9 @@ There are two ways of adding node relationships in Gatsby: (1) hierarchical (par
 
 #### Hierarchical relationships
 
-An example of a hierarchical relationship is `the gatsby-transformer-remark` plugin, which transforming a parent `fileNode`'s markdown string into a `MarkdownRemark` node. The transformer plugin adds its newly created child node as a child to the parent node using the action `createParentChildLink`. The markdown node is completely derived from the parent File node so wouldn't ever exist if the parent `fileNode` hadn't been created.
+An example of a hierarchical relationship is the `gatsby-transformer-remark` plugin, which transforming a parent `fileNode`'s markdown string into a `MarkdownRemark` node. The transformer plugin adds its newly created child node as a child to the parent node using the action `createParentChildLink`. The markdown node is completely derived from the parent `fileNode` so wouldn't ever exist if the parent `fileNode` hadn't been created.
 
-Because all children nodes are derived from their parent, when a parent node is deleted or changed, when a parent node is deleted, Gatsby deletes all of the child nodes (and their child nodes, and so on). 
+Because all children nodes are derived from their parent, when a parent node is deleted or changed, Gatsby deletes all of the child nodes (and their child nodes, and so on). 
 
 *Creating the relationship*
 
