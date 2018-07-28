@@ -114,8 +114,8 @@ fields.
 ```javascript{3,4,6-11}
 const { createFilePath } = require(`gatsby-source-filesystem`)
 
-exports.onCreateNode = ({ node, getNode, actions }) => {
-  const { createNodeField } = actions
+exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
+  const { createNodeField } = boundActionCreators
   if (node.internal.type === `MarkdownRemark`) {
     const slug = createFilePath({ node, getNode, basePath: `pages` })
     createNodeField({
@@ -153,8 +153,8 @@ In the same `gatsby-node.js` file, add the following.
 ```javascript{15-34}
 const { createFilePath } = require(`gatsby-source-filesystem`)
 
-exports.onCreateNode = ({ node, getNode, actions }) => {
-  const { createNodeField } = actions
+exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
+  const { createNodeField } = boundActionCreators
   if (node.internal.type === `MarkdownRemark`) {
     const slug = createFilePath({ node, getNode, basePath: `pages` })
     createNodeField({
@@ -165,7 +165,7 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
   }
 }
 
-exports.createPages = ({ graphql, actions }) => {
+exports.createPages = ({ graphql }) => {
   return new Promise((resolve, reject) => {
     graphql(`
       {
@@ -228,8 +228,8 @@ Then update `gatsby-node.js`
 const path = require(`path`)
 const { createFilePath } = require(`gatsby-source-filesystem`)
 
-exports.onCreateNode = ({ node, getNode, actions }) => {
-  const { createNodeField } = actions
+exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
+  const { createNodeField } = boundActionCreators
   if (node.internal.type === `MarkdownRemark`) {
     const slug = createFilePath({ node, getNode, basePath: `pages` })
     createNodeField({
@@ -240,8 +240,8 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
   }
 }
 
-exports.createPages = ({ graphql, actions }) => {
-  const { createPage } = actions
+exports.createPages = ({ graphql, boundActionCreators }) => {
+  const { createPage } = boundActionCreators
   return new Promise((resolve, reject) => {
     graphql(`
       {
