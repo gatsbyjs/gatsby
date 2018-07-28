@@ -1749,3 +1749,14 @@
   built_by: Michael McQuade
   built_by_url: https://github.com/giraffesyo
   featured: false
+- title: Haacht Brewery
+  description: >
+    Corporate wesbite for Haacht Brewery. Designed and Developed by Gafas.
+  main_url: https://haacht.com/en/
+  url: https://haacht.com
+  categories:
+    - Corporate
+  built_by: Gafas
+  built_by_url: https://gafas.be
+  featured: false
+  
