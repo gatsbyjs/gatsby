@@ -9,7 +9,8 @@
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
     "react-redux": "5.0.5",
-    "redux": "3.6.0"
+    "redux": "3.6.0",
+    "unstated": "^2.1.1"
   },
   "keywords": [
     "gatsby"
