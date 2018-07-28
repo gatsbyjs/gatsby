@@ -30,6 +30,10 @@ exports.onPreBootstrap = (
     n => n.internal.type === `Screenshot`
   )
 
+  if (screenshotNodes.length === 0) {
+    return
+  }
+
   // Check for updated screenshots
   // and prevent Gatsby from garbage collecting remote file nodes
   screenshotNodes.forEach(n => {
@@ -113,6 +117,10 @@ const createScreenshotNode = async ({
       createNode,
       createNodeId,
     })
+
+    if (!fileNode) {
+      throw new Error(`Remote file node is null`, screenshotResponse.data.url)
+    }
 
     const screenshotNode = {
       id: `${parent} >>> Screenshot`,
