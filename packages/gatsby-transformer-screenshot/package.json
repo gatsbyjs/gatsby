@@ -7,7 +7,8 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "axios": "^0.18.0"
+    "axios": "^0.18.0",
+    "better-queue": "^3.8.10"
   },
   "devDependencies": {
     "@babel/cli": "7.0.0-beta.52",
