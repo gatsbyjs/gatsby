@@ -111,7 +111,7 @@ For more advanced developers who just want to dig in and see how Gatsby handles 
 
   <span><!-- don’t remove this; it prevents the text below from smashing into the summary text --></span>
   
-  To add a global stylesheet, require the stylesheet in `gatsby-browser.js`:
+  If you prefer the “start from scratch” approach, setting up a Gatsby site requires three dependencies to start:
   ```sh
   # create a new project and move into it
   mkdir my-new-gatsby-site
