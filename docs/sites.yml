@@ -1792,3 +1792,14 @@
   built_by: Daniel Stout
   built_by_url: https://github.com/stoutlabs
   featured: false
+- title: Otsimo
+  description: > 
+     Otsimo is a special education application for children with autism, down syndrome and other developmental disabilities.
+  main_url: https://otsimo.com/en/
+  url: https://otsimo.com/en/
+  categories: 
+    - Landing
+    - Blog
+    - Education
+  featured: false
+ 
