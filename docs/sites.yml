@@ -1792,6 +1792,28 @@
   built_by: Daniel Stout
   built_by_url: https://github.com/stoutlabs
   featured: false
+- title: Chicago Ticket Outcomes By Neighborhood
+  description: >
+    ProPublica data visualization of traffic ticket court outcomes
+  categories:
+    - News
+    - Nonprofit
+    - Visualization  
+  url: https://projects.propublica.org/graphics/il/il-city-sticker-tickets-maps/ticket-status/?initialWidth=782
+  built_by: David Eads
+  built_by_url: https://github.com/eads
+  featured: false
+- title: Chicago South Side Traffic Ticketing rates
+  description: >
+    ProPublica data visualization of traffic ticket rates by community
+  url: https://projects.propublica.org/graphics/il/il-city-sticker-tickets-maps/ticket-rate/?initialWidth=782
+  categories:
+    - News
+    - Nonprofit
+    - Visualization
+  built_by: David Eads
+  built_by_url: https://github.com/eads
+  featured: false
 - title: Otsimo
   description: > 
      Otsimo is a special education application for children with autism, down syndrome and other developmental disabilities.
@@ -1802,4 +1824,3 @@
     - Blog
     - Education
   featured: false
- 
