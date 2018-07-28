@@ -12,9 +12,11 @@ This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While t
 
 Before diving in to the upgrade guide, here's a brief section on starting a new project with Gatsby v2 instead of upgrading an existing project.
 
-If you're a _start from scratch_ kind of person, you can install the Gatsby beta and React like this: `npm install gatsby@next react react-dom`
+_Start from scratch:_ If you're a _start from scratch_ kind of person, you can install the Gatsby beta and React like this: `npm install gatsby@next react react-dom`
 
-If you'd rather use one of the official starters, you're in luck, there's a v2 edition for each of them. Install your favourite one with the Gatsby CLI.
+_Tutorial:_ If you'd like a step-by-step guide, [follow the tutorial](/tutorial/) to get started with Gatsby v2.
+
+_Starters:_ If you'd rather use one of the official starters, you're in luck, there's a v2 edition for each of them. Install your favourite one with the Gatsby CLI.
 
 `gatsby-starter-default` with v2:
 
@@ -41,7 +43,7 @@ Read on for a detailed guide on what's new in version 2!
 - [Update Gatsby version](#update-gatsby-version)
 - [Manually install React](#manually-install-react)
 - [Manually install plugins’ peer dependencies](#manually-install-plugins-peer-dependencies)
-- [Update layout component](#update-layout-component)
+- [Remove or refactor layout components](#remove-or-refactor-layout-components)
 - [Import Link from Gatsby](#import-link-from-gatsby)
 - [Import graphql from Gatsby](#import-graphql-from-gatsby)
 - [Rename `boundActionCreators` to `actions`](#rename-boundactioncreators-to-actions)
@@ -58,6 +60,7 @@ Read on for a detailed guide on what's new in version 2!
 - [Only allow defined keys on node.internal object](#only-allow-defined-keys-on-the-node-internal-object)
 - [Import `graphql` types from `gatsby/graphql`](#import-graphql-types-from-gatsbygraphql)
 - [Move `Babel Configuration`](#move-babel-configuration)
+- [Explicit query names no longer required](#explicit-query-names-no-longer-required)
 - [Plugin specific changes](#plugin-specific-changes)
 
 You can start with a few of the most important steps - install Gatsby v2 dependencies and update your layout components.
@@ -110,17 +113,21 @@ npm i typography react-typography
 
 Search for the plugins that you use in the [plugin library](/plugins) and check their installation instructions for additional packages that now need installed.
 
-## Update layout component
+## Remove or refactor layout components
 
-The special layout component (`src/layouts/index.js`) that Gatsby v1 used to wrap every page has been removed. If the layout of your site appears to be broken, this is most likely the reason why.
+In Gatsby v2, the special layout component (`src/layouts/index.js`) that wrapped every page in Gatsby v1 has been removed. The "top level component" is now just the page itself. If the layout of your site looks broken, this is likely the reason why.
 
-To learn more about the considerations behind this removal, read the [RFC for removing the special layout component](https://github.com/gatsbyjs/rfcs/blob/master/text/0002-remove-special-layout-components.md).
+There are a number of implications to this change:
 
-The following is the recommended migration path:
+- To render different layouts for different pages, just use the standard React inheritance model. Gatsby no longer maintains, or needs to maintain, separate behavior for handling layouts.
+- Because the "top level component" changes between each page, React will rerender all children. This means that shared components previously in a Gatsby v1 layout-- like navigations-- will unmount and remount. This will break CSS transitions or React state within those shared components. For more information, including in-progress workarounds, [see this ongoing discussion](https://github.com/gatsbyjs/gatsby/issues/6127).
+- To learn more about the original decisions behind this removal, read the [RFC for removing the special layout component](https://github.com/gatsbyjs/rfcs/blob/master/text/0002-remove-special-layout-components.md).
 
-### 1. Convert children from function to normal prop (required)
+The following migration path is recommended:
 
-In v1, the `children` prop passed to layout was a function and needed to be executed. In v2, this is no longer the case.
+### 1. Convert the layout's children from a render prop to a normal prop (required)
+
+In v1, the `children` prop passed to layout was a function (render prop) and needed to be executed. In v2, this is no longer the case.
 
 ```diff
 import React from "react"
@@ -139,9 +146,11 @@ export default ({ children }) => (
 git mv src/layouts/index.js src/components/layout.js
 ```
 
-### 3. Import and wrap pages with layout component
+### 3. Import and wrap pages with the layout component
 
-Adhering to normal React composition model, you import the layout component and use it to wrap the content of the page.
+Adhering to the normal React composition model, import your layout component and use it to wrap the content of the page.
+
+
 
 `src/pages/index.js`
 
@@ -158,9 +167,39 @@ export default () => (
 
 Repeat for every page and template that needs this layout.
 
-### 4. Change query to use `StaticQuery`
+### 4. Pass `history`, `location`, and `match` props to layout
 
-Since layout is no longer special, you now need to make use of v2’s [StaticQuery feature](/docs/static-query/).
+In v1, layout component had access to `history`, `location`, and `match` props. In v2, only pages have access to these props; if you need these props in the layout component, pass them through from the page.
+
+`layout.js`
+
+```jsx
+import React from "react"
+
+export default ({ children, location }) => (
+  <div>
+    <p>Path is {location.pathname}</p>
+    {children}
+  </div>
+)
+```
+
+`src/pages/index.js`
+
+```jsx
+import React from "react"
+import Layout from "../components/layout.js"
+
+export default props => (
+  <Layout location={props.location}>
+    <div>Hello World</div>
+  </Layout>
+)
+```
+
+### 5. Change query to use `StaticQuery`
+
+If you were using the `data` prop in your Gatsby v1 layout, you now need to make use of Gatsby v2’s [StaticQuery feature](/docs/static-query/), since a layout is now a normal component.
 
 Replacing a layout's query with `StaticQuery`:
 
@@ -210,36 +249,6 @@ import Helmet from "react-helmet"
 +     )}
 +   />
 + )
-```
-
-### 5. Pass `history`, `location`, and `match` props to layout
-
-In v1, layout component had access to `history`, `location`, and `match` props. In v2, only pages have access to these props; pass them to your layout component as needed.
-
-`layout.js`
-
-```jsx
-import React from "react"
-
-export default ({ children, location }) => (
-  <div>
-    <p>Path is {location.pathname}</p>
-    {children}
-  </div>
-)
-```
-
-`src/pages/index.js`
-
-```jsx
-import React from "react"
-import Layout from "../components/layout.js"
-
-export default props => (
-  <Layout location={props.location}>
-    <div>Hello World</div>
-  </Layout>
-)
 ```
 
 ## Import Link from Gatsby
@@ -346,11 +355,41 @@ Further examples can be found in the [Gatsby Image docs](https://github.com/gats
 
 ## Manually specify PostCSS plugins
 
-Gatsby v2 removed `postcss-cssnext` and `postcss-import` from the default postcss setup.
+Gatsby v2 removed `postcss-cssnext` and `postcss-import` from the default PostCSS setup.
 
-Use [`onCreateWebpackConfig`](/docs/add-custom-webpack-config) to specify your postcss plugins.
+To have the same configuration that you had in v1, you should use [`gatsby-plugin-postcss`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-postcss) and follow the recommended migration path below.
 
-Note: there will be a `postcss` plugin that allows you to configure postcss from a standard postcss config file. [Follow this discussion on issue 3284](https://github.com/gatsbyjs/gatsby/issues/3284).
+### 1. Install the dependencies
+
+`npm install --save gatsby-plugin-postcss postcss-import postcss-cssnext postcss-browser-reporter postcss-reporter`
+
+**NOTE**: `postcss-cssnext` is [deprecated](https://moox.io/blog/deprecating-cssnext/) and it is better to use `postcss-preset-env` now.
+
+### 2. Include `gatsby-plugin-postcss` in your `gatsby-config.js` file
+
+```js
+// in gatsby-config.js
+plugins: [`gatsby-plugin-postcss`],
+```
+
+### 3. Include PostCSS plugins in your `postcss.config.js` file
+
+```js
+// in postcss.config.js
+const postcssImport = require(`postcss-import`);
+const postcssCssNext = require(`postcss-cssnext`);
+const postcssBrowserReporter = require(`postcss-browser-reporter`);
+const postcssReporter = require(`postcss-reporter`);
+
+module.exports = () => ({
+  plugins: [
+    postcssImport(),
+    postcssCssNext(),
+    postcssBrowserReporter(),
+    postcssReporter(),
+  ],
+})
+```
 
 ## Convert to either pure CommonJS or pure ES6
 
@@ -519,6 +558,39 @@ The latest version of Gatsby uses Babel 7, which introduced [a new behavior for 
 
 More information on Gatsby and Babel configuration available [here](/docs/babel/#how-to-use-a-custom-babelrc-file).
 
+## Explicit query names no longer required
+
+Gatsby v2 doesn't require explicit query names. You can skip them now:
+
+```diff
+export const query = graphql`
+-  query ThisIsExplicitQueryName($slug: String!) {
++  query($slug: String!) {
+    markdownRemark(fields: { slug: { eq: $slug } }) {
+      html
+      frontmatter {
+        title
+      }
+    }
+  }
+```
+
+You can also skip the `query` keyword if you don't use query variables:
+
+```diff
+export const query = graphql`
+-  query ThisIsAnotherExplicitQueryName {
++  {
+    site {
+      siteMetadata {
+        title
+      }
+    }
+  }
+```
+
+This isn't a breaking change. Queries with explicit names will continue to work as they did in v1.
+
 ## Plugin specific changes
 
 Some plugins require additional changes before your site will compile.
@@ -534,3 +606,9 @@ For example, if you use [`gatsby-plugin-typography`](https://www.gatsbyjs.org/pa
 + const { rhythm, scale } = typography;
 + export { rhythm, scale, typography as default };
 ```
+
+### createRemoteFileNode
+
+The signature for using createRemoteFileNode changed in v2, it now expects a new parameter `createNodeId`.
+
+[See docs for `createRemoteFileNode`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem#createremotefilenode)

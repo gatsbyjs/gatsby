@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.1-beta.15"></a>
+
+## [2.0.1-beta.15](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.1-beta.14...gatsby-source-contentful@2.0.1-beta.15) (2018-07-21)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+<a name="2.0.1-beta.14"></a>
+
+## [2.0.1-beta.14](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.1-beta.13...gatsby-source-contentful@2.0.1-beta.14) (2018-07-20)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+<a name="2.0.1-beta.13"></a>
+
+## [2.0.1-beta.13](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.1-beta.12...gatsby-source-contentful@2.0.1-beta.13) (2018-07-13)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+<a name="2.0.1-beta.12"></a>
+
+## [2.0.1-beta.12](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.1-beta.11...gatsby-source-contentful@2.0.1-beta.12) (2018-07-13)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+<a name="2.0.1-beta.11"></a>
+
+## [2.0.1-beta.11](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.1-beta.10...gatsby-source-contentful@2.0.1-beta.11) (2018-07-11)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
 <a name="2.0.1-beta.10"></a>
 
 ## [2.0.1-beta.10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.1-beta.9...gatsby-source-contentful@2.0.1-beta.10) (2018-07-09)

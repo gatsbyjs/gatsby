@@ -36,7 +36,7 @@ Pixabay's [API documentation](https://pixabay.com/api/docs/#api_search_images) d
 
 Take the above URL and paste it in to a browser to see Pixabay's response to your query. It gives you a list of photos matching the query "yellow flowers" that have received an Editor's Choice award.
 
-> **NOTE:** You should replace <YOUR_API_KEY_HERE> with your Pixabay API key.
+> **NOTE:** You should replace `<YOUR_API_KEY_HERE>` with your Pixabay API key.
 
 ### Plugin behavior
 
@@ -120,11 +120,8 @@ const crypto = require("crypto")
 const fetch = require("node-fetch")
 const queryString = require("query-string")
 
-exports.sourceNodes = (
-  { boundActionCreators, createNodeId },
-  configOptions
-) => {
-  const { createNode } = boundActionCreators
+exports.sourceNodes = ({ actions, createNodeId }, configOptions) => {
+  const { createNode } = actions
 
   // Gatsby adds a configOption that's not needed for this plugin, delete it
   delete configOptions.plugins
@@ -144,11 +141,11 @@ const fetch = require("node-fetch")
 const queryString = require("query-string")
 ```
 
-Then you implemented Gatsby's [`sourceNodes` API](/docs/node-apis/#sourceNodes) which Gatsby will run as part of its bootstrap process. When Gatsby calls `sourceNodes`, it'll pass in some helper functions (`boundActionCreators` and `createNodeId`) along with any config options that are provided in your project's `gatsby-config.js` file:
+Then you implemented Gatsby's [`sourceNodes` API](/docs/node-apis/#sourceNodes) which Gatsby will run as part of its bootstrap process. When Gatsby calls `sourceNodes`, it'll pass in some helper functions (`actions` and `createNodeId`) along with any config options that are provided in your project's `gatsby-config.js` file:
 
 ```js
 exports.sourceNodes = (
-  { boundActionCreators, createNodeId },
+  { actions, createNodeId },
   configOptions
 ) => {
 ```
@@ -156,7 +153,7 @@ exports.sourceNodes = (
 You do some initial setup:
 
 ```js
-const { createNode } = boundActionCreators
+const { createNode } = actions
 
 // Gatsby adds a configOption that's not needed for this plugin, delete it
 delete configOptions.plugins
@@ -220,10 +217,10 @@ const queryString = require('query-string')
 const crypto = require('crypto')
 
 exports.sourceNodes = (
-  { boundActionCreators, createNodeId },
+  { actions, createNodeId },
   configOptions
 ) => {
-  const { createNode } = boundActionCreators
+  const { createNode } = actions
 
   // Gatsby adds a configOption that's not needed for this plugin, delete it
   delete configOptions.plugins

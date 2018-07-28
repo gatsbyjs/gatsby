@@ -80,7 +80,7 @@ class GatsbyGramModal extends React.Component {
     return (
       <StaticQuery
         query={graphql`
-          query ModalPosts {
+          query {
             allPostsJson {
               edges {
                 node {

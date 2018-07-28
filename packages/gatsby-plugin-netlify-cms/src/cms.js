@@ -1,8 +1,7 @@
-/* eslint-disable no-unused-vars */
-/* eslint-env browser */
 import CMS from "netlify-cms"
 import "netlify-cms/dist/cms.css"
-import netlifyIdentityWidget from "netlify-identity-widget"
 
-window.netlifyIdentity = netlifyIdentityWidget
-netlifyIdentityWidget.init()
+// eslint-disable-next-line no-undef
+if (NETLIFY_CMS_PREVIEW_STYLES_SET) {
+  CMS.registerPreviewStyle(`styles.css`)
+}

@@ -1,141 +1,143 @@
-const HtmlWebpackPlugin = require(`html-webpack-plugin`)
-const MiniCssExtractPlugin = require(`mini-css-extract-plugin`)
-
-function plugins(stage) {
-  const commonPlugins = [
-    // Output /admin/index.html
-    new HtmlWebpackPlugin({
-      title: `Content Manager`,
-      filename: `admin/index.html`,
-      chunks: [`cms`],
-    }),
-  ]
-
-  if (stage === `develop`) {
-    return commonPlugins
-  } else if (stage === `build-javascript`) {
-    return [
-      ...commonPlugins,
-
-      new MiniCssExtractPlugin({
-        filename: `cms.css`,
-      }),
-    ]
-  }
-
-  return []
-}
+import path from "path"
+import { get, mapValues, isPlainObject, trim, pickBy } from "lodash"
+import webpack from "webpack"
+import HtmlWebpackPlugin from "html-webpack-plugin"
+import MiniCssExtractPlugin from "mini-css-extract-plugin"
+import UglifyJsPlugin from "uglifyjs-webpack-plugin"
+import FriendlyErrorsPlugin from "friendly-errors-webpack-plugin"
 
 /**
- * Exclude Netlify CMS styles from Gatsby CSS bundle. This relies on Gatsby
- * using webpack-configurator for webpack config extension, and also on the
- * target loader key being named "css" in Gatsby's webpack config.
+ * Deep mapping function for plain objects and arrays. Allows any value,
+ * including an object or array, to be transformed.
  */
-function excludeFromLoader({ actions, rules, getConfig }) {
-  const regex = /\/node_modules\/netlify-cms\//
+function deepMap(obj, fn) {
+  /**
+   * If the transform function transforms the value, regardless of type,
+   * return the transformed value.
+   */
+  const mapped = fn(obj)
+  if (mapped !== obj) {
+    return mapped
+  }
 
-  const prevConfig = getConfig()
+  /**
+   * Recursively deep map arrays and plain objects, otherwise return the value.
+   */
+  if (Array.isArray(obj)) {
+    return obj.map(value => deepMap(value, fn))
+  }
+  if (isPlainObject(obj)) {
+    return mapValues(obj, value => deepMap(value, fn))
+  }
+  return obj
+}
 
-  actions.replaceWebpackConfig({
-    ...prevConfig,
-
-    module: {
-      ...prevConfig.module,
-
-      rules: prevConfig.module.rules.map(rule => {
-        const { test: cssRuleTest } = rules.css()
-
-        const cssRuleTestAsString = String(cssRuleTest)
-
-        const isCssRule =
-          rule.oneOf &&
-          rule.oneOf.some(({ test }) => String(test) === cssRuleTestAsString)
-
-        if (isCssRule) {
-          const newRule = {
-            ...rule,
-
-            oneOf: rule.oneOf.map(rule => {
-              const { exclude: prevExclude } = rule
-
-              if (!prevExclude) {
-                return {
-                  ...rule,
-                  exclude: regex,
-                }
-              } else if (Array.isArray(prevExclude)) {
-                return {
-                  ...rule,
-                  exclude: [...prevExclude, regex],
-                }
-              }
-
-              return {
-                ...rule,
-                exclude: [prevExclude, regex],
-              }
-            }),
-          }
-
-          return newRule
-        }
-
-        return rule
+exports.onCreateWebpackConfig = (
+  { store, stage, getConfig, plugins },
+  {
+    modulePath,
+    stylesPath,
+    publicPath = `admin`,
+    enableIdentityWidget = true,
+    htmlTitle = `Content Manager`,
+  }
+) => {
+  if ([`develop`, `build-javascript`].includes(stage)) {
+    const gatsbyConfig = getConfig()
+    const { program } = store.getState()
+    const publicPathClean = trim(publicPath, `/`)
+    const config = {
+      ...gatsbyConfig,
+      mode: `none`,
+      /**
+       * Two entries, one for the core CMS styles, and a `styles` entry, the
+       * output of which will be applied to the preview pane iframe only. Use
+       * `pickBy` to filter out empty entries.
+       */
+      entry: pickBy({
+        cms: [
+          `${__dirname}/cms.js`,
+          modulePath,
+          enableIdentityWidget && `${__dirname}/cms-identity.js`,
+        ].filter(p => p),
+        styles: stylesPath,
       }),
-    },
-  })
-}
-
-function module(args) {
-  const { stage, getConfig, actions, loaders } = args
-
-  if (stage === `build-css`) {
-    excludeFromLoader(args)
-  } else if (stage === `build-javascript`) {
-    excludeFromLoader(args)
-
-    // Exclusively extract Netlify CMS styles to /cms.css (filename configured
-    // above with plugin instantiation).
-
-    const prevConfig = getConfig()
-
-    actions.replaceWebpackConfig({
-      ...prevConfig,
-
+      output: {
+        path: path.join(program.directory, `public`, publicPathClean),
+      },
       module: {
-        ...prevConfig.module,
-
-        rules: [
-          ...prevConfig.module.rules,
-
-          {
-            test: /\.css$/,
-            include: [/\/node_modules\/netlify-cms\//],
-            use: [MiniCssExtractPlugin.loader, loaders.css()],
-          },
-        ],
+        /**
+         * Manually swap `style-loader` for `MiniCssExtractPlugin.loader`.
+         * `style-loader` is only used in development, and doesn't allow us to
+         * pass the `styles` entry css path to Netlify CMS.
+         */
+        rules: deepMap(gatsbyConfig.module.rules, value => {
+          if (
+            typeof get(value, `loader`) === `string` &&
+            value.loader.includes(`style-loader`)
+          ) {
+            return { ...value, loader: MiniCssExtractPlugin.loader }
+          }
+          return value
+        }),
       },
-    })
+      plugins: [
+        /**
+         * Remove plugins that either attempt to process the core Netlify CMS
+         * application, or that we want to replace with our own instance.
+         */
+        ...gatsbyConfig.plugins.filter(
+          plugin =>
+            ![UglifyJsPlugin, MiniCssExtractPlugin, FriendlyErrorsPlugin].find(
+              Plugin => plugin instanceof Plugin
+            )
+        ),
+
+        /**
+         * Provide a custom message for Netlify CMS compilation success.
+         */
+        stage === `develop` &&
+          new FriendlyErrorsPlugin({
+            clearConsole: false,
+            compilationSuccessInfo: {
+              messages: [
+                `Netlify CMS is running at ${
+                  program.ssl ? `https` : `http`
+                }://${program.host}:${program.port}/${publicPathClean}/`,
+              ],
+            },
+          }),
+
+        /**
+         * Use a simple filename with no hash so we can access from source by
+         * path.
+         */
+        new MiniCssExtractPlugin({
+          filename: `[name].css`,
+        }),
+
+        /**
+         * Auto generate CMS index.html page.
+         */
+        new HtmlWebpackPlugin({
+          title: htmlTitle,
+          chunks: [`cms`],
+        }),
+
+        /**
+         * Set flag if custom styles path is added to plugin options.
+         */
+        plugins.define({
+          NETLIFY_CMS_PREVIEW_STYLES_SET: !!stylesPath,
+        }),
+      ].filter(p => p),
+
+      /**
+       * Remove common chunks style optimizations from Gatsby's default config,
+       * they cause issues for our pre-bundled code.
+       */
+      optimization: {},
+    }
+    webpack(config).run()
   }
-}
-
-exports.onCreateWebpackConfig = (args, { modulePath }) => {
-  const { actions, stage, getConfig } = args
-
-  if (stage === `develop` || stage === `build-javascript`) {
-    const prevConfig = getConfig()
-
-    actions.replaceWebpackConfig({
-      ...prevConfig,
-
-      entry: {
-        ...prevConfig.entry,
-
-        cms: [`${__dirname}/cms.js`, modulePath].filter(p => p),
-      },
-      plugins: [...prevConfig.plugins, ...plugins(stage)],
-    })
-  }
-
-  module(args)
 }

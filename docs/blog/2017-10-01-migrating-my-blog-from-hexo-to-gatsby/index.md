@@ -295,6 +295,7 @@ specify a `pageQuery` that will pass data into the default export of that page.
 ```jsx
 // src/pages/index.js
 import React from "react"
+import { graphql } from "gatsby"
 
 export default class BlogIndex extends React.Component {
   render() {
@@ -673,6 +674,7 @@ Here it is in all it's glory:
 ```jsx
 // src/templates/post.js
 import React from "react"
+import { graphql } from "gatsby"
 
 export default class BlogPost extends React.Component {
   render() {

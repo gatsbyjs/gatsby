@@ -10,12 +10,16 @@ const Icon = ({ icon, alt, href }) => (
       marginRight: rhythm(3 / 4),
       display: `inline-block`,
       padding: 0,
+      height: `calc(14px + 1vw)`,
       [presets.Phablet]: {
         marginBottom: 0,
-        width: `auto`,
+        height: `calc(9px + 1vw)`,
         ":last-child": {
           marginRight: 0,
         },
+      },
+      [presets.Tablet]: {
+        height: `calc(12px + 1vw)`,
       },
     }}
   >
@@ -44,13 +48,7 @@ const Icon = ({ icon, alt, href }) => (
         alt={alt}
         css={{
           margin: 0,
-          height: `calc(14px + 1vw)`,
-          [presets.Phablet]: {
-            height: `calc(9px + 1vw)`,
-          },
-          [presets.Tablet]: {
-            height: `calc(12px + 1vw)`,
-          },
+          height: `100%`,
         }}
       />
     </a>

@@ -77,15 +77,17 @@ class FilteredShowcase extends Component {
           // create map of categories with totals
           const aggregatedCategories = data.allSitesYaml.edges.reduce(
             (categories, edge) => {
-              edge.node.categories.forEach(category => {
-                // if we already have the category recorded, increase count
-                if (categories[category]) {
-                  categories[category] = categories[category] + 1
-                } else {
-                  // record first encounter of category
-                  categories[category] = 1
-                }
-              })
+              if (edge.node.categories) {
+                edge.node.categories.forEach(category => {
+                  // if we already have the category recorded, increase count
+                  if (categories[category]) {
+                    categories[category] = categories[category] + 1
+                  } else {
+                    // record first encounter of category
+                    categories[category] = 1
+                  }
+                })
+              }
 
               return { ...categories }
             },
@@ -119,7 +121,9 @@ class FilteredShowcase extends Component {
                     paddingTop: 0,
                     borderRight: `1px solid ${colors.ui.light}`,
                     // background: colors.ui.whisper,
-                    height: `calc(100vh - ${presets.headerHeight})`,
+                    height: `calc(100vh - (${presets.headerHeight} + ${
+                      presets.bannerHeight
+                    }))`,
                   },
                 }}
               >
@@ -441,7 +445,7 @@ const styles = {
     position: `sticky`,
     top: 0,
     [presets.Desktop]: {
-      top: `calc(${presets.headerHeight} - 1px)`,
+      top: `calc(${presets.headerHeight} + ${presets.bannerHeight} - 1px)`,
     },
   },
   scrollbar: {

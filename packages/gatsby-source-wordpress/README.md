@@ -64,6 +64,13 @@ plugins: [
       // This feature is untested for sites hosted on Wordpress.com.
       // Defaults to true.
       useACF: true,
+      // Include specific ACF Option Pages that have a set post ID
+      // Regardless if an ID is set, the default options route will still be retrieved
+      // Must be using V3 of ACF to REST to include these routes     
+      // Example: `["option_page_1", "option_page_2"]` will include the proper ACF option
+      // routes with the ID option_page_1 and option_page_2
+      // Dashes in IDs will be converted to underscores for use in GraphQL
+      acfOptionPageIds = [],
       auth: {
         // If auth.user and auth.pass are filled, then the source plugin will be allowed
         // to access endpoints that are protected with .htaccess.
@@ -234,6 +241,29 @@ For example the following URL:
         id
        type
         // Put your fields here
+      }
+    }
+  }
+}
+```
+
+### Query ACF Options
+
+Whether you are using V2 or V3 of ACF to REST, the query below will return `options` as the default ACF Options page data.
+
+If you have specified `acfOptionPageIds` in your site's `gatsby-config.js` (ex: `option_page_1`), then they will be accessible by their ID:
+
+```
+{
+  allWordpressAcfOptions {
+    edges {
+      node{
+        option_page_1 {
+          test_acf
+        }
+        options {
+          test_acf
+        }
       }
     }
   }
