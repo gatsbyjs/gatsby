@@ -1,9 +1,9 @@
 import { Container } from "unstated"
 
-class CounterContainer extends Container<CounterState> {
+class CounterContainer extends Container {
   state = {
-    count: 0
-  };
+    count: 0,
+  }
 
   increment() {
     this.setState({ count: this.state.count + 1 })
