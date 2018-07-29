@@ -1,9 +1,9 @@
 {
-  "name": "gatsby-example-redux",
+  "name": "gatsby-example-unstated",
   "private": true,
-  "description": "Gatsby example site that shows use of redux.",
+  "description": "Gatsby example site that shows use of unstated.",
   "version": "1.0.0",
-  "author": "Scotty Eckenthal <scott.eckenthal@gmail.com>",
+  "author": "greg lobinski <greglobinski@gmail.com>",
   "dependencies": {
     "gatsby": "next",
     "react": "^16.4.0",
