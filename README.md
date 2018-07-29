@@ -41,6 +41,8 @@
   <span> · </span>
   <a href="https://next.gatsbyjs.org/docs/gatsby-starters/">Starters</a>
   <span> · </span>
+  <a href="https://next.gatsbyjs.org/showcase/">Showcase</a>
+  <span> · </span>
   <a href="https://next.gatsbyjs.org/docs/how-to-contribute/">Contribute</a>
   <span> · </span>
   Support: <a href="https://spectrum.chat/gatsby-js">Spectrum</a>
@@ -67,7 +69,11 @@ You can get a new Gatsby site up and running on your local dev environment in 5 
     Get your Gatsby blog set up in a single command:
 
     ```sh
-    npx gatsby-cli new my-blazing-fast-site https://github.com/gatsbyjs/gatsby-starter-default#v2
+    # install the Gatsby CLI globally
+    npm install -g gatsby-cli
+    
+    # create a new Gatsby site using the default starter
+    gatsby new my-blazing-fast-site https://github.com/gatsbyjs/gatsby-starter-default#v2
     ```
 
 2.  **Start the site in `develop` mode.**
@@ -76,7 +82,7 @@ You can get a new Gatsby site up and running on your local dev environment in 5 
 
     ```sh
     cd my-blazing-fast-site/
-    yarn develop
+    gatsby develop
     ```
 
     > **NOTE:** If you prefer npm, you can also run `npm run develop` to start the site.
@@ -118,10 +124,10 @@ For more advanced developers who just want to dig in and see how Gatsby handles 
   cd my-new-gatsby-site
   
   # initialize the project
-  yarn init
+  npm init
   
   # add the required dependencies
-  yarn add gatsby@next react react-dom
+  npm install gatsby@next react react-dom
   ```
 </details>
 
