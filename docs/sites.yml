@@ -1824,26 +1824,14 @@
     - Blog
     - Education
   featured: false
-
 - title: TRIPBY.org
   description: >
     Harm reduction info about psychoactive drugs.
-
-  # this URL is used to generate a screenshot
   main_url: https://tripby.org
-  
-  # this is the URL that is linked from the showcase
   url: https://tripby.org
-
-  # You can list as many categories as you want here. Check list of Categories below in this doc!
-  # If you'd like to create a new category, simply list it here.
   categories:
     - Healthcare
     - Education
-  
-  # Add the name (developer or company) and URL (e.g. Twitter, GitHub, portfolio) to be used for attribution
   built_by: Mateus Ferreira
   built_by_url: https://dlbn.co
-  
-  # leave as false, the Gatsby site review board will choose featured sites quarterly
   featured: true
