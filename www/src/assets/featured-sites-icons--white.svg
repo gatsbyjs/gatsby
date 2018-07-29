@@ -1,28 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="34px" height="38px" version="1.1" viewBox="0 0 34 38">
-<!--Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch-->
-    <title>
-        icons/featuredd
-    </title>
-    <desc>
-        Created with Sketch.
-    </desc>
-    <defs>
-        <path id="path-1" d="M11.799569,24.3103448 L9.21336207,30 L6.62715517,24.3103448 L0.9375,21.7241379 L6.62715517,19.137931 L9.21336207,13.4482759 L11.799569,19.137931 L17.4892241,21.7241379 L11.799569,24.3103448 Z M23.5719828,15.3931034 L21.6271552,19.6551724 L19.6823276,15.3931034 L15.4202586,13.4482759 L19.6823276,11.5034483 L21.6271552,7.24137931 L23.5719828,11.5034483 L27.8340517,13.4482759 L23.5719828,15.3931034 Z M12.5788793,5.43448276 L11.2823276,8.27586207 L9.98577586,5.43448276 L7.14439655,4.13793103 L9.98577586,2.84137931 L11.2823276,0 L12.5788793,2.84137931 L15.4202586,4.13793103 L12.5788793,5.43448276 Z"/>
-    </defs>
-    <g id="Symbols" fill="none" fill-rule="evenodd" stroke="none" stroke-width="1">
-        <g id="featured/header" transform="translate(3.000000, 2.000000)">
-            <g id="Featured-Sites-Header">
-                <g id="icons/featured">
-                    <mask id="mask-2" fill="white">
-                        <use xlink:href="#path-1"/>
-                    </mask>
-                    <use id="Combined-Shape" fill="#000000" fill-rule="evenodd" xlink:href="#path-1"/>
-                    <g id="colors/white" fill="#ffffff" fill-rule="evenodd" mask="url(#mask-2)">
-                        <rect id="Rectangle-4" width="30" height="30" x="0" y="0"/>
-                    </g>
-                </g>
-            </g>
-        </g>
-    </g>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewBox="0 0 16 16">
+  <defs>
+    <path id="custom-preset-a" d="M6.79310345,12.9655172 L5.4137931,16 L4.03448276,12.9655172 L1,11.5862069 L4.03448276,10.2068966 L5.4137931,7.17241379 L6.79310345,10.2068966 L9.82758621,11.5862069 L6.79310345,12.9655172 Z M13.0717241,8.20965517 L12.0344828,10.4827586 L10.9972414,8.20965517 L8.72413793,7.17241379 L10.9972414,6.13517241 L12.0344828,3.86206897 L13.0717241,6.13517241 L15.3448276,7.17241379 L13.0717241,8.20965517 Z M7.20873563,2.8983908 L6.51724138,4.4137931 L5.82574713,2.8983908 L4.31034483,2.20689655 L5.82574713,1.5154023 L6.51724138,0 L7.20873563,1.5154023 L8.72413793,2.20689655 L7.20873563,2.8983908 Z"/>
+  </defs>
+  <g fill="none" fill-rule="evenodd">
+    <use fill="#FFF" xlink:href="#custom-preset-a"/>
+  </g>
 </svg>
