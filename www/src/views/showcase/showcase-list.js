@@ -44,6 +44,9 @@ const ShowcaseList = ({ items, count }) => {
                     "&:hover": {
                       ...styles.screenshotHover,
                     },
+                    "&:hover ~ .meta > .featured-site": {
+                      transform: `translateY(-3px)`,
+                    },
                   },
                 }}
               >
@@ -82,6 +85,7 @@ const ShowcaseList = ({ items, count }) => {
                     color: `#9B9B9B`,
                   },
                 }}
+                className="meta"
               >
                 <div
                   css={{
@@ -124,6 +128,7 @@ const ShowcaseList = ({ items, count }) => {
                     to={`/showcase?${qs.stringify({
                       filters: `Featured`,
                     })}`}
+                    className="featured-site"
                   >
                     <img
                       src={FeaturedIcon}
@@ -188,6 +193,7 @@ const styles = {
   },
   featuredItem: {
     display: `none`,
+    transition: `background .3s cubic-bezier(.4,0,.2,1), transform .3s cubic-bezier(.4,0,.2,1)`,
     [presets.Desktop]: {
       alignItems: `center`,
       background: colors.accent,
@@ -204,9 +210,6 @@ const styles = {
       top: 0,
       right: 0,
       width: 24,
-      transition: `background ${presets.animation.speedDefault} ${
-        presets.animation.curveDefault
-      }`,
       "&:hover": {
         background: colors.gatsby,
       },
