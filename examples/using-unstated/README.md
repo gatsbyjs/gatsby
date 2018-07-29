@@ -1,4 +1,4 @@
-# Redux
+# Unstated
 
 https://using-unstated.gatsbyjs.org/
 
