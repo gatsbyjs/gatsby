@@ -181,30 +181,33 @@ const styles = {
     position: `relative`,
   },
   featuredItem: {
-    "@media (max-width: 767px)": {
-      display: `none`,
-    },
-    position: `absolute`,
-    top: `0`,
-    right: `-2px`,
-    margin: `0`,
-    padding: `0`,
-    background: `transparent`,
-    border: `none`,
-    cursor: `pointer`,
-    boxShadow: `none`,
-    "&:hover": {
-      background: `transparent`,
+    display: `none`,
+    [presets.Desktop]: {
+      alignItems: `center`,
+      background: colors.accent,
+      border: `none`,
+      borderTopRightRadius: presets.radius,
+      borderBottomLeftRadius: presets.radius,
+      boxShadow: `none`,
+      cursor: `pointer`,
+      display: `flex`,
+      height: 24,
+      margin: 0,
+      padding: 0,
+      position: `absolute`,
+      top: 0,
+      right: -2,
+      width: 24,
+      transition: `background ${presets.animation.speedDefault} ${
+        presets.animation.curveDefault
+      }`,
+      "&:hover": {
+        background: colors.gatsby,
+      },
     },
   },
   featuredIcon: {
-    padding: `2px 4px`,
-    margin: 0,
-    background: `#FFB322`,
-    borderRadius: `0 0 0 4px`,
+    margin: `0 auto`,
     display: `block`,
-    "&:hover": {
-      background: colors.gatsby,
-    },
   },
 }
