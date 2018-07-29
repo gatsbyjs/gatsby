@@ -1824,3 +1824,12 @@
     - Blog
     - Education
   featured: false
+- title: Matt Bagni Portfolio 2018
+  description: > 
+     Mostly the result of playing with Gatsby and learning about react and graphql. Using the screenshot plugin to showcase the work done for my company in the last 2 years, and a good amount of other experiments.
+  main_url: https://mattbag.github.io
+  url: https://mattbag.github.io
+  categories: 
+    - Landing
+    - Portoflio
+  featured: false
