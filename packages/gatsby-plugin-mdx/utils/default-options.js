@@ -1,9 +1,18 @@
-module.exports = pluginOptions =>
-  Object.assign(
+module.exports = pluginOptions => {
+  const options = Object.assign(
     {
       extensions: [".mdx"],
       mdPlugins: [],
-      hastPlugins: []
+      hastPlugins: [],
+      defaultLayouts: {}
     },
     pluginOptions
   );
+
+  // backwards compatibility for `defaultLayout`
+  if (options.defaultLayout && !options.defaultLayouts.default) {
+    options.defaultLayouts.default = options.defaultLayout;
+  }
+
+  return options;
+};

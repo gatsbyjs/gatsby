@@ -17,12 +17,12 @@ exports.setFieldsOnGraphQLNodeType = require("./extend-node-type");
  * Add the webpack config for loading MDX files
  */
 exports.onCreateWebpackConfig = (
-  { stage, rules, loaders, plugins, actions },
+  { stage, rules, loaders, plugins, actions, getNodes },
   pluginOptions
 ) => {
-  const { extensions } = defaultOptions(pluginOptions);
+  const options = defaultOptions(pluginOptions);
   const testPattern = new RegExp(
-    extensions.map(ext => `${escapeStringRegexp(ext)}$`).join("|")
+    options.extensions.map(ext => `${escapeStringRegexp(ext)}$`).join("|")
   );
 
   actions.setWebpackConfig({
@@ -34,7 +34,10 @@ exports.onCreateWebpackConfig = (
             loaders.js(),
             {
               loader: "gatsby-mdx/mdx-loader",
-              options: pluginOptions
+              options: {
+                getNodes,
+                pluginOptions: options
+              }
             }
           ]
         }
