@@ -77,12 +77,18 @@ const ShowcaseList = ({ items, count }) => {
                   ...scale(-2 / 5),
                   display: `flex`,
                   justifyContent: `space-between`,
+                  alignItems: `baseline`,
                   "&&": {
                     color: `#9B9B9B`,
                   },
                 }}
               >
-                <div>
+                <div
+                  css={{
+                    paddingRight: rhythm(1),
+                    lineHeight: 1.3,
+                  }}
+                >
                   <ShowcaseItemCategories categories={node.categories} />
                 </div>
                 {node.source_url && (
@@ -177,7 +183,7 @@ const styles = {
     display: `flex`,
     flexDirection: `column`,
     margin: rhythm(3 / 4),
-    width: 280,
+    width: 282,
     position: `relative`,
   },
   featuredItem: {
@@ -196,7 +202,7 @@ const styles = {
       padding: 0,
       position: `absolute`,
       top: 0,
-      right: -2,
+      right: 0,
       width: 24,
       transition: `background ${presets.animation.speedDefault} ${
         presets.animation.curveDefault
