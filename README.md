@@ -99,7 +99,7 @@ For most developers, we recommend starting with our [in-depth tutorial for creat
 
 #### [Follow the Tutorial](https://next.gatsbyjs.org/tutorial/)
 
-## 💼 Migration Guide
+## 💼 Migration Guides
 
 Already have a Gatsby site? These handy guides will help you add the improvements of Gatsby v2 to your site without starting from scratch!
 
