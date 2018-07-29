@@ -3,12 +3,14 @@ import { Link } from "gatsby"
 import Img from "gatsby-image"
 import hex2rgba from "hex2rgba"
 import { style } from "glamor"
+import qs from "qs"
 
 import ShowcaseItemCategories from "./showcase-item-categories"
 import { options, rhythm, scale } from "../../utils/typography"
 import presets, { colors } from "../../utils/presets"
 
 import GithubIcon from "react-icons/lib/go/mark-github"
+import FeaturedIcon from "../../assets/featured-sites-icons--white.svg"
 
 const ShowcaseList = ({ items, count }) => {
   if (count) items = items.slice(0, count)
@@ -41,6 +43,9 @@ const ShowcaseList = ({ items, count }) => {
                     }`,
                     "&:hover": {
                       ...styles.screenshotHover,
+                    },
+                    "&:hover ~ .meta > .featured-site": {
+                      transform: `translateY(-3px)`,
                     },
                   },
                 }}
@@ -75,12 +80,19 @@ const ShowcaseList = ({ items, count }) => {
                   ...scale(-2 / 5),
                   display: `flex`,
                   justifyContent: `space-between`,
+                  alignItems: `baseline`,
                   "&&": {
                     color: `#9B9B9B`,
                   },
                 }}
+                className="meta"
               >
-                <div>
+                <div
+                  css={{
+                    paddingRight: rhythm(1),
+                    lineHeight: 1.3,
+                  }}
+                >
                   <ShowcaseItemCategories categories={node.categories} />
                 </div>
                 {node.source_url && (
@@ -105,6 +117,27 @@ const ShowcaseList = ({ items, count }) => {
                       <GithubIcon style={{ verticalAlign: `text-top` }} />
                     </a>
                   </div>
+                )}
+                {node.featured && (
+                  <Link
+                    css={{
+                      "&&": {
+                        ...styles.featuredItem,
+                      },
+                    }}
+                    to={`/showcase?${qs.stringify({
+                      filters: `Featured`,
+                    })}`}
+                    className="featured-site"
+                  >
+                    <img
+                      src={FeaturedIcon}
+                      alt="icon"
+                      css={{
+                        ...styles.featuredIcon,
+                      }}
+                    />
+                  </Link>
                 )}
               </div>
             </div>
@@ -155,6 +188,35 @@ const styles = {
     display: `flex`,
     flexDirection: `column`,
     margin: rhythm(3 / 4),
-    width: 280,
+    width: 282,
+    position: `relative`,
+  },
+  featuredItem: {
+    display: `none`,
+    transition: `background .3s cubic-bezier(.4,0,.2,1), transform .3s cubic-bezier(.4,0,.2,1)`,
+    [presets.Desktop]: {
+      alignItems: `center`,
+      background: colors.accent,
+      border: `none`,
+      borderTopRightRadius: presets.radius,
+      borderBottomLeftRadius: presets.radius,
+      boxShadow: `none`,
+      cursor: `pointer`,
+      display: `flex`,
+      height: 24,
+      margin: 0,
+      padding: 0,
+      position: `absolute`,
+      top: 0,
+      right: 0,
+      width: 24,
+      "&:hover": {
+        background: colors.gatsby,
+      },
+    },
+  },
+  featuredIcon: {
+    margin: `0 auto`,
+    display: `block`,
   },
 }
