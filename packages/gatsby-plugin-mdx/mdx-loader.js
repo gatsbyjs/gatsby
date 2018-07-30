@@ -9,11 +9,9 @@ module.exports = async function(content) {
   const callback = this.async();
   const { getNodes, pluginOptions } = getOptions(this);
 
-  const fileNode = _.first(
-    getNodes().filter(
-      node =>
-        node.internal.type === `File` && node.absolutePath === this.resourcePath
-    )
+  const fileNode = getNodes().find(
+    node =>
+      node.internal.type === `File` && node.absolutePath === this.resourcePath
   );
 
   const source = fileNode && fileNode.sourceInstanceName;
@@ -21,7 +19,8 @@ module.exports = async function(content) {
   // get the default layout for the file source group, or if it doesn't
   // exist, the overall default layout
   const defaultLayout = _.get(
-    pluginOptions.defaultLayouts, source,
+    pluginOptions.defaultLayouts,
+    source,
     _.get(pluginOptions.defaultLayouts, "default")
   );
 
