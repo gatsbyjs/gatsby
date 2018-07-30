@@ -89,7 +89,7 @@ module.exports = function (root, cb) {
 
     if (checkSameOriginWithoutProtocol(window.location.origin, anchoreUrl.origin)) {
       cb(anchoreUrl.pathname)
-      return true
+      return false
     }
 
     cb(anchor.getAttribute(`href`))
