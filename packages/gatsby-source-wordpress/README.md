@@ -751,6 +751,26 @@ add_filter('acf/format_value/type=repeater', 'acf_nullify_empty', 100, 3);
 
 This code should be added as a plugin (recommended), or within the `functions.php` of a theme.
 
+### GraphQL Error - Unknown field `localFile` on type `[image field]`
+
+WordPress has a [known issue](https://core.trac.wordpress.org/ticket/41445) that can affect how media objects are returned through the REST API.
+
+During the upload process to the WordPress media library, the `post_parent` value ([seen here in the wp_posts table](https://codex.wordpress.org/Database_Description#Table:_wp_posts)) is set to the ID of the post the image is attached to. This value is unable to be changed by any WordPress administration actions.
+
+When the post an image is attached to becomes inaccessible (e.g. from changing visibility settings, or deleting the post), the image itself is restricted in the REST API:
+```
+   {  
+      "code":"rest_forbidden",
+      "message":"You don't have permission to do this.",
+      "data":{  
+         "status":403
+      }
+   }
+```
+which prevents Gatsby from retrieving it.
+
+In order to resolve this, you can manually change the `post_parent` value of the image record to `0` in the database. The only side effect of this change is that the image will no longer appear in the "Uploaded to this post" filter in the Add Media dialog in the WordPress administration area.
+
 ### Self-signed certificates
 
 When running locally, or in other situations that may involve self-signed certificates, you may run into the error: `The request failed with error code "DEPTH_ZERO_SELF_SIGNED_CERT"`.
