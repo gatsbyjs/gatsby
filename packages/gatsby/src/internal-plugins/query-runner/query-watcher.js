@@ -142,10 +142,12 @@ const updateStateAndRunQueries = isFirstRun => {
 
     if (queriesWillNotRun) {
       report.log(report.stripIndent`
-        Queries are only executed for Page components. Instead of a query,
-        co-locate a GraphQL fragment and compose that fragment into the query (or other
-        fragment) of the top-level page that renders this component. For more
-        info on fragments and composition see: http://graphql.org/learn/queries/#fragments
+        Exported queries are only executed for Page components. Instead of an exported
+        query, either co-locate a GraphQL fragment and compose that fragment into the
+        query (or other fragment) of the top-level page that renders this component, or
+        use a <StaticQuery> in this component. For more info on fragments and
+        composition, see http://graphql.org/learn/queries/#fragments and for more
+        information on <StaticQuery>, see https://next.gatsbyjs.org/docs/static-query
       `)
     }
     runQueuedQueries()
