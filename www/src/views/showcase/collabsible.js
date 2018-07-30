@@ -16,44 +16,55 @@ class Collapsible extends Component {
 
   render() {
     const { heading, children } = this.props
+    const { collapsed } = this.state
+
     return (
-      <div>
-        <h4
-          css={{
-            color: colors.lilac,
-            cursor: `pointer`,
-            display: `flex`,
-            alignItems: `center`,
-            fontWeight: `normal`,
-            fontSize: scale(-2 / 5).fontSize,
-            marginTop: rhythm(options.blockMarginBottom),
-            marginRight: rhythm(5 / 4),
-            letterSpacing: `.1em`,
-            textTransform: `uppercase`,
-            "&:hover": {
-              color: colors.gatsby,
-            },
-          }}
-          onClick={this.handleClick}
-        >
-          {heading}
-          {` `}
-          <span css={{ marginLeft: `auto` }}>
-            {this.state.collapsed ? <FaAngleDown /> : <FaAngleUp />}
-          </span>
-        </h4>
+      <div
+        css={{
+          borderBottom: collapsed ? 0 : `1px solid ${colors.ui.light}`,
+          display: collapsed ? false : `flex`,
+          flex: collapsed ? `0 0 auto` : `1 1 auto`,
+          // paddingBottom: collapsed ? 0 : rhythm(options.blockMarginBottom),
+        }}
+      >
         <div
           css={{
-            overflow: `hidden`,
-            height: this.state.collapsed ? `0px` : `500px`,
-            transition: `height 0.2s`,
+            display: `flex`,
+            flexDirection: `column`,
+            minHeight: `100%`,
+            width: `100%`,
           }}
         >
+          <h4
+            css={{
+              alignItems: `center`,
+              color: colors.lilac,
+              cursor: `pointer`,
+              display: `flex`,
+              flexShrink: 0,
+              fontWeight: `normal`,
+              fontSize: scale(-2 / 5).fontSize,
+              marginTop: rhythm(options.blockMarginBottom),
+              marginRight: rhythm(5 / 4),
+              letterSpacing: `.1em`,
+              textTransform: `uppercase`,
+              "&:hover": {
+                color: colors.gatsby,
+              },
+            }}
+            onClick={this.handleClick}
+          >
+            {heading}
+            {` `}
+            <span css={{ marginLeft: `auto` }}>
+              {collapsed ? <FaAngleDown /> : <FaAngleUp />}
+            </span>
+          </h4>
           <div
             css={{
-              overflowY: `scroll`,
-              height: `500px`,
               ...styles.scrollbar,
+              display: collapsed ? `none` : `block`,
+              overflowY: `auto`,
             }}
           >
             {children}
