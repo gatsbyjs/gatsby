@@ -71,7 +71,7 @@
         - title: What are transformer plugins?
           link: /tutorial/part-six/#transformer-plugins
         - title: Create a list of our site's markdown files
-          link: /tutorial/part-six/#create-a-list-of-our-sites-markdown-files-in-srcpagesindexjs
+          link: /tutorial/part-six/#create-a-list-of-your-sites-markdown-files-in-srcpagesindexjs
     - title: 7. Programmatically create pages from data
       link: /tutorial/part-seven/
       ui: steps
