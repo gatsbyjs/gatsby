@@ -1838,6 +1838,6 @@
   url: 'https://www.lifestonechurch.net/'
   source_url: 'https://github.com/lifestonechurch/lifestonechurch.net'
   featured: false
-categories:
+  categories:
     - Marketing
     - Nonprofit
