@@ -276,6 +276,7 @@ Websites built with Gatsby:
 - [GaiAma - We are wildlife](https://www.gaiama.org) ([source](https://github.com/GaiAma/gaiama.org))
 - [Rescue Amazonian Rainforest](https://www.rescue-amazonian-rainforest.com/) ([source](https://github.com/GaiAma/rescue-amazonian-rainforest.com))
 - [Michael McQuade - Personal Blog](https://giraffesyo.io) ([source](https://github.com/giraffesyo/giraffesyo.github.io))
+- [Lifestone Church](https:/www.lifestonechurch.net) ([source](https://github.com/lifestonechurch/lifestonechurch.net))
 
 ## Docs
 
