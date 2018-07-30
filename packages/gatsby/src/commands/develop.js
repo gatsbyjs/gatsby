@@ -222,7 +222,7 @@ async function startServer(program) {
         report.panic(
           `Unable to start Gatsby on port ${
             program.port
-          } as there's already a process listing on that port.`
+          } as there's already a process listening on that port.`
         )
         return
       }
