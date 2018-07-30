@@ -24,6 +24,32 @@ module.exports = {
 }
 ```
 
+Note: if you are using `gatsby-remark-prismjs`, make sure that it’s listed after this plugin. Otherwise, you might face an issue described here: https://github.com/gatsbyjs/gatsby/issues/5764.
+
+```javascript
+// good
+{
+  resolve: `gatsby-transformer-remark`,
+  options: {
+    plugins: [
+      `gatsby-remark-autolink-headers`,
+      `gatsby-remark-prismjs`,
+    ],
+  },
+}
+
+// bad
+{
+  resolve: `gatsby-transformer-remark`,
+  options: {
+    plugins: [
+      `gatsby-remark-prismjs`, // should be placed after `gatsby-remark-autolink-headers`
+      `gatsby-remark-autolink-headers`,
+    ],
+  },
+}
+```
+
 ## Options
 
 - `offsetY`: Signed integer. Vertical offset value in pixels (optional)
