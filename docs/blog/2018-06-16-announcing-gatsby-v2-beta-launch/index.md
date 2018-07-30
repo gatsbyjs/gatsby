@@ -20,7 +20,7 @@ Gatsby v2 builds on the foundations of v1 to introduce a range of improvements:
 
   We’ve renamed `sizes` and `resolutions` to `fluid` and `fixed`, `boundActionCreators` to `actions`, as well as other changes intended to make API names more consistent and prevent common gotchas.
 
-  To see the full list of renamings, take a look at the upgrade guide for [image queries](https://next.gatsbyjs.org/docs/migrating-from-v1-to-v2/#rename-responsive-image-queries), [actions](https://next.gatsbyjs.org/docs/migrating-from-v1-to-v2/#rename-code-classlanguage-textboundactioncreatorscode-to-code-classlanguage-textactionscode) and the [babel](https://next.gatsbyjs.org/docs/migrating-from-v1-to-v2/#change-code-classlanguage-textmodifybabelrccode-to-code-classlanguage-textoncreatebabelconfigcode) and [webpack](https://next.gatsbyjs.org/docs/migrating-from-v1-to-v2/#change-code-classlanguage-textmodifywebpackconfigcode-to-code-classlanguage-textoncreatewebpackconfigcode) API hooks.
+  To see the full list of renamings, take a look at the upgrade guide for [image queries](https://next.gatsbyjs.org/docs/migrating-from-v1-to-v2/#rename-responsive-image-queries), [actions](https://next.gatsbyjs.org/docs/migrating-from-v1-to-v2/#rename-boundactioncreators-to-actions) and the [babel](https://next.gatsbyjs.org/docs/migrating-from-v1-to-v2/#change-modifybabelrc-to-oncreatebabelconfig) and [webpack](https://next.gatsbyjs.org/docs/migrating-from-v1-to-v2/#change-modifywebpackconfig-to-oncreatewebpackconfig) API hooks.
 
 - Hotter Hot Reloading
 

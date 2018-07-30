@@ -338,7 +338,7 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
     Bootstrap/Bootswatch instead of bulma
 
 - [open-crowd-fund](https://github.com/rwieruch/open-crowd-fund)
-  [(demo)](https://www.roadtolearnreact.com/)
+  [(demo)](https://www.concisejavascript.org/)
 
   Features:
 
