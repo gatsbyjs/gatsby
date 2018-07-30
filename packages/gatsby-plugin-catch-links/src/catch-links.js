@@ -1,7 +1,16 @@
 import { withPrefix } from "gatsby-link"
+import { replace } from 'gatsby'
 
-module.exports = function(root, cb) {
-  root.addEventListener(`click`, function(ev) {
+function checkSameOriginWithoutProtocol(origin1, origin2) {
+  const protocolRegex = new RegExp(/(^\w+:|^)\/\//)
+  const removeTrailingSlash = new RegExp(/\//g)
+
+  return origin1.replace(protocolRegex, ``).replace(removeTrailingSlash, ``) ===
+         origin2.replace(protocolRegex, ``).replace(removeTrailingSlash, ``)
+}
+
+module.exports = function (root, cb) {
+  root.addEventListener(`click`, function (ev) {
     if (
       ev.button !== 0 ||
       ev.altKey ||
@@ -20,6 +29,7 @@ module.exports = function(root, cb) {
         break
       }
     }
+
     if (!anchor) return true
 
     // Don't catch links where a target (other than self) is set
@@ -74,6 +84,14 @@ module.exports = function(root, cb) {
     // to avoid `https://example.com/myapp/https://example.com/myapp/here` navigation
 
     ev.preventDefault()
+
+
+    var anchoreUrl = new URL(anchor.getAttribute(`href`))
+
+    if (checkSameOriginWithoutProtocol(window.location.origin, anchoreUrl.origin)) {
+      replace(anchoreUrl.pathname)
+      return true
+    }
 
     cb(anchor.getAttribute(`href`))
     return false
