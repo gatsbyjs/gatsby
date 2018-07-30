@@ -6,6 +6,10 @@ Gatsby allows a build to be traced, enabling you to find which plugins or parts 
 
 ![Example Zipkin Trace](./images/zipkin-trace.png)
 
+- [Running Gatsby with tracing turned on](/docs/performance-tracing/#running-gatsby-with-tracing-turned-on)
+- [Tracing backend examples](/docs/performance-tracing/#tracing-backend-examples)
+- [Adding your own tracing](/docs/performance-tracing/#adding-your-own-tracing)
+
 ## Running Gatsby with tracing turned on
 
 Gatsby code is instrumented with Open Tracing, which is a general tracing API that is implementation agnostic. Therefore, you'll need to include and configure an open tracing compatible library in your application, as well as a backend to collect the trace data.
@@ -52,3 +56,23 @@ There are many open tracing compatible backends available. Below is an example o
     ```
 
 4.  Once the build is complete, view your tracing information at [http://localhost:9411](http://localhost:9411)
+
+## Adding your own tracing
+
+The default tracing that comes with Gatsby can give you a good idea of which plugins or stages of the build are slowing down your site. But sometimes, you'll want to trace the internals of your site. Or if you're a plugin author, you might want to trace long operations. 
+
+To provide custom tracing, you can use the `tracing` object, which is present in the args passed to API implementers. This tracing object contains a function called `startSpan`. This simply wraps [open tracing startSpan](https://github.com/opentracing/opentracing-javascript/blob/master/src/tracer.ts#L79), but provides the default `childOf: parentSpan` span args. `startSpan` returns a span object that you must explicitly end by calling its `.finish()` method. For example:
+
+```javascript
+exports.sourceNodes = async ({ actions, tracing, }) => {
+  const span = tracing.startSpan('foobar')
+
+  // Do stuff
+
+  span.finish()
+}
+```
+
+With this span, you can perform any open tracing operations such as [span.setTag](https://github.com/opentracing/opentracing-javascript/blob/master/src/span.ts#L89). Just make sure that the tracing backend supports these operations.
+
+You can provide an optional second span options argument to `startSpan` which will be passed to the underlying open tracing call. Or, if you're familiar with the open tracing API, you can access the underlying parentSpan object under `tracing.parentSpan`. 
