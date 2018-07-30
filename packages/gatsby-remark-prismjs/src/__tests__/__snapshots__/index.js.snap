@@ -23,7 +23,7 @@ Object {
       },
       "type": "html",
       "value": "<div class=\\"gatsby-highlight\\" data-language=\\"js\\">
-      <pre class=\\"custom-js\\"><code class=\\"custom-js\\"><span class=\\"token comment\\">// Fake</span></code></pre>
+      <pre class=\\"custom-js\\"><code><span class=\\"token comment\\">// Fake</span></code></pre>
       </div>",
     },
   ],
@@ -66,7 +66,7 @@ Object {
       },
       "type": "html",
       "value": "<div class=\\"gatsby-highlight\\" data-language=\\"javascript\\">
-      <pre class=\\"language-javascript\\"><code class=\\"language-javascript\\">// Fake</code></pre>
+      <pre class=\\"language-javascript\\"><code>// Fake</code></pre>
       </div>",
     },
   ],
@@ -109,7 +109,7 @@ Object {
       },
       "type": "html",
       "value": "<div class=\\"gatsby-highlight\\" data-language=\\"js\\">
-      <pre class=\\"language-js\\"><code class=\\"language-js\\"><span class=\\"token comment\\">// Fake</span></code></pre>
+      <pre class=\\"language-js\\"><code><span class=\\"token comment\\">// Fake</span></code></pre>
       </div>",
     },
   ],
