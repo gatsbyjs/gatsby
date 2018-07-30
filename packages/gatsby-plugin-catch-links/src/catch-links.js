@@ -1,12 +1,11 @@
 import { withPrefix } from "gatsby-link"
-import { replace } from 'gatsby'
 
 function checkSameOriginWithoutProtocol(origin1, origin2) {
   const protocolRegex = new RegExp(/(^\w+:|^)\/\//)
   const removeTrailingSlash = new RegExp(/\//g)
 
   return origin1.replace(protocolRegex, ``).replace(removeTrailingSlash, ``) ===
-         origin2.replace(protocolRegex, ``).replace(removeTrailingSlash, ``)
+    origin2.replace(protocolRegex, ``).replace(removeTrailingSlash, ``)
 }
 
 module.exports = function (root, cb) {
@@ -89,7 +88,7 @@ module.exports = function (root, cb) {
     var anchoreUrl = new URL(anchor.getAttribute(`href`))
 
     if (checkSameOriginWithoutProtocol(window.location.origin, anchoreUrl.origin)) {
-      replace(anchoreUrl.pathname)
+      cb(anchoreUrl.pathname)
       return true
     }
 
