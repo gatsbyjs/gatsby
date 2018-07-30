@@ -151,6 +151,10 @@ Gatsby is dedicated to building a welcoming, diverse, safe community. We expect 
 
 This repository is a [monorepo](https://trunkbaseddevelopment.com/monorepos/) managed using [Lerna](https://github.com/lerna/lerna). This means there are [multiple packages](/packages) managed in this codebase, even though we publish them to NPM as separate packages.
 
+### Contributing to Gatsby v1
+
+We are currently only accepting bug fixes for Gatsby v1. All new features, docs enhancements, and other improvements _must_ be created against v2 (the `master` branch).
+
 ## 💜 Thanks to Our Contributors and Sponsors
 
 Thanks to our many contributors and sponsors as well as the companies sponsoring
