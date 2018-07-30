@@ -159,3 +159,31 @@ it(`Leaves other graphql tags alone`, () => {
   `
   )
 })
+
+it(`Removes all gatsby queries`, () => {
+  matchesSnapshot(
+    `
+  import { graphql } from 'gatsby'
+
+  export default () => (
+    <div>{data.site.siteMetadata.title}</div>
+  )
+
+  export const siteMetaQuery = graphql\`
+    fragment siteMetaQuery on RootQueryType {
+      site {
+        siteMetadata {
+          title
+        }
+      }
+    }
+  \`
+
+  export const query = graphql\`
+     {
+       ...siteMetaQuery
+     }
+  \`
+  `
+  )
+})
