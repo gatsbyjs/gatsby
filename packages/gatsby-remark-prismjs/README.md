@@ -139,9 +139,10 @@ This is some beautiful code:
     ]
     ```
 
-You can also add line highlighting. It adds a span around lines of code with a
-special class `.gatsby-highlight-code-line` that you can target with styles. See
-this README for more info.
+This code will render three markup tags. The outermost being a `div` with the class `gatsby-highlight`. Then, a `pre` tag with either the class you specified as your `classPrefix` or the default of `language-`. Finally, a classless `code` tag is the innermost wrapper.
+
+You can also add line highlighting. This plugin adds a span around lines of code with a
+special class `.gatsby-highlight-code-line` that you can target with styles. 
 
 In the following code snippet, lines 1 and 4 through 6 will get the line
 highlighting. The line range parsing is done with
