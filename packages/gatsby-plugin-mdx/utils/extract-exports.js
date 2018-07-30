@@ -1,4 +1,4 @@
-const babel = require("babel-core");
+const babel = require("@babel/core");
 const babelReact = require("@babel/preset-react");
 const objRestSpread = require("@babel/plugin-proposal-object-rest-spread");
 const mdx = require("./mdx");
