@@ -136,7 +136,11 @@ async function findGraphQLTags(file, text): Promise<Array<DefinitionNode>> {
             })
           },
         })
-        resolve(queries)
+
+        // Remove duplicate queries
+        const uniqueQueries = _.uniqBy(queries, _.isEqual)
+
+        resolve(uniqueQueries)
       })
       .catch(reject)
   })
