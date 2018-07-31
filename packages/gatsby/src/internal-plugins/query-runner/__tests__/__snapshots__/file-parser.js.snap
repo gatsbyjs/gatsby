@@ -258,6 +258,56 @@ Map {
     ],
     "kind": "Document",
   },
+  "static-query-closing-tag.js" => Object {
+    "definitions": Array [
+      Object {
+        "directives": Array [],
+        "hash": 2605331189,
+        "isStaticQuery": true,
+        "kind": "OperationDefinition",
+        "loc": Object {
+          "end": 7,
+          "start": 0,
+        },
+        "name": Object {
+          "kind": "Name",
+          "value": "staticQueryClosingTagJs2605331189",
+        },
+        "operation": "query",
+        "selectionSet": Object {
+          "kind": "SelectionSet",
+          "loc": Object {
+            "end": 7,
+            "start": 0,
+          },
+          "selections": Array [
+            Object {
+              "alias": undefined,
+              "arguments": Array [],
+              "directives": Array [],
+              "kind": "Field",
+              "loc": Object {
+                "end": 5,
+                "start": 2,
+              },
+              "name": Object {
+                "kind": "Name",
+                "loc": Object {
+                  "end": 5,
+                  "start": 2,
+                },
+                "value": "foo",
+              },
+              "selectionSet": undefined,
+            },
+          ],
+        },
+        "text": "{ foo }",
+        "variableDefinitions": Array [],
+      },
+    ],
+    "kind": "Document",
+  },
   "page-query-and-static-query-named-export.js" => Object {
     "definitions": Array [
       Object {
