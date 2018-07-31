@@ -11,7 +11,12 @@ import {
 
 if (process.env.NODE_ENV === `production`) {
   throw new Error(
-    `It appears like Gatsby is misconfigured. JSONStore shouldn't be used in production.`
+    `It appears like Gatsby is misconfigured. JSONStore is Gatsby internal ` +
+      `development-only component and should never be used in production.\n\n` +
+      `Unless your site has a complex or custom webpack/Gatsby ` +
+      `configuration this is likely a bug in Gatsby. ` +
+      `Please report this at https://github.com/gatsbyjs/gatsby/issues ` +
+      `with steps to reproduce this error.`
   )
 }
 
