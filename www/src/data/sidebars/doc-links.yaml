@@ -64,7 +64,7 @@
           link: /docs/working-with-images/
     - title: Querying your data with GraphQL*
       link: /docs/graphql/
-      items: 
+      items:
         - title: Introducing GraphiQL*
           link: /docs/introducing-graphiql/
         - title: Build a page with a GraphQL query
@@ -120,7 +120,7 @@
           link: /docs/component-css/
         - title: PostCSS*
           link: /docs/post-css/
-    - title: Debugging*
+    - title: Debugging
       link: /docs/debugging/
       items:
         - title: Debugging HTML builds
@@ -130,7 +130,7 @@
         - title: Debugging the build process
           link: /docs/debugging-the-build-process/
         - title: Trace Gatsby builds
-          link: /docs/docs/performance-tracing.md
+          link: /docs/performance-tracing/
     - title: Apps with Gatsby
       link: /docs/building-apps-with-gatsby/
       items:
@@ -150,7 +150,7 @@
         - title: Adding a 404 Page
           link: /docs/add-404-page/
         - title: Adding search to your Gatsby website
-          link: /docs/adding-search/ 
+          link: /docs/adding-search/
         - title: Adding tags and categories to blog posts
           link: /docs/adding-tags-and-categories-to-blog-posts/
         - title: Creating a sitemap*
@@ -161,7 +161,7 @@
           link: /docs/seo/
     - title: Performance*
       link: /docs/performance/
-      items: 
+      items:
         - title: Caching
           link: /docs/caching/
         - title: Local HTTPS

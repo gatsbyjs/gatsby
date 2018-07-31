@@ -1833,3 +1833,33 @@
     - Landing
     - Portfolio
   featured: false
+- title: Lifestone Church
+  main_url: 'https://www.lifestonechurch.net/'
+  url: 'https://www.lifestonechurch.net/'
+  source_url: 'https://github.com/lifestonechurch/lifestonechurch.net'
+  featured: false
+  categories:
+    - Marketing
+    - Nonprofit
+- title: Artem Sapegin
+  description: > 
+     Little homepage of Artem Sapegin, a frontend developer, passionate photographer, coffee drinker and crazy dogs’ owner.
+  main_url: https://sapegin.me/
+  url: https://sapegin.me/
+  categories:
+    - Landing
+    - Portfolio
+    - Open Source
+    - Personal
+    - Web Dev
+  built_by: Artem Sapegin
+  built_by_url: https://github.com/sapegin
+  featured: false
+- title: SparkPost Developers
+  main_url: 'https://developers.sparkpost.com/'
+  url: 'https://developers.sparkpost.com/'
+  source_url: 'https://github.com/SparkPost/developers.sparkpost.com'
+  categories:
+    - Documentation
+    - API
+  featured: false
