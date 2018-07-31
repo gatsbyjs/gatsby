@@ -1,12 +1,10 @@
 import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
 import React, { createElement } from "react"
 import ReactDOM from "react-dom"
-import { Router, Route, withRouter, matchPath } from "react-router-dom"
+import { Router, matchPath, navigate as reachNavigate } from "@reach/router"
 import { ScrollContext } from "gatsby-react-router-scroll"
 import domReady from "domready"
-import { createLocation } from "history"
-import history from "./history"
-window.___history = history
+import { createLocation } from "history/LocationUtils"
 import emitter from "./emitter"
 window.___emitter = emitter
 import redirects from "./redirects.json"
@@ -35,7 +33,7 @@ const maybeRedirect = pathname => {
   const redirect = redirectMap[pathname]
 
   if (redirect != null) {
-    history.replace(redirect.toPath)
+    window.history.replace(redirect.toPath)
     return true
   } else {
     return false
@@ -56,7 +54,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   let lastNavigateToLocationString = null
 
   const navigate = (to, replace) => {
-    const location = createLocation(to, null, null, history.location)
+    const location = createLocation(to)
     let { pathname } = location
     const redirect = redirectMap[pathname]
 
@@ -81,10 +79,6 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     ) {
       return
     }
-
-    const historyNavigateFunc = replace
-      ? window.___history.replace
-      : window.___history.push
 
     const historyNavigateAction = replace ? `REPLACE` : `PUSH`
 
@@ -112,7 +106,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
         loader.getResourcesForPathname(`/404.html`, loaderCallback)
       } else {
         clearTimeout(timeoutId)
-        historyNavigateFunc(location)
+        reachNavigate(location.pathname, { replace })
       }
     }
 
@@ -125,34 +119,34 @@ apiRunnerAsync(`onClientEntry`).then(() => {
 
   // Call onRouteUpdate on the initial page load.
   apiRunner(`onRouteUpdate`, {
-    location: history.location,
-    action: history.action,
+    location: window.history.location,
+    action: null,
   })
 
-  let initialAttachDone = false
-  function attachToHistory(history) {
-    if (!window.___history || initialAttachDone === false) {
-      window.___history = history
-      initialAttachDone = true
+  // let initialAttachDone = false
+  // function attachToHistory(history) {
+  // if (!window.___history || initialAttachDone === false) {
+  // window.___history = history
+  // initialAttachDone = true
 
-      history.listen((location, action) => {
-        if (!maybeRedirect(location.pathname)) {
-          // Check if we already ran onPreRouteUpdate API
-          // in navigateTo function
-          if (
-            lastNavigateToLocationString !==
-            `${location.pathname}${location.search}${location.hash}`
-          ) {
-            apiRunner(`onPreRouteUpdate`, { location, action })
-          }
-          // Make sure React has had a chance to flush to DOM first.
-          setTimeout(() => {
-            apiRunner(`onRouteUpdate`, { location, action })
-          }, 0)
-        }
-      })
-    }
-  }
+  // history.listen((location, action) => {
+  // if (!maybeRedirect(location.pathname)) {
+  // // Check if we already ran onPreRouteUpdate API
+  // // in navigateTo function
+  // if (
+  // lastNavigateToLocationString !==
+  // `${location.pathname}${location.search}${location.hash}`
+  // ) {
+  // apiRunner(`onPreRouteUpdate`, { location, action })
+  // }
+  // // Make sure React has had a chance to flush to DOM first.
+  // setTimeout(() => {
+  // apiRunner(`onRouteUpdate`, { location, action })
+  // }, 0)
+  // }
+  // })
+  // }
+  // }
 
   function shouldUpdateScroll(prevRouterProps, { location: { pathname } }) {
     const results = apiRunner(`shouldUpdateScroll`, {
@@ -174,37 +168,42 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     return true
   }
 
-  const AltRouter = apiRunner(`replaceRouterComponent`, { history })[0]
+  class RouteHandler extends React.Component {
+    render() {
+      const { location } = this.props
+      let child
+
+      if (loader.getPage(location.pathname)) {
+        child = createElement(PageRenderer, {
+          isPage: true,
+          ...this.props,
+        })
+      } else {
+        child = createElement(PageRenderer, {
+          isPage: true,
+          location: { pathname: `/404.html` },
+        })
+      }
+
+      return (
+        <ScrollContext
+          location={location}
+          shouldUpdateScroll={shouldUpdateScroll}
+        >
+          {child}
+        </ScrollContext>
+      )
+    }
+  }
 
   loader.getResourcesForPathname(window.location.pathname, () => {
     const Root = () =>
       createElement(
-        AltRouter ? AltRouter : Router,
+        Router,
         {
-          basename: __PATH_PREFIX__,
-          history: !AltRouter ? history : undefined,
+          basepath: __PATH_PREFIX__,
         },
-        createElement(
-          ScrollContext,
-          { shouldUpdateScroll },
-          createElement(withRouter(Route), {
-            render: routeProps => {
-              attachToHistory(routeProps.history)
-
-              if (loader.getPage(routeProps.location.pathname)) {
-                return createElement(PageRenderer, {
-                  isPage: true,
-                  ...routeProps,
-                })
-              } else {
-                return createElement(PageRenderer, {
-                  isPage: true,
-                  location: { pathname: `/404.html` },
-                })
-              }
-            },
-          })
-        )
+        createElement(RouteHandler, { path: `/` })
       )
 
     const NewRoot = apiRunner(`wrapRootComponent`, { Root }, Root)[0]

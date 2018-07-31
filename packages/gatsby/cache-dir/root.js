@@ -1,7 +1,6 @@
-import { createElement } from "react"
-import { Router, Route } from "react-router-dom"
+import React, { createElement } from "react"
+import { Router, navigate as reachNavigate } from "@reach/router"
 import { ScrollContext } from "gatsby-react-router-scroll"
-import history from "./history"
 import { apiRunner } from "./api-runner-browser"
 import syncRequires from "./sync-requires"
 import pages from "./pages.json"
@@ -11,6 +10,7 @@ import { hot } from "react-hot-loader"
 import JSONStore from "./json-store"
 
 import * as ErrorOverlay from "react-error-overlay"
+console.log({ pages })
 
 // Report runtime errors
 ErrorOverlay.startReportingRuntimeErrors({
@@ -58,22 +58,22 @@ maybeRedirect(location.pathname)
 
 // Call onRouteUpdate on the initial page load.
 apiRunner(`onRouteUpdate`, {
-  location: history.location,
-  action: history.action,
+  location: window.history.location,
+  action: null,
 })
 
-function attachToHistory(history) {
-  if (!window.___history) {
-    window.___history = history
+// function attachToHistory(history) {
+// if (!window.___history) {
+// window.___history = history
 
-    history.listen((location, action) => {
-      if (!maybeRedirect(location.pathname)) {
-        apiRunner(`onPreRouteUpdate`, { location, action })
-        apiRunner(`onRouteUpdate`, { location, action })
-      }
-    })
-  }
-}
+// history.listen((location, action) => {
+// if (!maybeRedirect(location.pathname)) {
+// apiRunner(`onPreRouteUpdate`, { location, action })
+// apiRunner(`onRouteUpdate`, { location, action })
+// }
+// })
+// }
+// }
 
 function maybeRedirect(pathname) {
   const redirect = redirectMap[pathname]
@@ -87,7 +87,7 @@ function maybeRedirect(pathname) {
       )
     }
 
-    history.replace(redirect.toPath)
+    window.history.replace(redirect.toPath)
     return true
   } else {
     return false
@@ -115,60 +115,102 @@ function shouldUpdateScroll(prevRouterProps, { location: { pathname } }) {
 }
 
 const push = to => {
-  window.___history.push(to)
+  reachNavigate(to)
 }
 
 const replace = to => {
-  window.___history.replace(to)
+  reachNavigate(to, { replace: true })
 }
 
 window.___push = push
 window.___replace = replace
+console.log(`hi?`)
 
-const AltRouter = apiRunner(`replaceRouterComponent`, { history })[0]
+const NoMatch = () => <div>ooooops</div>
+
+class RouteHandler extends React.Component {
+  render() {
+    console.log(`RouteHandler`)
+    const { location } = this.props
+    const { pathname } = location
+    const pageResources = loader.getResourcesForPathname(pathname)
+    console.log({ pageResources })
+    const isPage = !!(pageResources && pageResources.component)
+    let child
+    if (isPage) {
+      child = (
+        <JSONStore
+          pages={pages}
+          {...this.props}
+          pageResources={pageResources}
+        />
+      )
+    } else {
+      const dev404Page = pages.find(p => /^\/dev-404-page/.test(p.path))
+      child = createElement(
+        syncRequires.components[dev404Page.componentChunkName],
+        {
+          pages,
+          ...this.props,
+        }
+      )
+    }
+
+    return (
+      <ScrollContext
+        location={location}
+        history={this.props.history}
+        shouldUpdateScroll={shouldUpdateScroll}
+      >
+        {child}
+      </ScrollContext>
+    )
+  }
+}
 
 const Root = () =>
   createElement(
-    AltRouter ? AltRouter : Router,
+    Router,
     {
-      basename: __PATH_PREFIX__,
-      history: !AltRouter ? history : undefined,
+      basepath: __PATH_PREFIX__,
     },
-    createElement(
-      ScrollContext,
-      { shouldUpdateScroll },
-      createElement(Route, {
-        // eslint-disable-next-line react/display-name
-        render: routeProps => {
-          attachToHistory(routeProps.history)
-          const { pathname } = routeProps.location
-          const pageResources = loader.getResourcesForPathname(pathname)
-          const isPage = !!(pageResources && pageResources.component)
-          if (isPage) {
-            return createElement(JSONStore, {
-              pages,
-              ...routeProps,
-              pageResources,
-            })
-          } else {
-            const dev404Page = pages.find(p => /^\/dev-404-page/.test(p.path))
-            return createElement(Route, {
-              key: `404-page`,
-              // eslint-disable-next-line react/display-name
-              component: props =>
-                createElement(
-                  syncRequires.components[dev404Page.componentChunkName],
-                  {
-                    pages,
-                    ...routeProps,
-                  }
-                ),
-            })
-          }
-        },
-      })
-    )
+    createElement(RouteHandler, { default: true })
   )
+// createElement(
+// ScrollContext,
+// { shouldUpdateScroll },
+// createElement(Route, {
+// // eslint-disable-next-line react/display-name
+// render: routeProps => {
+// attachToHistory(routeProps.history)
+// const { pathname } = routeProps.location
+// const pageResources = loader.getResourcesForPathname(pathname)
+// const isPage = !!(pageResources && pageResources.component)
+// if (isPage) {
+// return createElement(JSONStore, {
+// pages,
+// ...routeProps,
+// pageResources,
+// })
+// } else {
+// const dev404Page = pages.find(p => /^\/dev-404-page/.test(p.path))
+// return createElement(Route, {
+// key: `404-page`,
+// // eslint-disable-next-line react/display-name
+// component: props =>
+// createElement(
+// syncRequires.components[dev404Page.componentChunkName],
+// {
+// pages,
+// ...routeProps,
+// }
+// ),
+// })
+// }
+// },
+// })
+// )
+// )
 
 // Let site, plugins wrap the site e.g. for Redux.
 const WrappedRoot = apiRunner(`wrapRootComponent`, { Root }, Root)[0]

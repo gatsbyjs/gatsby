@@ -1,7 +1,7 @@
 /*global __PATH_PREFIX__ */
 import PropTypes from "prop-types"
 import React from "react"
-import { Link, NavLink } from "react-router-dom"
+import { Link, Location } from "@reach/router"
 import { polyfill } from "react-lifecycles-compat"
 import { createLocation, createPath } from "history"
 
@@ -50,7 +50,7 @@ class GatsbyLink extends React.Component {
       IOSupported = true
     }
 
-    const { location } = context.router.history
+    const { location } = props
     const to = createLocation(props.to, null, null, location)
 
     this.state = {
@@ -95,13 +95,14 @@ class GatsbyLink extends React.Component {
   }
 
   render() {
+    console.log(this.props)
     const { onClick, onMouseEnter, ...rest } = this.props
-    let El
-    if (Object.keys(NavLinkPropTypes).some(propName => this.props[propName])) {
-      El = NavLink
-    } else {
-      El = Link
-    }
+    let El = Link
+    // if (Object.keys(NavLinkPropTypes).some(propName => this.props[propName])) {
+    // El = NavLink
+    // } else {
+    // El = Link
+    // }
 
     return (
       <El
@@ -162,7 +163,7 @@ class GatsbyLink extends React.Component {
           return true
         }}
         {...rest}
-        to={this.state.to}
+        to={this.state.to.pathname}
         innerRef={this.handleRef}
       />
     )
@@ -180,7 +181,11 @@ GatsbyLink.contextTypes = {
   router: PropTypes.object,
 }
 
-export default polyfill(GatsbyLink)
+const withLocation = Comp => props => (
+  <Location>{location => <Comp location={location} {...props} />}</Location>
+)
+
+export default withLocation(polyfill(GatsbyLink))
 
 export const push = to => {
   window.___push(to)

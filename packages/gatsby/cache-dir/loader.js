@@ -32,6 +32,14 @@ const fetchPageResourceMap = () => {
         // Need to come up with an API for plugins to access
         // site info.
         window.___dataPaths = dataPaths
+
+        // We don't need the origin path for client only page routes
+        // in the client so we copy over the matchPath so @reach/router's
+        // "pick" function works natively.
+        pages = pages.map(p => {
+          p.path = p.matchPath
+          return p
+        })
         queue.addPagesArray(pages)
         queue.addDataPaths(dataPaths)
         resolve((fetchedPageResourceMap = true))
