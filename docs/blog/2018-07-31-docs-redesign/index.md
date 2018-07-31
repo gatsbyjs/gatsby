@@ -5,7 +5,7 @@ author: Shannon Soper
 tags: ["documentation", "launch"]
 ---
 
-There's a new design for the [next.gatsbyjs.org/docs/](https://next.gatsbyjs.org/docs/) sidebar!
+We've been working on a new design for the docs sidebar. You can see it live on the next version of gatsbyjs.org at [next.gatsbyjs.org/docs/](https://next.gatsbyjs.org/docs/)!
 
 ![New Sidebar collapsed](new-sidebar-collapsed.png)
 
