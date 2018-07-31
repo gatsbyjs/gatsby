@@ -1863,6 +1863,17 @@
     - Documentation
     - API
   featured: false
+- title: Malik Browne Portfolio 2018
+  description: >
+    The portfolio blog of Malik Browne, a full stack engineer, foodie, and avid blogger/YouTuber.
+  main_url: https://www.malikbrowne.com/about
+  url: https://www.malikbrowne.com
+  categories:
+    - Blog
+    - Portfolio
+  built_by: Malik Browne
+  built_by_url: https://twitter.com/milkstarz
+  featured: false
 - title: Novatics
   description: > 
      Digital products that inspire and make a difference
