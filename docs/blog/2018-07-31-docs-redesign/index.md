@@ -76,53 +76,22 @@ Thank you Martyn Hoyer, Eka, Benjamin Modayil, Nicky Meuleman, Jonathan Prozzi, 
 
 Common obstacle #1:
 
-- We're paying attention to data from our Algolia search bar even though most people just use Google. Algolia has some problems currently: it doesn't show all results if there are too many, and it doesn't pull information from headers. That is one of the reasons it's really difficult to find things by search.
+- Information embedded in the tutorial doesn't _also_ exist in the guides, like "how to create links between pages." Algolia search doesn't find keyword inside headers within a document.
 
 Possible solutions:
 
-- use Google data over Algolia search data
-- work on the UI for Algolia search so it pulls up what people need
-- dedicated Algolia search page
+- The tutorials won't have a monopoly on any information; it will also exist in the guides. This is already taken care of by stub articles that indicate what information we need to pull over from the tutorial, like [Creating slugs for pages](https://next.gatsbyjs.org/docs/creating-slugs-for-pages/) and [Linking between pages](https://next.gatsbyjs.org/docs/linking-between-pages/)
 
-Common obstacle #2:
-
-- Information embedded in the tutorial doesn't _also_ exist in the guides, like "how to create links between pages." Algolia search doesn't find keyword inside headers within a document and Google search didn't surface this as well as guides. [TRUE???]
-
-Solution:
-
-- The tutorials won't have a monopoly on any information; it will also exist in the guides.
-- Maybe we can tweak Algolia search to look for keywords in headers
-
-Common obstacle #3
+Common obstacle #2
 
 - People expect to find more information in Getting Started and the READme file than currently exist. They are looking to evaluate how easy Gatsby is to use through a set of basic tasks.
 
-Solution:
+Possible solutions:
 
-- Add a recipes section to both the Getting Started and READme file with a list of how to do basic tasks very quickly
+- Add a [Recipes doc](https://github.com/gatsbyjs/gatsby/issues/6572) to both the Getting Started and READme file with a list of how to do basic tasks very quickly.
+- [Revise READme](https://github.com/gatsbyjs/gatsby/issues/6569).
 
-Common obstacle #4
-
-- Ideally, people ought to be able to flow through the docs in a way that helps them build foundational knowledge and also get tasks done. Here are two examples of ideal pathways through the docs:
-
-* Core Concepts > Guides > Tutorials
-* Getting Started > Recipes > Guides > Tutorials
-
-However, the docs themselves don't make these pathways obvious or easy to accomplish.
-
-Solution:
-
-- Include references, prereqs, and suggested next steps in all relevant docs
-
-Common obstacle #5:
-
-- API specification needed to be renamed
-- People don't know a lot of docs exist. Common topics that were little known: e-commerce, wp tutorials, how to create a plugin, how to pitch Gatsby, how to sign up for the newsletter
-
-Solution:
-Perhaps do a featured docs dashboard.
-
-Common obstacle #6
+Common obstacle #3
 We have about 60 stub articles now that are topics people care about and we need people to write them!
 
 Solution:
@@ -130,8 +99,23 @@ Want to volunteer to write one? Check out all the stub articles (titles in _ital
 
 ![Stub articles](stub-articles.png)
 
-## Need 5-7 testers for new structure!
+## Next steps
 
-Want to sign up for a 45 minute usability test of the new structure? (It will likely take 20-30 minutes, just blocking out more time in case you have questions and more commentary!)
+### Need 5 testers for new structure!
+
+Want to sign up for a 45 minute usability test of the new structure? (It will likely take 20-30 minutes, and I blocked out 45 minutes in case you have questions and more commentary. I'll close the sign-up link once I get 5 people who sign up.
 
 Sign up here: [https://calendly.com/shannon-soper/new-ia-usability-test/07-30-2018](https://calendly.com/shannon-soper/new-ia-usability-test/07-30-2018)
+
+### Resolve current issues
+
+> Try installing the free [Zenhub extension](https://www.zenhub.com/extension) for Firefox or Chrome to view these issues accurately
+
+See open issues in the [Docs IA redesign MVP](https://github.com/gatsbyjs/gatsby/issues/6899). We're done with basic features (YAY!) and just resolving a few more issues now!
+
+### Next steps
+
+Once the issues in the MVP are resolved, we'll move on to these projects:
+
+- [Docs IA redesign phase 2](https://github.com/gatsbyjs/gatsby/issues/6900)
+- [Docs IA redesign phase 3](https://github.com/gatsbyjs/gatsby/issues/6901)
