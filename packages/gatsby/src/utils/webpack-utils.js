@@ -81,7 +81,7 @@ export type RuleUtils = {
   yaml: RuleFactory<*>,
   fonts: RuleFactory<*>,
   images: RuleFactory<*>,
-  audioVideo: RuleFactory<*>,
+  miscAssets: RuleFactory<*>,
 
   css: ContextualRuleFactory,
   cssModules: RuleFactory<*>,
@@ -350,12 +350,12 @@ module.exports = async ({
   }
 
   /**
-   * Loads audio or video assets
+   * Loads audio, video, or pdf assets
    */
-  rules.audioVideo = () => {
+  rules.miscAssets = () => {
     return {
       use: [loaders.file()],
-      test: /\.(mp4|webm|wav|mp3|m4a|aac|oga|flac)$/,
+      test: /\.(mp4|webm|wav|mp3|m4a|aac|oga|flac|pdf)$/,
     }
   }
 

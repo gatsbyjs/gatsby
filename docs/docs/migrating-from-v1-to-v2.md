@@ -43,7 +43,7 @@ Read on for a detailed guide on what's new in version 2!
 - [Update Gatsby version](#update-gatsby-version)
 - [Manually install React](#manually-install-react)
 - [Manually install plugins’ peer dependencies](#manually-install-plugins-peer-dependencies)
-- [Update layout component](#update-layout-component)
+- [Remove or refactor layout components](#remove-or-refactor-layout-components)
 - [Import Link from Gatsby](#import-link-from-gatsby)
 - [Import graphql from Gatsby](#import-graphql-from-gatsby)
 - [Rename `boundActionCreators` to `actions`](#rename-boundactioncreators-to-actions)
@@ -113,17 +113,21 @@ npm i typography react-typography
 
 Search for the plugins that you use in the [plugin library](/plugins) and check their installation instructions for additional packages that now need installed.
 
-## Update layout component
+## Remove or refactor layout components
 
-The special layout component (`src/layouts/index.js`) that Gatsby v1 used to wrap every page has been removed. If the layout of your site appears to be broken, this is most likely the reason why.
+In Gatsby v2, the special layout component (`src/layouts/index.js`) that wrapped every page in Gatsby v1 has been removed. The "top level component" is now just the page itself. If the layout of your site looks broken, this is likely the reason why.
 
-To learn more about the considerations behind this removal, read the [RFC for removing the special layout component](https://github.com/gatsbyjs/rfcs/blob/master/text/0002-remove-special-layout-components.md).
+There are a number of implications to this change:
 
-The following is the recommended migration path:
+- To render different layouts for different pages, just use the standard React inheritance model. Gatsby no longer maintains, or needs to maintain, separate behavior for handling layouts.
+- Because the "top level component" changes between each page, React will rerender all children. This means that shared components previously in a Gatsby v1 layout-- like navigations-- will unmount and remount. This will break CSS transitions or React state within those shared components. For more information, including in-progress workarounds, [see this ongoing discussion](https://github.com/gatsbyjs/gatsby/issues/6127).
+- To learn more about the original decisions behind this removal, read the [RFC for removing the special layout component](https://github.com/gatsbyjs/rfcs/blob/master/text/0002-remove-special-layout-components.md).
 
-### 1. Convert children from function to normal prop (required)
+The following migration path is recommended:
 
-In v1, the `children` prop passed to layout was a function and needed to be executed. In v2, this is no longer the case.
+### 1. Convert the layout's children from a render prop to a normal prop (required)
+
+In v1, the `children` prop passed to layout was a function (render prop) and needed to be executed. In v2, this is no longer the case.
 
 ```diff
 import React from "react"
@@ -142,9 +146,11 @@ export default ({ children }) => (
 git mv src/layouts/index.js src/components/layout.js
 ```
 
-### 3. Import and wrap pages with layout component
+### 3. Import and wrap pages with the layout component
 
-Adhering to normal React composition model, you import the layout component and use it to wrap the content of the page.
+Adhering to the normal React composition model, import your layout component and use it to wrap the content of the page.
+
+
 
 `src/pages/index.js`
 
@@ -161,9 +167,39 @@ export default () => (
 
 Repeat for every page and template that needs this layout.
 
-### 4. Change query to use `StaticQuery`
+### 4. Pass `history`, `location`, and `match` props to layout
 
-Since layout is no longer special, you now need to make use of v2’s [StaticQuery feature](/docs/static-query/).
+In v1, layout component had access to `history`, `location`, and `match` props. In v2, only pages have access to these props; if you need these props in the layout component, pass them through from the page.
+
+`layout.js`
+
+```jsx
+import React from "react"
+
+export default ({ children, location }) => (
+  <div>
+    <p>Path is {location.pathname}</p>
+    {children}
+  </div>
+)
+```
+
+`src/pages/index.js`
+
+```jsx
+import React from "react"
+import Layout from "../components/layout.js"
+
+export default props => (
+  <Layout location={props.location}>
+    <div>Hello World</div>
+  </Layout>
+)
+```
+
+### 5. Change query to use `StaticQuery`
+
+If you were using the `data` prop in your Gatsby v1 layout, you now need to make use of Gatsby v2’s [StaticQuery feature](/docs/static-query/), since a layout is now a normal component.
 
 Replacing a layout's query with `StaticQuery`:
 
@@ -213,36 +249,6 @@ import Helmet from "react-helmet"
 +     )}
 +   />
 + )
-```
-
-### 5. Pass `history`, `location`, and `match` props to layout
-
-In v1, layout component had access to `history`, `location`, and `match` props. In v2, only pages have access to these props; pass them to your layout component as needed.
-
-`layout.js`
-
-```jsx
-import React from "react"
-
-export default ({ children, location }) => (
-  <div>
-    <p>Path is {location.pathname}</p>
-    {children}
-  </div>
-)
-```
-
-`src/pages/index.js`
-
-```jsx
-import React from "react"
-import Layout from "../components/layout.js"
-
-export default props => (
-  <Layout location={props.location}>
-    <div>Hello World</div>
-  </Layout>
-)
 ```
 
 ## Import Link from Gatsby

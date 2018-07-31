@@ -11,6 +11,12 @@ export const query = graphql\`
   \`;"
 `;
 
+exports[`Removes all gatsby queries 1`] = `
+"export default (() => React.createElement(\\"div\\", null, data.site.siteMetadata.title));
+export const siteMetaQuery = \\"2673797374\\";
+export const query = \\"2589775908\\";"
+`;
+
 exports[`Transforms queries in <StaticQuery> 1`] = `
 "import staticQueryData from \\"public/static/d/2626356014.json\\";
 import React from 'react';

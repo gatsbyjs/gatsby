@@ -1,5 +1,11 @@
 # gatsby-plugin-netlify-cms
 
+**Gatsby v1 and Netlify CMS 1.x require [`gatsby-plugin-netlify-cms@^2.0.0`](https://github.com/gatsbyjs/gatsby/blob/gatsby-plugin-netlify-cms@2.0.1/packages/gatsby-plugin-netlify-cms/README.md).**
+
+**Gatsby v2 and Netlify CMS 2.x require `gatsby-plugin-netlify-cms@^3.0.0-beta.0`, which is documented below.**
+
+## Overview
+
 Automatically generates an `admin/index.html` with a default Netlify CMS implementation.
 
 Netlify CMS is a React single page app for editing git based content via API.
@@ -10,7 +16,7 @@ site](https://netlifycms.org).
 ## Install
 
 ```shell
-npm install --save netlify-cms gatsby-plugin-netlify-cms
+npm install --save netlify-cms gatsby-plugin-netlify-cms@next
 ```
 
 ## How to use
@@ -40,7 +46,9 @@ widgets](https://www.netlifycms.org/docs/custom-widgets/#registerwidget) or
 styling the [preview
 pane](https://www.netlifycms.org/docs/customization/#registerpreviewstyle),
 you'll need to do so in a JavaScript module and provide Gatsby with the path to
-your module via the `modulePath` option:
+your module via the `modulePath` option. Any styles imported by this module (or
+by the modules that it imports, all the way down the chain) are automatically
+applied to the editor preview pane by the plugin.
 
 ```javascript
 plugins: [
@@ -60,7 +68,22 @@ plugins: [
 The js module might look like this:
 
 ```javascript
+/**
+ * The default export of `netlify-cms` is an object with all of the Netlify CMS
+ * extension registration methods, such as `registerWidget` and
+ * `registerPreviewTemplate`.
+ */
 import CMS from `netlify-cms`
+
+/**
+ * Any imported styles will automatically be applied to the editor preview
+ * pane, there is no need to use `registerPreviewStyle` for imported styles.
+ * All of the example imports below would result in styles being applied to the
+ * preview pane.
+ */
+import `module-that-imports-styles.js`
+import `styles.scss`
+import `../other-styles.css`
 
 /**
  * Let's say you've created widget and preview components for a custom image
@@ -95,21 +118,6 @@ plugins: [
   },
 ]
 ```
-
-### `stylesPath`
-
-(_optional_, default: `undefined`)
-
-Gatsby template components can be used as [preview
-templates](https://www.netlifycms.org/docs/customization/) in Netlify CMS. To
-apply your site styles to the preview pane as well, you would normally register
-a [custom
-stylesheet](https://www.netlifycms.org/docs/customization/#registerpreviewstyle),
-but your Gatsby style source may be Sass or CSS modules, and can't be passed to
-Netlify CMS as is. The `stylesPath` accepts a path or an array of paths to your
-raw styles. The styles are built using the same Webpack and Babel configuration
-that your Gatsby site uses, and the CSS output is automatically registered and
-used in the preview pane.
 
 ### `publicPath`
 

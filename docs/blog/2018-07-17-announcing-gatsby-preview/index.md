@@ -7,7 +7,7 @@ tags: ["contentful", "preview", "product"]
 
 Today we’re excited to announce our first commercial offering, a hosted Gatsby preview service for teams, with [Contentful](https://www.contentful.com/) as our initial integration. 
 
-Since [launching Gatsby Inc.](https://www.gatsbyjs.org/blog/2018-05-24-launching-new-gatsby-company/), we’ve loved hearing the increasing excitement from developers as more and more of you try out Gatsby and get hooked on the ability to easily create compelling, performant web experiences. 
+Since [launching Gatsby Inc.](/blog/2018-05-24-launching-new-gatsby-company/), we’ve loved hearing the increasing excitement from developers as more and more of you try out Gatsby and get hooked on the ability to easily create compelling, performant web experiences. 
 
 With modern Javascript, React’s component model, and Progressive Web App features built in, Gatsby is a compelling alternative to traditional CMS site building, while still allowing content teams to use  mature CMS content workflows.
 
