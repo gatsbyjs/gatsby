@@ -60,7 +60,7 @@ We also use [Peril][peril] to [automatically invite contributors][invite] to the
 
 We have a lot of ideas for the Gatsby store — from [new swag ideas](https://github.com/gatsbyjs/store.gatsbyjs.org/issues?q=is%3Aissue+is%3Aopen+label%3A%22Swag+Ideas%22+sort%3Aupdated-desc) to adding more rewards for contributors who go above and beyond — but we’d love to hear more from you! Please [tweet at us][twitter] or open issues on [the store repo][swag-source] with ideas.
 
-For now, that’s it! We’ll leave you with my our favorite genre of tweet: “dogs wearing Gatsby swag”.
+For now, that’s it! We’ll leave you with our favorite genre of tweet: “dogs wearing Gatsby swag”.
 
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Thanks <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a> for the t-shirt! If there are any developers out there that haven’t tried out Gatsby yet here is my dog Birch silently judging you. 😉 Trust me, it’s awesome. <a href="https://t.co/THDSmhKdBb">pic.twitter.com/THDSmhKdBb</a></p>&mdash; Ryan Wiemer (@ryanwiemer) <a href="https://twitter.com/ryanwiemer/status/1022267081998266368?ref_src=twsrc%5Etfw">July 25, 2018</a></blockquote>
 
