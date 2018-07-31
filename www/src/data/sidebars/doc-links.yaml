@@ -130,7 +130,7 @@
         - title: Debugging the build process
           link: /docs/debugging-the-build-process/
         - title: Trace Gatsby builds
-          link: /docs/docs/performance-tracing.md
+          link: /docs/performance-tracing/
     - title: Apps with Gatsby
       link: /docs/building-apps-with-gatsby/
       items:
