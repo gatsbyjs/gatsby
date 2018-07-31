@@ -1833,6 +1833,14 @@
     - Landing
     - Portfolio
   featured: false
+- title: Lifestone Church
+  main_url: 'https://www.lifestonechurch.net/'
+  url: 'https://www.lifestonechurch.net/'
+  source_url: 'https://github.com/lifestonechurch/lifestonechurch.net'
+  featured: false
+  categories:
+    - Marketing
+    - Nonprofit
 - title: Artem Sapegin
   description: > 
      Little homepage of Artem Sapegin, a frontend developer, passionate photographer, coffee drinker and crazy dogs’ owner.
