@@ -83,6 +83,15 @@ async function findGraphQLTags(file, text): Promise<Array<DefinitionNode>> {
           return
         }
 
+        /**
+         * Mapping of graphql documents to concatenated location of graphql template
+         * literal that contains that document and location of graphql document inside
+         * template literal.
+         *
+         * This is used to prevent returning duplicated documents.
+         */
+        const documentLocations = new WeakMap()
+
         // Look for queries in <StaticQuery /> elements.
         traverse(ast, {
           TaggedTemplateExpression(path) {
@@ -103,9 +112,10 @@ async function findGraphQLTags(file, text): Promise<Array<DefinitionNode>> {
 
             if (isGlobal) warnForGlobalTag(file)
 
-            gqlAst.definitions.forEach(def =>
+            gqlAst.definitions.forEach(def => {
+              documentLocations.set(def, `${path.node.start}-${def.loc.start}`)
               generateQueryName({ def, hash, file })
-            )
+            })
 
             const definitions = [...gqlAst.definitions].map(d => {
               d.isStaticQuery = true
@@ -127,9 +137,13 @@ async function findGraphQLTags(file, text): Promise<Array<DefinitionNode>> {
 
                 if (isGlobal) warnForGlobalTag(file)
 
-                gqlAst.definitions.forEach(def =>
+                gqlAst.definitions.forEach(def => {
+                  documentLocations.set(
+                    def,
+                    `${innerPath.node.start}-${def.loc.start}`
+                  )
                   generateQueryName({ def, hash, file })
-                )
+                })
 
                 queries.push(...gqlAst.definitions)
               },
@@ -138,7 +152,7 @@ async function findGraphQLTags(file, text): Promise<Array<DefinitionNode>> {
         })
 
         // Remove duplicate queries
-        const uniqueQueries = _.uniqBy(queries, _.isEqual)
+        const uniqueQueries = _.uniqBy(queries, q => documentLocations.get(q))
 
         resolve(uniqueQueries)
       })
