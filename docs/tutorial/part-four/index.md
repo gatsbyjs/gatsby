@@ -331,6 +331,8 @@ export default ({ children }) => (
 
 It worked!! 🎉
 
+Notice `<StaticQuery/>` wrapping the component? `<StaticQuery/>` is utilized to query GraphQL data inside a component. It's usage can be clearly seen in `layout.js` above.
+
 ![fake-title-graphql](fake-title-graphql.png)
 
 But let's restore the real title.
