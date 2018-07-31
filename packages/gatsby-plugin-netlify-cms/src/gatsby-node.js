@@ -1,7 +1,8 @@
 import path from "path"
-import { get, mapValues, isPlainObject, trim, pickBy } from "lodash"
+import { get, mapValues, isPlainObject, trim } from "lodash"
 import webpack from "webpack"
 import HtmlWebpackPlugin from "html-webpack-plugin"
+import HtmlWebpackExcludeAssetsPlugin from "html-webpack-exclude-assets-plugin"
 import MiniCssExtractPlugin from "mini-css-extract-plugin"
 import UglifyJsPlugin from "uglifyjs-webpack-plugin"
 import FriendlyErrorsPlugin from "friendly-errors-webpack-plugin"
@@ -34,13 +35,7 @@ function deepMap(obj, fn) {
 
 exports.onCreateWebpackConfig = (
   { store, stage, getConfig, plugins },
-  {
-    modulePath,
-    stylesPath,
-    publicPath = `admin`,
-    enableIdentityWidget = true,
-    htmlTitle = `Content Manager`,
-  }
+  { modulePath, publicPath = `admin`, enableIdentityWidget = true, htmlTitle = `Content Manager` },
 ) => {
   if ([`develop`, `build-javascript`].includes(stage)) {
     const gatsbyConfig = getConfig()
@@ -48,20 +43,13 @@ exports.onCreateWebpackConfig = (
     const publicPathClean = trim(publicPath, `/`)
     const config = {
       ...gatsbyConfig,
-      mode: `none`,
-      /**
-       * Two entries, one for the core CMS styles, and a `styles` entry, the
-       * output of which will be applied to the preview pane iframe only. Use
-       * `pickBy` to filter out empty entries.
-       */
-      entry: pickBy({
+      entry: {
         cms: [
           `${__dirname}/cms.js`,
           modulePath,
           enableIdentityWidget && `${__dirname}/cms-identity.js`,
         ].filter(p => p),
-        styles: stylesPath,
-      }),
+      },
       output: {
         path: path.join(program.directory, `public`, publicPathClean),
       },
@@ -122,20 +110,22 @@ exports.onCreateWebpackConfig = (
         new HtmlWebpackPlugin({
           title: htmlTitle,
           chunks: [`cms`],
+          excludeAssets: [/cms.css/],
         }),
 
         /**
-         * Set flag if custom styles path is added to plugin options.
+         * Exclude CSS from index.html, as any imported styles are assumed to be
+         * targeting the editor preview pane. Uses `excludeAssets` option from
+         * `HtmlWebpackPlugin` config.
          */
-        plugins.define({
-          NETLIFY_CMS_PREVIEW_STYLES_SET: !!stylesPath,
-        }),
+        new HtmlWebpackExcludeAssetsPlugin(),
       ].filter(p => p),
 
       /**
-       * Remove common chunks style optimizations from Gatsby's default config,
-       * they cause issues for our pre-bundled code.
+       * Remove mode and common chunks style optimizations from Gatsby's default
+       * config, they cause issues for our pre-bundled code.
        */
+      mode: `none`,
       optimization: {},
     }
     webpack(config).run()
