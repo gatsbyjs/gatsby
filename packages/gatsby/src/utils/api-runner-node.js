@@ -50,7 +50,7 @@ const initAPICallTracing = (parentSpan) => {
 
   return {
     parentSpan,
-    startSpan
+    startSpan,
   }
 }
 
