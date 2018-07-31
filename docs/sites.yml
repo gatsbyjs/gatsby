@@ -1833,6 +1833,20 @@
     - Landing
     - Portfolio
   featured: false
+- title: Artem Sapegin
+  description: > 
+     Little homepage of Artem Sapegin, a frontend developer, passionate photographer, coffee drinker and crazy dogs’ owner.
+  main_url: https://sapegin.me/
+  url: https://sapegin.me/
+  categories:
+    - Landing
+    - Portfolio
+    - Open Source
+    - Personal
+    - Web Dev
+  built_by: Artem Sapegin
+  built_by_url: https://github.com/sapegin
+  featured: false
 - title: SparkPost Developers
   main_url: 'https://developers.sparkpost.com/'
   url: 'https://developers.sparkpost.com/'
