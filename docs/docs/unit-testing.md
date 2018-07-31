@@ -43,6 +43,12 @@ time:
     "testPathIgnorePatterns": ["node_modules", ".cache"],
     "transformIgnorePatterns": [
       "node_modules/(?!(gatsby)/)"
+    ],
+    "globals": {
+      "__PATH_PREFIX__": ""
+    },
+    "setupFiles": [
+      "<rootDir>/loadershim.js"
     ]
   }
 ```
@@ -59,6 +65,7 @@ const babelOptions = {
   plugins: [
     "@babel/plugin-proposal-optional-chaining",
     "@babel/plugin-proposal-class-properties",
+    "babel-plugin-remove-graphql-queries",
   ],
 }
 
@@ -87,7 +94,7 @@ double underscores in the name.
 module.exports = "test-file-stub"
 ```
 
-The final config setting is `transformIgnorePatterns`. This is very important,
+The next config setting is `transformIgnorePatterns`. This is very important,
 and is different from what you'll find in other Jest guides. The reason that you
 need this is because Gastby includes un-transpiled ES6 code. By default Jest
 doesn't try to transform code inside `node_modules`, so you will get an error
@@ -103,6 +110,21 @@ SyntaxError: Unexpected token import
 This is because `gatsby-browser-entry.js` isn't being transpiled before running
 in Jest. You can fix this by changing the default `transformIgnorePatterns` to
 exclude the `gatsby` module.
+
+The `globals` section sets `__PATH_PREFIX__`, which is usually set by Gatsby,
+and which some components need.
+
+There's one more global that you need to set, but as it's a function you can't
+set it here in the JSON. The `setupFiles` array lets you list files that will be
+included before all tests are run, so it's perfect for this.
+
+```js
+// loadershim.js
+
+global.___loader = {
+  enqueue: jest.fn(),
+}
+```
 
 ## Writing tests
 
@@ -198,7 +220,7 @@ Then edit the Jest config in your `package.json` to match this:
         "^.+\\.tsx?$": "ts-jest",
         "^.+\\.jsx?$": "<rootDir>/jestPreprocess.js"
     },
-    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.([tj]sx?)$",
+    "testRegex": "(/__tests__/.*\\.([tj]sx?)|(\\.|/)(test|spec))\\.([tj]sx?)$",
     "moduleFileExtensions": [
         "ts",
         "tsx",
@@ -210,6 +232,12 @@ Then edit the Jest config in your `package.json` to match this:
     "testPathIgnorePatterns": ["node_modules", ".cache"],
     "transformIgnorePatterns": [
       "node_modules/(?!(gatsby)/)"
+    ],
+    "globals": {
+      "__PATH_PREFIX__": ""
+    },
+    "setupFiles": [
+      "<rootDir>/loadershim.js"
     ]
   }
 ```
