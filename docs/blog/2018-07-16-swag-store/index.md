@@ -42,7 +42,7 @@ Here’s the short version:
 
 We know how much it sucks when things aren’t available in your country, so — for now, at least — Gatsby Inc. is footing the bill for shipping, no matter where you are in the world. It is our sincere hope that we can keep this up, but we can’t guarantee it’s sustainable. (_Hint: this means you should probably order sooner rather than later, just in case._)
 
-## Post your swag photos on Twiter!
+## Post your swag photos on Twitter!
 
 We love seeing how great the community looks in purple, so please post your Gatsby swag photos with the hashtag [#buildwithgatsby](https://twitter.com/search?q=%23buildwithgatsby).
 
