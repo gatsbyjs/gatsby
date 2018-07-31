@@ -236,7 +236,7 @@ const queue = {
       process.env.NODE_ENV !== `production` &&
       process.env.NODE_ENV !== `test`
     ) {
-      devGetPageData(path)
+      devGetPageData(page.path)
     }
 
     const mountOrderBoost = 1 / mountOrder
