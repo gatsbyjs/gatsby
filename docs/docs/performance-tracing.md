@@ -76,6 +76,6 @@ exports.sourceNodes = async ({ actions, tracing, }) => {
 }
 ```
 
-With this span, you can perform any open tracing operations such as [span.setTag](https://github.com/opentracing/opentracing-javascript/blob/master/src/span.ts#L89). Just make sure that the tracing backend supports these operations.
+With this span, you can perform any open tracing span operations such as [span.setTag](https://github.com/opentracing/opentracing-javascript/blob/master/src/span.ts#L89). Just make sure that the tracing backend supports these operations. You can provide an optional second span options argument to `startSpan` which will be passed to the underlying open tracing call. 
 
-You can provide an optional second span options argument to `startSpan` which will be passed to the underlying open tracing call. Or, if you're familiar with the open tracing API, you can access the underlying parentSpan object under `tracing.parentSpan`. 
+For advanced use cases, the `tracing` object also provides `tracer` and `parentSpan` fields. You can use these to contruct independent spans, or your own child spans (see open [tracing project](https://github.com/opentracing/opentracing-javascript/tree/master/src) for more info.

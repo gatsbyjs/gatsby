@@ -49,6 +49,7 @@ const initAPICallTracing = (parentSpan) => {
   }
 
   return {
+    tracer,
     parentSpan,
     startSpan,
   }
