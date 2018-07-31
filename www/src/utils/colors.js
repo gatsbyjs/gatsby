@@ -76,6 +76,10 @@ const colors = {
     bright: gray(64, 270),
     light: gray(80, 270),
   },
+  code: {
+    remove: `#e45c5c`,
+    add: `#4a9c59`,
+  }
 }
 
 let pointer = `a`
