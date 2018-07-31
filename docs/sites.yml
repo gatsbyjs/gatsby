@@ -1863,3 +1863,17 @@
     - Documentation
     - API
   featured: false
+- title: Novatics
+  description: > 
+     Digital products that inspire and make a difference
+  main_url: https://www.novatics.com.br
+  url: https://www.novatics.com.br
+  categories:
+    - Landing
+    - Portfolio
+    - Technology
+    - Digital Products
+    - Web Dev
+  built_by: Novatics
+  built_by_url: https://github.com/Novatics
+  featured: false
