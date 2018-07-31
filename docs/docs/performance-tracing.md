@@ -65,9 +65,12 @@ To provide custom tracing, you can use the `tracing` object, which is present in
 
 ```javascript
 exports.sourceNodes = async ({ actions, tracing, }) => {
-  const span = tracing.startSpan('foobar')
+  const span = tracing.startSpan(`foo`)
 
-  // Do stuff
+  // Perform any span operations. E.g add a tag to your span
+  span.setTag(`bar`, `baz`)
+
+  // Rest of your plugin code
 
   span.finish()
 }
