@@ -1,4 +1,4 @@
-# gatsby-graphql-source example with GraphCMS
+# gatsby-source-graphql example with GraphCMS
 
 Simple gatsby site that displays blog with data inside GraphCMS.
 
