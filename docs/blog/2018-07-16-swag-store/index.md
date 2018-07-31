@@ -21,7 +21,7 @@ We’ve spent the last couple weeks working the kinks out, and we couldn’t be 
 
 ## Free swag for all contributors 💪💜
 
-We’re most excited about the launch of the store because it means contributors are now able to get stickers, socks, and/or t-shirts for free — a little token of our appreciation for putting the time in to make the open source community even better. You’re all amazing, and we 💜 you for it.
+We’re extremely excited about the launch of the store because it means contributors are now able to get stickers, socks, and/or t-shirts for free — a little token of our appreciation for putting the time in to make the open source community even better. You’re all amazing, and we 💜 you for it.
 
 Going forward, all contributors to the [Gatsby organization on GitHub][org] will automatically qualify for free Gatsby swag. **And when we say _all_ contributors, we mean it: even if you contributed to Gatsby before the store was launched, you’re qualified for free swag!**
 
