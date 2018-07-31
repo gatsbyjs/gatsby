@@ -1833,3 +1833,11 @@
     - Landing
     - Portfolio
   featured: false
+- title: SparkPost Developers
+  main_url: 'https://developers.sparkpost.com/'
+  url: 'https://developers.sparkpost.com/'
+  source_url: 'https://github.com/SparkPost/developers.sparkpost.com'
+  categories:
+    - Documentation
+    - API
+  featured: false
