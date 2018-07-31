@@ -331,7 +331,7 @@ export default ({ children }) => (
 
 It worked!! 🎉
 
-Notice `<StaticQuery/>` wrapping the component? `<StaticQuery/>` is utilized to query data using GraphQL inside a component. It's usage can be clearly seen in `layout.js` above.
+`<StaticQuery/>` is utilized to query data using GraphQL, inside a component. It's usage can be clearly seen in `layout.js` above.
 
 ![fake-title-graphql](fake-title-graphql.png)
 
