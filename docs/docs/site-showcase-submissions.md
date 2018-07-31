@@ -6,11 +6,13 @@ Want to submit a site to the [Site Showcase](https://next.gatsbyjs.org/showcase/
 
 ## Steps
 
-There are only two major steps :)
+There are only three major steps :)
 
-1.  If there is a chance that someone else could have already submitted the site, please make sure no one else has already submitted it by searching existing PRs: https://github.com/gatsbyjs/gatsby/pulls
+1. If this is your first contribution to the Gatsby open source repo, follow the [Contribution guidelines](https://next.gatsbyjs.org/docs/how-to-contribute/#contributing-to-the-repo) to get push access rights. 
 
-2.  Edit the [`sites.yml`](https://github.com/gatsbyjs/gatsby/blob/master/docs/sites.yml) file by adding your submission to the bottom of the list of sites in the following format:
+2. If there is a chance that someone else could have already submitted the site, please make sure no one else has already submitted it by searching existing PRs: https://github.com/gatsbyjs/gatsby/pulls
+
+3.  Edit the [`sites.yml`](https://github.com/gatsbyjs/gatsby/blob/master/docs/sites.yml) file by adding your submission to the bottom of the list of sites in the following format:
 
 ```yaml
 - title: Title of the Site
