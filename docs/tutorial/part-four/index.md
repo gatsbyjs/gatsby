@@ -66,7 +66,7 @@ to you.
 
 Gatsby uses GraphQL to enable components to declare the data they need.
 
-## Your first GraphQL query
+## Create a new example site
 
 Let's create another new site for this part of the tutorial like in the previous
 parts. You're going to build a Markdown blog called "Pandas Eating Lots".
@@ -208,22 +208,23 @@ You have another small site with a layout and two pages.
 
 Now let's start querying 😋
 
-## Querying for the site title
+## Add and query for siteMetadata
 
-When building sites, it's common to want to reuse common bits of data across the
+When building sites, its' common to want to reuse common bits of data across the
 site. Like the _site title_ for example. Look at the `/about/` page. You'll
-notice that you have the site title in both the layout component (the site
-header) as well as in the title of the About page. But what if you want to change
-the site title at some point in the future? You'd have to search across all your
-components for spots using the site title and edit each instance of the title. This process is both cumbersome and
-error-prone, especially as sites get larger and more complex. It's much better to
-store the title in one place and then _pull_ that title into components whenever
-you need it.
+notice that you have the site title (`Pandas Eating Lots`) in both the layout
+component (the site header) as well as in the `<h1/>` of the `about.js` page.
 
-To solve this, you can add site "metadata" — like page title or description — to the `gatsby-config.js` file. Let's add your site title to
-`gatsby-config.js` file and then query it from your layout and about page!
+But what if you want to change the site title in the future? You'd have to
+search for the title across all your components and edit each instance. This is
+both cumbersome and error-prone, especially for larger and more complex sites.
+Instead, you can store the title in one location and reference this location
+from other files. This way you change the title one place and Gatsby will _pull_
+your updated title into files that reference it.
 
-Edit your `gatsby-config.js`:
+The place for these common bits like the site title, is a `siteMetadata`
+object in the `gatsby-config.js` file. Let's add your site title to
+`gatsby-config.js` file.  Edit your `gatsby-config.js`:
 
 ```javascript{2-4}
 module.exports = {
@@ -242,15 +243,12 @@ module.exports = {
 }
 ```
 
-Restart the development server.
+Restart the development server.  Now, you'll add a page query. Use a page query
+to add the title to the `<h1/>` in the `src/pages/about.js` file:
 
-Then edit the two components:
-
-`src/pages/about.js`
 
 ```jsx{2,5,7,14-23}
 import React from "react"
-import { graphql } from "gatsby"
 import Layout from "../components/layout"
 
 export default ({ data }) => (
@@ -274,7 +272,34 @@ export const query = graphql`
 `
 ```
 
-`src/components/layout.js`
+It worked!! 🎉
+
+![fake-title-graphql](fake-title-graphql.png)
+
+Page queries must live outside of the component definition, by convention at the
+end of a page component file. Your new code retrieves the `title` with this
+GraphyQL query:
+
+```
+{
+  site {
+    siteMetadata {
+      title
+    }
+  }
+}
+```
+
+You can only use page queries on page components, and they are limited to the
+`pageContext`. A `<StaticQuery/>` allows you to query from any component instead
+of a page. The GraphQL query itself is the same as the page query, though.
+
+ 💡 A future version of the tutorial will cover StaticQuery in more detail. For now, check out [this StaticQuery documentation for more info](/docs/static-query/).
+
+Go ahead and add both a `<StaticQuery/>` to your `src/components/layout.js` and
+a `{data.site.siteMetadata.title}` reference that uses this data. When you are
+done your file looks like this:
+
 
 ```jsx{3,8-18,35}
 import React from "react"
@@ -329,25 +354,21 @@ export default ({ children }) => (
 )
 ```
 
-It worked!! 🎉
-
-> 💡 `<StaticQuery/>` can be used to query data from a component instead of a page. A future version of the tutorial will cover this in more detail. For now you can check out [the StaticQuery documentation for more info](/docs/static-query/).
-
-![fake-title-graphql](fake-title-graphql.png)
+Another success!
 
 But let's restore the real title.
 
-One of the core principles of Gatsby is _creators need an immediate connection to
-what they're creating_
-([hat tip to Bret Victor](http://blog.ezyang.com/2012/02/transcript-of-inventing-on-principleb/)).
+One of the core principles of Gatsby is _creators need an immediate connection
+to what they're creating_ ([hat tip to Bret
+Victor](http://blog.ezyang.com/2012/02/transcript-of-inventing-on-principleb/)).
 Or, in other words, when you make any change to code you should immediately see
 the effect of that change. You manipulate an input of Gatsby and you see the new
 output showing up on the screen.
 
-So almost everywhere, changes you make will immediately take effect.
+So almost everywhere, changes you make will immediately take effect. Edit
+`gatsby-config.js` file and change the `title` back to "Pandas Eating Lots". The
+change should show up very quickly in your site pages.
 
-Try editing the title in `siteMetadata`—change the title back to "Pandas Eating
-Lots". The change should show up very quickly in your browser.
 
 ## How does the graphql tag work?
 
@@ -360,6 +381,9 @@ The longer answer is a little more involved: Gatsby borrows a technique from
 
 This means that the `graphql` tag isn’t executed the way that you might expect. For example, you cannot use [expression interpolation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#Expression_interpolation) with Gatsby's `graphql` tag.
 
+
 ## What's coming next?
 
-Next, you'll be learning about how to pull data into your Gatsby site using GraphQL with source plugins in [part five](/tutorial/part-five/) of the tutorial.
+Next, you'll be learning about how to pull data into your Gatsby site using
+GraphQL with source plugins in [part five](/tutorial/part-five/) of the
+tutorial.
