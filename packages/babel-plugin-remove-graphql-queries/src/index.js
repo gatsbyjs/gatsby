@@ -129,7 +129,8 @@ export default function({ types: t }) {
             if (
               [`production`, `test`].includes(process.env.NODE_ENV) &&
               path2.isJSXIdentifier({ name: `StaticQuery` }) &&
-              path2.referencesImport(`gatsby`)
+              path2.referencesImport(`gatsby`) &&
+              path2.parent.type !== `JSXClosingElement`
             ) {
               const identifier = t.identifier(`staticQueryData`)
               const filename = state.file.opts.filename

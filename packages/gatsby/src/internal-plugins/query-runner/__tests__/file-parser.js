@@ -43,6 +43,13 @@ query {
     render={data => <div>{data.doo}</div>}
   />
 )`,
+    "static-query-closing-tag.js": `export default () => (
+  <StaticQuery
+    query={graphql\`{ foo }\`}
+  >
+    {data => <div>{data.foo}</div>}
+  </StaticQuery>
+)`,
     "page-query-and-static-query-named-export.js": `export const Component = () => (
   <StaticQuery
     query={graphql\`query StaticQueryName { foo }\`}

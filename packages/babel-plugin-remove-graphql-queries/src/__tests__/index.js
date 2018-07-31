@@ -187,3 +187,18 @@ it(`Removes all gatsby queries`, () => {
   `
   )
 })
+
+it(`Handles closing StaticQuery tag`, () => {
+  matchesSnapshot(`
+  import React from 'react'
+  import { graphql, StaticQuery } from 'gatsby'
+
+  export default () => (
+    <StaticQuery
+      query={graphql\`{site { siteMetadata { title }}}\`}
+    >
+      {data => <div>{data.site.siteMetadata.title}</div>}
+    </StaticQuery>
+  )
+  `)
+})
