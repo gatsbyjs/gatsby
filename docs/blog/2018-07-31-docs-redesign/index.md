@@ -103,14 +103,16 @@ Solution:
 
 Common obstacle #4
 
-- There is an invisible relationship between categories of docs like this:
-  Core Concepts > Guides > Tutorials
-  Getting Started > Recipes > Guides > Tutorials
-  and since it's invisible, sometimes people get interrupted in their flow
+- Ideally, people ought to be able to flow through the docs in a way that helps them build foundational knowledge and also get tasks done. Here are two examples of ideal pathways through the docs:
+
+* Core Concepts > Guides > Tutorials
+* Getting Started > Recipes > Guides > Tutorials
+
+However, the docs themselves don't make these pathways obvious or easy to accomplish.
 
 Solution:
 
-- Include references, prereqs, and next steps in all relevant docs
+- Include references, prereqs, and suggested next steps in all relevant docs
 
 Common obstacle #5:
 
