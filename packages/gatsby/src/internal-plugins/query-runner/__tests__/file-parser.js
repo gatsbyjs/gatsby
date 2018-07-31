@@ -37,6 +37,12 @@ query {
     render={data => <div>{data.foo}</div>}
   />
 )`,
+    "static-query-named-export.js": `export const Component = () => (
+  <StaticQuery
+    query={graphql\`query StaticQueryName { foo }\`}
+    render={data => <div>{data.doo}</div>}
+  />
+)`,
   }
 
   const parser = new FileParser()

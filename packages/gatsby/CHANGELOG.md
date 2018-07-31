@@ -3,6 +3,146 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.0-beta.61"></a>
+
+# [2.0.0-beta.61](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.0-beta.60...gatsby@2.0.0-beta.61) (2018-07-28)
+
+**Note:** Version bump only for package gatsby
+
+<a name="2.0.0-beta.60"></a>
+
+# [2.0.0-beta.60](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.0-beta.59...gatsby@2.0.0-beta.60) (2018-07-27)
+
+**Note:** Version bump only for package gatsby
+
+<a name="2.0.0-beta.59"></a>
+
+# [2.0.0-beta.59](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.0-beta.58...gatsby@2.0.0-beta.59) (2018-07-25)
+
+**Note:** Version bump only for package gatsby
+
+<a name="2.0.0-beta.58"></a>
+
+# [2.0.0-beta.58](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.0-beta.57...gatsby@2.0.0-beta.58) (2018-07-25)
+
+**Note:** Version bump only for package gatsby
+
+<a name="2.0.0-beta.57"></a>
+
+# [2.0.0-beta.57](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.0-beta.56...gatsby@2.0.0-beta.57) (2018-07-24)
+
+**Note:** Version bump only for package gatsby
+
+<a name="2.0.0-beta.56"></a>
+
+# [2.0.0-beta.56](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.0-beta.55...gatsby@2.0.0-beta.56) (2018-07-24)
+
+**Note:** Version bump only for package gatsby
+
+<a name="2.0.0-beta.55"></a>
+
+# [2.0.0-beta.55](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.0-beta.54...gatsby@2.0.0-beta.55) (2018-07-21)
+
+**Note:** Version bump only for package gatsby
+
+<a name="2.0.0-beta.54"></a>
+
+# [2.0.0-beta.54](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.0-beta.53...gatsby@2.0.0-beta.54) (2018-07-20)
+
+**Note:** Version bump only for package gatsby
+
+<a name="2.0.0-beta.53"></a>
+
+# [2.0.0-beta.53](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.0-beta.52...gatsby@2.0.0-beta.53) (2018-07-20)
+
+**Note:** Version bump only for package gatsby
+
+<a name="2.0.0-beta.52"></a>
+
+# [2.0.0-beta.52](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.0-beta.51...gatsby@2.0.0-beta.52) (2018-07-20)
+
+**Note:** Version bump only for package gatsby
+
+<a name="2.0.0-beta.51"></a>
+
+# [2.0.0-beta.51](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.0-beta.50...gatsby@2.0.0-beta.51) (2018-07-20)
+
+**Note:** Version bump only for package gatsby
+
+<a name="2.0.0-beta.50"></a>
+
+# [2.0.0-beta.50](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.0-beta.49...gatsby@2.0.0-beta.50) (2018-07-20)
+
+**Note:** Version bump only for package gatsby
+
+<a name="2.0.0-beta.49"></a>
+
+# [2.0.0-beta.49](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.0-beta.48...gatsby@2.0.0-beta.49) (2018-07-20)
+
+### Bug Fixes
+
+- Bumping Serve Up to 9.2.0 Broke Calls to Serve's API ([#6598](https://github.com/gatsbyjs/gatsby/issues/6598)) ([ce9c3a8](https://github.com/gatsbyjs/gatsby/commit/ce9c3a8))
+
+<a name="2.0.0-beta.48"></a>
+
+# [2.0.0-beta.48](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.0-beta.47...gatsby@2.0.0-beta.48) (2018-07-19)
+
+**Note:** Version bump only for package gatsby
+
+<a name="2.0.0-beta.47"></a>
+
+# [2.0.0-beta.47](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.0-beta.46...gatsby@2.0.0-beta.47) (2018-07-18)
+
+**Note:** Version bump only for package gatsby
+
+<a name="2.0.0-beta.46"></a>
+
+# [2.0.0-beta.46](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.0-beta.45...gatsby@2.0.0-beta.46) (2018-07-18)
+
+**Note:** Version bump only for package gatsby
+
+<a name="2.0.0-beta.45"></a>
+
+# [2.0.0-beta.45](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.0-beta.44...gatsby@2.0.0-beta.45) (2018-07-18)
+
+**Note:** Version bump only for package gatsby
+
+<a name="2.0.0-beta.44"></a>
+
+# [2.0.0-beta.44](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.0-beta.43...gatsby@2.0.0-beta.44) (2018-07-18)
+
+**Note:** Version bump only for package gatsby
+
+<a name="2.0.0-beta.43"></a>
+
+# [2.0.0-beta.43](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.0-beta.42...gatsby@2.0.0-beta.43) (2018-07-17)
+
+**Note:** Version bump only for package gatsby
+
+<a name="2.0.0-beta.42"></a>
+
+# [2.0.0-beta.42](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.0-beta.41...gatsby@2.0.0-beta.42) (2018-07-17)
+
+**Note:** Version bump only for package gatsby
+
+<a name="2.0.0-beta.41"></a>
+
+# [2.0.0-beta.41](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.0-beta.40...gatsby@2.0.0-beta.41) (2018-07-17)
+
+**Note:** Version bump only for package gatsby
+
+<a name="2.0.0-beta.40"></a>
+
+# [2.0.0-beta.40](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.0-beta.39...gatsby@2.0.0-beta.40) (2018-07-16)
+
+**Note:** Version bump only for package gatsby
+
+<a name="2.0.0-beta.39"></a>
+
+# [2.0.0-beta.39](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.0-beta.38...gatsby@2.0.0-beta.39) (2018-07-16)
+
+**Note:** Version bump only for package gatsby
+
 <a name="2.0.0-beta.38"></a>
 
 # [2.0.0-beta.38](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.0-beta.37...gatsby@2.0.0-beta.38) (2018-07-15)

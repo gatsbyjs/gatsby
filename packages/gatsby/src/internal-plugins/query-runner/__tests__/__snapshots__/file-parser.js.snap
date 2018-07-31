@@ -204,5 +204,59 @@ Map {
     ],
     "kind": "Document",
   },
+  "static-query-named-export.js" => Object {
+    "definitions": Array [
+      Object {
+        "directives": Array [],
+        "hash": 407706182,
+        "isStaticQuery": true,
+        "kind": "OperationDefinition",
+        "loc": Object {
+          "end": 29,
+          "start": 0,
+        },
+        "name": Object {
+          "kind": "Name",
+          "loc": Object {
+            "end": 21,
+            "start": 6,
+          },
+          "value": "StaticQueryName",
+        },
+        "operation": "query",
+        "selectionSet": Object {
+          "kind": "SelectionSet",
+          "loc": Object {
+            "end": 29,
+            "start": 22,
+          },
+          "selections": Array [
+            Object {
+              "alias": undefined,
+              "arguments": Array [],
+              "directives": Array [],
+              "kind": "Field",
+              "loc": Object {
+                "end": 27,
+                "start": 24,
+              },
+              "name": Object {
+                "kind": "Name",
+                "loc": Object {
+                  "end": 27,
+                  "start": 24,
+                },
+                "value": "foo",
+              },
+              "selectionSet": undefined,
+            },
+          ],
+        },
+        "text": "query StaticQueryName { foo }",
+        "variableDefinitions": Array [],
+      },
+    ],
+    "kind": "Document",
+  },
 }
 `;

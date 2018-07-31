@@ -135,3 +135,33 @@ Which would return:
 ## Examples
 
 The [gatsbygram example site](https://github.com/gatsbyjs/gatsby/blob/master/examples/gatsbygram/gatsby-node.js) uses this plugin.
+
+## Troubleshooting
+
+If some fields are missing or you see the error on build:
+> There are conflicting field types in your data. GraphQL schema will omit those fields.
+
+It's probably because you have arrays of mixed values somewhere. For instance:
+
+```
+{
+  stuff: [25, "bob"],
+  orEven: [
+    [25, "bob"],
+    [23, "joe"]
+  ]
+}
+```
+
+If you can rewrite your data with objects you should be good to go:
+
+```
+{
+  stuff: [{ "count": 25, "name": "bob" }],
+  orEven: [
+    { "count": 25, "name": "bob" },
+    { "count": 23, "name": "joe" }
+  ]
+}
+```
+

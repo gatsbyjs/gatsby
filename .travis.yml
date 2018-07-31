@@ -1,5 +1,3 @@
-sudo: required
-
 services:
   - docker
 
@@ -17,6 +15,7 @@ jobs:
           node_js:
             - '6'
             - '8'
+            - '10'
           cache:
             yarn: true
           before_install:
@@ -32,6 +31,7 @@ jobs:
           node_js:
             - '6'
             - '8'
+            - '10'
           cache:
             yarn: true
           before_install:

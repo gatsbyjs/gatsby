@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+import { graphql } from "gatsby"
 import PostIcons from "../components/PostIcons"
 import Layout from "../layouts"
 

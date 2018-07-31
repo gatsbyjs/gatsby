@@ -1,4 +1,5 @@
 import React from "react"
+import { graphql } from "gatsby"
 import StoryItem from "../components/story-item"
 import Layout from "../layouts"
 

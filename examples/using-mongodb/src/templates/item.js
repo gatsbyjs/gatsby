@@ -1,4 +1,5 @@
 import React from "react"
+import { graphql } from "gatsby"
 import Layout from "../layouts"
 
 class Item extends React.Component {

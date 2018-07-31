@@ -1,5 +1,6 @@
 import * as PropTypes from "prop-types"
 import React from "react"
+import { graphql } from "gatsby"
 import PostDetail from "../components/post-detail"
 import Layout from "../layouts"
 
