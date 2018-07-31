@@ -1888,3 +1888,16 @@
   built_by: Novatics
   built_by_url: https://github.com/Novatics
   featured: false
+- title: I migliori by Vivigratis
+  description: > 
+     Product review website
+  main_url: https://imigliori.vivigratis.com/
+  url: https://imigliori.vivigratis.com/
+  categories:
+    - Blog
+    - Travel
+    - Technology
+    - Wellness
+    - Fashion
+  built_by: Kframe Interactive SA
+  featured: false
