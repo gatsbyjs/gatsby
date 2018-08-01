@@ -30,7 +30,9 @@ to refresh the page.
 
 Let's try linking to the
 "[Code and Syntax Highlighting with PrismJS](/code-and-syntax-highlighting/)"
-article…
+article using a relative path.
+
+Also, let's link to "[Rendering math equations with KaTeX](https://using-remark.gatsbyjs.org/katex/)" article using an absolute path.
 
 [1]: https://www.gatsbyjs.org/packages/gatsby-remark-copy-linked-files/
 [2]: https://www.gatsbyjs.org/packages/gatsby-plugin-catch-links/
