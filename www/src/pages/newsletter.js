@@ -3,7 +3,6 @@ import Helmet from "react-helmet"
 import { rhythm } from "../utils/typography"
 import { colors } from "../utils/presets"
 
-import Layout from "../components/layout"
 import Container from "../components/container"
 import EmailCaptureForm from "../components/email-capture-form"
 
@@ -12,7 +11,7 @@ class NewsLetter extends Component {
     const { location, data } = this.props
 
     return (
-      <Layout location={location}>
+      <div>
         <Helmet>
           <title>Newsletter</title>
         </Helmet>
@@ -42,7 +41,7 @@ class NewsLetter extends Component {
             }}
           />
         </Container>
-      </Layout>
+      </div>
     )
   }
 }
