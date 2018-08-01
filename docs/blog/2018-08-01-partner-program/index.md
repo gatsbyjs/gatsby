@@ -40,5 +40,7 @@ We’ll have a lot more features and benefits coming soon. Future additions to t
 * Dedicated pages on [Gatsbyjs.org] (https://github.com/gatsbyjs/rfcs/blob/8bb84d8a4ed495678ae76645f940a03ad562a7d1/text/0008--individual-agency-company-pages.md#agency-pages) highlighting partners & showcasing the sites they've built with Gatsby
 * Free swag! Exclusive partner swag coming soon.
 
+<hubspot-form portal-id="4731712" form-id="bbad5044-d31d-4473-bd57-62cb64fdc811"></hubspot-form>
+
 Fill out the form above to let us know your interest in the Gatsby Partner Program!
 
