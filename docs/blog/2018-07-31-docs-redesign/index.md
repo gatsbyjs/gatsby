@@ -74,7 +74,7 @@ So, I did three different usability tests with about 5 people each and got some 
 
 Thank you Martyn Hoyer, Eka, Benjamin Modayil, Nicky Meuleman, Jonathan Prozzi, Kelly Lawrence, Chris Wiseman, Simon Koelewijn, Cameron Steele, Bogdan Lazar, Shannon Smith, Hugo Marques, Ria Carmin, Abhishek Vishwakarma, Peter Wiebe, and Korey Boone.
 
-Common obstacle #1:
+Common obstacle no.1:
 
 - Information embedded in the tutorial doesn't _also_ exist in the guides, like "how to create links between pages."
 
@@ -82,7 +82,7 @@ Possible solutions:
 
 - The tutorials won't have a monopoly on any information; it will also exist in the guides. This is already taken care of by stub articles that indicate what information we need to pull over from the tutorial, like [Creating slugs for pages](https://next.gatsbyjs.org/docs/creating-slugs-for-pages/) and [Linking between pages](https://next.gatsbyjs.org/docs/linking-between-pages/)
 
-Common obstacle #2
+Common obstacle no.2
 
 - People expect to find more information in Getting Started and the READme file than currently exist. They are looking to evaluate how easy Gatsby is to use through a set of basic tasks.
 
@@ -91,7 +91,7 @@ Possible solutions:
 - Add a [Recipes doc](https://github.com/gatsbyjs/gatsby/issues/6572) to both the Getting Started and READme file with a list of how to do basic tasks very quickly.
 - [Revise READme](https://github.com/gatsbyjs/gatsby/issues/6569).
 
-Common obstacle #3
+Common obstacle no.3
 We have about 60 stub articles now that are topics people care about and we need people to write them!
 
 Solution:
