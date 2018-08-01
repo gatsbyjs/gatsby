@@ -76,7 +76,7 @@ Thank you Martyn Hoyer, Eka, Benjamin Modayil, Nicky Meuleman, Jonathan Prozzi, 
 
 Common obstacle #1:
 
-- Information embedded in the tutorial doesn't _also_ exist in the guides, like "how to create links between pages." Algolia search doesn't find keyword inside headers within a document.
+- Information embedded in the tutorial doesn't _also_ exist in the guides, like "how to create links between pages."
 
 Possible solutions:
 
