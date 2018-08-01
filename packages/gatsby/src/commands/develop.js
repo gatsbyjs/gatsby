@@ -415,7 +415,7 @@ module.exports = async (program: any) => {
         console.log(
           `%s %s %s %s`,
           chalk.cyan(api),
-          chalk.yellow(`is deprecated. Use`),
+          chalk.yellow(`is deprecated. Please use`),
           chalk.cyan(fixMap[api].newName),
           chalk.yellow(`instead. For migration instructions, see ${fixMap[api].docsLink}\nCheck the following files:`)
         )
