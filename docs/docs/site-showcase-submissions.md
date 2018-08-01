@@ -16,14 +16,25 @@ There are only three major steps :)
 
 ```yaml
 - title: Title of the Site
-  description: >
-    This description will appear in the modal detail view and permalink views for your site.
 
   # this URL is used to generate a screenshot
   main_url: http://titleofthesite.com/
   
   # this is the URL that is linked from the showcase
   url: http://titleofthesite.co.uk/
+  
+  # optional: for open-source sites, this URL points to the repo that powers the site
+  source_url: https://github.com/{username}/{titleofthesite}
+  
+  # optional: short paragraph describing the content and/or purpose of the site that will appear in the modal detail view and permalink views for your site
+  description: >
+    {titleofthesite} is a shiny new website built with Gatsby v2 that makes important contributions towards a faster web for everyone.
+  
+  # optional: not currently displayed in the Gatsby showcase
+  date_added: 2018-08-01
+  
+  # optional: not currently displayed in the Gatsby showcase (one of v0, v1, v2)
+  gatsby_version: v2
 
   # You can list as many categories as you want here. Check list of Categories below in this doc!
   # If you'd like to create a new category, simply list it here.
@@ -86,6 +97,7 @@ A few notes on site content: a common question is this: "aren't all Gatsby sites
 - Podcast
 - Real Estate
 - Retail
+- Science
 - Technology
 - Web Dev
 - (feel free to create new ones after checking to make sure the tag you want doesn't already exist)
