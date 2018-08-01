@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.0-beta.6"></a>
+
+# [2.0.0-beta.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/compare/gatsby-link@2.0.0-beta.5...gatsby-link@2.0.0-beta.6) (2018-08-01)
+
+**Note:** Version bump only for package gatsby-link
+
 <a name="2.0.0-beta.5"></a>
 
 # [2.0.0-beta.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/compare/gatsby-link@2.0.0-beta.4...gatsby-link@2.0.0-beta.5) (2018-07-21)
