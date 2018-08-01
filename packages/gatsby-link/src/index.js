@@ -16,10 +16,6 @@ function normalizePath(path) {
 const NavLinkPropTypes = {
   activeClassName: PropTypes.string,
   activeStyle: PropTypes.object,
-  exact: PropTypes.bool,
-  strict: PropTypes.bool,
-  isActive: PropTypes.func,
-  location: PropTypes.object,
 }
 
 // Set up IntersectionObserver
@@ -51,22 +47,12 @@ class GatsbyLink extends React.Component {
     }
 
     const { location } = props
-    const to = createLocation(props.to, null, null, location)
 
     this.state = {
-      path: createPath(to),
-      to,
       IOSupported,
       location,
     }
     this.handleRef = this.handleRef.bind(this)
-  }
-
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (prevState.to === nextProps.to) return null
-    const to = createLocation(nextProps.to, null, null, prevState.location)
-    const path = createPath(to)
-    return { path, to }
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -163,7 +149,7 @@ class GatsbyLink extends React.Component {
           return true
         }}
         {...rest}
-        to={this.state.to.pathname}
+        to={this.props.to}
         innerRef={this.handleRef}
       />
     )
