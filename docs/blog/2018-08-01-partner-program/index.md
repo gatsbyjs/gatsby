@@ -11,11 +11,13 @@ In the business of building websites or web apps for clients? Get the support yo
 Gatsby is growing like gangbusters due to the contributions of this great open source community—thank you! We’ve been hearing from more and more agencies and website development shops about how they’re embracing Gatsby to build blazing-fast websites and web apps for their clients. We want to support these efforts and help you get the word out about your amazing work. 
 
 ## Gatsby Partner Program
-With that in mind, we’re happy to announce Gatsby’s Partner Program. Partner with Gatsby to get your agency or client websites highlighted on the [Gatsby Site Showcase](https://next.gatsbyjs.org/showcase/) to generate more visibility to your work. We’ll also be building out the partner program in the coming months to add more benefits like training for your developers, joint case studies, free swag, and more. To show interest in the program, there are a few simple steps to get started.
+With that in mind, we’re happy to announce Gatsby’s Partner Program. Partner with Gatsby to get your agency or client websites highlighted on the [Gatsby Site Showcase](https://next.gatsbyjs.org/showcase/) to generate more visibility to your work. We’ll also be building out the partner program in the coming months to add more benefits like training for developers, joint case studies, free swag, and more. To show interest in the program, there are a few simple steps to get started.
 
 ## Steps to get started:
-Step 1: Build a client (or your agency) website with Gatsby.
+Step 1: Build a client (or agency) website with Gatsby.
+
 Step 2: Submit your Gatsby client or agency website to the [Site Showcase](https://next.gatsbyjs.org/docs/site-showcase-submissions/).
+
 Step 3: Fill out the form below to let us know you’re interested in learning more about future developments to Gatsby’s Partner Program. 
 
 <!--[if lte IE 8]>
@@ -40,7 +42,9 @@ We’ll have a lot more features and benefits coming soon. Future additions to t
 * Dedicated pages on [Gatsbyjs.org](https://github.com/gatsbyjs/rfcs/blob/8bb84d8a4ed495678ae76645f940a03ad562a7d1/text/0008--individual-agency-company-pages.md#agency-pages) highlighting partners & showcasing the sites they've built with Gatsby
 * Free swag! Exclusive partner swag coming soon.
 
+Fill out the form below to let us know your interest in the Gatsby Partner Program!
+
 <hubspot-form portal-id="4731712" form-id="bbad5044-d31d-4473-bd57-62cb64fdc811"></hubspot-form>
 
-Fill out the form above to let us know your interest in the Gatsby Partner Program!
+
 
