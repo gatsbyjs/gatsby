@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 import React from "react"
 import { Link, Location } from "@reach/router"
 import { polyfill } from "react-lifecycles-compat"
-import { createPath } from "history"
+import { parsePath } from "gatsby"
 
 export function withPrefix(path) {
   return normalizePath(`${__PATH_PREFIX__}/${path}`)
@@ -58,14 +58,14 @@ class GatsbyLink extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     // Preserve non IO functionality if no support
     if (this.props.to !== prevProps.to && !this.state.IOSupported) {
-      ___loader.enqueue(this.state.path)
+      ___loader.enqueue(parsePath(this.props.to).pathname)
     }
   }
 
   componentDidMount() {
     // Preserve non IO functionality if no support
     if (!this.state.IOSupported) {
-      ___loader.enqueue(this.state.to.pathname)
+      ___loader.enqueue(parsePath(this.props.to).pathname)
     }
   }
 
@@ -75,7 +75,7 @@ class GatsbyLink extends React.Component {
     if (this.state.IOSupported && ref) {
       // If IO supported and element reference found, setup Observer functionality
       handleIntersection(ref, () => {
-        ___loader.enqueue(this.state.to.pathname)
+        ___loader.enqueue(parsePath(this.props.to).pathname)
       })
     }
   }
@@ -101,7 +101,7 @@ class GatsbyLink extends React.Component {
         onMouseEnter={e => {
           // eslint-disable-line
           onMouseEnter && onMouseEnter(e)
-          ___loader.hovering(this.state.path)
+          ___loader.hovering(parsePath(this.props.to).pathname)
         }}
         onClick={e => {
           // eslint-disable-line
@@ -118,29 +118,17 @@ class GatsbyLink extends React.Component {
           ) {
             // Is this link pointing to a hash on the same page? If so,
             // just scroll there.
-            let pathname = this.state.path
-            if (pathname.split(`#`).length > 1) {
-              pathname = pathname
-                .split(`#`)
-                .slice(0, -1)
-                .join(``)
-            }
+            const { pathname, hash } = parsePath(this.props.to)
             if (pathname === window.location.pathname) {
-              const hashFragment = this.state.path
-                .split(`#`)
-                .slice(1)
-                .join(`#`)
-              const element = hashFragment
-                ? document.getElementById(hashFragment)
-                : null
+              const element = hash ? document.getElementById(hash) : null
               if (element !== null) {
                 element.scrollIntoView()
-                return true
+                e.preventDefault()
               } else {
                 // This is just a normal link to the current page so let's emulate default
                 // browser behavior by scrolling now to the top of the page.
                 window.scrollTo(0, 0)
-                return true
+                e.preventDefault()
               }
             }
 
@@ -148,7 +136,7 @@ class GatsbyLink extends React.Component {
             // loaded before continuing.
             if (process.env.NODE_ENV === `production`) {
               e.preventDefault()
-              window.___push(this.state.to)
+              window.___push(this.props.to)
             }
           }
 

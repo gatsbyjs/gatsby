@@ -5,13 +5,13 @@ import { Router, navigate as reachNavigate } from "@reach/router"
 import { globalHistory } from "@reach/router/lib/history"
 import { ScrollContext } from "gatsby-react-router-scroll"
 import domReady from "domready"
-import { createLocation } from "history/LocationUtils"
 import emitter from "./emitter"
 window.___emitter = emitter
 import redirects from "./redirects.json"
 import PageRenderer from "./page-renderer"
 import asyncRequires from "./async-requires"
 import loader, { setApiRunnerForLoader } from "./loader"
+import parsePath from "./parse-path"
 
 window.asyncRequires = asyncRequires
 window.___emitter = emitter
@@ -53,8 +53,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   let lastNavigateToLocationString = null
 
   const navigate = (to, replace) => {
-    const location = createLocation(to)
-    let { pathname } = location
+    const { pathname } = parsePath(to)
     const redirect = redirectMap[pathname]
 
     // If we're redirecting, just replace the passed in pathname
@@ -70,15 +69,6 @@ apiRunnerAsync(`onClientEntry`).then(() => {
 
     const wl = window.location
 
-    // If we're already at this location, do nothing.
-    if (
-      wl.pathname === location.pathname &&
-      wl.search === location.search &&
-      wl.hash === location.hash
-    ) {
-      return
-    }
-
     const historyNavigateAction = replace ? `REPLACE` : `PUSH`
 
     // Start a timer to wait for a second before transitioning and showing a
@@ -91,9 +81,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       })
     }, 1000)
 
-    lastNavigateToLocationString = `${location.pathname}${location.search}${
-      location.hash
-    }`
+    lastNavigateToLocationString = to
 
     apiRunner(`onPreRouteUpdate`, { location, action: historyNavigateAction })
 
