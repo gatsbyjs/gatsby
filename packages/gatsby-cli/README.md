@@ -31,8 +31,8 @@ development server.
 Options
 
 ```
-  -H, --host    Set host. Defaults to localhost
-  -p, --port    Set port. Defaults to 8000
+  -H, --host    Set host. Defaults to the HOST environment variable or localhost if unset
+  -p, --port    Set port. Defaults to the PORT environment variable or 8000 if unset
   -o, --open    Open the site in your browser for you
   -S, --https   Use HTTPS
 ```
