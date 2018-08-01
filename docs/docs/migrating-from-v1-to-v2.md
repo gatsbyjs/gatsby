@@ -316,6 +316,9 @@ The `sizes` and `resolutions` queries are deprecated in v2. These queries have b
 Update image query and fragment names:
 
 ```diff
+import React from "react"
+import { graphql } from "gatsby"
+
 const Example = ({ data }) => {
   <div>
 -    <Img sizes={data.foo.childImageSharp.sizes} />
