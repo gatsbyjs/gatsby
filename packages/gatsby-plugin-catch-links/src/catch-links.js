@@ -78,7 +78,7 @@ module.exports = function (root, cb) {
     var re = new RegExp(`^${a2.host}${withPrefix(`/`)}`)
     if (!re.test(`${a1.host}${a1.pathname}`)) return true
 
-    // TODO: add a check for absolute internal links in a callback or here,
+    // Adding a check for absolute internal links in a callback or here,
     // or always pass only `${a1.pathname}${a1.hash}`
     // to avoid `https://example.com/myapp/https://example.com/myapp/here` navigation
 
