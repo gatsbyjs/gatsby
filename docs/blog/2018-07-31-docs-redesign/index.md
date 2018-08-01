@@ -36,7 +36,7 @@ We wanted to make sure that the site provides necessary information to developer
 
 Here is a list of what we liked and didn’t like in docs with similar goals to ours. We looked at NextJS, ReactJS, Expo, Ghost, Drupal, WordPress, Joomla, Silver Stripe, Netlify, and Apollo.
 
-#### Things we liked:
+### The goods:
 
 - Accordion menus make design clean
 - Flat menus mean nothing is hidden
@@ -47,7 +47,7 @@ Here is a list of what we liked and didn’t like in docs with similar goals to 
 - List of “lessons”
 - Different organizational structures for different services
 
-#### Things we didn’t like:
+### The bads:
 
 - Not enough categories
 - Cluttered landing pages
@@ -105,17 +105,14 @@ Want to volunteer to write one? Check out all the stub articles (titles in _ital
 
 Want to sign up for a 45 minute usability test of the new structure? (It will likely take 20-30 minutes, and I blocked out 45 minutes in case you have questions and more commentary. I'll close the sign-up link once I get 5 people who sign up.
 
-Sign up here: [https://calendly.com/shannon-soper/new-ia-usability-test/07-30-2018](https://calendly.com/shannon-soper/new-ia-usability-test/07-30-2018)
+- Sign up here: [https://calendly.com/shannon-soper/new-ia-usability-test/07-30-2018](https://calendly.com/shannon-soper/new-ia-usability-test/07-30-2018)
 
-### Resolve current issues
+### Issues to be resolved
 
 > Try installing the free [Zenhub extension](https://www.zenhub.com/extension) for Firefox or Chrome to view these issues accurately
 
-See open issues in the [Docs IA redesign MVP](https://github.com/gatsbyjs/gatsby/issues/6899). We're done with basic features (YAY!) and just resolving a few more issues now!
+Help resolve issues in these projects!
 
-### Next steps
-
-Once the issues in the MVP are resolved, we'll move on to these projects:
-
+- [Docs IA redesign MVP](https://github.com/gatsbyjs/gatsby/issues/6899). Once the issues in the MVP are resolved, we'll move on to phase 2 and phase 3.
 - [Docs IA redesign phase 2](https://github.com/gatsbyjs/gatsby/issues/6900)
 - [Docs IA redesign phase 3](https://github.com/gatsbyjs/gatsby/issues/6901)
