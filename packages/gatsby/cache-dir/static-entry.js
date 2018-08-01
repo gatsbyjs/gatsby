@@ -125,7 +125,7 @@ export default (pagePath, callback) => {
       {
         basepath: pathPrefix.slice(0, -1),
       },
-      createElement(RouteHandler, { default: true })
+      createElement(RouteHandler, { path: `/*` })
     )
   )
 

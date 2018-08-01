@@ -195,7 +195,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
         {
           basepath: __PATH_PREFIX__,
         },
-        createElement(RouteHandler, { default: true })
+        createElement(RouteHandler, { path: `/*` })
       )
 
     const NewRoot = apiRunner(`wrapRootComponent`, { Root }, Root)[0]

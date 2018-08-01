@@ -172,7 +172,7 @@ const Root = () =>
     {
       basepath: __PATH_PREFIX__,
     },
-    createElement(RouteHandler, { default: true })
+    createElement(RouteHandler, { path: `/*` })
   )
 
 // Let site, plugins wrap the site e.g. for Redux.
