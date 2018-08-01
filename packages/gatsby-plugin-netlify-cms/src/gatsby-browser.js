@@ -1,6 +1,6 @@
 import netlifyIdentityWidget from "netlify-identity-widget"
 
-exports.onInitialClientRender = (_, { enableIdentityWidget }) => {
+exports.onInitialClientRender = (_, { enableIdentityWidget = true }) => {
   if (enableIdentityWidget) {
     netlifyIdentityWidget.on(`init`, user => {
       if (!user) {

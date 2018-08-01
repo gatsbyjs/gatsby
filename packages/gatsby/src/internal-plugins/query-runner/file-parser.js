@@ -83,6 +83,18 @@ async function findGraphQLTags(file, text): Promise<Array<DefinitionNode>> {
           return
         }
 
+        /**
+         * A map of graphql documents to unique locations.
+         *
+         * A graphql document's unique location is made of: 
+         *
+         *  - the location of the graphql template literal that contains the document, and
+         *  - the document's location within the graphql template literal
+         *
+         * This is used to prevent returning duplicated documents.
+         */
+        const documentLocations = new WeakMap()
+
         // Look for queries in <StaticQuery /> elements.
         traverse(ast, {
           TaggedTemplateExpression(path) {
@@ -103,9 +115,10 @@ async function findGraphQLTags(file, text): Promise<Array<DefinitionNode>> {
 
             if (isGlobal) warnForGlobalTag(file)
 
-            gqlAst.definitions.forEach(def =>
+            gqlAst.definitions.forEach(def => {
+              documentLocations.set(def, `${path.node.start}-${def.loc.start}`)
               generateQueryName({ def, hash, file })
-            )
+            })
 
             const definitions = [...gqlAst.definitions].map(d => {
               d.isStaticQuery = true
@@ -127,16 +140,24 @@ async function findGraphQLTags(file, text): Promise<Array<DefinitionNode>> {
 
                 if (isGlobal) warnForGlobalTag(file)
 
-                gqlAst.definitions.forEach(def =>
+                gqlAst.definitions.forEach(def => {
+                  documentLocations.set(
+                    def,
+                    `${innerPath.node.start}-${def.loc.start}`
+                  )
                   generateQueryName({ def, hash, file })
-                )
+                })
 
                 queries.push(...gqlAst.definitions)
               },
             })
           },
         })
-        resolve(queries)
+
+        // Remove duplicate queries
+        const uniqueQueries = _.uniqBy(queries, q => documentLocations.get(q))
+
+        resolve(uniqueQueries)
       })
       .catch(reject)
   })

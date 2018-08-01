@@ -5,6 +5,9 @@ import domReady from "domready"
 import socketIo from "./socketIo"
 import emitter from "./emitter"
 import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
+import loader from "./loader"
+import syncRequires from "./sync-requires"
+import pages from "./pages.json"
 
 window.___emitter = emitter
 
@@ -36,17 +39,21 @@ apiRunnerAsync(`onClientEntry`).then(() => {
 
   const rootElement = document.getElementById(`___gatsby`)
 
-  let Root = preferDefault(require(`./root`))
-
   const renderer = apiRunner(
     `replaceHydrateFunction`,
     undefined,
     ReactDOM.render
   )[0]
 
-  domReady(() => {
-    renderer(<Root />, rootElement, () => {
-      apiRunner(`onInitialClientRender`)
+  loader.addPagesArray(pages)
+  loader.addDevRequires(syncRequires)
+
+  loader.getResourcesForPathname(window.location.pathname, () => {
+    let Root = preferDefault(require(`./root`))
+    domReady(() => {
+      renderer(<Root />, rootElement, () => {
+        apiRunner(`onInitialClientRender`)
+      })
     })
   })
 })

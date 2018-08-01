@@ -6,11 +6,13 @@ Want to submit a site to the [Site Showcase](https://next.gatsbyjs.org/showcase/
 
 ## Steps
 
-There are only two major steps :)
+There are only three major steps :)
 
-1.  If there is a chance that someone else could have already submitted the site, please make sure no one else has already submitted it by searching existing PRs: https://github.com/gatsbyjs/gatsby/pulls
+1. If this is your first contribution to the Gatsby open source repo, follow the [Contribution guidelines](https://next.gatsbyjs.org/docs/how-to-contribute/#contributing-to-the-repo) to get push access rights. 
 
-2.  Edit the [`sites.yml`](https://github.com/gatsbyjs/gatsby/blob/master/docs/sites.yml) file by adding your submission to the bottom of the list of sites in the following format:
+2. If there is a chance that someone else could have already submitted the site, please make sure no one else has already submitted it by searching existing PRs: https://github.com/gatsbyjs/gatsby/pulls
+
+3.  Edit the [`sites.yml`](https://github.com/gatsbyjs/gatsby/blob/master/docs/sites.yml) file by adding your submission to the bottom of the list of sites in the following format:
 
 ```yaml
 - title: Title of the Site
@@ -90,14 +92,20 @@ A few notes on site content: a common question is this: "aren't all Gatsby sites
 
 ### Note on Featured Sites
 
+#### Review process
+
+By default, all sites submitted to the Site Showcase will be reviewed by the Gatsby Site Review Board as a candidate for the 'Featured Sites' section of the showcase. If you do not want your site to be featured, please add 'DO NOT FEATURE' to the pull request.
+
 Featured sites will be chosen quarterly based on the following criteria:
 
-- how the site performs according to a set of criteria TBD by a group (also TBD)
+- how the site performs according to a set of criteria TBD by the Gatsby Site Review Board
 - voting by the community
 
 #### How to Set a Site as Featured
 
 _Note: the Gatsby team will choose featured sites, leave as `featured: false` when first posting_
+
+If you're site is chosen as featured, here's what to do next:
 
 1.  Change `featured: false` to `featured: true`
 

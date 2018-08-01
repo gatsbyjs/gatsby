@@ -2,3 +2,4 @@
 /gatsby-ssr.js
 /gatsby-browser.js
 /app-shell.js
+/prefetch-catcher.js

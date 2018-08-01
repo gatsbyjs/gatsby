@@ -32,7 +32,7 @@ When you run `npm run deploy` all contents of the `public` folder will be moved 
 
 First thing is to create a repository which should be named `username.github.io`.
 
-In this case we dont need to specify `pathPrefix`, but our website needs to be pushed to `master` branch.
+In this case we don't need to specify `pathPrefix`, but our website needs to be pushed to `master` branch.
 
 ```
     {

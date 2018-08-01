@@ -129,7 +129,8 @@ export default function({ types: t }) {
             if (
               [`production`, `test`].includes(process.env.NODE_ENV) &&
               path2.isJSXIdentifier({ name: `StaticQuery` }) &&
-              path2.referencesImport(`gatsby`)
+              path2.referencesImport(`gatsby`) &&
+              path2.parent.type !== `JSXClosingElement`
             ) {
               const identifier = t.identifier(`staticQueryData`)
               const filename = state.file.opts.filename
@@ -162,6 +163,8 @@ export default function({ types: t }) {
           },
         }
 
+        const tagsToRemoveImportsFrom = new Set()
+
         path.traverse({
           TaggedTemplateExpression(path2, state) {
             const { ast, text, hash, isGlobal } = getGraphQLTag(path2)
@@ -172,7 +175,11 @@ export default function({ types: t }) {
             const query = text
 
             const tag = path2.get(`tag`)
-            if (!isGlobal) removeImport(tag)
+            if (!isGlobal) {
+              // Enqueue import removal. If we would remove it here, subsequent named exports
+              // wouldn't be handled properly
+              tagsToRemoveImportsFrom.add(tag)
+            }
 
             // Replace the query with the hash of the query.
             path2.replaceWith(t.StringLiteral(queryHash))
@@ -182,6 +189,8 @@ export default function({ types: t }) {
             return null
           },
         })
+
+        tagsToRemoveImportsFrom.forEach(removeImport)
       },
     },
   }

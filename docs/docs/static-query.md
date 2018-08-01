@@ -4,8 +4,6 @@ title: "Querying data in components using StaticQuery"
 
 Gatsby v2 introduces `StaticQuery`, a new API that allows components to retrieve data via GraphQL query.
 
-_Note: There is [a known issue with `StaticQuery`](https://github.com/gatsbyjs/gatsby/issues/6350) that only allows it to work with non-page components as seen in the example below. Until [#6350](https://github.com/gatsbyjs/gatsby/issues/6350) is resolved, page queries should be performed [as seen in this article](https://next.gatsbyjs.org/docs/build-a-page-with-graphql-query/)._
-
 ## Basic example
 
 We'll create a new `Header` component located at `src/components/header.js`:
@@ -78,8 +76,11 @@ Header.propTypes = {
 }
 ```
 
-## How it differs from page query
+## How StaticQuery differs from page query
 
-StaticQuery can do most of the things that page query can, including fragments.
+StaticQuery can do most of the things that page query can, including fragments. The main difference are:
 
-You can’t, however, pass **Query Variables** to `StaticQuery`, like you can in page queries through `pageContext`.
+- `StaticQuery` can be used anywhere inside your source code including page components.
+- `StaticQuery` can't use **Query Variables**, like you can in page queries through `pageContext`.
+- page queries are only available on page components.
+- page queries have access to the pageContext.

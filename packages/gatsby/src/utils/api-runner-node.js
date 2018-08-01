@@ -40,6 +40,21 @@ const doubleBind = (boundActionCreators, api, plugin, actionOptions) => {
   }
 }
 
+const initAPICallTracing = (parentSpan) => {
+
+  const startSpan = (spanName, spanArgs = {}) => {
+    const defaultSpanArgs = { childOf: parentSpan }
+
+    return tracer.startSpan(spanName, _.merge(defaultSpanArgs, spanArgs))
+  }
+
+  return {
+    tracer,
+    parentSpan,
+    startSpan,
+  }
+}
+
 const runAPI = (plugin, api, args) => {
   const gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
   if (gatsbyNode[api]) {
@@ -75,6 +90,8 @@ const runAPI = (plugin, api, args) => {
 
     const namespacedCreateNodeId = id => createNodeId(id, plugin.name)
 
+    const tracing = initAPICallTracing(pluginSpan)
+
     const apiCallArgs = [
       {
         ...args,
@@ -91,6 +108,7 @@ const runAPI = (plugin, api, args) => {
         getNodeAndSavePathDependency,
         cache,
         createNodeId: namespacedCreateNodeId,
+        tracing,
       },
       plugin.pluginOptions,
     ]
@@ -168,9 +186,28 @@ module.exports = async (api, args = {}, pluginSource) =>
       startTime: new Date().toJSON(),
       traceId: args.traceId,
     }
-    apiRunInstance.id = `${api}|${apiRunInstance.startTime}|${
-      apiRunInstance.traceId
-    }|${JSON.stringify(args)}`
+
+    // Generate IDs for api runs. Most IDs we generate from the args
+    // but some API calls can have very large argument objects so we
+    // have special ways of generating IDs for those to avoid stringifying
+    // large objects.
+    let id
+    if (api === `setFieldsOnGraphQLNodeType`) {
+      id = `${api}${apiRunInstance.startTime}${args.type.name}${args.traceId}`
+    } else if (api === `onCreateNode`) {
+      id = `${api}${apiRunInstance.startTime}${
+        args.node.internal.contentDigest
+      }${args.traceId}`
+    } else if (api === `preprocessSource`) {
+      id = `${api}${apiRunInstance.startTime}${args.filename}${args.traceId}`
+    } else if (api === `onCreatePage`) {
+      id = `${api}${apiRunInstance.startTime}${args.page.path}${args.traceId}`
+    } else {
+      id = `${api}|${apiRunInstance.startTime}|${
+        apiRunInstance.traceId
+      }|${JSON.stringify(args)}`
+    }
+    apiRunInstance.id = id
 
     if (args.waitForCascadingActions) {
       waitingForCasacadeToFinish.push(apiRunInstance)

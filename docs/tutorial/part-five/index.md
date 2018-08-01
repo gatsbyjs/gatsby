@@ -23,7 +23,7 @@ You can access it when your site's development server is running—normally at
 Here you poke around the built-in `Site` "type" and see what fields are available
 on it—including the `siteMetadata` object you queried earlier. Try opening
 Graph_i_QL and play with your data! Press <kbd>Ctrl + Space</kbd> to bring up
-the autocomplete window and <kbd>Ctrl + Enter</kbd> to run the query. You'll be
+the autocomplete window and <kbd>Ctrl + Enter</kbd> to run the GraphQL query. You'll be
 using Graph_i_QL a lot more through the remainder of the tutorial.
 
 ## Source plugins
@@ -103,7 +103,7 @@ to start building the UI.
 
 Let's try this.
 
-Create a new file at `src/pages/my-files.js` with the `allFile` query you just
+Create a new file at `src/pages/my-files.js` with the `allFile` GraphQL query you just
 created:
 
 ```jsx{6}
@@ -137,7 +137,7 @@ export const query = graphql`
 ```
 
 The `console.log(data)` line is highlighted above. It's often helpful when
-creating a new component to console out the data you're getting from the query
+creating a new component to console out the data you're getting from the GraphQL query
 so you can explore the data in your browser console while building the UI.
 
 If you visit the new page at `/my-files/` and open up your browser console
@@ -145,7 +145,7 @@ you will see something like:
 
 ![data-in-console](data-in-console.png)
 
-The shape of the data matches the shape of the query.
+The shape of the data matches the shape of the GraphQL query.
 
 Let's add some code to your component to print out the File data.
 

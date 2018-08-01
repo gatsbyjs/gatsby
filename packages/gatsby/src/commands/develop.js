@@ -222,7 +222,7 @@ async function startServer(program) {
         report.panic(
           `Unable to start Gatsby on port ${
             program.port
-          } as there's already a process listing on that port.`
+          } as there's already a process listening on that port.`
         )
         return
       }
@@ -250,14 +250,6 @@ module.exports = async (program: any) => {
   const detect = require(`detect-port`)
   const port =
     typeof program.port === `string` ? parseInt(program.port, 10) : program.port
-
-  // In order to enable custom ssl, --cert-file --key-file and -https flags must all be
-  // used together
-  if ((program[`cert-file`] || program[`key-file`]) && !program.https) {
-    report.panic(
-      `for custom ssl --https, --cert-file, and --key-file must be used together`
-    )
-  }
 
   // In order to enable custom ssl, --cert-file --key-file and -https flags must all be
   // used together

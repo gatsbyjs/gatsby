@@ -1,3 +1,4 @@
+const Promise = require(`bluebird`)
 const convertHrtime = require(`convert-hrtime`)
 const Worker = require(`jest-worker`).default
 const numWorkers = require(`physical-cpu-count`) || 1
@@ -7,22 +8,32 @@ const workerPool = new Worker(require.resolve(`./worker`), {
   numWorkers,
 })
 
-module.exports = async (htmlComponentRendererPath, pages, activity) => {
-  const start = process.hrtime()
-  const segments = chunk(pages, numWorkers)
-  const concurrency = 30
+module.exports = (htmlComponentRendererPath, pages, activity) =>
+  new Promise((resolve, reject) => {
+    const start = process.hrtime()
+    const segments = chunk(pages, 50)
+    let finished = 0
 
-  await Promise.all(
-    segments.map(paths =>
-      workerPool.renderHTML({ htmlComponentRendererPath, paths, concurrency })
+    Promise.map(
+      segments,
+      pageSegment =>
+        new Promise((resolve, reject) => {
+          workerPool
+            .renderHTML({ htmlComponentRendererPath, paths: pageSegment })
+            .then(() => {
+              finished += pageSegment.length
+              if (activity) {
+                activity.setStatus(
+                  `${finished}/${pages.length} ${(
+                    finished / convertHrtime(process.hrtime(start)).seconds
+                  ).toFixed(2)} pages/second`
+                )
+              }
+              resolve()
+            })
+            .catch(reject)
+        })
     )
-  )
-
-  if (activity) {
-    activity.setStatus(
-      `${pages.length}/${pages.length} ${(
-        pages.length / convertHrtime(process.hrtime(start)).seconds
-      ).toFixed(2)} pages/second`
-    )
-  }
-}
+      .then(resolve)
+      .catch(reject)
+  })

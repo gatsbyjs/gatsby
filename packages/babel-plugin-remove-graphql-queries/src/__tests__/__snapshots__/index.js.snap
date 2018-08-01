@@ -1,5 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Handles closing StaticQuery tag 1`] = `
+"import staticQueryData from \\"public/static/d/2626356014.json\\";
+import React from 'react';
+import { StaticQuery } from 'gatsby';
+export default (() => React.createElement(StaticQuery, {
+  query: \\"2626356014\\",
+  data: staticQueryData
+}, data => React.createElement(\\"div\\", null, data.site.siteMetadata.title)));"
+`;
+
 exports[`Leaves other graphql tags alone 1`] = `
 "import React from 'react';
 import { graphql } from 'relay';
@@ -9,6 +19,12 @@ export const query = graphql\`
        site { siteMetadata { title }}
      }
   \`;"
+`;
+
+exports[`Removes all gatsby queries 1`] = `
+"export default (() => React.createElement(\\"div\\", null, data.site.siteMetadata.title));
+export const siteMetaQuery = \\"2673797374\\";
+export const query = \\"2589775908\\";"
 `;
 
 exports[`Transforms queries in <StaticQuery> 1`] = `

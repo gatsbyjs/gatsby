@@ -8,7 +8,7 @@ title: GraphQL Reference
 
 This page will walk you through a series of GraphQL queries, each designed to demonstrate a particular feature of GraphQL. You'll be querying the _real_ schema used on gatsbyjs.org so feel free to experiment and poke around the innards of our site!
 
-You'll be using GraphiQL, an interactive editor you can also use [while building your Gatsby site](/tutorial/part-four/#introducing-graphiql).
+You'll be using GraphiQL, an interactive editor you can also use [while building your Gatsby site](/tutorial/part-five/#introducing-graphiql).
 
 ## Basic query
 
@@ -78,7 +78,7 @@ To add variables to page component queries, pass these in the `context` object [
 
 ## Group
 
-You can also group values on the basis of a field e.g. the title, date or category and get the field value, the total number of occurences and edges.
+You can also group values on the basis of a field e.g. the title, date or category and get the field value, the total number of occurrences and edges.
 
 The query below gets us all authors (`fieldValue`) who wrote a blogpost and how many blogposts (`totalCount`) they wrote. In addition we're grabbing the `title` and `slug` of the author's articles.
 
