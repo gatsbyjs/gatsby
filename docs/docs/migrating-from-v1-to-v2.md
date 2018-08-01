@@ -317,7 +317,7 @@ Update image query and fragment names:
 
 ```diff
 import React from "react"
-+ import { graphql } from "gatsby"
+import { graphql } from "gatsby"
 
 const Example = ({ data }) => {
   <div>
