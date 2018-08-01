@@ -18,10 +18,10 @@ There are only three major steps :)
 - title: Title of the Site
 
   # this URL is used to generate a screenshot
-  main_url: http://titleofthesite.com/
+  main_url: https://titleofthesite.com
   
   # this is the URL that is linked from the showcase
-  url: http://titleofthesite.co.uk/
+  url: https://titleofthesite.com/portfolio
   
   # optional: for open-source sites, this URL points to the repo that powers the site
   source_url: https://github.com/{username}/{titleofthesite}
@@ -30,10 +30,10 @@ There are only three major steps :)
   description: >
     {titleofthesite} is a shiny new website built with Gatsby v2 that makes important contributions towards a faster web for everyone.
   
-  # optional: not currently displayed in the Gatsby showcase
+  # optional and not currently displayed in the Gatsby showcase
   date_added: 2018-08-01
   
-  # optional: not currently displayed in the Gatsby showcase (one of v0, v1, v2)
+  # optional and not currently displayed in the Gatsby showcase (one of v0, v1, v2)
   gatsby_version: v2
 
   # You can list as many categories as you want here. Check list of Categories below in this doc!
