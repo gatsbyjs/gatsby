@@ -65,7 +65,6 @@ const babelOptions = {
   plugins: [
     "@babel/plugin-proposal-optional-chaining",
     "@babel/plugin-proposal-class-properties",
-    "babel-plugin-remove-graphql-queries",
   ],
 }
 
@@ -125,6 +124,22 @@ global.___loader = {
   enqueue: jest.fn(),
 }
 ```
+
+Finally it's a good idea to mock the gatsby module itself. This may not be
+needed at first, but will make thinmgs a lot easier if you want to test
+components that use `Link` or GraphQL.
+
+```js
+"use strict"
+import React from "react"
+const gatsby = jest.genMockFromModule("gatsby")
+gatsby.Link = ({ to, ...props }) => <a href={to} {...props} />
+
+module.exports = gatsby
+```
+
+This automatically mocks all of the `gatsby` exports, but also replaces `Link`
+with a simple `<a>` element. See below for why.
 
 ## Writing tests
 
@@ -218,7 +233,7 @@ Then edit the Jest config in your `package.json` to match this:
   "jest": {
     "transform": {
         "^.+\\.tsx?$": "ts-jest",
-        "^.+\\.jsx?$": "<rootDir>/jestPreprocess.js"
+        "^.+\\.jsx?$": "<rootDir>/jest-preprocess.js"
     },
     "testRegex": "(/__tests__/.*\\.([tj]sx?)|(\\.|/)(test|spec))\\.([tj]sx?)$",
     "moduleFileExtensions": [
@@ -251,8 +266,9 @@ testing your component:
     TypeError: Cannot read property 'history' of undefined
 ```
 
-This is a `react-router` error, and can be fixed by wrapping your component in a
-`MemoryRouter` from `react-router-dom`. For example:
+This is a `react-router` error, and can be fixed either by mocking the `Link`
+component in `gatsby` or `gatsby-link`, as shown above, or by wrapping your
+component in a `MemoryRouter` from `react-router-dom`. For example:
 
 ```js
 import React from "react"

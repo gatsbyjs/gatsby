@@ -3,12 +3,11 @@ Title: Testing components with GraphQL
 ---
 
 If you try to run unit tests on components that use GraphQL queries, you will
-discover that you have no data. Jest can't run your queries, so uses
-`babel-plugin-remove-graphql-queries` to strip them out. This means that if you
-are testing components that rely on GraphQL data, you will need to provide the
-data yourself. This is a good thing, as otherwise your tests could break if your
-data changes, and in the case of remote data sources it would need network
-access to run tests.
+discover that you have no data. Jest can't run your queries, so if you are
+testing components that rely on GraphQL data, you will need to provide the data
+yourself. This is a good thing, as otherwise your tests could break if your data
+changes, and in the case of remote data sources it would need network access to
+run tests.
 
 In general it is best practice to test the smallest components possible, so the
 simplest thing to do is to test the individual page components with mock data,
@@ -21,6 +20,11 @@ First you should make sure you have read
 described. This guide is based on the same blog starter project. You will be
 writing a simple snapshot test for the index page.
 
+As Jest doesn't run or compile away your GraphQL queries you need to mock the
+`graphql` function to stop it throwing an error. If you set your project up with
+a mock for `gatsby` as described in the unit testing guide then this is already
+done.
+
 ## Testing page queries
 
 As this is testing a page component you will need to put your tests in another
@@ -32,17 +36,10 @@ folder so that Gatsby doesn't try to turn the tests into pages.
 import React from "react"
 import renderer from "react-test-renderer"
 import BlogIndex from "../pages/index"
-import { MemoryRouter } from "react-router-dom"
 
 describe("BlogIndex", () =>
   it("renders correctly", () => {
-    const tree = renderer
-      .create(
-        <MemoryRouter>
-          <BlogIndex />
-        </MemoryRouter>
-      )
-      .toJSON()
+    const tree = renderer.create(<BlogIndex />).toJSON()
     expect(tree).toMatchSnapshot()
   }))
 ```
@@ -56,7 +53,6 @@ location object. You can fix this by passing one in:
 import React from "react"
 import renderer from "react-test-renderer"
 import BlogIndex from "../pages/index"
-import { MemoryRouter } from "react-router-dom"
 
 describe("BlogIndex", () =>
   it("renders correctly", () => {
@@ -64,13 +60,7 @@ describe("BlogIndex", () =>
       pathname: "",
     }
 
-    const tree = renderer
-      .create(
-        <MemoryRouter>
-          <BlogIndex location={location} />
-        </MemoryRouter>
-      )
-      .toJSON()
+    const tree = renderer.create(<BlogIndex location={location} />).toJSON()
     expect(tree).toMatchSnapshot()
   }))
 ```
@@ -182,7 +172,6 @@ you will be defining it directly inside your test file:
 import React from "react"
 import renderer from "react-test-renderer"
 import BlogIndex from "../pages/index"
-import { MemoryRouter } from "react-router-dom"
 
 describe("BlogIndex", () =>
   it("renders correctly", () => {
@@ -216,11 +205,7 @@ describe("BlogIndex", () =>
     }
 
     const tree = renderer
-      .create(
-        <MemoryRouter>
-          <BlogIndex location={location} data={data} />
-        </MemoryRouter>
-      )
+      .create(<BlogIndex location={location} data={data} />)
       .toJSON()
     expect(tree).toMatchSnapshot()
   }))
@@ -275,7 +260,7 @@ are passing to StaticQuery. Rename it first to avoid confusion:
 ```js
 // src/components/Header.js
 import React from "react"
-import { StaticQuery } from "gatsby"
+import { StaticQuery, graphql } from "gatsby"
 
 export const PureHeader = ({ data }) => (
   <header>
