@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 import React from "react"
 import { Link, Location } from "@reach/router"
 import { polyfill } from "react-lifecycles-compat"
-import { createLocation, createPath } from "history"
+import { createPath } from "history"
 
 export function withPrefix(path) {
   return normalizePath(`${__PATH_PREFIX__}/${path}`)
@@ -81,17 +81,23 @@ class GatsbyLink extends React.Component {
   }
 
   render() {
-    console.log(this.props)
     const { onClick, onMouseEnter, location, ...rest } = this.props
-    let El = Link
-    // if (Object.keys(NavLinkPropTypes).some(propName => this.props[propName])) {
-    // El = NavLink
-    // } else {
-    // El = Link
-    // }
+    let getProps
+    if (this.props.getProps) {
+      getProps = this.props.getProps
+    } else {
+      getProps = ({ isCurrent }) =>
+        isCurrent
+          ? {
+              className: this.props.activeClassName,
+              style: { ...this.props.style, ...this.props.activeStyle },
+            }
+          : null
+    }
 
     return (
-      <El
+      <Link
+        getProps={getProps}
         onMouseEnter={e => {
           // eslint-disable-line
           onMouseEnter && onMouseEnter(e)
