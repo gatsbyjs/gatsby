@@ -390,11 +390,11 @@ module.exports = async (program: any) => {
     const fixMap = {
       boundActionCreators: {
         newName: `actions`,
-        docsLink: `https://next.gatsbyjs.org/docs/migrating-from-v1-to-v2/#rename-boundactioncreators-to-actions`,
+        docsLink: `https://gatsby.app/boundActionCreators`,
       },
       pathContext: {
         newName: `pageContext`,
-        docsLink: `https://next.gatsbyjs.org/docs/migrating-from-v1-to-v2/#rename-pathcontext-to-pagecontext`,
+        docsLink: `https://gatsby.app/pathContext`,
       },
     }
     const deprecatedLocations = {}
@@ -417,7 +417,7 @@ module.exports = async (program: any) => {
           chalk.cyan(api),
           chalk.yellow(`is deprecated. Use`),
           chalk.cyan(fixMap[api].newName),
-          chalk.yellow(`instead: ${fixMap[api].docsLink}\nCheck the following files:`)
+          chalk.yellow(`instead. For migration instructions, see ${fixMap[api].docsLink}\nCheck the following files:`)
         )
         console.log()
         deprecatedLocations[api].forEach(file => console.log(file))
