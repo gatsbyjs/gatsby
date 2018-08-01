@@ -3,7 +3,7 @@ import { rhythm, options } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
 import { css } from "glamor"
 import hex2rgba from "hex2rgba"
-import addToMailchimp from 'gatsby-plugin-mailchimp'
+import addToMailchimp from "gatsby-plugin-mailchimp"
 
 let stripeAnimation = css.keyframes({
   "0%": { backgroundPosition: `0 0` },
@@ -43,36 +43,37 @@ class EmailCaptureForm extends React.Component {
   // Post to MC server & handle its response
   _postEmailToMailchimp = (email, attributes) => {
     addToMailchimp(email, attributes)
-    .then(result => {
-      // Mailchimp always returns a 200 response
-      // So we check the result for MC errors & failures
-      if (result.result !== `success`) {
+      .then(result => {
+        // Mailchimp always returns a 200 response
+        // So we check the result for MC errors & failures
+        if (result.result !== `success`) {
+          this.setState({
+            status: `error`,
+            msg: result.msg,
+          })
+        } else {
+          // Email address succesfully subcribed to Mailchimp
+          this.setState({
+            status: `success`,
+            msg: result.msg,
+          })
+        }
+      })
+      .catch(err => {
+        // Network failures, timeouts, etc
         this.setState({
           status: `error`,
-          msg: result.msg,
+          msg: err,
         })
-      } else {
-        // Email address succesfully subcribed to Mailchimp
-        this.setState({
-          status: `success`,
-          msg: result.msg,
-        })
-      }
-    })
-    .catch(err => {
-      // Network failures, timeouts, etc
-      this.setState({
-        status: `error`,
-        msg: err,
       })
-    })
   }
 
   _handleFormSubmit = e => {
     e.preventDefault()
     e.stopPropagation()
 
-    this.setState({
+    this.setState(
+      {
         status: `sending`,
         msg: null,
       },
@@ -84,19 +85,22 @@ class EmailCaptureForm extends React.Component {
   }
 
   render() {
+    const { signupMessage, confirmMessage, containerCss } = this.props
+
     return (
       <div
         css={{
           borderTop: `2px solid ${colors.lilac}`,
           marginTop: rhythm(3),
           paddingTop: `${rhythm(1)}`,
+          ...containerCss,
         }}
       >
         {this.state.status === `success` ? (
-          <div>Thank you! Youʼll receive your first email shortly.</div>
+          <div>{confirmMessage}</div>
         ) : (
           <div>
-            <p>Enjoyed this post? Receive the next one in your inbox!</p>
+            <p>{signupMessage}</p>
             <form
               id="email-capture"
               method="post"
@@ -157,6 +161,12 @@ class EmailCaptureForm extends React.Component {
       </div>
     )
   }
+}
+
+EmailCaptureForm.defaultProps = {
+  signupMessage: "Enjoyed this post? Receive the next one in your inbox!",
+  confirmMessage: "Thank you! Youʼll receive your first email shortly.",
+  containerCss: {},
 }
 
 export default EmailCaptureForm

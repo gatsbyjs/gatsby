@@ -1,7 +1,8 @@
 import React from "react"
-import Link from "gatsby-link"
+import { Link, graphql } from "gatsby"
 import * as PropTypes from "prop-types"
 import Img from "gatsby-image"
+import Layout from "../layouts"
 
 import { rhythm } from "../utils/typography"
 
@@ -17,9 +18,9 @@ class CategoryTemplate extends React.Component {
       product,
       icon,
     } = category
-    const iconImg = icon.resolutions
+    const iconImg = icon.fixed
     return (
-      <div>
+      <Layout>
         <div
           style={{
             display: `flex`,
@@ -33,7 +34,7 @@ class CategoryTemplate extends React.Component {
               width: iconImg.width,
               marginRight: rhythm(1 / 2),
             }}
-            resolutions={iconImg}
+            fixed={iconImg}
           />
           <h4 style={{ marginBottom: 0 }}>{title}</h4>
         </div>
@@ -51,7 +52,7 @@ class CategoryTemplate extends React.Component {
               ))}
           </ul>
         </div>
-      </div>
+      </Layout>
     )
   }
 }
@@ -61,13 +62,13 @@ CategoryTemplate.propTypes = propTypes
 export default CategoryTemplate
 
 export const pageQuery = graphql`
-  query categoryQuery($id: String!) {
+  query($id: String!) {
     contentfulCategory(id: { eq: $id }) {
       title {
         title
       }
       icon {
-        resolutions(width: 75) {
+        fixed(width: 75) {
           base64
           src
           srcSet

@@ -4,7 +4,7 @@ import stripPrefix from "./strip-prefix"
 
 const pageCache = {}
 
-module.exports = (pages, pathPrefix = ``) => rawPathname => {
+export default (pages, pathPrefix = ``) => rawPathname => {
   let pathname = decodeURIComponent(rawPathname)
 
   // Remove the pathPrefix from the pathname.

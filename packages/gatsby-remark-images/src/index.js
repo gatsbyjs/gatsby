@@ -2,7 +2,7 @@ const select = require(`unist-util-select`)
 const path = require(`path`)
 const isRelativeUrl = require(`is-relative-url`)
 const _ = require(`lodash`)
-const { sizes } = require(`gatsby-plugin-sharp`)
+const { fluid } = require(`gatsby-plugin-sharp`)
 const Promise = require(`bluebird`)
 const cheerio = require(`cheerio`)
 const slash = require(`slash`)
@@ -10,7 +10,7 @@ const slash = require(`slash`)
 // If the image is relative (not hosted elsewhere)
 // 1. Find the image file
 // 2. Find the image's size
-// 3. Filter out any responsive image sizes that are greater than the image's width
+// 3. Filter out any responsive image fluid sizes that are greater than the image's width
 // 4. Create the responsive images.
 // 5. Set the html w/ aspect ratio helper.
 module.exports = (
@@ -24,6 +24,7 @@ module.exports = (
     linkImagesToOriginal: true,
     showCaptions: false,
     pathPrefix,
+    withWebp: false,
   }
 
   const options = _.defaults(pluginOptions, defaults)
@@ -58,23 +59,23 @@ module.exports = (
       return resolve()
     }
 
-    let responsiveSizesResult = await sizes({
+    let fluidResult = await fluid({
       file: imageNode,
       args: options,
       reporter,
     })
 
-    if (!responsiveSizesResult) {
+    if (!fluidResult) {
       return resolve()
     }
 
     // Calculate the paddingBottom %
-    const ratio = `${1 / responsiveSizesResult.aspectRatio * 100}%`
+    const ratio = `${(1 / fluidResult.aspectRatio) * 100}%`
 
-    const originalImg = responsiveSizesResult.originalImg
-    const fallbackSrc = responsiveSizesResult.src
-    const srcSet = responsiveSizesResult.srcSet
-    const presentationWidth = responsiveSizesResult.presentationWidth
+    const originalImg = fluidResult.originalImg
+    const fallbackSrc = fluidResult.src
+    const srcSet = fluidResult.srcSet
+    const presentationWidth = fluidResult.presentationWidth
 
     // Generate default alt tag
     const srcSplit = node.url.split(`/`)
@@ -85,6 +86,66 @@ module.exports = (
     // TODO
     // Fade in images on load.
     // https://www.perpetual-beta.org/weblog/silky-smooth-image-loading.html
+
+    const imageClass = `gatsby-resp-image-image`
+    const imageStyle = `width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px ${
+      options.backgroundColor
+    };`
+
+    // Create our base image tag
+    let imageTag = `
+      <img
+        class="${imageClass}"
+        style="${imageStyle}"
+        alt="${node.alt ? node.alt : defaultAlt}"
+        title="${node.title ? node.title : ``}"
+        src="${fallbackSrc}"
+        srcset="${srcSet}"
+        sizes="${fluidResult.sizes}"
+      />
+    `
+
+    // if options.withWebp is enabled, generate a webp version and change the image tag to a picture tag
+    if (options.withWebp) {
+      const webpFluidResult = await fluid({
+        file: imageNode,
+        args: _.defaults(
+          { toFormat: `WEBP` },
+          // override options if it's an object, otherwise just pass through defaults
+          options.withWebp === true ? {} : options.withWebp,
+          pluginOptions,
+          defaults
+        ),
+        reporter,
+      })
+
+      if (!webpFluidResult) {
+        return resolve()
+      }
+
+      imageTag = `
+      <picture>
+        <source
+          srcset="${webpFluidResult.srcSet}"
+          sizes="${webpFluidResult.sizes}"
+          type="${webpFluidResult.srcSetType}"
+        />
+        <source
+          srcset="${srcSet}"
+          sizes="${fluidResult.sizes}"
+          type="${fluidResult.srcSetType}"
+        />
+        <img
+          class="${imageClass}"
+          style="${imageStyle}"
+          src="${fallbackSrc}" 
+          alt="${node.alt ? node.alt : defaultAlt}"
+          title="${node.title ? node.title : ``}"
+          src="${fallbackSrc}"
+        />
+      </picture>
+      `
+    }
 
     // Construct new image node w/ aspect ratio placeholder
     let rawHTML = `
@@ -97,21 +158,9 @@ module.exports = (
     <span
       class="gatsby-resp-image-background-image"
       style="padding-bottom: ${ratio}; position: relative; bottom: 0; left: 0; background-image: url('${
-      responsiveSizesResult.base64
+      fluidResult.base64
     }'); background-size: cover; display: block;"
-    >
-      <img
-        class="gatsby-resp-image-image"
-        style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px ${
-          options.backgroundColor
-        };"
-        alt="${node.alt ? node.alt : defaultAlt}"
-        title="${node.title ? node.title : ``}"
-        src="${fallbackSrc}"
-        srcset="${srcSet}"
-        sizes="${responsiveSizesResult.sizes}"
-      />
-    </span>
+    >${imageTag}</span>
   </span>
   `
 

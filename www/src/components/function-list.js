@@ -1,4 +1,5 @@
 import React from "react"
+import { graphql } from "gatsby"
 
 import { rhythm, scale, options } from "../utils/typography"
 
@@ -53,7 +54,7 @@ const Param = (param, depth = 0) => {
 
 export default ({ functions }) => (
   <div>
-    {functions.map(({ node }, i) => (
+    {functions.map((node, i) => (
       <div
         id={node.name}
         key={`reference list ${node.name}`}

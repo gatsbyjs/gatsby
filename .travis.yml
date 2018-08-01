@@ -1,5 +1,3 @@
-sudo: required
-
 services:
   - docker
 
@@ -17,6 +15,7 @@ jobs:
           node_js:
             - '6'
             - '8'
+            - '10'
           cache:
             yarn: true
           before_install:
@@ -26,13 +25,13 @@ jobs:
           - yarn run bootstrap
           script:
           - yarn test
-          - yarn danger ci
 
         - stage: gatsbygram ui tests
           language: node_js
           node_js:
             - '6'
             - '8'
+            - '10'
           cache:
             yarn: true
           before_install:
@@ -53,6 +52,6 @@ jobs:
           before_install:
             - chmod +x scripts/www-graphql-docker-push.sh
           script:
-            - ./scripts/www-graphql-docker-push.sh
+            - travis_wait 30 ./scripts/www-graphql-docker-push.sh
 
 

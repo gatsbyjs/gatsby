@@ -40,8 +40,10 @@ function transformPackageJson(json) {
   return json
 }
 
-exports.sourceNodes = ({ boundActionCreators, store }) => {
-  const { createNode } = boundActionCreators
+const createPageId = path => `SitePage ${path}`
+
+exports.sourceNodes = ({ actions, store }) => {
+  const { createNode } = actions
   const state = store.getState()
   const { program } = state
   const { flattenedPlugins } = state
@@ -137,10 +139,8 @@ exports.sourceNodes = ({ boundActionCreators, store }) => {
   })
 }
 
-const createPageId = path => `SitePage ${path}`
-
-exports.onCreatePage = ({ page, boundActionCreators }) => {
-  const { createNode } = boundActionCreators
+exports.onCreatePage = ({ page, actions }) => {
+  const { createNode } = actions
   // eslint-disable-next-line
   const { updatedAt, ...pageWithoutUpdated } = page
 
@@ -154,7 +154,7 @@ exports.onCreatePage = ({ page, boundActionCreators }) => {
       type: `SitePage`,
       contentDigest: crypto
         .createHash(`md5`)
-        .update(JSON.stringify(page))
+        .update(JSON.stringify(pageWithoutUpdated))
         .digest(`hex`),
       description:
         page.pluginCreatorId === `Plugin default-site-plugin`
@@ -168,5 +168,5 @@ exports.onCreatePage = ({ page, boundActionCreators }) => {
 emitter.on(`DELETE_PAGE`, action => {
   const nodeId = createPageId(action.payload.path)
   const node = getNode(nodeId)
-  boundActionCreators.deleteNode(nodeId, node)
+  boundActionCreators.deleteNode({ node })
 })

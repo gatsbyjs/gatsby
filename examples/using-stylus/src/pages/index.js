@@ -1,5 +1,5 @@
 import React from "react"
-import Link from "gatsby-link"
+import { Link } from "gatsby"
 import "./index.styl"
 
 class CssModules extends React.Component {
@@ -21,12 +21,15 @@ class CssModules extends React.Component {
             <h2>Nav example</h2>
             <ul>
               <li>
+                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                 <a href="#">Store</a>
               </li>
               <li>
+                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                 <a href="#">Help</a>
               </li>
               <li>
+                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                 <a href="#">Logout</a>
               </li>
             </ul>

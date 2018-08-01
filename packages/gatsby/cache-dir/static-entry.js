@@ -1,50 +1,60 @@
-import React from "react"
-import { renderToString, renderToStaticMarkup } from "react-dom/server"
-import { StaticRouter, Route, withRouter } from "react-router-dom"
-import { kebabCase, get, merge, isArray, isString } from "lodash"
+const React = require(`react`)
+const fs = require(`fs`)
+const { join } = require(`path`)
+const { renderToString, renderToStaticMarkup } = require(`react-dom/server`)
+const { StaticRouter, Route } = require(`react-router-dom`)
+const { get, merge, isObject, flatten, uniqBy } = require(`lodash`)
 
-import apiRunner from "./api-runner-ssr"
-import pages from "./pages.json"
-import syncRequires from "./sync-requires"
-import testRequireError from "./test-require-error"
+const apiRunner = require(`./api-runner-ssr`)
+const syncRequires = require(`./sync-requires`)
+const { dataPaths, pages } = require(`./data.json`)
+
+// Speed up looking up pages.
+const pagesObjectMap = new Map()
+pages.forEach(p => pagesObjectMap.set(p.path, p))
+
+const stats = JSON.parse(
+  fs.readFileSync(`${process.cwd()}/public/webpack.stats.json`, `utf-8`)
+)
+
+// const testRequireError = require("./test-require-error")
+// For some extremely mysterious reason, webpack adds the above module *after*
+// this module so that when this code runs, testRequireError is undefined.
+// So in the meantime, we'll just inline it.
+const testRequireError = (moduleName, err) => {
+  const regex = new RegExp(`Error: Cannot find module\\s.${moduleName}`)
+  const firstLine = err.toString().split(`\n`)[0]
+  return regex.test(firstLine)
+}
 
 let Html
 try {
   Html = require(`../src/html`)
 } catch (err) {
-  if (testRequireError(`..\/src\/html`, err)) {
+  if (testRequireError(`../src/html`, err)) {
     Html = require(`./default-html`)
   } else {
-    console.log(
-      `\n\nThere was an error requiring "src/html.js"\n\n`,
-      err,
-      `\n\n`
-    )
-    process.exit()
+    throw err
   }
 }
 
-const pathChunkName = path => {
-  const name = path === `/` ? `index` : kebabCase(path)
-  return `path---${name}`
+Html = Html && Html.__esModule ? Html.default : Html
+
+function urlJoin(...parts) {
+  return parts.reduce((r, next) => {
+    const segment = next == null ? `` : String(next).replace(/^\/+/, ``)
+    return segment ? `${r.replace(/\/$/, ``)}/${segment}` : r
+  }, ``)
 }
 
-const getPage = path => pages.find(page => page.path === path)
-const defaultLayout = props => <div>{props.children()}</div>
-
-const getLayout = page => {
-  const layout = syncRequires.layouts[page.layout]
-  return layout ? layout : defaultLayout
-}
+const getPage = path => pagesObjectMap.get(path)
 
 const createElement = React.createElement
 
-module.exports = (locals, callback) => {
-  let pathPrefix = `/`
-  if (__PREFIX_PATHS__) {
-    pathPrefix = `${__PATH_PREFIX__}/`
-  }
-  const is404 = pathChunkName(locals.path).indexOf('path---404') > -1
+export default (pagePath, callback) => {
+  const pathPrefix = `${__PATH_PREFIX__}/`
+  const is404 = pathChunkName(pagePath.path).indexOf('path---404') > -1
+
   let bodyHtml = ``
   let headComponents = []
   let htmlAttributes = {}
@@ -81,31 +91,44 @@ module.exports = (locals, callback) => {
     bodyProps = merge({}, bodyProps, props)
   }
 
+  const page = getPage(pagePath)
+
+  let dataAndContext = {}
+  if (page.jsonName in dataPaths) {
+    const pathToJsonData = `../public/` + dataPaths[page.jsonName]
+    try {
+      dataAndContext = JSON.parse(
+        fs.readFileSync(
+          `${process.cwd()}/public/static/d/${dataPaths[page.jsonName]}.json`
+        )
+      )
+    } catch (e) {
+      console.log(`error`, pathToJsonData, e)
+      process.exit()
+    }
+  }
+
+  const AltStaticRouter = apiRunner(`replaceStaticRouterComponent`)[0]
+
+  apiRunner(`replaceStaticRouterComponent`)
+
   const bodyComponent = createElement(
-    StaticRouter,
+    AltStaticRouter || StaticRouter,
     {
+      basename: pathPrefix.slice(0, -1),
       location: {
-        pathname: locals.path,
+        pathname: pagePath,
       },
       context: {},
     },
     createElement(Route, {
-      render: routeProps => {
-        const page = getPage(routeProps.location.pathname)
-        const layout = getLayout(page)
-        return createElement(withRouter(layout), {
-          children: layoutProps => {
-            const props = layoutProps ? layoutProps : routeProps
-            return createElement(
-              syncRequires.components[page.componentChunkName],
-              {
-                ...props,
-                ...syncRequires.json[page.jsonName],
-              }
-            )
-          },
-        })
-      },
+      // eslint-disable-next-line react/display-name
+      render: routeProps =>
+        createElement(syncRequires.components[page.componentChunkName], {
+          ...routeProps,
+          ...dataAndContext,
+          pathContext: dataAndContext.pageContext,
+        }),
     })
   )
 
@@ -126,6 +149,54 @@ module.exports = (locals, callback) => {
     bodyHtml = renderToString(bodyComponent)
   }
 
+  // Create paths to scripts
+  let scriptsAndStyles = flatten(
+    [`app`, page.componentChunkName].map(s => {
+      const fetchKey = `assetsByChunkName[${s}]`
+
+      let chunks = get(stats, fetchKey)
+      let namedChunkGroups = get(stats, `namedChunkGroups`)
+
+      if (!chunks) {
+        return null
+      }
+
+      chunks = chunks.map(chunk => {
+        if (chunk === `/`) {
+          return null
+        }
+        return { rel: `preload`, name: chunk }
+      })
+
+      namedChunkGroups[s].assets.forEach(asset =>
+        chunks.push({ rel: `preload`, name: asset })
+      )
+
+      const childAssets = namedChunkGroups[s].childAssets
+      for (const rel in childAssets) {
+        chunks = merge(
+          chunks,
+          childAssets[rel].map(chunk => {
+            return { rel, name: chunk }
+          })
+        )
+      }
+
+      return chunks
+    })
+  )
+    .filter(s => isObject(s))
+    .sort((s1, s2) => (s1.rel == `preload` ? -1 : 1)) // given priority to preload
+
+  scriptsAndStyles = uniqBy(scriptsAndStyles, item => item.name)
+
+  const scripts = scriptsAndStyles.filter(
+    script => script.name && script.name.endsWith(`.js`)
+  )
+  const styles = scriptsAndStyles.filter(
+    style => style.name && style.name.endsWith(`.css`)
+  )
+
   apiRunner(`onRenderBody`, {
     setHeadComponents,
     setHtmlAttributes,
@@ -133,78 +204,97 @@ module.exports = (locals, callback) => {
     setPreBodyComponents,
     setPostBodyComponents,
     setBodyProps,
-    pathname: locals.path,
+    pathname: pagePath,
     bodyHtml,
+    scripts,
+    styles,
+    pathPrefix,
   })
 
-  let stats
-  try {
-    stats = require(`../public/stats.json`)
-  } catch (e) {
-    // ignore
+  scripts
+    .slice(0)
+    .reverse()
+    .forEach(script => {
+      // Add preload/prefetch <link>s for scripts.
+      headComponents.push(
+        <link
+          as="script"
+          rel={script.rel}
+          key={script.name}
+          href={urlJoin(pathPrefix, script.name)}
+        />
+      )
+    })
+
+  if (page.jsonName in dataPaths) {
+    const dataPath = `${pathPrefix}static/d/${dataPaths[page.jsonName]}.json`
+    headComponents.push(
+      <link
+        rel="preload"
+        key={dataPath}
+        href={dataPath}
+        as="fetch"
+        crossOrigin="use-credentials"
+      />
+    )
   }
 
-  // Create paths to scripts
-  const page = pages.find(page => page.path === locals.path)
-  const scripts = [
-    `commons`,
-    `app`,
-    pathChunkName(locals.path),
-    page.componentChunkName,
-    page.layoutComponentChunkName,
-  ]
-    .map(s => {
-      const fetchKey = `assetsByChunkName[${s}]`
+  styles
+    .slice(0)
+    .reverse()
+    .forEach(style => {
+      // Add <link>s for styles that should be prefetched
+      // otherwise, inline as a <style> tag
 
-      let fetchedScript = get(stats, fetchKey)
-
-      if (!fetchedScript) {
-        return null
+      if (style.rel === `prefetch`) {
+        headComponents.push(
+          <link
+            as="style"
+            rel={style.rel}
+            key={style.name}
+            href={urlJoin(pathPrefix, style.name)}
+          />
+        )
+      } else {
+        headComponents.unshift(
+          <style
+            data-href={urlJoin(pathPrefix, style.name)}
+            dangerouslySetInnerHTML={{
+              __html: fs.readFileSync(
+                join(process.cwd(), `public`, style.name),
+                `utf-8`
+              ),
+            }}
+          />
+        )
       }
-
-      // If sourcemaps are enabled, then the entry will be an array with
-      // the script name as the first entry.
-      fetchedScript = isArray(fetchedScript) ? fetchedScript[0] : fetchedScript
-      const prefixedScript = `${pathPrefix}${fetchedScript}`
-
-      // Make sure we found a component.
-      if (prefixedScript === `/`) {
-        return null
-      }
-
-      return prefixedScript
     })
-    .filter(s => isString(s))
 
-  scripts.forEach(script => {
-    // Add preload <link>s for scripts.
-    headComponents.unshift(
-      <link rel="preload" key={script} href={script} as="script" />
-    )
-  })
+  // Add page metadata for the current page
+  const windowData = `/*<![CDATA[*/window.page=${JSON.stringify(page)};${
+    page.jsonName in dataPaths
+      ? `window.dataPath="${dataPaths[page.jsonName]}";`
+      : ``
+  }/*]]>*/`
 
-  // Add the chunk-manifest at the end of body element.
-  const chunkManifest = require(`!raw!../public/chunk-manifest.json`)
-  postBodyComponents.unshift(
-    <script
-      id="webpack-manifest"
-      key="webpack-manifest"
-      dangerouslySetInnerHTML={{
-        __html: `/*<![CDATA[*/window.webpackManifest=${chunkManifest}/*]]>*/`,
-      }}
-    />
-  )
-
-  // Add script loader for page scripts to the end of body element (after webpack manifest).
-  const scriptsString = scripts.map(s => `"${s}"`).join(`,`)
   postBodyComponents.push(
     <script
       key={`script-loader`}
+      id={`gatsby-script-loader`}
       dangerouslySetInnerHTML={{
-        __html: `/*<![CDATA[*/[${scriptsString}].forEach(function(s){document.write('<script src="'+s+'" defer></'+'script>')})/*]]>*/`,
+        __html: windowData,
       }}
     />
   )
+
+  // Filter out prefetched bundles as adding them as a script tag
+  // would force high priority fetching.
+  const bodyScripts = scripts.filter(s => s.rel !== `prefetch`).map(s => {
+    const scriptPath = `${pathPrefix}${JSON.stringify(s.name).slice(1, -1)}`
+    return <script key={scriptPath} src={scriptPath} async />
+  })
+
+  postBodyComponents.push(...bodyScripts)
 
   const html = `<!DOCTYPE html>${renderToStaticMarkup(
     <Html
@@ -215,7 +305,7 @@ module.exports = (locals, callback) => {
       preBodyComponents={preBodyComponents}
       postBodyComponents={postBodyComponents}
       body={bodyHtml}
-      path={locals.path}
+      path={pagePath}
     />
   )}`
 

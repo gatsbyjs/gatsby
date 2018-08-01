@@ -6,21 +6,21 @@ be stored along side of, and revisioned with, your website content.
 
 It currently supports:
 
-* [Babel](https://babeljs.io/repl/)
-* [Codepen](https://codepen.io/)
-* [CodeSandbox](https://codesandbox.io/)
-* [Ramda](http://ramdajs.com/repl)
+- [Babel](https://babeljs.io/repl/)
+- [Codepen](https://codepen.io/)
+- [CodeSandbox](https://codesandbox.io/)
+- [Ramda](http://ramdajs.com/repl)
 
 This plug-in was created to solve a couple of problems the React team has faced
 with [reactjs.org](https://github.com/reactjs/reactjs.org):
 
-* Examples were stored separately from documentation (eg in Codepen) which made
+- Examples were stored separately from documentation (eg in Codepen) which made
   it more difficult to coordinate updates. (It was easy to forget to update an
   example when an API changes.)
-* Examples (eg Codepens) were owned by a single author, so the community
+- Examples (eg Codepens) were owned by a single author, so the community
   couldn't contribute PRs to update them without forking and fragmenting
   ownership.
-* It was easy to create invalid links (eg Babel REPL links that \_don't quite
+- It was easy to create invalid links (eg Babel REPL links that \_don't quite
   work).
 
 ## Overview
@@ -42,7 +42,7 @@ to HTML links that open the embedded code examples in a REPL. For example:
 
 ```html
 <!-- before -->
-[See it in Babel](babel://hello-world)
+[See it in Babel](babel://hello-world.js)
 
 <!-- after -->
 <a href="https://babeljs.io/repl/#?presets=react&code_lz=...">
@@ -50,7 +50,7 @@ to HTML links that open the embedded code examples in a REPL. For example:
 </a>
 
 <!-- before -->
-[Try it on CodePen](codepen://components-and-props/rendering-a-component)
+[Try it on CodePen](codepen://components-and-props/rendering-a-component.js)
 
 <!-- after -->
 <a href="/redirect-to-codepen/components-and-props/rendering-a-component">
@@ -58,12 +58,41 @@ to HTML links that open the embedded code examples in a REPL. For example:
 </a>
 
 <!-- before -->
-[Try it on CodeSandbox](codesandbox://components-and-props/rendering-a-component)
+[Try it on CodeSandbox](codesandbox://components-and-props/rendering-a-component.js)
 
 <!-- after -->
 <a href="https://codesandbox.io/api/v1/sandboxes/define?parameters=...">
   Try it on CodeSandbox
 </a>
+```
+
+### Creating CodeSandbox Example With Multiple Files
+
+Sometimes a larger code example would require more than a single file, with various types. For example, you might have an example folder like this:
+
+```
+├── my-example
+│   ├── index.js
+│   ├── util.js
+│   └── index.css
+```
+
+CodeSandbox supports code example with multiple files. With this plugin, you can do:
+
+```html
+[Try it on CodeSandbox](codesandbox://my-example/index.js,my-example/util.js,my-example/index.css)
+```
+
+> Caveat
+>
+> The first file path you passed to `codesandbox://` will be the entry of your example, that is, the `main` field specified in your `package.json`.
+
+And in `index.js`, you could import other files using the ES6 modules syntax:
+
+```js
+import { foo } from "./utils"
+
+import "./index.css"
 ```
 
 ### How does it work?

@@ -4,14 +4,14 @@ import GatsbyLink from "gatsby-link"
 
 class TOC extends React.Component {
   render() {
-    const { allComponents } = this.props.pathContext
+    const { allComponents } = this.props.pageContext
     return (
       <div>
         <h1>Component styleguide</h1>
         <ul>
-          {allComponents.map(({ displayName, path }, index) => (
+          {allComponents.map(({ displayName, filePath }, index) => (
             <li key={index}>
-              <GatsbyLink to={path}>{displayName}</GatsbyLink>
+              <GatsbyLink to={filePath}>{displayName}</GatsbyLink>
             </li>
           ))}
         </ul>
@@ -21,11 +21,11 @@ class TOC extends React.Component {
 }
 
 TOC.propTypes = {
-  pathContext: PropTypes.shape({
+  pageContext: PropTypes.shape({
     allComponents: PropTypes.arrayOf(
       PropTypes.shape({
         displayName: PropTypes.string.isRequired,
-        path: PropTypes.string.isRequired,
+        filePath: PropTypes.string.isRequired,
       }).isRequired
     ).isRequired,
   }).isRequired,

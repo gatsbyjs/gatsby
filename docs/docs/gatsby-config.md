@@ -29,7 +29,7 @@ module.exports = {
     siteUrl: `https://www.gatsbyjs.org`,
     description: `Blazing-fast static site generator for React`,
   },
-};
+}
 ```
 
 This way you can store it in one place, and pull it whenever you need it. If you ever need to update the info, you only have to change it here.
@@ -52,7 +52,7 @@ module.exports = {
       },
     },
   ],
-};
+}
 ```
 
 See more about [Plugins](/docs/plugins/) for more on utilizing plugins, and to see available official and community plugins.
@@ -65,7 +65,7 @@ It's common for sites to be hosted somewhere other than the root of their domain
 module.exports = {
   // Note: it must *not* have a trailing slash.
   pathPrefix: `/blog`,
-};
+}
 ```
 
 See more about [Adding a Path Prefix](/docs/path-prefix/).
@@ -79,7 +79,7 @@ If you'd like to provide your own Promise polyfill, you can set `polyfill` to fa
 ```javascript
 module.exports = {
   polyfill: false,
-};
+}
 ```
 
 See more about [Browser Support](/docs/browser-support/#polyfills) in Gatsby.
@@ -121,7 +121,7 @@ module.exports = {
 Gatsby then uses this mapping when creating the GraphQL schema to enable you to query data from both sources:
 
 ```graphql
-query BlogPost($slug: String!) {
+query($slug: String!) {
   markdownRemark(fields: { slug: { eq: $slug } }) {
     html
     fields {
@@ -198,7 +198,7 @@ module.exports = {
 You can query the `tech` object via the referred ids in `experience`:
 
 ```graphql
-query CV {
+query {
   experience: allExperienceJson {
     edges {
       node {
@@ -232,7 +232,7 @@ module.exports = {
     prefix: "/api",
     url: "http://examplesite.com/api/",
   },
-};
+}
 ```
 
 See more about [Proxying API Requests in Develop](/docs/api-proxy/).

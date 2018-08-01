@@ -38,25 +38,22 @@ const styles = StyleSheet.create({
 })
 
 const Container = ({ style, ...props }) => (
-  <View {...props} style={[styles.container, style]}/>
+  <View {...props} style={[styles.container, style]} />
 )
 
-const Header = ({ children }) => (
-  <Text style={styles.header}>{children}</Text>
-)
+const Header = ({ children }) => <Text style={styles.header}>{children}</Text>
 
 const HeaderSub = ({ style, children }) => (
-  <Text style={[styles.headerSub,style]}>{children}</Text>
+  <Text style={[styles.headerSub, style]}>{children}</Text>
 )
 
 const OpenLinkButton = ({ title, url }) => (
   <View style={styles.openLinkButton}>
-    <Button onPress={() => Linking.openURL(url)} title={title}/>
+    <Button onPress={() => Linking.openURL(url)} title={title} />
   </View>
 )
 
 const Row = ({ children }) => <View style={styles.row}>{children}</View>
-
 
 class StatefulSwitch extends React.Component {
   state = { value: true }
@@ -84,7 +81,6 @@ class StatefulCheckBox extends React.Component {
   }
 }
 
-
 class AnimationExample extends React.Component {
   state = {
     animatedValue: new Animated.Value(0),
@@ -101,7 +97,7 @@ class AnimationExample extends React.Component {
         tension: 6,
       }).start()
     })
-  };
+  }
 
   render() {
     const scaleAnimation = this.state.animatedValue.interpolate({
@@ -125,13 +121,13 @@ class AnimationExample extends React.Component {
       outputRange: [-150, 150],
     })
     return (
-      <View style={{ width: 800, justifyContent: `center`, alignItems: `center` }}>
+      <View
+        style={{ width: 800, justifyContent: `center`, alignItems: `center` }}
+      >
         <TouchableOpacity onPress={this.animate}>
           <Animated.View
             style={{
-              transform: [
-                { translateX: translateXAnimation },
-              ],
+              transform: [{ translateX: translateXAnimation }],
             }}
           >
             <Animated.View
@@ -158,54 +154,62 @@ class AnimationExample extends React.Component {
   }
 }
 
-
 const IndexPage = () => (
   <View>
-
     <Container>
       <Header>Gatsby using react-native-web</Header>
       <HeaderSub style={{ maxWidth: 600 }}>
-        This is an example usage of <Text style={{ color: `red` }}>gatsby-plugin-react-native-web</Text>, which permit to share React component
-        between your ReactNative mobile app and your Gatsby static website. Crazy right?
+        This is an example usage of{` `}
+        <Text style={{ color: `red` }}>gatsby-plugin-react-native-web</Text>,
+        which permit to share React component between your ReactNative mobile
+        app and your Gatsby static website. Crazy right?
       </HeaderSub>
     </Container>
 
     <Container>
       <Row>
-        <OpenLinkButton title="Go to plugin repo" url={`https://github.com/slorber/gatsby-plugin-react-native-web`}/>
-        <OpenLinkButton title="Go to RNW repo" url={`https://github.com/necolas/react-native-web`}/>
-        <OpenLinkButton title="Go to this page source code"
-                        url={`https://github.com/gatsbyjs/gatsby/blob/master/examples/using-react-native-web/src/pages/index.js`}/>
+        <OpenLinkButton
+          title="Go to plugin repo"
+          url={`https://github.com/slorber/gatsby-plugin-react-native-web`}
+        />
+        <OpenLinkButton
+          title="Go to RNW repo"
+          url={`https://github.com/necolas/react-native-web`}
+        />
+        <OpenLinkButton
+          title="Go to this page source code"
+          url={`https://github.com/gatsbyjs/gatsby/blob/master/examples/using-react-native-web/src/pages/index.js`}
+        />
       </Row>
     </Container>
 
     <View>
       <Row>
         <Container>
-          <StatefulSwitch/>
+          <StatefulSwitch />
         </Container>
         <Container>
-          <StatefulCheckBox/>
+          <StatefulCheckBox />
         </Container>
         <Container>
-          <ActivityIndicator size="large"/>
+          <ActivityIndicator size="large" />
         </Container>
         <Container style={{ width: 300 }}>
-          <ProgressBar indeterminate={true}/>
+          <ProgressBar indeterminate={true} />
         </Container>
       </Row>
       <Row>
         <Container style={{ width: 300 }}>
           <Picker>
-            <Picker.Item label="Goblet of Fire"/>
-            <Picker.Item label="Order of the Phoenix"/>
+            <Picker.Item label="Goblet of Fire" />
+            <Picker.Item label="Order of the Phoenix" />
           </Picker>
         </Container>
       </Row>
     </View>
 
     <Container>
-      <AnimationExample/>
+      <AnimationExample />
     </Container>
 
     <Container>
@@ -213,7 +217,6 @@ const IndexPage = () => (
         <Text>link to 2nd page</Text>
       </GatsbyLink>
     </Container>
-
   </View>
 )
 

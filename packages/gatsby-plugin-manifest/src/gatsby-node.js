@@ -52,7 +52,9 @@ exports.onPostBuild = (args, pluginOptions) =>
     if (icon !== undefined) {
       // Check if the icon exists
       if (!doesIconExist(icon)) {
-        reject(`icon (${icon}) does not exist as defined in gatsby-config.js. Make sure the file exists relative to the root of the site.`)
+        reject(
+          `icon (${icon}) does not exist as defined in gatsby-config.js. Make sure the file exists relative to the root of the site.`
+        )
       }
       generateIcons(manifest.icons, icon).then(() => {
         //images have been generated

@@ -74,11 +74,11 @@ growing, so oftentimes a plugin already exists that solves the particular
 problem you're trying to solve. To address the functionality we want for _this_
 blog, we'll use the following plugins:
 
-* [`gatsby-plugin-catch-links`][gatsby-plugin-catch-links]
-  * implements the history `pushState` API, and does not require a page reload
+- [`gatsby-plugin-catch-links`][gatsby-plugin-catch-links]
+  - implements the history `pushState` API, and does not require a page reload
     on navigating to a different page in the blog
-* [`gatsby-plugin-react-helmet`][gatsby-plugin-react-helmet]
-  * [react-helmet][react-helmet] is a tool that allows for modification of the
+- [`gatsby-plugin-react-helmet`][gatsby-plugin-react-helmet]
+  - [react-helmet][react-helmet] is a tool that allows for modification of the
     `head` tags; Gatsby statically renders any of these `head` tag changes
 
 with the following command:
@@ -165,8 +165,8 @@ over and convert to usable HTML.
 We'll only be using one transformer plugin (for Markdown), so let's get that
 installed.
 
-* [gatsby-transformer-remark][gatsby-transformer-remark]
-  * Uses the [remark][remark] Markdown parser to transform .md files on disk
+- [gatsby-transformer-remark][gatsby-transformer-remark]
+  - Uses the [remark][remark] Markdown parser to transform .md files on disk
     into HTML; additionally this transformer can optionally take plugins to
     further extend functionality--e.g. add syntax highlighting with
     `gatsby-remark-prismjs`, `gatsby-remark-copy-linked-files` to copy relative
@@ -256,15 +256,15 @@ We'll want to create the file `src/templates/blog-post.js` (please create the
 `src/templates` folder if it does not yet exist!).
 
 ```javascript
-import React from "react";
-import Helmet from "react-helmet";
+import React from "react"
+import Helmet from "react-helmet"
 
 // import '../css/blog-post.css'; // make it pretty!
 
 export default function Template({
   data, // this prop will be injected by the GraphQL query we'll write in a bit
 }) {
-  const { markdownRemark: post } = data; // data.markdownRemark holds our post data
+  const { markdownRemark: post } = data // data.markdownRemark holds our post data
   return (
     <div className="blog-post-container">
       <Helmet title={`Your Blog Name - ${post.frontmatter.title}`} />
@@ -276,7 +276,7 @@ export default function Template({
         />
       </div>
     </div>
-  );
+  )
 }
 ```
 
@@ -300,6 +300,7 @@ specified earlier.
 ```javascript{21-32}
 import React from 'react';
 import Helmet from 'react-helmet';
+import { graphql } from 'gatsby';
 
 // import '../css/blog-post.css';
 
@@ -378,13 +379,13 @@ Gatsby, as detailed in its [Node API specification][node-spec]. However, we only
 care about one particular API in this instance, `createPages`.
 
 ```javascript
-const path = require("path");
+const path = require("path")
 
 exports.createPages = ({ boundActionCreators, graphql }) => {
-  const { createPage } = boundActionCreators;
+  const { createPage } = boundActionCreators
 
-  const blogPostTemplate = path.resolve(`src/templates/blog-post.js`);
-};
+  const blogPostTemplate = path.resolve(`src/templates/blog-post.js`)
+}
 ```
 
 Nothing super complex yet! We're using the `createPages` API (which Gatsby will
@@ -532,14 +533,14 @@ create `src/pages/tags.js`, the path `http://localhost:8000/tags/` will be
 available within the browser and the statically generated site.
 
 ```javascript
-import React from "react";
-import Link from "gatsby-link";
-import Helmet from "react-helmet";
+import React from "react"
+import { Link, graphql } from "gatsby"
+import Helmet from "react-helmet"
 
 // import '../css/index.css'; // add some style if you want!
 
 export default function Index({ data }) {
-  const { edges: posts } = data.allMarkdownRemark;
+  const { edges: posts } = data.allMarkdownRemark
   return (
     <div className="blog-posts">
       {posts
@@ -553,10 +554,10 @@ export default function Index({ data }) {
               <h2>{post.frontmatter.date}</h2>
               <p>{post.excerpt}</p>
             </div>
-          );
+          )
         })}
     </div>
-  );
+  )
 }
 
 export const pageQuery = graphql`
@@ -575,7 +576,7 @@ export const pageQuery = graphql`
       }
     }
   }
-`;
+`
 ```
 
 OK! So we've followed a similar approach to our blog post template, so this
@@ -587,7 +588,7 @@ string! GraphQL is awesome.
 
 The actual React component is fairly trivial, but one important note should be
 made. It's important that when linking to internal content, i.e. other blog
-links, that you should always use `gatsby-link`. Gatsby does not work if pages
+links, that you should always use `Link` from `gatsby`. Gatsby does not work if pages
 are not routed via this utility. Additionally, this utility also works with
 `pathPrefix`, which allows for a Gatsby site to be deployed a non-root domain.
 This is useful if this blog will be hosted on something like GitHub Pages, or
@@ -607,10 +608,10 @@ following along with this tutorial! You can not only make it pretty and style
 with CSS (or [styled-components][styled-components]!), but you could improve it
 functionally by implementing some of the following:
 
-* Add a tag listing and tag search page
-  * hint: the `createPages` API in `gatsby-node.js` file is useful here, as is
+- Add a tag listing and tag search page
+  - hint: the `createPages` API in `gatsby-node.js` file is useful here, as is
     frontmatter
-* adding navigation between a specific blog post and past/present blog posts
+- adding navigation between a specific blog post and past/present blog posts
   (the `context` API of `createPages` is useful here), etc.
 
 With our new found knowledge of Gatsby and its API, you should feel empowered to
@@ -625,14 +626,14 @@ Now go build something great.
 
 ## Links
 
-* [`@dschau/gatsby-blog-starter-kit`][source-code]
-  * A working repo demonstrating all of the aforementioned functionality of
+- [`@dschau/gatsby-blog-starter-kit`][source-code]
+  - A working repo demonstrating all of the aforementioned functionality of
     Gatsby
-* [`@dschau/create-gatsby-blog-post`][create-gatsby-blog-post]
-  * A utility and CLI I created to scaffold out a blog post following the
+- [`@dschau/create-gatsby-blog-post`][create-gatsby-blog-post]
+  - A utility and CLI I created to scaffold out a blog post following the
     predefined Gatsby structure with frontmatter, date, path, etc.
-* [Source code for my blog][blog-source-code]
-  * The source code for my blog, which takes the gatsby-starter-blog-post
+- [Source code for my blog][blog-source-code]
+  - The source code for my blog, which takes the gatsby-starter-blog-post
     (previous link), and expands upon it with a bunch of features and some more
     advanced functionality
 

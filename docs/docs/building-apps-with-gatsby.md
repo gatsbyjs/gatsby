@@ -12,8 +12,8 @@ With this method, Gatsby renders the initial page with shared page content -- th
 
 Some examples of how you could use this:
 
-* A news site with live data like sports scores or the weather
-* An e-commerce site with universal product pages and category pages, but also personalized recommendation sections
+- A news site with live data like sports scores or the weather
+- An e-commerce site with universal product pages and category pages, but also personalized recommendation sections
 
 You can also use your React components to create interactive widgets e.g. allow a user to do searches or submit forms. Because Gatsby is just React, it's easy to blend static and interactive/dynamic models of building web sites.
 
@@ -21,7 +21,7 @@ You can also use your React components to create interactive widgets e.g. allow 
 
 Often you want to create a site with client-only portions that are gated by authentication.
 
-A classic example would be a site that has a landing page, various marketing pages, a login page, and then an app section for logged-in users. The logged-in section doesn't need to be server rendered as all data will be loaded live from your API after the user logs so it makes sense to make this portion of your site client-only.
+A classic example would be a site that has a landing page, various marketing pages, a login page, and then an app section for logged-in users. The logged-in section doesn't need to be server rendered as all data will be loaded live from your API after the user logs in. So it makes sense to make this portion of your site client-only.
 
 Gatsby uses [React Router](https://reacttraining.com/react-router/) under the hood. You should use React Router to create client-only routes.
 
@@ -35,18 +35,18 @@ _Note: There's also a plugin that can aid in creating client-only routes:
 ```javascript
 // Implement the Gatsby API “onCreatePage”. This is
 // called after every page is created.
-exports.onCreatePage = async ({ page, boundActionCreators }) => {
-  const { createPage } = boundActionCreators;
+exports.onCreatePage = async ({ page, actions }) => {
+  const { createPage } = actions
 
   // page.matchPath is a special key that's used for matching pages
   // only on the client.
   if (page.path.match(/^\/app/)) {
-    page.matchPath = "/app/:path";
+    page.matchPath = "/app/:path"
 
     // Update the page.
-    createPage(page);
+    createPage(page)
   }
-};
+}
 ```
 
 The [example site "simple auth"](https://github.com/gatsbyjs/gatsby/blob/master/examples/simple-auth/README.md) demos how to combine user authentication with restricted client-only routes.

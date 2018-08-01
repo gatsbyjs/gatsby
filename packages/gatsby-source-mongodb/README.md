@@ -18,7 +18,7 @@ module.exports = {
       options: { dbName: `local`, collection: `documents` },
     },
   ],
-};
+}
 ```
 
 ### multiple collections
@@ -32,19 +32,21 @@ module.exports = {
       options: { dbName: `local`, collection: [`documents`, `vehicles`] },
     },
   ],
-};
+}
 ```
 
 ## Plugin options
 
-* **dbName**: indicates the database name that you want to use
-* **collection**: the collection name within Mongodb, this can also be an array
+- **dbName**: indicates the database name that you want to use
+- **collection**: the collection name within Mongodb, this can also be an array
   for multiple collections
-* **server**: contains the server info, with sub properties address and port ex.
+- **server**: contains the server info, with sub properties address and port ex.
   server: { address: `ds143532.mlab.com`, port: 43532 }. Defaults to a server
   running locally on the default port.
-* **auth**: the authentication data to login a Mongodb collection, with sub
+- **auth**: the authentication data to login a Mongodb collection, with sub
   properties user and password. ex. auth: { user: `admin`, password: `12345` }
+- **extraParams**: useful to set additional parameters for the connection, like authSource, ssl or replicaSet
+  (needed for connecting to MongoDB Atlas db as a service), ex: extraParams: { replicaSet: `test-shard-0`, ssl: `true`, authSource: `admin` }
 
 ### Mapping mediatype feature
 
@@ -82,7 +84,7 @@ The GraphQL query to get the transformed markdown would look something like
 this.
 
 ```graphql
-query ItemQuery($id: String!) {
+query($id: String!) {
   mongodbCloudDocuments(id: { eq: $id }) {
     id
     name
@@ -103,7 +105,7 @@ Below is a sample query for fetching all MongoDB document nodes from a db named
 **'Cloud'** and a collection named **'documents'**.
 
 ```graphql
-query PageQuery {
+query {
   allMongodbCloudDocuments {
     edges {
       node {

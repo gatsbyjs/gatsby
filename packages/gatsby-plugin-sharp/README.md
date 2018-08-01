@@ -22,7 +22,7 @@ images. By default it uses a quality setting of [50-75].
 
 ```javascript
 // In your gatsby-config.js
-plugins: [`gatsby-plugin-sharp`];
+plugins: [`gatsby-plugin-sharp`]
 ```
 
 ## Methods
@@ -31,77 +31,78 @@ plugins: [`gatsby-plugin-sharp`];
 
 #### Parameters
 
-* `width` (int, default: 400)
-* `height` (int)
-* `quality` (int, default: 50)
-* `jpegProgressive` (bool, default: true)
-* `pngCompressionLevel` (int, default: 9)
-* `base64`(bool, default: false)
+- `width` (int, default: 400)
+- `height` (int)
+- `quality` (int, default: 50)
+- `jpegProgressive` (bool, default: true)
+- `pngCompressionLevel` (int, default: 9)
+- `base64`(bool, default: false)
 
 #### Returns
 
-* `src` (string)
-* `width` (int)
-* `height` (int)
-* `aspectRatio` (float)
+- `src` (string)
+- `width` (int)
+- `height` (int)
+- `aspectRatio` (float)
 
-### responsiveResolution
+### fixed
 
 Automatically create sizes for different resolutions — we do 1x, 1.5x, 2x, and
 3x.
 
 #### Parameters
 
-* `width` (int, default: 400)
-* `height` (int)
-* `quality` (int, default: 50)
+- `width` (int, default: 400)
+- `height` (int)
+- `quality` (int, default: 50)
 
 #### Returns
 
-* `base64` (string)
-* `aspectRatio` (float)
-* `width` (float)
-* `height` (float)
-* `src` (string)
-* `srcSet` (string)
+- `base64` (string)
+- `aspectRatio` (float)
+- `width` (float)
+- `height` (float)
+- `src` (string)
+- `srcSet` (string)
 
-### responsiveSizes
+### fluid
 
-Create sizes (in width) for the image. If the max width of the container for the
+Create fluid sizes (in width) for the image. If the max width of the container for the
 rendered markdown file is 800px, the sizes would then be: 200, 400, 800, 1200,
 1600, 2400 – enough to provide close to the optimal image size for every device
 size / screen resolution.
 
-On top of that, responsiveSizes returns everything else (namely aspectRatio and
+On top of that, `fluid` returns everything else (namely aspectRatio and
 a base64 image to use as a placeholder) you need to implement the "blur up"
 technique popularized by Medium and Facebook (and also available as a Gatsby
 plugin for Markdown content as gatsby-remark-images).
 
 #### Parameters
 
-* `maxWidth` (int, default: 800)
-* `maxHeight` (int)
-* `quality` (int, default: 50)
-* `sizeByPixelDensity` (bool, default: false)
+- `maxWidth` (int, default: 800)
+- `maxHeight` (int)
+- `quality` (int, default: 50)
+- `sizeByPixelDensity` (bool, default: false)
 
 #### Returns
 
-* `base64` (string)
-* `aspectRatio` (float)
-* `src` (string)
-* `srcSet` (string)
-* `sizes` (string)
-* `originalImg` (string)
+- `base64` (string)
+- `aspectRatio` (float)
+- `src` (string)
+- `srcSet` (string)
+- `srcSetType` (string)
+- `sizes` (string)
+- `originalImg` (string)
 
 ### Shared Options
 
 In addition to their individual parameters, all methods above share the
 following:
 
-* `grayscale` (bool, default: false)
-* `duotone` (bool|obj, default: false)
-* `toFormat` (string, default: '')
-* `cropFocus` (string, default: '[sharp.strategy.attention][6]')
+- `grayscale` (bool, default: false)
+- `duotone` (bool|obj, default: false)
+- `toFormat` (string, default: '')
+- `cropFocus` (string, default: '[sharp.strategy.attention][6]')
 
 #### toFormat
 
@@ -144,7 +145,7 @@ given two hex colors `shadow` and `highlight` defining start and end color of
 the duotone gradient, e.g.
 
 ```javascript
-responsiveResolution(
+fixed(
   width: 800,
   duotone: {
     highlight: "#f00e2e",
@@ -164,7 +165,7 @@ Logic is borrowed from [react-duotone][5].
 You can pass a third optional parameter, `opacity`:
 
 ```javascript
-responsiveResolution(
+fluid(
   width: 800,
   duotone: {
     highlight: "#f00e2e",
@@ -215,7 +216,7 @@ All [node-potrace `Potrace` parameters][13] are exposed and can be set via the
 `traceSVG` argument:
 
 ```javascript
-responsiveResolution(
+fixed(
   traceSVG: {
     color: "#f00e2e"
     turnPolicy: TURNPOLICY_MINORITY

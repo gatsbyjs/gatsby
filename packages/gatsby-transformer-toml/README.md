@@ -10,7 +10,7 @@ Parses TOML files.
 
 ```javascript
 // In your gatsby-config.js
-plugins: [`gatsby-transformer-toml`];
+plugins: [`gatsby-transformer-toml`]
 ```
 
 ## Parsing algorithm
@@ -38,7 +38,7 @@ userDescription = "Lorem..."
 Then you'll be able to query your data using:
 
 ```graphql
-query MyQuery {
+query {
   userToml {
     userName
     userAvatar

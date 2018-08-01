@@ -1,9 +1,8 @@
 import React from "react"
-import Link from "gatsby-link"
-import TwitterIcon from "react-icons/lib/fa/twitter"
-import GithubIcon from "react-icons/lib/go/mark-github"
+import { Link } from "gatsby"
 import { OutboundLink } from "gatsby-plugin-google-analytics"
-
+import GithubIcon from "react-icons/lib/go/mark-github"
+import TwitterIcon from "react-icons/lib/fa/twitter"
 import SearchForm from "../components/search-form"
 import DiscordIcon from "../components/discord"
 import logo from "../logo.svg"
@@ -42,8 +41,8 @@ const NavItem = ({ linkTo, children }) => (
 )
 
 export default ({ pathname }) => {
-  const isHomepage = pathname == `/`
-  const isBlog = pathname == `/blog/`
+  const isHomepage = pathname === `/`
+  const isBlog = pathname === `/blog/`
   let styles = {}
   if (isHomepage) {
     styles.backgroundColor = `rgba(255,255,255,0)`
@@ -88,14 +87,16 @@ export default ({ pathname }) => {
   return (
     <div
       role="navigation"
+      className="navigation"
       css={{
         borderBottom: `1px solid ${colors.ui.light}`,
         backgroundColor: `rgba(255,255,255,0.975)`,
-        position: isHomepage ? `absolute` : false,
+        position: isHomepage ? `absolute` : `relative`,
         height: presets.headerHeight,
         zIndex: `2`,
         left: 0,
         right: 0,
+        top: `calc(${presets.bannerHeight} - 1px)`,
         [presets.Tablet]: {
           position: isHomepage || isBlog ? `absolute` : `fixed`,
         },
@@ -129,8 +130,7 @@ export default ({ pathname }) => {
           <img
             src={logo}
             css={{
-              height: 28,
-              width: `auto`,
+              width: 106,
               margin: 0,
             }}
             alt=""
@@ -157,6 +157,7 @@ export default ({ pathname }) => {
           <NavItem linkTo="/plugins/">Plugins</NavItem>
           <NavItem linkTo="/features/">Features</NavItem>
           <NavItem linkTo="/blog/">Blog</NavItem>
+          <NavItem linkTo="/showcase/">Showcase</NavItem>
         </ul>
         <div
           css={{

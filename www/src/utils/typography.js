@@ -8,7 +8,7 @@ import {
   MIN_LARGER_DISPLAY_MEDIA_QUERY,
 } from "typography-breakpoint-constants"
 
-const options = {
+const _options = {
   headerFontFamily: [
     `Futura PT`,
     `-apple-system`,
@@ -34,6 +34,20 @@ const options = {
     `Liberation Mono`,
     `Courier New`,
     `monospace`,
+  ],
+  systemFontFamily: [
+    `-apple-system`,
+    `BlinkMacSystemFont`,
+    `Segoe UI`,
+    `Roboto`,
+    `Oxygen`,
+    `Ubuntu`,
+    `Cantarell`,
+    `Fira Sans`,
+    `Droid Sans`,
+    `Helvetica Neue`,
+    `Arial`,
+    `sans-serif`,
   ],
   baseFontSize: `18px`,
   baseLineHeight: 1.4,
@@ -78,7 +92,7 @@ const options = {
       hr: {
         backgroundColor: colors.ui.light,
       },
-      "tt,code": {
+      "tt,code,kbd": {
         // background: `hsla(23, 60%, 97%, 1)`,
         background: colors.a[0],
         fontFamily: options.monospaceFontFamily.join(`,`),
@@ -123,8 +137,8 @@ const options = {
         marginRight: `${rhythm(-options.blockMarginBottom)}`,
         marginLeft: `${rhythm(-options.blockMarginBottom)}`,
         paddingRight: rhythm(options.blockMarginBottom),
-        paddingLeft: `${rhythm(options.blockMarginBottom / 5 * 4)}`,
-        borderLeft: `${rhythm(options.blockMarginBottom / 5 * 1)} solid ${
+        paddingLeft: `${rhythm((options.blockMarginBottom / 5) * 4)}`,
+        borderLeft: `${rhythm((options.blockMarginBottom / 5) * 1)} solid ${
           colors.a[3]
         }`,
         display: `block`,
@@ -215,12 +229,6 @@ const options = {
           boxShadow: `inset 0 1px 0 0 #faede5, inset 0 -1px 0 0 #faede5`,
         },
       },
-      [`${presets.Tablet} and (max-width:980px)`]: {
-        ".has-sidebar .gatsby-highlight": {
-          marginLeft: 0,
-          marginRight: 0,
-        },
-      },
       video: {
         width: `100%`,
         marginBottom: rhythm(options.blockMarginBottom),
@@ -231,12 +239,12 @@ const options = {
       [MOBILE_MEDIA_QUERY]: {
         // Make baseFontSize on mobile 16px.
         html: {
-          fontSize: `${16 / 16 * 100}%`,
+          fontSize: `${(16 / 16) * 100}%`,
         },
       },
       [TABLET_MEDIA_QUERY]: {
         html: {
-          fontSize: `${17 / 16 * 100}%`,
+          fontSize: `${(17 / 16) * 100}%`,
         },
       },
       [MIN_DEFAULT_MEDIA_QUERY]: {
@@ -252,13 +260,15 @@ const options = {
           marginRight: `${rhythm(-options.blockMarginBottom * 1.5)}`,
           marginLeft: `${rhythm(-options.blockMarginBottom * 1.5)}`,
           paddingRight: rhythm(options.blockMarginBottom * 1.5),
-          paddingLeft: `${rhythm(options.blockMarginBottom * 1.5 / 5 * 4)}`,
-          borderLeftWidth: `${rhythm(options.blockMarginBottom * 1.5 / 5 * 1)}`,
+          paddingLeft: `${rhythm(((options.blockMarginBottom * 1.5) / 5) * 4)}`,
+          borderLeftWidth: `${rhythm(
+            ((options.blockMarginBottom * 1.5) / 5) * 1
+          )}`,
         },
       },
       [MIN_LARGER_DISPLAY_MEDIA_QUERY]: {
         html: {
-          fontSize: `${21 / 16 * 100}%`,
+          fontSize: `${(21 / 16) * 100}%`,
         },
       },
       ".token.comment,.token.block-comment,.token.prolog,.token.doctype,.token.cdata": {
@@ -270,11 +280,11 @@ const options = {
         // color: `blue`,
         color: colors.c[12],
       },
-      ".token.property,.token.tag,.token.boolean,.token.number,.token.function-name,.token.constant,.token.symbol,.token.deleted": {
+      ".token.property,.token.tag,.token.boolean,.token.number,.token.function-name,.token.constant,.token.symbol": {
         // color: `#a285d8`,
         color: colors.b[9],
       },
-      ".token.selector,.token.attr-name,.token.string,.token.char,.token.function,.token.builtin,.token.inserted": {
+      ".token.selector,.token.attr-name,.token.string,.token.char,.token.function,.token.builtin": {
         // color: `#a2466c`,
         color: colors.a[9],
       },
@@ -287,6 +297,12 @@ const options = {
         // color: `blue`,
         color: colors.b[8],
       },
+      ".token.inserted": {
+        color: colors.code.add,
+      },
+      ".token.deleted": {
+        color: colors.code.remove,
+      },
       // Fancy external links in posts, borrowed from
       // https://github.com/comfusion/after-dark/
       // @see https://github.com/comfusion/after-dark/blob/8fdbe2f480ac40315cf0e01cece785d2b5c4b0c3/layouts/partials/critical-theme.css#L36-L39
@@ -297,6 +313,7 @@ const options = {
   },
 }
 
-const typography = new Typography(options)
+const typography = new Typography(_options)
 
+export const { scale, rhythm, options } = typography
 export default typography

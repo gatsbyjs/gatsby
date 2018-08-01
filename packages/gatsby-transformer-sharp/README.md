@@ -10,26 +10,26 @@ including resizing, cropping, and creating responsive images.
 
 ## Install
 
-`npm install --save gatsby-transformer-sharp`
+`npm install --save gatsby-transformer-sharp gatsby-plugin-sharp`
 
 ## How to use
 
 ```javascript
 // In your gatsby-config.js
 module.exports = {
-  plugins: [`gatsby-transformer-sharp`],
-};
+  plugins: [`gatsby-plugin-sharp`, `gatsby-transformer-sharp`],
+}
 ```
 
 ## Parsing algorithm
 
 It recognizes files with the following extensions as images.
 
-* jpeg
-* jpg
-* png
-* webp
-* tif
-* tiff
+- jpeg
+- jpg
+- png
+- webp
+- tif
+- tiff
 
 Each image file is parsed into a node of type `ImageSharp`.

@@ -4,7 +4,8 @@ const {
   GraphQLString,
   GraphQLInt,
   GraphQLEnumType,
-} = require(`graphql`)
+  GraphQLJSON,
+} = require(`gatsby/graphql`)
 const Remark = require(`remark`)
 const select = require(`unist-util-select`)
 const sanitizeHTML = require(`sanitize-html`)
@@ -20,10 +21,10 @@ const parse = require(`remark-parse`)
 const stringify = require(`remark-stringify`)
 const english = require(`retext-english`)
 const remark2retext = require(`remark-retext`)
-const GraphQlJson = require(`graphql-type-json`)
 const stripPosition = require(`unist-util-remove-position`)
 const hastReparseRaw = require(`hast-util-raw`)
 
+let fileNodes
 let pluginsCacheStr = ``
 let pathPrefixCacheStr = ``
 const astCacheKey = node =>
@@ -60,7 +61,7 @@ const withPathPrefix = (url, pathPrefix) =>
 const ASTPromiseMap = new Map()
 
 module.exports = (
-  { type, store, pathPrefix, getNode, cache, reporter },
+  { type, store, pathPrefix, getNode, getNodes, cache, reporter },
   pluginOptions
 ) => {
   if (type.name !== `MarkdownRemark`) {
@@ -104,9 +105,9 @@ module.exports = (
         return await ASTPromiseMap.get(cacheKey)
       } else {
         const ASTGenerationPromise = new Promise(async resolve => {
-          const files = _.values(store.getState().nodes).filter(
-            n => n.internal.type === `File`
-          )
+          if (process.env.NODE_ENV !== `production` || !fileNodes) {
+            fileNodes = getNodes().filter(n => n.internal.type === `File`)
+          }
           const ast = await new Promise((resolve, reject) => {
             // Use Bluebird's Promise function "each" to run remark plugins serially.
             Promise.each(pluginOptions.plugins, plugin => {
@@ -115,9 +116,10 @@ module.exports = (
                 return requiredPlugin.mutateSource(
                   {
                     markdownNode,
-                    files,
+                    files: fileNodes,
                     getNode,
                     reporter,
+                    cache,
                   },
                   plugin.pluginOptions
                 )
@@ -170,9 +172,9 @@ module.exports = (
               // every node type in DataTree gets a schema type automatically.
               // typegen plugins just modify the auto-generated types to add derived fields
               // as well as computationally expensive fields.
-              const files = _.values(store.getState().nodes).filter(
-                n => n.internal.type === `File`
-              )
+              if (process.env.NODE_ENV !== `production` || !fileNodes) {
+                fileNodes = getNodes().filter(n => n.internal.type === `File`)
+              }
               // Use Bluebird's Promise function "each" to run remark plugins serially.
               Promise.each(pluginOptions.plugins, plugin => {
                 const requiredPlugin = require(plugin.resolve)
@@ -182,9 +184,10 @@ module.exports = (
                       markdownAST,
                       markdownNode,
                       getNode,
-                      files,
+                      files: fileNodes,
                       pathPrefix,
                       reporter,
+                      cache,
                     },
                     plugin.pluginOptions
                   )
@@ -328,7 +331,7 @@ module.exports = (
         },
       },
       htmlAst: {
-        type: GraphQlJson,
+        type: GraphQLJSON,
         resolve(markdownNode) {
           return getHTMLAst(markdownNode).then(ast => {
             const strippedAst = stripPosition(_.clone(ast), true)

@@ -4,6 +4,8 @@ const fs = require(`fs`)
 const path = require(`path`)
 const crypto = require(`crypto`)
 const glob = require(`glob`)
+const { store } = require(`../../redux`)
+const existsSync = require(`fs-exists-cached`).sync
 
 function createFileContentHash(root, globPattern) {
   const hash = crypto.createHash(`md5`)
@@ -33,12 +35,12 @@ function createFileContentHash(root, globPattern) {
  */
 function resolvePlugin(pluginName) {
   // Only find plugins when we're not given an absolute path
-  if (!fs.existsSync(pluginName)) {
+  if (!existsSync(pluginName)) {
     // Find the plugin in the local plugins folder
     const resolvedPath = slash(path.resolve(`./plugins/${pluginName}`))
 
-    if (fs.existsSync(resolvedPath)) {
-      if (fs.existsSync(`${resolvedPath}/package.json`)) {
+    if (existsSync(resolvedPath)) {
+      if (existsSync(`${resolvedPath}/package.json`)) {
         const packageJSON = JSON.parse(
           fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`)
         )
@@ -130,8 +132,7 @@ module.exports = async (config = {}) => {
   // Add internal plugins
   const internalPlugins = [
     `../../internal-plugins/dev-404-page`,
-    `../../internal-plugins/component-page-creator`,
-    `../../internal-plugins/component-layout-creator`,
+    `../../internal-plugins/load-babel-config`,
     `../../internal-plugins/internal-data-bridge`,
     `../../internal-plugins/prod-404`,
     `../../internal-plugins/query-runner`,
@@ -158,6 +159,17 @@ module.exports = async (config = {}) => {
       plugins: [],
     },
   })
+
+  const program = store.getState().program
+  plugins.push(
+    processPlugin({
+      resolve: `gatsby-plugin-page-creator`,
+      options: {
+        path: slash(path.join(program.directory, `src/pages`)),
+        pathCheck: false,
+      },
+    })
+  )
 
   return plugins
 }

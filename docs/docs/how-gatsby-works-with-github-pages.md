@@ -12,7 +12,7 @@ Add a `deploy` script to `package.json`
 
 ```
     {
-        scripts: {
+        "scripts": {
             "deploy": "gatsby build --prefix-paths && gh-pages -d public",
         }
     }
@@ -21,18 +21,18 @@ Add a `deploy` script to `package.json`
 We are using prefix paths because our website is inside a folder `http://username.github.io/reponame/` so we need to add pathPrefix to `gatsby-config.js`
 
 ```
-{
+module.exports = {
     pathPrefix: "/reponame"
 }
 ```
 
-When you run `npm run deploy` all contents of the `public` folder will be moved to your repository's `gh-pages` branch.  Make sure that your repository's settings has the `gh-pages` branch set as the source.
+When you run `npm run deploy` all contents of the `public` folder will be moved to your repository's `gh-pages` branch. Make sure that your repository's settings has the `gh-pages` branch set as the source.
 
 ## GitHub Organization or User page
 
 First thing is to create a repository which should be named `username.github.io`.
 
-In this case we dont need to specify `pathPrefix`, but our website needs to be pushed to `master` branch.
+In this case we don't need to specify `pathPrefix`, but our website needs to be pushed to `master` branch.
 
 ```
     {

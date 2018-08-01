@@ -24,8 +24,8 @@
  * @param {Object} pluginOptions
  * @example
  * // From gatsby-plugin-glamor
- * import { renderToString } from "react-dom/server"
- * import inline from "glamor-inline"
+ * const { renderToString } = require("react-dom/server")
+ * const inline = require("glamor-inline")
  *
  * exports.replaceRenderer = ({ bodyComponent, replaceBodyHTMLString }) => {
  *   const bodyHTML = renderToString(bodyComponent)
@@ -35,6 +35,11 @@
  * }
  */
 exports.replaceRenderer = true
+
+/**
+ * Allow a plugin to replace the static router component.
+ */
+exports.replaceStaticRouterComponent = true
 
 /**
  * Called after every page Gatsby server renders while building HTML so you can
@@ -73,7 +78,7 @@ exports.replaceRenderer = true
  * is merged with other body props and passed to `html.js` as `bodyProps`.
  * @param {Object} pluginOptions
  * @example
- * import Helmet from "react-helmet"
+ * const Helmet = require("react-helmet")
  *
  * exports.onRenderBody = (
  *   { setHeadComponents, setHtmlAttributes, setBodyAttributes },

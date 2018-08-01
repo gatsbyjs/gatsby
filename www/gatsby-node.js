@@ -4,7 +4,8 @@ const path = require(`path`)
 const parseFilepath = require(`parse-filepath`)
 const fs = require(`fs-extra`)
 const slash = require(`slash`)
-const slugify = require(`limax`)
+const slugify = require(`slugify`)
+const url = require(`url`)
 
 const localPackages = `../packages`
 const localPackagesArr = []
@@ -18,8 +19,8 @@ const slugToAnchor = slug =>
     .filter(item => item !== ``) // remove empty values
     .pop() // take last item
 
-exports.createPages = ({ graphql, boundActionCreators }) => {
-  const { createPage, createRedirect } = boundActionCreators
+exports.createPages = ({ graphql, actions }) => {
+  const { createPage, createRedirect } = actions
 
   // Random redirects
   createRedirect({
@@ -53,6 +54,24 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
     const remotePackageTemplate = path.resolve(
       `src/templates/template-docs-remote-packages.js`
     )
+    const showcaseTemplate = path.resolve(
+      `src/templates/template-showcase-details.js`
+    )
+
+    createRedirect({
+      fromPath: `/docs/bound-action-creators/`,
+      isPermanent: true,
+      redirectInBrowser: true,
+      toPath: `/docs/actions/`,
+    })
+
+    createRedirect({
+      fromPath: `/docs/bound-action-creators`,
+      isPermanent: true,
+      redirectInBrowser: true,
+      toPath: `/docs/actions`,
+    })
+
     // Query for markdown nodes to use in creating pages.
     resolve(
       graphql(
@@ -60,7 +79,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
           query {
             allMarkdownRemark(
               sort: { order: DESC, fields: [frontmatter___date] }
-              limit: 1000
+              limit: 10000
               filter: { fileAbsolutePath: { ne: null } }
             ) {
               edges {
@@ -80,6 +99,15 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
               }
             }
             allAuthorYaml {
+              edges {
+                node {
+                  fields {
+                    slug
+                  }
+                }
+              }
+            }
+            allSitesYaml(filter: { main_url: { ne: null } }) {
               edges {
                 node {
                   fields {
@@ -116,11 +144,13 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
           edge => {
             const slug = _.get(edge, `node.fields.slug`)
             const draft = _.get(edge, `node.frontmatter.draft`)
-            if (!slug) return
+            if (!slug) return undefined
 
             if (_.includes(slug, `/blog/`) && !draft) {
               return edge
             }
+
+            return undefined
           }
         )
 
@@ -160,6 +190,18 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
           createPage({
             path: `${edge.node.fields.slug}`,
             component: slash(contributorPageTemplate),
+            context: {
+              slug: edge.node.fields.slug,
+            },
+          })
+        })
+
+        result.data.allSitesYaml.edges.forEach(edge => {
+          if (!edge.node.fields) return
+          if (!edge.node.fields.slug) return
+          createPage({
+            path: `${edge.node.fields.slug}`,
+            component: slash(showcaseTemplate),
             context: {
               slug: edge.node.fields.slug,
             },
@@ -215,8 +257,8 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
 }
 
 // Create slugs for files.
-exports.onCreateNode = ({ node, boundActionCreators, getNode }) => {
-  const { createNodeField } = boundActionCreators
+exports.onCreateNode = ({ node, actions, getNode }) => {
+  const { createNodeField } = actions
   let slug
   if (node.internal.type === `File`) {
     const parsedFilePath = parseFilepath(node.relativePath)
@@ -266,7 +308,14 @@ exports.onCreateNode = ({ node, boundActionCreators, getNode }) => {
       createNodeField({ node, name: `slug`, value: slug })
     }
   } else if (node.internal.type === `AuthorYaml`) {
-    slug = `/contributors/${slugify(node.id)}/`
+    slug = `/contributors/${slugify(node.id, {
+      lower: true,
+    })}/`
+    createNodeField({ node, name: `slug`, value: slug })
+  } else if (node.internal.type === `SitesYaml` && node.main_url) {
+    const parsed = url.parse(node.main_url)
+    const cleaned = parsed.hostname + parsed.pathname
+    slug = `/showcase/${slugify(cleaned)}`
     createNodeField({ node, name: `slug`, value: slug })
   }
 }

@@ -1,4 +1,5 @@
-import typography, { rhythm, scale, options } from "../utils/typography"
+import React from "react"
+import typography, { rhythm, scale } from "../utils/typography"
 import presets from "../utils/presets"
 import { vP, vPHd, vPVHd, vPVVHd } from "../components/gutters"
 import { FormidableIcon, FabricIcon, SegmentIcon } from "../assets/logos"
@@ -9,19 +10,23 @@ const Icon = ({ icon, alt, href }) => (
       marginRight: rhythm(3 / 4),
       display: `inline-block`,
       padding: 0,
+      height: `calc(14px + 1vw)`,
       [presets.Phablet]: {
         marginBottom: 0,
-        width: `auto`,
+        height: `calc(9px + 1vw)`,
         ":last-child": {
           marginRight: 0,
         },
+      },
+      [presets.Tablet]: {
+        height: `calc(12px + 1vw)`,
       },
     }}
   >
     <a
       href={href}
       target="_blank"
-      rel="noopener"
+      rel="noopener noreferrer"
       css={{
         borderBottom: `0 !important`,
         boxShadow: `none !important`,
@@ -43,13 +48,7 @@ const Icon = ({ icon, alt, href }) => (
         alt={alt}
         css={{
           margin: 0,
-          height: `calc(14px + 1vw)`,
-          [presets.Phablet]: {
-            height: `calc(9px + 1vw)`,
-          },
-          [presets.Tablet]: {
-            height: `calc(12px + 1vw)`,
-          },
+          height: `100%`,
         }}
       />
     </a>

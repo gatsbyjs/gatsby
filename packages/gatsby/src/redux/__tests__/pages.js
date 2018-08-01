@@ -2,8 +2,19 @@
 
 const glob = require(`glob`)
 const reducer = require(`../reducers/pages`)
+const { actions } = require(`../actions`)
+const { readFile } = require(`fs-extra`)
 
 jest.mock(`fs`)
+jest.mock(`fs-extra`, () => {
+  return {
+    readFile: jest.fn(() => `contents`),
+  }
+})
+
+afterEach(() => {
+  readFile.mockClear()
+})
 
 Date.now = jest.fn(
   () =>
@@ -22,8 +33,7 @@ describe(`Add pages`, () => {
     // Set up some mocked out file info before each test
     require(`fs`).__setMockFiles(MOCK_FILE_INFO)
   })
-  test(`allows you to add pages`, () => {
-    const { actions } = require(`../actions`)
+  it(`allows you to add pages`, () => {
     const action = actions.createPage(
       {
         path: `/hi/`,
@@ -37,7 +47,6 @@ describe(`Add pages`, () => {
   })
 
   it(`Fails if path is missing`, () => {
-    const { actions } = require(`../actions`)
     const action = actions.createPage(
       {
         component: `/path/to/file1.js`,
@@ -48,7 +57,6 @@ describe(`Add pages`, () => {
   })
 
   it(`Fails if component path is missing`, () => {
-    const { actions } = require(`../actions`)
     const action = actions.createPage(
       {
         path: `/whatever/`,
@@ -59,7 +67,6 @@ describe(`Add pages`, () => {
   })
 
   it(`Fails if the component path isn't absolute`, () => {
-    const { actions } = require(`../actions`)
     const action = actions.createPage(
       {
         path: `/whatever/`,
@@ -71,7 +78,6 @@ describe(`Add pages`, () => {
   })
 
   it(`Fails if use a reserved field in the context object`, () => {
-    const { actions } = require(`../actions`)
     const action = actions.createPage(
       {
         component: `/path/to/file1.js`,
@@ -87,7 +93,6 @@ describe(`Add pages`, () => {
   })
 
   it(`adds an initial forward slash if the user doesn't`, () => {
-    const { actions } = require(`../actions`)
     const action = actions.createPage(
       {
         path: `hi/`,
@@ -96,11 +101,10 @@ describe(`Add pages`, () => {
       { id: `test`, name: `test` }
     )
     const state = reducer(undefined, action)
-    expect(state[0].path).toEqual(`/hi/`)
+    expect(Array.from(state.values())[0].path).toEqual(`/hi/`)
   })
 
   it(`allows you to add pages with context`, () => {
-    const { actions } = require(`../actions`)
     const action = actions.createPage(
       {
         path: `/hi/`,
@@ -117,7 +121,6 @@ describe(`Add pages`, () => {
   })
 
   it(`allows you to add pages with matchPath`, () => {
-    const { actions } = require(`../actions`)
     const action = actions.createPage(
       {
         path: `/hi/`,
@@ -132,7 +135,6 @@ describe(`Add pages`, () => {
   })
 
   it(`allows you to add multiple pages`, () => {
-    const { actions } = require(`../actions`)
     const action = actions.createPage(
       {
         path: `/hi/`,
@@ -150,11 +152,10 @@ describe(`Add pages`, () => {
     let state = reducer(undefined, action)
     state = reducer(state, action2)
     expect(state).toMatchSnapshot()
-    expect(state.length).toEqual(2)
+    expect(state.size).toEqual(2)
   })
 
   it(`allows you to update existing pages (based on path)`, () => {
-    const { actions } = require(`../actions`)
     const action = actions.createPage(
       {
         path: `/hi/`,
@@ -175,11 +176,10 @@ describe(`Add pages`, () => {
     let state = reducer(undefined, action)
     state = reducer(state, action2)
     expect(state).toMatchSnapshot()
-    expect(state.length).toEqual(1)
+    expect(state.size).toEqual(1)
   })
 
   it(`allows you to delete paths`, () => {
-    const { actions } = require(`../actions`)
     const action = actions.createPage(
       {
         path: `/hi/`,
@@ -192,6 +192,6 @@ describe(`Add pages`, () => {
     let state = reducer(undefined, action)
     state = reducer(state, action2)
     expect(state).toMatchSnapshot()
-    expect(state.length).toEqual(0)
+    expect(state.size).toEqual(0)
   })
 })

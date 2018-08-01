@@ -13,6 +13,7 @@ points to your files.
 ## How to use
 
 In your `gatsby-config.js`:
+
 ```javascript
 module.exports = {
   plugins: [
@@ -24,7 +25,7 @@ module.exports = {
       },
     },
   ],
-};
+}
 ```
 
 ## Parsing algorithm
@@ -39,11 +40,7 @@ The algorithm for arrays is to convert each item in the array into a node.
 So if your project has a `letters.json` with `[{ "value": "a" }, { "value": "b" }, { "value": "c" }]` then the following three nodes would be created:
 
 ```javascript
-[
-  { value: "a" },
-  { value: "b" },
-  { value: "c" },
-];
+;[{ value: "a" }, { value: "b" }, { value: "c" }]
 ```
 
 ### Single Object
@@ -79,7 +76,7 @@ Where each of `a.json`, `b.json` and `c.json` look like:
 Then the following three nodes would be created:
 
 ```javascript
-[
+;[
   {
     value: "a",
   },
@@ -89,7 +86,7 @@ Then the following three nodes would be created:
   {
     value: "c",
   },
-];
+]
 ```
 
 ## How to query
@@ -130,7 +127,7 @@ Which would return:
           value: "c",
         },
       },
-    ];
+    ]
   }
 }
 ```
@@ -138,3 +135,33 @@ Which would return:
 ## Examples
 
 The [gatsbygram example site](https://github.com/gatsbyjs/gatsby/blob/master/examples/gatsbygram/gatsby-node.js) uses this plugin.
+
+## Troubleshooting
+
+If some fields are missing or you see the error on build:
+> There are conflicting field types in your data. GraphQL schema will omit those fields.
+
+It's probably because you have arrays of mixed values somewhere. For instance:
+
+```
+{
+  stuff: [25, "bob"],
+  orEven: [
+    [25, "bob"],
+    [23, "joe"]
+  ]
+}
+```
+
+If you can rewrite your data with objects you should be good to go:
+
+```
+{
+  stuff: [{ "count": 25, "name": "bob" }],
+  orEven: [
+    { "count": 25, "name": "bob" },
+    { "count": 23, "name": "joe" }
+  ]
+}
+```
+
