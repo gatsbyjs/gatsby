@@ -96,7 +96,7 @@ class GatsbyLink extends React.Component {
 
   render() {
     console.log(this.props)
-    const { onClick, onMouseEnter, ...rest } = this.props
+    const { onClick, onMouseEnter, location, ...rest } = this.props
     let El = Link
     // if (Object.keys(NavLinkPropTypes).some(propName => this.props[propName])) {
     // El = NavLink

@@ -1,7 +1,8 @@
 import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
 import React, { createElement } from "react"
 import ReactDOM from "react-dom"
-import { Router, matchPath, navigate as reachNavigate } from "@reach/router"
+import { Router, navigate as reachNavigate } from "@reach/router"
+import { globalHistory } from "@reach/router/lib/history"
 import { ScrollContext } from "gatsby-react-router-scroll"
 import domReady from "domready"
 import { createLocation } from "history/LocationUtils"
@@ -15,8 +16,6 @@ import loader, { setApiRunnerForLoader } from "./loader"
 window.asyncRequires = asyncRequires
 window.___emitter = emitter
 window.___loader = loader
-
-window.matchPath = matchPath
 
 setApiRunnerForLoader(apiRunner)
 loader.addPagesArray([window.page])
@@ -120,33 +119,25 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   // Call onRouteUpdate on the initial page load.
   apiRunner(`onRouteUpdate`, {
     location: window.history.location,
-    action: null,
   })
 
-  // let initialAttachDone = false
-  // function attachToHistory(history) {
-  // if (!window.___history || initialAttachDone === false) {
-  // window.___history = history
-  // initialAttachDone = true
-
-  // history.listen((location, action) => {
-  // if (!maybeRedirect(location.pathname)) {
-  // // Check if we already ran onPreRouteUpdate API
-  // // in navigateTo function
-  // if (
-  // lastNavigateToLocationString !==
-  // `${location.pathname}${location.search}${location.hash}`
-  // ) {
-  // apiRunner(`onPreRouteUpdate`, { location, action })
-  // }
-  // // Make sure React has had a chance to flush to DOM first.
-  // setTimeout(() => {
-  // apiRunner(`onRouteUpdate`, { location, action })
-  // }, 0)
-  // }
-  // })
-  // }
-  // }
+  globalHistory.listen(() => {
+    const location = globalHistory.location
+    if (!maybeRedirect(location.pathname)) {
+      // Check if we already ran onPreRouteUpdate API
+      // in navigateTo function
+      if (
+        lastNavigateToLocationString !==
+        `${location.pathname}${location.search}${location.hash}`
+      ) {
+        apiRunner(`onPreRouteUpdate`, { location })
+      }
+      // Make sure React has had a chance to flush to DOM first.
+      setTimeout(() => {
+        apiRunner(`onRouteUpdate`, { location })
+      }, 0)
+    }
+  })
 
   function shouldUpdateScroll(prevRouterProps, { location: { pathname } }) {
     const results = apiRunner(`shouldUpdateScroll`, {
@@ -174,6 +165,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       let child
 
       if (loader.getPage(location.pathname)) {
+        console.log(`found page`)
         child = createElement(PageRenderer, {
           isPage: true,
           ...this.props,
@@ -203,7 +195,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
         {
           basepath: __PATH_PREFIX__,
         },
-        createElement(RouteHandler, { path: `/` })
+        createElement(RouteHandler, { default: true })
       )
 
     const NewRoot = apiRunner(`wrapRootComponent`, { Root }, Root)[0]

@@ -1,6 +1,7 @@
 import React, { createElement } from "react"
 import { Router, navigate as reachNavigate } from "@reach/router"
 import { ScrollContext } from "gatsby-react-router-scroll"
+import { globalHistory } from "@reach/router/lib/history"
 import { apiRunner } from "./api-runner-browser"
 import syncRequires from "./sync-requires"
 import pages from "./pages.json"
@@ -59,21 +60,18 @@ maybeRedirect(location.pathname)
 // Call onRouteUpdate on the initial page load.
 apiRunner(`onRouteUpdate`, {
   location: window.history.location,
-  action: null,
 })
 
-// function attachToHistory(history) {
-// if (!window.___history) {
-// window.___history = history
-
-// history.listen((location, action) => {
-// if (!maybeRedirect(location.pathname)) {
-// apiRunner(`onPreRouteUpdate`, { location, action })
-// apiRunner(`onRouteUpdate`, { location, action })
-// }
-// })
-// }
-// }
+globalHistory.listen(() => {
+  const location = globalHistory.location
+  if (!maybeRedirect(location.pathname)) {
+    apiRunner(`onPreRouteUpdate`, { location })
+    // Make sure React has had a chance to flush to DOM first.
+    setTimeout(() => {
+      apiRunner(`onRouteUpdate`, { location })
+    }, 0)
+  }
+})
 
 function maybeRedirect(pathname) {
   const redirect = redirectMap[pathname]
@@ -176,41 +174,6 @@ const Root = () =>
     },
     createElement(RouteHandler, { default: true })
   )
-// createElement(
-// ScrollContext,
-// { shouldUpdateScroll },
-// createElement(Route, {
-// // eslint-disable-next-line react/display-name
-// render: routeProps => {
-// attachToHistory(routeProps.history)
-// const { pathname } = routeProps.location
-// const pageResources = loader.getResourcesForPathname(pathname)
-// const isPage = !!(pageResources && pageResources.component)
-// if (isPage) {
-// return createElement(JSONStore, {
-// pages,
-// ...routeProps,
-// pageResources,
-// })
-// } else {
-// const dev404Page = pages.find(p => /^\/dev-404-page/.test(p.path))
-// return createElement(Route, {
-// key: `404-page`,
-// // eslint-disable-next-line react/display-name
-// component: props =>
-// createElement(
-// syncRequires.components[dev404Page.componentChunkName],
-// {
-// pages,
-// ...routeProps,
-// }
-// ),
-// })
-// }
-// },
-// })
-// )
-// )
 
 // Let site, plugins wrap the site e.g. for Redux.
 const WrappedRoot = apiRunner(`wrapRootComponent`, { Root }, Root)[0]
