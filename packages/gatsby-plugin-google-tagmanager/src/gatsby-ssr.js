@@ -1,8 +1,6 @@
 import React from "react"
 import { oneLine, stripIndent } from "common-tags"
 
-const SCRIPT_METHOD = 'setPostBodyComponents';
-
 exports.onRenderBody = (
   { setHeadComponents, setPostBodyComponents, setPreBodyComponents },
   pluginOptions
@@ -32,7 +30,7 @@ exports.onRenderBody = (
             })(window,document,'script','dataLayer', '${pluginOptions.id}');`,
         }}
       />,
-    ];
+    ]
 
     if (pluginOptions.includePostBody) {
       setPostBodyComponents(scriptsArray)
