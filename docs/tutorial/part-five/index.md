@@ -3,6 +3,8 @@ title: Source plugins
 typora-copy-images-to: ./
 ---
 
+> This tutorial is part of a series about Gatsby’s data layer. Make sure you’ve gone through [part 4](/tutorial/part-four/) before continuing here.
+
 ## What's in this tutorial?
 
 In this tutorial, you'll be learning about how to pull data into your Gatsby site using GraphQL and source plugins. Before you learn about these plugins, however, you'll want to know how to use something called Graph_i_QL, a tool that helps you structure your queries correctly.
