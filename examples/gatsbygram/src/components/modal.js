@@ -7,9 +7,9 @@ import findIndex from "lodash/findIndex"
 import mousetrap from "mousetrap"
 import * as PropTypes from "prop-types"
 import { push, StaticQuery } from "gatsby"
+import { graphql } from "gatsby"
 
 import { rhythm } from "../utils/typography"
-import { graphql } from "gatsby"
 
 let posts
 
