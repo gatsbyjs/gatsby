@@ -116,13 +116,18 @@ CSS along your PrismJS theme and the styles for `.gatsby-highlight-code-line`:
  * padding and overflow.
  * 1. Make the element just wide enough to fit its content.
  * 2. Always fill the visible space in .gatsby-highlight.
+ * 3. Adjust the position of the line numbers
  */
 .gatsby-highlight pre[class*="language-"] {
   background-color: transparent;
   margin: 0;
+  padding: 0;
   overflow: initial;
   float: left; /* 1 */
   min-width: 100%; /* 2 */
+}
+.gatsby-highlight pre[class*="language-"].line-numbers {
+  paddingLeft: 2.8em; /* 3 */
 }
 ```
 

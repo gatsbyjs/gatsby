@@ -134,10 +134,14 @@ const options = {
         backgroundColor: `transparent`,
         borderRadius: 0,
         margin: 0,
+        padding: 0,
         overflow: `initial`,
         float: `left`,
         minWidth: `100%`,
         textShadow: `none`,
+      },
+      ".gatsby-highlight pre[class*='language-'].line-numbers": {
+        paddingLeft: `2.8em`,
       },
       ".gatsby-highlight-code-line": {
         background: `#fff2cc`,
