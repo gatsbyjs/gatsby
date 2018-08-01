@@ -196,7 +196,7 @@ Open a new terminal in the root directory of your tutorial site, then start Gats
 gatsby develop
 ```
 
-Check the lines after `success on PreBootstrap`, you should see your "Testing my plugin" message along with the `key` from your `gatsby-config.js` file:
+Check the lines after `success onPreBootstrap`, you should see your "Testing my plugin" message along with the `key` from your `gatsby-config.js` file:
 
 ```shell
 success onPreBootstrap — 0.048 s
