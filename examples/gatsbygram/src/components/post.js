@@ -6,6 +6,7 @@ import Img from "gatsby-image"
 
 import { rhythm, scale } from "../utils/typography"
 import presets from "../utils/presets"
+import { graphql } from "gatsby"
 
 let touched = false
 

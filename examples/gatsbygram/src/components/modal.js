@@ -9,6 +9,7 @@ import * as PropTypes from "prop-types"
 import { push, StaticQuery } from "gatsby"
 
 import { rhythm } from "../utils/typography"
+import { graphql } from "gatsby"
 
 let posts
 
