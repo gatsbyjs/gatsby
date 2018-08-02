@@ -188,7 +188,7 @@ exports.extractQueries = () => {
   // only in initial run, because during development state will be adjusted.
   clearInactiveComponents()
 
-  updateStateAndRunQueries(true).then(() => {
+  return updateStateAndRunQueries(true).then(() => {
     // During development start watching files to recompile & run
     // queries on the fly.
     if (process.env.NODE_ENV !== `production`) {
