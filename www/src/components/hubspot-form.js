@@ -23,6 +23,10 @@ export default class GatsbyHubspotForm extends Component {
           color: colors.gatsby,
           fontFamily: options.headerFontFamily.join(`,`),
           padding: `15px`,
+            "& .hs-form fieldset": {
+              maxWidth: 'none',
+              width: '100%',
+            },
           "& .hs-form-field": {
             paddingBottom: `20px`,
           },
@@ -37,7 +41,7 @@ export default class GatsbyHubspotForm extends Component {
           },
           "& .hs-form input": formInput,
           '& .hs-form input[type="text"], .hs-form input[type="email"], .hs-form input[type="number"]': {
-            width: `250px`,
+            width: `100% !important`,
             ":focus": {
               borderColor: colors.gatsby,
               outline: 0,
