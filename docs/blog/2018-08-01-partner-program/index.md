@@ -20,18 +20,6 @@ Step 2: Submit your Gatsby client or agency website to the [Site Showcase](https
 
 Step 3: Fill out the form below to let us know you’re interested in learning more about future developments to Gatsby’s Partner Program. 
 
-<!--[if lte IE 8]>
-<script charset="utf-8" type="text/javascript" src="//js.hsforms.net/forms/v2-legacy.js"></script>
-<![endif]-->
-<script charset="utf-8" type="text/javascript" src="//js.hsforms.net/forms/v2.js"></script>
-<script>
-  hbspt.forms.create({
-	portalId: "4731712",
-	formId: "bbad5044-d31d-4473-bd57-62cb64fdc811",
-	sfdcCampaignId: "701f4000000VDrYAAW"
-});
-</script>
-
 So what’s next for partners?
 
 We’ll have a lot more features and benefits coming soon. Future additions to the program will include:
@@ -44,7 +32,7 @@ We’ll have a lot more features and benefits coming soon. Future additions to t
 
 Fill out the form below to let us know your interest in the Gatsby Partner Program!
 
-<hubspot-form portal-id="4731712" form-id="bbad5044-d31d-4473-bd57-62cb64fdc811"></hubspot-form>
+<hubspot-form portal-id="4731712" form-id="bbad5044-d31d-4473-bd57-62cb64fdc811" sfdc-campaign-id="701f4000000VDrYAAW"></hubspot-form>
 
 
 
