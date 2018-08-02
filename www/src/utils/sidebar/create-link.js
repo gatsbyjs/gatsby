@@ -21,11 +21,8 @@ const createLink = ({
     <span
       css={{
         display: `flex`,
-        minHeight: 40,
         alignItems: `center`,
         position: `relative`,
-        paddingTop: 10,
-        paddingBottom: 10,
         "&:before": {
           background: colors.ui.border,
           bottom: 0,
@@ -43,7 +40,7 @@ const createLink = ({
           styles.link,
           isDraft && styles.draft,
           isActive && styles.activeLink,
-          isExpanded && styles.activeWorkaround,
+          isExpanded && styles.expandedChildren,
           isParentOfActiveItem && styles.parentOfActiveLink,
         ]}
         onClick={onLinkClick}
@@ -58,11 +55,11 @@ const createLink = ({
 
 const bulletOffset = {
   default: {
-    left: `-25px`,
-    top: `.35em`,
+    left: -25,
+    top: `1.15em`,
   },
   desktop: {
-    top: `.4em`,
+    top: `1.2em`,
   },
 }
 
@@ -72,18 +69,20 @@ const styles = {
   draft: {
     "&&": {
       color: colors.gray.calm,
-      // fontStyle: `italic`,
     },
   },
   parentOfActiveLink: {
+    "&&": {
+      color: colors.gatsby,
+      fontWeight: `bold`,
+    },
     "&:before, &:after": {
       display: `none`,
     },
   },
-  activeWorkaround: {
+  expandedChildren: {
     "&&": {
       color: colors.gatsby,
-      fontWeight: `bold`,
     },
   },
   activeLink: {
@@ -102,6 +101,9 @@ const styles = {
   },
   link: {
     paddingRight: 40,
+    minHeight: 40,
+    paddingTop: 10,
+    paddingBottom: 10,
     position: `relative`,
     zIndex: 1,
     width: `100%`,
@@ -139,13 +141,12 @@ const styles = {
       background: colors.gatsby,
       borderRadius: 4,
       content: ` `,
-      left: `-0.6rem`,
+      left: bulletOffset.default.left + 7,
       opacity: 0,
       transform: `translateX(-200px)`,
       width: 1,
       [presets.Tablet]: {
         ...bulletOffset.desktop,
-        left: `-0.6rem`,
       },
     },
   },

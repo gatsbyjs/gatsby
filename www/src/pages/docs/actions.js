@@ -7,7 +7,7 @@ import Functions from "../../components/function-list"
 import { rhythm, scale } from "../../utils/typography"
 import Layout from "../../components/layout"
 import Container from "../../components/container"
-import { sectionListDocs } from "../../utils/sidebar/section-list"
+import { itemListDocs } from "../../utils/sidebar/item-list"
 
 class ActionCreatorsDocs extends React.Component {
   render() {
@@ -17,7 +17,7 @@ class ActionCreatorsDocs extends React.Component {
     ).filter(func => func.name !== `deleteNodes`)
 
     return (
-      <Layout location={this.props.location} sectionList={sectionListDocs}>
+      <Layout location={this.props.location} itemList={itemListDocs}>
         <Container>
           <Helmet>
             <title>Actions</title>

@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+
 import SidebarBody from "./sidebar"
 
 class ScrollSyncSection extends Component {
@@ -28,9 +29,9 @@ class ScrollSyncSection extends Component {
   }
 
   calculateItemTopOffsets() {
-    const { sectionList } = this.props
+    const { itemList } = this.props
 
-    const itemIds = _getItemIds(sectionList)
+    const itemIds = _getItemIds(itemList)
     this.setState({
       itemTopOffsets: _getElementTopOffsetsById(itemIds),
     })
@@ -69,10 +70,11 @@ class ScrollSyncSection extends Component {
   }
 }
 
-const _getItemIds = sectionList => {
+// @todo make recursive
+const _getItemIds = itemList => {
   let list = []
 
-  sectionList.forEach(section => {
+  itemList.forEach(section => {
     if (section.items) {
       let sectionItems = section.items
         .map(item => {

@@ -1,181 +1,47 @@
 import React, { Fragment } from "react"
 
-import presets, { colors } from "../../utils/presets"
-import { rhythm, options, scale } from "../../utils/typography"
-
 import Item from "./item"
-import SectionTitle from "./section-title"
-import ChevronSvg from "./chevron-svg"
+import { Title, TitleButton, SplitButton } from "./section-title"
+import presets, { colors } from "../../utils/presets"
 
 const paddingLeft = level => (level === 0 ? level + 1 * 40 : level + 1 * 20)
 
-const Chevron = ({ isActive }) => (
-  <span
-    css={{
-      display: `none`,
-      [presets.Tablet]: {
-        display: `flex`,
-        width: 40,
-        minHeight: 40,
-        flexBasis: `40px`,
-        flexShrink: 0,
-        alignItems: `center`,
-        marginLeft: `auto`,
-        position: `relative`,
-        "&:before": {
-          ...styles.ulHorizontalDivider,
-          top: `auto`,
-          bottom: 0,
-          left: `0 !important`,
-        },
-      },
-    }}
-  >
-    <ChevronSvg
-      cssProps={{
-        color: isActive ? colors.lilac : colors.ui.bright,
-        transform: isActive ? `rotateX(180deg)` : `rotateX(0deg)`,
-        transition: `transform 0.2s ease`,
-        marginLeft: `auto`,
-        marginRight: `auto`,
-      }}
-    />
-  </span>
-)
-
-const ToggleSectionChevron = ({
-  isActive,
-  uid,
-  hideSectionTitle,
-  onSectionTitleClick,
-}) => (
-  <button
-    aria-expanded={isActive}
-    aria-controls={uid}
-    css={{
-      ...styles.resetButton,
-      [presets.Tablet]: {
-        display: hideSectionTitle ? `none` : `inline`,
-      },
-      "&:hover": {
-        background: `white`,
-      },
-    }}
-    onClick={onSectionTitleClick}
-  >
-    <Chevron isActive={isActive} />
-  </button>
-)
-
-const ToggleSectionButton = ({
-  title,
-  isActive,
-  uid,
-  level,
-  hideSectionTitle,
-  onSectionTitleClick,
-}) => (
-  <button
-    aria-expanded={isActive}
-    aria-controls={uid}
-    css={{
-      ...styles.button,
-      paddingLeft: level === 0 ? 40 : 0,
-      paddingRight: `0 !important`,
-      [presets.Tablet]: {
-        display: hideSectionTitle ? `none` : `inline`,
-      },
-      "&:before": {
-        ...styles.ulHorizontalDivider,
-        top: `auto`,
-        bottom: 0,
-        left: level === 0 ? 40 : 0,
-      },
-    }}
-    onClick={onSectionTitleClick}
-  >
-    <SectionTitle isActive={isActive} isSplit={true} level={level}>
-      {title}
-      <Chevron isActive={isActive} />
-    </SectionTitle>
-  </button>
-)
-
-const Title = ({ title, level, isActive }) => (
-  <div
-    css={{
-      alignItems: `center`,
-      display: `flex`,
-      paddingLeft: paddingLeft(level),
-      minHeight: 40,
-    }}
-  >
-    <SectionTitle disabled isActive={isActive} level={level}>
-      {title}
-    </SectionTitle>
-  </div>
-)
-
 const ItemWithSubitems = ({
-  item,
   activeItemLink,
+  createLink,
+  isExpanded,
+  item,
+  level,
   location,
   onLinkClick,
-  uid,
-  hideSectionTitle,
   onSectionTitleClick,
-  createLink,
-  isActive,
-  level,
-  isExpanded,
+  uid,
 }) => {
-  const SectionTitleComponent = item.disableAccordions
-    ? Title
-    : ToggleSectionButton
+  const SectionTitleComponent = item.disableAccordions ? Title : TitleButton
+  const isActive = item.link === activeItemLink.link
 
   return (
     <Fragment>
       {item.link ? (
-        <span
-          css={{
-            alignItems: `flex-end`,
-            display: `flex`,
-            paddingLeft: level === 0 ? 40 : 0,
-            position: `relative`,
-            width: `100%`,
-          }}
-        >
-          <span
-            css={{
-              borderRight: `1px solid ${colors.ui.border}`,
-              flexGrow: 1,
-            }}
-          >
-            {createLink({
-              isActive: item.link === activeItemLink.link,
-              isExpanded: isExpanded,
-              item,
-              location,
-              onLinkClick,
-            })}
-          </span>
-          <span css={{ marginLeft: `auto` }}>
-            <ToggleSectionChevron
-              isActive={isActive}
-              uid={uid}
-              hideSectionTitle={hideSectionTitle}
-              onSectionTitleClick={onSectionTitleClick}
-            />
-          </span>
-        </span>
+        <SplitButton
+          level={level}
+          isActive={isActive}
+          isExpanded={isExpanded}
+          item={item}
+          location={location}
+          onLinkClick={onLinkClick}
+          onSectionTitleClick={onSectionTitleClick}
+          uid={uid}
+          createLink={createLink}
+        />
       ) : (
         <SectionTitleComponent
-          title={item.title}
           isActive={isActive}
-          uid={uid}
+          isExpanded={isExpanded}
           level={level}
-          hideSectionTitle={hideSectionTitle}
           onSectionTitleClick={onSectionTitleClick}
+          title={item.title}
+          uid={uid}
         />
       )}
     </Fragment>
@@ -188,89 +54,80 @@ class Accordion extends React.Component {
 
     this.state = {
       uid: (`` + Math.random()).replace(/\D/g, ``),
-      collapsed: props.collapsed || props.isActive || false,
+      isExpanded: props.isExpanded || props.isActive || false,
     }
+
     this.handleClick = this.handleClick.bind(this)
   }
 
   handleClick(...args) {
-    this.setState({ collapsed: !this.state.collapsed })
-    if (this.props.onClick) {
-      this.props.onClick(...args)
+    this.setState({ isExpanded: !this.state.isExpanded })
+
+    if (this.props.onLinkClick) {
+      this.props.onLinkClick(...args)
     }
   }
 
   render() {
     const {
-      collapsed = this.state.collapsed,
+      activeItemLink,
+      activeItemParents,
       createLink,
+      isActive,
+      isExpanded = this.state.isExpanded,
+      item,
+      level,
       location,
       onLinkClick,
       onSectionTitleClick,
-      item,
-      hideSectionTitle,
-      activeItemLink,
-      isFirstItem,
-      isLastItem,
-      singleSection,
-      level,
-      activeItemParents,
-      isActive,
     } = this.props
-    const uid = `section_` + this.state.uid
+    const uid = `item_` + this.state.uid
 
     return (
       <li
-        className="accordion"
         css={{
           background:
-            collapsed && isActive && level > 0 ? colors.ui.light : false,
+            isExpanded && isActive && level > 0 ? colors.ui.light : false,
           position: `relative`,
         }}
       >
         <ItemWithSubitems
-          item={item}
           activeItemLink={activeItemLink}
+          activeItemParents={activeItemParents}
+          createLink={createLink}
+          isActive={isActive}
+          isExpanded={isExpanded}
+          item={item}
+          level={level}
           location={location}
           onLinkClick={onLinkClick}
-          uid={uid}
-          hideSectionTitle={hideSectionTitle}
           onSectionTitleClick={this.handleClick}
-          createLink={createLink}
-          isActive={collapsed}
-          isExpanded={isActive}
-          level={level}
-          activeItemParents={activeItemParents}
+          uid={uid}
         />
         <ul
           id={uid}
           css={{
             ...styles.ul,
-            paddingBottom: level === 0 && collapsed ? 40 : false,
+            paddingBottom: level === 0 && isExpanded ? 40 : false,
             "& li": {
               paddingLeft: paddingLeft(level),
             },
             [presets.Tablet]: {
-              display: collapsed ? `block` : `none`,
+              display: isExpanded ? `block` : `none`,
             },
           }}
         >
           {item.items.map(subitem => (
             <Item
+              activeItemLink={activeItemLink}
+              activeItemParents={activeItemParents}
               createLink={createLink}
+              item={subitem}
+              key={subitem.title}
+              level={level + 1}
               location={location}
               onLinkClick={onLinkClick}
               onSectionTitleClick={onSectionTitleClick}
-              item={subitem}
-              hideSectionTitle={hideSectionTitle}
-              singleSection={singleSection}
-              activeItemLink={activeItemLink}
-              isFirstItem={isFirstItem}
-              isLastItem={isLastItem}
-              activeItemParents={activeItemParents}
-              isActive={isActive}
-              key={subitem.title}
-              level={level + 1}
               styles={{
                 ...(item.ui === `steps` && {
                   ...styles.ulStepsUI,
@@ -299,69 +156,21 @@ const styles = {
   ulStepsUI: {
     "&:after": {
       background: colors.ui.bright,
+      bottom: `1.5rem`,
       content: ` `,
       left: 0,
-      top: `1.5rem`,
-      bottom: `1.5rem`,
       position: `absolute`,
+      top: `1.5rem`,
       width: 1,
     },
     "&:before": {
+      borderLeft: `1px dashed ${colors.ui.bright}`,
+      bottom: 0,
       content: ` `,
       height: `100%`,
       left: 0,
       position: `absolute`,
-      bottom: 0,
       width: 0,
-      borderLeft: `1px dashed ${colors.ui.bright}`,
-    },
-  },
-  resetButton: {
-    backgroundColor: `transparent`,
-    border: 0,
-    cursor: `pointer`,
-    padding: 0,
-    marginLeft: `auto`,
-  },
-  button: {
-    backgroundColor: `transparent`,
-    border: 0,
-    cursor: `pointer`,
-    padding: 0,
-    position: `relative`,
-    textAlign: `left`,
-    width: `100%`,
-  },
-  liActive: {
-    background: colors.ui.light,
-  },
-  ulHorizontalDivider: {
-    background: colors.ui.border,
-    top: 0,
-    content: ` `,
-    height: 1,
-    position: `absolute`,
-    right: 0,
-    left: 40,
-  },
-  liTutorial: {
-    "&&": {
-      marginBottom: `1rem`,
-      "& a": {
-        fontWeight: `bold`,
-        fontFamily: options.headerFontFamily.join(`,`),
-        fontSize: scale(-2 / 10).fontSize,
-      },
-      "& ul a": {
-        fontWeight: `normal`,
-        fontSize: scale(-1 / 10).fontSize,
-        [presets.Phablet]: {
-          fontSize: scale(-2 / 10).fontSize,
-        },
-        [presets.Tablet]: {
-          fontSize: scale(-4 / 10).fontSize,
-        },
-      },
     },
   },
 }

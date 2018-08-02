@@ -16,17 +16,13 @@ const isItemActive = (activeItemParents, item) => {
 class Item extends React.Component {
   render() {
     const {
+      activeItemLink,
+      activeItemParents,
+      item,
+      level,
       location,
       onLinkClick,
       onSectionTitleClick,
-      item,
-      hideSectionTitle,
-      singleSection,
-      activeItemLink,
-      isFirstItem,
-      isLastItem,
-      level,
-      activeItemParents,
       ui,
     } = this.props
 
@@ -34,22 +30,19 @@ class Item extends React.Component {
       <Fragment>
         {item.items ? (
           <Accordion
+            activeItemLink={activeItemLink}
+            activeItemParents={activeItemParents}
+            createLink={createLink}
             isActive={
               item.link === location.pathname ||
               isItemActive(activeItemParents, item) ||
               item.disableAccordions
             }
-            onSectionTitleClick={onSectionTitleClick}
-            hideSectionTitle={hideSectionTitle}
-            singleSection={singleSection}
             item={item}
-            activeItemLink={activeItemLink}
-            createLink={createLink}
-            location={location}
-            isFirstItem={isFirstItem}
-            isLastItem={isLastItem}
             level={level}
-            activeItemParents={activeItemParents}
+            location={location}
+            onLinkClick={onLinkClick}
+            onSectionTitleClick={onSectionTitleClick}
           />
         ) : (
           <li

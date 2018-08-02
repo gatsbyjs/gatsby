@@ -8,11 +8,11 @@ const createHash = link => {
   return index >= 0 ? link.substr(index + 1) : false
 }
 
-const extendSectionList = sectionList => {
-  sectionList.forEach(section => {
+const extenditemList = itemList => {
+  itemList.forEach(section => {
     if (section.items) extendItem(section.items, section.title)
   })
-  return sectionList
+  return itemList
 }
 
 const extendItem = (items, parentTitle) => {
@@ -23,16 +23,16 @@ const extendItem = (items, parentTitle) => {
   })
 }
 
-const sectionListDocs = extendSectionList(docsSidebar).map(item => {
+const itemListDocs = extenditemList(docsSidebar).map(item => {
   return { ...item }
 })
 
-const sectionListFeatures = extendSectionList(featuresSidebar).map(item => {
+const itemListFeatures = extenditemList(featuresSidebar).map(item => {
   return { ...item, disableAccordions: true }
 })
 
-const sectionListTutorial = extendSectionList(tutorialSidebar).map(item => {
-  return { ...item, disableAccordions: true }
+const itemListTutorial = extenditemList(tutorialSidebar).map(item => {
+  return { ...item }
 })
 
-export { sectionListDocs, sectionListFeatures, sectionListTutorial }
+export { itemListDocs, itemListFeatures, itemListTutorial }
