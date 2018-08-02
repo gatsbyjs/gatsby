@@ -29,8 +29,8 @@ const isItemActive = (location, item, activeItemHash) => {
   return false
 }
 
-const getActiveItem = (sectionList, location, activeItemHash) => {
-  for (let item of sectionList) {
+const getActiveItem = (itemList, location, activeItemHash) => {
+  for (let item of itemList) {
     if (item.link) {
       if (isItemActive(location, item, activeItemHash)) return item
     }

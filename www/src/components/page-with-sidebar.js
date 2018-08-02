@@ -25,10 +25,10 @@ export default props => {
           {props.renderContent()}
         </div>
         <StickyResponsiveSidebar
-          location={props.location}
-          sectionList={props.sectionList}
           enableScrollSync={props.enableScrollSync}
+          itemList={props.itemList}
           key={props.location.pathname}
+          location={props.location}
         />
       </Fragment>
     )

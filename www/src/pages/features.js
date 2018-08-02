@@ -6,7 +6,7 @@ import Layout from "../components/layout"
 import EvaluationTable from "../components/evaluation-table"
 import EvaluationCell from "../components/evaluation-cell"
 import FuturaParagraph from "../components/futura-paragraph"
-import { sectionListFeatures } from "../utils/sidebar/section-list"
+import { itemListFeatures } from "../utils/sidebar/item-list"
 import Container from "../components/container"
 import { options, rhythm } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
@@ -204,7 +204,7 @@ class FeaturesPage extends Component {
     return (
       <Layout
         location={this.props.location}
-        sectionList={sectionListFeatures}
+        itemList={itemListFeatures}
         enableScrollSync={true}
       >
         <Container>
