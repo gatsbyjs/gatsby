@@ -11,7 +11,6 @@ import { hot } from "react-hot-loader"
 import JSONStore from "./json-store"
 
 import * as ErrorOverlay from "react-error-overlay"
-console.log({ pages })
 
 // Report runtime errors
 ErrorOverlay.startReportingRuntimeErrors({
@@ -122,17 +121,14 @@ const replace = to => {
 
 window.___push = push
 window.___replace = replace
-console.log(`hi?`)
 
 const NoMatch = () => <div>ooooops</div>
 
 class RouteHandler extends React.Component {
   render() {
-    console.log(`RouteHandler`)
     const { location } = this.props
     const { pathname } = location
     const pageResources = loader.getResourcesForPathname(pathname)
-    console.log({ pageResources })
     const isPage = !!(pageResources && pageResources.component)
     let child
     if (isPage) {

@@ -152,8 +152,14 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       const { location } = this.props
       let child
 
+      // TODO
+      // check if hash + if element and if so scroll
+      // remove hash handling from gatsby-link
+      // check if scrollbehavior handles back button for
+      // restoring old position
+      // if not, add that.
+
       if (loader.getPage(location.pathname)) {
-        console.log(`found page`)
         child = createElement(PageRenderer, {
           isPage: true,
           ...this.props,
