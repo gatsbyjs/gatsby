@@ -15,17 +15,27 @@ export default function socketIo() {
       try {
         // eslint-disable-next-line no-undef
         socket = io()
+
+        const didDataChange = (msg, queryData) =>
+          !(msg.payload.id in queryData) ||
+          JSON.stringify(msg.payload.result) !==
+            JSON.stringify(queryData[msg.payload.id])
+
         socket.on(`message`, msg => {
           if (msg.type === `staticQueryResult`) {
-            staticQueryData = {
-              ...staticQueryData,
-              [msg.payload.id]: msg.payload.result,
+            if (didDataChange(msg, staticQueryData)) {
+              staticQueryData = {
+                ...staticQueryData,
+                [msg.payload.id]: msg.payload.result,
+              }
             }
           }
           if (msg.type === `pageQueryResult`) {
-            pageQueryData = {
-              ...pageQueryData,
-              [msg.payload.id]: msg.payload.result,
+            if (didDataChange(msg, pageQueryData)) {
+              pageQueryData = {
+                ...pageQueryData,
+                [msg.payload.id]: msg.payload.result,
+              }
             }
           }
           if (msg.type && msg.payload) {
@@ -41,3 +51,34 @@ export default function socketIo() {
     return null
   }
 }
+
+function getPageData(pathname, cb) {
+  if (pathname in pageQueryData) {
+    // We already have data, no need to request it
+    cb && cb()
+    return true
+  }
+
+  if (cb) {
+    const onPageDataCallback = msg => {
+      if (msg.type === `pageQueryResult` && msg.payload.id === pathname) {
+        socket.off(`message`, onPageDataCallback)
+        cb()
+      }
+    }
+    socket.on(`message`, onPageDataCallback)
+  }
+
+  socket.emit(`getDataForPath`, pathname)
+  return false
+}
+
+function registerPath(path) {
+  socket.emit(`registerPath`, path)
+}
+
+function unregisterPath(path) {
+  socket.emit(`unregisterPath`, path)
+}
+
+export { getPageData, registerPath, unregisterPath }

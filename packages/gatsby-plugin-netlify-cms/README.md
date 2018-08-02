@@ -98,6 +98,41 @@ import ImageGalleryPreview from `./image-gallery-preview.js`
 CMS.registerWidget(`image-gallery`, ImageGalleryWidget, ImageGalleryPreview)
 ```
 
+### `manualInit`
+
+(_optional_, default: `false`)
+
+Set this to `true` If you need to [manually initialize](https://www.netlifycms.org/docs/beta-features/#manual-initialization) Netlify CMS. The plugin will take care of setting `window.CMS_MANUAL_INIT` to `true`:
+
+```javascript
+plugins: [
+  {
+    resolve: `gatsby-plugin-netlify-cms`,
+    options: {
+      manualInit: true,
+    },
+  },
+]
+```
+
+The js module might look like this:
+
+```javascript
+import CMS, { init } from `netlify-cms`
+
+/**
+ * Optionally pass in a config object. This object will be merged into `config.yml` if it exists
+ */
+
+init({
+  config: {
+    backend: {
+      name: 'git-gateway',
+    },
+  },
+})
+```
+
 ### `enableIdentityWidget`
 
 (_optional_, default: `true`)

@@ -132,7 +132,7 @@ class GatsbyLink extends React.Component {
               }
             }
 
-            // In production, make sure the necessary scripts are
+            // Make sure the necessary scripts and data are
             // loaded before continuing.
             if (process.env.NODE_ENV === `production`) {
               e.preventDefault()

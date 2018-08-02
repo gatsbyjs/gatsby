@@ -118,9 +118,9 @@ At this point, you’ve got a fully functional Gatsby website. For additional in
 
 Full documentation for Gatsby lives [on the website](https://next.gatsbyjs.org/).
 
-For most developers, we recommend starting with our [in-depth tutorial for creating a site with Gatsby](https://next.gatsbyjs.org/tutorial/). It starts with zero assumptions about your level of ability and walks through every step of the process.
+-   **For most developers, we recommend starting with our [in-depth tutorial for creating a site with Gatsby](https://next.gatsbyjs.org/tutorial/).** It starts with zero assumptions about your level of ability and walks through every step of the process.
 
-For advanced developers, check out the “Guides”, API reference, and “Advanced Tutorials” sections of [the Gatsby documentation](https://next.gatsbyjs.org/docs/).
+-   **To dive straight into code samples head [to our documentation](https://next.gatsbyjs.org/docs/).** In particular, check out the “Guides”, API reference, and “Advanced Tutorials” sections in the sidebar.
 
 We welcome suggestions for improving our docs. See the [“how to contribute”](https://next.gatsbyjs.org/docs/how-to-contribute/) documentation for more details.
 

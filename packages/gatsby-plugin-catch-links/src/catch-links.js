@@ -1,7 +1,15 @@
 import { withPrefix } from "gatsby-link"
 
-module.exports = function(root, cb) {
-  root.addEventListener(`click`, function(ev) {
+function checkSameOriginWithoutProtocol(origin1, origin2) {
+  const protocolRegex = new RegExp(/(^\w+:|^)\/\//)
+  const removeTrailingSlash = new RegExp(/\//g)
+
+  return origin1.replace(protocolRegex, ``).replace(removeTrailingSlash, ``) ===
+    origin2.replace(protocolRegex, ``).replace(removeTrailingSlash, ``)
+}
+
+module.exports = function (root, cb) {
+  root.addEventListener(`click`, function (ev) {
     if (
       ev.button !== 0 ||
       ev.altKey ||
@@ -20,6 +28,7 @@ module.exports = function(root, cb) {
         break
       }
     }
+
     if (!anchor) return true
 
     // Don't catch links where a target (other than self) is set
@@ -69,11 +78,19 @@ module.exports = function(root, cb) {
     var re = new RegExp(`^${a2.host}${withPrefix(`/`)}`)
     if (!re.test(`${a1.host}${a1.pathname}`)) return true
 
-    // TODO: add a check for absolute internal links in a callback or here,
+    // Adding a check for absolute internal links in a callback or here,
     // or always pass only `${a1.pathname}${a1.hash}`
     // to avoid `https://example.com/myapp/https://example.com/myapp/here` navigation
 
     ev.preventDefault()
+
+
+    var anchoreUrl = new URL(anchor.getAttribute(`href`))
+
+    if (checkSameOriginWithoutProtocol(window.location.origin, anchoreUrl.origin)) {
+      cb(`${anchoreUrl.pathname}${anchoreUrl.search}${anchoreUrl.hash}`)
+      return false
+    }
 
     cb(anchor.getAttribute(`href`))
     return false

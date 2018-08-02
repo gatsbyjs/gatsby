@@ -56,6 +56,7 @@ A basic page component with a GraphQL query might look like this:
 
 ```jsx
 import React from "react"
+import { graphql } from "gatsby"
 
 export default ({ data }) => (
   <div>
@@ -174,6 +175,7 @@ This is what a component using `gatsby-image` looks like:
 ```jsx
 import React from "react"
 import Img from "gatsby-image"
+import { graphql } from "gatsby"
 
 export default ({ data }) => (
   <div>
@@ -242,6 +244,7 @@ It’s good practice for your helper components to define and export a fragment 
 // src/pages/index.jsx
 
 import React from "react"
+import { graphql } from "gatsby"
 
 export default ({ data }) => {
   return (
@@ -283,6 +286,7 @@ If the index component becomes too large, you might want to refactor it into sma
 // src/components/IndexPost.jsx
 
 import React from "react"
+import { graphql } from "gatsby"
 
 export default ({ frontmatter: { title, date } }) => (
   <div>
@@ -309,6 +313,7 @@ Now, we can use the component together with the exported fragment in our index p
 
 import React from "react";
 import IndexPost from "../components/IndexPost";
+import { graphql } from "gatsby"
 
 export default ({ data }) => {
   return (
