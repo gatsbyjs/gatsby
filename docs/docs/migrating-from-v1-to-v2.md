@@ -12,7 +12,7 @@ This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While t
 
 ## What we'll cover
 
-- [Setting Up Dependencies](#setting-up-dependencies)
+- [Updating Up Dependencies](#setting-up-dependencies)
 
   - [Update Gatsby version](#update-gatsby-version)
   - [Manually install React](#manually-install-react)
@@ -24,8 +24,9 @@ This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While t
   - [Change `navigateTo` to `push`](#change-navigateto-to-push)
   - [Convert to either pure CommonJS or pure ES6](#convert-to-either-pure-commonjs-or-pure-es6)
   - [Move Babel configuration](#move-babel-configuration)
-  - [Manually specify PostCSS plugins](#manually-specify-postcss-plugins)
+  - [Restore v1 PostCSS plugin setup](#restore-v1-post-css-setup)
   - [Don't query nodes by ID](#dont-query-nodes-by-id)
+  - [Typography.js Plugin Config](#typographyjs-plugin-config-changes)
 
 - [Resolving Deprecations](#resolving-deprecations)
 
@@ -50,12 +51,11 @@ This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While t
   - [`createRemoteFileNode` API has changed](#createRemoteFileNode)
   - [Only allow defined keys on the `node.internal` object](#only-allow-defined-keys-on-the-node-internal-object)
   - [Import `graphql` types from `gatsby/graphql`](#import-graphql-types-from-gatsbygraphql)
-  - [Plugin specific changes](#plugin-specific-changes)
 
 - [For Explorers](#for-explorers)
   - [V2 from Scratch](#starting-a-new-project-with-gatsby-v2)
 
-## Setting Up Dependencies
+## Updating Your Dependencies
 
 The very first thing you will need to do is update your dependencies and install any needed peer dependencies.
 
@@ -311,11 +311,11 @@ The latest version of Gatsby uses Babel 7, which introduced [a new behavior for 
 
 More information on Gatsby and Babel configuration available [here](/docs/babel/#how-to-use-a-custom-babelrc-file).
 
-### Manually specify PostCSS plugins
+### Restore v1 PostCSS Plugin Setup
 
 Gatsby v2 removed `postcss-cssnext` and `postcss-import` from the default PostCSS setup.
 
-To have the same configuration that you had in v1, you should use [`gatsby-plugin-postcss`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-postcss) and follow the recommended migration path below.
+To have the same configuration that you had in v1 (if you were using these plugins), you should use [`gatsby-plugin-postcss`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-postcss) and follow the recommended migration path below.
 
 #### 1. Install the dependencies
 
@@ -374,6 +374,21 @@ Here's an example querying an image:
 ```
 
 [See the Pull Request that implemented this change](https://github.com/gatsbyjs/gatsby/pull/3807/files)
+
+### Typography.js Plugin Config Changes
+
+If you use [`gatsby-plugin-typography`](https://www.gatsbyjs.org/packages/gatsby-plugin-typography/), you now need to explicitly export `scale` and `rhythm` as named exports from your typography config module.
+
+`src/utils/typography.js`
+
+```diff
+- const typography = new Typography();
+- export default typography;
+
++ const typography = new Typography();
++ const { rhythm, scale } = typography;
++ export { rhythm, scale, typography as default };
+```
 
 ## Resolving Deprecations
 
@@ -481,7 +496,7 @@ Further examples can be found in the [Gatsby Image docs](https://github.com/gats
 
 ### Delete Nodes API Deprecated
 
-Stub content. PRs welcome!
+`deleteNodes` is now deprecated, so instead you should write `nodes.forEach(n => deleteNode({ node: n }))`
 
 ## Other Changes Worth Noting
 
@@ -520,7 +535,7 @@ This isn't a breaking change. Queries with explicit names will continue to work 
 
 ### Remove inlined CSS in `html.js`
 
-Gatsby v2 will automatically inline your CSS. You can remove any custom CSS inlining from your custom `html.js`.
+Gatsby v2 will automatically inline your CSS. You can remove any custom CSS inlining from your custom `html.js` and unless it was used for anything else specifically, you can also remove `html.js` itself.
 
 See an example in [this PR that upgrades the `using-remark` site to Gatsby v2](https://github.com/gatsbyjs/gatsby/commit/765b679cbc222fd5f527690427ee431cca7ccd61#diff-637c76e3c059ed8efacedf6e30de2d61).
 
@@ -613,27 +628,11 @@ Import graphql types from `gatsby/graphql` to prevent `Schema must contain uniqu
 +const { GraphQLString } = require(`gatsby/graphql`)
 ```
 
-### Plugin specific changes
-
-Some plugins require additional changes before your site will compile.
-For example, if you use [`gatsby-plugin-typography`](https://www.gatsbyjs.org/packages/gatsby-plugin-typography/), you now need to explicitly export `scale` and `rhythm` as named exports from your typography config module.
-
-`src/utils/typography.js`
-
-```diff
-- const typography = new Typography();
-- export default typography;
-
-+ const typography = new Typography();
-+ const { rhythm, scale } = typography;
-+ export { rhythm, scale, typography as default };
-```
-
 ## For Explorers
 
 ### Starting a New Project with v2
 
-Before diving in to the upgrade guide, here's a brief section on starting a new project with Gatsby v2 instead of upgrading an existing project.
+Here's a brief section on starting a new project with Gatsby v2 instead of upgrading an existing project.
 
 _Start from scratch:_ If you're a _start from scratch_ kind of person, you can install the Gatsby beta and React like this: `npm install gatsby@next react react-dom`
 
