@@ -1,41 +1,17 @@
 - title: Quick start
-  link: /docs/
   items:
+    - title: Quick start
+      link: /docs/
     - title: Recipes*
       link: /docs/recipes/
     - title: Overview of the docs*
       link: /docs/overview/
     - title: Main Tutorial (step-by-step)
       link: /tutorial/
-    - title: Apps with Gatsby
-      link: /docs/building-apps-with-gatsby/
-      items:
-        - title: Progressive web app (PWA)
-          link: /docs/progressive-web-app/
-        - title: Creating Dynamically-Rendered Navigation*
-          link: /docs/creating-dynamically-rendered-navigation/
-        - title: Authentication*
-          link: /docs/authentication/
-        - title: E-commerce*
-          link: /docs/e-commerce/
-        - title: Interactive pages*
-          link: /docs/interactive-pages/
-        - title: Headless CMS*
-          ui: steps
-          items:
-            - title: Netlify CMS
-              link: /docs/netlify-cms/
-            - title: WordPress*
-              link: /docs/wordpress/
-            - title: Drupal*
-              link: /docs/drupal/
-            - title: Contentful*
-              link: /docs/contentful/
-            - title: Prose*
-              link: /docs/prose/
 - title: Guides
   items:
-    - title: Preparing your environment
+    - title: Preparing your environment*
+      link: /docs/environment/
       items:
       - title: Basic hardware and software requirements*
         link: /docs/basic-hardware-software-requirements/
@@ -45,9 +21,10 @@
         link: /docs/gatsby-on-macs/
       - title: Gatsby on Windows
         link: /docs/gatsby-on-windows/
-    - title: Deploying & Hosting
+    - title: Deploying & Hosting*
+      link: /docs/deploying-and-hosting/
       items:
-        - title: Preparing site for deployment
+        - title: Preparing site for deployment*
           link: /docs/preparing-for-deployment/
         - title: Deploying
           link: /docs/deploy-gatsby/
@@ -55,7 +32,8 @@
           link: /docs/path-prefix/
         - title: How Gatsby works with GitHub pages
           link: /docs/how-gatsby-works-with-github-pages/
-    - title: Custom configuration
+    - title: Custom configuration*
+      link: /docs/customization/
       items:
         - title: Babel.js
           link: /docs/babel/
@@ -67,11 +45,12 @@
           link: /docs/environment-variables/
         - title: Proxying API requests
           link: /docs/api-proxy/
-    - title: Images and files
+    - title: Images and files*
+      link: /docs/images-and-files/
       items:
         - title: Adding Images, Fonts, and Files
           link: /docs/adding-images-fonts-files/
-        - title: Static folder
+        - title: Static folder*
           link: /docs/static-folder/
         - title: Dropping images into static folders*
           link: /docs/dropping-images-into-static-folders/
@@ -83,12 +62,12 @@
           link: /docs/gatsby-source-filesystem-programmatic-import/
         - title: Working with images in Gatsby
           link: /docs/working-with-images/
-    - title: Querying your data with GraphQL
+    - title: Querying your data with GraphQL*
       link: /docs/graphql/
-      items: 
+      items:
         - title: Introducing GraphiQL*
-          link: /docs/introducting-graphiql/
-        - title: Build a page with a GraphQL query*
+          link: /docs/introducing-graphiql/
+        - title: Build a page with a GraphQL query
           link: /docs/build-a-page-with-graphql-query/
         - title: Creating and modifying pages
           link: /docs/creating-and-modifying-pages/
@@ -102,7 +81,20 @@
           link: /docs/programmatically-create-pages-from-data/
         - title: Querying data with StaticQuery
           link: /docs/static-query/
-    - title: Plugins
+    - title: Headless CMS*
+      link: /docs/headless-cms/
+      items:
+        - title: Netlify CMS
+          link: /docs/netlify-cms/
+        - title: WordPress*
+          link: /docs/wordpress/
+        - title: Drupal*
+          link: /docs/drupal/
+        - title: Contentful*
+          link: /docs/contentful/
+        - title: Prose*
+          link: /docs/prose/
+    - title: Plugins*
       link: /docs/plugins/
       items:
         - title: Plugin authoring
@@ -111,7 +103,8 @@
           link: /docs/submit-to-plugin-library/
         - title: Source plugin tutorial
           link: /docs/source-plugin-tutorial/
-    - title: Styling
+    - title: Styling*
+      link: /docs/styling/
       items:
         - title: CSS Modules*
           link: /docs/css-modules/
@@ -128,17 +121,36 @@
         - title: PostCSS*
           link: /docs/post-css/
     - title: Debugging
+      link: /docs/debugging/
       items:
         - title: Debugging HTML builds
           link: /docs/debugging-html-builds/
         - title: Debugging Replace Renderer API
           link: /docs/debugging-replace-renderer-api/
-    - title: Preparing site for launch
+        - title: Debugging the build process
+          link: /docs/debugging-the-build-process/
+        - title: Trace Gatsby builds
+          link: /docs/performance-tracing/
+    - title: Apps with Gatsby
+      link: /docs/building-apps-with-gatsby/
+      items:
+        - title: Progressive web app (PWA)
+          link: /docs/progressive-web-app/
+        - title: Creating Dynamically-Rendered Navigation*
+          link: /docs/creating-dynamically-rendered-navigation/
+        - title: Authentication*
+          link: /docs/authentication/
+        - title: E-commerce*
+          link: /docs/e-commerce/
+        - title: Interactive pages*
+          link: /docs/interactive-pages/
+    - title: Preparing site for launch*
+      link: /docs/website-functionality/
       items:
         - title: Adding a 404 Page
           link: /docs/add-404-page/
         - title: Adding search to your Gatsby website
-          link: /docs/adding-search/ 
+          link: /docs/adding-search/
         - title: Adding tags and categories to blog posts
           link: /docs/adding-tags-and-categories-to-blog-posts/
         - title: Creating a sitemap*
@@ -149,7 +161,7 @@
           link: /docs/seo/
     - title: Performance*
       link: /docs/performance/
-      items: 
+      items:
         - title: Caching
           link: /docs/caching/
         - title: Local HTTPS
@@ -186,6 +198,22 @@
       link: /docs/migrating-from-v1-to-v2/
     - title: Migrating from v0 to v1
       link: /docs/migrating-from-v0-to-v1/
+- title: Conceptual Guide
+  items:
+    - title: The Gatsby core philosophy*
+      link: /docs/gatsby-core-philosophy/
+    - title: Life and times of a Gatsby build*
+      link: /docs/life-and-times-of-a-gatsby-build/
+    - title: Building with components
+      link: /docs/building-with-components/
+    - title: Lifecycle APIs
+      link: /docs/gatsby-lifecycle-apis/
+    - title: Plugins
+      link: /docs/plugins/
+    - title: PRPL pattern
+      link: /docs/prpl-pattern/
+    - title: Querying data with GraphQL
+      link: /docs/querying-with-graphql/
 - title: Advanced Tutorials
   items:
     - title: Making a site with user authentication*
@@ -210,6 +238,8 @@
       link: /docs/contributor-swag/
     - title: How to file an issue
       link: /docs/how-to-file-an-issue/
+    - title: How to label an issue
+      link: /docs/how-to-label-an-issue/
     - title: How to submit a PR*
       link: /docs/how-to-submit-a-pr/
     - title: Gatsby style guide
@@ -226,8 +256,8 @@
       link: /docs/how-to-pitch-gatsby/
     - title: Submit a blogpost*
       link: /docs/submit-a-blogpost/
-    - title: Submit to Site Showcase*
-      link: /docs/submit-to-site-showcase/
+    - title: Site Showcase Submissions
+      link: /docs/site-showcase-submissions/
     - title: Submit to Starter Showcase*
       link: /docs/submit-to-starter-showcase/
 - title: Glossary*
