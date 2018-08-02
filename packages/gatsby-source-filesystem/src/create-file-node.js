@@ -67,7 +67,7 @@ exports.createFileNode = async (
           slashedFile.absolutePath
         )
       ),
-      relativePathFromProjectRoot: path.relative(process.cwd(), slashed),
+      filePath: path.relative(process.cwd(), slashed),
       extension: slashedFile.ext.slice(1).toLowerCase(),
       size: stats.size,
       prettySize: prettyBytes(stats.size),
