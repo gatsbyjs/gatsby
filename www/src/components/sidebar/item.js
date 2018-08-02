@@ -1,55 +1,65 @@
 import React, { Fragment } from "react"
 
 import Accordion from "./accordion"
-import presets from "../../utils/presets"
-import { scale, rhythm } from "../../utils/typography"
+import createLink from "../../utils/sidebar/create-link"
+
+const isItemActive = (activeItemParents, item) => {
+  if (activeItemParents) {
+    for (let parent of activeItemParents) {
+      if (parent === item.title) return true
+    }
+  }
+
+  return false
+}
 
 class Item extends React.Component {
   render() {
     const {
-      createLink,
+      activeItemLink,
+      activeItemParents,
+      item,
+      level,
       location,
       onLinkClick,
       onSectionTitleClick,
-      item,
-      hideSectionTitle,
-      singleSection,
-      activeItemLink,
-      isFirstItem,
-      isLastItem,
+      ui,
     } = this.props
 
     return (
       <Fragment>
         {item.items ? (
           <Accordion
-            itemStyles={styles}
-            isActive={this.props.isActive || item.disableAccordions}
-            onSectionTitleClick={onSectionTitleClick}
-            hideSectionTitle={hideSectionTitle}
-            singleSection={singleSection}
-            item={item}
             activeItemLink={activeItemLink}
+            activeItemParents={activeItemParents}
             createLink={createLink}
+            isActive={
+              item.link === location.pathname ||
+              isItemActive(activeItemParents, item) ||
+              item.disableAccordions
+            }
+            item={item}
+            level={level}
             location={location}
-            isFirstItem={isFirstItem}
-            isLastItem={isLastItem}
+            onLinkClick={onLinkClick}
+            onSectionTitleClick={onSectionTitleClick}
           />
         ) : (
-          <div
+          <li
             className="item"
             css={{
-              ...styles.item,
+              ...this.props.styles,
+              paddingLeft: level === 0 ? 40 : false,
             }}
           >
             {createLink({
-              isActive: item.link === activeItemLink,
-              item: item,
+              isActive: item.link === activeItemLink.link,
               item,
               location,
               onLinkClick,
+              stepsUI: ui === `steps`,
             })}
-          </div>
+          </li>
         )}
       </Fragment>
     )
@@ -57,25 +67,3 @@ class Item extends React.Component {
 }
 
 export default Item
-
-const horizontalPadding = rhythm(3 / 4)
-const horizontalPaddingDesktop = rhythm(3 / 2)
-const styles = {
-  item: {
-    lineHeight: 1.3,
-    margin: 0,
-    paddingLeft: horizontalPadding,
-    paddingRight: horizontalPadding,
-    fontSize: scale(-1 / 10).fontSize,
-    [presets.Phablet]: {
-      fontSize: scale(-2 / 10).fontSize,
-    },
-    [presets.Tablet]: {
-      fontSize: scale(-4 / 10).fontSize,
-    },
-    [presets.Desktop]: {
-      paddingLeft: horizontalPaddingDesktop,
-      paddingRight: horizontalPaddingDesktop,
-    },
-  },
-}
