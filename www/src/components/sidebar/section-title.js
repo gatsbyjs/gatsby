@@ -108,6 +108,7 @@ const SplitButton = ({
         onLinkClick,
       })}
     </span>
+    {/* @todo this should cover 100% of the item's height */}
     <button
       aria-controls={uid}
       aria-expanded={isExpanded}
