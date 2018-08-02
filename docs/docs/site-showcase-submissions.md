@@ -29,12 +29,6 @@ There are only three major steps :)
   # optional: short paragraph describing the content and/or purpose of the site that will appear in the modal detail view and permalink views for your site
   description: >
     {titleofthesite} is a shiny new website built with Gatsby v2 that makes important contributions towards a faster web for everyone.
-  
-  # optional and not currently displayed in the Gatsby showcase
-  date_added: 2018-08-01
-  
-  # optional and not currently displayed in the Gatsby showcase (one of v0, v1, v2)
-  gatsby_version: v2
 
   # You can list as many categories as you want here. Check list of Categories below in this doc!
   # If you'd like to create a new category, simply list it here.
