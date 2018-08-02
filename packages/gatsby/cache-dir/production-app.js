@@ -1,20 +1,15 @@
 import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
 import React, { createElement } from "react"
 import ReactDOM from "react-dom"
-import { Router, navigate as reachNavigate } from "@reach/router"
-import { globalHistory } from "@reach/router/lib/history"
+import { Router } from "@reach/router"
 import { ScrollContext } from "gatsby-react-router-scroll"
 import domReady from "domready"
-import {
-  shouldUpdateScroll,
-  init as navigationInit,
-} from "./navigation"
+import { shouldUpdateScroll, init as navigationInit } from "./navigation"
 import emitter from "./emitter"
 window.___emitter = emitter
 import PageRenderer from "./page-renderer"
 import asyncRequires from "./async-requires"
 import loader, { setApiRunnerForLoader } from "./loader"
-import parsePath from "./parse-path"
 
 window.asyncRequires = asyncRequires
 window.___emitter = emitter
@@ -73,7 +68,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
         </ScrollContext>
       )
     }
-  }  
+  }
 
   loader.getResourcesForPathname(window.location.pathname, () => {
     const Root = () =>

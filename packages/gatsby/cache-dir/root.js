@@ -1,13 +1,7 @@
 import React, { createElement } from "react"
-import { Router, navigate as reachNavigate } from "@reach/router"
-import { globalHistory } from "@reach/router/lib/history"
+import { Router } from "@reach/router"
 import { ScrollContext } from "gatsby-react-router-scroll"
-import {
-  shouldUpdateScroll,
-  attachToHistory,
-  init as navigationInit,
-} from "./navigation"
-import history from "./history"
+import { shouldUpdateScroll, init as navigationInit } from "./navigation"
 import { apiRunner } from "./api-runner-browser"
 import syncRequires from "./sync-requires"
 import pages from "./pages.json"
