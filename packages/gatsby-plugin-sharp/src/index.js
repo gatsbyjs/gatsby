@@ -62,7 +62,6 @@ const reportError = (message, err, reporter) => {
 }
 
 const generalArgs = {
-  width: 400,
   maxWidth: 800,
   quality: 50,
   jpegProgressive: true,
@@ -77,11 +76,19 @@ const generalArgs = {
 
 const healOptions = (args, defaultArgs) => {
   let options = _.defaults({}, args, defaultArgs, generalArgs)
-  options.width = parseInt(options.width, 10)
   options.maxWidth = parseInt(options.maxWidth, 10)
   options.quality = parseInt(options.quality, 10)
   options.pngCompressionLevel = parseInt(options.pngCompressionLevel, 10)
   options.toFormat = options.toFormat.toLowerCase()
+
+  // only set width to 400 if neither width nor height is passed
+  if (options.width === undefined && options.height === undefined) {
+    options.width = 400
+  } else if (options.width !== undefined) {
+    options.width = parseInt(options.width, 10)
+  } else if (options.height !== undefined) {
+    options.height = parseInt(options.height, 10)
+  }
 
   return options
 }
@@ -343,11 +350,16 @@ function queueImageResizing({ file, args = {}, reporter }) {
     height = options.height
     // Recalculate the aspectRatio for the cropped photo
     aspectRatio = width / height
-  } else {
+  } else if (options.width) {
     // Use the aspect ratio of the image to calculate what will be the resulting
     // height.
     width = options.width
     height = Math.round(options.width / aspectRatio)
+  } else {
+    // Use the aspect ratio of the image to calculate what will be the resulting
+    // width.
+    height = options.height
+    width = Math.round(options.height * aspectRatio)
   }
 
   // Create job and process.
@@ -572,27 +584,32 @@ async function fluid({ file, args = {}, reporter }) {
 async function fixed({ file, args = {}, reporter }) {
   const options = healOptions(args, {})
 
+  // if no width is passed, we need to resize the image based on the passed height
+  const fixedDimension = options.width === undefined ? `height` : `width`
+
   // Create sizes for different resolutions — we do 1x, 1.5x, 2x, and 3x.
   const sizes = []
-  sizes.push(options.width)
-  sizes.push(options.width * 1.5)
-  sizes.push(options.width * 2)
-  sizes.push(options.width * 3)
+  sizes.push(options[fixedDimension])
+  sizes.push(options[fixedDimension] * 1.5)
+  sizes.push(options[fixedDimension] * 2)
+  sizes.push(options[fixedDimension] * 3)
   const dimensions = getImageSize(file)
 
-  const filteredSizes = sizes.filter(size => size <= dimensions.width)
+  const filteredSizes = sizes.filter(size => size <= dimensions[fixedDimension])
 
   // If there's no fluid images after filtering (e.g. image is smaller than what's
   // requested, add back the original so there's at least something)
   if (filteredSizes.length === 0) {
-    filteredSizes.push(dimensions.width)
+    filteredSizes.push(dimensions[fixedDimension])
     console.warn(
       `
-                 The requested width "${
-                   options.width
-                 }px" for a resolutions field for
+                 The requested ${fixedDimension} "${
+        options[fixedDimension]
+      }px" for a resolutions field for
                  the file ${file.absolutePath}
-                 was wider than the actual image width of ${dimensions.width}px!
+                 was larger than the actual image ${fixedDimension} of ${
+        dimensions[fixedDimension]
+      }px!
                  If possible, replace the current image with a larger one.
                  `
     )
@@ -604,10 +621,10 @@ async function fixed({ file, args = {}, reporter }) {
   const images = sortedSizes.map(size => {
     const arrrgs = {
       ...options,
-      width: Math.round(size),
+      [fixedDimension]: Math.round(size),
     }
     // Queue images for processing.
-    if (options.height) {
+    if (options.width !== undefined && options.height !== undefined) {
       arrrgs.height = Math.round(size * (options.height / options.width))
     }
 

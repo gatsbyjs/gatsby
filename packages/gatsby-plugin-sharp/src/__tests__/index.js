@@ -133,6 +133,17 @@ describe(`gatsby-plugin-sharp`, () => {
       expect(result.width).toEqual(1)
       expect(console.warn).toHaveBeenCalledTimes(1)
     })
+
+    it(`correctly infers the width when only the height is given`, async () => {
+      const args = { height: 10 }
+
+      const result = await fixed({
+        file: getFileObject(path.join(__dirname, `images/144-density.png`)),
+        args,
+      })
+
+      expect(result.width).toEqual(21)
+    })
   })
 
   describe(`base64`, () => {
