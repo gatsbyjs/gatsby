@@ -466,9 +466,9 @@ Modify `about-css-modules.js` so it looks like the following:
 ```jsx{7-19,25-34}
 import React from "react";
 import styles from "./about-css-modules.module.css";
-console.log(styles);
-
 import Container from "../components/container";
+
+console.log(styles);
 
 const User = props => (
   <div className={styles.user}>

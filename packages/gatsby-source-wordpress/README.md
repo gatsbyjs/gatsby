@@ -64,6 +64,13 @@ plugins: [
       // This feature is untested for sites hosted on Wordpress.com.
       // Defaults to true.
       useACF: true,
+      // Include specific ACF Option Pages that have a set post ID
+      // Regardless if an ID is set, the default options route will still be retrieved
+      // Must be using V3 of ACF to REST to include these routes     
+      // Example: `["option_page_1", "option_page_2"]` will include the proper ACF option
+      // routes with the ID option_page_1 and option_page_2
+      // Dashes in IDs will be converted to underscores for use in GraphQL
+      acfOptionPageIds = [],
       auth: {
         // If auth.user and auth.pass are filled, then the source plugin will be allowed
         // to access endpoints that are protected with .htaccess.
@@ -234,6 +241,29 @@ For example the following URL:
         id
        type
         // Put your fields here
+      }
+    }
+  }
+}
+```
+
+### Query ACF Options
+
+Whether you are using V2 or V3 of ACF to REST, the query below will return `options` as the default ACF Options page data.
+
+If you have specified `acfOptionPageIds` in your site's `gatsby-config.js` (ex: `option_page_1`), then they will be accessible by their ID:
+
+```
+{
+  allWordpressAcfOptions {
+    edges {
+      node{
+        option_page_1 {
+          test_acf
+        }
+        options {
+          test_acf
+        }
       }
     }
   }
@@ -720,6 +750,26 @@ add_filter('acf/format_value/type=repeater', 'acf_nullify_empty', 100, 3);
 ```
 
 This code should be added as a plugin (recommended), or within the `functions.php` of a theme.
+
+### GraphQL Error - Unknown field `localFile` on type `[image field]`
+
+WordPress has a [known issue](https://core.trac.wordpress.org/ticket/41445) that can affect how media objects are returned through the REST API.
+
+During the upload process to the WordPress media library, the `post_parent` value ([seen here in the wp_posts table](https://codex.wordpress.org/Database_Description#Table:_wp_posts)) is set to the ID of the post the image is attached to. This value is unable to be changed by any WordPress administration actions.
+
+When the post an image is attached to becomes inaccessible (e.g. from changing visibility settings, or deleting the post), the image itself is restricted in the REST API:
+```
+   {  
+      "code":"rest_forbidden",
+      "message":"You don't have permission to do this.",
+      "data":{  
+         "status":403
+      }
+   }
+```
+which prevents Gatsby from retrieving it.
+
+In order to resolve this, you can manually change the `post_parent` value of the image record to `0` in the database. The only side effect of this change is that the image will no longer appear in the "Uploaded to this post" filter in the Add Media dialog in the WordPress administration area.
 
 ### Self-signed certificates
 

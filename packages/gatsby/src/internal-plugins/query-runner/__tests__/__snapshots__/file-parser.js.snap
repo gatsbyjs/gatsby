@@ -204,5 +204,391 @@ Map {
     ],
     "kind": "Document",
   },
+  "static-query-named-export.js" => Object {
+    "definitions": Array [
+      Object {
+        "directives": Array [],
+        "hash": 407706182,
+        "isStaticQuery": true,
+        "kind": "OperationDefinition",
+        "loc": Object {
+          "end": 29,
+          "start": 0,
+        },
+        "name": Object {
+          "kind": "Name",
+          "loc": Object {
+            "end": 21,
+            "start": 6,
+          },
+          "value": "StaticQueryName",
+        },
+        "operation": "query",
+        "selectionSet": Object {
+          "kind": "SelectionSet",
+          "loc": Object {
+            "end": 29,
+            "start": 22,
+          },
+          "selections": Array [
+            Object {
+              "alias": undefined,
+              "arguments": Array [],
+              "directives": Array [],
+              "kind": "Field",
+              "loc": Object {
+                "end": 27,
+                "start": 24,
+              },
+              "name": Object {
+                "kind": "Name",
+                "loc": Object {
+                  "end": 27,
+                  "start": 24,
+                },
+                "value": "foo",
+              },
+              "selectionSet": undefined,
+            },
+          ],
+        },
+        "text": "query StaticQueryName { foo }",
+        "variableDefinitions": Array [],
+      },
+    ],
+    "kind": "Document",
+  },
+  "static-query-closing-tag.js" => Object {
+    "definitions": Array [
+      Object {
+        "directives": Array [],
+        "hash": 2605331189,
+        "isStaticQuery": true,
+        "kind": "OperationDefinition",
+        "loc": Object {
+          "end": 7,
+          "start": 0,
+        },
+        "name": Object {
+          "kind": "Name",
+          "value": "staticQueryClosingTagJs2605331189",
+        },
+        "operation": "query",
+        "selectionSet": Object {
+          "kind": "SelectionSet",
+          "loc": Object {
+            "end": 7,
+            "start": 0,
+          },
+          "selections": Array [
+            Object {
+              "alias": undefined,
+              "arguments": Array [],
+              "directives": Array [],
+              "kind": "Field",
+              "loc": Object {
+                "end": 5,
+                "start": 2,
+              },
+              "name": Object {
+                "kind": "Name",
+                "loc": Object {
+                  "end": 5,
+                  "start": 2,
+                },
+                "value": "foo",
+              },
+              "selectionSet": undefined,
+            },
+          ],
+        },
+        "text": "{ foo }",
+        "variableDefinitions": Array [],
+      },
+    ],
+    "kind": "Document",
+  },
+  "page-query-and-static-query-named-export.js" => Object {
+    "definitions": Array [
+      Object {
+        "directives": Array [],
+        "hash": 407706182,
+        "isStaticQuery": true,
+        "kind": "OperationDefinition",
+        "loc": Object {
+          "end": 29,
+          "start": 0,
+        },
+        "name": Object {
+          "kind": "Name",
+          "loc": Object {
+            "end": 21,
+            "start": 6,
+          },
+          "value": "StaticQueryName",
+        },
+        "operation": "query",
+        "selectionSet": Object {
+          "kind": "SelectionSet",
+          "loc": Object {
+            "end": 29,
+            "start": 22,
+          },
+          "selections": Array [
+            Object {
+              "alias": undefined,
+              "arguments": Array [],
+              "directives": Array [],
+              "kind": "Field",
+              "loc": Object {
+                "end": 27,
+                "start": 24,
+              },
+              "name": Object {
+                "kind": "Name",
+                "loc": Object {
+                  "end": 27,
+                  "start": 24,
+                },
+                "value": "foo",
+              },
+              "selectionSet": undefined,
+            },
+          ],
+        },
+        "text": "query StaticQueryName { foo }",
+        "variableDefinitions": Array [],
+      },
+      Object {
+        "directives": Array [],
+        "kind": "OperationDefinition",
+        "loc": Object {
+          "end": 27,
+          "start": 0,
+        },
+        "name": Object {
+          "kind": "Name",
+          "loc": Object {
+            "end": 19,
+            "start": 6,
+          },
+          "value": "PageQueryName",
+        },
+        "operation": "query",
+        "selectionSet": Object {
+          "kind": "SelectionSet",
+          "loc": Object {
+            "end": 27,
+            "start": 20,
+          },
+          "selections": Array [
+            Object {
+              "alias": undefined,
+              "arguments": Array [],
+              "directives": Array [],
+              "kind": "Field",
+              "loc": Object {
+                "end": 25,
+                "start": 22,
+              },
+              "name": Object {
+                "kind": "Name",
+                "loc": Object {
+                  "end": 25,
+                  "start": 22,
+                },
+                "value": "foo",
+              },
+              "selectionSet": undefined,
+            },
+          ],
+        },
+        "variableDefinitions": Array [],
+      },
+    ],
+    "kind": "Document",
+  },
+  "multiple-fragment-exports.js" => Object {
+    "definitions": Array [
+      Object {
+        "directives": Array [],
+        "kind": "FragmentDefinition",
+        "loc": Object {
+          "end": 53,
+          "start": 3,
+        },
+        "name": Object {
+          "kind": "Name",
+          "loc": Object {
+            "end": 21,
+            "start": 12,
+          },
+          "value": "Fragment1",
+        },
+        "selectionSet": Object {
+          "kind": "SelectionSet",
+          "loc": Object {
+            "end": 53,
+            "start": 40,
+          },
+          "selections": Array [
+            Object {
+              "alias": undefined,
+              "arguments": Array [],
+              "directives": Array [],
+              "kind": "Field",
+              "loc": Object {
+                "end": 49,
+                "start": 46,
+              },
+              "name": Object {
+                "kind": "Name",
+                "loc": Object {
+                  "end": 49,
+                  "start": 46,
+                },
+                "value": "foo",
+              },
+              "selectionSet": undefined,
+            },
+          ],
+        },
+        "typeCondition": Object {
+          "kind": "NamedType",
+          "loc": Object {
+            "end": 39,
+            "start": 25,
+          },
+          "name": Object {
+            "kind": "Name",
+            "loc": Object {
+              "end": 39,
+              "start": 25,
+            },
+            "value": "RootQueryField",
+          },
+        },
+      },
+      Object {
+        "directives": Array [],
+        "kind": "FragmentDefinition",
+        "loc": Object {
+          "end": 106,
+          "start": 56,
+        },
+        "name": Object {
+          "kind": "Name",
+          "loc": Object {
+            "end": 74,
+            "start": 65,
+          },
+          "value": "Fragment2",
+        },
+        "selectionSet": Object {
+          "kind": "SelectionSet",
+          "loc": Object {
+            "end": 106,
+            "start": 93,
+          },
+          "selections": Array [
+            Object {
+              "alias": undefined,
+              "arguments": Array [],
+              "directives": Array [],
+              "kind": "Field",
+              "loc": Object {
+                "end": 102,
+                "start": 99,
+              },
+              "name": Object {
+                "kind": "Name",
+                "loc": Object {
+                  "end": 102,
+                  "start": 99,
+                },
+                "value": "bar",
+              },
+              "selectionSet": undefined,
+            },
+          ],
+        },
+        "typeCondition": Object {
+          "kind": "NamedType",
+          "loc": Object {
+            "end": 92,
+            "start": 78,
+          },
+          "name": Object {
+            "kind": "Name",
+            "loc": Object {
+              "end": 92,
+              "start": 78,
+            },
+            "value": "RootQueryField",
+          },
+        },
+      },
+      Object {
+        "directives": Array [],
+        "kind": "FragmentDefinition",
+        "loc": Object {
+          "end": 53,
+          "start": 3,
+        },
+        "name": Object {
+          "kind": "Name",
+          "loc": Object {
+            "end": 21,
+            "start": 12,
+          },
+          "value": "Fragment3",
+        },
+        "selectionSet": Object {
+          "kind": "SelectionSet",
+          "loc": Object {
+            "end": 53,
+            "start": 40,
+          },
+          "selections": Array [
+            Object {
+              "alias": undefined,
+              "arguments": Array [],
+              "directives": Array [],
+              "kind": "Field",
+              "loc": Object {
+                "end": 49,
+                "start": 46,
+              },
+              "name": Object {
+                "kind": "Name",
+                "loc": Object {
+                  "end": 49,
+                  "start": 46,
+                },
+                "value": "baz",
+              },
+              "selectionSet": undefined,
+            },
+          ],
+        },
+        "typeCondition": Object {
+          "kind": "NamedType",
+          "loc": Object {
+            "end": 39,
+            "start": 25,
+          },
+          "name": Object {
+            "kind": "Name",
+            "loc": Object {
+              "end": 39,
+              "start": 25,
+            },
+            "value": "RootQueryField",
+          },
+        },
+      },
+    ],
+    "kind": "Document",
+  },
 }
 `;

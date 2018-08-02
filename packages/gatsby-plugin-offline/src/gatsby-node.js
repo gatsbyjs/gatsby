@@ -56,17 +56,15 @@ exports.onPostBuild = (args, pluginOptions) => {
   // holds any paths for scripts and links
   const criticalFilePaths = []
 
-  $(`script`)
-    .filter((_, elem) => $(elem).attr(`src`) !== undefined)
-    .each((_, elem) => {
-      criticalFilePaths.push(`${rootDir}${$(elem).attr(`src`)}`)
-    })
+  $(`script[src], link[as=script]`).each((_, elem) => {
+    const $elem = $(elem)
+    const url = $elem.attr(`src`) || $elem.attr(`href`)
+    const blackListRegex = /\.xml$/
 
-  $(`link`)
-    .filter((_, elem) => $(elem).attr(`as`) !== `script`)
-    .each((_, elem) => {
-      criticalFilePaths.push(`${rootDir}${$(elem).attr(`href`)}`)
-    })
+    if (!blackListRegex.test(url)) {
+      criticalFilePaths.push(`${rootDir}${url}`)
+    }
+  })
 
   const options = {
     staticFileGlobs: files.concat([
