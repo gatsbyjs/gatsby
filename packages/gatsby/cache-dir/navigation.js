@@ -68,21 +68,18 @@ const navigate = (to, replace) => {
     window.location = pathname
   }
 
-  const historyNavigateAction = replace ? `REPLACE` : `PUSH`
-
   // Start a timer to wait for a second before transitioning and showing a
   // loader in case resources aren't around yet.
   const timeoutId = setTimeout(() => {
     emitter.emit(`onDelayedLoadPageResources`, { pathname })
     apiRunner(`onRouteUpdateDelayed`, {
-      location,
-      action: historyNavigateAction,
+      location: window.location,
     })
   }, 1000)
 
   lastNavigateToLocationString = to
 
-  apiRunner(`onPreRouteUpdate`, { location, action: historyNavigateAction })
+  apiRunner(`onPreRouteUpdate`, { location: window.location })
 
   const loaderCallback = pageResources => {
     if (!pageResources) {
@@ -92,7 +89,7 @@ const navigate = (to, replace) => {
       loader.getResourcesForPathname(`/404.html`, loaderCallback)
     } else {
       clearTimeout(timeoutId)
-      reachNavigate(location.pathname, { replace })
+      reachNavigate(to, { replace })
     }
   }
 
