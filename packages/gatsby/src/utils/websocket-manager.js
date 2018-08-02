@@ -38,6 +38,9 @@ const getCachedPageData = (
 ): QueryResult => {
   const { jsonDataPaths, pages } = store.getState()
   const page = pages.get(pagePath)
+  if (!page) {
+    return null
+  }
   const dataPath = jsonDataPaths[page.jsonName]
   if (typeof dataPath === `undefined`) {
     console.log(
@@ -148,20 +151,31 @@ class WebsocketManager {
         }
       }
 
-      s.on(`registerPath`, path => {
-        s.join(getRoomNameFromPath(path))
-        activePath = path
-        this.activePaths.add(path)
-
+      const getDataForPath = path => {
         if (!this.pageResults.has(path)) {
           const result = getCachedPageData(path, this.programDir)
-          this.pageResults.set(path, result)
+          if (result) {
+            this.pageResults.set(path, result)
+          } else {
+            console.log(`Page not found`, path)
+            return
+          }
         }
 
         this.websocket.send({
           type: `pageQueryResult`,
           payload: this.pageResults.get(path),
         })
+      }
+
+      s.on(`getDataForPath`, getDataForPath)
+
+      s.on(`registerPath`, path => {
+        s.join(getRoomNameFromPath(path))
+        activePath = path
+        this.activePaths.add(path)
+
+        getDataForPath(path)
       })
 
       s.on(`disconnect`, s => {
