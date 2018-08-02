@@ -23,7 +23,7 @@ This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While t
   - [Remove or refactor layout components](#remove-or-refactor-layout-components)
   - [Change `navigateTo` to `push`](#change-navigateto-to-push)
   - [Convert to either pure CommonJS or pure ES6](#convert-to-either-pure-commonjs-or-pure-es6)
-  - [Move `Babel Configuration`](#move-babel-configuration)
+  - [Move Babel configuration](#move-babel-configuration)
   - [Manually specify PostCSS plugins](#manually-specify-postcss-plugins)
   - [Don't query nodes by ID](#dont-query-nodes-by-id)
 
@@ -44,11 +44,11 @@ This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While t
 
 - [For Plugin Maintainers](#for-plugin-maintainers)
 
-  - [Setting the Proper Peer Dependencies](#setting-the-proper-peer-dependencies)
+  - [Setting the proper Peer Dependencies](#setting-the-proper-peer-dependencies)
   - [Change `modifyBabelrc` to `onCreateBabelConfig`](#change-modifybabelrc-to-oncreatebabelconfig)
   - [Change `modifyWebpackConfig` to `onCreateWebpackConfig`](#change-modifywebpackconfig-to-oncreatewebpackconfig)
   - [`createRemoteFileNode` API has changed](#createRemoteFileNode)
-  - [Only allow defined keys on node.internal object](#only-allow-defined-keys-on-the-node-internal-object)
+  - [Only allow defined keys on the `node.internal` object](#only-allow-defined-keys-on-the-node-internal-object)
   - [Import `graphql` types from `gatsby/graphql`](#import-graphql-types-from-gatsbygraphql)
   - [Plugin specific changes](#plugin-specific-changes)
 
@@ -77,7 +77,7 @@ Since v2 is currently in beta, you need update your `package.json` to use the pr
 
 ### Update Gatsby related packages
 
-Update your `package.json` to use the pre-release versions of Gatsby related packages. Any package name that starts with `gatsby-` should be upgraded to use the `next` version. Note, this only applies to plugins managed in the gatsbyjs/gatsby repo. If you're using community plugins, they might not be upgraded yet. Check their repo for the status. Many plugins won't actually need upgraded so they very well might keep working. For example:
+Update your `package.json` to use the pre-release versions of Gatsby related packages. Any package name that starts with `gatsby-` should be upgraded to use the `next` version. Note, this only applies to plugins managed in the gatsbyjs/gatsby repo. If you're using community plugins, they might not be upgraded yet. Check their repo for the status. Many plugins won't actually need upgrading so they very well might keep working. For example:
 
 `package.json`
 
@@ -99,7 +99,7 @@ npm i react react-dom
 
 ### Manually install plugins' peer dependencies
 
-Some plugins had dependencies that were also made peerDependencies. For example, if you use [`gatsby-plugin-typography`](https://www.gatsbyjs.org/packages/gatsby-plugin-typography/), you now need to install:
+Some plugins had dependencies that were also made `peerDependencies`. For example, if you use [`gatsby-plugin-typography`](https://www.gatsbyjs.org/packages/gatsby-plugin-typography/), you now need to install:
 
 ```bash
 npm i typography react-typography
@@ -163,7 +163,7 @@ Repeat for every page and template that needs this layout.
 
 #### 4. Pass `history`, `location`, and `match` props to layout
 
-In v1, layout component had access to `history`, `location`, and `match` props. In v2, only pages have access to these props; if you need these props in the layout component, pass them through from the page.
+In v1, the layout component had access to `history`, `location`, and `match` props. In v2, only pages have access to these props; if you need these props in the layout component, pass them through from the page.
 
 `layout.js`
 
