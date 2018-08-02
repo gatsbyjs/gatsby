@@ -388,8 +388,14 @@ module.exports = async (program: any) => {
   function printDeprecationWarnings() {
     const deprecatedApis = [`boundActionCreators`, `pathContext`]
     const fixMap = {
-      boundActionCreators: `actions`,
-      pathContext: `pageContext`,
+      boundActionCreators: {
+        newName: `actions`,
+        docsLink: `https://gatsby.app/boundActionCreators`,
+      },
+      pathContext: {
+        newName: `pageContext`,
+        docsLink: `https://gatsby.app/pathContext`,
+      },
     }
     const deprecatedLocations = {}
     deprecatedApis.forEach(api => (deprecatedLocations[api] = []))
@@ -409,9 +415,9 @@ module.exports = async (program: any) => {
         console.log(
           `%s %s %s %s`,
           chalk.cyan(api),
-          chalk.yellow(`is deprecated. Use`),
-          chalk.cyan(fixMap[api]),
-          chalk.yellow(`instead. Check the following files:`)
+          chalk.yellow(`is deprecated. Please use`),
+          chalk.cyan(fixMap[api].newName),
+          chalk.yellow(`instead. For migration instructions, see ${fixMap[api].docsLink}\nCheck the following files:`)
         )
         console.log()
         deprecatedLocations[api].forEach(file => console.log(file))

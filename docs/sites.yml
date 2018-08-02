@@ -1901,3 +1901,16 @@
     - Fashion
   built_by: Kframe Interactive SA
   featured: false
+- title: Max McKinney
+  description: > 
+     I’m a developer and designer with a focus in web technologies. I build cars on the side.
+  main_url: https://maxmckinney.com/
+  url: https://maxmckinney.com/
+  categories:
+    - Portfolio
+    - Web Dev
+    - Design
+    - Landing
+    - Personal
+  built_by: Max McKinney
+  featured: false

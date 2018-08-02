@@ -35,7 +35,13 @@ function deepMap(obj, fn) {
 
 exports.onCreateWebpackConfig = (
   { store, stage, getConfig, plugins },
-  { modulePath, publicPath = `admin`, enableIdentityWidget = true, htmlTitle = `Content Manager` },
+  { 
+    modulePath, 
+    publicPath = `admin`, 
+    enableIdentityWidget = true, 
+    htmlTitle = `Content Manager`, 
+    manualInit = false, 
+  },
 ) => {
   if ([`develop`, `build-javascript`].includes(stage)) {
     const gatsbyConfig = getConfig()
@@ -45,6 +51,7 @@ exports.onCreateWebpackConfig = (
       ...gatsbyConfig,
       entry: {
         cms: [
+          manualInit && `${__dirname}/cms-manual-init.js`,
           `${__dirname}/cms.js`,
           modulePath,
           enableIdentityWidget && `${__dirname}/cms-identity.js`,
