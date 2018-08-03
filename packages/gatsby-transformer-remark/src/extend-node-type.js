@@ -5,6 +5,7 @@ const {
   GraphQLInt,
   GraphQLEnumType,
   GraphQLJSON,
+  GraphQLBoolean,
 } = require(`gatsby/graphql`)
 const Remark = require(`remark`)
 const select = require(`unist-util-select`)
@@ -346,8 +347,12 @@ module.exports = (
             type: GraphQLInt,
             defaultValue: 140,
           },
+          halfChop: {
+            type: GraphQLBoolean,
+            defaultValue: true,
+          },
         },
-        resolve(markdownNode, { pruneLength }) {
+        resolve(markdownNode, { pruneLength, halfChop }) {
           if (markdownNode.excerpt) {
             return Promise.resolve(markdownNode.excerpt)
           }
@@ -359,8 +364,13 @@ module.exports = (
               }
               return
             })
-
-            return prune(excerptNodes.join(` `), pruneLength, `…`)
+            if (halfChop) {
+              return prune(excerptNodes.join(` `), pruneLength, `…`)
+            }
+            return _.truncate(excerptNodes.join(` `), {
+              length: pruneLength,
+              omission: `…`,
+            })
           })
         },
       },
