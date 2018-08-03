@@ -385,6 +385,7 @@
     - Web Dev
     - Portfolio
 - title: Dave Lindberg Marketing & Design
+  url: 'https://davelindberg.com/'
   main_url: 'https://davelindberg.com/'
   source_url: 'https://github.com/Dave-Lindberg/dl-gatsby'
   featured: false
