@@ -1,5 +1,5 @@
 ---
-title: Introducting GraphiQL
+title: Introducing GraphiQL
 ---
 
 This is a stub. Help our community expand it.
