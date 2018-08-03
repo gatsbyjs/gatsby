@@ -225,7 +225,7 @@ async function startServer(program) {
         report.panic(
           `Unable to start Gatsby on port ${
             program.port
-          } as there's already a process listing on that port.`
+          } as there's already a process listening on that port.`
         )
         return
       }
@@ -253,14 +253,6 @@ module.exports = async (program: any) => {
   const detect = require(`detect-port`)
   const port =
     typeof program.port === `string` ? parseInt(program.port, 10) : program.port
-
-  // In order to enable custom ssl, --cert-file --key-file and -https flags must all be
-  // used together
-  if ((program[`cert-file`] || program[`key-file`]) && !program.https) {
-    report.panic(
-      `for custom ssl --https, --cert-file, and --key-file must be used together`
-    )
-  }
 
   // In order to enable custom ssl, --cert-file --key-file and -https flags must all be
   // used together
@@ -399,8 +391,14 @@ module.exports = async (program: any) => {
   function printDeprecationWarnings() {
     const deprecatedApis = [`boundActionCreators`, `pathContext`]
     const fixMap = {
-      boundActionCreators: `actions`,
-      pathContext: `pageContext`,
+      boundActionCreators: {
+        newName: `actions`,
+        docsLink: `https://gatsby.app/boundActionCreators`,
+      },
+      pathContext: {
+        newName: `pageContext`,
+        docsLink: `https://gatsby.app/pathContext`,
+      },
     }
     const deprecatedLocations = {}
     deprecatedApis.forEach(api => (deprecatedLocations[api] = []))
@@ -420,9 +418,9 @@ module.exports = async (program: any) => {
         console.log(
           `%s %s %s %s`,
           chalk.cyan(api),
-          chalk.yellow(`is deprecated. Use`),
-          chalk.cyan(fixMap[api]),
-          chalk.yellow(`instead. Check the following files:`)
+          chalk.yellow(`is deprecated. Please use`),
+          chalk.cyan(fixMap[api].newName),
+          chalk.yellow(`instead. For migration instructions, see ${fixMap[api].docsLink}\nCheck the following files:`)
         )
         console.log()
         deprecatedLocations[api].forEach(file => console.log(file))

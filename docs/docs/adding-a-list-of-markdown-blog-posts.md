@@ -89,7 +89,7 @@ The only thing left to do is to add the `PostLink` component. Create a new file 
 
 ```jsx
 import React from "react"
-import Link from "gatsby-link"
+import { Link } from "gatsby"
 
 const PostLink = ({ post }) => (
   <div>

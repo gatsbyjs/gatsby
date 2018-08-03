@@ -1,178 +1,72 @@
-import React, { Component } from "react"
-import ScrollSyncBody from "./scroll-sync-body"
-import SidebarBody from "./body"
-import ChevronSvg from "./chevron-svg"
+import React from "react"
+
+import Item from "./item"
+import getActiveItem from "../../utils/sidebar/get-active-item"
+import getActiveItemParents from "../../utils/sidebar/get-active-item-parents"
 import presets, { colors } from "../../utils/presets"
-import { rhythm } from "../../utils/typography"
+import { scale, options } from "../../utils/typography"
 
-class StickyResponsiveSidebar extends Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      open: false,
-    }
-  }
-
-  _openNavMenu = () => {
-    this.setState({ open: !this.state.open })
-  }
-
-  _closeNavMenu = () => {
-    this.setState({ open: false })
-  }
-
+class SidebarBody extends React.Component {
   render() {
-    const { open } = this.state
-    const BodyComponent = this.props.enableScrollSync
-      ? ScrollSyncBody
-      : SidebarBody
-
-    const iconOffset = open ? 8 : -4
-    const menuOpacity = open ? 1 : 0
-    const menuOffset = open ? 0 : rhythm(10)
+    const {
+      activeItemHash,
+      closeSidebar,
+      enableScrollSync,
+      itemList,
+      location,
+    } = this.props
+    const activeItemLink = getActiveItem(itemList, location, activeItemHash)
+    const activeItemParents = getActiveItemParents(itemList, activeItemLink, [])
 
     return (
-      <React.Fragment>
-        <div
-          style={{
-            opacity: menuOpacity,
-            transition: `opacity 0.5s ease`,
-          }}
-          css={{
-            ...styles.sidebar,
-            pointerEvents: open ? `auto` : `none`,
-            [presets.Tablet]: { ...styles.sidebarLargeScreen },
-            [presets.Desktop]: { ...styles.sidebarLargerScreen },
-          }}
-        >
-          <div
-            style={{
-              transform: `translateX(-${menuOffset})`,
-              transition: `transform 0.5s ease`,
-            }}
-            css={{
-              [presets.Tablet]: {
-                transform: `none !important`,
-              },
-            }}
-          >
-            <BodyComponent
-              closeParentMenu={this._closeNavMenu}
-              {...this.props}
+      <div className="docSearch-sidebar" css={{ height: `100%` }}>
+        <ul css={{ ...styles.list }}>
+          {itemList.map((item, index) => (
+            <Item
+              activeItemHash={activeItemHash}
+              activeItemLink={activeItemLink}
+              activeItemParents={activeItemParents}
+              isScrollSync={enableScrollSync}
+              item={item}
+              key={index}
+              level={0}
+              location={location}
+              onLinkClick={closeSidebar}
             />
-          </div>
-        </div>
-        <div
-          css={{ ...styles.button }}
-          onClick={this._openNavMenu}
-          role="button"
-          tabIndex={0}
-        >
-          <div
-            css={{
-              alignItems: `center`,
-              display: `flex`,
-              flexDirection: `row`,
-              height: 60,
-              justifyContent: `space-around`,
-              width: `100%`,
-            }}
-          >
-            <div
-              css={{
-                alignSelf: `center`,
-                color: `#fff`,
-                display: `flex`,
-                flexDirection: `column`,
-                height: 20,
-                width: 20,
-              }}
-            >
-              <ChevronSvg
-                size={15}
-                cssProps={{
-                  transform: `translate(2px, ${iconOffset}px) rotate(180deg)`,
-                  transition: `transform 0.2s ease`,
-                }}
-              />
-              <ChevronSvg
-                size={15}
-                cssProps={{
-                  transform: `translate(2px, ${0 - iconOffset}px)`,
-                  transition: `transform 0.2s ease`,
-                }}
-              />
-            </div>
-          </div>
-        </div>
-      </React.Fragment>
+          ))}
+        </ul>
+      </div>
     )
   }
 }
 
-export default StickyResponsiveSidebar
-
-const horizontalPadding = rhythm(3 / 4)
+export default SidebarBody
 
 const styles = {
-  sidebar: {
-    background: `#fff`,
-    border: 0,
-    boxShadow: `0 0 20px rgba(0, 0, 0, 0.15)`,
-    display: `block`,
-    height: `100vh`,
-    paddingTop: horizontalPadding,
-    paddingBottom: horizontalPadding,
-    position: `fixed`,
-    overflowY: `auto`,
-    top: 0,
-    WebkitOverflowScrolling: `touch`,
-    width: 320,
-    zIndex: 10,
-    "::-webkit-scrollbar": {
-      width: `6px`,
-      height: `6px`,
+  list: {
+    margin: 0,
+    paddingTop: 20,
+    paddingBottom: 20,
+    fontSize: scale(-1 / 10).fontSize,
+    [presets.Phablet]: {
+      fontSize: scale(-2 / 10).fontSize,
     },
-    "::-webkit-scrollbar-thumb": {
-      background: colors.ui.bright,
+    [presets.Tablet]: {
+      backgroundColor: colors.ui.whisper,
+      borderRight: `1px solid ${colors.ui.border}`,
+      fontSize: scale(-4 / 10).fontSize,
     },
-    "::-webkit-scrollbar-track": {
-      background: colors.ui.light,
+    "&&": {
+      "& a": {
+        fontFamily: options.systemFontFamily.join(`,`),
+      },
     },
-  },
-  sidebarLargeScreen: {
-    backgroundColor: colors.ui.whisper,
-    borderRight: `1px solid ${colors.ui.light}`,
-    boxShadow: `none`,
-    height: `calc(100vh - ${presets.headerHeight} - ${
-      presets.bannerHeight
-    } + 1px)`,
-    maxWidth: `none`,
-    opacity: `1 !important`,
-    pointerEvents: `auto`,
-    top: `calc(${presets.headerHeight} + ${presets.bannerHeight} - 1px)`,
-    width: rhythm(10),
-    zIndex: 2,
-  },
-  sidebarLargerScreen: {
-    paddingTop: horizontalPadding,
-    paddingBottom: horizontalPadding,
-    width: rhythm(12),
-  },
-  button: {
-    backgroundColor: colors.gatsby,
-    bottom: 44, // iOS Safari's inert "bottom 44px"
-    border: `1px solid rgba(255, 255, 255, 0.1)`,
-    borderRadius: `50%`,
-    boxShadow: `0 0 20px rgba(0, 0, 0, 0.3)`,
-    cursor: `pointer`,
-    display: `block`,
-    position: `fixed`,
-    right: 20,
-    bottom: 100,
-    width: 60,
-    zIndex: 20,
-    [presets.Tablet]: { display: `none` },
+    "& li": {
+      margin: 0,
+      listStyle: `none`,
+    },
+    "& > li:last-child > span:before": {
+      display: `none`,
+    },
   },
 }

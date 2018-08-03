@@ -1,0 +1,181 @@
+import React, { Component, Fragment } from "react"
+
+import Sidebar from "./sidebar"
+import ScrollSyncSidebar from "./scroll-sync-sidebar"
+import ChevronSvg from "./chevron-svg"
+import presets, { colors } from "../../utils/presets"
+import { rhythm } from "../../utils/typography"
+
+class StickyResponsiveSidebar extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = { open: false }
+  }
+
+  _openSidebar = () => {
+    this.setState({ open: !this.state.open })
+  }
+
+  _closeSidebar = () => {
+    this.setState({ open: false })
+  }
+
+  render() {
+    const { open } = this.state
+    const SidebarComponent = this.props.enableScrollSync
+      ? ScrollSyncSidebar
+      : Sidebar
+
+    const iconOffset = open ? 8 : -4
+    const menuOpacity = open ? 1 : 0
+    const menuOffset = open ? 0 : rhythm(10)
+
+    return (
+      <Fragment>
+        <div
+          css={{
+            ...styles.sidebarScrollContainer,
+            opacity: menuOpacity,
+            pointerEvents: open ? `auto` : `none`,
+          }}
+        >
+          <div
+            css={{
+              ...styles.sidebar,
+              transform: `translateX(-${menuOffset})`,
+            }}
+          >
+            <SidebarComponent
+              closeSidebar={this._closeSidebar}
+              {...this.props}
+            />
+          </div>
+        </div>
+        <div
+          css={{ ...styles.sidebarToggleButton }}
+          onClick={this._openSidebar}
+          role="button"
+          tabIndex={0}
+        >
+          <div css={{ ...styles.sidebarToggleButtonInner }}>
+            <ChevronSvg
+              size={15}
+              cssProps={{
+                transform: `translate(2px, ${iconOffset}px) rotate(180deg)`,
+                transition: `transform 0.2s ease`,
+              }}
+            />
+            <ChevronSvg
+              size={15}
+              cssProps={{
+                transform: `translate(2px, ${0 - iconOffset}px)`,
+                transition: `transform 0.2s ease`,
+              }}
+            />
+          </div>
+        </div>
+      </Fragment>
+    )
+  }
+}
+
+export default StickyResponsiveSidebar
+
+const styles = {
+  sidebarScrollContainer: {
+    WebkitOverflowScrolling: `touch`,
+    background: `#fff`,
+    border: 0,
+    bottom: 0,
+    boxShadow: `0 0 20px rgba(0, 0, 0, 0.15)`,
+    display: `block`,
+    height: `100vh`,
+    overflowY: `auto`,
+    position: `fixed`,
+    top: 0,
+    transition: `opacity 0.5s ease`,
+    width: 320,
+    zIndex: 10,
+    "::-webkit-scrollbar": {
+      height: `6px`,
+      width: `6px`,
+    },
+    "::-webkit-scrollbar-thumb": {
+      background: colors.ui.bright,
+    },
+    "::-webkit-scrollbar-track": {
+      background: colors.ui.light,
+    },
+    [presets.Tablet]: {
+      boxShadow: `none`,
+      height: `calc(100vh - ${presets.headerHeight} - ${
+        presets.bannerHeight
+      } + 1px)`,
+      maxWidth: `none`,
+      opacity: `1 !important`,
+      pointerEvents: `auto`,
+      top: `calc(${presets.headerHeight} + ${presets.bannerHeight} - 1px)`,
+      visibility: `hidden`,
+      width: rhythm(10),
+      zIndex: 2,
+      "::-webkit-scrollbar-track": {
+        background: `transparent`,
+      },
+      "&:hover": {
+        visibility: `visible`,
+      },
+    },
+    [presets.Desktop]: {
+      width: rhythm(12),
+    },
+  },
+  sidebar: {
+    background: `#fff`,
+    height: `100%`,
+    position: `relative`,
+    transition: `transform 0.5s ease`,
+    [presets.Tablet]: {
+      backgroundColor: colors.ui.whisper,
+      visibility: `visible`,
+      transform: `none !important`,
+      "&:before": {
+        background: colors.ui.border,
+        bottom: 0,
+        content: ` `,
+        display: `block`,
+        height: `100%`,
+        left: `auto`,
+        position: `absolute`,
+        right: 0,
+        top: 0,
+        width: 1,
+      },
+    },
+  },
+  sidebarToggleButton: {
+    backgroundColor: colors.gatsby,
+    borderRadius: `50%`,
+    bottom: 64,
+    boxShadow: `0 0 20px rgba(0, 0, 0, 0.3)`,
+    cursor: `pointer`,
+    display: `flex`,
+    height: 60,
+    justifyContent: `space-around`,
+    position: `fixed`,
+    right: 20,
+    visibility: `visible`,
+    width: 60,
+    zIndex: 20,
+    [presets.Tablet]: { display: `none` },
+  },
+  sidebarToggleButtonInner: {
+    alignSelf: `center`,
+    color: `#fff`,
+    display: `flex`,
+    flexDirection: `column`,
+    height: 20,
+    visibility: `visible`,
+    width: 20,
+  },
+}

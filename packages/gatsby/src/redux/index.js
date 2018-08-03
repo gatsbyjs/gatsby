@@ -1,7 +1,6 @@
 const Redux = require(`redux`)
 const Promise = require(`bluebird`)
 const _ = require(`lodash`)
-const { composeWithDevTools } = require(`remote-redux-devtools`)
 const fs = require(`fs`)
 const mitt = require(`mitt`)
 const stringify = require(`json-stringify-safe`)
@@ -56,39 +55,16 @@ try {
   // ignore errors.
 }
 
-let store
-// Only setup the Redux devtools if explicitly enabled.
-if (process.env.REDUX_DEVTOOLS === `true`) {
-  const sitePackageJSON = require(`${process.cwd()}/package.json`)
-  const composeEnhancers = composeWithDevTools({
-    realtime: true,
-    port: 19999,
-    name: sitePackageJSON.name,
+const store = Redux.createStore(
+  Redux.combineReducers({ ...reducers }),
+  initialState,
+  Redux.applyMiddleware(function multi({ dispatch }) {
+    return next => action =>
+      Array.isArray(action)
+        ? action.filter(Boolean).map(dispatch)
+        : next(action)
   })
-  store = Redux.createStore(
-    Redux.combineReducers({ ...reducers }),
-    initialState,
-    composeEnhancers(
-      Redux.applyMiddleware(function multi({ dispatch }) {
-        return next => action =>
-          Array.isArray(action)
-            ? action.filter(Boolean).map(dispatch)
-            : next(action)
-      })
-    )
-  )
-} else {
-  store = Redux.createStore(
-    Redux.combineReducers({ ...reducers }),
-    initialState,
-    Redux.applyMiddleware(function multi({ dispatch }) {
-      return next => action =>
-        Array.isArray(action)
-          ? action.filter(Boolean).map(dispatch)
-          : next(action)
-    })
-  )
-}
+)
 
 // Persist state.
 const saveState = state => {

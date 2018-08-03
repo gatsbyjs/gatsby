@@ -1,16 +1,15 @@
-import React from "react"
+import React, { Fragment } from "react"
 
-import Sidebar from "./sidebar/sidebar"
+import StickyResponsiveSidebar from "./sidebar/sticky-responsive-sidebar"
 import presets from "../utils/presets"
 import { rhythm } from "../utils/typography"
-import findSectionForPath from "../utils/sidebar/find-section-for-path"
 
 export default props => {
   if (props.disable) {
     return props.renderContent()
   } else {
     return (
-      <div>
+      <Fragment>
         <div
           css={{
             [presets.Tablet]: { paddingLeft: rhythm(10) },
@@ -25,18 +24,13 @@ export default props => {
         >
           {props.renderContent()}
         </div>
-        <Sidebar
-          location={props.location}
-          sectionList={props.sectionList}
-          createLink={props.createLink}
-          defaultActiveSection={findSectionForPath(
-            props.location.pathname,
-            props.sectionList
-          )}
+        <StickyResponsiveSidebar
           enableScrollSync={props.enableScrollSync}
+          itemList={props.itemList}
           key={props.location.pathname}
+          location={props.location}
         />
-      </div>
+      </Fragment>
     )
   }
 }

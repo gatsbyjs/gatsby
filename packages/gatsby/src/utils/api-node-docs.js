@@ -141,16 +141,16 @@ exports.onCreatePage = true
  * @param {object} $0
  * @param {object} $0.type Object containing `name` and `nodes`
  * @example
- * import { GraphlQLString } from "gatsby/graphql"
+ * import { GraphQLString } from "gatsby/graphql"
  *
  * exports.setFieldsOnGraphQLNodeType = ({ type }) => {
  *   if (type.name === `File`) {
  *     return {
  *       newField: {
- *         type: GraphlQLString,
+ *         type: GraphQLString,
  *         args: {
  *           myArgument: {
- *             type: GraphlQLString,
+ *             type: GraphQLString,
  *          }
  *         }
  *         resolve: (source, fieldArgs) => {
