@@ -384,6 +384,19 @@
   categories:
     - Web Dev
     - Portfolio
+- title: Dave Lindberg Marketing & Design
+  main_url: 'https://davelindberg.com/'
+  source_url: 'https://github.com/Dave-Lindberg/dl-gatsby'
+  featured: false
+  description: >-
+    My work revolves around solving problems for people in business, using integrated design and marketing strategies to improve sales, increase brand engagement, generate leads and achieve goals.
+  categories:
+    - Creative
+    - Design
+    - Featured
+    - Marketing
+    - SEO
+    - Portfolio
 - title: Design Systems Weekly
   main_url: 'https://designsystems.email/'
   url: 'https://designsystems.email/'
@@ -1510,7 +1523,7 @@
   built_by_url: https://github.com/b0gd4n
   featured: false
 - title: HackerOne Platform Documentation
-  description: > 
+  description: >
     HackerOne's Product Documentation Center!
   url: https://docs.hackerone.com/
   main_url: https://docs.hackerone.com/
@@ -1519,7 +1532,7 @@
     - Security
   featured: false
 - title: Patreon Partners
-  description: > 
+  description: >
     Resources and products to help you do more with Patreon.
   url: https://partners.patreon.com/
   main_url: https://partners.patreon.com/
@@ -1528,51 +1541,51 @@
     - Directory
   featured: false
 - title: Bureau Of Meteorology (beta)
-  description: > 
-    Help shape the future of Bureau services 
+  description: >
+    Help shape the future of Bureau services
   url: https://beta.bom.gov.au/
   main_url: https://beta.bom.gov.au/
-  categories: 
+  categories:
     - Meteorology
     - Research
     - Services
   featured: false
 - title: Curbside
-  description: > 
+  description: >
     Connecting Stores with Mobile Customers
   main_url: https://curbside.com/
   url: https://curbside.com/
-  categories: 
+  categories:
     - Mobile Commerce
     - Software
   featured: false
 - title: Mux Video
-  description: > 
+  description: >
     API to video hosting and streaming
   main_url: https://mux.com/
   url: https://mux.com/
-  categories: 
+  categories:
     - Video
     - Hosting
     - Streaming
     - API
   featured: false
 - title: Swapcard
-  description: > 
+  description: >
     The easiest way for event organizers to instantly connect people, build a community of attendees and exhibitors, and increase revenue over time
   main_url: https://www.swapcard.com/
   url: https://www.swapcard.com/
-  categories: 
+  categories:
     - Event
     - Community
     - Services
   featured: false
 - title: Kalix
-  description: > 
+  description: >
     Kalix is perfect for healthcare professionals starting out in private practice, to those with an established clinic.
   main_url: https://www.kalixhealth.com/
   url: https://www.kalixhealth.com/
-  categories: 
+  categories:
     - Scheduling
     - Documentation
     - Messaging
@@ -1580,115 +1593,115 @@
     - Services
   featured: false
 - title: Hubba
-  description: > 
+  description: >
     Buy wholesale products from thousands of independent, verified Brands.
   main_url: https://join.hubba.com/
   url: https://join.hubba.com/
-  categories: 
+  categories:
     - eCommerce
     - Retail
   featured: false
 - title: Airbnb Engineering & Data Science
-  description: > 
+  description: >
     Creative engineers and data scientists building a world where you can belong anywhere
   main_url: https://airbnb.io/
   url: https://airbnb.io/
-  categories: 
+  categories:
     - Blog
     - Gallery
     - Projects
   featured: false
 - title: HyperPlay
-  description: > 
+  description: >
     In Asean's 1st Ever LOL Esports X Music Festival
   main_url: https://hyperplay.leagueoflegends.com/
   url: https://hyperplay.leagueoflegends.com/
-  categories: 
+  categories:
     - Landing
   featured: false
 - title: Bad Credit Loans
-  description: > 
+  description: >
     Get the funds you need, from $250-$5,000
   main_url: https://www.creditloan.com/
   url: https://www.creditloan.com/
-  categories: 
+  categories:
     - Loans
     - Credits
   featured: false
 - title: Financial Center
-  description: > 
+  description: >
      Member-owned, not-for-profit, co-operative whose members receive financial benefits in the form of lower loan rates, higher savings rates, and lower fees than banks.
   main_url: https://fcfcu.com/
   url: https://fcfcu.com/
-  categories: 
+  categories:
     - Loans
     - Credits
     - Online Banking
     - Nonprofit
   featured: false
 - title: Open FDA
-  description: > 
+  description: >
      Provides APIs and raw download access to a number of high-value, high priority and scalable structured datasets, including adverse events, drug product labeling, and recall enforcement reports.
   main_url: https://open.fda.gov/
   url: https://open.fda.gov/
-  categories: 
+  categories:
     - APIs
     - Datasets
     - Reports
   featured: false
 - title: Office of Institutional Research and Assessment
-  description: > 
+  description: >
      Good Data, Good Decisions
   main_url: http://oira.ua.edu/
   url: http://oira.ua.edu/
-  categories: 
+  categories:
     - Research
     - Data
   featured: false
 - title: GM Capital One
-  description: > 
+  description: >
      Introducing the new online experience for your GM Rewards Credit Card
   main_url: https://gm.capitalone.com/
   url: https://gm.capitalone.com/
-  categories: 
+  categories:
     - Rewards
     - Credit Card
   featured: false
 - title: House Manager
-  description: > 
+  description: >
      Home service membership that offers proactive and on-demand maintenance for homeowners
   main_url: https://housemanager.calstate.aaa.com/
   url: https://housemanager.calstate.aaa.com/
-  categories: 
+  categories:
     - Home
     - Services
   featured: false
 - title: Trintellix
-  description: > 
+  description: >
      It may help make a difference for your depression (MDD).
   main_url: https://us.trintellix.com/
   url: https://us.trintellix.com/
-  categories: 
+  categories:
     - Health
     - Help
   featured: false
 - title: The Telegraph Premium
-  description: > 
+  description: >
      Exclusive stories from award-winning journalists
   main_url: https://premium.telegraph.co.uk/
   url: https://premium.telegraph.co.uk/
-  categories: 
+  categories:
     - Landing
     - Newspaper
     - Subscription
   featured: false
 - title: html2canvas
-  description: > 
+  description: >
      Screenshots with JavaScript
   main_url: http://html2canvas.hertzen.com/
   url: http://html2canvas.hertzen.com/
   source_url: https://github.com/niklasvh/html2canvas/tree/master/www
-  categories: 
+  categories:
     - Tool
     - Screenshots
     - JavaScript
@@ -1697,12 +1710,12 @@
   built_by_url: http://hertzen.com/
   featured: false
 - title: The State of JavaScript 2017
-  description: > 
+  description: >
       Data from over 20,000 developers, asking them questions on topics ranging from front-end frameworks and state management, to build tools and testing libraries.
   main_url: https://stateofjs.com/
   url: https://stateofjs.com/
   source_url: https://github.com/StateOfJS/StateOfJS
-  categories: 
+  categories:
     - Data
     - JavaScript
     - Statistics
@@ -1710,21 +1723,21 @@
   built_by_url: https://github.com/StateOfJS/StateOfJS/graphs/contributors
   featured: false
 - title: Dato CMS
-  description: > 
+  description: >
       The API-based CMS your editors will love
   main_url: https://www.datocms.com/
   url: https://www.datocms.com/
-  categories: 
+  categories:
     - CMS
     - API
     - Tool
   featured: false
 - title: Half Electronics
-  description: > 
-      Personal website 
+  description: >
+      Personal website
   main_url: https://www.halfelectronic.com/
   url: https://www.halfelectronic.com/
-  categories: 
+  categories:
     - Blog
     - Electronics
   built_by: Fernando Poumian
@@ -1798,7 +1811,7 @@
   categories:
     - News
     - Nonprofit
-    - Visualization  
+    - Visualization
   url: https://projects.propublica.org/graphics/il/il-city-sticker-tickets-maps/ticket-status/?initialWidth=782
   built_by: David Eads
   built_by_url: https://github.com/eads
@@ -1815,21 +1828,21 @@
   built_by_url: https://github.com/eads
   featured: false
 - title: Otsimo
-  description: > 
+  description: >
      Otsimo is a special education application for children with autism, down syndrome and other developmental disabilities.
   main_url: https://otsimo.com/en/
   url: https://otsimo.com/en/
-  categories: 
+  categories:
     - Landing
     - Blog
     - Education
   featured: false
 - title: Matt Bagni Portfolio 2018
-  description: > 
+  description: >
      Mostly the result of playing with Gatsby and learning about react and graphql. Using the screenshot plugin to showcase the work done for my company in the last 2 years, and a good amount of other experiments.
   main_url: https://mattbag.github.io
   url: https://mattbag.github.io
-  categories: 
+  categories:
     - Landing
     - Portfolio
   featured: false
@@ -1842,7 +1855,7 @@
     - Marketing
     - Nonprofit
 - title: Artem Sapegin
-  description: > 
+  description: >
      Little homepage of Artem Sapegin, a frontend developer, passionate photographer, coffee drinker and crazy dogs’ owner.
   main_url: https://sapegin.me/
   url: https://sapegin.me/
@@ -1875,7 +1888,7 @@
   built_by_url: https://twitter.com/milkstarz
   featured: false
 - title: Novatics
-  description: > 
+  description: >
      Digital products that inspire and make a difference
   main_url: https://www.novatics.com.br
   url: https://www.novatics.com.br
@@ -1889,7 +1902,7 @@
   built_by_url: https://github.com/Novatics
   featured: false
 - title: I migliori by Vivigratis
-  description: > 
+  description: >
      Product review website
   main_url: https://imigliori.vivigratis.com/
   url: https://imigliori.vivigratis.com/
@@ -1902,7 +1915,7 @@
   built_by: Kframe Interactive SA
   featured: false
 - title: Max McKinney
-  description: > 
+  description: >
      I’m a developer and designer with a focus in web technologies. I build cars on the side.
   main_url: https://maxmckinney.com/
   url: https://maxmckinney.com/
