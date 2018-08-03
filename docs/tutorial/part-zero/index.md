@@ -108,13 +108,13 @@ gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world
 - Starting with `gatsby` says, ‘hey, we want to use the gatsby-cli tool!’
 - `new` is a gatsby command to create a new Gatsby project.
 - Here, `hello-world` is an arbitrary title — you could pick anything. The CLI tool will place the code for your new site in a new folder called “hello-world”.
-- Lastly, the Github URL specified points to a code repository that holds the starter code you want to use. If you aren't familiar yet with git and Github, you can [learn more here]([**Try Git: Git Tutorial**](https://try.github.io/).
+- Lastly, the Github URL specified points to a code repository that holds the starter code you want to use. If you aren't familiar yet with git and Github, you can [learn more here](https://try.github.io/).
 
 ```bash
 cd hello-world
 ```
 
-- This says ‘I want to change directories (`cd`) to this other subfolder called “hello-world”. Whenever you want to run any commands for your site, you need to be in the context for that site (aka, your terminal needs to be pointed at the directory where your site code lives).
+- This says 'I want to change directories (`cd`) to the “hello-world” subfolder'. Whenever you want to run any commands for your site, you need to be in the context for that site (aka, your terminal needs to be pointed at the directory where your site code lives).
 
 ```bash
 gatsby develop

@@ -45,7 +45,7 @@ Open the file at `/src/pages/index.js`. The code in this file creates a componen
 
 1.  Change the “Hello World!” text to “Hello Gatsby!”, and save the file. If your windows are side-by-side, you can see that your code and content changes are reflected almost instantly in the browser after you save the file.
 
-> **💡 Hot reloading** Gatsby uses “hot reloading” to speed up your development process. Essentially, when you’re running a Gatsby development server, the Gatsby site files are being “watched” in the background — any time you save a file, your changes will be immediately reflected in the browser. You don’t need to hard refresh the page, or restart the development server — your changes just appear.
+> 💡 Gatsby uses **hot reloading** to speed up your development process. Essentially, when you’re running a Gatsby development server, the Gatsby site files are being “watched” in the background — any time you save a file, your changes will be immediately reflected in the browser. You don’t need to hard refresh the page, or restart the development server — your changes just appear.
 
 2.  Let’s make our changes a little more visible. Try replacing the code in `/src/pages/index.js` with the code below, and save again. You’ll see changes to the text; The text color will be purple, and the font size will be larger.
 
@@ -63,7 +63,7 @@ export default () => (
 
 3.  Remove the font size styling. Change the “Hello Gatsby!” text to a level-one header. Add a paragraph beneath the header.
 
-```jsx{3-5}
+```jsx{4-6}
 import React from "react"
 
 export default () => (
@@ -92,7 +92,7 @@ export default () => (
 
 ![Add image](04-add-image.png)
 
-### **💡** **Wait… HTML in our JavaScript?**
+### **Wait… HTML in our JavaScript?**
 
 _If you’re familiar with React and JSX, feel free to skip this section._ If you haven’t worked with the React framework before, you may be wondering what HTML is doing in a JavaScript function. Or why we’re importing `react` on the first line but seemingly not using it anywhere. This hybrid “HTML-in-JS” is actually a syntax extension of JavaScript, for React, called JSX. You can follow along this tutorial without prior experience with React, but if you’re curious, here’s a brief primer…
 
@@ -229,7 +229,7 @@ export default () => (
 
 You should now see your “About Gatsby” header text again!
 
-**💡 What are these “props”?**
+### What are “props”?
 
 Earlier we defined React components as reusable pieces of code describing a UI. To make these reusable pieces dynamic, we need to be able to supply them with different data. We do that with input called “props". Props are (appropriately enough) properties supplied to React components.
 
