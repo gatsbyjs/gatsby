@@ -24,20 +24,21 @@ const ItemWithSubitems = ({
     <Fragment>
       {item.link ? (
         <SplitButton
-          level={level}
+          createLink={createLink}
           isActive={isActive}
           isExpanded={isExpanded}
           item={item}
+          level={level}
           location={location}
           onLinkClick={onLinkClick}
           onSectionTitleClick={onSectionTitleClick}
           uid={uid}
-          createLink={createLink}
         />
       ) : (
         <SectionTitleComponent
           isActive={isActive}
           isExpanded={isExpanded}
+          item={item}
           level={level}
           onSectionTitleClick={onSectionTitleClick}
           title={item.title}
@@ -54,17 +55,19 @@ class Accordion extends React.Component {
 
     this.state = {
       uid: (`` + Math.random()).replace(/\D/g, ``),
-      isExpanded: props.isExpanded || props.isActive || false,
     }
 
     this.handleClick = this.handleClick.bind(this)
   }
 
   handleClick(...args) {
-    this.setState({ isExpanded: !this.state.isExpanded })
-
     if (this.props.onLinkClick) {
       this.props.onLinkClick(...args)
+    }
+
+    if (this.props.onSectionTitleClick) {
+      console.log(`YOOO`, ...args)
+      this.props.onSectionTitleClick(...args)
     }
   }
 
@@ -74,14 +77,17 @@ class Accordion extends React.Component {
       activeItemParents,
       createLink,
       isActive,
-      isExpanded = this.state.isExpanded,
       item,
       level,
       location,
       onLinkClick,
       onSectionTitleClick,
+      sectionHash,
     } = this.props
     const uid = `item_` + this.state.uid
+    const isExpanded = sectionHash[item.title]
+
+    // console.log(`----`, item.title)
 
     return (
       <li
@@ -101,7 +107,7 @@ class Accordion extends React.Component {
           level={level}
           location={location}
           onLinkClick={onLinkClick}
-          onSectionTitleClick={this.handleClick}
+          onSectionTitleClick={onSectionTitleClick}
           uid={uid}
         />
         <ul
@@ -127,7 +133,9 @@ class Accordion extends React.Component {
               level={level + 1}
               location={location}
               onLinkClick={onLinkClick}
+              isExpanded={isExpanded}
               onSectionTitleClick={onSectionTitleClick}
+              sectionHash={sectionHash}
               styles={{
                 ...(item.ui === `steps` && {
                   ...styles.ulStepsUI,

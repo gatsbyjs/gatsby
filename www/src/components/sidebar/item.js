@@ -18,6 +18,8 @@ class Item extends React.Component {
     const {
       activeItemLink,
       activeItemParents,
+      isActive,
+      sectionHash,
       item,
       level,
       location,
@@ -34,6 +36,7 @@ class Item extends React.Component {
             activeItemParents={activeItemParents}
             createLink={createLink}
             isActive={
+              isActive ||
               item.link === location.pathname ||
               isItemActive(activeItemParents, item) ||
               item.disableAccordions
@@ -42,11 +45,11 @@ class Item extends React.Component {
             level={level}
             location={location}
             onLinkClick={onLinkClick}
+            sectionHash={sectionHash}
             onSectionTitleClick={onSectionTitleClick}
           />
         ) : (
           <li
-            className="item"
             css={{
               ...this.props.styles,
               paddingLeft: level === 0 ? 40 : false,
