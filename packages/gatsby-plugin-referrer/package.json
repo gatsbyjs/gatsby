@@ -1,0 +1,35 @@
+{
+  "name": "gatsby-plugin-referrer",
+  "description": "Gatsby plugin that creates a cookie that stores the website that initially referred a user to your website",
+  "version": "1.0.0",
+  "author": "Cassandra Beckley <beckl.ds@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-referrer#readme",
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "referrer",
+    "referer"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-referrer",
+  "peerDependencies": {
+    "gatsby": ">2.0.0-alpha"
+  },
+  "scripts": {
+    "build": "babel src --out-dir . --ignore **/__tests__",
+    "prepare": "cross-env NODE_ENV=production npm run build",
+    "watch": "babel -w src --out-dir . --ignore **/__tests__"
+  },
+  "dependencies": {
+    "@babel/runtime": "7.0.0-beta.52"
+  },
+  "devDependencies": {
+    "@babel/cli": "7.0.0-beta.52",
+    "@babel/core": "7.0.0-beta.52",
+    "cross-env": "^5.2.0"
+  }
+}
