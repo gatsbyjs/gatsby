@@ -2,8 +2,9 @@ import React, { Component } from "react"
 import MdArrowDownward from "react-icons/lib/md/arrow-downward"
 import Fuse from "fuse.js"
 
-import Filters from "./filters"
+import styles from '../shared/styles'
 import ShowcaseList from "./showcase-list"
+import Filters from "./filters"
 import SearchIcon from "../../components/search-icon"
 import { options, rhythm, scale } from "../../utils/typography"
 import presets, { colors } from "../../utils/presets"
@@ -223,64 +224,3 @@ class FilteredShowcase extends Component {
 }
 
 export default FilteredShowcase
-
-const styles = {
-  button: {
-    border: 0,
-    borderRadius: presets.radius,
-    cursor: `pointer`,
-    fontFamily: options.headerFontFamily.join(`,`),
-    fontWeight: `bold`,
-    padding: `${rhythm(1 / 5)} ${rhythm(2 / 3)}`,
-    WebkitFontSmoothing: `antialiased`,
-    "&&": {
-      backgroundColor: colors.gatsby,
-      borderBottom: `none`,
-      boxShadow: `none`,
-      color: `white`,
-      "&:hover": {
-        backgroundColor: colors.gatsby,
-      },
-    },
-  },
-  sticky: {
-    paddingTop: rhythm(options.blockMarginBottom),
-    position: `sticky`,
-    top: 0,
-    [presets.Desktop]: {
-      top: `calc(${presets.headerHeight} + ${presets.bannerHeight} - 1px)`,
-    },
-  },
-  searchInput: {
-    border: 0,
-    borderRadius: presets.radiusLg,
-    color: colors.gatsby,
-    fontFamily: options.headerFontFamily.join(`,`),
-    paddingTop: rhythm(1 / 8),
-    paddingRight: rhythm(1 / 5),
-    paddingBottom: rhythm(1 / 8),
-    paddingLeft: rhythm(1),
-    width: rhythm(5),
-    ":focus": {
-      outline: 0,
-      backgroundColor: colors.ui.light,
-      borderRadius: presets.radiusLg,
-      transition: `width ${presets.animation.speedDefault} ${
-        presets.animation.curveDefault
-      }, background-color ${presets.animation.speedDefault} ${
-        presets.animation.curveDefault
-      }`,
-    },
-  },
-  loadMoreButton: {
-    display: `block`,
-    marginBottom: rhythm(options.blockMarginBottom * 5),
-    marginTop: rhythm(options.blockMarginBottom * 2),
-    marginLeft: `auto`,
-    marginRight: `auto`,
-    [presets.Desktop]: {
-      marginLeft: rhythm(6 / 4),
-      marginRight: rhythm(6 / 4),
-    },
-  },
-}
