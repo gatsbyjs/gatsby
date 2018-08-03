@@ -24,26 +24,22 @@
           link: /tutorial/part-zero/#set-up-a-code-editor
         - title: Set up Prettier
           link: /tutorial/part-zero/#set-up-prettier
-    - title: 1. Introduction to Gatsby basics
+    - title: 1. Get to know Gatsby building blocks
       link: /tutorial/part-one/
       ui: steps
       items:
-        - title: Check environment
-          link: /tutorial/part-one/#check-your-development-environment
-        - title: Install the "Hello World" starter
-          link: /tutorial/part-one/#install-the-hello-world-starter
-        - title: Linking between pages
-          link: /tutorial/part-one/#linking-between-pages
-        - title: Interactive page
-          link: /tutorial/part-one/#interactive-page
-        - title: Deploying Gatsby.js websites
-          link: /tutorial/part-one/#deploying-gatsbyjs-websites
+        - title: Using Gatsby starters
+          link: /tutorial/part-one/#using-gatsby-starters
+        - title: Familiarizing with Gatsby pages
+          link: /tutorial/part-one/#familiarizing-with-gatsby-pages
+        - title: Building with components
+          link: /tutorial/part-one/#building-with-components
+        - title: Deploying a Gatsby site
+          link: /tutorial/part-one/#deploying-a-gatsby-site
     - title: 2. Introduction to using CSS in Gatsby
       link: /tutorial/part-two/
       ui: steps
       items:
-        - title: Building with components
-          link: /tutorial/part-two/#building-with-components
         - title: Creating Global Styles
           link: /tutorial/part-two/#creating-global-styles
         - title: Typography.js
