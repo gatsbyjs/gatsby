@@ -6,6 +6,9 @@ const { chunk } = require(`lodash`)
 
 const workerPool = new Worker(require.resolve(`./worker`), {
   numWorkers,
+  forkOptions: {
+    silent: false,
+  },
 })
 
 module.exports = (htmlComponentRendererPath, pages, activity) =>
