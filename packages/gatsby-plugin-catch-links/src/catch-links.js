@@ -85,7 +85,7 @@ module.exports = function (root, cb) {
     ev.preventDefault()
 
 
-    var anchoreUrl = new URL(anchor.getAttribute(`href`))
+    var anchoreUrl = new URL(anchor.href)
 
     if (checkSameOriginWithoutProtocol(window.location.origin, anchoreUrl.origin)) {
       cb(`${anchoreUrl.pathname}${anchoreUrl.search}${anchoreUrl.hash}`)
