@@ -1,6 +1,6 @@
 > **NOTE**: You probably don't need this plugin!
 >
->Gatsby works with CSS Modules by default, no need for extra plugins. You should only use this if you already know what `babel-plugin-react-css-modules` is and want to enable it for your project.
+> Gatsby works with CSS Modules by default, no need for extra plugins. You should only use this if you already know what `babel-plugin-react-css-modules` is and want to enable it for your project.
 
 # gatsby-plugin-react-css-modules
 
@@ -21,12 +21,12 @@ plugins: [
   {
     resolve: `gatsby-plugin-react-css-modules`,
     options: {
-      // *.css files are included by default.	
-      // To support another syntax (e.g. SCSS),	
-      // add `postcss-scss` to your project's devDependencies	
-      // and add the following option here:	
-      filetypes: {	
-        ".scss": { syntax: `postcss-scss` },	
+      // *.css files are included by default.
+      // To support another syntax (e.g. SCSS),
+      // add `postcss-scss` to your project's devDependencies
+      // and add the following option here:
+      filetypes: {
+        ".scss": { syntax: `postcss-scss` },
       },
       // Exclude global styles from the plugin using a RegExp:
       exclude: `\/global\/`,
