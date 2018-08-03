@@ -70,6 +70,7 @@
     "graphql": "^0.13.2",
     "graphql-relay": "^0.5.5",
     "graphql-skip-limit": "^2.0.0-beta.3",
+    "graphql-tools": "^3.0.4",
     "graphql-type-json": "^0.2.1",
     "hash-mod": "^0.0.5",
     "history": "^4.6.2",

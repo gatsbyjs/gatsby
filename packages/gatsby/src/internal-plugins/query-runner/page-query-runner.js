@@ -16,6 +16,7 @@ const { store, emitter } = require(`../../redux`)
 
 let queuedDirtyActions = []
 let active = false
+let running = false
 
 const runQueriesForPathnamesQueue = new Set()
 exports.queueQueryForPathname = pathname => {
@@ -65,8 +66,16 @@ emitter.on(`DELETE_NODE`, action => {
 })
 
 const runQueuedActions = async () => {
-  if (active) {
-    runQueries()
+  if (active && !running) {
+    try {
+      running = true
+      await runQueries()
+    } finally {
+      running = false
+      if (queuedDirtyActions.length > 0) {
+        runQueuedActions()
+      }
+    }
   }
 }
 exports.runQueuedActions = runQueuedActions
