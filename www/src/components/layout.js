@@ -58,8 +58,11 @@ class DefaultLayout extends React.Component {
   }
 
   render() {
-    const isHomepage = this.props.location.pathname === `/`
-
+    const { location = {
+      pathname: '/starter-showcase'
+    } } = this.props // location will be undefined if on 'starter-showcase'
+    const isHomepage = location.pathname === `/`
+    
     // SEE: template-docs-markdown for why this.props.isSidebarDisabled is here
     const isSidebarDisabled =
       this.props.isSidebarDisabled || !this.props.itemList

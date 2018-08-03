@@ -11,6 +11,7 @@
     "gatsby-image": "next",
     "gatsby-plugin-canonical-urls": "next",
     "gatsby-plugin-catch-links": "next",
+    "gatsby-plugin-create-client-paths": "^1.0.8",
     "gatsby-plugin-feed": "next",
     "gatsby-plugin-fullstory": "^1.0.4-5",
     "gatsby-plugin-glamor": "next",
@@ -52,6 +53,7 @@
     "parse-filepath": "^1.0.2",
     "prismjs": "^1.14.0",
     "qs": "^6.5.2",
+    "query-string": "^6.1.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-helmet": "^5.2.0",
@@ -80,6 +82,13 @@
     "deploy": "gatsby build --prefix-paths && gh-pages -d public",
     "develop": "gatsby develop",
     "serve": "gatsby serve",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "scrapeStarters": "cd src/data/StarterShowcase && node scraper.js"
+  },
+  "devDependencies": {
+    "front-matter": "^2.3.0",
+    "get-package-json-from-github": "^1.2.1",
+    "github-api": "^3.0.0",
+    "webshot": "^0.18.0"
   }
 }
