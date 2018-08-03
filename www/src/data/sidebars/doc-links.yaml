@@ -2,6 +2,8 @@
   items:
     - title: Quick start
       link: /docs/
+    - title: Starters
+      link: /docs/gatsby-starters/
     - title: Recipes*
       link: /docs/recipes/
     - title: Overview of the docs*
