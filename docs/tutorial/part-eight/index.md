@@ -63,7 +63,7 @@ As you can see, Gatsby's performance is excellent out of the box but we're missi
 
 ## Add a manifest file
 
-Looks like we have a pretty lackluster score in the "Progressive Web App" category. Let's go about addressing that.
+Looks like we have a pretty lackluster score in the "Progressive Web App" category. Let's address that.
 
 But first, what exactly *are* PWAs?
 
