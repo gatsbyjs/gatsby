@@ -218,17 +218,24 @@ the output.
 
 The method above works for page queries, as you can pass the data in directly to
 the component. This doesn't work for components that use `StaticQuery` though,
-so we need to take a slightly different approach to testing these. The blog
-starter project doesn't include `StaticQuery`, so the example here is from
+as that uses `context` rather than `props` so we need to take a slightly
+different approach to testing these. The blog starter project doesn't include
+`StaticQuery`, so the example here is from
 [the StaticQuery docs](/docs/static-query/).
 
-The pattern for enabling type checking described in the docs is a good starting
-point for making these components testable, but you need access to the
-component.
+Using `StaticQuery` allows you to make queries in any component, not just pages.
+This gives a lot of flexibility, and avoid having to pass the props down to
+deeply-nested components. The pattern for enabling type checking described in
+the docs is a good starting point for making these components testable, as it
+separates the query from the definition of the component itself. However that
+example doesn't export the inner, pure component, which is what you'll need to
+test.
 
-Here is the example:
+Here is the example of a header component that queries the page data itself,
+rather than needing it to be passed from the layout:
 
 ```js
+// src/components/Header.js
 import React from "react"
 import { StaticQuery } from "gatsby"
 
@@ -287,8 +294,20 @@ export default Header
 ```
 
 Now you have two components exported from the file: the component that includes
-the StaticQuery data which is still the default export, and a pure component
-that you can test. Here's how:
+the StaticQuery data which is still the default export, and another component
+that you can test. This means you can test the component independently of the
+GraphQL.
+
+This is a good example of the benefits of keeping components "pure", meaning
+they always generate the same output if given the same inputs and have no
+side-effects apart from their return value. This means we can be sure the tests
+are always reproducable and don't fail if, for example, the network is down or
+the data source changes. In this example, `Header` is impure as it makes a
+query, so the output depends on something apart from its props. `PureHeader` is
+pure because its return value is entirely dependent on the props passed it it.
+This means it's very easy to test, and a snapshot should never change.
+
+Here's how:
 
 ```js
 // src/components/Header.test.js
@@ -311,8 +330,6 @@ describe("Header", () =>
     expect(tree).toMatchSnapshot()
   }))
 ```
-
-This means you can test the component independently of the GraphQL.
 
 ## Using TypeScript
 
