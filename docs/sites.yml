@@ -387,7 +387,7 @@
 - title: Dave Lindberg Marketing & Design
   main_url: 'https://davelindberg.com/'
   source_url: 'https://github.com/Dave-Lindberg/dl-gatsby'
-  featured: true
+  featured: false
   description: >-
     My work revolves around solving problems for people in business, using integrated design and marketing strategies to improve sales, increase brand engagement, generate leads and achieve goals.
   categories:
