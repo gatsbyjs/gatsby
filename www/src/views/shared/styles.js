@@ -20,6 +20,50 @@ const styles = {
       width: 400,
     },
   }),
+  showcaseList: {	
+    display: `flex`,	
+    flexWrap: `wrap`,	
+    padding: rhythm(3 / 4),	
+    justifyContent: `center`,	
+    [presets.Desktop]: {	
+      justifyContent: `flex-start`,	
+    },	
+  },
+  showcaseItem: {	
+    display: `flex`,	
+    flexDirection: `column`,	
+    margin: rhythm(3 / 4),	
+    width: 282,	
+    position: `relative`,	
+  },
+  featuredItem: {	
+    display: `none`,	
+    transition: `background .3s cubic-bezier(.4,0,.2,1), transform .3s cubic-bezier(.4,0,.2,1)`,	
+    [presets.Desktop]: {	
+      alignItems: `center`,	
+      background: colors.accent,	
+      border: `none`,	
+      borderTopRightRadius: presets.radius,	
+      borderBottomLeftRadius: presets.radius,	
+      boxShadow: `none`,	
+      cursor: `pointer`,	
+      display: `flex`,	
+      height: 24,	
+      margin: 0,	
+      padding: 0,	
+      position: `absolute`,	
+      top: 0,	
+      right: 0,	
+      width: 24,	
+      "&:hover": {	
+        background: colors.gatsby,	
+      },	
+    },	
+  },	
+  featuredIcon: {	
+    margin: `0 auto`,	
+    display: `block`,	
+  },
   withTitleHover: style({
     "& .title": {
       transition: `box-shadow .3s cubic-bezier(.4,0,.2,1), transform .3s cubic-bezier(.4,0,.2,1)`,

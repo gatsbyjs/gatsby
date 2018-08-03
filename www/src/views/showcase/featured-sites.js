@@ -4,6 +4,7 @@ import Img from "gatsby-image"
 import hex2rgba from "hex2rgba"
 import { style } from "glamor"
 
+import styles from "../shared/styles"
 import MdArrowForward from "react-icons/lib/md/arrow-forward"
 import ShowcaseItemCategories from "./showcase-item-categories"
 import FeaturedSitesIcon from "../../assets/featured-sites-icons.svg"
@@ -333,78 +334,3 @@ class FeaturedSites extends Component {
 }
 
 export default FeaturedSites
-
-const styles = {
-  featuredSitesCard: style({
-    display: `flex`,
-    flexDirection: `column`,
-    flexGrow: 0,
-    flexShrink: 0,
-    width: 320,
-    marginBottom: rhythm(options.blockMarginBottom * 2),
-    marginRight: rhythm(3 / 4),
-    [presets.Hd]: {
-      width: 360,
-      marginRight: rhythm(6 / 4),
-    },
-    [presets.VHd]: {
-      width: 400,
-    },
-  }),
-  withTitleHover: style({
-    "& .title": {
-      transition: `box-shadow .3s cubic-bezier(.4,0,.2,1), transform .3s cubic-bezier(.4,0,.2,1)`,
-      boxShadow: `inset 0 0px 0px 0px ${colors.ui.whisper}`,
-    },
-    "&:hover .title": {
-      boxShadow: `inset 0 -3px 0px 0px ${colors.ui.bright}`,
-    },
-  }),
-  button: {
-    border: 0,
-    borderRadius: presets.radius,
-    cursor: `pointer`,
-    fontFamily: options.headerFontFamily.join(`,`),
-    fontWeight: `bold`,
-    padding: `${rhythm(1 / 5)} ${rhythm(2 / 3)}`,
-    WebkitFontSmoothing: `antialiased`,
-    "&&": {
-      backgroundColor: colors.gatsby,
-      borderBottom: `none`,
-      boxShadow: `none`,
-      color: `white`,
-      "&:hover": {
-        backgroundColor: colors.gatsby,
-      },
-    },
-  },
-  scrollbar: {
-    WebkitOverflowScrolling: `touch`,
-    "&::-webkit-scrollbar": {
-      width: `6px`,
-      height: `6px`,
-    },
-    "&::-webkit-scrollbar-thumb": {
-      background: colors.ui.bright,
-    },
-    "&::-webkit-scrollbar-track": {
-      background: colors.ui.light,
-    },
-  },
-  screenshot: {
-    borderRadius: presets.radius,
-    boxShadow: `0 4px 10px ${hex2rgba(colors.gatsby, 0.1)}`,
-    marginBottom: rhythm(options.blockMarginBottom / 2),
-    transition: `all ${presets.animation.speedDefault} ${
-      presets.animation.curveDefault
-    }`,
-  },
-  screenshotHover: {
-    background: `transparent`,
-    color: colors.gatsby,
-    "& .gatsby-image-wrapper": {
-      transform: `translateY(-3px)`,
-      boxShadow: `0 8px 20px ${hex2rgba(colors.lilac, 0.5)}`,
-    },
-  },
-}
