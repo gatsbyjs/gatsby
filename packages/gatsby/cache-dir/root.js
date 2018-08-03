@@ -1,12 +1,16 @@
 import { createElement } from "react"
 import { Router, Route } from "react-router-dom"
 import { ScrollContext } from "gatsby-react-router-scroll"
+import {
+  shouldUpdateScroll,
+  attachToHistory,
+  init as navigationInit,
+} from "./navigation"
 import history from "./history"
 import { apiRunner } from "./api-runner-browser"
 import syncRequires from "./sync-requires"
 import pages from "./pages.json"
-import redirects from "./redirects.json"
-import loader, { setApiRunnerForLoader } from "./loader"
+import loader from "./loader"
 import { hot } from "react-hot-loader"
 import JSONStore from "./json-store"
 
@@ -42,88 +46,13 @@ if (window.__webpack_hot_middleware_reporter__ !== undefined) {
   })
 }
 
-setApiRunnerForLoader(apiRunner)
-loader.addPagesArray(pages)
-loader.addDevRequires(syncRequires)
-window.___loader = loader
-
-// Convert to a map for faster lookup in maybeRedirect()
-const redirectMap = redirects.reduce((map, redirect) => {
-  map[redirect.fromPath] = redirect
-  return map
-}, {})
-
-// Check for initial page-load redirect
-maybeRedirect(location.pathname)
+navigationInit()
 
 // Call onRouteUpdate on the initial page load.
 apiRunner(`onRouteUpdate`, {
   location: history.location,
   action: history.action,
 })
-
-function attachToHistory(history) {
-  if (!window.___history) {
-    window.___history = history
-
-    history.listen((location, action) => {
-      if (!maybeRedirect(location.pathname)) {
-        apiRunner(`onPreRouteUpdate`, { location, action })
-        apiRunner(`onRouteUpdate`, { location, action })
-      }
-    })
-  }
-}
-
-function maybeRedirect(pathname) {
-  const redirect = redirectMap[pathname]
-
-  if (redirect != null) {
-    const pageResources = loader.getResourcesForPathname(pathname)
-
-    if (pageResources != null) {
-      console.error(
-        `The route "${pathname}" matches both a page and a redirect; this is probably not intentional.`
-      )
-    }
-
-    history.replace(redirect.toPath)
-    return true
-  } else {
-    return false
-  }
-}
-
-function shouldUpdateScroll(prevRouterProps, { location: { pathname } }) {
-  const results = apiRunner(`shouldUpdateScroll`, {
-    prevRouterProps,
-    pathname,
-  })
-  if (results.length > 0) {
-    return results[0]
-  }
-
-  if (prevRouterProps) {
-    const {
-      location: { pathname: oldPathname },
-    } = prevRouterProps
-    if (oldPathname === pathname) {
-      return false
-    }
-  }
-  return true
-}
-
-const push = to => {
-  window.___history.push(to)
-}
-
-const replace = to => {
-  window.___history.replace(to)
-}
-
-window.___push = push
-window.___replace = replace
 
 const AltRouter = apiRunner(`replaceRouterComponent`, { history })[0]
 

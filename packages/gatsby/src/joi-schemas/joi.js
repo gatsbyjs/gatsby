@@ -40,6 +40,7 @@ export const nodeSchema = Joi.object()
         fieldOwners: Joi.array(),
         content: Joi.string().allow(``),
         description: Joi.string(),
+        ignoreType: Joi.boolean(),
       })
       .unknown({
         allow: false,

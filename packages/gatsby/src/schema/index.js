@@ -1,6 +1,7 @@
 /* @flow */
 const _ = require(`lodash`)
 const { GraphQLSchema, GraphQLObjectType } = require(`graphql`)
+const { mergeSchemas } = require(`graphql-tools`)
 
 const buildNodeTypes = require(`./build-node-types`)
 const buildNodeConnections = require(`./build-node-connections`)
@@ -17,11 +18,17 @@ module.exports = async ({ parentSpan }) => {
   invariant(!_.isEmpty(nodes), `There are no available GQL nodes`)
   invariant(!_.isEmpty(connections), `There are no available GQL connections`)
 
-  const schema = new GraphQLSchema({
+  const thirdPartySchemas = store.getState().thirdPartySchemas || []
+
+  const gatsbySchema = new GraphQLSchema({
     query: new GraphQLObjectType({
       name: `RootQueryType`,
       fields: { ...connections, ...nodes },
     }),
+  })
+
+  const schema = mergeSchemas({
+    schemas: [gatsbySchema, ...thirdPartySchemas],
   })
 
   store.dispatch({

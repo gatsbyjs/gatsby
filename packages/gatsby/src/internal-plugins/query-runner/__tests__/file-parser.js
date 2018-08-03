@@ -37,6 +37,41 @@ query {
     render={data => <div>{data.foo}</div>}
   />
 )`,
+    "static-query-named-export.js": `export const Component = () => (
+  <StaticQuery
+    query={graphql\`query StaticQueryName { foo }\`}
+    render={data => <div>{data.doo}</div>}
+  />
+)`,
+    "static-query-closing-tag.js": `export default () => (
+  <StaticQuery
+    query={graphql\`{ foo }\`}
+  >
+    {data => <div>{data.foo}</div>}
+  </StaticQuery>
+)`,
+    "page-query-and-static-query-named-export.js": `export const Component = () => (
+  <StaticQuery
+    query={graphql\`query StaticQueryName { foo }\`}
+    render={data => <div>{data.doo}</div>}
+  />
+)
+export const pageQuery = graphql\`query PageQueryName { foo }\`
+`,
+    "multiple-fragment-exports.js": `export const fragment1 = graphql\`
+  fragment Fragment1 on RootQueryField {
+    foo
+  }
+  fragment Fragment2 on RootQueryField {
+    bar
+  }
+\`
+export const fragment3 = graphql\`
+  fragment Fragment3 on RootQueryField {
+    baz
+  }
+\`
+`,
   }
 
   const parser = new FileParser()

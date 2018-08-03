@@ -178,13 +178,9 @@ module.exports = async (args: BootstrapArgs) => {
   // directory.
   initCache()
 
-  // Ensure the public/static directory and data subdirectories are created.
+  // Ensure the public/static directory
   await fs.ensureDir(`${program.directory}/public/static`)
-  await Promise.all(
-    _.range(0, 999).map(i =>
-      fs.ensureDir(`${program.directory}/public/static/d/${i}`)
-    )
-  )
+
   activity.end()
 
   // Copy our site files to the root of the site.

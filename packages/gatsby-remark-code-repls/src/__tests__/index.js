@@ -121,6 +121,24 @@ describe(`gatsby-remark-code-repls`, () => {
         )
       })
 
+      it(`errors if you provide multiple files in non-codesandbox examples`, () => {
+        const markdownAST = remark.parse(
+          `[](${protocol}path/to/nested/file.js,path/to/nested/anotherFile.js,path/to/nested/file.css)`
+        )
+        const runPlugin = () =>
+          plugin({ markdownAST }, { directory: `examples` })
+
+        if (protocol !== PROTOCOL_CODE_SANDBOX) {
+          expect(runPlugin).toThrow(
+            `Code example path should only contain a single file, but found more than one: ` +
+              `path/to/nested/file.js,path/to/nested/anotherFile.js,path/to/nested/file.css. ` +
+              `Only CodeSandbox REPL supports multiple files entries, the protocol prefix of which starts with codesandbox://`
+          )
+        } else {
+          expect(runPlugin).not.toThrow()
+        }
+      })
+
       if (protocol === PROTOCOL_CODE_SANDBOX) {
         it(`supports custom html config option for index html`, () => {
           const markdownAST = remark.parse(
@@ -151,6 +169,14 @@ describe(`gatsby-remark-code-repls`, () => {
             }
           )
 
+          expect(transformed).toMatchSnapshot()
+        })
+
+        it(`supports importing multiple files`, () => {
+          const markdownAST = remark.parse(
+            `[](${protocol}path/to/nested/file.js,path/to/nested/anotherFile.js,path/to/nested/file.css)`
+          )
+          const transformed = plugin({ markdownAST }, { directory: `examples` })
           expect(transformed).toMatchSnapshot()
         })
       }

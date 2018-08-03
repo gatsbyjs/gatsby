@@ -11,7 +11,7 @@ size, disability, ethnicity, gender identity and expression, level of
 experience, nationality, personal appearance, race, religion, or sexual identity
 and orientation.
 
-[Read full code of conduct](/code-of-conduct/)
+[Read full code of conduct](/docs/code-of-conduct/)
 
 ## Ways to Contribute
 
@@ -23,6 +23,12 @@ The Gatsby community welcomes contributions. Please refer to the guides below on
 - [Gatsby Style Guide](/docs/gatsby-style-guide/)
 
 ## Gatsby news
+
+### Newsletter
+
+Sign up for the Gatsby newsletter to keep up with the latest from the Gatsby community! Hear about new features, tips & tricks, and what people are building.
+
+[Sign up here](/newsletter/)
 
 ### Twitter
 

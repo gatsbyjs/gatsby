@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+import { graphql } from "gatsby"
 
 import ShowcaseView from "../views/showcase"
 
@@ -15,7 +16,7 @@ export default ShowcasePage
 
 export const showcaseQuery = graphql`
   query {
-    featured: allSitesYaml(limit: 40, filter: { featured: { eq: true } }) {
+    featured: allSitesYaml(filter: { featured: { eq: true } }) {
       edges {
         node {
           id
@@ -37,7 +38,7 @@ export const showcaseQuery = graphql`
         }
       }
     }
-    allSitesYaml(limit: 40, filter: { main_url: { ne: null } }) {
+    allSitesYaml(filter: { main_url: { ne: null } }) {
       edges {
         node {
           id
@@ -48,6 +49,7 @@ export const showcaseQuery = graphql`
           description
           main_url
           built_by_url
+          source_url
           childScreenshot {
             screenshotFile {
               childImageSharp {

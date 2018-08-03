@@ -1,8 +1,8 @@
 ---
 title: Debugging
+overview: true
 ---
 
-This is a stub. Help our community expand it.
+While building your site, you’ll sometimes encounter bugs. These guides help you set up debugging in Gatsby so you can spot and squash bugs more easily.
 
-Please use the [Gatsby Style Guide](/docs/gatsby-style-guide/) to ensure your
-pull request gets accepted.
+[[guidelist]]
