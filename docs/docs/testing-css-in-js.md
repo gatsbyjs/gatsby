@@ -52,9 +52,11 @@ Lastly you need to tell Jest where to find this file. Open your `package.json` a
 
 ## Usage
 
-In this example you'll use `react-test-renderer` but you can also use [react-testing-library](docs/testing-react-components) or any other appropriate library.
+In this example you'll use `react-test-renderer` but you can also use [react-testing-library](docs/testing-react-components) or any other appropriate library. Because you created the `setup-test-env.js` file you can write your unit tests like you used to do. But now you'll also get the styling information!
 
 ```js
+// src/components/Button.test.js
+
 import React from 'react'
 import styled from 'react-emotion'
 import renderer from 'react-test-renderer'
@@ -93,9 +95,13 @@ If your styled component depends on `theme` via `ThemeProvider` you'll have two 
 - Wrap all your components with the `ThemeProvider`
 - Use API helpers (have a look at the library's documentation, e.g. [styled-components](https://github.com/styled-components/jest-styled-components#theming) or [emotion](https://github.com/emotion-js/emotion/tree/master/packages/emotion-theming#createbroadcast-function))
 
+And this is where snapshots tests really shine. If you change, e.g. the primary color in your theme file you'll see which components get affected by this change. This way you can catch unintended changes to the style of your components.
+
 This example uses the first option:
 
 ```js
+// src/components/Wrapper.test.js
+
 import React from 'react'
 import { ThemeProvider } from 'emotion-theming'
 import renderer from 'react-test-renderer'
