@@ -1,6 +1,6 @@
 ---
 title: Simple GraphQL APIs with Gatsby
-date: "2018-07-17"
+date: "2018-08-03"
 author: "Mikhail Novikov"
 tags: ["gatsby", "graphql", "plugin", "source"]
 ---
