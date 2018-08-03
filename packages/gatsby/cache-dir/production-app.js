@@ -9,13 +9,12 @@ import emitter from "./emitter"
 window.___emitter = emitter
 import PageRenderer from "./page-renderer"
 import asyncRequires from "./async-requires"
-import loader, { setApiRunnerForLoader } from "./loader"
+import loader from "./loader"
 
 window.asyncRequires = asyncRequires
 window.___emitter = emitter
 window.___loader = loader
 
-setApiRunnerForLoader(apiRunner)
 loader.addPagesArray([window.page])
 loader.addDataPaths({ [window.page.jsonName]: window.dataPath })
 loader.addProdRequires(asyncRequires)
