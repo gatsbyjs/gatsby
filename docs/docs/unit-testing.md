@@ -274,9 +274,13 @@ testing your component:
     TypeError: Cannot read property 'history' of undefined
 ```
 
-This is a `react-router` error, and can be fixed either by mocking the `Link`
-component in `gatsby` or `gatsby-link`, as shown above, or by wrapping your
-component in a `MemoryRouter` from `react-router-dom`. For example:
+This is an error in `gatsby-link`, although `react-router-dom` would complain
+too if it got that far. The simplest way to fix this is by mocking the `Link`
+component in `gatsby` or `gatsby-link`, as shown above. There are some
+situations where you might not want to do this, mainly if you want to test the
+behavior of the `Link` component. The way to handle this is to wrap your
+component in a `MemoryRouter` from `react-router-dom`. You will need to do this
+for any test which includes a `Link`. For example:
 
 ```js
 import React from "react"
