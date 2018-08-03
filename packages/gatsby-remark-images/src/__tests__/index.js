@@ -146,3 +146,26 @@ test(`it leaves non-relative HTML img tags alone`, async () => {
   const nodes = await plugin(createPluginOptions(content, imagePath))
   expect(nodes[0].value).toBe(content)
 })
+
+test(`it leaves images that are already linked alone`, async () => {
+  const imagePath = `image/my-image.jpg`
+  const content = `
+[![img](./${imagePath})](https://google.com)
+`
+
+  const nodes = await plugin(createPluginOptions(content, imagePath))
+  expect(nodes).toEqual([])
+})
+
+test(`it leaves linked HTML img tags alone`, async () => {
+  const imagePath = `images/this-image-already-has-a-link.jpeg`
+
+  const content = `
+<a href="https://example.org">
+  <img src="./${imagePath}">
+</a>
+  `.trim()
+
+  const nodes = await plugin(createPluginOptions(content, imagePath))
+  expect(nodes[0].value).toBe(content)
+})

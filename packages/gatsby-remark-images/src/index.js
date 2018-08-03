@@ -1,4 +1,5 @@
 const select = require(`unist-util-select`)
+const visitWithParents = require(`unist-util-visit-parents`)
 const path = require(`path`)
 const isRelativeUrl = require(`is-relative-url`)
 const _ = require(`lodash`)
@@ -30,10 +31,17 @@ module.exports = (
   const options = _.defaults(pluginOptions, defaults)
 
   // This will only work for markdown syntax image tags
-  const markdownImageNodes = select(markdownAST, `image`)
+  let markdownImageNodes = []
 
   // This will also allow the use of html image tags
   const rawHtmlNodes = select(markdownAST, `html`)
+
+  visitWithParents(markdownAST, `image`, (node, ancestors) => {
+    const inLink = ancestors.some(ancestor => ancestor.type === `link`)
+    if (!inLink) {
+      markdownImageNodes.push(node)
+    }
+  })
 
   // Takes a node and generates the needed images and then returns
   // the needed HTML replacement for the image
@@ -138,7 +146,7 @@ module.exports = (
         <img
           class="${imageClass}"
           style="${imageStyle}"
-          src="${fallbackSrc}" 
+          src="${fallbackSrc}"
           alt="${node.alt ? node.alt : defaultAlt}"
           title="${node.title ? node.title : ``}"
           src="${fallbackSrc}"
@@ -240,6 +248,11 @@ module.exports = (
 
             let imageRefs = []
             $(`img`).each(function() {
+              // Make sure we don’t override already-linked images
+              if ($(this).closest(`a`).length > 0) {
+                return
+              }
+
               imageRefs.push($(this))
             })
 
