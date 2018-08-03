@@ -24,7 +24,7 @@ plugins: [`gatsby-plugin-offline`]
 When adding this plugin to your `gatsby-config.js`, you can pass in options to
 override the default sw-precache config.
 
-The default config is as following. Warning, you can break the offline support
+The default config is as follows. Warning, you can break the offline support
 and AppCache setup by changing these options so tread carefully.
 
 ```javascript

@@ -1,4 +1,17 @@
+const { readFile, writeFile } = require(`fs-extra`)
+
 jest.mock(`fs`)
+jest.mock(`fs-extra`, () => {
+  return {
+    readFile: jest.fn(() => `contents`),
+    writeFile: jest.fn(),
+  }
+})
+
+afterEach(() => {
+  readFile.mockClear()
+  writeFile.mockClear()
+})
 
 describe(`Track root nodes`, () => {
   const reduxStatePath = `${process.cwd()}/.cache/redux-state.json`

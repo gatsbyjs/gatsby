@@ -65,7 +65,7 @@ class DefaultLayout extends React.Component {
     
     // SEE: template-docs-markdown for why this.props.isSidebarDisabled is here
     const isSidebarDisabled =
-      this.props.isSidebarDisabled || !this.props.sectionList
+      this.props.isSidebarDisabled || !this.props.itemList
     let isModal = false
     if (!windowWidth && typeof window !== `undefined`) {
       windowWidth = window.innerWidth
@@ -199,8 +199,7 @@ class DefaultLayout extends React.Component {
         >
           <PageWithSidebar
             disable={isSidebarDisabled}
-            createLink={this.props.createLink}
-            sectionList={this.props.sectionList}
+            itemList={this.props.itemList}
             location={this.props.location}
             enableScrollSync={this.props.enableScrollSync}
             renderContent={() => this.props.children}

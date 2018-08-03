@@ -125,8 +125,8 @@ module.exports = async (
         }
       case `build-javascript`:
         return {
-          filename: `[name]-[chunkhash].js`,
-          chunkFilename: `[name]-[chunkhash].js`,
+          filename: `[name]-[contenthash].js`,
+          chunkFilename: `[name]-[contenthash].js`,
           path: directoryPath(`public`),
           publicPath: program.prefixPaths
             ? `${store.getState().config.pathPrefix}/`
@@ -290,7 +290,7 @@ module.exports = async (
       rules.yaml(),
       rules.fonts(),
       rules.images(),
-      rules.audioVideo(),
+      rules.miscAssets(),
     ]
     switch (stage) {
       case `develop`: {

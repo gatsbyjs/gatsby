@@ -5,6 +5,7 @@ import stripPrefix from "./strip-prefix"
 const preferDefault = m => (m && m.default) || m
 
 let prefetcher
+let devGetPageData
 let inInitialRender = true
 let hasFetched = Object.create(null)
 let syncRequires = {}
@@ -19,6 +20,10 @@ const failedResources = {}
 const MAX_HISTORY = 5
 
 const jsonPromiseStore = {}
+
+if (process.env.NODE_ENV !== `production`) {
+  devGetPageData = require(`./socketIo`).getPageData
+}
 
 /**
  * Fetch resource map (pages data and paths to json files with results of
@@ -41,6 +46,8 @@ const fetchPageResourceMap = () => {
   return fetchingPageResourceMapPromise
 }
 
+const createJsonURL = jsonName => `${__PATH_PREFIX__}/static/d/${jsonName}.json`
+
 const fetchResource = resourceName => {
   // Find resource
   let resourceFunction
@@ -52,9 +59,7 @@ const fetchResource = resourceName => {
     } else {
       resourceFunction = () => {
         const fetchPromise = new Promise((resolve, reject) => {
-          const url = `${__PATH_PREFIX__}/static/d/${
-            jsonDataPaths[resourceName]
-          }.json`
+          const url = createJsonURL(jsonDataPaths[resourceName])
           var req = new XMLHttpRequest()
           req.open(`GET`, url, true)
           req.withCredentials = true
@@ -198,7 +203,10 @@ const queue = {
     // Tell plugins with custom prefetching logic that they should start
     // prefetching this path.
     if (!prefetchTriggered[path]) {
-      apiRunner(`onPrefetchPathname`, { pathname: path })
+      apiRunner(`onPrefetchPathname`, {
+        pathname: path,
+        getResourcesForPathname: queue.getResourcesForPathname,
+      })
       prefetchTriggered[path] = true
     }
 
@@ -222,6 +230,13 @@ const queue = {
 
     if (!page) {
       return false
+    }
+
+    if (
+      process.env.NODE_ENV !== `production` &&
+      process.env.NODE_ENV !== `test`
+    ) {
+      devGetPageData(page.path)
     }
 
     const mountOrderBoost = 1 / mountOrder
@@ -302,8 +317,15 @@ const queue = {
         component: syncRequires.components[page.componentChunkName],
         page,
       }
-      cb(pageResources)
-      return pageResources
+
+      const onDataCallback = () => {
+        cb(pageResources)
+      }
+
+      if (devGetPageData(page.path, onDataCallback)) {
+        return pageResources
+      }
+      return null
     }
     // Production code path
     if (failedPaths[path]) {
@@ -355,7 +377,7 @@ const queue = {
       getResourceModule(page.jsonName),
     ]).then(([component, json]) => {
       const pageResources = { component, json, page }
-
+      pageResources.page.jsonURL = createJsonURL(jsonDataPaths[page.jsonName])
       pathScriptsCache[path] = pageResources
       cb(pageResources)
 
