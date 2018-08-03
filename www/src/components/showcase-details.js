@@ -1,5 +1,4 @@
 import React, { Fragment } from "react"
-import { graphql } from "gatsby"
 import Helmet from "react-helmet"
 import url from "url"
 import hex2rgba from "hex2rgba"
@@ -8,7 +7,7 @@ import qs from "qs"
 
 import presets, { colors } from "../utils/presets"
 import { options, scale, rhythm } from "../utils/typography"
-import { Link, StaticQuery } from "gatsby"
+import { Link, StaticQuery, graphql } from "gatsby"
 import Layout from "../components/layout"
 import ShareMenu from "../components/share-menu"
 

@@ -2,6 +2,7 @@ import React from "react"
 import PropTypes from "prop-types"
 import Helmet from "react-helmet"
 
+import { Link } from "gatsby"
 import { colors } from "../utils/presets"
 import Container from "../components/container"
 import MarkdownPageFooter from "../components/markdown-page-footer"
@@ -30,24 +31,27 @@ class PackageReadMe extends React.Component {
           <meta name="twitter.label1" content="Reading time" />
           <meta name="twitter:data1" content={`${timeToRead} min read`} />
         </Helmet>
-        <a
-          css={{
-            "&&": {
-              display: githubUrl ? `inline-block` : `none`,
-              fontWeight: `normal`,
-              border: 0,
-              color: colors.gray.calm,
-              boxShadow: `none`,
-              "&:hover": {
-                background: `none`,
-                color: colors.gatsby,
+        <div css={{ display: 'flex', justifyContent: 'space-between' }}>
+          <a
+            css={{
+              "&&": {
+                display: githubUrl ? `inline-block` : `none`,
+                fontWeight: `normal`,
+                border: 0,
+                color: colors.gray.calm,
+                boxShadow: `none`,
+                "&:hover": {
+                  background: `none`,
+                  color: colors.gatsby,
+                }
               },
-            },
-          }}
-          href={githubUrl}
-        >
-          <GithubIcon style={{ verticalAlign: `text-top` }} />
-        </a>
+            }}
+            href={githubUrl}
+          >
+            <GithubIcon style={{ verticalAlign: `text-top` }} />
+          </a>
+          {githubUrl && <Link to={`/starter-showcase?d=${packageName}`}>See starters that use this</Link>}
+        </div>
 
         <div
           css={{

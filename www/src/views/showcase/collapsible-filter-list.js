@@ -2,7 +2,7 @@ import React from "react"
 
 import MdCheckboxBlank from "react-icons/lib/md/check-box-outline-blank"
 import MdCheckbox from "react-icons/lib/md/check-box"
-import Collapsible from "./collabsible"
+import Collapsible from "../shared/collapsible"
 
 import { options, scale, rhythm } from "../../utils/typography"
 import { colors } from "../../utils/presets"
