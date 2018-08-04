@@ -837,10 +837,10 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
   - Syntax highlighting via PrismJS
   - Styled Components
   - Pagination
- 
+
 - [lite](https://github.com/sqrthree/lite)
   [(Live demo)](https://blog.sqrtthree.com/)
- 
+
   > A clean and delicate theme for blog based on Gatsby.
 
   Features:
@@ -859,7 +859,7 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
 - [gatsby-universal](https://github.com/fabe/gatsby-universal)
   [(Live demo)](https://gatsby-universal.netlify.com)
 
-  An *opinionated* starter for using Gatsby v2 with React Context, tag-agnostic styled-components, page transitions, scroll events with `IntersectionObserver`. Made for state-of-the-art marketing sites.
+  An _opinionated_ starter for using Gatsby v2 with React Context, tag-agnostic styled-components, page transitions, scroll events with `IntersectionObserver`. Made for state-of-the-art marketing sites.
 
   Features:
 
