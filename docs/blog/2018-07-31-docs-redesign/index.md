@@ -21,9 +21,9 @@ Although making room for new docs was an obvious need, the solution was not obvi
 
 Here's the design process.
 
-## Provonix criteria for great docs
+## Pronovix criteria for great docs
 
-We wanted to make sure that the site provides necessary information to developers at each of these stages (thank you, Provonix, for the excellent articles on this, like [Eliminating API Friction Along Downstream Developer Journey](https://pronovix.com/blog/eliminating-api-friction-along-downstream-developer-journey-1) and [What is the MVP for a Developer Portal?](https://pronovix.com/blog/what-mvp-developer-portal))
+We wanted to make sure that the site provides necessary information to developers at each of these stages (thank you, Pronovix, for the excellent articles on this, like [Eliminating API Friction Along Downstream Developer Journey](https://pronovix.com/blog/eliminating-api-friction-along-downstream-developer-journey-1) and [What is the MVP for a Developer Portal?](https://pronovix.com/blog/what-mvp-developer-portal))
 
 1.  Discover/Research - what is this site? how can this portal help me to solve my specific task?
 2.  Evaluate - can I trust this organization’s commitment to its project?

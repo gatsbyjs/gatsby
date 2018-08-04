@@ -1,7 +1,6 @@
 import React from "react"
 import { graphql } from "gatsby"
 import _ from "lodash"
-
 import Layout from "../components/layout"
 import PageWithPluginSearchBar from "../components/page-with-plugin-searchbar"
 import PackageReadme from "../components/package-readme"

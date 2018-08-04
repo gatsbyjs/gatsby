@@ -4,13 +4,9 @@ import { graphql } from "gatsby"
 
 import Layout from "../components/layout"
 import {
-  createLinkDocs,
-  createLinkTutorial,
-} from "../utils/sidebar/create-link"
-import {
-  sectionListDocs,
-  sectionListTutorial,
-} from "../utils/sidebar/section-list"
+  itemListDocs,
+  itemListTutorial,
+} from "../utils/sidebar/item-list"
 import MarkdownPageFooter from "../components/markdown-page-footer"
 import DocSearchContent from "../components/docsearch-content"
 
@@ -70,8 +66,7 @@ class DocsTemplate extends React.Component {
           isSidebarDisabled={
             this.props.location.pathname === `/code-of-conduct/`
           }
-          sectionList={isDocsPage ? sectionListDocs : sectionListTutorial}
-          createLink={isDocsPage ? createLinkDocs : createLinkTutorial}
+          itemList={isDocsPage ? itemListDocs : itemListTutorial}
           enableScrollSync={isDocsPage ? false : true}
         >
           <DocSearchContent>
