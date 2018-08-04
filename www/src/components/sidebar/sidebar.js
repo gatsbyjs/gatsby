@@ -129,6 +129,10 @@ class SidebarBody extends Component {
 
   _expandAll = () => {
     if (this.state.expandAll) {
+      this._writeLocalStorage(
+        { openSectionHash: this._getInitialState(this.props).openSectionHash },
+        this.state.key
+      )
       this.setState({
         ...this._getInitialState(this.props),
         expandAll: false,
