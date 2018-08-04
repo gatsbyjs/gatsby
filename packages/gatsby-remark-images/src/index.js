@@ -264,11 +264,6 @@ module.exports = (
 
             let imageRefs = []
             $(`img`).each(function() {
-              // Make sure we don’t override already-linked images
-              if ($(this).closest(`a`).length > 0) {
-                return
-              }
-
               imageRefs.push($(this))
             })
 
