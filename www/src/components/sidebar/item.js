@@ -19,7 +19,7 @@ class Item extends React.Component {
       activeItemLink,
       activeItemParents,
       isActive,
-      sectionHash,
+      openSectionHash,
       item,
       level,
       location,
@@ -45,7 +45,7 @@ class Item extends React.Component {
             level={level}
             location={location}
             onLinkClick={onLinkClick}
-            sectionHash={sectionHash}
+            openSectionHash={openSectionHash}
             onSectionTitleClick={onSectionTitleClick}
           />
         ) : (

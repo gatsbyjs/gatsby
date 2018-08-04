@@ -66,7 +66,6 @@ class Accordion extends React.Component {
     }
 
     if (this.props.onSectionTitleClick) {
-      console.log(`YOOO`, ...args)
       this.props.onSectionTitleClick(...args)
     }
   }
@@ -82,12 +81,10 @@ class Accordion extends React.Component {
       location,
       onLinkClick,
       onSectionTitleClick,
-      sectionHash,
+      openSectionHash,
     } = this.props
     const uid = `item_` + this.state.uid
-    const isExpanded = sectionHash[item.title]
-
-    // console.log(`----`, item.title)
+    const isExpanded = openSectionHash[item.title] || item.disableAccordions
 
     return (
       <li
@@ -135,7 +132,7 @@ class Accordion extends React.Component {
               onLinkClick={onLinkClick}
               isExpanded={isExpanded}
               onSectionTitleClick={onSectionTitleClick}
-              sectionHash={sectionHash}
+              openSectionHash={openSectionHash}
               styles={{
                 ...(item.ui === `steps` && {
                   ...styles.ulStepsUI,

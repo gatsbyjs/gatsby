@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 
 import Item from "./item"
+import ExpandAllButton from "./button-expand-all"
 import getActiveItem from "../../utils/sidebar/get-active-item"
 import getActiveItemParents from "../../utils/sidebar/get-active-item-parents"
 import presets, { colors } from "../../utils/presets"
@@ -16,42 +17,8 @@ const isItemActive = (activeItemParents, item) => {
   return false
 }
 
-const ExpandAllButton = ({ onClick, expandAll }) => (
-  <div
-    css={{
-      position: `fixed`,
-      top: 240,
-      left: 0,
-      textAlign: `right`,
-      zIndex: 10,
-    }}
-  >
-    <button
-      onClick={onClick}
-      css={{
-        transform: `rotate(-90deg)`,
-        transformOrigin: `top left`,
-        ...scale(-2 / 3),
-        background: colors.ui.bright,
-        border: `none`,
-        borderBottomLeftRadius: presets.radius,
-        borderBottomRightRadius: presets.radius,
-        color: colors.gatsby,
-        cursor: `pointer`,
-        paddingLeft: 10,
-        paddingRight: 10,
-        fontFamily: options.systemFontFamily.join(`,`),
-      }}
-    >
-      {expandAll ? `Collapse All` : `Expand All`}
-    </button>
-  </div>
-)
-
 const getOpenItemHash = (itemList, state) => {
   for (let item of itemList) {
-    // console.log(`--`, item.title)
-
     state.openSectionHash[item.title] =
       isItemActive(state.activeItemParents, item) ||
       state.activeItemLink.title === item.title
@@ -69,8 +36,56 @@ class SidebarBody extends Component {
     super(props, context)
 
     this._toggleSection = this._toggleSection.bind(this)
-
     this.state = { ...this._getInitialState(props) }
+  }
+
+  componentDidMount() {
+    const key = this.props.itemList[0].key
+    const initialState = this.state
+    const localState = localStorage.getItem(`gatsbyjs:sidebar:${key}`)
+    let newState
+
+    const bar = Object.keys(initialState.openSectionHash).filter(function(key) {
+      return initialState.openSectionHash[key]
+    })
+
+    if (localState) {
+      newState = {
+        ...initialState,
+        openSectionHash: JSON.parse(localState).openSectionHash,
+      }
+
+      for (let item in initialState.openSectionHash) {
+        for (let parent of bar) {
+          if (parent === item) {
+            newState.openSectionHash[item] = true
+          }
+        }
+      }
+
+      this.setState(newState)
+    } else {
+      this._writeLocalStorage(this.state, key)
+    }
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    if (props.activeItemHash !== state.activeItemHash) {
+      return {
+        activeItemLink: getActiveItem(
+          props.itemList,
+          props.location,
+          props.activeItemHash
+        ),
+        activeItemHash: props.activeItemHash,
+      }
+    }
+
+    return null
+  }
+
+  _writeLocalStorage(state, key) {
+    localStorage.setItem(`gatsbyjs:sidebar:${key}`, JSON.stringify(state))
   }
 
   _getInitialState(props) {
@@ -83,6 +98,8 @@ class SidebarBody extends Component {
     const state = {
       openSectionHash: {},
       expandAll: false,
+      key: props.itemList[0].key,
+      activeItemHash: props.activeItemHash,
       activeItemLink: activeItemLink,
       activeItemParents: getActiveItemParents(
         props.itemList,
@@ -97,15 +114,17 @@ class SidebarBody extends Component {
   }
 
   _toggleSection(item) {
-    console.log(`=== TOGGLE SECTION`, item)
-
     const { openSectionHash } = this.state
-    this.setState({
+
+    const newState = {
       openSectionHash: {
         ...openSectionHash,
         [item.title]: !openSectionHash[item.title],
       },
-    })
+    }
+
+    this._writeLocalStorage(newState, this.state.key)
+    this.setState(newState)
   }
 
   _expandAll = () => {
@@ -114,26 +133,17 @@ class SidebarBody extends Component {
         ...this._getInitialState(this.props),
         expandAll: false,
       })
-      // console.log(`EXPANDED ALL`, this.state)
     } else {
       let openSectionHash = { ...this.state.openSectionHash }
       Object.keys(openSectionHash).forEach(k => (openSectionHash[k] = true))
+      this._writeLocalStorage({ openSectionHash }, this.state.key)
       this.setState({ openSectionHash, expandAll: true })
-      // console.log(`EXPANDED ALL`, this.state)
     }
   }
 
   render() {
-    const {
-      activeItemHash,
-      closeSidebar,
-      enableScrollSync,
-      itemList,
-      location,
-    } = this.props
+    const { closeSidebar, itemList, location } = this.props
     const { openSectionHash, activeItemLink, activeItemParents } = this.state
-
-    console.log(`open sections:`, this.state)
 
     return (
       <div className="docSearch-sidebar" css={{ height: `100%` }}>
@@ -144,18 +154,16 @@ class SidebarBody extends Component {
         <ul css={{ ...styles.list }}>
           {itemList.map((item, index) => (
             <Item
-              activeItemHash={activeItemHash}
               activeItemLink={activeItemLink}
               activeItemParents={activeItemParents}
               isActive={openSectionHash[item.title]}
-              isScrollSync={enableScrollSync}
               item={item}
               key={index}
               level={0}
               location={location}
               onLinkClick={closeSidebar}
               onSectionTitleClick={this._toggleSection}
-              sectionHash={openSectionHash}
+              openSectionHash={openSectionHash}
             />
           ))}
         </ul>
