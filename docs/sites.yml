@@ -1928,3 +1928,15 @@
     - Personal
   built_by: Max McKinney
   featured: false
+- title: Agata Milik
+  description: >
+     Website of a Polish psychologist/psychotherapist based in Gdańsk, Poland.
+  main_url: https://agatamilik.pl
+  url: https://agatamilik.pl
+  categories:
+    - Landing
+    - Marketing
+    - Healthcare
+  built_by: Piotr Fedorczyk
+  built_by_url: https://piotrf.pl
+  featured: false
