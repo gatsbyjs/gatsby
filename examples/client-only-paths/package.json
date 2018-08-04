@@ -6,19 +6,17 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "gatsby": "next",
-    "gatsby-plugin-typography": "next",
+    "gatsby-react-router-scroll": "next",
     "lodash": "^4.16.4",
     "react": "^16.3.1",
-    "react-addons-css-transition-group": "^15.5.2",
     "react-dom": "^16.3.1",
+    "react-transition-group": "^2.4.0",
     "react-typography": "^0.16.13",
     "slash": "^1.0.0",
     "typography": "^0.16.6",
     "typography-breakpoint-constants": "^0.15.10"
   },
-  "keywords": [
-    "gatsby"
-  ],
+  "keywords": ["gatsby"],
   "license": "MIT",
   "main": "n/a",
   "scripts": {
