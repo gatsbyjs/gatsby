@@ -4,7 +4,7 @@ Everything here corresponds to the Starter Showcase initiated and maintained by 
 
 open a PR to add a markdown file with your starter. Look at the other markdown files in the `/startersData` folder for format. the other folders will be generated when we run our scripts at scrape time.
 
-----
+---
 
 # For Maintainers
 
