@@ -19,11 +19,11 @@ const isItemActive = (activeItemParents, item) => {
 
 const getOpenItemHash = (itemList, state) => {
   for (let item of itemList) {
-    state.openSectionHash[item.title] =
-      isItemActive(state.activeItemParents, item) ||
-      state.activeItemLink.title === item.title
-
     if (item.items) {
+      state.openSectionHash[item.title] =
+        isItemActive(state.activeItemParents, item) ||
+        state.activeItemLink.title === item.title
+
       getOpenItemHash(item.items, state)
     }
   }
