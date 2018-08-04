@@ -1,5 +1,5 @@
 import React from "react"
-import { Router, Link, Redirect, Location } from "@reach/router"
+import { Router, Link, Location } from "@reach/router"
 import { TransitionGroup, CSSTransition } from "react-transition-group"
 import "./main.css"
 
