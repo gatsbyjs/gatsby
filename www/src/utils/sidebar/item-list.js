@@ -28,7 +28,12 @@ const itemListDocs = extenditemList(docsSidebar).map(item => {
 })
 
 const itemListFeatures = extenditemList(featuresSidebar).map(item => {
-  return { ...item, key: `features`, disableAccordions: true }
+  return {
+    ...item,
+    key: `features`,
+    disableAccordions: true,
+    disableExpandAll: true,
+  }
 })
 
 const itemListTutorial = extenditemList(tutorialSidebar).map(item => {

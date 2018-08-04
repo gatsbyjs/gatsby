@@ -3,73 +3,57 @@ import GoFold from "react-icons/lib/go/fold"
 import GoUnfold from "react-icons/lib/go/unfold"
 
 import presets, { colors } from "../../utils/presets"
-import { scale, options } from "../../utils/typography"
+import { scale, options, rhythm } from "../../utils/typography"
 
 const ExpandAllButton = ({ onClick, expandAll }) => (
-  <div
+  <button
+    onClick={onClick}
     css={{
-      position: `fixed`,
-      top: `calc(${presets.bannerHeight} + ${presets.headerHeight} + 119px)`,
-      left: 0,
-      zIndex: 10,
+      ...scale(-2 / 3),
+      lineHeight: 1,
+      background: `transparent`,
+      border: `none`,
+      borderRadius: presets.radius,
+      color: colors.gatsby,
+      display: `flex`,
+      cursor: `pointer`,
+      alignItems: `center`,
+      flexGrow: 0,
+      marginLeft: `auto`,
+      paddingTop: rhythm(options.blockMarginBottom / 3),
+      paddingBottom: rhythm(options.blockMarginBottom / 3),
+      fontFamily: options.systemFontFamily.join(`,`),
+      textAlign: `left`,
+      transition: `all .2s`,
+      "&:hover": {
+        background: colors.ui.bright,
+      },
     }}
   >
-    <button
-      onClick={onClick}
-      css={{
-        transform: `rotate(-90deg)`,
-        transformOrigin: `top left`,
-        ...scale(-2 / 3),
-        background: colors.ui.bright,
-        border: `none`,
-        borderBottomLeftRadius: presets.radius,
-        borderBottomRightRadius: presets.radius,
-        color: colors.gatsby,
-        display: `flex`,
-        cursor: `pointer`,
-        paddingLeft: 10,
-        paddingRight: 6,
-        opacity: 0.75,
-        fontFamily: options.systemFontFamily.join(`,`),
-        textAlign: `left`,
-        transition: `opacity .2s`,
-        width: 120,
-        "&:hover": {
-          opacity: 1,
-        },
-      }}
-    >
-      {expandAll ? (
-        <Fragment>
-          Collapse All
-          <span
-            css={{
-              display: `inline-block`,
-              fontSize: `.9rem`,
-              marginLeft: `auto`,
-              transform: `rotate(90deg)`,
-            }}
-          >
-            <GoFold />
-          </span>
-        </Fragment>
-      ) : (
-        <Fragment>
-          Expand All
-          <span
-            css={{
-              display: `inline-block`,
-              fontSize: `.9rem`,
-              marginLeft: `auto`,
-              transform: `rotate(90deg)`,
-            }}
-          >
-            <GoUnfold />
-          </span>
-        </Fragment>
-      )}
-    </button>
-  </div>
+    {expandAll ? (
+      <Fragment>
+        <span>Collapse All</span>
+        <span css={{ ...styles.icon }}>
+          <GoFold />
+        </span>
+      </Fragment>
+    ) : (
+      <Fragment>
+        <span>Expand All</span>
+        <span css={{ ...styles.icon }}>
+          <GoUnfold />
+        </span>
+      </Fragment>
+    )}
+  </button>
 )
 
 export default ExpandAllButton
+
+const styles = {
+  icon: {
+    display: `inline-block`,
+    fontSize: `.9rem`,
+    marginLeft: 8,
+  },
+}

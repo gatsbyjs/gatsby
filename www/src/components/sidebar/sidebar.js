@@ -151,26 +151,46 @@ class SidebarBody extends Component {
 
     return (
       <div className="docSearch-sidebar" css={{ height: `100%` }}>
-        <ExpandAllButton
-          onClick={this._expandAll}
-          expandAll={this.state.expandAll}
-        />
-        <ul css={{ ...styles.list }}>
-          {itemList.map((item, index) => (
-            <Item
-              activeItemLink={activeItemLink}
-              activeItemParents={activeItemParents}
-              isActive={openSectionHash[item.title]}
-              item={item}
-              key={index}
-              level={0}
-              location={location}
-              onLinkClick={closeSidebar}
-              onSectionTitleClick={this._toggleSection}
-              openSectionHash={openSectionHash}
+        {!itemList[0].disableExpandAll && (
+          <div css={{ ...styles.utils }}>
+            <ExpandAllButton
+              onClick={this._expandAll}
+              expandAll={this.state.expandAll}
             />
-          ))}
-        </ul>
+          </div>
+        )}
+        <div
+          css={{
+            ...styles.sidebarScrollContainer,
+            [presets.Tablet]: {
+              ...styles.sidebarScrollContainerTablet,
+              height: itemList[0].disableExpandAll
+                ? `calc(100vh - ${presets.headerHeight} - ${
+                    presets.bannerHeight
+                  } + 1px)`
+                : `calc(100vh - ${presets.headerHeight} - ${
+                    presets.bannerHeight
+                  } - ${presets.sidebarUtilityHeight} + 1px)`,
+            },
+          }}
+        >
+          <ul css={{ ...styles.list }}>
+            {itemList.map((item, index) => (
+              <Item
+                activeItemLink={activeItemLink}
+                activeItemParents={activeItemParents}
+                isActive={openSectionHash[item.title]}
+                item={item}
+                key={index}
+                level={0}
+                location={location}
+                onLinkClick={closeSidebar}
+                onSectionTitleClick={this._toggleSection}
+                openSectionHash={openSectionHash}
+              />
+            ))}
+          </ul>
+        </div>
       </div>
     )
   }
@@ -179,6 +199,47 @@ class SidebarBody extends Component {
 export default SidebarBody
 
 const styles = {
+  utils: {
+    display: `none`,
+    [presets.Tablet]: {
+      borderRight: `1px solid ${colors.ui.border}`,
+      display: `flex`,
+      alignItems: `center`,
+      height: presets.sidebarUtilityHeight,
+      background: colors.ui.whisper,
+      paddingLeft: 40,
+      paddingRight: 8,
+      borderBottom: `1px solid ${colors.ui.border}`,
+    },
+  },
+  sidebarScrollContainer: {
+    WebkitOverflowScrolling: `touch`,
+    background: `#fff`,
+    border: 0,
+    display: `block`,
+    height: `100vh`,
+    overflowY: `auto`,
+    transition: `opacity 0.5s ease`,
+    zIndex: 10,
+    borderRight: `1px solid ${colors.ui.border}`,
+    "::-webkit-scrollbar": {
+      height: `6px`,
+      width: `6px`,
+    },
+    "::-webkit-scrollbar-thumb": {
+      background: colors.ui.bright,
+    },
+    "::-webkit-scrollbar-thumb:hover": {
+      background: colors.lilac,
+    },
+    "::-webkit-scrollbar-track": {
+      background: colors.ui.light,
+    },
+  },
+  sidebarScrollContainerTablet: {
+    backgroundColor: colors.ui.whisper,
+    top: `calc(${presets.headerHeight} + ${presets.bannerHeight} - 1px)`,
+  },
   list: {
     margin: 0,
     paddingTop: 20,
@@ -188,8 +249,6 @@ const styles = {
       fontSize: scale(-2 / 10).fontSize,
     },
     [presets.Tablet]: {
-      backgroundColor: colors.ui.whisper,
-      borderRight: `1px solid ${colors.ui.border}`,
       fontSize: scale(-4 / 10).fontSize,
     },
     "&&": {
