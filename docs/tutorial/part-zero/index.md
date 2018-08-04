@@ -23,7 +23,6 @@ The command line is a text-based interface used to run commands on your computer
 
 Take a moment to locate and open up the command line interface (CLI) for your computer. (Depending on which operating system you are using, see [**instructions for Mac**](http://www.macworld.co.uk/feature/mac-software/how-use-terminal-on-mac-3608274/), or [**instructions for Windows**](https://www.quora.com/How-do-I-open-terminal-in-windows)).
 
-
 > 💡 For a great introduction to using the command line, check out [**Codecademy’s Command Line tutorial**](https://www.codecademy.com/courses/learn-the-command-line/lessons/navigation/exercises/your-first-command) for Mac and Linux users, and [**this tutorial**](https://www.computerhope.com/issues/chusedos.htm) for Windows users. (Even if you are a Windows user, the first page of the Codecademy tutorial is a valuable read, as it explains what the command line is, not just how to interface with it.)
 
 ## Install Node.js
@@ -36,9 +35,9 @@ Visit the [**Node.js site**](https://nodejs.org/) and follow the instructions to
 
 **✋ Check your Node.js installation**
 
-1. Open up your terminal.
-2. Run `node --version`. (If you’re new to the command line, “run `command`” means “type `node --version` in the command prompt, and hit the Enter key”. From here on, this is what we mean by “run `command`”).
-3. Run `npm --version`.
+1.  Open up your terminal.
+2.  Run `node --version`. (If you’re new to the command line, “run `command`” means “type `node --version` in the command prompt, and hit the Enter key”. From here on, this is what we mean by “run `command`”).
+3.  Run `npm --version`.
 
 The output of each of those commands should be a version number. (Your versions may not be the same as those shown below!) If entering those commands doesn’t show you a version number, go back and make sure you have installed Node.js.
 
@@ -46,7 +45,7 @@ The output of each of those commands should be a version number. (Your versions 
 
 ## Familiarize with npm
 
-npm is a JavaScript package manager. A package is a module of code that you can choose to include in your projects. If you just downloaded and installed Node.js, npm was installed with it! 
+npm is a JavaScript package manager. A package is a module of code that you can choose to include in your projects. If you just downloaded and installed Node.js, npm was installed with it!
 
 npm has three distinct components: the npm website, the npm registry, and the npm CLI (command line interface).
 
@@ -62,8 +61,8 @@ The Gatsby CLI tool lets you quickly create new Gatsby-powered sites, and run co
 
 **✋ Install the Gatsby CLI tool**
 
-1. Navigate to the terminal.
-2. Run `npm install --global gatsby-cli`.
+1.  Navigate to the terminal.
+2.  Run `npm install --global gatsby-cli`.
 
 > 💡 If you are unable to successfully install due to a permissions issue, you may want to check out the [npm docs on fixing permissions](https://docs.npmjs.com/getting-started/fixing-npm-permissions), or [this guide](https://github.com/sindresorhus/guides/blob/master/npm-global-without-sudo.md).
 
@@ -79,9 +78,9 @@ npm install --global gatsby-cli
 
 **✋ Check your Gatsby CLI installation**
 
-1. Open up your terminal.
-2. Run `gatsby --version`.
-3. Run `gatsby --help`.
+1.  Open up your terminal.
+2.  Run `gatsby --version`.
+3.  Run `gatsby --help`.
 
 ![Check gatsby version in terminal](02-gatsby-version.png)
 
@@ -93,10 +92,10 @@ Now let’s use the gatsby-cli tool to create your first Gatsby site. Using the 
 
 **✋ Create a Gatsby site**
 
-1. Open up your terminal.
-2. Run `gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world#v2`. (*Note: Depending on your download speed, the amount of time this takes will vary*).
-3. Run `cd hello-world`.
-4. Run `gatsby develop`. 
+1.  Open up your terminal.
+2.  Run `gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world#v2`. (_Note: Depending on your download speed, the amount of time this takes will vary_).
+3.  Run `cd hello-world`.
+4.  Run `gatsby develop`.
 
 ![Create Hello World site](03-create-site.gif)
 
@@ -131,7 +130,7 @@ Open up a new tab in your browser and navigate to [**http://localhost:8000**](ht
 
 Congrats! This is the beginning of your very first Gatsby site! 🎉
 
-You’ll be able to visit the site locally at [***http://localhost:8000***](http://localhost:8000/) for as long as your development server is running. (That’s the process you started by running the `gatsby develop` command). To stop running that process (or to “stop running the development server”), go back to your terminal window, hold down the “control” key and then hit “c” (ctrl-c). To start it again, run `gatsby develop` again!
+You’ll be able to visit the site locally at [**_http://localhost:8000_**](http://localhost:8000/) for as long as your development server is running. (That’s the process you started by running the `gatsby develop` command). To stop running that process (or to “stop running the development server”), go back to your terminal window, hold down the “control” key and then hit “c” (ctrl-c). To start it again, run `gatsby develop` again!
 
 ## Set up a code editor
 
@@ -153,11 +152,10 @@ Visit the [**Prettier site**](https://prettier.io/) and follow the instructions 
 
 To summarize, in this section you:
 
-  - Installed and learned about Node.js and the npm CLI tool
-  - Installed and learned about the Gatsby CLI tool
-  - Generated a new Gatsby site using the Gatsby CLI tool
-  - Downloaded a code editor
-  - Installed a code formatter called Prettier
+- Installed and learned about Node.js and the npm CLI tool
+- Installed and learned about the Gatsby CLI tool
+- Generated a new Gatsby site using the Gatsby CLI tool
+- Downloaded a code editor
+- Installed a code formatter called Prettier
 
 Now, let’s move on to [**getting to know Gatsby building blocks**](/tutorial/part-one/).
-

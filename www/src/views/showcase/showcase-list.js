@@ -2,7 +2,7 @@ import React from "react"
 import { Link } from "gatsby"
 import Img from "gatsby-image"
 
-import styles from '../shared/styles'
+import styles from "../shared/styles"
 import qs from "qs"
 
 import ShowcaseItemCategories from "./showcase-item-categories"

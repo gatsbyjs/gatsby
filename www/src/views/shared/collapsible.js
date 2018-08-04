@@ -5,7 +5,7 @@ import FaAngleUp from "react-icons/lib/fa/angle-up"
 import { options, scale, rhythm } from "../../utils/typography"
 import { colors } from "../../utils/presets"
 
-import styles from './styles'
+import styles from "./styles"
 
 class Collapsible extends Component {
   state = {

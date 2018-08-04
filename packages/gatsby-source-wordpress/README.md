@@ -66,7 +66,7 @@ plugins: [
       useACF: true,
       // Include specific ACF Option Pages that have a set post ID
       // Regardless if an ID is set, the default options route will still be retrieved
-      // Must be using V3 of ACF to REST to include these routes     
+      // Must be using V3 of ACF to REST to include these routes
       // Example: `["option_page_1", "option_page_2"]` will include the proper ACF option
       // routes with the ID option_page_1 and option_page_2
       // Dashes in IDs will be converted to underscores for use in GraphQL
@@ -758,15 +758,17 @@ WordPress has a [known issue](https://core.trac.wordpress.org/ticket/41445) that
 During the upload process to the WordPress media library, the `post_parent` value ([seen here in the wp_posts table](https://codex.wordpress.org/Database_Description#Table:_wp_posts)) is set to the ID of the post the image is attached to. This value is unable to be changed by any WordPress administration actions.
 
 When the post an image is attached to becomes inaccessible (e.g. from changing visibility settings, or deleting the post), the image itself is restricted in the REST API:
+
 ```
-   {  
+   {
       "code":"rest_forbidden",
       "message":"You don't have permission to do this.",
-      "data":{  
+      "data":{
          "status":403
       }
    }
 ```
+
 which prevents Gatsby from retrieving it.
 
 In order to resolve this, you can manually change the `post_parent` value of the image record to `0` in the database. The only side effect of this change is that the image will no longer appear in the "Uploaded to this post" filter in the Add Media dialog in the WordPress administration area.
