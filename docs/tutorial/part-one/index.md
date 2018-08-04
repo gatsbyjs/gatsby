@@ -23,7 +23,7 @@ gatsby new [SITE_DIRECTORY_NAME] [URL_OF_STARTER_GITHUB_REPO]
 
 If you omit a URL from the end, Gatsby will automatically generate a site for you based on the [**default starter**](https://github.com/gatsbyjs/gatsby-starter-default). For this section of the tutorial, we’ll stick with the “Hello World” site you already created in tutorial part zero.
 
-**✋ Open up the code.**
+### ✋ Open up the code.
 
 In your code editor, open up the code generated for your “Hello World” site, and take a look at the different directories and files contained in the ‘hello-world’ directory. It should look something like this:
 
@@ -47,7 +47,7 @@ Open the file at `/src/pages/index.js`. The code in this file creates a componen
 
 > 💡 Gatsby uses **hot reloading** to speed up your development process. Essentially, when you’re running a Gatsby development server, the Gatsby site files are being “watched” in the background — any time you save a file, your changes will be immediately reflected in the browser. You don’t need to hard refresh the page, or restart the development server — your changes just appear.
 
-2.  Let’s make our changes a little more visible. Try replacing the code in `/src/pages/index.js` with the code below, and save again. You’ll see changes to the text; The text color will be purple, and the font size will be larger.
+2. Let’s make our changes a little more visible. Try replacing the code in `/src/pages/index.js` with the code below, and save again. You’ll see changes to the text; The text color will be purple, and the font size will be larger.
 
 ```jsx
 import React from "react"
@@ -92,7 +92,7 @@ export default () => (
 
 ![Add image](04-add-image.png)
 
-### **Wait… HTML in our JavaScript?**
+### Wait… HTML in our JavaScript?
 
 _If you’re familiar with React and JSX, feel free to skip this section._ If you haven’t worked with the React framework before, you may be wondering what HTML is doing in a JavaScript function. Or why we’re importing `react` on the first line but seemingly not using it anywhere. This hybrid “HTML-in-JS” is actually a syntax extension of JavaScript, for React, called JSX. You can follow along this tutorial without prior experience with React, but if you’re curious, here’s a brief primer…
 
