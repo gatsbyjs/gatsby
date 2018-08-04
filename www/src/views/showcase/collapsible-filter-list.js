@@ -60,7 +60,11 @@ const CollapsibleFilterList = ({
             marginRight: 8,
           }}
         >
-          {filters.includes(c) ? <MdCheckbox /> : <MdCheckboxBlank />}
+          {filters.includes(c) ? (
+            <MdCheckbox style={{ verticalAlign: `sub` }} />
+          ) : (
+            <MdCheckboxBlank style={{ verticalAlign: `sub` }} />
+          )}
         </div>
         <div
           css={{

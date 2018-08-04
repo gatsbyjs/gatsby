@@ -1,4 +1,4 @@
-import { options, /* rhythm, scale, */ rhythm } from "../../utils/typography"
+import typography, { options, rhythm } from "../../utils/typography"
 import presets, { colors } from "../../utils/presets"
 import { style } from "glamor"
 import hex2rgba from "hex2rgba"
@@ -20,49 +20,49 @@ const styles = {
       width: 400,
     },
   }),
-  showcaseList: {	
-    display: `flex`,	
-    flexWrap: `wrap`,	
-    padding: rhythm(3 / 4),	
-    justifyContent: `center`,	
-    [presets.Desktop]: {	
-      justifyContent: `flex-start`,	
-    },	
+  showcaseList: {
+    display: `flex`,
+    flexWrap: `wrap`,
+    padding: rhythm(3 / 4),
+    justifyContent: `center`,
+    [presets.Desktop]: {
+      justifyContent: `flex-start`,
+    },
   },
-  showcaseItem: {	
-    display: `flex`,	
-    flexDirection: `column`,	
-    margin: rhythm(3 / 4),	
-    width: 282,	
-    position: `relative`,	
+  showcaseItem: {
+    display: `flex`,
+    flexDirection: `column`,
+    margin: rhythm(3 / 4),
+    width: 282,
+    position: `relative`,
   },
-  featuredItem: {	
-    display: `none`,	
-    transition: `background .3s cubic-bezier(.4,0,.2,1), transform .3s cubic-bezier(.4,0,.2,1)`,	
-    [presets.Desktop]: {	
-      alignItems: `center`,	
-      background: colors.accent,	
-      border: `none`,	
-      borderTopRightRadius: presets.radius,	
-      borderBottomLeftRadius: presets.radius,	
-      boxShadow: `none`,	
-      cursor: `pointer`,	
-      display: `flex`,	
-      height: 24,	
-      margin: 0,	
-      padding: 0,	
-      position: `absolute`,	
-      top: 0,	
-      right: 0,	
-      width: 24,	
-      "&:hover": {	
-        background: colors.gatsby,	
-      },	
-    },	
-  },	
-  featuredIcon: {	
-    margin: `0 auto`,	
-    display: `block`,	
+  featuredItem: {
+    display: `none`,
+    transition: `background .3s cubic-bezier(.4,0,.2,1), transform .3s cubic-bezier(.4,0,.2,1)`,
+    [presets.Desktop]: {
+      alignItems: `center`,
+      background: colors.accent,
+      border: `none`,
+      borderTopRightRadius: presets.radius,
+      borderBottomLeftRadius: presets.radius,
+      boxShadow: `none`,
+      cursor: `pointer`,
+      display: `flex`,
+      height: 24,
+      margin: 0,
+      padding: 0,
+      position: `absolute`,
+      top: 0,
+      right: 0,
+      width: 24,
+      "&:hover": {
+        background: colors.gatsby,
+      },
+    },
+  },
+  featuredIcon: {
+    margin: `0 auto`,
+    display: `block`,
   },
   withTitleHover: style({
     "& .title": {
@@ -94,9 +94,9 @@ const styles = {
   sticky: {
     paddingTop: rhythm(options.blockMarginBottom),
     position: `sticky`,
-    top: 0,
+    top: `calc(${presets.bannerHeight} - 1px)`,
     [presets.Desktop]: {
-      top: `calc(${presets.headerHeight} - 1px)`,
+      top: `calc(${presets.headerHeight} + ${presets.bannerHeight} - 1px)`,
     },
   },
   scrollbar: {
@@ -118,7 +118,7 @@ const styles = {
     marginBottom: rhythm(options.blockMarginBottom / 2),
     transition: `all ${presets.animation.speedDefault} ${
       presets.animation.curveDefault
-      }`,
+    }`,
   },
   screenshotHover: {
     background: `transparent`,
@@ -131,6 +131,10 @@ const styles = {
   noLinkUnderline: {
     borderBottom: `none !important`, // i know i know
     boxShadow: `none !important`, // but people really want this
+  },
+  searchInput: {
+    paddingLeft: `1.4rem`,
+    fontFamily: typography.options.headerFontFamily.join(`,`),
   },
 }
 
