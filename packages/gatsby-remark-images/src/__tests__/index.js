@@ -154,7 +154,11 @@ test(`it leaves images that are already linked alone`, async () => {
 `
 
   const nodes = await plugin(createPluginOptions(content, imagePath))
-  expect(nodes).toEqual([])
+  const node = nodes.pop()
+
+  expect(node.type).toBe(`html`)
+  expect(node.value).toMatchSnapshot()
+  expect(node.value).not.toMatch(`<html>`)
 })
 
 test(`it leaves linked HTML img tags alone`, async () => {
@@ -167,5 +171,39 @@ test(`it leaves linked HTML img tags alone`, async () => {
   `.trim()
 
   const nodes = await plugin(createPluginOptions(content, imagePath))
-  expect(nodes[0].value).toBe(content)
+  const node = nodes.pop()
+
+  expect(node.type).toBe(`html`)
+  expect(node.value).toMatchSnapshot()
+  expect(node.value).not.toMatch(`<html>`)
+})
+
+test(`it leaves single-line linked HTML img tags alone`, async () => {
+  const imagePath = `images/this-image-already-has-a-link.jpeg`
+
+  const content = `
+<a href="https://example.org"><img src="./${imagePath}"></a>
+  `.trim()
+
+  const nodes = await plugin(createPluginOptions(content, imagePath))
+  const node = nodes.pop()
+
+  expect(node.type).toBe(`html`)
+  expect(node.value).toMatchSnapshot()
+  expect(node.value).not.toMatch(`<html>`)
+})
+
+test(`it handles goofy nesting properly`, async () => {
+  const imagePath = `images/this-image-already-has-a-link.jpeg`
+
+  const content = `
+  <a href="https://google.com">**![test](./${imagePath})**</a>
+  `.trim()
+
+  const nodes = await plugin(createPluginOptions(content, imagePath))
+  const node = nodes.pop()
+
+  expect(node.type).toBe(`html`)
+  expect(node.value).toMatchSnapshot()
+  expect(node.value).not.toMatch(`<html>`)
 })

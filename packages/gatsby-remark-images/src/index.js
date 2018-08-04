@@ -1,4 +1,4 @@
-const select = require(`unist-util-select`)
+// const select = require(`unist-util-select`)
 const visitWithParents = require(`unist-util-visit-parents`)
 const path = require(`path`)
 const isRelativeUrl = require(`is-relative-url`)
@@ -30,22 +30,34 @@ module.exports = (
 
   const options = _.defaults(pluginOptions, defaults)
 
+  const findParentLinks = ({ children }) =>
+    children.some(
+      node =>
+        (node.type === `html` && !!node.value.match(/<a /)) ||
+        node.type === `link`
+    )
+
+  // This will allow the use of html image tags
+  // const rawHtmlNodes = select(markdownAST, `html`)
+  let rawHtmlNodes = []
+  visitWithParents(markdownAST, `html`, (node, ancestors) => {
+    const inLink = ancestors.some(findParentLinks)
+
+    rawHtmlNodes.push({ node, inLink })
+  })
+
   // This will only work for markdown syntax image tags
   let markdownImageNodes = []
 
-  // This will also allow the use of html image tags
-  const rawHtmlNodes = select(markdownAST, `html`)
-
   visitWithParents(markdownAST, `image`, (node, ancestors) => {
-    const inLink = ancestors.some(ancestor => ancestor.type === `link`)
-    if (!inLink) {
-      markdownImageNodes.push(node)
-    }
+    const inLink = ancestors.some(findParentLinks)
+
+    markdownImageNodes.push({ node, inLink })
   })
 
   // Takes a node and generates the needed images and then returns
   // the needed HTML replacement for the image
-  const generateImagesAndUpdateNode = async function(node, resolve) {
+  const generateImagesAndUpdateNode = async function(node, resolve, inLink) {
     // Check if this markdownNode has a File parent. This plugin
     // won't work if the image isn't hosted locally.
     const parentNode = getNode(markdownNode.parent)
@@ -173,7 +185,7 @@ module.exports = (
   `
 
     // Make linking to original image optional.
-    if (options.linkImagesToOriginal) {
+    if (!inLink && options.linkImagesToOriginal) {
       rawHTML = `
   <a
     class="gatsby-resp-image-link"
@@ -204,7 +216,7 @@ module.exports = (
   return Promise.all(
     // Simple because there is no nesting in markdown
     markdownImageNodes.map(
-      node =>
+      ({ node, inLink }) =>
         new Promise(async (resolve, reject) => {
           const fileType = node.url.slice(-3)
 
@@ -215,7 +227,11 @@ module.exports = (
             fileType !== `gif` &&
             fileType !== `svg`
           ) {
-            const rawHTML = await generateImagesAndUpdateNode(node, resolve)
+            const rawHTML = await generateImagesAndUpdateNode(
+              node,
+              resolve,
+              inLink
+            )
 
             if (rawHTML) {
               // Replace the image node with an inline HTML node.
@@ -234,7 +250,7 @@ module.exports = (
     Promise.all(
       // Complex because HTML nodes can contain multiple images
       rawHtmlNodes.map(
-        node =>
+        ({ node, inLink }) =>
           new Promise(async (resolve, reject) => {
             if (!node.value) {
               return resolve()
@@ -278,7 +294,8 @@ module.exports = (
               ) {
                 const rawHTML = await generateImagesAndUpdateNode(
                   formattedImgTag,
-                  resolve
+                  resolve,
+                  inLink
                 )
 
                 if (rawHTML) {
