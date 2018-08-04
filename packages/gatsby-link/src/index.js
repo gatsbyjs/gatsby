@@ -81,7 +81,7 @@ class GatsbyLink extends React.Component {
   }
 
   render() {
-    const { onClick, onMouseEnter, location, ...rest } = this.props
+    const { onClick, onMouseEnter, ...rest } = this.props
     let getProps
     if (this.props.getProps) {
       getProps = this.props.getProps
@@ -159,6 +159,7 @@ GatsbyLink.contextTypes = {
   router: PropTypes.object,
 }
 
+// eslint-disable-next-line react/display-name
 const withLocation = Comp => props => (
   <Location>{location => <Comp location={location} {...props} />}</Location>
 )

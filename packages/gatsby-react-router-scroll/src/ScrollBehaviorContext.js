@@ -60,8 +60,8 @@ class ScrollContext extends React.Component {
   }
 
   getRouterProps() {
-    const { history, location } = this.props
-    return { history, location }
+    const { location } = this.props
+    return { location, history }
   }
 
   shouldUpdateScroll = (prevRouterProps, routerProps) => {
