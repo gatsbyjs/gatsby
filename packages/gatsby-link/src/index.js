@@ -89,7 +89,9 @@ class GatsbyLink extends React.Component {
       getProps = ({ isCurrent }) =>
         isCurrent
           ? {
-              className: this.props.activeClassName,
+              className: [this.props.className, this.props.activeClassName]
+                .filter(i => i)
+                .join(` `),
               style: { ...this.props.style, ...this.props.activeStyle },
             }
           : null
