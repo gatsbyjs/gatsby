@@ -72,6 +72,7 @@ const styles = {
   parentOfActiveLink: {
     "&&": {
       color: colors.gatsby,
+      fontWeight: `bold`,
     },
   },
   activeLink: {
