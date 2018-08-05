@@ -100,18 +100,6 @@ class SidebarBody extends Component {
     return null
   }
 
-  _readLocalStorage(key) {
-    if (hasLocalStorage) {
-      return localStorage.getItem(`gatsbyjs:sidebar:${key}`)
-    }
-  }
-
-  _writeLocalStorage(state, key) {
-    if (hasLocalStorage) {
-      localStorage.setItem(`gatsbyjs:sidebar:${key}`, JSON.stringify(state))
-    }
-  }
-
   _getInitialState(props) {
     const activeItemLink = getActiveItem(
       props.itemList,
@@ -135,6 +123,18 @@ class SidebarBody extends Component {
     getOpenItemHash(props.itemList, state)
 
     return state
+  }
+
+  _readLocalStorage(key) {
+    if (hasLocalStorage) {
+      return localStorage.getItem(`gatsbyjs:sidebar:${key}`)
+    }
+  }
+
+  _writeLocalStorage(state, key) {
+    if (hasLocalStorage) {
+      localStorage.setItem(`gatsbyjs:sidebar:${key}`, JSON.stringify(state))
+    }
   }
 
   _toggleSection(item) {
