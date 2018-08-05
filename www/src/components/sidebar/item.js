@@ -28,6 +28,8 @@ class Item extends React.Component {
       ui,
     } = this.props
 
+    const isParentOfActiveItem = isItemActive(activeItemParents, item)
+
     return (
       <Fragment>
         {item.items ? (
@@ -38,9 +40,10 @@ class Item extends React.Component {
             isActive={
               isActive ||
               item.link === location.pathname ||
-              isItemActive(activeItemParents, item) ||
+              isParentOfActiveItem ||
               item.disableAccordions
             }
+            isParentOfActiveItem={isParentOfActiveItem}
             item={item}
             level={level}
             location={location}

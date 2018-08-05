@@ -89,11 +89,18 @@ class SidebarBody extends Component {
 
   static getDerivedStateFromProps(props, state) {
     if (props.activeItemHash !== state.activeItemHash) {
+      const activeItemLink = getActiveItem(
+        props.itemList,
+        props.location,
+        props.activeItemHash
+      )
+
       return {
-        activeItemLink: getActiveItem(
+        activeItemLink: activeItemLink,
+        activeItemParents: getActiveItemParents(
           props.itemList,
-          props.location,
-          props.activeItemHash
+          activeItemLink,
+          []
         ),
         activeItemHash: props.activeItemHash,
       }

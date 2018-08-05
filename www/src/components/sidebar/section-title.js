@@ -77,6 +77,7 @@ const SplitButton = ({
   createLink,
   isActive,
   isExpanded,
+  isParentOfActiveItem,
   item,
   level,
   location,
@@ -104,6 +105,7 @@ const SplitButton = ({
       {createLink({
         isActive,
         isExpanded,
+        isParentOfActiveItem,
         item,
         location,
         onLinkClick,

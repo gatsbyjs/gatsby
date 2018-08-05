@@ -10,6 +10,7 @@ const ItemWithSubitems = ({
   activeItemLink,
   createLink,
   isExpanded,
+  isParentOfActiveItem,
   item,
   level,
   location,
@@ -27,6 +28,7 @@ const ItemWithSubitems = ({
           createLink={createLink}
           isActive={isActive}
           isExpanded={isExpanded}
+          isParentOfActiveItem={isParentOfActiveItem}
           item={item}
           level={level}
           location={location}
@@ -38,6 +40,7 @@ const ItemWithSubitems = ({
         <SectionTitleComponent
           isActive={isActive}
           isExpanded={isExpanded}
+          isParentOfActiveItem={isParentOfActiveItem}
           item={item}
           level={level}
           onSectionTitleClick={onSectionTitleClick}
@@ -76,6 +79,7 @@ class Accordion extends React.Component {
       activeItemParents,
       createLink,
       isActive,
+      isParentOfActiveItem,
       item,
       level,
       location,
@@ -100,6 +104,7 @@ class Accordion extends React.Component {
           createLink={createLink}
           isActive={isActive}
           isExpanded={isExpanded}
+          isParentOfActiveItem={isParentOfActiveItem}
           item={item}
           level={level}
           location={location}
