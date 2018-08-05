@@ -34,7 +34,8 @@
     "prettier-eslint-cli": "4.7.1",
     "rimraf": "^2.6.1",
     "yaml-lint": "^1.2.4",
-    "yargs": "^10.0.3"
+    "yargs": "^10.0.3",
+    "url-loader": "^1.0.1"
   },
   "engines": {
     "yarn": "^1.2.1",
