@@ -273,7 +273,7 @@ const styles = {
   list: {
     margin: 0,
     paddingTop: 20,
-    paddingBottom: 64,
+    paddingBottom: 104,
     fontSize: scale(-2 / 10).fontSize,
     [presets.Tablet]: {
       fontSize: scale(-4 / 10).fontSize,
