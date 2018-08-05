@@ -238,17 +238,14 @@ export default SidebarBody
 
 const styles = {
   utils: {
-    display: `none`,
-    [presets.Tablet]: {
-      borderRight: `1px solid ${colors.ui.border}`,
-      display: `flex`,
-      alignItems: `center`,
-      height: presets.sidebarUtilityHeight,
-      background: colors.ui.whisper,
-      paddingLeft: 40,
-      paddingRight: 8,
-      borderBottom: `1px solid ${colors.ui.border}`,
-    },
+    borderRight: `1px solid ${colors.ui.border}`,
+    display: `flex`,
+    alignItems: `center`,
+    height: presets.sidebarUtilityHeight,
+    background: colors.ui.whisper,
+    paddingLeft: 40,
+    paddingRight: 8,
+    borderBottom: `1px solid ${colors.ui.border}`,
   },
   sidebarScrollContainer: {
     WebkitOverflowScrolling: `touch`,
@@ -282,10 +279,7 @@ const styles = {
     margin: 0,
     paddingTop: 20,
     paddingBottom: 20,
-    fontSize: scale(-1 / 10).fontSize,
-    [presets.Phablet]: {
-      fontSize: scale(-2 / 10).fontSize,
-    },
+    fontSize: scale(-2 / 10).fontSize,
     [presets.Tablet]: {
       fontSize: scale(-4 / 10).fontSize,
     },

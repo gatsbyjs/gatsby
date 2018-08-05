@@ -116,12 +116,10 @@ class Accordion extends React.Component {
           id={uid}
           css={{
             ...styles.ul,
+            display: isExpanded ? `block` : `none`,
             paddingBottom: level === 0 && isExpanded ? 40 : false,
             "& li": {
               paddingLeft: paddingLeft(level),
-            },
-            [presets.Tablet]: {
-              display: isExpanded ? `block` : `none`,
             },
           }}
         >
