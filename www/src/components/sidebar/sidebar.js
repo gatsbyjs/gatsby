@@ -10,11 +10,11 @@ import { scale, options } from "../../utils/typography"
 // Access to global `localStorage` property must be guarded as it
 // fails under iOS private session mode.
 var hasLocalStorage = true
-var testKey = `react-localstorage.mixin.test-key`
+var testKey = `gatsbyjs.sidebar.testKey`
 var ls
 try {
   ls = global.localStorage
-  ls.setItem(testKey, `foo`)
+  ls.setItem(testKey, `test`)
   ls.removeItem(testKey)
 } catch (e) {
   hasLocalStorage = false
@@ -65,7 +65,7 @@ class SidebarBody extends Component {
           return initialState.openSectionHash[key]
         })
 
-        const newState = {
+        const state = {
           ...initialState,
           openSectionHash: JSON.parse(localState).openSectionHash,
         }
@@ -73,12 +73,14 @@ class SidebarBody extends Component {
         for (let item in initialState.openSectionHash) {
           for (let parent of bar) {
             if (parent === item) {
-              newState.openSectionHash[item] = true
+              state.openSectionHash[item] = true
             }
           }
         }
 
-        this.setState(newState)
+        state.expandAll = Object.entries(state.openSectionHash).every(k => k[1])
+
+        this.setState(state)
       } else {
         this._writeLocalStorage(this.state, key)
       }
@@ -121,6 +123,7 @@ class SidebarBody extends Component {
     }
 
     getOpenItemHash(props.itemList, state)
+    state.expandAll = Object.entries(state.openSectionHash).every(k => k[1])
 
     return state
   }
@@ -128,6 +131,8 @@ class SidebarBody extends Component {
   _readLocalStorage(key) {
     if (hasLocalStorage) {
       return localStorage.getItem(`gatsbyjs:sidebar:${key}`)
+    } else {
+      return false
     }
   }
 
@@ -140,15 +145,17 @@ class SidebarBody extends Component {
   _toggleSection(item) {
     const { openSectionHash } = this.state
 
-    const newState = {
+    const state = {
       openSectionHash: {
         ...openSectionHash,
         [item.title]: !openSectionHash[item.title],
       },
     }
 
-    this._writeLocalStorage(newState, this.state.key)
-    this.setState(newState)
+    state.expandAll = Object.entries(state.openSectionHash).every(k => k[1])
+
+    this._writeLocalStorage(state, this.state.key)
+    this.setState(state)
   }
 
   _expandAll = () => {
