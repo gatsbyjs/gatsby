@@ -200,15 +200,11 @@ class SidebarBody extends Component {
         <div
           css={{
             ...styles.sidebarScrollContainer,
+            height: itemList[0].disableExpandAll
+              ? `calc(100%)`
+              : `calc(100% - ${presets.sidebarUtilityHeight} + 1px)`,
             [presets.Tablet]: {
               ...styles.sidebarScrollContainerTablet,
-              height: itemList[0].disableExpandAll
-                ? `calc(100vh - ${presets.headerHeight} - ${
-                    presets.bannerHeight
-                  } + 1px)`
-                : `calc(100vh - ${presets.headerHeight} - ${
-                    presets.bannerHeight
-                  } - ${presets.sidebarUtilityHeight} + 1px)`,
             },
           }}
         >
@@ -252,7 +248,6 @@ const styles = {
     background: `#fff`,
     border: 0,
     display: `block`,
-    height: `100vh`,
     overflowY: `auto`,
     transition: `opacity 0.5s ease`,
     zIndex: 10,
