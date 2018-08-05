@@ -54,7 +54,6 @@ const TitleButton = ({
     css={{
       ...styles.resetButton,
       ...styles.button,
-      // background: `green`,
       paddingLeft: level === 0 ? 40 : 0,
       paddingRight: `0 !important`,
       minHeight: 40,
@@ -97,7 +96,6 @@ const SplitButton = ({
     <span
       css={{
         flexGrow: 1,
-        // background: `red`,
         [presets.Tablet]: {
           borderRight: `1px solid ${colors.ui.border}`,
         },
@@ -118,7 +116,6 @@ const SplitButton = ({
       css={{
         ...styles.resetButton,
         marginLeft: `auto`,
-        // background: `orange`,
         "&:hover": {
           background: `white`,
         },
