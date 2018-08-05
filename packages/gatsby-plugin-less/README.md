@@ -61,6 +61,8 @@ plugins: [
 
 ### v2.0.0
 
+- to work with v2 you have to install the next branch `npm install --save gatsby-plugin-less@next`
+
 - `less` is moved to a peer dependency. Installing the package
   alongside `gatsby-plugin-less` is now required. Use `npm install --save less`
 
