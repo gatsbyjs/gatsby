@@ -7,6 +7,19 @@ import getActiveItemParents from "../../utils/sidebar/get-active-item-parents"
 import presets, { colors } from "../../utils/presets"
 import { scale, options } from "../../utils/typography"
 
+// Access to global `localStorage` property must be guarded as it
+// fails under iOS private session mode.
+var hasLocalStorage = true
+var testKey = `react-localstorage.mixin.test-key`
+var ls
+try {
+  ls = global.localStorage
+  ls.setItem(testKey, `foo`)
+  ls.removeItem(testKey)
+} catch (e) {
+  hasLocalStorage = false
+}
+
 const isItemActive = (activeItemParents, item) => {
   if (activeItemParents) {
     for (let parent of activeItemParents) {
@@ -40,32 +53,35 @@ class SidebarBody extends Component {
   }
 
   componentDidMount() {
-    const key = this.props.itemList[0].key
-    const initialState = this.state
-    const localState = localStorage.getItem(`gatsbyjs:sidebar:${key}`)
-    let newState
+    if (hasLocalStorage) {
+      const key = this.props.itemList[0].key
+      const initialState = this.state
+      const localState = this._readLocalStorage(key)
 
-    const bar = Object.keys(initialState.openSectionHash).filter(function(key) {
-      return initialState.openSectionHash[key]
-    })
+      if (localState) {
+        const bar = Object.keys(initialState.openSectionHash).filter(function(
+          key
+        ) {
+          return initialState.openSectionHash[key]
+        })
 
-    if (localState) {
-      newState = {
-        ...initialState,
-        openSectionHash: JSON.parse(localState).openSectionHash,
-      }
+        const newState = {
+          ...initialState,
+          openSectionHash: JSON.parse(localState).openSectionHash,
+        }
 
-      for (let item in initialState.openSectionHash) {
-        for (let parent of bar) {
-          if (parent === item) {
-            newState.openSectionHash[item] = true
+        for (let item in initialState.openSectionHash) {
+          for (let parent of bar) {
+            if (parent === item) {
+              newState.openSectionHash[item] = true
+            }
           }
         }
-      }
 
-      this.setState(newState)
-    } else {
-      this._writeLocalStorage(this.state, key)
+        this.setState(newState)
+      } else {
+        this._writeLocalStorage(this.state, key)
+      }
     }
   }
 
@@ -84,8 +100,16 @@ class SidebarBody extends Component {
     return null
   }
 
+  _readLocalStorage(key) {
+    if (hasLocalStorage) {
+      return localStorage.getItem(`gatsbyjs:sidebar:${key}`)
+    }
+  }
+
   _writeLocalStorage(state, key) {
-    localStorage.setItem(`gatsbyjs:sidebar:${key}`, JSON.stringify(state))
+    if (hasLocalStorage) {
+      localStorage.setItem(`gatsbyjs:sidebar:${key}`, JSON.stringify(state))
+    }
   }
 
   _getInitialState(props) {
