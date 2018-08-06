@@ -95,8 +95,11 @@ You can get a new Gatsby site up and running on your local dev environment in 5 
     npm install -g gatsby-cli
 
     # create a new Gatsby site using the default starter
-    gatsby new my-blazing-fast-site https://github.com/gatsbyjs/gatsby-starter-default#v2
+    gatsby new my-blazing-fast-site
     ```
+    
+    _Want to try v2 beta? Run this instead:_
+    `gatsby new my-blazing-fast-site https://github.com/gatsbyjs/gatsby-starter-default#v2`
 
 2.  **Start the site in `develop` mode.**
 
