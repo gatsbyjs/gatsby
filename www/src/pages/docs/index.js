@@ -5,6 +5,7 @@ import Helmet from "react-helmet"
 import Layout from "../../components/layout"
 import { itemListDocs } from "../../utils/sidebar/item-list"
 import Container from "../../components/container"
+import EmailCaptureForm from "../../components/email-capture-form"
 import DocSearchContent from "../../components/docsearch-content"
 import presets from "../../utils/presets"
 
@@ -93,6 +94,7 @@ class IndexRoute extends React.Component {
             >
               <h2>Documentation</h2>
             </div>
+            <EmailCaptureForm signupMessage="Want to keep up with the latest tips & tricks? Subscribe to our newsletter!" />
           </Container>
         </DocSearchContent>
       </Layout>

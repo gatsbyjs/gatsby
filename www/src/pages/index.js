@@ -18,6 +18,7 @@ import Diagram from "../components/diagram"
 import BlogPostPreviewItem from "../components/blog-post-preview-item"
 import FuturaParagraph from "../components/futura-paragraph"
 import CtaButton from "../components/cta-button"
+import EmailCaptureForm from "../components/email-capture-form"
 import TechWithIcon from "../components/tech-with-icon"
 
 class IndexRoute extends React.Component {
@@ -198,12 +199,11 @@ class IndexRoute extends React.Component {
                           css={{ marginBottom: rhythm(2) }}
                         />
                       ))}
-                      <CtaButton
-                        to="/blog/"
-                        overrideCSS={{ marginBottom: rhythm(2) }}
-                      >
-                        Read More
-                      </CtaButton>
+                      <CtaButton to="/blog/">Read More</CtaButton>
+                      <EmailCaptureForm
+                        signupMessage="Subscribe to our newsletter!"
+                        containerCss={{ marginBottom: rhythm(2) }}
+                      />
                     </Container>
                   </div>
                 </Cards>
