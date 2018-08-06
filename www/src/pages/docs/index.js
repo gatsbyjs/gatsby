@@ -29,12 +29,14 @@ class IndexRoute extends React.Component {
             <ol>
               <li>
                 <p>Create a new site.</p>
-                <pre>
-                  <code className="language-sh">
-                    gatsby new gatsby-site
-                    https://github.com/gatsbyjs/gatsby-starter-default#v2
-                  </code>
-                </pre>
+                <div className="gatsby-highlight" data-language="bash">
+                  <pre className="language-bash">
+                    <code className="language-bash">
+                      gatsby new gatsby-site
+                      https://github.com/gatsbyjs/gatsby-starter-default#v2
+                    </code>
+                  </pre>
+                </div>
               </li>
               <li>
                 <code>cd gatsby-site</code>
