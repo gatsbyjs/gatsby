@@ -38,7 +38,7 @@ const handleIntersection = (el, cb) => {
 }
 
 class GatsbyLink extends React.Component {
-  constructor(props, context) {
+  constructor(props) {
     super()
     // Default to no support for IntersectionObserver
     let IOSupported = false
@@ -80,30 +80,43 @@ class GatsbyLink extends React.Component {
     }
   }
 
-  render() {
-    const { onClick, onMouseEnter, ...rest } = this.props
-    let getProps
-    if (this.props.getProps) {
-      getProps = this.props.getProps
-    } else {
-      getProps = ({ isCurrent }) =>
-        isCurrent
-          ? {
-              className: [this.props.className, this.props.activeClassName]
-                .filter(i => i)
-                .join(` `),
-              style: { ...this.props.style, ...this.props.activeStyle },
-            }
-          : null
+  defaultGetProps = ({ isCurrent }) => {
+    if (isCurrent) {
+      return {
+        className: [this.props.className, this.props.activeClassName]
+          .filter(Boolean)
+          .join(` `),
+        style: { ...this.props.style, ...this.props.activeStyle },
+      }
     }
+    return null
+  }
+
+  render() {
+    const {
+      to,
+      getProps = this.defaultGetProps,
+      onClick,
+      onMouseEnter,
+      location,
+      /* eslint-disable no-unused-vars */
+      activeClassName: $activeClassName,
+      activeStyle: $activeStyle,
+      ref: $ref,
+      innerRef: $innerRef,
+      /* eslint-enable no-unused-vars */
+      ...rest
+    } = this.props
 
     return (
       <Link
+        to={to}
         getProps={getProps}
+        innerRef={this.handleRef}
         onMouseEnter={e => {
           // eslint-disable-line
           onMouseEnter && onMouseEnter(e)
-          ___loader.hovering(parsePath(this.props.to).pathname)
+          ___loader.hovering(parsePath(to).pathname)
         }}
         onClick={e => {
           // eslint-disable-line
@@ -121,8 +134,8 @@ class GatsbyLink extends React.Component {
             e.preventDefault()
             // Is this link pointing to a hash on the same page? If so,
             // just scroll there.
-            const { pathname, hash } = parsePath(this.props.to)
-            if (pathname === window.location.pathname) {
+            const { pathname, hash } = parsePath(to)
+            if (pathname === location.pathname) {
               const element = hash ? document.getElementById(hash) : null
               if (element !== null) {
                 element.scrollIntoView()
@@ -135,14 +148,12 @@ class GatsbyLink extends React.Component {
 
             // Make sure the necessary scripts and data are
             // loaded before continuing.
-            window.___push(this.props.to)
+            push(to)
           }
 
           return true
         }}
         {...rest}
-        to={this.props.to}
-        innerRef={this.handleRef}
       />
     )
   }
@@ -153,10 +164,6 @@ GatsbyLink.propTypes = {
   innerRef: PropTypes.func,
   onClick: PropTypes.func,
   to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
-}
-
-GatsbyLink.contextTypes = {
-  router: PropTypes.object,
 }
 
 // eslint-disable-next-line react/display-name
