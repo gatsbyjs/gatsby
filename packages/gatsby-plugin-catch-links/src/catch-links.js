@@ -4,12 +4,14 @@ function checkSameOriginWithoutProtocol(origin1, origin2) {
   const protocolRegex = new RegExp(/(^\w+:|^)\/\//)
   const removeTrailingSlash = new RegExp(/\//g)
 
-  return origin1.replace(protocolRegex, ``).replace(removeTrailingSlash, ``) ===
+  return (
+    origin1.replace(protocolRegex, ``).replace(removeTrailingSlash, ``) ===
     origin2.replace(protocolRegex, ``).replace(removeTrailingSlash, ``)
+  )
 }
 
-module.exports = function (root, cb) {
-  root.addEventListener(`click`, function (ev) {
+module.exports = function(root, cb) {
+  root.addEventListener(`click`, function(ev) {
     if (
       ev.button !== 0 ||
       ev.altKey ||
@@ -84,10 +86,11 @@ module.exports = function (root, cb) {
 
     ev.preventDefault()
 
-
     var anchoreUrl = new URL(anchor.href)
 
-    if (checkSameOriginWithoutProtocol(window.location.origin, anchoreUrl.origin)) {
+    if (
+      checkSameOriginWithoutProtocol(window.location.origin, anchoreUrl.origin)
+    ) {
       cb(`${anchoreUrl.pathname}${anchoreUrl.search}${anchoreUrl.hash}`)
       return false
     }

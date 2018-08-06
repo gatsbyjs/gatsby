@@ -12,11 +12,7 @@ const isParentActive = (sections, parentTitle) => {
   return false
 }
 
-const getActiveItemParents = (
-  itemList,
-  activeItemLink,
-  activeItemParents
-) => {
+const getActiveItemParents = (itemList, activeItemLink, activeItemParents) => {
   if (activeItemLink.parentTitle) {
     const bar = isParentActive(itemList, activeItemLink.parentTitle)
     activeItemParents.push(bar.title)

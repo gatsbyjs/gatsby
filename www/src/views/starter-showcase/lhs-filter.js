@@ -3,12 +3,18 @@ import React from "react"
 // import FaAngleUp from "react-icons/lib/fa/angle-up"
 import MdCheckboxBlank from "react-icons/lib/md/check-box-outline-blank"
 import MdCheckbox from "react-icons/lib/md/check-box"
-import /*presets, */ { colors } from "../../utils/presets"
+import { /*presets, */ colors } from "../../utils/presets"
 import { options, /* rhythm, */ scale, rhythm } from "../../utils/typography"
 
-import Collapsible from '../shared/collapsible'
+import Collapsible from "../shared/collapsible"
 
-export default function LHSFilter({ sortRecent, heading, data, filters, setFilters }) {
+export default function LHSFilter({
+  sortRecent,
+  heading,
+  data,
+  filters,
+  setFilters,
+}) {
   return (
     <Collapsible heading={heading}>
       {data
@@ -57,9 +63,7 @@ export default function LHSFilter({ sortRecent, heading, data, filters, setFilte
             >
               <div
                 css={{
-                  color: filters.has(c)
-                    ? colors.gatsby
-                    : colors.ui.bright,
+                  color: filters.has(c) ? colors.gatsby : colors.ui.bright,
                   ...scale(0),
                   marginRight: 8,
                 }}

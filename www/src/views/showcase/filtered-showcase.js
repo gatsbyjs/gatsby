@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import MdArrowDownward from "react-icons/lib/md/arrow-downward"
 import Fuse from "fuse.js"
 
-import styles from '../shared/styles'
+import styles from "../shared/styles"
 import ShowcaseList from "./showcase-list"
 import Filters from "./filters"
 import SearchIcon from "../../components/search-icon"

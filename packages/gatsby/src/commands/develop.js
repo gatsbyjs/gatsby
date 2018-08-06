@@ -417,7 +417,11 @@ module.exports = async (program: any) => {
           chalk.cyan(api),
           chalk.yellow(`is deprecated. Please use`),
           chalk.cyan(fixMap[api].newName),
-          chalk.yellow(`instead. For migration instructions, see ${fixMap[api].docsLink}\nCheck the following files:`)
+          chalk.yellow(
+            `instead. For migration instructions, see ${
+              fixMap[api].docsLink
+            }\nCheck the following files:`
+          )
         )
         console.log()
         deprecatedLocations[api].forEach(file => console.log(file))

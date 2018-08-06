@@ -107,27 +107,27 @@ not boilerplate.
 
 Gatsby source plugins not only create nodes, they also create relationships between nodes that are exposed to GraphQL queries.
 
-There are two ways of adding node relationships in Gatsby: (1) transformations (parent-child) or (2) foreign-key based. 
+There are two ways of adding node relationships in Gatsby: (1) transformations (parent-child) or (2) foreign-key based.
 
 #### Transformation relationships
 
 An example of a transformation relationship is the `gatsby-transformer-remark` plugin, which transforms a parent `fileNode`'s markdown string into a `MarkdownRemark` node. The Remark transformer plugin adds its newly created child node as a child of the parent node using the action `createParentChildLink`. Transformation relationships are used when a new node is _completely_ derived from a single parent node. E.g. the markdown node is derived from the parent `fileNode` and wouldn't ever exist if the parent `fileNode` hadn't been created.
 
-Because all children nodes are derived from their parent, when a parent node is deleted or changed, Gatsby deletes all of the child nodes (and their child nodes, and so on) with the expectation that they'll be recreated again by transformer plugins. This is done to ensure there's not nodes left over that were derived from older versions of data but shouldn't exist any longer. 
+Because all children nodes are derived from their parent, when a parent node is deleted or changed, Gatsby deletes all of the child nodes (and their child nodes, and so on) with the expectation that they'll be recreated again by transformer plugins. This is done to ensure there's not nodes left over that were derived from older versions of data but shouldn't exist any longer.
 
-*Creating the transformation relationship*
+_Creating the transformation relationship_
 
 In order to create a parent/child relationship, when calling `createNode` for the child node, the new node object that is passed in should have a `parent` key with the value set to the parent node's `id`. After this, call the `createParentChildLink` function exported inside `actions`.
 
-*Examples*
+_Examples_
 
 [Here's the above example](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-transformer-remark/src/on-node-create.js#L34-L64) from the `gatsby-transformer-remark` source plugin.
 
-[Here's another example](https://github.com/gatsbyjs/gatsby/blob/1fb19f9ad16618acdac7eda33d295d8ceba7f393/packages/gatsby-transformer-sharp/src/on-node-create.js#L3-L25) from the `gatsby-transformer-sharp` source plugin.  
+[Here's another example](https://github.com/gatsbyjs/gatsby/blob/1fb19f9ad16618acdac7eda33d295d8ceba7f393/packages/gatsby-transformer-sharp/src/on-node-create.js#L3-L25) from the `gatsby-transformer-sharp` source plugin.
 
 #### Foreign-key relationships
 
-An example of a foreign-key relationship would be a Post that has an Author. 
+An example of a foreign-key relationship would be a Post that has an Author.
 
 In this relationship, each object is a distinct entity that exists whether or not the other does, with independent schemas, and field(s) on each entity that reference the other entity -- in this case the Post would have an Author, and the Author might have Posts. The API of a service that allows complex object modelling, for example a CMS, will often allow users to relationships between entities and expose them through the API.
 
@@ -135,19 +135,18 @@ When an object node is deleted, Gatsby _does not_ delete any referenced entities
 
 ##### Creating the relationship
 
-Let's say you want to create a relationship between Posts and Authors, and let's say you want to call the field `author`. 
+Let's say you want to create a relationship between Posts and Authors, and let's say you want to call the field `author`.
 
-Before you pass the Post object and Author object into `createNode` and create the respective nodes, you need to create a field called `author___NODE`  on the Post object to hold the relationship to Authors. The value of this field should be the node ID of the Author.
+Before you pass the Post object and Author object into `createNode` and create the respective nodes, you need to create a field called `author___NODE` on the Post object to hold the relationship to Authors. The value of this field should be the node ID of the Author.
 
 ##### Creating the reverse relationship
 
-It's often convenient for querying to add to the schema backwards references. For example, you might want to query the Author of a Post but you might also want to query all the posts an author has written. 
+It's often convenient for querying to add to the schema backwards references. For example, you might want to query the Author of a Post but you might also want to query all the posts an author has written.
 
-If you want to call this field on `Author` `posts`, you would create a field called `posts___NODE` to hold the relationship to Posts. The value of this field should be an array of Post IDs. 
+If you want to call this field on `Author` `posts`, you would create a field called `posts___NODE` to hold the relationship to Posts. The value of this field should be an array of Post IDs.
 
 Here's an example from the [Wordpress source plugin](https://github.com/gatsbyjs/gatsby/blob/1fb19f9ad16618acdac7eda33d295d8ceba7f393/packages/gatsby-source-wordpress/src/normalize.js#L178-L189).
 
 #### Union types
 
 When creating fields linking to an array of nodes, if the array of IDs are all of the same type, the relationship field that is created will be of this type. If the linked nodes are of different types; the field will turn into a union type of all types that are linked. See the [GraphQL documentation on how to query union types](https://graphql.org/learn/schema/#union-types).
-
