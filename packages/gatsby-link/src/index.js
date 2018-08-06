@@ -1,9 +1,9 @@
 /*global __PATH_PREFIX__ */
 import PropTypes from "prop-types"
 import React from "react"
-import { Link, NavLink } from "react-router-dom"
+import { Link, Location } from "@reach/router"
 import { polyfill } from "react-lifecycles-compat"
-import { createLocation, createPath } from "history"
+import { parsePath } from "gatsby"
 
 export function withPrefix(path) {
   return normalizePath(`${__PATH_PREFIX__}/${path}`)
@@ -16,10 +16,6 @@ function normalizePath(path) {
 const NavLinkPropTypes = {
   activeClassName: PropTypes.string,
   activeStyle: PropTypes.object,
-  exact: PropTypes.bool,
-  strict: PropTypes.bool,
-  isActive: PropTypes.func,
-  location: PropTypes.object,
 }
 
 // Set up IntersectionObserver
@@ -50,36 +46,26 @@ class GatsbyLink extends React.Component {
       IOSupported = true
     }
 
-    const { location } = context.router.history
-    const to = createLocation(props.to, null, null, location)
+    const { location } = props
 
     this.state = {
-      path: createPath(to),
-      to,
       IOSupported,
       location,
     }
     this.handleRef = this.handleRef.bind(this)
   }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (prevState.to === nextProps.to) return null
-    const to = createLocation(nextProps.to, null, null, prevState.location)
-    const path = createPath(to)
-    return { path, to }
-  }
-
   componentDidUpdate(prevProps, prevState) {
     // Preserve non IO functionality if no support
     if (this.props.to !== prevProps.to && !this.state.IOSupported) {
-      ___loader.enqueue(this.state.path)
+      ___loader.enqueue(parsePath(this.props.to).pathname)
     }
   }
 
   componentDidMount() {
     // Preserve non IO functionality if no support
     if (!this.state.IOSupported) {
-      ___loader.enqueue(this.state.to.pathname)
+      ___loader.enqueue(parsePath(this.props.to).pathname)
     }
   }
 
@@ -89,26 +75,35 @@ class GatsbyLink extends React.Component {
     if (this.state.IOSupported && ref) {
       // If IO supported and element reference found, setup Observer functionality
       handleIntersection(ref, () => {
-        ___loader.enqueue(this.state.to.pathname)
+        ___loader.enqueue(parsePath(this.props.to).pathname)
       })
     }
   }
 
   render() {
     const { onClick, onMouseEnter, ...rest } = this.props
-    let El
-    if (Object.keys(NavLinkPropTypes).some(propName => this.props[propName])) {
-      El = NavLink
+    let getProps
+    if (this.props.getProps) {
+      getProps = this.props.getProps
     } else {
-      El = Link
+      getProps = ({ isCurrent }) =>
+        isCurrent
+          ? {
+              className: [this.props.className, this.props.activeClassName]
+                .filter(i => i)
+                .join(` `),
+              style: { ...this.props.style, ...this.props.activeStyle },
+            }
+          : null
     }
 
     return (
-      <El
+      <Link
+        getProps={getProps}
         onMouseEnter={e => {
           // eslint-disable-line
           onMouseEnter && onMouseEnter(e)
-          ___loader.hovering(this.state.path)
+          ___loader.hovering(parsePath(this.props.to).pathname)
         }}
         onClick={e => {
           // eslint-disable-line
@@ -123,44 +118,30 @@ class GatsbyLink extends React.Component {
             !e.ctrlKey &&
             !e.shiftKey
           ) {
+            e.preventDefault()
             // Is this link pointing to a hash on the same page? If so,
             // just scroll there.
-            let pathname = this.state.path
-            if (pathname.split(`#`).length > 1) {
-              pathname = pathname
-                .split(`#`)
-                .slice(0, -1)
-                .join(``)
-            }
+            const { pathname, hash } = parsePath(this.props.to)
             if (pathname === window.location.pathname) {
-              const hashFragment = this.state.path
-                .split(`#`)
-                .slice(1)
-                .join(`#`)
-              const element = hashFragment
-                ? document.getElementById(hashFragment)
-                : null
+              const element = hash ? document.getElementById(hash) : null
               if (element !== null) {
                 element.scrollIntoView()
-                return true
               } else {
                 // This is just a normal link to the current page so let's emulate default
                 // browser behavior by scrolling now to the top of the page.
                 window.scrollTo(0, 0)
-                return true
               }
             }
 
             // Make sure the necessary scripts and data are
             // loaded before continuing.
-            e.preventDefault()
-            window.___push(this.state.to)
+            window.___push(this.props.to)
           }
 
           return true
         }}
         {...rest}
-        to={this.state.to}
+        to={this.props.to}
         innerRef={this.handleRef}
       />
     )
@@ -178,7 +159,12 @@ GatsbyLink.contextTypes = {
   router: PropTypes.object,
 }
 
-export default polyfill(GatsbyLink)
+// eslint-disable-next-line react/display-name
+const withLocation = Comp => props => (
+  <Location>{location => <Comp location={location} {...props} />}</Location>
+)
+
+export default withLocation(polyfill(GatsbyLink))
 
 export const push = to => {
   window.___push(to)

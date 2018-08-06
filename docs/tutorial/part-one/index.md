@@ -47,7 +47,7 @@ Open the file at `/src/pages/index.js`. The code in this file creates a componen
 
 > 💡 Gatsby uses **hot reloading** to speed up your development process. Essentially, when you’re running a Gatsby development server, the Gatsby site files are being “watched” in the background — any time you save a file, your changes will be immediately reflected in the browser. You don’t need to hard refresh the page, or restart the development server — your changes just appear.
 
-2. Let’s make our changes a little more visible. Try replacing the code in `/src/pages/index.js` with the code below, and save again. You’ll see changes to the text; The text color will be purple, and the font size will be larger.
+2.  Let’s make our changes a little more visible. Try replacing the code in `/src/pages/index.js` with the code below, and save again. You’ll see changes to the text; The text color will be purple, and the font size will be larger.
 
 ```jsx
 import React from "react"
