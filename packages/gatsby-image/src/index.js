@@ -69,24 +69,6 @@ const listenToIntersections = (el, cb) => {
   listeners.push([el, cb])
 }
 
-let isWebpSupportedCache = null
-const isWebpSupported = () => {
-  if (isWebpSupportedCache !== null) {
-    return isWebpSupportedCache
-  }
-
-  const elem =
-    typeof window !== `undefined` ? window.document.createElement(`canvas`) : {}
-  if (elem.getContext && elem.getContext(`2d`)) {
-    isWebpSupportedCache =
-      elem.toDataURL(`image/webp`).indexOf(`data:image/webp`) === 0
-  } else {
-    isWebpSupportedCache = false
-  }
-
-  return isWebpSupportedCache
-}
-
 const noscriptImg = props => {
   // Check if prop exists before adding each attribute to the string output below to prevent
   // HTML validation issues caused by empty values like width="" and height=""
@@ -143,7 +125,7 @@ class Image extends React.Component {
 
     // If this image has already been loaded before then we can assume it's
     // already in the browser cache so it's cheap to just show directly.
-    const seenBefore = inImageCache(props)
+    const seenBefore = !props.critical && inImageCache(props)
 
     if (
       !seenBefore &&
@@ -161,6 +143,10 @@ class Image extends React.Component {
       imgLoaded = false
     }
 
+    if (props.critical) {
+      isVisible = true
+    }
+
     this.state = {
       isVisible,
       imgLoaded,
@@ -170,10 +156,16 @@ class Image extends React.Component {
     this.handleRef = this.handleRef.bind(this)
   }
 
+  componentDidMount() {
+    if (this.props.critical) {
+      this.setState({ imgLoaded: true })
+    }
+  }
+
   handleRef(ref) {
     if (this.state.IOSupported && ref) {
       listenToIntersections(ref, () => {
-        this.setState({ isVisible: true, imgLoaded: false })
+        this.setState({ isVisible: true })
       })
     }
   }
@@ -215,12 +207,6 @@ class Image extends React.Component {
     if (fluid) {
       const image = fluid
 
-      // Use webp by default if browser supports it
-      if (image.srcWebp && image.srcSetWebp && isWebpSupported()) {
-        image.src = image.srcWebp
-        image.srcSet = image.srcSetWebp
-      }
-
       // The outer div is necessary to reset the z-index to 0.
       return (
         <Tag
@@ -249,7 +235,7 @@ class Image extends React.Component {
               }}
             />
 
-            {/* Show the blury base64 image. */}
+            {/* Show the blurry base64 image. */}
             {image.base64 && (
               <Img
                 alt={alt}
@@ -288,27 +274,42 @@ class Image extends React.Component {
 
             {/* Once the image is visible (or the browser doesn't support IntersectionObserver), start downloading the image */}
             {this.state.isVisible && (
-              <Img
-                alt={alt}
-                title={title}
-                srcSet={image.srcSet}
-                src={image.src}
-                sizes={image.sizes}
-                style={imageStyle}
-                onLoad={() => {
-                  this.state.IOSupported && this.setState({ imgLoaded: true })
-                  this.props.onLoad && this.props.onLoad()
-                }}
-                onError={this.props.onError}
-              />
+              <picture>
+                {image.srcSetWebp && (<source
+                  type={`image/webp`}
+                  srcSet={image.srcSetWebp}
+                  sizes={image.sizes}
+                />)}
+
+                <source
+                  srcSet={image.srcSet}
+                  sizes={image.sizes}
+                />
+
+                <Img
+                  alt={alt}
+                  title={title}
+                  src={image.src}
+                  srcSet={image.srcSet}
+                  sizes={image.sizes}
+                  style={imageStyle}
+                  onLoad={() => {
+                    this.state.IOSupported && this.setState({ imgLoaded: true })
+                    this.props.onLoad && this.props.onLoad()
+                  }}
+                  onError={this.props.onError}
+                />
+              </picture>
             )}
 
             {/* Show the original image during server-side rendering if JavaScript is disabled */}
-            <noscript
-              dangerouslySetInnerHTML={{
-                __html: noscriptImg({ alt, title, ...image }),
-              }}
-            />
+            {!this.props.critical && (
+              <noscript
+                dangerouslySetInnerHTML={{
+                  __html: noscriptImg({ alt, title, ...image }),
+                }}
+              />
+            )}
           </Tag>
         </Tag>
       )
@@ -329,12 +330,6 @@ class Image extends React.Component {
         delete divStyle.display
       }
 
-      // Use webp by default if browser supports it
-      if (image.srcWebp && image.srcSetWebp && isWebpSupported()) {
-        image.src = image.srcWebp
-        image.srcSet = image.srcSetWebp
-      }
-
       // The outer div is necessary to reset the z-index to 0.
       return (
         <Tag
@@ -351,7 +346,7 @@ class Image extends React.Component {
             style={divStyle}
             ref={this.handleRef}
           >
-            {/* Show the blury base64 image. */}
+            {/* Show the blurry base64 image. */}
             {image.base64 && (
               <Img
                 alt={alt}
@@ -387,34 +382,50 @@ class Image extends React.Component {
 
             {/* Once the image is visible, start downloading the image */}
             {this.state.isVisible && (
-              <Img
-                alt={alt}
-                title={title}
-                width={image.width}
-                height={image.height}
-                srcSet={image.srcSet}
-                src={image.src}
-                style={imageStyle}
-                onLoad={() => {
-                  this.setState({ imgLoaded: true })
-                  this.props.onLoad && this.props.onLoad()
-                }}
-                onError={this.props.onError}
-              />
+              <picture>
+                {image.srcSetWebp && (<source
+                  type={`image/webp`}
+                  srcSet={image.srcSetWebp}
+                  sizes={image.sizes}
+                />)}
+
+                <source
+                  srcSet={image.srcSet}
+                  sizes={image.sizes}
+                />
+
+                <Img
+                  alt={alt}
+                  title={title}
+                  width={image.width}
+                  height={image.height}
+                  src={image.src}
+                  srcSet={image.srcSet}
+                  sizes={image.sizes}
+                  style={imageStyle}
+                  onLoad={() => {
+                    this.setState({ imgLoaded: true })
+                    this.props.onLoad && this.props.onLoad()
+                  }}
+                  onError={this.props.onError}
+                />
+              </picture>
             )}
 
             {/* Show the original image during server-side rendering if JavaScript is disabled */}
-            <noscript
-              dangerouslySetInnerHTML={{
-                __html: noscriptImg({
-                  alt,
-                  title,
-                  width: image.width,
-                  height: image.height,
-                  ...image,
-                }),
-              }}
-            />
+            {!this.props.critical && (
+              <noscript
+                dangerouslySetInnerHTML={{
+                  __html: noscriptImg({
+                    alt,
+                    title,
+                    width: image.width,
+                    height: image.height,
+                    ...image,
+                  }),
+                }}
+              />
+            )}
           </Tag>
         </Tag>
       )
@@ -425,6 +436,7 @@ class Image extends React.Component {
 }
 
 Image.defaultProps = {
+  critical: false,
   fadeIn: true,
   alt: ``,
   Tag: `div`,
@@ -465,6 +477,7 @@ Image.propTypes = {
     PropTypes.string,
     PropTypes.object,
   ]),
+  critical: PropTypes.bool,
   style: PropTypes.object,
   imgStyle: PropTypes.object,
   placeholderStyle: PropTypes.object,
