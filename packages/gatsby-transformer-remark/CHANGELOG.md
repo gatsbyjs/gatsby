@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.1.1-beta.6"></a>
+
+## [2.1.1-beta.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.1.1-beta.5...gatsby-transformer-remark@2.1.1-beta.6) (2018-08-06)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
 <a name="2.1.1-beta.5"></a>
 
 ## [2.1.1-beta.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.1.1-beta.4...gatsby-transformer-remark@2.1.1-beta.5) (2018-07-27)
