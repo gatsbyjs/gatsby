@@ -369,6 +369,9 @@ Two common ways this change _might_ break your site is:
 
 Read more about the features of our new router at https://reach.tech/router
 
+**NOTE:** One prominant feature of @reach/router, relative routes, isn't working currently in Gatsby. We're working with Ryan Florence
+on fixing that so hopefully it'll be supported soon.
+
 Read on for instructions on migrating your site to @reach/router.
 
 #### Only string `to` allowed
