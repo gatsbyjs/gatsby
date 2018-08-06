@@ -2,7 +2,6 @@
 import PropTypes from "prop-types"
 import React from "react"
 import { Link, Location } from "@reach/router"
-import { polyfill } from "react-lifecycles-compat"
 import { parsePath } from "gatsby"
 
 export function withPrefix(path) {
@@ -171,7 +170,7 @@ const withLocation = Comp => props => (
   <Location>{location => <Comp location={location} {...props} />}</Location>
 )
 
-export default withLocation(polyfill(GatsbyLink))
+export default withLocation(GatsbyLink)
 
 export const push = to => {
   window.___push(to)
