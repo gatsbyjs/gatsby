@@ -154,12 +154,7 @@
   "engines": {
     "node": ">6.0.0"
   },
-  "files": [
-    "./cache-dir",
-    "./dist",
-    "graphql.js",
-    "index.d.ts"
-  ],
+  "files": ["./cache-dir", "./dist", "graphql.js", "index.d.ts"],
   "homepage": "https://github.com/gatsbyjs/gatsby#readme",
   "keywords": [
     "blog",

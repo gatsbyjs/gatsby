@@ -188,16 +188,6 @@ module.exports = async (
 
           new FriendlyErrorsWebpackPlugin({
             clearConsole: false,
-            compilationSuccessInfo: {
-              messages: [
-                `You can now view your site in the browser running at ${
-                  program.ssl ? `https` : `http`
-                }://${program.host}:${program.port}`,
-                `Your graphql debugger is running at ${
-                  program.ssl ? `https` : `http`
-                }://${program.host}:${program.port}/___graphql`,
-              ],
-            },
           }),
         ])
         break
