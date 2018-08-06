@@ -20,7 +20,7 @@ gatsby new glamor-tutorial https://github.com/gatsbyjs/gatsby-starter-hello-worl
 Second, install the Gatsby plugin for Glamor.
 
 ```shell
-npm install --save gatsby-plugin-glamor
+npm install --save gatsby-plugin-glamor glamor
 ```
 
 And then add it to your site's `gatsby-config.js`:

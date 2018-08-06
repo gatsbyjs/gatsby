@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.1-beta.10"></a>
+
+## [2.0.1-beta.10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/compare/gatsby-remark-images@2.0.1-beta.9...gatsby-remark-images@2.0.1-beta.10) (2018-08-06)
+
+### Bug Fixes
+
+- **gatsby-remark-images:** don’t add links if image is already linked ([#6982](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/issues/6982)) ([0146fc6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/commit/0146fc6)), closes [#6980](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/issues/6980)
+
 <a name="2.0.1-beta.9"></a>
 
 ## [2.0.1-beta.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/compare/gatsby-remark-images@2.0.1-beta.8...gatsby-remark-images@2.0.1-beta.9) (2018-07-21)
