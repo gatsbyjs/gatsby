@@ -133,7 +133,7 @@
           link: /docs/debugging-the-build-process/
         - title: Trace Gatsby builds
           link: /docs/performance-tracing/
-    - title: Apps with Gatsby
+    - title: Building Apps with Gatsby
       link: /docs/building-apps-with-gatsby/
       items:
         - title: Progressive web app (PWA)
