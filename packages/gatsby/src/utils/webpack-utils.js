@@ -238,7 +238,7 @@ module.exports = async ({
 
     file: (options = {}) => {
       return {
-        loader: require.resolve(`url-loader`),
+        loader: require.resolve(`file-loader`),
         options: {
           name: `${assetRelativeRoot}[name]-[hash].[ext]`,
           ...options,
