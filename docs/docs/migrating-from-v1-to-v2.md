@@ -435,7 +435,7 @@ Gatsby's `<Link>` component supports out-of-the-box `activeClassName` and `activ
 
 If you have more advanced styling needs, [use the `getProps` prop](https://reach.tech/router/api/Link).
 
-#### Change client paths to use a spat
+#### Change client paths to use a splat
 
 When creating a client route in `gatsby-node.js`, use a `*` to select all child routes instead of `:path`.
 
@@ -521,7 +521,7 @@ Here's links to diffs for three sites with client routes that were upgraded to @
 
 ### APIs `onPreRouteUpdate` and `onRouteUpdate` no longer called with the route update action
 
-React Router v4 would tell us the "action" (push/replace) that trigger the route
+React Router v4 would tell us the "action" (push/replace) that triggered the route
 transition. We passed this as one of the arguments along with `location` to plugins. @reach/router doesn't support this so we've removed it from the API calls.
 
 ### Browser API `relaceRouterComponent` was removed
