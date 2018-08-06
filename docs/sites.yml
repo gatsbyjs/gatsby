@@ -1921,6 +1921,16 @@
     - Personal
   built_by: Max McKinney
   featured: false
+- title: Stickyard
+  description: >
+     Make your React component sticky the easy way
+  main_url: https://nihgwu.github.io/stickyard/
+  url: https://nihgwu.github.io/stickyard/
+  source_url: https://github.com/nihgwu/stickyard/tree/master/website
+  categories:
+    - Web Dev
+  built_by: Neo Nie
+  featured: false
 - title: Agata Milik
   description: >
      Website of a Polish psychologist/psychotherapist based in Gdańsk, Poland.
