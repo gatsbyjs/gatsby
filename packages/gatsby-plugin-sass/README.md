@@ -31,10 +31,10 @@ plugins: [
 ]
 ```
 
-### With CSS modules
+### With CSS Modules
 
-Using CSS modules requires no additional configuration. Simply prepend `.module` to the extension. For example: `App.scss` -> `App.module.scss`.
-Any file with the `module` extension will use CSS modules.
+Using CSS Modules requires no additional configuration. Simply prepend `.module` to the extension. For example: `App.scss` -> `App.module.scss`.
+Any file with the `module` extension will use CSS Modules.
 
 ### PostCSS plugins
 
