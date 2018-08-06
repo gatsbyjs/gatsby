@@ -67,7 +67,7 @@ If you prefer to write locally before submitting a PR, then follow these steps:
 1.  Fork this repository
 2.  Copy your fork to your local machine.
 3.  Add a remote upstream so git knows where the official Gatsby
-    repository is located by running the command `git remote add upstream YOUR_FORKED_REPO_URL`
+    repository is located by running the command `git remote add upstream https://github.com/gatsbyjs/gatsby.git`
 4.  Create a new branch for your work with the command `git checkout -b NEW-BRANCH-NAME`. Try to name your branch in a way that describes your
     article topic, like `fix/ArticleHTMLElements`
 5.  Write your article, commit your changes locally, and push your new branch to
