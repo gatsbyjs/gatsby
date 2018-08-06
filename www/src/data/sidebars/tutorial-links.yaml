@@ -54,8 +54,8 @@
       link: /tutorial/part-three/
       ui: steps
       items:
-        - title: Our first layout component
-          link: /tutorial/part-three/
+        - title: Your first layout component
+          link: /tutorial/part-three/#your-first-layout-component
     - title: 4. Querying for data in a blog
       link: /tutorial/part-four/
       ui: steps
@@ -66,8 +66,8 @@
           link: /tutorial/part-four/#data-in-gatsby
         - title: How Gatsby uses GraphQL
           link: /tutorial/part-four/#how-gatsbys-data-layer-uses-graphql-to-pull-data-into-components
-        - title: Our first GraphQL query
-          link: /tutorial/part-four/#our-first-graphql-query
+        - title: Your first GraphQL query
+          link: /tutorial/part-four/#your-first-graphql-query
     - title: 5. Source plugins and rendering queried data
       link: /tutorial/part-five/
       ui: steps
