@@ -1921,6 +1921,20 @@
     - Personal
   built_by: Max McKinney
   featured: false
+- title: WebPurple
+  main_url: 'https://www.webpurple.net/'
+  url: 'https://www.webpurple.net/'
+  source_url: 'https://github.com/WebPurple/site'
+  description: >-
+    Site of local (Russia, Ryazan) frontend community. Main purpose is to show info about meetups and keep blog.
+  categories:
+  - Nonprofit
+  - Web Dev
+  - Community
+  - Blog
+  - Open Source
+  built_by: Nikita Kirsanov
+  built_by_url: 'https://twitter.com/kitos_kirsanov'
 - title: Papertrail.io
   description: >
      Inspection Management for the 21st Century
