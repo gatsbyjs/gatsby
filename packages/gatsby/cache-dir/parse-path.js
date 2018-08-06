@@ -1,15 +1,15 @@
 export default function parsePath(path) {
-  var pathname = path || "/"
-  var search = ""
-  var hash = ""
+  var pathname = path || `/`
+  var search = ``
+  var hash = ``
 
-  var hashIndex = pathname.indexOf("#")
+  var hashIndex = pathname.indexOf(`#`)
   if (hashIndex !== -1) {
     hash = pathname.substr(hashIndex)
     pathname = pathname.substr(0, hashIndex)
   }
 
-  var searchIndex = pathname.indexOf("?")
+  var searchIndex = pathname.indexOf(`?`)
   if (searchIndex !== -1) {
     search = pathname.substr(searchIndex)
     pathname = pathname.substr(0, searchIndex)
@@ -17,7 +17,7 @@ export default function parsePath(path) {
 
   return {
     pathname: pathname,
-    search: search === "?" ? "" : search,
-    hash: hash === "#" ? "" : hash,
+    search: search === `?` ? `` : search,
+    hash: hash === `#` ? `` : hash,
   }
 }

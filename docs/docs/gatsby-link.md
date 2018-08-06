@@ -31,18 +31,22 @@ import React from "react"
 import { Link } from "gatsby"
 
 class Page extends React.Component {
-  render () {
-    <div>
-      <Link
-        to="/another-page/"
-        activeStyle={{
-          color: 'red'
-        }}
-        innerRef={(el) => { this.myLink = el }}
-      >
-      Another page
-      </Link>
-    </div>
+  render() {
+    return (
+      <div>
+        <Link
+          to="/another-page/"
+          activeStyle={{
+            color: "red",
+          }}
+          innerRef={el => {
+            this.myLink = el
+          }}
+        >
+          Another page
+        </Link>
+      </div>
+    )
   }
 }
 ```
@@ -66,23 +70,23 @@ Note that `push` was previously named `navigateTo`. `navigateTo` is deprecated i
 ## Prefixed paths helper
 
 It is common to host sites in a sub-directory of a site. Gatsby let's you [set
-the path prefix for your site](/docs/path-prefix/). After doing so, Gatsby's `<Link>` component  will automatically handle constructing the correct URL in development and production.
+the path prefix for your site](/docs/path-prefix/). After doing so, Gatsby's `<Link>` component will automatically handle constructing the correct URL in development and production.
 
 For pathnames you construct manually, there's a helper function, `withPrefix` that prepends your path prefix in production (but doesn't during development where paths don't need prefixed).
 
 ```jsx
-import { withPrefix } from "gatsby-link";
+import { withPrefix } from "gatsby-link"
 
 const IndexLayout = ({ children, location }) => {
-  const isHomepage = location.pathname === withPrefix("/");
+  const isHomepage = location.pathname === withPrefix("/")
 
   return (
     <div>
       <h1>Welcome {isHomepage ? "home" : "aboard"}!</h1>
       {children()}
     </div>
-  );
-};
+  )
+}
 ```
 
 ## Use `<Link>` only for internal links!
@@ -100,13 +104,13 @@ question, you may need to customize the heuristic to your environment, but the
 following may be a good starting point:
 
 ```jsx
-import {Link as GatsbyLink} from "gatsby";
+import { Link as GatsbyLink } from "gatsby"
 
 const Link = ({ children, to, ...other }) => {
   // Tailor the following test to your environment.
   // This example assumes that any internal link (intended for Gatsby)
   // will start with exactly one slash, and that anything else is external.
-  const internal = /^\/(?!\/)/.test(to);
+  const internal = /^\/(?!\/)/.test(to)
 
   // Use gatsby-link for internal links, and <a> for others
   if (internal) {
@@ -114,14 +118,14 @@ const Link = ({ children, to, ...other }) => {
       <GatsbyLink to={to} {...other}>
         {children}
       </GatsbyLink>
-    );
+    )
   }
   return (
     <a href={to} {...other}>
       {children}
     </a>
-  );
-};
+  )
+}
 
-export default Link;
+export default Link
 ```
