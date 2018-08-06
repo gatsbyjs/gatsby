@@ -339,13 +339,6 @@
   categories:
     - Blog
     - Web Dev
-- title: The Chiedo Companies Website
-  main_url: 'https://chiedo.tv/'
-  url: 'https://chiedo.tv/'
-  featured: false
-  categories:
-    - Landing
-    - Web Dev
 - title: Chocolate Free
   main_url: 'https://chocolate-free.com/'
   url: 'https://chocolate-free.com/'
