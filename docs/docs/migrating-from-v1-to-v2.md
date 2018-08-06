@@ -27,7 +27,8 @@ This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While t
   - [Restore v1 PostCSS plugin setup](#restore-v1-post-css-setup)
   - [Migrate from React Router` to @reach/router](#migrate-from-react-router-to-reachrouter)
   - [APIs onPreRouteUpdate and onRouteUpdate no longer called with the route update action](#apis-onprerouteupdate-and-onrouteupdate-no-longer-called-with-the-route-update-action)
-  - [Browser API `relaceRouterComponent` was removed](#browser-api-relaceroutercomponent-was-removed)
+  - [Browser API `replaceRouterComponent` was removed](#browser-api-replaceroutercomponent-was-removed)
+  - [Browser API `replaceHistory` was removed](#browser-api-replacehistory-was-removed)
   - [Don't query nodes by ID](#dont-query-nodes-by-id)
   - [Typography.js Plugin Config](#typographyjs-plugin-config-changes)
 
@@ -534,7 +535,7 @@ Here's links to diffs for three sites with client routes that were upgraded to @
 React Router v4 would tell us the "action" (push/replace) that triggered the route
 transition. We passed this as one of the arguments along with `location` to plugins. @reach/router doesn't support this so we've removed it from the API calls.
 
-### Browser API `relaceRouterComponent` was removed
+### Browser API `replaceRouterComponent` was removed
 
 React Router allowed you to swap out its history object. To enable this in Gatsby, an API, `replaceRouterComponent` was added so that you could use a custom version of history or React Router. As @reach/router doesn't support this, we've removed this API.
 
@@ -542,6 +543,10 @@ We did, erroneously, suggest using this API for adding support for Redux, etc. w
 
 If you were using `replaceRouterComponent` for this, you'll need to migrate to
 `wrapRootComponent`. See this PR migrating the `using-redux` example site as a pattern to follow https://github.com/gatsbyjs/gatsby/pull/6986
+
+### Browser API `replaceHistory` was removed
+
+Similar to `replaceRouterComponent`, we no longer support custom histories so this was removed.
 
 ### Don't query nodes by ID
 

@@ -70,13 +70,6 @@ exports.shouldUpdateScroll = true
 exports.registerServiceWorker = true
 
 /**
- * Allow a plugin to replace the router component e.g. to use a custom history version.
- * @param {object} $0
- * @param {object} $0.history The history instance to use in the replacement router instance
- */
-exports.replaceRouterComponent = true
-
-/**
  * Allow a plugin to replace the page component renderer. This api runner can be used to
  * implement page transitions. See https://github.com/gatsbyjs/gatsby/tree/master/examples/using-page-transitions for an example of this.
  * @param {object} $0
@@ -84,13 +77,6 @@ exports.replaceRouterComponent = true
  * @param {object} $0.loader The gatsby loader.
  */
 exports.replaceComponentRenderer = true
-
-/**
- * Allow a plugin to replace the history object.
- * @param {object} $0
- * @param {object} $0.basename The base URL of the app.
- */
-exports.replaceHistory = true
 
 /**
  * Allow a plugin to wrap the root component.
