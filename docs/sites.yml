@@ -1942,4 +1942,15 @@
   - Open Source
   built_by: Nikita Kirsanov
   built_by_url: 'https://twitter.com/kitos_kirsanov'
+- title: Papertrail.io
+  description: >
+     Inspection Management for the 21st Century
+  main_url: https://www.papertrail.io/
+  url: https://www.papertrail.io/
+  categories:
+    - Marketing
+    - Technology
+    - Landing
+  built_by: Papertrail.io
+  built_by_url: https://www.papertrail.io
   featured: false

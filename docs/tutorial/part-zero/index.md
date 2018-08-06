@@ -29,11 +29,11 @@ Take a moment to locate and open up the command line interface (CLI) for your co
 
 Node.js is an environment that can run JavaScript code. Gatsby is built with Node.js. To get up and running with Gatsby, you’ll need to have a recent version installed on your computer.
 
-**⌚ Download Node.js**
+### ⌚ Download Node.js
 
 Visit the [**Node.js site**](https://nodejs.org/) and follow the instructions to download and install the recommended version for your operating system. Once you have followed the installation steps, make sure everything was installed properly:
 
-**✋ Check your Node.js installation**
+### ✋ Check your Node.js installation
 
 1.  Open up your terminal.
 2.  Run `node --version`. (If you’re new to the command line, “run `command`” means “type `node --version` in the command prompt, and hit the Enter key”. From here on, this is what we mean by “run `command`”).
@@ -59,7 +59,7 @@ npm has three distinct components: the npm website, the npm registry, and the np
 
 The Gatsby CLI tool lets you quickly create new Gatsby-powered sites, and run commands for developing Gatsby sites. It is a published npm package. You can install the Gatsby CLI from the npm registry, using the npm CLI.
 
-**✋ Install the Gatsby CLI tool**
+### ✋ Install the Gatsby CLI tool
 
 1.  Navigate to the terminal.
 2.  Run `npm install --global gatsby-cli`.
@@ -76,7 +76,7 @@ npm install --global gatsby-cli
 - When installing npm packages, you can install them globally, or in a specific project. (We’ll learn about the latter, later). The `--global` flag signals that we want the first option, to install globally. This means our package will be available to us on our computer, outside of the context of a specific project.
 - `gatsby-cli` is the exact name our desired package is registered with on the [**npm registry**](https://www.npmjs.com/package/gatsby-cli).
 
-**✋ Check your Gatsby CLI installation**
+### ✋ Check your Gatsby CLI installation
 
 1.  Open up your terminal.
 2.  Run `gatsby --version`.
@@ -90,7 +90,7 @@ If successfully installed, running `gatsby --version` should return a version nu
 
 Now let’s use the gatsby-cli tool to create your first Gatsby site. Using the tool, you can use “starters”, or partially built sites with some default configuration, to help you get moving faster on creating a certain type of site. The “Hello World” starter we’ll be using here is a starter with the bare essentials needed for a [Gatsby](/) site.
 
-**✋ Create a Gatsby site**
+### ✋ Create a Gatsby site
 
 1.  Open up your terminal.
 2.  Run `gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world#v2`. (_Note: Depending on your download speed, the amount of time this takes will vary_).
@@ -108,13 +108,13 @@ gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world
 - Starting with `gatsby` says, ‘hey, we want to use the gatsby-cli tool!’
 - `new` is a gatsby command to create a new Gatsby project.
 - Here, `hello-world` is an arbitrary title — you could pick anything. The CLI tool will place the code for your new site in a new folder called “hello-world”.
-- Lastly, the Github URL specified points to a code repository that holds the starter code you want to use. If you aren't familiar yet with git and Github, you can [learn more here]([**Try Git: Git Tutorial**](https://try.github.io/).
+- Lastly, the Github URL specified points to a code repository that holds the starter code you want to use. If you aren't familiar yet with git and Github, you can [learn more here](https://try.github.io/).
 
 ```bash
 cd hello-world
 ```
 
-- This says ‘I want to change directories (`cd`) to this other subfolder called “hello-world”. Whenever you want to run any commands for your site, you need to be in the context for that site (aka, your terminal needs to be pointed at the directory where your site code lives).
+- This says 'I want to change directories (`cd`) to the “hello-world” subfolder'. Whenever you want to run any commands for your site, you need to be in the context for that site (aka, your terminal needs to be pointed at the directory where your site code lives).
 
 ```bash
 gatsby develop
@@ -122,7 +122,7 @@ gatsby develop
 
 - This command starts a development server. You will be able to see and interact with your new site in a development environment — local (on your computer, not published to the internet).
 
-**✋ View your site locally**
+### ✋ View your site locally
 
 Open up a new tab in your browser and navigate to [**http://localhost:8000**](http://localhost:8000/).
 
@@ -136,7 +136,7 @@ You’ll be able to visit the site locally at [**_http://localhost:8000_**](http
 
 A code editor is a program designed specifically for editing computer code. There are many great ones out there; If you haven't worked with a code editor before, we recommend the editor used throughout this tutorial -- [**VS Code**](https://code.visualstudio.com/).
 
-**⌚ Download VS Code**
+### ⌚ Download VS Code
 
 Visit the [VS code site](https://code.visualstudio.com/#alt-downloads), and download the version appropriate for your platform.
 
@@ -144,7 +144,7 @@ Visit the [VS code site](https://code.visualstudio.com/#alt-downloads), and down
 
 [Prettier](https://github.com/prettier/prettier) is a tool that helps format your code and keep it consistent.
 
-**⌚ Install Prettier**
+### ⌚ Install Prettier
 
 Visit the [**Prettier site**](https://prettier.io/) and follow the instructions to install.
 
