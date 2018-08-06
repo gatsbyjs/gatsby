@@ -2,7 +2,7 @@ import React from "react"
 import { oneLine, stripIndent } from "common-tags"
 
 exports.onRenderBody = (
-  { setHeadComponents, setPreBodyComponents },
+  { setHeadComponents, setPostBodyComponents, setPreBodyComponents },
   pluginOptions
 ) => {
   if (
@@ -18,7 +18,7 @@ exports.onRenderBody = (
     `
         : ``
 
-    setHeadComponents([
+    const scriptsArray = [
       <script
         key="plugin-google-tagmanager"
         dangerouslySetInnerHTML={{
@@ -30,7 +30,14 @@ exports.onRenderBody = (
             })(window,document,'script','dataLayer', '${pluginOptions.id}');`,
         }}
       />,
-    ])
+    ]
+
+    if (pluginOptions.includePostBody) {
+      setPostBodyComponents(scriptsArray)
+    } else {
+      setHeadComponents(scriptsArray)
+    }
+
 
     setPreBodyComponents([
       <noscript
