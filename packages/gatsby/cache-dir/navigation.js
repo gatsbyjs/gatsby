@@ -26,7 +26,7 @@ function maybeRedirect(pathname) {
       }
     }
 
-    history.replace(redirect.toPath)
+    window.___replace(redirect.toPath)
     return true
   } else {
     return false

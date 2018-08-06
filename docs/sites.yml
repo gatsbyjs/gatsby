@@ -339,13 +339,6 @@
   categories:
     - Blog
     - Web Dev
-- title: The Chiedo Companies Website
-  main_url: 'https://chiedo.tv/'
-  url: 'https://chiedo.tv/'
-  featured: false
-  categories:
-    - Landing
-    - Web Dev
 - title: Chocolate Free
   main_url: 'https://chocolate-free.com/'
   url: 'https://chocolate-free.com/'
@@ -1927,4 +1920,30 @@
     - Landing
     - Personal
   built_by: Max McKinney
+  featured: false
+- title: WebPurple
+  main_url: 'https://www.webpurple.net/'
+  url: 'https://www.webpurple.net/'
+  source_url: 'https://github.com/WebPurple/site'
+  description: >-
+    Site of local (Russia, Ryazan) frontend community. Main purpose is to show info about meetups and keep blog.
+  categories:
+  - Nonprofit
+  - Web Dev
+  - Community
+  - Blog
+  - Open Source
+  built_by: Nikita Kirsanov
+  built_by_url: 'https://twitter.com/kitos_kirsanov'
+- title: Papertrail.io
+  description: >
+     Inspection Management for the 21st Century
+  main_url: https://www.papertrail.io/
+  url: https://www.papertrail.io/
+  categories:
+    - Marketing
+    - Technology
+    - Landing
+  built_by: Papertrail.io
+  built_by_url: https://www.papertrail.io
   featured: false

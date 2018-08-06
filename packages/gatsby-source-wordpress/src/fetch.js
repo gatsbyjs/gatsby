@@ -234,7 +234,7 @@ async function fetchData({
       entities = entities.concat(routeResponse)
     } else {
       routeResponse.__type = type
-      if(optionPageId) {
+      if (optionPageId) {
         routeResponse.__acfOptionPageId = optionPageId
       }
       entities.push(routeResponse)
@@ -410,7 +410,8 @@ function getValidRoutes({
       const routePath = getRoutePath(url, route._links.self)
       if (excludedTypes.includes(entityType)) {
         // Grab ACF Version from routes
-        acfRestVersion = key === `/acf/${entityType}` ? entityType.substr(1) : acfRestVersion
+        acfRestVersion =
+          key === `/acf/${entityType}` ? entityType.substr(1) : acfRestVersion
         if (_verbose)
           console.log(
             colorized.out(`Invalid route.`, colorized.color.Font.FgRed)
@@ -474,7 +475,10 @@ function getValidRoutes({
 
   if (_verbose)
     console.log(
-      colorized.out(`Detected ACF to REST version: v${acfRestVersion}.`, colorized.color.Font.FgGreen)
+      colorized.out(
+        `Detected ACF to REST version: v${acfRestVersion}.`,
+        colorized.color.Font.FgGreen
+      )
     )
 
   if (_useACF) {
@@ -498,7 +502,10 @@ function getValidRoutes({
     }
     if (_verbose)
       console.log(
-        colorized.out(`Added ACF Options route(s).`, colorized.color.Font.FgGreen)
+        colorized.out(
+          `Added ACF Options route(s).`,
+          colorized.color.Font.FgGreen
+        )
       )
     if (_hostingWPCOM) {
       // TODO : Need to test that out with ACF on Wordpress.com hosted site. Need a premium account on wp.com to install extensions.
