@@ -417,6 +417,16 @@ const Photo = ({ location, photoId }) => {
 }
 ```
 
+#### A `history` prop is no longer passed to page components
+
+React Router would pass a `history` prop to components that you could use to navigate.
+
+If you need to do programmatic navigation, import instead the @reach/router's `navigate` function.
+
+```javascript
+import { navigate } from "@reach/router"
+```
+
 #### The following props are no longer available on `<Link>`
 
 - `exact`
