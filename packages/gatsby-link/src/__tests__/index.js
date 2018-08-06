@@ -1,6 +1,10 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import { MemoryRouter } from "react-router-dom"
+import {
+  createMemorySource,
+  createHistory,
+  LocationProvider,
+} from "@reach/router"
 
 const getInstance = (props, pathPrefix = ``) => {
   Object.assign(global.window, {
@@ -10,7 +14,7 @@ const getInstance = (props, pathPrefix = ``) => {
   const context = { router: { history: {} } }
 
   const Link = require(`../`).default
-  return new Link(props, context)
+  return Link(props, context)
 }
 
 const getPush = () => {
@@ -43,16 +47,6 @@ describe(`<Link />`, () => {
     }).not.toThrow()
   })
 
-  describe(`path prefixing`, () => {
-    it(`does not include path prefix`, () => {
-      const to = `/path`
-      const pathPrefix = `/blog`
-      const instance = getInstance({ to }, pathPrefix)
-
-      expect(instance.state.to.pathname).toEqual(to)
-    })
-  })
-
   describe(`the location to link to`, () => {
     global.window.___loader = {
       enqueue: jest.fn(),
@@ -63,61 +57,19 @@ describe(`<Link />`, () => {
 
       const node = document.createElement(`div`)
       const Link = require(`../`).default
+      let source = createMemorySource(`/`)
+      let history = createHistory(source)
 
       ReactDOM.render(
-        <MemoryRouter>
+        <LocationProvider history={history}>
           <Link to={location}>link</Link>
-        </MemoryRouter>,
+        </LocationProvider>,
         node
       )
 
       const href = node.querySelector(`a`).getAttribute(`href`)
 
       expect(href).toEqual(location)
-    })
-
-    it(`accepts a location "to" prop`, () => {
-      const location = {
-        pathname: `/courses`,
-        search: `?sort=name`,
-        hash: `#the-hash`,
-        state: { fromDashboard: true },
-      }
-
-      const node = document.createElement(`div`)
-      const Link = require(`../`).default
-
-      ReactDOM.render(
-        <MemoryRouter>
-          <Link to={location}>link</Link>
-        </MemoryRouter>,
-        node
-      )
-
-      const href = node.querySelector(`a`).getAttribute(`href`)
-
-      expect(href).toEqual(`/courses?sort=name#the-hash`)
-    })
-
-    it(`resolves to with no pathname using current location`, () => {
-      const location = {
-        search: `?sort=name`,
-        hash: `#the-hash`,
-      }
-
-      const node = document.createElement(`div`)
-      const Link = require(`../`).default
-
-      ReactDOM.render(
-        <MemoryRouter initialEntries={[`/somewhere`]}>
-          <Link to={location}>link</Link>
-        </MemoryRouter>,
-        node
-      )
-
-      const href = node.querySelector(`a`).getAttribute(`href`)
-
-      expect(href).toEqual(`/somewhere?sort=name#the-hash`)
     })
   })
 

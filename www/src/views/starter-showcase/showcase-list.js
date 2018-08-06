@@ -148,7 +148,8 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
                       }
                       css={{ ...styles.noLinkUnderline }}
                     >
-                      <FaClipboard />{` `}
+                      <FaClipboard />
+                      {` `}
                     </a>
                     <a
                       href={node.frontmatter.demo}
@@ -156,7 +157,8 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
                       rel="noopener noreferrer"
                       css={{ ...styles.noLinkUnderline }}
                     >
-                      <FaExtLink />{` `}
+                      <FaExtLink />
+                      {` `}
                     </a>
                     <a
                       href={`https://github.com/${githubFullName}`}
@@ -164,7 +166,8 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
                       rel="noopener noreferrer"
                       css={{ ...styles.noLinkUnderline }}
                     >
-                      <FaGithub />{` `}
+                      <FaGithub />
+                      {` `}
                     </a>
                   </span>
                 </div>

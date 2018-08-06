@@ -109,7 +109,8 @@ class StarterTemplate extends React.Component {
                 }}
               >
                 {starterShowcase.owner.login}
-              </a>{` `}
+              </a>
+              {` `}
               <span>/</span>
               <div>
                 <h1 css={{ margin: 0, display: `inline-block` }}>
@@ -118,7 +119,8 @@ class StarterTemplate extends React.Component {
                 <span css={{ marginLeft: 20 }}>
                   <span role="img" aria-label="star">
                     ⭐
-                  </span>{` `}
+                  </span>
+                  {` `}
                   {starterShowcase.stars}
                 </span>
               </div>
@@ -367,7 +369,8 @@ class StarterTemplate extends React.Component {
                             {` `}
                             <a href={`https://npm.im/${dep}`}>
                               <FaExtLink />
-                            </a>{` `}
+                            </a>
+                            {` `}
                             {dep}
                           </div>
                         )
