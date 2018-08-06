@@ -172,6 +172,8 @@
           link: /docs/lighthouse-audit/
 - title: API Reference
   items:
+    - title: Gatsby Link
+      link: /docs/gatsby-link/
     - title: Gatsby Node APIs
       link: /docs/node-apis/
     - title: Gatsby Browser APIs

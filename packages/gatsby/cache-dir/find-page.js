@@ -1,5 +1,5 @@
 // TODO add tests especially for handling prefixed links.
-import { matchPath } from "react-router-dom"
+import { match as matchPath } from "@reach/router/lib/utils"
 import stripPrefix from "./strip-prefix"
 
 const pageCache = {}
@@ -34,40 +34,18 @@ export default (pages, pathPrefix = ``) => rawPathname => {
   // Array.prototype.find is not supported in IE so we use this somewhat odd
   // work around.
   pages.some(page => {
-    if (page.matchPath) {
-      // Try both the path and matchPath
-      if (
-        matchPath(trimmedPathname, { path: page.path }) ||
-        matchPath(trimmedPathname, {
-          path: page.matchPath,
-        })
-      ) {
-        foundPage = page
-        pageCache[trimmedPathname] = page
-        return true
-      }
-    } else {
-      if (
-        matchPath(trimmedPathname, {
-          path: page.path,
-          exact: true,
-        })
-      ) {
-        foundPage = page
-        pageCache[trimmedPathname] = page
-        return true
-      }
+    let pathToMatch = page.matchPath ? page.matchPath : page.path
+    if (matchPath(pathToMatch, trimmedPathname)) {
+      foundPage = page
+      pageCache[trimmedPathname] = page
+      return true
+    }
 
-      // Finally, try and match request with default document.
-      if (
-        matchPath(trimmedPathname, {
-          path: page.path + `index.html`,
-        })
-      ) {
-        foundPage = page
-        pageCache[trimmedPathname] = page
-        return true
-      }
+    // Finally, try and match request with default document.
+    if (matchPath(`${page.path}index.html`, trimmedPathname)) {
+      foundPage = page
+      pageCache[trimmedPathname] = page
+      return true
     }
 
     return false

@@ -1,16 +1,10 @@
 import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
 import React, { createElement } from "react"
 import ReactDOM from "react-dom"
-import { Router, Route, withRouter, matchPath } from "react-router-dom"
+import { Router } from "@reach/router"
 import { ScrollContext } from "gatsby-react-router-scroll"
 import domReady from "domready"
-import {
-  shouldUpdateScroll,
-  attachToHistory,
-  init as navigationInit,
-} from "./navigation"
-import history from "./history"
-window.___history = history
+import { shouldUpdateScroll, init as navigationInit } from "./navigation"
 import emitter from "./emitter"
 window.___emitter = emitter
 import PageRenderer from "./page-renderer"
@@ -18,7 +12,8 @@ import asyncRequires from "./async-requires"
 import loader from "./loader"
 
 window.asyncRequires = asyncRequires
-window.matchPath = matchPath
+window.___emitter = emitter
+window.___loader = loader
 
 loader.addPagesArray([window.page])
 loader.addDataPaths({ [window.page.jsonName]: window.dataPath })
@@ -36,41 +31,52 @@ apiRunnerAsync(`onClientEntry`).then(() => {
 
   // Call onRouteUpdate on the initial page load.
   apiRunner(`onRouteUpdate`, {
-    location: history.location,
-    action: history.action,
+    location: window.history.location,
   })
 
-  const AltRouter = apiRunner(`replaceRouterComponent`, { history })[0]
+  class RouteHandler extends React.Component {
+    render() {
+      const { location } = this.props
+      let child
+
+      // TODO
+      // check if hash + if element and if so scroll
+      // remove hash handling from gatsby-link
+      // check if scrollbehavior handles back button for
+      // restoring old position
+      // if not, add that.
+
+      if (loader.getPage(location.pathname)) {
+        child = createElement(PageRenderer, {
+          isPage: true,
+          ...this.props,
+        })
+      } else {
+        child = createElement(PageRenderer, {
+          isPage: true,
+          location: { pathname: `/404.html` },
+        })
+      }
+
+      return (
+        <ScrollContext
+          location={location}
+          shouldUpdateScroll={shouldUpdateScroll}
+        >
+          {child}
+        </ScrollContext>
+      )
+    }
+  }
 
   loader.getResourcesForPathname(window.location.pathname, () => {
     const Root = () =>
       createElement(
-        AltRouter ? AltRouter : Router,
+        Router,
         {
-          basename: __PATH_PREFIX__,
-          history: !AltRouter ? history : undefined,
+          basepath: __PATH_PREFIX__,
         },
-        createElement(
-          ScrollContext,
-          { shouldUpdateScroll },
-          createElement(withRouter(Route), {
-            render: routeProps => {
-              attachToHistory(routeProps.history)
-
-              if (loader.getPage(routeProps.location.pathname)) {
-                return createElement(PageRenderer, {
-                  isPage: true,
-                  ...routeProps,
-                })
-              } else {
-                return createElement(PageRenderer, {
-                  isPage: true,
-                  location: { pathname: `/404.html` },
-                })
-              }
-            },
-          })
-        )
+        createElement(RouteHandler, { path: `/*` })
       )
 
     const NewRoot = apiRunner(`wrapRootComponent`, { Root }, Root)[0]

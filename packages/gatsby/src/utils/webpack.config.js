@@ -331,15 +331,6 @@ module.exports = async (
           {
             oneOf: [rules.cssModules(), rules.css()],
           },
-
-          // Remove manually unused React Router modules. Try removing these
-          // rules whenever they get around to making a new release with their
-          // tree shaking fixes.
-          { test: /HashHistory/, use: `null-loader` },
-          { test: /MemoryHistory/, use: `null-loader` },
-          { test: /StaticRouter/, use: `null-loader` },
-          { test: /MemoryRouter/, use: `null-loader` },
-          { test: /HashRouter/, use: `null-loader` },
         ])
 
         break

@@ -1,22 +1,22 @@
 import React from "react"
 import PropTypes from "prop-types"
-import { Redirect, Route } from "react-router-dom"
+import { Router, navigate } from "@reach/router"
 import { isLoggedIn } from "../utils/auth"
 
 // More info at https://reacttraining.com/react-router/web/example/auth-workflow
-const PrivateRoute = ({ component: Component, ...rest }) => (
-  <Route
-    {...rest}
-    render={props =>
-      !isLoggedIn() ? (
-        // If we’re not logged in, redirect to the home page.
-        <Redirect to={{ pathname: `/app/login` }} />
-      ) : (
-        <Component {...props} />
-      )
-    }
-  />
-)
+const PrivateRoute = ({ component: Component, ...rest }) => {
+  if (!isLoggedIn() && window.location.pathname !== `/app/login`) {
+    // If we’re not logged in, redirect to the home page.
+    navigate(`/app/login`)
+    return null
+  }
+
+  return (
+    <Router>
+      <Component {...rest} />
+    </Router>
+  )
+}
 
 PrivateRoute.propTypes = {
   component: PropTypes.any.isRequired,
