@@ -347,12 +347,12 @@ module.exports = (
             type: GraphQLInt,
             defaultValue: 140,
           },
-          halfChop: {
+          truncate: {
             type: GraphQLBoolean,
-            defaultValue: true,
+            defaultValue: false,
           },
         },
-        resolve(markdownNode, { pruneLength, halfChop }) {
+        resolve(markdownNode, { pruneLength, truncate }) {
           if (markdownNode.excerpt) {
             return Promise.resolve(markdownNode.excerpt)
           }
@@ -364,7 +364,7 @@ module.exports = (
               }
               return
             })
-            if (halfChop) {
+            if (!truncate) {
               return prune(excerptNodes.join(` `), pruneLength, `…`)
             }
             return _.truncate(excerptNodes.join(` `), {
