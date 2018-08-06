@@ -59,7 +59,7 @@ For cases when you can only use event handlers for navigation, you can use `push
 import { push } from "gatsby"
 
 render () {
-  <div onClick={ () => push('/example')}>
+  <div onClick={ () => push('/example')} role="link" tabIndex="0" onKeyUp={this.handleKeyUp}>
     <p>Example</p>
   </div>
 }
