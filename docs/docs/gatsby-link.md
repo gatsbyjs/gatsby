@@ -56,7 +56,7 @@ class Page extends React.Component {
 For cases when you can only use event handlers for navigation, you can use `push` or `replace`. `push` is a wrapper for `history.push` and `replace` wraps `history.replace`.
 
 ```jsx
-import { push } from "gatsby-link"
+import { push } from "gatsby"
 
 render () {
   <div onClick={ () => push('/example')}>
@@ -75,7 +75,7 @@ the path prefix for your site](/docs/path-prefix/). After doing so, Gatsby's `<L
 For pathnames you construct manually, there's a helper function, `withPrefix` that prepends your path prefix in production (but doesn't during development where paths don't need prefixed).
 
 ```jsx
-import { withPrefix } from "gatsby-link"
+import { withPrefix } from "gatsby"
 
 const IndexLayout = ({ children, location }) => {
   const isHomepage = location.pathname === withPrefix("/")
@@ -96,7 +96,7 @@ This component is intended _only_ for links to pages handled by Gatsby. For link
 Sometimes you won't know ahead of time whether a link will be internal or not,
 such as when the data is coming from a CMS.
 In these cases you may find it useful to make a component which inspects the
-link and renders either with `gatsby-link` or with a regular `<a>` tag
+link and renders either with Gatsby's `<Link>` or with a regular `<a>` tag
 accordingly.
 
 Since deciding whether a link is internal or not depends on the site in
@@ -112,7 +112,7 @@ const Link = ({ children, to, ...other }) => {
   // will start with exactly one slash, and that anything else is external.
   const internal = /^\/(?!\/)/.test(to)
 
-  // Use gatsby-link for internal links, and <a> for others
+  // Use Gatsby Link for internal links, and <a> for others
   if (internal) {
     return (
       <GatsbyLink to={to} {...other}>
