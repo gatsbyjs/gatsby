@@ -12,7 +12,7 @@ This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While t
 
 ## What we'll cover
 
-- [Updating Up Dependencies](#setting-up-dependencies)
+- [Updating Your Dependencies](#updating-your-dependencies)
 
   - [Update Gatsby version](#update-gatsby-version)
   - [Manually install React](#manually-install-react)

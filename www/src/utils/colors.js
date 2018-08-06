@@ -80,7 +80,7 @@ const colors = {
   code: {
     remove: `#e45c5c`,
     add: `#4a9c59`,
-  }
+  },
 }
 
 let pointer = `a`

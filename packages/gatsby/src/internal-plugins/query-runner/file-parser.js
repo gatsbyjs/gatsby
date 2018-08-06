@@ -86,7 +86,7 @@ async function findGraphQLTags(file, text): Promise<Array<DefinitionNode>> {
         /**
          * A map of graphql documents to unique locations.
          *
-         * A graphql document's unique location is made of: 
+         * A graphql document's unique location is made of:
          *
          *  - the location of the graphql template literal that contains the document, and
          *  - the document's location within the graphql template literal

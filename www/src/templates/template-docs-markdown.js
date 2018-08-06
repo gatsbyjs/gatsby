@@ -3,10 +3,7 @@ import Helmet from "react-helmet"
 import { graphql } from "gatsby"
 
 import Layout from "../components/layout"
-import {
-  itemListDocs,
-  itemListTutorial,
-} from "../utils/sidebar/item-list"
+import { itemListDocs, itemListTutorial } from "../utils/sidebar/item-list"
 import MarkdownPageFooter from "../components/markdown-page-footer"
 import DocSearchContent from "../components/docsearch-content"
 

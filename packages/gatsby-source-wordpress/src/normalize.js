@@ -69,25 +69,30 @@ exports.normalizeACF = normalizeACF
 
 // Combine all ACF Option page data
 exports.combineACF = function(entities) {
- let acfOptionData = {}
- // Map each ACF Options object keys/data to single object
- _.forEach(entities.filter((e) => e.__type === `wordpress__acf_options`), (e) => {
-   if(e[`acf`]) {
-     acfOptionData[e.__acfOptionPageId || `options`] = {}
-     Object.keys(e[`acf`]).map((k) => acfOptionData[e.__acfOptionPageId || `options`][k] = e[`acf`][k])
-   }
- })
+  let acfOptionData = {}
+  // Map each ACF Options object keys/data to single object
+  _.forEach(entities.filter(e => e.__type === `wordpress__acf_options`), e => {
+    if (e[`acf`]) {
+      acfOptionData[e.__acfOptionPageId || `options`] = {}
+      Object.keys(e[`acf`]).map(
+        k => (acfOptionData[e.__acfOptionPageId || `options`][k] = e[`acf`][k])
+      )
+    }
+  })
 
- // Remove previous ACF Options objects (if any)
- _.pullAll(entities, entities.filter((e) => e.__type === `wordpress__acf_options`))
+  // Remove previous ACF Options objects (if any)
+  _.pullAll(
+    entities,
+    entities.filter(e => e.__type === `wordpress__acf_options`)
+  )
 
- // Create single ACF Options object
- entities.push({
-   acf: acfOptionData || false,
-   __type: `wordpress__acf_options`,
- })
+  // Create single ACF Options object
+  entities.push({
+    acf: acfOptionData || false,
+    __type: `wordpress__acf_options`,
+  })
 
- return entities
+  return entities
 }
 
 // Create entities from the few the WordPress API returns as an object for presumably

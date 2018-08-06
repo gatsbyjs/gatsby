@@ -4,41 +4,41 @@ title: Build a page with a GraphQL query
 
 Gatsby creates pages from components located within `src/pages`. It watches the folder and will create and remove pages as you add and remove components. The pathname for each page is derived from the name of the component. For example, `src/pages/about.js` would be located at `/about/` when published.
 
-
 In this guide, you will learn how to perform a query of your site's metadata for the description to display on your homepage.
 
 ## Adding `description` to `siteMetadata`
+
 The first step in displaying the description will be ensuring you have one to begin with.
 
 Inside of `gatsby-config.js`:
+
 ```js
 module.exports = {
   siteMetadata: {
-    title: 'My Homepage',
-    description: 'This is where I write my thoughts.'
-  }
+    title: "My Homepage",
+    description: "This is where I write my thoughts.",
+  },
 }
 ```
 
 ## Basic Index Page Markup
 
 A simple index page (`src/pages/index.js`) can be marked up like so:
+
 ```js
-import React from 'react'
+import React from "react"
 
 const HomePage = () => {
-  return (
-    <div>
-      Hello!
-    </div>
-  )
+  return <div>Hello!</div>
 }
 
 export default HomePage
 ```
 
 ## Adding the GraphQL Query
+
 The first thing to do is import GraphQL from Gatsby. At the top of `index.js` add:
+
 ```diff
 import React from 'react'
 + import { graphql } from 'gatsby'
@@ -83,11 +83,12 @@ export const query = graphql`
 +        description
 +      }
 +    }
-+  }  
++  }
 `
 ```
 
 ## Get Data into the `<HomePage />` Component
+
 To start, update the `HomePage` component to destructure `data` from props.
 
 The `data` prop contains the results of the GraphQL query, and matches the shape you would expect. With this in mind, the updated `HomePage` markup looks like:
@@ -113,7 +114,7 @@ export const query = graphql`
         description
       }
     }
-  }  
+  }
 `
 
 export default HomePage
