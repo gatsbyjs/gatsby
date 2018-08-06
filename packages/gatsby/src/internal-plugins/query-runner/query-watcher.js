@@ -154,14 +154,48 @@ const updateStateAndRunQueries = isFirstRun => {
   })
 }
 
-exports.extractQueries = () =>
-  updateStateAndRunQueries(true).then(() => {
+/**
+ * Removes components templates that aren't used by any page from redux store.
+ */
+const clearInactiveComponents = () => {
+  const { components, pages } = store.getState()
+
+  const activeTemplates = new Set()
+  pages.forEach(page => {
+    // Set will guarantee uniqeness of entires
+    activeTemplates.add(slash(page.component))
+  })
+
+  components.forEach(component => {
+    if (!activeTemplates.has(component.componentPath)) {
+      debug(
+        `${
+          component.componentPath
+        } component was removed because it isn't used by any page`
+      )
+      store.dispatch({
+        type: `REMOVE_TEMPLATE_COMPONENT`,
+        payload: component,
+      })
+    }
+  })
+}
+
+exports.extractQueries = () => {
+  // Remove template components that point to not existing page templates.
+  // We need to do this, because components data is cached and there might
+  // be changes applied when development server isn't running. This is needed
+  // only in initial run, because during development state will be adjusted.
+  clearInactiveComponents()
+
+  return updateStateAndRunQueries(true).then(() => {
     // During development start watching files to recompile & run
     // queries on the fly.
     if (process.env.NODE_ENV !== `production`) {
       watch(store.getState().program.directory)
     }
   })
+}
 
 const queueQueriesForPageComponent = componentPath => {
   const pages = getPagesForComponent(componentPath)
