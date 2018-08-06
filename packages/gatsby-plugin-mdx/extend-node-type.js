@@ -110,7 +110,7 @@ ${code}`;
       },
       wordCount: {
         type: new GraphQLObjectType({
-          name: `wordCount`,
+          name: `wordCounts`,
           fields: {
             paragraphs: {
               type: GraphQLInt
