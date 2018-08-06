@@ -62,7 +62,6 @@ const reportError = (message, err, reporter) => {
 }
 
 const generalArgs = {
-  maxWidth: 800,
   quality: 50,
   jpegProgressive: true,
   pngCompressionLevel: 9,
@@ -76,7 +75,6 @@ const generalArgs = {
 
 const healOptions = (args, defaultArgs) => {
   let options = _.defaults({}, args, defaultArgs, generalArgs)
-  options.maxWidth = parseInt(options.maxWidth, 10)
   options.quality = parseInt(options.quality, 10)
   options.pngCompressionLevel = parseInt(options.pngCompressionLevel, 10)
   options.toFormat = options.toFormat.toLowerCase()
@@ -88,6 +86,15 @@ const healOptions = (args, defaultArgs) => {
     options.width = parseInt(options.width, 10)
   } else if (options.height !== undefined) {
     options.height = parseInt(options.height, 10)
+  }
+
+  // only set maxWidth to 800 if neither maxWidth nor maxHeight is passed
+  if (options.maxWidth === undefined && options.maxHeight === undefined) {
+    options.maxWidth = 800
+  } else if (options.maxWidth !== undefined) {
+    options.maxWidth = parseInt(options.maxWidth, 10)
+  } else if (options.maxHeight !== undefined) {
+    options.maxHeight = parseInt(options.maxHeight, 10)
   }
 
   return options
@@ -467,11 +474,25 @@ async function fluid({ file, args = {}, reporter }) {
     options.sizeByPixelDensity && typeof density === `number` && density > 0
       ? density / 72
       : 1
-  const presentationWidth = Math.min(
-    options.maxWidth,
-    Math.round(width / pixelRatio)
-  )
-  const presentationHeight = Math.round(presentationWidth * (height / width))
+
+  // if no maxWidth is passed, we need to resize the image based on the passed maxHeight
+  const fixedDimension =
+    options.maxWidth === undefined ? `maxHeight` : `maxWidth`
+
+  let presentationWidth, presentationHeight
+  if (fixedDimension === `maxWidth`) {
+    presentationWidth = Math.min(
+      options.maxWidth,
+      Math.round(width / pixelRatio)
+    )
+    presentationHeight = Math.round(presentationWidth * (height / width))
+  } else {
+    presentationHeight = Math.min(
+      options.maxHeight,
+      Math.round(height / pixelRatio)
+    )
+    presentationWidth = Math.round(presentationHeight * (width / height))
+  }
 
   // If the users didn't set default sizes, we'll make one.
   if (!options.sizes) {
@@ -487,30 +508,35 @@ async function fluid({ file, args = {}, reporter }) {
   // image processing time (Sharp has optimizations thankfully for creating
   // multiple sizes of the same input file)
   const fluidSizes = []
-  fluidSizes.push(options.maxWidth / 4)
-  fluidSizes.push(options.maxWidth / 2)
-  fluidSizes.push(options.maxWidth)
-  fluidSizes.push(options.maxWidth * 1.5)
-  fluidSizes.push(options.maxWidth * 2)
-  fluidSizes.push(options.maxWidth * 3)
-  const filteredSizes = fluidSizes.filter(size => size < width)
+  fluidSizes.push(options[fixedDimension] / 4)
+  fluidSizes.push(options[fixedDimension] / 2)
+  fluidSizes.push(options[fixedDimension])
+  fluidSizes.push(options[fixedDimension] * 1.5)
+  fluidSizes.push(options[fixedDimension] * 2)
+  fluidSizes.push(options[fixedDimension] * 3)
+  const filteredSizes = fluidSizes.filter(
+    size => size < (fixedDimension === `maxWidth` ? width : height)
+  )
 
   // Add the original image to ensure the largest image possible
   // is available for small images. Also so we can link to
   // the original image.
-  filteredSizes.push(width)
+  filteredSizes.push(fixedDimension === `maxWidth` ? width : height)
 
   // Sort sizes for prettiness.
   const sortedSizes = _.sortBy(filteredSizes)
 
   // Queue sizes for processing.
+  const dimensionAttr = fixedDimension === `maxWidth` ? `width` : `height`
+  const otherDimensionAttr = fixedDimension === `maxWidth` ? `height` : `width`
   const images = sortedSizes.map(size => {
     const arrrgs = {
       ...options,
-      width: Math.round(size),
+      [otherDimensionAttr]: undefined,
+      [dimensionAttr]: Math.round(size),
     }
     // Queue sizes for processing.
-    if (options.maxHeight) {
+    if (options.maxWidth !== undefined && options.maxHeight !== undefined) {
       arrrgs.height = Math.round(size * (options.maxHeight / options.maxWidth))
     }
 
@@ -538,7 +564,7 @@ async function fluid({ file, args = {}, reporter }) {
   // Construct src and srcSet strings.
   const originalImg = _.maxBy(images, image => image.width).src
   const fallbackSrc = _.minBy(images, image =>
-    Math.abs(options.maxWidth - image.width)
+    Math.abs(options[fixedDimension] - image[dimensionAttr])
   ).src
   const srcSet = images
     .map(image => `${image.src} ${Math.round(image.width)}w`)

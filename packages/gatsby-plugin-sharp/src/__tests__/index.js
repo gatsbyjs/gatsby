@@ -97,6 +97,16 @@ describe(`gatsby-plugin-sharp`, () => {
 
       expect(args).toEqual({ maxWidth: 400 })
     })
+
+    it(`infers the maxWidth if only maxHeight is given`, async () => {
+      const args = { maxHeight: 20 }
+      const result = await fluid({
+        file: getFileObject(path.join(__dirname, `images/144-density.png`)),
+        args,
+      })
+
+      expect(result.presentationWidth).toEqual(41)
+    })
   })
 
   describe(`fixed`, () => {
