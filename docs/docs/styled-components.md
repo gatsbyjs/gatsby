@@ -19,7 +19,7 @@ gatsby new styled-components-tutorial https://github.com/gatsbyjs/gatsby-starter
 Second, we'll install the Gatsby plugin for Styled Components.
 
 ```sh
-npm install --save gatsby-plugin-styled-components styled-components
+npm install --save gatsby-plugin-styled-components styled-components babel-plugin-styled-components
 ```
 
 And then add it to your site's `gatsby-config.js`:
