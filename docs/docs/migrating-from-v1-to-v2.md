@@ -30,6 +30,7 @@ This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While t
   - [Browser API `replaceRouterComponent` was removed](#browser-api-replaceroutercomponent-was-removed)
   - [Browser API `replaceHistory` was removed](#browser-api-replacehistory-was-removed)
   - [Don't query nodes by ID](#dont-query-nodes-by-id)
+  - [Use Query in place of RootQueryType](#use-query-in-place-of-rootquerytype)
   - [Typography.js Plugin Config](#typographyjs-plugin-config-changes)
 
 - [Resolving Deprecations](#resolving-deprecations)
@@ -573,6 +574,26 @@ Here's an example querying an image:
 ```
 
 [See the Pull Request that implemented this change](https://github.com/gatsbyjs/gatsby/pull/3807/files)
+
+### Use `Query` in place of `RootQueryType`
+
+The GraphQL root type has been changed from `RootQueryType` to `Query`. This is only likely to impact you if you have top-level fragments in your GraphQL queries:
+
+```diff
+  query Blog {
+    ...Sidebar
+    blogPosts {
+      title
+      slug
+    }
+  }
+  
+- fragment Sidebar on RootQueryType {
++ fragment Sidebar on Query {
+    siteDescription
+  }
+}
+```
 
 ### Typography.js Plugin Config Changes
 
