@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.0-beta.12"></a>
+
+# [2.0.0-beta.12](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.0.0-beta.10...gatsby-cli@2.0.0-beta.12) (2018-08-07)
+
+**Note:** Version bump only for package gatsby-cli
+
 <a name="2.0.0-beta.10"></a>
 
 # [2.0.0-beta.10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.0.0-beta.8...gatsby-cli@2.0.0-beta.10) (2018-08-07)
