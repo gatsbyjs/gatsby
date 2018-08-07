@@ -32,6 +32,7 @@ This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While t
   - [Don't query nodes by ID](#dont-query-nodes-by-id)
   - [Use Query in place of RootQueryType](#use-query-in-place-of-rootquerytype)
   - [Typography.js Plugin Config](#typographyjs-plugin-config-changes)
+  - [Update CSS Modules class names that use dashes](#update-css-modules-class-names-that-use-dashes)
 
 - [Resolving Deprecations](#resolving-deprecations)
 
@@ -585,7 +586,7 @@ The GraphQL root type has been changed from `RootQueryType` to `Query`. This is 
       slug
     }
   }
-  
+
 - fragment Sidebar on RootQueryType {
 + fragment Sidebar on Query {
     siteDescription
@@ -607,6 +608,29 @@ If you use [`gatsby-plugin-typography`](https://www.gatsbyjs.org/packages/gatsby
 + const { rhythm, scale } = typography;
 + export { rhythm, scale, typography as default };
 ```
+
+### Update CSS Modules class names that use dashes
+
+If you use CSS Modules and have class names with dashes in them, you'll need to change how you access the class names from JavaScript.
+
+This is because the [`camelCase` option](https://github.com/webpack-contrib/css-loader#camelcase) for CSS Modules has been changed from `false` to `dashesOnly`.
+
+Here's an example with a class named `.my-class-name`:
+
+
+```diff
+import React from "react"
+import myStyles from "./my.module.css"
+
+export default ({ children }) => (
+-  <div className={myStyles['my-class-name']}>
++  <div className={myStyles.myClassName}>
+    {children}
+  </div>
+)
+```
+
+TODO: add a code snippet that uses [`onCreateWebpackConfig`](/docs/node-apis/#onCreateWebpackConfig) to revert to Gatsby's v1 behaviour.
 
 ## Resolving Deprecations
 
