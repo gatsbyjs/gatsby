@@ -86,27 +86,27 @@
     - title: Sourcing content and data*
       link: /docs/sourcing-content-and-data
       items:
-        - title: Filesystem*
-          link: /docs/filesystem/
-        - title: Database*
-          link: /docs/database/
-        - title: SaaS service*
-          link: /docs/saas-service/
-        - title: Private APIs*
-          link: /docs/private-apis/
+        - title: Sourcing from the filesystem*
+          link: /docs/sourcing-from-the-filesystem/
+        - title: Sourcing from databases*
+          link: /docs/sourcing-from-databases/
+        - title: Sourcing from SaaS services*
+          link: /docs/sourcing-from-saas-services/
+        - title: Sourcing from private APIs*
+          link: /docs/sourcing-from-private-apis/
         - title: Headless CMS*
           link: /docs/headless-cms/
             items:
-              - title: Netlify CMS
-                link: /docs/netlify-cms/
-              - title: WordPress*
-                link: /docs/wordpress/
-              - title: Drupal*
-                link: /docs/drupal/
-              - title: Contentful*
-                link: /docs/contentful/
-              - title: Prose*
-                link: /docs/prose/
+              - title: Sourcing from Netlify CMS
+                link: /docs/sourcing-from-netlify-cms/
+              - title: Sourcing from WordPress*
+                link: /docs/sourcing-from-wordpress/
+              - title: Sourcing from Drupal*
+                link: /docs/sourcing-from-drupal/
+              - title: Sourcing from Contentful*
+                link: /docs/sourcing-from-contentful/
+              - title: Sourcing from Prose*
+                link: /docs/sourcing-from-prose/
     - title: Plugins*
       link: /docs/plugins/
       items:
@@ -188,12 +188,12 @@
     - title: Adding third-party services*
       link: /docs/adding-third-party-services/
       items:
-        - title: Search*
-          link: /docs/search/
-        - title: Analytics*
-          link: /docs/analytics/
-        - title: Forms*
-          link: /docs/forms/
+        - title: Adding search*
+          link: /docs/adding-search/
+        - title: Adding analytics*
+          link: /docs/adding-analytics/
+        - title: Adding forms*
+          link: /docs/adding-forms/
     - title: Performance*
       link: /docs/performance/
       items:
