@@ -1,20 +1,18 @@
+import "@babel/polyfill"
 import React from "react"
-import ReactDOM from "react-dom"
+import { render, cleanup } from "react-testing-library"
 import {
   createMemorySource,
   createHistory,
   LocationProvider,
 } from "@reach/router"
+import Link, { push, replace, withPrefix } from "../"
+
+afterEach(cleanup)
 
 const getInstance = (props, pathPrefix = ``) => {
-  Object.assign(global.window, {
-    __PATH_PREFIX__: pathPrefix,
-  })
-
-  const context = { router: { history: {} } }
-
-  const Link = require(`../`).default
-  return Link(props, context)
+  getWithPrefix()(pathPrefix)
+  return Link(props)
 }
 
 const getPush = () => {
@@ -22,7 +20,7 @@ const getPush = () => {
     ___push: jest.fn(),
   })
 
-  return require(`../`).push
+  return push
 }
 
 const getReplace = () => {
@@ -30,17 +28,51 @@ const getReplace = () => {
     ___replace: jest.fn(),
   })
 
-  return require(`../`).replace
+  return replace
 }
 
 const getWithPrefix = (pathPrefix = ``) => {
   Object.assign(global.window, {
     __PATH_PREFIX__: pathPrefix,
   })
-  return require(`../`).withPrefix
+  return withPrefix
+}
+
+const setup = ({ sourcePath = `/active`, linkProps } = {}) => {
+  const source = createMemorySource(sourcePath)
+  const history = createHistory(source)
+
+  const utils = render(
+    <LocationProvider history={history}>
+      <Link
+        to="/"
+        className="link"
+        style={{ color: `black` }}
+        activeClassName="is-active"
+        activeStyle={{ textDecoration: `underline` }}
+        {...linkProps}
+      >
+        link
+      </Link>
+    </LocationProvider>
+  )
+
+  return Object.assign({}, utils, {
+    link: utils.getByText(`link`),
+  })
 }
 
 describe(`<Link />`, () => {
+  it(`matches basic snapshot`, () => {
+    const { container } = setup()
+    expect(container).toMatchSnapshot()
+  })
+
+  it(`matches active snapshot`, () => {
+    const { container } = setup({ linkProps: { to: `/active` } })
+    expect(container).toMatchSnapshot()
+  })
+
   it(`does not fail to initialize without --prefix-paths`, () => {
     expect(() => {
       getInstance({})
@@ -54,22 +86,9 @@ describe(`<Link />`, () => {
 
     it(`accepts to as a string`, () => {
       const location = `/courses?sort=name`
+      const { link } = setup({ linkProps: { to: location } })
 
-      const node = document.createElement(`div`)
-      const Link = require(`../`).default
-      let source = createMemorySource(`/`)
-      let history = createHistory(source)
-
-      ReactDOM.render(
-        <LocationProvider history={history}>
-          <Link to={location}>link</Link>
-        </LocationProvider>,
-        node
-      )
-
-      const href = node.querySelector(`a`).getAttribute(`href`)
-
-      expect(href).toEqual(location)
+      expect(link.getAttribute(`href`)).toEqual(location)
     })
   })
 
