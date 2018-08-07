@@ -15,6 +15,7 @@ class PageRenderer extends React.Component {
 
     // Set the pathname for 404 pages.
     const pathname = this.getPathName(location)
+    this.onPostLoadPageResources = this.onPostLoadPageResources.bind(this)
 
     this.state = {
       lastPathname: location.pathname,
@@ -48,13 +49,24 @@ class PageRenderer extends React.Component {
     // Listen to events so when our page gets updated, we can transition.
     // This is only useful on delayed transitions as the page will get rendered
     // without the necessary page resources and then re-render once those come in.
-    emitter.on(`onPostLoadPageResources`, e => {
-      const page = loader.getPage(this.props.location.pathname)
+    emitter.on(`onPostLoadPageResources`, this.onPostLoadPageResources)
+  }
 
-      if (page && e.page.path === page.path) {
+  onPostLoadPageResources(e) {
+    const page = loader.getPage(this.props.location.pathname)
+
+    if (page && e.page.path === page.path) {
+      // only update state if it changed, otherwise we get into
+      // weird loop - TODO: find root cause of it instead of this
+      // workaround.
+      if (this.state.pageResources !== e.pageResources) {
         this.setState({ pageResources: e.pageResources })
       }
-    })
+    }
+  }
+
+  componentWillUnmount() {
+    emitter.off(`onPostLoadPageResources`, this.onPostLoadPageResources)
   }
 
   componentDidUpdate(prevProps) {
