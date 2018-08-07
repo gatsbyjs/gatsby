@@ -27,7 +27,7 @@
     "gatsby": ">2.0.0-alpha",
     "react": "^0.14.0 || ^15.0.0 || ^16.0.0",
     "react-dom": "^0.14.0 || ^15.0.0 || ^16.0.0",
-    "react-router-dom": "^4.0"
+    "@reach/router": "^1.0"
   },
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-react-router-scroll",
   "scripts": {

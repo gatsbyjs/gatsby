@@ -272,9 +272,9 @@ export default props => (
 
 ### Convert to either pure CommonJS or pure ES6
 
-Gatsby v2 uses babel 7 which is stricter about parsing files with mixed JS styles.
+Gatsby v2 uses webpack 4 which is stricter about modules with mixed module systems.
 
-ES6 Modules are ok:
+All ES6 is 👍:
 
 ```js
 // GOOD: ES modules syntax works
@@ -282,7 +282,7 @@ import foo from "foo"
 export default foo
 ```
 
-CommonJS is ok:
+All CommonJS is 👌:
 
 ```js
 // GOOD: CommonJS syntax works
@@ -290,7 +290,7 @@ const foo = require("foo")
 module.exports = foo
 ```
 
-Mixing `requires` and `export` is not ok:
+Mixing `requires` and `export` is 🙀:
 
 ```js
 // BAD: Mixed ES and CommonJS module syntax will cause failures
@@ -298,15 +298,13 @@ const foo = require("foo")
 export default foo
 ```
 
-Mixing `import` and `module.exports` is not ok:
+Mixing `import` and `module.exports` 🤪:
 
 ```js
 // BAD: Mixed ES and CommonJS module syntax will cause failures
 import foo from "foo"
 module.exports = foo
 ```
-
-See [Gatsby's babel docs for more details](/docs/babel).
 
 ### Move Babel Configuration
 
