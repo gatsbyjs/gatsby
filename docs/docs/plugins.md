@@ -14,7 +14,7 @@ community plugins and their documentation, visit the [Plugin Library](/plugins/)
 
 For documentation on the different types of plugins and the functionality provided by each, see the [Plugin Authoring page](/docs/plugin-authoring/).
 
-For a walkthrough of how to build and publish your own plugin, see the [Source Plugin Tutorial](/docs/source-plugin-tutorial/)
+For a walkthrough of how to build and publish your own plugin, see the [Source Plugin Tutorial](/docs/source-plugin-tutorial/).
 
 ## How to use Gatsby plugins?
 
