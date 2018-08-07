@@ -29,7 +29,7 @@ In your code editor, open up the code generated for your “Hello World” site,
 
 ![Hello World project in VS Code](01-hello-world-vscode.png)
 
-_Note: Again, the editor shown here is Visual Studio. If you’re using a different editor, it will look a little different._
+_Note: Again, the editor shown here is Visual Studio Code. If you’re using a different editor, it will look a little different._
 
 Let’s take a look at the code that powers the home page.
 
