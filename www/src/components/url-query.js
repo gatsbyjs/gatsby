@@ -1,5 +1,6 @@
-import { Component } from "react"
-import { withRouter } from "react-router-dom"
+import React, { Component } from "react"
+import { Location } from "@reach/router"
+import { globalHistory } from "@reach/router/lib/history"
 import qs from "qs"
 
 class URLQuery extends Component {
@@ -7,13 +8,12 @@ class URLQuery extends Component {
 
   componentDidMount = () => {
     const {
-      history,
       location: { search },
     } = this.props
 
     this.getDerivedStateFromQuery(search)
 
-    this.unlisten = history.listen(({ search }) => {
+    this.unlisten = globalHistory.listen(({ search }) => {
       this.getDerivedStateFromQuery(search)
     })
   }
@@ -47,4 +47,10 @@ class URLQuery extends Component {
   render = () => this.props.children(this.state, this.updateQuery)
 }
 
-export default withRouter(URLQuery)
+const URLQueryWithLocation = props => (
+  <Location>
+    {({ location }) => <URLQuery {...props} location={location} />}
+  </Location>
+)
+
+export default URLQueryWithLocation

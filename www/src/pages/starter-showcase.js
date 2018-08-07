@@ -7,9 +7,8 @@ class ShowcasePage extends Component {
   render() {
     const data = this.props.data
     const location = this.props.location
-    const history = this.props.history
 
-    return <ShowcaseView data={data} location={location} history={history} />
+    return <ShowcaseView data={data} location={location} />
   }
 }
 

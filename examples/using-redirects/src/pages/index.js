@@ -13,17 +13,20 @@ const IndexPage = () => (
             createRedirect
           </a>
         </code>
-        &nbsp;<a href="https://www.gatsbyjs.org/docs/bound-action-creators/">
+        &nbsp;
+        <a href="https://www.gatsbyjs.org/docs/bound-action-creators/">
           bound action creator
         </a>
         {` `}
         example.
       </p>
       <p>
-        These paths redirect{` `}
+        These paths redirect
+        {` `}
         <Link activeClassName="selected" to="/">
           here
-        </Link>:
+        </Link>
+        :
       </p>
       <ul>
         <li>
@@ -34,22 +37,20 @@ const IndexPage = () => (
         </li>
       </ul>
       <p>
-        The{` `}
+        The
+        {` `}
         <Link activeClassName="selected" to="/">
           here
         </Link>
         {` `}
-        link uses{` `}
+        link uses
+        {` `}
         <a href="https://www.gatsbyjs.org/packages/gatsby-link/">gatsby-link</a>
         {` `}
         <code>activeClassName</code>
-        &nbsp;support derived from{` `}
-        <a href="https://github.com/ReactTraining/react-router/blob/master/packages/react-router-dom/docs/api/NavLink.md">
-          React Router’s NavLink component
-        </a>
-        {` `}
         to apply the <code>selected</code>
-        &nbsp;class to links that match to the active path, and{` `}
+        &nbsp;class to links that match to the active path, and
+        {` `}
         <code>import './selected.css'</code>
         &nbsp;in <code>/src/layouts/index.js</code>
         &nbsp;makes the <code>.selected {`{ color: #396; }`}</code> &nbsp;style
