@@ -60,7 +60,8 @@ const navigate = (to, replace) => {
   // If we're redirecting, just replace the passed in pathname
   // to the one we want to redirect to.
   if (redirect) {
-    pathname = redirect.toPath
+    to = redirect.toPath
+    pathname = parsePath(to).pathname
   }
 
   // If we had a service worker update, no matter the path, reload window
