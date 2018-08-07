@@ -98,5 +98,13 @@
       link: /tutorial/part-eight/
       ui: steps
       items:
-        - title: Lighthouse audit
-          link: /tutorial/part-eight/#lighthouse
+        - title: Audit with Lighthouse
+          link: /tutorial/part-eight/#auditing-with-lighthouse
+        - title: Add a manifest file
+          link: /tutorial/part-eight/#add-a-manifest-file
+        - title: Add offline support
+          link: /tutorial/part-eight/#add-offline-support
+        - title: Add page metadata
+          link: /tutorial/part-eight/#add-page-metadata
+        - title: Keep making it better
+          link: /tutorial/part-eight/#keep-making-it-better
