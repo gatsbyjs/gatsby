@@ -9,6 +9,7 @@
   "dependencies": {
     "@babel/runtime": "7.0.0-beta.52",
     "cheerio": "^1.0.0-rc.2",
+    "lodash": "^4.17.10",
     "sw-precache": "^5.2.1"
   },
   "devDependencies": {
