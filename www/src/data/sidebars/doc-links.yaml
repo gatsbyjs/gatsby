@@ -83,19 +83,30 @@
           link: /docs/programmatically-create-pages-from-data/
         - title: Querying data with StaticQuery
           link: /docs/static-query/
-    - title: Headless CMS*
-      link: /docs/headless-cms/
+    - title: Sourcing content and data*
+      link: /docs/sourcing-content-and-data
       items:
-        - title: Netlify CMS
-          link: /docs/netlify-cms/
-        - title: WordPress*
-          link: /docs/wordpress/
-        - title: Drupal*
-          link: /docs/drupal/
-        - title: Contentful*
-          link: /docs/contentful/
-        - title: Prose*
-          link: /docs/prose/
+        - title: Filesystem*
+          link: /docs/filesystem/
+        - title: Database*
+          link: /docs/database/
+        - title: SaaS service*
+          link: /docs/saas-service/
+        - title: Private APIs*
+          link: /docs/private-apis/
+        - title: Headless CMS*
+          link: /docs/headless-cms/
+            items:
+              - title: Netlify CMS
+                link: /docs/netlify-cms/
+              - title: WordPress*
+                link: /docs/wordpress/
+              - title: Drupal*
+                link: /docs/drupal/
+              - title: Contentful*
+                link: /docs/contentful/
+              - title: Prose*
+                link: /docs/prose/
     - title: Plugins*
       link: /docs/plugins/
       items:
@@ -122,6 +133,19 @@
           link: /docs/component-css/
         - title: PostCSS*
           link: /docs/post-css/
+    - title: Testing*
+      link: /docs/testing/
+      items:
+        - title: Unit testing
+          link: /docs/unit-testing/
+        - title: Testing components with GraphQL
+          link: /docs/testing-components-with-graphql/
+        - title: End-to-end testing
+          link: /docs/end-to-end-testing/
+        - title: Testing CSS-in-JS
+          link: /docs/testing-css-in-js/
+        - title: Testing React components
+          link: /docs/testing-react-components/
     - title: Debugging
       link: /docs/debugging/
       items:
@@ -161,6 +185,15 @@
           link: /docs/linking-between-pages/
         - title: Search Engine Optimization (SEO)
           link: /docs/seo/
+    - title: Adding third-party services*
+      link: /docs/adding-third-party-services/
+      items:
+        - title: Search*
+          link: /docs/search/
+        - title: Analytics*
+          link: /docs/analytics/
+        - title: Forms*
+          link: /docs/forms/
     - title: Performance*
       link: /docs/performance/
       items:
