@@ -29,7 +29,7 @@ class DocsLocalPackagesTemplate extends React.Component {
 
     return (
       <Layout location={this.props.location}>
-        <PageWithPluginSearchBar>
+        <PageWithPluginSearchBar location={this.props.location}>
           <PackageReadme
             page={markdownRemark ? _.pick(markdownRemark, `parent`) : false}
             packageName={

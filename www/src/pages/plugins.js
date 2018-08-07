@@ -11,7 +11,7 @@ class Plugins extends Component {
   render() {
     return (
       <Layout location={this.props.location}>
-        <PageWithPluginSearchBar isPluginsIndex>
+        <PageWithPluginSearchBar isPluginsIndex location={this.props.location}>
           <Container
             css={{
               alignItems: `center`,

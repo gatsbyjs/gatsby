@@ -397,10 +397,15 @@ class PluginSearchBar extends Component {
     this.updateHistory = debounce(this.updateHistory, updateAfter)
   }
 
-  urlToSearch = () => window.location.search.slice(2)
+  urlToSearch = () => {
+    if (this.props.location.search) {
+      return this.props.location.search.slice(2)
+    }
+    return null
+  }
 
   updateHistory(value) {
-    reachNavigate(`${window.location.pathanme}?=${value.query}`, {
+    reachNavigate(`${this.props.location.pathanme}?=${value.query}`, {
       replace: true,
     })
   }
@@ -421,7 +426,7 @@ class PluginSearchBar extends Component {
           onSearchStateChange={this.onSearchStateChange.bind(this)}
         >
           <Search
-            pathname={window.location.pathname}
+            pathname={this.props.location.pathname}
             searchState={this.state.searchState.query}
           />
         </InstantSearch>

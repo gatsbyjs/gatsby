@@ -6,10 +6,10 @@ const { chunk } = require(`lodash`)
 
 const workerPool = new Worker(require.resolve(`./worker`), {
   numWorkers,
-  forkOptions: {
-    silent: false,
-  },
 })
+
+workerPool.getStdout().pipe(process.stdout)
+workerPool.getStderr().pipe(process.stderr)
 
 module.exports = (htmlComponentRendererPath, pages, activity) =>
   new Promise((resolve, reject) => {

@@ -185,7 +185,7 @@ class FeaturedSites extends Component {
                       "&:hover": { ...styles.screenshotHover },
                     },
                   }}
-                  to={node.fields && node.fields.slug}
+                  to={node.fields.slug}
                   state={{ isModal: true }}
                 >
                   {node.childScreenshot && (
