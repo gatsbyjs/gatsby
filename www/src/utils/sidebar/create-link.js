@@ -10,7 +10,6 @@ const createLink = ({
   item,
   onLinkClick,
   isActive,
-  isExpanded,
   isParentOfActiveItem,
   stepsUI,
 }) => {
@@ -40,7 +39,6 @@ const createLink = ({
           styles.link,
           isDraft && styles.draft,
           isActive && styles.activeLink,
-          isExpanded && styles.expandedChildren,
           isParentOfActiveItem && styles.parentOfActiveLink,
         ]}
         onClick={onLinkClick}
@@ -75,14 +73,6 @@ const styles = {
     "&&": {
       color: colors.gatsby,
       fontWeight: `bold`,
-    },
-    "&:before, &:after": {
-      display: `none`,
-    },
-  },
-  expandedChildren: {
-    "&&": {
-      color: colors.gatsby,
     },
   },
   activeLink: {

@@ -84,31 +84,16 @@ export default StickyResponsiveSidebar
 
 const styles = {
   sidebarScrollContainer: {
-    WebkitOverflowScrolling: `touch`,
-    background: `#fff`,
     border: 0,
     bottom: 0,
-    boxShadow: `0 0 20px rgba(0, 0, 0, 0.15)`,
     display: `block`,
     height: `100vh`,
-    overflowY: `auto`,
     position: `fixed`,
     top: 0,
     transition: `opacity 0.5s ease`,
     width: 320,
     zIndex: 10,
-    "::-webkit-scrollbar": {
-      height: `6px`,
-      width: `6px`,
-    },
-    "::-webkit-scrollbar-thumb": {
-      background: colors.ui.bright,
-    },
-    "::-webkit-scrollbar-track": {
-      background: colors.ui.light,
-    },
     [presets.Tablet]: {
-      boxShadow: `none`,
       height: `calc(100vh - ${presets.headerHeight} - ${
         presets.bannerHeight
       } + 1px)`,
@@ -116,41 +101,19 @@ const styles = {
       opacity: `1 !important`,
       pointerEvents: `auto`,
       top: `calc(${presets.headerHeight} + ${presets.bannerHeight} - 1px)`,
-      visibility: `hidden`,
       width: rhythm(10),
-      zIndex: 2,
-      "::-webkit-scrollbar-track": {
-        background: `transparent`,
-      },
-      "&:hover": {
-        visibility: `visible`,
-      },
     },
     [presets.Desktop]: {
       width: rhythm(12),
     },
   },
   sidebar: {
-    background: `#fff`,
     height: `100%`,
-    position: `relative`,
     transition: `transform 0.5s ease`,
+    boxShadow: `0 0 20px rgba(0, 0, 0, 0.15)`,
     [presets.Tablet]: {
-      backgroundColor: colors.ui.whisper,
-      visibility: `visible`,
       transform: `none !important`,
-      "&:before": {
-        background: colors.ui.border,
-        bottom: 0,
-        content: ` `,
-        display: `block`,
-        height: `100%`,
-        left: `auto`,
-        position: `absolute`,
-        right: 0,
-        top: 0,
-        width: 1,
-      },
+      boxShadow: `none`,
     },
   },
   sidebarToggleButton: {
