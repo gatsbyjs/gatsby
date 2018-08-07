@@ -8,16 +8,14 @@
   },
   "dependencies": {
     "@babel/runtime": "7.0.0-beta.52",
-    "@types/history": "^4.6.2",
-    "@types/react-router-dom": "^4.2.5",
+    "@reach/router": "^1.1.1",
     "prop-types": "^15.6.1",
     "ric": "^1.3.0"
   },
   "devDependencies": {
     "@babel/cli": "7.0.0-beta.52",
     "@babel/core": "7.0.0-beta.52",
-    "cross-env": "^5.1.4",
-    "react-router-dom": "^4.2.2"
+    "cross-env": "^5.1.4"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link#readme",
   "keywords": [
