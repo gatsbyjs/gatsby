@@ -54,22 +54,6 @@
   optionalDependencies:
     chokidar "^2.0.3"
 
-"@babel/cli@^7.0.0-beta.52":
-  version "7.0.0-beta.56"
-  resolved "https://registry.yarnpkg.com/@babel/cli/-/cli-7.0.0-beta.56.tgz#fba46b162ca2b7d36469e27cbb8da6e9a85f24c9"
-  dependencies:
-    commander "^2.8.1"
-    convert-source-map "^1.1.0"
-    fs-readdir-recursive "^1.0.0"
-    glob "^7.0.0"
-    lodash "^4.17.10"
-    mkdirp "^0.5.1"
-    output-file-sync "^2.0.0"
-    slash "^1.0.0"
-    source-map "^0.5.0"
-  optionalDependencies:
-    chokidar "^2.0.3"
-
 "@babel/code-frame@7.0.0-beta.36":
   version "7.0.0-beta.36"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.0.0-beta.36.tgz#2349d7ec04b3a06945ae173280ef8579b63728e4"
@@ -96,7 +80,7 @@
   dependencies:
     "@babel/highlight" "7.0.0-beta.52"
 
-"@babel/code-frame@7.0.0-beta.56", "@babel/code-frame@^7.0.0-beta.35", "@babel/code-frame@^7.0.0-beta.52":
+"@babel/code-frame@^7.0.0-beta.35":
   version "7.0.0-beta.56"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.0.0-beta.56.tgz#09f76300673ac085d3b90e02aafa0ffc2c96846a"
   dependencies:
@@ -142,25 +126,6 @@
     semver "^5.4.1"
     source-map "^0.5.0"
 
-"@babel/core@^7.0.0-beta.52":
-  version "7.0.0-beta.56"
-  resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.0.0-beta.56.tgz#cc03ffbb62564fef58fd1cefcbb3e32011c21df9"
-  dependencies:
-    "@babel/code-frame" "7.0.0-beta.56"
-    "@babel/generator" "7.0.0-beta.56"
-    "@babel/helpers" "7.0.0-beta.56"
-    "@babel/parser" "7.0.0-beta.56"
-    "@babel/template" "7.0.0-beta.56"
-    "@babel/traverse" "7.0.0-beta.56"
-    "@babel/types" "7.0.0-beta.56"
-    convert-source-map "^1.1.0"
-    debug "^3.1.0"
-    json5 "^0.5.0"
-    lodash "^4.17.10"
-    resolve "^1.3.2"
-    semver "^5.4.1"
-    source-map "^0.5.0"
-
 "@babel/generator@7.0.0-beta.44":
   version "7.0.0-beta.44"
   resolved "https://registry.yarnpkg.com/@babel/generator/-/generator-7.0.0-beta.44.tgz#c7e67b9b5284afcf69b309b50d7d37f3e5033d42"
@@ -188,16 +153,6 @@
     "@babel/types" "7.0.0-beta.52"
     jsesc "^2.5.1"
     lodash "^4.17.5"
-    source-map "^0.5.0"
-    trim-right "^1.0.1"
-
-"@babel/generator@7.0.0-beta.56":
-  version "7.0.0-beta.56"
-  resolved "https://registry.yarnpkg.com/@babel/generator/-/generator-7.0.0-beta.56.tgz#07d9c2f45990c453130e080eddcd252a9cbd8d66"
-  dependencies:
-    "@babel/types" "7.0.0-beta.56"
-    jsesc "^2.5.1"
-    lodash "^4.17.10"
     source-map "^0.5.0"
     trim-right "^1.0.1"
 
@@ -276,14 +231,6 @@
     "@babel/template" "7.0.0-beta.52"
     "@babel/types" "7.0.0-beta.52"
 
-"@babel/helper-function-name@7.0.0-beta.56":
-  version "7.0.0-beta.56"
-  resolved "https://registry.yarnpkg.com/@babel/helper-function-name/-/helper-function-name-7.0.0-beta.56.tgz#4e9c8a84ce4368b4a779409d0c4fe3f714be60ab"
-  dependencies:
-    "@babel/helper-get-function-arity" "7.0.0-beta.56"
-    "@babel/template" "7.0.0-beta.56"
-    "@babel/types" "7.0.0-beta.56"
-
 "@babel/helper-get-function-arity@7.0.0-beta.36":
   version "7.0.0-beta.36"
   resolved "https://registry.yarnpkg.com/@babel/helper-get-function-arity/-/helper-get-function-arity-7.0.0-beta.36.tgz#f5383bac9a96b274828b10d98900e84ee43e32b8"
@@ -307,12 +254,6 @@
   resolved "https://registry.yarnpkg.com/@babel/helper-get-function-arity/-/helper-get-function-arity-7.0.0-beta.52.tgz#1c0cda58e0b75f45e92eafbd8fe189a4eee92b74"
   dependencies:
     "@babel/types" "7.0.0-beta.52"
-
-"@babel/helper-get-function-arity@7.0.0-beta.56":
-  version "7.0.0-beta.56"
-  resolved "https://registry.yarnpkg.com/@babel/helper-get-function-arity/-/helper-get-function-arity-7.0.0-beta.56.tgz#872864d67e25705b94d1c71afc72344aafc8dc9c"
-  dependencies:
-    "@babel/types" "7.0.0-beta.56"
 
 "@babel/helper-hoist-variables@7.0.0-beta.52":
   version "7.0.0-beta.52"
@@ -412,12 +353,6 @@
   dependencies:
     "@babel/types" "7.0.0-beta.52"
 
-"@babel/helper-split-export-declaration@7.0.0-beta.56":
-  version "7.0.0-beta.56"
-  resolved "https://registry.yarnpkg.com/@babel/helper-split-export-declaration/-/helper-split-export-declaration-7.0.0-beta.56.tgz#82d53382836134ba3ed0ea2394ca21fe579ec241"
-  dependencies:
-    "@babel/types" "7.0.0-beta.56"
-
 "@babel/helper-wrap-function@7.0.0-beta.52":
   version "7.0.0-beta.52"
   resolved "https://registry.yarnpkg.com/@babel/helper-wrap-function/-/helper-wrap-function-7.0.0-beta.52.tgz#36148e93176299c28a1d2befdb8fe1cc3b79b4b4"
@@ -442,14 +377,6 @@
     "@babel/template" "7.0.0-beta.52"
     "@babel/traverse" "7.0.0-beta.52"
     "@babel/types" "7.0.0-beta.52"
-
-"@babel/helpers@7.0.0-beta.56":
-  version "7.0.0-beta.56"
-  resolved "https://registry.yarnpkg.com/@babel/helpers/-/helpers-7.0.0-beta.56.tgz#a01cac1481c6fa38197ae410137539045b160443"
-  dependencies:
-    "@babel/template" "7.0.0-beta.56"
-    "@babel/traverse" "7.0.0-beta.56"
-    "@babel/types" "7.0.0-beta.56"
 
 "@babel/highlight@7.0.0-beta.44":
   version "7.0.0-beta.44"
@@ -502,10 +429,6 @@
 "@babel/parser@7.0.0-beta.52":
   version "7.0.0-beta.52"
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.0.0-beta.52.tgz#4e935b62cd9bf872bd37bcf1f63d82fe7b0237a2"
-
-"@babel/parser@7.0.0-beta.56":
-  version "7.0.0-beta.56"
-  resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.0.0-beta.56.tgz#8638aa02e0130cd10b2ba4128e2b804112073ed3"
 
 "@babel/plugin-proposal-async-generator-functions@7.0.0-beta.52":
   version "7.0.0-beta.52"
@@ -984,15 +907,6 @@
     "@babel/types" "7.0.0-beta.52"
     lodash "^4.17.5"
 
-"@babel/template@7.0.0-beta.56":
-  version "7.0.0-beta.56"
-  resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.0.0-beta.56.tgz#a428197e0c9db142f8581cbfdcfa9289b0dd7fd7"
-  dependencies:
-    "@babel/code-frame" "7.0.0-beta.56"
-    "@babel/parser" "7.0.0-beta.56"
-    "@babel/types" "7.0.0-beta.56"
-    lodash "^4.17.10"
-
 "@babel/traverse@7.0.0-beta.36":
   version "7.0.0-beta.36"
   resolved "https://registry.yarnpkg.com/@babel/traverse/-/traverse-7.0.0-beta.36.tgz#1dc6f8750e89b6b979de5fe44aa993b1a2192261"
@@ -1050,20 +964,6 @@
     globals "^11.1.0"
     invariant "^2.2.0"
     lodash "^4.17.5"
-
-"@babel/traverse@7.0.0-beta.56":
-  version "7.0.0-beta.56"
-  resolved "https://registry.yarnpkg.com/@babel/traverse/-/traverse-7.0.0-beta.56.tgz#62fdfe69328cfaad414ef01844f5ab40e32f4ad0"
-  dependencies:
-    "@babel/code-frame" "7.0.0-beta.56"
-    "@babel/generator" "7.0.0-beta.56"
-    "@babel/helper-function-name" "7.0.0-beta.56"
-    "@babel/helper-split-export-declaration" "7.0.0-beta.56"
-    "@babel/parser" "7.0.0-beta.56"
-    "@babel/types" "7.0.0-beta.56"
-    debug "^3.1.0"
-    globals "^11.1.0"
-    lodash "^4.17.10"
 
 "@babel/types@7.0.0-beta.36":
   version "7.0.0-beta.36"

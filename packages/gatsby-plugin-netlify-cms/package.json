@@ -16,8 +16,8 @@
     "webpack": "^4.16.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.0.0-beta.52",
-    "@babel/core": "^7.0.0-beta.52",
+    "@babel/cli": "7.0.0-beta.52",
+    "@babel/core": "7.0.0-beta.52",
     "cross-env": "^5.1.4",
     "react": "^16.4.1",
     "react-dom": "^16.4.1"
