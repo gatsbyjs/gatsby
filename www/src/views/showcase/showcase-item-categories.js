@@ -5,19 +5,22 @@ import qs from "qs"
 import URLQuery from "../../components/url-query"
 import { colors } from "../../utils/presets"
 
-const ScrollToLink = ({ onClickHandler, category, showcase, ...rest }) => (
-  <URLQuery>
-    {(_, updateQuery) => (
-      <a
-        href="#showcase"
-        onClick={onClickHandler(showcase, updateQuery, category)}
-        {...rest}
-      >
-        {category}
-      </a>
-    )}
-  </URLQuery>
-)
+const ScrollToLink = ({ onClick, category, showcase, ...rest }) => {
+  const onClickHandler = onClick
+  return (
+    <URLQuery>
+      {(_, updateQuery) => (
+        <a
+          href="#showcase"
+          onClick={onClickHandler(showcase, updateQuery, category)}
+          {...rest}
+        >
+          {category}
+        </a>
+      )}
+    </URLQuery>
+  )
+}
 
 const ShowcaseItemCategories = ({ categories, onClickHandler, showcase }) => {
   const LinkComponent = onClickHandler ? ScrollToLink : Link
@@ -40,7 +43,7 @@ const ShowcaseItemCategories = ({ categories, onClickHandler, showcase }) => {
         to={`/showcase?${qs.stringify({
           filters: [c],
         })}`}
-        onClickHandler={onClickHandler}
+        onClick={onClickHandler}
         showcase={showcase}
         category={c}
       >
