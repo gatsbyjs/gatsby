@@ -131,23 +131,11 @@ components that use `Link` or GraphQL.
 
 ```js
 // __mocks__/gatsby.js
-"use strict"
-import React from "react"
-const gatsby = jest.genMockFromModule("gatsby")
-gatsby.Link = ({ to, activeClassName, activeStyle, isActive, ...props }) => (
-  <a
-    href={to}
-    activeclassname={activeClassName}
-    activestyle={activeStyle}
-    isactive={isActive}
-    {...props}
-  />
-)
-module.exports = gatsby
+const gatsby = jest.requireActual("gatsby")
+module.exports = { ...gatsby, graphql: jest.fn(), Link: "Link" }
 ```
 
-This automatically mocks all of the `gatsby` exports, but also replaces `Link`
-with a simple `<a>` element. See below for why.
+This mocks the `graphql()` function and `Link` component.
 
 ## Writing tests
 
@@ -265,42 +253,63 @@ Then edit the Jest config in your `package.json` to match this:
   }
 ```
 
-## Other potential issues
+## Testing components with Router
 
-If you are using the `Link` component then you may encounter this error when
-testing your component:
+When you test components they are not in a `Router`, meaning they don't have
+access to some context and props that they may be expecting. The most common of
+these is the `Link` component. In the example above we mock the `Link` component
+as a string, which is the simplest solution and works for most uses. However
+sometimes you might want to test with the real `Link` component. As of v2,
+Gatsby uses `@reach/router` for navigation, which is good at handling test
+environments, and unlike React Router is happy to render `Link`s outside of a
+`Router` context. However there is a small issue related to the `gatsby` mock.
+We can use a small workaround to avoid an error.
 
-```
-    TypeError: Cannot read property 'history' of undefined
-```
-
-This is an error in `gatsby-link`, although `react-router-dom` would complain
-too if it got that far. The simplest way to fix this is by mocking the `Link`
-component in `gatsby` or `gatsby-link`, as shown above. There are some
-situations where you might not want to do this, mainly if you want to test the
-behavior of the `Link` component. The way to handle this is to wrap your
-component in a `MemoryRouter` from `react-router-dom`. You will need to do this
-for any test which includes a `Link`. For example:
+First, remove the `Link` mock from `gatsby`:
 
 ```js
+// __mocks__/gatsby.js
+const gatsby = jest.requireActual("gatsby")
+module.exports = { ...gatsby, graphql: jest.fn() }
+```
+
+While the `Link` component is exported by the main `gatsby` package, it is
+actually defined in `gatsby-link`. That in turn uses `parsePath()` from
+`gatsby`, which causes module resolution issues. Fortunately it's an easy fix.
+You need to create a mock for `gatsby-link`, even though it will actually be the
+real module. You do this so that you can tell it to not try and use the mock
+`gatsby`:
+
+```js
+// __mocks__/gatsby-link.js
+jest.unmock("gatsby")
+module.exports = jest.requireActual("gatsby-link")
+```
+
+One more issue that you may encounter is that some components expect to be able
+to use the `location` prop that is passed in by `Router`. You can fix this by
+manually passing in the prop:
+
+```js
+// src/__tests__/index.js
+
 import React from "react"
 import renderer from "react-test-renderer"
-import { MemoryRouter } from "react-router-dom"
+import BlogIndex from "../pages/index"
 
-import Bio from "./Bio"
-
-describe("Bio", () =>
+describe("BlogIndex", () =>
   it("renders correctly", () => {
-    const tree = renderer
-      .create(
-        <MemoryRouter>
-          <Bio />
-        </MemoryRouter>
-      )
-      .toJSON()
+    const location = {
+      pathname: "/",
+    }
+
+    const tree = renderer.create(<BlogIndex location={location} />).toJSON()
     expect(tree).toMatchSnapshot()
   }))
 ```
+
+For more information on testing page components, be sure to read the docs on
+[testing components with GraphQL](/docs/testing-components-with-graphql/)
 
 ## Other resources
 
