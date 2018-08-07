@@ -4,7 +4,7 @@ const path = require(`path`)
 const slash = require(`slash`)
 const _ = require(`lodash`)
 
-const getResourcesFromHTML = require(`get-resources-from-html`)
+const getResourcesFromHTML = require(`./get-resources-from-html`)
 
 exports.createPages = ({ actions }) => {
   if (process.env.NODE_ENV === `production`) {
