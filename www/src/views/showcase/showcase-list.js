@@ -32,7 +32,8 @@ const ShowcaseList = ({ items, count }) => {
               }}
             >
               <Link
-                to={{ pathname: node.fields.slug, state: { isModal: true } }}
+                to={node.fields.slug}
+                state={{ isModal: true }}
                 {...styles.withTitleHover}
                 css={{
                   "&&": {

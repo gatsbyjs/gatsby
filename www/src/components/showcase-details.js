@@ -141,11 +141,9 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
           modalPrevious={() => parent.previous(allSitesYaml)}
           modalNextLink={
             <Link
-              to={{
-                pathname: nextSite.fields.slug,
-                state: {
-                  isModal: true,
-                },
+              to={nextSite.fields.slug}
+              state={{
+                isModal: true,
               }}
               css={{
                 display: `block`,
@@ -195,11 +193,9 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
           }
           modalPreviousLink={
             <Link
-              to={{
-                pathname: previousSite.fields.slug,
-                state: {
-                  isModal: true,
-                },
+              to={previousSite.fields.slug}
+              state={{
+                isModal: true,
               }}
               css={{
                 display: `block`,
@@ -474,7 +470,8 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                         verticalAlign: `sub`,
                       }}
                     />
-                    Visit site{` `}
+                    Visit site
+                    {` `}
                   </a>
                   <ShareMenu
                     url={data.sitesYaml.main_url}
@@ -520,7 +517,8 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                       paddingRight: 20,
                     }}
                   >
-                    Categories{` `}
+                    Categories
+                    {` `}
                   </div>
                   <div>
                     {categories.map((c, i) => (

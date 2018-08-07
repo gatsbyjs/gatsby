@@ -6,7 +6,6 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "gatsby": "next",
-    "gatsby-react-router-scroll": "next",
     "lodash": "^4.16.4",
     "react": "^16.3.1",
     "react-dom": "^16.3.1",

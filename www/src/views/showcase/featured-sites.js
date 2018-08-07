@@ -102,7 +102,9 @@ class FeaturedSites extends Component {
                 }}
                 onClick={this.onClickHandler(showcase, updateQuery, `Featured`)}
               >
-                <span className="title">View all</span>&nbsp;<MdArrowForward
+                <span className="title">View all</span>
+                &nbsp;
+                <MdArrowForward
                   style={{ marginLeft: 4, verticalAlign: `sub` }}
                 />
               </a>
@@ -135,7 +137,8 @@ class FeaturedSites extends Component {
               rel="noopener noreferrer"
               css={{ ...styles.button }}
             >
-              Submit{` `}
+              Submit
+              {` `}
               <span
                 css={{
                   display: `none`,
@@ -144,8 +147,10 @@ class FeaturedSites extends Component {
                   },
                 }}
               >
-                your{` `}
-              </span>Site
+                your
+                {` `}
+              </span>
+              Site
               <MdArrowForward style={{ marginLeft: 4, verticalAlign: `sub` }} />
             </a>
           </div>
@@ -180,10 +185,8 @@ class FeaturedSites extends Component {
                       "&:hover": { ...styles.screenshotHover },
                     },
                   }}
-                  to={{
-                    pathname: node.fields && node.fields.slug,
-                    state: { isModal: true },
-                  }}
+                  to={node.fields.slug}
+                  state={{ isModal: true }}
                 >
                   {node.childScreenshot && (
                     <Img

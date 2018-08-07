@@ -32,10 +32,12 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
           No {`${emptyStateReason}`} starters found!
           <div css={{ color: colors.gatsby }}>
             <small>
-              Maybe you should write one and{` `}
+              Maybe you should write one and
+              {` `}
               <a href="https://github.com/gatsbyjs/gatsby/issues/new?template=feature_request.md">
                 submit it
-              </a>?
+              </a>
+              ?
             </small>
           </div>
         </h1>
@@ -84,7 +86,8 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
               {...styles.withTitleHover}
             >
               <Link
-                to={{ pathname: `/starters/${stub}`, state: { isModal: true } }}
+                to={`/starters/${stub}`}
+                state={{ isModal: true }}
                 css={{
                   "&&": {
                     borderBottom: `none`,

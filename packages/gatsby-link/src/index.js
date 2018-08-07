@@ -164,7 +164,7 @@ GatsbyLink.propTypes = {
   ...NavLinkPropTypes,
   innerRef: PropTypes.func,
   onClick: PropTypes.func,
-  to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
+  to: PropTypes.string.isRequired,
 }
 
 // eslint-disable-next-line react/display-name
