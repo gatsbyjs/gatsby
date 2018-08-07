@@ -1,5 +1,7 @@
 const _ = require("lodash");
 const { getOptions } = require("loader-utils");
+const grayMatter = require("gray-matter");
+
 const mdx = require("./utils/mdx");
 const debug = require("debug")("gatsby-mdx:mdx-loader");
 
@@ -29,12 +31,14 @@ module.exports = async function(content) {
   // check needs to happen first.
   if (!hasDefaultExport(content) && !!defaultLayout) {
     debug("inserting default layout", defaultLayout);
+    const { content: contentWithoutFrontmatter } = grayMatter(content);
+
     code = `import DefaultLayout from "${defaultLayout}"
 
 
 export default DefaultLayout
 
-${content}`;
+${contentWithoutFrontmatter}`;
   }
 
   code = await mdx(code, pluginOptions);
