@@ -5,19 +5,13 @@ import {
   createHistory,
   LocationProvider,
 } from "@reach/router"
-import Link from "../"
+import Link, { push, replace, withPrefix } from "../"
 
 afterEach(cleanup)
 
 const getInstance = (props, pathPrefix = ``) => {
-  Object.assign(global.window, {
-    __PATH_PREFIX__: pathPrefix,
-  })
-
-  const context = { router: { history: {} } }
-
-  const Link = require(`../`).default
-  return Link(props, context)
+  getWithPrefix()(pathPrefix)
+  return Link(props)
 }
 
 const getPush = () => {
@@ -25,7 +19,7 @@ const getPush = () => {
     ___push: jest.fn(),
   })
 
-  return require(`../`).push
+  return push
 }
 
 const getReplace = () => {
@@ -33,14 +27,14 @@ const getReplace = () => {
     ___replace: jest.fn(),
   })
 
-  return require(`../`).replace
+  return replace
 }
 
 const getWithPrefix = (pathPrefix = ``) => {
   Object.assign(global.window, {
     __PATH_PREFIX__: pathPrefix,
   })
-  return require(`../`).withPrefix
+  return withPrefix
 }
 
 const setup = ({ sourcePath = `/active`, linkProps } = {}) => {
