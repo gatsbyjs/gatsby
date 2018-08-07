@@ -78,3 +78,35 @@ plugins: [
   alongside `gatsby-plugin-sass` is now required. Use `npm install --save node-sass`
 
 - support Gatsby v2 only
+
+## Known issues
+
+- paths to assets (images and fonts) used in your scss files need to be relative to the scss entry file.
+
+in a folder structure like this...
+```
+- src
+   |_assets
+     |_scss
+       |_app.scss
+       |_components
+         |_button.scss
+         |...
+       |...
+     |_images
+     |_fonts
+```
+a typical app.scss imports rules from other files in the folder.
+```scss
+// app.scss
+@import 'component/button.scss'
+...
+```
+say button uses a background image:
+```diff
+// button.scss
+.button {
+- background-image: url('../../images/btn.png');
++ background-image: url('../images/btn.png');
+}
+```
