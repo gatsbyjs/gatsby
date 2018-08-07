@@ -43,7 +43,7 @@ and common cross-browser flexbox bugs. Normally you don't need to think about it
 you'd prefer to add additional postprocessing to your SASS output you can sepecify plugins
 in the plugin options
 
-## "Relative paths & url()"
+## Relative paths & url()
 
 This plugin resolves `url()` paths relative to the entry SCSS/SASS file not – as might be expected – the location relative to the declaration. Under the hood, it makes use of [sass-loader](https://github.com/webpack-contrib/sass-loader/blob/master/README.md#problems-with-url) and this is documented in the [readme](https://github.com/webpack-contrib/sass-loader/blob/master/README.md#problems-with-url). 
 
