@@ -280,6 +280,7 @@ module.exports = async (
       rules.yaml(),
       rules.fonts(),
       rules.images(),
+      rules.media(),
       rules.miscAssets(),
     ]
     switch (stage) {
