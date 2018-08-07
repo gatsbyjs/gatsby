@@ -31,7 +31,7 @@ In your code editor, open up the code generated for your “Hello World” site,
 
 _Note: Again, the editor shown here is Visual Studio Code. If you’re using a different editor, it will look a little different._
 
-Let’s take a look at the code that powers the home page.
+Let’s take a look at the code that powers the homepage.
 
 > 💡 If you stopped your development server after running `gatsby develop` in the previous section, start it up again now — time to make some changes to the hello-world site!
 
@@ -206,15 +206,15 @@ export default () => (
 
 In the browser, the “About Gatsby” header text should now be replaced with “This is a header.” But we don’t want the “About” page to say “This is a header.” We want it to say, “About Gatsby”.
 
-4.  Head back to `/src/components/header.js`, and replace it with the following:
+4.  Head back to `/src/components/header.js`, and make the following change:
 
-```jsx
+```jsx{3}
 import React from "react"
 
 export default props => <h1>{props.headerText}</h1>
 ```
 
-5.  Head back to `/src/pages/about.js` and replace it with the following:
+5.  Head back to `/src/pages/about.js` and make the following change:
 
 ```jsx{6}
 import React from "react"
@@ -282,6 +282,37 @@ And there we have it; A second header — without rewriting any code — by pass
 Layout components are for sections of a site that you want to share across multiple pages. For example, Gatsby sites will commonly have a layout component with a shared header and footer. Other common things to add to layouts include a sidebar, and/or a navigation menu.
 
 We’ll explore layout components in [part three](/tutorial/part-three).
+
+## Linking between pages
+
+At this point you have two pages -- a home page and an about page. Let's link between the two.
+
+### ✋ Using the `<Link />` component
+
+1. Open the index page component (`/src/pages/index.js`). Import the `<Link />` component from Gatsby. Add a `<Link />` component below the header, and give it a `to` property, with the value of `"/about/"` for the pathname:
+
+```jsx{2,7}
+import React from "react"
+import { Link } from "gatsby"
+import Header from "../components/header"
+
+export default () => (
+    <div style={{ color: `purple` }}>
+        <Link to="/about/">About</Link>
+        <Header headerText="Hello Gatsby!" />
+        <p>What a world.</p>
+        <img src="https://source.unsplash.com/random/400x200" alt="" />
+    </div>
+)
+```
+
+2. Open up the about page component (`/src/pages/about.js`), and follow the same steps as above, but instead of giving the new link component a `to` attribute with a value of `"/about/"`, give it a value of `"/"`. Save, and take a look.
+
+![Linking between gatsby pages](09-linking-between-pages.gif)
+
+Use the Gatsby `<Link />` component for linking to pages internally, within your site. For external links to pages not handled by your Gatsby site, use the regular HTML `<a>` tag.
+
+> 💡 Check out more detail on routing in Gatsby in the [API doc for Gatsby Link](/docs/gatsby-link/).
 
 ## Deploying a Gatsby site
 
