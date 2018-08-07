@@ -47,6 +47,7 @@ time:
     "globals": {
       "__PATH_PREFIX__": ""
     },
+    "testURL": "http://localhost",
     "setupFiles": [
       "<rootDir>/loadershim.js"
     ]
@@ -112,6 +113,9 @@ exclude the `gatsby` module.
 
 The `globals` section sets `__PATH_PREFIX__`, which is usually set by Gatsby,
 and which some components need.
+
+You need to set `testURL` to a valid URL, because some DOM APIs such as
+`localStorage` are unhappy with the default (`about:blank`).
 
 There's one more global that you need to set, but as it's a function you can't
 set it here in the JSON. The `setupFiles` array lets you list files that will be
@@ -247,6 +251,7 @@ Then edit the Jest config in your `package.json` to match this:
     "globals": {
       "__PATH_PREFIX__": ""
     },
+    "testURL": "http://localhost",
     "setupFiles": [
       "<rootDir>/loadershim.js"
     ]
