@@ -3,10 +3,11 @@ const { isString } = require("lodash");
 module.exports = pluginOptions => {
   const options = Object.assign(
     {
+      decks: [],
+      defaultLayouts: {},
       extensions: [".mdx"],
-      mdPlugins: [],
       hastPlugins: [],
-      defaultLayouts: {}
+      mdPlugins: []
     },
     pluginOptions
   );
