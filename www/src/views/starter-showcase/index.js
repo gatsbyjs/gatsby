@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import Helmet from "react-helmet"
 import Layout from "../../components/layout"
-import RRSM from "../../utils/react-router-state-manager"
+import RRSM from "../../utils/reach-router-state-manager"
 
 import FilteredShowcase from "./filtered-showcase"
 

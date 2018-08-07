@@ -1,107 +1,163 @@
-<img alt="Gatsby" src="https://www.gatsbyjs.org/monogram.svg" width="100">
+<p align="center">
+  <a href="https://next.gatsbyjs.org">
+    <img alt="Gatsby" src="https://www.gatsbyjs.org/monogram.svg" width="60" />
+  </a>
+</p>
+<h1 align="center">
+  Gatsby v2 [beta] · (see <a href="https://github.com/gatsbyjs/gatsby/tree/v1">v1</a>)
+</h1>
 
-# Gatsby
+<h3 align="center">
+  ⚛️ 📄 :rocket:
+</h3>
+<p align="center">
+  <strong>Blazing fast site generator for React</strong><br>
+  Go beyond static sites: build blogs, ecommerce sites, full-blown apps, and more with Gatsby.
+</p>
+<p align="center">
+  <a href="https://github.com/gatsbyjs/gatsby/blob/master/LICENSE">
+    <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="Gatsby is released under the MIT license." />
+  </a>
+  <a href="https://travis-ci.org/gatsbyjs/gatsby">
+    <img src="https://travis-ci.org/gatsbyjs/gatsby.svg?branch=master" alt="Current TravisCI build status." />
+  </a>
+  <a href="https://www.npmjs.org/package/gatsby">
+    <img src="https://img.shields.io/npm/v/gatsby.svg?style=flat-square" alt="Current npm package version." />
+  </a>
+  <a href="https://npmcharts.com/compare/gatsby?minimal=true">
+    <img src="https://img.shields.io/npm/dm/gatsby.svg" alt="Downloads per month on npm." />
+  </a>
+  <a href="https://next.gatsbyjs.org/docs/how-to-submit-a-pr/">
+    <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs welcome!" />
+  </a>
+</p>
 
-⚛️📄🚀 Blazing-fast static site generator for React
+<h3 align="center">
+  <a href="https://next.gatsbyjs.org/docs/">Quickstart</a>
+  <span> · </span>
+  <a href="https://next.gatsbyjs.org/tutorial/">Tutorial</a>
+  <span> · </span>
+  <a href="https://next.gatsbyjs.org/plugins/">Plugins</a>
+  <span> · </span>
+  <a href="https://next.gatsbyjs.org/docs/gatsby-starters/">Starters</a>
+  <span> · </span>
+  <a href="https://next.gatsbyjs.org/showcase/">Showcase</a>
+  <span> · </span>
+  <a href="https://next.gatsbyjs.org/docs/how-to-contribute/">Contribute</a>
+  <span> · </span>
+  Support: <a href="https://spectrum.chat/gatsby-js">Spectrum</a>
+  <span> & </span>
+  <a href="https://discord.gg/0ZcbPKXt5bVoxkfV">Discord</a>
+</h3>
 
-## Docs
+Gatsby is a modern framework for blazing fast websites.
 
-**[View the docs on gatsbyjs.org](https://www.gatsbyjs.org/docs/)**
+- **Go Beyond Static Websites.** Get all the benefits of static websites with none of the
+  limitations. Gatsby sites are fully functional React apps, so you can create high-quality,
+  dynamic web apps, from blogs to ecommerce sites to user dashboards.
 
-[Migrating from v1 to v2?](https://next.gatsbyjs.org/docs/migrating-from-v1-to-v2/)
+- **Use a Modern Stack for Every Site.** No matter where the data comes from, Gatsby sites are
+  built using React and GraphQL. Build a uniform workflow for you and your team, regardless of
+  whether the data is coming from the same back-end.
 
-## Link component
+- **Load Data From Anywhere.** Gatsby pulls in data from any data source, whether it’s Markdown
+  files, a headless CMS like Contentful or WordPress, or a REST or GraphQL API. Use source plugins
+  to load your data, then develop using Gatsby’s uniform GraphQL interface.
 
-A `<Link>` component for Gatsby.
+- **Performance Is Baked In.** Ace your performance audits by default. Gatsby automates code
+  splitting, image optimization, inlining critical styles, lazy-loading and prefetching resources,
+  and more to ensure your site is fast — no manual tuning required.
 
-It's a wrapper around
-[React Router's Link component](https://github.com/ReactTraining/react-router/blob/master/packages/react-router-dom/docs/api/Link.md)
-that adds enhancements specific to Gatsby. All props are passed through to React
-Router's Link.
+- **Host at Scale for Pennies.** Gatsby sites don’t require servers, so you can host your entire
+  site on a CDN for a fraction of the cost of a server-rendered site. Many Gatsby sites can be
+  hosted entirely free on services like GitHub Pages and Netlify.
 
-You can set the `activeStyle` or `activeClassName` prop to add styling
-attributes to the rendered element when it matches the current URL, and Gatsby
-also supports React Router's props `exact`, `strict`, `isActive`, and
-`location`. If any of these props are set, then
-[React Router's NavLink component](https://github.com/ReactTraining/react-router/blob/master/packages/react-router-dom/docs/api/NavLink.md)
-will be used instead of the default `Link`.
+[**Learn how to use Gatsby for your next project.**](https://next.gatsbyjs.org/docs/)
 
-Gatsby does per-route code splitting. This means that when navigating to a new
-page, the code chunks necessary for that page might not be loaded. This is bad.
-Any unnecessary latency when changing pages should be avoided. So to avoid that
-Gatsby preloads code chunks and page data.
+## What’s In This Document
 
-Preloading is triggered by a link entering the viewport; Gatsby uses
-`Link`/`NavLink`'s `innerRef` property to create a new InteractionObserver (on
-supported browsers) to monitor visible links. This way, Gatsby only prefetches
-code/data chunks for pages the user is likely to navigate to. You can also get
-access to the link element by passing in a `innerRef` prop.
+- [Get Up and Running in 5 Minutes](#-get-up-and-running-in-5-minutes)
+- [Learning Gatsby](#-learning-gatsby)
+- [Migration Guides](#-migration-guides)
+- [How to Contribute](#-how-to-contribute)
+- [Thanks to Our Contributors and Sponsors](#-thanks-to-our-contributors-and-sponsors)
 
-### Install
+## 🚀 Get Up and Running in 5 Minutes
 
-`npm install --save gatsby`
+You can get a new Gatsby site up and running on your local dev environment in 5 minutes with these three steps:
 
-### How to use
+1.  **Create a Gatsby site from a Gatsby starter.**
 
-In JavaScript:
+    Get your Gatsby blog set up in a single command:
 
-```jsx
-import { Link } from "gatsby"
+    ```sh
+    # install the Gatsby CLI globally
+    npm install -g gatsby-cli
 
-render () {
-  <div>
-    <Link
-      to="/another-page/"
-      activeStyle={{
-        color: 'red'
-      }}
-      innerRef={(el) => { this.myLink = el }}
-    >
-    Another page
-    </Link>
-  </div>
-}
-```
+    # create a new Gatsby site using the default starter
+    gatsby new my-blazing-fast-site
+    ```
+    
+    _Want to try v2 beta? Run this instead:_
+    `gatsby new my-blazing-fast-site https://github.com/gatsbyjs/gatsby-starter-default#v2`
 
-### Programmatic navigation
+2.  **Start the site in `develop` mode.**
 
-For cases when you can only use event handlers for navigation, you can use
-`push` (which uses `history.push`) or `replace` (which uses `history.replace`):
+    Next, move into your new site’s directory and start it up:
 
-```jsx
-import { push } from "gatsby"
+    ```sh
+    cd my-blazing-fast-site/
+    gatsby develop
+    ```
 
-render () {
-  <div onClick={ () => push('/example')}>
-    <p>Example</p>
-  </div>
-}
-```
+3.  **Open the source code and start editing!**
 
-### Prefixed paths helper
+    Your site is now running at `http://localhost:8000`. Open the the `my-blazing-fast-site` directory in your code editor of choice and edit `src/pages/index.js`. Save your changes and the browser will update in real time!
 
-Gatsby allows you to [automatically prefix links](/docs/path-prefix/) for sites
-hosted on GitHub Pages or other places where your site isn't at the root of the
-domain.
+At this point, you’ve got a fully functional Gatsby website. For additional information on how you can customize your Gatsby site, see our [plugins](https://next.gatsbyjs.org/plugins/) and [the official tutorial](https://next.gatsbyjs.org/tutorial/).
 
-This can create problems during development as pathnames won't be prefixed. To
-handle both, gatsby-link exports a helper function `withPrefix` that prepends
-the prefix during production but doesn't in development.
+## 🎓 Learning Gatsby
 
-This is only for pathnames you're constructing manually. The `<Link>` component
-handles prefixing automatically.
+Full documentation for Gatsby lives [on the website](https://next.gatsbyjs.org/).
 
-```jsx
-import { withPrefix } from "gatsby"
+- **For most developers, we recommend starting with our [in-depth tutorial for creating a site with Gatsby](https://next.gatsbyjs.org/tutorial/).** It starts with zero assumptions about your level of ability and walks through every step of the process.
 
-const IndexLayout = ({ children, location }) => {
-  const isHomepage = location.pathname === withPrefix("/")
+- **To dive straight into code samples head [to our documentation](https://next.gatsbyjs.org/docs/).** In particular, check out the “Guides”, API reference, and “Advanced Tutorials” sections in the sidebar.
 
-  return (
-    <div>
-      <h1>Welcome {isHomepage ? "home" : "aboard"}!</h1>
-      {children}
-    </div>
-  )
-}
-```
+We welcome suggestions for improving our docs. See the [“how to contribute”](https://next.gatsbyjs.org/docs/how-to-contribute/) documentation for more details.
+
+**Start Learning Gatsby: [Follow the Tutorial](https://next.gatsbyjs.org/tutorial/) · [Read the Docs](https://next.gatsbyjs.org/docs/)**
+
+## 💼 Migration Guides
+
+Already have a Gatsby site? These handy guides will help you add the improvements of Gatsby v2 to your site without starting from scratch!
+
+- [Migrate a Gatsby site from v1 to v2](https://next.gatsbyjs.org/docs/migrating-from-v1-to-v2/)
+- Still on v0? Start here: [Migrate a Gatsby site from v0 to v1](https://next.gatsbyjs.org/docs/migrating-from-v0-to-v1/)
+
+## 🤝 How to Contribute
+
+Whether you're helping us fix bugs, improve the docs, or spread the word, we'd love to have you as part of the Gatsby community! :muscle::purple_heart:
+
+Check out our [contributor onboarding docs](https://next.gatsbyjs.org/docs/how-to-contribute/) for ideas on contributing and setup steps for getting our repos up and running on your local machine.
+
+[**Read the Contributing Guide**](https://next.gatsbyjs.org/docs/how-to-contribute/)
+
+### Code of Conduct
+
+Gatsby is dedicated to building a welcoming, diverse, safe community. We expect everyone participating in the Gatsby community to abide by our [Code of Conduct](https://next.gatsbyjs.org/docs/code-of-conduct/). Please read it. Please follow it. In the Gatsby community, we work hard to build each other up and create amazing things together. 💪💜
+
+[**Read the Code of Conduct**](https://next.gatsbyjs.org/docs/code-of-conduct/)
+
+### A note on how this repository is organized
+
+This repository is a [monorepo](https://trunkbaseddevelopment.com/monorepos/) managed using [Lerna](https://github.com/lerna/lerna). This means there are [multiple packages](/packages) managed in this codebase, even though we publish them to NPM as separate packages.
+
+### Contributing to Gatsby v1
+
+We are currently only accepting bug fixes for Gatsby v1. No new features will be accepted.
+
+## 💜 Thanks to Our Contributors and Sponsors
+
+Thanks to our many contributors and sponsors as well as the companies sponsoring
+our testing and hosting infrastructure: [Travis CI](https://travis-ci.com/), [Appveyor](https://www.appveyor.com/), and [Netlify](https://www.netlify.com/).
