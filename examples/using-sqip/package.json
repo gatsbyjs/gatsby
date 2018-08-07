@@ -4,12 +4,14 @@
   "version": "1.0.0",
   "author": "Benedikt Rötsch <info@benedikt-roetsch.de>",
   "dependencies": {
-    "gatsby": "^1.9.247",
-    "gatsby-image": "^1.0.48",
-    "gatsby-plugin-sharp": "^1.6.43",
-    "gatsby-source-filesystem": "^1.5.34",
-    "gatsby-transformer-sharp": "^1.6.23",
-    "gatsby-transformer-sqip": "0.0.6"
+    "gatsby": "next",
+    "gatsby-image": "next",
+    "gatsby-plugin-sharp": "next",
+    "gatsby-source-filesystem": "next",
+    "gatsby-transformer-sharp": "next",
+    "gatsby-transformer-sqip": "next",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2"
   },
   "keywords": [
     "gatsby"
