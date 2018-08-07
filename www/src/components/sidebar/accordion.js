@@ -10,6 +10,7 @@ const ItemWithSubitems = ({
   activeItemLink,
   createLink,
   isExpanded,
+  isParentOfActiveItem,
   item,
   level,
   location,
@@ -24,20 +25,23 @@ const ItemWithSubitems = ({
     <Fragment>
       {item.link ? (
         <SplitButton
-          level={level}
+          createLink={createLink}
           isActive={isActive}
           isExpanded={isExpanded}
+          isParentOfActiveItem={isParentOfActiveItem}
           item={item}
+          level={level}
           location={location}
           onLinkClick={onLinkClick}
           onSectionTitleClick={onSectionTitleClick}
           uid={uid}
-          createLink={createLink}
         />
       ) : (
         <SectionTitleComponent
           isActive={isActive}
           isExpanded={isExpanded}
+          isParentOfActiveItem={isParentOfActiveItem}
+          item={item}
           level={level}
           onSectionTitleClick={onSectionTitleClick}
           title={item.title}
@@ -54,17 +58,18 @@ class Accordion extends React.Component {
 
     this.state = {
       uid: (`` + Math.random()).replace(/\D/g, ``),
-      isExpanded: props.isExpanded || props.isActive || false,
     }
 
     this.handleClick = this.handleClick.bind(this)
   }
 
   handleClick(...args) {
-    this.setState({ isExpanded: !this.state.isExpanded })
-
     if (this.props.onLinkClick) {
       this.props.onLinkClick(...args)
+    }
+
+    if (this.props.onSectionTitleClick) {
+      this.props.onSectionTitleClick(...args)
     }
   }
 
@@ -74,14 +79,16 @@ class Accordion extends React.Component {
       activeItemParents,
       createLink,
       isActive,
-      isExpanded = this.state.isExpanded,
+      isParentOfActiveItem,
       item,
       level,
       location,
       onLinkClick,
       onSectionTitleClick,
+      openSectionHash,
     } = this.props
     const uid = `item_` + this.state.uid
+    const isExpanded = openSectionHash[item.title] || item.disableAccordions
 
     return (
       <li
@@ -97,23 +104,22 @@ class Accordion extends React.Component {
           createLink={createLink}
           isActive={isActive}
           isExpanded={isExpanded}
+          isParentOfActiveItem={isParentOfActiveItem}
           item={item}
           level={level}
           location={location}
           onLinkClick={onLinkClick}
-          onSectionTitleClick={this.handleClick}
+          onSectionTitleClick={onSectionTitleClick}
           uid={uid}
         />
         <ul
           id={uid}
           css={{
             ...styles.ul,
+            display: isExpanded ? `block` : `none`,
             paddingBottom: level === 0 && isExpanded ? 40 : false,
             "& li": {
               paddingLeft: paddingLeft(level),
-            },
-            [presets.Tablet]: {
-              display: isExpanded ? `block` : `none`,
             },
           }}
         >
@@ -127,7 +133,9 @@ class Accordion extends React.Component {
               level={level + 1}
               location={location}
               onLinkClick={onLinkClick}
+              isExpanded={isExpanded}
               onSectionTitleClick={onSectionTitleClick}
+              openSectionHash={openSectionHash}
               styles={{
                 ...(item.ui === `steps` && {
                   ...styles.ulStepsUI,
