@@ -1,3 +1,4 @@
+import "@babel/polyfill"
 import React from "react"
 import { render, cleanup } from "react-testing-library"
 import {
@@ -56,10 +57,9 @@ const setup = ({ sourcePath = `/active`, linkProps } = {}) => {
     </LocationProvider>
   )
 
-  return {
-    ...utils,
+  return Object.assign({}, utils, {
     link: utils.getByText(`link`),
-  }
+  })
 }
 
 describe(`<Link />`, () => {
