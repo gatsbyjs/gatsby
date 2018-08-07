@@ -17,6 +17,7 @@
     "json5": "^1.0.1",
     "lodash": "^4.17.10",
     "mdast-util-to-string": "^1.0.4",
+    "mdast-util-toc": "^2.0.1",
     "remark": "^9.0.0",
     "retext": "^5.0.0",
     "strip-markdown": "^3.0.1",

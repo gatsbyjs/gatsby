@@ -12,11 +12,13 @@ const retext = require("retext");
 const visit = require("unist-util-visit");
 const remove = require("unist-util-remove");
 const toString = require("mdast-util-to-string");
+const generateTOC = require("mdast-util-toc");
 const stripMarkdown = require("strip-markdown");
 const grayMatter = require("gray-matter");
 const { createMdxAstCompiler } = require("@mdx-js/mdx");
 const prune = require("underscore.string/prune");
 const mdx = require("./utils/mdx");
+const getTableOfContents = require("./utils/get-table-of-content");
 const defaultOptions = require("./utils/default-options");
 
 const stripFrontmatter = source => grayMatter(source).content;
@@ -144,6 +146,21 @@ ${code}`;
             headings = headings.filter(heading => heading.depth === depth);
           }
           return headings;
+        }
+      },
+      tableOfContents: {
+        type: GraphQLJSON,
+        args: {
+          maxDepth: {
+            type: GraphQLInt,
+            default: 6
+          }
+        },
+        async resolve(mdxNode, { maxDepth }) {
+          const ast = await getAST(mdxNode);
+          const toc = generateTOC(ast, maxDepth);
+
+          return getTableOfContents(toc.map, {});
         }
       },
       timeToRead: {
