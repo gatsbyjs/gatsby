@@ -9,7 +9,7 @@ Gatsby is an excellent framework for building web apps. You can use Gatsby to cr
 
 ## Hybrid app pages
 
-With this method, Gatsby initially renders the page statically, and then when your React components load in the browser they can fetch and render data from APIs.
+When a visitor lands on a Gatsby page, the page's HTML file is loaded first, then the JavaScript bundle; When your React components load in the browser, they can fetch and render data from APIs.
 
 > 💡 The [React docs](https://reactjs.org/docs/faq-ajax.html) have a great, straightforward example demonstrating this approach.
 
