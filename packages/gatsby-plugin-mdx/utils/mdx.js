@@ -3,7 +3,7 @@ const grayMatter = require("gray-matter");
 /**
  * Converts MDX to JSX, including converting classic frontmatter to an
  * exported variable.
- * 
+ *
  * @param  {String} source  MDX source
  * @param  {Object} options options for mdx library
  * @return {String}         JSX source
@@ -17,4 +17,4 @@ module.exports = async function mdxToJsx(source, options) {
 
 export const _frontmatter = ${JSON.stringify(data)};
 `;
-}
+};
