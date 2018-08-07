@@ -350,12 +350,23 @@ module.exports = async ({
   }
 
   /**
-   * Loads audio, video, or pdf assets
+   * Loads audio and video and inlines them via a data URI if they are below
+   * the size threshold
+   */
+  rules.media = () => {
+    return {
+      use: [loaders.url()],
+      test: /\.(mp4|webm|wav|mp3|m4a|aac|oga|flac)$/,
+    }
+  }
+
+  /**
+   * Loads assets without inlining
    */
   rules.miscAssets = () => {
     return {
       use: [loaders.file()],
-      test: /\.(mp4|webm|wav|mp3|m4a|aac|oga|flac|pdf)$/,
+      test: /\.pdf$/,
     }
   }
 
