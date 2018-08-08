@@ -57,7 +57,10 @@ export default () => (
 )
 ```
 
-![View changes with hot reloading](02-hot-reloading.gif)
+<video controls="controls" autoplay="true" loop="true">
+  <source type="video/mp4" src="./02-hot-reloading.mp4"></source>
+  <p>Sorry! You browser doesn't support this video.</p>
+</video>
 
 > 💡 We’ll be covering more about styling in Gatsby in part two of the tutorial.
 

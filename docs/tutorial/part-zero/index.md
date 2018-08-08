@@ -97,7 +97,10 @@ Now let’s use the gatsby-cli tool to create your first Gatsby site. Using the 
 3.  Run `cd hello-world`.
 4.  Run `gatsby develop`.
 
-![Create Hello World site](03-create-site.gif)
+<video controls="controls" autoplay="true" loop="true">
+  <source type="video/mp4" src="./03-create-site.mp4"></source>
+  <p>Sorry! You browser doesn't support this video.</p>
+</video>
 
 What just happened?
 
