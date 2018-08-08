@@ -159,7 +159,7 @@ describe(`static-entry`, () => {
       reverseBodyComponentsPluginFactory(`Pre`),
     ]
 
-    DevelopStaticEntry(`/about/`, (_, html) => {
+    StaticEntry(`/about/`, (_, html) => {
       expect(html).toMatchSnapshot()
       done()
     })
