@@ -1983,3 +1983,16 @@
   built_by: Matt Ferderer
   built_by_url: https://twitter.com/mattferderer
   featured: false
+- title: Sahyadri Open Source Community
+  main_url: https://sosc.org.in
+  url: https://sosc.org.in
+  source_url: https://github.com/haxzie/sosc-website
+  description: >
+    Official website of Sahyadri Open Source Community for community blog, event details and members info.
+  categories:
+    - Blog
+    - Community
+    - Open Source
+  built_by: Musthaq Ahamad
+  built_by_url: https://github.com/haxzie
+  featured: false
