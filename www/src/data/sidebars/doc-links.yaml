@@ -13,7 +13,7 @@
 - title: Guides
   items:
     - title: Preparing your environment*
-      link: /docs/environment/
+      link: /docs/preparing-your-environment/
       items:
       - title: Basic hardware and software requirements*
         link: /docs/basic-hardware-software-requirements/
