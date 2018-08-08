@@ -1,7 +1,12 @@
 import React, { createElement } from "react"
 import { Router } from "@reach/router"
 import { ScrollContext } from "gatsby-react-router-scroll"
-import { shouldUpdateScroll, init as navigationInit } from "./navigation"
+import {
+  shouldUpdateScroll,
+  init as navigationInit,
+  onRouteUpdate,
+  onPreRouteUpdate,
+} from "./navigation"
 import { apiRunner } from "./api-runner-browser"
 import syncRequires from "./sync-requires"
 import pages from "./pages.json"
@@ -43,12 +48,12 @@ if (window.__webpack_hot_middleware_reporter__ !== undefined) {
 
 navigationInit()
 
-// Call onRouteUpdate on the initial page load.
-apiRunner(`onRouteUpdate`, {
-  location: window.history.location,
-})
-
 class RouteHandler extends React.Component {
+  constructor(props) {
+    super(props)
+    onPreRouteUpdate(props.location)
+  }
+
   render() {
     const { location } = this.props
     const { pathname } = location
@@ -83,6 +88,20 @@ class RouteHandler extends React.Component {
         {child}
       </ScrollContext>
     )
+  }
+
+  // Call onRouteUpdate on the initial page load.
+  componentDidMount() {
+    onRouteUpdate(this.props.location)
+  }
+
+  shouldComponentUpdate() {
+    onPreRouteUpdate(this.props.location)
+    return true
+  }
+
+  componentDidUpdate() {
+    onRouteUpdate(this.props.location)
   }
 }
 
