@@ -67,7 +67,7 @@ module.exports = (modulePath, resolver = require.resolve) => {
     },
   })
 
-  if (isES6 && isCommonJS) {
+  if (isES6 && isCommonJS && process.env.NODE_ENV !== `test`) {
     report.panic(
       `This plugin file is using both CommonJS and ES6 module systems together which we don't support.
 You'll need to edit the file to use just one or the other.
