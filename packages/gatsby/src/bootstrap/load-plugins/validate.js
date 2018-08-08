@@ -29,8 +29,7 @@ const getBadExportsMessage = (badExports, exportType, apis) => {
   let message = `\n`
   message += stripIndent`
     Your plugins must export known APIs from their gatsby-${exportType}.js.
-    The following exports aren't APIs. Perhaps you made a typo or
-    your plugin is outdated?
+    The following exports aren't APIs. Perhaps you made a typo or your plugin is outdated?
 
     See https://www.gatsbyjs.org/docs/${exportType}-apis/ for the list of Gatsby ${capitalized} APIs
   `
@@ -44,8 +43,8 @@ const getBadExportsMessage = (badExports, exportType, apis) => {
     if (isDefaultPlugin && isModifyWebpackConfig) {
       message += stripIndent`
         - Your site's gatsby-${exportType}.js is exporting "${ bady.exportName }" which was removed in Gatsby v2. Refer to the migration guide for more info on upgrading to "onCreateWebpackConfig":
-        https://gatsby.app/update-webpack-config
       `
+      message += `\n https://gatsby.app/update-webpack-config`
     } else if (isDefaultPlugin) {
       message += stripIndent`
         - Your site's gatsby-${exportType}.js is exporting a variable named "${
@@ -62,7 +61,7 @@ const getBadExportsMessage = (badExports, exportType, apis) => {
 
     if (similarities.bestMatch.rating > 0.5 && !isModifyWebpackConfig) {
       message += `\n\n`
-      message += ` Perhaps you meant to export "${
+      message += `Perhaps you meant to export "${
         similarities.bestMatch.target
       }"?`
     }
