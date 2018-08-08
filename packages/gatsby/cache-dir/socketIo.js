@@ -29,7 +29,6 @@ export default function socketIo() {
                 [msg.payload.id]: msg.payload.result,
               }
             }
-            ___emitter.emit(msg.type, msg.payload)
           }
           if (msg.type === `pageQueryResult`) {
             if (didDataChange(msg, pageQueryData)) {
@@ -37,9 +36,9 @@ export default function socketIo() {
                 ...pageQueryData,
                 [msg.payload.id]: msg.payload.result,
               }
-              ___emitter.emit(msg.type, msg.payload)
             }
-          } else if (msg.type && msg.payload) {
+          }
+          if (msg.type && msg.payload) {
             ___emitter.emit(msg.type, msg.payload)
           }
         })
