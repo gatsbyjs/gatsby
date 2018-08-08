@@ -109,7 +109,7 @@ class GatsbyLink extends React.Component {
 
     return (
       <Link
-        to={to}
+        to={withPrefix(to)}
         getProps={getProps}
         innerRef={this.handleRef}
         onMouseEnter={e => {

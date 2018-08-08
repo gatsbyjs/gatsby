@@ -9,6 +9,9 @@ import {
 import Link, { push, replace, withPrefix } from "../"
 
 afterEach(cleanup)
+beforeEach(() => {
+  global.__PATH_PREFIX__ = ''
+})
 
 const getInstance = (props, pathPrefix = ``) => {
   getWithPrefix()(pathPrefix)
@@ -89,6 +92,14 @@ describe(`<Link />`, () => {
       const { link } = setup({ linkProps: { to: location } })
 
       expect(link.getAttribute(`href`)).toEqual(location)
+    })
+
+    it(`includes the pathPrefix`, () => {
+      const prefix = global.__PATH_PREFIX__ = '/prefixed'
+      const location = `/courses?sort=name`
+      const { link } = setup({ linkProps: { to: location } })
+
+      expect(link.getAttribute(`href`)).toEqual(`${prefix}${location}`)
     })
   })
 
