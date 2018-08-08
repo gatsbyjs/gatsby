@@ -47,13 +47,13 @@ module.exports = (modulePath, resolver = require.resolve) => {
       if (exportName) exportNames.push(exportName)
     },
     AssignmentExpression: function AssignmentExpression(astPath) {
-      isCommonJS = true
       const nodeLeft = astPath.node.left
 
       if (nodeLeft.type !== `MemberExpression`) return
 
       // get foo from `exports.foo = bar`
       if (get(nodeLeft, `object.name`) === `exports`) {
+        isCommonJS = true
         exportNames.push(nodeLeft.property.name)
       }
 
@@ -62,6 +62,7 @@ module.exports = (modulePath, resolver = require.resolve) => {
         get(nodeLeft, `object.object.name`) === `module` &&
         get(nodeLeft, `object.property.name`) === `exports`
       ) {
+        isCommonJS = true
         exportNames.push(nodeLeft.property.name)
       }
     },
