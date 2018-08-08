@@ -255,7 +255,7 @@ Now go to your `src/pages/index.js` file. This is your homepage that shows at th
 
 ```js{3,7}
 import React from 'react'
-import Link from 'gatsby-link'
+import { Link } from 'gatsby'
 import Checkout from '../components/checkout'
 
 const IndexPage = () => (

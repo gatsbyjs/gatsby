@@ -81,7 +81,7 @@ export type RuleUtils = {
   yaml: RuleFactory<*>,
   fonts: RuleFactory<*>,
   images: RuleFactory<*>,
-  audioVideo: RuleFactory<*>,
+  miscAssets: RuleFactory<*>,
 
   css: ContextualRuleFactory,
   cssModules: RuleFactory<*>,
@@ -117,13 +117,7 @@ module.exports = async ({
   stage: Stage,
   program: any,
 }): Promise<WebpackUtilsOptions> => {
-  /**
-   *  the leading `../` for assetRelativeRoot is required to ensure
-   * the static files extracted by webpack are not part of the
-   * "build-javascript" output path of `/js`. The same technique is
-   * used for CSS
-   */
-  const assetRelativeRoot = `../static/`
+  const assetRelativeRoot = `static/`
   const vendorRegex = /(node_modules|bower_components)/
   const supportedBrowsers = program.browserlist
 
@@ -244,7 +238,7 @@ module.exports = async ({
 
     file: (options = {}) => {
       return {
-        loader: require.resolve(`url-loader`),
+        loader: require.resolve(`file-loader`),
         options: {
           name: `${assetRelativeRoot}[name]-[hash].[ext]`,
           ...options,
@@ -356,12 +350,23 @@ module.exports = async ({
   }
 
   /**
-   * Loads audio or video assets
+   * Loads audio and video and inlines them via a data URI if they are below
+   * the size threshold
    */
-  rules.audioVideo = () => {
+  rules.media = () => {
+    return {
+      use: [loaders.url()],
+      test: /\.(mp4|webm|wav|mp3|m4a|aac|oga|flac)$/,
+    }
+  }
+
+  /**
+   * Loads assets without inlining
+   */
+  rules.miscAssets = () => {
     return {
       use: [loaders.file()],
-      test: /\.(mp4|webm|wav|mp3|m4a|aac|oga|flac)$/,
+      test: /\.pdf$/,
     }
   }
 
@@ -449,8 +454,8 @@ module.exports = async ({
    */
   plugins.extractText = options =>
     new MiniCssExtractPlugin({
-      filename: `../css/[name].[contenthash].css`,
-      chunkFilename: `../css/[name].[contenthash].css`,
+      filename: `[name].[contenthash].css`,
+      chunkFilename: `[name].[contenthash].css`,
       ...options,
     })
 

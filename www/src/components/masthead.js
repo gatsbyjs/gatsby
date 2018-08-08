@@ -48,7 +48,7 @@ const MastheadContent = () => (
         css={{
           ...scale(0.7),
           color: colors.gatsby,
-          lineHeight: 1,
+          lineHeight: 1.1,
           margin: 0,
           marginBottom: `1.2em`,
           padding: 0,

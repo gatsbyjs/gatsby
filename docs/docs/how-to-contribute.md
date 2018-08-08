@@ -16,7 +16,7 @@ We want contributing to Gatsby to be fun, enjoyable, and educational for anyone 
 - Searching for Gatsby on Discord or Spectrum and helping someone else who needs help
 - Teaching others how to contribute to Gatsby's repo!
 
-As our way of saying “thank you” to our contributors, **_all contributors_ are eligible for [free Gatsby swag](/docs/contributor-swag/)** — whether you’re contributing code, docs, a talk, an article, or something else that helps the Gatby community. [Learn how to claim free swag for contributors.](/docs/contributor-swag/)
+As our way of saying “thank you” to our contributors, **_all contributors_ are eligible for [free Gatsby swag](/docs/contributor-swag/)** — whether you’re contributing code, docs, a talk, an article, or something else that helps the Gatsby community. [Learn how to claim free swag for contributors.](/docs/contributor-swag/)
 
 ### Not sure how to start contributing?
 
@@ -61,10 +61,10 @@ The usual contributing steps are:
 - Run `npm run watch` from the root of the repo to watch for changes to packages' source code and compile these changes on-the-fly as you work. Note that the watch command can be resource intensive. To limit it to the packages you're working on, add a scope flag, like `npm run watch -- --scope={gatsby,gatsby-cli}`. To watch just one package, run `npm run watch -- --scope=gatsby`.
 - Install [gatsby-dev-cli](/packages/gatsby-dev-cli/) globally: `yarn global add gatsby-dev-cli`
 - Run `yarn install` in each of the sites you're testing.
-- For each of your Gatsby test sites, run the `gatsby-dev` command there to copy
+- For each of your Gatsby test sites, run the `gatsby-dev` command inside the test site's directory to copy
   the built files from your cloned copy of Gatsby. It'll watch for your changes
   to Gatsby packages and copy them into the site. For more detailed instructions
-  see the [gatsby-dev-cli README](/packages/gatsby-dev-cli/)
+  see the [gatsby-dev-cli README](/packages/gatsby-dev-cli/) and check out the [gatsby-dev-cli demo video](https://www.youtube.com/watch?v=D0SwX1MSuas).
 - Add tests and code for your changes.
 - Once you're done, make sure all tests still pass: `yarn test`.
 - Commit and push to your fork.
@@ -116,45 +116,6 @@ To add a new blog post to the gatsbyjs.org blog:
 
 ## Development tools
 
-### Redux devtools
+### Debugging the build process
 
-Gatsby uses Redux for managing state during development and building. It's often
-helpful to see the flow of actions and built-up state for a site you're working
-on or if adding new functionality to core. We leverage
-[Remote Redux Devtools](https://github.com/zalmoxisus/remote-redux-devtools) and
-[RemoteDev Server](https://github.com/zalmoxisus/remotedev-server) to help you debug Gatsby.
-
-To use this, first install
-[redux-devtools-extension](https://github.com/zalmoxisus/redux-devtools-extension)
-in your browser. Then in your Gatsby repo, run `npm run remotedev`. Then in your
-site directory run `REDUX_DEVTOOLS=true gatsby develop`. Depending on your
-operating system and shell, you may need to modify how you set the
-`REDUX_DEVTOOLS` environment variable.
-
-At this point, your site will be sending Redux actions and state to the remote
-server.
-
-To connect to this, you need to setup the devtools extension to talk to the
-remote server.
-
-First open the remote devtools.
-
-![how to open the redux remote devtools extension](./images/open-remote-dev-tools.png)
-
-Then click settings along the bottom menu and set the host and port.
-
-![how to set the host/port for the remote devtools extension to connect to Gatsby](./images/remote-dev-settings.png)
-
-After this, the devtools extension _should_ connect to the remote server and
-you'll see actions start showing up.
-
-![gatsby redux remote devtools](./images/running-redux-devtools.png)
-
-**Warning!! Lots of bugginess**. While having this available is extremely
-helpful, this setup is very buggy and fragile. There is a memory leak in the
-extension that's triggered it seems every time you restart the Gatsby
-development server. Also the extension often, for no apparent reason, just won't
-show any actions from the remote server. It'll also often freeze up. The best
-solution seems to just be turning everything off and on again. Fixing up these
-tools would be very helpful for us and many others using these tools if someone
-wants to take this on!
+Check [Debugging the build process](/docs/debugging-the-build-process/) page to learn how to debug Gatsby.

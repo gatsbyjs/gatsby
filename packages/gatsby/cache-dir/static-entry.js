@@ -2,7 +2,7 @@ const React = require(`react`)
 const fs = require(`fs`)
 const { join } = require(`path`)
 const { renderToString, renderToStaticMarkup } = require(`react-dom/server`)
-const { StaticRouter, Route } = require(`react-router-dom`)
+const { ServerLocation, Router } = require(`@reach/router`)
 const { get, merge, isObject, flatten, uniqBy } = require(`lodash`)
 
 const apiRunner = require(`./api-runner-ssr`)
@@ -34,12 +34,7 @@ try {
   if (testRequireError(`../src/html`, err)) {
     Html = require(`./default-html`)
   } else {
-    console.log(
-      `\n\nThere was an error requiring "src/html.js"\n\n`,
-      err,
-      `\n\n`
-    )
-    process.exit()
+    throw err
   }
 }
 
@@ -58,8 +53,6 @@ const createElement = React.createElement
 
 export default (pagePath, callback) => {
   const pathPrefix = `${__PATH_PREFIX__}/`
-  const pathToGroupStyles = `css/`
-  const pathToGroupScripts = `js/`
 
   let bodyHtml = ``
   let headComponents = []
@@ -132,28 +125,26 @@ export default (pagePath, callback) => {
     }
   }
 
-  const AltStaticRouter = apiRunner(`replaceStaticRouterComponent`)[0]
-
-  apiRunner(`replaceStaticRouterComponent`)
+  class RouteHandler extends React.Component {
+    render() {
+      return createElement(syncRequires.components[page.componentChunkName], {
+        ...this.props,
+        ...dataAndContext,
+        pathContext: dataAndContext.pageContext,
+      })
+    }
+  }
 
   const bodyComponent = createElement(
-    AltStaticRouter || StaticRouter,
-    {
-      basename: pathPrefix.slice(0, -1),
-      location: {
-        pathname: pagePath,
+    ServerLocation,
+    { url: pagePath },
+    createElement(
+      Router,
+      {
+        basepath: pathPrefix.slice(0, -1),
       },
-      context: {},
-    },
-    createElement(Route, {
-      // eslint-disable-next-line react/display-name
-      render: routeProps =>
-        createElement(syncRequires.components[page.componentChunkName], {
-          ...routeProps,
-          ...dataAndContext,
-          pathContext: dataAndContext.pageContext,
-        }),
-    })
+      createElement(RouteHandler, { path: `/*` })
+    )
   )
 
   // Let the site or plugin render the page component.
@@ -217,7 +208,6 @@ export default (pagePath, callback) => {
   const scripts = scriptsAndStyles.filter(
     script => script.name && script.name.endsWith(`.js`)
   )
-
   const styles = scriptsAndStyles.filter(
     style => style.name && style.name.endsWith(`.css`)
   )
@@ -246,7 +236,7 @@ export default (pagePath, callback) => {
           as="script"
           rel={script.rel}
           key={script.name}
-          href={urlJoin(pathPrefix, pathToGroupScripts, script.name)}
+          href={urlJoin(pathPrefix, script.name)}
         />
       )
     })
@@ -270,22 +260,23 @@ export default (pagePath, callback) => {
     .forEach(style => {
       // Add <link>s for styles that should be prefetched
       // otherwise, inline as a <style> tag
+
       if (style.rel === `prefetch`) {
         headComponents.push(
           <link
             as="style"
             rel={style.rel}
             key={style.name}
-            href={urlJoin(pathPrefix, pathToGroupStyles, style.name)}
+            href={urlJoin(pathPrefix, style.name)}
           />
         )
       } else {
         headComponents.unshift(
           <style
-            data-href={urlJoin(pathPrefix, style.name.slice(2))}
+            data-href={urlJoin(pathPrefix, style.name)}
             dangerouslySetInnerHTML={{
               __html: fs.readFileSync(
-                join(process.cwd(), `public`, pathToGroupStyles, style.name),
+                join(process.cwd(), `public`, style.name),
                 `utf-8`
               ),
             }}
@@ -323,9 +314,7 @@ export default (pagePath, callback) => {
   // Filter out prefetched bundles as adding them as a script tag
   // would force high priority fetching.
   const bodyScripts = scripts.filter(s => s.rel !== `prefetch`).map(s => {
-    const scriptPath = `${pathPrefix}${pathToGroupScripts}${JSON.stringify(
-      s.name
-    ).slice(1, -1)}`
+    const scriptPath = `${pathPrefix}${JSON.stringify(s.name).slice(1, -1)}`
     return <script key={scriptPath} src={scriptPath} async />
   })
 

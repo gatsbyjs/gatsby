@@ -13,7 +13,7 @@ const generatePathToOutput = outputPath => {
   return path.join(process.cwd(), `public`, outputFileName)
 }
 
-export function renderHTML({ htmlComponentRendererPath, paths, concurrency }) {
+export function renderHTML({ htmlComponentRendererPath, paths }) {
   return Promise.map(
     paths,
     path =>
@@ -26,7 +26,6 @@ export function renderHTML({ htmlComponentRendererPath, paths, concurrency }) {
         } catch (e) {
           reject(e)
         }
-      }),
-    { concurrency }
+      })
   )
 }

@@ -29,12 +29,30 @@ module.exports = {
       },
     },
     {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `StarterShowcaseImages`,
+        path: `${__dirname}/src/data/StarterShowcase/generatedScreenshots`,
+      },
+    },
+    //   need to have the img processing first? https://github.com/gatsbyjs/gatsby/issues/5196
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `StarterShowcaseData`,
+        path: `${__dirname}/src/data/StarterShowcase/startersData`,
+      },
+    },
+    {
+      resolve: `gatsby-plugin-create-client-paths`,
+      options: { prefixes: [`/starter-showcase/*`] },
+    },
+    {
       resolve: `gatsby-plugin-typography`,
       options: {
         pathToConfigModule: `src/utils/typography`,
       },
     },
-    `gatsby-transformer-sharp`,
     `gatsby-transformer-documentationjs`,
     `gatsby-transformer-yaml`,
     {
@@ -54,9 +72,9 @@ module.exports = {
               wrapperStyle: `margin-bottom: 1.05rem`,
             },
           },
+          `gatsby-remark-autolink-headers`,
           `gatsby-remark-prismjs`,
           `gatsby-remark-copy-linked-files`,
-          `gatsby-remark-autolink-headers`,
           `gatsby-remark-smartypants`,
         ],
       },
@@ -69,6 +87,7 @@ module.exports = {
       },
     },
     `gatsby-plugin-glamor`,
+    `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     `gatsby-plugin-catch-links`,
     `gatsby-plugin-lodash`,

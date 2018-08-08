@@ -23,6 +23,7 @@ Object {
   "src": "/static/test-1234-85b96.png",
   "srcSet": "/static/test-1234-7c9f5.png 200w,
 /static/test-1234-85b96.png 281w",
+  "srcSetType": "image/png",
 }
 `;
 
@@ -39,6 +40,7 @@ Object {
   "src": "/static/test-1234-24ad8.png",
   "srcSet": "/static/test-1234-06d78.png 200w,
 /static/test-1234-24ad8.png 281w",
+  "srcSetType": "image/png",
 }
 `;
 
@@ -54,6 +56,7 @@ Object {
   "sizes": "(max-width: 1px) 100vw, 1px",
   "src": "/static/test-1234-18c2a.png",
   "srcSet": "/static/test-1234-18c2a.png 1w",
+  "srcSetType": "image/png",
 }
 `;
 

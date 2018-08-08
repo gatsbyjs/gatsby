@@ -3,7 +3,8 @@ const precache = require(`sw-precache`)
 const path = require(`path`)
 const slash = require(`slash`)
 const _ = require(`lodash`)
-const cheerio = require(`cheerio`)
+
+const getResourcesFromHTML = require(`./get-resources-from-html`)
 
 exports.createPages = ({ actions }) => {
   if (process.env.NODE_ENV === `production`) {
@@ -45,28 +46,9 @@ exports.onPostBuild = (args, pluginOptions) => {
     rootDir
   )
 
-  // load index.html to pull scripts/links necessary for proper offline reload
-  const html = fs.readFileSync(
-    path.resolve(`${process.cwd()}/${rootDir}/index.html`)
+  const criticalFilePaths = getResourcesFromHTML(
+    `${process.cwd()}/${rootDir}/index.html`
   )
-
-  // party like it's 2006
-  const $ = cheerio.load(html)
-
-  // holds any paths for scripts and links
-  const criticalFilePaths = []
-
-  $(`script`)
-    .filter((_, elem) => $(elem).attr(`src`) !== undefined)
-    .each((_, elem) => {
-      criticalFilePaths.push(`${rootDir}${$(elem).attr(`src`)}`)
-    })
-
-  $(`link`)
-    .filter((_, elem) => $(elem).attr(`as`) !== `script`)
-    .each((_, elem) => {
-      criticalFilePaths.push(`${rootDir}${$(elem).attr(`href`)}`)
-    })
 
   const options = {
     staticFileGlobs: files.concat([

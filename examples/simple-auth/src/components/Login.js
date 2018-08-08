@@ -1,5 +1,5 @@
 import React from "react"
-import { Redirect } from "react-router-dom"
+import { redirectTo } from "@reach/router"
 import Form from "./Form"
 import View from "./View"
 import { handleLogin, isLoggedIn } from "../utils/auth"
@@ -23,7 +23,7 @@ class Login extends React.Component {
 
   render() {
     if (isLoggedIn()) {
-      return <Redirect to={{ pathname: `/app/profile` }} />
+      redirectTo(`/app/profile`)
     }
 
     return (

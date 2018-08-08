@@ -331,6 +331,8 @@ export default ({ children }) => (
 
 It worked!! 🎉
 
+> 💡 `<StaticQuery/>` can be used to query data from a component instead of a page. A future version of the tutorial will cover this in more detail. For now you can check out [the StaticQuery documentation for more info](/docs/static-query/).
+
 ![fake-title-graphql](fake-title-graphql.png)
 
 But let's restore the real title.

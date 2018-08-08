@@ -1,3 +1,11 @@
+- title: ReactJS
+  main_url: 'https://reactjs.org/'
+  url: 'https://reactjs.org/'
+  source_url: 'https://github.com/reactjs/reactjs.org'
+  featured: true
+  categories:
+    - Web Dev
+    - Featured
 - title: NEON
   main_url: 'http://neonrated.com/'
   url: 'http://neonrated.com/'
@@ -16,6 +24,23 @@
   plugins: 'gatsby-plugin-react-helmet, gatsby-plugin-react-next'
   built_by: Studio Lovelock
   built_by_url: 'http://www.studiolovelock.com/'
+- title: Slite
+  main_url: 'https://slite.com/'
+  url: 'https://slite.com/'
+  featured: true
+  categories:
+    - Landing
+    - Marketing
+    - Technology
+    - Featured
+- title: GraphCMS
+  main_url: 'https://graphcms.com/'
+  url: 'https://graphcms.com/'
+  featured: true
+  categories:
+    - Landing
+    - Marketing
+    - Technology
 - title: Bottender Docs
   main_url: 'https://bottender.js.org/'
   url: 'https://bottender.js.org/'
@@ -86,23 +111,6 @@
     - Portfolio
     - Creative
     - Web Dev
-    - Featured
-- title: ReactJS
-  main_url: 'https://reactjs.org/'
-  url: 'https://reactjs.org/'
-  source_url: 'https://github.com/reactjs/reactjs.org'
-  featured: true
-  categories:
-    - Web Dev
-    - Featured
-- title: Slite
-  main_url: 'https://slite.com/'
-  url: 'https://slite.com/'
-  featured: true
-  categories:
-    - Landing
-    - Marketing
-    - Technology
     - Featured
 - title: unrealcpp
   main_url: 'https://unrealcpp.com/'
@@ -331,13 +339,6 @@
   categories:
     - Blog
     - Web Dev
-- title: The Chiedo Companies Website
-  main_url: 'https://chiedo.tv/'
-  url: 'https://chiedo.tv/'
-  featured: false
-  categories:
-    - Landing
-    - Web Dev
 - title: Chocolate Free
   main_url: 'https://chocolate-free.com/'
   url: 'https://chocolate-free.com/'
@@ -375,6 +376,20 @@
   featured: false
   categories:
     - Web Dev
+    - Portfolio
+- title: Dave Lindberg Marketing & Design
+  url: 'https://davelindberg.com/'
+  main_url: 'https://davelindberg.com/'
+  source_url: 'https://github.com/Dave-Lindberg/dl-gatsby'
+  featured: false
+  description: >-
+    My work revolves around solving problems for people in business, using integrated design and marketing strategies to improve sales, increase brand engagement, generate leads and achieve goals.
+  categories:
+    - Creative
+    - Design
+    - Featured
+    - Marketing
+    - SEO
     - Portfolio
 - title: Design Systems Weekly
   main_url: 'https://designsystems.email/'
@@ -440,14 +455,6 @@
   featured: false
   categories:
     - Web Dev
-- title: GraphCMS
-  main_url: 'https://graphcms.com/'
-  url: 'https://graphcms.com/'
-  featured: false
-  categories:
-    - Landing
-    - Marketing
-    - Technology
 - title: The freeCodeCamp Guide
   main_url: 'https://guide.freecodecamp.org/'
   url: 'https://guide.freecodecamp.org/'
@@ -709,6 +716,9 @@
   main_url: 'https://www.beachhutpoole.co.uk/'
   url: 'https://www.beachhutpoole.co.uk/'
   featured: false
+  categories:
+    - Travel
+    - Marketing
 - title: Bricolage.io
   main_url: 'https://www.bricolage.io/'
   url: 'https://www.bricolage.io/'
@@ -1035,16 +1045,48 @@
   categories:
     - News
     - Technology
-- title: Smakosh (source)
+- title: Smakosh
+  main_url: 'https://smakosh.com/'
+  url: 'https://smakosh.com/'
+  source_url: 'https://github.com/smakosh/smakosh.com'
   featured: false
+  categories:
+    - Portfolio
+    - Web Dev
+    - Creative
 - title: Philipp Czernitzki - Blog/Website
+  main_url: 'http://philippczernitzki.me/'
+  url: 'http://philippczernitzki.me/'
   featured: false
+  categories:
+    - Portfolio
+    - Web Dev
+    - Blog
 - title: WebGazer
+  main_url: 'https://www.webgazer.io/'
+  url: 'https://www.webgazer.io/'
   featured: false
+  categories:
+    - Marketing
+    - Web Dev
+    - Technology
 - title: Joe Seifi's Blog
+  main_url: 'http://seifi.org/'
+  url: 'http://seifi.org/'
   featured: false
-- title: Bartosz Dominiak Blog/Portfolio (source)
+  categories:
+    - Portfolio
+    - Web Dev
+    - Blog
+- title: Bartosz Dominiak Blog/Portfolio
+  main_url: 'http://bartoszdominiak.com/'
+  url: 'http://bartoszdominiak.com/'
+  source_url: 'https://github.com/bartdominiak/blog'
   featured: false
+  categories:
+    - Portfolio
+    - Web Dev
+    - Blog
 - title: HBTU MUN 2018 (source)
   featured: false
 - title: Jamie Henson's Blog (source)
@@ -1085,8 +1127,18 @@
   featured: false
 - title: Steven Natera's blog
   featured: false
-- title: LekoArts - Graphic Designer
+- title: LekoArts
+  main_url: 'https://www.lekoarts.de'
+  url: 'https://www.lekoarts.de'
+  source_url: 'https://github.com/LeKoArts/portfolio'
   featured: false
+  built_by: LekoArts
+  built_by_url: 'https://github.com/LeKoArts'
+  description: >-
+    Hi, I'm Lennart — a self-taught and passionate graphic/web designer & frontend developer based in Darmstadt, Germany. I love it to realize complex projects in a creative manner and face new challenges. Since 6 years I do graphic design, my love for frontend development came up 3 years ago. I enjoy acquiring new skills and cementing this knowledge by writing blogposts and creating tutorials.
+  categories:
+    - Portfolio
+    - Blog
 - title: Georgi Yanev (source)
   featured: false
 - title: Hallingdata
@@ -1182,19 +1234,6 @@
   source_url: https://github.com/GaiAma/gaiama.org
   built_by: GaiAma
   built_by_url: 'https://www.gaiama.org/'
-- title: Rescue Amazonian Rainforest
-  main_url: 'https://www.rescue-amazonian-rainforest.com/'
-  url: 'https://www.rescue-amazonian-rainforest.com/'
-  featured: false
-  description: >-
-    Germany based nonprofit, dedicated to rainforest conservation in Perú.
-  categories:
-    - Nonprofit
-    - Blog
-    - Portfolio
-  source_url: https://github.com/GaiAma/rescue-amazonian-rainforest.com
-  built_by: GaiAma
-  built_by_url: 'https://www.gaiama.org/'
 - title: Healthcare Logic
   main_url: 'https://www.healthcarelogic.com/'
   url: 'https://www.healthcarelogic.com/'
@@ -1245,3 +1284,715 @@
     - Personal Development
   built_by: Stephanie Langers (content), Adrian Wenke (development)
   built_by_url: 'https://twitter.com/AdrianWenke'
+- title: Life Without Barriers | Foster Care
+  main_url: 'https://www.lwb.org.au/foster-care'
+  url: 'https://www.lwb.org.au/foster-care'
+  featured: false
+  description: >-
+    We are urgently seeking foster carers all across Australia. Can you open your heart and your home to a child in need?
+    There are different types of foster care that can suit you. We offer training and 24/7 support.
+  categories:
+    - Charity
+    - Nonprofit
+    - Education
+    - Documentation
+    - Marketing
+  built_by: LWB Digital Team
+  built_by_url: 'https://twitter.com/LWBAustralia'
+- title: Bejamas - JAM Experts for hire
+  main_url: 'https://bejamas.io/'
+  url: 'https://bejamas.io/'
+  featured: false
+  description: >-
+    We help agencies and companies with JAMStack tools. This includes web development using Static Site Generators, Headless CMS, CI / CD and CDN setup.
+  categories:
+    - Technology
+    - Web Dev
+    - Agency
+    - Creative
+    - Marketing
+  built_by: Bejamas.io
+  built_by_url: 'https://bejamas.io/'
+- title: Zensum
+  main_url: 'https://zensum.se/'
+  url: 'https://zensum.se/'
+  featured: false
+  description: >-
+    Borrow money quickly and safely through Zensum. We compare Sweden's leading banks and credit institutions. Choose from multiple offers and lower your monthly cost. [Translated from Swedish]
+  categories:
+    - Technology
+    - Finance
+    - Corporate
+    - Marketing
+  built_by: Bejamas.io
+  built_by_url: 'https://bejamas.io/'
+- title: StatusHub - Easy to use Hosted Status Page Service
+  main_url: 'https://statushub.com/'
+  url: 'https://statushub.com/'
+  featured: false
+  description: >-
+    Set up your very own service status page in minutes with StatusHub. Allow customers to subscribe to be updated automatically.
+  categories:
+    - Technology
+    - Marketing
+  built_by: Bejamas.io
+  built_by_url: 'https://bejamas.io/'
+- title: Matthias Kretschmann Portfolio
+  main_url: 'https://matthiaskretschmann.com/'
+  url: 'https://matthiaskretschmann.com/'
+  source_url: 'https://github.com/kremalicious/portfolio'
+  featured: false
+  description: >-
+    Portfolio of designer & developer Matthias Kretschmann.
+  categories:
+    - Portfolio
+    - Web Dev
+    - Creative
+  built_by: Matthias Kretschmann
+  built_by_url: 'https://matthiaskretschmann.com/'
+- title: Cajun Bowfishing
+  main_url: 'https://cajunbowfishing.com/'
+  url: 'https://cajunbowfishing.com/'
+  featured: false
+  categories:
+    - eCommerce
+    - Sports
+  built_by: Escalade Sports
+  built_by_url: 'http://escaladesports.com/'
+- title: Iron Cove Solutions
+  main_url: 'https://ironcovesolutions.com/'
+  url: 'https://ironcovesolutions.com/'
+  description: >-
+    Iron Cove Solutions is a cloud based consulting firm. We help companies deliver a return on cloud usage by applying best practices
+  categories:
+    - Technology
+    - Web Dev
+  built_by: Iron Cove Solutions
+  built_by_url: 'https://ironcovesolutions.com/'
+  featured: false
+- title: Eventos orellana
+  description: >-
+    Somos una empresa dedicada a brindar asesoría personalizada
+    y profesional para la elaboración y coordinación de eventos
+    sociales y empresariales.
+  main_url: 'https://eventosorellana.com/'
+  url: 'https://eventosorellana.com/'
+  featured: false
+  categories:
+    - Gallery
+  built_by: Codedebug
+  built_by_url: 'https://codedebug.co/'
+- title: Moetez Chaabene Portfolio / Blog
+  main_url: 'https://moetez.me/'
+  url: 'https://moetez.me/'
+  source_url: 'https://github.com/moetezch/moetez.me'
+  featured: false
+  description: >-
+    Portfolio of Moetez Chaabene
+  categories:
+    - Portfolio
+    - Web Dev
+    - Blog
+  built_by: Moetez Chaabene
+  built_by_url: 'https://twitter.com/moetezch'
+- title: Nikita
+  description: >-
+    Automation of system deployments in Node.js for applications and infrastructures.
+  main_url: https://nikita.js.org/
+  url: https://nikita.js.org/
+  source_url: 'https://github.com/adaltas/node-nikita'
+  categories:
+    - Documentation
+    - Open Source
+    - Technology
+  built_by: David Worms
+  built_by_url: http://www.adaltas.com
+  featured: false
+- title: Gourav Sood Blog & Portfolio
+  main_url: 'https://www.gouravsood.com/'
+  url: 'https://www.gouravsood.com/'
+  featured: false
+  categories:
+    - Blog
+    - Portfolio
+    - Salesforce
+  built_by: Gourav Sood
+  built_by_url: 'https://www.gouravsood.com/'
+- title: Figma
+  main_url: 'https://www.figma.com/'
+  url: 'https://www.figma.com/'
+  featured: false
+  categories:
+    - Marketing
+    - Design
+- title: Jonas Tebbe Portfolio
+  description: >
+    Hey, I’m Jonas and I create digital products.
+  main_url: https://jonastebbe.com
+  url: https://jonastebbe.com
+  categories:
+    - Portfolio
+  built_by: Jonas Tebbe
+  built_by_url: http://twitter.com/jonastebbe
+  featured: false
+- title: Parker Sarsfield Portfolio
+  description: >
+    I'm Parker, a software engineer and sneakerhead.
+  main_url: https://parkersarsfield.com
+  url: https://parkersarsfield.com
+  categories:
+    - Blog
+    - Portfolio
+  built_by: Parker Sarsfield
+  built_by_url: https://parkersarsfield.com
+- title: Front-end web development with Greg
+  description: >
+    JavaScript, GatsbyJS, ReactJS, CSS in JS... Let's learn some stuff together.
+  main_url: https://dev.greglobinski.com
+  url: https://dev.greglobinski.com
+  categories:
+    - Blog
+    - Web Dev
+  built_by: Greg Lobinski
+  built_by_url: https://github.com/greglobinski
+- title: Insomnia
+  description: >
+    Desktop HTTP and GraphQL client for developers
+  main_url: https://insomnia.rest/
+  url: https://insomnia.rest/
+  categories:
+    - Landing
+    - Blog
+  built_by: Gregory Schier
+  built_by_url: https://schier.co
+  featured: false
+- title: Timeline Theme Portfolio
+  description: >
+    I'm Aman Mittal, a software developer.
+  main_url: http://www.amanhimself.me/
+  url: http://www.amanhimself.me/
+  categories:
+    - Landing
+    - Web Dev
+    - Portfolio
+  built_by: Aman Mittal
+  built_by_url: http://www.amanhimself.me/
+- title: Ocean artUp
+  description: >
+    Science outreach site built using styled-components and Contentful. It presents the research project "Ocean artUp" funded by an Advanced Grant of the European Research Council to explore the possible benefits of artificial uplift of nutrient-rich deep water to the ocean’s sunlit surface layer.
+  main_url: https://ocean-artup.eu
+  url: https://ocean-artup.eu
+  source_url: https://github.com/JanoshRiebesell/ocean-artup
+  categories:
+    - Education
+    - Blog
+    - Science
+  built_by: Janosh Riebesell
+  built_by_url: https://janosh.io
+  featured: false
+- title: Ryan Fitzgerald
+  description: >
+    Personal portfolio and blog for Ryan Fitzgerald
+  main_url: https://ryanfitzgerald.ca/
+  url: https://ryanfitzgerald.ca/
+  categories:
+    - Web Dev
+    - Portfolio
+  built_by: Ryan Fitzgerald
+  built_by_url: https://github.com/RyanFitzgerald
+  featured: false
+- title: Kaizen
+  description: >
+    Content Marketing, PR & SEO Agency in London
+  main_url: https://www.kaizen.co.uk/
+  url: https://www.kaizen.co.uk/
+  categories:
+    - Agency
+    - Blog
+    - Creative
+    - Design
+    - Web Dev
+    - SEO
+  built_by: Bogdan Stanciu
+  built_by_url: https://github.com/b0gd4n
+  featured: false
+- title: HackerOne Platform Documentation
+  description: >
+    HackerOne's Product Documentation Center!
+  url: https://docs.hackerone.com/
+  main_url: https://docs.hackerone.com/
+  categories:
+    - Documentation
+    - Security
+  featured: false
+- title: Patreon Partners
+  description: >
+    Resources and products to help you do more with Patreon.
+  url: https://partners.patreon.com/
+  main_url: https://partners.patreon.com/
+  categories:
+    - Resources
+    - Directory
+  featured: false
+- title: Bureau Of Meteorology (beta)
+  description: >
+    Help shape the future of Bureau services
+  url: https://beta.bom.gov.au/
+  main_url: https://beta.bom.gov.au/
+  categories:
+    - Meteorology
+    - Research
+    - Services
+  featured: false
+- title: Curbside
+  description: >
+    Connecting Stores with Mobile Customers
+  main_url: https://curbside.com/
+  url: https://curbside.com/
+  categories:
+    - Mobile Commerce
+    - Software
+  featured: false
+- title: Mux Video
+  description: >
+    API to video hosting and streaming
+  main_url: https://mux.com/
+  url: https://mux.com/
+  categories:
+    - Video
+    - Hosting
+    - Streaming
+    - API
+  featured: false
+- title: Swapcard
+  description: >
+    The easiest way for event organizers to instantly connect people, build a community of attendees and exhibitors, and increase revenue over time
+  main_url: https://www.swapcard.com/
+  url: https://www.swapcard.com/
+  categories:
+    - Event
+    - Community
+    - Services
+  featured: false
+- title: Kalix
+  description: >
+    Kalix is perfect for healthcare professionals starting out in private practice, to those with an established clinic.
+  main_url: https://www.kalixhealth.com/
+  url: https://www.kalixhealth.com/
+  categories:
+    - Scheduling
+    - Documentation
+    - Messaging
+    - Billing
+    - Services
+  featured: false
+- title: Hubba
+  description: >
+    Buy wholesale products from thousands of independent, verified Brands.
+  main_url: https://join.hubba.com/
+  url: https://join.hubba.com/
+  categories:
+    - eCommerce
+    - Retail
+  featured: false
+- title: Airbnb Engineering & Data Science
+  description: >
+    Creative engineers and data scientists building a world where you can belong anywhere
+  main_url: https://airbnb.io/
+  url: https://airbnb.io/
+  categories:
+    - Blog
+    - Gallery
+    - Projects
+  featured: false
+- title: HyperPlay
+  description: >
+    In Asean's 1st Ever LOL Esports X Music Festival
+  main_url: https://hyperplay.leagueoflegends.com/
+  url: https://hyperplay.leagueoflegends.com/
+  categories:
+    - Landing
+  featured: false
+- title: Bad Credit Loans
+  description: >
+    Get the funds you need, from $250-$5,000
+  main_url: https://www.creditloan.com/
+  url: https://www.creditloan.com/
+  categories:
+    - Loans
+    - Credits
+  featured: false
+- title: Financial Center
+  description: >
+     Member-owned, not-for-profit, co-operative whose members receive financial benefits in the form of lower loan rates, higher savings rates, and lower fees than banks.
+  main_url: https://fcfcu.com/
+  url: https://fcfcu.com/
+  categories:
+    - Loans
+    - Credits
+    - Online Banking
+    - Nonprofit
+  featured: false
+- title: Open FDA
+  description: >
+     Provides APIs and raw download access to a number of high-value, high priority and scalable structured datasets, including adverse events, drug product labeling, and recall enforcement reports.
+  main_url: https://open.fda.gov/
+  url: https://open.fda.gov/
+  categories:
+    - APIs
+    - Datasets
+    - Reports
+  featured: false
+- title: Office of Institutional Research and Assessment
+  description: >
+     Good Data, Good Decisions
+  main_url: http://oira.ua.edu/
+  url: http://oira.ua.edu/
+  categories:
+    - Research
+    - Data
+  featured: false
+- title: GM Capital One
+  description: >
+     Introducing the new online experience for your GM Rewards Credit Card
+  main_url: https://gm.capitalone.com/
+  url: https://gm.capitalone.com/
+  categories:
+    - Rewards
+    - Credit Card
+  featured: false
+- title: House Manager
+  description: >
+     Home service membership that offers proactive and on-demand maintenance for homeowners
+  main_url: https://housemanager.calstate.aaa.com/
+  url: https://housemanager.calstate.aaa.com/
+  categories:
+    - Home
+    - Services
+  featured: false
+- title: Trintellix
+  description: >
+     It may help make a difference for your depression (MDD).
+  main_url: https://us.trintellix.com/
+  url: https://us.trintellix.com/
+  categories:
+    - Health
+    - Help
+  featured: false
+- title: The Telegraph Premium
+  description: >
+     Exclusive stories from award-winning journalists
+  main_url: https://premium.telegraph.co.uk/
+  url: https://premium.telegraph.co.uk/
+  categories:
+    - Landing
+    - Newspaper
+    - Subscription
+  featured: false
+- title: html2canvas
+  description: >
+     Screenshots with JavaScript
+  main_url: http://html2canvas.hertzen.com/
+  url: http://html2canvas.hertzen.com/
+  source_url: https://github.com/niklasvh/html2canvas/tree/master/www
+  categories:
+    - Tool
+    - Screenshots
+    - JavaScript
+    - Documentation
+  built_by: Niklas von Hertzen
+  built_by_url: http://hertzen.com/
+  featured: false
+- title: The State of JavaScript 2017
+  description: >
+      Data from over 20,000 developers, asking them questions on topics ranging from front-end frameworks and state management, to build tools and testing libraries.
+  main_url: https://stateofjs.com/
+  url: https://stateofjs.com/
+  source_url: https://github.com/StateOfJS/StateOfJS
+  categories:
+    - Data
+    - JavaScript
+    - Statistics
+  built_by: StateOfJS
+  built_by_url: https://github.com/StateOfJS/StateOfJS/graphs/contributors
+  featured: false
+- title: Dato CMS
+  description: >
+      The API-based CMS your editors will love
+  main_url: https://www.datocms.com/
+  url: https://www.datocms.com/
+  categories:
+    - CMS
+    - API
+    - Tool
+  featured: false
+- title: Half Electronics
+  description: >
+      Personal website
+  main_url: https://www.halfelectronic.com/
+  url: https://www.halfelectronic.com/
+  categories:
+    - Blog
+    - Electronics
+  built_by: Fernando Poumian
+  built_by_url: https://github.com/fpoumian/halfelectronic.com
+  featured: false
+- title: Frithir Software Development
+  main_url: 'https://frithir.com/'
+  url: 'https://frithir.com/'
+  featured: false
+  description: >-
+    I DRINK COFFEE, WRITE CODE AND IMPROVE MY DEVELOPMENT SKILLS EVERY DAY.
+  categories:
+    - Creative
+    - Design
+    - Web Dev
+  built_by: Frithir
+  built_by_url: 'https://Frithir.com/'
+- title: Unow
+  main_url: https://www.unow.fr/
+  url: https://www.unow.fr/
+  categories:
+    - Education
+    - Corporate
+    - Marketing
+  featured: false
+- title: Peter Hironaka
+  description: >
+    Freelance Web Developer based in Los Angeles.
+  main_url: https://peterhironaka.com/
+  url: https://peterhironaka.com/
+  categories:
+    - Portfolio
+    - Web Dev
+  built_by: Peter Hironaka
+  built_by_url: https://github.com/PHironaka
+  featured: false
+- title: Michael McQuade
+  description: >
+    Personal website and blog for Michael McQuade
+  main_url: https://giraffesyo.io
+  url: https://giraffesyo.io
+  categories:
+    - Blog
+  built_by: Michael McQuade
+  built_by_url: https://github.com/giraffesyo
+  featured: false
+- title: Haacht Brewery
+  description: >
+    Corporate wesbite for Haacht Brewery. Designed and Developed by Gafas.
+  main_url: https://haacht.com/en/
+  url: https://haacht.com
+  categories:
+    - Corporate
+  built_by: Gafas
+  built_by_url: https://gafas.be
+  featured: false
+- title: StoutLabs
+  description: >
+    Portfolio of Daniel Stout, freelance web dev in East Tennessee.
+  main_url: https://www.stoutlabs.com/
+  url: https://www.stoutlabs.com/
+  categories:
+    - Web Dev
+    - Portfolio
+  built_by: Daniel Stout
+  built_by_url: https://github.com/stoutlabs
+  featured: false
+- title: Chicago Ticket Outcomes By Neighborhood
+  description: >
+    ProPublica data visualization of traffic ticket court outcomes
+  categories:
+    - News
+    - Nonprofit
+    - Visualization
+  url: https://projects.propublica.org/graphics/il/il-city-sticker-tickets-maps/ticket-status/?initialWidth=782
+  built_by: David Eads
+  built_by_url: https://github.com/eads
+  featured: false
+- title: Chicago South Side Traffic Ticketing rates
+  description: >
+    ProPublica data visualization of traffic ticket rates by community
+  url: https://projects.propublica.org/graphics/il/il-city-sticker-tickets-maps/ticket-rate/?initialWidth=782
+  categories:
+    - News
+    - Nonprofit
+    - Visualization
+  built_by: David Eads
+  built_by_url: https://github.com/eads
+  featured: false
+- title: Otsimo
+  description: >
+     Otsimo is a special education application for children with autism, down syndrome and other developmental disabilities.
+  main_url: https://otsimo.com/en/
+  url: https://otsimo.com/en/
+  categories:
+    - Landing
+    - Blog
+    - Education
+  featured: false
+- title: Matt Bagni Portfolio 2018
+  description: >
+     Mostly the result of playing with Gatsby and learning about react and graphql. Using the screenshot plugin to showcase the work done for my company in the last 2 years, and a good amount of other experiments.
+  main_url: https://mattbag.github.io
+  url: https://mattbag.github.io
+  categories:
+    - Landing
+    - Portfolio
+  featured: false
+- title: Lifestone Church
+  main_url: 'https://www.lifestonechurch.net/'
+  url: 'https://www.lifestonechurch.net/'
+  source_url: 'https://github.com/lifestonechurch/lifestonechurch.net'
+  featured: false
+  categories:
+    - Marketing
+    - Nonprofit
+- title: Artem Sapegin
+  description: >
+     Little homepage of Artem Sapegin, a frontend developer, passionate photographer, coffee drinker and crazy dogs’ owner.
+  main_url: https://sapegin.me/
+  url: https://sapegin.me/
+  categories:
+    - Landing
+    - Portfolio
+    - Open Source
+    - Personal
+    - Web Dev
+  built_by: Artem Sapegin
+  built_by_url: https://github.com/sapegin
+  featured: false
+- title: SparkPost Developers
+  main_url: 'https://developers.sparkpost.com/'
+  url: 'https://developers.sparkpost.com/'
+  source_url: 'https://github.com/SparkPost/developers.sparkpost.com'
+  categories:
+    - Documentation
+    - API
+  featured: false
+- title: Malik Browne Portfolio 2018
+  description: >
+    The portfolio blog of Malik Browne, a full stack engineer, foodie, and avid blogger/YouTuber.
+  main_url: https://www.malikbrowne.com/about
+  url: https://www.malikbrowne.com
+  categories:
+    - Blog
+    - Portfolio
+  built_by: Malik Browne
+  built_by_url: https://twitter.com/milkstarz
+  featured: false
+- title: Novatics
+  description: >
+     Digital products that inspire and make a difference
+  main_url: https://www.novatics.com.br
+  url: https://www.novatics.com.br
+  categories:
+    - Landing
+    - Portfolio
+    - Technology
+    - Digital Products
+    - Web Dev
+  built_by: Novatics
+  built_by_url: https://github.com/Novatics
+  featured: false
+- title: I migliori by Vivigratis
+  description: >
+     Product review website
+  main_url: https://imigliori.vivigratis.com/
+  url: https://imigliori.vivigratis.com/
+  categories:
+    - Blog
+    - Travel
+    - Technology
+    - Wellness
+    - Fashion
+  built_by: Kframe Interactive SA
+  featured: false
+- title: Max McKinney
+  description: >
+     I’m a developer and designer with a focus in web technologies. I build cars on the side.
+  main_url: https://maxmckinney.com/
+  url: https://maxmckinney.com/
+  categories:
+    - Portfolio
+    - Web Dev
+    - Design
+    - Landing
+    - Personal
+  built_by: Max McKinney
+  featured: false
+- title: Stickyard
+  description: >
+     Make your React component sticky the easy way
+  main_url: https://nihgwu.github.io/stickyard/
+  url: https://nihgwu.github.io/stickyard/
+  source_url: https://github.com/nihgwu/stickyard/tree/master/website
+  categories:
+    - Web Dev
+  built_by: Neo Nie
+  featured: false
+- title: Agata Milik
+  description: >
+     Website of a Polish psychologist/psychotherapist based in Gdańsk, Poland.
+  main_url: https://agatamilik.pl
+  url: https://agatamilik.pl
+  categories:
+    - Landing
+    - Marketing
+    - Healthcare
+  built_by: Piotr Fedorczyk
+  built_by_url: https://piotrf.pl
+  featured: false
+- title: WebPurple
+  main_url: 'https://www.webpurple.net/'
+  url: 'https://www.webpurple.net/'
+  source_url: 'https://github.com/WebPurple/site'
+  description: >-
+    Site of local (Russia, Ryazan) frontend community. Main purpose is to show info about meetups and keep blog.
+  categories:
+  - Nonprofit
+  - Web Dev
+  - Community
+  - Blog
+  - Open Source
+  built_by: Nikita Kirsanov
+  built_by_url: 'https://twitter.com/kitos_kirsanov'
+  featured: false
+- title: Papertrail.io
+  description: >
+     Inspection Management for the 21st Century
+  main_url: https://www.papertrail.io/
+  url: https://www.papertrail.io/
+  categories:
+    - Marketing
+    - Technology
+    - Landing
+  built_by: Papertrail.io
+  built_by_url: https://www.papertrail.io
+  featured: false
+- title: Matt Ferderer
+  main_url: https://mattferderer.com
+  url: https://mattferderer.com
+  source_url: https://github.com/mattferderer/gatsbyblog
+  description: >
+    {titleofthesite} is a blog built with Gatsby that discusses web related tech such as JavaScript, .NET, Blazor & security.
+  categories:
+    - Blog
+    - Web Dev
+    - Personal
+  built_by: Matt Ferderer
+  built_by_url: https://twitter.com/mattferderer
+  featured: false
+- title: Sahyadri Open Source Community
+  main_url: https://sosc.org.in
+  url: https://sosc.org.in
+  source_url: https://github.com/haxzie/sosc-website
+  description: >
+    Official website of Sahyadri Open Source Community for community blog, event details and members info.
+  categories:
+    - Blog
+    - Community
+    - Open Source
+  built_by: Musthaq Ahamad
+  built_by_url: https://github.com/haxzie
+  featured: false

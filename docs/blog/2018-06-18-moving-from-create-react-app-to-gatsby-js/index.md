@@ -189,7 +189,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
 
 Since you already have the `BlogPost` component from your React project move it to `src/template/blog-post.js`.
 
-Your Gatbsy project will look like this:
+Your Gatsby project will look like this:
 
 ```sh
 ├── LICENSE

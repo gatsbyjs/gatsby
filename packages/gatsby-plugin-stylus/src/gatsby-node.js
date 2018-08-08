@@ -38,24 +38,23 @@ exports.onCreateWebpackConfig = (
     },
   }
 
-  const stylusRuleModules = {
-    test: /\.module\.styl$/,
+  const stylusRule = {
+    test: /\.styl$/,
     use: isSSR
       ? [loaders.null()]
       : [
           loaders.miniCssExtract(),
-          loaders.css({ modules: true, importLoaders: 2 }),
+          loaders.css({ importLoaders: 2 }),
           loaders.postcss({ plugins: postCssPlugins }),
           stylusLoader,
         ],
   }
 
-  const stylusRule = {
-    test: /\.styl$/,
-    exclude: /\.module\.styl$/,
+  const stylusRuleModules = {
+    test: /\.module\.styl$/,
     use: [
       !isSSR && loaders.miniCssExtract(),
-      loaders.css({ importLoaders: 2 }),
+      loaders.css({ modules: true, importLoaders: 2 }),
       loaders.postcss({ plugins: postCssPlugins }),
       stylusLoader,
     ].filter(Boolean),

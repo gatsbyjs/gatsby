@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.1-beta.10"></a>
+
+## [2.0.1-beta.10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.1-beta.9...gatsby-source-filesystem@2.0.1-beta.10) (2018-07-24)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+<a name="2.0.1-beta.9"></a>
+
+## [2.0.1-beta.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.1-beta.8...gatsby-source-filesystem@2.0.1-beta.9) (2018-07-21)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+<a name="2.0.1-beta.8"></a>
+
+## [2.0.1-beta.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.1-beta.7...gatsby-source-filesystem@2.0.1-beta.8) (2018-07-19)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+<a name="2.0.1-beta.7"></a>
+
+## [2.0.1-beta.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.1-beta.6...gatsby-source-filesystem@2.0.1-beta.7) (2018-07-19)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
 <a name="2.0.1-beta.6"></a>
 
 ## [2.0.1-beta.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.1-beta.5...gatsby-source-filesystem@2.0.1-beta.6) (2018-07-18)

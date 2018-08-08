@@ -70,27 +70,9 @@ const handleQuery = (
   query,
   component
 ) => {
-  // If this is page query
-  if (components.has(component)) {
-    if (components.get(component).query !== query.text) {
-      boundActionCreators.replaceComponentQuery({
-        query: query.text,
-        componentPath: component,
-      })
-
-      debug(
-        `Page query in ${component} ${
-          components.get(component).query.length === 0
-            ? `was added`
-            : `has changed`
-        }.`
-      )
-      queueQueriesForPageComponent(component)
-    }
-    return true
-
-    // Add action / reducer + watch staticquery files
-  } else if (query.isStaticQuery) {
+  // If this is a static query
+  // Add action / reducer + watch staticquery files
+  if (query.isStaticQuery) {
     const isNewQuery = !staticQueryComponents.has(query.jsonName)
     if (
       isNewQuery ||
@@ -113,6 +95,25 @@ const handleQuery = (
 
       boundActionCreators.deleteComponentsDependencies([query.jsonName])
       queueQueryForPathname(query.jsonName)
+    }
+    return true
+
+    // If this is page query
+  } else if (components.has(component)) {
+    if (components.get(component).query !== query.text) {
+      boundActionCreators.replaceComponentQuery({
+        query: query.text,
+        componentPath: component,
+      })
+
+      debug(
+        `Page query in ${component} ${
+          components.get(component).query.length === 0
+            ? `was added`
+            : `has changed`
+        }.`
+      )
+      queueQueriesForPageComponent(component)
     }
     return true
   }
@@ -141,24 +142,60 @@ const updateStateAndRunQueries = isFirstRun => {
 
     if (queriesWillNotRun) {
       report.log(report.stripIndent`
-        Queries are only executed for Page components. Instead of a query,
-        co-locate a GraphQL fragment and compose that fragment into the query (or other
-        fragment) of the top-level page that renders this component. For more
-        info on fragments and composition see: http://graphql.org/learn/queries/#fragments
+        Exported queries are only executed for Page components. Instead of an exported
+        query, either co-locate a GraphQL fragment and compose that fragment into the
+        query (or other fragment) of the top-level page that renders this component, or
+        use a <StaticQuery> in this component. For more info on fragments and
+        composition, see http://graphql.org/learn/queries/#fragments and for more
+        information on <StaticQuery>, see https://next.gatsbyjs.org/docs/static-query
       `)
     }
     runQueuedQueries()
   })
 }
 
-exports.extractQueries = () =>
-  updateStateAndRunQueries(true).then(() => {
+/**
+ * Removes components templates that aren't used by any page from redux store.
+ */
+const clearInactiveComponents = () => {
+  const { components, pages } = store.getState()
+
+  const activeTemplates = new Set()
+  pages.forEach(page => {
+    // Set will guarantee uniqeness of entires
+    activeTemplates.add(slash(page.component))
+  })
+
+  components.forEach(component => {
+    if (!activeTemplates.has(component.componentPath)) {
+      debug(
+        `${
+          component.componentPath
+        } component was removed because it isn't used by any page`
+      )
+      store.dispatch({
+        type: `REMOVE_TEMPLATE_COMPONENT`,
+        payload: component,
+      })
+    }
+  })
+}
+
+exports.extractQueries = () => {
+  // Remove template components that point to not existing page templates.
+  // We need to do this, because components data is cached and there might
+  // be changes applied when development server isn't running. This is needed
+  // only in initial run, because during development state will be adjusted.
+  clearInactiveComponents()
+
+  return updateStateAndRunQueries(true).then(() => {
     // During development start watching files to recompile & run
     // queries on the fly.
     if (process.env.NODE_ENV !== `production`) {
       watch(store.getState().program.directory)
     }
   })
+}
 
 const queueQueriesForPageComponent = componentPath => {
   const pages = getPagesForComponent(componentPath)

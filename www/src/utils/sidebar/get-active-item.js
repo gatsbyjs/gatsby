@@ -6,48 +6,38 @@ const isItemActive = (location, item, activeItemHash) => {
 
   if (activeItemHash) {
     if (activeItemHash === `NONE` && linkWithoutHashMatchesPathname) {
-      return true
+      return item
     }
 
     if (item.link === `${location.pathname}#${activeItemHash}`) {
-      return true
+      return item
     }
   }
 
   if (linkMatchesPathname && !location.hash && activeItemHashFalsy) {
-    return true
+    return item
   }
 
   if (item.link === `${location.pathname}${location.hash}` && !activeItemHash) {
-    return true
+    return item
   }
 
   if (linkMatchesPathname && !location.hash && !activeItemHash) {
-    return true
+    return item
   }
 
   return false
 }
 
-const getActiveItem = (sectionList, location, activeItemHash) => {
-  for (let item of sectionList) {
+const getActiveItem = (itemList, location, activeItemHash) => {
+  for (let item of itemList) {
+    if (item.link) {
+      if (isItemActive(location, item, activeItemHash)) return item
+    }
+
     if (item.items) {
-      for (let subitem of item.items) {
-        if (isItemActive(location, subitem, activeItemHash)) {
-          return subitem.link
-        }
-        if (subitem.items) {
-          for (let subsubitem of subitem.items) {
-            if (isItemActive(location, subsubitem, activeItemHash)) {
-              return subsubitem.link
-            }
-          }
-        }
-      }
-    } else {
-      if (isItemActive(location, item, activeItemHash)) {
-        return item.link
-      }
+      let activeSubItem = getActiveItem(item.items, location, activeItemHash)
+      if (activeSubItem) return activeSubItem
     }
   }
 

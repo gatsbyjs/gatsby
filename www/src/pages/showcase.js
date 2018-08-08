@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+import { graphql } from "gatsby"
 
 import ShowcaseView from "../views/showcase"
 
@@ -48,6 +49,7 @@ export const showcaseQuery = graphql`
           description
           main_url
           built_by_url
+          source_url
           childScreenshot {
             screenshotFile {
               childImageSharp {

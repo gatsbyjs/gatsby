@@ -79,7 +79,7 @@ createFilePath({
   // The parameter from `onCreateNode` should be passed in here
   getNode:
   // The base path for your files.
-  // Defaults to `src/pages`. For the example above, you'd use `src/contents`.
+  // Defaults to `src/pages`. For the example above, you'd use `src/content`.
   basePath:
   // Whether you want your file paths to contain a trailing `/` slash
   // Defaults to true

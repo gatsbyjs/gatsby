@@ -2,7 +2,6 @@
 .slidingVertical{
 	display: inline;
     text-indent: 8px;
-    line-height: 1.25;
 }
 .slidingVertical span{
 	animation: topToBottom 10s linear infinite 0s;
@@ -10,7 +9,6 @@
     -webkit-animation: topToBottom 10s linear infinite 0s;
     
 	opacity: 0;
-	overflow: hidden;
 	position: absolute;
 }
 .slidingVertical span:nth-child(2){

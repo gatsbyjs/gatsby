@@ -1,12 +1,16 @@
-import { createElement } from "react"
-import { Router, Route } from "react-router-dom"
+import React, { createElement } from "react"
+import { Router } from "@reach/router"
 import { ScrollContext } from "gatsby-react-router-scroll"
-import history from "./history"
+import {
+  shouldUpdateScroll,
+  init as navigationInit,
+  onRouteUpdate,
+  onPreRouteUpdate,
+} from "./navigation"
 import { apiRunner } from "./api-runner-browser"
 import syncRequires from "./sync-requires"
 import pages from "./pages.json"
-import redirects from "./redirects.json"
-import loader, { setApiRunnerForLoader } from "./loader"
+import loader from "./loader"
 import { hot } from "react-hot-loader"
 import JSONStore from "./json-store"
 
@@ -42,132 +46,72 @@ if (window.__webpack_hot_middleware_reporter__ !== undefined) {
   })
 }
 
-setApiRunnerForLoader(apiRunner)
-loader.addPagesArray(pages)
-loader.addDevRequires(syncRequires)
-window.___loader = loader
+navigationInit()
 
-// Convert to a map for faster lookup in maybeRedirect()
-const redirectMap = redirects.reduce((map, redirect) => {
-  map[redirect.fromPath] = redirect
-  return map
-}, {})
-
-// Check for initial page-load redirect
-maybeRedirect(location.pathname)
-
-// Call onRouteUpdate on the initial page load.
-apiRunner(`onRouteUpdate`, {
-  location: history.location,
-  action: history.action,
-})
-
-function attachToHistory(history) {
-  if (!window.___history) {
-    window.___history = history
-
-    history.listen((location, action) => {
-      if (!maybeRedirect(location.pathname)) {
-        apiRunner(`onPreRouteUpdate`, { location, action })
-        apiRunner(`onRouteUpdate`, { location, action })
-      }
-    })
+class RouteHandler extends React.Component {
+  constructor(props) {
+    super(props)
+    onPreRouteUpdate(props.location)
   }
-}
 
-function maybeRedirect(pathname) {
-  const redirect = redirectMap[pathname]
-
-  if (redirect != null) {
+  render() {
+    const { location } = this.props
+    const { pathname } = location
     const pageResources = loader.getResourcesForPathname(pathname)
-
-    if (pageResources != null) {
-      console.error(
-        `The route "${pathname}" matches both a page and a redirect; this is probably not intentional.`
+    const isPage = !!(pageResources && pageResources.component)
+    let child
+    if (isPage) {
+      child = (
+        <JSONStore
+          pages={pages}
+          {...this.props}
+          pageResources={pageResources}
+        />
+      )
+    } else {
+      const dev404Page = pages.find(p => /^\/dev-404-page/.test(p.path))
+      child = createElement(
+        syncRequires.components[dev404Page.componentChunkName],
+        {
+          pages,
+          ...this.props,
+        }
       )
     }
 
-    history.replace(redirect.toPath)
+    return (
+      <ScrollContext
+        location={location}
+        history={this.props.history}
+        shouldUpdateScroll={shouldUpdateScroll}
+      >
+        {child}
+      </ScrollContext>
+    )
+  }
+
+  // Call onRouteUpdate on the initial page load.
+  componentDidMount() {
+    onRouteUpdate(this.props.location)
+  }
+
+  shouldComponentUpdate() {
+    onPreRouteUpdate(this.props.location)
     return true
-  } else {
-    return false
-  }
-}
-
-function shouldUpdateScroll(prevRouterProps, { location: { pathname } }) {
-  const results = apiRunner(`shouldUpdateScroll`, {
-    prevRouterProps,
-    pathname,
-  })
-  if (results.length > 0) {
-    return results[0]
   }
 
-  if (prevRouterProps) {
-    const {
-      location: { pathname: oldPathname },
-    } = prevRouterProps
-    if (oldPathname === pathname) {
-      return false
-    }
+  componentDidUpdate() {
+    onRouteUpdate(this.props.location)
   }
-  return true
 }
-
-const push = to => {
-  window.___history.push(to)
-}
-
-const replace = to => {
-  window.___history.replace(to)
-}
-
-window.___push = push
-window.___replace = replace
-
-const AltRouter = apiRunner(`replaceRouterComponent`, { history })[0]
 
 const Root = () =>
   createElement(
-    AltRouter ? AltRouter : Router,
+    Router,
     {
-      basename: __PATH_PREFIX__,
-      history: !AltRouter ? history : undefined,
+      basepath: __PATH_PREFIX__,
     },
-    createElement(
-      ScrollContext,
-      { shouldUpdateScroll },
-      createElement(Route, {
-        // eslint-disable-next-line react/display-name
-        render: routeProps => {
-          attachToHistory(routeProps.history)
-          const { pathname } = routeProps.location
-          const pageResources = loader.getResourcesForPathname(pathname)
-          const isPage = !!(pageResources && pageResources.component)
-          if (isPage) {
-            return createElement(JSONStore, {
-              pages,
-              ...routeProps,
-              pageResources,
-            })
-          } else {
-            const dev404Page = pages.find(p => /^\/dev-404-page/.test(p.path))
-            return createElement(Route, {
-              key: `404-page`,
-              // eslint-disable-next-line react/display-name
-              component: props =>
-                createElement(
-                  syncRequires.components[dev404Page.componentChunkName],
-                  {
-                    pages,
-                    ...routeProps,
-                  }
-                ),
-            })
-          }
-        },
-      })
-    )
+    createElement(RouteHandler, { path: `/*` })
   )
 
 // Let site, plugins wrap the site e.g. for Redux.

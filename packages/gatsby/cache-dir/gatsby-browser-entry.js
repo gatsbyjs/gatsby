@@ -2,6 +2,7 @@ import React from "react"
 import PropTypes from "prop-types"
 import Link, { withPrefix, push, replace, navigateTo } from "gatsby-link"
 import PageRenderer from "./public-page-renderer"
+import parsePath from "./parse-path"
 
 const StaticQueryContext = React.createContext({})
 
@@ -42,6 +43,7 @@ export {
   Link,
   withPrefix,
   graphql,
+  parsePath,
   push,
   replace,
   navigateTo, // TODO: remove navigateTo for v3
