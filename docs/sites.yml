@@ -1970,3 +1970,16 @@
   built_by: Papertrail.io
   built_by_url: https://www.papertrail.io
   featured: false
+- title: Matt Ferderer
+  main_url: https://mattferderer.com
+  url: https://mattferderer.com
+  source_url: https://github.com/mattferderer/gatsbyblog
+  description: >
+    {titleofthesite} is a blog built with Gatsby that discusses web related tech such as JavaScript, .NET, Blazor & security.
+  categories:
+    - Blog
+    - Web Dev
+    - Personal
+  built_by: Matt Ferderer
+  built_by_url: https://twitter.com/mattferderer
+  featured: false
