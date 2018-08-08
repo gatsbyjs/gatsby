@@ -136,17 +136,21 @@ You’ll be able to visit the site locally at [**_http://localhost:8000_**](http
 
 A code editor is a program designed specifically for editing computer code. There are many great ones out there; If you haven't worked with a code editor before, we recommend the editor used throughout this tutorial -- [**VS Code**](https://code.visualstudio.com/).
 
-### ⌚ Download VS Code
+### ✋ Download VS Code
 
 Visit the [VS code site](https://code.visualstudio.com/#alt-downloads), and download the version appropriate for your platform.
 
-## Set up Prettier
+### ✋ Install Prettier plugin
 
-[Prettier](https://github.com/prettier/prettier) is a tool that helps format your code and keep it consistent.
+We also recommend using [Prettier](https://github.com/prettier/prettier) -- Prettier is a tool that helps format your code, keeping it consistent (and helping to avoid errors!).
 
-### ⌚ Install Prettier
+You can use Prettier directly in your editor using the [Prettier VS Code plugin](https://github.com/prettier/prettier-vscode):
 
-Visit the [**Prettier site**](https://prettier.io/) and follow the instructions to install.
+1. Open the extensions view on VS Code (View => Extensions)
+2. Search for "Prettier - Code formatter"
+3. Click "Install". After installation you'll be prompted to restart VS Code to enable the extension.
+
+> 💡 If you're not using VS Code, check out the Prettier docs for [install instructions](https://prettier.io/docs/en/install.html) or [other editor integrations](https://prettier.io/docs/en/editors.html).
 
 ## ➡️ What’s Next?
 
