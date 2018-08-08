@@ -31,7 +31,7 @@ class PackageReadMe extends React.Component {
           <meta name="twitter.label1" content="Reading time" />
           <meta name="twitter:data1" content={`${timeToRead} min read`} />
         </Helmet>
-        <div css={{ display: 'flex', justifyContent: 'space-between' }}>
+        <div css={{ display: `flex`, justifyContent: `space-between` }}>
           <a
             css={{
               "&&": {
@@ -43,14 +43,18 @@ class PackageReadMe extends React.Component {
                 "&:hover": {
                   background: `none`,
                   color: colors.gatsby,
-                }
+                },
               },
             }}
             href={githubUrl}
           >
             <GithubIcon style={{ verticalAlign: `text-top` }} />
           </a>
-          {githubUrl && <Link to={`/starter-showcase?d=${packageName}`}>See starters that use this</Link>}
+          {githubUrl && (
+            <Link to={`/starter-showcase?d=${packageName}`}>
+              See starters that use this
+            </Link>
+          )}
         </div>
 
         <div

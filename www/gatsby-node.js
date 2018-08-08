@@ -190,15 +190,14 @@ exports.createPages = ({ graphql, actions }) => {
         })
 
         // Create starters.
-        const starters = _.filter(
-          result.data.allMarkdownRemark.edges,
-          edge => {
-            const slug = _.get(edge, `node.fields.starterShowcase.slug`)
-            if (!slug) return null
-            else return edge
-          }
+        const starters = _.filter(result.data.allMarkdownRemark.edges, edge => {
+          const slug = _.get(edge, `node.fields.starterShowcase.slug`)
+          if (!slug) return null
+          else return edge
+        })
+        const starterTemplate = path.resolve(
+          `src/templates/template-starter-showcase.js`
         )
-        const starterTemplate = path.resolve(`src/templates/template-starter-showcase.js`)
 
         starters.forEach((edge, index) => {
           createPage({
@@ -206,7 +205,7 @@ exports.createPages = ({ graphql, actions }) => {
             component: slash(starterTemplate),
             context: {
               slug: edge.node.fields.starterShowcase.slug,
-              stub: edge.node.fields.starterShowcase.stub
+              stub: edge.node.fields.starterShowcase.stub,
             },
           })
         })
@@ -330,7 +329,8 @@ exports.onCreateNode = ({ node, actions, getNode, getNodes }) => {
       })
       createNodeField({ node, name: `package`, value: true })
     }
-    if ( // starter showcase
+    if (
+      // starter showcase
       fileNode.sourceInstanceName === `StarterShowcaseData` &&
       parsedFilePath.name !== `README`
     ) {
@@ -360,10 +360,9 @@ exports.onPostBuild = () => {
   )
 }
 
-
 // Starter Showcase related code
 const { createFilePath } = require(`gatsby-source-filesystem`)
-const gitFolder = './src/data/StarterShowcase/generatedGithubData'
+const gitFolder = `./src/data/StarterShowcase/generatedGithubData`
 function createNodesForStarterShowcase({ node, getNode, getNodes, actions }) {
   const { createNodeField, createParentChildLink } = actions
   if (node.internal.type === `MarkdownRemark`) {
@@ -373,11 +372,12 @@ function createNodesForStarterShowcase({ node, getNode, getNodes, actions }) {
       basePath: `startersData`,
     })
     // preprocessing
-    const stub = slug.replace(/\//gi, '')
+    const stub = slug.replace(/\//gi, ``)
     var fromPath = path.join(gitFolder, `${stub}.json`)
-    var data = fs.readFileSync(fromPath, 'utf8')
+    var data = fs.readFileSync(fromPath, `utf8`)
     const ghdata = JSON.parse(data)
-    if (ghdata.repository && ghdata.repository.url) ghdata.repository = ghdata.repository.url // flatten a potential object into a string. weird quirk.
+    if (ghdata.repository && ghdata.repository.url)
+      ghdata.repository = ghdata.repository.url // flatten a potential object into a string. weird quirk.
     const { repoMetadata, dependencies = [], devDependencies = [] } = ghdata
     const allDependencies = Object.entries(dependencies).concat(
       Object.entries(devDependencies)
@@ -397,12 +397,18 @@ function createNodesForStarterShowcase({ node, getNode, getNodes, actions }) {
       allDependencies,
       gatsbyDependencies: allDependencies
         .filter(
-          ([key, _]) => !['gatsby-cli', 'gatsby-link'].includes(key) // remove stuff everyone has
+          ([key, _]) => ![`gatsby-cli`, `gatsby-link`].includes(key) // remove stuff everyone has
         )
-        .filter(([key, _]) => key.includes('gatsby')),
-      miscDependencies: allDependencies.filter(([key, _]) => !key.includes('gatsby')),
+        .filter(([key, _]) => key.includes(`gatsby`)),
+      miscDependencies: allDependencies.filter(
+        ([key, _]) => !key.includes(`gatsby`)
+      ),
     }
-    createNodeField({ node, name: `starterShowcase`, value: starterShowcaseFields })
+    createNodeField({
+      node,
+      name: `starterShowcase`,
+      value: starterShowcaseFields,
+    })
   }
 }
 // End Starter Showcase related code
@@ -410,7 +416,7 @@ function createNodesForStarterShowcase({ node, getNode, getNodes, actions }) {
 // limited logging for debug purposes
 let limitlogcount = 0
 function log(max) {
-  return function (...args) {
+  return function(...args) {
     if (limitlogcount++ < max) console.log(...args)
   }
 }

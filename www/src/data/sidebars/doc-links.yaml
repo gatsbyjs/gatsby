@@ -13,7 +13,7 @@
 - title: Guides
   items:
     - title: Preparing your environment*
-      link: /docs/environment/
+      link: /docs/preparing-your-environment/
       items:
       - title: Basic hardware and software requirements*
         link: /docs/basic-hardware-software-requirements/
@@ -133,7 +133,7 @@
           link: /docs/debugging-the-build-process/
         - title: Trace Gatsby builds
           link: /docs/performance-tracing/
-    - title: Apps with Gatsby
+    - title: Building Apps with Gatsby
       link: /docs/building-apps-with-gatsby/
       items:
         - title: Progressive web app (PWA)
@@ -172,6 +172,8 @@
           link: /docs/lighthouse-audit/
 - title: API Reference
   items:
+    - title: Gatsby Link
+      link: /docs/gatsby-link/
     - title: Gatsby Node APIs
       link: /docs/node-apis/
     - title: Gatsby Browser APIs

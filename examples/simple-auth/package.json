@@ -5,13 +5,11 @@
   "author": "Jason Lengstorf <jason@lengstorf.com>",
   "dependencies": {
     "gatsby": "next",
-    "gatsby-link": "next",
     "gatsby-plugin-react-helmet": "next",
     "prop-types": "^15.6.1",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
-    "react-helmet": "^5.2.0",
-    "react-router-dom": "^4.2.2"
+    "react-helmet": "^5.2.0"
   },
   "keywords": [
     "gatsby"

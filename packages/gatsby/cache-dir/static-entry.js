@@ -2,7 +2,7 @@ const React = require(`react`)
 const fs = require(`fs`)
 const { join } = require(`path`)
 const { renderToString, renderToStaticMarkup } = require(`react-dom/server`)
-const { StaticRouter, Route } = require(`react-router-dom`)
+const { ServerLocation, Router } = require(`@reach/router`)
 const { get, merge, isObject, flatten, uniqBy } = require(`lodash`)
 
 const apiRunner = require(`./api-runner-ssr`)
@@ -107,28 +107,26 @@ export default (pagePath, callback) => {
     }
   }
 
-  const AltStaticRouter = apiRunner(`replaceStaticRouterComponent`)[0]
-
-  apiRunner(`replaceStaticRouterComponent`)
+  class RouteHandler extends React.Component {
+    render() {
+      return createElement(syncRequires.components[page.componentChunkName], {
+        ...this.props,
+        ...dataAndContext,
+        pathContext: dataAndContext.pageContext,
+      })
+    }
+  }
 
   const bodyComponent = createElement(
-    AltStaticRouter || StaticRouter,
-    {
-      basename: pathPrefix.slice(0, -1),
-      location: {
-        pathname: pagePath,
+    ServerLocation,
+    { url: pagePath },
+    createElement(
+      Router,
+      {
+        basepath: pathPrefix.slice(0, -1),
       },
-      context: {},
-    },
-    createElement(Route, {
-      // eslint-disable-next-line react/display-name
-      render: routeProps =>
-        createElement(syncRequires.components[page.componentChunkName], {
-          ...routeProps,
-          ...dataAndContext,
-          pathContext: dataAndContext.pageContext,
-        }),
-    })
+      createElement(RouteHandler, { path: `/*` })
+    )
   )
 
   // Let the site or plugin render the page component.

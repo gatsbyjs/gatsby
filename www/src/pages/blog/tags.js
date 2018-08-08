@@ -26,13 +26,15 @@ const TagsPage = ({
       <div>
         <h1>Tags</h1>
         <ul>
-          {group.map(tag => (
-            <li key={tag.fieldValue}>
-              <Link to={`/blog/tags/${kebabCase(tag.fieldValue)}/`}>
-                {tag.fieldValue} ({tag.totalCount})
-              </Link>
-            </li>
-          ))}
+          {group.map(tag => {
+            return (
+              <li key={tag.fieldValue}>
+                <Link to={`/blog/tags/${kebabCase(tag.fieldValue)}/`}>
+                  {tag.fieldValue} ({tag.totalCount})
+                </Link>
+              </li>
+            )
+          })}
         </ul>
       </div>
     </Container>
