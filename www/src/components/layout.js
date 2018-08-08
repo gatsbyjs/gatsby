@@ -165,7 +165,8 @@ class DefaultLayout extends React.Component {
           <html lang="en" />
         </Helmet>
         <Banner background={isHomepage ? `#402060` : false}>
-          These are the docs for v2 beta.{` `}
+          These are the docs for v2 beta.
+          {` `}
           <OutboundLink
             href="https://gatsbyjs.org/"
             css={{
@@ -184,7 +185,8 @@ class DefaultLayout extends React.Component {
               {` `}
               instead
             </span>
-          </OutboundLink>.
+          </OutboundLink>
+          .
         </Banner>
         <Navigation pathname={this.props.location.pathname} />
         <div

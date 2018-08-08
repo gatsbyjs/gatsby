@@ -305,116 +305,102 @@ const queue = {
     }
   },
 
-  getResourcesForPathname: (path, cb = () => {}) => {
+  getResourcesForPathnameSync: path => pathScriptsCache[path],
+
+  getResourcesForPathname: path => {
     queue.checkIfDoingInitialRenderForSW(path)
 
-    const doingInitialRender = inInitialRender
-    inInitialRender = false
+    return new Promise((resolve, reject) => {
+      const doingInitialRender = inInitialRender
+      inInitialRender = false
 
-    // Production code path
-    if (failedPaths[path]) {
-      handleResourceLoadError(
-        path,
-        `Previously detected load failure for "${path}"`
-      )
-      cb()
-      return null
-    }
-    const page = findPage(path)
+      // Production code path
+      if (failedPaths[path]) {
+        handleResourceLoadError(
+          path,
+          `Previously detected load failure for "${path}"`
+        )
+        return reject()
+      }
+      const page = findPage(path)
 
-    if (!page && !fetchedPageResourceMap) {
-      // If page wasn't found check and we didn't fetch resources map for
-      // all pages, wait for fetch to complete and try to get resources again
-      fetchPageResourceMap().then(() => {
-        queue.getResourcesForPathname(path, cb)
-      })
-      return null
-    }
+      if (!page && !fetchedPageResourceMap) {
+        // If page wasn't found check and we didn't fetch resources map for
+        // all pages, wait for fetch to complete and try to get resources again
+        fetchPageResourceMap().then(() =>
+          resolve(queue.getResourcesForPathname(path))
+        )
+      }
 
-    if (!page) {
-      console.log(`A page wasn't found for "${path}"`)
-      cb()
-      return null
-    }
+      if (!page) {
+        console.log(`A page wasn't found for "${path}"`)
+        return reject()
+      }
 
-    // Use the path from the page so the pathScriptsCache uses
-    // the normalized path.
-    path = page.path
+      // Use the path from the page so the pathScriptsCache uses
+      // the normalized path.
+      path = page.path
 
-    // Check if it's in the cache already.
-    if (pathScriptsCache[path]) {
-      Promise.resolve().then(() => {
-        cb(pathScriptsCache[path])
+      // Check if it's in the cache already.
+      if (pathScriptsCache[path]) {
         emitter.emit(`onPostLoadPageResources`, {
           page,
           pageResources: pathScriptsCache[path],
         })
+        return resolve(pathScriptsCache[path])
+      }
+
+      // Nope, we need to load resource(s)
+      emitter.emit(`onPreLoadPageResources`, {
+        path,
       })
-      return pathScriptsCache[path]
-    }
 
-    console.log(`onPreLoadPageResources`)
-    // Nope, we need to load resource(s)
-    emitter.emit(`onPreLoadPageResources`, {
-      path,
-    })
-
-    // In development we know the code is loaded already
-    // so we just return with it immediately.
-    if (process.env.NODE_ENV !== `production`) {
-      const page = findPage(path)
-      const pageResources = {
-        component: syncRequires.components[page.componentChunkName],
-        page,
-      }
-
-      const onDataCallback = () => {
-        console.log(`onDataCallback`)
-        cb(pageResources)
-        emitter.emit(`onPostLoadPageResources`, {
-          page,
-          pageResources,
-        })
-      }
-
-      if (devGetPageData(page.path)) {
-        console.log(`returning pageResources`, {
-          pageResources,
-        })
-        cb(pageResources)
-        return pageResources
-      } else {
-        devGetPageData(page.path, onDataCallback)
-      }
-      return null
-    } else {
-      Promise.all([
-        getResourceModule(page.componentChunkName),
-        getResourceModule(page.jsonName),
-      ]).then(([component, json]) => {
+      // In development we know the code is loaded already
+      // so we just return with it immediately.
+      if (process.env.NODE_ENV !== `production`) {
+        const page = findPage(path)
         const pageResources = {
-          component,
-          json,
+          component: syncRequires.components[page.componentChunkName],
           page,
         }
-        pageResources.page.jsonURL = createJsonURL(jsonDataPaths[page.jsonName])
+        // Add to the cache.
         pathScriptsCache[path] = pageResources
-        cb(pageResources)
-
-        emitter.emit(`onPostLoadPageResources`, {
-          page,
-          pageResources,
+        devGetPageData(page.path).then(pageData => {
+          emitter.emit(`onPostLoadPageResources`, {
+            page,
+            pageResources,
+          })
+          resolve(pageResources)
         })
+      } else {
+        Promise.all([
+          getResourceModule(page.componentChunkName),
+          getResourceModule(page.jsonName),
+        ]).then(([component, json]) => {
+          const pageResources = {
+            component,
+            json,
+            page,
+          }
+          pageResources.page.jsonURL = createJsonURL(
+            jsonDataPaths[page.jsonName]
+          )
+          pathScriptsCache[path] = pageResources
+          resolve(pageResources)
 
-        if (doingInitialRender) {
-          // We got all resources needed for first mount,
-          // we can fetch resoures for all pages.
-          fetchPageResourceMap()
-        }
-      })
-    }
+          emitter.emit(`onPostLoadPageResources`, {
+            page,
+            pageResources,
+          })
 
-    return null
+          if (doingInitialRender) {
+            // We got all resources needed for first mount,
+            // we can fetch resoures for all pages.
+            fetchPageResourceMap()
+          }
+        })
+      }
+    })
   },
 
   // for testing
@@ -428,6 +414,7 @@ export const setApiRunnerForLoader = runner => {
 
 export const publicLoader = {
   getResourcesForPathname: queue.getResourcesForPathname,
+  getResourcesForPathnameSync: queue.getResourcesForPathnameSync,
 }
 
 export default queue

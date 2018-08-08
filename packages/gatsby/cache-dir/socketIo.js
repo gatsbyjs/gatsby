@@ -22,7 +22,6 @@ export default function socketIo() {
             JSON.stringify(queryData[msg.payload.id])
 
         socket.on(`message`, msg => {
-          console.log({ msg })
           if (msg.type === `staticQueryResult`) {
             if (didDataChange(msg, staticQueryData)) {
               staticQueryData = {
@@ -53,35 +52,38 @@ export default function socketIo() {
   }
 }
 
-function getPageData(pathname, cb = () => {}) {
-  console.log(`getPageData`, { pathname, pageQueryData })
-  if (pathname in pageQueryData) {
-    console.log(`already have data for`, { pathname })
-    // We already have data, no need to request it
-    cb && cb(pageQueryData[pathname])
-    return pageQueryData[pathname]
-  }
+const inFlightGetPageDataPromiseCache = {}
+function getPageData(pathname) {
+  if (inFlightGetPageDataPromiseCache[pathname]) {
+    return inFlightGetPageDataPromiseCache[pathname]
+  } else {
+    inFlightGetPageDataPromiseCache[pathname] = new Promise(resolve => {
+      if (pageQueryData[pathname]) {
+        delete inFlightGetPageDataPromiseCache[pathname]
+        resolve(pageQueryData[pathname])
+      } else {
+        const onPageDataCallback = msg => {
+          if (msg.type === `pageQueryResult` && msg.payload.id === pathname) {
+            socket.off(`message`, onPageDataCallback)
+            delete inFlightGetPageDataPromiseCache[pathname]
+            resolve(pageQueryData[pathname])
+          }
+        }
+        socket.on(`message`, onPageDataCallback)
 
-  if (cb) {
-    const onPageDataCallback = msg => {
-      if (msg.type === `pageQueryResult` && msg.payload.id === pathname) {
-        socket.off(`message`, onPageDataCallback)
-        cb()
+        socket.emit(`getDataForPath`, pathname)
       }
-    }
-    socket.on(`message`, onPageDataCallback)
+    })
   }
-
-  socket.emit(`getDataForPath`, pathname)
-  return false
+  return inFlightGetPageDataPromiseCache[pathname]
 }
 
 function registerPath(path) {
-  socket.emit(`registerPath`, path)
+  // socket.emit(`registerPath`, path)
 }
 
 function unregisterPath(path) {
-  socket.emit(`unregisterPath`, path)
+  // socket.emit(`unregisterPath`, path)
 }
 
 export { getPageData, registerPath, unregisterPath }

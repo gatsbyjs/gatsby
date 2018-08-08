@@ -48,7 +48,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   loader.addPagesArray(pages)
   loader.addDevRequires(syncRequires)
 
-  loader.getResourcesForPathname(window.location.pathname, () => {
+  loader.getResourcesForPathname(window.location.pathname).then(() => {
     let Root = preferDefault(require(`./root`))
     domReady(() => {
       renderer(<Root />, rootElement, () => {
