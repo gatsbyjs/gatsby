@@ -29,7 +29,7 @@ First you need to create a production build of your Gatsby site. The Gatsby deve
 
 ### ✋ Create a production build
 
-1. Stop the development server (if it's still running) and run:
+1.  Stop the development server (if it's still running) and run:
 
 ```bash
 gatsby build
@@ -37,7 +37,7 @@ gatsby build
 
 > 💡 As you learned in [part 1](/tutorial/part-one/), this does a production build of your site and outputs the built static files into the `public` directory.
 
-2. View the production site locally. Run:
+2.  View the production site locally. Run:
 
 ```bash
 gatsby serve
@@ -47,15 +47,15 @@ Once this starts, you can now view your site at `localhost:9000`.
 
 ### Run a Lighthouse audit
 
-Now let's run your first Lighthouse test. 
+Now let's run your first Lighthouse test.
 
-1. Open the site in Chrome (if you didn't already do so) and then open up the Chrome DevTools.
+1.  Open the site in Chrome (if you didn't already do so) and then open up the Chrome DevTools.
 
-2. Click on the "Audits" tab where you'll see a screen that looks like:
+2.  Click on the "Audits" tab where you'll see a screen that looks like:
 
 ![Lighthouse audit start](./lighthouse-audit.png)
 
-3. Click "Perform an audit..." (All available audit types should be selected by default). Then click "Run audit". (It'll then take a minute or so to run the audit). Once the audit is complete, you should see results that look like this:
+3.  Click "Perform an audit..." (All available audit types should be selected by default). Then click "Run audit". (It'll then take a minute or so to run the audit). Once the audit is complete, you should see results that look like this:
 
 ![Lighthouse audit results](./lighthouse-audit-results.png)
 
@@ -65,7 +65,7 @@ As you can see, Gatsby's performance is excellent out of the box but we're missi
 
 Looks like we have a pretty lackluster score in the "Progressive Web App" category. Let's address that.
 
-But first, what exactly *are* PWAs?
+But first, what exactly _are_ PWAs?
 
 They are regular websites that take advantage of modern browser functionality to augment the web experience with app-like features and benefits. Check out [Google's overview](https://developers.google.com/web/progressive-web-apps/) of what defines a PWA experience.
 
@@ -79,30 +79,30 @@ Quoting [Google](https://developers.google.com/web/fundamentals/web-app-manifest
 
 ### ✋ Using `gatsby-plugin-manifest`
 
-1. Install the plugin:
+1.  Install the plugin:
 
 ```bash
 npm install --save gatsby-plugin-manifest
 ```
 
-2. Add the plugin to the `plugins` array in your `gatsby-config.js` file.
+2.  Add the plugin to the `plugins` array in your `gatsby-config.js` file.
 
 ```javascript
 {
-    plugins: [
-        {
-            resolve: `gatsby-plugin-manifest`,
-            options: {
-                name: 'GatsbyJS',
-                short_name: 'GatsbyJS',
-                start_url: '/',
-                background_color: '#6b37bf',
-                theme_color: '#6b37bf',
-                display: 'minimal-ui',
-                icon: 'src/images/icon.png', // This path is relative to the root of the site.
-            }
-        }
-    ]
+  plugins: [
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: "GatsbyJS",
+        short_name: "GatsbyJS",
+        start_url: "/",
+        background_color: "#6b37bf",
+        theme_color: "#6b37bf",
+        display: "minimal-ui",
+        icon: "src/images/icon.png", // This path is relative to the root of the site.
+      },
+    },
+  ]
 }
 ```
 
@@ -116,13 +116,13 @@ Another requirement for a website to qualify as a PWA is the use of a [service w
 
 ### ✋ Using `gatsby-plugin-offline`
 
-1. Install the plugin:
+1.  Install the plugin:
 
 ```bash
 npm install --save gatsby-plugin-offline
 ```
 
-2. Add the plugin to the `plugins` array in your `gatsby-config.js` file.
+2.  Add the plugin to the `plugins` array in your `gatsby-config.js` file.
 
 ```javascript
 {
@@ -140,7 +140,7 @@ npm install --save gatsby-plugin-offline
 
 That's all you need to get started with service workers with Gatsby.
 
-> 💡 The manifest plugin should be listed *before* the offline plugin so that the offline plugin can cache the created `manifest.webmanifest`.
+> 💡 The manifest plugin should be listed _before_ the offline plugin so that the offline plugin can cache the created `manifest.webmanifest`.
 
 ## Add page metadata
 
@@ -152,21 +152,21 @@ Gatsby's [react helmet plugin](/packages/gatsby-plugin-react-helmet/) provides d
 
 ### ✋ Using `React Helmet` and `gatsby-plugin-react-helmet`
 
-1. Install both packages:
+1.  Install both packages:
 
 ```bash
 npm install --save gatsby-plugin-react-helmet react-helmet
 ```
 
-2. Add the plugin to the `plugins` array in your `gatsby-config.js` file.
+2.  Add the plugin to the `plugins` array in your `gatsby-config.js` file.
 
 ```javascript
 {
-    plugins: [`gatsby-plugin-react-helmet`]
+  plugins: [`gatsby-plugin-react-helmet`]
 }
 ```
 
-3. Use `React Helmet` in your pages:
+3.  Use `React Helmet` in your pages:
 
 ```jsx{8-12}
 import React from "react";

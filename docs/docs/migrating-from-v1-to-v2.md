@@ -617,7 +617,6 @@ This is because the [`camelCase` option](https://github.com/webpack-contrib/css-
 
 Here's an example with a class named `.my-class-name`:
 
-
 ```diff
 import React from "react"
 import myStyles from "./my.module.css"
