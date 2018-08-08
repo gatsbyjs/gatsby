@@ -1,0 +1,23 @@
+{
+  "name": "gatsby-example-unstated",
+  "private": true,
+  "description": "Gatsby example site that shows use of unstated.",
+  "version": "1.0.0",
+  "author": "greg lobinski <greglobinski@gmail.com>",
+  "dependencies": {
+    "gatsby": "next",
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0",
+    "unstated": "^2.1.1"
+  },
+  "keywords": [
+    "gatsby"
+  ],
+  "license": "MIT",
+  "main": "n/a",
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve"
+  }
+}
