@@ -45,6 +45,7 @@ const onRouteUpdate = location => {
 }
 
 const navigate = (to, replace) => {
+  console.log(`navigate`, { to, replace })
   let { pathname } = parsePath(to)
   const redirect = redirectMap[pathname]
 
@@ -70,6 +71,7 @@ const navigate = (to, replace) => {
   }, 1000)
 
   const loaderCallback = pageResources => {
+    console.log(`got pageResources`, { pageResources })
     if (!pageResources) {
       // We fetch resources for 404 page in page-renderer.js. Calling it
       // here is to ensure that we have needed resouces to render page

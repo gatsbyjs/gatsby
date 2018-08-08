@@ -58,6 +58,7 @@ class RouteHandler extends React.Component {
     const { location } = this.props
     const { pathname } = location
     const pageResources = loader.getResourcesForPathname(pathname)
+    console.log(`RouteHandler`, { location, pageResources })
     const isPage = !!(pageResources && pageResources.component)
     let child
     if (isPage) {

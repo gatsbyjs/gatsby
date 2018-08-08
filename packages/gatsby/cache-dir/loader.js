@@ -274,7 +274,11 @@ const queue = {
 
   getPage: pathname => findPage(pathname),
 
-  getResourcesForPathname: (path, cb = () => {}) => {
+  // If we're loading from a service worker (it's already activated on
+  // this initial render) and we can't find a page, there's a good chance
+  // we're on a new page that this (now old) service worker doesn't know
+  // about so we'll unregister it and reload.
+  checkIfDoingInitialRenderForSW: path => {
     if (
       inInitialRender &&
       navigator &&
@@ -282,10 +286,6 @@ const queue = {
       navigator.serviceWorker.controller &&
       navigator.serviceWorker.controller.state === `activated`
     ) {
-      // If we're loading from a service worker (it's already activated on
-      // this initial render) and we can't find a page, there's a good chance
-      // we're on a new page that this (now old) service worker doesn't know
-      // about so we'll unregister it and reload.
       if (!findPage(path)) {
         navigator.serviceWorker
           .getRegistrations()
@@ -303,30 +303,14 @@ const queue = {
           })
       }
     }
+  },
+
+  getResourcesForPathname: (path, cb = () => {}) => {
+    queue.checkIfDoingInitialRenderForSW(path)
+
     const doingInitialRender = inInitialRender
     inInitialRender = false
-    // In development we know the code is loaded already
-    // so we just return with it immediately.
-    if (process.env.NODE_ENV !== `production`) {
-      const page = findPage(path)
-      if (!page) {
-        cb()
-        return null
-      }
-      const pageResources = {
-        component: syncRequires.components[page.componentChunkName],
-        page,
-      }
 
-      const onDataCallback = () => {
-        cb(pageResources)
-      }
-
-      if (devGetPageData(page.path, onDataCallback)) {
-        return pageResources
-      }
-      return null
-    }
     // Production code path
     if (failedPaths[path]) {
       handleResourceLoadError(
@@ -369,29 +353,66 @@ const queue = {
       return pathScriptsCache[path]
     }
 
-    emitter.emit(`onPreLoadPageResources`, { path })
+    console.log(`onPreLoadPageResources`)
     // Nope, we need to load resource(s)
-
-    Promise.all([
-      getResourceModule(page.componentChunkName),
-      getResourceModule(page.jsonName),
-    ]).then(([component, json]) => {
-      const pageResources = { component, json, page }
-      pageResources.page.jsonURL = createJsonURL(jsonDataPaths[page.jsonName])
-      pathScriptsCache[path] = pageResources
-      cb(pageResources)
-
-      emitter.emit(`onPostLoadPageResources`, {
-        page,
-        pageResources,
-      })
-
-      if (doingInitialRender) {
-        // We got all resourecs needed for first mount,
-        // we can fetch resoures for all pages.
-        fetchPageResourceMap()
-      }
+    emitter.emit(`onPreLoadPageResources`, {
+      path,
     })
+
+    // In development we know the code is loaded already
+    // so we just return with it immediately.
+    if (process.env.NODE_ENV !== `production`) {
+      const page = findPage(path)
+      const pageResources = {
+        component: syncRequires.components[page.componentChunkName],
+        page,
+      }
+
+      const onDataCallback = () => {
+        console.log(`onDataCallback`)
+        cb(pageResources)
+        emitter.emit(`onPostLoadPageResources`, {
+          page,
+          pageResources,
+        })
+      }
+
+      if (devGetPageData(page.path)) {
+        console.log(`returning pageResources`, {
+          pageResources,
+        })
+        cb(pageResources)
+        return pageResources
+      } else {
+        devGetPageData(page.path, onDataCallback)
+      }
+      return null
+    } else {
+      Promise.all([
+        getResourceModule(page.componentChunkName),
+        getResourceModule(page.jsonName),
+      ]).then(([component, json]) => {
+        const pageResources = {
+          component,
+          json,
+          page,
+        }
+        pageResources.page.jsonURL = createJsonURL(jsonDataPaths[page.jsonName])
+        pathScriptsCache[path] = pageResources
+        cb(pageResources)
+
+        emitter.emit(`onPostLoadPageResources`, {
+          page,
+          pageResources,
+        })
+
+        if (doingInitialRender) {
+          // We got all resources needed for first mount,
+          // we can fetch resoures for all pages.
+          fetchPageResourceMap()
+        }
+      })
+    }
 
     return null
   },

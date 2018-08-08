@@ -22,6 +22,7 @@ export default function socketIo() {
             JSON.stringify(queryData[msg.payload.id])
 
         socket.on(`message`, msg => {
+          console.log({ msg })
           if (msg.type === `staticQueryResult`) {
             if (didDataChange(msg, staticQueryData)) {
               staticQueryData = {
@@ -52,11 +53,13 @@ export default function socketIo() {
   }
 }
 
-function getPageData(pathname, cb) {
+function getPageData(pathname, cb = () => {}) {
+  console.log(`getPageData`, { pathname, pageQueryData })
   if (pathname in pageQueryData) {
+    console.log(`already have data for`, { pathname })
     // We already have data, no need to request it
-    cb && cb()
-    return true
+    cb && cb(pageQueryData[pathname])
+    return pageQueryData[pathname]
   }
 
   if (cb) {

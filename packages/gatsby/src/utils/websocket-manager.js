@@ -127,20 +127,6 @@ class WebsocketManager {
     this.websocket.on(`connection`, s => {
       let activePath = null
 
-      // Send already existing static query results
-      this.staticQueryResults.forEach(result => {
-        this.websocket.send({
-          type: `staticQueryResult`,
-          payload: result,
-        })
-      })
-      this.pageResults.forEach(result => {
-        this.websocket.send({
-          type: `pageQueryResult`,
-          payload: result,
-        })
-      })
-
       const leaveRoom = path => {
         s.leave(getRoomNameFromPath(path))
         const leftRoom = this.websocket.sockets.adapter.rooms[

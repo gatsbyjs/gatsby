@@ -147,6 +147,8 @@ class GatsbyLink extends React.Component {
               }
             }
 
+            console.log(`gatsby-link push`, to)
+
             // Make sure the necessary scripts and data are
             // loaded before continuing.
             push(to)
