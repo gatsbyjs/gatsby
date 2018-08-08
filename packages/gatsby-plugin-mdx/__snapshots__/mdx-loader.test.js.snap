@@ -1,12 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`mdx-loader snapshot one.mdx 1`] = `
+exports[`mdx-loader snapshot with body 1`] = `
 import React from "react";
 import { MDXTag } from "@mdx-js/tag";
 
 export default ({ components, ...props }) => (
   <MDXTag name="wrapper" components={components}>
-    <MDXTag name="h1" components={components}>{\`some heading\`}</MDXTag>
+    <MDXTag name="h1" components={components}>{\`Some title\`}</MDXTag>
+    <MDXTag name="p" components={components}>{\`a bit of a paragraph\`}</MDXTag>
+    <MDXTag name="p" components={components}>{\`some content\`}</MDXTag>
   </MDXTag>
 );
 
@@ -14,21 +16,135 @@ export const _frontmatter = {};
 
 `;
 
-exports[`mdx-loader snapshot two.mdx 1`] = `
+exports[`mdx-loader snapshot with frontmatter 1`] = `
 import React from "react";
 import { MDXTag } from "@mdx-js/tag";
 
 export default ({ components, ...props }) => (
   <MDXTag name="wrapper" components={components}>
-    <MDXTag name="h1" components={components}>{\`Two things\`}</MDXTag>
-    <MDXTag name="p" components={components}>{\`some paragraph content\`}</MDXTag>
-    <MDXTag name="p" components={components}>
-      <MDXTag
-        name="strong"
-        components={components}
-        parentName="p"
-      >{\`bold\`}</MDXTag>
-    </MDXTag>
+    <MDXTag name="h1" components={components}>{\`Some title\`}</MDXTag>
+    <MDXTag name="p" components={components}>{\`a bit of a paragraph\`}</MDXTag>
+    <MDXTag name="p" components={components}>{\`some content\`}</MDXTag>
+  </MDXTag>
+);
+
+export const _frontmatter = { one: "two", three: 4, array: [1, 2, 3] };
+
+`;
+
+exports[`mdx-loader snapshot with frontmatter-layout 1`] = `
+import React from "react";
+import { MDXTag } from "@mdx-js/tag";
+
+export default ({ components, ...props }) => (
+  <MDXTag
+    name="wrapper"
+    Layout={({ children, ...props }) => <div>{children}</div>}
+    layoutProps={props}
+    components={components}
+  >
+    <MDXTag name="h1" components={components}>{\`Some title\`}</MDXTag>
+    <MDXTag name="p" components={components}>{\`a bit of a paragraph\`}</MDXTag>
+    <MDXTag name="p" components={components}>{\`some content\`}</MDXTag>
+  </MDXTag>
+);
+
+export const _frontmatter = { one: "two", three: 4, array: [1, 2, 3] };
+
+`;
+
+exports[`mdx-loader snapshot with frontmatter-layout-namedExports 1`] = `
+import React from "react";
+import { MDXTag } from "@mdx-js/tag";
+
+export const meta = { author: "chris" };
+export default ({ components, ...props }) => (
+  <MDXTag
+    name="wrapper"
+    Layout={({ children, ...props }) => <div>{children}</div>}
+    layoutProps={props}
+    components={components}
+  >
+    <MDXTag name="h1" components={components}>{\`Some title\`}</MDXTag>
+    <MDXTag name="p" components={components}>{\`a bit of a paragraph\`}</MDXTag>
+    <MDXTag name="p" components={components}>{\`some content\`}</MDXTag>
+  </MDXTag>
+);
+
+export const _frontmatter = { one: "two", three: 4, array: [1, 2, 3] };
+
+`;
+
+exports[`mdx-loader snapshot with frontmatter-namedExports 1`] = `
+import React from "react";
+import { MDXTag } from "@mdx-js/tag";
+
+export const meta = { author: "chris" };
+export default ({ components, ...props }) => (
+  <MDXTag name="wrapper" components={components}>
+    <MDXTag name="h1" components={components}>{\`Some title\`}</MDXTag>
+    <MDXTag name="p" components={components}>{\`a bit of a paragraph\`}</MDXTag>
+    <MDXTag name="p" components={components}>{\`some content\`}</MDXTag>
+  </MDXTag>
+);
+
+export const _frontmatter = { one: "two", three: 4, array: [1, 2, 3] };
+
+`;
+
+exports[`mdx-loader snapshot with layout 1`] = `
+import React from "react";
+import { MDXTag } from "@mdx-js/tag";
+
+export default ({ components, ...props }) => (
+  <MDXTag
+    name="wrapper"
+    Layout={({ children, ...props }) => <div>{children}</div>}
+    layoutProps={props}
+    components={components}
+  >
+    <MDXTag name="h1" components={components}>{\`Some title\`}</MDXTag>
+    <MDXTag name="p" components={components}>{\`a bit of a paragraph\`}</MDXTag>
+    <MDXTag name="p" components={components}>{\`some content\`}</MDXTag>
+  </MDXTag>
+);
+
+export const _frontmatter = {};
+
+`;
+
+exports[`mdx-loader snapshot with layout-namedExports 1`] = `
+import React from "react";
+import { MDXTag } from "@mdx-js/tag";
+
+export const meta = { author: "chris" };
+export default ({ components, ...props }) => (
+  <MDXTag
+    name="wrapper"
+    Layout={({ children, ...props }) => <div>{children}</div>}
+    layoutProps={props}
+    components={components}
+  >
+    <MDXTag name="h1" components={components}>{\`Some title\`}</MDXTag>
+    <MDXTag name="p" components={components}>{\`a bit of a paragraph\`}</MDXTag>
+    <MDXTag name="p" components={components}>{\`some content\`}</MDXTag>
+  </MDXTag>
+);
+
+export const _frontmatter = {};
+
+`;
+
+exports[`mdx-loader snapshot with namedExports 1`] = `
+import React from "react";
+import { MDXTag } from "@mdx-js/tag";
+
+export const meta = { author: "chris" };
+export default ({ components, ...props }) => (
+  <MDXTag name="wrapper" components={components}>
+    <MDXTag name="h1" components={components}>{\`Some title\`}</MDXTag>
+    <MDXTag name="p" components={components}>{\`a bit of a paragraph\`}</MDXTag>
+    <MDXTag name="p" components={components}>{\`some content\`}</MDXTag>
   </MDXTag>
 );
 

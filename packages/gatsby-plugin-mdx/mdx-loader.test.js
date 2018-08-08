@@ -1,30 +1,58 @@
 const mdxLoader = require("./mdx-loader");
 const prettier = require("prettier");
+const c = require("js-combinatorics");
 
-const fixtures = [
-  [
-    "one.mdx",
+function genMDXFile(input) {
+  const code = {
+    frontmatter: `---
+one: two
+three: 4
+array: [1,2,3]
+---`,
+    defaultLayout: `export default ({children, ...props}) => (
+<div>
+{children}
+</div>
+)`,
+    namedExports: `export const meta = {author: "chris"}`,
+    body: `# Some title
+    
+a bit of a paragraph
+    
+some content`
+  };
+
+  return {
+    name:
+      Object.entries(input)
+        .filter(([k, v]) => !!v)
+        .map(([k, v]) => k)
+        .join("-") || "body",
+    content: [
+      input.frontmatter ? code.frontmatter : "",
+      input.layout ? code.defaultLayout : "",
+      input.namedExports ? code.namedExports : "",
+      code.body
+    ].join("\n\n")
+  };
+}
+
+// generate a table of all possible combinations of genMDXfile input
+const fixtures = c
+  .baseN([true, false], 3)
+  .toArray()
+  .map(([frontmatter, layout, namedExports]) =>
+    genMDXFile({ frontmatter, layout, namedExports })
+  )
+  .map(({ name, content }) => [
+    name,
     {
       internal: { type: "File" },
       sourceInstanceName: "webpack-test-fixtures",
-      absolutePath: "/fake/one.mdx"
+      absolutePath: `/fake/${name}`
     },
-    "# some heading"
-  ],
-  [
-    "two.mdx",
-    {
-      internal: { type: "File" },
-      sourceInstanceName: "webpack-test-fixtures",
-      absolutePath: "/fake/two.mdx"
-    },
-    `# Two things
-
-some paragraph content
-
-**bold**`
-  ]
-];
+    content
+  ]);
 
 describe("mdx-loader", () => {
   expect.addSnapshotSerializer({
@@ -36,7 +64,7 @@ describe("mdx-loader", () => {
     }
   });
   test.each(fixtures)(
-    "snapshot %s",
+    "snapshot with %s",
     async (filename, fakeGatsbyNode, content) => {
       const loader = mdxLoader.bind({
         async() {
