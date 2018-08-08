@@ -16,6 +16,7 @@
     "md5-file": "^3.1.1",
     "mime": "^2.2.0",
     "pretty-bytes": "^4.0.2",
+    "readdirp-walk": "^1.6.0",
     "slash": "^1.0.0",
     "valid-url": "^1.0.9",
     "xstate": "^3.1.0"
