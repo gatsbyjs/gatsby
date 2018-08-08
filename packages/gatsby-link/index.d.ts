@@ -1,11 +1,21 @@
-import * as React from "react";
+import * as React from 'react';
 
-export const push: (to: LocationDescriptor) => void;
-export const replace: (to: LocationDescriptor) => void;
+export const push: (to: string) => void;
+export const replace: (to: string) => void;
 
 // TODO: Remove navigateTo for Gatsby v3
-export const navigateTo: (to: LocationDescriptor) => void;
+export const navigateTo: (to: string) => void;
 
 export const withPrefix: (path: string) => string;
 
-export default class GatsbyLink extends React.Component<GatsbyLinkProps, any> { }
+export interface GatsbyLinkProps extends NavLinkProps {
+  onClick?: (event: any) => void;
+  innerRef?: (instancee: any) => void;
+  className?: string;
+  activeClassName?: string;
+  style?: { [key: string]: any };
+  activeStyle?: { [key: string]: any };
+  to: string;
+}
+
+export default class GatsbyLink extends React.Component<GatsbyLinkProps, any> {}
