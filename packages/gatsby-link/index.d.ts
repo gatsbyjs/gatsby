@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 
 export const push: (to: string) => void;
 export const replace: (to: string) => void;
@@ -10,7 +10,7 @@ export const withPrefix: (path: string) => string;
 
 export interface GatsbyLinkProps extends NavLinkProps {
   onClick?: (event: any) => void;
-  innerRef?: (instancee: any) => void;
+  innerRef?: (instance: any) => void;
   className?: string;
   activeClassName?: string;
   style?: { [key: string]: any };
