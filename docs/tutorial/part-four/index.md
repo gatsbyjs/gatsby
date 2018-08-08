@@ -93,42 +93,6 @@ gatsby-plugin-emotion emotion react-emotion emotion-server
 Let's set up a site similar to what you ended with in Part Three. This site will have a layout
 component and two page components:
 
-`src/pages/index.js`
-
-```jsx
-import React from "react"
-import Layout from "../components/layout"
-
-export default () => (
-  <Layout>
-    <h1>Amazing Pandas Eating Things</h1>
-    <div>
-      <img
-        src="https://2.bp.blogspot.com/-BMP2l6Hwvp4/TiAxeGx4CTI/AAAAAAAAD_M/XlC_mY3SoEw/s1600/panda-group-eating-bamboo.jpg"
-        alt="Group of pandas eating bamboo"
-      />
-    </div>
-  </Layout>
-)
-```
-
-`src/pages/about.js`
-
-```jsx
-import React from "react"
-import Layout from "../components/layout"
-
-export default () => (
-  <Layout>
-    <h1>About Pandas Eating Lots</h1>
-    <p>
-      We're the only site running on your computer dedicated to showing the best
-      photos and videos of pandas eating lots of food.
-    </p>
-  </Layout>
-)
-```
-
 `src/components/layout.js`
 
 ```jsx
@@ -168,6 +132,42 @@ export default ({ children }) => (
     </Link>
     {children}
   </div>
+)
+```
+
+`src/pages/index.js`
+
+```jsx
+import React from "react"
+import Layout from "../components/layout"
+
+export default () => (
+  <Layout>
+    <h1>Amazing Pandas Eating Things</h1>
+    <div>
+      <img
+        src="https://2.bp.blogspot.com/-BMP2l6Hwvp4/TiAxeGx4CTI/AAAAAAAAD_M/XlC_mY3SoEw/s1600/panda-group-eating-bamboo.jpg"
+        alt="Group of pandas eating bamboo"
+      />
+    </div>
+  </Layout>
+)
+```
+
+`src/pages/about.js`
+
+```jsx
+import React from "react"
+import Layout from "../components/layout"
+
+export default () => (
+  <Layout>
+    <h1>About Pandas Eating Lots</h1>
+    <p>
+      We're the only site running on your computer dedicated to showing the best
+      photos and videos of pandas eating lots of food.
+    </p>
+  </Layout>
 )
 ```
 
@@ -248,8 +248,9 @@ Then edit the two components:
 
 `src/pages/about.js`
 
-```jsx{4,6,13-22}
+```jsx{2,5,7,14-23}
 import React from "react"
+import { graphql } from "gatsby"
 import Layout from "../components/layout"
 
 export default ({ data }) => (
@@ -263,7 +264,7 @@ export default ({ data }) => (
 )
 
 export const query = graphql`
-  query AboutQuery {
+  query {
     site {
       siteMetadata {
         title
@@ -278,14 +279,14 @@ export const query = graphql`
 ```jsx{3,8-18,35}
 import React from "react"
 import { css } from "react-emotion"
-import { StaticQuery, Link } from "gatsby"
+import { StaticQuery, Link, graphql } from "gatsby"
 
 import { rhythm } from "../utils/typography"
 
 export default ({ children }) => (
   <StaticQuery
     query={graphql`
-      query LayoutQuery {
+      query {
         site {
           siteMetadata {
             title
@@ -330,6 +331,8 @@ export default ({ children }) => (
 
 It worked!! 🎉
 
+> 💡 `<StaticQuery/>` can be used to query data from a component instead of a page. A future version of the tutorial will cover this in more detail. For now you can check out [the StaticQuery documentation for more info](/docs/static-query/).
+
 ![fake-title-graphql](fake-title-graphql.png)
 
 But let's restore the real title.
@@ -346,27 +349,16 @@ So almost everywhere, changes you make will immediately take effect.
 Try editing the title in `siteMetadata`—change the title back to "Pandas Eating
 Lots". The change should show up very quickly in your browser.
 
-## Wait — where did the graphql tag come from?
+## How does the graphql tag work?
 
-You may have noticed that you used a
-[tag function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#Tagged_template_literals)
-called `graphql`, but you never actually _import_ a `graphql` tag. So... how does
-this not throw an error?
+You may have noticed that you used a [tag function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#Tagged_template_literals) called `graphql`. Behind the scenes Gatsby handles these tags in a particular way - let's explore what actually happens when you use Gatsby's `graphql` tag:
 
-The short answer is this: during the Gatsby build process, GraphQL queries are
-pulled out of the original source for parsing.
+The short answer is this: during the Gatsby build process, GraphQL queries are pulled out of the original source for parsing.
 
 The longer answer is a little more involved: Gatsby borrows a technique from
-[Relay](https://facebook.github.io/relay/) that converts your source code into an
-[abstract syntax tree (AST)](https://en.wikipedia.org/wiki/Abstract_syntax_tree)
-during the build step. All `graphql`-tagged templates are found in
-[`file-parser.js`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/file-parser.js)
-and
-[`query-compiler.js`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/query-compiler.js),
-which effectively removes them from the original source code. This means that
-the `graphql` tag isn’t executed the way that you might expect, which is why
-there’s no error, despite the fact that you’re technically using an undefined tag
-in your source.
+[Relay](https://facebook.github.io/relay/) that converts your source code into an [abstract syntax tree (AST)](https://en.wikipedia.org/wiki/Abstract_syntax_tree) during the build step. [`file-parser.js`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/file-parser.js) and [`query-compiler.js`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/query-compiler.js) pick out your `graphql`-tagged templates and effectively remove them from the original source code.
+
+This means that the `graphql` tag isn’t executed the way that you might expect. For example, you cannot use [expression interpolation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#Expression_interpolation) with Gatsby's `graphql` tag.
 
 ## What's coming next?
 

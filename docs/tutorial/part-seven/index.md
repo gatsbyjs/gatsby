@@ -3,6 +3,8 @@ title: Programmatically create pages from data
 typora-copy-images-to: ./
 ---
 
+> This tutorial is part of a series about Gatsby’s data layer. Make sure you’ve gone through [part 4](/tutorial/part-four/), [part 5](/tutorial/part-five/), and [part 6](/tutorial/part-six/) before continuing here.
+
 ## What's in this tutorial?
 
 In the previous tutorial, you created a nice index page that queries markdown
@@ -36,14 +38,15 @@ We do our best to make Gatsby APIs simple to implement. To implement an API, you
 with the name of the API from `gatsby-node.js`.
 
 So let's do that. In the root of your site, create a file named
-`gatsby-node.js`. Then add to it the following. This function will be called by
-Gatsby whenever a new node is created (or updated).
+`gatsby-node.js`. Then add the following.
 
 ```javascript
 exports.onCreateNode = ({ node }) => {
   console.log(node.internal.type)
 }
 ```
+
+This `onCreateNode` function will be called by Gatsby whenever a new node is created (or updated).
 
 Stop and restart the development server. As you do, you'll see quite a few newly
 created nodes get logged to the terminal console.
@@ -62,7 +65,7 @@ exports.onCreateNode = ({ node }) => {
 ```
 
 You want to use each markdown file name to create the page slug. So
-`pandas-and-bananas.md"` will become `/pandas-and-bananas/`. But how do you get
+`pandas-and-bananas.md` will become `/pandas-and-bananas/`. But how do you get
 the file name from the `MarkdownRemark` node? To get it, you need to _traverse_
 the "node graph" to its _parent_ `File` node, as `File` nodes contain data you
 need about files on disk. To do that, modify your function again:
@@ -127,7 +130,7 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
 ```
 
 Restart the development server and open or refresh Graph_i_QL. Then run this
-query to see your new slugs.
+GraphQL query to see your new slugs.
 
 ```graphql
 {
@@ -187,7 +190,7 @@ exports.createPages = ({ graphql, actions }) => {
 ```
 
 You've added an implementation of the
-[`createPages`](/docs/node-apis/#createPages) API which API Gatsby calls so plugins can add
+[`createPages`](/docs/node-apis/#createPages) API which Gatsby calls so plugins can add
 pages.
 
 As mentioned in the intro to this part of the tutorial, the steps to programmatically creating pages are:
@@ -286,8 +289,9 @@ Visit one of them and you see:
 Which is a bit boring and not what you want. Let's pull in data from your markdown post. Change
 `src/templates/blog-post.js` to:
 
-```jsx{4-5,8-11,14-25}
+```jsx{5-6,9-12,15-26}
 import React from "react"
+import { graphql } from "gatsby"
 import Layout from "../components/layout"
 
 export default ({ data }) => {
@@ -303,7 +307,7 @@ export default ({ data }) => {
 }
 
 export const query = graphql`
-  query BlogPostQuery($slug: String!) {
+  query($slug: String!) {
     markdownRemark(fields: { slug: { eq: $slug } }) {
       html
       frontmatter {
@@ -328,7 +332,7 @@ links.
 ```jsx{3,23-29,45,64-66}
 import React from "react"
 import { css } from "react-emotion"
-import { Link } from "gatsby"
+import { Link, graphql } from "gatsby"
 import { rhythm } from "../utils/typography"
 import Layout from "../components/layout"
 
@@ -378,7 +382,7 @@ export default ({ data }) => {
 }
 
 export const query = graphql`
-  query IndexQuery {
+  query {
     allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
       totalCount
       edges {

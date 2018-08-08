@@ -1,11 +1,12 @@
 import React, { Component } from "react"
+import { graphql } from "gatsby"
 import Helmet from "react-helmet"
 
 import Layout from "../components/layout"
 import EvaluationTable from "../components/evaluation-table"
 import EvaluationCell from "../components/evaluation-cell"
 import FuturaParagraph from "../components/futura-paragraph"
-import featuresSidebar from "../data/sidebars/features-links.yaml"
+import { itemListFeatures } from "../utils/sidebar/item-list"
 import Container from "../components/container"
 import { options, rhythm } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
@@ -201,7 +202,11 @@ class FeaturesPage extends Component {
     )
 
     return (
-      <Layout location={this.props.location} sidebarYaml={featuresSidebar}>
+      <Layout
+        location={this.props.location}
+        itemList={itemListFeatures}
+        enableScrollSync={true}
+      >
         <Container>
           <FeaturesHeader />
           <EvaluationTable
@@ -218,7 +223,7 @@ class FeaturesPage extends Component {
 export default FeaturesPage
 
 export const pageQuery = graphql`
-  query EvaluationTableQuery {
+  query {
     allGatsbySpecsCsv {
       edges {
         node {

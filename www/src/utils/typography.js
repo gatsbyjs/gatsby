@@ -35,6 +35,20 @@ const _options = {
     `Courier New`,
     `monospace`,
   ],
+  systemFontFamily: [
+    `-apple-system`,
+    `BlinkMacSystemFont`,
+    `Segoe UI`,
+    `Roboto`,
+    `Oxygen`,
+    `Ubuntu`,
+    `Cantarell`,
+    `Fira Sans`,
+    `Droid Sans`,
+    `Helvetica Neue`,
+    `Arial`,
+    `sans-serif`,
+  ],
   baseFontSize: `18px`,
   baseLineHeight: 1.4,
   headerLineHeight: 1.075,
@@ -266,11 +280,11 @@ const _options = {
         // color: `blue`,
         color: colors.c[12],
       },
-      ".token.property,.token.tag,.token.boolean,.token.number,.token.function-name,.token.constant,.token.symbol,.token.deleted": {
+      ".token.property,.token.tag,.token.boolean,.token.number,.token.function-name,.token.constant,.token.symbol": {
         // color: `#a285d8`,
         color: colors.b[9],
       },
-      ".token.selector,.token.attr-name,.token.string,.token.char,.token.function,.token.builtin,.token.inserted": {
+      ".token.selector,.token.attr-name,.token.string,.token.char,.token.function,.token.builtin": {
         // color: `#a2466c`,
         color: colors.a[9],
       },
@@ -282,6 +296,12 @@ const _options = {
         // color: `#a285d8`,
         // color: `blue`,
         color: colors.b[8],
+      },
+      ".token.inserted": {
+        color: colors.code.add,
+      },
+      ".token.deleted": {
+        color: colors.code.remove,
       },
       // Fancy external links in posts, borrowed from
       // https://github.com/comfusion/after-dark/

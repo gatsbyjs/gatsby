@@ -7,6 +7,7 @@ import {
   InfiniteHits,
   Toggle,
 } from "react-instantsearch/dom"
+import { navigate as reachNavigate } from "@reach/router"
 import { colors } from "../utils/presets"
 import { Link } from "gatsby"
 import DownloadArrow from "react-icons/lib/go/arrow-small-down"
@@ -268,7 +269,8 @@ class Search extends Component {
             marginTop: rhythm(3 / 4),
           }}
         >
-          Search by{` `}
+          Search by
+          {` `}
           <a
             href={`https://www.algolia.com/`}
             css={{
@@ -312,10 +314,7 @@ const Result = ({ hit, pathname, search }) => {
   const selected = pathname.includes(hit.name)
   return (
     <Link
-      to={{
-        pathname: `/packages/${hit.name}/`,
-        search: `?=${search}`,
-      }}
+      to={`/packages/${hit.name}/?=${search}`}
       css={{
         "&&": {
           display: `block`,
@@ -398,12 +397,16 @@ class PluginSearchBar extends Component {
     this.updateHistory = debounce(this.updateHistory, updateAfter)
   }
 
-  urlToSearch = () => this.props.history.location.search.slice(2)
+  urlToSearch = () => {
+    if (this.props.location.search) {
+      return this.props.location.search.slice(2)
+    }
+    return null
+  }
 
   updateHistory(value) {
-    this.props.history.replace({
-      pathname: window.location.pathname,
-      search: `?=${value.query}`,
+    reachNavigate(`${this.props.location.pathanme}?=${value.query}`, {
+      replace: true,
     })
   }
 
@@ -423,7 +426,7 @@ class PluginSearchBar extends Component {
           onSearchStateChange={this.onSearchStateChange.bind(this)}
         >
           <Search
-            pathname={this.props.history.location.pathname}
+            pathname={this.props.location.pathname}
             searchState={this.state.searchState.query}
           />
         </InstantSearch>

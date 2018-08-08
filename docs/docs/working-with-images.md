@@ -24,7 +24,7 @@ This example is for an image gallery where images stretch when the page is resiz
 
 ```jsx
 export const query = graphql`
-  query indexQuery {
+  query {
     fileName: file(relativePath: { eq: "images/myimage.jpg" }) {
       childImageSharp {
         fluid(maxWidth: 400, maxHeight: 250) {
@@ -75,7 +75,7 @@ The fragment can then be referenced in the image query:
 
 ```
 export const query = graphql`
-  query imageGallery {
+  query {
     image1:file(relativePath: { eq: "images/image1.jpg" }) {
       ...squareImage
     }

@@ -1,6 +1,6 @@
-import React from "react"
+import React, { Fragment } from "react"
 
-import SidebarBody from "./sidebar-body"
+import StickyResponsiveSidebar from "./sidebar/sticky-responsive-sidebar"
 import presets from "../utils/presets"
 import { rhythm } from "../utils/typography"
 
@@ -9,7 +9,7 @@ export default props => {
     return props.renderContent()
   } else {
     return (
-      <div>
+      <Fragment>
         <div
           css={{
             [presets.Tablet]: { paddingLeft: rhythm(10) },
@@ -24,8 +24,13 @@ export default props => {
         >
           {props.renderContent()}
         </div>
-        <SidebarBody yaml={props.yaml} />
-      </div>
+        <StickyResponsiveSidebar
+          enableScrollSync={props.enableScrollSync}
+          itemList={props.itemList}
+          key={props.location.pathname}
+          location={props.location}
+        />
+      </Fragment>
     )
   }
 }

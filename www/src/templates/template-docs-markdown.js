@@ -1,64 +1,86 @@
 import React from "react"
 import Helmet from "react-helmet"
+import { graphql } from "gatsby"
 
 import Layout from "../components/layout"
-import docsSidebar from "../data/sidebars/doc-links.yaml"
-import tutorialSidebar from "../data/sidebars/tutorial-links.yaml"
+import { itemListDocs, itemListTutorial } from "../utils/sidebar/item-list"
 import MarkdownPageFooter from "../components/markdown-page-footer"
 import DocSearchContent from "../components/docsearch-content"
 
 import Container from "../components/container"
-import { rhythm } from "../utils/typography"
+
+import docsHierarchy from "../data/sidebars/doc-links.yaml"
+
+// I’m doing some gymnastics here that I can only hope you’ll forgive me for.
+// Find the guides in the sidebar YAML.
+const guides = docsHierarchy.find(group => group.title === `Guides`).items
+
+// Finds child items for a given guide overview page using its slug.
+const getChildGuides = slug => guides.find(guide => guide.link === slug).items
+
+// Create a table of contents from the child guides.
+const createGuideList = guides =>
+  guides
+    .map(guide => `<li><a href="${guide.link}">${guide.title}</a></li>`)
+    .join(``)
+
+const getPageHTML = page => {
+  if (!page.frontmatter.overview) {
+    return page.html
+  }
+
+  const guides = getChildGuides(page.fields.slug)
+  const guideList = createGuideList(guides)
+  const toc = `
+    <h2>Guides in this section:</h2>
+    <ul>${guideList}</ul>
+  `
+
+  // This is probably a capital offense in Reactland. 😱😱😱
+  return page.html.replace(`[[guidelist]]`, toc)
+}
 
 class DocsTemplate extends React.Component {
   render() {
     const page = this.props.data.markdownRemark
+    const isDocsPage = this.props.location.pathname.slice(0, 5) === `/docs`
+    const html = getPageHTML(page)
+
     return (
-      <Layout
-        location={this.props.location}
-        isSidebarDisabled={
-          this.props.location.pathname === `/community/` ||
-          this.props.location.pathname === `/code-of-conduct/`
-        }
-        sidebarYaml={
-          this.props.location.pathname.slice(0, 5) === `/docs`
-            ? docsSidebar
-            : tutorialSidebar
-        }
-      >
-        <DocSearchContent>
-          <Container>
-            <div
-              css={{
-                paddingLeft: rhythm(2),
-              }}
-            >
-              <Helmet>
-                <title>{page.frontmatter.title}</title>
-                <meta name="description" content={page.excerpt} />
-                <meta name="og:description" content={page.excerpt} />
-                <meta name="twitter:description" content={page.excerpt} />
-                <meta name="og:title" content={page.frontmatter.title} />
-                <meta name="og:type" content="article" />
-                <meta name="twitter.label1" content="Reading time" />
-                <meta
-                  name="twitter:data1"
-                  content={`${page.timeToRead} min read`}
-                />
-              </Helmet>
+      <React.Fragment>
+        <Helmet>
+          <title>{page.frontmatter.title}</title>
+          <meta name="description" content={page.excerpt} />
+          <meta name="og:description" content={page.excerpt} />
+          <meta name="twitter:description" content={page.excerpt} />
+          <meta name="og:title" content={page.frontmatter.title} />
+          <meta name="og:type" content="article" />
+          <meta name="twitter.label1" content="Reading time" />
+          <meta name="twitter:data1" content={`${page.timeToRead} min read`} />
+        </Helmet>
+        <Layout
+          location={this.props.location}
+          isSidebarDisabled={
+            this.props.location.pathname === `/code-of-conduct/`
+          }
+          itemList={isDocsPage ? itemListDocs : itemListTutorial}
+          enableScrollSync={isDocsPage ? false : true}
+        >
+          <DocSearchContent>
+            <Container>
               <h1 id={page.fields.anchor} css={{ marginTop: 0 }}>
                 {page.frontmatter.title}
               </h1>
               <div
                 dangerouslySetInnerHTML={{
-                  __html: page.html,
+                  __html: html,
                 }}
               />
               <MarkdownPageFooter page={page} />
-            </div>
-          </Container>
-        </DocSearchContent>
-      </Layout>
+            </Container>
+          </DocSearchContent>
+        </Layout>
+      </React.Fragment>
     )
   }
 }
@@ -66,7 +88,7 @@ class DocsTemplate extends React.Component {
 export default DocsTemplate
 
 export const pageQuery = graphql`
-  query TemplateDocsMarkdown($path: String!) {
+  query($path: String!) {
     markdownRemark(fields: { slug: { eq: $path } }) {
       html
       excerpt
@@ -77,6 +99,7 @@ export const pageQuery = graphql`
       }
       frontmatter {
         title
+        overview
       }
       ...MarkdownPageFooter
     }

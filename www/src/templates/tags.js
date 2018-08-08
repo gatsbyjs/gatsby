@@ -1,8 +1,8 @@
 import React from "react"
 import PropTypes from "prop-types"
-import Container from "../components/container"
+import { Link, graphql } from "gatsby"
 
-import { Link } from "gatsby"
+import Container from "../components/container"
 import Layout from "../components/layout"
 
 const Tags = ({ pageContext, data, location }) => {
@@ -58,11 +58,14 @@ Tags.propTypes = {
 export default Tags
 
 export const pageQuery = graphql`
-  query TagPage($tag: String) {
+  query($tag: String) {
     allMarkdownRemark(
       limit: 2000
       sort: { fields: [frontmatter___date], order: DESC }
-      filter: { frontmatter: { tags: { in: [$tag] } } }
+      filter: {
+        frontmatter: { tags: { in: [$tag] } }
+        fileAbsolutePath: { regex: "/docs.blog/" }
+      }
     ) {
       totalCount
       edges {

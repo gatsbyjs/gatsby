@@ -45,6 +45,8 @@ module.exports = {
   running locally on the default port.
 - **auth**: the authentication data to login a Mongodb collection, with sub
   properties user and password. ex. auth: { user: `admin`, password: `12345` }
+- **extraParams**: useful to set additional parameters for the connection, like authSource, ssl or replicaSet
+  (needed for connecting to MongoDB Atlas db as a service), ex: extraParams: { replicaSet: `test-shard-0`, ssl: `true`, authSource: `admin` }
 
 ### Mapping mediatype feature
 
@@ -82,7 +84,7 @@ The GraphQL query to get the transformed markdown would look something like
 this.
 
 ```graphql
-query ItemQuery($id: String!) {
+query($id: String!) {
   mongodbCloudDocuments(id: { eq: $id }) {
     id
     name
@@ -103,7 +105,7 @@ Below is a sample query for fetching all MongoDB document nodes from a db named
 **'Cloud'** and a collection named **'documents'**.
 
 ```graphql
-query PageQuery {
+query {
   allMongodbCloudDocuments {
     edges {
       node {

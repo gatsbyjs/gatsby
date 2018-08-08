@@ -124,13 +124,6 @@ class EvaluationTable extends Component {
                         display={row.node.Subcategory}
                         category={row.node.Subcategory}
                       />,
-                      <div
-                        dangerouslySetInnerHTML={{
-                          __html: `<span id="${row.node.Feature.toLowerCase()
-                            .split(` `)
-                            .join(`-`)}"></span>`,
-                        }}
-                      />,
                       <tr>
                         {headers.map((header, j) => (
                           <td
@@ -151,6 +144,13 @@ class EvaluationTable extends Component {
                               fontSize: `90%`,
                               lineHeight: `${rhythm(3 / 4)}`,
                             }}
+                            id={
+                              j === 0
+                                ? row.node.Feature.toLowerCase()
+                                    .split(` `)
+                                    .join(`-`)
+                                : false
+                            }
                             onClick={() => {
                               this.setState({
                                 [`${s},${i}`]: !showTooltip(s, i),

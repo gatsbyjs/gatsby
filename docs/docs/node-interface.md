@@ -16,7 +16,7 @@ fields: Object,
 internal: {
   contentDigest: String,
   // Optional media type (https://en.wikipedia.org/wiki/Media_type) to indicate
-  // to transformer plugins this node has data they can futher process.
+  // to transformer plugins this node has data they can further process.
   mediaType: String,
   // A globally unique node type chosen by the plugin owner.
   type: String,

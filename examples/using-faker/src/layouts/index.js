@@ -65,7 +65,7 @@ TemplateWrapper.propTypes = {
 export default TemplateWrapper
 
 export const query = graphql`
-  query NameQuery {
+  query {
     personalData {
       id
       name {

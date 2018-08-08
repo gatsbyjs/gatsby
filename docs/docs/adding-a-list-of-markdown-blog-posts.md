@@ -47,6 +47,7 @@ Second, you need to provide the data to your component with a GraphQL query. Let
 
 ```jsx
 import React from "react"
+import { graphql } from "gatsby"
 import PostLink from "../components/post-link"
 
 const IndexPage = ({
@@ -64,7 +65,7 @@ const IndexPage = ({
 export default IndexPage
 
 export const pageQuery = graphql`
-  query IndexQuery {
+  query {
     allMarkdownRemark(sort: { order: DESC, fields: [frontmatter___date] }) {
       edges {
         node {
@@ -88,7 +89,7 @@ The only thing left to do is to add the `PostLink` component. Create a new file 
 
 ```jsx
 import React from "react"
-import Link from "gatsby-link"
+import { Link } from "gatsby"
 
 const PostLink = ({ post }) => (
   <div>

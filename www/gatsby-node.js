@@ -4,7 +4,7 @@ const path = require(`path`)
 const parseFilepath = require(`parse-filepath`)
 const fs = require(`fs-extra`)
 const slash = require(`slash`)
-const slugify = require(`limax`)
+const slugify = require(`slugify`)
 const url = require(`url`)
 
 const localPackages = `../packages`
@@ -79,7 +79,7 @@ exports.createPages = ({ graphql, actions }) => {
           query {
             allMarkdownRemark(
               sort: { order: DESC, fields: [frontmatter___date] }
-              limit: 1000
+              limit: 10000
               filter: { fileAbsolutePath: { ne: null } }
             ) {
               edges {
@@ -87,6 +87,10 @@ exports.createPages = ({ graphql, actions }) => {
                   fields {
                     slug
                     package
+                    starterShowcase {
+                      slug
+                      stub
+                    }
                   }
                   frontmatter {
                     title
@@ -107,7 +111,7 @@ exports.createPages = ({ graphql, actions }) => {
                 }
               }
             }
-            allSitesYaml(limit: 40, filter: { main_url: { ne: null } }) {
+            allSitesYaml(filter: { main_url: { ne: null } }) {
               edges {
                 node {
                   fields {
@@ -144,11 +148,13 @@ exports.createPages = ({ graphql, actions }) => {
           edge => {
             const slug = _.get(edge, `node.fields.slug`)
             const draft = _.get(edge, `node.frontmatter.draft`)
-            if (!slug) return
+            if (!slug) return undefined
 
             if (_.includes(slug, `/blog/`) && !draft) {
               return edge
             }
+
+            return undefined
           }
         )
 
@@ -182,6 +188,28 @@ exports.createPages = ({ graphql, actions }) => {
             },
           })
         })
+
+        // Create starters.
+        const starters = _.filter(result.data.allMarkdownRemark.edges, edge => {
+          const slug = _.get(edge, `node.fields.starterShowcase.slug`)
+          if (!slug) return null
+          else return edge
+        })
+        const starterTemplate = path.resolve(
+          `src/templates/template-starter-showcase.js`
+        )
+
+        starters.forEach((edge, index) => {
+          createPage({
+            path: `/starters${edge.node.fields.starterShowcase.slug}`, // required
+            component: slash(starterTemplate),
+            context: {
+              slug: edge.node.fields.starterShowcase.slug,
+              stub: edge.node.fields.starterShowcase.stub,
+            },
+          })
+        })
+        // END Create starters.
 
         // Create contributor pages.
         result.data.allAuthorYaml.edges.forEach(edge => {
@@ -255,7 +283,7 @@ exports.createPages = ({ graphql, actions }) => {
 }
 
 // Create slugs for files.
-exports.onCreateNode = ({ node, actions, getNode }) => {
+exports.onCreateNode = ({ node, actions, getNode, getNodes }) => {
   const { createNodeField } = actions
   let slug
   if (node.internal.type === `File`) {
@@ -301,12 +329,21 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
       })
       createNodeField({ node, name: `package`, value: true })
     }
+    if (
+      // starter showcase
+      fileNode.sourceInstanceName === `StarterShowcaseData` &&
+      parsedFilePath.name !== `README`
+    ) {
+      createNodesForStarterShowcase({ node, getNode, getNodes, actions })
+    } // end starter showcase
     if (slug) {
       createNodeField({ node, name: `anchor`, value: slugToAnchor(slug) })
       createNodeField({ node, name: `slug`, value: slug })
     }
   } else if (node.internal.type === `AuthorYaml`) {
-    slug = `/contributors/${slugify(node.id)}/`
+    slug = `/contributors/${slugify(node.id, {
+      lower: true,
+    })}/`
     createNodeField({ node, name: `slug`, value: slug })
   } else if (node.internal.type === `SitesYaml` && node.main_url) {
     const parsed = url.parse(node.main_url)
@@ -321,4 +358,65 @@ exports.onPostBuild = () => {
     `../docs/blog/2017-02-21-1-0-progress-update-where-came-from-where-going/gatsbygram.mp4`,
     `./public/gatsbygram.mp4`
   )
+}
+
+// Starter Showcase related code
+const { createFilePath } = require(`gatsby-source-filesystem`)
+const gitFolder = `./src/data/StarterShowcase/generatedGithubData`
+function createNodesForStarterShowcase({ node, getNode, getNodes, actions }) {
+  const { createNodeField, createParentChildLink } = actions
+  if (node.internal.type === `MarkdownRemark`) {
+    const slug = createFilePath({
+      node,
+      getNode,
+      basePath: `startersData`,
+    })
+    // preprocessing
+    const stub = slug.replace(/\//gi, ``)
+    var fromPath = path.join(gitFolder, `${stub}.json`)
+    var data = fs.readFileSync(fromPath, `utf8`)
+    const ghdata = JSON.parse(data)
+    if (ghdata.repository && ghdata.repository.url)
+      ghdata.repository = ghdata.repository.url // flatten a potential object into a string. weird quirk.
+    const { repoMetadata, dependencies = [], devDependencies = [] } = ghdata
+    const allDependencies = Object.entries(dependencies).concat(
+      Object.entries(devDependencies)
+    )
+    // make an object to stick into a Field
+    const starterShowcaseFields = {
+      slug,
+      stub,
+      date: new Date(node.frontmatter.date),
+      githubData: ghdata,
+      // nice-to-have destructures of githubData
+      description: ghdata.description,
+      stars: repoMetadata.stargazers_count,
+      lastUpdated: repoMetadata.created_at,
+      owner: repoMetadata.owner,
+      githubFullName: repoMetadata.full_name,
+      allDependencies,
+      gatsbyDependencies: allDependencies
+        .filter(
+          ([key, _]) => ![`gatsby-cli`, `gatsby-link`].includes(key) // remove stuff everyone has
+        )
+        .filter(([key, _]) => key.includes(`gatsby`)),
+      miscDependencies: allDependencies.filter(
+        ([key, _]) => !key.includes(`gatsby`)
+      ),
+    }
+    createNodeField({
+      node,
+      name: `starterShowcase`,
+      value: starterShowcaseFields,
+    })
+  }
+}
+// End Starter Showcase related code
+
+// limited logging for debug purposes
+let limitlogcount = 0
+function log(max) {
+  return function(...args) {
+    if (limitlogcount++ < max) console.log(...args)
+  }
 }

@@ -1,4 +1,5 @@
 import React from "react"
+import { graphql } from "gatsby"
 import Helmet from "react-helmet"
 import sortBy from "lodash/sortBy"
 
@@ -6,7 +7,7 @@ import Functions from "../../components/function-list"
 import { rhythm, scale } from "../../utils/typography"
 import Layout from "../../components/layout"
 import Container from "../../components/container"
-import docsSidebar from "../../data/sidebars/doc-links.yaml"
+import { itemListDocs } from "../../utils/sidebar/item-list"
 
 class BrowserAPIDocs extends React.Component {
   render() {
@@ -16,7 +17,7 @@ class BrowserAPIDocs extends React.Component {
     )
 
     return (
-      <Layout location={this.props.location} sidebarYaml={docsSidebar}>
+      <Layout location={this.props.location} itemList={itemListDocs}>
         <Container>
           <Helmet>
             <title>Browser APIs</title>
@@ -51,7 +52,7 @@ class BrowserAPIDocs extends React.Component {
 export default BrowserAPIDocs
 
 export const pageQuery = graphql`
-  query BrowserAPIDocsQuery {
+  query {
     file(relativePath: { regex: "/src.*api-browser-docs.js/" }) {
       childrenDocumentationJs {
         name

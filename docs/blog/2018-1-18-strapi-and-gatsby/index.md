@@ -213,7 +213,7 @@ _Path: `src/pages/index.js`_
 
 ```jsx
 import React from "react"
-import { Link } from "gatsby"
+import { Link, graphql } from "gatsby"
 
 const IndexPage = ({ data }) => (
   <div>

@@ -39,7 +39,7 @@ const IndexPage = ({ data }) => (
 export default IndexPage
 
 export const query = graphql`
-  query CompanyQuery {
+  query {
     allCompanyData {
       edges {
         node {

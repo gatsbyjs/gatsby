@@ -78,7 +78,7 @@ const RecipeTemplate = ({ data }) => (
 export default RecipeTemplate
 
 export const query = graphql`
-  query RecipeTemplate($slug: String!) {
+  query($slug: String!) {
     recipes(fields: { slug: { eq: $slug } }) {
       title
       preparationTime

@@ -1,4 +1,5 @@
 import React from "react"
+import { graphql } from "gatsby"
 import Img from "gatsby-image"
 import { OutboundLink } from "gatsby-plugin-google-analytics"
 
@@ -83,7 +84,7 @@ class ContributorPageTemplate extends React.Component {
 export default ContributorPageTemplate
 
 export const pageQuery = graphql`
-  query TemplateContributorPage($slug: String!) {
+  query($slug: String!) {
     authorYaml(fields: { slug: { eq: $slug } }) {
       id
       bio

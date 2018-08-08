@@ -1,4 +1,5 @@
 import React from "react"
+import { graphql } from "gatsby"
 import Img from "gatsby-image"
 import Layout from "../layouts"
 import { rhythm } from "../utils/typography"
@@ -307,7 +308,7 @@ const ImageAPI = props => {
 export default ImageAPI
 
 export const pageQuery = graphql`
-  query ImageAPIExamples {
+  query {
     allContentfulAsset(filter: { node_locale: { eq: "en-US" } }) {
       edges {
         node {

@@ -4,6 +4,8 @@ const path = require(`path`)
 const slash = require(`slash`)
 const _ = require(`lodash`)
 
+const getResourcesFromHTML = require(`./get-resources-from-html`)
+
 exports.createPages = ({ actions }) => {
   if (process.env.NODE_ENV === `production`) {
     const { createPage } = actions
@@ -44,12 +46,17 @@ exports.onPostBuild = (args, pluginOptions) => {
     rootDir
   )
 
+  const criticalFilePaths = getResourcesFromHTML(
+    `${process.cwd()}/${rootDir}/index.html`
+  )
+
   const options = {
     staticFileGlobs: files.concat([
       `${rootDir}/index.html`,
       `${rootDir}/manifest.json`,
       `${rootDir}/manifest.webmanifest`,
       `${rootDir}/offline-plugin-app-shell-fallback/index.html`,
+      ...criticalFilePaths,
     ]),
     stripPrefix: rootDir,
     // If `pathPrefix` is configured by user, we should replace

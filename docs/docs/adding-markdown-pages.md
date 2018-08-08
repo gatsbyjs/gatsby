@@ -18,7 +18,7 @@ Use the plugin [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/#
 
 #### Install
 
-`npm i --save gatsby-source-filesystem`
+`npm install --save gatsby-source-filesystem`
 
 Now open `gatsby-config.js` to add this plugin to the plugin array.
 
@@ -43,7 +43,7 @@ Now that we've "sourced" the markdown files from the filesystem, we can now "tra
 
 We'll use the plugin [`gatsby-transformer-remark`](/packages/gatsby-transformer-remark/) to recognise files which are markdown and read its content. It will convert the frontmatter metadata part of your markdown file as `frontmatter` and the content part as HTML.
 
-`npm i --save gatsby-transformer-remark`
+`npm install --save gatsby-transformer-remark`
 
 Add this to `gatsby-config.js` after the previously added `gatsby-source-filesystem`.
 
@@ -79,6 +79,7 @@ Now create a `blogTemplate.js` inside it with the following content.
 
 ```jsx
 import React from "react"
+import { graphql } from "gatsby"
 
 export default function Template({
   data, // this prop will be injected by the GraphQL query below.
@@ -100,7 +101,7 @@ export default function Template({
 }
 
 export const pageQuery = graphql`
-  query BlogPostByPath($path: String!) {
+  query($path: String!) {
     markdownRemark(frontmatter: { path: { eq: $path } }) {
       html
       frontmatter {
@@ -123,13 +124,13 @@ Two things are important in the file above.
 
 Gatsby exposes a powerful Node.js API, which allows for functionality such as creating dynamic pages. This API is available in the `gatsby-node.js` file in the root directory of your project, at the same level as `gatsby-config.js`. Each export found in this file will be run by Gatsby, as detailed in its [Node API specification](/docs/node-apis/). However, we only care about one particular API in this instance, `createPages`.
 
-Gatsby calls the `createPages` API (if present) at build time with injected parameters, `boundActionCreators` and `graphql`. Use the `graphql` to query Markdown file data as below. Next use `createPage` action creator to create a page for each of the Markdown files using the `blogTemplate.js` we created in the previous step.
+Gatsby calls the `createPages` API (if present) at build time with injected parameters, `actions` and `graphql`. Use the `graphql` to query Markdown file data as below. Next use `createPage` action creator to create a page for each of the Markdown files using the `blogTemplate.js` we created in the previous step.
 
 ```javascript
 const path = require("path")
 
-exports.createPages = ({ boundActionCreators, graphql }) => {
-  const { createPage } = boundActionCreators
+exports.createPages = ({ actions, graphql }) => {
+  const { createPage } = actions
 
   const blogPostTemplate = path.resolve(`src/templates/blogTemplate.js`)
 

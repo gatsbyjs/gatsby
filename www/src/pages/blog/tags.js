@@ -1,5 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
+import { graphql } from "gatsby"
 
 // Utilities
 import kebabCase from "lodash/kebabCase"
@@ -26,12 +27,12 @@ const TagsPage = ({
         <h1>Tags</h1>
         <ul>
           {group.map(tag => (
-            <li key={tag.fieldValue}>
-              <Link to={`/blog/tags/${kebabCase(tag.fieldValue)}/`}>
-                {tag.fieldValue} ({tag.totalCount})
-              </Link>
-            </li>
-          ))}
+              <li key={tag.fieldValue}>
+                <Link to={`/blog/tags/${kebabCase(tag.fieldValue)}/`}>
+                  {tag.fieldValue} ({tag.totalCount})
+                </Link>
+              </li>
+            ))}
         </ul>
       </div>
     </Container>
@@ -59,7 +60,7 @@ TagsPage.propTypes = {
 export default TagsPage
 
 export const pageQuery = graphql`
-  query TagsQuery {
+  query {
     site {
       siteMetadata {
         title

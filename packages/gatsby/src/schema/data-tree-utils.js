@@ -7,6 +7,7 @@ const invariant = require(`invariant`)
 const createKey = require(`./create-key`)
 const { typeConflictReporter } = require(`./type-conflict-reporter`)
 const DateType = require(`./types/type-date`)
+const is32BitInteger = require(`../utils/is-32-bit-integer`)
 
 import type { TypeEntry } from "./type-conflict-reporter"
 
@@ -118,7 +119,7 @@ const getExampleScalarFromArray = values =>
     values,
     (value, nextValue) => {
       // Prefer floats over ints as they're more specific.
-      if (nextValue && _.isNumber(nextValue) && !_.isInteger(nextValue)) {
+      if (nextValue && _.isNumber(nextValue) && !is32BitInteger(nextValue)) {
         return nextValue
       } else if (value === null) {
         return nextValue
@@ -162,7 +163,7 @@ const extractFromEntries = (
     return getExampleScalarFromArray(values)
   } else if (_.isObject(exampleValue)) {
     if (Array.isArray(exampleValue)) {
-      const concatanedItems = [].concat(...values)
+      const concatanedItems = _.flatten(values)
       // Linked node arrays don't get reduced further as we
       // want to preserve all the linked node types.
       if (key.includes(`___NODE`)) {

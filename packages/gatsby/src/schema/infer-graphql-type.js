@@ -19,6 +19,7 @@ const createKey = require(`./create-key`)
 const { getExampleValues, isEmptyObjectOrArray } = require(`./data-tree-utils`)
 const DateType = require(`./types/type-date`)
 const FileType = require(`./types/type-file`)
+const is32BitInteger = require(`../utils/is-32-bit-integer`)
 
 import type { GraphQLOutputType } from "graphql"
 import type {
@@ -117,7 +118,7 @@ function inferGraphQLType({
         }),
       }
     case `number`:
-      return _.isInteger(exampleValue)
+      return is32BitInteger(exampleValue)
         ? { type: GraphQLInt }
         : { type: GraphQLFloat }
     default:

@@ -1,8 +1,0 @@
-{
-  "env": {
-    "browser": true
-  },
-  "globals": {
-    "graphql": false
-  }
-}

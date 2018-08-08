@@ -22,7 +22,7 @@ const AllRecipes = ({ data }) => (
 export default AllRecipes
 
 export const query = graphql`
-  query AllRecipes {
+  query {
     allRecipes(limit: 1000) {
       edges {
         node {

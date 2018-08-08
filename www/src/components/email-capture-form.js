@@ -1,7 +1,8 @@
 import React from "react"
 import { rhythm, options } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
-import { css } from "glamor"
+import { formInput } from "../utils/form-styles"
+import { css, merge } from "glamor"
 import hex2rgba from "hex2rgba"
 import addToMailchimp from "gatsby-plugin-mailchimp"
 
@@ -9,23 +10,6 @@ let stripeAnimation = css.keyframes({
   "0%": { backgroundPosition: `0 0` },
   "100%": { backgroundPosition: `30px 60px` },
 })
-
-const formInputDefaultStyles = {
-  backgroundColor: `#fff`,
-  border: `1px solid ${colors.ui.bright}`,
-  borderRadius: presets.radius,
-  color: colors.brand,
-  fontFamily: options.headerFontFamily.join(`,`),
-  padding: rhythm(1 / 2),
-  verticalAlign: `middle`,
-  transition: `all ${presets.animation.speedDefault} ${
-    presets.animation.curveDefault
-  }`,
-  "::placeholder": {
-    color: colors.lilac,
-    opacity: 1,
-  },
-}
 
 class EmailCaptureForm extends React.Component {
   constructor() {
@@ -76,28 +60,31 @@ class EmailCaptureForm extends React.Component {
       {
         status: `sending`,
         msg: null,
-      }
+      },
       // setState callback (subscribe email to MC)
-      // this._postEmailToMailchimp(this.state.email, {
-      // pathname: document.location.pathname,
-      // })
+      this._postEmailToMailchimp(this.state.email, {
+        pathname: document.location.pathname,
+      })
     )
   }
 
   render() {
+    const { signupMessage, confirmMessage, containerCss } = this.props
+
     return (
       <div
         css={{
           borderTop: `2px solid ${colors.lilac}`,
           marginTop: rhythm(3),
           paddingTop: `${rhythm(1)}`,
+          ...containerCss,
         }}
       >
         {this.state.status === `success` ? (
-          <div>Thank you! Youʼll receive your first email shortly.</div>
+          <div>{confirmMessage}</div>
         ) : (
           <div>
-            <p>Enjoyed this post? Receive the next one in your inbox!</p>
+            <p>{signupMessage}</p>
             <form
               id="email-capture"
               method="post"
@@ -110,21 +97,19 @@ class EmailCaptureForm extends React.Component {
                   name="email"
                   placeholder="you@email.com"
                   onChange={this._handleEmailChange}
-                  css={{
-                    ...formInputDefaultStyles,
+                  css={merge(formInput, {
                     width: `250px`,
                     ":focus": {
                       borderColor: colors.gatsby,
                       outline: 0,
                       boxShadow: `0 0 0 0.2rem ${hex2rgba(colors.lilac, 0.25)}`,
                     },
-                  }}
+                  })}
                 />
                 <button
                   type="submit"
                   onClick={this._handleFormSubmit}
-                  css={{
-                    ...formInputDefaultStyles,
+                  css={merge(formInput, {
                     borderColor: colors.gatsby,
                     color: colors.gatsby,
                     cursor: `pointer`,
@@ -141,7 +126,7 @@ class EmailCaptureForm extends React.Component {
                       outline: 0,
                       boxShadow: `0 0 0 0.2rem ${hex2rgba(colors.lilac, 0.25)}`,
                     },
-                  }}
+                  })}
                 >
                   Subscribe
                 </button>
@@ -158,6 +143,12 @@ class EmailCaptureForm extends React.Component {
       </div>
     )
   }
+}
+
+EmailCaptureForm.defaultProps = {
+  signupMessage: `Enjoyed this post? Receive the next one in your inbox!`,
+  confirmMessage: `Thank you! Youʼll receive your first email shortly.`,
+  containerCss: {},
 }
 
 export default EmailCaptureForm

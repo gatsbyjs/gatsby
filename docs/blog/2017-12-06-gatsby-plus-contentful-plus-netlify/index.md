@@ -157,7 +157,7 @@ features. I haven’t heard any complaints from my co-workers.
 Another “problem” with static sites is the lack of out-of-the-box site search.
 Most search implementations occur between the server and the database. As a doc
 site, users typically expect solid search functionality. There are a few
-frontend only javascript search libraries (like [lunr.js](https://lunrjs.com/))
+frontend only JavaScript search libraries (like [lunr.js](https://lunrjs.com/))
 that take a search query and parse a pre-built JSON index of your content.
 
 I could have created this index by tying into the `onPostBuild` Gatsby API. This

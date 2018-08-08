@@ -1,4 +1,5 @@
 import React from "react"
+import { graphql } from "gatsby"
 import EditIcon from "react-icons/lib/md/create"
 import CheckIcon from "react-icons/lib/md/thumb-up"
 import CrossIcon from "react-icons/lib/md/thumb-down"

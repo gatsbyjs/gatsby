@@ -1,4 +1,5 @@
 import React from "react"
+import { graphql } from "gatsby"
 
 import Layout from "../components/layout"
 import PageWithPluginSearchBar from "../components/page-with-plugin-searchbar"
@@ -11,7 +12,7 @@ class DocsRemotePackagesTemplate extends React.Component {
     } = this.props
     return (
       <Layout location={this.props.location}>
-        <PageWithPluginSearchBar history={this.props.history}>
+        <PageWithPluginSearchBar location={this.props.location}>
           <PackageReadme
             page={markdownRemark}
             packageName={npmPackage.name}
@@ -36,7 +37,7 @@ class DocsRemotePackagesTemplate extends React.Component {
 export default DocsRemotePackagesTemplate
 
 export const pageQuery = graphql`
-  query TemplateDocsRemotePackages($slug: String!) {
+  query($slug: String!) {
     markdownRemark(fields: { slug: { eq: $slug } }) {
       ...MarkdownPageFooter
     }
