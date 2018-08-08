@@ -32,21 +32,36 @@ const getBadExportsMessage = (badExports, exportType, apis) => {
     The following exports aren't APIs. Perhaps you made a typo or
     your plugin is outdated?
 
-    See https://www.gatsbyjs.org/docs/${exportType}-apis/ for the list of Gatsby ${capitalized} APIs`
+    See https://www.gatsbyjs.org/docs/${exportType}-apis/ for the list of Gatsby ${capitalized} APIs
+  `
 
   badExports.forEach(bady => {
+    message += `\n\n`
     const similarities = stringSimiliarity.findBestMatch(bady.exportName, apis)
-    message += `\n — `
-    if (bady.pluginName == `default-site-plugin`) {
-      message += `Your site's gatsby-${exportType}.js is exporting a variable named "${
-        bady.exportName
-      }" which isn't an API.`
+    const isDefaultPlugin = bady.pluginName == `default-site-plugin`
+    const isModifyWebpackConfig = bady.exportName === `modifyWebpackConfig`
+
+    if (isDefaultPlugin && isModifyWebpackConfig) {
+      message += stripIndent`
+        - Your site's gatsby-${exportType}.js is exporting "${ bady.exportName }" which was removed in Gatsby v2. Refer to the migration guide for more info on upgrading to "onCreateWebpackConfig":
+        https://gatsby.app/update-webpack-config
+      `
+    } else if (isDefaultPlugin) {
+      message += stripIndent`
+        - Your site's gatsby-${exportType}.js is exporting a variable named "${
+          bady.exportName
+        }" which isn't an API.
+      `
     } else {
-      message += `The plugin "${bady.pluginName}@${
-        bady.pluginVersion
-      }" is exporting a variable named "${bady.exportName}" which isn't an API.`
+      message += stripIndent`
+        - The plugin "${bady.pluginName}@${
+          bady.pluginVersion
+        }" is exporting a variable named "${bady.exportName}" which isn't an API.
+      `
     }
-    if (similarities.bestMatch.rating > 0.5) {
+
+    if (similarities.bestMatch.rating > 0.5 && !isModifyWebpackConfig) {
+      message += `\n\n`
       message += ` Perhaps you meant to export "${
         similarities.bestMatch.target
       }"?`
