@@ -37,6 +37,7 @@
     "chalk": "^2.3.2",
     "chokidar": "^2.0.2",
     "common-tags": "^1.4.0",
+    "compression": "^1.7.3",
     "convert-hrtime": "^2.0.0",
     "copyfiles": "^1.2.0",
     "core-js": "^2.5.0",
