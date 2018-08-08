@@ -201,7 +201,7 @@ export default () => (
 
 ![Adding Header component](06-header-component.png)
 
-In the browser, the “About Gatsby” header text should now be replaced with “This is a header.” But we don’t the “About” page to say “This is a header.” We want it to say, “About Gatsby”.
+In the browser, the “About Gatsby” header text should now be replaced with “This is a header.” But we don’t want the “About” page to say “This is a header.” We want it to say, “About Gatsby”.
 
 4.  Head back to `/src/components/header.js`, and replace it with the following:
 
