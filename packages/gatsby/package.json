@@ -114,7 +114,6 @@
     "redux": "^3.6.0",
     "relay-compiler": "1.5.0",
     "request": "^2.85.0",
-    "serve": "^9.2.0",
     "shallow-compare": "^1.2.2",
     "sift": "^5.1.0",
     "signal-exit": "^3.0.2",

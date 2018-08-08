@@ -1,7 +1,5 @@
 /* @flow weak */
-const handler = require(`serve-handler`)
 const openurl = require(`opn`)
-const http = require(`http`)
 const signalExit = require(`signal-exit`)
 const compression = require(`compression`)
 const express = require(`express`)
