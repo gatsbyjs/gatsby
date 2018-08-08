@@ -5,6 +5,7 @@ import {
   shouldUpdateScroll,
   init as navigationInit,
   onRouteUpdate,
+  onPreRouteUpdate,
 } from "./navigation"
 import { apiRunner } from "./api-runner-browser"
 import syncRequires from "./sync-requires"
@@ -48,6 +49,11 @@ if (window.__webpack_hot_middleware_reporter__ !== undefined) {
 navigationInit()
 
 class RouteHandler extends React.Component {
+  constructor(props) {
+    super(props)
+    onPreRouteUpdate(props.location)
+  }
+
   render() {
     const { location } = this.props
     const { pathname } = location
@@ -87,6 +93,11 @@ class RouteHandler extends React.Component {
   // Call onRouteUpdate on the initial page load.
   componentDidMount() {
     onRouteUpdate(this.props.location)
+  }
+
+  shouldComponentUpdate() {
+    onPreRouteUpdate(this.props.location)
+    return true
   }
 
   componentDidUpdate() {

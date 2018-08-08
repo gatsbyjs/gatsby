@@ -8,6 +8,7 @@ import {
   shouldUpdateScroll,
   init as navigationInit,
   onRouteUpdate,
+  onPreRouteUpdate,
 } from "./navigation"
 import emitter from "./emitter"
 window.___emitter = emitter
@@ -34,6 +35,11 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   }
 
   class RouteHandler extends React.Component {
+    constructor(props) {
+      super(props)
+      onPreRouteUpdate(props.location)
+    }
+
     render() {
       const { location } = this.props
       let child
@@ -70,6 +76,11 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     // Call onRouteUpdate on the initial page load.
     componentDidMount() {
       onRouteUpdate(this.props.location)
+    }
+
+    shouldComponentUpdate() {
+      onPreRouteUpdate(this.props.location)
+      return true
     }
 
     componentDidUpdate() {
