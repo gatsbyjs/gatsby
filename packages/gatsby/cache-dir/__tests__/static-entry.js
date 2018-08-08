@@ -62,25 +62,29 @@ const fakeStylesPlugin = {
   },
 }
 
-const reversePostBodyPlugin = {
-  plugin: {
-    onPreRenderHTML: ({ getPostBodyComponents, replacePostBodyComponents }) => {
-      const postBodyComponents = getPostBodyComponents()
-      postBodyComponents.reverse()
-      replacePostBodyComponents(postBodyComponents)
+const reverseBodyComponentsPluginFactory = (type) => {
+  return {
+    plugin: {
+      onPreRenderHTML: (props) => {
+        const components = props[`get${type}BodyComponents`]()
+        components.reverse()
+        props[`replace${type}BodyComponents`](components)
+      },
     },
-  },
-}
+  }}
 
-const fakeComponentsPlugin = {
-  plugin: {
-    onRenderBody: ({ setPostBodyComponents }) => setPostBodyComponents([
-      <div key="div1">div1</div>,
-      <div key="div2">div2</div>,
-      <div key="div3">div3</div>,
-    ]),
-  },
-}
+const fakeComponentsPluginFactory = type => {
+  return {
+    plugin: {
+      onRenderBody: (props) => {
+        props[`set${type}BodyComponents`]([
+          <div key="div1">div1</div>,
+          <div key="div2">div2</div>,
+          <div key="div3">div3</div>,
+        ])
+      },
+    },
+  }}
 
 describe(`develop-static-entry`, () => {
   test(`onPreRenderHTML can be used to replace headComponents`, (done) => {
@@ -97,8 +101,20 @@ describe(`develop-static-entry`, () => {
 
   test(`onPreRenderHTML can be used to replace postBodyComponents`, (done) => {
     global.plugins = [
-      fakeComponentsPlugin,
-      reversePostBodyPlugin,
+      fakeComponentsPluginFactory(`Post`),
+      reverseBodyComponentsPluginFactory(`Post`),
+    ]
+
+    DevelopStaticEntry(`/about/`, (_, html) => {
+      expect(html).toMatchSnapshot()
+      done()
+    })
+  })
+
+  test(`onPreRenderHTML can be used to replace preBodyComponents`, (done) => {
+    global.plugins = [
+      fakeComponentsPluginFactory(`Pre`),
+      reverseBodyComponentsPluginFactory(`Pre`),
     ]
 
     DevelopStaticEntry(`/about/`, (_, html) => {
@@ -127,11 +143,23 @@ describe(`static-entry`, () => {
 
   test(`onPreRenderHTML can be used to replace postBodyComponents`, (done) => {
     global.plugins = [
-      fakeComponentsPlugin,
-      reversePostBodyPlugin,
+      fakeComponentsPluginFactory(`Post`),
+      reverseBodyComponentsPluginFactory(`Post`),
     ]
 
     StaticEntry(`/about/`, (_, html) => {
+      expect(html).toMatchSnapshot()
+      done()
+    })
+  })
+
+  test(`onPreRenderHTML can be used to replace preBodyComponents`, (done) => {
+    global.plugins = [
+      fakeComponentsPluginFactory(`Pre`),
+      reverseBodyComponentsPluginFactory(`Pre`),
+    ]
+
+    DevelopStaticEntry(`/about/`, (_, html) => {
       expect(html).toMatchSnapshot()
       done()
     })

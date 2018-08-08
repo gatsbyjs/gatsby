@@ -65,6 +65,12 @@ export default (pagePath, callback) => {
     headComponents = components
   }
 
+  const getPreBodyComponents = () => preBodyComponents
+
+  const replacePreBodyComponents = components => {
+    preBodyComponents = components
+  }
+
   const getPostBodyComponents = () => postBodyComponents
 
   const replacePostBodyComponents = components => {
@@ -83,6 +89,8 @@ export default (pagePath, callback) => {
   apiRunner(`onPreRenderHTML`, {
     getHeadComponents,
     replaceHeadComponents,
+    getPreBodyComponents,
+    replacePreBodyComponents,
     getPostBodyComponents,
     replacePostBodyComponents,
   })
