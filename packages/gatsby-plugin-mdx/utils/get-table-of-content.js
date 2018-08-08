@@ -23,7 +23,9 @@ const visit = require("unist-util-visit");
 // TODO: fully test it with different options, tight=True
 //
 function getItems(node, current) {
-  if (node.type === "paragraph") {
+  if (!node) {
+    return {};
+  } else if (node.type === "paragraph") {
     visit(node, item => {
       if (item.type === "link") {
         current.url = item.url;
