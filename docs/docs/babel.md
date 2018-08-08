@@ -62,9 +62,8 @@ to root of your site and modifying it per your needs.
     [
       "@babel/plugin-transform-runtime",
       {
-        helpers: true,
-        regenerator: true,
-        polyfill: false,
+        "helpers": true,
+        "regenerator": true,
       },
     ],
   ],
