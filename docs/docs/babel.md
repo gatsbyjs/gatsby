@@ -64,7 +64,6 @@ to root of your site and modifying it per your needs.
       {
         helpers: true,
         regenerator: true,
-        polyfill: false,
       },
     ],
   ],

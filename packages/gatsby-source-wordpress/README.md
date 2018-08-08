@@ -70,7 +70,7 @@ plugins: [
       // Example: `["option_page_1", "option_page_2"]` will include the proper ACF option
       // routes with the ID option_page_1 and option_page_2
       // Dashes in IDs will be converted to underscores for use in GraphQL
-      acfOptionPageIds = [],
+      acfOptionPageIds: [],
       auth: {
         // If auth.user and auth.pass are filled, then the source plugin will be allowed
         // to access endpoints that are protected with .htaccess.

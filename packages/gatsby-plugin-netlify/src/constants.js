@@ -25,7 +25,7 @@ export const SECURITY_HEADERS = {
 }
 
 export const CACHING_HEADERS = {
-  "/static/*": [`Cache-Control: max-age=31536000`],
+  "/static/*": [`Cache-Control: public, max-age=31536000, immutable`],
 }
 
 export const LINK_REGEX = /^(Link: <\/)(.+)(>;.+)/

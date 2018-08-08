@@ -380,6 +380,11 @@ Object {
           "stage": "build-html",
         },
         Object {
+          "name": "babel-plugin-macros",
+          "options": Object {},
+          "stage": "build-html",
+        },
+        Object {
           "name": "@babel/plugin-transform-runtime",
           "options": Object {
             "helpers": true,
@@ -443,6 +448,11 @@ Object {
         },
         Object {
           "name": "@babel/plugin-syntax-dynamic-import",
+          "options": Object {},
+          "stage": "develop",
+        },
+        Object {
+          "name": "babel-plugin-macros",
           "options": Object {},
           "stage": "develop",
         },
@@ -516,6 +526,10 @@ Object {
       Object {},
     ],
     Array [
+      "/path/to/module/babel-plugin-macros",
+      Object {},
+    ],
+    Array [
       "/path/to/module/@babel/plugin-transform-runtime",
       Object {
         "helpers": true,
@@ -568,6 +582,10 @@ Object {
     ],
     Array [
       "/path/to/module/@babel/plugin-syntax-dynamic-import",
+      Object {},
+    ],
+    Array [
+      "/path/to/module/babel-plugin-macros",
       Object {},
     ],
     Array [
