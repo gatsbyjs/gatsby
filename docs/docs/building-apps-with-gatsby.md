@@ -4,8 +4,8 @@ title: "Building Apps with Gatsby"
 
 Gatsby is an excellent framework for building web apps. You can use Gatsby to create personalized, logged-in experiences with two different approaches.
 
-1. "hybrid" app pages, and
-2. client-only routes & user authentication
+1.  "hybrid" app pages, and
+2.  client-only routes & user authentication
 
 ## Hybrid app pages
 
@@ -52,6 +52,6 @@ exports.onCreatePage = async ({ page, actions }) => {
 ```
 
 > 💡 Note: There's also a plugin to simplify the creation of client-only routes in your site:
-[gatsby-plugin-create-client-paths](/packages/gatsby-plugin-create-client-paths/).
+> [gatsby-plugin-create-client-paths](/packages/gatsby-plugin-create-client-paths/).
 
 Check out the ["simple auth" example site](https://github.com/gatsbyjs/gatsby/blob/master/examples/simple-auth/README.md) for a demo implementing user authentication and restricted client-only routes.

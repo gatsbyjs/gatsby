@@ -27,7 +27,8 @@ exports.onRenderBody = (
       : ``
   }
   ${
-      ((typeof pluginOptions.anonymize !== `undefined`) && (pluginOptions.anonymize === true))
+    typeof pluginOptions.anonymize !== `undefined` &&
+    pluginOptions.anonymize === true
       ? `function gaOptout(){document.cookie=disableStr+'=true; expires=Thu, 31 Dec 2099 23:59:59 UTC;path=/',window[disableStr]=!0}var gaProperty='${
           pluginOptions.trackingId
         }',disableStr='ga-disable-'+gaProperty;document.cookie.indexOf(disableStr+'=true')>-1&&(window[disableStr]=!0);`
@@ -47,7 +48,8 @@ exports.onRenderBody = (
   if (typeof ga === "function") {
     ga('create', '${pluginOptions.trackingId}', 'auto');
       ${
-          ((typeof pluginOptions.anonymize !== `undefined`) && (pluginOptions.anonymize === true))
+        typeof pluginOptions.anonymize !== `undefined` &&
+        pluginOptions.anonymize === true
           ? `ga('set', 'anonymizeIp', true);`
           : ``
       }}

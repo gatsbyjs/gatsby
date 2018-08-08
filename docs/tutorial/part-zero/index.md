@@ -146,9 +146,9 @@ We also recommend using [Prettier](https://github.com/prettier/prettier) -- Pret
 
 You can use Prettier directly in your editor using the [Prettier VS Code plugin](https://github.com/prettier/prettier-vscode):
 
-1. Open the extensions view on VS Code (View => Extensions)
-2. Search for "Prettier - Code formatter"
-3. Click "Install". After installation you'll be prompted to restart VS Code to enable the extension.
+1.  Open the extensions view on VS Code (View => Extensions)
+2.  Search for "Prettier - Code formatter"
+3.  Click "Install". After installation you'll be prompted to restart VS Code to enable the extension.
 
 > 💡 If you're not using VS Code, check out the Prettier docs for [install instructions](https://prettier.io/docs/en/install.html) or [other editor integrations](https://prettier.io/docs/en/editors.html).
 
