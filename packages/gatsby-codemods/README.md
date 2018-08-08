@@ -2,6 +2,8 @@
 
 A collection of codemod scripts for use with [JSCodeshift](https://github.com/facebook/jscodeshift) that help migrate to newer versions of Gatsby.
 
+> **Note:** Codemods are designed to rewrite your project's files. Ensure you have a backup before going any further.
+
 ### Setup & Run
 
 - Install JSCodeshift as a global module
