@@ -4,7 +4,11 @@ import ReactDOM from "react-dom"
 import { Router } from "@reach/router"
 import { ScrollContext } from "gatsby-react-router-scroll"
 import domReady from "domready"
-import { shouldUpdateScroll, init as navigationInit } from "./navigation"
+import {
+  shouldUpdateScroll,
+  init as navigationInit,
+  onRouteUpdate,
+} from "./navigation"
 import emitter from "./emitter"
 window.___emitter = emitter
 import PageRenderer from "./page-renderer"
@@ -28,11 +32,6 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   if (apiRunner(`registerServiceWorker`).length > 0) {
     require(`./register-service-worker`)
   }
-
-  // Call onRouteUpdate on the initial page load.
-  apiRunner(`onRouteUpdate`, {
-    location: window.history.location,
-  })
 
   class RouteHandler extends React.Component {
     render() {
@@ -66,6 +65,15 @@ apiRunnerAsync(`onClientEntry`).then(() => {
           {child}
         </ScrollContext>
       )
+    }
+
+    // Call onRouteUpdate on the initial page load.
+    componentDidMount() {
+      onRouteUpdate(this.props.location)
+    }
+
+    componentDidUpdate() {
+      onRouteUpdate(this.props.location)
     }
   }
 

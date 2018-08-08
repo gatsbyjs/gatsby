@@ -35,8 +35,7 @@ function maybeRedirect(pathname) {
 
 let lastNavigateToLocationString = null
 
-globalHistory.listen(() => {
-  const location = globalHistory.location
+const onRouteUpdate = location => {
   if (!maybeRedirect(location.pathname)) {
     // Check if we already ran onPreRouteUpdate API
     // in navigateTo function
@@ -47,11 +46,9 @@ globalHistory.listen(() => {
       apiRunner(`onPreRouteUpdate`, { location })
     }
     // Make sure React has had a chance to flush to DOM first.
-    setTimeout(() => {
-      apiRunner(`onRouteUpdate`, { location })
-    }, 0)
+    apiRunner(`onRouteUpdate`, { location })
   }
-})
+}
 
 const navigate = (to, replace) => {
   let { pathname } = parsePath(to)
@@ -132,4 +129,4 @@ function init() {
   maybeRedirect(window.location.pathname)
 }
 
-export { init, shouldUpdateScroll }
+export { init, shouldUpdateScroll, onRouteUpdate }
