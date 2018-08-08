@@ -87,7 +87,12 @@ const navigate = (to, replace) => {
       // We fetch resources for 404 page in page-renderer.js. Calling it
       // here is to ensure that we have needed resouces to render page
       // before navigating to it
-      loader.getResourcesForPathname(`/404.html`, loaderCallback)
+      if (process.env.NODE_ENV === `production`) {
+        loader.getResourcesForPathname(`/404.html`, loaderCallback)
+      } else {
+        clearTimeout(timeoutId)
+        reachNavigate(to, { replace })
+      }
     } else {
       clearTimeout(timeoutId)
       reachNavigate(to, { replace })
