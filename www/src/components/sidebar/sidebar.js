@@ -57,7 +57,7 @@ class SidebarBody extends Component {
     const node = this.scrollRef.current
 
     if (node) {
-      // node.setScrollPosition({ offset: this.props.position })
+      node.scrollTop = this.props.position
     }
 
     if (hasLocalStorage) {
@@ -207,8 +207,8 @@ class SidebarBody extends Component {
         <div
           onScroll={({ nativeEvent }) => {
             // get proper scroll position
-            // const position = nativeEvent.target.scrollPosition
-            // onPositionChange(position)
+            const position = nativeEvent.target.scrollTop
+            onPositionChange(position)
           }}
           ref={this.scrollRef}
           css={{
