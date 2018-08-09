@@ -11,7 +11,6 @@ import { apiRunner } from "./api-runner-browser"
 import syncRequires from "./sync-requires"
 import pages from "./pages.json"
 import loader from "./loader"
-import { hot } from "react-hot-loader"
 import JSONStore from "./json-store"
 
 import * as ErrorOverlay from "react-error-overlay"
@@ -117,4 +116,4 @@ const Root = () =>
 // Let site, plugins wrap the site e.g. for Redux.
 const WrappedRoot = apiRunner(`wrapRootComponent`, { Root }, Root)[0]
 
-export default hot(module)(WrappedRoot)
+export default WrappedRoot
