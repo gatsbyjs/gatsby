@@ -282,7 +282,7 @@ We’ll explore layout components in [part three](/tutorial/part-three).
 
 ## Deploying a Gatsby site
 
-Gatsby.js is a _static site generator_, which means there are no servers to setup or complicated databases to deploy. Instead, the Gatsby `build` command produces a directory of static HTMLand JavaScript files which you can deploy to a static site hosting service.
+Gatsby.js is a _static site generator_, which means there are no servers to setup or complicated databases to deploy. Instead, the Gatsby `build` command produces a directory of static HTML and JavaScript files which you can deploy to a static site hosting service.
 
 Let's try using [Surge](http://surge.sh/) for deploying your first Gatsby
 website. Surge is one of many "static site hosts" which make it possible to
