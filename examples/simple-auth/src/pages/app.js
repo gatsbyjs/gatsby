@@ -10,9 +10,9 @@ import Status from "../components/Status"
 const App = () => (
   <Layout>
     <Status />
-    <PrivateRoute path="/app/profile" component={Home} />
-    <PrivateRoute path="/app/details" component={Details} />
     <Router>
+      <PrivateRoute path="/app/profile" component={Home} />
+      <PrivateRoute path="/app/details" component={Details} />
       <Login path="/app/login" />
     </Router>
   </Layout>
