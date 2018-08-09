@@ -125,8 +125,8 @@ module.exports = async (
         }
       case `build-javascript`:
         return {
-          filename: `[name]-[chunkhash].js`,
-          chunkFilename: `[name]-[chunkhash].js`,
+          filename: `[name]-[contenthash].js`,
+          chunkFilename: `[name]-[contenthash].js`,
           path: directoryPath(`public`),
           publicPath: program.prefixPaths
             ? `${store.getState().config.pathPrefix}/`
@@ -188,16 +188,6 @@ module.exports = async (
 
           new FriendlyErrorsWebpackPlugin({
             clearConsole: false,
-            compilationSuccessInfo: {
-              messages: [
-                `You can now view your site in the browser running at ${
-                  program.ssl ? `https` : `http`
-                }://${program.host}:${program.port}`,
-                `Your graphql debugger is running at ${
-                  program.ssl ? `https` : `http`
-                }://${program.host}:${program.port}/___graphql`,
-              ],
-            },
           }),
         ])
         break
@@ -290,6 +280,7 @@ module.exports = async (
       rules.yaml(),
       rules.fonts(),
       rules.images(),
+      rules.media(),
       rules.miscAssets(),
     ]
     switch (stage) {
@@ -341,15 +332,6 @@ module.exports = async (
           {
             oneOf: [rules.cssModules(), rules.css()],
           },
-
-          // Remove manually unused React Router modules. Try removing these
-          // rules whenever they get around to making a new release with their
-          // tree shaking fixes.
-          { test: /HashHistory/, use: `null-loader` },
-          { test: /MemoryHistory/, use: `null-loader` },
-          { test: /StaticRouter/, use: `null-loader` },
-          { test: /MemoryRouter/, use: `null-loader` },
-          { test: /HashRouter/, use: `null-loader` },
         ])
 
         break

@@ -22,49 +22,48 @@ browsers.
 ## How to use a custom .babelrc file
 
 Gatsby ships with a default .babelrc setup that should work for most sites. If you'd like
-to add custom Babel presets or plugins, we recommend copying our default .bablerc below
+to add custom Babel presets or plugins, we recommend copying our default .babelrc below
 to root of your site and modifying it per your needs.
 
 ```json5
 {
-  "cacheDirectory": true,
-  "babelrc": false,
-  "presets": [
+  cacheDirectory: true,
+  babelrc: false,
+  presets: [
     [
       "@babel/preset-env",
       {
-        "loose": true,
-        "modules": false,
-        "useBuiltIns": "usage",
-        "shippedProposals": true,
-        "targets": {
-          "browsers": [">0.25%", "not dead"],
+        loose: true,
+        modules: false,
+        useBuiltIns: "usage",
+        shippedProposals: true,
+        targets: {
+          browsers: [">0.25%", "not dead"],
         },
       },
     ],
     [
       "@babel/preset-react",
       {
-        "useBuiltIns": true,
-        "pragma": "React.createElement",
+        useBuiltIns: true,
+        pragma: "React.createElement",
       },
     ],
     "@babel/preset-flow",
   ],
-  "plugins": [
+  plugins: [
     [
       "@babel/plugin-proposal-class-properties",
       {
-        "loose": true,
+        loose: true,
       },
     ],
     "@babel/plugin-syntax-dynamic-import",
     [
       "@babel/plugin-transform-runtime",
       {
-        "helpers": true,
-        "regenerator": true,
-        "polyfill": false,
+        helpers: true,
+        regenerator: true,
       },
     ],
   ],

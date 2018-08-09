@@ -86,6 +86,10 @@ const addDefaultPluginsPresets = (
     name: `@babel/plugin-syntax-dynamic-import`,
     stage,
   })
+  actions.setBabelPlugin({
+    name: `babel-plugin-macros`,
+    stage,
+  })
   // Polyfills the runtime needed for async/await and generators
   actions.setBabelPlugin({
     name: `@babel/plugin-transform-runtime`,

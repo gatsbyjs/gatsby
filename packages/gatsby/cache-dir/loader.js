@@ -5,6 +5,7 @@ import stripPrefix from "./strip-prefix"
 const preferDefault = m => (m && m.default) || m
 
 let prefetcher
+let devGetPageData
 let inInitialRender = true
 let hasFetched = Object.create(null)
 let syncRequires = {}
@@ -19,6 +20,10 @@ const failedResources = {}
 const MAX_HISTORY = 5
 
 const jsonPromiseStore = {}
+
+if (process.env.NODE_ENV !== `production`) {
+  devGetPageData = require(`./socketIo`).getPageData
+}
 
 /**
  * Fetch resource map (pages data and paths to json files with results of
@@ -227,6 +232,13 @@ const queue = {
       return false
     }
 
+    if (
+      process.env.NODE_ENV !== `production` &&
+      process.env.NODE_ENV !== `test`
+    ) {
+      devGetPageData(page.path)
+    }
+
     const mountOrderBoost = 1 / mountOrder
     mountOrder += 1
 
@@ -305,8 +317,15 @@ const queue = {
         component: syncRequires.components[page.componentChunkName],
         page,
       }
-      cb(pageResources)
-      return pageResources
+
+      const onDataCallback = () => {
+        cb(pageResources)
+      }
+
+      if (devGetPageData(page.path, onDataCallback)) {
+        return pageResources
+      }
+      return null
     }
     // Production code path
     if (failedPaths[path]) {

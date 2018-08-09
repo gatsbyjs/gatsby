@@ -2,6 +2,8 @@
   items:
     - title: Quick start
       link: /docs/
+    - title: Starters
+      link: /docs/gatsby-starters/
     - title: Recipes*
       link: /docs/recipes/
     - title: Overview of the docs*
@@ -11,7 +13,7 @@
 - title: Guides
   items:
     - title: Preparing your environment*
-      link: /docs/environment/
+      link: /docs/preparing-your-environment/
       items:
       - title: Basic hardware and software requirements*
         link: /docs/basic-hardware-software-requirements/
@@ -64,7 +66,7 @@
           link: /docs/working-with-images/
     - title: Querying your data with GraphQL*
       link: /docs/graphql/
-      items: 
+      items:
         - title: Introducing GraphiQL*
           link: /docs/introducing-graphiql/
         - title: Build a page with a GraphQL query
@@ -120,7 +122,7 @@
           link: /docs/component-css/
         - title: PostCSS*
           link: /docs/post-css/
-    - title: Debugging*
+    - title: Debugging
       link: /docs/debugging/
       items:
         - title: Debugging HTML builds
@@ -129,7 +131,9 @@
           link: /docs/debugging-replace-renderer-api/
         - title: Debugging the build process
           link: /docs/debugging-the-build-process/
-    - title: Apps with Gatsby
+        - title: Trace Gatsby builds
+          link: /docs/performance-tracing/
+    - title: Building Apps with Gatsby
       link: /docs/building-apps-with-gatsby/
       items:
         - title: Progressive web app (PWA)
@@ -148,7 +152,7 @@
         - title: Adding a 404 Page
           link: /docs/add-404-page/
         - title: Adding search to your Gatsby website
-          link: /docs/adding-search/ 
+          link: /docs/adding-search/
         - title: Adding tags and categories to blog posts
           link: /docs/adding-tags-and-categories-to-blog-posts/
         - title: Creating a sitemap*
@@ -159,7 +163,7 @@
           link: /docs/seo/
     - title: Performance*
       link: /docs/performance/
-      items: 
+      items:
         - title: Caching
           link: /docs/caching/
         - title: Local HTTPS
@@ -168,6 +172,8 @@
           link: /docs/lighthouse-audit/
 - title: API Reference
   items:
+    - title: Gatsby Link
+      link: /docs/gatsby-link/
     - title: Gatsby Node APIs
       link: /docs/node-apis/
     - title: Gatsby Browser APIs

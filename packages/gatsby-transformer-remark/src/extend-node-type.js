@@ -105,7 +105,7 @@ module.exports = (
         return await ASTPromiseMap.get(cacheKey)
       } else {
         const ASTGenerationPromise = new Promise(async resolve => {
-          if (process.env.NODE_ENV === `production` && !fileNodes) {
+          if (process.env.NODE_ENV !== `production` || !fileNodes) {
             fileNodes = getNodes().filter(n => n.internal.type === `File`)
           }
           const ast = await new Promise((resolve, reject) => {
@@ -172,7 +172,7 @@ module.exports = (
               // every node type in DataTree gets a schema type automatically.
               // typegen plugins just modify the auto-generated types to add derived fields
               // as well as computationally expensive fields.
-              if (process.env.NODE_ENV === `production` && !fileNodes) {
+              if (process.env.NODE_ENV !== `production` || !fileNodes) {
                 fileNodes = getNodes().filter(n => n.internal.type === `File`)
               }
               // Use Bluebird's Promise function "each" to run remark plugins serially.

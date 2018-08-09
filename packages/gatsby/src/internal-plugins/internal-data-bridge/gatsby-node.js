@@ -154,7 +154,7 @@ exports.onCreatePage = ({ page, actions }) => {
       type: `SitePage`,
       contentDigest: crypto
         .createHash(`md5`)
-        .update(JSON.stringify(page))
+        .update(JSON.stringify(pageWithoutUpdated))
         .digest(`hex`),
       description:
         page.pluginCreatorId === `Plugin default-site-plugin`

@@ -64,7 +64,7 @@ type ActionOptions = {
 
 /**
  * Delete a page
- * @param {Object} page a page object with at least the path set
+ * @param {Object} page a page object
  * @param {string} page.path The path of the page
  * @param {string} page.component The absolute path to the page component
  * @example
@@ -1105,6 +1105,30 @@ actions.createRedirect = ({
       toPath: `${pathPrefix}${toPath}`,
       ...rest,
     },
+  }
+}
+
+/**
+ * Add a third-party schema to be merged into main schema. Schema has to be a
+ * graphql-js GraphQLSchema object.
+ *
+ * This schema is going to be merged as-is. This can easily break the main
+ * Gatsby schema, so it's user's responsibility to make sure it doesn't happen
+ * (by eg namespacing the schema).
+ *
+ * @param {Object} $0
+ * @param {GraphQLSchema} $0.schema GraphQL schema to add
+ */
+actions.addThirdPartySchema = (
+  { schema }: { schema: GraphQLSchema },
+  plugin: Plugin,
+  traceId?: string
+) => {
+  return {
+    type: `ADD_THIRD_PARTY_SCHEMA`,
+    plugin,
+    traceId,
+    payload: schema,
   }
 }
 

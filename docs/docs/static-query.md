@@ -7,6 +7,7 @@ Gatsby v2 introduces `StaticQuery`, a new API that allows components to retrieve
 ## Basic example
 
 We'll create a new `Header` component located at `src/components/header.js`:
+
 ```jsx
 import React from "react"
 import { StaticQuery, graphql } from "gatsby"

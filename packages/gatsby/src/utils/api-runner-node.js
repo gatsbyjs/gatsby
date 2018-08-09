@@ -40,6 +40,20 @@ const doubleBind = (boundActionCreators, api, plugin, actionOptions) => {
   }
 }
 
+const initAPICallTracing = parentSpan => {
+  const startSpan = (spanName, spanArgs = {}) => {
+    const defaultSpanArgs = { childOf: parentSpan }
+
+    return tracer.startSpan(spanName, _.merge(defaultSpanArgs, spanArgs))
+  }
+
+  return {
+    tracer,
+    parentSpan,
+    startSpan,
+  }
+}
+
 const runAPI = (plugin, api, args) => {
   const gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
   if (gatsbyNode[api]) {
@@ -75,6 +89,8 @@ const runAPI = (plugin, api, args) => {
 
     const namespacedCreateNodeId = id => createNodeId(id, plugin.name)
 
+    const tracing = initAPICallTracing(pluginSpan)
+
     const apiCallArgs = [
       {
         ...args,
@@ -91,6 +107,7 @@ const runAPI = (plugin, api, args) => {
         getNodeAndSavePathDependency,
         cache,
         createNodeId: namespacedCreateNodeId,
+        tracing,
       },
       plugin.pluginOptions,
     ]

@@ -3,6 +3,8 @@ title: Programmatically create pages from data
 typora-copy-images-to: ./
 ---
 
+> This tutorial is part of a series about Gatsby’s data layer. Make sure you’ve gone through [part 4](/tutorial/part-four/), [part 5](/tutorial/part-five/), and [part 6](/tutorial/part-six/) before continuing here.
+
 ## What's in this tutorial?
 
 In the previous tutorial, you created a nice index page that queries markdown
@@ -36,7 +38,7 @@ We do our best to make Gatsby APIs simple to implement. To implement an API, you
 with the name of the API from `gatsby-node.js`.
 
 So let's do that. In the root of your site, create a file named
-`gatsby-node.js`. Then add the following. 
+`gatsby-node.js`. Then add the following.
 
 ```javascript
 exports.onCreateNode = ({ node }) => {
@@ -128,7 +130,7 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
 ```
 
 Restart the development server and open or refresh Graph_i_QL. Then run this
-query to see your new slugs.
+GraphQL query to see your new slugs.
 
 ```graphql
 {

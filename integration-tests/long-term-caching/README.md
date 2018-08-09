@@ -8,6 +8,8 @@ After each run, move the public folder to `public-${runNumber}`.
 
 You can easily compare run outputs with the tool Meld. `meld public-1 public-2`.
 
+It'd be nice to automate this but a manual check works for now.
+
 ## Runs
 
 1.  Hello world

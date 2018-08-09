@@ -49,6 +49,7 @@ export const showcaseQuery = graphql`
           description
           main_url
           built_by_url
+          source_url
           childScreenshot {
             screenshotFile {
               childImageSharp {

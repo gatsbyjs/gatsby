@@ -3,8 +3,7 @@ import { Link } from "gatsby"
 import Helmet from "react-helmet"
 
 import Layout from "../../components/layout"
-import { sectionListDocs } from "../../utils/sidebar/section-list"
-import { createLinkDocs } from "../../utils/sidebar/create-link"
+import { itemListDocs } from "../../utils/sidebar/item-list"
 import Container from "../../components/container"
 import DocSearchContent from "../../components/docsearch-content"
 import presets from "../../utils/presets"
@@ -12,11 +11,7 @@ import presets from "../../utils/presets"
 class IndexRoute extends React.Component {
   render() {
     return (
-      <Layout
-        location={this.props.location}
-        createLink={createLinkDocs}
-        sectionList={sectionListDocs}
-      >
+      <Layout location={this.props.location} itemList={itemListDocs}>
         <DocSearchContent>
           <Container>
             <Helmet>
@@ -34,12 +29,14 @@ class IndexRoute extends React.Component {
             <ol>
               <li>
                 <p>Create a new site.</p>
-                <pre>
-                  <code className="language-sh">
-                    gatsby new gatsby-site
-                    https://github.com/gatsbyjs/gatsby-starter-default#v2
-                  </code>
-                </pre>
+                <div className="gatsby-highlight" data-language="bash">
+                  <pre className="language-bash">
+                    <code className="language-bash">
+                      gatsby new gatsby-site
+                      https://github.com/gatsbyjs/gatsby-starter-default#v2
+                    </code>
+                  </pre>
+                </div>
               </li>
               <li>
                 <code>cd gatsby-site</code>
