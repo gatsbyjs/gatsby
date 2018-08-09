@@ -530,6 +530,10 @@ Here's links to diffs for three sites with client routes that were upgraded to @
 - [client-only-routes](https://github.com/gatsbyjs/gatsby/pull/6918/files#diff-69757e54875e28ef83eb8efe45a33fdf)
 - [simple-auth](https://github.com/gatsbyjs/gatsby/pull/6918/files#diff-53ac112a4b2ec760b26a86c953df2339)
 
+### Plugin `gatsby-react-router-scroll` no longer needed
+
+This plugin can be removed from the package.json's dependencies.
+
 ### APIs `onPreRouteUpdate` and `onRouteUpdate` no longer called with the route update action
 
 React Router v4 would tell us the "action" (push/replace) that triggered the route
