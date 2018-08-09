@@ -201,7 +201,7 @@ export default () => (
 
 ![Adding Header component](06-header-component.png)
 
-In the browser, the “About Gatsby” header text should now be replaced with “This is a header.” But we don’t the “About” page to say “This is a header.” We want it to say, “About Gatsby”.
+In the browser, the “About Gatsby” header text should now be replaced with “This is a header.” But we don’t want the “About” page to say “This is a header.” We want it to say, “About Gatsby”.
 
 4.  Head back to `/src/components/header.js`, and replace it with the following:
 
@@ -282,7 +282,7 @@ We’ll explore layout components in [part three](/tutorial/part-three).
 
 ## Deploying a Gatsby site
 
-Gatsby.js is a _static site generator_, which means there are no servers to setup or complicated databases to deploy. Instead, the Gatsby `build` command produces a directory of static HTMLand JavaScript files which you can deploy to a static site hosting service.
+Gatsby.js is a _static site generator_, which means there are no servers to setup or complicated databases to deploy. Instead, the Gatsby `build` command produces a directory of static HTML and JavaScript files which you can deploy to a static site hosting service.
 
 Let's try using [Surge](http://surge.sh/) for deploying your first Gatsby
 website. Surge is one of many "static site hosts" which make it possible to
