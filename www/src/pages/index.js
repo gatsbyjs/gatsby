@@ -159,6 +159,15 @@ class IndexRoute extends React.Component {
                   hasSideBar={false}
                   css={{ maxWidth: rhythm(30), paddingBottom: `0 !important` }}
                 >
+                      <EmailCaptureForm
+                        signupMessage="Want to keep up to date with the latest posts on our blog? Subscribe to our newsletter!"
+                        containerCss={{
+                          marginTop: 0,
+                          marginBottom: rhythm(1),
+                          border: `none`,
+                        }}
+                      />
+ 
                   <h2
                     css={{
                       textAlign: `left`,
@@ -184,10 +193,6 @@ class IndexRoute extends React.Component {
                   >
                     Read More
                   </CtaButton>
-                  <EmailCaptureForm
-                    signupMessage="Subscribe to our newsletter!"
-                    containerCss={{ marginBottom: rhythm(2) }}
-                  />
                 </Container>
               </div>
             </Cards>
