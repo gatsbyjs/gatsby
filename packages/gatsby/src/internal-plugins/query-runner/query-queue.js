@@ -15,7 +15,7 @@ const queueOptions = {
   },
   priority: (job, cb) => {
     const activePaths = Array.from(websocketManager.activePaths.values())
-    if (job.path && activePaths.includes(job.path)) {
+    if (job.id && activePaths.includes(job.id)) {
       cb(null, 10)
     } else {
       cb(null, 1)

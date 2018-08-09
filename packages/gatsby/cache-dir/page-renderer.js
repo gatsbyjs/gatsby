@@ -15,11 +15,10 @@ class PageRenderer extends React.Component {
 
     // Set the pathname for 404 pages.
     const pathname = this.getPathName(location)
-    this.onPostLoadPageResources = this.onPostLoadPageResources.bind(this)
 
     this.state = {
       lastPathname: location.pathname,
-      pageResources: loader.getResourcesForPathname(pathname),
+      pageResources: loader.getResourcesForPathnameSync(pathname),
     }
   }
 
@@ -35,7 +34,9 @@ class PageRenderer extends React.Component {
     }
 
     if (prevState.lastPathname !== location.pathname) {
-      const pageResources = loader.getResourcesForPathname(location.pathname)
+      const pageResources = loader.getResourcesForPathnameSync(
+        location.pathname
+      )
 
       if (pageResources) {
         nextState.pageResources = pageResources
@@ -49,24 +50,13 @@ class PageRenderer extends React.Component {
     // Listen to events so when our page gets updated, we can transition.
     // This is only useful on delayed transitions as the page will get rendered
     // without the necessary page resources and then re-render once those come in.
-    emitter.on(`onPostLoadPageResources`, this.onPostLoadPageResources)
-  }
+    emitter.on(`onPostLoadPageResources`, e => {
+      const page = loader.getPage(this.props.location.pathname)
 
-  onPostLoadPageResources(e) {
-    const page = loader.getPage(this.props.location.pathname)
-
-    if (page && e.page.path === page.path) {
-      // only update state if it changed, otherwise we get into
-      // weird loop - TODO: find root cause of it instead of this
-      // workaround.
-      if (this.state.pageResources !== e.pageResources) {
+      if (page && e.page.path === page.path) {
         this.setState({ pageResources: e.pageResources })
       }
-    }
-  }
-
-  componentWillUnmount() {
-    emitter.off(`onPostLoadPageResources`, this.onPostLoadPageResources)
+    })
   }
 
   componentDidUpdate(prevProps) {
@@ -75,11 +65,11 @@ class PageRenderer extends React.Component {
     const { location } = this.props
     const pathName = this.getPathName(location)
 
-    if (!loader.getResourcesForPathname(pathName))
+    if (!loader.getResourcesForPathnameSync(pathName))
       // Page resources won't be set in cases where the browser back button
       // or forward button is pushed as we can't wait as normal for resources
       // to load before changing the page.
-      loader.getResourcesForPathname(pathName, pageResources => {
+      loader.getResourcesForPathnameSync(pathName, pageResources => {
         // The page may have changed since we started this, in which case doesn't update
         if (this.props.location.pathname !== location.pathname) {
           return
