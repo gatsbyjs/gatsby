@@ -525,6 +525,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                       <Fragment key={c}>
                         <Link
                           to={`/showcase?${qs.stringify({ filters: [c] })}`}
+                          state={{ isModal: true }}
                         >
                           {c}
                         </Link>
