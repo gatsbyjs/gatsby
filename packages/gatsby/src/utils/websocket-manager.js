@@ -168,8 +168,6 @@ class WebsocketManager {
         s.join(getRoomNameFromPath(path))
         activePath = path
         this.activePaths.add(path)
-
-        getDataForPath(path)
       })
 
       s.on(`disconnect`, s => {

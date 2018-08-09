@@ -78,22 +78,16 @@ function getPageData(pathname) {
   return inFlightGetPageDataPromiseCache[pathname]
 }
 
-// These were causing trouble so disabling for now until we have time to debug.
-//
-// Basically, every time registerPath was called, the backend pushed repeatedly
-// the same query results.
-//
-// Their purpose is to set on the backend the "current" path in the frontend
-// to prioritize the query for the current path.
-//
-// This does seem less necessary now that query running is faster.
-//
+// Tell websocket-manager.js the new path we're on.
+// This will help the backend prioritize queries for this
+// path.
 function registerPath(path) {
-  // socket.emit(`registerPath`, path)
+  socket.emit(`registerPath`, path)
 }
 
+// Unregister the former path
 function unregisterPath(path) {
-  // socket.emit(`unregisterPath`, path)
+  socket.emit(`unregisterPath`, path)
 }
 
 export { getPageData, registerPath, unregisterPath }
