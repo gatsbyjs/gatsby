@@ -285,11 +285,11 @@ We’ll explore layout components in [part three](/tutorial/part-three).
 
 ## Linking between pages
 
-At this point you have two pages -- a home page and an about page. Let's link between the two.
+You'll often want to link between pages on your site. Let's look at how to route within a Gatsby site.
 
 ### ✋ Using the `<Link />` component
 
-1. Open the index page component (`/src/pages/index.js`). Import the `<Link />` component from Gatsby. Add a `<Link />` component below the header, and give it a `to` property, with the value of `"/about/"` for the pathname:
+1. Open the index page component (`/src/pages/index.js`). Import the `<Link />` component from Gatsby. Add a `<Link />` component below the header, and give it a `to` property, with the value of `"/contact/"` for the pathname:
 
 ```jsx{2,7}
 import React from "react"
@@ -298,7 +298,7 @@ import Header from "../components/header"
 
 export default () => (
     <div style={{ color: `purple` }}>
-        <Link to="/about/">About</Link>
+        <Link to="/contact/">Contact</Link>
         <Header headerText="Hello Gatsby!" />
         <p>What a world.</p>
         <img src="https://source.unsplash.com/random/400x200" alt="" />
@@ -306,11 +306,38 @@ export default () => (
 )
 ```
 
-2. Open up the about page component (`/src/pages/about.js`), and follow the same steps as above, but instead of giving the new link component a `to` attribute with a value of `"/about/"`, give it a value of `"/"`. Save, and take a look.
+When you click the new "Contact" link on the homepage, you should see...
 
-![Linking between gatsby pages](09-linking-between-pages.gif)
+![Gatsby dev 404 page](09-dev-404.png)
 
-Use the Gatsby `<Link />` component for linking to pages internally, within your site. For external links to pages not handled by your Gatsby site, use the regular HTML `<a>` tag.
+...the Gatsby development 404 page. Why? Because we're attempting to link to a page that doesn't exist yet.
+
+> 💡 Want to know more about 404 pages in Gatsby? Check out [the docs](/docs/add-404-page/).
+
+2. Let's create a new page component for our new " Contact" page at `src/pages/contact.js`, and have it link back to the homepage: 
+
+```jsx
+import React from "react"
+import { Link } from 'gatsby'
+import Header from "../components/header"
+
+export default () => (
+    <div style={{ color: `teal` }}>
+        <Link to="/">Home</Link>
+        <Header headerText="Contact" />
+        <p>Send us a message!</p>
+    </div>
+)
+```
+
+After you save the file, you should be see the contact page, and be able to link between the homepage and the contact page.
+
+<video controls="controls" loop="true">
+  <source type="video/mp4" src="./10-linking-between-pages.mp4"></source>
+  <p>Sorry! You browser doesn't support this video.</p>
+</video>
+
+The Gatsby `<Link />` component is for linking between pages within your site. For external links to pages not handled by your Gatsby site, use the regular HTML `<a>` tag.
 
 > 💡 Check out more detail on routing in Gatsby in the [API doc for Gatsby Link](/docs/gatsby-link/).
 
