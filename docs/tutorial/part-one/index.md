@@ -45,6 +45,11 @@ Open the file at `/src/pages/index.js`. The code in this file creates a componen
 
 1.  Change the “Hello World!” text to “Hello Gatsby!”, and save the file. If your windows are side-by-side, you can see that your code and content changes are reflected almost instantly in the browser after you save the file.
 
+<video controls="controls" autoplay="true" loop="true">
+  <source type="video/mp4" src="./02-demo-hot-reloading.mp4"></source>
+  <p>Sorry! You browser doesn't support this video.</p>
+</video>
+
 > 💡 Gatsby uses **hot reloading** to speed up your development process. Essentially, when you’re running a Gatsby development server, the Gatsby site files are being “watched” in the background — any time you save a file, your changes will be immediately reflected in the browser. You don’t need to hard refresh the page, or restart the development server — your changes just appear.
 
 2.  Let’s make our changes a little more visible. Try replacing the code in `/src/pages/index.js` with the code below, and save again. You’ll see changes to the text; The text color will be purple, and the font size will be larger.
@@ -56,8 +61,6 @@ export default () => (
   <div style={{ color: `purple`, fontSize: `72px` }}>Hello Gatsby!</div>
 )
 ```
-
-![View changes with hot reloading](02-hot-reloading.gif)
 
 > 💡 We’ll be covering more about styling in Gatsby in part two of the tutorial.
 
