@@ -88,7 +88,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     }
   }
 
-  loader.getResourcesForPathname(window.location.pathname, () => {
+  loader.getResourcesForPathname(window.location.pathname).then(() => {
     const Root = () =>
       createElement(
         Router,

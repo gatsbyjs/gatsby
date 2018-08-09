@@ -11,7 +11,6 @@ import { apiRunner } from "./api-runner-browser"
 import syncRequires from "./sync-requires"
 import pages from "./pages.json"
 import loader from "./loader"
-import { hot } from "react-hot-loader"
 import JSONStore from "./json-store"
 
 import * as ErrorOverlay from "react-error-overlay"
@@ -57,7 +56,7 @@ class RouteHandler extends React.Component {
   render() {
     const { location } = this.props
     const { pathname } = location
-    const pageResources = loader.getResourcesForPathname(pathname)
+    const pageResources = loader.getResourcesForPathnameSync(pathname)
     const isPage = !!(pageResources && pageResources.component)
     let child
     if (isPage) {
@@ -117,4 +116,4 @@ const Root = () =>
 // Let site, plugins wrap the site e.g. for Redux.
 const WrappedRoot = apiRunner(`wrapRootComponent`, { Root }, Root)[0]
 
-export default hot(module)(WrappedRoot)
+export default WrappedRoot

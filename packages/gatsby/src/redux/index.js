@@ -49,9 +49,6 @@ try {
     initialState.nodes = objectToMap(initialState.nodes)
   }
 } catch (e) {
-  if (process.env.NODE_ENV === `test`) {
-    console.log(`error loading initialState`, e)
-  }
   // ignore errors.
 }
 
