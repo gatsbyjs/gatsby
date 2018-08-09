@@ -58,6 +58,7 @@ const navigate = (to, replace) => {
   // If we had a service worker update, no matter the path, reload window
   if (window.GATSBY_SW_UPDATED) {
     window.location = pathname
+    return
   }
 
   // Start a timer to wait for a second before transitioning and showing a
