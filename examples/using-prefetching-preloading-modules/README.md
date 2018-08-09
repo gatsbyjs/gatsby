@@ -1,6 +1,6 @@
 # Using Prefetching/Preloading modules
 
-Demonstrates de usage of Prefetching and Preloaded modules with Gatsby.
+Demonstrates the usage of Prefetching and Preloaded modules with Gatsby.
 
 ## References
 
