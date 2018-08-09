@@ -275,6 +275,8 @@ module.exports = async (
   function getModule(config) {
     // Common config for every env.
     // prettier-ignore
+    console.log({ yaml: rules.yaml(), use: rules.yaml().use })
+    console.log({ js: rules.js(), use: rules.js().use })
     let configRules = [
       rules.js(),
       rules.yaml(),

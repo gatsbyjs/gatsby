@@ -123,10 +123,16 @@ module.exports = async ({
 
   const PRODUCTION = !stage.includes(`develop`)
 
-  const babelLoader = await createBabelLoader({
+  console.log({ stage, supportedBrowsers })
+
+  // TODO have to collect this data and write out to file
+  // so the loader can read that in and add the plugin
+  // info. Loaders have to be a string, not a function.
+  const babelLoader = createBabelLoader({
     stage,
     browserslist: supportedBrowsers,
   })
+  // console.log(babelLoader())
 
   const isSSR = stage.includes(`html`)
 
@@ -300,7 +306,8 @@ module.exports = async ({
    * Javascript loader via babel, excludes node_modules
    */
   {
-    let js = options => {
+    let js = (options = {}) => {
+      console.log({ jsoptons: options })
       return {
         test: /\.jsx?$/,
         exclude: vendorRegex,

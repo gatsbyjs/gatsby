@@ -9,6 +9,7 @@ const { SourceMapConsumer } = require(`source-map`)
 
 module.exports = function prepareStackTrace(error, source) {
   const map = new SourceMapConsumer(readFileSync(source, `utf8`))
+  console.log(error)
   const stack = stackTrace
     .parse(error)
     .map(frame => wrapCallSite(map, frame))
