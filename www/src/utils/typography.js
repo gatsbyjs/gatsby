@@ -8,22 +8,24 @@ import {
   MIN_LARGER_DISPLAY_MEDIA_QUERY,
 } from "typography-breakpoint-constants"
 
+const headerFontFamily = [
+  `Futura PT`,
+  `-apple-system`,
+  `BlinkMacSystemFont`,
+  `Segoe UI`,
+  `Roboto`,
+  `Oxygen`,
+  `Ubuntu`,
+  `Cantarell`,
+  `Fira Sans`,
+  `Droid Sans`,
+  `Helvetica Neue`,
+  `Arial`,
+  `sans-serif`,
+]
+
 const _options = {
-  headerFontFamily: [
-    `Futura PT`,
-    `-apple-system`,
-    `BlinkMacSystemFont`,
-    `Segoe UI`,
-    `Roboto`,
-    `Oxygen`,
-    `Ubuntu`,
-    `Cantarell`,
-    `Fira Sans`,
-    `Droid Sans`,
-    `Helvetica Neue`,
-    `Arial`,
-    `sans-serif`,
-  ],
+  headerFontFamily,
   bodyFontFamily: [`Spectral`, `Georgia`, `Times New Roman`, `Times`, `serif`],
   monospaceFontFamily: [
     `Space Mono`,
@@ -187,6 +189,12 @@ const _options = {
         fontSize: `102%`,
         color: colors.gatsby,
       },
+      ".post-body figcaption": {
+        color: colors.gray.calm,
+        fontFamily: headerFontFamily.join(`,`),
+        fontSize: `87.5%`,
+        marginTop: rhythm(1 / 2),
+      },
       ".main-body a:hover": {
         background: colors.ui.bright,
       },
@@ -205,6 +213,12 @@ const _options = {
         borderBottom: `transparent`,
         marginTop: rhythm(options.blockMarginBottom * 2),
         marginBottom: rhythm(options.blockMarginBottom * 2),
+      },
+      ".main-body figure a.gatsby-resp-image-link": {
+        boxShadow: `none`,
+        borderBottom: `transparent`,
+        marginTop: rhythm(options.blockMarginBottom * 2),
+        marginBottom: 0,
       },
       ".main-body a.gatsby-resp-image-link:hover": {
         background: `none`,
