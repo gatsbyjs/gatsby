@@ -49,15 +49,16 @@ class StickyResponsiveSidebar extends Component {
               transform: `translateX(-${menuOffset})`,
             }}
           >
-          <ScrollPositionConsumer>
-            {({ position, onPositionChange }) => (
-              <SidebarComponent
-                position={position}
-                onPositionChange={onPositionChange}
-                closeSidebar={this._closeSidebar}
-                {...this.props}
-            />
-            )}
+            <ScrollPositionConsumer>
+              {({ position, onPositionChange }) => (
+                <SidebarComponent
+                  position={position}
+                  onPositionChange={onPositionChange}
+                  closeSidebar={this._closeSidebar}
+                  {...this.props}
+                />
+              )}
+            </ScrollPositionConsumer>
           </div>
         </div>
         <div
