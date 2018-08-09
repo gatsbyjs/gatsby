@@ -64,6 +64,30 @@
           link: /docs/gatsby-source-filesystem-programmatic-import/
         - title: Working with images in Gatsby
           link: /docs/working-with-images/
+    - title: Sourcing content and data*
+      link: /docs/sourcing-content-and-data
+      items:
+        - title: Sourcing from the filesystem*
+          link: /docs/sourcing-from-the-filesystem/
+        - title: Sourcing from databases*
+          link: /docs/sourcing-from-databases/
+        - title: Sourcing from SaaS services*
+          link: /docs/sourcing-from-saas-services/
+        - title: Sourcing from private APIs*
+          link: /docs/sourcing-from-private-apis/
+        - title: Headless CMS*
+          link: /docs/headless-cms/
+            items:
+              - title: Sourcing from Netlify CMS
+                link: /docs/sourcing-from-netlify-cms/
+              - title: Sourcing from WordPress*
+                link: /docs/sourcing-from-wordpress/
+              - title: Sourcing from Drupal*
+                link: /docs/sourcing-from-drupal/
+              - title: Sourcing from Contentful*
+                link: /docs/sourcing-from-contentful/
+              - title: Sourcing from Prose*
+                link: /docs/sourcing-from-prose/
     - title: Querying your data with GraphQL*
       link: /docs/graphql/
       items:
@@ -83,19 +107,6 @@
           link: /docs/programmatically-create-pages-from-data/
         - title: Querying data with StaticQuery
           link: /docs/static-query/
-    - title: Headless CMS*
-      link: /docs/headless-cms/
-      items:
-        - title: Netlify CMS
-          link: /docs/netlify-cms/
-        - title: WordPress*
-          link: /docs/wordpress/
-        - title: Drupal*
-          link: /docs/drupal/
-        - title: Contentful*
-          link: /docs/contentful/
-        - title: Prose*
-          link: /docs/prose/
     - title: Plugins*
       link: /docs/plugins/
       items:
@@ -122,6 +133,19 @@
           link: /docs/component-css/
         - title: PostCSS*
           link: /docs/post-css/
+    - title: Testing*
+      link: /docs/testing/
+      items:
+        - title: Unit testing
+          link: /docs/unit-testing/
+        - title: Testing components with GraphQL
+          link: /docs/testing-components-with-graphql/
+        - title: End-to-end testing
+          link: /docs/end-to-end-testing/
+        - title: Testing CSS-in-JS
+          link: /docs/testing-css-in-js/
+        - title: Testing React components
+          link: /docs/testing-react-components/
     - title: Debugging
       link: /docs/debugging/
       items:
@@ -161,6 +185,15 @@
           link: /docs/linking-between-pages/
         - title: Search Engine Optimization (SEO)
           link: /docs/seo/
+    - title: Adding third-party services*
+      link: /docs/adding-third-party-services/
+      items:
+        - title: Adding search*
+          link: /docs/adding-search/
+        - title: Adding analytics*
+          link: /docs/adding-analytics/
+        - title: Adding forms*
+          link: /docs/adding-forms/
     - title: Performance*
       link: /docs/performance/
       items:
