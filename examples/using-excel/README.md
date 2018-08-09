@@ -1,3 +1,3 @@
 # using-excel
 
-Demonstrates the use of excel with Gatsby.
+Demonstrates the use of Excel with Gatsby.
