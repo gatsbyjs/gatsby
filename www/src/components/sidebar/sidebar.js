@@ -50,9 +50,16 @@ class SidebarBody extends Component {
 
     this._toggleSection = this._toggleSection.bind(this)
     this.state = { ...this._getInitialState(props) }
+    this.scrollRef = React.createRef()
   }
 
   componentDidMount() {
+    const node = this.scrollRef.current
+
+    if (node) {
+      // node.setScrollPosition({ offset: this.props.position })
+    }
+
     if (hasLocalStorage) {
       const key = this.props.itemList[0].key
       const initialState = this.state
@@ -184,7 +191,7 @@ class SidebarBody extends Component {
   }
 
   render() {
-    const { closeSidebar, itemList, location } = this.props
+    const { closeSidebar, itemList, location, onPositionChange } = this.props
     const { openSectionHash, activeItemLink, activeItemParents } = this.state
 
     return (
@@ -198,6 +205,12 @@ class SidebarBody extends Component {
           </div>
         )}
         <div
+          onScroll={({ nativeEvent }) => {
+            // get proper scroll position
+            // const position = nativeEvent.target.scrollPosition
+            // onPositionChange(position)
+          }}
+          ref={this.scrollRef}
           css={{
             ...styles.sidebarScrollContainer,
             height: itemList[0].disableExpandAll

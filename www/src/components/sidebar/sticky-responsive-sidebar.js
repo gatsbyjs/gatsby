@@ -5,6 +5,9 @@ import ScrollSyncSidebar from "./scroll-sync-sidebar"
 import ChevronSvg from "./chevron-svg"
 import presets, { colors } from "../../utils/presets"
 import { rhythm } from "../../utils/typography"
+import ScrollPositionProvider, {
+  ScrollPositionConsumer,
+} from "./scrollbar-position-provider"
 
 class StickyResponsiveSidebar extends Component {
   constructor(props) {
@@ -32,7 +35,7 @@ class StickyResponsiveSidebar extends Component {
     const menuOffset = open ? 0 : rhythm(10)
 
     return (
-      <Fragment>
+      <ScrollPositionProvider>
         <div
           css={{
             ...styles.sidebarScrollContainer,
@@ -46,10 +49,15 @@ class StickyResponsiveSidebar extends Component {
               transform: `translateX(-${menuOffset})`,
             }}
           >
-            <SidebarComponent
-              closeSidebar={this._closeSidebar}
-              {...this.props}
+          <ScrollPositionConsumer>
+            {({ position, onPositionChange }) => (
+              <SidebarComponent
+                position={position}
+                onPositionChange={onPositionChange}
+                closeSidebar={this._closeSidebar}
+                {...this.props}
             />
+            )}
           </div>
         </div>
         <div
@@ -75,7 +83,7 @@ class StickyResponsiveSidebar extends Component {
             />
           </div>
         </div>
-      </Fragment>
+      </ScrollPositionProvider>
     )
   }
 }
