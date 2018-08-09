@@ -405,7 +405,7 @@ class PluginSearchBar extends Component {
   }
 
   updateHistory(value) {
-    reachNavigate(`${this.props.location.pathanme}?=${value.query}`, {
+    reachNavigate(`${this.props.location.pathname}?=${value.query}`, {
       replace: true,
     })
   }
