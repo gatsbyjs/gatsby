@@ -875,3 +875,21 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
   - Manifest support
   - Sitemap support
   - [More info here](https://github.com/fabe/gatsby-universal#readme)
+  
+  - [gatsby-starter-bootstrap-cv](https://github.com/mhjadav/gatsby-starter-bootstrap-cv)
+  [(Live demo)](http://obese-plant.surge.sh/)
+
+  > A clean and simple theme for cv based on Gatsby using bootstrap.
+
+  Features:
+
+  - Designed as a minimalistic website
+  - A minimalistic grid using bootstrap
+  - Font icons using `font-awesome`
+  - Google Analytics using `gatsby-plugin-google-analytics`
+  - Prerendered Open Graph tags for rich sharing
+  - Site config to add data
+  - Make your site ready in 2 mins
+  - [More info here](https://github.com/mhjadav/gatsby-starter-bootstrap-cv#gatsby-starter-bootstrap-cv)
+
+  
