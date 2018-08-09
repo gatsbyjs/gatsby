@@ -5,6 +5,7 @@ import Helmet from "react-helmet"
 import Layout from "../../components/layout"
 import Container from "../../components/container"
 import BlogPostPreviewItem from "../../components/blog-post-preview-item"
+import EmailCaptureForm from "../../components/email-capture-form"
 
 import presets, { colors } from "../../utils/presets"
 import { rhythm, options } from "../../utils/typography"
@@ -95,6 +96,7 @@ class BlogPostsIndex extends React.Component {
                 }}
               />
             ))}
+            <EmailCaptureForm signupMessage="Enjoying our blog? Receive the next post in your inbox!" />
           </Container>
         </div>
       </Layout>

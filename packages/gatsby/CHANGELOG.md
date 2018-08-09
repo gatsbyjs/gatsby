@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.0-beta.92"></a>
+
+# [2.0.0-beta.92](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.0-beta.91...gatsby@2.0.0-beta.92) (2018-08-09)
+
+**Note:** Version bump only for package gatsby
+
+<a name="2.0.0-beta.91"></a>
+
+# [2.0.0-beta.91](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.0-beta.90...gatsby@2.0.0-beta.91) (2018-08-09)
+
+**Note:** Version bump only for package gatsby
+
+<a name="2.0.0-beta.90"></a>
+
+# [2.0.0-beta.90](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.0-beta.89...gatsby@2.0.0-beta.90) (2018-08-09)
+
+**Note:** Version bump only for package gatsby
+
+<a name="2.0.0-beta.89"></a>
+
+# [2.0.0-beta.89](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.0-beta.88...gatsby@2.0.0-beta.89) (2018-08-09)
+
+**Note:** Version bump only for package gatsby
+
+<a name="2.0.0-beta.88"></a>
+
+# [2.0.0-beta.88](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.0-beta.87...gatsby@2.0.0-beta.88) (2018-08-09)
+
+**Note:** Version bump only for package gatsby
+
 <a name="2.0.0-beta.87"></a>
 
 # [2.0.0-beta.87](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.0-beta.86...gatsby@2.0.0-beta.87) (2018-08-08)
