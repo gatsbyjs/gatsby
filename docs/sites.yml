@@ -1998,3 +1998,15 @@
   built_by: Musthaq Ahamad
   built_by_url: https://github.com/haxzie
   featured: false
+- title: Thibault Maekelbergh
+  main_url: https://thibmaek.com
+  url: https://thibmaek.com
+  source_url: https://github.com/thibmaek/thibmaek.github.io
+  description: >
+    A nice blog about development, Raspberry Pi, plants and probably records.
+  categories:
+    - Blog
+    - Open Source
+  built_by: Thibault Maekelbergh
+  built_by_url: https://twitter.com/thibmaek
+  featured: false
