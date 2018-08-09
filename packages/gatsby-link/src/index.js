@@ -108,9 +108,11 @@ class GatsbyLink extends React.Component {
       ...rest
     } = this.props
 
+    const prefixTo = withPrefix(to)
+
     return (
       <Link
-        to={to}
+        to={prefixTo}
         state={state}
         getProps={getProps}
         innerRef={this.handleRef}
@@ -135,7 +137,7 @@ class GatsbyLink extends React.Component {
             e.preventDefault()
             // Is this link pointing to a hash on the same page? If so,
             // just scroll there.
-            const { pathname, hash } = parsePath(to)
+            const { pathname, hash } = parsePath(prefixTo)
             if (pathname === location.pathname || !pathname) {
               const element = hash
                 ? document.getElementById(hash.substr(1))
@@ -151,7 +153,7 @@ class GatsbyLink extends React.Component {
 
             // Make sure the necessary scripts and data are
             // loaded before continuing.
-            push(to)
+            push(prefixTo)
           }
 
           return true

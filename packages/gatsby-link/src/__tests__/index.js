@@ -32,13 +32,13 @@ const getReplace = () => {
 }
 
 const getWithPrefix = (pathPrefix = ``) => {
-  Object.assign(global.window, {
-    __PATH_PREFIX__: pathPrefix,
-  })
+  global.__PATH_PREFIX__ = pathPrefix
+
   return withPrefix
 }
 
 const setup = ({ sourcePath = `/active`, linkProps } = {}) => {
+  global.__PATH_PREFIX__ = ``
   const source = createMemorySource(sourcePath)
   const history = createHistory(source)
 
