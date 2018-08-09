@@ -69,7 +69,10 @@
     "typeface-spectral": "^0.0.54",
     "typography": "^0.16.6",
     "typography-breakpoint-constants": "^0.15.10",
-    "typography-plugin-code": "^0.16.11"
+    "typography-plugin-code": "^0.16.11",
+    "zipkin": "^0.14.0",
+    "zipkin-javascript-opentracing": "^1.6.0",
+    "zipkin-transport-http": "^0.14.0"
   },
   "keywords": [
     "gatsby"
