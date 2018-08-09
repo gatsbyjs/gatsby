@@ -120,13 +120,7 @@ export default (pagePath, callback) => {
   const bodyComponent = createElement(
     ServerLocation,
     { url: pagePath },
-    createElement(
-      Router,
-      {
-        basepath: pathPrefix.slice(0, -1),
-      },
-      createElement(RouteHandler, { path: `/*` })
-    )
+    createElement(Router, null, createElement(RouteHandler, { path: `/*` }))
   )
 
   // Let the site or plugin render the page component.
