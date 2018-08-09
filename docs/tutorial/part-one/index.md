@@ -285,7 +285,7 @@ We’ll explore layout components in [part three](/tutorial/part-three).
 
 ## Linking between pages
 
-You'll often want to link between pages on your site. Let's look at how to route within a Gatsby site.
+You'll often want to link between pages -- Let's look at routing in a Gatsby site.
 
 ### ✋ Using the `<Link />` component
 
@@ -314,7 +314,7 @@ When you click the new "Contact" link on the homepage, you should see...
 
 > 💡 Want to know more about 404 pages in Gatsby? Check out [the docs](/docs/add-404-page/).
 
-2. Let's create a new page component for our new " Contact" page at `src/pages/contact.js`, and have it link back to the homepage: 
+2. Let's create a page component for our new " Contact" page at `src/pages/contact.js`, and have it link back to the homepage: 
 
 ```jsx
 import React from "react"
@@ -330,7 +330,7 @@ export default () => (
 )
 ```
 
-After you save the file, you should be see the contact page, and be able to link between the homepage and the contact page.
+After you save the file, you should be see the contact page, and be able to link between it and the homepage.
 
 <video controls="controls" loop="true">
   <source type="video/mp4" src="./10-linking-between-pages.mp4"></source>
@@ -349,7 +349,7 @@ Let's try using [Surge](http://surge.sh/) for deploying your first Gatsby
 website. Surge is one of many "static site hosts" which make it possible to
 deploy Gatsby sites.
 
-If you haven't previously installed & setup Surge, open a new terminal window and install their terminal tool:
+If you haven't previously installed & set up Surge, open a new terminal window and install their terminal tool:
 
 ```bash
 npm install --global surge
