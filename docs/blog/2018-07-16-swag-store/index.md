@@ -1,6 +1,6 @@
 ---
 title: Free Swag for Gatsby Contributors
-date: "2018-07-30"
+date: "2018-08-09"
 image: images/gatsby-swag.jpg
 author: Jason Lengstorf
 tags: ["collaboration","gatsby","community"]
