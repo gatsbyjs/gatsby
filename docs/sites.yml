@@ -1998,6 +1998,18 @@
   built_by: Musthaq Ahamad
   built_by_url: https://github.com/haxzie
   featured: false
+- title: Tech Confessions
+  main_url: https://confessions.tech
+  url: https://confessions.tech
+  source_url: https://github.com/JonathanSpeek/tech-confessions
+  description: >
+    A guilt-free place for us to confess our tech sins 🙏
+  categories:
+    - Community
+    - Open Source
+  built_by: Jonathan Speek
+  built_by_url: https://speek.design
+  featured: false
 - title: Thibault Maekelbergh
   main_url: https://thibmaek.com
   url: https://thibmaek.com
