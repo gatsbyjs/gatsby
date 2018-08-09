@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "author": "Jason Lengstorf <jason@lengstorf.com>",
   "dependencies": {
-    "gatsby": "next",
+    "gatsby": "^2.0.0-beta.91",
     "gatsby-plugin-react-helmet": "next",
     "prop-types": "^15.6.1",
     "react": "^16.4.0",

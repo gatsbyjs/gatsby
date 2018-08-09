@@ -103,6 +103,7 @@ class GatsbyLink extends React.Component {
       activeStyle: $activeStyle,
       ref: $ref,
       innerRef: $innerRef,
+      state,
       /* eslint-enable no-unused-vars */
       ...rest
     } = this.props
@@ -112,6 +113,7 @@ class GatsbyLink extends React.Component {
     return (
       <Link
         to={prefixTo}
+        state={state}
         getProps={getProps}
         innerRef={this.handleRef}
         onMouseEnter={e => {
