@@ -1,3 +1,3 @@
 # using-excel
 
-https://using-excel.gatsbyjs.org
+Demonstrates de use of excel with Gatsby.

@@ -1,3 +1,3 @@
 # using-csv
 
-https://using-csv.gatsbyjs.org
+Demonstrates de usage of CSV files with Gatsby.
