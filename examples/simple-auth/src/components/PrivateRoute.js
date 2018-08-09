@@ -1,6 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
-import { Router, navigate } from "@reach/router"
+import { navigate } from "@reach/router"
 import { isLoggedIn } from "../utils/auth"
 
 const PrivateRoute = ({ component: Component, location, ...rest }) => {
@@ -10,11 +10,7 @@ const PrivateRoute = ({ component: Component, location, ...rest }) => {
     return null
   }
 
-  return (
-    <Router>
-      <Component {...rest} />
-    </Router>
-  )
+  return <Component {...rest} />
 }
 
 PrivateRoute.propTypes = {
