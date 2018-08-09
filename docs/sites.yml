@@ -2033,4 +2033,27 @@
     - Creative
   built_by: Linton Ye
   built_by_url: https://twitter.com/lintonye
+- title: DesignSystems.com
+  main_url: https://www.designsystems.com/
+  url: https://www.designsystems.com/
+  description: >
+    A resource for learning, creating and evangelizing design systems.
+  categories:
+    - Design
+    - Blog
+    - Technology
+  built_by: Corey Ward
+  built_by_url: http://www.coreyward.me/
+  featured: false
+- title: Devol’s Dance
+  main_url: https://www.devolsdance.com/
+  url: https://www.devolsdance.com/
+  description: >
+    Devol’s Dance is an invite-only, one-day event celebrating industrial robotics, AI, and automation.
+  categories:
+    - Marketing
+    - Landing
+    - Technology
+  built_by: Corey Ward
+  built_by_url: http://www.coreyward.me/
   featured: false
