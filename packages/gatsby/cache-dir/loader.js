@@ -305,7 +305,10 @@ const queue = {
     }
   },
 
-  getResourcesForPathnameSync: path => pathScriptsCache[path],
+  getResourcesForPathnameSync: path => {
+    const page = findPage(path)
+    return pathScriptsCache[page.path]
+  },
 
   getResourcesForPathname: path => {
     queue.checkIfDoingInitialRenderForSW(path)
@@ -363,6 +366,7 @@ const queue = {
           component: syncRequires.components[page.componentChunkName],
           page,
         }
+
         // Add to the cache.
         pathScriptsCache[path] = pageResources
         devGetPageData(page.path).then(pageData => {
