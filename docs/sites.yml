@@ -1425,6 +1425,8 @@
   categories:
     - Marketing
     - Design
+  built_by: Corey Ward
+  built_by_url: http://www.coreyward.me/
 - title: Jonas Tebbe Portfolio
   description: >
     Hey, I’m Jonas and I create digital products.
@@ -1996,7 +1998,7 @@
   built_by: Musthaq Ahamad
   built_by_url: https://github.com/haxzie
   featured: false
-  - title: Tech Confessions
+- title: Tech Confessions
   main_url: https://confessions.tech
   url: https://confessions.tech
   source_url: https://github.com/JonathanSpeek/tech-confessions
@@ -2007,4 +2009,16 @@
     - Open Source
   built_by: Jonathan Speek
   built_by_url: https://speek.design
+  featured: false
+- title: Thibault Maekelbergh
+  main_url: https://thibmaek.com
+  url: https://thibmaek.com
+  source_url: https://github.com/thibmaek/thibmaek.github.io
+  description: >
+    A nice blog about development, Raspberry Pi, plants and probably records.
+  categories:
+    - Blog
+    - Open Source
+  built_by: Thibault Maekelbergh
+  built_by_url: https://twitter.com/thibmaek
   featured: false
