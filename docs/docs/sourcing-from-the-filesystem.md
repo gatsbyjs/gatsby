@@ -1,5 +1,5 @@
 ---
-title: Contentful
+title: Sourcing from the Filesystem
 ---
 
 This is a stub. Help our community expand it.
