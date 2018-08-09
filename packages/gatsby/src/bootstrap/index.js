@@ -245,6 +245,7 @@ module.exports = async (args: BootstrapArgs) => {
       return {
         resolve: hasAPIFile(`browser`, plugin),
         options: plugin.pluginOptions,
+        name: plugin.name,
       }
     }),
     plugin => plugin.resolve
@@ -255,7 +256,12 @@ module.exports = async (args: BootstrapArgs) => {
       plugin =>
         `{
       plugin: require('${plugin.resolve}'),
-      options: ${JSON.stringify(plugin.options)},
+      options: ${JSON.stringify(plugin.options)},${
+          process.env.NODE_ENV !== `production`
+            ? `
+      name: '${plugin.name}',`
+            : ``
+        }
     }`
     )
     .join(`,`)
