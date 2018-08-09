@@ -2022,6 +2022,17 @@
   built_by: Thibault Maekelbergh
   built_by_url: https://twitter.com/thibmaek
   featured: false
+- title: LearnReact.design
+  main_url: https://learnreact.design
+  url: https://learnreact.design
+  description: >
+    React Essentials For Designers: A React course tailored for product designers, ux designers, ui designers.
+  categories:
+    - Blog
+    - Landing
+    - Creative
+  built_by: Linton Ye
+  built_by_url: https://twitter.com/lintonye
 - title: DesignSystems.com
   main_url: https://www.designsystems.com/
   url: https://www.designsystems.com/
