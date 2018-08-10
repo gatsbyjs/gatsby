@@ -41,7 +41,7 @@ async function onCreateNode({ node, boundActionCreators, loadNodeContent }) {
         _.upperFirst(_.camelCase(`${node.name} Json`))
       )
     })
-  } else if (_.isPlainObject(parsedContent)) {
+  } else if (_.isPlainObject(parsedContent) && typeof node.dir !== 'undefined') {
     transformObject(
       parsedContent,
       parsedContent.id ? parsedContent.id : `${node.id} >>> JSON`,
