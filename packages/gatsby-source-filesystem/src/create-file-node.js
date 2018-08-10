@@ -24,7 +24,6 @@ const memoizedGetGitPath = () => {
   let gitInfoPathCache = ``
   return () => {
     if (gitInfoPathCache !== ``) {
-      console.log(gitInfoPathCache)
       return gitInfoPathCache
     } else {
       promisifiedGI([`repository`, `name`, `branch`]).then(
