@@ -246,7 +246,6 @@ class SearchForm extends Component {
    */ autocompleteSelected(e) {
     e.stopPropagation()
     // Use an anchor tag to parse the absolute url (from autocomplete.js) into a relative url
-    // eslint-disable-next-line no-undef
     const a = document.createElement(`a`)
     a.href = e._args[0].url
     this.searchInput.blur()
@@ -254,21 +253,18 @@ class SearchForm extends Component {
   }
   componentDidMount() {
     if (
-      typeof window === `undefined` || // eslint-disable-line no-undef
+      typeof window === `undefined` ||
       typeof window.docsearch === `undefined`
     ) {
-      // eslint-disable-line no-undef
       console.warn(`Search has failed to load and now is being disabled`)
       this.setState({ enabled: false })
       return
     }
-    // eslint-disable-next-line no-undef
     window.addEventListener(
       `autocomplete:selected`,
       this.autocompleteSelected,
       true
     )
-    // eslint-disable-next-line no-undef
     window.docsearch({
       apiKey: `71af1f9c4bd947f0252e17051df13f9c`,
       indexName: `gatsbyjs`,
