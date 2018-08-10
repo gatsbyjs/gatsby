@@ -21,7 +21,7 @@ This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While t
 - [Handling Breaking Changes](#handling-breaking-changes)
 
   - [Remove or refactor layout components](#remove-or-refactor-layout-components)
-  - [Change `navigateTo` to `push`](#change-navigateto-to-push)
+  - [Change `navigateTo` to `navigate`](#change-navigateto-to-navigate)
   - [Convert to either pure CommonJS or pure ES6](#convert-to-either-pure-commonjs-or-pure-es6)
   - [Move Babel configuration](#move-babel-configuration)
   - [Restore v1 PostCSS plugin setup](#restore-v1-post-css-setup)
@@ -251,23 +251,23 @@ import Helmet from "react-helmet"
 + )
 ```
 
-### Change `navigateTo` to `push`
+### Change `navigateTo` to `navigate`
 
-The `navigateTo` method in `gatsby-link` was renamed to `push` so as to mirror the browser history function. We also
-added support for using `replace` as well.
+The `navigateTo` method in `gatsby-link` was renamed to `navigate` to mirror
+the [API used by @reach/router](https://reach.tech/router/api/navigate).
 
-In addition to the name change, `gatsby-link` is now directly exported from the `gatsby` package.
+In addition to the name change, `gatsby-link` is now directly exported from the `gatsby` package and can't be installed directly.
 
 ```diff
 import React from "react"
 - import { navigateTo } from "gatsby-link"
-+ import { push } from "gatsby"
++ import { navigate } from "gatsby"
 
-// Don't use push with an onClick btw :-)
+// Don't use navigate with an onClick btw :-)
 // Generally just use the `<Link>` component.
 export default props => (
 -  <div onClick={() => navigateTo(`/`)}>Click to go to home</div>
-+  <div onClick={() => push(`/`)}>Click to go to home</div>
++  <div onClick={() => navigate(`/`)}>Click to go to home</div>
 )
 ```
 
