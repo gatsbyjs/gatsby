@@ -1,4 +1,4 @@
-import { graphql } from 'gatsby';
+import { graphql } from "gatsby"
 import React from "react"
 import InsetPageLayout from "../components/Layouts/insetPage"
 

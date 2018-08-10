@@ -1,5 +1,5 @@
 import React from "react"
-import { Link, graphql } from "gatsby";
+import { Link, graphql } from "gatsby"
 
 class StoryItem extends React.Component {
   render() {

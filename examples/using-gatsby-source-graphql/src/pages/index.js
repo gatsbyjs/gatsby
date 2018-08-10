@@ -1,4 +1,4 @@
-import { graphql } from 'gatsby';
+import { graphql } from "gatsby"
 import React from "react"
 import { makeBlogPath } from "../utils"
 import dateformat from "dateformat"
