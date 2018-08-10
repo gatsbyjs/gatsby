@@ -57,6 +57,7 @@ This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While t
   - [`createRemoteFileNode` API has changed](#createRemoteFileNode)
   - [Only allow defined keys on the `node.internal` object](#only-allow-defined-keys-on-the-node-internal-object)
   - [Import `graphql` types from `gatsby/graphql`](#import-graphql-types-from-gatsbygraphql)
+  - [Browser API `wrapPageComponent` has changed](#browser-api-wrappagecomponent-has-changed)
 
 - [For Explorers](#for-explorers)
   - [V2 from Scratch](#starting-a-new-project-with-gatsby-v2)
@@ -890,6 +891,24 @@ Import graphql types from `gatsby/graphql` to prevent `Schema must contain uniqu
 ```diff
 -const { GraphQLString } = require(`graphql`)
 +const { GraphQLString } = require(`gatsby/graphql`)
+```
+
+### Browser API `wrapPageComponent` has changed
+
+We now pass `component` Element instead of `Root` Component and expect that `wrapPageComponent` will return Element and not Component. This change was needed to keep all wrapping APIs uniform.
+
+```diff
+-export const wrapRootComponent = ({ Root }) => {
++export const wrapRootComponent = ({ component }) => {
+-  const ConnectedRootComponent = () => (
++  const ConnectedRootElement = (
+    <Provider store={store}>
+      <Root />
+    </Provider>
+  )
+-  return ConnectedRootComponent
++  return ConnectedRootElement
+}
 ```
 
 ## For Explorers
