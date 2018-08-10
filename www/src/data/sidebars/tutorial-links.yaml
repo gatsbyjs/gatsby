@@ -32,6 +32,8 @@
           link: /tutorial/part-one/#familiarizing-with-gatsby-pages
         - title: Building with components
           link: /tutorial/part-one/#building-with-components
+        - title: Linking between pages
+          link: /tutorial/part-one/#linking-between-pages
         - title: Deploying a Gatsby site
           link: /tutorial/part-one/#deploying-a-gatsby-site
     - title: 2. Introduction to using CSS in Gatsby

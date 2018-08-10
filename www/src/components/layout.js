@@ -3,7 +3,7 @@ import Modal from "react-modal"
 import Helmet from "react-helmet"
 import { OutboundLink } from "gatsby-plugin-google-analytics"
 import MdClose from "react-icons/lib/md/close"
-import { push, PageRenderer } from "gatsby"
+import { navigate, PageRenderer } from "gatsby"
 import presets, { colors } from "../utils/presets"
 import Banner from "../components/banner"
 import Navigation from "../components/navigation"
@@ -32,7 +32,7 @@ class DefaultLayout extends React.Component {
   }
 
   handleCloseModal() {
-    push(this.props.modalBackgroundPath)
+    navigate(this.props.modalBackgroundPath)
   }
 
   componentDidMount() {
@@ -110,7 +110,7 @@ class DefaultLayout extends React.Component {
                 backgroundColor: `rgba(255, 255, 255, 0.95)`,
               },
             }}
-            onRequestClose={() => push(this.props.modalBackgroundPath)}
+            onRequestClose={() => navigate(this.props.modalBackgroundPath)}
             contentLabel="Site Details Modal"
           >
             <div

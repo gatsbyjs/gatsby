@@ -31,7 +31,7 @@ In your code editor, open up the code generated for your “Hello World” site,
 
 _Note: Again, the editor shown here is Visual Studio Code. If you’re using a different editor, it will look a little different._
 
-Let’s take a look at the code that powers the home page.
+Let’s take a look at the code that powers the homepage.
 
 > 💡 If you stopped your development server after running `gatsby develop` in the previous section, start it up again now — time to make some changes to the hello-world site!
 
@@ -206,15 +206,15 @@ export default () => (
 
 In the browser, the “About Gatsby” header text should now be replaced with “This is a header.” But we don’t want the “About” page to say “This is a header.” We want it to say, “About Gatsby”.
 
-4.  Head back to `/src/components/header.js`, and replace it with the following:
+4.  Head back to `/src/components/header.js`, and make the following change:
 
-```jsx
+```jsx{3}
 import React from "react"
 
 export default props => <h1>{props.headerText}</h1>
 ```
 
-5.  Head back to `/src/pages/about.js` and replace it with the following:
+5.  Head back to `/src/pages/about.js` and make the following change:
 
 ```jsx{6}
 import React from "react"
@@ -283,6 +283,64 @@ Layout components are for sections of a site that you want to share across multi
 
 We’ll explore layout components in [part three](/tutorial/part-three).
 
+## Linking between pages
+
+You'll often want to link between pages -- Let's look at routing in a Gatsby site.
+
+### ✋ Using the `<Link />` component
+
+1. Open the index page component (`/src/pages/index.js`). Import the `<Link />` component from Gatsby. Add a `<Link />` component below the header, and give it a `to` property, with the value of `"/contact/"` for the pathname:
+
+```jsx{2,7}
+import React from "react"
+import { Link } from "gatsby"
+import Header from "../components/header"
+
+export default () => (
+    <div style={{ color: `purple` }}>
+        <Link to="/contact/">Contact</Link>
+        <Header headerText="Hello Gatsby!" />
+        <p>What a world.</p>
+        <img src="https://source.unsplash.com/random/400x200" alt="" />
+    </div>
+)
+```
+
+When you click the new "Contact" link on the homepage, you should see...
+
+![Gatsby dev 404 page](09-dev-404.png)
+
+...the Gatsby development 404 page. Why? Because we're attempting to link to a page that doesn't exist yet.
+
+> 💡 Want to know more about 404 pages in Gatsby? Check out [the docs](/docs/add-404-page/).
+
+2. Let's create a page component for our new " Contact" page at `src/pages/contact.js`, and have it link back to the homepage: 
+
+```jsx
+import React from "react"
+import { Link } from 'gatsby'
+import Header from "../components/header"
+
+export default () => (
+    <div style={{ color: `teal` }}>
+        <Link to="/">Home</Link>
+        <Header headerText="Contact" />
+        <p>Send us a message!</p>
+    </div>
+)
+```
+
+After you save the file, you should be see the contact page, and be able to link between it and the homepage.
+
+<video controls="controls" loop="true">
+  <source type="video/mp4" src="./10-linking-between-pages.mp4"></source>
+  <p>Sorry! You browser doesn't support this video.</p>
+</video>
+
+The Gatsby `<Link />` component is for linking between pages within your site. For external links to pages not handled by your Gatsby site, use the regular HTML `<a>` tag.
+
+> 💡 Check out more detail on routing in Gatsby in the [API doc for Gatsby Link](/docs/gatsby-link/).
+
 ## Deploying a Gatsby site
 
 Gatsby.js is a _static site generator_, which means there are no servers to setup or complicated databases to deploy. Instead, the Gatsby `build` command produces a directory of static HTML and JavaScript files which you can deploy to a static site hosting service.
@@ -291,7 +349,7 @@ Let's try using [Surge](http://surge.sh/) for deploying your first Gatsby
 website. Surge is one of many "static site hosts" which make it possible to
 deploy Gatsby sites.
 
-If you haven't previously installed & setup Surge, open a new terminal window and install their terminal tool:
+If you haven't previously installed & set up Surge, open a new terminal window and install their terminal tool:
 
 ```bash
 npm install --global surge
