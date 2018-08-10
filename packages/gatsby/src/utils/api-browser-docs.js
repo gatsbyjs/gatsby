@@ -81,7 +81,7 @@ exports.replaceComponentRenderer = true
 /**
  * Allow a plugin to wrap the root component.
  * @param {object} $0
- * @param {object} $0.Root The "Root" component built by Gatsby.
+ * @param {object} $0.component The "Root" React Element built by Gatsby.
  */
 exports.wrapRootComponent = true
 

@@ -99,5 +99,4 @@ exports.onRenderBody = true
  * @param {object} $0
  * @param {object} $0.component The "Root" React Element built by Gatsby.
  */
-
 exports.wrapRootComponent = true
