@@ -8,15 +8,38 @@ const prettyBytes = require(`pretty-bytes`)
 const md5File = require(`bluebird`).promisify(require(`md5-file`))
 const crypto = require(`crypto`)
 
+const promisifiedGI = fields => {
+  return new Promise((resolve, reject) => {
+    gi(fields, (err, gitInfo) => {
+      if (err) {
+        reject(err)
+      } else {
+        resolve(gitInfo)
+      }
+    })
+  })
+}
+
 const memoizedGetGitPath = () => {
   let gitInfoPathCache = ``
   return () => {
-    if (gitInfoPathCache === ``) {
+    if (gitInfoPathCache !== ``) {
+      console.log(gitInfoPathCache)
       return gitInfoPathCache
     } else {
-      let { repository, name, branch } = gi([`repository`, `name`, `branch`])
-      gitInfoPathCache = `${repository}/${name}/${branch}`
-      return gitInfoPathCache
+      promisifiedGI([`repository`, `name`, `branch`]).then(
+        ({ repository, name, branch }) => {
+          // git@github.com:michalbe/git-info.git
+          const rootPath = repository.replace(
+            /^(?:git@|https:\/\/)([^:\/]+)[:\/](.*).git/,
+            (match, host, userAndRepo) => {
+              return `${host}/${userAndRepo}`
+            }
+          )
+          gitInfoPathCache = `https://${rootPath}/tree/${branch}`
+          return gitInfoPathCache
+        }
+      )
     }
   }
 }
