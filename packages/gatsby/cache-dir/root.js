@@ -93,15 +93,6 @@ class RouteHandler extends React.Component {
   componentDidMount() {
     onRouteUpdate(this.props.location)
   }
-
-  shouldComponentUpdate() {
-    onPreRouteUpdate(this.props.location)
-    return true
-  }
-
-  componentDidUpdate() {
-    onRouteUpdate(this.props.location)
-  }
 }
 
 const Root = () =>
