@@ -363,6 +363,10 @@ module.exports = async (
         "react-hot-loader": path.dirname(
           require.resolve(`react-hot-loader/package.json`)
         ),
+        "react-lifecycles-compat": directoryPath(
+          `.cache/react-lifecycles-compat.js`
+        ),
+        "create-react-context": directoryPath(`.cache/create-react-context.js`),
       },
     }
   }
