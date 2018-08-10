@@ -117,11 +117,20 @@ export default (pagePath, callback) => {
     }
   }
 
-  const bodyComponent = createElement(
+  const routeComponent = createElement(
     ServerLocation,
     { url: pagePath },
     createElement(Router, null, createElement(RouteHandler, { path: `/*` }))
   )
+
+  const bodyComponent = apiRunner(
+    `wrapRootComponent`,
+    { component: routeComponent },
+    routeComponent,
+    ({ result }) => {
+      return { component: result }
+    }
+  ).pop()
 
   // Let the site or plugin render the page component.
   apiRunner(`replaceRenderer`, {
