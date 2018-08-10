@@ -109,11 +109,27 @@ export default (pagePath, callback) => {
 
   class RouteHandler extends React.Component {
     render() {
-      return createElement(syncRequires.components[page.componentChunkName], {
+      const props = {
         ...this.props,
         ...dataAndContext,
         pathContext: dataAndContext.pageContext,
-      })
+      }
+
+      const pageComponent = createElement(
+        syncRequires.components[page.componentChunkName],
+        props
+      )
+
+      const wrappedPage = apiRunner(
+        `wrapPageComponent`,
+        { component: pageComponent, props },
+        pageComponent,
+        ({ result }) => {
+          return { component: result, props }
+        }
+      ).pop()
+
+      return wrappedPage
     }
   }
 

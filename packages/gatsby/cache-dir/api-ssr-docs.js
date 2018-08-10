@@ -95,6 +95,14 @@ exports.replaceRenderer = true
 exports.onRenderBody = true
 
 /**
+ * Allow a plugin to wrap the page component.
+ * @param {object} $0
+ * @param {object} $0.component The "Page" React Element built by Gatsby.
+ * @param {object} $0.props Props object used by page.
+ */
+exports.wrapPageComponent = true
+
+/**
  * Allow a plugin to wrap the root component.
  * @param {object} $0
  * @param {object} $0.component The "Root" React Element built by Gatsby.
