@@ -44,7 +44,7 @@ const onRouteUpdate = location => {
   }
 }
 
-const navigate = (to, replace) => {
+const navigate = (to, options) => {
   let { pathname } = parsePath(to)
   const redirect = redirectMap[pathname]
 
@@ -74,10 +74,10 @@ const navigate = (to, replace) => {
     if (!pageResources && process.env.NODE_ENV === `production`) {
       loader.getResourcesForPathname(`/404.html`).then(() => {
         clearTimeout(timeoutId)
-        reachNavigate(to, { replace })
+        reachNavigate(to, options)
       })
     } else {
-      reachNavigate(to, { replace })
+      reachNavigate(to, options)
       clearTimeout(timeoutId)
     }
   })
@@ -106,8 +106,9 @@ function shouldUpdateScroll(prevRouterProps, { location: { pathname } }) {
 function init() {
   setApiRunnerForLoader(apiRunner)
   window.___loader = loader
-  window.___push = to => navigate(to, false)
-  window.___replace = to => navigate(to, true)
+  window.___push = to => navigate(to, { replace: false })
+  window.___replace = to => navigate(to, { replace: true })
+  window.___navigate = (to, options) => navigate(to, options)
 
   // Check for initial page-load redirect
   maybeRedirect(window.location.pathname)

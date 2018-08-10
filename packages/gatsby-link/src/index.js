@@ -153,7 +153,7 @@ class GatsbyLink extends React.Component {
 
             // Make sure the necessary scripts and data are
             // loaded before continuing.
-            push(prefixedTo)
+            navigate(prefixedTo, { state })
           }
 
           return true
@@ -180,11 +180,21 @@ const withLocation = Comp => props => (
 
 export default withLocation(GatsbyLink)
 
+export const navigate = (to, options) => {
+  window.___navigate(to, options)
+}
+
 export const push = to => {
+  console.warn(
+    `The "push" method is now deprecated and will be removed in Gatsby v3. Please use "navigate" instead.`
+  )
   window.___push(to)
 }
 
 export const replace = to => {
+  console.warn(
+    `The "replace" method is now deprecated and will be removed in Gatsby v3. Please use "navigate" instead.`
+  )
   window.___replace(to)
 }
 
