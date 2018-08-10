@@ -2057,6 +2057,16 @@
   built_by: Corey Ward
   built_by_url: http://www.coreyward.me/
   featured: false
+- title: Mega House Creative
+  main_url: https://www.megahousecreative.com/
+  url: https://www.megahousecreative.com/
+  description: >
+    Mega House Creative is a digital agency that provides unique goal-oriented web marketing solutions.
+  categories:
+    - Marketing
+    - Agency
+  built_by: Daniel Robinson
+  featured: false
 - title: Tobie Marier Robitaille - csc
   main_url: https://tobiemarierrobitaille.com/
   url: https://tobiemarierrobitaille.com/en/
