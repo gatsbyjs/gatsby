@@ -7,7 +7,6 @@ const UglifyPlugin = require(`uglifyjs-webpack-plugin`)
 const MiniCssExtractPlugin = require(`mini-css-extract-plugin`)
 
 const builtinPlugins = require(`./webpack-plugins`)
-const createBabelLoader = require(`./babel-loader`)
 const eslintConfig = require(`./eslint-config`)
 
 type LoaderSpec = string | { loader: string, options?: Object }
@@ -122,17 +121,6 @@ module.exports = async ({
   const supportedBrowsers = program.browserslist
 
   const PRODUCTION = !stage.includes(`develop`)
-
-  console.log({ stage, supportedBrowsers })
-
-  // TODO have to collect this data and write out to file
-  // so the loader can read that in and add the plugin
-  // info. Loaders have to be a string, not a function.
-  // const babelLoader = createBabelLoader({
-  // stage,
-  // browserslist: supportedBrowsers,
-  // })
-  // console.log(babelLoader())
 
   const isSSR = stage.includes(`html`)
 
@@ -307,7 +295,6 @@ module.exports = async ({
    */
   {
     let js = (options = {}) => {
-      console.log({ jsoptons: options })
       return {
         test: /\.jsx?$/,
         exclude: vendorRegex,

@@ -53,8 +53,7 @@ module.exports = babelLoader.custom(babel => {
       let { options } = partialConfig
 
       // If there is no filesystem config present add more defaults
-      // TODO: maybe this should be stricter, like checkks if there are no plugins or presets?
-      // TODO: this could be in an internal plugin like it is currently
+      // TODO: maybe this should be stricter, like checks if there are no plugins or presets?
       if (!partialConfig.hasFilesystemConfig()) {
         const [reduxPresets, reduxPlugins] = prepareOptions(babel)
         options = {
