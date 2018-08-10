@@ -1,3 +1,4 @@
+import { graphql } from "gatsby"
 import React from "react"
 import ReactMarkdown from "react-markdown"
 import dateformat from "dateformat"
