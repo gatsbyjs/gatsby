@@ -1,20 +1,19 @@
 import React from "react"
-import { renderToString } from "react-dom/server"
 import { JssProvider, SheetsRegistry, ThemeProvider } from "react-jss"
 
-exports.replaceRenderer = (
-  { bodyComponent, replaceBodyHTMLString, setHeadComponents },
-  { theme = {} }
-) => {
-  const sheets = new SheetsRegistry()
+const sheets = new SheetsRegistry()
 
-  const bodyHTML = renderToString(
+// eslint-disable-next-line react/prop-types
+exports.wrapRootComponent = ({ component }, { theme = {} }) => {
+  // const theme = options.theme || {}
+  return (
     <JssProvider registry={sheets}>
-      <ThemeProvider theme={theme}>{bodyComponent}</ThemeProvider>
+      <ThemeProvider theme={theme}>{component}</ThemeProvider>
     </JssProvider>
   )
+}
 
-  replaceBodyHTMLString(bodyHTML)
+exports.onRenderBody = ({ setHeadComponents }) => {
   setHeadComponents([
     <style
       type="text/css"
