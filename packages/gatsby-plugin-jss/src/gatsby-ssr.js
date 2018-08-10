@@ -3,15 +3,12 @@ import { JssProvider, SheetsRegistry, ThemeProvider } from "react-jss"
 
 const sheets = new SheetsRegistry()
 
-// eslint-disable-next-line react/prop-types
-exports.wrapRootComponent = ({ component }, { theme = {} }) => {
-  // const theme = options.theme || {}
-  return (
-    <JssProvider registry={sheets}>
-      <ThemeProvider theme={theme}>{component}</ThemeProvider>
-    </JssProvider>
-  )
-}
+// eslint-disable-next-line react/prop-types,react/display-name
+exports.wrapRootComponent = ({ component }, { theme = {} }) => (
+  <JssProvider registry={sheets}>
+    <ThemeProvider theme={theme}>{component}</ThemeProvider>
+  </JssProvider>
+)
 
 exports.onRenderBody = ({ setHeadComponents }) => {
   setHeadComponents([
