@@ -193,5 +193,8 @@
     "watch": "rimraf dist && mkdir dist && npm run build:internal-plugins && npm run build:rawfiles && npm run build:src -- --watch"
   },
   "types": "index.d.ts",
-  "gitHead": "788133e56dd005663f353fff90ffa37ce2fd87b9"
+  "gitHead": "788133e56dd005663f353fff90ffa37ce2fd87b9",
+  "yargs": {
+    "boolean-negation": false
+  }
 }
