@@ -82,7 +82,7 @@ exports.replaceComponentRenderer = true
  * Allow a plugin to wrap the page component.
  *
  * This is useful for setting wrapper component around pages that won't get
- * unmounted on page change.
+ * unmounted on page change. For setting Provider components use (#wrapRootComponent)[wrapRootComponent].
  *
  * _Note:_ [There is equivalent hook in SSR API](/docs/ssr-apis/#wrapPageComponent)
  * @param {object} $0
@@ -104,6 +104,7 @@ exports.wrapPageComponent = true
  * Allow a plugin to wrap the root component.
  *
  * This is useful to setup any Providers component that will wrap your application.
+ * For setting persistent UI elements around pages use (#wrapPageComponent)[wrapPageComponent].
  *
  * _Note:_ [There is equivalent hook in SSR API](/docs/ssr-apis/#wrapRootComponent)
  * @param {object} $0
