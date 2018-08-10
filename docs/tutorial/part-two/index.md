@@ -7,39 +7,7 @@ Welcome to part two of the Gatsby tutorial!
 
 ## What's in this tutorial?
 
-In this part you're going to explore options for styling Gatsby websites and dive
-deeper into using React components for building sites.
-
-## Building with components
-
-One of the big mental shifts you make when starting to build with components (if you are already a developer) is
-that now your CSS, HTML, and JavaScript are tightly coupled, and often living even
-within the same file.
-
-While a seemingly simple change, this has profound implications for how you think
-about building websites.
-
-Take the example of creating a custom button. In the past you would
-create a CSS class (perhaps `.primary-button`) with your custom styles and then
-whenever you want to apply those styles e.g.
-
-```html
-<button class="primary-button">
-  Click me
-</button>
-```
-
-In the world of components, you instead create a `PrimaryButton` component with
-your button styles and use it throughout your site like:
-
-<!-- prettier-ignore -->
-```jsx
-<PrimaryButton>Click me</PrimaryButton>
-```
-
-Components become the base building blocks of your site. Instead of being
-limited to the building blocks the browser provides e.g. `<button />`, you can easily create new
-building blocks that elegantly meet the needs of your projects.
+In this part you're going to explore options for styling Gatsby websites and dive deeper into using React components for building sites.
 
 ## Creating global styles
 

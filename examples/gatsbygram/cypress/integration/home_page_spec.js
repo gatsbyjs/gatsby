@@ -1,7 +1,6 @@
-
 describe(`The Home Page`, () => {
   it(`successfully loads`, () => {
-    cy.visit(`/`) 
+    cy.visit(`/`)
   })
 
   it(`contains the title with an SVG icon and text "Gatsbygram"`, () => {
@@ -28,20 +27,30 @@ describe(`The Home Page`, () => {
   })
 
   it(`shows number of likes when hovered on a post`, () => {
-    cy.fixture(`posts`).then((postsData) => {
+    cy.fixture(`posts`).then(postsData => {
       const post = postsData[0]
-      cy.getTestElement(`post`).first().trigger(`mouseover`)
+      cy.getTestElement(`post`)
+        .first()
+        .trigger(`mouseover`)
       cy.getTestElement(`likes`).contains(post.likes)
-      cy.getTestElement(`post`).first().trigger(`mouseout`)
+      cy.getTestElement(`post`)
+        .first()
+        .trigger(`mouseout`)
     })
   })
 
   it(`opens and closes a post`, () => {
-    cy.fixture(`posts`).then((postsData) => {
+    cy.fixture(`posts`).then(postsData => {
       const post = postsData[0]
-      cy.getTestElement(`post`).first().click()
-      cy.url().should('contain', post.id)
-      cy.getTestElement(`post-detail-avatar`).should(`have.attr`, `src`, post.avatar)
+      cy.getTestElement(`post`)
+        .first()
+        .click()
+      cy.url().should("contain", post.id)
+      cy.getTestElement(`post-detail-avatar`).should(
+        `have.attr`,
+        `src`,
+        post.avatar
+      )
       cy.getTestElement(`post-detail-username`).contains(post.username)
       cy.getTestElement(`post-detail-likes`).contains(post.likes)
       cy.getTestElement(`post-detail-text`).contains(post.username)
@@ -52,36 +61,42 @@ describe(`The Home Page`, () => {
   })
 
   it(`goes to next / previous post on clicking arrow icons`, () => {
-    cy.fixture(`posts`).then((postsData) => {
+    cy.fixture(`posts`).then(postsData => {
       const post1 = postsData[0]
       const post2 = postsData[1]
       // open fist post
-      cy.getTestElement(`post`).first().click()
-      cy.url().should('contain', post1.id)
+      cy.getTestElement(`post`)
+        .first()
+        .click()
+        .wait(100)
+      cy.url().should("contain", post1.id)
       // click right arrow icon to go to 2nd post
       cy.getTestElement(`next-post`).click()
-      cy.url().should('contain', post2.id)
+      cy.url().should("contain", post2.id)
       // press left arrow to go back to 1st post
       cy.getTestElement(`previous-post`).click()
-      cy.url().should('contain', post1.id)
+      cy.url().should("contain", post1.id)
       // close the post
       cy.getTestElement(`modal-close`).click()
     })
   })
 
   it(`goes to next / previous post with keyboard shortcut`, () => {
-    cy.fixture(`posts`).then((postsData) => {
+    cy.fixture(`posts`).then(postsData => {
       const post1 = postsData[0]
       const post2 = postsData[1]
       // open fist post
-      cy.getTestElement(`post`).first().click()
-      cy.url().should('contain', post1.id)
+      cy.getTestElement(`post`)
+        .first()
+        .click()
+        .debug()
+      cy.url().should("contain", post1.id)
       // press right arrow to go to 2nd post
       cy.get(`body`).type(`{rightarrow}`)
-      cy.url().should('contain', post2.id)
+      cy.url().should("contain", post2.id)
       // press left arrow to go back to 1st post
       cy.get(`body`).type(`{leftarrow}`)
-      cy.url().should('contain', post1.id)
+      cy.url().should("contain", post1.id)
       // close the post
       cy.getTestElement(`modal-close`).click()
     })
@@ -89,16 +104,16 @@ describe(`The Home Page`, () => {
 
   it(`loads more posts when Load More button is clicked & on scroll`, () => {
     // initially loads 12 posts
-    cy.getTestElement(`post`).should('have.length', 12)
+    cy.getTestElement(`post`).should("have.length", 12)
 
     // loads 12 more posts when Load More button is clicked
     cy.getTestElement(`load-more`).click()
-    cy.getTestElement(`post`).should('have.length', 24)
+    cy.getTestElement(`post`).should("have.length", 24)
 
     // loads 12 more posts when scrolled to bottom
     // cy.getTestElement(`home-container`).scrollTo(`0%`, `99%`)
     cy.window().scrollTo(`bottom`)
-    cy.getTestElement(`post`).should('have.length', 36)
+    cy.getTestElement(`post`).should("have.length", 36)
 
     // let's go back to top
     cy.window().scrollTo(`top`)

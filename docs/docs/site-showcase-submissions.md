@@ -8,33 +8,38 @@ Want to submit a site to the [Site Showcase](https://next.gatsbyjs.org/showcase/
 
 There are only three major steps :)
 
-1. If this is your first contribution to the Gatsby open source repo, follow the [Contribution guidelines](https://next.gatsbyjs.org/docs/how-to-contribute/#contributing-to-the-repo) to get push access rights. 
+1.  If this is your first contribution to the Gatsby open source repo, follow the [Contribution guidelines](https://next.gatsbyjs.org/docs/how-to-contribute/#contributing-to-the-repo) to get push access rights.
 
-2. If there is a chance that someone else could have already submitted the site, please make sure no one else has already submitted it by searching existing PRs: https://github.com/gatsbyjs/gatsby/pulls
+2.  If there is a chance that someone else could have already submitted the site, please make sure no one else has already submitted it by searching existing PRs: https://github.com/gatsbyjs/gatsby/pulls
 
 3.  Edit the [`sites.yml`](https://github.com/gatsbyjs/gatsby/blob/master/docs/sites.yml) file by adding your submission to the bottom of the list of sites in the following format:
 
 ```yaml
 - title: Title of the Site
-  description: >
-    This description will appear in the modal detail view and permalink views for your site.
 
   # this URL is used to generate a screenshot
-  main_url: http://titleofthesite.com/
-  
+  main_url: https://titleofthesite.com
+
   # this is the URL that is linked from the showcase
-  url: http://titleofthesite.co.uk/
+  url: https://titleofthesite.com/portfolio
+
+  # optional: for open-source sites, this URL points to the repo that powers the site
+  source_url: https://github.com/{username}/{titleofthesite}
+
+  # optional: short paragraph describing the content and/or purpose of the site that will appear in the modal detail view and permalink views for your site
+  description: >
+    {titleofthesite} is a shiny new website built with Gatsby v2 that makes important contributions towards a faster web for everyone.
 
   # You can list as many categories as you want here. Check list of Categories below in this doc!
   # If you'd like to create a new category, simply list it here.
   categories:
     - Relevant category 1
     - Relevant category 2
-  
+
   # Add the name (developer or company) and URL (e.g. Twitter, GitHub, portfolio) to be used for attribution
   built_by: Jane Q. Developer
   built_by_url: https://example.org
-  
+
   # leave as false, the Gatsby site review board will choose featured sites quarterly
   featured: false
 ```
@@ -86,6 +91,7 @@ A few notes on site content: a common question is this: "aren't all Gatsby sites
 - Podcast
 - Real Estate
 - Retail
+- Science
 - Technology
 - Web Dev
 - (feel free to create new ones after checking to make sure the tag you want doesn't already exist)

@@ -40,8 +40,7 @@ const doubleBind = (boundActionCreators, api, plugin, actionOptions) => {
   }
 }
 
-const initAPICallTracing = (parentSpan) => {
-
+const initAPICallTracing = parentSpan => {
   const startSpan = (spanName, spanArgs = {}) => {
     const defaultSpanArgs = { childOf: parentSpan }
 

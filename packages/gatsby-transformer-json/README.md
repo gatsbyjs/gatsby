@@ -139,6 +139,7 @@ The [gatsbygram example site](https://github.com/gatsbyjs/gatsby/blob/master/exa
 ## Troubleshooting
 
 If some fields are missing or you see the error on build:
+
 > There are conflicting field types in your data. GraphQL schema will omit those fields.
 
 It's probably because you have arrays of mixed values somewhere. For instance:
@@ -164,4 +165,3 @@ If you can rewrite your data with objects you should be good to go:
   ]
 }
 ```
-

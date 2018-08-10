@@ -8,7 +8,6 @@ Issue labels are a tool in GitHub that that is used to group issues into one or 
 
 [Check out Gatsby's labels (and their descriptions)](https://github.com/gatsbyjs/gatsby/issues/labels)
 
-
 ## Why label issues?
 
 Gatsby is a very active project with many new issues opened each day. Labelling issues helps by identifying:
@@ -29,7 +28,7 @@ You can get an invite to the team by having a Pull Request merged into the Gatsb
 
 ## How to label an issue
 
-Ideally every issue should have a single `type:` label applied to it. Optionally a `status: ` label, or other labels may also be applied.
+Ideally every issue should have a single `type:` label applied to it. Optionally a `status:` label, or other labels may also be applied.
 
 Before continuing, get familiar with [Gatsby's issue labels and their descriptions](https://github.com/gatsbyjs/gatsby/issues/labels).
 
@@ -49,7 +48,7 @@ Start with [Gatsby's issues list](https://github.com/gatsbyjs/gatsby/issues) and
 
 Read the issue and any comments to understand what the issue is about.
 
-### Choose one `type: ` label
+### Choose one `type:` label
 
 Choose a type label from the _labels_ dropdown to the right-hand side of the issue.
 
@@ -63,13 +62,13 @@ It's OK to change the type of an issue as more information becomes available. Wh
 
 Changing labels is quick and easily reversible, so don't worry too much about applying a "wrong" label.
 
-Choose an appropriate `type: ` label and you're ready to move on to the next step.
+Choose an appropriate `type:` label and you're ready to move on to the next step.
 
-### Choose a `status: ` label (optional)
+### Choose a `status:` label (optional)
 
-Check through the [`status: ` labels (and their descriptions)](https://github.com/gatsbyjs/gatsby/issues/labels), if any apply to this issue add them as necessary.
+Check through the [`status:` labels (and their descriptions)](https://github.com/gatsbyjs/gatsby/issues/labels), if any apply to this issue add them as necessary.
 
-Examples of applying `status: ` labels might be:
+Examples of applying `status:` labels might be:
 
 - An issue that depends on an external dependency being changed could be labelled with `status: blocked`
 

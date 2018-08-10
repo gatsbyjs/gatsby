@@ -1,39 +1,12 @@
-import Link from "gatsby-link"
 import React from "react"
+import Link from "gatsby-link"
+
 import presets, { colors } from "../presets"
-import { options, rhythm } from "../typography"
 
 const _getTitle = (title, isDraft) => (isDraft ? title.slice(0, -1) : title)
 const _isDraft = title => title.slice(-1) === `*`
 
-const createLinkDocs = ({
-  item,
-  isActive,
-  onLinkClick,
-  isParentOfActiveItem,
-  stepsUI,
-}) => {
-  const isDraft = _isDraft(item.title)
-  const title = _getTitle(item.title, isDraft)
-
-  return (
-    <Link
-      css={[
-        styles.link,
-        isDraft && styles.draft,
-        isActive && styles.activeLink,
-        isParentOfActiveItem && styles.parentOfActiveLink,
-      ]}
-      onClick={onLinkClick}
-      to={`${item.link}`}
-    >
-      {stepsUI && <span css={{ ...styles.subsectionLink }} />}
-      {title}
-    </Link>
-  )
-}
-
-const createLinkTutorial = ({
+const createLink = ({
   item,
   onLinkClick,
   isActive,
@@ -44,29 +17,47 @@ const createLinkTutorial = ({
   const title = _getTitle(item.title, isDraft)
 
   return (
-    <Link
-      css={[
-        styles.link,
-        isDraft && styles.draft,
-        isActive && styles.activeLink,
-        isParentOfActiveItem && styles.parentOfActiveLink,
-      ]}
-      onClick={onLinkClick}
-      to={`${item.link}`}
+    <span
+      css={{
+        display: `flex`,
+        alignItems: `center`,
+        position: `relative`,
+        "&:before": {
+          background: colors.ui.border,
+          bottom: 0,
+          top: `auto`,
+          content: ` `,
+          height: 1,
+          position: `absolute`,
+          right: 0,
+          left: 0,
+        },
+      }}
     >
-      {stepsUI && <span css={{ ...styles.subsectionLink }} />}
-      {title}
-    </Link>
+      <Link
+        css={[
+          styles.link,
+          isDraft && styles.draft,
+          isActive && styles.activeLink,
+          isParentOfActiveItem && styles.parentOfActiveLink,
+        ]}
+        onClick={onLinkClick}
+        to={item.link}
+      >
+        {stepsUI && <span css={{ ...styles.subsectionLink }} />}
+        {title}
+      </Link>
+    </span>
   )
 }
 
 const bulletOffset = {
   default: {
-    left: `-1rem`,
-    top: `.6em`,
+    left: -25,
+    top: `1.15em`,
   },
   desktop: {
-    top: `.55em`,
+    top: `1.2em`,
   },
 }
 
@@ -76,20 +67,18 @@ const styles = {
   draft: {
     "&&": {
       color: colors.gray.calm,
-      fontStyle: `italic`,
     },
   },
   parentOfActiveLink: {
-    "&:after": {
-      display: `none`,
-    },
-    "&:before": {
-      display: `none`,
+    "&&": {
+      color: colors.gatsby,
+      fontWeight: `bold`,
     },
   },
   activeLink: {
     "&&": {
       color: colors.gatsby,
+      fontWeight: `bold`,
     },
     "&:before": {
       background: colors.gatsby,
@@ -101,15 +90,16 @@ const styles = {
     },
   },
   link: {
-    display: `block`,
-    paddingTop: rhythm(1 / 8),
-    paddingBottom: rhythm(1 / 8),
+    paddingRight: 40,
+    minHeight: 40,
+    paddingTop: 10,
+    paddingBottom: 10,
     position: `relative`,
     zIndex: 1,
+    width: `100%`,
     "&&": {
       border: 0,
       boxShadow: `none`,
-      fontFamily: options.systemFontFamily.join(`,`),
       fontWeight: `normal`,
       "&:hover": {
         background: `transparent`,
@@ -120,39 +110,33 @@ const styles = {
         },
       },
     },
-    "&:before": {
+    "&:before, &:after": {
       ...bulletOffset.default,
-      borderRadius: `100%`,
-      content: ` `,
-      fontWeight: `normal`,
       height: bulletSize,
       position: `absolute`,
-      transform: `scale(0.1)`,
       transition: `all ${presets.animation.speedDefault} ${
         presets.animation.curveDefault
       }`,
+    },
+    "&:before": {
+      borderRadius: `100%`,
+      content: ` `,
+      transform: `scale(0.1)`,
       width: bulletSize,
       [presets.Tablet]: {
         ...bulletOffset.desktop,
       },
     },
     "&:after": {
-      ...bulletOffset.default,
       background: colors.gatsby,
       borderRadius: 4,
       content: ` `,
-      height: bulletSize,
-      left: `-0.6rem`,
+      left: bulletOffset.default.left + 7,
       opacity: 0,
-      position: `absolute`,
       transform: `translateX(-200px)`,
-      transition: `all ${presets.animation.speedDefault} ${
-        presets.animation.curveDefault
-      }`,
       width: 1,
       [presets.Tablet]: {
         ...bulletOffset.desktop,
-        left: `-0.6rem`,
       },
     },
   },
@@ -173,4 +157,4 @@ const styles = {
   },
 }
 
-export { createLinkDocs, createLinkTutorial }
+export default createLink

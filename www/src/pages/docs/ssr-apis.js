@@ -7,8 +7,7 @@ import Functions from "../../components/function-list"
 import { rhythm, scale } from "../../utils/typography"
 import Layout from "../../components/layout"
 import Container from "../../components/container"
-import { sectionListDocs } from "../../utils/sidebar/section-list"
-import { createLinkDocs } from "../../utils/sidebar/create-link"
+import { itemListDocs } from "../../utils/sidebar/item-list"
 
 class SSRAPIs extends React.Component {
   render() {
@@ -17,11 +16,7 @@ class SSRAPIs extends React.Component {
       func => func.name
     )
     return (
-      <Layout
-        location={this.props.location}
-        createLink={createLinkDocs}
-        sectionList={sectionListDocs}
-      >
+      <Layout location={this.props.location} itemList={itemListDocs}>
         <Container>
           <Helmet>
             <title>SSR APIs</title>
