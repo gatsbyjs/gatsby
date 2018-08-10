@@ -135,8 +135,13 @@ export default (pagePath, callback) => {
 
   const routeComponent = createElement(
     ServerLocation,
-    { url: pagePath },
-    createElement(Router, null, createElement(RouteHandler, { path: `/*` }))
+    { url: `${pathPrefix}${pagePath}` },
+    createElement(Router,
+      {
+        baseuri: pathPrefix.slice(0, -1),
+      },
+      createElement(RouteHandler, { path: `/*` })
+    )
   )
 
   const bodyComponent = apiRunner(
