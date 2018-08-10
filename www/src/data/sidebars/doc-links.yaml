@@ -77,17 +77,17 @@
           link: /docs/sourcing-from-private-apis/
         - title: Headless CMS*
           link: /docs/headless-cms/
-            items:
-              - title: Sourcing from Netlify CMS
-                link: /docs/sourcing-from-netlify-cms/
-              - title: Sourcing from WordPress*
-                link: /docs/sourcing-from-wordpress/
-              - title: Sourcing from Drupal*
-                link: /docs/sourcing-from-drupal/
-              - title: Sourcing from Contentful*
-                link: /docs/sourcing-from-contentful/
-              - title: Sourcing from Prose*
-                link: /docs/sourcing-from-prose/
+          items:
+            - title: Sourcing from Netlify CMS
+              link: /docs/sourcing-from-netlify-cms/
+            - title: Sourcing from WordPress*
+              link: /docs/sourcing-from-wordpress/
+            - title: Sourcing from Drupal*
+              link: /docs/sourcing-from-drupal/
+            - title: Sourcing from Contentful*
+              link: /docs/sourcing-from-contentful/
+            - title: Sourcing from Prose*
+              link: /docs/sourcing-from-prose/
     - title: Querying your data with GraphQL*
       link: /docs/graphql/
       items:

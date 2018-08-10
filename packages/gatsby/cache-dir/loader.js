@@ -218,6 +218,8 @@ const queue = {
     // Check if the page exists.
     let page = findPage(path)
 
+    // In production, we lazy load page metadata. If that
+    // hasn't been fetched yet, start fetching it now.
     if (
       process.env.NODE_ENV === `production` &&
       !page &&
@@ -307,9 +309,16 @@ const queue = {
 
   getResourcesForPathnameSync: path => {
     const page = findPage(path)
-    return pathScriptsCache[page.path]
+    if (page) {
+      return pathScriptsCache[page.path]
+    } else {
+      return null
+    }
   },
 
+  // Get resources (code/data) for a path. Fetches metdata first
+  // if necessary and then the code/data bundles. Used for prefetching
+  // and getting resources for page changes.
   getResourcesForPathname: path => {
     queue.checkIfDoingInitialRenderForSW(path)
 
@@ -327,17 +336,23 @@ const queue = {
       }
       const page = findPage(path)
 
-      if (!page && !fetchedPageResourceMap) {
+      // In production, we lazy load page metadata. If that
+      // hasn't been fetched yet, start fetching it now.
+      if (
+        !page &&
+        !fetchedPageResourceMap &&
+        process.env.NODE_ENV === `production`
+      ) {
         // If page wasn't found check and we didn't fetch resources map for
         // all pages, wait for fetch to complete and try to get resources again
-        fetchPageResourceMap().then(() =>
+        return fetchPageResourceMap().then(() =>
           resolve(queue.getResourcesForPathname(path))
         )
       }
 
       if (!page) {
         console.log(`A page wasn't found for "${path}"`)
-        return reject()
+        return resolve()
       }
 
       // Use the path from the page so the pathScriptsCache uses
