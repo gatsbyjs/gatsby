@@ -50,9 +50,9 @@ class StickyResponsiveSidebar extends Component {
             }}
           >
             <ScrollPositionConsumer>
-              {({ position, onPositionChange }) => (
+              {({ positions, onPositionChange }) => (
                 <SidebarComponent
-                  position={position}
+                  position={positions[this.props.location.pathname]}
                   onPositionChange={onPositionChange}
                   closeSidebar={this._closeSidebar}
                   {...this.props}

@@ -1,16 +1,21 @@
 import React, { Component } from "react"
 
+const positionStore = {}
+
 const PositionContext = React.createContext({
-  position: 0,
+  positions: positionStore,
   onPositionChange: () => {},
 })
 
 export default class ScrollPositionProvider extends Component {
-  state = { scrollPosition: 0 }
+  state = { positions: positionStore }
 
-  onPositionChange = position => {
+  onPositionChange = (cacheName, position) => {
+    console.log({cacheName, position})
+
     this.setState(() => {
-      return { scrollPosition: position }
+      positionStore[cacheName] = position
+      return { positions: { ...positionStore } }
     })
   }
 
@@ -18,7 +23,7 @@ export default class ScrollPositionProvider extends Component {
     return (
       <PositionContext.Provider
         value={{
-          position: this.state.scrollPosition,
+          positions: this.state.positions,
           onPositionChange: this.onPositionChange,
         }}
       >
