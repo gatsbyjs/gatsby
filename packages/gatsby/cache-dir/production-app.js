@@ -77,15 +77,6 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     componentDidMount() {
       onRouteUpdate(this.props.location)
     }
-
-    shouldComponentUpdate() {
-      onPreRouteUpdate(this.props.location)
-      return true
-    }
-
-    componentDidUpdate() {
-      onRouteUpdate(this.props.location)
-    }
   }
 
   loader.getResourcesForPathname(window.location.pathname).then(() => {
