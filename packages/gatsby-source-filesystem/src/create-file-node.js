@@ -1,11 +1,49 @@
 const slash = require(`slash`)
 const path = require(`path`)
 const fs = require(`fs-extra`)
+const gi = require(`git-info`)
 const mime = require(`mime`)
 const prettyBytes = require(`pretty-bytes`)
 
 const md5File = require(`bluebird`).promisify(require(`md5-file`))
 const crypto = require(`crypto`)
+
+const promisifiedGI = fields => {
+  return new Promise((resolve, reject) => {
+    gi(fields, (err, gitInfo) => {
+      if (err) {
+        reject(err)
+      } else {
+        resolve(gitInfo)
+      }
+    })
+  })
+}
+
+const memoizedGetGitPath = () => {
+  let gitInfoPathCache = ``
+  return () => {
+    if (gitInfoPathCache !== ``) {
+      return gitInfoPathCache
+    } else {
+      promisifiedGI([`repository`, `name`, `branch`]).then(
+        ({ repository, name, branch }) => {
+          // git@github.com:michalbe/git-info.git
+          const rootPath = repository.replace(
+            /^(?:git@|https:\/\/)([^:\/]+)[:\/](.*).git/,
+            (match, host, userAndRepo) => {
+              return `${host}/${userAndRepo}`
+            }
+          )
+          gitInfoPathCache = `https://${rootPath}/tree/${branch}`
+          return gitInfoPathCache
+        }
+      )
+    }
+  }
+}
+
+const getGitPath = memoizedGetGitPath()
 
 exports.createFileNode = async (
   pathToFile,
@@ -67,6 +105,8 @@ exports.createFileNode = async (
           slashedFile.absolutePath
         )
       ),
+      filePath: path.relative(process.cwd(), slashed),
+      gitRepoPath: getGitPath(),
       extension: slashedFile.ext.slice(1).toLowerCase(),
       size: stats.size,
       prettySize: prettyBytes(stats.size),
