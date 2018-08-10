@@ -1,6 +1,6 @@
 require(`v8-compile-cache`)
 
-const fs = require(`fs`)
+const fs = require(`fs-extra`)
 const path = require(`path`)
 const dotenv = require(`dotenv`)
 const FriendlyErrorsWebpackPlugin = require(`friendly-errors-webpack-plugin`)
@@ -27,6 +27,12 @@ module.exports = async (
   webpackPort = 1500
 ) => {
   const directoryPath = withBasePath(directory)
+
+  await fs.writeFile(
+    directoryPath(`.cache/current-stage.txt`),
+    suppliedStage,
+    `utf8`
+  )
 
   // We combine develop & develop-html stages for purposes of generating the
   // webpack config.
@@ -275,8 +281,6 @@ module.exports = async (
   function getModule(config) {
     // Common config for every env.
     // prettier-ignore
-    console.log({ yaml: rules.yaml(), use: rules.yaml().use })
-    console.log({ js: rules.js(), use: rules.js().use })
     let configRules = [
       rules.js(),
       rules.yaml(),

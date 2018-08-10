@@ -128,10 +128,10 @@ module.exports = async ({
   // TODO have to collect this data and write out to file
   // so the loader can read that in and add the plugin
   // info. Loaders have to be a string, not a function.
-  const babelLoader = createBabelLoader({
-    stage,
-    browserslist: supportedBrowsers,
-  })
+  // const babelLoader = createBabelLoader({
+  // stage,
+  // browserslist: supportedBrowsers,
+  // })
   // console.log(babelLoader())
 
   const isSSR = stage.includes(`html`)
@@ -269,7 +269,7 @@ module.exports = async ({
     js: options => {
       return {
         options,
-        loader: babelLoader,
+        loader: require.resolve(`./babel-loader`),
       }
     },
 
