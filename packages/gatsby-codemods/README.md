@@ -15,7 +15,7 @@ npm install --global jscodeshift
 - Install this package
 
 ```
-npm install gatsby-codemods
+npm install gatsby-codemods@next
 ```
 
 - Run a transform from this package on your project
