@@ -16,15 +16,15 @@ describe(`create-file-node`, () => {
   })
 })
 
-describe(`get-git-repo-path`, () => {
-  it(`should return the git repo file path`, () => {
-    const createNodeId = jest.fn()
-    createNodeId.mockReturnValue(`uuid-from-gatsby`)
-    let fileNode = createFileNode(
-      path.resolve(`${__dirname}/fixtures/file.json`),
-      createNodeId,
-      {}
-    )
-    expect(fileNode.gitRepoPath).toBeDefined()
-  })
-})
+// describe(`get-git-repo-path`, () => {
+//   it(`should return the git repo file path`, () => {
+//     const createNodeId = jest.fn()
+//     createNodeId.mockReturnValue(`uuid-from-gatsby`)
+//     let fileNode = createFileNode(
+//       path.resolve(`${__dirname}/fixtures/file.json`),
+//       createNodeId,
+//       {}
+//     )
+//     expect(fileNode.gitRepoPath).toBeDefined()
+//   })
+// })
