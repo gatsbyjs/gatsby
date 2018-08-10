@@ -114,6 +114,21 @@ const Root = () =>
   )
 
 // Let site, plugins wrap the site e.g. for Redux.
-const WrappedRoot = apiRunner(`wrapRootComponent`, { Root }, Root)[0]
+const WrappedRoot = apiRunner(
+  `wrapRootComponent`,
+  { component: <Root /> },
+  <Root />,
+  ({ result, plugin }) => {
+    // In development check if we get React Element and throw if we don't
+    if (!React.isValidElement(result)) {
+      throw new Error(
+        `"${
+          plugin.name
+        }" plugin implementing wrapRootComponent Browser API hook returned wrong type. Need instance of React Element. TODO: add link to migration guide`
+      )
+    }
+    return { component: result }
+  }
+).pop()
 
-export default WrappedRoot
+export default () => WrappedRoot

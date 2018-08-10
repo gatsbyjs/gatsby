@@ -98,7 +98,16 @@ apiRunnerAsync(`onClientEntry`).then(() => {
         createElement(RouteHandler, { path: `/*` })
       )
 
-    const NewRoot = apiRunner(`wrapRootComponent`, { Root }, Root)[0]
+    const WrappedRoot = apiRunner(
+      `wrapRootComponent`,
+      { component: <Root /> },
+      <Root />,
+      ({ result }) => {
+        return { component: result }
+      }
+    ).pop()
+
+    let NewRoot = () => WrappedRoot
 
     const renderer = apiRunner(
       `replaceHydrateFunction`,
