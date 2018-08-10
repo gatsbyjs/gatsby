@@ -39,10 +39,33 @@ Structure of a jscodeshift call:
 
 #### `global-graphql-calls`
 
-Add `import { graphql } from "gatsby"` to files that have graphql queries in them. See the [Gatsby v2 migration guide for more details].(https://next.gatsbyjs.org/docs/migrating-from-v1-to-v2/#import-graphql-from-gatsby)
+Add a `graphql` import to modules that use the `graphql` tag function without an import. This was supported in Gatsby v1 and deprecated for Gatsby v2.
+
+See the [Gatsby v2 migration guide for details on when to use this](https://next.gatsbyjs.org/docs/migrating-from-v1-to-v2/#import-graphql-from-gatsby).
 
 ```sh
 jscodeshift -t node_modules/gatsby-codemods/dist/transforms/global-graphql-calls.js <path>
+```
+
+Example result:
+
+```diff
+import React from "react"
++ import { graphql } from "gatsby"
+
+export default ({ data }) => (
+  <h1>{data.site.siteMetadata.title}</h1>
+)
+
+export const query = graphql`
+  query {
+    site {
+      siteMetadata {
+        title
+      }
+    }
+  }
+`
 ```
 
 ### More scripts
