@@ -542,7 +542,27 @@ React Router allowed you to swap out its history object. To enable this in Gatsb
 We did, erroneously, suggest using this API for adding support for Redux, etc. where you need to wrap the root Gatsby component with your own component.
 
 If you were using `replaceRouterComponent` for this, you'll need to migrate to
-`wrapRootComponent`. See this PR migrating the `using-redux` example site as a pattern to follow https://github.com/gatsbyjs/gatsby/pull/6986
+`wrapRootComponent`:
+
+```diff
+import React from 'react'
+import { Provider } from 'react-redux'
+-import { Router } from 'react-router-dom'
+
+-export const replaceRouterComponent = ({ history }) => {
++export const wrapRootComponent = ({ component }) => {
+-  const ConnectedRouterWrapper = ({ children }) => (
++  const ConnectedRootComponent = (
+    <Provider store={store}>
+-      <Router history={history}>{children}</Router>
++      {component}
+    </Provider>
+  )
+
+-  return ConnectedRouterWrapper
++  return ConnectedRootComponent
+}
+```
 
 ### Browser API `replaceHistory` was removed
 
