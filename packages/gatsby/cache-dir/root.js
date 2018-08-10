@@ -124,7 +124,7 @@ const WrappedRoot = apiRunner(
       throw new Error(
         `"${
           plugin.name
-        }" plugin implementing wrapRootComponent Browser API hook returned wrong type. Need instance of React Element. TODO: add link to migration guide`
+        }" plugin implementing wrapRootComponent Browser API hook returned wrong type. It expects React Element. See https://next.gatsbyjs.org/docs/migrating-from-v1-to-v2/#browser-api-wrappagecomponent-has-changed`
       )
     }
     return { component: result }
