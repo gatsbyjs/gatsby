@@ -681,6 +681,8 @@ export const query = graphql`
 `
 ```
 
+> There is a codemod that can automatically make this change to your projects. Check out the [`gatsby-codemods`](https://www.npmjs.com/package/gatsby-codemods) package for usage instructions.
+
 ### Rename `boundActionCreators` to `actions`
 
 `boundActionCreators` is deprecated in v2. You can continue using it, but it’s recommended that you rename it to `actions`.
