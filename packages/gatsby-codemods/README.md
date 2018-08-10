@@ -24,6 +24,8 @@ npm install gatsby-codemods jscodeshift -t
 jscodeshift -t node_modules/gatsby-codemods/dist/transforms/global-graphql-calls.js my-project
 ```
 
+- jscodeshift tries to match the formatting of your existing code, but you may need to use a tool like [prettier](https://prettier.io/) to ensure consistency after running these codemods.
+
 Structure of a jscodeshift call:
 
 - `jscodeshift -t <codemod-script> <path>`
