@@ -53,19 +53,21 @@ class Page extends React.Component {
 
 ## Programmatic navigation
 
-For cases when you can only use event handlers for navigation, you can use `push` or `replace`. `push` is a wrapper for `history.push` and `replace` wraps `history.replace`.
+For cases when you can only use event handlers for navigation, you can use `navigate`
 
 ```jsx
-import { push } from "gatsby"
+import { navigate } from "gatsby"
 
 render () {
-  <div onClick={ () => push('/example')} role="link" tabIndex="0" onKeyUp={this.handleKeyUp}>
+  <div onClick={ () => navigate('/example')} role="link" tabIndex="0" onKeyUp={this.handleKeyUp}>
     <p>Example</p>
   </div>
 }
 ```
 
-Note that `push` was previously named `navigateTo`. `navigateTo` is deprecated in Gatsby v2.
+You can also pass state to pages when you navigate e.g. `navigate("/a-path/", { state: { pleasant: "reasonably" }}`
+
+Note that `navigate` was previously named `navigateTo`. `navigateTo` is deprecated in Gatsby v2.
 
 ## Prefixed paths helper
 
