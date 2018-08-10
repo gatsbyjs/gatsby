@@ -96,15 +96,47 @@ exports.onRenderBody = true
 
 /**
  * Allow a plugin to wrap the page component.
+ *
+ * This is useful for setting wrapper component around pages that won't get
+ * unmounted on page change.
+ *
+ * _Note:_ [There is equivalent hook in Browser API](/docs/browser-apis/#wrapPageComponent)
  * @param {object} $0
  * @param {object} $0.component The "Page" React Element built by Gatsby.
  * @param {object} $0.props Props object used by page.
+ * @example
+ * import React from "react"
+ * import Layout from "./src/components/Layout"
+ *
+ * export const wrapPageComponent = ({ component, props }) => {
+ *   // props provide same data to Layout as Page component will get
+ *   // including location, data, etc - you don't need to pass it
+ *   <Layout {...props}>{component}</Layout>
+ * }
  */
 exports.wrapPageComponent = true
 
 /**
  * Allow a plugin to wrap the root component.
+ *
+ * This is useful to setup any Providers component that will wrap your application.
+ *
+ * _Note:_ [There is equivalent hook in Browser API](/docs/browser-apis/#wrapRootComponent)
  * @param {object} $0
  * @param {object} $0.component The "Root" React Element built by Gatsby.
+ * @example
+ * import React from "react"
+ * import { Provider } from "react-redux"
+ *
+ * import createStore from "./src/state/createStore"
+ * const store = createStore()
+ *
+ * export const wrapRootComponent = ({ component }) => {
+ *   return (
+ *     <Provider store={store}>
+ *       {component}
+ *     </Provider>
+ *   )
+ * }
  */
 exports.wrapRootComponent = true
