@@ -119,11 +119,10 @@ export default (pagePath, callback) => {
 
   const bodyComponent = createElement(
     ServerLocation,
-    { url: pagePath },
-    createElement(
-      Router,
+    { url: `${pathPrefix}${pagePath}` },
+    createElement(Router,
       {
-        basepath: pathPrefix.slice(0, -1),
+        baseuri: pathPrefix.slice(0, -1),
       },
       createElement(RouteHandler, { path: `/*` })
     )
