@@ -41,6 +41,13 @@ exports.createPages = ({ graphql, actions }) => {
     isPermanent: true,
   })
 
+  createRedirect({
+    fromPath: `/docs/netlify-cms`,
+    isPermanent: true,
+    redirectInBrowser: true,
+    toPath: `/docs/sourcing-from-netlify-cms`,
+  })
+
   return new Promise((resolve, reject) => {
     const docsTemplate = path.resolve(`src/templates/template-docs-markdown.js`)
     const blogPostTemplate = path.resolve(`src/templates/template-blog-post.js`)
