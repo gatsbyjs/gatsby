@@ -1,11 +1,5 @@
-const React = require(`react`)
+/* eslint-disable */
 const { Link } = require(`gatsby`)
-
-function SomeComponent(props) {
-  return <div />
-}
-
-export default SomeComponent
 
 export const query = graphql`
   query {

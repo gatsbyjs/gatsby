@@ -1,11 +1,5 @@
-import React from "react"
+/* eslint-disable */
 import Gatsby from "gatsby"
-
-function SomeComponent(props) {
-  return <div />
-}
-
-export default SomeComponent
 
 export const query = graphql`
   query {
