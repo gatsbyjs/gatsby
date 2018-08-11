@@ -401,7 +401,7 @@ class PluginSearchBar extends Component {
     if (this.props.location.search) {
       return this.props.location.search.slice(2)
     }
-    return null
+    return ``
   }
 
   updateHistory(value) {
