@@ -3,6 +3,8 @@ import presets, { colors } from "../../utils/presets"
 import { style } from "glamor"
 import hex2rgba from "hex2rgba"
 
+const { curveDefault, speedDefault } = presets.animation
+
 const styles = {
   featuredSitesCard: style({
     display: `flex`,
@@ -133,8 +135,26 @@ const styles = {
     boxShadow: `none !important`, // but people really want this
   },
   searchInput: {
-    paddingLeft: `1.4rem`,
+    appearance: `none`,
+    backgroundColor: `transparent`,
+    border: 0,
+    borderRadius: presets.radiusLg,
+    color: colors.gatsby,
+    paddingTop: rhythm(1 / 8),
+    paddingRight: rhythm(1 / 4),
+    paddingBottom: rhythm(1 / 8),
+    paddingLeft: rhythm(1),
+    overflow: `hidden`,
     fontFamily: typography.options.headerFontFamily.join(`,`),
+    transition: `width ${speedDefault} ${curveDefault}, background-color ${speedDefault} ${curveDefault}`,
+    width: `6.8rem`,
+    "&::placeholder": {
+      color: colors.lilac,
+    },
+    "&:focus": {
+      width: `9rem`,
+      background: colors.ui.light,
+    },
   },
 }
 
