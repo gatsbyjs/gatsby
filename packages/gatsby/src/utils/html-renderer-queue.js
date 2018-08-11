@@ -22,7 +22,15 @@ module.exports = (htmlComponentRendererPath, pages, activity) =>
       pageSegment =>
         new Promise((resolve, reject) => {
           workerPool
-            .renderHTML({ htmlComponentRendererPath, paths: pageSegment })
+            .renderHTML({
+              htmlComponentRendererPath,
+              paths: pageSegment,
+              envVars: {
+                NODE_ENV: process.env.NODE_ENV,
+                gatsby_executing_command: process.env.gatsby_executing_command,
+                gatsby_log_level: process.env.gatsby_log_level,
+              },
+            })
             .then(() => {
               finished += pageSegment.length
               if (activity) {
