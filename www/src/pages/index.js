@@ -134,7 +134,7 @@ class IndexRoute extends React.Component {
                   </Card>
 
                   <Diagram
-                    containerCSS={{
+                    containerCss={{
                       borderTopLeftRadius: 0,
                       borderTopRightRadius: 0,
                       flex: `1 1 100%`,
@@ -175,7 +175,7 @@ class IndexRoute extends React.Component {
                   >
                     <Container
                       hasSideBar={false}
-                      css={{
+                      containerCss={{
                         maxWidth: rhythm(30),
                         paddingBottom: `0 !important`,
                       }}

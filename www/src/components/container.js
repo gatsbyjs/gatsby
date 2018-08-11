@@ -3,7 +3,7 @@ import presets from "../utils/presets"
 
 import { rhythm, options } from "../utils/typography"
 
-export default ({ children, className, hasSideBar = true, css = {} }) => (
+const Container = ({ children, className, hasSideBar = true, containerCss = {} }) => (
   <div
     css={{
       maxWidth: hasSideBar
@@ -16,10 +16,12 @@ export default ({ children, className, hasSideBar = true, css = {} }) => (
       [presets.Tablet]: {
         paddingBottom: rhythm(1.5),
       },
-      ...css,
+      ...containerCss,
     }}
     className={className}
   >
     {children}
   </div>
 )
+
+export default Container

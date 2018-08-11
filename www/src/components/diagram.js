@@ -222,7 +222,7 @@ const Gatsby = ({ children }) => (
   </div>
 )
 
-const Diagram = ({ containerCSS }) => (
+const Diagram = ({ containerCss }) => (
   <section
     className="Diagram"
     css={{
@@ -231,7 +231,7 @@ const Diagram = ({ containerCSS }) => (
       padding: vP,
       marginTop: rhythm(1),
       textAlign: `center`,
-      ...containerCSS,
+      ...containerCss,
       [presets.Tablet]: {
         marginTop: 0,
       },
