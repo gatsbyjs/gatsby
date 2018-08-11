@@ -192,9 +192,8 @@ module.exports = async (
         ])
         break
       case `build-javascript`: {
-        configPlugins = configPlugins.concat([
-          plugins.extractText(),
-          // Minify Javascript.
+        // Minify Javascript only if needed.
+        configPlugins = program.noUglify ? configPlugins : configPlugins.concat([
           plugins.uglify({
             uglifyOptions: {
               compress: {
@@ -202,6 +201,9 @@ module.exports = async (
               },
             },
           }),
+        ])
+        configPlugins = configPlugins.concat([
+          plugins.extractText(),
           // Write out stats object mapping named dynamic imports (aka page
           // components) to all their async chunks.
           {
@@ -428,6 +430,7 @@ module.exports = async (
       splitChunks: {
         name: false,
       },
+      minimize: !program.noUglify,
     }
   }
 
