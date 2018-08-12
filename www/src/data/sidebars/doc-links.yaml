@@ -279,6 +279,8 @@
       link: /docs/how-to-label-an-issue/
     - title: How to submit a PR*
       link: /docs/how-to-submit-a-pr/
+    - title: Community Pair Programming Sessions
+      link: /docs/pair-programming/
     - title: Gatsby style guide
       link: /docs/gatsby-style-guide/
     - title: Design principles*
