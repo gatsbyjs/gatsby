@@ -1,5 +1,5 @@
 ---
-title: My Experience doing pair programming with the Gatsby Team and why you should do it
+title: My experience doing pair programming with the Gatsby team and why you should do it
 date: "2018-08-11"
 image: images/screenshot.jpg
 author: Horacio Herrera
@@ -34,4 +34,4 @@ Jason patiently explained the parts I didn’t understand about Gatsby and he al
 
 10! No doubt. And higher than 10 if you have never done pair programming. Just take a simple task and go! It’s not about the code you will write, but the experience of developing with an expert. It’s just amazing. :)
 
-Again, thanks Jason Lengstorf for the time! and thanks Gatsby for this amazing project! 🎉
+Again, thanks Jason Lengstorf for the time, and thanks Gatsby for this amazing project! 🎉
