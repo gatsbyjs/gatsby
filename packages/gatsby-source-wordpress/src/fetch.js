@@ -40,8 +40,8 @@ async function fetch({
     console.time(`=END PLUGIN=====================================`)
 
     console.log(
-      colorized.out(
-        `=START PLUGIN=====================================
+      colorized.out(`
+=START PLUGIN=====================================
 
 Site URL: ${_siteURL}
 Site hosted on Wordpress.com: ${_hostingWPCOM}
@@ -172,7 +172,7 @@ async function fetchData({
 }) {
   const { type, url, optionPageId } = route
 
-  if (_verbose)
+  if (_verbose) {
     console.log(
       colorized.out(
         `=== [ Fetching ${type} ] ===`,
@@ -180,7 +180,9 @@ async function fetchData({
       ),
       url
     )
-  if (_verbose) console.time(`Fetching the ${type} took`)
+
+    console.time(`Fetching the ${type} took`)
+  }
 
   let routeResponse = await getPages(
     {
@@ -315,8 +317,10 @@ async function getPages(
     }
 
     if (_verbose) {
-      console.log(`\nTotal entities :`, total)
-      console.log(`Pages to be requested :`, totalPages)
+      console.log(`
+Total entities : ${total}
+Pages to be requested : ${totalPages}`
+      )
     }
 
     // We got page 1, now we want pages 2 through totalPages
