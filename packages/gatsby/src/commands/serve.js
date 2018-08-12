@@ -11,6 +11,13 @@ module.exports = program => {
   const app = express()
   app.use(compression())
   app.use(express.static(`public`))
+  app.use((req, res, next) => {
+    if (req.accepts(`html`)) {
+      res.status(404).sendFile(`404.html`, { root: `public` })
+    } else {
+      next()
+    }
+  })
 
   const server = app.listen(port, () => {
     let openUrlString = `http://localhost:` + port
