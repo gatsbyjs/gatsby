@@ -10,7 +10,7 @@ I love pair programming. This is one of the practices we do in our trainings at 
 
 A couple of weeks ago, we were planning to rebuild our websites using Gatsby, and then I saw this:
 
-![Jason's Tweet](images/tweet.png)
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">This was a ton of fun! Anyone else want to pair up? <a href="https://twitter.com/kylemathews?ref_src=twsrc%5Etfw">@kylemathews</a>, <a href="https://twitter.com/kurtiskemple?ref_src=twsrc%5Etfw">@kurtiskemple</a>, <a href="https://twitter.com/mdashallanson?ref_src=twsrc%5Etfw">@mdashallanson</a>, <a href="https://twitter.com/mipiechowiak?ref_src=twsrc%5Etfw">@mipiechowiak</a>, and I are all opening up a few one-hour slots for screen sharing/pair programming on your <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a> projects — DM to grab your slot! 💪💜 <a href="https://t.co/O3lKUQ79c4">https://t.co/O3lKUQ79c4</a></p>&mdash; Jason Lengstorf (@jlengstorf) <a href="https://twitter.com/jlengstorf/status/1016721019376025600?ref_src=twsrc%5Etfw">July 10, 2018</a></blockquote>
 
 I didn’t have to think about that twice--I booked it! It was funny because the week before this tweet I was talking to [Alex](https://twitter.com/alex_lobera) and [Richard](https://twitter.com/ric9176) about a similar idea I had with ReactJS Academy. We want to do something similar to pair programming with developers who want to learn React (if you are interested please send me a DM!).
 
@@ -34,4 +34,6 @@ Jason patiently explained the parts I didn’t understand about Gatsby and he al
 
 10! No doubt. And higher than 10 if you have never done pair programming. Just take a simple task and go! It’s not about the code you will write, but the experience of developing with an expert. It’s just amazing. :)
 
-Again, thanks Jason Lengstorf for the time, and thanks Gatsby for this amazing project! 🎉
+If you want to sign up for your session, check out the [open community pair programming sessions docs and signup instructions](/docs/pair-programming/).
+
+Again, thanks Jason Lengstorf for the time! and thanks Gatsby for this amazing project!! 🎉
