@@ -2,4 +2,5 @@
 /gatsby-ssr.js
 /gatsby-browser.js
 /common.js
+/components.js
 /app-shell.js
