@@ -2,7 +2,7 @@
 title: My Experience doing pair programming with the Gatsby Team and why you should do it
 date: "2018-08-11"
 image: images/screenshot.jpg
-author: Jason Lengstorf
+author: Horacio Herrera
 tags: ["collaboration","gatsby","community"]
 ---
 
