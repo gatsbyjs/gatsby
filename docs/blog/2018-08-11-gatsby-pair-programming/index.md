@@ -34,6 +34,6 @@ Jason patiently explained the parts I didn’t understand about Gatsby and he al
 
 10! No doubt. And higher than 10 if you have never done pair programming. Just take a simple task and go! It’s not about the code you will write, but the experience of developing with an expert. It’s just amazing. :)
 
-If you want to sign up for your session, check out the [open community pair programming sessions docs and signup instructions](/docs/pair-programming/).
-
 Again, thanks Jason Lengstorf for the time! and thanks Gatsby for this amazing project!! 🎉
+
+> If you want to sign up for your session, check out the [open community pair programming sessions docs and signup instructions](/docs/pair-programming/).
