@@ -1,7 +1,13 @@
 const repl = require(`repl`)
 const { graphql } = require(`graphql`)
 const bootstrap = require(`../bootstrap`)
-const { store } = require(`../redux`)
+const {
+  store,
+  loadNodeContent,
+  getNodes,
+  getNode,
+  hasNodeChanged,
+} = require(`../redux`)
 
 module.exports = async program => {
   // run bootstrap
@@ -19,6 +25,11 @@ module.exports = async program => {
     nodes,
   } = store.getState()
 
+  const query = async query => {
+    const result = await graphql(schema, query, {}, {}, {})
+    console.log(`query result: ${JSON.stringify(result)}`)
+  }
+
   // init new repl
   const _ = repl.start({
     prompt: `gatsby > `,
@@ -28,19 +39,16 @@ module.exports = async program => {
   _.context.babelrc = babelrc
   _.context.components = components
   _.context.dataPaths = jsonDataPaths
+  _.context.getNode = getNode
+  _.context.getNodes = getNodes
+  _.context.hasNodeChanged = hasNodeChanged
+  _.context.loadNodeContent = loadNodeContent
   _.context.nodes = [...nodes.entries()]
   _.context.pages = [...pages.entries()]
+  _.context.runQuery = query
   _.context.schema = schema
   _.context.siteConfig = config
   _.context.staticQueries = staticQueryComponents
-
-  // add custom repl commands, used in repl lik: `.query "{ site { ... } }"`
-  _.defineCommand(`query`, {
-    action: async query => {
-      const result = await graphql(schema, query, {}, {}, {})
-      return result
-    },
-  })
 
   _.on(`exit`, () => process.exit(0))
 }
