@@ -5,6 +5,7 @@ import Helmet from "react-helmet"
 import Layout from "../../components/layout"
 import { itemListDocs } from "../../utils/sidebar/item-list"
 import Container from "../../components/container"
+import EmailCaptureForm from "../../components/email-capture-form"
 import DocSearchContent from "../../components/docsearch-content"
 import presets from "../../utils/presets"
 
@@ -29,12 +30,14 @@ class IndexRoute extends React.Component {
             <ol>
               <li>
                 <p>Create a new site.</p>
-                <pre>
-                  <code className="language-sh">
-                    gatsby new gatsby-site
-                    https://github.com/gatsbyjs/gatsby-starter-default#v2
-                  </code>
-                </pre>
+                <div className="gatsby-highlight" data-language="bash">
+                  <pre className="language-bash">
+                    <code className="language-bash">
+                      gatsby new gatsby-site
+                      https://github.com/gatsbyjs/gatsby-starter-default#v2
+                    </code>
+                  </pre>
+                </div>
               </li>
               <li>
                 <code>cd gatsby-site</code>
@@ -91,6 +94,7 @@ class IndexRoute extends React.Component {
             >
               <h2>Documentation</h2>
             </div>
+            <EmailCaptureForm signupMessage="Want to keep up with the latest tips & tricks? Subscribe to our newsletter!" />
           </Container>
         </DocSearchContent>
       </Layout>

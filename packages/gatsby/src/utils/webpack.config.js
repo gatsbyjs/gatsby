@@ -188,23 +188,12 @@ module.exports = async (
 
           new FriendlyErrorsWebpackPlugin({
             clearConsole: false,
-            compilationSuccessInfo: {
-              messages: [
-                `You can now view your site in the browser running at ${
-                  program.ssl ? `https` : `http`
-                }://${program.host}:${program.port}`,
-                `Your graphql debugger is running at ${
-                  program.ssl ? `https` : `http`
-                }://${program.host}:${program.port}/___graphql`,
-              ],
-            },
           }),
         ])
         break
       case `build-javascript`: {
-        configPlugins = configPlugins.concat([
-          plugins.extractText(),
-          // Minify Javascript.
+        // Minify Javascript only if needed.
+        configPlugins = program.noUglify ? configPlugins : configPlugins.concat([
           plugins.uglify({
             uglifyOptions: {
               compress: {
@@ -212,6 +201,9 @@ module.exports = async (
               },
             },
           }),
+        ])
+        configPlugins = configPlugins.concat([
+          plugins.extractText(),
           // Write out stats object mapping named dynamic imports (aka page
           // components) to all their async chunks.
           {
@@ -290,6 +282,7 @@ module.exports = async (
       rules.yaml(),
       rules.fonts(),
       rules.images(),
+      rules.media(),
       rules.miscAssets(),
     ]
     switch (stage) {
@@ -341,15 +334,6 @@ module.exports = async (
           {
             oneOf: [rules.cssModules(), rules.css()],
           },
-
-          // Remove manually unused React Router modules. Try removing these
-          // rules whenever they get around to making a new release with their
-          // tree shaking fixes.
-          { test: /HashHistory/, use: `null-loader` },
-          { test: /MemoryHistory/, use: `null-loader` },
-          { test: /StaticRouter/, use: `null-loader` },
-          { test: /MemoryRouter/, use: `null-loader` },
-          { test: /HashRouter/, use: `null-loader` },
         ])
 
         break
@@ -381,6 +365,10 @@ module.exports = async (
         "react-hot-loader": path.dirname(
           require.resolve(`react-hot-loader/package.json`)
         ),
+        "react-lifecycles-compat": directoryPath(
+          `.cache/react-lifecycles-compat.js`
+        ),
+        "create-react-context": directoryPath(`.cache/create-react-context.js`),
       },
     }
   }
@@ -442,6 +430,7 @@ module.exports = async (
       splitChunks: {
         name: false,
       },
+      minimize: !program.noUglify,
     }
   }
 

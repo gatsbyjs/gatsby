@@ -19,8 +19,8 @@ class NewsLetter extends Component {
         <Container
           hasSideBar={false}
           css={{
-            display: "flex",
-            flexDirection: "column",
+            display: `flex`,
+            flexDirection: `column`,
           }}
         >
           <h1 id="introduction" style={{ marginTop: 0 }}>

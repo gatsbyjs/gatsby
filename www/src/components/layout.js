@@ -3,7 +3,7 @@ import Modal from "react-modal"
 import Helmet from "react-helmet"
 import { OutboundLink } from "gatsby-plugin-google-analytics"
 import MdClose from "react-icons/lib/md/close"
-import { push, PageRenderer } from "gatsby"
+import { navigate, PageRenderer } from "gatsby"
 import presets, { colors } from "../utils/presets"
 import Banner from "../components/banner"
 import Navigation from "../components/navigation"
@@ -32,7 +32,7 @@ class DefaultLayout extends React.Component {
   }
 
   handleCloseModal() {
-    push(this.props.modalBackgroundPath)
+    navigate(this.props.modalBackgroundPath)
   }
 
   componentDidMount() {
@@ -58,11 +58,13 @@ class DefaultLayout extends React.Component {
   }
 
   render() {
-    const { location = {
-      pathname: '/starter-showcase'
-    } } = this.props // location will be undefined if on 'starter-showcase'
+    const {
+      location = {
+        pathname: `/starter-showcase`,
+      },
+    } = this.props // location will be undefined if on 'starter-showcase'
     const isHomepage = location.pathname === `/`
-    
+
     // SEE: template-docs-markdown for why this.props.isSidebarDisabled is here
     const isSidebarDisabled =
       this.props.isSidebarDisabled || !this.props.itemList
@@ -108,7 +110,7 @@ class DefaultLayout extends React.Component {
                 backgroundColor: `rgba(255, 255, 255, 0.95)`,
               },
             }}
-            onRequestClose={() => push(this.props.modalBackgroundPath)}
+            onRequestClose={() => navigate(this.props.modalBackgroundPath)}
             contentLabel="Site Details Modal"
           >
             <div
@@ -163,7 +165,8 @@ class DefaultLayout extends React.Component {
           <html lang="en" />
         </Helmet>
         <Banner background={isHomepage ? `#402060` : false}>
-          These are the docs for v2 beta.{` `}
+          These are the docs for v2 beta.
+          {` `}
           <OutboundLink
             href="https://gatsbyjs.org/"
             css={{
@@ -182,7 +185,8 @@ class DefaultLayout extends React.Component {
               {` `}
               instead
             </span>
-          </OutboundLink>.
+          </OutboundLink>
+          .
         </Banner>
         <Navigation pathname={this.props.location.pathname} />
         <div

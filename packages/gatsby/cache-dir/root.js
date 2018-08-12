@@ -1,17 +1,16 @@
-import { createElement } from "react"
-import { Router, Route } from "react-router-dom"
+import React, { createElement } from "react"
+import { Router } from "@reach/router"
 import { ScrollContext } from "gatsby-react-router-scroll"
 import {
   shouldUpdateScroll,
-  attachToHistory,
   init as navigationInit,
+  onRouteUpdate,
+  onPreRouteUpdate,
 } from "./navigation"
-import history from "./history"
 import { apiRunner } from "./api-runner-browser"
 import syncRequires from "./sync-requires"
 import pages from "./pages.json"
 import loader from "./loader"
-import { hot } from "react-hot-loader"
 import JSONStore from "./json-store"
 
 import * as ErrorOverlay from "react-error-overlay"
@@ -48,58 +47,64 @@ if (window.__webpack_hot_middleware_reporter__ !== undefined) {
 
 navigationInit()
 
-// Call onRouteUpdate on the initial page load.
-apiRunner(`onRouteUpdate`, {
-  location: history.location,
-  action: history.action,
-})
+class RouteHandler extends React.Component {
+  constructor(props) {
+    super(props)
+    onPreRouteUpdate(props.location)
+  }
 
-const AltRouter = apiRunner(`replaceRouterComponent`, { history })[0]
+  render() {
+    const { location } = this.props
+    const { pathname } = location
+    const pageResources = loader.getResourcesForPathnameSync(pathname)
+    const isPage = !!(pageResources && pageResources.component)
+    let child
+    if (isPage) {
+      child = (
+        <JSONStore
+          pages={pages}
+          {...this.props}
+          pageResources={pageResources}
+        />
+      )
+    } else {
+      const dev404Page = pages.find(p => /^\/dev-404-page/.test(p.path))
+      child = createElement(
+        syncRequires.components[dev404Page.componentChunkName],
+        {
+          pages,
+          ...this.props,
+        }
+      )
+    }
+
+    return (
+      <ScrollContext
+        location={location}
+        history={this.props.history}
+        shouldUpdateScroll={shouldUpdateScroll}
+      >
+        {child}
+      </ScrollContext>
+    )
+  }
+
+  // Call onRouteUpdate on the initial page load.
+  componentDidMount() {
+    onRouteUpdate(this.props.location)
+  }
+}
 
 const Root = () =>
   createElement(
-    AltRouter ? AltRouter : Router,
+    Router,
     {
-      basename: __PATH_PREFIX__,
-      history: !AltRouter ? history : undefined,
+      basepath: __PATH_PREFIX__,
     },
-    createElement(
-      ScrollContext,
-      { shouldUpdateScroll },
-      createElement(Route, {
-        // eslint-disable-next-line react/display-name
-        render: routeProps => {
-          attachToHistory(routeProps.history)
-          const { pathname } = routeProps.location
-          const pageResources = loader.getResourcesForPathname(pathname)
-          const isPage = !!(pageResources && pageResources.component)
-          if (isPage) {
-            return createElement(JSONStore, {
-              pages,
-              ...routeProps,
-              pageResources,
-            })
-          } else {
-            const dev404Page = pages.find(p => /^\/dev-404-page/.test(p.path))
-            return createElement(Route, {
-              key: `404-page`,
-              // eslint-disable-next-line react/display-name
-              component: props =>
-                createElement(
-                  syncRequires.components[dev404Page.componentChunkName],
-                  {
-                    pages,
-                    ...routeProps,
-                  }
-                ),
-            })
-          }
-        },
-      })
-    )
+    createElement(RouteHandler, { path: `/*` })
   )
 
 // Let site, plugins wrap the site e.g. for Redux.
 const WrappedRoot = apiRunner(`wrapRootComponent`, { Root }, Root)[0]
 
-export default hot(module)(WrappedRoot)
+export default WrappedRoot

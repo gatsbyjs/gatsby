@@ -22,8 +22,6 @@
           link: /tutorial/part-zero/#create-a-gatsby-site
         - title: Set up a code editor
           link: /tutorial/part-zero/#set-up-a-code-editor
-        - title: Set up Prettier
-          link: /tutorial/part-zero/#set-up-prettier
     - title: 1. Get to know Gatsby building blocks
       link: /tutorial/part-one/
       ui: steps
@@ -34,6 +32,8 @@
           link: /tutorial/part-one/#familiarizing-with-gatsby-pages
         - title: Building with components
           link: /tutorial/part-one/#building-with-components
+        - title: Linking between pages
+          link: /tutorial/part-one/#linking-between-pages
         - title: Deploying a Gatsby site
           link: /tutorial/part-one/#deploying-a-gatsby-site
     - title: 2. Introduction to using CSS in Gatsby
@@ -54,8 +54,8 @@
       link: /tutorial/part-three/
       ui: steps
       items:
-        - title: Our first layout component
-          link: /tutorial/part-three/
+        - title: Your first layout component
+          link: /tutorial/part-three/#your-first-layout-component
     - title: 4. Querying for data in a blog
       link: /tutorial/part-four/
       ui: steps
@@ -66,8 +66,8 @@
           link: /tutorial/part-four/#data-in-gatsby
         - title: How Gatsby uses GraphQL
           link: /tutorial/part-four/#how-gatsbys-data-layer-uses-graphql-to-pull-data-into-components
-        - title: Our first GraphQL query
-          link: /tutorial/part-four/#our-first-graphql-query
+        - title: Your first GraphQL query
+          link: /tutorial/part-four/#your-first-graphql-query
     - title: 5. Source plugins and rendering queried data
       link: /tutorial/part-five/
       ui: steps
@@ -98,5 +98,13 @@
       link: /tutorial/part-eight/
       ui: steps
       items:
-        - title: Lighthouse audit
-          link: /tutorial/part-eight/#lighthouse
+        - title: Audit with Lighthouse
+          link: /tutorial/part-eight/#auditing-with-lighthouse
+        - title: Add a manifest file
+          link: /tutorial/part-eight/#add-a-manifest-file
+        - title: Add offline support
+          link: /tutorial/part-eight/#add-offline-support
+        - title: Add page metadata
+          link: /tutorial/part-eight/#add-page-metadata
+        - title: Keep making it better
+          link: /tutorial/part-eight/#keep-making-it-better

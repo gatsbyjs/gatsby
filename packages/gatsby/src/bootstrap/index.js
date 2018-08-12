@@ -216,6 +216,19 @@ module.exports = async (args: BootstrapArgs) => {
     if (env === `ssr` && plugin.skipSSR === true) return undefined
 
     const envAPIs = plugin[`${env}APIs`]
+
+    // Always include the site's gatsby-browser.js if it exists as it's
+    // a handy place to include global styles and other global imports.
+    try {
+      if (env === `browser` && plugin.name === `default-site-plugin`) {
+        return slash(
+          require.resolve(path.join(plugin.resolve, `gatsby-${env}`))
+        )
+      }
+    } catch (e) {
+      // ignore
+    }
+
     if (envAPIs && Array.isArray(envAPIs) && envAPIs.length > 0) {
       return slash(path.join(plugin.resolve, `gatsby-${env}`))
     }
@@ -231,6 +244,7 @@ module.exports = async (args: BootstrapArgs) => {
     }),
     plugin => plugin.resolve
   )
+
   const browserPlugins = _.filter(
     flattenedPlugins.map(plugin => {
       return {

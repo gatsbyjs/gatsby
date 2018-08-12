@@ -9,26 +9,44 @@ import MdSort from "react-icons/lib/md/sort"
 import { options, /* rhythm, */ scale, rhythm } from "../../utils/typography"
 import presets, { colors } from "../../utils/presets"
 
-import styles from '../shared/styles'
+import styles from "../shared/styles"
 
-import LHSFilter from './lhs-filter'
-import ShowcaseList from './showcase-list'
+import LHSFilter from "./lhs-filter"
+import ShowcaseList from "./showcase-list"
 
 export default class FilteredShowcase extends Component {
   state = {
     sitesToShow: 9,
   }
-  setFiltersCategory = filtersCategory => this.props.setURLState({ c: Array.from(filtersCategory) })
-  setFiltersDependency = filtersDependency => this.props.setURLState({ d: Array.from(filtersDependency) })
-  toggleSort = () => this.props.setURLState({ sort: this.props.urlState.sort === `recent` ? `stars` : `recent` })
+  setFiltersCategory = filtersCategory =>
+    this.props.setURLState({ c: Array.from(filtersCategory) })
+  setFiltersDependency = filtersDependency =>
+    this.props.setURLState({ d: Array.from(filtersDependency) })
+  toggleSort = () =>
+    this.props.setURLState({
+      sort: this.props.urlState.sort === `recent` ? `stars` : `recent`,
+    })
   resetFilters = () => this.props.setURLState({ c: null, d: null, s: `` })
   render() {
     const { data, urlState, setURLState } = this.props
-    const { setFiltersCategory, setFiltersDependency, resetFilters, toggleSort } = this
-    const filtersCategory = new Set(Array.isArray(urlState.c) ? urlState.c : [urlState.c])
-    const filtersDependency = new Set(Array.isArray(urlState.d) ? urlState.d : [urlState.d])
+    const {
+      setFiltersCategory,
+      setFiltersDependency,
+      resetFilters,
+      toggleSort,
+    } = this
+    const filtersCategory = new Set(
+      Array.isArray(urlState.c) ? urlState.c : [urlState.c]
+    )
+    const filtersDependency = new Set(
+      Array.isArray(urlState.d) ? urlState.d : [urlState.d]
+    )
     // https://stackoverflow.com/a/32001444/1106414
-    const filters = new Set([].concat(...[filtersCategory, filtersDependency].map(set => Array.from(set))))
+    const filters = new Set(
+      [].concat(
+        ...[filtersCategory, filtersDependency].map(set => Array.from(set))
+      )
+    )
 
     let items = data.allMarkdownRemark.edges,
       imgs = data.allFile.edges
@@ -38,7 +56,9 @@ export default class FilteredShowcase extends Component {
         // TODO: SWYX: very very simple object search algorithm, i know, sorry
         const { fields, frontmatter } = node.node
         if (fields) frontmatter.fields = fields.starterShowcase
-        return JSON.stringify(frontmatter).toLowerCase().includes(urlState.s)
+        return JSON.stringify(frontmatter)
+          .toLowerCase()
+          .includes(urlState.s)
       })
     }
 
@@ -100,46 +120,68 @@ export default class FilteredShowcase extends Component {
               paddingLeft: rhythm(3 / 4),
             }}
           >
-            {(filters.size > 0 ||
-              urlState.s.length > 0) && // search is a filter too https://gatsbyjs.slack.com/archives/CB4V648ET/p1529224551000008
-              (
-                <div
+            {(filters.size > 0 || urlState.s.length > 0) && ( // search is a filter too https://gatsbyjs.slack.com/archives/CB4V648ET/p1529224551000008
+              <div
+                css={{
+                  marginRight: rhythm(3 / 4),
+                }}
+              >
+                <button
                   css={{
-                    marginRight: rhythm(3 / 4),
+                    ...scale(-1 / 6),
+                    alignItems: `center`,
+                    background: colors.ui.light,
+                    border: 0,
+                    borderRadius: presets.radius,
+                    color: colors.gatsby,
+                    cursor: `pointer`,
+                    display: `flex`,
+                    fontFamily: options.headerFontFamily.join(`,`),
+                    marginTop: rhythm(options.blockMarginBottom),
+                    paddingRight: rhythm(3 / 4),
+                    textAlign: `left`,
+                    "&:hover": {
+                      background: colors.gatsby,
+                      color: `#fff`,
+                    },
                   }}
+                  onClick={resetFilters}
                 >
-                  <button
-                    css={{
-                      ...scale(-1 / 6),
-                      alignItems: `center`,
-                      background: colors.ui.light,
-                      border: 0,
-                      borderRadius: presets.radius,
-                      color: colors.gatsby,
-                      cursor: `pointer`,
-                      display: `flex`,
-                      fontFamily: options.headerFontFamily.join(`,`),
-                      marginTop: rhythm(options.blockMarginBottom),
-                      paddingRight: rhythm(3 / 4),
-                      textAlign: `left`,
-                      "&:hover": {
-                        background: colors.gatsby,
-                        color: `#fff`,
-                      },
-                    }}
-                    onClick={resetFilters}
-                  >
-                    <MdClear style={{ marginRight: rhythm(1 / 4) }} /> Reset all
-                    Filters
+                  <MdClear style={{ marginRight: rhythm(1 / 4) }} /> Reset all
+                  Filters
                 </button>
-                </div>
+              </div>
+            )}
+            <LHSFilter
+              heading="Categories"
+              data={Array.from(
+                count(
+                  items.map(
+                    ({ node }) => node.frontmatter && node.frontmatter.tags
+                  )
+                )
               )}
-            <LHSFilter heading="Categories" data={Array.from(
-              count(items.map(({ node }) => node.frontmatter && node.frontmatter.tags))
-            )} filters={filtersCategory} setFilters={setFiltersCategory} sortRecent={urlState.sort === `recent`} />
-            <LHSFilter heading="Gatsby Dependencies" data={Array.from(
-              count(items.map(({ node }) => node.fields && node.fields.starterShowcase.gatsbyDependencies.map(str => str[0])))
-            )} filters={filtersDependency} setFilters={setFiltersDependency} sortRecent={urlState.sort === `recent`} />
+              filters={filtersCategory}
+              setFilters={setFiltersCategory}
+              sortRecent={urlState.sort === `recent`}
+            />
+            <LHSFilter
+              heading="Gatsby Dependencies"
+              data={Array.from(
+                count(
+                  items.map(
+                    ({ node }) =>
+                      node.fields &&
+                      node.fields.starterShowcase.gatsbyDependencies.map(
+                        str => str[0]
+                      )
+                  )
+                )
+              )}
+              filters={filtersDependency}
+              setFilters={setFiltersDependency}
+              sortRecent={urlState.sort === `recent`}
+            />
           </div>
         </div>
         <div css={{ width: `100%` }}>
@@ -172,20 +214,21 @@ export default class FilteredShowcase extends Component {
                     All {data.allMarkdownRemark.edges.length} Starters
                   </span>
                 ) : (
-                    <span>
-                      {items.length}
-                      {` `}
-                      {filters.size === 1 && filters.values()[0]}
-                      {` `}
-                      Sites
+                  <span>
+                    {items.length}
+                    {` `}
+                    {filters.size === 1 && filters.values()[0]}
+                    {` `}
+                    Sites
                   </span>
-                  )
+                )
               ) : (
-                  <span>{items.length} search results</span>
-                )}
+                <span>{items.length} search results</span>
+              )}
             </h2>
             <div css={{ marginLeft: `auto` }}>
-              <label css={{
+              <label
+                css={{
                   display: `none`,
                   [presets.Desktop]: {
                     color: colors.gatsby,
@@ -198,11 +241,13 @@ export default class FilteredShowcase extends Component {
                     paddingLeft: rhythm(1),
                     width: rhythm(5),
                   },
-              }}>
+                }}
+              >
                 <MdArrowForward css={{ marginRight: 8 }} />
                 Submit your starter
               </label>
-              <label css={{
+              <label
+                css={{
                   display: `none`,
                   [presets.Desktop]: {
                     color: colors.gatsby,
@@ -215,7 +260,7 @@ export default class FilteredShowcase extends Component {
                     // paddingLeft: rhythm(1),
                     width: rhythm(5),
                   },
-              }}
+                }}
                 onClick={toggleSort}
               >
                 <MdSort css={{ marginRight: 8 }} />
@@ -239,9 +284,9 @@ export default class FilteredShowcase extends Component {
                       borderRadius: presets.radiusLg,
                       transition: `width ${presets.animation.speedDefault} ${
                         presets.animation.curveDefault
-                        }, background-color ${presets.animation.speedDefault} ${
+                      }, background-color ${presets.animation.speedDefault} ${
                         presets.animation.curveDefault
-                        }`,
+                      }`,
                     },
                   }}
                   type="text"
@@ -270,10 +315,15 @@ export default class FilteredShowcase extends Component {
                   }}
                 />
               </label>
-
             </div>
           </div>
-          <ShowcaseList urlState={urlState} sortRecent={urlState.sort === `recent`} items={items} imgs={imgs} count={this.state.sitesToShow} />
+          <ShowcaseList
+            urlState={urlState}
+            sortRecent={urlState.sort === `recent`}
+            items={items}
+            imgs={imgs}
+            count={this.state.sitesToShow}
+          />
           {this.state.sitesToShow < items.length && (
             <button
               css={{
@@ -326,8 +376,7 @@ function filterByCategories(list, categories) {
   let items = list
   items = items.filter(
     ({ node }) =>
-      node.frontmatter &&
-      isSuperset(node.frontmatter.tags, categories)
+      node.frontmatter && isSuperset(node.frontmatter.tags, categories)
   )
   return items
 }
@@ -337,7 +386,10 @@ function filterByDependencies(list, categories) {
   items = items.filter(
     ({ node }) =>
       node.fields &&
-      isSuperset(node.fields.starterShowcase.gatsbyDependencies.map(c => c[0]), categories)
+      isSuperset(
+        node.fields.starterShowcase.gatsbyDependencies.map(c => c[0]),
+        categories
+      )
     // node.fields.starterShowcase.gatsbyDependencies.filter(c => categories.has(c[0])).length > 0
   )
 
@@ -352,4 +404,3 @@ function isSuperset(set, subset) {
   }
   return true
 }
-

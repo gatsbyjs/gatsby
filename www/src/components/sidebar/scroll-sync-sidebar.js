@@ -60,13 +60,7 @@ class ScrollSyncSection extends Component {
 
   render() {
     const { activeItemHash } = this.state
-    return (
-      <SidebarBody
-        isScrollSync
-        activeItemHash={activeItemHash}
-        {...this.props}
-      />
-    )
+    return <SidebarBody activeItemHash={activeItemHash} {...this.props} />
   }
 }
 

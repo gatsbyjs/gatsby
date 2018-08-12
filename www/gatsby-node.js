@@ -73,213 +73,208 @@ exports.createPages = ({ graphql, actions }) => {
     })
 
     // Query for markdown nodes to use in creating pages.
-    resolve(
-      graphql(
-        `
-          query {
-            allMarkdownRemark(
-              sort: { order: DESC, fields: [frontmatter___date] }
-              limit: 10000
-              filter: { fileAbsolutePath: { ne: null } }
-            ) {
-              edges {
-                node {
-                  fields {
-                    slug
-                    package
-                    starterShowcase {
-                      slug
-                      stub
-                    }
-                  }
-                  frontmatter {
-                    title
-                    draft
-                    canonicalLink
-                    publishedAt
-                    tags
-                  }
-                }
-              }
-            }
-            allAuthorYaml {
-              edges {
-                node {
-                  fields {
-                    slug
-                  }
-                }
-              }
-            }
-            allSitesYaml(filter: { main_url: { ne: null } }) {
-              edges {
-                node {
-                  fields {
-                    slug
-                  }
-                }
-              }
-            }
-            allNpmPackage {
-              edges {
-                node {
-                  id
-                  title
+
+    graphql(
+      `
+        query {
+          allMarkdownRemark(
+            sort: { order: DESC, fields: [frontmatter___date] }
+            limit: 10000
+            filter: { fileAbsolutePath: { ne: null } }
+          ) {
+            edges {
+              node {
+                fields {
                   slug
-                  readme {
+                  package
+                  starterShowcase {
+                    slug
+                    stub
+                  }
+                }
+                frontmatter {
+                  title
+                  draft
+                  canonicalLink
+                  publishedAt
+                  tags
+                }
+              }
+            }
+          }
+          allAuthorYaml {
+            edges {
+              node {
+                fields {
+                  slug
+                }
+              }
+            }
+          }
+          allSitesYaml(filter: { main_url: { ne: null } }) {
+            edges {
+              node {
+                fields {
+                  slug
+                }
+              }
+            }
+          }
+          allNpmPackage {
+            edges {
+              node {
+                id
+                title
+                slug
+                readme {
+                  id
+                  childMarkdownRemark {
                     id
-                    childMarkdownRemark {
-                      id
-                      html
-                    }
+                    html
                   }
                 }
               }
             }
           }
-        `
-      ).then(result => {
-        if (result.errors) {
-          reject(result.errors)
+        }
+      `
+    ).then(result => {
+      if (result.errors) {
+        return reject(result.errors)
+      }
+
+      const blogPosts = _.filter(result.data.allMarkdownRemark.edges, edge => {
+        const slug = _.get(edge, `node.fields.slug`)
+        const draft = _.get(edge, `node.frontmatter.draft`)
+        if (!slug) return undefined
+
+        if (_.includes(slug, `/blog/`) && !draft) {
+          return edge
         }
 
-        const blogPosts = _.filter(
-          result.data.allMarkdownRemark.edges,
-          edge => {
-            const slug = _.get(edge, `node.fields.slug`)
-            const draft = _.get(edge, `node.frontmatter.draft`)
-            if (!slug) return undefined
+        return undefined
+      })
 
-            if (_.includes(slug, `/blog/`) && !draft) {
-              return edge
-            }
+      // Create blog pages.
+      blogPosts.forEach((edge, index) => {
+        const next = index === 0 ? null : blogPosts[index - 1].node
+        const prev =
+          index === blogPosts.length - 1 ? null : blogPosts[index + 1].node
 
-            return undefined
-          }
-        )
+        createPage({
+          path: `${edge.node.fields.slug}`, // required
+          component: slash(blogPostTemplate),
+          context: {
+            slug: edge.node.fields.slug,
+            prev,
+            next,
+          },
+        })
+      })
 
-        // Create blog pages.
-        blogPosts.forEach((edge, index) => {
-          const next = index === 0 ? null : blogPosts[index - 1].node
-          const prev =
-            index === blogPosts.length - 1 ? null : blogPosts[index + 1].node
+      const tagLists = blogPosts
+        .filter(post => _.get(post, `node.frontmatter.tags`))
+        .map(post => _.get(post, `node.frontmatter.tags`))
 
+      _.uniq(_.flatten(tagLists)).forEach(tag => {
+        createPage({
+          path: `/blog/tags/${_.kebabCase(tag)}/`,
+          component: tagTemplate,
+          context: {
+            tag,
+          },
+        })
+      })
+
+      // Create starters.
+      const starters = _.filter(result.data.allMarkdownRemark.edges, edge => {
+        const slug = _.get(edge, `node.fields.starterShowcase.slug`)
+        if (!slug) return null
+        else return edge
+      })
+      const starterTemplate = path.resolve(
+        `src/templates/template-starter-showcase.js`
+      )
+
+      starters.forEach((edge, index) => {
+        createPage({
+          path: `/starters${edge.node.fields.starterShowcase.slug}`, // required
+          component: slash(starterTemplate),
+          context: {
+            slug: edge.node.fields.starterShowcase.slug,
+            stub: edge.node.fields.starterShowcase.stub,
+          },
+        })
+      })
+      // END Create starters.
+
+      // Create contributor pages.
+      result.data.allAuthorYaml.edges.forEach(edge => {
+        createPage({
+          path: `${edge.node.fields.slug}`,
+          component: slash(contributorPageTemplate),
+          context: {
+            slug: edge.node.fields.slug,
+          },
+        })
+      })
+
+      result.data.allSitesYaml.edges.forEach(edge => {
+        if (!edge.node.fields) return
+        if (!edge.node.fields.slug) return
+        createPage({
+          path: `${edge.node.fields.slug}`,
+          component: slash(showcaseTemplate),
+          context: {
+            slug: edge.node.fields.slug,
+          },
+        })
+      })
+
+      // Create docs pages.
+      result.data.allMarkdownRemark.edges.forEach(edge => {
+        const slug = _.get(edge, `node.fields.slug`)
+        if (!slug) return
+
+        if (!_.includes(slug, `/blog/`)) {
           createPage({
             path: `${edge.node.fields.slug}`, // required
-            component: slash(blogPostTemplate),
-            context: {
-              slug: edge.node.fields.slug,
-              prev,
-              next,
-            },
-          })
-        })
-
-        const tagLists = blogPosts
-          .filter(post => _.get(post, `node.frontmatter.tags`))
-          .map(post => _.get(post, `node.frontmatter.tags`))
-
-        _.uniq(_.flatten(tagLists)).forEach(tag => {
-          createPage({
-            path: `/blog/tags/${_.kebabCase(tag)}/`,
-            component: tagTemplate,
-            context: {
-              tag,
-            },
-          })
-        })
-
-        // Create starters.
-        const starters = _.filter(
-          result.data.allMarkdownRemark.edges,
-          edge => {
-            const slug = _.get(edge, `node.fields.starterShowcase.slug`)
-            if (!slug) return null
-            else return edge
-          }
-        )
-        const starterTemplate = path.resolve(`src/templates/template-starter-showcase.js`)
-
-        starters.forEach((edge, index) => {
-          createPage({
-            path: `/starters${edge.node.fields.starterShowcase.slug}`, // required
-            component: slash(starterTemplate),
-            context: {
-              slug: edge.node.fields.starterShowcase.slug,
-              stub: edge.node.fields.starterShowcase.stub
-            },
-          })
-        })
-        // END Create starters.
-
-        // Create contributor pages.
-        result.data.allAuthorYaml.edges.forEach(edge => {
-          createPage({
-            path: `${edge.node.fields.slug}`,
-            component: slash(contributorPageTemplate),
+            component: slash(
+              edge.node.fields.package ? localPackageTemplate : docsTemplate
+            ),
             context: {
               slug: edge.node.fields.slug,
             },
           })
-        })
-
-        result.data.allSitesYaml.edges.forEach(edge => {
-          if (!edge.node.fields) return
-          if (!edge.node.fields.slug) return
-          createPage({
-            path: `${edge.node.fields.slug}`,
-            component: slash(showcaseTemplate),
-            context: {
-              slug: edge.node.fields.slug,
-            },
-          })
-        })
-
-        // Create docs pages.
-        result.data.allMarkdownRemark.edges.forEach(edge => {
-          const slug = _.get(edge, `node.fields.slug`)
-          if (!slug) return
-
-          if (!_.includes(slug, `/blog/`)) {
-            createPage({
-              path: `${edge.node.fields.slug}`, // required
-              component: slash(
-                edge.node.fields.package ? localPackageTemplate : docsTemplate
-              ),
-              context: {
-                slug: edge.node.fields.slug,
-              },
-            })
-          }
-        })
-
-        const allPackages = result.data.allNpmPackage.edges
-        // Create package readme
-        allPackages.forEach(edge => {
-          if (_.includes(localPackagesArr, edge.node.title)) {
-            createPage({
-              path: edge.node.slug,
-              component: slash(localPackageTemplate),
-              context: {
-                slug: edge.node.slug,
-                id: edge.node.id,
-              },
-            })
-          } else {
-            createPage({
-              path: edge.node.slug,
-              component: slash(remotePackageTemplate),
-              context: {
-                slug: edge.node.slug,
-                id: edge.node.id,
-              },
-            })
-          }
-        })
-
-        return
+        }
       })
-    )
+
+      const allPackages = result.data.allNpmPackage.edges
+      // Create package readme
+      allPackages.forEach(edge => {
+        if (_.includes(localPackagesArr, edge.node.title)) {
+          createPage({
+            path: edge.node.slug,
+            component: slash(localPackageTemplate),
+            context: {
+              slug: edge.node.slug,
+              id: edge.node.id,
+            },
+          })
+        } else {
+          createPage({
+            path: edge.node.slug,
+            component: slash(remotePackageTemplate),
+            context: {
+              slug: edge.node.slug,
+              id: edge.node.id,
+            },
+          })
+        }
+      })
+
+      return resolve()
+    })
   })
 }
 
@@ -330,7 +325,8 @@ exports.onCreateNode = ({ node, actions, getNode, getNodes }) => {
       })
       createNodeField({ node, name: `package`, value: true })
     }
-    if ( // starter showcase
+    if (
+      // starter showcase
       fileNode.sourceInstanceName === `StarterShowcaseData` &&
       parsedFilePath.name !== `README`
     ) {
@@ -360,10 +356,9 @@ exports.onPostBuild = () => {
   )
 }
 
-
 // Starter Showcase related code
 const { createFilePath } = require(`gatsby-source-filesystem`)
-const gitFolder = './src/data/StarterShowcase/generatedGithubData'
+const gitFolder = `./src/data/StarterShowcase/generatedGithubData`
 function createNodesForStarterShowcase({ node, getNode, getNodes, actions }) {
   const { createNodeField, createParentChildLink } = actions
   if (node.internal.type === `MarkdownRemark`) {
@@ -373,11 +368,12 @@ function createNodesForStarterShowcase({ node, getNode, getNodes, actions }) {
       basePath: `startersData`,
     })
     // preprocessing
-    const stub = slug.replace(/\//gi, '')
+    const stub = slug.replace(/\//gi, ``)
     var fromPath = path.join(gitFolder, `${stub}.json`)
-    var data = fs.readFileSync(fromPath, 'utf8')
+    var data = fs.readFileSync(fromPath, `utf8`)
     const ghdata = JSON.parse(data)
-    if (ghdata.repository && ghdata.repository.url) ghdata.repository = ghdata.repository.url // flatten a potential object into a string. weird quirk.
+    if (ghdata.repository && ghdata.repository.url)
+      ghdata.repository = ghdata.repository.url // flatten a potential object into a string. weird quirk.
     const { repoMetadata, dependencies = [], devDependencies = [] } = ghdata
     const allDependencies = Object.entries(dependencies).concat(
       Object.entries(devDependencies)
@@ -397,12 +393,18 @@ function createNodesForStarterShowcase({ node, getNode, getNodes, actions }) {
       allDependencies,
       gatsbyDependencies: allDependencies
         .filter(
-          ([key, _]) => !['gatsby-cli', 'gatsby-link'].includes(key) // remove stuff everyone has
+          ([key, _]) => ![`gatsby-cli`, `gatsby-link`].includes(key) // remove stuff everyone has
         )
-        .filter(([key, _]) => key.includes('gatsby')),
-      miscDependencies: allDependencies.filter(([key, _]) => !key.includes('gatsby')),
+        .filter(([key, _]) => key.includes(`gatsby`)),
+      miscDependencies: allDependencies.filter(
+        ([key, _]) => !key.includes(`gatsby`)
+      ),
     }
-    createNodeField({ node, name: `starterShowcase`, value: starterShowcaseFields })
+    createNodeField({
+      node,
+      name: `starterShowcase`,
+      value: starterShowcaseFields,
+    })
   }
 }
 // End Starter Showcase related code
@@ -410,7 +412,7 @@ function createNodesForStarterShowcase({ node, getNode, getNodes, actions }) {
 // limited logging for debug purposes
 let limitlogcount = 0
 function log(max) {
-  return function (...args) {
+  return function(...args) {
     if (limitlogcount++ < max) console.log(...args)
   }
 }

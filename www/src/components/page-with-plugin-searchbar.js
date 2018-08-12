@@ -45,7 +45,7 @@ class PageWithPluginSearchBar extends Component {
             },
           }}
         >
-          <PluginSearchBar history={this.props.history} />
+          <PluginSearchBar location={this.props.location} />
         </div>
         <div
           css={{

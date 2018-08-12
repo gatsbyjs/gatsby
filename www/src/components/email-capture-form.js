@@ -11,7 +11,6 @@ let stripeAnimation = css.keyframes({
   "100%": { backgroundPosition: `30px 60px` },
 })
 
-
 class EmailCaptureForm extends React.Component {
   constructor() {
     super()
@@ -147,8 +146,8 @@ class EmailCaptureForm extends React.Component {
 }
 
 EmailCaptureForm.defaultProps = {
-  signupMessage: "Enjoyed this post? Receive the next one in your inbox!",
-  confirmMessage: "Thank you! Youʼll receive your first email shortly.",
+  signupMessage: `Enjoyed this post? Receive the next one in your inbox!`,
+  confirmMessage: `Thank you! Youʼll receive your first email shortly.`,
   containerCss: {},
 }
 
