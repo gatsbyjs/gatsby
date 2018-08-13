@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.1.1-beta.7"></a>
+
+## [2.1.1-beta.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/compare/gatsby-transformer-sharp@2.1.1-beta.6...gatsby-transformer-sharp@2.1.1-beta.7) (2018-08-13)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
 <a name="2.1.1-beta.6"></a>
 
 ## [2.1.1-beta.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/compare/gatsby-transformer-sharp@2.1.1-beta.5...gatsby-transformer-sharp@2.1.1-beta.6) (2018-07-21)
