@@ -250,6 +250,11 @@ const _options = {
       ".twitter-tweet-rendered": {
         margin: `${rhythm(options.blockMarginBottom * 2)} auto !important`,
       },
+      ".egghead-video": {
+        width: `620px`,
+        height: `348px`,
+        border: `none`,
+      },
       [MOBILE_MEDIA_QUERY]: {
         // Make baseFontSize on mobile 16px.
         html: {
