@@ -1,10 +1,14 @@
 import * as React from "react";
+import { NavigateOptions, LinkProps, NavigateFn } from "@reach/router";
 
-export const push: (to: LocationDescriptor) => void;
-export const replace: (to: LocationDescriptor) => void;
+export interface GatsbyLinkProps<TState = {}> extends LinkProps<TState> {}
 
-// TODO: Remove navigateTo for Gatsby v3
-export const navigateTo: (to: LocationDescriptor) => void;
+export const navigate: NavigateFn;
+
+// TODO: Remove these three functions for Gatsby v3
+export const push: (to: string) => void;
+export const replace: (to: string) => void;
+export const navigateTo: (to: string) => void;
 
 export const withPrefix: (path: string) => string;
 
