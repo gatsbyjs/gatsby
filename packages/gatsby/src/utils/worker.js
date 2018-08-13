@@ -13,7 +13,11 @@ const generatePathToOutput = outputPath => {
   return path.join(process.cwd(), `public`, outputFileName)
 }
 
-export function renderHTML({ htmlComponentRendererPath, paths }) {
+export function renderHTML({ htmlComponentRendererPath, paths, envVars }) {
+  // This is being executed in child process, so we need to set some vars
+  // for modules that aren't bundled by webpack.
+  Object.entries(envVars).forEach(([key, value]) => (process.env[key] = value))
+
   return Promise.map(
     paths,
     path =>
