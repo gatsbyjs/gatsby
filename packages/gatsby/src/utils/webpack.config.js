@@ -434,6 +434,49 @@ module.exports = async (
     }
   }
 
+  if (stage === `build-html` || stage === `develop-html`) {
+    const externalList = [
+      /^lodash/,
+      `react`,
+      /^react-dom/,
+      `pify`,
+      `@reach/router`,
+      `@reach/router/lib/history`,
+      `common-tags`,
+      `path`,
+      `semver`,
+      `react-helmet`,
+      `minimatch`,
+      `fs`,
+      /^core-js/,
+      `es6-promise`,
+      `crypto`,
+      `zlib`,
+      `http`,
+      `https`,
+      `debug`,
+    ]
+
+    config.externals = [
+      function(context, request, callback) {
+        if (
+          externalList.some(item => {
+            if (typeof item === `string` && item === request) {
+              return true
+            } else if (item instanceof RegExp && item.test(request)) {
+              return true
+            }
+
+            return false
+          })
+        ) {
+          return callback(null, `umd ${request}`)
+        }
+        return callback()
+      },
+    ]
+  }
+
   store.dispatch(actions.replaceWebpackConfig(config))
   const getConfig = () => store.getState().webpack
 
