@@ -118,7 +118,7 @@ plugins: [
       background_color: "#f7f0eb",
       theme_color: "#a2466c",
       display: "minimal-ui",
-      icon: src/images/icon.png // This path is relative to the root of the site.
+      icon: "src/images/icon.png", // This path is relative to the root of the site.
       icons: [
         {
           src: `/favicons/android-chrome-192x192.png`,
