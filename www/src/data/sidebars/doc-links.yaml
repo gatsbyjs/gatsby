@@ -12,7 +12,7 @@
       link: /tutorial/
 - title: Guides
   items:
-    - title: Preparing your environment*
+    - title: Preparing your environment
       link: /docs/preparing-your-environment/
       items:
         - title: Basic hardware and software requirements*
@@ -107,7 +107,7 @@
           link: /docs/programmatically-create-pages-from-data/
         - title: Querying data with StaticQuery
           link: /docs/static-query/
-    - title: Plugins*
+    - title: Plugins
       link: /docs/plugins/
       items:
         - title: Plugin authoring
@@ -116,7 +116,7 @@
           link: /docs/submit-to-plugin-library/
         - title: Source plugin tutorial
           link: /docs/source-plugin-tutorial/
-    - title: Styling*
+    - title: Styling
       link: /docs/styling/
       items:
         - title: CSS Modules*
