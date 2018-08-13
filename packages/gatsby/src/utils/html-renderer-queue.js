@@ -13,6 +13,12 @@ const workerPool = new Worker(require.resolve(`./worker`), {
 
 module.exports = (htmlComponentRendererPath, pages, activity) =>
   new Promise((resolve, reject) => {
+    const envVars = {
+      NODE_ENV: process.env.NODE_ENV,
+      gatsby_executing_command: process.env.gatsby_executing_command,
+      gatsby_log_level: process.env.gatsby_log_level,
+    }
+
     const start = process.hrtime()
     const segments = chunk(pages, 50)
     let finished = 0
@@ -25,11 +31,7 @@ module.exports = (htmlComponentRendererPath, pages, activity) =>
             .renderHTML({
               htmlComponentRendererPath,
               paths: pageSegment,
-              envVars: {
-                NODE_ENV: process.env.NODE_ENV,
-                gatsby_executing_command: process.env.gatsby_executing_command,
-                gatsby_log_level: process.env.gatsby_log_level,
-              },
+              envVars,
             })
             .then(() => {
               finished += pageSegment.length
