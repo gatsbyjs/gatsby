@@ -1,15 +1,14 @@
 ---
-title: Plugin Authoring
+title: Plugin authoring
 ---
 
-One of the best ways to add functionality to Gatsby is through our plugin system. Gatsby is designed to be extensible, which means plugins are able to extend and modify just about everything Gatsby does.
+You may be looking to build a plugin that doesn't exist yet, or you may just be curious to know more about the anatomy of a Gatsby plugin. We'll review:
 
-Of the many possibilities, plugins can:
-
-- add external data or content (e.g. your CMS, static files, a REST API) to your Gatsby GraphQL data
-- transform data from other formats (e.g. YAML, CSV) to JSON objects
-- add third-party services (e.g. Google Analytics, Instagram) to your site
-- anything you can dream up!
+1. the core concepts of what a Gatsby plugin is
+2. naming conventions for the plugin title
+3. expected files in a plugin package
+4. defining a local (unpublished) plugin for your own use case
+5. what a plugin is _not_
 
 ## Core Concepts
 
