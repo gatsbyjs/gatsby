@@ -36,48 +36,25 @@ async function fetch({
     url = `${_siteURL}/wp-json`
   }
 
-  if (_verbose) console.log()
-  if (_verbose)
+  if (_verbose) {
+    console.time(`=END PLUGIN=====================================`)
+
     console.log(
-      colorized.out(
-        `=START PLUGIN=====================================`,
+      colorized.out(`
+=START PLUGIN=====================================
+
+Site URL: ${_siteURL}
+Site hosted on Wordpress.com: ${_hostingWPCOM}
+Using ACF: ${_useACF}
+Using Auth: ${_auth.htaccess_user} ${_auth.htaccess_pass}
+Verbose output: ${_verbose}
+
+Mama Route URL: ${url}
+`,
         colorized.color.Font.FgBlue
       )
     )
-  if (_verbose) console.time(`=END PLUGIN=====================================`)
-  if (_verbose) console.log(``)
-  if (_verbose)
-    console.log(
-      colorized.out(`Site URL: ${_siteURL}`, colorized.color.Font.FgBlue)
-    )
-  if (_verbose)
-    console.log(
-      colorized.out(
-        `Site hosted on Wordpress.com: ${_hostingWPCOM}`,
-        colorized.color.Font.FgBlue
-      )
-    )
-  if (_verbose)
-    console.log(
-      colorized.out(`Using ACF: ${_useACF}`, colorized.color.Font.FgBlue)
-    )
-  if (_verbose)
-    console.log(
-      colorized.out(
-        `Using Auth: ${_auth.htaccess_user} ${_auth.htaccess_pass}`,
-        colorized.color.Font.FgBlue
-      )
-    )
-  if (_verbose)
-    console.log(
-      colorized.out(`Verbose output: ${_verbose}`, colorized.color.Font.FgBlue)
-    )
-  if (_verbose) console.log(``)
-  if (_verbose)
-    console.log(
-      colorized.out(`Mama Route URL: ${url}`, colorized.color.Font.FgBlue)
-    )
-  if (_verbose) console.log(``)
+  }
 
   // Call the main API Route to discover the all the routes exposed on this API.
   let allRoutes
@@ -113,17 +90,15 @@ async function fetch({
       refactoredEntityTypes,
     })
 
-    if (_verbose) console.log(``)
-    if (_verbose)
+    if (_verbose) {
       console.log(
-        colorized.out(
-          `Fetching the JSON data from ${
-            validRoutes.length
-          } valid API Routes...`,
+        colorized.out(`
+Fetching the JSON data from ${validRoutes.length} valid API Routes...
+`,
           colorized.color.Font.FgBlue
         )
       )
-    if (_verbose) console.log(``)
+    }
 
     for (let route of validRoutes) {
       entities = entities.concat(
@@ -197,7 +172,7 @@ async function fetchData({
 }) {
   const { type, url, optionPageId } = route
 
-  if (_verbose)
+  if (_verbose) {
     console.log(
       colorized.out(
         `=== [ Fetching ${type} ] ===`,
@@ -205,7 +180,9 @@ async function fetchData({
       ),
       url
     )
-  if (_verbose) console.time(`Fetching the ${type} took`)
+
+    console.time(`Fetching the ${type} took`)
+  }
 
   let routeResponse = await getPages(
     {
@@ -340,8 +317,10 @@ async function getPages(
     }
 
     if (_verbose) {
-      console.log(`\nTotal entities :`, total)
-      console.log(`Pages to be requested :`, totalPages)
+      console.log(`
+Total entities : ${total}
+Pages to be requested : ${totalPages}`
+      )
     }
 
     // We got page 1, now we want pages 2 through totalPages
