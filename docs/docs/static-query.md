@@ -1,5 +1,5 @@
 ---
-title: "Querying data in components using StaticQuery"
+title: Querying data in components using StaticQuery
 ---
 
 Gatsby v2 introduces `StaticQuery`, a new API that allows components to retrieve data via GraphQL query.
