@@ -152,6 +152,7 @@ const styles = {
       color: colors.lilac,
     },
     "&:focus": {
+      outline: "none",
       width: `9rem`,
       background: colors.ui.light,
     },
