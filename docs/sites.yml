@@ -2078,6 +2078,16 @@
   built_by: Mill3 Studio
   built_by_url: https://mill3.studio/en/
   featured: false
+- title: Cmsbased
+  main_url: https://www.cmsbased.net
+  url: https://www.cmsbased.net
+  description: >
+    Cmsbased is providing automation tools and design resources for Web Hosting and IT services industry.
+  categories:
+    - Technology
+    - Design
+    - Digital Products
+  featured: false
 - title: Traffic Design Biennale 2018
   main_url: https://trafficdesign.pl
   url: http://trafficdesign.pl/pl/ficzery/2018-biennale/
