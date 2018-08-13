@@ -168,14 +168,14 @@ class IndexRoute extends React.Component {
                   >
                     <Container
                       hasSideBar={false}
-                      containerCss={{
+                      overrideCSS={{
                         maxWidth: rhythm(30),
                         paddingBottom: `0 !important`,
                       }}
                     >
                       <EmailCaptureForm
                         signupMessage="Want to keep up to date with the latest posts on our blog? Subscribe to our newsletter!"
-                        containerCss={{
+                        overrideCSS={{
                           marginTop: 0,
                           marginBottom: rhythm(1),
                           border: `none`,

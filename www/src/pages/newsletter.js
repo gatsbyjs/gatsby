@@ -35,7 +35,7 @@ class NewsLetter extends Component {
           <EmailCaptureForm
             signupMessage="Sign up for the Gatsby Newsletter"
             confirmMessage="Success! You have been subscribed to the Gatsby newsletter. Expect to see a newsletter in your inbox each Wednesday (or the equivalent of US Wednesday in your time zone)!"
-            containerCss={{
+            overrideCSS={{
               marginTop: rhythm(1),
               paddingTop: rhythm(1 / 2),
               borderTop: `2px solid ${colors.lilac}`,
