@@ -37,9 +37,9 @@ const getPageHTML = page => {
   } else {
     // For the Headless CMS section, we need to dig into sub-items.
     // This is hard-coded and fragile and I hate it and I’m sorry.
-    guides = getChildGuides(`/docs/sourcing-content-and-data/`).items.find(
+    guides = getChildGuides(`/docs/content-and-data/`).find(
       guide => guide.link === page.fields.slug
-    )
+    ).items
   }
 
   const guideList = createGuideList(guides)
@@ -88,8 +88,6 @@ class DocsTemplate extends React.Component {
                   __html: html,
                 }}
               />
-              <pre>{JSON.stringify(page, null, 2)}</pre>
-              <pre>{JSON.stringify(guides, null, 2)}</pre>
               <MarkdownPageFooter page={page} />
             </Container>
           </DocSearchContent>
