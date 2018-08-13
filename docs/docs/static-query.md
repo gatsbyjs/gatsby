@@ -8,6 +8,12 @@ In this guide, we'll walk through an example using `StaticQuery`, and discuss [t
 
 ## How to use `StaticQuery` in components
 
+<iframe class="egghead-video" width=600 height=348 src="https://egghead.io/lessons/gatsby-load-data-using-graphql-queries-directly-in-a-gatsby-v2-component-with-staticquery/embed" />
+
+Video hosted on [egghead.io][egghead].
+
+[egghead]: https://egghead.io/lessons/gatsby-load-data-using-graphql-queries-directly-in-a-gatsby-v2-component-with-staticquery
+
 ### Basic example
 
 We'll create a new `Header` component located at `src/components/header.js`:
