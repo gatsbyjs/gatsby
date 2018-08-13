@@ -29,7 +29,19 @@ const getPageHTML = page => {
     return page.html
   }
 
-  const guides = getChildGuides(page.fields.slug)
+  // Ugh. This is gross and I want to make it less gross.
+  let guides
+  if (page.fields.slug !== `/docs/headless-cms/`) {
+    // Normally, we’re pulling from the top level of guides.
+    guides = getChildGuides(page.fields.slug)
+  } else {
+    // For the Headless CMS section, we need to dig into sub-items.
+    // This is hard-coded and fragile and I hate it and I’m sorry.
+    guides = getChildGuides(`/docs/sourcing-content-and-data/`).items.find(
+      guide => guide.link === page.fields.slug
+    )
+  }
+
   const guideList = createGuideList(guides)
   const toc = `
     <h2>Guides in this section:</h2>
@@ -76,6 +88,8 @@ class DocsTemplate extends React.Component {
                   __html: html,
                 }}
               />
+              <pre>{JSON.stringify(page, null, 2)}</pre>
+              <pre>{JSON.stringify(guides, null, 2)}</pre>
               <MarkdownPageFooter page={page} />
             </Container>
           </DocSearchContent>

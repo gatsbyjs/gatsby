@@ -75,7 +75,7 @@
           link: /docs/sourcing-from-saas-services/
         - title: Sourcing from private APIs*
           link: /docs/sourcing-from-private-apis/
-        - title: Headless CMS*
+        - title: Headless CMS
           link: /docs/headless-cms/
           items:
             - title: Sourcing from Netlify CMS
