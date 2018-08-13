@@ -2,7 +2,9 @@
 title: Querying data in pages with graphql
 ---
 
-In this guide, you will learn [how to use Gatsby's `graphql` tag](/page-query#adding-the-graphql-query) in your site pages. We'll also go a little deeper into [how the `graphql` tag works](/page-query#how-does-the-graphql-tag-work).
+Gatsby's `graphql` tag enables page components to retrieve data via GraphQL query.
+
+In this guide, you will learn [how to use the `graphql` tag](/page-query#adding-the-graphql-query) in your pages, as well as go a little deeper into [how the `graphql` tag works](/page-query#how-does-the-graphql-tag-work).
 
 ## How to use the `graphql` tag in pages
 
@@ -124,7 +126,7 @@ After restarting `gatsby develop`, your home page will now display "This is wher
 
 ## How does the graphql tag work?
 
-You may have noticed that you used a [tag function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#Tagged_template_literals) called `graphql`. Behind the scenes Gatsby handles these tags in a particular way - let's take a deeper look at what actually happens when you use Gatsby's `graphql` tag:
+`graphql` is a [tag function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#Tagged_template_literals). Behind the scenes Gatsby handles these tags in a particular way:
 
 ### The short answer
 
