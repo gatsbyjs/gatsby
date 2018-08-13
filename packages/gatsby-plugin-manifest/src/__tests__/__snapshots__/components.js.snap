@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`gatsby-plugin-manifest generateHeadComponents creates head components 1`] = `
+exports[`gatsby-plugin-manifest generateHeadComponents creates automatic mode head components 1`] = `
 Array [
   <link
     href="/icons/icon-48x48.png"
@@ -57,7 +57,7 @@ Array [
 ]
 `;
 
-exports[`gatsby-plugin-manifest generateHeadComponents creates prefixed head components 1`] = `
+exports[`gatsby-plugin-manifest generateHeadComponents creates automatic mode head components prefixed 1`] = `
 Array [
   <link
     href="/prefix/icons/icon-48x48.png"
@@ -105,6 +105,33 @@ Array [
   />,
   <link
     href="/prefix/manifest.webmanifest"
+    rel="manifest"
+  />,
+  <meta
+    content="#000000"
+    name="theme-color"
+  />,
+]
+`;
+
+exports[`gatsby-plugin-manifest generateHeadComponents creates hybrid mode head components 1`] = `
+Array [
+  <link
+    href="/favicons/android-chrome-48x48.png"
+    rel="shortcut icon"
+  />,
+  <link
+    href="/favicons/android-chrome-48x48.png"
+    rel="apple-touch-icon"
+    sizes="48x48"
+  />,
+  <link
+    href="/favicons/android-chrome-512x512.png"
+    rel="apple-touch-icon"
+    sizes="512x512"
+  />,
+  <link
+    href="/manifest.webmanifest"
     rel="manifest"
   />,
   <meta
