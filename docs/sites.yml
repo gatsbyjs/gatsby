@@ -2078,3 +2078,16 @@
   built_by: Mill3 Studio
   built_by_url: https://mill3.studio/en/
   featured: false
+- title: Traffic Design Biennale 2018
+  main_url: https://trafficdesign.pl
+  url: http://trafficdesign.pl/pl/ficzery/2018-biennale/
+  description: >
+    Mini site for 2018 edition of Traffic Design’s Biennale
+  categories:
+    - Landing
+    - Creative
+    - Nonprofit
+    - Gallery
+  built_by: Piotr Fedorczyk
+  built_by_url: https://piotrf.pl
+  featured: false
