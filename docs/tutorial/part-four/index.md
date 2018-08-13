@@ -279,7 +279,7 @@ Page queries live outside of the component definition -- by convention at the en
 
 ### Use a StaticQuery
 
-[StaticQuery](/docs/static-query/) is a new API introduced in v2 that allows non-page components (like our `layout.js` component), to retrieve data via GraphQL queries.
+[StaticQuery](/docs/static-query/) is a new API introduced in Gatsby v2 that allows non-page components (like our `layout.js` component), to retrieve data via GraphQL queries.
 
 Go ahead and add a `<StaticQuery/>` to your `src/components/layout.js` file, and a `{data.site.siteMetadata.title}` reference that uses this data. When you are done your file looks like this:
 
