@@ -229,7 +229,7 @@ Restart the development server.
 
 ### Use a page query
 
-Now the site title is available to be queried; Let's add it to the `about.js` file using a page query:
+Now the site title is available to be queried; Let's add it to the `about.js` file using a [page query](/docs/page-query):
 
 ```jsx{2,5,7,14-23}
 import React from "react"
