@@ -15,18 +15,18 @@
     - title: Preparing your environment*
       link: /docs/preparing-your-environment/
       items:
-      - title: Basic hardware and software requirements*
-        link: /docs/basic-hardware-software-requirements/
-      - title: Browser Support
-        link: /docs/browser-support/
-      - title: Gatsby on Macs*
-        link: /docs/gatsby-on-macs/
-      - title: Gatsby on Windows
-        link: /docs/gatsby-on-windows/
+        - title: Basic hardware and software requirements*
+          link: /docs/basic-hardware-software-requirements/
+        - title: Browser Support
+          link: /docs/browser-support/
+        - title: Gatsby on Macs*
+          link: /docs/gatsby-on-macs/
+        - title: Gatsby on Windows
+          link: /docs/gatsby-on-windows/
     - title: Deploying & Hosting*
       link: /docs/deploying-and-hosting/
       items:
-        - title: Preparing site for deployment*
+        - title: Preparing your site for deployment*
           link: /docs/preparing-for-deployment/
         - title: Deploying
           link: /docs/deploy-gatsby/
@@ -88,7 +88,7 @@
               link: /docs/sourcing-from-contentful/
             - title: Sourcing from Prose*
               link: /docs/sourcing-from-prose/
-    - title: Querying your data with GraphQL*
+    - title: Querying your data with GraphQL
       link: /docs/graphql/
       items:
         - title: Introducing GraphiQL*
@@ -170,8 +170,8 @@
           link: /docs/e-commerce/
         - title: Interactive pages*
           link: /docs/interactive-pages/
-    - title: Preparing site for launch*
-      link: /docs/website-functionality/
+    - title: Preparing your site for launch
+      link: /docs/preparing-for-site-launch/
       items:
         - title: Adding a 404 Page
           link: /docs/add-404-page/
@@ -194,7 +194,7 @@
           link: /docs/adding-analytics/
         - title: Adding forms*
           link: /docs/adding-forms/
-    - title: Performance*
+    - title: Performance
       link: /docs/performance/
       items:
         - title: Caching
