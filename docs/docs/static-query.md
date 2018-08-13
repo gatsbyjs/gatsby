@@ -1,10 +1,14 @@
 ---
-title: "Querying data in components using StaticQuery"
+title: Querying data in components using StaticQuery
 ---
 
 Gatsby v2 introduces `StaticQuery`, a new API that allows components to retrieve data via GraphQL query.
 
-## Basic example
+In this guide, we'll walk through an example using `StaticQuery`, and discuss [the difference between a StaticQuery and a page query](/static-query/#how-staticquery-differs-from-page-query).
+
+## How to use `StaticQuery` in components
+
+### Basic example
 
 We'll create a new `Header` component located at `src/components/header.js`:
 
@@ -36,7 +40,7 @@ export default Header
 
 Using `StaticQuery`, you can colocate a component with its data. No longer is it required to, say, pass data down from `Layout` to `Header`.
 
-## Typechecking
+### Typechecking
 
 With the above pattern, you lose the ability to typecheck with PropTypes. To regain typechecking while achieving the same result, you can change the component to:
 
