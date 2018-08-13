@@ -15,7 +15,7 @@ If you're using this plugin together with `gatsby-plugin-offline` (recommended),
 this plugin should be listed _before_ the offline plugin so that it can cache
 the created manifest.webmanifest.
 
-If you use the "automatic mode" (described below), this plugin will also add a favicon link to your html pages.
+If you use the "automatic mode" or "hybrid mode" (described below), this plugin will also add a favicon link and "apple-touch-icon" links to your html pages.
 
 ## Install
 
