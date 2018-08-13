@@ -133,14 +133,7 @@ class IndexRoute extends React.Component {
                     </FuturaParagraph>
                   </Card>
 
-                  <Diagram
-                    containerCss={{
-                      borderTopLeftRadius: 0,
-                      borderTopRightRadius: 0,
-                      flex: `1 1 100%`,
-                      borderTop: `1px solid ${colors.ui.light}`,
-                    }}
-                  />
+                  <Diagram/>
 
                   <div css={{ flex: `1 1 100%` }}>
                     <Container hasSideBar={false}>
