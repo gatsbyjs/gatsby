@@ -2078,3 +2078,16 @@
   built_by: Mill3 Studio
   built_by_url: https://mill3.studio/en/
   featured: false
+- title: Mahipat's Portfolio
+  main_url: https://mojaave.com/
+  url: https://mojaave.com
+  description: >
+    I'm a full stack developer, I have designed and developed beautiful web applcations, with strong focus on performance & responsive design.
+  categories:
+    - Portfolio
+    - Software
+    - Web Dev
+    - Personal
+  built_by: Mahipat Jadav
+  built_by_url: https://mojaave.com/
+  featured: false
