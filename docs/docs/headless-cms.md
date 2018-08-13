@@ -17,4 +17,4 @@ The guides in this section will walk through the process of setting up content s
 
 ## How to add new guides to this section
 
-If you don’t see your preferred CMS in this list, you can [write a new guide yourself](http://localhost:8000/docs/how-to-contribute/) or [open an issue to request it](https://github.com/gatsbyjs/gatsby/issues/new/choose).
+If you don’t see your preferred CMS in this list, you can [write a new guide yourself](/docs/how-to-contribute/) or [open an issue to request it](https://github.com/gatsbyjs/gatsby/issues/new/choose).
