@@ -210,7 +210,7 @@ Now let's start querying 😋
 
 ## Add and query for siteMetadata
 
-When building sites, its' common to want to reuse common bits of data across the
+When building sites, it's common to want to reuse common bits of data across the
 site. Like the _site title_ for example. Look at the `/about/` page. You'll
 notice that you have the site title (`Pandas Eating Lots`) in both the layout
 component (the site header) as well as in the `<h1/>` of the `about.js` page.
