@@ -2,8 +2,6 @@
 title: Querying data in pages with graphql
 ---
 
-Gatsby automatically creates pages from components located within `src/pages`. It watches the folder and will create and remove pages as you add and remove components. The pathname for each page is derived from the name of the component. For example, `src/pages/about.js` would be located at `/about/` when published.
-
 In this guide, you will learn [how to use Gatsby's `graphql` tag](/page-query#adding-the-graphql-query) in your site pages. We'll also go a little deeper into [how the `graphql` tag works](/page-query#how-does-the-graphql-tag-work).
 
 ## How to use the `graphql` tag in pages
