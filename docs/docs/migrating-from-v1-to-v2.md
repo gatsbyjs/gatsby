@@ -543,7 +543,7 @@ React Router allowed you to swap out its history object. To enable this in Gatsb
 We did, erroneously, suggest using this API for adding support for Redux, etc. where you need to wrap the root Gatsby component with your own component.
 
 If you were using `replaceRouterComponent` for this, you'll need to migrate to
-`wrapRootComponent`:
+`wrapRootElement`:
 
 ```diff
 import React from 'react'
@@ -551,17 +551,17 @@ import { Provider } from 'react-redux'
 -import { Router } from 'react-router-dom'
 
 -export const replaceRouterComponent = ({ history }) => {
-+export const wrapRootComponent = ({ component }) => {
++export const wrapRootElement = ({ element }) => {
 -  const ConnectedRouterWrapper = ({ children }) => (
-+  const ConnectedRootComponent = (
++  const ConnectedRootElement = (
     <Provider store={store}>
 -      <Router history={history}>{children}</Router>
-+      {component}
++      {element}
     </Provider>
   )
 
 -  return ConnectedRouterWrapper
-+  return ConnectedRootComponent
++  return ConnectedRootElement
 }
 ```
 
@@ -893,17 +893,19 @@ Import graphql types from `gatsby/graphql` to prevent `Schema must contain uniqu
 +const { GraphQLString } = require(`gatsby/graphql`)
 ```
 
-### Browser API `wrapPageComponent` has changed
+### Browser API `wrapRootComponent` has been removed
 
-We now pass `component` Element instead of `Root` Component and expect that `wrapPageComponent` will return Element and not Component. This change was needed to keep all wrapping APIs uniform.
+Use new [`wrapRootElement`](/docs/browser-apis/#wrapRootComponent) API:
+We now pass `component` Element instead of `Root` Component and expect that `wrapRootElement` will return Element and not Component. This change was needed to keep all wrapping APIs uniform.
 
 ```diff
 -export const wrapRootComponent = ({ Root }) => {
-+export const wrapRootComponent = ({ component }) => {
++export const wrapRootElement = ({ element }) => {
 -  const ConnectedRootComponent = () => (
 +  const ConnectedRootElement = (
     <Provider store={store}>
-      <Root />
+-      <Root />
++      {element}
     </Provider>
   )
 -  return ConnectedRootComponent
