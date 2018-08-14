@@ -1,6 +1,5 @@
 const babelLoader = require(`babel-loader`)
 const path = require(`path`)
-const fs = require(`fs`)
 
 const prepareOptions = babel => {
   const pluginBabelConfig = require(path.join(
@@ -9,6 +8,37 @@ const prepareOptions = babel => {
   ))
 
   const stage = process.env.GATSBY_BUILD_STAGE
+
+  // Required plugins/presets
+  const requiredPlugins = [
+    babel.createConfigItem(
+      [require.resolve(`babel-plugin-remove-graphql-queries`)],
+      {
+        type: `plugin`,
+      }
+    ),
+  ]
+  const requiredPresets = []
+
+  // Stage specific plugins to add
+  if (stage === `build-html` || stage === `develop-html`) {
+    requiredPlugins.push(
+      babel.createConfigItem(
+        [require.resolve(`babel-plugin-dynamic-import-node`)],
+        {
+          type: `plugin`,
+        }
+      )
+    )
+  }
+
+  if (stage === `develop`) {
+    requiredPlugins.push(
+      babel.createConfigItem([require.resolve(`react-hot-loader/babel`)], {
+        type: `plugin`,
+      })
+    )
+  }
 
   // Go through babel state and create config items.
   const reduxPlugins = []
@@ -28,7 +58,7 @@ const prepareOptions = babel => {
     )
   })
 
-  return [reduxPresets, reduxPlugins]
+  return [reduxPresets, reduxPlugins, requiredPresets, requiredPlugins]
 }
 
 module.exports = babelLoader.custom(babel => {
@@ -47,15 +77,27 @@ module.exports = babelLoader.custom(babel => {
     // Passed Babel's 'PartialConfig' object.
     config(partialConfig) {
       let { options } = partialConfig
+      const [
+        reduxPresets,
+        reduxPlugins,
+        requiredPresets,
+        requiredPlugins,
+      ] = prepareOptions(babel)
 
       // If there is no filesystem config present add more defaults
       // TODO: maybe this should be stricter, like checks if there are no plugins or presets?
       if (!partialConfig.hasFilesystemConfig()) {
-        const [reduxPresets, reduxPlugins] = prepareOptions(babel)
         options = {
           ...options,
-          plugins: reduxPlugins,
-          presets: reduxPresets,
+          plugins: [...reduxPlugins, ...requiredPlugins],
+          presets: [...reduxPresets, ...requiredPresets],
+        }
+      } else {
+        // Push on just our required plugins/presets
+        options = {
+          ...options,
+          plugins: [...options.plugins, ...requiredPlugins],
+          presets: [...options.presets, ...requiredPresets],
         }
       }
 
