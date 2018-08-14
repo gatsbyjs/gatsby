@@ -47,7 +47,19 @@ exports.sourceNodes = async (
       if (!url) return
       if (!type) return
       const getNext = async (url, data = []) => {
-        const d = await axios.get(url)
+        let d
+        try {
+          d = await axios.get(url)
+        } catch (error) {
+          if (error.response && error.response.status == 405) {
+            // The endpoint doesn't support the GET method, so just skip it.
+            return []
+          } else {
+            console.error(`Failed to fetch ${url}`, error.message)
+            console.log(error.data)
+            throw error
+          }
+        }
         data = data.concat(d.data.data)
         if (d.data.links.next) {
           data = await getNext(d.data.links.next, data)
