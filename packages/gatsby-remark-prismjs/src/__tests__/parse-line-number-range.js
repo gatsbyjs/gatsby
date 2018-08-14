@@ -46,7 +46,14 @@ describe(`parses numeric ranges from the languages markdown code directive`, () 
       expect(parseLineNumberRange(`jsx{numberLines: 3}`).numberLines).toEqual(true)
       expect(parseLineNumberRange(`jsx{numberLines: 3}`).numberLinesStartAt).toEqual(3)
     })
-  
+
+    it(`parses the right line number start index without a specified language`, () => {
+      expect(parseLineNumberRange(`{numberLines: true}`).numberLines).toEqual(true)
+      expect(parseLineNumberRange(`{numberLines: true}`).numberLinesStartAt).toEqual(1)
+      expect(parseLineNumberRange(`{numberLines: 3}`).numberLines).toEqual(true)
+      expect(parseLineNumberRange(`{numberLines: 3}`).numberLinesStartAt).toEqual(3)
+    })
+
     it(`ignores non-true or non-number values`, () => {
       expect(parseLineNumberRange(`jsx{numberLines: false}`).numberLines).toEqual(false)
       expect(parseLineNumberRange(`jsx{numberLines: NaN}`).numberLines).toEqual(false)
@@ -59,11 +66,37 @@ describe(`parses numeric ranges from the languages markdown code directive`, () 
   })
 
   describe(`parses both line numbering and line highlighting options`, () => {
-    expect(parseLineNumberRange(`jsx{1,5,7-8}{numberLines: 3}`)).toEqual({
-      splitLanguage: `jsx`,
-      highlightLines: [1,5,7,8],
-      numberLines: true,
-      numberLinesStartAt: 3,
+    it(`one line highlighted`, () => {
+      expect(parseLineNumberRange(`jsx{1}{numberLines: 3}`)).toEqual({
+        splitLanguage: `jsx`,
+        highlightLines: [1],
+        numberLines: true,
+        numberLinesStartAt: 3,
+      })
+    })
+    it(`multiple lines highlighted`, () => {
+      expect(parseLineNumberRange(`jsx{1,5,7-8}{numberLines: 3}`)).toEqual({
+        splitLanguage: `jsx`,
+        highlightLines: [1,5,7,8],
+        numberLines: true,
+        numberLinesStartAt: 3,
+      })
+    })
+    it(`numberLines: true`, () => {
+      expect(parseLineNumberRange(`jsx{1,5,7-8}{numberLines: true}`)).toEqual({
+        splitLanguage: `jsx`,
+        highlightLines: [1,5,7,8],
+        numberLines: true,
+        numberLinesStartAt: 1,
+      })
+    })
+    it(`reverse ordering`, () => {
+      expect(parseLineNumberRange(`jsx{numberLines: 4}{2}`)).toEqual({
+        splitLanguage: `jsx`,
+        highlightLines: [2],
+        numberLines: true,
+        numberLinesStartAt: 4,
+      })
     })
   })
 
