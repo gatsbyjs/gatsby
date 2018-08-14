@@ -83,6 +83,11 @@ const addDefaultPluginsPresets = (
     options: { loose: true },
   })
   actions.setBabelPlugin({
+    name: `babel-plugin-remove-graphql-queries`,
+    stage,
+    options: { loose: true },
+  })
+  actions.setBabelPlugin({
     name: `@babel/plugin-syntax-dynamic-import`,
     stage,
   })
@@ -100,6 +105,21 @@ const addDefaultPluginsPresets = (
       polyfill: false,
     },
   })
+
+  // Stage specific plugins to add
+  if (stage === `build-html` || stage === `develop-html`) {
+    actions.setBabelPlugin({
+      name: `babel-plugin-dynamic-import-node`,
+      stage,
+    })
+  }
+
+  if (stage === `develop`) {
+    actions.setBabelPlugin({
+      name: `react-hot-loader/babel`,
+      stage,
+    })
+  }
 }
 
 exports.addDefaultPluginsPresets = addDefaultPluginsPresets
