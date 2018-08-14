@@ -128,6 +128,20 @@ plugins: [
 ]
 ```
 
+Line numbers can start from anywhere, here's an example showing a small extract from a larger chunk of code:
+
+    ```{numberLines: 549}
+    ...
+    a long imaginary code block
+    ...
+    ```
+
+```{numberLines: 549}
+...
+ a long imaginary code block
+...
+```
+
 Let's do something crazy and add a list with another code example:
 
 - **A list item**
