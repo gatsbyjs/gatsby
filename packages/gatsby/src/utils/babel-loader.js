@@ -41,7 +41,6 @@ module.exports = babelLoader.custom(babel => {
       return {
         loader: {
           cacheDirectory: true,
-          babelrc: false,
           sourceType: `unambiguous`,
           ...options,
         },
