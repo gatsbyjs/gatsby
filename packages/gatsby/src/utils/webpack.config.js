@@ -439,9 +439,12 @@ module.exports = async (
 
   if (stage === `build-html` || stage === `develop-html`) {
     const externalList = [
-      /^lodash/,
+      // match `lodash` and `lodash/foo`
+      // but not things like `lodash-es`
+      `lodash`,
+      /^lodash\//,
       `react`,
-      /^react-dom/,
+      /^react-dom\//,
       `pify`,
       `@reach/router`,
       `@reach/router/lib/history`,
@@ -451,7 +454,7 @@ module.exports = async (
       `react-helmet`,
       `minimatch`,
       `fs`,
-      /^core-js/,
+      /^core-js\//,
       `es6-promise`,
       `crypto`,
       `zlib`,
