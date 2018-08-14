@@ -43,7 +43,7 @@ module.exports = (
     numLinesStyle = numLinesClass = numLinesNumber = ``
     if (numberLines) {
       numLinesStyle = ` style="counter-reset: linenumber ${numberLinesStartAt - 1}"`
-      numLinesClass = `line-numbers`
+      numLinesClass = ` line-numbers`
       numLinesNumber = addLineNumbers(node.value)
     }
 
