@@ -28,11 +28,7 @@ module.exports = async (
 ) => {
   const directoryPath = withBasePath(directory)
 
-  await fs.writeFile(
-    directoryPath(`.cache/current-stage.txt`),
-    suppliedStage,
-    `utf8`
-  )
+  process.env.GATSBY_BUILD_STAGE = suppliedStage
 
   // We combine develop & develop-html stages for purposes of generating the
   // webpack config.

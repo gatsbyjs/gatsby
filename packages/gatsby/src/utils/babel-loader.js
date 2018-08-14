@@ -8,10 +8,7 @@ const prepareOptions = babel => {
     `./.cache/babelState.json`
   ))
 
-  const stage = fs.readFileSync(
-    path.join(process.cwd(), `./.cache/current-stage.txt`),
-    `utf8`
-  )
+  const stage = process.env.GATSBY_BUILD_STAGE
 
   // Go through babel state and create config items.
   const reduxPlugins = []
