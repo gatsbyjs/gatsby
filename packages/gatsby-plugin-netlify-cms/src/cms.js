@@ -1,8 +1,6 @@
-/* eslint-disable no-unused-vars */
-/* eslint-env browser */
 import CMS from "netlify-cms"
-import "netlify-cms/dist/cms.css"
-import netlifyIdentityWidget from "netlify-identity-widget"
 
-window.netlifyIdentity = netlifyIdentityWidget
-netlifyIdentityWidget.init()
+/**
+ * The stylesheet output from the module at `stylesPath` will be at `cms.css`.
+ */
+CMS.registerPreviewStyle(`cms.css`)

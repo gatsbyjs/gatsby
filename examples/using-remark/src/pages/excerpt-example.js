@@ -59,7 +59,7 @@ class Index extends React.Component {
 export default Index
 
 export const pageQuery = graphql`
-  query ExcerptExampleQuery {
+  query {
     allMarkdownRemark(filter: { frontmatter: { example: { eq: true } } }) {
       edges {
         node {

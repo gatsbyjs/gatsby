@@ -5,6 +5,7 @@ const testRequireError = require(`../utils/test-require-error`).default
 const report = require(`gatsby-cli/lib/reporter`)
 const chalk = require(`chalk`)
 const path = require(`path`)
+const existsSync = require(`fs-exists-cached`).sync
 
 function isNearMatch(
   fileName: string,
@@ -45,7 +46,7 @@ module.exports = async function getConfigFile(
       )
       console.log(``)
       process.exit(1)
-    } else if (fs.existsSync(path.join(rootDir, `src`, configName))) {
+    } else if (existsSync(path.join(rootDir, `src`, configName))) {
       console.log(``)
       report.error(
         `Your ${configName} file is in the wrong place. You've placed it in the src/ directory. It must instead be at the root of your site next to your package.json file.`

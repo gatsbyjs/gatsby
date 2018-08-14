@@ -32,7 +32,7 @@ class TagsPageRoute extends React.Component {
 export default TagsPageRoute
 
 export const pageQuery = graphql`
-  query TagsQuery {
+  query {
     site {
       siteMetadata {
         title

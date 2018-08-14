@@ -369,7 +369,7 @@ site doesn't require a page reload. Gatsby _pre-caches_ code and data needed for
 other pages so that clicking on a link loads the next page instantly.
 
 All the setup for this is handled behind the scenes. Gatsby uses
-[React Router](https://github.com/ReactTraining/react-router) under the hood but
+[@reach/router](https://reach.tech/router/) under the hood but
 generates all the configuration for you.
 
 Normally page resources are pre-cached with a service worker. But as several
@@ -557,7 +557,7 @@ node scrape.js INSTAGRAM_USERNAME
 gatsby develop
 ```
 
-While writing this post I scrapped a few accounts and published their resulting
+While writing this post I scraped a few accounts and published their resulting
 "Gatsbygram" sites:
 
 - https://iceland-gatsbygram.netlify.com

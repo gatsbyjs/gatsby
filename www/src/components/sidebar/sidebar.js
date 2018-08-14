@@ -1,176 +1,295 @@
 import React, { Component } from "react"
-import ScrollSyncBody from "./scroll-sync-body"
-import SidebarBody from "./body"
-import ChevronSvg from "./chevron-svg"
+
+import Item from "./item"
+import ExpandAllButton from "./button-expand-all"
+import getActiveItem from "../../utils/sidebar/get-active-item"
+import getActiveItemParents from "../../utils/sidebar/get-active-item-parents"
 import presets, { colors } from "../../utils/presets"
-import { rhythm } from "../../utils/typography"
+import { scale, options } from "../../utils/typography"
 
-class StickyResponsiveSidebar extends Component {
-  constructor(props) {
-    super(props)
+// Access to global `localStorage` property must be guarded as it
+// fails under iOS private session mode.
+var hasLocalStorage = true
+var testKey = `gatsbyjs.sidebar.testKey`
+var ls
+try {
+  ls = global.localStorage
+  ls.setItem(testKey, `test`)
+  ls.removeItem(testKey)
+} catch (e) {
+  hasLocalStorage = false
+}
 
-    this.state = {
-      open: false,
+const isItemActive = (activeItemParents, item) => {
+  if (activeItemParents) {
+    for (let parent of activeItemParents) {
+      if (parent === item.title) return true
     }
   }
 
-  _openNavMenu = () => {
-    this.setState({ open: !this.state.open })
+  return false
+}
+
+const getOpenItemHash = (itemList, state) => {
+  for (let item of itemList) {
+    if (item.items) {
+      state.openSectionHash[item.title] =
+        isItemActive(state.activeItemParents, item) ||
+        state.activeItemLink.title === item.title
+
+      getOpenItemHash(item.items, state)
+    }
   }
 
-  _closeNavMenu = () => {
-    this.setState({ open: false })
+  return false
+}
+
+class SidebarBody extends Component {
+  constructor(props, context) {
+    super(props, context)
+
+    this._toggleSection = this._toggleSection.bind(this)
+    this.state = { ...this._getInitialState(props) }
+  }
+
+  componentDidMount() {
+    if (hasLocalStorage) {
+      const key = this.props.itemList[0].key
+      const initialState = this.state
+      const localState = this._readLocalStorage(key)
+
+      if (localState) {
+        const bar = Object.keys(initialState.openSectionHash).filter(function(
+          key
+        ) {
+          return initialState.openSectionHash[key]
+        })
+
+        const state = {
+          ...initialState,
+          openSectionHash: JSON.parse(localState).openSectionHash,
+        }
+
+        for (let item in initialState.openSectionHash) {
+          for (let parent of bar) {
+            if (parent === item) {
+              state.openSectionHash[item] = true
+            }
+          }
+        }
+
+        state.expandAll = Object.entries(state.openSectionHash).every(k => k[1])
+
+        this.setState(state)
+      } else {
+        this._writeLocalStorage(this.state, key)
+      }
+    }
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    if (props.activeItemHash !== state.activeItemHash) {
+      const activeItemLink = getActiveItem(
+        props.itemList,
+        props.location,
+        props.activeItemHash
+      )
+
+      return {
+        activeItemLink: activeItemLink,
+        activeItemParents: getActiveItemParents(
+          props.itemList,
+          activeItemLink,
+          []
+        ),
+        activeItemHash: props.activeItemHash,
+      }
+    }
+
+    return null
+  }
+
+  _getInitialState(props) {
+    const activeItemLink = getActiveItem(
+      props.itemList,
+      props.location,
+      props.activeItemHash
+    )
+
+    const state = {
+      openSectionHash: {},
+      expandAll: false,
+      key: props.itemList[0].key,
+      activeItemHash: props.activeItemHash,
+      activeItemLink: activeItemLink,
+      activeItemParents: getActiveItemParents(
+        props.itemList,
+        activeItemLink,
+        []
+      ),
+    }
+
+    getOpenItemHash(props.itemList, state)
+    state.expandAll = Object.entries(state.openSectionHash).every(k => k[1])
+
+    return state
+  }
+
+  _readLocalStorage(key) {
+    if (hasLocalStorage) {
+      return localStorage.getItem(`gatsbyjs:sidebar:${key}`)
+    } else {
+      return false
+    }
+  }
+
+  _writeLocalStorage(state, key) {
+    if (hasLocalStorage) {
+      localStorage.setItem(`gatsbyjs:sidebar:${key}`, JSON.stringify(state))
+    }
+  }
+
+  _toggleSection(item) {
+    const { openSectionHash } = this.state
+
+    const state = {
+      openSectionHash: {
+        ...openSectionHash,
+        [item.title]: !openSectionHash[item.title],
+      },
+    }
+
+    state.expandAll = Object.entries(state.openSectionHash).every(k => k[1])
+
+    this._writeLocalStorage(state, this.state.key)
+    this.setState(state)
+  }
+
+  _expandAll = () => {
+    if (this.state.expandAll) {
+      this._writeLocalStorage(
+        { openSectionHash: this._getInitialState(this.props).openSectionHash },
+        this.state.key
+      )
+      this.setState({
+        ...this._getInitialState(this.props),
+        expandAll: false,
+      })
+    } else {
+      let openSectionHash = { ...this.state.openSectionHash }
+      Object.keys(openSectionHash).forEach(k => (openSectionHash[k] = true))
+      this._writeLocalStorage({ openSectionHash }, this.state.key)
+      this.setState({ openSectionHash, expandAll: true })
+    }
   }
 
   render() {
-    const { open } = this.state
-    const BodyComponent = this.props.enableScrollSync
-      ? ScrollSyncBody
-      : SidebarBody
-
-    const iconOffset = open ? 8 : -4
-    const menuOpacity = open ? 1 : 0
-    const menuOffset = open ? 0 : rhythm(10)
-
-    const horizontalPadding = rhythm(3 / 4)
-    const horizonalPaddingDesktop = rhythm(3 / 2)
+    const { closeSidebar, itemList, location } = this.props
+    const { openSectionHash, activeItemLink, activeItemParents } = this.state
 
     return (
-      <React.Fragment>
-        <div
-          style={{
-            opacity: menuOpacity,
-            transition: `opacity 0.5s ease`,
-          }}
-          css={{
-            ...sidebarStyles,
-            background: `#fff`,
-            border: 0,
-            boxShadow: `0 0 20px rgba(0, 0, 0, 0.15)`,
-            display: `block`,
-            height: `100vh`,
-            paddingTop: horizontalPadding,
-            paddingBottom: horizontalPadding,
-            pointerEvents: open ? `auto` : `none`,
-            top: 0,
-            width: 320,
-            zIndex: 10,
-            [presets.Tablet]: {
-              backgroundColor: colors.ui.whisper,
-              borderRight: `1px solid ${colors.ui.light}`,
-              boxShadow: `none`,
-              height: `calc(100vh - ${presets.headerHeight} - ${
-                presets.bannerHeight
-              } + 1px)`,
-              maxWidth: `none`,
-              opacity: `1 !important`,
-              pointerEvents: `auto`,
-              top: `calc(${presets.headerHeight} + ${
-                presets.bannerHeight
-              } - 1px)`,
-              width: rhythm(10),
-              zIndex: 2,
-            },
-            [presets.Desktop]: {
-              paddingTop: horizonalPaddingDesktop,
-              paddingBottom: horizonalPaddingDesktop,
-              width: rhythm(12),
-            },
-          }}
-        >
-          <div
-            style={{
-              transform: `translateX(-${menuOffset})`,
-              transition: `transform 0.5s ease`,
-            }}
-            css={{
-              [presets.Tablet]: {
-                transform: `none !important`,
-              },
-            }}
-          >
-            <BodyComponent
-              closeParentMenu={this._closeNavMenu}
-              {...this.props}
+      <div className="docSearch-sidebar" css={{ height: `100%` }}>
+        {!itemList[0].disableExpandAll && (
+          <div css={{ ...styles.utils }}>
+            <ExpandAllButton
+              onClick={this._expandAll}
+              expandAll={this.state.expandAll}
             />
           </div>
-        </div>
+        )}
         <div
           css={{
-            backgroundColor: colors.gatsby,
-            bottom: 44, // iOS Safari's inert "bottom 44px"
-            display: `block`, // gets overriden at small screen sizes
-            cursor: `pointer`,
-            position: `fixed`,
-            right: 20,
-            width: 60,
-            zIndex: 20,
-            borderRadius: `50%`,
-            border: `1px solid rgba(255, 255, 255, 0.1)`,
-            boxShadow: `0 0 20px rgba(0, 0, 0, 0.3)`,
-            [presets.Tablet]: { display: `none` },
+            ...styles.sidebarScrollContainer,
+            height: itemList[0].disableExpandAll
+              ? `calc(100%)`
+              : `calc(100% - ${presets.sidebarUtilityHeight} + 1px)`,
+            [presets.Tablet]: {
+              ...styles.sidebarScrollContainerTablet,
+            },
           }}
-          onClick={this._openNavMenu}
-          role="button"
-          tabIndex={0}
         >
-          <div
-            css={{
-              display: `flex`,
-              flexDirection: `row`,
-              alignItems: `center`,
-              height: 60,
-              width: `100%`,
-              justifyContent: `space-around`,
-            }}
-          >
-            <div
-              css={{
-                width: 20,
-                height: 20,
-                alignSelf: `center`,
-                display: `flex`,
-                flexDirection: `column`,
-                color: `#fff`,
-              }}
-            >
-              <ChevronSvg
-                size={15}
-                cssProps={{
-                  transform: `translate(2px, ${iconOffset}px) rotate(180deg)`,
-                  transition: `transform 0.2s ease`,
-                }}
+          <ul css={{ ...styles.list }}>
+            {itemList.map((item, index) => (
+              <Item
+                activeItemLink={activeItemLink}
+                activeItemParents={activeItemParents}
+                isActive={openSectionHash[item.title]}
+                item={item}
+                key={index}
+                level={0}
+                location={location}
+                onLinkClick={closeSidebar}
+                onSectionTitleClick={this._toggleSection}
+                openSectionHash={openSectionHash}
               />
-              <ChevronSvg
-                size={15}
-                cssProps={{
-                  transform: `translate(2px, ${0 - iconOffset}px)`,
-                  transition: `transform 0.2s ease`,
-                }}
-              />
-            </div>
-          </div>
+            ))}
+          </ul>
         </div>
-      </React.Fragment>
+      </div>
     )
   }
 }
 
-export default StickyResponsiveSidebar
+export default SidebarBody
 
-const sidebarStyles = {
-  width: rhythm(10),
-  position: `fixed`,
-  overflowY: `auto`,
-  WebkitOverflowScrolling: `touch`,
-  "::-webkit-scrollbar": {
-    width: `6px`,
-    height: `6px`,
+const styles = {
+  utils: {
+    borderRight: `1px solid ${colors.ui.border}`,
+    display: `flex`,
+    alignItems: `center`,
+    height: presets.sidebarUtilityHeight,
+    background: colors.ui.whisper,
+    paddingLeft: 40,
+    paddingRight: 8,
+    borderBottom: `1px solid ${colors.ui.border}`,
   },
-  "::-webkit-scrollbar-thumb": {
-    background: colors.ui.bright,
+  sidebarScrollContainer: {
+    WebkitOverflowScrolling: `touch`,
+    background: `#fff`,
+    border: 0,
+    display: `block`,
+    overflowY: `auto`,
+    transition: `opacity 0.5s ease`,
+    zIndex: 10,
+    borderRight: `1px solid ${colors.ui.border}`,
+    "::-webkit-scrollbar": {
+      height: `6px`,
+      width: `6px`,
+    },
+    "::-webkit-scrollbar-thumb": {
+      background: colors.ui.bright,
+    },
+    "::-webkit-scrollbar-thumb:hover": {
+      background: colors.lilac,
+    },
+    "::-webkit-scrollbar-track": {
+      background: colors.ui.light,
+    },
   },
-  "::-webkit-scrollbar-track": {
-    background: colors.ui.light,
+  sidebarScrollContainerTablet: {
+    backgroundColor: colors.ui.whisper,
+    top: `calc(${presets.headerHeight} + ${presets.bannerHeight} - 1px)`,
+  },
+  list: {
+    margin: 0,
+    paddingTop: 20,
+    paddingBottom: 104,
+    fontSize: scale(-2 / 10).fontSize,
+    [presets.Tablet]: {
+      fontSize: scale(-4 / 10).fontSize,
+      paddingBottom: 20,
+    },
+    "&&": {
+      "& a": {
+        fontFamily: options.systemFontFamily.join(`,`),
+      },
+    },
+    "& li": {
+      margin: 0,
+      listStyle: `none`,
+    },
+    "& > li:last-child > span:before": {
+      display: `none`,
+    },
   },
 }

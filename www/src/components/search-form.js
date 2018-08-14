@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import PropTypes from "prop-types"
-import { push } from "gatsby"
+import { navigate } from "gatsby"
 import { rhythm } from "../utils/typography"
 
 import presets, { colors } from "../utils/presets"
@@ -232,48 +232,39 @@ css.insert(`
     }
   }
 `)
-
 class SearchForm extends Component {
   constructor() {
     super()
     this.state = { enabled: true, focussed: false }
     this.autocompleteSelected = this.autocompleteSelected.bind(this)
   }
-
   /**
    * Replace the default selection event, allowing us to do client-side
    * navigation thus avoiding a full page refresh.
    *
    * Ref: https://github.com/algolia/autocomplete.js#events
-   */
-  autocompleteSelected(e) {
+   */ autocompleteSelected(e) {
     e.stopPropagation()
     // Use an anchor tag to parse the absolute url (from autocomplete.js) into a relative url
-    // eslint-disable-next-line no-undef
     const a = document.createElement(`a`)
     a.href = e._args[0].url
     this.searchInput.blur()
-    push(`${a.pathname}${a.hash}`)
+    navigate(`${a.pathname}${a.hash}`)
   }
-
   componentDidMount() {
     if (
-      typeof window === `undefined` || // eslint-disable-line no-undef
-      typeof window.docsearch === `undefined` // eslint-disable-line no-undef
+      typeof window === `undefined` ||
+      typeof window.docsearch === `undefined`
     ) {
       console.warn(`Search has failed to load and now is being disabled`)
       this.setState({ enabled: false })
       return
     }
-
-    // eslint-disable-next-line no-undef
     window.addEventListener(
       `autocomplete:selected`,
       this.autocompleteSelected,
       true
     )
-
-    // eslint-disable-next-line no-undef
     window.docsearch({
       apiKey: `71af1f9c4bd947f0252e17051df13f9c`,
       indexName: `gatsbyjs`,
@@ -287,11 +278,9 @@ class SearchForm extends Component {
       },
     })
   }
-
   render() {
     const { enabled, focussed } = this.state
     const { iconStyles, isHomepage } = this.props
-
     return enabled ? (
       <form
         css={{
@@ -328,7 +317,6 @@ class SearchForm extends Component {
                 width: rhythm(5),
                 transition: `width ${speedDefault} ${curveDefault}, background-color ${speedDefault} ${curveDefault}`,
               },
-
               [presets.Desktop]: {
                 backgroundColor: !isHomepage && `#fff`,
                 color: colors.gatsby,
@@ -338,7 +326,6 @@ class SearchForm extends Component {
                   color: colors.gatsby,
                 },
               },
-
               [presets.Hd]: {
                 backgroundColor: isHomepage && colors.lilac,
                 color: isHomepage && colors.ui.light,
@@ -367,7 +354,6 @@ class SearchForm extends Component {
               pointerEvents: `none`,
               transition: `fill ${speedDefault} ${curveDefault}`,
               transform: `translateY(-50%)`,
-
               [presets.Hd]: {
                 fill: focussed && isHomepage && colors.gatsby,
               },
@@ -378,10 +364,8 @@ class SearchForm extends Component {
     ) : null
   }
 }
-
 SearchForm.propTypes = {
   isHomepage: PropTypes.bool,
   iconStyles: PropTypes.object,
 }
-
 export default SearchForm

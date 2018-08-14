@@ -70,13 +70,6 @@ exports.shouldUpdateScroll = true
 exports.registerServiceWorker = true
 
 /**
- * Allow a plugin to replace the router component e.g. to use a custom history version.
- * @param {object} $0
- * @param {object} $0.history The history instance to use in the replacement router instance
- */
-exports.replaceRouterComponent = true
-
-/**
  * Allow a plugin to replace the page component renderer. This api runner can be used to
  * implement page transitions. See https://github.com/gatsbyjs/gatsby/tree/master/examples/using-page-transitions for an example of this.
  * @param {object} $0
@@ -84,13 +77,6 @@ exports.replaceRouterComponent = true
  * @param {object} $0.loader The gatsby loader.
  */
 exports.replaceComponentRenderer = true
-
-/**
- * Allow a plugin to replace the history object.
- * @param {object} $0
- * @param {object} $0.basename The base URL of the app.
- */
-exports.replaceHistory = true
 
 /**
  * Allow a plugin to wrap the root component.
@@ -104,6 +90,7 @@ exports.wrapRootComponent = true
  * for plugins with custom prefetching logic.
  * @param {object} $0
  * @param {object} $0.pathname The pathname whose resources should now be prefetched
+ * @param {object} $0.getResourcesForPathname Function for fetching resources related to pathname
  */
 exports.onPrefetchPathname = true
 
@@ -126,3 +113,31 @@ exports.disableCorePrefetching = true
  * };
  */
 exports.replaceHydrateFunction = true
+
+/**
+ * Inform plugins when a service worker has been installed.
+ * @param {object} $0
+ * @param {object} $0.serviceWorker The service worker instance.
+ */
+exports.onServiceWorkerInstalled = true
+
+/**
+ * Inform plugins of when a service worker has an update available.
+ * @param {object} $0
+ * @param {object} $0.serviceWorker The service worker instance.
+ */
+exports.onServiceWorkerUpdateFound = true
+
+/**
+ * Inform plugins when a service worker has become active.
+ * @param {object} $0
+ * @param {object} $0.serviceWorker The service worker instance.
+ */
+exports.onServiceWorkerActive = true
+
+/**
+ * Inform plugins when a service worker is redundant.
+ * @param {object} $0
+ * @param {object} $0.serviceWorker The service worker instance.
+ */
+exports.onServiceWorkerRedundant = true

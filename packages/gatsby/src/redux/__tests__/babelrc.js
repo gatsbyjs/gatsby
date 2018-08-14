@@ -7,7 +7,7 @@ const babelrcReducer = require(`../reducers/babelrc`)
 const {
   addDefaultPluginsPresets,
   actionifyBabelrc,
-} = require(`../../internal-plugins/load-babel-config/gatsby-node`)
+} = require(`../../internal-plugins/load-babel-config/utils`)
 const { buildConfig } = require(`../../utils/babel-config`)
 
 describe(`Babelrc actions/reducer`, () => {

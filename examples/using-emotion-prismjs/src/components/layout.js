@@ -1,5 +1,5 @@
 import React, { Fragment } from "react"
-import { Link, StaticQuery } from "gatsby"
+import { Link, StaticQuery, graphql } from "gatsby"
 import PropTypes from "prop-types"
 import { css } from "react-emotion"
 import Helmet from "react-helmet"
@@ -57,7 +57,7 @@ Layout.propTypes = {
 export default props => (
   <StaticQuery
     query={graphql`
-      query LayoutQuery {
+      query {
         site {
           siteMetadata {
             title

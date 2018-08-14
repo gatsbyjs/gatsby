@@ -60,7 +60,7 @@ Gatsby provides a hosted screenshot service for you to use; however, you can run
 
 AWS Lambda is a "serverless" computing platform that lets you run code in response to events, without needing to set up a server. This plugin uses a Lambda function to take screenshots and store them in an AWS S3 bucket.
 
-First, you will need to (create a S3 bucket)[https://docs.aws.amazon.com/AmazonS3/latest/gsg/CreatingABucket.html] for storing screenshots. Once you have done that, create a (Lifecycle Policy)[https://docs.aws.amazon.com/AmazonS3/latest/user-guide/create-lifecycle.html] for the bucket that sets a number of days before files in the bucket expire. Screenshots will be cached until this date.
+First, you will need to [create a S3 bucket](https://docs.aws.amazon.com/AmazonS3/latest/gsg/CreatingABucket.html) for storing screenshots. Once you have done that, create a [Lifecycle Policy](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/create-lifecycle.html) for the bucket that sets a number of days before files in the bucket expire. Screenshots will be cached until this date.
 
 To build the Lambda package, run `npm run build-lambda-package` in this directory. A file called `lambda-package.zip` will be generated - upload this as the source of your AWS Lambda. Finally, you will need to set `S3_BUCKET` as an environment variable for the lambda.
 

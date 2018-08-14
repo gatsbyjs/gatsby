@@ -5,7 +5,7 @@ const crypto = require(`crypto`)
 async function onCreateNode({ node, actions, loadNodeContent, createNodeId }) {
   const { createNode, createParentChildLink } = actions
   // Filter out non-toml content
-  // Currently TOML files are considered 'application/octet-stream' in 'mime-db'
+  // Currently TOML files are considered null in 'mime-db'
   // Hence the extension test instead of mediaType test
   if (node.extension !== `toml`) {
     return

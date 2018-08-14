@@ -8,7 +8,7 @@
   "license": "MIT",
   "dependencies": {
     "gatsby": "next",
-    "gatsby-source-medium": "^1.0.1",
+    "gatsby-source-medium": "next",
     "react": "^16.4.0",
     "react-dom": "^16.4.0"
   },

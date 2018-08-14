@@ -1,5 +1,5 @@
 import React from "react"
-import { Link } from "gatsby"
+import { Link, graphql } from "gatsby"
 import * as PropTypes from "prop-types"
 import Img from "gatsby-image"
 import Layout from "../layouts"
@@ -62,7 +62,7 @@ CategoryTemplate.propTypes = propTypes
 export default CategoryTemplate
 
 export const pageQuery = graphql`
-  query categoryQuery($id: String!) {
+  query($id: String!) {
     contentfulCategory(id: { eq: $id }) {
       title {
         title

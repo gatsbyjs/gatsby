@@ -1,5 +1,6 @@
 const chokidar = require(`chokidar`)
 const fs = require(`fs`)
+const path = require(`path`)
 const { Machine } = require(`xstate`)
 
 const { createFileNode } = require(`./create-file-node`)
@@ -84,6 +85,12 @@ Please pick a path to an existing directory.
 
 See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
       `)
+  }
+
+  // Validate that the path is absolute.
+  // Absolute paths are required to resolve images correctly.
+  if (!path.isAbsolute(pluginOptions.path)) {
+    pluginOptions.path = path.resolve(process.cwd(), pluginOptions.path)
   }
 
   const fsMachine = createFSMachine()

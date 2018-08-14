@@ -5,7 +5,7 @@ const pkgs = glob.sync(`./packages/*`).map(p => p.replace(/^\./, `<rootDir>`))
 
 const reGatsby = /gatsby$/
 const gatsbyDir = pkgs.find(p => reGatsby.exec(p))
-const gatsbyBuildDirs = [`dist`, `cache-dir`].map(dir => path.join(gatsbyDir, dir))
+const gatsbyBuildDirs = [`dist`].map(dir => path.join(gatsbyDir, dir))
 const builtTestsDirs = pkgs.map(p => path.join(p, `__tests__`))
 
 const ignoreDirs = [].concat(gatsbyBuildDirs, builtTestsDirs)
@@ -27,4 +27,7 @@ module.exports = {
   moduleNameMapper: {
     "^highlight.js$": `<rootDir>/node_modules/highlight.js/lib/index.js`,
   },
+  // TODO: Remove this once https://github.com/facebook/jest/pull/6792 is released.
+  // Probably in Jest 23.4.3
+  testURL: 'http://localhost',
 }

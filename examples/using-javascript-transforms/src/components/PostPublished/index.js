@@ -1,36 +1,32 @@
 import React from "react"
-import Helmet from "react-helmet"
 import moment from "moment"
 
 class PostPublished extends React.Component {
   render() {
     const frontmatter = this
-
+    let published
     if (frontmatter.updated === null) {
-      var published = (
-        <div className="date-published">
-          <p>
-            <em>
-              published {moment(frontmatter.written).format(`D MMM YYYY`)}
-            </em>
-          </p>
-        </div>
+      published = (
+        <em>`published`{moment(frontmatter.written).format(`D MMM YYYY`)}</em>
       )
     } else {
-      var published = (
-        <div className="date-published">
-          <p>
-            <em>
-              originally published{` `}
-              {moment(frontmatter.written).format(`D MMM YYYY`)} and updated{` `}
-              {moment(frontmatter.updated).format(`D MMM YYYY`)}
-            </em>
-          </p>
-        </div>
+      published = (
+        <em>
+          {`originally published `}
+          {moment(frontmatter.written).format(`D MMM YYYY`)}
+          {` and updated `}
+          {moment(frontmatter.updated).format(`D MMM YYYY`)}
+        </em>
       )
     }
 
-    return <div className="container content">{published}</div>
+    return (
+      <div className="container content">
+        <div className="date-published">
+          <p>{published}</p>
+        </div>
+      </div>
+    )
   }
 }
 

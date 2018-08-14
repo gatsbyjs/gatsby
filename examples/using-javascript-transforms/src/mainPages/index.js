@@ -1,11 +1,10 @@
 import React from "react"
-import { Link } from "gatsby"
-import Helmet from "react-helmet"
+import { Link, graphql } from "gatsby"
 import sortBy from "lodash/sortBy"
 import moment from "moment"
 import InsetPageLayout from "../components/Layouts/insetPage"
 
-exports.frontmatter = {
+export const frontmatter = {
   layoutType: `page`,
   path: `/`,
 }
@@ -88,7 +87,7 @@ class SiteIndex extends React.Component {
 export default SiteIndex
 
 export const pageQuery = graphql`
-  query allPosts {
+  query {
     allJavascriptFrontmatter {
       edges {
         node {
@@ -116,7 +115,6 @@ export const pageQuery = graphql`
             title
             path
             layoutType
-            parent
             written
             updated
             category

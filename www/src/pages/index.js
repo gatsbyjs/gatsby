@@ -18,6 +18,7 @@ import Diagram from "../components/diagram"
 import BlogPostPreviewItem from "../components/blog-post-preview-item"
 import FuturaParagraph from "../components/futura-paragraph"
 import CtaButton from "../components/cta-button"
+import EmailCaptureForm from "../components/email-capture-form"
 import TechWithIcon from "../components/tech-with-icon"
 
 class IndexRoute extends React.Component {
@@ -41,6 +42,7 @@ class IndexRoute extends React.Component {
               css={{
                 padding: rhythm(presets.gutters.default / 2),
                 flex: `0 0 100%`,
+                maxWidth: `100%`,
                 [presets.Hd]: {
                   padding: vP,
                   paddingTop: 0,
@@ -178,6 +180,14 @@ class IndexRoute extends React.Component {
                         paddingBottom: `0 !important`,
                       }}
                     >
+                      <EmailCaptureForm
+                        signupMessage="Want to keep up to date with the latest posts on our blog? Subscribe to our newsletter!"
+                        containerCss={{
+                          marginTop: 0,
+                          marginBottom: rhythm(1),
+                          border: `none`,
+                        }}
+                      />
                       <h2
                         css={{
                           textAlign: `left`,
@@ -197,12 +207,7 @@ class IndexRoute extends React.Component {
                           css={{ marginBottom: rhythm(2) }}
                         />
                       ))}
-                      <CtaButton
-                        to="/blog/"
-                        overrideCSS={{ marginBottom: rhythm(2) }}
-                      >
-                        Read More
-                      </CtaButton>
+                      <CtaButton to="/blog/">Read More</CtaButton>
                     </Container>
                   </div>
                 </Cards>
@@ -218,7 +223,7 @@ class IndexRoute extends React.Component {
 export default IndexRoute
 
 export const pageQuery = graphql`
-  query Index {
+  query {
     file(relativePath: { eq: "gatsby-explanation.png" }) {
       childImageSharp {
         fluid(maxWidth: 870) {

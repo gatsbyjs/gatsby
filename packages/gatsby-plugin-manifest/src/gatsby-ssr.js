@@ -8,7 +8,7 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
       <link
         key={`gatsby-plugin-manifest-icon-link`}
         rel="shortcut icon"
-        href="/icons/icon-48x48.png"
+        href={withPrefix(`/icons/icon-48x48.png`)}
       />,
     ])
   }

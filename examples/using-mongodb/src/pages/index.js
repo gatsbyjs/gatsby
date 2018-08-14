@@ -1,4 +1,5 @@
 import React from "react"
+import { graphql } from "gatsby"
 import StoryItem from "../components/story-item"
 import Layout from "../layouts"
 
@@ -24,7 +25,7 @@ class Index extends React.Component {
 export default Index
 
 export const pageQuery = graphql`
-  query PageQuery {
+  query {
     allMongodbCloudDocuments {
       edges {
         node {

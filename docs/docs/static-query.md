@@ -1,19 +1,31 @@
 ---
-title: "Querying data in non-page components using StaticQuery"
+title: Querying data in components using StaticQuery
 ---
 
-Gatsby v2 introduces `StaticQuery`, a new API that allows non-page components to retrieve data via GraphQL query.
+Gatsby v2 introduces `StaticQuery`, a new API that allows components to retrieve data via GraphQL query.
 
-## Basic example
+In this guide, we'll walk through an example using `StaticQuery`, and discuss [the difference between a StaticQuery and a page query](/static-query/#how-staticquery-differs-from-page-query).
+
+## How to use `StaticQuery` in components
+
+<iframe class="egghead-video" width=600 height=348 src="https://egghead.io/lessons/gatsby-load-data-using-graphql-queries-directly-in-a-gatsby-v2-component-with-staticquery/embed" />
+
+Video hosted on [egghead.io][egghead].
+
+[egghead]: https://egghead.io/lessons/gatsby-load-data-using-graphql-queries-directly-in-a-gatsby-v2-component-with-staticquery
+
+### Basic example
+
+We'll create a new `Header` component located at `src/components/header.js`:
 
 ```jsx
 import React from "react"
-import { StaticQuery } from "gatsby"
+import { StaticQuery, graphql } from "gatsby"
 
 const Header = () => (
   <StaticQuery
     query={graphql`
-      query HeaderQuery {
+      query {
         site {
           siteMetadata {
             title
@@ -34,7 +46,7 @@ export default Header
 
 Using `StaticQuery`, you can colocate a component with its data. No longer is it required to, say, pass data down from `Layout` to `Header`.
 
-## Typechecking
+### Typechecking
 
 With the above pattern, you lose the ability to typecheck with PropTypes. To regain typechecking while achieving the same result, you can change the component to:
 
@@ -52,7 +64,7 @@ const Header = ({ data }) => (
 export default props => (
   <StaticQuery
     query={graphql`
-      query HeaderQuery {
+      query {
         site {
           siteMetadata {
             title
@@ -75,8 +87,11 @@ Header.propTypes = {
 }
 ```
 
-## How it differs from page query
+## How StaticQuery differs from page query
 
-StaticQuery can do most of the things that page query can, including fragments.
+StaticQuery can do most of the things that page query can, including fragments. The main difference are:
 
-You can’t, however, pass **Query Variables** to `StaticQuery`, like you can in page queries through `pageContext`.
+- `StaticQuery` can be used anywhere inside your source code including page components.
+- `StaticQuery` can't use **Query Variables**, like you can in page queries through `pageContext`.
+- page queries are only available on page components.
+- page queries have access to the pageContext.

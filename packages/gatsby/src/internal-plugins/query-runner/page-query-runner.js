@@ -16,26 +16,44 @@ const { store, emitter } = require(`../../redux`)
 
 let queuedDirtyActions = []
 let active = false
+let running = false
+
+const runQueriesForPathnamesQueue = new Set()
+exports.queueQueryForPathname = pathname => {
+  runQueriesForPathnamesQueue.add(pathname)
+}
 
 // Do initial run of graphql queries during bootstrap.
 // Afterwards we listen "API_RUNNING_QUEUE_EMPTY" and check
 // for dirty nodes before running queries.
-exports.runQueries = async () => {
-  // Run queued dirty nodes now that we're active.
+exports.runInitialQueries = async () => {
+  await runQueries()
+
+  active = true
+  return
+}
+
+const runQueries = async () => {
+  // Find paths dependent on dirty nodes
   queuedDirtyActions = _.uniq(queuedDirtyActions, a => a.payload.id)
   const dirtyIds = findDirtyIds(queuedDirtyActions)
-  await runQueriesForPathnames(dirtyIds)
-
   queuedDirtyActions = []
 
   // Find ids without data dependencies (i.e. no queries have been run for
   // them before) and run them.
   const cleanIds = findIdsWithoutDataDependencies()
 
-  // Run these pages
-  await runQueriesForPathnames(cleanIds)
+  // Construct paths for all queries to run
+  const pathnamesToRun = _.uniq([
+    ...runQueriesForPathnamesQueue,
+    ...dirtyIds,
+    ...cleanIds,
+  ])
 
-  active = true
+  runQueriesForPathnamesQueue.clear()
+
+  // Run these paths
+  await runQueriesForPathnames(pathnamesToRun)
   return
 }
 
@@ -48,17 +66,19 @@ emitter.on(`DELETE_NODE`, action => {
 })
 
 const runQueuedActions = async () => {
-  if (active) {
-    queuedDirtyActions = _.uniq(queuedDirtyActions, a => a.payload.id)
-    await runQueriesForPathnames(findDirtyIds(queuedDirtyActions))
-    queuedDirtyActions = []
-
-    // Find ids without data dependencies (e.g. new pages) and run
-    // their queries.
-    const cleanIds = findIdsWithoutDataDependencies()
-    runQueriesForPathnames(cleanIds)
+  if (active && !running) {
+    try {
+      running = true
+      await runQueries()
+    } finally {
+      running = false
+      if (queuedDirtyActions.length > 0) {
+        runQueuedActions()
+      }
+    }
   }
 }
+exports.runQueuedActions = runQueuedActions
 
 // Wait until all plugins have finished running (e.g. various
 // transformer plugins) before running queries so we don't
@@ -81,7 +101,7 @@ const findIdsWithoutDataDependencies = () => {
   // paths.
   const notTrackedIds = _.difference(
     [
-      ...state.pages.map(p => p.path),
+      ...Array.from(state.pages.values(), p => p.path),
       ...[...state.staticQueryComponents.values()].map(c => c.jsonName),
     ],
     [...allTrackedIds, ...seenIdsWithoutDataDependencies]
@@ -115,17 +135,17 @@ const runQueriesForPathnames = pathnames => {
     queue.push(queryJob)
   })
 
-  const pages = [...state.pages]
+  const pages = state.pages
   let didNotQueueItems = true
   pageQueries.forEach(id => {
-    const page = pages.find(pl => pl.path === id)
+    const page = pages.get(id)
     if (page) {
       didNotQueueItems = false
       queue.push(
         ({
           id: page.path,
           jsonName: page.jsonName,
-          query: store.getState().components[page.componentPath].query,
+          query: store.getState().components.get(page.componentPath).query,
           isPage: true,
           componentPath: page.componentPath,
           context: {

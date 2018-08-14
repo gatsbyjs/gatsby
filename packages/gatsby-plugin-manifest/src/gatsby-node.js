@@ -18,7 +18,7 @@ function generateIcons(icons, srcIcon) {
   })
 }
 
-exports.onPostBuild = (args, pluginOptions) =>
+exports.onPostBootstrap = (args, pluginOptions) =>
   new Promise((resolve, reject) => {
     const { icon } = pluginOptions
     const manifest = { ...pluginOptions }

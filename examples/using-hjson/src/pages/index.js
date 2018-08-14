@@ -1,3 +1,4 @@
+import { graphql } from "gatsby"
 import React from "react"
 
 class IndexComponent extends React.Component {
@@ -45,7 +46,7 @@ class IndexComponent extends React.Component {
 export default IndexComponent
 
 export const IndexQuery = graphql`
-  query IndexQuery {
+  query {
     example: file(name: { eq: "example" }, extension: { eq: "hjson" }) {
       data: childFilesHJson {
         key

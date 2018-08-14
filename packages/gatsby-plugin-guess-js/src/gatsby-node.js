@@ -2,12 +2,16 @@ const { GuessPlugin } = require(`guess-webpack`)
 
 let guessPlugin
 exports.onPreBootstrap = (_, pluginOptions) => {
-  const { period, GAViewID } = pluginOptions
+  const { period, jwt, GAViewID, reportProvider } = pluginOptions
   period.startDate = new Date(period.startDate)
   period.endDate = new Date(period.endDate)
   guessPlugin = new GuessPlugin({
     // GA view ID.
     GA: GAViewID,
+
+    jwt: jwt,
+
+    reportProvider: reportProvider,
 
     // Hints Guess to not perform prefetching and delegate this logic to
     // its consumer.
@@ -31,7 +35,7 @@ exports.onPreBootstrap = (_, pluginOptions) => {
   })
 }
 
-exports.onCreateWebpackConfig = ({ actions, stage }, pluginOptions) => {
+exports.onCreateWebpackConfig = ({ actions }) => {
   actions.setWebpackConfig({
     plugins: [guessPlugin],
   })

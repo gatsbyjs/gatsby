@@ -1,5 +1,5 @@
 import React from "react"
-import { Link } from "gatsby"
+import { Link, graphql } from "gatsby"
 import "./index.css"
 
 const IndexPage = ({ data }) => (
@@ -39,7 +39,7 @@ const IndexPage = ({ data }) => (
 export default IndexPage
 
 export const query = graphql`
-  query CompanyQuery {
+  query {
     allCompanyData {
       edges {
         node {

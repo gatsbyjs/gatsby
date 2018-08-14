@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { Link } from "gatsby"
+import { Link, graphql } from "gatsby"
 import ClockIcon from "react-icons/lib/fa/clock-o"
 
 import Layout from "../layouts"
@@ -52,7 +52,7 @@ export default Home
 
 // Set here the ID of the home page.
 export const pageQuery = graphql`
-  query homePageQuery {
+  query {
     allWordpressPage {
       edges {
         node {

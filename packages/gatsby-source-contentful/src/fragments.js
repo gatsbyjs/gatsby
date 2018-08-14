@@ -10,6 +10,16 @@ export const contentfulAssetFixed = graphql`
   }
 `
 
+export const contentfulAssetFixedTracedSVG = graphql`
+  fragment GatsbyContentfulFixed_tracedSVG on ContentfulFixed {
+    tracedSVG
+    width
+    height
+    src
+    srcSet
+  }
+`
+
 export const contentfulAssetFixedNoBase64 = graphql`
   fragment GatsbyContentfulFixed_noBase64 on ContentfulFixed {
     width
@@ -45,6 +55,16 @@ export const contentfulAssetFixedPreferWebpNoBase64 = graphql`
 export const contentfulAssetFluid = graphql`
   fragment GatsbyContentfulFluid on ContentfulFluid {
     base64
+    aspectRatio
+    src
+    srcSet
+    sizes
+  }
+`
+
+export const contentfulAssetFluidTracedSVG = graphql`
+  fragment GatsbyContentfulFluid_tracedSVG on ContentfulFluid {
+    tracedSVG
     aspectRatio
     src
     srcSet

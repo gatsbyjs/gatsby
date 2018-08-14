@@ -8,22 +8,24 @@ import {
   MIN_LARGER_DISPLAY_MEDIA_QUERY,
 } from "typography-breakpoint-constants"
 
+const headerFontFamily = [
+  `Futura PT`,
+  `-apple-system`,
+  `BlinkMacSystemFont`,
+  `Segoe UI`,
+  `Roboto`,
+  `Oxygen`,
+  `Ubuntu`,
+  `Cantarell`,
+  `Fira Sans`,
+  `Droid Sans`,
+  `Helvetica Neue`,
+  `Arial`,
+  `sans-serif`,
+]
+
 const _options = {
-  headerFontFamily: [
-    `Futura PT`,
-    `-apple-system`,
-    `BlinkMacSystemFont`,
-    `Segoe UI`,
-    `Roboto`,
-    `Oxygen`,
-    `Ubuntu`,
-    `Cantarell`,
-    `Fira Sans`,
-    `Droid Sans`,
-    `Helvetica Neue`,
-    `Arial`,
-    `sans-serif`,
-  ],
+  headerFontFamily,
   bodyFontFamily: [`Spectral`, `Georgia`, `Times New Roman`, `Times`, `serif`],
   monospaceFontFamily: [
     `Space Mono`,
@@ -187,6 +189,12 @@ const _options = {
         fontSize: `102%`,
         color: colors.gatsby,
       },
+      ".post-body figcaption": {
+        color: colors.gray.calm,
+        fontFamily: headerFontFamily.join(`,`),
+        fontSize: `87.5%`,
+        marginTop: rhythm(1 / 2),
+      },
       ".main-body a:hover": {
         background: colors.ui.bright,
       },
@@ -205,6 +213,12 @@ const _options = {
         borderBottom: `transparent`,
         marginTop: rhythm(options.blockMarginBottom * 2),
         marginBottom: rhythm(options.blockMarginBottom * 2),
+      },
+      ".main-body figure a.gatsby-resp-image-link": {
+        boxShadow: `none`,
+        borderBottom: `transparent`,
+        marginTop: rhythm(options.blockMarginBottom * 2),
+        marginBottom: 0,
       },
       ".main-body a.gatsby-resp-image-link:hover": {
         background: `none`,
@@ -235,6 +249,11 @@ const _options = {
       },
       ".twitter-tweet-rendered": {
         margin: `${rhythm(options.blockMarginBottom * 2)} auto !important`,
+      },
+      ".egghead-video": {
+        width: `620px`,
+        height: `348px`,
+        border: `none`,
       },
       [MOBILE_MEDIA_QUERY]: {
         // Make baseFontSize on mobile 16px.
@@ -280,11 +299,11 @@ const _options = {
         // color: `blue`,
         color: colors.c[12],
       },
-      ".token.property,.token.tag,.token.boolean,.token.number,.token.function-name,.token.constant,.token.symbol,.token.deleted": {
+      ".token.property,.token.tag,.token.boolean,.token.number,.token.function-name,.token.constant,.token.symbol": {
         // color: `#a285d8`,
         color: colors.b[9],
       },
-      ".token.selector,.token.attr-name,.token.string,.token.char,.token.function,.token.builtin,.token.inserted": {
+      ".token.selector,.token.attr-name,.token.string,.token.char,.token.function,.token.builtin": {
         // color: `#a2466c`,
         color: colors.a[9],
       },
@@ -296,6 +315,12 @@ const _options = {
         // color: `#a285d8`,
         // color: `blue`,
         color: colors.b[8],
+      },
+      ".token.inserted": {
+        color: colors.code.add,
+      },
+      ".token.deleted": {
+        color: colors.code.remove,
       },
       // Fancy external links in posts, borrowed from
       // https://github.com/comfusion/after-dark/

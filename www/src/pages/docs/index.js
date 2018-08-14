@@ -3,20 +3,16 @@ import { Link } from "gatsby"
 import Helmet from "react-helmet"
 
 import Layout from "../../components/layout"
-import { sectionListDocs } from "../../utils/sidebar/section-list"
-import { createLinkDocs } from "../../utils/sidebar/create-link"
+import { itemListDocs } from "../../utils/sidebar/item-list"
 import Container from "../../components/container"
+import EmailCaptureForm from "../../components/email-capture-form"
 import DocSearchContent from "../../components/docsearch-content"
 import presets from "../../utils/presets"
 
 class IndexRoute extends React.Component {
   render() {
     return (
-      <Layout
-        location={this.props.location}
-        createLink={createLinkDocs}
-        sectionList={sectionListDocs}
-      >
+      <Layout location={this.props.location} itemList={itemListDocs}>
         <DocSearchContent>
           <Container>
             <Helmet>
@@ -33,9 +29,15 @@ class IndexRoute extends React.Component {
             <h2 id="using-the-gatsby-cli">Using the Gatsby CLI</h2>
             <ol>
               <li>
-                Create a new site.
-                {` `}
-                <code>gatsby new gatsby-site</code>
+                <p>Create a new site.</p>
+                <div className="gatsby-highlight" data-language="bash">
+                  <pre className="language-bash">
+                    <code className="language-bash">
+                      gatsby new gatsby-site
+                      https://github.com/gatsbyjs/gatsby-starter-default#v2
+                    </code>
+                  </pre>
+                </div>
               </li>
               <li>
                 <code>cd gatsby-site</code>
@@ -92,6 +94,7 @@ class IndexRoute extends React.Component {
             >
               <h2>Documentation</h2>
             </div>
+            <EmailCaptureForm signupMessage="Want to keep up with the latest tips & tricks? Subscribe to our newsletter!" />
           </Container>
         </DocSearchContent>
       </Layout>

@@ -12,7 +12,7 @@ Content entered directly below the header but before the first section heading i
 This is a paragraph with a *bold* word and an _italicized_ word.
 
 .Image caption
-image::image-file-name.png[I am the image alt text.]
+image::https://avatars3.githubusercontent.com/u/71047?s=100&v=4[Kyle Mathews]
 
 This is another paragraph.footnote:[I am footnote text and will be rendered at the bottom of the article.]
 

@@ -180,7 +180,9 @@ describe(`Gatsby data tree utils`, () => {
     example = getExampleValues({ nodes: [{ number: 5 }, { number: 2.5 }] })
     expect(example.number).toBeDefined()
     expect(example.number).toEqual(2.5)
-    example = getExampleValues({ nodes: [{ number: 5 }, { number: 3000000000 }] })
+    example = getExampleValues({
+      nodes: [{ number: 5 }, { number: 3000000000 }],
+    })
     expect(example.number).toBeDefined()
     expect(example.number).toEqual(3000000000)
 
@@ -193,7 +195,9 @@ describe(`Gatsby data tree utils`, () => {
     example = getExampleValues({ nodes: [{ number: 2.5 }, { number: 5 }] })
     expect(example.number).toBeDefined()
     expect(example.number).toEqual(2.5)
-    example = getExampleValues({ nodes: [{ number: 3000000000 }, { number: 5 }] })
+    example = getExampleValues({
+      nodes: [{ number: 3000000000 }, { number: 5 }],
+    })
     expect(example.number).toBeDefined()
     expect(example.number).toEqual(3000000000)
 

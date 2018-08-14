@@ -1,6 +1,6 @@
 # Using Prefetching/Preloading modules
 
-https://using-prefetch-preload-module.gatsbyjs.org
+Demonstrates the usage of Prefetching and Preloaded modules with Gatsby.
 
 ## References
 

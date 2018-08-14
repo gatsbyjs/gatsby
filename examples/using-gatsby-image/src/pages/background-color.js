@@ -1,4 +1,5 @@
 import React from "react"
+import { graphql } from "gatsby"
 import Img from "gatsby-image"
 import Lorem from "../components/lorem"
 import Ipsum from "../components/ipsum"
@@ -51,7 +52,7 @@ const BlurUp = ({ data, location }) => (
 export default BlurUp
 
 export const query = graphql`
-  query BackgroundColorQuery {
+  query {
     reddImageMobile: file(relativePath: { regex: "/redd/" }) {
       childImageSharp {
         fixed(width: 126) {

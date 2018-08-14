@@ -14,7 +14,7 @@ class Layout extends React.Component {
     return (
       <StaticQuery
         query={graphql`
-          query LayoutIndexQuery {
+          query {
             site {
               siteMetadata {
                 author

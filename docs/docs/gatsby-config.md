@@ -121,7 +121,7 @@ module.exports = {
 Gatsby then uses this mapping when creating the GraphQL schema to enable you to query data from both sources:
 
 ```graphql
-query BlogPost($slug: String!) {
+query($slug: String!) {
   markdownRemark(fields: { slug: { eq: $slug } }) {
     html
     fields {
@@ -198,7 +198,7 @@ module.exports = {
 You can query the `tech` object via the referred ids in `experience`:
 
 ```graphql
-query CV {
+query {
   experience: allExperienceJson {
     edges {
       node {

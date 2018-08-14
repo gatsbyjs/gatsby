@@ -199,7 +199,7 @@ Here is what your `index.js` should look like with the query added:
 
 ```jsx
 import React from "react"
-import { Link } from "gatsby"
+import { graphql, Link } from "gatsby"
 import Img from "gatsby-image"
 
 const IndexPage = ({ data }) => {
@@ -224,7 +224,7 @@ const IndexPage = ({ data }) => {
 export default IndexPage
 
 export const query = graphql`
-  query ImageQuery {
+  query {
     allWordpressPost {
       edges {
         node {
