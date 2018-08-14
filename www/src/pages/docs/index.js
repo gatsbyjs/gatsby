@@ -5,6 +5,7 @@ import Helmet from "react-helmet"
 import SidebarBody from "../../components/sidebar-body"
 import docsSidebar from "./doc-links.yaml"
 import Container from "../../components/container"
+import EmailCaptureForm from "../../components/email-capture-form"
 import presets from "../../utils/presets"
 
 class IndexRoute extends React.Component {
@@ -77,6 +78,7 @@ class IndexRoute extends React.Component {
           {` `}
           <Link to="/tutorial/">Go to the tutorial</Link>.
         </p>
+        <EmailCaptureForm signupMessage="Want to keep up with the latest tips & tricks? Subscribe to our newsletter!" />
         <div
           css={{
             display: `block`,
