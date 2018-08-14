@@ -1,14 +1,9 @@
 /* @flow */
 
 const fs = require(`fs-extra`)
-const path = require(`path`)
-const json5 = require(`json5`)
-const report = require(`gatsby-cli/lib/reporter`)
-const { actionifyBabelrc, addDefaultPluginsPresets } = require(`./utils`)
-const existsSync = require(`fs-exists-cached`).sync
+const { addDefaultPluginsPresets } = require(`./utils`)
 
 const apiRunnerNode = require(`../../utils/api-runner-node`)
-const testRequireError = require(`../../utils/test-require-error`).default
 const { withBasePath } = require(`../../utils/path`)
 
 /**
@@ -17,7 +12,6 @@ const { withBasePath } = require(`../../utils/path`)
  */
 exports.onCreateBabelConfig = ({ stage, store, actions }) => {
   const program = store.getState().program
-  const { directory } = program
 
   addDefaultPluginsPresets(actions, {
     stage,

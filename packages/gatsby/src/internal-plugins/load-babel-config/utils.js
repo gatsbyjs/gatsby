@@ -1,49 +1,3 @@
-const _ = require(`lodash`)
-
-/**
- * Convert a babelrc from a .babelrc file or package.json
- * to actions to add it to the store.
- */
-const actionifyBabelrc = (babelrc, actions) => {
-  const { presets, plugins, ...options } = babelrc
-  if (presets && _.isArray(presets)) {
-    presets.forEach(p => {
-      let name
-      let options = {}
-      if (_.isArray(p)) {
-        name = p[0]
-        options = p[1]
-      } else {
-        name = p
-      }
-      actions.setBabelPreset({
-        name,
-        options,
-      })
-    })
-  }
-  if (plugins && _.isArray(plugins)) {
-    plugins.forEach(p => {
-      let name
-      let options = {}
-      if (_.isArray(p)) {
-        name = p[0]
-        options = p[1]
-      } else {
-        name = p
-      }
-      actions.setBabelPlugin({
-        name,
-        options,
-      })
-    })
-  }
-
-  if (_.isObject(options) && !_.isEmpty(options)) {
-    actions.setBabelOptions({ options })
-  }
-}
-
 const addDefaultPluginsPresets = (
   actions,
   { stage = ``, browserslist = {} }
@@ -108,4 +62,3 @@ const addDefaultPluginsPresets = (
 }
 
 exports.addDefaultPluginsPresets = addDefaultPluginsPresets
-exports.actionifyBabelrc = actionifyBabelrc
