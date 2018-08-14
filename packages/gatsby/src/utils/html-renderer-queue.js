@@ -15,11 +15,11 @@ module.exports = (htmlComponentRendererPath, pages, activity) =>
   new Promise((resolve, reject) => {
     // We need to only pass env vars that are set programatically in gatsby-cli
     // to child process. Other vars will be picked up from environment.
-    const envVars = {
+    const envVars = Object.entries({
       NODE_ENV: process.env.NODE_ENV,
       gatsby_executing_command: process.env.gatsby_executing_command,
       gatsby_log_level: process.env.gatsby_log_level,
-    }
+    })
 
     const start = process.hrtime()
     const segments = chunk(pages, 50)
