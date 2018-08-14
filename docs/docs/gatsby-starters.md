@@ -891,3 +891,15 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
   - Offline support, 
   - Favicons (App favicons generator)
   - [More info here](https://github.com/mhjadav/gatsby-starter-bootstrap-cv#gatsby-starter-bootstrap-cv)
+  
+- [gatsby-starter-kit](https://github.com/greglobinski/gatsby-starter-kit)
+  [(Docs)](https://greglobinski.github.io/gatsby-starter-kit-docs/)  
+  
+  > A set of starters for Gatsby v2
+  - Minimal
+  - Equipped
+  - Themed
+  - Website
+  - Blog
+  - more coming soon
+  
