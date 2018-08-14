@@ -79,3 +79,21 @@ If you enable this optional option, Google Analytics will not be loaded at all f
 ## The "exclude" option
 
 If you need to exclude any path from the tracking system, you can add it (one or more) to this optional array as glob expressions.
+
+## Create Only Fields
+
+This plugin supports all optional Create Only Fields documented in Google Analytics:
+
+- `name`: string, tracker name
+- `clientId`: string
+- `sampleRate`: number
+- `siteSpeedSampleRate`: number
+- `alwaysSendReferrer`: boolean
+- `allowAnchor`: boolean
+- `cookieName`: string
+- `cookieDomain`: string, defaults to `'auto'` if not given
+- `cookieExpires`: number
+- `storeGac`: boolean
+- `legacyCookieDomain`: string
+- `legacyHistoryImport`: boolean
+- `allowLinker`: boolean
