@@ -140,6 +140,9 @@ const options = {
         minWidth: `100%`,
         textShadow: `none`,
       },
+      ".gatsby-highlight pre[class*='language-'].line-numbers": {
+        paddingLeft: `2.8em`,
+      },
       ".gatsby-highlight-code-line": {
         background: `#fff2cc`,
         display: `block`,
