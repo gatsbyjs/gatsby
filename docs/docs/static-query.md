@@ -92,4 +92,4 @@ Header.propTypes = {
 StaticQuery can do most of the things that page query can, including fragments. The main differences are:
 
 - page queries can accept variables (via `pageContext`) but can only be added to _page_ components
-- StaticQuery does not accept variables (that's where "static" in its name comes from), but can be used in _any_ component in your site
+- StaticQuery does not accept variables (hence the name "static"), but can be used in _any_ component, including pages
