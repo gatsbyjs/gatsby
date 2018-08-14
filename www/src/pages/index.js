@@ -133,14 +133,7 @@ class IndexRoute extends React.Component {
                     </FuturaParagraph>
                   </Card>
 
-                  <Diagram
-                    containerCSS={{
-                      borderTopLeftRadius: 0,
-                      borderTopRightRadius: 0,
-                      flex: `1 1 100%`,
-                      borderTop: `1px solid ${colors.ui.light}`,
-                    }}
-                  />
+                  <Diagram/>
 
                   <div css={{ flex: `1 1 100%` }}>
                     <Container hasSideBar={false}>
@@ -175,14 +168,14 @@ class IndexRoute extends React.Component {
                   >
                     <Container
                       hasSideBar={false}
-                      css={{
+                      overrideCSS={{
                         maxWidth: rhythm(30),
                         paddingBottom: `0 !important`,
                       }}
                     >
                       <EmailCaptureForm
                         signupMessage="Want to keep up to date with the latest posts on our blog? Subscribe to our newsletter!"
-                        containerCss={{
+                        overrideCSS={{
                           marginTop: 0,
                           marginBottom: rhythm(1),
                           border: `none`,
