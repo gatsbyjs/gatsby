@@ -109,89 +109,104 @@ ${code}`;
 
     return resolve({
       code: {
-        type: GraphQLString,
-        resolve(markdownNode) {
-          return getCode(markdownNode);
-        }
-      },
-      codeBody: {
-        type: GraphQLString,
-        async resolve(mdxNode) {
-          const { data, content } = grayMatter(mdxNode.rawBody);
-          let code = await rawMDX(content, {
-            ...options
-          });
+        resolve(mdxNode) {
+          return mdxNode;
+        },
+        type: new GraphQLObjectType({
+          name: "MDXCode",
+          fields: {
+            raw: {
+              type: GraphQLString,
+              resolve(markdownNode) {
+                return getCode(markdownNode);
+              }
+            },
+            body: {
+              type: GraphQLString,
+              async resolve(mdxNode) {
+                const { data, content } = grayMatter(mdxNode.rawBody);
+                let code = await rawMDX(content, {
+                  ...options
+                });
 
-          const instance = new BabelPluginPluckImports();
-          const result = babel.transform(code, {
-            plugins: [instance.plugin, objRestSpread],
-            presets: [require("@babel/preset-react")]
-          });
+                const instance = new BabelPluginPluckImports();
+                const result = babel.transform(code, {
+                  plugins: [instance.plugin, objRestSpread],
+                  presets: [require("@babel/preset-react")]
+                });
 
-          // TODO: be more sophisticated about these replacements
-          return result.code
-            .replace("export default", "return")
-            .replace(/\nexport /g, "\n");
-        }
-      },
-      codeScope: {
-        type: GraphQLString,
-        async resolve(mdxNode) {
-          const CACHE_DIR = `.cache`;
-          const PLUGIN_DIR = `gatsby-mdx`;
-          const REMOTE_MDX_DIR = `remote-mdx-dir`;
-          mkdirp.sync(
-            path.join(pluginOptions.root, CACHE_DIR, PLUGIN_DIR, REMOTE_MDX_DIR)
-          );
-          const createFilePath = (directory, filename, ext) =>
-            path.join(
-              directory,
-              CACHE_DIR,
-              PLUGIN_DIR,
-              REMOTE_MDX_DIR,
-              `${filename}${ext}`
-            );
+                // TODO: be more sophisticated about these replacements
+                return result.code
+                  .replace("export default", "return")
+                  .replace(/\nexport /g, "\n");
+              }
+            },
+            scope: {
+              type: GraphQLString,
+              async resolve(mdxNode) {
+                const CACHE_DIR = `.cache`;
+                const PLUGIN_DIR = `gatsby-mdx`;
+                const REMOTE_MDX_DIR = `remote-mdx-dir`;
+                mkdirp.sync(
+                  path.join(
+                    pluginOptions.root,
+                    CACHE_DIR,
+                    PLUGIN_DIR,
+                    REMOTE_MDX_DIR
+                  )
+                );
+                const createFilePath = (directory, filename, ext) =>
+                  path.join(
+                    directory,
+                    CACHE_DIR,
+                    PLUGIN_DIR,
+                    REMOTE_MDX_DIR,
+                    `${filename}${ext}`
+                  );
 
-          const createHash = str =>
-            crypto
-              .createHash(`md5`)
-              .update(str)
-              .digest(`hex`);
+                const createHash = str =>
+                  crypto
+                    .createHash(`md5`)
+                    .update(str)
+                    .digest(`hex`);
 
-          const { data, content } = grayMatter(mdxNode.rawBody);
-          let code = await rawMDX(content, {
-            ...options
-          });
+                const { data, content } = grayMatter(mdxNode.rawBody);
+                let code = await rawMDX(content, {
+                  ...options
+                });
 
-          const instance = new BabelPluginPluckImports();
-          const result = babel.transform(code, {
-            plugins: [instance.plugin, objRestSpread],
-            presets: [require("@babel/preset-react")]
-          });
+                const instance = new BabelPluginPluckImports();
+                const result = babel.transform(code, {
+                  plugins: [instance.plugin, objRestSpread],
+                  presets: [require("@babel/preset-react")]
+                });
 
-          const identifiers = Array.from(instance.state.identifiers);
-          const imports = Array.from(instance.state.imports);
-          if (!identifiers.includes("React")) {
-            identifiers.push("React");
-            imports.push("import React from 'react'");
-          }
-          if (!identifiers.includes("MDXTag")) {
-            identifiers.push("MDXTag");
-            imports.push("import { MDXTag } from '@mdx-js/tag'");
-          }
-          const scopeFileContent = `${imports.join("\n")}
+                const identifiers = Array.from(instance.state.identifiers);
+                const imports = Array.from(instance.state.imports);
+                if (!identifiers.includes("React")) {
+                  identifiers.push("React");
+                  imports.push("import React from 'react'");
+                }
+                if (!identifiers.includes("MDXTag")) {
+                  identifiers.push("MDXTag");
+                  imports.push("import { MDXTag } from '@mdx-js/tag'");
+                }
+                const scopeFileContent = `${imports.join("\n")}
 
 export default { ${identifiers.join(", ")} }`;
 
-          const filePath = createFilePath(
-            pluginOptions.root,
-            createHash(scopeFileContent),
-            ".js"
-          );
+                const filePath = createFilePath(
+                  pluginOptions.root,
+                  createHash(scopeFileContent),
+                  ".js"
+                );
 
-          fs.writeFileSync(filePath, scopeFileContent);
-          return filePath;
-        }
+                fs.writeFileSync(filePath, scopeFileContent);
+                return filePath;
+              }
+            }
+          }
+        })
       },
       excerpt: {
         type: GraphQLString,
