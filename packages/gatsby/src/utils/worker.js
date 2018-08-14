@@ -16,7 +16,7 @@ const generatePathToOutput = outputPath => {
 export function renderHTML({ htmlComponentRendererPath, paths, envVars }) {
   // This is being executed in child process, so we need to set some vars
   // for modules that aren't bundled by webpack.
-  Object.entries(envVars).forEach(([key, value]) => (process.env[key] = value))
+  envVars.forEach(([key, value]) => (process.env[key] = value))
 
   return Promise.map(
     paths,
