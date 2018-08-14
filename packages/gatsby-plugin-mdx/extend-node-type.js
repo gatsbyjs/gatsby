@@ -17,6 +17,16 @@ const stripMarkdown = require("strip-markdown");
 const grayMatter = require("gray-matter");
 const { createMdxAstCompiler } = require("@mdx-js/mdx");
 const prune = require("underscore.string/prune");
+const crypto = require("crypto");
+const fs = require("fs");
+const path = require("path");
+const mkdirp = require("mkdirp");
+const BabelPluginPluckImports = require("babel-plugin-pluck-imports");
+const objRestSpread = require("@babel/plugin-proposal-object-rest-spread");
+const babel = require("@babel/core");
+const rawMDX = require("@mdx-js/mdx");
+const syntaxJSX = require("@babel/plugin-syntax-jsx");
+
 const mdx = require("./utils/mdx");
 const getTableOfContents = require("./utils/get-table-of-content");
 const defaultOptions = require("./utils/default-options");
@@ -56,8 +66,11 @@ module.exports = (
       return remark().stringify(textAst);
     }
 
-    async function getCode(mdxNode) {
-      const code = await mdx(mdxNode.rawBody, options);
+    async function getCode(mdxNode, overrideOptions) {
+      const code = await mdx(mdxNode.rawBody, {
+        ...options,
+        ...overrideOptions
+      });
 
       return `import React from 'react'
 import { MDXTag } from '@mdx-js/tag'
@@ -99,6 +112,85 @@ ${code}`;
         type: GraphQLString,
         resolve(markdownNode) {
           return getCode(markdownNode);
+        }
+      },
+      codeBody: {
+        type: GraphQLString,
+        async resolve(mdxNode) {
+          const { data, content } = grayMatter(mdxNode.rawBody);
+          let code = await rawMDX(content, {
+            ...options
+          });
+
+          const instance = new BabelPluginPluckImports();
+          const result = babel.transform(code, {
+            plugins: [instance.plugin, objRestSpread],
+            presets: [require("@babel/preset-react")]
+          });
+
+          // TODO: be more sophisticated about these replacements
+          return result.code
+            .replace("export default", "return")
+            .replace(/\nexport /g, "\n");
+        }
+      },
+      codeScope: {
+        type: GraphQLString,
+        async resolve(mdxNode) {
+          const CACHE_DIR = `.cache`;
+          const PLUGIN_DIR = `gatsby-mdx`;
+          const REMOTE_MDX_DIR = `remote-mdx-dir`;
+          mkdirp.sync(
+            path.join(pluginOptions.root, CACHE_DIR, PLUGIN_DIR, REMOTE_MDX_DIR)
+          );
+          const createFilePath = (directory, filename, ext) =>
+            path.join(
+              directory,
+              CACHE_DIR,
+              PLUGIN_DIR,
+              REMOTE_MDX_DIR,
+              `${filename}${ext}`
+            );
+
+          const createHash = str =>
+            crypto
+              .createHash(`md5`)
+              .update(str)
+              .digest(`hex`);
+
+          const { data, content } = grayMatter(mdxNode.rawBody);
+          let code = await rawMDX(content, {
+            ...options
+          });
+
+          const instance = new BabelPluginPluckImports();
+          const result = babel.transform(code, {
+            plugins: [instance.plugin, objRestSpread],
+            presets: [require("@babel/preset-react")]
+          });
+
+          const identifiers = Array.from(instance.state.identifiers);
+          const imports = Array.from(instance.state.imports);
+          if (!identifiers.includes("React")) {
+            identifiers.push("React");
+            imports.push("import React from 'react'");
+          }
+          if (!identifiers.includes("MDXTag")) {
+            identifiers.push("MDXTag");
+            imports.push("import { MDXTag } from '@mdx-js/tag'");
+          }
+          const scopeFileContent = `${imports.join("\n")}
+
+export default { ${identifiers.join(", ")} }`;
+
+          const filePath = createFilePath(
+            pluginOptions.root,
+            createHash(scopeFileContent),
+            ".js"
+          );
+
+          fs.writeFileSync(filePath, scopeFileContent);
+          return filePath;
         }
       },
       excerpt: {

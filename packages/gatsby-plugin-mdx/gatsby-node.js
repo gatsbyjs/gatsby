@@ -37,6 +37,11 @@ exports.onCreateWebpackConfig = (
     module: {
       rules: [
         {
+          test: /\.js$/,
+          include: path.resolve(__dirname, ".cache/gatsby-mdx"),
+          use: [loaders.js()]
+        },
+        {
           test: testPattern,
           exclude: decks,
           use: [
