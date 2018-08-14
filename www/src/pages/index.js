@@ -4,7 +4,7 @@ import { OutboundLink } from "gatsby-plugin-google-analytics"
 
 import Layout from "../components/layout"
 import presets, { colors } from "../utils/presets"
-import { rhythm } from "../utils/typography"
+import { rhythm, options } from "../utils/typography"
 import { WebpackIcon, ReactJSIcon, GraphQLIcon } from "../assets/logos"
 import { vP } from "../components/gutters"
 import Container from "../components/container"
@@ -200,7 +200,7 @@ class IndexRoute extends React.Component {
                           css={{ marginBottom: rhythm(2) }}
                         />
                       ))}
-                      <CtaButton to="/blog/">Read More</CtaButton>
+                      <CtaButton to="/blog/" overrideCSS={{ marginBottom: rhythm(options.blockMarginBottom * 2) }}>Read More</CtaButton>
                     </Container>
                   </div>
                 </Cards>
