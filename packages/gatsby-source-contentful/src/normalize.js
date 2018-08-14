@@ -481,6 +481,7 @@ exports.createAssetNodes = ({
         : ``,
     }
     const assetNode = {
+      contentful_id: localizedAsset.sys.contentful_id,
       id: mId(localizedAsset.sys.id),
       parent: null,
       children: [],
