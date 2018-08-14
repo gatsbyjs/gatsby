@@ -172,8 +172,8 @@
   "license": "MIT",
   "main": "cache-dir/gatsby-browser-entry.js",
   "peerDependencies": {
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0"
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2"
   },
   "repository": {
     "type": "git",
