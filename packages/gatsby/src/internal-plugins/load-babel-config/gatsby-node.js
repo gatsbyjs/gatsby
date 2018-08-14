@@ -43,5 +43,5 @@ exports.onPreBootstrap = async ({ store }) => {
   })
   const babelrcState = store.getState().babelrc
   const babelState = JSON.stringify(babelrcState.stages, null, 4)
-  fs.writeFile(directoryPath(`.cache/babelState.json`), babelState)
+  await fs.writeFile(directoryPath(`.cache/babelState.json`), babelState)
 }
