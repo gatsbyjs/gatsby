@@ -1,1 +1,1 @@
-exports.wrapRootComponent = require(`./inject-provider`)
+exports.wrapRootElement = require(`./inject-provider`)

@@ -99,11 +99,11 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       )
 
     const WrappedRoot = apiRunner(
-      `wrapRootComponent`,
-      { component: <Root /> },
+      `wrapRootElement`,
+      { element: <Root /> },
       <Root />,
       ({ result }) => {
-        return { component: result }
+        return { element: result }
       }
     ).pop()
 

@@ -1,4 +1,4 @@
 require(`isomorphic-fetch`)
 
 const preferDefault = m => (m && m.default) || m
-exports.wrapRootComponent = preferDefault(require(`./inject-provider`))
+exports.wrapRootElement = preferDefault(require(`./inject-provider`))

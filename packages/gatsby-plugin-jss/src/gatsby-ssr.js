@@ -4,9 +4,9 @@ import { JssProvider, SheetsRegistry, ThemeProvider } from "react-jss"
 const sheets = new SheetsRegistry()
 
 // eslint-disable-next-line react/prop-types,react/display-name
-exports.wrapRootComponent = ({ component }, { theme = {} }) => (
+exports.wrapRootElement = ({ element }, { theme = {} }) => (
   <JssProvider registry={sheets}>
-    <ThemeProvider theme={theme}>{component}</ThemeProvider>
+    <ThemeProvider theme={theme}>{element}</ThemeProvider>
   </JssProvider>
 )
 

@@ -7,6 +7,6 @@ const client = new ApolloClient({
 })
 
 // eslint-disable-next-line react/prop-types,react/display-name
-export default ({ component }) => (
-  <ApolloProvider client={client}>{component}</ApolloProvider>
+export default ({ element }) => (
+  <ApolloProvider client={client}>{element}</ApolloProvider>
 )

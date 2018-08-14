@@ -13,6 +13,4 @@ const initialState = { id: null, title: `None` }
 const store = createStore(reducer, initialState)
 
 // eslint-disable-next-line react/prop-types,react/display-name
-module.exports = ({ component }) => (
-  <Provider store={store}>{component}</Provider>
-)
+module.exports = ({ element }) => <Provider store={store}>{element}</Provider>

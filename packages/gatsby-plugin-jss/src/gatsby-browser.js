@@ -7,7 +7,7 @@ exports.onInitialClientRender = () => {
   ssStyles && ssStyles.parentNode.removeChild(ssStyles)
 }
 // eslint-disable-next-line react/prop-types
-exports.wrapRootComponent = ({ component }, options) => {
+exports.wrapRootElement = ({ element }, options) => {
   const theme = options.theme || {}
-  return <ThemeProvider theme={theme}>{component}</ThemeProvider>
+  return <ThemeProvider theme={theme}>{element}</ThemeProvider>
 }

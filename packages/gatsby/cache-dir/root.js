@@ -115,19 +115,11 @@ const Root = () =>
 
 // Let site, plugins wrap the site e.g. for Redux.
 const WrappedRoot = apiRunner(
-  `wrapRootComponent`,
-  { component: <Root /> },
+  `wrapRootElement`,
+  { element: <Root /> },
   <Root />,
   ({ result, plugin }) => {
-    // In development check if we get React Element and throw if we don't
-    if (!React.isValidElement(result)) {
-      throw new Error(
-        `"${
-          plugin.name
-        }" plugin implementing wrapRootComponent Browser API hook returned wrong type. It expects React Element. See https://next.gatsbyjs.org/docs/migrating-from-v1-to-v2/#browser-api-wrappagecomponent-has-changed`
-      )
-    }
-    return { component: result }
+    return { element: result }
   }
 ).pop()
 

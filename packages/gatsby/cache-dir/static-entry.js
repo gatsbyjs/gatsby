@@ -115,17 +115,17 @@ export default (pagePath, callback) => {
         pathContext: dataAndContext.pageContext,
       }
 
-      const pageComponent = createElement(
+      const pageElement = createElement(
         syncRequires.components[page.componentChunkName],
         props
       )
 
       const wrappedPage = apiRunner(
-        `wrapPageComponent`,
-        { component: pageComponent, props },
-        pageComponent,
+        `wrapPageElement`,
+        { element: pageElement, props },
+        pageElement,
         ({ result }) => {
-          return { component: result, props }
+          return { element: result, props }
         }
       ).pop()
 
@@ -133,10 +133,11 @@ export default (pagePath, callback) => {
     }
   }
 
-  const routeComponent = createElement(
+  const routerElement = createElement(
     ServerLocation,
     { url: `${pathPrefix}${pagePath}` },
-    createElement(Router,
+    createElement(
+      Router,
       {
         baseuri: pathPrefix.slice(0, -1),
       },
@@ -145,11 +146,11 @@ export default (pagePath, callback) => {
   )
 
   const bodyComponent = apiRunner(
-    `wrapRootComponent`,
-    { component: routeComponent },
-    routeComponent,
+    `wrapRootElement`,
+    { element: routerElement },
+    routerElement,
     ({ result }) => {
-      return { component: result }
+      return { element: result }
     }
   ).pop()
 
