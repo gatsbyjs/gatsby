@@ -187,9 +187,7 @@ function prepareTextNode(node, key, text, createNode, createNodeId) {
 function prepareJSONNode(node, key, content, createNodeId, i = ``) {
   const str = JSON.stringify(content)
   const JSONNode = {
-    ...(typeof content === 'string' || content instanceof String
-      ? { content: content }
-      : { ...content }),
+    ...(_.isPlainObject(content) ? { ...content } : { content: content }),
     id: createNodeId(`${node.id}${key}${i}JSONNode`),
     parent: node.id,
     children: [],
