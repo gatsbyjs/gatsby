@@ -12,21 +12,21 @@
       link: /tutorial/
 - title: Guides
   items:
-    - title: Preparing your environment*
+    - title: Preparing your environment
       link: /docs/preparing-your-environment/
       items:
-      - title: Basic hardware and software requirements*
-        link: /docs/basic-hardware-software-requirements/
-      - title: Browser Support
-        link: /docs/browser-support/
-      - title: Gatsby on Macs*
-        link: /docs/gatsby-on-macs/
-      - title: Gatsby on Windows
-        link: /docs/gatsby-on-windows/
+        - title: Basic hardware and software requirements*
+          link: /docs/basic-hardware-software-requirements/
+        - title: Browser Support
+          link: /docs/browser-support/
+        - title: Gatsby on Macs*
+          link: /docs/gatsby-on-macs/
+        - title: Gatsby on Windows
+          link: /docs/gatsby-on-windows/
     - title: Deploying & Hosting*
       link: /docs/deploying-and-hosting/
       items:
-        - title: Preparing site for deployment*
+        - title: Preparing your site for deployment*
           link: /docs/preparing-for-deployment/
         - title: Deploying
           link: /docs/deploy-gatsby/
@@ -65,7 +65,7 @@
         - title: Working with images in Gatsby
           link: /docs/working-with-images/
     - title: Sourcing content and data*
-      link: /docs/sourcing-content-and-data
+      link: /docs/content-and-data/
       items:
         - title: Sourcing from the filesystem*
           link: /docs/sourcing-from-the-filesystem/
@@ -75,7 +75,7 @@
           link: /docs/sourcing-from-saas-services/
         - title: Sourcing from private APIs*
           link: /docs/sourcing-from-private-apis/
-        - title: Headless CMS*
+        - title: Headless CMS
           link: /docs/headless-cms/
           items:
             - title: Sourcing from Netlify CMS
@@ -88,15 +88,17 @@
               link: /docs/sourcing-from-contentful/
             - title: Sourcing from Prose*
               link: /docs/sourcing-from-prose/
-    - title: Querying your data with GraphQL*
+    - title: Querying your data with GraphQL
       link: /docs/graphql/
       items:
         - title: Introducing GraphiQL*
           link: /docs/introducing-graphiql/
-        - title: Build a page with a GraphQL query
-          link: /docs/build-a-page-with-graphql-query/
         - title: Creating and modifying pages
           link: /docs/creating-and-modifying-pages/
+        - title: Querying data in pages with graphql
+          link: /docs/page-query/
+        - title: Querying data in components with StaticQuery
+          link: /docs/static-query/
         - title: Adding Markdown pages
           link: /docs/adding-markdown-pages/
         - title: Adding a list of Markdown blog posts
@@ -105,9 +107,7 @@
           link: /docs/creating-slugs-for-pages/
         - title: Programmatically create pages from data*
           link: /docs/programmatically-create-pages-from-data/
-        - title: Querying data with StaticQuery
-          link: /docs/static-query/
-    - title: Plugins*
+    - title: Plugins
       link: /docs/plugins/
       items:
         - title: Plugin authoring
@@ -116,7 +116,7 @@
           link: /docs/submit-to-plugin-library/
         - title: Source plugin tutorial
           link: /docs/source-plugin-tutorial/
-    - title: Styling*
+    - title: Styling
       link: /docs/styling/
       items:
         - title: CSS Modules*
@@ -170,8 +170,8 @@
           link: /docs/e-commerce/
         - title: Interactive pages*
           link: /docs/interactive-pages/
-    - title: Preparing site for launch*
-      link: /docs/website-functionality/
+    - title: Preparing your site for launch
+      link: /docs/preparing-for-site-launch/
       items:
         - title: Adding a 404 Page
           link: /docs/add-404-page/
@@ -194,7 +194,7 @@
           link: /docs/adding-analytics/
         - title: Adding forms*
           link: /docs/adding-forms/
-    - title: Performance*
+    - title: Performance
       link: /docs/performance/
       items:
         - title: Caching
@@ -279,6 +279,8 @@
       link: /docs/how-to-label-an-issue/
     - title: How to submit a PR*
       link: /docs/how-to-submit-a-pr/
+    - title: Community Pair Programming Sessions
+      link: /docs/pair-programming/
     - title: Gatsby style guide
       link: /docs/gatsby-style-guide/
     - title: Design principles*

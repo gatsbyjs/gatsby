@@ -1,5 +1,5 @@
 ---
-title: Drupal
+title: Sourcing from WordPress
 ---
 
 This is a stub. Help our community expand it.

@@ -2057,3 +2057,61 @@
   built_by: Corey Ward
   built_by_url: http://www.coreyward.me/
   featured: false
+- title: Mega House Creative
+  main_url: https://www.megahousecreative.com/
+  url: https://www.megahousecreative.com/
+  description: >
+    Mega House Creative is a digital agency that provides unique goal-oriented web marketing solutions.
+  categories:
+    - Marketing
+    - Agency
+  built_by: Daniel Robinson
+  featured: false
+- title: Tobie Marier Robitaille - csc
+  main_url: https://tobiemarierrobitaille.com/
+  url: https://tobiemarierrobitaille.com/en/
+  description: >
+    Portfolio site for director of photography Tobie Marier Robitaille
+  categories:
+    - Portfolio
+    - Gallery
+  built_by: Mill3 Studio
+  built_by_url: https://mill3.studio/en/
+  featured: false
+- title: Mahipat's Portfolio
+  main_url: https://mojaave.com/
+  url: https://mojaave.com
+  source_url: https://github.com/mhjadav/mojaave
+  description: >
+    mojaave.com is Mahipat's portfolio, I have developed it using Gatsby v2 and Bootstrap, To get in touch with people looking for full stack developer.
+  categories:
+    - Portfolio
+    - Software
+    - Web Dev
+    - Personal
+  built_by: Mahipat Jadav
+  built_by_url: https://mojaave.com/
+  featured: false
+- title: Cmsbased
+  main_url: https://www.cmsbased.net
+  url: https://www.cmsbased.net
+  description: >
+    Cmsbased is providing automation tools and design resources for Web Hosting and IT services industry.
+  categories:
+    - Technology
+    - Design
+    - Digital Products
+  featured: false
+- title: Traffic Design Biennale 2018
+  main_url: https://trafficdesign.pl
+  url: http://trafficdesign.pl/pl/ficzery/2018-biennale/
+  description: >
+    Mini site for 2018 edition of Traffic Design’s Biennale
+  categories:
+    - Landing
+    - Creative
+    - Nonprofit
+    - Gallery
+  built_by: Piotr Fedorczyk
+  built_by_url: https://piotrf.pl
+  featured: false

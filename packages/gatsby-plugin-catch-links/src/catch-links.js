@@ -1,4 +1,4 @@
-import { withPrefix } from "gatsby-link"
+import { withPrefix } from "gatsby"
 
 function checkSameOriginWithoutProtocol(origin1, origin2) {
   const protocolRegex = new RegExp(/(^\w+:|^)\/\//)

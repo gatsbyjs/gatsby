@@ -37,7 +37,13 @@ exports.sourceNodes = (
         collection.map(col =>
           createNodes(db, pluginOptions, dbName, createNode, createNodeId, col)
         )
-      )
+      ).then(() => {
+        db.close()
+      }).catch(err => {
+        console.warn(err)
+        db.close()
+        return err
+      })
     })
     .catch(err => {
       console.warn(err)
@@ -58,13 +64,14 @@ function createNodes(
     let cursor = collection.find()
 
     // Execute the each command, triggers for each document
-    cursor.each(function(err, item) {
-      // If the item is null then the cursor is exhausted/empty and closed
-      if (item == null) {
-        // Let's close the db
-        db.close()
-        resolve()
-      } else {
+    cursor.toArray((err, documents) => {
+
+      if (err) {
+        reject(err)
+      }
+
+      documents.forEach((item) => {      
+
         var id = item._id.toString()
         delete item._id
 
@@ -116,7 +123,8 @@ function createNodes(
         childrenNodes.forEach(node => {
           createNode(node)
         })
-      }
+      })
+      resolve()
     })
   })
 }
