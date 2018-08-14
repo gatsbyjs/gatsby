@@ -3,7 +3,6 @@ const visit = require(`unist-util-visit`)
 const parseLineNumberRange = require(`./parse-line-number-range`)
 const highlightCode = require(`./highlight-code`)
 const addLineNumbers = require(`./add-line-numbers`)
-const { oneLineTrim } = require(`common-tags`)
 
 module.exports = (
   { markdownAST },
@@ -43,7 +42,7 @@ module.exports = (
     let numLinesStyle, numLinesClass, numLinesNumber
     numLinesStyle = numLinesClass = numLinesNumber = ``
     if (numberLines) {
-      numLinesStyle = `style="counter-reset: linenumber ${numberLinesStartAt - 1}"`
+      numLinesStyle = ` style="counter-reset: linenumber ${numberLinesStartAt - 1}"`
       numLinesClass = `line-numbers`
       numLinesNumber = addLineNumbers(node.value)
     }
@@ -51,15 +50,15 @@ module.exports = (
     // Replace the node with the markup we need to make
     // 100% width highlighted code lines work
     node.type = `html`
-    node.value = oneLineTrim`
-      <div class="gatsby-highlight" data-language="${languageName}">
-        <pre ${numLinesStyle} class="${className}${numLinesClass}">
-          <code class="${className}">
-            ${highlightCode(language, node.value, highlightLines)}
-          </code>
-          ${numLinesNumber}
-        </pre>
-      </div>`
+    node.value = ``
+    + `<div class="gatsby-highlight" data-language="${languageName}">`
+    +   `<pre${numLinesStyle} class="${className}${numLinesClass}">`
+    +     `<code class="${className}">`
+    +       `${highlightCode(language, node.value, highlightLines)}`
+    +     `</code>`
+    +     `${numLinesNumber}`
+    +   `</pre>`
+    + `</div>`
     })
 
   visit(markdownAST, `inlineCode`, node => {
@@ -76,10 +75,6 @@ module.exports = (
     const className = `${classPrefix}${languageName}`
 
     node.type = `html`
-    node.value = oneLineTrim`
-      <code class="${className}">
-        ${highlightCode(languageName, node.value)}
-      </code>
-    `
+    node.value = `<code class="${className}">${highlightCode(languageName, node.value)}</code>`
   })
 }
