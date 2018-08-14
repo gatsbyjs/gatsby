@@ -45,7 +45,9 @@ const IndexPage = () => (
         {` `}
         link uses
         {` `}
-        <a href="https://www.gatsbyjs.org/packages/gatsby-link/">gatsby-link</a>
+        <a href="https://next.gatsbyjs.org/docs/gatsby-link/">
+          <code>Link</code>
+        </a>
         {` `}
         <code>activeClassName</code>
         to apply the <code>selected</code>
