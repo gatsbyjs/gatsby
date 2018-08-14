@@ -8,7 +8,7 @@ import hex2rgba from "hex2rgba"
 
 class EmailCaptureForm extends React.Component {
   render() {
-    const { signupMessage, confirmMessage, containerCss } = this.props
+    const { signupMessage, confirmMessage, overrideCSS } = this.props
 
     return (
       <div
@@ -16,7 +16,7 @@ class EmailCaptureForm extends React.Component {
           borderTop: `2px solid ${colors.lilac}`,
           marginTop: rhythm(3),
           paddingTop: `${rhythm(1)}`,
-          ...containerCss,
+          ...overrideCSS,
         }}
       >
         <div>
@@ -35,7 +35,7 @@ class EmailCaptureForm extends React.Component {
 EmailCaptureForm.defaultProps = {
   signupMessage: `Enjoyed this post? Receive the next one in your inbox!`,
   confirmMessage: `Thank you! Youʼll receive your first email shortly.`,
-  containerCss: {},
+  overrideCSS: {},
 }
 
 export default EmailCaptureForm
