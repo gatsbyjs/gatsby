@@ -22,6 +22,7 @@ Array [
     "name": "load-babel-config",
     "nodeAPIs": Array [
       "onCreateBabelConfig",
+      "onPreBootstrap",
     ],
     "pluginOptions": Object {
       "plugins": Array [],
@@ -126,6 +127,7 @@ Array [
     "name": "load-babel-config",
     "nodeAPIs": Array [
       "onCreateBabelConfig",
+      "onPreBootstrap",
     ],
     "pluginOptions": Object {
       "plugins": Array [],
