@@ -170,7 +170,7 @@ class FilteredShowcase extends Component {
                     <label css={{ position: `relative` }}>
                       <input
                         css={{ ...styles.searchInput }}
-                        type="text"
+                        type="search"
                         value={this.state.search}
                         onChange={e =>
                           this.setState({
@@ -211,7 +211,9 @@ class FilteredShowcase extends Component {
                     }}
                   >
                     Load More
-                    <MdArrowDownward style={{ marginLeft: 4 }} />
+                    <MdArrowDownward
+                      style={{ marginLeft: 4, verticalAlign: `sub` }}
+                    />
                   </button>
                 )}
               </div>

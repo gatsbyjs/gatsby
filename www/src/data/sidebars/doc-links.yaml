@@ -12,7 +12,7 @@
       link: /tutorial/
 - title: Guides
   items:
-    - title: Preparing your environment*
+    - title: Preparing your environment
       link: /docs/preparing-your-environment/
       items:
         - title: Basic hardware and software requirements*
@@ -93,10 +93,12 @@
       items:
         - title: Introducing GraphiQL*
           link: /docs/introducing-graphiql/
-        - title: Build a page with a GraphQL query
-          link: /docs/build-a-page-with-graphql-query/
         - title: Creating and modifying pages
           link: /docs/creating-and-modifying-pages/
+        - title: Querying data in pages with graphql
+          link: /docs/page-query/
+        - title: Querying data in components with StaticQuery
+          link: /docs/static-query/
         - title: Adding Markdown pages
           link: /docs/adding-markdown-pages/
         - title: Adding a list of Markdown blog posts
@@ -105,9 +107,7 @@
           link: /docs/creating-slugs-for-pages/
         - title: Programmatically create pages from data*
           link: /docs/programmatically-create-pages-from-data/
-        - title: Querying data with StaticQuery
-          link: /docs/static-query/
-    - title: Plugins*
+    - title: Plugins
       link: /docs/plugins/
       items:
         - title: Plugin authoring
@@ -116,7 +116,7 @@
           link: /docs/submit-to-plugin-library/
         - title: Source plugin tutorial
           link: /docs/source-plugin-tutorial/
-    - title: Styling*
+    - title: Styling
       link: /docs/styling/
       items:
         - title: CSS Modules*
@@ -279,6 +279,8 @@
       link: /docs/how-to-label-an-issue/
     - title: How to submit a PR*
       link: /docs/how-to-submit-a-pr/
+    - title: Community Pair Programming Sessions
+      link: /docs/pair-programming/
     - title: Gatsby style guide
       link: /docs/gatsby-style-guide/
     - title: Design principles*
