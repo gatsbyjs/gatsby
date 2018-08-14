@@ -3,6 +3,7 @@ const visit = require(`unist-util-visit`)
 const parseLineNumberRange = require(`./parse-line-number-range`)
 const highlightCode = require(`./highlight-code`)
 const addLineNumbers = require(`./add-line-numbers`)
+const { oneLineTrim } = require(`common-tags`)
 
 module.exports = (
   { markdownAST },
@@ -15,7 +16,12 @@ module.exports = (
 
   visit(markdownAST, `code`, node => {
     let language = node.lang
-    let { splitLanguage, highlightLines, numberLines, numberLinesStartAt } = parseLineNumberRange(language)
+    let {
+      splitLanguage,
+      highlightLines,
+      numberLines,
+      numberLinesStartAt,
+    } = parseLineNumberRange(language)
     language = splitLanguage
 
     // PrismJS's theme styles are targeting pre[class*="language-"]
@@ -25,9 +31,7 @@ module.exports = (
     //
     // @see https://github.com/PrismJS/prism/blob/1d5047df37aacc900f8270b1c6215028f6988eb1/themes/prism.css#L49-L54
     let languageName = `text`
-    if (language) {
-      languageName = normalizeLanguage(language)
-    }
+    if (language) { languageName = normalizeLanguage(language) }
 
     // Allow users to specify a custom class prefix to avoid breaking
     // line highlights if Prism is required by any other code.
@@ -35,19 +39,28 @@ module.exports = (
     // re-process our already-highlighted markup.
     // @see https://github.com/gatsbyjs/gatsby/issues/1486
     const className = `${classPrefix}${languageName}`
-    
+
+    let numLinesStyle, numLinesClass, numLinesNumber
+    numLinesStyle = numLinesClass = numLinesNumber = ``
+    if (numberLines) {
+      numLinesStyle = `style="counter-reset: linenumber ${numberLinesStartAt - 1}"`
+      numLinesClass = `line-numbers`
+      numLinesNumber = addLineNumbers(node.value)
+    }
+
     // Replace the node with the markup we need to make
     // 100% width highlighted code lines work
     node.type = `html`
-    node.value = `<div class="gatsby-highlight" data-language="${languageName}"><pre ${numberLines
-          ? ` style="counter-reset: linenumber ${numberLinesStartAt - 1}"`
-          : ``
-        } class="${className}${numberLines ? ` line-numbers` : ``}"><code class="${className}">${highlightCode(
-          language,
-          node.value,
-          highlightLines
-          )}</code>${numberLines ? addLineNumbers(node.value) : ``}</pre></div>`
-  })
+    node.value = oneLineTrim`
+      <div class="gatsby-highlight" data-language="${languageName}">
+        <pre ${numLinesStyle} class="${className}${numLinesClass}">
+          <code class="${className}">
+            ${highlightCode(language, node.value, highlightLines)}
+          </code>
+          ${numLinesNumber}
+        </pre>
+      </div>`
+    })
 
   visit(markdownAST, `inlineCode`, node => {
     let languageName = `text`
@@ -63,9 +76,10 @@ module.exports = (
     const className = `${classPrefix}${languageName}`
 
     node.type = `html`
-    node.value = `<code class="${className}">${highlightCode(
-      languageName,
-      node.value
-    )}</code>`
+    node.value = oneLineTrim`
+      <code class="${className}">
+        ${highlightCode(languageName, node.value)}
+      </code>
+    `
   })
 }
