@@ -39,6 +39,12 @@ plugins: [
             // the language "sh" which will highlight using the
             // bash highlighter.
             aliases: {},
+            // This toggles the display of line numbers alongside the code.
+            // To use it, add the following line in src/layouts/index.js
+            // right after importing the prism color scheme:
+            //  `require("prismjs/plugins/line-numbers/prism-line-numbers.css");`
+            // Defaults to false.
+            showLineNumbers: false
           },
         },
       ],
@@ -110,6 +116,7 @@ CSS along your PrismJS theme and the styles for `.gatsby-highlight-code-line`:
  * padding and overflow.
  * 1. Make the element just wide enough to fit its content.
  * 2. Always fill the visible space in .gatsby-highlight.
+ * 3. Adjust the position of the line numbers
  */
 .gatsby-highlight pre[class*="language-"] {
   background-color: transparent;
@@ -119,6 +126,20 @@ CSS along your PrismJS theme and the styles for `.gatsby-highlight-code-line`:
   float: left; /* 1 */
   min-width: 100%; /* 2 */
 }
+.gatsby-highlight pre[class*="language-"].line-numbers {
+  paddingLeft: 2.8em; /* 3 */
+}
+```
+
+#### Optional: Add line numbering
+
+If you want to add line numbering alongside your code, you need to
+import the corresponding CSS file from PrismJS, right after importing your
+colorscheme in `layout/index.js`:
+
+```javascript
+// layouts/index.js
+require("prismjs/plugins/line-numbers/prism-line-numbers.css");
 ```
 
 ### Usage in Markdown
@@ -126,6 +147,39 @@ CSS along your PrismJS theme and the styles for `.gatsby-highlight-code-line`:
 This is some beautiful code:
 
     ```javascript
+    // In your gatsby-config.js
+    plugins: [
+      {
+        resolve: `gatsby-transformer-remark`,
+        options: {
+          plugins: [
+            `gatsby-remark-prismjs`,
+          ]
+        }
+      }
+    ]
+    ```
+
+To see the line numbers alongside your code, you can use the `numberLines` option:
+
+    ```javascript{numberLines: true}
+    // In your gatsby-config.js
+    plugins: [
+      {
+        resolve: `gatsby-transformer-remark`,
+        options: {
+          plugins: [
+            `gatsby-remark-prismjs`,
+          ]
+        }
+      }
+    ]
+    ```
+
+You can also start numbering at any index you wish (here, numbering
+will start at index 5):
+
+    ```javascript{numberLines: 5}
     // In your gatsby-config.js
     plugins: [
       {
@@ -204,9 +258,21 @@ throw our overflow and background on `.gatsby-highlight`, and use
 `display:block` on `.gatsby-highlight-code-line` – all of this coming together
 to facilitate the desired line highlight behavior.
 
+### Line numbering
+
+Because [the line numbering PrismJS plugin][7] runs client-side, a few adaptations were required to make it work:
+
+* A class `.line-numbers` is dynamically added to the `<pre>` element.
+* A new node `<span class="line-numbers-rows">` is added right before the closing `</pre>`
+containing as many empty `<span>`s as there are lines.
+
+See the [client-side PrismJS implementation][8] for reference.
+
 [1]: https://github.com/PrismJS/prism/tree/8eb0ab6f76484ca47fa7acbf77657fab17b03ca7/plugins/line-highlight
 [2]: https://github.com/facebook/react/blob/00ba97a354e841701b4b83983c3a3904895e7b87/docs/_config.yml#L10
 [3]: http://prismjs.com/#plugins
 [4]: https://facebook.github.io/react/tutorial/tutorial.html
 [5]: https://github.com/PrismJS/prism/tree/1d5047df37aacc900f8270b1c6215028f6988eb1/themes
 [6]: http://prismjs.com/
+[7]: https://prismjs.com/plugins/line-numbers/
+[8]: https://github.com/PrismJS/prism/blob/master/plugins/line-numbers/prism-line-numbers.js#L69-L115
