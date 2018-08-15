@@ -1390,6 +1390,12 @@
   dependencies:
     "@types/node" "*"
 
+"@types/reach__router@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@types/reach__router/-/reach__router-1.0.0.tgz#c32d6a322f2dc8eb847df5ebe3fc931a340202c5"
+  dependencies:
+    "@types/react" "*"
+
 "@types/react@*":
   version "16.4.6"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.4.6.tgz#5024957c6bcef4f02823accf5974faba2e54fada"
