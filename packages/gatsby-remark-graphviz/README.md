@@ -43,5 +43,3 @@ Which will be rendered using viz.js and the output html will replace the code bl
 If you want a broader range of drawing options, checkout [gatsby-remark-draw](https://www.npmjs.com/package/gatsby-remark-draw). It provides SvgBobRus, Graphviz, and Mermaid, but note that you must have these already installed on your system
 
 If you're simply looking for a normal (not Gatsby) remark plugin for graphviz, see [remark-graphviz](https://www.npmjs.com/package/remark-graphviz) which inspired this plugin.
-
-
