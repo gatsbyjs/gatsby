@@ -36,7 +36,7 @@ Then, add `dot` code blocks to your markdown. E.g
 
 Which will be rendered using viz.js and the output html will replace the code block with the actual SVG.
 
-![](./example-graph.png)
+![rendered-graph](./rendered-graph.svg)
 
 ## Alternatives
 
