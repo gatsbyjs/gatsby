@@ -258,7 +258,7 @@ If we had passed another prop to our `<Header />` component, like so...
 
 ...we would have been able to also access the `arbitraryPhrase` prop: `{props.arbitraryPhrase}`.
 
-6.  To emphasize how this makes our components reusable, let’s add an extra `<Header />` component to the about page. Add the following code to the `/src/components/header.js` file, and save.
+6.  To emphasize how this makes our components reusable, let’s add an extra `<Header />` component to the about page. Add the following code to the `/src/pages/about.js` file, and save.
 
 ```jsx{7}
 import React from "react"
