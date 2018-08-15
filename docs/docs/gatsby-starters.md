@@ -80,7 +80,9 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
   - Tags
   - Categories
   - Google Analytics
+  - [NetlifyCMS](https://www.netlifycms.org/) support
   - Disqus
+  - Out of the box image optimization via gatsby-image
   - Offline support
   - Web App Manifest
   - SEO
