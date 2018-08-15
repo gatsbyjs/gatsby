@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.2-beta.9"></a>
+
+## [2.0.2-beta.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-catch-links/compare/gatsby-plugin-catch-links@2.0.2-beta.8...gatsby-plugin-catch-links@2.0.2-beta.9) (2018-08-15)
+
+### Bug Fixes
+
+- update docs to remove `gatsby-link` reference ([#7315](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-catch-links/issues/7315)) ([a285e1c](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-catch-links/commit/a285e1c))
+
 <a name="2.0.2-beta.8"></a>
 
 ## [2.0.2-beta.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-catch-links/compare/gatsby-plugin-catch-links@2.0.2-beta.7...gatsby-plugin-catch-links@2.0.2-beta.8) (2018-08-14)
