@@ -1,5 +1,5 @@
 import * as React from "react"
-import { NavigateFn, LinkProps } from "@types/reach__router"
+import { NavigateFn, LinkProps } from "@reach/router"
 
 export interface GatsbyLinkProps extends LinkProps {
   activeClassName?: string
