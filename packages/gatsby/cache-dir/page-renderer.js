@@ -119,7 +119,14 @@ class PageRenderer extends React.Component {
   }
 
   render() {
-    if (!this.state.pageResources) return null
+    if (!(this.state.pageResources && this.state.pageResources.json)) {
+      if (window.location.search) {
+        window.location.search += `&no-cache=1`
+      } else {
+        window.location.search = `?no-cache=1`
+      }
+      return null
+    }
 
     const pathContext =
       process.env.NODE_ENV !== `production`
