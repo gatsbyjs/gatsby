@@ -208,8 +208,8 @@ module.exports = babelLoader.custom(babel => {
         fallbackPresets,
       ] = prepareOptions(babel)
 
-      // If there is no filesystem config present add more defaults
-      // TODO: maybe this should be stricter, like checks if there are no plugins or presets?
+      // If there is no filesystem babel config present, add our fallback
+      // presets/plugins.
       if (!partialConfig.hasFilesystemConfig()) {
         options = {
           ...options,
@@ -217,7 +217,7 @@ module.exports = babelLoader.custom(babel => {
           presets: [...fallbackPresets, ...requiredPresets],
         }
       } else {
-        // Push on just our required plugins/presets
+        // With a babelrc present, only add our required plugins/presets
         options = {
           ...options,
           plugins: [...options.plugins, ...requiredPlugins],
@@ -225,7 +225,7 @@ module.exports = babelLoader.custom(babel => {
         }
       }
 
-      // Merge in presets/plugins from gatsby plugins.
+      // Merge in presets/plugins added from gatsby plugins.
       reduxPresets.forEach(preset => {
         options.presets = mergeConfigItemOptions({
           items: options.presets,
@@ -234,6 +234,7 @@ module.exports = babelLoader.custom(babel => {
           babel,
         })
       })
+
       reduxPlugins.forEach(plugin => {
         options.plugins = mergeConfigItemOptions({
           items: options.plugins,
