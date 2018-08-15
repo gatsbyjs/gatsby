@@ -1,12 +1,14 @@
 ---
-title: Build a page with a GraphQL query
+title: Querying data in pages with graphql
 ---
 
-Gatsby creates pages from components located within `src/pages`. It watches the folder and will create and remove pages as you add and remove components. The pathname for each page is derived from the name of the component. For example, `src/pages/about.js` would be located at `/about/` when published.
+Gatsby's `graphql` tag enables page components to retrieve data via GraphQL query.
 
-In this guide, you will learn how to perform a query of your site's metadata for the description to display on your homepage.
+In this guide, you will learn [how to use the `graphql` tag](/page-query#adding-the-graphql-query) in your pages, as well as go a little deeper into [how the `graphql` tag works](/page-query#how-does-the-graphql-tag-work).
 
-## Adding `description` to `siteMetadata`
+## How to use the `graphql` tag in pages
+
+### Add `description` to `siteMetadata`
 
 The first step in displaying the description will be ensuring you have one to begin with.
 
@@ -21,7 +23,7 @@ module.exports = {
 }
 ```
 
-## Basic Index Page Markup
+### Mark up basic index page
 
 A simple index page (`src/pages/index.js`) can be marked up like so:
 
@@ -35,9 +37,9 @@ const HomePage = () => {
 export default HomePage
 ```
 
-## Adding the GraphQL Query
+### Add the `graphql` query
 
-The first thing to do is import GraphQL from Gatsby. At the top of `index.js` add:
+The first thing to do is import `graphql` from Gatsby. At the top of `index.js` add:
 
 ```diff
 import React from 'react'
@@ -87,7 +89,7 @@ export const query = graphql`
 `
 ```
 
-## Get Data into the `<HomePage />` Component
+### Provide data to the `<HomePage />` component
 
 To start, update the `HomePage` component to destructure `data` from props.
 
@@ -121,3 +123,18 @@ export default HomePage
 ```
 
 After restarting `gatsby develop`, your home page will now display "This is where I write my thoughts." from the description set in `gatsby-config.js`!
+
+## How does the graphql tag work?
+
+`graphql` is a [tag function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#Tagged_template_literals). Behind the scenes Gatsby handles these tags in a particular way:
+
+### The short answer
+
+During the Gatsby build process, GraphQL queries are pulled out of the original source for parsing.
+
+### The longer answer
+
+The longer answer is a little more involved: Gatsby borrows a technique from
+[Relay](https://facebook.github.io/relay/) that converts your source code into an [abstract syntax tree (AST)](https://en.wikipedia.org/wiki/Abstract_syntax_tree) during the build step. [`file-parser.js`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/file-parser.js) and [`query-compiler.js`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/query-compiler.js) pick out your `graphql`-tagged templates and effectively remove them from the original source code.
+
+This means that the `graphql` tag isn’t executed the way that you might expect. For example, you cannot use [expression interpolation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#Expression_interpolation) with Gatsby's `graphql` tag.

@@ -64,13 +64,13 @@ No language indicated, so no syntax highlighting.
 But let's throw in a <b>tag</b>.
 ```
 
-## Line highlighting
+## Line highlighting & numbering
 
-[gatsby-remark-prismjs][1] has its own line highlighting implementation which
+[gatsby-remark-prismjs][1] has its own line highlighting & numbering implementation which
 differs a bit from PrismJS's own. You can find out everything about it in the
 [corresponding README][1].
 
-    ```javascript{1-2,22}
+    ```javascript{1-2,22}{numberLines: true}
     // In your gatsby-config.js
     // Let's make this line very long so that our container has to scroll its overflow…
     plugins: [
@@ -99,7 +99,7 @@ differs a bit from PrismJS's own. You can find out everything about it in the
     ]
     ```
 
-```javascript{1-2,22}
+```javascript{1-2,22}{numberLines: true}
 // In your gatsby-config.js
 // Let's make this line very long so that our container has to scroll its overflow…
 plugins: [
@@ -126,6 +126,20 @@ plugins: [
     }
   }
 ]
+```
+
+Line numbers can start from anywhere, here's an example showing a small extract from a larger chunk of code:
+
+    ```{numberLines: 549}
+    ...
+    a long imaginary code block
+    ...
+    ```
+
+```{numberLines: 549}
+...
+ a long imaginary code block
+...
 ```
 
 Let's do something crazy and add a list with another code example:

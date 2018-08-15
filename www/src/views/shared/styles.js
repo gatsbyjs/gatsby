@@ -1,7 +1,9 @@
-import { options, /* rhythm, scale, */ rhythm } from "../../utils/typography"
+import typography, { options, rhythm } from "../../utils/typography"
 import presets, { colors } from "../../utils/presets"
 import { style } from "glamor"
 import hex2rgba from "hex2rgba"
+
+const { curveDefault, speedDefault } = presets.animation
 
 const styles = {
   featuredSitesCard: style({
@@ -94,9 +96,9 @@ const styles = {
   sticky: {
     paddingTop: rhythm(options.blockMarginBottom),
     position: `sticky`,
-    top: 0,
+    top: `calc(${presets.bannerHeight} - 1px)`,
     [presets.Desktop]: {
-      top: `calc(${presets.headerHeight} - 1px)`,
+      top: `calc(${presets.headerHeight} + ${presets.bannerHeight} - 1px)`,
     },
   },
   scrollbar: {
@@ -131,6 +133,29 @@ const styles = {
   noLinkUnderline: {
     borderBottom: `none !important`, // i know i know
     boxShadow: `none !important`, // but people really want this
+  },
+  searchInput: {
+    appearance: `none`,
+    backgroundColor: `transparent`,
+    border: 0,
+    borderRadius: presets.radiusLg,
+    color: colors.gatsby,
+    paddingTop: rhythm(1 / 8),
+    paddingRight: rhythm(1 / 4),
+    paddingBottom: rhythm(1 / 8),
+    paddingLeft: rhythm(1),
+    overflow: `hidden`,
+    fontFamily: typography.options.headerFontFamily.join(`,`),
+    transition: `width ${speedDefault} ${curveDefault}, background-color ${speedDefault} ${curveDefault}`,
+    width: `6.8rem`,
+    "&::placeholder": {
+      color: colors.lilac,
+    },
+    "&:focus": {
+      outline: "none",
+      width: `9rem`,
+      background: colors.ui.light,
+    },
   },
 }
 
