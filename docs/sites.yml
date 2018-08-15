@@ -2078,6 +2078,17 @@
   built_by: Mill3 Studio
   built_by_url: https://mill3.studio/en/
   featured: false
+- title: Bestvideogame.deals
+  main_url: https://bestvideogame.deals/
+  url: https://bestvideogame.deals/
+  description: >
+    Video game comparison website for the UK, build with GatsbyJS.
+  categories:
+    - eCommerce
+    - Video Games
+  built_by: Koen Kamphuis
+  built_by_url: https://koenkamphuis.com/
+  featured: false
 - title: Mahipat's Portfolio
   main_url: https://mojaave.com/
   url: https://mojaave.com
