@@ -79,34 +79,41 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     }
   }
 
-  loader.getResourcesForPathname(window.location.pathname).then(() => {
-    const Root = () =>
-      createElement(
-        Router,
-        {
-          basepath: __PATH_PREFIX__,
-        },
-        createElement(RouteHandler, { path: `/*` })
-      )
-
-    const NewRoot = apiRunner(`wrapRootComponent`, { Root }, Root)[0]
-
-    const renderer = apiRunner(
-      `replaceHydrateFunction`,
-      undefined,
-      ReactDOM.hydrate
-    )[0]
-
-    domReady(() => {
-      renderer(
-        <NewRoot />,
-        typeof window !== `undefined`
-          ? document.getElementById(`___gatsby`)
-          : void 0,
-        () => {
-          apiRunner(`onInitialClientRender`)
-        }
-      )
+  loader
+    .getResourcesForPathname(window.location.pathname)
+    .then(() => {
+      if (!loader.getPage(window.location.pathname)) {
+        return loader.getResourcesForPathname(`/404.html`)
+      }
     })
-  })
+    .then(() => {
+      const Root = () =>
+        createElement(
+          Router,
+          {
+            basepath: __PATH_PREFIX__,
+          },
+          createElement(RouteHandler, { path: `/*` })
+        )
+
+      const NewRoot = apiRunner(`wrapRootComponent`, { Root }, Root)[0]
+
+      const renderer = apiRunner(
+        `replaceHydrateFunction`,
+        undefined,
+        ReactDOM.hydrate
+      )[0]
+
+      domReady(() => {
+        renderer(
+          <NewRoot />,
+          typeof window !== `undefined`
+            ? document.getElementById(`___gatsby`)
+            : void 0,
+          () => {
+            apiRunner(`onInitialClientRender`)
+          }
+        )
+      })
+    })
 })
