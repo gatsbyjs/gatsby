@@ -17,7 +17,7 @@ module.exports = async ({ markdownAST }, pluginOptions = {}) =>
       const viz = new Viz({ Module, render })
 
       viz
-        .renderString(value, { lang })
+        .renderString(value, { engine: lang })
         .then(svgString => {
           node.type = `html`
           node.value = svgString
