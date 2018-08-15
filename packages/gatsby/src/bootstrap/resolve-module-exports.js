@@ -76,7 +76,7 @@ You'll need to edit the file to use just one or the other.
 plugin: ${modulePath}.js
 
 This didn't cause a problem in Gatsby v1 so you might want to review the migration doc for this:
-https://next.gatsbyjs.org/docs/migrating-from-v1-to-v2/#convert-to-either-pure-commonjs-or-pure-es6
+https://gatsby.app/no-mixed-modules
       `
     )
   }
