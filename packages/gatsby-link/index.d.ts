@@ -1,11 +1,19 @@
-import * as React from "react";
+import * as React from "react"
+import { NavigateFn, LinkProps } from "@types/reach__router"
 
-export const push: (to: LocationDescriptor) => void;
-export const replace: (to: LocationDescriptor) => void;
+export interface GatsbyLinkProps extends LinkProps {
+  activeClassName?: string
+  activeStyle?: object
+  innerRef?: Function
+  onClick?: Function
+  to: string
+}
 
-// TODO: Remove navigateTo for Gatsby v3
-export const navigateTo: (to: LocationDescriptor) => void;
+export default class GatsbyLink extends React.Component<GatsbyLinkProps, any> {}
+export const navigate: NavigateFn
+export const withPrefix: (path: string) => string
 
-export const withPrefix: (path: string) => string;
-
-export default class GatsbyLink extends React.Component<GatsbyLinkProps, any> { }
+// TODO: Remove navigateTo, push & replace for Gatsby v3
+export const push: (to: string) => void
+export const replace: (to: string) => void
+export const navigateTo: (to: string) => void
