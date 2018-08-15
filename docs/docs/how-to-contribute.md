@@ -58,7 +58,7 @@ The usual contributing steps are:
 - Setup up repo and install dependencies: `yarn run bootstrap`
 - Make sure tests are passing for you: `yarn test`
 - Create a topic branch: `git checkout -b topics/new-feature-name`
-- Run `npm run watch` from the root of the repo to watch for changes to packages' source code and compile these changes on-the-fly as you work. Note that the watch command can be resource intensive. To limit it to the packages you're working on, add a scope flag, like `npm run watch -- --scope={gatsby,gatsby-cli}`. To watch just one package, run `npm run watch -- --scope=gatsby`.
+- Run `yarn run watch` from the root of the repo to watch for changes to packages' source code and compile these changes on-the-fly as you work. Note that the watch command can be resource intensive. To limit it to the packages you're working on, add a scope flag, like `yarn run watch -- --scope={gatsby,gatsby-cli}`. To watch just one package, run `yarn run watch -- --scope=gatsby`.
 - Install [gatsby-dev-cli](/packages/gatsby-dev-cli/) globally: `yarn global add gatsby-dev-cli`
 - Run `yarn install` in each of the sites you're testing.
 - For each of your Gatsby test sites, run the `gatsby-dev` command inside the test site's directory to copy
