@@ -117,6 +117,15 @@ const prepareOptions = babel => {
 
   fallbackPlugins.push(
     babel.createConfigItem(
+      [require.resolve(`@babel/plugin-syntax-dynamic-import`)],
+      {
+        type: `plugin`,
+      }
+    )
+  )
+
+  fallbackPlugins.push(
+    babel.createConfigItem(
       [
         require.resolve(`@babel/plugin-transform-runtime`),
         {
