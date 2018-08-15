@@ -1,0 +1,43 @@
+{
+  "name": "gatsby-remark-graphviz",
+  "description": "Processes graphviz code blocks and renders to SVG using viz.js",
+  "version": "1.0.0-alpha.1",
+  "author": "Anthony Marcar <anthony@moocar.me>",
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "dependencies": {
+    "@babel/runtime": "7.0.0-beta.52",
+    "unist-util-visit": "^1.4.0",
+    "viz.js": "^2.0.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "7.0.0-beta.52",
+    "@babel/core": "7.0.0-beta.52",
+    "cross-env": "^5.1.4",
+    "rimraf": "^2.6.2",
+    "unist-util-find": "^1.0.1"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-graphviz#readme",
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "markdown",
+    "remark",
+    "graphviz",
+    "dot",
+    "circo",
+    "graphs"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "peerDependencies": {
+    "gatsby": ">2.0.0-alpha"
+  },
+  "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-graphviz",  
+  "scripts": {
+    "build": "babel --out-dir . src",
+    "prepare": "cross-env NODE_ENV=production npm run build",
+    "watch": "babel -w src --out-dir . --ignore **/__tests__"
+  }
+}
