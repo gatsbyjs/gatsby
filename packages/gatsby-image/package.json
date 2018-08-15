@@ -8,7 +8,8 @@
   },
   "dependencies": {
     "@babel/runtime": "7.0.0-beta.52",
-    "prop-types": "^15.6.1"
+    "prop-types": "^15.6.1",
+    "react-testing-library": "^4.1.7"
   },
   "devDependencies": {
     "@babel/cli": "7.0.0-beta.52",

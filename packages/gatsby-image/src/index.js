@@ -104,11 +104,12 @@ const noscriptImg = props => {
 }
 
 const Img = props => {
-  const { style, onLoad, ...otherProps } = props
+  const { style, onLoad, onError, ...otherProps } = props
   return (
     <img
       {...otherProps}
       onLoad={onLoad}
+      onError={onError}
       style={{
         position: `absolute`,
         top: 0,
@@ -126,6 +127,7 @@ const Img = props => {
 
 Img.propTypes = {
   style: PropTypes.object,
+  onError: PropTypes.func,
   onLoad: PropTypes.func,
 }
 
@@ -297,6 +299,7 @@ class Image extends React.Component {
                   this.state.IOSupported && this.setState({ imgLoaded: true })
                   this.props.onLoad && this.props.onLoad()
                 }}
+                onError={this.props.onError}
               />
             )}
 
@@ -396,6 +399,7 @@ class Image extends React.Component {
                   this.setState({ imgLoaded: true })
                   this.props.onLoad && this.props.onLoad()
                 }}
+                onError={this.props.onError}
               />
             )}
 
@@ -467,6 +471,7 @@ Image.propTypes = {
   position: PropTypes.string,
   backgroundColor: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   onLoad: PropTypes.func,
+  onError: PropTypes.func,
   Tag: PropTypes.string,
 }
 
