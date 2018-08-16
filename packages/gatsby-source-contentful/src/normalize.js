@@ -187,7 +187,7 @@ function prepareTextNode(node, key, text, createNode, createNodeId) {
 function prepareJSONNode(node, key, content, createNodeId, i = ``) {
   const str = JSON.stringify(content)
   const JSONNode = {
-    ...content,
+    ...(_.isPlainObject(content) ? { ...content } : { content: content }),
     id: createNodeId(`${node.id}${key}${i}JSONNode`),
     parent: node.id,
     children: [],
@@ -481,6 +481,7 @@ exports.createAssetNodes = ({
         : ``,
     }
     const assetNode = {
+      contentful_id: localizedAsset.sys.contentful_id,
       id: mId(localizedAsset.sys.id),
       parent: null,
       children: [],

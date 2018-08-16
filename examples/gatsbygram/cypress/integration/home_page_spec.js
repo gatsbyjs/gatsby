@@ -64,11 +64,10 @@ describe(`The Home Page`, () => {
     cy.fixture(`posts`).then(postsData => {
       const post1 = postsData[0]
       const post2 = postsData[1]
-      // open fist post
+      // open first post
       cy.getTestElement(`post`)
         .first()
         .click()
-        .wait(100)
       cy.url().should("contain", post1.id)
       // click right arrow icon to go to 2nd post
       cy.getTestElement(`next-post`).click()
@@ -89,7 +88,6 @@ describe(`The Home Page`, () => {
       cy.getTestElement(`post`)
         .first()
         .click()
-        .debug()
       cy.url().should("contain", post1.id)
       // press right arrow to go to 2nd post
       cy.get(`body`).type(`{rightarrow}`)

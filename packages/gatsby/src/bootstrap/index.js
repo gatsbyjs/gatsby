@@ -219,11 +219,14 @@ module.exports = async (args: BootstrapArgs) => {
 
     // Always include the site's gatsby-browser.js if it exists as it's
     // a handy place to include global styles and other global imports.
-    if (env === `browser` && plugin.name === `default-site-plugin`) {
-      const gatsbyBrowser = slash(
-        require.resolve(path.join(plugin.resolve, `gatsby-${env}`))
-      )
-      if (fs.existsSync(gatsbyBrowser)) return gatsbyBrowser
+    try {
+      if (env === `browser` && plugin.name === `default-site-plugin`) {
+        return slash(
+          require.resolve(path.join(plugin.resolve, `gatsby-${env}`))
+        )
+      }
+    } catch (e) {
+      // ignore
     }
 
     if (envAPIs && Array.isArray(envAPIs) && envAPIs.length > 0) {

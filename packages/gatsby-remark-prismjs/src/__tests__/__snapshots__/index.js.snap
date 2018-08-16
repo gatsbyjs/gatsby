@@ -22,9 +22,7 @@ Object {
         },
       },
       "type": "html",
-      "value": "<div class=\\"gatsby-highlight\\" data-language=\\"js\\">
-      <pre class=\\"custom-js\\"><code class=\\"custom-js\\"><span class=\\"token comment\\">// Fake</span></code></pre>
-      </div>",
+      "value": "<div class=\\"gatsby-highlight\\" data-language=\\"js\\"><pre class=\\"custom-js\\"><code class=\\"custom-js\\"><span class=\\"token comment\\">// Fake</span></code></pre></div>",
     },
   ],
   "position": Object {
@@ -65,9 +63,7 @@ Object {
         },
       },
       "type": "html",
-      "value": "<div class=\\"gatsby-highlight\\" data-language=\\"javascript\\">
-      <pre class=\\"language-javascript\\"><code class=\\"language-javascript\\">// Fake</code></pre>
-      </div>",
+      "value": "<div class=\\"gatsby-highlight\\" data-language=\\"javascript\\"><pre class=\\"language-javascript\\"><code class=\\"language-javascript\\">// Fake</code></pre></div>",
     },
   ],
   "position": Object {
@@ -108,9 +104,7 @@ Object {
         },
       },
       "type": "html",
-      "value": "<div class=\\"gatsby-highlight\\" data-language=\\"js\\">
-      <pre class=\\"language-js\\"><code class=\\"language-js\\"><span class=\\"token comment\\">// Fake</span></code></pre>
-      </div>",
+      "value": "<div class=\\"gatsby-highlight\\" data-language=\\"js\\"><pre class=\\"language-js\\"><code class=\\"language-js\\"><span class=\\"token comment\\">// Fake</span></code></pre></div>",
     },
   ],
   "position": Object {
@@ -338,6 +332,50 @@ Object {
       "column": 10,
       "line": 1,
       "offset": 9,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`remark prism plugin numberLines adds line-number markup when necessary 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "lang": "js{numberLines:5}",
+      "position": Position {
+        "end": Object {
+          "column": 4,
+          "line": 4,
+          "offset": 46,
+        },
+        "indent": Array [
+          1,
+          1,
+          1,
+        ],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "html",
+      "value": "<div class=\\"gatsby-highlight\\" data-language=\\"js\\"><pre style=\\"counter-reset: linenumber 4\\" class=\\"language-js line-numbers\\"><code class=\\"language-js\\"><span class=\\"token comment\\">//.foo { </span>
+color<span class=\\"token punctuation\\">:</span> red<span class=\\"token punctuation\\">;</span>
+ <span class=\\"token punctuation\\">}</span>\`</code><span aria-hidden=\\"true\\" class=\\"line-numbers-rows\\" style=\\"white-space: normal; width: auto; left: 0;\\"><span></span><span></span><span></span></span></pre></div>",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 4,
+      "line": 4,
+      "offset": 46,
     },
     "start": Object {
       "column": 1,
