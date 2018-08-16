@@ -251,6 +251,14 @@
       link: /docs/prpl-pattern/
     - title: Querying data with GraphQL
       link: /docs/querying-with-graphql/
+- title: Behind The Scenes
+  items:
+    - title: Learning Gatsbys Internals
+      link: /docs/learning-gatsbys-internals
+    - title: Node Creation
+      link: /docs/node-creation-behind-the-scenes/
+    - title: Schema Generation
+      link: /docs/schema-generation-behind-the-scenes/
 - title: Advanced Tutorials
   items:
     - title: Making a site with user authentication*

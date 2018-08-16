@@ -1,5 +1,5 @@
 ---
-title: Schema
+title: Schema Generation
 ---
 
 ## Schema
@@ -10,24 +10,29 @@ At a high level, here are the steps performed during this stage:
 
 ```dot
 digraph graphname {
-  graph [labelloc="t" label=""];
-  "cfd" [ style = "filled" label = "Custom Field Declarations 
-  { type, args, resolve }" ];
-  "cfiot" [ label = "Custom Fields InputObjectType
+  "Node" [ label = "Node
+  e.g type = File" ];
+  "rnodes" [ label = "redux.nodes" ];
+  "cfd" [ label = "Custom Field Declarations 
+  e.g source-filesystem: publicURL()" ];
+  "cfiot" [ label = "Custom Fields InputObjectType 
   { args: lt, gt, eq, re }" ];
-  "cf" [ label = "ConnectionFields
+  "cf" [ label = "ConnectionFields 
   e.g allMarkdownRemark()" ];
+  "nfiot" [ label = "Node Fields InputObjectType" ];
+  "pt" [ label = "ProcessedNodeType" ];
   "Plugin" -> "Node" [ label = "Creates node with type" ];
-  "Node" -> "exampleValue" [ label = "all nodes of type" ];
-  "exampleValue" -> "Node Fields InputObjectType";
-  "Plugin" -> cfd [ label = "setFieldsOnGraphQLNodeType" ];
-  cfd -> cfiot;
-  "Node Fields InputObjectType" -> "ProcessedType";
-  cfiot -> "ProcessedType";
-  "Node Interface" -> "ProcessedType";
-  "ProcessedType" -> cf;
-  "ProcessedType" -> "GraphQLSchema" [ label = "all types" ];
-  cf -> "GraphQLSchema";
+  "Node" -> "rnodes";
+  "rnodes" -> "exampleValue" [ label = "filtered by Node Type" ];
+  "exampleValue" -> "nfiot";
+  "Plugin" -> "cfd" [ label = "setFieldsOnGraphQLNodeType" ];
+  "cfd" -> "cfiot";
+  "nfiot" -> "pt";
+  "cfiot" -> "pt";
+  "Node Interface" -> "pt";
+  "pt" -> "cf";
+  "pt" -> "GraphQLSchema" [ label = "all types" ];
+  "cf" -> "GraphQLSchema";
 }
 ```
 
@@ -68,7 +73,7 @@ Now that we've built an object with examples of all the type's possible fields, 
 
 ### 6. Create a GraphqlObjectType
 
-We're now ready to create our final Graphql Type, known as a [ProcessedType](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/build-node-types.js#L182). This includes all inferred fields from the example object, merged with all the fields created from the plugins. It also includes the `Node Interface`, which provides reuseuable fields such as id, parent and children. We also create the same Input Types like in the plugin so that we can query by a node's field by regex, equality etc.
+We're now ready to create our final Graphql Type, known as a [ProcessedNodeType](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/build-node-types.js#L182). This includes all inferred fields from the example object, merged with all the fields created from the plugins. It also includes the `Node Interface`, which provides reuseuable fields such as id, parent and children. We also create the same Input Types like in the plugin so that we can query by a node's field by regex, equality etc.
 
 ### 7. Create Connection Fields
 
