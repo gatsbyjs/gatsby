@@ -7,7 +7,9 @@ tags: ["cms","gatsby","drupal"]
 
 ## Why use Drupal + Gatsby together?
 
-Kyle Mathews is presenting on “Gatsby + Drupal” at Decoupled Drupal Days NYC this Saturday; for those who can’t make it to his presentation, we wanted to give you a sneak peak of what it will be about. (Hint: it’s about how nicely Gatsby and Drupal work together!)
+Kyle Mathews is presenting on “Gatsby + Drupal” at [Decoupled Drupal Days NYC](https://2018.decoupleddays.com/session/decoupled-drupal-gatsby) this Saturday; for those who can’t make it to his presentation, we wanted to give you a sneak peak of what it will be about. 
+
+(Hint: it’s about how nicely Gatsby and Drupal work together!)
 
 Take a look at the source code of [the official Gatsby + Drupal example site](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-drupal) or [see it live](https://using-drupal.gatsbyjs.org/). Gatsby co-founder, Kyle Mathews, has a [long history with Drupal](https://www.gatsbyjs.org/blog/2018-05-24-launching-new-gatsby-company/#drupal-and-the-lamp-stack) and built this example site in Gatsby’s early days:
 
