@@ -52,7 +52,7 @@ Read the issue and any comments to understand what the issue is about.
 
 Choose a type label from the _labels_ dropdown to the right-hand side of the issue.
 
-!(GitHub label dropdown)(./images/github-label-list.png)
+![GitHub label dropdown](./images/github-label-list.png)
 
 You can check through the [label descriptions](https://github.com/gatsbyjs/gatsby/issues/labels) for more information on each one.
 

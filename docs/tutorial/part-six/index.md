@@ -177,7 +177,7 @@ But your one blog post looks a bit lonely. So let's add another one at
 
 ```markdown
 ---
-title: Pandas and Bananas
+title: "Pandas and Bananas"
 date: "2017-08-21"
 ---
 

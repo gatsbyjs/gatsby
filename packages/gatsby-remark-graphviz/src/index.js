@@ -6,30 +6,30 @@ const viz = new Viz({ Module, render })
 
 const validLanguages = [`dot`, `circo`]
 
-module.exports = async ({ markdownAST }, pluginOptions = {}) => {
-  let codeNodes = []
+module.exports = async ({ markdownAST }, pluginOptions = {}) =>
+  new Promise((resolve, reject) => {
+    visit(markdownAST, `code`, node => {
+      const { lang, value } = node
 
-  visit(markdownAST, `code`, node => {
-    // Only act on languages supported by graphviz
-    if (validLanguages.includes(node.lang)) {
-      codeNodes.push(node)
-    }
-    return node
-  })
+      // If this codeblock is not a known graphviz format, bail.
+      if (!validLanguages.includes(lang)) {
+        return node
+      }
 
-  await Promise.all(
-    codeNodes.map(async node => {
-      const { value, lang } = node
+      const viz = new Viz({ Module, render })
 
-      // Perform actual render
-      const svgString = await viz.renderString(value, { engine: lang })
+      viz
+        .renderString(value, { engine: lang })
+        .then(svgString => {
+          node.type = `html`
+          node.value = svgString
+          resolve(markdownAST)
+        })
+        .catch(error => {
+          console.log(error)
+          reject()
+        })
 
-      // Mutate the current node. Converting from a code block to
-      // HTML (with svg content)
-      node.type = `html`
-      node.value = svgString
-
-      return node
+      return null
     })
-  )
-}
+  })
