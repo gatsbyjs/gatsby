@@ -13,7 +13,7 @@ const chokidar = require(`chokidar`)
 const path = require(`path`)
 const slash = require(`slash`)
 
-const { store } = require(`../../redux/`)
+const { store, emitter } = require(`../../redux/`)
 const { boundActionCreators } = require(`../../redux/actions`)
 const queryCompiler = require(`./query-compiler`).default
 const report = require(`gatsby-cli/lib/reporter`)
@@ -247,4 +247,32 @@ const watch = rootDir => {
       debounceCompile()
     })
   filesToWatch.forEach(filePath => watcher.add(filePath))
+}
+
+if (process.env.gatsby_executing_command === `develop`) {
+  let bootstrapFinished = false
+  emitter.on(`BOOTSTRAP_FINISHED`, () => {
+    bootstrapFinished = true
+  })
+  emitter.on(`DELETE_PAGE`, action => {
+    if (bootstrapFinished) {
+      const componentPath = slash(action.payload.component)
+      const { pages } = store.getState()
+      let otherPageWithTemplateExists = false
+      for (let page of pages.values()) {
+        if (slash(page.component) === componentPath) {
+          otherPageWithTemplateExists = true
+          break
+        }
+      }
+      if (!otherPageWithTemplateExists) {
+        store.dispatch({
+          type: `REMOVE_TEMPLATE_COMPONENT`,
+          payload: {
+            componentPath,
+          },
+        })
+      }
+    }
+  })
 }

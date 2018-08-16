@@ -24,7 +24,7 @@ This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While t
   - [Change `navigateTo` to `navigate`](#change-navigateto-to-navigate)
   - [Convert to either pure CommonJS or pure ES6](#convert-to-either-pure-commonjs-or-pure-es6)
   - [Move Babel configuration](#move-babel-configuration)
-  - [Restore v1 PostCSS plugin setup](#restore-v1-post-css-setup)
+  - [Restore v1 PostCSS plugin setup](#restore-v1-postcss-plugin-setup)
   - [Migrate from React Router` to @reach/router](#migrate-from-react-router-to-reachrouter)
   - [APIs onPreRouteUpdate and onRouteUpdate no longer called with the route update action](#apis-onprerouteupdate-and-onrouteupdate-no-longer-called-with-the-route-update-action)
   - [Browser API `replaceRouterComponent` was removed](#browser-api-replaceroutercomponent-was-removed)

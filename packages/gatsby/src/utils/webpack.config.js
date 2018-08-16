@@ -363,6 +363,9 @@ module.exports = async (
         // Using directories for module resolution is mandatory because
         // relative path imports are used sometimes
         // See https://stackoverflow.com/a/49455609/6420957 for more details
+        "@babel/runtime": path.dirname(
+          require.resolve(`@babel/runtime/package.json`)
+        ),
         "core-js": path.dirname(require.resolve(`core-js/package.json`)),
         "react-hot-loader": path.dirname(
           require.resolve(`react-hot-loader/package.json`)
@@ -438,9 +441,12 @@ module.exports = async (
 
   if (stage === `build-html` || stage === `develop-html`) {
     const externalList = [
-      /^lodash/,
+      // match `lodash` and `lodash/foo`
+      // but not things like `lodash-es`
+      `lodash`,
+      /^lodash\//,
       `react`,
-      /^react-dom/,
+      /^react-dom\//,
       `pify`,
       `@reach/router`,
       `@reach/router/lib/history`,
@@ -450,7 +456,7 @@ module.exports = async (
       `react-helmet`,
       `minimatch`,
       `fs`,
-      /^core-js/,
+      /^core-js\//,
       `es6-promise`,
       `crypto`,
       `zlib`,
