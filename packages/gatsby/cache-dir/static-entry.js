@@ -127,24 +127,50 @@ export default (pagePath, callback) => {
 
   class RouteHandler extends React.Component {
     render() {
-      return createElement(syncRequires.components[page.componentChunkName], {
+      const props = {
         ...this.props,
         ...dataAndContext,
         pathContext: dataAndContext.pageContext,
-      })
+      }
+
+      const pageElement = createElement(
+        syncRequires.components[page.componentChunkName],
+        props
+      )
+
+      const wrappedPage = apiRunner(
+        `wrapPageElement`,
+        { element: pageElement, props },
+        pageElement,
+        ({ result }) => {
+          return { element: result, props }
+        }
+      ).pop()
+
+      return wrappedPage
     }
   }
 
-  const bodyComponent = createElement(
+  const routerElement = createElement(
     ServerLocation,
     { url: `${pathPrefix}${pagePath}` },
-    createElement(Router,
+    createElement(
+      Router,
       {
         baseuri: pathPrefix.slice(0, -1),
       },
       createElement(RouteHandler, { path: `/*` })
     )
   )
+
+  const bodyComponent = apiRunner(
+    `wrapRootElement`,
+    { element: routerElement },
+    routerElement,
+    ({ result }) => {
+      return { element: result }
+    }
+  ).pop()
 
   // Let the site or plugin render the page component.
   apiRunner(`replaceRenderer`, {

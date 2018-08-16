@@ -132,15 +132,25 @@ class PageRenderer extends React.Component {
       pathContext,
     }
 
-    const [replacementComponent] = apiRunner(`replaceComponentRenderer`, {
+    const [replacementElement] = apiRunner(`replaceComponentRenderer`, {
       props: { ...this.props, pageResources: this.state.pageResources },
       loader: publicLoader,
     })
 
-    return (
-      replacementComponent ||
+    const pageElement =
+      replacementElement ||
       createElement(this.state.pageResources.component, props)
-    )
+
+    const wrappedPage = apiRunner(
+      `wrapPageElement`,
+      { element: pageElement, props },
+      pageElement,
+      ({ result }) => {
+        return { element: result, props }
+      }
+    ).pop()
+
+    return wrappedPage
   }
 }
 

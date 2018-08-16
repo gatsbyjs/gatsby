@@ -8,9 +8,9 @@
   },
   "dependencies": {
     "@babel/runtime": "7.0.0-beta.52",
-    "styletron-client": "^3.0.0-rc.1",
-    "styletron-react": "^3.0.0-rc.2",
-    "styletron-server": "^3.0.0-rc.1"
+    "styletron-engine-atomic": "^1.0.8",
+    "styletron-react": "^4",
+    "styletron-standard": "^1.0.6"
   },
   "devDependencies": {
     "@babel/cli": "7.0.0-beta.52",

@@ -37,11 +37,6 @@
 exports.replaceRenderer = true
 
 /**
- * Allow a plugin to replace the static router component.
- */
-exports.replaceStaticRouterComponent = true
-
-/**
  * Called after every page Gatsby server renders while building HTML so you can
  * set head and body components to be rendered in your `html.js`.
  *
@@ -136,3 +131,51 @@ exports.onRenderBody = true
  * }
  */
 exports.onPreRenderHTML = true
+
+/**
+ * Allow a plugin to wrap the page element.
+ *
+ * This is useful for setting wrapper component around pages that won't get
+ * unmounted on page change. For setting Provider components use (#wrapRootElement)[wrapRootElement].
+ *
+ * _Note:_ [There is equivalent hook in Browser API](/docs/browser-apis/#wrapPageElement)
+ * @param {object} $0
+ * @param {object} $0.element The "Page" React Element built by Gatsby.
+ * @param {object} $0.props Props object used by page.
+ * @example
+ * import React from "react"
+ * import Layout from "./src/components/Layout"
+ *
+ * export const wrapPageElement = ({ element, props }) => {
+ *   // props provide same data to Layout as Page element will get
+ *   // including location, data, etc - you don't need to pass it
+ *   <Layout {...props}>{element}</Layout>
+ * }
+ */
+exports.wrapPageElement = true
+
+/**
+ * Allow a plugin to wrap the root element.
+ *
+ * This is useful to setup any Providers component that will wrap your application.
+ * For setting persistent UI elements around pages use (#wrapPageElement)[wrapPageElement].
+ *
+ * _Note:_ [There is equivalent hook in Browser API](/docs/browser-apis/#wrapRootElement)
+ * @param {object} $0
+ * @param {object} $0.element The "Root" React Element built by Gatsby.
+ * @example
+ * import React from "react"
+ * import { Provider } from "react-redux"
+ *
+ * import createStore from "./src/state/createStore"
+ * const store = createStore()
+ *
+ * export const wrapRootElement = ({ element }) => {
+ *   return (
+ *     <Provider store={store}>
+ *       {element}
+ *     </Provider>
+ *   )
+ * }
+ */
+exports.wrapRootElement = true
