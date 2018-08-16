@@ -21,13 +21,18 @@ module.exports = async ({ markdownAST }, pluginOptions = {}) => {
     codeNodes.map(async node => {
       const { value, lang } = node
 
-      // Perform actual render
-      const svgString = await viz.renderString(value, { engine: lang })
+      try {
+        // Perform actual render
+        const svgString = await viz.renderString(value, { engine: lang })
 
-      // Mutate the current node. Converting from a code block to
-      // HTML (with svg content)
-      node.type = `html`
-      node.value = svgString
+        // Mutate the current node. Converting from a code block to
+        // HTML (with svg content)
+        node.type = `html`
+        node.value = svgString
+      } catch (error) {
+        console.log(`Error during viz.js execution. Leaving code block unchanged`)
+        console.log(error)
+      }
 
       return node
     })
