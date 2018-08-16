@@ -49,7 +49,6 @@ exports.onPostBuild = (args, pluginOptions) => {
 
   const criticalFilePaths = _.concat(
     getResourcesFromHTML(`${process.cwd()}/${rootDir}/index.html`),
-    getResourcesFromHTML(`${process.cwd()}/${rootDir}/404.html`),
     getResourcesFromHTML(
       `${process.cwd()}/${rootDir}/offline-plugin-app-shell-fallback/index.html`
     )
