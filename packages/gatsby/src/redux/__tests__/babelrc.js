@@ -75,10 +75,10 @@ describe(`Babelrc actions/reducer`, () => {
   })
 
   it(`sets default presets/plugins if there's no userland babelrc`, () => {
-    // const fakeResolver = moduleName => `/path/to/module/${moduleName}`
+    const fakeResolver = moduleName => `/path/to/module/${moduleName}`
     const babel = { createConfigItem: jest.fn() }
 
-    prepareOptions(babel)
+    prepareOptions(babel, fakeResolver)
 
     expect(babel.createConfigItem.mock.calls).toMatchSnapshot()
   })

@@ -1,7 +1,7 @@
 const path = require(`path`)
 const _ = require(`lodash`)
 
-const prepareOptions = babel => {
+const prepareOptions = (babel, resolve = require.resolve) => {
   let pluginBabelConfig = { test: { plugins: [], presets: [] } }
   if (process.env.NODE_ENV !== `test`) {
     pluginBabelConfig = require(path.join(
@@ -14,30 +14,24 @@ const prepareOptions = babel => {
 
   // Required plugins/presets
   const requiredPlugins = [
-    babel.createConfigItem(
-      [require.resolve(`babel-plugin-remove-graphql-queries`)],
-      {
-        type: `plugin`,
-      }
-    ),
+    babel.createConfigItem([resolve(`babel-plugin-remove-graphql-queries`)], {
+      type: `plugin`,
+    }),
   ]
   const requiredPresets = []
 
   // Stage specific plugins to add
   if (stage === `build-html` || stage === `develop-html`) {
     requiredPlugins.push(
-      babel.createConfigItem(
-        [require.resolve(`babel-plugin-dynamic-import-node`)],
-        {
-          type: `plugin`,
-        }
-      )
+      babel.createConfigItem([resolve(`babel-plugin-dynamic-import-node`)], {
+        type: `plugin`,
+      })
     )
   }
 
   if (stage === `develop`) {
     requiredPlugins.push(
-      babel.createConfigItem([require.resolve(`react-hot-loader/babel`)], {
+      babel.createConfigItem([resolve(`react-hot-loader/babel`)], {
         type: `plugin`,
       })
     )
@@ -61,7 +55,7 @@ const prepareOptions = babel => {
   fallbackPresets.push(
     babel.createConfigItem(
       [
-        require.resolve(`@babel/preset-env`),
+        resolve(`@babel/preset-env`),
         {
           loose: true,
           modules: false,
@@ -78,7 +72,7 @@ const prepareOptions = babel => {
   fallbackPresets.push(
     babel.createConfigItem(
       [
-        require.resolve(`@babel/preset-react`),
+        resolve(`@babel/preset-react`),
         {
           useBuiltIns: true,
           pragma: `React.createElement`,
@@ -92,7 +86,7 @@ const prepareOptions = babel => {
   )
 
   fallbackPresets.push(
-    babel.createConfigItem([require.resolve(`@babel/preset-flow`)], {
+    babel.createConfigItem([resolve(`@babel/preset-flow`)], {
       type: `preset`,
     })
   )
@@ -100,7 +94,7 @@ const prepareOptions = babel => {
   fallbackPlugins.push(
     babel.createConfigItem(
       [
-        require.resolve(`@babel/plugin-proposal-class-properties`),
+        resolve(`@babel/plugin-proposal-class-properties`),
         {
           loose: true,
         },
@@ -112,24 +106,21 @@ const prepareOptions = babel => {
   )
 
   fallbackPlugins.push(
-    babel.createConfigItem([require.resolve(`babel-plugin-macros`)], {
+    babel.createConfigItem([resolve(`babel-plugin-macros`)], {
+      type: `plugin`,
+    })
+  )
+
+  fallbackPlugins.push(
+    babel.createConfigItem([resolve(`@babel/plugin-syntax-dynamic-import`)], {
       type: `plugin`,
     })
   )
 
   fallbackPlugins.push(
     babel.createConfigItem(
-      [require.resolve(`@babel/plugin-syntax-dynamic-import`)],
-      {
-        type: `plugin`,
-      }
-    )
-  )
-
-  fallbackPlugins.push(
-    babel.createConfigItem(
       [
-        require.resolve(`@babel/plugin-transform-runtime`),
+        resolve(`@babel/plugin-transform-runtime`),
         {
           helpers: true,
           regenerator: true,
@@ -147,14 +138,14 @@ const prepareOptions = babel => {
   const reduxPresets = []
   pluginBabelConfig[stage].plugins.forEach(plugin => {
     reduxPlugins.push(
-      babel.createConfigItem([require.resolve(plugin.name), plugin.options], {
+      babel.createConfigItem([resolve(plugin.name), plugin.options], {
         type: `plugin`,
       })
     )
   })
   pluginBabelConfig[stage].presets.forEach(preset => {
     reduxPresets.push(
-      babel.createConfigItem([require.resolve(preset.name), preset.options], {
+      babel.createConfigItem([resolve(preset.name), preset.options], {
         type: `preset`,
       })
     )
