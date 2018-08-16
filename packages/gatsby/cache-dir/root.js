@@ -105,6 +105,13 @@ const Root = () =>
   )
 
 // Let site, plugins wrap the site e.g. for Redux.
-const WrappedRoot = apiRunner(`wrapRootComponent`, { Root }, Root)[0]
+const WrappedRoot = apiRunner(
+  `wrapRootElement`,
+  { element: <Root /> },
+  <Root />,
+  ({ result, plugin }) => {
+    return { element: result }
+  }
+).pop()
 
-export default WrappedRoot
+export default () => WrappedRoot
