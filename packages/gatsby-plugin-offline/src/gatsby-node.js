@@ -102,6 +102,13 @@ exports.onPostBuild = (args, pluginOptions) => {
       files: `public/sw.js`,
       from: `path = (new URL(absoluteUrlString)).pathname`,
       to: `url = new URL(absoluteUrlString), path = url.pathname + url.search`,
+    }).then(changes => {
+      // Check that the patch has been applied correctly
+      if (changes.length !== 1)
+        throw new Error(
+          `Patching sw.js failed - sw-precache has probably been modified upstream.\n` +
+          `Please report this issue at https://github.com/gatsbyjs/gatsby/issues`
+        )
     })
   )
 }
