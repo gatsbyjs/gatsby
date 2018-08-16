@@ -103,7 +103,7 @@ export default ({ children }) => (
 )
 ```
 
-And then You can use it anywhere:
+And then you can use it anywhere:
 
 - To read state:
 
