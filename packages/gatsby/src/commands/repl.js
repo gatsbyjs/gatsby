@@ -41,11 +41,10 @@ module.exports = async program => {
   _.context.dataPaths = jsonDataPaths
   _.context.getNode = getNode
   _.context.getNodes = getNodes
-  _.context.hasNodeChanged = hasNodeChanged
   _.context.loadNodeContent = loadNodeContent
   _.context.nodes = [...nodes.entries()]
   _.context.pages = [...pages.entries()]
-  _.context.runQuery = query
+  _.context.graphql = query
   _.context.schema = schema
   _.context.siteConfig = config
   _.context.staticQueries = staticQueryComponents
