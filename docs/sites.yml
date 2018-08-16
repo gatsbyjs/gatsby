@@ -2126,3 +2126,15 @@
   built_by: Piotr Fedorczyk
   built_by_url: https://piotrf.pl
   featured: false
+- title: Timely
+  main_url: https://timelyapp.com/
+  url: https://timelyapp.com/
+  description: >
+    Fully automatic time tracking. For those who trade in time.
+  categories:
+    - Software
+    - Time Tracking
+    - Tool
+  built_by: Timm Stokke
+  built_by_url: https://timm.stokke.me
+  featured: false
