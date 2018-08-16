@@ -168,11 +168,12 @@ module.exports = (
     }
 
     // Construct new image node w/ aspect ratio placeholder
+    const showCaptions = options.showCaptions && node.title
     let rawHTML = `
   <span
     class="gatsby-resp-image-wrapper"
     style="position: relative; display: block; ${
-      options.showCaptions && node.title ? null : options.wrapperStyle 
+      showCaptions ? null : options.wrapperStyle 
     }; max-width: ${presentationWidth}px; margin-left: auto; margin-right: auto;"
   >
     <span
@@ -200,8 +201,7 @@ module.exports = (
     }
 
     // Wrap in figure and use title as caption
-
-    if (options.showCaptions && node.title) {
+    if (showCaptions) {
       rawHTML = `
   <figure class="gatsby-resp-image-figure" style="${options.wrapperStyle}">
   ${rawHTML}
