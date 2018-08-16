@@ -12,7 +12,19 @@ npm install --save gatsby-plugin-layout@next
 
 ## How to use
 
-Add the plugin to your `gatsby-config.js` and set path to component:
+Add the plugin to your `gatsby-config.js`:
+
+By default plugin will try to use Layout component located in `src/layouts/index.js` (same as Gatsby v1)
+
+```js
+module.exports = {
+    plugins: [
+      `gatsby-plugin-layout`
+    ]
+];
+```
+
+If you prefer to keep layout in different place, you can use `component` option:
 
 ```js
 module.exports = {
