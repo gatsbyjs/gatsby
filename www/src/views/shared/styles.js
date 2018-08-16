@@ -93,6 +93,16 @@ const styles = {
       },
     },
   },
+  loadMoreButton: {
+    alignItems: `center`,
+    display: `flex`,
+    flexFlow: `row wrap`,
+    margin: `0 auto ${rhythm(3)}`,
+    padding: `${rhythm(1 / 3)} ${rhythm(3)}`,
+    [presets.Desktop]: {
+      margin: `0 auto ${rhythm(2 / 2)}`,
+    },
+  },
   sticky: {
     paddingTop: rhythm(options.blockMarginBottom),
     position: `sticky`,
@@ -152,7 +162,7 @@ const styles = {
       color: colors.lilac,
     },
     "&:focus": {
-      outline: "none",
+      outline: `none`,
       width: `9rem`,
       background: colors.ui.light,
     },
