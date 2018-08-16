@@ -133,7 +133,7 @@
           link: /docs/component-css/
         - title: PostCSS*
           link: /docs/post-css/
-    - title: Testing*
+    - title: Testing
       link: /docs/testing/
       items:
         - title: Unit testing
