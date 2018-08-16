@@ -82,7 +82,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   loader
     .getResourcesForPathname(window.location.pathname)
     .then(() => {
-      if (!loader.getPage(window.location.pathname)) {
+      if (!loader.getPage(window.location.pathname) && window.location.match(/(?<!(\?|&)no-cache=1)/)) {
         return loader.getResourcesForPathname(`/404.html`)
       }
     })
