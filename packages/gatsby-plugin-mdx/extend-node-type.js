@@ -37,7 +37,7 @@ module.exports = (
   { type, store, pathPrefix, getNode, getNodes, cache, reporter },
   pluginOptions
 ) => {
-  if (type.name !== `Mdx`) {
+  if (!type.name.endsWith(`Mdx`)) {
     return {};
   }
 
@@ -79,7 +79,7 @@ ${code}`;
     }
 
     const HeadingType = new GraphQLObjectType({
-      name: `MdxHeading`,
+      name: `MdxHeading${type.name}`,
       fields: {
         value: {
           type: GraphQLString,
@@ -96,7 +96,7 @@ ${code}`;
       }
     });
     const Headings = new GraphQLEnumType({
-      name: `Headings`,
+      name: `Headings${type.name}`,
       values: {
         h1: { value: 1 },
         h2: { value: 2 },
@@ -113,7 +113,7 @@ ${code}`;
           return mdxNode;
         },
         type: new GraphQLObjectType({
-          name: "MDXCode",
+          name: `MDXCode${type.name}`,
           fields: {
             raw: {
               type: GraphQLString,
@@ -286,7 +286,7 @@ export default { ${identifiers.join(", ")} }`;
       },
       wordCount: {
         type: new GraphQLObjectType({
-          name: `wordCounts`,
+          name: `wordCounts${type.name}`,
           fields: {
             paragraphs: {
               type: GraphQLInt

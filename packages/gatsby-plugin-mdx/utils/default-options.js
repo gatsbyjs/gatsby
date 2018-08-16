@@ -7,7 +7,8 @@ module.exports = pluginOptions => {
       defaultLayouts: {},
       extensions: [".mdx"],
       hastPlugins: [],
-      mdPlugins: []
+      mdPlugins: [],
+      transformers: {}
     },
     pluginOptions
   );
