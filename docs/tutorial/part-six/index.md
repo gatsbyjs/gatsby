@@ -198,7 +198,7 @@ this powerful set of operators, you can select any data you want—in the format
 need.
 
 In your index page's GraphQL query, change `allMarkdownRemark` to
-`allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC })`. Save
+`allMarkdownRemark(sort: { fields: [frontmatter___date], order: ASC })`. Save
 this and the sort order should be fixed.
 
 Try opening Graph_i_QL and playing with different sort options. You can sort the
