@@ -29,6 +29,7 @@ This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While t
   - [APIs onPreRouteUpdate and onRouteUpdate no longer called with the route update action](#apis-onprerouteupdate-and-onrouteupdate-no-longer-called-with-the-route-update-action)
   - [Browser API `replaceRouterComponent` was removed](#browser-api-replaceroutercomponent-was-removed)
   - [Browser API `replaceHistory` was removed](#browser-api-replacehistory-was-removed)
+  - [Browser API `wrapRootComponent` was removed](#browser-api-wraprootcomponent-was-removed)
   - [Don't query nodes by ID](#dont-query-nodes-by-id)
   - [Use Query in place of RootQueryType](#use-query-in-place-of-rootquerytype)
   - [Typography.js Plugin Config](#typographyjs-plugin-config-changes)
@@ -57,7 +58,6 @@ This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While t
   - [`createRemoteFileNode` API has changed](#createRemoteFileNode)
   - [Only allow defined keys on the `node.internal` object](#only-allow-defined-keys-on-the-node-internal-object)
   - [Import `graphql` types from `gatsby/graphql`](#import-graphql-types-from-gatsbygraphql)
-  - [Browser API `wrapPageComponent` has changed](#browser-api-wrappagecomponent-has-changed)
 
 - [For Explorers](#for-explorers)
   - [V2 from Scratch](#starting-a-new-project-with-gatsby-v2)
@@ -893,7 +893,7 @@ Import graphql types from `gatsby/graphql` to prevent `Schema must contain uniqu
 +const { GraphQLString } = require(`gatsby/graphql`)
 ```
 
-### Browser API `wrapRootComponent` has been removed
+### Browser API `wrapRootComponent` was removed
 
 Use new [`wrapRootElement`](/docs/browser-apis/#wrapRootComponent) API:
 We now pass `component` Element instead of `Root` Component and expect that `wrapRootElement` will return Element and not Component. This change was needed to keep all wrapping APIs uniform.
