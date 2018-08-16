@@ -12,7 +12,7 @@ Querying images with GraphQL allows you to access the image's data as well as pe
 
 You'll need a few plugins for this:
 
-- [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/) plugin allows you to [query files with GraphQL](docs/querying-with-graphql/#images)
+- [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/) plugin allows you to [query files with GraphQL](/docs/querying-with-graphql/#images)
 - [`gatsby-plugin-sharp`](/packages/gatsby-plugin-sharp) powers the connections between Sharp and Gatsby Plugins
 - [`gatsby-transformer-sharp`](/packages/gatsby-transformer-sharp/) allows you to create multiples images of the right sizes and resolutions with a query
 
