@@ -4,7 +4,7 @@ const _ = require(`lodash`)
 const prepareOptions = babel => {
   let pluginBabelConfig = { test: { plugins: [], presets: [] } }
   if (process.env.NODE_ENV !== `test`) {
-    const pluginBabelConfig = require(path.join(
+    pluginBabelConfig = require(path.join(
       process.cwd(),
       `./.cache/babelState.json`
     ))

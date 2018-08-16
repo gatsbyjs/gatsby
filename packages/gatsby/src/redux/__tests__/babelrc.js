@@ -1,7 +1,3 @@
-const fs = require(`fs-extra`)
-const path = require(`path`)
-const json5 = require(`json5`)
-
 const { actions } = require(`../actions`)
 const babelrcReducer = require(`../reducers/babelrc`)
 const {
