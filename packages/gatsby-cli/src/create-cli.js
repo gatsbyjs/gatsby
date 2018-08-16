@@ -215,6 +215,15 @@ function buildLocalCommands(cli, isLocalSite) {
       }
     },
   })
+
+  cli.command({
+    command: `repl`,
+    desc: `Get a node repl with context of Gatsby environment, see (add docs link here)`,
+    handler: getCommandHandler(`repl`, (args, cmd) => {
+      process.env.NODE_ENV = process.env.NODE_ENV || `development`
+      return cmd(args)
+    }),
+  })
 }
 
 function isLocalGatsbySite() {
