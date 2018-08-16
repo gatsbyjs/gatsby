@@ -45,7 +45,7 @@ const getBadExportsMessage = (badExports, exportType, apis) => {
       },
       wrapRootComponent: {
         replacement: `wrapRootElement`,
-        migrationLink: `https://next.gatsbyjs.org/docs/migrating-from-v1-to-v2/#browser-api-wraprootcomponent-was-removed`,
+        migrationLink: `https://gatsby.app/update-wraprootcomponent`,
       },
     }
     const isOldAPI = Object.keys(badExportsMigrationMap).includes(
