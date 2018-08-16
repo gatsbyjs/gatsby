@@ -319,6 +319,22 @@ const queue = {
 
       if (!page) {
         console.log(`A page wasn't found for "${path}"`)
+
+        // Try to load the page directly.
+        //
+        // Usually the page either doesn't exist, resulting in a 404 error, or
+        // isn't available offline. Appending the query ensures the correct error
+        // message is displayed, or if the page is available online, it will
+        // load properly.
+
+        if (!window.location.search.match(/(\?|&)no-cache=1$/)) {
+          if (window.location.search) {
+            window.location.search += `&no-cache=1`
+          } else {
+            window.location.search = `?no-cache=1`
+          }
+        }
+
         return resolve()
       }
 
