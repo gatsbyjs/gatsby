@@ -5,10 +5,9 @@ const json5 = require(`json5`)
 const { actions } = require(`../actions`)
 const babelrcReducer = require(`../reducers/babelrc`)
 const {
-  addDefaultPluginsPresets,
-  actionifyBabelrc,
-} = require(`../../internal-plugins/load-babel-config/utils`)
-const { buildConfig } = require(`../../utils/babel-config`)
+  prepareOptions,
+  mergeConfigItemOptions,
+} = require(`../../utils/babel-loader-helpers`)
 
 describe(`Babelrc actions/reducer`, () => {
   it(`allows adding a new plugin`, () => {
@@ -80,35 +79,12 @@ describe(`Babelrc actions/reducer`, () => {
   })
 
   it(`sets default presets/plugins if there's no userland babelrc`, () => {
-    const fakeResolver = moduleName => `/path/to/module/${moduleName}`
-    const actionsLog = []
-    const mockActions = {
-      setBabelPreset: args => {
-        actionsLog.push(actions.setBabelPreset(args, { name: `test` }))
-      },
-      setBabelPlugin: args => {
-        actionsLog.push(actions.setBabelPlugin(args, { name: `test` }))
-      },
-    }
-    addDefaultPluginsPresets(mockActions, {
-      stage: `develop`,
-      browserslist: {},
-    })
-    addDefaultPluginsPresets(mockActions, {
-      stage: `build-html`,
-      browserslist: {},
-    })
-    const endState = actionsLog.reduce(
-      (state, action) => babelrcReducer(state, action),
-      undefined
-    )
-    expect(endState).toMatchSnapshot()
-    expect(
-      buildConfig(endState.stages.develop, `develop`, fakeResolver)
-    ).toMatchSnapshot()
-    expect(
-      buildConfig(endState.stages.develop, `build-html`, fakeResolver)
-    ).toMatchSnapshot()
+    // const fakeResolver = moduleName => `/path/to/module/${moduleName}`
+    const babel = { createConfigItem: jest.fn() }
+
+    prepareOptions(babel)
+
+    expect(babel.createConfigItem.mock.calls).toMatchSnapshot()
   })
 
   it(`allows setting options`, () => {
@@ -136,33 +112,5 @@ describe(`Babelrc actions/reducer`, () => {
     let state = babelrcReducer(undefined, action)
     expect(state.stages.develop.options.sourceMaps).toBe(`inline`)
     expect(state.stages[`develop-html`].options.sourceMaps).toBe(undefined)
-  })
-
-  it(`handles custom .babelrc files`, async () => {
-    const file = await fs.readFile(
-      path.join(__dirname, `mocks`, `.babelrc`),
-      `utf-8`
-    )
-    const parsed = json5.parse(file)
-
-    const actionsLog = []
-    const mockActions = {
-      setBabelPreset: args => {
-        actionsLog.push(actions.setBabelPreset(args, { name: `test` }))
-      },
-      setBabelPlugin: args => {
-        actionsLog.push(actions.setBabelPlugin(args, { name: `test` }))
-      },
-      setBabelOptions: args => {
-        actionsLog.push(actions.setBabelOptions(args, { name: `test` }))
-      },
-    }
-    actionifyBabelrc(parsed, mockActions)
-    const endState = actionsLog.reduce(
-      (state, action) => babelrcReducer(state, action),
-      undefined
-    )
-
-    expect(endState).toMatchSnapshot()
   })
 })
