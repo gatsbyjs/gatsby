@@ -2,7 +2,7 @@
 
 Wrap pages in component that won't get remounted on page changes.
 
-Wrapping component will have access to all props available in Page components. This is escape hatch to get basic v1 layouts back.
+Wrapping component will have access to all props available in Page components. This is an escape hatch to get basic v1 layouts back.
 
 ## Install
 
@@ -45,7 +45,7 @@ module.exports = {
 
 Use [React Context](https://reactjs.org/docs/context.html) to pass data both ways.
 
-For example You can use this boilerplate:
+For example you can use this boilerplate:
 
 ```js
 // Context.js
