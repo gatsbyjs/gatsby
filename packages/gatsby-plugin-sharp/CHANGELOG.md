@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.0-beta.9"></a>
+
+# [2.0.0-beta.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.0-beta.8...gatsby-plugin-sharp@2.0.0-beta.9) (2018-08-16)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
 <a name="2.0.0-beta.8"></a>
 
 # [2.0.0-beta.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.0-beta.7...gatsby-plugin-sharp@2.0.0-beta.8) (2018-08-16)
