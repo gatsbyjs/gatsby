@@ -113,4 +113,25 @@ describe(`Babelrc actions/reducer`, () => {
     expect(state.stages.develop.options.sourceMaps).toBe(`inline`)
     expect(state.stages[`develop-html`].options.sourceMaps).toBe(undefined)
   })
+
+  it(`allows merging config items`, () => {
+    const babel = { createConfigItem: jest.fn() }
+    // This merges in new change.
+    mergeConfigItemOptions({
+      items: [{ options: { wat: 1 }, file: { resolved: `hi` } }],
+      itemToMerge: { options: { wat: 2 }, file: { resolved: `hi` } },
+      type: `plugin`,
+      babel,
+    })
+    expect(babel.createConfigItem.mock.calls).toMatchSnapshot()
+
+    expect(
+      mergeConfigItemOptions({
+        items: [{ options: { wat: 1 }, file: { resolved: `hi` } }],
+        itemToMerge: { options: { wat: 2 }, file: { resolved: `hi2` } },
+        type: `plugin`,
+        babel,
+      })
+    ).toMatchSnapshot()
+  })
 })

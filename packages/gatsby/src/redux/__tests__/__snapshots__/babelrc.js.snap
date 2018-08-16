@@ -126,6 +126,43 @@ Object {
 }
 `;
 
+exports[`Babelrc actions/reducer allows merging config items 1`] = `
+Array [
+  Array [
+    Array [
+      "hi",
+      Object {
+        "wat": 2,
+      },
+    ],
+    Object {
+      "type": "plugin",
+    },
+  ],
+]
+`;
+
+exports[`Babelrc actions/reducer allows merging config items 2`] = `
+Array [
+  Object {
+    "file": Object {
+      "resolved": "hi",
+    },
+    "options": Object {
+      "wat": 1,
+    },
+  },
+  Object {
+    "file": Object {
+      "resolved": "hi2",
+    },
+    "options": Object {
+      "wat": 2,
+    },
+  },
+]
+`;
+
 exports[`Babelrc actions/reducer sets default presets/plugins if there's no userland babelrc 1`] = `
 Array [
   Array [

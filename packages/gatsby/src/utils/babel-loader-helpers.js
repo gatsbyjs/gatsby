@@ -145,8 +145,6 @@ const prepareOptions = babel => {
   // Go through babel state and create config items for presets/plugins from.
   const reduxPlugins = []
   const reduxPresets = []
-  console.log({ pluginBabelConfig, stage })
-  console.log(pluginBabelConfig[stage])
   pluginBabelConfig[stage].plugins.forEach(plugin => {
     reduxPlugins.push(
       babel.createConfigItem([require.resolve(plugin.name), plugin.options], {
