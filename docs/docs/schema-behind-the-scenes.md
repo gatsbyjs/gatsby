@@ -9,7 +9,26 @@ Once the nodes have been sourced and transformed, the next step is to generate t
 At a high level, here are the steps performed during this stage:
 
 ```dot
-"Node" -> ExampleValue;
+digraph graphname {
+  graph [labelloc="t" label=""];
+  "cfd" [ style = "filled" label = "Custom Field Declarations 
+  { type, args, resolve }" ];
+  "cfiot" [ label = "Custom Fields InputObjectType
+  { args: lt, gt, eq, re }" ];
+  "cf" [ label = "ConnectionFields
+  e.g allMarkdownRemark()" ];
+  "Plugin" -> "Node" [ label = "Creates node with type" ];
+  "Node" -> "exampleValue" [ label = "all nodes of type" ];
+  "exampleValue" -> "Node Fields InputObjectType";
+  "Plugin" -> cfd [ label = "setFieldsOnGraphQLNodeType" ];
+  cfd -> cfiot;
+  "Node Fields InputObjectType" -> "ProcessedType";
+  cfiot -> "ProcessedType";
+  "Node Interface" -> "ProcessedType";
+  "ProcessedType" -> cf;
+  "ProcessedType" -> "GraphQLSchema" [ label = "all types" ];
+  cf -> "GraphQLSchema";
+}
 ```
 
 1. Group all nodes by type (`node.internal.type`). E.g `File`, `ImageSharp`. Then, for each type, perform the following steps:
