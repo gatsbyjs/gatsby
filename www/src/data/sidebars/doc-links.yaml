@@ -257,8 +257,12 @@
       link: /docs/learning-gatsbys-internals
     - title: Node Creation
       link: /docs/node-creation-behind-the-scenes/
+    - title: Data Storage (Redux)
+      link: /docs/data-storage-redux/
     - title: Schema Generation
       link: /docs/schema-generation-behind-the-scenes/
+    - title: Build Caching
+      link: /docs/build-caching/
 - title: Advanced Tutorials
   items:
     - title: Making a site with user authentication*
