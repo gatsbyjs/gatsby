@@ -1,13 +1,7 @@
 const repl = require(`repl`)
 const { graphql } = require(`graphql`)
 const bootstrap = require(`../bootstrap`)
-const {
-  store,
-  loadNodeContent,
-  getNodes,
-  getNode,
-  hasNodeChanged,
-} = require(`../redux`)
+const { store, loadNodeContent, getNodes, getNode } = require(`../redux`)
 
 module.exports = async program => {
   // run bootstrap
