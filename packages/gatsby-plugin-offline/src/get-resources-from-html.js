@@ -26,22 +26,28 @@ module.exports = htmlPath => {
   // holds any paths for scripts and links
   const criticalFilePaths = []
 
-  $(`script[src], link[as=script], link[as=font], link[as=fetch], link[rel=stylesheet], style[data-href]`).each(
-    (_, elem) => {
-      const $elem = $(elem)
-      const url = $elem.attr(`src`) || $elem.attr(`href`) || $elem.attr(`data-href`)
-      const blackListRegex = /\.xml$/
+  $(`
+    script[src],
+    link[as=script],
+    link[as=font],
+    link[as=fetch],
+    link[rel=stylesheet],
+    style[data-href]
+  `).each((_, elem) => {
+    const $elem = $(elem)
+    const url =
+      $elem.attr(`src`) || $elem.attr(`href`) || $elem.attr(`data-href`)
+    const blackListRegex = /\.xml$/
 
-      if (!blackListRegex.test(url)) {
-        let path = url
-        if (url.substr(0, 4) !== `http`) {
-          path = `public${url}`
-        }
-
-        criticalFilePaths.push(path)
+    if (!blackListRegex.test(url)) {
+      let path = url
+      if (url.substr(0, 4) !== `http`) {
+        path = `public${url}`
       }
+
+      criticalFilePaths.push(path)
     }
-  )
+  })
 
   return _.uniq(criticalFilePaths)
 }
