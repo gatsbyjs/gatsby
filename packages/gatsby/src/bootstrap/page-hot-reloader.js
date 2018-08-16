@@ -15,7 +15,6 @@ emitter.on(`CREATE_NODE`, action => {
 })
 emitter.on(`DELETE_NODE`, action => {
   pagesDirty = true
-  debouncedCreatePages()
 })
 
 emitter.on(`API_RUNNING_QUEUE_EMPTY`, () => {
@@ -65,8 +64,6 @@ const runCreatePages = async () => {
 
   emitter.emit(`CREATE_PAGE_END`)
 }
-
-const debouncedCreatePages = _.debounce(runCreatePages, 100)
 
 module.exports = graphqlRunner => {
   graphql = graphqlRunner
