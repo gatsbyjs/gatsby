@@ -90,6 +90,24 @@ export default (pagePath, callback) => {
     bodyProps = merge({}, bodyProps, props)
   }
 
+  const getHeadComponents = () => headComponents
+
+  const replaceHeadComponents = components => {
+    headComponents = components
+  }
+
+  const getPreBodyComponents = () => preBodyComponents
+
+  const replacePreBodyComponents = components => {
+    preBodyComponents = components
+  }
+
+  const getPostBodyComponents = () => postBodyComponents
+
+  const replacePostBodyComponents = components => {
+    postBodyComponents = components
+  }
+
   const page = getPage(pagePath)
 
   let dataAndContext = {}
@@ -264,6 +282,15 @@ export default (pagePath, callback) => {
           />
         )
       }
+    })
+
+    apiRunner(`onPreRenderHTML`, {
+      getHeadComponents,
+      replaceHeadComponents,
+      getPreBodyComponents,
+      replacePreBodyComponents,
+      getPostBodyComponents,
+      replacePostBodyComponents,
     })
 
   // Add page metadata for the current page
