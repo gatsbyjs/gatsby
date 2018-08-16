@@ -156,7 +156,7 @@ const processFile = (file, jobs, cb, reporter) => {
     if (args.duotone) {
       clonedPipeline = await duotone(
         args.duotone,
-        job.file.extension,
+        args.toFormat || job.file.extension,
         clonedPipeline
       )
     }
@@ -413,7 +413,11 @@ async function notMemoizedbase64({ file, args = {}, reporter }) {
 
   // duotone
   if (options.duotone) {
-    pipeline = await duotone(options.duotone, file.extension, pipeline)
+    pipeline = await duotone(
+      options.duotone,
+      args.toFormat || file.extension,
+      pipeline
+    )
   }
 
   const [buffer, info] = await pipeline.toBufferAsync()
@@ -710,7 +714,11 @@ async function notMemoizedtraceSVG({ file, args, fileArgs, reporter }) {
 
   // duotone
   if (options.duotone) {
-    pipeline = await duotone(options.duotone, file.extension, pipeline)
+    pipeline = await duotone(
+      options.duotone,
+      args.toFormat || file.extension,
+      pipeline
+    )
   }
 
   const tmpDir = require(`os`).tmpdir()
