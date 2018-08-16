@@ -32,7 +32,7 @@ exports.onServiceWorkerInstalled = () => {
   // get all resource URLs
   const resources = [].slice
     .call(nodes)
-    .map(node => (node.src || node.href || node.getAttribute(`data-href`)))
+    .map(node => node.src || node.href || node.getAttribute(`data-href`))
 
   for (const resource of resources) {
     fetch(resource)
@@ -42,7 +42,7 @@ exports.onServiceWorkerInstalled = () => {
   // thereby storing it in SW cache
   Promise.all(pathnameResources).then(pageResources => {
     for (const pageResource of pageResources) {
-      fetch(pageResource.page.jsonURL)
+      if (pageResource) fetch(pageResource.page.jsonURL)
     }
   })
 }

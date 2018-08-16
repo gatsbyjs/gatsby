@@ -320,19 +320,41 @@ const queue = {
       if (!page) {
         console.log(`A page wasn't found for "${path}"`)
 
-        // Try to load the page directly.
-        //
-        // Usually the page either doesn't exist, resulting in a 404 error, or
-        // isn't available offline. Appending the query ensures the correct error
-        // message is displayed, or if the page is available online, it will
-        // load properly.
+        // Try to load the page directly (as opposed to from the cache).
 
-        if (!window.location.search.match(/(\?|&)no-cache=1$/)) {
-          if (window.location.search) {
-            window.location.search += `&no-cache=1`
+        // Store the URL for testing later with `fetch`
+        let url = new URL(window.location)
+
+        // Check the page isn't already loaded directly; that it's the page
+        // we're on currently, not a page which failed to preload; and that
+        // we're not running `gatsby develop`
+        if (
+          !url.search.match(/(\?|&)no-cache=1$/) &&
+          window.location.pathname === path &&
+          process.env.NODE_ENV === `production`
+        ) {
+          // Append the appropriate query to the URL
+          if (url.search) {
+            url.search += `&no-cache=1`
           } else {
-            window.location.search = `?no-cache=1`
+            url.search = `?no-cache=1`
           }
+
+          // Now test if the page is available directly
+          fetch(url.href)
+            .then(response => {
+              // Redirect there if there isn't a 404
+              if (response.status !== 404) window.location.replace(url)
+
+              // If a 404 occurs, we don't need to redirect since a 404 page
+              // is displayed anyway. If another HTTP error occurs, a more
+              // appropriate error message will be displayed after redirecting.
+            })
+            .catch(() => {
+              // If an error occurs (usually when offline), navigate to the
+              // page anyway to show the browser's proper offline error page
+              window.location.replace(url)
+            })
         }
 
         return resolve()

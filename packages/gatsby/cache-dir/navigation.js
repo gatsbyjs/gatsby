@@ -72,10 +72,17 @@ const navigate = (to, options) => {
 
   loader.getResourcesForPathname(pathname).then(pageResources => {
     if (!pageResources && process.env.NODE_ENV === `production`) {
-      loader.getResourcesForPathname(`/404.html`).then(() => {
+      loader.getResourcesForPathname(`/404.html`).then(response => {
         clearTimeout(timeoutId)
         onPreRouteUpdate(window.location)
-        reachNavigate(to, options).then(() => onRouteUpdate(window.location))
+
+        // Show the server's 404 page by navigating directly if a custom page
+        // doesn't exist (otherwise the page contents won't change)
+        if (!response) {
+          window.location.href = to
+        } else {
+          reachNavigate(to, options).then(() => onRouteUpdate(window.location))
+        }
       })
     } else {
       onPreRouteUpdate(window.location)
