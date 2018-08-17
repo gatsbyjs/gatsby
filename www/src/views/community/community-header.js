@@ -13,6 +13,10 @@ const CommunityHeaderLink = ({ linkTo, children }) => (
   >
     <Link
       to={linkTo}
+      activeStyle={{
+        backgroundColor: colors.gatsby,
+        color: `white`,
+      }}
       css={{
         "&&": {
           textTransform: `uppercase`,
@@ -20,7 +24,8 @@ const CommunityHeaderLink = ({ linkTo, children }) => (
           fontWeight: `600`,
           boxShadow: `none`,
           borderBottom: `none`,
-          padding: `6px 1.5rem`,
+          padding: `${rhythm(1 / 4)} 1rem`,
+          margin: `0 ${rhythm(1 / 6)}`,
           borderRadius: `40px`,
           "&:hover": {
             backgroundColor: colors.gatsby,
@@ -35,6 +40,7 @@ const CommunityHeaderLink = ({ linkTo, children }) => (
 )
 const CommunityHeader = () => (
   <header
+    role="header"
     css={{
       display: `flex`,
       alignItems: `center`,
@@ -62,6 +68,7 @@ const CommunityHeader = () => (
       Creators
     </Link>
     <nav
+      role="navigation"
       css={{
         // listStyle: `none`,
         display: `flex`,
@@ -69,14 +76,14 @@ const CommunityHeader = () => (
         alignItems: `center`,
       }}
     >
-      <CommunityHeaderLink linkTo="/community">All</CommunityHeaderLink>
-      <CommunityHeaderLink linkTo="/community/people">
+      <CommunityHeaderLink linkTo="/community/">All</CommunityHeaderLink>
+      <CommunityHeaderLink linkTo="/community/people/">
         People
       </CommunityHeaderLink>
-      <CommunityHeaderLink linkTo="/community/agencies">
+      <CommunityHeaderLink linkTo="/community/agencies/">
         Agencies
       </CommunityHeaderLink>
-      <CommunityHeaderLink linkTo="/community/companies">
+      <CommunityHeaderLink linkTo="/community/companies/">
         Companies
       </CommunityHeaderLink>
     </nav>

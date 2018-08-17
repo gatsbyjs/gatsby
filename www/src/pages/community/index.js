@@ -1,5 +1,6 @@
 import React, { Component } from "react"
-import CommunityView from "../views/community"
+import CommunityView from "../../views/community"
+import Layout from "../../components/layout"
 
 class CommunityPage extends Component {
   render() {
