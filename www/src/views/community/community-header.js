@@ -1,8 +1,12 @@
 import React, { Component } from "react"
 import { Link } from "gatsby"
-import { rhythm, scale } from "../../utils/typography"
+import typography, { rhythm, scale } from "../../utils/typography"
+import SearchIcon from "../../components/search-icon"
 import presets, { colors } from "../../utils/presets"
 import Checkmark from "./check.svg"
+import Arrow from "./arrow.svg"
+
+const { curveDefault, speedDefault } = presets.animation
 
 const CommunityHeaderLink = ({ linkTo, children }) => (
   <li
@@ -46,18 +50,14 @@ class CommunityHeader extends Component {
     this.state = {
       forHire: false,
       hiring: false,
+      search: ``,
     }
   }
 
   handleInputChange = event => {
     const target = event.target
-    const value = target.type === `checkbox` ? target.checked : target.value
+    const value = target.checked
     const name = target.name
-    // if (!this.state.forHire) {
-    //   this.setState({ forHire: true })
-    // } else {
-    //   this.setState({ forHire: false })
-    // }
 
     this.setState({
       [name]: value,
@@ -70,15 +70,7 @@ class CommunityHeader extends Component {
       <header
         role="header"
         css={{
-          display: `flex`,
-          alignItems: `center`,
-          width: `100vw`,
-          borderBottom: `1px solid ${colors.ui.light}`,
-          backgroundColor: `rgba(255,255,255,0.975)`,
-          height: presets.headerHeight,
-          zIndex: `2`,
-          paddingLeft: rhythm(3 / 4),
-          paddingRight: rhythm(3 / 4),
+          ...styles.header,
         }}
       >
         <Link
@@ -129,12 +121,10 @@ class CommunityHeader extends Component {
               name="forHire"
               css={{
                 ...styles.input,
-                "&:checked + label": {
-                  background: `red`,
-                },
               }}
               checked={this.state.forHire}
               onChange={this.handleInputChange}
+              disabled={this.state.hiring}
             />
             For Hire
           </label>
@@ -150,8 +140,69 @@ class CommunityHeader extends Component {
               }}
               checked={this.state.hiring}
               onChange={this.handleInputChange}
+              disabled={this.state.forHire}
             />
             Hiring
+          </label>
+        </div>
+        <div
+          css={{
+            marginLeft: `auto`,
+            display: `flex`,
+            alignItems: `center`,
+          }}
+        >
+          <button
+            css={{
+              background: `transparent`,
+              border: `1px solid ${colors.lilac}`,
+              color: colors.lilac,
+              padding: `${rhythm(1 / 4)} 1rem`,
+              display: `flex`,
+              alignItems: `center`,
+              borderRadius: `2px`,
+              cursor: `pointer`,
+              marginRight: `${rhythm(1 / 4)}`,
+              "&:hover": {
+                backgroundColor: colors.gatsby,
+                color: `white`,
+              },
+            }}
+          >
+            <span
+              css={{
+                marginRight: `${rhythm(1 / 4)}`,
+              }}
+            >
+              Become a Creator
+            </span>
+            <img src={Arrow} alt="" css={{ marginBottom: 0 }} />
+          </button>
+          <label css={{ position: `relative` }}>
+            <input
+              css={{ ...styles.searchInput }}
+              type="search"
+              value={this.state.search}
+              onChange={e =>
+                this.setState({
+                  search: e.target.value,
+                })
+              }
+              placeholder="Search"
+              aria-label="Search"
+            />
+            <SearchIcon
+              overrideCSS={{
+                fill: colors.lilac,
+                position: `absolute`,
+                left: `5px`,
+                top: `50%`,
+                width: `16px`,
+                height: `16px`,
+                pointerEvents: `none`,
+                transform: `translateY(-50%)`,
+              }}
+            />
           </label>
         </div>
       </header>
@@ -162,6 +213,17 @@ class CommunityHeader extends Component {
 export default CommunityHeader
 
 const styles = {
+  header: {
+    display: `flex`,
+    alignItems: `center`,
+    borderBottom: `1px solid ${colors.ui.light}`,
+    backgroundColor: `rgba(255,255,255,0.975)`,
+    height: presets.headerHeight,
+    zIndex: `2`,
+    paddingLeft: rhythm(3 / 4),
+    paddingRight: rhythm(3 / 4),
+    fontFamily: typography.options.headerFontFamily.join(`,`),
+  },
   filter: {
     border: `1px solid ${colors.ui.bright}`,
     borderRadius: `40px`,
@@ -172,7 +234,6 @@ const styles = {
     alignItems: `center`,
     justifyContent: `space-between`,
     color: colors.gatsby,
-    fontFamily: `Futura PT`,
     cursor: `pointer`,
   },
   input: {
@@ -193,5 +254,27 @@ const styles = {
   activeFilter: {
     backgroundColor: colors.ui.bright,
     color: colors.gatsby,
+  },
+  searchInput: {
+    appearance: `none`,
+    backgroundColor: `transparent`,
+    border: 0,
+    borderRadius: presets.radiusLg,
+    color: colors.gatsby,
+    paddingTop: rhythm(1 / 8),
+    paddingRight: rhythm(1 / 4),
+    paddingBottom: rhythm(1 / 8),
+    paddingLeft: rhythm(1),
+    overflow: `hidden`,
+    transition: `width ${speedDefault} ${curveDefault}, background-color ${speedDefault} ${curveDefault}`,
+    width: `6.8rem`,
+    "&::placeholder": {
+      color: colors.lilac,
+    },
+    "&:focus": {
+      outline: `none`,
+      width: `9rem`,
+      background: colors.ui.light,
+    },
   },
 }
