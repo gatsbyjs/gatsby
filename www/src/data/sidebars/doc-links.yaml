@@ -255,6 +255,8 @@
   items:
     - title: Learning Gatsbys Internals
       link: /docs/learning-gatsbys-internals
+    - title: How APIS/Plugins Are Run
+      link: /docs/how-plugins-apis-are-run/
     - title: Node Creation
       link: /docs/node-creation-behind-the-scenes/
     - title: Data Storage (Redux)
