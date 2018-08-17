@@ -21,8 +21,6 @@ Early in the bootstrap phase, we [load all the configured plugins](https://githu
 
 In addition, we also create a lookup from api to the plugins that implement it and save this to redux as `api-to-plugins`. This is implemented in [load-plugins/validate.js](https://github.com/gatsbyjs/gatsby/blob/8029c6647ab38792bb0a7c135ab4b98ae70a2627/packages/gatsby/src/bootstrap/load-plugins/validate.js#L106)
 
-## General Flow
-
 ## apiRunInstance
 
 Some API calls can take a while to finish. So every time an API is run, we create an object called [apiRunInstance](https://github.com/gatsbyjs/gatsby/blob/8029c6647ab38792bb0a7c135ab4b98ae70a2627/packages/gatsby/src/utils/api-runner-node.js#L179) to track it. It contains the following notable fields:
