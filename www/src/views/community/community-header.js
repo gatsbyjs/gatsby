@@ -82,6 +82,9 @@ class CommunityHeader extends Component {
               boxShadow: `none`,
               borderBottom: `none`,
               marginRight: rhythm(1 / 2),
+              "&:hover": {
+                backgroundColor: `initial`,
+              },
             },
           }}
         >
