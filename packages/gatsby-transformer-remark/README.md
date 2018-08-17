@@ -68,10 +68,9 @@ A sample GraphQL query to get MarkdownRemark nodes:
 
 ### Excerpts for non-latin languages
 
-By default, excerpts is avoid half-chopped words when truncating content.
-But it might fail for non-latin languages, and return to `...`
+By default, excerpt uses underscore.string/prune which doesn't handle non-latin characters (https://github.com/epeli/underscore.string/issues/418).
 
-To solve this, you can set `truncate` option on `excerpt` field, like:
+If that is the case, you can set truncate option on excerpt field, like:
 
 ```graphql
 {
