@@ -127,13 +127,13 @@
           link: /docs/glamor/
         - title: Using CSS-in-JS library styled components
           link: /docs/styled-components/
-        - title: Creating global styles*
+        - title: Creating global styles
           link: /docs/creating-global-styles/
         - title: Component CSS*
           link: /docs/component-css/
         - title: PostCSS*
           link: /docs/post-css/
-    - title: Testing*
+    - title: Testing
       link: /docs/testing/
       items:
         - title: Unit testing

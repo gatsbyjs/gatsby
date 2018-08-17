@@ -1,10 +1,11 @@
-import { Client, Server } from "styletron-engine-atomic"
-import { driver } from "styletron-standard"
+const { Client, Server } = require(`styletron-engine-atomic`)
+const { driver } = require(`styletron-standard`)
 
-let instance
+let memoizedValue
 
-export default (() => options => {
-  if (!instance) {
+module.exports = (() => options => {
+  if (!memoizedValue) {
+    let instance
     if (typeof window !== `undefined` && window.document.createElement) {
       const styleElements = document.getElementsByClassName(
         `_styletron_hydrate_`
@@ -13,9 +14,10 @@ export default (() => options => {
     } else {
       instance = new Server(options)
     }
+    memoizedValue = {
+      css: json => driver(json, instance),
+      instance,
+    }
   }
-  return {
-    css: json => driver(json, instance),
-    instance: instance,
-  }
+  return memoizedValue
 })()
