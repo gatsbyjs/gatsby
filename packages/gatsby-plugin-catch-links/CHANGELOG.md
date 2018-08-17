@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.2-beta.10"></a>
+
+## [2.0.2-beta.10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-catch-links/compare/gatsby-plugin-catch-links@2.0.2-beta.9...gatsby-plugin-catch-links@2.0.2-beta.10) (2018-08-17)
+
+### Bug Fixes
+
+- **gatsby-plugin-catch-links:** update old react-router api to new reach-router ([#7408](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-catch-links/issues/7408)) ([bedc6f0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-catch-links/commit/bedc6f0))
+
 <a name="2.0.2-beta.9"></a>
 
 ## [2.0.2-beta.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-catch-links/compare/gatsby-plugin-catch-links@2.0.2-beta.8...gatsby-plugin-catch-links@2.0.2-beta.9) (2018-08-15)
