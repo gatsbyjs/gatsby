@@ -136,7 +136,7 @@ exports.onPreRenderHTML = true
  * Allow a plugin to wrap the page element.
  *
  * This is useful for setting wrapper component around pages that won't get
- * unmounted on page change. For setting Provider components use (#wrapRootElement)[wrapRootElement].
+ * unmounted on page change. For setting Provider components use [#wrapRootElement](wrapRootElement).
  *
  * _Note:_ [There is equivalent hook in Browser API](/docs/browser-apis/#wrapPageElement)
  * @param {object} $0
@@ -158,7 +158,7 @@ exports.wrapPageElement = true
  * Allow a plugin to wrap the root element.
  *
  * This is useful to setup any Providers component that will wrap your application.
- * For setting persistent UI elements around pages use (#wrapPageElement)[wrapPageElement].
+ * For setting persistent UI elements around pages use [#wrapPageElement](wrapPageElement).
  *
  * _Note:_ [There is equivalent hook in Browser API](/docs/browser-apis/#wrapRootElement)
  * @param {object} $0
