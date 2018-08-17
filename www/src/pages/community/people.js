@@ -1,9 +1,11 @@
-import React from "react"
+import React, { Component } from "react"
+import CommunityView from "../../views/community"
 
-const People = () => (
-  <div>
-    <h1>HELLO FROM PEOPLE</h1>
-  </div>
-)
+class PeoplePage extends Component {
+  render() {
+    const { location } = this.props
+    return <CommunityView location={location} title={`People`} />
+  }
+}
 
-export default People
+export default PeoplePage

@@ -6,12 +6,11 @@ import CommunityHeader from "./community-header"
 
 class CommunityView extends Component {
   render() {
-    const { location } = this.props
-
+    const { location, title } = this.props
     return (
       <Layout location={location}>
         <Helmet>
-          <title>Community</title>
+          <title>{title}</title>
         </Helmet>
         <CommunityHeader />
         <main
@@ -21,7 +20,7 @@ class CommunityView extends Component {
             paddingRight: rhythm(3 / 4),
           }}
         >
-          <h1>HELLO FROM THE COMMUNITY PAGES</h1>
+          <h1>{title}</h1>
         </main>
       </Layout>
     )
