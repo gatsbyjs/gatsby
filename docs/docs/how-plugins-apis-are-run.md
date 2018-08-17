@@ -62,6 +62,36 @@ Each plugin is run inside a [map-series](https://www.npmjs.com/package/map-serie
 
 ## Using traceID to await downstream API calls
 
+```dot
+digraph {
+  node [ shape="box" ];
+  
+  "initialCall" [ label="apiRunner(`sourceNodes`, {\l    traceId: `initial-sourceNodes`,\l    waitForCascadingActions: true,\l    parentSpan: parentSpan\l})\l " ];
+  "apiRunner1" [ label="api-runner-node.js" ];
+  "sourceNodes" [ label="plugin.SourceNodes()" ];
+  "createNode" [ label="createNode(node)" ];
+  "apisRunning" [ label="apisRunningByTraceId[traceId]" ];
+  "createNodeReducer" [ label="CREATE_NODE reducer" ];
+  "CREATE_NODE" [ label="CREATE_NODE event" ];
+  "pluginRunner" [ label="plugin-runner.js" ];
+  "onCreateNode" [ label="plugin.onCreateNode()" ];
+  "apiRunnerOnCreateNode" [ label="apiRunner(`onCreateNode`, {\l    node,\l    traceId: action.traceId\l})\l "; ];
+  "apiRunner2" [ label="api-runner-node.js" ];
+  
+  "initialCall" -> "apiRunner1";
+  "apiRunner1" -> "apisRunning" [ label="set to 1" ];
+  "apiRunner1" -> "sourceNodes" [ label="call" ];
+  "sourceNodes" -> "createNode" [ label="call (traceID implicitly passed)" ];
+  "createNode" -> "createNodeReducer" [ label="triggers" ];
+  "createNodeReducer" -> "CREATE_NODE" [ label="emits" ];
+  "CREATE_NODE" -> "pluginRunner" [ label="handled by" ];
+  "pluginRunner" -> "apiRunnerOnCreateNode";
+  "apiRunnerOnCreateNode" -> "apiRunner2";
+  "apiRunner2" -> "onCreateNode" [ label="call" ];
+  "apiRunner2" -> "apisRunning" [ label="increment" ];
+}
+```
+
 The majority of API calls result in one or more implementing plugins being called. We then wait for them all to complete, and return. But some plugins (e.g [sourceNodes]()) result in calls to actions that themselves call APIs. We need some way of tracing whether an API call originated from another API call, so that we can wait on all child calls to complete. The mechanism for this is the `traceId`. 
 
 1. The traceID is passed as an argument to the original API runner. E.g 
