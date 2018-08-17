@@ -18,7 +18,7 @@ npm install --save-dev jest-emotion babel-plugin-emotion
 
 As [Gatsby's emotion plugin](https://www.gatsbyjs.org/packages/gatsby-plugin-emotion/) is using `babel-plugin-emotion` under the hood you'll also need to install it so that Jest can use it.
 
-If you followed along with the [Unit testing guide](docs/unit-testing) you'll have the file `jest-preprocess.js` at the root of your project. Open that file and add the plugin:
+If you followed along with the [Unit testing guide](/docs/unit-testing) you'll have the file `jest-preprocess.js` at the root of your project. Open that file and add the plugin:
 
 ```diff
 const babelOptions = {
@@ -52,7 +52,7 @@ Lastly you need to tell Jest where to find this file. Open your `package.json` a
 
 ## Usage
 
-In this example you'll use `react-test-renderer` but you can also use [react-testing-library](docs/testing-react-components) or any other appropriate library. Because you created the `setup-test-env.js` file you can write your unit tests like you used to do. But now you'll also get the styling information!
+In this example you'll use `react-test-renderer` but you can also use [react-testing-library](/docs/testing-react-components) or any other appropriate library. Because you created the `setup-test-env.js` file you can write your unit tests like you used to do. But now you'll also get the styling information!
 
 ```js
 // src/components/Button.test.js
