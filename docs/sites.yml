@@ -1029,15 +1029,23 @@
     - Portfolio
     - Web Dev
     - Blog
-- title: Bastion Bot
+- title: The Bastion Bot
   main_url: 'https://bastionbot.org/'
   url: 'https://bastionbot.org/'
+  source_url: 'https://github.com/TheBastionBot/Bastion-Website'
+  description: 'Give awesome perks to your Discord server!'
   featured: false
   categories:
-    - Marketing
+    - Open Source
     - Technology
     - Documentation
-    - Web Dev
+    - Bot
+    - Community
+    - Services
+    - Software
+    - Tool
+  built_by: Sankarsan Kampa
+  built_by_url: https://sankarsankampa.com
 - title: upGizmo
   main_url: 'https://www.upgizmo.com/'
   url: 'https://www.upgizmo.com/'
