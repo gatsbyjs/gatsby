@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.1.1-beta.7"></a>
+
+## [2.1.1-beta.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.1.1-beta.6...gatsby-transformer-remark@2.1.1-beta.7) (2018-08-17)
+
+### Bug Fixes
+
+- remark excerpt add halfChop option ([#6992](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/issues/6992)) ([4386750](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/commit/4386750))
+
 <a name="2.1.1-beta.6"></a>
 
 ## [2.1.1-beta.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.1.1-beta.5...gatsby-transformer-remark@2.1.1-beta.6) (2018-08-06)
