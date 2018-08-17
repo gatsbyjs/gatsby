@@ -1,15 +1,19 @@
-const { tsPresetsFromJsPresets } = require(`./`)
+// const { tsPresetsFromJsPresets } = require(`./`)
 
 const resolvableExtensions = () => [`.ts`, `.tsx`]
+
+function onCreateBabelConfig({ actions }, pluginOptions) {
+  actions.setBabelPreset({
+    name: `@babel/preset-typescript`,
+  })
+}
 
 function onCreateWebpackConfig({ actions, loaders, stage }) {
   const jsLoader = loaders.js()
   if (
     !(
       jsLoader &&
-      jsLoader.loader &&
-      jsLoader.options &&
-      jsLoader.options.presets
+      jsLoader.loader
     )
   ) {
     return
@@ -22,10 +26,6 @@ function onCreateWebpackConfig({ actions, loaders, stage }) {
           use: [
             {
               loader: jsLoader.loader,
-              options: {
-                ...jsLoader.options,
-                presets: tsPresetsFromJsPresets(jsLoader.options.presets),
-              },
             },
           ],
         },
@@ -33,5 +33,7 @@ function onCreateWebpackConfig({ actions, loaders, stage }) {
     },
   })
 }
+
 exports.onCreateWebpackConfig = onCreateWebpackConfig
 exports.resolvableExtensions = resolvableExtensions
+exports.onCreateBabelConfig = onCreateBabelConfig
