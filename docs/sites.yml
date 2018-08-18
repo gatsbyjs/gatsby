@@ -2146,3 +2146,24 @@
   built_by: Timm Stokke
   built_by_url: https://timm.stokke.me
   featured: false
+- title: Stitch Fix
+  main_url: https://www.stitchfix.com/
+  url: https://www.stitchfix.com/
+  description: >
+    Stitch Fix is an online styling service that delivers a truly personalized shopping experience.
+  categories:
+    - eCommerce
+    - Clothing
+    - Fashion
+  featured: false
+- title: Snap Kit
+  main_url: https://kit.snapchat.com/
+  url: https://kit.snapchat.com/
+  description: >
+    Snap Kit lets developers integrate some of Snapchat’s best features across platforms.
+  categories:
+    - Technology
+    - Tool
+    - Software
+    - Documentation
+  featured: false
