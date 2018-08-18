@@ -6,7 +6,7 @@ module.exports = () => {
 
   const plugin = () => {
     const visitor = {
-      ExportNamedDeclaration(path, state) {
+      ExportNamedDeclaration(path) {
         const declaration = path.node.declaration;
         if (
           declaration.type === "VariableDeclaration" &&
@@ -17,7 +17,9 @@ module.exports = () => {
               results[declarator.id.name] = JSON5.parse(
                 generate(declarator.init).code
               );
-            } catch (e) {}
+            } catch (e) {
+              // why was this empty?
+            }
           });
         }
       }

@@ -1,11 +1,8 @@
-const { getOptions } = require("loader-utils");
-const debug = require("debug")("gatsby-mdx:mdx-deck-post-loader");
-
-const hasDefaultExport = str => /\nexport default/.test(str);
+//const { getOptions } = require("loader-utils");
 
 module.exports = async function(content) {
   const callback = this.async();
-  const { pluginOptions: options } = getOptions(this) || {};
+  //  const { pluginOptions: options } = getOptions(this) || {};
 
   const code = `import { SlideDeck } from 'mdx-deck'
 ${content.replace("export default", "export const slides =")}

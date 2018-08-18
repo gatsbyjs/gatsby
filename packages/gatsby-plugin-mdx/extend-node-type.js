@@ -25,7 +25,6 @@ const BabelPluginPluckImports = require("babel-plugin-pluck-imports");
 const objRestSpread = require("@babel/plugin-proposal-object-rest-spread");
 const babel = require("@babel/core");
 const rawMDX = require("@mdx-js/mdx");
-const syntaxJSX = require("@babel/plugin-syntax-jsx");
 
 const mdx = require("./utils/mdx");
 const getTableOfContents = require("./utils/get-table-of-content");
@@ -34,7 +33,7 @@ const defaultOptions = require("./utils/default-options");
 const stripFrontmatter = source => grayMatter(source).content;
 
 module.exports = (
-  { type, store, pathPrefix, getNode, getNodes, cache, reporter },
+  { type /*store, pathPrefix, getNode, getNodes, cache, reporter*/ },
   pluginOptions
 ) => {
   if (!type.name.endsWith(`Mdx`)) {
@@ -44,7 +43,7 @@ module.exports = (
   const options = defaultOptions(pluginOptions);
   const compiler = createMdxAstCompiler(options);
 
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve /*, reject*/) => {
     async function getAST(mdxNode) {
       return compiler.parse(stripFrontmatter(mdxNode.rawBody));
     }
@@ -124,7 +123,7 @@ ${code}`;
             body: {
               type: GraphQLString,
               async resolve(mdxNode) {
-                const { data, content } = grayMatter(mdxNode.rawBody);
+                const { content } = grayMatter(mdxNode.rawBody);
                 let code = await rawMDX(content, {
                   ...options
                 });
@@ -170,13 +169,13 @@ ${code}`;
                     .update(str)
                     .digest(`hex`);
 
-                const { data, content } = grayMatter(mdxNode.rawBody);
+                const { content } = grayMatter(mdxNode.rawBody);
                 let code = await rawMDX(content, {
                   ...options
                 });
 
                 const instance = new BabelPluginPluckImports();
-                const result = babel.transform(code, {
+                babel.transform(code, {
                   plugins: [instance.plugin, objRestSpread],
                   presets: [require("@babel/preset-react")]
                 });
