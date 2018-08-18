@@ -113,6 +113,8 @@ describe(`long term caching`, () => {
     basePath = resolve(`${__dirname}/base`)
     rootPath = resolve(`${__dirname}/..`)
 
+    await remove(basePath)
+
     await mkdirp(basePath)
 
     await copy(`${rootPath}/src`, `${basePath}/src`)
