@@ -2146,3 +2146,20 @@
   built_by: Timm Stokke
   built_by_url: https://timm.stokke.me
   featured: false
+  - title: Mayer Media Co.
+  main_url: https://mayermediaco.com/
+  url: https://mayermediaco.com/
+source_url: https://github.com/MayerMediaCo/MayerMediaCo2.0
+  description: >
+    A web development, design, and digital marketing freelance business dedicated to
+    helping small business and creative entrepreneurs succeed.
+  categories:
+    - Web Dev
+    - Marketing
+    - Technology
+    - Blog
+    - Design
+  built_by: Danny Mayer
+  built_by_url: https://twitter.com/MayerMediaCo
+  featured: false
+  
