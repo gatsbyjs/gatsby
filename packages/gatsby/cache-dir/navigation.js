@@ -5,6 +5,7 @@ import emitter from "./emitter"
 import { globalHistory } from "@reach/router/lib/history"
 import { navigate as reachNavigate } from "@reach/router"
 import parsePath from "./parse-path"
+import loadDirectlyOr404 from "./load-directly-or-404"
 
 // Convert to a map for faster lookup in maybeRedirect()
 const redirectMap = redirects.reduce((map, redirect) => {
@@ -72,51 +73,12 @@ const navigate = (to, options) => {
 
   loader.getResourcesForPathname(pathname).then(pageResources => {
     if (!pageResources && process.env.NODE_ENV === `production`) {
-      loader.getResourcesForPathname(`/404.html`).then(response => {
+      loader.getResourcesForPathname(`/404.html`).then(resources => {
         clearTimeout(timeoutId)
         onPreRouteUpdate(window.location)
-
-        // Show the server's 404 page by navigating directly if a custom page
-        // doesn't exist (otherwise the page contents won't change)
-        if (!response) {
-          window.location.href = to
-        } else {
-          // Try to load the page directly (as opposed to from the cache).
-          //
-          // Store the URL for testing later with `fetch`.
-          let url = new URL(window.location)
-
-          // Check the page isn't already loaded directly.
-          if (!url.search.match(/(\?|&)no-cache=1$/)) {
-            // Append the appropriate query to the URL
-            if (url.search) {
-              url.search += `&no-cache=1`
-            } else {
-              url.search = `?no-cache=1`
-            }
-
-            // Now test if the page is available directly
-            fetch(url.href)
-              .then(response => {
-                if (response.status !== 404) {
-                  // Redirect there if there isn't a 404. If a different HTTP
-                  // error occurs, the appropriate error message will be
-                  // displayed after loading the page directly.
-                  window.location.replace(url)
-                } else {
-                  // If a 404 occurs, show the custom 404 page.
-                  reachNavigate(to, options).then(() =>
-                    onRouteUpdate(window.location)
-                  )
-                }
-              })
-              .catch(() => {
-                // If an error occurs (usually when offline), navigate to the
-                // page anyway to show the browser's proper offline error page
-                window.location.replace(url)
-              })
-          }
-        }
+        loadDirectlyOr404(resources, to).then(() =>
+          reachNavigate(to, options).then(() => onRouteUpdate(window.location))
+        )
       })
     } else {
       onPreRouteUpdate(window.location)

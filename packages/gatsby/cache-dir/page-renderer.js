@@ -130,7 +130,7 @@ class PageRenderer extends React.Component {
       if (url.search) {
         url.search += `&no-cache=1`
       } else {
-        url.search += `?no-cache=1`
+        url.search = `?no-cache=1`
       }
       window.location.replace(url)
 

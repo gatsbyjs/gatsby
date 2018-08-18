@@ -66,7 +66,7 @@ class RouteHandler extends React.Component {
           pageResources={pageResources}
         />
       )
-    } else if (pages.find(p => /^\/404.html$/.test(p.path))) {
+    } else if (loader.getPage(`/404.html`)) {
       location.pathname = `/404.html`
       child = (
         <JSONStore
