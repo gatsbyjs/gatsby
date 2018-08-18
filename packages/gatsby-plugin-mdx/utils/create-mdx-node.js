@@ -1,5 +1,4 @@
 const crypto = require("crypto");
-const merge = require("lodash/merge");
 const mdx = require("./mdx");
 const extractExports = require("./extract-exports");
 
@@ -13,17 +12,7 @@ module.exports = async (
   const code = await mdx(nodeContent, options);
 
   // extract all the exports
-  const nodeExports = extractExports(code);
-
-  // grab the frontmatter
-  const classicFrontmatter = nodeExports._frontmatter || {};
-  const exportFrontmatter = nodeExports.frontmatter || {};
-
-  // // delete the frontmatter from the exports
-  delete nodeExports._frontmatter;
-  delete nodeExports.frontmatter;
-
-  const frontmatter = merge(classicFrontmatter, exportFrontmatter);
+  const { frontmatter, ...nodeExports } = extractExports(code);
 
   const mdxNode = {
     id: createNodeId(`${node.id} >>> ${node.internal.type}Mdx`),

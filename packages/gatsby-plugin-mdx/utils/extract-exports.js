@@ -13,18 +13,18 @@ module.exports = code => {
 
   const exportedVariables = gatherExports.results();
 
-  // https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-transformer-remark/src/on-node-create.js#L22
-  // Convert date objects to string. Otherwise there's type mismatches
-  // during inference as some dates are strings and others date objects.
-  // if (data.data) {
-  //   data.data = _.mapValues(data.data, v => {
-  //     if (_.isDate(v)) {
-  //       return v.toJSON()
-  //     } else {
-  //       return v
-  //     }
-  //   })
-  // }
+  // grab the frontmatter
+  const {
+    _frontmatter: classicFrontmatter = {},
+    frontmatter: exportFrontmatter = {},
+    ...newExportedVariables
+  } = exportedVariables;
 
-  return exportedVariables;
+  // add the merged frontmatter to the exports
+  newExportedVariables.frontmatter = {
+    ...classicFrontmatter,
+    ...exportFrontmatter
+  };
+
+  return newExportedVariables;
 };
