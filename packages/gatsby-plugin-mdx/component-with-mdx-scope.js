@@ -21,7 +21,7 @@ module.exports = function componentWithMDXScope(
   // hoist pageQuery and any other named exports
   const OGWrapper = fs.readFileSync(absWrapperPath, "utf-8");
   const instance = new BabelPluginPluckExports();
-  const result = babel.transform(OGWrapper, {
+  babel.transform(OGWrapper, {
     plugins: [instance.plugin, syntaxObjRestSpread],
     presets: [require("@babel/preset-react")]
   }).code;
@@ -72,6 +72,7 @@ export default ({children, ...props}) => <OriginalWrapper
 
   fs.writeFileSync(absPathToNewWrapper, newWrapper);
 
+  debug(`wrapper "${absPathToNewWrapper}" created from "${absWrapperPath}"`);
   return absPathToNewWrapper;
 };
 

@@ -17,7 +17,7 @@ exports.setFieldsOnGraphQLNodeType = require("./extend-node-type");
  * Add the webpack config for loading MDX files
  */
 exports.onCreateWebpackConfig = (
-  { stage, rules, loaders, plugins, actions, getNodes },
+  { stage, loaders, plugins, actions, getNodes },
   pluginOptions
 ) => {
   const options = defaultOptions(pluginOptions);

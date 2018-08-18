@@ -25,8 +25,8 @@ some content`
   return {
     name:
       Object.entries(input)
-        .filter(([k, v]) => !!v)
-        .map(([k, v]) => k)
+        .filter(([k, v]) => !!v) // eslint-disable-line no-unused-vars
+        .map(([k, v]) => k) // eslint-disable-line no-unused-vars
         .join("-") || "body",
     content: [
       input.frontmatter ? code.frontmatter : "",
@@ -56,7 +56,7 @@ const fixtures = c
 
 describe("mdx-loader", () => {
   expect.addSnapshotSerializer({
-    print(val, serialize) {
+    print(val /*, serialize */) {
       return prettier.format(val, { parser: "babylon" });
     },
     test() {
@@ -75,7 +75,7 @@ describe("mdx-loader", () => {
         },
         query: {
           getNodes() {
-            return fixtures.map(([filename, node, ...other]) => node);
+            return fixtures.map(([, node]) => node);
           },
           pluginOptions: {}
         },
