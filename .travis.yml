@@ -25,6 +25,7 @@ jobs:
           - yarn run bootstrap
           script:
           - yarn test
+          - yarn test:integration
 
         - stage: gatsbygram ui tests
           language: node_js
