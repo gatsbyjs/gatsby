@@ -129,7 +129,7 @@ describe(`long term caching`, () => {
     await createPublic3()
     await createPublic4()
     await createPublic5()
-  }, 100000)
+  }, 1000000)
 
   afterAll(async () => {
     await remove(basePath)
@@ -139,44 +139,44 @@ describe(`long term caching`, () => {
     const public0 = resolve(`${basePath}/public-0`)
     const public1 = resolve(`${basePath}/public-1`)
 
-    const originalFiles = await getDirFilesWalk(public0)
-    const changedFiles = await getDirFilesWalk(public1)
-    expect(originalFiles).not.toEqual(expect.arrayContaining(changedFiles))
+    const previousFiles = await getDirFilesWalk(public0)
+    const modifiedFiles = await getDirFilesWalk(public1)
+    expect(previousFiles).not.toEqual(expect.arrayContaining(modifiedFiles))
   })
 
   test(`Add import to src/pages/index.js`, async () => {
-    const public0 = resolve(`${basePath}/public-0`)
+    const public1 = resolve(`${basePath}/public-1`)
     const public2 = resolve(`${basePath}/public-2`)
 
-    const originalFiles = await getDirFilesWalk(public0)
-    const changedFiles = await getDirFilesWalk(public2)
-    expect(originalFiles).not.toEqual(expect.arrayContaining(changedFiles))
+    const previousFiles = await getDirFilesWalk(public1)
+    const modifiedFiles = await getDirFilesWalk(public2)
+    expect(previousFiles).not.toEqual(expect.arrayContaining(modifiedFiles))
   })
 
   test(`Add async import to src/pages/index.js`, async () => {
-    const public0 = resolve(`${basePath}/public-0`)
+    const public2 = resolve(`${basePath}/public-2`)
     const public3 = resolve(`${basePath}/public-3`)
 
-    const originalFiles = await getDirFilesWalk(public0)
-    const changedFiles = await getDirFilesWalk(public3)
-    expect(originalFiles).not.toEqual(expect.arrayContaining(changedFiles))
+    const previousFiles = await getDirFilesWalk(public2)
+    const modifiedFiles = await getDirFilesWalk(public3)
+    expect(previousFiles).not.toEqual(expect.arrayContaining(modifiedFiles))
   })
 
   test(`Add another async import to src/pages/index.js`, async () => {
-    const public0 = resolve(`${basePath}/public-0`)
+    const public3 = resolve(`${basePath}/public-3`)
     const public4 = resolve(`${basePath}/public-4`)
 
-    const originalFiles = await getDirFilesWalk(public0)
-    const changedFiles = await getDirFilesWalk(public4)
-    expect(originalFiles).not.toEqual(expect.arrayContaining(changedFiles))
+    const previousFiles = await getDirFilesWalk(public3)
+    const modifiedFiles = await getDirFilesWalk(public4)
+    expect(previousFiles).not.toEqual(expect.arrayContaining(modifiedFiles))
   })
 
   test(`Add character to src/async-2.js`, async () => {
-    const public0 = resolve(`${basePath}/public-0`)
+    const public4 = resolve(`${basePath}/public-4`)
     const public5 = resolve(`${basePath}/public-5`)
 
-    const originalFiles = await getDirFilesWalk(public0)
-    const changedFiles = await getDirFilesWalk(public5)
-    expect(originalFiles).not.toEqual(expect.arrayContaining(changedFiles))
+    const previousFiles = await getDirFilesWalk(public4)
+    const modifiedFiles = await getDirFilesWalk(public5)
+    expect(previousFiles).not.toEqual(expect.arrayContaining(modifiedFiles))
   })
 })
