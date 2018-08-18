@@ -9,10 +9,7 @@ const {
   writeFile,
 } = require(`fs-extra`)
 const { resolve } = require(`path`)
-const { execFile } = require(`child_process`)
-const { promisify } = require(`util`)
-
-const execFileAsync = promisify(execFile)
+const { execFileSync } = require(`child_process`)
 
 const getDirFilesWalk = async dir => {
   const dirFiles = await readdir(dir)
@@ -41,7 +38,7 @@ describe(`long term caching`, () => {
   let pagesPath
 
   const createPublic0 = async () => {
-    await execFileAsync(`yarn`, [`build`], { cwd: basePath })
+    execFileSync(`yarn`, [`build`], { cwd: basePath })
     move(`${basePath}/public`, `${basePath}/public-0`)
   }
 
@@ -53,7 +50,7 @@ describe(`long term caching`, () => {
     const modifiedData = data.replace(regex, `?`)
     await writeFile(`${pagesPath}/index.js`, modifiedData)
 
-    await execFileAsync(`yarn`, [`build`], { cwd: basePath })
+    execFileSync(`yarn`, [`build`], { cwd: basePath })
     await move(`${basePath}/public`, `${basePath}/public-1`)
   }
 
@@ -66,7 +63,7 @@ describe(`long term caching`, () => {
     const modifiedData = `${import1}\n${data}`
     await writeFile(`${pagesPath}/index.js`, modifiedData)
 
-    await execFileAsync(`yarn`, [`build`], { cwd: basePath })
+    execFileSync(`yarn`, [`build`], { cwd: basePath })
     await move(`${basePath}/public`, `${basePath}/public-2`)
   }
 
@@ -79,7 +76,7 @@ describe(`long term caching`, () => {
     const modifiedData = `${import1}\n${data}`
     await writeFile(`${pagesPath}/index.js`, modifiedData)
 
-    await execFileAsync(`yarn`, [`build`], { cwd: basePath })
+    execFileSync(`yarn`, [`build`], { cwd: basePath })
     await move(`${basePath}/public`, `${basePath}/public-3`)
   }
 
@@ -93,7 +90,7 @@ describe(`long term caching`, () => {
     const modifiedData = `${import1}\n${import2}\n${data}`
     await writeFile(`${pagesPath}/index.js`, modifiedData)
 
-    await execFileAsync(`yarn`, [`build`], { cwd: basePath })
+    execFileSync(`yarn`, [`build`], { cwd: basePath })
     await move(`${basePath}/public`, `${basePath}/public-4`)
   }
 
@@ -105,7 +102,7 @@ describe(`long term caching`, () => {
     const modifiedData = data.replace(regex, `?`)
     await writeFile(`${srcPath}/async-2.js`, modifiedData)
 
-    await execFileAsync(`yarn`, [`build`], { cwd: basePath })
+    execFileSync(`yarn`, [`build`], { cwd: basePath })
     await move(`${basePath}/public`, `${basePath}/public-5`)
   }
 
@@ -123,7 +120,7 @@ describe(`long term caching`, () => {
     srcPath = resolve(`${basePath}/src`)
     pagesPath = resolve(`${srcPath}/pages`)
 
-    await execFileAsync(`yarn`, [], { cwd: basePath })
+    execFileSync(`yarn`, [], { cwd: basePath })
 
     await createPublic0()
     await createPublic1()
