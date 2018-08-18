@@ -1,6 +1,6 @@
 export default function(resources, path) {
   return new Promise(resolve => {
-    let url = new URL(window.location.origin + path)
+    const url = new URL(window.location.origin + path)
 
     // Check the page isn't already loaded directly.
     if (!url.search.match(/(\?|&)no-cache=1$/)) {
