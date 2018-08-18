@@ -34,9 +34,6 @@ const options = {
     `${rootDir}/manifest.json`,
     `${rootDir}/manifest.webmanifest`,
     `${rootDir}/offline-plugin-app-shell-fallback/index.html`,
-    // Webpack chunks aren't always detected by `getResourcesFromHTML`
-    // since they're sometimes loaded from other chunks.
-    `${rootDir}/+([1234567890])-*.js`,
     ...criticalFilePaths,
   ]),
   stripPrefix: rootDir,
