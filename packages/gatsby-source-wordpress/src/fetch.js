@@ -41,7 +41,8 @@ async function fetch({
     console.time(`=END PLUGIN=====================================`)
 
     console.log(
-      colorized.out(`
+      colorized.out(
+        `
 =START PLUGIN=====================================
 
 Site URL: ${_siteURL}
@@ -93,7 +94,8 @@ Mama Route URL: ${url}
 
     if (_verbose) {
       console.log(
-        colorized.out(`
+        colorized.out(
+          `
 Fetching the JSON data from ${validRoutes.length} valid API Routes...
 `,
           colorized.color.Font.FgBlue
@@ -320,8 +322,7 @@ async function getPages(
     if (_verbose) {
       console.log(`
 Total entities : ${total}
-Pages to be requested : ${totalPages}`
-      )
+Pages to be requested : ${totalPages}`)
     }
 
     // We got page 1, now we want pages 2 through totalPages
@@ -380,29 +381,31 @@ function getValidRoutes({
   if (_useACF) {
     let defaultAcfNamespace = `acf/v3`
     // Grab ACF Version from namespaces
-    const acfNamespace = allRoutes.data.namespaces.find(
-      namespace => namespace.includes("acf")
+    const acfNamespace = allRoutes.data.namespaces.find(namespace =>
+      namespace.includes(`acf`)
     )
     const acfRestNamespace = acfNamespace ? acfNamespace : defaultAcfNamespace
     _includedRoutes.push(`/${acfRestNamespace}/**`)
 
     if (_verbose)
-    console.log(
-      colorized.out(
-        `Detected ACF to REST namespace: ${acfRestNamespace}.`,
-        colorized.color.Font.FgGreen
+      console.log(
+        colorized.out(
+          `Detected ACF to REST namespace: ${acfRestNamespace}.`,
+          colorized.color.Font.FgGreen
+        )
       )
-    )
     // The OPTIONS ACF API Route is not giving a valid _link so let`s add it manually
     // and pass ACF option page ID
     // ACF to REST v3 requires options/options
-    let optionsRoute = acfRestNamespace.includes('3') ? `options/options/` : `options/`
+    let optionsRoute = acfRestNamespace.includes(`3`)
+      ? `options/options/`
+      : `options/`
     validRoutes.push({
       url: `${url}/${acfRestNamespace}/${optionsRoute}`,
       type: `${typePrefix}acf_options`,
     })
     // ACF to REST V2 does not allow ACF Option Page ID specification
-    if (_acfOptionPageIds.length > 0 && acfRestNamespace.includes('3')) {
+    if (_acfOptionPageIds.length > 0 && acfRestNamespace.includes(`3`)) {
       _acfOptionPageIds.forEach(function(acfOptionPageId) {
         validRoutes.push({
           url: `${url}/acf/v3/options/${acfOptionPageId}`,
