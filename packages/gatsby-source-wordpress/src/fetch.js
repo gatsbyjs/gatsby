@@ -376,7 +376,60 @@ function getValidRoutes({
   refactoredEntityTypes,
 }) {
   let validRoutes = []
-  let acfRestVersion = 3
+
+  if (_useACF) {
+    let defaultAcfNamespace = `acf/v3`
+    // Grab ACF Version from namespaces
+    const acfNamespace = allRoutes.data.namespaces.find(
+      namespace => namespace.includes("acf")
+    )
+    const acfRestNamespace = acfNamespace ? acfNamespace : defaultAcfNamespace
+    _includedRoutes.push(`/${acfRestNamespace}/**`)
+
+    if (_verbose)
+    console.log(
+      colorized.out(
+        `Detected ACF to REST namespace: ${acfRestNamespace}.`,
+        colorized.color.Font.FgGreen
+      )
+    )
+    // The OPTIONS ACF API Route is not giving a valid _link so let`s add it manually
+    // and pass ACF option page ID
+    // ACF to REST v3 requires options/options
+    let optionsRoute = acfRestNamespace.includes('3') ? `options/options/` : `options/`
+    validRoutes.push({
+      url: `${url}/${acfRestNamespace}/${optionsRoute}`,
+      type: `${typePrefix}acf_options`,
+    })
+    // ACF to REST V2 does not allow ACF Option Page ID specification
+    if (_acfOptionPageIds.length > 0 && acfRestNamespace.includes('3')) {
+      _acfOptionPageIds.forEach(function(acfOptionPageId) {
+        validRoutes.push({
+          url: `${url}/acf/v3/options/${acfOptionPageId}`,
+          type: `${typePrefix}acf_options`,
+          optionPageId: acfOptionPageId,
+        })
+      })
+      if (_verbose)
+        console.log(
+          colorized.out(
+            `Added ACF Options route(s).`,
+            colorized.color.Font.FgGreen
+          )
+        )
+    }
+    if (_acfOptionPageIds.length > 0 && _hostingWPCOM) {
+      // TODO : Need to test that out with ACF on Wordpress.com hosted site. Need a premium account on wp.com to install extensions.
+      if (_verbose)
+        console.log(
+          colorized.out(
+            `The ACF options pages is untested under wordpress.com hosting. Please let me know if it works.`,
+            colorized.color.Effect.Blink
+          )
+        )
+    }
+  }
+
   for (let key of Object.keys(allRoutes.data.routes)) {
     if (_verbose) console.log(`Route discovered :`, key)
     let route = allRoutes.data.routes[key]
@@ -461,52 +514,6 @@ function getValidRoutes({
           colorized.out(
             `Invalid route: detail route`,
             colorized.color.Font.FgRed
-          )
-        )
-    }
-  }
-
-  if (_verbose)
-    console.log(
-      colorized.out(
-        `Detected ACF to REST version: v${acfRestVersion}.`,
-        colorized.color.Font.FgGreen
-      )
-    )
-
-  if (_useACF) {
-    // The OPTIONS ACF API Route is not giving a valid _link so let`s add it manually
-    // and pass ACF option page ID
-    // ACF to REST v3 requires options/options
-    let optionsRoute = acfRestVersion == 3 ? `options/options/` : `options/`
-    validRoutes.push({
-      url: `${url}/acf/v${acfRestVersion}/${optionsRoute}`,
-      type: `${typePrefix}acf_options`,
-    })
-    // ACF to REST V2 does not allow ACF Option Page ID specification
-    if (acfRestVersion == 3) {
-      _acfOptionPageIds.forEach(function(acfOptionPageId) {
-        validRoutes.push({
-          url: `${url}/acf/v3/options/${acfOptionPageId}`,
-          type: `${typePrefix}acf_options`,
-          optionPageId: acfOptionPageId,
-        })
-      })
-    }
-    if (_verbose)
-      console.log(
-        colorized.out(
-          `Added ACF Options route(s).`,
-          colorized.color.Font.FgGreen
-        )
-      )
-    if (_hostingWPCOM) {
-      // TODO : Need to test that out with ACF on Wordpress.com hosted site. Need a premium account on wp.com to install extensions.
-      if (_verbose)
-        console.log(
-          colorized.out(
-            `The ACF options pages is untested under wordpress.com hosting. Please let me know if it works.`,
-            colorized.color.Effect.Blink
           )
         )
     }
