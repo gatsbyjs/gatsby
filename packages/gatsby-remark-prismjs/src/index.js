@@ -30,7 +30,9 @@ module.exports = (
     //
     // @see https://github.com/PrismJS/prism/blob/1d5047df37aacc900f8270b1c6215028f6988eb1/themes/prism.css#L49-L54
     let languageName = `text`
-    if (language) { languageName = normalizeLanguage(language) }
+    if (language) {
+      languageName = normalizeLanguage(language)
+    }
 
     // Allow users to specify a custom class prefix to avoid breaking
     // line highlights if Prism is required by any other code.
@@ -42,7 +44,8 @@ module.exports = (
     let numLinesStyle, numLinesClass, numLinesNumber
     numLinesStyle = numLinesClass = numLinesNumber = ``
     if (numberLines) {
-      numLinesStyle = ` style="counter-reset: linenumber ${numberLinesStartAt - 1}"`
+      numLinesStyle = ` style="counter-reset: linenumber ${numberLinesStartAt -
+        1}"`
       numLinesClass = ` line-numbers`
       numLinesNumber = addLineNumbers(node.value)
     }
@@ -60,7 +63,7 @@ module.exports = (
     +     `${numLinesNumber}`
     +   `</pre>`
     + `</div>`
-    })
+  })
 
   visit(markdownAST, `inlineCode`, node => {
     let languageName = `text`
@@ -76,6 +79,9 @@ module.exports = (
     const className = `${classPrefix}${languageName}`
 
     node.type = `html`
-    node.value = `<code class="${className}">${highlightCode(languageName, node.value)}</code>`
+    node.value = `<code class="${className}">${highlightCode(
+      languageName,
+      node.value
+    )}</code>`
   })
 }

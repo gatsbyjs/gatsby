@@ -14,19 +14,19 @@ gatsby develop
 Second, create a css file and define any styles you wish. An arbitrary example:
 
 ```css
-    html {
-        background-color: lavenderblush;
-    }
+html {
+  background-color: lavenderblush;
+}
 
-    a {
-        color: rebeccapurple;
-    }
+a {
+  color: rebeccapurple;
+}
 ```
 
 Then, include the stylesheet in your site's `gatsby-browser.js` file.
 
 ```javascript
-import './src/styles/global.css'
+import "./src/styles/global.css"
 
 // or:
 // require('./src/styles/global.css')

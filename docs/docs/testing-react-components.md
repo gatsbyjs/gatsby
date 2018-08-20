@@ -21,10 +21,10 @@ npm install --save-dev react-testing-library jest-dom
 Create the file `setup-test-env.js` at the root of your project. Insert this code into it:
 
 ```js
-import 'jest-dom/extend-expect';
+import "jest-dom/extend-expect"
 
 // this is basically: afterEach(cleanup)
-import 'react-testing-library/cleanup-after-each';
+import "react-testing-library/cleanup-after-each"
 ```
 
 This file gets run automatically by Jest before every test and therefore you don't need to add the imports to every single test file.
@@ -42,16 +42,16 @@ Lastly you need to tell Jest where to find this file. Open your `package.json` a
 Let's create a little example test using the newly added library. If you haven't done already read the [unit testing guide](/docs/unit-testing) — essentially you'll use `react-testing-library` instead of `react-test-renderer` now. There are a lot of options when it comes to selectors, this example chooses `getByTestId` here. It also utilizes `toHaveTextContent` from `jest-dom`:
 
 ```js
-import React from 'react'
-import { render } from 'react-testing-library'
+import React from "react"
+import { render } from "react-testing-library"
 
 // You have to write data-testid
 const Title = () => <h1 data-testid="hero-title">Gatsby is awesome!</h1>
 
-test('Displays the correct title', () => {
+test("Displays the correct title", () => {
   const { getByTestId } = render(<Title />)
   // Assertion
-  expect(getByTestId('hero-title')).toHaveTextContent('Gatsby is awesome!')
+  expect(getByTestId("hero-title")).toHaveTextContent("Gatsby is awesome!")
   // --> Test will pass
 })
 ```

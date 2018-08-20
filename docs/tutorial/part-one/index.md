@@ -289,7 +289,7 @@ You'll often want to link between pages -- Let's look at routing in a Gatsby sit
 
 ### ✋ Using the `<Link />` component
 
-1. Open the index page component (`/src/pages/index.js`). Import the `<Link />` component from Gatsby. Add a `<Link />` component below the header, and give it a `to` property, with the value of `"/contact/"` for the pathname:
+1.  Open the index page component (`/src/pages/index.js`). Import the `<Link />` component from Gatsby. Add a `<Link />` component below the header, and give it a `to` property, with the value of `"/contact/"` for the pathname:
 
 ```jsx{2,7}
 import React from "react"
@@ -314,19 +314,19 @@ When you click the new "Contact" link on the homepage, you should see...
 
 > 💡 Want to know more about 404 pages in Gatsby? Check out [the docs](/docs/add-404-page/).
 
-2. Let's create a page component for our new " Contact" page at `src/pages/contact.js`, and have it link back to the homepage: 
+2.  Let's create a page component for our new " Contact" page at `src/pages/contact.js`, and have it link back to the homepage:
 
 ```jsx
 import React from "react"
-import { Link } from 'gatsby'
+import { Link } from "gatsby"
 import Header from "../components/header"
 
 export default () => (
-    <div style={{ color: `teal` }}>
-        <Link to="/">Home</Link>
-        <Header headerText="Contact" />
-        <p>Send us a message!</p>
-    </div>
+  <div style={{ color: `teal` }}>
+    <Link to="/">Home</Link>
+    <Header headerText="Contact" />
+    <p>Send us a message!</p>
+  </div>
 )
 ```
 

@@ -16,13 +16,13 @@ Add the plugin to your `gatsby-config.js`.
 
 ```js
 module.exports = {
-    plugins: [
-        {
-            resolve: `gatsby-plugin-emotion`,
-            options: {
-                // Accepts all options defined by `babel-plugin-emotion` plugin.
-            }
-        }
-    ]
-};
+  plugins: [
+    {
+      resolve: `gatsby-plugin-emotion`,
+      options: {
+        // Accepts all options defined by `babel-plugin-emotion` plugin.
+      },
+    },
+  ],
+}
 ```

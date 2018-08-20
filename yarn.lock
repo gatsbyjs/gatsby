@@ -224,6 +224,10 @@
   version "7.0.0-beta.52"
   resolved "https://registry.yarnpkg.com/@babel/helper-plugin-utils/-/helper-plugin-utils-7.0.0-beta.52.tgz#2f058c5f7c3a5fe4bc219036b2e78e11bddeb7ad"
 
+"@babel/helper-plugin-utils@7.0.0-rc.1":
+  version "7.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/@babel/helper-plugin-utils/-/helper-plugin-utils-7.0.0-rc.1.tgz#3e277eae59818e7d4caf4174f58a7a00d441336e"
+
 "@babel/helper-regex@7.0.0-beta.52":
   version "7.0.0-beta.52"
   resolved "https://registry.yarnpkg.com/@babel/helper-regex/-/helper-regex-7.0.0-beta.52.tgz#4ad8c7720497afbcd8f897c8a1b2ad03ebcd3061"
@@ -390,6 +394,12 @@
   dependencies:
     "@babel/helper-plugin-utils" "7.0.0-beta.52"
 
+"@babel/plugin-syntax-flow@7.0.0-rc.1":
+  version "7.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-flow/-/plugin-syntax-flow-7.0.0-rc.1.tgz#1c0165eb2fa7c5769eaf27f2bfb46e7df5d3f034"
+  dependencies:
+    "@babel/helper-plugin-utils" "7.0.0-rc.1"
+
 "@babel/plugin-syntax-jsx@7.0.0-beta.52":
   version "7.0.0-beta.52"
   resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-jsx/-/plugin-syntax-jsx-7.0.0-beta.52.tgz#ed57b2ca5ab5bcf931c419b111e8df0318f8f65e"
@@ -499,6 +509,13 @@
   dependencies:
     "@babel/helper-plugin-utils" "7.0.0-beta.52"
     "@babel/plugin-syntax-flow" "7.0.0-beta.52"
+
+"@babel/plugin-transform-flow-strip-types@7.0.0-rc.1":
+  version "7.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-transform-flow-strip-types/-/plugin-transform-flow-strip-types-7.0.0-rc.1.tgz#dd69161fd75bc0c68803c0c6051730d559cc2d85"
+  dependencies:
+    "@babel/helper-plugin-utils" "7.0.0-rc.1"
+    "@babel/plugin-syntax-flow" "7.0.0-rc.1"
 
 "@babel/plugin-transform-for-of@7.0.0-beta.52":
   version "7.0.0-beta.52"
@@ -715,6 +732,13 @@
   dependencies:
     "@babel/helper-plugin-utils" "7.0.0-beta.52"
     "@babel/plugin-transform-flow-strip-types" "7.0.0-beta.52"
+
+"@babel/preset-flow@^7.0.0-rc.1":
+  version "7.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/@babel/preset-flow/-/preset-flow-7.0.0-rc.1.tgz#d7a9e4a39bdd5355dc708a70fbbf7ce49a4b429b"
+  dependencies:
+    "@babel/helper-plugin-utils" "7.0.0-rc.1"
+    "@babel/plugin-transform-flow-strip-types" "7.0.0-rc.1"
 
 "@babel/preset-react@7.0.0-beta.52":
   version "7.0.0-beta.52"
