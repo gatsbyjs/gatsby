@@ -23,7 +23,7 @@
           link: /docs/gatsby-on-macs/
         - title: Gatsby on Windows
           link: /docs/gatsby-on-windows/
-    - title: Deploying & Hosting*
+    - title: Deploying & hosting
       link: /docs/deploying-and-hosting/
       items:
         - title: Preparing your site for deployment*
@@ -34,7 +34,7 @@
           link: /docs/path-prefix/
         - title: How Gatsby works with GitHub pages
           link: /docs/how-gatsby-works-with-github-pages/
-    - title: Custom configuration*
+    - title: Custom configuration
       link: /docs/customization/
       items:
         - title: Babel.js
@@ -159,7 +159,7 @@
           link: /docs/debugging-the-build-process/
         - title: Trace Gatsby builds
           link: /docs/performance-tracing/
-    - title: Building Apps with Gatsby
+    - title: Building apps with Gatsby
       link: /docs/building-apps-with-gatsby/
       items:
         - title: Progressive web app (PWA)
