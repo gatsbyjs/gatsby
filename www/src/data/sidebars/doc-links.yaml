@@ -112,8 +112,10 @@
       items:
         - title: Plugin authoring
           link: /docs/plugin-authoring/
-        - title: Submit to Plugin Library*
-          link: /docs/submit-to-plugin-library/
+        - title: Create a Transformer Plugin*
+          link: /docs/create-transformer-plugin/
+        - title: Create a Source Plugin
+          link: /docs/create-source-plugin/
         - title: Source plugin tutorial
           link: /docs/source-plugin-tutorial/
     - title: Styling

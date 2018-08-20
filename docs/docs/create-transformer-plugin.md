@@ -1,5 +1,5 @@
 ---
-title: Submit to Plugin Library
+title: Create a Transformer Plugin
 ---
 
 This is a stub. Help our community expand it.
