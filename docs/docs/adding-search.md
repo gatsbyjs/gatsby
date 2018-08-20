@@ -1,5 +1,5 @@
 ---
-title: "Adding search to your Gatsby website"
+title: "Adding search"
 ---
 
 Before we go through the steps for adding search to your Gatsby website, let's examine the components needed for adding search to a website.

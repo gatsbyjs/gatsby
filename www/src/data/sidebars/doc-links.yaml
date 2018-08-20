@@ -175,8 +175,6 @@
       items:
         - title: Adding a 404 Page
           link: /docs/add-404-page/
-        - title: Adding search to your Gatsby website
-          link: /docs/adding-search/
         - title: Adding tags and categories to blog posts
           link: /docs/adding-tags-and-categories-to-blog-posts/
         - title: Creating a sitemap*
@@ -185,10 +183,10 @@
           link: /docs/linking-between-pages/
         - title: Search Engine Optimization (SEO)
           link: /docs/seo/
-    - title: Adding third-party services*
+    - title: Adding third-party services
       link: /docs/adding-third-party-services/
       items:
-        - title: Adding search*
+        - title: Adding search
           link: /docs/adding-search/
         - title: Adding analytics*
           link: /docs/adding-analytics/
