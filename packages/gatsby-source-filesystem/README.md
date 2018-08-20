@@ -94,8 +94,8 @@ The following is taken from [Gatsby Tutorial, Part Seven](https://www.gatsbyjs.o
 ```javascript
 const { createFilePath } = require(`gatsby-source-filesystem`)
 
-exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
-  const { createNodeField } = boundActionCreators
+exports.onCreateNode = ({ node, getNode, actions }) => {
+  const { createNodeField } = actions
   // Ensures we are processing only markdown files
   if (node.internal.type === "MarkdownRemark") {
     // Use `createFilePath` to turn markdown files in our `data/faqs` directory into `/faqs/slug`
