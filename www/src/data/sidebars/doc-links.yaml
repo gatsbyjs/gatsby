@@ -188,9 +188,9 @@
       items:
         - title: Adding search
           link: /docs/adding-search/
-        - title: Adding analytics
+        - title: Adding analytics*
           link: /docs/adding-analytics/
-        - title: Adding forms
+        - title: Adding forms*
           link: /docs/adding-forms/
     - title: Performance
       link: /docs/performance/
