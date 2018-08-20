@@ -53,11 +53,12 @@ const createElement = React.createElement
 
 export default (pagePath, callback) => {
   const pathPrefix = `${__PATH_PREFIX__}/`
+  const is404 = pathChunkName(pagePath.path).indexOf('path---404') > -1
 
   let bodyHtml = ``
   let headComponents = []
   let htmlAttributes = {}
-  let bodyAttributes = {}
+  let bodyAttributes = !is404 ? {} : { id: 'is404' }
   let preBodyComponents = []
   let postBodyComponents = []
   let bodyProps = {}

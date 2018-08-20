@@ -289,6 +289,9 @@ const queue = {
       navigator.serviceWorker.controller.state === `activated`
     ) {
       if (!findPage(path)) {
+        // Check if 404 route was served, if so don't reload service worker
+        if(document.getElementById('is404')) return
+
         navigator.serviceWorker
           .getRegistrations()
           .then(function(registrations) {
