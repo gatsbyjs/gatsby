@@ -208,7 +208,11 @@ class SidebarBody extends Component {
           onScroll={({ nativeEvent }) => {
             // get proper scroll position
             const position = nativeEvent.target.scrollTop
-            onPositionChange(location.pathname, position)
+            const { pathname } = location
+
+            requestAnimationFrame(() => {
+              onPositionChange(pathname, position)
+            })
           }}
           ref={this.scrollRef}
           css={{
