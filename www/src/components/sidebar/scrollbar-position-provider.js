@@ -11,7 +11,6 @@ export default class ScrollPositionProvider extends Component {
   state = { positions: positionStore }
 
   onPositionChange = (cacheName, position) => {
-    console.log({cacheName, position})
 
     this.setState(() => {
       positionStore[cacheName] = position
