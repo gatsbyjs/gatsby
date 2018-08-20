@@ -4,11 +4,11 @@ title: Plugin authoring
 
 You may be looking to build a plugin that doesn't exist yet, or you may just be curious to know more about the anatomy of a Gatsby plugin. We'll review:
 
-1. the core concepts of what a Gatsby plugin is
-2. naming conventions for the plugin title
-3. expected files in a plugin package
-4. defining a local (unpublished) plugin for your own use case
-5. what a plugin is _not_
+1.  the core concepts of what a Gatsby plugin is
+2.  naming conventions for the plugin title
+3.  expected files in a plugin package
+4.  defining a local (unpublished) plugin for your own use case
+5.  what a plugin is _not_
 
 ## Core Concepts
 

@@ -40,7 +40,8 @@ async function fetch({
     console.time(`=END PLUGIN=====================================`)
 
     console.log(
-      colorized.out(`
+      colorized.out(
+        `
 =START PLUGIN=====================================
 
 Site URL: ${_siteURL}
@@ -92,7 +93,8 @@ Mama Route URL: ${url}
 
     if (_verbose) {
       console.log(
-        colorized.out(`
+        colorized.out(
+          `
 Fetching the JSON data from ${validRoutes.length} valid API Routes...
 `,
           colorized.color.Font.FgBlue
@@ -319,8 +321,7 @@ async function getPages(
     if (_verbose) {
       console.log(`
 Total entities : ${total}
-Pages to be requested : ${totalPages}`
-      )
+Pages to be requested : ${totalPages}`)
     }
 
     // We got page 1, now we want pages 2 through totalPages

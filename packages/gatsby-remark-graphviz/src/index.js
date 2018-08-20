@@ -30,7 +30,9 @@ module.exports = async ({ markdownAST }, pluginOptions = {}) => {
         node.type = `html`
         node.value = svgString
       } catch (error) {
-        console.log(`Error during viz.js execution. Leaving code block unchanged`)
+        console.log(
+          `Error during viz.js execution. Leaving code block unchanged`
+        )
         console.log(error)
       }
 

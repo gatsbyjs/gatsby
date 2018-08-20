@@ -19,8 +19,8 @@ Video hosted on [egghead.io][egghead].
 We'll create a new `Header` component located at `src/components/header.js`:
 
 ```jsx
-import React from 'react';
-import { StaticQuery, graphql } from 'gatsby';
+import React from "react"
+import { StaticQuery, graphql } from "gatsby"
 
 export default () => (
   <StaticQuery
@@ -39,7 +39,7 @@ export default () => (
       </header>
     )}
   />
-);
+)
 ```
 
 Using `StaticQuery`, you can colocate a component with its data. No longer is it required to, say, pass data down from `Layout` to `Header`.

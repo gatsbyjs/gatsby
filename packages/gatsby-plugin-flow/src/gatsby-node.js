@@ -5,4 +5,3 @@ function onCreateBabelConfig({ actions }, pluginOptions) {
 }
 
 exports.onCreateBabelConfig = onCreateBabelConfig
-

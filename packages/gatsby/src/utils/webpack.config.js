@@ -195,15 +195,17 @@ module.exports = async (
         break
       case `build-javascript`: {
         // Minify Javascript only if needed.
-        configPlugins = program.noUglify ? configPlugins : configPlugins.concat([
-          plugins.uglify({
-            uglifyOptions: {
-              compress: {
-                drop_console: false,
-              },
-            },
-          }),
-        ])
+        configPlugins = program.noUglify
+          ? configPlugins
+          : configPlugins.concat([
+              plugins.uglify({
+                uglifyOptions: {
+                  compress: {
+                    drop_console: false,
+                  },
+                },
+              }),
+            ])
         configPlugins = configPlugins.concat([
           plugins.extractText(),
           // Write out stats object mapping named dynamic imports (aka page
