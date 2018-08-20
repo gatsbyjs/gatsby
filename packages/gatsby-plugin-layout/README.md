@@ -47,15 +47,13 @@ There are a few scenarios where it makes sense to reimplement the V1 layout hand
 
 ### How layouts worked in version 1
 
-In the original implementation, the layout component was wrapped around the outside of the router, which, in pseudo-code, looked something like this:
+In the original implementation, the layout component was wrapped around the outside of the page component, which, in pseudo-code, looked something like this:
 
 ```jsx
 <Root>
   <Layout>
-    <Router>
-      {/* Everything inside the router re-renders on every page load */}
-      <PageTemplate>{/* page content here */}</PageTemplate>
-    </Router>
+    {/* layout is not affected when the page template changes */}
+    <PageElement>{/* page content here */}</PageElement>
   </Layout>
 </Root>
 ```
@@ -68,12 +66,10 @@ In version 2, the layout component is no longer special, and it's included in ev
 
 ```jsx
 <Root>
-  <Router>
-    {/* Everything inside the router re-renders on every page load */}
-    <PageTemplate>
-      <Layout>{/* page content here */}</Layout>
-    </PageTemplate>
-  </Router>
+  <PageElement>
+    {/* layout will rerender each time the page template changes */}
+    <Layout>{/* page content here */}</Layout>
+  </PageElement>
 </Root>
 ```
 
