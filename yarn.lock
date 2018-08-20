@@ -4533,7 +4533,7 @@ create-hmac@^1.1.0, create-hmac@^1.1.2, create-hmac@^1.1.4:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
-create-react-context@^0.2.1:
+create-react-context@^0.2.1, create-react-context@^0.2.2:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/create-react-context/-/create-react-context-0.2.2.tgz#9836542f9aaa22868cd7d4a6f82667df38019dca"
   dependencies:
@@ -14270,35 +14270,31 @@ stylehacks@^4.0.0:
     postcss "^6.0.0"
     postcss-selector-parser "^3.0.0"
 
-styletron-client@^3.0.0-rc.1, styletron-client@^3.0.4:
-  version "3.0.4"
-  resolved "https://registry.yarnpkg.com/styletron-client/-/styletron-client-3.0.4.tgz#50c3fcdc7f45ed0693d68dc174bd0f2fa607cc57"
+styletron-engine-atomic@^1.0.8:
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/styletron-engine-atomic/-/styletron-engine-atomic-1.0.8.tgz#97f0abef84a4b15a9c70c64571db67eb68e06042"
   dependencies:
-    styletron-core "^3.0.4"
+    inline-style-prefixer "^4.0.0"
+    styletron-standard "^1.0.6"
 
-styletron-core@^3.0.4:
-  version "3.0.4"
-  resolved "https://registry.yarnpkg.com/styletron-core/-/styletron-core-3.0.4.tgz#648081572a8de30acbe3008cd283c421565444bb"
-
-styletron-react@^3.0.0-rc.2:
-  version "3.0.4"
-  resolved "https://registry.yarnpkg.com/styletron-react/-/styletron-react-3.0.4.tgz#fe7714778a809f6c2634b62a334fc0b6ba265a36"
+styletron-react-core@^1.3.2:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/styletron-react-core/-/styletron-react-core-1.3.2.tgz#919f9e55e555d8bd66957e11c98c00d1d6e559f9"
   dependencies:
-    "@types/react" "*"
+    create-react-context "^0.2.2"
     prop-types "^15.6.0"
-    styletron-client "^3.0.4"
-    styletron-server "^3.0.4"
-    styletron-utils "^3.0.4"
 
-styletron-server@^3.0.0-rc.1, styletron-server@^3.0.4:
-  version "3.0.4"
-  resolved "https://registry.yarnpkg.com/styletron-server/-/styletron-server-3.0.4.tgz#6bf24643b2ce84198d0fcb7c27308f00880c8dfd"
+styletron-react@^4:
+  version "4.3.5"
+  resolved "https://registry.yarnpkg.com/styletron-react/-/styletron-react-4.3.5.tgz#f85515fa83de41e2f73c029c82524ada0c8bbe81"
   dependencies:
-    styletron-core "^3.0.4"
+    prop-types "^15.6.0"
+    styletron-react-core "^1.3.2"
+    styletron-standard "^1.0.6"
 
-styletron-utils@^3.0.4:
-  version "3.0.4"
-  resolved "https://registry.yarnpkg.com/styletron-utils/-/styletron-utils-3.0.4.tgz#6696320f6ade52383006c4d47e72c5c6a1f37b15"
+styletron-standard@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/styletron-standard/-/styletron-standard-1.0.6.tgz#f38a21d888ccee143a7c263e86d525f1eef2df7d"
   dependencies:
     inline-style-prefixer "^4.0.0"
 
