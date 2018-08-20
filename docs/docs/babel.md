@@ -47,7 +47,6 @@ to root of your site and modifying it per your needs.
         pragma: "React.createElement",
       },
     ],
-    "@babel/preset-flow",
   ],
   plugins: [
     [
