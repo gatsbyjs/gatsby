@@ -1,11 +1,14 @@
 const plugins = require(`./api-runner-browser-plugins`)
 
-exports.apiRunner = (api, args, defaultReturn) => {
+exports.apiRunner = (api, args, defaultReturn, argTransform) => {
   let results = plugins.map(plugin => {
     if (!plugin.plugin[api]) {
       return undefined
     }
     const result = plugin.plugin[api](args, plugin.options)
+    if (result && argTransform) {
+      args = argTransform({ args, result, plugin })
+    }
     return result
   })
 

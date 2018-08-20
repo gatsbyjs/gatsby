@@ -1029,15 +1029,23 @@
     - Portfolio
     - Web Dev
     - Blog
-- title: Bastion Bot
+- title: The Bastion Bot
   main_url: 'https://bastionbot.org/'
   url: 'https://bastionbot.org/'
+  source_url: 'https://github.com/TheBastionBot/Bastion-Website'
+  description: 'Give awesome perks to your Discord server!'
   featured: false
   categories:
-    - Marketing
+    - Open Source
     - Technology
     - Documentation
-    - Web Dev
+    - Bot
+    - Community
+    - Services
+    - Software
+    - Tool
+  built_by: Sankarsan Kampa
+  built_by_url: https://sankarsankampa.com
 - title: upGizmo
   main_url: 'https://www.upgizmo.com/'
   url: 'https://www.upgizmo.com/'
@@ -2125,4 +2133,37 @@
     - Gallery
   built_by: Piotr Fedorczyk
   built_by_url: https://piotrf.pl
+  featured: false
+- title: Timely
+  main_url: https://timelyapp.com/
+  url: https://timelyapp.com/
+  description: >
+    Fully automatic time tracking. For those who trade in time.
+  categories:
+    - Software
+    - Time Tracking
+    - Tool
+  built_by: Timm Stokke
+  built_by_url: https://timm.stokke.me
+  featured: false
+- title: Stitch Fix
+  main_url: https://www.stitchfix.com/
+  url: https://www.stitchfix.com/
+  description: >
+    Stitch Fix is an online styling service that delivers a truly personalized shopping experience.
+  categories:
+    - eCommerce
+    - Clothing
+    - Fashion
+  featured: false
+- title: Snap Kit
+  main_url: https://kit.snapchat.com/
+  url: https://kit.snapchat.com/
+  description: >
+    Snap Kit lets developers integrate some of Snapchat’s best features across platforms.
+  categories:
+    - Technology
+    - Tool
+    - Software
+    - Documentation
   featured: false

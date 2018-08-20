@@ -38,28 +38,45 @@ const getBadExportsMessage = (badExports, exportType, apis) => {
     message += `\n\n`
     const similarities = stringSimiliarity.findBestMatch(bady.exportName, apis)
     const isDefaultPlugin = bady.pluginName == `default-site-plugin`
-    const isModifyWebpackConfig = bady.exportName === `modifyWebpackConfig`
+    const badExportsMigrationMap = {
+      modifyWebpackConfig: {
+        replacement: `onCreateWebpackConfig`,
+        migrationLink: `https://gatsby.app/update-webpack-config`,
+      },
+      wrapRootComponent: {
+        replacement: `wrapRootElement`,
+        migrationLink: `https://gatsby.app/update-wraprootcomponent`,
+      },
+    }
+    const isOldAPI = Object.keys(badExportsMigrationMap).includes(
+      bady.exportName
+    )
 
-    if (isDefaultPlugin && isModifyWebpackConfig) {
+    if (isDefaultPlugin && isOldAPI) {
+      const { replacement, migrationLink } = badExportsMigrationMap[
+        bady.exportName
+      ]
       message += stripIndent`
-        - Your site's gatsby-${exportType}.js is exporting "${ bady.exportName }" which was removed in Gatsby v2. Refer to the migration guide for more info on upgrading to "onCreateWebpackConfig":
+        - Your site's gatsby-${exportType}.js is exporting "${
+        bady.exportName
+      }" which was removed in Gatsby v2. Refer to the migration guide for more info on upgrading to "${replacement}":
       `
-      message += `\n https://gatsby.app/update-webpack-config`
+      message += `\n ${migrationLink}`
     } else if (isDefaultPlugin) {
       message += stripIndent`
         - Your site's gatsby-${exportType}.js is exporting a variable named "${
-          bady.exportName
-        }" which isn't an API.
+        bady.exportName
+      }" which isn't an API.
       `
     } else {
       message += stripIndent`
         - The plugin "${bady.pluginName}@${
-          bady.pluginVersion
-        }" is exporting a variable named "${bady.exportName}" which isn't an API.
+        bady.pluginVersion
+      }" is exporting a variable named "${bady.exportName}" which isn't an API.
       `
     }
 
-    if (similarities.bestMatch.rating > 0.5 && !isModifyWebpackConfig) {
+    if (similarities.bestMatch.rating > 0.5 && !isOldAPI) {
       message += `\n\n`
       message += `Perhaps you meant to export "${
         similarities.bestMatch.target

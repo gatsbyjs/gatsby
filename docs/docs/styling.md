@@ -10,4 +10,3 @@ In this section you'll find guides on different styling methods supported by Gat
 Gatsby doesn't prescribe or dictate any single styling approach. Choose what works best for you!
 
 [[guidelist]]
-

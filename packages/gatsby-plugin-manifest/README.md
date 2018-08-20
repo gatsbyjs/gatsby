@@ -133,7 +133,7 @@ plugins: [
       ],
     },
   },
-];
+]
 ```
 
 The hybrid option allows the most flexibility while still not requiring you to create most icons sizes manually.

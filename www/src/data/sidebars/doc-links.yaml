@@ -23,7 +23,7 @@
           link: /docs/gatsby-on-macs/
         - title: Gatsby on Windows
           link: /docs/gatsby-on-windows/
-    - title: Deploying & Hosting*
+    - title: Deploying & hosting
       link: /docs/deploying-and-hosting/
       items:
         - title: Preparing your site for deployment*
@@ -34,7 +34,7 @@
           link: /docs/path-prefix/
         - title: How Gatsby works with GitHub pages
           link: /docs/how-gatsby-works-with-github-pages/
-    - title: Custom configuration*
+    - title: Custom configuration
       link: /docs/customization/
       items:
         - title: Babel.js
@@ -112,8 +112,10 @@
       items:
         - title: Plugin authoring
           link: /docs/plugin-authoring/
-        - title: Submit to Plugin Library*
-          link: /docs/submit-to-plugin-library/
+        - title: Create a Transformer Plugin*
+          link: /docs/create-transformer-plugin/
+        - title: Create a Source Plugin
+          link: /docs/create-source-plugin/
         - title: Source plugin tutorial
           link: /docs/source-plugin-tutorial/
     - title: Styling
@@ -127,13 +129,13 @@
           link: /docs/glamor/
         - title: Using CSS-in-JS library styled components
           link: /docs/styled-components/
-        - title: Creating global styles*
+        - title: Creating global styles
           link: /docs/creating-global-styles/
         - title: Component CSS*
           link: /docs/component-css/
         - title: PostCSS*
           link: /docs/post-css/
-    - title: Testing*
+    - title: Testing
       link: /docs/testing/
       items:
         - title: Unit testing
@@ -157,7 +159,7 @@
           link: /docs/debugging-the-build-process/
         - title: Trace Gatsby builds
           link: /docs/performance-tracing/
-    - title: Building Apps with Gatsby
+    - title: Building apps with Gatsby
       link: /docs/building-apps-with-gatsby/
       items:
         - title: Progressive web app (PWA)
@@ -175,8 +177,6 @@
       items:
         - title: Adding a 404 Page
           link: /docs/add-404-page/
-        - title: Adding search to your Gatsby website
-          link: /docs/adding-search/
         - title: Adding tags and categories to blog posts
           link: /docs/adding-tags-and-categories-to-blog-posts/
         - title: Creating a sitemap*
@@ -185,10 +185,10 @@
           link: /docs/linking-between-pages/
         - title: Search Engine Optimization (SEO)
           link: /docs/seo/
-    - title: Adding third-party services*
+    - title: Adding third-party services
       link: /docs/adding-third-party-services/
       items:
-        - title: Adding search*
+        - title: Adding search
           link: /docs/adding-search/
         - title: Adding analytics*
           link: /docs/adding-analytics/
