@@ -310,14 +310,14 @@ export default (pagePath, callback) => {
       }
     })
 
-    apiRunner(`onPreRenderHTML`, {
-      getHeadComponents,
-      replaceHeadComponents,
-      getPreBodyComponents,
-      replacePreBodyComponents,
-      getPostBodyComponents,
-      replacePostBodyComponents,
-    })
+  apiRunner(`onPreRenderHTML`, {
+    getHeadComponents,
+    replaceHeadComponents,
+    getPreBodyComponents,
+    replacePreBodyComponents,
+    getPostBodyComponents,
+    replacePostBodyComponents,
+  })
 
   // Add page metadata for the current page
   const windowData = `/*<![CDATA[*/window.page=${JSON.stringify(page)};${

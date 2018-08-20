@@ -69,7 +69,7 @@ If that is the case, you can set `truncate` option on `excerpt` field, like:
 ```graphql
 {
   markdownRemark {
-    excerpt (truncate: true)
+    excerpt(truncate: true)
   }
 }
 ```

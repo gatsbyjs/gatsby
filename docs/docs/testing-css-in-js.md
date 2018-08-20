@@ -4,9 +4,9 @@ title: "Testing CSS-in-JS"
 
 Popular CSS-in-JS libraries like [styled-components](https://github.com/styled-components/styled-components) or [emotion](https://github.com/emotion-js/emotion) can also be tested with the help of [jest-styled-components](https://github.com/styled-components/jest-styled-components) or [jest-emotion](https://github.com/emotion-js/emotion/tree/master/packages/jest-emotion) respectively. These packages improve Jest's built-in snapshot testing experience and are a great way to help avoid unintended changes to your website's UI. Please refer to your package's documentation to see if it also offers testing capabilities.
 
-*Snapshot serializers* like `jest-styled-components` or `jest-emotion` modify the standard output to a more meaningful and readable snapshot, e.g. by removing unnecessary information or displaying data in another format. Which ultimately leads to more compareable and effective snapshot tests.
+_Snapshot serializers_ like `jest-styled-components` or `jest-emotion` modify the standard output to a more meaningful and readable snapshot, e.g. by removing unnecessary information or displaying data in another format. Which ultimately leads to more compareable and effective snapshot tests.
 
-By default snapshots of your styled components show the generated class names (which you didn't set) and no styling information. When changing the styles you'll only see the diff of some cryptic class names (hashes). That's why you should use the above mentioned *snapshot serializers*. They remove the hashes and format the CSS in style elements.
+By default snapshots of your styled components show the generated class names (which you didn't set) and no styling information. When changing the styles you'll only see the diff of some cryptic class names (hashes). That's why you should use the above mentioned _snapshot serializers_. They remove the hashes and format the CSS in style elements.
 
 For this example we'll use emotion. The testing utilities of emotion and glamor are largely based on [jest-styled-components](https://github.com/styled-components/jest-styled-components) so they have a similar usage. Please have a look at the testing section of your library to follow along.
 
@@ -36,10 +36,10 @@ module.exports = require("babel-jest").createTransformer(babelOptions)
 In order to tell Jest to use the serializer you'll need to create the file `setup-test-env.js` which will be run automatically before every test. Create the file `setup-test-env.js` at the root of your project. Insert this code into it:
 
 ```js
-import { createSerializer } from 'jest-emotion';
-import * as emotion from 'emotion';
+import { createSerializer } from "jest-emotion"
+import * as emotion from "emotion"
 
-expect.addSnapshotSerializer(createSerializer(emotion));
+expect.addSnapshotSerializer(createSerializer(emotion))
 ```
 
 Lastly you need to tell Jest where to find this file. Open your `package.json` and add this entry to your `"jest"` section:
@@ -57,15 +57,15 @@ In this example you'll use `react-test-renderer` but you can also use [react-tes
 ```js
 // src/components/Button.test.js
 
-import React from 'react'
-import styled from 'react-emotion'
-import renderer from 'react-test-renderer'
+import React from "react"
+import styled from "react-emotion"
+import renderer from "react-test-renderer"
 
 const Button = styled.div`
   color: hotpink;
 `
 
-test('Button renders correctly', () => {
+test("Button renders correctly", () => {
   expect(
     renderer.create(<Button>This is hotpink.</Button>).toJSON()
   ).toMatchSnapshot()
@@ -87,7 +87,7 @@ exports[`Button renders correctly 1`] = `
 >
   This is hotpink.
 </div>
-`;
+`
 ```
 
 If your styled component depends on `theme` via `ThemeProvider` you'll have two options:
@@ -102,25 +102,27 @@ This example uses the first option:
 ```js
 // src/components/Wrapper.test.js
 
-import React from 'react'
-import { ThemeProvider } from 'emotion-theming'
-import renderer from 'react-test-renderer'
+import React from "react"
+import { ThemeProvider } from "emotion-theming"
+import renderer from "react-test-renderer"
 
 const theme = {
-  maxWidth: '1450px',
+  maxWidth: "1450px",
 }
 
 const Wrapper = styled.section`
   max-width: ${props => props.theme.maxWidth};
 `
 
-test('Wrapper renders correctly', () => {
+test("Wrapper renders correctly", () => {
   expect(
-    renderer.create(
-      <ThemeProvider theme={theme}>
-        <Wrapper>Content.</Wrapper>
-      </ThemeProvider>
-    ).toJSON()
+    renderer
+      .create(
+        <ThemeProvider theme={theme}>
+          <Wrapper>Content.</Wrapper>
+        </ThemeProvider>
+      )
+      .toJSON()
   ).toMatchSnapshot()
 })
 ```
@@ -140,5 +142,5 @@ exports[`Wrapper renders correctly 1`] = `
 >
   Content
 </div>
-`;
+`
 ```

@@ -918,7 +918,7 @@ Import graphql types from `gatsby/graphql` to prevent `Schema must contain uniqu
 
 ### Add `gatsby-plugin-flow` if you are using Flowtype
 
-`@babel/preset-flow` was removed from Gatsby's default babel configuration to make it easier to allow users to choose their own transpiler.  If your site has its own `.babelrc` that already includes the Flow preset, no changes are necessary.  Otherwise, you should install [`gatsby-plugin-flow`](/packages/gatsby-plugin-flow).
+`@babel/preset-flow` was removed from Gatsby's default babel configuration to make it easier to allow users to choose their own transpiler. If your site has its own `.babelrc` that already includes the Flow preset, no changes are necessary. Otherwise, you should install [`gatsby-plugin-flow`](/packages/gatsby-plugin-flow).
 
 ## For Explorers
 

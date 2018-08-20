@@ -3,7 +3,12 @@ import presets from "../utils/presets"
 
 import { rhythm, options } from "../utils/typography"
 
-const Container = ({ children, className, hasSideBar = true, overrideCSS = {} }) => (
+const Container = ({
+  children,
+  className,
+  hasSideBar = true,
+  overrideCSS = {},
+}) => (
   <div
     css={{
       maxWidth: hasSideBar

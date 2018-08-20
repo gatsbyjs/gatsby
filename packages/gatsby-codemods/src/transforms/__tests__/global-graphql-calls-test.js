@@ -16,7 +16,7 @@ describe(`codemods`, () => {
       __dirname,
       `global-graphql-calls`,
       null,
-      `global-graphql-calls/${ test }`
+      `global-graphql-calls/${test}`
     )
   )
 })
