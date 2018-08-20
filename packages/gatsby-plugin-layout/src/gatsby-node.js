@@ -6,11 +6,12 @@ let absoluteComponentPath
 
 exports.onPreInit = ({ store }, { component }) => {
   let userSpecifiedPath = true
+  const defaultLayoutComponentPath = `src/layouts/index`
   if (!component) {
     // Default to `src/layouts/index.[js|jsx]` for drop-in replacement of v1 layouts
     component = path.join(
       store.getState().program.directory,
-      `src/layouts/index`
+      defaultLayoutComponentPath
     )
     userSpecifiedPath = false
   }
