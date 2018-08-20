@@ -89,6 +89,7 @@
     "scrapeStarters": "cd src/data/StarterShowcase && node scraper.js"
   },
   "devDependencies": {
+    "cypress": "^3.1.0",
     "front-matter": "^2.3.0",
     "get-package-json-from-github": "^1.2.1",
     "github-api": "^3.0.0",
