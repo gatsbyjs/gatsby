@@ -82,7 +82,7 @@ class ContextProviderComponent extends React.Component {
   }
 
   render() {
-    return <Provider value={this.state}>{this.props.children})</Provider>
+    return <Provider value={this.state}>{this.props.children}</Provider>
   }
 }
 
