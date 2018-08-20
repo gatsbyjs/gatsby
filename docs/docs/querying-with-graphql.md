@@ -14,7 +14,7 @@ familiar with SQL, it works in a very similar way. Using a special syntax, you d
 the data you want in your component and then that data is given
 to you.
 
-Gatsby uses GraphQL to enable [page and layout
+Gatsby uses GraphQL to enable [page and StaticQuery
 components](/docs/building-with-components/) to declare what data they and their
 sub-components need. Then, Gatsby makes that data available in
 the browser when needed by your components.
