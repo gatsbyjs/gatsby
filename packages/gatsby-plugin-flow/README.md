@@ -1,4 +1,4 @@
-# gatsby-plugin-typescript
+# gatsby-plugin-flow
 
 Provides drop-in support for Flow by adding `@babel/preset-flow`.
 
