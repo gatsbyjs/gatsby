@@ -54,39 +54,6 @@ class SidebarBody extends Component {
   }
 
   componentDidMount() {
-    // if (hasLocalStorage) {
-    //   const key = this.props.itemList[0].key
-    //   const initialState = this.state
-    //   const localState = this._readLocalStorage(key)
-
-    //   if (localState) {
-    //     const bar = Object.keys(initialState.openSectionHash).filter(function(
-    //       key
-    //     ) {
-    //       return initialState.openSectionHash[key]
-    //     })
-
-    //     const state = {
-    //       ...initialState,
-    //       openSectionHash: JSON.parse(localState).openSectionHash,
-    //     }
-
-    //     for (let item in initialState.openSectionHash) {
-    //       for (let parent of bar) {
-    //         if (parent === item) {
-    //           state.openSectionHash[item] = true
-    //         }
-    //       }
-    //     }
-
-    //     state.expandAll = Object.entries(state.openSectionHash).every(k => k[1])
-
-    //     this.setState(state)
-    //   } else {
-    //     this._writeLocalStorage(this.state, key)
-    //   }
-    // }
-
     const node = this.scrollRef.current
 
     if (hasLocalStorage) {
