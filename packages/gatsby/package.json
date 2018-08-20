@@ -18,7 +18,6 @@
     "@babel/plugin-transform-runtime": "7.0.0-beta.52",
     "@babel/polyfill": "7.0.0-beta.52",
     "@babel/preset-env": "7.0.0-beta.52",
-    "@babel/preset-flow": "7.0.0-beta.52",
     "@babel/preset-react": "7.0.0-beta.52",
     "@babel/runtime": "7.0.0-beta.52",
     "@babel/traverse": "7.0.0-beta.52",

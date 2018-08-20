@@ -204,14 +204,6 @@ Array [
   ],
   Array [
     Array [
-      "/path/to/module/@babel/preset-flow",
-    ],
-    Object {
-      "type": "preset",
-    },
-  ],
-  Array [
-    Array [
       "/path/to/module/@babel/plugin-proposal-class-properties",
       Object {
         "loose": true,
