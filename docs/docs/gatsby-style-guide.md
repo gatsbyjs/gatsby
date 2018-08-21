@@ -19,7 +19,7 @@ The community plans, writes, and maintains these Docs on GitHub.
   - [Use "you" as the pronoun](#use-you-as-the-pronoun)
   - [Avoid "easy" and "simple"](#avoid-easy-and-simple)
   - [Avoid emojis, slang, and metaphors](#avoid-emojis-slang-and-metaphors)
-  - [Avoid jargon](#avoid-jargon)
+  - [Define jargon](#define-jargon)
 - [Writing style](#writing-style)
   - [Concise writing](#concise-writing)
   - [Use clear hyperlinks](#use-clear-hyperlinks)
@@ -27,6 +27,7 @@ The community plans, writes, and maintains these Docs on GitHub.
   - [Abbreviate terms](#abbreviate-terms)
   - [SEO optimized titles](#seo-optimized-titles)
 - [Grammar & formatting](#grammar-and-formatting)
+  - [Title and header formatting](#title-and-header-formatting)
   - [Code blocks, inline code, images](#code-blocks-inline-code-images)
   - [Capitalize proper nouns](#capitalize-proper-nouns)
   - [Use active voice](#use-active-voice)
@@ -125,7 +126,7 @@ Avoid using emojis or emoticons in the Docs and idiomatic expressions / slang, o
 the cultural meaning of an emoji, emoticon, or slang may be different around the world.
 Also, emojis can render differently on different systems.
 
-### Avoid jargon
+### Define jargon
 
 Articles should be written with short, clear sentences, and use as little jargon
 as necessary.
@@ -200,6 +201,20 @@ but _not_ in the `.md` file name or folder name (e.g. Title: What is GraphQL? an
 what-is-graphql).
 
 ## Grammar and formatting
+
+### Title and header formatting
+
+Title case article titles (each major word is uppercase). Sentence case article headings (only the initial word is uppercase). Neither need punctuation at the end of the phrase unless a question mark is required. Article titles do not take the Oxford comma and use the ampersand in place of “and.” Article headings do take the Oxford comma and use the word “and.”
+
+Titles are automatically formatted as h1. Mark up article headings as h2 and subheads as h3 or h4 as needed. Most article headings are conceptually and rhetorically at the same level as each other; avoid unnecessary complexity and mark them up as h2 unless they’re true subheads.
+
+Article title or document title:
+
+> Salty, Sweet & Spicy
+
+Article header or subhead:
+
+> Salty, sweet, and spicy
 
 ### Code blocks, inline code, images
 
