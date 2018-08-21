@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.0.0-rc.0"></a>
+
+# [1.0.0-rc.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-guess-js@1.0.0-beta.4...gatsby-plugin-guess-js@1.0.0-rc.0) (2018-08-21)
+
+**Note:** Version bump only for package gatsby-plugin-guess-js
+
 <a name="1.0.0-beta.4"></a>
 
 # [1.0.0-beta.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-guess-js@1.0.0-beta.3...gatsby-plugin-guess-js@1.0.0-beta.4) (2018-07-21)
