@@ -2,7 +2,7 @@
 title: Schema Generation
 ---
 
-## Schema
+## GrapQL Schema Generation
 
 Once the nodes have been sourced and transformed, the next step is to generate the GraphQL Schema. This is one of the more complex parts of the Gatsby code base. We must infer a GraphQL schema from all the nodes that have been sourced and transformed so far. Read on to find out how that occurs.
 
@@ -93,3 +93,26 @@ allMarkdownRemark(
 
 We're done! We've created GraphQL Types by inferring from node's examples and combining them with custom fields declared by plugins. We've also created Types that can be queried for all instances of that node's types. We now merge these types into a single collection which is used to create a new [GraphQLSchema](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/index.js#L23), which is then saved to `redux.schema`.
 
+## More schema information
+
+### `${type}___${field}` strings  e.g `frontmatter___date`
+
+You might see sorting queries such as:
+
+```graphql
+{
+  allMarkdownRemark(sort: { fields: [frontmatter___date]}) {
+    edges {
+      node {
+        ...
+      }
+    }
+  }
+}
+```
+
+The `frontmatter___date` is a notation the `date` field on the `frontmatter` type. In sift, this would be represented as `frontmatter.date`, but graphql doesn't allow this syntax, so we're forced to use `___` instead of a period. The translation occurs in [run-sift.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/run-sift.js#L255)
+
+### Sift querying
+
+TODO

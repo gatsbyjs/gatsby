@@ -79,10 +79,10 @@ digraph {
   "initialCall" -> "apiRunner1";
   "apiRunner1" -> "apisRunning" [ label="set to 1" ];
   "apiRunner1" -> "sourceNodes" [ label="call" ];
-  "sourceNodes" -> "createNode" [ label="call (traceID implicitly passed)" ];
-  "createNode" -> "createNodeReducer" [ label="triggers" ];
-  "createNodeReducer" -> "CREATE_NODE" [ label="emits" ];
-  "CREATE_NODE" -> "pluginRunner" [ label="handled by" ];
+  "sourceNodes" -> "createNode" [ label="call (traceID passed via doubleBind)" ];
+  "createNode" -> "createNodeReducer" [ label="triggers (action has traceId)" ];
+  "createNodeReducer" -> "CREATE_NODE" [ label="emits (event has traceId)" ];
+  "CREATE_NODE" -> "pluginRunner" [ label="handled by (event has traceId)" ];
   "pluginRunner" -> "apiRunnerOnCreateNode";
   "apiRunnerOnCreateNode" -> "apiRunner2";
   "apiRunner2" -> "onCreateNode" [ label="call" ];
