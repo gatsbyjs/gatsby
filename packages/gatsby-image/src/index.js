@@ -73,30 +73,30 @@ const noscriptImg = props => {
   // Check if prop exists before adding each attribute to the string output below to prevent
   // HTML validation issues caused by empty values like width="" and height=""
   const src = props.src ? `src="${props.src}" ` : `src="" ` // required attribute
-  const srcSet = props.srcSet ? `srcset="${props.srcSet}" ` : ``
   const sizes = props.sizes ? `sizes="${props.sizes}" ` : ``
+  const srcSetWebp = props.srcSetWebp ? `<source type='image/webp' srcSet="${props.srcSetWebp}" ${sizes}/>` : ``
+  const srcSet = props.srcSet ? `<source srcSet="${props.srcSet}" ${sizes}/>` : ``
   const title = props.title ? `title="${props.title}" ` : ``
   const alt = props.alt ? `alt="${props.alt}" ` : `alt="" ` // required attribute
   const width = props.width ? `width="${props.width}" ` : ``
   const height = props.height ? `height="${props.height}" ` : ``
   const opacity = props.opacity ? props.opacity : `1`
   const transitionDelay = props.transitionDelay ? props.transitionDelay : `0.5s`
-
-  return `<img ${width}${height}${src}${srcSet}${alt}${title}${sizes}style="position:absolute;top:0;left:0;transition:opacity 0.5s;transition-delay:${transitionDelay};opacity:${opacity};width:100%;height:100%;object-fit:cover;object-position:center"/>`
+  return (`<picture>${srcSetWebp}${srcSet}<img ${width}${height}${src}${alt}${title}style="position:absolute;top:0;left:0;transition:opacity 0.5s;transition-delay:${transitionDelay};opacity:${opacity};width:100%;height:100%;object-fit:cover;object-position:center"/></picture>`)
 }
 
-const Img = props => {
+const Img = React.forwardRef((props, ref) => {
   const { style, onLoad, onError, ...otherProps } = props
-  return (
-    <img
+
+  return <img
       {...otherProps}
       onLoad={onLoad}
       onError={onError}
+      ref={ref}
       style={{
         position: `absolute`,
         top: 0,
         left: 0,
-        transition: `opacity 0.5s`,
         width: `100%`,
         height: `100%`,
         objectFit: `cover`,
@@ -104,8 +104,7 @@ const Img = props => {
         ...style,
       }}
     />
-  )
-}
+})
 
 Img.propTypes = {
   style: PropTypes.object,
@@ -122,10 +121,11 @@ class Image extends React.Component {
     let isVisible = true
     let imgLoaded = true
     let IOSupported = false
+    let fadeIn = props.fadeIn
 
     // If this image has already been loaded before then we can assume it's
     // already in the browser cache so it's cheap to just show directly.
-    const seenBefore = !props.critical && inImageCache(props)
+    const seenBefore = inImageCache(props)
 
     if (
       !seenBefore &&
@@ -145,20 +145,32 @@ class Image extends React.Component {
 
     if (props.critical) {
       isVisible = true
+      imgLoaded = false
+      IOSupported = false
     }
+
+    const hasNoScript =  !(this.props.critical && !this.props.fadeIn)
 
     this.state = {
       isVisible,
       imgLoaded,
       IOSupported,
+      fadeIn,
+      hasNoScript,
+      seenBefore,
     }
 
+    this.imageRef = React.createRef()
+    this.handleImageLoaded = this.handleImageLoaded.bind(this)
     this.handleRef = this.handleRef.bind(this)
   }
 
   componentDidMount() {
     if (this.props.critical) {
-      this.setState({ imgLoaded: true })
+      const img = this.imageRef.current
+      if (img && img.complete) {
+        this.handleImageLoaded()
+      }
     }
   }
 
@@ -168,6 +180,14 @@ class Image extends React.Component {
         this.setState({ isVisible: true })
       })
     }
+  }
+
+  handleImageLoaded() {
+    this.setState({ imgLoaded: true })
+    if (this.state.seenBefore) {
+      this.setState({ fadeIn: false })
+    }
+    this.props.onLoad && this.props.onLoad()
   }
 
   render() {
@@ -194,13 +214,14 @@ class Image extends React.Component {
 
     const imagePlaceholderStyle = {
       opacity: this.state.imgLoaded ? 0 : 1,
-      transitionDelay: `0.25s`,
+      transitionDelay: this.state.imgLoaded ? `0.5s` : `0.25s`,
       ...imgStyle,
       ...placeholderStyle,
     }
 
     const imageStyle = {
-      opacity: this.state.imgLoaded || this.props.fadeIn === false ? 1 : 0,
+      opacity: this.state.imgLoaded || this.state.fadeIn === false ? 1 : 0,
+      transition: this.state.fadeIn === true ? `opacity 0.5s` : ``,
       ...imgStyle,
     }
 
@@ -290,20 +311,16 @@ class Image extends React.Component {
                   alt={alt}
                   title={title}
                   src={image.src}
-                  srcSet={image.srcSet}
-                  sizes={image.sizes}
                   style={imageStyle}
-                  onLoad={() => {
-                    this.state.IOSupported && this.setState({ imgLoaded: true })
-                    this.props.onLoad && this.props.onLoad()
-                  }}
+                  ref={this.imageRef}
+                  onLoad={this.handleImageLoaded}
                   onError={this.props.onError}
                 />
               </picture>
             )}
 
             {/* Show the original image during server-side rendering if JavaScript is disabled */}
-            {!this.props.critical && (
+            {this.state.hasNoScript && (
               <noscript
                 dangerouslySetInnerHTML={{
                   __html: noscriptImg({ alt, title, ...image }),
@@ -400,20 +417,16 @@ class Image extends React.Component {
                   width={image.width}
                   height={image.height}
                   src={image.src}
-                  srcSet={image.srcSet}
-                  sizes={image.sizes}
                   style={imageStyle}
-                  onLoad={() => {
-                    this.setState({ imgLoaded: true })
-                    this.props.onLoad && this.props.onLoad()
-                  }}
+                  ref={this.imageRef}
+                  onLoad={this.handleImageLoaded}
                   onError={this.props.onError}
                 />
               </picture>
             )}
 
             {/* Show the original image during server-side rendering if JavaScript is disabled */}
-            {!this.props.critical && (
+            {this.state.hasNoScript && (
               <noscript
                 dangerouslySetInnerHTML={{
                   __html: noscriptImg({
