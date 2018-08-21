@@ -250,9 +250,8 @@
     - title: Querying data with GraphQL
       link: /docs/querying-with-graphql/
 - title: Behind The Scenes
+  link: /docs/behind-the-scenes/
   items:
-    - title: Behind the Scenes
-      link: /docs/behind-the-scenes/
     - title: How APIS/Plugins Are Run
       link: /docs/how-plugins-apis-are-run/
     - title: Node Creation
