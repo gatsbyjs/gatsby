@@ -5,13 +5,31 @@ import pages from "./pages.json"
 import loader from "./loader"
 import JSONStore from "./json-store"
 
-const DevPageRenderer = ({ location }) => {
-  const pageResources = loader.getResourcesForPathname(location.pathname)
-  return React.createElement(JSONStore, {
-    pages,
-    location,
-    pageResources,
-  })
+class DevPageRenderer extends React.Component {
+  state = {}
+
+  componentDidMount() {
+    loader
+      .getResourcesForPathname(this.props.location.pathname)
+      .then(pageResources => {
+        this.setState({ pageResources })
+      })
+  }
+
+  render() {
+    const { pageResources } = this.state
+    const { location } = this.props
+
+    if (!pageResources) {
+      return null
+    }
+
+    return React.createElement(JSONStore, {
+      pages,
+      location,
+      pageResources,
+    })
+  }
 }
 
 DevPageRenderer.propTypes = {
