@@ -37,7 +37,7 @@
       items:
         - title: Babel.js
           link: /docs/babel/
-        - title: Babel plugin macros
+        - title: Babel plugin macros*
           link: /docs/babel-plugin-macros/
         - title: Custom webpack config
           link: /docs/add-custom-webpack-config/
@@ -45,7 +45,7 @@
           link: /docs/custom-html/
         - title: Environment variables
           link: /docs/environment-variables/
-        - title: ESlint
+        - title: ESlint*
           link: /docs/eslint/
         - title: Proxying API requests
           link: /docs/api-proxy/
@@ -205,7 +205,7 @@
           link: /docs/local-https/
         - title: Lighthouse audit*
           link: /docs/lighthouse-audit/
-        - title: Optimize plugins with Guess.js
+        - title: Optimize plugins with Guess.js*
           link: /docs/optimize-plugins-with-guessjs/
 - title: API Reference
   items:
