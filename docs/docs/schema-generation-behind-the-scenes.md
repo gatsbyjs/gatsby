@@ -13,11 +13,11 @@ digraph graphname {
   "Node" [ label = "Node
   e.g type = File" ];
   "rnodes" [ label = "redux.nodes" ];
-  "cfd" [ label = "Custom Field Declarations 
+  "cfd" [ label = "Custom Field Declarations
   e.g source-filesystem: publicURL()" ];
-  "cfiot" [ label = "Custom Fields InputObjectType 
+  "cfiot" [ label = "Custom Fields InputObjectType
   { args: lt, gt, eq, re }" ];
-  "cf" [ label = "ConnectionFields 
+  "cf" [ label = "ConnectionFields
   e.g allMarkdownRemark()" ];
   "nfiot" [ label = "Node Fields InputObjectType" ];
   "pt" [ label = "ProcessedNodeType" ];
@@ -36,14 +36,14 @@ digraph graphname {
 }
 ```
 
-1. Group all nodes by type (`node.internal.type`). E.g `File`, `ImageSharp`. Then, for each type, perform the following steps:
-1. Each plugin has the chance to provide custom field Types for their node type via the [setFieldsOnGraphQLNodeType]() API. These APIS are run now
-1. Convert each of these custom field types into an input filter type.
-1. Build an example object from all the existing nodes. 
-1. For each example value, generate a GraphQL Type (or use a scalar), and an input filter type. So we can query this node by any of its fields
-1. Create a `GraphQLObjectType` (the actual GraphQL Type object)
-1. Create GraphQL types for connections between fields. This includes pagination, sorting, and limits for collections of nodes.
-1. Create a new `GraphQLSchema` using the inferred Types and connection types and save this to `redux.schema`
+1.  Group all nodes by type (`node.internal.type`). E.g `File`, `ImageSharp`. Then, for each type, perform the following steps:
+1.  Each plugin has the chance to provide custom field Types for their node type via the [setFieldsOnGraphQLNodeType]() API. These APIS are run now
+1.  Convert each of these custom field types into an input filter type.
+1.  Build an example object from all the existing nodes.
+1.  For each example value, generate a GraphQL Type (or use a scalar), and an input filter type. So we can query this node by any of its fields
+1.  Create a `GraphQLObjectType` (the actual GraphQL Type object)
+1.  Create GraphQL types for connections between fields. This includes pagination, sorting, and limits for collections of nodes.
+1.  Create a new `GraphQLSchema` using the inferred Types and connection types and save this to `redux.schema`
 
 See below for details on each of the above steps.
 
@@ -69,7 +69,7 @@ The next step is to start inferring the GraphQL equivelent of the node's fields.
 
 ### 5. Generate GraphQL Type from Example
 
-Now that we've built an object with examples of all the type's possible fields, we can [infer](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-input-fields.js#L71) the actual GraphQL equivelent types. This simply maps javascript types to GraphQL types. E.g `typeof(value) = int` would result in `GraphQLInt`. If the type is an object, we recurse down into its structure, inferring types from each of its sub fields. 
+Now that we've built an object with examples of all the type's possible fields, we can [infer](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-input-fields.js#L71) the actual GraphQL equivelent types. This simply maps javascript types to GraphQL types. E.g `typeof(value) = int` would result in `GraphQLInt`. If the type is an object, we recurse down into its structure, inferring types from each of its sub fields.
 
 ### 6. Create a GraphqlObjectType
 
@@ -77,15 +77,15 @@ We're now ready to create our final Graphql Type, known as a [ProcessedNodeType]
 
 ### 7. Create Connection Fields
 
-We've built a GraphQL type that can query by any of the node's fields, including custom plugin fields. But what about querying for connections between nodes? E.g query the first 10 fields of this type, sorted by this field? And use skip/limit pagination style? 
+We've built a GraphQL type that can query by any of the node's fields, including custom plugin fields. But what about querying for connections between nodes? E.g query the first 10 fields of this type, sorted by this field? And use skip/limit pagination style?
 
 This occurs in [build-connection-fields](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/build-connection-fields.js#L17). We create useful fields such as `totalCount`, `distinct`, `group`, `next`, `prev`, `edges`, `sort`, etc. We end up with a GraphQL Type that can be queried for all of its nodes. For example :
 
 ```javascript
 allMarkdownRemark(
-  sort: {}, 
-  limit: 100, 
-  filter: { fileAbsolutePath: { ne: null} } 
+  sort: {},
+  limit: 100,
+  filter: { fileAbsolutePath: { ne: null } }
 )
 ```
 
@@ -95,7 +95,7 @@ We're done! We've created GraphQL Types by inferring from node's examples and co
 
 ## More schema information
 
-### `${type}___${field}` strings  e.g `frontmatter___date`
+### `${type}___${field}` strings e.g `frontmatter___date`
 
 You might see sorting queries such as:
 
