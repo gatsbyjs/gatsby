@@ -244,10 +244,11 @@ straightforward way to communicate a subject. For example:
 
 ### Make lists clear with the Oxford Comma
 
-Use the Oxford Comma when possible (it is a comma used after the penultimate
+Use the Oxford Comma except in titles. It is a comma used after the penultimate
 item in a list of three or more items, before ‘and’ or ‘or’ e.g. an Italian
-painter, sculptor, and architect). It makes things easier, clearer, and prettier
-to read.
+painter, sculptor, and architect. It makes things clearer.
+
+[Confusion can happen when you don't use the Oxford comma](https://img.buzzfeed.com/buzzfeed-static/static/2015-02/22/18/enhanced/webdr11/enhanced-buzz-32156-1424646300-12.jpg?downsize=715:*&output-format=auto&output-quality=auto).
 
 ### Apps that help you edit
 
