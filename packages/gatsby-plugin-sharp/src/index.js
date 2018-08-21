@@ -127,13 +127,14 @@ const processFile = (file, jobs, cb, reporter) => {
     } else {
       clonedPipeline = pipeline
     }
-    // Sharp only allows ints as height/width. Since height isn't always
-    // set, check first before trying to round it.
-    let roundedHeight = args.height
-    if (roundedHeight) {
-      roundedHeight = Math.round(roundedHeight)
-    }
-    const roundedWidth = Math.round(args.width)
+    // Sharp only allows ints as height/width. Since either height or width
+    // could not be set, check first before trying to round them.
+    let roundedHeight = args.hasOwnProperty(args, `height`)
+      ? Math.round(args.height)
+      : undefined
+    const roundedWidth = args.hasOwnProperty(args, `width`)
+      ? Math.round(args.width)
+      : undefined
     clonedPipeline
       .resize(roundedWidth, roundedHeight)
       .crop(args.cropFocus)
