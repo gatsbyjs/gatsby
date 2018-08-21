@@ -47,13 +47,13 @@ exports.onPostBuild = (args, pluginOptions) => {
     rootDir
   )
 
-  const criticalFilePaths = _.concat(
+  const criticalFilePaths = _.uniq(_.concat(
     getResourcesFromHTML(`${process.cwd()}/${rootDir}/index.html`),
     getResourcesFromHTML(`${process.cwd()}/${rootDir}/404.html`),
     getResourcesFromHTML(
       `${process.cwd()}/${rootDir}/offline-plugin-app-shell-fallback/index.html`
     )
-  )
+  ))
 
   const options = {
     staticFileGlobs: files.concat([
