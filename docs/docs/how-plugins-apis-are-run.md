@@ -8,7 +8,7 @@ Note, this section only explains how `gatsby-node` plugins are run. Not browser 
 
 ## Early in the build
 
-Early in the bootstrap phase, we [load all the configured plugins](https://github.com/gatsbyjs/gatsby/blob/8029c6647ab38792bb0a7c135ab4b98ae70a2627/packages/gatsby/src/bootstrap/load-plugins/index.js#L40) (and internal plugins) for the site. These are saved into redux under `flattenedPlugins`. Each plugin in redux contains the following fields:
+Early in the bootstrap phase, we [load all the configured plugins](https://github.com/gatsbyjs/gatsby/blob/8029c6647ab38792bb0a7c135ab4b98ae70a2627/packages/gatsby/src/bootstrap/load-plugins/index.js#L40) (and internal plugins) for the site. These are saved into redux under the `flattenedPlugins` namespace. Each plugin in redux contains the following fields:
 
 - **resolve**: absolute path to the plugin's directory
 - **id**: String concatenation of 'Plugin ' and the name of the plugin. E.g `Plugin query-runner`
@@ -34,7 +34,7 @@ Some API calls can take a while to finish. So every time an API is run, we creat
 - **span**: opentracing span for tracing builds
 - **traceId**: optional args.traceId provided if API will result in further API calls (see below)
 
-We immediately place this object into an `apisRunningById` Map.
+We immediately place this object into an `apisRunningById` Map, where we track its execution.
 
 ## Running each plugin
 
@@ -50,7 +50,7 @@ All actions take 3 arguments:
 2. The plugin that is calling this action. E.g `createNode` uses this to assign the owner of the new node
 3. An object with misc action options:
     - **traceId**: See below
-    - **parentSpan**: opentracing span
+    - **parentSpan**: opentracing span (see [tracing docs](/docs/performance-tracing/))
 
 Passing the plugin and action options on every single action call would be extremely painful for plugin/site authors. Since we know the plugin, traceId and parentSpan when we're running our API, we can rebind inject actions so these arguments are already provided. This is done in the [doubleBind](https://github.com/gatsbyjs/gatsby/blob/8029c6647ab38792bb0a7c135ab4b98ae70a2627/packages/gatsby/src/utils/api-runner-node.js#L14) step. 
 
@@ -90,7 +90,7 @@ digraph {
 }
 ```
 
-The majority of API calls result in one or more implementing plugins being called. We then wait for them all to complete, and return. But some plugins (e.g [sourceNodes]()) result in calls to actions that themselves call APIs. We need some way of tracing whether an API call originated from another API call, so that we can wait on all child calls to complete. The mechanism for this is the `traceId`. 
+The majority of API calls result in one or more implementing plugins being called. We then wait for them all to complete, and return. But some plugins (e.g [sourceNodes](/docs/node-apis/#sourceNodes)) result in calls to actions that themselves call APIs. We need some way of tracing whether an API call originated from another API call, so that we can wait on all child calls to complete. The mechanism for this is the `traceId`. 
 
 1. The traceID is passed as an argument to the original API runner. E.g 
 

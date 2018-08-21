@@ -251,8 +251,8 @@
       link: /docs/querying-with-graphql/
 - title: Behind The Scenes
   items:
-    - title: Learning Gatsbys Internals
-      link: /docs/learning-gatsbys-internals
+    - title: Behind the Scenes
+      link: /docs/behind-the-scenes/
     - title: How APIS/Plugins Are Run
       link: /docs/how-plugins-apis-are-run/
     - title: Node Creation

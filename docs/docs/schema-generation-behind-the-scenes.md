@@ -77,7 +77,7 @@ We're now ready to create our final Graphql Type, known as a [ProcessedNodeType]
 
 ### 7. Create Connection Fields
 
-We've built a GraphQL type where we can query by any of the node's fields, including custom plugin fields. But what about querying for connections between nodes? E.g query the first 10 fields of this type, sorted by this field? And use skip/limit pagination style? 
+We've built a GraphQL type that can query by any of the node's fields, including custom plugin fields. But what about querying for connections between nodes? E.g query the first 10 fields of this type, sorted by this field? And use skip/limit pagination style? 
 
 This occurs in [build-connection-fields](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/build-connection-fields.js#L17). We create useful fields such as `totalCount`, `distinct`, `group`, `next`, `prev`, `edges`, `sort`, etc. We end up with a GraphQL Type that can be queried for all of its nodes. For example :
 
