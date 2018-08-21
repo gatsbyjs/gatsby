@@ -4,11 +4,11 @@ title: Plugin authoring
 
 You may be looking to build a plugin that doesn't exist yet, or you may just be curious to know more about the anatomy of a Gatsby plugin. We'll review:
 
-1. the core concepts of what a Gatsby plugin is
-2. naming conventions for the plugin title
-3. expected files in a plugin package
-4. defining a local (unpublished) plugin for your own use case
-5. what a plugin is _not_
+1.  the core concepts of what a Gatsby plugin is
+2.  naming conventions for the plugin title
+3.  expected files in a plugin package
+4.  defining a local (unpublished) plugin for your own use case
+5.  what a plugin is _not_
 
 ## Core Concepts
 
@@ -64,13 +64,3 @@ Like all `gatsby-*` files, the code is not processed by Babel. If you want
 to use JavaScript syntax which isn't supported by your version of Node.js, you
 can place the files in a `src` subfolder and build them to the plugin folder
 root.
-
-## What don't you need plugins for?
-
-Most third-party functionality you want to add to your website will follow standard Javascript and React.js patterns for importing packages and composing UIs. These do not require a Gatsby plugin!
-
-Some examples:
-
-- Importing Javascript packages that provide general functionality, such as `lodash` or `axios`
-- Using React components or component libraries you want to include in your UI, such as `Ant Design`, `Material UI`, or the typeahead from your component library.
-- Integrating visualization libraries, such as `Highcharts` or `d3`.

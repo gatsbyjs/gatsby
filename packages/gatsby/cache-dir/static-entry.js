@@ -90,6 +90,24 @@ export default (pagePath, callback) => {
     bodyProps = merge({}, bodyProps, props)
   }
 
+  const getHeadComponents = () => headComponents
+
+  const replaceHeadComponents = components => {
+    headComponents = components
+  }
+
+  const getPreBodyComponents = () => preBodyComponents
+
+  const replacePreBodyComponents = components => {
+    preBodyComponents = components
+  }
+
+  const getPostBodyComponents = () => postBodyComponents
+
+  const replacePostBodyComponents = components => {
+    postBodyComponents = components
+  }
+
   const page = getPage(pagePath)
 
   let dataAndContext = {}
@@ -109,24 +127,50 @@ export default (pagePath, callback) => {
 
   class RouteHandler extends React.Component {
     render() {
-      return createElement(syncRequires.components[page.componentChunkName], {
+      const props = {
         ...this.props,
         ...dataAndContext,
         pathContext: dataAndContext.pageContext,
-      })
+      }
+
+      const pageElement = createElement(
+        syncRequires.components[page.componentChunkName],
+        props
+      )
+
+      const wrappedPage = apiRunner(
+        `wrapPageElement`,
+        { element: pageElement, props },
+        pageElement,
+        ({ result }) => {
+          return { element: result, props }
+        }
+      ).pop()
+
+      return wrappedPage
     }
   }
 
-  const bodyComponent = createElement(
+  const routerElement = createElement(
     ServerLocation,
     { url: `${pathPrefix}${pagePath}` },
-    createElement(Router,
+    createElement(
+      Router,
       {
         baseuri: pathPrefix.slice(0, -1),
       },
       createElement(RouteHandler, { path: `/*` })
     )
   )
+
+  const bodyComponent = apiRunner(
+    `wrapRootElement`,
+    { element: routerElement },
+    routerElement,
+    ({ result }) => {
+      return { element: result }
+    }
+  ).pop()
 
   // Let the site or plugin render the page component.
   apiRunner(`replaceRenderer`, {
@@ -265,6 +309,15 @@ export default (pagePath, callback) => {
         )
       }
     })
+
+  apiRunner(`onPreRenderHTML`, {
+    getHeadComponents,
+    replaceHeadComponents,
+    getPreBodyComponents,
+    replacePreBodyComponents,
+    getPostBodyComponents,
+    replacePostBodyComponents,
+  })
 
   // Add page metadata for the current page
   const windowData = `/*<![CDATA[*/window.page=${JSON.stringify(page)};${

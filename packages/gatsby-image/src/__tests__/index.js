@@ -1,6 +1,6 @@
 import "@babel/polyfill"
-import React from 'react'
-import { render, cleanup, fireEvent } from 'react-testing-library'
+import React from "react"
+import { render, cleanup, fireEvent } from "react-testing-library"
 import Img from "../"
 
 afterAll(cleanup)
@@ -19,11 +19,7 @@ const fluidShapeMock = {
   sizes: `(max-width: 600px) 100vw, 600px`,
 }
 
-const setup = (
-  fluid = false,
-  onLoad = () => { },
-  onError = () => { }
-) => {
+const setup = (fluid = false, onLoad = () => {}, onError = () => {}) => {
   const { container } = render(
     <Img
       backgroundColor
@@ -31,8 +27,8 @@ const setup = (
       style={{ display: `inline` }}
       title={`Title for the image`}
       alt={`Alt text for the image`}
-      {...(fluid && { fluid: fluidShapeMock })}
-      {...(!fluid && { fixed: fixedShapeMock })}
+      {...fluid && { fluid: fluidShapeMock }}
+      {...!fluid && { fixed: fixedShapeMock }}
       onLoad={onLoad}
       onError={onError}
     />
@@ -68,6 +64,5 @@ describe(`<Img />`, () => {
 
     expect(onLoadMock).toHaveBeenCalledTimes(1)
     expect(onErrorMock).toHaveBeenCalledTimes(1)
-
   })
 })

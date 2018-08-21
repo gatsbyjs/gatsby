@@ -119,7 +119,23 @@ class PageRenderer extends React.Component {
   }
 
   render() {
-    if (!this.state.pageResources) return null
+    if (
+      !(this.state.pageResources && this.state.pageResources.json) &&
+      process.env.NODE_ENV === `production`
+    ) {
+      // Try to load the page directly - this should result in a 404 or
+      // network offline error.
+
+      const url = new URL(window.location)
+      if (url.search) {
+        url.search += `&no-cache=1`
+      } else {
+        url.search = `?no-cache=1`
+      }
+      window.location.replace(url)
+
+      return null
+    }
 
     const pathContext =
       process.env.NODE_ENV !== `production`
@@ -132,15 +148,25 @@ class PageRenderer extends React.Component {
       pathContext,
     }
 
-    const [replacementComponent] = apiRunner(`replaceComponentRenderer`, {
+    const [replacementElement] = apiRunner(`replaceComponentRenderer`, {
       props: { ...this.props, pageResources: this.state.pageResources },
       loader: publicLoader,
     })
 
-    return (
-      replacementComponent ||
+    const pageElement =
+      replacementElement ||
       createElement(this.state.pageResources.component, props)
-    )
+
+    const wrappedPage = apiRunner(
+      `wrapPageElement`,
+      { element: pageElement, props },
+      pageElement,
+      ({ result }) => {
+        return { element: result, props }
+      }
+    ).pop()
+
+    return wrappedPage
   }
 }
 

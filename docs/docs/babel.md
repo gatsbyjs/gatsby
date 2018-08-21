@@ -27,8 +27,6 @@ to root of your site and modifying it per your needs.
 
 ```json5
 {
-  cacheDirectory: true,
-  babelrc: false,
   presets: [
     [
       "@babel/preset-env",
@@ -49,7 +47,6 @@ to root of your site and modifying it per your needs.
         pragma: "React.createElement",
       },
     ],
-    "@babel/preset-flow",
   ],
   plugins: [
     [
@@ -59,6 +56,7 @@ to root of your site and modifying it per your needs.
       },
     ],
     "@babel/plugin-syntax-dynamic-import",
+    "babel-plugin-macros",
     [
       "@babel/plugin-transform-runtime",
       {
