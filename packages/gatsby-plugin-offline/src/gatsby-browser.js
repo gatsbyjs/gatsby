@@ -9,7 +9,7 @@ exports.onPrefetchPathname = ({ pathname, getResourcesForPathname }) => {
   if (swNotInstalled && `serviceWorker` in navigator) {
     pathnameResources.push(
       new Promise(resolve => {
-        getResourcesForPathname(pathname, resources => {
+        getResourcesForPathname(pathname).then(resources => {
           resolve(resources)
         })
       })
@@ -22,24 +22,27 @@ exports.onServiceWorkerInstalled = () => {
   swNotInstalled = false
 
   // grab nodes from head of document
-  const nodes = document.querySelectorAll(
-    `head > script[src], head > link[as=script]`
-  )
+  const nodes = document.querySelectorAll(`
+    head > script[src],
+    head > link[as=script],
+    head > link[rel=stylesheet],
+    head > style[data-href]
+  `)
 
-  // get all script URLs
-  const scripts = [].slice
+  // get all resource URLs
+  const resources = [].slice
     .call(nodes)
-    .map(node => (node.src ? node.src : node.href))
+    .map(node => node.src || node.href || node.getAttribute(`data-href`))
+
+  for (const resource of resources) {
+    fetch(resource)
+  }
 
   // loop over all resources and fetch the page component and JSON
   // thereby storing it in SW cache
   Promise.all(pathnameResources).then(pageResources => {
-    pageResources.forEach(pageResource => {
-      const [script] = scripts.filter(s =>
-        s.includes(pageResource.page.componentChunkName)
-      )
-      fetch(pageResource.page.jsonURL)
-      fetch(script)
-    })
+    for (const pageResource of pageResources) {
+      if (pageResource) fetch(pageResource.page.jsonURL)
+    }
   })
 }

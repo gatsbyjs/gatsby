@@ -9,7 +9,9 @@ class Dev404Page extends React.Component {
   }
   render() {
     const { pathname } = this.props.location
-    const pages = this.props.pages.filter(p => !/^\/dev-404-page/.test(p.path))
+    const pages = this.props.pages.filter(
+      p => !/^\/dev-404-page\/$/.test(p.path)
+    )
     let newFilePath
     if (pathname === `/`) {
       newFilePath = `src/pages/index.js`

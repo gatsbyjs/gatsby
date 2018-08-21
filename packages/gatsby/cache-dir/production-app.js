@@ -15,6 +15,7 @@ window.___emitter = emitter
 import PageRenderer from "./page-renderer"
 import asyncRequires from "./async-requires"
 import loader from "./loader"
+import loadDirectlyOr404 from "./load-directly-or-404"
 
 window.asyncRequires = asyncRequires
 window.___emitter = emitter
@@ -83,7 +84,11 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     .getResourcesForPathname(window.location.pathname)
     .then(() => {
       if (!loader.getPage(window.location.pathname)) {
-        return loader.getResourcesForPathname(`/404.html`)
+        return loader
+          .getResourcesForPathname(`/404.html`)
+          .then(resources =>
+            loadDirectlyOr404(resources, window.location.pathname)
+          )
       }
     })
     .then(() => {

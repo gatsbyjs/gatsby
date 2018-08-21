@@ -5,6 +5,7 @@ import emitter from "./emitter"
 import { globalHistory } from "@reach/router/lib/history"
 import { navigate as reachNavigate } from "@reach/router"
 import parsePath from "./parse-path"
+import loadDirectlyOr404 from "./load-directly-or-404"
 
 // Convert to a map for faster lookup in maybeRedirect()
 const redirectMap = redirects.reduce((map, redirect) => {
@@ -72,10 +73,12 @@ const navigate = (to, options) => {
 
   loader.getResourcesForPathname(pathname).then(pageResources => {
     if (!pageResources && process.env.NODE_ENV === `production`) {
-      loader.getResourcesForPathname(`/404.html`).then(() => {
+      loader.getResourcesForPathname(`/404.html`).then(resources => {
         clearTimeout(timeoutId)
         onPreRouteUpdate(window.location)
-        reachNavigate(to, options).then(() => onRouteUpdate(window.location))
+        loadDirectlyOr404(resources, to).then(() =>
+          reachNavigate(to, options).then(() => onRouteUpdate(window.location))
+        )
       })
     } else {
       onPreRouteUpdate(window.location)
