@@ -13017,6 +13017,14 @@ replace-ext@1.0.0, replace-ext@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/replace-ext/-/replace-ext-1.0.0.tgz#de63128373fcbf7c3ccfa4de5a480c45a67958eb"
 
+replace-in-file@^3.4.2:
+  version "3.4.2"
+  resolved "https://registry.yarnpkg.com/replace-in-file/-/replace-in-file-3.4.2.tgz#6d40f076ac86948e28efeb6fab73fbad5c0bfa2a"
+  dependencies:
+    chalk "^2.4.1"
+    glob "^7.1.2"
+    yargs "^12.0.1"
+
 request-promise-core@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/request-promise-core/-/request-promise-core-1.1.1.tgz#3eee00b2c5aa83239cfb04c5700da36f81cd08b6"

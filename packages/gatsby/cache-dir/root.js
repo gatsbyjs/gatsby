@@ -54,9 +54,8 @@ class RouteHandler extends React.Component {
   }
 
   render() {
-    const { location } = this.props
-    const { pathname } = location
-    const pageResources = loader.getResourcesForPathnameSync(pathname)
+    let { location } = this.props
+    const pageResources = loader.getResourcesForPathnameSync(location.pathname)
     const isPage = !!(pageResources && pageResources.component)
     let child
     if (isPage) {
@@ -67,8 +66,17 @@ class RouteHandler extends React.Component {
           pageResources={pageResources}
         />
       )
+    } else if (loader.getPage(`/404.html`)) {
+      location.pathname = `/404.html`
+      child = (
+        <JSONStore
+          pages={pages}
+          {...this.props}
+          pageResources={loader.getResourcesForPathnameSync(location.pathname)}
+        />
+      )
     } else {
-      const dev404Page = pages.find(p => /^\/dev-404-page/.test(p.path))
+      const dev404Page = pages.find(p => /^\/dev-404-page\/$/.test(p.path))
       child = createElement(
         syncRequires.components[dev404Page.componentChunkName],
         {

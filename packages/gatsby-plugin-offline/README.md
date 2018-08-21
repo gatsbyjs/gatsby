@@ -29,34 +29,39 @@ and AppCache setup by changing these options so tread carefully.
 
 ```javascript
 const options = {
-  staticFileGlobs: [
-    `${rootDir}/**/*.{woff2}`,
-    `${rootDir}/commons-*js`,
-    `${rootDir}/app-*js`,
+  staticFileGlobs: files.concat([
     `${rootDir}/index.html`,
     `${rootDir}/manifest.json`,
     `${rootDir}/manifest.webmanifest`,
     `${rootDir}/offline-plugin-app-shell-fallback/index.html`,
-  ],
+    ...criticalFilePaths,
+  ]),
   stripPrefix: rootDir,
+  // If `pathPrefix` is configured by user, we should replace
+  // the `public` prefix with `pathPrefix`.
+  // See more at:
+  // https://github.com/GoogleChrome/sw-precache#replaceprefix-string
+  replacePrefix: args.pathPrefix || ``,
   navigateFallback: `/offline-plugin-app-shell-fallback/index.html`,
-  // Only match URLs without extensions.
+  // Only match URLs without extensions or the query `no-cache=1`.
   // So example.com/about/ will pass but
+  // example.com/about/?no-cache=1 and
   // example.com/cheeseburger.jpg will not.
   // We only want the service worker to handle our "clean"
   // URLs and not any files hosted on the site.
-  navigateFallbackWhitelist: [/^.*(?!\.\w?$)/],
+  //
+  // Regex based on http://stackoverflow.com/a/18017805
+  navigateFallbackWhitelist: [/^.*([^.]{5}|.html)(?<!(\?|&)no-cache=1)$/],
   cacheId: `gatsby-plugin-offline`,
-  // Do cache bust JS URLs until can figure out how to make Webpack's
-  // URLs truely content-addressed.
-  dontCacheBustUrlsMatching: /(.\w{8}.woff2)/, //|-\w{20}.js)/,
+  // Don't cache-bust JS files and anything in the static directory
+  dontCacheBustUrlsMatching: /(.*js$|\/static\/)/,
   runtimeCaching: [
     {
-      // Add runtime caching of images.
-      urlPattern: /\.(?:png|jpg|jpeg|webp|svg|gif|tiff)$/,
+      // Add runtime caching of various page resources.
+      urlPattern: /\.(?:png|jpg|jpeg|webp|svg|gif|tiff|js|woff|woff2|json|css)$/,
       handler: `fastest`,
     },
   ],
-  skipWaiting: false,
+  skipWaiting: true,
 }
 ```

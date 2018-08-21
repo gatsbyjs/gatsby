@@ -23,8 +23,14 @@ if (`serviceWorker` in navigator) {
                 // It's the perfect time to display a "Content is cached for offline use." message.
                 console.log(`Content is now available offline!`)
 
-                // post to service worker that install is complete
-                apiRunner(`onServiceWorkerInstalled`, { serviceWorker: reg })
+                // Post to service worker that install is complete.
+                // Delay to allow time for the event listener to be added --
+                // otherwise fetch is called too soon and resources aren't cached.
+                window.setTimeout(() => {
+                  apiRunner(`onServiceWorkerInstalled`, {
+                    serviceWorker: reg,
+                  })
+                }, 100)
               }
               break
 
