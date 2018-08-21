@@ -1,5 +1,5 @@
 /* eslint-disable */
-const Gatsby = require(`gatsby`)
+const Gatsby = require(`gatsby`);
 
 export const query = Gatsby.graphql`
   query {
@@ -7,4 +7,4 @@ export const query = Gatsby.graphql`
       prefix
     }
   }
-`
+`;
