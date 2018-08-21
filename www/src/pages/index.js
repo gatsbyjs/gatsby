@@ -133,7 +133,7 @@ class IndexRoute extends React.Component {
                     </FuturaParagraph>
                   </Card>
 
-                  <Diagram/>
+                  <Diagram />
 
                   <div css={{ flex: `1 1 100%` }}>
                     <Container hasSideBar={false}>
@@ -200,7 +200,14 @@ class IndexRoute extends React.Component {
                           css={{ marginBottom: rhythm(2) }}
                         />
                       ))}
-                      <CtaButton to="/blog/" overrideCSS={{ marginBottom: rhythm(options.blockMarginBottom * 2) }}>Read More</CtaButton>
+                      <CtaButton
+                        to="/blog/"
+                        overrideCSS={{
+                          marginBottom: rhythm(options.blockMarginBottom * 2),
+                        }}
+                      >
+                        Read More
+                      </CtaButton>
                     </Container>
                   </div>
                 </Cards>

@@ -195,15 +195,17 @@ module.exports = async (
         break
       case `build-javascript`: {
         // Minify Javascript only if needed.
-        configPlugins = program.noUglify ? configPlugins : configPlugins.concat([
-          plugins.uglify({
-            uglifyOptions: {
-              compress: {
-                drop_console: false,
-              },
-            },
-          }),
-        ])
+        configPlugins = program.noUglify
+          ? configPlugins
+          : configPlugins.concat([
+              plugins.uglify({
+                uglifyOptions: {
+                  compress: {
+                    drop_console: false,
+                  },
+                },
+              }),
+            ])
         configPlugins = configPlugins.concat([
           plugins.extractText(),
           // Write out stats object mapping named dynamic imports (aka page
@@ -355,8 +357,11 @@ module.exports = async (
       // directory if you need to install a specific version of a module for a
       // part of your site.
       modules: [
-        directoryPath(path.join(`src`, `node_modules`)),
+        directoryPath(path.join(`node_modules`)),
         `node_modules`,
+        // This is head scratching - without it css modules in production will fail
+        // to find module with relative path
+        `./`,
       ],
       alias: {
         gatsby$: directoryPath(path.join(`.cache`, `gatsby-browser-entry.js`)),

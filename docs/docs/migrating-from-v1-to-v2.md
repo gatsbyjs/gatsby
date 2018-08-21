@@ -570,6 +570,26 @@ import { Provider } from 'react-redux'
 
 Similar to `replaceRouterComponent`, we no longer support custom histories so this was removed.
 
+### Browser API `wrapRootComponent` was replaced with `wrapRootElement`
+
+Use new [`wrapRootElement`](/docs/browser-apis/#wrapRootComponent) API:
+We now pass `component` Element instead of `Root` Component and expect that `wrapRootElement` will return Element and not Component. This change was needed to keep all wrapping APIs uniform.
+
+```diff
+-export const wrapRootComponent = ({ Root }) => {
++export const wrapRootElement = ({ element }) => {
+-  const ConnectedRootComponent = () => (
++  const ConnectedRootElement = (
+    <Provider store={store}>
+-      <Root />
++      {element}
+    </Provider>
+  )
+-  return ConnectedRootComponent
++  return ConnectedRootElement
+}
+```
+
 ### Don't query nodes by ID
 
 Source and transformer plugins now use UUIDs for IDs. If you used glob or regex to query nodes by id then you'll need to query something else.
@@ -896,25 +916,9 @@ Import graphql types from `gatsby/graphql` to prevent `Schema must contain uniqu
 +const { GraphQLString } = require(`gatsby/graphql`)
 ```
 
-### Browser API `wrapRootComponent` was replaced with `wrapRootElement`
+### Add `gatsby-plugin-flow` if you are using Flowtype
 
-Use new [`wrapRootElement`](/docs/browser-apis/#wrapRootComponent) API:
-We now pass `component` Element instead of `Root` Component and expect that `wrapRootElement` will return Element and not Component. This change was needed to keep all wrapping APIs uniform.
-
-```diff
--export const wrapRootComponent = ({ Root }) => {
-+export const wrapRootElement = ({ element }) => {
--  const ConnectedRootComponent = () => (
-+  const ConnectedRootElement = (
-    <Provider store={store}>
--      <Root />
-+      {element}
-    </Provider>
-  )
--  return ConnectedRootComponent
-+  return ConnectedRootElement
-}
-```
+`@babel/preset-flow` was removed from Gatsby's default babel configuration to make it easier to allow users to choose their own transpiler. If your site has its own `.babelrc` that already includes the Flow preset, no changes are necessary. Otherwise, you should install [`gatsby-plugin-flow`](/packages/gatsby-plugin-flow).
 
 ## For Explorers
 

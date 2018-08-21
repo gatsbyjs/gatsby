@@ -1,5 +1,5 @@
 ---
-title: Submit to Plugin Library
+title: Adding forms
 ---
 
 This is a stub. Help our community expand it.

@@ -85,12 +85,6 @@ const prepareOptions = (babel, resolve = require.resolve) => {
     )
   )
 
-  fallbackPresets.push(
-    babel.createConfigItem([resolve(`@babel/preset-flow`)], {
-      type: `preset`,
-    })
-  )
-
   fallbackPlugins.push(
     babel.createConfigItem(
       [

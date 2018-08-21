@@ -276,37 +276,6 @@ const queue = {
 
   getPage: pathname => findPage(pathname),
 
-  // If we're loading from a service worker (it's already activated on
-  // this initial render) and we can't find a page, there's a good chance
-  // we're on a new page that this (now old) service worker doesn't know
-  // about so we'll unregister it and reload.
-  checkIfDoingInitialRenderForSW: path => {
-    if (
-      inInitialRender &&
-      navigator &&
-      navigator.serviceWorker &&
-      navigator.serviceWorker.controller &&
-      navigator.serviceWorker.controller.state === `activated`
-    ) {
-      if (!findPage(path)) {
-        navigator.serviceWorker
-          .getRegistrations()
-          .then(function(registrations) {
-            // We would probably need this to
-            // prevent unnecessary reloading of the page
-            // while unregistering of ServiceWorker is not happening
-            if (registrations.length) {
-              for (let registration of registrations) {
-                registration.unregister()
-              }
-
-              window.location.reload()
-            }
-          })
-      }
-    }
-  },
-
   getResourcesForPathnameSync: path => {
     const page = findPage(path)
     if (page) {
@@ -320,8 +289,6 @@ const queue = {
   // if necessary and then the code/data bundles. Used for prefetching
   // and getting resources for page changes.
   getResourcesForPathname: path => {
-    queue.checkIfDoingInitialRenderForSW(path)
-
     return new Promise((resolve, reject) => {
       const doingInitialRender = inInitialRender
       inInitialRender = false
@@ -352,6 +319,12 @@ const queue = {
 
       if (!page) {
         console.log(`A page wasn't found for "${path}"`)
+
+        // Preload the custom 404 page when running `gatsby develop`
+        if (path !== `/404.html` && process.env.NODE_ENV !== `production`) {
+          queue.getResourcesForPathname(`/404.html`)
+        }
+
         return resolve()
       }
 

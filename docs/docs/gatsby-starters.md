@@ -877,31 +877,31 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
   - Manifest support
   - Sitemap support
   - [More info here](https://github.com/fabe/gatsby-universal#readme)
-  
+
 - [gatsby-starter-bootstrap-cv](https://github.com/mhjadav/gatsby-starter-bootstrap-cv)
   [(Live demo)](https://elegant-hawking-bbad05.netlify.com/)
 
   Features:
-  
+
   - Designed as a minimalistic website
   - A minimalistic card using bootstrap
   - Font icons using `font-awesome`
   - Google Analytics using `gatsby-plugin-google-analytics`
   - Prerendered Open Graph tags for rich sharing
   - Site config to add data
-  - 100% PWA (manifest.webmanifest) 
-  - Offline support, 
+  - 100% PWA (manifest.webmanifest)
+  - Offline support,
   - Favicons (App favicons generator)
   - [More info here](https://github.com/mhjadav/gatsby-starter-bootstrap-cv#gatsby-starter-bootstrap-cv)
-  
+
 - [gatsby-starter-kit](https://github.com/greglobinski/gatsby-starter-kit)
-  [(Docs)](https://greglobinski.github.io/gatsby-starter-kit-docs/)  
-  
+  [(Docs)](https://greglobinski.github.io/gatsby-starter-kit-docs/)
+
   > A set of starters for Gatsby v2
+
   - Minimal
   - Equipped
   - Themed
   - Website
   - Blog
   - more coming soon
-  

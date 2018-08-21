@@ -1134,11 +1134,11 @@ actions.addThirdPartySchema = (
 }
 
 /**
- * All defined actions.
+ * All action creators wrapped with a dispatch.
  */
 exports.actions = actions
 
 /**
- * All action creators wrapped with a dispatch.
+ * All action creators wrapped with a dispatch. - *DEPRECATED*
  */
 exports.boundActionCreators = bindActionCreators(actions, store.dispatch)
