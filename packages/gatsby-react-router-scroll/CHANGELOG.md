@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.0-beta.9"></a>
+
+# [2.0.0-beta.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-react-router-scroll/compare/gatsby-react-router-scroll@2.0.0-beta.8...gatsby-react-router-scroll@2.0.0-beta.9) (2018-08-21)
+
+**Note:** Version bump only for package gatsby-react-router-scroll
+
 <a name="2.0.0-beta.8"></a>
 
 # [2.0.0-beta.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-react-router-scroll/compare/gatsby-react-router-scroll@2.0.0-beta.6...gatsby-react-router-scroll@2.0.0-beta.8) (2018-08-07)
