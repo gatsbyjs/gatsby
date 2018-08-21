@@ -1,4 +1,4 @@
 {
   "baseUrl": "http://localhost:8000",
-  "videoRecording": false
+  "video": false
 }
