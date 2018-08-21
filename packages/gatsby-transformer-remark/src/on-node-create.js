@@ -3,14 +3,20 @@ const crypto = require(`crypto`)
 
 module.exports = async function onCreateNode(
   { node, loadNodeContent, actions, createNodeId, reporter },
-  pluginOptions
+  {
+    plugins = null,
+    filter = () => true,
+    type = `MarkdownRemark`,
+    ...grayMatterOptions
+  } = {}
 ) {
   const { createNode, createParentChildLink } = actions
 
   // We only care about markdown content.
   if (
-    node.internal.mediaType !== `text/markdown` &&
-    node.internal.mediaType !== `text/x-markdown`
+    (node.internal.mediaType !== `text/markdown` &&
+      node.internal.mediaType !== `text/x-markdown`) ||
+    !filter(node)
   ) {
     return
   }
@@ -18,15 +24,15 @@ module.exports = async function onCreateNode(
   const content = await loadNodeContent(node)
 
   try {
-    const data = grayMatter(content, pluginOptions)
+    const data = grayMatter(content, grayMatterOptions)
 
     const markdownNode = {
-      id: createNodeId(`${node.id} >>> MarkdownRemark`),
+      id: createNodeId(`${node.id} >>> ${type}`),
       children: [],
       parent: node.id,
       internal: {
         content: data.content,
-        type: `MarkdownRemark`,
+        type,
       },
     }
 

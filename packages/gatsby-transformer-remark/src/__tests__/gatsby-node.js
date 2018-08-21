@@ -101,6 +101,50 @@ Sed bibendum sem iaculis, pellentesque leo sed, imperdiet ante. Sed consequat ma
         expect(createParentChildLink).toHaveBeenCalledTimes(1)
       })
     })
+
+    it(`Filters nodes with the given filter function, if provided`, async () => {
+      const content = ``
+
+      node.content = content
+      node.sourceInstanceName = `gatsby-test-source`
+
+      const createNode = jest.fn()
+      const createParentChildLink = jest.fn()
+      const actions = { createNode, createParentChildLink }
+      const createNodeId = jest.fn()
+      createNodeId.mockReturnValue(`uuid-from-gatsby`)
+
+      await onCreateNode(
+        {
+          node,
+          loadNodeContent,
+          actions,
+          createNodeId,
+        },
+        {
+          filter: node =>
+            node.sourceInstanceName === `gatsby-other-test-source`,
+        }
+      ).then(() => {
+        expect(createNode).toHaveBeenCalledTimes(0)
+        expect(createParentChildLink).toHaveBeenCalledTimes(0)
+      })
+
+      await onCreateNode(
+        {
+          node,
+          loadNodeContent,
+          actions,
+          createNodeId,
+        },
+        {
+          filter: node => node.sourceInstanceName === `gatsby-test-source`,
+        }
+      ).then(() => {
+        expect(createNode).toHaveBeenCalledTimes(1)
+        expect(createParentChildLink).toHaveBeenCalledTimes(1)
+      })
+    })
   })
 
   describe(`process graphql correctly`, () => {
