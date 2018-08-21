@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.0-rc.0"></a>
+
+# [2.0.0-rc.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-smartypants/compare/gatsby-remark-smartypants@2.0.0-beta.3...gatsby-remark-smartypants@2.0.0-rc.0) (2018-08-21)
+
+**Note:** Version bump only for package gatsby-remark-smartypants
+
 <a name="2.0.0-beta.3"></a>
 
 # [2.0.0-beta.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-smartypants/compare/gatsby-remark-smartypants@2.0.0-beta.2...gatsby-remark-smartypants@2.0.0-beta.3) (2018-07-21)
