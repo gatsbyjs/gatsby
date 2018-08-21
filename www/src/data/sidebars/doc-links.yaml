@@ -8,8 +8,6 @@
       link: /docs/recipes/
     - title: Overview of the docs*
       link: /docs/overview/
-    - title: Main Tutorial (step-by-step)
-      link: /tutorial/
 - title: Guides
   items:
     - title: Preparing your environment
