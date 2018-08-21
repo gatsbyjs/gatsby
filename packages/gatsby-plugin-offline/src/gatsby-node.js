@@ -47,13 +47,15 @@ exports.onPostBuild = (args, pluginOptions) => {
     rootDir
   )
 
-  const criticalFilePaths = _.uniq(_.concat(
-    getResourcesFromHTML(`${process.cwd()}/${rootDir}/index.html`),
-    getResourcesFromHTML(`${process.cwd()}/${rootDir}/404.html`),
-    getResourcesFromHTML(
-      `${process.cwd()}/${rootDir}/offline-plugin-app-shell-fallback/index.html`
+  const criticalFilePaths = _.uniq(
+    _.concat(
+      getResourcesFromHTML(`${process.cwd()}/${rootDir}/index.html`),
+      getResourcesFromHTML(`${process.cwd()}/${rootDir}/404.html`),
+      getResourcesFromHTML(
+        `${process.cwd()}/${rootDir}/offline-plugin-app-shell-fallback/index.html`
+      )
     )
-  ))
+  )
 
   const options = {
     staticFileGlobs: files.concat([
@@ -105,7 +107,7 @@ exports.onPostBuild = (args, pluginOptions) => {
       if (changes.length !== 1)
         throw new Error(
           `Patching sw.js failed - sw-precache has probably been modified upstream.\n` +
-          `Please report this issue at https://github.com/gatsbyjs/gatsby/issues`
+            `Please report this issue at https://github.com/gatsbyjs/gatsby/issues`
         )
     })
   )

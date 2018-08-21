@@ -13,7 +13,7 @@
 export default function(resources, path) {
   return new Promise(resolve => {
     const url = new URL(window.location.origin + path)
-    
+
     // Append the appropriate query to the URL.
     if (url.search) {
       url.search += `&no-cache=1`
