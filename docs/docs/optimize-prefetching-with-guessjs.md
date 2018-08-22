@@ -1,5 +1,5 @@
 ---
-title: Optimize Plugins with Guess.js
+title: Optimize Prefetching with Guess.js
 ---
 
 This is a stub. Help our community expand it.
