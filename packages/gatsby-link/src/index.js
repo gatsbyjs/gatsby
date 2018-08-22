@@ -138,7 +138,7 @@ class GatsbyLink extends React.Component {
             // Is this link pointing to a hash on the same page? If so,
             // just scroll there.
             const { pathname, hash } = parsePath(prefixedTo)
-            if (pathname === location.pathname || !pathname) {
+            if (pathname === location.pathname || to.startsWith(`#`)) {
               const element = hash
                 ? document.getElementById(hash.substr(1))
                 : null
