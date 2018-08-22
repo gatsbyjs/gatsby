@@ -155,3 +155,5 @@ exports.sourceNodes = async (
 
   return
 }
+
+exports.onCreateNode = require(`./on-create-node`)
