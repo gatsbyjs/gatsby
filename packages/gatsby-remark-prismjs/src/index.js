@@ -6,7 +6,7 @@ const addLineNumbers = require(`./add-line-numbers`)
 
 module.exports = (
   { markdownAST },
-  { classPrefix = `language-`, inlineCodeMarker = null, aliases = {} } = {}
+  { classPrefix = `language-`, inlineCodeMarker = null, aliases = {}, noInlineHighlight = false } = {}
 ) => {
   const normalizeLanguage = lang => {
     const lower = lang.toLowerCase()
@@ -65,23 +65,25 @@ module.exports = (
     + `</div>`
   })
 
-  visit(markdownAST, `inlineCode`, node => {
-    let languageName = `text`
+  if (!noInlineHighlight) {
+    visit(markdownAST, `inlineCode`, node => {
+      let languageName = `text`
 
-    if (inlineCodeMarker) {
-      let [language, restOfValue] = node.value.split(`${inlineCodeMarker}`, 2)
-      if (language && restOfValue) {
-        languageName = normalizeLanguage(language)
-        node.value = restOfValue
+      if (inlineCodeMarker) {
+        let [language, restOfValue] = node.value.split(`${inlineCodeMarker}`, 2)
+        if (language && restOfValue) {
+          languageName = normalizeLanguage(language)
+          node.value = restOfValue
+        }
       }
-    }
 
-    const className = `${classPrefix}${languageName}`
+      const className = `${classPrefix}${languageName}`
 
-    node.type = `html`
-    node.value = `<code class="${className}">${highlightCode(
-      languageName,
-      node.value
-    )}</code>`
-  })
+      node.type = `html`
+      node.value = `<code class="${className}">${highlightCode(
+        languageName,
+        node.value
+      )}</code>`
+    })
+  }
 }
