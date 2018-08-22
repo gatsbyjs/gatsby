@@ -149,11 +149,12 @@ class GatsbyLink extends React.Component {
                 // browser behavior by scrolling now to the top of the page.
                 window.scrollTo(0, 0)
               }
-            }
+            } else {
 
-            // Make sure the necessary scripts and data are
-            // loaded before continuing.
-            navigate(prefixedTo, { state })
+              // Make sure the necessary scripts and data are
+              // loaded before continuing.
+              navigate(prefixedTo, { state })
+            }
           }
 
           return true
