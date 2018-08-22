@@ -3,8 +3,6 @@ const METHOD = `navigate`
 const EXISTING_MODULE_NAME = `gatsby-link`
 const MODULE_NAME = `gatsby`
 
-const output = root => root.toSource({ quote: `single` })
-
 const getFirstNode = (j, root) => {
   const first = root.find(j.Program).get(`body`, 0)
   return [first, first.node]
@@ -17,15 +15,17 @@ const replaceEsm = (j, root) => {
     },
   })
 
-  if (!importStatement.length || !containsNavigateTo(j, root, importStatement)) {
-    return false
+  const containsNavigateTo = importStatement.find(j.Identifier, {
+    name: EXISTING_METHOD,
+  }).length > 0
+
+  if (!importStatement.length || !containsNavigateTo) {
+    return
   }
 
   addGatsbyImport(j, root)
   replaceGatsbyLinkImport(j, root, importStatement)
   replaceCallExpressions(j, root)
-
-  return output(root)
 }
 
 const replaceCommonJs = (j, root) => {
@@ -44,14 +44,12 @@ const replaceCommonJs = (j, root) => {
   })
 
   if (!gatsbyLink.length || !navigateTo.length) {
-    return false
+    return
   }
 
   addGatsbyRequire(j, root, requires)
   replaceGatsbyLinkRequire(j, root, requires)
   replaceCallExpressions(j, root)
-
-  return output(root)
 }
 
 const addGatsbyImport = (j, root) => {
@@ -135,10 +133,6 @@ const replaceCallExpressions = (j, root) => {
   })
 }
 
-const containsNavigateTo = (j, root, importStatement) => importStatement.find(j.Identifier, {
-  name: EXISTING_METHOD,
-}).length > 0
-
 module.exports = (file, api, options) => {
   const j = api.jscodeshift
   const root = j(file.source)
@@ -146,8 +140,10 @@ module.exports = (file, api, options) => {
   const isEsm = root.find(j.ImportDeclaration).length > 0
 
   if (isEsm) {
-    return replaceEsm(j, root)
+    replaceEsm(j, root)
+  } else {
+    replaceCommonJs(j, root)
   }
 
-  return replaceCommonJs(j, root)
+  return root.toSource({ quote: `single` })
 }
