@@ -354,6 +354,14 @@ exports.onCreateNode = ({ node, actions, getNode, getNodes }) => {
     slug = `/showcase/${slugify(cleaned)}`
     createNodeField({ node, name: `slug`, value: slug })
   }
+  // Community/Creators Pages
+  else if (node.internal.type === `CreatorsYaml`) {
+    slug = `/community/${node.type}/${slugify(node.name, {
+      lower: true,
+    })}`
+    createNodeField({ node, name: `slug`, value: slug })
+  }
+  // end Community/Creators Pages
 }
 
 exports.onPostBuild = () => {
