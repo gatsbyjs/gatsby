@@ -80,7 +80,7 @@ exports.onPostBuild = (args, pluginOptions) => {
     // URLs and not any files hosted on the site.
     //
     // Regex based on http://stackoverflow.com/a/18017805
-    navigateFallbackWhitelist: [/^.*([^.]{5}|.html)(?<!(\?|&)no-cache=1)$/],
+    navigateFallbackWhitelist: [/^.*([^.]{5}|.html(?<!(\?|&)no-cache=1)$/],
     cacheId: `gatsby-plugin-offline`,
     // Don't cache-bust JS files and anything in the static directory
     dontCacheBustUrlsMatching: /(.*js$|\/static\/)/,
