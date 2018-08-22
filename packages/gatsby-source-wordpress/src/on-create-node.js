@@ -1,13 +1,7 @@
-const { runHastTransformations } = require(`./hast-functions`);
+const { runHastTransformations } = require(`./hast-functions`)
 
-module.exports = async (
-  nodeOptions,
-  pluginOptions,
-) => {
+module.exports = async (nodeOptions, pluginOptions) => {
   if (pluginOptions.hastOptions) {
-    runHastTransformations(
-      nodeOptions,
-      pluginOptions,
-    )
+    runHastTransformations(nodeOptions, pluginOptions)
   }
 }
