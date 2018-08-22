@@ -2167,3 +2167,18 @@
     - Software
     - Documentation
   featured: false
+- title: Tensiq
+  main_url: https://tensiq.com
+  url: https://tensiq.com
+  source_url: https://github.com/Tensiq/tensiq-site
+  description: >
+    Tensiq is an e-Residency startup, that provides development in cutting-edge technology while delivering secure, resilient, performant solutions.
+  categories:
+    - Game Dev
+    - Web Dev
+    - Mobile Dev
+    - Agency
+    - Open Source
+  built_by: Jens
+  built_by_url: https://github.com/arrkiin
+  featured: false
