@@ -27,6 +27,8 @@ const {
   PotraceType,
 } = require(`./types`)
 
+const DEFAULT_QUALITY = 50
+
 function toArray(buf) {
   var arr = new Array(buf.length)
 
@@ -50,6 +52,7 @@ const fixedNodeType = ({
   getNodeAndSavePathDependency,
   reporter,
   name,
+  defaultQuality,
 }) => {
   return {
     type: new GraphQLObjectType({
@@ -128,7 +131,7 @@ const fixedNodeType = ({
       },
       quality: {
         type: GraphQLInt,
-        defaultValue: 50,
+        defaultValue: defaultQuality,
       },
       toFormat: {
         type: ImageFormatType,
@@ -169,6 +172,7 @@ const fluidNodeType = ({
   getNodeAndSavePathDependency,
   reporter,
   name,
+  defaultQuality,
 }) => {
   return {
     type: new GraphQLObjectType({
@@ -245,7 +249,7 @@ const fluidNodeType = ({
       },
       quality: {
         type: GraphQLInt,
-        defaultValue: 50,
+        defaultValue: defaultQuality,
       },
       toFormat: {
         type: ImageFormatType,
@@ -285,7 +289,7 @@ module.exports = ({
   pathPrefix,
   getNodeAndSavePathDependency,
   reporter,
-}) => {
+}, { defaultQuality = DEFAULT_QUALITY } = {}) => {
   if (type.name !== `ImageSharp`) {
     return {}
   }
@@ -295,6 +299,7 @@ module.exports = ({
     pathPrefix,
     getNodeAndSavePathDependency,
     reporter,
+    defaultQuality,
   }
 
   // TODO: Remove resolutionsNode and sizesNode for Gatsby v3
@@ -451,3 +456,5 @@ module.exports = ({
     },
   }
 }
+
+module.exports.__DEFAULT_QUALITY__ = 50
