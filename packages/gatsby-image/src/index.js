@@ -135,6 +135,19 @@ class Image extends React.Component {
   constructor(props) {
     super(props)
 
+    this.tagRef = React.createRef()
+
+    // The initial state needs to be the same on the client and on the server,
+    // otherwise rehydratation might fail in unexpected ways.
+    // See https://github.com/gatsbyjs/gatsby/issues/2330
+    this.state = {
+      isVisible: false,
+      imgLoaded: false,
+      IOSupported: false,
+    }
+  }
+
+  componentDidMount() {
     // If this browser doesn't support the IntersectionObserver API
     // we default to start downloading the image right away.
     let isVisible = true
@@ -143,7 +156,7 @@ class Image extends React.Component {
 
     // If this image has already been loaded before then we can assume it's
     // already in the browser cache so it's cheap to just show directly.
-    const seenBefore = inImageCache(props)
+    const seenBefore = inImageCache(this.props)
 
     if (
       !seenBefore &&
@@ -161,19 +174,19 @@ class Image extends React.Component {
       imgLoaded = false
     }
 
-    this.state = {
-      isVisible,
-      imgLoaded,
-      IOSupported,
-    }
+    this.setState(() => {
+      return {
+        isVisible,
+        imgLoaded,
+        IOSupported,
+      }
+    })
 
-    this.handleRef = this.handleRef.bind(this)
-  }
-
-  handleRef(ref) {
-    if (this.state.IOSupported && ref) {
-      listenToIntersections(ref, () => {
-        this.setState({ isVisible: true, imgLoaded: false })
+    if (IOSupported && this.tagRef.current) {
+      listenToIntersections(this.tagRef.current, () => {
+        this.setState(() => {
+          return { isVisible: true, imgLoaded: false }
+        })
       })
     }
   }
@@ -239,7 +252,7 @@ class Image extends React.Component {
               overflow: `hidden`,
               ...style,
             }}
-            ref={this.handleRef}
+            ref={this.tagRef}
           >
             {/* Preserve the aspect ratio. */}
             <Tag
@@ -349,7 +362,7 @@ class Image extends React.Component {
           <Tag
             className={`${className ? className : ``} gatsby-image-wrapper`}
             style={divStyle}
-            ref={this.handleRef}
+            ref={this.tagRef}
           >
             {/* Show the blury base64 image. */}
             {image.base64 && (
