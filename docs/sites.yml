@@ -2182,3 +2182,14 @@
   built_by: Jens
   built_by_url: https://github.com/arrkiin
   featured: false
+- title: SendGrid
+  main_url: https://sendgrid.com/docs/
+  url: https://sendgrid.com/docs/
+  description: >
+    SendGrid delivers your transactional and marketing emails through the world's largest cloud-based email delivery platform.
+  categories:
+    - Technology
+    - Tool
+    - Software
+    - Documentation
+  featured: false
