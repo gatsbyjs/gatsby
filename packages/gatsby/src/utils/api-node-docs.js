@@ -250,3 +250,9 @@ exports.onPostBuild = true
  * See gatsby-transformer-remark and gatsby-source-contentful for examples.
  */
 exports.onPreExtractQueries = true
+
+/**
+ * Run when gatsby develop server is started, its useful to add proxy and middleware
+ * to the dev server app
+ */
+exports.onCreateDevServer = true
