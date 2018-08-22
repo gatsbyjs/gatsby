@@ -1,0 +1,54 @@
+- name: Andy Slezak
+  type: Individual
+  description: "Andy Slezak is a web developer"
+  website: "https://www.aslezak.com/"
+  github: "https://github.com/amslezak"
+  image: null
+  open_for_work: true
+  portfolio:
+    - Blog
+    - Web Dev
+    - Featured
+- name: Fabian Schultz
+  type: Individual
+  description: "Fabian Schultz is a web developer"
+  website: "https://fabianschultz.com/"
+  github: "https://github.com/fabe"
+  image: null
+  open_for_work: false
+  portfolio:
+    - Blog
+    - Web Dev
+    - Featured
+- name: Formidable
+  type: Agency
+  description: "Formidable builds cool things"
+  website: "https://formidable.com/"
+  github: null
+  image: null
+  open_for_work: true
+  portfolio: null
+- name: Haptic Media
+  type: Agency
+  description: "Haptic Media is an agency in France"
+  website: "https://hapticmedia.fr/en"
+  github: null
+  image: null
+  open_for_work: false
+  portfolio: null
+- name: Dona Rita
+  type: Company
+  description: "Dona Rita is a marketing company"
+  website: "https://www.donarita.co.uk/"
+  github: null
+  image: null
+  open_for_work: true
+  portfolio: null
+- name: Deliveroo Design
+  type: Company
+  description: "Deliveroo Design is a company"
+  website: "https://www.deliveroo.design/"
+  github: null
+  image: null
+  open_for_work: false
+  portfolio: null
