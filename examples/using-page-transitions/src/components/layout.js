@@ -1,10 +1,19 @@
 import React from "react"
 import { Link } from "gatsby"
+import posed from "react-pose"
 import Helmet from "react-helmet"
 
 import "./layout.css"
 
-import Transition from "./transition"
+// Use `posed.div` elements anywhere on the pages.
+const Transition = posed.div({
+  enter: {
+    opacity: 1,
+  },
+  exit: {
+    opacity: 0,
+  },
+})
 
 const Header = () => (
   <div

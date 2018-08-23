@@ -9,7 +9,7 @@
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-helmet": "^5.2.0",
-    "react-transition-group": "^2.2.1"
+    "react-pose": "^3.0.2"
   },
   "keywords": [
     "gatsby"

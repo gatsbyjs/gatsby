@@ -1,56 +1,22 @@
 import React from "react"
-import { Transition as ReactTransition } from "react-transition-group"
-import getTransitionStyle from "../utils/getTransitionStyle"
-import { historyExitingEventType, timeout } from "../../gatsby-browser"
+import posed, { PoseGroup } from "react-pose"
 
-class Transition extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = { exiting: false }
-    this.listenerHandler = this.listenerHandler.bind(this)
-  }
+const timeout = 250
 
-  listenerHandler(event) {
-    this.setState({ exiting: true })
-  }
-
-  componentDidMount() {
-    window.addEventListener(historyExitingEventType, this.listenerHandler)
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener(historyExitingEventType, this.listenerHandler)
-  }
-
-  static getDerivedStateFromProps({ exiting }) {
-    if (exiting) {
-      return { exiting: false }
-    }
-    return null
-  }
-
+class Transition extends React.PureComponent {
   render() {
-    const transitionProps = {
-      timeout: {
-        enter: 0,
-        exit: timeout,
-      },
-      appear: true,
-      in: !this.state.exiting,
-    }
+    const { children, location } = this.props
 
+    const RoutesContainer = posed.div({
+      enter: { delay: timeout, delayChildren: timeout },
+    })
+
+    // To enable page transitions on mount / initial load,
+    // use the prop `animateOnMount={true}` on `PoseGroup`.
     return (
-      <ReactTransition {...transitionProps}>
-        {status => (
-          <div
-            style={{
-              ...getTransitionStyle({ status, timeout }),
-            }}
-          >
-            {this.props.children}
-          </div>
-        )}
-      </ReactTransition>
+      <PoseGroup>
+        <RoutesContainer key={location.pathname}>{children}</RoutesContainer>
+      </PoseGroup>
     )
   }
 }
