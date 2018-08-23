@@ -2200,6 +2200,8 @@
   description: >
     SendGrid delivers your transactional and marketing emails through the world's largest cloud-based email delivery platform.
   categories:
+    - API
+    - APIs
     - Technology
     - Tool
     - Software
