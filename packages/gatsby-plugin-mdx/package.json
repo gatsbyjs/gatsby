@@ -1,6 +1,6 @@
 {
   "name": "gatsby-mdx",
-  "version": "0.0.11",
+  "version": "0.0.12-ci",
   "description": "mdx integration for gatsby",
   "main": "index.js",
   "license": "MIT",
@@ -8,8 +8,8 @@
     "test": "jest"
   },
   "peerDependencies": {
-    "@mdx-js/mdx": "^0.15.0-2",
-    "@mdx-js/tag": "^0.15.0-2",
+    "@mdx-js/mdx": "^0.15.0",
+    "@mdx-js/tag": "^0.15.0",
     "mdx-deck": "^1.5.7"
   },
   "dependencies": {
