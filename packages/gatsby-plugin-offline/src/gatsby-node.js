@@ -1,5 +1,5 @@
 const fs = require(`fs`)
-const precache = require(`sw-precache`)
+const precache = require(`@davidbailey00/sw-precache`)
 const path = require(`path`)
 const slash = require(`slash`)
 const _ = require(`lodash`)
@@ -81,7 +81,7 @@ exports.onPostBuild = (args, pluginOptions) => {
     // Regex based on http://stackoverflow.com/a/18017805
     navigateFallbackWhitelist: [/^[^?]*([^.?]{5}|\.html)(\?.*)?$/],
     navigateFallbackBlacklist: [/\?(.+&)?no-cache=1$/],
-    navigateFallbackRegexesIncludeParameters: true,
+    navigateFallbackRegExpsIncludeParameters: true,
     cacheId: `gatsby-plugin-offline`,
     // Don't cache-bust JS files and anything in the static directory
     dontCacheBustUrlsMatching: /(.*js$|\/static\/)/,
