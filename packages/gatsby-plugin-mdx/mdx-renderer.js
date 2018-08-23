@@ -1,7 +1,8 @@
 import { withMDXComponents } from "@mdx-js/tag/dist/mdx-provider";
+import { withMDXScope } from "./context";
 
-export default withMDXComponents(
-  ({ scope = {}, components = {}, children, ...props }) => {
+export default withMDXScope(
+  withMDXComponents(({ scope = {}, components = {}, children, ...props }) => {
     const fullScope = {
       components,
       props,
@@ -15,5 +16,5 @@ export default withMDXComponents(
 
     const end = fn({}, ...values)({ components, ...props });
     return end;
-  }
+  })
 );
