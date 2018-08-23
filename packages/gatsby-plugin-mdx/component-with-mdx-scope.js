@@ -40,7 +40,8 @@ module.exports = function componentWithMDXScope(
     .map((_, i) => `...__mdxScope_${i}`)
     .join(", ");
   const newWrapper = `// .cache/gatsby-mdx/wrapper-components/{wrapper-filepath-hash}-{scope-hash}.js
-  import React from 'react';
+import React from 'react';
+import { MDXScopeProvider } from 'gatsby-mdx/context';
 
 ${codeScopeAbsPaths
     .map((scopePath, i) => `import __mdxScope_${i} from '${scopePath}';`)
@@ -53,12 +54,13 @@ import { graphql } from 'gatsby';
 // pageQuery, etc get hoisted to here
 ${instance.state.exports.map(exportString => exportString)};
 
-export default ({children, ...props}) => <OriginalWrapper
-  {...props}
-  __mdxScope={{${mdxScopes}}}
+export default ({children, ...props}) => <MDXScopeProvider __mdxScope={{${mdxScopes}}}>
+  <OriginalWrapper
+    {...props}
   >
     {children}
-  </OriginalWrapper>`;
+  </OriginalWrapper>
+</MDXScopeProvider>`;
 
   const hashName =
     scopeHashes.length > 1
