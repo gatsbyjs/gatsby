@@ -14,25 +14,25 @@ The community plans, writes, and maintains these Docs on GitHub.
 - [Writing process](#writing-process)
   - [Think of your audience](#think-of-your-audience)
   - [Research](#research)
-  - [Community help](#community-help)
+  - [Write drafts and get feedback](#write-drafts-and-get-feedback)
 - [Word choice](#word-choice)
   - [Use "you" as the pronoun](#use-you-as-the-pronoun)
   - [Avoid "easy" and "simple"](#avoid-easy-and-simple)
   - [Avoid emojis, slang, and metaphors](#avoid-emojis-slang-and-metaphors)
   - [Define jargon](#define-jargon)
 - [Writing style](#writing-style)
-  - [Concise writing](#concise-writing)
+  - [Write concisely](#write-concisely)
   - [Use clear hyperlinks](#use-clear-hyperlinks)
   - [Indicate when something is optional](#indicate-when-something-is-optional)
   - [Abbreviate terms](#abbreviate-terms)
-  - [SEO optimized titles](#seo-optimized-titles)
+  - [Use SEO optimized titles](#use-seo-optimized-titles)
 - [Grammar & formatting](#grammar-and-formatting)
-  - [Title and header formatting](#title-and-header-formatting)
-  - [Code blocks, inline code, images](#code-blocks-inline-code-images)
+  - [Format titles and headers](#format-titles-and-headers)
+  - [Format code blocks, inline code, and images](#format-code-blocks-inline-code-and-images)
   - [Capitalize proper nouns](#capitalize-proper-nouns)
   - [Use active voice](#use-active-voice)
   - [Make lists clear with the Oxford Comma](#make-lists-clear-with-the-oxford-comma)
-  - [Apps that help you edit](#apps-that-help-you-edit)
+  - [Use apps that help you edit](#use-apps-that-help-you-edit)
 
 ## Welcome!
 
@@ -94,7 +94,7 @@ Possible sources of great content to learn from:
 - Dreams
 - Anything else you can think of
 
-### Community help
+### Write drafts and get feedback
 
 Technical writing, or the literature of science and technology, is difficult
 because it requires you to take a technical (usually abstract) topic and explain
@@ -139,9 +139,9 @@ need to define words that newcomers might have a hard time understanding.
 
 ## Writing style
 
-### Concise writing
+### Write concisely
 
-Concise writing communicates the bare minimum without redundancy. Strive to make your writing as short as possible; this practice will often lead to more accurate and specific writing as well, because it helps you recognize any vague wording.
+Concise writing communicates the bare minimum without redundancy. Strive to make your writing as short as possible; this practice will often lead to more accurate and specific writing.
 
 ### Use clear hyperlinks
 
@@ -161,7 +161,7 @@ If you want to abbreviate a term in your article, write it out fully first, then
 put the abbreviation in parentheses. After that, you may use the abbreviation going for the rest of the article. For example, "In computer science, an
 abstract syntax tree (AST) is ..."
 
-### SEO optimized titles
+### Use SEO optimized titles
 
 This explains how to create a doc that shows up in Google searches.
 
@@ -202,7 +202,7 @@ what-is-graphql).
 
 ## Grammar and formatting
 
-### Title and header formatting
+### Format titles and headers
 
 Title case article titles (each major word is uppercase). Sentence case article headings (only the initial word is uppercase). Neither need punctuation at the end of the phrase unless a question mark is required. Article titles do not take the Oxford comma and use the ampersand in place of “and.” Article headings do take the Oxford comma and use the word “and.”
 
@@ -216,7 +216,7 @@ Article header or subhead:
 
 > Salty, sweet, and spicy
 
-### Code blocks, inline code, images
+### Format code blocks, inline code, and images
 
 - [Formatting inline code and code blocks](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#code)
 - [Adding images to articles](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#images).
@@ -250,7 +250,7 @@ painter, sculptor, and architect. It makes things clearer.
 
 [Confusion can happen when you don't use the Oxford comma](https://img.buzzfeed.com/buzzfeed-static/static/2015-02/22/18/enhanced/webdr11/enhanced-buzz-32156-1424646300-12.jpg?downsize=715:*&output-format=auto&output-quality=auto).
 
-### Apps that help you edit
+### Use apps that help you edit
 
 Use the [Hemingway App](http://www.hemingwayapp.com/). There’s nothing magical
 about this tool, but it will automatically detect widely agreed-upon
