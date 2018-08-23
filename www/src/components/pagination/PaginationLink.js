@@ -1,11 +1,16 @@
 import React from 'react'
 import { Link } from 'gatsby'
+import { colors } from "../../utils/presets"
 
-const PaginationLink = props => {
-  if (props.to) {
-    return <Link to={props.to}>{props.children}</Link>
+const PaginationLink = ({ to, children, ...props }) => {
+  if (to) {
+    return (
+      <Link to={to} {...props}>
+        {children}
+      </Link>
+    )
   }
-  return <span>{props.children}</span>
+  return <span css={{ color: colors.gray.calm }}>{children}</span>
 }
 
 export default PaginationLink
