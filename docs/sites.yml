@@ -2167,6 +2167,18 @@
     - Software
     - Documentation
   featured: false
+- title: Insights
+  main_url: https://justaskusers.com/
+  url: https://justaskusers.com/
+  description: >
+    Insights helps user experience (UX) researchers conduct their research and make sense of the findings.
+  categories:
+    - User Experience
+    - Research
+    - Design
+  built_by: Just Ask Users
+  built_by_url: https://justaskusers.com/
+  featured: false
 - title: Tensiq
   main_url: https://tensiq.com
   url: https://tensiq.com
