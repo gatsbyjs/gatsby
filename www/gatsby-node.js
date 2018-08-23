@@ -356,7 +356,17 @@ exports.onCreateNode = ({ node, actions, getNode, getNodes }) => {
   }
   // Community/Creators Pages
   else if (node.internal.type === `CreatorsYaml`) {
-    slug = `/community/${node.type}/${slugify(node.name, {
+    let type
+    if (node.type === `individual`) {
+      type = `people`
+    }
+    if (node.type === `agency`) {
+      type = `agencies`
+    }
+    if (node.type === `company`) {
+      type = `companies`
+    }
+    slug = `/community/${type}/${slugify(node.name, {
       lower: true,
     })}`
     createNodeField({ node, name: `slug`, value: slug })
