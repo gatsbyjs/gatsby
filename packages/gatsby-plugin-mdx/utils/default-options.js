@@ -1,4 +1,9 @@
-const { isString } = require("lodash");
+const { isString, once } = require("lodash");
+const debug = require("debug")("gatsby-mdx:utils/default-options");
+
+const optDebug = once(options => {
+  debug("options", options);
+});
 
 module.exports = pluginOptions => {
   const options = Object.assign(
@@ -8,7 +13,8 @@ module.exports = pluginOptions => {
       extensions: [".mdx"],
       hastPlugins: [],
       mdPlugins: [],
-      transformers: {}
+      transformers: {},
+      root: process.cwd()
     },
     pluginOptions
   );
@@ -25,5 +31,6 @@ module.exports = pluginOptions => {
     options.defaultLayouts.default = options.defaultLayout;
   }
 
+  optDebug(options);
   return options;
 };

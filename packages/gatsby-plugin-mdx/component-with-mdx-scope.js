@@ -11,7 +11,7 @@ const BabelPluginPluckExports = require("babel-plugin-pluck-exports");
 module.exports = function componentWithMDXScope(
   absWrapperPath,
   codeScopeAbsPaths = [],
-  projectRoot
+  projectRoot = process.cwd()
 ) {
   if (typeof codeScopeAbsPaths === "string") {
     codeScopeAbsPaths = [codeScopeAbsPaths];
