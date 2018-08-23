@@ -147,12 +147,7 @@ ${code}`;
                 const PLUGIN_DIR = `gatsby-mdx`;
                 const REMOTE_MDX_DIR = `remote-mdx-dir`;
                 mkdirp.sync(
-                  path.join(
-                    pluginOptions.root,
-                    CACHE_DIR,
-                    PLUGIN_DIR,
-                    REMOTE_MDX_DIR
-                  )
+                  path.join(options.root, CACHE_DIR, PLUGIN_DIR, REMOTE_MDX_DIR)
                 );
                 const createFilePath = (directory, filename, ext) =>
                   path.join(
@@ -195,7 +190,7 @@ ${code}`;
 export default { ${identifiers.join(", ")} }`;
 
                 const filePath = createFilePath(
-                  pluginOptions.root,
+                  options.root,
                   createHash(scopeFileContent),
                   ".js"
                 );
