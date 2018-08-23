@@ -877,9 +877,9 @@
     follow-redirects "^1.2.5"
     is-buffer "^1.1.5"
 
-"@davidbailey00/sw-precache@^5.3.0":
-  version "5.3.0"
-  resolved "https://registry.yarnpkg.com/@davidbailey00/sw-precache/-/sw-precache-5.3.0.tgz#e444636624d6a794f389d1a17f4d8099e60aa262"
+"@davidbailey00/sw-precache@^5.3.1":
+  version "5.3.1"
+  resolved "https://registry.yarnpkg.com/@davidbailey00/sw-precache/-/sw-precache-5.3.1.tgz#b2c89abae4dc28c26e1e8f58f00f1cc76b4b0001"
   dependencies:
     dom-urls "^1.1.0"
     es6-promise "^4.0.5"
