@@ -3,9 +3,12 @@ title: Docs templates
 ---
 
 1.  [Why use templates?](#why-use-templates)
-2.  [Guide article template](#guide-article-template)
-3.  [Guide overview article template](#guide-overview-article-template)
-4.  [Tutorial template](#tutorial-template)
+2.  [Guide](#guide)
+    - [Guide template](#guide-template)
+3.  [Guide overview](#guide-overview)
+    - [Guide overview template](#guide-overview-template)
+4.  [Tutorial](#tutorial)
+    - [Tutorial template](#tutorial-template)
 5.  [Plugin READme template](#plugin-readme-template)
 6.  [Starter READme template](#starter-readme-template)
 
@@ -15,7 +18,19 @@ title: Docs templates
 
 Here are templates (models) to follow when contributing to Gatsby docs to ensure that the docs accomplish their purpose. If you have a good reason to deviate from the following template structures, mention those reasons in the PR so others can give proper feedback.
 
-## Guide article template
+### Decision tree: what content goes where?
+
+Is the content a step-by-step tutorial or a shorter article?
+
+- a step-by-step tutorial ought to go under Advanced Tutorials in the Tutuorial section of the .org site
+- a shorter article ought to go under the Docs
+
+Does the step-by-step tutorial deal with a high-demand and/or Gatsby core technology?
+
+- Yes --> Put it in the Advanced Tutorials in the Tutorial section of the .org site
+- No -->
+
+## Guide
 
 ### What are guide articles?
 
@@ -23,13 +38,13 @@ Guide articles are found under the "Guides" category in the docs.
 
 ### Example of a guide article
 
-[Add a 404 page](/docs/add-404-page/) is an example of a guide that may or may not be perfect yet. As you read through this template, take note of where that article can be improved.
+[Add a 404 page](/docs/add-404-page/) is an example of a guide that isn't perfect yet. As you read through this template, take note of where that article can be improved.
 
 ### What should a guide article be about?
 
 We need guide articles to describe every task you can accomplish with Gatsby.
 
-Each guide articles should explain exactly one task and that task should be
+Each guide article should explain exactly one task and that task should be
 apparent from the article's title.
 
 #### What if I want to include multiple tasks and concepts in a guide article?
@@ -58,44 +73,45 @@ Topics should be chosen based on these priorities:
 
 ### Length of a guide
 
-Ideally, a guide fits above the fold on the computer screen, which means the entire guide is visible in one glance, so the person viewing the screen doesn't need to scroll to view the whole guide.
+Ideally, a guide fits above the fold on the computer screen. This means the entire guide is visible at one glance, so the person viewing the screen doesn't need to scroll to view the whole guide.
 
 If it needs to extend beyond the fold, try to keep it to the length of a piece of 8.5x11" paper (standard US paper size). This is a somewhat arbitrarily chosen standard that will nevertheless help us keep guides short, consistent, and printable should anyone ever want to print a Gatsby book :)
 
-### Format
+### Guide template
 
 You can copy and paste the markdown text below and fill it in with your own information
 
-````
+```markdown
 ---
-title: Querying data with GraphQL
+title: Querying Data with GraphQL
 ---
 
 ### Introductory paragraph
+
 The introductory paragraph should be a 1-2 sentence explanation of the main
 topic and answer the following question:
 
-What is the purpose of this guide describes?
+What is the purpose of this guide?
 
 ### Prerequisites (if any)
+
 If applicable, list any prerequisites to reading and understanding your article. Does the reader need to read another document first, install a particular plugin, or already know a certain skill? List those things here.
 
 ### The facts
+
 What are the facts you know about the topic of this guide?
 
 Keep paragraphs short (around 1-4 sentences). People are more likely to read
 several short paragraphs instead of a huge block of text.
 
 ### Example
+
 Readers will likely use doc articles as a quick reference to look up syntax.
 Articles should have a basic, real-world example that shows common use cases of its syntax.
 
 Provide at least one example of how the task gets accomplished. A code snippet is ideal, in this format:
 
-
-\`\`\`shell
-code snippet
-\`\`\`
+    code snippet
 
 //See this [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#code) on how to format code examples
 
@@ -116,39 +132,42 @@ them at the bottom in an "Other Resources" section. You can also mention here an
 - Link to source code for a live site
 - Links to relevant plugins
 - Links to starters
-
 ```
-## Guide overview article template
 
-### Perfect example of a guide overview article
+## Guide overview
+
+### Perfect example of a guide overview
+
 [Deploying and Hosting](/docs/deploying-and-hosting/)
 
-### What should a guide overview article be about?
-Each article should give a short overview of its section of the guides and ideally fit “above the fold” (the reader can see the whole guide overview article on desktop without scrolling).
+### What should a guide overview be about?
+
+Each overview should give a short overview of its section of the guides and ideally fit “above the fold” (the reader can see the whole guide overview article on desktop without scrolling).
 
 The goal: by skimming over the list of guide overview articles, a person new to Gatsby should get a good overview of what functionality Gatsby is capable of and what they can accomplish with Gatsby.
 
 ### Length of a guide overview article
+
 Ideally, a guide overview fits above the fold on the computer screen, which means the entire guide is visible in one glance, so the person viewing the screen doesn't need to scroll to view the whole guide.
 
 If it needs to extend beyond the fold, try to keep it to the length of a piece of 8.5x11" paper (standard US paper size). This is a somewhat arbitrarily chosen standard that will nevertheless help us keep guides short, consistent, and printable should anyone ever want to print a Gatsby book :)
 
 ### When should I create a new guide overview article?
+
 Guide overview articles are essentially new parent categories that help organize all the guide articles. Here’s how to decide if you should create a new guide overview article:
 
-1. Is there already a stub guide overview articles that already exists in the Docs?
-2. Is there already a plan to create the guide overview article in the In Progress epic, Roadmap epics, or backlog epics in Github Zenhub?
-3. If you can answer no to all of the above, are there a group of guide articles (already written or about to be written) that don’t fit well under an existing category? If yes, go ahead and create the new guide overview article!
+1.  Stub articles (already exist on the site but just don't have content in them yet)
+2.  Articles requested in the In Progress epics in Github Zenhub
+3.  Articles requested in the Roadmap in Github Zenhub
+4.  Articles that you or other community members would like to see
 
-### When is a guide overview article the wrong place to write something?
-Some content belongs in other places. Examples:
-- A step-by-step tutorial that isn't related to an existing doc belongs on the www.gatsbyjs.org blog, an outside blog, or linked to the READme of an associated plugin or starter
-- A pitch for a product, tool, or other service that is not being maintained by the core Gatsby team
+## Guide overview template
 
-## Format
 You can copy and paste the markdown text below and fill it in with your own information
-```
 
+```markdown
+---
+title: Testing
 ---
 
 ## title: Testing
@@ -177,10 +196,11 @@ Assume the reader has basic programming knowledge like the command line, code ed
 - Link to source code for a live site
 - Links to relevant plugins
 - Links to starters
+```
 
 ---
 
-## Tutorial template
+## Tutorial
 
 ### Perfect example of a tutorial
 
@@ -211,10 +231,13 @@ If a tutorial is longer than 3 8.5x11” pages or has more than about 5 headers 
 
 If you have a tutorial that falls into this category, it is likely a big enough project that you’ll benefit from the feedback process provided by creating an [RFC (Request for Comments) document](https://github.com/gatsbyjs/rfcs).
 
-## Format
+## Tutorial template
 
 You can copy and paste the markdown text below and fill it in with your own information
 
+```markdown
+---
+title: Title
 ---
 
 ## title: How to create a decoupled Drupal site with Gatsby
@@ -224,7 +247,7 @@ You can copy and paste the markdown text below and fill it in with your own info
 By the end of this tutorial, you’ll have done the following:
 
 - learned how to **\_\_**
-- built a ****\_****
+- built a \***\*\_\*\***
 - used a **\_\_\_** with Gatsby
 
 ## Prerequisites (if any)
@@ -239,9 +262,7 @@ several short paragraphs instead of a huge block of text.
 Readers will likely use doc articles as a quick reference to look up syntax.
 Articles should have a basic, real-world example that shows common use cases of its syntax.
 
-\`\`\`shell
-code example
-\`\`\`
+    code example
 
 //See this [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#code) on how to format code examples
 
@@ -262,7 +283,7 @@ Include as many steps as you need. If there are more than 5-10 steps, it might b
 In this tutorial, you did the following:
 
 - learned how to **\_\_**
-- built a ****\_****
+- built a \***\*\_\*\***
 - used a **\_\_\_** with Gatsby
 
 ## What’s next
@@ -280,40 +301,44 @@ them at the bottom in an "Other Resources" section. You can also mention here an
 - Link to source code for a live site
 - Links to relevant plugins
 - Links to starters
-
 ```
-______________________
+
+---
 
 ## Plugin READme template
 
 ### Example of a plugin READme
+
 [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/)
 
-```
+```markdown
 ## Description
+
 Include a summary of what this plugin accomplishes. Is there a demo site that shows how this plugin operates? If so, include a link to the deployed demo site and/or its src code here.
 
 ### Dependencies (optional)
+
 Are there any plugins that must be installed in order to make this plugin work, please include a list of those plugins and links to their pages here.
 
 ### Learning Resources (optional)
+
 If there are other tutorials, docs, and learning resources that are necessary or helpful to someone using this plugin, please link to those here.
 
 ## How to install
+
 Please include installation instructions here.
 
 ## Available options (if any)
 
 ## When do I use this plugin?
+
 Include stories about when this plugin is helpful and/or necessary.
 
 ## Examples of usage
 
 This usually shows a code example showing how to include this plugin in a site's `config.js` file.
 
-\`\`\`shell
-code example
-\`\`\`
+    code example
 
 //See this [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#code) on how to format code examples.
 
@@ -328,26 +353,30 @@ If this is a source plugin READme, source plugins ought to allow people to query
 ## How to develop locally
 
 ## How to contribute
-If you have unanswered questions, would like help with enhancing or debugging the plugin, it is nice to include instructions for people who want to contribute to your plugin.
 
+If you have unanswered questions, would like help with enhancing or debugging the plugin, it is nice to include instructions for people who want to contribute to your plugin.
 ```
-________________________
+
+---
 
 ## Starter READme template
 
 ### Example of a starter READme
+
 [Default Starter READme](https://github.com/gatsbyjs/gatsby-starter-default))
 
-```
+```markdown
 ## Name of starter
 
 ## Quick start
+
 Give instructions on how to install this starter
 
 ## Features
+
 Tell features comes with this starter. This is a chance to give users a brief tour of how to use this starter effectively.
 
 ## Next steps
+
 Any tips on how to deploy this starter? What CMS to use? Other fun ways to build on top of the starter? Say those here!
 ```
-````
