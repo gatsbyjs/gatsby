@@ -65,12 +65,10 @@ describe(`The Home Page`, () => {
       const post1 = postsData[0]
       const post2 = postsData[1]
       // wait for page to initialize
-      cy.wait(200)
+      cy.wait(500)
       // open first post
       cy.getTestElement(`post`)
         .first()
-        // find the first child, since it covers the parent
-        .find(`> div`)
         .click()
       cy.url().should("contain", post1.id)
       // click right arrow icon to go to 2nd post
@@ -89,16 +87,16 @@ describe(`The Home Page`, () => {
       const post1 = postsData[0]
       const post2 = postsData[1]
       // wait for page to initialize
-      cy.wait(200)
+      cy.wait(500)
       // open fist post
       cy.getTestElement(`post`)
         .first()
-        // find the first child, since it covers the parent
-        .find(`> div`)
-        .click()
+        // force, because sometimes the children cover
+        // the outer element causing Cypress to complain
+        .click({ force: true })
       cy.url().should("contain", post1.id)
       // wait for page to initialize
-      cy.wait(200)
+      cy.wait(500)
       // press right arrow to go to 2nd post
       cy.get(`body`).type(`{rightarrow}`)
       cy.url().should("contain", post2.id)
