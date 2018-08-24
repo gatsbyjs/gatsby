@@ -644,12 +644,15 @@
 - title: The Rick and Morty API
   main_url: 'https://rickandmortyapi.com/'
   url: 'https://rickandmortyapi.com/'
+  built_by: Axel Fuhrmann
+  built_by_url: https://axelfuhrmann.com/
   featured: false
   categories:
     - Web Dev
     - Entertainment
     - Documentation
     - Open Source
+    - API
 - title: Santa Compañía Creativa
   main_url: 'https://santacc.es/'
   url: 'https://santacc.es/'
@@ -2204,4 +2207,18 @@
     - Tool
     - Software
     - Documentation
+  featured: false
+- title: Mintfort
+  main_url: https://mintfort.com/
+  url: https://mintfort.com/
+  source_url: https://github.com/MintFort/mintfort.com
+  description: >
+    Mintfort, the first crypto-friendly bank account. Store and manage assets on the blockchain.
+  categories:
+    - Technology
+    - Tool
+    - Bank
+    - Software
+  built_by: Axel Fuhrmann
+  built_by_url: https://axelfuhrmann.com/
   featured: false
