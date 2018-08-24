@@ -57,11 +57,12 @@ exports.onPostBuild = (args, pluginOptions) => {
   )
 
   const options = {
+    globDirectory: rootDir,
     globPatterns: files.concat([
-      `${rootDir}/index.html`,
-      `${rootDir}/manifest.json`,
-      `${rootDir}/manifest.webmanifest`,
-      `${rootDir}/offline-plugin-app-shell-fallback/index.html`,
+      `/index.html`,
+      `/manifest.json`,
+      `/manifest.webmanifest`,
+      `/offline-plugin-app-shell-fallback/index.html`,
       ...criticalFilePaths,
     ]),
     modifyUrlPrefix: {
@@ -93,6 +94,11 @@ exports.onPostBuild = (args, pluginOptions) => {
     ],
     skipWaiting: true,
   }
+
+  // pluginOptions.plugins is assigned automatically when the user hasn't
+  // specified custom options - Workbox throws an error with unsupported
+  // parameters, so delete it
+  delete pluginOptions.plugins
 
   const combinedOptions = _.defaults(pluginOptions, options)
   return workboxBuild.generateSW({ swDest: `public/sw.js`, ...combinedOptions })
