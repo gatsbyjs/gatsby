@@ -29,13 +29,8 @@ and AppCache setup by changing these options so tread carefully.
 
 ```javascript
 const options = {
-  globPatterns: files.concat([
-    `${rootDir}/index.html`,
-    `${rootDir}/manifest.json`,
-    `${rootDir}/manifest.webmanifest`,
-    `${rootDir}/offline-plugin-app-shell-fallback/index.html`,
-    ...criticalFilePaths,
-  ]),
+  globDirectory: rootDir,
+  globPatterns,
   modifyUrlPrefix: {
     rootDir: ``,
     // If `pathPrefix` is configured by user, we should replace
