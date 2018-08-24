@@ -443,7 +443,7 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
    Features: 
   
   - Implement authentication & host your app on AWS
-  - Sign in, Sign Uo, & Sign Out
+  - Sign in, Sign Up, & Sign Out
   - Fetch user metadata
   - Multi-factor authentication (MFA)
   - Protected Routes with Authorization
