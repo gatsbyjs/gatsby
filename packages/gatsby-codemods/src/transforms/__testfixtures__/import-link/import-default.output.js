@@ -1,0 +1,1 @@
+import { Link } from "gatsby";
