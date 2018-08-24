@@ -438,7 +438,7 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
   - Protected Routes with Authorization
   - Realtime Database with Users
 
-- [gatsby-aws-amplify-authentication](https://github.com/dabit3/gatsby-auth-starter-aws)  [(demo)](http://gatsbyauth-20180816145726-hosting-bucket.s3-website-us-east-1.amazonaws.com/)
+- [gatsby-aws-amplify-authentication](https://github.com/dabit3/gatsby-auth-starter-aws-amplify)  [(demo)](http://gatsbyauth-20180816145726-hosting-bucket.s3-website-us-east-1.amazonaws.com/)
 
    Features: 
   
