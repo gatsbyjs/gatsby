@@ -102,6 +102,8 @@ describe(`The Home Page`, () => {
       // press right arrow to go to 2nd post
       cy.get(`body`).type(`{rightarrow}`)
       cy.url().should("contain", post2.id)
+      // wait for page to transition
+      cy.wait(200)
       // press left arrow to go back to 1st post
       cy.get(`body`).type(`{leftarrow}`)
       cy.url().should("contain", post1.id)
