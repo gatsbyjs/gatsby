@@ -7,8 +7,7 @@ const {
   isExport,
   isExportDefault,
   BLOCKS_REGEX,
-  EMPTY_NEWLINE,
-  ...props
+  EMPTY_NEWLINE
 } = require("@mdx-js/mdx/util");
 
 const toMDAST = require("remark-parse");
@@ -52,7 +51,7 @@ const hasDefaultExport = (str, options) => {
     }
   };
 
-  tokenizeEsSyntax.locator = (value, fromIndex) => {
+  tokenizeEsSyntax.locator = value => {
     return isExport(value) || isImport(value) ? -1 : 1;
   };
 
@@ -67,7 +66,7 @@ const hasDefaultExport = (str, options) => {
   }
 
   const { content } = grayMatter(str);
-  const fn = unified()
+  unified()
     .use(toMDAST, options)
     .use(esSyntax)
     .use(squeeze, options)
