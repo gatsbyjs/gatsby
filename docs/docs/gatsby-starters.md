@@ -905,3 +905,15 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
   - Website
   - Blog
   - more coming soon
+  
+- [gatsby-v2-jslingui](https://github.com/zuiidea/gatsby-v2-jslingui)
+  [(demo)](https://gatsby-v2-jslingui.surge.sh)
+
+  > An starter for using Gatsby v2 with [js-lingui](https://github.com/lingui/js-lingui).
+
+  Features:
+  
+  - Localization (Multilanguage) provided by [js-lingui](https://github.com/lingui/js-lingui)
+  - Message extraction
+  - Avoids code duplication - generates pages for each locale
+  - Possibility of translated paths
