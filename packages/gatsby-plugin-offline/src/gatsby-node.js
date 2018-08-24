@@ -1,9 +1,8 @@
 const fs = require(`fs`)
-const precache = require(`sw-precache`)
+const workboxBuild = require(`workbox-build`)
 const path = require(`path`)
 const slash = require(`slash`)
 const _ = require(`lodash`)
-const replace = require(`replace-in-file`)
 
 const getResourcesFromHTML = require(`./get-resources-from-html`)
 
@@ -58,19 +57,19 @@ exports.onPostBuild = (args, pluginOptions) => {
   )
 
   const options = {
-    staticFileGlobs: files.concat([
+    globPatterns: files.concat([
       `${rootDir}/index.html`,
       `${rootDir}/manifest.json`,
       `${rootDir}/manifest.webmanifest`,
       `${rootDir}/offline-plugin-app-shell-fallback/index.html`,
       ...criticalFilePaths,
     ]),
-    stripPrefix: rootDir,
-    // If `pathPrefix` is configured by user, we should replace
-    // the `public` prefix with `pathPrefix`.
-    // See more at:
-    // https://github.com/GoogleChrome/sw-precache#replaceprefix-string
-    replacePrefix: args.pathPrefix || ``,
+    modifyUrlPrefix: {
+      rootDir: ``,
+      // If `pathPrefix` is configured by user, we should replace
+      // the default prefix with `pathPrefix`.
+      "": args.pathPrefix || ``,
+    },
     navigateFallback: `/offline-plugin-app-shell-fallback/index.html`,
     // Only match URLs without extensions or the query `no-cache=1`.
     // So example.com/about/ will pass but
@@ -80,7 +79,8 @@ exports.onPostBuild = (args, pluginOptions) => {
     // URLs and not any files hosted on the site.
     //
     // Regex based on http://stackoverflow.com/a/18017805
-    navigateFallbackWhitelist: [/^.*([^.]{5}|.html)(?<!(\?|&)no-cache=1)$/],
+    navigateFallbackWhitelist: [/^[^?]*([^.?]{5}|\.html)(\?.*)?$/],
+    navigateFallbackBlacklist: [/\?(.+&)?no-cache=1$/],
     cacheId: `gatsby-plugin-offline`,
     // Don't cache-bust JS files and anything in the static directory
     dontCacheBustUrlsMatching: /(.*js$|\/static\/)/,
@@ -88,27 +88,12 @@ exports.onPostBuild = (args, pluginOptions) => {
       {
         // Add runtime caching of various page resources.
         urlPattern: /\.(?:png|jpg|jpeg|webp|svg|gif|tiff|js|woff|woff2|json|css)$/,
-        handler: `fastest`,
+        handler: `staleWhileRevalidate`,
       },
     ],
     skipWaiting: true,
   }
 
   const combinedOptions = _.defaults(pluginOptions, options)
-
-  return precache.write(`public/sw.js`, combinedOptions).then(() =>
-    // Patch sw.js to include search queries when matching URLs against navigateFallbackWhitelist
-    replace({
-      files: `public/sw.js`,
-      from: `path = (new URL(absoluteUrlString)).pathname`,
-      to: `url = new URL(absoluteUrlString), path = url.pathname + url.search`,
-    }).then(changes => {
-      // Check that the patch has been applied correctly
-      if (changes.length !== 1)
-        throw new Error(
-          `Patching sw.js failed - sw-precache has probably been modified upstream.\n` +
-            `Please report this issue at https://github.com/gatsbyjs/gatsby/issues`
-        )
-    })
-  )
+  return workboxBuild.write({ swDest: `public/sw.js`, ...combinedOptions })
 }
