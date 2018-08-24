@@ -42,7 +42,7 @@ module.exports = htmlPath => {
     const blackListRegex = /(\.xml$|^\/\/|^http)/
 
     if (!blackListRegex.test(url)) {
-      criticalFilePaths.push(url)
+      criticalFilePaths.push(url.replace(/^\//, ``))
     }
   })
 

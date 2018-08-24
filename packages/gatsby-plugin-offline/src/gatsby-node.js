@@ -28,23 +28,22 @@ const readStats = () => {
   }
 }
 
-const getAssetsForChunks = (chunks, rootDir) =>
-  _.flatten(chunks.map(chunk => readStats().assetsByChunkName[chunk])).map(
-    assetFileName => `${rootDir}/${assetFileName}`
+const getAssetsForChunks = chunks => {
+  const files = _.flatten(
+    chunks.map(chunk => readStats().assetsByChunkName[chunk])
   )
+  return _.compact(files)
+}
 
 exports.onPostBuild = (args, pluginOptions) => {
   const rootDir = `public`
 
   // Get exact asset filenames for app and offline app shell chunks
-  const files = getAssetsForChunks(
-    [
-      `app`,
-      `webpack-runtime`,
-      `component---node-modules-gatsby-plugin-offline-app-shell-js`,
-    ],
-    rootDir
-  )
+  const files = getAssetsForChunks([
+    `app`,
+    `webpack-runtime`,
+    `component---node-modules-gatsby-plugin-offline-app-shell-js`,
+  ])
 
   const criticalFilePaths = _.uniq(
     _.concat(
@@ -56,15 +55,20 @@ exports.onPostBuild = (args, pluginOptions) => {
     )
   )
 
+  const globPatterns = files.concat([
+    `index.html`,
+    `offline-plugin-app-shell-fallback/index.html`,
+    ...criticalFilePaths,
+  ])
+
+  const manifests = [`manifest.json`, `manifest.webmanifest`]
+  manifests.forEach(file => {
+    if (fs.existsSync(`${rootDir}/${file}`)) globPatterns.push(file)
+  })
+
   const options = {
     globDirectory: rootDir,
-    globPatterns: files.concat([
-      `/index.html`,
-      `/manifest.json`,
-      `/manifest.webmanifest`,
-      `/offline-plugin-app-shell-fallback/index.html`,
-      ...criticalFilePaths,
-    ]),
+    globPatterns,
     modifyUrlPrefix: {
       rootDir: ``,
       // If `pathPrefix` is configured by user, we should replace
@@ -97,9 +101,17 @@ exports.onPostBuild = (args, pluginOptions) => {
 
   // pluginOptions.plugins is assigned automatically when the user hasn't
   // specified custom options - Workbox throws an error with unsupported
-  // parameters, so delete it
+  // parameters, so delete it.
   delete pluginOptions.plugins
-
   const combinedOptions = _.defaults(pluginOptions, options)
-  return workboxBuild.generateSW({ swDest: `public/sw.js`, ...combinedOptions })
+
+  const swDest = `public/sw.js`
+  return workboxBuild
+    .generateSW({ swDest, ...combinedOptions })
+    .then(({ count, size, warnings }) => {
+      if (warnings) warnings.forEach(warning => console.warn(warning))
+      console.log(
+        `Generated ${swDest}, which will precache ${count} files, totaling ${size} bytes.`
+      )
+    })
 }
