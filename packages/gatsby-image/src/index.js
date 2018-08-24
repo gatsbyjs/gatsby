@@ -104,10 +104,11 @@ const noscriptImg = props => {
 }
 
 const Img = props => {
-  const { style, onLoad, onError, ...otherProps } = props
+  const { style, src, onLoad, onError, ...otherProps } = props
   return (
     <img
       {...otherProps}
+      key={src}
       onLoad={onLoad}
       onError={onError}
       style={{
