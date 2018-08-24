@@ -95,5 +95,5 @@ exports.onPostBuild = (args, pluginOptions) => {
   }
 
   const combinedOptions = _.defaults(pluginOptions, options)
-  return workboxBuild.write({ swDest: `public/sw.js`, ...combinedOptions })
+  return workboxBuild.generateSW({ swDest: `public/sw.js`, ...combinedOptions })
 }
