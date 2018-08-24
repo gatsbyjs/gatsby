@@ -5,8 +5,7 @@ import CommunityView from "../../views/community"
 class AgenciesPage extends Component {
   render() {
     const { location, data } = this.props
-    console.log(data)
-    return <CommunityView location={location} title={`Agencies`} />
+    return <CommunityView location={location} data={data} title={`Agencies`} />
   }
 }
 
@@ -21,6 +20,13 @@ export const pageQuery = graphql`
           description
           website
           github
+          image {
+            childImageSharp {
+              fixed(width: 240, height: 240) {
+                ...GatsbyImageSharpFixed
+              }
+            }
+          }
           hiring
           portfolio
           fields {

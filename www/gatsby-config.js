@@ -21,6 +21,13 @@ module.exports = {
         path: `${__dirname}/../docs/`,
       },
     },
+    // {
+    //   resolve: `gatsby-source-filesystem`,
+    //   options: {
+    //     name: `CreatorImages`,
+    //     path: `${__dirname}/../docs/community/images`,
+    //   },
+    // },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
