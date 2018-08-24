@@ -97,6 +97,7 @@ exports.onPostBuild = (args, pluginOptions) => {
       },
     ],
     skipWaiting: true,
+    clientsClaim: true,
   }
 
   // pluginOptions.plugins is assigned automatically when the user hasn't

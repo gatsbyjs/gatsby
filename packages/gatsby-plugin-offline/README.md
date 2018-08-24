@@ -59,5 +59,6 @@ const options = {
     },
   ],
   skipWaiting: true,
+  clientsClaim: true,
 }
 ```
