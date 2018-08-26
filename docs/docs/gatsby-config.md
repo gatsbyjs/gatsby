@@ -10,15 +10,15 @@ _Note: There are many sample configs which may be helpful to reference in the di
 
 Options available to set within `gatsby-config.js` include:
 
-1.  siteMetadata (object)
-2.  plugins (array)
-3.  pathPrefix (string)
-4.  polyfill (boolean)
-5.  mapping (object)
-6.  proxy (object)
-7.  developMiddleware (function)
+1.  [siteMetadata](#siteMetadata) (object)
+2.  [plugins](#plugins) (array)
+3.  [pathPrefix](#pathPrefix) (string)
+4.  [polyfill](#polyfill) (boolean)
+5.  [mapping](#mapping-node-types) (object)
+6.  [proxy](#proxy) (object)
+7.  [developMiddleware](#advanced-proxying-with-developmiddleware) (function)
 
-## siteMetadata
+## siteMetadata ##
 
 When you want to reuse common pieces of data across the site (for example, your site title), you can store that data in `siteMetadata`:
 
