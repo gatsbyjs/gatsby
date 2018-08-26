@@ -18,7 +18,7 @@ Options available to set within `gatsby-config.js` include:
 6.  [proxy](#proxy) (object)
 7.  [developMiddleware](#advanced-proxying-with-developmiddleware) (function)
 
-## siteMetadata ##
+## siteMetadata
 
 When you want to reuse common pieces of data across the site (for example, your site title), you can store that data in `siteMetadata`:
 
@@ -221,6 +221,30 @@ query {
   }
 }
 ```
+
+Mapping also works between Markdown files. For example, instead of having all authors in a YAML file, you could have info about each author in a separate Markdown file:
+
+```markdown
+---
+author_id: Kyle Mathews
+twitter: "@kylemathews"
+---
+
+Founder @ GatsbyJS. Likes tech, reading/writing, founding things. Blogs at bricolage.io.
+```
+
+And then add the following rule to your `gatsby-config.js`:
+
+```javascript
+module.exports = {
+  plugins: [...],
+  mapping: {
+    'MarkdownRemark.frontmatter.author': `MarkdownRemark.frontmatter.author_id`
+  },
+}
+```
+
+Similarly to YAML and JSON files, mapping between Markdown files can also be used to map an array of ids.
 
 ## Proxy
 
