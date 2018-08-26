@@ -1,27 +1,44 @@
 import React, { Component } from "react"
 import { graphql } from "gatsby"
+import Layout from "../components/layout"
+import Helmet from "react-helmet"
+import typography, { rhythm, scale } from "../utils/typography"
 import Img from "gatsby-image"
+
+//A variant of the Creators Header Design here with Breadcrumb of Creators > PEOPLE (Whatever) > Creator so clickable to go back to creators
 
 class CreatorTemplate extends Component {
   render() {
     const { data } = this.props
     const creator = data.creatorsYaml
     return (
-      <div
-        css={{
-          display: `flex`,
-        }}
-      >
-        <Img
+      <Layout location={location}>
+        <Helmet>
+          <title>{creator.name}</title>
+        </Helmet>
+        <main
+          role="main"
           css={{
-            minWidth: `30vw`,
+            padding: rhythm(3 / 4),
           }}
-          alt={`${creator.name}`}
-          fluid={creator.image.childImageSharp.fluid}
-        />
-        <p>{creator.name}</p>
-        <p>{creator.location}</p>
-      </div>
+        >
+          <div
+            css={{
+              display: `flex`,
+            }}
+          >
+            <Img
+              css={{
+                minWidth: `30vw`,
+              }}
+              alt={`${creator.name}`}
+              fluid={creator.image.childImageSharp.fluid}
+            />
+            <p>{creator.name}</p>
+            <p>{creator.location}</p>
+          </div>
+        </main>
+      </Layout>
     )
   }
 }
