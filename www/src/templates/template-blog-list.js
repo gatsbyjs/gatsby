@@ -88,13 +88,12 @@ class BlogPostsIndex extends React.Component {
                     transform: `translateY(0)`,
                     transition: `transform 50ms`,
                   },
-                  [presets.Desktop]: {},
-                  [presets.Hd]: {},
-                }}
-              />
-            ))}
-            <Pagination context={this.props.pageContext} />
-            <EmailCaptureForm signupMessage="Enjoying our blog? Receive the next post in your inbox!" />
+                },
+              }}
+            />
+          ))}
+          <Pagination context={this.props.pathContext} />
+          <EmailCaptureForm signupMessage="Enjoying our blog? Receive the next post in your inbox!" />
         </Container>
       </div>
     )

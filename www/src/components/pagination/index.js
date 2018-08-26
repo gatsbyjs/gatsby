@@ -1,5 +1,5 @@
 import React from "react"
-import { navigate } from "gatsby"
+import { navigateTo } from "gatsby-link"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import ArrowBackIcon from "react-icons/lib/md/arrow-back"
 import PaginationLink from "./PaginationLink"
@@ -8,7 +8,7 @@ import { options, rhythm } from "../../utils/typography"
 
 class Pagination extends React.Component {
   changePage = e => {
-    navigate(`/blog/${e.target.value}`)
+    navigateTo(`/blog/${e.target.value}`)
   }
   render() {
     const { numPages, currentPage } = this.props.context
