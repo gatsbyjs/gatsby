@@ -1,7 +1,7 @@
 - name: Andy Slezak
   type: individual
   description: "Andy Slezak is a web developer"
-  location: "Somewhere"
+  location: "New York, USA"
   website: "https://www.aslezak.com/"
   github: "https://github.com/amslezak"
   image: "images/andy-slezak.jpg"
@@ -13,7 +13,7 @@
 - name: Fabian Schultz
   type: individual
   description: "Fabian Schultz is a web developer"
-  location: "Somewhere"
+  location: "Potsdam, Germany"
   website: "https://fabianschultz.com/"
   github: "https://github.com/fabe"
   image: "images/fabian-schultz.jpg"
@@ -25,7 +25,7 @@
 - name: Formidable
   type: agency
   description: "Formidable builds cool things"
-  location: "Somewhere"
+  location: "Seattle, US"
   website: "https://formidable.com/"
   github: null
   image: "images/formidable.jpg"
@@ -34,16 +34,16 @@
 - name: Haptic Media
   type: agency
   description: "Haptic Media is an agency in France"
-  location: "Somewhere"
+  location: "Paris, France"
   website: "https://hapticmedia.fr/en"
   github: null
   image: "images/haptic-media.jpg"
-  for_hire: false
+  for_hire: true
   portfolio: null
 - name: Dona Rita
   type: company
   description: "Dona Rita is a marketing company"
-  location: "Somewhere"
+  location: "London, UK"
   website: "https://www.donarita.co.uk/"
   github: null
   image: "images/dona-rita.jpg"
@@ -52,7 +52,7 @@
 - name: Deliveroo Design
   type: company
   description: "Deliveroo Design is a company"
-  location: "Somewhere"
+  location: "London, UK"
   website: "https://www.deliveroo.design/"
   github: null
   image: "images/deliveroo-design.jpg"

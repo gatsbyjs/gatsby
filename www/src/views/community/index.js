@@ -1,10 +1,12 @@
 import React, { Component } from "react"
 import Helmet from "react-helmet"
-import { rhythm } from "../../utils/typography"
+import typography, { rhythm, scale } from "../../utils/typography"
 import Layout from "../../components/layout"
 import CommunityHeader from "./community-header"
 import Img from "gatsby-image"
 import GithubIcon from "react-icons/lib/go/mark-github"
+
+import presets, { colors } from "../../utils/presets"
 
 class CommunityView extends Component {
   render() {
@@ -37,6 +39,7 @@ class CommunityView extends Component {
                   display: `flex`,
                   flexDirection: `column`,
                   marginRight: `1rem`,
+                  fontFamily: typography.options.headerFontFamily.join(`,`),
                 }}
               >
                 <Img
@@ -55,15 +58,29 @@ class CommunityView extends Component {
                   >{`${item.node.name}`}</h5>
                   {item.node.github && (
                     <GithubIcon
-                      style={{
+                      css={{
                         marginLeft: `auto`,
+                        color: colors.gray.bright,
                       }}
                     />
                   )}
                 </span>
-                <span>{`${item.node.location}`}</span>
+                <span
+                  css={{
+                    margin: `${rhythm(1 / 6)} 0`,
+                    color: colors.gray.bright,
+                    ...scale(-1 / 3),
+                  }}
+                >{`${item.node.location}`}</span>
                 {item.node.for_hire || item.node.hiring ? (
-                  <span>{item.node.for_hire ? `For Hire` : `Hiring`}</span>
+                  <span
+                    css={[
+                      styles.badge,
+                      item.node.for_hire ? styles.forHire : styles.hiring,
+                    ]}
+                  >
+                    {item.node.for_hire ? `For Hire` : `Hiring`}
+                  </span>
                 ) : null}
               </div>
             ))}
@@ -79,3 +96,20 @@ export default CommunityView
 // make this a template
 // pass the type from Page
 // query based on that
+
+const styles = {
+  badge: {
+    ...scale(-1 / 3),
+    padding: `0 ${rhythm(1 / 3)}`,
+    borderRadius: `20px`,
+    alignSelf: `flex-start`,
+  },
+  hiring: {
+    background: colors.ui.light,
+    color: colors.gatsby,
+  },
+  forHire: {
+    background: colors.success,
+    color: `white`,
+  },
+}
