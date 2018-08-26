@@ -42,7 +42,7 @@ export default () => (
 )
 ```
 
-Using `StaticQuery`, you can colocate a component with its data. No longer is it required to, say, pass data down from `Layout` to `Header`. It’s important that you write your query within the `StaticQuery` component, rather than referencing a variable from elsewhere. For example, this will result in the query “loading” for ever:
+Using `StaticQuery`, you can colocate a component with its data. No longer is it required to, say, pass data down from `Layout` to `Header`. It’s important that you write your query within the `StaticQuery` component, rather than referencing a variable from elsewhere. For example, this won’t work:
 
 ```jsx
 import React from "react"
