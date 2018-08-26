@@ -18,6 +18,7 @@ export const pageQuery = graphql`
         node {
           name
           description
+          location
           website
           github
           image {

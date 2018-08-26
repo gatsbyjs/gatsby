@@ -18,6 +18,7 @@ export const pageQuery = graphql`
         node {
           name
           description
+          location
           website
           github
           image {
@@ -28,6 +29,7 @@ export const pageQuery = graphql`
             }
           }
           hiring
+          for_hire
           portfolio
           fields {
             slug
