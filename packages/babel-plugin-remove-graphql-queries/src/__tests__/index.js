@@ -3,7 +3,7 @@ const plugin = require(`../`)
 
 function matchesSnapshot(query) {
   const { code } = babel.transform(query, {
-    presets: [`react`],
+    presets: [`@babel/preset-react`],
     plugins: [plugin],
   })
   expect(code).toMatchSnapshot()
