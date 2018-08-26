@@ -64,6 +64,9 @@ exports.createPages = ({ graphql, actions }) => {
     const showcaseTemplate = path.resolve(
       `src/templates/template-showcase-details.js`
     )
+    const creatorPageTemplate = path.resolve(
+      `src/templates/template-creator-details.js`
+    )
 
     createRedirect({
       fromPath: `/docs/bound-action-creators/`,
@@ -110,6 +113,15 @@ exports.createPages = ({ graphql, actions }) => {
             }
           }
           allAuthorYaml {
+            edges {
+              node {
+                fields {
+                  slug
+                }
+              }
+            }
+          }
+          allCreatorsYaml {
             edges {
               node {
                 fields {
@@ -220,6 +232,18 @@ exports.createPages = ({ graphql, actions }) => {
         createPage({
           path: `${edge.node.fields.slug}`,
           component: slash(contributorPageTemplate),
+          context: {
+            slug: edge.node.fields.slug,
+          },
+        })
+      })
+
+      result.data.allCreatorsYaml.edges.forEach(edge => {
+        if (!edge.node.fields) return
+        if (!edge.node.fields.slug) return
+        createPage({
+          path: `${edge.node.fields.slug}`,
+          component: slash(creatorPageTemplate),
           context: {
             slug: edge.node.fields.slug,
           },

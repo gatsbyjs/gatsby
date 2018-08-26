@@ -24,8 +24,8 @@ module.exports = {
     // {
     //   resolve: `gatsby-source-filesystem`,
     //   options: {
-    //     name: `CreatorImages`,
-    //     path: `${__dirname}/../docs/community/images`,
+    //     name: `creators`,
+    //     path: `${__dirname}/../docs/community/`,
     //   },
     // },
     {

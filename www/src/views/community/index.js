@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+import { Link } from "gatsby"
 import Helmet from "react-helmet"
 import typography, { rhythm, scale } from "../../utils/typography"
 import Layout from "../../components/layout"
@@ -33,14 +34,23 @@ class CommunityView extends Component {
             {items.map(item => (
               // this gonna be a link rendering a template
               // config on gatsby-node.js
-              <div
+              <Link
                 key={item.node.name}
                 css={{
-                  display: `flex`,
-                  flexDirection: `column`,
-                  marginRight: `1rem`,
-                  fontFamily: typography.options.headerFontFamily.join(`,`),
+                  "&&": {
+                    borderBottom: `none`,
+                    boxShadow: `none`,
+                    transition: `box-shadow .3s cubic-bezier(.4,0,.2,1), transform .3s cubic-bezier(.4,0,.2,1)`,
+                    display: `flex`,
+                    flexDirection: `column`,
+                    marginRight: `1rem`,
+                    fontFamily: typography.options.headerFontFamily.join(`,`),
+                    "&:hover": {
+                      background: `transparent`,
+                    },
+                  },
                 }}
+                to={item.node.fields.slug}
               >
                 <Img
                   alt={`${item.node.name}`}
@@ -82,7 +92,7 @@ class CommunityView extends Component {
                     {item.node.for_hire ? `For Hire` : `Hiring`}
                   </span>
                 ) : null}
-              </div>
+              </Link>
             ))}
           </div>
         </main>
