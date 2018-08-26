@@ -52,7 +52,7 @@ const getPage = path => pagesObjectMap.get(path)
 const createElement = React.createElement
 
 export default (pagePath, callback) => {
-  const pathPrefix = `${__PATH_PREFIX__}/`
+  const pathPrefix = `${__PATH_PREFIX__}`
 
   let bodyHtml = ``
   let headComponents = []
