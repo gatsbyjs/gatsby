@@ -1,13 +1,14 @@
 import React from "react"
 import Helmet from "react-helmet"
 
-import Container from "../../components/container"
-import BlogPostPreviewItem from "../../components/blog-post-preview-item"
-import EmailCaptureForm from "../../components/email-capture-form"
+import Container from "../components/container"
+import BlogPostPreviewItem from "../components/blog-post-preview-item"
+import Pagination from "../components/pagination"
+import EmailCaptureForm from "../components/email-capture-form"
 
-import presets, { colors } from "../../utils/presets"
-import { rhythm, scale, options } from "../../utils/typography"
-import logo from "../../monogram.svg"
+import presets, { colors } from "../utils/presets"
+import { rhythm, options } from "../utils/typography"
+import logo from "../monogram.svg"
 
 class BlogPostsIndex extends React.Component {
   render() {
@@ -88,12 +89,11 @@ class BlogPostsIndex extends React.Component {
                     transition: `transform 50ms`,
                   },
                 },
-                [presets.Desktop]: {},
-                [presets.Hd]: {},
               }}
             />
           ))}
-            <EmailCaptureForm signupMessage="Enjoying our blog? Receive the next post in your inbox!" />
+          <Pagination context={this.props.pathContext} />
+          <EmailCaptureForm signupMessage="Enjoying our blog? Receive the next post in your inbox!" />
         </Container>
       </div>
     )
@@ -103,13 +103,15 @@ class BlogPostsIndex extends React.Component {
 export default BlogPostsIndex
 
 export const pageQuery = graphql`
-  query BlogPostsIndexQuery {
+  query blogListQuery($skip: Int!, $limit: Int!) {
     allMarkdownRemark(
       sort: { order: DESC, fields: [frontmatter___date] }
       filter: {
         frontmatter: { draft: { ne: true } }
         fileAbsolutePath: { regex: "/docs.blog/" }
       }
+      limit: $limit
+      skip: $skip
     ) {
       edges {
         node {
