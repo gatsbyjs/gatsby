@@ -7,9 +7,9 @@
   image: "images/andy-slezak.jpg"
   for_hire: true
   portfolio:
-    - Blog
-    - Web Dev
-    - Featured
+    - "https://github.com/amslezak"
+    - "https://github.com/amslezak"
+    - "https://github.com/amslezak"
 - name: Fabian Schultz
   type: individual
   description: "Fabian Schultz is a web developer, content creator and photographer. Photography and cooking are the things that drive him, because of the stories they can tell."
@@ -19,9 +19,9 @@
   image: "images/fabian-schultz.jpg"
   for_hire: false
   portfolio:
-    - Blog
-    - Web Dev
-    - Featured
+    - "https://github.com/fabe"
+    - "https://github.com/fabe"
+    - "https://github.com/fabe"
 - name: Formidable
   type: agency
   description: "Formidable builds cool things"

@@ -164,13 +164,16 @@ class CreatorTemplate extends Component {
               >
                 Worked On
               </p>
-              <div
-                css={{
-                  display: `flex`,
-                }}
-              >
-                {creator.portfolio}
-              </div>
+
+              {creator.portfolio && (
+                <div
+                  css={{
+                    display: `flex`,
+                  }}
+                >
+                  {creator.portfolio.map((work, i) => <a key={i}>{work}</a>)}
+                </div>
+              )}
             </span>
           </div>
         </main>
