@@ -40,13 +40,6 @@ try {
 
 Html = Html && Html.__esModule ? Html.default : Html
 
-function urlJoin(...parts) {
-  return parts.reduce((r, next) => {
-    const segment = next == null ? `` : String(next).replace(/^\/+/, ``)
-    return segment ? `${r.replace(/\/$/, ``)}/${segment}` : r
-  }, ``)
-}
-
 const getPage = path => pagesObjectMap.get(path)
 
 const createElement = React.createElement
@@ -148,13 +141,14 @@ export default (pagePath, callback) => {
       return wrappedPage
     }
   }
+
   const routerElement = createElement(
     ServerLocation,
-    { url: `${__PATH_PREFIX__}/${pagePath}` },
+    { url: `${__PATH_PREFIX__}${pagePath}` },
     createElement(
       Router,
       {
-        baseuri: `${__PATH_PREFIX__}/`,
+        baseuri: `${__PATH_PREFIX__}`,
       },
       createElement(RouteHandler, { path: `/*` })
     )
@@ -258,7 +252,7 @@ export default (pagePath, callback) => {
           as="script"
           rel={script.rel}
           key={script.name}
-          href={urlJoin(__PATH_PREFIX__, script.name)}
+          href={`${__PATH_PREFIX__}/${script.name}`}
         />
       )
     })
@@ -289,13 +283,13 @@ export default (pagePath, callback) => {
             as="style"
             rel={style.rel}
             key={style.name}
-            href={urlJoin(__PATH_PREFIX__, style.name)}
+            href={`${__PATH_PREFIX__}/${style.name}`}
           />
         )
       } else {
         headComponents.unshift(
           <style
-            data-href={urlJoin(__PATH_PREFIX__, style.name)}
+            data-href={`${__PATH_PREFIX__}/${style.name}`}
             dangerouslySetInnerHTML={{
               __html: fs.readFileSync(
                 join(process.cwd(), `public`, style.name),
