@@ -148,33 +148,36 @@ class CreatorTemplate extends Component {
                 {creator.location}
               </p>
             </span>
-            <span
-              css={{
-                borderBottom: `2px solid black`,
-                padding: `${rhythm(3 / 4)} 0`,
-              }}
-            >
-              <p
+            {creator.portfolio && (
+              <span
                 css={{
-                  margin: `0`,
-                  textDecoration: `underline`,
-                  fontWeight: `600`,
-                  width: `150`,
+                  borderBottom: `2px solid black`,
+                  padding: `${rhythm(3 / 4)} 0`,
                 }}
               >
-                Worked On
-              </p>
-
-              {creator.portfolio && (
+                <p
+                  css={{
+                    margin: `0`,
+                    textDecoration: `underline`,
+                    fontWeight: `600`,
+                    width: `150`,
+                  }}
+                >
+                  Worked On
+                </p>
+                {/* We can probably map the sent websites on sites.yml as worked on and just parse that here */}
+                {/* this should go to their website on the Gatsby showcase, so we can actually just parse the screenshot available there and show it as a thumbnail? */}
                 <div
                   css={{
                     display: `flex`,
+                    flexDirection: `column`,
+                    alignItems: `flex-start`,
                   }}
                 >
                   {creator.portfolio.map((work, i) => <a key={i}>{work}</a>)}
                 </div>
-              )}
-            </span>
+              </span>
+            )}
           </div>
         </main>
       </Layout>
