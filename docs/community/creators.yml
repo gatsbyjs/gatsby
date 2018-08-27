@@ -1,6 +1,6 @@
 - name: Andy Slezak
   type: individual
-  description: "Andy Slezak is a web developer"
+  description: "Andy Slezak is a web developer, content creator and photographer. Photography and cooking are the things that drive him, because of the stories they can tell."
   location: "New York, USA"
   website: "https://www.aslezak.com/"
   github: "https://github.com/amslezak"
@@ -12,7 +12,7 @@
     - Featured
 - name: Fabian Schultz
   type: individual
-  description: "Fabian Schultz is a web developer"
+  description: "Fabian Schultz is a web developer, content creator and photographer. Photography and cooking are the things that drive him, because of the stories they can tell."
   location: "Potsdam, Germany"
   website: "https://fabianschultz.com/"
   github: "https://github.com/fabe"

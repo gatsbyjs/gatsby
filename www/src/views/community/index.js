@@ -13,7 +13,6 @@ class CommunityView extends Component {
   render() {
     const { location, title, data } = this.props
     let items = data.allCreatorsYaml.edges
-    // console.log(items)
     return (
       <Layout location={location}>
         <Helmet>
@@ -61,11 +60,11 @@ class CommunityView extends Component {
                     display: `flex`,
                   }}
                 >
-                  <h5
+                  <p
                     css={{
                       margin: `0`,
                     }}
-                  >{`${item.node.name}`}</h5>
+                  >{`${item.node.name}`}</p>
                   {item.node.github && (
                     <GithubIcon
                       css={{
