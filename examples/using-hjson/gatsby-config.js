@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
     title: `gatsby-example-using-hjson`,
-    description: `Blazing-fast React.js static site generator`,
+    description: `Blazing-fast React.js static site and PWA (Progressive Web App) generator`,
   },
   plugins: [
     `gatsby-transformer-hjson`,

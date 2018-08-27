@@ -12,7 +12,7 @@ Create an RSS feed (or multiple feeds) for your Gatsby site.
 // In your gatsby-config.js
 siteMetadata: {
   title: `GatsbyJS`,
-  description: `A fantastic new static site generator.`,
+  description: `A fantastic new static site and PWA (Progressive Web App) generator.`,
   siteUrl: `https://www.gatsbyjs.org`
 },
 plugins: [

@@ -27,7 +27,7 @@ module.exports = {
   siteMetadata: {
     title: `Gatsby`,
     siteUrl: `https://www.gatsbyjs.org`,
-    description: `Blazing-fast static site generator for React`,
+    description: `Blazing-fast static site and PWA (Progressive Web App) generator for React`,
   },
 }
 ```
