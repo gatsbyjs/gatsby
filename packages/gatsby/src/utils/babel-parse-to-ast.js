@@ -15,7 +15,7 @@ const PARSER_OPTIONS = {
     [
       `decorators`,
       {
-        decoratorsBeforeExport: false,
+        decoratorsBeforeExport: true,
       },
     ],
     `classProperties`,
