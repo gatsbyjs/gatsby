@@ -19,6 +19,18 @@ module.exports = pluginOptions => {
     pluginOptions
   );
 
+  // ensure File transformer is always ours
+  options.transformers.File = {
+    transformer: async ({ loadNodeContent, node }) => {
+      const mdxContent = await loadNodeContent(node);
+      return { meta: undefined, content: mdxContent };
+    },
+    // We only care about markdown content.
+    // replace with mediaType when mime-db is merged
+    //    node.internal.mediaType !== `text/mdx`
+    filter: ({ node }) => options.extensions.includes(node.ext)
+  };
+
   // support single layout set in the `defaultLayouts` option
   if (options.defaultLayouts && isString(options.defaultLayouts)) {
     options.defaultLayouts = {
