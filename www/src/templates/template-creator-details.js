@@ -11,17 +11,33 @@ import GithubIcon from "react-icons/lib/go/mark-github"
 //A variant of the Creators Header Design here with Breadcrumb of Creators > PEOPLE (Whatever) > Creator so clickable to go back to creators
 
 class CreatorTemplate extends Component {
+  constructor(props) {
+    super(props)
+    this.state = { sites: [] }
+  }
+
+  componentDidMount() {
+    this.generateThumbnails()
+  }
+
+  generateThumbnails = () => {
+    let sites = []
+    const creator = this.props.data.creatorsYaml
+    this.props.data.allSitesYaml.edges.map(site => {
+      if (site.node.built_by === creator.name) {
+        sites.push(site)
+      }
+    })
+    this.setState({ sites: sites })
+  }
   render() {
     const { data } = this.props
     const creator = data.creatorsYaml
-    const sites = data.allSitesYaml
-    // console.log(this.props.pageContext.slug)
-    // console.log(this.props.pageContext.slug)
-    console.log(
-      this.props.pageContext.slug.match(/\/([^\/]+)\/?$/)[1].replace(`-`, ` `)
-    )
+    // const sites = data.allSitesYaml
+    // console.log(
+    //   this.props.pageContext.slug.match(/\/([^\/]+)\/?$/)[1].replace(`-`, ` `)
+    // )
 
-    // [\s-]+
     return (
       <Layout location={location}>
         <Helmet>
@@ -173,17 +189,28 @@ class CreatorTemplate extends Component {
                 >
                   Worked On
                 </p>
-                {/* We can probably map the sent websites on sites.yml as worked on and just parse that here */}
-                {/* this should go to their website on the Gatsby showcase, so we can actually just parse the screenshot available there and show it as a thumbnail? */}
                 <div
                   css={{
                     display: `flex`,
-                    flexDirection: `column`,
                     alignItems: `flex-start`,
                   }}
                 >
-                  {console.log(sites)}
-                  {creator.portfolio.map((work, i) => <a key={i}>{work}</a>)}
+                  {this.state.sites.map(site => (
+                    // these gonna be links that link back to the showcase pages
+                    <Img
+                      key={site.node.title}
+                      css={
+                        {
+                          // minWidth: `150`,
+                        }
+                      }
+                      alt={`${site.node.title}`}
+                      fixed={
+                        site.node.childScreenshot.screenshotFile.childImageSharp
+                          .fixed
+                      }
+                    />
+                  ))}
                 </div>
               </span>
             )}
@@ -222,6 +249,17 @@ export const pageQuery = graphql`
       edges {
         node {
           built_by
+          url
+          title
+          childScreenshot {
+            screenshotFile {
+              childImageSharp {
+                fixed(width: 150, height: 150) {
+                  ...GatsbyImageSharpFixed
+                }
+              }
+            }
+          }
           fields {
             slug
           }
@@ -247,3 +285,34 @@ const styles = {
 // (fields: { slug: { eq: $slug.match(/\/([^\/]+)\/?$/)[1] } })
 
 // (fields: { creator: { eq: $slug } })
+
+/*     allSitesYaml(filter: { built_by: { eq: "Andy Slezak" } }) {
+      edges {
+        node {
+          built_by
+          childScreenshot {
+            screenshotFile {
+              childImageSharp {
+                fixed(width: 150, height: 150) {
+                  ...GatsbyImageSharpFixed
+                }
+              }
+            }
+          }
+          fields {
+            slug
+          }
+        }
+      }
+    } */
+
+/*     <Img
+    css={{
+      minWidth: `150`,
+    }}
+    alt={`${site.node.title}`}
+    fixed={
+      site.node.childScreenshot.screenshotFile
+        .childImageSharp.fixed
+    }
+  />  */
