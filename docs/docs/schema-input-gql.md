@@ -8,7 +8,7 @@ In [gqlTypes](/docs/schema-gql-type), we inferred a Gatsby Node's main fields. T
 
 ```graphql
 {
-  markdownRemark(wordCount: {paragraphs: {eq: 4}}) {
+  markdownRemark(wordCount: { paragraphs: { eq: 4 } }) {
     html
   }
 }
@@ -22,7 +22,9 @@ The first step is to generate an input field for each type of field on the redux
 
 ```graphql
 {
-  markdownRemark(frontmatter: {author: {eq: "F. Scott Fitzgerald"}}) { id }
+  markdownRemark(frontmatter: { author: { eq: "F. Scott Fitzgerald" } }) {
+    id
+  }
 }
 ```
 
@@ -48,7 +50,6 @@ If the key is a foreign key reference (ends in `___NODE`), then we find the fiel
     }
   }
 }
-
 ```
 
 ### Inferring input filters from plugin fields
@@ -57,7 +58,7 @@ Plugins themselves have the opportunity to create custom fields that apply to AL
 
 ```graphql
 {
-  markdownRemark(wordCount: {paragraphs: {eq: 4}}) {
+  markdownRemark(wordCount: { paragraphs: { eq: 4 } }) {
     html
   }
 }
@@ -69,7 +70,7 @@ Plugins add custom fields by implementing the [setFieldsOnGraphQLNodeType](/docs
 { //GraphQLInputObjectType
   name: `WordCountwordcountInputObject`,
   fields: {
-    `paragraphs`: { 
+    `paragraphs`: {
       type: { // GraphQLInputObjectType
         name: `WordCountParagraphsQueryInt`,
         fields: {
@@ -117,7 +118,7 @@ Now that we've generated input fields from the redux nodes and from custom plugi
   `wordCount`: { //GraphQLInputObjectType
     name: `WordCountwordcountInputObject`,
     fields: {
-      `paragraphs`: { 
+      `paragraphs`: {
         type: { // GraphQLInputObjectType
           name: `WordCountParagraphsQueryInt`,
           fields: {

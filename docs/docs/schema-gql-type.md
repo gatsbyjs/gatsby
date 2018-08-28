@@ -22,7 +22,7 @@ When running a GraphQL query, there are a variety of fields that you will want t
 
 When GraphQL runs, it will query all `file` nodes by their relativePath and return the first node that satisfies that query. Then, it will filter down the fields to return by the inner expression. I.e `{ childMarkdownRemark ... }`. The building of the query arguments is covered by the [Inferring Input Filters](/docs/schema-input-gql) doc. This section instead explains how the inner filter schema is generated.
 
-During the [sourceNodes](/docs/node-apis/#sourceNodes) phase, let's say that [gatsby-source-filesystem](/packages/gatsby-source-filesystem) ran and created a bunch of File nodes. Then, different transformers react via [onCreateNode](/docs/node-apis/#onCreateNode), resulting in children of different `node.internal.type`s being created. 
+During the [sourceNodes](/docs/node-apis/#sourceNodes) phase, let's say that [gatsby-source-filesystem](/packages/gatsby-source-filesystem) ran and created a bunch of File nodes. Then, different transformers react via [onCreateNode](/docs/node-apis/#onCreateNode), resulting in children of different `node.internal.type`s being created.
 
 There are 3 categories of node fields that we can query.
 
@@ -57,7 +57,7 @@ node {
 ```
 
 Each of these categories of fields is created in a different way, explained below.
-    
+
 ## gqlType Creation
 
 The Gatsby term for the GraphQLObjectType for a unique node type, is `gqlType`. GraphQLObjectTypes are simply objects that define the type name and fields. The field definitions are created by the [createNodeFields](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/build-node-types.js#L48) function in `build-node-types.js`.
@@ -74,9 +74,9 @@ Fields on the node that were created directly by the source and transform plugin
 
 The creation of these fields is handled by the [inferObjectStructureFromNodes](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js#L317) function in [infer-graphql-type.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js). Given an object, a field could be in one of 3 sub-categories:
 
-1. It involves a mapping in [gatsby-config.js](/docs/gatsby-config/#mapping-node-types)
-2. It's value is a foreign key reference to some other node (ends in `___NODE`)
-3. It's a plain object or value (e.g String, number, etc)
+1.  It involves a mapping in [gatsby-config.js](/docs/gatsby-config/#mapping-node-types)
+2.  It's value is a foreign key reference to some other node (ends in `___NODE`)
+3.  It's a plain object or value (e.g String, number, etc)
 
 #### Mapping field
 
@@ -96,15 +96,13 @@ Now we can create a GraphQL Field declaration whose type is `AuthorYaml` (which 
 
 #### Foreign Key reference (`___NODE`)
 
-If not a mapping field, it might instead end in `___NODE`, signifying that its value is an ID that is a foreign key reference to another node in redux. Check out the [Create a Source Plugin](/docs/create-source-plugin/#create-source-plugin) for how this works from a user point of view. Behind the scenes, the field inference is handled by [inferFromFieldName](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js#L204). 
+If not a mapping field, it might instead end in `___NODE`, signifying that its value is an ID that is a foreign key reference to another node in redux. Check out the [Create a Source Plugin](/docs/create-source-plugin/#create-source-plugin) for how this works from a user point of view. Behind the scenes, the field inference is handled by [inferFromFieldName](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js#L204).
 
 This is actually quite similar to the mapping case above. We remove the `___NODE` part of the field name. E.g `author___NODE` would become `author`. Then, we find our `linkedNode`. I.e given the example value for `author` (which would be an ID), we find its actual node in redux. Then, we find its type in processed types by its `internal.type`. Note, that also like in mapping fields, we can define the `linkedField` too. This can be specified via `nodeFieldname___NODE___linkedFieldName`. E.g for `author___NODE___name`, the linkedField would be `name` instead of `id`.
 
 Now we can return a new GraphQL Field object, whose type is the one found above. Its resolver searches through all redux nodes until it finds one with the matching ID. As usual, it also creates a [page dependency](TODO), from the query context's path to the node ID.
 
-If the foreign key value is an array of IDs, then instead of returning a Field declaration for a single field, we return a `GraphQLUnionType`, which is a union of all the distinct linked types in the array. 
-
-
+If the foreign key value is an array of IDs, then instead of returning a Field declaration for a single field, we return a `GraphQLUnionType`, which is a union of all the distinct linked types in the array.
 
 #### Plain object or value field
 
@@ -120,12 +118,12 @@ in addition, if a value is a string that actually points to a file, then we hand
 
 #### Child fields creation
 
-Let's continue with the `File` type example. There are many transformer plugins that implement `onCreateNode` for `File` nodes. These produce `File` children that are of their own type. E.g `markdownRemark`, `postsJson`. 
+Let's continue with the `File` type example. There are many transformer plugins that implement `onCreateNode` for `File` nodes. These produce `File` children that are of their own type. E.g `markdownRemark`, `postsJson`.
 
 Gatsby stores these children in redux as IDs in the parent's `children` field. And then stores those child nodes as full redux nodes themselves (see [node creation for more](/docs/node-creation-behind-the-scenes/#node-relationship-storage-model)). E.g for a File node with two children, it will be stored in the redux `nodes` namespace as:
 
 ```javascript
-{ 
+{
   `id1`: { type: `File`, children: [`id2`, `id3`], ...other_fields },
   `id2`: { type: `markdownRemark`, ...other_fields },
   `id3`: { type: `postsJson`, ...other_fields }
@@ -164,5 +162,4 @@ When a node is created as a child of some node, that fact is stored as a `parent
 
 ### Plugin fields
 
-These are fields created by plugins that implement the [setFieldsOnGraphQLNodeType](/docs/node-apis/#setFieldsOnGraphQLNodeType) API. These plugins return full GraphQL Field declarations, complete with type and resolve functions. 
-
+These are fields created by plugins that implement the [setFieldsOnGraphQLNodeType](/docs/node-apis/#setFieldsOnGraphQLNodeType) API. These plugins return full GraphQL Field declarations, complete with type and resolve functions.

@@ -26,7 +26,7 @@ Gatsby stores child nodes in redux as IDs in the parent's `children` field. And 
 }
 ```
 
-An important note here is that we do not store a distinct collection of each type of child. Rather we store a single collection that they're all packed into. 
+An important note here is that we do not store a distinct collection of each type of child. Rather we store a single collection that they're all packed into.
 
 ### Explicitly recording a parent/child relationship
 

@@ -6,13 +6,13 @@ title: Querying with Sift
 
 Gatsby stores all data loaded during the source-nodes phase in redux. And it allows you to write GraphQL queries to query that data. But Redux is a plain javascript object store. So how does Gatsby query over those nodes using the GraphQL Query language?
 
-The answer is that it uses the [sift.js](https://github.com/crcn/sift.js/tree/master) library. It is a port of the MongoDB query language that works over plain javascript objects. It turns out that mongo's query language is very compatible with GraphQL. 
+The answer is that it uses the [sift.js](https://github.com/crcn/sift.js/tree/master) library. It is a port of the MongoDB query language that works over plain javascript objects. It turns out that mongo's query language is very compatible with GraphQL.
 
-Most of the logic below is in the the [run-sift.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/run-sift.js) file, which is called from the [ProcessedNodeType `resolve()`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/build-node-types.js#L191) function. 
+Most of the logic below is in the the [run-sift.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/run-sift.js) file, which is called from the [ProcessedNodeType `resolve()`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/build-node-types.js#L191) function.
 
 ## ProcessedNodeType Resolve Function
 
-Remember, at the point this resolve function is created, we have been iterating over all the distinct `node.internal.type`s in the redux `nodes` namespace. So for instance we might be on the `MarkdownRemark` type. Therefore the `resolve()` function closes over this type name and has access to all the nodes of that type. 
+Remember, at the point this resolve function is created, we have been iterating over all the distinct `node.internal.type`s in the redux `nodes` namespace. So for instance we might be on the `MarkdownRemark` type. Therefore the `resolve()` function closes over this type name and has access to all the nodes of that type.
 
 The `resolve()` function calls `run-sift.js`, and provides it with the following arguments:
 
@@ -46,13 +46,12 @@ runSift({
 
 This file converts GraphQL Arguments into sift queries and applies them to the collection of all nodes of this type. The rough steps are:
 
-1. Convert query args to sift args
-1. Drop leaves from args
-1. Resolve inner query fields on all nodes
-1. Track newly realized fields
-1. Run sift query on all nodes
-1. Create Page dependency if required
-
+1.  Convert query args to sift args
+1.  Drop leaves from args
+1.  Resolve inner query fields on all nodes
+1.  Track newly realized fields
+1.  Run sift query on all nodes
+1.  Create Page dependency if required
 
 ### 1. Convert query args to sift args
 
@@ -97,13 +96,13 @@ The [nodesPromise](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsb
 markdownRemarkGqlType.resolve(node, {}, {}, { fieldName: `wordcount` })
 ```
 
-Note that the graphql-js library has NOT been invoked yet. We're instead calling the appropriate gqlType resolve function manually. 
+Note that the graphql-js library has NOT been invoked yet. We're instead calling the appropriate gqlType resolve function manually.
 
-The resolve method in this case would return a paragraph node, which also needs to be properly resolved. So We descend the `fieldsToSift` arg tree and perform the above operation on the paragraph node (using the found paragraph gqlType). 
+The resolve method in this case would return a paragraph node, which also needs to be properly resolved. So We descend the `fieldsToSift` arg tree and perform the above operation on the paragraph node (using the found paragraph gqlType).
 
 After `resolveRecursive` has finished, we will have "realized" all the query fields in each node, giving us confidence that we can perform the query with all the data being there.
 
-### 4. Track newly inlined fields 
+### 4. Track newly inlined fields
 
 TODO: I think what's going on here is that nodes when created, have explicit objects on them already. And there must be a step that links all these sub objects to the root node. But, the fields that are realized in the above step haven't been created before. So we need to track them explicitly. Feels a bit cray cray, but legit I guess.
 
