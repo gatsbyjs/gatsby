@@ -14,6 +14,14 @@ class CreatorTemplate extends Component {
   render() {
     const { data } = this.props
     const creator = data.creatorsYaml
+    const sites = data.allSitesYaml
+    // console.log(this.props.pageContext.slug)
+    // console.log(this.props.pageContext.slug)
+    console.log(
+      this.props.pageContext.slug.match(/\/([^\/]+)\/?$/)[1].replace(`-`, ` `)
+    )
+
+    // [\s-]+
     return (
       <Layout location={location}>
         <Helmet>
@@ -174,6 +182,7 @@ class CreatorTemplate extends Component {
                     alignItems: `flex-start`,
                   }}
                 >
+                  {console.log(sites)}
                   {creator.portfolio.map((work, i) => <a key={i}>{work}</a>)}
                 </div>
               </span>
@@ -209,6 +218,16 @@ export const pageQuery = graphql`
         slug
       }
     }
+    allSitesYaml {
+      edges {
+        node {
+          built_by
+          fields {
+            slug
+          }
+        }
+      }
+    }
   }
 `
 
@@ -224,3 +243,7 @@ const styles = {
     textTransform: `uppercase`,
   },
 }
+
+// (fields: { slug: { eq: $slug.match(/\/([^\/]+)\/?$/)[1] } })
+
+// (fields: { creator: { eq: $slug } })

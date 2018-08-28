@@ -7,6 +7,8 @@
     - Blog
     - Web Dev
     - Featured
+  built_by: Linton Ye
+  built_by_url: https://twitter.com/lintonye
 - title: Andy Slezak
   main_url: "https://www.aslezak.com/"
   url: "https://www.aslezak.com/"
@@ -16,6 +18,8 @@
     - Web Dev
     - Portfolio
     - Featured
+  built_by: Andy Slezak
+  built_by_url: https://www.aslezak.com/
 - title: Deliveroo.Design
   main_url: "https://www.deliveroo.design/"
   url: "https://www.deliveroo.design/"
@@ -24,6 +28,8 @@
     - Food
     - Marketing
     - Featured
+  built_by: Andy Slezak
+  built_by_url: https://www.aslezak.com/
 - title: Dona Rita
   main_url: "https://www.donarita.co.uk/"
   url: "https://www.donarita.co.uk/"
@@ -33,6 +39,8 @@
     - Food
     - Marketing
     - Featured
+  built_by: Fabian Schultz
+  built_by_url: https://www.formidable.com/
 - title: Fröhlich ∧ Frei
   main_url: "https://www.froehlichundfrei.de/"
   url: "https://www.froehlichundfrei.de/"
@@ -41,6 +49,8 @@
     - Web Dev
     - Blog
     - Open Source
+  built_by: Formidable
+  built_by_url: https://www.aslezak.com/
 - title: How to GraphQL
   main_url: "https://www.howtographql.com/"
   url: "https://www.howtographql.com/"
@@ -144,15 +154,4 @@
     - eCommerce
     - Clothing
     - Fashion
-  featured: false
-- title: Snap Kit
-  main_url: https://kit.snapchat.com/
-  url: https://kit.snapchat.com/
-  description: >
-    Snap Kit lets developers integrate some of Snapchat’s best features across platforms.
-  categories:
-    - Technology
-    - Tool
-    - Software
-    - Documentation
   featured: false
