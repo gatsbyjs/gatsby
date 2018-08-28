@@ -325,7 +325,7 @@ To have the same configuration that you had in v1 (if you were using these plugi
 
 #### 1. Install the dependencies
 
-`npm install --save gatsby-plugin-postcss postcss-import postcss-cssnext postcss-browser-reporter postcss-reporter`
+`npm install --save gatsby-plugin-postcss@next postcss-import postcss-cssnext postcss-browser-reporter postcss-reporter`
 
 **NOTE**: `postcss-cssnext` is [deprecated](https://moox.io/blog/deprecating-cssnext/) and it is better to use `postcss-preset-env` now.
 
