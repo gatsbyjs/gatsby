@@ -10,10 +10,10 @@ module.exports = htmlPath => {
     // load index.html to pull scripts/links necessary for proper offline reload
     html = fs.readFileSync(path.resolve(htmlPath))
   } catch (err) {
-    // ENOENT means the file doesn't exist, which is to be expected when trying
-    // to open 404.html if the user hasn't created a custom 404 page -- return
-    // an empty array.
-    if (err.code === `ENOENT`) {
+    // Return an empty array if the file doesn't exist yet or the file system
+    // is returning a directory instead for the 404.html
+    const acceptableCodes = [`ENOENT`, `EISDIR`]
+    if (acceptableCodes.includes(err.code)) {
       return []
     } else {
       throw err
