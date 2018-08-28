@@ -1,13 +1,21 @@
 const crypto = require("crypto");
+const debug = require("debug")("gatsby-mdx:utils/create-mdx-node");
+
 const mdx = require("./mdx");
 const extractExports = require("./extract-exports");
 
 module.exports = async (
-  { node, transform, getNode, createNodeId },
+  { node, transform, loadNodeContent, getNode, createNodeId },
   { createNode, createParentChildLink },
-  options
+  { __internalMdxTypeName, ...options }
 ) => {
-  const { meta, content: nodeContent } = transform({ node, getNode });
+  const nodeType = __internalMdxTypeName || `${node.internal.type}Mdx`;
+  debug(`creating node for nodeType \`${nodeType}\``);
+  const { meta, content: nodeContent } = await transform({
+    node,
+    getNode,
+    loadNodeContent
+  });
 
   const code = await mdx(nodeContent, options);
 
@@ -15,12 +23,12 @@ module.exports = async (
   const { frontmatter, ...nodeExports } = extractExports(code);
 
   const mdxNode = {
-    id: createNodeId(`${node.id} >>> ${node.internal.type}Mdx`),
+    id: createNodeId(`${node.id} >>> ${nodeType}`),
     children: [],
     parent: node.id,
     internal: {
       content: nodeContent,
-      type: `${node.internal.type}Mdx`
+      type: nodeType
     }
   };
 
