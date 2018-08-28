@@ -2235,7 +2235,7 @@
 - title: 500Tech
   main_url: 'https://500tech.com/'
   url: 'https://500tech.com/'
-  featured: true
+  featured: false
   categories:
     - Web Dev
     - Agency
