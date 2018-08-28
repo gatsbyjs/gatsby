@@ -366,12 +366,9 @@ class StarterTemplate extends React.Component {
                               marginBottom: `1rem`,
                             }}
                           >
-                            {` `}
                             <a href={`https://npm.im/${dep}`}>
-                              <FaExtLink />
+                              {`${dep} `}<FaExtLink />
                             </a>
-                            {` `}
-                            {dep}
                           </div>
                         )
                     )}
