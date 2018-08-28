@@ -644,12 +644,15 @@
 - title: The Rick and Morty API
   main_url: 'https://rickandmortyapi.com/'
   url: 'https://rickandmortyapi.com/'
+  built_by: Axel Fuhrmann
+  built_by_url: https://axelfuhrmann.com/
   featured: false
   categories:
     - Web Dev
     - Entertainment
     - Documentation
     - Open Source
+    - API
 - title: Santa Compañía Creativa
   main_url: 'https://santacc.es/'
   url: 'https://santacc.es/'
@@ -1489,14 +1492,19 @@
   built_by_url: http://www.amanhimself.me/
 - title: Ocean artUp
   description: >
-    Science outreach site built using styled-components and Contentful. It presents the research project "Ocean artUp" funded by an Advanced Grant of the European Research Council to explore the possible benefits of artificial uplift of nutrient-rich deep water to the ocean’s sunlit surface layer.
+    Science outreach site built using styled-components and Contentful.
+    It presents the research project "Ocean artUp" funded by an Advanced
+    Grant of the European Research Council to explore the possible
+    benefits of artificial uplift of nutrient-rich deep water to the
+    ocean’s sunlit surface layer.
   main_url: https://ocean-artup.eu
   url: https://ocean-artup.eu
-  source_url: https://github.com/JanoshRiebesell/ocean-artup
+  source_url: https://github.com/janosh/ocean-artup
   categories:
+    - Science
+    - Research
     - Education
     - Blog
-    - Science
   built_by: Janosh Riebesell
   built_by_url: https://janosh.io
   featured: false
@@ -2207,3 +2215,36 @@
     - Software
     - Documentation
   featured: false
+- title: Mintfort
+  main_url: https://mintfort.com/
+  url: https://mintfort.com/
+  source_url: https://github.com/MintFort/mintfort.com
+  description: >
+    Mintfort, the first crypto-friendly bank account. Store and manage assets on the blockchain.
+  categories:
+    - Technology
+    - Tool
+    - Bank
+    - Software
+  built_by: Axel Fuhrmann
+  built_by_url: https://axelfuhrmann.com/
+  featured: false
+- title: React Native Explorer
+  main_url: https://react-native-explorer.firebaseapp.com
+  url: https://react-native-explorer.firebaseapp.com
+  description: >
+    Explorer React Native packages and examples effortlessly.
+  categories:
+    - React Native
+    - Software
+    - Tool
+  featured: false
+- title: 500Tech
+  main_url: 'https://500tech.com/'
+  url: 'https://500tech.com/'
+  featured: false
+  categories:
+    - Web Dev
+    - Agency
+    - Open Source
+    - Featured

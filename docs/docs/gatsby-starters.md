@@ -438,6 +438,17 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
   - Protected Routes with Authorization
   - Realtime Database with Users
 
+- [gatsby-aws-amplify-authentication](https://github.com/dabit3/gatsby-auth-starter-aws-amplify)  [(demo)](http://gatsbyauth-20180816145726-hosting-bucket.s3-website-us-east-1.amazonaws.com/)
+
+   Features: 
+  
+  - Implement authentication & host your app on AWS
+  - Sign in, Sign Up, & Sign Out
+  - Fetch user metadata
+  - Multi-factor authentication (MFA)
+  - Protected Routes with Authorization
+  - Scalable user management
+
 - [gatsby-starter-ceevee](https://github.com/amandeepmittal/gatsby-starter-ceevee) [(demo)](http://gatsby-starter-ceevee.surge.sh/)
 
   Features:
@@ -905,3 +916,26 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
   - Website
   - Blog
   - more coming soon
+  
+- [gatsby-v2-jslingui](https://github.com/zuiidea/gatsby-v2-jslingui)
+  [(demo)](https://gatsby-v2-jslingui.surge.sh)
+
+  > An starter for using Gatsby v2 with [js-lingui](https://github.com/lingui/js-lingui).
+
+  Features:
+  
+  - Localization (Multilanguage) provided by [js-lingui](https://github.com/lingui/js-lingui)
+  - Message extraction
+  - Avoids code duplication - generates pages for each locale
+  - Possibility of translated paths
+
+- [gatsby-starter-directive](https://github.com/gregtillbrook/gatsby-starter-directive)
+  [(Live demo)](https://elastic-noyce-c49425.netlify.com/)
+
+  Features:
+
+  - Based off of the Directive site template. Designed by
+    [HTML5 UP](https://html5up.net/directive)
+  - Simple one page site
+  - Fully Responsive
+  - Styling with SCSS

@@ -10,13 +10,13 @@ _Note: There are many sample configs which may be helpful to reference in the di
 
 Options available to set within `gatsby-config.js` include:
 
-1.  siteMetadata (object)
-2.  plugins (array)
-3.  pathPrefix (string)
-4.  polyfill (boolean)
-5.  mapping (object)
-6.  proxy (object)
-7.  developMiddleware (function)
+1.  [siteMetadata](#siteMetadata) (object)
+2.  [plugins](#plugins) (array)
+3.  [pathPrefix](#pathPrefix) (string)
+4.  [polyfill](#polyfill) (boolean)
+5.  [mapping](#mapping-node-types) (object)
+6.  [proxy](#proxy) (object)
+7.  [developMiddleware](#advanced-proxying-with-developmiddleware) (function)
 
 ## siteMetadata
 
@@ -221,6 +221,30 @@ query {
   }
 }
 ```
+
+Mapping also works between Markdown files. For example, instead of having all authors in a YAML file, you could have info about each author in a separate Markdown file:
+
+```markdown
+---
+author_id: Kyle Mathews
+twitter: "@kylemathews"
+---
+
+Founder @ GatsbyJS. Likes tech, reading/writing, founding things. Blogs at bricolage.io.
+```
+
+And then add the following rule to your `gatsby-config.js`:
+
+```javascript
+module.exports = {
+  plugins: [...],
+  mapping: {
+    'MarkdownRemark.frontmatter.author': `MarkdownRemark.frontmatter.author_id`
+  },
+}
+```
+
+Similarly to YAML and JSON files, mapping between Markdown files can also be used to map an array of ids.
 
 ## Proxy
 

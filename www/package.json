@@ -11,7 +11,6 @@
     "gatsby-image": "next",
     "gatsby-plugin-canonical-urls": "next",
     "gatsby-plugin-catch-links": "next",
-    "gatsby-plugin-create-client-paths": "^1.0.8",
     "gatsby-plugin-feed": "next",
     "gatsby-plugin-fullstory": "^1.0.4-5",
     "gatsby-plugin-glamor": "next",
