@@ -42,14 +42,7 @@ function preset(context, options = {}) {
     plugins: [
       r("@babel/plugin-proposal-class-properties"),
       r("@babel/plugin-proposal-optional-chaining"),
-      [
-        r("@babel/plugin-transform-runtime"),
-        {
-          // we are only polyfilling the node environment
-          // so we need to enable the runtime replacements for the browser preset
-          corejs: browser ? 2 : false,
-        },
-      ],
+      r("@babel/plugin-transform-runtime"),
     ],
   }
 }
