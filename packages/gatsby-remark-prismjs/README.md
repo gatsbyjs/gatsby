@@ -127,7 +127,7 @@ CSS along your PrismJS theme and the styles for `.gatsby-highlight-code-line`:
   min-width: 100%; /* 2 */
 }
 .gatsby-highlight pre[class*="language-"].line-numbers {
-  paddingleft: 2.8em; /* 3 */
+  padding-left: 2.8em; /* 3 */
 }
 ```
 

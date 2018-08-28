@@ -112,7 +112,7 @@ A continuación, haga clic en configuración en el menú inferior y configure el
 Luego de esto, el devtools extension _debería_ conectarse al <tt>remote server</tt>
 y verás que las acciones comienzan a aparecer.
 
-![gatsby redux remote devtools](.../../docs/docs/images/running-redux-devtools.png)
+![gatsby redux remote devtools](../../docs/docs/images/running-redux-devtools.png)
 
 **¡¡Advertencia!! Un montón de errores**. Si bien tener esto disponible es extremadamente
 útil, esta configuración es muy defectuosa y frágil. Hay una pérdida de memoria en la extensión que se activa,
