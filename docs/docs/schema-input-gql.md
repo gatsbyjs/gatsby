@@ -4,7 +4,7 @@ title: Inferring Input Filters
 
 ## Input Filters vs gqlType
 
-Up until now, we've inferred a Gatsby Node's main fields ([gqlType](TODO)). These allow us to query a node's children, parent, object fields. But these are only useful inside a GraphQL Query. Before we get there, we have to be able to query the types we have already created by their fields. E.g, querying for all markdownRemark nodes that have 4 paragraphs.
+In [gqlTypes](/docs/schema-gql-type), we inferred a Gatsby Node's main fields. These allow us to query a node's children, parent and object fields. But these are only useful once a top level GraphQL Query has returned results. In order to query by those fields, we must create GraphQL objects for input filters. E.g, querying for all markdownRemark nodes that have 4 paragraphs.
 
 ```graphql
 {
@@ -14,7 +14,7 @@ Up until now, we've inferred a Gatsby Node's main fields ([gqlType](TODO)). Thes
 }
 ```
 
-The arguments (`wordcount: {paragraphs: {eq: 4}}`) to the query are known as Input filters. In GraphQL Land, they are the [GraphQLInputObjectType](https://graphql.org/graphql-js/type/#graphqlinputobjecttype). This section covers how these Input filters are inferred.
+The arguments (`wordcount: {paragraphs: {eq: 4}}`) to the query are known as Input filters. In graphql-js, they are the [GraphQLInputObjectType](https://graphql.org/graphql-js/type/#graphqlinputobjecttype). This section covers how these Input filters are inferred.
 
 ### Inferring input filters from example node values
 
@@ -26,9 +26,9 @@ The first step is to generate an input field for each type of field on the redux
 }
 ```
 
-This step is handled by [inferInputObjectStrctureFromNodes](TODO). First, we generate an example Value (see [gqlTypes](TODO)). For each field on the example value (e.g `author`), we create a [GraphQLInputObjectType](TODO) with an appropriate name. The fields for Input Objects are predicates that depend on the value's `typeof` result. E.g for a String, we need to be able to query by `eq`, `regex` etc. If the value is an object itself, then we recurse, building its fields as above.
+This step is handled by [inferInputObjectStrctureFromNodes](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-input-fields.js#L235). First, we generate an example Value (see [gqlTypes](/docs/schema-gql-type#gqltype-creation)). For each field on the example value (e.g `author`), we create a [GraphQLInputObjectType](https://graphql.org/graphql-js/type/#graphqlinputobjecttype) with an appropriate name. The fields for Input Objects are predicates that depend on the value's `typeof` result. E.g for a String, we need to be able to query by `eq`, `regex` etc. If the value is an object itself, then we recurse, building its fields as above.
 
-If the key is a foreign key reference (ends in `___NODE`), then we find the field's linked Type first, and progress as above (for more on how foreign keys are implemented, see [gqlType](TODO)). After this step, we will end up with an Input Object type such as .
+If the key is a foreign key reference (ends in `___NODE`), then we find the field's linked Type first, and progress as above (for more on how foreign keys are implemented, see [gqlType](/docs/schema-gql-type#foreign-key-reference-___node)). After this step, we will end up with an Input Object type such as .
 
 ```javascript
 {
@@ -63,7 +63,7 @@ Plugins themselves have the opportunity to create custom fields that apply to AL
 }
 ```
 
-Plugins add custom fields by implementing the [setFieldsOnGraphQLNodeType](TODO) API. They must return a full GraphQLObjectType, complete with `resolve` function. Once this API has been run, the fields are passed to [inferInputObjectStructureFromFields](TODO), which will generate input filters for thew new fields. The result would look something like:
+Plugins add custom fields by implementing the [setFieldsOnGraphQLNodeType](/docs/node-apis/#setFieldsOnGraphQLNodeType) API. They must return a full GraphQLObjectType, complete with `resolve` function. Once this API has been run, the fields are passed to [inferInputObjectStructureFromFields](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-input-fields-from-fields.js#L195), which will generate input filters for thew new fields. The result would look something like:
 
 ```javascript
 { //GraphQLInputObjectType
@@ -87,7 +87,7 @@ Plugins add custom fields by implementing the [setFieldsOnGraphQLNodeType](TODO)
 }
 ```
 
-As usual, the input filter fields are based on the type of the field, which is defined by the plugin.
+As usual, the input filter fields (`eq`, `lt`, `gt`, etc) are based on the type of the field (`Int` in this case), which is defined by the plugin.
 
 ### Merged result
 
