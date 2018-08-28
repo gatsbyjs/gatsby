@@ -260,6 +260,15 @@
       link: /docs/data-storage-redux/
     - title: Schema Generation
       link: /docs/schema-generation-behind-the-scenes/
+      items:
+        - title: Building the gqlType
+          link: /docs/schema-gql-type
+        - title: Building the input filters
+          link: /docs/schema-input-gql
+        - title: How sift resolvers work
+          link: /docs/schema-sift
+    - title: Page Creation
+      link: /docs/page-creation/
     - title: Build Caching*
       link: /docs/build-caching/
 - title: Advanced Tutorials
