@@ -4,7 +4,7 @@ title: How APIs/plugins are run
 
 For most sites, plugins take up the majority of the build time. So what's really happening when APIs are called?
 
-Note, this section only explains how `gatsby-node` plugins are run. Not browser or ssr plugins.
+_Note: this section only explains how `gatsby-node` plugins are run. Not browser or ssr plugins_
 
 ## Early in the build
 
@@ -52,7 +52,7 @@ All actions take 3 arguments:
     - **traceId**: See below
     - **parentSpan**: opentracing span (see [tracing docs](/docs/performance-tracing/))
 
-Passing the plugin and action options on every single action call would be extremely painful for plugin/site authors. Since we know the plugin, traceId and parentSpan when we're running our API, we can rebind inject actions so these arguments are already provided. This is done in the [doubleBind](https://github.com/gatsbyjs/gatsby/blob/8029c6647ab38792bb0a7c135ab4b98ae70a2627/packages/gatsby/src/utils/api-runner-node.js#L14) step.
+Passing the plugin and action options on every single action call would be extremely painful for plugin/site authors. Since we know the plugin, traceId and parentSpan when we're running our API, we can rebind injected actions so these arguments are already provided. This is done in the [doubleBind](https://github.com/gatsbyjs/gatsby/blob/8029c6647ab38792bb0a7c135ab4b98ae70a2627/packages/gatsby/src/utils/api-runner-node.js#L14) step.
 
 ## Waiting for all plugins to run
 

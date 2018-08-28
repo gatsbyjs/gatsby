@@ -10,6 +10,49 @@ A node is stored in redux under the `nodes` namespace, whose state is a map of t
 
 Nodes are created in Gatsby by calling [createNode](/docs/actions/#createNode). This happens primarily in the [sourceNodes](/docs/node-apis/#sourceNodes) bootstrap phase. Nodes created during this phase are top level nodes. I.e, they have no parent. This is represented by source plugins setting the node's `parent` field to `___SOURCE___`. Nodes created via transform plugins (who implement [onCreateNode](/docs/node-apis/#onCreateNode)) will have source nodes as their parents, or other transformed nodes. For a rough overview of what happens when source nodes run, see the [traceID illustration](/docs/how-plugins-apis-are-run/#using-traceid-to-await-downstream-api-calls).
 
+## Parent/Child/Refs
+
+There are a few different scenarios for creating parent/child relationships.
+
+### Node relationship storage model
+
+Gatsby stores child nodes in redux as IDs in the parent's `children` field. And then stores those child nodes as full redux nodes themselves. E.g for a File node with two children, it will be stored in the redux `nodes` namespace as:
+
+```javascript
+{
+  `id1`: { type: `File`, children: [`id2`, `id3`], ...other_fields },
+  `id2`: { type: `markdownRemark`, ...other_fields },
+  `id3`: { type: `postsJson`, ...other_fields }
+}
+```
+
+An important note here is that we do not store a distinct collection of each type of child. Rather we store a single collection that they're all packed into. 
+
+### Explicitly recording a parent/child relationship
+
+This occurs when a transformer plugin implements [onCreateNode](/docs/node-apis/#onCreateNode) in order to create some child of the originally created node. In this case, the transformer plugin will call [createParentChildLink](/docs/actions/#createParentChildLink), with the original node, and the newly created node. All this does is push the child's node ID onto the parent's `children` collection and resave the parent to redux.
+
+This does **not** automatically create a `parent` field on the child node. If a plugin author wishes to allow child nodes to navigate to their parents in GraphQL queries, they must explicitly set `childNode.parent: 'parent.id'` when creating the child node.
+
+### Foreign Key reference (`___NODE`)
+
+We've established that child nodes are stored at the top level in redux, and are referenced via ids in their parent's `children` collection. The same mechanism drives foreign key relationships. Foreign key fields have a `___NODE` suffix on the field name. At query time, Gatsby will take the field's value as an ID, and search redux for a matching node. This is explained in more detail in [schema gqlTypes](/docs/schema-gql-type#foreign-key-reference-___node).
+
+### Plain objects at creation time
+
+Let's say you create the following node by passing it to `createNode`
+
+```javascript
+{
+  foo: 'bar',
+  baz: {
+    car: 10
+  }
+}
+```
+
+The value for `baz` is itself an object. That value's parent is the top level object. In this case, Gatsby simply saves the top level node as is to redux. It doesn't attempt to extract `baz` into its own node. During schema compilation, Gatsby will infer the sub object's type while [creating the gqlType](/docs/schema-gql-type#plain-object-or-value-field).
+
 ## Fresh/stale nodes
 
 Every time a build is re-run, there is a chance that a node that exists in the redux store no longer exists in the original data source. E.g a file might be deleted from disk between runs. We need a way to indicate that fact to Gatsby.
@@ -25,7 +68,3 @@ Any nodes that aren't touched by the end of the `source-nodes` phase, are delete
 From a site developer's point of view, nodes are immutable. In the sense that if you simply change a node object, those changes will not be seen by other parts of Gatsby. To make a change to a node, it must be persisted to redux via an action.
 
 So, how do you add a field to an existing node? E.g perhaps in onCreateNode, you want to add a transformer specific field? You can call [createNodeField]() and this will simply add your field to the node's `node.fields` object and then persists it to redux. This can then be referenced by other parts of your plugin at later stages of the build.
-
-## `${field}___NODE` fields
-
-You may notice references to node fields ending in `___NODE`. These signify foreign key relationships to some other node. For more info on how to use this, see the [create-source-plugin](/docs/create-source-plugin/) tutorial.

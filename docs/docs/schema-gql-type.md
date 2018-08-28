@@ -122,7 +122,7 @@ in addition, if a value is a string that actually points to a file, then we hand
 
 Let's continue with the `File` type example. There are many transformer plugins that implement `onCreateNode` for `File` nodes. These produce `File` children that are of their own type. E.g `markdownRemark`, `postsJson`. 
 
-Gatsby stores these children in redux as IDs in the parent's `children` field. And then stores those child nodes as full redux nodes themselves (see [node creation for more](TODO)). E.g for a File node with two children, it will be stored in the redux `nodes` namespace as:
+Gatsby stores these children in redux as IDs in the parent's `children` field. And then stores those child nodes as full redux nodes themselves (see [node creation for more](/docs/node-creation-behind-the-scenes/#node-relationship-storage-model)). E.g for a File node with two children, it will be stored in the redux `nodes` namespace as:
 
 ```javascript
 { 
