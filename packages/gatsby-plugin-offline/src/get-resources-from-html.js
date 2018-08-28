@@ -10,6 +10,8 @@ module.exports = htmlPath => {
     // load index.html to pull scripts/links necessary for proper offline reload
     html = fs.readFileSync(path.resolve(htmlPath))
   } catch (err) {
+    // Return an empty array if the file doesn't exist yet or the file system
+    // is returning a directory instead for the 404.html
     const acceptableCodes = [`ENOENT`, `EISDIR`]
     if (acceptableCodes.includes(err.code)) {
       return []
