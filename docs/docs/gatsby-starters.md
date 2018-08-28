@@ -917,3 +917,14 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
   - Message extraction
   - Avoids code duplication - generates pages for each locale
   - Possibility of translated paths
+
+- [gatsby-starter-directive](https://github.com/gregtillbrook/gatsby-starter-directive)
+  [(Live demo)](https://elastic-noyce-c49425.netlify.com/)
+
+  Features:
+
+  - Based off of the Directive site template. Designed by
+    [HTML5 UP](https://html5up.net/directive)
+  - Simple one page site
+  - Fully Responsive
+  - Styling with SCSS
