@@ -42,7 +42,33 @@ export default () => (
 )
 ```
 
-Using `StaticQuery`, you can colocate a component with its data. No longer is it required to, say, pass data down from `Layout` to `Header`.
+Using `StaticQuery`, you can colocate a component with its data. No longer is it required to, say, pass data down from `Layout` to `Header`. It’s important that you write your query within the `StaticQuery` component, rather than referencing a variable from elsewhere. (Using queries will be added in the future; see [this issue](https://github.com/gatsbyjs/gatsby/issues/6545) for details.) For example, this won’t work:
+
+```jsx
+import React from "react"
+import { StaticQuery, graphql } from "gatsby"
+
+const query = graphql`
+  query HeadingQuery {
+    site {
+      siteMetadata {
+        title
+      }
+    }
+  }
+`
+
+export default () => (
+  <StaticQuery
+    query={query}
+    render={data => (
+      <header>
+        <h1>{data.site.siteMetadata.title}</h1>
+      </header>
+    )}
+  />
+)
+```
 
 ### Typechecking
 
