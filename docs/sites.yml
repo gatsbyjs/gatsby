@@ -1,0 +1,157 @@
+- title: unrealcpp
+  main_url: "https://unrealcpp.com/"
+  url: "https://unrealcpp.com/"
+  source_url: "https://github.com/Harrison1/unrealcpp-com"
+  featured: true
+  categories:
+    - Blog
+    - Web Dev
+    - Featured
+  built_by: Linton Ye
+  built_by_url: https://twitter.com/lintonye
+- title: Andy Slezak
+  main_url: "https://www.aslezak.com/"
+  url: "https://www.aslezak.com/"
+  source_url: "https://github.com/amslezak"
+  featured: true
+  categories:
+    - Web Dev
+    - Portfolio
+    - Featured
+  built_by: Andy Slezak
+  built_by_url: https://www.aslezak.com/
+- title: Deliveroo.Design
+  main_url: "https://www.deliveroo.design/"
+  url: "https://www.deliveroo.design/"
+  featured: true
+  categories:
+    - Food
+    - Marketing
+    - Featured
+  built_by: Andy Slezak
+  built_by_url: https://www.aslezak.com/
+- title: Dona Rita
+  main_url: "https://www.donarita.co.uk/"
+  url: "https://www.donarita.co.uk/"
+  source_url: "https://github.com/peduarte/dona-rita-website"
+  featured: true
+  categories:
+    - Food
+    - Marketing
+    - Featured
+  built_by: Fabian Schultz
+  built_by_url: https://www.formidable.com/
+- title: Fröhlich ∧ Frei
+  main_url: "https://www.froehlichundfrei.de/"
+  url: "https://www.froehlichundfrei.de/"
+  featured: true
+  categories:
+    - Web Dev
+    - Blog
+    - Open Source
+  built_by: Formidable
+  built_by_url: https://www.aslezak.com/
+- title: How to GraphQL
+  main_url: "https://www.howtographql.com/"
+  url: "https://www.howtographql.com/"
+  source_url: "https://github.com/howtographql/howtographql"
+  featured: true
+  categories:
+    - Documentation
+    - Web Dev
+    - Open Source
+    - Featured
+- title: OnCallogy
+  main_url: "https://www.oncallogy.com/"
+  url: "https://www.oncallogy.com/"
+  featured: true
+  categories:
+    - Landing
+    - Marketing
+    - Featured
+    - Healthcare
+- title: Ryan Wiemer's Portfolio
+  main_url: "https://www.ryanwiemer.com/"
+  url: "https://www.ryanwiemer.com/knw-photography/"
+  source_url: "https://github.com/ryanwiemer/rw"
+  featured: true
+  categories:
+    - Portfolio
+    - Web Dev
+    - Featured
+- title: Ventura Digitalagentur Köln
+  main_url: "https://www.ventura-digital.de/"
+  url: "https://www.ventura-digital.de/"
+  featured: true
+  categories:
+    - Agency
+    - Marketing
+    - Featured
+- title: Azer Koçulu
+  main_url: "http://azer.bike/"
+  url: "http://azer.bike/photography"
+  featured: false
+  categories:
+    - Portfolio
+    - Photography
+    - Web Dev
+- title: Damir.io
+  main_url: "http://damir.io/"
+  url: "http://damir.io/"
+  source_url: "https://github.com/dvzrd/gatsby-sfiction"
+  featured: false
+  categories:
+    - Creative
+- title: Digital Psychology
+  main_url: "http://digitalpsychology.io/"
+  url: "http://digitalpsychology.io/"
+  source_url: "https://github.com/danistefanovic/digitalpsychology.io"
+  featured: false
+  categories:
+    - Education
+    - Library
+- title: GRANDstack
+  main_url: "http://grandstack.io/"
+  url: "http://grandstack.io/"
+  featured: false
+  categories:
+    - Open Source
+    - Web Dev
+- title: Théâtres Parisiens
+  main_url: "http://theatres-parisiens.fr/"
+  url: "http://theatres-parisiens.fr/"
+  source_url: "https://github.com/phacks/theatres-parisiens"
+  featured: false
+  categories:
+    - Education
+    - Entertainment
+- title: William Owen UK Portfolio / Blog
+  main_url: "http://william-owen.co.uk/"
+  url: "http://william-owen.co.uk/"
+  featured: false
+  description: >-
+    Over 20 years experience delivering customer-facing websites, internet-based
+    solutions and creative visual design for a wide range of companies and
+    organisations.
+  categories:
+    - Portfolio
+    - Blog
+  built_by: William Owen
+  built_by_url: "https://twitter.com/twilowen"
+- title: A4 纸网
+  main_url: "http://www.a4z.cn/"
+  url: "http://www.a4z.cn/price"
+  source_url: "https://github.com/hiooyUI/hiooyui.github.io"
+  featured: false
+  categories:
+    - Retail
+- title: Stitch Fix
+  main_url: https://www.stitchfix.com/
+  url: https://www.stitchfix.com/
+  description: >
+    Stitch Fix is an online styling service that delivers a truly personalized shopping experience.
+  categories:
+    - eCommerce
+    - Clothing
+    - Fashion
+  featured: false
