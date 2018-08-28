@@ -31,7 +31,7 @@ class CommunityView extends Component {
             }}
           >
             {items.map(item => (
-              // this gonna be a link rendering a template
+              // this is probably going to be a link rendering a template
               // config on gatsby-node.js
               <Link
                 key={item.node.name}
