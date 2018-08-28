@@ -2232,3 +2232,12 @@
     - Software
     - Tool
   featured: false
+- title: 500Tech
+  main_url: 'https://500tech.com/'
+  url: 'https://500tech.com/'
+  featured: false
+  categories:
+    - Web Dev
+    - Agency
+    - Open Source
+    - Featured
