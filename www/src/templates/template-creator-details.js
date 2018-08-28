@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import { graphql } from "gatsby"
+import { Link } from "gatsby"
 import Layout from "../components/layout"
 import Helmet from "react-helmet"
 import typography, { rhythm, scale } from "../utils/typography"
@@ -22,7 +23,7 @@ class CreatorTemplate extends Component {
 
   generateThumbnails = () => {
     let sites = []
-    const creator = this.props.data.creatorsYaml
+    let creator = this.props.data.creatorsYaml
     this.props.data.allSitesYaml.edges.map(site => {
       if (site.node.built_by === creator.name) {
         sites.push(site)
@@ -33,11 +34,6 @@ class CreatorTemplate extends Component {
   render() {
     const { data } = this.props
     const creator = data.creatorsYaml
-    // const sites = data.allSitesYaml
-    // console.log(
-    //   this.props.pageContext.slug.match(/\/([^\/]+)\/?$/)[1].replace(`-`, ` `)
-    // )
-
     return (
       <Layout location={location}>
         <Helmet>
@@ -101,7 +97,6 @@ class CreatorTemplate extends Component {
                 <GithubIcon
                   css={{
                     marginLeft: `auto`,
-                    // color: colors.gray.bright,
                   }}
                 />
               )}
@@ -149,7 +144,6 @@ class CreatorTemplate extends Component {
               css={{
                 borderBottom: `2px solid black`,
                 padding: `${rhythm(3 / 4)} 0`,
-
                 display: `flex`,
               }}
             >
@@ -182,6 +176,7 @@ class CreatorTemplate extends Component {
                 <p
                   css={{
                     margin: `0`,
+                    marginBottom: rhythm(3 / 4),
                     textDecoration: `underline`,
                     fontWeight: `600`,
                     width: `150`,
@@ -196,20 +191,31 @@ class CreatorTemplate extends Component {
                   }}
                 >
                   {this.state.sites.map(site => (
-                    // these gonna be links that link back to the showcase pages
-                    <Img
+                    <Link
                       key={site.node.title}
-                      css={
-                        {
-                          // minWidth: `150`,
+                      css={{
+                        "&&": {
+                          marginRight: rhythm(3 / 4),
+                          borderBottom: `none`,
+                          boxShadow: `none`,
+                          transition: `all ${presets.animation.speedDefault} ${
+                            presets.animation.curveDefault
+                          }`,
+                          "&:hover": {
+                            background: `none`,
+                          },
+                        },
+                      }}
+                      to={site.node.fields.slug}
+                    >
+                      <Img
+                        alt={`${site.node.title}`}
+                        fixed={
+                          site.node.childScreenshot.screenshotFile
+                            .childImageSharp.fixed
                         }
-                      }
-                      alt={`${site.node.title}`}
-                      fixed={
-                        site.node.childScreenshot.screenshotFile.childImageSharp
-                          .fixed
-                      }
-                    />
+                      />
+                    </Link>
                   ))}
                 </div>
               </span>
@@ -254,7 +260,7 @@ export const pageQuery = graphql`
           childScreenshot {
             screenshotFile {
               childImageSharp {
-                fixed(width: 150, height: 150) {
+                fixed(width: 100, height: 100) {
                   ...GatsbyImageSharpFixed
                 }
               }
