@@ -1657,7 +1657,7 @@
   main_url: https://open.fda.gov/
   url: https://open.fda.gov/
   categories:
-    - APIs
+    - API
     - Datasets
     - Reports
   featured: false
@@ -2208,6 +2208,7 @@
   description: >
     SendGrid delivers your transactional and marketing emails through the world's largest cloud-based email delivery platform.
   categories:
+    - API
     - Technology
     - Tool
     - Software
