@@ -1,19 +1,9 @@
 import React from "react"
 import { Link } from "gatsby"
-import posed from "react-pose"
 import Helmet from "react-helmet"
+import Transition from "../components/transition"
 
 import "./layout.css"
-
-// Use `posed.div` elements anywhere on the pages.
-const Transition = posed.div({
-  enter: {
-    opacity: 1,
-  },
-  exit: {
-    opacity: 0,
-  },
-})
 
 const Header = () => (
   <div
@@ -44,7 +34,7 @@ const Header = () => (
   </div>
 )
 
-const TemplateWrapper = ({ children }) => (
+const TemplateWrapper = ({ children, location }) => (
   <div>
     <Helmet
       title="Gatsby Default Starter"
@@ -62,7 +52,7 @@ const TemplateWrapper = ({ children }) => (
         paddingTop: 0,
       }}
     >
-      <Transition>{children}</Transition>
+      <Transition location={location}>{children}</Transition>
     </div>
   </div>
 )
