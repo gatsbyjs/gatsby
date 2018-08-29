@@ -66,23 +66,25 @@ Please see the [Docs templates](/templates/) for guidelines on how to format the
 
 Before you begin writing, answer these questions. Sample answers have been included:
 
-Q: Who will read my writing?
-A: Developers with at least an understanding of coding in HTML, CSS, and JS, but not necessarily much React or GraphQL.
+Question: Who will read my writing?
 
-Q: What do I hope my readers will know and/or be able to do after reading it?
-A: I hope my readers will be able to successfully add search to their Gatsby site.
+Answer: Developers with knowledge and experience coding in HTML, CSS, and JS but not necessarily React or GraphQL.
+
+Question: What do I hope my readers will know and/or be able to do after reading it?
+
+Answer (example): I hope my readers will be able to successfully add search to their Gatsby site.
 
 Once you answer those questions, create an outline of the topic and think about any coding examples you'll use (if applicable). This helps to organize your thoughts and make the writing process easier.
 
 ### Research
 
-Many times, the information that needs to go in your document already exists somewhere in the world.
+Many times, the information that needs to go in your document already exists somewhere.
 
-The best practice is to avoid copying and pasting huge chunks of other people's work and to rather use their work to learn so you can write your own document. If you do quote someone's work verbatim, remember to reference where you got the information.
+Avoid copying and pasting huge chunks of other people's work and to rather use their work to learn so you can write your own document. If you do quote someone's work verbatim, reference where you got the information.
 
 If the content is already somewhere else on the .org site, feel free to copy and paste without quoting or referencing.
 
-Possible sources of great content to learn from:
+Possible sources of great research materials:
 
 - Blogposts (on gatsbyjs.org and other sites)
 - Docs (on gatsbyjs.org and other sites)
@@ -101,12 +103,8 @@ because it requires you to take a technical (usually abstract) topic and explain
 it in a clear, accurate, and objective manner. You'll likely go through several
 rounds of proofreading and editing before you're happy with your writing.
 
-Also, there's a community of support from a whole team of contributors, whom you
-can bounce ideas off of and ask for input on your writing. Stay active in the
-[Discord chat room](https://discordapp.com/invite/0ZcbPKXt5bVoxkfV) and ask lots of questions.
-
-With your help, Gatsby will have a comprehensive reference tool that will help
-millions of people who are learning to code for years to come.
+Also, there's a community of contributors to support you. Bounce ideas off of them and ask for input on your writing in the
+[Discord chat room](https://discordapp.com/invite/0ZcbPKXt5bVoxkfV) and in the [GitHub repo](https://github.com/gatsbyjs/gatsby).
 
 ## Word choice
 
