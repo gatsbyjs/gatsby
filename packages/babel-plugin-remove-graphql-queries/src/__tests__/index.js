@@ -1,10 +1,9 @@
 const babel = require(`babel-core`)
-const reactPreset = require(`@babel/preset-react`)
 const plugin = require(`../`)
 
 function matchesSnapshot(query) {
   const { code } = babel.transform(query, {
-    presets: [reactPreset],
+    presets: [`@babel/preset-react`],
     plugins: [plugin],
   })
   expect(code).toMatchSnapshot()
