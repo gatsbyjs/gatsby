@@ -1,6 +1,6 @@
 {
   "name": "gatsby-mdx",
-  "version": "0.0.15",
+  "version": "0.1.0",
   "description": "mdx integration for gatsby",
   "main": "index.js",
   "license": "MIT",
@@ -20,6 +20,7 @@
     "escape-string-regexp": "^1.0.5",
     "fs-extra": "^7.0.0",
     "gray-matter": "^4.0.1",
+    "htmltojsx": "^0.3.0",
     "json5": "^1.0.1",
     "lodash": "^4.17.10",
     "mdast-util-to-string": "^1.0.4",
@@ -28,6 +29,7 @@
     "retext": "^5.0.0",
     "strip-markdown": "^3.0.1",
     "underscore.string": "^3.3.4",
+    "unist-util-map": "^1.0.4",
     "unist-util-remove": "^1.0.1",
     "unist-util-visit": "^1.4.0"
   },
