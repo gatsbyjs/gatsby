@@ -1858,6 +1858,17 @@
     - Landing
     - Portfolio
   featured: false
+- title: Lisa Ye's Blog
+  description: >
+      Simple blog/portofolio for a fashion designer. Gatsby_v2 + Netlify cms
+  main_url: https://lisaye.netlify.com/
+  url: https://lisaye.netlify.com/
+  categories:
+    - Blog
+    - Portfolio
+    - Personal
+    - Fashion
+  featured: false
 - title: Lifestone Church
   main_url: 'https://www.lifestonechurch.net/'
   url: 'https://www.lifestonechurch.net/'
