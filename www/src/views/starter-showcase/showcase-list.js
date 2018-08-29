@@ -138,9 +138,7 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
               </Link>
               <div
                 css={{
-                  ...scale(-1 / 6),
-                  color: colors.gray.bright,
-                  fontWeight: `normal`,
+                  ...styles.meta,
                   marginTop: rhythm(options.blockMarginBottom),
                 }}
               >

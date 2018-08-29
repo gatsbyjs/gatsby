@@ -78,13 +78,9 @@ const ShowcaseList = ({ items, count }) => {
               </Link>
               <div
                 css={{
-                  ...scale(-2 / 5),
+                  ...styles.meta,
                   display: `flex`,
                   justifyContent: `space-between`,
-                  alignItems: `baseline`,
-                  "&&": {
-                    color: `#9B9B9B`,
-                  },
                 }}
                 className="meta"
               >

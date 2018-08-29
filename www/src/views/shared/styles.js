@@ -1,4 +1,4 @@
-import typography, { options, rhythm } from "../../utils/typography"
+import typography, { options, rhythm, scale } from "../../utils/typography"
 import presets, { colors } from "../../utils/presets"
 import { style } from "glamor"
 import hex2rgba from "hex2rgba"
@@ -143,6 +143,13 @@ const styles = {
   noLinkUnderline: {
     borderBottom: `none !important`, // i know i know
     boxShadow: `none !important`, // but people really want this
+  },
+  meta: {
+    ...scale(-1 / 5),
+    alignItems: `baseline`,
+    "&&": {
+      color: colors.gray.bright,
+    },
   },
   searchInput: {
     appearance: `none`,
