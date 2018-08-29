@@ -392,6 +392,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                     <a
                       href={data.sitesYaml.source_url}
                       target="_blank"
+                      rel="noopener noreferrer"
                       css={{
                         ...styles.link,
                       }}
@@ -446,6 +447,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                   <a
                     href={data.sitesYaml.main_url}
                     target="_blank"
+                    rel="noopener noreferrer"
                     css={{
                       border: 0,
                       borderRadius: presets.radius,
