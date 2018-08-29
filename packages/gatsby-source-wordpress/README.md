@@ -143,7 +143,10 @@ plugins.
       you the menus and menu locations endpoint.
 
 - [x] [WPML-REST-API](https://github.com/shawnhooper/wpml-rest-api) which adds
-      the current locale and available translations to all post types.
+      the current locale and available translations to all post types translated with WPML.
+
+- [x] [wp-rest-polylang](https://github.com/maru3l/wp-rest-polylang) which adds
+      the current locale and available translations to all post types translated with Polylang.
 
 ## How to use Gatsby with Wordpress.com hosting
 
@@ -453,6 +456,84 @@ Full example:
           wordpress_id
           post_title
           href
+        }
+      }
+    }
+  }
+}
+```
+
+### Query posts with the Polylang Fields Node
+
+```graphql
+{
+  allWordpressPost {
+    edges {
+      node {
+        id
+        slug
+        title
+        content
+        excerpt
+        date
+        modified
+        author
+        featured_media
+        template
+        categories
+        tags
+        polylang_current_lang
+        polylang_translations {
+          id
+          slug
+          title
+          content
+          excerpt
+          date
+          modified
+          author
+          featured_media
+          template
+          categories
+          tags
+          polylang_current_lang
+        }
+      }
+    }
+  }
+}
+```
+
+### Query pages with the Polylang Fields Node
+
+```graphql
+{
+  allWordpressPage {
+    edges {
+      node {
+        id
+        title
+        content
+        excerpt
+        date
+        modified
+        slug
+        author
+        featured_media
+        template
+        polylang_current_lang
+        polylang_translations {
+          id
+          title
+          content
+          excerpt
+          date
+          modified
+          slug
+          author
+          featured_media
+          template
+          polylang_current_lang
         }
       }
     }
