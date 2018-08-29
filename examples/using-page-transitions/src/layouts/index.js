@@ -1,10 +1,9 @@
 import React from "react"
 import { Link } from "gatsby"
 import Helmet from "react-helmet"
+import Transition from "../components/transition"
 
 import "./layout.css"
-
-import Transition from "./transition"
 
 const Header = () => (
   <div
@@ -35,7 +34,7 @@ const Header = () => (
   </div>
 )
 
-const TemplateWrapper = ({ children }) => (
+const TemplateWrapper = ({ children, location }) => (
   <div>
     <Helmet
       title="Gatsby Default Starter"
@@ -53,7 +52,7 @@ const TemplateWrapper = ({ children }) => (
         paddingTop: 0,
       }}
     >
-      <Transition>{children}</Transition>
+      <Transition location={location}>{children}</Transition>
     </div>
   </div>
 )
