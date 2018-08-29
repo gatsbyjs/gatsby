@@ -2,7 +2,7 @@ module.exports = {
   siteMetadata: {
     title: `gatsby-example-using-remark`,
     author: `@gatsbyjs`,
-    description: `Blazing fast React.js static site and PWA (Progressive Web App) generator`,
+    description: `Blazing fast modern site generator for React`,
     homepage: `https://www.gatsbyjs.org`,
   },
   mapping: {
