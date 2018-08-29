@@ -201,3 +201,33 @@ it(`Handles closing StaticQuery tag`, () => {
   )
   `)
 })
+
+it(`Doesn't add data import for non static queries`, () => {
+  matchesSnapshot(`
+  import React from 'react'
+  import { StaticQuery, graphql } from "gatsby"
+
+  const Test = () => (
+    <StaticQuery
+      query={graphql\`
+      {
+        site {
+          siteMetadata {
+            title
+          }
+        }
+      }
+      \`}
+      render={data => <div>{data.site.siteMetadata.title}</div>}
+    />
+  )
+
+  export default Test
+
+  export const fragment = graphql\`
+    fragment MarkdownNodeFragment on MarkdownRemark {
+      html
+    }
+  \`
+  `)
+})
