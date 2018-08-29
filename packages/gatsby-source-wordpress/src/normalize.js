@@ -277,6 +277,22 @@ exports.mapElementsToParent = entities =>
     return e
   })
 
+exports.mapPolylangTranlations = entities =>
+  entities.map(entitie => {
+    if (entitie.polylang_translations) {
+      entitie.polylang_translations___NODE = entitie.polylang_translations.map(
+        translation =>
+          entities.find(
+            t =>
+              t.wordpress_id === translation.wordpress_id &&
+              entitie.__type === t.__type
+          ).id
+      )
+    }
+
+    return entitie
+  })
+
 exports.searchReplaceContentUrls = function({
   entities,
   searchAndReplaceContentUrls,
