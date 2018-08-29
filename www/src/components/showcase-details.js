@@ -7,6 +7,7 @@ import qs from "qs"
 
 import presets, { colors } from "../utils/presets"
 import { options, scale, rhythm } from "../utils/typography"
+import sharedStyles from "../views/shared/styles"
 import { Link, StaticQuery, graphql } from "gatsby"
 import Layout from "../components/layout"
 import ShareMenu from "../components/share-menu"
@@ -492,7 +493,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                   css={{
                     boxShadow: isModal
                       ? false
-                      : `0 4px 10px ${hex2rgba(colors.gatsby, 0.1)}`,
+                      : sharedStyles.screenshot.boxShadow,
                   }}
                 />
               </div>
