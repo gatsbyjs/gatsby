@@ -26,14 +26,44 @@ const objRestSpread = require("@babel/plugin-proposal-object-rest-spread");
 const babel = require("@babel/core");
 const rawMDX = require("@mdx-js/mdx");
 
+const debug = require("debug")("gatsby-mdx:extend-node-type");
 const mdx = require("./utils/mdx");
 const getTableOfContents = require("./utils/get-table-of-content");
 const defaultOptions = require("./utils/default-options");
+const getSourcePluginsAsRemarkPlugins = require("./utils/get-source-plugins-as-remark-plugins");
 
 const stripFrontmatter = source => grayMatter(source).content;
+/* 
+ * function mutateNode({
+ *   pluginOptions,
+ *   mdxNode,
+ *   getNode,
+ *   files,
+ *   reporter,
+ *   cache
+ * }) {
+ *   return Promise.each(pluginOptions.gatsbyRemarkPlugins, plugin => {
+ *     const requiredPlugin = require(plugin.resolve);
+ *     if (_.isFunction(requiredPlugin.mutateSource)) {
+ *       return requiredPlugin.mutateSource(
+ *         {
+ *           mdxNode,
+ *           files: fileNodes,
+ *           getNode,
+ *           reporter,
+ *           cache
+ *         },
+ *         plugin.pluginOptions
+ *       );
+ *     } else {
+ *       return Promise.resolve();
+ *     }
+ *   });
+ * }
+ *  */
 
 module.exports = (
-  { type /*store, pathPrefix, getNode, getNodes, cache, reporter*/ },
+  { type /*store*/, pathPrefix, getNode, getNodes, cache, reporter },
   pluginOptions
 ) => {
   if (!type.name.endsWith(`Mdx`)) {
@@ -42,6 +72,33 @@ module.exports = (
 
   const options = defaultOptions(pluginOptions);
   const compiler = createMdxAstCompiler(options);
+
+  for (let plugin of options.gatsbyRemarkPlugins) {
+    if (!plugin.resolve) {
+      throw new Error(
+        'gatsby-remark plugins must be configured in the form {resolve: "plugin", options: {}}'
+      );
+    }
+    debug("requiring", plugin.resolve);
+    const requiredPlugin = require(plugin.resolve);
+    debug("required", plugin);
+    if (_.isFunction(requiredPlugin.setParserPlugins)) {
+      for (let parserPlugin of requiredPlugin.setParserPlugins(
+        plugin.pluginOptions
+      )) {
+        if (_.isArray(parserPlugin)) {
+          const [parser, parserPluginOptions] = parserPlugin;
+          debug("adding mdPlugin with options", plugin, parserPluginOptions);
+          options.mdPlugins.push([parser, parserPluginOptions]);
+          //          remark = remark.use(parser, options);
+        } else {
+          debug("adding mdPlugin", plugin);
+          options.mdPlugins.push(parserPlugin);
+          //          remark = remark.use(parserPlugin);
+        }
+      }
+    }
+  }
 
   return new Promise((resolve /*, reject*/) => {
     async function getAST(mdxNode) {
@@ -66,6 +123,15 @@ module.exports = (
     }
 
     async function getCode(mdxNode, overrideOptions) {
+      /* await mutateNode({
+       *   pluginOptions,
+       *   mdxNode,
+       *   files: getNodes().filter(n => n.internal.type === `File`),
+       *   getNode,
+       *   reporter,
+       *   cache
+       * }); */
+
       const code = await mdx(mdxNode.rawBody, {
         ...options,
         ...overrideOptions
@@ -106,6 +172,26 @@ ${code}`;
       }
     });
 
+    async function rawMDXWithGatsbyRemarkPlugins(content, opts, mdxNode) {
+      const gatsbyRemarkPluginsAsMDPlugins = await getSourcePluginsAsRemarkPlugins(
+        {
+          gatsbyRemarkPlugins: options.gatsbyRemarkPlugins,
+          mdxNode,
+          //          files,
+          getNode,
+          getNodes,
+          reporter,
+          cache,
+          pathPrefix
+        }
+      );
+
+      return rawMDX(content, {
+        ...options,
+        mdPlugins: options.mdPlugins.concat(gatsbyRemarkPluginsAsMDPlugins)
+      });
+    }
+
     return resolve({
       code: {
         resolve(mdxNode) {
@@ -123,10 +209,24 @@ ${code}`;
             body: {
               type: GraphQLString,
               async resolve(mdxNode) {
+                /* await mutateNode({
+                 *   pluginOptions,
+                 *   mdxNode,
+                 *   files: getNodes().filter(n => n.internal.type === `File`),
+                 *   getNode,
+                 *   reporter,
+                 *   cache
+                 * }); */
+
                 const { content } = grayMatter(mdxNode.rawBody);
-                let code = await rawMDX(content, {
-                  ...options
-                });
+
+                let code = await rawMDXWithGatsbyRemarkPlugins(
+                  content,
+                  {
+                    ...options
+                  },
+                  mdxNode
+                );
 
                 const instance = new BabelPluginPluckImports();
                 const result = babel.transform(code, {
@@ -146,6 +246,7 @@ ${code}`;
                 const CACHE_DIR = `.cache`;
                 const PLUGIN_DIR = `gatsby-mdx`;
                 const REMOTE_MDX_DIR = `remote-mdx-dir`;
+
                 mkdirp.sync(
                   path.join(options.root, CACHE_DIR, PLUGIN_DIR, REMOTE_MDX_DIR)
                 );
@@ -165,9 +266,14 @@ ${code}`;
                     .digest(`hex`);
 
                 const { content } = grayMatter(mdxNode.rawBody);
-                let code = await rawMDX(content, {
-                  ...options
-                });
+
+                let code = await rawMDXWithGatsbyRemarkPlugins(
+                  content,
+                  {
+                    ...options
+                  },
+                  mdxNode
+                );
 
                 const instance = new BabelPluginPluckImports();
                 babel.transform(code, {
