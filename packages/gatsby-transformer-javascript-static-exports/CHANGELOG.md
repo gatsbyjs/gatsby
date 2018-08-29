@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.1.1-rc.2"></a>
+
+## [2.1.1-rc.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-javascript-static-exports/compare/gatsby-transformer-javascript-static-exports@2.1.1-rc.1...gatsby-transformer-javascript-static-exports@2.1.1-rc.2) (2018-08-29)
+
+**Note:** Version bump only for package gatsby-transformer-javascript-static-exports
+
 <a name="2.1.1-rc.1"></a>
 
 ## [2.1.1-rc.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-javascript-static-exports/compare/gatsby-transformer-javascript-static-exports@2.1.1-rc.0...gatsby-transformer-javascript-static-exports@2.1.1-rc.1) (2018-08-29)
