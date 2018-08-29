@@ -26,7 +26,12 @@ async function onCreateNode({
       `flow`,
       `doExpressions`,
       `objectRestSpread`,
-      `decorators`,
+      [
+        `decorators`,
+        {
+          decoratorsBeforeExport: true,
+        },
+      ],
       `classProperties`,
       `classPrivateProperties`,
       `classPrivateMethods`,
