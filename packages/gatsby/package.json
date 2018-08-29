@@ -1,6 +1,6 @@
 {
   "name": "gatsby",
-  "description": "React.js Static Site Generator",
+  "description": "Blazing fast modern site generator for React",
   "version": "2.0.0-rc.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {

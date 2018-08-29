@@ -13,7 +13,7 @@ to bridge this gap, providing a solid interface that works well for technical an
 users alike, and interacts with your static site repository via API so that every change results in
 a commit.
 
-A primary focus of Netlify CMS is to work well with static site generators like Gatsby. Installation
+A primary focus of Netlify CMS is to work well with modern site generators like Gatsby. Installation
 typically requires just an index.html file and a YAML configuration file, but we're going to
 leverage the Gatsby plugin for Netlify CMS to automatically install and build the CMS along with a
 static site.
