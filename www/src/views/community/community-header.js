@@ -45,16 +45,13 @@ const CommunityHeaderLink = ({ linkTo, children }) => (
 )
 
 class CommunityHeader extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      forHire: false,
-      hiring: false,
-      search: ``,
-    }
+  state = {
+    forHire: false,
+    hiring: false,
+    search: ``,
   }
 
-  handleInputChange = event => {
+  handleInputChange = (event, val) => {
     const target = event.target
     const value = target.checked
     const name = target.name
@@ -62,6 +59,7 @@ class CommunityHeader extends Component {
     this.setState({
       [name]: value,
     })
+    this.props.applyFilter(val)
   }
 
   render() {
@@ -126,7 +124,7 @@ class CommunityHeader extends Component {
                 ...styles.input,
               }}
               checked={this.state.forHire}
-              onChange={this.handleInputChange}
+              onChange={event => this.handleInputChange(event, `for_hire`)}
               disabled={this.state.hiring}
             />
             For Hire
@@ -142,7 +140,7 @@ class CommunityHeader extends Component {
                 ...styles.input,
               }}
               checked={this.state.hiring}
-              onChange={this.handleInputChange}
+              onChange={event => this.handleInputChange(event, `hiring`)}
               disabled={this.state.forHire}
             />
             Hiring

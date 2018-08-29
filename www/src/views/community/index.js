@@ -10,15 +10,42 @@ import GithubIcon from "react-icons/lib/go/mark-github"
 import presets, { colors } from "../../utils/presets"
 
 class CommunityView extends Component {
+  state = {
+    creators: this.props.data.allCreatorsYaml.edges,
+    for_hire: false,
+    hiring: false,
+  }
   render() {
     const { location, title, data } = this.props
-    let items = data.allCreatorsYaml.edges
+    const { creators } = this.state
+    // let items = this.props.data.allCreatorsYaml.edges
+
+    const applyFilter = filter => {
+      if (this.state[filter] === true) {
+        this.setState({
+          creators: this.props.data.allCreatorsYaml.edges,
+          [filter]: false,
+        })
+      }
+
+      //   this.setState(prevState => { filters[filter]: !prevState.filters[filter]}
+      //  );
+      // }
+      else {
+        let items = creators.filter(item => item.node[filter] === true)
+        this.setState({ creators: items, [filter]: true })
+      }
+    }
+
+    // calculate the forhire and hiring here and render accordingly, trigger that function from the header
+
+    // change URL from the header via URLQuery as well
     return (
       <Layout location={location}>
         <Helmet>
           <title>{title}</title>
         </Helmet>
-        <CommunityHeader />
+        <CommunityHeader applyFilter={filter => applyFilter(filter)} />
         <main
           role="main"
           css={{
@@ -30,7 +57,7 @@ class CommunityView extends Component {
               display: `flex`,
             }}
           >
-            {items.map(item => (
+            {creators.map(item => (
               // this is probably going to be a link rendering a template
               // config on gatsby-node.js
               <Link
