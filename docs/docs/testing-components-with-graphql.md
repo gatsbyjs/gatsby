@@ -256,7 +256,7 @@ export default props => (
         }
       }
     `}
-    render={data => <Header data={data} {...props} />}
+    render={data => <Header {...props} data={data} />}
   />
 )
 ```
@@ -286,7 +286,7 @@ export const Header = props => (
         }
       }
     `}
-    render={data => <PureHeader data={data} {...props} />}
+    render={data => <PureHeader {...props} data={data} />}
   />
 )
 
