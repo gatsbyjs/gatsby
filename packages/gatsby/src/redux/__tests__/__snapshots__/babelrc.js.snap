@@ -234,7 +234,6 @@ Array [
       "/path/to/module/@babel/plugin-transform-runtime",
       Object {
         "helpers": true,
-        "polyfill": false,
         "regenerator": true,
       },
     ],

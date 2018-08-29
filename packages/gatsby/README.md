@@ -11,7 +11,7 @@
   ⚛️ 📄 :rocket:
 </h3>
 <p align="center">
-  <strong>Blazing fast site generator for React</strong><br>
+  <strong>Blazing fast modern site generator for React</strong><br>
   Go beyond static sites: build blogs, ecommerce sites, full-blown apps, and more with Gatsby.
 </p>
 <p align="center">

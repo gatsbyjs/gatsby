@@ -9,6 +9,7 @@ import Layout from "../components/layout"
 import ShareMenu from "../components/share-menu"
 import presets, { colors } from "../utils/presets"
 import { /*typography, */ rhythm, scale, options } from "../utils/typography"
+import sharedStyles from "../views/shared/styles"
 import MdLaunch from "react-icons/lib/md/launch"
 import GithubIcon from "react-icons/lib/fa/github"
 
@@ -272,7 +273,7 @@ class StarterTemplate extends React.Component {
                   fluid={imageSharp.childImageSharp.fluid}
                   alt={`Screenshot of ${imageSharp.name}`}
                   css={{
-                    ...styles.screenshot,
+                    ...sharedStyles.screenshot,
                   }}
                 />
               )}
