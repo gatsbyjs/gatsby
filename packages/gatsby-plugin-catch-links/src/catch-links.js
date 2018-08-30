@@ -109,6 +109,19 @@ export const pathIsNotHandledByApp = destination => {
   )
 }
 
+export const hashShouldBeFollowed = (origin, destination) => (
+  destination.hash !== `` && (
+    /**
+     * Dynamically created anchor links (href="#my-anchor") do not always 
+     * have pathname on IE 
+     */
+    destination.pathname === `` ||
+
+    /* Don't catch links pointed to the same page but with a hash. */
+    destination.pathname === origin.pathname
+  )
+)
+
 export default function(root, cb) {
   root.addEventListener(`click`, function(ev) {
     if ( userIsForcingNavigation(ev) ) return true
@@ -136,15 +149,7 @@ export default function(root, cb) {
 
     if ( pathIsNotHandledByApp(destination) ) return true
 
-    // Dynamically created anchor links (href="#my-anchor") do not always have pathname on IE
-    if (destination.pathname === ``) {
-      return true
-    }
-
-    // Don't catch links pointed to the same page but with a hash.
-    if (destination.hash !== ``) {
-      return true
-    }
+    if ( hashShouldBeFollowed(origin, destination) ) return true
 
     ev.preventDefault()
 
