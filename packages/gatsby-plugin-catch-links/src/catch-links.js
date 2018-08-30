@@ -23,25 +23,35 @@ export const findClosestAnchor = event => {
   return null
 }
 
-export const authorIsForcingNavigation = anchor => {
-  // Don't catch links where a target (other than self) is set
-  // e.g. _blank.
-  if (anchor.target && anchor.target.toLowerCase() !== `_self`) return true
+export const authorIsForcingNavigation = anchor => (
+  /**
+   * HTML5 attribute that informs the browser to handle the 
+   * href as a downloadable file
+   */
+  anchor.hasAttribute(`download`) === true ||
 
-  // HTML5 attribute that informs the browser to handle the href 
-  // as a downloadable file
-  if (anchor.hasAttribute(`download`)) return true
+  /**
+   * Only catch target=_self anchors
+   */
+  anchor.hasAttribute(`target`) === false ||
 
-  return false
-}
+  /* Assumption: some browsers use null for default attribute values */
+  anchor.target == null ||
 
-export const urlsAreOnSameOrigin = (origin, destination) => {
-  // https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy
-  return (
-    origin.protocol === destination.protocol &&
-    origin.host === destination.host /* This includes both hostname and port */
-  )
-}
+  /**
+   * The browser defaults to _self, but, not all browsers set 
+   * a.target to the string value `_self` by default
+   */
+  [`_self`, ``].indexOf(anchor.target) === -1
+)
+
+// https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy
+export const urlsAreOnSameOrigin = (origin, destination) => (
+  origin.protocol === destination.protocol &&
+
+   /* a.host includes both hostname and port in the expected format host:port */
+  origin.host === destination.host
+)
 
 export default function(root, cb) {
   root.addEventListener(`click`, function(ev) {
