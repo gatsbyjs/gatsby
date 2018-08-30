@@ -288,6 +288,8 @@ exports.mapPolylangTranlations = entities =>
               entitie.__type === t.__type
           ).id
       )
+
+      delete entitie.polylang_translations
     }
 
     return entitie
