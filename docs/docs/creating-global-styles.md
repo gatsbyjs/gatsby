@@ -25,6 +25,9 @@ a {
 
 Then, include the stylesheet in your site's `gatsby-browser.js` file.
 
+> _Note: This solution works when including css as those styles are extracted when building the js but not for css-in-js.
+Including styles in a layout component or a global-styles.js is your best bet for that._ 
+
 ```javascript
 import "./src/styles/global.css"
 

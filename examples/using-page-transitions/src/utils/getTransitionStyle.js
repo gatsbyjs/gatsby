@@ -1,6 +1,7 @@
 const getTransitionStyles = timeout => {
   return {
     entering: {
+      position: "absolute",
       opacity: 0,
     },
     entered: {

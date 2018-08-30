@@ -5,11 +5,12 @@
   "author": "Steven Surgnier <stevensurgnier@gmail.com>",
   "dependencies": {
     "gatsby": "next",
+    "gatsby-plugin-layout": "^1.0.0-rc.1",
     "gatsby-plugin-react-helmet": "next",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-helmet": "^5.2.0",
-    "react-transition-group": "^2.2.1"
+    "react-transition-group": "^2.4.0"
   },
   "keywords": [
     "gatsby"

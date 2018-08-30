@@ -243,7 +243,7 @@ const Diagram = () => (
     <h1 css={{ marginBottom: rhythm(1.5), ...scale(0.9) }}>How Gatsby works</h1>
     <div css={{ maxWidth: rhythm(20), margin: `0 auto ${rhythm(2)}` }}>
       <FuturaParagraph>
-        Gatsby lets you build blazing-fast sites with <em>your data</em>,
+        Gatsby lets you build blazing fast sites with <em>your data</em>,
         whatever the source. Liberate your sites from legacy CMSs and fly into
         the future.
       </FuturaParagraph>

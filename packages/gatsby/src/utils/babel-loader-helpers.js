@@ -118,7 +118,6 @@ const prepareOptions = (babel, resolve = require.resolve) => {
         {
           helpers: true,
           regenerator: true,
-          polyfill: false,
         },
       ],
       {
