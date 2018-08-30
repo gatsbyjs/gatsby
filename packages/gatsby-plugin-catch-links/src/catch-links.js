@@ -44,37 +44,37 @@ export default function(root, cb) {
 
     if( authorIsForcingNavigation(targetAnchor) ) return true
 
+    // IE clears the host value if the anchor href changed after creation, e.g.
+    // in React. Creating a new anchor element to ensure host value is present
+    const destination = document.createElement(`a`)
+    destination.href = targetAnchor.href
+
+    // In IE, the default port is included in the anchor host but excluded from
+    // the location host.  This affects the ability to directly compare
+    // location host to anchor host.  For example: http://example.com would
+    // have a location.host of 'example.com' and an destination.host of
+    // 'example.com:80' Creating anchor from the location.href to normalize the
+    // host value.
+    const origin = document.createElement(`a`)
+    origin.href = window.location.href
+
+    if (destination.host !== origin.host) return true
+
     // Don't catch links pointed to the same page but with a hash.
-    if (targetAnchor.pathname === window.location.pathname && targetAnchor.hash !== ``) {
+    if (destination.pathname === origin.pathname && destination.hash !== ``) {
       return true
     }
 
     // Dynamically created anchor links (href="#my-anchor") do not always have pathname on IE
-    if (targetAnchor.pathname === ``) {
+    if (destination.pathname === ``) {
       return true
     }
 
     // Don't catch links pointed at what look like file extensions (other than
     // .htm/html extensions).
-    if (targetAnchor.pathname.search(/^.*\.((?!htm)[a-z0-9]{1,5})$/i) !== -1) {
+    if (destination.pathname.search(/^.*\.((?!htm)[a-z0-9]{1,5})$/i) !== -1) {
       return true
     }
-
-    // IE clears the host value if the anchor href changed after creation, e.g.
-    // in React. Creating a new anchor element to ensure host value is present
-    var a1 = document.createElement(`a`)
-    a1.href = targetAnchor.href
-
-    // In IE, the default port is included in the anchor host but excluded from
-    // the location host.  This affects the ability to directly compare
-    // location host to anchor host.  For example: http://example.com would
-    // have a location.host of 'example.com' and an targetAnchor.host of
-    // 'example.com:80' Creating anchor from the location.href to normalize the
-    // host value.
-    var a2 = document.createElement(`a`)
-    a2.href = window.location.href
-
-    if (a1.host !== a2.host) return true
 
     // For when pathPrefix is used in an app and there happens to be a link
     // pointing to the same domain but outside of the app's pathPrefix. For
@@ -84,16 +84,16 @@ export default function(root, cb) {
     // href="https://example.com/not-my-app"> the plugin won't catch it and
     // will navigate to an external link instead of doing a pushState resulting
     // in `https://example.com/myapp/https://example.com/not-my-app`
-    var re = new RegExp(`^${a2.host}${withPrefix(`/`)}`)
-    if (!re.test(`${a1.host}${a1.pathname}`)) return true
+    var re = new RegExp(`^${origin.host}${withPrefix(`/`)}`)
+    if (!re.test(`${destination.host}${destination.pathname}`)) return true
 
     // TODO: add a check for absolute internal links in a callback or here,
-    // or always pass only `${a1.pathname}${a1.hash}`
+    // or always pass only `${destination.pathname}${destination.hash}`
     // to avoid `https://example.com/myapp/https://example.com/myapp/here` navigation
 
     ev.preventDefault()
 
-    cb(targetAnchor.getAttribute(`href`))
+    cb(destination.getAttribute(`href`))
     return false
   })
 }
