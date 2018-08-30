@@ -35,7 +35,7 @@
     "gatsby-remark-responsive-iframe": "next",
     "gatsby-remark-smartypants": "next",
     "gatsby-source-filesystem": "^2.0.1-rc.1",
-    "gatsby-source-npm-package-search": "^1.0.8",
+    "gatsby-source-npm-package-search": "next",
     "gatsby-transformer-csv": "next",
     "gatsby-transformer-documentationjs": "next",
     "gatsby-transformer-remark": "next",
