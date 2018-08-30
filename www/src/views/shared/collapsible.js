@@ -26,6 +26,7 @@ class Collapsible extends Component {
           borderBottom: collapsed ? 0 : `1px solid ${colors.ui.light}`,
           display: collapsed ? false : `flex`,
           flex: collapsed ? `0 0 auto` : `1 1 auto`,
+          overflowY: `auto`,
           // paddingBottom: collapsed ? 0 : rhythm(options.blockMarginBottom),
         }}
       >
@@ -67,6 +68,27 @@ class Collapsible extends Component {
               ...styles.scrollbar,
               display: collapsed ? `none` : `block`,
               overflowY: `auto`,
+
+              /**
+               * Dynamic shadow indicating there is more content to scroll
+               * Adapted from http://lea.verou.me/2012/04/background-attachment-local/
+               * It isn’t ideal because the shadows sit below the content (see: background)
+               * instead of above
+               * But this has got to be more performant and maintainable
+               * than using React ref + listening to scroll event
+               */
+              background: `
+              linear-gradient(white 30%, rgba(255,255,255,0)),
+              linear-gradient(rgba(255,255,255,0), white 70%) 0 100%,
+              radial-gradient(farthest-side at 50% 0, ${
+                colors.ui.bright
+              }, transparent),
+              radial-gradient(farthest-side at 50% 100%, ${
+                colors.ui.bright
+              }, transparent) 0 100%`,
+              backgroundRepeat: `no-repeat`,
+              backgroundSize: `100% 60px, 100% 60px, 100% 20px, 100% 20px`,
+              backgroundAttachment: `local, local, scroll, scroll`,
             }}
           >
             {children}
