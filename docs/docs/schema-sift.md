@@ -102,17 +102,11 @@ The resolve method in this case would return a paragraph node, which also needs 
 
 After `resolveRecursive` has finished, we will have "realized" all the query fields in each node, giving us confidence that we can perform the query with all the data being there.
 
-### 4. Track newly inlined fields
-
-TODO: I think what's going on here is that nodes when created, have explicit objects on them already. And there must be a step that links all these sub objects to the root node. But, the fields that are realized in the above step haven't been created before. So we need to track them explicitly. Feels a bit cray cray, but legit I guess.
-
-TODO: Create proper node tracking doc in other .md
-
 ### 5. Run sift query on all nodes
 
 Now that we've realized all fields that need to be queried, on all nodes of this type, we are finally ready to apply the sift query to all those nodes. This step is handled by [tempPromise](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/run-sift.js#L214). It simply concatenates all the top level objects in the args tree together with a sift `$and` expression, and then iterates over all nodes returning the first one that satisfies the sift expression.
 
-In the case that `connection === true` (argument passed to run-sift), then instead of just choosing the first argument, we will select ALL nodes that match the sift query. If the GraphQL query specified `sort`, `skip`, or `limit` fields, then we use the [graphql-skip-limit](TODO) library to filter down to the appropriate results. See [schema-connections](TODO) for more info.
+In the case that `connection === true` (argument passed to run-sift), then instead of just choosing the first argument, we will select ALL nodes that match the sift query. If the GraphQL query specified `sort`, `skip`, or `limit` fields, then we use the [graphql-skip-limit](https://www.npmjs.com/package/graphql-skip-limit) library to filter down to the appropriate results. See [schema-connections](/docs/schema-connections) for more info.
 
 ### 6. Create Page dependency if required
 
