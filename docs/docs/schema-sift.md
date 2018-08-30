@@ -112,9 +112,11 @@ TODO: Create proper node tracking doc in other .md
 
 Now that we've realized all fields that need to be queried, on all nodes of this type, we are finally ready to apply the sift query to all those nodes. This step is handled by [tempPromise](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/run-sift.js#L214). It simply concatenates all the top level objects in the args tree together with a sift `$and` expression, and then iterates over all nodes returning the first one that satisfies the sift expression.
 
+In the case that `connection === true` (argument passed to run-sift), then instead of just choosing the first argument, we will select ALL nodes that match the sift query. If the GraphQL query specified `sort`, `skip`, or `limit` fields, then we use the [graphql-skip-limit](TODO) library to filter down to the appropriate results. See [schema-connections](TODO) for more info.
+
 ### 6. Create Page dependency if required
 
-Assuming we find a node, we finish off by recording the page that initiated the query (in the `path` field depends on the found node. More on this in [create page dependency](TODO)
+Assuming we find a node (or multiple if `connection` === true), we finish off by recording the page that initiated the query (in the `path` field depends on the found node. More on this in [create page dependency](TODO).
 
 ## Note about plugin resolve side effects
 
