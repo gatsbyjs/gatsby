@@ -23,26 +23,56 @@ export const findClosestAnchor = event => {
   return null
 }
 
-export const authorIsForcingNavigation = anchor => (
-  /**
-   * HTML5 attribute that informs the browser to handle the 
-   * href as a downloadable file
-   */
-  anchor.hasAttribute(`download`) === true ||
-
-  /**
-   * Only catch target=_self anchors
-   */
+export const anchorsTargetIsEquivalentToSelf = anchor => (
+  /* If not target attribute is present it's treated as _self */
   anchor.hasAttribute(`target`) === false ||
-
-  /* Assumption: some browsers use null for default attribute values */
-  anchor.target == null ||
 
   /**
    * The browser defaults to _self, but, not all browsers set 
    * a.target to the string value `_self` by default
    */
-  [`_self`, ``].indexOf(anchor.target) === -1
+
+  /** 
+   * Assumption: some browsers use null/undefined for default 
+   * attribute values 
+   */
+  anchor.target == null ||
+
+  /** 
+   * Some browsers use the empty string to mean _self, check 
+   * for actual `_self` 
+   */
+  [`_self`, ``].indexOf(anchor.target) !== -1 ||
+
+  /**
+   * As per https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#attr-target
+   */
+  (
+    anchor.target === `_parent` && (
+      !window.parent || 
+      window.parent === window
+    )
+  ) || 
+  (
+    anchor.target === `_top` && (
+      !window.top || 
+      window.top === window
+    )
+  )
+)
+
+export const authorIsForcingNavigation = anchor => (
+  /**
+   * HTML5 attribute that informs the browser to handle the 
+   * href as a downloadable file; let the browser handle it
+   */
+  anchor.hasAttribute(`download`) === true ||
+
+  /**
+   * Let the browser handle anything that doesn't look like a 
+   * target="_self" anchor
+   */
+  anchorsTargetIsEquivalentToSelf(anchor) === false
 )
 
 // https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy
