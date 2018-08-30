@@ -5,6 +5,7 @@ import { OutboundLink } from "gatsby-plugin-google-analytics"
 import MdClose from "react-icons/lib/md/close"
 import { navigate, PageRenderer } from "gatsby"
 import presets, { colors } from "../utils/presets"
+import healLocationPathname from "../utils/sidebar/heal-location-pathname"
 import Banner from "../components/banner"
 import Navigation from "../components/navigation"
 import MobileNavigation from "../components/navigation-mobile"
@@ -58,11 +59,8 @@ class DefaultLayout extends React.Component {
   }
 
   render() {
-    const {
-      location = {
-        pathname: `/starter-showcase`,
-      },
-    } = this.props // location will be undefined if on 'starter-showcase'
+    let { location } = this.props
+    location.pathname = healLocationPathname(location.pathname)
     const isHomepage = location.pathname === `/`
 
     // SEE: template-docs-markdown for why this.props.isSidebarDisabled is here
@@ -160,7 +158,7 @@ class DefaultLayout extends React.Component {
           <meta name="og:site_name" content="GatsbyJS" />
           <link
             rel="canonical"
-            href={`https://gatsbyjs.org${this.props.location.pathname}`}
+            href={`https://gatsbyjs.org${location.pathname}`}
           />
           <html lang="en" />
         </Helmet>
@@ -188,7 +186,7 @@ class DefaultLayout extends React.Component {
           </OutboundLink>
           .
         </Banner>
-        <Navigation pathname={this.props.location.pathname} />
+        <Navigation pathname={location.pathname} />
         <div
           className={`main-body`}
           css={{
@@ -204,7 +202,7 @@ class DefaultLayout extends React.Component {
           <PageWithSidebar
             disable={isSidebarDisabled}
             itemList={this.props.itemList}
-            location={this.props.location}
+            location={location}
             enableScrollSync={this.props.enableScrollSync}
             renderContent={() => this.props.children}
           />

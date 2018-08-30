@@ -4,6 +4,7 @@ import { graphql } from "gatsby"
 
 import Layout from "../components/layout"
 import { itemListDocs, itemListTutorial } from "../utils/sidebar/item-list"
+import healLocationPathname from "../utils/sidebar/heal-location-pathname"
 import MarkdownPageFooter from "../components/markdown-page-footer"
 import DocSearchContent from "../components/docsearch-content"
 
@@ -55,7 +56,8 @@ const getPageHTML = page => {
 class DocsTemplate extends React.Component {
   render() {
     const page = this.props.data.markdownRemark
-    const isDocsPage = this.props.location.pathname.slice(0, 5) === `/docs`
+    const pathname = healLocationPathname(this.props.location.pathname)
+    const isDocsPage = pathname.slice(0, 5) === `/docs`
     const html = getPageHTML(page)
 
     return (
@@ -72,9 +74,7 @@ class DocsTemplate extends React.Component {
         </Helmet>
         <Layout
           location={this.props.location}
-          isSidebarDisabled={
-            this.props.location.pathname === `/code-of-conduct/`
-          }
+          isSidebarDisabled={pathname === `/code-of-conduct/`}
           itemList={isDocsPage ? itemListDocs : itemListTutorial}
           enableScrollSync={isDocsPage ? false : true}
         >
