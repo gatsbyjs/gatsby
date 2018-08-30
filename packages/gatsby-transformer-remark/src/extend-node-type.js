@@ -230,7 +230,7 @@ module.exports = (
       }
     }
 
-    async function getTableOfContents(markdownNode, field) {
+    async function getTableOfContents(markdownNode, pathToSlugField) {
       const cachedToc = await cache.get(tableOfContentsCacheKey(markdownNode))
       if (cachedToc) {
         return cachedToc
@@ -242,11 +242,11 @@ module.exports = (
         if (tocAst.map) {
           const addSlugToUrl = function(node) {
             if (node.url) {
-              if (!markdownNode.fields || markdownNode.fields[field] === undefined) {
-                console.warn(`Skipping TableOfContents. Field '${field}' missing from markdown node`)
+              if (_.get(markdownNode, pathToSlugField) === undefined) {
+                console.warn(`Skipping TableOfContents. Field '${pathToSlugField}' missing from markdown node`)
                 return null
               }
-              node.url = [pathPrefix, markdownNode.fields[field], node.url]
+              node.url = [pathPrefix, _.get(markdownNode, pathToSlugField), node.url]
                 .join(`/`)
                 .replace(/\/\//g, `/`)
             }
@@ -413,13 +413,13 @@ module.exports = (
       tableOfContents: {
         type: GraphQLString,
         args: {
-          field: {
+          pathToSlugField: {
             type: GraphQLString,
-            defaultValue: `slug`,
+            defaultValue: `fields.slug`,
           },
         },
-        resolve(markdownNode, { field }) {
-          return getTableOfContents(markdownNode, field)
+        resolve(markdownNode, { pathToSlugField }) {
+          return getTableOfContents(markdownNode, pathToSlugField)
         },
       },
       // TODO add support for non-latin languages https://github.com/wooorm/remark/issues/251#issuecomment-296731071
