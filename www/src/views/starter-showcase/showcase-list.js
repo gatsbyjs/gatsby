@@ -4,7 +4,8 @@ import Img from "gatsby-image"
 import FaExtLink from "react-icons/lib/fa/external-link"
 import FaGithub from "react-icons/lib/fa/github"
 import FaClipboard from "react-icons/lib/fa/clipboard"
-import { /* options, rhythm, */ scale, rhythm } from "../../utils/typography"
+import MdStar from "react-icons/lib/md/star"
+import { /* rhythm, */ scale, rhythm, options } from "../../utils/typography"
 import presets, { colors } from "../../utils/presets"
 import copyToClipboard from "../../utils/copy-to-clipboard"
 import styles from "../shared/styles"
@@ -48,6 +49,7 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
   return (
     <div
       css={{
+        fontFamily: options.headerFontFamily.join(`,`),
         display: `flex`,
         flexWrap: `wrap`,
         padding: rhythm(3 / 4),
@@ -136,14 +138,25 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
               </Link>
               <div
                 css={{
-                  ...scale(-2 / 5),
-                  color: `#9B9B9B`,
-                  fontWeight: `normal`,
+                  ...styles.meta,
+                  marginTop: rhythm(options.blockMarginBottom),
                 }}
               >
                 <div css={{ display: `flex`, justifyContent: `space-between` }}>
-                  {repo.owner && repo.owner.login} /
-                  <span>
+                  <span css={{ color: colors.gray.dark }}>
+                    {repo.owner && repo.owner.login} /
+                  </span>
+                  <span
+                    css={{
+                      "> a": {
+                        paddingLeft: 5,
+                        "&:hover": {
+                          background: `none`,
+                          color: colors.gatsby,
+                        },
+                      },
+                    }}
+                  >
                     <a
                       href="#copy-to-clipboard"
                       onClick={() =>
@@ -196,9 +209,12 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
                 </div>
                 <div css={{ display: `flex`, justifyContent: `space-between` }}>
                   <div css={{ display: `inline-block` }}>
-                    <span role="img" aria-label="star">
-                      ⭐
-                    </span>
+                    <MdStar
+                      style={{
+                        color: colors.accent,
+                        verticalAlign: "text-top",
+                      }}
+                    />
                     {stars}
                   </div>
                   <div css={{ display: `inline-block` }}>
