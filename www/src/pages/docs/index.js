@@ -21,7 +21,7 @@ class IndexRoute extends React.Component {
             <h1 id="get-started" css={{ marginTop: 0 }}>
               Get started
             </h1>
-            <p>Gatsby is a blazing-fast static site generator for React.</p>
+            <p>Gatsby is a blazing fast modern site generator for React.</p>
             <h2>Install Gatsby{`'`}s command line tool</h2>
             <p>
               <code>npm install --global gatsby-cli</code>

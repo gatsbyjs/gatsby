@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-flow",
-  "version": "1.0.1-rc.0",
+  "version": "1.0.1-rc.1",
   "description": "Stub description for gatsby-plugin-flow",
   "main": "index.js",
   "scripts": {
@@ -24,11 +24,11 @@
   "license": "MIT",
   "dependencies": {
     "@babel/preset-flow": "^7.0.0-rc.1",
-    "@babel/runtime": "7.0.0-beta.52"
+    "@babel/runtime": "^7.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "7.0.0-beta.52",
-    "@babel/core": "7.0.0-beta.52",
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.0.0",
     "cross-env": "^5.0.5"
   }
 }

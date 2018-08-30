@@ -184,7 +184,16 @@ export default function({ types: t }) {
             // Replace the query with the hash of the query.
             path2.replaceWith(t.StringLiteral(queryHash))
 
-            path.traverse(nestedJSXVistor, { queryHash, query })
+            // modify StaticQuery elements and import data only if query is inside StaticQuery
+            if (
+              path2.parentPath?.parentPath?.parentPath?.node?.name?.name ===
+              `StaticQuery`
+            ) {
+              path2.parentPath.parentPath.parentPath.traverse(nestedJSXVistor, {
+                queryHash,
+                query,
+              })
+            }
 
             return null
           },

@@ -64,6 +64,8 @@ describe(`The Home Page`, () => {
     cy.fixture(`posts`).then(postsData => {
       const post1 = postsData[0]
       const post2 = postsData[1]
+      // wait for page to initialize
+      cy.wait(200)
       // open first post
       cy.getTestElement(`post`)
         .first()
@@ -72,6 +74,8 @@ describe(`The Home Page`, () => {
       // click right arrow icon to go to 2nd post
       cy.getTestElement(`next-post`).click()
       cy.url().should("contain", post2.id)
+      // wait for page to transition
+      cy.wait(200)
       // press left arrow to go back to 1st post
       cy.getTestElement(`previous-post`).click()
       cy.url().should("contain", post1.id)
@@ -84,14 +88,22 @@ describe(`The Home Page`, () => {
     cy.fixture(`posts`).then(postsData => {
       const post1 = postsData[0]
       const post2 = postsData[1]
+      // wait for page to initialize
+      cy.wait(200)
       // open fist post
       cy.getTestElement(`post`)
         .first()
-        .click()
+        // force, because sometimes the children cover
+        // the outer element causing Cypress to complain
+        .click({ force: true })
       cy.url().should("contain", post1.id)
+      // wait for page to transition
+      cy.wait(200)
       // press right arrow to go to 2nd post
       cy.get(`body`).type(`{rightarrow}`)
       cy.url().should("contain", post2.id)
+      // wait for page to transition
+      cy.wait(200)
       // press left arrow to go back to 1st post
       cy.get(`body`).type(`{leftarrow}`)
       cy.url().should("contain", post1.id)

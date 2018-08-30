@@ -127,5 +127,5 @@ module.exports = (file, api, options) => {
     addRequire(j, root, tag)
   }
 
-  return root.toSource({ quote: `single` })
+  return root.toSource({ quote: `single`, lineTerminator: `\n` })
 }
