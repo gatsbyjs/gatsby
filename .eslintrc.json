@@ -24,7 +24,9 @@
     "jest": true
   },
   "globals": {
-    "spyOn": true
+    "spyOn": true,
+    "cy": true,
+    "Cypress": true
   },
   "rules": {
     "no-console": "off",
