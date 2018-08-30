@@ -84,6 +84,31 @@ export const urlsAreOnSameOrigin = (origin, destination) => (
   origin.host === destination.host
 )
 
+export const pathIsNotHandledByApp = destination => {
+  const pathStartRegEx = new RegExp(`^${escapeStringRegexp(withPrefix(`/`))}`)
+  const pathFileExtensionRegEx = /^.*\.((?!htm)[a-z0-9]{1,5})$/i
+
+  return (
+    /** 
+     * For when pathPrefix is used in an app and there happens to be a link
+     * pointing to the same domain but outside of the app's pathPrefix. For
+     * example, a Gatsby app lives at https://example.com/myapp/, with the
+     * pathPrefix set to `/myapp`. When adding an absolute link to the same
+     * domain but outside of the /myapp path, for example, <a
+     * href="https://example.com/not-my-app"> the plugin won't catch it and
+     * will navigate to an external link instead of doing a pushState resulting
+     * in `https://example.com/myapp/https://example.com/not-my-app`
+     */
+    pathStartRegEx.test(`${destination.pathname}`) === false ||
+
+    /**
+     * Don't catch links pointed at what look like file extensions (other than
+     * .htm/html extensions).
+     */
+    destination.pathname.search(pathFileExtensionRegEx) !== -1
+  )
+}
+
 export default function(root, cb) {
   root.addEventListener(`click`, function(ev) {
     if ( userIsForcingNavigation(ev) ) return true
@@ -109,22 +134,7 @@ export default function(root, cb) {
 
     if ( urlsAreOnSameOrigin(origin, destination) === false ) return true
 
-    // For when pathPrefix is used in an app and there happens to be a link
-    // pointing to the same domain but outside of the app's pathPrefix. For
-    // example, a Gatsby app lives at https://example.com/myapp/, with the
-    // pathPrefix set to `/myapp`. When adding an absolute link to the same
-    // domain but outside of the /myapp path, for example, <a
-    // href="https://example.com/not-my-app"> the plugin won't catch it and
-    // will navigate to an external link instead of doing a pushState resulting
-    // in `https://example.com/myapp/https://example.com/not-my-app`
-    var re = new RegExp(`^${escapeStringRegexp(withPrefix(`/`))}`)
-    if (!re.test(`${destination.pathname}`)) return true
-
-    // Don't catch links pointed at what look like file extensions (other than
-    // .htm/html extensions).
-    if (destination.pathname.search(/^.*\.((?!htm)[a-z0-9]{1,5})$/i) !== -1) {
-      return true
-    }
+    if ( pathIsNotHandledByApp(destination) ) return true
 
     // Dynamically created anchor links (href="#my-anchor") do not always have pathname on IE
     if (destination.pathname === ``) {
