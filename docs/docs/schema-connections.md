@@ -95,4 +95,4 @@ The Sort Input Type itself is created in [build-node-connections.js](https://git
 ### Connection Resolver (sift)
 
 Finally, we're ready to define the resolver for our Connection type (in [build-node-connections.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/build-node-connections.js#L65)). This is where we come up with the name `all${type}` (e.g `allMarkdownRemark`) that is so common in Gatsby queries. The resolver is fairly simple. It uses the [sift.js](https://www.npmjs.com/package/sift) library to query across all nodes of the same type in redux. The big difference is that we supply the `connection: true` parameter to `run-sift.js` which is where sorting, and pagination is actually executed. See [Querying with Sift](/docs/schema-sift) for how this actually works.
-runs 
+
