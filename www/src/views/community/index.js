@@ -6,8 +6,9 @@ import Layout from "../../components/layout"
 import CommunityHeader from "./community-header"
 import Img from "gatsby-image"
 import GithubIcon from "react-icons/lib/go/mark-github"
-// import { navigate } from "gatsby"
+import { navigate } from "gatsby"
 import presets, { colors } from "../../utils/presets"
+import qs from "qs"
 
 class CommunityView extends Component {
   state = {
@@ -15,32 +16,45 @@ class CommunityView extends Component {
     for_hire: false,
     hiring: false,
   }
+
+  componentDidMount() {
+    const query = qs.parse(this.props.location.search.slice(1))
+    if (query.filter) {
+      let items = this.state.creators.filter(
+        item => item.node[query.filter] === true
+      )
+      this.setState({ creators: items, [query.filter]: true })
+    }
+  }
+
   render() {
     const { location, title, data } = this.props
     const { creators } = this.state
-    // let items = this.props.data.allCreatorsYaml.edges
 
     const applyFilter = filter => {
-      // console.log(this.props)
       if (this.state[filter] === true) {
         this.setState({
-          creators: this.props.data.allCreatorsYaml.edges,
+          creators: data.allCreatorsYaml.edges,
           [filter]: false,
         })
+        navigate(`${location.pathname}`)
       } else {
         let items = creators.filter(item => item.node[filter] === true)
         this.setState({ creators: items, [filter]: true })
       }
-      // navigate(`${location.pathname}filter: ${filter}`)
+      navigate(`${location.pathname}?filter=${filter}`)
     }
 
-    // change URL from the header via URLQuery as well
     return (
       <Layout location={location}>
         <Helmet>
           <title>{title}</title>
         </Helmet>
-        <CommunityHeader applyFilter={filter => applyFilter(filter)} />
+        <CommunityHeader
+          applyFilter={filter => applyFilter(filter)}
+          forHire={this.state.for_hire}
+          hiring={this.state.hiring}
+        />
         <main
           role="main"
           css={{
@@ -57,8 +71,6 @@ class CommunityView extends Component {
               <p css={{ color: colors.gatsby }}>No results</p>
             ) : (
               creators.map(item => (
-                // this is probably going to be a link rendering a template
-                // config on gatsby-node.js
                 <Link
                   key={item.node.name}
                   css={{
