@@ -443,6 +443,8 @@
   categories:
     - Portfolio
     - Web Dev
+  built_by: Fabian Schultz
+  built_by_url: 'https://fabianschultz.com/'
 - title: Formidable
   main_url: 'https://formidable.com/'
   url: 'https://formidable.com/'
@@ -516,6 +518,8 @@
   categories:
     - Creative
     - Portfolio
+  built_by: Kris Hedstrom
+  built_by_url: 'https://k-create.com/'
 - title: knpw.rs
   main_url: 'https://knpw.rs/'
   url: 'https://knpw.rs/'
@@ -1337,7 +1341,7 @@
     - Agency
     - Creative
     - Marketing
-  built_by: Bejamas.io
+  built_by: Bejamas
   built_by_url: 'https://bejamas.io/'
 - title: Zensum
   main_url: 'https://zensum.se/'

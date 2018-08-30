@@ -29,6 +29,7 @@ export const pageQuery = graphql`
             }
           }
           hiring
+          for_hire
           portfolio
           fields {
             slug

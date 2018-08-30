@@ -166,7 +166,7 @@ class CreatorTemplate extends Component {
                 {creator.location}
               </p>
             </span>
-            {creator.portfolio && (
+            {creator.portfolio === true && (
               <span
                 css={{
                   borderBottom: `2px solid black`,
