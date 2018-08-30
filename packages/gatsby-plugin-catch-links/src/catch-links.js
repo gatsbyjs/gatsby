@@ -35,7 +35,7 @@ export const authorIsForcingNavigation = anchor => {
   return false
 }
 
-module.exports = function(root, cb) {
+export default function(root, cb) {
   root.addEventListener(`click`, function(ev) {
     if ( userIsForcingNavigation(ev) ) return true
 
