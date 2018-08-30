@@ -119,8 +119,9 @@ export default function(root, cb) {
     var re = new RegExp(`^${origin.host}${withPrefix(`/`)}`)
     if (!re.test(`${destination.host}${destination.pathname}`)) return true
 
-    // Don't catch links pointed to the same page but with a hash.
-    if (destination.pathname === origin.pathname && destination.hash !== ``) {
+    // Don't catch links pointed at what look like file extensions (other than
+    // .htm/html extensions).
+    if (destination.pathname.search(/^.*\.((?!htm)[a-z0-9]{1,5})$/i) !== -1) {
       return true
     }
 
@@ -129,9 +130,8 @@ export default function(root, cb) {
       return true
     }
 
-    // Don't catch links pointed at what look like file extensions (other than
-    // .htm/html extensions).
-    if (destination.pathname.search(/^.*\.((?!htm)[a-z0-9]{1,5})$/i) !== -1) {
+    // Don't catch links pointed to the same page but with a hash.
+    if (destination.hash !== ``) {
       return true
     }
 
