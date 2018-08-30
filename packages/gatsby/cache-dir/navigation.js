@@ -42,6 +42,8 @@ const onPreRouteUpdate = location => {
 const onRouteUpdate = location => {
   if (!maybeRedirect(location.pathname)) {
     apiRunner(`onRouteUpdate`, { location })
+    // Temp hack while awaiting https://github.com/reach/router/issues/119
+    window.__navigatingToLink = false
   }
 }
 
