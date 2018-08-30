@@ -1,17 +1,17 @@
 import { withPrefix } from "gatsby-link"
 
+export const userIsForcingNavigation = event => (
+  event.button !== 0 ||
+  event.altKey ||
+  event.ctrlKey ||
+  event.metaKey ||
+  event.shiftKey ||
+  event.defaultPrevented
+)
+
 module.exports = function(root, cb) {
   root.addEventListener(`click`, function(ev) {
-    if (
-      ev.button !== 0 ||
-      ev.altKey ||
-      ev.ctrlKey ||
-      ev.metaKey ||
-      ev.shiftKey ||
-      ev.defaultPrevented
-    ) {
-      return true
-    }
+    if ( userIsForcingNavigation(ev) ) return true
 
     var anchor = null
     for (var n = ev.target; n.parentNode; n = n.parentNode) {
