@@ -14,7 +14,9 @@ const htmlToJSXConverter = new HTMLtoJSX({
 const withPathPrefix = (url, pathPrefix) =>
   (pathPrefix + url).replace(/\/\//, `/`);
 
-const isJSXRegex = /<[A-Z]/g;
+// TODO: replace this regex with more robust html vs JSX detection
+// If you modify this, do a lot of manual testing
+const isJSXRegex = /<\/?[A-Z]/;
 const htmlToJSXPlugin = () =>
   function transformer(ast) {
     const astMapped = map(ast, node => {
