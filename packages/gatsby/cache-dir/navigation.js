@@ -42,10 +42,17 @@ const onPreRouteUpdate = location => {
 const onRouteUpdate = location => {
   if (!maybeRedirect(location.pathname)) {
     apiRunner(`onRouteUpdate`, { location })
+    // Temp hack while awaiting https://github.com/reach/router/issues/119
+    window.__navigatingToLink = false
   }
 }
 
-const navigate = (to, options) => {
+const navigate = (to, options = {}) => {
+  // Temp hack while awaiting https://github.com/reach/router/issues/119
+  if (!options.replace) {
+    window.__navigatingToLink = true
+  }
+
   let { pathname } = parsePath(to)
   const redirect = redirectMap[pathname]
 
@@ -109,6 +116,9 @@ function shouldUpdateScroll(prevRouterProps, { location: { pathname } }) {
 }
 
 function init() {
+  // Temp hack while awaiting https://github.com/reach/router/issues/119
+  window.__navigatingToLink = false
+
   setApiRunnerForLoader(apiRunner)
   window.___loader = loader
   window.___push = to => navigate(to, { replace: false })
