@@ -131,6 +131,13 @@ Array [
     "meta": Array [],
     "modified": "2017-09-02T10:52:25.000Z",
     "ping_status": "open",
+    "polylang_current_lang": "en_US",
+    "polylang_tranlations": Array [
+      Object {
+        "locale": "fr_FR",
+        "wordpress_id": 26,
+      },
+    ],
     "slug": "sample-post-2",
     "status": "publish",
     "sticky": false,
@@ -350,6 +357,13 @@ Array [
     "meta": Array [],
     "modified": "2017-09-02T10:52:42.000Z",
     "ping_status": "open",
+    "polylang_current_lang": "fr_FR",
+    "polylang_tranlations": Array [
+      Object {
+        "locale": "en_US",
+        "wordpress_id": 28,
+      },
+    ],
     "slug": "sample-post-1",
     "status": "publish",
     "sticky": false,
@@ -1533,6 +1547,13 @@ Array [
     "meta": Array [],
     "modified": "2017-09-02T10:52:25.000Z",
     "ping_status": "open",
+    "polylang_current_lang": "en_US",
+    "polylang_tranlations": Array [
+      Object {
+        "locale": "fr_FR",
+        "wordpress_id": 26,
+      },
+    ],
     "slug": "sample-post-2",
     "status": "publish",
     "sticky": false,
@@ -1743,6 +1764,13 @@ Array [
     "meta": Array [],
     "modified": "2017-09-02T10:52:42.000Z",
     "ping_status": "open",
+    "polylang_current_lang": "fr_FR",
+    "polylang_tranlations": Array [
+      Object {
+        "locale": "en_US",
+        "wordpress_id": 28,
+      },
+    ],
     "slug": "sample-post-1",
     "status": "publish",
     "sticky": false,
@@ -2872,6 +2900,13 @@ Array [
     "meta": Array [],
     "modified": "2017-09-02T10:52:25.000Z",
     "ping_status": "open",
+    "polylang_current_lang": "en_US",
+    "polylang_tranlations": Array [
+      Object {
+        "locale": "fr_FR",
+        "wordpress_id": 26,
+      },
+    ],
     "slug": "sample-post-2",
     "status": "publish",
     "sticky": false,
@@ -2988,6 +3023,13 @@ Array [
     "meta": Array [],
     "modified": "2017-09-02T10:52:42.000Z",
     "ping_status": "open",
+    "polylang_current_lang": "fr_FR",
+    "polylang_tranlations": Array [
+      Object {
+        "locale": "en_US",
+        "wordpress_id": 28,
+      },
+    ],
     "slug": "sample-post-1",
     "status": "publish",
     "sticky": false,
@@ -4149,6 +4191,13 @@ Array [
     "meta": Array [],
     "modified": "2017-09-02T10:52:25.000Z",
     "ping_status": "open",
+    "polylang_current_lang": "en_US",
+    "polylang_tranlations": Array [
+      Object {
+        "locale": "fr_FR",
+        "wordpress_id": 26,
+      },
+    ],
     "slug": "sample-post-2",
     "status": "publish",
     "sticky": false,
@@ -4359,6 +4408,13 @@ Array [
     "meta": Array [],
     "modified": "2017-09-02T10:52:42.000Z",
     "ping_status": "open",
+    "polylang_current_lang": "fr_FR",
+    "polylang_tranlations": Array [
+      Object {
+        "locale": "en_US",
+        "wordpress_id": 28,
+      },
+    ],
     "slug": "sample-post-1",
     "status": "publish",
     "sticky": false,
@@ -5520,6 +5576,13 @@ Array [
     "meta": Array [],
     "modified": "2017-09-02T10:52:25.000Z",
     "ping_status": "open",
+    "polylang_current_lang": "en_US",
+    "polylang_tranlations": Array [
+      Object {
+        "locale": "fr_FR",
+        "wordpress_id": 26,
+      },
+    ],
     "slug": "sample-post-2",
     "status": "publish",
     "sticky": false,
@@ -5730,6 +5793,13 @@ Array [
     "meta": Array [],
     "modified": "2017-09-02T10:52:42.000Z",
     "ping_status": "open",
+    "polylang_current_lang": "fr_FR",
+    "polylang_tranlations": Array [
+      Object {
+        "locale": "en_US",
+        "wordpress_id": 28,
+      },
+    ],
     "slug": "sample-post-1",
     "status": "publish",
     "sticky": false,
@@ -6859,6 +6929,13 @@ Array [
     "meta": Array [],
     "modified": "2017-09-02T10:52:25.000Z",
     "ping_status": "open",
+    "polylang_current_lang": "en_US",
+    "polylang_tranlations": Array [
+      Object {
+        "locale": "fr_FR",
+        "wordpress_id": 26,
+      },
+    ],
     "slug": "sample-post-2",
     "status": "publish",
     "sticky": false,
@@ -6975,6 +7052,13 @@ Array [
     "meta": Array [],
     "modified": "2017-09-02T10:52:42.000Z",
     "ping_status": "open",
+    "polylang_current_lang": "fr_FR",
+    "polylang_tranlations": Array [
+      Object {
+        "locale": "en_US",
+        "wordpress_id": 28,
+      },
+    ],
     "slug": "sample-post-1",
     "status": "publish",
     "sticky": false,
@@ -8262,6 +8346,13 @@ Array [
     "meta": Array [],
     "modified": "2017-09-02T10:52:25.000Z",
     "ping_status": "open",
+    "polylang_current_lang": "en_US",
+    "polylang_tranlations": Array [
+      Object {
+        "locale": "fr_FR",
+        "wordpress_id": 26,
+      },
+    ],
     "slug": "sample-post-2",
     "status": "publish",
     "sticky": false,
@@ -8471,6 +8562,13 @@ Array [
     "meta": Array [],
     "modified": "2017-09-02T10:52:42.000Z",
     "ping_status": "open",
+    "polylang_current_lang": "fr_FR",
+    "polylang_tranlations": Array [
+      Object {
+        "locale": "en_US",
+        "wordpress_id": 28,
+      },
+    ],
     "slug": "sample-post-1",
     "status": "publish",
     "sticky": false,
@@ -9600,6 +9698,13 @@ Array [
     "modified": "2017-09-02T10:52:25",
     "modified_gmt": "2017-09-02T10:52:25",
     "ping_status": "open",
+    "polylang_current_lang": "en_US",
+    "polylang_tranlations": Array [
+      Object {
+        "locale": "fr_FR",
+        "wordpress_id": 26,
+      },
+    ],
     "slug": "sample-post-2",
     "status": "publish",
     "sticky": false,
@@ -9821,6 +9926,13 @@ Array [
     "modified": "2017-09-02T10:52:42",
     "modified_gmt": "2017-09-02T10:52:42",
     "ping_status": "open",
+    "polylang_current_lang": "fr_FR",
+    "polylang_tranlations": Array [
+      Object {
+        "locale": "en_US",
+        "wordpress_id": 28,
+      },
+    ],
     "slug": "sample-post-1",
     "status": "publish",
     "sticky": false,
@@ -11020,6 +11132,13 @@ Array [
     "meta": Array [],
     "modified": "2017-09-02T10:52:25.000Z",
     "ping_status": "open",
+    "polylang_current_lang": "en_US",
+    "polylang_tranlations": Array [
+      Object {
+        "locale": "fr_FR",
+        "wordpress_id": 26,
+      },
+    ],
     "slug": "sample-post-2",
     "status": "publish",
     "sticky": false,
@@ -11230,6 +11349,13 @@ Array [
     "meta": Array [],
     "modified": "2017-09-02T10:52:42.000Z",
     "ping_status": "open",
+    "polylang_current_lang": "fr_FR",
+    "polylang_tranlations": Array [
+      Object {
+        "locale": "en_US",
+        "wordpress_id": 28,
+      },
+    ],
     "slug": "sample-post-1",
     "status": "publish",
     "sticky": false,
@@ -12336,7 +12462,7 @@ Array [
       "guid": "http://dev-gatbsyjswp.pantheonsite.io/?p=28",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "85e6e9ca10a2c66cdd673cbafe70f31c",
+        "contentDigest": "0985e6e5557bbb9722fb8b809e885b27",
         "type": "wordpress__POST",
       },
       "link": "http://dev-gatbsyjswp.pantheonsite.io/sample-post-2/",
@@ -12344,6 +12470,13 @@ Array [
       "modified": "2017-09-02T10:52:25.000Z",
       "parent": null,
       "ping_status": "open",
+      "polylang_current_lang": "en_US",
+      "polylang_tranlations": Array [
+        Object {
+          "locale": "fr_FR",
+          "wordpress_id": 26,
+        },
+      ],
       "slug": "sample-post-2",
       "status": "publish",
       "sticky": false,
@@ -12469,7 +12602,7 @@ Array [
       "guid": "http://dev-gatbsyjswp.pantheonsite.io/?p=26",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "22265990bf7246310fb3f24f9c9bfc76",
+        "contentDigest": "be39ce27a1dad95ea15c3747c128f487",
         "type": "wordpress__POST",
       },
       "link": "http://dev-gatbsyjswp.pantheonsite.io/sample-post-1/",
@@ -12477,6 +12610,13 @@ Array [
       "modified": "2017-09-02T10:52:42.000Z",
       "parent": null,
       "ping_status": "open",
+      "polylang_current_lang": "fr_FR",
+      "polylang_tranlations": Array [
+        Object {
+          "locale": "en_US",
+          "wordpress_id": 28,
+        },
+      ],
       "slug": "sample-post-1",
       "status": "publish",
       "sticky": false,
