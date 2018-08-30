@@ -4,11 +4,6 @@ import React from "react"
 import { Link, Location } from "@reach/router"
 import { parsePath } from "gatsby"
 
-// Temp hack while awaiting https://github.com/reach/router/issues/119
-if (typeof window !== `undefined`) {
-  window.__navigatingToLink = false
-}
-
 export function withPrefix(path) {
   return normalizePath(`${__PATH_PREFIX__}/${path}`)
 }
@@ -155,9 +150,6 @@ class GatsbyLink extends React.Component {
                 window.scrollTo(0, 0)
               }
             }
-
-            // Temp hack while awaiting https://github.com/reach/router/issues/119
-            window.__navigatingToLink = true
 
             // Make sure the necessary scripts and data are
             // loaded before continuing.
