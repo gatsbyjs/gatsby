@@ -23,6 +23,18 @@ export const findClosestAnchor = event => {
   return null
 }
 
+export const authorIsForcingNavigation = anchor => {
+  // Don't catch links where a target (other than self) is set
+  // e.g. _blank.
+  if (anchor.target && anchor.target.toLowerCase() !== `_self`) return true
+
+  // HTML5 attribute that informs the browser to handle the href 
+  // as a downloadable file
+  if (anchor.hasAttribute(`download`)) return true
+
+  return false
+}
+
 module.exports = function(root, cb) {
   root.addEventListener(`click`, function(ev) {
     if ( userIsForcingNavigation(ev) ) return true
@@ -30,9 +42,7 @@ module.exports = function(root, cb) {
     const targetAnchor = findClosestAnchor(ev)
     if (targetAnchor == null) return true
 
-    // Don't catch links where a target (other than self) is set
-    // e.g. _blank.
-    if (targetAnchor.target && targetAnchor.target.toLowerCase() !== `_self`) return true
+    if( authorIsForcingNavigation(targetAnchor) ) return true
 
     // Don't catch links pointed to the same page but with a hash.
     if (targetAnchor.pathname === window.location.pathname && targetAnchor.hash !== ``) {
