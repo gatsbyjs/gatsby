@@ -61,6 +61,7 @@ This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While t
 
 - [For Explorers](#for-explorers)
   - [V2 from Scratch](#starting-a-new-project-with-gatsby-v2)
+  - [Troubleshooting](#for-explorers-troubleshooting)
 
 ## Updating Your Dependencies
 
@@ -949,3 +950,13 @@ gatsby new my-hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
 ```
+
+### For Explorers Troubleshooting
+
+If you get following error while starting the development on a new project with `gatsby@next` or the newest version of gatsby: 
+
+```
+There was a problem loading the local develop command. Gatsby may not be installed. Perhaps you need to run "npm install"?
+```
+
+Try to install the latest `gatsby-cli` with `npm i -g gatsby-cli` and create a new project with one of the starters above. This should fix the error above.
