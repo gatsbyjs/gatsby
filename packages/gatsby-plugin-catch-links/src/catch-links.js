@@ -146,13 +146,10 @@ export default function(root, cb) {
       return true
     }
 
-    // TODO: add a check for absolute internal links in a callback or here,
-    // or always pass only `${destination.pathname}${destination.hash}`
-    // to avoid `https://example.com/myapp/https://example.com/myapp/here` navigation
-
     ev.preventDefault()
 
-    cb(destination.getAttribute(`href`))
+    cb(`${destination.pathname}${destination.search}${destination.hash}`)
+
     return false
   })
 }
