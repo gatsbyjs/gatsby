@@ -47,15 +47,15 @@ export default function(root, cb) {
   root.addEventListener(`click`, function(ev) {
     if ( userIsForcingNavigation(ev) ) return true
 
-    const targetAnchor = findClosestAnchor(ev)
-    if (targetAnchor == null) return true
+    const clickedAnchor = findClosestAnchor(ev)
+    if (clickedAnchor == null) return true
 
-    if( authorIsForcingNavigation(targetAnchor) ) return true
+    if( authorIsForcingNavigation(clickedAnchor) ) return true
 
     // IE clears the host value if the anchor href changed after creation, e.g.
     // in React. Creating a new anchor element to ensure host value is present
     const destination = document.createElement(`a`)
-    destination.href = targetAnchor.href
+    destination.href = clickedAnchor.href
 
     // In IE, the default port is included in the anchor host but excluded from
     // the location host.  This affects the ability to directly compare
