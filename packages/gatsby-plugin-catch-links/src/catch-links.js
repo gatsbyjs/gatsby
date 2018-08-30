@@ -108,6 +108,17 @@ export default function(root, cb) {
 
     if ( urlsAreOnSameOrigin(origin, destination) === false ) return true
 
+    // For when pathPrefix is used in an app and there happens to be a link
+    // pointing to the same domain but outside of the app's pathPrefix. For
+    // example, a Gatsby app lives at https://example.com/myapp/, with the
+    // pathPrefix set to `/myapp`. When adding an absolute link to the same
+    // domain but outside of the /myapp path, for example, <a
+    // href="https://example.com/not-my-app"> the plugin won't catch it and
+    // will navigate to an external link instead of doing a pushState resulting
+    // in `https://example.com/myapp/https://example.com/not-my-app`
+    var re = new RegExp(`^${origin.host}${withPrefix(`/`)}`)
+    if (!re.test(`${destination.host}${destination.pathname}`)) return true
+
     // Don't catch links pointed to the same page but with a hash.
     if (destination.pathname === origin.pathname && destination.hash !== ``) {
       return true
@@ -123,17 +134,6 @@ export default function(root, cb) {
     if (destination.pathname.search(/^.*\.((?!htm)[a-z0-9]{1,5})$/i) !== -1) {
       return true
     }
-
-    // For when pathPrefix is used in an app and there happens to be a link
-    // pointing to the same domain but outside of the app's pathPrefix. For
-    // example, a Gatsby app lives at https://example.com/myapp/, with the
-    // pathPrefix set to `/myapp`. When adding an absolute link to the same
-    // domain but outside of the /myapp path, for example, <a
-    // href="https://example.com/not-my-app"> the plugin won't catch it and
-    // will navigate to an external link instead of doing a pushState resulting
-    // in `https://example.com/myapp/https://example.com/not-my-app`
-    var re = new RegExp(`^${origin.host}${withPrefix(`/`)}`)
-    if (!re.test(`${destination.host}${destination.pathname}`)) return true
 
     // TODO: add a check for absolute internal links in a callback or here,
     // or always pass only `${destination.pathname}${destination.hash}`
