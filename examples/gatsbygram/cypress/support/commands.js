@@ -25,6 +25,6 @@
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
 // copied from here - https://github.com/cypress-io/cypress/issues/1212#issuecomment-360395261
-Cypress.Commands.add("getTestElement", (selector) => {
-  return cy.get(`[data-testid="${selector}"]`)
+Cypress.Commands.add("getTestElement", (selector, options = {}) => {
+  return cy.get(`[data-testid="${selector}"]`, options)
 })

@@ -64,20 +64,16 @@ describe(`The Home Page`, () => {
     cy.fixture(`posts`).then(postsData => {
       const post1 = postsData[0]
       const post2 = postsData[1]
-      // wait for page to initialize
-      cy.wait(200)
       // open first post
-      cy.getTestElement(`post`)
+      cy.getTestElement(`post`, {timeout: 10000})
         .first()
         .click()
       cy.url().should("contain", post1.id)
       // click right arrow icon to go to 2nd post
       cy.getTestElement(`next-post`).click()
-      cy.url().should("contain", post2.id)
-      // wait for page to transition
-      cy.wait(200)
+      cy.url({timeout: 10000}).should("contain", post2.id)
       // press left arrow to go back to 1st post
-      cy.getTestElement(`previous-post`).click()
+      cy.getTestElement(`previous-post`, {timeout: 10000}).click()
       cy.url().should("contain", post1.id)
       // close the post
       cy.getTestElement(`modal-close`).click()
@@ -88,25 +84,19 @@ describe(`The Home Page`, () => {
     cy.fixture(`posts`).then(postsData => {
       const post1 = postsData[0]
       const post2 = postsData[1]
-      // wait for page to initialize
-      cy.wait(200)
       // open fist post
-      cy.getTestElement(`post`)
+      cy.getTestElement(`post`, {timeout: 10000})
         .first()
         // force, because sometimes the children cover
         // the outer element causing Cypress to complain
         .click({ force: true })
-      cy.url().should("contain", post1.id)
-      // wait for page to transition
-      cy.wait(200)
+      cy.url({timeout: 10000}).should("contain", post1.id)
       // press right arrow to go to 2nd post
-      cy.get(`body`).type(`{rightarrow}`)
-      cy.url().should("contain", post2.id)
-      // wait for page to transition
-      cy.wait(200)
+      cy.get(`body`, {timeout: 10000}).type(`{rightarrow}`)
+      cy.url({timeout: 10000}).should("contain", post2.id)
       // press left arrow to go back to 1st post
-      cy.get(`body`).type(`{leftarrow}`)
-      cy.url().should("contain", post1.id)
+      cy.get(`body`, {timeout: 10000}).type(`{leftarrow}`)
+      cy.url({timeout: 10000}).should("contain", post1.id)
       // close the post
       cy.getTestElement(`modal-close`).click()
     })
