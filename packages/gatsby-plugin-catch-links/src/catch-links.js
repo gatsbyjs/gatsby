@@ -35,6 +35,14 @@ export const authorIsForcingNavigation = anchor => {
   return false
 }
 
+export const urlsAreOnSameOrigin = (origin, destination) => {
+  // https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy
+  return (
+    origin.protocol === destination.protocol &&
+    origin.host === destination.host /* This includes both hostname and port */
+  )
+}
+
 export default function(root, cb) {
   root.addEventListener(`click`, function(ev) {
     if ( userIsForcingNavigation(ev) ) return true
@@ -58,7 +66,7 @@ export default function(root, cb) {
     const origin = document.createElement(`a`)
     origin.href = window.location.href
 
-    if (destination.host !== origin.host) return true
+    if ( urlsAreOnSameOrigin(origin, destination) === false ) return true
 
     // Don't catch links pointed to the same page but with a hash.
     if (destination.pathname === origin.pathname && destination.hash !== ``) {
