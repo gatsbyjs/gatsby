@@ -116,8 +116,8 @@ export default function(root, cb) {
     // href="https://example.com/not-my-app"> the plugin won't catch it and
     // will navigate to an external link instead of doing a pushState resulting
     // in `https://example.com/myapp/https://example.com/not-my-app`
-    var re = new RegExp(`^${origin.host}${withPrefix(`/`)}`)
-    if (!re.test(`${destination.host}${destination.pathname}`)) return true
+    var re = new RegExp(`^${withPrefix(`/`)}`)
+    if (!re.test(`${destination.pathname}`)) return true
 
     // Don't catch links pointed at what look like file extensions (other than
     // .htm/html extensions).
