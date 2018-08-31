@@ -24,6 +24,7 @@
     "eslint-plugin-prettier": "^2.6.0",
     "eslint-plugin-react": "^7.7.0",
     "flow-bin": "^0.42.0",
+    "fs-extra": "^7.0.0",
     "glob": "^7.1.1",
     "jest": "^22.4.3",
     "jest-cli": "^22.4.3",
@@ -70,6 +71,7 @@
     "test": "npm-run-all -s lint jest",
     "test:update": "jest --updateSnapshot",
     "test:watch": "jest --watch",
+    "test:integration": "jest --config=jest.integration.js",
     "test_bkup": "npm-run-all -s lint test-node test-integration",
     "version": "prettier --write \"**/CHANGELOG.md\" --no-semi",
     "watch": "lerna run watch --no-sort --stream --concurrency 999"

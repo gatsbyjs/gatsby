@@ -25,6 +25,22 @@ jobs:
           - yarn run bootstrap
           script:
           - yarn test
+        - 
+          if: type = pull_request
+          language: node_js
+          node_js:
+            - '6'
+            - '8'
+            - '10'
+          cache:
+            yarn: true
+          before_install:
+          - curl -o- -L https://yarnpkg.com/install.sh | bash
+          - export PATH=$HOME/.yarn/bin:$PATH
+          install:
+          - yarn run bootstrap
+          script:
+          - yarn test:integration
 
         - stage: gatsbygram ui tests
           language: node_js
