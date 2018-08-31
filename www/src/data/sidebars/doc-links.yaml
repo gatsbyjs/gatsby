@@ -262,23 +262,34 @@
       link: /docs/how-plugins-apis-are-run/
     - title: Node Creation
       link: /docs/node-creation-behind-the-scenes/
-    - title: Data Storage (Redux)*
-      link: /docs/data-storage-redux/
     - title: Schema Generation
       link: /docs/schema-generation-behind-the-scenes/
       items:
         - title: Building the GqlType
-          link: /docs/schema-gql-type
+          link: /docs/schema-gql-type/
         - title: Building the Input Filters
-          link: /docs/schema-input-gql
+          link: /docs/schema-input-gql/
         - title: Querying with Sift
-          link: /docs/schema-sift
+          link: /docs/schema-sift/
         - title: Connections
-          link: /docs/schema-connections
+          link: /docs/schema-connections/
     - title: Page Creation
       link: /docs/page-creation/
+    - title: Node/Page Dependencies
+      link: /docs/behind-the-scenes-dependencies/
+    - title: Queries
+      link: /docs/query-behind-the-scenes/
+      items:
+        - title: Query Extraction
+          link: /docs/behind-the-scenes-query-extraction/
+        - title: Query Execution
+          link: /docs/behind-the-scenes-query-execution/
+    - title: Data Storage (Redux)*
+      link: /docs/data-storage-redux/
     - title: Build Caching*
       link: /docs/build-caching/
+    - title: Terminology
+      link: /docs/behind-the-scenes-terminology/
 - title: Advanced Tutorials
   items:
     - title: Making a site with user authentication*
