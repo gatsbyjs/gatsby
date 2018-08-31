@@ -89,9 +89,6 @@ module.exports = (
       return resolve()
     }
 
-    // Calculate the paddingBottom %
-    const ratio = `${(1 / fluidResult.aspectRatio) * 100}%`
-
     const originalImg = fluidResult.originalImg
     const fallbackSrc = fluidResult.src
     const srcSet = fluidResult.srcSet
@@ -103,10 +100,6 @@ module.exports = (
     const fileNameNoExt = fileName.replace(/\.[^/.]+$/, ``)
     const defaultAlt = fileNameNoExt.replace(/[^A-Z0-9]/gi, ` `)
 
-    // TODO
-    // Fade in images on load.
-    // https://www.perpetual-beta.org/weblog/silky-smooth-image-loading.html
-
     const imageClass = `gatsby-resp-image-image`
     const imageStyle = `
       width: 100%;
@@ -117,11 +110,19 @@ module.exports = (
       top: 0;
       left: 0;
       opacity: 0;
+      transition-delay: 0.5s;
       transition: opacity 0.5s;
       box-shadow: inset 0px 0px 0px 400px ${
       options.backgroundColor
     };`
-    const onload = `this.style.opacity = 1`
+    const onload = `
+      var background = this;
+      var image = background.parentNode.querySelector('.gatsby-resp-image-image');
+      image.onload = function (event) {
+        background.style.opacity = 0;
+        image.style.opacity = 1;
+      }
+    `
 
     // Create our base image tag
     let imageTag = `
@@ -133,7 +134,6 @@ module.exports = (
         src="${fallbackSrc}"
         srcset="${srcSet}"
         sizes="${fluidResult.sizes}"
-        onload="${onload}"
       />
     `
 
@@ -173,7 +173,6 @@ module.exports = (
           src="${fallbackSrc}"
           alt="${node.alt ? node.alt : defaultAlt}"
           title="${node.title ? node.title : ``}"
-          onload="${onload}"
         />
       </picture>
       `
@@ -188,12 +187,13 @@ module.exports = (
       showCaptions ? null : options.wrapperStyle
     }; max-width: ${presentationWidth}px; margin-left: auto; margin-right: auto;"
   >
-    <span
+    <img
       class="gatsby-resp-image-background-image"
-      style="padding-bottom: ${ratio}; position: relative; bottom: 0; left: 0; background-image: url('${
-      fluidResult.base64
-    }'); background-size: cover; display: block;"
-    >${imageTag}</span>
+      onload="${onload}"
+      style="width: 100%; height: 100%; position: relative; bottom: 0; left: 0; transition-delay: 0.5s; tranistion: opacity 0.5s; opacity: 1; background-size: cover; display: block;"
+      src="${fluidResult.base64}"
+    / >
+    ${imageTag}
   </span>
   `
 
