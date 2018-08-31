@@ -2,7 +2,7 @@
 title: How Gatsby Works with GitHub Pages
 ---
 
-The easiest way to push a gatsby app to GitHub Pages is by using a package called `[gh-pages](https://github.com/tschaub/gh-pages)`.
+The easiest way to push a Gatsby app to GitHub Pages is by using a package called `[gh-pages](https://github.com/tschaub/gh-pages)`.
 
 `npm install gh-pages --save-dev`
 
@@ -18,7 +18,7 @@ Add a `deploy` script to `package.json`
     }
 ```
 
-We are using prefix paths because our website is inside a folder `http://username.github.io/reponame/` so we need to add pathPrefix to `gatsby-config.js`
+The `--prefix-paths` flag is used because your website is inside a folder like `http://username.github.io/reponame/`, you'll need to add your `/reponame` path prefix as an option to `gatsby-config.js`:
 
 ```
 module.exports = {
@@ -30,9 +30,9 @@ When you run `npm run deploy` all contents of the `public` folder will be moved 
 
 ## GitHub Organization or User page
 
-First thing is to create a repository which should be named `username.github.io`.
+Create a repository named like `username.github.io`.
 
-**Note**: In this case we don't need to specify `pathPrefix`, and our website needs to be pushed to `master` branch.
+**Note**: In this case you don't need to specify `pathPrefix` and your website needs to be pushed to `master` branch.
 
 ```
     {
