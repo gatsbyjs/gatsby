@@ -28,7 +28,9 @@ module.exports = {
 }
 ```
 
-You can see an example project at https://github.com/gatsbyjs/gatsby/tree/master/examples/using-excel.
+This plugin allows you to pass any available options used by the underlying library's function. [Click here](https://github.com/SheetJS/js-xlsx#json) to view the full list of options.
+
+You can see an example project at [https://github.com/gatsbyjs/gatsby/tree/master/examples/using-excel](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-excel).
 
 ## Parsing algorithm
 
@@ -71,7 +73,7 @@ the following nodes would be created:
 
 ## How to query
 
-You'd be able to query your letters like:
+Using the same `letters.xlsx` example from above, you'd be able to query your letters like:
 
 ```graphql
 {
@@ -123,11 +125,15 @@ module.exports = {
     {
       resolve: `gatsby-transformer-excel`,
       options: {
-        rawOutput: false,
+        raw: false,
       },
     },
   ],
 }
 ```
+
+*NOTE 1*: A previous version of this library used the attribute name `rawOutput`. This name still works, but is an alias for the correct attribute `raw`. If both attributes are specified, the value for `raw` takes precedence.
+
+*NOTE 2*: If you don't specify the `raw` or `rawOutput` option, a value of `true` will be used in the underlying js-xlsx function. This is opposite the library's [default value of false](https://github.com/SheetJS/js-xlsx#json).
 
 This will make sure, that all field types are converted to strings.
