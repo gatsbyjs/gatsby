@@ -166,7 +166,7 @@ const ComponentThatChangeState = () => (
         <div onClick={() => set({menuOpen: !data.menuOpen})}>
             {data.menuOpen ? `Opened Menu` : `Closed Menu`}
         </div>
-    )
+    )}
   </ContextConsumer>
 )
 ```
