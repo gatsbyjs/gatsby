@@ -50,14 +50,14 @@ export const anchorsTargetIsEquivalentToSelf = anchor => (
    */
   (
     anchor.target === `_parent` && (
-      !window.parent || 
-      window.parent === window
+      !anchor.ownerDocument.defaultView.parent || 
+      anchor.ownerDocument.defaultView.parent === anchor.ownerDocument.defaultView
     )
   ) || 
   (
     anchor.target === `_top` && (
-      !window.top || 
-      window.top === window
+      !anchor.ownerDocument.defaultView.top || 
+      anchor.ownerDocument.defaultView.top === anchor.ownerDocument.defaultView
     )
   )
 )
