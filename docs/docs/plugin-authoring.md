@@ -8,8 +8,7 @@ You may be looking to build a plugin that doesn't exist yet, or you may just be 
 2.  naming conventions for the plugin title
 3.  expected files in a plugin package
 4.  defining a local (unpublished) plugin for your own use case
-5.  what a plugin is _not_
-6.  how to publish your plugin to the library
+5.  how to publish your plugin to the library
 
 ## Core Concepts
 
