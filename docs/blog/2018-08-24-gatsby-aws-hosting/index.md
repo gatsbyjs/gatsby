@@ -1,12 +1,19 @@
-# Publishing Your Next Gatsby Site to AWS With AWS Amplify
-
-In this post, we'll walk through how to host & publish your next Gatsby site to AWS using [AWS Amplify](https://aws-amplify.github.io/).
+---
+title: Publishing Your Next Gatsby Site to AWS With AWS Amplify
+date: "2018-08-31"
+author: "Nader Dabit"
+tags: ["gatsby", "serverless", "hosting", "blog", "aws amplify"]
+excerpt: "In this post, we'll walk through how to host & publish your next Gatsby site to AWS"
+canonicalLink: "https://aws-amplify.github.io/amplify-js/media/hosting_guide"
+---
 
 ![Publishing Your Next Gatsby Site to AWS With AWS Amplify](gatsbyaws.jpeg)
 
+In this post, we'll walk through how to host & publish your next Gatsby site to AWS using [AWS Amplify](https://aws-amplify.github.io/).
+
 AWS Amplify is a client library & CLI that allows developers to get up & running with full-stack cloud-powered applications with features like authentication, GraphQL, storage, REST APIs, analytics, Lambda functions, hosting & more. 
 
-Using the hosting feature, you can deploy your application to AWS as well as set up your site with Amazon Cloudfront CDN. This is what we'll be doing in this tutorial. Let's begin!
+Using the __Hosting__ feature, you can deploy your application to AWS as well as set up your site with Amazon Cloudfront CDN. This is what we'll be doing in this tutorial. Let's begin!
 
 ## Getting Started - Gatsby
 
@@ -44,7 +51,7 @@ With the AWS Amplify CLI installed, we now need to configure it with an IAM User
 amplify configure
 ```
 
-> For a video walkthrough of how to configure the AWS Amplify CLI, click here.
+> For a video walkthrough of how to configure the AWS Amplify CLI, click [here](https://www.youtube.com/watch?v=fWbM5DLh25U).
 
 Now, we can create a new Amplify project in the root of our Gatsby project:
 
