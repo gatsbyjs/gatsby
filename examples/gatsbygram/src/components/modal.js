@@ -32,11 +32,13 @@ class GatsbyGramModal extends React.Component {
     mousetrap.unbind(`spacebar`)
   }
 
+  getIdFromUrl() { return this.props.location.pathname.split(`/`)[1] }
+
   findCurrentIndex() {
     let index
     index = findIndex(
       posts,
-      post => post.id === this.props.location.pathname.split(`/`)[1]
+      post => post.id === this.getIdFromUrl()
     )
 
     return index
@@ -94,6 +96,7 @@ class GatsbyGramModal extends React.Component {
           if (!posts) {
             posts = data.allPostsJson.edges.map(e => e.node)
           }
+          const postId = this.getIdFromUrl()
           return (
             <Modal
               isOpen={this.props.isOpen}
@@ -142,6 +145,7 @@ class GatsbyGramModal extends React.Component {
                 >
                   <CaretLeft
                     data-testid="previous-post"
+                    data-postid={postId}
                     css={{
                       cursor: `pointer`,
                       fontSize: `50px`,
@@ -153,6 +157,7 @@ class GatsbyGramModal extends React.Component {
                   {this.props.children}
                   <CaretRight
                     data-testid="next-post"
+                    data-postid={postId}
                     css={{
                       cursor: `pointer`,
                       fontSize: `50px`,
