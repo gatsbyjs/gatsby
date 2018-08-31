@@ -19,7 +19,7 @@ export default function(resources, path, replaceOnSuccess = false) {
         `Found no-cache=1 while attempting to load a page directly; ` +
           `this is likely due to a bug in Gatsby, or a misconfiguration in your project.`
       )
-      reject()
+      return reject()
     }
 
     // Append the appropriate query to the URL.
