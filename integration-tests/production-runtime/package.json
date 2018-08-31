@@ -21,12 +21,16 @@
     "build": "gatsby build",
     "develop": "gatsby develop",
     "format": "prettier --write '**/*.js'",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npm-run-all -s build start-server-and-test",
+    "start-server-and-test": "start-server-and-test serve http://localhost:9000 cy:run",
+    "serve": "gatsby serve",
     "cy:open": "cypress open",
     "cy:run": "cypress run"
   },
   "devDependencies": {
-    "prettier": "^1.14.2"
+    "npm-run-all": "^4.1.3",
+    "prettier": "^1.14.2",
+    "start-server-and-test": "^1.7.0"
   },
   "repository": {
     "type": "git",
