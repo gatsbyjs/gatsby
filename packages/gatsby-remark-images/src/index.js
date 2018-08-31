@@ -161,7 +161,6 @@ module.exports = (
           src="${fallbackSrc}"
           alt="${node.alt ? node.alt : defaultAlt}"
           title="${node.title ? node.title : ``}"
-          src="${fallbackSrc}"
         />
       </picture>
       `
