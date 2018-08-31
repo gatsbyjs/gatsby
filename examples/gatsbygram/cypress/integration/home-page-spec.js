@@ -1,4 +1,8 @@
 describe(`The Home Page`, () => {
+  beforeEach(() => {
+    cy.visit(`/`)
+  })
+
   it(`successfully loads`, () => {
     cy.visit(`/`)
   })
@@ -45,8 +49,8 @@ describe(`The Home Page`, () => {
       cy.getTestElement(`post`)
         .first()
         .click()
-      cy.url().should("contain", post.id)
-      cy.getTestElement(`post-detail-avatar`).should(
+      cy.url().should(`contain`, post.id)
+      cy.getTestElement(`post-detail-avatar`, { timeout: 10000 }).should(
         `have.attr`,
         `src`,
         post.avatar
@@ -70,27 +74,24 @@ describe(`The Home Page`, () => {
     cy.fixture(`posts`).then(postsData => {
       const post1 = postsData[0]
       const post2 = postsData[1]
-      // wait for page to initialize
-      let routeChangePromise
-      setRouteChangePromise(cy, routeChangePromise)
-      cy.wrap(routeChangePromise)
 
       // open first post
       cy.getTestElement(`post`)
         .first()
         .click()
-      cy.url().should("contain", post1.id)
-      // click right arrow icon to go to 2nd post
-      setRouteChangePromise(cy, routeChangePromise)
-      cy.getTestElement(`next-post`).click()
-      cy.wrap(routeChangePromise)
-      cy.url().should("contain", post2.id)
+      cy.url().should(`contain`, post1.id)
 
-      // wait for page to transition
-      cy.wrap(routeChangePromise)
+      // click right arrow icon to go to 2nd post
+      cy.getTestElement(`next-post`, { timeout: 10000 }).click()
+      cy.url().should(`contain`, post2.id)
+
+      // wait for modal to update
+      cy.get(`[data-testid="previous-post"][data-postid="${post2.id}"]`, { timeout: 10000 })
+
       // press left arrow to go back to 1st post
       cy.getTestElement(`previous-post`).click()
-      cy.url().should("contain", post1.id)
+      cy.url().should(`contain`, post1.id)
+
       // close the post
       cy.getTestElement(`modal-close`).click()
     })
@@ -100,33 +101,29 @@ describe(`The Home Page`, () => {
     cy.fixture(`posts`).then(postsData => {
       const post1 = postsData[0]
       const post2 = postsData[1]
-      // wait for page to initialize
-      let routeChangePromise
-      setRouteChangePromise(cy, routeChangePromise)
-      cy.wrap(routeChangePromise)
 
       // open fist post
-      setRouteChangePromise(cy, routeChangePromise)
       cy.getTestElement(`post`)
         .first()
         // force, because sometimes the children cover
         // the outer element causing Cypress to complain
         .click({ force: true })
+      cy.url().should(`contain`, post1.id)
 
-      cy.url().should("contain", post1.id)
-
-      // wait for page to transition
-      cy.wrap(routeChangePromise)
+      // wait for modal to update
+      cy.get(`[data-testid="next-post"][data-postid="${post1.id}"]`, { timeout: 10000 })
 
       // press right arrow to go to 2nd post
-      setRouteChangePromise(cy, routeChangePromise)
       cy.get(`body`).type(`{rightarrow}`)
       cy.url().should("contain", post2.id)
-      // wait for page to transition
-      cy.wrap(routeChangePromise)
-      // press left arrow to go back to 1st post
+
+      // wait for modal to update
+      cy.get(`[data-testid="next-post"][data-postid="${post2.id}"]`, { timeout: 10000 })
+
+      // press left arrow to go back to 1srt post
       cy.get(`body`).type(`{leftarrow}`)
-      cy.url().should("contain", post1.id)
+      cy.url().should(`contain`, post1.id)
+
       // close the post
       cy.getTestElement(`modal-close`).click()
     })
@@ -134,16 +131,16 @@ describe(`The Home Page`, () => {
 
   it(`loads more posts when Load More button is clicked & on scroll`, () => {
     // initially loads 12 posts
-    cy.getTestElement(`post`).should("have.length", 12)
+    cy.getTestElement(`post`).should(`have.length`, 12)
 
     // loads 12 more posts when Load More button is clicked
     cy.getTestElement(`load-more`).click()
-    cy.getTestElement(`post`).should("have.length", 24)
+    cy.getTestElement(`post`).should(`have.length`, 24)
 
     // loads 12 more posts when scrolled to bottom
     // cy.getTestElement(`home-container`).scrollTo(`0%`, `99%`)
     cy.window().scrollTo(`bottom`)
-    cy.getTestElement(`post`).should("have.length", 36)
+    cy.getTestElement(`post`).should(`have.length`, 36)
 
     // let's go back to top
     cy.window().scrollTo(`top`)
