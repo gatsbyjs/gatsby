@@ -9,7 +9,7 @@ sudo: required
 
 jobs:
     include:
-        - stage: build and test
+        - stage: Unit tests
           if: type = pull_request
           language: node_js
           node_js:
@@ -25,7 +25,8 @@ jobs:
           - yarn run bootstrap
           script:
           - yarn test
-        - 
+
+        - stage: Integration tests
           if: type = pull_request
           language: node_js
           node_js:
@@ -42,7 +43,7 @@ jobs:
           script:
           - yarn test:integration
 
-        - stage: gatsbygram ui tests
+        - stage: UI tests
           language: node_js
           node_js:
             - '6'
