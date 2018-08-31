@@ -1,5 +1,5 @@
 ---
-title: 'Gatsby Starters'
+title: "Gatsby Starters"
 ---
 
 The Gatsby CLI tool lets you install “starters”. These are boilerplate Gatsby sites maintained by the community.
@@ -448,10 +448,10 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
   - Protected Routes with Authorization
   - Realtime Database with Users
 
-- [gatsby-aws-amplify-authentication](https://github.com/dabit3/gatsby-auth-starter-aws-amplify)  [(demo)](http://gatsbyauth-20180816145726-hosting-bucket.s3-website-us-east-1.amazonaws.com/)
+- [gatsby-aws-amplify-authentication](https://github.com/dabit3/gatsby-auth-starter-aws-amplify) [(demo)](http://gatsbyauth-20180816145726-hosting-bucket.s3-website-us-east-1.amazonaws.com/)
 
-   Features: 
-  
+  Features:
+
   - Implement authentication & host your app on AWS
   - Sign in, Sign Up, & Sign Out
   - Fetch user metadata
@@ -926,14 +926,14 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
   - Website
   - Blog
   - more coming soon
-  
+
 - [gatsby-v2-jslingui](https://github.com/zuiidea/gatsby-v2-jslingui)
   [(demo)](https://gatsby-v2-jslingui.surge.sh)
 
   > An starter for using Gatsby v2 with [js-lingui](https://github.com/lingui/js-lingui).
 
   Features:
-  
+
   - Localization (Multilanguage) provided by [js-lingui](https://github.com/lingui/js-lingui)
   - Message extraction
   - Avoids code duplication - generates pages for each locale

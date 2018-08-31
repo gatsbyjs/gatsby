@@ -258,7 +258,9 @@ export default (pagePath, callback) => {
     })
 
   if (page.jsonName in dataPaths) {
-    const dataPath = `${__PATH_PREFIX__}/static/d/${dataPaths[page.jsonName]}.json`
+    const dataPath = `${__PATH_PREFIX__}/static/d/${
+      dataPaths[page.jsonName]
+    }.json`
     headComponents.push(
       <link
         rel="preload"
@@ -330,7 +332,10 @@ export default (pagePath, callback) => {
   // Filter out prefetched bundles as adding them as a script tag
   // would force high priority fetching.
   const bodyScripts = scripts.filter(s => s.rel !== `prefetch`).map(s => {
-    const scriptPath = `${__PATH_PREFIX__}/${JSON.stringify(s.name).slice(1, -1)}`
+    const scriptPath = `${__PATH_PREFIX__}/${JSON.stringify(s.name).slice(
+      1,
+      -1
+    )}`
     return <script key={scriptPath} src={scriptPath} async />
   })
 
