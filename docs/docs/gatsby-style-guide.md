@@ -67,12 +67,10 @@ Please see the [Docs templates](/templates/) for guidelines on how to format the
 Before you begin writing, answer these questions. Sample answers have been included:
 
 Question: Who will read my writing?
-
-Answer: Developers with knowledge and experience coding in HTML, CSS, and JS but not necessarily React or GraphQL.
+_Answer: Developers with knowledge and experience coding in HTML, CSS, and JS but not necessarily React or GraphQL._
 
 Question: What do I hope my readers will know and/or be able to do after reading it?
-
-Answer (example): I hope my readers will be able to successfully add search to their Gatsby site.
+_Answer (example): I hope my readers will be able to successfully add search to their Gatsby site._
 
 Once you answer those questions, create an outline of the topic and think about any coding examples you'll use (if applicable). This helps to organize your thoughts and make the writing process easier.
 
