@@ -10,9 +10,9 @@ export const userIsForcingNavigation = event => (
   event.defaultPrevented
 )
 
-export const findClosestAnchor = event => {
+export const findClosestAnchor = node => {
   for (
-    var node = event.target; 
+    ; 
     node.parentNode; 
     node = node.parentNode
   ) {
@@ -123,10 +123,10 @@ export const hashShouldBeFollowed = (origin, destination) => (
 )
 
 export default function(root, cb) {
-  root.addEventListener(`click`, function(ev) {
-    if ( userIsForcingNavigation(ev) ) return true
+  root.addEventListener(`click`, function(event) {
+    if ( userIsForcingNavigation(event) ) return true
 
-    const clickedAnchor = findClosestAnchor(ev)
+    const clickedAnchor = findClosestAnchor(event.target)
     if (clickedAnchor == null) return true
 
     if( authorIsForcingNavigation(clickedAnchor) ) return true
@@ -151,7 +151,7 @@ export default function(root, cb) {
 
     if ( hashShouldBeFollowed(origin, destination) ) return true
 
-    ev.preventDefault()
+    event.preventDefault()
 
     cb(`${destination.pathname}${destination.search}${destination.hash}`)
 
