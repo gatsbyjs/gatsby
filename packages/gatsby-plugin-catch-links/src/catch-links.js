@@ -25,7 +25,7 @@ export const findClosestAnchor = node => {
 }
 
 export const anchorsTargetIsEquivalentToSelf = anchor => (
-  /* If not target attribute is present it's treated as _self */
+  /* If target attribute is not present it's treated as _self */
   anchor.hasAttribute(`target`) === false ||
 
   /**
