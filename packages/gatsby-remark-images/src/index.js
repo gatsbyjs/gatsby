@@ -108,9 +108,20 @@ module.exports = (
     // https://www.perpetual-beta.org/weblog/silky-smooth-image-loading.html
 
     const imageClass = `gatsby-resp-image-image`
-    const imageStyle = `width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px ${
+    const imageStyle = `
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      vertical-align: middle;
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      transition: opacity 0.5s;
+      box-shadow: inset 0px 0px 0px 400px ${
       options.backgroundColor
     };`
+    const onload = `this.style.opacity = 1`
 
     // Create our base image tag
     let imageTag = `
@@ -122,6 +133,7 @@ module.exports = (
         src="${fallbackSrc}"
         srcset="${srcSet}"
         sizes="${fluidResult.sizes}"
+        onload="${onload}"
       />
     `
 
@@ -161,6 +173,7 @@ module.exports = (
           src="${fallbackSrc}"
           alt="${node.alt ? node.alt : defaultAlt}"
           title="${node.title ? node.title : ``}"
+          onload="${onload}"
         />
       </picture>
       `
