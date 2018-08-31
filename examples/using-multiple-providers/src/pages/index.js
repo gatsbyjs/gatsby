@@ -80,10 +80,7 @@ class IndexPage extends React.Component {
               if (error) return <div>Error :(</div>
 
               return (
-                <>
-                  <h3>Details {data.blogPost.title}</h3>
-                  <div>{data.blogPost.post}</div>
-                </>
+                <>`                 `<h3>Details {data.blogPost.title}</h3>`                 `<div>{data.blogPost.post}</div>`               `</>
               )
             }}
           </Query>

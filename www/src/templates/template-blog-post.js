@@ -191,10 +191,12 @@ class BlogPostTemplate extends React.Component {
                 {post.frontmatter.canonicalLink && (
                   <span>
                     {` `}
-                    (originally published at{` `}
+                    (originally published at
+                    {` `}
                     <OutboundLink href={post.frontmatter.canonicalLink}>
                       {post.frontmatter.publishedAt}
-                    </OutboundLink>)
+                    </OutboundLink>
+                    )
                   </span>
                 )}
               </BioLine>
@@ -221,7 +223,8 @@ class BlogPostTemplate extends React.Component {
                 {post.frontmatter.imageAuthor &&
                   post.frontmatter.imageAuthorLink && (
                     <em>
-                      Image by{` `}
+                      Image by
+                      {` `}
                       <OutboundLink href={post.frontmatter.imageAuthorLink}>
                         {post.frontmatter.imageAuthor}
                       </OutboundLink>

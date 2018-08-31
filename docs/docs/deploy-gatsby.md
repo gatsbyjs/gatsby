@@ -339,7 +339,7 @@ deploy:
 plugins:
   # Force aggressive 1yr max-age header for all .js and .js.map requests
   - name: http-headers
-    path: ['/*.js', '/*.js.map']
+    path: ["/*.js", "/*.js.map"]
     options:
       "Cache-Control": "public, max-age=31536000"
   - name: webpage

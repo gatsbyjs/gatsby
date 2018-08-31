@@ -288,8 +288,8 @@ const queue = {
   // Get resources (code/data) for a path. Fetches metdata first
   // if necessary and then the code/data bundles. Used for prefetching
   // and getting resources for page changes.
-  getResourcesForPathname: path => {
-    return new Promise((resolve, reject) => {
+  getResourcesForPathname: path =>
+    new Promise((resolve, reject) => {
       const doingInitialRender = inInitialRender
       inInitialRender = false
 
@@ -392,8 +392,7 @@ const queue = {
           }
         })
       }
-    })
-  },
+    }),
 
   // for testing
   ___resources: () => resourcesArray.slice().reverse(),
