@@ -30,7 +30,6 @@ async function onCreateNode(
   const xlsxOptions = _.defaults(options, { 'raw': options.rawOutput }, { 'raw': true })
   delete xlsxOptions.rawOutput
   delete xlsxOptions.plugins
-  console.log(`JSON after updates is: ${JSON.stringify(xlsxOptions)}`)
 
   // Parse
   let wb = XLSX.read(content, { type: `binary`, cellDates: true })
