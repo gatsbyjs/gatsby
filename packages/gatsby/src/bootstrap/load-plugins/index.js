@@ -18,8 +18,8 @@ const apis = {
 }
 
 // Create a "flattened" array of plugins with all subplugins
-// brought to the top-level. This simplifies running gatsby-* files
-// for subplugins.
+// brought to the top-level. This simplifies running gatsby-* 
+// files for subplugins.
 const flattenPlugins = plugins => {
   const flattened = []
   const extractPlugins = plugin => {
