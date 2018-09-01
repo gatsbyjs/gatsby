@@ -3,7 +3,8 @@ services:
 os:
   - linux
 dist: trusty
-sudo: required
+ # use container-based build env for faster boot
+sudo: false
 language: node_js
 
 matrix:
