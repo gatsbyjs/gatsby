@@ -1,3 +1,4 @@
+import { imageClass, imageBackgroundClass, imageWrapperClass } from "./classes";
 // const select = require(`unist-util-select`)
 const visitWithParents = require(`unist-util-visit-parents`)
 const path = require(`path`)
@@ -7,33 +8,6 @@ const { fluid } = require(`gatsby-plugin-sharp`)
 const Promise = require(`bluebird`)
 const cheerio = require(`cheerio`)
 const slash = require(`slash`)
-
-const imageClass = `gatsby-resp-image-image`;
-const imageWrapperClass = `gatsby-resp-image-wrapper`;
-const imageBackgroundClass = `gatsby-resp-image-background-image`;
-
-const applyBlurUpScript = (node) => {
-  node.value += `
-    <script>
-      var imageWrappers = document.querySelectorAll(".${imageWrapperClass}")
-      
-      for (var i = 0, imageWrapper; imageWrapper = imageWrappers[i]; i++) {
-        var backgroundElement = imageWrapper.querySelector(".${imageBackgroundClass}")
-        var imageElement = imageWrapper.querySelector(".${imageClass}")
-        var onImageLoadHandler = createOnImageLoad(backgroundElement, imageElement)
-
-        imageElement.complete ? onImageLoadHandler() : imageElement.addEventListener("load", onImageLoadHandler)
-      }
-      
-      function createOnImageLoad(background, image) {
-        return function () {          
-          background.style.opacity = 0;
-          image.style.opacity = 1;
-        }
-      }
-    </script>
-  `
-}
 
 // If the image is relative (not hosted elsewhere)
 // 1. Find the image file
@@ -338,12 +312,6 @@ module.exports = (
             return resolve(node)
           })
       )
-    ).then(htmlImageNodes => {
-      const allNodes = markdownImageNodes.concat(htmlImageNodes).filter(node => !!node)
-      if (allNodes.length > 0) {
-        applyBlurUpScript(allNodes[allNodes.length - 1])
-      }
-      return allNodes
-    })
+    ).then(htmlImageNodes =>  markdownImageNodes.concat(htmlImageNodes).filter(node => !!node))
   )
 }
