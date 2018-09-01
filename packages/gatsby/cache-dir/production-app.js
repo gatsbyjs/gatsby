@@ -85,9 +85,9 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     window.page.path !== window.location.pathname &&
     window.page.path !== `/offline-plugin-app-shell-fallback/`
   ) {
-    const url = new URL(window.location)
-    url.pathname = window.page.path
-    navigate(url, { replace: true })
+    navigate(window.page.path + window.location.search + window.location.hash, {
+      replace: true,
+    })
   }
 
   loader
