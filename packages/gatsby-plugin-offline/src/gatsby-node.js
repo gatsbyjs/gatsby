@@ -104,7 +104,7 @@ exports.onPostBuild = (args, pluginOptions) => {
   // specified custom options - Workbox throws an error with unsupported
   // parameters, so delete it.
   delete pluginOptions.plugins
-  const combinedOptions = _.defaults(pluginOptions, options)
+  const combinedOptions = _.merge(pluginOptions, options)
 
   const swDest = `public/sw.js`
   return workboxBuild
