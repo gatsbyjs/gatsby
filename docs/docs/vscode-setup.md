@@ -2,7 +2,7 @@
 title: "Setting up VSCode for Gatsby development"
 ---
 
-VSCode is a wonderful tool that can require some working. Here's some reccomendations to get everything flowing smoothly.
+VSCode is a wonderful tool that can require some initial setup to get everything working. Here's some reccomendations to get code flowing smoothly.
 
 ## Initial Setup
 
@@ -34,7 +34,7 @@ The following `jsconfig.json` is reccomended for getting better intellisense on 
 
 ### Chrome
 
-In order to get started you need to install the [Debugger for Chrome extension](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome), and [add a custom-weback-config](/docs/add-custom-webpack-config).
+In order to get started you need to install the [Debugger for Chrome extension](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome), and [add a custom Webpack config](/docs/add-custom-webpack-config).
 
 The extra webpack config is as follows, and it is simply just adding the following lines to your `gatsby-node.js`.
 
