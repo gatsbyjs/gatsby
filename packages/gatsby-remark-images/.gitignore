@@ -1,5 +1,5 @@
 /classes.js
-/gatsby-ssr.js
+/gatsby-browser.js
 /index.js
 /__tests__/*
 tests

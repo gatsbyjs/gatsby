@@ -1,5 +1,4 @@
-import { imageClass, imageBackgroundClass, imageWrapperClass } from "./classes";
-// const select = require(`unist-util-select`)
+const { imageClass, imageBackgroundClass, imageWrapperClass } = require(`./classes`)
 const visitWithParents = require(`unist-util-visit-parents`)
 const path = require(`path`)
 const isRelativeUrl = require(`is-relative-url`)
