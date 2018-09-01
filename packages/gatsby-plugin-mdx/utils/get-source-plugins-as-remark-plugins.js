@@ -75,9 +75,9 @@ module.exports = async function getSourcePluginsAsRemarkPlugins({
     .map(plugin => {
       debug("userPlugins: contructing remark plugin for ", plugin);
       const requiredPlugin = require(plugin.resolve);
-      return () =>
+      const wrappedPlugin = () =>
         async function transformer(markdownAST) {
-          requiredPlugin(
+          await requiredPlugin(
             {
               markdownAST,
               markdownNode: mdxNode,
@@ -91,11 +91,13 @@ module.exports = async function getSourcePluginsAsRemarkPlugins({
           );
           return markdownAST;
         };
+
+      return [wrappedPlugin, {}];
     });
 
   if (pathPlugin) {
-    return [pathPlugin, ...userPlugins, htmlToJSXPlugin];
+    return [pathPlugin, ...userPlugins, [htmlToJSXPlugin, {}]];
   } else {
-    return [...userPlugins, htmlToJSXPlugin];
+    return [...userPlugins, [htmlToJSXPlugin, {}]];
   }
 };
