@@ -110,8 +110,8 @@ module.exports = (
       top: 0;
       left: 0;
       opacity: 0;
-      transition-delay: 0.5s;
       transition: opacity 0.5s;
+      transition-delay: 0.5s;
       box-shadow: inset 0px 0px 0px 400px ${
       options.backgroundColor
     };`
