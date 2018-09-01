@@ -8,6 +8,33 @@ const Promise = require(`bluebird`)
 const cheerio = require(`cheerio`)
 const slash = require(`slash`)
 
+const imageClass = `gatsby-resp-image-image`;
+const imageWrapperClass = `gatsby-resp-image-wrapper`;
+const imageBackgroundClass = `gatsby-resp-image-background-image`;
+
+const applyBlurUpScript = (node) => {
+  node.value += `
+    <script>
+      var imageWrappers = document.querySelectorAll(".${imageWrapperClass}")
+      
+      for (var i = 0, imageWrapper; imageWrapper = imageWrappers[i]; i++) {
+        var backgroundElement = imageWrapper.querySelector(".${imageBackgroundClass}")
+        var imageElement = imageWrapper.querySelector(".${imageClass}")
+        var onImageLoadHandler = createOnImageLoad(backgroundElement, imageElement)
+
+        imageElement.complete ? onImageLoadHandler() : imageElement.addEventListener("load", onImageLoadHandler)
+      }
+      
+      function createOnImageLoad(background, image) {
+        return function () {          
+          background.style.opacity = 0;
+          image.style.opacity = 1;
+        }
+      }
+    </script>
+  `
+}
+
 // If the image is relative (not hosted elsewhere)
 // 1. Find the image file
 // 2. Find the image's size
@@ -100,7 +127,6 @@ module.exports = (
     const fileNameNoExt = fileName.replace(/\.[^/.]+$/, ``)
     const defaultAlt = fileNameNoExt.replace(/[^A-Z0-9]/gi, ` `)
 
-    const imageClass = `gatsby-resp-image-image`
     const imageStyle = `
       width: 100%;
       height: 100%;
@@ -115,14 +141,6 @@ module.exports = (
       box-shadow: inset 0px 0px 0px 400px ${
       options.backgroundColor
     };`
-    const onload = `
-      var background = this;
-      var image = background.parentNode.querySelector('.gatsby-resp-image-image');
-      image.onload = function (event) {
-        background.style.opacity = 0;
-        image.style.opacity = 1;
-      }
-    `
 
     // Create our base image tag
     let imageTag = `
@@ -182,14 +200,13 @@ module.exports = (
     const showCaptions = options.showCaptions && node.title
     let rawHTML = `
   <span
-    class="gatsby-resp-image-wrapper"
+    class="${imageWrapperClass}"
     style="position: relative; display: block; ${
       showCaptions ? null : options.wrapperStyle
     }; max-width: ${presentationWidth}px; margin-left: auto; margin-right: auto;"
   >
     <img
-      class="gatsby-resp-image-background-image"
-      onload="${onload}"
+      class="${imageBackgroundClass}"
       style="width: 100%; height: 100%; position: relative; bottom: 0; left: 0; transition-delay: 0.5s; tranistion: opacity 0.5s; opacity: 1; background-size: cover; display: block;"
       src="${fluidResult.base64}"
     / >
@@ -321,8 +338,12 @@ module.exports = (
             return resolve(node)
           })
       )
-    ).then(htmlImageNodes =>
-      markdownImageNodes.concat(htmlImageNodes).filter(node => !!node)
-    )
+    ).then(htmlImageNodes => {
+      const allNodes = markdownImageNodes.concat(htmlImageNodes).filter(node => !!node)
+      if (allNodes.length > 0) {
+        applyBlurUpScript(allNodes[allNodes.length - 1])
+      }
+      return allNodes
+    })
   )
 }
