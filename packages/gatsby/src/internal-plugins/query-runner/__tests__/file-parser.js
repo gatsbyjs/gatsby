@@ -72,6 +72,29 @@ export const fragment3 = graphql\`
   }
 \`
 `,
+    "query-in-separate-variable.js": `import React from "react"
+import { StaticQuery } from "gatsby"
+
+const query = graphql\`{ allMarkdownRemark { blah { node { cheese }}}}\`
+
+export default () => (
+  <StaticQuery
+    query={query}
+    render={data => <div>{data.pizza}</div>}
+  />
+)`,
+    "query-in-separate-variable-2.js": `import React from "react"
+import { StaticQuery } from "gatsby"
+
+const query = graphql\`{ fakeOut { blah { node { cheese }}}}\`
+const strangeQueryName = graphql\`{ allStrangeQueryName { blah { node { cheese }}}}\`
+
+export default () => (
+  <StaticQuery
+    query={strangeQueryName}
+    render={data => <div>{data.pizza}</div>}
+  />
+)`,
   }
 
   const parser = new FileParser()

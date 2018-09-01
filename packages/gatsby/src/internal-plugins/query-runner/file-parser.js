@@ -95,38 +95,76 @@ async function findGraphQLTags(file, text): Promise<Array<DefinitionNode>> {
          */
         const documentLocations = new WeakMap()
 
+        const extractStaticQuery = taggedTemplateExpressPath => {
+          const { ast: gqlAst, text, hash, isGlobal } = getGraphQLTag(
+            taggedTemplateExpressPath
+          )
+          if (!gqlAst) return
+
+          if (isGlobal) warnForGlobalTag(file)
+
+          gqlAst.definitions.forEach(def => {
+            documentLocations.set(
+              def,
+              `${taggedTemplateExpressPath.node.start}-${def.loc.start}`
+            )
+            generateQueryName({
+              def,
+              hash,
+              file,
+            })
+          })
+
+          const definitions = [...gqlAst.definitions].map(d => {
+            d.isStaticQuery = true
+            d.text = text
+            d.hash = hash
+            return d
+          })
+
+          queries.push(...definitions)
+        }
+
         // Look for queries in <StaticQuery /> elements.
         traverse(ast, {
-          TaggedTemplateExpression(path) {
-            if (
-              (`descendant of query`,
-              path?.parentPath?.parentPath?.node?.name?.name !== `query`)
-            ) {
+          JSXElement(path) {
+            if (path.node.openingElement.name.name !== `StaticQuery`) {
               return
             }
-            if (
-              path.parentPath?.parentPath?.parentPath?.node?.name?.name !==
-              `StaticQuery`
-            ) {
-              return
-            }
-            const { ast: gqlAst, text, hash, isGlobal } = getGraphQLTag(path)
-            if (!gqlAst) return
 
-            if (isGlobal) warnForGlobalTag(file)
-
-            gqlAst.definitions.forEach(def => {
-              documentLocations.set(def, `${path.node.start}-${def.loc.start}`)
-              generateQueryName({ def, hash, file })
+            path.traverse({
+              JSXAttribute(jsxPath) {
+                if (jsxPath.node.name.name !== `query`) {
+                  return
+                }
+                jsxPath.traverse({
+                  TaggedTemplateExpression(templatePath) {
+                    extractStaticQuery(templatePath)
+                  },
+                  Identifier(identifierPath) {
+                    if (identifierPath.node.name !== `graphql`) {
+                      const varName = identifierPath.node.name
+                      traverse(ast, {
+                        VariableDeclarator(varPath) {
+                          if (
+                            varPath.node.id.name === varName &&
+                            varPath.node.init.type ===
+                              `TaggedTemplateExpression`
+                          ) {
+                            varPath.traverse({
+                              TaggedTemplateExpression(templatePath) {
+                                extractStaticQuery(templatePath)
+                              },
+                            })
+                          }
+                        },
+                      })
+                    }
+                  },
+                })
+              },
             })
-
-            const definitions = [...gqlAst.definitions].map(d => {
-              d.isStaticQuery = true
-              d.text = text
-              d.hash = hash
-              return d
-            })
-            queries.push(...definitions)
+            return
           },
         })
 
@@ -145,7 +183,11 @@ async function findGraphQLTags(file, text): Promise<Array<DefinitionNode>> {
                     def,
                     `${innerPath.node.start}-${def.loc.start}`
                   )
-                  generateQueryName({ def, hash, file })
+                  generateQueryName({
+                    def,
+                    hash,
+                    file,
+                  })
                 })
 
                 queries.push(...gqlAst.definitions)
