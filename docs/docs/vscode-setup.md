@@ -18,7 +18,7 @@ You should add the `typescript` package as a global or dev dependancy for your p
 
 The following `jsconfig.json` is reccomended for getting better intellisense on your `.js` files while working.
 
-```
+```json5
 {
   "compilerOptions": {
     "target": "es2016",
@@ -53,7 +53,7 @@ exports.onCreateWebpackConfig = ({ actions, stage }) => {
 
 Afterwards in the `.vscode/launch.json` file, the following config will launch a new window that attaches to your website after you have started `gatsby develop`. It includes a `userDataDir` so that a seperate Chrome instance pops up with no extra user settings or plugins. Plugins like React Developer Tools are still available from the store, and chrome settings are persisted between runs.
 
-```json
+```json5
 // launch.json
 {
   "version": "0.2.0",
