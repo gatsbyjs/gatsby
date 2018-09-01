@@ -152,7 +152,7 @@ Now that the slugs are created, you can create the pages.
 
 In the same `gatsby-node.js` file, add the following.
 
-```javascript{15-34}
+```javascript{15-31}
 const { createFilePath } = require(`gatsby-source-filesystem`)
 
 exports.onCreateNode = ({ node, getNode, actions }) => {
@@ -167,25 +167,22 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
   }
 }
 
-exports.createPages = ({ graphql, actions }) => {
-  return new Promise((resolve, reject) => {
-    graphql(`
-      {
-        allMarkdownRemark {
-          edges {
-            node {
-              fields {
-                slug
-              }
+exports.createPages = async ({ graphql, actions }) => {
+  const result = await graphql(`
+    {
+      allMarkdownRemark {
+        edges {
+          node {
+            fields {
+              slug
             }
           }
         }
       }
-    `).then(result => {
-      console.log(JSON.stringify(result, null, 4))
-      resolve()
-    })
-  })
+    }
+  `)
+
+  console.log(JSON.stringify(result, null, 4))
 }
 ```
 
@@ -226,7 +223,7 @@ export default () => {
 
 Then update `gatsby-node.js`
 
-```javascript{1,17,32-42}
+```javascript{1,17,33-43}
 const path = require(`path`)
 const { createFilePath } = require(`gatsby-source-filesystem`)
 
@@ -242,34 +239,32 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
   }
 }
 
-exports.createPages = ({ graphql, actions }) => {
+exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
-  return new Promise((resolve, reject) => {
-    graphql(`
-      {
-        allMarkdownRemark {
-          edges {
-            node {
-              fields {
-                slug
-              }
+
+  const result = await graphql(`
+    {
+      allMarkdownRemark {
+        edges {
+          node {
+            fields {
+              slug
             }
           }
         }
       }
-    `).then(result => {
-      result.data.allMarkdownRemark.edges.forEach(({ node }) => {
-        createPage({
-          path: node.fields.slug,
-          component: path.resolve(`./src/templates/blog-post.js`),
-          context: {
-            // Data passed to context is available
-            // in page queries as GraphQL variables.
-            slug: node.fields.slug,
-          },
-        })
-      })
-      resolve()
+    }
+  `)
+
+  result.data.allMarkdownRemark.edges.forEach(({ node }) => {
+    createPage({
+      path: node.fields.slug,
+      component: path.resolve(`./src/templates/blog-post.js`),
+      context: {
+        // Data passed to context is available
+        // in page queries as GraphQL variables.
+        slug: node.fields.slug,
+      },
     })
   })
 }
