@@ -4,23 +4,28 @@ os:
   - linux
 dist: trusty
 sudo: required
-
 language: node_js
-node_js:
-  - '6'
-  - '8'
-  - '10'
 
 matrix:
   include:
-    - name: "Unit Tests"
+    - name: "Unit Tests on Node.js 6"
       env: SRC_PATH=. INSTALL_COMMAND='run bootstrap' TEST_COMMAND=test
+      node_js:
+        - '6'
+    - name: "Unit Tests on Node.js 8"
+      env: SRC_PATH=. INSTALL_COMMAND='run bootstrap' TEST_COMMAND=test
+      node_js:
+        - '8'
+    - name: "Unit Tests on Node.js 10"
+      env: SRC_PATH=. INSTALL_COMMAND='run bootstrap' TEST_COMMAND=test
+      node_js:
+        - '10'
     - name: "Integration Tests"
       env: SRC_PATH=. INSTALL_COMMAND='run bootstrap' TEST_COMMAND='test:integration'
     - name: "Develop UI Tests"
-      env: SRC_PATH='examples/gatsbygram' INSTALL_COMMAND='install' TEST_COMMAND=test
+      env: SRC_PATH='examples/gatsbygram' INSTALL_COMMAND='install' TEST_COMMAND='test'
     - name: "Production UI Tests"
-      env: SRC_PATH='integration-tests/production-runtime' INSTALL_COMMAND='install' TEST_COMMAND=test
+      env: SRC_PATH='integration-tests/production-runtime' INSTALL_COMMAND='install' TEST_COMMAND='test'
 
 cache:
   yarn: true
