@@ -21,4 +21,5 @@ module.exports = {
   moduleNameMapper: {
     "^highlight.js$": `<rootDir>/node_modules/highlight.js/lib/index.js`,
   },
+  testURL: `http://localhost:8000`,
 }
