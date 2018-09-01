@@ -122,39 +122,41 @@ export const hashShouldBeFollowed = (origin, destination) => (
   )
 )
 
+export const routeThroughBrowserOrApp = hrefHandler => event => {
+  if ( userIsForcingNavigation(event) ) return true
+
+  const clickedAnchor = findClosestAnchor(event.target)
+  if ( clickedAnchor == null ) return true
+
+  if( authorIsForcingNavigation(clickedAnchor) ) return true
+
+  // IE clears the host value if the anchor href changed after creation, e.g.
+  // in React. Creating a new anchor element to ensure host value is present
+  const destination = document.createElement(`a`)
+  destination.href = clickedAnchor.href
+
+  // In IE, the default port is included in the anchor host but excluded from
+  // the location host.  This affects the ability to directly compare
+  // location host to anchor host.  For example: http://example.com would
+  // have a location.host of 'example.com' and an destination.host of
+  // 'example.com:80' Creating anchor from the location.href to normalize the
+  // host value.
+  const origin = document.createElement(`a`)
+  origin.href = window.location.href
+
+  if ( urlsAreOnSameOrigin(origin, destination) === false ) return true
+
+  if ( pathIsNotHandledByApp(destination) ) return true
+
+  if ( hashShouldBeFollowed(origin, destination) ) return true
+
+  event.preventDefault()
+
+  hrefHandler(`${destination.pathname}${destination.search}${destination.hash}`)
+
+  return false
+}
+
 export default function(root, cb) {
-  root.addEventListener(`click`, function(event) {
-    if ( userIsForcingNavigation(event) ) return true
-
-    const clickedAnchor = findClosestAnchor(event.target)
-    if ( clickedAnchor == null ) return true
-
-    if( authorIsForcingNavigation(clickedAnchor) ) return true
-
-    // IE clears the host value if the anchor href changed after creation, e.g.
-    // in React. Creating a new anchor element to ensure host value is present
-    const destination = document.createElement(`a`)
-    destination.href = clickedAnchor.href
-
-    // In IE, the default port is included in the anchor host but excluded from
-    // the location host.  This affects the ability to directly compare
-    // location host to anchor host.  For example: http://example.com would
-    // have a location.host of 'example.com' and an destination.host of
-    // 'example.com:80' Creating anchor from the location.href to normalize the
-    // host value.
-    const origin = document.createElement(`a`)
-    origin.href = window.location.href
-
-    if ( urlsAreOnSameOrigin(origin, destination) === false ) return true
-
-    if ( pathIsNotHandledByApp(destination) ) return true
-
-    if ( hashShouldBeFollowed(origin, destination) ) return true
-
-    event.preventDefault()
-
-    cb(`${destination.pathname}${destination.search}${destination.hash}`)
-
-    return false
-  })
+  root.addEventListener(`click`, routeThroughBrowserOrApp(cb))
 }
