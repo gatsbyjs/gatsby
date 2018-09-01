@@ -127,7 +127,7 @@ export default function(root, cb) {
     if ( userIsForcingNavigation(event) ) return true
 
     const clickedAnchor = findClosestAnchor(event.target)
-    if (clickedAnchor == null) return true
+    if ( clickedAnchor == null ) return true
 
     if( authorIsForcingNavigation(clickedAnchor) ) return true
 
