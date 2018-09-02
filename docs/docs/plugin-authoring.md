@@ -71,7 +71,8 @@ In order to add your plugin to the [Plugin Library], you need to publish a packa
 
 After doing so, Algolia will take up to 12 hours to add it to the library search index (the exact time necessary is still unknown), and wait for the daily rebuild of https://gatsbyjs.org to automatically include your plugin page to the website. Then, all you have to do is share your wonderful plugin with the community!
 
-**NOTE:** You can include other _relevant_ keywords to your `package.json` file to help interested users in finding it. As an example, a  Markdown MathJax transformer would include:
+**NOTE:** You can include other _relevant_ keywords to your `package.json` file to help interested users in finding it. As an example, a Markdown MathJax transformer would include:
+
 ```
 "keywords": [
   "gatsby",
