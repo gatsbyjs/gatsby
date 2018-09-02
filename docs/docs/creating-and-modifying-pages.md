@@ -52,47 +52,38 @@ of the markdown file.
 ```javascript
 // Implement the Gatsby API “createPages”. This is called once the
 // data layer is bootstrapped to let plugins create pages from data.
-exports.createPages = ({ graphql, actions }) => {
+exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
-  return new Promise((resolve, reject) => {
-    const blogPostTemplate = path.resolve(`src/templates/blog-post.js`)
-    // Query for markdown nodes to use in creating pages.
-    resolve(
-      graphql(
-        `
-          {
-            allMarkdownRemark(limit: 1000) {
-              edges {
-                node {
-                  frontmatter {
-                    path
-                  }
-                }
-              }
-            }
+  const blogPostTemplate = path.resolve(`src/templates/blog-post.js`)
+  // Query for markdown nodes to use in creating pages.
+  const result = await graphql(`{
+    allMarkdownRemark(limit: 1000) {
+      edges {
+        node {
+          frontmatter {
+            path
           }
-        `
-      ).then(result => {
-        if (result.errors) {
-          reject(result.errors)
         }
+      }
+    }
+  }`)
+  if (result.errors) {
+    throw new Error(result.errors.map(err => err.message).join(', '))
+  }
 
-        // Create pages for each markdown file.
-        result.data.allMarkdownRemark.edges.forEach(({ node }) => {
-          const path = node.frontmatter.path
-          createPage({
-            path,
-            component: blogPostTemplate,
-            // In your blog post template's graphql query, you can use path
-            // as a GraphQL variable to query for data from the markdown file.
-            context: {
-              path,
-            },
-          })
-        })
-      })
-    )
+  // Create pages for each markdown file.
+  result.data.allMarkdownRemark.edges.forEach(({ node }) => {
+    const path = node.frontmatter.path
+    createPage({
+      path,
+      component: blogPostTemplate,
+      // In your blog post template's graphql query, you can use path
+      // as a GraphQL variable to query for data from the markdown file.
+      context: {
+        path,
+      },
+    })
   })
 }
 ```
@@ -118,16 +109,13 @@ _Note: There's also a plugin that will remove all trailing slashes from pages au
 // called after every page is created.
 exports.onCreatePage = ({ page, actions }) => {
   const { createPage, deletePage } = actions
-  return new Promise(resolve => {
-    const oldPage = Object.assign({}, page)
-    // Remove trailing slash unless page is /
-    page.path = _path => (_path === `/` ? _path : _path.replace(/\/$/, ``))
-    if (page.path !== oldPage.path) {
-      // Replace new page with old page
-      deletePage(oldPage)
-      createPage(page)
-    }
-    resolve()
-  })
+  const oldPage = Object.assign({}, page)
+  // Remove trailing slash unless page is /
+  page.path = _path => (_path === `/` ? _path : _path.replace(/\/$/, ``))
+  if (page.path !== oldPage.path) {
+    // Replace new page with old page
+    deletePage(oldPage)
+    createPage(page)
+  }
 }
 ```
