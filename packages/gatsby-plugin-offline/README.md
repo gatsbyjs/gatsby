@@ -29,19 +29,14 @@ and AppCache setup by changing these options so tread carefully.
 
 ```javascript
 const options = {
-  staticFileGlobs: files.concat([
-    `${rootDir}/index.html`,
-    `${rootDir}/manifest.json`,
-    `${rootDir}/manifest.webmanifest`,
-    `${rootDir}/offline-plugin-app-shell-fallback/index.html`,
-    ...criticalFilePaths,
-  ]),
-  stripPrefix: rootDir,
-  // If `pathPrefix` is configured by user, we should replace
-  // the `public` prefix with `pathPrefix`.
-  // See more at:
-  // https://github.com/GoogleChrome/sw-precache#replaceprefix-string
-  replacePrefix: args.pathPrefix || ``,
+  globDirectory: rootDir,
+  globPatterns,
+  modifyUrlPrefix: {
+    rootDir: ``,
+    // If `pathPrefix` is configured by user, we should replace
+    // the default prefix with `pathPrefix`.
+    "": args.pathPrefix || ``,
+  },
   navigateFallback: `/offline-plugin-app-shell-fallback/index.html`,
   // Only match URLs without extensions or the query `no-cache=1`.
   // So example.com/about/ will pass but
@@ -51,7 +46,8 @@ const options = {
   // URLs and not any files hosted on the site.
   //
   // Regex based on http://stackoverflow.com/a/18017805
-  navigateFallbackWhitelist: [/^.*([^.]{5}|.html)(?<!(\?|&)no-cache=1)$/],
+  navigateFallbackWhitelist: [/^[^?]*([^.?]{5}|\.html)(\?.*)?$/],
+  navigateFallbackBlacklist: [/\?(.+&)?no-cache=1$/],
   cacheId: `gatsby-plugin-offline`,
   // Don't cache-bust JS files and anything in the static directory
   dontCacheBustUrlsMatching: /(.*js$|\/static\/)/,
@@ -59,9 +55,10 @@ const options = {
     {
       // Add runtime caching of various page resources.
       urlPattern: /\.(?:png|jpg|jpeg|webp|svg|gif|tiff|js|woff|woff2|json|css)$/,
-      handler: `fastest`,
+      handler: `staleWhileRevalidate`,
     },
   ],
   skipWaiting: true,
+  clientsClaim: true,
 }
 ```

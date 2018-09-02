@@ -209,9 +209,9 @@ Note that Gatsby is warning that your plugin doesn't do anything yet. Time to fi
 Update `gatsby-node.js` in your `plugins/gatsby-source-pixabay/` directory:
 
 ```js{11-30}
-const fetch = require('node-fetch')
-const queryString = require('query-string')
-const crypto = require('crypto')
+const fetch = require("node-fetch")
+const queryString = require("query-string")
+const crypto = require("crypto")
 
 exports.sourceNodes = ({ actions, createNodeId }, configOptions) => {
   const { createNode } = actions
@@ -269,9 +269,9 @@ You're ready to add the final step of your plugin - converting this data into a 
 You're adding a helper function on lines 12 to 32 and processing the data into a node on lines 49 to 52:
 
 ```js{12-32,49-52}
-const fetch = require('node-fetch')
-const queryString = require('query-string')
-const crypto = require('crypto')
+const fetch = require("node-fetch")
+const queryString = require("query-string")
+const crypto = require("crypto")
 
 exports.sourceNodes = ({ actions, createNodeId }, configOptions) => {
   const { createNode } = actions
@@ -284,9 +284,9 @@ exports.sourceNodes = ({ actions, createNodeId }, configOptions) => {
     const nodeId = createNodeId(`pixabay-photo-${photo.id}`)
     const nodeContent = JSON.stringify(photo)
     const nodeContentDigest = crypto
-      .createHash('md5')
+      .createHash("md5")
       .update(nodeContent)
-      .digest('hex')
+      .digest("hex")
 
     const nodeData = Object.assign({}, photo, {
       id: nodeId,

@@ -42,7 +42,8 @@ export default class MarkdownPageFooter extends React.Component {
           <span css={{ lineHeight: rhythm(2) }}>Thank you!</span>
         ) : (
           <span css={{ lineHeight: rhythm(2) }}>
-            Was this helpful?{` `}
+            Was this helpful?
+            {` `}
             <CheckIcon
               onClick={() => {
                 sendReview(true, this.props.page.parent.relativePath)

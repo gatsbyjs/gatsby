@@ -9,6 +9,7 @@ import Layout from "../components/layout"
 import ShareMenu from "../components/share-menu"
 import presets, { colors } from "../utils/presets"
 import { /*typography, */ rhythm, scale, options } from "../utils/typography"
+import sharedStyles from "../views/shared/styles"
 import MdLaunch from "react-icons/lib/md/launch"
 import GithubIcon from "react-icons/lib/fa/github"
 
@@ -272,7 +273,7 @@ class StarterTemplate extends React.Component {
                   fluid={imageSharp.childImageSharp.fluid}
                   alt={`Screenshot of ${imageSharp.name}`}
                   css={{
-                    ...styles.screenshot,
+                    ...sharedStyles.screenshot,
                   }}
                 />
               )}
@@ -322,7 +323,9 @@ class StarterTemplate extends React.Component {
               <div>
                 {frontmatter.features ? (
                   <ul css={{ marginTop: 0 }}>
-                    {frontmatter.features.map((f, i) => <li key={i}>{f}</li>)}
+                    {frontmatter.features.map((f, i) => (
+                      <li key={i}>{f}</li>
+                    ))}
                   </ul>
                 ) : (
                   `No features`
@@ -366,12 +369,10 @@ class StarterTemplate extends React.Component {
                               marginBottom: `1rem`,
                             }}
                           >
-                            {` `}
                             <a href={`https://npm.im/${dep}`}>
+                              {`${dep} `}
                               <FaExtLink />
                             </a>
-                            {` `}
-                            {dep}
                           </div>
                         )
                     )}

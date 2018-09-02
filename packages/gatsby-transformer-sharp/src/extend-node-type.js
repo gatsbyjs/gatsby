@@ -105,7 +105,6 @@ const fixedNodeType = ({
     args: {
       width: {
         type: GraphQLInt,
-        defaultValue: 400,
       },
       height: {
         type: GraphQLInt,
@@ -222,7 +221,6 @@ const fluidNodeType = ({
     args: {
       maxWidth: {
         type: GraphQLInt,
-        defaultValue: 800,
       },
       maxHeight: {
         type: GraphQLInt,
@@ -377,7 +375,6 @@ module.exports = ({
       args: {
         width: {
           type: GraphQLInt,
-          defaultValue: 400,
         },
         height: {
           type: GraphQLInt,

@@ -9,7 +9,7 @@ sudo: required
 
 jobs:
     include:
-        - stage: build and test
+        - stage: Unit tests
           if: type = pull_request
           language: node_js
           node_js:
@@ -26,7 +26,24 @@ jobs:
           script:
           - yarn test
 
-        - stage: gatsbygram ui tests
+        - stage: Integration tests
+          if: type = pull_request
+          language: node_js
+          node_js:
+            - '6'
+            - '8'
+            - '10'
+          cache:
+            yarn: true
+          before_install:
+          - curl -o- -L https://yarnpkg.com/install.sh | bash
+          - export PATH=$HOME/.yarn/bin:$PATH
+          install:
+          - yarn run bootstrap
+          script:
+          - yarn test:integration
+
+        - stage: Develop UI tests
           language: node_js
           node_js:
             - '6'
@@ -38,6 +55,23 @@ jobs:
           - curl -o- -L https://yarnpkg.com/install.sh | bash
           - export PATH=$HOME/.yarn/bin:$PATH
           - cd examples/gatsbygram
+          install:
+          - yarn
+          script:
+          - yarn test
+
+        - stage: Production UI tests
+          language: node_js
+          node_js:
+            - '6'
+            - '8'
+            - '10'
+          cache:
+            yarn: true
+          before_install:
+          - curl -o- -L https://yarnpkg.com/install.sh | bash
+          - export PATH=$HOME/.yarn/bin:$PATH
+          - cd integration-tests/production-runtime
           install:
           - yarn
           script:

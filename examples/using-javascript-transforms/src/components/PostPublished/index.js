@@ -7,7 +7,10 @@ class PostPublished extends React.Component {
     let published
     if (frontmatter.updated === null) {
       published = (
-        <em>`published`{moment(frontmatter.written).format(`D MMM YYYY`)}</em>
+        <em>
+          `published`
+          {moment(frontmatter.written).format(`D MMM YYYY`)}
+        </em>
       )
     } else {
       published = (

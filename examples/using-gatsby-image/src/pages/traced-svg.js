@@ -91,8 +91,7 @@ const UnsplashMasonry = edges => (
                 `utf8`
               )
             ).format()}
-            {` `}
-            B
+            {` `}B
           </span>
         </div>
       ))}

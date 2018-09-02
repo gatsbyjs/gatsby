@@ -12,7 +12,7 @@ function _loadNodeContent(fileNode, fallback) {
 
 async function onCreateNode(
   { node, actions, loadNodeContent, createNodeId },
-  options
+  options = {}
 ) {
   const { createNode, createParentChildLink } = actions
   const extensions = `xls|xlsx|xlsm|xlsb|xml|xlw|xlc|csv|txt|dif|sylk|slk|prn|ods|fods|uos|dbf|wks|123|wq1|qpw|htm|html`.split(
@@ -23,13 +23,19 @@ async function onCreateNode(
   }
   // Load binary string
   const content = await _loadNodeContent(node, loadNodeContent)
+
+  // accept *all* options to pass to the sheet_to_json function
+  // alias legacy `rawOutput` to correct `raw` attribute
+  // NOTE: the default of true for `raw` is opposite the library's default
+  const xlsxOptions = _.defaults(options, { 'raw': options.rawOutput }, { 'raw': true })
+  delete xlsxOptions.rawOutput
+  delete xlsxOptions.plugins
+
   // Parse
   let wb = XLSX.read(content, { type: `binary`, cellDates: true })
   wb.SheetNames.forEach((n, idx) => {
     let ws = wb.Sheets[n]
-    let parsedContent = XLSX.utils.sheet_to_json(ws, {
-      raw: options && `rawOutput` in options ? options.rawOutput : true,
-    })
+    let parsedContent = XLSX.utils.sheet_to_json(ws, xlsxOptions)
 
     if (_.isArray(parsedContent)) {
       const csvArray = parsedContent.map((obj, i) => {

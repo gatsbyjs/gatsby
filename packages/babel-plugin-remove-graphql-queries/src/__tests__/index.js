@@ -1,10 +1,9 @@
 const babel = require(`babel-core`)
-const reactPreset = require(`@babel/preset-react`)
 const plugin = require(`../`)
 
 function matchesSnapshot(query) {
   const { code } = babel.transform(query, {
-    presets: [reactPreset],
+    presets: [`@babel/preset-react`],
     plugins: [plugin],
   })
   expect(code).toMatchSnapshot()
@@ -200,5 +199,35 @@ it(`Handles closing StaticQuery tag`, () => {
       {data => <div>{data.site.siteMetadata.title}</div>}
     </StaticQuery>
   )
+  `)
+})
+
+it(`Doesn't add data import for non static queries`, () => {
+  matchesSnapshot(`
+  import React from 'react'
+  import { StaticQuery, graphql } from "gatsby"
+
+  const Test = () => (
+    <StaticQuery
+      query={graphql\`
+      {
+        site {
+          siteMetadata {
+            title
+          }
+        }
+      }
+      \`}
+      render={data => <div>{data.site.siteMetadata.title}</div>}
+    />
+  )
+
+  export default Test
+
+  export const fragment = graphql\`
+    fragment MarkdownNodeFragment on MarkdownRemark {
+      html
+    }
+  \`
   `)
 })

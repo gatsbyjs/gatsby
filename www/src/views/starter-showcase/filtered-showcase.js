@@ -110,7 +110,8 @@ export default class FilteredShowcase extends Component {
               },
             }}
           >
-            Filter & Refine{` `}
+            Filter & Refine
+            {` `}
             <span css={{ marginLeft: `auto`, opacity: 0.5 }}>
               <MdFilterList />
             </span>
@@ -118,6 +119,11 @@ export default class FilteredShowcase extends Component {
           <div
             css={{
               paddingLeft: rhythm(3 / 4),
+              height: `calc(100vh - ((${presets.headerHeight} * 2) + ${
+                presets.bannerHeight
+              }))`,
+              display: `flex`,
+              flexDirection: `column`,
             }}
           >
             {(filters.size > 0 || urlState.s.length > 0) && ( // search is a filter too https://gatsbyjs.slack.com/archives/CB4V648ET/p1529224551000008
