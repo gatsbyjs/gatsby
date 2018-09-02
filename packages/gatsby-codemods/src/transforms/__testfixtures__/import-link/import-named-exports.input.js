@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { graphql } from "gatsby"
 import Link from "gatsby-link"
 

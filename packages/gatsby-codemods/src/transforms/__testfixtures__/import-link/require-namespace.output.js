@@ -1,4 +1,3 @@
-/* eslint-disable */
 const Gatsby = require(`gatsby`)
 
 const IndexPage = () => (

@@ -1,4 +1,3 @@
-/* eslint-disable */
 const { graphql } = require(`gatsby`)
 const Link = require('gatsby-link')
 

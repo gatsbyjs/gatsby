@@ -43,7 +43,8 @@
   },
   "eslintIgnore": [
     "interfaces",
-    "**/__tests__/fixtures/"
+    "**/__tests__/fixtures/",
+    "**/__testfixtures__/"
   ],
   "private": true,
   "scripts": {
