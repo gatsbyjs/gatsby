@@ -2258,3 +2258,13 @@
     - Agency
     - Open Source
     - Featured
+ - title: It's a Date
+   description: >
+    It's a Date is a dating app that actually involves dating.
+   main_url: 'https://www.itsadate.app/'
+   url: 'https://www.itsadate.app/'
+   featured: false
+   categories:
+     - App
+     - Blog
+     - Featured
