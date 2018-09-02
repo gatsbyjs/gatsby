@@ -2,7 +2,6 @@ import React, { createElement } from "react"
 import PropTypes from "prop-types"
 import loader, { publicLoader } from "./loader"
 import emitter from "./emitter"
-import { polyfill } from "react-lifecycles-compat"
 import shallowCompare from "shallow-compare"
 import { apiRunner } from "./api-runner-browser"
 
@@ -19,7 +18,7 @@ class PageRenderer extends React.Component {
 
     this.state = {
       lastPathname: location.pathname,
-      pageResources: loader.getResourcesForPathname(pathname),
+      pageResources: loader.getResourcesForPathnameSync(pathname),
     }
   }
 
@@ -35,7 +34,9 @@ class PageRenderer extends React.Component {
     }
 
     if (prevState.lastPathname !== location.pathname) {
-      const pageResources = loader.getResourcesForPathname(location.pathname)
+      const pageResources = loader.getResourcesForPathnameSync(
+        location.pathname
+      )
 
       if (pageResources) {
         nextState.pageResources = pageResources
@@ -64,11 +65,11 @@ class PageRenderer extends React.Component {
     const { location } = this.props
     const pathName = this.getPathName(location)
 
-    if (!loader.getResourcesForPathname(pathName))
+    if (!loader.getResourcesForPathnameSync(pathName))
       // Page resources won't be set in cases where the browser back button
       // or forward button is pushed as we can't wait as normal for resources
       // to load before changing the page.
-      loader.getResourcesForPathname(pathName, pageResources => {
+      loader.getResourcesForPathnameSync(pathName, pageResources => {
         // The page may have changed since we started this, in which case doesn't update
         if (this.props.location.pathname !== location.pathname) {
           return
@@ -118,7 +119,23 @@ class PageRenderer extends React.Component {
   }
 
   render() {
-    if (!this.state.pageResources) return null
+    if (
+      !(this.state.pageResources && this.state.pageResources.json) &&
+      process.env.NODE_ENV === `production`
+    ) {
+      // Try to load the page directly - this should result in a 404 or
+      // network offline error.
+
+      const url = new URL(window.location)
+      if (url.search) {
+        url.search += `&no-cache=1`
+      } else {
+        url.search = `?no-cache=1`
+      }
+      window.location.replace(url)
+
+      return null
+    }
 
     const pathContext =
       process.env.NODE_ENV !== `production`
@@ -131,15 +148,25 @@ class PageRenderer extends React.Component {
       pathContext,
     }
 
-    const [replacementComponent] = apiRunner(`replaceComponentRenderer`, {
+    const [replacementElement] = apiRunner(`replaceComponentRenderer`, {
       props: { ...this.props, pageResources: this.state.pageResources },
       loader: publicLoader,
     })
 
-    return (
-      replacementComponent ||
+    const pageElement =
+      replacementElement ||
       createElement(this.state.pageResources.component, props)
-    )
+
+    const wrappedPage = apiRunner(
+      `wrapPageElement`,
+      { element: pageElement, props },
+      pageElement,
+      ({ result }) => {
+        return { element: result, props }
+      }
+    ).pop()
+
+    return wrappedPage
   }
 }
 
@@ -149,4 +176,4 @@ PageRenderer.propTypes = {
   pageContext: PropTypes.object,
 }
 
-export default polyfill(PageRenderer)
+export default PageRenderer

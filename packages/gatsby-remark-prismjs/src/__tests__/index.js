@@ -57,4 +57,13 @@ describe(`remark prism plugin`, () => {
       expect(markdownAST).toMatchSnapshot()
     })
   })
+
+  describe(`numberLines`, () => {
+    it(`adds line-number markup when necessary`, () => {
+      const code = `\`\`\`js{numberLines:5}\n//.foo { \ncolor: red;\n }\``
+      const markdownAST = remark.parse(code)
+      plugin({ markdownAST })
+      expect(markdownAST).toMatchSnapshot()
+    })
+  })
 })

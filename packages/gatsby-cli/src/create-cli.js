@@ -2,8 +2,8 @@ const path = require(`path`)
 const resolveCwd = require(`resolve-cwd`)
 const yargs = require(`yargs`)
 const report = require(`./reporter`)
-const fs = require(`fs`)
 const envinfo = require(`envinfo`)
+const existsSync = require(`fs-exists-cached`).sync
 
 const DEFAULT_BROWSERS = [`>0.25%`, `not dead`]
 
@@ -19,7 +19,7 @@ function buildLocalCommands(cli, isLocalSite) {
   const directory = path.resolve(`.`)
 
   let siteInfo = { directory, browserslist: DEFAULT_BROWSERS }
-  const useYarn = fs.existsSync(path.join(directory, `yarn.lock`))
+  const useYarn = existsSync(path.join(directory, `yarn.lock`))
   if (isLocalSite) {
     const json = require(path.join(directory, `package.json`))
     siteInfo.sitePackageJson = json
@@ -44,7 +44,7 @@ function buildLocalCommands(cli, isLocalSite) {
         resolveCwd.silent(`gatsby/dist/utils/${command}`)
       if (!cmdPath)
         return report.panic(
-          `There was a problem loading the local ${command} command. Gatsby may not be installed. Perhaps you need to run "npm install"?`
+          `There was a problem loading the local ${command} command. Gatsby may not be installed in your site's "node_modules" directory. Perhaps you need to run "npm install"? You might need to delete your "package-lock.json" as well.`
         )
 
       report.verbose(`loading local command from: ${cmdPath}`)
@@ -116,6 +116,10 @@ function buildLocalCommands(cli, isLocalSite) {
           type: `string`,
           default: ``,
           describe: `Custom HTTPS key file (relative path; also required: --https, --cert-file). See https://www.gatsbyjs.org/docs/local-https/`,
+        })
+        .option(`open-tracing-config-file`, {
+          type: `string`,
+          describe: `Tracer configuration file (open tracing compatible). See https://www.gatsbyjs.org/docs/performance-tracing/`,
         }),
     handler: handlerP(
       getCommandHandler(`develop`, (args, cmd) => {
@@ -137,11 +141,16 @@ function buildLocalCommands(cli, isLocalSite) {
         type: `boolean`,
         default: false,
         describe: `Build site with link paths prefixed (set prefix in your config).`,
-      }).option(`no-uglify`, {
-        type: `boolean`,
-        default: false,
-        describe: `Build site without uglifying JS bundles (for debugging).`,
-      }),
+      })
+        .option(`no-uglify`, {
+          type: `boolean`,
+          default: false,
+          describe: `Build site without uglifying JS bundles (for debugging).`,
+        })
+        .option(`open-tracing-config-file`, {
+          type: `string`,
+          describe: `Tracer configuration file (open tracing compatible). See https://www.gatsbyjs.org/docs/performance-tracing/`,
+        }),
     handler: handlerP(
       getCommandHandler(`build`, (args, cmd) => {
         process.env.NODE_ENV = `production`
@@ -205,6 +214,15 @@ function buildLocalCommands(cli, isLocalSite) {
         console.log(err)
       }
     },
+  })
+
+  cli.command({
+    command: `repl`,
+    desc: `Get a node repl with context of Gatsby environment, see (add docs link here)`,
+    handler: getCommandHandler(`repl`, (args, cmd) => {
+      process.env.NODE_ENV = process.env.NODE_ENV || `development`
+      return cmd(args)
+    }),
   })
 }
 

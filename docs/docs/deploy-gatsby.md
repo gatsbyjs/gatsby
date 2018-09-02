@@ -330,7 +330,7 @@ There are some additional HTTP header optimizations you can configure in your `a
 
 ```yaml
 deploy:
-  # Note with below setting it is not neccessary to pass --directory to aero deploy command
+  # Note with below setting it is not necessary to pass --directory to aero deploy command
   directory: public
   # Turn off the Aerobatic asset fingerprinting since Gatsby already does this
   optimizer:
@@ -339,7 +339,7 @@ deploy:
 plugins:
   # Force aggressive 1yr max-age header for all .js and .js.map requests
   - name: http-headers
-    path: ['/*.js', '/*.js.map']
+    path: ["/*.js", "/*.js.map"]
     options:
       "Cache-Control": "public, max-age=31536000"
   - name: webpage

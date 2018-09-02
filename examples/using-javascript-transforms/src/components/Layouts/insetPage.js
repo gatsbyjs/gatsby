@@ -1,4 +1,5 @@
 import React from "react"
+import { graphql } from "gatsby"
 import SiteSidebar from "../SiteSidebar"
 import MasterLayout from "./master"
 

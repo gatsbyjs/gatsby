@@ -1,5 +1,5 @@
 import React from "react"
-import { Link } from "gatsby"
+import { Link, graphql } from "gatsby"
 import { css } from "emotion"
 import get from "lodash/get"
 import { rhythm, scale } from "../utils/typography"
@@ -49,7 +49,8 @@ class BlogIndex extends React.Component {
         <div className={indexContainer}>
           <h2>
             Enjoy the nicely highlighted code snippets in the posts below styled
-            with the{` `}
+            with the
+            {` `}
             {` `}
             <a href="https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs">
               Gatsby PrismJS plugin
@@ -88,7 +89,7 @@ class BlogIndex extends React.Component {
 export default BlogIndex
 
 export const pageQuery = graphql`
-  query IndexQuery {
+  query {
     allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
       edges {
         node {

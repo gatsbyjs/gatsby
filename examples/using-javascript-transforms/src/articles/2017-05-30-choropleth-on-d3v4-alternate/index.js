@@ -1,4 +1,5 @@
 import React from "react"
+import { graphql } from "gatsby"
 import BlogPostChrome from "../../components/BlogPostChrome"
 var d3 = require(`d3`)
 

@@ -125,13 +125,24 @@ function inferGraphQLInputFields({
           )
       }
 
+      let fields
+      if (headType === `object`) {
+        fields = {
+          elemMatch: {
+            type: inType,
+          },
+        }
+      } else {
+        fields = {
+          ...typeFields(headType),
+          in: { type: new GraphQLList(inType) },
+        }
+      }
+
       return {
         type: new GraphQLInputObjectType({
           name: createTypeName(`${prefix}QueryList`),
-          fields: {
-            ...typeFields(headType),
-            in: { type: new GraphQLList(inType) },
-          },
+          fields,
         }),
       }
     }

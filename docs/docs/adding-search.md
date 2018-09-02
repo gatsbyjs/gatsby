@@ -1,5 +1,5 @@
 ---
-title: "Adding search to your Gatsby website"
+title: "Adding search"
 ---
 
 Before we go through the steps for adding search to your Gatsby website, let's examine the components needed for adding search to a website.
@@ -32,13 +32,13 @@ Now that you know the three required components, there are a few ways to approac
 
 Using an open source search engine is always free and allows you to enable offline search for your site. Note that you need to be careful with offline search because the entire search index has to be brought into the client, which can affect the bundle size significantly.
 
-Open source libraries like [`elesticlunr`](https://www.npmjs.com/package/elasticlunr) or [`js-search`](https://github.com/bvaughn/js-search) can be used to enable search for your site.
+Open source libraries like [`elasticlunr`](https://www.npmjs.com/package/elasticlunr) or [`js-search`](https://github.com/bvaughn/js-search) can be used to enable search for your site.
 
 Doing so will require you to create a search index when your site is built. For `elesticlunr`, there is a plugin called [`gatsby-plugin-elasticlunr-search`](https://github.com/andrew-codes/gatsby-plugin-elasticlunr-search) that creates a search index automatically.
 
 For other libraries, you can use a combination of [`onCreateNode`](https://www.gatsbyjs.org/docs/node-apis/#onCreateNode), [`setFieldsOnGraphQLNodeType`](https://www.gatsbyjs.org/docs/node-apis/#setFieldsOnGraphQLNodeType) and [`sourceNodes`](https://www.gatsbyjs.org/docs/node-apis/#sourceNodes) from the Gatsby node API to create the search index and make it available in GraphQL. For more info on how to do this check out [`gatsby-plugin-elasticlunr-search`'s source code](https://github.com/andrew-codes/gatsby-plugin-elasticlunr-search/blob/master/src/gatsby-node.js#L88-L126).
 
-Another option is to generate the search index at the end of the build using the [`onPostBuild`](https://www.gatsbyjs.org/docs/node-apis/#onPostBuild) node API.
+Another option is to generate the search index at the end of the build using the [`onPostBuild`](https://www.gatsbyjs.org/docs/node-apis/#onPostBuild) node API. This approach is used by [`gatsby-plugin-lunr`](https://github.com/humanseelabs/gatsby-plugin-lunr) to build a multilanguage index.
 
 After building the search index and including it in Gatsby's data layer, you will need to allow the user to search your website. This is typically done by using a text input to capture the search query, then using one of the libraries mentioned above to retrieve the desired document(s).
 

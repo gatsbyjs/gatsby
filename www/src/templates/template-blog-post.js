@@ -1,6 +1,7 @@
 import React from "react"
 import Helmet from "react-helmet"
 import { Link, graphql } from "gatsby"
+import rehypeReact from "rehype-react"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import ArrowBackIcon from "react-icons/lib/md/arrow-back"
 import Img from "gatsby-image"
@@ -12,6 +13,12 @@ import typography, { rhythm, scale, options } from "../utils/typography"
 import Container from "../components/container"
 import EmailCaptureForm from "../components/email-capture-form"
 import TagsSection from "../components/tags-section"
+import HubspotForm from "../components/hubspot-form"
+
+const renderAst = new rehypeReact({
+  createElement: React.createElement,
+  components: { "hubspot-form": HubspotForm },
+}).Compiler
 
 class BlogPostTemplate extends React.Component {
   render() {
@@ -184,10 +191,12 @@ class BlogPostTemplate extends React.Component {
                 {post.frontmatter.canonicalLink && (
                   <span>
                     {` `}
-                    (originally published at{` `}
+                    (originally published at
+                    {` `}
                     <OutboundLink href={post.frontmatter.canonicalLink}>
                       {post.frontmatter.publishedAt}
-                    </OutboundLink>)
+                    </OutboundLink>
+                    )
                   </span>
                 )}
               </BioLine>
@@ -214,7 +223,8 @@ class BlogPostTemplate extends React.Component {
                 {post.frontmatter.imageAuthor &&
                   post.frontmatter.imageAuthorLink && (
                     <em>
-                      Image by{` `}
+                      Image by
+                      {` `}
                       <OutboundLink href={post.frontmatter.imageAuthorLink}>
                         {post.frontmatter.imageAuthor}
                       </OutboundLink>
@@ -222,12 +232,9 @@ class BlogPostTemplate extends React.Component {
                   )}
               </div>
             )}
-          <div
-            className="post-body"
-            dangerouslySetInnerHTML={{
-              __html: this.props.data.markdownRemark.html,
-            }}
-          />
+          <div className="post-body">
+            {renderAst(this.props.data.markdownRemark.htmlAst)}
+          </div>
           <TagsSection tags={this.props.data.markdownRemark.frontmatter.tags} />
           <EmailCaptureForm />
         </Container>
@@ -308,9 +315,9 @@ class BlogPostTemplate extends React.Component {
 export default BlogPostTemplate
 
 export const pageQuery = graphql`
-  query TemplateBlogPost($slug: String!) {
+  query($slug: String!) {
     markdownRemark(fields: { slug: { eq: $slug } }) {
-      html
+      htmlAst
       excerpt
       timeToRead
       fields {

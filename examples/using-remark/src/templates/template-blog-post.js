@@ -130,7 +130,7 @@ class BlogPostRoute extends React.Component {
 export default BlogPostRoute
 
 export const pageQuery = graphql`
-  query BlogPostBySlug($slug: String!) {
+  query($slug: String!) {
     markdownRemark(fields: { slug: { eq: $slug } }) {
       htmlAst
       timeToRead

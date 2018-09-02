@@ -1,7 +1,15 @@
 import React from "react"
 import PropTypes from "prop-types"
-import Link, { withPrefix, push, replace, navigateTo } from "gatsby-link"
+import Link, {
+  withPrefix,
+  navigate,
+  push,
+  replace,
+  navigateTo,
+} from "gatsby-link"
+import { addListener as waitForRouteChange } from "./wait-for-route-change"
 import PageRenderer from "./public-page-renderer"
+import parsePath from "./parse-path"
 
 const StaticQueryContext = React.createContext({})
 
@@ -42,10 +50,13 @@ export {
   Link,
   withPrefix,
   graphql,
-  push,
-  replace,
+  parsePath,
+  navigate,
+  push, // TODO replace for v3
+  replace, // TODO remove replace for v3
   navigateTo, // TODO: remove navigateTo for v3
   StaticQueryContext,
   StaticQuery,
   PageRenderer,
+  waitForRouteChange,
 }

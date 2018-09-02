@@ -79,7 +79,7 @@ createFilePath({
   // The parameter from `onCreateNode` should be passed in here
   getNode:
   // The base path for your files.
-  // Defaults to `src/pages`. For the example above, you'd use `src/contents`.
+  // Defaults to `src/pages`. For the example above, you'd use `src/content`.
   basePath:
   // Whether you want your file paths to contain a trailing `/` slash
   // Defaults to true
@@ -94,8 +94,8 @@ The following is taken from [Gatsby Tutorial, Part Seven](https://www.gatsbyjs.o
 ```javascript
 const { createFilePath } = require(`gatsby-source-filesystem`)
 
-exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
-  const { createNodeField } = boundActionCreators
+exports.onCreateNode = ({ node, getNode, actions }) => {
+  const { createNodeField } = actions
   // Ensures we are processing only markdown files
   if (node.internal.type === "MarkdownRemark") {
     // Use `createFilePath` to turn markdown files in our `data/faqs` directory into `/faqs/slug`
@@ -132,8 +132,11 @@ createRemoteFileNode({
   // Gatsby's cache which the helper uses to check if the file has been downloaded already. It's passed to all Node APIs.
   cache,
 
-  // The boundActionCreator used to create nodes
+  // The action used to create nodes
   createNode,
+
+  // A helper function for creating node Ids
+  createNodeId,
 
   // OPTIONAL
   // Adds htaccess authentication to the download request if passed in.
@@ -148,7 +151,14 @@ The following example is pulled from [gatsby-source-wordpress](https://github.co
 ```javascript
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 
-exports.downloadMediaFiles = ({ nodes, store, cache, createNode, _auth }) => {
+exports.downloadMediaFiles = ({
+  nodes,
+  store,
+  cache,
+  createNode,
+  createNodeId,
+  _auth,
+}) => {
   nodes.map(async node => {
     let fileNode
     // Ensures we are only processing Media Files
@@ -160,6 +170,7 @@ exports.downloadMediaFiles = ({ nodes, store, cache, createNode, _auth }) => {
           store,
           cache,
           createNode,
+          createNodeId,
           auth: _auth,
         })
       } catch (e) {

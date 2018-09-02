@@ -1,136 +1,105 @@
+import "@babel/polyfill"
 import React from "react"
-import ReactDOM from "react-dom"
-import { MemoryRouter } from "react-router-dom"
+import { render, cleanup } from "react-testing-library"
+import {
+  createMemorySource,
+  createHistory,
+  LocationProvider,
+} from "@reach/router"
+import Link, { push, replace, withPrefix } from "../"
+
+afterEach(cleanup)
 
 const getInstance = (props, pathPrefix = ``) => {
-  Object.assign(global.window, {
-    __PATH_PREFIX__: pathPrefix,
-  })
-
-  const context = { router: { history: {} } }
-
-  const Link = require(`../`).default
-  return new Link(props, context)
+  getWithPrefix()(pathPrefix)
+  return Link(props)
 }
 
 const getPush = () => {
-  Object.assign(global.window, {
-    ___push: jest.fn(),
-  })
-
-  return require(`../`).push
+  global.___push = jest.fn()
+  return push
 }
 
 const getReplace = () => {
-  Object.assign(global.window, {
-    ___replace: jest.fn(),
-  })
-
-  return require(`../`).replace
+  global.___replace = jest.fn()
+  return replace
 }
 
 const getWithPrefix = (pathPrefix = ``) => {
-  Object.assign(global.window, {
-    __PATH_PREFIX__: pathPrefix,
+  global.__PATH_PREFIX__ = pathPrefix
+  return withPrefix
+}
+
+const setup = ({ sourcePath = `/active`, linkProps, pathPrefix = `` } = {}) => {
+  global.__PATH_PREFIX__ = pathPrefix
+  const source = createMemorySource(sourcePath)
+  const history = createHistory(source)
+
+  const utils = render(
+    <LocationProvider history={history}>
+      <Link
+        to="/"
+        className="link"
+        style={{ color: `black` }}
+        activeClassName="is-active"
+        activeStyle={{ textDecoration: `underline` }}
+        {...linkProps}
+      >
+        link
+      </Link>
+    </LocationProvider>
+  )
+
+  return Object.assign({}, utils, {
+    link: utils.getByText(`link`),
   })
-  return require(`../`).withPrefix
 }
 
 describe(`<Link />`, () => {
+  it(`matches basic snapshot`, () => {
+    const { container } = setup()
+    expect(container).toMatchSnapshot()
+  })
+
+  it(`matches active snapshot`, () => {
+    const { container } = setup({ linkProps: { to: `/active` } })
+    expect(container).toMatchSnapshot()
+  })
+
   it(`does not fail to initialize without --prefix-paths`, () => {
     expect(() => {
       getInstance({})
     }).not.toThrow()
   })
 
-  describe(`path prefixing`, () => {
-    it(`does not include path prefix`, () => {
-      const to = `/path`
-      const pathPrefix = `/blog`
-      const instance = getInstance({ to }, pathPrefix)
-
-      expect(instance.state.to.pathname).toEqual(to)
-    })
-  })
-
   describe(`the location to link to`, () => {
-    global.window.___loader = {
+    global.___loader = {
       enqueue: jest.fn(),
     }
 
     it(`accepts to as a string`, () => {
       const location = `/courses?sort=name`
+      const { link } = setup({ linkProps: { to: location } })
 
-      const node = document.createElement(`div`)
-      const Link = require(`../`).default
-
-      ReactDOM.render(
-        <MemoryRouter>
-          <Link to={location}>link</Link>
-        </MemoryRouter>,
-        node
-      )
-
-      const href = node.querySelector(`a`).getAttribute(`href`)
-
-      expect(href).toEqual(location)
+      expect(link.getAttribute(`href`)).toEqual(location)
     })
 
-    it(`accepts a location "to" prop`, () => {
-      const location = {
-        pathname: `/courses`,
-        search: `?sort=name`,
-        hash: `#the-hash`,
-        state: { fromDashboard: true },
-      }
-
-      const node = document.createElement(`div`)
-      const Link = require(`../`).default
-
-      ReactDOM.render(
-        <MemoryRouter>
-          <Link to={location}>link</Link>
-        </MemoryRouter>,
-        node
-      )
-
-      const href = node.querySelector(`a`).getAttribute(`href`)
-
-      expect(href).toEqual(`/courses?sort=name#the-hash`)
-    })
-
-    it(`resolves to with no pathname using current location`, () => {
-      const location = {
-        search: `?sort=name`,
-        hash: `#the-hash`,
-      }
-
-      const node = document.createElement(`div`)
-      const Link = require(`../`).default
-
-      ReactDOM.render(
-        <MemoryRouter initialEntries={[`/somewhere`]}>
-          <Link to={location}>link</Link>
-        </MemoryRouter>,
-        node
-      )
-
-      const href = node.querySelector(`a`).getAttribute(`href`)
-
-      expect(href).toEqual(`/somewhere?sort=name#the-hash`)
+    it(`includes the pathPrefix`, () => {
+      const pathPrefix = `/prefixed`
+      const location = `/courses?sort=name`
+      const { link } = setup({ linkProps: { to: location }, pathPrefix })
+      expect(link.getAttribute(`href`)).toEqual(`${pathPrefix}${location}`)
     })
   })
 
   it(`push is called with correct args`, () => {
     getPush()(`/some-path`)
-
-    expect(global.window.___push).toHaveBeenCalledWith(`/some-path`)
+    expect(global.___push).toHaveBeenCalledWith(`/some-path`)
   })
 
   it(`replace is called with correct args`, () => {
     getReplace()(`/some-path`)
-
-    expect(global.window.___replace).toHaveBeenCalledWith(`/some-path`)
+    expect(global.___replace).toHaveBeenCalledWith(`/some-path`)
   })
 })
 

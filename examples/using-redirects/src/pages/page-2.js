@@ -13,16 +13,19 @@ const SecondPage = () => (
             createRedirect
           </a>
         </code>
-        &nbsp;<a href="https://www.gatsbyjs.org/docs/bound-action-creators/">
+        &nbsp;
+        <a href="https://www.gatsbyjs.org/docs/bound-action-creators/">
           bound action creator
         </a>
         &nbsp;example.
       </p>
       <p>
-        These paths redirect{` `}
+        These paths redirect
+        {` `}
         <Link activeClassName="selected" to="/page2/">
           here
-        </Link>:
+        </Link>
+        :
       </p>
       <ul>
         <li>
@@ -40,18 +43,23 @@ const SecondPage = () => (
         Note how the trailing slash changes disappears and reappears in the
         address bar path when following the last two <code>/page2</code>
         &nbsp;links&nbsp;above. This demonstrates the need to handle
-        trailing-slashed and non-trailing-slashed versions of{` `}
+        trailing-slashed and non-trailing-slashed versions of
+        {` `}
         <code>fromPath</code>
-        &nbsp;separately when using <code>createRedirect</code> &nbsp;in{` `}
-        <code>/gatsby-node.js</code>. Gatsby serves{` `}
+        &nbsp;separately when using <code>createRedirect</code> &nbsp;in
+        {` `}
+        <code>/gatsby-node.js</code>. Gatsby serves
+        {` `}
         <a href="https://www.gatsbyjs.org/docs/building-with-components/">
           page components
         </a>
         &nbsp;at either version by default, but we need to explicitly redirect
-        both versions independently (More on{` `}
+        both versions independently (More on
+        {` `}
         <a href="https://www.gatsbyjs.org/docs/creating-and-modifying-pages/#removing-trailing-slashes">
           handling trailing&nbsp;slashes
-        </a>).
+        </a>
+        ).
       </p>
       <p>These paths redirect to the homepage:</p>
       <ul>

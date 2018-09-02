@@ -7,8 +7,7 @@ import Functions from "../../components/function-list"
 import { rhythm, scale } from "../../utils/typography"
 import Layout from "../../components/layout"
 import Container from "../../components/container"
-import { sectionListDocs } from "../../utils/sidebar/section-list"
-import { createLinkDocs } from "../../utils/sidebar/create-link"
+import { itemListDocs } from "../../utils/sidebar/item-list"
 
 class NodeAPIDocs extends React.Component {
   render() {
@@ -17,11 +16,7 @@ class NodeAPIDocs extends React.Component {
       func => func.name
     )
     return (
-      <Layout
-        location={this.props.location}
-        createLink={createLinkDocs}
-        sectionList={sectionListDocs}
-      >
+      <Layout location={this.props.location} itemList={itemListDocs}>
         <Container>
           <Helmet>
             <title>Node APIs</title>
@@ -66,7 +61,8 @@ class NodeAPIDocs extends React.Component {
           <hr />
           <h2 css={{ marginBottom: rhythm(1 / 2) }}>Usage</h2>
           <p css={{ marginBottom: rhythm(1) }}>
-            Implement any of these APIs by exporting them from a file named{` `}
+            Implement any of these APIs by exporting them from a file named
+            {` `}
             <code>gatsby-node.js</code> in the root of your project.
           </p>
           <hr />
@@ -91,7 +87,7 @@ class NodeAPIDocs extends React.Component {
 export default NodeAPIDocs
 
 export const pageQuery = graphql`
-  query APINodeDocsQuery {
+  query {
     file(relativePath: { regex: "/src.*api-node-docs.js/" }) {
       childrenDocumentationJs {
         name

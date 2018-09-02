@@ -52,7 +52,7 @@ const BlurUp = ({ data, location }) => (
 export default BlurUp
 
 export const query = graphql`
-  query BackgroundColorQuery {
+  query {
     reddImageMobile: file(relativePath: { regex: "/redd/" }) {
       childImageSharp {
         fixed(width: 126) {

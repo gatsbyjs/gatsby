@@ -2,7 +2,7 @@ module.exports = {
   siteMetadata: {
     title: `Gatsby`,
     siteUrl: `https://www.gatsbyjs.org`,
-    description: `Blazing-fast static site generator for React`,
+    description: `Blazing fast modern site generator for React`,
   },
   mapping: {
     "MarkdownRemark.frontmatter.author": `AuthorYaml`,
@@ -29,12 +29,26 @@ module.exports = {
       },
     },
     {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `StarterShowcaseImages`,
+        path: `${__dirname}/src/data/StarterShowcase/generatedScreenshots`,
+      },
+    },
+    //   need to have the img processing first? https://github.com/gatsbyjs/gatsby/issues/5196
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `StarterShowcaseData`,
+        path: `${__dirname}/src/data/StarterShowcase/startersData`,
+      },
+    },
+    {
       resolve: `gatsby-plugin-typography`,
       options: {
         pathToConfigModule: `src/utils/typography`,
       },
     },
-    `gatsby-transformer-sharp`,
     `gatsby-transformer-documentationjs`,
     `gatsby-transformer-yaml`,
     {
@@ -54,9 +68,9 @@ module.exports = {
               wrapperStyle: `margin-bottom: 1.05rem`,
             },
           },
+          `gatsby-remark-autolink-headers`,
           `gatsby-remark-prismjs`,
           `gatsby-remark-copy-linked-files`,
-          `gatsby-remark-autolink-headers`,
           `gatsby-remark-smartypants`,
         ],
       },
@@ -69,6 +83,7 @@ module.exports = {
       },
     },
     `gatsby-plugin-glamor`,
+    `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     `gatsby-plugin-catch-links`,
     `gatsby-plugin-lodash`,
@@ -84,13 +99,7 @@ module.exports = {
         icon: `src/assets/gatsby-icon.png`,
       },
     },
-    {
-      resolve: `gatsby-plugin-offline`,
-      options: {
-        navigateFallback: null,
-        navigateFallbackWhitelist: [],
-      },
-    },
+    `gatsby-plugin-offline`,
     `gatsby-transformer-csv`,
     `gatsby-plugin-twitter`,
     `gatsby-plugin-react-helmet`,

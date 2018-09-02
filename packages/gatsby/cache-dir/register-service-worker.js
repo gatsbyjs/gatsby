@@ -1,10 +1,11 @@
-import emitter from "./emitter"
+import { apiRunner } from "./api-runner-browser"
 
 if (`serviceWorker` in navigator) {
   navigator.serviceWorker
     .register(`${__PATH_PREFIX__}/sw.js`)
     .then(function(reg) {
       reg.addEventListener(`updatefound`, () => {
+        apiRunner(`onServiceWorkerUpdateFound`, { serviceWorker: reg })
         // The updatefound event implies that reg.installing is set; see
         // https://w3c.github.io/ServiceWorker/#service-worker-registration-updatefound-event
         const installingWorker = reg.installing
@@ -21,12 +22,25 @@ if (`serviceWorker` in navigator) {
                 // At this point, everything has been precached.
                 // It's the perfect time to display a "Content is cached for offline use." message.
                 console.log(`Content is now available offline!`)
-                emitter.emit(`sw:installed`)
+
+                // Post to service worker that install is complete.
+                // Delay to allow time for the event listener to be added --
+                // otherwise fetch is called too soon and resources aren't cached.
+                window.setTimeout(() => {
+                  apiRunner(`onServiceWorkerInstalled`, {
+                    serviceWorker: reg,
+                  })
+                }, 100)
               }
               break
 
             case `redundant`:
               console.error(`The installing service worker became redundant.`)
+              apiRunner(`onServiceWorkerRedundant`, { serviceWorker: reg })
+              break
+
+            case `active`:
+              apiRunner(`onServiceWorkerActive`, { serviceWorker: reg })
               break
           }
         })

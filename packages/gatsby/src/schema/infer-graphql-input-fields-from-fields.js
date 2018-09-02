@@ -148,12 +148,21 @@ function convertToInputFilter(
     const innerFilter = convertToInputFilter(`${prefix}ListElem`, innerType)
     const innerFields = innerFilter ? innerFilter.getFields() : {}
 
-    return new GraphQLInputObjectType({
-      name: createTypeName(`${prefix}QueryList`),
-      fields: {
+    let fields
+    if (innerType instanceof GraphQLInputObjectType) {
+      fields = {
+        elemMatch: { type: innerFilter },
+      }
+    } else {
+      fields = {
         ...innerFields,
         in: { type: new GraphQLList(innerType) },
-      },
+      }
+    }
+
+    return new GraphQLInputObjectType({
+      name: createTypeName(`${prefix}QueryList`),
+      fields,
     })
   } else if (type instanceof GraphQLNonNull) {
     return convertToInputFilter(prefix, type.ofType)

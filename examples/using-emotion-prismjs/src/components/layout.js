@@ -1,5 +1,5 @@
 import React, { Fragment } from "react"
-import { Link, StaticQuery } from "gatsby"
+import { Link, StaticQuery, graphql } from "gatsby"
 import PropTypes from "prop-types"
 import { css } from "react-emotion"
 import Helmet from "react-helmet"
@@ -34,7 +34,9 @@ class Layout extends React.Component {
             content="Gatsby example site using Emotion and PrismJS"
           />
           <meta name="referrer" content="origin" />
-        </Helmet>` `<div className={indexContainer}>
+        </Helmet>
+        ` `
+        <div className={indexContainer}>
           <HeadingTag>
             <Link className={link} to={`/`}>
               Using Gatsby with Emotion and PrismJS
@@ -57,7 +59,7 @@ Layout.propTypes = {
 export default props => (
   <StaticQuery
     query={graphql`
-      query LayoutQuery {
+      query {
         site {
           siteMetadata {
             title

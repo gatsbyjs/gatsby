@@ -1,10 +1,9 @@
 const babel = require(`babel-core`)
-const reactPreset = require(`@babel/preset-react`)
 const plugin = require(`../`)
 
 function matchesSnapshot(query) {
   const { code } = babel.transform(query, {
-    presets: [reactPreset],
+    presets: [`@babel/preset-react`],
     plugins: [plugin],
   })
   expect(code).toMatchSnapshot()
@@ -158,4 +157,77 @@ it(`Leaves other graphql tags alone`, () => {
   \`
   `
   )
+})
+
+it(`Removes all gatsby queries`, () => {
+  matchesSnapshot(
+    `
+  import { graphql } from 'gatsby'
+
+  export default () => (
+    <div>{data.site.siteMetadata.title}</div>
+  )
+
+  export const siteMetaQuery = graphql\`
+    fragment siteMetaQuery on RootQueryType {
+      site {
+        siteMetadata {
+          title
+        }
+      }
+    }
+  \`
+
+  export const query = graphql\`
+     {
+       ...siteMetaQuery
+     }
+  \`
+  `
+  )
+})
+
+it(`Handles closing StaticQuery tag`, () => {
+  matchesSnapshot(`
+  import React from 'react'
+  import { graphql, StaticQuery } from 'gatsby'
+
+  export default () => (
+    <StaticQuery
+      query={graphql\`{site { siteMetadata { title }}}\`}
+    >
+      {data => <div>{data.site.siteMetadata.title}</div>}
+    </StaticQuery>
+  )
+  `)
+})
+
+it(`Doesn't add data import for non static queries`, () => {
+  matchesSnapshot(`
+  import React from 'react'
+  import { StaticQuery, graphql } from "gatsby"
+
+  const Test = () => (
+    <StaticQuery
+      query={graphql\`
+      {
+        site {
+          siteMetadata {
+            title
+          }
+        }
+      }
+      \`}
+      render={data => <div>{data.site.siteMetadata.title}</div>}
+    />
+  )
+
+  export default Test
+
+  export const fragment = graphql\`
+    fragment MarkdownNodeFragment on MarkdownRemark {
+      html
+    }
+  \`
+  `)
 })

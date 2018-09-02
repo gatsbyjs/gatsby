@@ -1,4 +1,5 @@
 import React from "react"
+import { graphql } from "gatsby"
 import InsetPageLayout from "../components/Layouts/insetPage"
 
 class mdInsetPage extends React.Component {
@@ -18,7 +19,7 @@ class mdInsetPage extends React.Component {
 export default mdInsetPage
 
 export const pageQuery = graphql`
-  query markdownTemplateBySlug($slug: String!) {
+  query($slug: String!) {
     markdownRemark(fields: { slug: { eq: $slug } }) {
       html
     }

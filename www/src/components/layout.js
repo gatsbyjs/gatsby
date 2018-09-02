@@ -2,10 +2,10 @@ import React from "react"
 import Modal from "react-modal"
 import Helmet from "react-helmet"
 import { OutboundLink } from "gatsby-plugin-google-analytics"
-import { rhythm, options, scale } from "../utils/typography"
 import MdClose from "react-icons/lib/md/close"
-import { push, PageRenderer } from "gatsby"
+import { navigate, PageRenderer } from "gatsby"
 import presets, { colors } from "../utils/presets"
+import Banner from "../components/banner"
 import Navigation from "../components/navigation"
 import MobileNavigation from "../components/navigation-mobile"
 import PageWithSidebar from "../components/page-with-sidebar"
@@ -32,7 +32,7 @@ class DefaultLayout extends React.Component {
   }
 
   handleCloseModal() {
-    push(this.props.modalBackgroundPath)
+    navigate(this.props.modalBackgroundPath)
   }
 
   componentDidMount() {
@@ -58,11 +58,16 @@ class DefaultLayout extends React.Component {
   }
 
   render() {
-    const isHomepage = this.props.location.pathname === `/`
+    const {
+      location = {
+        pathname: `/starter-showcase`,
+      },
+    } = this.props // location will be undefined if on 'starter-showcase'
+    const isHomepage = location.pathname === `/`
 
     // SEE: template-docs-markdown for why this.props.isSidebarDisabled is here
     const isSidebarDisabled =
-      this.props.isSidebarDisabled || !this.props.sectionList
+      this.props.isSidebarDisabled || !this.props.itemList
     let isModal = false
     if (!windowWidth && typeof window !== `undefined`) {
       windowWidth = window.innerWidth
@@ -105,7 +110,7 @@ class DefaultLayout extends React.Component {
                 backgroundColor: `rgba(255, 255, 255, 0.95)`,
               },
             }}
-            onRequestClose={() => push(this.props.modalBackgroundPath)}
+            onRequestClose={() => navigate(this.props.modalBackgroundPath)}
             contentLabel="Site Details Modal"
           >
             <div
@@ -159,21 +164,9 @@ class DefaultLayout extends React.Component {
           />
           <html lang="en" />
         </Helmet>
-        <div
-          className="banner"
-          css={{
-            width: `100%`,
-            padding: rhythm(1 / 2),
-            background: isHomepage ? `#402060` : colors.gatsby,
-            color: colors.ui.bright,
-            fontFamily: options.headerFontFamily.join(`,`),
-            fontSize: scale(-1 / 5).fontSize,
-            zIndex: `3`,
-            position: `fixed`,
-            WebkitFontSmoothing: `antialiased`,
-          }}
-        >
-          These are the docs for v2 beta.{` `}
+        <Banner background={isHomepage ? `#402060` : false}>
+          These are the docs for v2 beta.
+          {` `}
           <OutboundLink
             href="https://gatsbyjs.org/"
             css={{
@@ -192,8 +185,9 @@ class DefaultLayout extends React.Component {
               {` `}
               instead
             </span>
-          </OutboundLink>.
-        </div>
+          </OutboundLink>
+          .
+        </Banner>
         <Navigation pathname={this.props.location.pathname} />
         <div
           className={`main-body`}
@@ -209,8 +203,7 @@ class DefaultLayout extends React.Component {
         >
           <PageWithSidebar
             disable={isSidebarDisabled}
-            createLink={this.props.createLink}
-            sectionList={this.props.sectionList}
+            itemList={this.props.itemList}
             location={this.props.location}
             enableScrollSync={this.props.enableScrollSync}
             renderContent={() => this.props.children}

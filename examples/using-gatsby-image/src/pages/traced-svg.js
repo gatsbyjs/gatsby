@@ -91,8 +91,7 @@ const UnsplashMasonry = edges => (
                 `utf8`
               )
             ).format()}
-            {` `}
-            B
+            {` `}B
           </span>
         </div>
       ))}
@@ -154,7 +153,7 @@ class TracedSVG extends React.Component {
 export default TracedSVG
 
 export const query = graphql`
-  query TracedSVGQuery {
+  query {
     reddImageMobile: file(relativePath: { regex: "/redd/" }) {
       childImageSharp {
         fixed(width: 125) {

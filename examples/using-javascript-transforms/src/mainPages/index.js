@@ -1,5 +1,5 @@
 import React from "react"
-import { Link } from "gatsby"
+import { Link, graphql } from "gatsby"
 import sortBy from "lodash/sortBy"
 import moment from "moment"
 import InsetPageLayout from "../components/Layouts/insetPage"
@@ -87,7 +87,7 @@ class SiteIndex extends React.Component {
 export default SiteIndex
 
 export const pageQuery = graphql`
-  query allPosts {
+  query {
     allJavascriptFrontmatter {
       edges {
         node {

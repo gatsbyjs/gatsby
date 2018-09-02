@@ -7,39 +7,7 @@ Welcome to part two of the Gatsby tutorial!
 
 ## What's in this tutorial?
 
-In this part you're going to explore options for styling Gatsby websites and dive
-deeper into using React components for building sites.
-
-## Building with components
-
-One of the big mental shifts you make when starting to build with components (if you are already a developer) is
-that now your CSS, HTML, and JavaScript are tightly coupled, and often living even
-within the same file.
-
-While a seemingly simple change, this has profound implications for how you think
-about building websites.
-
-Take the example of creating a custom button. In the past you would
-create a CSS class (perhaps `.primary-button`) with your custom styles and then
-whenever you want to apply those styles e.g.
-
-```html
-<button class="primary-button">
-  Click me
-</button>
-```
-
-In the world of components, you instead create a `PrimaryButton` component with
-your button styles and use it throughout your site like:
-
-<!-- prettier-ignore -->
-```jsx
-<PrimaryButton>Click me</PrimaryButton>
-```
-
-Components become the base building blocks of your site. Instead of being
-limited to the building blocks the browser provides e.g. `<button />`, you can easily create new
-building blocks that elegantly meet the needs of your projects.
+In this part you're going to explore options for styling Gatsby websites and dive deeper into using React components for building sites.
 
 ## Creating global styles
 
@@ -171,9 +139,11 @@ export default () => (
     <h1>Richard Hamming on Luck</h1>
     <div>
       <p>
-        From Richard Hamming’s classic and must-read talk, “<a href="http://www.cs.virginia.edu/~robins/YouAndYourResearch.html">
+        From Richard Hamming’s classic and must-read talk, “
+        <a href="http://www.cs.virginia.edu/~robins/YouAndYourResearch.html">
           You and Your Research
-        </a>”.
+        </a>
+        ”.
       </p>
       <blockquote>
         <p>
@@ -208,9 +178,11 @@ export default () => (
     <h1>Richard Hamming on Luck</h1>
     <div>
       <p>
-        From Richard Hamming’s classic and must-read talk, “<a href="http://www.cs.virginia.edu/~robins/YouAndYourResearch.html">
+        From Richard Hamming’s classic and must-read talk, “
+        <a href="http://www.cs.virginia.edu/~robins/YouAndYourResearch.html">
           You and Your Research
-        </a>”.
+        </a>
+        ”.
       </p>
       <blockquote>
         <p>
@@ -269,7 +241,7 @@ Now, all the text font sizes should be slightly bigger. Try changing the
 `baseFontSize` to `24px` then `12px`. All elements get resized as their
 `font-size` is based on the `baseFontSize`.
 
-_Note that if you use `gatsby-plugin-typography` with the default starter, you'll need to delete the default index.css used by that starter as it overrides the Typography.js CSS_
+_Note that if you use `gatsby-plugin-typography` with the default starter, you'll need to delete the default layout.css used by that starter as it overrides the Typography.js CSS_
 
 There are
 [many themes available](https://github.com/KyleAMathews/typography.js#published-typographyjs-themes)
@@ -387,7 +359,7 @@ export default () => (
 )
 ```
 
-If you visit `http://localhost:8001/about-css-modules/`, your page should now look like:
+If you visit `http://localhost:8000/about-css-modules/`, your page should now look like:
 
 ![css-modules-1](css-modules-1.png)
 
@@ -464,22 +436,18 @@ directory. But, if it's used only in one file, create it inline.
 Modify `about-css-modules.js` so it looks like the following:
 
 ```jsx{7-19,25-34}
-import React from "react";
-import styles from "./about-css-modules.module.css";
-console.log(styles);
+import React from "react"
+import styles from "./about-css-modules.module.css"
+import Container from "../components/container"
 
-import Container from "../components/container";
+console.log(styles)
 
 const User = props => (
   <div className={styles.user}>
     <img src={props.avatar} className={styles.avatar} alt="" />
     <div className={styles.description}>
-      <h2 className={styles.username}>
-        {props.username}
-      </h2>
-      <p className={styles.excerpt}>
-        {props.excerpt}
-      </p>
+      <h2 className={styles.username}>{props.username}</h2>
+      <p className={styles.excerpt}>{props.excerpt}</p>
     </div>
   </div>
 )

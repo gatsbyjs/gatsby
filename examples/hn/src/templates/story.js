@@ -51,9 +51,7 @@ class Story extends React.Component {
                   {story.title}
                 </a>
                 <span className="sitebit comhead">
-                  {` `}(
-                  <span className="sitestr">{story.domain}</span>
-                  )
+                  {` `}(<span className="sitestr">{story.domain}</span>)
                 </span>
               </td>
             </tr>
@@ -70,9 +68,7 @@ class Story extends React.Component {
                 <span className="age">
                   <Link to={`/item/${story.id}/`}>{story.timeISO}</Link>
                 </span>
-                {` `}
-                |
-                {` `}
+                {` `}|{` `}
                 <Link to={`/item/${story.id}/`}>
                   {story.descendants ? story.descendants : 0} comments
                 </Link>
@@ -103,7 +99,7 @@ class Story extends React.Component {
 export default Story
 
 export const pageQuery = graphql`
-  query StoryQuery($id: String!) {
+  query($id: String!) {
     hnStory(id: { eq: $id }) {
       id
       title

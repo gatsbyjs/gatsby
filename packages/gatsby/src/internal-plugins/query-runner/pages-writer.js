@@ -12,30 +12,31 @@ let lastHash = null
 const writePages = async () => {
   bootstrapFinished = true
   let { program, jsonDataPaths, pages } = store.getState()
+  pages = [...pages.values()]
 
   const pagesComponentDependencies = {}
 
   // Write out pages.json
-  const pagesData = _.sortBy(
-    pages.reduce((mem, { path, matchPath, componentChunkName, jsonName }) => {
-      const pageComponentsChunkNames = {
-        componentChunkName,
-      }
+  let pagesData = []
+  pages.forEach(({ path, matchPath, componentChunkName, jsonName }) => {
+    const pageComponentsChunkNames = {
+      componentChunkName,
+    }
 
-      if (program._[0] === `develop`) {
-        pagesComponentDependencies[path] = pageComponentsChunkNames
-      }
+    if (program._[0] === `develop`) {
+      pagesComponentDependencies[path] = pageComponentsChunkNames
+    }
 
-      return [
-        ...mem,
-        {
-          ...pageComponentsChunkNames,
-          jsonName,
-          path,
-          matchPath,
-        },
-      ]
-    }, []),
+    pagesData.push({
+      ...pageComponentsChunkNames,
+      jsonName,
+      path,
+      matchPath,
+    })
+  })
+
+  pagesData = _.sortBy(
+    pagesData,
     // Sort pages with matchPath to end so explicit routes
     // will match before general.
     p => (p.matchPath ? 1 : 0)
@@ -112,7 +113,7 @@ const preferDefault = m => m && m.default || m
       .then(() => fs.move(tmp, destination, { overwrite: true }))
   }
 
-  return await Promise.all([
+  const result = await Promise.all([
     writeAndMove(`pages.json`, JSON.stringify(pagesData, null, 4)),
     writeAndMove(`sync-requires.js`, syncRequires),
     writeAndMove(`async-requires.js`, asyncRequires),
@@ -124,6 +125,8 @@ const preferDefault = m => m && m.default || m
       })
     ),
   ])
+
+  return result
 }
 
 exports.writePages = writePages

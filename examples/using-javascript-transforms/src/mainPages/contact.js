@@ -1,3 +1,4 @@
+import { graphql } from "gatsby"
 import React from "react"
 import InsetPageLayout from "../components/Layouts/insetPage"
 
@@ -21,7 +22,7 @@ class ContactMe extends React.Component {
 export default ContactMe
 
 export const pageQuery = graphql`
-  query contactUs {
+  query {
     site {
       ...site_sitemetadata
     }

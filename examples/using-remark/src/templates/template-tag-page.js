@@ -15,7 +15,8 @@ class TagRoute extends React.Component {
       <Layout location={this.props.location}>
         <h1>
           {this.props.data.allMarkdownRemark.totalCount}
-          {` `}posts tagged with “{this.props.pageContext.tag}”
+          {` `}
+          posts tagged with “{this.props.pageContext.tag}”
         </h1>
         <ul>{postLinks}</ul>
         <p>
@@ -29,7 +30,7 @@ class TagRoute extends React.Component {
 export default TagRoute
 
 export const pageQuery = graphql`
-  query TagPage($tag: String) {
+  query($tag: String) {
     allMarkdownRemark(
       limit: 1000
       sort: { fields: [frontmatter___date], order: DESC }

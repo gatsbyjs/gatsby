@@ -16,6 +16,7 @@ const { store, emitter } = require(`../../redux`)
 
 let queuedDirtyActions = []
 let active = false
+let running = false
 
 const runQueriesForPathnamesQueue = new Set()
 exports.queueQueryForPathname = pathname => {
@@ -65,8 +66,16 @@ emitter.on(`DELETE_NODE`, action => {
 })
 
 const runQueuedActions = async () => {
-  if (active) {
-    runQueries()
+  if (active && !running) {
+    try {
+      running = true
+      await runQueries()
+    } finally {
+      running = false
+      if (queuedDirtyActions.length > 0) {
+        runQueuedActions()
+      }
+    }
   }
 }
 exports.runQueuedActions = runQueuedActions
@@ -92,7 +101,7 @@ const findIdsWithoutDataDependencies = () => {
   // paths.
   const notTrackedIds = _.difference(
     [
-      ...state.pages.map(p => p.path),
+      ...Array.from(state.pages.values(), p => p.path),
       ...[...state.staticQueryComponents.values()].map(c => c.jsonName),
     ],
     [...allTrackedIds, ...seenIdsWithoutDataDependencies]
@@ -126,10 +135,10 @@ const runQueriesForPathnames = pathnames => {
     queue.push(queryJob)
   })
 
-  const pages = [...state.pages]
+  const pages = state.pages
   let didNotQueueItems = true
   pageQueries.forEach(id => {
-    const page = pages.find(pl => pl.path === id)
+    const page = pages.get(id)
     if (page) {
       didNotQueueItems = false
       queue.push(
