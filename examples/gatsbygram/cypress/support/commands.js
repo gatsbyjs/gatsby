@@ -38,8 +38,16 @@ Cypress.Commands.add(
     cy.window({ log: false }).then({ timeout: 9999 }, win =>
       win.___waitForRouteChange().then(location => {
         Cypress.log({
-          name: `dom update`,
+          name: `wait for route change`,
           message: location.pathname,
+          type: `parent`,
+          consoleProps: () => {
+            return {
+              pathname: location.pathname,
+              search: location.search,
+              hash: location.hash,
+            }
+          },
         })
         return subject
       })
