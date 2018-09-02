@@ -39,6 +39,7 @@ const onPreRouteUpdate = location => {
     apiRunner(`onPreRouteUpdate`, { location })
   }
 }
+
 const onRouteUpdate = location => {
   if (!maybeRedirect(location.pathname)) {
     apiRunner(`onRouteUpdate`, { location })

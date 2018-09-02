@@ -92,7 +92,12 @@ apiRunnerAsync(`onClientEntry`).then(() => {
 
   // Load resources when navigating back/forward
   window.addEventListener(`popstate`, () => {
-    if (!loader.getPage(window.location.pathname)) getInitialResources()
+    if (!loader.getPage(window.location.pathname)) {
+      // apiRunner(`onPreRouteUpdate`, { location: window.location })
+      getInitialResources() // .then(() =>
+      // apiRunner(`onRouteUpdate`, { location: window.location })
+      // )
+    }
   })
 
   getInitialResources().then(() => {
