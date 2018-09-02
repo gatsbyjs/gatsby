@@ -1,8 +1,8 @@
 ---
-title: "Setting up VSCode for Gatsby development"
+title: "Setting up Visual Studio Code for Gatsby development"
 ---
 
-VSCode is a wonderful tool that can require some initial setup to get everything working. Here's some reccomendations to get code flowing smoothly.
+VS Code is a wonderful tool that can require some initial setup to get everything working. Here's some recommendations to get code flowing smoothly.
 
 ## Initial Setup
 
@@ -12,7 +12,7 @@ You should add the `.vscode` folder to your `.gitignore`, as your workspace sett
 
 ### Correcting Intellisense
 
-You should add the `typescript` package as a global or dev dependancy for your project so that you can benefit from the typescript driven refactoring and other development goodies.
+You should add the `typescript` package as a global or dev dependency for your project so that you can benefit from the TypeScript-driven refactoring and other development goodies.
 
 `yarn global add typescript` will add it globally.
 
