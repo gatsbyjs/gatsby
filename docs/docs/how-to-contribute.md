@@ -51,7 +51,7 @@ You can install the latest version of Gatsby by following these steps:
   https://yarnpkg.com/en/docs/install
 - Install dependencies using `yarn run bootstrap` in the root of the repo.
 
-The usual contributing steps are:
+There are two ways to contribute. This is the most usual way:
 
 - Fork the [official repository](https://github.com/gatsbyjs/gatsby).
 - Clone your fork: `git clone --depth=1 https://github.com/<your-username>/gatsby.git`
