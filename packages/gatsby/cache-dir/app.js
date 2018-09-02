@@ -49,8 +49,18 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   loader.addPagesArray(pages)
   loader.addDevRequires(syncRequires)
 
+  const Root = hot(module)(preferDefault(require(`./root`)))
+
+  // Load resources when navigating back/forward
+  window.addEventListener(`popstate`, () => {
+    if (!loader.getResourcesForPathnameSync(window.location.pathname)) {
+      loader
+        .getResourcesForPathname(window.location.pathname)
+        .then(() => renderer(<Root />, rootElement))
+    }
+  })
+
   loader.getResourcesForPathname(window.location.pathname).then(() => {
-    let Root = hot(module)(preferDefault(require(`./root`)))
     domReady(() => {
       renderer(<Root />, rootElement, () => {
         apiRunner(`onInitialClientRender`)

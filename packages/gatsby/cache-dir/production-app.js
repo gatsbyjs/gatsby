@@ -90,60 +90,68 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     })
   }
 
-  loader
-    .getResourcesForPathname(window.location.pathname)
-    .then(() => {
-      if (!loader.getPage(window.location.pathname)) {
-        return loader
-          .getResourcesForPathname(`/404.html`)
-          .then(resources =>
-            loadDirectlyOr404(
-              resources,
-              window.location.pathname +
-                window.location.search +
-                window.location.hash,
-              true
-            )
-          )
+  // Load resources when navigating back/forward
+  window.addEventListener(`popstate`, () => {
+    if (!loader.getPage(window.location.pathname)) getInitialResources()
+  })
+
+  getInitialResources().then(() => {
+    const Root = () =>
+      createElement(
+        Router,
+        {
+          basepath: __PATH_PREFIX__,
+        },
+        createElement(RouteHandler, { path: `/*` })
+      )
+
+    const WrappedRoot = apiRunner(
+      `wrapRootElement`,
+      { element: <Root /> },
+      <Root />,
+      ({ result }) => {
+        return { element: result }
       }
-    })
-    .then(() => {
-      const Root = () =>
-        createElement(
-          Router,
-          {
-            basepath: __PATH_PREFIX__,
-          },
-          createElement(RouteHandler, { path: `/*` })
-        )
+    ).pop()
 
-      const WrappedRoot = apiRunner(
-        `wrapRootElement`,
-        { element: <Root /> },
-        <Root />,
-        ({ result }) => {
-          return { element: result }
+    let NewRoot = () => WrappedRoot
+
+    const renderer = apiRunner(
+      `replaceHydrateFunction`,
+      undefined,
+      ReactDOM.hydrate
+    )[0]
+
+    domReady(() => {
+      renderer(
+        <NewRoot />,
+        typeof window !== `undefined`
+          ? document.getElementById(`___gatsby`)
+          : void 0,
+        () => {
+          apiRunner(`onInitialClientRender`)
         }
-      ).pop()
-
-      let NewRoot = () => WrappedRoot
-
-      const renderer = apiRunner(
-        `replaceHydrateFunction`,
-        undefined,
-        ReactDOM.hydrate
-      )[0]
-
-      domReady(() => {
-        renderer(
-          <NewRoot />,
-          typeof window !== `undefined`
-            ? document.getElementById(`___gatsby`)
-            : void 0,
-          () => {
-            apiRunner(`onInitialClientRender`)
-          }
-        )
-      })
+      )
     })
+  })
 })
+
+function getInitialResources() {
+  return loader.getResourcesForPathname(window.location.pathname).then(() => {
+    if (loader.getPage(window.location.pathname)) {
+      return
+    }
+
+    loader
+      .getResourcesForPathname(`/404.html`)
+      .then(resources =>
+        loadDirectlyOr404(
+          resources,
+          window.location.pathname +
+            window.location.search +
+            window.location.hash,
+          true
+        )
+      )
+  })
+}
