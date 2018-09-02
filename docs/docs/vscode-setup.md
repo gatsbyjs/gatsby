@@ -10,13 +10,13 @@ VS Code is a wonderful tool that can require some initial setup to get everythin
 
 You should add the `.vscode` folder to your `.gitignore`, as your workspace settings and perferences should not be committed to a git repository. Consider setting up an `.editorconfig` file if you need to sync different settings like linting preferences across editors.
 
-### Correcting Intellisense
+### Correcting IntelliSense
 
 You should add the `typescript` package as a global or dev dependency for your project so that you can benefit from the TypeScript-driven refactoring and other development goodies.
 
 `yarn global add typescript` will add it globally.
 
-The following `jsconfig.json` is reccomended for getting better intellisense on your `.js` files while working.
+The following `jsconfig.json` is reccomended for getting better IntelliSense on your `.js` files while working.
 
 ```json5
 {
