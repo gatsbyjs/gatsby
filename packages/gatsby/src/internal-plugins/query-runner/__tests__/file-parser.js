@@ -73,7 +73,7 @@ export const fragment3 = graphql\`
 \`
 `,
     "query-in-separate-variable.js": `import React from "react"
-import { StaticQuery } from "gatsby"
+import { StaticQuery, graphql } from "gatsby"
 
 const query = graphql\`{ allMarkdownRemark { blah { node { cheese }}}}\`
 
@@ -84,10 +84,19 @@ export default () => (
   />
 )`,
     "query-in-separate-variable-2.js": `import React from "react"
-import { StaticQuery } from "gatsby"
+import { StaticQuery, graphql } from "gatsby"
 
 const query = graphql\`{ fakeOut { blah { node { cheese }}}}\`
 const strangeQueryName = graphql\`{ allStrangeQueryName { blah { node { cheese }}}}\`
+
+export default () => (
+  <StaticQuery
+    query={strangeQueryName}
+    render={data => <div>{data.pizza}</div>}
+  />
+)`,
+    "query-not-defined.js": `import React from "react"
+import { StaticQuery, graphql } from "gatsby"
 
 export default () => (
   <StaticQuery
@@ -104,7 +113,11 @@ export default () => (
   })
 
   it(`extracts query AST correctly from files`, async () => {
+    let outputData = ""
+    let storeLog = inputs => (outputData += inputs)
+    console["log"] = jest.fn(storeLog)
     const results = await parser.parseFiles(Object.keys(MOCK_FILE_INFO))
     expect(results).toMatchSnapshot()
+    expect(outputData).toMatchSnapshot()
   })
 })
