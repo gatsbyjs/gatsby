@@ -2258,3 +2258,17 @@
     - Agency
     - Open Source
     - Featured
+- title: Peter Kroyer - Web Design / Web Development
+  main_url: https://www.peterkroyer.at/en/
+  url: https://www.peterkroyer.at/en/
+  description: >
+    Freelance web designer / web developer based in Vienna, Austria.
+  categories:
+    - Agency
+    - Web Dev
+    - Design
+    - Portfolio
+    - Creative
+  built_by: Peter Kroyer
+  built_by_url: https://www.peterkroyer.at/
+  featured: false
