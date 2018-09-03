@@ -142,7 +142,8 @@ The `PageHeader` component in the `en` folder might look like this:
 ```json
 {
   "heading": "Shwmae, bonjour, and hola!",
-  "description": "Available in English, Welsh, French, and Spanish, with more translations coming soon. doopoll is great for local, multi-lingual, and global organisations."
+  "description":
+    "Available in English, Welsh, French, and Spanish, with more translations coming soon. doopoll is great for local, multi-lingual, and global organisations."
 }
 ```
 
@@ -151,7 +152,8 @@ And the `cy` component would look like this:
 ```json
 {
   "heading": "Shwmae, bonjour, a hola!",
-  "description": "Ar gael yn Saesneg, Cymraeg, Ffrangeg a Sbaeneg, gyda rhagor o gyfieithiadau'n dod yn fuan. Mae doopoll yn wych ar gyfer sefydliadau lleol, amlieithog a byd-eang."
+  "description":
+    "Ar gael yn Saesneg, Cymraeg, Ffrangeg a Sbaeneg, gyda rhagor o gyfieithiadau'n dod yn fuan. Mae doopoll yn wych ar gyfer sefydliadau lleol, amlieithog a byd-eang."
 }
 ```
 
