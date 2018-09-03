@@ -7,7 +7,7 @@ import CommunityHeader from "./community-header"
 import Img from "gatsby-image"
 import GithubIcon from "react-icons/lib/go/mark-github"
 import { navigate } from "gatsby"
-import presets, { colors } from "../../utils/presets"
+import { colors } from "../../utils/presets"
 import qs from "qs"
 
 class CommunityView extends Component {
@@ -15,65 +15,30 @@ class CommunityView extends Component {
     creators: this.props.data.allCreatorsYaml.edges,
     for_hire: false,
     hiring: false,
-    // search: ``,
   }
 
-  // static getDerivedStateFromProps(nextProps, prevState) {
-  //   if (nextProps.location.search === ``) {
-  //     return { creators: nextProps.data.allCreatorsYaml.edges }
-  //   } else if (nextProps.location.search !== prevState.location.search) {
-  //     const query = qs.parse(this.props.location.search.slice(1))
-  //     let items = this.state.creators.filter(
-  //       item => item.node[query.filter] === true
-  //     )
-  //     this.setState({
-  //       creators: items,
-  //       [query.filter]: true,
-  //       search: this.props.location.search,
-  //     })
-  //   }
-  // }
-
-  // componentDidUpdate(prevProps, prevState) {
-  //   if (
-  //     this.props.location !== prevProps.location &&
-  //     this.props.location.search === ``
-  //   ) {
-  //     const query = qs.parse(prevProps.location.search.slice(1))
-  //     let prevQuery = prevState[query.filter]
-  //     this.setState({
-  //       creators: this.props.data.allCreatorsYaml.edges,
-  //       [prevQuery]: false,
-  //     })
-  //     navigate(`${location.pathname}`)
-  //   }
-  //   if (this.props.location !== prevProps.location) {
-  //     const query = qs.parse(this.props.location.search.slice(1))
-  //     if (query.filter) {
-  //       let items = this.state.creators.filter(
-  //         item => item.node[query.filter] === true
-  //       )
-  //       this.setState({
-  //         creators: items,
-  //         [query.filter]: true,
-  //       })
-  //     }
-  //   }
-  // }
-
-  // compare state.filter and turn it on and off
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     if (
       this.props.location.state.filter !== prevProps.location.state.filter &&
       this.props.location.state.filter === ``
     ) {
-      console.log(`filter is empty`)
+      this.setState({
+        creators: this.props.data.allCreatorsYaml.edges,
+        [prevProps.location.state.filter]: false,
+      })
     }
     if (
       this.props.location.state.filter !== prevProps.location.state.filter &&
       this.props.location.state.filter !== ``
     ) {
-      console.log(`filter is ${this.props.location.state.filter}`)
+      let items = this.state.creators.filter(
+        item => item.node[this.props.location.state.filter] === true
+      )
+      this.setState({
+        creators: items,
+        [this.props.location.state.filter]: true,
+        [prevProps.location.state.filter]: false,
+      })
     }
   }
 
@@ -99,8 +64,6 @@ class CommunityView extends Component {
         this.setState({
           creators: data.allCreatorsYaml.edges,
           [filter]: false,
-
-          // search: this.props.location.search,
         })
         navigate(`${location.pathname}`, { state: { filter: `` } })
       } else {
@@ -108,7 +71,6 @@ class CommunityView extends Component {
         this.setState({
           creators: items,
           [filter]: true,
-          // search: this.props.location.search,
         })
         navigate(`${location.pathname}?filter=${filter}`, {
           state: { filter: filter },
@@ -210,10 +172,6 @@ class CommunityView extends Component {
 }
 
 export default CommunityView
-
-// make this a template
-// pass the type from Page
-// query based on that
 
 const styles = {
   badge: {

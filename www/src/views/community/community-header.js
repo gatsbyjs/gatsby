@@ -18,6 +18,7 @@ const CommunityHeaderLink = ({ linkTo, children }) => (
   >
     <Link
       to={linkTo}
+      state={{ filter: `` }}
       activeStyle={{
         backgroundColor: colors.gatsby,
         color: `white`,
@@ -59,6 +60,7 @@ class CommunityHeader extends Component {
       >
         <Link
           to="/community/"
+          state={{ filter: `` }}
           css={{
             "&&": {
               ...scale(1 / 3),
