@@ -104,6 +104,16 @@ export default () => (
     render={data => <div>{data.pizza}</div>}
   />
 )`,
+    "query-imported.js": `import React from "react"
+import { StaticQuery, graphql } from "gatsby"
+import strangeQueryName from "./another-file.js"
+
+export default () => (
+  <StaticQuery
+    query={strangeQueryName}
+    render={data => <div>{data.pizza}</div>}
+  />
+)`,
   }
 
   const parser = new FileParser()
