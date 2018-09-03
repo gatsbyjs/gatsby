@@ -2258,6 +2258,7 @@
     - Agency
     - Open Source
     - Featured
+  featured: false
 - title: Node.js HBase
   description: >
     Asynchronous HBase client for NodeJs using REST.
@@ -2270,4 +2271,18 @@
     - Technology
   built_by: David Worms
   built_by_url: http://www.adaltas.com
+  featured: false
+- title: Peter Kroyer - Web Design / Web Development
+  main_url: https://www.peterkroyer.at/en/
+  url: https://www.peterkroyer.at/en/
+  description: >
+    Freelance web designer / web developer based in Vienna, Austria.
+  categories:
+    - Agency
+    - Web Dev
+    - Design
+    - Portfolio
+    - Creative
+  built_by: Peter Kroyer
+  built_by_url: https://www.peterkroyer.at/
   featured: false
