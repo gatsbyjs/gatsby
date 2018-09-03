@@ -132,8 +132,8 @@ module.exports = {
 }
 ```
 
-*NOTE 1*: A previous version of this library used the attribute name `rawOutput`. This name still works, but is an alias for the correct attribute `raw`. If both attributes are specified, the value for `raw` takes precedence.
+_NOTE 1_: A previous version of this library used the attribute name `rawOutput`. This name still works, but is an alias for the correct attribute `raw`. If both attributes are specified, the value for `raw` takes precedence.
 
-*NOTE 2*: If you don't specify the `raw` or `rawOutput` option, a value of `true` will be used in the underlying js-xlsx function. This is opposite the library's [default value of false](https://github.com/SheetJS/js-xlsx#json).
+_NOTE 2_: If you don't specify the `raw` or `rawOutput` option, a value of `true` will be used in the underlying js-xlsx function. This is opposite the library's [default value of false](https://github.com/SheetJS/js-xlsx#json).
 
 This will make sure, that all field types are converted to strings.
