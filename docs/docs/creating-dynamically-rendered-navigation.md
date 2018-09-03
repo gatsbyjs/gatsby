@@ -16,7 +16,7 @@ What this doc will cover:
 
 You will be using `gatsby-config.js` to store the data for your links. `gatsby-config.js` is a file used for configuring gatsby located in the root path of every Gatsby project. A plain old javascript object is exported from this file, this object contains `siteMetadata` object which you can query through graphql when generating your static pages. 
 
-This guide will use the gatsby starter project  `gatsby-starter-default`, which can be downloaded through the gatsby CLI.  
+This guide will use the gatsby starter project `gatsby-starter-default`, this project can be downloaded through the gatsby command line interface tool using the command `gatsby new [project-name] https://github.com/gatsbyjs/gatsby-starter-default#v2`.  
 
 ### Creating the link data
 First, locate the `gatsby-config.js` file in the root directory of your project. Inside the `siteMetaData` object, add an array of menu links objects. These objects should contain two properties: name and link. Name is the name of your navigation item, link is the page which will be navigated to when a menu item is clicked.
