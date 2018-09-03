@@ -123,9 +123,9 @@ export default () => (
   })
 
   it(`extracts query AST correctly from files`, async () => {
-    let outputData = ""
+    let outputData = ``
     let storeLog = inputs => (outputData += inputs)
-    console["log"] = jest.fn(storeLog)
+    console[`log`] = jest.fn(storeLog)
     const results = await parser.parseFiles(Object.keys(MOCK_FILE_INFO))
     expect(results).toMatchSnapshot()
     expect(outputData).toMatchSnapshot()
