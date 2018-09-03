@@ -77,8 +77,9 @@ const handleQuery = (
     const isNewQuery = !oldQuery
 
     // Compare query text because text is compiled query with any attached
-    // fragments. Compare hash because hash is used for identyfing query and
-    // passign data to component in development. Hash can change if user will
+    // fragments and we want to rerun queries if fragments are edited.
+    // Compare hash because hash is used for identyfing query and
+    // passing data to component in development. Hash can change if user will
     // format query text, but it doesn't mean that compiled text will change.
     if (
       isNewQuery ||
