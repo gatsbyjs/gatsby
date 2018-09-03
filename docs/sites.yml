@@ -2258,6 +2258,19 @@
     - Agency
     - Open Source
     - Featured
+- title: Node.js HBase
+  description: >
+    Asynchronous HBase client for NodeJs using REST.
+  main_url: https://hbase.js.org/
+  url: https://hbase.js.org/
+  source_url: 'https://github.com/adaltas/node-hbase'
+  categories:
+    - Documentation
+    - Open Source
+    - Technology
+  built_by: David Worms
+  built_by_url: http://www.adaltas.com
+  featured: false
 - title: Peter Kroyer - Web Design / Web Development
   main_url: https://www.peterkroyer.at/en/
   url: https://www.peterkroyer.at/en/
