@@ -1,6 +1,6 @@
 describe(`The Home Page`, () => {
   it(`successfully loads`, () => {
-    cy.visit(`/`)
+    cy.visit(`/`).waitForRouteChange()
   })
 
   it(`contains the title with an SVG icon and text "Gatsbygram"`, () => {
@@ -11,9 +11,16 @@ describe(`The Home Page`, () => {
   it(`contains a link to about page in nav bar and it works`, () => {
     cy.getTestElement(`about-link`).contains(`About`)
     cy.getTestElement(`about-link`).click()
-    cy.url().should(`eq`, `${Cypress.config(`baseUrl`)}/about/`)
+    cy.waitForRouteChange()
+      .location(`pathname`)
+      .should(`equal`, `/about/`)
+
     // go back to home page
-    cy.visit(`/`)
+    cy.getTestElement(`site-title`).click()
+
+    cy.waitForRouteChange()
+      .location(`pathname`)
+      .should(`equal`, `/`)
   })
 
   it(`renders user avatar and name`, () => {
@@ -45,7 +52,11 @@ describe(`The Home Page`, () => {
       cy.getTestElement(`post`)
         .first()
         .click()
-      cy.url().should("contain", post.id)
+
+      cy.waitForRouteChange()
+        .url()
+        .should(`contain`, post.id)
+
       cy.getTestElement(`post-detail-avatar`).should(
         `have.attr`,
         `src`,
@@ -56,94 +67,95 @@ describe(`The Home Page`, () => {
       cy.getTestElement(`post-detail-text`).contains(post.username)
       cy.getTestElement(`post-detail-text`).contains(post.text)
       cy.getTestElement(`modal-close`).click()
-      cy.url().should(`eq`, `${Cypress.config(`baseUrl`)}/`)
+      cy.waitForRouteChange()
+        .location(`pathname`)
+        .should(`equal`, `/`)
     })
   })
 
-  const setRouteChangePromise = (cy, routeChangePromise) =>
-    cy.window().then(win => {
-      routeChangePromise = win.___waitForRouteChange()
-      return
-    })
-
   it(`goes to next / previous post on clicking arrow icons`, () => {
-    cy.fixture(`posts`).then(postsData => {
-      const post1 = postsData[0]
-      const post2 = postsData[1]
-      // wait for page to initialize
-      let routeChangePromise
-      setRouteChangePromise(cy, routeChangePromise)
-      cy.wrap(routeChangePromise)
-
-      // open first post
+    cy.fixture(`posts`).then(([post1, post2]) => {
       cy.getTestElement(`post`)
         .first()
         .click()
-      cy.url().should("contain", post1.id)
-      // click right arrow icon to go to 2nd post
-      setRouteChangePromise(cy, routeChangePromise)
-      cy.getTestElement(`next-post`).click()
-      cy.wrap(routeChangePromise)
-      cy.url().should("contain", post2.id)
 
-      // wait for page to transition
-      cy.wrap(routeChangePromise)
+      cy.waitForRouteChange()
+        .url()
+        .should(`contain`, post1.id)
+
+      // click right arrow icon to go to 2nd post
+      cy.getTestElement(`next-post`).click()
+
+      cy.waitForRouteChange()
+        .url()
+        .should(`contain`, post2.id)
+
       // press left arrow to go back to 1st post
       cy.getTestElement(`previous-post`).click()
-      cy.url().should("contain", post1.id)
+
+      cy.waitForRouteChange()
+        .url()
+        .should(`contain`, post1.id)
+
       // close the post
       cy.getTestElement(`modal-close`).click()
+
+      cy.waitForRouteChange()
+        .location(`pathname`)
+        .should(`equal`, `/`)
     })
   })
 
   it(`goes to next / previous post with keyboard shortcut`, () => {
-    cy.fixture(`posts`).then(postsData => {
-      const post1 = postsData[0]
-      const post2 = postsData[1]
-      // wait for page to initialize
-      let routeChangePromise
-      setRouteChangePromise(cy, routeChangePromise)
-      cy.wrap(routeChangePromise)
-
+    cy.fixture(`posts`).then(([post1, post2]) => {
       // open fist post
-      setRouteChangePromise(cy, routeChangePromise)
       cy.getTestElement(`post`)
         .first()
-        // force, because sometimes the children cover
-        // the outer element causing Cypress to complain
-        .click({ force: true })
-
-      cy.url().should("contain", post1.id)
+        .click()
 
       // wait for page to transition
-      cy.wrap(routeChangePromise)
+      cy.waitForRouteChange()
+        .url()
+        .should(`contain`, post1.id)
 
       // press right arrow to go to 2nd post
-      setRouteChangePromise(cy, routeChangePromise)
       cy.get(`body`).type(`{rightarrow}`)
-      cy.url().should("contain", post2.id)
+
       // wait for page to transition
-      cy.wrap(routeChangePromise)
+      cy.waitForRouteChange()
+        .url()
+        .should(`contain`, post2.id)
+
       // press left arrow to go back to 1st post
       cy.get(`body`).type(`{leftarrow}`)
-      cy.url().should("contain", post1.id)
+
+      // wait for page to transition
+      cy.waitForRouteChange()
+        .url()
+        .should(`contain`, post1.id)
+
       // close the post
       cy.getTestElement(`modal-close`).click()
+
+      // wait for page to transition
+      cy.waitForRouteChange()
+        .location(`pathname`)
+        .should(`equal`, `/`)
     })
   })
 
   it(`loads more posts when Load More button is clicked & on scroll`, () => {
     // initially loads 12 posts
-    cy.getTestElement(`post`).should("have.length", 12)
+    cy.getTestElement(`post`).should(`have.length`, 12)
 
     // loads 12 more posts when Load More button is clicked
     cy.getTestElement(`load-more`).click()
-    cy.getTestElement(`post`).should("have.length", 24)
+    cy.getTestElement(`post`).should(`have.length`, 24)
 
     // loads 12 more posts when scrolled to bottom
     // cy.getTestElement(`home-container`).scrollTo(`0%`, `99%`)
     cy.window().scrollTo(`bottom`)
-    cy.getTestElement(`post`).should("have.length", 36)
+    cy.getTestElement(`post`).should(`have.length`, 36)
 
     // let's go back to top
     cy.window().scrollTo(`top`)
