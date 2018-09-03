@@ -5,8 +5,6 @@ import rehypeReact from "rehype-react"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import ArrowBackIcon from "react-icons/lib/md/arrow-back"
 import Img from "gatsby-image"
-import { OutboundLink } from "gatsby-plugin-google-analytics"
-
 import Layout from "../components/layout"
 import presets, { colors } from "../utils/presets"
 import typography, { rhythm, scale, options } from "../utils/typography"
@@ -193,9 +191,9 @@ class BlogPostTemplate extends React.Component {
                     {` `}
                     (originally published at
                     {` `}
-                    <OutboundLink href={post.frontmatter.canonicalLink}>
+                    <a href={post.frontmatter.canonicalLink}>
                       {post.frontmatter.publishedAt}
-                    </OutboundLink>
+                    </a>
                     )
                   </span>
                 )}
@@ -225,9 +223,9 @@ class BlogPostTemplate extends React.Component {
                     <em>
                       Image by
                       {` `}
-                      <OutboundLink href={post.frontmatter.imageAuthorLink}>
+                      <a href={post.frontmatter.imageAuthorLink}>
                         {post.frontmatter.imageAuthor}
-                      </OutboundLink>
+                      </a>
                     </em>
                   )}
               </div>
