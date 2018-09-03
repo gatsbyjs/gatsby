@@ -61,7 +61,7 @@ script to **deploy** your project by running `npm install gh-pages --save-dev`.
 
 Then add a `deploy` script in your `package.json` file.
 
-```
+```json
 "scripts": {
   "deploy": "gatsby build --prefix-paths && gh-pages -d public",
 }
@@ -73,7 +73,7 @@ paths. The `pathPrefix` should be the project name in your repository. (ex.
 `/project-name`). See
 [the docs page on path prefixing for more](/docs/path-prefix/).
 
-```
+```js
 module.exports = {
   pathPrefix: `/project-name`,
 }
@@ -98,7 +98,7 @@ repository dedicated to files for the site. The sites must be published from the
 kept in a branch named `source` or something similar. We also don't need to
 prefix links like we do with project sites.
 
-```
+```json
 "scripts": {
   "deploy": "gatsby build && gh-pages -b master -d public",
 }
@@ -126,7 +126,7 @@ platform.
 Create a new GitLab repository, initialize your Gatsby project folder if you
 haven't already, and add the GitLab remote.
 
-```
+```bash
 git init
 git remote add origin git@gitlab.com:examplerepository
 git add .
@@ -145,7 +145,7 @@ paths. The `pathPrefix` should be the project name in your repository. (ex.
 `/examplerepository`). See
 [the docs page on path prefixing for more](/docs/path-prefix/).
 
-```
+```js
 module.exports = {
   pathPrefix: `/examplerepository`,
 }
@@ -154,20 +154,20 @@ module.exports = {
 ### Build and Deploy with GitLab CI
 
 To use GitLab's continuous integration (CI), you need to add a `.gitlab-ci.yml`
-configuration file. This is the file that Gitlab uses to manage the CI job.
+configuration file. This is the file that GitLab uses to manage the CI job.
 
-It can easily be added to your repository by the [Gitlab](https://gitlab.com)
+It can easily be added to your repository by the [GitLab](https://gitlab.com)
 website, as the online editor contains a pre-built template for Gatsby deployment.
 
 To use the template open your repository on their website, select the 'Setup CI/CD' option on
 the center menu, and it will create a new blank `.gitlab-ci.yml` for you. Now
-select the 'Apply a Gitlab CI Yaml Template' drop-down, and type 'Gatsby' into
+select the 'Apply a GitLab CI Yaml Template' drop-down, and type 'Gatsby' into
 the filter. Select the Gatsby option, click 'Commit Changes', and you are done!
 
 If adding this manually to your project, the file needs to contain a few required
 fields:
 
-```
+```yaml
 image: node:latest
 
 # This folder is cached between builds
@@ -225,7 +225,7 @@ You can use the [heroku buildpack static](https://github.com/heroku/heroku-build
 
 Set the `heroku/node.js` and `heroku-buildpack-static` buildpacks on your application creating an `app.json` file on the root of your project.
 
-```
+```json
 {
   "buildpacks": [
     {
@@ -242,7 +242,7 @@ Sometimes specifying buildpacks via the `app.json` file doesn't work. If this is
 
 Add a `heroku-postbuild` script in your `package.json`:
 
-```
+```json
 {
 
   // ...
