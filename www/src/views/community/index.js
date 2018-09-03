@@ -15,7 +15,7 @@ class CommunityView extends Component {
     creators: this.props.data.allCreatorsYaml.edges,
     for_hire: false,
     hiring: false,
-    search: ``,
+    // search: ``,
   }
 
   // static getDerivedStateFromProps(nextProps, prevState) {
@@ -34,6 +34,49 @@ class CommunityView extends Component {
   //   }
   // }
 
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (
+  //     this.props.location !== prevProps.location &&
+  //     this.props.location.search === ``
+  //   ) {
+  //     const query = qs.parse(prevProps.location.search.slice(1))
+  //     let prevQuery = prevState[query.filter]
+  //     this.setState({
+  //       creators: this.props.data.allCreatorsYaml.edges,
+  //       [prevQuery]: false,
+  //     })
+  //     navigate(`${location.pathname}`)
+  //   }
+  //   if (this.props.location !== prevProps.location) {
+  //     const query = qs.parse(this.props.location.search.slice(1))
+  //     if (query.filter) {
+  //       let items = this.state.creators.filter(
+  //         item => item.node[query.filter] === true
+  //       )
+  //       this.setState({
+  //         creators: items,
+  //         [query.filter]: true,
+  //       })
+  //     }
+  //   }
+  // }
+
+  // compare state.filter and turn it on and off
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      this.props.location.state.filter !== prevProps.location.state.filter &&
+      this.props.location.state.filter === ``
+    ) {
+      console.log(`filter is empty`)
+    }
+    if (
+      this.props.location.state.filter !== prevProps.location.state.filter &&
+      this.props.location.state.filter !== ``
+    ) {
+      console.log(`filter is ${this.props.location.state.filter}`)
+    }
+  }
+
   componentDidMount() {
     const query = qs.parse(this.props.location.search.slice(1))
     if (query.filter) {
@@ -43,7 +86,6 @@ class CommunityView extends Component {
       this.setState({
         creators: items,
         [query.filter]: true,
-        search: this.props.location.search,
       })
     }
   }
@@ -57,13 +99,21 @@ class CommunityView extends Component {
         this.setState({
           creators: data.allCreatorsYaml.edges,
           [filter]: false,
+
+          // search: this.props.location.search,
         })
-        navigate(`${location.pathname}`)
+        navigate(`${location.pathname}`, { state: { filter: `` } })
       } else {
         let items = creators.filter(item => item.node[filter] === true)
-        this.setState({ creators: items, [filter]: true })
+        this.setState({
+          creators: items,
+          [filter]: true,
+          // search: this.props.location.search,
+        })
+        navigate(`${location.pathname}?filter=${filter}`, {
+          state: { filter: filter },
+        })
       }
-      navigate(`${location.pathname}?filter=${filter}`)
     }
 
     return (
