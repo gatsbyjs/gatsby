@@ -15,7 +15,24 @@ class CommunityView extends Component {
     creators: this.props.data.allCreatorsYaml.edges,
     for_hire: false,
     hiring: false,
+    search: ``,
   }
+
+  // static getDerivedStateFromProps(nextProps, prevState) {
+  //   if (nextProps.location.search === ``) {
+  //     return { creators: nextProps.data.allCreatorsYaml.edges }
+  //   } else if (nextProps.location.search !== prevState.location.search) {
+  //     const query = qs.parse(this.props.location.search.slice(1))
+  //     let items = this.state.creators.filter(
+  //       item => item.node[query.filter] === true
+  //     )
+  //     this.setState({
+  //       creators: items,
+  //       [query.filter]: true,
+  //       search: this.props.location.search,
+  //     })
+  //   }
+  // }
 
   componentDidMount() {
     const query = qs.parse(this.props.location.search.slice(1))
@@ -23,7 +40,11 @@ class CommunityView extends Component {
       let items = this.state.creators.filter(
         item => item.node[query.filter] === true
       )
-      this.setState({ creators: items, [query.filter]: true })
+      this.setState({
+        creators: items,
+        [query.filter]: true,
+        search: this.props.location.search,
+      })
     }
   }
 
