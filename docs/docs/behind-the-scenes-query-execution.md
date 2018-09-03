@@ -10,6 +10,65 @@ Query Execution is kicked off by bootstrap by calling [page-query-runner.js runI
 - [query-queue.js](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby/src/internal-plugins/query-runner/query-queue.js)
 - [query-runner.js](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby/src/internal-plugins/query-runner/query-runner.js)
 
+Here's an overview of how it all relates:
+
+```dot
+digraph {
+  compound = true;
+  
+  subgraph cluster_other {
+    style = invis;
+    extractQueries [ label = "query-watcher.js", shape = box ];
+    componentsDD [ label = "componentDataDependencies\l(redux)", shape = cylinder ];
+    components [ label = "components\l (redux)", shape = cylinder ];
+    createNode [ label = "CREATE_NODE action", shape = box ];
+  }
+  
+  subgraph cluster_pageQueryRunner {
+    label = "page-query-runner.js"
+    
+    dirtyActions [ label = "dirtyActions", shape = cylinder ];
+    extractedQueryQ [ label = "queueQueryForPathname()", shape = box ]; 
+    findIdsWithoutDD [ label = "findIdsWithoutDataDependencies()", shape = box ];
+    findDirtyActions [ label = "findDirtyActions()", shape = box ];
+    queryJobs [ label = "runQueriesForPathnames()", shape = box ];
+    
+    extractedQueryQ -> queryJobs;
+    findIdsWithoutDD -> queryJobs;
+    dirtyActions -> findDirtyActions [ weight = 100 ];
+    findDirtyActions -> queryJobs;
+  }
+
+  subgraph cluster_queryQueue {
+    label = "query-queue.js";
+    queryQ [ label = "better-queue", shape = box ];
+  }
+  
+  subgraph cluster_queryRunner {
+    label = "query-runner.js"
+    queryRunner [ label = "default" ];
+    graphqlJs [ label = "graphqlJs(schema, query, context, ...)" ];
+    result [ label = "Query Result" ];
+    diskResult [ label = "/public/static/d/${dataPath}", shape = cylinder ];
+    jsonDataPaths [ label = "jsonDataPaths\l(redux)", shape = cylinder ];
+  
+    queryRunner -> graphqlJs;
+    graphqlJs -> result;
+    result -> diskResult;
+    result -> jsonDataPaths;
+  }
+  
+  extractQueries -> extractedQueryQ;
+  componentsDD -> findIdsWithoutDD;
+  components -> findIdsWithoutDD;
+  createNode -> dirtyActions;
+
+  queryJobs -> queryQ [ lhead = cluster_queryQueue ];
+
+  queryQ -> queryRunner [ lhead = cluster_queryRunner ];
+}
+```
+
 #### Figuring out which queries need to be executed
 
 The first thing this query does is figure out what queries even need to be run. You would think this would simply be a matter of running the Queries that were enqueued in [Extract Queries](/docs/behind-the-scenes-query-extraction/), but matters are complicated by support for `gatsby develop`. Below is the logic for figuring out which queries need to be executed (code is in [runQueries()](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/page-query-runner.js#L36)).
