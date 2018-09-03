@@ -162,10 +162,7 @@ const Checkout = class extends React.Component {
   }
 
   componentDidMount() {
-    // In Gatsby V2, the out-of-the-box eslint config will throw an error at StripeCheckout on line 167. 
-    // To temporarily bypass this issue, the eslint-disable is added to this function. 
-    /* eslint-disable */
-    this.stripeHandler = StripeCheckout.configure({
+    this.stripeHandler = window.StripeCheckout.configure({
       // You’ll need to add your own Stripe public key to the `checkout.js` file.
       // key: 'pk_test_STRIPE_PUBLISHABLE_KEY',
       key: "pk_test_kuhbxb0MMZsp6fj6aTNDnxUu",
@@ -173,7 +170,6 @@ const Checkout = class extends React.Component {
         this.resetButton()
       },
     })
-    /* eslint-disable */
   }
 
   openStripeCheckout(event) {
