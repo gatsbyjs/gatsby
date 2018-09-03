@@ -2258,7 +2258,6 @@
     - Agency
     - Open Source
     - Featured
-  featured: false
 - title: Node.js HBase
   description: >
     Asynchronous HBase client for NodeJs using REST.
