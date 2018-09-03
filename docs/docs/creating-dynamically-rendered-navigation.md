@@ -5,7 +5,7 @@ title: Creating Dynamically-Rendered Navigation
 
 ## Creating dynamic navigation in Gatsby
 
-Often at times you will want to be able to easily edit your websites navigation in response to a *change in requirements*. To achieve this, you can use gatsby to dynamically generate your navigation. Where you store the data for your navigation can be anywhere a backend API, CMS, headless CMS or even the filesystem.
+Often at times you will want to be able to edit your websites navigation in response to a *change in requirements*. To achieve this, you can use gatsby to dynamically generate your navigation. Where you store the data for your navigation can be anywhere a backend API, CMS, headless CMS or even the filesystem.
 
 What this doc will cover:
 
