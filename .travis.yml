@@ -1,81 +1,51 @@
 services:
   - docker
-
 os:
   - linux
-
 dist: trusty
-sudo: required
+ # use container-based build env for faster boot
+sudo: false
+language: node_js
 
-jobs:
-    include:
-        - stage: Unit tests
-          if: type = pull_request
-          language: node_js
-          node_js:
-            - '6'
-            - '8'
-            - '10'
-          cache:
-            yarn: true
-          before_install:
-          - curl -o- -L https://yarnpkg.com/install.sh | bash
-          - export PATH=$HOME/.yarn/bin:$PATH
-          install:
-          - yarn run bootstrap
-          script:
-          - yarn test
+matrix:
+  include:
+    - name: "Lint"
+      env: SRC_PATH=. INSTALL_COMMAND='install' TEST_COMMAND='lint'
+      node_js:
+        - 'lts/*'
+    - name: "Unit Tests on Node.js 6"
+      env: SRC_PATH=. INSTALL_COMMAND='run bootstrap' TEST_COMMAND=jest
+      node_js:
+        - '6'
+    - name: "Unit Tests on Node.js 8"
+      env: SRC_PATH=. INSTALL_COMMAND='run bootstrap' TEST_COMMAND=jest
+      node_js:
+        - '8'
+    - name: "Unit Tests on Node.js 10"
+      env: SRC_PATH=. INSTALL_COMMAND='run bootstrap' TEST_COMMAND=jest
+      node_js:
+        - '10'
+    - name: "Integration Tests"
+      env: SRC_PATH=. INSTALL_COMMAND='install' TEST_COMMAND='test:integration'
+      node_js:
+        - 'lts/*'
+    - name: "Develop UI Tests"
+      env: SRC_PATH='examples/gatsbygram' INSTALL_COMMAND='install' TEST_COMMAND='test'
+      node_js:
+        - 'lts/*'
+    - name: "Production UI Tests"
+      env: SRC_PATH='integration-tests/production-runtime' INSTALL_COMMAND='install' TEST_COMMAND='test'
+      node_js:
+        - 'lts/*'
 
-        - stage: Integration tests
-          if: type = pull_request
-          language: node_js
-          node_js:
-            - '6'
-            - '8'
-            - '10'
-          cache:
-            yarn: true
-          before_install:
-          - curl -o- -L https://yarnpkg.com/install.sh | bash
-          - export PATH=$HOME/.yarn/bin:$PATH
-          install:
-          - yarn run bootstrap
-          script:
-          - yarn test:integration
-
-        - stage: Develop UI tests
-          language: node_js
-          node_js:
-            - '6'
-            - '8'
-            - '10'
-          cache:
-            yarn: true
-          before_install:
-          - curl -o- -L https://yarnpkg.com/install.sh | bash
-          - export PATH=$HOME/.yarn/bin:$PATH
-          - cd examples/gatsbygram
-          install:
-          - yarn
-          script:
-          - yarn test
-
-        - stage: Production UI tests
-          language: node_js
-          node_js:
-            - '6'
-            - '8'
-            - '10'
-          cache:
-            yarn: true
-          before_install:
-          - curl -o- -L https://yarnpkg.com/install.sh | bash
-          - export PATH=$HOME/.yarn/bin:$PATH
-          - cd integration-tests/production-runtime
-          install:
-          - yarn
-          script:
-          - yarn test
+cache:
+  yarn: true
+before_install:
+  - 'cd $SRC_PATH'
+install:
+  - 'yarn $INSTALL_COMMAND'
+script:
+  - 'yarn $TEST_COMMAND'
 
 # new pushes aren't working at the moment (the build times out processing showcase images)
 # the existing image works fine, and can be manually updated by running through the steps
