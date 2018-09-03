@@ -583,7 +583,7 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
   - TSLint (with custom TSLint rules)
   - Markdown rendering with Remark
   - Basic component structure
-  - Styling with [styled-components](https://www.styled-components.com/)
+  - Styling with [emotion](https://emotion.sh/)
 
 - [gatsby-orga](https://github.com/xiaoxinghu/gatsby-orga)
   [(demo)](https://xiaoxinghu.github.io/gatsby-orga/)
