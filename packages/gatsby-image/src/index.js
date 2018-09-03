@@ -183,7 +183,6 @@ class Image extends React.Component {
       title,
       alt,
       className,
-      outerWrapperClassName,
       style = {},
       imgStyle = {},
       placeholderStyle = {},
@@ -221,95 +220,84 @@ class Image extends React.Component {
         image.srcSet = image.srcSetWebp
       }
 
-      // The outer div is necessary to reset the z-index to 0.
       return (
         <Tag
-          className={`${
-            outerWrapperClassName ? outerWrapperClassName : ``
-          } gatsby-image-outer-wrapper`}
+          className={`${className ? className : ``} gatsby-image-wrapper`}
           style={{
-            // Let users set component to be absolutely positioned.
-            position: style.position === `absolute` ? `initial` : `relative`,
+            position: `relative`,
+            overflow: `hidden`,
+            ...style,
           }}
+          ref={this.handleRef}
         >
+          {/* Preserve the aspect ratio. */}
           <Tag
-            className={`${className ? className : ``} gatsby-image-wrapper`}
             style={{
-              position: `relative`,
-              overflow: `hidden`,
-              ...style,
+              width: `100%`,
+              paddingBottom: `${100 / image.aspectRatio}%`,
             }}
-            ref={this.handleRef}
-          >
-            {/* Preserve the aspect ratio. */}
+          />
+
+          {/* Show the blury base64 image. */}
+          {image.base64 && (
+            <Img
+              alt={alt}
+              title={title}
+              src={image.base64}
+              style={imagePlaceholderStyle}
+            />
+          )}
+
+          {/* Show the traced SVG image. */}
+          {image.tracedSVG && (
+            <Img
+              alt={alt}
+              title={title}
+              src={image.tracedSVG}
+              style={imagePlaceholderStyle}
+            />
+          )}
+
+          {/* Show a solid background color. */}
+          {bgColor && (
             <Tag
+              title={title}
               style={{
-                width: `100%`,
-                paddingBottom: `${100 / image.aspectRatio}%`,
+                backgroundColor: bgColor,
+                position: `absolute`,
+                top: 0,
+                bottom: 0,
+                opacity: !this.state.imgLoaded ? 1 : 0,
+                transitionDelay: `0.35s`,
+                right: 0,
+                left: 0,
               }}
             />
+          )}
 
-            {/* Show the blury base64 image. */}
-            {image.base64 && (
-              <Img
-                alt={alt}
-                title={title}
-                src={image.base64}
-                style={imagePlaceholderStyle}
-              />
-            )}
-
-            {/* Show the traced SVG image. */}
-            {image.tracedSVG && (
-              <Img
-                alt={alt}
-                title={title}
-                src={image.tracedSVG}
-                style={imagePlaceholderStyle}
-              />
-            )}
-
-            {/* Show a solid background color. */}
-            {bgColor && (
-              <Tag
-                title={title}
-                style={{
-                  backgroundColor: bgColor,
-                  position: `absolute`,
-                  top: 0,
-                  bottom: 0,
-                  opacity: !this.state.imgLoaded ? 1 : 0,
-                  transitionDelay: `0.35s`,
-                  right: 0,
-                  left: 0,
-                }}
-              />
-            )}
-
-            {/* Once the image is visible (or the browser doesn't support IntersectionObserver), start downloading the image */}
-            {this.state.isVisible && (
-              <Img
-                alt={alt}
-                title={title}
-                srcSet={image.srcSet}
-                src={image.src}
-                sizes={image.sizes}
-                style={imageStyle}
-                onLoad={() => {
-                  this.state.IOSupported && this.setState({ imgLoaded: true })
-                  this.props.onLoad && this.props.onLoad()
-                }}
-                onError={this.props.onError}
-              />
-            )}
-
-            {/* Show the original image during server-side rendering if JavaScript is disabled */}
-            <noscript
-              dangerouslySetInnerHTML={{
-                __html: noscriptImg({ alt, title, ...image }),
+          {/* Once the image is visible (or the browser doesn't support IntersectionObserver), start downloading the image */}
+          {this.state.isVisible && (
+            <Img
+              alt={alt}
+              title={title}
+              srcSet={image.srcSet}
+              src={image.src}
+              sizes={image.sizes}
+              style={imageStyle}
+              onLoad={() => {
+                this.state.IOSupported && this.setState({ imgLoaded: true })
+                this.props.onLoad && this.props.onLoad()
               }}
+              onError={this.props.onError}
             />
-          </Tag>
+          )}
+
+          {/* Show the original image during server-side rendering if JavaScript is disabled */}
+          <noscript
+            dangerouslySetInnerHTML={{
+              __html: noscriptImg({ alt, title, ...image }),
+            }}
+          />
         </Tag>
       )
     }
@@ -338,84 +326,74 @@ class Image extends React.Component {
       // The outer div is necessary to reset the z-index to 0.
       return (
         <Tag
-          className={`${
-            outerWrapperClassName ? outerWrapperClassName : ``
-          } gatsby-image-outer-wrapper`}
-          style={{
-            // Let users set component to be absolutely positioned.
-            position: style.position === `absolute` ? `initial` : `relative`,
-          }}
+          className={`${className ? className : ``} gatsby-image-wrapper`}
+          style={divStyle}
+          ref={this.handleRef}
         >
-          <Tag
-            className={`${className ? className : ``} gatsby-image-wrapper`}
-            style={divStyle}
-            ref={this.handleRef}
-          >
-            {/* Show the blury base64 image. */}
-            {image.base64 && (
-              <Img
-                alt={alt}
-                title={title}
-                src={image.base64}
-                style={imagePlaceholderStyle}
-              />
-            )}
+          {/* Show the blury base64 image. */}
+          {image.base64 && (
+            <Img
+              alt={alt}
+              title={title}
+              src={image.base64}
+              style={imagePlaceholderStyle}
+            />
+          )}
 
-            {/* Show the traced SVG image. */}
-            {image.tracedSVG && (
-              <Img
-                alt={alt}
-                title={title}
-                src={image.tracedSVG}
-                style={imagePlaceholderStyle}
-              />
-            )}
+          {/* Show the traced SVG image. */}
+          {image.tracedSVG && (
+            <Img
+              alt={alt}
+              title={title}
+              src={image.tracedSVG}
+              style={imagePlaceholderStyle}
+            />
+          )}
 
-            {/* Show a solid background color. */}
-            {bgColor && (
-              <Tag
-                title={title}
-                style={{
-                  backgroundColor: bgColor,
-                  width: image.width,
-                  opacity: !this.state.imgLoaded ? 1 : 0,
-                  transitionDelay: `0.25s`,
-                  height: image.height,
-                }}
-              />
-            )}
-
-            {/* Once the image is visible, start downloading the image */}
-            {this.state.isVisible && (
-              <Img
-                alt={alt}
-                title={title}
-                width={image.width}
-                height={image.height}
-                srcSet={image.srcSet}
-                src={image.src}
-                style={imageStyle}
-                onLoad={() => {
-                  this.setState({ imgLoaded: true })
-                  this.props.onLoad && this.props.onLoad()
-                }}
-                onError={this.props.onError}
-              />
-            )}
-
-            {/* Show the original image during server-side rendering if JavaScript is disabled */}
-            <noscript
-              dangerouslySetInnerHTML={{
-                __html: noscriptImg({
-                  alt,
-                  title,
-                  width: image.width,
-                  height: image.height,
-                  ...image,
-                }),
+          {/* Show a solid background color. */}
+          {bgColor && (
+            <Tag
+              title={title}
+              style={{
+                backgroundColor: bgColor,
+                width: image.width,
+                opacity: !this.state.imgLoaded ? 1 : 0,
+                transitionDelay: `0.25s`,
+                height: image.height,
               }}
             />
-          </Tag>
+          )}
+
+          {/* Once the image is visible, start downloading the image */}
+          {this.state.isVisible && (
+            <Img
+              alt={alt}
+              title={title}
+              width={image.width}
+              height={image.height}
+              srcSet={image.srcSet}
+              src={image.src}
+              style={imageStyle}
+              onLoad={() => {
+                this.setState({ imgLoaded: true })
+                this.props.onLoad && this.props.onLoad()
+              }}
+              onError={this.props.onError}
+            />
+          )}
+
+          {/* Show the original image during server-side rendering if JavaScript is disabled */}
+          <noscript
+            dangerouslySetInnerHTML={{
+              __html: noscriptImg({
+                alt,
+                title,
+                width: image.width,
+                height: image.height,
+                ...image,
+              }),
+            }}
+          />
         </Tag>
       )
     }
@@ -461,14 +439,9 @@ Image.propTypes = {
   title: PropTypes.string,
   alt: PropTypes.string,
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]), // Support Glamor's css prop.
-  outerWrapperClassName: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.object,
-  ]),
   style: PropTypes.object,
   imgStyle: PropTypes.object,
   placeholderStyle: PropTypes.object,
-  position: PropTypes.string,
   backgroundColor: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   onLoad: PropTypes.func,
   onError: PropTypes.func,
