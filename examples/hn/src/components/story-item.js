@@ -25,9 +25,7 @@ class StoryItem extends React.Component {
                 {story.title}
               </a>
               <span className="sitebit comhead">
-                {` `}(
-                <span className="sitestr">{story.domain}</span>
-                )
+                {` `}(<span className="sitestr">{story.domain}</span>)
               </span>
             </td>
           </tr>
@@ -49,9 +47,7 @@ class StoryItem extends React.Component {
               </span>
               {` `}
               <span id={`unv_${story.id}`} />
-              {` `}
-              |
-              {` `}
+              {` `}|{` `}
               <Link to={`/item/${story.id}/`}>
                 {story.descendants ? story.descendants : 0} comments
               </Link>

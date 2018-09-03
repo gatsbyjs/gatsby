@@ -4,7 +4,7 @@ demo: https://xiaoxinghu.github.io/gatsby-orga/
 repo: https://github.com/xiaoxinghu/gatsby-orga
 description: n/a
 tags:
-- Orga
+  - Orga
 features:
-- Parses org-mode files with Orga.
+  - Parses org-mode files with Orga.
 ---

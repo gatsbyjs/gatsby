@@ -110,7 +110,8 @@ export default class FilteredShowcase extends Component {
               },
             }}
           >
-            Filter & Refine{` `}
+            Filter & Refine
+            {` `}
             <span css={{ marginLeft: `auto`, opacity: 0.5 }}>
               <MdFilterList />
             </span>

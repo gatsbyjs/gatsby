@@ -2,7 +2,7 @@ import loader, { setApiRunnerForLoader } from "./loader"
 import redirects from "./redirects.json"
 import { apiRunner } from "./api-runner-browser"
 import emitter from "./emitter"
-import { globalHistory } from "@reach/router/lib/history"
+import { resolveRouteChangeListeners } from "./wait-for-route-change"
 import { navigate as reachNavigate } from "@reach/router"
 import parsePath from "./parse-path"
 import loadDirectlyOr404 from "./load-directly-or-404"
@@ -42,10 +42,19 @@ const onPreRouteUpdate = location => {
 const onRouteUpdate = location => {
   if (!maybeRedirect(location.pathname)) {
     apiRunner(`onRouteUpdate`, { location })
+    resolveRouteChangeListeners()
+
+    // Temp hack while awaiting https://github.com/reach/router/issues/119
+    window.__navigatingToLink = false
   }
 }
 
-const navigate = (to, options) => {
+const navigate = (to, options = {}) => {
+  // Temp hack while awaiting https://github.com/reach/router/issues/119
+  if (!options.replace) {
+    window.__navigatingToLink = true
+  }
+
   let { pathname } = parsePath(to)
   const redirect = redirectMap[pathname]
 
@@ -109,6 +118,9 @@ function shouldUpdateScroll(prevRouterProps, { location: { pathname } }) {
 }
 
 function init() {
+  // Temp hack while awaiting https://github.com/reach/router/issues/119
+  window.__navigatingToLink = false
+
   setApiRunnerForLoader(apiRunner)
   window.___loader = loader
   window.___push = to => navigate(to, { replace: false })

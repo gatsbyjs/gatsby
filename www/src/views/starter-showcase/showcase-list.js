@@ -212,7 +212,7 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
                     <MdStar
                       style={{
                         color: colors.accent,
-                        verticalAlign: "text-top",
+                        verticalAlign: `text-top`,
                       }}
                     />
                     {stars}

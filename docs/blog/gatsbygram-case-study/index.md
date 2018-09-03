@@ -2,7 +2,7 @@
 title: Gatsbygram Case Study
 date: "2017-03-09"
 author: "Kyle Mathews"
-image: 'ui-and-code.png'
+image: "ui-and-code.png"
 imageTitle: Gatsbygram
 ---
 

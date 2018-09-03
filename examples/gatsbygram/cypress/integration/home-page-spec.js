@@ -60,22 +60,34 @@ describe(`The Home Page`, () => {
     })
   })
 
+  const setRouteChangePromise = (cy, routeChangePromise) =>
+    cy.window().then(win => {
+      routeChangePromise = win.___waitForRouteChange()
+      return
+    })
+
   it(`goes to next / previous post on clicking arrow icons`, () => {
     cy.fixture(`posts`).then(postsData => {
       const post1 = postsData[0]
       const post2 = postsData[1]
       // wait for page to initialize
-      cy.wait(200)
+      let routeChangePromise
+      setRouteChangePromise(cy, routeChangePromise)
+      cy.wrap(routeChangePromise)
+
       // open first post
       cy.getTestElement(`post`)
         .first()
         .click()
       cy.url().should("contain", post1.id)
       // click right arrow icon to go to 2nd post
+      setRouteChangePromise(cy, routeChangePromise)
       cy.getTestElement(`next-post`).click()
+      cy.wrap(routeChangePromise)
       cy.url().should("contain", post2.id)
+
       // wait for page to transition
-      cy.wait(200)
+      cy.wrap(routeChangePromise)
       // press left arrow to go back to 1st post
       cy.getTestElement(`previous-post`).click()
       cy.url().should("contain", post1.id)
@@ -89,21 +101,29 @@ describe(`The Home Page`, () => {
       const post1 = postsData[0]
       const post2 = postsData[1]
       // wait for page to initialize
-      cy.wait(200)
+      let routeChangePromise
+      setRouteChangePromise(cy, routeChangePromise)
+      cy.wrap(routeChangePromise)
+
       // open fist post
+      setRouteChangePromise(cy, routeChangePromise)
       cy.getTestElement(`post`)
         .first()
         // force, because sometimes the children cover
         // the outer element causing Cypress to complain
         .click({ force: true })
+
       cy.url().should("contain", post1.id)
+
       // wait for page to transition
-      cy.wait(200)
+      cy.wrap(routeChangePromise)
+
       // press right arrow to go to 2nd post
+      setRouteChangePromise(cy, routeChangePromise)
       cy.get(`body`).type(`{rightarrow}`)
       cy.url().should("contain", post2.id)
       // wait for page to transition
-      cy.wait(200)
+      cy.wrap(routeChangePromise)
       // press left arrow to go back to 1st post
       cy.get(`body`).type(`{leftarrow}`)
       cy.url().should("contain", post1.id)
