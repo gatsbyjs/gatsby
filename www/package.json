@@ -14,7 +14,6 @@
     "gatsby-plugin-feed": "next",
     "gatsby-plugin-fullstory": "^1.0.4-5",
     "gatsby-plugin-glamor": "next",
-    "gatsby-plugin-google-analytics": "next",
     "gatsby-plugin-google-tagmanager": "next",
     "gatsby-plugin-lodash": "next",
     "gatsby-plugin-mailchimp": "^2.2.3",

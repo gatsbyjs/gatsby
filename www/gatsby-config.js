@@ -104,12 +104,6 @@ module.exports = {
     `gatsby-plugin-twitter`,
     `gatsby-plugin-react-helmet`,
     {
-      resolve: `gatsby-plugin-google-analytics`,
-      options: {
-        trackingId: `UA-93349937-1`,
-      },
-    },
-    {
       resolve: `gatsby-plugin-google-tagmanager`,
       options: {
         id: `GTM-KLZLVML`,
