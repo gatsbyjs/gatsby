@@ -116,12 +116,6 @@ module.exports = {
       },
     },
 
-    {
-      resolve: `gatsby-plugin-fullstory`,
-      options: {
-        fs_org: `B2TRP`,
-      },
-    },
     `gatsby-plugin-sitemap`,
     {
       resolve: `gatsby-plugin-feed`,
@@ -195,5 +189,6 @@ module.exports = {
       },
     },
     `gatsby-transformer-screenshot`,
+    `gatsby-plugin-subfont`,
   ],
 }
