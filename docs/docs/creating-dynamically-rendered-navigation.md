@@ -7,27 +7,27 @@ title: Creating Dynamically-Rendered Navigation
 
 At times you will want to be able to edit your website's navigation in response to a *change in requirements*. To achieve this, you can use Gatsby to dynamically generate your navigation. Where you store the data for your navigation can be anywhere - a backend API, CMS, headless CMS or even the filesystem.
 
-What this doc will cover:
+What this section will cover:
 
- - Adding data to your siteMetadata
- - Querying it using GraphQL
+ - Adding data to your sites configuration
+ - Querying the data using GraphQL
  - Pulling the data into a component using StaticQuery
- - Dynamically generating a navigation component
+ - Dynamically rendering your navigation
 
-You will be using `gatsby-config.js` to store the data for your links. `gatsby-config.js` is a file used for configuring gatsby located in the root path of every Gatsby project. A plain old javascript object is exported from this file, this object contains the `siteMetadata` object which you can query through graphql when generating your static pages. 
+You will be using `gatsby-config.js` to store the data for your links. `gatsby-config.js` is a file used for configuring Gatsby located in the root path of every Gatsby project. A plain old javascript object is exported from this file, this object contains the `siteMetadata` object which you can query through graphql when generating your static pages. 
 
 This guide will use the Gatsby starter project `gatsby-starter-default`, which can be downloaded through the Gatsby command line interface tool using the command `gatsby new [project-name] https://github.com/gatsbyjs/gatsby-starter-default#v2`.  
 
 ### Creating the link data
 First, locate the `gatsby-config.js` file in the root directory of your project. Inside the `siteMetadata` object, add an array of menu link objects. These objects should contain two properties: name and link. Name is the name of your navigation item, link is the page which will be navigated to when a menu item is clicked.
 
-```js
+```diff
 module.exports = {
   siteMetadata: {
     title: 'Gatsby Default Starter',
-    menuLinks:[
-      {name:'home',link:'/'},
-      {name:'page2',link:'/page-2'}
++    menuLinks:[
++      {name:'home',link:'/'},
++      {name:'page2',link:'/page-2'}
     ]
   },
   plugins: []
@@ -87,87 +87,165 @@ Inside your project locate the `src/components` folder and navigate to the `layo
 
 StaticQuery is a new component introduced in Gatsby V2 and allows you to run GraphQL queries within your components, not just pages. It allows developers to colocate data with their components.
 
-Currently the layout component should look like the following:
+Let's extend the query within this component to include the menu links, so it looks as so:
 
-```js
+```diff
+const Layout = ({ children }) => (
   <StaticQuery
     query={graphql`
       query SiteTitleQuery {
         site {
           siteMetadata {
             title
-            menuLinks {
-              name
-              link
-            }
++            menuLinks {
++              name
++              link
++            }
           }
         }
       }
-    `} ...left out for brevity/>
+    `}
+    render={data => (
+      <React.Fragment>
+        <Helmet
+          title={'tite'}
+          meta={[
+            { name: 'description', content: 'Sample' },
+            { name: 'keywords', content: 'sample, something' },
+          ]}
+        >
+        </Helmet>
+        <Header siteTitle={data.site.siteMetadata.title} />
+        <div
+          style={{
+            margin: '0 auto',
+            maxWidth: 960,
+            padding: '0px 1.0875rem 1.45rem',
+            paddingTop: 0,
+          }}
+        >
+          {children}
+        </div>
+      </React.Fragment>
+    )}
+  />
+)
 ```
 
-Let's extend the query within this component to include the menuLinks meta data, so it looks as so: (**Note:** *The GraphQL query must be located within the StaticQuery component, rather than referencing a variable from elsewhere due to how Gatsby parses our project*).
+With the above changes to your `StaticQuery` component, the  `render` property which accepts a function that takes one argument now has  has access to the menu links for use inside the function (as the argument). The last thing that is left to do is to display the site's navigation.
 
-```js
-<StaticQuery query={
-      graphql`
-      query SiteQuery {
+To do this the header component that is already available in the project seems like it might be a good starting place to display the navigation. Lets pass the `menuLinks` object to this header component like so:
+```diff
+const Layout = ({ children }) => (
+  <StaticQuery
+    query={graphql`
+      query SiteTitleQuery {
         site {
           siteMetadata {
             title
-            menuLinks {
-              name
-              link
-            }
++            menuLinks {
++              name
++              link
++            }
           }
         }
       }
-    `} 
-...left out for brevity />
-```
-
-With the above changes to your `StaticQuery` component, the  `render` property which accepts a function that takes one argument now has  has access to the siteMetadata for use inside the function (as the argument). The last thing that is left to do is to display the site's navigation.
-
-To do this the header component that is already available in the project seems like it might be a good starting place to display the navigation. Lets pass the menuLinks to this header component as props like so:
-```js
-<Header menuLinks={data.site.siteMetadata.menuLinks} siteTitle={data.site.siteMetadata.title}/>
+    `}
+    render={data => (
+      <React.Fragment>
+        <Helmet
+          title={'tite'}
+          meta={[
+            { name: 'description', content: 'Sample' },
+            { name: 'keywords', content: 'sample, something' },
+          ]}
+        >
+        </Helmet>
+-      <Header siteTitle={data.site.siteMetadata.title} />
++      <Header menuLinks={data.site.siteMetadata.menuLinks} siteTitle={data.site.siteMetadata.title}/>
+        <div
+          style={{
+            margin: '0 auto',
+            maxWidth: 960,
+            padding: '0px 1.0875rem 1.45rem',
+            paddingTop: 0,
+          }}
+        >
+          {children}
+        </div>
+      </React.Fragment>
+    )}
+  />
+)
 ```
 
 ### Using the header component to display the navigation
 
 Locate the `header.js` file inside `src/components` and remove everything so just the functional component definition is left (everything else is just boilerplate code given to us when generating our project):
 
-```js
+```diff
 import React from 'react'
 import { Link } from 'gatsby'
-const Header = ({ siteTitle, menuLinks }) => {
-
-}
+const Header = ({ siteTitle, menuLinks }) => (
+-  <div
+-    style={{
+-      background: 'rebeccapurple',
+-      marginBottom: '1.45rem',
+-    }}
+-  >
+-    <div
+-      style={{
+-        margin: '0 auto',
+-        maxWidth: 960,
+-        padding: '1.45rem 1.0875rem',
+-      }}
+-    >
+-      <div style={{
+-        display: 'flex',
+-        'justifyItems': 'space-between',
+-        'alignItems': 'center'
+-      }}>
+-        <h1 style={{ margin: 0, flex: 1 }}>
+-          <Link
+-            to="/"
+-            style={{
+-              color: 'white',
+-              textDecoration: 'none',
+-            }}
+-          >
+-            {siteTitle}
+-          </Link>
+-        </h1>
+-
+-      </div>
+-    </div>
+-  </div>
+)
 ```
 
-The `siteTitle` and `menuLinks` arguments are de-structered es6 syntax for quickly accessing an objects inner properties. It is functionally equivalent to writing `obj.siteTitle` or `obj.menuLinks`.
+The `siteTitle` and `menuLinks` arguments are de-structered es6 syntax for quickly accessing an objects inner properties. It is functionally equivalent to writing `object.siteTitle` or `object.menuLinks`.
 
-You can now access the header component's props and map the menuLinks into elements that can be rendered in the document. Like so:
+You can now access the header component's props and map the menuLinks into elements that can be rendered in the document:
 
-```js
+```diff
 import React from 'react'
 import { Link } from 'gatsby'
-const Header = ({ siteTitle, menuLinks }) => {
-	return (
-		<nav>
-		    {
-		      menuLinks.map( link=>
-			    <li key={link.name} style={{'listStyleType':'none'}}>
-				    <Link to={link.link}>{link.name}</Link>
-			    </li>
-			 )
-		    }
-		</nav>
-    )
-}
+
+const Header = ({ siteTitle, menuLinks }) => (
++  <nav style={{ display: 'flex', flex: 1 }}>
++    {
++      menuLinks.map(link =>
++        <li key={link.name} style={{ 'listStyleType': 'none' }}>
++          <Link to={link.link}>{link.name}</Link>
++        </li>)
++    }
++  </nav>
+)
 ```
 
-If you have made it this far congratulations! You have now dynamically generated your site's navigation and can add new site links dynamically by adding entries to the `gatsby-config.js` file. Be sure to check out more documentation for more in-depth examples of how to achieve other common tasks using Gatsby.
+Starting the development server by running `npm run develop` and navigating to `http://localhost:8000` you should now see some dynamically genrated menu links on your page. 
+
+If you have made it this far good job! You have now dynamically generated your site's navigation and can add new site links dynamically by adding entries to the `gatsby-config.js` file. Be sure to check out more documentation for more in-depth examples of how to achieve other common tasks using Gatsby.
 
 
 
