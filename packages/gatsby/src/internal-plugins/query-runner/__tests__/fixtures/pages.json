@@ -1,0 +1,67 @@
+[
+  {
+    "jsonName": "offline-plugin-app-shell-fallback-a30",
+    "internalComponentName": "ComponentOfflinePluginAppShellFallback",
+    "path": "/offline-plugin-app-shell-fallback/",
+    "matchPath": null,
+    "component": "my/gatsby/project/node_modules/gatsby-plugin-offline/app-shell.js",
+    "componentChunkName": "component---node-modules-gatsby-plugin-offline-app-shell-js",
+    "context": {},
+    "updatedAt": 1536075586514,
+    "pluginCreator___NODE": "Plugin gatsby-plugin-offline",
+    "pluginCreatorId": "Plugin gatsby-plugin-offline",
+    "componentPath": "my/gatsby/project/node_modules/gatsby-plugin-offline/app-shell.js"
+  },
+  {
+    "jsonName": "404-22d",
+    "internalComponentName": "Component404",
+    "path": "/404/",
+    "matchPath": "/404/",
+    "component": "my/gatsby/project/src/pages/404.js",
+    "componentChunkName": "component---src-pages-404-js",
+    "context": {},
+    "updatedAt": 1536075586525,
+    "pluginCreator___NODE": "Plugin gatsby-plugin-page-creator",
+    "pluginCreatorId": "Plugin gatsby-plugin-page-creator",
+    "componentPath": "my/gatsby/project/src/pages/404.js"
+  },
+  {
+    "jsonName": "index",
+    "internalComponentName": "ComponentIndex",
+    "path": "/",
+    "matchPath": null,
+    "component": "my/gatsby/project/src/pages/index.js",
+    "componentChunkName": "component---src-pages-index-js",
+    "context": {},
+    "updatedAt": 1536075586526,
+    "pluginCreator___NODE": "Plugin gatsby-plugin-page-creator",
+    "pluginCreatorId": "Plugin gatsby-plugin-page-creator",
+    "componentPath": "my/gatsby/project/src/pages/index.js"
+  },
+  {
+    "jsonName": "page-2-fbc",
+    "internalComponentName": "ComponentPage2",
+    "path": "/page-2/",
+    "matchPath": null,
+    "component": "my/gatsby/project/src/pages/page-2.js",
+    "componentChunkName": "component---src-pages-page-2-js",
+    "context": {},
+    "updatedAt": 1536075586526,
+    "pluginCreator___NODE": "Plugin gatsby-plugin-page-creator",
+    "pluginCreatorId": "Plugin gatsby-plugin-page-creator",
+    "componentPath": "my/gatsby/project/src/pages/page-2.js"
+  },
+  {
+    "jsonName": "404-html-516",
+    "internalComponentName": "Component404Html",
+    "path": "/404.html",
+    "matchPath": null,
+    "component": "my/gatsby/project/src/pages/404.js",
+    "componentChunkName": "component---src-pages-404-js",
+    "context": {},
+    "updatedAt": 1536075586537,
+    "pluginCreator___NODE": "Plugin prod-404",
+    "pluginCreatorId": "Plugin prod-404",
+    "componentPath": "my/gatsby/project/src/pages/404.js"
+  }
+]
