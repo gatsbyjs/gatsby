@@ -112,7 +112,7 @@ The core of this step creates a GraphQL Field object, where the type is inferred
 
 If however, the value is an object or array, we recurse, using [inferObjectStructureFromNodes](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js#L317) to create the GraphQL fields.
 
-in addition, if a value is a string that actually points to a file, then we hand off field inference to [types/file-type.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/types/type-file.js) which creates a new type that resolves File-like strings to File types. The same goes for Strings that look like dates. These are handled by [types/date-type.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/types/type-date.js) which creates a `GraphQLDate` custom type.
+In addition, Gatsby creates custom GraphQL types for `File` ([types/type-file.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/types/type-file.js)) and `Date` ([types/type-date.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/types/type-file.js)). If the value of our field is a string that looks like a filename or a date (handled by [should-infer](TODO) functions), then we return the appropariate custom type. 
 
 ### Child/Parent fields
 
@@ -163,3 +163,44 @@ When a node is created as a child of some node, that fact is stored as a `parent
 ### Plugin fields
 
 These are fields created by plugins that implement the [setFieldsOnGraphQLNodeType](/docs/node-apis/#setFieldsOnGraphQLNodeType) API. These plugins return full GraphQL Field declarations, complete with type and resolve functions.
+
+### File types
+
+As described in [plain object or value field](#plain-object-or-value-field), if a string field value looks like a file path, then we infer `File` as the field's type. The creation of this type occurs in [type-file.js setFileNodeRootType()](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/types/type-file.js#L18). It is called just after we have created the GqlType for `File` (only called once). 
+
+It creates a new GraphQL Field Config whose type is the just created `File` GqlType, and whose resolver converts a string into a File object. Here's how it works:
+
+Say we have a `data/posts.json` file that has been sourced (of type `File`), and then the [gatsby-transformer-json](/packages/gatsby-transformer-json) transformer creates a child node (of type `PostsJson`)
+
+```javascript
+// data/posts.json
+[
+  {
+    "id": "1685001452849004065",
+    "text": "Venice is 👌",
+    "image": "images/BdiU-TTFP4h.jpg",
+  }
+]
+```
+
+Notice that the image value looks like a file. Therefore, we'd like to query it as if it were a file, and get its relativePath, accessTime, etc.
+
+```graphql
+{ 
+  postsJson( id: { eq: "1685001452849004065" } ) {
+    image {
+      relativePath, 
+      accessTime
+    }
+  }
+}
+```
+
+The [File type resolver](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/types/type-file.js#L135) takes care of this. It gets the value (`images/BdiU-TTFP4h.jpg`). It then looks up this node's root NodeID via [node-tracking](TODO) which returns the original `data/posts.json` file. It creates a new filename by concatenating the field value onto the parent node's directory. 
+
+I.e `data` + `images/BdiU-TTFP4h.jpg` = `data/images/BdiU-TTFP4h.jpg`. 
+
+And then finally it searches redux for the first `File` node whose path matches this one. This is our proper resolved node. We're done!
+
+
+
