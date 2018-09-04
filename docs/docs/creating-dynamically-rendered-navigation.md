@@ -138,7 +138,7 @@ const Layout = ({ children }) => (
 )
 ```
 
-With the above changes to your `StaticQuery` component, the  `render` property which accepts a function that takes one argument now has  has access to the menu links for use inside the function (as the argument). The last thing that is left to do is to display the site's navigation.
+With the above changes to your `StaticQuery` component, the  `render` property which accepts a function that takes one argument now has access to the menu links for use inside the function (as the argument). The last thing that is left to do is to display the site's navigation.
 
 To do this the header component that is already available in the project seems like it might be a good starting place to display the navigation. Lets pass the `menuLinks` object to this header component like so:
 ```diff
