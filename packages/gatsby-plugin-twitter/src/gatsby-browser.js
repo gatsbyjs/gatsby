@@ -1,10 +1,10 @@
 const injectTwitterScript = () => {
   function addJS(jsCode) {
-    var s = document.createElement("script")
+    var s = document.createElement(`script`)
 
-    s.type = "text/javascript"
+    s.type = `text/javascript`
     s.innerText = jsCode
-    document.getElementsByTagName("head")[0].appendChild(s)
+    document.getElementsByTagName(`head`)[0].appendChild(s)
   }
   addJS(`
           window.twttr = (function(d, s, id) {
@@ -30,7 +30,7 @@ let injectedTwitterScript = false
 exports.onRouteUpdate = function({ location }) {
   // If there's an embedded tweet, lazy-load the twitter script (if it hasn't
   // already been loaded), and then run the twitter load function.
-  if (document.querySelector(".twitter-tweet") !== null) {
+  if (document.querySelector(`.twitter-tweet`) !== null) {
     if (!injectedTwitterScript) {
       injectTwitterScript()
     }
