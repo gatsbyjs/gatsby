@@ -1,6 +1,7 @@
 import React from "react"
 import Helmet from "react-helmet"
 import { graphql } from "gatsby"
+import { MIN_DEFAULT_MEDIA_QUERY } from "typography-breakpoint-constants"
 
 import Layout from "../components/layout"
 import { itemListDocs, itemListTutorial } from "../utils/sidebar/item-list"
@@ -8,7 +9,8 @@ import MarkdownPageFooter from "../components/markdown-page-footer"
 import DocSearchContent from "../components/docsearch-content"
 
 import Container from "../components/container"
-import colors from "../utils/colors"
+import presets, { colors } from "../utils/presets"
+import { rhythm, options } from "../utils/typography"
 
 import docsHierarchy from "../data/sidebars/doc-links.yaml"
 
@@ -88,19 +90,22 @@ class DocsTemplate extends React.Component {
                 css={{
                   "> .gatsby-code-title": {
                     backgroundColor: colors.gatsby,
-                    borderTopLeftRadius: 8,
-                    borderTopRightRadius: 8,
+                    borderTopLeftRadius: presets.radiusLg,
+                    borderTopRightRadius: presets.radiusLg,
                     color: `white`,
-                    fontFamily:
-                      `Space Mono, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace`,
+                    fontFamily: options.monospaceFontFamily.join(`,`),
                     fontSize: 14,
-                    marginLeft: `-1.05rem`,
-                    marginRight: `-1.05rem`,
-                    padding: `0.5rem 1.05rem`,
-                    "@media only screen and (min-width: 980px)": {
-                      padding: `1rem 1.575rem`,
-                      marginLeft: `-1.575rem`,
-                      marginRight: `-1.575rem`,
+                    marginLeft: rhythm(-options.blockMarginBottom),
+                    marginRight: rhythm(-options.blockMarginBottom),
+                    padding: `${rhythm(options.blockMarginBottom / 2)} ${rhythm(
+                      options.blockMarginBottom
+                    )}`,
+                    [MIN_DEFAULT_MEDIA_QUERY]: {
+                      marginLeft: rhythm(-options.blockMarginBottom * 1.5),
+                      marginRight: rhythm(-options.blockMarginBottom * 1.5),
+                      padding: `${rhythm(options.blockMarginBottom)} ${rhythm(
+                        options.blockMarginBottom * 1.5
+                      )}`,
                     },
                   },
                 }}
