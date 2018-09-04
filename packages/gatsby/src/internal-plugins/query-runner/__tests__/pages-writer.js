@@ -1,5 +1,5 @@
 const _ = require(`lodash`)
-const { writePages } = require(`../pages-writer`)
+const { writePages, resetLastHash } = require(`../pages-writer`)
 
 const jsonDataPathsFixture = require(`./fixtures/jsonDataPaths.json`)
 const pagesFixture = require(`./fixtures/pages.json`)
@@ -39,6 +39,7 @@ describe(`Pages writer`, () => {
     const spy = jest.spyOn(mockFsExtra, `writeFile`)
 
     await writePages()
+    const data1 = spy.mock.calls[3][1]
 
     mockState = {
       ...mockState,
@@ -52,16 +53,36 @@ describe(`Pages writer`, () => {
           _(pagesFixture)
             .chunk(2)
             .reverse()
-            .concat()
+            .flatten()
             .value(),
       },
     }
 
-    await writePages()
+    // Ensure testing in the same conditions as if we have
+    // removed the .cache folder
+    resetLastHash()
 
-    // `fs.writeFile` is called 4 times while the execution of `writePages`.
-    // But it's never called if data to write has the same hash than those
-    // of the previous call.
-    expect(spy.mock.calls.length).toBe(4)
+    await writePages()
+    const data2 = spy.mock.calls[7][1]
+
+    expect(spy.mock.calls.length).toBe(8)
+
+    const expectedResult = JSON.stringify({
+      pages: [
+        { path: `/amet`, matchPath: null },
+        { path: `/ipsum`, matchPath: null },
+        { path: `/lorem`, matchPath: null },
+        { path: `/dolor`, matchPath: `/foo` },
+        { path: `/sit`, matchPath: `/bar` },
+      ],
+      dataPaths: {
+        bar: `b/a/r`,
+        baz: `b/a/z`,
+        foo: `f/o/o`,
+      },
+    })
+
+    expect(data1).toEqual(expectedResult)
+    expect(data2).toEqual(expectedResult)
   })
 })

@@ -131,6 +131,12 @@ const preferDefault = m => m && m.default || m
 
 exports.writePages = writePages
 
+const resetLastHash = () => {
+  lastHash = null
+}
+
+exports.resetLastHash = resetLastHash
+
 let bootstrapFinished = false
 let oldPages
 const debouncedWritePages = _.debounce(
