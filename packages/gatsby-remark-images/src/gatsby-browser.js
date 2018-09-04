@@ -3,8 +3,7 @@ const { imageClass, imageBackgroundClass, imageWrapperClass } = require(`./class
 exports.onRouteUpdate = () => {    
     const imageWrappers = document.querySelectorAll(`.${imageWrapperClass}`)
 
-    for (const index in imageWrappers) {
-        const imageWrapper = imageWrapper[index]
+    Array.prototype.forEach.call(imageWrappers, (imageWrapper) => {
         const backgroundElement = imageWrapper.querySelector(`.${imageBackgroundClass}`)
         const imageElement = imageWrapper.querySelector(`.${imageClass}`)
 
@@ -16,7 +15,7 @@ exports.onRouteUpdate = () => {
         const imageLoadHandler = createImageLoadHandler(backgroundElement, imageElement)
 
         imageElement.complete ? imageLoadHandler() : imageElement.addEventListener(`load`, imageLoadHandler)
-    }
+    })
 }
 
 function createImageLoadHandler(background, image) {
