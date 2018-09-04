@@ -1,56 +1,36 @@
 import React from "react"
-import { Transition as ReactTransition } from "react-transition-group"
+import {
+  TransitionGroup,
+  Transition as ReactTransition,
+} from "react-transition-group"
 import getTransitionStyle from "../utils/getTransitionStyle"
-import { historyExitingEventType, timeout } from "../../gatsby-browser"
 
-class Transition extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = { exiting: false }
-    this.listenerHandler = this.listenerHandler.bind(this)
-  }
+const timeout = 250
 
-  listenerHandler(event) {
-    this.setState({ exiting: true })
-  }
-
-  componentDidMount() {
-    window.addEventListener(historyExitingEventType, this.listenerHandler)
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener(historyExitingEventType, this.listenerHandler)
-  }
-
-  static getDerivedStateFromProps({ exiting }) {
-    if (exiting) {
-      return { exiting: false }
-    }
-    return null
-  }
-
+class Transition extends React.PureComponent {
   render() {
-    const transitionProps = {
-      timeout: {
-        enter: 0,
-        exit: timeout,
-      },
-      appear: true,
-      in: !this.state.exiting,
-    }
+    const { children, location } = this.props
 
     return (
-      <ReactTransition {...transitionProps}>
-        {status => (
-          <div
-            style={{
-              ...getTransitionStyle({ status, timeout }),
-            }}
-          >
-            {this.props.children}
-          </div>
-        )}
-      </ReactTransition>
+      <TransitionGroup>
+        <ReactTransition
+          key={location.pathname}
+          timeout={{
+            enter: timeout,
+            exit: timeout,
+          }}
+        >
+          {status => (
+            <div
+              style={{
+                ...getTransitionStyle({ status, timeout }),
+              }}
+            >
+              {children}
+            </div>
+          )}
+        </ReactTransition>
+      </TransitionGroup>
     )
   }
 }

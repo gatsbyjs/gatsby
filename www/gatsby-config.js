@@ -2,7 +2,7 @@ module.exports = {
   siteMetadata: {
     title: `Gatsby`,
     siteUrl: `https://www.gatsbyjs.org`,
-    description: `Blazing-fast static site generator for React`,
+    description: `Blazing fast modern site generator for React`,
   },
   mapping: {
     "MarkdownRemark.frontmatter.author": `AuthorYaml`,
@@ -99,22 +99,10 @@ module.exports = {
         icon: `src/assets/gatsby-icon.png`,
       },
     },
-    {
-      resolve: `gatsby-plugin-offline`,
-      options: {
-        navigateFallback: null,
-        navigateFallbackWhitelist: [],
-      },
-    },
+    `gatsby-plugin-offline`,
     `gatsby-transformer-csv`,
     `gatsby-plugin-twitter`,
     `gatsby-plugin-react-helmet`,
-    {
-      resolve: `gatsby-plugin-google-analytics`,
-      options: {
-        trackingId: `UA-93349937-1`,
-      },
-    },
     {
       resolve: `gatsby-plugin-google-tagmanager`,
       options: {
@@ -122,12 +110,6 @@ module.exports = {
       },
     },
 
-    {
-      resolve: `gatsby-plugin-fullstory`,
-      options: {
-        fs_org: `B2TRP`,
-      },
-    },
     `gatsby-plugin-sitemap`,
     {
       resolve: `gatsby-plugin-feed`,
@@ -201,5 +183,6 @@ module.exports = {
       },
     },
     `gatsby-transformer-screenshot`,
+    `gatsby-plugin-subfont`,
   ],
 }

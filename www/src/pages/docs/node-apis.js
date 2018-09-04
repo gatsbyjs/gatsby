@@ -61,7 +61,8 @@ class NodeAPIDocs extends React.Component {
           <hr />
           <h2 css={{ marginBottom: rhythm(1 / 2) }}>Usage</h2>
           <p css={{ marginBottom: rhythm(1) }}>
-            Implement any of these APIs by exporting them from a file named{` `}
+            Implement any of these APIs by exporting them from a file named
+            {` `}
             <code>gatsby-node.js</code> in the root of your project.
           </p>
           <hr />

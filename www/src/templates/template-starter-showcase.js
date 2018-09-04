@@ -1,6 +1,5 @@
 import React from "react"
 import Helmet from "react-helmet"
-// import { OutboundLink } from "gatsby-plugin-google-analytics"
 import { Link, graphql } from "gatsby"
 import Img from "gatsby-image"
 
@@ -9,6 +8,7 @@ import Layout from "../components/layout"
 import ShareMenu from "../components/share-menu"
 import presets, { colors } from "../utils/presets"
 import { /*typography, */ rhythm, scale, options } from "../utils/typography"
+import sharedStyles from "../views/shared/styles"
 import MdLaunch from "react-icons/lib/md/launch"
 import GithubIcon from "react-icons/lib/fa/github"
 
@@ -272,7 +272,7 @@ class StarterTemplate extends React.Component {
                   fluid={imageSharp.childImageSharp.fluid}
                   alt={`Screenshot of ${imageSharp.name}`}
                   css={{
-                    ...styles.screenshot,
+                    ...sharedStyles.screenshot,
                   }}
                 />
               )}
@@ -367,7 +367,8 @@ class StarterTemplate extends React.Component {
                             }}
                           >
                             <a href={`https://npm.im/${dep}`}>
-                              {`${dep} `}<FaExtLink />
+                              {`${dep} `}
+                              <FaExtLink />
                             </a>
                           </div>
                         )

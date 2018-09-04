@@ -81,7 +81,7 @@ Then install some other needed dependencies at the root of the project. You'll u
 "Kirkham", and you'll try out a CSS-in-JS library, ["Emotion"](https://emotion.sh/):
 
 ```shell
-npm install --save gatsby-plugin-typography typography react-typography typography-theme-kirkham gatsby-plugin-emotion emotion react-emotion emotion-server
+npm install --save gatsby-plugin-typography typography react-typography typography-theme-kirkham gatsby-plugin-emotion@next emotion react-emotion emotion-server
 ```
 
 Let's set up a site similar to what you ended with in [Part Three](/tutorial/part-three). This site will have a layout component and two page components:

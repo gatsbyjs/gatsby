@@ -1858,6 +1858,17 @@
     - Landing
     - Portfolio
   featured: false
+- title: Lisa Ye's Blog
+  description: >
+      Simple blog/portofolio for a fashion designer. Gatsby_v2 + Netlify cms
+  main_url: https://lisaye.netlify.com/
+  url: https://lisaye.netlify.com/
+  categories:
+    - Blog
+    - Portfolio
+    - Personal
+    - Fashion
+  featured: false
 - title: Lifestone Church
   main_url: 'https://www.lifestonechurch.net/'
   url: 'https://www.lifestonechurch.net/'
@@ -2246,4 +2257,39 @@
     - Web Dev
     - Agency
     - Open Source
-    - Featured
+- title: It's a Date
+  description: >
+    It's a Date is a dating app that actually involves dating.
+  main_url: 'https://www.itsadate.app/'
+  url: 'https://www.itsadate.app/'
+  featured: false
+  categories:
+    - App
+    - Blog
+- title: Node.js HBase
+  description: >
+    Asynchronous HBase client for NodeJs using REST.
+  main_url: https://hbase.js.org/
+  url: https://hbase.js.org/
+  source_url: 'https://github.com/adaltas/node-hbase'
+  categories:
+    - Documentation
+    - Open Source
+    - Technology
+  built_by: David Worms
+  built_by_url: http://www.adaltas.com
+  featured: false
+- title: Peter Kroyer - Web Design / Web Development
+  main_url: https://www.peterkroyer.at/en/
+  url: https://www.peterkroyer.at/en/
+  description: >
+    Freelance web designer / web developer based in Vienna, Austria.
+  categories:
+    - Agency
+    - Web Dev
+    - Design
+    - Portfolio
+    - Creative
+  built_by: Peter Kroyer
+  built_by_url: https://www.peterkroyer.at/
+  featured: false
