@@ -121,23 +121,10 @@ const prefetchResource = resourceName => {
 const getResourceModule = resourceName =>
   fetchResource(resourceName).then(preferDefault)
 
-// TODO remove queuing logic since it's broken anyways.
-// Prefetcher logic
-if (process.env.NODE_ENV === `production`) {
-  prefetcher = require(`./prefetcher`)({
-    prefetchNextResource: () => {
-      let next = queue.dequeue()
-      return next && prefetchResource(next)
-    },
-  })
-
-  emitter.on(`onPreLoadPageResources`, e => {
-    prefetcher.onPreLoadPageResources(e)
-  })
-  emitter.on(`onPostLoadPageResources`, e => {
-    prefetcher.onPostLoadPageResources(e)
-  })
-}
+setInterval(() => {
+  let next = queue.dequeue()
+  next && prefetchResource(next)
+}, 100)
 
 const appearsOnLine = () => {
   const isOnLine = navigator.onLine
@@ -178,16 +165,10 @@ const sortResourcesByCount = (a, b) => {
 
 let findPage
 let pathScriptsCache = {}
-let resourcesArray = []
-let mountOrder = 1
 let prefetchTriggered = {}
 let disableCorePrefetching = false
 
 const queue = {
-  empty: () => {
-    resourcesCount = Object.create(null)
-    resourcesArray = []
-  },
   addPagesArray: newPages => {
     findPage = pageFinderFactory(newPages, __PATH_PREFIX__)
   },
@@ -200,7 +181,6 @@ const queue = {
   addDataPaths: dataPaths => {
     jsonDataPaths = dataPaths
   },
-  dequeue: () => resourcesArray.pop(),
   // Hovering on a link is a very strong indication the user is going to
   // click on it soon so let's start prefetching resources for this
   // pathname.
@@ -253,35 +233,9 @@ const queue = {
       devGetPageData(page.path)
     }
 
-    const mountOrderBoost = 1 / mountOrder
-    mountOrder += 1
-
-    function enqueueResource(resourceName) {
-      if (!resourceName) return
-      if (!resourcesCount[resourceName]) {
-        resourcesCount[resourceName] = 1 + mountOrderBoost
-      } else {
-        resourcesCount[resourceName] += 1 + mountOrderBoost
-      }
-
-      // Before adding, checking that the resource isn't either
-      // already queued or been downloading.
-      if (hasFetched[resourceName] || resourcesArray.includes(resourceName))
-        return
-
-      resourcesArray.unshift(resourceName)
-    }
-
-    // Add resources to queue.
-    enqueueResource(page.jsonName)
-    enqueueResource(page.componentChunkName)
-
-    // Sort resources by resourcesCount.
-    resourcesArray.sort(sortResourcesByCount)
-
-    if (process.env.NODE_ENV === `production`) {
-      prefetcher.onNewResourcesAdded()
-    }
+    // Prefetch resources.
+    prefetchResource(page.jsonName)
+    prefetchResource(page.componentChunkName)
 
     return true
   },
@@ -419,9 +373,6 @@ const queue = {
         })
       }
     }),
-
-  // for testing
-  ___resources: () => resourcesArray.slice().reverse(),
 }
 
 export const setApiRunnerForLoader = runner => {
