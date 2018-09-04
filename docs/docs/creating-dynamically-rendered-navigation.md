@@ -251,10 +251,13 @@ const Header = ({ siteTitle, menuLinks }) => (
 
 Starting the development server by running `npm run develop` and navigating to `http://localhost:8000` you should now see some dynamically genrated menu links on your page. 
 
-If you have made it this far good job! You can now add new site links to your website dynamically by adding entries to the `gatsby-config.js` file. Be sure to check out more documentation for more in-depth examples of how to achieve other common tasks using Gatsby.
+If you have made it this far good job! You can now add new site links to your website dynamically by adding entries to the `gatsby-config.js` file.
 
+## Where to next?
+Be sure to check out more documentation for more in-depth examples of how to achieve other common tasks using Gatsby.
 
-
+- [Authentication in Gatsby](https://next.gatsbyjs.org/docs/authentication/)
+- [E-commerce in Gatsby](https://next.gatsbyjs.org/docs/e-commerce/)
 
 
 
