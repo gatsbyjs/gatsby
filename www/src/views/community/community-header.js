@@ -46,9 +46,9 @@ const CommunityHeaderLink = ({ linkTo, children }) => (
 )
 
 class CommunityHeader extends Component {
-  state = {
+  /*   state = {
     search: ``,
-  }
+  } */
   render() {
     const { forHire, hiring } = this.props
     return (
@@ -167,7 +167,8 @@ class CommunityHeader extends Component {
             </span>
             <img src={Arrow} alt="" css={{ marginBottom: 0 }} />
           </button>
-          <label css={{ position: `relative` }}>
+          {/* // Search function is not implemented yet, do we want/need it here? */}
+          {/*  <label css={{ position: `relative` }}>
             <input
               css={{ ...styles.searchInput }}
               type="search"
@@ -192,7 +193,7 @@ class CommunityHeader extends Component {
                 transform: `translateY(-50%)`,
               }}
             />
-          </label>
+          </label> */}
         </div>
       </header>
     )
@@ -244,7 +245,7 @@ const styles = {
     backgroundColor: colors.ui.bright,
     color: colors.gatsby,
   },
-  searchInput: {
+  /*   searchInput: {
     appearance: `none`,
     backgroundColor: `transparent`,
     border: 0,
@@ -265,5 +266,5 @@ const styles = {
       width: `9rem`,
       background: colors.ui.light,
     },
-  },
+  }, */
 }
