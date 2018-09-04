@@ -20,24 +20,31 @@ digraph {
   fragments [ label = "fragments. e.g\l.cache/fragments/fragment1.js", shape = cylinder ];
   srcFiles [ label = "source files. e.g\lsrc/pages/my-page.js", shape = cylinder ];
   components [ label = "redux.state.components\l(via createPage)", shape = cylinder ];
-  fileQueries [ label = "files with queries", shape = box ];
-  babylon [ label = "parse files with babylon\lfilter those with queries" ];
-  queryAst [ label = "QueryASTs", shape = box ];
   schema [ label = "Gatsby schema", shape = cylinder ];
-  relayCompiler [ label = "Relay Compiler" ];
-  queries [ label = "{ Queries | { filePath | <query> query } }", shape = record ];
-  query [ label = "{\l    name: filePath,\l    text: rawQueryText,\l    originalText: original text from file,\l    path: filePath,\l    isStaticQuery: if it is,\l    hash: hash of query\l}\l ", shape = box ];
   
+  subgraph cluster_compiler {
+    label = "query-compiler.js";
+    fileQueries [ label = "files containing queries", shape = box ];
+    babylon [ label = "parse files with babylon\lfilter those with queries" ];
+    queryAst [ label = "QueryASTs", shape = box ];
+    relayCompiler [ label = "Relay Compiler" ];
+    queries [ label = "{ Queries | { filePath | <query> query } }", shape = record ];
+    query [ label = "{\l    name: filePath,\l    text: rawQueryText,\l    originalText: original text from file,\l    path: filePath,\l    isStaticQuery: if it is,\l    hash: hash of query\l}\l ", shape = box ];
+
+  }
   
-  fragments -> fileQueries;
-  srcFiles -> fileQueries;
-  components -> fileQueries;
   fileQueries -> babylon;
   babylon -> queryAst;
   queryAst -> relayCompiler;
-  schema -> relayCompiler;
   relayCompiler -> queries;
   queries:query -> query;
+  fragments -> fileQueries;
+  srcFiles -> fileQueries;
+  components -> fileQueries;
+  schema -> relayCompiler;
+  
+  fragments -> srcFiles [ style = invis ];
+  fragments -> components [ style = invis ];
 }
 ```
 
@@ -49,9 +56,55 @@ If the query is a `StaticQuery`, we call the `replaceStaticQuery` action to save
 
 If the query is just a normal every day query (not StaticQuery), then we update its component's `query` in the redux `components` namespace via the `replaceComponentQuery` action.
 
+```dot
+digraph {
+  compound = true;
+
+  compiler [ label = "query-compiler.js" ];
+  
+  subgraph cluster_watcher {
+    label = "query-watcher.js:handleQuery()"
+    query [ label = "{\l    name: filePath,\l    text: rawQueryText,\l    originalText: original text from file,\l    path: filePath,\l    isStaticQuery: if it is,\l    hash: hash of query\l}\l ", shape = box ];
+    replaceStaticQuery [ label = "replaceStaticQuery()" ];
+    staticQueryComponents [ label = "staticQueryComponents\l (redux)", shape = cylinder ];
+    replaceComponentQuery [ label = "replaceComponentQuery()" ];
+    components [ label = "components\l (redux)", shape = cylinder ];
+  
+    query -> replaceStaticQuery [ label = "if static query" ];
+    query -> replaceComponentQuery [ label = "if not static" ];
+    replaceStaticQuery -> staticQueryComponents;
+    replaceComponentQuery -> components [ label = "set `query` attribute" ];
+  }
+  
+  compiler -> query [ label = "for each compiled query", lhead = cluster_watcher ];
+}
+```
+
+
 #### Queue for execution
 
 Now that we've saved our query, we're ready to queue it for execution. Query execution is mainly handled by [page-query-runner.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/page-query-runner.js), so we accomplish this by passing the component's path to `queueQueryForPathname` function.
 
-Now let's learn about [Query Execution](/docs/behind-the-scenes-query-execution/).
 
+```dot
+digraph {
+  compound = true;
+  compiler [ label = "query-compiler.js" ];
+  
+  subgraph cluster_watcher {
+    label = "query-watcher.js:handleQuery()"
+    query [ label = "{\l    name: filePath,\l    text: rawQueryText,\l    originalText: original text from file,\l    path: filePath,\l    isStaticQuery: if it is,\l    hash: hash of query\l}\l ", shape = box ];
+    
+  }
+  
+  subgraph cluster_pageQueryRunner {
+    label = "page-query-runner.js"
+    queueQueryForPathname [ label = "queueQueryForPathname()" ];
+  }
+  
+  compiler -> query [ label = "for each compiled query", lhead = cluster_watcher ];
+  query -> queueQueryForPathname [ label = "queue for execution" ];
+}
+```
+
+Now let's learn about [Query Execution](/docs/behind-the-scenes-query-execution/).
