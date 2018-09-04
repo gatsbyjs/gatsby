@@ -6,6 +6,7 @@ import Img from "gatsby-image"
 import FaExtLink from "react-icons/lib/fa/external-link"
 import Layout from "../components/layout"
 import ShareMenu from "../components/share-menu"
+import TechWithIcon from "../components/tech-with-icon"
 import presets, { colors } from "../utils/presets"
 import { /*typography, */ rhythm, scale, options } from "../utils/typography"
 import sharedStyles from "../views/shared/styles"
@@ -13,6 +14,7 @@ import MdLaunch from "react-icons/lib/md/launch"
 import MdStar from "react-icons/lib/md/star"
 import MdArrowBack from "react-icons/lib/md/arrow-back"
 import GithubIcon from "react-icons/lib/fa/github"
+import { NetlifyIcon } from "../assets/logos"
 
 const gutter = rhythm(3 / 4)
 const gutterDesktop = rhythm(6 / 4)
@@ -94,17 +96,22 @@ class StarterTemplate extends React.Component {
               <meta name="twitter:data1" content={`1 min read`} />
             </Helmet>
             <div
+              className="top-header"
               css={{
                 fontFamily: options.headerFontFamily.join(`,`),
                 padding: gutter,
-                paddingBottom: rhythm(1.5 / 4),
+                // paddingBottom: rhythm(1.5 / 4),
                 [presets.Desktop]: {
                   padding: gutterDesktop,
-                  paddingBottom: rhythm(3 / 4),
+                  // paddingBottom: rhythm(3 / 4),
                 },
               }}
             >
-              <div>
+              <div
+                css={{
+                  paddingBottom: rhythm(1 / 4),
+                }}
+              >
                 <Link
                   to={`/starter-showcase`}
                   {...sharedStyles.withTitleHover}
@@ -128,7 +135,7 @@ class StarterTemplate extends React.Component {
                     style={{ marginRight: 4, verticalAlign: `sub` }}
                   />
                   &nbsp;
-                  <span className="title">All starters</span>
+                  <span className="title">All Starters</span>
                 </Link>
               </div>
               <div>
@@ -136,27 +143,45 @@ class StarterTemplate extends React.Component {
                   {starterShowcase.stub}
                 </h1>
               </div>
+            </div>
+            <div
+              className="starter-meta-container"
+              css={{
+                fontFamily: options.headerFontFamily.join(`,`),
+                padding: gutter,
+                paddingBottom: rhythm(1.5 / 4),
+                color: colors.gray.dark,
+                display: "flex",
+                flexWrap: "nowrap",
+                width: 320,
+                flexDirection: "column-reverse",
+                [presets.Desktop]: {
+                  padding: gutterDesktop,
+                  paddingBottom: rhythm(3 / 4),
+                },
+                [presets.Phablet]: {
+                  width: "100%",
+                  flexDirection: "row",
+                },
+              }}
+            >
+              {/* STARS, LAST UPDATED */}
               <div
-                className="all-column-container"
+                className="left-column-container"
                 css={{
-                  color: colors.gray.dark,
+                  marginTop: rhythm(3 / 4),
+                  paddingRight: 15,
+                  // flexGrow: 0,
                   display: "flex",
                   flexWrap: "wrap",
+                  [presets.Phablet]: {},
                 }}
               >
-                {/* STARS, LAST UPDATED */}
-                <div
-                  className="left-column-container"
-                  css={{
-                    marginTop: rhythm(3 / 4),
-                    paddingRight: 30,
-                    flexGrow: 0,
-                  }}
-                >
+                <div className="github-stars">
                   <span
                     css={{
                       color: colors.accent,
-                      paddingRight: 30,
+                      paddingRight: 10,
                     }}
                   >
                     <MdStar style={{ verticalAlign: `sub` }} />
@@ -165,106 +190,129 @@ class StarterTemplate extends React.Component {
                       {starterShowcase.stars}
                     </span>
                   </span>
+                </div>
+                <div className="last-updated">
                   <span
                     css={{
                       color: colors.gray.calm,
                       fontFamily: options.headerFontFamily.join(`,`),
-                      paddingRight: 10,
+                      paddingRight: 8,
                     }}
                   >
                     Updated
                   </span>
                   {showDate(starterShowcase.githubData.repoMetadata.updated_at)}
                 </div>
-                <div
-                  className="right-column-container"
-                  css={{
-                    marginTop: rhythm(3 / 4),
-                    marginRight: 15,
-                    // right column needs to flex itself
-                    display: "flex",
+              </div>
+              <div
+                className="right-column-container"
+                css={{
+                  marginTop: rhythm(3 / 4),
+                  marginRight: 15,
+                  // right column needs to flex itself
+                  display: "flex",
+                  flexWrap: "wrap",
+                  flexGrow: 1,
+                  justifyContent: "flex-start",
+                  [presets.Phablet]: {
                     justifyContent: "space-between",
-                    flexGrow: 1,
+                  },
+                }}
+              >
+                {/* BY {AUTHOR} */}
+                <div
+                  className="by-author"
+                  css={{ paddingRight: 15, paddingBottom: 15 }}
+                >
+                  <span css={{ color: colors.gray.light }}>{`By  `}</span>
+                  <a
+                    css={{
+                      "&&": {
+                        boxShadow: `none`,
+                        borderBottom: 0,
+                        color: colors.lilac,
+                        cursor: `pointer`,
+                        fontFamily: options.headerFontFamily.join(`,`),
+                        "&:hover": {
+                          background: `transparent`,
+                          color: colors.gatsby,
+                        },
+                      },
+                    }}
+                    href={`https://github.com/${starterShowcase.owner.login}`}
+                  >
+                    <span className="title">{starterShowcase.owner.login}</span>
+                  </a>
+                </div>
+                {/* OUT LINK / SHARE LINK */}
+                <div
+                  className="out-links"
+                  css={{
+                    // to position share dropdown
+                    position: "relative",
+                    zIndex: 1,
+                    // marginTop: rhythm(3 / 4),
+                    // alignSelf: "flex-end",
+                    // flexGrow: "1",
+                    // textAlign: "left",
+                    // [presets.Desktop]: {
+                    //   textAlign: "right",
+                    // },
                   }}
                 >
-                  {/* BY {AUTHOR} */}
-                  <div className="by-author">
-                    <span css={{ color: colors.gray.light }}>{`By  `}</span>
-                    <a
-                      css={{
-                        "&&": {
-                          boxShadow: `none`,
-                          borderBottom: 0,
-                          color: colors.lilac,
-                          cursor: `pointer`,
-                          fontFamily: options.headerFontFamily.join(`,`),
-                          "&:hover": {
-                            background: `transparent`,
-                            color: colors.gatsby,
-                          },
-                        },
-                      }}
-                      href={`https://github.com/${starterShowcase.owner.login}`}
-                    >
-                      <span className="title">
-                        {starterShowcase.owner.login}
-                      </span>
-                    </a>
-                  </div>
-                  {/* OUT LINK / SHARE LINK */}
-                  <div
-                    className="out-links"
+                  <a
+                    href={frontmatter.demo}
                     css={{
-                      // to position share dropdown
-                      position: "relative",
-                      zIndex: 1,
-                      // marginTop: rhythm(3 / 4),
-                      // alignSelf: "flex-end",
-                      // flexGrow: "1",
-                      // textAlign: "left",
-                      // [presets.Desktop]: {
-                      //   textAlign: "right",
-                      // },
+                      border: 0,
+                      borderRadius: presets.radius,
+                      color: colors.accent,
+                      fontFamily: options.headerFontFamily.join(`,`),
+                      fontWeight: `bold`,
+                      marginRight: rhythm(1.5 / 4),
+                      padding: `${rhythm(1 / 5)} ${rhythm(2 / 3)}`, // @todo same as site showcase but wrong for some reason
+                      textDecoration: `none`,
+                      WebkitFontSmoothing: `antialiased`,
+                      "&&": {
+                        backgroundColor: colors.accent,
+                        borderBottom: `none`,
+                        boxShadow: `none`,
+                        color: colors.gatsby,
+                        "&:hover": {
+                          backgroundColor: colors.accent,
+                        },
+                      },
                     }}
                   >
-                    <a
-                      href={frontmatter.demo}
-                      css={{
-                        border: 0,
-                        borderRadius: presets.radius,
-                        color: colors.accent,
-                        fontFamily: options.headerFontFamily.join(`,`),
-                        fontWeight: `bold`,
-                        marginRight: rhythm(1.5 / 4),
-                        padding: `${rhythm(1 / 5)} ${rhythm(2 / 3)}`, // @todo same as site showcase but wrong for some reason
-                        textDecoration: `none`,
-                        WebkitFontSmoothing: `antialiased`,
-                        "&&": {
-                          backgroundColor: colors.accent,
-                          borderBottom: `none`,
-                          boxShadow: `none`,
-                          color: colors.gatsby,
-                          "&:hover": {
-                            backgroundColor: colors.accent,
-                          },
-                        },
-                      }}
-                    >
-                      <MdLaunch style={{ verticalAlign: `sub` }} /> Visit demo
-                    </a>
-                    <ShareMenu
-                      url={`https://github.com/${
-                        starterShowcase.githubFullName
-                      }`}
-                      title={`Check out ${repoName} on the @Gatsby Starter Showcase!`}
-                      image={imageSharp.childImageSharp.fluid.src}
-                      theme={"accent"}
-                    />
-                  </div>
+                    <MdLaunch style={{ verticalAlign: `sub` }} /> Visit demo
+                  </a>
+                  <ShareMenu
+                    url={`https://github.com/${starterShowcase.githubFullName}`}
+                    title={`Check out ${repoName} on the @Gatsby Starter Showcase!`}
+                    image={imageSharp.childImageSharp.fluid.src}
+                    theme={"accent"}
+                  />
                 </div>
               </div>
             </div>
             <div
+              className="screenshot"
+              css={{
+                borderTop: `1px solid ${colors.ui.light}`,
+                position: `relative`,
+              }}
+            >
+              {imageSharp && (
+                <Img
+                  fluid={imageSharp.childImageSharp.fluid}
+                  alt={`Screenshot of ${imageSharp.name}`}
+                  css={{
+                    ...sharedStyles.screenshot,
+                  }}
+                />
+              )}
+            </div>
+            <div
+              className="github-source-playground"
               css={{
                 display: `flex`,
                 borderTop: `1px solid ${colors.ui.light}`,
@@ -281,7 +329,6 @@ class StarterTemplate extends React.Component {
                     padding: 20,
                     paddingLeft: starterShowcase.featured ? false : 0,
                     display: `flex`,
-                    borderRight: `1px solid ${colors.ui.light}`,
                     [presets.Desktop]: {
                       ...scale(-1 / 6),
                     },
@@ -294,6 +341,7 @@ class StarterTemplate extends React.Component {
                       marginRight: 10,
                       height: 26,
                       width: 20,
+                      color: colors.gatsby,
                     }}
                   />
                   <a href={repoUrl} css={{ ...styles.link }}>
@@ -309,7 +357,7 @@ class StarterTemplate extends React.Component {
                     padding: 20,
                     paddingLeft: 0,
                     flex: 1,
-                    justifyContent: `center`,
+                    justifyContent: `flex-end`,
                     display: `flex`,
                     borderRight: `1px solid ${colors.ui.light}`,
                     ...scale(-1 / 6),
@@ -317,19 +365,31 @@ class StarterTemplate extends React.Component {
                   },
                 }}
               >
-                <span css={{ marginRight: 20 }}>Try this starter</span>
+                <span
+                  css={{
+                    marginRight: 20,
+                    color: colors.gray.calm,
+                    ...scale(1 / 5),
+                  }}
+                >
+                  Try this starter
+                </span>
                 <a
                   href={`https://app.netlify.com/start/deploy?repository=${repoUrl}`}
                   style={{
                     borderBottom: `none`,
                     boxShadow: `none`,
+                    color: colors.gatsby,
+                    ...scale(1 / 5),
+                    fontWeight: `normal`,
                   }}
                 >
-                  <img
+                  {/* <img
                     src="https://www.netlify.com/img/deploy/button.svg"
                     alt="Deploy to Netlify"
                     css={{ marginBottom: 0 }}
-                  />
+                  /> */}
+                  <TechWithIcon icon={NetlifyIcon}>Netlify</TechWithIcon>
                 </a>
               </div>
             </div>
