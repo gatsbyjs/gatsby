@@ -25,10 +25,9 @@ Is the content a step-by-step tutorial or a shorter article?
 - a step-by-step tutorial ought to go under Advanced Tutorials in the Tutuorial section of the .org site
 - a shorter article ought to go under the Docs
 
-Does the step-by-step tutorial deal with a high-demand and/or Gatsby core technology?
+Where do I put the content in the docs sidebar?
 
-- Yes --> Put it in the Advanced Tutorials in the Tutorial section of the .org site
-- No -->
+Create the PR to place the tutorial where you think it fits in the navigation, and OSS maintainers will give feedback as needed.
 
 ## Guide
 
@@ -36,7 +35,7 @@ Does the step-by-step tutorial deal with a high-demand and/or Gatsby core techno
 
 Guide articles are found under the "Guides" category in the docs.
 
-### Example of a guide article
+### Near-perfect example of a guide article
 
 [Add a 404 page](/docs/add-404-page/) is an example of a guide that isn't perfect yet. As you read through this template, take note of where that article can be improved.
 
@@ -136,7 +135,7 @@ them at the bottom in an "Other Resources" section. You can also mention here an
 
 ## Guide overview
 
-### Perfect example of a guide overview
+### Near-perfect example of a guide overview
 
 [Deploying and Hosting](/docs/deploying-and-hosting/)
 
@@ -202,9 +201,9 @@ Assume the reader has basic programming knowledge like the command line, code ed
 
 ## Tutorial
 
-### Perfect example of a tutorial
+### Near perfect example of a tutorial
 
-[link]()
+[Main Gatsby tutorial](https://www.gatsbyjs.org/tutorial/)
 
 ### What should a tutorial be about?
 
@@ -233,7 +232,7 @@ If you have a tutorial that falls into this category, it is likely a big enough 
 
 ## Tutorial template
 
-You can copy and paste the markdown text below and fill it in with your own information
+You can copy and paste the markdown text below and fill it in with your own information.
 
 ```markdown
 ---
@@ -307,9 +306,9 @@ them at the bottom in an "Other Resources" section. You can also mention here an
 
 ## Plugin READme template
 
-### Example of a plugin READme
+### Near-perfect example of a plugin READme
 
-[`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/)
+`[gatsby-source-filesystem]`(/packages/gatsby-source-filesystem/)
 
 ```markdown
 ## Description
@@ -361,9 +360,9 @@ If you have unanswered questions, would like help with enhancing or debugging th
 
 ## Starter READme template
 
-### Example of a starter READme
+### Near-perfect example of a starter READme
 
-[Default Starter READme](https://github.com/gatsbyjs/gatsby-starter-default))
+[Default Starter READme](https://github.com/gatsbyjs/gatsby-starter-default)
 
 ```markdown
 ## Name of starter
