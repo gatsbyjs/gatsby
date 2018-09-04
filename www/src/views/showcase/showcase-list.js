@@ -53,9 +53,8 @@ const ShowcaseList = ({ items, count }) => {
               >
                 {node.childScreenshot ? (
                   <Img
-                    resolutions={
-                      node.childScreenshot.screenshotFile.childImageSharp
-                        .resolutions
+                    fixed={
+                      node.childScreenshot.screenshotFile.childImageSharp.fixed
                     }
                     alt={`Screenshot of ${node.title}`}
                     css={{
