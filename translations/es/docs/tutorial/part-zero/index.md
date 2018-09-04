@@ -41,7 +41,7 @@ Visita el sitio [**Node.js**](https://nodejs.org/) y sigue las instrucciones par
 
 La salida de cada uno de esos comandos debe ser un número de versión. (¡Es posible que sus versiones no coincidan con las que se muestran a continuación!) Si al ingresar esos comandos no aparece un número de versión, regresa y asegúrate de haber instalado Node.js.
 
-![Check node and npm versions in terminal](01-node-npm-versions.png)
+![Check node and npm versions in terminal](../../../../../docs/tutorial/part-zero/01-node-npm-versions.png)
 
 ## familiarizándonos con npm
 
@@ -82,7 +82,7 @@ npm install --global gatsby-cli
 2.  Ejecuta `gatsby --version`.
 3.  Ejecuta `gatsby --help`.
 
-![Check gatsby version in terminal](02-gatsby-version.png)
+![Check gatsby version in terminal](../../../../../docs/tutorial/part-zero/02-gatsby-version.png)
 
 Si se instala con éxito, `gatsby --version` debería devolver un número de versión, y al ejecutar `gatsby --help` se mostrarán diferentes comandos disponibles usando la herramienta `gatsby-cli`.
 
@@ -98,7 +98,7 @@ Ahora usemos la herramienta gatsby-cli para crear tu primer sitio de Gatsby. Con
 4. Ejecuta `gatsby develop`.
 
 <video controls="controls" autoplay="true" loop="true">
-  <source type="video/mp4" src="./03-create-site.mp4"></source>
+  <source type="video/mp4" src="../../../../../docs/tutorial/part-zero/03-create-site.mp4"></source>
   <p>Sorry! You browser doesn't support this video.</p>
 </video>
 
@@ -129,7 +129,7 @@ gatsby develop
 
 abre una nueva tab en tu navegador y dirígete a [**http://localhost:8000**](http://localhost:8000/).
 
-![Check homepage](04-home-page.png)
+![Check homepage](../../../../../docs/tutorial/part-zero/04-home-page.png)
 
 Felicidades! ¡Este es el comienzo de tu primer sitio de Gatsby! 🎉
 

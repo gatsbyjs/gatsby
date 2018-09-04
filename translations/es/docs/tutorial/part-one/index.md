@@ -27,7 +27,7 @@ Si omites una URL desde el final, Gatsby generará automáticamente un sitio par
 
 En tu editor de código, abre el código generado para tu sitio "Hello World" y echa un vistazo a los diferentes directorios y archivos contenidos en el directorio 'hello-world'. Debería verse algo como esto:
 
-![Hola proyecto mundial en VS Code](01-hello-world-vscode.png)
+![Hola proyecto mundial en VS Code](../../../../../docs/tutorial/part-one/01-hello-world-vscode.png)
 
 _Nota: Nuevamente, el editor que se muestra aquí es Visual Studio Code. Si usas un editor diferente, se verá un poco diferente._
 
@@ -46,7 +46,7 @@ Abre el archivo en `/src/pages/index.js`. El código en este archivo crea un com
 1. Cambia el texto "Hello World!" A "¡Hola Gatsby!" Y guarda el archivo. Si tus ventanas están una al lado de la otra, puedes ver que el código y los cambios de contenido se reflejan casi instantáneamente en el navegador después de guardar el archivo.
 
 <video controls="controls" autoplay="true" loop="true">
-  <source type="video/mp4" src="./02-demo-hot-reloading.mp4"></source>
+  <source type="video/mp4" src="../../../../../docs/tutorial/part-one/02-demo-hot-reloading.mp4"></source>
   <p>Sorry! You browser doesn't support this video.</p>
 </video>
 
@@ -77,7 +77,7 @@ export default () => (
 )
 ```
 
-![More changes with hot reloading](03-more-hot-reloading.png)
+![More changes with hot reloading](../../../../../docs/tutorial/part-one/03-more-hot-reloading.png)
 
 4.  Añade una imagen. (En este caso, una imagen aleatoria desde unsplash).
 
@@ -93,7 +93,7 @@ export default () => (
 )
 ```
 
-![Add image](04-add-image.png)
+![Add image](../../../../../docs/tutorial/part-one/04-add-image.png)
 
 ### Espera... ¿HTML en nuestro JavaScript?
 
@@ -170,7 +170,7 @@ export default () => (
 
 2.  Dirigete a http://localhost:8000/about/.
 
-![New about page](05-about-page.png)
+![New about page](../../../../../docs/tutorial/part-one/05-about-page.png)
 
 Con solo poner un componente de React en el archivo `/src/pages/about.js`, ahora tenemos una página accesible en`/about`.
 
@@ -201,7 +201,7 @@ export default () => (
 )
 ```
 
-![Adding Header component](06-header-component.png)
+![Adding Header component](../../../../../docs/tutorial/part-one/06-header-component.png)
 
 En el navegador, el texto del encabezado "Acerca de Gatsby" ahora debería reemplazarse por "Esto es un encabezado". Pero no queremos que la página "Acerca de" diga "Esto es un encabezado". Queremos que diga ". Acerca de Gatsby ".
 
@@ -227,7 +227,7 @@ export default () => (
 )
 ```
 
-![Passing data to header](07-pass-data-header.png)
+![Passing data to header](../../../../../docs/tutorial/part-one/07-pass-data-header.png)
 
 ¡Ahora deberías ver nuevamente el texto del encabezado "Acerca de Gatsby"!
 
@@ -272,7 +272,7 @@ export default () => (
 )
 ```
 
-![Duplicate header to show reusability](08-duplicate-header.png)
+![Duplicate header to show reusability](../../../../../docs/tutorial/part-one/08-duplicate-header.png)
 
 Y ahí lo tenemos; Un segundo encabezado, sin reescribir ningún código, al pasar datos diferentes usando props.
 
@@ -307,7 +307,7 @@ export default () => (
 
 Al hacer clic en el nuevo enlace "Contacto" en la página de inicio, deberías ver...
 
-![Gatsby dev 404 page](09-dev-404.png)
+![Gatsby dev 404 page](../../../../../docs/tutorial/part-one/09-dev-404.png)
 
 ...la página Gatsby development 404. ¿Por qué? Porque estamos intentando vincular a una página que aún no existe.
 
@@ -377,7 +377,7 @@ surge public/
 
 Una vez que esto termine de ejecutarse, deberías ver en tu terminal algo como:
 
-![Screenshot of publishing Gatsby site with Surge](surge-deployment.png)
+![Screenshot of publishing Gatsby site with Surge](../../../../../docs/tutorial/part-one/surge-deployment.png)
 
 Abre la dirección web que figura en la línea inferior (`low-pain.surge.sh` en este
 caso) y verás tu sitio recién publicado. ¡Buen trabajo!
