@@ -53,6 +53,7 @@ const ShowcaseList = ({ items, count }) => {
               >
                 {node.childScreenshot ? (
                   <Img
+                    backgroundColor
                     fixed={
                       node.childScreenshot.screenshotFile.childImageSharp.fixed
                     }
