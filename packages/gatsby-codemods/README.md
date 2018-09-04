@@ -68,6 +68,31 @@ export const query = graphql`
 `
 ```
 
+#### `navigate-calls`
+
+Change the deprecated `navigateTo` method from `gatsby-link` to `navigate` from the `gatsby` module.
+
+See the [Gatsby v2 migration guide for details on when to use this](https://next.gatsbyjs.org/docs/migrating-from-v1-to-v2/#change-navigateto-to-navigate).
+
+```sh
+jscodeshift -t node_modules/gatsby-codemods/dist/transforms/navigate-calls.js <path>
+```
+
+Example result:
+
+```diff
+import React from "react"
+- import { navigateTo } from "gatsby-link"
++ import { navigate } from "gatsby"
+
+// Don't use navigate with an onClick btw :-)
+// Generally just use the `<Link>` component.
+export default props => (
+-  <div onClick={() => navigateTo(`/`)}>Click to go to home</div>
++  <div onClick={() => navigate(`/`)}>Click to go to home</div>
+)
+```
+
 ### More scripts
 
 Check out [issue 5038 in the Gatsby repo for additional codemod ideas](https://github.com/gatsbyjs/gatsby/issues/5038#issuecomment-411516865).

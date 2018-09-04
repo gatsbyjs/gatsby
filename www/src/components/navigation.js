@@ -1,6 +1,5 @@
 import React from "react"
 import { Link } from "gatsby"
-import { OutboundLink } from "gatsby-plugin-google-analytics"
 import GithubIcon from "react-icons/lib/go/mark-github"
 import TwitterIcon from "react-icons/lib/fa/twitter"
 import SearchForm from "../components/search-form"
@@ -171,7 +170,7 @@ export default ({ pathname }) => {
             iconStyles={{ ...socialIconsStyles }}
             isHomepage={isHomepage}
           />
-          <OutboundLink
+          <a
             href="https://github.com/gatsbyjs/gatsby"
             title="GitHub"
             css={{
@@ -180,7 +179,7 @@ export default ({ pathname }) => {
             }}
           >
             <GithubIcon style={{ verticalAlign: `text-top` }} />
-          </OutboundLink>
+          </a>
           <div
             css={{
               display: `none`,
@@ -188,7 +187,7 @@ export default ({ pathname }) => {
               [presets.Hd]: { display: `inline-block` },
             }}
           >
-            <OutboundLink
+            <a
               href="https://discord.gg/0ZcbPKXt5bVoxkfV"
               title="Discord"
               css={{
@@ -197,8 +196,8 @@ export default ({ pathname }) => {
               }}
             >
               <DiscordIcon overrideCSS={{ verticalAlign: `text-top` }} />
-            </OutboundLink>
-            <OutboundLink
+            </a>
+            <a
               href="https://twitter.com/gatsbyjs"
               title="@gatsbyjs"
               css={{
@@ -207,9 +206,9 @@ export default ({ pathname }) => {
               }}
             >
               <TwitterIcon style={{ verticalAlign: `text-top` }} />
-            </OutboundLink>
+            </a>
           </div>
-          <OutboundLink
+          <a
             href="https://www.gatsbyjs.com"
             title="gatsbyjs.com"
             css={{
@@ -219,7 +218,7 @@ export default ({ pathname }) => {
             }}
           >
             .com
-          </OutboundLink>
+          </a>
         </div>
       </div>
     </div>
