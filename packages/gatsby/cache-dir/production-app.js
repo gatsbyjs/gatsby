@@ -83,10 +83,10 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   if (
     window.page &&
     window.page.path !== `/offline-plugin-app-shell-fallback/` &&
-    window.page.pathPrefix + window.page.path !== window.location.pathname
+    __PATH_PREFIX__ + window.page.path !== window.location.pathname
   ) {
     navigate(
-      window.page.pathPrefix +
+      __PATH_PREFIX__ +
         window.page.path +
         window.location.search +
         window.location.hash,

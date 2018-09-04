@@ -313,7 +313,6 @@ export default (pagePath, callback) => {
   })
 
   // Add page metadata for the current page
-  page.pathPrefix = __PATH_PREFIX__
   const windowData = `/*<![CDATA[*/window.page=${JSON.stringify(page)};${
     page.jsonName in dataPaths
       ? `window.dataPath="${dataPaths[page.jsonName]}";`
