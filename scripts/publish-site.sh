@@ -4,7 +4,7 @@ npm install -g gatsby-dev-cli
 gatsby-dev --set-path-to-repo .
 
 echo "=== Installing the website dependencies"
-cd "$1" || exist
+cd "$1" || exit
 
 # Normally you wouldn't do this but we
 # want to test the latest versions of packages always
