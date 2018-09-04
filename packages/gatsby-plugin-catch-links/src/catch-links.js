@@ -53,13 +53,13 @@ export const anchorsTargetIsEquivalentToSelf = anchor => (
    */
   (
     anchor.target === `_parent` && (
-      !anchor.ownerDocument.defaultView.parent || 
+      !anchor.ownerDocument.defaultView.parent || // Assumption: This can be falsey
       anchor.ownerDocument.defaultView.parent === anchor.ownerDocument.defaultView
     )
   ) || 
   (
     anchor.target === `_top` && (
-      !anchor.ownerDocument.defaultView.top || 
+      !anchor.ownerDocument.defaultView.top || // Assumption: This can be falsey
       anchor.ownerDocument.defaultView.top === anchor.ownerDocument.defaultView
     )
   )
