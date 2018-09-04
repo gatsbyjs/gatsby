@@ -485,7 +485,6 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                 </div>
                 <Img
                   key={data.sitesYaml.id}
-                  backgroundColor
                   fluid={
                     data.sitesYaml.childScreenshot.screenshotFile
                       .childImageSharp.fluid

@@ -190,7 +190,6 @@ class FeaturedSites extends Component {
                 >
                   {node.childScreenshot && (
                     <Img
-                      backgroundColor
                       fluid={
                         node.childScreenshot.screenshotFile.childImageSharp
                           .fluid
