@@ -18,17 +18,6 @@ title: Docs templates
 
 Here are templates (models) to follow when contributing to Gatsby docs to ensure that the docs accomplish their purpose. If you have a good reason to deviate from the following template structures, mention those reasons in the PR so others can give proper feedback.
 
-### Decision tree: what content goes where?
-
-Is the content a step-by-step tutorial or a shorter article?
-
-- a step-by-step tutorial ought to go under Advanced Tutorials in the Tutuorial section of the .org site
-- a shorter article ought to go under the Docs
-
-Where do I put the content in the docs sidebar?
-
-Create the PR to place the tutorial where you think it fits in the navigation, and OSS maintainers will give feedback as needed.
-
 ## Guide
 
 ### What are guide articles?
