@@ -163,5 +163,9 @@ export const routeThroughBrowserOrApp = hrefHandler => event => {
 }
 
 export default function(root, cb) {
-  root.addEventListener(`click`, routeThroughBrowserOrApp(cb))
+  const clickHandler = routeThroughBrowserOrApp(cb)
+
+  root.addEventListener(`click`, clickHandler)
+
+  return () => root.removeEventListener(`click`, clickHandler)
 }
