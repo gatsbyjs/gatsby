@@ -8,7 +8,7 @@ import MarkdownPageFooter from "../components/markdown-page-footer"
 import DocSearchContent from "../components/docsearch-content"
 
 import Container from "../components/container"
-import colors from '../utils/colors';
+import colors from "../utils/colors"
 
 import docsHierarchy from "../data/sidebars/doc-links.yaml"
 
@@ -86,22 +86,23 @@ class DocsTemplate extends React.Component {
               </h1>
               <div
                 css={{
-                  '> .gatsby-code-title': {
+                  "> .gatsby-code-title": {
                     backgroundColor: colors.gatsby,
                     borderTopLeftRadius: 8,
                     borderTopRightRadius: 8,
-                    color: 'white',
-                    fontFamily: 'Space Mono, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace',
+                    color: `white`,
+                    fontFamily:
+                      `Space Mono, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace`,
                     fontSize: 14,
-                    marginLeft: '-1.05rem',
-                    marginRight: '-1.05rem',
-                    padding: '0.5rem 1.05rem',
-                    '@media only screen and (min-width: 980px)': {
-                      padding: '1rem 1.575rem',
-                      marginLeft: '-1.575rem',
-                      marginRight: '-1.575rem',
-                    }
-                  }
+                    marginLeft: `-1.05rem`,
+                    marginRight: `-1.05rem`,
+                    padding: `0.5rem 1.05rem`,
+                    "@media only screen and (min-width: 980px)": {
+                      padding: `1rem 1.575rem`,
+                      marginLeft: `-1.575rem`,
+                      marginRight: `-1.575rem`,
+                    },
+                  },
                 }}
                 dangerouslySetInnerHTML={{
                   __html: html,
