@@ -949,3 +949,17 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
   - Simple one page site
   - Fully Responsive
   - Styling with SCSS
+
+- [gatsby-starter-solid-state](https://github.com/theschmocker/gatsby-starter-solid-state)
+  [(demo)](https://gatsby-starter-solid-state.netlify.com)
+
+  Features:
+  
+  - Built upon gatsby-starter-default
+  - Based on the [Solid State](https://html5up.net/solid-state) theme
+  - PWA out-of-the-box with gatsby-plugin-manifest and gatsby-plugin-offline
+  - Lazy-loaded, responsive images
+  - Styled using SCSS
+  - Fully responsive
+  - Helper components for interacting with Sass classes
+  - Uses the latest version of React
