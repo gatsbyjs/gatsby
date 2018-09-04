@@ -139,9 +139,11 @@ export default () => (
     <h1>Richard Hamming on Luck</h1>
     <div>
       <p>
-        From Richard Hamming’s classic and must-read talk, “<a href="http://www.cs.virginia.edu/~robins/YouAndYourResearch.html">
+        From Richard Hamming’s classic and must-read talk, “
+        <a href="http://www.cs.virginia.edu/~robins/YouAndYourResearch.html">
           You and Your Research
-        </a>”.
+        </a>
+        ”.
       </p>
       <blockquote>
         <p>
@@ -176,9 +178,11 @@ export default () => (
     <h1>Richard Hamming on Luck</h1>
     <div>
       <p>
-        From Richard Hamming’s classic and must-read talk, “<a href="http://www.cs.virginia.edu/~robins/YouAndYourResearch.html">
+        From Richard Hamming’s classic and must-read talk, “
+        <a href="http://www.cs.virginia.edu/~robins/YouAndYourResearch.html">
           You and Your Research
-        </a>”.
+        </a>
+        ”.
       </p>
       <blockquote>
         <p>
@@ -432,22 +436,18 @@ directory. But, if it's used only in one file, create it inline.
 Modify `about-css-modules.js` so it looks like the following:
 
 ```jsx{7-19,25-34}
-import React from "react";
-import styles from "./about-css-modules.module.css";
-import Container from "../components/container";
+import React from "react"
+import styles from "./about-css-modules.module.css"
+import Container from "../components/container"
 
-console.log(styles);
+console.log(styles)
 
 const User = props => (
   <div className={styles.user}>
     <img src={props.avatar} className={styles.avatar} alt="" />
     <div className={styles.description}>
-      <h2 className={styles.username}>
-        {props.username}
-      </h2>
-      <p className={styles.excerpt}>
-        {props.excerpt}
-      </p>
+      <h2 className={styles.username}>{props.username}</h2>
+      <p className={styles.excerpt}>{props.excerpt}</p>
     </div>
   </div>
 )

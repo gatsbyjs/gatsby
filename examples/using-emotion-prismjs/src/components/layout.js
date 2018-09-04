@@ -34,7 +34,9 @@ class Layout extends React.Component {
             content="Gatsby example site using Emotion and PrismJS"
           />
           <meta name="referrer" content="origin" />
-        </Helmet>` `<div className={indexContainer}>
+        </Helmet>
+        ` `
+        <div className={indexContainer}>
           <HeadingTag>
             <Link className={link} to={`/`}>
               Using Gatsby with Emotion and PrismJS

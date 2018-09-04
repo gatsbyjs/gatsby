@@ -1,7 +1,7 @@
 import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
 import React, { createElement } from "react"
 import ReactDOM from "react-dom"
-import { Router } from "@reach/router"
+import { Router, navigate } from "@reach/router"
 import { ScrollContext } from "gatsby-react-router-scroll"
 import domReady from "domready"
 import {
@@ -80,6 +80,16 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     }
   }
 
+  if (
+    window.page.path &&
+    window.page.path !== window.location.pathname &&
+    window.page.path !== `/offline-plugin-app-shell-fallback/`
+  ) {
+    navigate(window.page.path + window.location.search + window.location.hash, {
+      replace: true,
+    })
+  }
+
   loader
     .getResourcesForPathname(window.location.pathname)
     .then(() => {
@@ -87,7 +97,13 @@ apiRunnerAsync(`onClientEntry`).then(() => {
         return loader
           .getResourcesForPathname(`/404.html`)
           .then(resources =>
-            loadDirectlyOr404(resources, window.location.pathname)
+            loadDirectlyOr404(
+              resources,
+              window.location.pathname +
+                window.location.search +
+                window.location.hash,
+              true
+            )
           )
       }
     })

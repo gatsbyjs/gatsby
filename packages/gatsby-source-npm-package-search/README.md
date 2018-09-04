@@ -11,9 +11,11 @@ This plugin uses Yarn's Algolia search to import all gatsby-related package info
 ```javascript
 // In your gatsby-config.js
 plugins: [
-  resolve: `gatsby-source-npm`,
-  options: {
-    keywords: [`keyword1`, `keyword2`]
+  {
+    resolve: `gatsby-source-npm-package-search`,
+    options: {
+      keywords: [`keyword1`, `keyword2`]
+    }
   }
 ]
 ```

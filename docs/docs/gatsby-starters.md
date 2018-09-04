@@ -1,5 +1,5 @@
 ---
-title: 'Gatsby Starters'
+title: "Gatsby Starters"
 ---
 
 The Gatsby CLI tool lets you install “starters”. These are boilerplate Gatsby sites maintained by the community.
@@ -448,10 +448,10 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
   - Protected Routes with Authorization
   - Realtime Database with Users
 
-- [gatsby-aws-amplify-authentication](https://github.com/dabit3/gatsby-auth-starter-aws-amplify)  [(demo)](http://gatsbyauth-20180816145726-hosting-bucket.s3-website-us-east-1.amazonaws.com/)
+- [gatsby-aws-amplify-authentication](https://github.com/dabit3/gatsby-auth-starter-aws-amplify) [(demo)](http://gatsbyauth-20180816145726-hosting-bucket.s3-website-us-east-1.amazonaws.com/)
 
-   Features: 
-  
+  Features:
+
   - Implement authentication & host your app on AWS
   - Sign in, Sign Up, & Sign Out
   - Fetch user metadata
@@ -583,7 +583,7 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
   - TSLint (with custom TSLint rules)
   - Markdown rendering with Remark
   - Basic component structure
-  - Styling with [styled-components](https://www.styled-components.com/)
+  - Styling with [emotion](https://emotion.sh/)
 
 - [gatsby-orga](https://github.com/xiaoxinghu/gatsby-orga)
   [(demo)](https://xiaoxinghu.github.io/gatsby-orga/)
@@ -926,14 +926,14 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
   - Website
   - Blog
   - more coming soon
-  
+
 - [gatsby-v2-jslingui](https://github.com/zuiidea/gatsby-v2-jslingui)
   [(demo)](https://gatsby-v2-jslingui.surge.sh)
 
   > An starter for using Gatsby v2 with [js-lingui](https://github.com/lingui/js-lingui).
 
   Features:
-  
+
   - Localization (Multilanguage) provided by [js-lingui](https://github.com/lingui/js-lingui)
   - Message extraction
   - Avoids code duplication - generates pages for each locale
@@ -949,3 +949,17 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
   - Simple one page site
   - Fully Responsive
   - Styling with SCSS
+
+- [gatsby-starter-solid-state](https://github.com/theschmocker/gatsby-starter-solid-state)
+  [(demo)](https://gatsby-starter-solid-state.netlify.com)
+
+  Features:
+  
+  - Built upon gatsby-starter-default
+  - Based on the [Solid State](https://html5up.net/solid-state) theme
+  - PWA out-of-the-box with gatsby-plugin-manifest and gatsby-plugin-offline
+  - Lazy-loaded, responsive images
+  - Styled using SCSS
+  - Fully responsive
+  - Helper components for interacting with Sass classes
+  - Uses the latest version of React

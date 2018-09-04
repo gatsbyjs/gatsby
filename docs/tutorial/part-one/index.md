@@ -70,10 +70,10 @@ export default () => (
 import React from "react"
 
 export default () => (
-    <div style={{ color: `purple` }}>
-        <h1>Hello Gatsby!</h1>
-        <p>What a world.</p>
-    </div>
+  <div style={{ color: `purple` }}>
+    <h1>Hello Gatsby!</h1>
+    <p>What a world.</p>
+  </div>
 )
 ```
 
@@ -85,11 +85,11 @@ export default () => (
 import React from "react"
 
 export default () => (
-    <div style={{ color: `purple` }}>
-        <h1>Hello Gatsby!</h1>
-        <p>What a world.</p>
-        <img src="https://source.unsplash.com/random/400x200" alt="" />
-    </div>
+  <div style={{ color: `purple` }}>
+    <h1>Hello Gatsby!</h1>
+    <p>What a world.</p>
+    <img src="https://source.unsplash.com/random/400x200" alt="" />
+  </div>
 )
 ```
 
@@ -195,10 +195,10 @@ import React from "react"
 import Header from "../components/header"
 
 export default () => (
-    <div style={{ color: `teal` }}>
-        <Header />
-        <p>Such wow. Very React.</p>
-    </div>
+  <div style={{ color: `teal` }}>
+    <Header />
+    <p>Such wow. Very React.</p>
+  </div>
 )
 ```
 
@@ -221,10 +221,10 @@ import React from "react"
 import Header from "../components/header"
 
 export default () => (
-    <div style={{ color: `teal` }}>
-        <Header headerText="About Gatsby" />
-        <p>Such wow. Very React.</p>
-    </div>
+  <div style={{ color: `teal` }}>
+    <Header headerText="About Gatsby" />
+    <p>Such wow. Very React.</p>
+  </div>
 )
 ```
 
@@ -265,11 +265,11 @@ import React from "react"
 import Header from "../components/header"
 
 export default () => (
-    <div style={{ color: `teal` }}>
-        <Header headerText="About Gatsby" />
-        <Header headerText="It's pretty cool" />
-        <p>Such wow. Very React.</p>
-    </div>
+  <div style={{ color: `teal` }}>
+    <Header headerText="About Gatsby" />
+    <Header headerText="It's pretty cool" />
+    <p>Such wow. Very React.</p>
+  </div>
 )
 ```
 
@@ -297,12 +297,12 @@ import { Link } from "gatsby"
 import Header from "../components/header"
 
 export default () => (
-    <div style={{ color: `purple` }}>
-        <Link to="/contact/">Contact</Link>
-        <Header headerText="Hello Gatsby!" />
-        <p>What a world.</p>
-        <img src="https://source.unsplash.com/random/400x200" alt="" />
-    </div>
+  <div style={{ color: `purple` }}>
+    <Link to="/contact/">Contact</Link>
+    <Header headerText="Hello Gatsby!" />
+    <p>What a world.</p>
+    <img src="https://source.unsplash.com/random/400x200" alt="" />
+  </div>
 )
 ```
 
@@ -358,7 +358,7 @@ npm install --global surge
 surge
 ```
 
-Next, build your site by running the following command in the terminal at the root of your site (tip: make sure you're running this command at the root of your site, in this case in the tutorial-part-one folder, which you can do by opening a new tab in the same window you used to run `gatsby develop`):
+Next, build your site by running the following command in the terminal at the root of your site (tip: make sure you're running this command at the root of your site, in this case in the hello-world folder, which you can do by opening a new tab in the same window you used to run `gatsby develop`):
 
 ```bash
 gatsby build

@@ -99,10 +99,7 @@ module.exports = {
     title: `Your Name - Blog`,
     author: `Your Name`,
   },
-  plugins: [
-    'gatsby-plugin-catch-links',
-    'gatsby-plugin-react-helmet',
-  ],
+  plugins: ["gatsby-plugin-catch-links", "gatsby-plugin-react-helmet"],
 }
 ```
 
@@ -134,16 +131,16 @@ yarn add gatsby-source-filesystem
 module.exports = {
   // previous configuration
   plugins: [
-    'gatsby-plugin-catch-links',
-    'gatsby-plugin-react-helmet',
+    "gatsby-plugin-catch-links",
+    "gatsby-plugin-react-helmet",
     {
       resolve: `gatsby-source-filesystem`,
       options: {
         path: `${__dirname}/src/pages`,
-        name: 'pages',
+        name: "pages",
       },
-    }
-  ]
+    },
+  ],
 }
 ```
 
@@ -184,24 +181,24 @@ and editing `gatsby-config.js`
 ```javascript{13-18}
 module.exports = {
   // previous setup
-    plugins: [
-    'gatsby-plugin-catch-links',
-    'gatsby-plugin-react-helmet',
+  plugins: [
+    "gatsby-plugin-catch-links",
+    "gatsby-plugin-react-helmet",
     {
       resolve: `gatsby-source-filesystem`,
       options: {
         path: `${__dirname}/src/pages`,
-        name: 'pages',
+        name: "pages",
       },
     },
     {
-      resolve: 'gatsby-transformer-remark',
+      resolve: "gatsby-transformer-remark",
       options: {
-        plugins: [] // just in case those previously mentioned remark plugins sound cool :)
-      }
+        plugins: [], // just in case those previously mentioned remark plugins sound cool :)
+      },
     },
-  ]
-};
+  ],
+}
 ```
 
 Whew! Seems like a lot of set up, but collectively these plugins are going to
@@ -298,25 +295,26 @@ piece of data our query selects will be injected via the `data` property we
 specified earlier.
 
 ```javascript{21-32}
-import React from 'react';
-import Helmet from 'react-helmet';
-import { graphql } from 'gatsby';
+import React from "react"
+import Helmet from "react-helmet"
+import { graphql } from "gatsby"
 
 // import '../css/blog-post.css';
 
-export default function Template({
-  data
-}) {
-  const { markdownRemark: post } = data;
+export default function Template({ data }) {
+  const { markdownRemark: post } = data
   return (
     <div className="blog-post-container">
       <Helmet title={`Your Blog Name - ${post.frontmatter.title}`} />
       <div className="blog-post">
         <h1>{post.frontmatter.title}</h1>
-        <div className="blog-post-content" dangerouslySetInnerHTML={{ __html: post.html }} />
+        <div
+          className="blog-post-content"
+          dangerouslySetInnerHTML={{ __html: post.html }}
+        />
       </div>
     </div>
-  );
+  )
 }
 
 export const pageQuery = graphql`
@@ -330,7 +328,7 @@ export const pageQuery = graphql`
       }
     }
   }
-`;
+`
 ```
 
 If you're not familar with GraphQL, this may seem slightly confusing, but we can
@@ -401,32 +399,33 @@ query, which will fetch all of our Markdown posts.
 ### Querying for posts
 
 ```javascript{8-31}
-const path = require('path');
+const path = require("path")
 
 exports.createPages = ({ boundActionCreators, graphql }) => {
-  const { createPage } = boundActionCreators;
+  const { createPage } = boundActionCreators
 
-  const blogPostTemplate = path.resolve(`src/templates/blog-post.js`);
+  const blogPostTemplate = path.resolve(`src/templates/blog-post.js`)
 
-  return graphql(`{
-    allMarkdownRemark(
-      sort: { order: DESC, fields: [frontmatter___date] }
-      limit: 1000
-    ) {
-      edges {
-        node {
-          frontmatter {
-            path
+  return graphql(`
+    {
+      allMarkdownRemark(
+        sort: { order: DESC, fields: [frontmatter___date] }
+        limit: 1000
+      ) {
+        edges {
+          node {
+            frontmatter {
+              path
+            }
           }
         }
       }
     }
-  }`)
-    .then(result => {
-      if (result.errors) {
-        return Promise.reject(result.errors);
-      }
-    });
+  `).then(result => {
+    if (result.errors) {
+      return Promise.reject(result.errors)
+    }
+  })
 }
 ```
 
@@ -449,41 +448,41 @@ pages (with the `createPage` action creator). Let's do that!
 ### Creating the pages
 
 ```javascript{32-39}
-const path = require('path');
+const path = require("path")
 
 exports.createPages = ({ boundActionCreators, graphql }) => {
-  const { createPage } = boundActionCreators;
+  const { createPage } = boundActionCreators
 
-  const blogPostTemplate = path.resolve(`src/templates/blog-post.js`);
+  const blogPostTemplate = path.resolve(`src/templates/blog-post.js`)
 
-  return graphql(`{
-    allMarkdownRemark(
-      sort: { order: DESC, fields: [frontmatter___date] }
-      limit: 1000
-    ) {
-      edges {
-        node {
-          frontmatter {
-            path
+  return graphql(`
+    {
+      allMarkdownRemark(
+        sort: { order: DESC, fields: [frontmatter___date] }
+        limit: 1000
+      ) {
+        edges {
+          node {
+            frontmatter {
+              path
+            }
           }
         }
       }
     }
-  }`)
-    .then(result => {
-      if (result.errors) {
-        return Promise.reject(result.errors);
-      }
+  `).then(result => {
+    if (result.errors) {
+      return Promise.reject(result.errors)
+    }
 
-      result.data.allMarkdownRemark.edges
-        .forEach(({ node }) => {
-          createPage({
-            path: node.frontmatter.path,
-            component: blogPostTemplate,
-            context: {} // additional data can be passed via context
-          });
-        });
-    });
+    result.data.allMarkdownRemark.edges.forEach(({ node }) => {
+      createPage({
+        path: node.frontmatter.path,
+        component: blogPostTemplate,
+        context: {}, // additional data can be passed via context
+      })
+    })
+  })
 }
 ```
 
