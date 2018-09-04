@@ -113,7 +113,8 @@ Here it is, trimmed to one node for brevity:
       "edges": [
         {
           "node": {
-            "excerpt": "Far far away, behind the word mountains, far from the countries Vokalia and\nConsonantia, there live the blind texts. Separated they live in…",
+            "excerpt":
+              "Far far away, behind the word mountains, far from the countries Vokalia and\nConsonantia, there live the blind texts. Separated they live in…",
             "fields": {
               "slug": "/hi-folks/"
             },

@@ -7,7 +7,7 @@ import Link, {
   replace,
   navigateTo,
 } from "gatsby-link"
-import { addListener as waitForRouteChange } from "./wait-for-route-change"
+import { waitForRouteChange } from "./wait-for-route-change"
 import PageRenderer from "./public-page-renderer"
 import parsePath from "./parse-path"
 

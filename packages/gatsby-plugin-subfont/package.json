@@ -1,7 +1,7 @@
 {
-  "name": "gatsby-plugin-layout",
-  "version": "1.0.0-rc.3",
-  "description": "Stub description for gatsby-plugin-layout",
+  "name": "gatsby-plugin-subfont",
+  "version": "1.0.1-rc.0",
+  "description": "Runs the font delivery optimizing CLI tool subfont on the homepage of your site during the Gatsby build",
   "main": "index.js",
   "scripts": {
     "build": "babel src --out-dir . --ignore **/__tests__",
@@ -12,18 +12,19 @@
     "gatsby",
     "gatsby-plugin"
   ],
-  "author": "",
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
-  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-layout#readme",
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-subfont#readme",
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby.git"
   },
   "license": "MIT",
   "dependencies": {
-    "@babel/runtime": "^7.0.0"
+    "@babel/runtime": "^7.0.0",
+    "subfont": "^3.6.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",

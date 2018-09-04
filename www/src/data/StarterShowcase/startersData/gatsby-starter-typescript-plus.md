@@ -12,5 +12,5 @@ features:
   - TSLint (with custom TSLint rules)
   - Markdown rendering with Remark
   - Basic component structure
-  - Styling with styled-components
+  - Styling with emotion
 ---
