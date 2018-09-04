@@ -32,11 +32,10 @@ exports.onServiceWorkerInstalled = ({ getResourceURLsForPathname }) => {
     fetch(resource)
   }
 
-  // loop over all resources and fetch the page component and JSON
-  // thereby storing it in SW cache
+  // Loop over all resources and fetch the page component and JSON
+  // to add it to the sw cache.
   prefetchedPathnames.forEach(path => {
     const { jsUrl, dataUrl } = getResourceURLsForPathname(path)
-    console.log(`fetching for sw`, { jsUrl, dataUrl })
     fetch(jsUrl)
     fetch(dataUrl)
   })

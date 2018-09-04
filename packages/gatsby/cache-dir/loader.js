@@ -121,11 +121,6 @@ const prefetchResource = resourceName => {
 const getResourceModule = resourceName =>
   fetchResource(resourceName).then(preferDefault)
 
-setInterval(() => {
-  let next = queue.dequeue()
-  next && prefetchResource(next)
-}, 100)
-
 const appearsOnLine = () => {
   const isOnLine = navigator.onLine
   if (typeof isOnLine === `boolean`) {
@@ -235,7 +230,9 @@ const queue = {
 
     // Prefetch resources.
     prefetchResource(page.jsonName)
-    prefetchResource(page.componentChunkName)
+    if (process.env.NODE_ENV === `production`) {
+      prefetchResource(page.componentChunkName)
+    }
 
     return true
   },

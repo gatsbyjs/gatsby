@@ -232,6 +232,15 @@ css.insert(`
     }
   }
 `)
+const checkScriptDownloaded = cb => {
+  if (typeof window.docsearch !== `undefined`) {
+    cb()
+  } else {
+    setTimeout(() => {
+      checkScriptDownloaded(cb)
+    }, 250)
+  }
+}
 class SearchForm extends Component {
   constructor() {
     super()
@@ -251,15 +260,7 @@ class SearchForm extends Component {
     this.searchInput.blur()
     navigate(`${a.pathname}${a.hash}`)
   }
-  componentDidMount() {
-    if (
-      typeof window === `undefined` ||
-      typeof window.docsearch === `undefined`
-    ) {
-      console.warn(`Search has failed to load and now is being disabled`)
-      this.setState({ enabled: false })
-      return
-    }
+  init() {
     window.addEventListener(
       `autocomplete:selected`,
       this.autocompleteSelected,
@@ -277,6 +278,36 @@ class SearchForm extends Component {
         keyboardShortcuts: [`s`],
       },
     })
+  }
+  componentDidMount() {
+    if (
+      typeof window === `undefined` ||
+      typeof window.docsearch === `undefined`
+    ) {
+      setTimeout(() => {
+        // Lazy load css
+        const path = `https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css`
+        const link = document.createElement(`link`)
+        link.setAttribute(`rel`, `stylesheet`)
+        link.setAttribute(`type`, `text/css`)
+        link.setAttribute(`href`, path)
+        document.head.appendChild(link)
+        // Lazy load js
+        const script = document.createElement(`script`)
+        script.setAttribute(
+          "src",
+          "https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"
+        )
+        document.head.appendChild(script)
+      }, 1000)
+      checkScriptDownloaded(() => {
+        this.setState({ enabled: true }, () => this.init())
+      })
+      console.warn(`Search hasn't been loaded and now is being disabled`)
+      this.setState({ enabled: false })
+      return
+    }
+    this.init()
   }
   render() {
     const { enabled, focussed } = this.state
