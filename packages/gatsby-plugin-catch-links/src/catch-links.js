@@ -6,7 +6,10 @@ export const userIsForcingNavigation = event => (
   event.altKey ||
   event.ctrlKey ||
   event.metaKey ||
-  event.shiftKey ||
+  event.shiftKey
+)
+
+export const navigationWasHandledElsewhere = event => (
   event.defaultPrevented
 )
 
@@ -124,6 +127,8 @@ export const hashShouldBeFollowed = (origin, destination) => (
 
 export const routeThroughBrowserOrApp = hrefHandler => event => {
   if ( userIsForcingNavigation(event) ) return true
+
+  if ( navigationWasHandledElsewhere(event) ) return true
 
   const clickedAnchor = findClosestAnchor(event.target)
   if ( clickedAnchor == null ) return true
