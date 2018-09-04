@@ -187,6 +187,39 @@ plugins: [
 ]
 ```
 
+### `externals`
+
+(_optional_, default: `undefined`)
+
+Configure the external modules for the cms, if the value is an array it will be passed to [html-webpack-externals-plugin](https://npm.im/html-webpack-externals-plugin). `externals` object options, if the value is thruty it will externalize `netlify-cms` and `netlify-identity-widget` packages.
+
+## Example
+
+Here is the plugin with example values for all options (note that no option is
+required):
+
+```javascript
+plugins: [
+  {
+    resolve: `gatsby-plugin-netlify-cms`,
+    options: {
+      modulePath: `path/to/custom/script.js`, // default: undefined
+      stylesPath: `path/to/styles.sass`, // default: undefined
+      enableIdentityWidget: `true`,
+      publicPath: `admin`,
+      htmlTitle: `Content Manager`,
+      externals: [
+        {
+          module: `netlify-cms-widget-material-icons`,
+          entry: `https://unpkg.com/netlify-cms-widget-material-icons/dist/umd/material-icons.min.js`,
+          global: 'NetlifyCMSWidgetMaterialIcons'
+        }
+      ]
+    },
+  },
+]
+```
+
 ## Support
 
 For help with integrating Netlify CMS with Gatsby, check out the community
