@@ -8,6 +8,7 @@ module.exports = (
         presets: [],
         options: {
           cacheDirectory: true,
+          babelrc: false,
           sourceType: `unambiguous`,
         },
       },
@@ -16,6 +17,7 @@ module.exports = (
         presets: [],
         options: {
           cacheDirectory: true,
+          babelrc: false,
           sourceType: `unambiguous`,
         },
       },
@@ -24,6 +26,7 @@ module.exports = (
         presets: [],
         options: {
           cacheDirectory: true,
+          babelrc: false,
           sourceType: `unambiguous`,
         },
       },
@@ -32,6 +35,7 @@ module.exports = (
         presets: [],
         options: {
           cacheDirectory: true,
+          babelrc: false,
           sourceType: `unambiguous`,
         },
       },
