@@ -1,6 +1,7 @@
 import pageFinderFactory from "./find-page"
 import emitter from "./emitter"
 import stripPrefix from "./strip-prefix"
+import prefetchHelper from "./prefetch"
 
 const preferDefault = m => (m && m.default) || m
 
@@ -47,6 +48,8 @@ const fetchPageResourceMap = () => {
 }
 
 const createJsonURL = jsonName => `${__PATH_PREFIX__}/static/d/${jsonName}.json`
+const createComponentUrl = componentChunkName =>
+  `${__PATH_PREFIX__}${window.___chunkMapping[componentChunkName]}`
 
 const fetchResource = resourceName => {
   // Find resource
@@ -106,15 +109,25 @@ const fetchResource = resourceName => {
   })
 }
 
+const prefetchResource = resourceName => {
+  if (resourceName.slice(0, 12) === `component---`) {
+    prefetchHelper(createComponentUrl(resourceName))
+  } else {
+    const url = createJsonURL(jsonDataPaths[resourceName])
+    prefetchHelper(url)
+  }
+}
+
 const getResourceModule = resourceName =>
   fetchResource(resourceName).then(preferDefault)
 
+// TODO remove queuing logic since it's broken anyways.
 // Prefetcher logic
 if (process.env.NODE_ENV === `production`) {
   prefetcher = require(`./prefetcher`)({
-    fetchNextResource: () => {
+    prefetchNextResource: () => {
       let next = queue.dequeue()
-      return next && fetchResource(next)
+      return next && prefetchResource(next)
     },
   })
 
@@ -205,7 +218,6 @@ const queue = {
     if (!prefetchTriggered[path]) {
       apiRunner(`onPrefetchPathname`, {
         pathname: path,
-        getResourcesForPathname: queue.getResourcesForPathname,
       })
       prefetchTriggered[path] = true
     }
@@ -275,6 +287,20 @@ const queue = {
   },
 
   getPage: pathname => findPage(pathname),
+
+  getResourceURLsForPathname: path => {
+    const page = findPage(path)
+    if (page) {
+      const jsUrl = createComponentUrl(page.componentChunkName)
+      const dataUrl = createJsonURL(jsonDataPaths[page.jsonName])
+      return {
+        jsUrl,
+        dataUrl,
+      }
+    } else {
+      return null
+    }
+  },
 
   getResourcesForPathnameSync: path => {
     const page = findPage(path)
@@ -405,6 +431,7 @@ export const setApiRunnerForLoader = runner => {
 
 export const publicLoader = {
   getResourcesForPathname: queue.getResourcesForPathname,
+  getResourceURLsForPathname: queue.getResourceURLsForPathname,
   getResourcesForPathnameSync: queue.getResourcesForPathnameSync,
 }
 

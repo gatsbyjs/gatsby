@@ -1,4 +1,4 @@
-module.exports = ({ fetchNextResource }) => {
+module.exports = ({ prefetchNextResource }) => {
   let pagesLoading = []
   let current = null
   const clearCurrent = () => {
@@ -12,7 +12,7 @@ module.exports = ({ fetchNextResource }) => {
       if (current || !!pagesLoading.length) return
 
       // Start another resource downloading.
-      let next = fetchNextResource()
+      let next = prefetchNextResource()
       if (!next) return
       current = next.then(clearCurrent, clearCurrent).then(enqueueUpdate)
     })
