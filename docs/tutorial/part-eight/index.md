@@ -99,7 +99,7 @@ npm install --save gatsby-plugin-manifest
         background_color: "#6b37bf",
         theme_color: "#6b37bf",
         display: "minimal-ui",
-        icon: "src/images/icon.png", // This path is relative to the root of the site.
+        icon: "src/images/gatsby-icon.png", // This path is relative to the root of the site.
       },
     },
   ]
