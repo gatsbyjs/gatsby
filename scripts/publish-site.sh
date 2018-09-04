@@ -18,12 +18,6 @@ gatsby-dev --scan-once --quiet
 FRAGMENTSDIR="node_modules/gatsby-transformer-sharp/src"
 [ -d "$FRAGMENTSDIR" ] && cp ../../packages/gatsby-transformer-sharp/src/fragments.js "$FRAGMENTSDIR/fragments.js"
 
-echo "temp delete offline-plugin"
-OFFLINENODE="./node_modules/gatsby-plugin-offline/gatsby-node.js"
-OFFLINEBROWSER="./node_modules/gatsby-plugin-offline/gatsby-browser.js"
-[ -f "$OFFLINENODE" ] && rm $OFFLINENODE
-[ -f "$OFFLINEBROWSER" ] && rm $OFFLINEBROWSER
-
 echo "=== Building website"
 # Once we get better cache invalidation, remove the following line
 rm -rf .cache
