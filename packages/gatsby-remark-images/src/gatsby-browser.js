@@ -3,12 +3,19 @@ const { imageClass, imageBackgroundClass, imageWrapperClass } = require(`./class
 exports.onRouteUpdate = () => {    
     const imageWrappers = document.querySelectorAll(`.${imageWrapperClass}`)
 
-    for (let imageWrapper of imageWrappers) {
+    for (const index in imageWrappers) {
+        const imageWrapper = imageWrapper[index]
         const backgroundElement = imageWrapper.querySelector(`.${imageBackgroundClass}`)
         const imageElement = imageWrapper.querySelector(`.${imageClass}`)
-        const onImageLoadHandler = createImageLoadHandler(backgroundElement, imageElement)
 
-        imageElement.complete ? onImageLoadHandler() : imageElement.addEventListener(`load`, onImageLoadHandler)
+        // set the opacity to zero after we identify matching images
+        // to avoid issues where this script loads incorrectly
+        // resulting in hidden images
+        imageElement.style.opacity = 0
+
+        const imageLoadHandler = createImageLoadHandler(backgroundElement, imageElement)
+
+        imageElement.complete ? imageLoadHandler() : imageElement.addEventListener(`load`, imageLoadHandler)
     }
 }
 
