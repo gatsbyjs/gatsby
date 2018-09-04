@@ -19,16 +19,22 @@ You will be using `gatsby-config.js` to store the data for your links. `gatsby-c
 This guide will use the Gatsby starter project `gatsby-starter-default`, which can be downloaded through the Gatsby command line interface tool using the command `gatsby new [project-name] https://github.com/gatsbyjs/gatsby-starter-default#v2`.  
 
 ### Creating the link data
-First, locate the `gatsby-config.js` file in the root directory of your project. Inside the `siteMetadata` object, add an array of menu link objects. These objects should contain two properties: name and link. Name is the name of your navigation item, link is the page which will be navigated to when a menu item is clicked.
+First, locate the `gatsby-config.js` file in the root directory of your project. Inside the `siteMetadata` object, add an array of menu link objects. These objects should contain two properties: `name` and `link`. `name` is the name of your navigation item and `link` is the page which will be navigated to when a menu item is clicked.
 
 ```diff
 module.exports = {
   siteMetadata: {
     title: 'Gatsby Default Starter',
 +    menuLinks:[
-+      {name:'home',link:'/'},
-+      {name:'page2',link:'/page-2'}
-    ]
++      {
++         name:'home',
++         link:'/'
++      },
++      {
++         name:'page2',
++         link:'/page-2'
++      }
++    ]
   },
   plugins: []
 }
