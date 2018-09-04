@@ -10,7 +10,7 @@ import DocSearchContent from "../components/docsearch-content"
 
 import Container from "../components/container"
 import presets, { colors } from "../utils/presets"
-import { rhythm, options } from "../utils/typography"
+import { options, rhythm, scale } from "../utils/typography"
 
 import docsHierarchy from "../data/sidebars/doc-links.yaml"
 
@@ -94,7 +94,7 @@ class DocsTemplate extends React.Component {
                     borderTopRightRadius: presets.radiusLg,
                     color: `white`,
                     fontFamily: options.monospaceFontFamily.join(`,`),
-                    fontSize: 14,
+                    ...scale(-1 / 5),
                     marginLeft: rhythm(-options.blockMarginBottom),
                     marginRight: rhythm(-options.blockMarginBottom),
                     padding: `${rhythm(options.blockMarginBottom / 2)} ${rhythm(
