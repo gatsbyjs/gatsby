@@ -16,24 +16,6 @@ export default class HTML extends React.Component {
             href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css"
             as="style"
           />
-          <link
-            rel="preload"
-            href="/static/ftn45-webfont.c2439033.woff2"
-            as="font"
-            crossOrigin="anonymous"
-          />
-          <link
-            rel="preload"
-            href="/static/spectral-latin-400.d9fdfd34.woff2"
-            as="font"
-            crossOrigin="anonymous"
-          />
-          <link
-            rel="preload"
-            href="/static/ftn65-webfont.0ddc10d2.woff2"
-            as="font"
-            crossOrigin="anonymous"
-          />
           {this.props.headComponents}
           <meta charSet="utf-8" />
           <meta httpEquiv="X-UA-Compatible" content="IE=edge" />

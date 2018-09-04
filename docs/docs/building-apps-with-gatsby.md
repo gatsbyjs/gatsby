@@ -28,8 +28,6 @@ A classic example would be a site that has a landing page, various marketing pag
 
 Gatsby uses [@reach/router](https://reach.tech/router/) under the hood. You should use @reach/router to create client-only routes.
 
-These routes will exist on the client only and will not correspond to index.html files in an app's built assets. If you wish people to visit client routes directly, you'll need to set up your server to handle these correctly.
-
 These routes will exist on the client only and will not correspond to index.html files in an app's built assets. If you'd like site users to be able to visit client routes directly, you'll need to set up your server to handle those routes appropriately.
 
 To create client-only routes, add the following code to your site’s `gatsby-node.js` file:

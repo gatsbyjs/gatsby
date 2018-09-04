@@ -4,13 +4,13 @@ about: Something isn't working as expected? Here is the right place to report.
 ---
 
 <!--
-  To make it easier for us to help you — please follow the suggested format below.
+  Please fill out each section below, otherwise your issue will be closed. This info allows Gatsby maintainers to diagnose (and fix!) your issue as quickly as possible.
 
   Useful Links:
   - Documentation: https://www.gatsbyjs.org/docs/
   - How to File an Issue: https://www.gatsbyjs.org/docs/how-to-file-an-issue/
 
-  Before opening a new issue, please search existing issues https://github.com/gatsbyjs/gatsby/issues
+  Before opening a new issue, please search existing issues: https://github.com/gatsbyjs/gatsby/issues
 -->
 
 ## Description
@@ -19,7 +19,7 @@ Describe the issue that you're seeing.
 
 ### Steps to reproduce
 
-Clear steps describing how to reproduce the issue.
+Clear steps describing how to reproduce the issue. Please please please link to a demo project if possible, this makes your issue _much_ easier to diagnose (seriously).
 
 ### Expected result
 
@@ -31,15 +31,4 @@ What happened.
 
 ### Environment
 
-<!--
-  Required. Run `gatsby info --clipboard` in your gatsby project directory and paste its contents here.
-  Not working? You may need to update your global gatsby-cli - `npm install -g gatsby-cli`
--->
-
-### File contents (if changed)
-
-`gatsby-config.js`: N/A <!-- Please use a code block or just leave it as is if wasn't changed -->
-`package.json`: N/A <!-- Please use a code block or just leave it as is if wasn't changed -->
-`gatsby-node.js`: N/A <!-- Please use a code block or just leave it as is if wasn't changed -->
-`gatsby-browser.js`: N/A <!-- Please use a code block or just leave it as is if wasn't changed -->
-`gatsby-ssr.js`: N/A <!-- Please use a code block or just leave it as is if wasn't changed -->
+Run `gatsby info --clipboard` in your project directory and paste the output here. Not working? You may need to update your global gatsby-cli - `npm install -g gatsby-cli`

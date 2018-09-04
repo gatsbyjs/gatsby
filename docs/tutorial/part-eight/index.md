@@ -169,23 +169,23 @@ npm install --save gatsby-plugin-react-helmet react-helmet
 3.  Use `React Helmet` in your pages:
 
 ```jsx{8-12}
-import React from "react";
-import {Helmet} from "react-helmet";
+import React from "react"
+import { Helmet } from "react-helmet"
 
 class Application extends React.Component {
-  render () {
+  render() {
     return (
-        <div className="application">
-            <Helmet>
-                <meta charSet="utf-8" />
-                <title>My Title</title>
-                <link rel="canonical" href="http://mysite.com/example" />
-            </Helmet>
-            ...
-        </div>
-    );
+      <div className="application">
+        <Helmet>
+          <meta charSet="utf-8" />
+          <title>My Title</title>
+          <link rel="canonical" href="http://mysite.com/example" />
+        </Helmet>
+        ...
+      </div>
+    )
   }
-};
+}
 ```
 
 > 💡 The above example is from the [React Helmet docs](https://github.com/nfl/react-helmet#example). Check those out for more!

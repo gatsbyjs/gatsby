@@ -294,7 +294,8 @@ const Diagram = () => (
           }}
         >
           <ItemDescription>
-            HTML &middot; CSS &middot;{` `}
+            HTML &middot; CSS &middot;
+            {` `}
             <TechWithIcon icon={ReactJSIcon} height="1.1em">
               React
             </TechWithIcon>
