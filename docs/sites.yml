@@ -2311,3 +2311,19 @@
   built_by: Dave Geddes
   built_by_url: https://twitter.com/geddski
   featured: false
+- title: Rung
+  main_url: 'https://rung.com.br/'
+  url: 'https://rung.com.br/'
+  description: >
+    Rung alerts you about the exceptionalities of your personal and professional life.
+  categories:
+    - API
+    - Technology
+    - Tool
+    - Software
+    - Corporate
+    - Help
+    - Services
+    - Travel
+    - Bot
+  featured: false
