@@ -12,7 +12,7 @@ afterAll(() => {
 })
 
 describe(`catchLinks`, () => {
-    it(`creates a click event on the window`, (done) => {
+    it(`creates a click event`, (done) => {
         done.fail(`NOT IMPLEMENTED YET`)
     })
 })
