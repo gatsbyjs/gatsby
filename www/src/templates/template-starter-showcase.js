@@ -322,7 +322,9 @@ class StarterTemplate extends React.Component {
               <div>
                 {frontmatter.features ? (
                   <ul css={{ marginTop: 0 }}>
-                    {frontmatter.features.map((f, i) => <li key={i}>{f}</li>)}
+                    {frontmatter.features.map((f, i) => (
+                      <li key={i}>{f}</li>
+                    ))}
                   </ul>
                 ) : (
                   `No features`

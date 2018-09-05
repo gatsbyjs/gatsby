@@ -17,6 +17,10 @@ const stats = JSON.parse(
   fs.readFileSync(`${process.cwd()}/public/webpack.stats.json`, `utf-8`)
 )
 
+const chunkMapping = JSON.parse(
+  fs.readFileSync(`${process.cwd()}/public/chunk-map.json`, `utf-8`)
+)
+
 // const testRequireError = require("./test-require-error")
 // For some extremely mysterious reason, webpack adds the above module *after*
 // this module so that when this code runs, testRequireError is undefined.
@@ -325,6 +329,21 @@ export default (pagePath, callback) => {
       id={`gatsby-script-loader`}
       dangerouslySetInnerHTML={{
         __html: windowData,
+      }}
+    />
+  )
+
+  // Add chunk mapping metadata
+  const scriptChunkMapping = `/*<![CDATA[*/window.___chunkMapping=${JSON.stringify(
+    chunkMapping
+  )};/*]]>*/`
+
+  postBodyComponents.push(
+    <script
+      key={`chunk-mapping`}
+      id={`gatsby-chunk-mapping`}
+      dangerouslySetInnerHTML={{
+        __html: scriptChunkMapping,
       }}
     />
   )
