@@ -42,21 +42,29 @@ class CreatorTemplate extends Component {
           css={{
             padding: rhythm(3 / 4),
             display: `flex`,
+            flexDirection: `column`,
+            alignItems: `center`,
             justifyContent: `center`,
+            width: `100%`,
+            [presets.Desktop]: {
+              flexDirection: `row`,
+              alignItems: `flex-start`,
+            },
             fontFamily: typography.options.headerFontFamily.join(`,`),
           }}
         >
           <div
             css={{
               margin: rhythm(3 / 4),
-              flex: `1`,
-              maxWidth: `720`,
+              flexGrow: `1`,
+              width: `100%`,
+              [presets.Desktop]: {
+                width: `auto`,
+                maxWidth: `720`,
+              },
             }}
           >
             <Img
-              css={{
-                minWidth: `100%`,
-              }}
               alt={`${creator.name}`}
               fluid={creator.image.childImageSharp.fluid}
             />
@@ -67,7 +75,11 @@ class CreatorTemplate extends Component {
               flexDirection: `column`,
               margin: rhythm(3 / 4),
               flex: `1`,
-              maxWidth: `720`,
+              width: `100%`,
+              [presets.Desktop]: {
+                width: `auto`,
+                maxWidth: `720`,
+              },
             }}
           >
             {creator.for_hire || creator.hiring ? (
