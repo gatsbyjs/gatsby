@@ -135,7 +135,11 @@ export default () => (
     const results = await parser.parseFiles(Object.keys(MOCK_FILE_INFO))
     expect(results).toMatchSnapshot()
     expect(
-      spyStderr.mock.calls.filter(c => c[0].includes(`warning`))
+      spyStderr.mock.calls
+        .filter(c => c[0].includes(`warning`))
+        // Remove console colors + trim whitespace
+        // eslint-disable-next-line
+        .map(c => c[0].replace(/\x1B[[(?);]{0,2}(;?\d)*./g, ``).trim())
     ).toMatchSnapshot()
     spyStderr.mockRestore()
   })
