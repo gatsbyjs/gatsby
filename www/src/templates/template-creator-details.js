@@ -1,6 +1,5 @@
 import React, { Component } from "react"
-import { graphql } from "gatsby"
-import { Link } from "gatsby"
+import { graphql, Link } from "gatsby"
 import Layout from "../components/layout"
 import Helmet from "react-helmet"
 import typography, { rhythm, scale } from "../utils/typography"
@@ -8,8 +7,6 @@ import Img from "gatsby-image"
 import CommunityHeader from "../views/community/community-header"
 import presets, { colors } from "../utils/presets"
 import GithubIcon from "react-icons/lib/go/mark-github"
-
-//A variant of the Creators Header Design here with Breadcrumb of Creators > PEOPLE (Whatever) > Creator so clickable to go back to creators
 
 class CreatorTemplate extends Component {
   constructor(props) {
@@ -74,11 +71,11 @@ class CreatorTemplate extends Component {
             }}
           >
             {creator.for_hire || creator.hiring ? (
-              <span css={[styles.badge]}>
+              <div css={[styles.badge]}>
                 {creator.for_hire ? `Open For Work` : `Hiring`}
-              </span>
+              </div>
             ) : null}
-            <span
+            <div
               css={{
                 display: `flex`,
                 borderBottom: `2px solid black`,
@@ -100,22 +97,16 @@ class CreatorTemplate extends Component {
                   }}
                 />
               )}
-            </span>
-            <span
+            </div>
+            <div
               css={{
                 borderBottom: `2px solid black`,
                 padding: `${rhythm()} 0`,
               }}
             >
-              <p
-                css={{
-                  margin: `0`,
-                }}
-              >
-                {creator.description}
-              </p>
-            </span>
-            <span
+              {creator.description}
+            </div>
+            <div
               css={{
                 borderBottom: `2px solid black`,
                 padding: `${rhythm(3 / 4)} 0`,
@@ -139,8 +130,8 @@ class CreatorTemplate extends Component {
               >
                 {creator.website}
               </a>
-            </span>
-            <span
+            </div>
+            <div
               css={{
                 borderBottom: `2px solid black`,
                 padding: `${rhythm(3 / 4)} 0`,
@@ -165,9 +156,9 @@ class CreatorTemplate extends Component {
               >
                 {creator.location}
               </p>
-            </span>
+            </div>
             {creator.portfolio === true && (
-              <span
+              <div
                 css={{
                   borderBottom: `2px solid black`,
                   padding: `${rhythm(3 / 4)} 0`,
@@ -218,7 +209,7 @@ class CreatorTemplate extends Component {
                     </Link>
                   ))}
                 </div>
-              </span>
+              </div>
             )}
           </div>
         </main>
@@ -287,38 +278,3 @@ const styles = {
     textTransform: `uppercase`,
   },
 }
-
-// (fields: { slug: { eq: $slug.match(/\/([^\/]+)\/?$/)[1] } })
-
-// (fields: { creator: { eq: $slug } })
-
-/*     allSitesYaml(filter: { built_by: { eq: "Andy Slezak" } }) {
-      edges {
-        node {
-          built_by
-          childScreenshot {
-            screenshotFile {
-              childImageSharp {
-                fixed(width: 150, height: 150) {
-                  ...GatsbyImageSharpFixed
-                }
-              }
-            }
-          }
-          fields {
-            slug
-          }
-        }
-      }
-    } */
-
-/*     <Img
-    css={{
-      minWidth: `150`,
-    }}
-    alt={`${site.node.title}`}
-    fixed={
-      site.node.childScreenshot.screenshotFile
-        .childImageSharp.fixed
-    }
-  />  */
