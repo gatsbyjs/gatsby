@@ -15,42 +15,49 @@ const FileParser = require(`../file-parser`).default
 describe(`File parser`, () => {
   const MOCK_FILE_INFO = {
     "no-query.js": `import React from "react"`,
-    "page-query.js": `export const query = graphql\`
+    "page-query.js": `import { graphql } from 'gatsby'
+    export const query = graphql\`
 query PageQueryName {
   foo
 }
 \``,
-    "page-query-no-name.js": `export const query = graphql\`
+    "page-query-no-name.js": `import { graphql } from 'gatsby'
+  export const query = graphql\`
 query {
   foo
 }
 \``,
-    "static-query.js": `export default () => (
+    "static-query.js": `import { graphql } from 'gatsby'
+  export default () => (
   <StaticQuery
     query={graphql\`query StaticQueryName { foo }\`}
     render={data => <div>{data.doo}</div>}
   />
 )`,
-    "static-query-no-name.js": `export default () => (
+    "static-query-no-name.js": `import { graphql } from 'gatsby'
+  export default () => (
   <StaticQuery
     query={graphql\`{ foo }\`}
     render={data => <div>{data.foo}</div>}
   />
 )`,
-    "static-query-named-export.js": `export const Component = () => (
+    "static-query-named-export.js": `import { graphql } from 'gatsby'
+  export const Component = () => (
   <StaticQuery
     query={graphql\`query StaticQueryName { foo }\`}
     render={data => <div>{data.doo}</div>}
   />
 )`,
-    "static-query-closing-tag.js": `export default () => (
+    "static-query-closing-tag.js": `import { graphql } from 'gatsby'
+  export default () => (
   <StaticQuery
     query={graphql\`{ foo }\`}
   >
     {data => <div>{data.foo}</div>}
   </StaticQuery>
 )`,
-    "page-query-and-static-query-named-export.js": `export const Component = () => (
+    "page-query-and-static-query-named-export.js": `import { graphql } from 'gatsby'
+  export const Component = () => (
   <StaticQuery
     query={graphql\`query StaticQueryName { foo }\`}
     render={data => <div>{data.doo}</div>}
@@ -58,7 +65,8 @@ query {
 )
 export const pageQuery = graphql\`query PageQueryName { foo }\`
 `,
-    "multiple-fragment-exports.js": `export const fragment1 = graphql\`
+    "multiple-fragment-exports.js": `import { graphql } from 'gatsby'
+  export const fragment1 = graphql\`
   fragment Fragment1 on RootQueryField {
     foo
   }
@@ -124,10 +132,11 @@ export default () => (
 
   it(`extracts query AST correctly from files`, async () => {
     let outputData = ``
-    let storeLog = inputs => (outputData += inputs)
-    console[`log`] = jest.fn(storeLog)
+    const spyStdout = jest.spyOn(process.stdout, `write`)
+    const spyStderr = jest.spyOn(process.stderr, `write`)
     const results = await parser.parseFiles(Object.keys(MOCK_FILE_INFO))
     expect(results).toMatchSnapshot()
-    expect(outputData).toMatchSnapshot()
+    expect(spyStdout.mock.calls).toMatchSnapshot()
+    expect(spyStderr.mock.calls).toMatchSnapshot()
   })
 })

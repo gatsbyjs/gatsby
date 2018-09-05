@@ -215,14 +215,8 @@ export default function({ types: t }) {
                   Identifier(identifierPath) {
                     if (identifierPath.node.name !== `graphql`) {
                       const varName = identifierPath.node.name
-                      let found = false
                       path.traverse({
                         VariableDeclarator(varPath) {
-                          console.log({
-                            varPath: varPath.node.id.name,
-                            varName,
-                            init: varPath.node.init.type,
-                          })
                           if (
                             varPath.node.id.name === varName &&
                             varPath.node.init.type ===
@@ -230,7 +224,6 @@ export default function({ types: t }) {
                           ) {
                             varPath.traverse({
                               TaggedTemplateExpression(templatePath) {
-                                found = true
                                 setImportForStaticQuery(
                                   templatePath,
                                   jsxElementPath
@@ -251,7 +244,7 @@ export default function({ types: t }) {
         path.traverse({
           // Run it again to remove non-staticquery versions
           TaggedTemplateExpression(path2, state) {
-            const { ast, text, hash, isGlobal } = getGraphQLTag(path2)
+            const { ast, hash, isGlobal } = getGraphQLTag(path2)
 
             if (!ast) return null
 
