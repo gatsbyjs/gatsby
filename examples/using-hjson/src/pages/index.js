@@ -36,7 +36,9 @@ class IndexComponent extends React.Component {
         </table>
         <h2>Access by type: letters</h2>
         <ul>
-          {letters.edges.map(({ node }, id) => <li key={id}>{node.value}</li>)}
+          {letters.edges.map(({ node }, id) => (
+            <li key={id}>{node.value}</li>
+          ))}
         </ul>
       </div>
     )

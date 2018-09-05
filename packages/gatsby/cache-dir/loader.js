@@ -63,7 +63,7 @@ const fetchResource = resourceName => {
       resourceFunction = () => {
         const fetchPromise = new Promise((resolve, reject) => {
           const url = createJsonURL(jsonDataPaths[resourceName])
-          var req = new XMLHttpRequest()
+          const req = new XMLHttpRequest()
           req.open(`GET`, url, true)
           req.withCredentials = true
           req.onreadystatechange = () => {

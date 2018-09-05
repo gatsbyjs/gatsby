@@ -1,10 +1,10 @@
 const support = function(feature) {
-  if (typeof document === "undefined") {
+  if (typeof document === `undefined`) {
     return false
   }
-  const fakeLink = document.createElement("link")
+  const fakeLink = document.createElement(`link`)
   try {
-    if (fakeLink.relList && typeof fakeLink.relList.supports === "function") {
+    if (fakeLink.relList && typeof fakeLink.relList.supports === `function`) {
       return fakeLink.relList.supports(feature)
     }
   } catch (err) {
