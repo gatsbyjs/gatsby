@@ -1,3 +1,4 @@
+/* eslint-disable */
 const {
   graphql,
   Link

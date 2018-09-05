@@ -1,5 +1,6 @@
-import React from 'react'
-import * as Gatsby from 'gatsby'
+/* eslint-disable */
+import React from "react"
+import * as Gatsby from "gatsby"
 
 const IndexPage = () => (
   <div>
