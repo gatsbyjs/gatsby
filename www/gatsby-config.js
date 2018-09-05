@@ -21,13 +21,6 @@ module.exports = {
         path: `${__dirname}/../docs/`,
       },
     },
-    // {
-    //   resolve: `gatsby-source-filesystem`,
-    //   options: {
-    //     name: `creators`,
-    //     path: `${__dirname}/../docs/community/`,
-    //   },
-    // },
     {
       resolve: `gatsby-source-filesystem`,
       options: {

@@ -123,7 +123,7 @@ class CommunityView extends Component {
                     alt={`${item.node.name}`}
                     fixed={item.node.image.childImageSharp.fixed}
                   />
-                  <span
+                  <div
                     css={{
                       display: `flex`,
                     }}
@@ -141,23 +141,23 @@ class CommunityView extends Component {
                         }}
                       />
                     )}
-                  </span>
-                  <span
+                  </div>
+                  <div
                     css={{
                       margin: `${rhythm(1 / 6)} 0`,
                       color: colors.gray.bright,
                       ...scale(-1 / 3),
                     }}
-                  >{`${item.node.location}`}</span>
+                  >{`${item.node.location}`}</div>
                   {item.node.for_hire || item.node.hiring ? (
-                    <span
+                    <div
                       css={[
                         styles.badge,
                         item.node.for_hire ? styles.forHire : styles.hiring,
                       ]}
                     >
                       {item.node.for_hire ? `For Hire` : `Hiring`}
-                    </span>
+                    </div>
                   ) : null}
                 </Link>
               ))

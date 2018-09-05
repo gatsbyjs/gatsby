@@ -157,7 +157,17 @@ export default ({ pathname }) => {
           <NavItem linkTo="/features/">Features</NavItem>
           <NavItem linkTo="/blog/">Blog</NavItem>
           <NavItem linkTo="/showcase/">Showcase</NavItem>
-          <NavItem linkTo="/community/">Community</NavItem>
+          <li
+            css={{
+              display: `inline-block`,
+              margin: 0,
+            }}
+          >
+            {/* Need to pass the filter state here, so we can either differentiate this link from the others like this, or pass state as a prop to NavItem which I didn't prefer */}
+            <Link to="/community/" css={navItemStyles} state={{ filter: `` }}>
+              Community
+            </Link>
+          </li>
         </ul>
         <div
           css={{
