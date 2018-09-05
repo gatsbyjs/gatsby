@@ -288,6 +288,14 @@ class SearchForm extends Component {
       document.head.appendChild(link)
     }
   }
+  loadAlgoliaJS() {
+    !loadedJs &&
+      loadJS().then(a => {
+        loadedJs = true
+        window.docsearch = a.default
+        this.init()
+      })
+  }
   render() {
     const { focussed } = this.state
     const { iconStyles, isHomepage } = this.props
@@ -302,14 +310,8 @@ class SearchForm extends Component {
           marginBottom: 0,
         }}
         className="searchWrap"
-        onMouseOver={() =>
-          !loadedJs &&
-          loadJS().then(a => {
-            loadedJs = true
-            window.docsearch = a.default
-            this.init()
-          })
-        }
+        onMouseOver={() => this.loadAlgoliaJS()}
+        onClick={() => this.loadAlgoliaJS()}
         onSubmit={e => e.preventDefault()}
       >
         <label css={{ position: `relative` }}>
