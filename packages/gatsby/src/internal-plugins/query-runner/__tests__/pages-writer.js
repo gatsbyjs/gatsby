@@ -34,13 +34,48 @@ jest.mock(`../../../redux/`, () => {
   }
 })
 
+const expectedResult = JSON.stringify({
+  pages: [
+    { path: `/amet`, matchPath: null },
+    { path: `/ipsum`, matchPath: null },
+    { path: `/lorem`, matchPath: null },
+    { path: `/dolor`, matchPath: `/foo` },
+    { path: `/sit`, matchPath: `/bar` },
+  ],
+  dataPaths: {
+    bar: `b/a/r`,
+    baz: `b/a/z`,
+    foo: `f/o/o`,
+  },
+})
+
+const now = Date.now()
+
 describe(`Pages writer`, () => {
-  it(`writes pages with the good order`, async () => {
+  beforeEach(() => {
+    // Mock current date
+    global.Date.now = () => now
+
+    // Ensure testing in the same conditions as if we have
+    // removed the .cache folder
+    resetLastHash()
+  })
+
+  it(`writes pages with the good order #1`, async () => {
     const spy = jest.spyOn(mockFsExtra, `writeFile`)
 
     await writePages()
-    const data1 = spy.mock.calls[3][1]
 
+    expect(spy).toBeCalledWith(
+      `my/gatsby/project/.cache/data.json.${now}`,
+      expectedResult
+    )
+  })
+
+  it(`writes pages with the good order #2`, async () => {
+    const spy = jest.spyOn(mockFsExtra, `writeFile`)
+
+    // Reorder data in state
     mockState = {
       ...mockState,
       jsonDataPaths: {
@@ -58,31 +93,11 @@ describe(`Pages writer`, () => {
       },
     }
 
-    // Ensure testing in the same conditions as if we have
-    // removed the .cache folder
-    resetLastHash()
-
     await writePages()
-    const data2 = spy.mock.calls[7][1]
 
-    expect(spy.mock.calls.length).toBe(8)
-
-    const expectedResult = JSON.stringify({
-      pages: [
-        { path: `/amet`, matchPath: null },
-        { path: `/ipsum`, matchPath: null },
-        { path: `/lorem`, matchPath: null },
-        { path: `/dolor`, matchPath: `/foo` },
-        { path: `/sit`, matchPath: `/bar` },
-      ],
-      dataPaths: {
-        bar: `b/a/r`,
-        baz: `b/a/z`,
-        foo: `f/o/o`,
-      },
-    })
-
-    expect(data1).toEqual(expectedResult)
-    expect(data2).toEqual(expectedResult)
+    expect(spy).toBeCalledWith(
+      `my/gatsby/project/.cache/data.json.${now}`,
+      expectedResult
+    )
   })
 })
