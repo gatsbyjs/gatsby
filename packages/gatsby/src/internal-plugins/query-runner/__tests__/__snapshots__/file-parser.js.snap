@@ -855,9 +855,7 @@ Map {
 }
 `;
 
-exports[`File parser extracts query AST correctly from files 2`] = `Array []`;
-
-exports[`File parser extracts query AST correctly from files 3`] = `
+exports[`File parser extracts query AST correctly from files 2`] = `
 Array [
   Array [
     "[2K",

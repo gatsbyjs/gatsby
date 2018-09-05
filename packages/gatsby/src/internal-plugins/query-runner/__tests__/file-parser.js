@@ -131,11 +131,10 @@ export default () => (
   })
 
   it(`extracts query AST correctly from files`, async () => {
-    const spyStdout = jest.spyOn(process.stdout, `write`)
     const spyStderr = jest.spyOn(process.stderr, `write`)
     const results = await parser.parseFiles(Object.keys(MOCK_FILE_INFO))
     expect(results).toMatchSnapshot()
-    expect(spyStdout.mock.calls).toMatchSnapshot()
     expect(spyStderr.mock.calls).toMatchSnapshot()
+    spyStderr.mockRestore()
   })
 })
