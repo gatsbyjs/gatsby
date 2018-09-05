@@ -2293,3 +2293,21 @@
   built_by: Peter Kroyer
   built_by_url: https://www.peterkroyer.at/
   featured: false
+- title: Geddski
+  main_url: https://gedd.ski
+  url: https://gedd.ski
+  description: >
+    Frontend mastery blog - level up your UI game.
+  categories:
+    - Web Dev
+    - CSS
+    - JavaScript
+    - Grid
+    - Flexbox
+    - PWA
+    - Productivity
+    - UI
+    - UX
+  built_by: Dave Geddes
+  built_by_url: https://twitter.com/geddski
+  featured: false
