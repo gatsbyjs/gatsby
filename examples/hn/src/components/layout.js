@@ -101,9 +101,8 @@ class Layout extends React.Component {
                     <a href="lists">Lists</a>|{` `}
                     <a href="bookmarklet.html">Bookmarklet</a>|{` `}
                     <a href="dmca.html">DMCA</a>|{` `}
-                    <a href="http://www.ycombinator.com/apply/">
-                      Apply to YC
-                    </a>|{` `}
+                    <a href="http://www.ycombinator.com/apply/">Apply to YC</a>|
+                    {` `}
                     <a href="mailto:hn@ycombinator.com">Contact</a>
                   </span>
                 </center>
