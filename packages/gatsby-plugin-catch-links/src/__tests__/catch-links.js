@@ -109,7 +109,14 @@ describe(`the author might be forcing navigation`, () => {
         expect(catchLinks.authorIsForcingNavigation(testAnchor)).toBe(true)
     })
     describe(`if the clicked anchor does not target _self`, () => {
-        const separateBrowsingContext = document.body.appendChild(document.createElement(`iframe`))
+        let separateBrowsingContext
+    
+        beforeAll(() => {
+            separateBrowsingContext = document.body.appendChild(document.createElement(`iframe`))
+        })
+        afterAll(() => {
+            separateBrowsingContext.remove()
+        })
 
         test(`target=_blank`, () => {
             const testAnchor = document.createElement(`a`)
@@ -129,13 +136,18 @@ describe(`the author might be forcing navigation`, () => {
 
             expect(catchLinks.authorIsForcingNavigation(testAnchor)).toBe(true)
         })
-
-        separateBrowsingContext.remove()
     })
 })
 
 describe(`anchor target attribute looks like _self if`, () => {
-    const separateBrowsingContext = document.body.appendChild(document.createElement(`iframe`))
+    let separateBrowsingContext
+
+    beforeAll(() => {
+        separateBrowsingContext = document.body.appendChild(document.createElement(`iframe`))
+    })
+    afterAll(() => {
+        separateBrowsingContext.remove()
+    })
 
     it(`is not set`, () => {
         const testAnchor = document.createElement(`a`)
@@ -168,8 +180,6 @@ describe(`anchor target attribute looks like _self if`, () => {
 
         testAnchor.remove()
     })
-
-    separateBrowsingContext.remove()
 })
 
 describe(`navigation is routed through gatsby if the destination href`, () => {
