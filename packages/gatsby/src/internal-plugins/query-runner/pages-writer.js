@@ -37,10 +37,9 @@ const writePages = async () => {
 
   pagesData = _(pagesData)
     // Ensure pages keep the same sorting through builds
-    .sortBy([`path`])
-    // Sort pages with matchPath to end so explicit routes
+    // and sort pages with matchPath to end so explicit routes
     // will match before general.
-    .sortBy(p => (p.matchPath ? 1 : 0))
+    .sortBy(p => `${p.matchPath ? 1 : 0}${p.path}`)
     .value()
   const newHash = crypto
     .createHash(`md5`)
