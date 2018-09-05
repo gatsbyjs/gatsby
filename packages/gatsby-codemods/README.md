@@ -68,6 +68,29 @@ export const query = graphql`
 `
 ```
 
+
+#### `import-link`
+
+Import `Link` from `gatsby` instead of `gatsby-link` and remove the `gatsby-link` import.
+
+See the [Gatsby v2 migration guide for details on when to use this](https://next.gatsbyjs.org/docs/migrating-from-v1-to-v2/#import-link-from-gatsby).
+
+```sh
+jscodeshift -t node_modules/gatsby-codemods/dist/transforms/import-link.js <path>
+```
+
+Example result:
+
+```diff
+- import Link from "gatsby-link"
++ import { Link } from "gatsby"
+
+export default props => (
+  <Link to="/">Home</Link>
+)
+```
+
+
 #### `navigate-calls`
 
 Change the deprecated `navigateTo` method from `gatsby-link` to `navigate` from the `gatsby` module.
