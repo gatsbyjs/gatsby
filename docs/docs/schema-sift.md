@@ -16,7 +16,7 @@ Remember, at the point this resolve function is created, we have been iterating 
 
 The `resolve()` function calls `run-sift.js`, and provides it with the following arguments:
 
-- GraphQLArgs (as js object). Within a filter. E.g `wordcount: { paragraphs: { eg: 4 } }`
+- GraphQLArgs (as js object). Within a filter. E.g `wordcount: { paragraphs: { eq: 4 } }`
 - All nodes in redux of this type. E.g where `internal.type == MmarkdownRemark'`
 - Context `path`, if present
 - typeName. E.g `markdownRemark`
@@ -30,7 +30,7 @@ runSift({
     filter: { // Exact args from GraphQL Query
       wordcount: {
         paragraphs: {
-          eg: 4
+          eq: 4
         }
       }
     }
@@ -59,7 +59,7 @@ Sift expects all field names to be prepended by a `$`. The [siftify-args](https:
 
 - field key is`elemMatch`? Change to `$elemMatch`. Recurse on value object
 - field value is regex? Apply regex cleaning
-- field value is globl, use [minimatch](https://www.npmjs.com/package/minimatch) library to convert to Regex
+- field value is glob, use [minimatch](https://www.npmjs.com/package/minimatch) library to convert to Regex
 - normal value, prepend `$` to field name.
 
 So, the above query would become:
@@ -68,7 +68,7 @@ So, the above query would become:
 {
   `$wordcount`: {
     `$paragraphs`: {
-      `$eg`: 4
+      `$eq`: 4
     }
   }
 }

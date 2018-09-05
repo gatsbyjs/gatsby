@@ -10,17 +10,17 @@ Each sourced or transformed node has a `node.internal.type`, which is set by the
 
 During the schema generation phase, we must generate what's called a `ProcessedNodeType` in Gatsby. This is a simple structure that builds on top of a [graphql-js GraphQLObjectType](https://graphql.org/graphql-js/type/#graphqlobjecttype). Our goal in the below steps is to infer and construct this object for each unique node type in redux.
 
-The flow is summarized by the below graph. It shows the intermediate transformations that are performed by code in the Gatsby [schema folder](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby/src/schema), finally resulting in the [ProcessedNoteType](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/build-node-types.js#L182). It uses the example of building a `File` GraphQL type.
+The flow is summarized by the below graph. It shows the intermediate transformations that are performed by code in the Gatsby [schema folder](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby/src/schema), finally resulting in the [ProcessedNodeType](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/build-node-types.js#L182). It uses the example of building a `File` GraphQL type.
 
 ```dot
 digraph graphname {
   "pluginFields" [ label = "custom plugin fields\l{\l    publicURL: {\l        type: GraphQLString,\l        resolve(file, a, c) { ... }\l    }\l}\l ", shape = box ];
   "typeNodes" [ label = "all redux nodes of type\le.g internal.type === `File`", shape = "box" ];
-  "exampleValue" [ label = "exampleValue\l{\l    relativePath: `bogs/my-blog.md`,\l    accessTime: 8292387234\l}\l ", shape = "box" ];
+  "exampleValue" [ label = "exampleValue\l{\l    relativePath: `blogs/my-blog.md`,\l    accessTime: 8292387234\l}\l ", shape = "box" ];
   "resolve" [ label = "ProcessedNodeType.resolve()", shape = box ];
   "gqlType" [ label = "gqlType (GraphQLObjectType)\l{\l    fields,\l    name: `File`\l}\l ", shape = box ];
   "parentChild" [ label = "Parent/Children fields\lnode {\l    childMarkdownRemark { html }\l    parent { id }\l}\l ", shape = "box" ];
-  "objectFields" [ label = "Object node fields\l  node {\l    relativePath,\l    accessTime   }\l  }\l  ", shape = "box" ];
+  "objectFields" [ label = "Object node fields\l  node {\l    relativePath,\l    accessTime\l}\l ", shape = "box" ];
   "inputFilters" [ label = "InputFilters\lfile({\l    relativePath: {\l        eq: `blogs/my-blog.md`\l    }\l})\l ", shape = box ]
 
   "pluginFields" -> "inputFilters";
@@ -49,7 +49,7 @@ To declare custom fields, plugins implement the [setFieldsOnGraphQLNodeType](/do
 
 #### 2. Create a "GQLType"
 
-This step is quite complex, but at its most basic, it infers GraphQL Fields by constructing an `exampleObject` that merges all fields of the type in Redux. It uses this to infer all possible fields and their types, and construct GraphQL versions of them. It does the same for fields created by plugins (like in step 2). This step is explained in detail in [GraphQL Node Types Creation](/docs/schema-gql-type).
+This step is quite complex, but at its most basic, it infers GraphQL Fields by constructing an `exampleObject` that merges all fields of the type in Redux. It uses this to infer all possible fields and their types, and construct GraphQL versions of them. It does the same for fields created by plugins (like in step 1). This step is explained in detail in [GraphQL Node Types Creation](/docs/schema-gql-type).
 
 #### 3. Create Input filters
 
