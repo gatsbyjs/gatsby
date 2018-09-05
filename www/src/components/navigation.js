@@ -26,14 +26,14 @@ const navItemStyles = {
     opacity: 0.8,
   },
 }
-const NavItem = ({ linkTo, state, children }) => (
+const NavItem = ({ linkTo, children }) => (
   <li
     css={{
       display: `inline-block`,
       margin: 0,
     }}
   >
-    <Link to={linkTo} css={navItemStyles} state={state}>
+    <Link to={linkTo} css={navItemStyles}>
       {children}
     </Link>
   </li>
@@ -157,9 +157,16 @@ export default ({ pathname }) => {
           <NavItem linkTo="/features/">Features</NavItem>
           <NavItem linkTo="/blog/">Blog</NavItem>
           <NavItem linkTo="/showcase/">Showcase</NavItem>
-          <NavItem linkTo="/community/" state={{ filter: `` }}>
-            Community
-          </NavItem>
+          <li
+            css={{
+              display: `inline-block`,
+              margin: 0,
+            }}
+          >
+            <Link to="/community/" css={navItemStyles} state={{ filter: `` }}>
+              Community
+            </Link>
+          </li>
         </ul>
         <div
           css={{
