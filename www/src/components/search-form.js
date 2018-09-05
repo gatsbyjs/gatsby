@@ -7,6 +7,9 @@ import presets, { colors } from "../utils/presets"
 import hex2rgba from "hex2rgba"
 import SearchIcon from "./search-icon"
 
+const loadJS = () => import(`./docsearch.min.js`)
+let loadedJs = false
+
 import { css } from "glamor"
 
 const { curveDefault, speedDefault } = presets.animation
@@ -232,19 +235,10 @@ css.insert(`
     }
   }
 `)
-const checkScriptDownloaded = cb => {
-  if (typeof window.docsearch !== `undefined`) {
-    cb()
-  } else {
-    setTimeout(() => {
-      checkScriptDownloaded(cb)
-    }, 250)
-  }
-}
 class SearchForm extends Component {
   constructor() {
     super()
-    this.state = { enabled: true, focussed: false }
+    this.state = { focussed: false }
     this.autocompleteSelected = this.autocompleteSelected.bind(this)
   }
   /**
@@ -292,25 +286,12 @@ class SearchForm extends Component {
       link.setAttribute(`type`, `text/css`)
       link.setAttribute(`href`, path)
       document.head.appendChild(link)
-      // Lazy load js
-      const script = document.createElement(`script`)
-      script.setAttribute(
-        "src",
-        "https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"
-      )
-      document.head.appendChild(script)
-      checkScriptDownloaded(() => {
-        this.setState({ enabled: true }, () => this.init())
-      })
-      this.setState({ enabled: false })
-      return
     }
-    this.init()
   }
   render() {
-    const { enabled, focussed } = this.state
+    const { focussed } = this.state
     const { iconStyles, isHomepage } = this.props
-    return enabled ? (
+    return (
       <form
         css={{
           display: `flex`,
@@ -321,6 +302,14 @@ class SearchForm extends Component {
           marginBottom: 0,
         }}
         className="searchWrap"
+        onMouseOver={() =>
+          !loadedJs &&
+          loadJS().then(a => {
+            loadedJs = true
+            window.docsearch = a.default
+            this.init()
+          })
+        }
         onSubmit={e => e.preventDefault()}
       >
         <label css={{ position: `relative` }}>
@@ -390,7 +379,7 @@ class SearchForm extends Component {
           />
         </label>
       </form>
-    ) : null
+    )
   }
 }
 SearchForm.propTypes = {
