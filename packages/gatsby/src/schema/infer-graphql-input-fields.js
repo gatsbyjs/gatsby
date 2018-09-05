@@ -14,13 +14,14 @@ const typeOf = require(`type-of`)
 const createTypeName = require(`./create-type-name`)
 const createKey = require(`./create-key`)
 const {
-  extractFieldExamples,
+  getExampleValues,
   extractFieldNames,
   isEmptyObjectOrArray,
 } = require(`./data-tree-utils`)
 
 const { findLinkedNode } = require(`./infer-graphql-type`)
 const { getNodes } = require(`../redux`)
+const is32BitInteger = require(`../utils/is-32-bit-integer`)
 
 import type {
   GraphQLInputFieldConfig,
@@ -33,6 +34,7 @@ function typeFields(type): GraphQLInputFieldConfigMap {
       return {
         eq: { type: GraphQLBoolean },
         ne: { type: GraphQLBoolean },
+        in: { type: new GraphQLList(GraphQLBoolean) },
       }
     case `string`:
       return {
@@ -40,16 +42,27 @@ function typeFields(type): GraphQLInputFieldConfigMap {
         ne: { type: GraphQLString },
         regex: { type: GraphQLString },
         glob: { type: GraphQLString },
+        in: { type: new GraphQLList(GraphQLString) },
       }
     case `int`:
       return {
         eq: { type: GraphQLInt },
         ne: { type: GraphQLInt },
+        gt: { type: GraphQLInt },
+        gte: { type: GraphQLInt },
+        lt: { type: GraphQLInt },
+        lte: { type: GraphQLInt },
+        in: { type: new GraphQLList(GraphQLInt) },
       }
     case `float`:
       return {
         eq: { type: GraphQLFloat },
         ne: { type: GraphQLFloat },
+        gt: { type: GraphQLFloat },
+        gte: { type: GraphQLFloat },
+        lt: { type: GraphQLFloat },
+        lte: { type: GraphQLFloat },
+        in: { type: new GraphQLList(GraphQLFloat) },
       }
   }
   return {}
@@ -68,7 +81,7 @@ function inferGraphQLInputFields({
       let headType = typeOf(headValue)
 
       if (headType === `number`)
-        headType = _.isInteger(headValue) ? `int` : `float`
+        headType = is32BitInteger(headValue) ? `int` : `float`
 
       // Determine type for in operator.
       let inType
@@ -112,13 +125,24 @@ function inferGraphQLInputFields({
           )
       }
 
+      let fields
+      if (headType === `object`) {
+        fields = {
+          elemMatch: {
+            type: inType,
+          },
+        }
+      } else {
+        fields = {
+          ...typeFields(headType),
+          in: { type: new GraphQLList(inType) },
+        }
+      }
+
       return {
         type: new GraphQLInputObjectType({
           name: createTypeName(`${prefix}QueryList`),
-          fields: {
-            ...typeFields(headType),
-            in: { type: new GraphQLList(inType) },
-          },
+          fields,
         }),
       }
     }
@@ -157,7 +181,7 @@ function inferGraphQLInputFields({
       }
     }
     case `number`: {
-      if (value % 1 === 0) {
+      if (is32BitInteger(value)) {
         return {
           type: new GraphQLInputObjectType({
             name: createTypeName(`${prefix}QueryInteger`),
@@ -190,18 +214,43 @@ type InferInputOptions = {
   exampleValue?: Object,
 }
 
+const recursiveOmitBy = (value, fn) => {
+  if (_.isObject(value)) {
+    if (_.isPlainObject(value)) {
+      value = _.omitBy(value, fn)
+    }
+    _.each(value, (v, k) => {
+      value[k] = recursiveOmitBy(v, fn)
+    })
+    if (_.isEmpty(value)) {
+      // don't return empty objects - gatsby doesn't support these
+      return null
+    }
+  }
+  return value
+}
+
 const linkedNodeCache = {}
 
 export function inferInputObjectStructureFromNodes({
   nodes,
   typeName = ``,
   prefix = ``,
-  exampleValue = extractFieldExamples(nodes),
+  exampleValue = null,
 }: InferInputOptions): Object {
   const inferredFields = {}
   const isRoot = !prefix
 
   prefix = isRoot ? typeName : prefix
+  if (exampleValue === null) {
+    // typeName includes "Connection" string, which is not what we want,
+    // so extract type from first node
+    exampleValue = getExampleValues({
+      nodes,
+      typeName:
+        nodes && nodes[0] && nodes[0].internal && nodes[0].internal.type,
+    })
+  }
 
   _.each(exampleValue, (v, k) => {
     let value = v
@@ -222,8 +271,11 @@ export function inferInputObjectStructureFromNodes({
         const relatedNodes = getNodes().filter(
           node => node.internal.type === linkedNode.internal.type
         )
-        value = extractFieldExamples(relatedNodes)
-        value = _.omitBy(value, (_v, _k) => _.includes(_k, `___NODE`))
+        value = getExampleValues({
+          nodes: relatedNodes,
+          typeName: linkedNode.internal.type,
+        })
+        value = recursiveOmitBy(value, (_v, _k) => _.includes(_k, `___NODE`))
         linkedNodeCache[linkedNode.internal.type] = value
       }
 

@@ -5,31 +5,35 @@
   "version": "1.0.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "gatsby": "^1.9.52",
-    "gatsby-image": "^1.0.39",
-    "gatsby-link": "^1.6.20",
-    "gatsby-plugin-glamor": "^1.6.8",
-    "gatsby-plugin-google-analytics": "^1.0.8",
-    "gatsby-plugin-manifest": "^1.0.8",
-    "gatsby-plugin-offline": "^1.0.9",
-    "gatsby-plugin-sharp": "^1.6.8",
-    "gatsby-source-filesystem": "^1.5.2",
-    "gatsby-transformer-json": "^1.0.8",
-    "gatsby-transformer-sharp": "^1.6.8",
+    "core-js": "^2.5.5",
+    "gatsby": "next",
+    "gatsby-image": "next",
+    "gatsby-plugin-glamor": "next",
+    "gatsby-plugin-google-analytics": "next",
+    "gatsby-plugin-manifest": "next",
+    "gatsby-plugin-offline": "next",
+    "gatsby-plugin-sharp": "next",
+    "gatsby-plugin-typography": "next",
+    "gatsby-source-filesystem": "next",
+    "gatsby-transformer-json": "next",
+    "gatsby-transformer-sharp": "next",
+    "glamor": "^2.20.40",
     "instagram-screen-scrape": "^2.0.0",
     "lodash": "^4.16.4",
     "mkdirp": "^0.5.1",
     "mousetrap": "^1.6.0",
-    "progress": "^1.1.8",
+    "progress": "^2.0.0",
     "prop-types": "^15.5.8",
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2",
     "react-gravatar": "^2.6.1",
-    "react-icons": "^2.2.3",
-    "react-modal": "^1.7.6",
-    "react-typography": "^0.15.0",
+    "react-icons": "^2.2.7",
+    "react-modal": "^3.4.2",
+    "react-typography": "^0.16.13",
     "request": "^2.79.0",
     "slug": "^0.9.1",
-    "typeface-space-mono": "^0.0.22",
-    "typography": "^0.15.0"
+    "typeface-space-mono": "0.0.54",
+    "typography": "^0.16.6"
   },
   "keywords": [
     "gatsby"
@@ -38,10 +42,16 @@
   "main": "n/a",
   "scripts": {
     "lint": "./node_modules/.bin/eslint --ext .js,.jsx --ignore-pattern public .",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "start-server-and-test develop http://localhost:8000 cy:run",
     "develop": "gatsby develop",
     "dev": "gatsby develop",
     "build": "gatsby build",
-    "deploy": "gatsby build --prefix-paths && gh-pages -d public"
+    "deploy": "gatsby build --prefix-paths && gh-pages -d public",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run"
+  },
+  "devDependencies": {
+    "cypress": "^3.1.0",
+    "start-server-and-test": "^1.1.4"
   }
 }

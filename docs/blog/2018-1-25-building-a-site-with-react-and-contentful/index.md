@@ -2,6 +2,7 @@
 title: Building a Site with React and Contentful
 date: "2018-01-25"
 author: "Shannon Soper"
+tags: ["react", "contentful", "graphql"]
 ---
 
 A poster of _Starry Night_ by Vincent Van Gogh followed me to each new dorm room in college until it ripped beyond repair. I loved that poster.
@@ -79,7 +80,7 @@ module.exports = {
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
   ],
-};
+}
 ```
 
 ## Creating pages and GraphQL queries
@@ -114,14 +115,14 @@ Here is one of the first pages I rendered into a table format:
 Here are more examples of pages I created. This is the photo gallery page:
 
 ```jsx
-import React from "react";
+import React from "react"
 
 export default ({ data }) => {
-  console.log(data);
+  console.log(data)
   // The next line is where the code drills deeper into the data structure to finally get to photos.
   // In order to create the correct order here, follow the structure of the GraphQL query.
-  const photos = data.allContentfulPhotoGallery.edges[0].node.photos;
-  console.log(photos);
+  const photos = data.allContentfulPhotoGallery.edges[0].node.photos
+  console.log(photos)
 
   return (
     <div>
@@ -140,25 +141,25 @@ export default ({ data }) => {
         </div>
       ))}
     </div>
-  );
-};
+  )
+}
 
 export const query = graphql`
 query PhotoQuery {
 // starting here is where I copied and pasted the query I created in GraphiQL.
-    allContentfulPhotoGallery { 
-        edges { 
-            node { 
-                photos { 
-                    title 
-                    description 
-                    file { 
-                        url } 
-                        } 
-                    } 
-                } 
-            } 
-        }`;
+    allContentfulPhotoGallery {
+        edges {
+            node {
+                photos {
+                    title
+                    description
+                    file {
+                        url }
+                        }
+                    }
+                }
+            }
+        }`
 ```
 
 ## More complex pages
@@ -168,12 +169,12 @@ The list of Tricks & Commands presented a complex challenge because not all entr
 Because each entry was inconsistent, my friends helped me figure out a way to use JS to make sure we only requested a photo to be printed IF the photo existed. And if a particular entry didn't have a photo, the computer could forgive it (just this once). Here is the code from that page:
 
 ```jsx
-import React from "react";
+import React from "react"
 
 export default ({ data }) => {
-  const tricks = data.allContentfulTricksCommands.edges;
-  console.log(tricks);
-  console.log(data);
+  const tricks = data.allContentfulTricksCommands.edges
+  console.log(tricks)
+  console.log(data)
 
   return (
     <div>
@@ -193,14 +194,12 @@ export default ({ data }) => {
           {trick.node.exampleOfTheCommandInAction && (
             <img src={trick.node.exampleOfTheCommandInAction[0].file.url} />
           )}
-          {trick.node.exampleOfTheCommandInAction && (
-            <p>{trick.node.exampleOfTheCommandInAction[0].description}</p>
-          )}
+          {trick.node.exampleOfTheCommandInAction && <p>{trick.node.exampleOfTheCommandInAction[0].description}</p>}
         </div>
       ))}
     </div>
-  );
-};
+  )
+}
 
 export const query = graphql`
   query CommandsQuery {
@@ -225,7 +224,7 @@ export const query = graphql`
       }
     }
   }
-`;
+`
 ```
 
 ## Final thoughts

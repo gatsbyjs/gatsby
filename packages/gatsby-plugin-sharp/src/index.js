@@ -10,6 +10,7 @@ const imageminPngquant = require(`imagemin-pngquant`)
 const imageminWebp = require(`imagemin-webp`)
 const queue = require(`async/queue`)
 const path = require(`path`)
+const existsSync = require(`fs-exists-cached`).sync
 
 const imageSizeCache = new Map()
 const getImageSize = file => {
@@ -60,6 +61,45 @@ const reportError = (message, err, reporter) => {
   }
 }
 
+const generalArgs = {
+  quality: 50,
+  jpegProgressive: true,
+  pngCompressionLevel: 9,
+  base64: false,
+  grayscale: false,
+  duotone: false,
+  pathPrefix: ``,
+  toFormat: ``,
+  sizeByPixelDensity: false,
+}
+
+const healOptions = (args, defaultArgs) => {
+  let options = _.defaults({}, args, defaultArgs, generalArgs)
+  options.quality = parseInt(options.quality, 10)
+  options.pngCompressionLevel = parseInt(options.pngCompressionLevel, 10)
+  options.toFormat = options.toFormat.toLowerCase()
+
+  // only set width to 400 if neither width nor height is passed
+  if (options.width === undefined && options.height === undefined) {
+    options.width = 400
+  } else if (options.width !== undefined) {
+    options.width = parseInt(options.width, 10)
+  } else if (options.height !== undefined) {
+    options.height = parseInt(options.height, 10)
+  }
+
+  // only set maxWidth to 800 if neither maxWidth nor maxHeight is passed
+  if (options.maxWidth === undefined && options.maxHeight === undefined) {
+    options.maxWidth = 800
+  } else if (options.maxWidth !== undefined) {
+    options.maxWidth = parseInt(options.maxWidth, 10)
+  } else if (options.maxHeight !== undefined) {
+    options.maxHeight = parseInt(options.maxHeight, 10)
+  }
+
+  return options
+}
+
 let totalJobs = 0
 const processFile = (file, jobs, cb, reporter) => {
   // console.log("totalJobs", totalJobs)
@@ -87,13 +127,18 @@ const processFile = (file, jobs, cb, reporter) => {
     } else {
       clonedPipeline = pipeline
     }
-    // Sharp only allows ints as height/width. Since height isn't always
-    // set, check first before trying to round it.
+    // Sharp only allows ints as height/width. Since both aren't always
+    // set, check first before trying to round them.
     let roundedHeight = args.height
     if (roundedHeight) {
       roundedHeight = Math.round(roundedHeight)
     }
-    const roundedWidth = Math.round(args.width)
+
+    let roundedWidth = args.width
+    if (roundedWidth) {
+      roundedWidth = Math.round(roundedWidth)
+    }
+
     clonedPipeline
       .resize(roundedWidth, roundedHeight)
       .crop(args.cropFocus)
@@ -130,7 +175,7 @@ const processFile = (file, jobs, cb, reporter) => {
     if (args.duotone) {
       clonedPipeline = await duotone(
         args.duotone,
-        job.file.extension,
+        args.toFormat || job.file.extension,
         clonedPipeline
       )
     }
@@ -160,7 +205,7 @@ const processFile = (file, jobs, cb, reporter) => {
     ) {
       clonedPipeline
         .toBuffer()
-        .then(sharpBuffer => {
+        .then(sharpBuffer =>
           imagemin
             .buffer(sharpBuffer, {
               plugins: [
@@ -176,7 +221,7 @@ const processFile = (file, jobs, cb, reporter) => {
               fs.writeFile(job.outputPath, imageminBuffer, onFinish)
             })
             .catch(onFinish)
-        })
+        )
         .catch(onFinish)
       // Compress webp
     } else if (
@@ -185,7 +230,7 @@ const processFile = (file, jobs, cb, reporter) => {
     ) {
       clonedPipeline
         .toBuffer()
-        .then(sharpBuffer => {
+        .then(sharpBuffer =>
           imagemin
             .buffer(sharpBuffer, {
               plugins: [imageminWebp({ quality: args.quality })],
@@ -194,7 +239,7 @@ const processFile = (file, jobs, cb, reporter) => {
               fs.writeFile(job.outputPath, imageminBuffer, onFinish)
             })
             .catch(onFinish)
-        })
+        )
         .catch(onFinish)
       // any other format (jpeg, tiff) - don't compress it just handle output
     } else {
@@ -220,7 +265,7 @@ const queueJob = (job, reporter) => {
   }
 
   // Check if the output file already exists so we don't redo work.
-  if (fs.existsSync(job.outputPath)) {
+  if (existsSync(job.outputPath)) {
     return
   }
 
@@ -264,17 +309,7 @@ const queueJob = (job, reporter) => {
 }
 
 function queueImageResizing({ file, args = {}, reporter }) {
-  const defaultArgs = {
-    width: 400,
-    quality: 50,
-    jpegProgressive: true,
-    pngCompressionLevel: 9,
-    grayscale: false,
-    duotone: false,
-    pathPrefix: ``,
-    toFormat: ``,
-  }
-  const options = _.defaults(args, defaultArgs)
+  const options = healOptions(args, {})
   // Filter out false args, and args not for this extension and put width at
   // end (for the file path)
   const pairedArgs = _.toPairs(args)
@@ -327,11 +362,16 @@ function queueImageResizing({ file, args = {}, reporter }) {
     height = options.height
     // Recalculate the aspectRatio for the cropped photo
     aspectRatio = width / height
-  } else {
+  } else if (options.width) {
     // Use the aspect ratio of the image to calculate what will be the resulting
     // height.
     width = options.width
     height = Math.round(options.width / aspectRatio)
+  } else {
+    // Use the aspect ratio of the image to calculate what will be the resulting
+    // width.
+    height = options.height
+    width = Math.round(options.height * aspectRatio)
   }
 
   // Create job and process.
@@ -362,16 +402,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
 }
 
 async function notMemoizedbase64({ file, args = {}, reporter }) {
-  const defaultArgs = {
-    width: 20,
-    quality: 50,
-    jpegProgressive: true,
-    pngCompressionLevel: 9,
-    grayscale: false,
-    duotone: false,
-    toFormat: ``,
-  }
-  const options = _.defaults(args, defaultArgs)
+  const options = healOptions(args, { width: 20 })
   let pipeline
   try {
     pipeline = sharp(file.absolutePath).rotate()
@@ -406,7 +437,11 @@ async function notMemoizedbase64({ file, args = {}, reporter }) {
 
   // duotone
   if (options.duotone) {
-    pipeline = await duotone(options.duotone, file.extension, pipeline)
+    pipeline = await duotone(
+      options.duotone,
+      args.toFormat || file.extension,
+      pipeline
+    )
   }
 
   const [buffer, info] = await pipeline.toBufferAsync()
@@ -430,20 +465,8 @@ async function base64(args) {
   return await memoizedBase64(args)
 }
 
-async function responsiveSizes({ file, args = {}, reporter }) {
-  const defaultArgs = {
-    maxWidth: 800,
-    quality: 50,
-    jpegProgressive: true,
-    pngCompressionLevel: 9,
-    grayscale: false,
-    duotone: false,
-    pathPrefix: ``,
-    toFormat: ``,
-    sizeByPixelDensity: false,
-  }
-  const options = _.defaults({}, args, defaultArgs)
-  options.maxWidth = parseInt(options.maxWidth, 10)
+async function fluid({ file, args = {}, reporter }) {
+  const options = healOptions(args, {})
 
   // Account for images with a high pixel density. We assume that these types of
   // images are intended to be displayed at their native resolution.
@@ -455,18 +478,32 @@ async function responsiveSizes({ file, args = {}, reporter }) {
     return null
   }
 
-  const { width, height, density } = metadata
+  const { width, height, density, format } = metadata
   const pixelRatio =
     options.sizeByPixelDensity && typeof density === `number` && density > 0
       ? density / 72
       : 1
-  const presentationWidth = Math.min(
-    options.maxWidth,
-    Math.round(width / pixelRatio)
-  )
-  const presentationHeight = Math.round(presentationWidth * (height / width))
 
-  // If the users didn't set a default sizes, we'll make one.
+  // if no maxWidth is passed, we need to resize the image based on the passed maxHeight
+  const fixedDimension =
+    options.maxWidth === undefined ? `maxHeight` : `maxWidth`
+
+  let presentationWidth, presentationHeight
+  if (fixedDimension === `maxWidth`) {
+    presentationWidth = Math.min(
+      options.maxWidth,
+      Math.round(width / pixelRatio)
+    )
+    presentationHeight = Math.round(presentationWidth * (height / width))
+  } else {
+    presentationHeight = Math.min(
+      options.maxHeight,
+      Math.round(height / pixelRatio)
+    )
+    presentationWidth = Math.round(presentationHeight * (width / height))
+  }
+
+  // If the users didn't set default sizes, we'll make one.
   if (!options.sizes) {
     options.sizes = `(max-width: ${presentationWidth}px) 100vw, ${presentationWidth}px`
   }
@@ -479,31 +516,36 @@ async function responsiveSizes({ file, args = {}, reporter }) {
   // device size / screen resolution while (hopefully) not requiring too much
   // image processing time (Sharp has optimizations thankfully for creating
   // multiple sizes of the same input file)
-  const sizes = []
-  sizes.push(options.maxWidth / 4)
-  sizes.push(options.maxWidth / 2)
-  sizes.push(options.maxWidth)
-  sizes.push(options.maxWidth * 1.5)
-  sizes.push(options.maxWidth * 2)
-  sizes.push(options.maxWidth * 3)
-  const filteredSizes = sizes.filter(size => size < width)
+  const fluidSizes = []
+  fluidSizes.push(options[fixedDimension] / 4)
+  fluidSizes.push(options[fixedDimension] / 2)
+  fluidSizes.push(options[fixedDimension])
+  fluidSizes.push(options[fixedDimension] * 1.5)
+  fluidSizes.push(options[fixedDimension] * 2)
+  fluidSizes.push(options[fixedDimension] * 3)
+  const filteredSizes = fluidSizes.filter(
+    size => size < (fixedDimension === `maxWidth` ? width : height)
+  )
 
   // Add the original image to ensure the largest image possible
   // is available for small images. Also so we can link to
   // the original image.
-  filteredSizes.push(width)
+  filteredSizes.push(fixedDimension === `maxWidth` ? width : height)
 
   // Sort sizes for prettiness.
   const sortedSizes = _.sortBy(filteredSizes)
 
   // Queue sizes for processing.
+  const dimensionAttr = fixedDimension === `maxWidth` ? `width` : `height`
+  const otherDimensionAttr = fixedDimension === `maxWidth` ? `height` : `width`
   const images = sortedSizes.map(size => {
     const arrrgs = {
       ...options,
-      width: Math.round(size),
+      [otherDimensionAttr]: undefined,
+      [dimensionAttr]: Math.round(size),
     }
     // Queue sizes for processing.
-    if (options.maxHeight) {
+    if (options.maxWidth !== undefined && options.maxHeight !== undefined) {
       arrrgs.height = Math.round(size * (options.maxHeight / options.maxWidth))
     }
 
@@ -515,11 +557,12 @@ async function responsiveSizes({ file, args = {}, reporter }) {
   })
 
   const base64Width = 20
-  const base64Height = Math.max(1, Math.round(base64Width * height / width))
+  const base64Height = Math.max(1, Math.round((base64Width * height) / width))
   const base64Args = {
     duotone: options.duotone,
     grayscale: options.grayscale,
     rotate: options.rotate,
+    toFormat: options.toFormat,
     width: base64Width,
     height: base64Height,
   }
@@ -530,18 +573,40 @@ async function responsiveSizes({ file, args = {}, reporter }) {
   // Construct src and srcSet strings.
   const originalImg = _.maxBy(images, image => image.width).src
   const fallbackSrc = _.minBy(images, image =>
-    Math.abs(options.maxWidth - image.width)
+    Math.abs(options[fixedDimension] - image[dimensionAttr])
   ).src
   const srcSet = images
     .map(image => `${image.src} ${Math.round(image.width)}w`)
     .join(`,\n`)
   const originalName = file.base
 
+  // figure out the srcSet format
+  let srcSetType = `image/${format}`
+
+  if (options.toFormat) {
+    switch (options.toFormat) {
+      case `png`:
+        srcSetType = `image/png`
+        break
+      case `jpg`:
+        srcSetType = `image/jpeg`
+        break
+      case `webp`:
+        srcSetType = `image/webp`
+        break
+      case ``:
+      case `no_change`:
+      default:
+        break
+    }
+  }
+
   return {
     base64: base64Image.src,
     aspectRatio: images[0].aspectRatio,
     src: fallbackSrc,
     srcSet,
+    srcSetType,
     sizes: options.sizes,
     originalImg: originalImg,
     originalName: originalName,
@@ -551,56 +616,50 @@ async function responsiveSizes({ file, args = {}, reporter }) {
   }
 }
 
-async function resolutions({ file, args = {}, reporter }) {
-  const defaultArgs = {
-    width: 400,
-    quality: 50,
-    jpegProgressive: true,
-    pngCompressionLevel: 9,
-    grayscale: false,
-    duotone: false,
-    pathPrefix: ``,
-    toFormat: ``,
-  }
-  const options = _.defaults({}, args, defaultArgs)
-  options.width = parseInt(options.width, 10)
+async function fixed({ file, args = {}, reporter }) {
+  const options = healOptions(args, {})
+
+  // if no width is passed, we need to resize the image based on the passed height
+  const fixedDimension = options.width === undefined ? `height` : `width`
 
   // Create sizes for different resolutions — we do 1x, 1.5x, 2x, and 3x.
   const sizes = []
-  sizes.push(options.width)
-  sizes.push(options.width * 1.5)
-  sizes.push(options.width * 2)
-  sizes.push(options.width * 3)
+  sizes.push(options[fixedDimension])
+  sizes.push(options[fixedDimension] * 1.5)
+  sizes.push(options[fixedDimension] * 2)
+  sizes.push(options[fixedDimension] * 3)
   const dimensions = getImageSize(file)
 
-  const filteredSizes = sizes.filter(size => size <= dimensions.width)
+  const filteredSizes = sizes.filter(size => size <= dimensions[fixedDimension])
 
-  // If there's no sizes after filtering (e.g. image is smaller than what's
+  // If there's no fluid images after filtering (e.g. image is smaller than what's
   // requested, add back the original so there's at least something)
   if (filteredSizes.length === 0) {
-    filteredSizes.push(dimensions.width)
+    filteredSizes.push(dimensions[fixedDimension])
     console.warn(
       `
-                 The requested width "${
-                   options.width
-                 }px" for a resolutions field for
+                 The requested ${fixedDimension} "${
+        options[fixedDimension]
+      }px" for a resolutions field for
                  the file ${file.absolutePath}
-                 was wider than the actual image width of ${dimensions.width}px!
+                 was larger than the actual image ${fixedDimension} of ${
+        dimensions[fixedDimension]
+      }px!
                  If possible, replace the current image with a larger one.
                  `
     )
   }
 
-  // Sort sizes for prettiness.
+  // Sort images for prettiness.
   const sortedSizes = _.sortBy(filteredSizes)
 
   const images = sortedSizes.map(size => {
     const arrrgs = {
       ...options,
-      width: Math.round(size),
+      [fixedDimension]: Math.round(size),
     }
-    // Queue sizes for processing.
-    if (options.height) {
+    // Queue images for processing.
+    if (options.width !== undefined && options.height !== undefined) {
       arrrgs.height = Math.round(size * (options.height / options.width))
     }
 
@@ -615,6 +674,7 @@ async function resolutions({ file, args = {}, reporter }) {
     duotone: options.duotone,
     grayscale: options.grayscale,
     rotate: options.rotate,
+    toFormat: options.toFormat,
   }
 
   // Get base64 version
@@ -658,6 +718,7 @@ async function resolutions({ file, args = {}, reporter }) {
 
 async function notMemoizedtraceSVG({ file, args, fileArgs, reporter }) {
   const potrace = require(`potrace`)
+  const svgToMiniDataURI = require(`mini-svg-data-uri`)
   const trace = Promise.promisify(potrace.trace)
   const defaultArgs = {
     color: `lightgray`,
@@ -666,17 +727,7 @@ async function notMemoizedtraceSVG({ file, args, fileArgs, reporter }) {
     turnPolicy: potrace.Potrace.TURNPOLICY_MAJORITY,
   }
   const optionsSVG = _.defaults(args, defaultArgs)
-
-  const defaultFileResizeArgs = {
-    width: 400,
-    quality: 50,
-    jpegProgressive: true,
-    pngCompressionLevel: 9,
-    grayscale: false,
-    duotone: false,
-    toFormat: ``,
-  }
-  const options = _.defaults(fileArgs, defaultFileResizeArgs)
+  const options = healOptions(fileArgs, {})
   let pipeline
   try {
     pipeline = sharp(file.absolutePath).rotate()
@@ -711,7 +762,11 @@ async function notMemoizedtraceSVG({ file, args, fileArgs, reporter }) {
 
   // duotone
   if (options.duotone) {
-    pipeline = await duotone(options.duotone, file.extension, pipeline)
+    pipeline = await duotone(
+      options.duotone,
+      args.toFormat || file.extension,
+      pipeline
+    )
   }
 
   const tmpDir = require(`os`).tmpdir()
@@ -730,7 +785,7 @@ async function notMemoizedtraceSVG({ file, args, fileArgs, reporter }) {
 
   return trace(tmpFilePath, optionsSVG)
     .then(svg => optimize(svg))
-    .then(svg => encodeOptimizedSVGDataUri(svg))
+    .then(svg => svgToMiniDataURI(svg))
 }
 
 const memoizedTraceSVG = _.memoize(
@@ -740,19 +795,6 @@ const memoizedTraceSVG = _.memoize(
 
 async function traceSVG(args) {
   return await memoizedTraceSVG(args)
-}
-
-// https://codepen.io/tigt/post/optimizing-svgs-in-data-uris
-function encodeOptimizedSVGDataUri(svgString) {
-  var uriPayload = encodeURIComponent(svgString) // encode URL-unsafe characters
-    .replace(/%0A/g, ``) // remove newlines
-    .replace(/%20/g, ` `) // put spaces back in
-    .replace(/%3D/g, `=`) // ditto equals signs
-    .replace(/%3A/g, `:`) // ditto colons
-    .replace(/%2F/g, `/`) // ditto slashes
-    .replace(/%22/g, `'`) // replace quotes with apostrophes (may break certain SVGs)
-
-  return `data:image/svg+xml,` + uriPayload
 }
 
 const optimize = svg => {
@@ -774,9 +816,11 @@ function toArray(buf) {
 }
 
 exports.queueImageResizing = queueImageResizing
+exports.resize = queueImageResizing
 exports.base64 = base64
 exports.traceSVG = traceSVG
-exports.responsiveSizes = responsiveSizes
-exports.responsiveResolution = resolutions
-exports.sizes = responsiveSizes
-exports.resolutions = resolutions
+exports.sizes = fluid
+exports.resolutions = fixed
+exports.fluid = fluid
+exports.fixed = fixed
+exports.getImageSize = getImageSize

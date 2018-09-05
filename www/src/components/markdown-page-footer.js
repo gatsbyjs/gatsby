@@ -1,11 +1,12 @@
 import React from "react"
+import { graphql } from "gatsby"
 import EditIcon from "react-icons/lib/md/create"
 import CheckIcon from "react-icons/lib/md/thumb-up"
 import CrossIcon from "react-icons/lib/md/thumb-down"
 import { GraphQLClient } from "graphql-request"
 
 import { rhythm, scale } from "../utils/typography"
-import presets, { colors } from "../utils/presets"
+import { colors } from "../utils/presets"
 
 const client = new GraphQLClient(
   `https://api.graph.cool/relay/v1/cj8xuo77f0a3a0164y7jketkr`
@@ -41,7 +42,8 @@ export default class MarkdownPageFooter extends React.Component {
           <span css={{ lineHeight: rhythm(2) }}>Thank you!</span>
         ) : (
           <span css={{ lineHeight: rhythm(2) }}>
-            Was this helpful?{` `}
+            Was this helpful?
+            {` `}
             <CheckIcon
               onClick={() => {
                 sendReview(true, this.props.page.parent.relativePath)
@@ -91,7 +93,7 @@ export default class MarkdownPageFooter extends React.Component {
           }}
           href={`https://github.com/gatsbyjs/gatsby/blob/master/${
             this.props.packagePage ? `packages` : `docs`
-          }/${this.props.page.parent.relativePath}`}
+          }/${this.props.page ? this.props.page.parent.relativePath : ``}`}
         >
           <EditIcon css={{ fontSize: 20, position: `relative`, top: -2 }} />
           {` `}

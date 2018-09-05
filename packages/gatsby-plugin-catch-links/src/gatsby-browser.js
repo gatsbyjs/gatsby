@@ -1,7 +1,9 @@
-import { navigateTo } from "gatsby-link"
+import { navigate } from "gatsby"
 
 import catchLinks from "./catch-links"
 
-catchLinks(window, href => {
-  navigateTo(href)
-})
+exports.onClientEntry = () => {
+  catchLinks(window, href => {
+    navigate(href)
+  })
+}

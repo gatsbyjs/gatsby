@@ -15,6 +15,7 @@ const {
   inferInputObjectStructureFromNodes,
 } = require(`../infer-graphql-input-fields`)
 const createSortField = require(`../create-sort-field`)
+const { clearTypeExampleValues } = require(`../data-tree-utils`)
 
 function queryResult(nodes, query, { types = [] } = {}) {
   const nodeType = new GraphQLObjectType({
@@ -29,7 +30,7 @@ function queryResult(nodes, query, { types = [] } = {}) {
     nodeType,
     connectionFields: () =>
       buildConnectionFields({
-        name: `Test`,
+        name,
         nodes,
         nodeObjectType: nodeType,
       }),
@@ -75,11 +76,17 @@ function queryResult(nodes, query, { types = [] } = {}) {
   return graphql(schema, query)
 }
 
+beforeEach(() => {
+  clearTypeExampleValues()
+})
+
 describe(`GraphQL Input args`, () => {
   const nodes = [
     {
       index: 0,
       name: `The Mad Max`,
+      string: `a`,
+      float: 1.5,
       hair: 1,
       date: `2006-07-22T22:39:53.000Z`,
       anArray: [1, 2, 3, 4],
@@ -88,6 +95,7 @@ describe(`GraphQL Input args`, () => {
       },
       anotherKey: {
         withANested: {
+          nestedKey: `foo`,
           emptyArray: [],
           anotherEmptyArray: [],
         },
@@ -106,8 +114,15 @@ describe(`GraphQL Input args`, () => {
     {
       index: 1,
       name: `The Mad Wax`,
+      string: `b`,
+      float: 2.5,
       hair: 2,
       anArray: [1, 2, 5, 4],
+      anotherKey: {
+        withANested: {
+          nestedKey: `foo`,
+        },
+      },
       frontmatter: {
         date: `2006-07-22T22:39:53.000Z`,
         title: `The world of slash and adventure`,
@@ -115,17 +130,67 @@ describe(`GraphQL Input args`, () => {
         circle: `happy`,
       },
       boolean: false,
+      data: {
+        tags: [
+          {
+            tag: {
+              document: [
+                {
+                  data: {
+                    tag: `Design System`,
+                  },
+                  number: 3,
+                },
+              ],
+            },
+          },
+        ],
+      },
     },
     {
       index: 2,
       name: `The Mad Wax`,
+      string: `c`,
+      float: 3.5,
       hair: 0,
       date: `2006-07-29T22:39:53.000Z`,
+      anotherKey: {
+        withANested: {
+          nestedKey: `bar`,
+        },
+      },
       frontmatter: {
         date: `2006-07-22T22:39:53.000Z`,
         title: `The world of shave and adventure`,
         blue: 10010,
         circle: `happy`,
+      },
+      data: {
+        tags: [
+          {
+            tag: {
+              document: [
+                {
+                  data: {
+                    tag: `Gatsby`,
+                  },
+                },
+              ],
+            },
+          },
+          {
+            tag: {
+              document: [
+                {
+                  data: {
+                    tag: `Design System`,
+                  },
+                  number: 5,
+                },
+              ],
+            },
+          },
+        ],
       },
     },
   ]
@@ -261,6 +326,21 @@ describe(`GraphQL Input args`, () => {
     expect(Object.keys(fields.foo.type.getFields())).toHaveLength(2)
   })
 
+  it(`infers number types`, () => {
+    const fields = inferInputObjectStructureFromNodes({
+      nodes: [
+        {
+          int32: 42,
+          float: 2.5,
+          longint: 3000000000,
+        },
+      ],
+    }).inferredFields
+    expect(fields.int32.type.name.endsWith(`Integer`)).toBe(true)
+    expect(fields.float.type.name.endsWith(`Float`)).toBe(true)
+    expect(fields.longint.type.name.endsWith(`Float`)).toBe(true)
+  })
+
   it(`handles eq operator`, async () => {
     let result = await queryResult(
       nodes,
@@ -329,6 +409,78 @@ describe(`GraphQL Input args`, () => {
     expect(result.data.allNode.edges[0].node.hair).toEqual(1)
   })
 
+  it(`handles lt operator`, async () => {
+    let result = await queryResult(
+      nodes,
+      `
+        {
+          allNode(filter: {hair: { lt: 2 }}) {
+            edges { node { hair }}
+          }
+        }
+      `
+    )
+
+    expect(result.errors).not.toBeDefined()
+    expect(result.data.allNode.edges.length).toEqual(2)
+    expect(result.data.allNode.edges[0].node.hair).toEqual(1)
+    expect(result.data.allNode.edges[1].node.hair).toEqual(0)
+  })
+
+  it(`handles lte operator`, async () => {
+    let result = await queryResult(
+      nodes,
+      `
+        {
+          allNode(filter: {hair: { lte: 1 }}) {
+            edges { node { hair }}
+          }
+        }
+      `
+    )
+
+    expect(result.errors).not.toBeDefined()
+    expect(result.data.allNode.edges.length).toEqual(2)
+    expect(result.data.allNode.edges[0].node.hair).toEqual(1)
+    expect(result.data.allNode.edges[1].node.hair).toEqual(0)
+  })
+
+  it(`handles gt operator`, async () => {
+    let result = await queryResult(
+      nodes,
+      `
+        {
+          allNode(filter: {hair: { gt: 0 }}) {
+            edges { node { hair }}
+          }
+        }
+      `
+    )
+
+    expect(result.errors).not.toBeDefined()
+    expect(result.data.allNode.edges.length).toEqual(2)
+    expect(result.data.allNode.edges[0].node.hair).toEqual(1)
+    expect(result.data.allNode.edges[1].node.hair).toEqual(2)
+  })
+
+  it(`handles gte operator`, async () => {
+    let result = await queryResult(
+      nodes,
+      `
+        {
+          allNode(filter: {hair: { gte: 1 }}) {
+            edges { node { hair }}
+          }
+        }
+      `
+    )
+
+    expect(result.errors).not.toBeDefined()
+    expect(result.data.allNode.edges.length).toEqual(2)
+    expect(result.data.allNode.edges[0].node.hair).toEqual(1)
+    expect(result.data.allNode.edges[1].node.hair).toEqual(2)
+  })
+
   it(`handles the regex operator`, async () => {
     let result = await queryResult(
       nodes,
@@ -345,7 +497,42 @@ describe(`GraphQL Input args`, () => {
     expect(result.data.allNode.edges[0].node.name).toEqual(`The Mad Wax`)
   })
 
-  it(`handles the in operator`, async () => {
+  it(`handles the in operator for scalars`, async () => {
+    let result = await queryResult(
+      nodes,
+      `
+        {
+          string:allNode(filter: { string: { in: ["b", "c"] }}) {
+            edges { node { index }}
+          }
+          int:allNode(filter: { index: { in: [0, 2] }}) {
+            edges { node { index }}
+          }
+          float:allNode(filter: { float: { in: [1.5, 2.5] }}) {
+            edges { node { index }}
+          }
+          boolean:allNode(filter: { boolean: { in: [true, null] }}) {
+            edges { node { index }}
+          }
+        }
+      `
+    )
+    expect(result.errors).not.toBeDefined()
+    expect(result.data.string.edges.length).toEqual(2)
+    expect(result.data.string.edges[0].node.index).toEqual(1)
+    expect(result.data.string.edges[1].node.index).toEqual(2)
+    expect(result.data.int.edges.length).toEqual(2)
+    expect(result.data.int.edges[0].node.index).toEqual(0)
+    expect(result.data.int.edges[1].node.index).toEqual(2)
+    expect(result.data.float.edges.length).toEqual(2)
+    expect(result.data.float.edges[0].node.index).toEqual(0)
+    expect(result.data.float.edges[1].node.index).toEqual(1)
+    expect(result.data.boolean.edges.length).toEqual(2)
+    expect(result.data.boolean.edges[0].node.index).toEqual(0)
+    expect(result.data.boolean.edges[1].node.index).toEqual(2)
+  })
+
+  it(`handles the in operator for array`, async () => {
     let result = await queryResult(
       nodes,
       `
@@ -361,16 +548,43 @@ describe(`GraphQL Input args`, () => {
     expect(result.data.allNode.edges[0].node.name).toEqual(`The Mad Wax`)
   })
 
-  it(`handles the glob operator`, async () => {
+  it(`handles the in operator for array of objects`, async () => {
     let result = await queryResult(
       nodes,
       `
         {
-          allNode(limit: 10, filter: {name: { glob: "*Wax" }}) {
-            edges { node { name }}
+          test1:allNode(filter: {data: {tags: {elemMatch: {tag: {document: {elemMatch: {data: {tag: {eq: "Gatsby"}}}}}}}}}) {
+            edges { node { index }}
+          }
+          test2:allNode(filter: {data: {tags: {elemMatch: {tag: {document: {elemMatch: {data: {tag: {eq: "Design System"}}}}}}}}}) {
+            edges { node { index }}
+          }
+          test3:allNode(filter: {data: {tags: {elemMatch: {tag: {document: {elemMatch: {number: {lt: 4}}}}}}}}) {
+            edges { node { index }}
           }
         }
       `
+    )
+    expect(result.errors).not.toBeDefined()
+    expect(result.data.test1.edges.length).toEqual(1)
+    expect(result.data.test1.edges[0].node.index).toEqual(2)
+    expect(result.data.test2.edges.length).toEqual(2)
+    expect(result.data.test2.edges[0].node.index).toEqual(1)
+    expect(result.data.test2.edges[1].node.index).toEqual(2)
+    expect(result.data.test3.edges.length).toEqual(1)
+    expect(result.data.test3.edges[0].node.index).toEqual(1)
+  })
+
+  it(`handles the glob operator`, async () => {
+    let result = await queryResult(
+      nodes,
+      `
+          {
+            allNode(limit: 10, filter: {name: { glob: "*Wax" }}) {
+              edges { node { name }}
+            }
+          }
+        `
     )
     expect(result.errors).not.toBeDefined()
     expect(result.data.allNode.edges.length).toEqual(2)
@@ -428,10 +642,12 @@ describe(`GraphQL Input args`, () => {
             blue: distinct(field: frontmatter___blue)
             # Only one node has this field
             circle: distinct(field: frontmatter___circle)
+            nestedField: distinct(field: anotherKey___withANested___nestedKey)
           }
         }
       `
     )
+
     expect(result.errors).not.toBeDefined()
 
     expect(result.data.allNode.names.length).toEqual(2)
@@ -445,6 +661,10 @@ describe(`GraphQL Input args`, () => {
 
     expect(result.data.allNode.circle.length).toEqual(1)
     expect(result.data.allNode.circle[0]).toEqual(`happy`)
+
+    expect(result.data.allNode.nestedField.length).toEqual(2)
+    expect(result.data.allNode.nestedField[0]).toEqual(`bar`)
+    expect(result.data.allNode.nestedField[1]).toEqual(`foo`)
   })
 
   it(`handles the group connection field`, async () => {
@@ -476,6 +696,34 @@ describe(`GraphQL Input args`, () => {
     expect(result.data.allNode.anArray[0].fieldValue).toEqual(`1`)
     expect(result.data.allNode.anArray[0].field).toEqual(`anArray`)
     expect(result.data.allNode.anArray[0].totalCount).toEqual(2)
+  })
+
+  it(`handles the nested group connection field`, async () => {
+    let result = await queryResult(
+      nodes,
+      ` {
+        allNode {
+          nestedKey: group(field: anotherKey___withANested___nestedKey) {
+            field
+            fieldValue
+            totalCount
+          }
+        }
+      }`
+    )
+
+    expect(result.errors).not.toBeDefined()
+    expect(result.data.allNode.nestedKey).toHaveLength(2)
+    expect(result.data.allNode.nestedKey[0].fieldValue).toEqual(`bar`)
+    expect(result.data.allNode.nestedKey[0].field).toEqual(
+      `anotherKey.withANested.nestedKey`
+    )
+    expect(result.data.allNode.nestedKey[0].totalCount).toEqual(1)
+    expect(result.data.allNode.nestedKey[1].fieldValue).toEqual(`foo`)
+    expect(result.data.allNode.nestedKey[1].field).toEqual(
+      `anotherKey.withANested.nestedKey`
+    )
+    expect(result.data.allNode.nestedKey[1].totalCount).toEqual(2)
   })
 
   it(`can query object arrays`, async () => {

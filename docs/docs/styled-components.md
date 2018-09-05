@@ -19,7 +19,7 @@ gatsby new styled-components-tutorial https://github.com/gatsbyjs/gatsby-starter
 Second, we'll install the Gatsby plugin for Styled Components.
 
 ```sh
-npm install --save gatsby-plugin-styled-components styled-components
+npm install --save gatsby-plugin-styled-components styled-components babel-plugin-styled-components
 ```
 
 And then add it to your site's `gatsby-config.js`:
@@ -27,7 +27,7 @@ And then add it to your site's `gatsby-config.js`:
 ```javascript
 module.exports = {
   plugins: [`gatsby-plugin-styled-components`],
-};
+}
 ```
 
 Then in your terminal run `gatsby develop` to start the Gatsby development server.
@@ -35,15 +35,17 @@ Then in your terminal run `gatsby develop` to start the Gatsby development serve
 Now let's create a sample Styled Components page at `src/pages/index.js`:
 
 ```jsx
-import React from "react";
-import styled from "styled-components";
+import React from "react"
+import styled from "styled-components"
 
 const Container = styled.div`
+  margin: 3rem auto;
+  max-width: 600px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-`;
+`
 
 const UserWrapper = styled.div`
   display: flex;
@@ -52,29 +54,29 @@ const UserWrapper = styled.div`
   &:last-child {
     margin-bottom: 0;
   }
-`;
+`
 
 const Avatar = styled.img`
   flex: 0 0 96px;
   width: 96px;
   height: 96px;
   margin: 0;
-`;
+`
 
 const Description = styled.div`
   flex: 1;
   margin-left: 18px;
   padding: 12px;
-`;
+`
 
 const Username = styled.h2`
   margin: 0 0 12px 0;
   padding: 0;
-`;
+`
 
 const Excerpt = styled.p`
   margin: 0;
-`;
+`
 
 const User = props => (
   <UserWrapper>
@@ -84,7 +86,7 @@ const User = props => (
       <Excerpt>{props.excerpt}</Excerpt>
     </Description>
   </UserWrapper>
-);
+)
 
 export default () => (
   <Container>
@@ -101,5 +103,5 @@ export default () => (
       excerpt="I'm Bob smith, a vertically aligned type of guy. Lorem ipsum dolor sit amet, consectetur adipisicing elit."
     />
   </Container>
-);
+)
 ```

@@ -67,5 +67,11 @@ module.exports = {
         trackingId: `UA-91652198-1`,
       },
     },
+    {
+      resolve: `gatsby-plugin-typography`,
+      options: {
+        pathToConfigModule: `src/utils/typography`,
+      },
+    },
   ],
 }

@@ -8,9 +8,36 @@ import {
   MIN_LARGER_DISPLAY_MEDIA_QUERY,
 } from "typography-breakpoint-constants"
 
-const options = {
-  headerFontFamily: [
-    `Futura PT`,
+const headerFontFamily = [
+  `Futura PT`,
+  `-apple-system`,
+  `BlinkMacSystemFont`,
+  `Segoe UI`,
+  `Roboto`,
+  `Oxygen`,
+  `Ubuntu`,
+  `Cantarell`,
+  `Fira Sans`,
+  `Droid Sans`,
+  `Helvetica Neue`,
+  `Arial`,
+  `sans-serif`,
+]
+
+const _options = {
+  headerFontFamily,
+  bodyFontFamily: [`Spectral`, `Georgia`, `Times New Roman`, `Times`, `serif`],
+  monospaceFontFamily: [
+    `Space Mono`,
+    `SFMono-Regular`,
+    `Menlo`,
+    `Monaco`,
+    `Consolas`,
+    `Liberation Mono`,
+    `Courier New`,
+    `monospace`,
+  ],
+  systemFontFamily: [
     `-apple-system`,
     `BlinkMacSystemFont`,
     `Segoe UI`,
@@ -23,17 +50,6 @@ const options = {
     `Helvetica Neue`,
     `Arial`,
     `sans-serif`,
-  ],
-  bodyFontFamily: [`Spectral`, `Georgia`, `Times New Roman`, `Times`, `serif`],
-  monospaceFontFamily: [
-    `Space Mono`,
-    `SFMono-Regular`,
-    `Menlo`,
-    `Monaco`,
-    `Consolas`,
-    `Liberation Mono`,
-    `Courier New`,
-    `monospace`,
   ],
   baseFontSize: `18px`,
   baseLineHeight: 1.4,
@@ -59,7 +75,7 @@ const options = {
       h3: {
         ...scale(2 / 5),
         lineHeight: 1,
-        marginTop: rhythm(options.blockMarginBottom),
+        marginTop: rhythm(options.blockMarginBottom * 2),
         marginBottom: rhythm(options.blockMarginBottom / 2),
       },
       h4: {
@@ -78,7 +94,7 @@ const options = {
       hr: {
         backgroundColor: colors.ui.light,
       },
-      "tt,code": {
+      "tt,code,kbd": {
         // background: `hsla(23, 60%, 97%, 1)`,
         background: colors.a[0],
         fontFamily: options.monospaceFontFamily.join(`,`),
@@ -123,8 +139,8 @@ const options = {
         marginRight: `${rhythm(-options.blockMarginBottom)}`,
         marginLeft: `${rhythm(-options.blockMarginBottom)}`,
         paddingRight: rhythm(options.blockMarginBottom),
-        paddingLeft: `${rhythm(options.blockMarginBottom / 5 * 4)}`,
-        borderLeft: `${rhythm(options.blockMarginBottom / 5 * 1)} solid ${
+        paddingLeft: `${rhythm((options.blockMarginBottom / 5) * 4)}`,
+        borderLeft: `${rhythm((options.blockMarginBottom / 5) * 1)} solid ${
           colors.a[3]
         }`,
         display: `block`,
@@ -173,6 +189,12 @@ const options = {
         fontSize: `102%`,
         color: colors.gatsby,
       },
+      ".post-body figcaption": {
+        color: colors.gray.calm,
+        fontFamily: headerFontFamily.join(`,`),
+        fontSize: `87.5%`,
+        marginTop: rhythm(1 / 2),
+      },
       ".main-body a:hover": {
         background: colors.ui.bright,
       },
@@ -192,6 +214,12 @@ const options = {
         marginTop: rhythm(options.blockMarginBottom * 2),
         marginBottom: rhythm(options.blockMarginBottom * 2),
       },
+      ".main-body figure a.gatsby-resp-image-link": {
+        boxShadow: `none`,
+        borderBottom: `transparent`,
+        marginTop: rhythm(options.blockMarginBottom * 2),
+        marginBottom: 0,
+      },
       ".main-body a.gatsby-resp-image-link:hover": {
         background: `none`,
         boxShadow: `none`,
@@ -204,6 +232,19 @@ const options = {
         borderRadius: `${presets.radius}px`,
         overflow: `hidden`,
       },
+      ".gatsby-code-title": {
+        backgroundColor: colors.gatsby,
+        borderTopLeftRadius: `${presets.radiusLg}px`,
+        borderTopRightRadius: `${presets.radiusLg}px`,
+        color: `white`,
+        fontFamily: options.monospaceFontFamily.join(`,`),
+        ...scale(-1 / 5),
+        marginLeft: rhythm(-options.blockMarginBottom),
+        marginRight: rhythm(-options.blockMarginBottom),
+        padding: `${rhythm(options.blockMarginBottom / 2)} ${rhythm(
+          options.blockMarginBottom
+        )}`,
+      },
       "@media (max-width:634px)": {
         ".gatsby-highlight, .gatsby-resp-image-link": {
           borderRadius: 0,
@@ -215,12 +256,6 @@ const options = {
           boxShadow: `inset 0 1px 0 0 #faede5, inset 0 -1px 0 0 #faede5`,
         },
       },
-      [`${presets.Tablet} and (max-width:980px)`]: {
-        ".has-sidebar .gatsby-highlight": {
-          marginLeft: 0,
-          marginRight: 0,
-        },
-      },
       video: {
         width: `100%`,
         marginBottom: rhythm(options.blockMarginBottom),
@@ -228,19 +263,24 @@ const options = {
       ".twitter-tweet-rendered": {
         margin: `${rhythm(options.blockMarginBottom * 2)} auto !important`,
       },
+      ".egghead-video": {
+        width: `620px`,
+        height: `348px`,
+        border: `none`,
+      },
       [MOBILE_MEDIA_QUERY]: {
         // Make baseFontSize on mobile 16px.
         html: {
-          fontSize: `${16 / 16 * 100}%`,
+          fontSize: `${(16 / 16) * 100}%`,
         },
       },
       [TABLET_MEDIA_QUERY]: {
         html: {
-          fontSize: `${17 / 16 * 100}%`,
+          fontSize: `${(17 / 16) * 100}%`,
         },
       },
       [MIN_DEFAULT_MEDIA_QUERY]: {
-        ".gatsby-highlight, .post .gatsby-resp-iframe-wrapper, .post .gatsby-resp-image-link": {
+        ".gatsby-highlight, .post .gatsby-resp-iframe-wrapper, .post .gatsby-resp-image-link, .gatsby-code-title": {
           marginLeft: rhythm(-options.blockMarginBottom * 1.5),
           marginRight: rhythm(-options.blockMarginBottom * 1.5),
         },
@@ -252,13 +292,20 @@ const options = {
           marginRight: `${rhythm(-options.blockMarginBottom * 1.5)}`,
           marginLeft: `${rhythm(-options.blockMarginBottom * 1.5)}`,
           paddingRight: rhythm(options.blockMarginBottom * 1.5),
-          paddingLeft: `${rhythm(options.blockMarginBottom * 1.5 / 5 * 4)}`,
-          borderLeftWidth: `${rhythm(options.blockMarginBottom * 1.5 / 5 * 1)}`,
+          paddingLeft: `${rhythm(((options.blockMarginBottom * 1.5) / 5) * 4)}`,
+          borderLeftWidth: `${rhythm(
+            ((options.blockMarginBottom * 1.5) / 5) * 1
+          )}`,
+        },
+        ".gatsby-code-title": {
+          padding: `${rhythm(options.blockMarginBottom)} ${rhythm(
+            options.blockMarginBottom * 1.5
+          )}`,
         },
       },
       [MIN_LARGER_DISPLAY_MEDIA_QUERY]: {
         html: {
-          fontSize: `${21 / 16 * 100}%`,
+          fontSize: `${(21 / 16) * 100}%`,
         },
       },
       ".token.comment,.token.block-comment,.token.prolog,.token.doctype,.token.cdata": {
@@ -270,11 +317,11 @@ const options = {
         // color: `blue`,
         color: colors.c[12],
       },
-      ".token.property,.token.tag,.token.boolean,.token.number,.token.function-name,.token.constant,.token.symbol,.token.deleted": {
+      ".token.property,.token.tag,.token.boolean,.token.number,.token.function-name,.token.constant,.token.symbol": {
         // color: `#a285d8`,
         color: colors.b[9],
       },
-      ".token.selector,.token.attr-name,.token.string,.token.char,.token.function,.token.builtin,.token.inserted": {
+      ".token.selector,.token.attr-name,.token.string,.token.char,.token.function,.token.builtin": {
         // color: `#a2466c`,
         color: colors.a[9],
       },
@@ -287,6 +334,12 @@ const options = {
         // color: `blue`,
         color: colors.b[8],
       },
+      ".token.inserted": {
+        color: colors.code.add,
+      },
+      ".token.deleted": {
+        color: colors.code.remove,
+      },
       // Fancy external links in posts, borrowed from
       // https://github.com/comfusion/after-dark/
       // @see https://github.com/comfusion/after-dark/blob/8fdbe2f480ac40315cf0e01cece785d2b5c4b0c3/layouts/partials/critical-theme.css#L36-L39
@@ -297,6 +350,7 @@ const options = {
   },
 }
 
-const typography = new Typography(options)
+const typography = new Typography(_options)
 
+export const { scale, rhythm, options } = typography
 export default typography

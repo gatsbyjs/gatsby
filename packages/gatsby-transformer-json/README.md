@@ -12,9 +12,20 @@ points to your files.
 
 ## How to use
 
+In your `gatsby-config.js`:
+
 ```javascript
-// In your gatsby-config.js
-plugins: [`gatsby-transformer-json`];
+module.exports = {
+  plugins: [
+    `gatsby-transformer-json`,
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `./src/data/`,
+      },
+    },
+  ],
+}
 ```
 
 ## Parsing algorithm
@@ -26,14 +37,16 @@ or as single objects spread across multiple files.
 
 The algorithm for arrays is to convert each item in the array into a node.
 
-So if your project has a `letters.json` with `[{ "value": "a" }, { "value": "b" }, { "value": "c" }]` then the following three nodes would be created.
+So if your project has a `letters.json` with
 
-```javascript
-[
-  { value: "a", type: "Letters" },
-  { value: "b", type: "Letters" },
-  { value: "c", type: "Letters" },
-];
+```json
+[{ "value": "a" }, { "value": "b" }, { "value": "c" }]
+```
+
+Then the following three nodes would be created:
+
+```json
+[{ "value": "a" }, { "value": "b" }, { "value": "c" }]
 ```
 
 ### Single Object
@@ -42,7 +55,7 @@ The algorithm for single JSON objects is to convert the object defined at the
 root of the file into a node. The type of the node is based on the name of the
 parent directory.
 
-For example, lets say your project has a data layout like:
+For example, let's say your project has a data layout like:
 
 ```
 data/
@@ -54,35 +67,32 @@ data/
 
 Where each of `a.json`, `b.json` and `c.json` look like:
 
-```javascript
-{ 'value': 'a' }
+```json
+{ "value": "a" }
 ```
 
-```javascript
-{ 'value': 'b' }
+```json
+{ "value": "b" }
 ```
 
-```javascript
-{ 'value': 'c' }
+```json
+{ "value": "c" }
 ```
 
-Then the following three nodes would be created.
+Then the following three nodes would be created:
 
-```javascript
+```json
 [
   {
-    value: "a",
-    type: "Letters",
+    "value": "a"
   },
   {
-    value: "b",
-    type: "Letters",
+    "value": "b"
   },
   {
-    value: "c",
-    type: "Letters",
-  },
-];
+    "value": "c"
+  }
+]
 ```
 
 ## How to query
@@ -123,7 +133,35 @@ Which would return:
           value: "c",
         },
       },
-    ];
+    ]
   }
+}
+```
+
+## Examples
+
+The [gatsbygram example site](https://github.com/gatsbyjs/gatsby/blob/master/examples/gatsbygram/gatsby-node.js) uses this plugin.
+
+## Troubleshooting
+
+If some fields are missing or you see the error on build:
+
+> There are conflicting field types in your data. GraphQL schema will omit those fields.
+
+It's probably because you have arrays of mixed values somewhere. For instance:
+
+```json
+{
+  "stuff": [25, "bob"],
+  "orEven": [[25, "bob"], [23, "joe"]]
+}
+```
+
+If you can rewrite your data with objects, you should be good to go:
+
+```json
+{
+  "stuff": [{ "count": 25, "name": "bob" }],
+  "orEven": [{ "count": 25, "name": "bob" }, { "count": 23, "name": "joe" }]
 }
 ```

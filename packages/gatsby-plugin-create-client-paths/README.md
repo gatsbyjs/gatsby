@@ -7,7 +7,7 @@ Use this plugin to simplify creating a “hybrid” Gatsby app with both statica
 Install:
 
 ```
-yarn add gatsby-plugin-create-client-paths
+npm install --save gatsby-plugin-create-client-paths
 ```
 
 Then configure via `gatsby-config.js`:

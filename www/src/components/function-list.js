@@ -1,4 +1,5 @@
 import React from "react"
+import { graphql } from "gatsby"
 
 import { rhythm, scale, options } from "../utils/typography"
 
@@ -31,7 +32,10 @@ const Param = (param, depth = 0) => {
             <span css={{ color: `#73725f` }}>{`{${param.type.name}}`}</span>
           )}
         {param.default && (
-          <span css={{ color: `#73725f` }}>[default={param.default}]</span>
+          <span css={{ color: `#73725f` }}>
+            [default=
+            {param.default}]
+          </span>
         )}
       </h5>
       {param.description && (
@@ -53,7 +57,7 @@ const Param = (param, depth = 0) => {
 
 export default ({ functions }) => (
   <div>
-    {functions.map(({ node }, i) => (
+    {functions.map((node, i) => (
       <div
         id={node.name}
         key={`reference list ${node.name}`}
@@ -83,14 +87,19 @@ export default ({ functions }) => (
               <h4 css={{ marginTop: rhythm(1) }}>Example</h4>
               {` `}
               {node.examples.map((example, i) => (
-                <pre key={`${node.name} example ${i}`}>
-                  <code
+                <div className="gatsby-highlight">
+                  <pre
                     className="language-javascript"
-                    dangerouslySetInnerHTML={{
-                      __html: example.highlighted,
-                    }}
-                  />
-                </pre>
+                    key={`${node.name} example ${i}`}
+                  >
+                    <code
+                      className="language-javascript"
+                      dangerouslySetInnerHTML={{
+                        __html: example.highlighted,
+                      }}
+                    />
+                  </pre>
+                </div>
               ))}
             </div>
           )}

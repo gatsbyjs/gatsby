@@ -1,3 +1,7 @@
+> **NOTE**: You probably don't need this plugin!
+>
+> Gatsby works with CSS Modules by default, no need for extra plugins. You should only use this if you already know what `babel-plugin-react-css-modules` is and want to enable it for your project.
+
 # gatsby-plugin-react-css-modules
 
 Transforms `styleName` to `className` using compile time CSS module resolution.
@@ -7,7 +11,7 @@ for details.
 
 ## Install
 
-`yarn add gatsby-plugin-react-css-modules`
+`npm install --save gatsby-plugin-react-css-modules`
 
 ## How to use
 
@@ -29,7 +33,7 @@ plugins: [
       exclude: `\/global\/`,
     },
   },
-];
+]
 ```
 
 Files must be named using the pattern `filename.module.css` for Gatsby to treat

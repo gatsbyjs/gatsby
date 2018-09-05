@@ -2,7 +2,7 @@ module.exports = {
   siteMetadata: {
     title: `gatsby-example-using-remark`,
     author: `@gatsbyjs`,
-    description: `Blazing-fast React.js static site generator`,
+    description: `Blazing fast modern site generator for React`,
     homepage: `https://www.gatsbyjs.org`,
   },
   mapping: {
@@ -14,6 +14,12 @@ module.exports = {
       options: {
         path: `${__dirname}/src/pages`,
         name: `pages`,
+      },
+    },
+    {
+      resolve: `gatsby-plugin-typography`,
+      options: {
+        pathToConfigModule: `src/utils/typography.js`,
       },
     },
     `gatsby-transformer-sharp`,

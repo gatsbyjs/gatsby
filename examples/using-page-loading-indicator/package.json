@@ -4,9 +4,10 @@
   "description": "Gatsby example site using using-page-loading-indicator",
   "author": "Kyle Mathews<mathews.kyle@gmail.com>",
   "dependencies": {
-    "gatsby": "latest",
-    "gatsby-link": "latest",
-    "gatsby-plugin-nprogress": "^0.2.0"
+    "gatsby": "next",
+    "gatsby-plugin-nprogress": "next",
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0"
   },
   "license": "MIT",
   "main": "n/a",

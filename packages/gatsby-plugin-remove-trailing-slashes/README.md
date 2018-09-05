@@ -8,7 +8,7 @@ example, `yoursite.com/about/` becomes `yoursite.com/about`.
 Install:
 
 ```
-yarn add --dev gatsby-plugin-remove-trailing-slashes
+npm install --save-dev gatsby-plugin-remove-trailing-slashes
 ```
 
 Then configure via `gatsby-config.js`.

@@ -16,7 +16,11 @@ function httpExceptionHandler(e) {
     )
     return
   }
-  const { status, statusText, data: { message } } = response
+  const {
+    status,
+    statusText,
+    data: { message },
+  } = response
   console.log(
     colorized.out(
       `The server response was "${status} ${statusText}"`,

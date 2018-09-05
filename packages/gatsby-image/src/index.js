@@ -4,13 +4,13 @@ import PropTypes from "prop-types"
 // Handle legacy names for image queries.
 const convertProps = props => {
   let convertedProps = { ...props }
-  if (convertedProps.responsiveResolution) {
-    convertedProps.resolutions = convertedProps.responsiveResolution
-    delete convertedProps.responsiveResolution
+  if (convertedProps.resolutions) {
+    convertedProps.fixed = convertedProps.resolutions
+    delete convertedProps.resolutions
   }
-  if (convertedProps.responsiveSizes) {
-    convertedProps.sizes = convertedProps.responsiveSizes
-    delete convertedProps.responsiveSizes
+  if (convertedProps.sizes) {
+    convertedProps.fluid = convertedProps.sizes
+    delete convertedProps.sizes
   }
 
   return convertedProps
@@ -22,9 +22,9 @@ const imageCache = {}
 const inImageCache = props => {
   const convertedProps = convertProps(props)
   // Find src
-  const src = convertedProps.sizes
-    ? convertedProps.sizes.src
-    : convertedProps.resolutions.src
+  const src = convertedProps.fluid
+    ? convertedProps.fluid.src
+    : convertedProps.fixed.src
 
   if (imageCache[src]) {
     return true
@@ -88,26 +88,28 @@ const isWebpSupported = () => {
 }
 
 const noscriptImg = props => {
-  const {
-    opacity = ``,
-    src,
-    srcSet,
-    sizes = ``,
-    title = ``,
-    alt = ``,
-    width = ``,
-    height = ``,
-    transitionDelay = ``,
-  } = props
-  return `<img width=${width} height=${height} src="${src}" srcset="${srcSet}" alt="${alt}" title="${title}" sizes="${sizes}" style="position:absolute;top:0;left:0;transition:opacity 0.5s;transition-delay:${transitionDelay};opacity:${opacity};width:100%;height:100%;object-fit:cover;object-position:center"/>`
+  // Check if prop exists before adding each attribute to the string output below to prevent
+  // HTML validation issues caused by empty values like width="" and height=""
+  const src = props.src ? `src="${props.src}" ` : `src="" ` // required attribute
+  const srcSet = props.srcSet ? `srcset="${props.srcSet}" ` : ``
+  const sizes = props.sizes ? `sizes="${props.sizes}" ` : ``
+  const title = props.title ? `title="${props.title}" ` : ``
+  const alt = props.alt ? `alt="${props.alt}" ` : `alt="" ` // required attribute
+  const width = props.width ? `width="${props.width}" ` : ``
+  const height = props.height ? `height="${props.height}" ` : ``
+  const opacity = props.opacity ? props.opacity : `1`
+  const transitionDelay = props.transitionDelay ? props.transitionDelay : `0.5s`
+
+  return `<img ${width}${height}${src}${srcSet}${alt}${title}${sizes}style="position:absolute;top:0;left:0;transition:opacity 0.5s;transition-delay:${transitionDelay};opacity:${opacity};width:100%;height:100%;object-fit:cover;object-position:center"/>`
 }
 
 const Img = props => {
-  const { style, onLoad, ...otherProps } = props
+  const { style, onLoad, onError, ...otherProps } = props
   return (
     <img
       {...otherProps}
       onLoad={onLoad}
+      onError={onError}
       style={{
         position: `absolute`,
         top: 0,
@@ -125,6 +127,7 @@ const Img = props => {
 
 Img.propTypes = {
   style: PropTypes.object,
+  onError: PropTypes.func,
   onLoad: PropTypes.func,
 }
 
@@ -183,8 +186,9 @@ class Image extends React.Component {
       outerWrapperClassName,
       style = {},
       imgStyle = {},
-      sizes,
-      resolutions,
+      placeholderStyle = {},
+      fluid,
+      fixed,
       backgroundColor,
       Tag,
     } = convertProps(this.props)
@@ -200,6 +204,7 @@ class Image extends React.Component {
       opacity: this.state.imgLoaded ? 0 : 1,
       transitionDelay: `0.25s`,
       ...imgStyle,
+      ...placeholderStyle,
     }
 
     const imageStyle = {
@@ -207,8 +212,8 @@ class Image extends React.Component {
       ...imgStyle,
     }
 
-    if (sizes) {
-      const image = sizes
+    if (fluid) {
+      const image = fluid
 
       // Use webp by default if browser supports it
       if (image.srcWebp && image.srcSetWebp && isWebpSupported()) {
@@ -223,7 +228,6 @@ class Image extends React.Component {
             outerWrapperClassName ? outerWrapperClassName : ``
           } gatsby-image-outer-wrapper`}
           style={{
-            zIndex: 0,
             // Let users set component to be absolutely positioned.
             position: style.position === `absolute` ? `initial` : `relative`,
           }}
@@ -233,7 +237,6 @@ class Image extends React.Component {
             style={{
               position: `relative`,
               overflow: `hidden`,
-              zIndex: 1,
               ...style,
             }}
             ref={this.handleRef}
@@ -296,6 +299,7 @@ class Image extends React.Component {
                   this.state.IOSupported && this.setState({ imgLoaded: true })
                   this.props.onLoad && this.props.onLoad()
                 }}
+                onError={this.props.onError}
               />
             )}
 
@@ -310,13 +314,12 @@ class Image extends React.Component {
       )
     }
 
-    if (resolutions) {
-      const image = resolutions
+    if (fixed) {
+      const image = fixed
       const divStyle = {
         position: `relative`,
         overflow: `hidden`,
         display: `inline-block`,
-        zIndex: 1,
         width: image.width,
         height: image.height,
         ...style,
@@ -339,7 +342,6 @@ class Image extends React.Component {
             outerWrapperClassName ? outerWrapperClassName : ``
           } gatsby-image-outer-wrapper`}
           style={{
-            zIndex: 0,
             // Let users set component to be absolutely positioned.
             position: style.position === `absolute` ? `initial` : `relative`,
           }}
@@ -397,6 +399,7 @@ class Image extends React.Component {
                   this.setState({ imgLoaded: true })
                   this.props.onLoad && this.props.onLoad()
                 }}
+                onError={this.props.onError}
               />
             )}
 
@@ -427,11 +430,33 @@ Image.defaultProps = {
   Tag: `div`,
 }
 
+const fixedObject = PropTypes.shape({
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+  src: PropTypes.string.isRequired,
+  srcSet: PropTypes.string.isRequired,
+  base64: PropTypes.string,
+  tracedSVG: PropTypes.string,
+  srcWebp: PropTypes.string,
+  srcSetWebp: PropTypes.string,
+})
+
+const fluidObject = PropTypes.shape({
+  aspectRatio: PropTypes.number.isRequired,
+  src: PropTypes.string.isRequired,
+  srcSet: PropTypes.string.isRequired,
+  sizes: PropTypes.string.isRequired,
+  base64: PropTypes.string,
+  tracedSVG: PropTypes.string,
+  srcWebp: PropTypes.string,
+  srcSetWebp: PropTypes.string,
+})
+
 Image.propTypes = {
-  responsiveResolution: PropTypes.object,
-  responsiveSizes: PropTypes.object,
-  resolutions: PropTypes.object,
-  sizes: PropTypes.object,
+  resolutions: fixedObject,
+  sizes: fluidObject,
+  fixed: fixedObject,
+  fluid: fluidObject,
   fadeIn: PropTypes.bool,
   title: PropTypes.string,
   alt: PropTypes.string,
@@ -442,9 +467,11 @@ Image.propTypes = {
   ]),
   style: PropTypes.object,
   imgStyle: PropTypes.object,
+  placeholderStyle: PropTypes.object,
   position: PropTypes.string,
   backgroundColor: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   onLoad: PropTypes.func,
+  onError: PropTypes.func,
   Tag: PropTypes.string,
 }
 

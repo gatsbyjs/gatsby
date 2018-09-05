@@ -1,6 +1,6 @@
 module.exports = {
   siteMetadata: {
-    title: `Gatsby with emotion and Prismjs`,
+    title: `Gatsby with Emotion and PrismJS`,
   },
   plugins: [
     {
@@ -36,5 +36,6 @@ module.exports = {
         trackingId: `UA-93349937-2`,
       },
     },
+    `gatsby-plugin-react-helmet`,
   ],
 }

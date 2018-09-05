@@ -2,6 +2,7 @@
 title: My search for the perfect universal JavaScript framework
 date: "2017-10-29"
 author: "Tal Bereznitskey"
+tags: ["react", "ssr", "static"]
 ---
 
 It was 2010 when [Backbone.js](http://backbonejs.org) came out. Finally I could

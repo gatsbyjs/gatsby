@@ -3,9 +3,10 @@ title: Why I Upgraded My Website to GatsbyJS from Jekyll
 date: "2018-02-27"
 author: "Jia Hao Goh"
 excerpt: My thought process during the long overdue rewrite of this website
+tags: ["jekyll", "plugins", "getting-started", "gatsby-apis"]
 ---
 
-*This article is the first of a two part series, on the engineering behind my [website](https://jiahao.codes). Originally published [here](https://jiahao.codes/blog/why-i-upgraded-my-website/)*
+_This article is the first of a two part series, on the engineering behind my [website](https://jiahao.codes). Originally published [here](https://jiahao.codes/blog/why-i-upgraded-my-website/)_
 
 For the past couple of weeks, I’ve been rebuilding my personal website from scratch, live at [https://jiahao.codes](https://jiahao.codes) with the source code on [GitHub](https://github.com/jiahaog/jiahao.codes). In this article, I'll tell the story of this long overdue rewrite and talk about the new static site framework I eventually settled on, Gatsby.
 
@@ -27,17 +28,17 @@ When delivering content to users on mobile devices, it is important to optimize 
 
 However, it would be a pain to have to manually convert images into different sized thumbnails for a post. I wanted an automated image processing pipeline to automatically resize the images extracted from the markdown documents, and then automatically populate the `srcset` attribute on the images in the output HTML document. I found the [Jekyll Responsive Image Plugin](https://github.com/wildlyinaccurate/jekyll-responsive-image) great for this. It allows me to create templates which will be used by Jekyll when rendering the markdown and automatically does the image resizing.
 
-Even so, when I tried to do more complicated workflows like adding CSS preprocessing with dependence on the JavaScript ecosystem with the [Node Package Manager (npm)](https://www.npmjs.com/), it became a lot more convoluted. Looking at a few recipes I’ve found, I would have to dive down the road of writing [Gulp](https://gulpjs.com/) workflows and somehow connect them to Jekyll commands. I also chanced upon the [Jekyll Asset Pipeline](https://github.com/matthodan/jekyll-asset-pipeline) which seems what I could use. I didn’t dive too deep into it, but from brief glances it seems like I would have to come up with a lot of custom scripting to interface with Javascript libraries on my own.
+Even so, when I tried to do more complicated workflows like adding CSS preprocessing with dependence on the JavaScript ecosystem with the [Node Package Manager (npm)](https://www.npmjs.com/), it became a lot more convoluted. Looking at a few recipes I’ve found, I would have to dive down the road of writing [Gulp](https://gulpjs.com/) workflows and somehow connect them to Jekyll commands. I also chanced upon the [Jekyll Asset Pipeline](https://github.com/matthodan/jekyll-asset-pipeline) which seems what I could use. I didn’t dive too deep into it, but from brief glances it seems like I would have to come up with a lot of custom scripting to interface with JavaScript libraries on my own.
 
-I guess having used [webpack](https://webpack.js.org/) at work, I was pampered by this open source community where there are loaders and documented recipes for doing almost anything, granted that someone was willing to wade into the world of "Javascript fatigue". Around the same time, [@yangshun](https://github.com/yangshun) introduced me to [Gatsby](https://www.gatsbyjs.org/), a React static site generator which seemed really fascinating. It also seemed a good opportunity for me to get my hands dirty with frontend development again.
+I guess having used [webpack](https://webpack.js.org/) at work, I was pampered by this open source community where there are loaders and documented recipes for doing almost anything, granted that someone was willing to wade into the world of "JavaScript fatigue". Around the same time, [@yangshun](https://github.com/yangshun) introduced me to [Gatsby](https://www.gatsbyjs.org/), a React static site generator which seemed really fascinating. It also seemed a good opportunity for me to get my hands dirty with frontend development again.
 
-As I had some free time on my hands, why not rewrite everything again and keep myself updated with the ever-changing Javascript ecosystem? Seems like a lot of fun!
+As I had some free time on my hands, why not rewrite everything again and keep myself updated with the ever-changing JavaScript ecosystem? Seems like a lot of fun!
 
 ## Final Form — Gatsby
 
 [Gatsby](https://www.gatsbyjs.org/) is a static site generator that can render sites from markup documents using templates defined as React components. It functions similarly to Jekyll, where you can pick a [starter project](https://github.com/gatsbyjs/gatsby-starter-blog), [drop in](https://github.com/gatsbyjs/gatsby-starter-blog/blob/master/src/pages/hello-world/index.md) some markdown documents for articles, and [be rewarded](https://gatsbyjs.github.io/gatsby-starter-blog/) with a website with minimal effort.
 
-It offers much much more, however. Gatsby lets me leverage all the modern tools for building web applications and to add interactive experiences for visitors like a fully fledged [React](https://reactjs.org/) application. Not only that, it is unlike traditional single page applications, and works *without* JavaScript! Things would certainly be more complicated if I were to add a JavaScript compilation pipeline to a Jekyll site, and a JavaScript framework would be a better fit.
+It offers much much more, however. Gatsby lets me leverage all the modern tools for building web applications and to add interactive experiences for visitors like a fully fledged [React](https://reactjs.org/) application. Not only that, it is unlike traditional single page applications, and works _without_ JavaScript! Things would certainly be more complicated if I were to add a JavaScript compilation pipeline to a Jekyll site, and a JavaScript framework would be a better fit.
 
 ### How It Works
 
@@ -50,10 +51,16 @@ For example, I defined a `PostTemplate` which will be used to render pages for a
 ```jsx
 // src/templates/Post.jsx
 
-import React from 'react';
+import React from "react"
+import { graphql } from "gatsby"
 
 export default function PostTemplate({
-  data: { markdownRemark: { frontmatter: { title, date }, html } },
+  data: {
+    markdownRemark: {
+      frontmatter: { title, date },
+      html,
+    },
+  },
 }) {
   return (
     <div>
@@ -61,7 +68,7 @@ export default function PostTemplate({
       <small>{date}</small>
       <div dangerouslySetInnerHTML={{ __html: html }} />
     </div>
-  );
+  )
 }
 
 export const pageQuery = graphql`
@@ -74,14 +81,14 @@ export const pageQuery = graphql`
       }
     }
   }
-`;
+`
 ```
 
 When the `<PostTemplate />` component needs to be rendered into a page, the accompanying exported `pageQuery`, a GraphQL query is made, and the results are passed in as props into the component.
 
-The real magic happens when the website is compiled into a production bundle. Running `gatsby build` will tell Gatsby to perform all the GraphQL queries defined and render all the React components into a HTML document, using a technique known as server-side rendering. This means that everything “React” is serialized and compiled to static HTML, ready to be viewed without Javascript. Visitors to the site will then be able to quickly load and interact with the static version of the page.
+The real magic happens when the website is compiled into a production bundle. Running `gatsby build` will tell Gatsby to perform all the GraphQL queries defined and render all the React components into a HTML document, using a technique known as server-side rendering. This means that everything “React” is serialized and compiled to static HTML, ready to be viewed without JavaScript. Visitors to the site will then be able to quickly load and interact with the static version of the page.
 
-Not only that, within the HTML document, there are instructions to load the Javascript bundle of your application asynchronously. When it has been loaded, the content displayed in the browser will be dynamically replaced by the React application, gaining interactivity. This also happens with the other pages of your site — Gatsby will ensure that they are asynchronously loaded so that when you click on a link, the data is already cached on the browser for React to swap out the DOM elements that need to be changed. Everything is done to give the illusion of speed to the viewer while asynchronously loading everything in the background.
+Not only that, within the HTML document, there are instructions to load the JavaScript bundle of your application asynchronously. When it has been loaded, the content displayed in the browser will be dynamically replaced by the React application, gaining interactivity. This also happens with the other pages of your site — Gatsby will ensure that they are asynchronously loaded so that when you click on a link, the data is already cached on the browser for React to swap out the DOM elements that need to be changed. Everything is done to give the illusion of speed to the viewer while asynchronously loading everything in the background.
 
 ### Plugins
 

@@ -5,7 +5,7 @@ Array [
   Array [
     Object {
       "children": Array [],
-      "id": "whatever >>> TOML",
+      "id": "uuid-from-gatsby",
       "internal": Object {
         "contentDigest": "9ce7919cb3f607a0542bac4aa46136b6",
         "type": "",
@@ -43,7 +43,7 @@ Array [
     Object {
       "child": Object {
         "children": Array [],
-        "id": "whatever >>> TOML",
+        "id": "uuid-from-gatsby",
         "internal": Object {
           "contentDigest": "9ce7919cb3f607a0542bac4aa46136b6",
           "type": "",

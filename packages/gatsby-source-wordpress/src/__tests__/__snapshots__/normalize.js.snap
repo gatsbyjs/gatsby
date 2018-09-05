@@ -11008,30 +11008,6 @@ exports[`Process WordPress data creates nodes for each entry 1`] = `
 Array [
   Array [
     Object {
-      "children": Array [],
-      "content": "Sed efficitur finibus urna, in laoreet tellus sollicitudin sit amet. Phasellus elementum eros nec augue placerat, eget auctor enim mattis.",
-      "id": "uuid-from-gatsby0page_builderWordPressAcf_excerpt",
-      "internal": Object {
-        "contentDigest": "85f0c4be8389c9426e5794f4840576ff",
-        "type": "WordPressAcf_excerpt",
-      },
-      "parent": "uuid-from-gatsby0",
-    },
-  ],
-  Array [
-    Object {
-      "children": Array [],
-      "id": "uuid-from-gatsby1page_builderWordPressAcf_post_photo",
-      "internal": Object {
-        "contentDigest": "25073ffd042b197fca5eb299099c6a7b",
-        "type": "WordPressAcf_post_photo",
-      },
-      "parent": "uuid-from-gatsby1",
-      "photo___NODE": "uuid-from-gatsby",
-    },
-  ],
-  Array [
-    Object {
       "_links": Object {
         "about": Array [
           Object {
@@ -11138,46 +11114,25 @@ Array [
   Array [
     Object {
       "children": Array [],
-      "content": "Phasellus blandit sollicitudin metus, vitae ultricies tortor pretium sed. Donec et elit sed sapien mattis dapibus non at magna. Nulla et accumsan.",
-      "id": "uuid-from-gatsby0page_builderWordPressAcf_excerpt",
-      "internal": Object {
-        "contentDigest": "5e9b61c80dc85ebb82361fe05ebeea99",
-        "type": "WordPressAcf_excerpt",
-      },
-      "parent": "uuid-from-gatsby0",
-    },
-  ],
-  Array [
-    Object {
-      "children": Array [],
-      "id": "uuid-from-gatsby1page_builderWordPressAcf_image_gallery",
-      "internal": Object {
-        "contentDigest": "60b54d27dd7ea1a640409328eb1177c0",
-        "type": "WordPressAcf_image_gallery",
-      },
-      "parent": "uuid-from-gatsby1",
-      "pictures": Array [
-        Object {
-          "picture___NODE": "uuid-from-gatsby",
-          "title": "Venise",
-        },
-        Object {
-          "picture___NODE": "uuid-from-gatsby",
-          "title": "",
-        },
-      ],
-    },
-  ],
-  Array [
-    Object {
-      "children": Array [],
-      "id": "uuid-from-gatsby2page_builderWordPressAcf_post_photo",
+      "id": "uuid-from-gatsby1page_builderWordPressAcf_post_photo",
       "internal": Object {
         "contentDigest": "25073ffd042b197fca5eb299099c6a7b",
         "type": "WordPressAcf_post_photo",
       },
-      "parent": "uuid-from-gatsby2",
+      "parent": "uuid-from-gatsby1",
       "photo___NODE": "uuid-from-gatsby",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "content": "Sed efficitur finibus urna, in laoreet tellus sollicitudin sit amet. Phasellus elementum eros nec augue placerat, eget auctor enim mattis.",
+      "id": "uuid-from-gatsby0page_builderWordPressAcf_excerpt",
+      "internal": Object {
+        "contentDigest": "85f0c4be8389c9426e5794f4840576ff",
+        "type": "WordPressAcf_excerpt",
+      },
+      "parent": "uuid-from-gatsby0",
     },
   ],
   Array [
@@ -11287,6 +11242,51 @@ Array [
       "title": "Sample post 1",
       "type": "post",
       "wordpress_id": 26,
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "id": "uuid-from-gatsby2page_builderWordPressAcf_post_photo",
+      "internal": Object {
+        "contentDigest": "25073ffd042b197fca5eb299099c6a7b",
+        "type": "WordPressAcf_post_photo",
+      },
+      "parent": "uuid-from-gatsby2",
+      "photo___NODE": "uuid-from-gatsby",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "id": "uuid-from-gatsby1page_builderWordPressAcf_image_gallery",
+      "internal": Object {
+        "contentDigest": "60b54d27dd7ea1a640409328eb1177c0",
+        "type": "WordPressAcf_image_gallery",
+      },
+      "parent": "uuid-from-gatsby1",
+      "pictures": Array [
+        Object {
+          "picture___NODE": "uuid-from-gatsby",
+          "title": "Venise",
+        },
+        Object {
+          "picture___NODE": "uuid-from-gatsby",
+          "title": "",
+        },
+      ],
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "content": "Phasellus blandit sollicitudin metus, vitae ultricies tortor pretium sed. Donec et elit sed sapien mattis dapibus non at magna. Nulla et accumsan.",
+      "id": "uuid-from-gatsby0page_builderWordPressAcf_excerpt",
+      "internal": Object {
+        "contentDigest": "5e9b61c80dc85ebb82361fe05ebeea99",
+        "type": "WordPressAcf_excerpt",
+      },
+      "parent": "uuid-from-gatsby0",
     },
   ],
   Array [

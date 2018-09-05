@@ -1,15 +1,14 @@
 ---
-title: Plugin Authoring
+title: Plugin authoring
 ---
 
-One of the best ways to add functionality to Gatsby is through our plugin system. Gatsby is designed to be extensible, which means plugins are able to extend and modify just about everything Gatsby does.
+You may be looking to build a plugin that doesn't exist yet, or you may just be curious to know more about the anatomy of a Gatsby plugin. We'll review:
 
-Of the many possibilities, plugins can:
-
-- add external data or content (e.g. your CMS, static files, a REST API) to your Gatsby GraphQL data
-- transform data from other formats (e.g. YAML, CSV) to JSON objects
-- add third-party services (e.g. Google Analytics, Instagram) to your site
-- anything you can dream up!
+1.  the core concepts of what a Gatsby plugin is
+2.  naming conventions for the plugin title
+3.  expected files in a plugin package
+4.  defining a local (unpublished) plugin for your own use case
+5.  how to publish your plugin to the library
 
 ## Core Concepts
 
@@ -36,11 +35,13 @@ There are four standard plugin naming conventions for Gatsby:
 All files are optional unless specifically marked as required.
 
 - `package.json` — [required] this can be an empty object (`{}`) for local plugins
-    - `name` is used to identify the plugin when it mutates Gatsby’s GraphQL data structure
-        - if `name` isn’t set, the folder name for the plugin is used
-    - `version` is used to manage the cache — if it changes, the cache is cleared
-        - if `version` isn’t set, an MD5 hash of the `gatsby-*` file contents is used to invalidate the cache
-        - omitting the `version` field is recommended for local plugins
+  - `name` is used to identify the plugin when it mutates Gatsby’s GraphQL data structure
+    - if `name` isn’t set, the folder name for the plugin is used
+  - `version` is used to manage the cache — if it changes, the cache is cleared
+    - if `version` isn’t set, an MD5 hash of the `gatsby-*` file contents is used to invalidate the cache
+    - omitting the `version` field is recommended for local plugins
+  - `keywords` is used to make your plugin discoverable
+    - plugins published on the npm registry should have `gatsby` and `gatsby-plugin` in the `keywords` field to be added to the [Plugin Library](/packages/)
 - `gatsby-browser.js` — usage details are in the [browser API reference](/docs/browser-apis/)
 - `gatsby-node.js` — usage details are in the [Node API reference](/docs/node-apis/)
 - `gatsby-ssr.js` — usage details are in the [SSR API reference](/docs/ssr-apis/)
@@ -63,3 +64,21 @@ Like all `gatsby-*` files, the code is not processed by Babel. If you want
 to use JavaScript syntax which isn't supported by your version of Node.js, you
 can place the files in a `src` subfolder and build them to the plugin folder
 root.
+
+## Publishing a plugin to the library
+
+In order to add your plugin to the [Plugin Library], you need to publish a package to npm (learn how [here](https://docs.npmjs.com/getting-started/publishing-npm-packages)) with the [required files](#what-files-does-gatsby-look-for-in-a-plugin) and **include a `keywords` field** to `package.json` containing `gatsby` and `gatsby-plugin`.
+
+After doing so, Algolia will take up to 12 hours to add it to the library search index (the exact time necessary is still unknown), and wait for the daily rebuild of https://gatsbyjs.org to automatically include your plugin page to the website. Then, all you have to do is share your wonderful plugin with the community!
+
+**NOTE:** You can include other _relevant_ keywords to your `package.json` file to help interested users in finding it. As an example, a Markdown MathJax transformer would include:
+
+```
+"keywords": [
+  "gatsby",
+  "gatsby-plugin",
+  "gatsby-transformer-plugin",
+  "mathjax",
+  "markdown",
+]
+```

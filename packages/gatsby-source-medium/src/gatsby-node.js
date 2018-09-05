@@ -1,8 +1,8 @@
 const axios = require(`axios`)
 const crypto = require(`crypto`)
 
-const fetch = username => {
-  const url = `https://medium.com/${username}/latest?format=json`
+const fetch = (username, limit = 100) => {
+  const url = `https://medium.com/${username}/latest?format=json&limit=${limit}`
   return axios.get(url)
 }
 
@@ -25,11 +25,11 @@ const convertTimestamps = (nextObj, prevObj, prevKey) => {
 
 const strip = payload => payload.replace(prefix, ``)
 
-exports.sourceNodes = async ({ boundActionCreators }, { username }) => {
-  const { createNode } = boundActionCreators
+exports.sourceNodes = async ({ actions, createNodeId }, { username, limit }) => {
+  const { createNode } = actions
 
   try {
-    const result = await fetch(username)
+    const result = await fetch(username, limit)
     const json = JSON.parse(strip(result.data))
 
     let importableResources = []
@@ -59,7 +59,18 @@ exports.sourceNodes = async ({ boundActionCreators }, { username }) => {
       importableResources = importableResources.concat(collections)
     }
 
-    const resources = Array.prototype.concat(...importableResources)
+    const resources = Array.prototype
+      .concat(...importableResources)
+      .map(resource => {
+        return {
+          ...resource,
+          medium_id: resource.id,
+          id: createNodeId(resource.id ? resource.id : resource.userId),
+        }
+      })
+
+    const getID = node => (node ? node.id : null)
+
     resources.map(resource => {
       convertTimestamps(resource)
 
@@ -71,21 +82,24 @@ exports.sourceNodes = async ({ boundActionCreators }, { username }) => {
       const links =
         resource.type === `Post`
           ? {
-              author___NODE: resource.creatorId,
+              author___NODE: getID(
+                resources.find(r => r.userId === resource.creatorId)
+              ),
             }
           : resource.type === `User`
             ? {
-                posts___NODE: posts
-                  .filter(post => post.creatorId === resource.userId)
-                  .map(post => post.id),
+                posts___NODE: resources
+                  .filter(
+                    r => r.type === `Post` && r.creatorId === resource.userId
+                  )
+                  .map(r => r.id),
               }
             : {}
 
       const node = Object.assign(
         resource,
         {
-          id: resource.id ? resource.id : resource.userId,
-          parent: `__SOURCE__`,
+          parent: null,
           children: [],
           internal: {
             type: `Medium${resource.type}`,

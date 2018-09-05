@@ -29,16 +29,7 @@ const addRootNodeToInlineObject = (data, nodeId) => {
  * and that Node object.
  * @param {Node} node Root Node
  */
-// const nodeDigestTracked = new Set()
 const trackInlineObjectsInRootNode = node => {
-  // const id =
-  // node && node.internal && node.internal.contentDigest
-  // ? node.internal.contentDigest
-  // : node.id
-  // if (nodeDigestTracked.has(id)) {
-  // return node
-  // }
-
   _.each(node, (v, k) => {
     // Ignore the node internal object.
     if (k === `internal`) {
@@ -47,7 +38,6 @@ const trackInlineObjectsInRootNode = node => {
     addRootNodeToInlineObject(v, node.id)
   })
 
-  // nodeDigestTracked.add(id)
   return node
 }
 exports.trackInlineObjectsInRootNode = trackInlineObjectsInRootNode
@@ -55,14 +45,17 @@ exports.trackInlineObjectsInRootNode = trackInlineObjectsInRootNode
 /**
  * Finds top most ancestor of node that contains passed Object or Array
  * @param {(Object|Array)} obj Object/Array belonging to Node object or Node object
- * @returns {Node} Top most ancestor
+ * @param {nodePredicate} [predicate] Optional callback to check if ancestor meets defined conditions
+ * @returns {Node} Top most ancestor if predicate is not specified
+ * or first node that meet predicate conditions if predicate is specified
  */
-function findRootNode(obj) {
+const findRootNodeAncestor = (obj, predicate = null) => {
   // Find the root node.
   let rootNode = obj
   let whileCount = 0
   let rootNodeId
   while (
+    (!predicate || !predicate(rootNode)) &&
     (rootNodeId = getRootNodeId(rootNode) || rootNode.parent) &&
     (getNode(rootNode.parent) !== undefined || getNode(rootNodeId)) &&
     whileCount < 101
@@ -81,10 +74,15 @@ function findRootNode(obj) {
     }
   }
 
-  return rootNode
+  return !predicate || predicate(rootNode) ? rootNode : null
 }
 
-exports.findRootNode = findRootNode
+/**
+ * @callback nodePredicate
+ * @param {Node} node Node that is examined
+ */
+
+exports.findRootNodeAncestor = findRootNodeAncestor
 
 // Track nodes that are already in store
 _.each(getNodes(), node => {

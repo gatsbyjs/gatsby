@@ -1,0 +1,33 @@
+{
+  "name": "gatsby-example-using-prefetching-preloading-modules",
+  "private": true,
+  "description": "Gatsby example site using Prefetching/Preloading modules",
+  "version": "2.0.0",
+  "author": "Nuttapol Laoticharoen <pistachio.uss@gmail.com>",
+  "dependencies": {
+    "babel-plugin-styled-components": "^1.5.1",
+    "gatsby": "next",
+    "gatsby-plugin-offline": "next",
+    "gatsby-plugin-react-helmet": "next",
+    "gatsby-plugin-styled-components": "next",
+    "gatsby-plugin-typography": "next",
+    "lodash": "^4.16.4",
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0",
+    "react-helmet": "^5.2.0",
+    "react-typography": "^0.16.13",
+    "slash": "^1.0.0",
+    "styled-components": "^3.3.2",
+    "typography": "^0.16.17",
+    "typography-breakpoint-constants": "^0.15.10"
+  },
+  "keywords": [
+    "gatsby"
+  ],
+  "license": "MIT",
+  "main": "n/a",
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build"
+  }
+}

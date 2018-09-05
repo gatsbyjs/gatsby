@@ -95,7 +95,7 @@ module.exports = function(plop) {
       },
       {
         type: `add`,
-        path: `examples/{{kebabCase name}}/.eslintrc`,
+        path: `examples/{{kebabCase name}}/.eslintrc.json`,
         templateFile: `plop-templates/example/.eslintrc.hbs`,
       },
     ],

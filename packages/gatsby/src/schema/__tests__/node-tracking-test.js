@@ -1,4 +1,17 @@
+const { readFile, writeFile } = require(`fs-extra`)
+
 jest.mock(`fs`)
+jest.mock(`fs-extra`, () => {
+  return {
+    readFile: jest.fn(() => `contents`),
+    writeFile: jest.fn(),
+  }
+})
+
+afterEach(() => {
+  readFile.mockClear()
+  writeFile.mockClear()
+})
 
 describe(`Track root nodes`, () => {
   const reduxStatePath = `${process.cwd()}/.cache/redux-state.json`
@@ -28,10 +41,12 @@ describe(`Track root nodes`, () => {
   require(`fs`).__setMockFiles(MOCK_FILE_INFO)
 
   const { getNode, getNodes } = require(`../../redux`)
-  const { findRootNode } = require(`../node-tracking`)
+  const { findRootNodeAncestor } = require(`../node-tracking`)
   const runSift = require(`../run-sift`)
   const buildNodeTypes = require(`../build-node-types`)
-  const { boundActionCreators: { createNode } } = require(`../../redux/actions`)
+  const {
+    boundActionCreators: { createNode },
+  } = require(`../../redux/actions`)
 
   createNode(
     {
@@ -56,7 +71,7 @@ describe(`Track root nodes`, () => {
     it(`Tracks inline objects`, () => {
       const node = getNode(`id1`)
       const inlineObject = node.inlineObject
-      const trackedRootNode = findRootNode(inlineObject)
+      const trackedRootNode = findRootNodeAncestor(inlineObject)
 
       expect(trackedRootNode).toEqual(node)
     })
@@ -64,7 +79,7 @@ describe(`Track root nodes`, () => {
     it(`Tracks inline arrays`, () => {
       const node = getNode(`id1`)
       const inlineObject = node.inlineArray
-      const trackedRootNode = findRootNode(inlineObject)
+      const trackedRootNode = findRootNodeAncestor(inlineObject)
 
       expect(trackedRootNode).toEqual(node)
     })
@@ -72,7 +87,7 @@ describe(`Track root nodes`, () => {
     it(`Doesn't track copied objects`, () => {
       const node = getNode(`id1`)
       const copiedInlineObject = { ...node.inlineObject }
-      const trackedRootNode = findRootNode(copiedInlineObject)
+      const trackedRootNode = findRootNodeAncestor(copiedInlineObject)
 
       expect(trackedRootNode).not.toEqual(node)
     })
@@ -82,7 +97,7 @@ describe(`Track root nodes`, () => {
     it(`Tracks inline objects`, () => {
       const node = getNode(`id2`)
       const inlineObject = node.inlineObject
-      const trackedRootNode = findRootNode(inlineObject)
+      const trackedRootNode = findRootNodeAncestor(inlineObject)
 
       expect(trackedRootNode).toEqual(node)
     })
@@ -92,7 +107,7 @@ describe(`Track root nodes`, () => {
     let type, nodes
 
     beforeAll(async () => {
-      type = (await buildNodeTypes()).testNode.nodeObjectType
+      type = (await buildNodeTypes({})).testNode.nodeObjectType
       nodes = getNodes()
     })
 
@@ -105,10 +120,10 @@ describe(`Track root nodes`, () => {
       })
 
       expect(result.edges.length).toEqual(2)
-      expect(findRootNode(result.edges[0].node.inlineObject)).toEqual(
+      expect(findRootNodeAncestor(result.edges[0].node.inlineObject)).toEqual(
         result.edges[0].node
       )
-      expect(findRootNode(result.edges[1].node.inlineObject)).toEqual(
+      expect(findRootNodeAncestor(result.edges[1].node.inlineObject)).toEqual(
         result.edges[1].node
       )
     })
@@ -130,7 +145,7 @@ describe(`Track root nodes`, () => {
       })
 
       expect(result.edges.length).toEqual(1)
-      expect(findRootNode(result.edges[0].node.inlineObject)).toEqual(
+      expect(findRootNodeAncestor(result.edges[0].node.inlineObject)).toEqual(
         result.edges[0].node
       )
     })

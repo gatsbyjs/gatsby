@@ -1,9 +1,9 @@
 import React from "react"
-import Link from "gatsby-link"
-import TwitterIcon from "react-icons/lib/fa/twitter"
-import DiscordIcon from "../components/discord"
+import { Link } from "gatsby"
 import GithubIcon from "react-icons/lib/go/mark-github"
+import TwitterIcon from "react-icons/lib/fa/twitter"
 import SearchForm from "../components/search-form"
+import DiscordIcon from "../components/discord"
 import logo from "../logo.svg"
 import typography, { rhythm, scale } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
@@ -18,7 +18,7 @@ const navItemStyles = {
   textTransform: `uppercase`,
   letterSpacing: `0.03em`,
   lineHeight: `calc(${presets.headerHeight} - 6px)`,
-  padding: `6px ${rhythm(1 / 2)} 0`,
+  padding: `6px ${rhythm(1 / 4)} 0 ${rhythm(1 / 2)}`,
   position: `relative`,
   top: 0,
   transition: `color .15s ease-out`,
@@ -40,8 +40,8 @@ const NavItem = ({ linkTo, children }) => (
 )
 
 export default ({ pathname }) => {
-  const isHomepage = pathname == `/`
-  const isBlog = pathname == `/blog/`
+  const isHomepage = pathname === `/`
+  const isBlog = pathname === `/blog/`
   let styles = {}
   if (isHomepage) {
     styles.backgroundColor = `rgba(255,255,255,0)`
@@ -86,14 +86,16 @@ export default ({ pathname }) => {
   return (
     <div
       role="navigation"
+      className="navigation"
       css={{
         borderBottom: `1px solid ${colors.ui.light}`,
         backgroundColor: `rgba(255,255,255,0.975)`,
-        position: isHomepage ? `absolute` : false,
+        position: isHomepage ? `absolute` : `relative`,
         height: presets.headerHeight,
         zIndex: `2`,
         left: 0,
         right: 0,
+        top: `calc(${presets.bannerHeight} - 1px)`,
         [presets.Tablet]: {
           position: isHomepage || isBlog ? `absolute` : `fixed`,
         },
@@ -127,8 +129,7 @@ export default ({ pathname }) => {
           <img
             src={logo}
             css={{
-              height: 28,
-              width: `auto`,
+              width: 106,
               margin: 0,
             }}
             alt=""
@@ -152,9 +153,10 @@ export default ({ pathname }) => {
         >
           <NavItem linkTo="/docs/">Docs</NavItem>
           <NavItem linkTo="/tutorial/">Tutorial</NavItem>
-          <NavItem linkTo="/community/">Community</NavItem>
+          <NavItem linkTo="/plugins/">Plugins</NavItem>
           <NavItem linkTo="/features/">Features</NavItem>
           <NavItem linkTo="/blog/">Blog</NavItem>
+          <NavItem linkTo="/showcase/">Showcase</NavItem>
         </ul>
         <div
           css={{
@@ -177,7 +179,6 @@ export default ({ pathname }) => {
           >
             <GithubIcon style={{ verticalAlign: `text-top` }} />
           </a>
-
           <div
             css={{
               display: `none`,
@@ -186,7 +187,7 @@ export default ({ pathname }) => {
             }}
           >
             <a
-              href="https://discord.gg/0ZcbPKXt5bZjGY5n"
+              href="https://discord.gg/0ZcbPKXt5bVoxkfV"
               title="Discord"
               css={{
                 ...navItemStyles,
@@ -201,12 +202,22 @@ export default ({ pathname }) => {
               css={{
                 ...navItemStyles,
                 ...socialIconsStyles,
-                paddingRight: 0,
               }}
             >
               <TwitterIcon style={{ verticalAlign: `text-top` }} />
             </a>
           </div>
+          <a
+            href="https://www.gatsbyjs.com"
+            title="gatsbyjs.com"
+            css={{
+              ...navItemStyles,
+              ...socialIconsStyles,
+              paddingRight: 0,
+            }}
+          >
+            .com
+          </a>
         </div>
       </div>
     </div>

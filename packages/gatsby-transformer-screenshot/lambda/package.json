@@ -5,5 +5,8 @@
   },
   "devDependencies": {
     "aws-sdk": "^2.181.0"
-  }
+  },
+  "keywords": [
+    "gatsby-plugin"
+  ]
 }

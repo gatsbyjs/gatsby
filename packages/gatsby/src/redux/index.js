@@ -1,7 +1,6 @@
 const Redux = require(`redux`)
 const Promise = require(`bluebird`)
 const _ = require(`lodash`)
-const { composeWithDevTools } = require(`remote-redux-devtools`)
 const fs = require(`fs`)
 const mitt = require(`mitt`)
 const stringify = require(`json-stringify-safe`)
@@ -12,70 +11,146 @@ const emitter = mitt()
 // Reducers
 const reducers = require(`./reducers`)
 
+const objectToMap = obj => {
+  let map = new Map()
+  Object.keys(obj).forEach(key => {
+    map.set(key, obj[key])
+  })
+  return map
+}
+
+const mapToObject = map => {
+  const obj = {}
+  for (let [key, value] of map) {
+    obj[key] = value
+  }
+  return obj
+}
+
 // Read from cache the old node data.
 let initialState = {}
 try {
-  initialState = JSON.parse(
-    fs.readFileSync(`${process.cwd()}/.cache/redux-state.json`)
-  )
+  const file = fs.readFileSync(`${process.cwd()}/.cache/redux-state.json`)
+  // Apparently the file mocking in node-tracking-test.js
+  // can override the file reading replacing the mocked string with
+  // an already parsed object.
+  if (Buffer.isBuffer(file) || typeof file === `string`) {
+    initialState = JSON.parse(file)
+  }
+  if (initialState.staticQueryComponents) {
+    initialState.staticQueryComponents = objectToMap(
+      initialState.staticQueryComponents
+    )
+  }
+  if (initialState.components) {
+    initialState.components = objectToMap(initialState.components)
+  }
+  if (initialState.nodes) {
+    initialState.nodes = objectToMap(initialState.nodes)
+  }
 } catch (e) {
   // ignore errors.
 }
 
-let store
-// Only setup the Redux devtools if explicitly enabled.
-if (process.env.REDUX_DEVTOOLS === `true`) {
-  const sitePackageJSON = require(`${process.cwd()}/package.json`)
-  const composeEnhancers = composeWithDevTools({
-    realtime: true,
-    port: 19999,
-    name: sitePackageJSON.name,
+const store = Redux.createStore(
+  Redux.combineReducers({ ...reducers }),
+  initialState,
+  Redux.applyMiddleware(function multi({ dispatch }) {
+    return next => action =>
+      Array.isArray(action)
+        ? action.filter(Boolean).map(dispatch)
+        : next(action)
   })
-  store = Redux.createStore(
-    Redux.combineReducers({ ...reducers }),
-    initialState,
-    composeEnhancers(Redux.applyMiddleware())
-  )
-} else {
-  store = Redux.createStore(
-    Redux.combineReducers({ ...reducers }),
-    initialState
-  )
-}
+)
 
 // Persist state.
-const saveState = _.debounce(state => {
+const saveState = state => {
   const pickedState = _.pick(state, [
     `nodes`,
     `status`,
     `componentDataDependencies`,
+    `jsonDataPaths`,
+    `components`,
+    `staticQueryComponents`,
   ])
+
+  pickedState.staticQueryComponents = mapToObject(
+    pickedState.staticQueryComponents
+  )
+  pickedState.components = mapToObject(pickedState.components)
+  pickedState.nodes = mapToObject(pickedState.nodes)
+  const stringified = stringify(pickedState, null, 2)
   fs.writeFile(
     `${process.cwd()}/.cache/redux-state.json`,
-    stringify(pickedState, null, 2),
+    stringified,
     () => {}
   )
-}, 1000)
+}
+const saveStateDebounced = _.debounce(saveState, 1000)
 
 store.subscribe(() => {
   const lastAction = store.getState().lastAction
   emitter.emit(lastAction.type, lastAction)
 })
 
-emitter.on(`*`, () => {
-  saveState(store.getState())
-})
-
-exports.emitter = emitter
-exports.store = store
-exports.getNodes = () => {
-  let nodes = _.values(store.getState().nodes)
-  return nodes ? nodes : []
+// During development, once bootstrap is finished, persist state on changes.
+let bootstrapFinished = false
+if (process.env.gatsby_executing_command === `develop`) {
+  emitter.on(`BOOTSTRAP_FINISHED`, () => {
+    bootstrapFinished = true
+    saveState(store.getState())
+  })
+  emitter.on(`*`, () => {
+    if (bootstrapFinished) {
+      saveStateDebounced(store.getState())
+    }
+  })
 }
-const getNode = id => store.getState().nodes[id]
+
+// During builds, persist state once bootstrap has finished.
+if (process.env.gatsby_executing_command === `build`) {
+  emitter.on(`BOOTSTRAP_FINISHED`, () => {
+    saveState(store.getState())
+  })
+}
+
+/** Event emitter */
+exports.emitter = emitter
+
+/** Redux store */
+exports.store = store
+
+/**
+ * Get all nodes from redux store.
+ *
+ * @returns {Array}
+ */
+exports.getNodes = () => {
+  const nodes = store.getState().nodes
+  if (nodes) {
+    return Array.from(nodes.values())
+  } else {
+    return []
+  }
+}
+const getNode = id => store.getState().nodes.get(id)
+
+/** Get node by id from store.
+ *
+ * @param {string} id
+ * @returns {Object}
+ */
 exports.getNode = getNode
+
+/**
+ * Determine if node has changed.
+ *
+ * @param {string} id
+ * @param {string} digest
+ * @returns {boolean}
+ */
 exports.hasNodeChanged = (id, digest) => {
-  const node = store.getState().nodes[id]
+  const node = store.getState().nodes.get(id)
   if (!node) {
     return true
   } else {
@@ -83,6 +158,12 @@ exports.hasNodeChanged = (id, digest) => {
   }
 }
 
+/**
+ * Get content for a node from the plugin that created it.
+ *
+ * @param {Object} node
+ * @returns {promise}
+ */
 exports.loadNodeContent = node => {
   if (_.isString(node.internal.content)) {
     return Promise.resolve(node.internal.content)
@@ -107,6 +188,13 @@ exports.loadNodeContent = node => {
   }
 }
 
+/**
+ * Get node and save path dependency.
+ *
+ * @param {string} id
+ * @param {string} path
+ * @returns {Object} node
+ */
 exports.getNodeAndSavePathDependency = (id, path) => {
   const { createPageDependency } = require(`./actions/add-page-dependency`)
   const node = getNode(id)

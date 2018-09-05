@@ -1,4 +1,4 @@
-export default class extends React.Component {
+module.exports = class extends React.Component {
   render() {
     return <div />
   }

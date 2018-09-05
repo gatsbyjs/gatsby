@@ -7,6 +7,8 @@ describe(`Resolve module exports`, () => {
   const MOCK_FILE_INFO = {
     "/bad/file": `const exports.blah = () = }}}`,
     "/simple/export": `exports.foo = '';`,
+    "/export/const": `export const fooConst = '';`,
+    "/module/exports": `module.exports.barExports = '';`,
     "/multiple/export": `exports.bar = () => ''; exports.baz = {}; exports.foo = '';`,
     "/import/with/export": `import React from 'react'; exports.baz = '';`,
     "/realistic/export": `
@@ -134,6 +136,16 @@ describe(`Resolve module exports`, () => {
   it(`Resolves an export from an ES6 file`, () => {
     const result = resolveModuleExports(`/import/with/export`, resolver)
     expect(result).toEqual([`baz`])
+  })
+
+  it(`Resolves an exported const`, () => {
+    const result = resolveModuleExports(`/export/const`, resolver)
+    expect(result).toEqual([`fooConst`])
+  })
+
+  it(`Resolves module.exports`, () => {
+    const result = resolveModuleExports(`/module/exports`, resolver)
+    expect(result).toEqual([`barExports`])
   })
 
   it(`Resolves exports from a larger file`, () => {

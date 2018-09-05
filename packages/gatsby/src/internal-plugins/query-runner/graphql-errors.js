@@ -1,7 +1,7 @@
 // @flow
 
 import { print, visit, GraphQLError, getLocation } from "graphql"
-import babelCodeFrame from "babel-code-frame"
+import babelCodeFrame from "@babel/code-frame"
 import _ from "lodash"
 import report from "gatsby-cli/lib/reporter"
 
@@ -55,14 +55,14 @@ function formatError(message: string, filePath: string, codeFrame: string) {
 }
 
 function extractError(error: Error): { message: string, docName: string } {
-  const docRegex = /Invariant Violation: RelayParser: (.*). Source: document `(.*)` file:/g
+  const docRegex = /Invariant Violation: (RelayParser|GraphQLParser): (.*). Source: document `(.*)` file:/g
   let matches
   let message = ``,
     docName = ``
   while ((matches = docRegex.exec(error.toString())) !== null) {
     // This is necessary to avoid infinite loops with zero-width matches
     if (matches.index === docRegex.lastIndex) docRegex.lastIndex++
-    ;[, message, docName] = matches
+    ;[, , message, docName] = matches
   }
 
   if (!message) {
