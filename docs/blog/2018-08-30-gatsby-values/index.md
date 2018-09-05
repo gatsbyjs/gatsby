@@ -2,7 +2,7 @@
 title: What kind of company will we be? A look at Gatsby’s mission and values.
 author: Jason Lengstorf
 date: 2018-08-30
-image: images/gatsby-values-tweet.png
+image: images/values-whiteboard.jpg
 showImageInArticle: false
 tags: ["company"]
 ---
@@ -23,6 +23,16 @@ In this post, we’ll break down the process we followed, what we came up with, 
 
 Gatsby is a distributed team, which means that on most days we only interact with contributors and team members through Slack and GitHub messages. And with team members everywhere from San Francisco to Chiang Mai, getting the whole team on extended video calls to discuss philosophical questions is extremely difficult.
 
+<figure>
+  <img alt="The Gatsby team gathered around a whiteboard." src="./images/team-discussion.jpg" />
+  <figcaption>
+    The Inkteam in Portland, Oregon for a Gatsby Gathering. Photo:
+    <a href="https://www.houseofschaab.photography/">
+      Danielle Schaab
+    </a>
+  </figcaption>
+</figure>
+
 We took full advantage of being in the same room with each other to dig into these more nuanced discussions, which started a couple months ago when [Shannon](https://twitter.com/shannonb_ux) asked, “Do we have any company values?”
 
 ### Step 1: Anonymously collect ideas
@@ -37,6 +47,16 @@ Once we had all the anonymous ideas collected, Sam condensed them into common th
 
 While we were all together, Sam went through the themes with all of us and we wrote them out on a whiteboard. This helped all of us get back into the context of what we’d written down before, and what the team collectively values.
 
+<figure>
+  <img alt="Kurt holding a sticky note with “always be open to change” written on it." src="./images/kurt-sticky-note.jpg" />
+  <figcaption>
+    Kurt writing down really good ideas on a sticky note. Photo:
+    <a href="https://www.houseofschaab.photography/">
+      Danielle Schaab
+    </a>
+  </figcaption>
+</figure>
+
 ### Step 4: Capture additional ideas on sticky notes
 
 Once we all had context, we distributed sticky notes and markers, then set a timer for 15 minutes to allow everyone to add any additional ideas, values, or themes that weren’t covered in the original document.
@@ -44,6 +64,16 @@ Once we all had context, we distributed sticky notes and markers, then set a tim
 ### Step 5: Group similar ideas and identify the core values
 
 With everyone’s ideas on the board, we started grouping. [Marisa](https://twitter.com/marisamorby) and I looked for common threads in the ideas on the whiteboard and started to condense them down into a set of core values.
+
+<figure>
+  <img alt="Kyle, Linda, and Marisa adding and grouping ideas on the whiteboard." src="./images/values-whiteboard.jpg" />
+  <figcaption>
+    Kyle, Linda, and Marisa adding and grouping ideas on the whiteboard. Photo:
+    <a href="https://www.houseofschaab.photography/">
+      Danielle Schaab
+    </a>
+  </figcaption>
+</figure>
 
 As we wrote these out, we discussed them with the whole team to make sure we weren’t oversimplifying or losing the message behind anyone’s ideas.
 
@@ -57,7 +87,7 @@ With our themes identified, we needed to polish our notes up into clear company 
 
 ### Do the right thing when no one is looking
 
-Companies live or die by the trust they build. Gatsby is an open source product, which means we need to earn and maintain trust not only from our internal team, but from our larger community of contributors (and the open source community at large), as well as from our clients and customers.
+Companies live or die by the trust they build. Gatsby is an open source product, and that means we need to earn and maintain trust from our internal team, our larger community of contributors (and the open source community at large), as well as from our clients and customers.
 
 To earn that trust, we need to be deeply committed to always doing the right thing _for the sake of doing the right thing_.
 
@@ -75,15 +105,15 @@ To put it plainly: **unless it’s a critical competitive advantage, we’ll put
 
 Setting and meeting expectations is the backbone of successful business (and people). It’s how we show respect, act professionally, and maintain healthy relationships.
 
-**If we say we’re going to do something, we’ll do it.** If we’re going to miss a deadline, we’ll tell you _before_ it passes. If we’re going to be late, we’ll email or text to let you know.
+**If we say we’re going to do something, we’ll do it.** If we’re going to miss a deadline, we’ll tell you _before_ it passes. We’ll show up to meetings on time — and if we’re going to be late, we’ll email or text to let you know.
 
 Behind all bad feelings — anger, disappointment, frustration, and beyond — there’s almost always a violated expectation. Gatsby is all about creating great experiences and good feelings, and managing expectations is how we make sure we live up to our goals.
 
 ### Go slow to go fast
 
-Every project will be planned, but it’s best to plan _before_ you’re halfway done and everything’s going wrong.
+All projects are planned. The question is whether they're planned upfront, or halfway through.
 
-We understand the value of moving quickly and shipping things regularly. However, we also understand that rushing ahead blindly ultimately leads to slower growth — not to mention a frustrated, unhappy team.
+We understand the value of moving quickly and shipping things regularly. We also understand the value in first thinking things through to make sure we’re moving in the right direction and shipping the right things.
 
 **By taking the time up front to think through our goals and plan appropriately, we will avoid costly mistakes and slowdowns, keep the team and community on the same page, and ultimately move _much faster_** than if we were charging ahead without thinking things through.
 
@@ -95,17 +125,17 @@ Whenever we make decisions, we will put the experience of the developers using G
 
 ### Embrace growth
 
-**Healthy things grow, and growing things change.** Gatsby is a brand-spankin’-new company, and that means things are in near-constant flux. This means that we’re regularly up against circumstances that are rapidly evolving.
+**Healthy things grow, and growing things change.** Gatsby is a fast-growing, cutting edge technology startup, and that means things are in near-constant flux. This means that we’re regularly up against circumstances that are rapidly evolving.
 
-In order to survive and grow, we need to embrace growth as a healthy, vital process. This means delegating when necessary, asking for help when it’s time, and recognizing that the way we’ve always done things isn’t necessarily the way that works _today_. (And what works today may very well stop working tomorrow.)
+In order to survive and grow, we need to embrace growth as a healthy, vital process. This means making pragmatic decisions early, delegating when necessary, asking for help when it’s time, and recognizing how we’ve always done things isn’t necessarily what works _today_. (And what works today may very well stop working tomorrow.)
 
 These changes aren’t a sign that we’re failing, or that things are wrong. It’s a sign that the company is thriving.
 
-### Don’t be afraid to experiment with cool ideas
+### Experiment with cool ideas
 
-Gatsby was built as an experiment in bleeding edge technology. As a project, Gatsby has always aimed to be at the forefront of technological advances.
+Gatsby began as an experiment with bleeding edge technology. As a product, Gatsby has always aimed to be at the forefront of technological advances.
 
-While we need to stick to our roadmap and make steady progress toward our company goals, **we will maintain a state of excitement about new technology and foster a culture of experimentation, play, and wonder.** People are constantly creating incredible things, and it’s critical both to our success as a company _and_ to our happiness as geeks that we take time to play with these incredible new technologies.
+While we need to stick to our roadmap and make steady progress toward our company goals, **we will maintain a state of excitement about new technology and foster a culture of experimentation, play, and wonder.** We’re excited about reaching our goals and love to tinker. People are constantly creating incredible things, and it’s critical both to our success as a company _and_ to our happiness as geeks that we take time to play with these incredible new technologies.
 
 ### You belong here
 
@@ -122,6 +152,13 @@ As a stand-alone list, these values are a great list of aspirational ideas, but 
 To ensure we live and work according to these values, we’re using our values as a key factor in our decision making process. As we put together our roadmap, define our internal workflow processes, or even plan a tweet or GitHub response, we’ll be asking if the thing we’re about to do is lined up with our values.
 
 Are we acting like the company we want to be? Like the _people_ we want to be?
+
+<figure>
+  <img alt="The Gatsby Inkteam together in a park." src="./images/team-in-the-park.jpg" />
+  <figcaption>
+    The Gatsby Inkteam (not pictured: Florian Kissling). Photo: <a href="https://www.houseofschaab.photography/">Danielle Schaab</a>
+  </figcaption>
+</figure>
 
 It’s too early for any definitive results, but so far we’ve heard these values come up in meetings and discussions to keep things headed in the right direction. And — speaking personally — it feels _really dang good_ to be on a team that saw the importance of doing the upfront work to write these values down. I’m very proud to be part of the Gatsby Inkteam, and extremely grateful to be part of such an incredible open source community.
 
