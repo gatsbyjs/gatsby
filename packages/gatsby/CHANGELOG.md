@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.0-rc.11"></a>
+
+# [2.0.0-rc.11](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.0-rc.10...gatsby@2.0.0-rc.11) (2018-09-05)
+
+### Bug Fixes
+
+- babel options ([#7865](https://github.com/gatsbyjs/gatsby/issues/7865)) ([9c45441](https://github.com/gatsbyjs/gatsby/commit/9c45441))
+
 <a name="2.0.0-rc.10"></a>
 
 # [2.0.0-rc.10](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.0-rc.9...gatsby@2.0.0-rc.10) (2018-09-04)
