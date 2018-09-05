@@ -12,25 +12,27 @@ const support = function(feature) {
   }
 }
 const linkPrefetchStrategy = function(url) {
-  if (typeof document === "undefined") {
+  if (typeof document === `undefined`) {
     return
   }
-  const link = document.createElement("link")
-  link.setAttribute("rel", "prefetch")
-  link.setAttribute("href", url)
+  const link = document.createElement(`link`)
+  link.setAttribute(`rel`, `prefetch`)
+  link.setAttribute(`href`, url)
   const parentElement =
-    document.getElementsByTagName("head")[0] ||
-    document.getElementsByName("script")[0].parentNode
+    document.getElementsByTagName(`head`)[0] ||
+    document.getElementsByName(`script`)[0].parentNode
   parentElement.appendChild(link)
 }
-const importPrefetchStrategy = function(url) {
-  return new Promise(function(resolve_1, reject_1) {
-    require([url], resolve_1, reject_1)
-  })
+const xhrPrefetchStrategy = function(url) {
+  const req = new XMLHttpRequest()
+  req.open(`GET`, url, true)
+  req.withCredentials = true
+  req.send(null)
 }
-const supportedPrefetchStrategy = support("prefetch")
+
+const supportedPrefetchStrategy = support(`prefetch`)
   ? linkPrefetchStrategy
-  : importPrefetchStrategy
+  : xhrPrefetchStrategy
 
 const preFetched = {}
 
