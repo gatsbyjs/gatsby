@@ -183,13 +183,83 @@ describe(`anchor target attribute looks like _self if`, () => {
 })
 
 describe(`navigation is routed through gatsby if the destination href`, () => {
-    it(`shares the same origin and`, (done) => {
-        done.fail(`NOT IMPLEMENTED YET`)
+    // We're going to manually set up the event listener here
+    let hrefHandler
+    let eventDestroyer
+
+    beforeAll(() => {
+        hrefHandler = jest.fn()
+        eventDestroyer = catchLinks.default(window, hrefHandler)
     })
-    it(`shares the same top level path and`, (done) => {
-        done.fail(`NOT IMPLEMENTED YET`)
+
+    afterAll(() => {
+        eventDestroyer()
+    })
+
+    it(`shares the same origin and top path`, (done) => {
+        const sameOriginAndTopPath = document.createElement(`a`)
+        sameOriginAndTopPath.setAttribute(`href`, `${window.location.href}/someSubPath`)
+        document.body.appendChild(sameOriginAndTopPath)
+        
+        // create the click event we'll be using for testing
+        const clickEvent = new MouseEvent(`click`, {
+          bubbles: true,
+          cancelable: true,
+          view: window,
+        })
+    
+        hrefHandler.mockImplementation(() => {
+            expect(hrefHandler).toHaveBeenCalledWith(`${sameOriginAndTopPath.pathname}`)
+
+            sameOriginAndTopPath.remove()
+
+            done()
+        })
+        
+        sameOriginAndTopPath.dispatchEvent(clickEvent)
     })
     it(`is not a hash anchor for the current page`, (done) => {
-        done.fail(`NOT IMPLEMENTED YET`)
+        const withAnchor = document.createElement(`a`)
+        withAnchor.setAttribute(`href`, `${window.location.href}/someSubPath#inside`)
+        document.body.appendChild(withAnchor)
+        
+        // create the click event we'll be using for testing
+        const clickEvent = new MouseEvent(`click`, {
+          bubbles: true,
+          cancelable: true,
+          view: window,
+        })
+    
+        hrefHandler.mockImplementation(() => {
+            expect(hrefHandler).toHaveBeenCalledWith(`${withAnchor.pathname}${withAnchor.hash}`)
+
+            withAnchor.remove()
+            
+            done()
+        })
+        
+        withAnchor.dispatchEvent(clickEvent)
+    })
+    it(`has a URL "search" portion`, (done) => {
+        const withSearch = document.createElement(`a`)
+        withSearch.setAttribute(`href`, `${window.location.href}${pathPrefix}/subPath?q=find+me#inside`)
+        document.body.appendChild(withSearch)
+        
+        // create the click event we'll be using for testing
+        const clickEvent = new MouseEvent(`click`, {
+          bubbles: true,
+          cancelable: true,
+          view: window,
+        })
+    
+        hrefHandler.mockImplementation(() => {
+            expect(hrefHandler).toHaveBeenCalledWith(`${withSearch.pathname}${withSearch.search}${withSearch.hash}`)
+
+            withSearch.remove()
+            
+            done()
+        })
+        
+        withSearch.dispatchEvent(clickEvent)
     })
 })
