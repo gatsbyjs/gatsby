@@ -20,6 +20,10 @@ function findGatsbyRequire(root, j) {
   })
 }
 
+function getFirstNode(j, root) {
+  return root.find(j.Program).get(`body`, 0).node
+}
+
 function addEsmImport(j, root) {
   let existingImport = root.find(j.ImportDeclaration, {
     source: { value: `gatsby` },
@@ -32,6 +36,10 @@ function addEsmImport(j, root) {
     return // already exists
 
   if (!existingImport.length) {
+    // save comment at top (if any) and attach it to the new import statement
+    const firstNode = getFirstNode(j, root)
+    const { comments } = firstNode
+
     root
       .find(j.Program)
       .get(`body`, 0)
@@ -41,6 +49,11 @@ function addEsmImport(j, root) {
           j.literal(MODULE_NAME)
         )
       )
+
+    const newFirstNode = getFirstNode(j, root)
+    if (newFirstNode !== firstNode) {
+      newFirstNode.comments = comments
+    }
     return
   }
 
