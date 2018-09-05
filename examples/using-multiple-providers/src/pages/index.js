@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Fragment } from "react"
 import { connect } from "react-redux"
 import styled from "styled-components"
 import { gql } from "apollo-boost"
@@ -80,10 +80,10 @@ class IndexPage extends React.Component {
               if (error) return <div>Error :(</div>
 
               return (
-                <>`                  \` `<h3>Details {data.blogPost.title}</h3>` `<div>
-                    {data.blogPost.post}
-                  </div>` `
-                </>
+                <Fragment>
+                  <h3>Details {data.blogPost.title}</h3>
+                  <div>{data.blogPost.post}</div>` `
+                </Fragment>
               )
             }}
           </Query>
