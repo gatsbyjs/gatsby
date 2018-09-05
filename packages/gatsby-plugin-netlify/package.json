@@ -17,7 +17,7 @@
     "fs-extra": "^4.0.2",
     "kebab-hash": "^0.1.2",
     "lodash": "^4.17.4",
-    "webpack-assets-manifest": "^1.0.0"
+    "webpack-assets-manifest": "^3.0.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
