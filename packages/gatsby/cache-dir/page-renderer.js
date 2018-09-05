@@ -69,7 +69,7 @@ class PageRenderer extends React.Component {
       // Page resources won't be set in cases where the browser back button
       // or forward button is pushed as we can't wait as normal for resources
       // to load before changing the page.
-      loader.getResourcesForPathnameSync(pathName, pageResources => {
+      loader.getResourcesForPathname(pathName).then(pageResources => {
         // The page may have changed since we started this, in which case doesn't update
         if (this.props.location.pathname !== location.pathname) {
           return
