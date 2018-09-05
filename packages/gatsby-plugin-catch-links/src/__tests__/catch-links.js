@@ -8,6 +8,7 @@ beforeAll(() => {
 })
 
 afterAll(() => {
+    // Set history back to http://localhost:8000
     window.history.back()
 })
 
