@@ -33,6 +33,7 @@ exports.onRouteUpdate = function({ location }) {
   if (document.querySelector(`.twitter-tweet`) !== null) {
     if (!injectedTwitterScript) {
       injectTwitterScript()
+      injectedTwitterScript = true
     }
 
     if (
