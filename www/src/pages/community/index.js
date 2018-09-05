@@ -16,25 +16,7 @@ export const pageQuery = graphql`
     allCreatorsYaml {
       edges {
         node {
-          name
-          type
-          description
-          location
-          website
-          github
-          image {
-            childImageSharp {
-              fixed(width: 240, height: 240) {
-                ...GatsbyImageSharpFixed
-              }
-            }
-          }
-          for_hire
-          hiring
-          portfolio
-          fields {
-            slug
-          }
+          ...CreatorData
         }
       }
     }

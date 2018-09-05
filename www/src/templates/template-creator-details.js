@@ -282,7 +282,7 @@ const styles = {
   badge: {
     ...scale(-1 / 3),
     padding: `${rhythm(1 / 4)} 1.6rem`,
-    margin: `${rhythm(3 / 4)} 0`,
+    marginBottom: `${rhythm(3 / 4)}`,
     borderRadius: `20px`,
     alignSelf: `flex-start`,
     color: `white`,
