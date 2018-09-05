@@ -131,7 +131,6 @@ export default () => (
   })
 
   it(`extracts query AST correctly from files`, async () => {
-    let outputData = ``
     const spyStdout = jest.spyOn(process.stdout, `write`)
     const spyStderr = jest.spyOn(process.stderr, `write`)
     const results = await parser.parseFiles(Object.keys(MOCK_FILE_INFO))
