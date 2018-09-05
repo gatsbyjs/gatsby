@@ -134,7 +134,9 @@ export default () => (
     const spyStderr = jest.spyOn(process.stderr, `write`)
     const results = await parser.parseFiles(Object.keys(MOCK_FILE_INFO))
     expect(results).toMatchSnapshot()
-    expect(spyStderr.mock.calls).toMatchSnapshot()
+    expect(
+      spyStderr.mock.calls.filter(c => c[0].includes(`warning`))
+    ).toMatchSnapshot()
     spyStderr.mockRestore()
   })
 })
