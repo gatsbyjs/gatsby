@@ -4,6 +4,7 @@ const tests = [
   `import-namespace`,
   `require-destructure`,
   `require-namespace`,
+  `import-named-multiple`
 ]
 
 const defineTest = require(`jscodeshift/dist/testUtils`).defineTest

@@ -76,9 +76,16 @@ function addEsmImport(j, root) {
 }
 
 function removeGatsbyLinkEsmImport(j, root) {
+
   root.find(j.ImportDeclaration).forEach(path => {
     if (path.value.source.value === `gatsby-link`) {
-      j(path).remove()
+      if (path.value.specifiers.length === 1) {
+        j(path).remove()
+      } else {
+        path.value.specifiers = path.value.specifiers.filter(specifier => {
+          return specifier.local.name !== IMPORT_NAME
+        })
+      }
     }
   })
 }
@@ -163,5 +170,5 @@ module.exports = (file, api, options) => {
     removeGatsbyLinkRequire(j, root)
   }
 
-  return root.toSource()
+  return root.toSource({ lineTerminator: `\n` })
 }
