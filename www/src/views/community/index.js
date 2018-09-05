@@ -18,19 +18,17 @@ class CommunityView extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (
-      this.props.location.state.filter !== prevProps.location.state.filter &&
-      this.props.location.state.filter === ``
-    ) {
+    const filterStateChanged =
+      this.props.location.state.filter !== prevProps.location.state.filter
+    const isNotFiltered = this.props.location.state.filter === ``
+    const isFiltered = this.props.location.state.filter !== ``
+    if (filterStateChanged && isNotFiltered) {
       this.setState({
         creators: this.props.data.allCreatorsYaml.edges,
         [prevProps.location.state.filter]: false,
       })
     }
-    if (
-      this.props.location.state.filter !== prevProps.location.state.filter &&
-      this.props.location.state.filter !== ``
-    ) {
+    if (filterStateChanged && isFiltered) {
       let items = this.state.creators.filter(
         item => item.node[this.props.location.state.filter] === true
       )

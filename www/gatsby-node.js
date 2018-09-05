@@ -396,19 +396,23 @@ exports.onCreateNode = ({ node, actions, getNode, getNodes }) => {
     slug = `/showcase/${slugify(cleaned)}`
     createNodeField({ node, name: `slug`, value: slug })
   }
+
   // Community/Creators Pages
   else if (node.internal.type === `CreatorsYaml`) {
-    let type
-    if (node.type === `individual`) {
-      type = `people`
+    const validTypes = {
+      individual: `people`,
+      agency: `agencies`,
+      company: `companies`,
     }
-    if (node.type === `agency`) {
-      type = `agencies`
+
+    if (!validTypes[node.type]) {
+      throw new Error(
+        `Creators must have a type of “individual”, “agency”, or “company”, but invalid type “${
+          node.type
+        }” was provided for ${node.name}.`
+      )
     }
-    if (node.type === `company`) {
-      type = `companies`
-    }
-    slug = `/community/${type}/${slugify(node.name, {
+    slug = `/community/${validTypes[node.type]}/${slugify(node.name, {
       lower: true,
     })}`
     createNodeField({ node, name: `slug`, value: slug })
