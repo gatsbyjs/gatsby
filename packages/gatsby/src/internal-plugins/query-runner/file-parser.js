@@ -132,6 +132,8 @@ async function findGraphQLTags(file, text): Promise<Array<DefinitionNode>> {
               return
             }
 
+            // astexplorer.com link I (@kyleamathews) used when prototyping this algorithm
+            // https://astexplorer.net/#/gist/ab5d71c0f08f287fbb840bf1dd8b85ff/2f188345d8e5a4152fe7c96f0d52dbcc6e9da466
             path.traverse({
               JSXAttribute(jsxPath) {
                 if (jsxPath.node.name.name !== `query`) {
