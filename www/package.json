@@ -28,6 +28,7 @@
     "gatsby-plugin-twitter": "next",
     "gatsby-plugin-typography": "^2.2.0-rc.3",
     "gatsby-remark-autolink-headers": "next",
+    "gatsby-remark-code-titles": "^1.0.2",
     "gatsby-remark-copy-linked-files": "next",
     "gatsby-remark-images": "next",
     "gatsby-remark-prismjs": "next",
