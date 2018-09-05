@@ -54,12 +54,9 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   // Load resources when navigating back/forward
   window.addEventListener(`popstate`, () => {
     if (!loader.getResourcesForPathnameSync(window.location.pathname)) {
-      // apiRunner(`onPreRouteUpdate`, { location: window.location })
-      loader.getResourcesForPathname(window.location.pathname).then(() =>
-        renderer(<Root />, rootElement, () => {
-          // apiRunner(`onRouteUpdate`, { location: window.location })
-        })
-      )
+      loader
+        .getResourcesForPathname(window.location.pathname)
+        .then(() => renderer(<Root />, rootElement))
     }
   })
 
