@@ -841,9 +841,10 @@ In most cases you won't have to do anything to be v2 compatible, however there a
 
 `gatsby` should be included under `peerDependencies` of your plugin and it should specify the proper versions of support.
 
-```json
+```diff
 "peerDependencies": {
-  "gatsby": ">=2"
+-  "gatsby": "1"
++  "gatsby": ">=1"
 }
 ```
 
