@@ -26,14 +26,14 @@ const navItemStyles = {
     opacity: 0.8,
   },
 }
-const NavItem = ({ linkTo, children }) => (
+const NavItem = ({ linkTo, state, children }) => (
   <li
     css={{
       display: `inline-block`,
       margin: 0,
     }}
   >
-    <Link to={linkTo} css={navItemStyles}>
+    <Link to={linkTo} css={navItemStyles} state={state}>
       {children}
     </Link>
   </li>
@@ -157,17 +157,9 @@ export default ({ pathname }) => {
           <NavItem linkTo="/features/">Features</NavItem>
           <NavItem linkTo="/blog/">Blog</NavItem>
           <NavItem linkTo="/showcase/">Showcase</NavItem>
-          <li
-            css={{
-              display: `inline-block`,
-              margin: 0,
-            }}
-          >
-            {/* Need to pass the filter state here, so we can either differentiate this link from the others like this, or pass state as a prop to NavItem which I didn't prefer */}
-            <Link to="/community/" css={navItemStyles} state={{ filter: `` }}>
-              Community
-            </Link>
-          </li>
+          <NavItem linkTo="/community/" state={{ filter: `` }}>
+            Community
+          </NavItem>
         </ul>
         <div
           css={{
