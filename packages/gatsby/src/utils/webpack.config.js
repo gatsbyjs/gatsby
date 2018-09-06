@@ -216,6 +216,7 @@ module.exports = async (
                 `gatsby-webpack-stats-extractor`,
                 (stats, done) => {
                   let assets = {}
+                  let assetsMap = {}
                   for (let chunkGroup of stats.compilation.chunkGroups) {
                     if (chunkGroup.name) {
                       let files = []
@@ -225,6 +226,14 @@ module.exports = async (
                       assets[chunkGroup.name] = files.filter(
                         f => f.slice(-4) !== `.map`
                       )
+                      assetsMap[chunkGroup.name] =
+                        `/` +
+                        files.filter(
+                          f =>
+                            f.slice(-4) !== `.map` &&
+                            f.slice(0, chunkGroup.name.length) ===
+                              chunkGroup.name
+                        )[0]
                     }
                   }
 
@@ -234,9 +243,15 @@ module.exports = async (
                   }
 
                   fs.writeFile(
-                    path.join(`public`, `webpack.stats.json`),
-                    JSON.stringify(webpackStats),
-                    done
+                    path.join(`public`, `chunk-map.json`),
+                    JSON.stringify(assetsMap),
+                    () => {
+                      fs.writeFile(
+                        path.join(`public`, `webpack.stats.json`),
+                        JSON.stringify(webpackStats),
+                        done
+                      )
+                    }
                   )
                 }
               )

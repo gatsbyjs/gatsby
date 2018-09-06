@@ -203,7 +203,7 @@ exports.createPages = ({ graphql, actions }) => {
 
       _.uniq(_.flatten(tagLists)).forEach(tag => {
         createPage({
-          path: `/blog/tags/${_.kebabCase(tag)}/`,
+          path: `/blog/tags/${_.kebabCase(tag.toLowerCase())}/`,
           component: tagTemplate,
           context: {
             tag,

@@ -7,6 +7,9 @@ import presets, { colors } from "../utils/presets"
 import hex2rgba from "hex2rgba"
 import SearchIcon from "./search-icon"
 
+const loadJS = () => import(`./docsearch.min.js`)
+let loadedJs = false
+
 import { css } from "glamor"
 
 const { curveDefault, speedDefault } = presets.animation
@@ -235,7 +238,7 @@ css.insert(`
 class SearchForm extends Component {
   constructor() {
     super()
-    this.state = { enabled: true, focussed: false }
+    this.state = { focussed: false }
     this.autocompleteSelected = this.autocompleteSelected.bind(this)
   }
   /**
@@ -251,15 +254,7 @@ class SearchForm extends Component {
     this.searchInput.blur()
     navigate(`${a.pathname}${a.hash}`)
   }
-  componentDidMount() {
-    if (
-      typeof window === `undefined` ||
-      typeof window.docsearch === `undefined`
-    ) {
-      console.warn(`Search has failed to load and now is being disabled`)
-      this.setState({ enabled: false })
-      return
-    }
+  init() {
     window.addEventListener(
       `autocomplete:selected`,
       this.autocompleteSelected,
@@ -278,10 +273,33 @@ class SearchForm extends Component {
       },
     })
   }
+  componentDidMount() {
+    if (
+      typeof window === `undefined` ||
+      typeof window.docsearch === `undefined`
+    ) {
+      // Algolia's docsearch lib not loaded yet so load it.
+      // Lazy load css
+      const path = `https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css`
+      const link = document.createElement(`link`)
+      link.setAttribute(`rel`, `stylesheet`)
+      link.setAttribute(`type`, `text/css`)
+      link.setAttribute(`href`, path)
+      document.head.appendChild(link)
+    }
+  }
+  loadAlgoliaJS() {
+    !loadedJs &&
+      loadJS().then(a => {
+        loadedJs = true
+        window.docsearch = a.default
+        this.init()
+      })
+  }
   render() {
-    const { enabled, focussed } = this.state
+    const { focussed } = this.state
     const { iconStyles, isHomepage } = this.props
-    return enabled ? (
+    return (
       <form
         css={{
           display: `flex`,
@@ -292,6 +310,8 @@ class SearchForm extends Component {
           marginBottom: 0,
         }}
         className="searchWrap"
+        onMouseOver={() => this.loadAlgoliaJS()}
+        onClick={() => this.loadAlgoliaJS()}
         onSubmit={e => e.preventDefault()}
       >
         <label css={{ position: `relative` }}>
@@ -361,7 +381,7 @@ class SearchForm extends Component {
           />
         </label>
       </form>
-    ) : null
+    )
   }
 }
 SearchForm.propTypes = {
