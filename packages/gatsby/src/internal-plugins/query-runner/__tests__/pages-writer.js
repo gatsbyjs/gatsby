@@ -1,5 +1,6 @@
 const _ = require(`lodash`)
 const { writePages, resetLastHash } = require(`../pages-writer`)
+const { joinPath } = require(`../../../utils/path`)
 
 const jsonDataPathsFixture = require(`./fixtures/jsonDataPaths.json`)
 const pagesFixture = require(`./fixtures/pages.json`)
@@ -67,7 +68,7 @@ describe(`Pages writer`, () => {
     await writePages()
 
     expect(spy).toBeCalledWith(
-      `my/gatsby/project/.cache/data.json.${now}`,
+      joinPath(`my`, `gatsby`, `project`, `.cache`, `data.json.${now}`),
       expectedResult
     )
   })
@@ -96,7 +97,7 @@ describe(`Pages writer`, () => {
     await writePages()
 
     expect(spy).toBeCalledWith(
-      `my/gatsby/project/.cache/data.json.${now}`,
+      joinPath(`my`, `gatsby`, `project`, `.cache`, `data.json.${now}`),
       expectedResult
     )
   })
