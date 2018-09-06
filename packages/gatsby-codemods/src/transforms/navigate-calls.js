@@ -145,5 +145,5 @@ module.exports = (file, api, options) => {
     replaceCommonJs(j, root)
   }
 
-  return root.toSource({ quote: `single` })
+  return root.toSource({ quote: `single`, lineTerminator: `\n` })
 }

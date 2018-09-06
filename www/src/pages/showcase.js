@@ -29,8 +29,8 @@ export const showcaseQuery = graphql`
           childScreenshot {
             screenshotFile {
               childImageSharp {
-                sizes(maxWidth: 512) {
-                  ...GatsbyImageSharpSizes
+                fluid(maxWidth: 512) {
+                  ...GatsbyImageSharpFluid_noBase64
                 }
               }
             }
@@ -53,8 +53,8 @@ export const showcaseQuery = graphql`
           childScreenshot {
             screenshotFile {
               childImageSharp {
-                resolutions(width: 282, height: 211) {
-                  ...GatsbyImageSharpResolutions
+                fixed(width: 282, height: 211) {
+                  ...GatsbyImageSharpFixed_noBase64
                 }
               }
             }

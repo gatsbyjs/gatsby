@@ -232,6 +232,19 @@ const _options = {
         borderRadius: `${presets.radius}px`,
         overflow: `hidden`,
       },
+      ".gatsby-code-title": {
+        backgroundColor: colors.gatsby,
+        borderTopLeftRadius: `${presets.radiusLg}px`,
+        borderTopRightRadius: `${presets.radiusLg}px`,
+        color: `white`,
+        fontFamily: options.monospaceFontFamily.join(`,`),
+        ...scale(-1 / 5),
+        marginLeft: rhythm(-options.blockMarginBottom),
+        marginRight: rhythm(-options.blockMarginBottom),
+        padding: `${rhythm(options.blockMarginBottom / 2)} ${rhythm(
+          options.blockMarginBottom
+        )}`,
+      },
       "@media (max-width:634px)": {
         ".gatsby-highlight, .gatsby-resp-image-link": {
           borderRadius: 0,
@@ -267,7 +280,7 @@ const _options = {
         },
       },
       [MIN_DEFAULT_MEDIA_QUERY]: {
-        ".gatsby-highlight, .post .gatsby-resp-iframe-wrapper, .post .gatsby-resp-image-link": {
+        ".gatsby-highlight, .post .gatsby-resp-iframe-wrapper, .post .gatsby-resp-image-link, .gatsby-code-title": {
           marginLeft: rhythm(-options.blockMarginBottom * 1.5),
           marginRight: rhythm(-options.blockMarginBottom * 1.5),
         },
@@ -282,6 +295,11 @@ const _options = {
           paddingLeft: `${rhythm(((options.blockMarginBottom * 1.5) / 5) * 4)}`,
           borderLeftWidth: `${rhythm(
             ((options.blockMarginBottom * 1.5) / 5) * 1
+          )}`,
+        },
+        ".gatsby-code-title": {
+          padding: `${rhythm(options.blockMarginBottom)} ${rhythm(
+            options.blockMarginBottom * 1.5
           )}`,
         },
       },

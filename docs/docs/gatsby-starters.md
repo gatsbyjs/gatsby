@@ -963,3 +963,11 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
   - Fully responsive
   - Helper components for interacting with Sass classes
   - Uses the latest version of React
+
+- [gatsby-starter-typescript-sass](https://github.com/tdharmon/gatsby-starter-typescript-sass)
+  [(demo)](https://gatsby-starter-typescript-sass.netlify.com)
+
+  Features:
+  
+  - Built upon gatsby-starter-default
+  - Perfect if you want to use Typescript and SASS but don't want any extra code
