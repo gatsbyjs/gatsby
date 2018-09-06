@@ -229,8 +229,8 @@ const queue = {
     }
 
     // Prefetch resources.
-    prefetchResource(page.jsonName)
     if (process.env.NODE_ENV === `production`) {
+      prefetchResource(page.jsonName)
       prefetchResource(page.componentChunkName)
     }
 
