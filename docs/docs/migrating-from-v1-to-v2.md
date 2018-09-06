@@ -173,7 +173,7 @@ Repeat for every page and template that needs this layout.
 
 In v1, the layout component had access to `history`, `location`, and `match` props. In v2, only pages have access to these props; if you need these props in the layout component, pass them through from the page.
 
-`layout.js`
+`src/components/layout.js`
 
 ```jsx
 import React from "react"
@@ -190,7 +190,7 @@ export default ({ children, location }) => (
 
 ```jsx
 import React from "react"
-import Layout from "../components/layout.js"
+import Layout from "../components/layout"
 
 export default props => (
   <Layout location={props.location}>
@@ -205,7 +205,7 @@ If you were using the `data` prop in your Gatsby v1 layout, you now need to make
 
 Replacing a layout's query with `StaticQuery`:
 
-`layout.js`
+`src/components/layout.js`
 
 ```diff
 import React, { Fragment } from "react"
@@ -372,7 +372,7 @@ Two common ways this change _might_ break your site is:
 
 Read more about the features of our new router at https://reach.tech/router
 
-**NOTE:** One prominant feature of @reach/router, relative routes, isn't working currently in Gatsby. We're working with Ryan Florence
+**NOTE:** One prominent feature of @reach/router, relative routes, isn't working currently in Gatsby. We're working with Ryan Florence
 on fixing that so hopefully it'll be supported soon.
 
 Read on for instructions on migrating your site to @reach/router.
@@ -407,7 +407,7 @@ Now, to add state to a link, pass it via a `state` prop.
 ```jsx
 const NewsFeed = () => (
   <div>
-    <Link to="photos/123" state={{ fromNewsFeed: true }} />
+    <Link to="photos/123" state={{ fromFeed: true }} />
   </div>
 )
 
@@ -841,9 +841,10 @@ In most cases you won't have to do anything to be v2 compatible, however there a
 
 `gatsby` should be included under `peerDependencies` of your plugin and it should specify the proper versions of support.
 
-```json
+```diff
 "peerDependencies": {
-  "gatsby": ">=1"
+-  "gatsby": "1"
++  "gatsby": ">=1"
 }
 ```
 
