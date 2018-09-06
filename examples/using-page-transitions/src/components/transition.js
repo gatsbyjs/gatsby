@@ -5,20 +5,18 @@ import {
 } from "react-transition-group"
 
 const timeout = 250
-const getTransitionStyles = () => {
-  return {
-    entering: {
-      position: `absolute`,
-      opacity: 0,
-    },
-    entered: {
-      transition: `opacity ${timeout}ms ease-in-out`,
-      opacity: 1,
-    },
-    exiting: {
-      transition: `opacity ${timeout}ms ease-in-out`,
-      opacity: 0,
-    },
+const getTransitionStyles = {
+  entering: {
+    position: `absolute`,
+    opacity: 0
+  },
+  entered: {
+    transition: `opacity ${timeout}ms ease-in-out`,
+    opacity: 1
+  },
+  exiting: {
+    transition: `opacity ${timeout}ms ease-in-out`,
+    opacity: 0
   }
 }
 
@@ -38,7 +36,7 @@ class Transition extends React.PureComponent {
           {status => (
             <div
               style={{
-                ...getTransitionStyles()[status]
+                ...getTransitionStyles[status]
               }}
             >
               {children}
