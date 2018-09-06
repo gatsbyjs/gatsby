@@ -94,17 +94,19 @@ const _options = {
       hr: {
         backgroundColor: colors.ui.light,
       },
-      "tt,code,kbd": {
+      "tt, code, kbd": {
         // background: `hsla(23, 60%, 97%, 1)`,
         background: colors.a[0],
+        paddingTop: `0.1em`,
+        paddingBottom: `0.1em`,
+      },
+      "tt, code, kbd, .gatsby-code-title": {
         fontFamily: options.monospaceFontFamily.join(`,`),
         fontSize: `80%`,
         // Disable ligatures as they look funny w/ Space Mono as code.
         fontVariant: `none`,
         WebkitFontFeatureSettings: `"clig" 0, "calt" 0`,
         fontFeatureSettings: `"clig" 0, "calt" 0`,
-        paddingTop: `0.1em`,
-        paddingBottom: `0.1em`,
       },
       ".gatsby-highlight": {
         //background: colors.a[0],
@@ -237,8 +239,6 @@ const _options = {
         borderTopLeftRadius: `${presets.radiusLg}px`,
         borderTopRightRadius: `${presets.radiusLg}px`,
         color: `white`,
-        fontFamily: options.monospaceFontFamily.join(`,`),
-        ...scale(-1 / 5),
         marginLeft: rhythm(-options.blockMarginBottom),
         marginRight: rhythm(-options.blockMarginBottom),
         padding: `${rhythm(options.blockMarginBottom / 2)} ${rhythm(
@@ -296,12 +296,7 @@ const _options = {
           borderLeftWidth: `${rhythm(
             ((options.blockMarginBottom * 1.5) / 5) * 1
           )}`,
-        },
-        ".gatsby-code-title": {
-          padding: `${rhythm(options.blockMarginBottom)} ${rhythm(
-            options.blockMarginBottom * 1.5
-          )}`,
-        },
+        }
       },
       [MIN_LARGER_DISPLAY_MEDIA_QUERY]: {
         html: {
