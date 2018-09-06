@@ -37,6 +37,10 @@ matrix:
       env: SRC_PATH='integration-tests/production-runtime' INSTALL_COMMAND='install' TEST_COMMAND='test'
       node_js:
         - 'lts/*'
+    - name: "Path Prefix Tests"
+      env: SRC_PATH='integration-tests/path-prefix' INSTALL_COMMAND='install' TEST_COMMAND='test'
+      node_js:
+        - 'lts/*'
 
 cache:
   yarn: true
