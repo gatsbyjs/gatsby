@@ -42,16 +42,19 @@
   "main": "n/a",
   "scripts": {
     "lint": "./node_modules/.bin/eslint --ext .js,.jsx --ignore-pattern public .",
+    "pretest": "gatsby-dev --set-path-to-repo ../../ && gatsby-dev --scan-once --quiet && npm run fix-permissions",
     "test": "start-server-and-test develop http://localhost:8000 cy:run",
     "develop": "gatsby develop",
     "dev": "gatsby develop",
     "build": "gatsby build",
     "deploy": "gatsby build --prefix-paths && gh-pages -d public",
+    "fix-permissions": "chmod +x node_modules/.bin/gatsby node_modules/.bin/gatsby-dev",
     "cy:open": "cypress open",
     "cy:run": "cypress run"
   },
   "devDependencies": {
     "cypress": "^3.1.0",
+    "gatsby-dev-cli": "^2.0.0-rc.1",
     "start-server-and-test": "^1.1.4"
   }
 }
