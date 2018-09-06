@@ -26,22 +26,31 @@ const navItemStyles = {
     opacity: 0.8,
   },
 }
-const NavItem = ({ linkTo, children }) => (
+
+const activeNavItemStyles = {
+  fontWeight: `bold`,
+}
+
+const NavItem = ({ linkTo, children, active }) => (
   <li
     css={{
       display: `inline-block`,
       margin: 0,
     }}
   >
-    <Link to={linkTo} css={navItemStyles}>
+    <Link to={linkTo} css={[navItemStyles, active ? activeNavItemStyles : {}]}>
       {children}
     </Link>
   </li>
 )
 
+const getSectionFromPathname = pathname => pathname && pathname.split(`/`)[1]
+
 export default ({ pathname }) => {
   const isHomepage = pathname === `/`
   const isBlog = pathname === `/blog/`
+  const activeSection = getSectionFromPathname(pathname)
+
   let styles = {}
   if (isHomepage) {
     styles.backgroundColor = `rgba(255,255,255,0)`
@@ -151,12 +160,24 @@ export default ({ pathname }) => {
             },
           }}
         >
-          <NavItem linkTo="/docs/">Docs</NavItem>
-          <NavItem linkTo="/tutorial/">Tutorial</NavItem>
-          <NavItem linkTo="/plugins/">Plugins</NavItem>
-          <NavItem linkTo="/features/">Features</NavItem>
-          <NavItem linkTo="/blog/">Blog</NavItem>
-          <NavItem linkTo="/showcase/">Showcase</NavItem>
+          <NavItem active={activeSection === `docs`} linkTo="/docs/">
+            Docs
+          </NavItem>
+          <NavItem active={activeSection === `tutorial`} linkTo="/tutorial/">
+            Tutorial
+          </NavItem>
+          <NavItem active={activeSection === `plugins`} linkTo="/plugins/">
+            Plugins
+          </NavItem>
+          <NavItem active={activeSection === `features`} linkTo="/features/">
+            Features
+          </NavItem>
+          <NavItem active={activeSection === `blog`} linkTo="/blog/">
+            Blog
+          </NavItem>
+          <NavItem active={activeSection === `showcase`} linkTo="/showcase/">
+            Showcase
+          </NavItem>
         </ul>
         <div
           css={{
