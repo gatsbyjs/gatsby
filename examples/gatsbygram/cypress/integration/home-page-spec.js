@@ -170,7 +170,17 @@ describe(`The Home Page`, () => {
         .go(`back`)
 
       // test if the first post exists
-      cy.get(`div[to='/${post1.id}/']`).should(`exist`)
+      cy.waitForRouteChange()
+        .get(`div[to='/${post1.id}/']`)
+        .should(`exist`)
+
+      // close the post
+      cy.getTestElement(`modal-close`).click()
+
+      // wait for page to transition
+      cy.waitForRouteChange()
+        .location(`pathname`)
+        .should(`equal`, `/`)
     })
   })
 
