@@ -273,7 +273,7 @@
           link: /docs/schema-sift/
         - title: Connections
           link: /docs/schema-connections/
-    - title: Page Creation*
+    - title: Page Creation
       link: /docs/page-creation/
     - title: Page -> Node Dependencies
       link: /docs/page-node-dependencies/

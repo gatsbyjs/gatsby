@@ -2,7 +2,7 @@
 title: Internal Data Bridge
 ---
 
-The Internal Data Bridge is an internal Gatsby plugin located at [internal-plugins/internal-data-bridge](TODO). Its purpose is to create nodes representing pages, plugins, and site config so that they can be introspected for arbitrary purposes. As of writing, the only usage of this is by the [gatsby-plugin-sitemap](TODO) which uses it to... yes you guessed it, create a site map of your site. 
+The Internal Data Bridge is an internal Gatsby plugin located at [internal-plugins/internal-data-bridge](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby/src/internal-plugins/internal-data-bridge). Its purpose is to create nodes representing pages, plugins, and site config so that they can be introspected for arbitrary purposes. As of writing, the only usage of this is by the [gatsby-plugin-sitemap](/packages/gatsby-plugin-sitemap) which uses it to... yes you guessed it, create a site map of your site. 
 
 ## Example usage
 
@@ -48,4 +48,4 @@ A Node for each plugin in your `gatsby-config.js` that contains the full content
 
 ### SitePage
 
-Internal Data Bridge implements [onCreatePage](TODO) and creates a node of type `SitePage` that represents the created Page. Which allows you to introspect all pages created for your site.
+Internal Data Bridge implements [onCreatePage](/docs/node-apis/#onCreatePage) and creates a node of type `SitePage` that represents the created Page. Which allows you to introspect all pages created for your site.
