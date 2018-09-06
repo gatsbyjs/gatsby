@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
+const { pathPrefix } = require('../../gatsby-config')
 
-const withTrailingSlash = url => `${url}/`;
+const withTrailingSlash = url => `${url}/`
 
 describe(`Production pathPrefix`, () => {
   beforeEach(() => {
@@ -8,20 +9,25 @@ describe(`Production pathPrefix`, () => {
   })
 
   it(`returns 200 on base route`, () => {
-    cy.url().should('eq', withTrailingSlash(Cypress.config('baseUrl')))
+    cy.location('pathname').should('eq', withTrailingSlash(pathPrefix))
   })
 
   describe('navigation', () => {
-    const pageTwoLink = `a[data-test-id="page-2-link"]`;
+    const pageTwoLink = `a[data-test-id="page-2-link"]`
 
     it('prefixes link with /blog', () => {
-      cy.get(pageTwoLink).should('have.attr', 'href').and('include', '/blog')
+      cy.get(pageTwoLink)
+        .should('have.attr', 'href')
+        .and('include', '/blog')
     })
 
     it('can navigate to secondary page', () => {
       cy.get(pageTwoLink).click()
 
-      cy.url().should('eq', `${Cypress.config('baseUrl')}/page-2/`)
+      cy.location('pathname').should(
+        'eq',
+        withTrailingSlash(`${pathPrefix}/page-2`)
+      )
     })
 
     it('can navigate back from secondary page', () => {
@@ -29,7 +35,7 @@ describe(`Production pathPrefix`, () => {
 
       cy.get('a[data-test-id="index-link"]').click()
 
-      cy.url().should('eq', withTrailingSlash(Cypress.config('baseUrl')))
+      cy.location('pathname').should('eq', withTrailingSlash(pathPrefix))
     })
 
     it('can go back', () => {
@@ -37,7 +43,10 @@ describe(`Production pathPrefix`, () => {
 
       cy.go('back')
 
-      cy.url({ timeout: 10000 }).should('eq', withTrailingSlash(Cypress.config('baseUrl')))
+      cy.location('pathname', { timeout: 10000 }).should(
+        'eq',
+        withTrailingSlash(pathPrefix)
+      )
     })
   })
 })
