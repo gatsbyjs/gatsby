@@ -2,21 +2,21 @@
 title: Terminology
 ---
 
-Throughout the Gatsby code, you'll see the below object fields and variables mentioned. Their definitions and reason for existence are define below.
+Throughout the Gatsby code, you'll see the below object fields and variables mentioned. Their definitions and reason for existence are defined below.
 
 ## Page 
 
 ### Page Object
 
-created by calls to [createPage](/docs/actions/#createPage)
+created by calls to [createPage](/docs/actions/#createPage) (see [Page Creation](/docs/page-creation)).
 
-- path
-- matchPath
-- jsonName
-- component
-- componentChunkName
-- internalComponentName (unused)
-- context
+- [path](#path)
+- [matchPath](#matchpath)
+- [jsonName](#jsonname)
+- [component](#component)
+- [componentChunkName](#componentchunkname)
+- [internalComponentName](#internalcomponentname) (unused)
+- [context](#pagecontext)
 - updatedAt
 
 The above fields are explained below
@@ -31,7 +31,7 @@ It is created when the page object is created (see [Page Creation](/docs/page-cr
 
 ### Redux `pages` namespace
 
-Contains a map of Page path -> page
+Contains a map of Page [path](#path) -> [Page object](#page-object).
 
 ### matchPath
 
@@ -43,7 +43,7 @@ It is also used by [gatsby-plugin-netlify](http://localhost:8000/packages/gatsby
 
 ### jsonName
 
-The logical name for the query result of a page. Created during `createPage`. Name is constructed using kebabHash of page path. E.g. For above pagePath, it is:
+The logical name for the query result of a page. Created during [createPage](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/actions.js#L229). Name is constructed using kebabHash of page path. E.g. For above pagePath, it is:
 
 `blog-2018-07-17-announcing-gatsby-preview-995`
 
@@ -53,11 +53,11 @@ The path on disk to the javascript file containing the React component. E.g
 
 `/src/templates/template-blog-post.js`
 
-This of this as `componentPath` instead.
+Think of this as `componentPath` instead.
 
 ### Redux `components ` namespace
 
-Mapping from `component` (path) to its Page. It is created every time a page is created (by listening to `CREATE_PAGE`).
+Mapping from `component` (path on disk) to its [Page object](#page-object). It is created every time a page is created (by listening to `CREATE_PAGE`).
 
 ```javascript
 {
@@ -71,11 +71,11 @@ Mapping from `component` (path) to its Page. It is created every time a page is 
 }
 ```
 
-Query starts off as empty, but is set during the extractQueries phase by [query-watcher/handleQuery](TODO), once the query has compiled by relay (see [Query behind the scenes](TODO))
+Query starts off as empty, but is set during the extractQueries phase by [query-watcher/handleQuery](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/query-watcher.js#L68), once the query has compiled by relay (see [Query Extraction](/docs/query-extraction/)).
 
 ### componentChunkName
 
-The page.component, but passed (as above), kebab hashed. E.g, the componentChunkName for component
+The [page.component](#component) (path on disk), but passed (as above), kebab hashed. E.g, the componentChunkName for component
 
 `/src/templates/template-blog-post.js`
 
@@ -89,7 +89,7 @@ TODO: Mention how used by webpack
 
 If the path is `/`, internalComponentName = `ComponentIndex`. Otherwise, for a path of `/blog/foo`, it would be `ComponentBlogFoo`.
 
-Created as part of page, but appears to be unused.
+Created as part of page, but currently unused.
 
 ### page.context
 
@@ -103,9 +103,11 @@ Path to the page's query result. Relative to `/public/static/d/{modInt}`. Name i
 
 `621/path---blog-2018-07-17-announcing-gatsby-preview-995-a74-dwfQIanOJGe2gi27a9CLKHjamc`
 
+Set after [Query Execution](/docs/query-execution/#save-query-results-to-redux-and-disk) has finished.
+
 ### Redux `jsonDataPaths` namespace (dataPaths)
 
-Map of page `jsonName` to `dataPath`. Updated whenever a new query is run (in [query-runner.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/query-runner.js)). e.g
+Map of page [jsonName](#jsonname) to [dataPath](#datapath). Updated after [Query Execution](/docs/query-execution/#save-query-results-to-redux-and-disk). E.g
 
 ```
 {

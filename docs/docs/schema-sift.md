@@ -18,7 +18,7 @@ The `resolve()` function calls `run-sift.js`, and provides it with the following
 
 - GraphQLArgs (as js object). Within a filter. E.g `wordcount: { paragraphs: { eq: 4 } }`
 - All nodes in redux of this type. E.g where `internal.type == MmarkdownRemark'`
-- Context `path`, if present
+- Context `path`, if being called as part of a [page query](/docs/query-execution/#query-queue-execution)
 - typeName. E.g `markdownRemark`
 - gqlType. See [more on gqlType](/docs/schema-gql-type)
 
@@ -36,7 +36,7 @@ runSift({
     }
   },
   nodes: ${latestNodes},
-  path: context.path, // E.g /blog/2018-08-23/introducing-v2
+  path: context.path, // E.g /blogs/my-blog
   typeName: `markdownRemark`,
   type: ${gqlType}
 })
@@ -100,18 +100,22 @@ Note that the graphql-js library has NOT been invoked yet. We're instead calling
 
 The resolve method in this case would return a paragraph node, which also needs to be properly resolved. So We descend the `fieldsToSift` arg tree and perform the above operation on the paragraph node (using the found paragraph gqlType).
 
-After `resolveRecursive` has finished, we will have "realized" all the query fields in each node, giving us confidence that we can perform the query with all the data being there. Since new fields on the node may have been created in this process, we call `trackInlineObjectsInRootNode()` to track these new objects. See [Node Tracking Docs](/docs/behind-the-scenes-dependencies/#root-node-tracking) for more.
+After `resolveRecursive` has finished, we will have "realized" all the query fields in each node, giving us confidence that we can perform the query with all the data being there. 
+
+### 4. Track newly realized fields
+
+Since new fields on the node may have been created in this process, we call `trackInlineObjectsInRootNode()` to track these new objects. See [Node Tracking](/docs/node-tracking/) docs for more.
 
 ### 5. Run sift query on all nodes
 
-Now that we've realized all fields that need to be queried, on all nodes of this type, we are finally ready to apply the sift query to all those nodes. This step is handled by [tempPromise](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/run-sift.js#L214). It simply concatenates all the top level objects in the args tree together with a sift `$and` expression, and then iterates over all nodes returning the first one that satisfies the sift expression.
+Now that we've realized all fields that need to be queried, on all nodes of this type, we are finally ready to apply the sift query. This step is handled by [tempPromise](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/run-sift.js#L214). It simply concatenates all the top level objects in the args tree together with a sift `$and` expression, and then iterates over all nodes returning the first one that satisfies the sift expression.
 
-In the case that `connection === true` (argument passed to run-sift), then instead of just choosing the first argument, we will select ALL nodes that match the sift query. If the GraphQL query specified `sort`, `skip`, or `limit` fields, then we use the [graphql-skip-limit](https://www.npmjs.com/package/graphql-skip-limit) library to filter down to the appropriate results. See [schema-connections](/docs/schema-connections) for more info.
+In the case that `connection === true` (argument passed to run-sift), then instead of just choosing the first argument, we will select ALL nodes that match the sift query. If the GraphQL query specified `sort`, `skip`, or `limit` fields, then we use the [graphql-skip-limit](https://www.npmjs.com/package/graphql-skip-limit) library to filter down to the appropriate results. See [Schema Connections](/docs/schema-connections) for more info.
 
 ### 6. Create Page dependency if required
 
-Assuming we find a node (or multiple if `connection` === true), we finish off by recording the page that initiated the query (in the `path` field depends on the found node. More on this in [create page dependency](TODO).
+Assuming we find a node (or multiple if `connection` === true), we finish off by recording the page that initiated the query (in the `path` field) depends on the found node. More on this in [Page -> Node Dependencies](/docs/page-node-dependencies/).
 
-## Note about plugin resolve side effects
+## Note about plugin resolver side effects
 
 As [mentioned above](#3-resolve-inner-query-fields-on-all-nodes), `run-sift` must "realize" all query fields before querying over them. This involves calling the resolvers of custom plugins on **each node of that type**. Therefore, if a resolver performs side effects, then these will be triggered, regardless of whether the field result actually matches the query.

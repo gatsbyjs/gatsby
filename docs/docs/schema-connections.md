@@ -4,7 +4,7 @@ title: Schema connections
 
 ## What are schema connections?
 
-So far in schema generation, we have covered how [GraphQL types are inferred](/docs/schema-gql-type), how [query arguments for types](/docs/schema-input-gql) are created, and how [sift resolvers](/docs/schema-sift) work. But all of these only allow querying down to a single node of a type. Schema connections is the ability to query over collections of nodes of a type. For example, if we want to query all markdown nodes by some criteria, it will allow us to write queries such as:
+So far in schema generation, we have covered how [GraphQL types are inferred](/docs/schema-gql-type), how [query arguments for types](/docs/schema-input-gql) are created, and how [sift resolvers](/docs/schema-sift) work. But all of these only allow querying down to a single node of a type. Schema connections is the ability to query over **collections** of nodes of a type. For example, if we want to query all markdown nodes by some criteria, it will allow us to write queries such as:
 
 ```graphql
 {
@@ -28,7 +28,7 @@ _Fun Fact: This stuff is all based on [relay connections](https://facebook.githu
 
 The ConnectionType also defines input args to perform paging using the `skip/limit` pattern. The actual logic for paging is defined in the [graphql-skip-limit](https://www.npmjs.com/package/graphql-skip-limit) library in [arrayconnection.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/graphql-skip-limit/src/connection/arrayconnection.js). It is invoked as the last part of the [run-sift](/docs/schema-sift#5-run-sift-query-on-all-nodes) function. To aid in paging, the ConnectionType also defines a `pageInfo` field with a `hasNextPage` field. 
 
-The ConnectionType is defined in the [graphql-skip-limit connection.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/graphql-skip-limit/src/connection/connection.js) file. Its construction function takes a Type, and it creates a connectionType for that type. E.g passing in `MarkdownRemark` Type would result in a `MarkdownRemarkConnection` type whose `edges` field would be of type `MarkdownRemarkEdge`.
+The ConnectionType is defined in the [graphql-skip-limit connection.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/graphql-skip-limit/src/connection/connection.js) file. Its construction function takes a Type, and uses it to create a connectionType. E.g passing in `MarkdownRemark` Type would result in a `MarkdownRemarkConnection` type whose `edges` field would be of type `MarkdownRemarkEdge`.
 
 ### GroupConnection
 
@@ -88,7 +88,7 @@ Just like in [gql type input filters](/docs/schema-input-gql), we must generate 
 
 ### Sorting
 
-A `sort` argument can be added to the `Connection` type (not the `GroupConnection` type). You can sort by any (possibly nested( field in the connection results. These are enums that are created via the same mechanism described in [enum fields](#field-enum-value). Except that the inference of these enums occurs in [infer-graphql-input-type.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-input-fields.js#L302). 
+A `sort` argument can be added to the `Connection` type (not the `GroupConnection` type). You can sort by any (possibly nested) field in the connection results. These are enums that are created via the same mechanism described in [enum fields](#field-enum-value). Except that the inference of these enums occurs in [infer-graphql-input-type.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-input-fields.js#L302). 
 
 The Sort Input Type itself is created in [build-node-connections.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/build-node-connections.js#L49) and implemented by [create-sort-field.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/create-sort-field.js). The actual sorting occurs in run-sift (below).
 

@@ -16,7 +16,7 @@ There are a few different scenarios for creating parent/child relationships.
 
 ### Node relationship storage model
 
-Gatsby stores child nodes in redux as IDs in the parent's `children` field. And then stores those child nodes as full redux nodes themselves. E.g for a File node with two children, it will be stored in the redux `nodes` namespace as:
+All nodes in Gatsby are stored in a flat structure in the redux `nodes` namespace. A node's `children` field is an array of node IDS, whose nodes are also at the top level of the redux namespace. Here's an example of the `nodes` namespace.
 
 ```javascript
 {
@@ -26,7 +26,7 @@ Gatsby stores child nodes in redux as IDs in the parent's `children` field. And 
 }
 ```
 
-An important note here is that we do not store a distinct collection of each type of child. Rather we store a single collection that they're all packed into.
+An important note here is that we do not store a distinct collection of each type of child. Rather we store a single collection that they're all packed into. This has some implications on [child field inference](/docs/schema-gql-type/#child-fields-creation) in the Schema Generation phase.
 
 ### Explicitly recording a parent/child relationship
 
@@ -51,7 +51,9 @@ Let's say you create the following node by passing it to `createNode`
 }
 ```
 
-The value for `baz` is itself an object. That value's parent is the top level object. In this case, Gatsby simply saves the top level node as is to redux. It doesn't attempt to extract `baz` into its own node. During schema compilation, Gatsby will infer the sub object's type while [creating the gqlType](/docs/schema-gql-type#plain-object-or-value-field).
+The value for `baz` is itself an object. That value's parent is the top level object. In this case, Gatsby simply saves the top level node as is to redux. It doesn't attempt to extract `baz` into its own node. It does however track the subobject's root NodeID using [Node Tracking](/docs/node-tracking/)
+
+During schema compilation, Gatsby will infer the sub object's type while [creating the gqlType](/docs/schema-gql-type#plain-object-or-value-field). 
 
 ## Fresh/stale nodes
 
@@ -71,4 +73,4 @@ So, how do you add a field to an existing node? E.g perhaps in onCreateNode, you
 
 ## Node Tracking
 
-When a node is created, `createNode` will track all its fields against its nodeId. See [Node Tracking Docs](/docs/behind-the-scenes-dependencies/#root-node-tracking) for more.
+When a node is created, `createNode` will track all its fields against its nodeId. See [Node Tracking Docs](/docs/node-tracking/) for more.

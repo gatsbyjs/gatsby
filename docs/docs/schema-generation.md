@@ -10,14 +10,14 @@ Each sourced or transformed node has a `node.internal.type`, which is set by the
 
 During the schema generation phase, we must generate what's called a `ProcessedNodeType` in Gatsby. This is a simple structure that builds on top of a [graphql-js GraphQLObjectType](https://graphql.org/graphql-js/type/#graphqlobjecttype). Our goal in the below steps is to infer and construct this object for each unique node type in redux.
 
-The flow is summarized by the below graph. It shows the intermediate transformations that are performed by code in the Gatsby [schema folder](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby/src/schema), finally resulting in the [ProcessedNodeType](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/build-node-types.js#L182). It uses the example of building a `File` GraphQL type.
+The flow is summarized by the below graph. It shows the intermediate transformations or relevant parts of the user's graphql query that are performed by code in the Gatsby [schema folder](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby/src/schema), finally resulting in the [ProcessedNodeType](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/build-node-types.js#L182). It uses the example of building a `File` GraphQL type.
 
 ```dot
 digraph graphname {
   "pluginFields" [ label = "custom plugin fields\l{\l    publicURL: {\l        type: GraphQLString,\l        resolve(file, a, c) { ... }\l    }\l}\l ", shape = box ];
   "typeNodes" [ label = "all redux nodes of type\le.g internal.type === `File`", shape = "box" ];
   "exampleValue" [ label = "exampleValue\l{\l    relativePath: `blogs/my-blog.md`,\l    accessTime: 8292387234\l}\l ", shape = "box" ];
-  "resolve" [ label = "ProcessedNodeType.resolve()", shape = box ];
+  "resolve" [ label = "ProcessedNodeType\l including final resolve()", shape = box ];
   "gqlType" [ label = "gqlType (GraphQLObjectType)\l{\l    fields,\l    name: `File`\l}\l ", shape = box ];
   "parentChild" [ label = "Parent/Children fields\lnode {\l    childMarkdownRemark { html }\l    parent { id }\l}\l ", shape = "box" ];
   "objectFields" [ label = "Object node fields\l  node {\l    relativePath,\l    accessTime\l}\l ", shape = "box" ];
@@ -39,7 +39,7 @@ digraph graphname {
 
 ### For each unique Type
 
-The majority of schema generation code occurs in [build-node-types.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/build-node-types.js). The below steps will be executed for each unique type.
+The majority of schema generation code kicks off in [build-node-types.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/build-node-types.js). The below steps will be executed for each unique type.
 
 #### 1. Plugins create custom fields
 
@@ -58,3 +58,8 @@ This step creates GraphQL input filters for each field so the objects can be que
 #### 4. ProcessedTypeNode creation with resolve implementation
 
 Finally, we have everything we need to construct our final Gatsby Type object (known as `ProcessedTypeNode`). This contains the input filters and gqlType created above, and implements a resolve function for it using sift. More detail in the [Querying with Sift](/docs/schema-sift) section.
+
+#### 5. Create Connections for each type
+
+We've inferred all GraphQL Types, and the ability to query for a single node. But now we need to be able to query for collections of that type (e.g `allMarkdownRemark`). [Schema Connections](/docs/schema-connections/) takes care of that.
+

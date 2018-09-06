@@ -32,7 +32,7 @@ Some API calls can take a while to finish. So every time an API is run, we creat
 - **resolve**: promise resolve callback to be called when the API has finished running
 - **startTime**: time that the API run was started
 - **span**: opentracing span for tracing builds
-- **traceId**: optional args.traceId provided if API will result in further API calls (see below)
+- **traceId**: optional args.traceId provided if API will result in further API calls ([see below](#using-traceid-to-await-downstream-api-calls))
 
 We immediately place this object into an `apisRunningById` Map, where we track its execution.
 
@@ -49,7 +49,7 @@ All actions take 3 arguments:
 1.  The core information required by the action. E.g for [createNode](/docs/actions/#createNode), we must pass a node
 2.  The plugin that is calling this action. E.g `createNode` uses this to assign the owner of the new node
 3.  An object with misc action options:
-    - **traceId**: See below
+    - **traceId**: [See below](#using-traceid-to-await-downstream-api-calls)
     - **parentSpan**: opentracing span (see [tracing docs](/docs/performance-tracing/))
 
 Passing the plugin and action options on every single action call would be extremely painful for plugin/site authors. Since we know the plugin, traceId and parentSpan when we're running our API, we can rebind injected actions so these arguments are already provided. This is done in the [doubleBind](https://github.com/gatsbyjs/gatsby/blob/8029c6647ab38792bb0a7c135ab4b98ae70a2627/packages/gatsby/src/utils/api-runner-node.js#L14) step.
@@ -59,6 +59,8 @@ Passing the plugin and action options on every single action call would be extre
 Each plugin is run inside a [map-series](https://www.npmjs.com/package/map-series) promise, which allows them to be executed concurrently. Once all plugins have finished running, we remove them from [apisRunningById](https://github.com/gatsbyjs/gatsby/blob/8029c6647ab38792bb0a7c135ab4b98ae70a2627/packages/gatsby/src/utils/api-runner-node.js#L246) and fire a `API_RUNNING_QUEUE_EMPTY` event. This in turn, results in any dirty pages being recreated, as well as their queries. Finally, the results are returned.
 
 ## Using traceID to await downstream API calls
+
+The majority of API calls result in one or more implementing plugins being called. We then wait for them all to complete, and return. But some plugins (e.g [sourceNodes](/docs/node-apis/#sourceNodes)) result in calls to actions that themselves call APIs. We need some way of tracing whether an API call originated from another API call, so that we can wait on all child calls to complete. The mechanism for this is the `traceId`.
 
 ```dot
 digraph {
@@ -89,8 +91,6 @@ digraph {
   "apiRunner2" -> "apisRunning" [ label="increment" ];
 }
 ```
-
-The majority of API calls result in one or more implementing plugins being called. We then wait for them all to complete, and return. But some plugins (e.g [sourceNodes](/docs/node-apis/#sourceNodes)) result in calls to actions that themselves call APIs. We need some way of tracing whether an API call originated from another API call, so that we can wait on all child calls to complete. The mechanism for this is the `traceId`.
 
 1.  The traceID is passed as an argument to the original API runner. E.g
 

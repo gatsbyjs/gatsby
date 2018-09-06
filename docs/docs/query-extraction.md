@@ -4,7 +4,7 @@ title: Query Extraction
 
 ### Extracting Queries from Files
 
-Up until now, we have [sourced all nodes](/docs/node-creation-behind-the-scenes/) into redux, [inferred a schema](/docs/schema-generation-behind-the-scenes/) from them, and [created all pages](/docs/page-creation/). The next step is to extract and compile all graphql queries from our source files. The entrypoint to this phase is [query-watcher extractQueries()](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/query-watcher.js), which immediately compiles all graphql queries by calling into [query-compiler.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/query-compiler.js). 
+Up until now, we have [sourced all nodes](/docs/node-creation/) into redux, [inferred a schema](/docs/schema-generation/) from them, and [created all pages](/docs/page-creation/). The next step is to extract and compile all graphql queries from our source files. The entrypoint to this phase is [query-watcher extractQueries()](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/query-watcher.js), which immediately compiles all graphql queries by calling into [query-compiler.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/query-compiler.js). 
 
 #### Query Compilation
 
@@ -20,7 +20,7 @@ digraph {
   fragments [ label = "fragments. e.g\l.cache/fragments/fragment1.js", shape = cylinder ];
   srcFiles [ label = "source files. e.g\lsrc/pages/my-page.js", shape = cylinder ];
   components [ label = "redux.state.components\l(via createPage)", shape = cylinder ];
-  schema [ label = "Gatsby schema", shape = cylinder ];
+  schema [ label = "Gatsby schema", shape = cylinder, URL = "/docs/schema-generation/" ];
   
   subgraph cluster_compiler {
     label = "query-compiler.js";
@@ -52,9 +52,9 @@ digraph {
 
 We're now in the [handleQuery](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/query-watcher.js#L68) function.
 
-If the query is a `StaticQuery`, we call the `replaceStaticQuery` action to save it to to the `staticQueryComponents` namespace which is a mapping from a component's path to an object that contains the raw GraphQL Query amonst other things. More details in [Static Queries](/docs/behind-the-scenes-static-vs-normal-queries/). We also remove component's `jsonName` from the `components` redux namespace. See [Component/Page dependencies](/docs/behind-the-scenes-dependencies/). 
+If the query is a `StaticQuery`, we call the `replaceStaticQuery` action to save it to to the `staticQueryComponents` namespace which is a mapping from a component's path to an object that contains the raw GraphQL Query amonst other things. More details in [Static Queries](/docs/static-vs-normal-queries/). We also remove component's `jsonName` from the `components` redux namespace. See [Page -> Node Dependencies](/docs/page-node-dependencies/). 
 
-If the query is just a normal every day query (not StaticQuery), then we update its component's `query` in the redux `components` namespace via the `replaceComponentQuery` action.
+If the query is just a normal every day query (not StaticQuery), then we update its component's `query` in the redux `components` namespace via the [replaceComponentQuery](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/actions.js#L827) action.
 
 ```dot
 digraph {
@@ -107,4 +107,4 @@ digraph {
 }
 ```
 
-Now let's learn about [Query Execution](/docs/behind-the-scenes-query-execution/).
+Now let's learn about [Query Execution](/docs/query-execution/).
