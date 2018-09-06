@@ -113,7 +113,7 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
   - [Full list here!](https://github.com/fabien0102/gatsby-starter#whats-inside)
 
 - [gatsby-starter-bootstrap](https://github.com/jaxx2104/gatsby-starter-bootstrap)
-  [(demo)](https://jaxx2104.github.io/gatsby-starter-bootstrap/)
+  [(demo)](https://gatstrap.netlify.com/)
 
   Features:
 
