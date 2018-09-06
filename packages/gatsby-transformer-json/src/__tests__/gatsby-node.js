@@ -70,10 +70,19 @@ describe(`Process JSON nodes correctly`, () => {
 
   it(`correctly sets node type for array of objects`, async () => {
     ;[
-      [null, [`NodeNameJson`, `NodeNameJson`]],
-      [`fixed`, [`fixed`, `fixed`]],
-      [((node, obj) => obj.funny), [`yup`, `nope`]],
-    ].forEach(async ([typeName, [expectedOne, expectedTwo]]) => {
+      {
+        typeName: null,
+        expectedNodeTypes: [`NodeNameJson`, `NodeNameJson`],
+      },
+      {
+        typeName: `fixed`,
+        expectedNodeTypes: [`fixed`, `fixed`],
+      },
+      {
+        typeName: ((node, obj) => obj.funny),
+        expectedNodeTypes: [`yup`, `nope`],
+      },
+    ].forEach(async ({ typeName, expectedNodeTypes: [expectedOne, expectedTwo] }) => {
       const data = [
         { id: `foo`, blue: true, funny: `yup` },
         { blue: false, funny: `nope` },
@@ -94,18 +103,39 @@ describe(`Process JSON nodes correctly`, () => {
       }, {
         typeName,
       }).then(() => {
-        expect(createNode.mock.calls[0][0].internal.type).toEqual(expectedOne)
-        expect(createNode.mock.calls[1][0].internal.type).toEqual(expectedTwo)
+        expect(createNode).toBeCalledWith(
+          expect.objectContaining({
+            internal: expect.objectContaining({
+              type: expectedOne,
+            }),
+          })
+        )
+        expect(createNode).toBeCalledWith(
+          expect.objectContaining({
+            internal: expect.objectContaining({
+              type: expectedTwo,
+            }),
+          })
+        )
       })
     })
   })
 
   it(`correctly sets node type for single object`, async () => {
     ;[
-      [null, `FooJson`],
-      [`fixed`, `fixed`],
-      [((node, obj) => obj.funny), `yup`],
-    ].forEach(async ([typeName, expected]) => {
+      {
+        typeName: null,
+        expectedNodeType: `FooJson`,
+      },
+      {
+        typeName: `fixed`,
+        expectedNodeType: `fixed`,
+      },
+      {
+        typeName: ((node, obj) => obj.funny),
+        expectedNodeType: `yup`,
+      },
+    ].forEach(async ({ typeName, expectedNodeType }) => {
       const data = { id: `foo`, blue: true, funny: `yup` }
       node.content = JSON.stringify(data)
       node.dir = `/tmp/foo/`
@@ -124,7 +154,13 @@ describe(`Process JSON nodes correctly`, () => {
       }, {
         typeName,
       }).then(() => {
-        expect(createNode.mock.calls[0][0].internal.type).toEqual(expected)
+        expect(createNode).toBeCalledWith(
+          expect.objectContaining({
+            internal: expect.objectContaining({
+              type: expectedNodeType,
+            }),
+          })
+        )
       })
     })
   })
