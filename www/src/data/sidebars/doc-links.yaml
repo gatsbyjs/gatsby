@@ -279,6 +279,8 @@
       link: /docs/page-node-dependencies/
     - title: Node Tracking
       link: /docs/node-tracking/
+    - title: Internal Data Bridge
+      link: /docs/internal-data-bridge/
     - title: Queries
       link: /docs/query-behind-the-scenes/
       items:
