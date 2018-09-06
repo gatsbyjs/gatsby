@@ -374,9 +374,6 @@ module.exports = async (
       modules: [
         directoryPath(path.join(`node_modules`)),
         `node_modules`,
-        // This is head scratching - without it css modules in production will fail
-        // to find module with relative path
-        `./`,
       ],
       alias: {
         gatsby$: directoryPath(path.join(`.cache`, `gatsby-browser-entry.js`)),
