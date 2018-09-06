@@ -296,7 +296,7 @@ const _options = {
           borderLeftWidth: `${rhythm(
             ((options.blockMarginBottom * 1.5) / 5) * 1
           )}`,
-        }
+        },
       },
       [MIN_LARGER_DISPLAY_MEDIA_QUERY]: {
         html: {
