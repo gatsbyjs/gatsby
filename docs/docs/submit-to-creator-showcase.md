@@ -14,7 +14,7 @@ There are only two major steps :)
 
 ```yaml
 - name: Your Name
-  # There are three `types`: agency, company, and individual
+  # You can choose one of three `types`: agency, company, or individual
   type: agency
   description: >-
     We help agencies and companies with JAMStack tools. This includes web
@@ -27,7 +27,7 @@ There are only two major steps :)
   # Right now, you can only answer true to either `for_hire` or for `hiring`, but not for both.
   for_hire: true
   hiring: false
-  # If you mark `portfolio: true`, any sites you have in the Site Showcase that say `built_by: your name` will be linked to your Creator Profile. So make sure your name is exactly the same in both `sites.yml` and `creators.yml`.
+  # If you mark `portfolio: true`, any sites you have in the Site Showcase that say `built_by: [imagine your name here]` will be linked to your Creator Profile. So make sure that `name`in `creators.yml` is exactly the same as `built_by` in `sites.yml`.
   portfolio: true
 ```
 
