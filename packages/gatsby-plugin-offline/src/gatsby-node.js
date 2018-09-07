@@ -87,8 +87,8 @@ exports.onPostBuild = (args, pluginOptions) => {
     navigateFallbackWhitelist: [/^[^?]*([^.?]{5}|\.html)(\?.*)?$/],
     navigateFallbackBlacklist: [/\?(.+&)?no-cache=1$/],
     cacheId: `gatsby-plugin-offline`,
-    // Don't cache-bust JS files and anything in the static directory
-    dontCacheBustUrlsMatching: /(.*js$|\/static\/)/,
+    // Don't cache-bust JS or CSS files, and anything in the static directory
+    dontCacheBustUrlsMatching: /(.*\.js$|.*\.css$|\/static\/)/,
     runtimeCaching: [
       {
         // Add runtime caching of various page resources.
