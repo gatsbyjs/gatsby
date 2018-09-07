@@ -4,7 +4,7 @@ Parses YAML files. Supports arrays of objects and single objects.
 
 Supported extensions: `.yaml`, `.yml`
 
-Both `.yaml` and `.yml` are treated in the same way. This document uses both of them interchangably.
+Both `.yaml` and `.yml` are treated in the same way. This document uses both of them interchangeably.
 
 ## Install
 
@@ -41,7 +41,7 @@ or as single objects spread across multiple files.
 The _source folder_ can contain either the following:
 
 - **Array of Objects**: Where each file represents a collection. (_you probably want this one_)
-- **Single Object**: Where each _subfolder_ represents a collection; each files represents one "record".
+- **Single Object**: Where each _subfolder_ represents a collection; each file represents one "record".
 
 ### Array of Objects
 
@@ -58,17 +58,17 @@ So if your project has a `letters.yaml` which looks like:
 
 Then the following three nodes would be created.
 
-```javascript
-;[
+```json
+[
   {
-    character: "a",
+    "character": "a"
   },
   {
-    character: "b",
+    "character": "b"
   },
   {
-    character: "c",
-  },
+    "character": "c"
+  }
 ]
 ```
 
@@ -78,7 +78,7 @@ The algorithm for single YAML objects is to convert the object defined at the
 root of the file into a node. The type of the node is based on the name of the
 parent directory.
 
-For example, lets say your project has a data layout like:
+For example, let's say your project has a data layout like:
 
 ```
 data/
@@ -104,23 +104,23 @@ character: c
 
 Then the following three nodes would be created.
 
-```javascript
-;[
+```json
+[
   {
-    character: "a",
+    "character": "a"
   },
   {
-    character: "b",
+    "character": "b"
   },
   {
-    character: "c",
-  },
+    "character": "c"
+  }
 ]
 ```
 
 ## How to query
 
-You can query the nodes using `GraphQL`, like from the GraphiQL browser: `localhost:8000/___graphql`.
+You can query the nodes using GraphQL, like from the GraphiQL browser: `localhost:8000/___graphql`.
 
 Regardless of whether you choose to structure your data in arrays of objects or
 single objects, you'd be able to query your letters like:

@@ -1,9 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`Loader Resources are ordered correctly by count 1`] = `
-Array [
-  "page-component---src-pages-test-js",
-  "about-me.json",
-  "about.json",
-]
-`;

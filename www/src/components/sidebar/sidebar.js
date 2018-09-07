@@ -82,9 +82,8 @@ class SidebarBody extends Component {
         }
 
         state.expandAll = Object.entries(state.openSectionHash).every(k => k[1])
-
         this.setState(state, () => {
-          if (node) {
+          if (node && this.props.position) {
             node.scrollTop = this.props.position
           }
         })
@@ -209,9 +208,10 @@ class SidebarBody extends Component {
             // get proper scroll position
             const position = nativeEvent.target.scrollTop
             const { pathname } = location
+            const sidebarType = pathname.split(`/`)[1]
 
             requestAnimationFrame(() => {
-              onPositionChange(pathname, position)
+              onPositionChange(sidebarType, position)
             })
           }}
           ref={this.scrollRef}
