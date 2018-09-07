@@ -285,7 +285,7 @@ const styles = {
   },
   sidebarScrollContainerTablet: {
     backgroundColor: colors.ui.whisper,
-    top: `calc(${presets.headerHeight} + ${presets.bannerHeight} - 1px)`,
+    top: `calc(${presets.headerHeight} + ${presets.bannerHeight})`,
   },
   list: {
     margin: 0,

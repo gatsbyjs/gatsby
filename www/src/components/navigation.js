@@ -12,44 +12,48 @@ import { vP, vPHd, vPVHd, vPVVHd } from "./gutters"
 const navItemStyles = {
   ...scale(-1 / 3),
   boxSizing: `border-box`,
-  display: `inline-block`,
   color: `inherit`,
   textDecoration: `none`,
   textTransform: `uppercase`,
   letterSpacing: `0.03em`,
   lineHeight: `calc(${presets.headerHeight} - 6px)`,
-  padding: `6px ${rhythm(1 / 4)} 0 ${rhythm(1 / 2)}`,
   position: `relative`,
   top: 0,
   transition: `color .15s ease-out`,
   "&:hover": {
     opacity: 0.8,
   },
+  display: `flex`,
+  alignItems: `center`,
+  justifyContent: `center`,
+  borderBottom: `2px solid transparent`,
 }
 
 const activeNavItemStyles = {
-  fontWeight: `bold`,
+  // fontWeight: 600,
+  borderBottomColor: `#663399`,
 }
 
-const NavItem = ({ linkTo, children, active }) => (
+const assignActiveStyles = ({ isPartiallyCurrent }) =>
+  isPartiallyCurrent ? { style: activeNavItemStyles } : {}
+
+const NavItem = ({ linkTo, children }) => (
   <li
     css={{
       display: `inline-block`,
       margin: 0,
+      padding: `6px ${rhythm(1 / 4)} 0 ${rhythm(1 / 2)}`,
     }}
   >
-    <Link to={linkTo} css={[navItemStyles, active ? activeNavItemStyles : {}]}>
+    <Link to={linkTo} getProps={assignActiveStyles} css={navItemStyles}>
       {children}
     </Link>
   </li>
 )
 
-const getSectionFromPathname = pathname => pathname && pathname.split(`/`)[1]
-
 export default ({ pathname }) => {
   const isHomepage = pathname === `/`
   const isBlog = pathname === `/blog/`
-  const activeSection = getSectionFromPathname(pathname)
 
   let styles = {}
   if (isHomepage) {
@@ -68,6 +72,7 @@ export default ({ pathname }) => {
   }
   const socialIconsStyles = {
     color: colors.lilac,
+    padding: `6px ${rhythm(1 / 4)} 0 ${rhythm(1 / 2)}`,
     [presets.Phablet]: {
       color: isHomepage ? colors.ui.light : false,
     },
@@ -100,7 +105,7 @@ export default ({ pathname }) => {
         borderBottom: `1px solid ${colors.ui.light}`,
         backgroundColor: `rgba(255,255,255,0.975)`,
         position: isHomepage ? `absolute` : `relative`,
-        height: presets.headerHeight,
+        // height: presets.headerHeight,
         zIndex: `2`,
         left: 0,
         right: 0,
@@ -149,8 +154,8 @@ export default ({ pathname }) => {
             display: `none`,
             [presets.Tablet]: {
               display: `flex`,
+              alignItems: `center`,
               margin: 0,
-              padding: 0,
               listStyle: `none`,
               flexGrow: 1,
               overflowX: `auto`,
@@ -160,24 +165,12 @@ export default ({ pathname }) => {
             },
           }}
         >
-          <NavItem active={activeSection === `docs`} linkTo="/docs/">
-            Docs
-          </NavItem>
-          <NavItem active={activeSection === `tutorial`} linkTo="/tutorial/">
-            Tutorial
-          </NavItem>
-          <NavItem active={activeSection === `plugins`} linkTo="/plugins/">
-            Plugins
-          </NavItem>
-          <NavItem active={activeSection === `features`} linkTo="/features/">
-            Features
-          </NavItem>
-          <NavItem active={activeSection === `blog`} linkTo="/blog/">
-            Blog
-          </NavItem>
-          <NavItem active={activeSection === `showcase`} linkTo="/showcase/">
-            Showcase
-          </NavItem>
+          <NavItem linkTo="/docs/">Docs</NavItem>
+          <NavItem linkTo="/tutorial/">Tutorial</NavItem>
+          <NavItem linkTo="/plugins/">Plugins</NavItem>
+          <NavItem linkTo="/features/">Features</NavItem>
+          <NavItem linkTo="/blog/">Blog</NavItem>
+          <NavItem linkTo="/showcase/">Showcase</NavItem>
         </ul>
         <div
           css={{
@@ -203,8 +196,8 @@ export default ({ pathname }) => {
           <div
             css={{
               display: `none`,
-              [presets.Desktop]: { display: !isHomepage && `inline-block` },
-              [presets.Hd]: { display: `inline-block` },
+              [presets.Desktop]: { display: !isHomepage && `flex` },
+              [presets.Hd]: { display: `flex` },
             }}
           >
             <a
