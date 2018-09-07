@@ -62,7 +62,7 @@ So if your project has a `letters.xlsx` with two worksheets:
 
 the following nodes would be created:
 
-```javascript
+```json5
 [
   { letter: "a", value: 97, type: "LettersXlsxSheet1" },
   { letter: "b", value: 98, type: "LettersXlsxSheet1" },
