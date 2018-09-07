@@ -1,8 +1,8 @@
 const { isFunction } = require("lodash");
 const debug = require("debug")("gatsby-mdx:on-create-node");
 
-const defaultOptions = require("./utils/default-options");
-const createMDXNode = require("./utils/create-mdx-node");
+const defaultOptions = require("../utils/default-options");
+const createMDXNode = require("../utils/create-mdx-node");
 
 module.exports = async (
   { node, getNode, loadNodeContent, actions, createNodeId },
