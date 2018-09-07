@@ -29,7 +29,7 @@ class CreatorTemplate extends Component {
     this.setState({ sites: sites })
   }
   render() {
-    const { data } = this.props
+    const { data, location } = this.props
     const creator = data.creatorsYaml
     return (
       <Layout location={location}>
