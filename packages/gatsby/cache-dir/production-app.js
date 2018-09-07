@@ -4,12 +4,7 @@ import ReactDOM from "react-dom"
 import { Router, navigate } from "@reach/router"
 import { ScrollContext } from "gatsby-react-router-scroll"
 import domReady from "domready"
-import {
-  shouldUpdateScroll,
-  init as navigationInit,
-  onRouteUpdate,
-  onPreRouteUpdate,
-} from "./navigation"
+import { shouldUpdateScroll, init as navigationInit } from "./navigation"
 import emitter from "./emitter"
 window.___emitter = emitter
 import PageRenderer from "./page-renderer"
@@ -37,11 +32,6 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   }
 
   class RouteHandler extends React.Component {
-    constructor(props) {
-      super(props)
-      onPreRouteUpdate(props.location)
-    }
-
     render() {
       let { location } = this.props
       // TODO
@@ -72,11 +62,6 @@ apiRunnerAsync(`onClientEntry`).then(() => {
           </EnsureResources>
         </ScrollContext>
       )
-    }
-
-    // Call onRouteUpdate on the initial page load.
-    componentDidMount() {
-      onRouteUpdate(this.props.location)
     }
   }
 
