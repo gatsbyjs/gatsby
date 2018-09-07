@@ -50,7 +50,7 @@ With the above pattern, you lose the ability to typecheck with PropTypes. To reg
 
 ```jsx
 import React from "react"
-import { StaticQuery } from "gatsby"
+import { StaticQuery, graphql } from "gatsby"
 import PropTypes from "prop-types"
 
 const Header = ({ data }) => (
