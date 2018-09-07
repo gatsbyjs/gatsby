@@ -2377,3 +2377,13 @@
     - Travel
     - Bot
   featured: false
+- title: Mokkapps
+  main_url: 'https://www.mokkapps.de/projects'
+  url: 'https://www.mokkapps.de/'
+  description: >
+    Mokkapps is a shiny new portfolio website from the software developer Michael Hoffmann which was built with Gatsby v2
+  categories:
+    - Blog
+    - Portfolio
+    - Web Dev
+  featured: false
