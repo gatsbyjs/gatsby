@@ -11,7 +11,7 @@ const digest = str =>
 const typePrefix = `Contentful`
 const makeTypeName = type => _.upperFirst(_.camelCase(`${typePrefix} ${type}`))
 
-const getLocalizedField = ({ field, locale, localesFallback, defaultLocale }) => {
+const getLocalizedField = ({ field, locale, localesFallback }) => {
   if (!_.isUndefined(field[locale.code])) {
     return field[locale.code]
   } else if (
@@ -20,7 +20,7 @@ const getLocalizedField = ({ field, locale, localesFallback, defaultLocale }) =>
   ) {
     return getLocalizedField({
       field,
-      locale: { code: localesFallback[locale.code] || defaultLocale },
+      locale: { code: localesFallback[locale.code] },
       localesFallback,
     })
   } else {
@@ -35,8 +35,8 @@ const buildFallbackChain = locales => {
   )
   return localesFallback
 }
-const makeGetLocalizedField = ({ locale, localesFallback, defaultLocale }) => field =>
-  getLocalizedField({ field, locale, localesFallback, defaultLocale })
+const makeGetLocalizedField = ({ locale, localesFallback }) => field =>
+  getLocalizedField({ field, locale, localesFallback })
 
 exports.getLocalizedField = getLocalizedField
 exports.buildFallbackChain = buildFallbackChain
@@ -227,7 +227,6 @@ exports.createContentTypeNodes = ({
     const getField = makeGetLocalizedField({
       locale,
       localesFallback,
-      defaultLocale,
     })
 
     // Warn about any field conflicts
@@ -247,7 +246,13 @@ exports.createContentTypeNodes = ({
     // First create nodes for each of the entries of that content type
     const entryNodes = entries.map(entryItem => {
       // Get localized fields.
-      const entryItemFields = _.mapValues(entryItem.fields, v => getField(v))
+      const entryItemFields = _.mapValues(entryItem.fields, (v, k) => {
+        const fieldProps = contentTypeItem.fields.find(field => field.id === k)
+        if (fieldProps.localized) {
+          return getField(v)
+        }
+        return v[defaultLocale]
+      })
 
       // Prefix any conflicting fields
       // https://github.com/gatsbyjs/gatsby/pull/1084#pullrequestreview-41662888
@@ -462,7 +467,6 @@ exports.createAssetNodes = ({
     const getField = makeGetLocalizedField({
       locale,
       localesFallback,
-      defaultLocale,
     })
 
     const localizedAsset = { ...assetItem }
