@@ -17,8 +17,9 @@ class CommunityView extends Component {
     hiring: false,
   }
 
-  componentDidUpdate(prevProps) {
-    const filterStateChanged =
+  // Need to fix this as right now it's causing an error if a user goes to the /community or filtered site for the first time due to race condition with componentDidMount
+  /*   componentDidUpdate(prevProps) {
+     const filterStateChanged =
       this.props.location.state.filter !== prevProps.location.state.filter
     const isNotFiltered = this.props.location.state.filter === ``
     const isFiltered = this.props.location.state.filter !== ``
@@ -38,7 +39,7 @@ class CommunityView extends Component {
         [prevProps.location.state.filter]: false,
       })
     }
-  }
+  } */
 
   componentDidMount() {
     const query = qs.parse(this.props.location.search.slice(1))
