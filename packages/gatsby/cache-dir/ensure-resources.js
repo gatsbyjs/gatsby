@@ -1,7 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
 import loader from "./loader"
-import emitter from "./emitter"
 import shallowCompare from "shallow-compare"
 
 // Pass pathname in as prop.
@@ -35,19 +34,6 @@ class EnsureResources extends React.Component {
     }
 
     return nextState
-  }
-
-  componentDidMount() {
-    // Listen to events so when our page gets updated, we can transition.
-    // This is only useful on delayed transitions as the page will get rendered
-    // without the necessary page resources and then re-render once those come in.
-    emitter.on(`onPostLoadPageResources`, e => {
-      const page = loader.getPage(this.props.location.pathname)
-
-      if (page && e.page.path === page.path) {
-        this.setState({ pageResources: e.pageResources })
-      }
-    })
   }
 
   componentDidUpdate(prevProps) {
