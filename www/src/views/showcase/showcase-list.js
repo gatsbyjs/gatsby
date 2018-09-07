@@ -1,13 +1,13 @@
 import React from "react"
 import { Link } from "gatsby"
-import Img from "gatsby-image"
 
 import styles from "../shared/styles"
+import ThumbnailLink from "../shared/thumbnail"
 import qs from "qs"
 
 import ShowcaseItemCategories from "./showcase-item-categories"
-import { rhythm, scale } from "../../utils/typography"
-import presets, { colors } from "../../utils/presets"
+import { rhythm } from "../../utils/typography"
+import { colors } from "../../utils/presets"
 
 import GithubIcon from "react-icons/lib/go/mark-github"
 import FeaturedIcon from "../../assets/featured-sites-icons--white.svg"
@@ -31,50 +31,15 @@ const ShowcaseList = ({ items, count }) => {
                 ...styles.showcaseItem,
               }}
             >
-              <Link
-                to={node.fields.slug}
-                state={{ isModal: true }}
-                {...styles.withTitleHover}
-                css={{
-                  "&&": {
-                    borderBottom: `none`,
-                    boxShadow: `none`,
-                    transition: `all ${presets.animation.speedDefault} ${
-                      presets.animation.curveDefault
-                    }`,
-                    "&:hover": {
-                      ...styles.screenshotHover,
-                    },
-                    "&:hover ~ .meta > .featured-site": {
-                      transform: `translateY(-3px)`,
-                    },
-                  },
-                }}
+              <ThumbnailLink
+                slug={node.fields.slug}
+                image={node.childScreenshot}
+                title={node.title}
               >
-                {node.childScreenshot ? (
-                  <Img
-                    fixed={
-                      node.childScreenshot.screenshotFile.childImageSharp.fixed
-                    }
-                    alt={`Screenshot of ${node.title}`}
-                    css={{
-                      ...styles.screenshot,
-                    }}
-                  />
-                ) : (
-                  <div
-                    css={{
-                      width: 320,
-                      backgroundColor: `#d999e7`,
-                    }}
-                  >
-                    missing
-                  </div>
-                )}
                 <div>
                   <span className="title">{node.title}</span>
                 </div>
-              </Link>
+              </ThumbnailLink>
               <div
                 css={{
                   ...styles.meta,
