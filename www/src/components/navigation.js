@@ -25,6 +25,10 @@ const navItemStyles = {
   "&:hover": {
     opacity: 0.8,
   },
+  "&.active": {
+    color: colors.gatsby,
+    fontWeight: `bold`,
+  },
 }
 const NavItem = ({ linkTo, children }) => (
   <li
@@ -33,7 +37,7 @@ const NavItem = ({ linkTo, children }) => (
       margin: 0,
     }}
   >
-    <Link to={linkTo} css={navItemStyles}>
+    <Link to={linkTo} css={navItemStyles} activeClassName="active">
       {children}
     </Link>
   </li>
