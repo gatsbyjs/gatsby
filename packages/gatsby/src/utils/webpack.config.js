@@ -230,7 +230,7 @@ module.exports = async (
                         `/` +
                         files.filter(
                           f =>
-                            f.slice(-4) !== `.map` &&
+                            f.slice(-3) !== `.js` &&
                             f.slice(0, chunkGroup.name.length) ===
                               chunkGroup.name
                         )[0]
