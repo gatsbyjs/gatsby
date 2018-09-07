@@ -1,9 +1,8 @@
 // @flow
-const os = require(`os`)
 
 const autoprefixer = require(`autoprefixer`)
 const flexbugs = require(`postcss-flexbugs-fixes`)
-const UglifyPlugin = require(`uglifyjs-webpack-plugin`)
+const TerserPlugin = require(`terser-webpack-plugin`)
 const MiniCssExtractPlugin = require(`mini-css-extract-plugin`)
 
 const builtinPlugins = require(`./webpack-plugins`)
@@ -428,19 +427,19 @@ module.exports = async ({
    * Minify javascript code without regard for IE8. Attempts
    * to parallelize the work to save time. Generally only add in Production
    */
-  plugins.uglify = ({ uglifyOptions, ...options } = {}) =>
-    new UglifyPlugin({
+  plugins.minifyJs = ({ terserOptions, ...options } = {}) =>
+    new TerserPlugin({
       cache: true,
-      parallel: os.cpus().length - 1,
+      parallel: true,
       exclude: /\.min\.js/,
       sourceMap: true,
-      uglifyOptions: {
+      terserOptions: {
         compress: {
           drop_console: true,
         },
         ecma: 8,
         ie8: false,
-        ...uglifyOptions,
+        ...terserOptions,
       },
       ...options,
     })
