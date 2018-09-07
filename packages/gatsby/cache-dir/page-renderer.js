@@ -8,26 +8,33 @@ import { onRouteUpdate, onPreRouteUpdate } from "./navigation"
 class PageRenderer extends React.Component {
   constructor(props) {
     super(props)
-    onPreRouteUpdate(props.location)
+    if (props.isMain) {
+      onPreRouteUpdate(props.location)
+    }
   }
 
   componentDidMount() {
-    onRouteUpdate(this.props.location)
+    if (this.props.isMain) {
+      onRouteUpdate(this.props.location)
+    }
   }
 
   componentDidUpdate(prevProps, prevState, shouldFireRouteUpdate) {
-    if (shouldFireRouteUpdate) {
+    if (this.props.isMain && shouldFireRouteUpdate) {
       onRouteUpdate(this.props.location)
     }
   }
 
   getSnapshotBeforeUpdate(prevProps, prevState) {
-    if (this.props.location.pathname !== prevProps.location.pathname) {
-      onPreRouteUpdate(this.props.location)
-      return true
-    }
+    if (this.props.isMain) {
+      if (this.props.location.pathname !== prevProps.location.pathname) {
+        onPreRouteUpdate(this.props.location)
+        return true
+      }
 
-    return false
+      return false
+    }
+    return null
   }
 
   render() {
@@ -63,6 +70,7 @@ PageRenderer.propTypes = {
   pageResources: PropTypes.object.isRequired,
   data: PropTypes.object,
   pageContext: PropTypes.object.isRequired,
+  isMain: PropTypes.bool,
 }
 
 export default PageRenderer

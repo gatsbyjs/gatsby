@@ -66,6 +66,7 @@ class RouteHandler extends React.Component {
               pages={pages}
               {...this.props}
               {...locationAndPageResources}
+              isMain
             />
           )}
         </EnsureResources>

@@ -57,6 +57,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
                 location={location}
                 pageResources={pageResources}
                 {...pageResources.json}
+                isMain
               />
             )}
           </EnsureResources>
