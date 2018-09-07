@@ -194,18 +194,6 @@ module.exports = async (
         ])
         break
       case `build-javascript`: {
-        // Minify Javascript only if needed.
-        configPlugins = program.noUglify
-          ? configPlugins
-          : configPlugins.concat([
-              plugins.uglify({
-                uglifyOptions: {
-                  compress: {
-                    drop_console: false,
-                  },
-                },
-              }),
-            ])
         configPlugins = configPlugins.concat([
           plugins.extractText(),
           // Write out stats object mapping named dynamic imports (aka page
@@ -427,7 +415,7 @@ module.exports = async (
     // https://github.com/defunctzombie/package-browser-field-spec); setting
     // the target tells webpack which file to include, ie. browser vs main.
     target: stage === `build-html` || stage === `develop-html` ? `node` : `web`,
-    profile: stage === `production`,
+
     devtool: getDevtool(),
     // Turn off performance hints as we (for now) don't want to show the normal
     // webpack output anywhere.
@@ -452,7 +440,11 @@ module.exports = async (
       splitChunks: {
         name: false,
       },
-      minimize: !program.noUglify,
+      minimizer: [
+        // TODO: maybe this option should be noMinimize?
+        !program.noUglify && plugins.minifyJs(),
+        plugins.minifyCss(),
+      ].filter(Boolean),
     }
   }
 
