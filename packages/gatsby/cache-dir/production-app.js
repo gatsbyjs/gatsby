@@ -61,9 +61,10 @@ apiRunnerAsync(`onClientEntry`).then(() => {
           shouldUpdateScroll={shouldUpdateScroll}
         >
           <EnsureResources location={location}>
-            {pageResources => (
+            {({ pageResources, location }) => (
               <PageRenderer
                 {...this.props}
+                location={location}
                 pageResources={pageResources}
                 {...pageResources.json}
               />

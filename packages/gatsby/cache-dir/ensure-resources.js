@@ -6,6 +6,8 @@ import shallowCompare from "shallow-compare"
 // Pass pathname in as prop.
 // component will try fetching resources. If they exist,
 // will just render, else will render null.
+// It will also wait for pageResources
+// before propagating location change to children.
 class EnsureResources extends React.Component {
   constructor(props) {
     super()
@@ -15,25 +17,26 @@ class EnsureResources extends React.Component {
     const pathname = this.getPathName(location)
 
     this.state = {
-      lastPathname: location.pathname,
+      location: { ...location },
       pageResources: loader.getResourcesForPathnameSync(pathname),
     }
   }
 
   static getDerivedStateFromProps({ pageResources, location }, prevState) {
-    let nextState = { lastPathname: location.pathname }
-
-    if (prevState.lastPathname !== location.pathname) {
+    if (prevState.location.pathname !== location.pathname) {
       const pageResources = loader.getResourcesForPathnameSync(
         location.pathname
       )
 
       if (pageResources) {
-        nextState.pageResources = pageResources
+        return {
+          pageResources,
+          location: { ...location },
+        }
       }
     }
 
-    return nextState
+    return null
   }
 
   componentDidUpdate(prevProps) {
@@ -54,6 +57,7 @@ class EnsureResources extends React.Component {
         }
 
         this.setState({
+          location: { ...location },
           pageResources,
         })
       })
@@ -119,7 +123,7 @@ class EnsureResources extends React.Component {
       return null
     }
 
-    return this.props.children(this.state.pageResources)
+    return this.props.children(this.state)
   }
 }
 

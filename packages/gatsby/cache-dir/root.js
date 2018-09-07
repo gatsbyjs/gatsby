@@ -71,10 +71,11 @@ class RouteHandler extends React.Component {
     if (page) {
       child = (
         <EnsureResources location={location}>
-          {pageResources => (
+          {({ location, pageResources }) => (
             <JSONStore
               pages={pages}
               {...this.props}
+              location={location}
               pageResources={pageResources}
             />
           )}
