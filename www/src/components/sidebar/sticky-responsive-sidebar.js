@@ -113,7 +113,7 @@ const styles = {
       maxWidth: `none`,
       opacity: `1 !important`,
       pointerEvents: `auto`,
-      top: `calc(${presets.headerHeight} + ${presets.bannerHeight} - 1px)`,
+      top: `calc(${presets.headerHeight} + ${presets.bannerHeight})`,
       width: rhythm(10),
     },
     [presets.Desktop]: {
