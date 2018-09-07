@@ -112,7 +112,7 @@ const fetchResource = resourceName => {
 const prefetchResource = resourceName => {
   if (resourceName.slice(0, 12) === `component---`) {
     prefetchHelper(createComponentUrl(resourceName))
-  } else {
+  } else if (jsonDataPaths[resourceName]) {
     const url = createJsonURL(jsonDataPaths[resourceName])
     prefetchHelper(url)
   }
