@@ -33,7 +33,7 @@ module.exports = (
           use: [
             loaders.js(),
             {
-              loader: "gatsby-mdx/mdx-loader",
+              loader: "gatsby-mdx/loaders/mdx-loader",
               options: {
                 getNodes,
                 pluginOptions: options
@@ -46,7 +46,7 @@ module.exports = (
           include: decks,
           use: [
             loaders.js(),
-            { loader: "gatsby-mdx/mdx-deck-post-loader" },
+            { loader: "gatsby-mdx/loaders/mdx-deck-post-loader" },
             { loader: "mdx-deck/loader" }
           ]
         },
@@ -54,7 +54,7 @@ module.exports = (
           test: /.deck-mdx$/,
           use: [
             loaders.js(),
-            { loader: "gatsby-mdx/mdx-deck-post-loader" },
+            { loader: "gatsby-mdx/loaders/mdx-deck-post-loader" },
             { loader: "mdx-deck/loader" }
           ]
         }
