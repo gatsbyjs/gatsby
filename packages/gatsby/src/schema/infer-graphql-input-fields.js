@@ -216,7 +216,7 @@ type InferInputOptions = {
 
 const recursiveOmitBy = (value, fn) => {
   if (_.isObject(value)) {
-    let newValue = {}
+    let newValue = _.isArray(value) ? [] : {}
     if (_.isPlainObject(value)) {
       newValue = _.omitBy(value, fn)
     }
