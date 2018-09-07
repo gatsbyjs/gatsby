@@ -248,10 +248,10 @@ exports.createContentTypeNodes = ({
       // Get localized fields.
       const entryItemFields = _.mapValues(entryItem.fields, (v, k) => {
         const fieldProps = contentTypeItem.fields.find(field => field.id === k)
-        if (!fieldProps.localized) {
-          return v[defaultLocale]
+        if (fieldProps.localized) {
+          return getField(v)
         }
-        return getField(v)
+        return v[defaultLocale]
       })
 
       // Prefix any conflicting fields
