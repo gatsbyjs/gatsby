@@ -24,14 +24,6 @@ class EnsureResources extends React.Component {
   static getDerivedStateFromProps({ pageResources, location }, prevState) {
     let nextState = { lastPathname: location.pathname }
 
-    if (
-      process.env.NODE_ENV !== `production` &&
-      pageResources &&
-      pageResources.json
-    ) {
-      nextState.pageResources = pageResources
-    }
-
     if (prevState.lastPathname !== location.pathname) {
       const pageResources = loader.getResourcesForPathnameSync(
         location.pathname
