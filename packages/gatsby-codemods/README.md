@@ -116,14 +116,16 @@ export default props => (
 )
 ```
 
-#### `rename-boundactioncreators`
+#### `rename-bound-action-creators`
 
 Rename `boundActionCreators` to `actions`. `boundActionCreators` has been deprecated in Gatsby v2
+
+Note: Run this codemod only against files that use `boundActionCreators` instead of running it against a whole directory.
 
 See the [Gatsby v2 migration guide for details on when to use this](https://next.gatsbyjs.org/docs/migrating-from-v1-to-v2/#rename-boundactioncreators-to-actions).
 
 ```sh
-jscodeshift -t node_modules/gatsby-codemods/dist/transforms/rename-boundactioncreators.js <path>
+jscodeshift -t node_modules/gatsby-codemods/dist/transforms/rename-bound-action-creators.js <path-to-file>
 ```
 
 Example result:
