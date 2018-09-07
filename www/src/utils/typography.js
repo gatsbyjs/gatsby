@@ -110,9 +110,9 @@ const _options = {
       },
       ".gatsby-highlight": {
         //background: colors.a[0],
-        background: `#fdfaf6`,
+        background: colors.code.bg,
         //boxShadow: `inset 0 0 0 1px ${colors.a[1]}`,
-        boxShadow: `inset 0 0 0 1px #faede5`,
+        boxShadow: `inset 0 0 0 1px ${colors.code.border}`,
         borderRadius: `${presets.radius}px`,
         padding: rhythm(options.blockMarginBottom),
         marginBottom: rhythm(options.blockMarginBottom),
@@ -137,7 +137,7 @@ const _options = {
       },
       ".gatsby-highlight-code-line": {
         //background: colors.a[1],
-        background: `#faede5`,
+        background: colors.code.border,
         marginRight: `${rhythm(-options.blockMarginBottom)}`,
         marginLeft: `${rhythm(-options.blockMarginBottom)}`,
         paddingRight: rhythm(options.blockMarginBottom),
@@ -156,7 +156,7 @@ const _options = {
       },
       ".gatsby-highlight::-webkit-scrollbar-track": {
         //background: colors.a[1],
-        background: `#faede5`,
+        background: colors.code.border,
         borderRadius: `0 0 ${presets.radiusLg}px ${presets.radiusLg}px`,
       },
       // Target image captions. This is kind of a fragile selector...
@@ -235,10 +235,10 @@ const _options = {
         overflow: `hidden`,
       },
       ".gatsby-code-title": {
-        backgroundColor: colors.gatsby,
-        borderTopLeftRadius: `${presets.radiusLg}px`,
-        borderTopRightRadius: `${presets.radiusLg}px`,
-        color: `white`,
+        background: colors.code.bg,
+        border: `1px solid ${colors.code.border}`,
+        borderBottomWidth: 0,
+        color: colors.code.text,
         marginLeft: rhythm(-options.blockMarginBottom),
         marginRight: rhythm(-options.blockMarginBottom),
         padding: `${rhythm(options.blockMarginBottom / 2)} ${rhythm(
@@ -253,7 +253,7 @@ const _options = {
         },
         ".gatsby-highlight": {
           //boxShadow: `inset 0 1px 0 0 ${colors.a[1]}, inset 0 -1px 0 0 ${colors.a[1]}`,
-          boxShadow: `inset 0 1px 0 0 #faede5, inset 0 -1px 0 0 #faede5`,
+          boxShadow: `inset 0 1px 0 0 ${colors.code.border}, inset 0 -1px 0 0 ${colors.code.border}`,
         },
       },
       video: {
@@ -297,6 +297,9 @@ const _options = {
             ((options.blockMarginBottom * 1.5) / 5) * 1
           )}`,
         },
+        ".gatsby-code-title": {
+          padding: `${rhythm(options.blockMarginBottom / 2)} ${rhythm(options.blockMarginBottom * 1.5)}`,
+        }
       },
       [MIN_LARGER_DISPLAY_MEDIA_QUERY]: {
         html: {
