@@ -49,13 +49,13 @@ exports.onPostBuild = (args, pluginOptions) => {
 
   const criticalFilePaths = _.uniq(
     _.concat(
-      getResourcesFromHTML(`${process.cwd()}/${rootDir}/index.html`).map(omitPrefix),
-      getResourcesFromHTML(`${process.cwd()}/${rootDir}/404.html`).map(omitPrefix),
+      getResourcesFromHTML(`${process.cwd()}/${rootDir}/index.html`),
+      getResourcesFromHTML(`${process.cwd()}/${rootDir}/404.html`),
       getResourcesFromHTML(
         `${process.cwd()}/${rootDir}/offline-plugin-app-shell-fallback/index.html`
-      ).map(omitPrefix)
+      )
     )
-  )
+  ).map(omitPrefix)
 
   const globPatterns = files.concat([
     `index.html`,
