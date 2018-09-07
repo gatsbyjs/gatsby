@@ -12,9 +12,8 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
   }
 }
 
-exports.createPages = ({ graphql, actions }) => {
-  return new Promise((resolve, reject) => {
-    graphql(`
+exports.createPages = ({ graphql, actions }) => new Promise((resolve, reject) => {
+  graphql(`
       {
         allMarkdownRemark {
           edges {
@@ -27,9 +26,8 @@ exports.createPages = ({ graphql, actions }) => {
         }
       }
     `
-    ).then(result => {
-      console.log(JSON.stringify(result, null, 4))
-      resolve()
-    })
+  ).then(result => {
+    console.log(JSON.stringify(result, null, 4))
+    resolve()
   })
-}
+})
