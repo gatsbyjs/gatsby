@@ -157,6 +157,16 @@ export default ({ pathname }) => {
           <NavItem linkTo="/features/">Features</NavItem>
           <NavItem linkTo="/blog/">Blog</NavItem>
           <NavItem linkTo="/showcase/">Showcase</NavItem>
+          <li
+            css={{
+              display: `inline-block`,
+              margin: 0,
+            }}
+          >
+            <Link to="/community/" css={navItemStyles} state={{ filter: `` }}>
+              Community
+            </Link>
+          </li>
         </ul>
         <div
           css={{
