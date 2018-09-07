@@ -45,13 +45,15 @@ exports.onPostBuild = (args, pluginOptions) => {
     `component---node-modules-gatsby-plugin-offline-app-shell-js`,
   ])
 
+  const omitPrefix = path => args.pathPrefix ? path.slice(args.pathPrefix.length) : path
+
   const criticalFilePaths = _.uniq(
     _.concat(
-      getResourcesFromHTML(`${process.cwd()}/${rootDir}/index.html`),
-      getResourcesFromHTML(`${process.cwd()}/${rootDir}/404.html`),
+      getResourcesFromHTML(`${process.cwd()}/${rootDir}/index.html`).map(omitPrefix),
+      getResourcesFromHTML(`${process.cwd()}/${rootDir}/404.html`).map(omitPrefix),
       getResourcesFromHTML(
         `${process.cwd()}/${rootDir}/offline-plugin-app-shell-fallback/index.html`
-      )
+      ).map(omitPrefix)
     )
   )
 
@@ -70,10 +72,9 @@ exports.onPostBuild = (args, pluginOptions) => {
     globDirectory: rootDir,
     globPatterns,
     modifyUrlPrefix: {
-      rootDir: ``,
       // If `pathPrefix` is configured by user, we should replace
       // the default prefix with `pathPrefix`.
-      "": args.pathPrefix || ``,
+      "/": args.pathPrefix || `/`,
     },
     navigateFallback: `/offline-plugin-app-shell-fallback/index.html`,
     // Only match URLs without extensions or the query `no-cache=1`.
