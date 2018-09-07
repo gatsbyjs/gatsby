@@ -99,6 +99,12 @@ const navigate = (to, options = {}) => {
   })
 }
 
+// reset route change promise after going back / forward
+// in history (when not using Gatsby navigation)
+window.addEventListener(`popstate`, () => {
+  resetRouteChangePromise()
+})
+
 function shouldUpdateScroll(prevRouterProps, { location: { pathname } }) {
   const results = apiRunner(`shouldUpdateScroll`, {
     prevRouterProps,
