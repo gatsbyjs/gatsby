@@ -1,5 +1,6 @@
 const tests = [
   `create-page`,
+  `no-destructure`,
 ]
 
 const defineTest = require(`jscodeshift/dist/testUtils`).defineTest
