@@ -13,9 +13,9 @@ const {
 const toMDAST = require("remark-parse");
 const squeeze = require("remark-squeeze-paragraphs");
 
-const mdx = require("./utils/mdx");
-const getSourcePluginsAsRemarkPlugins = require("./utils/get-source-plugins-as-remark-plugins");
-const withDefaultOptions = require("./utils/default-options");
+const mdx = require("../utils/mdx");
+const getSourcePluginsAsRemarkPlugins = require("../utils/get-source-plugins-as-remark-plugins");
+const withDefaultOptions = require("../utils/default-options");
 const debug = require("debug")("gatsby-mdx:mdx-loader");
 
 const DEFAULT_OPTIONS = {
