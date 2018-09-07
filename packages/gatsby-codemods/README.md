@@ -116,6 +116,34 @@ export default props => (
 )
 ```
 
+#### `rename-boundactioncreators`
+
+Rename `boundActionCreators` to `actions`. `boundActionCreators` has been deprecated in Gatsby v2
+
+See the [Gatsby v2 migration guide for details on when to use this](https://next.gatsbyjs.org/docs/migrating-from-v1-to-v2/#rename-boundactioncreators-to-actions).
+
+```sh
+jscodeshift -t node_modules/gatsby-codemods/dist/transforms/rename-boundactioncreators.js <path>
+```
+
+Example result:
+
+```diff
+- exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
++ exports.onCreateNode = ({ node, getNode, actions }) => {
+- const { createNodeField } = boundActionCreators
++ const { createNodeField } = actions
+  if (node.internal.type === `MarkdownRemark`) {
+    const slug = createFilePath({ node, getNode, basePath: `pages` })
+    createNodeField({
+      node,
+      name: `slug`,
+      value: slug,
+    })
+  }
+}
+```
+
 ### More scripts
 
 Check out [issue 5038 in the Gatsby repo for additional codemod ideas](https://github.com/gatsbyjs/gatsby/issues/5038#issuecomment-411516865).
