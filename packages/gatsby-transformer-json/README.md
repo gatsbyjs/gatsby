@@ -201,7 +201,7 @@ module.exports = {
     {
       resolve: `gatsby-transformer-json`,
       options: {
-        typeName: ((node, object, isArray) => object.level),
+        typeName: (({ node, object, isArray }) => object.level),
       },
     },
   ],

@@ -3,9 +3,9 @@ const crypto = require(`crypto`)
 const path = require(`path`)
 
 async function onCreateNode({ node, actions, loadNodeContent, createNodeId }, pluginOptions) {
-  function getType(node, obj, isArray) {
+  function getType({ node, object, isArray }) {
     if (pluginOptions && _.isFunction(pluginOptions.typeName)) {
-      return pluginOptions.typeName(node, obj, isArray)
+      return pluginOptions.typeName({ node, object, isArray })
     } else if (pluginOptions && _.isString(pluginOptions.typeName)) {
       return pluginOptions.typeName
     } else if (isArray) {
@@ -50,14 +50,14 @@ async function onCreateNode({ node, actions, loadNodeContent, createNodeId }, pl
       transformObject(
         obj,
         obj.id ? obj.id : createNodeId(`${node.id} [${i}] >>> JSON`),
-        getType(node, obj, true)
+        getType({ node, object: obj, isArray: true })
       )
     })
   } else if (_.isPlainObject(parsedContent)) {
     transformObject(
       parsedContent,
       parsedContent.id ? parsedContent.id : createNodeId(`${node.id} >>> JSON`),
-      getType(node, parsedContent, false)
+      getType({ node, object: parsedContent, isArray: false })
     )
   }
 }

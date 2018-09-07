@@ -79,7 +79,7 @@ describe(`Process JSON nodes correctly`, () => {
         expectedNodeTypes: [`fixed`, `fixed`],
       },
       {
-        typeName: ((node, obj) => obj.funny),
+        typeName: (({ node, object }) => object.funny),
         expectedNodeTypes: [`yup`, `nope`],
       },
     ].forEach(async ({ typeName, expectedNodeTypes: [expectedOne, expectedTwo] }) => {
@@ -132,7 +132,7 @@ describe(`Process JSON nodes correctly`, () => {
         expectedNodeType: `fixed`,
       },
       {
-        typeName: ((node, obj) => obj.funny),
+        typeName: (({ node, object }) => object.funny),
         expectedNodeType: `yup`,
       },
     ].forEach(async ({ typeName, expectedNodeType }) => {
