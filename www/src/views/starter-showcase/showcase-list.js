@@ -49,13 +49,7 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
     <div
       css={{
         fontFamily: options.headerFontFamily.join(`,`),
-        display: `flex`,
-        flexWrap: `wrap`,
-        padding: rhythm(3 / 4),
-        justifyContent: `center`,
-        [presets.Desktop]: {
-          justifyContent: `flex-start`,
-        },
+        ...styles.showcaseList
       }}
     >
       {items.map(({ node }) => {
@@ -82,8 +76,7 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
             <div
               key={node.id}
               css={{
-                margin: rhythm(3 / 4),
-                width: 280,
+                ...styles.showcaseItem
               }}
               {...styles.withTitleHover}
             >
