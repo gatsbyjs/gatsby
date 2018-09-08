@@ -5,6 +5,7 @@ import { rhythm, scale, options } from "../utils/typography"
 
 const Banner = ({ children, background }) => {
   const backgroundColor = background ? background : colors.gatsby
+  const horizontalPadding = rhythm(1 / 2)
 
   return (
     <div
@@ -14,7 +15,7 @@ const Banner = ({ children, background }) => {
         height: presets.bannerHeight,
         position: `fixed`,
         width: `100%`,
-        zIndex: `3`,
+        zIndex: 3,
       }}
     >
       <div
@@ -23,7 +24,7 @@ const Banner = ({ children, background }) => {
           display: `flex`,
           height: presets.bannerHeight,
           overflowX: `auto`,
-          maskImage: `linear-gradient(to right, transparent, ${backgroundColor} 4%, ${backgroundColor} 96%, transparent)`,
+          maskImage: `linear-gradient(to right, transparent, ${backgroundColor} ${horizontalPadding}, ${backgroundColor} 96%, transparent)`,
         }}
       >
         <div
@@ -31,8 +32,8 @@ const Banner = ({ children, background }) => {
             color: colors.ui.bright,
             fontFamily: options.headerFontFamily.join(`,`),
             fontSize: scale(-1 / 5).fontSize,
-            paddingLeft: rhythm(1 / 2),
-            paddingRight: rhythm(1 / 2),
+            paddingLeft: horizontalPadding,
+            paddingRight: horizontalPadding,
             WebkitFontSmoothing: `antialiased`,
             whiteSpace: `nowrap`,
           }}
