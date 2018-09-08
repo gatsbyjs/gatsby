@@ -298,7 +298,7 @@ class SearchForm extends Component {
   }
   render() {
     const { focussed } = this.state
-    const { iconStyles, isHomepage } = this.props
+    const { iconColor, isHomepage, offsetVertical } = this.props
     return (
       <form
         css={{
@@ -308,42 +308,44 @@ class SearchForm extends Component {
           alignItems: `center`,
           marginLeft: rhythm(1 / 2),
           marginBottom: 0,
+          marginTop: offsetVertical ? offsetVertical : false,
         }}
         className="searchWrap"
         onMouseOver={() => this.loadAlgoliaJS()}
         onClick={() => this.loadAlgoliaJS()}
         onSubmit={e => e.preventDefault()}
       >
-        <label css={{ position: `relative` }}>
+        <label
+          css={{
+            position: `relative`,
+          }}
+        >
           <input
             id="doc-search"
             css={{
               appearance: `none`,
               backgroundColor: `transparent`,
               border: 0,
-              borderRadius: presets.radiusLg,
-              color: colors.gatsby,
+              borderRadius: presets.radius,
+              color: colors.lilac,
               paddingTop: rhythm(1 / 8),
               paddingRight: rhythm(1 / 4),
               paddingBottom: rhythm(1 / 8),
-              paddingLeft: rhythm(1),
+              paddingLeft: rhythm(5 / 4),
               overflow: `hidden`,
               width: rhythm(1),
               transition: `width ${speedDefault} ${curveDefault}, background-color ${speedDefault} ${curveDefault}`,
               ":focus": {
-                outline: 0,
                 backgroundColor: colors.ui.light,
-                borderRadius: presets.radiusLg,
+                color: colors.gatsby,
+                outline: 0,
                 width: rhythm(5),
-                transition: `width ${speedDefault} ${curveDefault}, background-color ${speedDefault} ${curveDefault}`,
               },
               [presets.Desktop]: {
                 backgroundColor: !isHomepage && `#fff`,
-                color: colors.gatsby,
                 width: !isHomepage && rhythm(3.5),
                 ":focus": {
                   backgroundColor: colors.ui.light,
-                  color: colors.gatsby,
                 },
               },
               [presets.Hd]: {
@@ -364,18 +366,17 @@ class SearchForm extends Component {
           />
           <SearchIcon
             overrideCSS={{
-              ...iconStyles,
-              fill: focussed && colors.gatsby,
+              fill: focussed ? colors.gatsby : colors.lilac,
               position: `absolute`,
-              left: `5px`,
+              left: rhythm(1 / 4),
               top: `50%`,
-              width: `16px`,
-              height: `16px`,
+              width: `1rem`,
+              height: `1rem`,
               pointerEvents: `none`,
               transition: `fill ${speedDefault} ${curveDefault}`,
-              transform: `translateY(-50%)`,
-              [presets.Hd]: {
-                fill: focussed && isHomepage && colors.gatsby,
+              transform: `translateY(-55%)`,
+              [presets.Phablet]: {
+                fill: focussed ? colors.gatsby : isHomepage ? iconColor : false,
               },
             }}
           />
@@ -386,6 +387,7 @@ class SearchForm extends Component {
 }
 SearchForm.propTypes = {
   isHomepage: PropTypes.bool,
-  iconStyles: PropTypes.object,
+  iconColor: PropTypes.string,
+  offsetVertical: PropTypes.string,
 }
 export default SearchForm
