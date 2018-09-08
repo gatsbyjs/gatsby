@@ -104,6 +104,13 @@ const ShowcaseList = ({ items, count }) => {
             </div>
           )
       )}
+      {/* makes last row items equal width and aligned left */}
+      <div css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }} />
+      <div css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }} />
+      <div css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }} />
+      <div css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }} />
+      <div css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }} />
+      <div css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }} />
     </div>
   )
 }
