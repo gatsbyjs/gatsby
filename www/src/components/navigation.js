@@ -30,8 +30,7 @@ const navItemStyles = {
 }
 
 const activeNavItemStyles = {
-  // fontWeight: 600,
-  borderBottomColor: `#663399`,
+  borderBottomColor: colors.gatsby,
 }
 
 const assignActiveStyles = ({ isPartiallyCurrent }) =>
