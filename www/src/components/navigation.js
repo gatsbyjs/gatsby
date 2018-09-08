@@ -58,14 +58,11 @@ export default ({ pathname }) => {
   if (isHomepage) {
     styles.backgroundColor = `rgba(255,255,255,0)`
     styles.borderBottomColor = `transparent`
-    styles[presets.Tablet] = {
-      position: isHomepage || isBlog ? `absolute` : `fixed`,
-    }
   } else if (isBlog) {
     styles.backgroundColor = `#fff`
     styles[presets.Tablet] = {
       borderBottomColor: `transparent`,
-      position: isHomepage || isBlog ? `absolute` : `fixed`,
+      position: `absolute`,
       backgroundColor: colors.ui.whisper,
     }
   }
