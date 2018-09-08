@@ -36,9 +36,7 @@ const getAssetsForChunks = chunks => {
 }
 
 exports.onPostBuild = (args, pluginOptions) => {
-  const pathPrefix = args.store.getState().program.prefixPaths
-    ? args.pathPrefix
-    : ``
+  const { pathPrefix } = args
   const rootDir = `public`
 
   // Get exact asset filenames for app and offline app shell chunks
