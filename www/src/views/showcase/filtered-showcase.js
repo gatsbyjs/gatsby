@@ -92,12 +92,8 @@ class FilteredShowcase extends Component {
           // get sorted set of categories to generate list with
           const categoryKeys = Object.keys(aggregatedCategories).sort(
             (a, b) => {
-              if (aggregatedCategories[a] > aggregatedCategories[b]) return -1
-              if (aggregatedCategories[a] < aggregatedCategories[b]) return -1
-              if (aggregatedCategories[a] == aggregatedCategories[b]) {
-                if (a < b) return -1
-                if (a > b) return 1
-              }
+              if (a < b) return -1
+              if (a > b) return 1
               return 0
             }
           )
