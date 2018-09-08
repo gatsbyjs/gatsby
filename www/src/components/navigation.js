@@ -104,11 +104,11 @@ export default ({ pathname }) => {
         borderBottom: `1px solid ${colors.ui.light}`,
         backgroundColor: `rgba(255,255,255,0.975)`,
         position: isHomepage ? `absolute` : `relative`,
-        // height: presets.headerHeight,
-        zIndex: `2`,
+        height: presets.headerHeight,
+        zIndex: 2,
         left: 0,
         right: 0,
-        top: `calc(${presets.bannerHeight} - 1px)`,
+        top: presets.bannerHeight,
         [presets.Tablet]: {
           position: isHomepage || isBlog ? `absolute` : `fixed`,
         },
@@ -170,20 +170,18 @@ export default ({ pathname }) => {
           <NavItem linkTo="/features/">Features</NavItem>
           <NavItem linkTo="/blog/">Blog</NavItem>
           <NavItem linkTo="/showcase/">Showcase</NavItem>
-          {
-            false ? 
-              <li
-                css={{
-                  display: `inline-block`,
-                  margin: 0,
-                }}
-              >
-                <Link to="/community/" css={navItemStyles} state={{ filter: `` }}>
-                  Community
-                </Link>
-              </li> :
-              null
-          }
+          {false ? (
+            <li
+              css={{
+                display: `inline-block`,
+                margin: 0,
+              }}
+            >
+              <Link to="/community/" css={navItemStyles} state={{ filter: `` }}>
+                Community
+              </Link>
+            </li>
+          ) : null}
         </ul>
         <div
           css={{
