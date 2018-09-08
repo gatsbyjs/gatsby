@@ -76,7 +76,6 @@ exports.onPostBuild = (args, pluginOptions) => {
     globDirectory: rootDir,
     globPatterns,
     modifyUrlPrefix: {
-      [rootDir]: ``,
       // If `pathPrefix` is configured by user, we should replace
       // the default prefix with `pathPrefix`.
       "/": `${args.pathPrefix}/` || `/`,
