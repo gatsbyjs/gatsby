@@ -226,14 +226,14 @@ module.exports = async (
                       assets[chunkGroup.name] = files.filter(
                         f => f.slice(-4) !== `.map`
                       )
-                      assetsMap[chunkGroup.name] =
-                        `/` +
-                        files.filter(
+                      assetsMap[chunkGroup.name] = files
+                        .filter(
                           f =>
-                            f.slice(-3) === `.js` &&
+                            f.slice(-4) !== `.map` &&
                             f.slice(0, chunkGroup.name.length) ===
                               chunkGroup.name
-                        )[0]
+                        )
+                        .map(filename => `/${filename}`)
                     }
                   }
 

@@ -48,8 +48,10 @@ const fetchPageResourceMap = () => {
 }
 
 const createJsonURL = jsonName => `${__PATH_PREFIX__}/static/d/${jsonName}.json`
-const createComponentUrl = componentChunkName =>
-  `${__PATH_PREFIX__}${window.___chunkMapping[componentChunkName]}`
+const createComponentUrls = componentChunkName =>
+  window.___chunkMapping[componentChunkName].map(
+    chunk => __PATH_PREFIX__ + chunk
+  )
 
 const fetchResource = resourceName => {
   // Find resource
@@ -111,7 +113,7 @@ const fetchResource = resourceName => {
 
 const prefetchResource = resourceName => {
   if (resourceName.slice(0, 12) === `component---`) {
-    prefetchHelper(createComponentUrl(resourceName))
+    createComponentUrls(resourceName).forEach(url => prefetchHelper(url))
   } else {
     const url = createJsonURL(jsonDataPaths[resourceName])
     prefetchHelper(url)
@@ -242,12 +244,10 @@ const queue = {
   getResourceURLsForPathname: path => {
     const page = findPage(path)
     if (page) {
-      const jsUrl = createComponentUrl(page.componentChunkName)
-      const dataUrl = createJsonURL(jsonDataPaths[page.jsonName])
-      return {
-        jsUrl,
-        dataUrl,
-      }
+      return [
+        ...createComponentUrls(page.componentChunkName),
+        createJsonURL(jsonDataPaths[page.jsonName]),
+      ]
     } else {
       return null
     }
