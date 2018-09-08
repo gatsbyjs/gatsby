@@ -20,7 +20,8 @@ plugins: [`gatsby-plugin-typescript`]
 
 ## Caveats
 
-This plugin uses [`babel-plugin-transform-typescript`](https://new.babeljs.io/docs/en/next/babel-plugin-transform-typescript.html) to transpile typescript. It does _not do type checking_. Also since the TypeScript
+This plugin uses [`babel-plugin-transform-typescript`](https://babeljs.io/docs/en/babel-plugin-transform-typescript.html)
+to transpile typescript. It does _not do type checking_. Also since the TypeScript
 compiler is not involved, the following applies:
 
 > Does not support namespaces.
@@ -36,7 +37,7 @@ compiler is not involved, the following applies:
 > to using export default and export const,
 > and import x, {y} from "z".
 
-https://new.babeljs.io/docs/en/next/babel-plugin-transform-typescript.html
+https://babeljs.io/docs/en/babel-plugin-transform-typescript.html
 
 ## Type checking
 
