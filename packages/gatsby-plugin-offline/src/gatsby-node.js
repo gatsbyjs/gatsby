@@ -78,7 +78,7 @@ exports.onPostBuild = (args, pluginOptions) => {
     modifyUrlPrefix: {
       // If `pathPrefix` is configured by user, we should replace
       // the default prefix with `pathPrefix`.
-      "/": `${pathPrefix}/` || `/`,
+      "/": `${pathPrefix}/`,
     },
     navigateFallback: `${pathPrefix || ``}/offline-plugin-app-shell-fallback/index.html`,
     // Only match URLs without extensions or the query `no-cache=1`.
