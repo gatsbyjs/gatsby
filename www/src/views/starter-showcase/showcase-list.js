@@ -1,14 +1,13 @@
-import React /* { Component } */ from "react"
-import { Link } from "gatsby"
-import Img from "gatsby-image"
+import React from "react"
 import FaExtLink from "react-icons/lib/fa/external-link"
 import FaGithub from "react-icons/lib/fa/github"
 import FaClipboard from "react-icons/lib/fa/clipboard"
 import MdStar from "react-icons/lib/md/star"
-import { /* rhythm, */ scale, rhythm, options } from "../../utils/typography"
+import { rhythm, options } from "../../utils/typography"
 import presets, { colors } from "../../utils/presets"
 import copyToClipboard from "../../utils/copy-to-clipboard"
 import styles from "../shared/styles"
+import ThumbnailLink from "../shared/thumbnail"
 
 const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
   if (!items.length) {
@@ -75,6 +74,7 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
         const minorVersion = match ? match[0] : gatsbyVersion // default to version if no match
         const isGatsbyVersionWarning = !/(2..+|next|latest)/g.test(minorVersion) // either 2.x or next or latest
         const imgsharp = imgsFilter(imgs, stub)
+
         const repo = githubData.repoMetadata
         const { pushed_at } = repo
         return (
@@ -87,59 +87,14 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
               }}
               {...styles.withTitleHover}
             >
-              <Link
-                to={`/starters/${stub}`}
-                state={{ isModal: true }}
-                css={{
-                  "&&": {
-                    borderBottom: `none`,
-                    boxShadow: `none`,
-                    transition: `all ${presets.animation.speedDefault} ${
-                      presets.animation.curveDefault
-                    }`,
-                    "&:hover": {
-                      ...styles.screenshotHover,
-                      // manual patch for hover
-                      boxShadow: `0 8px 20px rgba(157,124,191,0.5)`,
-                      transform: `translateY(-3px)`,
-                    },
-                  },
-                }}
-              >
-                <div
-                  className="gatsby-image-wrapper"
-                  css={{
-                    transition: `all ${presets.animation.speedDefault} ${
-                      presets.animation.curveDefault
-                    }`,
-                  }}
-                >
-                  {imgsharp ? (
-                    <Img
-                      fluid={imgsharp.childImageSharp.fluid}
-                      alt={`Screenshot of ${imgsharp.name}`}
-                      css={{
-                        ...styles.screenshot,
-                        marginBottom: 0,
-                      }}
-                    />
-                  ) : (
-                    <div
-                      css={{
-                        // height: 230,
-                        width: 320,
-                        backgroundColor: `#d999e7`,
-                      }}
-                    >
-                      missing
-                    </div>
-                  )}
-                </div>
-              </Link>
+              <ThumbnailLink
+                slug={`/starters/${stub}`}
+                image={imgsharp}
+                title={imgsharp.name}
+              />
               <div
                 css={{
                   ...styles.meta,
-                  marginTop: rhythm(options.blockMarginBottom),
                 }}
               >
                 <div css={{ display: `flex`, justifyContent: `space-between` }}>
