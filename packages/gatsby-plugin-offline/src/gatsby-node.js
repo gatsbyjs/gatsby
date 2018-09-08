@@ -36,6 +36,7 @@ const getAssetsForChunks = chunks => {
 }
 
 exports.onPostBuild = (args, pluginOptions) => {
+  const pathPrefix = args.store.getState().program.prefixPaths ? args.pathPrefix : ''
   const rootDir = `public`
 
   // Get exact asset filenames for app and offline app shell chunks
@@ -45,11 +46,10 @@ exports.onPostBuild = (args, pluginOptions) => {
     `component---node-modules-gatsby-plugin-offline-app-shell-js`,
   ])
 
-  // Remove the custom prefix so Workbox can find the files.
+  // Remove the custom prefix (if any) so Workbox can find the files.
   // This is added back at runtime (see modifyUrlPrefix) in order to serve
   // from the correct location.
-  const omitPrefix = path =>
-    args.pathPrefix ? path.slice(args.pathPrefix.length) : path
+  const omitPrefix = path => path.slice(pathPrefix.length)
 
   const criticalFilePaths = _.uniq(
     _.concat(
@@ -78,9 +78,9 @@ exports.onPostBuild = (args, pluginOptions) => {
     modifyUrlPrefix: {
       // If `pathPrefix` is configured by user, we should replace
       // the default prefix with `pathPrefix`.
-      "/": `${args.pathPrefix}/` || `/`,
+      "/": `${pathPrefix}/` || `/`,
     },
-    navigateFallback: `${args.pathPrefix || ``}/offline-plugin-app-shell-fallback/index.html`,
+    navigateFallback: `${pathPrefix || ``}/offline-plugin-app-shell-fallback/index.html`,
     // Only match URLs without extensions or the query `no-cache=1`.
     // So example.com/about/ will pass but
     // example.com/about/?no-cache=1 and
