@@ -1,7 +1,7 @@
 const colors = require(`./colors`).default
 
 module.exports = {
-  colors: colors,
+  colors,
   mobile: `(min-width: 400px)`,
   Mobile: `@media (min-width: 400px)`,
   phablet: `(min-width: 550px)`,

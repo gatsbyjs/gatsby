@@ -78,6 +78,9 @@ const colors = {
     light: gray(80, 270),
   },
   code: {
+    bg: '#fdfaf6',
+    border: '#faede5',
+    text: '#866c5b',
     remove: `#e45c5c`,
     add: `#4a9c59`,
   },
