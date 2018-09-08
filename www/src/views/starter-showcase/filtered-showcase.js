@@ -201,7 +201,6 @@ export default class FilteredShowcase extends Component {
               background: `rgba(255,255,255,0.98)`,
               paddingLeft: `${rhythm(3 / 4)}`,
               paddingRight: `${rhythm(3 / 4)}`,
-              paddingBottom: rhythm(options.blockMarginBottom),
               zIndex: 1,
               borderBottom: `1px solid ${colors.ui.light}`,
             }}
