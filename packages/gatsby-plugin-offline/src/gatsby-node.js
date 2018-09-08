@@ -45,7 +45,11 @@ exports.onPostBuild = (args, pluginOptions) => {
     `component---node-modules-gatsby-plugin-offline-app-shell-js`,
   ])
 
-  const omitPrefix = path => args.pathPrefix ? path.slice(args.pathPrefix.length) : path
+  // Remove the custom prefix so Workbox can find the files.
+  // This is added back at runtime (see modifyUrlPrefix) in order to serve
+  // from the correct location.
+  const omitPrefix = path =>
+    args.pathPrefix ? path.slice(args.pathPrefix.length) : path
 
   const criticalFilePaths = _.uniq(
     _.concat(
@@ -72,9 +76,10 @@ exports.onPostBuild = (args, pluginOptions) => {
     globDirectory: rootDir,
     globPatterns,
     modifyUrlPrefix: {
+      [rootDir]: ``,
       // If `pathPrefix` is configured by user, we should replace
       // the default prefix with `pathPrefix`.
-      "/": args.pathPrefix || `/`,
+      "/": `${args.pathPrefix}/` || `/`,
     },
     navigateFallback: `${args.pathPrefix || ``}/offline-plugin-app-shell-fallback/index.html`,
     // Only match URLs without extensions or the query `no-cache=1`.
@@ -88,8 +93,8 @@ exports.onPostBuild = (args, pluginOptions) => {
     navigateFallbackWhitelist: [/^[^?]*([^.?]{5}|\.html)(\?.*)?$/],
     navigateFallbackBlacklist: [/\?(.+&)?no-cache=1$/],
     cacheId: `gatsby-plugin-offline`,
-    // Don't cache-bust JS files and anything in the static directory
-    dontCacheBustUrlsMatching: /(.*js$|\/static\/)/,
+    // Don't cache-bust JS or CSS files, and anything in the static directory
+    dontCacheBustUrlsMatching: /(.*\.js$|.*\.css$|\/static\/)/,
     runtimeCaching: [
       {
         // Add runtime caching of various page resources.
