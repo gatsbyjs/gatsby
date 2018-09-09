@@ -103,3 +103,4 @@ Transforming data in Gatsby is also plugin-driven; Transformer plugins take data
 
 - Walk through an example using the `gatsby-transformer-remark` plugin to transform markdown files [tutorial part six](/tutorial/part-six/#transformer-plugins)
 - Search available transformer plugins in the [Gatsby library](/plugins/?=transformer)
+
