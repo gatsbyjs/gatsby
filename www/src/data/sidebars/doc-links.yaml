@@ -255,6 +255,47 @@
       link: /docs/prpl-pattern/
     - title: Querying data with GraphQL
       link: /docs/querying-with-graphql/
+- title: BEHIND THE SCENES
+  link: /docs/behind-the-scenes/
+  items:
+    - title: How APIS/Plugins Are Run
+      link: /docs/how-plugins-apis-are-run/
+    - title: Node Creation
+      link: /docs/node-creation/
+    - title: Schema Generation
+      link: /docs/schema-generation/
+      items:
+        - title: Building the GqlType
+          link: /docs/schema-gql-type/
+        - title: Building the Input Filters
+          link: /docs/schema-input-gql/
+        - title: Querying with Sift
+          link: /docs/schema-sift/
+        - title: Connections
+          link: /docs/schema-connections/
+    - title: Page Creation
+      link: /docs/page-creation/
+    - title: Page -> Node Dependencies
+      link: /docs/page-node-dependencies/
+    - title: Node Tracking
+      link: /docs/node-tracking/
+    - title: Internal Data Bridge
+      link: /docs/internal-data-bridge/
+    - title: Queries
+      link: /docs/query-behind-the-scenes/
+      items:
+        - title: Query Extraction
+          link: /docs/query-extraction/
+        - title: Query Execution
+          link: /docs/query-execution/
+        - title: Normal vs StaticQueries
+          link: /docs/static-vs-normal-queries/
+    - title: Data Storage (Redux)*
+      link: /docs/data-storage-redux/
+    - title: Build Caching*
+      link: /docs/build-caching/
+    - title: Terminology
+      link: /docs/behind-the-scenes-terminology/
 - title: Advanced Tutorials
   items:
     - title: Making a site with user authentication*
