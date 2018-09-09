@@ -17,7 +17,7 @@ describe(`catchLinks`, () => {
   let handler
 
   beforeAll(() => {
-    mockedAEH = jest.spyOn(window, "addEventListener")
+    mockedAEH = jest.spyOn(window, `addEventListener`)
     mockedAEH.mockImplementation((_, eventHandler) => (handler = eventHandler))
   })
 
@@ -111,10 +111,53 @@ describe(`a user may be forcing navigation if`, () => {
 
 describe(`the clicked element`, () => {
   it(`must be an anchor tag`, done => {
-    done.fail(`NOT IMPLEMENTED YET`)
+    const testAnchor = document.createElement(`a`)
+    document.body.appendChild(testAnchor)
+
+    // create the click event we'll be using for testing
+    const clickEvent = new MouseEvent(`click`, {
+      bubbles: true,
+      cancelable: true,
+      view: window,
+    })
+
+    const handler = event => {
+      expect(catchLinks.findClosestAnchor(event.target)).toBe(testAnchor)
+
+      testAnchor.remove()
+      window.removeEventListener(`click`, handler)
+
+      done()
+    }
+    window.addEventListener(`click`, handler)
+
+    testAnchor.dispatchEvent(clickEvent)
   })
-  it(`could be inside of an element`, done => {
-    done.fail(`NOT IMPLEMENTED YET`)
+  it(`could be inside of an anchor`, done => {
+    const testAnchor = document.createElement(`a`)
+    const clickTarget = document.createElement(`span`)
+
+    testAnchor.appendChild(clickTarget)
+    document.body.appendChild(testAnchor)
+
+    // create the click event we'll be using for testing
+    const clickEvent = new MouseEvent(`click`, {
+      bubbles: true,
+      cancelable: true,
+      view: window,
+    })
+
+    const handler = event => {
+      expect(catchLinks.findClosestAnchor(event.target)).toBe(testAnchor)
+
+      testAnchor.remove()
+      window.removeEventListener(`click`, handler)
+
+      done()
+    }
+    window.addEventListener(`click`, handler)
+
+    clickTarget.dispatchEvent(clickEvent)
   })
 })
 
