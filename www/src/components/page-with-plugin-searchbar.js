@@ -8,7 +8,7 @@ class PageWithPluginSearchBar extends Component {
     const searchbarWidth = rhythm(17)
 
     const styles = {
-      height: `calc(100vh - ${presets.headerHeight} + 1px)`,
+      height: `calc(100vh - ${presets.headerHeight})`,
       width: `100vw`,
       padding: rhythm(3 / 4),
       zIndex: 1,
