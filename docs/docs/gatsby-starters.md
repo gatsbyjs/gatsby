@@ -562,18 +562,6 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
   - Minimal UI and Styling -- made to customize.
   - Styled Components
 
-- [gatsby-starter-simple-landing](https://github.com/greglobinski/gatsby-starter-simple-landing)
-  [(demo)](https://gssl.greglobinski.com/)
-
-  Features:
-
-  - CSS-in-JS via [JSS](https://github.com/cssinjs/jss)
-  - easily restyled through theme object
-  - text content via Markdown files
-  - auto-generated sizes and types (png, webp) for background and hero images
-  - favicons generator
-  - webfonts with [webfontloader](https://github.com/typekit/webfontloader)
-
 - [gatsby-starter-typescript-plus](https://github.com/resir014/gatsby-starter-typescript-plus)
   [(demo)](https://gatsby-starter-typescript-plus.netlify.com/)
 
