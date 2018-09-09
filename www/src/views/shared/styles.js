@@ -26,15 +26,16 @@ const styles = {
     display: `flex`,
     flexWrap: `wrap`,
     padding: rhythm(3 / 4),
-    justifyContent: `space-evenly`,
+    justifyContent: `center`,
+    [presets.Desktop]: {
+      justifyContent: `flex-start`,
+    },
   },
   showcaseItem: {
     display: `flex`,
     flexDirection: `column`,
     margin: rhythm(3 / 4),
-    minWidth: 259,//shows 3 items/row on windows > 1200px wide
-    maxWidth: 350,
-    flex: `1 0 0`,
+    width: 282,
     position: `relative`,
   },
   featuredItem: {
