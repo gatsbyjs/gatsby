@@ -10,10 +10,10 @@ const ThumbnailLink = ({ slug, image, title, children }) => {
 
   // site showcase
   if (image.screenshotFile) {
-    screenshot = image.screenshotFile.childImageSharp.fluid
+    screenshot = image.screenshotFile.childImageSharp.fixed
   } else {
     // starter showcase
-    screenshot = image.childImageSharp.fluid
+    screenshot = image.childImageSharp.fixed
   }
 
   return (
@@ -37,7 +37,7 @@ const ThumbnailLink = ({ slug, image, title, children }) => {
     >
       {screenshot ? (
         <Img
-          fluid={screenshot}
+          fixed={screenshot}
           alt={`Screenshot of ${title}`}
           css={{ ...styles.screenshot }}
         />

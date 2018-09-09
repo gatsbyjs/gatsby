@@ -25,7 +25,10 @@ const styles = {
     display: `flex`,
     flexWrap: `wrap`,
     padding: rhythm(3 / 4),
-    justifyContent: `space-evenly`,
+    justifyContent: `center`,
+    [presets.Desktop]: {
+      justifyContent: `flex-start`,
+    },
   },
   showcaseItem: {
     display: `flex`,
