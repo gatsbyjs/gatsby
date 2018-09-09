@@ -49,7 +49,13 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
     <div
       css={{
         fontFamily: options.headerFontFamily.join(`,`),
-        ...styles.showcaseList
+        display: `flex`,
+        flexWrap: `wrap`,
+        padding: rhythm(3 / 4),
+        justifyContent: `center`,
+        [presets.Desktop]: {
+          justifyContent: `flex-start`,
+        },
       }}
     >
       {items.map(({ node }) => {
@@ -76,7 +82,8 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
             <div
               key={node.id}
               css={{
-                ...styles.showcaseItem
+                margin: rhythm(3 / 4),
+                width: 280,
               }}
               {...styles.withTitleHover}
             >
@@ -136,9 +143,9 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
                   </span>
                 </div>
                 <div>
-                  <span>
+                  <span className="title">
                     <h5 css={{ margin: 0 }}>
-                      <strong className="title">{repo.name}</strong>
+                      <strong>{repo.name}</strong>
                     </h5>
                   </span>
                   {/* {isGatsbyVersionWarning ?
@@ -174,13 +181,6 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
           )
         )
       })}
-      {/* makes last row items equal width and aligned left */}
-      <div css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }} />
-      <div css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }} />
-      <div css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }} />
-      <div css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }} />
-      <div css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }} />
-      <div css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }} />
     </div>
   )
 }
