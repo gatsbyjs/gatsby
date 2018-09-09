@@ -21,9 +21,7 @@ export const showcaseQuery = graphql`
         node {
           name
           childImageSharp {
-            fluid(maxWidth: 280, maxHeight: 230) {
-              ...GatsbyImageSharpFluid
-            }
+            ...ShowcaseThumbnailFragment_item
           }
         }
       }

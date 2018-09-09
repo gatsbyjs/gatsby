@@ -113,7 +113,7 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
   - [Full list here!](https://github.com/fabien0102/gatsby-starter#whats-inside)
 
 - [gatsby-starter-bootstrap](https://github.com/jaxx2104/gatsby-starter-bootstrap)
-  [(demo)](https://jaxx2104.github.io/gatsby-starter-bootstrap/)
+  [(demo)](https://gatstrap.netlify.com/)
 
   Features:
 
@@ -949,3 +949,25 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
   - Simple one page site
   - Fully Responsive
   - Styling with SCSS
+
+- [gatsby-starter-solid-state](https://github.com/theschmocker/gatsby-starter-solid-state)
+  [(demo)](https://gatsby-starter-solid-state.netlify.com)
+
+  Features:
+  
+  - Built upon gatsby-starter-default
+  - Based on the [Solid State](https://html5up.net/solid-state) theme
+  - PWA out-of-the-box with gatsby-plugin-manifest and gatsby-plugin-offline
+  - Lazy-loaded, responsive images
+  - Styled using SCSS
+  - Fully responsive
+  - Helper components for interacting with Sass classes
+  - Uses the latest version of React
+
+- [gatsby-starter-typescript-sass](https://github.com/tdharmon/gatsby-starter-typescript-sass)
+  [(demo)](https://gatsby-starter-typescript-sass.netlify.com)
+
+  Features:
+  
+  - Built upon gatsby-starter-default
+  - Perfect if you want to use Typescript and SASS but don't want any extra code

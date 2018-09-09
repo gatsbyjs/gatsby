@@ -3,7 +3,7 @@ title: Free Swag for Gatsby Contributors
 date: "2018-08-09"
 image: images/gatsby-swag.jpg
 author: Jason Lengstorf
-tags: ["collaboration", "gatsby", "community"]
+tags: ["collaboration", "community"]
 ---
 
 Today, we’re _so excited_ to announce the launch of the [Gatsby Swag Store][store]! If you’ve been following along [on Twitter][twitter], you may have seen the news a little while back.
