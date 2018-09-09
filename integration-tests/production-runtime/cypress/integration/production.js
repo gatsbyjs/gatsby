@@ -1,4 +1,4 @@
-/* eslint-disable no-undef */
+/* global cy */
 
 describe(`Production build tests`, () => {
   it(`should render properly`, () => {
@@ -11,8 +11,8 @@ describe(`Production build tests`, () => {
       .click()
 
     cy.waitForRouteChange()
-      .url()
-      .should(`contain`, `page-2`)
+      .location(`pathname`)
+      .should(`equal`, `/page-2/`)
 
     cy.reload()
       .waitForRouteChange()
