@@ -216,14 +216,15 @@ type InferInputOptions = {
 
 const recursiveOmitBy = (value, fn) => {
   if (_.isObject(value)) {
-    let newValue = _.isArray(value) ? [] : {}
     if (_.isPlainObject(value)) {
-      newValue = _.omitBy(value, fn)
+      value = _.omitBy(value, fn)
+    } else if (_.isArray(value)) {
+      // don't mutate original value
+      value = _.clone(value)
     }
     _.each(value, (v, k) => {
-      newValue[k] = recursiveOmitBy(v, fn)
+      value[k] = recursiveOmitBy(v, fn)
     })
-    value = newValue
     if (_.isEmpty(value)) {
       // don't return empty objects - gatsby doesn't support these
       return null
