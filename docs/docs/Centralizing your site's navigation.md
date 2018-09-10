@@ -1,5 +1,5 @@
 ---
-title: Creating Dynamically-Rendered Navigation
+title: Centralizing your site's navigation
 ---
 
 
