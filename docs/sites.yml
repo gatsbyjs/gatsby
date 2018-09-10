@@ -2387,3 +2387,14 @@
     - Portfolio
     - Web Dev
   featured: false
+- title: Premier Octet
+  main_url: 'https://www.premieroctet.com/'
+  url: 'https://www.premieroctet.com/'
+  description: >
+    Premier Octet is a React-based agency
+  categories:
+    - Agency
+    - Web Dev
+    - Mobile Dev
+    - React Native
+  featured: false
