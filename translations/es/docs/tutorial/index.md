@@ -8,8 +8,8 @@ El tutorial completo está destinado a ser lo más accesible posible para person
 
 0. [Configurando el entorno de desarrollo](/tutorial/part-zero/): te presentaremos las tecnologías centrales que impulsan a Gatsby y te guiaremos a través de la configuración de su entorno de desarrollo.
 1. [Conoce los bloques de construcción de Gatsby](/tutorial/part-one/): iniciar nuevos proyectos, desarrollar e implementar sitios.
-2. [Introducción al uso de CSS en Gatsby](/tutorial/part-two/): explora bibliotecas como Typography.js y CSS Modules.
-3. [Creación de plantillas anidadas en Gatsby](/tutorial/part-three/): las  plantillas son secciones de su sitio que se reutilizan en varias páginas, como encabezados y pies de página.
+1. [Introducción al uso de CSS en Gatsby](/tutorial/part-two/): explora bibliotecas como Typography.js y CSS Modules.
+1. [Creación de plantillas anidadas en Gatsby](/tutorial/part-three/): las plantillas son secciones de su sitio que se reutilizan en varias páginas, como encabezados y pies de página.
 
 ## Tutoriales avanzados
 
