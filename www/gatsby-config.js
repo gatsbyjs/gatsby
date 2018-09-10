@@ -55,6 +55,7 @@ module.exports = {
       resolve: `gatsby-transformer-remark`,
       options: {
         plugins: [
+          `gatsby-remark-graphviz`,
           `gatsby-remark-code-titles`,
           {
             resolve: `gatsby-remark-images`,

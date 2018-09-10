@@ -218,6 +218,9 @@ const recursiveOmitBy = (value, fn) => {
   if (_.isObject(value)) {
     if (_.isPlainObject(value)) {
       value = _.omitBy(value, fn)
+    } else if (_.isArray(value)) {
+      // don't mutate original value
+      value = _.clone(value)
     }
     _.each(value, (v, k) => {
       value[k] = recursiveOmitBy(v, fn)

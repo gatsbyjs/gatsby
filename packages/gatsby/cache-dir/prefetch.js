@@ -45,8 +45,6 @@ function normalizePath(path) {
 }
 
 const prefetch = function(url) {
-  url = withPrefix(url)
-
   if (preFetched[url]) {
     return
   }

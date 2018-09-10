@@ -107,13 +107,11 @@ const styles = {
     width: 320,
     zIndex: 10,
     [presets.Tablet]: {
-      height: `calc(100vh - ${presets.headerHeight} - ${
-        presets.bannerHeight
-      } + 1px)`,
+      height: `calc(100vh - ${presets.headerHeight} - ${presets.bannerHeight})`,
       maxWidth: `none`,
       opacity: `1 !important`,
       pointerEvents: `auto`,
-      top: `calc(${presets.headerHeight} + ${presets.bannerHeight} - 1px)`,
+      top: `calc(${presets.headerHeight} + ${presets.bannerHeight})`,
       width: rhythm(10),
     },
     [presets.Desktop]: {
