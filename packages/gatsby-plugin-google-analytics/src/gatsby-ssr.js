@@ -1,5 +1,19 @@
 import React from "react"
 
+const knownOptions = {
+  clientId: `string`,
+  sampleRate: `number`,
+  siteSpeedSampleRate: `number`,
+  alwaysSendReferrer: `boolean`,
+  allowAnchor: `boolean`,
+  cookieName: `string`,
+  cookieExpires: `number`,
+  storeGac: `boolean`,
+  legacyCookieDomain: `string`,
+  legacyHistoryImport: `boolean`,
+  allowLinker: `boolean`,
+}
+
 exports.onRenderBody = (
   { setHeadComponents, setPostBodyComponents },
   pluginOptions
@@ -13,6 +27,14 @@ exports.onRenderBody = (
         excludeGAPaths.push(mm.makeRe())
       })
     }
+
+    const gaCreateOptions = {}
+    for (const option in knownOptions) {
+      if (typeof pluginOptions[option] === knownOptions[option]) {
+        gaCreateOptions[option] = pluginOptions[option]
+      }
+    }
+
     const setComponents = pluginOptions.head
       ? setHeadComponents
       : setPostBodyComponents
@@ -46,7 +68,15 @@ exports.onRenderBody = (
     })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
   }
   if (typeof ga === "function") {
-    ga('create', '${pluginOptions.trackingId}', 'auto');
+    ga('create', '${pluginOptions.trackingId}', '${
+            typeof pluginOptions.cookieDomain === `string`
+              ? pluginOptions.cookieDomain
+              : `auto`
+          }', ${
+            typeof pluginOptions.name === `string`
+              ? `'${pluginOptions.name}', `
+              : ``
+          }${JSON.stringify(gaCreateOptions)});
       ${
         typeof pluginOptions.anonymize !== `undefined` &&
         pluginOptions.anonymize === true

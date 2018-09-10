@@ -54,7 +54,7 @@ export type LoaderUtils = {
   postcss: LoaderResolver<{
     browsers?: string[],
     plugins?: Array<any> | ((loader: any) => Array<any>),
-    minimze?: boolean,
+    minimize?: boolean,
     cssnano?: any,
   }>,
 
@@ -208,7 +208,7 @@ module.exports = async ({
         cssnano,
         plugins,
         browsers = supportedBrowsers,
-        minimze = PRODUCTION,
+        minimize = PRODUCTION,
         ...postcssOpts
       } = options
 
@@ -222,7 +222,7 @@ module.exports = async ({
               (typeof plugins === `function` ? plugins(loader) : plugins) || []
 
             return [
-              minimze && require(`cssnano`)(cssnano),
+              minimize && require(`cssnano`)(cssnano),
               flexbugs,
               autoprefixer({ browsers, flexbox: `no-2009` }),
               ...plugins,
