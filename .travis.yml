@@ -4,9 +4,7 @@ os:
   - linux
 dist: trusty
  # use container-based build env for faster boot
-sudo: true
-addons:
-  chrome: stable
+sudo: false
 language: node_js
 
 matrix:
