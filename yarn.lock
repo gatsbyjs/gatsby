@@ -1745,6 +1745,15 @@ ajv@^6.1.0, ajv@^6.5.0:
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.1"
 
+ajv@^6.1.1:
+  version "6.5.3"
+  resolved "https://registry.yarnpkg.com/ajv/-/ajv-6.5.3.tgz#71a569d189ecf4f4f321224fecb166f071dd90f9"
+  dependencies:
+    fast-deep-equal "^2.0.1"
+    fast-json-stable-stringify "^2.0.0"
+    json-schema-traverse "^0.4.1"
+    uri-js "^4.2.2"
+
 algoliasearch@^3.25.1:
   version "3.29.0"
   resolved "https://registry.yarnpkg.com/algoliasearch/-/algoliasearch-3.29.0.tgz#d04021a5450be55ce314b928bba4a38723399bd8"
@@ -4639,7 +4648,7 @@ copy-descriptor@^0.1.0:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/copy-descriptor/-/copy-descriptor-0.1.1.tgz#676f6eb3c39997c2ee1ac3a924fd6124748f578d"
 
-copy-webpack-plugin@^4.5.1:
+copy-webpack-plugin@^4.4.1, copy-webpack-plugin@^4.5.1:
   version "4.5.2"
   resolved "https://registry.yarnpkg.com/copy-webpack-plugin/-/copy-webpack-plugin-4.5.2.tgz#d53444a8fea2912d806e78937390ddd7e632ee5c"
   dependencies:
@@ -8156,6 +8165,22 @@ html-void-elements@^1.0.0, html-void-elements@^1.0.1:
 html-webpack-exclude-assets-plugin@^0.0.7:
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/html-webpack-exclude-assets-plugin/-/html-webpack-exclude-assets-plugin-0.0.7.tgz#ee69906adb3d869e4e29f29b0f3e99b53fa87c99"
+
+html-webpack-externals-plugin@^3.8.0:
+  version "3.8.0"
+  resolved "https://registry.yarnpkg.com/html-webpack-externals-plugin/-/html-webpack-externals-plugin-3.8.0.tgz#e3f38419c67b7599e69afab0966a2164d2a3d838"
+  dependencies:
+    ajv "^6.1.1"
+    copy-webpack-plugin "^4.4.1"
+    html-webpack-include-assets-plugin "^1.0.2"
+
+html-webpack-include-assets-plugin@^1.0.2:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/html-webpack-include-assets-plugin/-/html-webpack-include-assets-plugin-1.0.4.tgz#279cfdf001301f5a945b2525f7f6394d48a3a157"
+  dependencies:
+    glob "^7.1.2"
+    minimatch "^3.0.4"
+    slash "^1.0.0"
 
 html-webpack-plugin@^3.2.0:
   version "3.2.0"
@@ -15919,7 +15944,7 @@ upper-case@^1.0.3, upper-case@^1.1.0, upper-case@^1.1.1, upper-case@^1.1.3:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/upper-case/-/upper-case-1.1.3.tgz#f6b4501c2ec4cdd26ba78be7222961de77621598"
 
-uri-js@^4.2.1:
+uri-js@^4.2.1, uri-js@^4.2.2:
   version "4.2.2"
   resolved "https://registry.yarnpkg.com/uri-js/-/uri-js-4.2.2.tgz#94c540e1ff772956e2299507c010aea6c8838eb0"
   dependencies:

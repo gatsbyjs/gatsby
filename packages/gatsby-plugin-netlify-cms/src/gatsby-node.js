@@ -2,6 +2,7 @@ import path from "path"
 import { get, mapValues, isPlainObject, trim } from "lodash"
 import webpack from "webpack"
 import HtmlWebpackPlugin from "html-webpack-plugin"
+import HtmlWebpackExternalsPlugin from "html-webpack-externals-plugin"
 import HtmlWebpackExcludeAssetsPlugin from "html-webpack-exclude-assets-plugin"
 import MiniCssExtractPlugin from "mini-css-extract-plugin"
 import UglifyJsPlugin from "uglifyjs-webpack-plugin"
@@ -41,6 +42,7 @@ exports.onCreateWebpackConfig = (
     enableIdentityWidget = true,
     htmlTitle = `Content Manager`,
     manualInit = false,
+    externals,
   }
 ) => {
   if ([`develop`, `build-javascript`].includes(stage)) {
@@ -118,6 +120,26 @@ exports.onCreateWebpackConfig = (
           title: htmlTitle,
           chunks: [`cms`],
           excludeAssets: [/cms.css/],
+        }),
+
+        /**
+         * Externalize defined modules
+         */
+        externals && new HtmlWebpackExternalsPlugin({
+          externals: Array.isArray(externals)
+            ? externals
+            : [
+              enableIdentityWidget && {
+                module: `netlify-identity-widget`,
+                entry: `https://identity.netlify.com/v1/netlify-identity-widget.js`,
+                global: `netlifyIdentity`,
+              },
+              {
+                module: `netlify-cms`,
+                entry: `dist/netlify-cms.js`,
+                global: `CMS`,
+              },
+            ].filter(p => p),
         }),
 
         /**
