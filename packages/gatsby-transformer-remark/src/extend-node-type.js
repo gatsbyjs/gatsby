@@ -79,7 +79,7 @@ module.exports = (
       gfm,
       commonmark,
       footnotes,
-      pedantic
+      pedantic,
     }
     if (_.isArray(blocks)) {
       remarkOptions.blocks = blocks
