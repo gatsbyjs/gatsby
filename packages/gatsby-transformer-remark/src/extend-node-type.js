@@ -74,11 +74,17 @@ module.exports = (
 
   return new Promise((resolve, reject) => {
     // Setup Remark.
-    let remark = new Remark().data(`settings`, {
-      commonmark: true,
-      footnotes: true,
-      pedantic: true,
-    })
+    const { commonmark = true, footnotes = true, pedantic = true, gfm = true, blocks } = pluginOptions
+    const remarkOptions = {
+      gfm,
+      commonmark,
+      footnotes,
+      pedantic,
+    }
+    if (_.isArray(blocks)) {
+      remarkOptions.blocks = blocks
+    }
+    let remark = new Remark().data(`settings`, remarkOptions)
 
     for (let plugin of pluginOptions.plugins) {
       const requiredPlugin = require(plugin.resolve)
