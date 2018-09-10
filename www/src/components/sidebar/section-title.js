@@ -103,7 +103,9 @@ const SplitButton = ({
         isParentOfActiveItem,
         item,
         location,
-        onLinkClick,
+        onLinkClick: () => {
+          onLinkClick(item)
+        },
       })}
     </span>
     {/* @todo this should cover 100% of the item's height */}

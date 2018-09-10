@@ -235,7 +235,7 @@ class SidebarBody extends Component {
                 key={index}
                 level={0}
                 location={location}
-                onLinkClick={closeSidebar}
+                onLinkClick={this._toggleSection}
                 onSectionTitleClick={this._toggleSection}
                 openSectionHash={openSectionHash}
               />
