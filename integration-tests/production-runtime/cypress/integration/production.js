@@ -15,11 +15,12 @@ describe(`Production build tests`, () => {
       .should(`equal`, `/page-2/`)
 
     cy.reload()
-      .waitForRouteChange()
       .go(`back`)
 
     cy.waitForRouteChange()
       .getTestElement(`page2`)
       .should(`exist`)
+      .location(`pathname`)
+      .should(`equal`, `/`)
   })
 })
