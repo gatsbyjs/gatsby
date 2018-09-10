@@ -20,7 +20,7 @@ class EnsureResources extends React.Component {
   }
 
   static getDerivedStateFromProps({ pageResources, location }, prevState) {
-    if (prevState.location.pathname !== location.pathname) {
+    if (prevState.location !== location) {
       const pageResources = loader.getResourcesForPathnameSync(
         location.pathname
       )
@@ -81,7 +81,7 @@ class EnsureResources extends React.Component {
     // Check if location has changed on a page using internal routing
     // via matchPath configuration.
     if (
-      this.props.location.key !== nextProps.location.key &&
+      this.state.location.key !== nextState.location.key &&
       nextState.pageResources.page &&
       (nextState.pageResources.page.matchPath ||
         nextState.pageResources.page.path)
@@ -107,11 +107,6 @@ class EnsureResources extends React.Component {
       }
       window.location.replace(url)
 
-      return null
-    } else if (
-      process.env.NODE_ENV !== `production` &&
-      !this.state.pageResources
-    ) {
       return null
     }
 
