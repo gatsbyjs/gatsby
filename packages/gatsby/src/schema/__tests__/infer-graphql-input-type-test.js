@@ -15,7 +15,10 @@ const {
   inferInputObjectStructureFromNodes,
 } = require(`../infer-graphql-input-fields`)
 const createSortField = require(`../create-sort-field`)
-const { clearTypeExampleValues } = require(`../data-tree-utils`)
+const {
+  getExampleValues,
+  clearTypeExampleValues,
+} = require(`../data-tree-utils`)
 
 function queryResult(nodes, query, { types = [] } = {}) {
   const nodeType = new GraphQLObjectType({
@@ -753,48 +756,44 @@ describe(`GraphQL Input args`, () => {
 
 describe(`filtering on linked nodes`, () => {
   let types
-  beforeEach(() => {
-    const { store } = require(`../../redux`)
-    types = [
-      {
-        name: `Child`,
-        nodeObjectType: new GraphQLObjectType({
-          name: `Child`,
-          fields: inferObjectStructureFromNodes({
-            nodes: [{ id: `child_1`, hair: `brown`, height: 101 }],
-            types: [{ name: `Child` }],
-          }),
-        }),
-      },
-      {
-        name: `Pet`,
-        nodeObjectType: new GraphQLObjectType({
-          name: `Pet`,
-          fields: inferObjectStructureFromNodes({
-            nodes: [{ id: `pet_1`, species: `dog` }],
-            types: [{ name: `Pet` }],
-          }),
-        }),
-      },
-    ]
+  const allNodes = [
+    { id: `child_1`, internal: { type: `Child` }, hair: `brown` },
+    {
+      id: `child_2`,
+      internal: { type: `Child` },
+      hair: `blonde`,
+      height: 101,
+    },
+    {
+      id: `linked_A`,
+      internal: { type: `Linked_A` },
+      array: [{ linked___NODE: `linked_B` }],
+      single: { linked___NODE: `linked_B` },
+    },
+    { id: `linked_B`, internal: { type: `Linked_B` } },
+  ]
+  const typeMap = _.groupBy(allNodes, node => node.internal.type)
 
+  const { store } = require(`../../redux`)
+  allNodes.forEach(node => {
     store.dispatch({
       type: `CREATE_NODE`,
-      payload: { id: `child_1`, internal: { type: `Child` }, hair: `brown` },
+      payload: node,
     })
-    store.dispatch({
-      type: `CREATE_NODE`,
-      payload: {
-        id: `child_2`,
-        internal: { type: `Child` },
-        hair: `blonde`,
-        height: 101,
-      },
-    })
-    store.dispatch({
-      type: `CREATE_NODE`,
-      payload: { id: `pet_1`, internal: { type: `Pet` }, species: `dog` },
-    })
+  })
+
+  types = _.toPairs(typeMap).map(([type, nodes]) => {
+    return {
+      name: type,
+      nodeObjectType: new GraphQLObjectType({
+        name: type,
+        fields: () =>
+          inferObjectStructureFromNodes({
+            nodes,
+            types,
+          }),
+      }),
+    }
   })
 
   it(`filters on linked nodes via id`, async () => {
@@ -837,5 +836,32 @@ describe(`filtering on linked nodes`, () => {
     expect(result.data.allNode.edges[0].node.linked.height).toEqual(101)
     expect(result.data.allNode.edges[0].node.foo).toEqual(`bar`)
     expect(result.data.allNode.edges[1].node.foo).toEqual(`baz`)
+  })
+
+  it(`doesn't mutate node object`, async () => {
+    await queryResult(
+      [
+        {
+          test: [
+            {
+              linked___NODE: `linked_A`,
+            },
+          ],
+        },
+      ],
+      `
+        {
+          allNode {
+            edges { node { hair } }
+          }
+        }
+      `,
+      { types }
+    )
+    const originalNode = allNodes.find(
+      node => node.internal.type === `Linked_A`
+    )
+
+    expect(getExampleValues({ typeName: `Linked_A` })).toEqual(originalNode)
   })
 })
