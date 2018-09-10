@@ -7,6 +7,7 @@ import CtaButton from "./cta-button"
 import MastheadBg from "./masthead-bg"
 import FuturaParagraph from "./futura-paragraph"
 import { vP, vPHd, vPVHd, vPVVHd } from "../components/gutters"
+import Slider from "./slider"
 
 const MastheadContent = () => (
   <div
@@ -59,21 +60,25 @@ const MastheadContent = () => (
           [presets.Mobile]: {
             width: rhythm(10),
           },
+          fontSize: scale(3 / 5).fontSize,
+          "@media (min-width: 350px)": {
+            fontSize: scale(4 / 5).fontSize,
+          },          
           "@media (min-width: 650px)": {
             fontSize: scale(1).fontSize,
             width: rhythm(12),
           },
           [presets.Tablet]: {
             fontSize: scale(1.1).fontSize,
-            width: rhythm(12),
+            width: rhythm(14),
           },
           [presets.Hd]: {
             fontSize: scale(1.4).fontSize,
-            width: rhythm(14),
+            width: rhythm(16),
           },
           [presets.VHd]: {
             fontSize: scale(1.5).fontSize,
-            width: rhythm(16),
+            width: rhythm(18),
           },
           [presets.VVHd]: {
             fontSize: scale(1.6).fontSize,
@@ -81,7 +86,18 @@ const MastheadContent = () => (
           },
         }}
       >
-        Blazing-fast static site generator for React
+        <span css={{ display: `block` }}>
+          <span css={{ 
+            [presets.Tablet]: {
+              marginRight: rhythm(1 / 8),
+            } 
+          }}>Build</span>
+          <Slider 
+            items={[`blazing fast`, `modern`, `beautiful`, `secure`]} 
+            color={colors.lilac}
+          />
+        </span>
+        websites with React
       </h1>
       <CtaButton to="/docs/">
         <span css={{ verticalAlign: `middle` }}>Get Started</span>
