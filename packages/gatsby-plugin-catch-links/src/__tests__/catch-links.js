@@ -45,7 +45,7 @@ describe(`catchLinks`, () => {
   })
 })
 
-// https://github.com/facebook/jest/issues/936
+// https://github.com/facebook/jest/issues/936#issuecomment-214939935
 describe(`the click event`, () => {
   it(`checks if the user might be forcing navigation`, () => {})
   it(`checks if we clicked on an anchor`, () => {})
