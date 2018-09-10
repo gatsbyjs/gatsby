@@ -18,8 +18,6 @@ export default class GatsbyHubspotForm extends Component {
     const sfdcCampaignId =
       this.props.sfdcCampaignId || this.props[`sfdc-campaign-id`]
 
-    console.log(`render GatsbyHubspotForm`, this.props)
-
     // See https://designers.hubspot.com/docs/cos/hubspot-form-markup#styling-forms for information on how to style the form
     return (
       <div
