@@ -26,7 +26,9 @@ class IndexPage extends React.Component {
             content="Gatsby example site using Styled Components"
           />
           <meta name="referrer" content="origin" />
-        </Helmet>` `<div
+        </Helmet>
+        ` `
+        <div
           style={{
             margin: `0 auto`,
             marginTop: `3rem`,

@@ -59,6 +59,22 @@ You can query file nodes like the following:
 }
 ```
 
+To filter by the `name` you specified in the config, use `sourceInstanceName`:
+
+```graphql
+{
+  allFile(filter: { sourceInstanceName: { eq: "data" } }) {
+    edges {
+      node {
+        extension
+        dir
+        modifiedTime
+      }
+    }
+  }
+}
+```
+
 ## Helper functions
 
 `gatsby-source-filesystem` exports two helper functions:

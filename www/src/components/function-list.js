@@ -32,7 +32,10 @@ const Param = (param, depth = 0) => {
             <span css={{ color: `#73725f` }}>{`{${param.type.name}}`}</span>
           )}
         {param.default && (
-          <span css={{ color: `#73725f` }}>[default={param.default}]</span>
+          <span css={{ color: `#73725f` }}>
+            [default=
+            {param.default}]
+          </span>
         )}
       </h5>
       {param.description && (

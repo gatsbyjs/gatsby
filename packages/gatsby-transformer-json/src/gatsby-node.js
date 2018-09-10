@@ -2,7 +2,19 @@ const _ = require(`lodash`)
 const crypto = require(`crypto`)
 const path = require(`path`)
 
-async function onCreateNode({ node, actions, loadNodeContent, createNodeId }) {
+async function onCreateNode({ node, actions, loadNodeContent, createNodeId }, pluginOptions) {
+  function getType({ node, object, isArray }) {
+    if (pluginOptions && _.isFunction(pluginOptions.typeName)) {
+      return pluginOptions.typeName({ node, object, isArray })
+    } else if (pluginOptions && _.isString(pluginOptions.typeName)) {
+      return pluginOptions.typeName
+    } else if (isArray) {
+      return _.upperFirst(_.camelCase(`${node.name} Json`))
+    } else {
+      return _.upperFirst(_.camelCase(`${path.basename(node.dir)} Json`))
+    }
+  }
+
   function transformObject(obj, id, type) {
     const objStr = JSON.stringify(obj)
     const contentDigest = crypto
@@ -38,14 +50,14 @@ async function onCreateNode({ node, actions, loadNodeContent, createNodeId }) {
       transformObject(
         obj,
         obj.id ? obj.id : createNodeId(`${node.id} [${i}] >>> JSON`),
-        _.upperFirst(_.camelCase(`${node.name} Json`))
+        getType({ node, object: obj, isArray: true })
       )
     })
   } else if (_.isPlainObject(parsedContent)) {
     transformObject(
       parsedContent,
       parsedContent.id ? parsedContent.id : createNodeId(`${node.id} >>> JSON`),
-      _.upperFirst(_.camelCase(`${path.basename(node.dir)} Json`))
+      getType({ node, object: parsedContent, isArray: false })
     )
   }
 }

@@ -3,7 +3,7 @@
   avatar: avatars/kyle-mathews.jpeg
   twitter: "@kylemathews"
 - id: Dustin Schau
-  bio: Consultant @ Object Partners, Inc. Likes all things front-end, and travel. And other things too. Blogs at dustinschau.com/blog.
+  bio: Software Engineer @ GatsbyJS. Likes all things front-end, and travel. And other things too. Blogs at blog.dustinschau.com.
   avatar: avatars/dustin-schau.jpeg
   twitter: "@schaudustin"
 - id: Kostas Bariotis
@@ -161,3 +161,7 @@
   avatar: avatars/horacio-herrera.jpg
   twitter: "@hhg2288"
   bio: Designer, Developer & Coach • husband • dad • web • mobile • React Native • ReactJS • GraphQL
+- id: Nader Dabit
+  avatar: avatars/nader-dabit.jpg
+  twitter: "@dabit3"
+  bio: Developer Advocate at AWS

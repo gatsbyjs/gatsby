@@ -1,0 +1,93 @@
+workflows:
+  version: 2
+  main:
+    jobs:
+      - unit-node6
+      - unit-node8
+      - unit-node10
+      - lint
+      - integration
+      - ui
+      - prod_ui
+
+
+version: 2
+jobs:
+  unit-node6:
+    docker:
+      - image: circleci/node:6
+    steps:
+      - checkout
+      - run:
+          name: "Unit test with Node.js 6"
+          command: |
+            yarn run bootstrap
+            yarn jest -w 1
+
+  unit-node8:
+    docker:
+      - image: circleci/node:8
+    steps:
+      - checkout
+      - run:
+          name: "Unit test with Node.js 8"
+          command: |
+            yarn run bootstrap
+            yarn jest -w 1
+
+  unit-node10:
+    docker:
+      - image: circleci/node:10
+    steps:
+      - checkout
+      - run:
+          name: "Unit test with Node.js 10"
+          command: |
+            yarn run bootstrap
+            yarn jest -w 1
+
+  lint:
+    docker:
+      - image: circleci/node:8
+    steps:
+      - checkout
+      - run:
+          name: "Lint Code"
+          command: |
+            yarn install
+            yarn lint
+
+  integration:
+    docker:
+      - image: circleci/node:8
+    steps:
+      - checkout
+      - run:
+          name: "Integration Tests"
+          command: |
+            yarn install
+            yarn test:integration
+
+  ui:
+    docker:
+      - image: circleci/node:8-browsers
+    steps:
+      - checkout
+      - run:
+          name: "UI Tests"
+          command: |
+            cd examples/gatsbygram
+            yarn install
+            yarn test
+
+  prod_ui:
+    docker:
+      - image: circleci/node:8-browsers
+    steps:
+      - checkout
+      - run:
+          name: "UI Tests"
+          command: |
+            cd integration-tests/production-runtime
+            yarn install
+            yarn test

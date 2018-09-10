@@ -183,8 +183,8 @@ Add `gatsby-plugin-typography` and `typography-theme-moraga` (for example) and
 In `src/utils/typograhy` add:
 
 ```javascript=
-import Typography from 'typography';
-import theme from 'typography-theme-moraga';
+import Typography from "typography"
+import theme from "typography-theme-moraga"
 
 theme.overrideThemeStyles = () => {
   return {
@@ -197,13 +197,13 @@ theme.overrideThemeStyles = () => {
       left: `50%`,
       transform: `translateX(-50%)`,
     },
-  };
-};
+  }
+}
 
-theme.baseFontSize = `22px`;
-const typography = new Typography(theme);
+theme.baseFontSize = `22px`
+const typography = new Typography(theme)
 
-module.exports = typography;
+module.exports = typography
 ```
 
 and start the project again to see:
@@ -406,11 +406,16 @@ collections: # A list of collections the CMS should be able to edit
     create: true # Allow users to create new documents in this collection
     slug: "{{slug}}"
     fields: # The fields each document in this collection have
-      - {label: Title, name: "title", widget: "string", tagname: "h1"}
-      - {label: "Date", name: "date", widget: "datetime"}
-      - {label: Slug, name: "slug", widget: "string"}
-      - {label: Tags, name: tags, widget: list, default: ['APIs', 'JavaScript']}
-      - {label: "Body", name: "body", widget: "markdown"}
+      - { label: Title, name: "title", widget: "string", tagname: "h1" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: Slug, name: "slug", widget: "string" }
+      - {
+          label: Tags,
+          name: tags,
+          widget: list,
+          default: ["APIs", "JavaScript"],
+        }
+      - { label: "Body", name: "body", widget: "markdown" }
 ```
 
 The only interesting part is the `gatsby` branch which I used in parallel to the

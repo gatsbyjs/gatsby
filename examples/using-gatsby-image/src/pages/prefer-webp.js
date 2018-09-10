@@ -39,7 +39,8 @@ const PreferWebp = ({ data, location }) => (
     />
     <p>
       Lorem markdownum nocens, est aut tergo, inmansuetique bella. Neve illud
-      contrarius ad es prior.{` `}
+      contrarius ad es prior.
+      {` `}
       <a href="http://nunc.io/fuit.html">Planguntur</a> quondam, sua ferunt
       uterum semina advertere si fraudesque terram hosti subiecta, nec. Audenti
       refugitque manibusque aliis infelicem sed mihi aevis! Que ipso templa; tua
@@ -54,7 +55,8 @@ const PreferWebp = ({ data, location }) => (
     <p>
       Proteus ut dis nec exsecrantia data: agrestes, truculenta Peleus. Et
       diffidunt, talia intravit Thaumantias; figere et <em>et</em> qui socio
-      qui, <a href="http://vixmonet.io/in.html">tuo servet unda</a> hoc{` `}
+      qui, <a href="http://vixmonet.io/in.html">tuo servet unda</a> hoc
+      {` `}
       <strong>classi</strong>? Causam <em>quemque</em>? Subigebant cornibus
       fibras ut per nare nati, cunctis et <strong>illa verba</strong> inrita.
     </p>
@@ -72,13 +74,16 @@ const PreferWebp = ({ data, location }) => (
     />
     <h2>Levia mihi</h2>
     <p>
-      Precor Ortygiam, prudens diro stabant prodis moenia; aut tergo{` `}
+      Precor Ortygiam, prudens diro stabant prodis moenia; aut tergo
+      {` `}
       <a href="http://orehaec.io/">loquax et data</a> sua rite in vulnere. Esse
-      lumina plaustrum lacus necopina, iam umbrae nec clipeo sentit{` `}
+      lumina plaustrum lacus necopina, iam umbrae nec clipeo sentit
+      {` `}
       <a href="http://ut.org/hinc">sinistra</a>.
     </p>
     <p>
-      Pendebat nitidum vidistis ecce crematisregia fera et lucemque crines.{` `}
+      Pendebat nitidum vidistis ecce crematisregia fera et lucemque crines.
+      {` `}
       <a href="http://www.sub.net/">Est sopita satis</a> quod harena
       Antimachumque tulit fusile. Fieri qui que prosit equidem, meis praescia
       monebat cacumina tergo acerbo saepe nullaque.

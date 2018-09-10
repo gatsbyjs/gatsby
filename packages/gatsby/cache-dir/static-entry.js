@@ -17,6 +17,10 @@ const stats = JSON.parse(
   fs.readFileSync(`${process.cwd()}/public/webpack.stats.json`, `utf-8`)
 )
 
+const chunkMapping = JSON.parse(
+  fs.readFileSync(`${process.cwd()}/public/chunk-map.json`, `utf-8`)
+)
+
 // const testRequireError = require("./test-require-error")
 // For some extremely mysterious reason, webpack adds the above module *after*
 // this module so that when this code runs, testRequireError is undefined.
@@ -258,7 +262,9 @@ export default (pagePath, callback) => {
     })
 
   if (page.jsonName in dataPaths) {
-    const dataPath = `${__PATH_PREFIX__}/static/d/${dataPaths[page.jsonName]}.json`
+    const dataPath = `${__PATH_PREFIX__}/static/d/${
+      dataPaths[page.jsonName]
+    }.json`
     headComponents.push(
       <link
         rel="preload"
@@ -327,10 +333,28 @@ export default (pagePath, callback) => {
     />
   )
 
+  // Add chunk mapping metadata
+  const scriptChunkMapping = `/*<![CDATA[*/window.___chunkMapping=${JSON.stringify(
+    chunkMapping
+  )};/*]]>*/`
+
+  postBodyComponents.push(
+    <script
+      key={`chunk-mapping`}
+      id={`gatsby-chunk-mapping`}
+      dangerouslySetInnerHTML={{
+        __html: scriptChunkMapping,
+      }}
+    />
+  )
+
   // Filter out prefetched bundles as adding them as a script tag
   // would force high priority fetching.
   const bodyScripts = scripts.filter(s => s.rel !== `prefetch`).map(s => {
-    const scriptPath = `${__PATH_PREFIX__}/${JSON.stringify(s.name).slice(1, -1)}`
+    const scriptPath = `${__PATH_PREFIX__}/${JSON.stringify(s.name).slice(
+      1,
+      -1
+    )}`
     return <script key={scriptPath} src={scriptPath} async />
   })
 
