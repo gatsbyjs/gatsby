@@ -169,7 +169,7 @@ describe(`Gets field value based on current locale`, () => {
     expect(
       normalize.getLocalizedField({
         field,
-        localesFallback: { "es-ES": null, "de": null },
+        localesFallback: { "es-ES": null, de: null },
         locale: {
           code: `es-ES`,
         },

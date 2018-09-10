@@ -36,7 +36,7 @@ Visita el sitio [**Node.js**](https://nodejs.org/) y sigue las instrucciones par
 ### ✋ Comprueba la instalación de Node.js
 
 1. Abre tu terminal.
-2. Ejecuta `node --version`. (Si eres nuevo en la línea de comando, "ejecutar un `comando` "significa" algo  escribe: `node --versión` en el símbolo del sistema, y presionar la tecla Enter". A partir de aquí, esto es lo que queremos decir con "ejecutar" `comando`").
+2. Ejecuta `node --version`. (Si eres nuevo en la línea de comando, "ejecutar un `comando` "significa" algo escribe: `node --versión` en el símbolo del sistema, y presionar la tecla Enter". A partir de aquí, esto es lo que queremos decir con "ejecutar" `comando`").
 3. Ejecuta `npm --version`.
 
 La salida de cada uno de esos comandos debe ser un número de versión. (¡Es posible que sus versiones no coincidan con las que se muestran a continuación!) Si al ingresar esos comandos no aparece un número de versión, regresa y asegúrate de haber instalado Node.js.

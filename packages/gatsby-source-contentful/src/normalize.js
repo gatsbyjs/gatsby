@@ -11,7 +11,12 @@ const digest = str =>
 const typePrefix = `Contentful`
 const makeTypeName = type => _.upperFirst(_.camelCase(`${typePrefix} ${type}`))
 
-const getLocalizedField = ({ field, locale, localesFallback, defaultLocale }) => {
+const getLocalizedField = ({
+  field,
+  locale,
+  localesFallback,
+  defaultLocale,
+}) => {
   if (!_.isUndefined(field[locale.code])) {
     return field[locale.code]
   } else if (
@@ -35,7 +40,11 @@ const buildFallbackChain = locales => {
   )
   return localesFallback
 }
-const makeGetLocalizedField = ({ locale, localesFallback, defaultLocale }) => field =>
+const makeGetLocalizedField = ({
+  locale,
+  localesFallback,
+  defaultLocale,
+}) => field =>
   getLocalizedField({ field, locale, localesFallback, defaultLocale })
 
 exports.getLocalizedField = getLocalizedField

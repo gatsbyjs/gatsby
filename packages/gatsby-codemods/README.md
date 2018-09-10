@@ -68,7 +68,6 @@ export const query = graphql`
 `
 ```
 
-
 #### `import-link`
 
 Import `Link` from `gatsby` instead of `gatsby-link` and remove the `gatsby-link` import.
@@ -89,7 +88,6 @@ export default props => (
   <Link to="/">Home</Link>
 )
 ```
-
 
 #### `navigate-calls`
 
