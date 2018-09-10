@@ -50,6 +50,7 @@ They will be added to the following default list:
 
 ```
 **/*.un~
+**/.DS_Store
 **/.gitignore
 **/.npmignore
 **/.babelrc
