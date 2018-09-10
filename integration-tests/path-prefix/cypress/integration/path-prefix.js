@@ -1,50 +1,48 @@
-/* eslint-disable no-undef */
-const { pathPrefix } = require('../../gatsby-config')
+/* global cy */
+const { pathPrefix } = require(`../../gatsby-config`)
 
 const withTrailingSlash = url => `${url}/`
 
 describe(`Production pathPrefix`, () => {
   beforeEach(() => {
-    cy.visit('/')
+    cy.visit(`/`)
   })
 
   it(`returns 200 on base route`, () => {
-    cy.location('pathname').should('eq', withTrailingSlash(pathPrefix))
+    cy.location(`pathname`).should(`eq`, withTrailingSlash(pathPrefix))
   })
 
-  describe('navigation', () => {
-    const pageTwoLink = `a[data-test-id="page-2-link"]`
-
-    it('prefixes link with /blog', () => {
-      cy.get(pageTwoLink)
-        .should('have.attr', 'href')
-        .and('include', '/blog')
+  describe(`navigation`, () => {
+    it(`prefixes link with /blog`, () => {
+      cy.getTestElement(`page-2-link`)
+        .should(`have.attr`, `href`)
+        .and(`include`, `/blog`)
     })
 
-    it('can navigate to secondary page', () => {
-      cy.get(pageTwoLink).click()
+    it(`can navigate to secondary page`, () => {
+      cy.getTestElement(`page-2-link`).click()
 
-      cy.location('pathname').should(
-        'eq',
+      cy.location(`pathname`).should(
+        `eq`,
         withTrailingSlash(`${pathPrefix}/page-2`)
       )
     })
 
-    it('can navigate back from secondary page', () => {
-      cy.get(pageTwoLink).click()
+    it(`can navigate back from secondary page`, () => {
+      cy.getTestElement(`page-2-link`).click()
 
-      cy.get('a[data-test-id="index-link"]').click()
+      cy.getTestElement(`index-link`).click()
 
-      cy.location('pathname').should('eq', withTrailingSlash(pathPrefix))
+      cy.location(`pathname`).should(`eq`, withTrailingSlash(pathPrefix))
     })
 
-    it('can go back', () => {
-      cy.get(pageTwoLink).click()
+    it(`can go back`, () => {
+      cy.getTestElement(`page-2-link`).click()
 
-      cy.go('back')
+      cy.go(`back`)
 
-      cy.location('pathname', { timeout: 10000 }).should(
-        'eq',
+      cy.location(`pathname`, { timeout: 10000 }).should(
+        `eq`,
         withTrailingSlash(pathPrefix)
       )
     })
