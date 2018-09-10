@@ -129,6 +129,7 @@ See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
   const watcher = chokidar.watch(pluginOptions.path, {
     ignored: [
       `**/*.un~`,
+      `**/.DS_Store`,
       `**/.gitignore`,
       `**/.npmignore`,
       `**/.babelrc`,
@@ -150,6 +151,8 @@ See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
         currentState = fsMachine.transition(currentState.value, `EMIT_FS_EVENT`)
         createNode(fileNode)
       }
+
+      return null
     })
     return fileNodePromise
   }

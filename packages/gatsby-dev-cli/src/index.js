@@ -21,9 +21,11 @@ const argv = require(`yargs`)
     `Set path to Gatsby repository.
 You typically only need to configure this once.`
   )
+  .array(`packages`)
+  .describe(`packages`, `Explicitly specify packages to copy`)
   .help(`h`)
   .alias(`h`, `help`)
-  .array(`packages`).argv
+  .argv
 
 const conf = new Configstore(pkg.name)
 

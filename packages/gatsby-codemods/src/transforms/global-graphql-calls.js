@@ -42,9 +42,7 @@ function addEsmImport(j, root, tag) {
     root
       .find(j.Program)
       .get(`body`, 0)
-      .insertBefore(
-        importStatement
-      )
+      .insertBefore(importStatement)
     return
   }
 

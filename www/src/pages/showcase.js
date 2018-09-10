@@ -53,9 +53,7 @@ export const showcaseQuery = graphql`
           childScreenshot {
             screenshotFile {
               childImageSharp {
-                fixed(width: 282, height: 211) {
-                  ...GatsbyImageSharpFixed_noBase64
-                }
+                ...ShowcaseThumbnailFragment_item
               }
             }
           }
