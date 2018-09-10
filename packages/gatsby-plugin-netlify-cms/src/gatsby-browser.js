@@ -5,7 +5,7 @@ exports.onInitialClientRender = (_, { enableIdentityWidget = true }) => {
     netlifyIdentityWidget.on(`init`, user => {
       if (!user) {
         netlifyIdentityWidget.on(`login`, () => {
-          document.location.reload()
+          document.location.href = `/admin/`
         })
       }
     })
