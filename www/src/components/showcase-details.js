@@ -7,6 +7,7 @@ import qs from "qs"
 
 import presets, { colors } from "../utils/presets"
 import { options, scale, rhythm } from "../utils/typography"
+import sharedStyles from "../views/shared/styles"
 import { Link, StaticQuery, graphql } from "gatsby"
 import Layout from "../components/layout"
 import ShareMenu from "../components/share-menu"
@@ -163,7 +164,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                     ...styles.prevNextImage,
                   }}
                   backgroundColor
-                  resolutions={{
+                  fixed={{
                     srcSet: ``,
                     src:
                       nextSite.childScreenshot.screenshotFile.childImageSharp
@@ -215,7 +216,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                     ...styles.prevNextImage,
                   }}
                   backgroundColor
-                  resolutions={{
+                  fixed={{
                     srcSet: ``,
                     src:
                       previousSite.childScreenshot.screenshotFile
@@ -484,15 +485,15 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                 </div>
                 <Img
                   key={data.sitesYaml.id}
-                  sizes={
+                  fluid={
                     data.sitesYaml.childScreenshot.screenshotFile
-                      .childImageSharp.sizes
+                      .childImageSharp.fluid
                   }
                   alt={`Screenshot of ${data.sitesYaml.title}`}
                   css={{
                     boxShadow: isModal
                       ? false
-                      : `0 4px 10px ${hex2rgba(colors.gatsby, 0.1)}`,
+                      : sharedStyles.screenshot.boxShadow,
                   }}
                 />
               </div>

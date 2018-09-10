@@ -42,6 +42,9 @@ class Page extends React.Component {
           innerRef={el => {
             this.myLink = el
           }}
+          state={{
+            pleasant: "reasonably",
+          }}
         >
           Another page
         </Link>

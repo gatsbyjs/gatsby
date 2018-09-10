@@ -1,7 +1,6 @@
 import React from "react"
 import Modal from "react-modal"
 import Helmet from "react-helmet"
-import { OutboundLink } from "gatsby-plugin-google-analytics"
 import MdClose from "react-icons/lib/md/close"
 import { navigate, PageRenderer } from "gatsby"
 import presets, { colors } from "../utils/presets"
@@ -9,7 +8,6 @@ import Banner from "../components/banner"
 import Navigation from "../components/navigation"
 import MobileNavigation from "../components/navigation-mobile"
 import PageWithSidebar from "../components/page-with-sidebar"
-import "../css/prism-coy.css"
 
 import mousetrap from "mousetrap"
 
@@ -167,7 +165,7 @@ class DefaultLayout extends React.Component {
         <Banner background={isHomepage ? `#402060` : false}>
           These are the docs for v2 beta.
           {` `}
-          <OutboundLink
+          <a
             href="https://gatsbyjs.org/"
             css={{
               color: `#fff`,
@@ -185,7 +183,7 @@ class DefaultLayout extends React.Component {
               {` `}
               instead
             </span>
-          </OutboundLink>
+          </a>
           .
         </Banner>
         <Navigation pathname={this.props.location.pathname} />

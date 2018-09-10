@@ -1,4 +1,4 @@
-import typography, { options, rhythm } from "../../utils/typography"
+import typography, { options, rhythm, scale } from "../../utils/typography"
 import presets, { colors } from "../../utils/presets"
 import { style } from "glamor"
 import hex2rgba from "hex2rgba"
@@ -104,8 +104,15 @@ const styles = {
     },
   },
   sticky: {
-    paddingTop: rhythm(options.blockMarginBottom),
     position: `sticky`,
+    // We need the -1px here to work around a weird issue on Chrome
+    // where the sticky element is consistently positioned 1px too far down,
+    // leaving a nasty gap that the page content peeks through.
+    // FWIW the problem is only present on the "Site Showcase" index page,
+    // not the "Starter Showcase" index page; if the "Featured Sites" block
+    // is removed, the problem goes away. I tried removing elements in the
+    // "Featured Sites" content block, but no success—only removing the entire block
+    // resolves the issue.
     top: `calc(${presets.bannerHeight} - 1px)`,
     [presets.Desktop]: {
       top: `calc(${presets.headerHeight} + ${presets.bannerHeight} - 1px)`,
@@ -143,6 +150,13 @@ const styles = {
   noLinkUnderline: {
     borderBottom: `none !important`, // i know i know
     boxShadow: `none !important`, // but people really want this
+  },
+  meta: {
+    ...scale(-1 / 5),
+    alignItems: `baseline`,
+    "&&": {
+      color: colors.gray.bright,
+    },
   },
   searchInput: {
     appearance: `none`,

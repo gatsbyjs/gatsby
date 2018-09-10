@@ -1,7 +1,5 @@
 import React from "react"
 import { graphql } from "gatsby"
-import { OutboundLink } from "gatsby-plugin-google-analytics"
-
 import Layout from "../components/layout"
 import presets, { colors } from "../utils/presets"
 import { rhythm, options } from "../utils/typography"
@@ -18,7 +16,6 @@ import Diagram from "../components/diagram"
 import BlogPostPreviewItem from "../components/blog-post-preview-item"
 import FuturaParagraph from "../components/futura-paragraph"
 import CtaButton from "../components/cta-button"
-import EmailCaptureForm from "../components/email-capture-form"
 import TechWithIcon from "../components/tech-with-icon"
 
 class IndexRoute extends React.Component {
@@ -64,12 +61,10 @@ class IndexRoute extends React.Component {
                     </CardHeadline>
                     <FuturaParagraph>
                       Enjoy the power of the latest web technologies –{` `}
-                      <TechWithIcon icon={ReactJSIcon}>
-                        React.js
-                      </TechWithIcon>,{` `}
-                      <TechWithIcon icon={WebpackIcon}>
-                        Webpack
-                      </TechWithIcon>,{` `}
+                      <TechWithIcon icon={ReactJSIcon}>React.js</TechWithIcon>,
+                      {` `}
+                      <TechWithIcon icon={WebpackIcon}>Webpack</TechWithIcon>,
+                      {` `}
                       modern JavaScript and CSS and more — all setup and waiting
                       for you to start building.
                     </FuturaParagraph>
@@ -80,7 +75,8 @@ class IndexRoute extends React.Component {
                       Gatsby’s rich data plugin ecosystem lets you build sites
                       with the data you want — from one or many sources: Pull
                       data from headless CMSs, SaaS services, APIs, databases,
-                      your file system & more directly into your pages using{` `}
+                      your file system & more directly into your pages using
+                      {` `}
                       <TechWithIcon icon={GraphQLIcon}>GraphQL</TechWithIcon>.
                     </FuturaParagraph>
                   </Card>
@@ -99,11 +95,10 @@ class IndexRoute extends React.Component {
                     <FuturaParagraph>
                       Don't build a website with last decade's tech. The future
                       of the web is mobile, JavaScript and APIs—the {` `}
-                      <OutboundLink href="https://jamstack.org/">
-                        JAMstack
-                      </OutboundLink>. Every website is a web app and every web
-                      app is a website. Gatsby.js is the universal JavaScript
-                      framework you’ve been waiting for.
+                      <a href="https://jamstack.org/">JAMstack</a>. Every
+                      website is a web app and every web app is a website.
+                      Gatsby.js is the universal JavaScript framework you’ve
+                      been waiting for.
                     </FuturaParagraph>
                   </Card>
                   <Card>
@@ -173,14 +168,6 @@ class IndexRoute extends React.Component {
                         paddingBottom: `0 !important`,
                       }}
                     >
-                      <EmailCaptureForm
-                        signupMessage="Want to keep up to date with the latest posts on our blog? Subscribe to our newsletter!"
-                        overrideCSS={{
-                          marginTop: 0,
-                          marginBottom: rhythm(1),
-                          border: `none`,
-                        }}
-                      />
                       <h2
                         css={{
                           textAlign: `left`,

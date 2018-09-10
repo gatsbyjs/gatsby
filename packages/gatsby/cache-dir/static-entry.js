@@ -17,6 +17,10 @@ const stats = JSON.parse(
   fs.readFileSync(`${process.cwd()}/public/webpack.stats.json`, `utf-8`)
 )
 
+const chunkMapping = JSON.parse(
+  fs.readFileSync(`${process.cwd()}/public/chunk-map.json`, `utf-8`)
+)
+
 // const testRequireError = require("./test-require-error")
 // For some extremely mysterious reason, webpack adds the above module *after*
 // this module so that when this code runs, testRequireError is undefined.
@@ -40,20 +44,11 @@ try {
 
 Html = Html && Html.__esModule ? Html.default : Html
 
-function urlJoin(...parts) {
-  return parts.reduce((r, next) => {
-    const segment = next == null ? `` : String(next).replace(/^\/+/, ``)
-    return segment ? `${r.replace(/\/$/, ``)}/${segment}` : r
-  }, ``)
-}
-
 const getPage = path => pagesObjectMap.get(path)
 
 const createElement = React.createElement
 
 export default (pagePath, callback) => {
-  const pathPrefix = `${__PATH_PREFIX__}/`
-
   let bodyHtml = ``
   let headComponents = []
   let htmlAttributes = {}
@@ -153,11 +148,11 @@ export default (pagePath, callback) => {
 
   const routerElement = createElement(
     ServerLocation,
-    { url: `${pathPrefix}${pagePath}` },
+    { url: `${__PATH_PREFIX__}${pagePath}` },
     createElement(
       Router,
       {
-        baseuri: pathPrefix.slice(0, -1),
+        baseuri: `${__PATH_PREFIX__}`,
       },
       createElement(RouteHandler, { path: `/*` })
     )
@@ -248,7 +243,7 @@ export default (pagePath, callback) => {
     bodyHtml,
     scripts,
     styles,
-    pathPrefix,
+    pathPrefix: __PATH_PREFIX__,
   })
 
   scripts
@@ -261,13 +256,15 @@ export default (pagePath, callback) => {
           as="script"
           rel={script.rel}
           key={script.name}
-          href={urlJoin(pathPrefix, script.name)}
+          href={`${__PATH_PREFIX__}/${script.name}`}
         />
       )
     })
 
   if (page.jsonName in dataPaths) {
-    const dataPath = `${pathPrefix}static/d/${dataPaths[page.jsonName]}.json`
+    const dataPath = `${__PATH_PREFIX__}/static/d/${
+      dataPaths[page.jsonName]
+    }.json`
     headComponents.push(
       <link
         rel="preload"
@@ -292,13 +289,13 @@ export default (pagePath, callback) => {
             as="style"
             rel={style.rel}
             key={style.name}
-            href={urlJoin(pathPrefix, style.name)}
+            href={`${__PATH_PREFIX__}/${style.name}`}
           />
         )
       } else {
         headComponents.unshift(
           <style
-            data-href={urlJoin(pathPrefix, style.name)}
+            data-href={`${__PATH_PREFIX__}/${style.name}`}
             dangerouslySetInnerHTML={{
               __html: fs.readFileSync(
                 join(process.cwd(), `public`, style.name),
@@ -336,10 +333,28 @@ export default (pagePath, callback) => {
     />
   )
 
+  // Add chunk mapping metadata
+  const scriptChunkMapping = `/*<![CDATA[*/window.___chunkMapping=${JSON.stringify(
+    chunkMapping
+  )};/*]]>*/`
+
+  postBodyComponents.push(
+    <script
+      key={`chunk-mapping`}
+      id={`gatsby-chunk-mapping`}
+      dangerouslySetInnerHTML={{
+        __html: scriptChunkMapping,
+      }}
+    />
+  )
+
   // Filter out prefetched bundles as adding them as a script tag
   // would force high priority fetching.
   const bodyScripts = scripts.filter(s => s.rel !== `prefetch`).map(s => {
-    const scriptPath = `${pathPrefix}${JSON.stringify(s.name).slice(1, -1)}`
+    const scriptPath = `${__PATH_PREFIX__}/${JSON.stringify(s.name).slice(
+      1,
+      -1
+    )}`
     return <script key={scriptPath} src={scriptPath} async />
   })
 

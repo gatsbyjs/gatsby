@@ -1,6 +1,7 @@
 import pageFinderFactory from "./find-page"
 import emitter from "./emitter"
 import stripPrefix from "./strip-prefix"
+import prefetchHelper from "./prefetch"
 
 const preferDefault = m => (m && m.default) || m
 
@@ -47,6 +48,10 @@ const fetchPageResourceMap = () => {
 }
 
 const createJsonURL = jsonName => `${__PATH_PREFIX__}/static/d/${jsonName}.json`
+const createComponentUrls = componentChunkName =>
+  window.___chunkMapping[componentChunkName].map(
+    chunk => __PATH_PREFIX__ + chunk
+  )
 
 const fetchResource = resourceName => {
   // Find resource
@@ -60,7 +65,7 @@ const fetchResource = resourceName => {
       resourceFunction = () => {
         const fetchPromise = new Promise((resolve, reject) => {
           const url = createJsonURL(jsonDataPaths[resourceName])
-          var req = new XMLHttpRequest()
+          const req = new XMLHttpRequest()
           req.open(`GET`, url, true)
           req.withCredentials = true
           req.onreadystatechange = () => {
@@ -106,25 +111,17 @@ const fetchResource = resourceName => {
   })
 }
 
+const prefetchResource = resourceName => {
+  if (resourceName.slice(0, 12) === `component---`) {
+    createComponentUrls(resourceName).forEach(url => prefetchHelper(url))
+  } else {
+    const url = createJsonURL(jsonDataPaths[resourceName])
+    prefetchHelper(url)
+  }
+}
+
 const getResourceModule = resourceName =>
   fetchResource(resourceName).then(preferDefault)
-
-// Prefetcher logic
-if (process.env.NODE_ENV === `production`) {
-  prefetcher = require(`./prefetcher`)({
-    fetchNextResource: () => {
-      let next = queue.dequeue()
-      return next && fetchResource(next)
-    },
-  })
-
-  emitter.on(`onPreLoadPageResources`, e => {
-    prefetcher.onPreLoadPageResources(e)
-  })
-  emitter.on(`onPostLoadPageResources`, e => {
-    prefetcher.onPostLoadPageResources(e)
-  })
-}
 
 const appearsOnLine = () => {
   const isOnLine = navigator.onLine
@@ -165,16 +162,10 @@ const sortResourcesByCount = (a, b) => {
 
 let findPage
 let pathScriptsCache = {}
-let resourcesArray = []
-let mountOrder = 1
 let prefetchTriggered = {}
 let disableCorePrefetching = false
 
 const queue = {
-  empty: () => {
-    resourcesCount = Object.create(null)
-    resourcesArray = []
-  },
   addPagesArray: newPages => {
     findPage = pageFinderFactory(newPages, __PATH_PREFIX__)
   },
@@ -187,7 +178,6 @@ const queue = {
   addDataPaths: dataPaths => {
     jsonDataPaths = dataPaths
   },
-  dequeue: () => resourcesArray.pop(),
   // Hovering on a link is a very strong indication the user is going to
   // click on it soon so let's start prefetching resources for this
   // pathname.
@@ -205,7 +195,6 @@ const queue = {
     if (!prefetchTriggered[path]) {
       apiRunner(`onPrefetchPathname`, {
         pathname: path,
-        getResourcesForPathname: queue.getResourcesForPathname,
       })
       prefetchTriggered[path] = true
     }
@@ -241,40 +230,28 @@ const queue = {
       devGetPageData(page.path)
     }
 
-    const mountOrderBoost = 1 / mountOrder
-    mountOrder += 1
-
-    function enqueueResource(resourceName) {
-      if (!resourceName) return
-      if (!resourcesCount[resourceName]) {
-        resourcesCount[resourceName] = 1 + mountOrderBoost
-      } else {
-        resourcesCount[resourceName] += 1 + mountOrderBoost
-      }
-
-      // Before adding, checking that the resource isn't either
-      // already queued or been downloading.
-      if (hasFetched[resourceName] || resourcesArray.includes(resourceName))
-        return
-
-      resourcesArray.unshift(resourceName)
-    }
-
-    // Add resources to queue.
-    enqueueResource(page.jsonName)
-    enqueueResource(page.componentChunkName)
-
-    // Sort resources by resourcesCount.
-    resourcesArray.sort(sortResourcesByCount)
-
+    // Prefetch resources.
     if (process.env.NODE_ENV === `production`) {
-      prefetcher.onNewResourcesAdded()
+      prefetchResource(page.jsonName)
+      prefetchResource(page.componentChunkName)
     }
 
     return true
   },
 
   getPage: pathname => findPage(pathname),
+
+  getResourceURLsForPathname: path => {
+    const page = findPage(path)
+    if (page) {
+      return [
+        ...createComponentUrls(page.componentChunkName),
+        createJsonURL(jsonDataPaths[page.jsonName]),
+      ]
+    } else {
+      return null
+    }
+  },
 
   getResourcesForPathnameSync: path => {
     const page = findPage(path)
@@ -288,8 +265,8 @@ const queue = {
   // Get resources (code/data) for a path. Fetches metdata first
   // if necessary and then the code/data bundles. Used for prefetching
   // and getting resources for page changes.
-  getResourcesForPathname: path => {
-    return new Promise((resolve, reject) => {
+  getResourcesForPathname: path =>
+    new Promise((resolve, reject) => {
       const doingInitialRender = inInitialRender
       inInitialRender = false
 
@@ -392,11 +369,7 @@ const queue = {
           }
         })
       }
-    })
-  },
-
-  // for testing
-  ___resources: () => resourcesArray.slice().reverse(),
+    }),
 }
 
 export const setApiRunnerForLoader = runner => {
@@ -406,6 +379,7 @@ export const setApiRunnerForLoader = runner => {
 
 export const publicLoader = {
   getResourcesForPathname: queue.getResourcesForPathname,
+  getResourceURLsForPathname: queue.getResourceURLsForPathname,
   getResourcesForPathnameSync: queue.getResourcesForPathnameSync,
 }
 

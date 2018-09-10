@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import HubspotForm from "react-hubspot-form"
 import { css } from "glamor"
-import presets, { colors } from "../utils/presets"
+import { colors } from "../utils/presets"
 import { rhythm, options } from "../utils/typography"
 import hex2rgba from "hex2rgba"
 import { formInput } from "../utils/form-styles"
@@ -13,7 +13,10 @@ let stripeAnimation = css.keyframes({
 
 export default class GatsbyHubspotForm extends Component {
   render() {
-    const { portalId, formId, sfdcCampaignId } = this.props
+    const portalId = this.props.portalId || this.props[`portal-id`]
+    const formId = this.props.formId || this.props[`form-id`]
+    const sfdcCampaignId =
+      this.props.sfdcCampaignId || this.props[`sfdc-campaign-id`]
 
     // See https://designers.hubspot.com/docs/cos/hubspot-form-markup#styling-forms for information on how to style the form
     return (
