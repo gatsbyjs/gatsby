@@ -2,7 +2,7 @@
 
 describe(`Production build tests`, () => {
   it(`should render properly`, () => {
-    cy.visit(`/`)
+    cy.visit(`/`).waitForRouteChange()
   })
 
   it(`should navigate back after a reload`, () => {
