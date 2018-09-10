@@ -48,15 +48,9 @@ class RouteHandler extends React.Component {
     let { location } = this.props
     let child
 
-    // check if page exists
+    // check if page exists - in dev pages are sync loaded, it's safe to use
+    // loader.getPage
     let page = loader.getPage(location.pathname)
-    if (!page) {
-      // If page doesn't exist, check if 404 page exists
-      page = loader.getPage(`/404.html`)
-      if (page) {
-        location = { ...location, pathname: `/404.html` }
-      }
-    }
 
     if (page) {
       child = (

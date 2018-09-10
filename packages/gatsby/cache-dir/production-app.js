@@ -41,10 +41,6 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       // restoring old position
       // if not, add that.
 
-      if (!loader.getPage(location.pathname)) {
-        location = { ...location, pathname: `/404.html` }
-      }
-
       return (
         <ScrollContext
           location={location}

@@ -13,12 +13,9 @@ class EnsureResources extends React.Component {
     super()
     let location = props.location
 
-    // Set the pathname for 404 pages.
-    const pathname = this.getPathName(location)
-
     this.state = {
       location: { ...location },
-      pageResources: loader.getResourcesForPathnameSync(pathname),
+      pageResources: loader.getResourcesForPathnameSync(location.pathname),
     }
   }
 
@@ -42,14 +39,13 @@ class EnsureResources extends React.Component {
   componentDidUpdate(prevProps) {
     if (prevProps === this.props) return
 
-    const { location } = this.props
-    const pathName = this.getPathName(location)
+    const { pathname } = this.props.location
 
-    if (!loader.getResourcesForPathnameSync(pathName))
+    if (!loader.getResourcesForPathnameSync(pathname))
       // Page resources won't be set in cases where the browser back button
       // or forward button is pushed as we can't wait as normal for resources
       // to load before changing the page.
-      loader.getResourcesForPathname(pathName).then(pageResources => {
+      loader.getResourcesForPathname(pathname).then(pageResources => {
         // The page may have changed since we started this, in which case doesn't update
 
         if (this.props.location.pathname !== location.pathname) {
@@ -94,10 +90,6 @@ class EnsureResources extends React.Component {
     }
 
     return shallowCompare(this, nextProps, nextState)
-  }
-
-  getPathName(location) {
-    return !loader.getPage(location.pathname) ? `/404.html` : location.pathname
   }
 
   render() {
