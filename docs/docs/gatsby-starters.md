@@ -942,7 +942,7 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
   [(demo)](https://gatsby-starter-solid-state.netlify.com)
 
   Features:
-  
+
   - Built upon gatsby-starter-default
   - Based on the [Solid State](https://html5up.net/solid-state) theme
   - PWA out-of-the-box with gatsby-plugin-manifest and gatsby-plugin-offline
@@ -956,6 +956,6 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
   [(demo)](https://gatsby-starter-typescript-sass.netlify.com)
 
   Features:
-  
+
   - Built upon gatsby-starter-default
   - Perfect if you want to use Typescript and SASS but don't want any extra code
