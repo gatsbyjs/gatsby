@@ -113,7 +113,7 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
   - [Full list here!](https://github.com/fabien0102/gatsby-starter#whats-inside)
 
 - [gatsby-starter-bootstrap](https://github.com/jaxx2104/gatsby-starter-bootstrap)
-  [(demo)](https://jaxx2104.github.io/gatsby-starter-bootstrap/)
+  [(demo)](https://gatstrap.netlify.com/)
 
   Features:
 
@@ -562,18 +562,6 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
   - Minimal UI and Styling -- made to customize.
   - Styled Components
 
-- [gatsby-starter-simple-landing](https://github.com/greglobinski/gatsby-starter-simple-landing)
-  [(demo)](https://gssl.greglobinski.com/)
-
-  Features:
-
-  - CSS-in-JS via [JSS](https://github.com/cssinjs/jss)
-  - easily restyled through theme object
-  - text content via Markdown files
-  - auto-generated sizes and types (png, webp) for background and hero images
-  - favicons generator
-  - webfonts with [webfontloader](https://github.com/typekit/webfontloader)
-
 - [gatsby-starter-typescript-plus](https://github.com/resir014/gatsby-starter-typescript-plus)
   [(demo)](https://gatsby-starter-typescript-plus.netlify.com/)
 
@@ -583,7 +571,7 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
   - TSLint (with custom TSLint rules)
   - Markdown rendering with Remark
   - Basic component structure
-  - Styling with [styled-components](https://www.styled-components.com/)
+  - Styling with [emotion](https://emotion.sh/)
 
 - [gatsby-orga](https://github.com/xiaoxinghu/gatsby-orga)
   [(demo)](https://xiaoxinghu.github.io/gatsby-orga/)
@@ -949,3 +937,25 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
   - Simple one page site
   - Fully Responsive
   - Styling with SCSS
+
+- [gatsby-starter-solid-state](https://github.com/theschmocker/gatsby-starter-solid-state)
+  [(demo)](https://gatsby-starter-solid-state.netlify.com)
+
+  Features:
+
+  - Built upon gatsby-starter-default
+  - Based on the [Solid State](https://html5up.net/solid-state) theme
+  - PWA out-of-the-box with gatsby-plugin-manifest and gatsby-plugin-offline
+  - Lazy-loaded, responsive images
+  - Styled using SCSS
+  - Fully responsive
+  - Helper components for interacting with Sass classes
+  - Uses the latest version of React
+
+- [gatsby-starter-typescript-sass](https://github.com/tdharmon/gatsby-starter-typescript-sass)
+  [(demo)](https://gatsby-starter-typescript-sass.netlify.com)
+
+  Features:
+
+  - Built upon gatsby-starter-default
+  - Perfect if you want to use Typescript and SASS but don't want any extra code

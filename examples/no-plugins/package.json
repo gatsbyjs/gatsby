@@ -6,7 +6,7 @@
   "author": "Scotty Eckenthal <scott.eckenthal@gmail.com>",
   "dependencies": {
     "gatsby": "next",
-    "lodash": "^4.16.4",
+    "lodash": "^4.17.10",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
     "slash": "^1.0.0"

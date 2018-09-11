@@ -81,13 +81,18 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   }
 
   if (
-    window.page.path &&
-    window.page.path !== window.location.pathname &&
-    window.page.path !== `/offline-plugin-app-shell-fallback/`
+    window.page &&
+    window.page.path !== `/404.html` &&
+    !window.page.path.match(/^\/offline-plugin-app-shell-fallback\/?$/) &&
+    __PATH_PREFIX__ + window.page.path !== window.location.pathname
   ) {
-    navigate(window.page.path + window.location.search + window.location.hash, {
-      replace: true,
-    })
+    navigate(
+      __PATH_PREFIX__ +
+        window.page.path +
+        window.location.search +
+        window.location.hash,
+      { replace: true }
+    )
   }
 
   loader
