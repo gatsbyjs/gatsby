@@ -98,11 +98,15 @@ const navigate = (to, options = {}) => {
 }
 
 function shouldUpdateScroll(prevRouterProps, routerProps) {
-  const { location: { pathname, hash } } = routerProps
+  const {
+    location: { pathname, hash },
+  } = routerProps
   const results = apiRunner(`shouldUpdateScroll`, {
     prevRouterProps,
+    // `pathname` for backwards compatibility
+    pathname,
     routerProps,
-    savedScrollPositions: this._stateStorage
+    savedScrollPositions: this._stateStorage,
   })
   if (results.length > 0) {
     return results[0]
@@ -115,7 +119,7 @@ function shouldUpdateScroll(prevRouterProps, routerProps) {
     if (oldPathname === pathname) {
       // Scroll to element if it exists, if it doesn't, or no hash is provided,
       // scroll to top.
-      return hash ? hash.slice(1) : [0,0]
+      return hash ? hash.slice(1) : [0, 0]
     }
   }
   return true
