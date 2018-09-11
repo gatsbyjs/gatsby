@@ -8,7 +8,6 @@ const optDebug = once(options => {
 module.exports = pluginOptions => {
   const options = Object.assign(
     {
-      decks: [],
       defaultLayouts: {},
       extensions: [".mdx"],
       hastPlugins: [],

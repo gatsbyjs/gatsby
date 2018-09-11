@@ -27,7 +27,7 @@ exports.onCreateWebpackConfig = require("./gatsby/create-webpack-config");
  * determines which files in the pages/ directory get built as pages.
  */
 exports.resolvableExtensions = (data, pluginOptions) =>
-  defaultOptions(pluginOptions).extensions.concat(".deck-mdx");
+  defaultOptions(pluginOptions).extensions;
 
 /**
  * Convert MDX to JSX so that Gatsby can extract the GraphQL queries.
@@ -39,7 +39,7 @@ exports.preprocessSource = async function preprocessSource(
   const { extensions, ...options } = defaultOptions(pluginOptions);
   const ext = path.extname(filename);
 
-  if (extensions.includes(ext) || ext === ".deck-mdx") {
+  if (extensions.includes(ext)) {
     const code = await mdx(contents, options);
     return code;
   }
