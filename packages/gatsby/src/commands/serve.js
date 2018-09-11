@@ -14,7 +14,7 @@ module.exports = async program => {
     getConfigFile(program.directory, `gatsby-config`)
   )
 
-  pathPrefix = prefixPaths && pathPrefix ? pathPrefix : '/'
+  pathPrefix = prefixPaths && pathPrefix ? pathPrefix : `/`
 
   const app = express()
   const router = express.Router()
