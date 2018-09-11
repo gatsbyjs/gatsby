@@ -40,11 +40,6 @@ if (!havePackageJsonFile) {
   process.exit()
 }
 
-const localPkg = JSON.parse(fs.readFileSync(`package.json`))
-let packages = Object.keys(
-  _.merge({}, localPkg.dependencies, localPkg.devDependencies)
-)
-
 const pathToRepo = argv.setPathToRepo
 if (pathToRepo) {
   console.log(`Saving path to your Gatsby repo`)
@@ -65,6 +60,11 @@ gatsby-dev --set-path-to-repo /path/to/my/cloned/version/gatsby
   )
   process.exit()
 }
+
+const localPkg = JSON.parse(fs.readFileSync(`package.json`))
+let packages = Object.keys(
+  _.merge({}, localPkg.dependencies, localPkg.devDependencies)
+)
 
 if (argv.copyAll) {
   packages = fs.readdirSync(path.join(gatsbyLocation, `packages`))
