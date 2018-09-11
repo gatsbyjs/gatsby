@@ -9,8 +9,7 @@
   },
   "peerDependencies": {
     "@mdx-js/mdx": "^0.15.0",
-    "@mdx-js/tag": "^0.15.0",
-    "mdx-deck": "^1.5.7"
+    "@mdx-js/tag": "^0.15.0"
   },
   "dependencies": {
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.54",

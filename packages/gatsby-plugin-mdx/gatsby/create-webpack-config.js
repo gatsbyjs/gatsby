@@ -10,14 +10,6 @@ module.exports = (
   const testPattern = new RegExp(
     options.extensions.map(ext => `${escapeStringRegexp(ext)}$`).join("|")
   );
-  const mdxTestPattern = new RegExp(
-    options.extensions
-      .concat(".deck-mdx")
-      .map(ext => `${escapeStringRegexp(ext)}$`)
-      .join("|")
-  );
-
-  const decks = options.decks.map(ext => `${escapeStringRegexp(ext)}`);
 
   actions.setWebpackConfig({
     module: {
@@ -29,7 +21,6 @@ module.exports = (
         },
         {
           test: testPattern,
-          exclude: decks,
           use: [
             loaders.js(),
             {
@@ -39,23 +30,6 @@ module.exports = (
                 pluginOptions: options
               }
             }
-          ]
-        },
-        {
-          test: mdxTestPattern,
-          include: decks,
-          use: [
-            loaders.js(),
-            { loader: "gatsby-mdx/loaders/mdx-deck-post-loader" },
-            { loader: "mdx-deck/loader" }
-          ]
-        },
-        {
-          test: /.deck-mdx$/,
-          use: [
-            loaders.js(),
-            { loader: "gatsby-mdx/loaders/mdx-deck-post-loader" },
-            { loader: "mdx-deck/loader" }
           ]
         }
       ]
