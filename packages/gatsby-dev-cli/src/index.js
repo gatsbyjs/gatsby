@@ -67,9 +67,9 @@ gatsby-dev --set-path-to-repo /path/to/my/cloned/version/gatsby
 }
 
 if (argv.copyAll) {
-  packages = fs.readdirSync(path.join(gatsbyLocation, 'packages'));
+  packages = fs.readdirSync(path.join(gatsbyLocation, `packages`))
 } else {
-  packages = packages.filter(p => p.startsWith(`gatsby`));
+  packages = packages.filter(p => p.startsWith(`gatsby`))
 }
 
 if (!argv.packages && _.isEmpty(packages)) {
