@@ -359,8 +359,8 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
   - Secured Credit Card payments with Stripe
   - Storing of funding information in Firebase
 
-- [gatsby-starter-dimension](https://github.com/ChangoMan/gatsby-starter-dimension)
-  [(demo)](http://gatsby-dimension.surge.sh/)
+- [gatsby-starter-dimension-v2](https://github.com/codebushi/gatsby-starter-dimension-v2)
+  [(demo)](http://gatsby-dimension-v2.surge.sh/)
 
   Features:
 
@@ -369,6 +369,7 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
   - Simple one page site that's perfect for personal portfolios
   - Fully Responsive
   - Styling with SCSS
+  - Updated to use Gatsby.js V2
 
 - [gatsby-starter-docs](https://github.com/ericwindmill/gatsby-starter-docs)
   [(demo)](https://gatsby-docs-starter.netlify.com/)
@@ -427,8 +428,8 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
   - Offline support.
   - Page transitions.
 
-- [gatsby-starter-forty](https://github.com/ChangoMan/gatsby-starter-forty)
-  [(demo)](http://gatsby-forty.surge.sh/)
+- [gatsby-starter-forty-v2](https://github.com/codebushi/gatsby-starter-forty-v2)
+  [(demo)](http://gatsby-forty-v2.surge.sh/)
 
   Features:
 
@@ -437,6 +438,8 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
   - Colorful homepage, and also includes a Landing Page and Generic Page components.
   - Many elements are available, including buttons, forms, tables, and pagination.
   - Styling with SCSS
+  - Custom grid made using CSS Grid
+  - Updated to use Gatsby.js V2
 
 - [gatsby-firebase-authentication](https://github.com/rwieruch/gatsby-firebase-authentication) [(demo)](https://react-firebase-authentication.wieruch.com/)
 
