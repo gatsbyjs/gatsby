@@ -46,7 +46,8 @@ class IndexComponent extends React.Component {
             possible for Gatsby (and other React) websites.
           </p>
           <p>
-            The component requires{` `}
+            The component requires
+            {` `}
             <em css={{ fontWeight: `bold`, fontStyle: `normal` }}>
               no configuration
             </em>

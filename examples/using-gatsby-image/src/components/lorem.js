@@ -20,7 +20,8 @@ const Lorem = () => (
     <p>
       Proteus ut dis nec exsecrantia data: agrestes, truculenta Peleus. Et
       diffidunt, talia intravit Thaumantias; figere et <em>et</em> qui socio
-      qui, <a href="http://vixmonet.io/in.html">tuo servet unda</a> hoc{` `}
+      qui, <a href="http://vixmonet.io/in.html">tuo servet unda</a> hoc
+      {` `}
       <strong>classi</strong>? Causam <em>quemque</em>? Subigebant cornibus
       fibras ut per nare nati, cunctis et <strong>illa verba</strong> inrita.
     </p>

@@ -51,6 +51,7 @@ exports.createPages = ({ graphql, actions }) => {
   return new Promise((resolve, reject) => {
     const docsTemplate = path.resolve(`src/templates/template-docs-markdown.js`)
     const blogPostTemplate = path.resolve(`src/templates/template-blog-post.js`)
+    const blogListTemplate = path.resolve(`src/templates/template-blog-list.js`)
     const tagTemplate = path.resolve(`src/templates/tags.js`)
     const contributorPageTemplate = path.resolve(
       `src/templates/template-contributor-page.js`
@@ -63,6 +64,9 @@ exports.createPages = ({ graphql, actions }) => {
     )
     const showcaseTemplate = path.resolve(
       `src/templates/template-showcase-details.js`
+    )
+    const creatorPageTemplate = path.resolve(
+      `src/templates/template-creator-details.js`
     )
 
     createRedirect({
@@ -118,6 +122,15 @@ exports.createPages = ({ graphql, actions }) => {
               }
             }
           }
+          allCreatorsYaml {
+            edges {
+              node {
+                fields {
+                  slug
+                }
+              }
+            }
+          }
           allSitesYaml(filter: { main_url: { ne: null } }) {
             edges {
               node {
@@ -162,7 +175,24 @@ exports.createPages = ({ graphql, actions }) => {
         return undefined
       })
 
-      // Create blog pages.
+      // Create blog-list pages.
+      const postsPerPage = 8
+      const numPages = Math.ceil(blogPosts.length / postsPerPage)
+
+      Array.from({ length: numPages }).forEach((_, i) => {
+        createPage({
+          path: i === 0 ? `/blog` : `/blog/${i + 1}`,
+          component: slash(blogListTemplate),
+          context: {
+            limit: postsPerPage,
+            skip: i * postsPerPage,
+            numPages,
+            currentPage: i + 1,
+          },
+        })
+      })
+
+      // Create blog-post pages.
       blogPosts.forEach((edge, index) => {
         const next = index === 0 ? null : blogPosts[index - 1].node
         const prev =
@@ -185,7 +215,7 @@ exports.createPages = ({ graphql, actions }) => {
 
       _.uniq(_.flatten(tagLists)).forEach(tag => {
         createPage({
-          path: `/blog/tags/${_.kebabCase(tag)}/`,
+          path: `/blog/tags/${_.kebabCase(tag.toLowerCase())}/`,
           component: tagTemplate,
           context: {
             tag,
@@ -220,6 +250,18 @@ exports.createPages = ({ graphql, actions }) => {
         createPage({
           path: `${edge.node.fields.slug}`,
           component: slash(contributorPageTemplate),
+          context: {
+            slug: edge.node.fields.slug,
+          },
+        })
+      })
+
+      result.data.allCreatorsYaml.edges.forEach(edge => {
+        if (!edge.node.fields) return
+        if (!edge.node.fields.slug) return
+        createPage({
+          path: `${edge.node.fields.slug}`,
+          component: slash(creatorPageTemplate),
           context: {
             slug: edge.node.fields.slug,
           },
@@ -354,6 +396,28 @@ exports.onCreateNode = ({ node, actions, getNode, getNodes }) => {
     slug = `/showcase/${slugify(cleaned)}`
     createNodeField({ node, name: `slug`, value: slug })
   }
+
+  // Community/Creators Pages
+  else if (node.internal.type === `CreatorsYaml`) {
+    const validTypes = {
+      individual: `people`,
+      agency: `agencies`,
+      company: `companies`,
+    }
+
+    if (!validTypes[node.type]) {
+      throw new Error(
+        `Creators must have a type of “individual”, “agency”, or “company”, but invalid type “${
+          node.type
+        }” was provided for ${node.name}.`
+      )
+    }
+    slug = `/community/${validTypes[node.type]}/${slugify(node.name, {
+      lower: true,
+    })}`
+    createNodeField({ node, name: `slug`, value: slug })
+  }
+  // end Community/Creators Pages
 }
 
 exports.onPostBuild = () => {

@@ -113,8 +113,7 @@ Here it is, trimmed to one node for brevity:
       "edges": [
         {
           "node": {
-            "excerpt":
-              "Far far away, behind the word mountains, far from the countries Vokalia and\nConsonantia, there live the blind texts. Separated they live in…",
+            "excerpt": "Far far away, behind the word mountains, far from the countries Vokalia and\nConsonantia, there live the blind texts. Separated they live in…",
             "fields": {
               "slug": "/hi-folks/"
             },
@@ -256,7 +255,7 @@ export default props => (
         }
       }
     `}
-    render={data => <Header data={data} {...props} />}
+    render={data => <Header {...props} data={data} />}
   />
 )
 ```
@@ -286,7 +285,7 @@ export const Header = props => (
         }
       }
     `}
-    render={data => <PureHeader data={data} {...props} />}
+    render={data => <PureHeader {...props} data={data} />}
   />
 )
 

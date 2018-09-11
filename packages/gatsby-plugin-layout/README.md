@@ -163,10 +163,10 @@ import ContextConsumer from "./Context"
 const ComponentThatChangeState = () => (
   <ContextConsumer>
     {({ data, set }) => (
-        <div onClick={() => set({menuOpen: !data.menuOpen})}>
-            {data.menuOpen ? `Opened Menu` : `Closed Menu`}
-        </div>
-    )
+      <div onClick={() => set({ menuOpen: !data.menuOpen })}>
+        {data.menuOpen ? `Opened Menu` : `Closed Menu`}
+      </div>
+    )}
   </ContextConsumer>
 )
 ```

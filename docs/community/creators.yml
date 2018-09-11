@@ -1,0 +1,81 @@
+- name: Fabian Schultz
+  type: individual
+  description: >-
+    Hello, I’m Fabian — a product designer and developer based in Potsdam,
+    Germany. I’ve been working both as a product designer and frontend developer
+    for over 5 years now. I particularly enjoy working with companies that try
+    to meet broad and unique user needs.
+  location: 'Potsdam, Germany'
+  website: 'https://fabianschultz.com/'
+  github: 'https://github.com/fabe'
+  image: images/fabian-schultz.jpg
+  for_hire: true
+  portfolio: true
+- name: Kris Hedstrom
+  type: individual
+  description: >-
+    Hey. I’m Kris. I’m an interactive designer / developer. I grew up in Umeå,
+    in northern Sweden, but I now live in Brooklyn, NY. I am currently enjoying
+    a hybrid Art Director + Lead Product Engineer role at a small startup called
+    Nomad Health. Before that, I was a Product (Engineering) Manager at Tumblr.
+    Before that, I worked at agencies. Before that, I was a baby. I like to
+    design things, and then I like to build those things. I occasionally take on
+    freelance projects. Feel free to get in touch if you have an interesting
+    project that you want to collaborate on. Or if you just want to say hello,
+    that’s cool too.
+  location: 'New York, US'
+  website: 'https://k-create.com/'
+  github: 'https://github.com/kristofferh'
+  image: images/kris-hedstrom.jpg
+  for_hire: true
+  portfolio: true
+- name: Mahipat Jadav
+  type: individual
+  description: >-
+    Since last 7 years, I have been working as full stack developer with
+    companies in india, I have designed and developed reliable, fast, engaging &
+    responsive websites, with strong focus on performance & responsive design
+    using the latest technologies.
+  location: India
+  website: 'https://mojaave.com/'
+  github: 'https://github.com/mhjadav/mojaave'
+  image: images/mahipat-jadav.jpg
+  for_hire: true
+  portfolio: true
+- name: Bejamas
+  type: agency
+  description: >-
+    We help agencies and companies with JAMStack tools. This includes web
+    development using Static Site Generators, Headless CMS, CI / CD and CDN
+    setup.
+  location: Poland
+  website: 'https://bejamas.io/'
+  github: null
+  image: images/bejamas.jpg
+  for_hire: true
+  hiring: false
+  portfolio: true
+- name: Spacetime
+  type: agency
+  description: >-
+    Spacetime is a Dallas-based digital experience agency specializing in web,
+    app, startup, and digital experience creation.
+  location: 'Texas, US'
+  website: 'https://www.heyspacetime.com/'
+  github: null
+  image: images/spacetime.jpg
+  for_hire: false
+  hiring: true
+  portfolio: false
+- name: Iron Cove Solutions
+  type: company
+  description: >-
+    Iron Cove Solutions is a cloud based consulting firm. We help companies
+    deliver a return on cloud usage by applying best practices
+  location: 'California, US'
+  website: 'https://ironcovesolutions.com/'
+  github: null
+  image: images/iron-cove-solutions.jpg
+  for_hire: true
+  hiring: false
+  portfolio: true

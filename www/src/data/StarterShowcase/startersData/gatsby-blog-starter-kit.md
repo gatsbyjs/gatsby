@@ -4,9 +4,9 @@ demo: https://dschau.github.io/gatsby-blog-starter-kit/
 repo: https://github.com/dschau/gatsby-blog-starter-kit
 description: n/a
 tags:
-- blog
+  - blog
 features:
-- Blog post listing with previews for each blog post
-- Navigation between posts with a previous/next post button
-- Tags and tag navigation
+  - Blog post listing with previews for each blog post
+  - Navigation between posts with a previous/next post button
+  - Tags and tag navigation
 ---
