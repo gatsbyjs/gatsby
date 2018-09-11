@@ -578,6 +578,72 @@ describe(`GraphQL Input args`, () => {
     expect(result.data.test3.edges[0].node.index).toEqual(1)
   })
 
+  it(`handles the nin operator for array`, async () => {
+    let result = await queryResult(
+      nodes,
+      `
+        {
+          allNode(filter: {anArray: { nin: [5] }}) {
+            edges { node { anArray }}
+          }
+        }
+      `
+    )
+    expect(result.errors).not.toBeDefined()
+    expect(result.data.allNode.edges.length).toEqual(2)
+
+    result.data.allNode.edges.forEach(edge => {
+      expect(edge.node.anArray).not.toEqual(expect.arrayContaining([5]))
+    })
+  })
+
+  it(`handles the nin operator for scalars`, async () => {
+    let result = await queryResult(
+      nodes,
+      `
+        {
+          string:allNode(filter: { string: { nin: ["b", "c"] }}) {
+            edges { node { string }}
+          }
+          int:allNode(filter: { index: { nin: [0, 2] }}) {
+            edges { node { index }}
+          }
+          float:allNode(filter: { float: { nin: [1.5] }}) {
+            edges { node { float }}
+          }
+          boolean:allNode(filter: { boolean: { nin: [true, null] }}) {
+            edges { node { boolean }}
+          }
+        }
+      `
+    )
+
+    expect(result.errors).not.toBeDefined()
+
+    expect(result.data.string.edges.length).toEqual(1)
+    result.data.string.edges.forEach(edge => {
+      expect(edge.node.string).not.toEqual(`b`)
+      expect(edge.node.string).not.toEqual(`c`)
+    })
+
+    expect(result.data.int.edges.length).toEqual(1)
+    result.data.int.edges.forEach(edge => {
+      expect(edge.node.index).not.toEqual(0)
+      expect(edge.node.index).not.toEqual(2)
+    })
+
+    expect(result.data.float.edges.length).toEqual(2)
+    result.data.float.edges.forEach(edge => {
+      expect(edge.node.float).not.toEqual(1.5)
+    })
+
+    expect(result.data.boolean.edges.length).toEqual(1)
+    result.data.boolean.edges.forEach(edge => {
+      expect(edge.node.boolean).not.toEqual(null)
+      expect(edge.node.boolean).not.toEqual(true)
+    })
+  })
+
   it(`handles the glob operator`, async () => {
     let result = await queryResult(
       nodes,
