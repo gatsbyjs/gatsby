@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.1-rc.3"></a>
+
+## [2.0.1-rc.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.1-rc.2...gatsby-source-filesystem@2.0.1-rc.3) (2018-09-11)
+
+### Features
+
+- **gatsby-source-filesystem:** Added an 'ignore' property to the options to ignore more files. ([#8016](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/issues/8016)) ([3f67a2f](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/commit/3f67a2f))
+
 <a name="2.0.1-rc.2"></a>
 
 ## [2.0.1-rc.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.1-rc.1...gatsby-source-filesystem@2.0.1-rc.2) (2018-09-07)
