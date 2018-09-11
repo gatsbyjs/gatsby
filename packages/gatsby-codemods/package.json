@@ -1,6 +1,6 @@
 {
   "name": "gatsby-codemods",
-  "version": "1.0.0-rc.4",
+  "version": "1.0.0-rc.5",
   "description": "Stub description for gatsby-codemods",
   "main": "index.js",
   "scripts": {
@@ -30,5 +30,6 @@
     "@babel/core": "^7.0.0",
     "cross-env": "^5.0.5",
     "jscodeshift": "^0.5.1"
-  }
+  },
+  "gitHead": "f1c0f2b649474f8cccafddadb455f7eb418174c3"
 }
