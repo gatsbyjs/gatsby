@@ -9,7 +9,7 @@
     "gatsby": "next",
     "gatsby-plugin-manifest": "next",
     "gatsby-source-hacker-news": "next",
-    "lodash": "^4.16.4",
+    "lodash": "^4.17.10",
     "react": "^16.3.1",
     "react-dom": "^16.3.1",
     "slash": "^2.0.0"
