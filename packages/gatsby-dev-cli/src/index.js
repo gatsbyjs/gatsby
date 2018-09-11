@@ -21,6 +21,9 @@ const argv = require(`yargs`)
     `Set path to Gatsby repository.
 You typically only need to configure this once.`
   )
+  .alias(`C`, `copy-all`)
+  .nargs(`C`, 0)
+  .describe(`C`, `Copy all contents in packages/ instead of just gatsby packages`)
   .array(`packages`)
   .describe(`packages`, `Explicitly specify packages to copy`)
   .help(`h`)
@@ -38,13 +41,11 @@ if (!havePackageJsonFile) {
 }
 
 const localPkg = JSON.parse(fs.readFileSync(`package.json`))
-const packages = Object.keys(
+let packages = Object.keys(
   _.merge({}, localPkg.dependencies, localPkg.devDependencies)
 )
 
-const gatsbyPackages = packages.filter(p => p.startsWith(`gatsby`))
-
-const pathToRepo = argv[`set-path-to-repo`]
+const pathToRepo = argv.setPathToRepo
 if (pathToRepo) {
   console.log(`Saving path to your Gatsby repo`)
   conf.set(`gatsby-location`, path.resolve(pathToRepo))
@@ -65,7 +66,13 @@ gatsby-dev --set-path-to-repo /path/to/my/cloned/version/gatsby
   process.exit()
 }
 
-if (!argv.packages && _.isEmpty(gatsbyPackages)) {
+if (argv.copyAll) {
+  packages = fs.readdirSync(path.join(gatsbyLocation, 'packages'));
+} else {
+  packages = packages.filter(p => p.startsWith(`gatsby`));
+}
+
+if (!argv.packages && _.isEmpty(packages)) {
   console.error(
     `
 You haven't got any gatsby dependencies into your current package.json
@@ -82,7 +89,7 @@ gatsby-dev will pick them up.
   process.exit()
 }
 
-watch(gatsbyLocation, argv.packages || gatsbyPackages, {
+watch(gatsbyLocation, argv.packages || packages, {
   quiet: argv.quiet,
-  scanOnce: argv[`scan-once`],
+  scanOnce: argv.scanOnce,
 })
