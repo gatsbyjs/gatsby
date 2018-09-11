@@ -17,29 +17,30 @@ class CommunityView extends Component {
     hiring: false,
   }
 
-  // Need to fix this as right now it's causing an error if a user goes to the /community or filtered site for the first time due to race condition with componentDidMount
-  /*   componentDidUpdate(prevProps) {
-     const filterStateChanged =
-      this.props.location.state.filter !== prevProps.location.state.filter
-    const isNotFiltered = this.props.location.state.filter === ``
-    const isFiltered = this.props.location.state.filter !== ``
-    if (filterStateChanged && isNotFiltered) {
-      this.setState({
-        creators: this.props.data.allCreatorsYaml.edges,
-        [prevProps.location.state.filter]: false,
-      })
+  componentDidUpdate(prevProps) {
+    if (prevProps.location.state !== null) {
+      const filterStateChanged =
+        this.props.location.state.filter !== prevProps.location.state.filter
+      const isNotFiltered = this.props.location.state.filter === ``
+      const isFiltered = this.props.location.state.filter !== ``
+      if (filterStateChanged && isNotFiltered) {
+        this.setState({
+          creators: this.props.data.allCreatorsYaml.edges,
+          [prevProps.location.state.filter]: false,
+        })
+      }
+      if (filterStateChanged && isFiltered) {
+        let items = this.state.creators.filter(
+          item => item.node[this.props.location.state.filter] === true
+        )
+        this.setState({
+          creators: items,
+          [this.props.location.state.filter]: true,
+          [prevProps.location.state.filter]: false,
+        })
+      }
     }
-    if (filterStateChanged && isFiltered) {
-      let items = this.state.creators.filter(
-        item => item.node[this.props.location.state.filter] === true
-      )
-      this.setState({
-        creators: items,
-        [this.props.location.state.filter]: true,
-        [prevProps.location.state.filter]: false,
-      })
-    }
-  } */
+  }
 
   componentDidMount() {
     const query = qs.parse(this.props.location.search.slice(1))
@@ -51,6 +52,11 @@ class CommunityView extends Component {
         creators: items,
         [query.filter]: true,
       })
+      navigate(`${location.pathname}?filter=${query.filter}`, {
+        state: { filter: query.filter },
+      })
+    } else {
+      navigate(`${location.pathname}`, { state: { filter: `` } })
     }
   }
 
