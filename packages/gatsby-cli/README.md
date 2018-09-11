@@ -28,7 +28,7 @@ for more.
 At the root of a Gatsby site run `gatsby develop` to start the Gatsby
 development server.
 
-**Options**
+#### Options
 
 ```
   -H, --host    Set host. Defaults to localhost
@@ -45,7 +45,7 @@ to find out how you can set up an HTTPS development server using Gatsby.
 At the root of a Gatsby site run `gatsby build` to do a production build of a
 site.
 
-**Options**
+#### Options
 
 ```
   --prefix-paths               Build site with link paths prefixed (set prefix in your config).
@@ -58,7 +58,7 @@ site.
 At the root of a Gatsby site run `gatsby serve` to serve the production build of
 the site for testing.
 
-**Options**
+#### Options
 
 ```
   -H, --host        Set host. Defaults to localhost
@@ -71,7 +71,7 @@ the site for testing.
 
 At the root of a Gatsby site run `gatsby info` to get helpful environment information which will be required when reporting a bug.
 
-**Options**
+#### Options
 
 ```
   -C, --clipboard   Automagically copy environment information to clipboard
