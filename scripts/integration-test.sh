@@ -1,6 +1,7 @@
 #!/bin/bash
 INTEGRATION_TEST=$1
 SRC_PATH=$2
+RELATIVE_PATH="${3:-../../}" # set to third arg if defined, otherwise use ../../
 
 if [[ "$INTEGRATION_TEST" = true ]]; then
   npm install -g gatsby-dev-cli
@@ -12,7 +13,6 @@ if [[ "$INTEGRATION_TEST" = true ]]; then
   # setting up child integration test link to gatsby packages
   echo "=== setting up link to current changes with gatsby-dev"
   cd $SRC_PATH
-  gatsby-dev --set-path-to-repo ../../ # this presumes nested two levels deep
+  gatsby-dev --set-path-to-repo $RELATIVE_PATH
   gatsby-dev --scan-once --quiet
-  chmod +x ./node_modules/.bin/gatsby # this seems to be required to fix executables
 fi
