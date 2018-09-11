@@ -136,6 +136,7 @@ See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
       `**/yarn.lock`,
       `**/node_modules`,
       `../**/dist/**`,
+      ...(pluginOptions.ignore || []),
     ],
   })
 

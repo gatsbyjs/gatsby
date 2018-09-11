@@ -35,10 +35,28 @@ module.exports = {
       options: {
         name: `data`,
         path: `${__dirname}/src/data/`,
+        ignore: [`**/\.*`], // ignore files starting with a dot
       },
     },
   ],
 }
+```
+
+## Options
+
+In addition to the name and path parameters you may pass an optional `ignore` array of file globs to ignore.
+
+They will be added to the following default list:
+
+```
+**/*.un~
+**/.DS_Store
+**/.gitignore
+**/.npmignore
+**/.babelrc
+**/yarn.lock
+**/node_modules
+../**/dist/**
 ```
 
 ## How to query
