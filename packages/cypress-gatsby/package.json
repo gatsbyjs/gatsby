@@ -19,5 +19,6 @@
     "cypress": "^3.1.0",
     "gatsby": "^2.0.0-rc.13"
   },
+  "private": true,
   "readme": "README.md"
 }
