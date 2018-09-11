@@ -102,6 +102,7 @@ function shouldUpdateScroll(prevRouterProps, routerProps) {
   const results = apiRunner(`shouldUpdateScroll`, {
     prevRouterProps,
     routerProps,
+    savedScrollPositions: this._stateStorage
   })
   if (results.length > 0) {
     return results[0]
