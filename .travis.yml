@@ -41,11 +41,11 @@ matrix:
 cache:
   yarn: true
 before_install:
-  - './scripts/integration-test.sh $INTEGRATION_TEST $SRC_PATH'
   - 'cd $SRC_PATH'
 install:
   - 'yarn $INSTALL_COMMAND'
 script:
+  - './scripts/integration-test.sh $INTEGRATION_TEST'
   - 'yarn $TEST_COMMAND'
 
 # new pushes aren't working at the moment (the build times out processing showcase images)
