@@ -115,11 +115,11 @@ function shouldUpdateScroll(prevRouterProps, routerProps) {
     if (oldPathname === pathname) {
       const element = hash && document.getElementById(hash.slice(1))
       if (element) {
-        element.scrollIntoView()
-      } else {
-        window.scrollTo(0, 0)
+        // `scroll-behavior` accepts element ids to scroll to
+        return hash.slice(1)
       }
-      return false
+      // If element does not exist, scroll to top
+      return [0,0]
     }
   }
   return true
