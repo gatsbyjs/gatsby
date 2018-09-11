@@ -45,10 +45,10 @@ before_install:
 install:
   - 'yarn $INSTALL_COMMAND'
 script:
+  - 'yarn $TEST_COMMAND'
   - 'cd $TRAVIS_BUILD_DIR'
   - './scripts/integration-test.sh $INTEGRATION_TEST $SRC_PATH'
   - 'cd $SRC_PATH'
-  - 'yarn $TEST_COMMAND'
 
 # new pushes aren't working at the moment (the build times out processing showcase images)
 # the existing image works fine, and can be manually updated by running through the steps
