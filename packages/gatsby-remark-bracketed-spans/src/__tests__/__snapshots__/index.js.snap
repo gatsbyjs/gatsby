@@ -1,0 +1,93 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`gatsby-remark-brackted-spans creates nodes with id attribute and classes 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "children": Array [
+            Object {
+              "position": Position {
+                "end": Object {
+                  "column": 18,
+                  "line": 1,
+                  "offset": 17,
+                },
+                "indent": Array [],
+                "start": Object {
+                  "column": 2,
+                  "line": 1,
+                  "offset": 1,
+                },
+              },
+              "type": "text",
+              "value": "text in the span",
+            },
+          ],
+          "identifier": "text in the span",
+          "position": Position {
+            "end": Object {
+              "column": 19,
+              "line": 1,
+              "offset": 18,
+            },
+            "indent": Array [],
+            "start": Object {
+              "column": 1,
+              "line": 1,
+              "offset": 0,
+            },
+          },
+          "referenceType": "shortcut",
+          "type": "linkReference",
+        },
+        Object {
+          "position": Position {
+            "end": Object {
+              "column": 52,
+              "line": 1,
+              "offset": 51,
+            },
+            "indent": Array [],
+            "start": Object {
+              "column": 19,
+              "line": 1,
+              "offset": 18,
+            },
+          },
+          "type": "text",
+          "value": "{.class .other-class id=anything}",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 52,
+          "line": 1,
+          "offset": 51,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 52,
+      "line": 1,
+      "offset": 51,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;

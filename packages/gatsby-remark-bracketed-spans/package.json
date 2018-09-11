@@ -1,0 +1,42 @@
+{
+  "name": "gatsby-remark-brackted-spans",
+  "description": "Gatsby remark plugin for adding attributes to span tags in markdown",
+  "version": "2.0.0-rc.1",
+  "author": "Vadim Shvetsov <vadim@shvetsov.io>",
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.0.0",
+    "remark-bracketed-spans": "^3.0.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.0.0",
+    "cross-env": "^5.1.4",
+    "rimraf": "^2.6.2"
+  },
+  "files": [
+    "index.js",
+    "README.md"
+  ],
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-bracketed-spans#readme",
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "markdown",
+    "remark"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "peerDependencies": {
+    "gatsby": ">2.0.0-alpha"
+  },
+  "private": false,
+  "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-bracketed-spans",
+  "scripts": {
+    "build": "babel --out-dir . --ignore **/__tests__ src",
+    "prepare": "cross-env NODE_ENV=production npm run build",
+    "watch": "babel -w src --out-dir . --ignore **/__tests__"
+  }
+}
