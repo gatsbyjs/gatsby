@@ -14,5 +14,5 @@ if [[ "$INTEGRATION_TEST" = true ]]; then
   cd $SRC_PATH
   gatsby-dev --set-path-to-repo ../../ # this presumes nested two levels deep
   gatsby-dev --scan-once --quiet
-  chmod +x ./node_modules/.bin/{gatsby,gatsby-cli} # this seems to be required to fix executables
+  chmod +x ./node_modules/.bin/gatsby # this seems to be required to fix executables
 fi
