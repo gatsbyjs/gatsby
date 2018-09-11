@@ -1,5 +1,5 @@
 {
-  "name": "gatsby-remark-brackted-spans",
+  "name": "gatsby-remark-bracketed-spans",
   "description": "Gatsby remark plugin for adding attributes to span tags in markdown",
   "version": "2.0.0-rc.1",
   "author": "Vadim Shvetsov <vadim@shvetsov.io>",
