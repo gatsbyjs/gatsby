@@ -29,6 +29,7 @@ and AppCache setup by changing these options so tread carefully.
 
 ```javascript
 const options = {
+  importWorkboxFrom: `local`,
   globDirectory: rootDir,
   globPatterns,
   modifyUrlPrefix: {
