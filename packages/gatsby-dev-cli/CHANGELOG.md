@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.0-rc.4"></a>
+
+# [2.0.0-rc.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli/compare/gatsby-dev-cli@2.0.0-rc.3...gatsby-dev-cli@2.0.0-rc.4) (2018-09-11)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
 <a name="2.0.0-rc.3"></a>
 
 # [2.0.0-rc.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli/compare/gatsby-dev-cli@2.0.0-rc.2...gatsby-dev-cli@2.0.0-rc.3) (2018-09-11)
