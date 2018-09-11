@@ -179,6 +179,11 @@ function buildLocalCommands(cli, isLocalSite) {
           alias: `open`,
           type: `boolean`,
           describe: `Open the site in your browser for you.`,
+        })
+        .option(`prefix-paths`, {
+          type: `boolean`,
+          default: false,
+          describe: `Serve site with link paths prefixed (set prefix in your config).`,
         }),
 
     handler: getCommandHandler(`serve`),
