@@ -1,7 +1,7 @@
 {
   "name": "gatsby",
   "description": "Blazing fast modern site generator for React",
-  "version": "2.0.0-rc.18",
+  "version": "2.0.0-rc.19",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "./dist/bin/gatsby.js"
@@ -62,9 +62,9 @@
     "flat": "^4.0.0",
     "friendly-errors-webpack-plugin": "^1.6.1",
     "fs-extra": "^5.0.0",
-    "gatsby-cli": "^2.0.0-rc.4",
+    "gatsby-cli": "^2.0.0-rc.5",
     "gatsby-link": "^2.0.0-rc.2",
-    "gatsby-plugin-page-creator": "^2.0.0-rc.4",
+    "gatsby-plugin-page-creator": "^2.0.0-rc.5",
     "gatsby-react-router-scroll": "^2.0.0-rc.2",
     "glob": "^7.1.1",
     "graphql": "^0.13.2",
@@ -182,7 +182,7 @@
     "watch": "rimraf dist && mkdir dist && npm run build:internal-plugins && npm run build:rawfiles && npm run build:src -- --watch"
   },
   "types": "index.d.ts",
-  "gitHead": "19055ed19ee453e5d80c985a6bd3527c3f0b5da9",
+  "gitHead": "5bd5aebe066b9875354a81a4b9ed98722731c465",
   "yargs": {
     "boolean-negation": false
   }
