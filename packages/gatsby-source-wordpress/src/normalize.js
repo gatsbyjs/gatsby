@@ -278,21 +278,21 @@ exports.mapElementsToParent = entities =>
   })
 
 exports.mapPolylangTranlations = entities =>
-  entities.map(entitie => {
-    if (entitie.polylang_translations) {
-      entitie.polylang_translations___NODE = entitie.polylang_translations.map(
+  entities.map(entity => {
+    if (entity.polylang_translations) {
+      entity.polylang_translations___NODE = entity.polylang_translations.map(
         translation =>
           entities.find(
             t =>
               t.wordpress_id === translation.wordpress_id &&
-              entitie.__type === t.__type
+              entity.__type === t.__type
           ).id
       )
 
-      delete entitie.polylang_translations
+      delete entity.polylang_translations
     }
 
-    return entitie
+    return entity
   })
 
 exports.searchReplaceContentUrls = function({
