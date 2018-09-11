@@ -69,7 +69,7 @@ Community members (like you!) can contribute plugins (small amounts of
 JavaScript code) that others can then use when building Gatsby sites.
 
 There's already dozens of plugins! Check them out at the
-[plugins section of the site](/docs/plugins/).
+[plugins section of the site](/plugins/).
 
 Our goal with Gatsby plugins is to make them straightforward to install and use. In almost every Gatsby site you
 build, you will be installing plugins. While working through the rest of the
