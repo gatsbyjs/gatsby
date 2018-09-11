@@ -15,7 +15,7 @@
     "configstore": "^3.1.0",
     "fs-extra": "^4.0.1",
     "is-absolute": "^0.2.6",
-    "lodash": "^4.17.4",
+    "lodash": "^4.17.10",
     "yargs": "^8.0.2"
   },
   "devDependencies": {
