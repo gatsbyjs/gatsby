@@ -135,21 +135,6 @@ class GatsbyLink extends React.Component {
             !e.shiftKey
           ) {
             e.preventDefault()
-            // Is this link pointing to a hash on the same page? If so,
-            // just scroll there.
-            const { pathname, hash } = parsePath(prefixedTo)
-            if (pathname === location.pathname || !pathname) {
-              const element = hash
-                ? document.getElementById(hash.substr(1))
-                : null
-              if (element !== null) {
-                element.scrollIntoView()
-              } else {
-                // This is just a normal link to the current page so let's emulate default
-                // browser behavior by scrolling now to the top of the page.
-                window.scrollTo(0, 0)
-              }
-            }
 
             // Make sure the necessary scripts and data are
             // loaded before continuing.

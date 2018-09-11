@@ -97,7 +97,7 @@ const navigate = (to, options = {}) => {
   })
 }
 
-function shouldUpdateScroll(prevRouterProps, { location: { pathname } }) {
+function shouldUpdateScroll(prevRouterProps, { location: { pathname, hash } }) {
   const results = apiRunner(`shouldUpdateScroll`, {
     prevRouterProps,
     pathname,
@@ -111,6 +111,12 @@ function shouldUpdateScroll(prevRouterProps, { location: { pathname } }) {
       location: { pathname: oldPathname },
     } = prevRouterProps
     if (oldPathname === pathname) {
+      const element = hash && document.getElementById(hash.slice(1))
+      if (element) {
+        element.scrollIntoView()
+      } else {
+        window.scrollTo(0, 0)
+      }
       return false
     }
   }
