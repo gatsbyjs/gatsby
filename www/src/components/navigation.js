@@ -30,7 +30,7 @@ const NavItem = ({ linkTo, children }) => (
 
 const Navigation = ({ pathname }) => {
   const isHomepage = pathname === `/`
-  const isBlog = pathname === `/blog/`
+  const isBlog = pathname === `/blog/` || pathname.indexOf(`/blog/page/`) === 0
 
   const socialIconsStyles = {
     ...styles.navItem,
