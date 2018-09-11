@@ -1,3 +1,4 @@
+// Add babel plugin
 exports.onCreateBabelConfig = ({ actions }, pluginOptions) => {
   const {
     jsxPlugins: plugins,
