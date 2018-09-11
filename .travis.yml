@@ -30,7 +30,7 @@ matrix:
       node_js:
         - 'lts/*'
     - name: "Develop UI Tests"
-      env: SRC_PATH='examples/gatsbygram' INTEGRATION_TEST=true INSTALL_COMMAND='install' TEST_COMMAND='test'
+      env: SRC_PATH='examples/gatsbygram' INSTALL_COMMAND='install' TEST_COMMAND='test'
       node_js:
         - 'lts/*'
     - name: "Production UI Tests"
@@ -45,7 +45,9 @@ before_install:
 install:
   - 'yarn $INSTALL_COMMAND'
 script:
-  - './scripts/integration-test.sh $INTEGRATION_TEST'
+  - 'cd $TRAVIS_BUILD_DIR'
+  - './scripts/integration-test.sh $INTEGRATION_TEST $SRC_PATH'
+  - 'cd $SRC_PATH'
   - 'yarn $TEST_COMMAND'
 
 # new pushes aren't working at the moment (the build times out processing showcase images)
