@@ -14,17 +14,25 @@ exports[`<Img /> should render fixed size images 1`] = `
         style="width: 100px; opacity: 0; height: 100px;"
         title="Title for the image"
       />
-      <img
-        alt="Alt text for the image"
-        height="100"
-        src="test_image.jpg"
-        srcset="some srcSet"
-        style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; opacity: 1;"
-        title="Title for the image"
-        width="100"
-      />
+      <picture>
+        <source
+          srcset="some srcSetWebp"
+          type="image/webp"
+        />
+        <source
+          srcset="some srcSet"
+        />
+        <img
+          alt="Alt text for the image"
+          height="100"
+          src="test_image.jpg"
+          style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; opacity: 1;"
+          title="Title for the image"
+          width="100"
+        />
+      </picture>
       <noscript>
-        &lt;img width="100" height="100" src="test_image.jpg" srcset="some srcSet" alt="Alt text for the image" title="Title for the image" style="position:absolute;top:0;left:0;transition:opacity 0.5s;transition-delay:0.5s;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center"/&gt;
+        &lt;picture&gt;&lt;source type='image/webp' srcSet="some srcSetWebp" /&gt;&lt;source srcSet="some srcSet" /&gt;&lt;img width="100" height="100" src="test_image.jpg" alt="Alt text for the image" title="Title for the image" style="position:absolute;top:0;left:0;transition:opacity 0.5s;transition-delay:0.5s;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center"/&gt;&lt;/picture&gt;
       </noscript>
     </div>
   </div>
@@ -48,16 +56,25 @@ exports[`<Img /> should render fluid images 1`] = `
         style="position: absolute; top: 0px; bottom: 0px; opacity: 0; right: 0px; left: 0px;"
         title="Title for the image"
       />
-      <img
-        alt="Alt text for the image"
-        sizes="(max-width: 600px) 100vw, 600px"
-        src="test_image.jpg"
-        srcset="some srcSet"
-        style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; opacity: 1;"
-        title="Title for the image"
-      />
+      <picture>
+        <source
+          sizes="(max-width: 600px) 100vw, 600px"
+          srcset="some srcSetWebp"
+          type="image/webp"
+        />
+        <source
+          sizes="(max-width: 600px) 100vw, 600px"
+          srcset="some srcSet"
+        />
+        <img
+          alt="Alt text for the image"
+          src="test_image.jpg"
+          style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; opacity: 1;"
+          title="Title for the image"
+        />
+      </picture>
       <noscript>
-        &lt;img src="test_image.jpg" srcset="some srcSet" alt="Alt text for the image" title="Title for the image" sizes="(max-width: 600px) 100vw, 600px" style="position:absolute;top:0;left:0;transition:opacity 0.5s;transition-delay:0.5s;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center"/&gt;
+        &lt;picture&gt;&lt;source type='image/webp' srcSet="some srcSetWebp" sizes="(max-width: 600px) 100vw, 600px" /&gt;&lt;source srcSet="some srcSet" sizes="(max-width: 600px) 100vw, 600px" /&gt;&lt;img src="test_image.jpg" alt="Alt text for the image" title="Title for the image" style="position:absolute;top:0;left:0;transition:opacity 0.5s;transition-delay:0.5s;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center"/&gt;&lt;/picture&gt;
       </noscript>
     </div>
   </div>
