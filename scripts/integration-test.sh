@@ -12,7 +12,7 @@ if [[ "$INTEGRATION_TEST" = true ]]; then
   # setting up child integration test link to gatsby packages
   echo "=== setting up link to current changes with gatsby-dev"
   cd $SRC_PATH
-  gatsby-dev --set-path-to-repo ../
+  gatsby-dev --set-path-to-repo ../../ # this presumes nested two levels deep
   gatsby-dev --scan-once --quiet
   chmod +x ./node_modules/.bin/{gatsby,gatsby-cli} # this seems to be required to fix executables
 fi
