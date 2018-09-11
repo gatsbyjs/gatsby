@@ -61,10 +61,10 @@ the site for testing.
 **Options**
 
 ```
-  -H, --host      Set host. Defaults to localhost
-  -p, --port      Set port. Defaults to 8000
-  -o, --open      Open the site in your browser for you
-  --prefix-paths   Serve site with link paths prefixed (set prefix in your config).
+  -H, --host        Set host. Defaults to localhost
+  -p, --port        Set port. Defaults to 8000
+  -o, --open        Open the site in your browser for you
+  --prefix-paths    Serve site with link paths prefixed (set prefix in your config).
 ```
 
 ### Info
