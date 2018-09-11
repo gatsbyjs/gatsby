@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-page-creator",
-  "version": "2.0.0-rc.4",
+  "version": "2.0.0-rc.5",
   "description": "Gatsby plugin that automatically creates pages from React components in specified directories",
   "main": "index.js",
   "scripts": {
@@ -35,5 +35,5 @@
   "peerDependencies": {
     "gatsby": ">2.0.0-alpha"
   },
-  "gitHead": "19055ed19ee453e5d80c985a6bd3527c3f0b5da9"
+  "gitHead": "5bd5aebe066b9875354a81a4b9ed98722731c465"
 }

@@ -1,7 +1,7 @@
 {
   "name": "gatsby-source-graphql",
   "description": "Gatsby plugin which adds a third-party GraphQL API to Gatsby GraphQL",
-  "version": "2.0.0-rc.5",
+  "version": "2.0.0-rc.6",
   "author": "Mikhail Novikov <freiksenet@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -36,5 +36,5 @@
     "prepare": "cross-env NODE_ENV=production npm run build",
     "watch": "babel -w src --out-dir . --ignore **/__tests__"
   },
-  "gitHead": "19055ed19ee453e5d80c985a6bd3527c3f0b5da9"
+  "gitHead": "5bd5aebe066b9875354a81a4b9ed98722731c465"
 }
