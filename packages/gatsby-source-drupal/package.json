@@ -11,7 +11,7 @@
     "axios": "^0.18.0",
     "bluebird": "^3.5.0",
     "gatsby-source-filesystem": "^2.0.1-rc.2",
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.10"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",

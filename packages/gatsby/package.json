@@ -81,7 +81,7 @@
     "json-loader": "^0.5.7",
     "json-stringify-safe": "^5.0.1",
     "kebab-hash": "^0.1.2",
-    "lodash": "^4.17.4",
+    "lodash": "^4.17.10",
     "md5": "^2.2.1",
     "md5-file": "^3.1.1",
     "mime": "^2.2.0",

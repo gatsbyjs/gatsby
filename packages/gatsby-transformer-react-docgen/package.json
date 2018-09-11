@@ -18,7 +18,7 @@
     "@babel/cli": "^7.0.0",
     "@babel/core": "^7.0.0",
     "cross-env": "^5.1.4",
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.10"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-react-docgen#readme",
   "keywords": [
