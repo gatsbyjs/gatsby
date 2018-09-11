@@ -48,9 +48,9 @@ site.
 **Options**
 
 ```
-  -prefix-paths               Build site with link paths prefixed (set prefix in your config).
-  -no-uglify                  Build site without uglifying JS bundles (for debugging).
-  -open-tracing-config-file   Tracer configuration file (open tracing compatible). See https://www.gatsbyjs.org/docs/performance-tracing/
+  --prefix-paths               Build site with link paths prefixed (set prefix in your config).
+  --no-uglify                  Build site without uglifying JS bundles (for debugging).
+  --open-tracing-config-file   Tracer configuration file (open tracing compatible). See https://www.gatsbyjs.org/docs/performance-tracing/
 ```
 
 ### Serve
@@ -64,7 +64,7 @@ the site for testing.
   -H, --host      Set host. Defaults to localhost
   -p, --port      Set port. Defaults to 8000
   -o, --open      Open the site in your browser for you
-  -prefix-paths   Serve site with link paths prefixed (set prefix in your config).
+  --prefix-paths   Serve site with link paths prefixed (set prefix in your config).
 ```
 
 ### Info
