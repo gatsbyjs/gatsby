@@ -1,7 +1,7 @@
 /*global __PATH_PREFIX__ */
 import PropTypes from "prop-types"
 import React from "react"
-import { Link, Location } from "@reach/router"
+import { Link } from "@reach/router"
 import { parsePath } from "gatsby"
 
 export function withPrefix(path) {
@@ -45,11 +45,8 @@ class GatsbyLink extends React.Component {
       IOSupported = true
     }
 
-    const { location } = props
-
     this.state = {
       IOSupported,
-      location,
     }
     this.handleRef = this.handleRef.bind(this)
   }
@@ -97,7 +94,6 @@ class GatsbyLink extends React.Component {
       getProps = this.defaultGetProps,
       onClick,
       onMouseEnter,
-      location,
       /* eslint-disable no-unused-vars */
       activeClassName: $activeClassName,
       activeStyle: $activeStyle,
@@ -156,14 +152,7 @@ GatsbyLink.propTypes = {
   to: PropTypes.string.isRequired,
 }
 
-// eslint-disable-next-line react/display-name
-const withLocation = Comp => props => (
-  <Location>
-    {({ location }) => <Comp location={location} {...props} />}
-  </Location>
-)
-
-export default withLocation(GatsbyLink)
+export default GatsbyLink
 
 export const navigate = (to, options) => {
   window.___navigate(to, options)
