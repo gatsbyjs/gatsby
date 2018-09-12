@@ -26,3 +26,18 @@ plugins: [
   },
 ]
 ```
+
+[Configuration options for `styled-jsx`](https://github.com/zeit/styled-jsx#configuration-options) can also be specified:
+
+```js
+plugins: [
+  {
+    resolve: `gatsby-plugin-styled-jsx`,
+    options: {
+      optimizeForSpeed: true,
+      sourceMaps: false,
+      vendorPrefixes: true,
+    },
+  },
+]
+```
