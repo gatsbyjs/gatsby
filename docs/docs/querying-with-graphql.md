@@ -311,8 +311,8 @@ Now, we can use the component together with the exported fragment in our index p
 ```jsx{26}
 // src/pages/index.jsx
 
-import React from "react";
-import IndexPost from "../components/IndexPost";
+import React from "react"
+import IndexPost from "../components/IndexPost"
 import { graphql } from "gatsby"
 
 export default ({ data }) => {
@@ -326,8 +326,8 @@ export default ({ data }) => {
         </div>
       ))}
     </div>
-  );
-};
+  )
+}
 
 export const query = graphql`
   query {
@@ -340,7 +340,7 @@ export const query = graphql`
       }
     }
   }
-`;
+`
 ```
 
 ## Further reading

@@ -34,7 +34,9 @@ class Layout extends React.Component {
             content="Gatsby example site using Emotion and PrismJS"
           />
           <meta name="referrer" content="origin" />
-        </Helmet>` `<div className={indexContainer}>
+        </Helmet>
+        ` `
+        <div className={indexContainer}>
           <HeadingTag>
             <Link className={link} to={`/`}>
               Using Gatsby with Emotion and PrismJS
@@ -54,17 +56,19 @@ Layout.propTypes = {
   children: PropTypes.node.isRequired,
 }
 
+const query = graphql`
+  query {
+    site {
+      siteMetadata {
+        title
+      }
+    }
+  }
+`
+
 export default props => (
   <StaticQuery
-    query={graphql`
-      query {
-        site {
-          siteMetadata {
-            title
-          }
-        }
-      }
-    `}
+    query={query}
     render={data => (
       <Layout siteTitle={data.site.siteMetadata.title} {...props} />
     )}

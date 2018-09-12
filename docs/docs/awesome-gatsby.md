@@ -6,7 +6,7 @@ A curated list of interesting Gatsby community projects and learning resources.
 
 ## Site showcase
 
-See the [site showcase on the Gatsby README on GitHub](https://github.com/gatsbyjs/gatsby#showcase)
+See the [site showcase on the Gatsby v2 website.](https://next.gatsbyjs.org/showcase/)
 
 ## Starters
 
@@ -66,3 +66,7 @@ See the [list of official and community plugins](/docs/plugins/)
 ### DEV Community
 
 [The DEV Community Gatsby tag](https://dev.to/t/gatsbyjs) is a place to share Gatsby projects, articles and tutorials as well as start discussions and ask for feedback on Gatsby-related topics. Developers of all skill-levels are welcome to take part.
+
+### Hashnode Community
+
+[Gatsby community on Hashnode](https://hashnode.com/n/gatsby) is a place where you can read discussions about Gatsby projects, read articles and tutorials and ask the rest of the Hashnode community Gatsby-related questions. 

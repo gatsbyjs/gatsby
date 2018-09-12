@@ -51,7 +51,7 @@ You can install the latest version of Gatsby by following these steps:
   https://yarnpkg.com/en/docs/install
 - Install dependencies using `yarn run bootstrap` in the root of the repo.
 
-The usual contributing steps are:
+There are two ways to contribute. This is the most usual way:
 
 - Fork the [official repository](https://github.com/gatsbyjs/gatsby).
 - Clone your fork: `git clone --depth=1 https://github.com/<your-username>/gatsby.git`
@@ -64,7 +64,8 @@ The usual contributing steps are:
 - For each of your Gatsby test sites, run the `gatsby-dev` command inside the test site's directory to copy
   the built files from your cloned copy of Gatsby. It'll watch for your changes
   to Gatsby packages and copy them into the site. For more detailed instructions
-  see the [gatsby-dev-cli README](/packages/gatsby-dev-cli/) and check out the [gatsby-dev-cli demo video](https://www.youtube.com/watch?v=D0SwX1MSuas).
+  see the [gatsby-dev-cli README](/packages/gatsby-dev-cli/) and check out the [gatsby-dev-cli demo video](https://www.youtube.com/watch?v=D0SwX1MSuas).  
+  Note: if you plan to modify packages that are exported from `gatsby` directly, you need to either add those manually to your test sites so that they are listed in `package.json` (e.g. `yarn add gatsby-link`), or specify them explicitly with `gatsby-dev --packages gatsby-link`).
 - Add tests and code for your changes.
 - Once you're done, make sure all tests still pass: `yarn test`.
 - Commit and push to your fork.

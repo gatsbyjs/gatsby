@@ -16,7 +16,7 @@
     "gatsby-source-filesystem": "^1.5.27",
     "gatsby-transformer-remark": "^1.7.37",
     "gatsby-transformer-sharp": "^1.6.22",
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.10"
   },
   "homepage": "https://github.com/ChangoMan/gatsby-starter-forty",
   "keywords": [

@@ -1,6 +1,5 @@
 import React from "react"
 import Helmet from "react-helmet"
-// import { OutboundLink } from "gatsby-plugin-google-analytics"
 import { Link, graphql } from "gatsby"
 import Img from "gatsby-image"
 
@@ -323,7 +322,9 @@ class StarterTemplate extends React.Component {
               <div>
                 {frontmatter.features ? (
                   <ul css={{ marginTop: 0 }}>
-                    {frontmatter.features.map((f, i) => <li key={i}>{f}</li>)}
+                    {frontmatter.features.map((f, i) => (
+                      <li key={i}>{f}</li>
+                    ))}
                   </ul>
                 ) : (
                   `No features`
@@ -368,7 +369,8 @@ class StarterTemplate extends React.Component {
                             }}
                           >
                             <a href={`https://npm.im/${dep}`}>
-                              {`${dep} `}<FaExtLink />
+                              {`${dep} `}
+                              <FaExtLink />
                             </a>
                           </div>
                         )
