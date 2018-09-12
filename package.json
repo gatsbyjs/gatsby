@@ -60,7 +60,7 @@
     "lerna": "lerna",
     "lerna-prepare": "lerna run prepare",
     "lint": "npm-run-all --continue-on-error --parallel lint:js lint:yaml",
-    "lint:js": "eslint --ext .js,.jsx packages/**/src",
+    "lint:js": "eslint --ext .js,.jsx packages/**/src integration-tests/**/src",
     "lint:flow": "babel-node scripts/flow-check.js",
     "lint:yaml": "yamllint \"**/*.y?(a)ml\" --ignore=\"**/node_modules/**\"",
     "plop": "plop",

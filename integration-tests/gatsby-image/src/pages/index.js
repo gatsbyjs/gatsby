@@ -1,6 +1,7 @@
 import React from 'react'
 import { graphql } from 'gatsby'
 import Image from 'gatsby-image'
+import PropTypes from 'prop-types'
 
 import Layout from '../components/layout'
 
@@ -12,6 +13,10 @@ const IndexPage = ({ data }) => (
     <span data-testid="image-fixed"><Image fixed={data.fruitsFixed.childImageSharp.fixed} /></span>
   </Layout>
 )
+
+IndexPage.propTypes = {
+  data: PropTypes.object.isRequired,
+}
 
 export default IndexPage
 
@@ -32,4 +37,4 @@ export const pageQuery = graphql`
       }
     }
   }
-`;
+`
