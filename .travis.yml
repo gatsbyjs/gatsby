@@ -30,11 +30,11 @@ matrix:
       node_js:
         - 'lts/*'
     - name: "Develop UI Tests"
-      env: SRC_PATH='examples/gatsbygram' INSTALL_COMMAND='install' TEST_COMMAND='test'
+      env: SRC_PATH='examples/gatsbygram' INTEGRATION_TEST=true INSTALL_COMMAND='install' TEST_COMMAND='test'
       node_js:
         - 'lts/*'
     - name: "Production UI Tests"
-      env: SRC_PATH='integration-tests/production-runtime' INSTALL_COMMAND='install' TEST_COMMAND='test'
+      env: SRC_PATH='integration-tests/production-runtime' INTEGRATION_TEST=true INSTALL_COMMAND='install' TEST_COMMAND='test'
       node_js:
         - 'lts/*'
     - name: "Path Prefix Tests"
@@ -48,6 +48,10 @@ before_install:
   - 'cd $SRC_PATH'
 install:
   - 'yarn $INSTALL_COMMAND'
+before_script:
+  - 'cd $TRAVIS_BUILD_DIR'
+  - './scripts/integration-test.sh $INTEGRATION_TEST $SRC_PATH'
+  - 'cd $SRC_PATH'
 script:
   - 'yarn $TEST_COMMAND'
 
