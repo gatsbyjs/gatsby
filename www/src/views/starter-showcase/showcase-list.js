@@ -136,9 +136,9 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
                   </span>
                 </div>
                 <div>
-                  <span>
+                  <span className="title">
                     <h5 css={{ margin: 0 }}>
-                      <strong className="title">{repo.name}</strong>
+                      <strong>{repo.name}</strong>
                     </h5>
                   </span>
                   {/* {isGatsbyVersionWarning ?
