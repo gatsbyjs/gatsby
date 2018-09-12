@@ -14,5 +14,5 @@ if [[ "$INTEGRATION_TEST" = true ]]; then
   cd $SRC_PATH
   echo "=== setting up link to current changes with gatsby-dev in $(pwd)"
   gatsby-dev --set-path-to-repo $GATSBY_PATH
-  gatsby-dev --scan-once --quiet
+  gatsby-dev --scan-once --quiet --copy-all # copies _all_ files in gatsby/packages
 fi
