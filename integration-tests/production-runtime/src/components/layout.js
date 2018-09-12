@@ -18,8 +18,8 @@ const Layout = ({ children }) => (
       }
     `}
     render={data => (
-      <>`        \` \` \` \`
-       `<Helmet
+      <React.Fragment>
+        <Helmet
           title={data.site.siteMetadata.title}
           meta={[
             { name: `description`, content: `Sample` },
@@ -27,7 +27,8 @@ const Layout = ({ children }) => (
           ]}
         >
           <html lang="en" />
-        </Helmet>`        \` \` `<Header siteTitle={data.site.siteMetadata.title} />` `
+        </Helmet>
+        <Header siteTitle={data.site.siteMetadata.title} />
         <div
           style={{
             margin: `0 auto`,
@@ -37,8 +38,8 @@ const Layout = ({ children }) => (
           }}
         >
           {children}
-        </div>`        \` \` \` \`
-     `</>
+        </div>
+      </React.Fragment>
     )}
   />
 )
