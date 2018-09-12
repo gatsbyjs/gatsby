@@ -8,7 +8,6 @@ import presets, { colors } from "../../utils/presets"
 import copyToClipboard from "../../utils/copy-to-clipboard"
 import styles from "../shared/styles"
 import ThumbnailLink from "../shared/thumbnail"
-import V2Icon from "../../assets/v2icon.svg"
 
 const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
   if (!items.length) {
@@ -79,17 +78,85 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
               css={{
                 ...styles.showcaseItem
               }}
+              {...styles.withTitleHover}
             >
               <ThumbnailLink
                 slug={`/starters/${stub}`}
                 image={imgsharp}
                 title={imgsharp.name}
+              />
+              <div
+                css={{
+                  ...styles.meta,
+                }}
               >
-                <div css={{justifyContent: `space-between`, display: `flex`}}>
-                  <span>{repo.owner && repo.owner.login} /</span>
-                  <span css={{...styles.meta}}>
-                    {!isGatsbyVersionWarning && <img src={V2Icon} alt="icon" css={{width: `36px`, marginBottom: 0, verticalAlign: `text-bottom`}} />}
-                    {` `}
+                <div css={{ display: `flex`, justifyContent: `space-between` }}>
+                  <span css={{ color: colors.gray.dark }}>
+                    {repo.owner && repo.owner.login} /
+                  </span>
+                  <span
+                    css={{
+                      "> a": {
+                        paddingLeft: 5,
+                        "&:hover": {
+                          background: `none`,
+                          color: colors.gatsby,
+                        },
+                      },
+                    }}
+                  >
+                    <a
+                      href="#copy-to-clipboard"
+                      onClick={() =>
+                        copyToClipboard(`https://github.com/${githubFullName}`)
+                      }
+                      css={{ ...styles.noLinkUnderline }}
+                    >
+                      <FaClipboard />
+                      {` `}
+                    </a>
+                    <a
+                      href={node.frontmatter.demo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      css={{ ...styles.noLinkUnderline }}
+                    >
+                      <FaExtLink />
+                      {` `}
+                    </a>
+                    <a
+                      href={`https://github.com/${githubFullName}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      css={{ ...styles.noLinkUnderline }}
+                    >
+                      <FaGithub />
+                      {` `}
+                    </a>
+                  </span>
+                </div>
+                <div>
+                  <span>
+                    <h5 css={{ margin: 0 }}>
+                      <strong className="title">{repo.name}</strong>
+                    </h5>
+                  </span>
+                  {/* {isGatsbyVersionWarning ?
+                      <span css={{ fontStyle: `italic`, color: `red` }}>Outdated Version: {minorVersion}</span> :
+                      <span css={{ fontStyle: `italic`, color: `green` }}>Gatsby Version: {minorVersion}</span>
+                    } */}
+                </div>
+                <div
+                  css={{
+                    textOverflow: `ellipsis`,
+                    overflow: `hidden`,
+                    whiteSpace: `nowrap`,
+                  }}
+                >
+                  {description || `No description`}
+                </div>
+                <div css={{ display: `flex`, justifyContent: `space-between` }}>
+                  <div css={{ display: `inline-block` }}>
                     <MdStar
                       style={{
                         color: colors.accent,
@@ -97,70 +164,23 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
                       }}
                     />
                     {stars}
-                  </span>
+                  </div>
+                  <div css={{ display: `inline-block` }}>
+                    Updated {new Date(pushed_at).toLocaleDateString()}
+                  </div>
                 </div>
-                <strong className="title">{repo.name}</strong>
-                <span
-                  css={{
-                    textOverflow: `ellipsis`,
-                    overflow: `hidden`,
-                    whiteSpace: `nowrap`,
-                    display: `block`,
-                    ...styles.meta,
-                  }}
-                >
-                  {description || `No description`}
-                </span>
-              </ThumbnailLink>
-              <div css={{
-                display: `flex`,
-                justifyContent: `space-between`,
-                ...styles.meta,
-              }}>
-                <span css={{verticalAlign: `top`}}>
-                  Updated {new Date(pushed_at).toLocaleDateString()}
-                </span>
-                <span>
-                  {/* <a
-                    href="#copy-to-clipboard"
-                    onClick={() =>
-                      copyToClipboard(`https://github.com/${githubFullName}`)
-                    }
-                    css={{ ...styles.noLinkUnderline }}
-                  >
-                    <FaClipboard />
-                    {` `}
-                  </a> */}
-                  <a
-                    href={`https://github.com/${githubFullName}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    css={{ ...styles.noLinkUnderline }}
-                  >
-                    <FaGithub />
-                  </a>
-                  {` `}
-                  <a
-                    href={node.frontmatter.demo}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    css={{ ...styles.noLinkUnderline }}
-                  >
-                    <FaExtLink />
-                  </a>
-                </span>
               </div>
             </div>
           )
         )
       })}
       {/* makes last row items equal width and aligned left */}
-      <div aria-hidden="true" css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }} />
-      <div aria-hidden="true" css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }} />
-      <div aria-hidden="true" css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }} />
-      <div aria-hidden="true" css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }} />
-      <div aria-hidden="true" css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }} />
-      <div aria-hidden="true" css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }} />
+      <div css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }} />
+      <div css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }} />
+      <div css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }} />
+      <div css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }} />
+      <div css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }} />
+      <div css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }} />
     </div>
   )
 }
