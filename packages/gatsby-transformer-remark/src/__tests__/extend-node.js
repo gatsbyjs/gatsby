@@ -62,7 +62,7 @@ describe(`Excerpt is generated correctly from schema`, () => {
   // Make some fake functions its expecting.
   const loadNodeContent = node => Promise.resolve(node.content)
 
-  it(`correctly loads a default excerpt`, async () => {
+  it(`correctly loads a default excerpt`, async (done) => {
     const content = `---
 title: "my little pony"
 date: "2017-09-18T23:19:51.246Z"
@@ -85,7 +85,13 @@ Where oh where is my little pony?
           types: [{ name: `MarkdownRemark` }],
         }
       ).then(result => {
-        expect(_.isString(result.data.listNode.excerpt))
+        try {
+          expect(_.isString(result.data.listNode[0].excerpt)).toBeTruthy()
+          done()
+        }
+        catch(err) {
+          done.fail(err)
+        }
       })
     }
     const createParentChildLink = jest.fn()
