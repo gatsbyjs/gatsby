@@ -60,7 +60,7 @@ export default ThumbnailLink
 
 export const showcaseThumbnailFragment = graphql`
   fragment ShowcaseThumbnailFragment_item on ImageSharp {
-    fluid(maxWidth: 350) {
+    fluid(maxWidth: 350, maxHeight: 260, cropFocus: NORTH) {
       ...GatsbyImageSharpFluid_noBase64
     }
   }
