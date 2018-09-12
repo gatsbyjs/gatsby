@@ -69,52 +69,34 @@ const listenToIntersections = (el, cb) => {
   listeners.push([el, cb])
 }
 
-let isWebpSupportedCache = null
-const isWebpSupported = () => {
-  if (isWebpSupportedCache !== null) {
-    return isWebpSupportedCache
-  }
-
-  const elem =
-    typeof window !== `undefined` ? window.document.createElement(`canvas`) : {}
-  if (elem.getContext && elem.getContext(`2d`)) {
-    isWebpSupportedCache =
-      elem.toDataURL(`image/webp`).indexOf(`data:image/webp`) === 0
-  } else {
-    isWebpSupportedCache = false
-  }
-
-  return isWebpSupportedCache
-}
-
 const noscriptImg = props => {
   // Check if prop exists before adding each attribute to the string output below to prevent
   // HTML validation issues caused by empty values like width="" and height=""
   const src = props.src ? `src="${props.src}" ` : `src="" ` // required attribute
-  const srcSet = props.srcSet ? `srcset="${props.srcSet}" ` : ``
   const sizes = props.sizes ? `sizes="${props.sizes}" ` : ``
+  const srcSetWebp = props.srcSetWebp ? `<source type='image/webp' srcSet="${props.srcSetWebp}" ${sizes}/>` : ``
+  const srcSet = props.srcSet ? `<source srcSet="${props.srcSet}" ${sizes}/>` : ``
   const title = props.title ? `title="${props.title}" ` : ``
   const alt = props.alt ? `alt="${props.alt}" ` : `alt="" ` // required attribute
   const width = props.width ? `width="${props.width}" ` : ``
   const height = props.height ? `height="${props.height}" ` : ``
   const opacity = props.opacity ? props.opacity : `1`
   const transitionDelay = props.transitionDelay ? props.transitionDelay : `0.5s`
-
-  return `<img ${width}${height}${src}${srcSet}${alt}${title}${sizes}style="position:absolute;top:0;left:0;transition:opacity 0.5s;transition-delay:${transitionDelay};opacity:${opacity};width:100%;height:100%;object-fit:cover;object-position:center"/>`
+  return (`<picture>${srcSetWebp}${srcSet}<img ${width}${height}${src}${alt}${title}style="position:absolute;top:0;left:0;transition:opacity 0.5s;transition-delay:${transitionDelay};opacity:${opacity};width:100%;height:100%;object-fit:cover;object-position:center"/></picture>`)
 }
 
-const Img = props => {
+const Img = React.forwardRef((props, ref) => {
   const { style, onLoad, onError, ...otherProps } = props
-  return (
-    <img
+
+  return <img
       {...otherProps}
       onLoad={onLoad}
       onError={onError}
+      ref={ref}
       style={{
         position: `absolute`,
         top: 0,
         left: 0,
-        transition: `opacity 0.5s`,
         width: `100%`,
         height: `100%`,
         objectFit: `cover`,
@@ -122,8 +104,7 @@ const Img = props => {
         ...style,
       }}
     />
-  )
-}
+})
 
 Img.propTypes = {
   style: PropTypes.object,
@@ -140,6 +121,7 @@ class Image extends React.Component {
     let isVisible = true
     let imgLoaded = true
     let IOSupported = false
+    let fadeIn = props.fadeIn
 
     // If this image has already been loaded before then we can assume it's
     // already in the browser cache so it's cheap to just show directly.
@@ -161,21 +143,51 @@ class Image extends React.Component {
       imgLoaded = false
     }
 
+    if (props.critical) {
+      isVisible = true
+      imgLoaded = false
+      IOSupported = false
+    }
+
+    const hasNoScript =  !(this.props.critical && !this.props.fadeIn)
+
     this.state = {
       isVisible,
       imgLoaded,
       IOSupported,
+      fadeIn,
+      hasNoScript,
+      seenBefore,
     }
 
+    this.imageRef = React.createRef()
+    this.handleImageLoaded = this.handleImageLoaded.bind(this)
     this.handleRef = this.handleRef.bind(this)
+  }
+
+  componentDidMount() {
+    if (this.props.critical) {
+      const img = this.imageRef.current
+      if (img && img.complete) {
+        this.handleImageLoaded()
+      }
+    }
   }
 
   handleRef(ref) {
     if (this.state.IOSupported && ref) {
       listenToIntersections(ref, () => {
-        this.setState({ isVisible: true, imgLoaded: false })
+        this.setState({ isVisible: true })
       })
     }
+  }
+
+  handleImageLoaded() {
+    this.setState({ imgLoaded: true })
+    if (this.state.seenBefore) {
+      this.setState({ fadeIn: false })
+    }
+    this.props.onLoad && this.props.onLoad()
   }
 
   render() {
@@ -202,24 +214,19 @@ class Image extends React.Component {
 
     const imagePlaceholderStyle = {
       opacity: this.state.imgLoaded ? 0 : 1,
-      transitionDelay: `0.25s`,
+      transitionDelay: this.state.imgLoaded ? `0.5s` : `0.25s`,
       ...imgStyle,
       ...placeholderStyle,
     }
 
     const imageStyle = {
-      opacity: this.state.imgLoaded || this.props.fadeIn === false ? 1 : 0,
+      opacity: this.state.imgLoaded || this.state.fadeIn === false ? 1 : 0,
+      transition: this.state.fadeIn === true ? `opacity 0.5s` : `none`,
       ...imgStyle,
     }
 
     if (fluid) {
       const image = fluid
-
-      // Use webp by default if browser supports it
-      if (image.srcWebp && image.srcSetWebp && isWebpSupported()) {
-        image.src = image.srcWebp
-        image.srcSet = image.srcSetWebp
-      }
 
       // The outer div is necessary to reset the z-index to 0.
       return (
@@ -249,7 +256,7 @@ class Image extends React.Component {
               }}
             />
 
-            {/* Show the blury base64 image. */}
+            {/* Show the blurry base64 image. */}
             {image.base64 && (
               <Img
                 alt={alt}
@@ -288,27 +295,38 @@ class Image extends React.Component {
 
             {/* Once the image is visible (or the browser doesn't support IntersectionObserver), start downloading the image */}
             {this.state.isVisible && (
-              <Img
-                alt={alt}
-                title={title}
-                srcSet={image.srcSet}
-                src={image.src}
-                sizes={image.sizes}
-                style={imageStyle}
-                onLoad={() => {
-                  this.state.IOSupported && this.setState({ imgLoaded: true })
-                  this.props.onLoad && this.props.onLoad()
-                }}
-                onError={this.props.onError}
-              />
+              <picture>
+                {image.srcSetWebp && (<source
+                  type={`image/webp`}
+                  srcSet={image.srcSetWebp}
+                  sizes={image.sizes}
+                />)}
+
+                <source
+                  srcSet={image.srcSet}
+                  sizes={image.sizes}
+                />
+
+                <Img
+                  alt={alt}
+                  title={title}
+                  src={image.src}
+                  style={imageStyle}
+                  ref={this.imageRef}
+                  onLoad={this.handleImageLoaded}
+                  onError={this.props.onError}
+                />
+              </picture>
             )}
 
             {/* Show the original image during server-side rendering if JavaScript is disabled */}
-            <noscript
-              dangerouslySetInnerHTML={{
-                __html: noscriptImg({ alt, title, ...image }),
-              }}
-            />
+            {this.state.hasNoScript && (
+              <noscript
+                dangerouslySetInnerHTML={{
+                  __html: noscriptImg({ alt, title, ...image }),
+                }}
+              />
+            )}
           </Tag>
         </Tag>
       )
@@ -329,12 +347,6 @@ class Image extends React.Component {
         delete divStyle.display
       }
 
-      // Use webp by default if browser supports it
-      if (image.srcWebp && image.srcSetWebp && isWebpSupported()) {
-        image.src = image.srcWebp
-        image.srcSet = image.srcSetWebp
-      }
-
       // The outer div is necessary to reset the z-index to 0.
       return (
         <Tag
@@ -351,7 +363,7 @@ class Image extends React.Component {
             style={divStyle}
             ref={this.handleRef}
           >
-            {/* Show the blury base64 image. */}
+            {/* Show the blurry base64 image. */}
             {image.base64 && (
               <Img
                 alt={alt}
@@ -387,34 +399,46 @@ class Image extends React.Component {
 
             {/* Once the image is visible, start downloading the image */}
             {this.state.isVisible && (
-              <Img
-                alt={alt}
-                title={title}
-                width={image.width}
-                height={image.height}
-                srcSet={image.srcSet}
-                src={image.src}
-                style={imageStyle}
-                onLoad={() => {
-                  this.setState({ imgLoaded: true })
-                  this.props.onLoad && this.props.onLoad()
-                }}
-                onError={this.props.onError}
-              />
+              <picture>
+                {image.srcSetWebp && (<source
+                  type={`image/webp`}
+                  srcSet={image.srcSetWebp}
+                  sizes={image.sizes}
+                />)}
+
+                <source
+                  srcSet={image.srcSet}
+                  sizes={image.sizes}
+                />
+
+                <Img
+                  alt={alt}
+                  title={title}
+                  width={image.width}
+                  height={image.height}
+                  src={image.src}
+                  style={imageStyle}
+                  ref={this.imageRef}
+                  onLoad={this.handleImageLoaded}
+                  onError={this.props.onError}
+                />
+              </picture>
             )}
 
             {/* Show the original image during server-side rendering if JavaScript is disabled */}
-            <noscript
-              dangerouslySetInnerHTML={{
-                __html: noscriptImg({
-                  alt,
-                  title,
-                  width: image.width,
-                  height: image.height,
-                  ...image,
-                }),
-              }}
-            />
+            {this.state.hasNoScript && (
+              <noscript
+                dangerouslySetInnerHTML={{
+                  __html: noscriptImg({
+                    alt,
+                    title,
+                    width: image.width,
+                    height: image.height,
+                    ...image,
+                  }),
+                }}
+              />
+            )}
           </Tag>
         </Tag>
       )
@@ -425,6 +449,7 @@ class Image extends React.Component {
 }
 
 Image.defaultProps = {
+  critical: false,
   fadeIn: true,
   alt: ``,
   Tag: `div`,
@@ -465,6 +490,7 @@ Image.propTypes = {
     PropTypes.string,
     PropTypes.object,
   ]),
+  critical: PropTypes.bool,
   style: PropTypes.object,
   imgStyle: PropTypes.object,
   placeholderStyle: PropTypes.object,

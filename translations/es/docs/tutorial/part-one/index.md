@@ -55,7 +55,7 @@ Abre el archivo en `/src/pages/index.js`. El código en este archivo crea un com
 1. Hagamos nuestros cambios un poco más visibles. Intenta reemplazar el código en `/src/pages/index.js` con el siguiente código y vuelve a guardarlo. Verás cambios en el texto; El color del texto será violeta y el tamaño de la fuente será mayor.
 
 ```jsx
-import React from 'react'
+import React from "react"
 
 export default () => (
   <div style={{ color: `purple`, fontSize: `72px` }}>¡Hola Gatsby!</div>
@@ -70,10 +70,10 @@ export default () => (
 import React from "react"
 
 export default () => (
-    <div style={{ color: `purple` }}>
-        <h1>¡Hola Gatsby!</h1>
-        <p>Increíble.</p>
-    </div>
+  <div style={{ color: `purple` }}>
+    <h1>¡Hola Gatsby!</h1>
+    <p>Increíble.</p>
+  </div>
 )
 ```
 
@@ -85,11 +85,11 @@ export default () => (
 import React from "react"
 
 export default () => (
-    <div style={{ color: `purple` }}>
-        <h1>¡Hola Gatsby!</h1>
-        <p>Increíble.</p>
-        <img src="https://source.unsplash.com/random/400x200" alt="" />
-    </div>
+  <div style={{ color: `purple` }}>
+    <h1>¡Hola Gatsby!</h1>
+    <p>Increíble.</p>
+    <img src="https://source.unsplash.com/random/400x200" alt="" />
+  </div>
 )
 ```
 
@@ -162,7 +162,7 @@ import React from "react"
 
 export default () => (
   <div style={{ color: `teal` }}>
-    <h1>A  cerca de Gatsby</h1>
+    <h1>A cerca de Gatsby</h1>
     <p>Es fácil usar react en Gatsby.</p>
   </div>
 )
@@ -187,17 +187,17 @@ import React from "react"
 export default () => <h1>Este es un encabezado.</h1>
 ```
 
-3. Modifica el archivo `about.js` para importar el componente `Header`. Reemplace el marcado `h1` con ` <Header/> `:
+3. Modifica el archivo `about.js` para importar el componente `Header`. Reemplace el marcado `h1` con `<Header/>`:
 
 ```jsx{2,6}
 import React from "react"
 import Header from "../components/header"
 
 export default () => (
-    <div style={{ color: `teal` }}>
-        <Header />
-        <p>Es fácil usar react en Gatsby.</p>
-    </div>
+  <div style={{ color: `teal` }}>
+    <Header />
+    <p>Es fácil usar react en Gatsby.</p>
+  </div>
 )
 ```
 
@@ -220,10 +220,10 @@ import React from "react"
 import Header from "../components/header"
 
 export default () => (
-    <div style={{ color: `teal` }}>
-        <Header headerText="A cerca de Gatsby" />
-        <p>Es fácil usar react en Gatsby.</p>
-    </div>
+  <div style={{ color: `teal` }}>
+    <Header headerText="A cerca de Gatsby" />
+    <p>Es fácil usar react en Gatsby.</p>
+  </div>
 )
 ```
 
@@ -264,11 +264,11 @@ import React from "react"
 import Header from "../components/header"
 
 export default () => (
-    <div style={{ color: `teal` }}>
-        <Header headerText="A cerca de Gatsby" />
-        <Header headerText="Es asombroso" />
-        <p>Es fácil usar react en Gatsby.</p>
-    </div>
+  <div style={{ color: `teal` }}>
+    <Header headerText="A cerca de Gatsby" />
+    <Header headerText="Es asombroso" />
+    <p>Es fácil usar react en Gatsby.</p>
+  </div>
 )
 ```
 
@@ -296,12 +296,12 @@ import { Link } from "gatsby"
 import Header from "../components/header"
 
 export default () => (
-    <div style={{ color: `purple` }}>
-        <Link to="/contact/">Contacto</Link>
-        <Header headerText="!Hola Gatsby!" />
-        <p>Increible</p>
-        <img src="https://source.unsplash.com/random/400x200" alt="" />
-    </div>
+  <div style={{ color: `purple` }}>
+    <Link to="/contact/">Contacto</Link>
+    <Header headerText="!Hola Gatsby!" />
+    <p>Increible</p>
+    <img src="https://source.unsplash.com/random/400x200" alt="" />
+  </div>
 )
 ```
 

@@ -24,7 +24,7 @@
   "main": "index.js",
   "peerDependencies": {
     "gatsby": ">2.0.0-alpha",
-    "styled-jsx": "^2.2.1"
+    "styled-jsx": "^3.0.2"
   },
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-styled-jsx",
   "scripts": {
