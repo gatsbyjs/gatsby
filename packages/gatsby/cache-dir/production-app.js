@@ -82,12 +82,14 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   }
 
   const { page, location: browserLoc } = window
+  // TODO: comment what this check does
   if (
     page &&
     page.path !== `/404.html` &&
-    (!page.matchPath || !match(page.matchPath, browserLoc.pathname)) &&
+    __PATH_PREFIX__ + page.path !== browserLoc.pathname &&
     !page.path.match(/^\/offline-plugin-app-shell-fallback\/?$/) &&
-    __PATH_PREFIX__ + page.path !== browserLoc.pathname
+    (!page.matchPath ||
+      !match(__PATH_PREFIX__ + page.matchPath, browserLoc.pathname))
   ) {
     navigate(
       __PATH_PREFIX__ + page.path + browserLoc.search + browserLoc.hash,
@@ -96,10 +98,10 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   }
 
   loader
-    .getResourcesForPathname(location.pathname)
+    .getResourcesForPathname(browserLoc.pathname)
     .then(() => {
       if (!loader.getPage(location.pathname)) {
-        loader
+        return loader
           .getResourcesForPathname(`/404.html`)
           .then(resources =>
             loadDirectlyOr404(
@@ -109,6 +111,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
             )
           )
       }
+      return null
     })
     .then(() => {
       const Root = () =>
