@@ -6,8 +6,8 @@ const TerserPlugin = require(`terser-webpack-plugin`)
 const MiniCssExtractPlugin = require(`mini-css-extract-plugin`)
 const OptimizeCssAssetsPlugin = require(`optimize-css-assets-webpack-plugin`)
 
-const builtinPlugins = require(`./webpack-plugins`)
-const eslintConfig = require(`./eslint-config`)
+const eslintConfig = require(`../utils/eslint-config`)
+const builtinPlugins = require(`./plugins`)
 
 type LoaderSpec = string | { loader: string, options?: Object }
 type LoaderResolver<T: Object> = (options?: T) => LoaderSpec
@@ -248,7 +248,7 @@ module.exports = async ({
     js: options => {
       return {
         options,
-        loader: require.resolve(`./babel-loader`),
+        loader: require.resolve(`../utils/babel-loader`),
       }
     },
 

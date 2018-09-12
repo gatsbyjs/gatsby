@@ -10,8 +10,10 @@ const debug = require(`debug`)(`gatsby:webpack-config`)
 const report = require(`gatsby-cli/lib/reporter`)
 const { withBasePath } = require(`./path`)
 
+const createUtils = require(`../webpack/config-utils`)
+const StatsExtractorPlugin = require(`../webpack/stats-extractor-plugin`)
+
 const apiRunnerNode = require(`./api-runner-node`)
-const createUtils = require(`./webpack-utils`)
 const hasLocalEslint = require(`./local-eslint-config-finder`)
 
 // Four stages or modes:
@@ -198,53 +200,7 @@ module.exports = async (
           plugins.extractText(),
           // Write out stats object mapping named dynamic imports (aka page
           // components) to all their async chunks.
-          {
-            apply: function(compiler) {
-              compiler.hooks.done.tapAsync(
-                `gatsby-webpack-stats-extractor`,
-                (stats, done) => {
-                  let assets = {}
-                  let assetsMap = {}
-                  for (let chunkGroup of stats.compilation.chunkGroups) {
-                    if (chunkGroup.name) {
-                      let files = []
-                      for (let chunk of chunkGroup.chunks) {
-                        files.push(...chunk.files)
-                      }
-                      assets[chunkGroup.name] = files.filter(
-                        f => f.slice(-4) !== `.map`
-                      )
-                      assetsMap[chunkGroup.name] = files
-                        .filter(
-                          f =>
-                            f.slice(-4) !== `.map` &&
-                            f.slice(0, chunkGroup.name.length) ===
-                              chunkGroup.name
-                        )
-                        .map(filename => `/${filename}`)
-                    }
-                  }
-
-                  const webpackStats = {
-                    ...stats.toJson({ all: false, chunkGroups: true }),
-                    assetsByChunkName: assets,
-                  }
-
-                  fs.writeFile(
-                    path.join(`public`, `chunk-map.json`),
-                    JSON.stringify(assetsMap),
-                    () => {
-                      fs.writeFile(
-                        path.join(`public`, `webpack.stats.json`),
-                        JSON.stringify(webpackStats),
-                        done
-                      )
-                    }
-                  )
-                }
-              )
-            },
-          },
+          new StatsExtractorPlugin(),
         ])
         break
       }

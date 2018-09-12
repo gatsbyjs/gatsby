@@ -192,53 +192,18 @@ export default (pagePath, callback) => {
     }
   }
 
+  function assetsForCurrentPage() {
+    const isNotRootAndMatchesPage = a =>
+      (a.chunkName === `app` || a.chunkName === page.componentChunkName) &&
+      a.file !== `/` // <- I don't think this is possible
+
+    return {
+      js: stats.assets.js.filter(isNotRootAndMatchesPage),
+      css: stats.assets.css.filter(isNotRootAndMatchesPage),
+    }
+  }
   // Create paths to scripts
-  let scriptsAndStyles = flatten(
-    [`app`, page.componentChunkName].map(s => {
-      const fetchKey = `assetsByChunkName[${s}]`
-
-      let chunks = get(stats, fetchKey)
-      let namedChunkGroups = get(stats, `namedChunkGroups`)
-
-      if (!chunks) {
-        return null
-      }
-
-      chunks = chunks.map(chunk => {
-        if (chunk === `/`) {
-          return null
-        }
-        return { rel: `preload`, name: chunk }
-      })
-
-      namedChunkGroups[s].assets.forEach(asset =>
-        chunks.push({ rel: `preload`, name: asset })
-      )
-
-      const childAssets = namedChunkGroups[s].childAssets
-      for (const rel in childAssets) {
-        chunks = merge(
-          chunks,
-          childAssets[rel].map(chunk => {
-            return { rel, name: chunk }
-          })
-        )
-      }
-
-      return chunks
-    })
-  )
-    .filter(s => isObject(s))
-    .sort((s1, s2) => (s1.rel == `preload` ? -1 : 1)) // given priority to preload
-
-  scriptsAndStyles = uniqBy(scriptsAndStyles, item => item.name)
-
-  const scripts = scriptsAndStyles.filter(
-    script => script.name && script.name.endsWith(`.js`)
-  )
-  const styles = scriptsAndStyles.filter(
-    style => style.name && style.name.endsWith(`.css`)
-  )
+  let { js: scripts, css: styles } = assetsForCurrentPage()
 
   apiRunner(`onRenderBody`, {
     setHeadComponents,
@@ -254,20 +219,17 @@ export default (pagePath, callback) => {
     pathPrefix: __PATH_PREFIX__,
   })
 
-  scripts
-    .slice(0)
-    .reverse()
-    .forEach(script => {
-      // Add preload/prefetch <link>s for scripts.
-      headComponents.push(
-        <link
-          as="script"
-          rel={script.rel}
-          key={script.name}
-          href={`${__PATH_PREFIX__}/${script.name}`}
-        />
-      )
-    })
+  scripts.forEach(script => {
+    // Add preload/prefetch <link>s for scripts.
+    headComponents.push(
+      <link
+        as="script"
+        rel={script.rel}
+        key={script.file}
+        href={`${__PATH_PREFIX__}/${script.file}`}
+      />
+    )
+  })
 
   if (page.jsonName in dataPaths) {
     const dataPath = `${__PATH_PREFIX__}/static/d/${
@@ -284,36 +246,35 @@ export default (pagePath, callback) => {
     )
   }
 
-  styles
-    .slice(0)
-    .reverse()
-    .forEach(style => {
-      // Add <link>s for styles that should be prefetched
-      // otherwise, inline as a <style> tag
-
-      if (style.rel === `prefetch`) {
-        headComponents.push(
-          <link
-            as="style"
-            rel={style.rel}
-            key={style.name}
-            href={`${__PATH_PREFIX__}/${style.name}`}
-          />
-        )
-      } else {
-        headComponents.unshift(
-          <style
-            data-href={`${__PATH_PREFIX__}/${style.name}`}
-            dangerouslySetInnerHTML={{
-              __html: fs.readFileSync(
-                join(process.cwd(), `public`, style.name),
-                `utf-8`
-              ),
-            }}
-          />
-        )
-      }
-    })
+  // Add <link>s for styles that should be prefetched
+  // otherwise, inline as a <style> tag
+  headComponents.push(
+    ...styles
+      .filter(s => s.rel === `prefetch`)
+      .map(style => (
+        <link
+          as="style"
+          rel={style.rel}
+          key={style.file}
+          href={`${__PATH_PREFIX__}/${style.file}`}
+        />
+      ))
+  )
+  // unshift all at once to maintain the order
+  headComponents.unshift(
+    ...styles.filter(s => s.rel !== `prefetch`).map(style => (
+      <style
+        key={style.file}
+        data-href={`${__PATH_PREFIX__}/${style.file}`}
+        dangerouslySetInnerHTML={{
+          __html: fs.readFileSync(
+            join(process.cwd(), `public`, style.file),
+            `utf-8`
+          ),
+        }}
+      />
+    ))
+  )
 
   apiRunner(`onPreRenderHTML`, {
     getHeadComponents,
@@ -359,7 +320,7 @@ export default (pagePath, callback) => {
   // Filter out prefetched bundles as adding them as a script tag
   // would force high priority fetching.
   const bodyScripts = scripts.filter(s => s.rel !== `prefetch`).map(s => {
-    const scriptPath = `${__PATH_PREFIX__}/${JSON.stringify(s.name).slice(
+    const scriptPath = `${__PATH_PREFIX__}/${JSON.stringify(s.file).slice(
       1,
       -1
     )}`
