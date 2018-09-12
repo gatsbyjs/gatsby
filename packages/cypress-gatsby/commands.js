@@ -1,7 +1,7 @@
 /* global Cypress cy */
 
-Cypress.Commands.add(`getTestElement`, selector =>
-  cy.get(`[data-testid="${selector}"]`)
+Cypress.Commands.add(`getTestElement`, (selector, ...sub) =>
+  cy.get([`[data-testid="${selector}"]`].concat(sub).filter(Boolean).join(' '))
 )
 
 Cypress.Commands.add(
