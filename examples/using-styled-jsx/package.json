@@ -5,10 +5,10 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "gatsby": "next",
-    "gatsby-plugin-styled-jsx": "^2.0.0",
+    "gatsby-plugin-styled-jsx": "^3.0.1-rc.3",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "styled-jsx": "^2.2.5"
+    "styled-jsx": "^3.0.2"
   },
   "license": "MIT",
   "main": "n/a",
