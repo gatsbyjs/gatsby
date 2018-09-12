@@ -22,13 +22,14 @@ plugins: [`gatsby-plugin-offline`]
 ## Overriding options
 
 When adding this plugin to your `gatsby-config.js`, you can pass in options to
-override the default sw-precache config.
+override the default [Workbox](https://developers.google.com/web/tools/workbox/modules/workbox-build) config.
 
 The default config is as follows. Warning, you can break the offline support
 and AppCache setup by changing these options so tread carefully.
 
 ```javascript
 const options = {
+  importWorkboxFrom: `local`,
   globDirectory: rootDir,
   globPatterns,
   modifyUrlPrefix: {

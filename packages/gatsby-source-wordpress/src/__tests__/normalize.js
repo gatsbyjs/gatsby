@@ -57,6 +57,10 @@ describe(`Process WordPress data`, () => {
       { id: 2, acf: {} },
     ])
   })
+  it(`Creates links between entities and polylang translations entities`, () => {
+    entities = normalize.mapPolylangTranlations(entities)
+    expect(entities).toMatchSnapshot()
+  })
 
   // Actually let's not test this since it's a bit tricky to mock
   // as it needs access to the store/cache + would download file.
