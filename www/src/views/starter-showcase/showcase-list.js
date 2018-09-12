@@ -88,7 +88,7 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
                 <div css={{justifyContent: `space-between`, display: `flex`}}>
                   <span>{repo.owner && repo.owner.login} /</span>
                   <span css={{...styles.meta}}>
-                    {!isGatsbyVersionWarning && <img src={V2Icon} alt="icon" css={{width: `36px`, marginBottom: 0, verticalAlign: `text-bottom`}} />}
+                    {/* {!isGatsbyVersionWarning && <img src={V2Icon} alt="icon" css={{width: `36px`, marginBottom: 0, verticalAlign: `text-bottom`}} />} */}
                     {` `}
                     <MdStar
                       style={{
