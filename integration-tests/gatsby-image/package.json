@@ -26,7 +26,7 @@
     "develop": "gatsby develop",
     "format": "prettier --write '**/*.js'",
     "test": "npm-run-all -s build start-server-and-test",
-    "start-server-and-test": "start-server-and-test serve http://localhost:9000/blog cy:run",
+    "start-server-and-test": "start-server-and-test serve http://localhost:9000 cy:run",
     "serve": "gatsby serve",
     "cy:open": "cypress open",
     "cy:run": "cypress run --browser chrome"
