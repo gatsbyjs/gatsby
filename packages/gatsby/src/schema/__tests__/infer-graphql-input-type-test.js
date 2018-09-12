@@ -551,7 +551,7 @@ describe(`GraphQL Input args`, () => {
     expect(result.data.allNode.edges[0].node.name).toEqual(`The Mad Wax`)
   })
 
-  it(`handles the in operator for array of objects`, async () => {
+  it(`handles the elemMatch operator for array of objects`, async () => {
     let result = await queryResult(
       nodes,
       `
@@ -902,6 +902,37 @@ describe(`filtering on linked nodes`, () => {
     expect(result.data.allNode.edges[0].node.linked.height).toEqual(101)
     expect(result.data.allNode.edges[0].node.foo).toEqual(`bar`)
     expect(result.data.allNode.edges[1].node.foo).toEqual(`baz`)
+  })
+
+  it(`handles elemMatch operator`, async () => {
+    let result = await queryResult(
+      [
+        { linked___NODE: [`child_1`, `child_2`], foo: `bar` },
+        { linked___NODE: [`child_1`], foo: `baz` },
+        { linked___NODE: [`child_2`], foo: `foo` },
+        { foo: `ipsum` },
+      ],
+      `
+        {
+          eq:allNode(filter: { linked: { elemMatch: { hair: { eq: "brown" } } } }) {
+            edges { node { foo } }
+          }
+          in:allNode(filter: { linked: { elemMatch: { hair: { in: ["brown", "blonde"] } } } }) {
+            edges { node { foo } }
+          }
+        }
+      `,
+      { types }
+    )
+
+    expect(result.data.eq.edges.length).toEqual(2)
+    expect(result.data.eq.edges[0].node.foo).toEqual(`bar`)
+    expect(result.data.eq.edges[1].node.foo).toEqual(`baz`)
+
+    expect(result.data.in.edges.length).toEqual(3)
+    expect(result.data.in.edges[0].node.foo).toEqual(`bar`)
+    expect(result.data.in.edges[1].node.foo).toEqual(`baz`)
+    expect(result.data.in.edges[2].node.foo).toEqual(`foo`)
   })
 
   it(`doesn't mutate node object`, async () => {
