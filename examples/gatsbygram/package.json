@@ -52,7 +52,6 @@
   },
   "devDependencies": {
     "cypress": "^3.1.0",
-    "gatsby-dev-cli": "^2.0.0-rc.1",
     "start-server-and-test": "^1.1.4"
   }
 }
