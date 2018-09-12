@@ -4,7 +4,6 @@ import Helmet from "react-helmet"
 import FeaturedSites from "./featured-sites"
 import FilteredShowcase from "./filtered-showcase"
 import Layout from "../../components/layout"
-import presets from "../../utils/presets"
 
 class ShowcaseView extends Component {
   showcase = React.createRef()

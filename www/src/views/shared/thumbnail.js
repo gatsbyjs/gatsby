@@ -28,6 +28,7 @@ const ThumbnailLink = ({ slug, image, title, children }) => {
           transition: `all ${presets.animation.speedDefault} ${
             presets.animation.curveDefault
           }`,
+          fontWeight: 200,
           "&:hover": { ...styles.screenshotHover },
           "&:hover ~ .meta > .featured-site": {
             transform: `translateY(-3px)`,
@@ -60,7 +61,7 @@ export default ThumbnailLink
 
 export const showcaseThumbnailFragment = graphql`
   fragment ShowcaseThumbnailFragment_item on ImageSharp {
-    fluid(maxWidth: 350) {
+    fluid(maxWidth: 350, maxHeight: 260, cropFocus: NORTH) {
       ...GatsbyImageSharpFluid_noBase64
     }
   }

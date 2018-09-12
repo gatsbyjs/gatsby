@@ -86,7 +86,7 @@ export default class FilteredShowcase extends Component {
               ...styles.sticky,
               paddingTop: 0,
               borderRight: `1px solid ${colors.ui.light}`,
-              height: `calc(100vh - ${presets.headerHeight})`,
+              height: `calc(100vh - ${presets.headerHeight} - ${presets.headerHeight})`,
             },
           }}
         >
