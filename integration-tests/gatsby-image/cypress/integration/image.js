@@ -1,24 +1,7 @@
 /* global cy */
-const stringifyStyle = obj =>
-  Object.keys(obj)
-    .map(key => `${key}: ${obj[key]}`)
-    .join(`; `) + `;`
-
-const imageStyle = {
-  position: `absolute`,
-  top: `0px`,
-  left: `0px`,
-  width: `100%`,
-  height: `100%`,
-  'object-fit': `cover`,
-  'object-position': `center center`,
-  opacity: 1,
-  transition: `opacity 0.5s ease 0s`,
-}
-
 describe(`Production gatsby-image`, () => {
   beforeEach(() => {
-    cy.visit(`/`)
+    cy.visit(`/`).waitForRouteChange()
   })
 
   it(`renders an outer wrapper`, () => {
@@ -77,8 +60,7 @@ describe(`Production gatsby-image`, () => {
   it(`applies inline style to img`, () => {
     cy.getTestElement(`image-fluid`, `picture > img`).should(
       `have.attr`,
-      `style`,
-      stringifyStyle(imageStyle)
+      `style`
     )
   })
 
