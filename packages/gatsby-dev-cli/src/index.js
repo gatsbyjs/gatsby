@@ -69,7 +69,9 @@ let packages = Object.keys(
 if (argv.copyAll) {
   packages = fs.readdirSync(path.join(gatsbyLocation, `packages`))
 } else {
-  packages = packages.filter(p => p.startsWith(`gatsby`))
+  const { dependencies } = JSON.parse(fs.readFileSync(path.join(gatsbyLocation, `packages/gatsby/package.json`)))
+  const extraGatsbyPackages = Object.keys(dependencies).filter(d => d.startsWith(`gatsby`) && d !== `gatsby-plugin-page-creator`)
+  packages = packages.filter(p => p.startsWith(`gatsby`)).concat(extraGatsbyPackages)
 }
 
 if (!argv.packages && _.isEmpty(packages)) {
