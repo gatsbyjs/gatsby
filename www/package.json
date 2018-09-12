@@ -34,7 +34,7 @@
     "gatsby-remark-copy-linked-files": "next",
     "gatsby-remark-graphviz": "next",
     "gatsby-remark-images": "next",
-    "gatsby-remark-prismjs": "next",
+    "gatsby-remark-prismjs": "3.0.0-beta.6",
     "gatsby-remark-responsive-iframe": "next",
     "gatsby-remark-smartypants": "next",
     "gatsby-source-filesystem": "^2.0.1-rc.1",
