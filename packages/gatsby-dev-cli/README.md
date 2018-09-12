@@ -57,3 +57,7 @@ https://github.com/gatsbyjs/gatsby/blob/master/scripts/publish-site.sh.
 
 Don't output anything except for a quit message when used together with
 `--scan-once`.
+
+#### `--copy-all`
+
+Copy all modules/files in the gatsby source repo in packages/

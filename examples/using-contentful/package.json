@@ -12,7 +12,7 @@
     "gatsby-plugin-typography": "next",
     "gatsby-source-contentful": "next",
     "gatsby-transformer-remark": "next",
-    "lodash": "^4.16.4",
+    "lodash": "^4.17.10",
     "react": "^16.3.1",
     "react-dom": "^16.3.1",
     "react-typography": "^0.16.3",

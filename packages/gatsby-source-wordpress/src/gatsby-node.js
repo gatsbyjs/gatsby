@@ -123,6 +123,8 @@ exports.sourceNodes = async (
     searchAndReplaceContentUrls,
   })
 
+  entities = normalize.mapPolylangTranlations(entities)
+
   // apply custom normalizer
   if (typeof _normalizer === `function`) {
     entities = _normalizer({

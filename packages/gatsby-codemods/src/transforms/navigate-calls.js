@@ -15,9 +15,10 @@ const replaceEsm = (j, root) => {
     },
   })
 
-  const containsNavigateTo = importStatement.find(j.Identifier, {
-    name: EXISTING_METHOD,
-  }).length > 0
+  const containsNavigateTo =
+    importStatement.find(j.Identifier, {
+      name: EXISTING_METHOD,
+    }).length > 0
 
   if (!importStatement.length || !containsNavigateTo) {
     return
@@ -65,18 +66,16 @@ const addGatsbyImport = (j, root) => {
       [j.importSpecifier(j.identifier(METHOD))],
       j.literal(MODULE_NAME)
     )
-    first
-      .insertAfter(statement)
+    first.insertAfter(statement)
     return
   }
 
-  gatsbyImport
-    .replaceWith(({ node }) => {
-      node.specifiers = node.specifiers.concat(
-        j.importSpecifier(j.identifier(METHOD))
-      )
-      return node
-    })
+  gatsbyImport.replaceWith(({ node }) => {
+    node.specifiers = node.specifiers.concat(
+      j.importSpecifier(j.identifier(METHOD))
+    )
+    return node
+  })
 }
 
 // TODO: make work with existing gatsby requires (e.g. `const { StaticQuery } = require('gatsby');`)
@@ -90,8 +89,7 @@ const addGatsbyRequire = (j, root, requires) => {
     let statement = j.template.statement([
       `const { ${METHOD} } = require('${MODULE_NAME}');\n`,
     ])
-    first
-      .insertAfter(statement)
+    first.insertAfter(statement)
     return
   }
 }
@@ -99,17 +97,22 @@ const addGatsbyRequire = (j, root, requires) => {
 const replaceGatsbyLinkImport = (j, root, importStatement) => {
   const imports = importStatement.find(j.Identifier)
 
-  const allExistingMethods = imports.every(node => node.value.name === EXISTING_METHOD)
-  
+  const allExistingMethods = imports.every(
+    node => node.value.name === EXISTING_METHOD
+  )
+
   if (allExistingMethods) {
     importStatement.remove()
   }
 }
 
 const replaceGatsbyLinkRequire = (j, root, requires) => {
-  const links = requires.filter(el => j(el).find(j.CallExpression, {
-    arguments: [{ value: EXISTING_MODULE_NAME }],
-  }).length > 0)
+  const links = requires.filter(
+    el =>
+      j(el).find(j.CallExpression, {
+        arguments: [{ value: EXISTING_MODULE_NAME }],
+      }).length > 0
+  )
 
   links.forEach(el => {
     const node = j(el)

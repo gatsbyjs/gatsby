@@ -36,14 +36,6 @@ const supportedPrefetchStrategy = support(`prefetch`)
 
 const preFetched = {}
 
-export function withPrefix(path) {
-  return normalizePath(`${__PATH_PREFIX__}/${path}`)
-}
-
-function normalizePath(path) {
-  return path.replace(/\/+/g, `/`)
-}
-
 const prefetch = function(url) {
   if (preFetched[url]) {
     return
