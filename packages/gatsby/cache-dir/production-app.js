@@ -100,7 +100,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   loader
     .getResourcesForPathname(browserLoc.pathname)
     .then(() => {
-      if (!loader.getPage(location.pathname)) {
+      if (!loader.getPage(browserLoc.pathname)) {
         return loader
           .getResourcesForPathname(`/404.html`)
           .then(resources =>
