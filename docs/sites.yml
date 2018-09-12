@@ -2307,6 +2307,13 @@
     - Web Dev
     - Agency
     - Open Source
+- title: eworld
+  main_url: 'http://eworld.herokuapp.com/'
+  url: 'http://eworld.herokuapp.com/'
+  featured: false
+  categories:
+    - eCommerce
+    - Technology
 - title: It's a Date
   description: >
     It's a Date is a dating app that actually involves dating.
