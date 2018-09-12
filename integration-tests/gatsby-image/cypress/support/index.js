@@ -15,7 +15,7 @@
 
 // Import commands.js using ES2015 syntax:
 // TODO: import as "cypress-gatsby/commands" once this is published to NPM
-import "../../../../packages/cypress-gatsby/commands"
+import '../../../../packages/cypress-gatsby/commands'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')

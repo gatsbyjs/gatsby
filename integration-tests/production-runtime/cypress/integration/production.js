@@ -3,6 +3,5 @@
 describe(`Production build tests`, () => {
   it(`should render properly`, () => {
     cy.visit(`/`)
-    
   })
 })

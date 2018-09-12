@@ -56,7 +56,7 @@
     "format-packages": "prettier-eslint --write \"packages/*/src/**/*.js\"",
     "format-scripts": "prettier-eslint --write \"scripts/**/*.js\"",
     "format-www": "prettier-eslint --write \"www/*.js\" \"www/src/**/*.js\"",
-    "format-integration": "prettier-eslint --write \"integration-tests/**/src/**/*.js\"",
+    "format-integration": "prettier-eslint --write \"integration-tests/**/src/**/*.js\" \"integration-tests/**/cypress/**/*.js\"",
     "jest": "jest",
     "lerna": "lerna",
     "lerna-prepare": "lerna run prepare",

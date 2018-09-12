@@ -18,7 +18,7 @@ const Layout = ({ children }) => (
       }
     `}
     render={data => (
-      <>`        \` \`
+      <>`        \` \` \` \`
        `<Helmet
           title={data.site.siteMetadata.title}
           meta={[
@@ -27,7 +27,7 @@ const Layout = ({ children }) => (
           ]}
         >
           <html lang="en" />
-        </Helmet>`        \` `<Header siteTitle={data.site.siteMetadata.title} />` `
+        </Helmet>`        \` \` `<Header siteTitle={data.site.siteMetadata.title} />` `
         <div
           style={{
             margin: `0 auto`,
@@ -37,7 +37,7 @@ const Layout = ({ children }) => (
           }}
         >
           {children}
-        </div>`        \` \`
+        </div>`        \` \` \` \`
      `</>
     )}
   />
