@@ -2,6 +2,7 @@ import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
 import React, { createElement } from "react"
 import ReactDOM from "react-dom"
 import { Router, navigate } from "@reach/router"
+import { match } from "@reach/router/lib/utils"
 import { ScrollContext } from "gatsby-react-router-scroll"
 import domReady from "domready"
 import {
@@ -80,33 +81,30 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     }
   }
 
+  const { page, location: browserLoc } = window
   if (
-    window.page &&
-    window.page.path !== `/404.html` &&
-    !window.page.path.match(/^\/offline-plugin-app-shell-fallback\/?$/) &&
-    __PATH_PREFIX__ + window.page.path !== window.location.pathname
+    page &&
+    page.path !== `/404.html` &&
+    (!page.matchPath || !match(page.matchPath, browserLoc.pathname)) &&
+    !page.path.match(/^\/offline-plugin-app-shell-fallback\/?$/) &&
+    __PATH_PREFIX__ + page.path !== browserLoc.pathname
   ) {
     navigate(
-      __PATH_PREFIX__ +
-        window.page.path +
-        window.location.search +
-        window.location.hash,
+      __PATH_PREFIX__ + page.path + browserLoc.search + browserLoc.hash,
       { replace: true }
     )
   }
 
   loader
-    .getResourcesForPathname(window.location.pathname)
+    .getResourcesForPathname(location.pathname)
     .then(() => {
-      if (!loader.getPage(window.location.pathname)) {
-        return loader
+      if (!loader.getPage(location.pathname)) {
+        loader
           .getResourcesForPathname(`/404.html`)
           .then(resources =>
             loadDirectlyOr404(
               resources,
-              window.location.pathname +
-                window.location.search +
-                window.location.hash,
+              browserLoc.pathname + browserLoc.search + browserLoc.hash,
               true
             )
           )
