@@ -726,7 +726,6 @@
   gatsby_version: V1
   categories:
     - Blog
-    - Personal
   built_by: Jason Lengstorf
   built_by_url: "https://github.com/jlengstorf"
 - title: Mannequin.io
@@ -802,7 +801,6 @@
     broad and unique user needs.
   categories:
     - Portfolio
-    - Personal
 - title: Preston Richey Portfolio / Blog
   main_url: "https://prestonrichey.com/"
   url: "https://prestonrichey.com/"
@@ -1925,7 +1923,6 @@
   categories:
     - Blog
     - Portfolio
-    - Personal
     - Fashion
   featured: false
 - title: Lifestone Church
@@ -1945,7 +1942,6 @@
   categories:
     - Portfolio
     - Open Source
-    - Personal
     - Web Dev
   built_by: Artem Sapegin
   built_by_url: "https://github.com/sapegin"
@@ -2005,7 +2001,6 @@
     - Portfolio
     - Web Dev
     - Design
-    - Personal
   built_by: Max McKinney
   featured: false
 - title: Stickyard
@@ -2066,7 +2061,6 @@
   categories:
     - Blog
     - Web Dev
-    - Personal
   built_by: Matt Ferderer
   built_by_url: "https://twitter.com/mattferderer"
   featured: false
@@ -2172,7 +2166,6 @@
   categories:
     - Portfolio
     - Web Dev
-    - Personal
   built_by: Mahipat Jadav
   built_by_url: "https://mojaave.com/"
   featured: false
