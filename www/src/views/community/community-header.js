@@ -141,20 +141,25 @@ class CommunityHeader extends Component {
             alignItems: `center`,
           }}
         >
-          <button
+          <Link
+            to="/docs/submit-to-creator-showcase/"
             css={{
-              background: `transparent`,
-              border: `1px solid ${colors.lilac}`,
-              color: colors.lilac,
-              padding: `${rhythm(1 / 4)} 1rem`,
-              display: `flex`,
-              alignItems: `center`,
-              borderRadius: `2px`,
-              cursor: `pointer`,
-              marginRight: `${rhythm(1 / 4)}`,
-              "&:hover": {
-                backgroundColor: colors.gatsby,
-                color: `white`,
+              "&&": {
+                background: `transparent`,
+                border: `1px solid ${colors.lilac}`,
+                color: colors.lilac,
+                padding: `${rhythm(1 / 4)} 1rem`,
+                display: `flex`,
+                alignItems: `center`,
+                borderRadius: `2px`,
+                cursor: `pointer`,
+                marginRight: `${rhythm(1 / 4)}`,
+                boxShadow: `none`,
+                fontWeight: `400`,
+                "&:hover": {
+                  backgroundColor: colors.gatsby,
+                  color: `white`,
+                },
               },
             }}
           >
@@ -166,7 +171,7 @@ class CommunityHeader extends Component {
               Become a Creator
             </span>
             <img src={Arrow} alt="" css={{ marginBottom: 0 }} />
-          </button>
+          </Link>
           {/* // Search function is not implemented yet, do we want/need it here? */}
           {/*  <label css={{ position: `relative` }}>
             <input
