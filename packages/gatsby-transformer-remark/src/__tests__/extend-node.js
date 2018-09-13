@@ -9,9 +9,33 @@ const { onCreateNode } = require(`../gatsby-node`)
 const {
   inferObjectStructureFromNodes,
 } = require(`../../../gatsby/src/schema/infer-graphql-type`)
+const extendNodeType = require(`../extend-node-type`)
 
 // given a set of nodes and a query, return the result of the query
 async function queryResult(nodes, fragment, { types = [] } = {}) {
+  const inferredFields = inferObjectStructureFromNodes({
+    nodes,
+    types: [...types],
+  })
+  const extendNodeTypeFields = await extendNodeType(
+    {
+      type: { name: `MarkdownRemark` },
+      cache: {
+        get: () => null,
+        set: () => null,
+      },
+      getNodes: () => [],
+    },
+    {
+      plugins: [],
+    }
+  )
+
+  const markdownRemarkFields = {
+    ...inferredFields,
+    ...extendNodeTypeFields,
+  }
+
   const schema = new GraphQLSchema({
     query: new GraphQLObjectType({
       name: `RootQueryType`,
@@ -22,10 +46,7 @@ async function queryResult(nodes, fragment, { types = [] } = {}) {
             type: new GraphQLList(
               new GraphQLObjectType({
                 name: `MarkdownRemark`,
-                fields: inferObjectStructureFromNodes({
-                  nodes,
-                  types: [...types],
-                }),
+                fields: markdownRemarkFields,
               })
             ),
             resolve() {
