@@ -28,6 +28,7 @@ const ThumbnailLink = ({ slug, image, title, children }) => {
           transition: `all ${presets.animation.speedDefault} ${
             presets.animation.curveDefault
           }`,
+          fontWeight: 200,
           "&:hover": { ...styles.screenshotHover },
           "&:hover ~ .meta > .featured-site": {
             transform: `translateY(-3px)`,

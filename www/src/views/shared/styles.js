@@ -141,6 +141,22 @@ const styles = {
         color: colors.gatsby,
       },
     },
+  noLinkUnderline: {
+    borderBottom: `none !important`, // i know i know
+    boxShadow: `none !important`, // but people really want this
+    background: `none !important`,
+  },
+  shortcutIcon : {
+    "&&": {
+      color: colors.gray.bright,
+      fontWeight: `normal`,
+      borderBottom: `none`,
+      boxShadow: `none`,
+      "&:hover": {
+        background: `none`,
+        color: colors.gatsby,
+      }
+    },
   },
   meta: {
     ...scale(-1 / 4),
