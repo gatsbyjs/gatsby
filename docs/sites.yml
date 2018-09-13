@@ -89,7 +89,6 @@
   url: "https://housemanager.calstate.aaa.com/"
   categories:
     - Home
-    - Services
     - Featured
   featured: true
 - title: Life Without Barriers | Foster Care
@@ -1197,7 +1196,6 @@
     - Documentation
     - Bot
     - Community
-    - Services
     - Tool
   built_by: Sankarsan Kampa
   built_by_url: "https://sankarsankampa.com"
@@ -1650,7 +1648,6 @@
   main_url: "https://beta.bom.gov.au/"
   categories:
     - Meteorology
-    - Services
   featured: false
 - title: Curbside
   description: |
@@ -1680,7 +1677,6 @@
   categories:
     - Event
     - Community
-    - Services
   featured: false
 - title: Kalix
   description: >
@@ -1692,7 +1688,6 @@
     - Scheduling
     - Documentation
     - Billing
-    - Services
   featured: false
 - title: Hubba
   description: |
@@ -2307,7 +2302,6 @@
     - API
     - Technology
     - Tool
-    - Services
     - Travel
     - Bot
   featured: false
