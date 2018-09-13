@@ -102,10 +102,11 @@ const navigate = (to, options = {}) => {
   })
 }
 
-function shouldUpdateScroll(prevRouterProps, { location: { pathname } }) {
+function shouldUpdateScroll(prevRouterProps, { location: { pathname, state } }) {
   const results = apiRunner(`shouldUpdateScroll`, {
     prevRouterProps,
     pathname,
+    state,
   })
   if (results.length > 0) {
     return results[0]

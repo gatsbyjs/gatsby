@@ -59,6 +59,7 @@ exports.onRouteUpdate = true
  * @param {object} $0
  * @param {object} $0.prevRouterProps The previous state of the router before the route change.
  * @param {object} $0.pathname The new pathname
+ * @param {object} $0.state The new location state
  */
 exports.shouldUpdateScroll = true
 
