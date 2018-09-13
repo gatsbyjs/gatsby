@@ -1775,7 +1775,6 @@
   url: "https://us.trintellix.com/"
   categories:
     - Health & Wellness
-    - Help
   featured: false
 - title: The Telegraph Premium
   description: |
@@ -2343,7 +2342,6 @@
     - API
     - Technology
     - Tool
-    - Help
     - Services
     - Travel
     - Bot
