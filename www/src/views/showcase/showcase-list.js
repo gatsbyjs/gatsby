@@ -10,6 +10,7 @@ import { rhythm } from "../../utils/typography"
 import { colors } from "../../utils/presets"
 
 import GithubIcon from "react-icons/lib/go/mark-github"
+import FaExtLink from "react-icons/lib/fa/external-link"
 import FeaturedIcon from "../../assets/featured-sites-icons--white.svg"
 
 const ShowcaseList = ({ items, count }) => {
@@ -36,9 +37,7 @@ const ShowcaseList = ({ items, count }) => {
                 image={node.childScreenshot}
                 title={node.title}
               >
-                <div>
-                  <span className="title">{node.title}</span>
-                </div>
+                <strong className="title">{node.title}</strong>
               </ThumbnailLink>
               <div
                 css={{
@@ -56,29 +55,27 @@ const ShowcaseList = ({ items, count }) => {
                 >
                   <ShowcaseItemCategories categories={node.categories} />
                 </div>
-                {node.source_url && (
-                  <div>
+                <div css={{flex: `0 0 auto`, textAlign: `right`}}>
+                  {node.source_url && (
                     <a
-                      css={{
-                        "&&": {
-                          color: colors.gray.bright,
-                          fontWeight: `normal`,
-                          borderBottom: `none`,
-                          boxShadow: `none`,
-                          "&:hover": {
-                            background: `none`,
-                            color: colors.gatsby,
-                          },
-                        },
-                      }}
+                      css={{...styles.shortcutIcon}}
                       href={node.source_url}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
                       <GithubIcon style={{ verticalAlign: `text-top` }} />
                     </a>
-                  </div>
-                )}
+                  )}
+                  <a
+                    href={node.main_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    css={{...styles.shortcutIcon}}
+                  >
+                    {` `}
+                    <FaExtLink style={{ verticalAlign: `text-top` }} />
+                  </a>
+                </div>
                 {node.featured && (
                   <Link
                     css={{
