@@ -1761,7 +1761,7 @@
   url: "https://open.fda.gov/"
   categories:
     - API
-    - Datasets
+    - Data
     - Reports
   featured: false
 - title: Office of Institutional Research and Assessment
@@ -1995,7 +1995,6 @@
     - Landing
     - Portfolio
     - Technology
-    - Digital Products
     - Web Dev
   built_by: Novatics
   built_by_url: "https://github.com/Novatics"
@@ -2209,7 +2208,6 @@
   categories:
     - Technology
     - Design
-    - Digital Products
   featured: false
 - title: Traffic Design Biennale 2018
   main_url: "https://trafficdesign.pl"
