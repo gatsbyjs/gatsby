@@ -2423,3 +2423,16 @@
     - Open Source
     - Web Dev
   featured: false
+- title: Cameron Maske
+  main_url: 'https://www.cameronmaske.com/'
+  url: 'https://www.cameronmaske.com/courses/introduction-to-pytest/'
+  source_url: 'https://github.com/cameronmaske/cameronmaske.com-v2'
+  description: >
+    The homepage of Cameron Maske, a freelance full stack developer, who is currently working on a free pytest video course
+  categories:
+    - Personal
+    - Education
+    - Video 
+    - Portfolio 
+    - Freelance
+  featured: false
