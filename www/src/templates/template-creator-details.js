@@ -36,16 +36,20 @@ class CreatorTemplate extends Component {
         <Helmet>
           <title>{creator.name}</title>
         </Helmet>
-        <CommunityHeader />
+        <CommunityHeader submissionText="Add Yourself" />
         <main
           role="main"
           css={{
             padding: rhythm(3 / 4),
+            paddingBottom: `10vh`,
             display: `flex`,
             flexDirection: `column`,
             alignItems: `center`,
             justifyContent: `center`,
             width: `100%`,
+            [presets.Tablet]: {
+              paddingBottom: rhythm(3 / 4),
+            },
             [presets.Desktop]: {
               flexDirection: `row`,
               alignItems: `flex-start`,

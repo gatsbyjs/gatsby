@@ -108,7 +108,11 @@ class CommunityView extends Component {
           role="main"
           css={{
             padding: rhythm(3 / 4),
+            paddingBottom: `10vh`,
             fontFamily: typography.options.headerFontFamily.join(`,`),
+            [presets.Tablet]: {
+              paddingBottom: rhythm(3 / 4),
+            },
           }}
         >
           <div
