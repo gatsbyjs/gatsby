@@ -228,7 +228,6 @@
   url: "https://slite.com/"
   featured: false
   categories:
-    - Landing
     - Marketing
     - Technology
 - title: GraphCMS
@@ -236,7 +235,6 @@
   url: "https://graphcms.com/"
   featured: false
   categories:
-    - Landing
     - Marketing
     - Technology
 - title: Bottender Docs
@@ -353,7 +351,6 @@
   url: "https://www.oncallogy.com/"
   featured: false
   categories:
-    - Landing
     - Marketing
     - Healthcare
 - title: Ryan Wiemer's Portfolio
@@ -601,7 +598,6 @@
   url: "https://doopoll.co/"
   featured: false
   categories:
-    - Landing
     - Marketing
     - Technology
 - title: ERC dEX
@@ -1579,7 +1575,6 @@
   main_url: "https://insomnia.rest/"
   url: "https://insomnia.rest/"
   categories:
-    - Landing
     - Blog
   built_by: Gregory Schier
   built_by_url: "https://schier.co"
@@ -1590,7 +1585,6 @@
   main_url: "http://www.amanhimself.me/"
   url: "http://www.amanhimself.me/"
   categories:
-    - Landing
     - Web Dev
     - Portfolio
   built_by: Aman Mittal
@@ -1723,7 +1717,8 @@
   main_url: "https://hyperplay.leagueoflegends.com/"
   url: "https://hyperplay.leagueoflegends.com/"
   categories:
-    - Landing
+    - Video Games
+    - Music
   featured: false
 - title: Bad Credit Loans
   description: |
@@ -1782,7 +1777,6 @@
   main_url: "https://premium.telegraph.co.uk/"
   url: "https://premium.telegraph.co.uk/"
   categories:
-    - Landing
     - Newspaper
     - Subscription
   featured: false
@@ -1911,7 +1905,6 @@
   main_url: "https://otsimo.com/en/"
   url: "https://otsimo.com/en/"
   categories:
-    - Landing
     - Blog
     - Education
   featured: false
@@ -1923,7 +1916,6 @@
   main_url: "https://mattbag.github.io"
   url: "https://mattbag.github.io"
   categories:
-    - Landing
     - Portfolio
   featured: false
 - title: Lisa Ye's Blog
@@ -1952,7 +1944,6 @@
   main_url: "https://sapegin.me/"
   url: "https://sapegin.me/"
   categories:
-    - Landing
     - Portfolio
     - Open Source
     - Personal
@@ -1986,7 +1977,6 @@
   main_url: "https://www.novatics.com.br"
   url: "https://www.novatics.com.br"
   categories:
-    - Landing
     - Portfolio
     - Technology
     - Web Dev
@@ -2016,7 +2006,6 @@
     - Portfolio
     - Web Dev
     - Design
-    - Landing
     - Personal
   built_by: Max McKinney
   featured: false
@@ -2036,7 +2025,6 @@
   main_url: "https://agatamilik.pl"
   url: "https://agatamilik.pl"
   categories:
-    - Landing
     - Marketing
     - Healthcare
   built_by: Piotr Fedorczyk
@@ -2066,7 +2054,6 @@
   categories:
     - Marketing
     - Technology
-    - Landing
   built_by: Papertrail.io
   built_by_url: "https://www.papertrail.io"
   featured: false
@@ -2129,7 +2116,6 @@
     designers, ux designers, ui designers.
   categories:
     - Blog
-    - Landing
   built_by: Linton Ye
   built_by_url: "https://twitter.com/lintonye"
 - title: Devol’s Dance
@@ -2140,7 +2126,6 @@
     robotics, AI, and automation.
   categories:
     - Marketing
-    - Landing
     - Technology
   built_by: Corey Ward
   built_by_url: "http://www.coreyward.me/"
@@ -2208,7 +2193,6 @@
   description: |
     Mini site for 2018 edition of Traffic Design’s Biennale
   categories:
-    - Landing
     - Nonprofit
     - Gallery
   built_by: Piotr Fedorczyk
