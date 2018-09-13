@@ -2405,3 +2405,34 @@
     - Mobile Dev
     - React Native
   featured: false
+- title: Thorium
+  main_url: 'https://www.thoriumsim.com/'
+  url: 'https://www.thoriumsim.com/'
+  source_url: 'https://github.com/thorium-sim/thoriumsim.com'
+  description: >
+    Thorium - Open-source Starship Simulator Controls for Live Action Role Play
+  built_by: Alex Anderson
+  built_by_url: https://twitter.com/ralex1993
+  categories:
+    - Blog
+    - Portfolio
+    - Documentation
+    - Marketing
+    - Education
+    - Entertainment
+    - Open Source
+    - Web Dev
+  featured: false
+- title: Cameron Maske
+  main_url: 'https://www.cameronmaske.com/'
+  url: 'https://www.cameronmaske.com/courses/introduction-to-pytest/'
+  source_url: 'https://github.com/cameronmaske/cameronmaske.com-v2'
+  description: >
+    The homepage of Cameron Maske, a freelance full stack developer, who is currently working on a free pytest video course
+  categories:
+    - Personal
+    - Education
+    - Video 
+    - Portfolio 
+    - Freelance
+  featured: false

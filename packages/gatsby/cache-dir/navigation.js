@@ -42,6 +42,7 @@ const onPreRouteUpdate = location => {
     apiRunner(`onPreRouteUpdate`, { location })
   }
 }
+
 const onRouteUpdate = location => {
   if (!maybeRedirect(location.pathname)) {
     apiRunner(`onRouteUpdate`, { location })
@@ -89,18 +90,20 @@ const navigate = (to, options = {}) => {
     if (!pageResources && process.env.NODE_ENV === `production`) {
       loader.getResourcesForPathname(`/404.html`).then(resources => {
         clearTimeout(timeoutId)
-        onPreRouteUpdate(window.location)
-        loadDirectlyOr404(resources, to).then(() =>
-          reachNavigate(to, options).then(() => onRouteUpdate(window.location))
-        )
+        loadDirectlyOr404(resources, to).then(() => reachNavigate(to, options))
       })
     } else {
-      onPreRouteUpdate(window.location)
-      reachNavigate(to, options).then(() => onRouteUpdate(window.location))
+      reachNavigate(to, options)
       clearTimeout(timeoutId)
     }
   })
 }
+
+// reset route change promise after going back / forward
+// in history (when not using Gatsby navigation)
+window.addEventListener(`popstate`, () => {
+  resetRouteChangePromise()
+})
 
 function shouldUpdateScroll(prevRouterProps, { location: { pathname } }) {
   const results = apiRunner(`shouldUpdateScroll`, {
