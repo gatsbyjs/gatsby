@@ -63,6 +63,16 @@ class CommunityView extends Component {
   render() {
     const { location, title, data } = this.props
     const { creators } = this.state
+    let submissionText
+    if (title === `All`) {
+      submissionText = `Add Yourself`
+    } else if (title === `People`) {
+      submissionText = `Add Yourself`
+    } else if (title === `Agencies`) {
+      submissionText = `Add Your Agency`
+    } else if (title === `Companies`) {
+      submissionText = `Add Your Company`
+    }
 
     const applyFilter = filter => {
       if (this.state[filter] === true) {
@@ -92,6 +102,7 @@ class CommunityView extends Component {
           applyFilter={filter => applyFilter(filter)}
           forHire={this.state.for_hire}
           hiring={this.state.hiring}
+          submissionText={submissionText}
         />
         <main
           role="main"
