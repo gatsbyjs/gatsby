@@ -143,8 +143,8 @@
     "node": ">6.0.0"
   },
   "files": [
-    "./cache-dir",
-    "./dist",
+    "cache-dir",
+    "dist",
     "graphql.js",
     "index.d.ts"
   ],
