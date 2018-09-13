@@ -333,15 +333,7 @@ export default class FilteredShowcase extends Component {
             <button
               css={{
                 ...styles.button,
-                display: `block`,
-                marginBottom: rhythm(options.blockMarginBottom * 5),
-                marginTop: rhythm(options.blockMarginBottom * 2),
-                marginLeft: `auto`,
-                marginRight: `auto`,
-                [presets.Desktop]: {
-                  marginLeft: rhythm(6 / 4),
-                  marginRight: rhythm(6 / 4),
-                },
+                ...styles.loadMoreButton
               }}
               onClick={() => {
                 this.setState({ sitesToShow: this.state.sitesToShow + 15 })

@@ -2307,6 +2307,13 @@
     - Web Dev
     - Agency
     - Open Source
+- title: eworld
+  main_url: 'http://eworld.herokuapp.com/'
+  url: 'http://eworld.herokuapp.com/'
+  featured: false
+  categories:
+    - eCommerce
+    - Technology
 - title: It's a Date
   description: >
     It's a Date is a dating app that actually involves dating.
@@ -2386,4 +2393,15 @@
     - Blog
     - Portfolio
     - Web Dev
+  featured: false
+- title: Premier Octet
+  main_url: 'https://www.premieroctet.com/'
+  url: 'https://www.premieroctet.com/'
+  description: >
+    Premier Octet is a React-based agency
+  categories:
+    - Agency
+    - Web Dev
+    - Mobile Dev
+    - React Native
   featured: false

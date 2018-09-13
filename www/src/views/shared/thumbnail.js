@@ -10,10 +10,10 @@ const ThumbnailLink = ({ slug, image, title, children }) => {
 
   // site showcase
   if (image.screenshotFile) {
-    screenshot = image.screenshotFile.childImageSharp.fixed
+    screenshot = image.screenshotFile.childImageSharp.fluid
   } else {
     // starter showcase
-    screenshot = image.childImageSharp.fixed
+    screenshot = image.childImageSharp.fluid
   }
 
   return (
@@ -37,7 +37,7 @@ const ThumbnailLink = ({ slug, image, title, children }) => {
     >
       {screenshot ? (
         <Img
-          fixed={screenshot}
+          fluid={screenshot}
           alt={`Screenshot of ${title}`}
           css={{ ...styles.screenshot }}
         />
@@ -60,8 +60,8 @@ export default ThumbnailLink
 
 export const showcaseThumbnailFragment = graphql`
   fragment ShowcaseThumbnailFragment_item on ImageSharp {
-    fixed(width: 282, height: 211) {
-      ...GatsbyImageSharpFixed_noBase64
+    fluid(maxWidth: 350, maxHeight: 260, cropFocus: NORTH) {
+      ...GatsbyImageSharpFluid_noBase64
     }
   }
 `
