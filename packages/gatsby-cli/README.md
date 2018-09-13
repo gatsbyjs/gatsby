@@ -30,12 +30,12 @@ development server.
 
 #### Options
 
-```
-  -H, --host    Set host. Defaults to localhost
-  -p, --port    Set port. Defaults to 8000
-  -o, --open    Open the site in your browser for you
-  -S, --https   Use HTTPS
-```
+|     Option      | Description                                     |
+| :-------------: | ----------------------------------------------- |
+| `-H`, `--host`  | Set host. Defaults to localhost                 |
+| `-p`, `--port`  | Set port. Defaults to 8000                      |
+| `-o`, `--open`  | Open the site in your (default) browser for you |
+| `-S`, `--https` | Use HTTPS                                       |
 
 Follow the [Local HTTPS guide](https://www.gatsbyjs.org/docs/local-https/)
 to find out how you can set up an HTTPS development server using Gatsby.
@@ -47,11 +47,11 @@ site.
 
 #### Options
 
-```
-  --prefix-paths               Build site with link paths prefixed (set prefix in your config).
-  --no-uglify                  Build site without uglifying JS bundles (for debugging).
-  --open-tracing-config-file   Tracer configuration file (open tracing compatible). See https://www.gatsbyjs.org/docs/performance-tracing/
-```
+|            Option            | Description                                                                                                 |
+| :--------------------------: | ----------------------------------------------------------------------------------------------------------- |
+|       `--prefix-paths`       | Build site with link paths prefixed (set pathPrefix in your config)                                         |
+|        `--no-uglify`         | Build site without uglifying JS bundles (for debugging)                                                     |
+| `--open-tracing-config-file` | Tracer configuration file (open tracing compatible). See https://www.gatsbyjs.org/docs/performance-tracing/ |
 
 ### Serve
 
@@ -60,12 +60,12 @@ the site for testing.
 
 #### Options
 
-```
-  -H, --host        Set host. Defaults to localhost
-  -p, --port        Set port. Defaults to 8000
-  -o, --open        Open the site in your browser for you
-  --prefix-paths    Serve site with link paths prefixed (set prefix in your config).
-```
+|      Option      | Description                                                                     |
+| :--------------: | ------------------------------------------------------------------------------- |
+|  `-H`, `--host`  | Set host. Defaults to localhost                                                 |
+|  `-p`, `--port`  | Set port. Defaults to 8000                                                      |
+|  `-o`, `--open`  | Open the site in your (default) browser for you                                 |
+| `--prefix-paths` | Serve site with link paths prefixed (set pathPrefix in your `gatsby-config.js`) |
 
 ### Info
 
@@ -73,9 +73,9 @@ At the root of a Gatsby site run `gatsby info` to get helpful environment inform
 
 #### Options
 
-```
-  -C, --clipboard   Automagically copy environment information to clipboard
-```
+|       Option        | Description                                             |
+| :-----------------: | ------------------------------------------------------- |
+| `-C`, `--clipboard` | Automagically copy environment information to clipboard |
 
 ### Repl
 
