@@ -96,7 +96,7 @@ function inferGraphQLType({
   if (
     // momentjs crashes when it encounters a Symbol,
     // so check against that
-    typeof exampleValue !== 'symbol' &&
+    typeof exampleValue !== `symbol` &&
     DateType.shouldInfer(exampleValue)
   ) {
     return DateType.getType()
