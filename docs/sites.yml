@@ -1777,7 +1777,6 @@
   source_url: "https://github.com/niklasvh/html2canvas/tree/master/www"
   categories:
     - Tool
-    - Screenshots
     - JavaScript
     - Documentation
   built_by: Niklas von Hertzen
