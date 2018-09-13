@@ -14,7 +14,6 @@
     shopping experience.
   categories:
     - eCommerce
-    - Clothing
     - Fashion
     - Featured
   featured: true
@@ -769,7 +768,6 @@
   url: "https://meetfabric.com/"
   featured: false
   categories:
-    - Corporate
     - Marketing
     - Insurance
 - title: Nexit
@@ -882,7 +880,6 @@
   url: "https://simply.co.za/"
   featured: false
   categories:
-    - Corporate
     - Marketing
     - Insurance
 - title: Storybook
@@ -1464,7 +1461,6 @@
   categories:
     - Blog
     - Education
-    - Careers
     - Personal Development
   built_by: "Stephanie Langers (content), Adrian Wenke (development)"
   built_by_url: "https://twitter.com/AdrianWenke"
@@ -1479,7 +1475,6 @@
   categories:
     - Technology
     - Finance
-    - Corporate
     - Marketing
   built_by: Bejamas.io
   built_by_url: "https://bejamas.io/"
@@ -1863,7 +1858,6 @@
   url: "https://www.unow.fr/"
   categories:
     - Education
-    - Corporate
     - Marketing
   featured: false
 - title: Peter Hironaka
@@ -1889,11 +1883,11 @@
   featured: false
 - title: Haacht Brewery
   description: |
-    Corporate wesbite for Haacht Brewery. Designed and Developed by Gafas.
+    Corporate website for Haacht Brewery. Designed and Developed by Gafas.
   main_url: "https://haacht.com/en/"
   url: "https://haacht.com"
   categories:
-    - Corporate
+    - Brewery
   built_by: Gafas
   built_by_url: "https://gafas.be"
   featured: false
@@ -2380,7 +2374,6 @@
     - Technology
     - Tool
     - Software
-    - Corporate
     - Help
     - Services
     - Travel
