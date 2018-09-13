@@ -6,8 +6,8 @@ const extractExports = require("./extract-exports");
 
 module.exports = async (
   { node, transform, loadNodeContent, getNode, createNodeId },
-  { createNode, createParentChildLink },
-  { __internalMdxTypeName, ...options }
+  { createNode, createParentChildLink } = {},
+  { __internalMdxTypeName, __shouldCreateNode = true, ...options }
 ) => {
   const nodeType = __internalMdxTypeName || `${node.internal.type}Mdx`;
   debug(`creating node for nodeType \`${nodeType}\``);
@@ -48,7 +48,9 @@ module.exports = async (
     .update(JSON.stringify(mdxNode))
     .digest(`hex`);
 
-  createNode(mdxNode);
-  createParentChildLink({ parent: node, child: mdxNode });
+  if (__shouldCreateNode) {
+    createNode(mdxNode);
+    createParentChildLink({ parent: node, child: mdxNode });
+  }
   return mdxNode;
 };

@@ -3,7 +3,7 @@ const escapeStringRegexp = require("escape-string-regexp");
 const defaultOptions = require("../utils/default-options");
 
 module.exports = (
-  { stage, loaders, plugins, actions, getNodes },
+  { stage, loaders, actions, plugins, ...other },
   pluginOptions
 ) => {
   const options = defaultOptions(pluginOptions);
@@ -26,7 +26,7 @@ module.exports = (
             {
               loader: "gatsby-mdx/loaders/mdx-loader",
               options: {
-                getNodes,
+                ...other,
                 pluginOptions: options
               }
             }
