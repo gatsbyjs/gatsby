@@ -169,7 +169,6 @@
     Fully automatic time tracking. For those who trade in time.
   categories:
     - Time Tracking
-    - Tool
     - Featured
   built_by: Timm Stokke
   built_by_url: "https://timm.stokke.me"
@@ -182,7 +181,6 @@
     platforms.
   categories:
     - Technology
-    - Tool
     - Documentation
     - Featured
   featured: true
@@ -195,7 +193,6 @@
   categories:
     - API
     - Technology
-    - Tool
     - Documentation
     - Featured
   featured: true
@@ -1195,7 +1192,6 @@
     - Documentation
     - Bot
     - Community
-    - Tool
   built_by: Sankarsan Kampa
   built_by_url: "https://sankarsankampa.com"
 - title: upGizmo
@@ -1769,7 +1765,6 @@
   url: "http://html2canvas.hertzen.com/"
   source_url: "https://github.com/niklasvh/html2canvas/tree/master/www"
   categories:
-    - Tool
     - JavaScript
     - Documentation
   built_by: Niklas von Hertzen
@@ -1783,7 +1778,6 @@
   categories:
     - CMS
     - API
-    - Tool
   featured: false
 - title: Half Electronics
   description: |
@@ -2211,7 +2205,6 @@
     the blockchain.
   categories:
     - Technology
-    - Tool
     - Bank
   built_by: Axel Fuhrmann
   built_by_url: "https://axelfuhrmann.com/"
@@ -2223,7 +2216,6 @@
     Explorer React Native packages and examples effortlessly.
   categories:
     - React Native
-    - Tool
   featured: false
 - title: 500Tech
   main_url: "https://500tech.com/"
@@ -2299,7 +2291,6 @@
   categories:
     - API
     - Technology
-    - Tool
     - Travel
     - Bot
   featured: false
