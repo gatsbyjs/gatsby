@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.54",
+    "babel-plugin-gather-exports": "0.0.1",
     "babel-plugin-pluck-exports": "0.0.1",
     "babel-plugin-pluck-imports": "0.0.1",
     "debug": "^3.1.0",
@@ -20,7 +21,6 @@
     "fs-extra": "^7.0.0",
     "gray-matter": "^4.0.1",
     "htmltojsx": "^0.3.0",
-    "json5": "^1.0.1",
     "lodash": "^4.17.10",
     "mdast-util-to-string": "^1.0.4",
     "mdast-util-toc": "^2.0.1",

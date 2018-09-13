@@ -1,17 +1,17 @@
 const babel = require("@babel/core");
 const babelReact = require("@babel/preset-react");
 const objRestSpread = require("@babel/plugin-proposal-object-rest-spread");
-const gatherExportsGenerator = require("./babel-plugin-gather-exports");
+const BabelPluginGatherExports = require("babel-plugin-gather-exports");
 
 // grab all the export values
 module.exports = code => {
-  const gatherExports = gatherExportsGenerator();
+  const instance = new BabelPluginGatherExports();
   babel.transform(code, {
     presets: [babelReact],
-    plugins: [gatherExports, objRestSpread]
+    plugins: [instance.plugin, objRestSpread]
   });
 
-  const exportedVariables = gatherExports.results();
+  const exportedVariables = instance.state.exports;
 
   // grab the frontmatter
   const {
