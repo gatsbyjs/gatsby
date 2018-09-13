@@ -172,7 +172,6 @@
   description: |
     Fully automatic time tracking. For those who trade in time.
   categories:
-    - Software
     - Time Tracking
     - Tool
     - Featured
@@ -188,7 +187,6 @@
   categories:
     - Technology
     - Tool
-    - Software
     - Documentation
     - Featured
   featured: true
@@ -202,7 +200,6 @@
     - API
     - Technology
     - Tool
-    - Software
     - Documentation
     - Featured
   featured: true
@@ -1209,7 +1206,6 @@
     - Bot
     - Community
     - Services
-    - Software
     - Tool
   built_by: Sankarsan Kampa
   built_by_url: "https://sankarsankampa.com"
@@ -1676,7 +1672,6 @@
   url: "https://curbside.com/"
   categories:
     - Mobile Commerce
-    - Software
   featured: false
 - title: Mux Video
   description: |
@@ -2193,7 +2188,6 @@
     Bootstrap, To get in touch with people looking for full stack developer.
   categories:
     - Portfolio
-    - Software
     - Web Dev
     - Personal
   built_by: Mahipat Jadav
@@ -2261,7 +2255,6 @@
     - Technology
     - Tool
     - Bank
-    - Software
   built_by: Axel Fuhrmann
   built_by_url: "https://axelfuhrmann.com/"
   featured: false
@@ -2272,7 +2265,6 @@
     Explorer React Native packages and examples effortlessly.
   categories:
     - React Native
-    - Software
     - Tool
   featured: false
 - title: 500Tech
@@ -2352,7 +2344,6 @@
     - API
     - Technology
     - Tool
-    - Software
     - Help
     - Services
     - Travel
