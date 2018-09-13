@@ -63,6 +63,7 @@ class CommunityHeader extends Component {
           state={{ filter: `` }}
           css={{
             "&&": {
+              display: `none`,
               ...scale(1 / 3),
               color: colors.gatsby,
               boxShadow: `none`,
@@ -70,6 +71,9 @@ class CommunityHeader extends Component {
               marginRight: rhythm(1 / 2),
               "&:hover": {
                 backgroundColor: `initial`,
+              },
+              [presets.Desktop]: {
+                display: `inline`,
               },
             },
           }}
@@ -210,6 +214,7 @@ export default CommunityHeader
 const styles = {
   header: {
     display: `flex`,
+    flexWrap: `wrap`,
     alignItems: `center`,
     borderBottom: `1px solid ${colors.ui.light}`,
     backgroundColor: `rgba(255,255,255,0.975)`,
@@ -218,6 +223,9 @@ const styles = {
     paddingLeft: rhythm(3 / 4),
     paddingRight: rhythm(3 / 4),
     fontFamily: typography.options.headerFontFamily.join(`,`),
+    [presets.Tablet]: {
+      display: `flex`,
+    },
   },
   filter: {
     border: `1px solid ${colors.ui.bright}`,
