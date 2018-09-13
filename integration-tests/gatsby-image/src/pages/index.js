@@ -15,6 +15,14 @@ const IndexPage = ({ data }) => (
     <span data-testid="image-fixed">
       <Image fixed={data.fruitsFixed.childImageSharp.fixed} />
     </span>
+    <h1>Fixed &amp; Traced</h1>
+    <span data-testid="image-traced">
+      <Image fluid={data.fruitsTraced.childImageSharp.fluid} />
+    </span>
+    <h1>Intersection Observer</h1>
+    <span data-testid="image-lazy">
+      <Image fluid={data.fruitsLazy.childImageSharp.fluid} />
+    </span>
   </Layout>
 )
 
@@ -37,6 +45,20 @@ export const pageQuery = graphql`
       childImageSharp {
         fixed(width: 500) {
           ...GatsbyImageSharpFixed
+        }
+      }
+    }
+    fruitsTraced: file(relativePath: { eq: "citrus-fruits.jpg" }) {
+      childImageSharp {
+        fluid(maxWidth: 500, traceSVG: { background: "red", color: "white" }) {
+          ...GatsbyImageSharpFluid_tracedSVG
+        }
+      }
+    }
+    fruitsLazy: file(relativePath: { eq: "citrus-fruits.jpg" }) {
+      childImageSharp {
+        fluid(maxWidth: 900) {
+          ...GatsbyImageSharpFluid
         }
       }
     }
