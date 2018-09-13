@@ -2,10 +2,13 @@
 
 status=""
 
+yarn boostrap &&
 cd examples &&
+
 for example in *; do
   if [ -d "$example" ]; then
     cd "$example" &&
+    rm yarn.lock &&
     yarn &&
     gatsby-dev -s &&
     yarn build &&
