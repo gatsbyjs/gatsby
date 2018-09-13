@@ -78,85 +78,15 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
               css={{
                 ...styles.showcaseItem
               }}
-              {...styles.withTitleHover}
             >
               <ThumbnailLink
                 slug={`/starters/${stub}`}
                 image={imgsharp}
                 title={imgsharp.name}
-              />
-              <div
-                css={{
-                  ...styles.meta,
-                }}
               >
-                <div css={{ display: `flex`, justifyContent: `space-between` }}>
-                  <span css={{ color: colors.gray.dark }}>
-                    {repo.owner && repo.owner.login} /
-                  </span>
-                  <span
-                    css={{
-                      "> a": {
-                        paddingLeft: 5,
-                        "&:hover": {
-                          background: `none`,
-                          color: colors.gatsby,
-                        },
-                      },
-                    }}
-                  >
-                    <a
-                      href="#copy-to-clipboard"
-                      onClick={() =>
-                        copyToClipboard(`https://github.com/${githubFullName}`)
-                      }
-                      css={{ ...styles.noLinkUnderline }}
-                    >
-                      <FaClipboard />
-                      {` `}
-                    </a>
-                    <a
-                      href={node.frontmatter.demo}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      css={{ ...styles.noLinkUnderline }}
-                    >
-                      <FaExtLink />
-                      {` `}
-                    </a>
-                    <a
-                      href={`https://github.com/${githubFullName}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      css={{ ...styles.noLinkUnderline }}
-                    >
-                      <FaGithub />
-                      {` `}
-                    </a>
-                  </span>
-                </div>
-                <div>
-                  <span className="title">
-                    <h5 css={{ margin: 0 }}>
-                      <strong>{repo.name}</strong>
-                    </h5>
-                  </span>
-                  {/* {isGatsbyVersionWarning ?
-                      <span css={{ fontStyle: `italic`, color: `red` }}>Outdated Version: {minorVersion}</span> :
-                      <span css={{ fontStyle: `italic`, color: `green` }}>Gatsby Version: {minorVersion}</span>
-                    } */}
-                </div>
-                <div
-                  css={{
-                    textOverflow: `ellipsis`,
-                    overflow: `hidden`,
-                    whiteSpace: `nowrap`,
-                  }}
-                >
-                  {description || `No description`}
-                </div>
-                <div css={{ display: `flex`, justifyContent: `space-between` }}>
-                  <div css={{ display: `inline-block` }}>
+                <div css={{justifyContent: `space-between`, display: `flex`}}>
+                  <span>{repo.owner && repo.owner.login} /</span>
+                  <span css={{...styles.meta}}>
                     <MdStar
                       style={{
                         color: colors.accent,
@@ -164,11 +94,62 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
                       }}
                     />
                     {stars}
-                  </div>
-                  <div css={{ display: `inline-block` }}>
-                    Updated {new Date(pushed_at).toLocaleDateString()}
-                  </div>
+                  </span>
+                  {/* {isGatsbyVersionWarning ?
+                      <span css={{ fontStyle: `italic`, color: `red` }}>Outdated Version: {minorVersion}</span> :
+                      <span css={{ fontStyle: `italic`, color: `green` }}>Gatsby Version: {minorVersion}</span>
+                    } */}
                 </div>
+                <strong className="title">{repo.name}</strong>
+                <span
+                  css={{
+                    textOverflow: `ellipsis`,
+                    overflow: `hidden`,
+                    whiteSpace: `nowrap`,
+                    display: `block`,
+                    ...styles.meta,
+                  }}
+                >
+                  {description || `No description`}
+                </span>
+              </ThumbnailLink>
+              <div css={{
+                display: `flex`,
+                justifyContent: `space-between`,
+                ...styles.meta,
+              }}>
+                <span css={{verticalAlign: `top`}}>
+                  Updated {new Date(pushed_at).toLocaleDateString()}
+                </span>
+                <span>
+                  {/* <a
+                    href="#copy-to-clipboard"
+                    onClick={() =>
+                      copyToClipboard(`https://github.com/${githubFullName}`)
+                    }
+                    css={{ ...styles.noLinkUnderline }}
+                  >
+                    <FaClipboard />
+                    {` `}
+                  </a> */}
+                  <a
+                    href={`https://github.com/${githubFullName}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    css={{ ...styles.shortcutIcon }}
+                  >
+                    <FaGithub style={{ verticalAlign: `text-top` }} />
+                  </a>
+                  {` `}
+                  <a
+                    href={node.frontmatter.demo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    css={{ ...styles.shortcutIcon }}
+                  >
+                    <FaExtLink style={{ verticalAlign: `text-top` }} />
+                  </a>
+                </span>
               </div>
             </div>
           )
