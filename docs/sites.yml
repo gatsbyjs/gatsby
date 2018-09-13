@@ -1761,7 +1761,6 @@
   url: "https://premium.telegraph.co.uk/"
   categories:
     - Newspaper
-    - Subscription
   featured: false
 - title: html2canvas
   description: |
