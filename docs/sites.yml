@@ -133,7 +133,6 @@
     - Technology
     - Web Dev
     - Agency
-    - Creative
     - Marketing
     - Featured
   built_by: Bejamas
@@ -266,7 +265,6 @@
   featured: false
   categories:
     - Portfolio
-    - Creative
 - title: Hack Club
   main_url: "https://hackclub.com/"
   url: "https://hackclub.com/"
@@ -304,7 +302,6 @@
   featured: false
   categories:
     - Portfolio
-    - Creative
     - Web Dev
 - title: unrealcpp
   main_url: "https://unrealcpp.com/"
@@ -392,7 +389,7 @@
   source_url: "https://github.com/dvzrd/gatsby-sfiction"
   featured: false
   categories:
-    - Creative
+    - Fiction
 - title: Digital Psychology
   main_url: "http://digitalpsychology.io/"
   url: "http://digitalpsychology.io/"
@@ -575,7 +572,6 @@
     integrated design and marketing strategies to improve sales, increase brand
     engagement, generate leads and achieve goals.
   categories:
-    - Creative
     - Design
     - Featured
     - Marketing
@@ -668,7 +664,6 @@
   featured: false
   categories:
     - Agency
-    - Creative
 - title: heml.io
   main_url: "https://heml.io/"
   url: "https://heml.io/"
@@ -702,7 +697,6 @@
     project that you want to collaborate on. Or if you just want to say hello,
     that’s cool too.
   categories:
-    - Creative
     - Portfolio
   built_by: Kris Hedstrom
   built_by_url: "https://k-create.com/"
@@ -851,7 +845,6 @@
   featured: false
   categories:
     - Agency
-    - Creative
 - title: Sean Coker's Blog
   main_url: "https://sean.is/"
   url: "https://sean.is/"
@@ -898,7 +891,6 @@
   categories:
     - Portfolio
     - Web Dev
-    - Creative
 - title: VisitGemer
   main_url: "https://visitgemer.sk/"
   url: "https://visitgemer.sk/"
@@ -1013,7 +1005,6 @@
   source_url: "https://github.com/michelemazzucco/michelemazzucco.it"
   featured: false
   categories:
-    - Creative
     - Portfolio
 - title: Orbit FM Podcasts
   main_url: "https://www.orbit.fm/"
@@ -1151,7 +1142,6 @@
   featured: false
   categories:
     - Web Dev
-    - Creative
     - Agency
 - title: Marmelab
   main_url: "https://marmelab.com/en/"
@@ -1165,7 +1155,6 @@
   url: "http://thefmg.com/"
   featured: false
   categories:
-    - Creative
     - Entertainment
     - News
 - title: Cool Hunting
@@ -1239,7 +1228,6 @@
   categories:
     - Portfolio
     - Web Dev
-    - Creative
 - title: Philipp Czernitzki - Blog/Website
   main_url: "http://philippczernitzki.me/"
   url: "http://philippczernitzki.me/"
@@ -1383,7 +1371,6 @@
     - Marketing
     - Portfolio
     - Agency
-    - Creative
     - Featured
   built_by: Spacetime
   built_by_url: "https://www.heyspacetime.com/"
@@ -1499,7 +1486,6 @@
   categories:
     - Portfolio
     - Web Dev
-    - Creative
   built_by: Matthias Kretschmann
   built_by_url: "https://matthiaskretschmann.com/"
 - title: Iron Cove Solutions
@@ -1649,7 +1635,6 @@
   categories:
     - Agency
     - Blog
-    - Creative
     - Design
     - Web Dev
     - SEO
@@ -1848,7 +1833,6 @@
   featured: false
   description: "I DRINK COFFEE, WRITE CODE AND IMPROVE MY DEVELOPMENT SKILLS EVERY DAY."
   categories:
-    - Creative
     - Design
     - Web Dev
   built_by: Frithir
@@ -2153,7 +2137,6 @@
   categories:
     - Blog
     - Landing
-    - Creative
   built_by: Linton Ye
   built_by_url: "https://twitter.com/lintonye"
 - title: Devol’s Dance
@@ -2235,7 +2218,6 @@
     Mini site for 2018 edition of Traffic Design’s Biennale
   categories:
     - Landing
-    - Creative
     - Nonprofit
     - Gallery
   built_by: Piotr Fedorczyk
@@ -2342,7 +2324,6 @@
     - Web Dev
     - Design
     - Portfolio
-    - Creative
   built_by: Peter Kroyer
   built_by_url: https://www.peterkroyer.at/
   featured: false
