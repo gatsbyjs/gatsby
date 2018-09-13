@@ -50,7 +50,7 @@ class CommunityHeader extends Component {
     search: ``,
   } */
   render() {
-    const { forHire, hiring } = this.props
+    const { forHire, hiring, submissionText } = this.props
     return (
       <header
         role="header"
@@ -165,10 +165,10 @@ class CommunityHeader extends Component {
           >
             <span
               css={{
-                marginRight: `${rhythm(1 / 4)}`,
+                marginRight: `${rhythm(2 / 4)}`,
               }}
             >
-              Become a Creator
+              {submissionText}
             </span>
             <img src={Arrow} alt="" css={{ marginBottom: 0 }} />
           </Link>
