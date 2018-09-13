@@ -27,7 +27,7 @@ Other CMS systems you can connect to include:
 * [GraphCMS](https://www.gatsbyjs.org/packages/gatsby-source-graphcms-beta-patch/?=gatsby-source-)
 * [CraftCMS](https://www.gatsbyjs.org/packages/gatsby-source-craftcms/?=gatsby-source-)
 * [DatoCMS](https://www.gatsbyjs.org/packages/gatsby-source-datocms/?=gatsby-source-)
-* [Storyblog](https://www.gatsbyjs.org/packages/gatsby-source-storyblok/?=gatsby-source-)
+* [Storyblok](https://www.gatsbyjs.org/packages/gatsby-source-storyblok/?=gatsby-source-)
 
 ## How to add new guides to this section
 
