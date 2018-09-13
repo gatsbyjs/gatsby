@@ -971,17 +971,12 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
   - Gatsby v2
   - Rebass (Styled-components system)
   - Dynamic content from Contentful CMS
-  - Offline
-  - Lighthouse score of 93
   - Offline support
   - PWA ready
   - SEO
   - Responsive design
-  - Single page with scrolling behaviour
-  - Palette Theme by config
-  - React-headroom
+  - Theming
   - Font icons using font-awesome
-  - Google Analytics integration
   - Netlify Deployment Friendly
   - Medium syncronization
   - Social sharing (Twitter, Facebook, Google, LinkedIn)
