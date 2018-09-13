@@ -54,8 +54,6 @@ export type LoaderUtils = {
   postcss: LoaderResolver<{
     browsers?: string[],
     plugins?: Array<any> | ((loader: any) => Array<any>),
-    minimize?: boolean,
-    cssnano?: any,
   }>,
 
   file: LoaderResolver<*>,
