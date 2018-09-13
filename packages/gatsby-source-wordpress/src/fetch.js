@@ -73,7 +73,7 @@ Mama Route URL: ${url}
     
     if (_hostingWPCOM && _accessToken) {
       options.headers = {
-        Authorization: `Bearer ${_accessToken}`
+        Authorization: `Bearer ${_accessToken}`,
       }
     }
     
