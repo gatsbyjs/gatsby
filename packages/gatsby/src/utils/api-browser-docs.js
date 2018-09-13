@@ -54,11 +54,25 @@ exports.onRouteUpdateDelayed = true
 exports.onRouteUpdate = true
 
 /**
- * Allow a plugin to decide if the "scroll" should update or
+ * Allow a plugin to decide if the scroll position should update or
  * not on a route change.
  * @param {object} $0
  * @param {object} $0.prevRouterProps The previous state of the router before the route change.
- * @param {object} $0.pathname The new pathname
+ * @param {object} $0.routerProps The current state of the router.
+ * @param {object} $0.pathname The new pathname (for backwards compatibility).
+ * @param {function(object): Array|null} $0.getSavedScrollPosition Returns the saved scroll position for a location, or null.
+ * @example
+ * exports.shouldUpdateScroll = ({
+ *   routerProps: { location },
+ *   getSavedScrollPosition
+ * }) => {
+ *   const currentScrollPosition = getSavedScrollPosition(location)
+ *   const queriedScrollPosition = getSavedScrollPosition({ pathname: '/random' })
+ *
+ *   window.scrollTo(...(currentScrollPosition || [0, 0]))
+ *
+ *   return false
+ * }
  */
 exports.shouldUpdateScroll = true
 
