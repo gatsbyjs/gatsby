@@ -569,6 +569,9 @@ import { Provider } from 'react-redux'
 ### Browser API `replaceHistory` was removed
 
 Similar to `replaceRouterComponent`, we no longer support custom histories so this was removed.
+The `replaceHistory()` method could be used for tracking page views as it is possible to register listeners on route changes using `history.listen()`.
+
+In order to track page views, you can use the [`onRouteUpdate`](/docs/browser-apis/#onRouteUpdate) API to track pages changes.
 
 ### Browser API `wrapRootComponent` was replaced with `wrapRootElement`
 
