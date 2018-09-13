@@ -1597,7 +1597,6 @@
   source_url: "https://github.com/janosh/ocean-artup"
   categories:
     - Science
-    - Research
     - Education
     - Blog
   built_by: Janosh Riebesell
@@ -1653,7 +1652,6 @@
   main_url: "https://beta.bom.gov.au/"
   categories:
     - Meteorology
-    - Research
     - Services
   featured: false
 - title: Curbside
@@ -1755,7 +1753,6 @@
   main_url: "http://oira.ua.edu/"
   url: "http://oira.ua.edu/"
   categories:
-    - Research
     - Data
   featured: false
 - title: Trintellix
@@ -2196,7 +2193,6 @@
     make sense of the findings.
   categories:
     - User Experience
-    - Research
     - Design
   built_by: Just Ask Users
   built_by_url: "https://justaskusers.com/"
