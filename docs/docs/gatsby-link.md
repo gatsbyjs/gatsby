@@ -75,6 +75,8 @@ render () {
 }
 ```
 
+Using `replace` also won't scroll the page after navigation.
+
 ## Programmatic navigation
 
 For cases when you can only use event handlers for navigation, you can use `navigate`
