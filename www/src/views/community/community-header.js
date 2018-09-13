@@ -139,6 +139,17 @@ class CommunityHeader extends Component {
             </Link>
             {/* // Search function is not implemented yet, do we want/need it here? */}
             {/*  <label css={{ position: `relative` }}>
+=======
+                marginRight: `${rhythm(2 / 4)}`,
+              }}
+            >
+              {submissionText}
+            </span>
+            <img src={Arrow} alt="" css={{ marginBottom: 0 }} />
+          </Link>
+          {/* // Search function is not implemented yet, do we want/need it here? */}
+            {/*  <label css={{ position: `relative` }}>
+>>>>>>> master
             <input
               css={{ ...styles.searchInput }}
               type="search"
