@@ -1,7 +1,7 @@
 {
   "name": "gatsby",
   "description": "Blazing fast modern site generator for React",
-  "version": "2.0.0-rc.13",
+  "version": "2.0.0-rc.23",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "./dist/bin/gatsby.js"
@@ -61,9 +61,9 @@
     "flat": "^4.0.0",
     "friendly-errors-webpack-plugin": "^1.6.1",
     "fs-extra": "^5.0.0",
-    "gatsby-cli": "^2.0.0-rc.1",
-    "gatsby-link": "^2.0.0-rc.2",
-    "gatsby-plugin-page-creator": "^2.0.0-rc.1",
+    "gatsby-cli": "^2.0.0-rc.5",
+    "gatsby-link": "^2.0.0-rc.3",
+    "gatsby-plugin-page-creator": "^2.0.0-rc.5",
     "gatsby-react-router-scroll": "^2.0.0-rc.2",
     "glob": "^7.1.1",
     "graphql": "^0.13.2",
@@ -80,7 +80,7 @@
     "json-loader": "^0.5.7",
     "json-stringify-safe": "^5.0.1",
     "kebab-hash": "^0.1.2",
-    "lodash": "^4.17.4",
+    "lodash": "^4.17.10",
     "md5": "^2.2.1",
     "md5-file": "^3.1.1",
     "mime": "^2.2.0",
@@ -143,8 +143,8 @@
     "node": ">6.0.0"
   },
   "files": [
-    "./cache-dir",
-    "./dist",
+    "cache-dir",
+    "dist",
     "graphql.js",
     "index.d.ts"
   ],
@@ -182,7 +182,6 @@
     "watch": "rimraf dist && mkdir dist && npm run build:internal-plugins && npm run build:rawfiles && npm run build:src -- --watch"
   },
   "types": "index.d.ts",
-  "gitHead": "788133e56dd005663f353fff90ffa37ce2fd87b9",
   "yargs": {
     "boolean-negation": false
   }

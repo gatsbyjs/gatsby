@@ -8,7 +8,7 @@ Want to submit a site to the [Site Showcase](https://next.gatsbyjs.org/showcase/
 
 There are only three major steps :)
 
-1.  If this is your first contribution to the Gatsby open source repo, follow the [Contribution guidelines](https://next.gatsbyjs.org/docs/how-to-contribute/#contributing-to-the-repo) to get push access rights.
+1.  If this is your first contribution to the Gatsby open source repo, follow the [Contribution guidelines](https://next.gatsbyjs.org/docs/how-to-contribute/#contributing-to-the-repo).
 
 2.  If there is a chance that someone else could have already submitted the site, please make sure no one else has already submitted it by searching existing PRs: https://github.com/gatsbyjs/gatsby/pulls
 
@@ -104,8 +104,14 @@ By default, all sites submitted to the Site Showcase will be reviewed by the Gat
 
 Featured sites will be chosen quarterly based on the following criteria:
 
-- how the site performs according to a set of criteria TBD by the Gatsby Site Review Board
-- voting by the community
+- Well known brands
+- Use case diversity
+- Visual appeal
+- Visual diversity
+
+#### How many can be featured at a time?
+
+9, since that’s what can fit on one page of the site showcase
 
 #### How to Set a Site as Featured
 

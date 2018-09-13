@@ -260,6 +260,7 @@ prop. e.g. `<Img fluid={fluid} />`
 | `backgroundColor`       | `string` / `bool`   | Set a colored background placeholder. If true, uses "lightgray" for the color. You can also pass in any valid color string. |
 | `onLoad`                | `func`              | A callback that is called when the full-size image has loaded.                                                              |
 | `Tag`                   | `string`            | Which HTML tag to use for wrapping elements. Defaults to `div`.                                                             |
+| `critical`              | `bool`              | Opt-out of lazy-loading behavior. Defaults to `false`.                                                                      |
 
 ## Image processing arguments
 
@@ -270,6 +271,12 @@ prop. e.g. `<Img fluid={fluid} />`
 
 - If you want to set `display: none;` on a component using a `fixed` prop,
   you need to also pass in to the style prop `{ display: 'inherit' }`.
-- Images don't load until JavaScript is loaded. Gatsby's automatic code
+- By default, images don't load until JavaScript is loaded. Gatsby's automatic code
   splitting generally makes this fine but if images seem slow coming in on a
   page, check how much JavaScript is being loaded there.
+- Images marked as `critical` will start loading immediately as the DOM is 
+  parsed, but unless `fadeIn` is set to `false`, the transition from placeholder
+  to final image will not occur until after the component is mounted.
+- Gatsby-Image now is backed by newer `<picture>` tag. This newer standard allows for
+  media types to be chosen by the browser without using javascript. It also is
+  backward compatible to older browsers (IE 11, etc)

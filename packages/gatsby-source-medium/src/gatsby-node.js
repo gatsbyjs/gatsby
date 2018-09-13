@@ -25,7 +25,10 @@ const convertTimestamps = (nextObj, prevObj, prevKey) => {
 
 const strip = payload => payload.replace(prefix, ``)
 
-exports.sourceNodes = async ({ actions, createNodeId }, { username, limit }) => {
+exports.sourceNodes = async (
+  { actions, createNodeId },
+  { username, limit }
+) => {
   const { createNode } = actions
 
   try {

@@ -218,8 +218,8 @@ class SidebarBody extends Component {
           css={{
             ...styles.sidebarScrollContainer,
             height: itemList[0].disableExpandAll
-              ? `calc(100%)`
-              : `calc(100% - ${presets.sidebarUtilityHeight} + 1px)`,
+              ? `100%`
+              : `calc(100% - ${presets.sidebarUtilityHeight})`,
             [presets.Tablet]: {
               ...styles.sidebarScrollContainerTablet,
             },
@@ -285,7 +285,7 @@ const styles = {
   },
   sidebarScrollContainerTablet: {
     backgroundColor: colors.ui.whisper,
-    top: `calc(${presets.headerHeight} + ${presets.bannerHeight} - 1px)`,
+    top: `calc(${presets.headerHeight} + ${presets.bannerHeight})`,
   },
   list: {
     margin: 0,

@@ -19,7 +19,7 @@
     "gatsby-transformer-sharp": "next",
     "glamor": "^2.20.40",
     "instagram-screen-scrape": "^2.0.0",
-    "lodash": "^4.16.4",
+    "lodash": "^4.17.10",
     "mkdirp": "^0.5.1",
     "mousetrap": "^1.6.0",
     "progress": "^2.0.0",
@@ -48,7 +48,7 @@
     "build": "gatsby build",
     "deploy": "gatsby build --prefix-paths && gh-pages -d public",
     "cy:open": "cypress open",
-    "cy:run": "cypress run"
+    "cy:run": "cypress run --browser chrome"
   },
   "devDependencies": {
     "cypress": "^3.1.0",
