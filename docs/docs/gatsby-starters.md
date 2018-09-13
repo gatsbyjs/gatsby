@@ -980,3 +980,20 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
   - Netlify Deployment Friendly
   - Medium syncronization
   - Social sharing (Twitter, Facebook, Google, LinkedIn)
+
+- [gatsby-scientific-machine-learning-starter](https://github.com/DanShai/Gatsby-Machine-Learning-Starter)
+  [(demo)](https://danshai.github.io/Gatsby-Machine-Learning-Starter/)
+
+  Features:
+
+  - Easy editable content in markdown files (posts, pages and parts) via GraphQl
+  - Tensorflow integration , modified the reac [tfjx](https://github.com/ModelDepot/tfjsx) package to work with gatsby
+  - chartjs integration instead of plotly , plotly doesnt compile when deploying. so I used react-chartjs,
+    useful to see loss and accuracy functions and other charts you might have.
+  - Katex support to work with mathematical expressions and research
+  - csv plugin support to work with csv files data
+  - graph plugin to work with graphical schemes in your markdown files using mermaid
+  - Easy customizable base styles
+  - ESLint
+  - Prettier code styling
+  - Webpack , babel and deploy configured to eliminate heap crash during build and support for generator functions
