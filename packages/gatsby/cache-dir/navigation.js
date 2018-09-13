@@ -104,7 +104,7 @@ function shouldUpdateScroll(prevRouterProps, { location }) {
     // `pathname` for backwards compatibility
     pathname,
     routerProps: { location },
-    savedScrollPositions: this._stateStorage,
+    getSavedScrollPosition: args => this._stateStorage.read(args),
   })
   if (results.length > 0) {
     return results[0]
