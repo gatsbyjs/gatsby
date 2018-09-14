@@ -6,6 +6,13 @@
   categories:
     - Web Dev
     - Featured
+- title: Nike - Just Do It
+  main_url: "https://justdoit.nike.com/"
+  url: "https://justdoit.nike.com/"
+  featured: true
+  categories:
+    - eCommerce
+    - Featured
 - title: Stitch Fix
   main_url: "https://www.stitchfix.com/"
   url: "https://www.stitchfix.com/"
@@ -62,6 +69,14 @@
   plugins: "gatsby-plugin-react-helmet, gatsby-plugin-react-next"
   built_by: Studio Lovelock
   built_by_url: "http://www.studiolovelock.com/"
+- title: Hopper
+  main_url: "https://www.hopper.com/"
+  url: "https://www.hopper.com/"
+  featured: true
+  categories:
+    - eCommerce
+    - App
+    - featured
 - title: Cajun Bowfishing
   main_url: "https://cajunbowfishing.com/"
   url: "https://cajunbowfishing.com/"
@@ -79,16 +94,6 @@
   url: "https://gm.capitalone.com/"
   categories:
     - Credit Card
-    - Featured
-  featured: true
-- title: House Manager
-  description: >
-    Home service membership that offers proactive and on-demand maintenance for
-    homeowners
-  main_url: "https://housemanager.calstate.aaa.com/"
-  url: "https://housemanager.calstate.aaa.com/"
-  categories:
-    - Home
     - Featured
   featured: true
 - title: Life Without Barriers | Foster Care
@@ -622,6 +627,15 @@
     - Web Dev
     - Agency
     - Open Source
+- title: CalState House Manager
+  description: >
+    Home service membership that offers proactive and on-demand maintenance for
+    homeowners
+  main_url: "https://housemanager.calstate.aaa.com/"
+  url: "https://housemanager.calstate.aaa.com/"
+  categories:
+    - Home
+    - Insurance
 - title: Gatsby Manor
   main_url: "https://gatsbymanor.com/"
   url: "https://gatsbymanor.com/themes"
