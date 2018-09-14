@@ -10,7 +10,7 @@ Gatsby is a modern website and app generator. Thousands of developers use Gatsby
 
 [Read more](/) about how Gatsby improves developer productivity and performance by leveraging the latest web technologies.
 
-V2.0.0 is the result of months of hard work by the Gatsby core team and 315 contributors. Thank you to everyone who's contributed and tested the betas!
+V2.0.0 is the result of months of hard work by the Gatsby core team and 315 contributors. Thank you!
 
 This release focuses on performance and developer experience. Highlights include:
 
@@ -18,17 +18,17 @@ This release focuses on performance and developer experience. Highlights include
 - Shrunk JavaScript client runtime by 31%
 - Upgraded Gatsby to latest version of core dependencies, webpack 4, Babel 7, React 16.5
 
-[Sign up for our v2 webinar to learn more the new features in Gatsby v2](https://www.gatsbyjs.com/v2-launch-webinar).
+[Sign up for our v2 webinar to learn more about the new features in Gatsby v2](https://www.gatsbyjs.com/v2-launch-webinar).
 
 ![Gatsby astronaut butler delivers v2](./images/gatsby-v2-astronaut.png)
 
 ## People using Gatsby
 
-These are some of the fine companies that trust Gatsby.
+These are some of the fine organizations that trust Gatsby.
 
-Company logos + link to the website
+![Logos of organizations using Gatsby](./images/gatsby-logos.png)
 
-Along with Gatsby v2, [we’ve launched a new site showcase to show off](/showcase/) the great work the Gatsby community is doing.
+See 100s of other sites built with Gatsby in our [new site showcase](/showcase/).
 
 ## Rapidly growing ecosystem
 
@@ -52,7 +52,7 @@ Most sites should see large speed increases, up to 75% reduction.
 Improvements include:
 
 - [Reduced memory usage while server rendering pages](https://github.com/gatsbyjs/gatsby/pull/4912#issuecomment-381407967)
-- Webpack 4 includes many speedups to JavaScript and CSS bundling.
+- Webpack 4 includes many speedups to JavaScript and CSS bundling
 - React 16 improved SSR performance by 3-4x
 - [My "hulksmash" PR includes many small fixes to refactor slow algorithms](https://github.com/gatsbyjs/gatsby/pull/6226)
 - [Use all available cores when server rendering pages](https://github.com/gatsbyjs/gatsby/pull/6417)
@@ -61,7 +61,7 @@ There's still lots to be done to improve build performance! Our goal is to help 
 
 ### Shrunk JavaScript client runtime by 31%
 
-We shrunk the core JavaScript we ship with every Gatsby site by 31%!
+We shrunk the core JavaScript we ship with every Gatsby site by 31%! Less JavaScript means faster sites!
 
 Gatsby v1's core JavaScript was 78.5kb and **v2 is 53.9kb** (both gzipped sizes).
 
@@ -73,7 +73,7 @@ We switched routers from react-router to @reach/router which brought a 25% small
 
 ### React 16
 
-We upgraded from React 15 to 16. The React 16 was a huge release for the React ecosystem with support for fragments, error boundaries, portals, support for custom DOM attributes, improved server-side rendering, and reduced file size.
+We upgraded from React 15 to 16. React 16 was a huge release for the React ecosystem with support for fragments, error boundaries, portals, support for custom DOM attributes, improved server-side rendering, and reduced file size.
 
 [Read the React 16 release blog post](https://reactjs.org/blog/2017/09/26/react-v16.0.html).
 
@@ -110,7 +110,7 @@ We switched routers from [react-router](https://reacttraining.com/react-router/c
 
 @reach/router makes sure your Gatsby sites work for people using screen readers.
 
-It's written by the same author of react-router so migrating is straightforward.
+It's written by the same author of react-router, Ryan Florence, so migrating is straightforward.
 
 ### GraphQL stitching
 
@@ -141,38 +141,7 @@ Because of this, we decided to remove it. We added [`gatsby-plugin-layout`](/pac
 
 A very frequent feature request has been "how can I query for data in my components?"
 
-As part of removing layout components, I added support querying for data anywhere with a special component called `<StaticQuery />`.
-
-Using it looks like:
-
-```jsx
-import React from 'react'
-import Helmet from 'react-helmet'
-import { StaticQuery } from 'gatsby'
-
-export default class ExampleComponent extends React.Component {
-  render () {
-    <StaticQuery
-      query={graphql`
-        {
-           site {
-             siteMetadata {
-               title
-             }
-           }
-       }
-      `}
-      render={staticData => (
-        <div>
-          <Helmet title={staticData.site.siteMetadata.title} />
-          <h1>Welcome to {staticData.site.siteMetadata.title}!</h1>
-          <p>We hope your stay is pleasant.</p>
-        </div>
-      )}
-    />
-  }
-}
-```
+As part of removing layout components, we added support querying for data anywhere with a special component called `<StaticQuery />`.
 
 - [Read the RFC](https://github.com/gatsbyjs/rfcs/blob/master/text/0002-remove-special-layout-components.md#detailed-design)
 - [Read its documentation page](/docs/static-query/)
@@ -181,7 +150,7 @@ export default class ExampleComponent extends React.Component {
 
 [`gatsby-plugin-offline`](/packages/gatsby-plugin-offline/) adds drop-in service worker and offline support!
 
-[Kurt Kemple](https://github.com/kkemple) and [David Bailey](https://github.com/davidbailey00) have put a lot of time into bug fixes and feature improvments to handle more edge cases.
+[Kurt Kemple](https://github.com/kkemple) and [David Bailey](https://github.com/davidbailey00) have put a lot of time into bug fixes and feature improvements to handle more edge cases.
 
 ### Tracing
 
@@ -195,7 +164,7 @@ Tracing helps you to find which plugins or parts of the build are taking the lon
 
 ## Gatsby swag!
 
-By very popular demand, we're now selling stickers, socks, and t-shirts on our very own Gatsby eCommerce store (powered by Gatsby of course) at https://store.gatsbyjs.org/
+By very popular demand, we're now selling stickers, socks, and t-shirts on our very own Gatsby eCommerce store (powered by Gatsby of course) at [store.gatsbyjs.org](https://store.gatsbyjs.org/)
 
 [Read the launch blog post.](/blog/2018-08-09-swag-store/)
 
@@ -205,7 +174,7 @@ Best of all, contributors get free swag! Sign in with GitHub and claim your free
 
 ## Growing the community
 
-The Gatsby community has been growing very rapidly. We're seeing ~90 new PRs per week and it's really exciting to see new contributors tackle different parts of the code base and add documentation, features, fix bugs, and refactor dusty corners of the code base.
+The Gatsby community has been growing very rapidly. We're seeing ~90 new PRs per week and it's really exciting to see new contributors tackle different parts of the the project to add documentation, new features, bug fixes, and refactor dusty corners of the code base.
 
 We're investing heavily in scaling the velocity of the OSS project including:
 
@@ -228,8 +197,25 @@ Alongside v2, we've been working on a large docs initiative to revamp the inform
 
 ## v2 Webinar
 
-[Sign up for our v2 webinar to learn more the new features in Gatsby v2](https://www.gatsbyjs.com/v2-launch-webinar).
+[Sign up for our v2 webinar to learn more about the new features in Gatsby v2](https://www.gatsbyjs.com/v2-launch-webinar).
 
 ## Acknowledgments
 
-This release was not possible without everyone who helped contributed! Thanks to everyone who filed bugs, opened PRs, responded to issues, wrote documenation, tested betas, and more!
+This release was not possible without everyone who helped contributed! Thanks to everyone who filed bugs, opened PRs, responded to issues, wrote documentation, tested betas, and more!
+
+Special thanks to:
+
+- [Michal Piechowiak](https://github.com/pieh)
+- [Mike Allanson](https://github.com/m-allanson)
+- [Jason Quense](https://github.com/jquense)
+- [Kurt Kemple](https://github.com/kkemple)
+- [Anthony Marcar](https://github.com/Moocar)
+- [Shannon Soper](https://github.com/shannonbux)
+- [Flo Kissling](https://github.com/fk)
+- [Jason Stallings](https://github.com/octalmage)
+- [Porfirio Beiro](https://github.com/porfirioribeiro)
+- [Yang Bo](https://github.com/youngboy)
+- [Liviu Costea](https://github.com/lcostea)
+- [Alexander Nanberg](https://github.com/alexandernanberg)
+- [Neo Wu](https://github.com/nihgwu)
+- [Pistachio Harzal](https://github.com/pistachiology)
