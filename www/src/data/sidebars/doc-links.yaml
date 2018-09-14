@@ -255,7 +255,7 @@
       link: /docs/prpl-pattern/
     - title: Querying data with GraphQL
       link: /docs/querying-with-graphql/
-- title: BEHIND THE SCENES
+- title: Behind the Scenes
   link: /docs/behind-the-scenes/
   items:
     - title: How APIS/Plugins Are Run
