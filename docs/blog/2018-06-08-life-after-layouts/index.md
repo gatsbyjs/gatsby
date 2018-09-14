@@ -120,7 +120,7 @@ For a full list of what's new, check out our [V2 migration guide](https://next.g
 - You can get started using Gatsby V2 right now by installing our V2 default starter:
 
   ```
-  gatsby new my-gatsby-v2-site https://github.com/gatsbyjs/gatsby-starter-default#v2
+  gatsby new my-gatsby-v2-site https://github.com/gatsbyjs/gatsby-starter-default
   ```
 
   Huge thanks to [Yuki Takemoto](https://github.com/mottox2) for upgrading the starter to V2!

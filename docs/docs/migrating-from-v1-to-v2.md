@@ -80,8 +80,6 @@ Since v2 is currently in beta, you need update your `package.json` to use the pr
 }
 ```
 
-> Note: Gatsby v2 is in pre-release so you may encounter further breaking changes.
-
 ### Update Gatsby related packages
 
 Update your `package.json` to use the pre-release versions of Gatsby related packages. Any package name that starts with `gatsby-` should be upgraded to use the `next` version. Note, this only applies to plugins managed in the gatsbyjs/gatsby repo. If you're using community plugins, they might not be upgraded yet. Check their repo for the status. Many plugins won't actually need upgrading so they very well might keep working. For example:
@@ -934,22 +932,22 @@ _Start from scratch:_ If you're a _start from scratch_ kind of person, you can i
 
 _Tutorial:_ If you'd like a step-by-step guide, [follow the tutorial](/tutorial/) to get started with Gatsby v2.
 
-_Starters:_ If you'd rather use one of the official starters, you're in luck, there's a v2 edition for each of them. Install your favourite one with the Gatsby CLI.
+_Starters:_ If you'd rather use one of the official starters, install your favourite one with the Gatsby CLI.
 
 `gatsby-starter-default` with v2:
 
 ```
-gatsby new my-default-project https://github.com/gatsbyjs/gatsby-starter-default#v2
+gatsby new my-default-project https://github.com/gatsbyjs/gatsby-starter-default
 ```
 
 `gatsby-starter-hello-world` with v2:
 
 ```
-gatsby new my-hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world#v2
+gatsby new my-hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
 `gatsby-starter-blog` with v2:
 
 ```
-gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
+gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog
 ```
