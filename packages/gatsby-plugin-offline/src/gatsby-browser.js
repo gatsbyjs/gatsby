@@ -28,12 +28,14 @@ exports.onServiceWorkerInstalled = ({ getResourceURLsForPathname }) => {
     .call(nodes)
     .map(node => node.src || node.href || node.getAttribute(`data-href`))
 
-  const a = document.createElement(`a`)
-
   for (const resource of resources) {
-    a.href = resource
-    const isExternal = (a.host && a.host !== window.location.host)
-    fetch(resource, isExternal ? { mode: `no-cors` } : undefined)
+    const url = new URL(resource, window.location.origin)
+    const isExternal = url.origin !== window.location.origin
+    console.log(isExternal, resource)
+    fetch(
+      resource,
+      isExternal ? { mode: `no-cors` } : undefined
+    )
   }
 
   // Loop over all resources and fetch the page component and JSON
