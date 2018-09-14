@@ -6,23 +6,23 @@ author: "Kyle Mathews"
 
 We're incredibly pleased to announce the 2nd major release of Gatsby!
 
-Gatsby is a modern website and app generator focused on developer productivity and performance by leveraging the latest web technologies.
+Gatsby is a modern website and app generator. Thousands of developers use Gatsby to create amazing blogs, apps, marketing sites, ecommerce, documentation, and more!
 
-Thousands of developers use Gatsby to create amazing blogs, apps, marketing sites, ecommerce, documentation, and more!
+[Read more](/) about how Gatsby improves developer productivity and performance by leveraging the latest web technologies.
 
-V2.0.0 is the result of months of hard work by the Gatsby core team and 315 contributors.
+V2.0.0 is the result of months of hard work by the Gatsby core team and 315 contributors. Thank you to everyone who's contributed and tested the betas!
 
 This release focuses on performance and developer experience. Highlights include:
 
 - Reduced build times by up to 75%
-- Shrunk JavaScript client runtime by 23% [TODO get actual number]
+- Shrunk JavaScript client runtime by 31%
 - Upgraded Gatsby to latest version of core dependencies, webpack 4, Babel 7, React 16.5
 
 [Sign up for our v2 webinar to learn more about this release](https://www.gatsbyjs.com/v2-launch-webinar)
 
 ![Gatsby astronaut butler delivers v2](./images/gatsby-v2-astronaut.png)
 
-## Showcase
+## People using Gatsby
 
 These are some of the fine companies that trust Gatsby.
 
@@ -45,9 +45,11 @@ We’ve grown a lot in the last year since the Gatsby v1 release.
 
 ## What’s new in v2
 
-### Faster builds
+### Faster site builds
 
 We focused heavily on improving build speeds for v2 and are very pleased to see large build speed improvements across many parts of the build pipeline.
+
+Many sites should see large improvements to their build performance, up to 75% reduction.
 
 Improvements include:
 
@@ -57,19 +59,52 @@ Improvements include:
 - [This PR includes many small fixes to refactor slow algorithms](https://github.com/gatsbyjs/gatsby/pull/6226)
 - [Use all available cores when server rendering pages](https://github.com/gatsbyjs/gatsby/pull/6417)
 
-webpack 4/babel 7/run page rendering across all cores/hulksmash fixed slowdowns in code
+We're planning many more improvements for build performance. GraphQL query performance needs improved. We're also planning how to make additional parts of the build proces run across multiple cores.
 
-### Smaller client runtime
-React 16 smaller & @reach/router smaller
+### Shrunk JavaScript client runtime
+
+We shrunk the core JavaScript we ship with every Gatsby site by 31%!
+
+Gatsby v1's core JavaScript was 78.5kb and v2 is 53.9kb (both gzipped sizes).
+
+The reductions are largely due to the hard work by libraries we rely on.
+
+The React team decreased their lib's size by 30% React 15 to 16 (49.8kb to 34.8kb gzipped)
+
+We also switched routers from react-router to @reach/router which also has a 25% smaller bundle (8kb to 6kb gzipped).
 
 ### React 16
-Pull out some stuff from their blog post & link to it
+
+We upgraded from React 15 to 16. The React 16 was a huge release for the React ecosystem with support for fragments, error boundaries, portals, support for custom DOM attributes, improved server-side rendering, and reduced file size.
+
+[Read the React 16 release blog post](https://reactjs.org/blog/2017/09/26/react-v16.0.html).
 
 ### webpack 4
-Pull out some stuff from their blog post & link to it
+
+We're proud to use webpack for processing and bundling Gatsby site code, css, and assets.
+
+Webpack 4 was a huge release bringing with it:
+- Dramatic improvements to build times
+- New code splitting algorithm
+- New first-class support for lazy-loading CSS chunks.
+
+Read more about the webpack 4 release:
+
+- [webpack 4 release blog post](https://medium.com/webpack/webpack-4-released-today-6cdb994702d4)
+- [Code Splitting optimizations](https://medium.com/webpack/webpack-4-code-splitting-chunk-graph-and-the-splitchunks-optimization-be739a861366)
+- [mini-css-extract-plugin](https://github.com/webpack-contrib/mini-css-extract-plugin)
 
 ### Babel 7
-Pull out some stuff from their blog post & link to it
+
+Babel helps ensure that JavaScript you write works across different browsers (including older versions of Internet Explorer)
+
+The upgrade brings:
+
+- [Improved build speed](https://babeljs.io/blog/2018/08/27/7.0.0#speed)
+- [Experimental support for automatic polyfilling](https://babeljs.io/blog/2018/08/27/7.0.0#automatic-polyfilling-experimental) [See also our docs for this feature](https://next.gatsbyjs.org/docs/browser-support/#polyfills)
+- Support for more syntax e.g. Typescript and JSX Fragments
+
+[Read the Babel 7 release blog post](https://babeljs.io/blog/2018/08/27/7.0.0).
 
 ### Improved accessibility with @reach/router
 - Keyboard access
@@ -140,4 +175,4 @@ Alongside v2, we've been working on a large docs initiative to revamp the inform
 roadmap stuff. make it work, make it right, make it fast.
 
 
-
+[Sign up for our v2 webinar to learn more about this release](https://www.gatsbyjs.com/v2-launch-webinar)
