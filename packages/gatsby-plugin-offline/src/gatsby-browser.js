@@ -31,7 +31,6 @@ exports.onServiceWorkerInstalled = ({ getResourceURLsForPathname }) => {
   for (const resource of resources) {
     const url = new URL(resource, window.location.origin)
     const isExternal = url.origin !== window.location.origin
-    console.log(isExternal, resource)
     fetch(
       resource,
       isExternal ? { mode: `no-cors` } : undefined
