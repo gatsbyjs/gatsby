@@ -395,4 +395,4 @@ In this section we:
 - Learned about Gatsby page components and sub-components
 - Learned about React “props” and reusing React components
 
-Now, let’s move on to [**adding styles to our site**](/tutorial/part-two/)!
+Now, let’s move on to [**adding styles to our site**](/docs/tutorial/part-two/index.md)!
