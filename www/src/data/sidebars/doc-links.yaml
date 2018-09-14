@@ -205,8 +205,8 @@
           link: /docs/local-https/
         - title: Lighthouse audit*
           link: /docs/lighthouse-audit/
-        - title: Optimize plugins with Guess.js*
-          link: /docs/optimize-plugins-with-guessjs/
+        - title: Optimize Prefetching with Guess.js*
+          link: /docs/optimize-prefetching-with-guessjs/
 - title: API Reference
   items:
     - title: Gatsby Link
