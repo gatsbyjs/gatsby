@@ -2,7 +2,7 @@ const React = require(`react`)
 const fs = require(`fs`)
 const { join } = require(`path`)
 const { renderToString, renderToStaticMarkup } = require(`react-dom/server`)
-const { ServerLocation, Router } = require(`@reach/router`)
+const { ServerLocation, Router, isRedirect } = require(`@reach/router`)
 const { get, merge, isObject, flatten, uniqBy } = require(`lodash`)
 
 const apiRunner = require(`./api-runner-ssr`)
@@ -181,7 +181,12 @@ export default (pagePath, callback) => {
 
   // If no one stepped up, we'll handle it.
   if (!bodyHtml) {
-    bodyHtml = renderToString(bodyComponent)
+    try {
+      bodyHtml = renderToString(bodyComponent)
+    } catch (e) {
+      // ignore @reach/router redirect errors
+      if (!isRedirect(e)) throw e
+    }
   }
 
   // Create paths to scripts
