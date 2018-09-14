@@ -14,7 +14,6 @@
     "contentful": "^6.1.0",
     "deep-map": "^1.5.0",
     "fs-extra": "^4.0.2",
-    "gatsby-plugin-sharp": "^2.0.0-rc.7",
     "is-online": "^7.0.0",
     "json-stringify-safe": "^5.0.1",
     "lodash": "^4.17.10",
@@ -24,6 +23,9 @@
     "@babel/cli": "^7.0.0",
     "@babel/core": "^7.0.0",
     "cross-env": "^5.1.4"
+  },
+  "optionalDependencies": {
+    "gatsby-plugin-sharp": "^2.0.0-rc.7"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful#readme",
   "keywords": [
