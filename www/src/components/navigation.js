@@ -125,8 +125,8 @@ const Navigation = ({ pathname }) => {
             : {}),
         }}
       >
-        <Link to="/" css={styles.logoLink}>
-          <img src={logo} css={styles.logo} alt="" />
+        <Link to="/" css={styles.logoLink} aria-label="Go to homepage">
+          <img src={logo} css={styles.logo} alt="Gatsby logo" />
         </Link>
         <ul css={styles.navContainer}>
           <NavItem linkTo="/docs/">Docs</NavItem>
