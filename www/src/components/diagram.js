@@ -48,7 +48,7 @@ const SegmentTitle = ({ children }) => (
     css={{
       display: `inline`,
       background: colors.accent,
-      color: `#fff`,
+      color: colors.gray.copy,
       borderRadius: presets.radius,
       margin: `0 auto`,
       position: `relative`,
@@ -163,7 +163,7 @@ const ItemDescription = ({ children }) => (
     css={{
       lineHeight: 1.2,
       display: `block`,
-      color: colors.lilac,
+      color: colors.gatsby,
       [presets.Hd]: {
         fontSize: scale(-1 / 5).fontSize,
       },
