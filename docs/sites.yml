@@ -72,9 +72,11 @@
 - title: Hopper
   main_url: "https://www.hopper.com/"
   url: "https://www.hopper.com/"
+  built_by: Narative
+  built_by_url: "https://www.narative.co/"
   featured: true
   categories:
-    - eCommerce
+    - Technology
     - App
     - featured
 - title: Cajun Bowfishing
