@@ -674,8 +674,6 @@ export default ({ children }) => (
 )
 ```
 
-TODO: add a code snippet that uses [`onCreateWebpackConfig`](/docs/node-apis/#onCreateWebpackConfig) to revert to Gatsby's v1 behaviour.
-
 ## Resolving Deprecations
 
 ### Import Link from Gatsby
@@ -731,8 +729,6 @@ export const query = graphql`
 ### Rename `boundActionCreators` to `actions`
 
 `boundActionCreators` is deprecated in v2. You can continue using it, but it’s recommended that you rename it to `actions`.
-
-> TODO: document new actions - see [actions](/docs/actions)
 
 ### Rename `pathContext` to `pageContext`
 
