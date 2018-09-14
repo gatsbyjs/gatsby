@@ -18,7 +18,7 @@ This release focuses on performance and developer experience. Highlights include
 - Shrunk JavaScript client runtime by 31%
 - Upgraded Gatsby to latest version of core dependencies, webpack 4, Babel 7, React 16.5
 
-[Sign up for our v2 webinar to learn more about this release](https://www.gatsbyjs.com/v2-launch-webinar)
+[Sign up for our v2 webinar to learn more the new features in Gatsby v2](https://www.gatsbyjs.com/v2-launch-webinar).
 
 ![Gatsby astronaut butler delivers v2](./images/gatsby-v2-astronaut.png)
 
@@ -28,9 +28,7 @@ These are some of the fine companies that trust Gatsby.
 
 Company logos + link to the website
 
-Along with Gatsby v2, we’re launching a new site showcase showing off the great work the Gatsby community is doing.
-
-[Visit the new site showcase](/showcase/)
+Along with Gatsby v2, [we’ve launched a new site showcase to show off](/showcase/) the great work the Gatsby community is doing.
 
 ## Rapidly growing ecosystem
 
@@ -49,29 +47,29 @@ We’ve grown a lot in the last year since the Gatsby v1 release.
 
 We focused heavily on improving build speeds for v2 and are very pleased to see large build speed improvements across many parts of the build pipeline.
 
-Many sites should see large improvements to their build performance, up to 75% reduction.
+Most sites should see large speed increases, up to 75% reduction.
 
 Improvements include:
 
 - [Reduced memory usage while server rendering pages](https://github.com/gatsbyjs/gatsby/pull/4912#issuecomment-381407967)
 - Webpack 4 includes many speedups to JavaScript and CSS bundling.
-- React 16 improved SSR performance 3-4x
-- [This PR includes many small fixes to refactor slow algorithms](https://github.com/gatsbyjs/gatsby/pull/6226)
+- React 16 improved SSR performance by 3-4x
+- [My "hulksmash" PR includes many small fixes to refactor slow algorithms](https://github.com/gatsbyjs/gatsby/pull/6226)
 - [Use all available cores when server rendering pages](https://github.com/gatsbyjs/gatsby/pull/6417)
 
-We're planning many more improvements for build performance. GraphQL query performance needs improved. We're also planning how to make additional parts of the build proces run across multiple cores.
+There's still lots to be done to improve build performance! Our goal is to help Gatsby scale to sites of any size. More on this in coming months.
 
-### Shrunk JavaScript client runtime
+### Shrunk JavaScript client runtime by 31%
 
 We shrunk the core JavaScript we ship with every Gatsby site by 31%!
 
-Gatsby v1's core JavaScript was 78.5kb and v2 is 53.9kb (both gzipped sizes).
+Gatsby v1's core JavaScript was 78.5kb and **v2 is 53.9kb** (both gzipped sizes).
 
 The reductions are largely due to the hard work by libraries we rely on.
 
-The React team decreased their lib's size by 30% React 15 to 16 (49.8kb to 34.8kb gzipped)
+The React team decreased their code size by 30% from React 15 to 16 (49.8kb to 34.8kb gzipped)
 
-We also switched routers from react-router to @reach/router which also has a 25% smaller bundle (8kb to 6kb gzipped).
+We switched routers from react-router to @reach/router which brought a 25% smaller bundle (8kb to 6kb gzipped).
 
 ### React 16
 
@@ -81,7 +79,7 @@ We upgraded from React 15 to 16. The React 16 was a huge release for the React e
 
 ### webpack 4
 
-We're proud to use webpack for processing and bundling Gatsby site code, css, and assets.
+We're proud to use webpack for processing and bundling Gatsby site JavaScript, CSS, and assets.
 
 Webpack 4 was a huge release bringing with it:
 - Dramatic improvements to build times
@@ -96,7 +94,7 @@ Read more about the webpack 4 release:
 
 ### Babel 7
 
-Babel helps ensure that JavaScript you write works across different browsers (including older versions of Internet Explorer)
+Babel helps ensure the JavaScript you write works across different browsers (including older versions of Internet Explorer)
 
 The upgrade brings:
 
@@ -107,15 +105,21 @@ The upgrade brings:
 [Read the Babel 7 release blog post](https://babeljs.io/blog/2018/08/27/7.0.0).
 
 ### Improved accessibility with @reach/router
-- Keyboard access
-- Assistive devices announce correctly
-- Focus Management
-pull out stuff from site & link to it
+
+We switched routers from [react-router](https://reacttraining.com/react-router/core/guides/philosophy) to [@reach/router](https://reach.tech/router).
+
+@reach/router makes sure your Gatsby sites work for people using screen readers.
+
+It's written by the same author of react-router so migrating is straightforward.
 
 ### GraphQL stitching
-Important as more and more public/private schemas exist. Gatsby is to make it easy to get data into site. Link to RFC
 
-Combine static + dynamic
+We've added experimental support for GraphQL stitching.
+
+More and more services offer native GraphQL APIs and GraphQL stitching lets you use their API directly in your Gatsby site without having to wrap the API with a source plugin.
+
+- [Read the RFC](https://github.com/gatsbyjs/rfcs/blob/master/text/0000-native-graphql-source.md)
+- [Try out the plugin gatsby-source-graphql](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-graphql/README.md)
 
 ### Ludicrous Mode (aka faster data hot reloading)
 
@@ -123,21 +127,77 @@ We spent some time optimizing Gatsby's data processing layer to make markdown ed
 
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Coming soon to Gatsby v2: Ludicrous mode data hot reloading ;-)<a href="https://t.co/by1PyOYXc0">https://t.co/by1PyOYXc0</a><br><br>(note, this gif is not sped up at all) <a href="https://t.co/hFIYMbpalN">pic.twitter.com/hFIYMbpalN</a></p>&mdash; Gatsby (@gatsbyjs) <a href="https://twitter.com/gatsbyjs/status/974507205121617920?ref_src=twsrc%5Etfw">March 16, 2018</a></blockquote>
 
-### Layouts change
-Short summary of change & link to RFC & blog post
+### Remove special layout component
 
-### <StaticQuery>
-Everyone wants to query in components, link to RFC (was their one?) and blog post
+In Gatsby v1, there was a special "layout" component. While sometimes useful, it often proved confusing to people used to React as it breaks the normal component composition model.
+
+Because of this, we decided to remove it. We added [`gatsby-plugin-layout`](/packages/gatsby-plugin-layout/) to restore the behavior for those sites the standalone layout component benefits.
+
+- [Read the RFC](https://github.com/gatsbyjs/rfcs/blob/master/text/0002-remove-special-layout-components.md)
+- [Read the migration instructions](https://next.gatsbyjs.org/docs/migrating-from-v1-to-v2/#remove-or-refactor-layout-components)
+- [Read Jason Lengstorf's post "Life after Layouts"](/blog/2018-06-08-life-after-layouts/)
+
+### Query for data in components with `<StaticQuery />`
+
+A very frequent feature request has been "how can I query for data in my components?"
+
+As part of removing layout components, I added support querying for data anywhere with a special component called `<StaticQuery />`.
+
+Using it looks like:
+
+```jsx
+import React from 'react'
+import Helmet from 'react-helmet'
+import { StaticQuery } from 'gatsby'
+
+export default class ExampleComponent extends React.Component {
+  render () {
+    <StaticQuery
+      query={graphql`
+        {
+           site {
+             siteMetadata {
+               title
+             }
+           }
+       }
+      `}
+      render={staticData => (
+        <div>
+          <Helmet title={staticData.site.siteMetadata.title} />
+          <h1>Welcome to {staticData.site.siteMetadata.title}!</h1>
+          <p>We hope your stay is pleasant.</p>
+        </div>
+      )}
+    />
+  }
+}
+```
+
+- [Read the RFC](https://github.com/gatsbyjs/rfcs/blob/master/text/0002-remove-special-layout-components.md#detailed-design)
+- [Read its documentation page](/docs/static-query/)
 
 ### Improvements to gatsby-plugin-offline
-Highlight work by Kurt & David Bailey
+
+[`gatsby-plugin-offline`](/packages/gatsby-plugin-offline/) adds drop-in service worker and offline support!
+
+[Kurt Kemple](https://github.com/kkemple) and [David Bailey](https://github.com/davidbailey00) have put a lot of time into bug fixes and feature improvments to handle more edge cases.
 
 ### Tracing
-Talk about why useful feature & add screenshot — link to PR by Anthony
+
+[Anthony Marcar](https://github.com/Moocar) added tracing support to Gatsby!
+
+Tracing helps you to find which plugins or parts of the build are taking the longest and is very useful for debugging build slowdowns.
+
+![example gatsby build trace](../docs/images/zipkin-trace.png)
+
+[Read the documentation page on tracing](/docs/performance-tracing/)
 
 ## Gatsby swag!
 
 By very popular demand, we're now selling stickers, socks, and t-shirts on our very own Gatsby eCommerce store (powered by Gatsby of course) at https://store.gatsbyjs.org/
+
+[Read the launch blog post.](/blog/2018-08-09-swag-store/)
 
 Best of all, contributors get free swag! Sign in with GitHub and claim your free swag.
 
@@ -156,23 +216,20 @@ We're investing heavily in scaling the velocity of the OSS project including:
 - Rewarding contributors with free swag
 - Building maintainer dashboards to help direct our attention to the most important issues and PRs
 
-## Website Information Architecture revamp
+## Information Architecture revamp
 
 Alongside v2, we've been working on a large docs initiative to revamp the information architecture of our docs. We invest heavily in writing documentation as we know that great features don't matter if people can't use them. If you click to the [docs section](/docs/), you can see the new sidebar and IA.
 
 [Read Shannon Soper's writeup about the research behind the new IA](/blog/2018-07-31-docs-redesign/)
 
-## Get started with Gatsby in 5 minutes
+## Upgrading
 
-- [Follow our getting started guide to build your first Gatsby site](/docs)
 - Have an existing v1 Gatsby site? [Follow our migration guide to upgrade it to v2](/docs/migrating-from-v1-to-v2/).
 
-## The future
+## v2 Webinar
 
-- guess.js
-- mdx
+[Sign up for our v2 webinar to learn more the new features in Gatsby v2](https://www.gatsbyjs.com/v2-launch-webinar).
 
-roadmap stuff. make it work, make it right, make it fast.
+## Acknowledgments
 
-
-[Sign up for our v2 webinar to learn more about this release](https://www.gatsbyjs.com/v2-launch-webinar)
+This release was not possible without everyone who helped contributed! Thanks to everyone who filed bugs, opened PRs, responded to issues, wrote documenation, tested betas, and more!
