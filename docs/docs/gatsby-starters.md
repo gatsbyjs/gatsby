@@ -25,11 +25,11 @@ There are several starters that have been created. Create a PR to include yours!
 ## Official starters
 
 - [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default)
-  [(demo)](http://gatsbyjs.github.io/gatsby-starter-default/)
+  [(demo)](https://gatsby-starter-default-demo.netlify.com/)
 - [gatsby-starter-blog](https://github.com/gatsbyjs/gatsby-starter-blog)
-  [(demo)](http://gatsbyjs.github.io/gatsby-starter-blog/)
+  [(demo)](https://gatsby-starter-blog-demo.netlify.com/)
 - [gatsby-starter-hello-world](https://github.com/gatsbyjs/gatsby-starter-hello-world)
-  [(demo)](https://aberrant-fifth.surge.sh/)
+  [(demo)](https://gatsby-starter-hello-world-demo.netlify.com/)
 
 ### Using Gatsby v2 with the official starters
 
