@@ -238,6 +238,7 @@ class Image extends React.Component {
             // Let users set component to be absolutely positioned.
             position: style.position === `absolute` ? `initial` : `relative`,
           }}
+          key={image.src}
         >
           <Tag
             className={`${className ? className : ``} gatsby-image-wrapper`}
@@ -357,6 +358,7 @@ class Image extends React.Component {
             // Let users set component to be absolutely positioned.
             position: style.position === `absolute` ? `initial` : `relative`,
           }}
+          key={image.src}
         >
           <Tag
             className={`${className ? className : ``} gatsby-image-wrapper`}
