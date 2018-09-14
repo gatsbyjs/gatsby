@@ -29,7 +29,12 @@ exports.onServiceWorkerInstalled = ({ getResourceURLsForPathname }) => {
     .map(node => node.src || node.href || node.getAttribute(`data-href`))
 
   for (const resource of resources) {
-    fetch(resource)
+    const url = new URL(resource, window.location.origin)
+    const isExternal = url.origin !== window.location.origin
+    fetch(
+      resource,
+      isExternal ? { mode: `no-cors` } : undefined
+    )
   }
 
   // Loop over all resources and fetch the page component and JSON
