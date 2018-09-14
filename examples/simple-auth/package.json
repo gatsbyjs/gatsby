@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "author": "Jason Lengstorf <jason@lengstorf.com>",
   "dependencies": {
+    "@reach/router": "^1.1.1",
     "gatsby": "next",
     "gatsby-plugin-react-helmet": "next",
     "prop-types": "^15.6.1",
