@@ -24,7 +24,7 @@
     "gatsby-remark-responsive-iframe": "^1.4.16",
     "gatsby-source-filesystem": "^1.5.16",
     "gatsby-transformer-remark": "^1.7.30",
-    "lodash": "^4.17.4",
+    "lodash": "^4.17.10",
     "lodash-webpack-plugin": "^0.11.4",
     "react": "^16.2.0",
     "react-disqus-comments": "^1.1.1",

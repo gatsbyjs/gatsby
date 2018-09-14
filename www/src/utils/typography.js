@@ -95,8 +95,7 @@ const _options = {
         backgroundColor: colors.ui.light,
       },
       "tt, code, kbd": {
-        // background: `hsla(23, 60%, 97%, 1)`,
-        background: colors.a[0],
+        background: colors.code.bg,
         paddingTop: `0.1em`,
         paddingBottom: `0.1em`,
       },
@@ -109,9 +108,7 @@ const _options = {
         fontFeatureSettings: `"clig" 0, "calt" 0`,
       },
       ".gatsby-highlight": {
-        //background: colors.a[0],
         background: colors.code.bg,
-        //boxShadow: `inset 0 0 0 1px ${colors.a[1]}`,
         boxShadow: `inset 0 0 0 1px ${colors.code.border}`,
         borderRadius: `${presets.radius}px`,
         padding: rhythm(options.blockMarginBottom),
@@ -136,14 +133,13 @@ const _options = {
         lineHeight: options.baseLineHeight,
       },
       ".gatsby-highlight-code-line": {
-        //background: colors.a[1],
         background: colors.code.border,
         marginRight: `${rhythm(-options.blockMarginBottom)}`,
         marginLeft: `${rhythm(-options.blockMarginBottom)}`,
         paddingRight: rhythm(options.blockMarginBottom),
         paddingLeft: `${rhythm((options.blockMarginBottom / 5) * 4)}`,
         borderLeft: `${rhythm((options.blockMarginBottom / 5) * 1)} solid ${
-          colors.a[3]
+          colors.code.lineHighlightBorder
         }`,
         display: `block`,
       },
@@ -152,10 +148,9 @@ const _options = {
         height: `6px`,
       },
       ".gatsby-highlight::-webkit-scrollbar-thumb": {
-        background: colors.a[2],
+        background: colors.code.scrollbarThumb,
       },
       ".gatsby-highlight::-webkit-scrollbar-track": {
-        //background: colors.a[1],
         background: colors.code.border,
         borderRadius: `0 0 ${presets.radiusLg}px ${presets.radiusLg}px`,
       },
@@ -252,8 +247,9 @@ const _options = {
           borderRight: 0,
         },
         ".gatsby-highlight": {
-          //boxShadow: `inset 0 1px 0 0 ${colors.a[1]}, inset 0 -1px 0 0 ${colors.a[1]}`,
-          boxShadow: `inset 0 1px 0 0 ${colors.code.border}, inset 0 -1px 0 0 ${colors.code.border}`,
+          boxShadow: `inset 0 1px 0 0 ${colors.code.border}, inset 0 -1px 0 0 ${
+            colors.code.border
+          }`,
         },
       },
       video: {
@@ -298,45 +294,64 @@ const _options = {
           )}`,
         },
         ".gatsby-code-title": {
-          padding: `${rhythm(options.blockMarginBottom / 2)} ${rhythm(options.blockMarginBottom * 1.5)}`,
-        }
+          padding: `${rhythm(options.blockMarginBottom / 2)} ${rhythm(
+            options.blockMarginBottom * 1.5
+          )}`,
+        },
       },
       [MIN_LARGER_DISPLAY_MEDIA_QUERY]: {
         html: {
           fontSize: `${(21 / 16) * 100}%`,
         },
       },
-      ".token.comment,.token.block-comment,.token.prolog,.token.doctype,.token.cdata": {
-        // color: `#52ad9f`,
-        color: colors.c[8],
+      // PrismJS syntax highlighting token styles
+      // https://www.gatsbyjs.org/packages/gatsby-remark-prismjs/
+      ".token.comment, .token.block-comment, .token.prolog, .token.doctype, .token.cdata": {
+        color: colors.code.comment,
       },
       ".token.punctuation": {
-        // color: `#5F6364`,
-        // color: `blue`,
-        color: colors.c[12],
+        color: colors.code.punctuation,
       },
-      ".token.property,.token.tag,.token.boolean,.token.number,.token.function-name,.token.constant,.token.symbol": {
-        // color: `#a285d8`,
-        color: colors.b[9],
+      ".token.property, .token.tag, .token.boolean, .token.number, .token.function-name, .token.constant, .token.symbol": {
+        color: colors.code.tag,
       },
-      ".token.selector,.token.attr-name,.token.string,.token.char,.token.function,.token.builtin": {
-        // color: `#a2466c`,
-        color: colors.a[9],
+      ".token.selector, .token.attr-name, .token.string, .token.char, .token.function, .token.builtin": {
+        color: colors.code.selector,
       },
-      ".token.operator, .token.entity, .token.url, .token.variable": {
-        // color: `#c18b99`,
-        // color: `blue`,
-      },
+      ".token.operator, .token.entity, .token.url, .token.variable": {},
       ".token.atrule, .token.attr-value, .token.keyword, .token.class-name": {
-        // color: `#a285d8`,
-        // color: `blue`,
-        color: colors.b[8],
+        color: colors.code.keyword,
       },
       ".token.inserted": {
         color: colors.code.add,
       },
       ".token.deleted": {
         color: colors.code.remove,
+      },
+      ".token.regex, .token.important": {
+        color: colors.code.regex,
+      },
+      ".language-css .token.string, .style .token.string": {
+        color: colors.code.cssString,
+      },
+      ".token.important": {
+        fontWeight: `normal`,
+      },
+      ".token.bold": {
+        fontWeight: `bold`,
+      },
+      ".token.italic": {
+        fontStyle: `italic`,
+      },
+      ".token.entity": {
+        cursor: `help`,
+      },
+      ".namespace": {
+        opacity: 0.7,
+      },
+      // PrismJS plugin styles
+      ".token.tab:not(:empty):before, .token.cr:before, .token.lf:before": {
+        color: colors.code.invisibles,
       },
       // Fancy external links in posts, borrowed from
       // https://github.com/comfusion/after-dark/

@@ -73,6 +73,7 @@ exports.onPostBuild = (args, pluginOptions) => {
   })
 
   const options = {
+    importWorkboxFrom: `local`,
     globDirectory: rootDir,
     globPatterns,
     modifyUrlPrefix: {

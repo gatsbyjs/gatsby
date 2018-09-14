@@ -144,6 +144,46 @@ describe(`The Home Page`, () => {
     })
   })
 
+  it(`successfully goes back after reloading the page`, () => {
+    cy.fixture(`posts`).then(([post1, post2]) => {
+      // open fist post
+      cy.getTestElement(`post`)
+        .first()
+        .click()
+
+      // wait for page to transition
+      cy.waitForRouteChange()
+        .url()
+        .should(`contain`, post1.id)
+
+      // press right arrow to go to 2nd post
+      cy.get(`body`).type(`{rightarrow}`)
+
+      // wait for page to transition
+      cy.waitForRouteChange()
+        .url()
+        .should(`contain`, post2.id)
+
+      // reload the page and go back
+      cy.reload()
+        .waitForRouteChange()
+        .go(`back`)
+
+      // test if the first post exists
+      cy.waitForRouteChange()
+        .get(`div[to='/${post1.id}/']`)
+        .should(`exist`)
+
+      // close the post
+      cy.getTestElement(`modal-close`).click()
+
+      // wait for page to transition
+      cy.waitForRouteChange()
+        .location(`pathname`)
+        .should(`equal`, `/`)
+    })
+  })
+
   it(`loads more posts when Load More button is clicked & on scroll`, () => {
     // initially loads 12 posts
     cy.getTestElement(`post`).should(`have.length`, 12)

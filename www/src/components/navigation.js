@@ -30,7 +30,7 @@ const NavItem = ({ linkTo, children }) => (
 
 const Navigation = ({ pathname }) => {
   const isHomepage = pathname === `/`
-  const isBlog = pathname === `/blog/`
+  const isBlog = pathname === `/blog/` || pathname.indexOf(`/blog/page/`) === 0
 
   const socialIconsStyles = {
     ...styles.navItem,
@@ -125,8 +125,8 @@ const Navigation = ({ pathname }) => {
             : {}),
         }}
       >
-        <Link to="/" css={styles.logoLink}>
-          <img src={logo} css={styles.logo} alt="" />
+        <Link to="/" css={styles.logoLink} aria-label="Go to homepage">
+          <img src={logo} css={styles.logo} alt="Gatsby logo" />
         </Link>
         <ul css={styles.navContainer}>
           <NavItem linkTo="/docs/">Docs</NavItem>

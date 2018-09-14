@@ -90,6 +90,7 @@ const scalarFilterMap = {
     lt: { type: GraphQLInt },
     lte: { type: GraphQLInt },
     in: { type: new GraphQLList(GraphQLInt) },
+    nin: { type: new GraphQLList(GraphQLInt) },
   },
   Float: {
     eq: { type: GraphQLFloat },
@@ -99,11 +100,13 @@ const scalarFilterMap = {
     lt: { type: GraphQLFloat },
     lte: { type: GraphQLFloat },
     in: { type: new GraphQLList(GraphQLFloat) },
+    nin: { type: new GraphQLList(GraphQLFloat) },
   },
   ID: {
     eq: { type: GraphQLID },
     ne: { type: GraphQLID },
     in: { type: new GraphQLList(GraphQLID) },
+    nin: { type: new GraphQLList(GraphQLID) },
   },
   String: {
     eq: { type: GraphQLString },
@@ -111,11 +114,13 @@ const scalarFilterMap = {
     regex: { type: GraphQLString },
     glob: { type: GraphQLString },
     in: { type: new GraphQLList(GraphQLString) },
+    nin: { type: new GraphQLList(GraphQLString) },
   },
   Boolean: {
     eq: { type: GraphQLBoolean },
     ne: { type: GraphQLBoolean },
     in: { type: new GraphQLList(GraphQLBoolean) },
+    nin: { type: new GraphQLList(GraphQLBoolean) },
   },
 }
 

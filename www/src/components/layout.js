@@ -8,7 +8,6 @@ import Banner from "../components/banner"
 import Navigation from "../components/navigation"
 import MobileNavigation from "../components/navigation-mobile"
 import PageWithSidebar from "../components/page-with-sidebar"
-import "../css/prism-coy.css"
 
 import mousetrap from "mousetrap"
 

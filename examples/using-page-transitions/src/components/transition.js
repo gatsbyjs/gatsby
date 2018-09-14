@@ -8,16 +8,16 @@ const timeout = 250
 const getTransitionStyles = {
   entering: {
     position: `absolute`,
-    opacity: 0
+    opacity: 0,
   },
   entered: {
     transition: `opacity ${timeout}ms ease-in-out`,
-    opacity: 1
+    opacity: 1,
   },
   exiting: {
     transition: `opacity ${timeout}ms ease-in-out`,
-    opacity: 0
-  }
+    opacity: 0,
+  },
 }
 
 class Transition extends React.PureComponent {
@@ -36,7 +36,7 @@ class Transition extends React.PureComponent {
           {status => (
             <div
               style={{
-                ...getTransitionStyles[status]
+                ...getTransitionStyles[status],
               }}
             >
               {children}

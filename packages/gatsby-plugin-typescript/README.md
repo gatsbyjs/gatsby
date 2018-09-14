@@ -15,7 +15,10 @@ Provides drop-in support for TypeScript and TSX.
 `gatsby-config.js`
 
 ```javascript
-plugins: [`gatsby-plugin-typescript`]
+module.exports = {
+  // ...,
+  plugins: [...`gatsby-plugin-typescript`],
+}
 ```
 
 ## Caveats
