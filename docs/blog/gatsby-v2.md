@@ -6,134 +6,57 @@ author: "Kyle Mathews"
 
 We're incredibly pleased to announce the 2nd major release of Gatsby!
 
-Gatsby is a modern web site and app generator focused on mobile performance and developer productivity.
+Gatsby is a modern website and app generator focused on developer productivity and performance by leveraging the latest web technologies.
 
-V2.0.0 is the result of the months of hard work by the Gatsby core team and 315 contributors.
+Thousands of developers use Gatsby to create amazing blogs, apps, marketing sites, ecommerce, documentation, and more!
 
-Highlights of this release include:
+V2.0.0 is the result of months of hard work by the Gatsby core team and 315 contributors.
 
-- 75% faster build times
-- Our JavaScript client runtime is 23% smaller [TODO get actual number]
+This release focuses on performance and developer experience. Highlights include:
+
+- Reduced build times by up to 75%
+- Shrunk JavaScript client runtime by 23% [TODO get actual number]
 - Upgraded Gatsby to latest version of core dependencies, webpack 4, Babel 7, React 16.5
+
+[Sign up for our v2 webinar to learn more about this release](https://www.gatsbyjs.com/v2-launch-webinar)
 
 ![Gatsby astronaut butler delivers v2](./images/gatsby-v2-astronaut.png)
 
-## Try out Gatsby in 5 minutes
-
-There's never been a better time to try out Gatsby!
-
-- [Follow our getting started guide to build your first Gatsby site](/docs)
-- Have an existing v1 Gatsby site? [Follow our migration guide to upgrade it to v2](/docs/migrating-from-v1-to-v2/).
-
-## Rapidly growing ecosystem
-
-This last year, since our v1 release, has been eventful to say the least.
-
-- Gatsby is being adopted by organizations and agencies around the world
-- 1000+ contributed to Gatsby
-- Now merging ~80 PRs / week
-- Gatsby was downloaded 4+ million times
-- 550,000 people visited our website
-- 15,500 people starred our GitHub Repo going from 10k to 25.5k stars
-- Several core Gatsby contributors and I started a company and raised $3.7 million to support Gatsby OSS and create cloud tools to help teams build and deploy amazing Gatsby sites
-
 ## Showcase
+
+These are some of the fine companies that trust Gatsby.
 
 Company logos + link to the website
 
-## Gatsby's history
+Along with Gatsby v2, we’re launching a new site showcase showing off the great work the Gatsby community is doing.
 
-When I started working on Gatsby in early 2015, I spent a long time thinking about what would be the perfect way to build websites. I've always been obssessed with website speed and knew I wanted the framework to deliver blazing fast websites by default. I also love shipping and developing really quickly so wanted a framework that made it easy to start new projects and ship new features very quickly. Any thing that diverted my attention from working on design and features, I wanted to automate away.
+[Visit the new site showcase](/showcase/)
 
-- I shouldn't have to _configure my tools_ to start a new project
-- I shouldn't have to _write custom code to fetch data_ from my CMS or other data sources
-- I shouldn't have to _write custom code to transform data_ e.g. markdown to html
-- I shouldn't have to _setup optimized production builds_ of my code
-- I shouldn't have to _setup or manage servers and databases_ to run a large, high-traffic site (or small site)
+## Rapidly growing ecosystem
 
-I wanted a tool to help me build fast sites, faster.
+We’ve grown a lot in the last year since the Gatsby v1 release.
 
-These design goals led me to choose React. I'd already been using React for a year before I started working on Gatsby and was amazed at how productive I am building UIs with React.
+- We’ve reached 1100 contributors (up from 198)
+- Now merging ~90 PRs / week (up from ~50)
+- Gatsby was downloaded 4+ million times
+- 550,000 people visited our website
+- 15,500 people starred our GitHub Repo going from 10k to 25.5k stars
+- [Several core Gatsby contributors and I started a company](/blog/2018-05-24-launching-new-gatsby-company/) and raised $3.7 million to support Gatsby OSS and create cloud tools to help teams build and deploy amazing Gatsby sites
 
-I combined React with webpack and Babel into an easy-to-use installable where you could start new projects, develop with hot reloading, and build an optimized site with no fuss.
-
-Then, with the growing community around Gatsby, we added an innovative data layer that lets you query data from your React components from any source.
-
-We borrowed ideas from code compiliers, modern build systems like [Bazel](https://bazel.build/), and [Progressive Web Apps](https://developers.google.com/web/progressive-web-apps/) to analyze your site and automatically optimize page loads and site browsing performance.
-
-Three and a half years later with 6,136 commits by 1095 contributors, Gatsby v2 is a mature, widely-used framework for building fast modern websites with amazing user _and_ developer experience.
-
-## How does Gatsby make sites fast?
-
-A fast site is one that loads very quickly and is fast to click around on mobile—no matter the network conditions.
-
-We do extensive research and testing around front end performance to ensure Gatsby's sites are blazing fast out-of-the-box and _stay_ fast as you add new pages and features.
-
-You can think of Gatsby as a [PWA](https://developers.google.com/web/progressive-web-apps/) generator!
-
-I love seeing tweets from people showing off their [Lighthouse audit](https://developers.google.com/web/tools/lighthouse/) scores from their Gatsby site.
-
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Nailed it! All perfect green circles in Lighthouse for my <a href="https://twitter.com/hashtag/react?src=hash&amp;ref_src=twsrc%5Etfw">#react</a> site. Thanks <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a> <a href="https://t.co/LRxsjRCAfy">pic.twitter.com/LRxsjRCAfy</a></p>&mdash; Osmond 👨🏻‍💻 (@osmondvanhemert) <a href="https://twitter.com/osmondvanhemert/status/1035233190409949186?ref_src=twsrc%5Etfw">August 30, 2018</a></blockquote>
-
-Gatsby helps you achieve fast sites by:
-
-- Loading a lean static HTML version of your site so first paint is very fast
-- Preloading resources for linked pages so clicking on a link instantly renders the next page
-- Automatic route-based JavaScript and CSS splitting so pages only load the code actually needed for that page
-- A Service Worker (using [gatsby-plugin-offline](/packages/gatsby-plugin-offline/)) smartly caches your site so repeat visits are very fast and your site will even work offline!
-
-[Read more about why Gatsby is so fast in my blog post from last fall](/blog/2017-09-13-why-is-gatsby-so-fast/).
-
-## How does Gatsby help developers be more productive?
-
-Modern web tools are dramatically better than earlier generations of web tools and are a joy to work with.
-
-React is the most popular way to build modern web experiences and is used daily by 100s of thousands of developers around the world.
-
-Gatsby ties React, Babel, webpack, data and code hot reloading, and @reach/router into a cohesive, easy to install and use web framework.
-
-Gatsby lets you use the tools you want to use for website projects.
-
-We help you get started quickly with over [60 starters available to start a new project from](/docs/gatsby-starters/).
-
-Gatsby's extensive plugin ecosystem frequently solves your problems as soon as you realize you have them.
-
-There are now over 450 plugins ([see our plugin library](/packages/)) with more being added daily.
-
-Plugins help you configure Gatsby with various JavaScript & CSS libraries and solve common website building problems like adding Google Analytics, SEO, and pulling data from your favorite CMS and other data sources.
-
-We believe that productivity is part helping you work fast without getting stuck on problems. But the most important part of productivity is eliminating entire classes of work.
-
-This is why we focus so much on automating site productivity as well as plugins which automate common web tasks such as fetching data with plugins. As entire classes of problems are automated away, this frees up your attention to build more and better experiences for your users.
-
-## Gatsby swag!
-
-By very popular demand, we're now selling stickers, socks, and t-shirts on our very own Gatsby eCommerce store (powered by Gatsby of course) at https://store.gatsbyjs.org/
-
-Best of all, all contributors get free swag! Sign in with GitHub and claim your free swag.
-
-![store.gatsbyjs.org screenshot](./images/gatsby-store.png)
-
-## Growing the community
-
-The Gatsby community has been growing very rapidly. We're seeing ~90 new PRs per week and and it's really exciting to see new contributors tackle different parts of the code base and add documentation, features, fix bugs, and refactor dusty corners of the code base.
-
-We're investing heavily in scaling the velocity of the OSS project including:
-
-- hiring more maintainers
-- helping grow more maintainers through [pair programming](/docs/pair-programming/) & maintainer chat rooms & email list
-- Investing heavily in automated testing to reduce manual testing of PRs
-- Automating common checks and workflows
-- Rewarding contributors with free swag
-- Building maintainer dashboards to help direct our attention to the most important issues and PRs
-
-## Website Information Architecture revamp
-
-Alongside v2, we've been working on a large docs initiative to revamp the information architecture of our docs. We invest heavily in writing documentation as we know that great features don't matter if people can't use them. If you click to the [docs section](/docs/), you can see the new sidebar and IA. [Read Shannon Soper's writeup about the research behind the new IA](/blog/2018-07-31-docs-redesign/)
-
-## New features in v2
+## What’s new in v2
 
 ### Faster builds
+
+We focused heavily on improving build speeds for v2 and are very pleased to see large build speed improvements across many parts of the build pipeline.
+
+Improvements include:
+
+- [Reduced memory usage while server rendering pages](https://github.com/gatsbyjs/gatsby/pull/4912#issuecomment-381407967)
+- Webpack 4 includes many speedups to JavaScript and CSS bundling.
+- React 16 improved SSR performance 3-4x
+- [This PR includes many small fixes to refactor slow algorithms](https://github.com/gatsbyjs/gatsby/pull/6226)
+- [Use all available cores when server rendering pages](https://github.com/gatsbyjs/gatsby/pull/6417)
+
 webpack 4/babel 7/run page rendering across all cores/hulksmash fixed slowdowns in code
 
 ### Smaller client runtime
@@ -149,6 +72,9 @@ Pull out some stuff from their blog post & link to it
 Pull out some stuff from their blog post & link to it
 
 ### Improved accessibility with @reach/router
+- Keyboard access
+- Assistive devices announce correctly
+- Focus Management
 pull out stuff from site & link to it
 
 ### GraphQL stitching
@@ -157,6 +83,10 @@ Important as more and more public/private schemas exist. Gatsby is to make it ea
 Combine static + dynamic
 
 ### Ludicrous Mode (aka faster data hot reloading)
+
+We spent some time optimizing Gatsby's data processing layer to make markdown editing even nicer!
+
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Coming soon to Gatsby v2: Ludicrous mode data hot reloading ;-)<a href="https://t.co/by1PyOYXc0">https://t.co/by1PyOYXc0</a><br><br>(note, this gif is not sped up at all) <a href="https://t.co/hFIYMbpalN">pic.twitter.com/hFIYMbpalN</a></p>&mdash; Gatsby (@gatsbyjs) <a href="https://twitter.com/gatsbyjs/status/974507205121617920?ref_src=twsrc%5Etfw">March 16, 2018</a></blockquote>
 
 ### Layouts change
 Short summary of change & link to RFC & blog post
@@ -170,9 +100,44 @@ Highlight work by Kurt & David Bailey
 ### Tracing
 Talk about why useful feature & add screenshot — link to PR by Anthony
 
+## Gatsby swag!
+
+By very popular demand, we're now selling stickers, socks, and t-shirts on our very own Gatsby eCommerce store (powered by Gatsby of course) at https://store.gatsbyjs.org/
+
+Best of all, contributors get free swag! Sign in with GitHub and claim your free swag.
+
+![store.gatsbyjs.org screenshot](./images/gatsby-store.png)
+
+## Growing the community
+
+The Gatsby community has been growing very rapidly. We're seeing ~90 new PRs per week and it's really exciting to see new contributors tackle different parts of the code base and add documentation, features, fix bugs, and refactor dusty corners of the code base.
+
+We're investing heavily in scaling the velocity of the OSS project including:
+
+- Hiring more maintainers
+- Helping grow more maintainers through [pair programming](/docs/pair-programming/) & maintainer chat rooms & email list
+- Writing more automated tests to reduce manual PR testing
+- Automating common checks and workflows
+- Rewarding contributors with free swag
+- Building maintainer dashboards to help direct our attention to the most important issues and PRs
+
+## Website Information Architecture revamp
+
+Alongside v2, we've been working on a large docs initiative to revamp the information architecture of our docs. We invest heavily in writing documentation as we know that great features don't matter if people can't use them. If you click to the [docs section](/docs/), you can see the new sidebar and IA.
+
+[Read Shannon Soper's writeup about the research behind the new IA](/blog/2018-07-31-docs-redesign/)
+
+## Get started with Gatsby in 5 minutes
+
+- [Follow our getting started guide to build your first Gatsby site](/docs)
+- Have an existing v1 Gatsby site? [Follow our migration guide to upgrade it to v2](/docs/migrating-from-v1-to-v2/).
+
 ## The future
 
 - guess.js
 - mdx
 
 roadmap stuff. make it work, make it right, make it fast.
+
+
+
