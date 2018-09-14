@@ -77,7 +77,7 @@ To start, create a new Gatsby site with the [hello world starter](https://github
 # Create the site
 gatsby new global-styles https://github.com/gatsbyjs/gatsby-starter-hello-world
 
-npm install --save gatsby-plugin-emotion@next emotion emotion-server react-emotion
+npm install --save gatsby-plugin-emotion emotion emotion-server react-emotion
 ```
 
 Create `gatsby-config.js` and add the Emotion plugin:
