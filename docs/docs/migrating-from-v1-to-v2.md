@@ -68,31 +68,37 @@ The very first thing you will need to do is update your dependencies and install
 
 ### Update Gatsby version
 
-Since v2 is currently in beta, you need update your `package.json` to use the pre-release versions of Gatsby.
+You need update your `package.json` to use the latest version of Gatsby.
 
 `package.json`
 
 ```json
 "dependencies": {
-  "gatsby": "next",
-  "gatsby-image": "next",
-  "gatsby-plugin-sharp": "next"
+  "gatsby": "^2.0.0",
 }
+```
+
+Or run
+
+```bash
+npm i gatsby@latest
 ```
 
 ### Update Gatsby related packages
 
-Update your `package.json` to use the pre-release versions of Gatsby related packages. Any package name that starts with `gatsby-` should be upgraded to use the `next` version. Note, this only applies to plugins managed in the gatsbyjs/gatsby repo. If you're using community plugins, they might not be upgraded yet. Check their repo for the status. Many plugins won't actually need upgrading so they very well might keep working. For example:
+Update your `package.json` to use the latest versions of Gatsby related packages. Any package name that starts with `gatsby-` should be upgraded. Note, this only applies to plugins managed in the gatsbyjs/gatsby repo. If you're using community plugins, they might not be upgraded yet. Check their repo for the status. Many plugins won't actually need upgrading so they very well might keep working. You can run
 
-`package.json`
-
-```json
-"dependencies": {
-    "gatsby-plugin-google-analytics": "next",
-    "gatsby-plugin-netlify": "next",
-    "gatsby-plugin-sass": "next",
-}
+```bash
+npm outdated
 ```
+
+And compare "Wanted" and "Latest" versions and update `package.json` file manually or run
+
+```bash
+npm i gatsby-plugin-google-analytics@latest gatsby-plugin-netlify@latest gatsby-plugin-sass@latest
+```
+
+**NOTE**: Above command is just an example - adjust packages to ones you are actually using.
 
 ### Manually install React
 
@@ -928,7 +934,7 @@ Import graphql types from `gatsby/graphql` to prevent `Schema must contain uniqu
 
 Here's a brief section on starting a new project with Gatsby v2 instead of upgrading an existing project.
 
-_Start from scratch:_ If you're a _start from scratch_ kind of person, you can install the Gatsby beta and React like this: `npm install gatsby react react-dom`
+_Start from scratch:_ If you're a _start from scratch_ kind of person, you can install the Gatsby and React like this: `npm install gatsby react react-dom`
 
 _Tutorial:_ If you'd like a step-by-step guide, [follow the tutorial](/tutorial/) to get started with Gatsby v2.
 
