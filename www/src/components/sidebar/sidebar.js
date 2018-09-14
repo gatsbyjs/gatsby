@@ -195,14 +195,6 @@ class SidebarBody extends Component {
 
     return (
       <div className="docSearch-sidebar" css={{ height: `100%` }}>
-        {!itemList[0].disableExpandAll && (
-          <div css={{ ...styles.utils }}>
-            <ExpandAllButton
-              onClick={this._expandAll}
-              expandAll={this.state.expandAll}
-            />
-          </div>
-        )}
         <div
           onScroll={({ nativeEvent }) => {
             // get proper scroll position
@@ -242,6 +234,14 @@ class SidebarBody extends Component {
             ))}
           </ul>
         </div>
+        {!itemList[0].disableExpandAll && (
+          <div css={{ ...styles.utils }}>
+            <ExpandAllButton
+              onClick={this._expandAll}
+              expandAll={this.state.expandAll}
+            />
+          </div>
+        )}
       </div>
     )
   }
@@ -258,7 +258,7 @@ const styles = {
     background: colors.ui.whisper,
     paddingLeft: 40,
     paddingRight: 8,
-    borderBottom: `1px solid ${colors.ui.border}`,
+    borderTop: `1px solid ${colors.ui.border}`,
   },
   sidebarScrollContainer: {
     WebkitOverflowScrolling: `touch`,
