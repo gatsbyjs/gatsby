@@ -37,6 +37,7 @@ We’ve grown a lot in the last year since the Gatsby v1 release.
 - We’ve reached 1100 contributors (up from 198)
 - Now merging ~90 PRs / week (up from ~50)
 - Gatsby was downloaded 4+ million times
+- 452 Gatsby plugins have now been published to NPM
 - 550,000 people visited our website
 - 15,500 people starred our GitHub Repo going from 10k to 25.5k stars
 - [Several core Gatsby contributors and I started a company](/blog/2018-05-24-launching-new-gatsby-company/) and raised $3.7 million to support Gatsby OSS and create cloud tools to help teams build and deploy amazing Gatsby sites
