@@ -48,7 +48,7 @@ This ultimately boils down to two breaking changes and one recommendation:
 2.  **BREAKING CHANGE:** The `children` prop in our layout components is no longer a function (unless you explicitly provide a function).
 3.  We now recommend moving your layout components alongside the rest of your components (e.g. into `src/components/`).
 
-If we upgrade our simplified app by running `yarn add gatsby@next react react-dom` (see [the V1 => V2 migration guide](https://next.gatsbyjs.org/docs/migrating-from-v1-to-v2/) for more information on why we need to install React here), we need to upgrade our layout by moving `src/layouts/index.js` to `src/components/layout.js` and changing `children` from a function to a regular prop:
+If we upgrade our simplified app by running `yarn add gatsby react react-dom` (see [the V1 => V2 migration guide](https://next.gatsbyjs.org/docs/migrating-from-v1-to-v2/) for more information on why we need to install React here), we need to upgrade our layout by moving `src/layouts/index.js` to `src/components/layout.js` and changing `children` from a function to a regular prop:
 
 ```jsx
 import React from "react"
