@@ -21,7 +21,7 @@ const injectTwitterScript = () => {
 }
 
 let renderTweets = false
-const allTweets = []
+const renderedTweets = []
 
 exports.onRouteUpdate = function() {
   renderTweets = true
@@ -48,7 +48,7 @@ exports.onRouteUpdate = function() {
           .then(renderedTweet => {
             if (renderTweets) {
               tweet.parentNode.insertBefore(renderedTweet, tweet)
-              allTweets.push(renderedTweet)
+              renderedTweets.push(renderedTweet)
             } else {
               renderedTweet.remove()
             }
@@ -61,7 +61,7 @@ exports.onRouteUpdate = function() {
 exports.onPreRouteUpdate = function() {
   // Remove rendered tweets before navigating away, to prevent
   // memory leaks with React (since it's unaware of them)
-  allTweets.forEach(renderedTweet => renderedTweet.remove())
+  renderedTweets.forEach(renderedTweet => renderedTweet.remove())
 
   // Make sure tweets rendered later are removed (e.g. if the user
   // navigates away quickly, before the Twitter script loads)
