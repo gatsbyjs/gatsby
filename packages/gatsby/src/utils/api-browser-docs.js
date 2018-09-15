@@ -81,7 +81,7 @@ exports.onRouteUpdate = true
  *   return false
  * }
  */
-exports.shouldUpdateScroll = true;
+exports.shouldUpdateScroll = true
 
 /**
  * Allow a plugin to register a Service Worker. Should be a function that returns true.
