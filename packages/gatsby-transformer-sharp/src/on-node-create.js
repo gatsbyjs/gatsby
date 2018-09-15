@@ -5,7 +5,7 @@ const supportedExtensions = {
   webp: true,
   tif: true,
   tiff: true,
-  '': true
+  '': true,
 }
 
 module.exports = async function onCreateNode({ node, actions, createNodeId }) {
