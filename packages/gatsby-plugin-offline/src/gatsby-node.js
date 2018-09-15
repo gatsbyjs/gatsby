@@ -117,6 +117,10 @@ exports.onPostBuild = (args, pluginOptions) => {
     .generateSW({ swDest, ...combinedOptions })
     .then(({ count, size, warnings }) => {
       if (warnings) warnings.forEach(warning => console.warn(warning))
+
+      const swAppend = fs.readFileSync(`${__dirname}/sw-append.js`)
+      fs.appendFileSync(`public/sw.js`, swAppend)
+
       console.log(
         `Generated ${swDest}, which will precache ${count} files, totaling ${size} bytes.`
       )
