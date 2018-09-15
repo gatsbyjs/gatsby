@@ -8,12 +8,14 @@ self.addEventListener(`message`, event => {
 
     event.waitUntil(
       caches.open(cacheName).then(cache =>
-        resources.forEach(resource =>
-          cache.add(resource).catch(e => {
-            // ignore TypeErrors - usually due to external
-            // resources which don't allow CORS
-            if (!(e instanceof TypeError)) throw e
-          })
+        Promise.all(
+          resources.map(resource =>
+            cache.add(resource).catch(e => {
+              // ignore TypeErrors - usually due to external
+              // resources which don't allow CORS
+              if (!(e instanceof TypeError)) throw e
+            })
+          )
         )
       )
     )
