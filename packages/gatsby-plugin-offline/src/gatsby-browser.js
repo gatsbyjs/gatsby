@@ -38,7 +38,7 @@ exports.onServiceWorkerActive = ({ getResourceURLsForPathname, serviceWorker }) 
   )
 
   serviceWorker.active.postMessage({
-    type: `gatsby-runtime-cache`,
+    api: `gatsby-runtime-cache`,
     resources: [...resources, ...prefetchedResources],
   })
 }

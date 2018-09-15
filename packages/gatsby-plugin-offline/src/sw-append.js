@@ -1,8 +1,8 @@
 /* global workbox */
 
 self.addEventListener(`message`, event => {
-  const { type } = event.data
-  if (type === `gatsby-runtime-cache`) {
+  const { api } = event.data
+  if (api === `gatsby-runtime-cache`) {
     const { resources } = event.data
     const cacheName = workbox.core.cacheNames.runtime
 
