@@ -11,8 +11,8 @@ self.addEventListener(`message`, event => {
         Promise.all(
           resources.map(resource =>
             cache.add(resource).catch(e => {
-              // ignore TypeErrors - usually due to external
-              // resources which don't allow CORS
+              // ignore TypeErrors - these are usually due to
+              // external resources which don't allow CORS
               if (!(e instanceof TypeError)) throw e
             })
           )

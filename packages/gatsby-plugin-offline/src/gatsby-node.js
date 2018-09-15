@@ -101,6 +101,11 @@ exports.onPostBuild = (args, pluginOptions) => {
         urlPattern: /\.(?:png|jpg|jpeg|webp|svg|gif|tiff|js|woff|woff2|json|css)$/,
         handler: `staleWhileRevalidate`,
       },
+      {
+        // Use the Network First handler for external resources
+        urlPattern: /^https:/,
+        handler: `networkFirst`,
+      },
     ],
     skipWaiting: true,
     clientsClaim: true,
