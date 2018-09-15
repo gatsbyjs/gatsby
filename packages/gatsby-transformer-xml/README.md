@@ -17,7 +17,7 @@ plugins: [`gatsby-transformer-xml`]
 
 The algorithm for arrays is to convert each item in the array into a node.
 
-So if your project has a `bookss.xml` with
+So if your project has a `books.xml` with
 
 ```xml
 <?xml version="1.0"?>
@@ -46,75 +46,57 @@ So if your project has a `bookss.xml` with
 
 Then the following 2 nodes will be created
 
-```javascript
+```json
 {
-   "root":{
-      "name":"catalog",
-      "attributes":{
-
+  "root": {
+    "name": "catalog",
+    "attributes": {},
+    "children": [
+      {
+        "name": "book",
+        "attributes": {
+          "id": "bk101"
+        },
+        "children": [
+          {
+            "name": "author",
+            "attributes": {},
+            "children": [],
+            "content": "Gambardella, Matthew"
+          },
+          {
+            "name": "title",
+            "attributes": {},
+            "children": [],
+            "content": "XML Developer's Guide"
+          }
+        ],
+        "content": ""
       },
-      "children":[
-         {
-            "name":"book",
-            "attributes":{
-               "id":"bk101"
-            },
-            "children":[
-               {
-                  "name":"author",
-                  "attributes":{
-
-                  },
-                  "children":[
-
-                  ],
-                  "content":"Gambardella, Matthew"
-               },
-               {
-                  "name":"title",
-                  "attributes":{
-
-                  },
-                  "children":[
-
-                  ],
-                  "content":"XML Developer's Guide"
-               }
-            ],
-            "content":""
-         },
-         {
-            "name":"book",
-            "attributes":{
-               "id":"bk102"
-            },
-            "children":[
-               {
-                  "name":"author",
-                  "attributes":{
-
-                  },
-                  "children":[
-
-                  ],
-                  "content":"Ralls, Kim"
-               },
-               {
-                  "name":"title",
-                  "attributes":{
-
-                  },
-                  "children":[
-
-                  ],
-                  "content":"Midnight Rain"
-               }
-            ],
-            "content":""
-         }
-      ],
-      "content":""
-   }
+      {
+        "name": "book",
+        "attributes": {
+          "id": "bk102"
+        },
+        "children": [
+          {
+            "name": "author",
+            "attributes": {},
+            "children": [],
+            "content": "Ralls, Kim"
+          },
+          {
+            "name": "title",
+            "attributes": {},
+            "children": [],
+            "content": "Midnight Rain"
+          }
+        ],
+        "content": ""
+      }
+    ],
+    "content": ""
+  }
 }
 ```
 
@@ -142,14 +124,14 @@ Which would return:
     edges: [
       {
         node: {
-          content: 'Gambardella, Matthew'
-        }
+          content: "Gambardella, Matthew",
+        },
       },
       {
         node: {
-          content: 'XML Developer's Guide
-        }
-      }
+          content: "XML Developer's Guide",
+        },
+      },
     ]
   }
 }

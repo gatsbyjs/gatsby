@@ -194,18 +194,6 @@ module.exports = async (
         ])
         break
       case `build-javascript`: {
-        // Minify Javascript only if needed.
-        configPlugins = program.noUglify
-          ? configPlugins
-          : configPlugins.concat([
-              plugins.uglify({
-                uglifyOptions: {
-                  compress: {
-                    drop_console: false,
-                  },
-                },
-              }),
-            ])
         configPlugins = configPlugins.concat([
           plugins.extractText(),
           // Write out stats object mapping named dynamic imports (aka page
@@ -216,6 +204,7 @@ module.exports = async (
                 `gatsby-webpack-stats-extractor`,
                 (stats, done) => {
                   let assets = {}
+                  let assetsMap = {}
                   for (let chunkGroup of stats.compilation.chunkGroups) {
                     if (chunkGroup.name) {
                       let files = []
@@ -225,6 +214,14 @@ module.exports = async (
                       assets[chunkGroup.name] = files.filter(
                         f => f.slice(-4) !== `.map`
                       )
+                      assetsMap[chunkGroup.name] = files
+                        .filter(
+                          f =>
+                            f.slice(-4) !== `.map` &&
+                            f.slice(0, chunkGroup.name.length) ===
+                              chunkGroup.name
+                        )
+                        .map(filename => `/${filename}`)
                     }
                   }
 
@@ -234,9 +231,15 @@ module.exports = async (
                   }
 
                   fs.writeFile(
-                    path.join(`public`, `webpack.stats.json`),
-                    JSON.stringify(webpackStats),
-                    done
+                    path.join(`public`, `chunk-map.json`),
+                    JSON.stringify(assetsMap),
+                    () => {
+                      fs.writeFile(
+                        path.join(`public`, `webpack.stats.json`),
+                        JSON.stringify(webpackStats),
+                        done
+                      )
+                    }
                   )
                 }
               )
@@ -359,9 +362,6 @@ module.exports = async (
       modules: [
         directoryPath(path.join(`node_modules`)),
         `node_modules`,
-        // This is head scratching - without it css modules in production will fail
-        // to find module with relative path
-        `./`,
       ],
       alias: {
         gatsby$: directoryPath(path.join(`.cache`, `gatsby-browser-entry.js`)),
@@ -415,7 +415,7 @@ module.exports = async (
     // https://github.com/defunctzombie/package-browser-field-spec); setting
     // the target tells webpack which file to include, ie. browser vs main.
     target: stage === `build-html` || stage === `develop-html` ? `node` : `web`,
-    profile: stage === `production`,
+
     devtool: getDevtool(),
     // Turn off performance hints as we (for now) don't want to show the normal
     // webpack output anywhere.
@@ -440,7 +440,11 @@ module.exports = async (
       splitChunks: {
         name: false,
       },
-      minimize: !program.noUglify,
+      minimizer: [
+        // TODO: maybe this option should be noMinimize?
+        !program.noUglify && plugins.minifyJs(),
+        plugins.minifyCss(),
+      ].filter(Boolean),
     }
   }
 

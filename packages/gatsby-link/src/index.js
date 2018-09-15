@@ -100,6 +100,7 @@ class GatsbyLink extends React.Component {
       ref: $ref,
       innerRef: $innerRef,
       state,
+      replace,
       /* eslint-enable no-unused-vars */
       ...rest
     } = this.props
@@ -134,7 +135,7 @@ class GatsbyLink extends React.Component {
 
             // Make sure the necessary scripts and data are
             // loaded before continuing.
-            navigate(prefixedTo, { state })
+            navigate(prefixedTo, { state, replace })
           }
 
           return true
@@ -150,6 +151,7 @@ GatsbyLink.propTypes = {
   innerRef: PropTypes.func,
   onClick: PropTypes.func,
   to: PropTypes.string.isRequired,
+  replace: PropTypes.bool,
 }
 
 export default GatsbyLink

@@ -8,7 +8,7 @@ Want to submit a site to the [Site Showcase](https://next.gatsbyjs.org/showcase/
 
 There are only three major steps :)
 
-1.  If this is your first contribution to the Gatsby open source repo, follow the [Contribution guidelines](https://next.gatsbyjs.org/docs/how-to-contribute/#contributing-to-the-repo) to get push access rights.
+1.  If this is your first contribution to the Gatsby open source repo, follow the [Contribution guidelines](https://next.gatsbyjs.org/docs/how-to-contribute/#contributing-to-the-repo).
 
 2.  If there is a chance that someone else could have already submitted the site, please make sure no one else has already submitted it by searching existing PRs: https://github.com/gatsbyjs/gatsby/pulls
 
@@ -58,8 +58,6 @@ Categories currently include both _type of site_ (structure) and the _content of
 - eCommerce
 - Education
 - Gallery
-- Landing
-- Marketing
 - Portfolio
 - (feel free to create new ones after checking to make sure the tag you want doesn't already exist)
 
@@ -68,13 +66,12 @@ Categories currently include both _type of site_ (structure) and the _content of
 A few notes on site content: a common question is this: "aren't all Gatsby sites technically in the "web dev" category?" Well, no because this category means the _content_ of the site has to be about web development, like [ReactJS](https://reactjs.org/). Also, the difference between technology and web dev is like this. [Cardiogram](https://cardiogr.am/) is technology, while [ReactJS](https://reactjs.org/) is web dev.
 
 - Agency
-- Corporate
 - Cinema
-- Creative
 - Education
 - Entertainment
 - Finance
 - Food
+- Health & Wellness
 - Healthcare
 - Hosting
 - Gallery
@@ -86,11 +83,9 @@ A few notes on site content: a common question is this: "aren't all Gatsby sites
 - News
 - Nonprofit
 - Open Source
-- Personal
 - Photography
 - Podcast
 - Real Estate
-- Retail
 - Science
 - Technology
 - Web Dev
@@ -104,8 +99,14 @@ By default, all sites submitted to the Site Showcase will be reviewed by the Gat
 
 Featured sites will be chosen quarterly based on the following criteria:
 
-- how the site performs according to a set of criteria TBD by the Gatsby Site Review Board
-- voting by the community
+- Well known brands
+- Use case diversity
+- Visual appeal
+- Visual diversity
+
+#### How many can be featured at a time?
+
+9, since that’s what can fit on one page of the site showcase
 
 #### How to Set a Site as Featured
 

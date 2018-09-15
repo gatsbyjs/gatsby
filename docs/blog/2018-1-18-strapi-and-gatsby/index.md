@@ -2,7 +2,7 @@
 title: "Building a static blog using Gatsby and Strapi"
 date: "2018-01-18"
 author: "Pierre Burgy"
-tags: ["gatsby", "strapi"]
+tags: ["strapi"]
 ---
 
 ## Introduction

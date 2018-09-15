@@ -55,6 +55,8 @@ module.exports = {
       resolve: `gatsby-transformer-remark`,
       options: {
         plugins: [
+          `gatsby-remark-graphviz`,
+          `gatsby-remark-code-titles`,
           {
             resolve: `gatsby-remark-images`,
             options: {
@@ -103,26 +105,13 @@ module.exports = {
     `gatsby-transformer-csv`,
     `gatsby-plugin-twitter`,
     `gatsby-plugin-react-helmet`,
+    `gatsby-plugin-sitemap`,
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
-        trackingId: `UA-93349937-1`,
+        trackingId: `UA-93349937-5`,
       },
     },
-    {
-      resolve: `gatsby-plugin-google-tagmanager`,
-      options: {
-        id: `GTM-KLZLVML`,
-      },
-    },
-
-    {
-      resolve: `gatsby-plugin-fullstory`,
-      options: {
-        fs_org: `B2TRP`,
-      },
-    },
-    `gatsby-plugin-sitemap`,
     {
       resolve: `gatsby-plugin-feed`,
       options: {
@@ -195,5 +184,17 @@ module.exports = {
       },
     },
     `gatsby-transformer-screenshot`,
+    `gatsby-plugin-subfont`,
+    // {
+    // resolve: `gatsby-plugin-guess-js`,
+    // options: {
+    // GAViewID: `142357465`,
+    // // The "period" for fetching analytic data.
+    // period: {
+    // startDate: new Date(`2018-1-1`),
+    // endDate: new Date(),
+    // },
+    // },
+    // },
   ],
 }

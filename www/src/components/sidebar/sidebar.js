@@ -82,9 +82,8 @@ class SidebarBody extends Component {
         }
 
         state.expandAll = Object.entries(state.openSectionHash).every(k => k[1])
-
         this.setState(state, () => {
-          if (node) {
+          if (node && this.props.position) {
             node.scrollTop = this.props.position
           }
         })
@@ -209,17 +208,18 @@ class SidebarBody extends Component {
             // get proper scroll position
             const position = nativeEvent.target.scrollTop
             const { pathname } = location
+            const sidebarType = pathname.split(`/`)[1]
 
             requestAnimationFrame(() => {
-              onPositionChange(pathname, position)
+              onPositionChange(sidebarType, position)
             })
           }}
           ref={this.scrollRef}
           css={{
             ...styles.sidebarScrollContainer,
             height: itemList[0].disableExpandAll
-              ? `calc(100%)`
-              : `calc(100% - ${presets.sidebarUtilityHeight} + 1px)`,
+              ? `100%`
+              : `calc(100% - ${presets.sidebarUtilityHeight})`,
             [presets.Tablet]: {
               ...styles.sidebarScrollContainerTablet,
             },
@@ -285,7 +285,7 @@ const styles = {
   },
   sidebarScrollContainerTablet: {
     backgroundColor: colors.ui.whisper,
-    top: `calc(${presets.headerHeight} + ${presets.bannerHeight} - 1px)`,
+    top: `calc(${presets.headerHeight} + ${presets.bannerHeight})`,
   },
   list: {
     margin: 0,
@@ -296,10 +296,8 @@ const styles = {
       fontSize: scale(-4 / 10).fontSize,
       paddingBottom: 20,
     },
-    "&&": {
-      "& a": {
-        fontFamily: options.systemFontFamily.join(`,`),
-      },
+    "& a": {
+      fontFamily: options.systemFontFamily.join(`,`),
     },
     "& li": {
       margin: 0,

@@ -26,16 +26,15 @@ const styles = {
     display: `flex`,
     flexWrap: `wrap`,
     padding: rhythm(3 / 4),
-    justifyContent: `center`,
-    [presets.Desktop]: {
-      justifyContent: `flex-start`,
-    },
+    justifyContent: `space-evenly`,
   },
   showcaseItem: {
     display: `flex`,
     flexDirection: `column`,
     margin: rhythm(3 / 4),
-    width: 282,
+    minWidth: 259,//shows 3 items/row on windows > 1200px wide
+    maxWidth: 350,
+    flex: `1 0 0`,
     position: `relative`,
   },
   featuredItem: {
@@ -104,8 +103,15 @@ const styles = {
     },
   },
   sticky: {
-    paddingTop: rhythm(options.blockMarginBottom),
     position: `sticky`,
+    // We need the -1px here to work around a weird issue on Chrome
+    // where the sticky element is consistently positioned 1px too far down,
+    // leaving a nasty gap that the page content peeks through.
+    // FWIW the problem is only present on the "Site Showcase" index page,
+    // not the "Starter Showcase" index page; if the "Featured Sites" block
+    // is removed, the problem goes away. I tried removing elements in the
+    // "Featured Sites" content block, but no success—only removing the entire block
+    // resolves the issue.
     top: `calc(${presets.bannerHeight} - 1px)`,
     [presets.Desktop]: {
       top: `calc(${presets.headerHeight} + ${presets.bannerHeight} - 1px)`,
