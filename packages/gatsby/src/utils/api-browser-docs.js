@@ -59,22 +59,29 @@ exports.onRouteUpdate = true
  * @param {object} $0
  * @param {object} $0.prevRouterProps The previous state of the router before the route change.
  * @param {object} $0.routerProps The current state of the router.
- * @param {object} $0.pathname The new pathname (for backwards compatibility).
- * @param {function(object): Array|null} $0.getSavedScrollPosition Returns the saved scroll position for a location, or null.
+ * @param {string} $0.pathname The new pathname (for backwards compatibility with v1).
+ * @param {function} $0.getSavedScrollPosition Takes a location and returns the
+ * coordinates of the last scroll position for that location, or `null`. Gatsby
+ * saves scroll positions for each route in `SessionStorage`, so they are
+ * available after page reload.
+ * @returns {(boolean|string|Array)} Should return either an [x, y] Array of
+ * coordinates to scroll to, a string of the `id` or `name` of an element to
+ * scroll to, `false` to not update the scroll position, or `true` for the
+ * default behavior.
  * @example
  * exports.shouldUpdateScroll = ({
  *   routerProps: { location },
  *   getSavedScrollPosition
  * }) => {
- *   const currentScrollPosition = getSavedScrollPosition(location)
- *   const queriedScrollPosition = getSavedScrollPosition({ pathname: '/random' })
+ *   const currentPosition = getSavedScrollPosition(location)
+ *   const queriedPosition = getSavedScrollPosition({ pathname: `/random` })
  *
- *   window.scrollTo(...(currentScrollPosition || [0, 0]))
+ *   window.scrollTo(...(currentPosition || [0, 0]))
  *
  *   return false
  * }
  */
-exports.shouldUpdateScroll = true
+exports.shouldUpdateScroll = true;
 
 /**
  * Allow a plugin to register a Service Worker. Should be a function that returns true.
