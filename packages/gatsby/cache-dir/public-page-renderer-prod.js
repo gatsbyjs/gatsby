@@ -9,6 +9,7 @@ const ProdPageRenderer = ({ location }) => {
   return React.createElement(InternalPageRenderer, {
     location,
     pageResources,
+    ...pageResources.json,
   })
 }
 

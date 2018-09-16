@@ -40,7 +40,6 @@ class PageRenderer extends React.Component {
   render() {
     const props = {
       ...this.props,
-      ...this.props.pageResources.json,
       pathContext: this.props.pageContext,
     }
 
