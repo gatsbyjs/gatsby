@@ -205,8 +205,8 @@
           link: /docs/local-https/
         - title: Lighthouse audit*
           link: /docs/lighthouse-audit/
-        - title: Optimize plugins with Guess.js*
-          link: /docs/optimize-plugins-with-guessjs/
+        - title: Optimize Prefetching with Guess.js*
+          link: /docs/optimize-prefetching-with-guessjs/
 - title: API Reference
   items:
     - title: Gatsby Link
@@ -255,7 +255,7 @@
       link: /docs/prpl-pattern/
     - title: Querying data with GraphQL
       link: /docs/querying-with-graphql/
-- title: BEHIND THE SCENES
+- title: Behind the Scenes
   link: /docs/behind-the-scenes/
   items:
     - title: How APIS/Plugins Are Run
@@ -344,6 +344,8 @@
       link: /docs/submit-a-blogpost/
     - title: Site Showcase Submissions
       link: /docs/site-showcase-submissions/
+    - title: Submit to Creator Showcase
+      link: /docs/submit-to-creator-showcase/
     - title: Submit to Starter Showcase*
       link: /docs/submit-to-starter-showcase/
 - title: Glossary*

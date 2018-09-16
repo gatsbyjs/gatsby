@@ -16,7 +16,7 @@ This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While t
 
   - [Update Gatsby version](#update-gatsby-version)
   - [Manually install React](#manually-install-react)
-  - [Manually install plugins’ peer dependencies](#manually-install-plugins'-peer-dependencies)
+  - [Manually install plugins’ peer dependencies](#manually-install-plugins-peer-dependencies)
 
 - [Handling Breaking Changes](#handling-breaking-changes)
 
@@ -55,12 +55,12 @@ This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While t
   - [Setting the proper Peer Dependencies](#setting-the-proper-peer-dependencies)
   - [Change `modifyBabelrc` to `onCreateBabelConfig`](#change-modifybabelrc-to-oncreatebabelconfig)
   - [Change `modifyWebpackConfig` to `onCreateWebpackConfig`](#change-modifywebpackconfig-to-oncreatewebpackconfig)
-  - [`createRemoteFileNode` API has changed](#createRemoteFileNode)
+  - [`createRemoteFileNode` API has changed](#createremotefilenode)
   - [Only allow defined keys on the `node.internal` object](#only-allow-defined-keys-on-the-node-internal-object)
   - [Import `graphql` types from `gatsby/graphql`](#import-graphql-types-from-gatsbygraphql)
 
 - [For Explorers](#for-explorers)
-  - [V2 from Scratch](#starting-a-new-project-with-gatsby-v2)
+  - [V2 from Scratch](#starting-a-new-project-with-v2)
 
 ## Updating Your Dependencies
 
@@ -569,6 +569,9 @@ import { Provider } from 'react-redux'
 ### Browser API `replaceHistory` was removed
 
 Similar to `replaceRouterComponent`, we no longer support custom histories so this was removed.
+The `replaceHistory()` method could be used for tracking page views as it is possible to register listeners on route changes using `history.listen()`.
+
+In order to track page views, you can use the [`onRouteUpdate`](/docs/browser-apis/#onRouteUpdate) API to track pages changes.
 
 ### Browser API `wrapRootComponent` was replaced with `wrapRootElement`
 

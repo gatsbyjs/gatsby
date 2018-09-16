@@ -3,6 +3,68 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.0-rc.25"></a>
+
+# [2.0.0-rc.25](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.0-rc.24...gatsby@2.0.0-rc.25) (2018-09-14)
+
+**Note:** Version bump only for package gatsby
+
+<a name="2.0.0-rc.24"></a>
+
+# [2.0.0-rc.24](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.0-rc.23...gatsby@2.0.0-rc.24) (2018-09-13)
+
+**Note:** Version bump only for package gatsby
+
+<a name="2.0.0-rc.23"></a>
+
+# [2.0.0-rc.23](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.0-rc.22...gatsby@2.0.0-rc.23) (2018-09-13)
+
+**Note:** Version bump only for package gatsby
+
+<a name="2.0.0-rc.22"></a>
+
+# [2.0.0-rc.22](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.0-rc.21...gatsby@2.0.0-rc.22) (2018-09-13)
+
+**Note:** Version bump only for package gatsby
+
+<a name="2.0.0-rc.21"></a>
+
+# [2.0.0-rc.21](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.0-rc.20...gatsby@2.0.0-rc.21) (2018-09-12)
+
+**Note:** Version bump only for package gatsby
+
+<a name="2.0.0-rc.20"></a>
+
+# [2.0.0-rc.20](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.0-rc.19...gatsby@2.0.0-rc.20) (2018-09-12)
+
+### Bug Fixes
+
+- bug where client routes are redirected to their base page path ([#8083](https://github.com/gatsbyjs/gatsby/issues/8083)) ([4cd37ea](https://github.com/gatsbyjs/gatsby/commit/4cd37ea))
+
+<a name="2.0.0-rc.19"></a>
+
+# [2.0.0-rc.19](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.0-rc.18...gatsby@2.0.0-rc.19) (2018-09-11)
+
+**Note:** Version bump only for package gatsby
+
+<a name="2.0.0-rc.18"></a>
+
+# [2.0.0-rc.18](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.0-rc.17...gatsby@2.0.0-rc.18) (2018-09-11)
+
+**Note:** Version bump only for package gatsby
+
+<a name="2.0.0-rc.17"></a>
+
+# [2.0.0-rc.17](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.0-rc.16...gatsby@2.0.0-rc.17) (2018-09-11)
+
+**Note:** Version bump only for package gatsby
+
+<a name="2.0.0-rc.16"></a>
+
+# [2.0.0-rc.16](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.0-rc.15...gatsby@2.0.0-rc.16) (2018-09-11)
+
+**Note:** Version bump only for package gatsby
+
 <a name="2.0.0-rc.15"></a>
 
 # [2.0.0-rc.15](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.0-rc.14...gatsby@2.0.0-rc.15) (2018-09-08)

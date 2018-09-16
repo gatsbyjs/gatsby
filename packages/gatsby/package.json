@@ -1,7 +1,7 @@
 {
   "name": "gatsby",
   "description": "Blazing fast modern site generator for React",
-  "version": "2.0.0-rc.15",
+  "version": "2.0.0-rc.25",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "./dist/bin/gatsby.js"
@@ -40,7 +40,6 @@
     "copyfiles": "^1.2.0",
     "core-js": "^2.5.0",
     "css-loader": "^1.0.0",
-    "cssnano": "^4.0.2",
     "debug": "^3.1.0",
     "del": "^3.0.0",
     "detect-port": "^1.2.1",
@@ -62,9 +61,9 @@
     "flat": "^4.0.0",
     "friendly-errors-webpack-plugin": "^1.6.1",
     "fs-extra": "^5.0.0",
-    "gatsby-cli": "^2.0.0-rc.1",
-    "gatsby-link": "^2.0.0-rc.2",
-    "gatsby-plugin-page-creator": "^2.0.0-rc.1",
+    "gatsby-cli": "^2.0.0-rc.5",
+    "gatsby-link": "^2.0.0-rc.3",
+    "gatsby-plugin-page-creator": "^2.0.0-rc.5",
     "gatsby-react-router-scroll": "^2.0.0-rc.2",
     "glob": "^7.1.1",
     "graphql": "^0.13.2",
@@ -81,7 +80,7 @@
     "json-loader": "^0.5.7",
     "json-stringify-safe": "^5.0.1",
     "kebab-hash": "^0.1.2",
-    "lodash": "^4.17.4",
+    "lodash": "^4.17.10",
     "md5": "^2.2.1",
     "md5-file": "^3.1.1",
     "mime": "^2.2.0",
@@ -94,6 +93,7 @@
     "null-loader": "^0.1.1",
     "opentracing": "^0.14.3",
     "opn": "^5.3.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.1",
     "parse-filepath": "^1.0.1",
     "physical-cpu-count": "^2.0.0",
     "postcss-flexbugs-fixes": "^3.0.0",
@@ -112,8 +112,8 @@
     "socket.io": "^2.0.3",
     "string-similarity": "^1.2.0",
     "style-loader": "^0.21.0",
+    "terser-webpack-plugin": "^1.0.2",
     "type-of": "^2.0.1",
-    "uglifyjs-webpack-plugin": "^1.2.4",
     "url-loader": "^1.0.1",
     "uuid": "^3.1.0",
     "v8-compile-cache": "^1.1.0",
@@ -143,8 +143,8 @@
     "node": ">6.0.0"
   },
   "files": [
-    "./cache-dir",
-    "./dist",
+    "cache-dir",
+    "dist",
     "graphql.js",
     "index.d.ts"
   ],
@@ -182,7 +182,6 @@
     "watch": "rimraf dist && mkdir dist && npm run build:internal-plugins && npm run build:rawfiles && npm run build:src -- --watch"
   },
   "types": "index.d.ts",
-  "gitHead": "788133e56dd005663f353fff90ffa37ce2fd87b9",
   "yargs": {
     "boolean-negation": false
   }

@@ -104,6 +104,16 @@ const SplitButton = ({
         item,
         location,
         onLinkClick,
+        customCSS:
+          level === 0
+            ? {
+                "&&": {
+                  ...styles.smallCaps,
+                  color: isExpanded ? colors.gatsby : false,
+                  fontWeight: isActive ? `bold` : `normal`,
+                },
+              }
+            : false,
       })}
     </span>
     {/* @todo this should cover 100% of the item's height */}
@@ -153,13 +163,7 @@ const SectionTitle = ({ children, isExpanded, isActive, disabled, level }) => (
       fontSize: `100%`,
       fontWeight: isActive ? `bold` : `normal`,
       margin: 0,
-      ...(level === 0 && {
-        color: colors.lilac,
-        fontFamily: options.headerFontFamily.join(`,`),
-        letterSpacing: `.075em`,
-        textTransform: `uppercase`,
-      }),
-
+      ...(level === 0 && { ...styles.smallCaps }),
       color: isExpanded ? colors.gatsby : false,
       "&:hover": {
         color: disabled ? false : colors.gatsby,
@@ -192,5 +196,10 @@ const styles = {
     position: `absolute`,
     right: 0,
     left: 40,
+  },
+  smallCaps: {
+    fontFamily: options.headerFontFamily.join(`,`),
+    letterSpacing: `.075em`,
+    textTransform: `uppercase`,
   },
 }

@@ -18,7 +18,7 @@
     "gatsby-remark-prismjs": "next",
     "gatsby-source-filesystem": "next",
     "gatsby-transformer-remark": "next",
-    "lodash": "^4.17.4",
+    "lodash": "^4.17.10",
     "prismjs": "^1.14.0",
     "prop-types": "^15.6.0",
     "react": "^16.4.0",
