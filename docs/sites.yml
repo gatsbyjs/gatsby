@@ -2357,7 +2357,17 @@
   categories:
     - Personal
     - Education
-    - Video 
-    - Portfolio 
+    - Video
+    - Portfolio
     - Freelance
+  featured: false
+- title: Joseph Chambers
+  main_url: 'https://joseph.michael-chambers.com/'
+  url: 'https://joseph.michael-chambers.com/'
+  description: >
+    The homepage of Joseph Chambers, a freelance full stack developer, who is currently looking for work.
+  categories:
+    - Portfolio
+    - Freelance
+    - Web Dev
   featured: false
