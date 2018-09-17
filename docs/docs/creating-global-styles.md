@@ -20,7 +20,7 @@ To create a shared layout with global styles, start by creating a new Gatsby sit
 
 ```shell
 # Create the site
-gatsby new global-styles https://github.com/gatsbyjs/gatsby-starter-hello-world#v2
+gatsby new global-styles https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
 Open your new site in your code editor and create a new directory at `/src/components`. Inside, create two new files:
@@ -75,9 +75,9 @@ To start, create a new Gatsby site with the [hello world starter](https://github
 
 ```shell
 # Create the site
-gatsby new global-styles https://github.com/gatsbyjs/gatsby-starter-hello-world#v2
+gatsby new global-styles https://github.com/gatsbyjs/gatsby-starter-hello-world
 
-npm install --save gatsby-plugin-emotion@next emotion emotion-server react-emotion
+npm install --save gatsby-plugin-emotion emotion emotion-server react-emotion
 ```
 
 Create `gatsby-config.js` and add the Emotion plugin:
@@ -130,7 +130,7 @@ In some cases, using a shared layout component is not desirable. In these cases,
 First, open a new terminal window and run the following commands to create a new default Gatsby site and start the development server:
 
 ```shell
-gatsby new global-style-tutorial https://github.com/gatsbyjs/gatsby-starter-default#v2
+gatsby new global-style-tutorial https://github.com/gatsbyjs/gatsby-starter-default
 gatsby develop
 ```
 

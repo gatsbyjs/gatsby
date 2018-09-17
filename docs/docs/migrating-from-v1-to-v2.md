@@ -68,33 +68,37 @@ The very first thing you will need to do is update your dependencies and install
 
 ### Update Gatsby version
 
-Since v2 is currently in beta, you need update your `package.json` to use the pre-release versions of Gatsby.
+You need update your `package.json` to use the latest version of Gatsby.
 
 `package.json`
 
 ```json
 "dependencies": {
-  "gatsby": "next",
-  "gatsby-image": "next",
-  "gatsby-plugin-sharp": "next"
+  "gatsby": "^2.0.0",
 }
 ```
 
-> Note: Gatsby v2 is in pre-release so you may encounter further breaking changes.
+Or run
+
+```bash
+npm i gatsby@latest
+```
 
 ### Update Gatsby related packages
 
-Update your `package.json` to use the pre-release versions of Gatsby related packages. Any package name that starts with `gatsby-` should be upgraded to use the `next` version. Note, this only applies to plugins managed in the gatsbyjs/gatsby repo. If you're using community plugins, they might not be upgraded yet. Check their repo for the status. Many plugins won't actually need upgrading so they very well might keep working. For example:
+Update your `package.json` to use the latest versions of Gatsby related packages. Any package name that starts with `gatsby-` should be upgraded. Note, this only applies to plugins managed in the gatsbyjs/gatsby repo. If you're using community plugins, they might not be upgraded yet. Check their repo for the status. Many plugins won't actually need upgrading so they very well might keep working. You can run
 
-`package.json`
-
-```json
-"dependencies": {
-    "gatsby-plugin-google-analytics": "next",
-    "gatsby-plugin-netlify": "next",
-    "gatsby-plugin-sass": "next",
-}
+```bash
+npm outdated
 ```
+
+And compare "Wanted" and "Latest" versions and update `package.json` file manually or run
+
+```bash
+npm i gatsby-plugin-google-analytics@latest gatsby-plugin-netlify@latest gatsby-plugin-sass@latest
+```
+
+**NOTE**: Above command is just an example - adjust packages to ones you are actually using.
 
 ### Manually install React
 
@@ -325,7 +329,7 @@ To have the same configuration that you had in v1 (if you were using these plugi
 
 #### 1. Install the dependencies
 
-`npm install --save gatsby-plugin-postcss@next postcss-import postcss-cssnext postcss-browser-reporter postcss-reporter`
+`npm install --save gatsby-plugin-postcss postcss-import postcss-cssnext postcss-browser-reporter postcss-reporter`
 
 **NOTE**: `postcss-cssnext` is [deprecated](https://moox.io/blog/deprecating-cssnext/) and it is better to use `postcss-preset-env` now.
 
@@ -942,26 +946,26 @@ Import graphql types from `gatsby/graphql` to prevent `Schema must contain uniqu
 
 Here's a brief section on starting a new project with Gatsby v2 instead of upgrading an existing project.
 
-_Start from scratch:_ If you're a _start from scratch_ kind of person, you can install the Gatsby beta and React like this: `npm install gatsby@next react react-dom`
+_Start from scratch:_ If you're a _start from scratch_ kind of person, you can install Gatsby and React like this: `npm install gatsby react react-dom`
 
 _Tutorial:_ If you'd like a step-by-step guide, [follow the tutorial](/tutorial/) to get started with Gatsby v2.
 
-_Starters:_ If you'd rather use one of the official starters, you're in luck, there's a v2 edition for each of them. Install your favourite one with the Gatsby CLI.
+_Starters:_ If you'd rather use one of the official starters, install your favourite one with the Gatsby CLI.
 
 `gatsby-starter-default` with v2:
 
 ```
-gatsby new my-default-project https://github.com/gatsbyjs/gatsby-starter-default#v2
+gatsby new my-default-project https://github.com/gatsbyjs/gatsby-starter-default
 ```
 
 `gatsby-starter-hello-world` with v2:
 
 ```
-gatsby new my-hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world#v2
+gatsby new my-hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
 `gatsby-starter-blog` with v2:
 
 ```
-gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
+gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog
 ```
