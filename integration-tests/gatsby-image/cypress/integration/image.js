@@ -6,33 +6,17 @@ describe(`Production gatsby-image`, () => {
   })
 
   describe(`wrapping elements`, () => {
-    describe(`outer`, () => {
+    describe(`outer div`, () => {
       it(`exists`, () => {
         cy.getTestElement(fluidTestId)
-          .find(`.gatsby-image-outer-wrapper`)
+          .find(`.gatsby-image-wrapper`)
           .its(`length`)
           .should(`eq`, 1)
       })
 
       it(`contains position relative`, () => {
         cy.getTestElement(fluidTestId)
-          .find(`.gatsby-image-outer-wrapper`)
-          .should(`have.attr`, `style`)
-          .and(`contains`, `position:relative`)
-      })
-    })
-
-    describe(`inner`, () => {
-      it(`exists`, () => {
-        cy.getTestElement(fluidTestId)
-          .find(`.gatsby-image-outer-wrapper > .gatsby-image-wrapper`)
-          .its(`length`)
-          .should(`eq`, 1)
-      })
-
-      it(`contains position relative`, () => {
-        cy.getTestElement(fluidTestId)
-          .find(`.gatsby-image-outer-wrapper`)
+          .find(`.gatsby-image-wrapper`)
           .should(`have.attr`, `style`)
           .and(`contains`, `position:relative`)
       })

@@ -7,7 +7,7 @@ describe(`fluid`, () => {
 
   it(`renders a spacer div`, () => {
     cy.getTestElement(fluidTestId)
-      .find(`.gatsby-image-outer-wrapper > .gatsby-image-wrapper > div`)
+      .find(`.gatsby-image-wrapper > div`)
       .should(`have.attr`, `style`)
       .and(`match`, /width:100%;padding-bottom/)
   })

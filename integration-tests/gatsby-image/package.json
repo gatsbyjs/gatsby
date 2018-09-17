@@ -6,7 +6,7 @@
   "dependencies": {
     "cypress": "^3.1.0",
     "gatsby": "next",
-    "gatsby-image": "^2.0.0-rc.2",
+    "gatsby-image": "^2.0.5",
     "gatsby-plugin-manifest": "next",
     "gatsby-plugin-offline": "next",
     "gatsby-plugin-react-helmet": "next",
