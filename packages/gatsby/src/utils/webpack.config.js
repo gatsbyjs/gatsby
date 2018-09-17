@@ -172,12 +172,8 @@ module.exports = async (
     let configPlugins = [
       plugins.moment(),
 
-      /*
-       * Add a few global variables
-       * Set NODE_ENV to production (enables optimizations for React)
-       * Set __GATSBY_VERSION__ to track usage of versions
-       * __PATH_PREFIX__ what the link prefix is
-       */
+      // Add a few global variables. Set NODE_ENV to production (enables
+      // optimizations for React) and what the link prefix is (__PATH_PREFIX__).
       plugins.define({
         "process.env": processEnv(stage, `development`),
         __PATH_PREFIX__: JSON.stringify(
