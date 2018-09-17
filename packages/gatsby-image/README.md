@@ -78,6 +78,25 @@ plugins: [
 ];
 ```
 
+Also, make sure you have set up a source plugin, so your images are available in `graphql` queries. For example, if your images live in a project folder on the local filesystem, you would set up `gatsby-source-filesystem` in `gatsby-config.js` like so:
+```js
+const path = require(`path`);
+
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `images`,
+        path: path.join(__dirname, `src`, `images`)
+      }
+    },
+    `gatsby-plugin-sharp`,
+    `gatsby-transformer-sharp`
+  ]
+};
+```
+
 ## How to use
 
 This is what a component using `gatsby-image` looks like:
