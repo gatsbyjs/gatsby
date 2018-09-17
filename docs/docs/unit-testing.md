@@ -117,6 +117,8 @@ and which some components need.
 You need to set `testURL` to a valid URL, because some DOM APIs such as
 `localStorage` are unhappy with the default (`about:blank`).
 
+> Note: if you're using Jest 23.5.0 or later, `testURL` will default to `http://localhost` so you can skip this setting.
+
 There's one more global that you need to set, but as it's a function you can't
 set it here in the JSON. The `setupFiles` array lets you list files that will be
 included before all tests are run, so it's perfect for this.
@@ -210,7 +212,7 @@ Run the tests again now and it should all work! You should get a message about
 the snapshot being written. This is created in a `__snapshots__` directory next
 to your tests. If you take a look at it, you will see that it is a JSON
 representation of the `<Bio />` component. You should check your snapshot files
-into your SCM repository so that so that any changes are tracked in history.
+into a source control system (for example, a GitHub repo) so that so that any changes are tracked in history.
 This is particularly important to remember if you are using a continuous
 integration system such as Travis to run tests, as these will fail if no
 snapshot is present.
@@ -321,7 +323,7 @@ For more information on testing page components, be sure to read the docs on
 If you need to make changes to your Babel config, you can edit the config in
 `jest-preprocess.js`. You may need to enable some of the plugins used by Gatsby,
 though remember you may need to install the Babel 7 versions. See
-[the Gatsby Babel config guide](/docs/babel/) for some examples.
+[the Gatsby Babel config guide](/docs/babel) for some examples.
 
 For more information on Jest testing, visit
 [the Jest site](https://jestjs.io/docs/en/getting-started).

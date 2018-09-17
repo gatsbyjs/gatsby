@@ -1,5 +1,6 @@
 import React from "react"
 import { graphql } from "gatsby"
+import Helmet from "react-helmet"
 import Layout from "../components/layout"
 import presets, { colors } from "../utils/presets"
 import { rhythm, options } from "../utils/typography"
@@ -16,7 +17,6 @@ import Diagram from "../components/diagram"
 import BlogPostPreviewItem from "../components/blog-post-preview-item"
 import FuturaParagraph from "../components/futura-paragraph"
 import CtaButton from "../components/cta-button"
-import EmailCaptureForm from "../components/email-capture-form"
 import TechWithIcon from "../components/tech-with-icon"
 
 class IndexRoute extends React.Component {
@@ -24,6 +24,9 @@ class IndexRoute extends React.Component {
     const blogPosts = this.props.data.allMarkdownRemark
     return (
       <Layout location={this.props.location}>
+        <Helmet>
+          <meta name="Description" content="Blazing fast modern site generator for React. Go beyond static sites: build blogs, ecommerce sites, full-blown apps, and more with Gatsby." />
+        </Helmet>
         <div css={{ position: `relative` }}>
           <MastheadBg />
           <div
@@ -96,12 +99,10 @@ class IndexRoute extends React.Component {
                     <FuturaParagraph>
                       Don't build a website with last decade's tech. The future
                       of the web is mobile, JavaScript and APIs—the {` `}
-                      <a href="https://jamstack.org/">
-                        JAMstack
-                      </a>
-                      . Every website is a web app and every web app is a
-                      website. Gatsby.js is the universal JavaScript framework
-                      you’ve been waiting for.
+                      <a href="https://jamstack.org/">JAMstack</a>. Every
+                      website is a web app and every web app is a website.
+                      Gatsby.js is the universal JavaScript framework you’ve
+                      been waiting for.
                     </FuturaParagraph>
                   </Card>
                   <Card>
@@ -171,14 +172,6 @@ class IndexRoute extends React.Component {
                         paddingBottom: `0 !important`,
                       }}
                     >
-                      <EmailCaptureForm
-                        signupMessage="Want to keep up to date with the latest posts on our blog? Subscribe to our newsletter!"
-                        overrideCSS={{
-                          marginTop: 0,
-                          marginBottom: rhythm(1),
-                          border: `none`,
-                        }}
-                      />
                       <h2
                         css={{
                           textAlign: `left`,

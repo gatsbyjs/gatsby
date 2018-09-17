@@ -14,6 +14,12 @@ exports[`Adds canonical link to head correctly creates a canonical link if siteU
       ],
     ],
   ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
+  ],
 }
 `;
 

@@ -159,6 +159,8 @@ const updateStateAndRunQueries = isFirstRun => {
       `)
     }
     runQueuedQueries()
+
+    return null
   })
 }
 

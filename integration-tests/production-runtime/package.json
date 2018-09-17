@@ -25,7 +25,7 @@
     "start-server-and-test": "start-server-and-test serve http://localhost:9000 cy:run",
     "serve": "gatsby serve",
     "cy:open": "cypress open",
-    "cy:run": "cypress run"
+    "cy:run": "cypress run --browser chrome"
   },
   "devDependencies": {
     "npm-run-all": "^4.1.3",

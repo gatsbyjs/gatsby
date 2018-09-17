@@ -10,16 +10,23 @@ import {
 import { navigate as reachNavigate } from "@reach/router"
 import { colors } from "../utils/presets"
 import { Link } from "gatsby"
-import DownloadArrow from "react-icons/lib/go/arrow-small-down"
+import DownloadArrow from "react-icons/lib/md/file-download"
 import AlgoliaLogo from "../assets/algolia.svg"
 import debounce from "lodash/debounce"
 import unescape from "lodash/unescape"
 
 import presets from "../utils/presets"
 import typography, { rhythm, scale } from "../utils/typography"
+import { scrollbarStyles } from "../utils/styles"
 import { css as glam } from "glamor"
+
 // This is for the urlSync
 const updateAfter = 700
+
+// A couple constants for CSS
+const searchInputHeight = rhythm(7 / 4)
+const searchMetaHeight = rhythm(8 / 4)
+const searchInputWrapperMargin = rhythm(3 / 4)
 
 glam.insert(`
   .ais-SearchBox__input:valid ~ .ais-SearchBox__reset {
@@ -31,34 +38,36 @@ glam.insert(`
     position: relative;
     margin: 0;
     width: 100%;
-    height: 46px;
+    height: auto;
     white-space: nowrap;
     box-sizing: border-box;
   }
 
   .ais-SearchBox__wrapper {
-    width: 100%;
-    height: 100%;
+    height: calc(${searchInputHeight} + ${searchInputWrapperMargin});
+    display: flex;
+    align-items: flex-end;
   }
 
   .ais-SearchBox__input {
     -webkit-appearance: none;
+    background: #fff;
+    border: 1px solid ${colors.ui.bright};
+    border-radius: ${presets.radiusLg}px;
+    color: ${colors.gatsby};
     display: inline-block;
+    font-size: 18px;
+    font-family: ${typography.options.headerFontFamily.join(`,`)};
+    height: ${searchInputHeight};
+    padding: 0;
+    padding-right: ${searchInputHeight};
+    padding-left: ${searchInputHeight};
+    margin: 0 ${searchInputWrapperMargin};
     -webkit-transition: box-shadow 0.4s ease, background 0.4s ease;
     transition: box-shadow 0.4s ease, background 0.4s ease;
-    border: 1px solid #e0d6eb;
-    border-radius: 4px;
-    color: ${colors.gatsby};
-    background: #ffffff;
-    padding: 0;
-    padding-right: 36px;
-    padding-left: 46px;
-    width: 100%;
-    height: 100%;
     vertical-align: middle;
     white-space: normal;
-    font-size: inherit;
-    font-family: ${typography.options.headerFontFamily.join(`,`)};
+    width: calc(100% - ${rhythm(6 / 4)});
   }
   .ais-SearchBox__input:hover,
   .ais-SearchBox__input:active,
@@ -66,6 +75,14 @@ glam.insert(`
     box-shadow: none;
     outline: 0;
   }
+
+  .ais-SearchBox__input:active,
+  .ais-SearchBox__input:focus {
+    border-color: ${colors.lilac};
+    box-shadow: 0 0 0 3px ${colors.ui.bright};
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  }
+
   .ais-SearchBox__input::-webkit-input-placeholder,
   .ais-SearchBox__input::-moz-placeholder,
   .ais-SearchBox__input:-ms-input-placeholder,
@@ -73,19 +90,16 @@ glam.insert(`
     color: ${colors.lilac};
   }
 
-  .ais-SearchBox__submit {
+  .ais-SearchBox__submit,
+  .ais-SearchBox__reset {
     position: absolute;
-    top: 0;
-    right: inherit;
-    left: 0;
     margin: 0;
     border: 0;
-    border-radius: 4px 0 0 4px;
-    background-color: rgba(255, 255, 255, 0);
+    background-color: transparent;
     padding: 0;
-    width: 46px;
-    height: 100%;
-    vertical-align: middle;
+    cursor: pointer;
+    width: ${searchInputHeight};
+    height: ${searchInputHeight};
     text-align: center;
     font-size: inherit;
     -webkit-user-select: none;
@@ -93,63 +107,52 @@ glam.insert(`
     -ms-user-select: none;
     user-select: none;
   }
-  .ais-SearchBox__submit::before {
-    display: inline-block;
-    margin-right: -4px;
-    height: 100%;
-    vertical-align: middle;
-    content: "" 2;
-  }
-  .ais-SearchBox__submit:hover,
-  .ais-SearchBox__submit:active {
-    cursor: pointer;
+
+  .ais-SearchBox__submit {
+    top: ${searchInputWrapperMargin};
+    right: inherit;
+    left: ${searchInputWrapperMargin};
+    border-radius: ${presets.radiusLg}px 0 0 ${presets.radiusLg}px;
   }
   .ais-SearchBox__submit:focus {
     outline: 0;
   }
   .ais-SearchBox__submit svg {
-    width: 18px;
-    height: 18px;
+    width: 1rem;
+    height: 1rem;
     vertical-align: middle;
     fill: ${colors.ui.bright};
   }
 
   .ais-SearchBox__reset {
     display: none;
-    position: absolute;
-    top: 13px;
-    right: 13px;
-    margin: 0;
-    border: 0;
-    background: none;
-    cursor: pointer;
-    padding: 0;
+    top: ${searchInputWrapperMargin};
+    left: auto;
+    right: ${searchInputWrapperMargin};
     font-size: inherit;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    fill: ${colors.ui.bright};
   }
   .ais-SearchBox__reset:focus {
     outline: 0;
   }
+  .ais-SearchBox__reset:hover svg {
+    fill: ${colors.gatsby};
+  }
   .ais-SearchBox__reset svg {
-    display: block;
-    margin: 4px;
+    fill: ${colors.ui.bright};
     width: 12px;
     height: 12px;
+    vertical-align: middle;
   }
 
   .ais-InfiniteHits__loadMore {
-    width: 100%;
-    height: ${rhythm(2)};
-    border-radius: ${presets.radius}px;
-    border: 1px solid ${colors.gatsby};
-    margin-top: 0;
-    cursor: pointer;
     background-color: transparent;
+    border: 1px solid ${colors.gatsby};
+    border-radius: ${presets.radius}px;
     color: ${colors.gatsby};
+    cursor: pointer;
+    width: calc(100% - ${rhythm(6 / 4)});
+    margin: ${rhythm(3 / 4)};
+    height: ${rhythm(2)};
     outline: none;
     transition: all ${presets.animation.speedDefault} ${
   presets.animation.curveDefault
@@ -184,68 +187,61 @@ class Search extends Component {
       >
         <div
           css={{
+            borderBottom: `1px solid ${colors.ui.light}`,
             display: `flex`,
-            justifyContent: `center`,
+            flexDirection: `column`,
             width: `100%`,
           }}
         >
           <SearchBox translations={{ placeholder: `Search Gatsby Library` }} />
-        </div>
 
-        <div
-          css={{
-            display: `none`,
-          }}
-        >
-          <RefinementList
-            attributeName="keywords"
-            defaultRefinement={[`gatsby-component`, `gatsby-plugin`]}
-          />
-          <Toggle
-            attributeName="deprecated"
-            value={false}
-            label="No deprecated plugins"
-            defaultRefinement={true}
-          />
-        </div>
+          <div css={{ display: `none` }}>
+            <RefinementList
+              attributeName="keywords"
+              defaultRefinement={[`gatsby-component`, `gatsby-plugin`]}
+            />
+            <Toggle
+              attributeName="deprecated"
+              value={false}
+              label="No deprecated plugins"
+              defaultRefinement={true}
+            />
+          </div>
 
-        <div
-          css={{
-            height: rhythm(1.5),
-            paddingTop: rhythm(0.25),
-            paddingBottom: rhythm(0.25),
-            color: colors.gray.calm,
-            fontSize: 14,
-            fontStretch: `normal`,
-          }}
-        >
-          <Stats
-            translations={{
-              stats: function(n, ms) {
-                return `${n} results`
+          <div
+            css={{
+              alignItems: `center`,
+              color: colors.gray.calm,
+              display: `flex`,
+              fontFamily: typography.options.headerFontFamily.join(`,`),
+              fontSize: scale(1),
+              height: searchMetaHeight,
+              paddingLeft: rhythm(3 / 4),
+              paddingRight: rhythm(3 / 4),
+              [presets.Tablet]: {
+                fontSize: scale(-1 / 4).fontSize,
               },
             }}
-          />
+          >
+            <Stats
+              translations={{
+                stats: function(n, ms) {
+                  return `${n} results`
+                },
+              }}
+            />
+          </div>
         </div>
 
         <div>
           <div
             css={{
-              backgroundColor: `white`,
               [presets.Tablet]: {
-                height: `calc(100vh - 225px)`,
+                height: `calc(100vh - ${presets.headerHeight} - ${
+                  presets.bannerHeight
+                } - ${searchInputHeight} - ${searchInputWrapperMargin} - ${searchMetaHeight})`,
                 overflowY: `scroll`,
-                WebkitOverflowScrolling: `touch`,
-                "::-webkit-scrollbar": {
-                  width: `6px`,
-                  height: `6px`,
-                },
-                "::-webkit-scrollbar-thumb": {
-                  background: colors.ui.bright,
-                },
-                "::-webkit-scrollbar-track": {
-                  background: colors.ui.light,
-                },
+                ...scrollbarStyles,
               },
             }}
           >
@@ -267,10 +263,9 @@ class Search extends Component {
             lineHeight: 0,
             height: 20,
             marginTop: rhythm(3 / 4),
+            display: `none`,
           }}
         >
-          Search by
-          {` `}
           <a
             href={`https://www.algolia.com/`}
             css={{
@@ -317,70 +312,88 @@ const Result = ({ hit, pathname, search }) => {
       to={`/packages/${hit.name}/?=${search}`}
       css={{
         "&&": {
-          display: `block`,
-          fontFamily: typography.options.bodyFontFamily.join(`,`),
-          fontWeight: `400`,
-          color: colors.gray.dark,
-          borderLeft: `${rhythm(3 / 16)} solid ${
-            selected ? colors.gatsby : `none`
-          }`,
-          padding: rhythm(0.5),
-          paddingLeft: selected ? rhythm(5 / 16) : rhythm(1 / 2),
           boxShadow: `none`,
+          background: selected ? `#fff` : false,
           borderBottom: 0,
+          color: colors.gray.dark,
+          display: `block`,
+          fontWeight: `400`,
+          padding: rhythm(3 / 4),
           position: `relative`,
-          "&:after": {
-            content: ` `,
-            position: `absolute`,
+          transition: `all ${presets.animation.speedDefault} ${
+            presets.animation.curveDefault
+          }`,
+          zIndex: selected ? 1 : false,
+          "&:hover": {
+            background: selected ? `#fff` : colors.ui.border,
+          },
+          "&:before": {
+            background: colors.ui.border,
             bottom: 0,
-            top: `auto`,
-            width: `100%`,
+            content: ` `,
             height: 1,
             left: 0,
-            background: colors.ui.light,
+            position: `absolute`,
+            top: `auto`,
+            width: `100%`,
+          },
+          "&:after": {
+            background: selected ? colors.gatsby : false,
+            bottom: 0,
+            content: ` `,
+            position: `absolute`,
+            left: 0,
+            top: -1,
+            width: 4,
           },
         },
       }}
     >
       <div
         css={{
+          alignItems: `baseline`,
           display: `flex`,
           justifyContent: `space-between`,
+          marginBottom: rhythm(typography.options.blockMarginBottom / 2),
         }}
       >
         <div
           css={{
+            color: selected ? colors.gatsby : false,
             fontFamily: typography.options.headerFontFamily.join(`,`),
             fontWeight: `bold`,
+            lineHeight: 1.2,
           }}
         >
           {hit.name}
         </div>
-
         <div
           css={{
-            display: `flex`,
             alignItems: `center`,
-            fontSize: rhythm(0.5),
+            color: selected ? colors.lilac : colors.gray.bright,
+            display: `flex`,
+            fontFamily: typography.options.headerFontFamily.join(`,`),
+            fontSize: rhythm(4 / 7),
           }}
         >
           {hit.humanDownloadsLast30Days}
-
-          <DownloadArrow
-            style={{
-              width: 25,
-              height: 25,
+          {` `}
+          <span
+            css={{
+              color: selected ? colors.lilac : colors.gray.bright,
+              marginLeft: rhythm(1 / 6),
             }}
-            color="#000"
-          />
+          >
+            <DownloadArrow />
+          </span>
         </div>
       </div>
-
       <div
         css={{
-          color: colors.gray.calm,
-          fontSize: scale(-1 / 5).fontSize,
-          fontFamily: typography.options.headerFontFamily.join(`,`),
+          color: selected ? `inherit` : colors.gray.calm,
+          fontFamily: typography.options.systemFontFamily.join(`,`),
+          fontSize: scale(-1 / 2).fontSize,
+          lineHeight: 1.5,
         }}
       >
         {unescape(hit.description)}

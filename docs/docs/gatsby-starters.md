@@ -113,7 +113,7 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
   - [Full list here!](https://github.com/fabien0102/gatsby-starter#whats-inside)
 
 - [gatsby-starter-bootstrap](https://github.com/jaxx2104/gatsby-starter-bootstrap)
-  [(demo)](https://jaxx2104.github.io/gatsby-starter-bootstrap/)
+  [(demo)](https://gatstrap.netlify.com/)
 
   Features:
 
@@ -359,8 +359,8 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
   - Secured Credit Card payments with Stripe
   - Storing of funding information in Firebase
 
-- [gatsby-starter-dimension](https://github.com/ChangoMan/gatsby-starter-dimension)
-  [(demo)](http://gatsby-dimension.surge.sh/)
+- [gatsby-starter-dimension-v2](https://github.com/codebushi/gatsby-starter-dimension-v2)
+  [(demo)](http://gatsby-dimension-v2.surge.sh/)
 
   Features:
 
@@ -369,6 +369,7 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
   - Simple one page site that's perfect for personal portfolios
   - Fully Responsive
   - Styling with SCSS
+  - Updated to use Gatsby.js V2
 
 - [gatsby-starter-docs](https://github.com/ericwindmill/gatsby-starter-docs)
   [(demo)](https://gatsby-docs-starter.netlify.com/)
@@ -427,8 +428,8 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
   - Offline support.
   - Page transitions.
 
-- [gatsby-starter-forty](https://github.com/ChangoMan/gatsby-starter-forty)
-  [(demo)](http://gatsby-forty.surge.sh/)
+- [gatsby-starter-forty-v2](https://github.com/codebushi/gatsby-starter-forty-v2)
+  [(demo)](http://gatsby-forty-v2.surge.sh/)
 
   Features:
 
@@ -437,6 +438,8 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
   - Colorful homepage, and also includes a Landing Page and Generic Page components.
   - Many elements are available, including buttons, forms, tables, and pagination.
   - Styling with SCSS
+  - Custom grid made using CSS Grid
+  - Updated to use Gatsby.js V2
 
 - [gatsby-firebase-authentication](https://github.com/rwieruch/gatsby-firebase-authentication) [(demo)](https://react-firebase-authentication.wieruch.com/)
 
@@ -561,18 +564,6 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
   - Auto generated Navigation for your Wordpress Pages
   - Minimal UI and Styling -- made to customize.
   - Styled Components
-
-- [gatsby-starter-simple-landing](https://github.com/greglobinski/gatsby-starter-simple-landing)
-  [(demo)](https://gssl.greglobinski.com/)
-
-  Features:
-
-  - CSS-in-JS via [JSS](https://github.com/cssinjs/jss)
-  - easily restyled through theme object
-  - text content via Markdown files
-  - auto-generated sizes and types (png, webp) for background and hero images
-  - favicons generator
-  - webfonts with [webfontloader](https://github.com/typekit/webfontloader)
 
 - [gatsby-starter-typescript-plus](https://github.com/resir014/gatsby-starter-typescript-plus)
   [(demo)](https://gatsby-starter-typescript-plus.netlify.com/)
@@ -954,7 +945,7 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
   [(demo)](https://gatsby-starter-solid-state.netlify.com)
 
   Features:
-  
+
   - Built upon gatsby-starter-default
   - Based on the [Solid State](https://html5up.net/solid-state) theme
   - PWA out-of-the-box with gatsby-plugin-manifest and gatsby-plugin-offline
@@ -968,6 +959,41 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
   [(demo)](https://gatsby-starter-typescript-sass.netlify.com)
 
   Features:
-  
+
   - Built upon gatsby-starter-default
   - Perfect if you want to use Typescript and SASS but don't want any extra code
+  
+- [gatsby-starter-mate](https://github.com/EmaSuriano/gatsby-starter-mate)
+  [(demo)](https://gatsby-starter-mate.netlify.com/)
+
+  Features:
+
+  - Gatsby v2
+  - Rebass (Styled-components system)
+  - Dynamic content from Contentful CMS
+  - Offline support
+  - PWA ready
+  - SEO
+  - Responsive design
+  - Theming
+  - Font icons using font-awesome
+  - Netlify Deployment Friendly
+  - Medium syncronization
+  - Social sharing (Twitter, Facebook, Google, LinkedIn)
+
+- [gatsby-scientific-machine-learning-starter](https://github.com/DanShai/Gatsby-Machine-Learning-Starter)
+  [(demo)](https://danshai.github.io/Gatsby-Machine-Learning-Starter/)
+
+  Features:
+
+  - Easy editable content in markdown files (posts, pages and parts) via GraphQl
+  - Tensorflow integration , modified the reac [tfjx](https://github.com/ModelDepot/tfjsx) package to work with gatsby
+  - chartjs integration instead of plotly , plotly doesnt compile when deploying. so I used react-chartjs,
+    useful to see loss and accuracy functions and other charts you might have.
+  - Katex support to work with mathematical expressions and research
+  - csv plugin support to work with csv files data
+  - graph plugin to work with graphical schemes in your markdown files using mermaid
+  - Easy customizable base styles
+  - ESLint
+  - Prettier code styling
+  - Webpack , babel and deploy configured to eliminate heap crash during build and support for generator functions

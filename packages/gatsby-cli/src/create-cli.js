@@ -206,7 +206,8 @@ function buildLocalCommands(cli, isLocalSite) {
           },
           {
             console: true,
-            clipboard: args.clipboard,
+            // Clipboard is not accessible when on a linux tty
+            clipboard: (process.platform === `linux` && !process.env.DISPLAY) ? false : args.clipboard,
           }
         )
       } catch (err) {

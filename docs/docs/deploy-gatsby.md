@@ -174,17 +174,17 @@ image: node:latest
 # http://docs.gitlab.com/ce/ci/yaml/README.html#cache
 cache:
   paths:
-  - node_modules/
+    - node_modules/
 
 pages:
   script:
-  - npm install
-  - ./node_modules/.bin/gatsby build --prefix-paths
+    - npm install
+    - ./node_modules/.bin/gatsby build --prefix-paths
   artifacts:
     paths:
-    - public
+      - public
   only:
-  - master
+    - master
 ```
 
 The CI platform uses Docker images/containers, so `image: node:latest` tells the
@@ -244,7 +244,6 @@ Add a `heroku-postbuild` script in your `package.json`:
 
 ```json
 {
-
   // ...
   "scripts": {
     // ...

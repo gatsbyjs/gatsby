@@ -16,7 +16,7 @@ This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While t
 
   - [Update Gatsby version](#update-gatsby-version)
   - [Manually install React](#manually-install-react)
-  - [Manually install plugins’ peer dependencies](#manually-install-plugins'-peer-dependencies)
+  - [Manually install plugins’ peer dependencies](#manually-install-plugins-peer-dependencies)
 
 - [Handling Breaking Changes](#handling-breaking-changes)
 
@@ -55,12 +55,12 @@ This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While t
   - [Setting the proper Peer Dependencies](#setting-the-proper-peer-dependencies)
   - [Change `modifyBabelrc` to `onCreateBabelConfig`](#change-modifybabelrc-to-oncreatebabelconfig)
   - [Change `modifyWebpackConfig` to `onCreateWebpackConfig`](#change-modifywebpackconfig-to-oncreatewebpackconfig)
-  - [`createRemoteFileNode` API has changed](#createRemoteFileNode)
+  - [`createRemoteFileNode` API has changed](#createremotefilenode)
   - [Only allow defined keys on the `node.internal` object](#only-allow-defined-keys-on-the-node-internal-object)
   - [Import `graphql` types from `gatsby/graphql`](#import-graphql-types-from-gatsbygraphql)
 
 - [For Explorers](#for-explorers)
-  - [V2 from Scratch](#starting-a-new-project-with-gatsby-v2)
+  - [V2 from Scratch](#starting-a-new-project-with-v2)
 
 ## Updating Your Dependencies
 
@@ -173,7 +173,7 @@ Repeat for every page and template that needs this layout.
 
 In v1, the layout component had access to `history`, `location`, and `match` props. In v2, only pages have access to these props; if you need these props in the layout component, pass them through from the page.
 
-`layout.js`
+`src/components/layout.js`
 
 ```jsx
 import React from "react"
@@ -190,7 +190,7 @@ export default ({ children, location }) => (
 
 ```jsx
 import React from "react"
-import Layout from "../components/layout.js"
+import Layout from "../components/layout"
 
 export default props => (
   <Layout location={props.location}>
@@ -205,7 +205,7 @@ If you were using the `data` prop in your Gatsby v1 layout, you now need to make
 
 Replacing a layout's query with `StaticQuery`:
 
-`layout.js`
+`src/components/layout.js`
 
 ```diff
 import React, { Fragment } from "react"
@@ -372,7 +372,7 @@ Two common ways this change _might_ break your site is:
 
 Read more about the features of our new router at https://reach.tech/router
 
-**NOTE:** One prominant feature of @reach/router, relative routes, isn't working currently in Gatsby. We're working with Ryan Florence
+**NOTE:** One prominent feature of @reach/router, relative routes, isn't working currently in Gatsby. We're working with Ryan Florence
 on fixing that so hopefully it'll be supported soon.
 
 Read on for instructions on migrating your site to @reach/router.
@@ -407,7 +407,7 @@ Now, to add state to a link, pass it via a `state` prop.
 ```jsx
 const NewsFeed = () => (
   <div>
-    <Link to="photos/123" state={{ fromNewsFeed: true }} />
+    <Link to="photos/123" state={{ fromFeed: true }} />
   </div>
 )
 
@@ -569,6 +569,9 @@ import { Provider } from 'react-redux'
 ### Browser API `replaceHistory` was removed
 
 Similar to `replaceRouterComponent`, we no longer support custom histories so this was removed.
+The `replaceHistory()` method could be used for tracking page views as it is possible to register listeners on route changes using `history.listen()`.
+
+In order to track page views, you can use the [`onRouteUpdate`](/docs/browser-apis/#onRouteUpdate) API to track pages changes.
 
 ### Browser API `wrapRootComponent` was replaced with `wrapRootElement`
 
@@ -853,9 +856,10 @@ In most cases you won't have to do anything to be v2 compatible, however there a
 
 `gatsby` should be included under `peerDependencies` of your plugin and it should specify the proper versions of support.
 
-```json
+```diff
 "peerDependencies": {
-  "gatsby": ">=1"
+-  "gatsby": "1"
++  "gatsby": ">=1"
 }
 ```
 

@@ -39,7 +39,7 @@ Let’s take a look at the code that powers the homepage.
 
 Open up the `/src` directory in your code editor. Inside is a single directory: `/pages`.
 
-Open the file at `/src/pages/index.js`. The code in this file creates a component that contains a single div, and some text — appropriately, “Hello world!”
+Open the file at `src/pages/index.js`. The code in this file creates a component that contains a single div, and some text — appropriately, “Hello world!”
 
 ### ✋ Make changes to the “Hello World” homepage
 
@@ -52,9 +52,9 @@ Open the file at `/src/pages/index.js`. The code in this file creates a componen
 
 > 💡 Gatsby uses **hot reloading** to speed up your development process. Essentially, when you’re running a Gatsby development server, the Gatsby site files are being “watched” in the background — any time you save a file, your changes will be immediately reflected in the browser. You don’t need to hard refresh the page, or restart the development server — your changes just appear.
 
-2.  Let’s make our changes a little more visible. Try replacing the code in `/src/pages/index.js` with the code below, and save again. You’ll see changes to the text; The text color will be purple, and the font size will be larger.
+2.  Let’s make our changes a little more visible. Try replacing the code in `src/pages/index.js` with the code below, and save again. You’ll see changes to the text; The text color will be purple, and the font size will be larger.
 
-```jsx
+```jsx:title=src/pages/index.js
 import React from "react"
 
 export default () => (
@@ -66,7 +66,7 @@ export default () => (
 
 3.  Remove the font size styling. Change the “Hello Gatsby!” text to a level-one header. Add a paragraph beneath the header.
 
-```jsx{4-6}
+```jsx{4-6}:title=src/pages/index.js
 import React from "react"
 
 export default () => (
@@ -99,9 +99,9 @@ export default () => (
 
 _If you’re familiar with React and JSX, feel free to skip this section._ If you haven’t worked with the React framework before, you may be wondering what HTML is doing in a JavaScript function. Or why we’re importing `react` on the first line but seemingly not using it anywhere. This hybrid “HTML-in-JS” is actually a syntax extension of JavaScript, for React, called JSX. You can follow along this tutorial without prior experience with React, but if you’re curious, here’s a brief primer…
 
-Consider the original contents of the `/src/pages/index.js` file:
+Consider the original contents of the `src/pages/index.js` file:
 
-```jsx
+```jsx:title=src/pages/index.js
 import React from "react"
 
 export default () => <div>Hello world!</div>
@@ -109,7 +109,7 @@ export default () => <div>Hello world!</div>
 
 In pure JavaScript, it looks more like this:
 
-```javascript
+```javascript:title=src/pages/index.js
 import React from "react"
 
 export default () => React.createElement("div", null, "Hello world!")
@@ -152,13 +152,13 @@ limited to the building blocks the browser provides e.g. `<button />`, you can e
 
 ### ✋ Using page components
 
-Any React component defined in `/src/pages/*.js` will automatically become a page. Let’s see this in action.
+Any React component defined in `src/pages/*.js` will automatically become a page. Let’s see this in action.
 
-We already have a `/src/pages/index.js` file that came with the “Hello World” starter. Let’s create an about page.
+We already have a `src/pages/index.js` file that came with the “Hello World” starter. Let’s create an about page.
 
-1.  Create a new file at `/src/pages/about.js`, copy the following code into the new file, and save.
+1.  Create a new file at `src/pages/about.js`, copy the following code into the new file, and save.
 
-```jsx
+```jsx:title=src/pages/about.js
 import React from "react"
 
 export default () => (
@@ -173,16 +173,16 @@ export default () => (
 
 ![New about page](05-about-page.png)
 
-Just by putting a React component in the `/src/pages/about.js` file, we now have a page accessible at `/about`.
+Just by putting a React component in the `src/pages/about.js` file, we now have a page accessible at `/about`.
 
 ### ✋ Using sub-components
 
 Let’s say the homepage and the about page both got quite large, and we were rewriting a lot of things. We can use sub-components to break the UI into reusable pieces. Both of our pages have `<h1>` headers — let’s create a component that will describe a `Header`.
 
-1.  Create a new directory at `/src/components`, and a file within that directory called `header.js`.
-2.  Add the following code to the new `/src/components/header.js` file.
+1.  Create a new directory at `src/components`, and a file within that directory called `header.js`.
+2.  Add the following code to the new `src/components/header.js` file.
 
-```jsx
+```jsx:title=src/components/header.js
 import React from "react"
 
 export default () => <h1>This is a header.</h1>
@@ -190,7 +190,7 @@ export default () => <h1>This is a header.</h1>
 
 3.  Modify the `about.js` file to import the `Header` component. Replace the `h1` markup with `<Header />`:
 
-```jsx{2,6}
+```jsx{2,6}:title=src/pages/about.js
 import React from "react"
 import Header from "../components/header"
 
@@ -206,17 +206,17 @@ export default () => (
 
 In the browser, the “About Gatsby” header text should now be replaced with “This is a header.” But we don’t want the “About” page to say “This is a header.” We want it to say, “About Gatsby”.
 
-4.  Head back to `/src/components/header.js`, and make the following change:
+4.  Head back to `src/components/header.js`, and make the following change:
 
-```jsx{3}
+```jsx{3}:title=src/components/header.js
 import React from "react"
 
 export default props => <h1>{props.headerText}</h1>
 ```
 
-5.  Head back to `/src/pages/about.js` and make the following change:
+5.  Head back to `src/pages/about.js` and make the following change:
 
-```jsx{6}
+```jsx{6}:title=src/pages/about.js
 import React from "react"
 import Header from "../components/header"
 
@@ -258,9 +258,9 @@ If we had passed another prop to our `<Header />` component, like so...
 
 ...we would have been able to also access the `arbitraryPhrase` prop: `{props.arbitraryPhrase}`.
 
-6.  To emphasize how this makes our components reusable, let’s add an extra `<Header />` component to the about page. Add the following code to the `/src/pages/about.js` file, and save.
+6.  To emphasize how this makes our components reusable, let’s add an extra `<Header />` component to the about page. Add the following code to the `src/pages/about.js` file, and save.
 
-```jsx{7}
+```jsx{7}:title=src/pages/about.js
 import React from "react"
 import Header from "../components/header"
 
@@ -289,9 +289,9 @@ You'll often want to link between pages -- Let's look at routing in a Gatsby sit
 
 ### ✋ Using the `<Link />` component
 
-1.  Open the index page component (`/src/pages/index.js`). Import the `<Link />` component from Gatsby. Add a `<Link />` component below the header, and give it a `to` property, with the value of `"/contact/"` for the pathname:
+1.  Open the index page component (`src/pages/index.js`). Import the `<Link />` component from Gatsby. Add a `<Link />` component below the header, and give it a `to` property, with the value of `"/contact/"` for the pathname:
 
-```jsx{2,7}
+```jsx{2,7}:title=src/pages/index.js
 import React from "react"
 import { Link } from "gatsby"
 import Header from "../components/header"
@@ -316,7 +316,7 @@ When you click the new "Contact" link on the homepage, you should see...
 
 2.  Let's create a page component for our new " Contact" page at `src/pages/contact.js`, and have it link back to the homepage:
 
-```jsx
+```jsx:title=src/pages/contact.js
 import React from "react"
 import { Link } from "gatsby"
 import Header from "../components/header"

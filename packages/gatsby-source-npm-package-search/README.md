@@ -14,9 +14,9 @@ plugins: [
   {
     resolve: `gatsby-source-npm-package-search`,
     options: {
-      keywords: [`keyword1`, `keyword2`]
-    }
-  }
+      keywords: [`keyword1`, `keyword2`],
+    },
+  },
 ]
 ```
 
