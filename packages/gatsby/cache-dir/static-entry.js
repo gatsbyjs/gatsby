@@ -51,7 +51,9 @@ const createElement = React.createElement
 
 export default (pagePath, callback) => {
   let bodyHtml = ``
-  let headComponents = []
+  let headComponents = [
+    <meta name="generator" content={`Gatsby ${gatsbyVersion}`} />
+  ]
   let htmlAttributes = {}
   let bodyAttributes = {}
   let preBodyComponents = []
@@ -372,7 +374,6 @@ export default (pagePath, callback) => {
       headComponents={headComponents}
       htmlAttributes={htmlAttributes}
       bodyAttributes={bodyAttributes}
-      gatsbyVersion={gatsbyVersion}
       preBodyComponents={preBodyComponents}
       postBodyComponents={postBodyComponents}
       body={bodyHtml}
