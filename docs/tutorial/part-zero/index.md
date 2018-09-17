@@ -55,6 +55,12 @@ npm has three distinct components: the npm website, the npm registry, and the np
 
 > 💡 Check out npm’s introduction, “[**What is npm?**](https://docs.npmjs.com/getting-started/what-is-npm)”.
 
+## Install Git
+
+Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency. Gatsby requires Git so that you can easily clone starter templates from Github repo.
+
+If your system do not have Git installed, Install it from [https://git-scm.com/downloads](https://git-scm.com/downloads)
+
 ## Install the Gatsby CLI
 
 The Gatsby CLI tool lets you quickly create new Gatsby-powered sites, and run commands for developing Gatsby sites. It is a published npm package. You can install the Gatsby CLI from the npm registry, using the npm CLI.
