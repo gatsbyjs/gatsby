@@ -2407,3 +2407,13 @@
   built_by_url: https://www.linkedin.com/in/aleksanderhansson/
   categories:
     - Blog
+- title: Pirate Studios
+  description: >
+    Reinventing music studios with 24/7 self service rehearsal, DJ & production rooms available around the world.
+  main_url: 'https://www.piratestudios.co'
+  url: 'https://www.piratestudios.co'
+  featured: false
+  built_by: The Pirate Studios team
+  built_by_url: https://github.com/piratestudios/
+  categories:
+    - Music
