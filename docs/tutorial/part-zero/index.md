@@ -93,7 +93,7 @@ Now let’s use the gatsby-cli tool to create your first Gatsby site. Using the 
 ### ✋ Create a Gatsby site
 
 1.  Open up your terminal.
-2.  Run `gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world#v2`. (_Note: Depending on your download speed, the amount of time this takes will vary. For brevity's sake, the gif below was paused during part of the install_).
+2.  Run `gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world`. (_Note: Depending on your download speed, the amount of time this takes will vary. For brevity's sake, the gif below was paused during part of the install_).
 3.  Run `cd hello-world`.
 4.  Run `gatsby develop`.
 

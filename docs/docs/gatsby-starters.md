@@ -31,28 +31,6 @@ There are several starters that have been created. Create a PR to include yours!
 - [gatsby-starter-hello-world](https://github.com/gatsbyjs/gatsby-starter-hello-world)
   [(demo)](https://gatsby-starter-hello-world-demo.netlify.com/)
 
-### Using Gatsby v2 with the official starters
-
-If you'd like to get started with Gatsby v2 you're in luck, there's a v2 edition for each of the official starters. Install your favourite one with the Gatsby CLI.
-
-`gatsby-starter-default` with v2:
-
-```
-gatsby new my-default-project https://github.com/gatsbyjs/gatsby-starter-default#v2
-```
-
-`gatsby-starter-hello-world` with v2:
-
-```
-gatsby new my-hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world#v2
-```
-
-`gatsby-starter-blog` with v2:
-
-```
-gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
-```
-
 ## Community starters
 
 - [gatsby-starter-cosmicjs](https://github.com/cosmicjs/gatsby-starter)

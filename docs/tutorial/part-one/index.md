@@ -10,7 +10,7 @@ In the [**previous section**](/tutorial/part-zero/), you prepared your local dev
 In [**tutorial part zero**](/tutorial/part-zero/), you created a new site based on the “hello world” starter using the following command:
 
 ```bash
-gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world#v2
+gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
 When creating a new Gatsby site, you can use the following command structure to create a new site based on any existing Gatsby starter:
