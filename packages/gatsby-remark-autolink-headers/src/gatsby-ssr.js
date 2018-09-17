@@ -1,37 +1,42 @@
 import React from "react"
 
 exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
+  let className = `anchor`
+  if (pluginOptions.className) {
+    className = pluginOptions.className
+  }
+
   let offsetY = 0
   if (pluginOptions.offsetY) {
     offsetY = pluginOptions.offsetY
   }
 
   const styles = `
-    .anchor {
+    .${className} {
       float: left;
       padding-right: 4px;
       margin-left: -20px;
     }
-    h1 .anchor svg,
-    h2 .anchor svg,
-    h3 .anchor svg,
-    h4 .anchor svg,
-    h5 .anchor svg,
-    h6 .anchor svg {
+    h1 .${className} svg,
+    h2 .${className} svg,
+    h3 .${className} svg,
+    h4 .${className} svg,
+    h5 .${className} svg,
+    h6 .${className} svg {
       visibility: hidden;
     }
-    h1:hover .anchor svg,
-    h2:hover .anchor svg,
-    h3:hover .anchor svg,
-    h4:hover .anchor svg,
-    h5:hover .anchor svg,
-    h6:hover .anchor svg,
-    h1 .anchor:focus svg,
-    h2 .anchor:focus svg,
-    h3 .anchor:focus svg,
-    h4 .anchor:focus svg,
-    h5 .anchor:focus svg,
-    h6 .anchor:focus svg {
+    h1:hover .${className} svg,
+    h2:hover .${className} svg,
+    h3:hover .${className} svg,
+    h4:hover .${className} svg,
+    h5:hover .${className} svg,
+    h6:hover .${className} svg,
+    h1 .${className}:focus svg,
+    h2 .${className}:focus svg,
+    h3 .${className}:focus svg,
+    h4 .${className}:focus svg,
+    h5 .${className}:focus svg,
+    h6 .${className}:focus svg {
       visibility: visible;
     }
   `
