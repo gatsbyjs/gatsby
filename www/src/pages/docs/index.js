@@ -22,6 +22,12 @@ class IndexRoute extends React.Component {
               Get started
             </h1>
             <p>Gatsby is a blazing fast modern site generator for React.</p>
+           <h2>Prerequisites</h2>
+             <p> <strong> Node.js</strong>: Before Installing Gatsby, make sure you have Node.js and npm package manager installed on your system. If not, go to <a href="https://nodejs.org/" target="_blank">nodejs.org</a> and install a recent version for your operating system. </p>
+             <p> <strong> Git</strong>: Git is also required to setup Gatsby. If your system do not have Git installed, Install it from <a href="https://git-scm.com/downloads" target="_blank"> here</a></p>
+
+             <p> <i> Need a detailed walk through? </i> <Link to="/tutorial/"> Go to the tutorial</Link> </p>
+
             <h2>
               Install Gatsby
               {`'`}s command line tool
