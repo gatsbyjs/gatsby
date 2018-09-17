@@ -113,8 +113,8 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
                       css={{ ...styles.shortcutIcon }}
                     >
                       <CopyToClipboardIcon />
-                      {` `}
                     </a>
+                    {` `}
                     <a
                       href={node.frontmatter.demo}
                       target="_blank"
@@ -122,8 +122,8 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
                       css={{ ...styles.shortcutIcon }}
                     >
                       <LaunchDemoIcon />
-                      {` `}
                     </a>
+                    {` `}
                     <a
                       href={`https://github.com/${githubFullName}`}
                       target="_blank"
