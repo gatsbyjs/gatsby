@@ -166,7 +166,7 @@ class DefaultLayout extends React.Component {
           These are the docs for v2.
           {` `}
           <a
-            href="https://gatsbyjs.org/"
+            href="https://v1.gatsbyjs.org/"
             css={{
               color: `#fff`,
             }}
