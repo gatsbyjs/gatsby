@@ -53,10 +53,18 @@ module.exports = (
         throw Error(`Invalid snippet specified; no such file "${path}"`)
       }
 
-      // This method removes lines that contain only highlight or hideline directives,
+      // This method removes lines that contain only highlight or hide line directives,
       // eg 'highlight-next-line', 'highlight-range' or 'hideline-range' comments.
       function filterDirectives(line, index) {
-        if (line.includes(`hideline-range`)) {
+        if (line.includes(`hideline-next-line`)) {
+          // Although we're hiding the next line,
+          // We can use the current index since we also filter this lines.
+          // (Highlight line numbers are 1-based).
+          hiddenLines.push(index + 1)
+
+          // Strip lines that contain hideline-next-line comments.
+          return false
+        } else if (line.includes(`hideline-range`)) {
           const match = line.match(/hideline-range{([^}]+)}/)
           if (!match) {
             console.warn(`Invalid match specified: "${line.trim()}"`)
@@ -64,7 +72,7 @@ module.exports = (
           }
 
           const range = match[1] && match[1].replace(/\s/g, ``)
-          // hideline line numbers are 1-based but so are offsets.
+          // Hide line numbers are 1-based but so are offsets.
           // Remember that the current line (index) will be removed.
           rangeParser.parse(range).forEach(offset => {
             hiddenLines.push(index + offset)

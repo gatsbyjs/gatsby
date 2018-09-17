@@ -150,7 +150,7 @@ describe(`gatsby-remark-embed-snippet`, () => {
       expect(transformed).toMatchSnapshot()
     })
 
-    it(`should support hideline-range markers`, () => {
+    it(`should support hideline-range and hideline-next-line markers`, () => {
       fs.readFileSync.mockReturnValue(
         `
         /* hideline-range{2-3} */
@@ -158,6 +158,8 @@ describe(`gatsby-remark-embed-snippet`, () => {
           height: 100%;
           width: 100%;
           padding: 50px;
+          /* hideline-next-line */
+          background: red;
         }
       `
           .replace(/^ +/gm, ``)
@@ -246,15 +248,17 @@ describe(`gatsby-remark-embed-snippet`, () => {
       expect(transformed).toMatchSnapshot()
     })
 
-    it(`should support hideline-range markers`, () => {
+    it(`should support hideline-range and hideline-next-line markers`, () => {
       fs.readFileSync.mockReturnValue(
         `
-        <!-- hideline-range{4,8-9} -->
+        <!-- hideline-range{4,9-10} -->
         <html>
           <body>
             <p>
-              hidden
+              <span>hidden</span>
               <span>not hidden</span>
+              <!-- hideline-next-line -->
+              <span>hidden</span>
             </p>
             <ul>
               <li>hidden</li>
@@ -433,10 +437,10 @@ describe(`gatsby-remark-embed-snippet`, () => {
       expect(transformed).toMatchSnapshot()
     })
 
-    it(`should support hideline-range markers`, () => {
+    it(`should support hideline-range and hideline-next-line markers`, () => {
       fs.readFileSync.mockReturnValue(
         `
-        // hideline-range{1-2,9-11,16}
+        // hideline-range{1-2,9-11}
         import React from 'react'
         import { render } from "react-dom"
         ReactDOM.render(
@@ -452,6 +456,7 @@ describe(`gatsby-remark-embed-snippet`, () => {
           </div>,
           document.getElementById('root')
         );
+        // hideline-next-line
         console.log('Hidden')
       `
           .replace(/^ +/gm, ``)
