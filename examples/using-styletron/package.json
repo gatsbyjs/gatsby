@@ -5,8 +5,8 @@
   "version": "1.0.0",
   "author": "Nadiia Dmytrenko <nadiia.dmytrenko@gmail.com>",
   "dependencies": {
-    "gatsby": "next",
-    "gatsby-plugin-styletron": "next",
+    "gatsby": "^2.0.0",
+    "gatsby-plugin-styletron": "^3.0.0",
     "react": "^16.4.0",
     "react-dom": "^16.4.0"
   },

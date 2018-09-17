@@ -5,7 +5,7 @@
   "version": "1.0.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "gatsby": "next",
+    "gatsby": "^2.0.0",
     "lodash": "^4.17.10",
     "react": "^16.3.1",
     "react-dom": "^16.3.1",
@@ -15,7 +15,9 @@
     "typography": "^0.16.6",
     "typography-breakpoint-constants": "^0.15.10"
   },
-  "keywords": ["gatsby"],
+  "keywords": [
+    "gatsby"
+  ],
   "license": "MIT",
   "main": "n/a",
   "scripts": {
