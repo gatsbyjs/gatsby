@@ -6,6 +6,18 @@ const fs = require(`fs-extra`)
 const slash = require(`slash`)
 const slugify = require(`slugify`)
 const url = require(`url`)
+const getpkgjson = require(`get-package-json-from-github`)
+const { GraphQLClient } = require("graphql-request")
+
+require(`dotenv`).config({
+  path: `.env.${process.env.NODE_ENV}`,
+})
+
+const githubApiClient = new GraphQLClient(`https://api.github.com/graphql`, {
+  headers: {
+    authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+  },
+})
 
 const localPackages = `../packages`
 const localPackagesArr = []
@@ -236,7 +248,8 @@ exports.createPages = ({ graphql, actions }) => {
         })
       })
 
-      // Create starters.
+      // Create starter pages.
+      // const starters = result.data.allStartersYaml.edges.forEach(edge => { // @TODO
       const starters = _.filter(result.data.allMarkdownRemark.edges, edge => {
         const slug = _.get(edge, `node.fields.starterShowcase.slug`)
         if (!slug) return null
@@ -256,7 +269,6 @@ exports.createPages = ({ graphql, actions }) => {
           },
         })
       })
-      // END Create starters.
 
       // Create contributor pages.
       result.data.allAuthorYaml.edges.forEach(edge => {
@@ -408,6 +420,83 @@ exports.onCreateNode = ({ node, actions, getNode, getNodes }) => {
     const cleaned = parsed.hostname + parsed.pathname
     slug = `/showcase/${slugify(cleaned)}`
     createNodeField({ node, name: `slug`, value: slug })
+  }
+  // Starter Showcase Pages
+  else if (node.internal.type === `StartersYaml` && node.repo) {
+    if (!process.env.GITHUB_TOKEN) {
+      console.log(
+        "You need to create and set a Github token to work with the starter showcase"
+      )
+      return
+    }
+    const [owner, slug] = node.repo.split(`/`).splice(-2, 2)
+
+    Promise.all([
+      getpkgjson(node.repo),
+      githubApiClient.request(`
+          query {
+            repository(owner:"${owner}", name:"${slug}") {
+              name
+              stargazers {
+                totalCount
+              }
+              createdAt
+              updatedAt
+              owner {
+                login
+              }
+              nameWithOwner
+            }
+          }
+        `),
+    ])
+      .then(results => {
+        const [pkgjson, githubData] = results
+        const {
+          stargazers: { totalCount: stars },
+          updatedAt: lastUpdated,
+          owner: { login: owner },
+          nameWithOwner: githubFullName,
+        } = githubData.repository
+
+        const { dependencies = [], devDependencies = [] } = pkgjson
+        const allDependencies = Object.entries(dependencies).concat(
+          Object.entries(devDependencies)
+        )
+        const starterShowcaseFields = {
+          slug,
+          description: pkgjson.description,
+          stars,
+          lastUpdated,
+          owner,
+          githubFullName,
+          allDependencies,
+          gatsbyDependencies: allDependencies
+            .filter(
+              ([key, _]) => ![`gatsby-cli`, `gatsby-link`].includes(key) // remove stuff everyone has
+            )
+            .filter(([key, _]) => key.includes(`gatsby`)),
+          miscDependencies: allDependencies.filter(
+            ([key, _]) => !key.includes(`gatsby`)
+          ),
+        }
+        createNodeField({
+          node,
+          name: `starterShowcase`,
+          value: starterShowcaseFields,
+        })
+      })
+      .catch(err => {
+        console.log(
+          `\nError getting repo data. Maybe you need to authenticate?`,
+          err
+        )
+        return createNodeField({
+          node,
+          name: `starterShowcase`,
+          value: null,
+        })
+      })
   }
 
   // Community/Creators Pages
