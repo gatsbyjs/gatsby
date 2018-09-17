@@ -2357,8 +2357,8 @@
   categories:
     - Personal
     - Education
-    - Video 
-    - Portfolio 
+    - Video
+    - Portfolio
     - Freelance
   featured: false
 - title: Studenten bilden Schüler
@@ -2376,4 +2376,16 @@
     - Blog
   built_by: Janosh Riebesell
   built_by_url: "https://janosh.io"
+  featured: false
+- title: Joseph Chambers
+  main_url: 'https://joseph.michael-chambers.com/'
+  url: 'https://joseph.michael-chambers.com/'
+  description: >
+    The homepage of Joseph Chambers, a freelance full stack developer, who is currently looking for work.
+  categories:
+    - Portfolio
+    - Freelance
+    - Web Dev
+  built_by: Joseph Chambers
+  built_by_url: https://twitter.com/imcodingideas
   featured: false

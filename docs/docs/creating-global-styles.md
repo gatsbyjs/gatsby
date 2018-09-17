@@ -32,7 +32,7 @@ Open your new site in your code editor and create a new directory at `/src/compo
 +     │   │─  layout.js
 +     │   └─  layout.css
       │
-      └───page/
+      └───pages/
           └─  index.js
 ```
 
@@ -54,7 +54,7 @@ import "./layout.css"
 export default ({ children }) => <div>{children}</div>
 ```
 
-Finally, update `src/pags/index.js` to use the new layout component:
+Finally, update `src/pages/index.js` to use the new layout component:
 
 ```jsx
 import React from "react"
