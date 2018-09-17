@@ -934,7 +934,7 @@ Import graphql types from `gatsby/graphql` to prevent `Schema must contain uniqu
 
 Here's a brief section on starting a new project with Gatsby v2 instead of upgrading an existing project.
 
-_Start from scratch:_ If you're a _start from scratch_ kind of person, you can install the Gatsby and React like this: `npm install gatsby react react-dom`
+_Start from scratch:_ If you're a _start from scratch_ kind of person, you can install Gatsby and React like this: `npm install gatsby react react-dom`
 
 _Tutorial:_ If you'd like a step-by-step guide, [follow the tutorial](/tutorial/) to get started with Gatsby v2.
 
