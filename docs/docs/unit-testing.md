@@ -321,7 +321,7 @@ For more information on testing page components, be sure to read the docs on
 If you need to make changes to your Babel config, you can edit the config in
 `jest-preprocess.js`. You may need to enable some of the plugins used by Gatsby,
 though remember you may need to install the Babel 7 versions. See
-[the Gatsby Babel config guide](/docs/add-custom-webpack-config/#modifying-the-babel-loader) for some examples.
+[the Gatsby Babel config guide](/docs/babel) for some examples.
 
 For more information on Jest testing, visit
 [the Jest site](https://jestjs.io/docs/en/getting-started).
