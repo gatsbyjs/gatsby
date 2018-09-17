@@ -43,9 +43,11 @@ It is also used by [gatsby-plugin-netlify](http://localhost:8000/packages/gatsby
 
 ### jsonName
 
-The logical name for the query result of a page. Created during [createPage](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/actions.js#L229). Name is constructed using kebabHash of page path. E.g. For above pagePath, it is:
+The logical name for the page's query json result. The name is constructed during [createPage](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/actions.js#L229) using a kebabHash of page path. E.g. For above page path, it is:
 
 `blog-2018-07-17-announcing-gatsby-preview-995`
+
+The actual json file is written to disk after [Query Execution](/docs/query-execution/#save-query-results-to-redux-and-disk/).
 
 ### component
 
@@ -75,15 +77,15 @@ Query starts off as empty, but is set during the extractQueries phase by [query-
 
 ### componentChunkName
 
-The [page.component](#component) (path on disk), but passed (as above), kebab hashed. E.g, the componentChunkName for component
+The `[name]` portion of the webpack chunkFilename (`[name]-[contenthash].js`) (see [Production App webpack config](/docs/production-app/#webpack-config)). Its name is the concatenation of `component---` and the `component` name passed through [kebab-hash](https://www.npmjs.com/package/kebab-hash). E.g, the componentChunkName for component
 
-`/src/templates/template-blog-post.js`
+`/src/blog/2.js`
 
 is
 
-`component---src-templates-template-blog-post-js`
+`component---src-blog-2-js`
 
-TODO: Mention how used by webpack
+This is used extensively throughout Gatsby, but especially during [Code Splitting](http://localhost:8000/docs/how-code-splitting-works/).
 
 ### internalComponentName
 
@@ -179,43 +181,10 @@ export const pageQuery = graphql`
 
 ## Webpack stuff
 
-### /public/${componentChunkName}-[chunkhash].js
-
-The final webpack js bundle for the blog template page
-
-E.g
-
-`/public/component---src-templates-template-blog-post-js-2df3a086e8d2cdf690aa.js`
-
 ### /.cache/async-requires.js
 
-Generated javascript file that exports `components` and `data` fields.
-
-`components` is a mapping from `componentChunkName` to a function that imports the component's original source file path. This is used for code splitting. The import statement is a hint to webpack that that javascript file can be loaded later. The mapping And also provides a hint to the `componentChunkName`
-
-`data` is a function that imports `/.cache/data.json`. Which is code split in the same way
-
-E.g
-
-```js
-exports.components = {
-  "component---src-templates-template-blog-post-js": () =>
-    import("/Users/amarcar/dev/gatsbyjs/gatsby/www/src/templates/template-blog-post.js" /* webpackChunkName: "component---src-templates-template-blog-post-js" */),
-}
-
-exports.data = () =>
-  import("/Users/amarcar/dev/gatsbyjs/gatsby/www/.cache/data.json")
-```
+See [Write Out Pages](/docs/write-pages/).
 
 ### .cache/data.json
 
-During the `pagesWriter` bootstrap phase (last phase), `pages-writer.js` writes this file to disk. It contains `dataPaths` and `pages`.
-
-`dataPaths` is the same as the definition above.
-
-`pages` is a dump of the redux `pages` component state. Each page contains:
-
-- componentChunkName
-- jsonName
-- path
-
+See [Write Out Pages](/docs/write-pages/).
