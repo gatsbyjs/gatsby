@@ -26,11 +26,7 @@ if (`serviceWorker` in navigator) {
                 // Post to service worker that install is complete.
                 // Delay to allow time for the event listener to be added --
                 // otherwise fetch is called too soon and resources aren't cached.
-                window.setTimeout(() => {
-                  apiRunner(`onServiceWorkerInstalled`, {
-                    serviceWorker: reg,
-                  })
-                }, 100)
+                apiRunner(`onServiceWorkerInstalled`, { serviceWorker: reg })
               }
               break
 
@@ -39,7 +35,7 @@ if (`serviceWorker` in navigator) {
               apiRunner(`onServiceWorkerRedundant`, { serviceWorker: reg })
               break
 
-            case `active`:
+            case `activated`:
               apiRunner(`onServiceWorkerActive`, { serviceWorker: reg })
               break
           }

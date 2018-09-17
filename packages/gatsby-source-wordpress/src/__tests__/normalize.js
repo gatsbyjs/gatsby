@@ -58,7 +58,7 @@ describe(`Process WordPress data`, () => {
     ])
   })
   it(`Creates links between entities and polylang translations entities`, () => {
-    entities = normalize.mapPolylangTranlations(entities)
+    entities = normalize.mapPolylangTranslations(entities)
     expect(entities).toMatchSnapshot()
   })
 
