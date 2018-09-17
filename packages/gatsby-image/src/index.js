@@ -335,7 +335,6 @@ class Image extends React.Component {
         delete divStyle.display
       }
 
-      // The outer div is necessary to reset the z-index to 0.
       return (
         <Tag
           className={`${className ? className : ``} gatsby-image-wrapper`}
