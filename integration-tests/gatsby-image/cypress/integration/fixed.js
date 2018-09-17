@@ -7,7 +7,7 @@ describe(`fixed`, () => {
 
   it(`does not render a spacer div`, () => {
     cy.getTestElement(fixedTestId)
-      .find(`.gatsby-image-outer-wrapper > .gatsby-image-wrapper > div`)
+      .find(`.gatsby-image-wrapper > div`)
       .should(`not.exist`)
   })
 
