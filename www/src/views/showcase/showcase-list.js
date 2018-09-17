@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Fragment } from "react"
 import { Link } from "gatsby"
 
 import styles from "../shared/styles"
@@ -57,15 +57,17 @@ const ShowcaseList = ({ items, count }) => {
                 </div>
                 <div css={{flex: `0 0 auto`, textAlign: `right`}}>
                   {node.source_url && (
-                    <a
-                      css={{...styles.shortcutIcon}}
-                      href={node.source_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <GithubIcon style={{ verticalAlign: `text-top` }} />
-                    </a>
-                    {` `}
+                    <Fragment>
+                      <a
+                        css={{ ...styles.shortcutIcon }}
+                        href={node.source_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <GithubIcon style={{ verticalAlign: `text-top` }} />
+                      </a>
+                      {` `}
+                    </Fragment>
                   )}
                   <a
                     href={node.main_url}
