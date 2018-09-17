@@ -183,7 +183,7 @@ function buildLocalCommands(cli, isLocalSite) {
         .option(`prefix-paths`, {
           type: `boolean`,
           default: false,
-          describe: `Serve site with link paths prefixed (set pathPrefix in your gatsby-config.js.`,
+          describe: `Serve site with link paths prefixed (if built with pathPrefix in your gatsby-config.js).`,
         }),
 
     handler: getCommandHandler(`serve`),

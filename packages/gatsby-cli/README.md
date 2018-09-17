@@ -65,7 +65,7 @@ the site for testing.
 |  `-H`, `--host`  | Set host. Defaults to localhost                                                 |
 |  `-p`, `--port`  | Set port. Defaults to 8000                                                      |
 |  `-o`, `--open`  | Open the site in your (default) browser for you                                 |
-| `--prefix-paths` | Serve site with link paths prefixed (set pathPrefix in your `gatsby-config.js`) |
+| `--prefix-paths` | Serve site with link paths prefixed (if built with pathPrefix in your gatsby-config.js). |
 
 ### Info
 
