@@ -277,7 +277,7 @@ exports.mapElementsToParent = entities =>
     return e
   })
 
-exports.mapPolylangTranlations = entities =>
+exports.mapPolylangTranslations = entities =>
   entities.map(entity => {
     if (entity.polylang_translations) {
       entity.polylang_translations___NODE = entity.polylang_translations.map(

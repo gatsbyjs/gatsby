@@ -117,6 +117,8 @@ and which some components need.
 You need to set `testURL` to a valid URL, because some DOM APIs such as
 `localStorage` are unhappy with the default (`about:blank`).
 
+> Note: if you're using Jest 23.5.0 or later, `testURL` will default to `http://localhost` so you can skip this setting.
+
 There's one more global that you need to set, but as it's a function you can't
 set it here in the JSON. The `setupFiles` array lets you list files that will be
 included before all tests are run, so it's perfect for this.

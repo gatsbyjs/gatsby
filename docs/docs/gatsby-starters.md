@@ -962,3 +962,38 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
 
   - Built upon gatsby-starter-default
   - Perfect if you want to use Typescript and SASS but don't want any extra code
+  
+- [gatsby-starter-mate](https://github.com/EmaSuriano/gatsby-starter-mate)
+  [(demo)](https://gatsby-starter-mate.netlify.com/)
+
+  Features:
+
+  - Gatsby v2
+  - Rebass (Styled-components system)
+  - Dynamic content from Contentful CMS
+  - Offline support
+  - PWA ready
+  - SEO
+  - Responsive design
+  - Theming
+  - Font icons using font-awesome
+  - Netlify Deployment Friendly
+  - Medium syncronization
+  - Social sharing (Twitter, Facebook, Google, LinkedIn)
+
+- [gatsby-scientific-machine-learning-starter](https://github.com/DanShai/Gatsby-Machine-Learning-Starter)
+  [(demo)](https://danshai.github.io/Gatsby-Machine-Learning-Starter/)
+
+  Features:
+
+  - Easy editable content in markdown files (posts, pages and parts) via GraphQl
+  - Tensorflow integration , modified the reac [tfjx](https://github.com/ModelDepot/tfjsx) package to work with gatsby
+  - chartjs integration instead of plotly , plotly doesnt compile when deploying. so I used react-chartjs,
+    useful to see loss and accuracy functions and other charts you might have.
+  - Katex support to work with mathematical expressions and research
+  - csv plugin support to work with csv files data
+  - graph plugin to work with graphical schemes in your markdown files using mermaid
+  - Easy customizable base styles
+  - ESLint
+  - Prettier code styling
+  - Webpack , babel and deploy configured to eliminate heap crash during build and support for generator functions

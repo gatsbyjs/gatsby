@@ -58,8 +58,6 @@ Categories currently include both _type of site_ (structure) and the _content of
 - eCommerce
 - Education
 - Gallery
-- Landing
-- Marketing
 - Portfolio
 - (feel free to create new ones after checking to make sure the tag you want doesn't already exist)
 
@@ -68,13 +66,12 @@ Categories currently include both _type of site_ (structure) and the _content of
 A few notes on site content: a common question is this: "aren't all Gatsby sites technically in the "web dev" category?" Well, no because this category means the _content_ of the site has to be about web development, like [ReactJS](https://reactjs.org/). Also, the difference between technology and web dev is like this. [Cardiogram](https://cardiogr.am/) is technology, while [ReactJS](https://reactjs.org/) is web dev.
 
 - Agency
-- Corporate
 - Cinema
-- Creative
 - Education
 - Entertainment
 - Finance
 - Food
+- Health & Wellness
 - Healthcare
 - Hosting
 - Gallery
@@ -86,11 +83,9 @@ A few notes on site content: a common question is this: "aren't all Gatsby sites
 - News
 - Nonprofit
 - Open Source
-- Personal
 - Photography
 - Podcast
 - Real Estate
-- Retail
 - Science
 - Technology
 - Web Dev

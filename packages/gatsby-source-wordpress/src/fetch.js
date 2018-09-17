@@ -64,12 +64,19 @@ Mama Route URL: ${url}
       method: `get`,
       url: url,
     }
-    if (_auth) {
+    if (_auth && (_auth.htaccess_user || _auth.htaccess_pass)) {
       options.auth = {
         username: _auth.htaccess_user,
         password: _auth.htaccess_pass,
       }
     }
+    
+    if (_hostingWPCOM && _accessToken) {
+      options.headers = {
+        Authorization: `Bearer ${_accessToken}`,
+      }
+    }
+    
     allRoutes = await axios(options)
   } catch (e) {
     httpExceptionHandler(e)

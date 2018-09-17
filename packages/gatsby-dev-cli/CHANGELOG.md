@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.0-rc.6"></a>
+
+# [2.0.0-rc.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli/compare/gatsby-dev-cli@2.0.0-rc.5...gatsby-dev-cli@2.0.0-rc.6) (2018-09-12)
+
+### Features
+
+- add a copy-all script to gatsby-dev-cli ([#8066](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli/issues/8066)) ([1baa523](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli/commit/1baa523))
+
 <a name="2.0.0-rc.5"></a>
 
 # [2.0.0-rc.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli/compare/gatsby-dev-cli@2.0.0-rc.4...gatsby-dev-cli@2.0.0-rc.5) (2018-09-11)

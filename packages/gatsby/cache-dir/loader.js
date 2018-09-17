@@ -297,9 +297,9 @@ const queue = {
       if (!page) {
         console.log(`A page wasn't found for "${path}"`)
 
-        // Preload the custom 404 page when running `gatsby develop`
-        if (path !== `/404.html` && process.env.NODE_ENV !== `production`) {
-          queue.getResourcesForPathname(`/404.html`)
+        // Preload the custom 404 page
+        if (path !== `/404.html`) {
+          return resolve(queue.getResourcesForPathname(`/404.html`))
         }
 
         return resolve()
