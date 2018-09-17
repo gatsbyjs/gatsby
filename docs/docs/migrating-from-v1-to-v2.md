@@ -676,6 +676,18 @@ export default ({ children }) => (
 
 TODO: add a code snippet that uses [`onCreateWebpackConfig`](/docs/node-apis/#onCreateWebpackConfig) to revert to Gatsby's v1 behaviour.
 
+### gatsby-image's `outerWrapperClassName` was removed
+
+Because the outer wrapper `div` was removed, you can no longer use `outerWrapperClassName` for styling your images. You should merge those styles into your wrapper's class.
+
+```diff
+<Img
+  fluid={data.file.childImageSharp.fluid}
+  className={styles.wrapper}
+- outerWrapperClassName={styles.outerWrapper}
+/>
+```
+
 ## Resolving Deprecations
 
 ### Import Link from Gatsby
