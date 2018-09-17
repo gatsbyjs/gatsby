@@ -137,9 +137,9 @@ class DefaultLayout extends React.Component {
           <html lang="en" />
         </Helmet>
         <Banner background={isHomepage ? `#402060` : false}>
-          Gatsby v2 is now in beta!{` `}
+          These are the docs for v1.{` `}
           <OutboundLink
-            href="https://next.gatsbyjs.org/"
+            href="https://gatsbyjs.org/"
             css={{
               color: `#fff`,
             }}
@@ -151,8 +151,7 @@ class DefaultLayout extends React.Component {
         <div
           className={hasSidebar ? `main-body has-sidebar` : `main-body`}
           css={{
-            paddingTop: isHomepage
-            ? 0 : presets.bannerHeight,
+            paddingTop: isHomepage ? 0 : presets.bannerHeight,
             [presets.Tablet]: {
               margin: `0 auto`,
               paddingTop: isHomepage
