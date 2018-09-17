@@ -5,6 +5,7 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "bluebird": "^3.5.1",
+    "dotenv": "^6.0.0",
     "email-validator": "^1.1.1",
     "fuse.js": "^3.2.0",
     "gatsby": "^2.0.0",
