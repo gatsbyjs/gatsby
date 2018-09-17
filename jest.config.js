@@ -27,7 +27,4 @@ module.exports = {
   moduleNameMapper: {
     "^highlight.js$": `<rootDir>/node_modules/highlight.js/lib/index.js`,
   },
-  // TODO: Remove this once https://github.com/facebook/jest/pull/6792 is released.
-  // Probably in Jest 23.4.3
-  testURL: `http://localhost`,
 }

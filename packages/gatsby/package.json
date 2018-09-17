@@ -134,7 +134,6 @@
     "@babel/preset-react": "^7.0.0",
     "@babel/runtime": "^7.0.0",
     "cross-env": "^5.1.4",
-    "jest": "^22.4.3",
     "lerna": "^2.9.0",
     "nyc": "^7.0.0",
     "rimraf": "^2.6.1"
