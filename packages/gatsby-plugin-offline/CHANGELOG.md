@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.5"></a>
+
+## [2.0.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/compare/gatsby-plugin-offline@2.0.0-rc.9...gatsby-plugin-offline@2.0.5) (2018-09-17)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
 <a name="2.0.0-rc.9"></a>
 
 # [2.0.0-rc.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/compare/gatsby-plugin-offline@2.0.0-rc.8...gatsby-plugin-offline@2.0.0-rc.9) (2018-09-17)
