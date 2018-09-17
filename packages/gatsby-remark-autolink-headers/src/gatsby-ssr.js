@@ -12,7 +12,7 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
   }
 
   let showIcon = true
-  if ("icon" in pluginOptions) {
+  if (`icon` in pluginOptions) {
     showIcon = pluginOptions.icon
   }
 
