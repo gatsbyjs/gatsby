@@ -3,7 +3,7 @@ const fs = require(`fs`)
 const { join } = require(`path`)
 const { renderToString, renderToStaticMarkup } = require(`react-dom/server`)
 const { ServerLocation, Router, isRedirect } = require(`@reach/router`)
-const { get, merge, isObject, flatten, uniqBy } = require(`lodash`)
+const { get, merge } = require(`lodash`)
 
 const apiRunner = require(`./api-runner-ssr`)
 const syncRequires = require(`./sync-requires`)
@@ -52,7 +52,7 @@ const createElement = React.createElement
 export default (pagePath, callback) => {
   let bodyHtml = ``
   let headComponents = [
-    <meta name="generator" content={`Gatsby ${gatsbyVersion}`} />
+    <meta name="generator" content={`Gatsby ${gatsbyVersion}`} />,
   ]
   let htmlAttributes = {}
   let bodyAttributes = {}
@@ -198,8 +198,8 @@ export default (pagePath, callback) => {
       a.file !== `/` // <- I don't think this is possible
 
     return {
-      js: stats.assets.js.filter(isNotRootAndMatchesPage),
-      css: stats.assets.css.filter(isNotRootAndMatchesPage),
+      js: get(stats, `assets.js`, []).filter(isNotRootAndMatchesPage),
+      css: get(stats, `assets.css`, []).filter(isNotRootAndMatchesPage),
     }
   }
   // Create paths to scripts
@@ -248,33 +248,38 @@ export default (pagePath, callback) => {
 
   // Add <link>s for styles that should be prefetched
   // otherwise, inline as a <style> tag
-  headComponents.push(
-    ...styles
-      .filter(s => s.rel === `prefetch`)
-      .map(style => (
+  const prefetchedAssets = []
+  const inlineStyles = []
+
+  for (const asset of styles) {
+    if (asset.rel === `prefetch`) {
+      prefetchedAssets.push(
         <link
           as="style"
-          rel={style.rel}
-          key={style.file}
-          href={`${__PATH_PREFIX__}/${style.file}`}
+          rel={asset.rel}
+          key={asset.file}
+          href={`${__PATH_PREFIX__}/${asset.file}`}
         />
-      ))
-  )
-  // unshift all at once to maintain the order
-  headComponents.unshift(
-    ...styles.filter(s => s.rel !== `prefetch`).map(style => (
-      <style
-        key={style.file}
-        data-href={`${__PATH_PREFIX__}/${style.file}`}
-        dangerouslySetInnerHTML={{
-          __html: fs.readFileSync(
-            join(process.cwd(), `public`, style.file),
-            `utf-8`
-          ),
-        }}
-      />
-    ))
-  )
+      )
+    } else {
+      inlineStyles.push(
+        <style
+          key={asset.file}
+          data-href={`${__PATH_PREFIX__}/${asset.file}`}
+          dangerouslySetInnerHTML={{
+            __html: fs.readFileSync(
+              join(process.cwd(), `public`, asset.file),
+              `utf8`
+            ),
+          }}
+        />
+      )
+    }
+  }
+
+  // inline styles are added to the front
+  headComponents.unshift(...inlineStyles)
+  headComponents.push(...prefetchedAssets)
 
   apiRunner(`onPreRenderHTML`, {
     getHeadComponents,

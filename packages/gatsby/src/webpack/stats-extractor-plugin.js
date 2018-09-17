@@ -50,7 +50,6 @@ module.exports = class GatsbyStatsExtractor {
           const [chunkName] = chunk.names || []
           const chunkGroup = groups[chunkName]
 
-          console.log(chunkName)
           if (chunkName && chunkGroup) {
             let files = uniq(
               (groups[chunkName].assets || []).filter(f => !f.endsWith(`.map`))
