@@ -9,7 +9,7 @@ import ShowcaseItemCategories from "./showcase-item-categories"
 import { rhythm } from "../../utils/typography"
 
 import GithubIcon from "react-icons/lib/go/mark-github"
-import FaExtLink from "react-icons/lib/fa/external-link"
+import LaunchSiteIcon from "react-icons/lib/md/launch"
 import FeaturedIcon from "../../assets/featured-sites-icons--white.svg"
 
 const ShowcaseList = ({ items, count }) => {
@@ -69,12 +69,12 @@ const ShowcaseList = ({ items, count }) => {
                     </Fragment>
                   )}
                   <a
+                    css={{ ...styles.shortcutIcon }}
                     href={node.main_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    css={{ ...styles.shortcutIcon }}
                   >
-                    <FaExtLink style={{ verticalAlign: `text-top` }} />
+                    <LaunchSiteIcon style={{ verticalAlign: `text-top` }} />
                   </a>
                 </div>
                 {node.featured && (
