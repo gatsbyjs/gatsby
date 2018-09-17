@@ -6,13 +6,6 @@
   categories:
     - Web Dev
     - Featured
-- title: Nike - Just Do It
-  main_url: "https://justdoit.nike.com/"
-  url: "https://justdoit.nike.com/"
-  featured: true
-  categories:
-    - eCommerce
-    - Featured
 - title: Stitch Fix
   main_url: "https://www.stitchfix.com/"
   url: "https://www.stitchfix.com/"
@@ -246,6 +239,13 @@
     - Documentation
     - Web Dev
     - Open Source
+- title: Nike - Just Do It
+  main_url: "https://justdoit.nike.com/"
+  url: "https://justdoit.nike.com/"
+  featured: true
+  categories:
+    - eCommerce
+    - Featured    
 - title: Cardiogram
   main_url: "https://cardiogr.am/"
   url: "https://cardiogr.am/"
