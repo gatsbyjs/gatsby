@@ -175,12 +175,30 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
         )
       })}
       {/* makes last row items equal width and aligned left */}
-      <div aria-hidden="true" css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }} />
-      <div aria-hidden="true" css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }} />
-      <div aria-hidden="true" css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }} />
-      <div aria-hidden="true" css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }} />
-      <div aria-hidden="true" css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }} />
-      <div aria-hidden="true" css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }} />
+      <div
+        aria-hidden="true"
+        css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }}
+      />
+      <div
+        aria-hidden="true"
+        css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }}
+      />
+      <div
+        aria-hidden="true"
+        css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }}
+      />
+      <div
+        aria-hidden="true"
+        css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }}
+      />
+      <div
+        aria-hidden="true"
+        css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }}
+      />
+      <div
+        aria-hidden="true"
+        css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }}
+      />
     </div>
   )
 }
