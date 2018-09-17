@@ -2397,3 +2397,13 @@
   categories:
     - Jobs
   featured: false
+- title: MOMNOTEBOOK.COM
+  description: >
+    Sharing knowledge and experiences that make childhood and motherhood rich, vibrant and healthy.
+  main_url: 'https://momnotebook.com/'
+  url: 'https://momnotebook.com/'
+  featured: false
+  built_by: Aleksander Hansson
+  built_by_url: https://www.linkedin.com/in/aleksanderhansson/
+  categories:
+    - Blog
