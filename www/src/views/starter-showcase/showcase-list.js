@@ -94,17 +94,7 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
                   <span css={{ color: colors.gray.dark }}>
                     {repo.owner && repo.owner.login} /
                   </span>
-                  <span
-                    css={{
-                      "> a": {
-                        paddingLeft: 5,
-                        "&:hover": {
-                          background: `none`,
-                          color: colors.gatsby,
-                        },
-                      },
-                    }}
-                  >
+                  <span>
                     <a
                       href="#copy-to-clipboard"
                       onClick={() =>

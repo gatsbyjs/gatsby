@@ -147,6 +147,7 @@ const styles = {
     },
   },
   shortcutIcon: {
+    paddingLeft: rhythm(1 / 8),
     "&&": {
       color: colors.gray.bright,
       fontWeight: `normal`,
