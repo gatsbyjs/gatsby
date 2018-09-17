@@ -1,7 +1,18 @@
-/* eslint-disable */
+import { graphql } from "gatsby"
+
 export const contentfulAssetFixed = graphql`
   fragment GatsbyContentfulFixed on ContentfulFixed {
     base64
+    width
+    height
+    src
+    srcSet
+  }
+`
+
+export const contentfulAssetFixedTracedSVG = graphql`
+  fragment GatsbyContentfulFixed_tracedSVG on ContentfulFixed {
+    tracedSVG
     width
     height
     src
@@ -44,6 +55,16 @@ export const contentfulAssetFixedPreferWebpNoBase64 = graphql`
 export const contentfulAssetFluid = graphql`
   fragment GatsbyContentfulFluid on ContentfulFluid {
     base64
+    aspectRatio
+    src
+    srcSet
+    sizes
+  }
+`
+
+export const contentfulAssetFluidTracedSVG = graphql`
+  fragment GatsbyContentfulFluid_tracedSVG on ContentfulFluid {
+    tracedSVG
     aspectRatio
     src
     srcSet

@@ -19,6 +19,7 @@ const createKey = require(`./create-key`)
 const { getExampleValues, isEmptyObjectOrArray } = require(`./data-tree-utils`)
 const DateType = require(`./types/type-date`)
 const FileType = require(`./types/type-file`)
+const is32BitInteger = require(`../utils/is-32-bit-integer`)
 
 import type { GraphQLOutputType } from "graphql"
 import type {
@@ -92,7 +93,12 @@ function inferGraphQLType({
     return listType
   }
 
-  if (DateType.shouldInfer(exampleValue)) {
+  if (
+    // momentjs crashes when it encounters a Symbol,
+    // so check against that
+    typeof exampleValue !== `symbol` &&
+    DateType.shouldInfer(exampleValue)
+  ) {
     return DateType.getType()
   }
 
@@ -117,7 +123,7 @@ function inferGraphQLType({
         }),
       }
     case `number`:
-      return _.isInteger(exampleValue)
+      return is32BitInteger(exampleValue)
         ? { type: GraphQLInt }
         : { type: GraphQLFloat }
     default:

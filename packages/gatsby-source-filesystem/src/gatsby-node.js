@@ -1,5 +1,6 @@
 const chokidar = require(`chokidar`)
 const fs = require(`fs`)
+const path = require(`path`)
 const { Machine } = require(`xstate`)
 
 const { createFileNode } = require(`./create-file-node`)
@@ -86,6 +87,12 @@ See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
       `)
   }
 
+  // Validate that the path is absolute.
+  // Absolute paths are required to resolve images correctly.
+  if (!path.isAbsolute(pluginOptions.path)) {
+    pluginOptions.path = path.resolve(process.cwd(), pluginOptions.path)
+  }
+
   const fsMachine = createFSMachine()
   let currentState = fsMachine.initialState
   let fileNodeQueue = new Map()
@@ -122,12 +129,14 @@ See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
   const watcher = chokidar.watch(pluginOptions.path, {
     ignored: [
       `**/*.un~`,
+      `**/.DS_Store`,
       `**/.gitignore`,
       `**/.npmignore`,
       `**/.babelrc`,
       `**/yarn.lock`,
       `**/node_modules`,
       `../**/dist/**`,
+      ...(pluginOptions.ignore || []),
     ],
   })
 
@@ -143,6 +152,8 @@ See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
         currentState = fsMachine.transition(currentState.value, `EMIT_FS_EVENT`)
         createNode(fileNode)
       }
+
+      return null
     })
     return fileNodePromise
   }

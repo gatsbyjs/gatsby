@@ -1,6 +1,5 @@
-const metadata = require(`react-docgen`)
-
 const DOCLET_PATTERN = /^@(\w+)(?:$|\s((?:[^](?!^@\w))*))/gim
+
 const { hasOwnProperty: has } = Object.prototype
 let cleanDocletValue = str => {
   str = str.trim()
@@ -20,13 +19,33 @@ export const cleanDoclets = desc => {
 }
 
 /**
+ * Given a string, this function returns an object with doclet names as keys
+ * and their "content" as values.
+ *
+ * Adapted from https://github.com/reactjs/react-docgen/blob/ee8a5359c478b33a6954f4546637312764798d6b/src/utils/docblock.js#L62
+ * Updated to strip \r from the end of doclets
+ */
+const getDoclets = str => {
+  let doclets = Object.create(null)
+  let match = DOCLET_PATTERN.exec(str)
+  let val
+
+  for (; match; match = DOCLET_PATTERN.exec(str)) {
+    val = match[2] ? match[2].replace(/\r$/, ``) : true
+    doclets[match[1]] = val
+  }
+
+  return doclets
+}
+
+/**
  * parse out description doclets to an object and remove the comment
  *
  * @param  {ComponentMetadata|PropMetadata} obj
  */
 export const parseDoclets = obj => {
   let desc = obj.description || ``
-  return metadata.utils.docblock.getDoclets(desc) || Object.create(null)
+  return getDoclets(desc) || Object.create(null)
 }
 
 /**

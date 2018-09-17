@@ -18,6 +18,30 @@ exports.onClientEntry = true
 exports.onInitialClientRender = true
 
 /**
+ * Called when changing location is started.
+ * @param {object} $0
+ * @param {object} $0.location A location object
+ * @param {object} $0.action The "action" that caused the route change
+ * @example
+ * exports.onPreRouteUpdate = ({ location }) => {
+ *   console.log("Gatsby started to change location", location.pathname)
+ * }
+ */
+exports.onPreRouteUpdate = true
+
+/**
+ * Called when changing location is longer than 1 second.
+ * @param {object} $0
+ * @param {object} $0.location A location object
+ * @param {object} $0.action The "action" that caused the route change
+ * @example
+ * exports.onRouteUpdateDelayed = () => {
+ *   console.log("We can show loading indicator now")
+ * }
+ */
+exports.onRouteUpdateDelayed = true
+
+/**
  * Called when the user changes routes
  * @param {object} $0
  * @param {object} $0.location A location object
@@ -25,6 +49,14 @@ exports.onInitialClientRender = true
  * @example
  * exports.onRouteUpdate = ({ location }) => {
  *   console.log('new pathname', location.pathname)
+ *
+ *   // Track pageview with google analytics
+ *   window.ga(
+ *     `set`,
+ *     `page`,
+ *     location.pathname + location.search + location.hash,
+ *   )
+ *   window.ga(`send`, `pageview`)
  * }
  */
 exports.onRouteUpdate = true
@@ -46,13 +78,6 @@ exports.shouldUpdateScroll = true
 exports.registerServiceWorker = true
 
 /**
- * Allow a plugin to replace the router component e.g. to use a custom history version.
- * @param {object} $0
- * @param {object} $0.history The history instance to use in the replacement router instance
- */
-exports.replaceRouterComponent = true
-
-/**
  * Allow a plugin to replace the page component renderer. This api runner can be used to
  * implement page transitions. See https://github.com/gatsbyjs/gatsby/tree/master/examples/using-page-transitions for an example of this.
  * @param {object} $0
@@ -62,24 +87,59 @@ exports.replaceRouterComponent = true
 exports.replaceComponentRenderer = true
 
 /**
- * Allow a plugin to replace the history object.
+ * Allow a plugin to wrap the page element.
+ *
+ * This is useful for setting wrapper component around pages that won't get
+ * unmounted on page change. For setting Provider components use [wrapRootElement](#wrapRootElement).
+ *
+ * _Note:_ [There is equivalent hook in SSR API](/docs/ssr-apis/#wrapPageElement)
  * @param {object} $0
- * @param {object} $0.basename The base URL of the app.
+ * @param {object} $0.element The "Page" React Element built by Gatsby.
+ * @param {object} $0.props Props object used by page.
+ * @example
+ * import React from "react"
+ * import Layout from "./src/components/Layout"
+ *
+ * export const wrapPageElement = ({ element, props }) => {
+ *   // props provide same data to Layout as Page element will get
+ *   // including location, data, etc - you don't need to pass it
+ *   return <Layout {...props}>{element}</Layout>
+ * }
  */
-exports.replaceHistory = true
+exports.wrapPageElement = true
 
 /**
- * Allow a plugin to wrap the root component.
+ * Allow a plugin to wrap the root element.
+ *
+ * This is useful to setup any Providers component that will wrap your application.
+ * For setting persistent UI elements around pages use [wrapPageElement](#wrapPageElement).
+ *
+ * _Note:_ [There is equivalent hook in SSR API](/docs/ssr-apis/#wrapRootElement)
  * @param {object} $0
- * @param {object} $0.Root The "Root" component built by Gatsby.
+ * @param {object} $0.element The "Root" React Element built by Gatsby.
+ * @example
+ * import React from "react"
+ * import { Provider } from "react-redux"
+ *
+ * import createStore from "./src/state/createStore"
+ * const store = createStore()
+ *
+ * export const wrapRootElement = ({ element }) => {
+ *   return (
+ *     <Provider store={store}>
+ *       {element}
+ *     </Provider>
+ *   )
+ * }
  */
-exports.wrapRootComponent = true
+exports.wrapRootElement = true
 
 /**
  * Called when prefetching for a pathname is triggered. Allows
  * for plugins with custom prefetching logic.
  * @param {object} $0
  * @param {object} $0.pathname The pathname whose resources should now be prefetched
+ * @param {object} $0.getResourcesForPathname Function for fetching resources related to pathname
  */
 exports.onPrefetchPathname = true
 
@@ -102,3 +162,31 @@ exports.disableCorePrefetching = true
  * };
  */
 exports.replaceHydrateFunction = true
+
+/**
+ * Inform plugins when a service worker has been installed.
+ * @param {object} $0
+ * @param {object} $0.serviceWorker The service worker instance.
+ */
+exports.onServiceWorkerInstalled = true
+
+/**
+ * Inform plugins of when a service worker has an update available.
+ * @param {object} $0
+ * @param {object} $0.serviceWorker The service worker instance.
+ */
+exports.onServiceWorkerUpdateFound = true
+
+/**
+ * Inform plugins when a service worker has become active.
+ * @param {object} $0
+ * @param {object} $0.serviceWorker The service worker instance.
+ */
+exports.onServiceWorkerActive = true
+
+/**
+ * Inform plugins when a service worker is redundant.
+ * @param {object} $0
+ * @param {object} $0.serviceWorker The service worker instance.
+ */
+exports.onServiceWorkerRedundant = true

@@ -23,12 +23,6 @@ There are many Gatsby Remark plugins which you can install to customize how Mark
 It recognizes files with the following extensions as Markdown:
 
 - md
-- rmd
-- mkd
-- mkdn
-- mdwn
-- mdown
-- litcoffee
 - markdown
 
 Each Markdown file is parsed into a node of type `MarkdownRemark`.
@@ -60,6 +54,22 @@ A sample GraphQL query to get MarkdownRemark nodes:
         }
       }
     }
+  }
+}
+```
+
+## Troubleshooting
+
+### Excerpts for non-latin languages
+
+By default, `excerpt` uses `underscore.string/prune` which doesn't handle non-latin characters ([https://github.com/epeli/underscore.string/issues/418](https://github.com/epeli/underscore.string/issues/418)).
+
+If that is the case, you can set `truncate` option on `excerpt` field, like:
+
+```graphql
+{
+  markdownRemark {
+    excerpt(truncate: true)
   }
 }
 ```

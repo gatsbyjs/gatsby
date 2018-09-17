@@ -28,16 +28,8 @@ export const pageSchema = Joi.object()
 export const nodeSchema = Joi.object()
   .keys({
     id: Joi.string().required(),
-    children: Joi.array()
-      .items(Joi.string(), Joi.object().forbidden())
-      .required(),
-    parent: Joi.string()
-      .allow(null)
-      .required()
-      .error(
-        () =>
-          `"parent" must be the "id" of another node or if there is no parent (common), "null"`
-      ),
+    children: Joi.array().items(Joi.string(), Joi.object().forbidden()),
+    parent: Joi.string().allow(null),
     fields: Joi.object(),
     internal: Joi.object()
       .keys({
@@ -48,7 +40,10 @@ export const nodeSchema = Joi.object()
         fieldOwners: Joi.array(),
         content: Joi.string().allow(``),
         description: Joi.string(),
+        ignoreType: Joi.boolean(),
       })
-      .unknown({ allow: false }), // Don't allow non-standard fields
+      .unknown({
+        allow: false,
+      }), // Don't allow non-standard fields
   })
   .unknown()

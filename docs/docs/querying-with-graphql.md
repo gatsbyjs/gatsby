@@ -14,7 +14,7 @@ familiar with SQL, it works in a very similar way. Using a special syntax, you d
 the data you want in your component and then that data is given
 to you.
 
-Gatsby uses GraphQL to enable [page and layout
+Gatsby uses GraphQL to enable [page and StaticQuery
 components](/docs/building-with-components/) to declare what data they and their
 sub-components need. Then, Gatsby makes that data available in
 the browser when needed by your components.
@@ -56,6 +56,7 @@ A basic page component with a GraphQL query might look like this:
 
 ```jsx
 import React from "react"
+import { graphql } from "gatsby"
 
 export default ({ data }) => (
   <div>
@@ -65,7 +66,7 @@ export default ({ data }) => (
 )
 
 export const query = graphql`
-  query AboutQuery {
+  query {
     site {
       siteMetadata {
         title
@@ -174,6 +175,7 @@ This is what a component using `gatsby-image` looks like:
 ```jsx
 import React from "react"
 import Img from "gatsby-image"
+import { graphql } from "gatsby"
 
 export default ({ data }) => (
   <div>
@@ -183,7 +185,7 @@ export default ({ data }) => (
 )
 
 export const query = graphql`
-  query GatsbyImageSampleQuery {
+  query {
     file(relativePath: { eq: "blog/avatars/kyle-mathews.jpeg" }) {
       childImageSharp {
         # Specify the image processing specifications right in the query.
@@ -208,7 +210,7 @@ See also the following blog posts:
 
 Notice that in the above example for [querying images](#images), we used `...GatsbyImageSharpFixed`, which is a GraphQL Fragment, a reusable set of fields for query composition. You can read more about them [here](http://graphql.org/learn/queries/#fragments).
 
-If you wish to define your own fragments for use in your application, you can use named exports to export them in any Javascript file, and they will be automatically processed by Gatsby for use in your GraphQL queries.
+If you wish to define your own fragments for use in your application, you can use named exports to export them in any JavaScript file, and they will be automatically processed by Gatsby for use in your GraphQL queries.
 
 For example if I put a fragment in a helper component, I can use that fragment in any other query:
 
@@ -229,7 +231,7 @@ export const markdownFrontmatterFragment = graphql`
 They can then be used in any GraphQL query after that!
 
 ```graphql
-query PostByPath($path: String!) {
+query($path: String!) {
   markdownRemark(frontmatter: { path: { eq: $path } }) {
     ...MarkdownFrontmatter
   }
@@ -242,6 +244,7 @@ It’s good practice for your helper components to define and export a fragment 
 // src/pages/index.jsx
 
 import React from "react"
+import { graphql } from "gatsby"
 
 export default ({ data }) => {
   return (
@@ -260,7 +263,7 @@ export default ({ data }) => {
 }
 
 export const query = graphql`
-  query IndexQuery {
+  query {
     allMarkdownRemark {
       totalCount
       edges {
@@ -283,6 +286,7 @@ If the index component becomes too large, you might want to refactor it into sma
 // src/components/IndexPost.jsx
 
 import React from "react"
+import { graphql } from "gatsby"
 
 export default ({ frontmatter: { title, date } }) => (
   <div>
@@ -304,11 +308,12 @@ export const query = graphql`
 
 Now, we can use the component together with the exported fragment in our index page.
 
-```jsx{28}
+```jsx{26}
 // src/pages/index.jsx
 
-import React from "react";
-import IndexPost from "../components/IndexPost";
+import React from "react"
+import IndexPost from "../components/IndexPost"
+import { graphql } from "gatsby"
 
 export default ({ data }) => {
   return (
@@ -321,11 +326,11 @@ export default ({ data }) => {
         </div>
       ))}
     </div>
-  );
-};
+  )
+}
 
 export const query = graphql`
-  query IndexQuery {
+  query {
     allMarkdownRemark {
       totalCount
       edges {
@@ -335,7 +340,7 @@ export const query = graphql`
       }
     }
   }
-`;
+`
 ```
 
 ## Further reading

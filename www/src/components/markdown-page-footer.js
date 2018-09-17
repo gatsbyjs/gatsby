@@ -1,4 +1,5 @@
 import React from "react"
+import { graphql } from "gatsby"
 import EditIcon from "react-icons/lib/md/create"
 import CheckIcon from "react-icons/lib/md/thumb-up"
 import CrossIcon from "react-icons/lib/md/thumb-down"
@@ -41,7 +42,8 @@ export default class MarkdownPageFooter extends React.Component {
           <span css={{ lineHeight: rhythm(2) }}>Thank you!</span>
         ) : (
           <span css={{ lineHeight: rhythm(2) }}>
-            Was this helpful?{` `}
+            Was this helpful?
+            {` `}
             <CheckIcon
               onClick={() => {
                 sendReview(true, this.props.page.parent.relativePath)

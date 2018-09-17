@@ -187,7 +187,7 @@ function prepareTextNode(node, key, text, createNode, createNodeId) {
 function prepareJSONNode(node, key, content, createNodeId, i = ``) {
   const str = JSON.stringify(content)
   const JSONNode = {
-    ...content,
+    ...(_.isPlainObject(content) ? { ...content } : { content: content }),
     id: createNodeId(`${node.id}${key}${i}JSONNode`),
     parent: node.id,
     children: [],
@@ -227,7 +227,6 @@ exports.createContentTypeNodes = ({
     const getField = makeGetLocalizedField({
       locale,
       localesFallback,
-      defaultLocale,
     })
 
     // Warn about any field conflicts
@@ -247,7 +246,13 @@ exports.createContentTypeNodes = ({
     // First create nodes for each of the entries of that content type
     const entryNodes = entries.map(entryItem => {
       // Get localized fields.
-      const entryItemFields = _.mapValues(entryItem.fields, v => getField(v))
+      const entryItemFields = _.mapValues(entryItem.fields, (v, k) => {
+        const fieldProps = contentTypeItem.fields.find(field => field.id === k)
+        if (fieldProps.localized) {
+          return getField(v)
+        }
+        return v[defaultLocale]
+      })
 
       // Prefix any conflicting fields
       // https://github.com/gatsbyjs/gatsby/pull/1084#pullrequestreview-41662888
@@ -462,7 +467,6 @@ exports.createAssetNodes = ({
     const getField = makeGetLocalizedField({
       locale,
       localesFallback,
-      defaultLocale,
     })
 
     const localizedAsset = { ...assetItem }
@@ -481,6 +485,7 @@ exports.createAssetNodes = ({
         : ``,
     }
     const assetNode = {
+      contentful_id: localizedAsset.sys.contentful_id,
       id: mId(localizedAsset.sys.id),
       parent: null,
       children: [],

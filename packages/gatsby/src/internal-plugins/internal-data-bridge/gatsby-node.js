@@ -40,6 +40,8 @@ function transformPackageJson(json) {
   return json
 }
 
+const createPageId = path => `SitePage ${path}`
+
 exports.sourceNodes = ({ actions, store }) => {
   const { createNode } = actions
   const state = store.getState()
@@ -137,8 +139,6 @@ exports.sourceNodes = ({ actions, store }) => {
   })
 }
 
-const createPageId = path => `SitePage ${path}`
-
 exports.onCreatePage = ({ page, actions }) => {
   const { createNode } = actions
   // eslint-disable-next-line
@@ -154,7 +154,7 @@ exports.onCreatePage = ({ page, actions }) => {
       type: `SitePage`,
       contentDigest: crypto
         .createHash(`md5`)
-        .update(JSON.stringify(page))
+        .update(JSON.stringify(pageWithoutUpdated))
         .digest(`hex`),
       description:
         page.pluginCreatorId === `Plugin default-site-plugin`

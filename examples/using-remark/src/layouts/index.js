@@ -1,5 +1,5 @@
 import React from "react"
-import { Link, StaticQuery } from "gatsby"
+import { Link, StaticQuery, graphql } from "gatsby"
 import { scale } from "../utils/typography"
 import styles from "../styles"
 
@@ -7,13 +7,14 @@ import "typeface-space-mono"
 import "typeface-spectral"
 
 import "prismjs/themes/prism-solarizedlight.css"
+import "prismjs/plugins/line-numbers/prism-line-numbers.css"
 
 class Layout extends React.Component {
   render() {
     return (
       <StaticQuery
         query={graphql`
-          query LayoutIndexQuery {
+          query {
             site {
               siteMetadata {
                 author
@@ -55,7 +56,8 @@ class Layout extends React.Component {
                     color: styles.colors.light,
                   }}
                 >
-                  powered by{` `}
+                  powered by
+                  {` `}
                   <a target="_blank" rel="noopener noreferrer" href={homepage}>
                     {author}
                   </a>

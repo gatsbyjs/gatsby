@@ -1,6 +1,6 @@
 require(`v8-compile-cache`)
 
-const fs = require(`fs`)
+const fs = require(`fs-extra`)
 const path = require(`path`)
 const dotenv = require(`dotenv`)
 const FriendlyErrorsWebpackPlugin = require(`friendly-errors-webpack-plugin`)
@@ -27,6 +27,8 @@ module.exports = async (
   webpackPort = 1500
 ) => {
   const directoryPath = withBasePath(directory)
+
+  process.env.GATSBY_BUILD_STAGE = suppliedStage
 
   // We combine develop & develop-html stages for purposes of generating the
   // webpack config.
@@ -63,6 +65,7 @@ module.exports = async (
     // Don't allow overwriting of NODE_ENV, PUBLIC_DIR as to not break gatsby things
     envObject.NODE_ENV = JSON.stringify(env)
     envObject.PUBLIC_DIR = JSON.stringify(`${process.cwd()}/public`)
+    envObject.BUILD_STAGE = JSON.stringify(stage)
 
     return Object.assign(envObject, gatsbyVarObject)
   }
@@ -103,6 +106,9 @@ module.exports = async (
             }:${webpackPort}/`,
           devtoolModuleFilenameTemplate: info =>
             path.resolve(info.absoluteResourcePath).replace(/\\/g, `/`),
+          // Avoid React cross-origin errors
+          // See https://reactjs.org/docs/cross-origin-errors.html
+          crossOriginLoading: `anonymous`,
         }
       case `build-html`:
       case `develop-html`:
@@ -121,8 +127,8 @@ module.exports = async (
         }
       case `build-javascript`:
         return {
-          filename: `[name]-[chunkhash].js`,
-          chunkFilename: `[name]-[chunkhash].js`,
+          filename: `[name]-[contenthash].js`,
+          chunkFilename: `[name]-[contenthash].js`,
           path: directoryPath(`public`),
           publicPath: program.prefixPaths
             ? `${store.getState().config.pathPrefix}/`
@@ -184,30 +190,12 @@ module.exports = async (
 
           new FriendlyErrorsWebpackPlugin({
             clearConsole: false,
-            compilationSuccessInfo: {
-              messages: [
-                `You can now view your site in the browser running at ${program.ssl ? `https` : `http`}://${
-                  program.host
-                }:${program.port}`,
-                `Your graphql debugger is running at ${program.ssl ? `https` : `http`}://${program.host}:${
-                  program.port
-                }/___graphql`,
-              ],
-            },
           }),
         ])
         break
       case `build-javascript`: {
         configPlugins = configPlugins.concat([
           plugins.extractText(),
-          // Minify Javascript.
-          plugins.uglify({
-            uglifyOptions: {
-              compress: {
-                drop_console: false,
-              },
-            },
-          }),
           // Write out stats object mapping named dynamic imports (aka page
           // components) to all their async chunks.
           {
@@ -216,6 +204,7 @@ module.exports = async (
                 `gatsby-webpack-stats-extractor`,
                 (stats, done) => {
                   let assets = {}
+                  let assetsMap = {}
                   for (let chunkGroup of stats.compilation.chunkGroups) {
                     if (chunkGroup.name) {
                       let files = []
@@ -225,6 +214,14 @@ module.exports = async (
                       assets[chunkGroup.name] = files.filter(
                         f => f.slice(-4) !== `.map`
                       )
+                      assetsMap[chunkGroup.name] = files
+                        .filter(
+                          f =>
+                            f.slice(-4) !== `.map` &&
+                            f.slice(0, chunkGroup.name.length) ===
+                              chunkGroup.name
+                        )
+                        .map(filename => `/${filename}`)
                     }
                   }
 
@@ -234,9 +231,15 @@ module.exports = async (
                   }
 
                   fs.writeFile(
-                    path.join(`public`, `webpack.stats.json`),
-                    JSON.stringify(webpackStats),
-                    done
+                    path.join(`public`, `chunk-map.json`),
+                    JSON.stringify(assetsMap),
+                    () => {
+                      fs.writeFile(
+                        path.join(`public`, `webpack.stats.json`),
+                        JSON.stringify(webpackStats),
+                        done
+                      )
+                    }
                   )
                 }
               )
@@ -286,7 +289,8 @@ module.exports = async (
       rules.yaml(),
       rules.fonts(),
       rules.images(),
-      rules.audioVideo(),
+      rules.media(),
+      rules.miscAssets(),
     ]
     switch (stage) {
       case `develop`: {
@@ -337,15 +341,6 @@ module.exports = async (
           {
             oneOf: [rules.cssModules(), rules.css()],
           },
-
-          // Remove manually unused React Router modules. Try removing these
-          // rules whenever they get around to making a new release with their
-          // tree shaking fixes.
-          { test: /HashHistory/, use: `null-loader` },
-          { test: /MemoryHistory/, use: `null-loader` },
-          { test: /StaticRouter/, use: `null-loader` },
-          { test: /MemoryRouter/, use: `null-loader` },
-          { test: /HashRouter/, use: `null-loader` },
         ])
 
         break
@@ -365,11 +360,25 @@ module.exports = async (
       // directory if you need to install a specific version of a module for a
       // part of your site.
       modules: [
-        directoryPath(path.join(`src`, `node_modules`)),
+        directoryPath(path.join(`node_modules`)),
         `node_modules`,
       ],
       alias: {
         gatsby$: directoryPath(path.join(`.cache`, `gatsby-browser-entry.js`)),
+        // Using directories for module resolution is mandatory because
+        // relative path imports are used sometimes
+        // See https://stackoverflow.com/a/49455609/6420957 for more details
+        "@babel/runtime": path.dirname(
+          require.resolve(`@babel/runtime/package.json`)
+        ),
+        "core-js": path.dirname(require.resolve(`core-js/package.json`)),
+        "react-hot-loader": path.dirname(
+          require.resolve(`react-hot-loader/package.json`)
+        ),
+        "react-lifecycles-compat": directoryPath(
+          `.cache/react-lifecycles-compat.js`
+        ),
+        "create-react-context": directoryPath(`.cache/create-react-context.js`),
       },
     }
   }
@@ -406,7 +415,7 @@ module.exports = async (
     // https://github.com/defunctzombie/package-browser-field-spec); setting
     // the target tells webpack which file to include, ie. browser vs main.
     target: stage === `build-html` || stage === `develop-html` ? `node` : `web`,
-    profile: stage === `production`,
+
     devtool: getDevtool(),
     // Turn off performance hints as we (for now) don't want to show the normal
     // webpack output anywhere.
@@ -431,7 +440,58 @@ module.exports = async (
       splitChunks: {
         name: false,
       },
+      minimizer: [
+        // TODO: maybe this option should be noMinimize?
+        !program.noUglify && plugins.minifyJs(),
+        plugins.minifyCss(),
+      ].filter(Boolean),
     }
+  }
+
+  if (stage === `build-html` || stage === `develop-html`) {
+    const externalList = [
+      // match `lodash` and `lodash/foo`
+      // but not things like `lodash-es`
+      `lodash`,
+      /^lodash\//,
+      `react`,
+      /^react-dom\//,
+      `pify`,
+      `@reach/router`,
+      `@reach/router/lib/history`,
+      `common-tags`,
+      `path`,
+      `semver`,
+      `react-helmet`,
+      `minimatch`,
+      `fs`,
+      /^core-js\//,
+      `es6-promise`,
+      `crypto`,
+      `zlib`,
+      `http`,
+      `https`,
+      `debug`,
+    ]
+
+    config.externals = [
+      function(context, request, callback) {
+        if (
+          externalList.some(item => {
+            if (typeof item === `string` && item === request) {
+              return true
+            } else if (item instanceof RegExp && item.test(request)) {
+              return true
+            }
+
+            return false
+          })
+        ) {
+          return callback(null, `umd ${request}`)
+        }
+        return callback()
+      },
+    ]
   }
 
   store.dispatch(actions.replaceWebpackConfig(config))

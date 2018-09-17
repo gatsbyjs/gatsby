@@ -2,7 +2,7 @@
 title: "Building a static blog using Gatsby and Strapi"
 date: "2018-01-18"
 author: "Pierre Burgy"
-tags: ["gatsby", "strapi"]
+tags: ["strapi"]
 ---
 
 ## Introduction
@@ -213,7 +213,7 @@ _Path: `src/pages/index.js`_
 
 ```jsx
 import React from "react"
-import { Link } from "gatsby"
+import { Link, graphql } from "gatsby"
 
 const IndexPage = ({ data }) => (
   <div>

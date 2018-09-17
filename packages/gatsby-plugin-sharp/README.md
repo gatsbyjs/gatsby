@@ -90,6 +90,7 @@ plugin for Markdown content as gatsby-remark-images).
 - `aspectRatio` (float)
 - `src` (string)
 - `srcSet` (string)
+- `srcSetType` (string)
 - `sizes` (string)
 - `originalImg` (string)
 

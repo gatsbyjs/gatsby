@@ -1,5 +1,5 @@
 import React from "react"
-import { Link } from "gatsby"
+import { Link, graphql } from "gatsby"
 import Img from "gatsby-image"
 import Navigation from "../components/navigation"
 import Layout from "../layouts"
@@ -46,7 +46,8 @@ class IndexComponent extends React.Component {
             possible for Gatsby (and other React) websites.
           </p>
           <p>
-            The component requires{` `}
+            The component requires
+            {` `}
             <em css={{ fontWeight: `bold`, fontStyle: `normal` }}>
               no configuration
             </em>
@@ -120,7 +121,7 @@ class IndexComponent extends React.Component {
 export default IndexComponent
 
 export const query = graphql`
-  query FrontPageQuery {
+  query {
     file(relativePath: { regex: "/ng-55646/" }) {
       childImageSharp {
         fluid(maxWidth: 1500, rotate: 180) {

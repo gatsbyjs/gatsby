@@ -22,7 +22,7 @@ exports.onCreateWebpackConfig = (
       ? [loaders.null()]
       : [
           loaders.miniCssExtract(),
-          loaders.css({ importLoaders: 1 }),
+          loaders.css({ importLoaders: 2 }),
           loaders.postcss({ plugins: postCssPlugins }),
           sassLoader,
         ],
@@ -30,11 +30,11 @@ exports.onCreateWebpackConfig = (
   const sassRuleModules = {
     test: /\.module\.s(a|c)ss$/,
     use: [
-      loaders.miniCssExtract(),
-      loaders.css({ modules: true, importLoaders: 1 }),
+      !isSSR && loaders.miniCssExtract(),
+      loaders.css({ modules: true, importLoaders: 2 }),
       loaders.postcss({ plugins: postCssPlugins }),
       sassLoader,
-    ],
+    ].filter(Boolean),
   }
 
   let configRules = []

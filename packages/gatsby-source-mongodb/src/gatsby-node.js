@@ -2,6 +2,7 @@ const MongoClient = require(`mongodb`).MongoClient
 const crypto = require(`crypto`)
 const prepareMappingChildNode = require(`./mapping`)
 const _ = require(`lodash`)
+const queryString = require(`query-string`)
 
 exports.sourceNodes = (
   { actions, getNode, createNodeId, hasNodeChanged },
@@ -18,9 +19,12 @@ exports.sourceNodes = (
   if (pluginOptions.auth)
     authUrlPart = `${pluginOptions.auth.user}:${pluginOptions.auth.password}@`
 
+  let connectionExtraParams = getConnectionExtraParams(
+    pluginOptions.extraParams
+  )
   const connectionURL = `mongodb://${authUrlPart}${serverOptions.address}:${
     serverOptions.port
-  }/${dbName}`
+  }/${dbName}${connectionExtraParams}`
 
   return MongoClient.connect(connectionURL)
     .then(db => {
@@ -34,6 +38,14 @@ exports.sourceNodes = (
           createNodes(db, pluginOptions, dbName, createNode, createNodeId, col)
         )
       )
+        .then(() => {
+          db.close()
+        })
+        .catch(err => {
+          console.warn(err)
+          db.close()
+          return err
+        })
     })
     .catch(err => {
       console.warn(err)
@@ -54,13 +66,12 @@ function createNodes(
     let cursor = collection.find()
 
     // Execute the each command, triggers for each document
-    cursor.each(function(err, item) {
-      // If the item is null then the cursor is exhausted/empty and closed
-      if (item == null) {
-        // Let's close the db
-        db.close()
-        resolve()
-      } else {
+    cursor.toArray((err, documents) => {
+      if (err) {
+        reject(err)
+      }
+
+      documents.forEach(item => {
         var id = item._id.toString()
         delete item._id
 
@@ -68,6 +79,7 @@ function createNodes(
           // Data for the node.
           ...item,
           id: createNodeId(`${id}`),
+          mongodb_id: id,
           parent: `__${collectionName}__`,
           children: [],
           internal: {
@@ -111,11 +123,21 @@ function createNodes(
         childrenNodes.forEach(node => {
           createNode(node)
         })
-      }
+      })
+      resolve()
     })
   })
 }
 
 function caps(s) {
   return s.replace(/\b\w/g, l => l.toUpperCase())
+}
+
+function getConnectionExtraParams(extraParams) {
+  let connectionSuffix
+  if (extraParams) {
+    connectionSuffix = queryString.stringify(extraParams, { sort: false })
+  }
+
+  return connectionSuffix ? `?` + connectionSuffix : ``
 }

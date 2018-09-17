@@ -2,121 +2,186 @@
 title: Gatsby Style Guide
 ---
 
-The Gatsby community is building out a more comprehensive Guides section. It
-will be full of relevant articles written to be easily understood by the awesome
-people who love building with Gatsby!
+The Gatsby community is building out a more comprehensive Docs section. It
+will be full of relevant articles written to be easily understood by the many people who love building with Gatsby.
 
-We plan, write, and maintain these Guide articles on GitHub.
+The community plans, writes, and maintains these Docs on GitHub.
 
 ## Table of Contents
 
-- [What are Guide articles?](#what-are-guide-articles)
-- [What can I write an article about?](#what-can-i-write-an-article-about)
-- [How to contribute](#how-to-contribute)
-- [Running the Guide locally on your own computer](#running-the-guide-locally-on-your-own-computer)
-- [Article style guide](#article-style-guide)
+- [Welcome!](#welcome)
+- [What kinds of docs can I write?](#what-kinds-of-docs-can-i-write)
+- [Writing process](#writing-process)
+  - [Think of your audience](#think-of-your-audience)
+  - [Research](#research)
+  - [Write drafts and get feedback](#write-drafts-and-get-feedback)
+- [Word choice](#word-choice)
+  - [Use "you" as the pronoun](#use-you-as-the-pronoun)
+  - [Avoid "easy" and "simple"](#avoid-easy-and-simple)
+  - [Avoid emojis, slang, and metaphors](#avoid-emojis-slang-and-metaphors)
+  - [Define jargon](#define-jargon)
+- [Writing style](#writing-style)
+  - [Write concisely](#write-concisely)
+  - [Use clear hyperlinks](#use-clear-hyperlinks)
+  - [Indicate when something is optional](#indicate-when-something-is-optional)
+  - [Abbreviate terms](#abbreviate-terms)
+  - [Use SEO optimized titles](#use-seo-optimized-titles)
+- [Grammar & formatting](#grammar-and-formatting)
+  - [Format titles and headers](#format-titles-and-headers)
+  - [Format code blocks, inline code, and images](#format-code-blocks-inline-code-and-images)
+  - [Capitalize proper nouns](#capitalize-proper-nouns)
+  - [Use active voice](#use-active-voice)
+  - [Make lists clear with the Oxford Comma](#make-lists-clear-with-the-oxford-comma)
+  - [Use apps that help you edit](#use-apps-that-help-you-edit)
 
-# What are Guide articles?
+## Welcome!
 
-Guide articles can cover a broad range of topics. Please see the following
-examples: [tutorials](/tutorial/part-one/),
-[code documentation](/docs/browser-apis/),
-[explanatory articles](/docs/prpl-pattern/), and
-[focused guides](/docs/add-404-page/).
-
-# What can I write an article about?
-
-We welcome your help writing these articles! You don't have to be an expert in a
-topic to write about it--this entire Guide is open source, so even if you make a
-mistake, another contributor will eventually correct it.
+You don't have to be an expert in a
+topic to write about it--this entire website is open source, so even if you make a mistake, another contributor will help you correct it before the PR gets merged.
 
 If you’d like to help by writing an article, find a stub article in the Gatsby
-Guides (with an italicized title like this _Title_), write the article, then
-open a pull request (PR) in the Gatsby GitHub repo to replace the stub with your
-article.
+Docs (with a grey instead of black title in the sidebar of the Docs), write the article, then
+[open a pull request (PR)](/how-to-contribute/#contributing-to-the-documentation) in the Gatsby GitHub repo to replace the stub with your article.
 
-If you can't find a stub about the topic you'd like to write about, you can open
-a PR in GitHub that creates the stub and includes your draft article. Feel free
-to ask us questions if you're not sure where to put a new article in the
-directory structure.
+If you can't find a stub about the topic you'd like to write about, you can open a PR in GitHub that creates the stub and includes your draft article. Feel free to ask questions in the PR comments if you're not sure where to put a new article in the directory structure.
 
-Before you begin writing, make sure to read the article style guide below.
+Before you begin writing, make sure to read the rest of this style guide.
 
-# How to contribute
+## What kinds of docs can I write?
 
-You can create a PR with your draft article (or edits on an existing article) in
-two ways:
+Docs can cover a broad range of topics. Please see the following
+examples:
 
-1.  The easiest method is to use the GitHub interface. Read
-    [these instructions](https://help.github.com/articles/editing-files-in-another-user-s-repository/)
-    on how to create a draft article or propose edits in the GitHub interface.
-2.  Go into the
-    ["docs" folder](https://github.com/gatsbyjs/gatsby/tree/master/docs/docs) and
-    find the article stub you'd like to write or edit. All stubs will be in an
-    index.md file.
-3.  Click the "Edit this file" pencil icon and make your changes to the file in
-    GitHub-flavored Markdown.
-4.  Scroll to the bottom of the screen and add a commit message explaining your
-    changes. Then select the radio button option for "Create a new branch for
-    this commit and start a pull request" and click "Propose file changes"
-5.  On the next screen, you can add any other details about your PR, then click
-    "Create pull request".
+- [guides](/add-404-page/)
+- [guide overviews](/styling/)
+- [tutorials](/tutorial/part-one/)
+- [plugin READme](/packages/gatsby-source-filesystem/)
+- [starter READme](https://github.com/gatsbyjs/gatsby-starter-default)
 
-If you prefer to write locally before submitting a PR, then follow these steps:
+Please see the [Docs templates](/templates/) for guidelines on how to format the above kinds of documents.
 
-1.  Fork this repository
-2.  Copy your fork to your local machine.
-3.  Add a remote upstream so git knows where the official Gatsby
-    repository is located by running the command `git remote add upstream`
-    _incomplete code here_
-4.  Create a new branch for your work with the command `git checkout -b NEW-BRANCH-NAME`. Try to name your branch in a way that describes your
-    article topic, like `fix/ArticleHTMLElements`
-5.  Write your article, commit your changes locally, and push your new branch to
-    GitHub with the command `git push origin NEW-BRANCH-NAME`
-6.  Go to your repository on GitHub and open a PR
+## Writing process
 
-Make sure to maintain your local fork going forward so it stays up-to-date with
-the Gatsby guides repository. The next time you want to contribute, checkout
-your local `master` branch and run the command `git pull --rebase upstream master` before creating a new branch. This will grab all the changes on the
-official master branch without making an additional commit in your local
-repository.
+### Think of your audience
 
-# Running the Guide locally on your own computer
+Before you begin writing, answer these questions. Sample answers have been included:
 
-Finally, if you want to run a version of the Guides repository locally, follow
-these steps:
+Question: Who will read my writing?
+_Answer: Developers with knowledge and experience coding in HTML, CSS, and JS but not necessarily React or GraphQL._
 
-1.  Ensure you have the yarn package manager installed `npm install -g yarn`
-2.  Install the Gatsby cli `yarn add --global gatsby-cli`
-3.  Follow the steps above to fork and clone the Gatsby repo.
-4.  Enter the `www` directory where gatsbyjs.org is and install its dependencies `yarn install` then run `gatsby develop`.
+Question: What do I hope my readers will know and/or be able to do after reading it?
+_Answer (example): I hope my readers will be able to successfully add search to their Gatsby site._
 
-## Article style guide
+Once you answer those questions, create an outline of the topic and think about any coding examples you'll use (if applicable). This helps to organize your thoughts and make the writing process easier.
 
-We've written the following article style guide to help you get started with
-contributing.
+### Research
 
-# Table of Contents
+Many times, the information that needs to go in your document already exists somewhere.
 
-- [Article title](#article-title)
-- [Modularity](#modularity)
-- [General writing tips](#general-writing-tips)
-- [Formatting example code](#formatting-example-code)
-- [Adding images to articles](#adding-images-to-articles)
-- [Proper nouns](#proper-nouns)
-- [How to write clearly](#how-to-write-clearly)
+Avoid copying and pasting huge chunks of other people's work and to rather use their work to learn so you can write your own document. If you do quote someone's work verbatim, reference where you got the information.
 
-# Article title
+If the content is already somewhere else on the .org site, feel free to copy and paste without quoting or referencing.
 
-Article titles should be as short and clear as possible. We want readers to
-quickly find the information they're looking for and the title should reflect
-the main theme of the article.
+Possible sources of great research materials:
+
+- Blogposts (on gatsbyjs.org and other sites)
+- Docs (on gatsbyjs.org and other sites)
+- Video tutorials
+- Discord, Spectrum, or Twitter conversations
+- Google search results
+- Presentations you or others have given
+- Textbooks
+- Dreams
+- Anything else you can think of
+
+### Write drafts and get feedback
+
+Technical writing, or the literature of science and technology, is difficult
+because it requires you to take a technical (usually abstract) topic and explain
+it in a clear, accurate, and objective manner. You'll likely go through several
+rounds of proofreading and editing before you're happy with your writing.
+
+Also, there's a community of contributors to support you. Bounce ideas off of them and ask for input on your writing in the
+[Discord chat room](https://discordapp.com/invite/0ZcbPKXt5bVoxkfV) and in the [GitHub repo](https://github.com/gatsbyjs/gatsby).
+
+## Word choice
+
+### Use "you" as the pronoun
+
+Your articles should use the second person ("you") to help to give it a conversational tone. This way, the text and instructions seem to speak directly to the person reading it. Try to avoid using the first person ("I", "we", "let's", and "us").
+
+Using "you" is also more accurate than saying "we," because typically only one person is reading the tutorial or guide at a time and the person who wrote the tutorial is not actually going through it with them, so "we" would be inaccurate. You might notice that some technical documentation uses third person pronouns and nouns like "they" and "the user," which add more distance and feel colder than the conversational and warm "you" and "your."
+
+### Avoid "easy" and "simple"
+
+Avoid using words like "easy", "simple," and "basic" because if users have a hard time completing the task that is supposedly "easy," they will question their abilities. Consider using more specific descriptors; for example, when you say the phrase "deployment is easy," what do you really mean? Is it easy because it takes fewer steps than another option? If so, just use the most specific descriptor possible, which in that case would be "this deployment method involves fewer steps than other options."
+
+### Avoid emojis, slang, and metaphors
+
+Avoid using emojis or emoticons in the Docs and idiomatic expressions / slang, or metaphors. Gatsby has a global community, and
+the cultural meaning of an emoji, emoticon, or slang may be different around the world.
+Also, emojis can render differently on different systems.
+
+### Define jargon
+
+Articles should be written with short, clear sentences, and use as little jargon
+as necessary.
+
+> Jargon: (n.) special words or expressions that are used by a particular profession or group and are difficult for others to understand: legal jargon.
+
+All jargon should be defined immediately in plain English. In
+other words, pretend like your readers have basic coding experience but not necessarily experience with PWAs and the JAMstack (see what happened there? I just used two jargon words that need to be defined); you
+need to define words that newcomers might have a hard time understanding.
+
+## Writing style
+
+### Write concisely
+
+Concise writing communicates the bare minimum without redundancy. Strive to make your writing as short as possible; this practice will often lead to more accurate and specific writing.
+
+### Use clear hyperlinks
+
+Hyperlinks should contain the clearest words to indicate where the link will lead you. So instead of linking to the word [here](https://www.gatsbyjs.org/) link to [Gatsby's docs](https://www.gatsbyjs.org/).
+
+In tutorials that are meant for beginners, use as few hyperlinks as possible to minimize distractions. In docs, it's ok to include as many hyperlinks as necessary to provide relevant and interesting information and resources.
+
+### Indicate when something is optional
+
+When a paragraph or sentence offers an optional path, the beginning of the first sentence should indicate that it's optional. For example, "if you'd like to learn more about xyz, see our reference guide" is clearer than "Go to the reference guide if you'd like to learn more about xyz."
+
+This method allows people who would _not_ like to learn more about xyz to stop reading the sentence as early as possible. This method also allows people who _would_ like to learn more about xyz to recognize the opportunity to learn quicker instead of accidentally skipping over the paragraph.
+
+### Abbreviate terms
+
+If you want to abbreviate a term in your article, write it out fully first, then
+put the abbreviation in parentheses. After that, you may use the abbreviation going for the rest of the article. For example, "In computer science, an
+abstract syntax tree (AST) is ..."
+
+### Use SEO optimized titles
+
+This explains how to create a doc that shows up in Google searches.
+
+When you create the new guide or tutorial under /docs/, you’ll either create a file or a folder if there will be images pulled into the doc.
+
+File:
+`querying-data-with-graphql.md`
+
+or
+
+Folder:
+`querying-data-with-graphl`
+`querying-data-with-graphl/index.md`
+`querying-data-with-graphl/graphql-image.png`
+
+The `.md` title or the folder title gets turned into the URL route automatically.
+
+Article titles should be as short and reflect the main theme of the article to help readers quickly find the information they're looking for. Many people use Google to search for things like "gatsby graphql", so the article title should ideally reflect what people might search for on Google.
 
 Here are some title examples:
 
-- Creating and Modifying Pages
-- 404 Pages
-- What is GraphQL?
+- Creating and modifying pages
+- Adding a 404 page
+- Querying data with GraphQL
 
 The folder name is used in the URL, so only use dashes -, numbers 0-9, and
 lowercase letters a-z for it.
@@ -124,131 +189,39 @@ lowercase letters a-z for it.
 Here are some folder name examples:
 
 - creating-and-modifying-pages
-- 404-pages
-- what-is-graphql
+- adding-a-404-page
+- querying-data-with-graphql
 
 Note: Just to clarify, you can include special characters in the article title
-but _not_ in the folder name (e.g. Title: What is GraphQL? and Folder Name:
+but _not_ in the `.md` file name or folder name (e.g. Title: What is GraphQL? and Folder Name:
 what-is-graphql).
 
-# Modularity
+## Grammar and formatting
 
-Each article should explain exactly one concept, and that concept should be
-apparent from the article's title.
+### Format titles and headers
 
-We can reference other articles by linking to them inline or in an "Other
-Resources" section at the end of the article. Our goal is to have many articles
-that cover a broad range of technical topics.
+Title case article titles (each major word is uppercase). Sentence case article headings (only the initial word is uppercase). Neither need punctuation at the end of the phrase unless a question mark is required. Article titles do not take the Oxford comma and use the ampersand in place of “and.” Article headings do take the Oxford comma and use the word “and.”
 
-# General writing tips
+Titles are automatically formatted as h1. Mark up article headings as h2 and subheads as h3 or h4 as needed. Most article headings are conceptually and rhetorically at the same level as each other; avoid unnecessary complexity and mark them up as h2 unless they’re true subheads.
 
-Before you begin writing, create an outline of the topic and think about any
-coding examples you'll use (if applicable). This helps to organize your thoughts
-and make the writing process easier.
+Article title or document title:
 
-Articles should be written with short, clear sentences, and use as little jargon
-as necessary. All jargon should be defined immediately in plain English. In
-other words, pretend like your readers have very little coding experience; you
-need to define words that beginners might have a hard time understanding.
+> Salty, Sweet & Spicy
 
-The introduction paragraph should only be a 1-2 sentence explanation of the main
-topic. It should limit the use of any links to other Guide articles, as these
-can be distracting.
+Article header or subhead:
 
-Keep paragraphs short (around 1-4 sentences). People are more likely to read
-several short paragraphs instead of a huge block of text.
+> Salty, sweet, and spicy
 
-Use active voice instead of passive voice. Generally, it's a more concise and
-more straightforward way to communicate a subject. For example:
+### Format code blocks, inline code, and images
 
-- (Passive) The for loop in JavaScript is used by programmers to...
-- (Active) Programmers use the for loop in JavaScript to...
+- [Formatting inline code and code blocks](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#code)
+- [Adding images to articles](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#images).
+  If the images aren’t already hosted somewhere else on the web, you’ll need to put them online yourself. A good way to do this is to commit them to a GitHub repository of your own, then push them to GitHub. Then you can right click the image and copy its image source.
+- [Header formatting](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#headers). Avoid using H1 header; that is reserved for the title of each document.
 
-If you want to abbreviate a term in your article, write it out fully first, then
-put the abbreviation in parentheses. For example, "In computer science, an
-abstract syntax tree (AST) is ..."
+### Capitalize proper nouns
 
-Text should use the second person ("you") to help to give it a conversational
-tone. This way, the text and instructions seem to speak directly to the person
-reading it. Try to avoid using the first person ("I", "we", "let's", and "us").
-Using second person is also more accurate than saying "we," because typically only one person is reading the tutorial or guide at a time and the person who wrote the tutorial is not actually going through it with them, so "we" would be inaccurate. Finally, some technical documentation uses third person pronouns and nouns like "they" and "the user," which add more distance and feel colder than the conversational and warm "you" and "your."
-
-If there are other Guide resources you think readers would benefit from, add
-them at the bottom in an "Other Resources" section.
-
-You can add diagrams, graphics, or visualizations as necessary. You can also
-embed relevant YouTube videos and interactive [REPL.it](https://repl.it/) code
-editors.
-
-Don't use emojis or emoticons in the Guide. Gatsby has a global community, and
-the cultural meaning of an emoji or emoticon may be different around the world.
-Also, emojis can render differently on different systems.
-
-Format language keywords as code - this is done with the backtick key (located
-to the left of the "1" key on a US keyboard) in GitHub-flavored markdown. For
-example, put backticks around HTML tag names or CSS property names.
-
-Use the Oxford Comma when possible (it is a comma used after the penultimate
-item in a list of three or more items, before ‘and’ or ‘or’ e.g. an Italian
-painter, sculptor, and architect). It makes things easier, clearer, and prettier
-to read.
-
-Avoid using words like "easier" or "simple," because if users have a hard time completing the task that is supposedly "easy," they will question their abilities. Consider using more specific descriptors; for example, when you say the phrase "deployment is easy," what do you really mean? Is it easy because it takes fewer steps than another option? If so, just use the most specific descriptor possible, which in that case would be "this deployment method involves fewer steps than other options."
-
-Hyperlinks should contain the clearest words to indicate where the link will lead you. So instead of linking to the word [here](https://www.gatsbyjs.org/) link to [Gatsby's docs](https://www.gatsbyjs.org/).
-
-When a paragraph or sentence offers an optional path, the beginning of the first sentence should indicate optionality. For example, "if you'd like to learn more about xyz, see our reference guide" is clearer than "Go to the reference guide if you'd like to learn more about xyz." This method allows people who would _not_ like to learn more about xyz to stop reading the sentence as early as possible. This method also allows people who _would_ like to learn more about xyz to recognize the opportunity to learn quicker instead of skipping over the paragraph.
-
-# Formatting example code
-
-Readers will likely use Guide articles as a quick reference to look up syntax.
-Articles should have a basic, real-world example that shows common use cases of
-its syntax.
-
-Here are specific formatting guidelines for any code:
-
-- JavaScript statements end with a semicolon
-- Use double quotes where applicable
-- Show generally-accepted best practices, particularly for accessibility
-- Comments made should have a space between the comment characters and the
-  comment themselves
-- GitHub-flavored markdown supports syntax highlighting in code blocks for many
-  programming languages. To use it, indicate the language after the opening three back ticks \`\`\`
-
-  ```html
-   <div class="awesome" id="more-awesome">
-     <p>This is text in html</p>
-   </div>
-  ```
-
-  ```javascript
-  function logTheThings(stuff) {
-    console.log(stuff)
-  }
-  ```
-
-  ```css
-  .awesome {
-    background-color: #fccfcc;
-  }
-  ```
-
-# Adding images to articles
-
-For including images, if the images aren't already hosted somewhere else on the
-web, you'll need to put them online yourself. A good way to do this is to commit
-them to a GitHub repository of your own, then push them to GitHub. Then you can
-right click the image and copy its image source.
-
-Then you'd just need to reference them in your markdown file with this syntax:
-`[your alt text](your url)`
-
-Then the images should show up when you click the "preview table" tab.
-
-# Proper nouns
-
-Proper nouns should use correct capitalization when possible. Below is a list of
-words as they should appear in Guide articles.
+Proper nouns should use correct capitalization when possible. Below is a list of words as they should appear in Guide articles.
 
 - JavaScript (capital letters in "J" and "S" and no abbreviations)
 - Node.js
@@ -257,12 +230,23 @@ Front-end development (adjective form with a dash) is when you’re working on t
 front end (noun form with no dash). The same goes with the back end, full stack,
 and many other compound terms.
 
-# How to Write Clearly
+### Use active voice
 
-Technical writing, or the literature of science and technology, is difficult
-because it requires you to take a technical (usually abstract) topic and explain
-it in a clear, accurate, and objective manner. You'll likely go through several
-rounds of proofreading and editing before you're happy with your writing.
+Use active voice instead of passive voice. Generally, it's a more concise and
+straightforward way to communicate a subject. For example:
+
+- (Passive) The for loop in JavaScript is used by programmers to...
+- (Active) Programmers use the for loop in JavaScript to...
+
+### Make lists clear with the Oxford Comma
+
+Use the Oxford Comma except in titles. It is a comma used after the penultimate
+item in a list of three or more items, before ‘and’ or ‘or’ e.g. an Italian
+painter, sculptor, and architect. It makes things clearer.
+
+[Confusion can happen when you don't use the Oxford comma](https://img.buzzfeed.com/buzzfeed-static/static/2015-02/22/18/enhanced/webdr11/enhanced-buzz-32156-1424646300-12.jpg?downsize=715:*&output-format=auto&output-quality=auto).
+
+### Use apps that help you edit
 
 Use the [Hemingway App](http://www.hemingwayapp.com/). There’s nothing magical
 about this tool, but it will automatically detect widely agreed-upon
@@ -276,10 +260,3 @@ The Hemingway App will assign a “grade level” for your writing. You should a
 for a grade level of 6. Another tool available is the De-Jargonizer, originally
 designed for scientific communication but might help avoid overspecialized
 wording.
-
-Also, there's a community of support from a whole team of contributors, whom you
-can bounce ideas off of and ask for input on your writing. Stay active in the
-contributors chat room and ask lots of questions.
-
-With your help, we can create a comprehensive reference tool that will help
-millions of people who are learning to code for years to come.

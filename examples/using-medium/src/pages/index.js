@@ -1,4 +1,5 @@
 import React from "react"
+import { graphql } from "gatsby"
 import Layout from "../components/layout"
 
 const mediumCDNUrl = `https://cdn-images-1.medium.com/max/150/`
@@ -27,8 +28,9 @@ const IndexPage = ({ data }) => {
 
 export default IndexPage
 
+// Increase the `limit` parameter to get more posts
 export const pageQuery = graphql`
-  query IndexQuery {
+  query {
     allMediumPost(limit: 5, sort: { fields: [createdAt], order: DESC }) {
       edges {
         node {

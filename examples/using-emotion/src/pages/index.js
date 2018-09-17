@@ -66,9 +66,12 @@ const IndexPage = () => (
       <title>Gatsby Emotion</title>
       <meta name="description" content="Gatsby example site using Emotion" />
       <meta name="referrer" content="origin" />
-    </Helmet>` `<Wrapper>
+    </Helmet>
+    ` `
+    <Wrapper>
       <h1 className={title}>
-        Hello World, this is my first component styled with{` `}
+        Hello World, this is my first component styled with
+        {` `}
         <a href="https://emotion.sh/">emotion</a>!
       </h1>
       <p className={subtitle}>

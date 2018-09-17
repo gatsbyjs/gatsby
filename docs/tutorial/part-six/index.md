@@ -3,6 +3,8 @@ title: Transformer plugins
 typora-copy-images-to: ./
 ---
 
+> This tutorial is part of a series about Gatsby’s data layer. Make sure you’ve gone through [part 4](/tutorial/part-four/) and [part 5](/tutorial/part-five/) before continuing here.
+
 ## What's in this tutorial?
 
 The previous tutorial showed how source plugins bring data _into_ Gatsby’s data system. In this tutorial, you'll learn how transformer plugins _transform_ the raw content brought by source plugins. The combination of source plugins and transformer plugins can handle all data sourcing and data transformation you might need when building a Gatsby site.
@@ -100,10 +102,11 @@ blog post. With GraphQL you can _query_ for the current list of markdown blog
 posts so you won't need to maintain the list manually.
 
 Like with the `src/pages/my-files.js` page, replace `src/pages/index.js` with
-the following to add a query with some initial HTML and styling.
+the following to add a GraphQL query with some initial HTML and styling.
 
 ```jsx
 import React from "react"
+import { graphql } from "gatsby"
 import { css } from "react-emotion"
 import { rhythm } from "../utils/typography"
 import Layout from "../components/layout"
@@ -147,7 +150,7 @@ export default ({ data }) => {
 }
 
 export const query = graphql`
-  query IndexQuery {
+  query {
     allMarkdownRemark {
       totalCount
       edges {
@@ -174,7 +177,7 @@ But your one blog post looks a bit lonely. So let's add another one at
 
 ```markdown
 ---
-title: Pandas and Bananas
+title: "Pandas and Bananas"
 date: "2017-08-21"
 ---
 
@@ -189,12 +192,12 @@ seem to really enjoy bananas!
 Which looks great! Except… the order of the posts is wrong.
 
 But this is easy to fix. When querying a connection of some type, you can pass a
-variety of arguments to the query. You can `sort` and `filter` nodes, set how
+variety of arguments to the GraphQL query. You can `sort` and `filter` nodes, set how
 many nodes to `skip`, and choose the `limit` of how many nodes to retrieve. With
 this powerful set of operators, you can select any data you want—in the format you
 need.
 
-In your index page's query, change `allMarkdownRemark` to
+In your index page's GraphQL query, change `allMarkdownRemark` to
 `allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC })`. Save
 this and the sort order should be fixed.
 

@@ -13,6 +13,7 @@ const refactoredEntityTypes = {
 let _verbose
 let _siteURL
 let _useACF = true
+let _acfOptionPageIds
 let _hostingWPCOM
 let _auth
 let _perPage
@@ -27,6 +28,7 @@ exports.sourceNodes = async (
     protocol,
     hostingWPCOM,
     useACF = true,
+    acfOptionPageIds = [],
     auth = {},
     verboseOutput,
     perPage = 100,
@@ -40,6 +42,7 @@ exports.sourceNodes = async (
   _verbose = verboseOutput
   _siteURL = `${protocol}://${baseUrl}`
   _useACF = useACF
+  _acfOptionPageIds = acfOptionPageIds
   _hostingWPCOM = hostingWPCOM
   _auth = auth
   _perPage = perPage
@@ -52,6 +55,7 @@ exports.sourceNodes = async (
     _verbose,
     _siteURL,
     _useACF,
+    _acfOptionPageIds,
     _hostingWPCOM,
     _auth,
     _perPage,
@@ -63,8 +67,11 @@ exports.sourceNodes = async (
 
   // Normalize data & create nodes
 
-  // Remove ACF key if it's not an object
+  // Remove ACF key if it's not an object, combine ACF Options
   entities = normalize.normalizeACF(entities)
+
+  // Combine ACF Option Data entities into one but split by IDs + options
+  entities = normalize.combineACF(entities)
 
   // Creates entities from object collections of entities
   entities = normalize.normalizeEntities(entities)
@@ -116,6 +123,8 @@ exports.sourceNodes = async (
     searchAndReplaceContentUrls,
   })
 
+  entities = normalize.mapPolylangTranslations(entities)
+
   // apply custom normalizer
   if (typeof _normalizer === `function`) {
     entities = _normalizer({
@@ -133,6 +142,7 @@ exports.sourceNodes = async (
       _siteURL,
       hostingWPCOM,
       useACF,
+      acfOptionPageIds,
       auth,
       verboseOutput,
       perPage,

@@ -1,5 +1,5 @@
 import React from "react"
-import { Link } from "gatsby"
+import { Link, graphql } from "gatsby"
 
 import Layout from "../layouts"
 
@@ -22,7 +22,7 @@ class IndexPage extends React.Component {
 export default IndexPage
 
 export const pageQuery = graphql`
-  query allAsciiPages {
+  query {
     allAsciidoc {
       edges {
         node {

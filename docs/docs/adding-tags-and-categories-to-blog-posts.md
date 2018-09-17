@@ -77,10 +77,10 @@ import React from "react"
 import PropTypes from "prop-types"
 
 // Components
-import Link from "gatsby-link"
+import { Link, graphql } from "gatsby"
 
-const Tags = ({ pathContext, data }) => {
-  const { tag } = pathContext
+const Tags = ({ pageContext, data }) => {
+  const { tag } = pageContext
   const { edges, totalCount } = data.allMarkdownRemark
   const tagHeader = `${totalCount} post${
     totalCount === 1 ? "" : "s"
@@ -132,7 +132,7 @@ Tags.propTypes = {
 export default Tags
 
 export const pageQuery = graphql`
-  query TagPage($tag: String) {
+  query($tag: String) {
     allMarkdownRemark(
       limit: 2000
       sort: { fields: [frontmatter___date], order: DESC }
@@ -161,8 +161,8 @@ Now we've got a template. Great! I'll assume you followed the tutorial for [Addi
 ```js
 const path = require("path")
 
-exports.createPages = ({ boundActionCreators, graphql }) => {
-  const { createPage } = boundActionCreators
+exports.createPages = ({ actions, graphql }) => {
+  const { createPage } = actions
 
   const blogPostTemplate = path.resolve("src/templates/blog.js")
   const tagTemplate = path.resolve("src/templates/tags.js")
@@ -241,7 +241,7 @@ import kebabCase from "lodash/kebabCase"
 
 // Components
 import Helmet from "react-helmet"
-import Link from "gatsby-link"
+import { Link, graphql } from "gatsby"
 
 const TagsPage = ({
   data: {
@@ -289,7 +289,7 @@ TagsPage.propTypes = {
 export default TagsPage
 
 export const pageQuery = graphql`
-  query TagsQuery {
+  query {
     site {
       siteMetadata {
         title

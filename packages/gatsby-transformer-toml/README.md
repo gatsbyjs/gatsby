@@ -23,7 +23,7 @@ Live demo of TOML to JSON conversion using
 [toml](https://www.npmjs.com/package/toml) is
 [here](http://binarymuse.github.io/toml-node/).
 
-If you have `user.toml` in you project, with contents like this:
+If you have `user.toml` in your project, with contents like this:
 
 ```toml
 userName = "Random User"
@@ -38,7 +38,7 @@ userDescription = "Lorem..."
 Then you'll be able to query your data using:
 
 ```graphql
-query MyQuery {
+query {
   userToml {
     userName
     userAvatar

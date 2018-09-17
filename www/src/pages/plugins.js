@@ -11,14 +11,14 @@ class Plugins extends Component {
   render() {
     return (
       <Layout location={this.props.location}>
-        <PageWithPluginSearchBar history={this.props.history} isPluginsIndex>
+        <PageWithPluginSearchBar isPluginsIndex location={this.props.location}>
           <Container
             css={{
               alignItems: `center`,
               display: `flex`,
-              minHeight: `calc(100vh - (${
-                presets.headerHeight
-              } + 2.8rem - 1px))`,
+              minHeight: `calc(100vh - (${presets.headerHeight} + ${
+                presets.bannerHeight
+              }))`,
             }}
           >
             <div
@@ -60,8 +60,9 @@ class Plugins extends Component {
                 }}
               >
                 Please use the search bar to find plugins that will make your
-                blazing-fast site even more awesome. If you'd like to create
-                your own plugin, see the{` `}
+                blazing fast site even more awesome. If you{`'`}d like to create
+                your own plugin, see the
+                {` `}
                 <Link to="/docs/plugin-authoring/">Plugin Authoring</Link> page
                 in the docs!
               </p>

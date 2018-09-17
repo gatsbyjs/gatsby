@@ -1,6 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
-import { Link } from "gatsby"
+import { Link, graphql } from "gatsby"
 import Helmet from "react-helmet"
 
 import "./index.css"
@@ -65,7 +65,7 @@ TemplateWrapper.propTypes = {
 export default TemplateWrapper
 
 export const query = graphql`
-  query NameQuery {
+  query {
     personalData {
       id
       name {

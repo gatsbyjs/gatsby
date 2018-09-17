@@ -41,13 +41,13 @@ plugins: [
   {
     resolve: `gatsby-plugin-manifest`,
     options: {
-      name: "GatsbyJS",
-      short_name: "GatsbyJS",
-      start_url: "/",
-      background_color: "#f7f0eb",
-      theme_color: "#a2466c",
-      display: "minimal-ui",
-      icon: "src/images/icon.png", // This path is relative to the root of the site.
+      name: `GatsbyJS`,
+      short_name: `GatsbyJS`,
+      start_url: `/`,
+      background_color: `#f7f0eb`,
+      theme_color: `#a2466c`,
+      display: `minimal-ui`,
+      icon: `src/images/icon.png`, // This path is relative to the root of the site.
     },
   },
 ]
@@ -112,13 +112,13 @@ plugins: [
   {
     resolve: `gatsby-plugin-manifest`,
     options: {
-      name: "GatsbyJS",
-      short_name: "GatsbyJS",
-      start_url: "/",
-      background_color: "#f7f0eb",
-      theme_color: "#a2466c",
-      display: "minimal-ui",
-      icon: src/images/icon.png // This path is relative to the root of the site.
+      name: `GatsbyJS`,
+      short_name: `GatsbyJS`,
+      start_url: `/`,
+      background_color: `#f7f0eb`,
+      theme_color: `#a2466c`,
+      display: `minimal-ui`,
+      icon: `src/images/icon.png`, // This path is relative to the root of the site.
       icons: [
         {
           src: `/favicons/android-chrome-192x192.png`,
@@ -133,7 +133,7 @@ plugins: [
       ],
     },
   },
-];
+]
 ```
 
 The hybrid option allows the most flexibility while still not requiring you to create most icons sizes manually.
@@ -148,12 +148,12 @@ plugins: [
   {
     resolve: `gatsby-plugin-manifest`,
     options: {
-      name: "GatsbyJS",
-      short_name: "GatsbyJS",
-      start_url: "/",
-      background_color: "#f7f0eb",
-      theme_color: "#a2466c",
-      display: "minimal-ui",
+      name: `GatsbyJS`,
+      short_name: `GatsbyJS`,
+      start_url: `/`,
+      background_color: `#f7f0eb`,
+      theme_color: `#a2466c`,
+      display: `minimal-ui`,
       icons: [
         {
           // Everything in /static will be copied to an equivalent

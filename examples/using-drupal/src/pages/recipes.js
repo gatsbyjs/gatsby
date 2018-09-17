@@ -1,5 +1,5 @@
 import React from "react"
-import { Link } from "gatsby"
+import { Link, graphql } from "gatsby"
 
 import Layout from "../layouts"
 import Container from "../components/container"
@@ -22,7 +22,7 @@ const AllRecipes = ({ data }) => (
 export default AllRecipes
 
 export const query = graphql`
-  query AllRecipes {
+  query {
     allRecipes(limit: 1000) {
       edges {
         node {

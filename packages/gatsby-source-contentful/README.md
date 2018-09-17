@@ -44,6 +44,10 @@ plugins: [
 ]
 ```
 
+### Offline
+
+If you don't have internet connection you can add `export GATSBY_CONTENTFUL_OFFLINE=true` to tell the plugin to fallback to the cached data, if there is any.
+
 ### Configuration options
 
 **`spaceId`** [string][required]
@@ -61,6 +65,8 @@ The base host for all the API requests, by default it's 'cdn.contentful.com', if
 **`environment`** [string][optional] [default: 'master']
 
 The environment to pull the content from, for more info on environments check out this [Guide](https://www.contentful.com/developers/docs/concepts/multiple-environments/).
+
+You can pass in any other options available in the [contentful.js SDK](https://github.com/contentful/contentful.js#configuration).
 
 ## Notes on Contentful Content Models
 

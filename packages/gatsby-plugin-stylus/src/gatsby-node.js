@@ -28,6 +28,7 @@ exports.onCreateWebpackConfig = (
 ) => {
   const { setWebpackConfig } = actions
   const PRODUCTION = stage !== `develop`
+  const isSSR = stage.includes(`html`)
 
   const stylusLoader = {
     loader: resolve(`stylus-loader`),
@@ -39,23 +40,24 @@ exports.onCreateWebpackConfig = (
 
   const stylusRule = {
     test: /\.styl$/,
-    exclude: /\.module\.styl$/,
-    use: [
-      loaders.miniCssExtract(),
-      loaders.css({ importLoaders: 1 }),
-      loaders.postcss({ plugins: postCssPlugins }),
-      stylusLoader,
-    ],
+    use: isSSR
+      ? [loaders.null()]
+      : [
+          loaders.miniCssExtract(),
+          loaders.css({ importLoaders: 2 }),
+          loaders.postcss({ plugins: postCssPlugins }),
+          stylusLoader,
+        ],
   }
 
   const stylusRuleModules = {
     test: /\.module\.styl$/,
     use: [
-      loaders.miniCssExtract(),
-      loaders.css({ modules: true, importLoaders: 1 }),
+      !isSSR && loaders.miniCssExtract(),
+      loaders.css({ modules: true, importLoaders: 2 }),
       loaders.postcss({ plugins: postCssPlugins }),
       stylusLoader,
-    ],
+    ].filter(Boolean),
   }
 
   let configRules = []
@@ -63,22 +65,11 @@ exports.onCreateWebpackConfig = (
   switch (stage) {
     case `develop`:
     case `build-javascript`:
-      configRules = configRules.concat([
-        { oneOf: [stylusRule, stylusRuleModules] },
-      ])
-      break
-
     case `build-html`:
     case `develop-html`:
       configRules = configRules.concat([
         {
-          oneOf: [
-            {
-              ...stylusRule,
-              use: [loaders.null()],
-            },
-            stylusRuleModules,
-          ],
+          oneOf: [stylusRuleModules, stylusRule],
         },
       ])
       break

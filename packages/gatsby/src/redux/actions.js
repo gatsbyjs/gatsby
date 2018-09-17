@@ -1,6 +1,6 @@
 // @flow
-import Joi from "joi"
-import chalk from "chalk"
+const Joi = require(`joi`)
+const chalk = require(`chalk`)
 const _ = require(`lodash`)
 const { bindActionCreators } = require(`redux`)
 const { stripIndent } = require(`common-tags`)
@@ -11,8 +11,9 @@ const kebabHash = require(`kebab-hash`)
 const { hasNodeChanged, getNode } = require(`./index`)
 const { trackInlineObjectsInRootNode } = require(`../schema/node-tracking`)
 const { store } = require(`./index`)
-import * as joiSchemas from "../joi-schemas/joi"
-import { generateComponentChunkName } from "../utils/js-chunk-names"
+const fileExistsSync = require(`fs-exists-cached`).sync
+const joiSchemas = require(`../joi-schemas/joi`)
+const { generateComponentChunkName } = require(`../utils/js-chunk-names`)
 
 const actions = {}
 
@@ -55,9 +56,15 @@ type Plugin = {
   name: string,
 }
 
+type ActionOptions = {
+  traceId: ?string,
+  parentSpan: ?Object,
+  followsSpan: ?Object,
+}
+
 /**
  * Delete a page
- * @param {Object} page a page object with at least the path set
+ * @param {Object} page a page object
  * @param {string} page.path The path of the page
  * @param {string} page.component The absolute path to the page component
  * @example
@@ -75,6 +82,8 @@ const pascalCase = _.flow(
   _.upperFirst
 )
 const hasWarnedForPageComponent = new Set()
+const fileOkCache = {}
+
 /**
  * Create a page. See [the guide on creating and modifying pages](/docs/creating-and-modifying-pages/)
  * for detailed documenation about creating pages.
@@ -95,7 +104,11 @@ const hasWarnedForPageComponent = new Set()
  *   },
  * })
  */
-actions.createPage = (page: PageInput, plugin?: Plugin, traceId?: string) => {
+actions.createPage = (
+  page: PageInput,
+  plugin?: Plugin,
+  actionOptions?: ActionOptions
+) => {
   let noPageOrComponent = false
   let name = `The plugin "${plugin.name}"`
   if (plugin.name === `default-site-plugin`) {
@@ -174,7 +187,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   // Don't check if the component exists during tests as we use a lot of fake
   // component paths.
   if (process.env.NODE_ENV !== `test`) {
-    if (!fs.existsSync(page.component)) {
+    if (!fileExistsSync(page.component)) {
       const message = `${name} created a page with a component that doesn't exist`
       console.log(``)
       console.log(chalk.bold.red(message))
@@ -234,18 +247,17 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     internalPage.path = `/${internalPage.path}`
   }
 
-  const result = Joi.validate(internalPage, joiSchemas.pageSchema)
-  if (result.error) {
-    console.log(chalk.blue.bgYellow(`The upserted page didn't pass validation`))
-    console.log(chalk.bold.red(result.error))
-    console.log(internalPage)
-    return null
-  }
-
   // Validate that the page component imports React and exports something
   // (hopefully a component).
-  if (!internalPage.component.includes(`/.cache/`)) {
-    const fileContent = fs.readFileSync(internalPage.component, `utf-8`)
+  //
+  // Only run validation once during builds.
+  if (
+    !internalPage.component.includes(`/.cache/`) &&
+    (process.env.NODE_ENV === `production` &&
+      !fileOkCache[internalPage.component])
+  ) {
+    const fileName = internalPage.component
+    const fileContent = fs.readFileSync(fileName, `utf-8`)
     let notEmpty = true
     let includesDefaultExport = true
 
@@ -263,7 +275,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     if (!notEmpty || !includesDefaultExport) {
       const relativePath = path.relative(
         store.getState().program.directory,
-        internalPage.component
+        fileName
       )
 
       if (!notEmpty) {
@@ -279,7 +291,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       if (!includesDefaultExport) {
         console.log(``)
         console.log(
-          `The page component must export a React component for it to be valid`
+          `[${fileName}] The page component must export a React component for it to be valid`
         )
         console.log(``)
       }
@@ -287,12 +299,14 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       // TODO actually do die during builds.
       // process.exit(1)
     }
+
+    fileOkCache[internalPage.component] = true
   }
 
   return {
+    ...actionOptions,
     type: `CREATE_PAGE`,
     plugin,
-    traceId,
     payload: internalPage,
   }
 }
@@ -449,7 +463,11 @@ const typeOwners = {}
  *   }
  * })
  */
-actions.createNode = (node: any, plugin?: Plugin, traceId?: string) => {
+actions.createNode = (
+  node: any,
+  plugin?: Plugin,
+  actionOptions?: ActionOptions = {}
+) => {
   if (!_.isObject(node)) {
     return console.log(
       chalk.bold.red(
@@ -463,12 +481,22 @@ actions.createNode = (node: any, plugin?: Plugin, traceId?: string) => {
     node.internal = {}
   }
 
+  // Ensure the new node has a children array.
+  if (!node.array && !_.isArray(node.children)) {
+    node.children = []
+  }
+
+  // Ensure the new node has a parent field
+  if (!node.parent) {
+    node.parent = null
+  }
+
   // Tell user not to set the owner name themself.
   if (node.internal.owner) {
     console.log(JSON.stringify(node, null, 4))
     console.log(
       chalk.bold.red(
-        `The node internal.owner field is set automatically by Gatsby and not by plugin`
+        `The node internal.owner field is set automatically by Gatsby and not by plugins`
       )
     )
     process.exit(1)
@@ -553,6 +581,11 @@ actions.createNode = (node: any, plugin?: Plugin, traceId?: string) => {
     }
   }
 
+  if (actionOptions.parentSpan) {
+    actionOptions.parentSpan.setTag(`nodeId`, node.id)
+    actionOptions.parentSpan.setTag(`nodeType`, node.id)
+  }
+
   let deleteAction
   let updateNodeAction
   // Check if the node has already been processed.
@@ -560,7 +593,7 @@ actions.createNode = (node: any, plugin?: Plugin, traceId?: string) => {
     updateNodeAction = {
       type: `TOUCH_NODE`,
       plugin,
-      traceId,
+      ...actionOptions,
       payload: node.id,
     }
   } else {
@@ -569,14 +602,16 @@ actions.createNode = (node: any, plugin?: Plugin, traceId?: string) => {
     if (oldNode) {
       const descendantNodes = findChildrenRecursively(oldNode.children)
       if (descendantNodes.length > 0) {
-        deleteAction = actions.deleteNodes(descendantNodes)
+        deleteAction = descendantNodes.map(n =>
+          actions.deleteNode({ node: getNode(n) })
+        )
       }
     }
 
     updateNodeAction = {
       type: `CREATE_NODE`,
       plugin,
-      traceId,
+      ...actionOptions,
       payload: node,
     }
   }
@@ -654,7 +689,7 @@ type CreateNodeInput = {
 actions.createNodeField = (
   { node, name, value, fieldName, fieldValue }: CreateNodeInput,
   plugin: Plugin,
-  traceId?: string
+  actionOptions?: ActionOptions
 ) => {
   if (fieldName) {
     console.warn(
@@ -709,7 +744,7 @@ actions.createNodeField = (
   return {
     type: `ADD_FIELD_TO_NODE`,
     plugin,
-    traceId,
+    ...actionOptions,
     payload: node,
   }
 }
@@ -858,7 +893,9 @@ actions.replaceWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
  * @param {Object} config An options object in the shape of a normal babelrc javascript object
  * @example
  * setBabelOptions({
- *   sourceMaps: `inline`,
+ *   options: {
+ *     sourceMaps: `inline`,
+ *   }
  * })
  */
 actions.setBabelOptions = (options: Object, plugin?: ?Plugin = null) => {
@@ -1075,11 +1112,35 @@ actions.createRedirect = ({
 }
 
 /**
- * All defined actions.
+ * Add a third-party schema to be merged into main schema. Schema has to be a
+ * graphql-js GraphQLSchema object.
+ *
+ * This schema is going to be merged as-is. This can easily break the main
+ * Gatsby schema, so it's user's responsibility to make sure it doesn't happen
+ * (by eg namespacing the schema).
+ *
+ * @param {Object} $0
+ * @param {GraphQLSchema} $0.schema GraphQL schema to add
+ */
+actions.addThirdPartySchema = (
+  { schema }: { schema: GraphQLSchema },
+  plugin: Plugin,
+  traceId?: string
+) => {
+  return {
+    type: `ADD_THIRD_PARTY_SCHEMA`,
+    plugin,
+    traceId,
+    payload: schema,
+  }
+}
+
+/**
+ * All action creators wrapped with a dispatch.
  */
 exports.actions = actions
 
 /**
- * All action creators wrapped with a dispatch.
+ * All action creators wrapped with a dispatch. - *DEPRECATED*
  */
 exports.boundActionCreators = bindActionCreators(actions, store.dispatch)

@@ -53,7 +53,7 @@ need to maintain a runtime, a database, application code, or complex optimized
 web servers.
 
 But the downside is you have to keep separate template files that will
-eventually rendered as HTML on the browser, and Javascript file that will
+eventually rendered as HTML on the browser, and JavaScript file that will
 eventually manipulate that HTML again on the browser (and CSS assets too).
 
 ## Enter the new world order
@@ -86,7 +86,7 @@ On your end, the development flow looks:
 - During development, write code like a boss (hot reloading, modularized code,
   webpack plugins, etc...)
 - Use React.js Server Side Rendering API to convert this code to static HTML
-  content, and Javascript code, on your server
+  content, and JavaScript code, on your server
 
 It’s really that easy? Well, sort of.
 

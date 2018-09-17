@@ -4,7 +4,16 @@ date: "2017-12-06"
 author: "Josh Weaver"
 image: "gatsby-contentful-netlify-algolia.jpg"
 excerpt: "Gatsby has been getting a lot of recognition and adoption lately, and for good reason. It’s so flexible and it works well with nearly everything."
-tags: ["contentful", "netlify", "algolia", "getting-started", "hosting", "ci", "performance"]
+tags:
+  [
+    "contentful",
+    "netlify",
+    "algolia",
+    "getting-started",
+    "hosting",
+    "ci",
+    "performance",
+  ]
 ---
 
 Gatsby has been getting a lot of recognition and
@@ -157,7 +166,7 @@ features. I haven’t heard any complaints from my co-workers.
 Another “problem” with static sites is the lack of out-of-the-box site search.
 Most search implementations occur between the server and the database. As a doc
 site, users typically expect solid search functionality. There are a few
-frontend only javascript search libraries (like [lunr.js](https://lunrjs.com/))
+frontend only JavaScript search libraries (like [lunr.js](https://lunrjs.com/))
 that take a search query and parse a pre-built JSON index of your content.
 
 I could have created this index by tying into the `onPostBuild` Gatsby API. This

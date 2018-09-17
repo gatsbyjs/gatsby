@@ -3,15 +3,16 @@ import { Link } from "gatsby"
 import Helmet from "react-helmet"
 
 import Layout from "../../components/layout"
-import docsSidebar from "../../data/sidebars/doc-links.yaml"
+import { itemListDocs } from "../../utils/sidebar/item-list"
 import Container from "../../components/container"
+import EmailCaptureForm from "../../components/email-capture-form"
 import DocSearchContent from "../../components/docsearch-content"
 import presets from "../../utils/presets"
 
 class IndexRoute extends React.Component {
   render() {
     return (
-      <Layout location={this.props.location} sidebarYaml={docsSidebar}>
+      <Layout location={this.props.location} itemList={itemListDocs}>
         <DocSearchContent>
           <Container>
             <Helmet>
@@ -20,24 +21,34 @@ class IndexRoute extends React.Component {
             <h1 id="get-started" css={{ marginTop: 0 }}>
               Get started
             </h1>
-            <p>Gatsby is a blazing-fast static site generator for React.</p>
-            <h2>Install Gatsby{`'`}s command line tool</h2>
+            <p>Gatsby is a blazing fast modern site generator for React.</p>
+            <h2>
+              Install Gatsby
+              {`'`}s command line tool
+            </h2>
             <p>
               <code>npm install --global gatsby-cli</code>
             </p>
             <h2 id="using-the-gatsby-cli">Using the Gatsby CLI</h2>
             <ol>
               <li>
-                Create a new site.
-                {` `}
-                <code>gatsby new gatsby-site</code>
+                <p>Create a new site.</p>
+                <div className="gatsby-highlight" data-language="bash">
+                  <pre className="language-bash">
+                    <code className="language-bash">
+                      gatsby new gatsby-site
+                      https://github.com/gatsbyjs/gatsby-starter-default#v2
+                    </code>
+                  </pre>
+                </div>
               </li>
               <li>
                 <code>cd gatsby-site</code>
               </li>
               <li>
                 <code>gatsby develop</code> — Gatsby will start a hot-reloading
-                development environment accessible at{` `}
+                development environment accessible at
+                {` `}
                 <code>localhost:8000</code>
               </li>
               <li>
@@ -56,14 +67,17 @@ class IndexRoute extends React.Component {
             </ol>
             <p>
               To see detailed documentation for the CLI commands, run in the
-              terminal <code>gatsby --help</code> and for specific commands{` `}
-              <code>gatsby COMMAND_NAME --help</code> e.g.{` `}
+              terminal <code>gatsby --help</code> and for specific commands
+              {` `}
+              <code>gatsby COMMAND_NAME --help</code> e.g.
+              {` `}
               <code>gatsby develop --help</code>.
             </p>
             <h2 id="using-other-starters">Using other starters</h2>
             <p>
               Running <code>gatsby new</code> installs the default Gatsby
-              starter. There are{` `}
+              starter. There are
+              {` `}
               <Link to="/docs/gatsby-starters/">
                 many other official and community starters
               </Link>
@@ -87,6 +101,7 @@ class IndexRoute extends React.Component {
             >
               <h2>Documentation</h2>
             </div>
+            <EmailCaptureForm signupMessage="Want to keep up with the latest tips & tricks? Subscribe to our newsletter!" />
           </Container>
         </DocSearchContent>
       </Layout>

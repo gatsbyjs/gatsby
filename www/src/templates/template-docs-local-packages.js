@@ -1,6 +1,6 @@
 import React from "react"
+import { graphql } from "gatsby"
 import _ from "lodash"
-
 import Layout from "../components/layout"
 import PageWithPluginSearchBar from "../components/page-with-plugin-searchbar"
 import PackageReadme from "../components/package-readme"
@@ -29,7 +29,7 @@ class DocsLocalPackagesTemplate extends React.Component {
 
     return (
       <Layout location={this.props.location}>
-        <PageWithPluginSearchBar history={this.props.history}>
+        <PageWithPluginSearchBar location={this.props.location}>
           <PackageReadme
             page={markdownRemark ? _.pick(markdownRemark, `parent`) : false}
             packageName={
@@ -78,7 +78,7 @@ class DocsLocalPackagesTemplate extends React.Component {
 export default DocsLocalPackagesTemplate
 
 export const pageQuery = graphql`
-  query TemplateDocsLocalPackages($slug: String!) {
+  query($slug: String!) {
     markdownRemark(fields: { slug: { eq: $slug } }) {
       html
       excerpt

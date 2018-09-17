@@ -5,10 +5,13 @@
     },
     "publish": {
       "allowBranch": "master",
-      "cdVersion": "prerelease",
+      "bump": "prerelease",
       "conventionalCommits": true,
       "message": "chore(release): Publish",
-      "preid": "beta"
+      "preid": "rc",
+      "ignoreChanges": [
+        "CHANGELOG.md"
+      ]
     }
   },
   "loglevel": "success",

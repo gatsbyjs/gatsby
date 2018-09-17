@@ -31,6 +31,7 @@ function watch(root, packages, { scanOnce, quiet }) {
     const ignoreRegs = [
       /[/\\]node_modules[/\\]/i,
       /\.git/i,
+      /\.DS_Store/,
       new RegExp(`${p}[\\/\\\\]src[\\/\\\\]`, `i`),
     ]
 

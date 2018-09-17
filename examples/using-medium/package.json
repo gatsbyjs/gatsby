@@ -1,5 +1,5 @@
 {
-  "name": "gatsby-example-using-medmium",
+  "name": "gatsby-example-using-medium",
   "private": true,
   "version": "1.0.0",
   "description": "Gatsby example site that shows how to use the Medium source plugin",
@@ -8,7 +8,7 @@
   "license": "MIT",
   "dependencies": {
     "gatsby": "next",
-    "gatsby-source-medium": "^1.0.1",
+    "gatsby-source-medium": "next",
     "react": "^16.4.0",
     "react-dom": "^16.4.0"
   },
