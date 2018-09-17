@@ -21,8 +21,7 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link#readme",
   "keywords": [
-    "gatsby",
-    "gatsby-component"
+    "gatsby"
   ],
   "license": "MIT",
   "main": "index.js",
