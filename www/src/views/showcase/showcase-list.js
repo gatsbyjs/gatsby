@@ -7,7 +7,6 @@ import qs from "qs"
 
 import ShowcaseItemCategories from "./showcase-item-categories"
 import { rhythm } from "../../utils/typography"
-import { colors } from "../../utils/presets"
 
 import GithubIcon from "react-icons/lib/go/mark-github"
 import FaExtLink from "react-icons/lib/fa/external-link"
