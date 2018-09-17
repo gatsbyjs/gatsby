@@ -32,7 +32,7 @@ const styles = {
     display: `flex`,
     flexDirection: `column`,
     margin: rhythm(3 / 4),
-    minWidth: 259,//shows 3 items/row on windows > 1200px wide
+    minWidth: 259, //shows 3 items/row on windows > 1200px wide
     maxWidth: 350,
     flex: `1 0 0`,
     position: `relative`,
@@ -146,9 +146,18 @@ const styles = {
       boxShadow: `0 8px 20px ${hex2rgba(colors.lilac, 0.5)}`,
     },
   },
-  noLinkUnderline: {
-    borderBottom: `none !important`, // i know i know
-    boxShadow: `none !important`, // but people really want this
+  shortcutIcon: {
+    paddingLeft: rhythm(1 / 8),
+    "&&": {
+      color: colors.gray.bright,
+      fontWeight: `normal`,
+      borderBottom: `none`,
+      boxShadow: `none`,
+      "&:hover": {
+        background: `none`,
+        color: colors.gatsby,
+      },
+    },
   },
   meta: {
     ...scale(-1 / 5),

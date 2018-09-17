@@ -1,10 +1,10 @@
 import React from "react"
-import FaExtLink from "react-icons/lib/fa/external-link"
-import FaGithub from "react-icons/lib/fa/github"
-import FaClipboard from "react-icons/lib/fa/clipboard"
+import LaunchDemoIcon from "react-icons/lib/md/launch"
+import GithubIcon from "react-icons/lib/go/mark-github"
+import CopyToClipboardIcon from "react-icons/lib/go/clippy"
 import MdStar from "react-icons/lib/md/star"
-import { rhythm, options } from "../../utils/typography"
-import presets, { colors } from "../../utils/presets"
+import { options } from "../../utils/typography"
+import { colors } from "../../utils/presets"
 import copyToClipboard from "../../utils/copy-to-clipboard"
 import styles from "../shared/styles"
 import ThumbnailLink from "../shared/thumbnail"
@@ -49,7 +49,7 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
     <div
       css={{
         fontFamily: options.headerFontFamily.join(`,`),
-        ...styles.showcaseList
+        ...styles.showcaseList,
       }}
     >
       {items.map(({ node }) => {
@@ -76,7 +76,7 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
             <div
               key={node.id}
               css={{
-                ...styles.showcaseItem
+                ...styles.showcaseItem,
               }}
               {...styles.withTitleHover}
             >
@@ -94,43 +94,33 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
                   <span css={{ color: colors.gray.dark }}>
                     {repo.owner && repo.owner.login} /
                   </span>
-                  <span
-                    css={{
-                      "> a": {
-                        paddingLeft: 5,
-                        "&:hover": {
-                          background: `none`,
-                          color: colors.gatsby,
-                        },
-                      },
-                    }}
-                  >
+                  <span>
                     <a
                       href="#copy-to-clipboard"
                       onClick={() =>
                         copyToClipboard(`https://github.com/${githubFullName}`)
                       }
-                      css={{ ...styles.noLinkUnderline }}
+                      css={{ ...styles.shortcutIcon }}
                     >
-                      <FaClipboard />
-                      {` `}
+                      <CopyToClipboardIcon />
                     </a>
+                    {` `}
                     <a
                       href={node.frontmatter.demo}
                       target="_blank"
                       rel="noopener noreferrer"
-                      css={{ ...styles.noLinkUnderline }}
+                      css={{ ...styles.shortcutIcon }}
                     >
-                      <FaExtLink />
-                      {` `}
+                      <LaunchDemoIcon />
                     </a>
+                    {` `}
                     <a
                       href={`https://github.com/${githubFullName}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      css={{ ...styles.noLinkUnderline }}
+                      css={{ ...styles.shortcutIcon }}
                     >
-                      <FaGithub />
+                      <GithubIcon />
                       {` `}
                     </a>
                   </span>
@@ -175,12 +165,30 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
         )
       })}
       {/* makes last row items equal width and aligned left */}
-      <div aria-hidden="true" css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }} />
-      <div aria-hidden="true" css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }} />
-      <div aria-hidden="true" css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }} />
-      <div aria-hidden="true" css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }} />
-      <div aria-hidden="true" css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }} />
-      <div aria-hidden="true" css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }} />
+      <div
+        aria-hidden="true"
+        css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }}
+      />
+      <div
+        aria-hidden="true"
+        css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }}
+      />
+      <div
+        aria-hidden="true"
+        css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }}
+      />
+      <div
+        aria-hidden="true"
+        css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }}
+      />
+      <div
+        aria-hidden="true"
+        css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }}
+      />
+      <div
+        aria-hidden="true"
+        css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }}
+      />
     </div>
   )
 }
