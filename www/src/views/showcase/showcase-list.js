@@ -65,6 +65,7 @@ const ShowcaseList = ({ items, count }) => {
                     >
                       <GithubIcon style={{ verticalAlign: `text-top` }} />
                     </a>
+                    {` `}
                   )}
                   <a
                     href={node.main_url}
@@ -72,7 +73,6 @@ const ShowcaseList = ({ items, count }) => {
                     rel="noopener noreferrer"
                     css={{...styles.shortcutIcon}}
                   >
-                    {` `}
                     <FaExtLink style={{ verticalAlign: `text-top` }} />
                   </a>
                 </div>
