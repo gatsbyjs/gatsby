@@ -8,7 +8,7 @@ const { get, merge, isObject, flatten, uniqBy } = require(`lodash`)
 const apiRunner = require(`./api-runner-ssr`)
 const syncRequires = require(`./sync-requires`)
 const { dataPaths, pages } = require(`./data.json`)
-const { version: gatsbyVersion } = require(join(process.cwd(), 'node_modules/gatsby/package.json'))
+const { version: gatsbyVersion } = require(`gatsby/package.json`)
 
 // Speed up looking up pages.
 const pagesObjectMap = new Map()
