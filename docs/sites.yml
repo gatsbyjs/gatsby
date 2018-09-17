@@ -2361,6 +2361,22 @@
     - Portfolio
     - Freelance
   featured: false
+- title: Studenten bilden Schüler
+  description: >
+    Site for German student-run nonprofit initiative that works to provide free
+    tutoring to children from underprivileged families as well as refugees. Built
+    using styled-components and Contentful. Supports Google Analytics, fluid typography
+    and Algolia search.
+  main_url: "https://studenten-bilden-schueler.de"
+  url: "https://studenten-bilden-schueler.de"
+  source_url: "https://github.com/StudentenBildenSchueler/homepage"
+  categories:
+    - Education
+    - Nonprofit
+    - Blog
+  built_by: Janosh Riebesell
+  built_by_url: "https://janosh.io"
+  featured: false
 - title: Joseph Chambers
   main_url: 'https://joseph.michael-chambers.com/'
   url: 'https://joseph.michael-chambers.com/'
