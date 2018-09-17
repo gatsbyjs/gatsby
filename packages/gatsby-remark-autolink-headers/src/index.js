@@ -25,24 +25,26 @@ module.exports = ({ markdownAST }, { icon = svgIcon, className = "anchor" }) => 
     patch(data.htmlAttributes, `id`, id)
     patch(data.hProperties, `id`, id)
 
-    node.children.unshift({
-      type: `link`,
-      url: `#${id}`,
-      title: null,
-      data: {
-        hProperties: {
-          "aria-hidden": true,
-          class: className,
-        },
-        hChildren: [
-          {
-            type: `raw`,
-            // The Octicon link icon is the default. But users can set their own icon via the "icon" option.
-            value: icon,
+    if (icon !== false) {
+      node.children.unshift({
+        type: `link`,
+        url: `#${id}`,
+        title: null,
+        data: {
+          hProperties: {
+            "aria-hidden": true,
+            class: className,
           },
-        ],
-      },
-    })
+          hChildren: [
+            {
+              type: `raw`,
+              // The Octicon link icon is the default. But users can set their own icon via the "icon" option.
+              value: icon,
+            },
+          ],
+        },
+      })
+    }
   })
 
   return markdownAST

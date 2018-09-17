@@ -11,35 +11,42 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
     offsetY = pluginOptions.offsetY
   }
 
-  const styles = `
-    .${className} {
-      float: left;
-      padding-right: 4px;
-      margin-left: -20px;
-    }
-    h1 .${className} svg,
-    h2 .${className} svg,
-    h3 .${className} svg,
-    h4 .${className} svg,
-    h5 .${className} svg,
-    h6 .${className} svg {
-      visibility: hidden;
-    }
-    h1:hover .${className} svg,
-    h2:hover .${className} svg,
-    h3:hover .${className} svg,
-    h4:hover .${className} svg,
-    h5:hover .${className} svg,
-    h6:hover .${className} svg,
-    h1 .${className}:focus svg,
-    h2 .${className}:focus svg,
-    h3 .${className}:focus svg,
-    h4 .${className}:focus svg,
-    h5 .${className}:focus svg,
-    h6 .${className}:focus svg {
-      visibility: visible;
-    }
-  `
+  let showIcon = true
+  if ("icon" in pluginOptions) {
+    showIcon = pluginOptions.icon
+  }
+
+  const styles = showIcon
+    ? `
+      .${className} {
+        float: left;
+        padding-right: 4px;
+        margin-left: -20px;
+      }
+      h1 .${className} svg,
+      h2 .${className} svg,
+      h3 .${className} svg,
+      h4 .${className} svg,
+      h5 .${className} svg,
+      h6 .${className} svg {
+        visibility: hidden;
+      }
+      h1:hover .${className} svg,
+      h2:hover .${className} svg,
+      h3:hover .${className} svg,
+      h4:hover .${className} svg,
+      h5:hover .${className} svg,
+      h6:hover .${className} svg,
+      h1 .${className}:focus svg,
+      h2 .${className}:focus svg,
+      h3 .${className}:focus svg,
+      h4 .${className}:focus svg,
+      h5 .${className}:focus svg,
+      h6 .${className}:focus svg {
+        visibility: visible;
+      }
+    `
+  : ``
 
   const script = `
     document.addEventListener("DOMContentLoaded", function(event) {
