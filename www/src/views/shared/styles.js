@@ -146,11 +146,6 @@ const styles = {
       boxShadow: `0 8px 20px ${hex2rgba(colors.lilac, 0.5)}`,
     },
   },
-  noLinkUnderline: {
-    borderBottom: `none !important`, // i know i know
-    boxShadow: `none !important`, // but people really want this
-    background: `none !important`,
-  },
   shortcutIcon: {
     "&&": {
       color: colors.gray.bright,
