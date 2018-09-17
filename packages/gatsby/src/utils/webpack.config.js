@@ -169,7 +169,6 @@ module.exports = async (
   }
 
   function getPlugins() {
-    const { version: gatsbyVersion } = require(path.join(process.cwd(), `node_modules/gatsby/package.json`));
     let configPlugins = [
       plugins.moment(),
 
@@ -181,7 +180,6 @@ module.exports = async (
        */
       plugins.define({
         "process.env": processEnv(stage, `development`),
-        __GATSBY_VERSION__: JSON.stringify(gatsbyVersion),
         __PATH_PREFIX__: JSON.stringify(
           program.prefixPaths ? store.getState().config.pathPrefix : ``
         ),

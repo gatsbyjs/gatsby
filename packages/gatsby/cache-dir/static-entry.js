@@ -8,6 +8,7 @@ const { get, merge, isObject, flatten, uniqBy } = require(`lodash`)
 const apiRunner = require(`./api-runner-ssr`)
 const syncRequires = require(`./sync-requires`)
 const { dataPaths, pages } = require(`./data.json`)
+const { version: gatsbyVersion } = require(path.join(process.cwd(), 'node_modules/gatsby/package.json'))
 
 // Speed up looking up pages.
 const pagesObjectMap = new Map()
@@ -371,6 +372,7 @@ export default (pagePath, callback) => {
       headComponents={headComponents}
       htmlAttributes={htmlAttributes}
       bodyAttributes={bodyAttributes}
+      gatsbyVersion={gatsbyVersion}
       preBodyComponents={preBodyComponents}
       postBodyComponents={postBodyComponents}
       body={bodyHtml}
