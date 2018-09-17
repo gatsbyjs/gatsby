@@ -1,66 +1,14 @@
 import React from 'react'
-import { graphql } from 'gatsby'
-import Image from 'gatsby-image'
+import { Link } from 'gatsby'
 import PropTypes from 'prop-types'
 
 import Layout from '../components/layout'
 
-const IndexPage = ({ data }) => (
+const IndexPage = () => (
   <Layout>
-    <h1>Fluid</h1>
-    <span data-testid="image-fluid">
-      <Image fluid={data.fruitsFluid.childImageSharp.fluid} />
-    </span>
-    <h1>Fixed</h1>
-    <span data-testid="image-fixed">
-      <Image fixed={data.fruitsFixed.childImageSharp.fixed} />
-    </span>
-    <h1>Fixed &amp; Traced</h1>
-    <span data-testid="image-traced">
-      <Image fluid={data.fruitsTraced.childImageSharp.fluid} />
-    </span>
-    <h1>Intersection Observer</h1>
-    <span data-testid="image-lazy">
-      <Image fluid={data.fruitsLazy.childImageSharp.fluid} />
-    </span>
+    <h1>Gatsby Image integration test</h1>
+    <h2>Please navigate to <Link to="/fixed">/fixed</Link>, <Link to="/fluid">/fluid</Link>, or <Link to="/traced">/traced</Link>.</h2>
   </Layout>
 )
 
-IndexPage.propTypes = {
-  data: PropTypes.object.isRequired,
-}
-
 export default IndexPage
-
-export const pageQuery = graphql`
-  query {
-    fruitsFluid: file(relativePath: { eq: "citrus-fruits.jpg" }) {
-      childImageSharp {
-        fluid(maxWidth: 500) {
-          ...GatsbyImageSharpFluid
-        }
-      }
-    }
-    fruitsFixed: file(relativePath: { eq: "citrus-fruits.jpg" }) {
-      childImageSharp {
-        fixed(width: 500) {
-          ...GatsbyImageSharpFixed
-        }
-      }
-    }
-    fruitsTraced: file(relativePath: { eq: "citrus-fruits.jpg" }) {
-      childImageSharp {
-        fluid(maxWidth: 500, traceSVG: { background: "red", color: "white" }) {
-          ...GatsbyImageSharpFluid_tracedSVG
-        }
-      }
-    }
-    fruitsLazy: file(relativePath: { eq: "citrus-fruits.jpg" }) {
-      childImageSharp {
-        fluid(maxWidth: 900) {
-          ...GatsbyImageSharpFluid
-        }
-      }
-    }
-  }
-`

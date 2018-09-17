@@ -2,7 +2,7 @@ const fixedTestId = `image-fixed`
 
 describe(`fixed`, () => {
   beforeEach(() => {
-    cy.visit(`/`).waitForRouteChange()
+    cy.visit(`/fixed`).waitForRouteChange()
   })
 
   it(`does not render a spacer div`, () => {
@@ -23,11 +23,10 @@ describe(`fixed`, () => {
   })
 
   // TODO: figure out why these tests are failing
-  it.skip(`applies 1x/2x/3x`, () => {
+  it(`applies 1x/2x/3x`, () => {
     cy.getTestElement(fixedTestId)
-      .scrollIntoView()
-      .find(`picture > source`)
-      .should(`have.attr`, `srcset`)
+      .find('picture > source')
+      .should('have.attr', 'srcset')
       .and(srcset => {
         ;[`1x`, `2x`, `3x`].forEach(size => {
           expect(srcset).contains(size)
@@ -35,7 +34,7 @@ describe(`fixed`, () => {
       })
   })
 
-  describe.skip(`picture > img sizing`, () => {
+  describe(`picture > img sizing`, () => {
     it(`applies height attribute`, () => {
       cy.getTestElement(fixedTestId)
         .find(`picture > img`)
