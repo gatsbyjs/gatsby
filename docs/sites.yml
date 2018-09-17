@@ -2389,3 +2389,11 @@
   built_by: Joseph Chambers
   built_by_url: https://twitter.com/imcodingideas
   featured: false
+- title: Mike's Remote List
+  main_url: 'https://www.mikesremotelist.com'
+  url: 'https://www.mikesremotelist.com'
+  description: >
+    A list of remote jobs, updated throughout the day. Built on Gatsby v1 and powered by Contentful, Google Sheets, string and sticky tape.
+  categories:
+    - Jobs
+  featured: false
