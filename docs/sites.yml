@@ -2389,3 +2389,19 @@
   built_by: Joseph Chambers
   built_by_url: https://twitter.com/imcodingideas
   featured: false
+- title: Madvoid
+  main_url: 'https://madvoid.com/'
+  url: 'https://madvoid.com/'
+  description: >
+    Madvoid is a team of expert developers dedicated to creating simple, clear, usable and blazing fast web and mobile apps.
+    We are coders that help companies and agencies to create social & interactive experiences.
+    This includes full stack development using React, WebGL, Static Site Generators, Ruby On Rails, Phoenix, GraphQL, Chatbots, CI / CD, Docker and more!
+  categories:
+    - Portfolio
+    - Technology
+    - Web Dev
+    - Agency
+    - Marketing
+  built_by: Jean-Paul Bonnetouche
+  built_by_url: https://twitter.com/_jpb
+  featured: false
