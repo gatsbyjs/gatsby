@@ -32,7 +32,7 @@ const styles = {
     display: `flex`,
     flexDirection: `column`,
     margin: rhythm(3 / 4),
-    minWidth: 259,//shows 3 items/row on windows > 1200px wide
+    minWidth: 259, //shows 3 items/row on windows > 1200px wide
     maxWidth: 350,
     flex: `1 0 0`,
     position: `relative`,
@@ -151,7 +151,7 @@ const styles = {
     boxShadow: `none !important`, // but people really want this
     background: `none !important`,
   },
-  shortcutIcon : {
+  shortcutIcon: {
     "&&": {
       color: colors.gray.bright,
       fontWeight: `normal`,
@@ -160,7 +160,7 @@ const styles = {
       "&:hover": {
         background: `none`,
         color: colors.gatsby,
-      }
+      },
     },
   },
   meta: {

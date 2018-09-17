@@ -54,7 +54,7 @@ const ShowcaseList = ({ items, count }) => {
                 >
                   <ShowcaseItemCategories categories={node.categories} />
                 </div>
-                <div css={{flex: `0 0 auto`, textAlign: `right`}}>
+                <div css={{ flex: `0 0 auto`, textAlign: `right` }}>
                   {node.source_url && (
                     <Fragment>
                       <a
@@ -72,7 +72,7 @@ const ShowcaseList = ({ items, count }) => {
                     href={node.main_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    css={{...styles.shortcutIcon}}
+                    css={{ ...styles.shortcutIcon }}
                   >
                     <FaExtLink style={{ verticalAlign: `text-top` }} />
                   </a>
@@ -103,12 +103,30 @@ const ShowcaseList = ({ items, count }) => {
           )
       )}
       {/* makes last row items equal width and aligned left */}
-      <div aria-hidden="true" css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }} />
-      <div aria-hidden="true" css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }} />
-      <div aria-hidden="true" css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }} />
-      <div aria-hidden="true" css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }} />
-      <div aria-hidden="true" css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }} />
-      <div aria-hidden="true" css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }} />
+      <div
+        aria-hidden="true"
+        css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }}
+      />
+      <div
+        aria-hidden="true"
+        css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }}
+      />
+      <div
+        aria-hidden="true"
+        css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }}
+      />
+      <div
+        aria-hidden="true"
+        css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }}
+      />
+      <div
+        aria-hidden="true"
+        css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }}
+      />
+      <div
+        aria-hidden="true"
+        css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }}
+      />
     </div>
   )
 }
