@@ -184,6 +184,26 @@ function prepareTextNode(node, key, text, createNode, createNodeId) {
   return textNode
 }
 
+function prepareStructuredTextNode(node, key, content, createNode, createNodeId) {
+  const str = JSON.stringify(content)
+  const structuredTextNode = {
+    ...content,
+    id: createNodeId(`${node.id}${key}StructuredTextNode`),
+    parent: node.id,
+    children: [],
+    [key]: str,
+    internal: {
+      type: _.camelCase(`${node.internal.type} ${key} StructuredTextNode`),
+      mediaType: `application/json`,
+      content: str,
+      contentDigest: digest(str),
+    },
+  }
+
+  node.children = node.children.concat([structuredTextNode.id])
+
+  return structuredTextNode
+}
 function prepareJSONNode(node, key, content, createNodeId, i = ``) {
   const str = JSON.stringify(content)
   const JSONNode = {
@@ -372,6 +392,21 @@ exports.createContentTypeNodes = ({
 
           childrenNodes.push(textNode)
           entryItemFields[`${entryItemFieldKey}___NODE`] = textNode.id
+
+          delete entryItemFields[entryItemFieldKey]
+        } else if (
+          fieldType === `StructuredText` &&
+          _.isPlainObject(entryItemFields[entryItemFieldKey])
+        ) {
+          const stNode = prepareStructuredTextNode(
+            entryNode,
+            entryItemFieldKey,
+            entryItemFields[entryItemFieldKey],
+            createNodeId
+          )
+
+          childrenNodes.push(stNode)
+          entryItemFields[`${entryItemFieldKey}___NODE`] = stNode.id
 
           delete entryItemFields[entryItemFieldKey]
         } else if (
