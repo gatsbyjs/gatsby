@@ -83,23 +83,27 @@ exports.onCreateNode = async (
     return
   }
 
-  const screenshotNode = await new Promise((resolve, reject) => {
-    screenshotQueue
-      .push({
-        url: node.url,
-        parent: node.id,
-        store,
-        cache,
-        createNode,
-        createNodeId,
-      })
-      .on(`finish`, r => {
-        resolve(r)
-      })
-      .on(`failed`, e => {
-        reject(e)
-      })
-  })
+  try {
+    const screenshotNode = await new Promise((resolve, reject) => {
+      screenshotQueue
+        .push({
+          url: node.url,
+          parent: node.id,
+          store,
+          cache,
+          createNode,
+          createNodeId,
+        })
+        .on(`finish`, r => {
+          resolve(r)
+        })
+        .on(`failed`, e => {
+          reject(e)
+        })
+    })
+  } catch (e) {
+    return
+  }
 
   createParentChildLink({
     parent: node,
