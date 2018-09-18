@@ -86,7 +86,7 @@ jobs:
       - <<: *restore_node_modules
       - <<: *install_node_modules
       - <<: *attach_to_bootstrap
-      - run: ./scripts/integration-test.sh path-prefix
+      - run: ./scripts/integration-test.sh integration-tests/path-prefix
   
   e2e:gatsby-image:
     docker:
@@ -96,7 +96,7 @@ jobs:
       - <<: *restore_node_modules
       - <<: *install_node_modules
       - <<: *attach_to_bootstrap
-      - run: ./scripts/integration-test.sh gatsby-image
+      - run: ./scripts/integration-test.sh integration-tests/gatsby-image
   
   e2e:production_runtime:
     docker:
@@ -106,7 +106,7 @@ jobs:
       - <<: *restore_node_modules
       - <<: *install_node_modules
       - <<: *attach_to_bootstrap
-      - run: ./scripts/integration-test.sh production_runtime
+      - run: ./scripts/integration-test.sh integration-tests/production_runtime
 
 workflows:
   version: 2
