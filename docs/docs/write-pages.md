@@ -11,14 +11,14 @@ digraph {
 
   subgraph cluster_redux {
     label = "redux";
-    
+
     pages [ label = "pages", shape = cylinder ];
     components [ label = "components", shape = cylinder ];
     jsonDataPaths [ label = "jsonDataPaths", shape = cylinder ];
   }
-  
+
   writePages [ label = "pages-writer.js:writePages()" ];
-  
+
   subgraph cluster_cache {
     label = "site/.cache/";
     pagesJson [ label = "pages.json", shape = cylinder ];
@@ -26,11 +26,11 @@ digraph {
     asyncRequires [ label = "async-requires.js", shape = cylinder ];
     dataJson [ label = "data.json", shape = cylinder ];
   }
-  
+
   pages -> writePages;
   components -> writePages;
   jsonDataPaths -> writePages;
-  
+
   writePages -> pagesJson;
   writePages -> syncRequires;
   writePages -> asyncRequires;
@@ -40,7 +40,7 @@ digraph {
 
 Most of the code backing this section is in [pages-writer.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/pages-writer.js)
 
-The dynamic files that are created are (all under the `.cache` directory). 
+The dynamic files that are created are (all under the `.cache` directory).
 
 - [pages.json](#pagesjson)
 - [sync-requires.js](#sync-requiresjs)
@@ -49,7 +49,7 @@ The dynamic files that are created are (all under the `.cache` directory).
 
 ### pages.json
 
-This is a collection of page objects, created from redux `pages` namespace. For each page it includes the 
+This is a collection of page objects, created from redux `pages` namespace. For each page it includes the
 
 - [componentChunkName](/docs/behind-the-scenes-terminology/#componentchunkname)
 - [jsonName](/docs/behind-the-scenes-terminology/#jsonname)
@@ -123,7 +123,7 @@ This is a generated json file. It contains the entire `pages.json` contents ([as
     },
     // more pages
  ],
- 
+
  // jsonName -> dataPath
  dataPaths: {
    "blog-2-c06":"952/path---blog-2-c06-meTS6Okzenz0aDEeI6epU4DPJuE",
@@ -133,7 +133,7 @@ This is a generated json file. It contains the entire `pages.json` contents ([as
 
 `data.json` is used in two places. First, it's lazily imported by `async-requires.js` (above), which in turn is used by `production-app` to [load json results](/docs/production-app/#load-page-resources) for a page.
 
-It is also used by [Page HTML Generation](http://localhost:8000/docs/html-generation/) in two ways:
+It is also used by [Page HTML Generation](/docs/html-generation/) in two ways:
 
 1. `static-entry.js` produces a `page-renderer.js` webpack bundle that generates the HTML for a path. It requires `data.json` and uses the `pages` to lookup the page for the page.
 2. To get the `jsonName` from the page object, and uses it to contruct a resource path for the actual json result by looking it up in `data.json.dataPaths[jsonName]`.

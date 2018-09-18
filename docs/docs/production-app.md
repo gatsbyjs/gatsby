@@ -64,7 +64,7 @@ This contains the small [webpack-runtime](https://webpack.js.org/concepts/manife
 
 ##### component---[name]-[contenthash].js
 
-This is a separate bundle for each page. The mechanics for how these are split off from the main production app are covered in [Code Splitting](http://localhost:8000/docs/how-code-splitting-works/).
+This is a separate bundle for each page. The mechanics for how these are split off from the main production app are covered in [Code Splitting](/docs/how-code-splitting-works/).
 
 ## production-app.js
 
@@ -72,7 +72,7 @@ This is the entrypoint to webpack that outputs `app-[contenthash].js` bundle. It
 
 ### First load
 
-To show how `production-app` works, let's imagine that we've just refreshed the browser on our site's `/blog/2` page. The HTML loads immediately, painting our page quickly. It includes a CDATA section which injects page information into the `window` object so it's available in our js code (inserted during [Page HTML Generation](http://localhost:8000/docs/html-generation/#6-inject-page-info-to-cdata)).
+To show how `production-app` works, let's imagine that we've just refreshed the browser on our site's `/blog/2` page. The HTML loads immediately, painting our page quickly. It includes a CDATA section which injects page information into the `window` object so it's available in our js code (inserted during [Page HTML Generation](/docs/html-generation/#6-inject-page-info-to-cdata)).
 
 ```html
 /*
@@ -95,7 +95,7 @@ Then, the app, webpack-runtime, component, and data json bundles are loaded via 
 
 The first thing our app does is run the [onClientEntry](/docs/browser-apis/#onClientEntry) browser API. This allows plugins to perform any operations before we hit the rest of the page loading logic. For example [gatsby-plugin-glamor](/packages/gatsby-plugin-glamor/) will call rehydrate.
 
-It's worth noting that the browser API runner is completely different to `api-runner-node` which is explained in [How APIs/Plugins Are Run](/docs/how-plugins-apis-are-run/). `api-runner-node` runs in node.js and has to deal with complex server based execution paths. Whereas running APIs on the browser is simply a matter of iterating through the site's registered browser plugins and running them one after the other (see [api-runner-browser.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/api-runner-browser.js#L9)). 
+It's worth noting that the browser API runner is completely different to `api-runner-node` which is explained in [How APIs/Plugins Are Run](/docs/how-plugins-apis-are-run/). `api-runner-node` runs in node.js and has to deal with complex server based execution paths. Whereas running APIs on the browser is simply a matter of iterating through the site's registered browser plugins and running them one after the other (see [api-runner-browser.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/api-runner-browser.js#L9)).
 
 One thing to note is that it gets the list of plugins from `./cache/api-runner-browser-plugins.js`, which is generated [early in bootstrap](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/bootstrap/index.js#L289).
 
@@ -113,7 +113,7 @@ PageRenderer's constructor [loads the page resources](/docs/production-app/#load
 
 Before hydration occurs, we kick off the loading of resources in the background. As mentioned above, the current page's resources will have already been requested by `link` tags in the HTML. So, technically, there's nothing more required for this page load. But we can start loading resources required to navigate to other pages.
 
-This occurs in [loader.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/loader.js). The main function here is [getResourcesForPathname()](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/loader.js#L268). Given a path, it will find its page, and import its component module json query results. But to do this, it needs access to that information. This is provided by [async-requires.js](http://localhost:8000/docs/write-pages/#async-requiresjs) which contains the list of all pages in the site, and all their dataPathss. [fetchPageResourcesMap()](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/loader.js#L33) takes care of requesting that file, which occurs the [first time](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/loader.js#L292) `getResourcesForPathname()` is called. 
+This occurs in [loader.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/loader.js). The main function here is [getResourcesForPathname()](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/loader.js#L268). Given a path, it will find its page, and import its component module json query results. But to do this, it needs access to that information. This is provided by [async-requires.js](/docs/write-pages/#async-requiresjs) which contains the list of all pages in the site, and all their dataPathss. [fetchPageResourcesMap()](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/loader.js#L33) takes care of requesting that file, which occurs the [first time](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/loader.js#L292) `getResourcesForPathname()` is called.
 
 ### window variables
 
@@ -129,7 +129,7 @@ only used during `gatsby develop`.
 
 ##### `___chunkMapping`
 
-Contents of `chunk-map.json`. See [Code Splitting](/docs/how-code-splitting-works/#chunk-mapjson) for more. 
+Contents of `chunk-map.json`. See [Code Splitting](/docs/how-code-splitting-works/#chunk-mapjson) for more.
 
 ##### `___push`, `___replace` and `___navigate`
 
