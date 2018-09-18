@@ -54,4 +54,5 @@ workflows:
     jobs:
       - e2e:
           type: approval
-          requires: lint-and-test
+          requires:
+            - lint-and-test
