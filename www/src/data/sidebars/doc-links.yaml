@@ -17,8 +17,6 @@
           link: /docs/basic-hardware-software-requirements/
         - title: Browser Support
           link: /docs/browser-support/
-        - title: Gatsby on Macs*
-          link: /docs/gatsby-on-macs/
         - title: Gatsby on Windows
           link: /docs/gatsby-on-windows/
     - title: Deploying & hosting
@@ -339,14 +337,10 @@
       link: /docs/how-to-file-an-issue/
     - title: How to label an issue
       link: /docs/how-to-label-an-issue/
-    - title: How to submit a PR*
-      link: /docs/how-to-submit-a-pr/
     - title: Community Pair Programming Sessions
       link: /docs/pair-programming/
-    - title: Gatsby style guide
+    - title: Gatsby Style Guide
       link: /docs/gatsby-style-guide/
-    - title: Design principles*
-      link: /docs/design-principles/
     - title: RFC process*
       link: /docs/rfc-process/
     - title: Docs templates*
@@ -355,8 +349,6 @@
       link: /docs/how-to-run-a-gatsby-workshop/
     - title: How to pitch Gatsby*
       link: /docs/how-to-pitch-gatsby/
-    - title: Submit a blogpost*
-      link: /docs/submit-a-blogpost/
     - title: Site Showcase Submissions
       link: /docs/site-showcase-submissions/
     - title: Submit to Creator Showcase
