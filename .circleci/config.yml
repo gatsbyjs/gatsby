@@ -1,18 +1,26 @@
-node10: &node10
-  docker:
-    - image: circleci/node:10
+aliases:
+  node10: &node10
+    docker:
+      - image: circleci/node:10
 
-restore_node_modules: &restore_node_modules
-  restore_cache:
-    name: Restore node_modules cache
-    keys:
-      - node-modules-{{ checksum "yarn.lock" }}
+  restore_node_modules: &restore_node_modules
+    restore_cache:
+      name: Restore node_modules cache
+      keys:
+        - node-modules-{{ checksum "yarn.lock" }}
 
-install_node_modules: &install_node_modules
-  run:
-    name: Install node modules
-    command: |
-      yarn
+  install_node_modules: &install_node_modules
+    run:
+      name: Install node modules
+      command: |
+        yarn
+
+  persist_node_modules: &persist_node_modules
+    save_cache:
+      name: Save node modules cache
+      key: node-modules-{{ checksum "yarn.lock" }}
+      paths:
+        - node_modules
 
 version: 2
 
@@ -23,6 +31,7 @@ jobs:
       - checkout
       - <<: *restore_node_modules
       - <<: *install_node_modules
+      - <<: *persist_node_modules
       - run: yarn bootstrap
       - persist_to_workspace:
           root: packages
@@ -35,6 +44,7 @@ jobs:
       - checkout
       - <<: *restore_node_modules
       - <<: *install_node_modules
+      - <<: *persist_node_modules
       - run: yarn lint
 
   test:
@@ -43,6 +53,7 @@ jobs:
       - checkout
       - <<: *restore_node_modules
       - <<: *install_node_modules
+      - <<: *persist_node_modules
       - attach_workspace:
           at: packages
       - run: yarn jest -w 1
@@ -53,6 +64,7 @@ jobs:
       - checkout
       - <<: *restore_node_modules
       - <<: *install_node_modules
+      - <<: *persist_node_modules
       - run: yarn test:integration
 
   e2e:
@@ -77,7 +89,7 @@ workflows:
           requires:
             - bootstrap
       - integration
-      - approve-e2e:
+      - run-e2e:
           type: approval
           requires:
             - bootstrap
@@ -86,4 +98,4 @@ workflows:
             - integration
       - e2e:
           requires:
-            - approve-e2e
+            - run-e2e
