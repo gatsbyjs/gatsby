@@ -3,6 +3,10 @@ aliases:
     docker:
       - image: circleci/node:10
 
+  node10_browsers: &node10_browsers
+    docker:
+      - image: circleci/node:10-browsers
+
   restore_node_modules: &restore_node_modules
     restore_cache:
       name: Restore node_modules cache
@@ -25,6 +29,11 @@ aliases:
   attach_to_bootstrap: &attach_to_bootstrap
     attach_workspace:
       at: packages
+
+  ignore_master: &ignore_master
+    branches:
+      ignore:
+        - master
 
 version: 2
 
@@ -71,8 +80,8 @@ jobs:
       - run: yarn test:integration
 
   e2e:path-prefix:
-    docker:
-      - image: circleci/node:10-browsers
+    <<: *node10_browsers
+    <<: *ignore_master
     steps:
       - checkout
       - <<: *restore_node_modules
@@ -81,8 +90,8 @@ jobs:
       - run: ./scripts/integration-test.sh integration-tests/path-prefix
   
   e2e:gatsby-image:
-    docker:
-      - image: circleci/node:10-browsers
+    <<: *node10_browsers
+    <<: *ignore_master
     steps:
       - checkout
       - <<: *restore_node_modules
@@ -91,8 +100,8 @@ jobs:
       - run: ./scripts/integration-test.sh integration-tests/gatsby-image
   
   e2e:production_runtime:
-    docker:
-      - image: circleci/node:10-browsers
+    <<: *node10_browsers
+    <<: *ignore_master
     steps:
       - checkout
       - <<: *restore_node_modules
@@ -111,6 +120,7 @@ workflows:
             - bootstrap
       - integration
       - run-e2e:
+          <<: *ignore_master
           type: approval
           requires:
             - bootstrap
