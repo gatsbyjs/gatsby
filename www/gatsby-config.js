@@ -183,7 +183,12 @@ module.exports = {
         endpoint: `https://gatsbyjs.us17.list-manage.com/subscribe/post?u=1dc33f19eb115f7ebe4afe5ee&amp;id=f366064ba7`,
       },
     },
-    `gatsby-transformer-screenshot`,
+    {
+      resolve: `gatsby-transformer-screenshot`,
+      options: {
+        nodeTypes: [`StartersYaml`],
+      },
+    },
     `gatsby-plugin-subfont`,
     // {
     // resolve: `gatsby-plugin-guess-js`,

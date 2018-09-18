@@ -9,8 +9,8 @@ import copyToClipboard from "../../utils/copy-to-clipboard"
 import styles from "../shared/styles"
 import ThumbnailLink from "../shared/thumbnail"
 
-const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
-  if (!items.length) {
+const ShowcaseList = ({ urlState, starters, count, sortRecent }) => {
+  if (!starters.length) {
     // empty state!
     const emptyStateReason =
       urlState.s !== ``
@@ -44,7 +44,8 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
       </div>
     )
   }
-  if (count) items = items.sort(sortingFunction(sortRecent)).slice(0, count)
+  if (count)
+    starters = starters.sort(sortingFunction(sortRecent)).slice(0, count)
   return (
     <div
       css={{
@@ -52,29 +53,41 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
         ...styles.showcaseList,
       }}
     >
-      {items.map(({ node }) => {
+      {starters.map(({ node: starter }) => {
         const {
-          githubData,
+          // githubData,
+          // description,
+          // stars,
+          // githubFullName,
+          // stub,
+          // gatsbyDependencies,
+          allDependencies,
           description,
-          stars,
-          githubFullName,
-          stub,
           gatsbyDependencies,
-        } = node.fields.starterShowcase
+          name,
+          githubFullName,
+          lastUpdated,
+          miscDependencies,
+          owner,
+          slug,
+          stars,
+          stub,
+        } = starter.fields.starterShowcase
+        const { url: demoUrl, repo: repoUrl } = starter
         const gatsbyVersion = gatsbyDependencies.find(
           ([k, v]) => k === `gatsby`
         )[1]
         const match = gatsbyVersion.match(/([0-9]+)([.])([0-9]+)/) // we just want x.x
         const minorVersion = match ? match[0] : gatsbyVersion // default to version if no match
         const isGatsbyVersionWarning = !/(2..+|next|latest)/g.test(minorVersion) // either 2.x or next or latest
-        const imgsharp = imgsFilter(imgs, stub)
+        // const imgsharp = imgsFilter(imgs, stub)
 
-        const repo = githubData.repoMetadata
-        const { pushed_at } = repo
+        // const repo = githubData.repoMetadata
+        // const { pushed_at } = repo
         return (
-          node.fields && ( // have to filter out null fields from bad data
+          starter.fields && ( // have to filter out null fields from bad data
             <div
-              key={node.id}
+              key={starter.id}
               css={{
                 ...styles.showcaseItem,
               }}
@@ -82,8 +95,8 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
             >
               <ThumbnailLink
                 slug={`/starters/${stub}`}
-                image={imgsharp}
-                title={imgsharp.name}
+                image={starter.childScreenshot}
+                title={starter.name}
               />
               <div
                 css={{
@@ -91,9 +104,7 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
                 }}
               >
                 <div css={{ display: `flex`, justifyContent: `space-between` }}>
-                  <span css={{ color: colors.gray.dark }}>
-                    {repo.owner && repo.owner.login} /
-                  </span>
+                  <span css={{ color: colors.gray.dark }}>{owner} /</span>
                   <span>
                     <a
                       href="#copy-to-clipboard"
@@ -106,7 +117,7 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
                     </a>
                     {` `}
                     <a
-                      href={node.frontmatter.demo}
+                      href={demoUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       css={{ ...styles.shortcutIcon }}
@@ -128,7 +139,7 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
                 <div>
                   <span className="title">
                     <h5 css={{ margin: 0 }}>
-                      <strong>{repo.name}</strong>
+                      <strong>{name}</strong>
                     </h5>
                   </span>
                   {/* {isGatsbyVersionWarning ?
@@ -156,7 +167,7 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
                     {stars}
                   </div>
                   <div css={{ display: `inline-block` }}>
-                    Updated {new Date(pushed_at).toLocaleDateString()}
+                    Updated {new Date(lastUpdated).toLocaleDateString()}
                   </div>
                 </div>
               </div>
@@ -195,17 +206,15 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
 
 export default ShowcaseList
 
-function imgsFilter(imgs, stub) {
-  const result = imgs.filter(img => img.node.name === stub)
-  return result.length ? result[0].node : null
-}
+// function imgsFilter(imgs, stub) {
+//   const result = imgs.filter(img => img.node.name === stub)
+//   return result.length ? result[0].node : null
+// }
 
 function sortingFunction(sortRecent) {
   return function({ node: nodeA }, { node: nodeB }) {
     const safewrap = obj =>
-      sortRecent
-        ? new Date(obj.githubData.repoMetadata.pushed_at)
-        : obj[`stars`]
+      sortRecent ? new Date(obj.lastUpdated) : obj[`stars`]
     const metricA = safewrap(nodeA.fields.starterShowcase)
     const metricB = safewrap(nodeB.fields.starterShowcase)
     return metricB - metricA

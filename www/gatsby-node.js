@@ -449,6 +449,7 @@ exports.onCreateNode = ({ node, actions, getNode, getNodes }) => {
           stargazers: { totalCount: stars },
           updatedAt: lastUpdated,
           owner: { login: owner },
+          name,
           nameWithOwner: githubFullName,
         } = githubData.repository
 
@@ -458,6 +459,8 @@ exports.onCreateNode = ({ node, actions, getNode, getNodes }) => {
         )
         const starterShowcaseFields = {
           slug,
+          stub: slug,
+          name,
           description: pkgjson.description,
           stars,
           lastUpdated,

@@ -9,6 +9,7 @@ class ShowcasePage extends Component {
     const location = this.props.location
 
     return <ShowcaseView data={data} location={location} />
+    // return <div>hi</div>
   }
 }
 
@@ -22,6 +23,45 @@ export const showcaseQuery = graphql`
           name
           childImageSharp {
             ...ShowcaseThumbnailFragment_item
+          }
+        }
+      }
+    }
+    allStartersYaml {
+      edges {
+        node {
+          id
+          fields {
+            starterShowcase {
+              slug
+              stub
+              description
+              stars
+              lastUpdated
+              owner
+              name
+              githubFullName
+              allDependencies
+              gatsbyDependencies
+              miscDependencies
+            }
+          }
+          url
+          repo
+          description
+          tags
+          features
+          internal {
+            type
+          }
+          childScreenshot {
+            screenshotFile {
+              childImageSharp {
+                fluid(maxWidth: 512) {
+                  ...GatsbyImageSharpFluid_noBase64
+                }
+              }
+            }
           }
         }
       }
