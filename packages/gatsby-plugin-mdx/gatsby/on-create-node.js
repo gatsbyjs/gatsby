@@ -35,7 +35,11 @@ module.exports = async (
             transform: transformerFn
           },
           actions,
-          { __internalMdxTypeName: "Mdx", ...pluginOptions }
+          {
+            __internalMdxTypeName:
+              node.parent === "___SOURCE___" ? "Mdx" : undefined,
+            ...pluginOptions
+          }
         );
       }
     }
