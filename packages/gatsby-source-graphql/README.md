@@ -2,9 +2,8 @@
 
 Plugin for connecting arbitrary GraphQL APIs to Gatsby GraphQL. Remote schemas are stitched together by adding a type that wraps the remote schema Query type and putting it under field of Gatsby GraphQL Query.
 
-- [Example website]([See it here](https://using-gatsby-source-graphql.netlify.com/)
-  )
-- [Example website source]([See it here](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-gatsby-source-graphql)
+- [Example website]([See it here](https://using-gatsby-source-graphql.netlify.com/))
+- [Example website source]([See it here](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-gatsby-source-graphql))
 
 ## Install
 
