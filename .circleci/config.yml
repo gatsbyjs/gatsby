@@ -45,12 +45,14 @@ jobs:
 
 workflows:
   version: 2
-  lint-and-test:
+  build-test:
     jobs:
       - lint
       - test
       - integration
-  e2e-tests:
-    jobs:
       - e2e:
           type: approval
+          requires:
+            - lint
+            - test
+            - integration
