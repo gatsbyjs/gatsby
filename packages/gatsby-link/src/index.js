@@ -3,6 +3,7 @@ import PropTypes from "prop-types"
 import React from "react"
 import { Link, Location } from "@reach/router"
 import { parsePath } from "gatsby"
+import { prefixed } from "eventemitter3";
 
 export function withPrefix(path) {
   return normalizePath(`${__PATH_PREFIX__}/${path}`)
@@ -138,7 +139,7 @@ class GatsbyLink extends React.Component {
             e.preventDefault()
             // Is this link pointing to a hash on the same page? If so,
             // just scroll there.
-            const { pathname, hash } = parsePath(to)
+            const { pathname, hash } = parsePath(prefixedTo)
             if (pathname === location.pathname || !pathname) {
               const element = hash
                 ? document.getElementById(hash.substr(1))
