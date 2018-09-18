@@ -19,12 +19,11 @@
   "license": "MIT",
   "scripts": {
     "build": "gatsby build --prefix-paths",
-    "postbuild": "mv public blog && mkdir public && mv blog public/blog",
     "develop": "gatsby develop",
     "format": "prettier --write '**/*.js'",
     "test": "npm-run-all -s build start-server-and-test",
     "start-server-and-test": "start-server-and-test serve http://localhost:9000/blog cy:run",
-    "serve": "gatsby serve",
+    "serve": "gatsby serve --prefix-paths",
     "cy:open": "cypress open",
     "cy:run": "cypress run --browser chrome"
   },

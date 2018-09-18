@@ -9,10 +9,8 @@ interface GatsbyImageProps {
   title?: string;
   alt?: string;
   className?: string | object;
-  outerWrapperClassName?: string | object;
   style?: object;
   imgStyle?: object;
-  position?: string;
   backgroundColor?: string | boolean;
   onLoad?: (event: any) => void;
   Tag?: string;

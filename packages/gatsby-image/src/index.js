@@ -195,7 +195,6 @@ class Image extends React.Component {
       title,
       alt,
       className,
-      outerWrapperClassName,
       style = {},
       imgStyle = {},
       placeholderStyle = {},
@@ -228,33 +227,23 @@ class Image extends React.Component {
     if (fluid) {
       const image = fluid
 
-      // The outer div is necessary to reset the z-index to 0.
       return (
         <Tag
-          className={`${
-            outerWrapperClassName ? outerWrapperClassName : ``
-          } gatsby-image-outer-wrapper`}
+          className={`${className ? className : ``} gatsby-image-wrapper`}
           style={{
-            // Let users set component to be absolutely positioned.
-            position: style.position === `absolute` ? `initial` : `relative`,
+            position: `relative`,
+            overflow: `hidden`,
+            ...style,
           }}
+          ref={this.handleRef}
         >
+          {/* Preserve the aspect ratio. */}
           <Tag
-            className={`${className ? className : ``} gatsby-image-wrapper`}
             style={{
-              position: `relative`,
-              overflow: `hidden`,
-              ...style,
+              width: `100%`,
+              paddingBottom: `${100 / image.aspectRatio}%`,
             }}
-            ref={this.handleRef}
-          >
-            {/* Preserve the aspect ratio. */}
-            <Tag
-              style={{
-                width: `100%`,
-                paddingBottom: `${100 / image.aspectRatio}%`,
-              }}
-            />
+          />
 
             {/* Show the blurry base64 image. */}
             {image.base64 && (
@@ -327,7 +316,6 @@ class Image extends React.Component {
                 }}
               />
             )}
-          </Tag>
         </Tag>
       )
     }
@@ -347,99 +335,88 @@ class Image extends React.Component {
         delete divStyle.display
       }
 
-      // The outer div is necessary to reset the z-index to 0.
       return (
         <Tag
-          className={`${
-            outerWrapperClassName ? outerWrapperClassName : ``
-          } gatsby-image-outer-wrapper`}
-          style={{
-            // Let users set component to be absolutely positioned.
-            position: style.position === `absolute` ? `initial` : `relative`,
-          }}
+          className={`${className ? className : ``} gatsby-image-wrapper`}
+          style={divStyle}
+          ref={this.handleRef}
         >
-          <Tag
-            className={`${className ? className : ``} gatsby-image-wrapper`}
-            style={divStyle}
-            ref={this.handleRef}
-          >
-            {/* Show the blurry base64 image. */}
-            {image.base64 && (
+          {/* Show the blurry base64 image. */}
+          {image.base64 && (
+            <Img
+              alt={alt}
+              title={title}
+              src={image.base64}
+              style={imagePlaceholderStyle}
+            />
+          )}
+
+          {/* Show the traced SVG image. */}
+          {image.tracedSVG && (
+            <Img
+              alt={alt}
+              title={title}
+              src={image.tracedSVG}
+              style={imagePlaceholderStyle}
+            />
+          )}
+
+          {/* Show a solid background color. */}
+          {bgColor && (
+            <Tag
+              title={title}
+              style={{
+                backgroundColor: bgColor,
+                width: image.width,
+                opacity: !this.state.imgLoaded ? 1 : 0,
+                transitionDelay: `0.25s`,
+                height: image.height,
+              }}
+            />
+          )}
+
+          {/* Once the image is visible, start downloading the image */}
+          {this.state.isVisible && (
+            <picture>
+              {image.srcSetWebp && (<source
+                type={`image/webp`}
+                srcSet={image.srcSetWebp}
+                sizes={image.sizes}
+              />)}
+
+              <source
+                srcSet={image.srcSet}
+                sizes={image.sizes}
+              />
+
               <Img
                 alt={alt}
                 title={title}
-                src={image.base64}
-                style={imagePlaceholderStyle}
+                width={image.width}
+                height={image.height}
+                src={image.src}
+                style={imageStyle}
+                ref={this.imageRef}
+                onLoad={this.handleImageLoaded}
+                onError={this.props.onError}
               />
-            )}
+            </picture>
+          )}
 
-            {/* Show the traced SVG image. */}
-            {image.tracedSVG && (
-              <Img
-                alt={alt}
-                title={title}
-                src={image.tracedSVG}
-                style={imagePlaceholderStyle}
-              />
-            )}
-
-            {/* Show a solid background color. */}
-            {bgColor && (
-              <Tag
-                title={title}
-                style={{
-                  backgroundColor: bgColor,
+          {/* Show the original image during server-side rendering if JavaScript is disabled */}
+          {this.state.hasNoScript && (
+            <noscript
+              dangerouslySetInnerHTML={{
+                __html: noscriptImg({
+                  alt,
+                  title,
                   width: image.width,
-                  opacity: !this.state.imgLoaded ? 1 : 0,
-                  transitionDelay: `0.25s`,
                   height: image.height,
-                }}
-              />
-            )}
-
-            {/* Once the image is visible, start downloading the image */}
-            {this.state.isVisible && (
-              <picture>
-                {image.srcSetWebp && (<source
-                  type={`image/webp`}
-                  srcSet={image.srcSetWebp}
-                  sizes={image.sizes}
-                />)}
-
-                <source
-                  srcSet={image.srcSet}
-                  sizes={image.sizes}
-                />
-
-                <Img
-                  alt={alt}
-                  title={title}
-                  width={image.width}
-                  height={image.height}
-                  src={image.src}
-                  style={imageStyle}
-                  ref={this.imageRef}
-                  onLoad={this.handleImageLoaded}
-                  onError={this.props.onError}
-                />
-              </picture>
-            )}
-
-            {/* Show the original image during server-side rendering if JavaScript is disabled */}
-            {this.state.hasNoScript && (
-              <noscript
-                dangerouslySetInnerHTML={{
-                  __html: noscriptImg({
-                    alt,
-                    title,
-                    width: image.width,
-                    height: image.height,
-                    ...image,
-                  }),
-                }}
-              />
-            )}
-          </Tag>
+                  ...image,
+                }),
+              }}
+            />
+          )}
         </Tag>
       )
     }
@@ -486,15 +463,10 @@ Image.propTypes = {
   title: PropTypes.string,
   alt: PropTypes.string,
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]), // Support Glamor's css prop.
-  outerWrapperClassName: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.object,
-  ]),
   critical: PropTypes.bool,
   style: PropTypes.object,
   imgStyle: PropTypes.object,
   placeholderStyle: PropTypes.object,
-  position: PropTypes.string,
   backgroundColor: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   onLoad: PropTypes.func,
   onError: PropTypes.func,

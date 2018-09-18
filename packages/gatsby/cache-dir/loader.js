@@ -346,6 +346,11 @@ const queue = {
           getResourceModule(page.componentChunkName),
           getResourceModule(page.jsonName),
         ]).then(([component, json]) => {
+          if (!(component && json)) {
+            resolve(null)
+            return
+          }
+
           const pageResources = {
             component,
             json,

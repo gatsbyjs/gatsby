@@ -255,7 +255,7 @@
       link: /docs/prpl-pattern/
     - title: Querying data with GraphQL
       link: /docs/querying-with-graphql/
-- title: BEHIND THE SCENES
+- title: Behind the Scenes
   link: /docs/behind-the-scenes/
   items:
     - title: How APIS/Plugins Are Run
@@ -290,6 +290,17 @@
           link: /docs/query-execution/
         - title: Normal vs StaticQueries
           link: /docs/static-vs-normal-queries/
+    - title: Write out Pages
+      link: /docs/write-pages/
+    - title: Webpack and SSR
+      link: /docs/webpack-and-ssr/
+      items:
+        - title: Building the Javascript App
+          link: /docs/production-app/
+        - title: Page HTML Generation
+          link: /docs/html-generation/
+        - title: Code Splitting and Prefetching
+          link: /docs/how-code-splitting-works/
     - title: Data Storage (Redux)*
       link: /docs/data-storage-redux/
     - title: Build Caching*

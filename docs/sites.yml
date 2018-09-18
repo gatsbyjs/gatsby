@@ -6,13 +6,6 @@
   categories:
     - Web Dev
     - Featured
-- title: Nike - Just Do It
-  main_url: "https://justdoit.nike.com/"
-  url: "https://justdoit.nike.com/"
-  featured: true
-  categories:
-    - eCommerce
-    - Featured
 - title: Stitch Fix
   main_url: "https://www.stitchfix.com/"
   url: "https://www.stitchfix.com/"
@@ -33,6 +26,13 @@
   categories:
     - Blog
     - Gallery
+    - Featured
+  featured: true
+- title: Impossible Foods
+  main_url: "https://impossiblefoods.com/"
+  url: "https://impossiblefoods.com/"
+  categories:
+    - Food
     - Featured
   featured: true
 - title: Braun
@@ -72,11 +72,13 @@
 - title: Hopper
   main_url: "https://www.hopper.com/"
   url: "https://www.hopper.com/"
+  built_by: Narative
+  built_by_url: "https://www.narative.co/"
   featured: true
   categories:
-    - eCommerce
+    - Technology
     - App
-    - featured
+    - Featured
 - title: Cajun Bowfishing
   main_url: "https://cajunbowfishing.com/"
   url: "https://cajunbowfishing.com/"
@@ -244,6 +246,13 @@
     - Documentation
     - Web Dev
     - Open Source
+- title: Nike - Just Do It
+  main_url: "https://justdoit.nike.com/"
+  url: "https://justdoit.nike.com/"
+  featured: true
+  categories:
+    - eCommerce
+    - Featured
 - title: Cardiogram
   main_url: "https://cardiogr.am/"
   url: "https://cardiogr.am/"
@@ -2347,15 +2356,127 @@
     - Web Dev
   featured: false
 - title: Cameron Maske
-  main_url: 'https://www.cameronmaske.com/'
-  url: 'https://www.cameronmaske.com/courses/introduction-to-pytest/'
-  source_url: 'https://github.com/cameronmaske/cameronmaske.com-v2'
+  main_url: "https://www.cameronmaske.com/"
+  url: "https://www.cameronmaske.com/courses/introduction-to-pytest/"
+  source_url: "https://github.com/cameronmaske/cameronmaske.com-v2"
   description: >
     The homepage of Cameron Maske, a freelance full stack developer, who is currently working on a free pytest video course
   categories:
     - Personal
     - Education
-    - Video 
-    - Portfolio 
+    - Video
+    - Portfolio
     - Freelance
   featured: false
+- title: Studenten bilden Schüler
+  description: >
+    Site for German student-run nonprofit initiative that works to provide free
+    tutoring to children from underprivileged families as well as refugees. Built
+    using styled-components and Contentful. Supports Google Analytics, fluid typography
+    and Algolia search.
+  main_url: "https://studenten-bilden-schueler.de"
+  url: "https://studenten-bilden-schueler.de"
+  source_url: "https://github.com/StudentenBildenSchueler/homepage"
+  categories:
+    - Education
+    - Nonprofit
+    - Blog
+  built_by: Janosh Riebesell
+  built_by_url: "https://janosh.io"
+  featured: false
+- title: Joseph Chambers
+  main_url: "https://joseph.michael-chambers.com/"
+  url: "https://joseph.michael-chambers.com/"
+  description: >
+    The homepage of Joseph Chambers, a freelance full stack developer, who is currently looking for work.
+  categories:
+    - Portfolio
+    - Freelance
+    - Web Dev
+  built_by: Joseph Chambers
+  built_by_url: https://twitter.com/imcodingideas
+  featured: false
+- title: Mike's Remote List
+  main_url: "https://www.mikesremotelist.com"
+  url: "https://www.mikesremotelist.com"
+  description: >
+    A list of remote jobs, updated throughout the day. Built on Gatsby v1 and powered by Contentful, Google Sheets, string and sticky tape.
+  categories:
+    - Jobs
+  featured: false
+- title: Madvoid
+  main_url: "https://madvoid.com/"
+  url: "https://madvoid.com/screenshot/"
+  featured: false
+  description: >
+    Madvoid is a team of expert developers dedicated to creating simple, clear, usable and blazing fast web and mobile apps.
+    We are coders that help companies and agencies to create social & interactive experiences.
+    This includes full stack development using React, WebGL, Static Site Generators, Ruby On Rails, Phoenix, GraphQL, Chatbots, CI / CD, Docker and more!
+  categories:
+    - Portfolio
+    - Technology
+    - Web Dev
+    - Agency
+    - Marketing
+  built_by: Jean-Paul Bonnetouche
+  built_by_url: https://twitter.com/_jpb
+- title: MOMNOTEBOOK.COM
+  description: >
+    Sharing knowledge and experiences that make childhood and motherhood rich, vibrant and healthy.
+  main_url: 'https://momnotebook.com/'
+  url: 'https://momnotebook.com/'
+  featured: false
+  built_by: Aleksander Hansson
+  built_by_url: https://www.linkedin.com/in/aleksanderhansson/
+  categories:
+    - Blog
+- title: Pirate Studios
+  description: >
+    Reinventing music studios with 24/7 self service rehearsal, DJ & production rooms available around the world.
+  main_url: 'https://www.piratestudios.co'
+  url: 'https://www.piratestudios.co'
+  featured: false
+  built_by: The Pirate Studios team
+  built_by_url: https://github.com/piratestudios/
+  categories:
+    - Music
+- title: Aurora EOS
+  main_url: "https://www.auroraeos.com/"
+  url: "https://www.auroraeos.com/"
+  featured: false
+  categories:
+    - Blockchain
+    - Marketing
+    - Blog
+  built_by: Corey Ward
+  built_by_url: "http://www.coreyward.me/"
+- title: MadeComfy
+  main_url: "https://madecomfy.com.au/"
+  url: "https://madecomfy.com.au/"
+  description: >
+    Short term rental management startup, using Contentful + Gatsby + CicleCI
+  featured: false
+  categories:
+    - Travel
+  built_by: Lucas Vilela
+  built_by_url: "https://madecomfy.com.au/"
+- title: How To Book Cheap Flights
+  description: >
+    A travel blog built with Gatsby and adopting the AMP technology.
+  main_url: "https://howtobookcheapflights.com"
+  url: "https://howtobookcheapflights.com"
+  source_url: "https://github.com/flaviolivolsi/howtobookcheapflights"
+  featured: false
+  categories:
+    - Travel
+    - Blog
+  built_by: Flavio Li Volsi
+  built_by_url: "http://github.com/flaviolivolsi"
+- title: Tiger Facility Services
+  description: >
+    Tiger Facility Services combines facility management expertise with state of the art software to offer a sustainable and customer oriented cleaning and facility service.
+  main_url: https://www.tigerfacilityservices.com/de-en/
+  url: https://www.tigerfacilityservices.com/de-en/
+  featured: false
+  categories:
+    - B2B Services

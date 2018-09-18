@@ -296,10 +296,8 @@ const styles = {
       fontSize: scale(-4 / 10).fontSize,
       paddingBottom: 20,
     },
-    "&&": {
-      "& a": {
-        fontFamily: options.systemFontFamily.join(`,`),
-      },
+    "& a": {
+      fontFamily: options.systemFontFamily.join(`,`),
     },
     "& li": {
       margin: 0,

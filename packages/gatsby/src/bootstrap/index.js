@@ -17,6 +17,7 @@ const { initCache } = require(`../utils/cache`)
 const report = require(`gatsby-cli/lib/reporter`)
 const getConfigFile = require(`./get-config-file`)
 const tracer = require(`opentracing`).globalTracer()
+const preferDefault = require(`./prefer-default`)
 
 // Show stack trace on unhandled promises.
 process.on(`unhandledRejection`, (reason, p) => {
@@ -40,7 +41,6 @@ const {
 // Otherwise leave commented out.
 // require(`./log-line-function`)
 
-const preferDefault = m => (m && m.default) || m
 
 type BootstrapArgs = {
   directory: string,
