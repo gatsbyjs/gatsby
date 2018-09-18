@@ -112,7 +112,7 @@ Featured sites will be chosen quarterly based on the following criteria:
 
 _Note: the Gatsby team will choose featured sites, leave as `featured: false` when first posting_
 
-If you're site is chosen as featured, here's what to do next:
+If your site is chosen as featured, here's what to do next:
 
 1.  Change `featured: false` to `featured: true`
 

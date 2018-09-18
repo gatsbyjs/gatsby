@@ -5,7 +5,7 @@ This plugin reimplements the behavior of layout components in `gatsby@1`, which 
 ## Install
 
 ```
-npm install --save gatsby-plugin-layout@next
+npm install --save gatsby-plugin-layout
 ```
 
 ## How to use

@@ -4,7 +4,7 @@ SRC_PATH=$2
 GATSBY_PATH="${TRAVIS_BUILD_DIR:-../../}" # set to third arg if defined, otherwise use ../../
 
 if [[ "$INTEGRATION_TEST" = true ]]; then
-  npm install -g gatsby-dev-cli@next
+  npm install -g gatsby-dev-cli
 
   # bootstrapping all packages so we test _this_ PR's changes
   echo "=== bootstrapping $(pwd)"

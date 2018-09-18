@@ -10,7 +10,7 @@ En la [**sección previa**](/tutorial/part-zero/), preparaste tu entorno de desa
 En el [**tutorial parte cero**](/tutorial/part-zero/), creaste un nuevo sitio basado en el inicio "hello world" utilizando el siguiente comando:
 
 ```bash
-gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world#v2
+gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
 Al crear un nuevo sitio de Gatsby, puedes usar la siguiente estructura de comando para crear un nuevo sitio basado en cualquier iniciador de Gatsby existente:

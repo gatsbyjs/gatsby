@@ -6,13 +6,6 @@
   categories:
     - Web Dev
     - Featured
-- title: Nike - Just Do It
-  main_url: "https://justdoit.nike.com/"
-  url: "https://justdoit.nike.com/"
-  featured: true
-  categories:
-    - eCommerce
-    - Featured
 - title: Stitch Fix
   main_url: "https://www.stitchfix.com/"
   url: "https://www.stitchfix.com/"
@@ -33,6 +26,13 @@
   categories:
     - Blog
     - Gallery
+    - Featured
+  featured: true
+- title: Impossible Foods
+  main_url: "https://impossiblefoods.com/"
+  url: "https://impossiblefoods.com/"
+  categories:
+    - Food
     - Featured
   featured: true
 - title: Braun
@@ -78,7 +78,7 @@
   categories:
     - Technology
     - App
-    - featured
+    - Featured
 - title: Cajun Bowfishing
   main_url: "https://cajunbowfishing.com/"
   url: "https://cajunbowfishing.com/"
@@ -246,6 +246,13 @@
     - Documentation
     - Web Dev
     - Open Source
+- title: Nike - Just Do It
+  main_url: "https://justdoit.nike.com/"
+  url: "https://justdoit.nike.com/"
+  featured: true
+  categories:
+    - eCommerce
+    - Featured
 - title: Cardiogram
   main_url: "https://cardiogr.am/"
   url: "https://cardiogr.am/"
@@ -2412,3 +2419,33 @@
     - Marketing
   built_by: Jean-Paul Bonnetouche
   built_by_url: https://twitter.com/_jpb
+- title: MOMNOTEBOOK.COM
+  description: >
+    Sharing knowledge and experiences that make childhood and motherhood rich, vibrant and healthy.
+  main_url: 'https://momnotebook.com/'
+  url: 'https://momnotebook.com/'
+  featured: false
+  built_by: Aleksander Hansson
+  built_by_url: https://www.linkedin.com/in/aleksanderhansson/
+  categories:
+    - Blog
+- title: Pirate Studios
+  description: >
+    Reinventing music studios with 24/7 self service rehearsal, DJ & production rooms available around the world.
+  main_url: 'https://www.piratestudios.co'
+  url: 'https://www.piratestudios.co'
+  featured: false
+  built_by: The Pirate Studios team
+  built_by_url: https://github.com/piratestudios/
+  categories:
+    - Music
+- title: Aurora EOS
+  main_url: "https://www.auroraeos.com/"
+  url: "https://www.auroraeos.com/"
+  featured: false
+  categories:
+    - Blockchain
+    - Marketing
+    - Blog
+  built_by: Corey Ward
+  built_by_url: "http://www.coreyward.me/"

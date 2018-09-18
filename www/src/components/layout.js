@@ -163,10 +163,10 @@ class DefaultLayout extends React.Component {
           <html lang="en" />
         </Helmet>
         <Banner background={isHomepage ? `#402060` : false}>
-          These are the docs for v2 beta.
+          These are the docs for v2.
           {` `}
           <a
-            href="https://gatsbyjs.org/"
+            href="https://v1.gatsbyjs.org/"
             css={{
               color: `#fff`,
             }}

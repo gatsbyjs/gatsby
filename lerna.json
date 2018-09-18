@@ -5,10 +5,9 @@
     },
     "publish": {
       "allowBranch": "master",
-      "bump": "prerelease",
+      "bump": "patch",
       "conventionalCommits": true,
       "message": "chore(release): Publish",
-      "preid": "rc",
       "ignoreChanges": [
         "CHANGELOG.md"
       ]
