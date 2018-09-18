@@ -98,7 +98,7 @@ function buildLocalCommands(cli, isLocalSite) {
         .option(`o`, {
           alias: `open`,
           type: `boolean`,
-          describe: `Open the site in your browser for you.`,
+          describe: `Open the site in your (default) browser for you.`,
         })
         .option(`S`, {
           alias: `https`,
@@ -140,7 +140,7 @@ function buildLocalCommands(cli, isLocalSite) {
       _.option(`prefix-paths`, {
         type: `boolean`,
         default: false,
-        describe: `Build site with link paths prefixed (set prefix in your config).`,
+        describe: `Build site with link paths prefixed (set pathPrefix in your gatsby-config.js).`,
       })
         .option(`no-uglify`, {
           type: `boolean`,
@@ -178,7 +178,12 @@ function buildLocalCommands(cli, isLocalSite) {
         .option(`o`, {
           alias: `open`,
           type: `boolean`,
-          describe: `Open the site in your browser for you.`,
+          describe: `Open the site in your (default) browser for you.`,
+        })
+        .option(`prefix-paths`, {
+          type: `boolean`,
+          default: false,
+          describe: `Serve site with link paths prefixed (if built with pathPrefix in your gatsby-config.js).`,
         }),
 
     handler: getCommandHandler(`serve`),
