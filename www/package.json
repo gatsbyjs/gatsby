@@ -70,7 +70,6 @@
     "typeface-space-mono": "^0.0.54",
     "typeface-spectral": "^0.0.54",
     "typography": "^1.0.0-alpha.4",
-    "typography-breakpoint-constants": "^1.0.0-alpha.0",
     "typography-plugin-code": "^1.0.0-alpha.0",
     "zipkin": "^0.14.0",
     "zipkin-javascript-opentracing": "^1.6.0",
