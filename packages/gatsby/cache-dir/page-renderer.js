@@ -41,6 +41,7 @@ class PageRenderer extends React.Component {
     const props = {
       ...this.props,
       pathContext: this.props.pageContext,
+      key: this.props.location.pathname,
     }
 
     const [replacementElement] = apiRunner(`replaceComponentRenderer`, {

@@ -50,7 +50,6 @@ apiRunnerAsync(`onClientEntry`).then(() => {
           <EnsureResources location={location}>
             {({ pageResources, location }) => (
               <PageRenderer
-                key={location.pathname}
                 {...this.props}
                 location={location}
                 pageResources={pageResources}
