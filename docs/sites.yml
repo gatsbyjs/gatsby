@@ -2406,7 +2406,8 @@
   featured: false
 - title: Madvoid
   main_url: "https://madvoid.com/"
-  url: "https://madvoid.com/"
+  url: "https://madvoid.com/screenshot/"
+  featured: false
   description: >
     Madvoid is a team of expert developers dedicated to creating simple, clear, usable and blazing fast web and mobile apps.
     We are coders that help companies and agencies to create social & interactive experiences.
