@@ -137,7 +137,7 @@ describe(`navigate`, () => {
   })
 
   it(`respects pathPrefix`, () => {
-    const to = '/some-path';
+    const to = `/some-path`
     global.__PATH_PREFIX__ = `/blog`
     getNavigate()(to)
 

@@ -3,7 +3,6 @@ import PropTypes from "prop-types"
 import React from "react"
 import { Link, Location } from "@reach/router"
 import { parsePath } from "gatsby"
-import { prefixed } from "eventemitter3";
 
 export function withPrefix(path) {
   return normalizePath(`${__PATH_PREFIX__}/${path}`)
