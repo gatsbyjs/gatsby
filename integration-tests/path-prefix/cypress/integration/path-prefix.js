@@ -24,7 +24,7 @@ describe(`Production pathPrefix`, () => {
 
       cy.location(`pathname`).should(
         `eq`,
-        `${pathPrefix}/page-2`
+        withTrailingSlash(`${pathPrefix}/page-2`)
       )
     })
 
