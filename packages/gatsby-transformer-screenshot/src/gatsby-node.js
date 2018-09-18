@@ -78,10 +78,8 @@ exports.onCreateNode = async (
    * Check if node is of a type we care about, and has a url field
    * (originally only checked sites.yml, hence including by default)
    */
-  if (
-    ![`SitesYaml`, ...pluginOptions.nodeTypes].includes(node.internal.type) ||
-    !node.url
-  ) {
+  const validNodeTypes = [`SitesYaml`].concat(pluginOptions.nodeTypes || [])
+  if (!validNodeTypes.includes(node.internal.type) || !node.url) {
     return
   }
 
