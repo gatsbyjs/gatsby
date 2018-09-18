@@ -28,6 +28,13 @@
     - Gallery
     - Featured
   featured: true
+- title: Impossible Foods
+  main_url: "https://impossiblefoods.com/"
+  url: "https://impossiblefoods.com/"
+  categories:
+    - Food
+    - Featured
+  featured: true
 - title: Braun
   description: >
     Braun offers high performance hair removal and hair care products, including dryers, straighteners, shavers, and more.
