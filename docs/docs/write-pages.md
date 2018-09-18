@@ -133,7 +133,7 @@ This is a generated json file. It contains the entire `pages.json` contents ([as
 
 `data.json` is used in two places. First, it's lazily imported by `async-requires.js` (above), which in turn is used by `production-app` to [load json results](/docs/production-app/#load-page-resources) for a page.
 
-It is also used by [Page HTML Generation](http://localhost:8000/docs/html-generation/) in two ways:
+It is also used by [Page HTML Generation](/docs/html-generation/) in two ways:
 
 1. `static-entry.js` produces a `page-renderer.js` webpack bundle that generates the HTML for a path. It requires `data.json` and uses the `pages` to lookup the page for the page.
 2. To get the `jsonName` from the page object, and uses it to contruct a resource path for the actual json result by looking it up in `data.json.dataPaths[jsonName]`.
