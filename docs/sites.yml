@@ -252,7 +252,7 @@
   featured: true
   categories:
     - eCommerce
-    - Featured    
+    - Featured
 - title: Cardiogram
   main_url: "https://cardiogr.am/"
   url: "https://cardiogr.am/"
@@ -2414,3 +2414,13 @@
   built_by_url: https://www.linkedin.com/in/aleksanderhansson/
   categories:
     - Blog
+- title: Aurora EOS
+  main_url: "https://www.auroraeos.com/"
+  url: "https://www.auroraeos.com/"
+  featured: false
+  categories:
+    - Blockchain
+    - Marketing
+    - Blog
+  built_by: Corey Ward
+  built_by_url: "http://www.coreyward.me/"
