@@ -22,6 +22,10 @@ aliases:
       paths:
         - node_modules
 
+  attach_to_bootstrap: &attach_to_bootstrap
+    attach_workspace:
+      at: packages
+
 version: 2
 
 jobs:
@@ -62,8 +66,7 @@ jobs:
       - <<: *restore_node_modules
       - <<: *install_node_modules
       - <<: *persist_node_modules
-      - attach_workspace:
-          at: packages
+      - <<: *attach_to_bootstrap
       - run: yarn jest -w 1
 
   integration:
@@ -75,17 +78,35 @@ jobs:
       - <<: *persist_node_modules
       - run: yarn test:integration
 
-  e2e:
+  e2e:path-prefix:
     docker:
       - image: circleci/node:10-browsers
     steps:
       - checkout
       - <<: *restore_node_modules
       - <<: *install_node_modules
-      - attach_workspace:
-          at: packages
-      - run: sudo npm install -g gatsby-dev-cli
-      - run: ./scripts/run-integration-tests.sh
+      - <<: *attach_to_bootstrap
+      - run: ./scripts/integration-test.sh path-prefix
+  
+  e2e:gatsby-image:
+    docker:
+      - image: circleci/node:10-browsers
+    steps:
+      - checkout
+      - <<: *restore_node_modules
+      - <<: *install_node_modules
+      - <<: *attach_to_bootstrap
+      - run: ./scripts/integration-test.sh gatsby-image
+  
+  e2e:production_runtime:
+    docker:
+      - image: circleci/node:10-browsers
+    steps:
+      - checkout
+      - <<: *restore_node_modules
+      - <<: *install_node_modules
+      - <<: *attach_to_bootstrap
+      - run: ./scripts/integration-test.sh production_runtime
 
 workflows:
   version: 2
@@ -113,4 +134,6 @@ workflows:
             - integration
       - e2e:
           requires:
-            - run-e2e
+            - e2e:path-prefix
+            - e2e:gatsby-image
+            - e2e:production_runtime
