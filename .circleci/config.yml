@@ -31,9 +31,10 @@ aliases:
       at: packages
 
   ignore_master: &ignore_master
-    branches:
-      ignore:
-        - master
+    filters:
+      branches:
+        ignore:
+          - master
 
 version: 2
 
@@ -81,7 +82,6 @@ jobs:
 
   e2e:path-prefix:
     <<: *node10_browsers
-    <<: *ignore_master
     steps:
       - checkout
       - <<: *restore_node_modules
@@ -91,7 +91,6 @@ jobs:
   
   e2e:gatsby-image:
     <<: *node10_browsers
-    <<: *ignore_master
     steps:
       - checkout
       - <<: *restore_node_modules
@@ -101,7 +100,6 @@ jobs:
   
   e2e:production_runtime:
     <<: *node10_browsers
-    <<: *ignore_master
     steps:
       - checkout
       - <<: *restore_node_modules
@@ -120,8 +118,7 @@ workflows:
             - bootstrap
       - integration
       - run-e2e:
-          filters:
-            <<: *ignore_master
+          <<: *ignore_master
           type: approval
           requires:
             - bootstrap
@@ -129,11 +126,14 @@ workflows:
             - test
             - integration
       - e2e:path-prefix:
+          <<: *ignore_master
           requires:
             - run-e2e
       - e2e:gatsby-image:
+          <<: *ignore_master
           requires:
             - run-e2e
       - e2e:production_runtime:
+          <<: *ignore_master
           requires:
             - run-e2e
