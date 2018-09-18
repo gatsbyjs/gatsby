@@ -3,10 +3,10 @@ node10: &node10
     - image: circleci/node:10
 
 restore_node_modules: &restore_node_modules
-    restore_cache:
-      name: Restore node_modules cache
-      keys:
-        - node-modules-{{ checksum "yarn.lock" }}
+  restore_cache:
+    name: Restore node_modules cache
+    keys:
+      - node-modules-{{ checksum "yarn.lock" }}
 
 install_node_modules: &install_node_modules
   run:
@@ -27,7 +27,7 @@ jobs:
       - persist_to_workspace:
           root: packages
           paths:
-            - *
+            - '*'
 
   lint:
     <<: *node10
