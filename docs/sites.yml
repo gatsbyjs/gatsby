@@ -2434,11 +2434,11 @@
     - Blog
   built_by: Corey Ward
   built_by_url: "http://www.coreyward.me/"
-  - title: MadeComfy
-  description: >
-    Short term rental management startup, using Contentful + Gatsby + CicleCI
+- title: MadeComfy
   main_url: "https://madecomfy.com.au/"
   url: "https://madecomfy.com.au/"
+  description: >
+    Short term rental management startup, using Contentful + Gatsby + CicleCI
   featured: false
   categories:
     - Travel
