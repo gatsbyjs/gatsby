@@ -133,8 +133,11 @@ workflows:
             - test
             - integration
       - e2e:path-prefix:
-          requires: run-e2e
+          requires:
+            - run-e2e
       - e2e:gatsby-image:
-          requires: run-e2e
+          requires:
+            - run-e2e
       - e2e:production_runtime:
-          requires: run-e2e
+          requires:
+            - run-e2e
