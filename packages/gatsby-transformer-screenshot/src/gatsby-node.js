@@ -12,7 +12,7 @@ const screenshotQueue = new Queue(
       .then(r => cb(null, r))
       .catch(e => cb(e))
   },
-  { concurrent: LAMBDA_CONCURRENCY_LIMIT, maxRetries: 10, retryDelay: 1000 }
+  { concurrent: LAMBDA_CONCURRENCY_LIMIT, maxRetries: 3, retryDelay: 1000 }
 )
 
 const createContentDigest = obj =>
