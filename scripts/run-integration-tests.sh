@@ -1,8 +1,8 @@
 #!/bin/bash
-GATSBY_PATH="${CIRCLE_WORKING_DIRECTORY:-../../}" # set to third arg if defined, otherwise use ../../
+GATSBY_PATH="${CIRCLE_WORKING_DIRECTORY:-../../}"
 status=""
 
-npm install -g gatsby-dev-cli
+# note: this presumes yarn bootstrap has been run in root of repo
 cd integration-tests
 
 for test in *; do

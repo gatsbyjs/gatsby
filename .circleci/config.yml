@@ -40,6 +40,7 @@ jobs:
           name: "e2e tests"
           command: |
             yarn
+            npm install -g gatsby-dev-cli
             ./scripts/run-integration-tests.sh
 
 
