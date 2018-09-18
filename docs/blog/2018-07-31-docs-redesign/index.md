@@ -5,7 +5,7 @@ author: Shannon Soper
 tags: ["documentation", "launch"]
 ---
 
-We've been working on a new design for the docs sidebar. You can see it live on the next version of gatsbyjs.org at [gatsbyjs.org/docs/](https://gatsbyjs.org/docs/)!
+We've been working on a new design for the docs sidebar. You can see it live on the next version of gatsbyjs.org at [gatsbyjs.org/docs/](https://www.gatsbyjs.org/docs/)!
 
 ![New Sidebar collapsed](new-sidebar-collapsed.png)
 
@@ -80,7 +80,7 @@ Common obstacle no.1:
 
 Possible solutions:
 
-- The tutorials won't have a monopoly on any information; it will also exist in the guides. This is already taken care of by stub articles that indicate what information we need to pull over from the tutorial, like [Creating slugs for pages](https://gatsbyjs.org/docs/creating-slugs-for-pages/) and [Linking between pages](https://gatsbyjs.org/docs/linking-between-pages/)
+- The tutorials won't have a monopoly on any information; it will also exist in the guides. This is already taken care of by stub articles that indicate what information we need to pull over from the tutorial, like [Creating slugs for pages](https://www.gatsbyjs.org/docs/creating-slugs-for-pages/) and [Linking between pages](https://www.gatsbyjs.org/docs/linking-between-pages/)
 
 Common obstacle no.2
 
