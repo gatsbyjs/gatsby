@@ -101,14 +101,14 @@ exports.onCreateNode = async (
           reject(e)
         })
     })
+
+    createParentChildLink({
+      parent: node,
+      child: screenshotNode,
+    })
   } catch (e) {
     return
   }
-
-  createParentChildLink({
-    parent: node,
-    child: screenshotNode,
-  })
 }
 
 const createScreenshotNode = async ({
