@@ -1,47 +1,31 @@
-const { isFunction } = require("lodash");
-const debug = require("debug")("gatsby-mdx:on-create-node");
-
 const defaultOptions = require("../utils/default-options");
 const createMDXNode = require("../utils/create-mdx-node");
 
 module.exports = async (
-  { node, getNode, loadNodeContent, actions, createNodeId },
+  { node, loadNodeContent, actions, createNodeId },
   pluginOptions
 ) => {
+  const { createNode, createParentChildLink } = actions;
   const options = defaultOptions(pluginOptions);
 
-  /**
-   * transformerOptions can be a function or a {transformer, filter} object
-   */
-  if (Object.keys(options.transformers).includes(node.internal.type)) {
-    const transformerOptions = options.transformers[node.internal.type];
-    const transformerFn = isFunction(transformerOptions)
-      ? transformerOptions
-      : transformerOptions.transformer;
-    const filterFn = transformerOptions ? transformerOptions.filter : undefined;
-    debug(
-      `${node.internal.type} has transformerFn ${isFunction(transformerFn)}`
-    );
-    debug(`${node.internal.type} has filterFn ${isFunction(filterFn)}`);
-    if (transformerFn) {
-      if ((isFunction(filterFn) && filterFn({ node })) || !filterFn) {
-        debug(`processing node ${node.id}`);
-        await createMDXNode(
-          {
-            createNodeId,
-            getNode,
-            loadNodeContent,
-            node,
-            transform: transformerFn
-          },
-          actions,
-          {
-            __internalMdxTypeName:
-              node.parent === "___SOURCE___" ? "Mdx" : undefined,
-            ...pluginOptions
-          }
-        );
-      }
-    }
+  if (
+    !(node.internal.type === "File" && options.extensions.includes(node.ext)) &&
+    !(
+      node.internal.type !== "File" &&
+      options.mediaTypes.includes(node.internal.mediaType)
+    )
+  ) {
+    return;
   }
+
+  const content = await loadNodeContent(node);
+
+  const mdxNode = await createMDXNode({
+    id: createNodeId(`${node.id} >>> Mdx`),
+    node,
+    content
+  });
+
+  createNode(mdxNode);
+  createParentChildLink({ parent: node, child: mdxNode });
 };
