@@ -120,7 +120,8 @@ workflows:
             - bootstrap
       - integration
       - run-e2e:
-          <<: *ignore_master
+          filters:
+            <<: *ignore_master
           type: approval
           requires:
             - bootstrap
