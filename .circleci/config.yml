@@ -56,3 +56,4 @@ workflows:
             - lint
             - test
             - integration
+            - e2e
