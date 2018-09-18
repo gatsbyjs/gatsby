@@ -111,7 +111,7 @@ gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world
 - Comenzando con `gatsby` decimos, '¡oye, quiero usar la herramienta gatsby-cli!'
 - `new` es un comando de gatsby para crear un nuevo proyecto de Gatsby.
 - Aquí, `hello-world` es un título arbitrario: puedes elegir cualquier cosa. La herramienta CLI colocará el código de tu nuevo sitio en una nueva carpeta llamada "hello-world".
-- Por último, el URL de Github especificado apunta a un repositorio de código que contiene el código de inicio que deseas utilizar. Si aún no estás familiarizado con git y Github, puedes [obtener más información aquí](https://try.github.io/).
+- Por último, el URL de GitHub especificado apunta a un repositorio de código que contiene el código de inicio que deseas utilizar. Si aún no estás familiarizado con git y GitHub, puedes [obtener más información aquí](https://try.github.io/).
 
 ```bash
 cd hello-world
