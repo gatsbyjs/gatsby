@@ -38,6 +38,14 @@ jobs:
           paths:
             - '*'
 
+  install:
+    <<: *node10
+    steps:
+      - checkout
+      - <<: *restore_node_modules
+      - <<: *install_node_modules
+      - <<: *persist_node_modules
+
   lint:
     <<: *node10
     steps:
@@ -76,19 +84,26 @@ jobs:
       - <<: *install_node_modules
       - attach_workspace:
           at: packages
-      - run: npm install -g gatsby-dev-cli
+      - run: sudo npm install -g gatsby-dev-cli
       - run: ./scripts/run-integration-tests.sh
 
 workflows:
   version: 2
   build-test:
     jobs:
-      - bootstrap
-      - lint
+      - install
+      - bootstrap:
+          requires:
+            - install
+      - lint:
+          requires:
+            - install
       - test:
           requires:
             - bootstrap
-      - integration
+      - integration:
+          requires:
+            - install
       - run-e2e:
           type: approval
           requires:
