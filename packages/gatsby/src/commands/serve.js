@@ -10,10 +10,11 @@ module.exports = async program => {
   let { prefixPaths, port, open } = program
   port = typeof port === `string` ? parseInt(port, 10) : port
 
-  let { pathPrefix } = await preferDefault(
+  const config = await preferDefault(
     getConfigFile(program.directory, `gatsby-config`)
   )
 
+  let pathPrefix = config && config.pathPrefix
   pathPrefix = prefixPaths && pathPrefix ? pathPrefix : `/`
 
   const app = express()
