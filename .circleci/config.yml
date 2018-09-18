@@ -50,10 +50,12 @@ workflows:
       - lint
       - test
       - integration
+      - hold
+        type: approval
+        requires:
+          - lint
+          - test
+          - integration
       - e2e:
-          type: approval
-          requires:
-            - lint
-            - test
-            - integration
-            - e2e
+        requires:
+          - hold
