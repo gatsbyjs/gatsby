@@ -2450,6 +2450,16 @@
     - Blog
   built_by: Corey Ward
   built_by_url: "http://www.coreyward.me/"
+- title: MadeComfy
+  main_url: "https://madecomfy.com.au/"
+  url: "https://madecomfy.com.au/"
+  description: >
+    Short term rental management startup, using Contentful + Gatsby + CicleCI
+  featured: false
+  categories:
+    - Travel
+  built_by: Lucas Vilela
+  built_by_url: "https://madecomfy.com.au/"
 - title: How To Book Cheap Flights
   description: >
     A travel blog built with Gatsby and adopting the AMP technology.
