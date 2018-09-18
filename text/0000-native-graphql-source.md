@@ -4,7 +4,7 @@
 
 # Summary
 
-This RFCs proposes the way to add third-party GraphQL schemas into Gatsby core schema. In addition to a low-level API to add schemas to be stitched, it describes a higher-level API/plugin to integrate third-party APIs into your Gatbsy API.
+This RFCs proposes the way to add third-party GraphQL schemas into Gatsby core schema. In addition to a low-level API to add schemas to be stitched, it describes a higher-level API/plugin to integrate third-party APIs into your Gatsby API.
 
 * [Implementation](https://github.com/gatsbyjs/gatsby/tree/graphql/schema-stitching)
 * [Simple example project](https://github.com/freiksenet/gatsby-github-displayer)
@@ -95,7 +95,7 @@ exports.sourceNodes = async ({ boundActionCreators }) => {
 
 # Motivation
 
-When Gatsby started, there weren't that many GraphQL APIs in the wild. Nowadays, not only there are many public GraphQL APIs, but also many people have their own internal GraphQL API. Tools like Prisma and AWS Appsync are increasingly popular. As Gastby uses GraphQL, it's weird that there is no native way to use those plugin schemas. Currently one needs to create a custom source plugin for every GraphQL API.
+When Gatsby started, there weren't that many GraphQL APIs in the wild. Nowadays, not only there are many public GraphQL APIs, but also many people have their own internal GraphQL API. Tools like Prisma and AWS Appsync are increasingly popular. As Gatsby uses GraphQL, it's weird that there is no native way to use those plugin schemas. Currently one needs to create a custom source plugin for every GraphQL API.
 
 This RFCs proposes the way to automatically merge Gatsby schema with third-party APIs. In addition, it provides a simple to use plugin to do that, that should cover most of the use cases.
 
