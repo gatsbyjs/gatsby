@@ -42,14 +42,6 @@ jobs:
           paths:
             - '*'
 
-  install:
-    <<: *node10
-    steps:
-      - checkout
-      - <<: *restore_node_modules
-      - <<: *install_node_modules
-      - <<: *persist_node_modules
-
   lint:
     <<: *node10
     steps:
@@ -106,25 +98,18 @@ jobs:
       - <<: *restore_node_modules
       - <<: *install_node_modules
       - <<: *attach_to_bootstrap
-      - run: ./scripts/integration-test.sh integration-tests/production_runtime
+      - run: ./scripts/integration-test.sh integration-tests/production-runtime
 
 workflows:
   version: 2
   build-test:
     jobs:
-      - install
-      - bootstrap:
-          requires:
-            - install
-      - lint:
-          requires:
-            - install
+      - bootstrap
+      - lint
       - test:
           requires:
             - bootstrap
-      - integration:
-          requires:
-            - install
+      - integration
       - run-e2e:
           type: approval
           requires:
