@@ -68,17 +68,20 @@ exports.onPreBootstrap = (
   })
 }
 
-exports.onCreateNode = async ({
-  node,
-  actions,
-  store,
-  cache,
-  createNodeId,
-}) => {
+exports.onCreateNode = async (
+  { node, actions, store, cache, createNodeId },
+  pluginOptions
+) => {
   const { createNode, createParentChildLink } = actions
 
-  // We only care about parsed sites.yaml files with a url field
-  if (node.internal.type !== `SitesYaml` || !node.url) {
+  /*
+   * Check if node is of a type we care about, and has a url field
+   * (originally only checked sites.yml, hence including by default)
+   */
+  if (
+    ![`SitesYaml`, ...pluginOptions.nodeTypes].includes(node.internal.type) ||
+    !node.url
+  ) {
     return
   }
 
