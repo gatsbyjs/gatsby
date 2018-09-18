@@ -31,16 +31,16 @@ jobs:
           command: |
             yarn
             yarn test:integration
-    e2e:
-      docker:
-        - image: circleci/node:10-browsers
-      steps:
-        - checkout
-        - run:
-            name: "e2e tests"
-            command: |
-              yarn
-              ./scripts/run-integration-tests.sh
+  e2e:
+    docker:
+      - image: circleci/node:10-browsers
+    steps:
+      - checkout
+      - run:
+          name: "e2e tests"
+          command: |
+            yarn
+            ./scripts/run-integration-tests.sh
 
 
 workflows:
@@ -50,12 +50,9 @@ workflows:
       - lint
       - test
       - integration
-      - hold:
+      - e2e:
           type: approval
           requires:
             - lint
             - test
             - integration
-      - e2e:
-          requires:
-            - hold
