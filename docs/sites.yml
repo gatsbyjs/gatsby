@@ -2356,9 +2356,9 @@
     - Web Dev
   featured: false
 - title: Cameron Maske
-  main_url: 'https://www.cameronmaske.com/'
-  url: 'https://www.cameronmaske.com/courses/introduction-to-pytest/'
-  source_url: 'https://github.com/cameronmaske/cameronmaske.com-v2'
+  main_url: "https://www.cameronmaske.com/"
+  url: "https://www.cameronmaske.com/courses/introduction-to-pytest/"
+  source_url: "https://github.com/cameronmaske/cameronmaske.com-v2"
   description: >
     The homepage of Cameron Maske, a freelance full stack developer, who is currently working on a free pytest video course
   categories:
@@ -2385,8 +2385,8 @@
   built_by_url: "https://janosh.io"
   featured: false
 - title: Joseph Chambers
-  main_url: 'https://joseph.michael-chambers.com/'
-  url: 'https://joseph.michael-chambers.com/'
+  main_url: "https://joseph.michael-chambers.com/"
+  url: "https://joseph.michael-chambers.com/"
   description: >
     The homepage of Joseph Chambers, a freelance full stack developer, who is currently looking for work.
   categories:
@@ -2397,13 +2397,29 @@
   built_by_url: https://twitter.com/imcodingideas
   featured: false
 - title: Mike's Remote List
-  main_url: 'https://www.mikesremotelist.com'
-  url: 'https://www.mikesremotelist.com'
+  main_url: "https://www.mikesremotelist.com"
+  url: "https://www.mikesremotelist.com"
   description: >
     A list of remote jobs, updated throughout the day. Built on Gatsby v1 and powered by Contentful, Google Sheets, string and sticky tape.
   categories:
     - Jobs
   featured: false
+- title: Madvoid
+  main_url: "https://madvoid.com/"
+  url: "https://madvoid.com/screenshot/"
+  featured: false
+  description: >
+    Madvoid is a team of expert developers dedicated to creating simple, clear, usable and blazing fast web and mobile apps.
+    We are coders that help companies and agencies to create social & interactive experiences.
+    This includes full stack development using React, WebGL, Static Site Generators, Ruby On Rails, Phoenix, GraphQL, Chatbots, CI / CD, Docker and more!
+  categories:
+    - Portfolio
+    - Technology
+    - Web Dev
+    - Agency
+    - Marketing
+  built_by: Jean-Paul Bonnetouche
+  built_by_url: https://twitter.com/_jpb
 - title: MOMNOTEBOOK.COM
   description: >
     Sharing knowledge and experiences that make childhood and motherhood rich, vibrant and healthy.

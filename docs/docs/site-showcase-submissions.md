@@ -17,10 +17,10 @@ There are only three major steps :)
 ```yaml
 - title: Title of the Site
 
-  # this URL is used to generate a screenshot
+  # this is the URL that is linked from the showcase
   main_url: https://titleofthesite.com
 
-  # this is the URL that is linked from the showcase
+  # this URL is used to generate a screenshot
   url: https://titleofthesite.com/portfolio
 
   # optional: for open-source sites, this URL points to the repo that powers the site
