@@ -67,12 +67,9 @@ class ScrollSyncSection extends Component {
 const _getItemIds = section => {
   let list = []
 
-  section.forEach(section => {
-    if (section.hasOwnProperty('hash')) list.push(section.hash)
-
-    if (section.items) {
-      return list.push(..._getItemIds(section.items))
-    }
+  section.forEach(subSection => {
+    if (subSection.hasOwnProperty('hash')) list.push(subSection.hash)
+    if (subSection.items) list.push(..._getItemIds(subSection.items))
   })
 
   return list
