@@ -2462,3 +2462,11 @@
     - Blog
   built_by: Flavio Li Volsi
   built_by_url: "http://github.com/flaviolivolsi"
+- title: Tiger Facility Services
+  description: >
+    Tiger Facility Services combines facility management expertise with state of the art software to offer a sustainable and customer oriented cleaning and facility service.
+  main_url: https://www.tigerfacilityservices.com/de-en/
+  url: https://www.tigerfacilityservices.com/de-en/
+  featured: false
+  categories:
+    - B2B Services
