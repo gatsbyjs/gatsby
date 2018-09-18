@@ -56,25 +56,25 @@ export default class FilteredShowcase extends Component {
       )
     )
 
-    let items = data.allMarkdownRemark.edges,
-      imgs = data.allFile.edges
+    // let items = data.allMarkdownRemark.edges,
+    //   imgs = data.allFile.edges
+
+    let starters = data.allStartersYaml.edges
+    // screenshots will be at starters.node.childScreenshot
 
     if (urlState.s.length > 0) {
-      items = items.filter(node => {
-        // TODO: SWYX: very very simple object search algorithm, i know, sorry
-        const { fields, frontmatter } = node.node
-        if (fields) frontmatter.fields = fields.starterShowcase
-        return JSON.stringify(frontmatter)
+      starters = starters.filter(starter => {
+        return JSON.stringify(starter.node)
           .toLowerCase()
           .includes(urlState.s)
       })
     }
 
     if (filtersCategory.size > 0) {
-      items = filterByCategories(items, filtersCategory)
+      starters = filterByCategories(starters, filtersCategory)
     }
     if (filtersDependency.size > 0) {
-      items = filterByDependencies(items, filtersDependency)
+      starters = filterByDependencies(starters, filtersDependency)
     }
 
     return (
@@ -88,11 +88,7 @@ export default class FilteredShowcase extends Component {
             <LHSFilter
               heading="Categories"
               data={Array.from(
-                count(
-                  items.map(
-                    ({ node }) => node.frontmatter && node.frontmatter.tags
-                  )
-                )
+                count(starters.map(({ node: starter }) => starter.tags))
               )}
               filters={filtersCategory}
               setFilters={setFiltersCategory}
@@ -102,10 +98,10 @@ export default class FilteredShowcase extends Component {
               heading="Gatsby Dependencies"
               data={Array.from(
                 count(
-                  items.map(
-                    ({ node }) =>
-                      node.fields &&
-                      node.fields.starterShowcase.gatsbyDependencies.map(
+                  starters.map(
+                    ({ node: starter }) =>
+                      starter.fields &&
+                      starter.fields.starterShowcase.gatsbyDependencies.map(
                         str => str[0]
                       )
                   )
@@ -124,7 +120,7 @@ export default class FilteredShowcase extends Component {
               filters={filters}
               label="Gatsby Starter"
               items={items}
-              edges={data.allMarkdownRemark.edges}
+              edges={starters}
               what="size"
             />
             <div css={{ marginLeft: `auto` }}>
@@ -158,7 +154,7 @@ export default class FilteredShowcase extends Component {
                     paddingRight: rhythm(1 / 5),
                     paddingBottom: rhythm(1 / 8),
                     paddingLeft: rhythm(1),
-                    width: rhythm(5),
+                    width: rhythm(6),
                     ":focus": {
                       outline: 0,
                       backgroundColor: colors.ui.light,
@@ -174,8 +170,8 @@ export default class FilteredShowcase extends Component {
                   value={urlState.s}
                   // TODO: SWYX: i know this is spammy, we can finetune history vs search later
                   onChange={e => setURLState({ s: e.target.value })}
-                  placeholder="Search sites"
-                  aria-label="Search sites"
+                  placeholder="Search starters"
+                  aria-label="Search starters"
                 />
                 <SearchIcon
                   overrideCSS={{
@@ -195,11 +191,11 @@ export default class FilteredShowcase extends Component {
           <ShowcaseList
             urlState={urlState}
             sortRecent={urlState.sort === `recent`}
-            items={items}
-            imgs={imgs}
+            starters={starters}
+            // imgs={imgs} // this will come off starters instead
             count={this.state.sitesToShow}
           />
-          {this.state.sitesToShow < items.length && (
+          {this.state.sitesToShow < starters.length && (
             <Button
               tag="button"
               overrideCSS={styles.loadMoreButton}
@@ -238,27 +234,26 @@ function count(arrays) {
 }
 
 function filterByCategories(list, categories) {
-  let items = list
-  items = items.filter(
-    ({ node }) =>
-      node.frontmatter && isSuperset(node.frontmatter.tags, categories)
+  let starters = list
+  starters = starters.filter(({ node: starter }) =>
+    isSuperset(starter.tags, categories)
   )
-  return items
+  return starters
 }
 function filterByDependencies(list, categories) {
-  let items = list
+  let starters = list
 
-  items = items.filter(
-    ({ node }) =>
-      node.fields &&
+  starters = starters.filter(
+    ({ node: starter }) =>
+      starter.fields &&
       isSuperset(
-        node.fields.starterShowcase.gatsbyDependencies.map(c => c[0]),
+        starter.fields.starterShowcase.gatsbyDependencies.map(c => c[0]),
         categories
       )
-    // node.fields.starterShowcase.gatsbyDependencies.filter(c => categories.has(c[0])).length > 0
+    // starter.fields.starterShowcase.gatsbyDependencies.filter(c => categories.has(c[0])).length > 0
   )
 
-  return items
+  return starters
 }
 
 function isSuperset(set, subset) {
