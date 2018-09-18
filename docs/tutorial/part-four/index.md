@@ -73,7 +73,7 @@ Let's create another new site for this part of the tutorial. You're going to bui
 Open a new terminal window and run the following commands to create a new Gatsby site in a directory called `tutorial-part-four`, and navigate to the new directory:
 
 ```shell
-gatsby new tutorial-part-four https://github.com/gatsbyjs/gatsby-starter-hello-world#v2
+gatsby new tutorial-part-four https://github.com/gatsbyjs/gatsby-starter-hello-world
 cd tutorial-part-four
 ```
 
@@ -81,7 +81,7 @@ Then install some other needed dependencies at the root of the project. You'll u
 "Kirkham", and you'll try out a CSS-in-JS library, ["Emotion"](https://emotion.sh/):
 
 ```shell
-npm install --save gatsby-plugin-typography typography react-typography typography-theme-kirkham gatsby-plugin-emotion@next emotion react-emotion emotion-server
+npm install --save gatsby-plugin-typography typography react-typography typography-theme-kirkham gatsby-plugin-emotion emotion react-emotion emotion-server
 ```
 
 Let's set up a site similar to what you ended with in [Part Three](/tutorial/part-three). This site will have a layout component and two page components:

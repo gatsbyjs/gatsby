@@ -4,7 +4,7 @@
   </a>
 </p>
 <h1 align="center">
-  Gatsby v2 [beta] · (see <a href="https://github.com/gatsbyjs/gatsby/tree/v1">v1</a>)
+  Gatsby v2
 </h1>
 
 <h3 align="center">
@@ -97,9 +97,6 @@ You can get a new Gatsby site up and running on your local dev environment in 5 
     # create a new Gatsby site using the default starter
     gatsby new my-blazing-fast-site
     ```
-
-    _Want to try v2 beta? Run this instead:_
-    `gatsby new my-blazing-fast-site https://github.com/gatsbyjs/gatsby-starter-default#v2`
 
 2.  **Start the site in `develop` mode.**
 

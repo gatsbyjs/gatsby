@@ -4,7 +4,7 @@
   </a>
 </p>
 <h1 align="center">
-  Gatsby v2 [beta] · (see <a href="https://github.com/gatsbyjs/gatsby/tree/v1">v1</a>)
+  Gatsby v2
 </h1>
 
 <h3 align="center">
@@ -98,9 +98,6 @@ You can get a new Gatsby site up and running on your local dev environment in 5 
     gatsby new my-blazing-fast-site
     ```
 
-    _Want to try v2 beta? Run this instead:_
-    `gatsby new my-blazing-fast-site https://github.com/gatsbyjs/gatsby-starter-default#v2`
-
 2.  **Start the site in `develop` mode.**
 
     Next, move into your new site’s directory and start it up:
@@ -112,7 +109,7 @@ You can get a new Gatsby site up and running on your local dev environment in 5 
 
 3.  **Open the source code and start editing!**
 
-    Your site is now running at `http://localhost:8000`. Open the the `my-blazing-fast-site` directory in your code editor of choice and edit `src/pages/index.js`. Save your changes and the browser will update in real time!
+    Your site is now running at `http://localhost:8000`. Open the `my-blazing-fast-site` directory in your code editor of choice and edit `src/pages/index.js`. Save your changes and the browser will update in real time!
 
 At this point, you’ve got a fully functional Gatsby website. For additional information on how you can customize your Gatsby site, see our [plugins](https://next.gatsbyjs.org/plugins/) and [the official tutorial](https://next.gatsbyjs.org/tutorial/).
 

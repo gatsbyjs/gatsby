@@ -40,7 +40,11 @@ matrix:
       node_js:
         - 'lts/*'
     - name: "Path Prefix Tests"
-      env: SRC_PATH='integration-tests/path-prefix' INSTALL_COMMAND='install' TEST_COMMAND='test'
+      env: SRC_PATH='integration-tests/path-prefix' INTEGRATION_TEST=true INSTALL_COMMAND='install' TEST_COMMAND='test'
+      node_js:
+        - 'lts/*'
+    - name: "Gatsby Image Tests"
+      env: SRC_PATH='integration-tests/gatsby-image' INTEGRATION_TEST=true INSTALL_COMMAND='install' TEST_COMMAND='test'
       node_js:
         - 'lts/*'
 
