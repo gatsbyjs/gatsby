@@ -6,7 +6,7 @@ A curated list of interesting Gatsby community projects and learning resources.
 
 ## Site showcase
 
-See the [site showcase on the Gatsby v2 website.](https://next.gatsbyjs.org/showcase/)
+See the [site showcase on the Gatsby v2 website.](https://www.gatsbyjs.org/showcase/)
 
 ## Starters
 
