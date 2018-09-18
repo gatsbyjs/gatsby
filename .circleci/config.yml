@@ -1,59 +1,86 @@
+node10: &node10
+  docker:
+    - image: circleci/node:10
+
+restore_node_modules: &restore_node_modules
+    restore_cache:
+      name: Restore node_modules cache
+      keys:
+        - node-modules-{{ checksum "yarn.lock" }}
+
+install_node_modules: &install_node_modules
+  run:
+    name: Install node modules
+    command: |
+      yarn
+
 version: 2
 
 jobs:
+  bootstrap:
+    <<: *node10
+    steps:
+      - checkout
+      - <<: *restore_node_modules
+      - <<: *install_node_modules
+      - run: yarn bootstrap
+      - persist_to_workspace:
+          root: packages
+          paths:
+            - *
+
   lint:
-    docker:
-      - image: circleci/node:10
+    <<: *node10
     steps:
       - checkout
-      - run:
-          name: "Lint"
-          command: |
-            yarn
-            yarn lint
+      - <<: *restore_node_modules
+      - <<: *install_node_modules
+      - run: yarn lint
+
   test:
-    docker:
-      - image: circleci/node:10
+    <<: *node10
     steps:
       - checkout
-      - run:
-          name: "Unit test"
-          command: |
-            yarn bootstrap
-            yarn jest -w 1
+      - <<: *restore_node_modules
+      - <<: *install_node_modules
+      - attach_workspace:
+          at: packages
+      - run: yarn jest -w 1
+
   integration:
-    docker:
-      - image: circleci/node:10
+    <<: *node10
     steps:
       - checkout
-      - run:
-          name: "Integration tests"
-          command: |
-            yarn
-            yarn test:integration
+      - <<: *restore_node_modules
+      - <<: *install_node_modules
+      - run: yarn test:integration
+
   e2e:
     docker:
       - image: circleci/node:10-browsers
     steps:
       - checkout
-      - run:
-          name: "e2e tests"
-          command: |
-            yarn
-            npm install -g gatsby-dev-cli
-            ./scripts/run-integration-tests.sh
-
+      - <<: *restore_node_modules
+      - <<: *install_node_modules
+      - attach_workspace:
+          at: packages
+      - run: npm install -g gatsby-dev-cli
+      - run: ./scripts/run-integration-tests.sh
 
 workflows:
   version: 2
   build-test:
     jobs:
+      - bootstrap
       - lint
-      - test
+      - test:
+          requires:
+            - bootstrap
       - integration
       - approve-e2e:
           type: approval
           requires:
+            - bootstrap
             - lint
             - test
             - integration

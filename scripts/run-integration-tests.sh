@@ -9,8 +9,8 @@ for test in *; do
   if [ -d "$test" ]; then
     cd "$test"
     yarn &&
-    gatsby-dev --set-path-to-repo $GATSBY_PATH &&
-    gatsby-dev --scan-once --quiet --copy-all &&
+    sudo gatsby-dev --set-path-to-repo $GATSBY_PATH &&
+    sudo gatsby-dev --scan-once --quiet --copy-all &&
 
     yarn test &&
     status="${status}[success] building $test"$'\n' ||
