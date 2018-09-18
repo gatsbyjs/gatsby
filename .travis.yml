@@ -9,57 +9,41 @@ addons:
   chrome: stable
 language: node_js
 
-matrix:
+stages:
+  - lint
+  - unit-test
+  - integration-test
+
+jobs:
   include:
-    - name: "Lint"
-      env: SRC_PATH=. INSTALL_COMMAND='install' TEST_COMMAND='lint'
+    - stage: lint
+      node_js: "lts/*"
+      env:
+        SCRIPT_COMMAND: 'lint'
+    - stage: unit-test
       node_js:
-        - 'lts/*'
-    - name: "Unit Tests on Node.js 6"
-      env: SRC_PATH=. INSTALL_COMMAND='run bootstrap' TEST_COMMAND=jest
-      node_js:
-        - '6'
-    - name: "Unit Tests on Node.js 8"
-      env: SRC_PATH=. INSTALL_COMMAND='run bootstrap' TEST_COMMAND=jest
-      node_js:
-        - '8'
-    - name: "Unit Tests on Node.js 10"
-      env: SRC_PATH=. INSTALL_COMMAND='run bootstrap' TEST_COMMAND=jest
-      node_js:
-        - '10'
-    - name: "Integration Tests"
-      env: SRC_PATH=. INSTALL_COMMAND='install' TEST_COMMAND='test:integration'
-      node_js:
-        - 'lts/*'
-    - name: "Develop UI Tests"
-      env: SRC_PATH='examples/gatsbygram' INTEGRATION_TEST=true INSTALL_COMMAND='install' TEST_COMMAND='test'
-      node_js:
-        - 'lts/*'
-    - name: "Production UI Tests"
-      env: SRC_PATH='integration-tests/production-runtime' INTEGRATION_TEST=true INSTALL_COMMAND='install' TEST_COMMAND='test'
-      node_js:
-        - 'lts/*'
-    - name: "Path Prefix Tests"
-      env: SRC_PATH='integration-tests/path-prefix' INTEGRATION_TEST=true INSTALL_COMMAND='install' TEST_COMMAND='test'
-      node_js:
-        - 'lts/*'
-    - name: "Gatsby Image Tests"
-      env: SRC_PATH='integration-tests/gatsby-image' INTEGRATION_TEST=true INSTALL_COMMAND='install' TEST_COMMAND='test'
-      node_js:
-        - 'lts/*'
+        - "6"
+        - "8"
+        - "10"
+      env:
+        INSTALL_COMMAND: 'bootstrap'
+        SCRIPT_COMMAND: 'jest'
+    - stage: integration-test
+      node_js: "lts/*"
+      env:
+        SCRIPT_COMMAND: 'test:integration'
 
 cache:
   yarn: true
 before_install:
-  - 'cd $SRC_PATH'
-install:
-  - 'yarn $INSTALL_COMMAND'
+  - '[[ -z "${SRC_PATH}" ]] || cd $SRC_PATH'
+install: '[[ -z "${INSTALL_COMMAND}" ]] && yarn test || yarn $INSTALL_COMMAND'
 before_script:
   - 'cd $TRAVIS_BUILD_DIR'
   - './scripts/integration-test.sh $INTEGRATION_TEST $SRC_PATH'
-  - 'cd $SRC_PATH'
+  - '[[ -z "${SRC_PATH}" ]] || cd $SRC_PATH'
 script:
-  - 'yarn $TEST_COMMAND'
+  - '[[ -z "${SCRIPT_COMMAND}" ]] && yarn test || yarn $SCRIPT_COMMAND'
 
 # new pushes aren't working at the moment (the build times out processing showcase images)
 # the existing image works fine, and can be manually updated by running through the steps
