@@ -1,93 +1,57 @@
-workflows:
-  version: 2
-  main:
-    jobs:
-      - unit-node6
-      - unit-node8
-      - unit-node10
-      - lint
-      - integration
-      - ui
-      - prod_ui
-
-
 version: 2
+
 jobs:
-  unit-node6:
-    docker:
-      - image: circleci/node:6
-    steps:
-      - checkout
-      - run:
-          name: "Unit test with Node.js 6"
-          command: |
-            yarn run bootstrap
-            yarn jest -w 1
-
-  unit-node8:
-    docker:
-      - image: circleci/node:8
-    steps:
-      - checkout
-      - run:
-          name: "Unit test with Node.js 8"
-          command: |
-            yarn run bootstrap
-            yarn jest -w 1
-
-  unit-node10:
+  lint:
     docker:
       - image: circleci/node:10
     steps:
       - checkout
       - run:
-          name: "Unit test with Node.js 10"
+          name: "Lint"
           command: |
-            yarn run bootstrap
-            yarn jest -w 1
-
-  lint:
+            yarn
+            yarn lint
+  test:
     docker:
-      - image: circleci/node:8
+      - image: circleci/node:10
     steps:
       - checkout
       - run:
-          name: "Lint Code"
+          name: "Unit test"
           command: |
-            yarn install
-            yarn lint
-
+            yarn bootstrap
+            yarn jest -w 1
   integration:
     docker:
-      - image: circleci/node:8
+      - image: circleci/node:10
     steps:
       - checkout
       - run:
-          name: "Integration Tests"
+          name: "Integration tests"
           command: |
-            yarn install
+            yarn
             yarn test:integration
+    e2e:
+      docker:
+        - image: circleci/node:10-browsers
+      steps:
+        - checkout
+        - run:
+            name: "e2e tests"
+            command: |
+              yarn
+              ./scripts/run-integration-tests.sh
 
-  ui:
-    docker:
-      - image: circleci/node:8-browsers
-    steps:
-      - checkout
-      - run:
-          name: "UI Tests"
-          command: |
-            cd examples/gatsbygram
-            yarn install
-            yarn test
 
-  prod_ui:
-    docker:
-      - image: circleci/node:8-browsers
-    steps:
-      - checkout
-      - run:
-          name: "UI Tests"
-          command: |
-            cd integration-tests/production-runtime
-            yarn install
-            yarn test
+workflows:
+  version: 2
+  lint-and-test:
+    jobs:
+      - lint
+      - test
+      - integration
+  e2e-tests:
+    jobs:
+      - e2e:
+          type: approval
+          requires: lint-and-test
