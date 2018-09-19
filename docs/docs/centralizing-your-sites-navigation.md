@@ -2,23 +2,23 @@
 title: Centralizing your site's navigation
 ---
 
-
 ## Creating dynamic navigation in Gatsby
 
-At times you will want to be able to edit your website's navigation in response to a *change in requirements*. To achieve this, you can use Gatsby to dynamically generate your navigation. Where you store the data for your navigation can be anywhere - a backend API, CMS, headless CMS or even the filesystem.
+At times you will want to be able to edit your website's navigation in response to a _change in requirements_. To achieve this, you can use Gatsby to dynamically generate your navigation. Where you store the data for your navigation can be anywhere - a backend API, CMS, headless CMS or even the filesystem.
 
 What this section will cover:
 
- - Adding data to your site's configuration
- - Querying the data using GraphQL
- - Pulling the data into a component using StaticQuery
- - Dynamically rendering your navigation
+- Adding data to your site's configuration
+- Querying the data using GraphQL
+- Pulling the data into a component using StaticQuery
+- Dynamically rendering your navigation
 
-You will be using `gatsby-config.js` to store the data for your links. `gatsby-config.js` is a file used for configuring Gatsby, located in the root path of every Gatsby project. A plain old javascript object is exported from this file; this object contains the `siteMetadata` object which you can query through graphql when generating your static pages. 
+You will be using `gatsby-config.js` to store the data for your links. `gatsby-config.js` is a file used for configuring Gatsby, located in the root path of every Gatsby project. A plain old javascript object is exported from this file; this object contains the `siteMetadata` object which you can query through graphql when generating your static pages.
 
-This guide will use the Gatsby starter project `gatsby-starter-default`, which can be downloaded through the Gatsby command line interface tool using the command `gatsby new [project-name] https://github.com/gatsbyjs/gatsby-starter-default#v2`.  
+This guide will use the Gatsby starter project `gatsby-starter-default`, which can be downloaded through the Gatsby command line interface tool using the command `gatsby new [project-name] https://github.com/gatsbyjs/gatsby-starter-default#v2`.
 
 ### Creating the link data
+
 First, locate the `gatsby-config.js` file in the root directory of your project. Inside the `siteMetadata` object, add an array of menu link objects. These objects should contain two properties: `name` and `link`. `name` is the name of your navigation item and `link` is the page which will be navigated to when a menu item is clicked.
 
 ```diff
@@ -39,6 +39,7 @@ module.exports = {
   plugins: []
 }
 ```
+
 ### Viewing the `siteMetadata` in GraphQL
 
 GraphQL can be used to query for information contained in the `siteMetadata` object located in your project's `gatsby-config.js`. In order to test this out you can start the `default-starter-project` in development mode by running `npm run develop`.
@@ -59,7 +60,7 @@ query SiteQuery {
     }
   }
 }
-``` 
+```
 
 When executing this query within the GraphiQL editor you see output that looks similar to the following:
 
@@ -89,7 +90,7 @@ Perfect! You now have a way of obtaining data from the `gatsby-config.js` file. 
 
 ### Pulling data inside the layout component
 
-Inside your project, locate the `src/components` folder and navigate to the `layout.js` file. Within this layout component you should notice a component named `StaticQuery`. 
+Inside your project, locate the `src/components` folder and navigate to the `layout.js` file. Within this layout component you should notice a component named `StaticQuery`.
 
 StaticQuery is a new component introduced in Gatsby V2, which allows you to run GraphQL queries within your components, not just pages. It allows developers to colocate data with their components.
 
@@ -138,9 +139,10 @@ const Layout = ({ children }) => (
 )
 ```
 
-With the above changes to your `StaticQuery` component, the  `render` property, which accepts a function that takes one argument, now has access to the menu links for use inside the function (as the argument). The last thing that is left to do is to display the site's navigation.
+With the above changes to your `StaticQuery` component, the `render` property, which accepts a function that takes one argument, now has access to the menu links for use inside the function (as the argument). The last thing that is left to do is to display the site's navigation.
 
 To do this, the header component that is already available in the project seems like it might be a good starting place to display the navigation. Lets pass the `menuLinks` object to this header component like so:
+
 ```diff
 const Layout = ({ children }) => (
   <StaticQuery
@@ -249,15 +251,13 @@ const Header = ({ siteTitle, menuLinks }) => (
 )
 ```
 
-Starting the development server by running `npm run develop` and navigating to `http://localhost:8000` you should now see some dynamically genrated menu links on your page. 
+Starting the development server by running `npm run develop` and navigating to `http://localhost:8000` you should now see some dynamically genrated menu links on your page.
 
 If you have made it this far, good job! You can now add new site links to your website dynamically by adding entries to the `gatsby-config.js` file.
 
 ## Where to next?
+
 Be sure to check out more documentation for further in-depth examples and guides on achieving tasks using Gatsby.
 
-- [Authentication in Gatsby](https://next.gatsbyjs.org/docs/authentication/)
-- [E-commerce in Gatsby](https://next.gatsbyjs.org/docs/e-commerce/)
-
-
-
+- [Authentication in Gatsby](/docs/authentication/)
+- [E-commerce in Gatsby](/docs/e-commerce/)
