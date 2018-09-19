@@ -65,6 +65,9 @@ class Plugins extends Component {
                 {` `}
                 <Link to="/docs/plugin-authoring/">Plugin Authoring</Link> page
                 in the docs!
+                To learn more, visit the
+                {` `}
+                <Link to="/docs/plugins">plugins</Link> doc page.
               </p>
             </div>
           </Container>
