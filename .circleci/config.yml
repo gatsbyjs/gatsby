@@ -37,7 +37,7 @@ aliases:
           - master
 
   integration_test_template: &integration_test_template
-    <<: *node10_browsers: &node10_browsers
+    <<: *node10_browsers
     <<: *attach_to_bootstrap
     <<: *ignore_master
 
