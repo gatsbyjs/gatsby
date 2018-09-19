@@ -1,5 +1,6 @@
 import React from "react"
 import { withPrefix } from "gatsby"
+import path from "path"
 
 exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
   // If icons were generated, also add a favicon link.
@@ -8,7 +9,7 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
 
     // The icon path could be different in hybrid mode
     if (pluginOptions.icons && pluginOptions.icons.length) {
-      iconPath = pluginOptions.icons[0].src.substring(0, pluginOptions.icons[0].src.lastIndexOf(`/`))
+      iconPath = path.dirname(pluginOptions.icons[0].src)
     }
 
     setHeadComponents([
