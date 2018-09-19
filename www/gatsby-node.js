@@ -165,6 +165,21 @@ exports.createPages = ({ graphql, actions }) => {
               }
             }
           }
+          allStartersYaml {
+            edges {
+              node {
+                id
+                fields {
+                  starterShowcase {
+                    slug
+                    stub
+                  }
+                }
+                url
+                repo
+              }
+            }
+          }
           allNpmPackage {
             edges {
               node {
@@ -250,7 +265,13 @@ exports.createPages = ({ graphql, actions }) => {
 
       // Create starter pages.
       // const starters = result.data.allStartersYaml.edges.forEach(edge => { // @TODO
-      const starters = _.filter(result.data.allMarkdownRemark.edges, edge => {
+      // if (result.data.allStartersYaml) {
+      //   result.data.allStartersYaml.edges.forEach(edge => {
+      //     console.log("starter node", edge.node)
+      //   })
+      // }
+      // const starters = _.filter(result.data.allMarkdownRemark.edges, edge => {
+      const starters = _.filter(result.data.allStartersYaml.edges, edge => {
         const slug = _.get(edge, `node.fields.starterShowcase.slug`)
         if (!slug) return null
         else return edge
@@ -260,6 +281,10 @@ exports.createPages = ({ graphql, actions }) => {
       )
 
       starters.forEach((edge, index) => {
+        // starter slug: /gatsby-starter-timeline-theme/
+        // starter stub: gatsby-starter-timeline-theme
+        console.log("starter slug:", edge.node.fields.starterShowcase.slug)
+        console.log("starter stub:", edge.node.fields.starterShowcase.stub)
         createPage({
           path: `/starters${edge.node.fields.starterShowcase.slug}`, // required
           component: slash(starterTemplate),
@@ -429,13 +454,13 @@ exports.onCreateNode = ({ node, actions, getNode, getNodes }) => {
       )
       return
     }
-    const [owner, slug] = node.repo.split(`/`).splice(-2, 2)
+    const [owner, repoStub] = node.repo.split(`/`).splice(-2, 2)
 
     Promise.all([
       getpkgjson(node.repo),
       githubApiClient.request(`
           query {
-            repository(owner:"${owner}", name:"${slug}") {
+            repository(owner:"${owner}", name:"${repoStub}") {
               name
               stargazers {
                 totalCount
@@ -465,8 +490,8 @@ exports.onCreateNode = ({ node, actions, getNode, getNodes }) => {
           Object.entries(devDependencies)
         )
         const starterShowcaseFields = {
-          slug,
-          stub: slug,
+          slug: `/${repoStub}/`,
+          stub: repoStub,
           name,
           description: pkgjson.description,
           stars,
