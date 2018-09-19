@@ -2,8 +2,6 @@
 title: Deploying to S3/Cloudfront
 ---
 
-_Content taken from blogpost titled [Publishing Your Next Gatsby Site to AWS With AWS Amplify](/blog/2018-08-24-gatsby-aws-hosting/) written by Nader Dabit](https://twitter.com/@dabit3). Many thanks, Nader!_
-
 In this article, we'll walk through how to host & publish your next Gatsby site to AWS using [AWS Amplify](https://aws-amplify.github.io/).
 
 AWS Amplify is a combination of client library, CLI toolchain, and UI components. Amplify allow developers to get up & running with full-stack cloud-powered applications with features like authentication, GraphQL, storage, REST APIs, analytics, Lambda functions, hosting & more.
