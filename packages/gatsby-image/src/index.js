@@ -29,7 +29,7 @@ const inImageCache = props => {
   return imageCache[src] || false
 }
 
-const activateImageCache = props => {
+const activateCacheForImage = props => {
   const convertedProps = convertProps(props)
   // Find src
   const src = convertedProps.fluid
@@ -198,7 +198,7 @@ class Image extends React.Component {
   }
 
   handleImageLoaded() {
-    activateImageCache(this.props)
+    activateCacheForImage(this.props)
     
     this.setState({ imgLoaded: true })
     if (this.state.seenBefore) {
