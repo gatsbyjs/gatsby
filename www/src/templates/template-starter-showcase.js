@@ -20,7 +20,6 @@ class StarterTemplate extends React.Component {
     showAllDeps: false,
   }
   render() {
-    // const { data } = this.props
     const { startersYaml } = this.props.data
     const {
       url: demoUrl,

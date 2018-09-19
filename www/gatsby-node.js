@@ -13,12 +13,20 @@ require(`dotenv`).config({
   path: `.env.${process.env.NODE_ENV}`,
 })
 
+if (process.env.NODE_ENV === "production" && !process.env.GITHUB_TOKEN) {
+  throw new Error(
+    `A GitHub token is required to build the site. Check the README.`
+  )
+}
+
 // used to gather repo data on starters
-const githubApiClient = new GraphQLClient(`https://api.github.com/graphql`, {
-  headers: {
-    authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
-  },
-})
+const githubApiClient = process.env.GITHUB_TOKEN
+  ? new GraphQLClient(`https://api.github.com/graphql`, {
+      headers: {
+        authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+      },
+    })
+  : null
 
 const localPackages = `../packages`
 const localPackagesArr = []
@@ -266,6 +274,7 @@ exports.createPages = ({ graphql, actions }) => {
         if (!slug) return null
         else return edge
       })
+
       const starterTemplate = path.resolve(
         `src/templates/template-starter-showcase.js`
       )
@@ -425,13 +434,34 @@ exports.onCreateNode = ({ node, actions, getNode, getNodes }) => {
     slug = `/showcase/${slugify(cleaned)}`
     createNodeField({ node, name: `slug`, value: slug })
   } else if (node.internal.type === `StartersYaml` && node.repo) {
-    if (!process.env.GITHUB_TOKEN) {
-      console.log(
-        "You need to create and set a Github token to work with the starter showcase"
-      )
-      return
-    }
+    // To develop on the starter showcase, you'll need a GitHub
+    // personal access token. Check the `www` README for details.
+    // Default fields are to avoid graphql errors.
     const [owner, repoStub] = node.repo.split(`/`).splice(-2, 2)
+    const defaultFields = {
+      slug: ``,
+      stub: ``,
+      name: ``,
+      description: ``,
+      stars: ``,
+      lastUpdated: ``,
+      owner: ``,
+      githubFullName: ``,
+      allDependencies: ``,
+      gatsbyDependencies: ``,
+      miscDependencies: ``,
+    }
+
+    if (!process.env.GITHUB_TOKEN) {
+      return createNodeField({
+        node,
+        name: `starterShowcase`,
+        value: {
+          ...defaultFields,
+          error: `Looks like you need to supply a GitHub token`,
+        },
+      })
+    }
 
     Promise.all([
       getpkgjson(node.repo),
@@ -484,6 +514,7 @@ exports.onCreateNode = ({ node, actions, getNode, getNodes }) => {
           miscDependencies: allDependencies.filter(
             ([key, _]) => !key.includes(`gatsby`)
           ),
+          error: ``,
         }
         createNodeField({
           node,
@@ -493,13 +524,15 @@ exports.onCreateNode = ({ node, actions, getNode, getNodes }) => {
       })
       .catch(err => {
         console.log(
-          `\nError getting repo data. Maybe you need to authenticate?`,
-          err
+          `\nError getting repo data. Your GitHub token may be invalid`
         )
         return createNodeField({
           node,
           name: `starterShowcase`,
-          value: null,
+          value: {
+            ...defaultFields,
+            error: `Your GitHub token may be invalid.`,
+          },
         })
       })
   }
