@@ -57,7 +57,6 @@ aliases:
   integration_test_template: &integration_test_template
     <<: *node10_browsers
     <<: *attach_to_bootstrap
-    <<: *ignore_master
 
 version: 2
 
@@ -85,19 +84,19 @@ jobs:
       - <<: *persist_node_modules
       - run: yarn lint
 
-  testNode6:
-    <<: *node10
+  unit_tests_node6:
+    <<: *node6
     <<: *test_template
 
-  testNode8:
+  unit_tests_node8:
     <<: *node8
     <<: *test_template
 
-  testNode10:
+  unit_tests_node10:
     <<: *node10
     <<: *test_template
 
-  integration:
+  integration_tests:
     <<: *node10
     steps:
       - checkout
@@ -107,7 +106,7 @@ jobs:
       - <<: *persist_node_modules
       - run: yarn test:integration
 
-  e2e:path-prefix:
+  e2e_tests_path-prefix:
     <<: *integration_test_template
     steps:
       - checkout
@@ -117,7 +116,7 @@ jobs:
       - <<: *attach_to_bootstrap
       - run: ./scripts/integration-test.sh integration-tests/path-prefix
   
-  e2e:gatsby-image:
+  e2e_tests_gatsby-image:
     <<: *integration_test_template
     steps:
       - checkout
@@ -127,7 +126,7 @@ jobs:
       - <<: *attach_to_bootstrap
       - run: ./scripts/integration-test.sh integration-tests/gatsby-image
   
-  e2e:production_runtime:
+  e2e_tests_production_runtime:
     <<: *integration_test_template
     steps:
       - checkout
@@ -143,25 +142,25 @@ workflows:
     jobs:
       - bootstrap
       - lint
-      - testNode6:
+      - unit_tests_node6:
           requires:
             - bootstrap
-      - testNode8:
+      - unit_tests_node8:
           requires:
             - bootstrap
-      - testNode10:
+      - unit_tests_node10:
           requires:
             - bootstrap
-      - integration
-      - e2e:path-prefix:
+      - integration_tests
+      - e2e_tests_path-prefix:
           <<: *ignore_master
           requires:
             - bootstrap
-      - e2e:gatsby-image:
+      - e2e_tests_gatsby-image:
           <<: *ignore_master
           requires:
             - bootstrap
-      - e2e:production_runtime:
+      - e2e_tests_production_runtime:
           <<: *ignore_master
           requires:
             - bootstrap
