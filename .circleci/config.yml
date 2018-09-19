@@ -43,6 +43,7 @@ jobs:
     <<: *node10
     steps:
       - checkout
+      - run: ./scripts/assert-changed-files.sh "packages/*"
       - <<: *restore_node_modules
       - <<: *install_node_modules
       - <<: *persist_node_modules
@@ -65,6 +66,7 @@ jobs:
     <<: *node10
     steps:
       - checkout
+      - run: ./scripts/assert-changed-files.sh "packages/*"
       - <<: *restore_node_modules
       - <<: *install_node_modules
       - <<: *persist_node_modules
@@ -84,6 +86,7 @@ jobs:
     <<: *node10_browsers
     steps:
       - checkout
+      - run: ./scripts/assert-changed-files.sh "packages/*"
       - <<: *restore_node_modules
       - <<: *install_node_modules
       - <<: *attach_to_bootstrap
@@ -93,6 +96,7 @@ jobs:
     <<: *node10_browsers
     steps:
       - checkout
+      - run: ./scripts/assert-changed-files.sh "packages/*"
       - <<: *restore_node_modules
       - <<: *install_node_modules
       - <<: *attach_to_bootstrap
@@ -102,6 +106,7 @@ jobs:
     <<: *node10_browsers
     steps:
       - checkout
+      - run: ./scripts/assert-changed-files.sh "packages/*"
       - <<: *restore_node_modules
       - <<: *install_node_modules
       - <<: *attach_to_bootstrap
@@ -117,23 +122,15 @@ workflows:
           requires:
             - bootstrap
       - integration
-      - run-e2e:
-          <<: *ignore_master
-          type: approval
-          requires:
-            - bootstrap
-            - lint
-            - test
-            - integration
       - e2e:path-prefix:
           <<: *ignore_master
           requires:
-            - run-e2e
+            - bootstrap
       - e2e:gatsby-image:
           <<: *ignore_master
           requires:
-            - run-e2e
+            - bootstrap
       - e2e:production_runtime:
           <<: *ignore_master
           requires:
-            - run-e2e
+            - bootstrap
