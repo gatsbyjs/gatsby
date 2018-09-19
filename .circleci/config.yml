@@ -42,8 +42,8 @@ jobs:
   bootstrap:
     <<: *node10
     steps:
+      - run: ./scripts/assert-changed-files.sh "packages/*|integration-tests/*"
       - checkout
-      - run: ./scripts/assert-changed-files.sh "packages/*"
       - <<: *restore_node_modules
       - <<: *install_node_modules
       - <<: *persist_node_modules
@@ -65,8 +65,8 @@ jobs:
   test:
     <<: *node10
     steps:
+      - run: ./scripts/assert-changed-files.sh "packages/*|integration-tests/*"
       - checkout
-      - run: ./scripts/assert-changed-files.sh "packages/*"
       - <<: *restore_node_modules
       - <<: *install_node_modules
       - <<: *persist_node_modules
@@ -76,8 +76,8 @@ jobs:
   integration:
     <<: *node10
     steps:
+      - run: ./scripts/assert-changed-files.sh "packages/*|integration-tests/*"
       - checkout
-      - run: ./scripts/assert-changed-files.sh "packages/*"
       - <<: *restore_node_modules
       - <<: *install_node_modules
       - <<: *persist_node_modules
@@ -86,8 +86,8 @@ jobs:
   e2e:path-prefix:
     <<: *node10_browsers
     steps:
+      - run: ./scripts/assert-changed-files.sh "packages/*|integration-tests/*"
       - checkout
-      - run: ./scripts/assert-changed-files.sh "packages/*"
       - <<: *restore_node_modules
       - <<: *install_node_modules
       - <<: *attach_to_bootstrap
@@ -96,8 +96,8 @@ jobs:
   e2e:gatsby-image:
     <<: *node10_browsers
     steps:
+      - run: ./scripts/assert-changed-files.sh "packages/*|integration-tests/*"
       - checkout
-      - run: ./scripts/assert-changed-files.sh "packages/*"
       - <<: *restore_node_modules
       - <<: *install_node_modules
       - <<: *attach_to_bootstrap
@@ -106,8 +106,8 @@ jobs:
   e2e:production_runtime:
     <<: *node10_browsers
     steps:
+      - run: ./scripts/assert-changed-files.sh "packages/*|integration-tests/*"
       - checkout
-      - run: ./scripts/assert-changed-files.sh "packages/*"
       - <<: *restore_node_modules
       - <<: *install_node_modules
       - <<: *attach_to_bootstrap
