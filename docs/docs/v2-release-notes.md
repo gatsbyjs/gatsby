@@ -2,7 +2,8 @@
 title: v2 release notes
 ---
 
-This is a stub. Help our community expand it.
+Check out the following useful links for Gatsby v2:
 
-Please use the [Gatsby Style Guide](/docs/gatsby-style-guide/) to ensure your
-pull request gets accepted.
+- [Migrating from v1 to v2](/migrating-from-v1-to-v2/)
+- [v2 changelog](https://github.com/gatsbyjs/gatsby/blob/master/CHANGELOG.md#200---2018-09-13)
+- [v2 release announcement](/blog/2018-09-17-gatsby-v2/)
