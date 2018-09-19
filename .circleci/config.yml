@@ -106,6 +106,16 @@ jobs:
       - <<: *persist_node_modules
       - run: yarn test:integration
 
+  e2e_tests_gatsbygram:
+    <<: *integration_test_template
+    steps:
+      - checkout
+      - run: ./scripts/assert-changed-files.sh "packages/*|integration-tests/*|examples/gatsbygram/*"
+      - <<: *restore_node_modules
+      - <<: *install_node_modules
+      - <<: *attach_to_bootstrap
+      - run: ./scripts/integration-test.sh examples/gatsbygram
+
   e2e_tests_path-prefix:
     <<: *integration_test_template
     steps:
@@ -126,7 +136,7 @@ jobs:
       - <<: *attach_to_bootstrap
       - run: ./scripts/integration-test.sh integration-tests/gatsby-image
   
-  e2e_tests_production_runtime:
+  e2e_tests_runtime:
     <<: *integration_test_template
     steps:
       - checkout
