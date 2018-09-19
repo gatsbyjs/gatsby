@@ -41,7 +41,6 @@ class PageRenderer extends React.Component {
     const props = {
       ...this.props,
       pathContext: this.props.pageContext,
-      key: this.props.location.pathname,
     }
 
     const [replacementElement] = apiRunner(`replaceComponentRenderer`, {
@@ -51,7 +50,10 @@ class PageRenderer extends React.Component {
 
     const pageElement =
       replacementElement ||
-      createElement(this.props.pageResources.component, props)
+      createElement(this.props.pageResources.component, {
+        ...props,
+        key: this.props.location.pathname,
+      })
 
     const wrappedPage = apiRunner(
       `wrapPageElement`,
