@@ -1,6 +1,6 @@
 #!/bin/bash
 SRC_PATH=$1
-GATSBY_PATH="../../"
+GATSBY_PATH="${CIRCLE_WORKING_DIRECTORY:-../../}"
 
 sudo npm install -g gatsby-dev-cli
 
