@@ -322,9 +322,7 @@ class StarterTemplate extends React.Component {
               <div>
                 {frontmatter.features ? (
                   <ul css={{ marginTop: 0 }}>
-                    {frontmatter.features.map((f, i) => (
-                      <li key={i}>{f}</li>
-                    ))}
+                    {frontmatter.features.map((f, i) => <li key={i}>{f}</li>)}
                   </ul>
                 ) : (
                   `No features`
@@ -399,6 +397,41 @@ export default StarterTemplate
 
 export const pageQuery = graphql`
   query TemplateStarter($slug: String!, $stub: String!) {
+    startersYaml(fields: { starterShowcase: { slug: { eq: $slug } } }) {
+      id
+      fields {
+        starterShowcase {
+          slug
+          stub
+          description
+          stars
+          lastUpdated
+          owner
+          name
+          githubFullName
+          allDependencies
+          gatsbyDependencies
+          miscDependencies
+        }
+      }
+      url
+      repo
+      description
+      tags
+      features
+      internal {
+        type
+      }
+      childScreenshot {
+        screenshotFile {
+          childImageSharp {
+            fluid(maxWidth: 512) {
+              ...GatsbyImageSharpFluid_noBase64
+            }
+          }
+        }
+      }
+    }
     file(name: { eq: $stub }) {
       name
       childImageSharp {
