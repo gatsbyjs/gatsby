@@ -279,6 +279,10 @@
   main_url: "https://iammatthias.com/"
   url: "https://iammatthias.com/"
   source_url: "https://github.com/iammatthias/net"
+  description: >-
+    Photography portfolio and blog built using Contentful + Netlify + Gatsby V2.
+  built_by: Matthias Jordan
+  built_by_url: https://github.com/iammatthias
   featured: false
   categories:
     - Photography
