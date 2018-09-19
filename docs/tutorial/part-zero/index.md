@@ -141,6 +141,8 @@ Congrats! This is the beginning of your very first Gatsby site! 🎉
 
 You’ll be able to visit the site locally at [**_http://localhost:8000_**](http://localhost:8000/) for as long as your development server is running. (That’s the process you started by running the `gatsby develop` command). To stop running that process (or to “stop running the development server”), go back to your terminal window, hold down the “control” key and then hit “c” (ctrl-c). To start it again, run `gatsby develop` again!
 
+**Note:** If you are using VM setup like `vagrant`, and/or would like to listen on your local ip address, run `gatsby develop --host=0.0.0.0`. Now, the developement server listens on both 'localhost' and your local ip.
+
 ## Set up a code editor
 
 A code editor is a program designed specifically for editing computer code. There are many great ones out there; If you haven't worked with a code editor before, we recommend the editor used throughout this tutorial -- [**VS Code**](https://code.visualstudio.com/).
