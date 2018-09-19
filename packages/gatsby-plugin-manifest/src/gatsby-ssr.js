@@ -4,11 +4,11 @@ import { withPrefix } from "gatsby"
 exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
   // If icons were generated, also add a favicon link.
   if (pluginOptions.icon) {
-    let iconPath = '/icons';
+    let iconPath = `/icons`;
 
     // The icon path could be different in hybrid mode
     if (pluginOptions.icons && pluginOptions.icons.length) {
-      iconPath = pluginOptions.icons[0].src.substring(0, pluginOptions.icons[0].src.lastIndexOf("/"))
+      iconPath = pluginOptions.icons[0].src.substring(0, pluginOptions.icons[0].src.lastIndexOf(`/`))
     }
 
     setHeadComponents([
