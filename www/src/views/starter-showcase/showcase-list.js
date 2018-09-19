@@ -8,6 +8,7 @@ import { colors } from "../../utils/presets"
 import copyToClipboard from "../../utils/copy-to-clipboard"
 import styles from "../shared/styles"
 import ThumbnailLink from "../shared/thumbnail"
+import get from "lodash/get"
 
 const ShowcaseList = ({ urlState, starters, count, sortRecent }) => {
   if (!starters.length) {
@@ -196,10 +197,8 @@ export default ShowcaseList
 
 function sortingFunction(sortRecent) {
   return function({ node: nodeA }, { node: nodeB }) {
-    const safewrap = obj =>
-      sortRecent ? new Date(obj.lastUpdated) : obj[`stars`]
-    const metricA = safewrap(nodeA.fields.starterShowcase)
-    const metricB = safewrap(nodeB.fields.starterShowcase)
+    const metricA = get(nodeA, 'fields.starterShowcase.stars', 0)
+    const metricB = get(nodeB, 'fields.starterShowcase.stars', 0)
     return metricB - metricA
   }
 }
