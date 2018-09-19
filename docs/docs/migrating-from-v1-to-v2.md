@@ -16,7 +16,7 @@ This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While t
 
   - [Update Gatsby version](#update-gatsby-version)
   - [Manually install React](#manually-install-react)
-  - [Manually install plugins’ peer dependencies](#manually-install-plugins'-peer-dependencies)
+  - [Manually install plugins’ peer dependencies](#manually-install-plugins-peer-dependencies)
 
 - [Handling Breaking Changes](#handling-breaking-changes)
 
@@ -55,12 +55,12 @@ This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While t
   - [Setting the proper Peer Dependencies](#setting-the-proper-peer-dependencies)
   - [Change `modifyBabelrc` to `onCreateBabelConfig`](#change-modifybabelrc-to-oncreatebabelconfig)
   - [Change `modifyWebpackConfig` to `onCreateWebpackConfig`](#change-modifywebpackconfig-to-oncreatewebpackconfig)
-  - [`createRemoteFileNode` API has changed](#createRemoteFileNode)
+  - [`createRemoteFileNode` API has changed](#createremotefilenode)
   - [Only allow defined keys on the `node.internal` object](#only-allow-defined-keys-on-the-node-internal-object)
   - [Import `graphql` types from `gatsby/graphql`](#import-graphql-types-from-gatsbygraphql)
 
 - [For Explorers](#for-explorers)
-  - [V2 from Scratch](#starting-a-new-project-with-gatsby-v2)
+  - [V2 from Scratch](#starting-a-new-project-with-v2)
 
 ## Updating Your Dependencies
 
@@ -68,33 +68,37 @@ The very first thing you will need to do is update your dependencies and install
 
 ### Update Gatsby version
 
-Since v2 is currently in beta, you need update your `package.json` to use the pre-release versions of Gatsby.
+You need update your `package.json` to use the latest version of Gatsby.
 
 `package.json`
 
 ```json
 "dependencies": {
-  "gatsby": "next",
-  "gatsby-image": "next",
-  "gatsby-plugin-sharp": "next"
+  "gatsby": "^2.0.0",
 }
 ```
 
-> Note: Gatsby v2 is in pre-release so you may encounter further breaking changes.
+Or run
+
+```bash
+npm i gatsby@latest
+```
 
 ### Update Gatsby related packages
 
-Update your `package.json` to use the pre-release versions of Gatsby related packages. Any package name that starts with `gatsby-` should be upgraded to use the `next` version. Note, this only applies to plugins managed in the gatsbyjs/gatsby repo. If you're using community plugins, they might not be upgraded yet. Check their repo for the status. Many plugins won't actually need upgrading so they very well might keep working. For example:
+Update your `package.json` to use the latest versions of Gatsby related packages. Any package name that starts with `gatsby-` should be upgraded. Note, this only applies to plugins managed in the gatsbyjs/gatsby repo. If you're using community plugins, they might not be upgraded yet. Check their repo for the status. Many plugins won't actually need upgrading so they very well might keep working. You can run
 
-`package.json`
-
-```json
-"dependencies": {
-    "gatsby-plugin-google-analytics": "next",
-    "gatsby-plugin-netlify": "next",
-    "gatsby-plugin-sass": "next",
-}
+```bash
+npm outdated
 ```
+
+And compare "Wanted" and "Latest" versions and update `package.json` file manually or run
+
+```bash
+npm i gatsby-plugin-google-analytics@latest gatsby-plugin-netlify@latest gatsby-plugin-sass@latest
+```
+
+**NOTE**: Above command is just an example - adjust packages to ones you are actually using.
 
 ### Manually install React
 
@@ -173,7 +177,7 @@ Repeat for every page and template that needs this layout.
 
 In v1, the layout component had access to `history`, `location`, and `match` props. In v2, only pages have access to these props; if you need these props in the layout component, pass them through from the page.
 
-`layout.js`
+`src/components/layout.js`
 
 ```jsx
 import React from "react"
@@ -190,7 +194,7 @@ export default ({ children, location }) => (
 
 ```jsx
 import React from "react"
-import Layout from "../components/layout.js"
+import Layout from "../components/layout"
 
 export default props => (
   <Layout location={props.location}>
@@ -205,7 +209,7 @@ If you were using the `data` prop in your Gatsby v1 layout, you now need to make
 
 Replacing a layout's query with `StaticQuery`:
 
-`layout.js`
+`src/components/layout.js`
 
 ```diff
 import React, { Fragment } from "react"
@@ -325,7 +329,7 @@ To have the same configuration that you had in v1 (if you were using these plugi
 
 #### 1. Install the dependencies
 
-`npm install --save gatsby-plugin-postcss@next postcss-import postcss-cssnext postcss-browser-reporter postcss-reporter`
+`npm install --save gatsby-plugin-postcss postcss-import postcss-cssnext postcss-browser-reporter postcss-reporter`
 
 **NOTE**: `postcss-cssnext` is [deprecated](https://moox.io/blog/deprecating-cssnext/) and it is better to use `postcss-preset-env` now.
 
@@ -372,7 +376,7 @@ Two common ways this change _might_ break your site is:
 
 Read more about the features of our new router at https://reach.tech/router
 
-**NOTE:** One prominant feature of @reach/router, relative routes, isn't working currently in Gatsby. We're working with Ryan Florence
+**NOTE:** One prominent feature of @reach/router, relative routes, isn't working currently in Gatsby. We're working with Ryan Florence
 on fixing that so hopefully it'll be supported soon.
 
 Read on for instructions on migrating your site to @reach/router.
@@ -407,7 +411,7 @@ Now, to add state to a link, pass it via a `state` prop.
 ```jsx
 const NewsFeed = () => (
   <div>
-    <Link to="photos/123" state={{ fromNewsFeed: true }} />
+    <Link to="photos/123" state={{ fromFeed: true }} />
   </div>
 )
 
@@ -569,6 +573,9 @@ import { Provider } from 'react-redux'
 ### Browser API `replaceHistory` was removed
 
 Similar to `replaceRouterComponent`, we no longer support custom histories so this was removed.
+The `replaceHistory()` method could be used for tracking page views as it is possible to register listeners on route changes using `history.listen()`.
+
+In order to track page views, you can use the [`onRouteUpdate`](/docs/browser-apis/#onRouteUpdate) API to track pages changes.
 
 ### Browser API `wrapRootComponent` was replaced with `wrapRootElement`
 
@@ -672,6 +679,18 @@ export default ({ children }) => (
 ```
 
 TODO: add a code snippet that uses [`onCreateWebpackConfig`](/docs/node-apis/#onCreateWebpackConfig) to revert to Gatsby's v1 behaviour.
+
+### gatsby-image's `outerWrapperClassName` was removed
+
+Because the outer wrapper `div` was removed, you can no longer use `outerWrapperClassName` for styling your images. You should merge those styles into your wrapper's class.
+
+```diff
+<Img
+  fluid={data.file.childImageSharp.fluid}
+  className={styles.wrapper}
+- outerWrapperClassName={styles.outerWrapper}
+/>
+```
 
 ## Resolving Deprecations
 
@@ -841,9 +860,10 @@ In most cases you won't have to do anything to be v2 compatible, however there a
 
 `gatsby` should be included under `peerDependencies` of your plugin and it should specify the proper versions of support.
 
-```json
+```diff
 "peerDependencies": {
-  "gatsby": ">=1"
+-  "gatsby": "1"
++  "gatsby": ">=1"
 }
 ```
 
@@ -926,26 +946,26 @@ Import graphql types from `gatsby/graphql` to prevent `Schema must contain uniqu
 
 Here's a brief section on starting a new project with Gatsby v2 instead of upgrading an existing project.
 
-_Start from scratch:_ If you're a _start from scratch_ kind of person, you can install the Gatsby beta and React like this: `npm install gatsby@next react react-dom`
+_Start from scratch:_ If you're a _start from scratch_ kind of person, you can install Gatsby and React like this: `npm install gatsby react react-dom`
 
 _Tutorial:_ If you'd like a step-by-step guide, [follow the tutorial](/tutorial/) to get started with Gatsby v2.
 
-_Starters:_ If you'd rather use one of the official starters, you're in luck, there's a v2 edition for each of them. Install your favourite one with the Gatsby CLI.
+_Starters:_ If you'd rather use one of the official starters, install your favourite one with the Gatsby CLI.
 
 `gatsby-starter-default` with v2:
 
 ```
-gatsby new my-default-project https://github.com/gatsbyjs/gatsby-starter-default#v2
+gatsby new my-default-project https://github.com/gatsbyjs/gatsby-starter-default
 ```
 
 `gatsby-starter-hello-world` with v2:
 
 ```
-gatsby new my-hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world#v2
+gatsby new my-hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
 `gatsby-starter-blog` with v2:
 
 ```
-gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
+gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog
 ```

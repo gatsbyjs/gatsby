@@ -5,7 +5,7 @@ This plugin reimplements the behavior of layout components in `gatsby@1`, which 
 ## Install
 
 ```
-npm install --save gatsby-plugin-layout@next
+npm install --save gatsby-plugin-layout
 ```
 
 ## How to use
@@ -163,9 +163,9 @@ import ContextConsumer from "./Context"
 const ComponentThatChangeState = () => (
   <ContextConsumer>
     {({ data, set }) => (
-        <div onClick={() => set({menuOpen: !data.menuOpen})}>
-            {data.menuOpen ? `Opened Menu` : `Closed Menu`}
-        </div>
+      <div onClick={() => set({ menuOpen: !data.menuOpen })}>
+        {data.menuOpen ? `Opened Menu` : `Closed Menu`}
+      </div>
     )}
   </ContextConsumer>
 )

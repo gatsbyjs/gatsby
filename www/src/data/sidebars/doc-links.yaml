@@ -4,7 +4,7 @@
       link: /docs/
     - title: Starters
       link: /docs/gatsby-starters/
-    - title: Recipes*
+    - title: Recipes
       link: /docs/recipes/
     - title: Overview of the docs*
       link: /docs/overview/
@@ -203,10 +203,16 @@
           link: /docs/caching/
         - title: Local HTTPS
           link: /docs/local-https/
-        - title: Lighthouse audit*
-          link: /docs/lighthouse-audit/
-        - title: Optimize plugins with Guess.js*
-          link: /docs/optimize-plugins-with-guessjs/
+        - title: Audit with Lighthouse
+          link: /docs/audit-with-lighthouse/
+        - title: Add a Manifest File
+          link: /add-a-manifest-file/
+        - title: Add Offline Support
+          link: /add-offline-support/
+        - title: Add Page Metadata
+          link: /add-page-metadata/
+        - title: Optimize Prefetching with Guess.js*
+          link: /docs/optimize-prefetching-with-guessjs/
 - title: API Reference
   items:
     - title: Gatsby Link
@@ -255,6 +261,58 @@
       link: /docs/prpl-pattern/
     - title: Querying data with GraphQL
       link: /docs/querying-with-graphql/
+- title: Behind the Scenes
+  link: /docs/behind-the-scenes/
+  items:
+    - title: How APIS/Plugins Are Run
+      link: /docs/how-plugins-apis-are-run/
+    - title: Node Creation
+      link: /docs/node-creation/
+    - title: Schema Generation
+      link: /docs/schema-generation/
+      items:
+        - title: Building the GqlType
+          link: /docs/schema-gql-type/
+        - title: Building the Input Filters
+          link: /docs/schema-input-gql/
+        - title: Querying with Sift
+          link: /docs/schema-sift/
+        - title: Connections
+          link: /docs/schema-connections/
+    - title: Page Creation
+      link: /docs/page-creation/
+    - title: Page -> Node Dependencies
+      link: /docs/page-node-dependencies/
+    - title: Node Tracking
+      link: /docs/node-tracking/
+    - title: Internal Data Bridge
+      link: /docs/internal-data-bridge/
+    - title: Queries
+      link: /docs/query-behind-the-scenes/
+      items:
+        - title: Query Extraction
+          link: /docs/query-extraction/
+        - title: Query Execution
+          link: /docs/query-execution/
+        - title: Normal vs StaticQueries
+          link: /docs/static-vs-normal-queries/
+    - title: Write out Pages
+      link: /docs/write-pages/
+    - title: Webpack and SSR
+      link: /docs/webpack-and-ssr/
+      items:
+        - title: Building the Javascript App
+          link: /docs/production-app/
+        - title: Page HTML Generation
+          link: /docs/html-generation/
+        - title: Code Splitting and Prefetching
+          link: /docs/how-code-splitting-works/
+    - title: Data Storage (Redux)*
+      link: /docs/data-storage-redux/
+    - title: Build Caching*
+      link: /docs/build-caching/
+    - title: Terminology
+      link: /docs/behind-the-scenes-terminology/
 - title: Advanced Tutorials
   items:
     - title: Making a site with user authentication*
@@ -301,6 +359,8 @@
       link: /docs/submit-a-blogpost/
     - title: Site Showcase Submissions
       link: /docs/site-showcase-submissions/
+    - title: Submit to Creator Showcase
+      link: /docs/submit-to-creator-showcase/
     - title: Submit to Starter Showcase*
       link: /docs/submit-to-starter-showcase/
 - title: Glossary*

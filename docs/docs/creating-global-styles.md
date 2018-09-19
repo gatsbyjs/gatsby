@@ -12,7 +12,7 @@ In nearly every site, there will be some global styles, such as a reset or typog
 
 ## How to add global styles in Gatsby with standard CSS files
 
-The best way to add global styles is with a [shared layout component](https://next.gatsbyjs.org/tutorial/part-three/#your-first-layout-component). This layout component is used for things that are shared throughout the site, including styles, header components, and other common items.
+The best way to add global styles is with a [shared layout component](/tutorial/part-three/#your-first-layout-component). This layout component is used for things that are shared throughout the site, including styles, header components, and other common items.
 
 > **NOTE:** This pattern is implemented by default in [the default starter](https://github.com/gatsbyjs/gatsby-starter-default/blob/02324e5b04ea0a66d91c7fe7408b46d0a7eac868/src/layouts/index.js#L6).
 
@@ -20,7 +20,7 @@ To create a shared layout with global styles, start by creating a new Gatsby sit
 
 ```shell
 # Create the site
-gatsby new global-styles https://github.com/gatsbyjs/gatsby-starter-hello-world#v2
+gatsby new global-styles https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
 Open your new site in your code editor and create a new directory at `/src/components`. Inside, create two new files:
@@ -32,7 +32,7 @@ Open your new site in your code editor and create a new directory at `/src/compo
 +     │   │─  layout.js
 +     │   └─  layout.css
       │
-      └───page/
+      └───pages/
           └─  index.js
 ```
 
@@ -54,7 +54,7 @@ import "./layout.css"
 export default ({ children }) => <div>{children}</div>
 ```
 
-Finally, update `src/pags/index.js` to use the new layout component:
+Finally, update `src/pages/index.js` to use the new layout component:
 
 ```jsx
 import React from "react"
@@ -71,13 +71,13 @@ Run `gatsby develop` and you’ll see the global styles applied.
 
 > **NOTE:** For this example, we’ll be using [Emotion](https://emotion.sh), but the implementation is similar for other CSS-in-JS solutions as well.
 
-To start, create a new Gatsby site with the [hello world starter](https://github.com/gatsbyjs/gatsby-starter-hello-world) and install [`gatsby-plugin-emotion`](https://next.gatsbyjs.org/packages/gatsby-plugin-emotion/) and its dependencies:
+To start, create a new Gatsby site with the [hello world starter](https://github.com/gatsbyjs/gatsby-starter-hello-world) and install [`gatsby-plugin-emotion`](/packages/gatsby-plugin-emotion/) and its dependencies:
 
 ```shell
 # Create the site
-gatsby new global-styles https://github.com/gatsbyjs/gatsby-starter-hello-world#v2
+gatsby new global-styles https://github.com/gatsbyjs/gatsby-starter-hello-world
 
-npm install --save gatsby-plugin-emotion@next emotion emotion-server react-emotion
+npm install --save gatsby-plugin-emotion emotion emotion-server react-emotion
 ```
 
 Create `gatsby-config.js` and add the Emotion plugin:
@@ -130,7 +130,7 @@ In some cases, using a shared layout component is not desirable. In these cases,
 First, open a new terminal window and run the following commands to create a new default Gatsby site and start the development server:
 
 ```shell
-gatsby new global-style-tutorial https://github.com/gatsbyjs/gatsby-starter-default#v2
+gatsby new global-style-tutorial https://github.com/gatsbyjs/gatsby-starter-default
 gatsby develop
 ```
 

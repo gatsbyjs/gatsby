@@ -35,6 +35,7 @@ function typeFields(type): GraphQLInputFieldConfigMap {
         eq: { type: GraphQLBoolean },
         ne: { type: GraphQLBoolean },
         in: { type: new GraphQLList(GraphQLBoolean) },
+        nin: { type: new GraphQLList(GraphQLBoolean) },
       }
     case `string`:
       return {
@@ -43,6 +44,7 @@ function typeFields(type): GraphQLInputFieldConfigMap {
         regex: { type: GraphQLString },
         glob: { type: GraphQLString },
         in: { type: new GraphQLList(GraphQLString) },
+        nin: { type: new GraphQLList(GraphQLString) },
       }
     case `int`:
       return {
@@ -53,6 +55,7 @@ function typeFields(type): GraphQLInputFieldConfigMap {
         lt: { type: GraphQLInt },
         lte: { type: GraphQLInt },
         in: { type: new GraphQLList(GraphQLInt) },
+        nin: { type: new GraphQLList(GraphQLInt) },
       }
     case `float`:
       return {
@@ -63,6 +66,7 @@ function typeFields(type): GraphQLInputFieldConfigMap {
         lt: { type: GraphQLFloat },
         lte: { type: GraphQLFloat },
         in: { type: new GraphQLList(GraphQLFloat) },
+        nin: { type: new GraphQLList(GraphQLFloat) },
       }
   }
   return {}
@@ -218,6 +222,9 @@ const recursiveOmitBy = (value, fn) => {
   if (_.isObject(value)) {
     if (_.isPlainObject(value)) {
       value = _.omitBy(value, fn)
+    } else if (_.isArray(value)) {
+      // don't mutate original value
+      value = _.clone(value)
     }
     _.each(value, (v, k) => {
       value[k] = recursiveOmitBy(v, fn)

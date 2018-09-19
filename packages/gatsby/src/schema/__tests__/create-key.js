@@ -2,7 +2,7 @@ const createKey = require(`../create-key`)
 
 describe(`createKey`, () => {
   it(`leaves valid strings as is`, () => {
-    ;[`01234`, `validstring`, `_hello`, `_`].forEach(input => {
+    ;[`validstring`, `_hello`, `_`].forEach(input => {
       expect(createKey(input)).toBe(input)
     })
   })
@@ -13,6 +13,7 @@ describe(`createKey`, () => {
       [`~/path/to/some/module`, `_xpathxtoxsomexmodule`],
       [`/*`, `_x`],
       [`/*.js`, `_xxjs`],
+      [`01234`, `_01234`],
     ].forEach(([input, output]) => {
       expect(createKey(input)).toBe(output)
     })

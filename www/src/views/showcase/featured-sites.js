@@ -190,9 +190,9 @@ class FeaturedSites extends Component {
                 >
                   {node.childScreenshot && (
                     <Img
-                      sizes={
+                      fluid={
                         node.childScreenshot.screenshotFile.childImageSharp
-                          .sizes
+                          .fluid
                       }
                       alt={node.title}
                       css={{ ...styles.screenshot }}

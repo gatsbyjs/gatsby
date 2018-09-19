@@ -21,7 +21,7 @@ Let's dive in and explore creating layouts.
 As we mentioned in Part Two, at this point it's probably a good idea to close the terminal window(s) and project files from previous parts of the tutorial, to keep things clean on your desktop. Then, open a new terminal window and run the following commands to create a new Gatsby site in a directory called `tutorial-part-three` and then move to this new directory:
 
 ```shell
-gatsby new tutorial-part-three https://github.com/gatsbyjs/gatsby-starter-hello-world#v2
+gatsby new tutorial-part-three https://github.com/gatsbyjs/gatsby-starter-hello-world
 cd tutorial-part-three
 ```
 
