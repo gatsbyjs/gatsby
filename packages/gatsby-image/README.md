@@ -278,11 +278,33 @@ prop. e.g. `<Img fluid={fluid} />`
 | `onLoad`                | `func`              | A callback that is called when the full-size image has loaded.                                                              |
 | `Tag`                   | `string`            | Which HTML tag to use for wrapping elements. Defaults to `div`.                                                             |
 | `critical`              | `bool`              | Opt-out of lazy-loading behavior. Defaults to `false`.                                                                      |
+| `innerChild`            | `node`              | Optional “Slot” prop that takes any React element to be rendered before the closing tag of the wrapper element.                                                                      |
 
 ## Image processing arguments
 
 [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp) supports many additional arguments for transforming your images like
 `quality`, `sizeByPixelDensity`, `pngCompressionLevel`, `cropFocus`, `greyscale` and many more. See its documentation for more.
+
+## Inserting additional DOM element(s) inside the wrapper element
+
+The `innerChild` prop is an optional “slot” that accepts any valid React node. It will render the node before the wrapper element’s closing tag.
+
+Example of where this can be useful: overlaying text on top of images.
+
+```jsx
+  <Img
+    // your other props, such as fixed / fluid, etc.
+    innerChild={
+      <p style={{
+        position: `absolute`,
+        bottom: 0,
+        left: 0,
+      }}>
+        Hello, I’m a text overlaid on top of the image
+      </p>
+    }
+  />
+```
 
 ## Some other stuff to be aware of
 
@@ -291,7 +313,7 @@ prop. e.g. `<Img fluid={fluid} />`
 - By default, images don't load until JavaScript is loaded. Gatsby's automatic code
   splitting generally makes this fine but if images seem slow coming in on a
   page, check how much JavaScript is being loaded there.
-- Images marked as `critical` will start loading immediately as the DOM is 
+- Images marked as `critical` will start loading immediately as the DOM is
   parsed, but unless `fadeIn` is set to `false`, the transition from placeholder
   to final image will not occur until after the component is mounted.
 - Gatsby-Image now is backed by newer `<picture>` tag. This newer standard allows for
