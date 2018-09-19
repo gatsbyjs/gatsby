@@ -1,7 +1,7 @@
 #!/bin/bash
 SRC_PATH=$1
 CUSTOM_COMMAND="${2:-test}"
-GATSBY_PATH="${CIRCLE_WORKING_DIRECTORY:-../../}"
+GATSBY_PATH="/home/circleci/project"
 
 sudo npm install -g gatsby-dev-cli &&
 

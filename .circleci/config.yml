@@ -54,10 +54,6 @@ aliases:
       - <<: *attach_to_bootstrap
       - run: yarn jest -w 1
 
-  integration_test_template: &integration_test_template
-    <<: *node10_browsers
-    <<: *attach_to_bootstrap
-
   integration_test_workflow: &integration_test_workflow
     <<: *ignore_master
     requires:
@@ -112,7 +108,7 @@ jobs:
       - run: yarn test:integration
 
   e2e_tests_gatsbygram:
-    <<: *integration_test_template
+    <<: *node10_browsers
     steps:
       - checkout
       - run: ./scripts/assert-changed-files.sh "packages/*|integration-tests/*|examples/gatsbygram/*"
@@ -122,7 +118,7 @@ jobs:
       - run: ./scripts/integration-test.sh examples/gatsbygram
 
   e2e_tests_path-prefix:
-    <<: *integration_test_template
+    <<: *node10_browsers
     steps:
       - checkout
       - run: ./scripts/assert-changed-files.sh "packages/*|integration-tests/*"
@@ -132,7 +128,7 @@ jobs:
       - run: ./scripts/integration-test.sh integration-tests/path-prefix
   
   e2e_tests_gatsby-image:
-    <<: *integration_test_template
+    <<: *node10_browsers
     steps:
       - checkout
       - run: ./scripts/assert-changed-files.sh "packages/*|integration-tests/*"
@@ -142,7 +138,7 @@ jobs:
       - run: ./scripts/integration-test.sh integration-tests/gatsby-image
   
   e2e_tests_runtime:
-    <<: *integration_test_template
+    <<: *node10_browsers
     steps:
       - checkout
       - run: ./scripts/assert-changed-files.sh "packages/*|integration-tests/*"
