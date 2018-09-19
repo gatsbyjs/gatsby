@@ -2317,14 +2317,16 @@
     - Bot
   featured: false
 - title: Mokkapps
-  main_url: "https://www.mokkapps.de/projects"
+  main_url: "https://www.mokkapps.de/"
   url: "https://www.mokkapps.de/"
+  source_url: "https://github.com/mokkapps/website"
   description: >
-    Mokkapps is a shiny new portfolio website from the software developer Michael Hoffmann which was built with Gatsby v2
+    Portfolio website from Michael Hoffmann. Passionate software developer with focus on web-based technologies.
   categories:
     - Blog
     - Portfolio
     - Web Dev
+    - Mobile Dev
   featured: false
 - title: Premier Octet
   main_url: "https://www.premieroctet.com/"
