@@ -77,6 +77,7 @@ jobs:
     <<: *node10
     steps:
       - checkout
+      - run: ./scripts/assert-changed-files.sh "packages/*"
       - <<: *restore_node_modules
       - <<: *install_node_modules
       - <<: *persist_node_modules
