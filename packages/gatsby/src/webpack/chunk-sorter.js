@@ -1,7 +1,6 @@
 /** https://github.com/jantimon/html-webpack-plugin/blob/master/lib/chunksorter.js */
 
 const toposort = require(`toposort`)
-const _ = require(`lodash`)
 
 /**
   Sorts dependencies between chunks by their "parents" attribute.
@@ -18,63 +17,32 @@ module.exports = (chunks, chunkGroups) => {
   if (!chunks) return chunks
 
   // We build a map (chunk-id -> chunk) for faster access during graph building.
-  const nodeMap = {}
-
-  chunks.forEach(chunk => {
-    nodeMap[chunk.id] = chunk
-  })
+  const nodeMap = new Map(chunks.map(c => [c.id, c]))
 
   // Next, we add an edge for each parent relationship into the graph
-  let edges = []
+  const edges = chunkGroups.reduce(
+    (result, chunkGroup) =>
+      result.concat(
+        Array.from(chunkGroup.parentsIterable, parentGroup => [
+          parentGroup,
+          chunkGroup,
+        ])
+      ),
+    []
+  )
 
-  if (chunkGroups) {
-    // Add an edge for each parent (parent -> child)
-    edges = chunkGroups.reduce(
-      (result, chunkGroup) =>
-        result.concat(
-          Array.from(chunkGroup.parentsIterable, parentGroup => [
-            parentGroup,
-            chunkGroup,
-          ])
-        ),
-      []
-    )
-    const sortedGroups = toposort.array(chunkGroups, edges)
-    // flatten chunkGroup into chunks
-    const sortedChunks = sortedGroups
-      .reduce((result, chunkGroup) => result.concat(chunkGroup.chunks), [])
-      .map(
-        (
-          chunk // use the chunk from the list passed in, since it may be a filtered list
-        ) => nodeMap[chunk.id]
-      )
-      .filter((chunk, index, self) => {
-        // make sure exists (ie excluded chunks not in nodeMap)
-        const exists = !!chunk
-        // make sure we have a unique list
-        const unique = self.indexOf(chunk) === index
-        return exists && unique
-      })
-    return sortedChunks
-  } else {
-    // before webpack 4 there was no chunkGroups
-    chunks.forEach(chunk => {
-      if (chunk.parents) {
-        // Add an edge for each parent (parent -> child)
-        chunk.parents.forEach(parentId => {
-          // webpack2 chunk.parents are chunks instead of string id(s)
-          const parentChunk = _.isObject(parentId)
-            ? parentId
-            : nodeMap[parentId]
-          // If the parent chunk does not exist (e.g. because of an excluded chunk)
-          // we ignore that parent
-          if (parentChunk) {
-            edges.push([parentChunk, chunk])
-          }
-        })
-      }
+  const sortedGroups = toposort.array(chunkGroups, edges)
+  // flatten chunkGroup into chunks
+  const sortedChunks = sortedGroups
+    .reduce((result, chunkGroup) => result.concat(chunkGroup.chunks), [])
+    .map(chunk => nodeMap.get(chunk.id)) // use the chunk from the list passed in, since it may be a filtered list
+    .filter((chunk, index, list) => {
+      // make sure exists (ie excluded chunks not in nodeMap)
+      const exists = !!chunk
+      // make sure we have a unique list
+      const unique = list.indexOf(chunk) === index
+      return exists && unique
     })
-    // We now perform a topological sorting on the input chunks and built edges
-    return toposort.array(chunks, edges)
-  }
+
+  return sortedChunks
 }
