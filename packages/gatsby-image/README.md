@@ -272,10 +272,12 @@ prop. e.g. `<Img fluid={fluid} />`
 | `title`                 | `string`            | Passed to the `img` element                                                                                                 |
 | `alt`                   | `string`            | Passed to the `img` element                                                                                                 |
 | `className`             | `string` / `object` | Passed to the wrapper element. Object is needed to support Glamor's css prop                                                |
-| `style`                 | `object`            | Spread into the default styles in the wrapper element                                                                       |
-| `imgStyle`              | `object`            | Spread into the default styles for the actual `img` element                                                                 |
+| `style`                 | `object`            | Spread into the default styles of the wrapper element                                                                       |
+| `imgStyle`              | `object`            | Spread into the default styles of the actual `img` element                                                                 |
+| `placeholderStyle`      | `object`            | Spread into the default styles of the placeholder `img` element                                                                 |
 | `backgroundColor`       | `string` / `bool`   | Set a colored background placeholder. If true, uses "lightgray" for the color. You can also pass in any valid color string. |
 | `onLoad`                | `func`              | A callback that is called when the full-size image has loaded.                                                              |
+| `onError`               | `func`              | A callback that is called when the image fails to load.                                                              |
 | `Tag`                   | `string`            | Which HTML tag to use for wrapping elements. Defaults to `div`.                                                             |
 | `critical`              | `bool`              | Opt-out of lazy-loading behavior. Defaults to `false`.                                                                      |
 
