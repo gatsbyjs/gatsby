@@ -744,6 +744,8 @@ export const query = graphql`
 
 > There is a codemod that can automatically make this change to your projects. Check out the [`gatsby-codemods`](https://www.npmjs.com/package/gatsby-codemods) package for usage instructions.
 
+> Note that if you are relying on the auto-import feature of WebStorm or VSCode, it may import `graphql` from `'graphql'` instead of `'gatsby'`. This will throw a bunch of errors around bad imports. Make sure `graphql` is always imported from `gatsby`.
+
 ### Rename `boundActionCreators` to `actions`
 
 `boundActionCreators` is deprecated in v2. You can continue using it, but it’s recommended that you rename it to `actions`.

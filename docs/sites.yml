@@ -279,6 +279,10 @@
   main_url: "https://iammatthias.com/"
   url: "https://iammatthias.com/"
   source_url: "https://github.com/iammatthias/net"
+  description: >-
+    Photography portfolio and blog built using Contentful + Netlify + Gatsby V2.
+  built_by: Matthias Jordan
+  built_by_url: https://github.com/iammatthias
   featured: false
   categories:
     - Photography
@@ -2317,14 +2321,16 @@
     - Bot
   featured: false
 - title: Mokkapps
-  main_url: "https://www.mokkapps.de/projects"
+  main_url: "https://www.mokkapps.de/"
   url: "https://www.mokkapps.de/"
+  source_url: "https://github.com/mokkapps/website"
   description: >
-    Mokkapps is a shiny new portfolio website from the software developer Michael Hoffmann which was built with Gatsby v2
+    Portfolio website from Michael Hoffmann. Passionate software developer with focus on web-based technologies.
   categories:
     - Blog
     - Portfolio
     - Web Dev
+    - Mobile Dev
   featured: false
 - title: Premier Octet
   main_url: "https://www.premieroctet.com/"
@@ -2450,6 +2456,16 @@
     - Blog
   built_by: Corey Ward
   built_by_url: "http://www.coreyward.me/"
+- title: MadeComfy
+  main_url: "https://madecomfy.com.au/"
+  url: "https://madecomfy.com.au/"
+  description: >
+    Short term rental management startup, using Contentful + Gatsby + CicleCI
+  featured: false
+  categories:
+    - Travel
+  built_by: Lucas Vilela
+  built_by_url: "https://madecomfy.com.au/"
 - title: How To Book Cheap Flights
   description: >
     A travel blog built with Gatsby and adopting the AMP technology.
@@ -2462,3 +2478,22 @@
     - Blog
   built_by: Flavio Li Volsi
   built_by_url: "http://github.com/flaviolivolsi"
+- title: Tiger Facility Services
+  description: >
+    Tiger Facility Services combines facility management expertise with state of the art software to offer a sustainable and customer oriented cleaning and facility service.
+  main_url: https://www.tigerfacilityservices.com/de-en/
+  url: https://www.tigerfacilityservices.com/de-en/
+  featured: false
+  categories:
+    - B2B Services
+- title: "Luciano Mammino's blog"
+  description: >
+    Tech & programming blog of Luciano Mammino a.k.a. "loige", Fullstack Web Developer and International Speaker
+  main_url: https://loige.co
+  url: https://loige.co
+  featured: false
+  categories:
+    - Blog
+    - Web Dev
+  built_by: Luciano Mammino
+  built_by_url: https://loige.co

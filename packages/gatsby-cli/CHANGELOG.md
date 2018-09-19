@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.4.1"></a>
+
+## [2.4.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.4.0...gatsby-cli@2.4.1) (2018-09-18)
+
+### Features
+
+- add --prefix-paths option to gatsby serve cli ([#8060](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/issues/8060)) ([98c8e91](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/commit/98c8e91))
+
 <a name="2.4.0"></a>
 
 # [2.4.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.0.0-rc.6...gatsby-cli@2.4.0) (2018-09-17)

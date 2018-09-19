@@ -34,7 +34,7 @@
     "gatsby-remark-copy-linked-files": "^2.0.5",
     "gatsby-remark-graphviz": "^1.0.0",
     "gatsby-remark-images": "^2.0.1",
-    "gatsby-remark-prismjs": "^3.0.0",
+    "gatsby-remark-prismjs": "3.0.0-beta.6",
     "gatsby-remark-responsive-iframe": "^2.0.5",
     "gatsby-remark-smartypants": "^2.0.5",
     "gatsby-source-filesystem": "^2.0.1",
@@ -70,7 +70,6 @@
     "typeface-space-mono": "^0.0.54",
     "typeface-spectral": "^0.0.54",
     "typography": "^1.0.0-alpha.4",
-    "typography-breakpoint-constants": "^1.0.0-alpha.0",
     "typography-plugin-code": "^1.0.0-alpha.0",
     "zipkin": "^0.14.0",
     "zipkin-javascript-opentracing": "^1.6.0",
@@ -94,6 +93,14 @@
     "front-matter": "^2.3.0",
     "get-package-json-from-github": "^1.2.1",
     "github-api": "^3.0.0",
+    "husky": "^1.0.0-rc.14",
+    "prettier": "^1.14.2",
+    "pretty-quick": "^1.6.0",
     "webshot": "^0.18.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
   }
 }

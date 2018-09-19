@@ -4,7 +4,7 @@ title: Terminology
 
 Throughout the Gatsby code, you'll see the below object fields and variables mentioned. Their definitions and reason for existence are defined below.
 
-## Page 
+## Page
 
 ### Page Object
 
@@ -39,7 +39,7 @@ Think of this instead as `client matchPath`. It is ignored when creating pages d
 
 This is also used by [gatsby-plugin-create-client-paths](/packages/gatsby-plugin-create-client-paths/?=client). It duplicates pages whose path match some client-only prefix (e.g `/app/`). The duplicated page has a `matchPath` so that it is resolved first on the front end.
 
-It is also used by [gatsby-plugin-netlify](http://localhost:8000/packages/gatsby-plugin-netlify/?=netlify) when creating `_redirects`.
+It is also used by [gatsby-plugin-netlify](/packages/gatsby-plugin-netlify/?=netlify) when creating `_redirects`.
 
 ### jsonName
 
@@ -85,7 +85,7 @@ is
 
 `component---src-blog-2-js`
 
-This is used extensively throughout Gatsby, but especially during [Code Splitting](http://localhost:8000/docs/how-code-splitting-works/).
+This is used extensively throughout Gatsby, but especially during [Code Splitting](/docs/how-code-splitting-works/).
 
 ### internalComponentName
 

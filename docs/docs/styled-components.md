@@ -12,7 +12,7 @@ With CSS-in-JS, you avoid all that as CSS selectors are scoped automatically to 
 
 <iframe class="egghead-video" width=600 height=348 src="https://egghead.io/lessons/gatsby-style-gatsby-sites-with-styled-components/embed" />
 
-Video hosted on [egghead.io][https://egghead.io/lessons/gatsby-style-gatsby-sites-with-styled-components].
+Video hosted on [egghead.io](https://egghead.io/lessons/gatsby-style-gatsby-sites-with-styled-components).
 
 First, open a new terminal window and run the following to create a new site:
 

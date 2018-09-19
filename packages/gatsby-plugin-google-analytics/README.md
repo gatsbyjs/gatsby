@@ -24,6 +24,8 @@ module.exports = {
         respectDNT: true,
         // Avoids sending pageview hits from custom paths
         exclude: ["/preview/**", "/do-not-track/me/too/"],
+        // Enables Google Optimize using your container Id
+        optimizeId: "YOUR_GOOGLE_OPTIMIZE_TRACKING_ID",
         // Any additional create only fields (optional)
         sampleRate: 5,
         siteSpeedSampleRate: 10,
@@ -85,6 +87,10 @@ If you enable this optional option, Google Analytics will not be loaded at all f
 ## The "exclude" option
 
 If you need to exclude any path from the tracking system, you can add it (one or more) to this optional array as glob expressions.
+
+## The "optimizeId" option
+
+If you need to use Google Optimize for A/B testing, you can add this optional Optimize container id to allow Google Optimize to load the correct test parameters for your site.
 
 ## Create Only Fields
 

@@ -65,6 +65,9 @@ class Plugins extends Component {
                 {` `}
                 <Link to="/docs/plugin-authoring/">Plugin Authoring</Link> page
                 in the docs!
+                To learn more about Gatsby plugins, visit the
+                {` `}
+                <Link to="/docs/plugins">plugins doc page</Link>.
               </p>
             </div>
           </Container>

@@ -259,7 +259,7 @@ Gatsby will pick the exported `pageQuery` const and will know it's a GraphQL que
 
 ![files-1614223 1280](https://images.ctfassets.net/4x6byznv2pet/xodXA1B5OCGKW6eAkqi8e/47789915812c2ab95512f97efb1fcb79/files-1614223_1280.jpg)
 
-I will not go in depth with how to manage state with React since there are a lot of ways to achieve that. There is the new [React 16 Context API](https://reactjs.org/docs/context.html) or you can use other state libraries such as [Redux](https://github.com/reduxjs/react-redux). Using Gatsby you can request the data you need using the GraphQL data layer as shown in the previous example. This option is only available in the root components. This will change in [Gatsby v2 with the new `StaticQuery` feature](https://next.gatsbyjs.org/docs/static-query/). You can still use [Redux with Gatsby](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-redux) if you need to.
+I will not go in depth with how to manage state with React since there are a lot of ways to achieve that. There is the new [React 16 Context API](https://reactjs.org/docs/context.html) or you can use other state libraries such as [Redux](https://github.com/reduxjs/react-redux). Using Gatsby you can request the data you need using the GraphQL data layer as shown in the previous example. This option is only available in the root components. This will change in [Gatsby v2 with the new `StaticQuery` feature](/docs/static-query/). You can still use [Redux with Gatsby](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-redux) if you need to.
 
 ## Deployment
 
