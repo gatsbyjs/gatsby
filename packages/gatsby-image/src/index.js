@@ -316,6 +316,8 @@ class Image extends React.Component {
                 }}
               />
             )}
+
+            {this.props.innerChild}
         </Tag>
       )
     }
@@ -417,6 +419,8 @@ class Image extends React.Component {
               }}
             />
           )}
+
+          {this.props.innerChild}
         </Tag>
       )
     }
@@ -430,6 +434,7 @@ Image.defaultProps = {
   fadeIn: true,
   alt: ``,
   Tag: `div`,
+  innerChild: undefined,
 }
 
 const fixedObject = PropTypes.shape({
@@ -471,6 +476,7 @@ Image.propTypes = {
   onLoad: PropTypes.func,
   onError: PropTypes.func,
   Tag: PropTypes.string,
+  innerChild: PropTypes.node,
 }
 
 export default Image
