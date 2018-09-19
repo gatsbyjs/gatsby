@@ -320,7 +320,7 @@ module.exports = async (args: BootstrapArgs) => {
   activity.end()
 
   // Collect resolvable extensions and attach to program.
-  const extensions = [`.js`, `.jsx`, `.mjs`, `.wasm`, `.json`]
+  const extensions = [`.mjs`, `.js`, `.jsx`, `.wasm`, `.json`]
   // Change to this being an action and plugins implement `onPreBootstrap`
   // for adding extensions.
   const apiResults = await apiRunnerNode(`resolvableExtensions`, {
