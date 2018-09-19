@@ -13,6 +13,7 @@ require(`dotenv`).config({
   path: `.env.${process.env.NODE_ENV}`,
 })
 
+// used to gather repo data on starters
 const githubApiClient = new GraphQLClient(`https://api.github.com/graphql`, {
   headers: {
     authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
@@ -116,10 +117,6 @@ exports.createPages = ({ graphql, actions }) => {
                 fields {
                   slug
                   package
-                  starterShowcase {
-                    slug
-                    stub
-                  }
                 }
                 frontmatter {
                   title
@@ -257,13 +254,6 @@ exports.createPages = ({ graphql, actions }) => {
       })
 
       // Create starter pages.
-      // const starters = result.data.allStartersYaml.edges.forEach(edge => { // @TODO
-      // if (result.data.allStartersYaml) {
-      //   result.data.allStartersYaml.edges.forEach(edge => {
-      //     console.log("starter node", edge.node)
-      //   })
-      // }
-      // const starters = _.filter(result.data.allMarkdownRemark.edges, edge => {
       const starters = _.filter(result.data.allStartersYaml.edges, edge => {
         const slug = _.get(edge, `node.fields.starterShowcase.slug`)
         if (!slug) return null
@@ -274,12 +264,8 @@ exports.createPages = ({ graphql, actions }) => {
       )
 
       starters.forEach((edge, index) => {
-        // starter slug: /gatsby-starter-timeline-theme/
-        // starter stub: gatsby-starter-timeline-theme
-        console.log("starter slug:", edge.node.fields.starterShowcase.slug)
-        console.log("starter stub:", edge.node.fields.starterShowcase.stub)
         createPage({
-          path: `/starters${edge.node.fields.starterShowcase.slug}`, // required
+          path: `/starters${edge.node.fields.starterShowcase.slug}`,
           component: slash(starterTemplate),
           context: {
             slug: edge.node.fields.starterShowcase.slug,
@@ -417,13 +403,6 @@ exports.onCreateNode = ({ node, actions, getNode, getNodes }) => {
       })
       createNodeField({ node, name: `package`, value: true })
     }
-    if (
-      // starter showcase
-      fileNode.sourceInstanceName === `StarterShowcaseData` &&
-      parsedFilePath.name !== `README`
-    ) {
-      createNodesForStarterShowcase({ node, getNode, getNodes, actions })
-    } // end starter showcase
     if (slug) {
       createNodeField({ node, name: `anchor`, value: slugToAnchor(slug) })
       createNodeField({ node, name: `slug`, value: slug })
@@ -438,9 +417,7 @@ exports.onCreateNode = ({ node, actions, getNode, getNodes }) => {
     const cleaned = parsed.hostname + parsed.pathname
     slug = `/showcase/${slugify(cleaned)}`
     createNodeField({ node, name: `slug`, value: slug })
-  }
-  // Starter Showcase Pages
-  else if (node.internal.type === `StartersYaml` && node.repo) {
+  } else if (node.internal.type === `StartersYaml` && node.repo) {
     if (!process.env.GITHUB_TOKEN) {
       console.log(
         "You need to create and set a Github token to work with the starter showcase"
@@ -549,59 +526,6 @@ exports.onPostBuild = () => {
     `./public/gatsbygram.mp4`
   )
 }
-
-// Starter Showcase related code
-const { createFilePath } = require(`gatsby-source-filesystem`)
-const gitFolder = `./src/data/StarterShowcase/generatedGithubData`
-function createNodesForStarterShowcase({ node, getNode, getNodes, actions }) {
-  const { createNodeField, createParentChildLink } = actions
-  if (node.internal.type === `MarkdownRemark`) {
-    const slug = createFilePath({
-      node,
-      getNode,
-      basePath: `startersData`,
-    })
-    // preprocessing
-    const stub = slug.replace(/\//gi, ``)
-    var fromPath = path.join(gitFolder, `${stub}.json`)
-    var data = fs.readFileSync(fromPath, `utf8`)
-    const ghdata = JSON.parse(data)
-    if (ghdata.repository && ghdata.repository.url)
-      ghdata.repository = ghdata.repository.url // flatten a potential object into a string. weird quirk.
-    const { repoMetadata, dependencies = [], devDependencies = [] } = ghdata
-    const allDependencies = Object.entries(dependencies).concat(
-      Object.entries(devDependencies)
-    )
-    // make an object to stick into a Field
-    const starterShowcaseFields = {
-      slug,
-      stub,
-      date: new Date(node.frontmatter.date),
-      githubData: ghdata,
-      // nice-to-have destructures of githubData
-      description: ghdata.description,
-      stars: repoMetadata.stargazers_count,
-      lastUpdated: repoMetadata.created_at,
-      owner: repoMetadata.owner,
-      githubFullName: repoMetadata.full_name,
-      allDependencies,
-      gatsbyDependencies: allDependencies
-        .filter(
-          ([key, _]) => ![`gatsby-cli`, `gatsby-link`].includes(key) // remove stuff everyone has
-        )
-        .filter(([key, _]) => key.includes(`gatsby`)),
-      miscDependencies: allDependencies.filter(
-        ([key, _]) => !key.includes(`gatsby`)
-      ),
-    }
-    createNodeField({
-      node,
-      name: `starterShowcase`,
-      value: starterShowcaseFields,
-    })
-  }
-}
-// End Starter Showcase related code
 
 // limited logging for debug purposes
 let limitlogcount = 0
