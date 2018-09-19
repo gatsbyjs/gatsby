@@ -2486,3 +2486,14 @@
   featured: false
   categories:
     - B2B Services
+- title: "Luciano Mammino's blog"
+  description: >
+    Tech & programming blog of Luciano Mammino a.k.a. "loige", Fullstack Web Developer and International Speaker
+  main_url: https://loige.co
+  url: https://loige.co
+  featured: false
+  categories:
+    - Blog
+    - Web Dev
+  built_by: Luciano Mammino
+  built_by_url: https://loige.co
