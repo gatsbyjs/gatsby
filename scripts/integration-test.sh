@@ -3,7 +3,9 @@ INTEGRATION_TEST=$1
 SRC_PATH=$2
 GATSBY_PATH="${TRAVIS_BUILD_DIR:-../../}" # set to third arg if defined, otherwise use ../../
 
-if [[ "$INTEGRATION_TEST" = true ]]; then
+is_pull_request='^[0-9]+$'
+
+if [[ "$INTEGRATION_TEST" = true && "$TRAVIS_PULL_REQUEST" =~ $is_pull_request ]]; then
   npm install -g gatsby-dev-cli
 
   # bootstrapping all packages so we test _this_ PR's changes
