@@ -10,6 +10,7 @@
     "Noah Lange <noahrlange@gmail.com>"
   ],
   "dependencies": {
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
     "@babel/preset-typescript": "^7.0.0",
     "@babel/runtime": "^7.0.0",
     "babel-plugin-remove-graphql-queries": "^2.0.2-rc.3"

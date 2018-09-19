@@ -4,6 +4,12 @@ function onCreateBabelConfig({ actions }, pluginOptions) {
   actions.setBabelPreset({
     name: `@babel/preset-typescript`,
   })
+
+  // Recommended by TypeScript Babel Starter:
+  // https://github.com/Microsoft/TypeScript-Babel-Starter
+  actions.setBabelPlugin({
+    name: `@babel/plugin-proposal-object-rest-spread`,
+  })
 }
 
 function onCreateWebpackConfig({ actions, loaders }) {
