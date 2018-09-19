@@ -36,6 +36,10 @@ aliases:
         ignore:
           - master
 
+  integration_test_template: &integration_test_template
+    <<: *attach_to_bootstrap
+    <<: *ignore_master
+
 version: 2
 
 jobs:
@@ -84,7 +88,7 @@ jobs:
       - run: yarn test:integration
 
   e2e:path-prefix:
-    <<: *node10_browsers
+    <<: *integration_test_template
     steps:
       - checkout
       - run: ./scripts/assert-changed-files.sh "packages/*|integration-tests/*"
@@ -94,7 +98,7 @@ jobs:
       - run: ./scripts/integration-test.sh integration-tests/path-prefix
   
   e2e:gatsby-image:
-    <<: *node10_browsers
+    <<: *integration_test_template
     steps:
       - checkout
       - run: ./scripts/assert-changed-files.sh "packages/*|integration-tests/*"
@@ -104,7 +108,7 @@ jobs:
       - run: ./scripts/integration-test.sh integration-tests/gatsby-image
   
   e2e:production_runtime:
-    <<: *node10_browsers
+    <<: *integration_test_template
     steps:
       - checkout
       - run: ./scripts/assert-changed-files.sh "packages/*|integration-tests/*"
