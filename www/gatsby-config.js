@@ -29,21 +29,6 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `StarterShowcaseImages`,
-        path: `${__dirname}/src/data/StarterShowcase/generatedScreenshots`,
-      },
-    },
-    //   need to have the img processing first? https://github.com/gatsbyjs/gatsby/issues/5196
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `StarterShowcaseData`,
-        path: `${__dirname}/src/data/StarterShowcase/startersData`,
-      },
-    },
-    {
       resolve: `gatsby-plugin-typography`,
       options: {
         pathToConfigModule: `src/utils/typography`,
