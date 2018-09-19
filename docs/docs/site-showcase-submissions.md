@@ -2,13 +2,13 @@
 title: Site Showcase Submissions
 ---
 
-Want to submit a site to the [Site Showcase](https://next.gatsbyjs.org/showcase/)? Follow these instructions.
+Want to submit a site to the [Site Showcase](/showcase/)? Follow these instructions.
 
 ## Steps
 
 There are only three major steps :)
 
-1.  If this is your first contribution to the Gatsby open source repo, follow the [Contribution guidelines](https://next.gatsbyjs.org/docs/how-to-contribute/#contributing-to-the-repo).
+1.  If this is your first contribution to the Gatsby open source repo, follow the [Contribution guidelines](/docs/how-to-contribute/#contributing-to-the-repo).
 
 2.  If there is a chance that someone else could have already submitted the site, please make sure no one else has already submitted it by searching existing PRs: https://github.com/gatsbyjs/gatsby/pulls
 

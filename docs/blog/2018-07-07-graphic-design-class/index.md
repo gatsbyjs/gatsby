@@ -79,7 +79,7 @@ One thing they wanted more of:
 
 They suggest that a link be added to the home page of Gatsby pointing to it and all sites with git repos should be searchable first.
 
-> _NOTE_: His students are in luck! The [Starter Showcase](https://www.gatsbyjs.com/starters/?sort=stars) (see [PR 6113](https://github.com/gatsbyjs/gatsby/pull/6113)) and [Site Showcase](https://next.gatsbyjs.org/showcase/) ([see relevant issues here](https://github.com/gatsbyjs/gatsby/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+site+showcase)) are nearly done.
+> _NOTE_: His students are in luck! The [Starter Showcase](/starters/?sort=stars) (see [PR 6113](https://github.com/gatsbyjs/gatsby/pull/6113)) and [Site Showcase](/showcase/) ([see relevant issues here](https://github.com/gatsbyjs/gatsby/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+site+showcase)) are nearly done.
 
 ### What do you like about teaching with Gatsby?
 
