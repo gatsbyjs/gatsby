@@ -58,6 +58,11 @@ aliases:
     <<: *node10_browsers
     <<: *attach_to_bootstrap
 
+  integration_test_workflow: &integration_test_workflow
+    <<: *ignore_master
+    requires:
+      - bootstrap
+
 version: 2
 
 jobs:
@@ -162,15 +167,11 @@ workflows:
           requires:
             - bootstrap
       - integration_tests
+      - e2e_tests_gatsbygram:
+          <<: *integration_test_workflow
       - e2e_tests_path-prefix:
-          <<: *ignore_master
-          requires:
-            - bootstrap
+          <<: *integration_test_workflow
       - e2e_tests_gatsby-image:
-          <<: *ignore_master
-          requires:
-            - bootstrap
-      - e2e_tests_production_runtime:
-          <<: *ignore_master
-          requires:
-            - bootstrap
+          <<: *integration_test_workflow
+      - e2e_tests_runtime:
+          <<: *integration_test_workflow
