@@ -36,7 +36,7 @@ const activateCacheForImage = props => {
     ? convertedProps.fluid.src
     : convertedProps.fixed.src
 
-  imageCache[src] = true;
+  imageCache[src] = true
 }
 
 let io
