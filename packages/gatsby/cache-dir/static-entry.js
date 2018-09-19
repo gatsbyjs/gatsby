@@ -248,12 +248,12 @@ export default (pagePath, callback) => {
 
   // Add <link>s for styles that should be prefetched
   // otherwise, inline as a <style> tag
-  const prefetchedAssets = []
-  const inlineStyles = []
+  let styleComponents = []
+  const inlineStyleComponents = []
 
   for (const asset of styles) {
     if (asset.rel === `prefetch`) {
-      prefetchedAssets.push(
+      styleComponents.push(
         <link
           as="style"
           rel={asset.rel}
@@ -262,7 +262,7 @@ export default (pagePath, callback) => {
         />
       )
     } else {
-      inlineStyles.push(
+      inlineStyleComponents.push(
         <style
           key={asset.file}
           data-href={`${__PATH_PREFIX__}/${asset.file}`}
@@ -277,9 +277,10 @@ export default (pagePath, callback) => {
     }
   }
 
-  // inline styles are added to the front
-  headComponents.unshift(...inlineStyles)
-  headComponents.push(...prefetchedAssets)
+  // inline styles are added before the preloaded styles as whole to maintain order
+  styleComponents = [...inlineStyleComponents, ...styleComponents]
+
+  headComponents.push(...styleComponents)
 
   apiRunner(`onPreRenderHTML`, {
     getHeadComponents,
