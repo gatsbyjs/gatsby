@@ -33,6 +33,17 @@ const setup = (fluid = false, onLoad = () => {}, onError = () => {}) => {
       {...!fluid && { fixed: fixedShapeMock }}
       onLoad={onLoad}
       onError={onError}
+      innerChild={
+        <div
+          style={{
+            position: `absolute`,
+            left: 0,
+            bottom: 0,
+          }}
+        >
+          Text Overlay
+        </div>
+      }
     />
   )
 
