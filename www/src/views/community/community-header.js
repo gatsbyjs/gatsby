@@ -1,12 +1,12 @@
 import React, { Component } from "react"
 import { Link } from "gatsby"
 import typography, { rhythm, scale } from "../../utils/typography"
-import SearchIcon from "../../components/search-icon"
+// import SearchIcon from "../../components/search-icon"
 import presets, { colors } from "../../utils/presets"
 import Checkmark from "./check.svg"
 import Arrow from "./arrow.svg"
 
-const { curveDefault, speedDefault } = presets.animation
+// const { curveDefault, speedDefault } = presets.animation
 
 const CommunityHeaderLink = ({ linkTo, children }) => (
   <li
@@ -24,20 +24,7 @@ const CommunityHeaderLink = ({ linkTo, children }) => (
         color: `white`,
       }}
       css={{
-        "&&": {
-          textTransform: `uppercase`,
-          ...scale(-1 / 4),
-          fontWeight: `600`,
-          boxShadow: `none`,
-          borderBottom: `none`,
-          padding: `${rhythm(1 / 4)} 1rem`,
-          margin: `0 ${rhythm(1 / 6)}`,
-          borderRadius: `40px`,
-          "&:hover": {
-            backgroundColor: colors.gatsby,
-            color: `white`,
-          },
-        },
+        ...styles.communityHeaderLink,
       }}
     >
       {children}
@@ -62,16 +49,7 @@ class CommunityHeader extends Component {
           to="/community/"
           state={{ filter: `` }}
           css={{
-            "&&": {
-              ...scale(1 / 3),
-              color: colors.gatsby,
-              boxShadow: `none`,
-              borderBottom: `none`,
-              marginRight: rhythm(1 / 2),
-              "&:hover": {
-                backgroundColor: `initial`,
-              },
-            },
+            ...styles.creatorsLink,
           }}
         >
           Creators
@@ -80,8 +58,11 @@ class CommunityHeader extends Component {
           role="navigation"
           css={{
             display: `flex`,
-            justifyContent: `space-around`,
+            justifyContent: `space-between`,
             alignItems: `center`,
+            [presets.Phablet]: {
+              justifyContent: `flex-start`,
+            },
           }}
         >
           <CommunityHeaderLink linkTo="/community/">All</CommunityHeaderLink>
@@ -99,6 +80,7 @@ class CommunityHeader extends Component {
           className="community--filters"
           css={{
             display: `flex`,
+            flex: `2`,
           }}
         >
           <label
@@ -133,38 +115,31 @@ class CommunityHeader extends Component {
             />
             Hiring
           </label>
-        </div>
-        <div
-          css={{
-            marginLeft: `auto`,
-            display: `flex`,
-            alignItems: `center`,
-          }}
-        >
-          <Link
-            to="/docs/submit-to-creator-showcase/"
+          <div
             css={{
-              "&&": {
-                background: `transparent`,
-                border: `1px solid ${colors.lilac}`,
-                color: colors.lilac,
-                padding: `${rhythm(1 / 4)} 1rem`,
-                display: `flex`,
-                alignItems: `center`,
-                borderRadius: `2px`,
-                cursor: `pointer`,
-                marginRight: `${rhythm(1 / 4)}`,
-                boxShadow: `none`,
-                fontWeight: `400`,
-                "&:hover": {
-                  backgroundColor: colors.gatsby,
-                  color: `white`,
-                },
-              },
+              marginLeft: `auto`,
+              display: `flex`,
+              alignItems: `center`,
             }}
           >
-            <span
+            <Link
+              to="/docs/submit-to-creator-showcase/"
               css={{
+                ...styles.submissionButton,
+              }}
+            >
+              <span
+                css={{
+                  marginRight: `${rhythm(2 / 4)}`,
+                }}
+              >
+                {submissionText}
+              </span>
+              <img src={Arrow} alt="arrow" css={{ marginBottom: 0 }} />
+            </Link>
+            {/* // Search function is not implemented yet, do we want/need it here? */}
+            {/*  <label css={{ position: `relative` }}>
+=======
                 marginRight: `${rhythm(2 / 4)}`,
               }}
             >
@@ -173,7 +148,8 @@ class CommunityHeader extends Component {
             <img src={Arrow} alt="" css={{ marginBottom: 0 }} />
           </Link>
           {/* // Search function is not implemented yet, do we want/need it here? */}
-          {/*  <label css={{ position: `relative` }}>
+            {/*  <label css={{ position: `relative` }}>
+>>>>>>> master
             <input
               css={{ ...styles.searchInput }}
               type="search"
@@ -199,6 +175,7 @@ class CommunityHeader extends Component {
               }}
             />
           </label> */}
+          </div>
         </div>
       </header>
     )
@@ -209,20 +186,66 @@ export default CommunityHeader
 
 const styles = {
   header: {
+    ...scale(-3 / 4),
     display: `flex`,
-    alignItems: `center`,
+    flexDirection: `column`,
     borderBottom: `1px solid ${colors.ui.light}`,
     backgroundColor: `rgba(255,255,255,0.975)`,
-    height: presets.headerHeight,
     zIndex: `2`,
-    paddingLeft: rhythm(3 / 4),
-    paddingRight: rhythm(3 / 4),
+    padding: `${rhythm(2 / 4)} ${rhythm(1 / 4)} 0 ${rhythm(1 / 4)}`,
     fontFamily: typography.options.headerFontFamily.join(`,`),
+    [presets.Mobile]: {
+      ...scale(-2 / 4),
+    },
+    [presets.Tablet]: {
+      ...scale(),
+      padding: `0 ${rhythm(3 / 4)}`,
+      height: presets.headerHeight,
+      flexDirection: `row`,
+      alignItems: `center`,
+    },
+  },
+  creatorsLink: {
+    "&&": {
+      display: `none`,
+      ...scale(1 / 3),
+      color: colors.gatsby,
+      boxShadow: `none`,
+      borderBottom: `none`,
+      marginRight: rhythm(1 / 2),
+      "&:hover": {
+        backgroundColor: `initial`,
+      },
+      [presets.Desktop]: {
+        display: `inline`,
+      },
+    },
+  },
+  communityHeaderLink: {
+    "&&": {
+      ...scale(-3 / 4),
+      textTransform: `uppercase`,
+      fontWeight: `600`,
+      boxShadow: `none`,
+      borderBottom: `none`,
+      padding: `${rhythm(1 / 4)} 1rem`,
+      borderRadius: `40px`,
+      "&:hover": {
+        backgroundColor: colors.gatsby,
+        color: `white`,
+      },
+      [presets.Mobile]: {
+        ...scale(-2 / 4),
+      },
+      [presets.Tablet]: {
+        ...scale(-1 / 4),
+      },
+    },
   },
   filter: {
     border: `1px solid ${colors.ui.bright}`,
     borderRadius: `40px`,
-    margin: `0 ${rhythm(1 / 6)}`,
+    margin: `${rhythm(3 / 4)} ${rhythm(1 / 6)}`,
     paddingLeft: rhythm(1 / 4),
     paddingRight: rhythm(1 / 4),
     display: `flex`,
@@ -249,6 +272,28 @@ const styles = {
   activeFilter: {
     backgroundColor: colors.ui.bright,
     color: colors.gatsby,
+  },
+  submissionButton: {
+    "&&": {
+      background: `transparent`,
+      outline: `1px solid ${colors.lilac}`,
+      color: colors.lilac,
+      padding: `${rhythm(1 / 4)} 1rem`,
+      display: `flex`,
+      alignItems: `center`,
+      borderRadius: `2px`,
+      cursor: `pointer`,
+      boxShadow: `none`,
+      borderBottom: `none`,
+      fontWeight: `400`,
+      marginRight: `${rhythm(1 / 4)}`,
+      "&:hover": {
+        background: colors.gatsby,
+        color: `white`,
+        boxShadow: `none`,
+        borderBottom: `none`,
+      },
+    },
   },
   /*   searchInput: {
     appearance: `none`,
