@@ -41,7 +41,6 @@ const {
 // Otherwise leave commented out.
 // require(`./log-line-function`)
 
-
 type BootstrapArgs = {
   directory: string,
   prefixPaths?: boolean,
@@ -321,7 +320,7 @@ module.exports = async (args: BootstrapArgs) => {
   activity.end()
 
   // Collect resolvable extensions and attach to program.
-  const extensions = [`.js`, `.jsx`]
+  const extensions = [`.js`, `.jsx`, `.mjs`, `.wasm`, `.json`]
   // Change to this being an action and plugins implement `onPreBootstrap`
   // for adding extensions.
   const apiResults = await apiRunnerNode(`resolvableExtensions`, {
