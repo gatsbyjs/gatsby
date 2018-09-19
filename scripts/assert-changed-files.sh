@@ -1,7 +1,7 @@
 #!/bin/bash
 GREP_PATTERN=$1
 
-CHANGED_FILES="$(git diff master... --name-only -r | grep -E "$GREP_PATTERN")"
+CHANGED_FILES="$(git diff-tree --no-commit-id --name-only -r $CIRCLE_SHA1 | grep -E "$GREP_PATTERN")"
 FILES_COUNT=$(echo $CHANGED_FILES | wc -l)
 
 if [ $FILES_COUNT -eq 0 ]; then
