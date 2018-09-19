@@ -56,11 +56,7 @@ export default class FilteredShowcase extends Component {
       )
     )
 
-    // let items = data.allMarkdownRemark.edges,
-    //   imgs = data.allFile.edges
-
     let starters = data.allStartersYaml.edges
-    // screenshots will be at starters.node.childScreenshot
 
     if (urlState.s.length > 0) {
       starters = starters.filter(starter => {
@@ -192,7 +188,6 @@ export default class FilteredShowcase extends Component {
             urlState={urlState}
             sortRecent={urlState.sort === `recent`}
             starters={starters}
-            // imgs={imgs} // this will come off starters instead
             count={this.state.sitesToShow}
           />
           {this.state.sitesToShow < starters.length && (

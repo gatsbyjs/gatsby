@@ -56,21 +56,12 @@ const ShowcaseList = ({ urlState, starters, count, sortRecent }) => {
     >
       {starters.map(({ node: starter }) => {
         const {
-          // githubData,
-          // description,
-          // stars,
-          // githubFullName,
-          // stub,
-          // gatsbyDependencies,
-          allDependencies,
           description,
           gatsbyDependencies,
           name,
           githubFullName,
           lastUpdated,
-          miscDependencies,
           owner,
-          slug,
           stars,
           stub,
         } = starter.fields.starterShowcase
@@ -81,10 +72,7 @@ const ShowcaseList = ({ urlState, starters, count, sortRecent }) => {
         const match = gatsbyVersion.match(/([0-9]+)([.])([0-9]+)/) // we just want x.x
         const minorVersion = match ? match[0] : gatsbyVersion // default to version if no match
         const isGatsbyVersionWarning = !/(2..+|next|latest)/g.test(minorVersion) // either 2.x or next or latest
-        // const imgsharp = imgsFilter(imgs, stub)
 
-        // const repo = githubData.repoMetadata
-        // const { pushed_at } = repo
         return (
           starter.fields && ( // have to filter out null fields from bad data
             <div
@@ -182,11 +170,6 @@ const ShowcaseList = ({ urlState, starters, count, sortRecent }) => {
 }
 
 export default ShowcaseList
-
-// function imgsFilter(imgs, stub) {
-//   const result = imgs.filter(img => img.node.name === stub)
-//   return result.length ? result[0].node : null
-// }
 
 function sortingFunction(sortRecent) {
   return function({ node: nodeA }, { node: nodeB }) {

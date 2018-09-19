@@ -9,7 +9,6 @@ class ShowcasePage extends Component {
     const location = this.props.location
 
     return <ShowcaseView data={data} location={location} />
-    // return <div>hi</div>
   }
 }
 
@@ -17,16 +16,6 @@ export default ShowcasePage
 
 export const showcaseQuery = graphql`
   query SiteShowcaseQuery {
-    allFile(filter: { absolutePath: { regex: "/generatedScreenshots/" } }) {
-      edges {
-        node {
-          name
-          childImageSharp {
-            ...ShowcaseThumbnailFragment_item
-          }
-        }
-      }
-    }
     allStartersYaml {
       edges {
         node {
@@ -61,51 +50,6 @@ export const showcaseQuery = graphql`
                   ...GatsbyImageSharpFluid_noBase64
                 }
               }
-            }
-          }
-        }
-      }
-    }
-    allMarkdownRemark(
-      sort: { order: DESC, fields: [frontmatter___date] }
-      limit: 1000
-      filter: { fileAbsolutePath: { regex: "/startersData/", ne: null } }
-    ) {
-      edges {
-        node {
-          id
-          fileAbsolutePath
-          frontmatter {
-            demo
-            repo
-            tags
-            features
-          }
-          fields {
-            anchor
-            slug
-            title
-            package
-            starterShowcase {
-              stub
-              gatsbyDependencies
-              lastUpdated
-              description
-              githubFullName
-              owner {
-                avatar_url
-              }
-              githubData {
-                repoMetadata {
-                  full_name
-                  pushed_at
-                  name
-                  owner {
-                    login
-                  }
-                }
-              }
-              stars
             }
           }
         }
