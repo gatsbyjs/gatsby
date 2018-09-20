@@ -3,7 +3,7 @@ title: CSS Modules
 ---
 
 ## CSS modules and Gatsby
-Gatsby works out of the box with CSS Modules.
+Gatsby works out of the box with CSS Modules. Here is an [example site that uses CSS modules](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-css-modules).
 
 ## What is a CSS module?
 Quoting from
@@ -175,3 +175,4 @@ export default () => (
 The finished page should now look like:
 
 ![css-modules-final](./images/css-modules-final.png)
+
