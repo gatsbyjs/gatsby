@@ -2497,3 +2497,16 @@
     - Web Dev
   built_by: Luciano Mammino
   built_by_url: https://loige.co
+- title: Wire • Secure collaboration platform
+  description: >
+    Corporate website of Wire, an open source, end-to-end encrypted collaboration platform
+  main_url: https:/wire.com
+  url: https://wire.com
+  featured: false
+  categories:
+    - Open Source
+    - B2B Software
+    - Technology
+    - Blog
+  built_by: Wire team
+  built_by_url: https://github.com/orgs/wireapp/people
