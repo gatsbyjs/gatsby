@@ -112,6 +112,17 @@
   for_hire: true
   hiring: false
   portfolio: true
+- name: Ramón Chancay
+  type: individual
+  description: >-
+    Desarrollador web full stack en Guayaquil Ecuador. Actualmente en EveryMundo, Antes en El Universo, Disfruto de la construcción de cosas con código. Organizador y Speaker en Meetups por pizza y cerveza. 🍕🍻
+  location: 'Guayaquil, Ecuador'
+  website: 'https://ramonchancay.me'
+  github: 'https://github.com/devrchancay'
+  image: images/ramon-chancay.svg
+  for_hire: true
+  hiring: false
+  portfolio: false
 - name: Piotr Fedorczyk
   type: individual
   description: Digital product designer. Full-stack developer. Eclectic flâneur extraordinaire in constant exploration of spoken, visual and programming languages.
