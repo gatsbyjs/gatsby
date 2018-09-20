@@ -262,7 +262,7 @@ import Helmet from "react-helmet"
 The `navigateTo` method in `gatsby-link` was renamed to `navigate` to mirror
 the [API used by @reach/router](https://reach.tech/router/api/navigate).
 
-In addition to the name change, `gatsby-link` is now directly exported from the `gatsby` package and can't be installed directly.
+In addition to the name change, `gatsby-link` is now directly exported from the `gatsby` package and should not be installed directly.
 
 ```diff
 import React from "react"
@@ -708,7 +708,7 @@ export default props => (
 )
 ```
 
-Furthermore you can remove the package from the `package.json`.
+Furthermore, you can remove the package from `package.json`.
 
 ```diff
 "dependencies": {
@@ -718,6 +718,8 @@ Furthermore you can remove the package from the `package.json`.
 - "gatsby-link": "^1.6.39"
 }
 ```
+
+However, if you need to [test with the `Link` component](/docs/unit-testing.md#testing-components-with-router), you should not remove the package from `package.json`. This allows us to tell Jest to use the actual `gatsby-link` package while mocking the rest of Gatsby.
 
 ### Import graphql from Gatsby
 
