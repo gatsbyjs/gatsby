@@ -264,7 +264,7 @@ exports.createContentTypeNodes = function (_ref8) {
       if (foreignReferences) {
         foreignReferences.forEach(function (foreignReference) {
           var existingReference = entryItemFields[foreignReference.name];
-          if (existingReference) {
+          if (existingReference && Array.isArray(existingReference)) {
             entryItemFields[foreignReference.name].push(mId(foreignReference.id));
           } else {
             // If there is one foreign reference, there can be many.

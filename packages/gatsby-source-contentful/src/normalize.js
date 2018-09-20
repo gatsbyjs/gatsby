@@ -311,7 +311,7 @@ exports.createContentTypeNodes = ({
       if (foreignReferences) {
         foreignReferences.forEach(foreignReference => {
           const existingReference = entryItemFields[foreignReference.name]
-          if (existingReference) {
+          if (existingReference && Array.isArray(existingReference)) {
             entryItemFields[foreignReference.name].push(
               mId(foreignReference.id)
             )
