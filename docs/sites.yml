@@ -2580,3 +2580,14 @@
   built_by: Michael Uloth
   built_by_url: "https://www.michaeluloth.com"
   featured: false
+- title: Leyan Lo
+  main_url: https://www.leyanlo.com
+  url: https://www.leyanlo.com
+  description: >
+    Leyan Lo’s personal website
+  categories:
+    - Portfolio
+    - Rubik’s Cube
+  built_by: Leyan Lo
+  built_by_url: https://www.leyanlo.com
+  featured: false
