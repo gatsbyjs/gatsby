@@ -2500,8 +2500,8 @@
 - title: Wire • Secure collaboration platform
   description: >
     Corporate website of Wire, an open source, end-to-end encrypted collaboration platform
-  main_url: https:/wire.com
-  url: https://wire.com
+  main_url: "https://wire.com"
+  url: "https://wire.com"
   featured: false
   categories:
     - Open Source
@@ -2509,7 +2509,7 @@
     - Technology
     - Blog
   built_by: Wire team
-  built_by_url: https://github.com/orgs/wireapp/people
+  built_by_url: "https://github.com/orgs/wireapp/people"
 - title: J. Patrick Raftery
   main_url: "https://www.jpatrickraftery.com"
   url: "https://www.jpatrickraftery.com"
