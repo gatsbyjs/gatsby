@@ -28,6 +28,7 @@
     "glob": "^7.1.1",
     "jest": "^23.5.0",
     "jest-cli": "^23.5.0",
+    "jest-coverage-ratchet": "^0.2.3",
     "lerna": "^3.3.0",
     "npm-run-all": "4.1.2",
     "plop": "^1.8.1",
@@ -79,5 +80,15 @@
   },
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "jest": {
+    "coverageThreshold": {
+      "global": {
+        "lines": 70.78,
+        "statements": 70.16,
+        "functions": 66.64,
+        "branches": 57.23
+      }
+    }
+  }
 }
