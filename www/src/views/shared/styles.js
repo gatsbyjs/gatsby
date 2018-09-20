@@ -74,30 +74,11 @@ const styles = {
       boxShadow: `inset 0 -3px 0px 0px ${colors.ui.bright}`,
     },
   }),
-  button: {
-    border: 0,
-    borderRadius: presets.radius,
-    cursor: `pointer`,
-    fontFamily: options.headerFontFamily.join(`,`),
-    fontWeight: `bold`,
-    padding: `${rhythm(1 / 5)} ${rhythm(2 / 3)}`,
-    WebkitFontSmoothing: `antialiased`,
-    "&&": {
-      backgroundColor: colors.gatsby,
-      borderBottom: `none`,
-      boxShadow: `none`,
-      color: `white`,
-      "&:hover": {
-        backgroundColor: colors.gatsby,
-      },
-    },
-  },
   loadMoreButton: {
     alignItems: `center`,
     display: `flex`,
     flexFlow: `row wrap`,
     margin: `0 auto ${rhythm(3)}`,
-    padding: `${rhythm(1 / 3)} ${rhythm(3)}`,
     [presets.Desktop]: {
       margin: `0 auto ${rhythm(2 / 2)}`,
     },
