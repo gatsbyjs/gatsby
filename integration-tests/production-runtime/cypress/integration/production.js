@@ -5,9 +5,45 @@ describe(`Production build tests`, () => {
     cy.visit(`/`).waitForRouteChange()
   })
 
-  it(`should navigate back after a reload`, () => {
-    cy.getTestElement(`page2`)
+  it(`should restore scroll position only when going back in history`, () => {
+    cy.getTestElement(`long-page`)
       .click()
+      .waitForRouteChange()
+
+    cy.scrollTo(`bottom`)
+
+    cy.getTestElement(`index-link`)
+      .click()
+      .waitForRouteChange()
+
+    // after going back we expect page will
+    // be restore previous scroll position
+    cy.go(`back`).waitForRouteChange()
+
+    cy.window().then(win => {
+      expect(win.scrollY).not.to.eq(0, 0)
+    })
+
+    cy.go(`forward`).waitForRouteChange()
+
+    // after clicking link we expect page will
+    // be scrolled to top
+    cy.getTestElement(`long-page`)
+      .click()
+      .waitForRouteChange()
+
+    cy.window().then(win => {
+      expect(win.scrollY).to.eq(0, 0)
+    })
+
+    // reset to index page
+    cy.getTestElement(`index-link`)
+      .click()
+      .waitForRouteChange()
+  })
+
+  it(`should navigate back after a reload`, () => {
+    cy.getTestElement(`page2`).click()
 
     cy.waitForRouteChange()
       .location(`pathname`)
