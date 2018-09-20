@@ -1,4 +1,7 @@
 const path = require("path");
+const mkdirp = require("mkdirp");
+const { MDX_WRAPPERS_LOCATION, MDX_SCOPES_LOCATION } = require("./constants");
+
 const defaultOptions = require("./utils/default-options");
 const mdx = require("./utils/mdx");
 
@@ -53,4 +56,10 @@ exports.onCreateBabelConfig = ({ actions }) => {
   actions.setBabelPlugin({
     name: `@babel/plugin-proposal-object-rest-spread`
   });
+};
+
+exports.onPreBootstrap = ({ store }) => {
+  const { directory } = store.getState().program;
+  mkdirp.sync(path.join(directory, MDX_WRAPPERS_LOCATION));
+  mkdirp.sync(path.join(directory, MDX_SCOPES_LOCATION));
 };
