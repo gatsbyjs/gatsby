@@ -1,12 +1,9 @@
 import React, { Component } from "react"
 import { Link } from "gatsby"
 import typography, { rhythm, scale } from "../../utils/typography"
-// import SearchIcon from "../../components/search-icon"
 import presets, { colors } from "../../utils/presets"
 import Checkmark from "./check.svg"
 import Arrow from "./arrow.svg"
-
-// const { curveDefault, speedDefault } = presets.animation
 
 const CommunityHeaderLink = ({ linkTo, children }) => (
   <li
@@ -33,9 +30,6 @@ const CommunityHeaderLink = ({ linkTo, children }) => (
 )
 
 class CommunityHeader extends Component {
-  /*   state = {
-    search: ``,
-  } */
   render() {
     const { forHire, hiring, submissionText } = this.props
     return (
@@ -137,44 +131,6 @@ class CommunityHeader extends Component {
               </span>
               <img src={Arrow} alt="arrow" css={{ marginBottom: 0 }} />
             </Link>
-            {/* // Search function is not implemented yet, do we want/need it here? */}
-            {/*  <label css={{ position: `relative` }}>
-=======
-                marginRight: `${rhythm(2 / 4)}`,
-              }}
-            >
-              {submissionText}
-            </span>
-            <img src={Arrow} alt="" css={{ marginBottom: 0 }} />
-          </Link>
-          {/* // Search function is not implemented yet, do we want/need it here? */}
-            {/*  <label css={{ position: `relative` }}>
->>>>>>> master
-            <input
-              css={{ ...styles.searchInput }}
-              type="search"
-              value={this.state.search}
-              onChange={e =>
-                this.setState({
-                  search: e.target.value,
-                })
-              }
-              placeholder="Search"
-              aria-label="Search"
-            />
-            <SearchIcon
-              overrideCSS={{
-                fill: colors.lilac,
-                position: `absolute`,
-                left: `5px`,
-                top: `50%`,
-                width: `16px`,
-                height: `16px`,
-                pointerEvents: `none`,
-                transform: `translateY(-50%)`,
-              }}
-            />
-          </label> */}
           </div>
         </div>
       </header>
@@ -295,26 +251,4 @@ const styles = {
       },
     },
   },
-  /*   searchInput: {
-    appearance: `none`,
-    backgroundColor: `transparent`,
-    border: 0,
-    borderRadius: presets.radiusLg,
-    color: colors.gatsby,
-    paddingTop: rhythm(1 / 8),
-    paddingRight: rhythm(1 / 4),
-    paddingBottom: rhythm(1 / 8),
-    paddingLeft: rhythm(1),
-    overflow: `hidden`,
-    transition: `width ${speedDefault} ${curveDefault}, background-color ${speedDefault} ${curveDefault}`,
-    width: `6.8rem`,
-    "&::placeholder": {
-      color: colors.lilac,
-    },
-    "&:focus": {
-      outline: `none`,
-      width: `9rem`,
-      background: colors.ui.light,
-    },
-  }, */
 }
