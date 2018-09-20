@@ -96,9 +96,7 @@ module.exports = (config = {}) => {
 
       return {
         ...info,
-        pluginOptions: {
-          plugins: [],
-        },
+        pluginOptions: {},
       }
     } else {
       // Plugins can have plugins.
