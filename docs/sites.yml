@@ -303,12 +303,16 @@
     - Education
     - Web Dev
 - title: Piotr Fedorczyk Portfolio
-  main_url: "https://piotrf.pl/"
-  url: "https://piotrf.pl/"
-  featured: false
+  built_by: Piotr Fedorczyk
+  built_by_url: "https://piotrf.pl"
   categories:
     - Portfolio
     - Web Dev
+  description: >-
+    Portfolio of Piotr Fedorczyk, a digital product designer and full-stack developer specializing in shaping, designing and building news and tools for news.
+  featured: false
+  main_url: "https://piotrf.pl/"
+  url: "https://piotrf.pl/"
 - title: unrealcpp
   main_url: "https://unrealcpp.com/"
   url: "https://unrealcpp.com/"
@@ -2590,4 +2594,12 @@
     - Rubik’s Cube
   built_by: Leyan Lo
   built_by_url: https://www.leyanlo.com
+  featured: false
+- title: Hawaii National Bank
+  main_url: https://hawaiinational.bank
+  description: Hawaii National Bank's highly personalized service has helped loyal customers & locally owned businesses achieve their financial dreams for over 50 years.
+  categories:
+    - Bank
+  built_by: Wall-to-Wall Studios
+  built_by_url: https://walltowall.com
   featured: false
