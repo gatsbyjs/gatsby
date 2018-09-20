@@ -264,7 +264,7 @@ export function inferInputObjectStructureFromNodes({
     let key = k
     // Remove fields for traversing through nodes as we want to control
     // setting traversing up not try to automatically infer them.
-    if (isRoot && EXCLUDE_KEYS[key]) return
+    if (typeof value === `symbol` || (isRoot && EXCLUDE_KEYS[key])) return
 
     if (_.includes(key, `___NODE`)) {
       // TODO: Union the objects in array

@@ -341,7 +341,7 @@ function _inferObjectStructureFromNodes(
   _.each(resolvedExample, (value, key) => {
     // Remove fields common to the top-level of all nodes.  We add these
     // elsewhere so don't need to infer their type.
-    if (isRoot && EXCLUDE_KEYS[key]) return
+    if (typeof value === `symbol` || (isRoot && EXCLUDE_KEYS[key])) return
 
     // Several checks to see if a field is pointing to custom type
     // before we try automatic inference.
