@@ -1,93 +1,173 @@
-workflows:
-  version: 2
-  main:
-    jobs:
-      - unit-node6
-      - unit-node8
-      - unit-node10
-      - lint
-      - integration
-      - ui
-      - prod_ui
-
-
-version: 2
-jobs:
-  unit-node6:
+aliases:
+  node6: &node6
     docker:
       - image: circleci/node:6
-    steps:
-      - checkout
-      - run:
-          name: "Unit test with Node.js 6"
-          command: |
-            yarn run bootstrap
-            yarn jest -w 1
 
-  unit-node8:
+  node8: &node8
     docker:
       - image: circleci/node:8
-    steps:
-      - checkout
-      - run:
-          name: "Unit test with Node.js 8"
-          command: |
-            yarn run bootstrap
-            yarn jest -w 1
 
-  unit-node10:
+  node10: &node10
     docker:
       - image: circleci/node:10
+
+  node10_browsers: &node10_browsers
+    docker:
+      - image: circleci/node:10-browsers
+
+  restore_node_modules: &restore_node_modules
+    restore_cache:
+      name: Restore node_modules cache
+      keys:
+        - node-modules-{{ checksum "yarn.lock" }}
+
+  install_node_modules: &install_node_modules
+    run:
+      name: Install node modules
+      command: |
+        yarn
+
+  persist_node_modules: &persist_node_modules
+    save_cache:
+      name: Save node modules cache
+      key: node-modules-{{ checksum "yarn.lock" }}
+      paths:
+        - node_modules
+
+  attach_to_bootstrap: &attach_to_bootstrap
+    attach_workspace:
+      at: packages
+
+  ignore_master: &ignore_master
+    filters:
+      branches:
+        ignore:
+          - master
+
+  test_template: &test_template
     steps:
       - checkout
-      - run:
-          name: "Unit test with Node.js 10"
-          command: |
-            yarn run bootstrap
-            yarn jest -w 1
+      - run: ./scripts/assert-changed-files.sh "packages/*|integration-tests/*"
+      - <<: *restore_node_modules
+      - <<: *install_node_modules
+      - <<: *persist_node_modules
+      - <<: *attach_to_bootstrap
+      - run: yarn jest -w 1
+
+  integration_test_workflow: &integration_test_workflow
+    <<: *ignore_master
+    requires:
+      - bootstrap
+
+version: 2
+
+jobs:
+  bootstrap:
+    <<: *node10
+    steps:
+      - checkout
+      - run: ./scripts/assert-changed-files.sh "packages/*|integration-tests/*"
+      - <<: *restore_node_modules
+      - <<: *install_node_modules
+      - <<: *persist_node_modules
+      - run: yarn bootstrap
+      - persist_to_workspace:
+          root: packages
+          paths:
+            - '*'
 
   lint:
-    docker:
-      - image: circleci/node:8
+    <<: *node10
     steps:
       - checkout
-      - run:
-          name: "Lint Code"
-          command: |
-            yarn install
-            yarn lint
+      - <<: *restore_node_modules
+      - <<: *install_node_modules
+      - <<: *persist_node_modules
+      - run: yarn lint
 
-  integration:
-    docker:
-      - image: circleci/node:8
-    steps:
-      - checkout
-      - run:
-          name: "Integration Tests"
-          command: |
-            yarn install
-            yarn test:integration
+  unit_tests_node6:
+    <<: *node6
+    <<: *test_template
 
-  ui:
-    docker:
-      - image: circleci/node:8-browsers
-    steps:
-      - checkout
-      - run:
-          name: "UI Tests"
-          command: |
-            cd examples/gatsbygram
-            yarn install
-            yarn test
+  unit_tests_node8:
+    <<: *node8
+    <<: *test_template
 
-  prod_ui:
-    docker:
-      - image: circleci/node:8-browsers
+  unit_tests_node10:
+    <<: *node10
+    <<: *test_template
+
+  integration_tests:
+    <<: *node10
     steps:
       - checkout
-      - run:
-          name: "UI Tests"
-          command: |
-            cd integration-tests/production-runtime
-            yarn install
-            yarn test
+      - run: ./scripts/assert-changed-files.sh "packages/*|integration-tests/*"
+      - <<: *restore_node_modules
+      - <<: *install_node_modules
+      - <<: *persist_node_modules
+      - run: yarn test:integration
+
+  e2e_tests_gatsbygram:
+    <<: *node10_browsers
+    steps:
+      - checkout
+      - run: ./scripts/assert-changed-files.sh "packages/*|integration-tests/*|examples/gatsbygram/*"
+      - <<: *restore_node_modules
+      - <<: *install_node_modules
+      - <<: *attach_to_bootstrap
+      - run: ./scripts/integration-test.sh examples/gatsbygram
+
+  e2e_tests_path-prefix:
+    <<: *node10_browsers
+    steps:
+      - checkout
+      - run: ./scripts/assert-changed-files.sh "packages/*|integration-tests/*"
+      - <<: *restore_node_modules
+      - <<: *install_node_modules
+      - <<: *attach_to_bootstrap
+      - run: ./scripts/integration-test.sh integration-tests/path-prefix
+  
+  e2e_tests_gatsby-image:
+    <<: *node10_browsers
+    steps:
+      - checkout
+      - run: ./scripts/assert-changed-files.sh "packages/*|integration-tests/*"
+      - <<: *restore_node_modules
+      - <<: *install_node_modules
+      - <<: *attach_to_bootstrap
+      - run: ./scripts/integration-test.sh integration-tests/gatsby-image
+  
+  e2e_tests_runtime:
+    <<: *node10_browsers
+    steps:
+      - checkout
+      - run: ./scripts/assert-changed-files.sh "packages/*|integration-tests/*"
+      - <<: *restore_node_modules
+      - <<: *install_node_modules
+      - <<: *attach_to_bootstrap
+      - run: ./scripts/integration-test.sh integration-tests/production-runtime
+
+workflows:
+  version: 2
+  build-test:
+    jobs:
+      - bootstrap
+      - lint
+      - unit_tests_node6:
+          requires:
+            - bootstrap
+      - unit_tests_node8:
+          requires:
+            - bootstrap
+      - unit_tests_node10:
+          requires:
+            - bootstrap
+      - integration_tests
+      - e2e_tests_gatsbygram:
+          <<: *integration_test_workflow
+      - e2e_tests_path-prefix:
+          <<: *integration_test_workflow
+      - e2e_tests_gatsby-image:
+          <<: *integration_test_workflow
+      - e2e_tests_runtime:
+          <<: *integration_test_workflow
