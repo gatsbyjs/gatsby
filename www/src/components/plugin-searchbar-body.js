@@ -19,6 +19,7 @@ import presets from "../utils/presets"
 import typography, { rhythm, scale } from "../utils/typography"
 import { scrollbarStyles } from "../utils/styles"
 import { css as glam } from "glamor"
+import removeMD from "remove-markdown";
 
 // This is for the urlSync
 const updateAfter = 700
@@ -396,7 +397,7 @@ const Result = ({ hit, pathname, search }) => {
           lineHeight: 1.5,
         }}
       >
-        {unescape(hit.description)}
+        {removeMD(unescape(hit.description))}
       </div>
     </Link>
   )

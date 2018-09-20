@@ -889,12 +889,15 @@ There are several starters that have been created. Create a PR to include yours!
 
   > A set of starters for Gatsby v2
 
-  - Minimal
-  - Equipped
-  - Themed
-  - Website
-  - Blog
-  - more coming soon
+  - Minimal [ [docs](https://greglobinski.github.io/gatsby-starter-kit-docs/minimal-starter/) / [demo](https://gatsby-starter-kit-minimal.netlify.com/) ]
+  - Equipped [ [docs](https://greglobinski.github.io/gatsby-starter-kit-docs/equipped-starter/) / [demo](https://gatsby-starter-kit-equipped.netlify.com/) ]
+  - Themed [ [docs](https://greglobinski.github.io/gatsby-starter-kit-docs/themed-starter/) / [demo](https://gatsby-starter-kit-themed.netlify.com/) ]
+  - Website [ [docs](https://greglobinski.github.io/gatsby-starter-kit-docs/website-starter/) / [demo](https://gatsby-starter-kit-website.netlify.com/) ]
+  - Blog [ [docs](https://greglobinski.github.io/gatsby-starter-kit-docs/blog-starter/) / [demo](https://gatsby-starter-kit-blog.netlify.com/) ]
+  - Classy Docs [ [docs](https://greglobinski.github.io/gatsby-starter-kit-docs/classy-docs-starter/) / [demo](https://gatsby-starter-kit-classy-docs.netlify.com/) ]
+  - Side Blog [ [docs](https://greglobinski.github.io/gatsby-starter-kit-docs/side-blog-starter/) / [demo](https://gatsby-starter-kit-side-blog.netlify.com/) ]
+  - Clean Diary [ [docs](https://greglobinski.github.io/gatsby-starter-kit-docs/clean-diary-starter/) / [demo](https://gatsby-starter-kit-clean-diary.netlify.com/) ]
+  - more soon
 
 - [gatsby-v2-jslingui](https://github.com/zuiidea/gatsby-v2-jslingui)
   [(demo)](https://gatsby-v2-jslingui.surge.sh)

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.4.1"></a>
+
+## [2.4.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli/compare/gatsby-dev-cli@2.4.0...gatsby-dev-cli@2.4.1) (2018-09-19)
+
+### Bug Fixes
+
+- get gatsby-dev-cli working with tilde/home shortcut ([#8337](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli/issues/8337)) ([ae51353](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli/commit/ae51353))
+
 <a name="2.4.0"></a>
 
 # [2.4.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli/compare/gatsby-dev-cli@2.0.0-rc.6...gatsby-dev-cli@2.4.0) (2018-09-17)
