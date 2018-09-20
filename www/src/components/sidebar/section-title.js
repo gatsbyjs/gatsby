@@ -1,7 +1,7 @@
 import React from "react"
 
 import ChevronSvg from "./chevron-svg"
-import presets, { colors } from "../../utils/presets"
+import { colors } from "../../utils/presets"
 import { options } from "../../utils/typography"
 
 const paddingLeft = level => (level === 0 ? level + 1 * 40 : level + 1 * 20)
@@ -9,21 +9,18 @@ const paddingLeft = level => (level === 0 ? level + 1 * 40 : level + 1 * 20)
 const Chevron = ({ isExpanded }) => (
   <span
     css={{
-      display: `none`,
-      [presets.Tablet]: {
-        alignItems: `center`,
-        display: `flex`,
-        flexShrink: 0,
-        marginLeft: `auto`,
-        minHeight: 40,
-        position: `relative`,
-        width: 40,
-        "&:before": {
-          ...styles.ulHorizontalDivider,
-          bottom: 0,
-          left: `0 !important`,
-          top: `auto`,
-        },
+      alignItems: `center`,
+      display: `flex`,
+      flexShrink: 0,
+      marginLeft: `auto`,
+      minHeight: 40,
+      position: `relative`,
+      width: 40,
+      "&:before": {
+        ...styles.ulHorizontalDivider,
+        bottom: 0,
+        left: `0 !important`,
+        top: `auto`,
       },
     }}
   >
@@ -42,6 +39,7 @@ const Chevron = ({ isExpanded }) => (
 const TitleButton = ({
   isActive,
   isExpanded,
+  item,
   level,
   onSectionTitleClick,
   title,
@@ -63,7 +61,7 @@ const TitleButton = ({
         top: `auto`,
       },
     }}
-    onClick={onSectionTitleClick}
+    onClick={() => onSectionTitleClick(item)}
   >
     <SectionTitle isExpanded={isExpanded} isActive={isActive} level={level}>
       {title}
@@ -76,6 +74,7 @@ const SplitButton = ({
   createLink,
   isActive,
   isExpanded,
+  isParentOfActiveItem,
   item,
   level,
   location,
@@ -95,17 +94,26 @@ const SplitButton = ({
     <span
       css={{
         flexGrow: 1,
-        [presets.Tablet]: {
-          borderRight: `1px solid ${colors.ui.border}`,
-        },
+        borderRight: `1px solid ${colors.ui.border}`,
       }}
     >
       {createLink({
         isActive,
         isExpanded,
+        isParentOfActiveItem,
         item,
         location,
         onLinkClick,
+        customCSS:
+          level === 0
+            ? {
+                "&&": {
+                  ...styles.smallCaps,
+                  color: isExpanded ? colors.gatsby : false,
+                  fontWeight: isActive ? `bold` : `normal`,
+                },
+              }
+            : false,
       })}
     </span>
     {/* @todo this should cover 100% of the item's height */}
@@ -119,7 +127,7 @@ const SplitButton = ({
           background: `white`,
         },
       }}
-      onClick={onSectionTitleClick}
+      onClick={() => onSectionTitleClick(item)}
     >
       <Chevron isExpanded={isExpanded} />
     </button>
@@ -155,18 +163,10 @@ const SectionTitle = ({ children, isExpanded, isActive, disabled, level }) => (
       fontSize: `100%`,
       fontWeight: isActive ? `bold` : `normal`,
       margin: 0,
-      ...(level === 0 && {
-        color: colors.lilac,
-        fontFamily: options.headerFontFamily.join(`,`),
-        letterSpacing: `.075em`,
-        textTransform: `uppercase`,
-      }),
-
-      [presets.Tablet]: {
-        color: isExpanded ? colors.gatsby : false,
-        "&:hover": {
-          color: disabled ? false : colors.gatsby,
-        },
+      ...(level === 0 && { ...styles.smallCaps }),
+      color: isExpanded ? colors.gatsby : false,
+      "&:hover": {
+        color: disabled ? false : colors.gatsby,
       },
     }}
   >
@@ -196,5 +196,10 @@ const styles = {
     position: `absolute`,
     right: 0,
     left: 40,
+  },
+  smallCaps: {
+    fontFamily: options.headerFontFamily.join(`,`),
+    letterSpacing: `.075em`,
+    textTransform: `uppercase`,
   },
 }

@@ -1,5 +1,5 @@
 import React from "react"
-import Link from "gatsby-link"
+import { Link } from "gatsby"
 
 import presets, { colors } from "../presets"
 
@@ -10,9 +10,9 @@ const createLink = ({
   item,
   onLinkClick,
   isActive,
-  isExpanded,
   isParentOfActiveItem,
   stepsUI,
+  customCSS,
 }) => {
   const isDraft = _isDraft(item.title)
   const title = _getTitle(item.title, isDraft)
@@ -40,8 +40,8 @@ const createLink = ({
           styles.link,
           isDraft && styles.draft,
           isActive && styles.activeLink,
-          isExpanded && styles.expandedChildren,
           isParentOfActiveItem && styles.parentOfActiveLink,
+          customCSS && customCSS,
         ]}
         onClick={onLinkClick}
         to={item.link}
@@ -75,14 +75,6 @@ const styles = {
     "&&": {
       color: colors.gatsby,
       fontWeight: `bold`,
-    },
-    "&:before, &:after": {
-      display: `none`,
-    },
-  },
-  expandedChildren: {
-    "&&": {
-      color: colors.gatsby,
     },
   },
   activeLink: {

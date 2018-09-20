@@ -49,6 +49,14 @@ exports.onRouteUpdateDelayed = true
  * @example
  * exports.onRouteUpdate = ({ location }) => {
  *   console.log('new pathname', location.pathname)
+ *
+ *   // Track pageview with google analytics
+ *   window.ga(
+ *     `set`,
+ *     `page`,
+ *     location.pathname + location.search + location.hash,
+ *   )
+ *   window.ga(`send`, `pageview`)
  * }
  */
 exports.onRouteUpdate = true
@@ -70,13 +78,6 @@ exports.shouldUpdateScroll = true
 exports.registerServiceWorker = true
 
 /**
- * Allow a plugin to replace the router component e.g. to use a custom history version.
- * @param {object} $0
- * @param {object} $0.history The history instance to use in the replacement router instance
- */
-exports.replaceRouterComponent = true
-
-/**
  * Allow a plugin to replace the page component renderer. This api runner can be used to
  * implement page transitions. See https://github.com/gatsbyjs/gatsby/tree/master/examples/using-page-transitions for an example of this.
  * @param {object} $0
@@ -86,18 +87,52 @@ exports.replaceRouterComponent = true
 exports.replaceComponentRenderer = true
 
 /**
- * Allow a plugin to replace the history object.
+ * Allow a plugin to wrap the page element.
+ *
+ * This is useful for setting wrapper component around pages that won't get
+ * unmounted on page change. For setting Provider components use [wrapRootElement](#wrapRootElement).
+ *
+ * _Note:_ [There is equivalent hook in SSR API](/docs/ssr-apis/#wrapPageElement)
  * @param {object} $0
- * @param {object} $0.basename The base URL of the app.
+ * @param {object} $0.element The "Page" React Element built by Gatsby.
+ * @param {object} $0.props Props object used by page.
+ * @example
+ * import React from "react"
+ * import Layout from "./src/components/Layout"
+ *
+ * export const wrapPageElement = ({ element, props }) => {
+ *   // props provide same data to Layout as Page element will get
+ *   // including location, data, etc - you don't need to pass it
+ *   return <Layout {...props}>{element}</Layout>
+ * }
  */
-exports.replaceHistory = true
+exports.wrapPageElement = true
 
 /**
- * Allow a plugin to wrap the root component.
+ * Allow a plugin to wrap the root element.
+ *
+ * This is useful to setup any Providers component that will wrap your application.
+ * For setting persistent UI elements around pages use [wrapPageElement](#wrapPageElement).
+ *
+ * _Note:_ [There is equivalent hook in SSR API](/docs/ssr-apis/#wrapRootElement)
  * @param {object} $0
- * @param {object} $0.Root The "Root" component built by Gatsby.
+ * @param {object} $0.element The "Root" React Element built by Gatsby.
+ * @example
+ * import React from "react"
+ * import { Provider } from "react-redux"
+ *
+ * import createStore from "./src/state/createStore"
+ * const store = createStore()
+ *
+ * export const wrapRootElement = ({ element }) => {
+ *   return (
+ *     <Provider store={store}>
+ *       {element}
+ *     </Provider>
+ *   )
+ * }
  */
-exports.wrapRootComponent = true
+exports.wrapRootElement = true
 
 /**
  * Called when prefetching for a pathname is triggered. Allows

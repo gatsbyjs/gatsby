@@ -18,7 +18,7 @@ Use the plugin [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/#
 
 #### Install
 
-`npm i --save gatsby-source-filesystem`
+`npm install --save gatsby-source-filesystem`
 
 Now open `gatsby-config.js` to add this plugin to the plugin array.
 
@@ -43,7 +43,7 @@ Now that we've "sourced" the markdown files from the filesystem, we can now "tra
 
 We'll use the plugin [`gatsby-transformer-remark`](/packages/gatsby-transformer-remark/) to recognise files which are markdown and read its content. It will convert the frontmatter metadata part of your markdown file as `frontmatter` and the content part as HTML.
 
-`npm i --save gatsby-transformer-remark`
+`npm install --save gatsby-transformer-remark`
 
 Add this to `gatsby-config.js` after the previously added `gatsby-source-filesystem`.
 

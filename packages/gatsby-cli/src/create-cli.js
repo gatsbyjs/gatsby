@@ -44,7 +44,7 @@ function buildLocalCommands(cli, isLocalSite) {
         resolveCwd.silent(`gatsby/dist/utils/${command}`)
       if (!cmdPath)
         return report.panic(
-          `There was a problem loading the local ${command} command. Gatsby may not be installed. Perhaps you need to run "npm install"?`
+          `There was a problem loading the local ${command} command. Gatsby may not be installed in your site's "node_modules" directory. Perhaps you need to run "npm install"? You might need to delete your "package-lock.json" as well.`
         )
 
       report.verbose(`loading local command from: ${cmdPath}`)
@@ -98,7 +98,7 @@ function buildLocalCommands(cli, isLocalSite) {
         .option(`o`, {
           alias: `open`,
           type: `boolean`,
-          describe: `Open the site in your browser for you.`,
+          describe: `Open the site in your (default) browser for you.`,
         })
         .option(`S`, {
           alias: `https`,
@@ -140,7 +140,7 @@ function buildLocalCommands(cli, isLocalSite) {
       _.option(`prefix-paths`, {
         type: `boolean`,
         default: false,
-        describe: `Build site with link paths prefixed (set prefix in your config).`,
+        describe: `Build site with link paths prefixed (set pathPrefix in your gatsby-config.js).`,
       })
         .option(`no-uglify`, {
           type: `boolean`,
@@ -178,7 +178,12 @@ function buildLocalCommands(cli, isLocalSite) {
         .option(`o`, {
           alias: `open`,
           type: `boolean`,
-          describe: `Open the site in your browser for you.`,
+          describe: `Open the site in your (default) browser for you.`,
+        })
+        .option(`prefix-paths`, {
+          type: `boolean`,
+          default: false,
+          describe: `Serve site with link paths prefixed (if built with pathPrefix in your gatsby-config.js).`,
         }),
 
     handler: getCommandHandler(`serve`),
@@ -206,7 +211,8 @@ function buildLocalCommands(cli, isLocalSite) {
           },
           {
             console: true,
-            clipboard: args.clipboard,
+            // Clipboard is not accessible when on a linux tty
+            clipboard: (process.platform === `linux` && !process.env.DISPLAY) ? false : args.clipboard,
           }
         )
       } catch (err) {
@@ -214,6 +220,15 @@ function buildLocalCommands(cli, isLocalSite) {
         console.log(err)
       }
     },
+  })
+
+  cli.command({
+    command: `repl`,
+    desc: `Get a node repl with context of Gatsby environment, see (add docs link here)`,
+    handler: getCommandHandler(`repl`, (args, cmd) => {
+      process.env.NODE_ENV = process.env.NODE_ENV || `development`
+      return cmd(args)
+    }),
   })
 }
 

@@ -60,37 +60,19 @@ class ScrollSyncSection extends Component {
 
   render() {
     const { activeItemHash } = this.state
-    return (
-      <SidebarBody
-        isScrollSync
-        activeItemHash={activeItemHash}
-        {...this.props}
-      />
-    )
+    return <SidebarBody activeItemHash={activeItemHash} {...this.props} />
   }
 }
 
-// @todo make recursive
-const _getItemIds = itemList => {
+const _getItemIds = section => {
   let list = []
 
-  itemList.forEach(section => {
-    if (section.items) {
-      let sectionItems = section.items
-        .map(item => {
-          let subItemIds = []
-          if (item.items) {
-            subItemIds = item.items.map(subitem => subitem.hash)
-          }
-          return [item.hash, ...subItemIds]
-        })
-        .reduce((prev, current) => prev.concat(current))
-
-      list.push(sectionItems)
-    }
+  section.forEach(subSection => {
+    if (subSection.hasOwnProperty('hash')) list.push(subSection.hash)
+    if (subSection.items) list.push(..._getItemIds(subSection.items))
   })
 
-  return [].concat(...list)
+  return list
 }
 
 const _getElementTopOffsetsById = ids => {

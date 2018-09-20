@@ -3,6 +3,74 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="3.0.2"></a>
+
+## [3.0.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/compare/gatsby-plugin-netlify-cms@3.0.1...gatsby-plugin-netlify-cms@3.0.2) (2018-09-18)
+
+### Bug Fixes
+
+- **netlify-cms:** redirect after git gateway login ([#8286](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/issues/8286)) ([535b4a7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/commit/535b4a7))
+
+<a name="3.0.1"></a>
+
+## [3.0.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/compare/gatsby-plugin-netlify-cms@3.0.0...gatsby-plugin-netlify-cms@3.0.1) (2018-09-18)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
+<a name="3.0.0"></a>
+
+# [3.0.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/compare/gatsby-plugin-netlify-cms@3.0.0-rc.5...gatsby-plugin-netlify-cms@3.0.0) (2018-09-17)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
+<a name="3.0.0-rc.5"></a>
+
+# [3.0.0-rc.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/compare/gatsby-plugin-netlify-cms@3.0.0-rc.4...gatsby-plugin-netlify-cms@3.0.0-rc.5) (2018-09-11)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
+<a name="3.0.0-rc.4"></a>
+
+# [3.0.0-rc.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/compare/gatsby-plugin-netlify-cms@3.0.0-rc.3...gatsby-plugin-netlify-cms@3.0.0-rc.4) (2018-09-11)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
+<a name="3.0.0-rc.3"></a>
+
+# [3.0.0-rc.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/compare/gatsby-plugin-netlify-cms@3.0.0-rc.2...gatsby-plugin-netlify-cms@3.0.0-rc.3) (2018-09-11)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
+<a name="3.0.0-rc.2"></a>
+
+# [3.0.0-rc.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/compare/gatsby-plugin-netlify-cms@3.0.0-rc.1...gatsby-plugin-netlify-cms@3.0.0-rc.2) (2018-09-11)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
+<a name="3.0.0-rc.1"></a>
+
+# [3.0.0-rc.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/compare/gatsby-plugin-netlify-cms@3.0.0-rc.0...gatsby-plugin-netlify-cms@3.0.0-rc.1) (2018-08-29)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
+<a name="3.0.0-rc.0"></a>
+
+# [3.0.0-rc.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/compare/gatsby-plugin-netlify-cms@3.0.0-beta.4...gatsby-plugin-netlify-cms@3.0.0-rc.0) (2018-08-21)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
+<a name="3.0.0-beta.4"></a>
+
+# [3.0.0-beta.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/compare/gatsby-plugin-netlify-cms@3.0.0-beta.3...gatsby-plugin-netlify-cms@3.0.0-beta.4) (2018-08-08)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
+<a name="3.0.0-beta.3"></a>
+
+# [3.0.0-beta.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/compare/gatsby-plugin-netlify-cms@3.0.0-beta.2...gatsby-plugin-netlify-cms@3.0.0-beta.3) (2018-08-04)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
 <a name="3.0.0-beta.2"></a>
 
 # [3.0.0-beta.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/compare/gatsby-plugin-netlify-cms@3.0.0-beta.1...gatsby-plugin-netlify-cms@3.0.0-beta.2) (2018-08-01)

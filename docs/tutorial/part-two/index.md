@@ -69,7 +69,7 @@ Community members (like you!) can contribute plugins (small amounts of
 JavaScript code) that others can then use when building Gatsby sites.
 
 There's already dozens of plugins! Check them out at the
-[plugins section of the site](/docs/plugins/).
+[plugins section of the site](/plugins/).
 
 Our goal with Gatsby plugins is to make them straightforward to install and use. In almost every Gatsby site you
 build, you will be installing plugins. While working through the rest of the
@@ -83,7 +83,7 @@ Let's start by creating a new site. At this point it probably makes sense to clo
 Just like in part one, open a new terminal window and run the following commands to create a new Gatsby site in a directory called `tutorial-part-two`. Then, change to this new directory:
 
 ```shell
-gatsby new tutorial-part-two https://github.com/gatsbyjs/gatsby-starter-hello-world#v2
+gatsby new tutorial-part-two https://github.com/gatsbyjs/gatsby-starter-hello-world
 cd tutorial-part-two
 ```
 
@@ -139,9 +139,11 @@ export default () => (
     <h1>Richard Hamming on Luck</h1>
     <div>
       <p>
-        From Richard Hamming’s classic and must-read talk, “<a href="http://www.cs.virginia.edu/~robins/YouAndYourResearch.html">
+        From Richard Hamming’s classic and must-read talk, “
+        <a href="http://www.cs.virginia.edu/~robins/YouAndYourResearch.html">
           You and Your Research
-        </a>”.
+        </a>
+        ”.
       </p>
       <blockquote>
         <p>
@@ -176,9 +178,11 @@ export default () => (
     <h1>Richard Hamming on Luck</h1>
     <div>
       <p>
-        From Richard Hamming’s classic and must-read talk, “<a href="http://www.cs.virginia.edu/~robins/YouAndYourResearch.html">
+        From Richard Hamming’s classic and must-read talk, “
+        <a href="http://www.cs.virginia.edu/~robins/YouAndYourResearch.html">
           You and Your Research
-        </a>”.
+        </a>
+        ”.
       </p>
       <blockquote>
         <p>
@@ -237,7 +241,7 @@ Now, all the text font sizes should be slightly bigger. Try changing the
 `baseFontSize` to `24px` then `12px`. All elements get resized as their
 `font-size` is based on the `baseFontSize`.
 
-_Note that if you use `gatsby-plugin-typography` with the default starter, you'll need to delete the default index.css used by that starter as it overrides the Typography.js CSS_
+_Note that if you use `gatsby-plugin-typography` with the default starter, you'll need to delete the default layout.css used by that starter as it overrides the Typography.js CSS_
 
 There are
 [many themes available](https://github.com/KyleAMathews/typography.js#published-typographyjs-themes)
@@ -432,22 +436,18 @@ directory. But, if it's used only in one file, create it inline.
 Modify `about-css-modules.js` so it looks like the following:
 
 ```jsx{7-19,25-34}
-import React from "react";
-import styles from "./about-css-modules.module.css";
-import Container from "../components/container";
+import React from "react"
+import styles from "./about-css-modules.module.css"
+import Container from "../components/container"
 
-console.log(styles);
+console.log(styles)
 
 const User = props => (
   <div className={styles.user}>
     <img src={props.avatar} className={styles.avatar} alt="" />
     <div className={styles.description}>
-      <h2 className={styles.username}>
-        {props.username}
-      </h2>
-      <p className={styles.excerpt}>
-        {props.excerpt}
-      </p>
+      <h2 className={styles.username}>{props.username}</h2>
+      <p className={styles.excerpt}>{props.excerpt}</p>
     </div>
   </div>
 )

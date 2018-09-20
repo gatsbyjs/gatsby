@@ -4,14 +4,14 @@
   </a>
 </p>
 <h1 align="center">
-  Gatsby v2 [beta] · (see <a href="https://github.com/gatsbyjs/gatsby/tree/v1">v1</a>)
+  Gatsby v2
 </h1>
 
 <h3 align="center">
   ⚛️ 📄 :rocket:
 </h3>
 <p align="center">
-  <strong>Blazing fast site generator for React</strong><br>
+  <strong>Blazing fast modern site generator for React</strong><br>
   Go beyond static sites: build blogs, ecommerce sites, full-blown apps, and more with Gatsby.
 </p>
 <p align="center">
@@ -52,36 +52,35 @@
 
 Gatsby is a modern framework for blazing fast websites.
 
--   **Go Beyond Static Websites.** Get all the benefits of static websites with none of the
-    limitations. Gatsby sites are fully functional React apps, so you can create high-quality,
-    dynamic web apps, from blogs to ecommerce sites to user dashboards.
+- **Go Beyond Static Websites.** Get all the benefits of static websites with none of the
+  limitations. Gatsby sites are fully functional React apps, so you can create high-quality,
+  dynamic web apps, from blogs to ecommerce sites to user dashboards.
 
--   **Use a Modern Stack for Every Site.** No matter where the data comes from, Gatsby sites are
-    built using React and GraphQL. Build a uniform workflow for you and your team, regardless of
-    whether the data is coming from the same back-end.
+- **Use a Modern Stack for Every Site.** No matter where the data comes from, Gatsby sites are
+  built using React and GraphQL. Build a uniform workflow for you and your team, regardless of
+  whether the data is coming from the same back-end.
 
--   **Load Data From Anywhere.** Gatsby pulls in data from any data source, whether it’s Markdown
-    files, a headless CMS like Contentful or WordPress, or a REST or GraphQL API. Use source plugins
-    to load your data, then develop using Gatsby’s uniform GraphQL interface.
+- **Load Data From Anywhere.** Gatsby pulls in data from any data source, whether it’s Markdown
+  files, a headless CMS like Contentful or WordPress, or a REST or GraphQL API. Use source plugins
+  to load your data, then develop using Gatsby’s uniform GraphQL interface.
 
--   **Performance Is Baked In.** Ace your performance audits by default. Gatsby automates code
-    splitting, image optimization, inlining critical styles, lazy-loading and prefetching resources,
-    and more to ensure your site is fast — no manual tuning required.
+- **Performance Is Baked In.** Ace your performance audits by default. Gatsby automates code
+  splitting, image optimization, inlining critical styles, lazy-loading and prefetching resources,
+  and more to ensure your site is fast — no manual tuning required.
 
--   **Host at Scale for Pennies.** Gatsby sites don’t require servers, so you can host your entire
-    site on a CDN for a fraction of the cost of a server-rendered site. Many Gatsby sites can be 
-    hosted entirely free on services like GitHub Pages and Netlify.
+- **Host at Scale for Pennies.** Gatsby sites don’t require servers, so you can host your entire
+  site on a CDN for a fraction of the cost of a server-rendered site. Many Gatsby sites can be
+  hosted entirely free on services like GitHub Pages and Netlify.
 
 [**Learn how to use Gatsby for your next project.**](https://next.gatsbyjs.org/docs/)
 
 ## What’s In This Document
 
--   [Get Up and Running in 5 Minutes](#-get-up-and-running-in-5-minutes)
--   [Learning Gatsby](#-learning-gatsby)
--   [Migration Guides](#-migration-guides)
--   [How to Contribute](#-how-to-contribute)
--   [Thanks to Our Contributors and Sponsors](#-thanks-to-our-contributors-and-sponsors)
-
+- [Get Up and Running in 5 Minutes](#-get-up-and-running-in-5-minutes)
+- [Learning Gatsby](#-learning-gatsby)
+- [Migration Guides](#-migration-guides)
+- [How to Contribute](#-how-to-contribute)
+- [Thanks to Our Contributors and Sponsors](#-thanks-to-our-contributors-and-sponsors)
 
 ## 🚀 Get Up and Running in 5 Minutes
 
@@ -94,9 +93,9 @@ You can get a new Gatsby site up and running on your local dev environment in 5 
     ```sh
     # install the Gatsby CLI globally
     npm install -g gatsby-cli
-    
+
     # create a new Gatsby site using the default starter
-    gatsby new my-blazing-fast-site https://github.com/gatsbyjs/gatsby-starter-default#v2
+    gatsby new my-blazing-fast-site
     ```
 
 2.  **Start the site in `develop` mode.**
@@ -110,7 +109,7 @@ You can get a new Gatsby site up and running on your local dev environment in 5 
 
 3.  **Open the source code and start editing!**
 
-    Your site is now running at `http://localhost:8000`. Open the the `my-blazing-fast-site` directory in your code editor of choice and edit `src/pages/index.js`. Save your changes and the browser will update in real time!
+    Your site is now running at `http://localhost:8000`. Open the `my-blazing-fast-site` directory in your code editor of choice and edit `src/pages/index.js`. Save your changes and the browser will update in real time!
 
 At this point, you’ve got a fully functional Gatsby website. For additional information on how you can customize your Gatsby site, see our [plugins](https://next.gatsbyjs.org/plugins/) and [the official tutorial](https://next.gatsbyjs.org/tutorial/).
 
@@ -118,9 +117,9 @@ At this point, you’ve got a fully functional Gatsby website. For additional in
 
 Full documentation for Gatsby lives [on the website](https://next.gatsbyjs.org/).
 
--   **For most developers, we recommend starting with our [in-depth tutorial for creating a site with Gatsby](https://next.gatsbyjs.org/tutorial/).** It starts with zero assumptions about your level of ability and walks through every step of the process.
+- **For most developers, we recommend starting with our [in-depth tutorial for creating a site with Gatsby](https://next.gatsbyjs.org/tutorial/).** It starts with zero assumptions about your level of ability and walks through every step of the process.
 
--   **To dive straight into code samples head [to our documentation](https://next.gatsbyjs.org/docs/).** In particular, check out the “Guides”, API reference, and “Advanced Tutorials” sections in the sidebar.
+- **To dive straight into code samples head [to our documentation](https://next.gatsbyjs.org/docs/).** In particular, check out the “Guides”, API reference, and “Advanced Tutorials” sections in the sidebar.
 
 We welcome suggestions for improving our docs. See the [“how to contribute”](https://next.gatsbyjs.org/docs/how-to-contribute/) documentation for more details.
 

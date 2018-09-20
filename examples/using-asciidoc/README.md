@@ -1,6 +1,6 @@
-# Using Drupal
+# Using AsciiDoc
 
-https://using-drupal.gatsbyjs.org
+https://using-asciidoc.gatsbyjs.org
 
-Example site that demostrates how to build Gatsby sites
-that pull data from the [Drupal CMS](https://www.drupal.org/).
+Example site that demostrates how to build a Gatsby site
+pulling in data from [asciidoc](http://asciidoc.org/)-files.

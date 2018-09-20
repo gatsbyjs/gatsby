@@ -33,17 +33,6 @@ If you create a loader or plugin, we would <3 for you to open source it and put 
 Gatsby uses a "monorepo" pattern to manage its many dependencies and relies on
 lerna and yarn to configure the repository for active development.
 
-We're currently gearing up to release a new major version, v2.
-
-During this time, please choose the correct branch for your pull request:
-
-- `master` branch for Gatsby version 2 bug fixes
-- `master` branch for any new features (these will be released in the Gatsby v2 betas)
-- `master` branch for updates to the `www` and `docs` directories
-- `v1` branch for Gatsby version 1 bug fixes
-
-Note: We will only accept bug fixes for Gatsby v1. New features should be added to Gatsby v2.
-
 You can install the latest version of Gatsby by following these steps:
 
 - Clone the repo, navigate to its directory.
@@ -51,20 +40,21 @@ You can install the latest version of Gatsby by following these steps:
   https://yarnpkg.com/en/docs/install
 - Install dependencies using `yarn run bootstrap` in the root of the repo.
 
-The usual contributing steps are:
+There are two ways to contribute. This is the most usual way:
 
 - Fork the [official repository](https://github.com/gatsbyjs/gatsby).
 - Clone your fork: `git clone --depth=1 https://github.com/<your-username>/gatsby.git`
 - Setup up repo and install dependencies: `yarn run bootstrap`
 - Make sure tests are passing for you: `yarn test`
 - Create a topic branch: `git checkout -b topics/new-feature-name`
-- Run `npm run watch` from the root of the repo to watch for changes to packages' source code and compile these changes on-the-fly as you work. Note that the watch command can be resource intensive. To limit it to the packages you're working on, add a scope flag, like `npm run watch -- --scope={gatsby,gatsby-cli}`. To watch just one package, run `npm run watch -- --scope=gatsby`.
+- Run `yarn run watch` from the root of the repo to watch for changes to packages' source code and compile these changes on-the-fly as you work. Note that the watch command can be resource intensive. To limit it to the packages you're working on, add a scope flag, like `yarn run watch -- --scope={gatsby,gatsby-cli}`. To watch just one package, run `yarn run watch -- --scope=gatsby`.
 - Install [gatsby-dev-cli](/packages/gatsby-dev-cli/) globally: `yarn global add gatsby-dev-cli`
 - Run `yarn install` in each of the sites you're testing.
 - For each of your Gatsby test sites, run the `gatsby-dev` command inside the test site's directory to copy
   the built files from your cloned copy of Gatsby. It'll watch for your changes
   to Gatsby packages and copy them into the site. For more detailed instructions
-  see the [gatsby-dev-cli README](/packages/gatsby-dev-cli/) and check out the [gatsby-dev-cli demo video](https://www.youtube.com/watch?v=D0SwX1MSuas).
+  see the [gatsby-dev-cli README](/packages/gatsby-dev-cli/) and check out the [gatsby-dev-cli demo video](https://www.youtube.com/watch?v=D0SwX1MSuas).  
+  Note: if you plan to modify packages that are exported from `gatsby` directly, you need to either add those manually to your test sites so that they are listed in `package.json` (e.g. `yarn add gatsby-link`), or specify them explicitly with `gatsby-dev --packages gatsby-link`).
 - Add tests and code for your changes.
 - Once you're done, make sure all tests still pass: `yarn test`.
 - Commit and push to your fork.
@@ -81,8 +71,7 @@ you to commit the change and raise a PR right in the UI. This is the _easiest_
 way you can contribute to the project!
 
 However, if you want to make more changes to the website, that is, change
-layouts, add sections/pages, follow the steps below. You can then spin up your
-own instance of the Gatsby website and make/preview your changes before raising
+layout components or templates, add sections/pages, follow the steps below. You can then spin up your own instance of the Gatsby website and make/preview your changes before raising
 a pull request.
 
 - Clone the repo and navigate to `/www`

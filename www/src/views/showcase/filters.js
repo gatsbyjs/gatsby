@@ -34,7 +34,8 @@ const Filters = ({
         },
       }}
     >
-      Filter & Refine{` `}
+      Filter & Refine
+      {` `}
       <span css={{ marginLeft: `auto`, opacity: 0.5 }}>
         <MdFilterList />
       </span>
@@ -43,7 +44,7 @@ const Filters = ({
       css={{
         display: `flex`,
         flexDirection: `column`,
-        height: `calc(100% - ${presets.headerHeight} + 1px)`,
+        height: `calc(100% - ${presets.headerHeight})`,
         paddingLeft: rhythm(3 / 4),
       }}
     >

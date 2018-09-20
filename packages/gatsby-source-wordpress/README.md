@@ -66,11 +66,11 @@ plugins: [
       useACF: true,
       // Include specific ACF Option Pages that have a set post ID
       // Regardless if an ID is set, the default options route will still be retrieved
-      // Must be using V3 of ACF to REST to include these routes     
+      // Must be using V3 of ACF to REST to include these routes
       // Example: `["option_page_1", "option_page_2"]` will include the proper ACF option
       // routes with the ID option_page_1 and option_page_2
       // Dashes in IDs will be converted to underscores for use in GraphQL
-      acfOptionPageIds = [],
+      acfOptionPageIds: [],
       auth: {
         // If auth.user and auth.pass are filled, then the source plugin will be allowed
         // to access endpoints that are protected with .htaccess.
@@ -143,7 +143,10 @@ plugins.
       you the menus and menu locations endpoint.
 
 - [x] [WPML-REST-API](https://github.com/shawnhooper/wpml-rest-api) which adds
-      the current locale and available translations to all post types.
+      the current locale and available translations to all post types translated with WPML.
+
+- [x] [wp-rest-polylang](https://github.com/maru3l/wp-rest-polylang) which adds
+      the current locale and available translations to all post types translated with Polylang.
 
 ## How to use Gatsby with Wordpress.com hosting
 
@@ -460,6 +463,84 @@ Full example:
 }
 ```
 
+### Query posts with the Polylang Fields Node
+
+```graphql
+{
+  allWordpressPost {
+    edges {
+      node {
+        id
+        slug
+        title
+        content
+        excerpt
+        date
+        modified
+        author
+        featured_media
+        template
+        categories
+        tags
+        polylang_current_lang
+        polylang_translations {
+          id
+          slug
+          title
+          content
+          excerpt
+          date
+          modified
+          author
+          featured_media
+          template
+          categories
+          tags
+          polylang_current_lang
+        }
+      }
+    }
+  }
+}
+```
+
+### Query pages with the Polylang Fields Node
+
+```graphql
+{
+  allWordpressPage {
+    edges {
+      node {
+        id
+        title
+        content
+        excerpt
+        date
+        modified
+        slug
+        author
+        featured_media
+        template
+        polylang_current_lang
+        polylang_translations {
+          id
+          title
+          content
+          excerpt
+          date
+          modified
+          slug
+          author
+          featured_media
+          template
+          polylang_current_lang
+        }
+      }
+    }
+  }
+}
+```
+
 ## Image processing
 
 To use image processing you need `gatsby-transformer-sharp`, `gatsby-plugin-sharp` and their
@@ -758,15 +839,17 @@ WordPress has a [known issue](https://core.trac.wordpress.org/ticket/41445) that
 During the upload process to the WordPress media library, the `post_parent` value ([seen here in the wp_posts table](https://codex.wordpress.org/Database_Description#Table:_wp_posts)) is set to the ID of the post the image is attached to. This value is unable to be changed by any WordPress administration actions.
 
 When the post an image is attached to becomes inaccessible (e.g. from changing visibility settings, or deleting the post), the image itself is restricted in the REST API:
+
 ```
-   {  
+   {
       "code":"rest_forbidden",
       "message":"You don't have permission to do this.",
-      "data":{  
+      "data":{
          "status":403
       }
    }
 ```
+
 which prevents Gatsby from retrieving it.
 
 In order to resolve this, you can manually change the `post_parent` value of the image record to `0` in the database. The only side effect of this change is that the image will no longer appear in the "Uploaded to this post" filter in the Add Media dialog in the WordPress administration area.

@@ -126,17 +126,10 @@ class WebsocketManager {
 
     this.websocket.on(`connection`, s => {
       let activePath = null
-
       // Send already existing static query results
       this.staticQueryResults.forEach(result => {
         this.websocket.send({
           type: `staticQueryResult`,
-          payload: result,
-        })
-      })
-      this.pageResults.forEach(result => {
-        this.websocket.send({
-          type: `pageQueryResult`,
           payload: result,
         })
       })
@@ -164,6 +157,7 @@ class WebsocketManager {
 
         this.websocket.send({
           type: `pageQueryResult`,
+          why: `getDataForPath`,
           payload: this.pageResults.get(path),
         })
       }
@@ -174,8 +168,6 @@ class WebsocketManager {
         s.join(getRoomNameFromPath(path))
         activePath = path
         this.activePaths.add(path)
-
-        getDataForPath(path)
       })
 
       s.on(`disconnect`, s => {
@@ -200,6 +192,7 @@ class WebsocketManager {
       this.websocket.send({ type: `staticQueryResult`, payload: data })
     }
   }
+
   emitPageData(data: QueryResult) {
     if (this.isInitialised) {
       this.websocket.send({ type: `pageQueryResult`, payload: data })

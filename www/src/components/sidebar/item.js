@@ -13,11 +13,13 @@ const isItemActive = (activeItemParents, item) => {
   return false
 }
 
-class Item extends React.Component {
+class Item extends React.PureComponent {
   render() {
     const {
       activeItemLink,
       activeItemParents,
+      isActive,
+      openSectionHash,
       item,
       level,
       location,
@@ -25,6 +27,8 @@ class Item extends React.Component {
       onSectionTitleClick,
       ui,
     } = this.props
+
+    const isParentOfActiveItem = isItemActive(activeItemParents, item)
 
     return (
       <Fragment>
@@ -34,19 +38,21 @@ class Item extends React.Component {
             activeItemParents={activeItemParents}
             createLink={createLink}
             isActive={
+              isActive ||
               item.link === location.pathname ||
-              isItemActive(activeItemParents, item) ||
+              isParentOfActiveItem ||
               item.disableAccordions
             }
+            isParentOfActiveItem={isParentOfActiveItem}
             item={item}
             level={level}
             location={location}
             onLinkClick={onLinkClick}
+            openSectionHash={openSectionHash}
             onSectionTitleClick={onSectionTitleClick}
           />
         ) : (
           <li
-            className="item"
             css={{
               ...this.props.styles,
               paddingLeft: level === 0 ? 40 : false,

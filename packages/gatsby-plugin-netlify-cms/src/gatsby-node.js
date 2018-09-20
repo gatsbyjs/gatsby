@@ -34,14 +34,14 @@ function deepMap(obj, fn) {
 }
 
 exports.onCreateWebpackConfig = (
-  { store, stage, getConfig, plugins },
-  { 
-    modulePath, 
-    publicPath = `admin`, 
-    enableIdentityWidget = true, 
-    htmlTitle = `Content Manager`, 
-    manualInit = false, 
-  },
+  { store, stage, getConfig, plugins, pathPrefix },
+  {
+    modulePath,
+    publicPath = `admin`,
+    enableIdentityWidget = true,
+    htmlTitle = `Content Manager`,
+    manualInit = false,
+  }
 ) => {
   if ([`develop`, `build-javascript`].includes(stage)) {
     const gatsbyConfig = getConfig()
@@ -126,6 +126,14 @@ exports.onCreateWebpackConfig = (
          * `HtmlWebpackPlugin` config.
          */
         new HtmlWebpackExcludeAssetsPlugin(),
+
+        /**
+         * Pass in needed Gatsby config values.
+         */
+        new webpack.DefinePlugin({
+          __PATH__PREFIX__: pathPrefix,
+          CMS_PUBLIC_PATH: JSON.stringify(publicPath),
+        }),
       ].filter(p => p),
 
       /**

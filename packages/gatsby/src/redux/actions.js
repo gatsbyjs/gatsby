@@ -64,7 +64,7 @@ type ActionOptions = {
 
 /**
  * Delete a page
- * @param {Object} page a page object with at least the path set
+ * @param {Object} page a page object
  * @param {string} page.path The path of the page
  * @param {string} page.component The absolute path to the page component
  * @example
@@ -82,6 +82,8 @@ const pascalCase = _.flow(
   _.upperFirst
 )
 const hasWarnedForPageComponent = new Set()
+const fileOkCache = {}
+
 /**
  * Create a page. See [the guide on creating and modifying pages](/docs/creating-and-modifying-pages/)
  * for detailed documenation about creating pages.
@@ -102,7 +104,6 @@ const hasWarnedForPageComponent = new Set()
  *   },
  * })
  */
-const fileOkCache = {}
 actions.createPage = (
   page: PageInput,
   plugin?: Plugin,
@@ -892,7 +893,9 @@ actions.replaceWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
  * @param {Object} config An options object in the shape of a normal babelrc javascript object
  * @example
  * setBabelOptions({
- *   sourceMaps: `inline`,
+ *   options: {
+ *     sourceMaps: `inline`,
+ *   }
  * })
  */
 actions.setBabelOptions = (options: Object, plugin?: ?Plugin = null) => {
@@ -1133,11 +1136,11 @@ actions.addThirdPartySchema = (
 }
 
 /**
- * All defined actions.
+ * All action creators wrapped with a dispatch.
  */
 exports.actions = actions
 
 /**
- * All action creators wrapped with a dispatch.
+ * All action creators wrapped with a dispatch. - *DEPRECATED*
  */
 exports.boundActionCreators = bindActionCreators(actions, store.dispatch)

@@ -23,7 +23,7 @@ module.exports = async ({ spaceId, syncToken, ...options }) => {
     console.log(`Fetching default locale`)
     locales = await client.getLocales().then(response => response.items)
     defaultLocale = _.find(locales, { default: true }).code
-    console.log(`default local is : ${defaultLocale}`)
+    console.log(`default locale is : ${defaultLocale}`)
   } catch (e) {
     console.log(
       `Accessing your Contentful space failed. Perhaps you're offline or the spaceId/accessToken is incorrect.`

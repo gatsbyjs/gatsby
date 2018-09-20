@@ -36,48 +36,26 @@ async function fetch({
     url = `${_siteURL}/wp-json`
   }
 
-  if (_verbose) console.log()
-  if (_verbose)
+  if (_verbose) {
+    console.time(`=END PLUGIN=====================================`)
+
     console.log(
       colorized.out(
-        `=START PLUGIN=====================================`,
+        `
+=START PLUGIN=====================================
+
+Site URL: ${_siteURL}
+Site hosted on Wordpress.com: ${_hostingWPCOM}
+Using ACF: ${_useACF}
+Using Auth: ${_auth.htaccess_user} ${_auth.htaccess_pass}
+Verbose output: ${_verbose}
+
+Mama Route URL: ${url}
+`,
         colorized.color.Font.FgBlue
       )
     )
-  if (_verbose) console.time(`=END PLUGIN=====================================`)
-  if (_verbose) console.log(``)
-  if (_verbose)
-    console.log(
-      colorized.out(`Site URL: ${_siteURL}`, colorized.color.Font.FgBlue)
-    )
-  if (_verbose)
-    console.log(
-      colorized.out(
-        `Site hosted on Wordpress.com: ${_hostingWPCOM}`,
-        colorized.color.Font.FgBlue
-      )
-    )
-  if (_verbose)
-    console.log(
-      colorized.out(`Using ACF: ${_useACF}`, colorized.color.Font.FgBlue)
-    )
-  if (_verbose)
-    console.log(
-      colorized.out(
-        `Using Auth: ${_auth.htaccess_user} ${_auth.htaccess_pass}`,
-        colorized.color.Font.FgBlue
-      )
-    )
-  if (_verbose)
-    console.log(
-      colorized.out(`Verbose output: ${_verbose}`, colorized.color.Font.FgBlue)
-    )
-  if (_verbose) console.log(``)
-  if (_verbose)
-    console.log(
-      colorized.out(`Mama Route URL: ${url}`, colorized.color.Font.FgBlue)
-    )
-  if (_verbose) console.log(``)
+  }
 
   // Call the main API Route to discover the all the routes exposed on this API.
   let allRoutes
@@ -86,12 +64,19 @@ async function fetch({
       method: `get`,
       url: url,
     }
-    if (_auth) {
+    if (_auth && (_auth.htaccess_user || _auth.htaccess_pass)) {
       options.auth = {
         username: _auth.htaccess_user,
         password: _auth.htaccess_pass,
       }
     }
+    
+    if (_hostingWPCOM && _accessToken) {
+      options.headers = {
+        Authorization: `Bearer ${_accessToken}`,
+      }
+    }
+    
     allRoutes = await axios(options)
   } catch (e) {
     httpExceptionHandler(e)
@@ -113,17 +98,16 @@ async function fetch({
       refactoredEntityTypes,
     })
 
-    if (_verbose) console.log(``)
-    if (_verbose)
+    if (_verbose) {
       console.log(
         colorized.out(
-          `Fetching the JSON data from ${
-            validRoutes.length
-          } valid API Routes...`,
+          `
+Fetching the JSON data from ${validRoutes.length} valid API Routes...
+`,
           colorized.color.Font.FgBlue
         )
       )
-    if (_verbose) console.log(``)
+    }
 
     for (let route of validRoutes) {
       entities = entities.concat(
@@ -197,7 +181,7 @@ async function fetchData({
 }) {
   const { type, url, optionPageId } = route
 
-  if (_verbose)
+  if (_verbose) {
     console.log(
       colorized.out(
         `=== [ Fetching ${type} ] ===`,
@@ -205,7 +189,9 @@ async function fetchData({
       ),
       url
     )
-  if (_verbose) console.time(`Fetching the ${type} took`)
+
+    console.time(`Fetching the ${type} took`)
+  }
 
   let routeResponse = await getPages(
     {
@@ -234,7 +220,7 @@ async function fetchData({
       entities = entities.concat(routeResponse)
     } else {
       routeResponse.__type = type
-      if(optionPageId) {
+      if (optionPageId) {
         routeResponse.__acfOptionPageId = optionPageId
       }
       entities.push(routeResponse)
@@ -340,8 +326,9 @@ async function getPages(
     }
 
     if (_verbose) {
-      console.log(`\nTotal entities :`, total)
-      console.log(`Pages to be requested :`, totalPages)
+      console.log(`
+Total entities : ${total}
+Pages to be requested : ${totalPages}`)
     }
 
     // We got page 1, now we want pages 2 through totalPages
@@ -410,7 +397,8 @@ function getValidRoutes({
       const routePath = getRoutePath(url, route._links.self)
       if (excludedTypes.includes(entityType)) {
         // Grab ACF Version from routes
-        acfRestVersion = key === `/acf/${entityType}` ? entityType.substr(1) : acfRestVersion
+        acfRestVersion =
+          key === `/acf/${entityType}` ? entityType.substr(1) : acfRestVersion
         if (_verbose)
           console.log(
             colorized.out(`Invalid route.`, colorized.color.Font.FgRed)
@@ -474,7 +462,10 @@ function getValidRoutes({
 
   if (_verbose)
     console.log(
-      colorized.out(`Detected ACF to REST version: v${acfRestVersion}.`, colorized.color.Font.FgGreen)
+      colorized.out(
+        `Detected ACF to REST version: v${acfRestVersion}.`,
+        colorized.color.Font.FgGreen
+      )
     )
 
   if (_useACF) {
@@ -498,7 +489,10 @@ function getValidRoutes({
     }
     if (_verbose)
       console.log(
-        colorized.out(`Added ACF Options route(s).`, colorized.color.Font.FgGreen)
+        colorized.out(
+          `Added ACF Options route(s).`,
+          colorized.color.Font.FgGreen
+        )
       )
     if (_hostingWPCOM) {
       // TODO : Need to test that out with ACF on Wordpress.com hosted site. Need a premium account on wp.com to install extensions.

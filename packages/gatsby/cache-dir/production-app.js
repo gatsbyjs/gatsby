@@ -1,24 +1,22 @@
 import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
 import React, { createElement } from "react"
 import ReactDOM from "react-dom"
-import { Router, Route, withRouter, matchPath } from "react-router-dom"
+import { Router, navigate } from "@reach/router"
+import { match } from "@reach/router/lib/utils"
 import { ScrollContext } from "gatsby-react-router-scroll"
 import domReady from "domready"
-import {
-  shouldUpdateScroll,
-  attachToHistory,
-  init as navigationInit,
-} from "./navigation"
-import history from "./history"
-window.___history = history
+import { shouldUpdateScroll, init as navigationInit } from "./navigation"
 import emitter from "./emitter"
 window.___emitter = emitter
 import PageRenderer from "./page-renderer"
 import asyncRequires from "./async-requires"
 import loader from "./loader"
+import loadDirectlyOr404 from "./load-directly-or-404"
+import EnsureResources from "./ensure-resources"
 
 window.asyncRequires = asyncRequires
-window.matchPath = matchPath
+window.___emitter = emitter
+window.___loader = loader
 
 loader.addPagesArray([window.page])
 loader.addDataPaths({ [window.page.jsonName]: window.dataPath })
@@ -34,63 +32,106 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     require(`./register-service-worker`)
   }
 
-  // Call onRouteUpdate on the initial page load.
-  apiRunner(`onRouteUpdate`, {
-    location: history.location,
-    action: history.action,
-  })
+  class RouteHandler extends React.Component {
+    render() {
+      let { location } = this.props
+      // TODO
+      // check if hash + if element and if so scroll
+      // remove hash handling from gatsby-link
+      // check if scrollbehavior handles back button for
+      // restoring old position
+      // if not, add that.
 
-  const AltRouter = apiRunner(`replaceRouterComponent`, { history })[0]
-
-  loader.getResourcesForPathname(window.location.pathname, () => {
-    const Root = () =>
-      createElement(
-        AltRouter ? AltRouter : Router,
-        {
-          basename: __PATH_PREFIX__,
-          history: !AltRouter ? history : undefined,
-        },
-        createElement(
-          ScrollContext,
-          { shouldUpdateScroll },
-          createElement(withRouter(Route), {
-            render: routeProps => {
-              attachToHistory(routeProps.history)
-
-              if (loader.getPage(routeProps.location.pathname)) {
-                return createElement(PageRenderer, {
-                  isPage: true,
-                  ...routeProps,
-                })
-              } else {
-                return createElement(PageRenderer, {
-                  isPage: true,
-                  location: { pathname: `/404.html` },
-                })
-              }
-            },
-          })
-        )
+      return (
+        <ScrollContext
+          location={location}
+          shouldUpdateScroll={shouldUpdateScroll}
+        >
+          <EnsureResources location={location}>
+            {({ pageResources, location }) => (
+              <PageRenderer
+                {...this.props}
+                location={location}
+                pageResources={pageResources}
+                {...pageResources.json}
+                isMain
+              />
+            )}
+          </EnsureResources>
+        </ScrollContext>
       )
+    }
+  }
 
-    const NewRoot = apiRunner(`wrapRootComponent`, { Root }, Root)[0]
+  const { page, location: browserLoc } = window
+  // TODO: comment what this check does
+  if (
+    page &&
+    page.path !== `/404.html` &&
+    __PATH_PREFIX__ + page.path !== browserLoc.pathname &&
+    !page.path.match(/^\/offline-plugin-app-shell-fallback\/?$/) &&
+    (!page.matchPath ||
+      !match(__PATH_PREFIX__ + page.matchPath, browserLoc.pathname))
+  ) {
+    navigate(
+      __PATH_PREFIX__ + page.path + browserLoc.search + browserLoc.hash,
+      { replace: true }
+    )
+  }
 
-    const renderer = apiRunner(
-      `replaceHydrateFunction`,
-      undefined,
-      ReactDOM.hydrate
-    )[0]
-
-    domReady(() => {
-      renderer(
-        <NewRoot />,
-        typeof window !== `undefined`
-          ? document.getElementById(`___gatsby`)
-          : void 0,
-        () => {
-          apiRunner(`onInitialClientRender`)
-        }
-      )
+  loader
+    .getResourcesForPathname(browserLoc.pathname)
+    .then(() => {
+      if (!loader.getPage(browserLoc.pathname)) {
+        return loader
+          .getResourcesForPathname(`/404.html`)
+          .then(resources =>
+            loadDirectlyOr404(
+              resources,
+              browserLoc.pathname + browserLoc.search + browserLoc.hash,
+              true
+            )
+          )
+      }
+      return null
     })
-  })
+    .then(() => {
+      const Root = () =>
+        createElement(
+          Router,
+          {
+            basepath: __PATH_PREFIX__,
+          },
+          createElement(RouteHandler, { path: `/*` })
+        )
+
+      const WrappedRoot = apiRunner(
+        `wrapRootElement`,
+        { element: <Root /> },
+        <Root />,
+        ({ result }) => {
+          return { element: result }
+        }
+      ).pop()
+
+      let NewRoot = () => WrappedRoot
+
+      const renderer = apiRunner(
+        `replaceHydrateFunction`,
+        undefined,
+        ReactDOM.hydrate
+      )[0]
+
+      domReady(() => {
+        renderer(
+          <NewRoot />,
+          typeof window !== `undefined`
+            ? document.getElementById(`___gatsby`)
+            : void 0,
+          () => {
+            apiRunner(`onInitialClientRender`)
+          }
+        )
+      })
+    })
 })

@@ -1,5 +1,5 @@
 import React from "react"
-import { push, graphql } from "gatsby"
+import { navigate, graphql } from "gatsby"
 
 import ShowcaseDetails from "../components/showcase-details"
 
@@ -21,13 +21,12 @@ class ShowcaseTemplate extends React.Component {
       .node
   }
 
-  next = () => {
+  next = allSitesYaml => {
     const { location } = this.props
 
-    const nextSite = this.getNext()
+    const nextSite = this.getNext(allSitesYaml)
 
-    push({
-      pathname: nextSite.fields.slug,
+    navigate(nextSite.fields.slug, {
       state: {
         isModal: location.state.isModal,
       },
@@ -41,12 +40,11 @@ class ShowcaseTemplate extends React.Component {
     return allSitesYaml.edges[index].node
   }
 
-  previous = () => {
+  previous = allSitesYaml => {
     const { location } = this.props
 
-    const previousSite = this.getPrevious()
-    push({
-      pathname: previousSite.fields.slug,
+    const previousSite = this.getPrevious(allSitesYaml)
+    navigate(previousSite.fields.slug, {
       state: {
         isModal: location.state.isModal,
       },
@@ -89,8 +87,8 @@ export const pageQuery = graphql`
       childScreenshot {
         screenshotFile {
           childImageSharp {
-            sizes(maxWidth: 700) {
-              ...GatsbyImageSharpSizes
+            fluid(maxWidth: 700) {
+              ...GatsbyImageSharpFluid_noBase64
             }
             resize(
               width: 1500
