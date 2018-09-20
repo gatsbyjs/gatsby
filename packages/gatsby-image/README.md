@@ -7,7 +7,7 @@ Gatsby's GraphQL queries. It combines
 [Gatsby's native image processing](https://image-processing.gatsbyjs.org/)
 capabilities with advanced image loading techniques to easily and completely
 optimize image loading for your sites. `gatsby-image` uses
-[gatsby-plugin-sharp](https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/)
+[gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/)
 to power its image transformations.
 
 _Warning: gatsby-image is **not** a drop-in replacement for `<img/>`. It's
@@ -23,15 +23,15 @@ Large, unoptimized images dramatically slow down your site.
 But creating optimized images for websites has long been a thorny problem.
 Ideally you would:
 
-* Resize large images to the size needed by your design
-* Generate multiple smaller images so smartphones and tablets don't download
+- Resize large images to the size needed by your design
+- Generate multiple smaller images so smartphones and tablets don't download
   desktop-sized images
-* Strip all unnecessary metadata and optimize JPEG and PNG compression
-* Efficiently lazy load images to speed initial page load and save bandwidth
-* Use the "blur-up" technique or a
+- Strip all unnecessary metadata and optimize JPEG and PNG compression
+- Efficiently lazy load images to speed initial page load and save bandwidth
+- Use the "blur-up" technique or a
   "[traced placeholder](https://github.com/gatsbyjs/gatsby/issues/2435)" SVG to
   show a preview of the image while it loads
-* Hold the image position so your page doesn't jump while images load
+- Hold the image position so your page doesn't jump while images load
 
 Doing this consistently across a site feels like sisyphean labor. You manually
 optimize your images and then… several images are swapped in at the last minute
@@ -50,9 +50,9 @@ With Gatsby, we can make images way _way_ better.
 processing capabilities powered by GraphQL and Sharp. To produce perfect images,
 you need only:
 
-1. Import `gatsby-image` and use it in place of the built-in `img`
-2. Write a GraphQL query using one of the included GraphQL "fragments"
-   which specify the fields needed by `gatsby-image`.
+1.  Import `gatsby-image` and use it in place of the built-in `img`
+2.  Write a GraphQL query using one of the included GraphQL "fragments"
+    which specify the fields needed by `gatsby-image`.
 
 The GraphQL query creates multiple thumbnails with optimized JPEG and PNG
 compression. The `gatsby-image` component automatically sets up the "blur-up"
@@ -78,34 +78,53 @@ plugins: [
 ];
 ```
 
+Also, make sure you have set up a source plugin, so your images are available in `graphql` queries. For example, if your images live in a project folder on the local filesystem, you would set up `gatsby-source-filesystem` in `gatsby-config.js` like so:
+```js
+const path = require(`path`);
+
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `images`,
+        path: path.join(__dirname, `src`, `images`)
+      }
+    },
+    `gatsby-plugin-sharp`,
+    `gatsby-transformer-sharp`
+  ]
+};
+```
+
 ## How to use
 
 This is what a component using `gatsby-image` looks like:
 
 ```jsx
-import React from "react";
-import Img from "gatsby-image";
+import React from "react"
+import Img from "gatsby-image"
 
 export default ({ data }) => (
   <div>
     <h1>Hello gatsby-image</h1>
-    <Img resolutions={data.file.childImageSharp.resolutions} />
+    <Img fixed={data.file.childImageSharp.fixed} />
   </div>
-);
+)
 
 export const query = graphql`
-  query GatsbyImageSampleQuery {
+  query {
     file(relativePath: { eq: "blog/avatars/kyle-mathews.jpeg" }) {
       childImageSharp {
         # Specify the image processing specifications right in the query.
         # Makes it trivial to update as your page's design changes.
-        resolutions(width: 125, height: 125) {
-          ...GatsbyImageSharpResolutions
+        fixed(width: 125, height: 125) {
+          ...GatsbyImageSharpFixed
         }
       }
     }
   }
-`;
+`
 ```
 
 For another explanation of how to get started with gatsby-image, see this blog post by community member Kyle Gill [Image Optimization Made Easy with Gatsby.js](https://medium.com/@kyle.robert.gill/ridiculously-easy-image-optimization-with-gatsby-js-59d48e15db6e)
@@ -114,13 +133,13 @@ For another explanation of how to get started with gatsby-image, see this blog p
 
 There are two types of responsive images supported by gatsby-image.
 
-1. Images that have a _fixed_ width and height
-2. Images that stretch across a fluid container
+1.  Images that have a _fixed_ width and height
+2.  Images that stretch across a _fluid_ container
 
 In the first scenario, you want to vary the image's size for different screen
-_resolutions_ -- in other words, create retina images.
+resolutions -- in other words, create retina images.
 
-For the second scenario, you want to create multiple _sizes_ of thumbnails for
+For the second scenario, you want to create multiple sizes of thumbnails for
 devices with widths stretching from smartphone to wide desktop monitors.
 
 To decide between the two, ask yourself: "do I know the exact size this image
@@ -128,9 +147,9 @@ will be?" If yes, it's the first type. If no and its width and/or height need to
 vary depending on the size of the screen, then it's the second type.
 
 In Gatsby's GraphQL implementation, you query for the first type by querying a
-child object of an image called `resolutions` — which you can see in the sample
+child object of an image called `fixed` — which you can see in the sample
 component above. For the second type, you do a similar query but for a child
-object called `sizes`.
+object called `fluid`.
 
 ## Fragments
 
@@ -151,36 +170,38 @@ Their fragments are:
 
 ### gatsby-transformer-sharp
 
-* `GatsbyImageSharpResolutions`
-* `GatsbyImageSharpResolutions_noBase64`
-* `GatsbyImageSharpResolutions_tracedSVG`
-* `GatsbyImageSharpResolutions_withWebp`
-* `GatsbyImageSharpResolutions_withWebp_noBase64`
-* `GatsbyImageSharpResolutions_withWebp_tracedSVG`
-* `GatsbyImageSharpSizes`
-* `GatsbyImageSharpSizes_noBase64`
-* `GatsbyImageSharpSizes_tracedSVG`
-* `GatsbyImageSharpSizes_withWebp`
-* `GatsbyImageSharpSizes_withWebp_noBase64`
-* `GatsbyImageSharpSizes_withWebp_tracedSVG`
+- `GatsbyImageSharpFixed`
+- `GatsbyImageSharpFixed_noBase64`
+- `GatsbyImageSharpFixed_tracedSVG`
+- `GatsbyImageSharpFixed_withWebp`
+- `GatsbyImageSharpFixed_withWebp_noBase64`
+- `GatsbyImageSharpFixed_withWebp_tracedSVG`
+- `GatsbyImageSharpFluid`
+- `GatsbyImageSharpFluid_noBase64`
+- `GatsbyImageSharpFluid_tracedSVG`
+- `GatsbyImageSharpFluid_withWebp`
+- `GatsbyImageSharpFluid_withWebp_noBase64`
+- `GatsbyImageSharpFluid_withWebp_tracedSVG`
 
 ### gatsby-source-contentful
 
-* `GatsbyContentfulResolutions`
-* `GatsbyContentfulResolutions_noBase64`
-* `GatsbyContentfulResolutions_withWebp`
-* `GatsbyContentfulResolutions_withWebp_noBase64`
-* `GatsbyContentfulSizes`
-* `GatsbyContentfulSizes_noBase64`
-* `GatsbyContentfulSizes_withWebp`
-* `GatsbyContentfulSizes_withWebp_noBase64`
+- `GatsbyContentfulFixed`
+- `GatsbyContentfulFixed_noBase64`
+- `GatsbyContentfulFixed_tracedSVG`
+- `GatsbyContentfulFixed_withWebp`
+- `GatsbyContentfulFixed_withWebp_noBase64`
+- `GatsbyContentfulFluid`
+- `GatsbyContentfulFluid_noBase64`
+- `GatsbyContentfulFluid_tracedSVG`
+- `GatsbyContentfulFluid_withWebp`
+- `GatsbyContentfulFluid_withWebp_noBase64`
 
 ### gatsby-source-datocms
 
-* `GatsbyDatoCmsResolutions`
-* `GatsbyDatoCmsResolutions_noBase64`
-* `GatsbyDatoCmsSizes`
-* `GatsbyDatoCmsSizes_noBase64`
+- `GatsbyDatoCmsFixed`
+- `GatsbyDatoCmsFixed_noBase64`
+- `GatsbyDatoCmsFluid`
+- `GatsbyDatoCmsFluid_noBase64`
 
 If you don't want to use the blur-up effect, choose the fragment with `noBase64`
 at the end. If you want to use the traced placeholder SVGs, choose the fragment
@@ -195,12 +216,12 @@ _Please see the
 documentation for more information on `tracedSVG` and its configuration
 options._
 
-## "Resolutions" queries
+## "Fixed" queries
 
 ### Component
 
-Pass in the data returned from the `resolutions` object in your query via the
-`resolutions` prop. e.g. `<Img resolutions={resolutions} />`
+Pass in the data returned from the `fixed` object in your query via the
+`fixed` prop. e.g. `<Img fixed={fixed} />`
 
 ### Query
 
@@ -209,20 +230,20 @@ Pass in the data returned from the `resolutions` object in your query via the
   imageSharp {
     # Other options include height (set both width and height to crop),
     # grayscale, duotone, rotate, etc.
-    resolutions(width: 400) {
+    fixed(width: 400) {
       # Choose either the fragment including a small base64ed image, a traced placeholder SVG, or one without.
-      ...GatsbyImageSharpResolutions
+      ...GatsbyImageSharpFixed
     }
   }
 }
 ```
 
-## "Sizes" queries
+## "Fluid" queries
 
 ### Component
 
-Pass in the data returned from the `sizes` object in your query via the `sizes`
-prop. e.g. `<Img sizes={sizes} />`
+Pass in the data returned from the `fluid` object in your query via the `fluid`
+prop. e.g. `<Img fluid={fluid} />`
 
 ### Query
 
@@ -233,9 +254,9 @@ prop. e.g. `<Img sizes={sizes} />`
     #
     # Other options include maxHeight (set both maxWidth and maxHeight to crop),
     # grayscale, duotone, rotate, etc.
-    sizes(maxWidth: 700) {
+    fluid(maxWidth: 700) {
       # Choose either the fragment including a small base64ed image, a traced placeholder SVG, or one without.
-      ...GatsbyImageSharpSizes_noBase64
+      ...GatsbyImageSharpFluid_noBase64
     }
   }
 }
@@ -243,31 +264,38 @@ prop. e.g. `<Img sizes={sizes} />`
 
 ## `gatsby-image` props
 
-| Name                    | Type            | Description                                                                                                                 |
-| ----------------------- | --------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| `resolutions`           | `object`        | Data returned from the `resolutions` query                                                                                  |
-| `sizes`                 | `object`        | Data returned from the `sizes` query                                                                                        |
-| `fadeIn`                | `bool`          | Defaults to fading in the image on load                                                                                     |
-| `title`                 | `string`        | Passed to the `img` element                                                                                                 |
-| `alt`                   | `string`        | Passed to the `img` element                                                                                                 |
-| `className`             | `string|object` | Passed to the wrapper element. Object is needed to support Glamor's css prop                                                |
-| `outerWrapperClassName` | `string|object` | Passed to the outer wrapper element. Object is needed to support Glamor's css prop                                          |
-| `style`                 | `object`        | Spread into the default styles in the wrapper element                                                                       |
-| `imgStyle`              | `object`        | Spread into the default styles for the actual `img` element                                                                 |
-| `position`              | `string`        | Defaults to `relative`. Pass in `absolute` to make the component `absolute` positioned                                      |
-| `backgroundColor`       | `string|bool`   | Set a colored background placeholder. If true, uses "lightgray" for the color. You can also pass in any valid color string. |
-| `onLoad`                | `func`          | A callback that is called when the full-size image has loaded.                                                              |
-| `Tag`                   | `string`        | Which HTML tag to use for wrapping elements. Defaults to `div`.                                                             |
+| Name                    | Type                | Description                                                                                                                 |
+| ----------------------- | ------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `fixed`                 | `object`            | Data returned from the `fixed` query                                                                                        |
+| `fluid`                 | `object`            | Data returned from the `fluid` query                                                                                        |
+| `fadeIn`                | `bool`              | Defaults to fading in the image on load                                                                                     |
+| `title`                 | `string`            | Passed to the `img` element                                                                                                 |
+| `alt`                   | `string`            | Passed to the `img` element                                                                                                 |
+| `className`             | `string` / `object` | Passed to the wrapper element. Object is needed to support Glamor's css prop                                                |
+| `style`                 | `object`            | Spread into the default styles of the wrapper element                                                                       |
+| `imgStyle`              | `object`            | Spread into the default styles of the actual `img` element                                                                 |
+| `placeholderStyle`      | `object`            | Spread into the default styles of the placeholder `img` element                                                                 |
+| `backgroundColor`       | `string` / `bool`   | Set a colored background placeholder. If true, uses "lightgray" for the color. You can also pass in any valid color string. |
+| `onLoad`                | `func`              | A callback that is called when the full-size image has loaded.                                                              |
+| `onError`               | `func`              | A callback that is called when the image fails to load.                                                              |
+| `Tag`                   | `string`            | Which HTML tag to use for wrapping elements. Defaults to `div`.                                                             |
+| `critical`              | `bool`              | Opt-out of lazy-loading behavior. Defaults to `false`.                                                                      |
 
 ## Image processing arguments
 
 [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp) supports many additional arguments for transforming your images like
-`quality`,`sizeByPixelDensity`,`pngCompressionLevel`,`cropFocus`,`greyscale` and many more. See its documentation for more.
+`quality`, `sizeByPixelDensity`, `pngCompressionLevel`, `cropFocus`, `greyscale` and many more. See its documentation for more.
 
 ## Some other stuff to be aware of
 
-* If you want to set `display: none;` on a component using a `resolutions` prop,
-  you need to also pass in to the style prop `{ display: 'inherit' }`.\* Images
-  don't load until JavaScript is loaded. Gatsby's automatic code splitting
-  generally makes this fine but if images seem slow coming in on a page, check
-  how much JavaScript is being loaded there.
+- If you want to set `display: none;` on a component using a `fixed` prop,
+  you need to also pass in to the style prop `{ display: 'inherit' }`.
+- By default, images don't load until JavaScript is loaded. Gatsby's automatic code
+  splitting generally makes this fine but if images seem slow coming in on a
+  page, check how much JavaScript is being loaded there.
+- Images marked as `critical` will start loading immediately as the DOM is 
+  parsed, but unless `fadeIn` is set to `false`, the transition from placeholder
+  to final image will not occur until after the component is mounted.
+- Gatsby-Image now is backed by newer `<picture>` tag. This newer standard allows for
+  media types to be chosen by the browser without using javascript. It also is
+  backward compatible to older browsers (IE 11, etc)

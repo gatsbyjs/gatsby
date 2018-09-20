@@ -58,10 +58,10 @@ range of lines to highlight, relative to a `highlight-range` comment.
 #### JavaScript example
 
 ```js
-import React from "react";
-import ReactDOM from "react-dom";
+import React from "react"
+import ReactDOM from "react-dom"
 
-const name = "Brian"; // highlight-line
+const name = "Brian" // highlight-line
 
 ReactDOM.render(
   <div>
@@ -69,7 +69,7 @@ ReactDOM.render(
     <h1>Hello, ${name}!</h1>
   </div>,
   document.getElementById("root")
-);
+)
 ```
 
 #### CSS example
@@ -116,10 +116,12 @@ quz: "highlighted"
 
 ## How to use
 
+Important: This module must appear before `gatsby-remark-prismjs` in your plugins array, or the markup will have already been transformed into a code block and this plugin will fail to detect it and inline the file.
+
 ```javascript
 // In your gatsby-config.js
 module.exports = {
-  plugins: [ 
+  plugins: [
     {
       resolve: `gatsby-transformer-remark`,
       options: {
@@ -138,7 +140,7 @@ module.exports = {
             },
           },
           {
-            resolve: 'gatsby-remark-embed-snippet',
+            resolve: "gatsby-remark-embed-snippet",
             options: {
               // Class prefix for <pre> tags containing syntax highlighting;
               // defaults to 'language-' (eg <pre class="language-js">).
@@ -147,7 +149,7 @@ module.exports = {
               // you may use this to prevent Prism from re-processing syntax.
               // This is an uncommon use-case though;
               // If you're unsure, it's best to use the default value.
-              classPrefix: 'language-',
+              classPrefix: "language-",
 
               // Example code links are relative to this dir.
               // eg examples/path/to/file.js
@@ -157,6 +159,6 @@ module.exports = {
         ],
       },
     },
-  ]
+  ],
 }
 ```

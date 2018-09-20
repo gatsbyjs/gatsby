@@ -2,6 +2,7 @@
 title: From WordPress to Developing in React — Starting to See It
 date: "2017-10-20"
 author: "Benjamin Read"
+tags: ["React", "getting-started", "wordpress"]
 ---
 
 As a frontend designer I've always prided myself on being a HTML and CSS
@@ -52,17 +53,17 @@ makes groking easier. I have my layout, template and config modules at hand in
 the folder structure, without duplication.
 
 ```js
-import React from "react";
+import React from "react"
 // Template for blog page
 export default ({ data }) => {
-  const post = data.markdownRemark;
+  const post = data.markdownRemark
   return (
     <div>
       <h1>{post.frontmatter.title}</h1>
       <div dangerouslySetInnerHTML={{ __html: post.html }} />
     </div>
-  );
-};
+  )
+}
 // The data query
 export const query = graphql`
   query BlogPostQuery($slug: String!) {
@@ -74,7 +75,7 @@ export const query = graphql`
       }
     }
   }
-`;
+`
 ```
 
 Whilst this might _look_ weird, it actually makes it much easier to understand
@@ -111,7 +112,7 @@ export const query = graphql`
       }
     }
   }
-`;
+`
 ```
 
 Aside from those pesky tick characters, which are sometimes hard to spot for a

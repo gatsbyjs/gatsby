@@ -4,52 +4,48 @@ Provides drop-in support for TypeScript and TSX.
 
 ## Install
 
-`yarn add gatsby-plugin-typescript typescript`
+`npm install gatsby-plugin-typescript`
 
 ## How to use
 
-1. Include the plugin in your `gatsby-config.js` file.
-1. Add `tsconfig.json` file on your root directory.
-1. Write your components in TSX or TypeScript.
-1. You're good to go.
+1.  Include the plugin in your `gatsby-config.js` file.
+1.  Write your components in TSX or TypeScript.
+1.  You're good to go.
 
 `gatsby-config.js`
 
 ```javascript
-plugins: [`gatsby-plugin-typescript`];
-```
-
-Or with optional configuration:
-
-```javascript
-plugins: [
-  {
-    resolve: "gatsby-plugin-typescript",
-    options: {
-      transpileOnly: true, // default
-      compilerOptions: {
-        target: `esnext`,
-        experimentalDecorators: true,
-        jsx: `react`,
-      }, // default
-    },
-  },
-];
-```
-
-`tsconfig.json`
-
-```json
-{
-  "compilerOptions": {
-    "outDir": "./dist/",
-    "sourceMap": true,
-    "noImplicitAny": true,
-    "module": "commonjs",
-    "target": "esnext",
-    "jsx": "react",
-    "lib": ["dom", "es2015", "es2017"]
-  },
-  "include": ["./src/**/*"]
+module.exports = {
+  // ...,
+  plugins: [...`gatsby-plugin-typescript`],
 }
 ```
+
+## Caveats
+
+This plugin uses [`babel-plugin-transform-typescript`](https://babeljs.io/docs/en/babel-plugin-transform-typescript.html)
+to transpile typescript. It does _not do type checking_. Also since the TypeScript
+compiler is not involved, the following applies:
+
+> Does not support namespaces.
+> Workaround: Move to using file exports, or
+> migrate to using the module { } syntax instead.
+>
+> Does not support const enums because those require
+> type information to compile. Workaround: Remove the
+> const, which makes it available at runtime.
+>
+> Does not support export = and import =, because those
+> cannot be compiled to ES.next. Workaround: Convert
+> to using export default and export const,
+> and import x, {y} from "z".
+
+https://babeljs.io/docs/en/babel-plugin-transform-typescript.html
+
+## Type checking
+
+First of all you should set up your IDE so that type errors are surfaced.
+Visual Studio Code is very good in this regard.
+
+In addition, you can see the instructions in [TypeScript-Babel-Starter](https://github.com/Microsoft/TypeScript-Babel-Starter)
+for setting up a `type-check` task.

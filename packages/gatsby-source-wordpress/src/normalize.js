@@ -67,6 +67,34 @@ const normalizeACF = entities =>
 
 exports.normalizeACF = normalizeACF
 
+// Combine all ACF Option page data
+exports.combineACF = function(entities) {
+  let acfOptionData = {}
+  // Map each ACF Options object keys/data to single object
+  _.forEach(entities.filter(e => e.__type === `wordpress__acf_options`), e => {
+    if (e[`acf`]) {
+      acfOptionData[e.__acfOptionPageId || `options`] = {}
+      Object.keys(e[`acf`]).map(
+        k => (acfOptionData[e.__acfOptionPageId || `options`][k] = e[`acf`][k])
+      )
+    }
+  })
+
+  // Remove previous ACF Options objects (if any)
+  _.pullAll(
+    entities,
+    entities.filter(e => e.__type === `wordpress__acf_options`)
+  )
+
+  // Create single ACF Options object
+  entities.push({
+    acf: acfOptionData || false,
+    __type: `wordpress__acf_options`,
+  })
+
+  return entities
+}
+
 // Create entities from the few the WordPress API returns as an object for presumably
 // legacy reasons.
 const normalizeEntities = entities => {
@@ -137,12 +165,20 @@ exports.liftRenderedField = entities =>
   })
 
 // Exclude entities of unknown shape
+// Assume all entities contain a wordpress_id, except for whitelisted type wp_settings
 exports.excludeUnknownEntities = entities =>
-  entities.filter(e => e.wordpress_id) // Excluding entities without ID
+  entities.filter(e => e.wordpress_id || e.__type === `wordpress__wp_settings`) // Excluding entities without ID, or WP Settings
 
+// Create node ID from known entities
+// excludeUnknownEntities whitelisted types don't contain a wordpress_id
+// we create the node ID based upon type if the wordpress_id doesn't exist
 exports.createGatsbyIds = (createNodeId, entities) =>
   entities.map(e => {
-    e.id = createNodeId(`${e.__type}-${e.wordpress_id.toString()}`)
+    if (e.wordpress_id) {
+      e.id = createNodeId(`${e.__type}-${e.wordpress_id.toString()}`)
+    } else {
+      e.id = createNodeId(e.__type)
+    }
     return e
   })
 
@@ -164,7 +200,7 @@ exports.mapTypes = entities => {
 exports.mapAuthorsToUsers = entities => {
   const users = entities.filter(e => e.__type === `wordpress__wp_users`)
   return entities.map(e => {
-    if (e.author) {
+    if (users.length && e.author) {
       // Find the user
       const user = users.find(u => u.wordpress_id === e.author)
       if (user) {
@@ -192,21 +228,25 @@ exports.mapPostsToTagsCategories = entities => {
   const categories = entities.filter(e => e.__type === `wordpress__CATEGORY`)
 
   return entities.map(e => {
-    if (e.__type === `wordpress__POST`) {
-      // Replace tags & categories with links to their nodes.
-      if (e.tags.length) {
-        e.tags___NODE = e.tags.map(
-          t => tags.find(tObj => t === tObj.wordpress_id).id
-        )
-        delete e.tags
-      }
-      if (e.categories.length) {
-        e.categories___NODE = e.categories.map(
-          c => categories.find(cObj => c === cObj.wordpress_id).id
-        )
-        delete e.categories
-      }
+    // Replace tags & categories with links to their nodes.
+
+    let entityHasTags = e.tags && Array.isArray(e.tags) && e.tags.length
+    if (tags.length && entityHasTags) {
+      e.tags___NODE = e.tags.map(
+        t => tags.find(tObj => t === tObj.wordpress_id).id
+      )
+      delete e.tags
     }
+
+    let entityHasCategories =
+      e.categories && Array.isArray(e.categories) && e.categories.length
+    if (categories.length && entityHasCategories) {
+      e.categories___NODE = e.categories.map(
+        c => categories.find(cObj => c === cObj.wordpress_id).id
+      )
+      delete e.categories
+    }
+
     return e
   })
 }
@@ -221,6 +261,38 @@ exports.mapTagsCategoriesToTaxonomies = entities =>
       delete e.taxonomy
     }
     return e
+  })
+
+exports.mapElementsToParent = entities =>
+  entities.map(e => {
+    if (e.wordpress_parent) {
+      // Create parent_element with a link to the parent node of type.
+      const parentElement = entities.find(
+        t => t.wordpress_id === e.wordpress_parent && t.__type === e.__type
+      )
+      if (parentElement) {
+        e.parent_element___NODE = parentElement.id
+      }
+    }
+    return e
+  })
+
+exports.mapPolylangTranslations = entities =>
+  entities.map(entity => {
+    if (entity.polylang_translations) {
+      entity.polylang_translations___NODE = entity.polylang_translations.map(
+        translation =>
+          entities.find(
+            t =>
+              t.wordpress_id === translation.wordpress_id &&
+              entity.__type === t.__type
+          ).id
+      )
+
+      delete entity.polylang_translations
+    }
+
+    return entity
   })
 
 exports.searchReplaceContentUrls = function({
@@ -286,10 +358,8 @@ exports.mapEntitiesToMedia = entities => {
         ? true
         : false
 
-    const photoRegex = /\.(gif|jpg|jpeg|tiff|png)$/i
-    const isPhotoUrl = filename =>
-      _.isString(filename) && photoRegex.test(filename)
-    const isPhotoUrlAlreadyProcessed = key => key == `source_url`
+    const isURL = value => _.isString(value) && value.startsWith(`http`)
+    const isMediaUrlAlreadyProcessed = key => key == `source_url`
     const isFeaturedMedia = (value, key) =>
       (_.isNumber(value) || _.isBoolean(value)) && key === `featured_media`
     // ACF Gallery and similarly shaped arrays
@@ -299,7 +369,7 @@ exports.mapEntitiesToMedia = entities => {
 
     // Try to get media node from value:
     //  - special case - check if key is featured_media and value is photo ID
-    //  - check if value is photo url
+    //  - check if value is media url
     //  - check if value is ACF Image Object
     //  - check if value is ACF Gallery
     const getMediaFromValue = (value, key) => {
@@ -310,7 +380,7 @@ exports.mapEntitiesToMedia = entities => {
             : null,
           deleteField: true,
         }
-      } else if (isPhotoUrl(value) && !isPhotoUrlAlreadyProcessed(key)) {
+      } else if (isURL(value) && !isMediaUrlAlreadyProcessed(key)) {
         const mediaNodeID = getMediaItemID(
           media.find(m => m.source_url === value)
         )
@@ -384,27 +454,52 @@ exports.downloadMediaFiles = async ({
   store,
   cache,
   createNode,
+  createNodeId,
+  touchNode,
   _auth,
 }) =>
   Promise.all(
     entities.map(async e => {
-      let fileNode
+      let fileNodeID
       if (e.__type === `wordpress__wp_media`) {
-        try {
-          fileNode = await createRemoteFileNode({
-            url: e.source_url,
-            store,
-            cache,
-            createNode,
-            auth: _auth,
-          })
-        } catch (e) {
-          // Ignore
+        const mediaDataCacheKey = `wordpress-media-${e.wordpress_id}`
+        const cacheMediaData = await cache.get(mediaDataCacheKey)
+
+        // If we have cached media data and it wasn't modified, reuse
+        // previously created file node to not try to redownload
+        if (cacheMediaData && e.modified === cacheMediaData.modified) {
+          fileNodeID = cacheMediaData.fileNodeID
+          touchNode({ nodeId: cacheMediaData.fileNodeID })
+        }
+
+        // If we don't have cached data, download the file
+        if (!fileNodeID) {
+          try {
+            const fileNode = await createRemoteFileNode({
+              url: e.source_url,
+              store,
+              cache,
+              createNode,
+              createNodeId,
+              auth: _auth,
+            })
+
+            if (fileNode) {
+              fileNodeID = fileNode.id
+
+              await cache.set(mediaDataCacheKey, {
+                fileNodeID,
+                modified: e.modified,
+              })
+            }
+          } catch (e) {
+            // Ignore
+          }
         }
       }
 
-      if (fileNode) {
-        e.localFile___NODE = fileNode.id
+      if (fileNodeID) {
+        e.localFile___NODE = fileNodeID
         delete e.media_details.sizes
       }
 

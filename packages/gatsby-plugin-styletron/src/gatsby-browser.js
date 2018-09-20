@@ -1,13 +1,8 @@
 const React = require(`react`)
-const Styletron = require(`styletron-engine-atomic`).Client
-const StyletronProvider = require(`styletron-react`).Provider
+const styletron = require(`./index`)
+const { Provider } = require(`styletron-react`)
 
-exports.wrapRootComponent = ({ Root }, options) => () => {
-  const styleElements = document.getElementsByClassName(`_styletron_hydrate_`)
-  const styletron = new Styletron(styleElements, options)
-  return (
-    <StyletronProvider value={styletron}>
-      <Root />
-    </StyletronProvider>
-  )
-}
+// eslint-disable-next-line react/prop-types
+exports.wrapRootElement = ({ element }, options) => (
+  <Provider value={styletron(options).instance}>{element}</Provider>
+)

@@ -4,6 +4,7 @@ date: "2017-10-01"
 image: "hexo-to-gatsby.png"
 author: "Ian Sinnott"
 excerpt: "How I migrated my blog to Gatsby and how you can do the same."
+tags: ["hexo", "getting-started", "markdown"]
 ---
 
 _This article was originally posted on
@@ -22,11 +23,11 @@ Gatsby-specific knowledge.
 
 Here's the gist of what I'm going to cover:
 
-* Preparing an existing blog for migration
-* Configuring Gatsby to handle markdown
-* Querying your markdown files using GraphQL
-* Adding custom data to the generated GraphQL schema
-* Turning all your markdown files into static pages
+- Preparing an existing blog for migration
+- Configuring Gatsby to handle markdown
+- Querying your markdown files using GraphQL
+- Adding custom data to the generated GraphQL schema
+- Turning all your markdown files into static pages
 
 Let's jump in.
 
@@ -181,7 +182,7 @@ Let's fix that. We need to teach Gatsby how to query the file system. Luckily
 this is so common it's been done for you. Install the file system source plugin:
 
 ```
-yarn add gatsby-source-filesystem
+npm i --save gatsby-source-filesystem
 ```
 
 Now modify `gatsby-config.js` to both use the plugin and tell it what directory
@@ -230,7 +231,7 @@ files this is all you will need. But if you want to render markdown files as
 HTML you will need another plugin. Let's add that now:
 
 ```
-yarn add gatsby-transformer-remark
+npm i --save gatsby-transformer-remark
 ```
 
 As before, add it to the `plugins` field in `gatsby-config.js`:
@@ -293,16 +294,17 @@ specify a `pageQuery` that will pass data into the default export of that page.
 
 ```jsx
 // src/pages/index.js
-import React from "react";
+import React from "react"
+import { graphql } from "gatsby"
 
 export default class BlogIndex extends React.Component {
   render() {
     // Handle graphql errors
     if (this.props.errors && this.props.errors.length) {
       this.props.errors.forEach(({ message }) => {
-        console.error(`BlogIndex render errr: ${message}`);
-      });
-      return <h1>Errors found: Check the console for details</h1>;
+        console.error(`BlogIndex render errr: ${message}`)
+      })
+      return <h1>Errors found: Check the console for details</h1>
     }
 
     return (
@@ -312,7 +314,7 @@ export default class BlogIndex extends React.Component {
           <a key={i}>{node.frontmatter.title}</a>
         ))}
       </div>
-    );
+    )
   }
 }
 
@@ -328,17 +330,17 @@ export const pageQuery = graphql`
       }
     }
   }
-`;
+`
 ```
 
 This is a simplified example, but there are a few things going on that might not
 be intuitive.
 
-* In the render method we first check for errors, and return early if any are
+- In the render method we first check for errors, and return early if any are
   found
-* If no error are found we render a link for each item in the array:
+- If no error are found we render a link for each item in the array:
   `this.props.data.allMarkdownRemark.edges`
-* We export a `pageQuery` variable that is constructed using the magic `graphql`
+- We export a `pageQuery` variable that is constructed using the magic `graphql`
   global
 
 The error handling is pretty straightforward, if a bit verbose, as long as you
@@ -352,7 +354,7 @@ Now let's looks specifically at where we render a link for each blog post:
 {
   this.props.data.allMarkdownRemark.edges.map(({ node }, i) => (
     <a key={i}>{node.frontmatter.title}</a>
-  ));
+  ))
 }
 ```
 
@@ -376,7 +378,7 @@ export const pageQuery = graphql`
       }
     }
   }
-`;
+`
 ```
 
 This is how you get data from Gatsby into your react components. Make sure you
@@ -392,12 +394,12 @@ but the project is still young so the API could change at some point ¯\\_( ツ
 
 > But the links don't link anywhere... where's that `href`?
 
-Let's remedy that. Import the `gatsby-link` component and swap it for the simple
+Let's remedy that. Import the `Link` component and swap it for the simple
 `<a>` tag that was in there before:
 
 ```jsx
 import React from 'react';
-import Link from 'gatsby-link';
+import { Link } from 'gatsby';
 
 export default class BlogIndex extends React.Component {
   render() {
@@ -441,7 +443,7 @@ export const pageQuery = graphql`
       }
     }
   }
-`;
+`
 ```
 
 ```jsx
@@ -450,7 +452,7 @@ export const pageQuery = graphql`
     <Link to={node.frontmatter.url} key={i}>
       {node.frontmatter.title}
     </Link>
-  ));
+  ))
 }
 ```
 
@@ -495,15 +497,15 @@ we add custom fields. Example:
 
 ```js
 // gatsby-node.js
-const { GraphQLString } = require("graphql");
+const { GraphQLString } = require("gatsby/graphql")
 
 const getURL = node => {
   /* See the source link below for implementation */
-};
+}
 
 exports.setFieldsOnGraphQLNodeType = ({ type }) => {
   if (type.name !== "MarkdownRemark") {
-    return {};
+    return {}
   }
 
   return Promise.resolve({
@@ -511,8 +513,8 @@ exports.setFieldsOnGraphQLNodeType = ({ type }) => {
       type: GraphQLString,
       resolve: node => getURL(node),
     },
-  });
-};
+  })
+}
 ```
 
 > Source code for
@@ -564,26 +566,26 @@ case, `createPages`. In the same `gatsby-node.js` file as before:
 // .. other stuff from before...
 
 exports.createPages = ({ boundActionCreators }) => {
-  const { createPage } = boundActionCreators;
-  const postTemplate = path.resolve("./src/templates/custom-page.js");
+  const { createPage } = boundActionCreators
+  const postTemplate = path.resolve("./src/templates/custom-page.js")
 
   // Create a custom page!
   createPage({
     path: `/my-custom-page/`,
     component: postTemplate,
     context: {}, // Context will be passed in to the page query as graphql variables
-  });
-};
+  })
+}
 ```
 
 At the most basic level this method of page creation is quite simple: Grab the
 `createPage` function from the API and call it with some props.
 
-* `path` is required. This is the path that your page will have as a generated
+- `path` is required. This is the path that your page will have as a generated
   HTML file. It's the URL of your final page.
-* `component` is also required. It's the file containing the react component
+- `component` is also required. It's the file containing the react component
   that will be used to render this particular page.
-* `context` is optional but I've included it here because it will be important
+- `context` is optional but I've included it here because it will be important
   soon. This lets you pass data down to the react component specified in the
   `component` option as well as the `pageQuery` (if any).
 
@@ -600,8 +602,8 @@ markdownFiles.forEach(post => {
     context: {
       id: post.id,
     },
-  });
-});
+  })
+})
 ```
 
 I've included the pseudo code to highlight the fact that nothing too magical is
@@ -618,8 +620,8 @@ work.
 // NOTE: I'm using async/await to simplify the code since it's now natively supported
 // in Node 8.x. This means that our function will return a promise
 exports.createPages = async ({ graphql, boundActionCreators }) => {
-  const { createPage } = boundActionCreators;
-  const postTemplate = path.resolve("./src/templates/post.js");
+  const { createPage } = boundActionCreators
+  const postTemplate = path.resolve("./src/templates/post.js")
 
   // Using async await. Query will likely be very similar to your pageQuery in index.js
   const result = await graphql(`
@@ -633,11 +635,11 @@ exports.createPages = async ({ graphql, boundActionCreators }) => {
         }
       }
     }
-  `);
+  `)
 
   if (result.errors) {
-    console.log(result.errors);
-    throw new Error("Things broke, see console output above");
+    console.log(result.errors)
+    throw new Error("Things broke, see console output above")
   }
 
   // Create blog posts pages.
@@ -649,9 +651,9 @@ exports.createPages = async ({ graphql, boundActionCreators }) => {
         // Context will be passed in to the page query as graphql vars
         id: node.id,
       },
-    });
-  });
-};
+    })
+  })
+}
 ```
 
 Notice that the query is very similar to the `pageQuery` in index.js but it's
@@ -663,19 +665,20 @@ post template to use the ID to query one single blog post.
 If you've made it to this point rendering individual posts is quite
 straightforward. You need to:
 
-* Create the `postTemplate` file referenced in `createPages` above
-* Export your template component as the default export
-* Add a `pageQuery` that will fetch the blog post to render
+- Create the `postTemplate` file referenced in `createPages` above
+- Export your template component as the default export
+- Add a `pageQuery` that will fetch the blog post to render
 
 Here it is in all it's glory:
 
 ```jsx
 // src/templates/post.js
-import React from "react";
+import React from "react"
+import { graphql } from "gatsby"
 
 export default class BlogPost extends React.Component {
   render() {
-    const post = this.props.data.markdownRemark;
+    const post = this.props.data.markdownRemark
 
     return (
       <div className="Post">
@@ -685,7 +688,7 @@ export default class BlogPost extends React.Component {
           className="content"
         />
       </div>
-    );
+    )
   }
 }
 
@@ -699,7 +702,7 @@ export const pageQuery = graphql`
       html
     }
   }
-`;
+`
 ```
 
 If you're not used to GraphQL syntax the `pageQuery` might be a little
@@ -721,9 +724,9 @@ there's no limit to what you can implement.
 
 Here are some ideas:
 
-* Add previous and next buttons to each post
-* Create a remark plugin to add custom block types
-* Aggregate tags from your frontmatter and generate pages for all posts of a
+- Add previous and next buttons to each post
+- Create a remark plugin to add custom block types
+- Aggregate tags from your frontmatter and generate pages for all posts of a
   specific tag
 
 Some of these—such as pagination—are implemented on my blog. You can find the
@@ -735,9 +738,9 @@ source code here:
 
 In my opinion Gatsby provides a few killer features:
 
-* Extensible through a powerful plugin API.
-* Supports arbitrary data sources that can be easily queried using GraphQL.
-* Splits your code automatically so you don't have to worry about bundle size
+- Extensible through a powerful plugin API.
+- Supports arbitrary data sources that can be easily queried using GraphQL.
+- Splits your code automatically so you don't have to worry about bundle size
   increasing as a function of the number of pages you render.
 
 It's not a perfect project (looking at you global `graphql` object) and it's

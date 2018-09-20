@@ -7,7 +7,7 @@ const normalize = require(`normalize-path`)
 const systemPath = require(`path`)
 
 const { getNodes } = require(`../../redux`)
-const { findRootNode } = require(`../node-tracking`)
+const { findRootNodeAncestor } = require(`../node-tracking`)
 const {
   createPageDependency,
 } = require(`../../redux/actions/add-page-dependency`)
@@ -28,9 +28,9 @@ export function setFileNodeRootType(fileNodeRootType) {
 function pointsToFile(nodes, key, value) {
   const looksLikeFile =
     _.isString(value) &&
-    mime.lookup(value) !== `application/octet-stream` &&
+    mime.getType(value) !== null &&
     // domains ending with .com
-    mime.lookup(value) !== `application/x-msdownload` &&
+    mime.getType(value) !== `application/x-msdownload` &&
     isRelative(value) &&
     isRelativeUrl(value)
 
@@ -99,7 +99,7 @@ function pointsToFile(nodes, key, value) {
     }
   }
 
-  const rootNode = findRootNode(node)
+  const rootNode = findRootNodeAncestor(node)
 
   // Only nodes transformed (ultimately) from a File
   // can link to another File.
@@ -130,7 +130,7 @@ export function shouldInfer(nodes, selector, value) {
 function createType(fileNodeRootType, isArray) {
   if (!fileNodeRootType) return null
 
-  return {
+  return Object.freeze({
     type: isArray ? new GraphQLList(fileNodeRootType) : fileNodeRootType,
     resolve: (node, args, { path }, { fieldName }) => {
       let fieldValue = node[fieldName]
@@ -164,7 +164,7 @@ function createType(fileNodeRootType, isArray) {
 
       // Find the File node for this node (we assume the node is something
       // like markdown which would be a child node of a File node).
-      const parentFileNode = findRootNode(node)
+      const parentFileNode = findRootNodeAncestor(node)
 
       // Find the linked File node(s)
       if (isArray) {
@@ -173,7 +173,7 @@ function createType(fileNodeRootType, isArray) {
         return findLinkedFileNode(fieldValue)
       }
     },
-  }
+  })
 }
 
 export function getType() {

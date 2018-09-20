@@ -33,11 +33,18 @@ const newPath = (linkNode, destinationDir) => {
   return path.posix.join(process.cwd(), DEPLOY_DIR, newFileName(linkNode))
 }
 
-const newLinkURL = (linkNode, destinationDir) => {
-  if (destinationDir) {
-    return path.posix.join(`/`, destinationDir, newFileName(linkNode))
-  }
-  return path.posix.join(`/`, newFileName(linkNode))
+const newLinkURL = (linkNode, destinationDir, pathPrefix) => {
+  const linkPaths = [
+    `/`,
+    pathPrefix,
+    destinationDir,
+    newFileName(linkNode),
+  ].filter(function(lpath) {
+    if (lpath) return true
+    return false
+  })
+
+  return path.posix.join(...linkPaths)
 }
 
 function toArray(buf) {
@@ -51,7 +58,7 @@ function toArray(buf) {
 }
 
 module.exports = (
-  { files, markdownNode, markdownAST, getNode },
+  { files, markdownNode, markdownAST, pathPrefix, getNode },
   pluginOptions = {}
 ) => {
   const defaults = {
@@ -87,7 +94,7 @@ module.exports = (
         // Prevent uneeded copying
         if (linkPath === newFilePath) return
 
-        const linkURL = newLinkURL(linkNode, options.destinationDir)
+        const linkURL = newLinkURL(linkNode, options.destinationDir, pathPrefix)
         link.url = linkURL
         filesToCopy.set(linkPath, newFilePath)
       }
@@ -155,6 +162,15 @@ module.exports = (
     visitor(link)
   })
 
+  visit(markdownAST, `definition`, definition => {
+    const ext = definition.url.split(`.`).pop()
+    if (options.ignoreFileExtensions.includes(ext)) {
+      return
+    }
+
+    visitor(definition)
+  })
+
   // This will only work for markdown img tags
   visit(markdownAST, `image`, image => {
     const ext = image.url.split(`.`).pop()
@@ -208,11 +224,9 @@ module.exports = (
           .attr(`src`)
           .split(`.`)
           .pop()
-        if (options.ignoreFileExtensions.includes(ext)) {
-          return
+        if (!options.ignoreFileExtensions.includes(ext)) {
+          generateImagesAndUpdateNode(thisImg, node)
         }
-
-        generateImagesAndUpdateNode(thisImg, node)
       } catch (err) {
         // Ignore
       }
@@ -236,18 +250,16 @@ module.exports = (
           .attr(`src`)
           .split(`.`)
           .pop()
-        if (options.ignoreFileExtensions.includes(ext)) {
-          return
+        if (!options.ignoreFileExtensions.includes(ext)) {
+          // The link object will be modified to the new location so we'll
+          // use that data to update our ref
+          const link = { url: thisVideo.attr(`src`) }
+          visitor(link)
+          node.value = node.value.replace(
+            new RegExp(thisVideo.attr(`src`), `g`),
+            link.url
+          )
         }
-
-        // The link object will be modified to the new location so we'll
-        // use that data to update our ref
-        const link = { url: thisVideo.attr(`src`) }
-        visitor(link)
-        node.value = node.value.replace(
-          new RegExp(thisVideo.attr(`src`), `g`),
-          link.url
-        )
       } catch (err) {
         // Ignore
       }
@@ -271,16 +283,14 @@ module.exports = (
           .attr(`src`)
           .split(`.`)
           .pop()
-        if (options.ignoreFileExtensions.includes(ext)) {
-          return
+        if (!options.ignoreFileExtensions.includes(ext)) {
+          const link = { url: thisAudio.attr(`src`) }
+          visitor(link)
+          node.value = node.value.replace(
+            new RegExp(thisAudio.attr(`src`), `g`),
+            link.url
+          )
         }
-
-        const link = { url: thisAudio.attr(`src`) }
-        visitor(link)
-        node.value = node.value.replace(
-          new RegExp(thisAudio.attr(`src`), `g`),
-          link.url
-        )
       } catch (err) {
         // Ignore
       }
@@ -304,17 +314,15 @@ module.exports = (
           .attr(`href`)
           .split(`.`)
           .pop()
-        if (options.ignoreFileExtensions.includes(ext)) {
-          return
+        if (!options.ignoreFileExtensions.includes(ext)) {
+          const link = { url: thisATag.attr(`href`) }
+          visitor(link)
+
+          node.value = node.value.replace(
+            new RegExp(thisATag.attr(`href`), `g`),
+            link.url
+          )
         }
-
-        const link = { url: thisATag.attr(`href`) }
-        visitor(link)
-
-        node.value = node.value.replace(
-          new RegExp(thisATag.attr(`href`), `g`),
-          link.url
-        )
       } catch (err) {
         // Ignore
       }

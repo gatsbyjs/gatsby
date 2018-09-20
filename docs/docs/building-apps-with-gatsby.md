@@ -2,47 +2,54 @@
 title: "Building Apps with Gatsby"
 ---
 
-Gatsby is an excellent framework for building web apps. You can use Gatsby to create personalized, logged-in experiences with two different methods.
+Gatsby is an excellent framework for building web apps. You can use Gatsby to create personalized, logged-in experiences with two different approaches.
 
-The first approach is to build "hybrid" app pages which are statically rendered with dynamic sections. The second is, if needed, add client-only multi-page sections of the site.
+1.  "hybrid" app pages, and
+2.  client-only routes & user authentication
 
 ## Hybrid app pages
 
-With this method, Gatsby renders the initial page with shared page content -- then when your React components load in the browser, they can fetch and render data from APIs. The [React docs have a simple example of how to do this.](https://reactjs.org/docs/faq-ajax.html)
+When a visitor lands on a Gatsby page, the page's HTML file is loaded first, then the JavaScript bundle; When your React components load in the browser, they can fetch and render data from APIs.
 
-Some examples of how you could use this:
+> 💡 The [React docs](https://reactjs.org/docs/faq-ajax.html) have a great, straightforward example demonstrating this approach.
 
-* A news site with live data like sports scores or the weather
-* An e-commerce site with universal product pages and category pages, but also personalized recommendation sections
+Some examples of how you could apply this:
+
+- A news site with live data like sports scores or the weather
+- An e-commerce site with universal product pages and category pages, but also personalized recommendation sections
 
 You can also use your React components to create interactive widgets e.g. allow a user to do searches or submit forms. Because Gatsby is just React, it's easy to blend static and interactive/dynamic models of building web sites.
 
-## Client-only routes
+## Client-only routes & user authentication
 
 Often you want to create a site with client-only portions that are gated by authentication.
 
-A classic example would be a site that has a landing page, various marketing pages, a login page, and then an app section for logged-in users. The logged-in section doesn't need to be server rendered as all data will be loaded live from your API after the user logs so it makes sense to make this portion of your site client-only.
+A classic example would be a site that has a landing page, various marketing pages, a login page, and then an app section for logged-in users. The logged-in section doesn't need to be server rendered as all data will be loaded live from your API after the user logs in. So it makes sense to make this portion of your site client-only.
 
-These routes will exist on the client only and will not correspond to index.html files in an app's built assets. If you wish people to visit client routes directly, you'll need to setup your server to handle these correctly.
+Gatsby uses [@reach/router](https://reach.tech/router/) under the hood. You should use @reach/router to create client-only routes.
 
-To create client-only routes, you want to add code to your site's `gatsby-node.js` like the following:
+These routes will exist on the client only and will not correspond to index.html files in an app's built assets. If you'd like site users to be able to visit client routes directly, you'll need to set up your server to handle those routes appropriately.
 
-_Note: There's also a plugin that can aid in creating client-only routes:
-[gatsby-plugin-create-client-paths](/packages/gatsby-plugin-create-client-paths/)_.
+To create client-only routes, add the following code to your site’s `gatsby-node.js` file:
 
 ```javascript
 // Implement the Gatsby API “onCreatePage”. This is
 // called after every page is created.
-exports.onCreatePage = async ({ page, boundActionCreators }) => {
-  const { createPage } = boundActionCreators;
+exports.onCreatePage = async ({ page, actions }) => {
+  const { createPage } = actions
 
   // page.matchPath is a special key that's used for matching pages
   // only on the client.
   if (page.path.match(/^\/app/)) {
-    page.matchPath = "/app/:path";
+    page.matchPath = "/app/*"
 
     // Update the page.
-    createPage(page);
+    createPage(page)
   }
-};
+}
 ```
+
+> 💡 Note: There's also a plugin to simplify the creation of client-only routes in your site:
+> [gatsby-plugin-create-client-paths](/packages/gatsby-plugin-create-client-paths/).
+
+Check out the ["simple auth" example site](https://github.com/gatsbyjs/gatsby/blob/master/examples/simple-auth/README.md) for a demo implementing user authentication and restricted client-only routes.

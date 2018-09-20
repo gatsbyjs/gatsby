@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Text formatting  format error details correctly 1`] = `
+"Field:
+  One line error
+Bar:
+  Three
+  line
+  error"
+`;
+
+exports[`Text formatting  indent string correctly 1`] = `
+"  Line 1
+  Line 2
+    - Line 3"
+`;

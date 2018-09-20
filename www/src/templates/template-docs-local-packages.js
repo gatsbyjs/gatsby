@@ -1,11 +1,15 @@
 import React from "react"
+import { graphql } from "gatsby"
 import _ from "lodash"
-
+import Layout from "../components/layout"
+import PageWithPluginSearchBar from "../components/page-with-plugin-searchbar"
 import PackageReadme from "../components/package-readme"
 
 class DocsLocalPackagesTemplate extends React.Component {
   render() {
-    const { data: { npmPackage, markdownRemark } } = this.props
+    const {
+      data: { npmPackage, markdownRemark },
+    } = this.props
     const npmPackageNotFound = {
       keywords: [`gatsby`],
       lastPublisher: {
@@ -24,43 +28,49 @@ class DocsLocalPackagesTemplate extends React.Component {
     }
 
     return (
-      <PackageReadme
-        page={markdownRemark ? _.pick(markdownRemark, `parent`) : false}
-        packageName={
-          markdownRemark
-            ? markdownRemark.fields.title
-            : markdownRemarkNotFound.fields.title
-        }
-        excerpt={
-          markdownRemark
-            ? markdownRemark.excerpt
-            : markdownRemarkNotFound.excerpt
-        }
-        html={
-          markdownRemark ? markdownRemark.html : markdownRemarkNotFound.html
-        }
-        githubUrl={`https://github.com/gatsbyjs/gatsby/tree/master/packages/${
-          markdownRemark
-            ? markdownRemark.fields.title
-            : markdownRemarkNotFound.fields.title
-        }`}
-        timeToRead={
-          markdownRemark
-            ? markdownRemark.timeToRead
-            : markdownRemarkNotFound.timeToRead
-        }
-        modified={
-          npmPackage ? npmPackage.modified : npmPackageNotFound.modified
-        }
-        keywords={
-          npmPackage ? npmPackage.keywords : npmPackageNotFound.keywords
-        }
-        lastPublisher={
-          npmPackage
-            ? npmPackage.lastPublisher
-            : npmPackageNotFound.lastPublisher
-        }
-      />
+      <Layout location={this.props.location}>
+        <PageWithPluginSearchBar location={this.props.location}>
+          <PackageReadme
+            page={markdownRemark ? _.pick(markdownRemark, `parent`) : false}
+            packageName={
+              markdownRemark
+                ? markdownRemark.fields.title
+                : markdownRemarkNotFound.fields.title
+            }
+            excerpt={
+              markdownRemark
+                ? markdownRemark.excerpt
+                : markdownRemarkNotFound.excerpt
+            }
+            html={
+              markdownRemark ? markdownRemark.html : markdownRemarkNotFound.html
+            }
+            githubUrl={`https://github.com/gatsbyjs/gatsby/tree/master/packages/${
+              markdownRemark
+                ? markdownRemark.fields.title
+                : markdownRemarkNotFound.fields.title
+            }`}
+            timeToRead={
+              markdownRemark
+                ? markdownRemark.timeToRead
+                : markdownRemarkNotFound.timeToRead
+            }
+            modified={
+              npmPackage && npmPackage.modified
+                ? npmPackage.modified
+                : npmPackageNotFound.modified
+            }
+            keywords={
+              npmPackage ? npmPackage.keywords : npmPackageNotFound.keywords
+            }
+            lastPublisher={
+              npmPackage
+                ? npmPackage.lastPublisher
+                : npmPackageNotFound.lastPublisher
+            }
+          />
+        </PageWithPluginSearchBar>
+      </Layout>
     )
   }
 }
@@ -68,7 +78,7 @@ class DocsLocalPackagesTemplate extends React.Component {
 export default DocsLocalPackagesTemplate
 
 export const pageQuery = graphql`
-  query TemplateDocsLocalPackages($slug: String!) {
+  query($slug: String!) {
     markdownRemark(fields: { slug: { eq: $slug } }) {
       html
       excerpt
@@ -85,7 +95,6 @@ export const pageQuery = graphql`
         name
         avatar
       }
-      modified
     }
   }
 `

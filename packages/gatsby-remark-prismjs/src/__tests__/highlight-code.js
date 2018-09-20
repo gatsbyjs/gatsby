@@ -70,4 +70,40 @@ export default Counter
       expect(highlightCode(language, code)).toMatch(code)
     })
   })
+
+  describe(`with non-highlight-lines`, () => {
+    it(`does not add trailing newlines`, () => {
+      const highlightCode = require(`../highlight-code`)
+      const language = `javascript`
+      const code = `const a = 1\nconst b = 2`
+      expect(highlightCode(language, code)).not.toMatch(/\n$/)
+    })
+
+    it(`a trailing newline is preserved`, () => {
+      const highlightCode = require(`../highlight-code`)
+      const language = `javascript`
+      const code = `const a = 1\nconst b = 2\n`
+      expect(highlightCode(language, code)).toMatch(/[^\n]\n$/)
+    })
+  })
+
+  describe(`with non-highlight-lines`, () => {
+    it(`does not add trailing newlines`, () => {
+      const highlightCode = require(`../highlight-code`)
+      const language = `javascript`
+      const linesToHighlight = [1]
+      const code = `const a = 1\nconst b = 2`
+      expect(highlightCode(language, code, linesToHighlight)).not.toMatch(/\n$/)
+    })
+
+    it(`a trailing newline is preserved`, () => {
+      const highlightCode = require(`../highlight-code`)
+      const language = `javascript`
+      const linesToHighlight = [1]
+      const code = `const a = 1\nconst b = 2\n`
+      expect(highlightCode(language, code, linesToHighlight)).toMatch(
+        /[^\n]\n$/
+      )
+    })
+  })
 })

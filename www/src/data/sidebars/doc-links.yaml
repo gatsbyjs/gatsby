@@ -1,0 +1,361 @@
+- title: Quick start
+  items:
+    - title: Quick start
+      link: /docs/
+    - title: Starters
+      link: /docs/gatsby-starters/
+    - title: Recipes
+      link: /docs/recipes/
+    - title: Overview of the docs*
+      link: /docs/overview/
+- title: Guides
+  items:
+    - title: Preparing your environment
+      link: /docs/preparing-your-environment/
+      items:
+        - title: Basic hardware and software requirements*
+          link: /docs/basic-hardware-software-requirements/
+        - title: Browser Support
+          link: /docs/browser-support/
+        - title: Gatsby on Windows
+          link: /docs/gatsby-on-windows/
+    - title: Deploying & hosting
+      link: /docs/deploying-and-hosting/
+      items:
+        - title: Preparing your site for deployment*
+          link: /docs/preparing-for-deployment/
+        - title: Deploying
+          link: /docs/deploy-gatsby/
+        - title: Deploying to S3 and CloudFront
+          link: /docs/deploying-to-s3-cloudfront
+        - title: Path Prefix
+          link: /docs/path-prefix/
+        - title: How Gatsby works with GitHub pages
+          link: /docs/how-gatsby-works-with-github-pages/
+    - title: Custom configuration
+      link: /docs/customization/
+      items:
+        - title: Babel.js
+          link: /docs/babel/
+        - title: Babel plugin macros*
+          link: /docs/babel-plugin-macros/
+        - title: Custom webpack config
+          link: /docs/add-custom-webpack-config/
+        - title: Customizing html.js
+          link: /docs/custom-html/
+        - title: Environment variables
+          link: /docs/environment-variables/
+        - title: ESlint*
+          link: /docs/eslint/
+        - title: Proxying API requests
+          link: /docs/api-proxy/
+    - title: Images and files
+      link: /docs/images-and-files/
+      items:
+        - title: Adding Images, Fonts, and Files
+          link: /docs/adding-images-fonts-files/
+        - title: Static folder*
+          link: /docs/static-folder/
+        - title: Dropping images into static folders*
+          link: /docs/dropping-images-into-static-folders/
+        - title: Importing single files*
+          link: /docs/importing-single-files/
+        - title: Importing media content*
+          link: /docs/importing-media-content/
+        - title: gatsby-source-filesystem programmatic import*
+          link: /docs/gatsby-source-filesystem-programmatic-import/
+        - title: Working with images in Gatsby
+          link: /docs/working-with-images/
+    - title: Sourcing content and data*
+      link: /docs/content-and-data/
+      items:
+        - title: Sourcing from the filesystem*
+          link: /docs/sourcing-from-the-filesystem/
+        - title: Sourcing from databases*
+          link: /docs/sourcing-from-databases/
+        - title: Sourcing from SaaS services*
+          link: /docs/sourcing-from-saas-services/
+        - title: Sourcing from private APIs*
+          link: /docs/sourcing-from-private-apis/
+        - title: Headless CMS
+          link: /docs/headless-cms/
+          items:
+            - title: Sourcing from Netlify CMS
+              link: /docs/sourcing-from-netlify-cms/
+            - title: Sourcing from WordPress*
+              link: /docs/sourcing-from-wordpress/
+            - title: Sourcing from Drupal*
+              link: /docs/sourcing-from-drupal/
+            - title: Sourcing from Contentful*
+              link: /docs/sourcing-from-contentful/
+            - title: Sourcing from Prose*
+              link: /docs/sourcing-from-prose/
+    - title: Querying your data with GraphQL
+      link: /docs/graphql/
+      items:
+        - title: Introducing GraphiQL*
+          link: /docs/introducing-graphiql/
+        - title: Creating and modifying pages
+          link: /docs/creating-and-modifying-pages/
+        - title: Querying data in pages with graphql
+          link: /docs/page-query/
+        - title: Querying data in components with StaticQuery
+          link: /docs/static-query/
+        - title: Adding Markdown pages
+          link: /docs/adding-markdown-pages/
+        - title: Adding a list of Markdown blog posts
+          link: /docs/adding-a-list-of-markdown-blog-posts/
+        - title: Creating slugs for pages*
+          link: /docs/creating-slugs-for-pages/
+        - title: Programmatically create pages from data*
+          link: /docs/programmatically-create-pages-from-data/
+    - title: Plugins
+      link: /docs/plugins/
+      items:
+        - title: Plugin authoring
+          link: /docs/plugin-authoring/
+        - title: Create a Transformer Plugin*
+          link: /docs/create-transformer-plugin/
+        - title: Create a Source Plugin
+          link: /docs/create-source-plugin/
+        - title: Source plugin tutorial
+          link: /docs/source-plugin-tutorial/
+    - title: Styling
+      link: /docs/styling/
+      items:
+        - title: CSS Modules*
+          link: /docs/css-modules/
+        - title: Typography.js*
+          link: /docs/typography-js/
+        - title: Using CSS-in-JS library Glamor
+          link: /docs/glamor/
+        - title: Using CSS-in-JS library styled components
+          link: /docs/styled-components/
+        - title: Creating global styles
+          link: /docs/creating-global-styles/
+        - title: Component CSS*
+          link: /docs/component-css/
+        - title: PostCSS*
+          link: /docs/post-css/
+    - title: Testing
+      link: /docs/testing/
+      items:
+        - title: Unit testing
+          link: /docs/unit-testing/
+        - title: Testing components with GraphQL
+          link: /docs/testing-components-with-graphql/
+        - title: End-to-end testing
+          link: /docs/end-to-end-testing/
+        - title: Testing CSS-in-JS
+          link: /docs/testing-css-in-js/
+        - title: Testing React components
+          link: /docs/testing-react-components/
+    - title: Debugging
+      link: /docs/debugging/
+      items:
+        - title: Debugging HTML builds
+          link: /docs/debugging-html-builds/
+        - title: Debugging Replace Renderer API
+          link: /docs/debugging-replace-renderer-api/
+        - title: Debugging the build process
+          link: /docs/debugging-the-build-process/
+        - title: Trace Gatsby builds
+          link: /docs/performance-tracing/
+    - title: Building apps with Gatsby
+      link: /docs/building-apps-with-gatsby/
+      items:
+        - title: Progressive web app (PWA)
+          link: /docs/progressive-web-app/
+        - title: Creating Dynamically-Rendered Navigation*
+          link: /docs/creating-dynamically-rendered-navigation/
+        - title: Authentication*
+          link: /docs/authentication/
+        - title: E-commerce*
+          link: /docs/e-commerce/
+        - title: Interactive pages*
+          link: /docs/interactive-pages/
+    - title: Preparing your site for launch
+      link: /docs/preparing-for-site-launch/
+      items:
+        - title: Adding a 404 Page
+          link: /docs/add-404-page/
+        - title: Adding tags and categories to blog posts
+          link: /docs/adding-tags-and-categories-to-blog-posts/
+        - title: Creating a sitemap*
+          link: /docs/creating-a-sitemap/
+        - title: Linking between pages*
+          link: /docs/linking-between-pages/
+        - title: Search Engine Optimization (SEO)
+          link: /docs/seo/
+    - title: Adding third-party services
+      link: /docs/adding-third-party-services/
+      items:
+        - title: Adding search
+          link: /docs/adding-search/
+        - title: Adding analytics*
+          link: /docs/adding-analytics/
+        - title: Adding forms*
+          link: /docs/adding-forms/
+    - title: Performance
+      link: /docs/performance/
+      items:
+        - title: Caching
+          link: /docs/caching/
+        - title: Local HTTPS
+          link: /docs/local-https/
+        - title: Audit with Lighthouse
+          link: /docs/audit-with-lighthouse/
+        - title: Add a Manifest File
+          link: /docs/add-a-manifest-file/
+        - title: Add Offline Support
+          link: /docs/add-offline-support/
+        - title: Add Page Metadata
+          link: /docs/add-page-metadata/
+        - title: Optimize Prefetching with Guess.js*
+          link: /docs/optimize-prefetching-with-guessjs/
+- title: API Reference
+  items:
+    - title: Gatsby Link
+      link: /docs/gatsby-link/
+    - title: Gatsby Node APIs
+      link: /docs/node-apis/
+    - title: Gatsby Browser APIs
+      link: /docs/browser-apis/
+    - title: Gatsby SSR APIs
+      link: /docs/ssr-apis/
+    - title: Gatsby config
+      link: /docs/gatsby-config/
+    - title: Actions
+      link: /docs/actions/
+    - title: GraphQL reference
+      link: /docs/graphql-reference/
+    - title: Node interface
+      link: /docs/node-interface/
+    - title: API philosophy
+      link: /docs/api-specification/
+- title: Releases & Migration
+  items:
+    - title: v2 release notes*
+      link: /docs/v2-release-notes/
+    - title: v1 release notes*
+      link: /docs/v1-release-notes/
+    - title: Migrating from v1 to v2
+      link: /docs/migrating-from-v1-to-v2/
+    - title: Migrating from v0 to v1
+      link: /docs/migrating-from-v0-to-v1/
+- title: Conceptual Guide
+  items:
+    - title: The Gatsby core philosophy*
+      link: /docs/gatsby-core-philosophy/
+    - title: Life and times of a Gatsby build*
+      link: /docs/life-and-times-of-a-gatsby-build/
+    - title: Building with components
+      link: /docs/building-with-components/
+    - title: Lifecycle APIs
+      link: /docs/gatsby-lifecycle-apis/
+    - title: Plugins
+      link: /docs/plugins/
+    - title: PRPL pattern
+      link: /docs/prpl-pattern/
+    - title: Querying data with GraphQL
+      link: /docs/querying-with-graphql/
+- title: Behind the Scenes
+  link: /docs/behind-the-scenes/
+  items:
+    - title: How APIS/Plugins Are Run
+      link: /docs/how-plugins-apis-are-run/
+    - title: Node Creation
+      link: /docs/node-creation/
+    - title: Schema Generation
+      link: /docs/schema-generation/
+      items:
+        - title: Building the GqlType
+          link: /docs/schema-gql-type/
+        - title: Building the Input Filters
+          link: /docs/schema-input-gql/
+        - title: Querying with Sift
+          link: /docs/schema-sift/
+        - title: Connections
+          link: /docs/schema-connections/
+    - title: Page Creation
+      link: /docs/page-creation/
+    - title: Page -> Node Dependencies
+      link: /docs/page-node-dependencies/
+    - title: Node Tracking
+      link: /docs/node-tracking/
+    - title: Internal Data Bridge
+      link: /docs/internal-data-bridge/
+    - title: Queries
+      link: /docs/query-behind-the-scenes/
+      items:
+        - title: Query Extraction
+          link: /docs/query-extraction/
+        - title: Query Execution
+          link: /docs/query-execution/
+        - title: Normal vs StaticQueries
+          link: /docs/static-vs-normal-queries/
+    - title: Write out Pages
+      link: /docs/write-pages/
+    - title: Webpack and SSR
+      link: /docs/webpack-and-ssr/
+      items:
+        - title: Building the Javascript App
+          link: /docs/production-app/
+        - title: Page HTML Generation
+          link: /docs/html-generation/
+        - title: Code Splitting and Prefetching
+          link: /docs/how-code-splitting-works/
+    - title: Data Storage (Redux)*
+      link: /docs/data-storage-redux/
+    - title: Build Caching*
+      link: /docs/build-caching/
+    - title: Terminology
+      link: /docs/behind-the-scenes-terminology/
+- title: Advanced Tutorials
+  items:
+    - title: Making a site with user authentication*
+      link: /docs/authentication-tutorial/
+    - title: Making an e-commerce Gatsby site
+      link: /docs/ecommerce-tutorial/
+    - title: Creating a source plugin
+      link: /docs/source-plugin-tutorial/
+    - title: Using the WordPress source plugin
+      link: /docs/wordpress-source-plugin-tutorial/
+    - title: Adding images to a WordPress site
+      link: /docs/image-tutorial/
+- title: Contributing
+  items:
+    - title: Community
+      link: /docs/community/
+    - title: Code of Conduct
+      link: /docs/code-of-conduct/
+    - title: How to contribute
+      link: /docs/how-to-contribute/
+    - title: Free swag for contributors
+      link: /docs/contributor-swag/
+    - title: How to file an issue
+      link: /docs/how-to-file-an-issue/
+    - title: How to label an issue
+      link: /docs/how-to-label-an-issue/
+    - title: Community Pair Programming Sessions
+      link: /docs/pair-programming/
+    - title: Gatsby Style Guide
+      link: /docs/gatsby-style-guide/
+    - title: RFC process*
+      link: /docs/rfc-process/
+    - title: Docs templates*
+      link: /docs/templates/
+    - title: How to run a Gatsby workshop*
+      link: /docs/how-to-run-a-gatsby-workshop/
+    - title: How to pitch Gatsby*
+      link: /docs/how-to-pitch-gatsby/
+    - title: Site Showcase Submissions
+      link: /docs/site-showcase-submissions/
+    - title: Submit to Creator Showcase
+      link: /docs/submit-to-creator-showcase/
+    - title: Submit to Starter Showcase*
+      link: /docs/submit-to-starter-showcase/
+- title: Glossary*
+  link: /docs/glossary/
+- title: Commands (Gatsby CLI)*
+  link: /docs/gatsby-cli/

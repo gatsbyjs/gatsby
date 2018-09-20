@@ -1,20 +1,41 @@
-const metadata = require(`react-docgen`)
+const DOCLET_PATTERN = /^@(\w+)(?:$|\s((?:[^](?!^@\w))*))/gim
 
-let cleanDocletValue = str =>
-  str
-    .trim()
-    .replace(/^\{/, ``)
-    .replace(/\}$/, ``)
+const { hasOwnProperty: has } = Object.prototype
+let cleanDocletValue = str => {
+  str = str.trim()
+  if (str.endsWith(`}`) && str.startsWith(`{`)) str = str.slice(1, -1)
+  return str
+}
 
-let isLiteral = str => /^('|")/.test(str.trim())
+let isLiteral = str => /^('|"|true|false|\d+)/.test(str.trim())
 
 /**
  * Remove doclets from string
  */
 export const cleanDoclets = desc => {
   desc = desc || ``
-  let idx = desc.indexOf(`@`)
+  let idx = desc.search(DOCLET_PATTERN)
   return (idx === -1 ? desc : desc.substr(0, idx)).trim()
+}
+
+/**
+ * Given a string, this function returns an object with doclet names as keys
+ * and their "content" as values.
+ *
+ * Adapted from https://github.com/reactjs/react-docgen/blob/ee8a5359c478b33a6954f4546637312764798d6b/src/utils/docblock.js#L62
+ * Updated to strip \r from the end of doclets
+ */
+const getDoclets = str => {
+  let doclets = Object.create(null)
+  let match = DOCLET_PATTERN.exec(str)
+  let val
+
+  for (; match; match = DOCLET_PATTERN.exec(str)) {
+    val = match[2] ? match[2].replace(/\r$/, ``) : true
+    doclets[match[1]] = val
+  }
+
+  return doclets
 }
 
 /**
@@ -24,7 +45,7 @@ export const cleanDoclets = desc => {
  */
 export const parseDoclets = obj => {
   let desc = obj.description || ``
-  return metadata.utils.docblock.getDoclets(desc) || Object.create(null)
+  return getDoclets(desc) || Object.create(null)
 }
 
 /**
@@ -48,9 +69,12 @@ export const applyPropDoclets = prop => {
 
     if (value[0] === `(`) {
       value = value.substring(1, value.length - 1).split(`|`)
-
-      prop.type.value = value
-      prop.type.name = value.every(isLiteral) ? `enum` : `union`
+      const name = value.every(isLiteral) ? `enum` : `union`
+      prop.type.name = name
+      prop.type.value = value.map(
+        value =>
+          name === `enum` ? { value, computed: false } : { name: value }
+      )
     }
   }
 
@@ -59,12 +83,15 @@ export const applyPropDoclets = prop => {
   if (doclets.required) {
     prop.required = true
   }
-
+  const dft = has.call(doclets, `default`)
+    ? doclets.default
+    : doclets.defaultValue
   // Use @defaultValue to provide a prop's default value
-  if (doclets.defaultValue) {
+  if (dft != null) {
     prop.defaultValue = {
-      value: cleanDocletValue(doclets.defaultValue),
+      value: dft,
       computed: false,
     }
   }
+  return prop
 }

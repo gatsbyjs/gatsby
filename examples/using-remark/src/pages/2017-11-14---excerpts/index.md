@@ -26,9 +26,9 @@ You can also manually mark in your markdown where to stop excerpting—similar t
 
 ```json
 {
-  resolve: `gatsby-transformer-remark`,
-  options: {
-    excerpt_separator: `<!-- end -->`
+  "resolve": `gatsby-transformer-remark`,
+  "options": {
+    "excerpt_separator": `<!-- end -->`
   }
 }
 ```

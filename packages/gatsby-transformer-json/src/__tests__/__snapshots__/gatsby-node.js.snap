@@ -71,7 +71,7 @@ Array [
       "blue": false,
       "children": Array [],
       "funny": "nope",
-      "id": "whatever [1] >>> JSON",
+      "id": "uuid-from-gatsby",
       "internal": Object {
         "contentDigest": "f624311d932d73dcd416d2a8bea2b67d",
         "type": "NodeNameJson",
@@ -117,7 +117,7 @@ Array [
         "blue": false,
         "children": Array [],
         "funny": "nope",
-        "id": "whatever [1] >>> JSON",
+        "id": "uuid-from-gatsby",
         "internal": Object {
           "contentDigest": "f624311d932d73dcd416d2a8bea2b67d",
           "type": "NodeNameJson",

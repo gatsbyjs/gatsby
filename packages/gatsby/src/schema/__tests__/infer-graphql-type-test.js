@@ -6,10 +6,11 @@ const {
 } = require(`graphql`)
 const path = require(`path`)
 const normalizePath = require(`normalize-path`)
-
+const { clearTypeExampleValues } = require(`../data-tree-utils`)
+const { typeConflictReporter } = require(`../type-conflict-reporter`)
 const { inferObjectStructureFromNodes } = require(`../infer-graphql-type`)
 
-function queryResult(nodes, fragment, { types = [] } = {}) {
+function queryResult(nodes, fragment, { types = [], ignoreFields } = {}) {
   const schema = new GraphQLSchema({
     query: new GraphQLObjectType({
       name: `RootQueryType`,
@@ -22,6 +23,7 @@ function queryResult(nodes, fragment, { types = [] } = {}) {
                 name: `Test`,
                 fields: inferObjectStructureFromNodes({
                   nodes,
+                  ignoreFields,
                   types: [{ name: `Test` }, ...types],
                 }),
               })
@@ -48,6 +50,10 @@ function queryResult(nodes, fragment, { types = [] } = {}) {
   )
 }
 
+beforeEach(() => {
+  clearTypeExampleValues()
+})
+
 describe(`GraphQL type inferance`, () => {
   const nodes = [
     {
@@ -73,6 +79,10 @@ describe(`GraphQL type inferance`, () => {
           },
         },
       },
+      "with space": 1,
+      "with-hyphen": 2,
+      "with resolver": `1012-11-01`,
+      123: 42,
       aBoolean: true,
       externalUrl: `https://example.com/awesome.jpg`,
       domain: `pizza.com`,
@@ -91,6 +101,9 @@ describe(`GraphQL type inferance`, () => {
       anArray: [1, 2, 5, 4],
       aNestedArray: [[1, 2, 3, 4]],
       anObjectArray: [{ anotherObjectArray: [{ baz: `quz` }] }],
+      "with space": 3,
+      "with-hyphen": 4,
+      123: 24,
       frontmatter: {
         date: `1984-10-12`,
         title: `The world of slash and adventure`,
@@ -111,6 +124,20 @@ describe(`GraphQL type inferance`, () => {
     expect(result.errors[0].message).toMatch(
       `Cannot query field "foo" on type "Test".`
     )
+  })
+
+  it(`doesn't throw errors at ints longer than 32-bit`, async () => {
+    const result = await queryResult(
+      [
+        {
+          longint: 3000000000,
+        },
+      ],
+      `
+        longint
+      `
+    )
+    expect(result.errors).toBeUndefined()
   })
 
   it(`prefers float when multiple number types`, async () => {
@@ -188,6 +215,43 @@ describe(`GraphQL type inferance`, () => {
     expect(Object.keys(fields.foo.type.getFields())).toHaveLength(4)
   })
 
+  it(`infers number types`, () => {
+    const fields = inferObjectStructureFromNodes({
+      nodes: [
+        {
+          int32: 42,
+          float: 2.5,
+          longint: 3000000000,
+        },
+      ],
+    })
+    expect(fields.int32.type.name).toEqual(`Int`)
+    expect(fields.float.type.name).toEqual(`Float`)
+    expect(fields.longint.type.name).toEqual(`Float`)
+  })
+
+  it(`Handle invalid graphql field names`, async () => {
+    let result = await queryResult(
+      nodes,
+      `
+        with_space
+        with_hyphen
+        with_resolver(formatString:"DD.MM.YYYY")
+        _123
+      `
+    )
+
+    expect(result.errors).not.toBeDefined()
+    expect(result.data.listNode.length).toEqual(2)
+    expect(result.data.listNode[0].with_space).toEqual(1)
+    expect(result.data.listNode[0].with_hyphen).toEqual(2)
+    expect(result.data.listNode[1].with_space).toEqual(3)
+    expect(result.data.listNode[1].with_hyphen).toEqual(4)
+    expect(result.data.listNode[0].with_resolver).toEqual(`01.11.1012`)
+    expect(result.data.listNode[0]._123).toEqual(42)
+    expect(result.data.listNode[1]._123).toEqual(24)
+  })
+
   describe(`Handles dates`, () => {
     it(`Handles integer with valid date format`, async () => {
       let result = await queryResult(
@@ -262,6 +326,8 @@ describe(`GraphQL type inferance`, () => {
 
     beforeAll(() => {
       ;({ store } = require(`../../redux`))
+
+      store.dispatch({ type: `DELETE_CACHE` })
 
       store.dispatch({
         type: `CREATE_NODE`,
@@ -695,4 +761,45 @@ describe(`GraphQL type inferance`, () => {
         }
     `
     ).then(result => expect(result).toMatchSnapshot()))
+
+  describe(`type conflicts`, () => {
+    let addConflictSpy = jest.spyOn(typeConflictReporter, `addConflict`)
+
+    beforeEach(() => {
+      addConflictSpy.mockReset()
+    })
+
+    it(`catches conflicts and removes field`, async () => {
+      let result = await queryResult(
+        [{ foo: `foo`, number: 1.1 }, { foo: `bar`, number: `1` }],
+        `
+          foo
+          number
+        `
+      )
+      expect(addConflictSpy).toHaveBeenCalledTimes(1)
+
+      expect(result.errors.length).toEqual(1)
+      expect(result.errors[0].message).toMatch(
+        `Cannot query field "number" on type "Test".`
+      )
+    })
+
+    it(`does not warn about provided types`, async () => {
+      let result = await queryResult(
+        [{ foo: `foo`, number: 1.1 }, { foo: `bar`, number: `1` }],
+        `
+          foo
+          number
+        `,
+        { ignoreFields: [`number`] }
+      )
+      expect(addConflictSpy).not.toHaveBeenCalled()
+
+      expect(result.errors.length).toEqual(1)
+      expect(result.errors[0].message).toMatch(
+        `Cannot query field "number" on type "Test".`
+      )
+    })
+  })
 })

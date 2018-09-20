@@ -3,6 +3,7 @@ title: Why I Upgraded My Website to GatsbyJS from Jekyll
 date: "2018-02-27"
 author: "Jia Hao Goh"
 excerpt: My thought process during the long overdue rewrite of this website
+tags: ["jekyll", "plugins", "getting-started", "gatsby-apis"]
 ---
 
 _This article is the first of a two part series, on the engineering behind my [website](https://jiahao.codes). Originally published [here](https://jiahao.codes/blog/why-i-upgraded-my-website/)_
@@ -27,11 +28,11 @@ When delivering content to users on mobile devices, it is important to optimize 
 
 However, it would be a pain to have to manually convert images into different sized thumbnails for a post. I wanted an automated image processing pipeline to automatically resize the images extracted from the markdown documents, and then automatically populate the `srcset` attribute on the images in the output HTML document. I found the [Jekyll Responsive Image Plugin](https://github.com/wildlyinaccurate/jekyll-responsive-image) great for this. It allows me to create templates which will be used by Jekyll when rendering the markdown and automatically does the image resizing.
 
-Even so, when I tried to do more complicated workflows like adding CSS preprocessing with dependence on the JavaScript ecosystem with the [Node Package Manager (npm)](https://www.npmjs.com/), it became a lot more convoluted. Looking at a few recipes I’ve found, I would have to dive down the road of writing [Gulp](https://gulpjs.com/) workflows and somehow connect them to Jekyll commands. I also chanced upon the [Jekyll Asset Pipeline](https://github.com/matthodan/jekyll-asset-pipeline) which seems what I could use. I didn’t dive too deep into it, but from brief glances it seems like I would have to come up with a lot of custom scripting to interface with Javascript libraries on my own.
+Even so, when I tried to do more complicated workflows like adding CSS preprocessing with dependence on the JavaScript ecosystem with the [Node Package Manager (npm)](https://www.npmjs.com/), it became a lot more convoluted. Looking at a few recipes I’ve found, I would have to dive down the road of writing [Gulp](https://gulpjs.com/) workflows and somehow connect them to Jekyll commands. I also chanced upon the [Jekyll Asset Pipeline](https://github.com/matthodan/jekyll-asset-pipeline) which seems what I could use. I didn’t dive too deep into it, but from brief glances it seems like I would have to come up with a lot of custom scripting to interface with JavaScript libraries on my own.
 
-I guess having used [webpack](https://webpack.js.org/) at work, I was pampered by this open source community where there are loaders and documented recipes for doing almost anything, granted that someone was willing to wade into the world of "Javascript fatigue". Around the same time, [@yangshun](https://github.com/yangshun) introduced me to [Gatsby](https://www.gatsbyjs.org/), a React static site generator which seemed really fascinating. It also seemed a good opportunity for me to get my hands dirty with frontend development again.
+I guess having used [webpack](https://webpack.js.org/) at work, I was pampered by this open source community where there are loaders and documented recipes for doing almost anything, granted that someone was willing to wade into the world of "JavaScript fatigue". Around the same time, [@yangshun](https://github.com/yangshun) introduced me to [Gatsby](https://www.gatsbyjs.org/), a React static site generator which seemed really fascinating. It also seemed a good opportunity for me to get my hands dirty with frontend development again.
 
-As I had some free time on my hands, why not rewrite everything again and keep myself updated with the ever-changing Javascript ecosystem? Seems like a lot of fun!
+As I had some free time on my hands, why not rewrite everything again and keep myself updated with the ever-changing JavaScript ecosystem? Seems like a lot of fun!
 
 ## Final Form — Gatsby
 
@@ -50,10 +51,16 @@ For example, I defined a `PostTemplate` which will be used to render pages for a
 ```jsx
 // src/templates/Post.jsx
 
-import React from "react";
+import React from "react"
+import { graphql } from "gatsby"
 
 export default function PostTemplate({
-  data: { markdownRemark: { frontmatter: { title, date }, html } },
+  data: {
+    markdownRemark: {
+      frontmatter: { title, date },
+      html,
+    },
+  },
 }) {
   return (
     <div>
@@ -61,7 +68,7 @@ export default function PostTemplate({
       <small>{date}</small>
       <div dangerouslySetInnerHTML={{ __html: html }} />
     </div>
-  );
+  )
 }
 
 export const pageQuery = graphql`
@@ -74,14 +81,14 @@ export const pageQuery = graphql`
       }
     }
   }
-`;
+`
 ```
 
 When the `<PostTemplate />` component needs to be rendered into a page, the accompanying exported `pageQuery`, a GraphQL query is made, and the results are passed in as props into the component.
 
-The real magic happens when the website is compiled into a production bundle. Running `gatsby build` will tell Gatsby to perform all the GraphQL queries defined and render all the React components into a HTML document, using a technique known as server-side rendering. This means that everything “React” is serialized and compiled to static HTML, ready to be viewed without Javascript. Visitors to the site will then be able to quickly load and interact with the static version of the page.
+The real magic happens when the website is compiled into a production bundle. Running `gatsby build` will tell Gatsby to perform all the GraphQL queries defined and render all the React components into a HTML document, using a technique known as server-side rendering. This means that everything “React” is serialized and compiled to static HTML, ready to be viewed without JavaScript. Visitors to the site will then be able to quickly load and interact with the static version of the page.
 
-Not only that, within the HTML document, there are instructions to load the Javascript bundle of your application asynchronously. When it has been loaded, the content displayed in the browser will be dynamically replaced by the React application, gaining interactivity. This also happens with the other pages of your site — Gatsby will ensure that they are asynchronously loaded so that when you click on a link, the data is already cached on the browser for React to swap out the DOM elements that need to be changed. Everything is done to give the illusion of speed to the viewer while asynchronously loading everything in the background.
+Not only that, within the HTML document, there are instructions to load the JavaScript bundle of your application asynchronously. When it has been loaded, the content displayed in the browser will be dynamically replaced by the React application, gaining interactivity. This also happens with the other pages of your site — Gatsby will ensure that they are asynchronously loaded so that when you click on a link, the data is already cached on the browser for React to swap out the DOM elements that need to be changed. Everything is done to give the illusion of speed to the viewer while asynchronously loading everything in the background.
 
 ### Plugins
 
@@ -89,7 +96,7 @@ Because of the APIs exposed by Gatsby for interfacing with its internals, powerf
 
 #### Node.js APIs
 
-* Can be extended with a `gatsby-node.js` file in the root of the project
+- Can be extended with a `gatsby-node.js` file in the root of the project
 
 The [Node.js APIs](https://www.gatsbyjs.org/docs/node-apis/) let plugins extend or modify the heavy lifting performed by the Node.js process when compiling the application. Your gatsby-node.js file can export functions which modify the GraphQL data that is provided to React components when they are rendered. The APIs are also used by plugins to extend the internals of Gatsby e.g. the default webpack config can also be customized here.
 
@@ -97,13 +104,13 @@ Take the example of what happens during the processing of markdown files into pa
 
 #### Server-side Rendering APIs
 
-* Can be extended with a `gatsby-ssr.js` file in the root of the project
+- Can be extended with a `gatsby-ssr.js` file in the root of the project
 
 The [server side rendering APIs](https://www.gatsbyjs.org/docs/ssr-apis/) allow hooks to be defined to modify the rendering process of the application. For example, the [Typography.js Plugin](/packages/gatsby-plugin-typography) uses this to [inline the styles](https://github.com/gatsbyjs/gatsby/blob/ab1d7f50adcff5b7085e6236973b8c30083aa523/packages/gatsby-plugin-typography/src/gatsby-ssr.js#L11-L14) required into the DOM head when rendering.
 
 #### Browser APIs
 
-* Can be extended with a `gatsby-browser.js` file in the root of the project
+- Can be extended with a `gatsby-browser.js` file in the root of the project
 
 Finally, the [browser APIs](https://www.gatsbyjs.org/docs/browser-apis/) allows plugins to run code on lifecycle events while Gatsby is running in the browser. The [Google Analytics Plugin](/packages/gatsby-plugin-google-analytics) [uses these APIs](https://github.com/gatsbyjs/gatsby/blob/a3fea82b4d4b4c644156e841401821933e8d694a/packages/gatsby-plugin-google-analytics/src/gatsby-browser.js#L4-L5) to track the location of the user on route changes.
 

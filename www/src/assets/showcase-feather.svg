@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>icons/featured</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M7.611125,8.107875 L7.659875,11.362875 L5.103625,13.919125 L5.103625,10.615375 L7.611125,8.107875 Z M13.448625,2.271625 C14.461125,1.256625 16.012375,1.119125 17.178625,1.842875 L11.653625,7.367875 L11.604875,4.114125 L13.448625,2.271625 Z M18.158625,2.821625 C18.452375,3.297875 18.607375,3.835375 18.613625,4.376625 L16.601125,4.376625 L18.158625,2.821625 Z M17.274875,7.006625 L13.972375,7.006625 L15.218625,5.760375 L18.283625,5.760375 C18.142375,6.044125 17.966125,6.315375 17.729875,6.551625 L17.274875,7.006625 Z M9.023625,9.999125 L8.974875,6.744125 L10.242375,5.477875 L10.291125,8.731625 L9.023625,9.999125 Z M9.384875,14.897875 L6.082375,14.897875 L12.587375,8.390375 L15.891125,8.390375 L9.384875,14.897875 Z M2.247375,18.685375 L4.652375,16.280375 L9.957375,16.280375 L18.708625,7.530375 C20.431125,5.807875 20.431125,3.014125 18.708625,1.292875 C16.986125,-0.430875 14.192375,-0.430875 12.469875,1.292875 L3.922375,9.840375 L3.719875,10.042875 L3.719875,15.349125 L-0.000125,19.067875 L2.247375,18.685375 Z" id="path-1"></path>
+    </defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="detail/header" transform="translate(-292.000000, -116.000000)">
+            <g id="icons/feather" transform="translate(292.000000, 116.000000)">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <use id="Fill-1" fill="#9B9B9B" fill-rule="evenodd" xlink:href="#path-1"></use>
+                <g id="colors/gatsby" mask="url(#mask-2)" fill="#663399" fill-rule="evenodd">
+                    <rect id="Rectangle-4" x="0" y="0" width="20" height="20"></rect>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

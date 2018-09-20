@@ -3,6 +3,7 @@ title: Announcing Gatsby Manor, themes for Gatsby 🎉🎊
 date: "2018-02-09"
 image: "gatsbymanor.jpg"
 author: "Steven Natera"
+tags: ["themes"]
 ---
 
 I am proud to announce [Gatsby Manor](https://www.gatsbymanor.com/), a gallery
@@ -74,7 +75,7 @@ months later, Gatsby Manor was born.
 ## Final notes
 
 Gatsby Manor is in public alpha stage. There are plenty of
-[Github](https://github.com/gatsbymanor) contributions to go around. To get
+[GitHub](https://github.com/gatsbymanor) contributions to go around. To get
 started, try out a Gatsby Manor theme using our tutorial on [getting started](https://www.gatsbymanor.com/docs/quick-start/getting-started). Open an
 issue if you see an area of improvement. Follow and send us positive vibes on
 Twitter using [@TheGatsbyManor](https://twitter.com/TheGatsbyManor).

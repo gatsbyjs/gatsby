@@ -1,11 +1,11 @@
 import React from "react"
-import { withPrefix } from "gatsby-link"
+import { withPrefix } from "gatsby"
 import { defaultOptions } from "./internals"
 
 exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
-  let { output, addLinkToHead } = { ...defaultOptions, ...pluginOptions }
+  let { output, createLinkInHead } = { ...defaultOptions, ...pluginOptions }
 
-  if (!addLinkToHead) {
+  if (!createLinkInHead) {
     return
   }
 

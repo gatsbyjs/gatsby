@@ -1,13 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Process  nodes correctly correctly creates nodes from JSON which is an array of objects 1`] = `
+exports[`Process nodes correctly correctly creates nodes from JSON which is an array of objects 1`] = `
 Array [
   Array [
     Object {
       "blue": true,
       "children": Array [],
       "funny": "yup",
-      "id": "whatever [Sheet1 0] >>> csv",
+      "id": "uuid-from-gatsby",
       "internal": Object {
         "contentDigest": "73901821b17d5aa9dd6026181f73b64c",
         "type": "TestCsv__Sheet1",
@@ -20,7 +20,7 @@ Array [
       "blue": false,
       "children": Array [],
       "funny": "nope",
-      "id": "whatever [Sheet1 1] >>> csv",
+      "id": "uuid-from-gatsby",
       "internal": Object {
         "contentDigest": "f624311d932d73dcd416d2a8bea2b67d",
         "type": "TestCsv__Sheet1",
@@ -31,7 +31,7 @@ Array [
   Array [
     Object {
       "children": Array [],
-      "id": "whatever [0] >>> csv",
+      "id": "uuid-from-gatsby",
       "internal": Object {
         "contentDigest": "10c867561d207bc7dae0455d3cccad5b",
         "type": "TestCsv",
@@ -42,7 +42,7 @@ Array [
 ]
 `;
 
-exports[`Process  nodes correctly correctly creates nodes from JSON which is an array of objects 2`] = `
+exports[`Process nodes correctly correctly creates nodes from JSON which is an array of objects 2`] = `
 Array [
   Array [
     Object {
@@ -50,7 +50,7 @@ Array [
         "blue": true,
         "children": Array [],
         "funny": "yup",
-        "id": "whatever [Sheet1 0] >>> csv",
+        "id": "uuid-from-gatsby",
         "internal": Object {
           "contentDigest": "73901821b17d5aa9dd6026181f73b64c",
           "type": "TestCsv__Sheet1",
@@ -80,7 +80,7 @@ FALSE,nope
         "blue": false,
         "children": Array [],
         "funny": "nope",
-        "id": "whatever [Sheet1 1] >>> csv",
+        "id": "uuid-from-gatsby",
         "internal": Object {
           "contentDigest": "f624311d932d73dcd416d2a8bea2b67d",
           "type": "TestCsv__Sheet1",
@@ -108,7 +108,7 @@ FALSE,nope
     Object {
       "child": Object {
         "children": Array [],
-        "id": "whatever [0] >>> csv",
+        "id": "uuid-from-gatsby",
         "internal": Object {
           "contentDigest": "10c867561d207bc7dae0455d3cccad5b",
           "type": "TestCsv",
@@ -120,6 +120,276 @@ FALSE,nope
         "content": "blue,funny
 TRUE,yup
 FALSE,nope
+",
+        "extension": "csv",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/csv",
+        },
+        "name": "test",
+        "parent": "SOURCE",
+      },
+    },
+  ],
+]
+`;
+
+exports[`Process nodes correctly should correctly create nodes from JSON with legacy rawOutput option false 1`] = `
+Array [
+  Array [
+    Object {
+      "children": Array [],
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "c685d551c99950924e4b7a78a267a993",
+        "type": "TestCsv__Sheet1",
+      },
+      "parent": "whatever",
+      "red": "TRUE",
+      "veryfunny": "certainly",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "f197dfd371325c9aa0693a4c406f6cff",
+        "type": "TestCsv__Sheet1",
+      },
+      "parent": "whatever",
+      "red": "FALSE",
+      "veryfunny": "nada",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "10c867561d207bc7dae0455d3cccad5b",
+        "type": "TestCsv",
+      },
+      "parent": "whatever",
+    },
+  ],
+]
+`;
+
+exports[`Process nodes correctly should correctly create nodes from JSON with legacy rawOutput option false 2`] = `
+Array [
+  Array [
+    Object {
+      "child": Object {
+        "children": Array [],
+        "id": "uuid-from-gatsby",
+        "internal": Object {
+          "contentDigest": "c685d551c99950924e4b7a78a267a993",
+          "type": "TestCsv__Sheet1",
+        },
+        "parent": "whatever",
+        "red": "TRUE",
+        "veryfunny": "certainly",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "red,veryfunny
+TRUE,certainly
+FALSE,nada
+",
+        "extension": "csv",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/csv",
+        },
+        "name": "test",
+        "parent": "SOURCE",
+      },
+    },
+  ],
+  Array [
+    Object {
+      "child": Object {
+        "children": Array [],
+        "id": "uuid-from-gatsby",
+        "internal": Object {
+          "contentDigest": "f197dfd371325c9aa0693a4c406f6cff",
+          "type": "TestCsv__Sheet1",
+        },
+        "parent": "whatever",
+        "red": "FALSE",
+        "veryfunny": "nada",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "red,veryfunny
+TRUE,certainly
+FALSE,nada
+",
+        "extension": "csv",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/csv",
+        },
+        "name": "test",
+        "parent": "SOURCE",
+      },
+    },
+  ],
+  Array [
+    Object {
+      "child": Object {
+        "children": Array [],
+        "id": "uuid-from-gatsby",
+        "internal": Object {
+          "contentDigest": "10c867561d207bc7dae0455d3cccad5b",
+          "type": "TestCsv",
+        },
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "red,veryfunny
+TRUE,certainly
+FALSE,nada
+",
+        "extension": "csv",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/csv",
+        },
+        "name": "test",
+        "parent": "SOURCE",
+      },
+    },
+  ],
+]
+`;
+
+exports[`Process nodes correctly should correctly create nodes from JSON with raw option false 1`] = `
+Array [
+  Array [
+    Object {
+      "children": Array [],
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "c685d551c99950924e4b7a78a267a993",
+        "type": "TestCsv__Sheet1",
+      },
+      "parent": "whatever",
+      "red": "TRUE",
+      "veryfunny": "certainly",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "f197dfd371325c9aa0693a4c406f6cff",
+        "type": "TestCsv__Sheet1",
+      },
+      "parent": "whatever",
+      "red": "FALSE",
+      "veryfunny": "nada",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "10c867561d207bc7dae0455d3cccad5b",
+        "type": "TestCsv",
+      },
+      "parent": "whatever",
+    },
+  ],
+]
+`;
+
+exports[`Process nodes correctly should correctly create nodes from JSON with raw option false 2`] = `
+Array [
+  Array [
+    Object {
+      "child": Object {
+        "children": Array [],
+        "id": "uuid-from-gatsby",
+        "internal": Object {
+          "contentDigest": "c685d551c99950924e4b7a78a267a993",
+          "type": "TestCsv__Sheet1",
+        },
+        "parent": "whatever",
+        "red": "TRUE",
+        "veryfunny": "certainly",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "red,veryfunny
+TRUE,certainly
+FALSE,nada
+",
+        "extension": "csv",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/csv",
+        },
+        "name": "test",
+        "parent": "SOURCE",
+      },
+    },
+  ],
+  Array [
+    Object {
+      "child": Object {
+        "children": Array [],
+        "id": "uuid-from-gatsby",
+        "internal": Object {
+          "contentDigest": "f197dfd371325c9aa0693a4c406f6cff",
+          "type": "TestCsv__Sheet1",
+        },
+        "parent": "whatever",
+        "red": "FALSE",
+        "veryfunny": "nada",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "red,veryfunny
+TRUE,certainly
+FALSE,nada
+",
+        "extension": "csv",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/csv",
+        },
+        "name": "test",
+        "parent": "SOURCE",
+      },
+    },
+  ],
+  Array [
+    Object {
+      "child": Object {
+        "children": Array [],
+        "id": "uuid-from-gatsby",
+        "internal": Object {
+          "contentDigest": "10c867561d207bc7dae0455d3cccad5b",
+          "type": "TestCsv",
+        },
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "red,veryfunny
+TRUE,certainly
+FALSE,nada
 ",
         "extension": "csv",
         "id": "whatever",

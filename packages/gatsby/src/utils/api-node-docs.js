@@ -1,5 +1,5 @@
 /**
- * Let's plugins implementing support for other compile-to-js add to the list
+ * Lets plugins implementing support for other compile-to-js add to the list
  * of "resolvable" file extensions. Gatsby supports `.js` and `.jsx` by default.
  * @returns {Array} array of extensions
  */
@@ -10,12 +10,10 @@ exports.resolvableExtensions = true
  * sourcing and transformation of nodes plus creation of the GraphQL schema are
  * complete so you can query your data in order to create pages.
  *
- * See also [the documentation for the boundActionCreator `createPage`](/docs/bound-action-creators/#createPage).
+ * See also [the documentation for the action `createPage`](/docs/actions/#createPage).
  * @example
- * const path = require("path");
- *
- * exports.createPages = ({ graphql, boundActionCreators }) => {
- *   const { createPage } = boundActionCreators
+ * exports.createPages = ({ graphql, actions }) => {
+ *   const { createPage } = actions
  *   return new Promise((resolve, reject) => {
  *     const blogPostTemplate = path.resolve(`src/templates/blog-post.js`)
  *     // Query for markdown nodes to use in creating pages.
@@ -43,9 +41,13 @@ exports.resolvableExtensions = true
  *         result.data.allMarkdownRemark.edges.forEach(edge => {
  *             createPage({
  *               path: `${edge.node.fields.slug}`, // required
- *               component: slash(blogPostTemplate),
+ *               component: blogPostTemplate,
  *               context: {
- *                 slug: edge.node.fields.slug,
+ *                 // Add optional context data. Data can be used as
+ *                 // arguments to the page GraphQL query.
+ *                 //
+ *                 // The page "path" is always available as a GraphQL
+ *                 // argument.
  *               },
  *             })
  *         })
@@ -55,7 +57,6 @@ exports.resolvableExtensions = true
  *     )
  *   })
  * }
- * @returns {Array} array of extensions
  */
 
 exports.createPages = true
@@ -67,8 +68,8 @@ exports.createPages = true
  * page information as Gatsby's data changes but those implementing
  * `createPagesStatefully` will not.
  *
- * An example of a plugin that uses this extension point is the internal plugin
- * [component-page-creator](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby/src/internal-plugins/component-page-creator)
+ * An example of a plugin that uses this extension point is the plugin
+ * [gatsby-plugin-page-creator](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-page-creator)
  * which monitors the `src/pages` directory for the adding and removal of JS
  * pages. As its source of truth, files in the pages directory, is not known by
  * Gatsby, it needs to keep its own state about its world to know when to
@@ -77,28 +78,12 @@ exports.createPages = true
 exports.createPagesStatefully = true
 
 /**
- * Tell plugins to add layouts. This extension point is called only after the initial
- * sourcing and transformation of nodes plus creation of the GraphQL schema are
- * complete so you can query your data in order to create layouts.
- *
- * See also the documentation for [`createLayout`](/docs/bound-action-creators/#createLayout).
- * @example
- * exports.createLayouts = ({ graphql, boundActionCreators }) => {
- *  boundActionCreators.createLayout({
- *    component: path.resolve(`src/templates/custom-layout.js`),
- *    id: 'custom', // optional - if not provided the filename will be used as id
- *   })
- *  }
- */
-exports.createLayouts = true
-
-/**
  * Extension point to tell plugins to source nodes.
  *
- * See also the documentation for [`createNode`](/docs/bound-action-creators/#createNode).
+ * See also the documentation for [`createNode`](/docs/actions/#createNode).
  * @example
- * exports.sourceNodes = ({ boundActionCreators }) => {
- *   const { createNode } = boundActionCreators
+ * exports.sourceNodes = ({ actions }) => {
+ *   const { createNode } = actions
  *   // Create nodes here.
  * }
  */
@@ -108,11 +93,11 @@ exports.sourceNodes = true
  * Called when a new node is created. Plugins wishing to extend or
  * transform nodes created by other plugins should implement this API.
  *
- * See also the documentation for [`createNode`](/docs/bound-action-creators/#createNode)
- * and [`createNodeField`](/docs/bound-action-creators/#createNodeField)
+ * See also the documentation for [`createNode`](/docs/actions/#createNode)
+ * and [`createNodeField`](/docs/actions/#createNodeField)
  * @example
- * exports.onCreateNode = ({ node, boundActionCreators }) => {
- *   const { createNode, createNodeField } = boundActionCreators
+ * exports.onCreateNode = ({ node, actions }) => {
+ *   const { createNode, createNodeField } = actions
  *   // Transform the new node here and create a new node or
  *   // create a new node field.
  * }
@@ -130,21 +115,54 @@ exports.onCreateNode = true
 exports.onCreatePage = true
 
 /**
- * Called when a new layout is created. This extension API is useful
- * for programmatically manipulating layouts created by other plugins
- */
-exports.onCreateLayout = true
-
-/**
  * Called during the creation of the GraphQL schema. Allows plugins
- * to add new fields to the types created from data nodes. Many transformer
- * plugins use this to add fields that take arguments.
+ * to add new fields to the types created from data nodes. It will be called
+ * separately for each type.
+ *
+ * This function should return an object in the shape of
+ * [GraphQLFieldConfigMap](https://graphql.org/graphql-js/type/#graphqlobjecttype)
+ * which will be appended to fields inferred by Gatsby from data nodes.
+ *
+ * *Note:* Import GraphQL types from `gatsby/graphql` and don't add the `graphql`
+ * package to your project/plugin dependencies to avoid `Schema must
+ * contain unique named types but contains multiple types named` errors.
+ * `gatsby/graphql` exports all builtin GraphQL types as well as the `graphQLJSON`
+ * type.
+ *
+ * Many transformer plugins use this to add fields that take arguments.
  *
  * * [`gatsby-transformer-remark`](/packages/gatsby-transformer-remark/)
  * adds an "excerpt" field where the user when writing their query can specify
  * how many characters to prune the markdown source to.
  * * [`gatsby-transformer-sharp`](/packages/gatsby-transformer-sharp/) exposes
  * many image transformation options as GraphQL fields.
+ *
+ * @param {object} $0
+ * @param {object} $0.type Object containing `name` and `nodes`
+ * @example
+ * import { GraphQLString } from "gatsby/graphql"
+ *
+ * exports.setFieldsOnGraphQLNodeType = ({ type }) => {
+ *   if (type.name === `File`) {
+ *     return {
+ *       newField: {
+ *         type: GraphQLString,
+ *         args: {
+ *           myArgument: {
+ *             type: GraphQLString,
+ *          }
+ *         }
+ *         resolve: (source, fieldArgs) => {
+ *           return `Id of this node is ${source.id}.
+ *                   Field was called with argument: ${fieldArgs.myArgument}`
+ *         }
+ *       }
+ *     }
+ *   }
+ *
+ *   // by default return empty object
+ *   return {}
+ * }
  */
 exports.setFieldsOnGraphQLNodeType = true
 
@@ -166,19 +184,46 @@ exports.generateSideEffects = true
  * This API will change before 2.0 as it needs still to be converted to use
  * Redux actions.
  */
-exports.modifyBabelrc = true
+exports.onCreateBabelConfig = true
 
 /**
  * Let plugins extend/mutate the site's webpack configuration.
  *
- * Refer to the [Add custom webpack config docs
- * page](/docs/add-custom-webpack-config/) for detailed documentation on
- * modifying webpack docs).
+ * See also the documentation for [`setWebpackConfig`](/docs/actions/#setWebpackConfig).
+ *
+ * @param {object} $0
+ * @param {string} $0.stage The current build stage. One of 'develop', 'develop-html',
+ * 'build-javascript', or 'build-html'
+ * @param {function} $0.getConfig Returns the current webpack config
+ * @param {object} $0.rules A set of preconfigured webpack config rules
+ * @param {object} $0.loaders A set of preconfigured webpack config loaders
+ * @param {object} $0.plugins A set of preconfigured webpack config plugins
+ * @param {object} $0.actions
+ * @example
+ * exports.onCreateWebpackConfig = ({
+ *  stage, getConfig, rules, loaders, actions
+ * }) => {
+ *   actions.setWebpackConfig({
+ *     module: {
+ *       rules: [
+ *         {
+ *           test: 'my-css',
+ *           use: [loaders.style(), loaders.css()]
+ *         },
+ *       ],
+ *     },
+ *   });
+ * }
  */
-exports.modifyWebpackConfig = true
+exports.onCreateWebpackConfig = true
 
 /**
- * Called at the start of the bootstrap process before any other extension APIs are called.
+ * The first API called during Gatsby execution, runs as soon as plugins are loaded, before cache initialization and bootstrap preparation.
+ */
+exports.onPreInit = true
+
+/**
+ * Called once Gatsby has initialized itself and is ready to bootstrap your site.
  */
 exports.onPreBootstrap = true
 

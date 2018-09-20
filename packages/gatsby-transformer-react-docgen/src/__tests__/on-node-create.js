@@ -13,13 +13,17 @@ const readFile = file =>
   })
 
 describe(`transformer-react-doc-gen: onCreateNode`, () => {
-  let loadNodeContent, boundActionCreators, node, createdNodes, updatedNodes
+  let loadNodeContent, actions, node, createdNodes, updatedNodes
+  const createNodeId = jest.fn()
+  createNodeId.mockReturnValue(`uuid-from-gatsby`)
   let run = (node, opts = {}) =>
     onCreateNode(
       {
         node,
         loadNodeContent,
-        boundActionCreators,
+        actions,
+        createNodeId,
+        reporter: { error: console.error },
       },
       opts
     )
@@ -36,16 +40,16 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
       __fixture: `classes.js`,
     }
     loadNodeContent = jest.fn(node => readFile(node.__fixture))
-    boundActionCreators = {
+    actions = {
       createNode: jest.fn(n => createdNodes.push(n)),
       createParentChildLink: jest.fn(n => updatedNodes.push(n)),
     }
   })
 
-  it(`should only process javascript and jsx nodes`, () => {
+  it(`should only process javascript and jsx nodes`, async () => {
     loadNodeContent = jest.fn(() => new Promise(() => {}))
 
-    expect(run({ internal: { mediaType: `text/x-foo` } })).toBeNull()
+    expect(await run({ internal: { mediaType: `text/x-foo` } })).toBeUndefined()
     expect(
       run({ internal: { mediaType: `application/javascript` } })
     ).toBeDefined()
@@ -58,14 +62,22 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
     await run(node)
 
     let types = groupBy(createdNodes, n => n.internal.type)
-    expect(types.ComponentMetadata).toHaveLength(5)
+    expect(types.ComponentMetadata).toHaveLength(6)
   })
 
   it(`should give all components a name`, async () => {
     await run(node)
 
     let types = groupBy(createdNodes, `internal.type`)
-    expect(types.ComponentMetadata.every(c => c.displayName)).toBe(true)
+
+    expect(types.ComponentMetadata.map(c => c.displayName)).toEqual([
+      `Baz`,
+      `Buz`,
+      `Foo`,
+      `Baz.Foo`,
+      `Bar`,
+      `Qux`,
+    ])
   })
 
   it(`should infer a name`, async () => {
@@ -81,6 +93,19 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
 
     let types = groupBy(createdNodes, `internal.type`)
     expect(types.ComponentProp).toHaveLength(14)
+  })
+
+  it(`should delicately remove doclets`, async () => {
+    await run(node)
+
+    let types = groupBy(createdNodes, `internal.type`)
+    expect(types.ComponentProp[0].description).toEqual(
+      `An object hash of field (fix this @mention?) errors for the form.`
+    )
+    expect(types.ComponentProp[0].doclets).toEqual({
+      type: `{Foo}`,
+      default: `blue`,
+    })
   })
 
   it(`should extract create description nodes with markdown types`, async () => {
@@ -100,5 +125,19 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
     })
 
     expect(!!handler.mock.calls.length).toBe(true)
+  })
+
+  describe(`flowTypes`, () => {
+    beforeEach(() => {
+      node.__fixture = `flow.js`
+    })
+    it(`should add flow type info`, async () => {
+      await run(node)
+      const created = createdNodes.find(f => !!f.flowType)
+
+      expect(created.flowType).toEqual({
+        name: `number`,
+      })
+    })
   })
 })

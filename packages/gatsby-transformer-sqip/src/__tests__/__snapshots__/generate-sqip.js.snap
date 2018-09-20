@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`gatsby-transformer-sqip generateSqip cached 1`] = `
+Object {
+  "dataURI": "data:image/svg+xml,%3csvg%3e%3c!-- Cached SQIP SVG --%3e%3c/svg%3e",
+  "svg": "<svg><!-- Cached SQIP SVG --></svg>",
+}
+`;
+
+exports[`gatsby-transformer-sqip generateSqip not cached 1`] = `
+Object {
+  "dataURI": "data:image/svg+xml,%3csvg%3e%3c!-- Mocked SQIP SVG --%3e%3c/svg%3e",
+  "svg": "<svg><!-- Mocked SQIP SVG --></svg>",
+}
+`;
+
+exports[`gatsby-transformer-sqip generateSqip not cached 2`] = `
+Object {
+  "blur": 0,
+  "mode": 3,
+  "numberOfPrimitives": 5,
+}
+`;

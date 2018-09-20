@@ -3,7 +3,7 @@
   avatar: avatars/kyle-mathews.jpeg
   twitter: "@kylemathews"
 - id: Dustin Schau
-  bio: Consultant @ Object Partners, Inc. Likes all things front-end, and travel. And other things too. Blogs at dustinschau.com/blog.
+  bio: Software Engineer @ GatsbyJS. Likes all things front-end, and travel. And other things too. Blogs at blog.dustinschau.com.
   avatar: avatars/dustin-schau.jpeg
   twitter: "@schaudustin"
 - id: Kostas Bariotis
@@ -59,11 +59,11 @@
   avatar: avatars/arden-de-raaij.jpg
   twitter: "@ardennl"
 - id: Shannon Soper
-  bio: Lives and works in Provo, UT doing UX research for GatsbyJS, music teaching / performance, and keeping up with her dog’s Instagram fans @dgtrwatson. Her background is in persuasive writing & speaking and she enjoys teaching college-level writing courses on the side.
+  bio: UX researcher and educational psychology fan. Teaches piano and keeps up with her dog's Instagram fans @dgtrwatson.
   avatar: avatars/shannon-soper.jpg
   twitter: "@shannonb_ux"
 - id: Sam Bhagwat
-  bio: Bay Area adoptee. Programmer, econ nerd, startup enthusiast
+  bio: Bay Area adoptee. Gatsby co-founder. Programmer, econ nerd, startup enthusiast
   avatar: avatars/sam-bhagwat.jpg
   twitter: "@calcsam"
 - id: Pierre Burgy
@@ -101,3 +101,67 @@
   bio: Software engineer who loves open source and keeping up with awesome tech — https://jiahao.codes/
   avatar: avatars/jia-hao-goh.jpg
   twitter: "@jiahaog"
+- id: Vojtech Ruzicka
+  bio: Full-stack developer, clean code enthusiast, blogger at https://www.vojtechruzicka.com/
+  avatar: avatars/vojtech-ruzicka.jpg
+  twitter: "@vojtechruzicka"
+- id: Robert Svensson
+  bio: Developer and web security enthusiast living in Berlin.
+  avatar: avatars/robert-svensson.jpg
+  twitter: "@RobertDMW"
+- id: Carolyn Stransky
+  bio: Journalist and JavaScript developer based in Berlin, Germany.
+  avatar: avatars/carolyn-stransky.jpg
+  twitter: "@carolstran"
+- id: Sarah Mogin
+  bio: Developer and Diet Coke enthusiast in Brooklyn, NY
+  avatar: avatars/sarah-mogin.jpg
+  twitter: "@sarahmogin"
+- id: Dan Kass
+  bio: Co-founder and engineering lead at JustFix.nyc
+  avatar: avatars/dan-kass.jpg
+  twitter: "@JustFixNYC"
+- id: Gatsby Central
+  bio: The community for gatsby developers
+  avatar: avatars/gatsby-central.jpg
+  twitter: "@GatsbyCentral"
+- id: Ray Gesualdo
+  bio: UI Engineer at SalesLoft. Full-stack JavaScript-er. Speaker. Mentor. Writer. - https://www.raygesualdo.com
+  avatar: avatars/ray-gesualdo.jpg
+  twitter: "@RayGesualdo"
+- id: Michelle Barker
+  bio: Front end developer at Mud, CSS obsessive and blogger at https://css-irl.info
+  avatar: avatars/michelle-barker.jpg
+  twitter: "@CSSInRealLife"
+- id: Jason Lengstorf
+  bio: Developer. Occasional designer. Process and culture architect. Mediocre bartender. Blogs at lengstorf.com
+  avatar: avatars/jason-lengstorf.jpg
+  twitter: "@jlengstorf"
+- id: Mike Allanson
+  bio: Building tools and riding bicycles in London, UK
+  avatar: avatars/mike-allanson.jpg
+  twitter: "@mdashallanson"
+- id: Linda Watkins
+  bio: Marketing execution machine. I think critically, adjust often, and find creative solutions to problems.
+  avatar: avatars/linda-watkins.jpg
+  twitter: "@lindawatkins"
+- id: Dennis Brotzky
+  bio: Co-founder at Narative, driving Product and Engineering forward.
+  avatar: avatars/dennis-brotzky.jpg
+  twitter: "@_brotzky"
+- id: Tony Spiro
+  bio: Cosmic JS Co-founder. Building (blazing fast) apps faster @ https://cosmicjs.com
+  avatar: avatars/tony-spiro.jpg
+  twitter: "@tonyspiro"
+- id: Khaled Garbaya
+  bio: Software developer and full-time opensourcerer at @contentful. He speaks multiple languages and is often overheard saying "Bonjour" in HTML.
+  avatar: avatars/khaled-garbaya.jpg
+  twitter: "@khaled_garbaya"
+- id: Horacio Herrera
+  avatar: avatars/horacio-herrera.jpg
+  twitter: "@hhg2288"
+  bio: Designer, Developer & Coach • husband • dad • web • mobile • React Native • ReactJS • GraphQL
+- id: Nader Dabit
+  avatar: avatars/nader-dabit.jpg
+  twitter: "@dabit3"
+  bio: Developer Advocate at AWS

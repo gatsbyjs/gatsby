@@ -1,21 +1,21 @@
 {
   "name": "gatsby-plugin-styletron",
   "description": "A Gatsby plugin for styletron with built-in server-side rendering support",
-  "version": "2.0.4",
-  "author": "Nadiia Dmytrenko &lt;nadiia.dmytrenko@gmail.com&gt;",
+  "version": "3.0.0",
+  "author": "Nadiia Dmytrenko <nadiia.dmytrenko@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "babel-runtime": "^6.26.0",
-    "styletron-engine-atomic": "^1",
+    "@babel/runtime": "^7.0.0",
+    "styletron-engine-atomic": "^1.0.8",
     "styletron-react": "^4",
-    "styletron-react-core": "^1",
-    "styletron-standard": "^1"
+    "styletron-standard": "^1.0.6"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "cross-env": "^5.0.5"
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.0.0",
+    "cross-env": "^5.1.4"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-styletron#readme",
   "keywords": [
@@ -25,12 +25,12 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "gatsby": "^1.0.0"
+    "gatsby": ">2.0.0-alpha"
   },
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-styletron",
   "scripts": {
-    "build": "babel src --out-dir . --ignore __tests__",
-    "prepublish": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir . --ignore __tests__"
+    "build": "babel src --out-dir . --ignore **/__tests__",
+    "prepare": "cross-env NODE_ENV=production npm run build",
+    "watch": "babel -w src --out-dir . --ignore **/__tests__"
   }
 }
