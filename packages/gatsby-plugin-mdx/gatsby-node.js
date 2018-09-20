@@ -1,9 +1,7 @@
 const path = require("path");
 const mkdirp = require("mkdirp");
 const { MDX_WRAPPERS_LOCATION, MDX_SCOPES_LOCATION } = require("./constants");
-
 const defaultOptions = require("./utils/default-options");
-const mdx = require("./utils/mdx");
 
 /**
  * Create Mdx nodes from MDX files.
@@ -35,19 +33,7 @@ exports.resolvableExtensions = (data, pluginOptions) =>
 /**
  * Convert MDX to JSX so that Gatsby can extract the GraphQL queries.
  */
-exports.preprocessSource = async function preprocessSource(
-  { filename, contents },
-  pluginOptions
-) {
-  const { extensions, ...options } = defaultOptions(pluginOptions);
-  const ext = path.extname(filename);
-
-  if (extensions.includes(ext)) {
-    const code = await mdx(contents, options);
-    return code;
-  }
-  return null;
-};
+exports.preprocessSource = require("./gatsby/preprocess-source");
 
 /**
  * Required config for mdx to function
