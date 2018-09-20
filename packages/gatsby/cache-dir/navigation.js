@@ -51,7 +51,6 @@ const onRouteUpdate = location => {
     resolveRouteChangePromise()
 
     // Temp hack while awaiting https://github.com/reach/router/issues/119
-    console.log(`[navigation] no longer navigating`, location.pathname)
     window.__navigatingToLink = false
   }
 }
@@ -59,7 +58,6 @@ const onRouteUpdate = location => {
 const navigate = (to, options = {}) => {
   // Temp hack while awaiting https://github.com/reach/router/issues/119
   if (!options.replace) {
-    console.log(`[navigation] navigating`, location.pathname)
     window.__navigatingToLink = true
   }
 
