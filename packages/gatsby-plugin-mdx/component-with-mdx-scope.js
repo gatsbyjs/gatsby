@@ -1,4 +1,3 @@
-const mkdirp = require("mkdirp");
 const fs = require("fs");
 const crypto = require("crypto");
 const path = require("path");
@@ -8,6 +7,8 @@ const debug = require("debug")("gatsby-mdx:component-with-mdx-scope");
 
 const BabelPluginPluckExports = require("babel-plugin-pluck-exports");
 
+const { MDX_WRAPPERS_LOCATION } = require("./constants");
+
 module.exports = function componentWithMDXScope(
   absWrapperPath,
   codeScopeAbsPaths = [],
@@ -16,7 +17,6 @@ module.exports = function componentWithMDXScope(
   if (typeof codeScopeAbsPaths === "string") {
     codeScopeAbsPaths = [codeScopeAbsPaths];
   }
-  mkdirp.sync(path.join(projectRoot, CACHE_DIR, PLUGIN_DIR, MDX_WRAPPERS_DIR));
 
   // hoist pageQuery and any other named exports
   const OGWrapper = fs.readFileSync(absWrapperPath, "utf-8");
@@ -78,18 +78,8 @@ export default ({children, ...props}) => <MDXScopeProvider __mdxScope={{${mdxSco
   return absPathToNewWrapper;
 };
 
-const CACHE_DIR = `.cache`;
-const PLUGIN_DIR = `gatsby-mdx`;
-const MDX_WRAPPERS_DIR = `mdx-wrappers-dir`;
-
 const createFilePath = (directory, filename, ext) =>
-  path.join(
-    directory,
-    CACHE_DIR,
-    PLUGIN_DIR,
-    MDX_WRAPPERS_DIR,
-    `${filename}${ext}`
-  );
+  path.join(directory, MDX_WRAPPERS_LOCATION, `${filename}${ext}`);
 
 const createHash = str =>
   crypto

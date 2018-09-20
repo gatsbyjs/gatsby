@@ -20,11 +20,11 @@ const prune = require("underscore.string/prune");
 const crypto = require("crypto");
 const fs = require("fs");
 const path = require("path");
-const mkdirp = require("mkdirp");
 const BabelPluginPluckImports = require("babel-plugin-pluck-imports");
 const objRestSpread = require("@babel/plugin-proposal-object-rest-spread");
 const babel = require("@babel/core");
 const rawMDX = require("@mdx-js/mdx");
+const { MDX_SCOPES_LOCATION } = require("../constants");
 
 const debug = require("debug")("gatsby-mdx:extend-node-type");
 const mdx = require("../utils/mdx");
@@ -243,19 +243,10 @@ ${code}`;
             scope: {
               type: GraphQLString,
               async resolve(mdxNode) {
-                const CACHE_DIR = `.cache`;
-                const PLUGIN_DIR = `gatsby-mdx`;
-                const REMOTE_MDX_DIR = `remote-mdx-dir`;
-
-                mkdirp.sync(
-                  path.join(options.root, CACHE_DIR, PLUGIN_DIR, REMOTE_MDX_DIR)
-                );
                 const createFilePath = (directory, filename, ext) =>
                   path.join(
                     directory,
-                    CACHE_DIR,
-                    PLUGIN_DIR,
-                    REMOTE_MDX_DIR,
+                    MDX_SCOPES_LOCATION,
                     `${filename}${ext}`
                   );
 
