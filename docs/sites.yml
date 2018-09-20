@@ -2510,3 +2510,14 @@
     - Blog
   built_by: Wire team
   built_by_url: https://github.com/orgs/wireapp/people
+- title: Leyan Lo
+  main_url: https://www.leyanlo.com
+  url: https://www.leyanlo.com
+  description: >
+    Leyan Lo’s personal website
+  categories:
+    - Portfolio
+    - Rubik’s Cube
+  built_by: Leyan Lo
+  built_by_url: https://www.leyanlo.com
+  featured: false
