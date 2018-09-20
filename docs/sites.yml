@@ -303,12 +303,16 @@
     - Education
     - Web Dev
 - title: Piotr Fedorczyk Portfolio
-  main_url: "https://piotrf.pl/"
-  url: "https://piotrf.pl/"
-  featured: false
+  built_by: Piotr Fedorczyk
+  built_by_url: "https://piotrf.pl"
   categories:
     - Portfolio
     - Web Dev
+  description: >-
+    Portfolio of Piotr Fedorczyk, a digital product designer and full-stack developer specializing in shaping, designing and building news and tools for news.
+  featured: false
+  main_url: "https://piotrf.pl/"
+  url: "https://piotrf.pl/"
 - title: unrealcpp
   main_url: "https://unrealcpp.com/"
   url: "https://unrealcpp.com/"
