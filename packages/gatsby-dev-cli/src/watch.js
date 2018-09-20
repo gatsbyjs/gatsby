@@ -8,7 +8,7 @@ let numCopied = 0
 const debouncedQuit = _.debounce(() => {
   console.log(`Copied ${numCopied} files`)
   process.exit()
-}, 500)
+}, process.env.CI ? 2500 : 500)
 
 const copyPath = (oldPath, newPath, quiet) => {
   fs.copy(oldPath, newPath, err => {
