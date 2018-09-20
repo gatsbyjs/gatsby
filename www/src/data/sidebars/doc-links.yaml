@@ -66,6 +66,8 @@
           link: /docs/gatsby-source-filesystem-programmatic-import/
         - title: Working with images in Gatsby
           link: /docs/working-with-images/
+        - title: Using gatsby-image
+          link: /docs/using-gatsby-image/
     - title: Sourcing content and data*
       link: /docs/content-and-data/
       items:
