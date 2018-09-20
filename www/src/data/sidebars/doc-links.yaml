@@ -168,8 +168,10 @@
       items:
         - title: Progressive web app (PWA)
           link: /docs/progressive-web-app/
-        - title: Creating Dynamically-Rendered Navigation*
-          link: /docs/creating-dynamically-rendered-navigation/
+        - title: Centralizing your site's navigation
+          link: /docs/centralizing-your-sites-navigation/
+        - title: Rendering sidebar navigation dynamically
+          link: /docs/rendering-sidebar-navigation-dynamically/
         - title: Authentication*
           link: /docs/authentication/
         - title: E-commerce*
