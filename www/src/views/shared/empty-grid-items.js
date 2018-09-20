@@ -6,6 +6,7 @@ const EmptyGridItems = ({ styles }) => {
   for (let i = 0; i < 6; i++) {
     items.push(
       <div
+        key={`empty-grid-item-${i}`}
         aria-hidden="true"
         css={{
           ...styles,
