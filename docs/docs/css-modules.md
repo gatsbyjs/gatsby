@@ -3,9 +3,11 @@ title: CSS Modules
 ---
 
 ## CSS modules and Gatsby
+
 Gatsby works out of the box with CSS Modules. Here is an [example site that uses CSS modules](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-css-modules).
 
 ## What is a CSS module?
+
 Quoting from
 [the CSS Module homepage](https://github.com/css-modules/css-modules):
 
@@ -17,10 +19,12 @@ more safety. The tool automatically makes class and animation names unique so
 you don't have to worry about selector name collisions.
 
 ## When to use CSS modules
+
 CSS Modules are highly recommended for those new to building with Gatsby (and
 React in general).
 
 ## How to build a page using CSS modules
+
 First, create a new `Container` component. Create a new directory at
 `src/components` and then, in this new directory, create a file named
 `container.js` and paste the following:
@@ -175,4 +179,3 @@ export default () => (
 The finished page should now look like:
 
 ![css-modules-final](./images/css-modules-final.png)
-
