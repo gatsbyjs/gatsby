@@ -79,3 +79,14 @@
   for_hire: true
   hiring: false
   portfolio: true
+- name: Ste O'Neill
+  type: individual
+  description: >-
+    Hi I'm Ste! I’m a full stack web developer based in Leeds, England. I like to make bold, beautiful websites that don’t take themselves too seriously.
+  location: 'Leeds, England'
+  website: 'https://steoneill.me'
+  github: 'https://github.com/steoneill'
+  image: images/ste-oneill.jpg
+  for_hire: true
+  hiring: false
+  portfolio: true
