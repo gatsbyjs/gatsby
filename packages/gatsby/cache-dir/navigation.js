@@ -1,3 +1,5 @@
+import React from "react"
+import PropTypes from "prop-types"
 import loader, { setApiRunnerForLoader } from "./loader"
 import redirects from "./redirects.json"
 import { apiRunner } from "./api-runner-browser"
@@ -49,6 +51,7 @@ const onRouteUpdate = location => {
     resolveRouteChangePromise()
 
     // Temp hack while awaiting https://github.com/reach/router/issues/119
+    console.log(`[navigation] no longer navigating`, location.pathname)
     window.__navigatingToLink = false
   }
 }
@@ -56,6 +59,7 @@ const onRouteUpdate = location => {
 const navigate = (to, options = {}) => {
   // Temp hack while awaiting https://github.com/reach/router/issues/119
   if (!options.replace) {
+    console.log(`[navigation] navigating`, location.pathname)
     window.__navigatingToLink = true
   }
 
@@ -139,4 +143,39 @@ function init() {
   maybeRedirect(window.location.pathname)
 }
 
-export { init, shouldUpdateScroll, onRouteUpdate, onPreRouteUpdate }
+// Fire on(Pre)RouteUpdate APIs
+class RouteUpdates extends React.Component {
+  constructor(props) {
+    super(props)
+    onPreRouteUpdate(props.location)
+  }
+
+  componentDidMount() {
+    onRouteUpdate(this.props.location)
+  }
+
+  componentDidUpdate(prevProps, prevState, shouldFireRouteUpdate) {
+    if (shouldFireRouteUpdate) {
+      onRouteUpdate(this.props.location)
+    }
+  }
+
+  getSnapshotBeforeUpdate(prevProps, prevState) {
+    if (this.props.location.pathname !== prevProps.location.pathname) {
+      onPreRouteUpdate(this.props.location)
+      return true
+    }
+
+    return false
+  }
+
+  render() {
+    return this.props.children
+  }
+}
+
+RouteUpdates.propTypes = {
+  location: PropTypes.object.isRequired,
+}
+
+export { init, shouldUpdateScroll, RouteUpdates }
