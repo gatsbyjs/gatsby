@@ -158,7 +158,7 @@ class RouteUpdates extends React.Component {
     }
   }
 
-  getSnapshotBeforeUpdate(prevProps, prevState) {
+  getSnapshotBeforeUpdate(prevProps) {
     if (this.props.location.pathname !== prevProps.location.pathname) {
       onPreRouteUpdate(this.props.location)
       return true
