@@ -70,7 +70,7 @@ class FeaturedSites extends Component {
           <h1
             css={{
               ...scale(1 / 5),
-              // color: colors.gatsby,
+              color: colors.gatsby,
               fontFamily: options.headerFontFamily.join(`,`),
               fontWeight: `bold`,
               marginRight: 30,

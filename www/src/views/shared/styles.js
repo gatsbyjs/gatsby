@@ -108,7 +108,7 @@ const styles = {
       background: colors.ui.bright,
     },
     "&::-webkit-scrollbar-track": {
-      background: colors.ui.light,
+      background: colors.ui.whisper,
     },
   },
   screenshot: {
@@ -169,6 +169,34 @@ const styles = {
       width: `9rem`,
       background: colors.ui.light,
     },
+  },
+  filterButton: {
+    ...scale(-2 / 10),
+    [presets.Tablet]: {
+      ...scale(-4 / 10),
+    },
+    margin: 0,
+    alignItems: `flex-start`,
+    background: `none`,
+    border: `none`,
+    color: colors.gray.text,
+    cursor: `pointer`,
+    display: `flex`,
+    fontFamily: options.systemFontFamily.join(`,`),
+    justifyContent: `space-between`,
+    outline: `none`,
+    padding: 0,
+    paddingRight: rhythm(1),
+    paddingBottom: rhythm(options.blockMarginBottom / 8),
+    paddingTop: rhythm(options.blockMarginBottom / 8),
+    width: `100%`,
+    textAlign: `left`,
+    ":hover": {
+      color: colors.gatsby,
+    },
+  },
+  filterCount: {
+    color: colors.gray.bright,
   },
 }
 
