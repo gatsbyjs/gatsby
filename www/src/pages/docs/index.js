@@ -24,7 +24,7 @@ class IndexRoute extends React.Component {
             <p>Gatsby is a blazing fast modern site generator for React.</p>
             <p>
               This quick start is intended for intermediate to advanced
-              developers. For a gentler intro to Gatsby,
+              developers. For a gentler intro to Gatsby, 
               <Link to="/tutorial/">head to our tutorial!</Link>
             </p>
             <h2>
