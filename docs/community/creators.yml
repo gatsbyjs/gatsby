@@ -90,3 +90,13 @@
   for_hire: true
   hiring: false
   portfolio: true
+- name: Michael Uloth
+  type: individual
+  description: Michael Uloth is a Toronto-based web developer who specializes in building fast-loading, accessibile websites with Gatsby. 
+  location: Toronto
+  website: 'https://www.michaeluloth.com'
+  github: 'https://github.com/ooloth'
+  image: images/michael-uloth.jpg
+  for_hire: true
+  hiring: false
+  portfolio: true
