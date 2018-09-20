@@ -267,7 +267,7 @@ There are several starters that have been created. Create a PR to include yours!
   - Full-width photo grid-layout (with [gatsby-image](https://using-gatsby-image.gatsbyjs.org/))
   - Minimalistic light theme with large images
   - Create your projects in Markdown
-  - Styling with SCSS and
+  - Styling with Emotion and
     [Typography.js](https://kyleamathews.github.io/typography.js/)
   - Easily configurable
   - And other good stuff (SEO, Offline Support, WebApp Manifest Support)
@@ -281,11 +281,11 @@ There are several starters that have been created. Create a PR to include yours!
 
   - Focus on big images (with [gatsby-image](https://using-gatsby-image.gatsbyjs.org/))
   - Dark Theme with HeroPatterns Header
-  - CSS Grid and Styled Components
+  - CSS Grid and Emotion
   - One-Page layout with sub-pages for projects
   - Easily configurable
   - React Overdrive transitions
-  - Create your projects in Markdown
+  - Create your projects in Markdown (automatic import of images)
   - And other good stuff (SEO, Offline Support, WebApp Manifest Support)
 
 - [gatsby-starter-portfolio-bella](https://github.com/LeKoArts/gatsby-starter-portfolio-bella)
@@ -298,7 +298,7 @@ There are several starters that have been created. Create a PR to include yours!
   - Big typography & images
   - White theme
   - Prismic.io as CMS
-  - Emotion for styling
+  - Emotion for styling + Emotion-Grid
   - One-page layout with sub-pages for case studies
   - Easily configurable
   - And other good stuff (SEO, Offline Support, WebApp Manifest Support)
@@ -310,7 +310,6 @@ There are several starters that have been created. Create a PR to include yours!
 
   Features:
 
-  - Gatsby v2
   - React Spring
   - TailwindCSS & Emotion
   - Playful & Colorful One-Page website with Parallax effect
