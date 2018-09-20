@@ -2591,3 +2591,11 @@
   built_by: Leyan Lo
   built_by_url: https://www.leyanlo.com
   featured: false
+- title: Hawaii National Bank
+  main_url: https://hawaiinational.bank
+  description: Hawaii National Bank's highly personalized service has helped loyal customers & locally owned businesses achieve their financial dreams for over 50 years.
+  categories:
+    - Bank
+  built_by: Wall-to-Wall Studios
+  built_by_url: https://walltowall.com
+  featured: false
