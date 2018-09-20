@@ -5,9 +5,9 @@
     Germany. I’ve been working both as a product designer and frontend developer
     for over 5 years now. I particularly enjoy working with companies that try
     to meet broad and unique user needs.
-  location: 'Potsdam, Germany'
-  website: 'https://fabianschultz.com/'
-  github: 'https://github.com/fabe'
+  location: "Potsdam, Germany"
+  website: "https://fabianschultz.com/"
+  github: "https://github.com/fabe"
   image: images/fabian-schultz.jpg
   for_hire: true
   portfolio: true
@@ -23,9 +23,9 @@
     freelance projects. Feel free to get in touch if you have an interesting
     project that you want to collaborate on. Or if you just want to say hello,
     that’s cool too.
-  location: 'New York, US'
-  website: 'https://k-create.com/'
-  github: 'https://github.com/kristofferh'
+  location: "New York, US"
+  website: "https://k-create.com/"
+  github: "https://github.com/kristofferh"
   image: images/kris-hedstrom.jpg
   for_hire: true
   portfolio: true
@@ -37,8 +37,8 @@
     responsive websites, with strong focus on performance & responsive design
     using the latest technologies.
   location: India
-  website: 'https://mojaave.com/'
-  github: 'https://github.com/mhjadav/mojaave'
+  website: "https://mojaave.com/"
+  github: "https://github.com/mhjadav/mojaave"
   image: images/mahipat-jadav.jpg
   for_hire: true
   portfolio: true
@@ -49,7 +49,7 @@
     development using Static Site Generators, Headless CMS, CI / CD and CDN
     setup.
   location: Poland
-  website: 'https://bejamas.io/'
+  website: "https://bejamas.io/"
   github: null
   image: images/bejamas.jpg
   for_hire: true
@@ -60,8 +60,8 @@
   description: >-
     Spacetime is a Dallas-based digital experience agency specializing in web,
     app, startup, and digital experience creation.
-  location: 'Texas, US'
-  website: 'https://www.heyspacetime.com/'
+  location: "Texas, US"
+  website: "https://www.heyspacetime.com/"
   github: null
   image: images/spacetime.jpg
   for_hire: false
@@ -72,13 +72,25 @@
   description: >-
     Iron Cove Solutions is a cloud based consulting firm. We help companies
     deliver a return on cloud usage by applying best practices
-  location: 'California, US'
-  website: 'https://ironcovesolutions.com/'
+  location: "California, US"
+  website: "https://ironcovesolutions.com/"
   github: null
   image: images/iron-cove-solutions.jpg
   for_hire: true
   hiring: false
   portfolio: true
+- name: Marc-Antoine Ruel
+  type: individual
+  description: >-
+    Hi,
+    I'm a developer from Canada who loves making memorable websites and apps. I pay particular attention to performance, accessibility and the little details that make all the difference.
+  location: "Québec, Canada"
+  website: "https://www.marcantoineruel.com/"
+  github: "https://github.com/maru3l"
+  image: images/marc-antoine-ruel.jpg
+  for_hire: true
+  hiring: false
+  portfolio: false
 - name: Ste O'Neill
   type: individual
   description: >-
