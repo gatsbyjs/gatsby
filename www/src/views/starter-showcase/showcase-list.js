@@ -8,6 +8,7 @@ import { colors } from "../../utils/presets"
 import copyToClipboard from "../../utils/copy-to-clipboard"
 import styles from "../shared/styles"
 import ThumbnailLink from "../shared/thumbnail"
+import EmptyGridItems from "../shared/empty-grid-items"
 
 const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
   if (!items.length) {
@@ -164,31 +165,7 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
           )
         )
       })}
-      {/* makes last row items equal width and aligned left */}
-      <div
-        aria-hidden="true"
-        css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }}
-      />
-      <div
-        aria-hidden="true"
-        css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }}
-      />
-      <div
-        aria-hidden="true"
-        css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }}
-      />
-      <div
-        aria-hidden="true"
-        css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }}
-      />
-      <div
-        aria-hidden="true"
-        css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }}
-      />
-      <div
-        aria-hidden="true"
-        css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }}
-      />
+      {items.length && <EmptyGridItems styles={styles.showcaseItem} />}
     </div>
   )
 }

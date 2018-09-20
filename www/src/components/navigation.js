@@ -135,8 +135,7 @@ const Navigation = ({ pathname }) => {
           <NavItem linkTo="/features/">Features</NavItem>
           <NavItem linkTo="/blog/">Blog</NavItem>
           <NavItem linkTo="/showcase/">Showcase</NavItem>
-          {false ? (
-            <li css={styles.li}>
+          {/* <li css={styles.li}>
               <Link
                 to="/community/"
                 css={styles.navItem}
@@ -144,8 +143,7 @@ const Navigation = ({ pathname }) => {
               >
                 Community
               </Link>
-            </li>
-          ) : null}
+            </li> */}
         </ul>
         <div css={styles.searchAndSocialContainer}>
           <SearchForm
@@ -231,6 +229,7 @@ const styles = {
     color: `inherit`,
     display: `block`,
     letterSpacing: `0.03em`,
+    WebkitFontSmoothing: `antialiased`,
     lineHeight: `calc(${presets.headerHeight} - ${navItemTopOffset})`,
     position: `relative`,
     textDecoration: `none`,

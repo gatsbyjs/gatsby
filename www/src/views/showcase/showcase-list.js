@@ -3,6 +3,7 @@ import { Link } from "gatsby"
 
 import styles from "../shared/styles"
 import ThumbnailLink from "../shared/thumbnail"
+import EmptyGridItems from "../shared/empty-grid-items"
 import qs from "qs"
 
 import ShowcaseItemCategories from "./showcase-item-categories"
@@ -102,31 +103,7 @@ const ShowcaseList = ({ items, count }) => {
             </div>
           )
       )}
-      {/* makes last row items equal width and aligned left */}
-      <div
-        aria-hidden="true"
-        css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }}
-      />
-      <div
-        aria-hidden="true"
-        css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }}
-      />
-      <div
-        aria-hidden="true"
-        css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }}
-      />
-      <div
-        aria-hidden="true"
-        css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }}
-      />
-      <div
-        aria-hidden="true"
-        css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }}
-      />
-      <div
-        aria-hidden="true"
-        css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }}
-      />
+      {items.length && <EmptyGridItems styles={styles.showcaseItem} />}
     </div>
   )
 }
