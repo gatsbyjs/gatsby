@@ -56,12 +56,7 @@ class DefaultLayout extends React.Component {
   }
 
   render() {
-    const {
-      location = {
-        pathname: `/starter-showcase`,
-      },
-    } = this.props // location will be undefined if on 'starter-showcase'
-    const isHomepage = location.pathname === `/`
+    const isHomepage = this.props.location.pathname === `/`
 
     // SEE: template-docs-markdown for why this.props.isSidebarDisabled is here
     const isSidebarDisabled =
@@ -163,10 +158,10 @@ class DefaultLayout extends React.Component {
           <html lang="en" />
         </Helmet>
         <Banner background={isHomepage ? `#402060` : false}>
-          These are the docs for v2 beta.
+          These are the docs for v2.
           {` `}
           <a
-            href="https://gatsbyjs.org/"
+            href="https://v1.gatsbyjs.org/"
             css={{
               color: `#fff`,
             }}

@@ -57,7 +57,6 @@ exports.resolvableExtensions = true
  *     )
  *   })
  * }
- * @returns {Array} array of extensions
  */
 
 exports.createPages = true
@@ -193,8 +192,9 @@ exports.onCreateBabelConfig = true
  * See also the documentation for [`setWebpackConfig`](/docs/actions/#setWebpackConfig).
  *
  * @param {object} $0
- * @param {'develop' | 'develop-html' | 'build-javascript' | 'build-html'} $0.stage The current build stage
- * @param {function(): object} $0.getConfig Returns the current webpack config
+ * @param {string} $0.stage The current build stage. One of 'develop', 'develop-html',
+ * 'build-javascript', or 'build-html'
+ * @param {function} $0.getConfig Returns the current webpack config
  * @param {object} $0.rules A set of preconfigured webpack config rules
  * @param {object} $0.loaders A set of preconfigured webpack config loaders
  * @param {object} $0.plugins A set of preconfigured webpack config plugins

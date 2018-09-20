@@ -7,14 +7,20 @@ const PositionContext = React.createContext({
   onPositionChange: () => {},
 })
 
+let timerId
+
 export default class ScrollPositionProvider extends Component {
   state = { positions: positionStore }
 
   onPositionChange = (cacheName, position) => {
-    this.setState(() => {
-      positionStore[cacheName] = position
-      return { positions: { ...positionStore } }
-    })
+    clearTimeout(timerId)
+    // wait until position has stopped changing
+    timerId = setTimeout(() => {
+      this.setState(() => {
+        positionStore[cacheName] = position
+        return { positions: { ...positionStore } }
+      })
+    }, 100)
   }
 
   render() {

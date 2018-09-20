@@ -25,33 +25,11 @@ There are several starters that have been created. Create a PR to include yours!
 ## Official starters
 
 - [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default)
-  [(demo)](http://gatsbyjs.github.io/gatsby-starter-default/)
+  [(demo)](https://gatsby-starter-default-demo.netlify.com/)
 - [gatsby-starter-blog](https://github.com/gatsbyjs/gatsby-starter-blog)
-  [(demo)](http://gatsbyjs.github.io/gatsby-starter-blog/)
+  [(demo)](https://gatsby-starter-blog-demo.netlify.com/)
 - [gatsby-starter-hello-world](https://github.com/gatsbyjs/gatsby-starter-hello-world)
-  [(demo)](https://aberrant-fifth.surge.sh/)
-
-### Using Gatsby v2 with the official starters
-
-If you'd like to get started with Gatsby v2 you're in luck, there's a v2 edition for each of the official starters. Install your favourite one with the Gatsby CLI.
-
-`gatsby-starter-default` with v2:
-
-```
-gatsby new my-default-project https://github.com/gatsbyjs/gatsby-starter-default#v2
-```
-
-`gatsby-starter-hello-world` with v2:
-
-```
-gatsby new my-hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world#v2
-```
-
-`gatsby-starter-blog` with v2:
-
-```
-gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
-```
+  [(demo)](https://gatsby-starter-hello-world-demo.netlify.com/)
 
 ## Community starters
 
@@ -911,12 +889,15 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
 
   > A set of starters for Gatsby v2
 
-  - Minimal
-  - Equipped
-  - Themed
-  - Website
-  - Blog
-  - more coming soon
+  - Minimal [ [docs](https://greglobinski.github.io/gatsby-starter-kit-docs/minimal-starter/) / [demo](https://gatsby-starter-kit-minimal.netlify.com/) ]
+  - Equipped [ [docs](https://greglobinski.github.io/gatsby-starter-kit-docs/equipped-starter/) / [demo](https://gatsby-starter-kit-equipped.netlify.com/) ]
+  - Themed [ [docs](https://greglobinski.github.io/gatsby-starter-kit-docs/themed-starter/) / [demo](https://gatsby-starter-kit-themed.netlify.com/) ]
+  - Website [ [docs](https://greglobinski.github.io/gatsby-starter-kit-docs/website-starter/) / [demo](https://gatsby-starter-kit-website.netlify.com/) ]
+  - Blog [ [docs](https://greglobinski.github.io/gatsby-starter-kit-docs/blog-starter/) / [demo](https://gatsby-starter-kit-blog.netlify.com/) ]
+  - Classy Docs [ [docs](https://greglobinski.github.io/gatsby-starter-kit-docs/classy-docs-starter/) / [demo](https://gatsby-starter-kit-classy-docs.netlify.com/) ]
+  - Side Blog [ [docs](https://greglobinski.github.io/gatsby-starter-kit-docs/side-blog-starter/) / [demo](https://gatsby-starter-kit-side-blog.netlify.com/) ]
+  - Clean Diary [ [docs](https://greglobinski.github.io/gatsby-starter-kit-docs/clean-diary-starter/) / [demo](https://gatsby-starter-kit-clean-diary.netlify.com/) ]
+  - more soon
 
 - [gatsby-v2-jslingui](https://github.com/zuiidea/gatsby-v2-jslingui)
   [(demo)](https://gatsby-v2-jslingui.surge.sh)
@@ -962,3 +943,38 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog#v2
 
   - Built upon gatsby-starter-default
   - Perfect if you want to use Typescript and SASS but don't want any extra code
+  
+- [gatsby-starter-mate](https://github.com/EmaSuriano/gatsby-starter-mate)
+  [(demo)](https://gatsby-starter-mate.netlify.com/)
+
+  Features:
+
+  - Gatsby v2
+  - Rebass (Styled-components system)
+  - Dynamic content from Contentful CMS
+  - Offline support
+  - PWA ready
+  - SEO
+  - Responsive design
+  - Theming
+  - Font icons using font-awesome
+  - Netlify Deployment Friendly
+  - Medium syncronization
+  - Social sharing (Twitter, Facebook, Google, LinkedIn)
+
+- [gatsby-scientific-machine-learning-starter](https://github.com/DanShai/Gatsby-Machine-Learning-Starter)
+  [(demo)](https://danshai.github.io/Gatsby-Machine-Learning-Starter/)
+
+  Features:
+
+  - Easy editable content in markdown files (posts, pages and parts) via GraphQl
+  - Tensorflow integration , modified the reac [tfjx](https://github.com/ModelDepot/tfjsx) package to work with gatsby
+  - chartjs integration instead of plotly , plotly doesnt compile when deploying. so I used react-chartjs,
+    useful to see loss and accuracy functions and other charts you might have.
+  - Katex support to work with mathematical expressions and research
+  - csv plugin support to work with csv files data
+  - graph plugin to work with graphical schemes in your markdown files using mermaid
+  - Easy customizable base styles
+  - ESLint
+  - Prettier code styling
+  - Webpack , babel and deploy configured to eliminate heap crash during build and support for generator functions

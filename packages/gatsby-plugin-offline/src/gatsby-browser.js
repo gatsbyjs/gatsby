@@ -11,7 +11,7 @@ exports.onPrefetchPathname = ({ pathname }) => {
   }
 }
 
-exports.onServiceWorkerInstalled = ({ getResourceURLsForPathname }) => {
+exports.onServiceWorkerActive = ({ getResourceURLsForPathname, serviceWorker }) => {
   // stop recording prefetch events
   swNotInstalled = false
 
@@ -28,14 +28,17 @@ exports.onServiceWorkerInstalled = ({ getResourceURLsForPathname }) => {
     .call(nodes)
     .map(node => node.src || node.href || node.getAttribute(`data-href`))
 
-  for (const resource of resources) {
-    fetch(resource)
-  }
-
   // Loop over all resources and fetch the page component and JSON
   // to add it to the sw cache.
-  prefetchedPathnames.forEach(path => {
-    const urls = getResourceURLsForPathname(path)
-    urls.forEach(url => fetch(url))
+  const prefetchedResources = []
+  prefetchedPathnames.forEach(path =>
+    getResourceURLsForPathname(path).forEach(resource =>
+      prefetchedResources.push(resource)
+    )
+  )
+
+  serviceWorker.active.postMessage({
+    api: `gatsby-runtime-cache`,
+    resources: [...resources, ...prefetchedResources],
   })
 }

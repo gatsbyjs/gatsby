@@ -1,5 +1,6 @@
 import React from "react"
 import { graphql } from "gatsby"
+import Helmet from "react-helmet"
 import Layout from "../components/layout"
 import presets, { colors } from "../utils/presets"
 import { rhythm, options } from "../utils/typography"
@@ -23,6 +24,9 @@ class IndexRoute extends React.Component {
     const blogPosts = this.props.data.allMarkdownRemark
     return (
       <Layout location={this.props.location}>
+        <Helmet>
+          <meta name="Description" content="Blazing fast modern site generator for React. Go beyond static sites: build blogs, ecommerce sites, full-blown apps, and more with Gatsby." />
+        </Helmet>
         <div css={{ position: `relative` }}>
           <MastheadBg />
           <div

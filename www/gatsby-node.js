@@ -48,6 +48,12 @@ exports.createPages = ({ graphql, actions }) => {
     toPath: `/docs/sourcing-from-netlify-cms`,
   })
 
+  createRedirect({
+    fromPath: `/starter-showcase/`, // Moved "Starter Showcase" index page from /starter-showcase to /starters
+    toPath: `/starters/`,
+    isPermanent: true,
+  })
+
   return new Promise((resolve, reject) => {
     const docsTemplate = path.resolve(`src/templates/template-docs-markdown.js`)
     const blogPostTemplate = path.resolve(`src/templates/template-blog-post.js`)
@@ -181,7 +187,7 @@ exports.createPages = ({ graphql, actions }) => {
 
       Array.from({ length: numPages }).forEach((_, i) => {
         createPage({
-          path: i === 0 ? `/blog` : `/blog/${i + 1}`,
+          path: i === 0 ? `/blog` : `/blog/page/${i + 1}`,
           component: slash(blogListTemplate),
           context: {
             limit: postsPerPage,

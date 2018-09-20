@@ -2,13 +2,13 @@
 title: Site Showcase Submissions
 ---
 
-Want to submit a site to the [Site Showcase](https://next.gatsbyjs.org/showcase/)? Follow these instructions.
+Want to submit a site to the [Site Showcase](/showcase/)? Follow these instructions.
 
 ## Steps
 
 There are only three major steps :)
 
-1.  If this is your first contribution to the Gatsby open source repo, follow the [Contribution guidelines](https://next.gatsbyjs.org/docs/how-to-contribute/#contributing-to-the-repo).
+1.  If this is your first contribution to the Gatsby open source repo, follow the [Contribution guidelines](/docs/how-to-contribute/#contributing-to-the-repo).
 
 2.  If there is a chance that someone else could have already submitted the site, please make sure no one else has already submitted it by searching existing PRs: https://github.com/gatsbyjs/gatsby/pulls
 
@@ -17,10 +17,10 @@ There are only three major steps :)
 ```yaml
 - title: Title of the Site
 
-  # this URL is used to generate a screenshot
+  # this is the URL that is linked from the showcase
   main_url: https://titleofthesite.com
 
-  # this is the URL that is linked from the showcase
+  # this URL is used to generate a screenshot
   url: https://titleofthesite.com/portfolio
 
   # optional: for open-source sites, this URL points to the repo that powers the site
@@ -58,8 +58,6 @@ Categories currently include both _type of site_ (structure) and the _content of
 - eCommerce
 - Education
 - Gallery
-- Landing
-- Marketing
 - Portfolio
 - (feel free to create new ones after checking to make sure the tag you want doesn't already exist)
 
@@ -68,13 +66,12 @@ Categories currently include both _type of site_ (structure) and the _content of
 A few notes on site content: a common question is this: "aren't all Gatsby sites technically in the "web dev" category?" Well, no because this category means the _content_ of the site has to be about web development, like [ReactJS](https://reactjs.org/). Also, the difference between technology and web dev is like this. [Cardiogram](https://cardiogr.am/) is technology, while [ReactJS](https://reactjs.org/) is web dev.
 
 - Agency
-- Corporate
 - Cinema
-- Creative
 - Education
 - Entertainment
 - Finance
 - Food
+- Health & Wellness
 - Healthcare
 - Hosting
 - Gallery
@@ -86,11 +83,9 @@ A few notes on site content: a common question is this: "aren't all Gatsby sites
 - News
 - Nonprofit
 - Open Source
-- Personal
 - Photography
 - Podcast
 - Real Estate
-- Retail
 - Science
 - Technology
 - Web Dev
@@ -117,7 +112,7 @@ Featured sites will be chosen quarterly based on the following criteria:
 
 _Note: the Gatsby team will choose featured sites, leave as `featured: false` when first posting_
 
-If you're site is chosen as featured, here's what to do next:
+If your site is chosen as featured, here's what to do next:
 
 1.  Change `featured: false` to `featured: true`
 

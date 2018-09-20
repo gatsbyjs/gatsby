@@ -35,7 +35,7 @@ Can you say React without webpack? I can hardly say `hello world` without webpac
 
 ### Community
 
-Even though Gatsby is pretty new, the developers using it seem really involved. There are quite a few [articles on the Gatsby blog](/blog/). People seem to be happy to answer your Gatsby questions on Twitter and on Github you can ask anything without being shot down. Everyone is encouraged to contribute in form of plugins and pull requests, which gives me confidence that we'll see a lot of additions and improvements in the future.
+Even though Gatsby is pretty new, the developers using it seem really involved. There are quite a few [articles on the Gatsby blog](/blog/). People seem to be happy to answer your Gatsby questions on Twitter and on GitHub you can ask anything without being shot down. Everyone is encouraged to contribute in form of plugins and pull requests, which gives me confidence that we'll see a lot of additions and improvements in the future.
 
 ## Some thoughts on Gatsby
 
@@ -85,7 +85,7 @@ Incremental builds aren't yet possible, so every update means a complete rebuild
 
 ### Gatsby Image plugin is cool
 
-Did you see the SVG traced image before the image was loaded? If not, you're probably on Safari and I still haven't implemented the `intersection observer` polyfill. But in other browsers, images you add with the [gatsby image](https://using-gatsby-image.gatsbyjs.org/) component will include a blur or traced svg placeholder effect by default. It also has `srcset` and `webp`. It can use some work though it adds a few wrappers around your images that are hard to reconfigure without using `!important`. Oh and be warned, it uses `object-fit` by default, which is unsupported by IE11 and older browsers. Of course, you don't have to use this plugin and every addition / change is discussable on Github.
+Did you see the SVG traced image before the image was loaded? If not, you're probably on Safari and I still haven't implemented the `intersection observer` polyfill. But in other browsers, images you add with the [gatsby image](https://using-gatsby-image.gatsbyjs.org/) component will include a blur or traced svg placeholder effect by default. It also has `srcset` and `webp`. It can use some work though it adds a few wrappers around your images that are hard to reconfigure without using `!important`. Oh and be warned, it uses `object-fit` by default, which is unsupported by IE11 and older browsers. Of course, you don't have to use this plugin and every addition / change is discussable on GitHub.
 
 ### Keep an eye on the output
 

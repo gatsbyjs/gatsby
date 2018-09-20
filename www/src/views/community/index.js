@@ -7,7 +7,7 @@ import CommunityHeader from "./community-header"
 import Img from "gatsby-image"
 import GithubIcon from "react-icons/lib/go/mark-github"
 import { navigate } from "gatsby"
-import { colors } from "../../utils/presets"
+import presets, { colors } from "../../utils/presets"
 import qs from "qs"
 
 class CommunityView extends Component {
@@ -63,6 +63,16 @@ class CommunityView extends Component {
   render() {
     const { location, title, data } = this.props
     const { creators } = this.state
+    let submissionText
+    if (title === `All`) {
+      submissionText = `Add Yourself`
+    } else if (title === `People`) {
+      submissionText = `Add Yourself`
+    } else if (title === `Agencies`) {
+      submissionText = `Add Your Agency`
+    } else if (title === `Companies`) {
+      submissionText = `Add Your Company`
+    }
 
     const applyFilter = filter => {
       if (this.state[filter] === true) {
@@ -92,17 +102,27 @@ class CommunityView extends Component {
           applyFilter={filter => applyFilter(filter)}
           forHire={this.state.for_hire}
           hiring={this.state.hiring}
+          submissionText={submissionText}
         />
         <main
           role="main"
           css={{
             padding: rhythm(3 / 4),
+            paddingBottom: `10vh`,
             fontFamily: typography.options.headerFontFamily.join(`,`),
+            [presets.Tablet]: {
+              paddingBottom: rhythm(3 / 4),
+            },
           }}
         >
           <div
             css={{
               display: `flex`,
+              flexWrap: `wrap`,
+              justifyContent: `center`,
+              [presets.Desktop]: {
+                justifyContent: `flex-start`,
+              },
             }}
           >
             {creators.length < 1 ? (
@@ -118,9 +138,12 @@ class CommunityView extends Component {
                       transition: `box-shadow .3s cubic-bezier(.4,0,.2,1), transform .3s cubic-bezier(.4,0,.2,1)`,
                       display: `flex`,
                       flexDirection: `column`,
-                      marginRight: `1rem`,
-                      "&:hover": {
-                        background: `transparent`,
+                      margin: rhythm(3 / 4),
+                      [presets.Phablet]: {
+                        marginLeft: `0`,
+                        "&:hover": {
+                          background: `transparent`,
+                        },
                       },
                     },
                   }}

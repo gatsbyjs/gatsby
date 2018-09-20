@@ -1,5 +1,5 @@
 ---
-title: Submit a blogpost
+title: Rendering sidebar navigation dynamically
 ---
 
 This is a stub. Help our community expand it.
