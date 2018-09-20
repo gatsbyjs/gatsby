@@ -29,7 +29,9 @@ const flattenPlugins = plugins => {
     })
   }
 
-  plugins.forEach(plugin => {
+  const hasSubPlugins = plugin => plugin.pluginOptions.plugins
+
+  plugins.filter(hasSubPlugins).forEach(plugin => {
     flattened.push(plugin)
     extractPlugins(plugin)
   })
