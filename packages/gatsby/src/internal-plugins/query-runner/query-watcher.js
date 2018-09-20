@@ -13,7 +13,7 @@ const chokidar = require(`chokidar`)
 const path = require(`path`)
 const slash = require(`slash`)
 
-const { store } = require(`../../redux/`)
+const { store, emitter } = require(`../../redux/`)
 const { boundActionCreators } = require(`../../redux/actions`)
 const queryCompiler = require(`./query-compiler`).default
 const report = require(`gatsby-cli/lib/reporter`)
@@ -73,10 +73,18 @@ const handleQuery = (
   // If this is a static query
   // Add action / reducer + watch staticquery files
   if (query.isStaticQuery) {
-    const isNewQuery = !staticQueryComponents.has(query.jsonName)
+    const oldQuery = staticQueryComponents.get(query.jsonName)
+    const isNewQuery = !oldQuery
+
+    // Compare query text because text is compiled query with any attached
+    // fragments and we want to rerun queries if fragments are edited.
+    // Compare hash because hash is used for identyfing query and
+    // passing data to component in development. Hash can change if user will
+    // format query text, but it doesn't mean that compiled text will change.
     if (
       isNewQuery ||
-      staticQueryComponents.get(query.jsonName).query !== query.text
+      oldQuery.hash !== query.hash ||
+      oldQuery.text !== query.text
     ) {
       boundActionCreators.replaceStaticQuery({
         name: query.name,
@@ -142,24 +150,62 @@ const updateStateAndRunQueries = isFirstRun => {
 
     if (queriesWillNotRun) {
       report.log(report.stripIndent`
-        Queries are only executed for Page components. Instead of a query,
-        co-locate a GraphQL fragment and compose that fragment into the query (or other
-        fragment) of the top-level page that renders this component. For more
-        info on fragments and composition see: http://graphql.org/learn/queries/#fragments
+        Exported queries are only executed for Page components. Instead of an exported
+        query, either co-locate a GraphQL fragment and compose that fragment into the
+        query (or other fragment) of the top-level page that renders this component, or
+        use a <StaticQuery> in this component. For more info on fragments and
+        composition, see http://graphql.org/learn/queries/#fragments and for more
+        information on <StaticQuery>, see https://next.gatsbyjs.org/docs/static-query
       `)
     }
     runQueuedQueries()
+
+    return null
   })
 }
 
-exports.extractQueries = () =>
-  updateStateAndRunQueries(true).then(() => {
+/**
+ * Removes components templates that aren't used by any page from redux store.
+ */
+const clearInactiveComponents = () => {
+  const { components, pages } = store.getState()
+
+  const activeTemplates = new Set()
+  pages.forEach(page => {
+    // Set will guarantee uniqeness of entires
+    activeTemplates.add(slash(page.component))
+  })
+
+  components.forEach(component => {
+    if (!activeTemplates.has(component.componentPath)) {
+      debug(
+        `${
+          component.componentPath
+        } component was removed because it isn't used by any page`
+      )
+      store.dispatch({
+        type: `REMOVE_TEMPLATE_COMPONENT`,
+        payload: component,
+      })
+    }
+  })
+}
+
+exports.extractQueries = () => {
+  // Remove template components that point to not existing page templates.
+  // We need to do this, because components data is cached and there might
+  // be changes applied when development server isn't running. This is needed
+  // only in initial run, because during development state will be adjusted.
+  clearInactiveComponents()
+
+  return updateStateAndRunQueries(true).then(() => {
     // During development start watching files to recompile & run
     // queries on the fly.
     if (process.env.NODE_ENV !== `production`) {
       watch(store.getState().program.directory)
     }
   })
+}
 
 const queueQueriesForPageComponent = componentPath => {
   const pages = getPagesForComponent(componentPath)
@@ -211,4 +257,32 @@ const watch = rootDir => {
       debounceCompile()
     })
   filesToWatch.forEach(filePath => watcher.add(filePath))
+}
+
+if (process.env.gatsby_executing_command === `develop`) {
+  let bootstrapFinished = false
+  emitter.on(`BOOTSTRAP_FINISHED`, () => {
+    bootstrapFinished = true
+  })
+  emitter.on(`DELETE_PAGE`, action => {
+    if (bootstrapFinished) {
+      const componentPath = slash(action.payload.component)
+      const { pages } = store.getState()
+      let otherPageWithTemplateExists = false
+      for (let page of pages.values()) {
+        if (slash(page.component) === componentPath) {
+          otherPageWithTemplateExists = true
+          break
+        }
+      }
+      if (!otherPageWithTemplateExists) {
+        store.dispatch({
+          type: `REMOVE_TEMPLATE_COMPONENT`,
+          payload: {
+            componentPath,
+          },
+        })
+      }
+    }
+  })
 }

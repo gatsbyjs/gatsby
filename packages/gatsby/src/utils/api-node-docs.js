@@ -57,7 +57,6 @@ exports.resolvableExtensions = true
  *     )
  *   })
  * }
- * @returns {Array} array of extensions
  */
 
 exports.createPages = true
@@ -140,18 +139,17 @@ exports.onCreatePage = true
  *
  * @param {object} $0
  * @param {object} $0.type Object containing `name` and `nodes`
- * @param {array} $0.allNodes array of all nodes
  * @example
- * import { GraphlQLString } from "gatsby/graphql"
+ * import { GraphQLString } from "gatsby/graphql"
  *
  * exports.setFieldsOnGraphQLNodeType = ({ type }) => {
  *   if (type.name === `File`) {
  *     return {
  *       newField: {
- *         type: GraphlQLString,
+ *         type: GraphQLString,
  *         args: {
  *           myArgument: {
- *             type: GraphlQLString,
+ *             type: GraphQLString,
  *          }
  *         }
  *         resolve: (source, fieldArgs) => {
@@ -194,8 +192,9 @@ exports.onCreateBabelConfig = true
  * See also the documentation for [`setWebpackConfig`](/docs/actions/#setWebpackConfig).
  *
  * @param {object} $0
- * @param {'develop' | 'develop-html' | 'build-javascript' | 'build-html'} $0.stage The current build stage
- * @param {function(): object} $0.getConfig Returns the current webpack config
+ * @param {string} $0.stage The current build stage. One of 'develop', 'develop-html',
+ * 'build-javascript', or 'build-html'
+ * @param {function} $0.getConfig Returns the current webpack config
  * @param {object} $0.rules A set of preconfigured webpack config rules
  * @param {object} $0.loaders A set of preconfigured webpack config loaders
  * @param {object} $0.plugins A set of preconfigured webpack config plugins

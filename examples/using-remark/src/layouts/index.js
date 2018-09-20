@@ -7,6 +7,7 @@ import "typeface-space-mono"
 import "typeface-spectral"
 
 import "prismjs/themes/prism-solarizedlight.css"
+import "prismjs/plugins/line-numbers/prism-line-numbers.css"
 
 class Layout extends React.Component {
   render() {
@@ -55,7 +56,8 @@ class Layout extends React.Component {
                     color: styles.colors.light,
                   }}
                 >
-                  powered by{` `}
+                  powered by
+                  {` `}
                   <a target="_blank" rel="noopener noreferrer" href={homepage}>
                     {author}
                   </a>

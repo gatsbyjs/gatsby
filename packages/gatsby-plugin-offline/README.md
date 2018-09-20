@@ -22,41 +22,44 @@ plugins: [`gatsby-plugin-offline`]
 ## Overriding options
 
 When adding this plugin to your `gatsby-config.js`, you can pass in options to
-override the default sw-precache config.
+override the default [Workbox](https://developers.google.com/web/tools/workbox/modules/workbox-build) config.
 
-The default config is as following. Warning, you can break the offline support
+The default config is as follows. Warning, you can break the offline support
 and AppCache setup by changing these options so tread carefully.
 
 ```javascript
 const options = {
-  staticFileGlobs: [
-    `${rootDir}/**/*.{woff2}`,
-    `${rootDir}/commons-*js`,
-    `${rootDir}/app-*js`,
-    `${rootDir}/index.html`,
-    `${rootDir}/manifest.json`,
-    `${rootDir}/manifest.webmanifest`,
-    `${rootDir}/offline-plugin-app-shell-fallback/index.html`,
-  ],
-  stripPrefix: rootDir,
+  importWorkboxFrom: `local`,
+  globDirectory: rootDir,
+  globPatterns,
+  modifyUrlPrefix: {
+    rootDir: ``,
+    // If `pathPrefix` is configured by user, we should replace
+    // the default prefix with `pathPrefix`.
+    "": args.pathPrefix || ``,
+  },
   navigateFallback: `/offline-plugin-app-shell-fallback/index.html`,
-  // Only match URLs without extensions.
+  // Only match URLs without extensions or the query `no-cache=1`.
   // So example.com/about/ will pass but
+  // example.com/about/?no-cache=1 and
   // example.com/cheeseburger.jpg will not.
   // We only want the service worker to handle our "clean"
   // URLs and not any files hosted on the site.
-  navigateFallbackWhitelist: [/^.*(?!\.\w?$)/],
+  //
+  // Regex based on http://stackoverflow.com/a/18017805
+  navigateFallbackWhitelist: [/^[^?]*([^.?]{5}|\.html)(\?.*)?$/],
+  navigateFallbackBlacklist: [/\?(.+&)?no-cache=1$/],
   cacheId: `gatsby-plugin-offline`,
-  // Do cache bust JS URLs until can figure out how to make Webpack's
-  // URLs truely content-addressed.
-  dontCacheBustUrlsMatching: /(.\w{8}.woff2)/, //|-\w{20}.js)/,
+  // Don't cache-bust JS files and anything in the static directory
+  dontCacheBustUrlsMatching: /(.*js$|\/static\/)/,
   runtimeCaching: [
     {
-      // Add runtime caching of images.
-      urlPattern: /\.(?:png|jpg|jpeg|webp|svg|gif|tiff)$/,
-      handler: `fastest`,
+      // Add runtime caching of various page resources.
+      urlPattern: /\.(?:png|jpg|jpeg|webp|svg|gif|tiff|js|woff|woff2|json|css)$/,
+      handler: `staleWhileRevalidate`,
     },
   ],
-  skipWaiting: false,
+  skipWaiting: true,
+  clientsClaim: true,
 }
 ```

@@ -1,9 +1,8 @@
 /*global __PATH_PREFIX__ */
 import PropTypes from "prop-types"
 import React from "react"
-import { Link, NavLink } from "react-router-dom"
-import { polyfill } from "react-lifecycles-compat"
-import { createLocation, createPath } from "history"
+import { Link, Location } from "@reach/router"
+import { parsePath } from "gatsby"
 
 export function withPrefix(path) {
   return normalizePath(`${__PATH_PREFIX__}/${path}`)
@@ -16,10 +15,6 @@ function normalizePath(path) {
 const NavLinkPropTypes = {
   activeClassName: PropTypes.string,
   activeStyle: PropTypes.object,
-  exact: PropTypes.bool,
-  strict: PropTypes.bool,
-  isActive: PropTypes.func,
-  location: PropTypes.object,
 }
 
 // Set up IntersectionObserver
@@ -42,7 +37,7 @@ const handleIntersection = (el, cb) => {
 }
 
 class GatsbyLink extends React.Component {
-  constructor(props, context) {
+  constructor(props) {
     super()
     // Default to no support for IntersectionObserver
     let IOSupported = false
@@ -50,36 +45,26 @@ class GatsbyLink extends React.Component {
       IOSupported = true
     }
 
-    const { location } = context.router.history
-    const to = createLocation(props.to, null, null, location)
+    const { location } = props
 
     this.state = {
-      path: createPath(to),
-      to,
       IOSupported,
       location,
     }
     this.handleRef = this.handleRef.bind(this)
   }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (prevState.to === nextProps.to) return null
-    const to = createLocation(nextProps.to, null, null, prevState.location)
-    const path = createPath(to)
-    return { path, to }
-  }
-
   componentDidUpdate(prevProps, prevState) {
     // Preserve non IO functionality if no support
     if (this.props.to !== prevProps.to && !this.state.IOSupported) {
-      ___loader.enqueue(this.state.path)
+      ___loader.enqueue(parsePath(this.props.to).pathname)
     }
   }
 
   componentDidMount() {
     // Preserve non IO functionality if no support
     if (!this.state.IOSupported) {
-      ___loader.enqueue(this.state.to.pathname)
+      ___loader.enqueue(parsePath(this.props.to).pathname)
     }
   }
 
@@ -89,26 +74,53 @@ class GatsbyLink extends React.Component {
     if (this.state.IOSupported && ref) {
       // If IO supported and element reference found, setup Observer functionality
       handleIntersection(ref, () => {
-        ___loader.enqueue(this.state.to.pathname)
+        ___loader.enqueue(parsePath(this.props.to).pathname)
       })
     }
   }
 
-  render() {
-    const { onClick, onMouseEnter, ...rest } = this.props
-    let El
-    if (Object.keys(NavLinkPropTypes).some(propName => this.props[propName])) {
-      El = NavLink
-    } else {
-      El = Link
+  defaultGetProps = ({ isCurrent }) => {
+    if (isCurrent) {
+      return {
+        className: [this.props.className, this.props.activeClassName]
+          .filter(Boolean)
+          .join(` `),
+        style: { ...this.props.style, ...this.props.activeStyle },
+      }
     }
+    return null
+  }
+
+  render() {
+    const {
+      to,
+      getProps = this.defaultGetProps,
+      onClick,
+      onMouseEnter,
+      location,
+      /* eslint-disable no-unused-vars */
+      activeClassName: $activeClassName,
+      activeStyle: $activeStyle,
+      ref: $ref,
+      innerRef: $innerRef,
+      state,
+      replace,
+      /* eslint-enable no-unused-vars */
+      ...rest
+    } = this.props
+
+    const prefixedTo = withPrefix(to)
 
     return (
-      <El
+      <Link
+        to={prefixedTo}
+        state={state}
+        getProps={getProps}
+        innerRef={this.handleRef}
         onMouseEnter={e => {
           // eslint-disable-line
           onMouseEnter && onMouseEnter(e)
-          ___loader.hovering(this.state.path)
+          ___loader.hovering(parsePath(to).pathname)
         }}
         onClick={e => {
           // eslint-disable-line
@@ -123,47 +135,31 @@ class GatsbyLink extends React.Component {
             !e.ctrlKey &&
             !e.shiftKey
           ) {
+            e.preventDefault()
             // Is this link pointing to a hash on the same page? If so,
             // just scroll there.
-            let pathname = this.state.path
-            if (pathname.split(`#`).length > 1) {
-              pathname = pathname
-                .split(`#`)
-                .slice(0, -1)
-                .join(``)
-            }
-            if (pathname === window.location.pathname) {
-              const hashFragment = this.state.path
-                .split(`#`)
-                .slice(1)
-                .join(`#`)
-              const element = hashFragment
-                ? document.getElementById(hashFragment)
+            const { pathname, hash } = parsePath(prefixedTo)
+            if (pathname === location.pathname || !pathname) {
+              const element = hash
+                ? document.getElementById(hash.substr(1))
                 : null
               if (element !== null) {
                 element.scrollIntoView()
-                return true
               } else {
                 // This is just a normal link to the current page so let's emulate default
                 // browser behavior by scrolling now to the top of the page.
                 window.scrollTo(0, 0)
-                return true
               }
             }
 
-            // In production, make sure the necessary scripts are
+            // Make sure the necessary scripts and data are
             // loaded before continuing.
-            if (process.env.NODE_ENV === `production`) {
-              e.preventDefault()
-              window.___push(this.state.to)
-            }
+            navigate(prefixedTo, { state, replace })
           }
 
           return true
         }}
         {...rest}
-        to={this.state.to}
-        innerRef={this.handleRef}
       />
     )
   }
@@ -173,20 +169,34 @@ GatsbyLink.propTypes = {
   ...NavLinkPropTypes,
   innerRef: PropTypes.func,
   onClick: PropTypes.func,
-  to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
+  to: PropTypes.string.isRequired,
+  replace: PropTypes.bool,
 }
 
-GatsbyLink.contextTypes = {
-  router: PropTypes.object,
-}
+// eslint-disable-next-line react/display-name
+const withLocation = Comp => props => (
+  <Location>
+    {({ location }) => <Comp location={location} {...props} />}
+  </Location>
+)
 
-export default polyfill(GatsbyLink)
+export default withLocation(GatsbyLink)
+
+export const navigate = (to, options) => {
+  window.___navigate(to, options)
+}
 
 export const push = to => {
+  console.warn(
+    `The "push" method is now deprecated and will be removed in Gatsby v3. Please use "navigate" instead.`
+  )
   window.___push(to)
 }
 
 export const replace = to => {
+  console.warn(
+    `The "replace" method is now deprecated and will be removed in Gatsby v3. Please use "navigate" instead.`
+  )
   window.___replace(to)
 }
 

@@ -1,5 +1,4 @@
 import React, { Fragment } from "react"
-import { graphql } from "gatsby"
 import Helmet from "react-helmet"
 import url from "url"
 import hex2rgba from "hex2rgba"
@@ -8,7 +7,8 @@ import qs from "qs"
 
 import presets, { colors } from "../utils/presets"
 import { options, scale, rhythm } from "../utils/typography"
-import { Link, StaticQuery } from "gatsby"
+import sharedStyles from "../views/shared/styles"
+import { Link, StaticQuery, graphql } from "gatsby"
 import Layout from "../components/layout"
 import ShareMenu from "../components/share-menu"
 
@@ -16,7 +16,7 @@ import MdArrowUpward from "react-icons/lib/md/arrow-upward"
 import MdLaunch from "react-icons/lib/md/launch"
 import FeaturedIcon from "../assets/featured-detailpage-featuredicon.svg"
 import FeatherIcon from "../assets/showcase-feather.svg"
-import GithubIcon from "../assets/showcase-github.svg"
+import GithubIcon from "react-icons/lib/go/mark-github"
 
 const gutter = rhythm(3 / 4)
 const gutterDesktop = rhythm(6 / 4)
@@ -142,11 +142,9 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
           modalPrevious={() => parent.previous(allSitesYaml)}
           modalNextLink={
             <Link
-              to={{
-                pathname: nextSite.fields.slug,
-                state: {
-                  isModal: true,
-                },
+              to={nextSite.fields.slug}
+              state={{
+                isModal: true,
               }}
               css={{
                 display: `block`,
@@ -166,7 +164,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                     ...styles.prevNextImage,
                   }}
                   backgroundColor
-                  resolutions={{
+                  fixed={{
                     srcSet: ``,
                     src:
                       nextSite.childScreenshot.screenshotFile.childImageSharp
@@ -196,11 +194,9 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
           }
           modalPreviousLink={
             <Link
-              to={{
-                pathname: previousSite.fields.slug,
-                state: {
-                  isModal: true,
-                },
+              to={previousSite.fields.slug}
+              state={{
+                isModal: true,
               }}
               css={{
                 display: `block`,
@@ -220,7 +216,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                     ...styles.prevNextImage,
                   }}
                   backgroundColor
-                  resolutions={{
+                  fixed={{
                     srcSet: ``,
                     src:
                       previousSite.childScreenshot.screenshotFile
@@ -266,7 +262,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
               }}
             >
               <Helmet>
-                <title> {data.sitesYaml.title} </title>
+                <title>{data.sitesYaml.title}</title>
                 <meta
                   name="og:image"
                   content={`https://next.gatsbyjs.org${
@@ -379,7 +375,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                         marginRight: 10,
                       }}
                     />
-                    Featured{` `}
+                    Featured
                   </div>
                 )}
                 {data.sitesYaml.source_url && (
@@ -394,21 +390,20 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                       },
                     }}
                   >
-                    <img
-                      src={GithubIcon}
-                      alt="icon"
-                      css={{
-                        marginBottom: 0,
-                        marginRight: 10,
-                      }}
-                    />
                     <a
                       href={data.sitesYaml.source_url}
                       css={{
                         ...styles.link,
                       }}
                     >
-                      Source{` `}
+                      <GithubIcon
+                        style={{
+                          fontSize: 20,
+                          marginRight: 10,
+                          verticalAlign: `text-bottom`,
+                        }}
+                      />
+                      Source
                     </a>
                   </div>
                 )}
@@ -476,7 +471,8 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                         verticalAlign: `sub`,
                       }}
                     />
-                    Visit site{` `}
+                    Visit site
+                    {` `}
                   </a>
                   <ShareMenu
                     url={data.sitesYaml.main_url}
@@ -489,15 +485,15 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                 </div>
                 <Img
                   key={data.sitesYaml.id}
-                  sizes={
+                  fluid={
                     data.sitesYaml.childScreenshot.screenshotFile
-                      .childImageSharp.sizes
+                      .childImageSharp.fluid
                   }
                   alt={`Screenshot of ${data.sitesYaml.title}`}
                   css={{
                     boxShadow: isModal
                       ? false
-                      : `0 4px 10px ${hex2rgba(colors.gatsby, 0.1)}`,
+                      : sharedStyles.screenshot.boxShadow,
                   }}
                 />
               </div>
@@ -509,7 +505,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                   },
                 }}
               >
-                <p> {data.sitesYaml.description} </p>
+                <p>{data.sitesYaml.description}</p>
                 <div
                   css={{
                     display: `flex`,
@@ -522,13 +518,15 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                       paddingRight: 20,
                     }}
                   >
-                    Categories{` `}
+                    Categories
+                    {` `}
                   </div>
                   <div>
                     {categories.map((c, i) => (
                       <Fragment key={c}>
                         <Link
                           to={`/showcase?${qs.stringify({ filters: [c] })}`}
+                          state={{ isModal: true }}
                         >
                           {c}
                         </Link>

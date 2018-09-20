@@ -1,10 +1,9 @@
 import React from "react"
 import { graphql } from "gatsby"
-import { OutboundLink } from "gatsby-plugin-google-analytics"
-
+import Helmet from "react-helmet"
 import Layout from "../components/layout"
 import presets, { colors } from "../utils/presets"
-import { rhythm } from "../utils/typography"
+import { rhythm, options } from "../utils/typography"
 import { WebpackIcon, ReactJSIcon, GraphQLIcon } from "../assets/logos"
 import { vP } from "../components/gutters"
 import Container from "../components/container"
@@ -25,6 +24,9 @@ class IndexRoute extends React.Component {
     const blogPosts = this.props.data.allMarkdownRemark
     return (
       <Layout location={this.props.location}>
+        <Helmet>
+          <meta name="Description" content="Blazing fast modern site generator for React. Go beyond static sites: build blogs, ecommerce sites, full-blown apps, and more with Gatsby." />
+        </Helmet>
         <div css={{ position: `relative` }}>
           <MastheadBg />
           <div
@@ -63,12 +65,10 @@ class IndexRoute extends React.Component {
                     </CardHeadline>
                     <FuturaParagraph>
                       Enjoy the power of the latest web technologies –{` `}
-                      <TechWithIcon icon={ReactJSIcon}>
-                        React.js
-                      </TechWithIcon>,{` `}
-                      <TechWithIcon icon={WebpackIcon}>
-                        Webpack
-                      </TechWithIcon>,{` `}
+                      <TechWithIcon icon={ReactJSIcon}>React.js</TechWithIcon>,
+                      {` `}
+                      <TechWithIcon icon={WebpackIcon}>Webpack</TechWithIcon>,
+                      {` `}
                       modern JavaScript and CSS and more — all setup and waiting
                       for you to start building.
                     </FuturaParagraph>
@@ -79,7 +79,8 @@ class IndexRoute extends React.Component {
                       Gatsby’s rich data plugin ecosystem lets you build sites
                       with the data you want — from one or many sources: Pull
                       data from headless CMSs, SaaS services, APIs, databases,
-                      your file system & more directly into your pages using{` `}
+                      your file system & more directly into your pages using
+                      {` `}
                       <TechWithIcon icon={GraphQLIcon}>GraphQL</TechWithIcon>.
                     </FuturaParagraph>
                   </Card>
@@ -98,11 +99,10 @@ class IndexRoute extends React.Component {
                     <FuturaParagraph>
                       Don't build a website with last decade's tech. The future
                       of the web is mobile, JavaScript and APIs—the {` `}
-                      <OutboundLink href="https://jamstack.org/">
-                        JAMstack
-                      </OutboundLink>. Every website is a web app and every web
-                      app is a website. Gatsby.js is the universal JavaScript
-                      framework you’ve been waiting for.
+                      <a href="https://jamstack.org/">JAMstack</a>. Every
+                      website is a web app and every web app is a website.
+                      Gatsby.js is the universal JavaScript framework you’ve
+                      been waiting for.
                     </FuturaParagraph>
                   </Card>
                   <Card>
@@ -132,14 +132,7 @@ class IndexRoute extends React.Component {
                     </FuturaParagraph>
                   </Card>
 
-                  <Diagram
-                    containerCSS={{
-                      borderTopLeftRadius: 0,
-                      borderTopRightRadius: 0,
-                      flex: `1 1 100%`,
-                      borderTop: `1px solid ${colors.ui.light}`,
-                    }}
-                  />
+                  <Diagram />
 
                   <div css={{ flex: `1 1 100%` }}>
                     <Container hasSideBar={false}>
@@ -174,7 +167,7 @@ class IndexRoute extends React.Component {
                   >
                     <Container
                       hasSideBar={false}
-                      css={{
+                      overrideCSS={{
                         maxWidth: rhythm(30),
                         paddingBottom: `0 !important`,
                       }}
@@ -200,7 +193,9 @@ class IndexRoute extends React.Component {
                       ))}
                       <CtaButton
                         to="/blog/"
-                        overrideCSS={{ marginBottom: rhythm(2) }}
+                        overrideCSS={{
+                          marginBottom: rhythm(options.blockMarginBottom * 2),
+                        }}
                       >
                         Read More
                       </CtaButton>

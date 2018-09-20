@@ -31,6 +31,8 @@ this program running.
 Typically you'll also want to run `npm run watch` in the Gatsby repo to set up
 watchers to build Gatsby source code.
 
+**[Demo Video](https://www.youtube.com/watch?v=D0SwX1MSuas)**
+
 More detailed instruction for setting up your Gatsby development environment can
 be found [here](https://www.gatsbyjs.org/docs/how-to-contribute/).
 
@@ -55,3 +57,7 @@ https://github.com/gatsbyjs/gatsby/blob/master/scripts/publish-site.sh.
 
 Don't output anything except for a quit message when used together with
 `--scan-once`.
+
+#### `--copy-all`
+
+Copy all modules/files in the gatsby source repo in packages/

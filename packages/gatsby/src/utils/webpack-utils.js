@@ -1,13 +1,12 @@
 // @flow
-const os = require(`os`)
 
 const autoprefixer = require(`autoprefixer`)
 const flexbugs = require(`postcss-flexbugs-fixes`)
-const UglifyPlugin = require(`uglifyjs-webpack-plugin`)
+const TerserPlugin = require(`terser-webpack-plugin`)
 const MiniCssExtractPlugin = require(`mini-css-extract-plugin`)
+const OptimizeCssAssetsPlugin = require(`optimize-css-assets-webpack-plugin`)
 
 const builtinPlugins = require(`./webpack-plugins`)
-const { createBabelConfig } = require(`./babel-config`)
 const eslintConfig = require(`./eslint-config`)
 
 type LoaderSpec = string | { loader: string, options?: Object }
@@ -55,8 +54,6 @@ export type LoaderUtils = {
   postcss: LoaderResolver<{
     browsers?: string[],
     plugins?: Array<any> | ((loader: any) => Array<any>),
-    minimze?: boolean,
-    cssnano?: any,
   }>,
 
   file: LoaderResolver<*>,
@@ -81,7 +78,7 @@ export type RuleUtils = {
   yaml: RuleFactory<*>,
   fonts: RuleFactory<*>,
   images: RuleFactory<*>,
-  audioVideo: RuleFactory<*>,
+  miscAssets: RuleFactory<*>,
 
   css: ContextualRuleFactory,
   cssModules: RuleFactory<*>,
@@ -119,11 +116,9 @@ module.exports = async ({
 }): Promise<WebpackUtilsOptions> => {
   const assetRelativeRoot = `static/`
   const vendorRegex = /(node_modules|bower_components)/
-  const supportedBrowsers = program.browserlist
+  const supportedBrowsers = program.browserslist
 
   const PRODUCTION = !stage.includes(`develop`)
-
-  const babelConfig = await createBabelConfig(program, stage)
 
   const isSSR = stage.includes(`html`)
 
@@ -207,13 +202,7 @@ module.exports = async ({
     },
 
     postcss: (options = {}) => {
-      let {
-        cssnano,
-        plugins,
-        browsers = supportedBrowsers,
-        minimze = PRODUCTION,
-        ...postcssOpts
-      } = options
+      let { plugins, browsers = supportedBrowsers, ...postcssOpts } = options
 
       return {
         loader: require.resolve(`postcss-loader`),
@@ -225,11 +214,10 @@ module.exports = async ({
               (typeof plugins === `function` ? plugins(loader) : plugins) || []
 
             return [
-              minimze && require(`cssnano`)(cssnano),
               flexbugs,
               autoprefixer({ browsers, flexbox: `no-2009` }),
               ...plugins,
-            ].filter(Boolean)
+            ]
           },
           ...postcssOpts,
         },
@@ -238,7 +226,7 @@ module.exports = async ({
 
     file: (options = {}) => {
       return {
-        loader: require.resolve(`url-loader`),
+        loader: require.resolve(`file-loader`),
         options: {
           name: `${assetRelativeRoot}[name]-[hash].[ext]`,
           ...options,
@@ -257,10 +245,10 @@ module.exports = async ({
       }
     },
 
-    js: (options = babelConfig) => {
+    js: options => {
       return {
         options,
-        loader: require.resolve(`babel-loader`),
+        loader: require.resolve(`./babel-loader`),
       }
     },
 
@@ -297,7 +285,7 @@ module.exports = async ({
    * Javascript loader via babel, excludes node_modules
    */
   {
-    let js = options => {
+    let js = (options = {}) => {
       return {
         test: /\.jsx?$/,
         exclude: vendorRegex,
@@ -350,12 +338,23 @@ module.exports = async ({
   }
 
   /**
-   * Loads audio or video assets
+   * Loads audio and video and inlines them via a data URI if they are below
+   * the size threshold
    */
-  rules.audioVideo = () => {
+  rules.media = () => {
+    return {
+      use: [loaders.url()],
+      test: /\.(mp4|webm|wav|mp3|m4a|aac|oga|flac)$/,
+    }
+  }
+
+  /**
+   * Loads assets without inlining
+   */
+  rules.miscAssets = () => {
     return {
       use: [loaders.file()],
-      test: /\.(mp4|webm|wav|mp3|m4a|aac|oga|flac)$/,
+      test: /\.pdf$/,
     }
   }
 
@@ -420,22 +419,21 @@ module.exports = async ({
    * Minify javascript code without regard for IE8. Attempts
    * to parallelize the work to save time. Generally only add in Production
    */
-  plugins.uglify = ({ uglifyOptions, ...options } = {}) =>
-    new UglifyPlugin({
+  plugins.minifyJs = ({ terserOptions, ...options } = {}) =>
+    new TerserPlugin({
       cache: true,
-      parallel: os.cpus().length - 1,
+      parallel: true,
       exclude: /\.min\.js/,
       sourceMap: true,
-      uglifyOptions: {
-        compress: {
-          drop_console: true,
-        },
+      terserOptions: {
         ecma: 8,
         ie8: false,
-        ...uglifyOptions,
+        ...terserOptions,
       },
       ...options,
     })
+
+  plugins.minifyCss = (options = {}) => new OptimizeCssAssetsPlugin(options)
 
   /**
    * Extracts css requires into a single file;

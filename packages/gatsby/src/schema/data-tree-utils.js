@@ -163,7 +163,7 @@ const extractFromEntries = (
     return getExampleScalarFromArray(values)
   } else if (_.isObject(exampleValue)) {
     if (Array.isArray(exampleValue)) {
-      const concatanedItems = [].concat(...values)
+      const concatanedItems = _.flatten(values)
       // Linked node arrays don't get reduced further as we
       // want to preserve all the linked node types.
       if (key.includes(`___NODE`)) {

@@ -64,6 +64,13 @@ plugins: [
       // This feature is untested for sites hosted on Wordpress.com.
       // Defaults to true.
       useACF: true,
+      // Include specific ACF Option Pages that have a set post ID
+      // Regardless if an ID is set, the default options route will still be retrieved
+      // Must be using V3 of ACF to REST to include these routes
+      // Example: `["option_page_1", "option_page_2"]` will include the proper ACF option
+      // routes with the ID option_page_1 and option_page_2
+      // Dashes in IDs will be converted to underscores for use in GraphQL
+      acfOptionPageIds: [],
       auth: {
         // If auth.user and auth.pass are filled, then the source plugin will be allowed
         // to access endpoints that are protected with .htaccess.
@@ -136,7 +143,10 @@ plugins.
       you the menus and menu locations endpoint.
 
 - [x] [WPML-REST-API](https://github.com/shawnhooper/wpml-rest-api) which adds
-      the current locale and available translations to all post types.
+      the current locale and available translations to all post types translated with WPML.
+
+- [x] [wp-rest-polylang](https://github.com/maru3l/wp-rest-polylang) which adds
+      the current locale and available translations to all post types translated with Polylang.
 
 ## How to use Gatsby with Wordpress.com hosting
 
@@ -240,6 +250,29 @@ For example the following URL:
 }
 ```
 
+### Query ACF Options
+
+Whether you are using V2 or V3 of ACF to REST, the query below will return `options` as the default ACF Options page data.
+
+If you have specified `acfOptionPageIds` in your site's `gatsby-config.js` (ex: `option_page_1`), then they will be accessible by their ID:
+
+```
+{
+  allWordpressAcfOptions {
+    edges {
+      node{
+        option_page_1 {
+          test_acf
+        }
+        options {
+          test_acf
+        }
+      }
+    }
+  }
+}
+```
+
 ### Query posts with the child ACF Fields Node
 
 Mention the apparition of `childWordpressAcfField` in the query below :
@@ -292,22 +325,6 @@ Mention the apparition of `childWordpressAcfField` in the query below :
         acf {
          // use ___GraphiQL debugger and Ctrl+Spacebar to describe your model.
         }
-      }
-    }
-  }
-}
-```
-
-### Query with ACF Options
-
-The [ACF Options Page](https://www.advancedcustomfields.com/add-ons/options-page/) is a useful way to store global site content or settings. In order to use the Options Page with Gatsby, _the ACF to REST plugin has to be set to v2 in the WordPress administration area_.
-
-```graphQL
-{
-  allWordpressAcfOptions {
-    edges {
-      node {
-        // use ___GraphiQL debugger and Ctrl+Spacebar to describe your model.
       }
     }
   }
@@ -439,6 +456,84 @@ Full example:
           wordpress_id
           post_title
           href
+        }
+      }
+    }
+  }
+}
+```
+
+### Query posts with the Polylang Fields Node
+
+```graphql
+{
+  allWordpressPost {
+    edges {
+      node {
+        id
+        slug
+        title
+        content
+        excerpt
+        date
+        modified
+        author
+        featured_media
+        template
+        categories
+        tags
+        polylang_current_lang
+        polylang_translations {
+          id
+          slug
+          title
+          content
+          excerpt
+          date
+          modified
+          author
+          featured_media
+          template
+          categories
+          tags
+          polylang_current_lang
+        }
+      }
+    }
+  }
+}
+```
+
+### Query pages with the Polylang Fields Node
+
+```graphql
+{
+  allWordpressPage {
+    edges {
+      node {
+        id
+        title
+        content
+        excerpt
+        date
+        modified
+        slug
+        author
+        featured_media
+        template
+        polylang_current_lang
+        polylang_translations {
+          id
+          title
+          content
+          excerpt
+          date
+          modified
+          slug
+          author
+          featured_media
+          template
+          polylang_current_lang
         }
       }
     }
@@ -736,6 +831,28 @@ add_filter('acf/format_value/type=repeater', 'acf_nullify_empty', 100, 3);
 ```
 
 This code should be added as a plugin (recommended), or within the `functions.php` of a theme.
+
+### GraphQL Error - Unknown field `localFile` on type `[image field]`
+
+WordPress has a [known issue](https://core.trac.wordpress.org/ticket/41445) that can affect how media objects are returned through the REST API.
+
+During the upload process to the WordPress media library, the `post_parent` value ([seen here in the wp_posts table](https://codex.wordpress.org/Database_Description#Table:_wp_posts)) is set to the ID of the post the image is attached to. This value is unable to be changed by any WordPress administration actions.
+
+When the post an image is attached to becomes inaccessible (e.g. from changing visibility settings, or deleting the post), the image itself is restricted in the REST API:
+
+```
+   {
+      "code":"rest_forbidden",
+      "message":"You don't have permission to do this.",
+      "data":{
+         "status":403
+      }
+   }
+```
+
+which prevents Gatsby from retrieving it.
+
+In order to resolve this, you can manually change the `post_parent` value of the image record to `0` in the database. The only side effect of this change is that the image will no longer appear in the "Uploaded to this post" filter in the Add Media dialog in the WordPress administration area.
 
 ### Self-signed certificates
 

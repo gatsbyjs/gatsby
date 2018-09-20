@@ -5,21 +5,10 @@
   "version": "1.0.0",
   "author": "Nadiia Dmytrenko <nadiia.dmytrenko@gmail.com>",
   "dependencies": {
-    "gatsby": "next",
-    "gatsby-plugin-google-analytics": "next",
-    "gatsby-plugin-offline": "next",
-    "gatsby-plugin-styletron": "next",
-    "lodash": "^4.16.4",
+    "gatsby": "^2.0.0",
+    "gatsby-plugin-styletron": "^3.0.0",
     "react": "^16.4.0",
-    "react-dom": "^16.4.0",
-    "react-typography": "^0.15.0",
-    "slash": "^1.0.0",
-    "styletron-engine-atomic": "^1",
-    "styletron-react": "^4",
-    "styletron-react-core": "^1",
-    "styletron-standard": "^1",
-    "typography": "^0.15.8",
-    "typography-breakpoint-constants": "^0.14.0"
+    "react-dom": "^16.4.0"
   },
   "keywords": [
     "gatsby"

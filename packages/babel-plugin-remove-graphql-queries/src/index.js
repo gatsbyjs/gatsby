@@ -129,7 +129,8 @@ export default function({ types: t }) {
             if (
               [`production`, `test`].includes(process.env.NODE_ENV) &&
               path2.isJSXIdentifier({ name: `StaticQuery` }) &&
-              path2.referencesImport(`gatsby`)
+              path2.referencesImport(`gatsby`) &&
+              path2.parent.type !== `JSXClosingElement`
             ) {
               const identifier = t.identifier(`staticQueryData`)
               const filename = state.file.opts.filename
@@ -162,26 +163,107 @@ export default function({ types: t }) {
           },
         }
 
+        const tagsToRemoveImportsFrom = new Set()
+
+        const setImportForStaticQuery = templatePath => {
+          const { ast, text, hash, isGlobal } = getGraphQLTag(templatePath)
+
+          if (!ast) return null
+
+          const queryHash = hash.toString()
+          const query = text
+
+          const tag = templatePath.get(`tag`)
+          if (!isGlobal) {
+            // Enqueue import removal. If we would remove it here, subsequent named exports
+            // wouldn't be handled properly
+            tagsToRemoveImportsFrom.add(tag)
+          }
+
+          // Replace the query with the hash of the query.
+          templatePath.replaceWith(t.StringLiteral(queryHash))
+
+          // modify StaticQuery elements and import data only if query is inside StaticQuery
+          templatePath.parentPath.parentPath.parentPath.traverse(
+            nestedJSXVistor,
+            {
+              queryHash,
+              query,
+            }
+          )
+
+          return null
+        }
+
         path.traverse({
+          JSXElement(jsxElementPath) {
+            if (
+              jsxElementPath.node.openingElement.name.name !== `StaticQuery`
+            ) {
+              return
+            }
+
+            jsxElementPath.traverse({
+              JSXAttribute(jsxPath) {
+                if (jsxPath.node.name.name !== `query`) {
+                  return
+                }
+                jsxPath.traverse({
+                  TaggedTemplateExpression(templatePath, state) {
+                    setImportForStaticQuery(templatePath, jsxElementPath)
+                  },
+                  Identifier(identifierPath) {
+                    if (identifierPath.node.name !== `graphql`) {
+                      const varName = identifierPath.node.name
+                      path.traverse({
+                        VariableDeclarator(varPath) {
+                          if (
+                            varPath.node.id.name === varName &&
+                            varPath.node.init.type ===
+                              `TaggedTemplateExpression`
+                          ) {
+                            varPath.traverse({
+                              TaggedTemplateExpression(templatePath) {
+                                setImportForStaticQuery(
+                                  templatePath,
+                                  jsxElementPath
+                                )
+                              },
+                            })
+                          }
+                        },
+                      })
+                    }
+                  },
+                })
+              },
+            })
+          },
+        })
+
+        path.traverse({
+          // Run it again to remove non-staticquery versions
           TaggedTemplateExpression(path2, state) {
-            const { ast, text, hash, isGlobal } = getGraphQLTag(path2)
+            const { ast, hash, isGlobal } = getGraphQLTag(path2)
 
             if (!ast) return null
 
             const queryHash = hash.toString()
-            const query = text
 
             const tag = path2.get(`tag`)
-            if (!isGlobal) removeImport(tag)
+            if (!isGlobal) {
+              // Enqueue import removal. If we would remove it here, subsequent named exports
+              // wouldn't be handled properly
+              tagsToRemoveImportsFrom.add(tag)
+            }
 
             // Replace the query with the hash of the query.
             path2.replaceWith(t.StringLiteral(queryHash))
-
-            path.traverse(nestedJSXVistor, { queryHash, query })
-
             return null
           },
         })
+
+        tagsToRemoveImportsFrom.forEach(removeImport)
       },
     },
   }

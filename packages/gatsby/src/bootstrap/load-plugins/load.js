@@ -77,11 +77,13 @@ function resolvePlugin(pluginName) {
       version: packageJSON.version,
     }
   } catch (err) {
-    throw new Error(`Unable to find plugin "${pluginName}"`)
+    throw new Error(
+      `Unable to find plugin "${pluginName}". Perhaps you need to install its package?`
+    )
   }
 }
 
-module.exports = async (config = {}) => {
+module.exports = (config = {}) => {
   // Instantiate plugins.
   const plugins = []
 

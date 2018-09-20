@@ -24,7 +24,6 @@ exports[`gatsby-plugin-stylus Stage: build-html / No options 1`] = `
                   ],
                 },
                 Object {
-                  "exclude": /\\\\\\.module\\\\\\.styl\\$/,
                   "test": /\\\\\\.styl\\$/,
                   "use": Array [
                     "miniCssExtract",
@@ -44,6 +43,12 @@ exports[`gatsby-plugin-stylus Stage: build-html / No options 1`] = `
         },
       },
     ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
   ],
 }
 `;
@@ -72,7 +77,6 @@ exports[`gatsby-plugin-stylus Stage: build-html / PostCss plugins 1`] = `
                   ],
                 },
                 Object {
-                  "exclude": /\\\\\\.module\\\\\\.styl\\$/,
                   "test": /\\\\\\.styl\\$/,
                   "use": Array [
                     "miniCssExtract",
@@ -92,6 +96,12 @@ exports[`gatsby-plugin-stylus Stage: build-html / PostCss plugins 1`] = `
         },
       },
     ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
   ],
 }
 `;
@@ -123,7 +133,6 @@ exports[`gatsby-plugin-stylus Stage: build-html / Stylus options #1 1`] = `
                   ],
                 },
                 Object {
-                  "exclude": /\\\\\\.module\\\\\\.styl\\$/,
                   "test": /\\\\\\.styl\\$/,
                   "use": Array [
                     "miniCssExtract",
@@ -146,6 +155,12 @@ exports[`gatsby-plugin-stylus Stage: build-html / Stylus options #1 1`] = `
         },
       },
     ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
   ],
 }
 `;
@@ -181,7 +196,6 @@ exports[`gatsby-plugin-stylus Stage: build-html / Stylus options #2 1`] = `
                   ],
                 },
                 Object {
-                  "exclude": /\\\\\\.module\\\\\\.styl\\$/,
                   "test": /\\\\\\.styl\\$/,
                   "use": Array [
                     "miniCssExtract",
@@ -208,6 +222,12 @@ exports[`gatsby-plugin-stylus Stage: build-html / Stylus options #2 1`] = `
         },
       },
     ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
   ],
 }
 `;
@@ -236,7 +256,6 @@ exports[`gatsby-plugin-stylus Stage: build-javascript / No options 1`] = `
                   ],
                 },
                 Object {
-                  "exclude": /\\\\\\.module\\\\\\.styl\\$/,
                   "test": /\\\\\\.styl\\$/,
                   "use": Array [
                     "miniCssExtract",
@@ -256,6 +275,12 @@ exports[`gatsby-plugin-stylus Stage: build-javascript / No options 1`] = `
         },
       },
     ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
   ],
 }
 `;
@@ -284,7 +309,6 @@ exports[`gatsby-plugin-stylus Stage: build-javascript / PostCss plugins 1`] = `
                   ],
                 },
                 Object {
-                  "exclude": /\\\\\\.module\\\\\\.styl\\$/,
                   "test": /\\\\\\.styl\\$/,
                   "use": Array [
                     "miniCssExtract",
@@ -304,6 +328,12 @@ exports[`gatsby-plugin-stylus Stage: build-javascript / PostCss plugins 1`] = `
         },
       },
     ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
   ],
 }
 `;
@@ -335,7 +365,6 @@ exports[`gatsby-plugin-stylus Stage: build-javascript / Stylus options #1 1`] = 
                   ],
                 },
                 Object {
-                  "exclude": /\\\\\\.module\\\\\\.styl\\$/,
                   "test": /\\\\\\.styl\\$/,
                   "use": Array [
                     "miniCssExtract",
@@ -358,6 +387,12 @@ exports[`gatsby-plugin-stylus Stage: build-javascript / Stylus options #1 1`] = 
         },
       },
     ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
   ],
 }
 `;
@@ -393,7 +428,6 @@ exports[`gatsby-plugin-stylus Stage: build-javascript / Stylus options #2 1`] = 
                   ],
                 },
                 Object {
-                  "exclude": /\\\\\\.module\\\\\\.styl\\$/,
                   "test": /\\\\\\.styl\\$/,
                   "use": Array [
                     "miniCssExtract",
@@ -420,6 +454,12 @@ exports[`gatsby-plugin-stylus Stage: build-javascript / Stylus options #2 1`] = 
         },
       },
     ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
   ],
 }
 `;
@@ -448,7 +488,6 @@ exports[`gatsby-plugin-stylus Stage: develop / No options 1`] = `
                   ],
                 },
                 Object {
-                  "exclude": /\\\\\\.module\\\\\\.styl\\$/,
                   "test": /\\\\\\.styl\\$/,
                   "use": Array [
                     "miniCssExtract",
@@ -468,6 +507,12 @@ exports[`gatsby-plugin-stylus Stage: develop / No options 1`] = `
         },
       },
     ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
   ],
 }
 `;
@@ -496,7 +541,6 @@ exports[`gatsby-plugin-stylus Stage: develop / PostCss plugins 1`] = `
                   ],
                 },
                 Object {
-                  "exclude": /\\\\\\.module\\\\\\.styl\\$/,
                   "test": /\\\\\\.styl\\$/,
                   "use": Array [
                     "miniCssExtract",
@@ -516,6 +560,12 @@ exports[`gatsby-plugin-stylus Stage: develop / PostCss plugins 1`] = `
         },
       },
     ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
   ],
 }
 `;
@@ -547,7 +597,6 @@ exports[`gatsby-plugin-stylus Stage: develop / Stylus options #1 1`] = `
                   ],
                 },
                 Object {
-                  "exclude": /\\\\\\.module\\\\\\.styl\\$/,
                   "test": /\\\\\\.styl\\$/,
                   "use": Array [
                     "miniCssExtract",
@@ -570,6 +619,12 @@ exports[`gatsby-plugin-stylus Stage: develop / Stylus options #1 1`] = `
         },
       },
     ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
   ],
 }
 `;
@@ -605,7 +660,6 @@ exports[`gatsby-plugin-stylus Stage: develop / Stylus options #2 1`] = `
                   ],
                 },
                 Object {
-                  "exclude": /\\\\\\.module\\\\\\.styl\\$/,
                   "test": /\\\\\\.styl\\$/,
                   "use": Array [
                     "miniCssExtract",
@@ -632,6 +686,12 @@ exports[`gatsby-plugin-stylus Stage: develop / Stylus options #2 1`] = `
         },
       },
     ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
   ],
 }
 `;
@@ -660,7 +720,6 @@ exports[`gatsby-plugin-stylus Stage: develop-html / No options 1`] = `
                   ],
                 },
                 Object {
-                  "exclude": /\\\\\\.module\\\\\\.styl\\$/,
                   "test": /\\\\\\.styl\\$/,
                   "use": Array [
                     "miniCssExtract",
@@ -680,6 +739,12 @@ exports[`gatsby-plugin-stylus Stage: develop-html / No options 1`] = `
         },
       },
     ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
   ],
 }
 `;
@@ -708,7 +773,6 @@ exports[`gatsby-plugin-stylus Stage: develop-html / PostCss plugins 1`] = `
                   ],
                 },
                 Object {
-                  "exclude": /\\\\\\.module\\\\\\.styl\\$/,
                   "test": /\\\\\\.styl\\$/,
                   "use": Array [
                     "miniCssExtract",
@@ -728,6 +792,12 @@ exports[`gatsby-plugin-stylus Stage: develop-html / PostCss plugins 1`] = `
         },
       },
     ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
   ],
 }
 `;
@@ -759,7 +829,6 @@ exports[`gatsby-plugin-stylus Stage: develop-html / Stylus options #1 1`] = `
                   ],
                 },
                 Object {
-                  "exclude": /\\\\\\.module\\\\\\.styl\\$/,
                   "test": /\\\\\\.styl\\$/,
                   "use": Array [
                     "miniCssExtract",
@@ -782,6 +851,12 @@ exports[`gatsby-plugin-stylus Stage: develop-html / Stylus options #1 1`] = `
         },
       },
     ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
   ],
 }
 `;
@@ -817,7 +892,6 @@ exports[`gatsby-plugin-stylus Stage: develop-html / Stylus options #2 1`] = `
                   ],
                 },
                 Object {
-                  "exclude": /\\\\\\.module\\\\\\.styl\\$/,
                   "test": /\\\\\\.styl\\$/,
                   "use": Array [
                     "miniCssExtract",
@@ -844,6 +918,12 @@ exports[`gatsby-plugin-stylus Stage: develop-html / Stylus options #2 1`] = `
         },
       },
     ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
   ],
 }
 `;

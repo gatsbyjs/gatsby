@@ -1,7 +1,6 @@
 import CMS from "netlify-cms"
-import "netlify-cms/dist/cms.css"
 
-// eslint-disable-next-line no-undef
-if (NETLIFY_CMS_PREVIEW_STYLES_SET) {
-  CMS.registerPreviewStyle(`styles.css`)
-}
+/**
+ * The stylesheet output from the module at `stylesPath` will be at `cms.css`.
+ */
+CMS.registerPreviewStyle(`cms.css`)

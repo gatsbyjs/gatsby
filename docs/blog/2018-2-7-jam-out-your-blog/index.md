@@ -66,7 +66,7 @@ All I wanted to do was streamline my process and here I was adding another servi
 
 To spare you the details, I spent a few hours comparing my GraphQL queries to those used in the [Gatsby + Contentful example](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-contentful) to find errors in my code. I eventually gave up and I thought that there had to be an easier way to manage content online. Luckily there is. It's called Prose.
 
-## Managing Content Via Github: Enter Prose.io
+## Managing Content Via GitHub: Enter Prose.io
 
 Prose was originally created for editing markdown files on GitHub by the people at [Development Seed](https://developmentseed.org/).
 
@@ -74,12 +74,12 @@ Prose was originally created for editing markdown files on GitHub by the people 
 
 - Simple Content Authoring Environment
 - Designed for CMS-Free Websites
-- Web-based Interface for Managing Content Directly on Github
+- Web-based Interface for Managing Content Directly on GitHub
 - Advanced Support for Markdown Content - Including Syntax Highlighting & Formatting Toolbar
 
 Source: [Prose](http://prose.io/#about)
 
-So, a service that works on top of Github where I, or anyone with a Github account can quickly create and manage posts. Sick!
+So, a service that works on top of GitHub where I, or anyone with a GitHub account can quickly create and manage posts. Sick!
 
 #### Follow these steps:
 
@@ -96,7 +96,7 @@ _**Yes, there’s more.**_
 
 Because Prose was built for Jekyll, it recognizes any headmatter you add to your .md files. This will give developers the ability to build queries and replicate familiar features from other CMS platforms. Say hello to publish states, publish date, article author and more.
 
-I should also mention that Prose is an open source project that is available for download if you wish to self-host. Check out the [documentation on Github.](https://github.com/prose/prose)
+I should also mention that Prose is an open source project that is available for download if you wish to self-host. Check out the [documentation on GitHub.](https://github.com/prose/prose)
 
 ## Get Lean and Get on Netlify
 
@@ -122,7 +122,7 @@ Let’s summarize where we are and why [Netlify](https://www.netlify.com/) will 
 
 When it comes to continuous deployment and inexpensive hosting, using Netlify is, as Josh mentions “ a no brainer.”  Check out [Netlify’s features here](https://www.netlify.com/features/) for a more in-depth look.
 
-With streamlining in mind, a workflow doesn’t get any leaner than working within the confines of Github and Netlify. Think about the magic:
+With streamlining in mind, a workflow doesn’t get any leaner than working within the confines of GitHub and Netlify. Think about the magic:
 
 1.  Use Gatsby to create your website.
 2.  Set up a GitHub repository to track changes and version history.

@@ -1,31 +1,43 @@
-- title: Quick start
-  link: /docs/
 - title: Tutorial (step-by-step)
   items:
     - title: Introduction
       link: /tutorial/
-    - title: 0. Programming basics
+    - title: 0. Set Up Your Development Environment
       link: /tutorial/part-zero/
-    - title: 1. Introduction to Gatsby basics
+      ui: steps
+      items:
+        - title: Overview of core technologies
+          link: /tutorial/part-zero/#overview-of-core-technologies
+        - title: Familiarize with command line
+          link: /tutorial/part-zero/#familiarize-with-command-line
+        - title: Install Node.js
+          link: /tutorial/part-zero/#install-nodejs
+        - title: Familiarize with npm
+          link: /tutorial/part-zero/#familiarize-with-npm
+        - title: Install the Gatsby CLI
+          link: /tutorial/part-zero/#install-the-gatsby-cli
+        - title: Create a Gatsby site
+          link: /tutorial/part-zero/#create-a-site
+        - title: Set up a code editor
+          link: /tutorial/part-zero/#set-up-a-code-editor
+    - title: 1. Get to know Gatsby building blocks
       link: /tutorial/part-one/
       ui: steps
       items:
-        - title: Check environment
-          link: /tutorial/part-one/#check-your-development-environment
-        - title: Install the "Hello World" starter
-          link: /tutorial/part-one/#install-the-hello-world-starter
+        - title: Using Gatsby starters
+          link: /tutorial/part-one/#using-gatsby-starters
+        - title: Familiarizing with Gatsby pages
+          link: /tutorial/part-one/#familiarizing-with-gatsby-pages
+        - title: Building with components
+          link: /tutorial/part-one/#building-with-components
         - title: Linking between pages
           link: /tutorial/part-one/#linking-between-pages
-        - title: Interactive page
-          link: /tutorial/part-one/#interactive-page
-        - title: Deploying Gatsby.js websites
-          link: /tutorial/part-one/#deploying-gatsbyjs-websites
+        - title: Deploying a Gatsby site
+          link: /tutorial/part-one/#deploying-a-gatsby-site
     - title: 2. Introduction to using CSS in Gatsby
       link: /tutorial/part-two/
       ui: steps
       items:
-        - title: Building with components
-          link: /tutorial/part-two/#building-with-components
         - title: Creating Global Styles
           link: /tutorial/part-two/#creating-global-styles
         - title: Typography.js
@@ -40,8 +52,8 @@
       link: /tutorial/part-three/
       ui: steps
       items:
-        - title: Our first layout component
-          link: /tutorial/part-three/
+        - title: Your first layout component
+          link: /tutorial/part-three/#your-first-layout-component
     - title: 4. Querying for data in a blog
       link: /tutorial/part-four/
       ui: steps
@@ -52,8 +64,8 @@
           link: /tutorial/part-four/#data-in-gatsby
         - title: How Gatsby uses GraphQL
           link: /tutorial/part-four/#how-gatsbys-data-layer-uses-graphql-to-pull-data-into-components
-        - title: Our first GraphQL query
-          link: /tutorial/part-four/#our-first-graphql-query
+        - title: Your first GraphQL query
+          link: /tutorial/part-four/#your-first-graphql-query
     - title: 5. Source plugins and rendering queried data
       link: /tutorial/part-five/
       ui: steps
@@ -71,7 +83,7 @@
         - title: What are transformer plugins?
           link: /tutorial/part-six/#transformer-plugins
         - title: Create a list of our site's markdown files
-          link: /tutorial/part-six/#create-a-list-of-our-sites-markdown-files-in-srcpagesindexjs
+          link: /tutorial/part-six/#create-a-list-of-your-sites-markdown-files-in-srcpagesindexjs
     - title: 7. Programmatically create pages from data
       link: /tutorial/part-seven/
       ui: steps
@@ -84,5 +96,13 @@
       link: /tutorial/part-eight/
       ui: steps
       items:
-        - title: Lighthouse audit
-          link: /tutorial/part-eight/#lighthouse
+        - title: Audit with Lighthouse
+          link: /tutorial/part-eight/#auditing-with-lighthouse
+        - title: Add a manifest file
+          link: /tutorial/part-eight/#add-a-manifest-file
+        - title: Add offline support
+          link: /tutorial/part-eight/#add-offline-support
+        - title: Add page metadata
+          link: /tutorial/part-eight/#add-page-metadata
+        - title: Keep making it better
+          link: /tutorial/part-eight/#keep-making-it-better

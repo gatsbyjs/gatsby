@@ -38,6 +38,9 @@ const getCachedPageData = (
 ): QueryResult => {
   const { jsonDataPaths, pages } = store.getState()
   const page = pages.get(pagePath)
+  if (!page) {
+    return null
+  }
   const dataPath = jsonDataPaths[page.jsonName]
   if (typeof dataPath === `undefined`) {
     console.log(
@@ -123,17 +126,10 @@ class WebsocketManager {
 
     this.websocket.on(`connection`, s => {
       let activePath = null
-
       // Send already existing static query results
       this.staticQueryResults.forEach(result => {
         this.websocket.send({
           type: `staticQueryResult`,
-          payload: result,
-        })
-      })
-      this.pageResults.forEach(result => {
-        this.websocket.send({
-          type: `pageQueryResult`,
           payload: result,
         })
       })
@@ -148,20 +144,30 @@ class WebsocketManager {
         }
       }
 
-      s.on(`registerPath`, path => {
-        s.join(getRoomNameFromPath(path))
-        activePath = path
-        this.activePaths.add(path)
-
+      const getDataForPath = path => {
         if (!this.pageResults.has(path)) {
           const result = getCachedPageData(path, this.programDir)
-          this.pageResults.set(path, result)
+          if (result) {
+            this.pageResults.set(path, result)
+          } else {
+            console.log(`Page not found`, path)
+            return
+          }
         }
 
         this.websocket.send({
           type: `pageQueryResult`,
+          why: `getDataForPath`,
           payload: this.pageResults.get(path),
         })
+      }
+
+      s.on(`getDataForPath`, getDataForPath)
+
+      s.on(`registerPath`, path => {
+        s.join(getRoomNameFromPath(path))
+        activePath = path
+        this.activePaths.add(path)
       })
 
       s.on(`disconnect`, s => {
@@ -186,6 +192,7 @@ class WebsocketManager {
       this.websocket.send({ type: `staticQueryResult`, payload: data })
     }
   }
+
   emitPageData(data: QueryResult) {
     if (this.isInitialised) {
       this.websocket.send({ type: `pageQueryResult`, payload: data })

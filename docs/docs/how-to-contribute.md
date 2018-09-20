@@ -16,7 +16,7 @@ We want contributing to Gatsby to be fun, enjoyable, and educational for anyone 
 - Searching for Gatsby on Discord or Spectrum and helping someone else who needs help
 - Teaching others how to contribute to Gatsby's repo!
 
-As our way of saying “thank you” to our contributors, **_all contributors_ are eligible for [free Gatsby swag](/docs/contributor-swag/)** — whether you’re contributing code, docs, a talk, an article, or something else that helps the Gatby community. [Learn how to claim free swag for contributors.](/docs/contributor-swag/)
+As our way of saying “thank you” to our contributors, **_all contributors_ are eligible for [free Gatsby swag](/docs/contributor-swag/)** — whether you’re contributing code, docs, a talk, an article, or something else that helps the Gatsby community. [Learn how to claim free swag for contributors.](/docs/contributor-swag/)
 
 ### Not sure how to start contributing?
 
@@ -33,17 +33,6 @@ If you create a loader or plugin, we would <3 for you to open source it and put 
 Gatsby uses a "monorepo" pattern to manage its many dependencies and relies on
 lerna and yarn to configure the repository for active development.
 
-We're currently gearing up to release a new major version, v2.
-
-During this time, please choose the correct branch for your pull request:
-
-- `master` branch for Gatsby version 2 bug fixes
-- `master` branch for any new features (these will be released in the Gatsby v2 betas)
-- `master` branch for updates to the `www` and `docs` directories
-- `v1` branch for Gatsby version 1 bug fixes
-
-Note: We will only accept bug fixes for Gatsby v1. New features should be added to Gatsby v2.
-
 You can install the latest version of Gatsby by following these steps:
 
 - Clone the repo, navigate to its directory.
@@ -51,20 +40,21 @@ You can install the latest version of Gatsby by following these steps:
   https://yarnpkg.com/en/docs/install
 - Install dependencies using `yarn run bootstrap` in the root of the repo.
 
-The usual contributing steps are:
+There are two ways to contribute. This is the most usual way:
 
 - Fork the [official repository](https://github.com/gatsbyjs/gatsby).
 - Clone your fork: `git clone --depth=1 https://github.com/<your-username>/gatsby.git`
 - Setup up repo and install dependencies: `yarn run bootstrap`
 - Make sure tests are passing for you: `yarn test`
 - Create a topic branch: `git checkout -b topics/new-feature-name`
-- Run `npm run watch` from the root of the repo to watch for changes to packages' source code and compile these changes on-the-fly as you work. Note that the watch command can be resource intensive. To limit it to the packages you're working on, add a scope flag, like `npm run watch -- --scope={gatsby,gatsby-cli}`. To watch just one package, run `npm run watch -- --scope=gatsby`.
+- Run `yarn run watch` from the root of the repo to watch for changes to packages' source code and compile these changes on-the-fly as you work. Note that the watch command can be resource intensive. To limit it to the packages you're working on, add a scope flag, like `yarn run watch -- --scope={gatsby,gatsby-cli}`. To watch just one package, run `yarn run watch -- --scope=gatsby`.
 - Install [gatsby-dev-cli](/packages/gatsby-dev-cli/) globally: `yarn global add gatsby-dev-cli`
 - Run `yarn install` in each of the sites you're testing.
-- For each of your Gatsby test sites, run the `gatsby-dev` command there to copy
+- For each of your Gatsby test sites, run the `gatsby-dev` command inside the test site's directory to copy
   the built files from your cloned copy of Gatsby. It'll watch for your changes
   to Gatsby packages and copy them into the site. For more detailed instructions
-  see the [gatsby-dev-cli README](/packages/gatsby-dev-cli/)
+  see the [gatsby-dev-cli README](/packages/gatsby-dev-cli/) and check out the [gatsby-dev-cli demo video](https://www.youtube.com/watch?v=D0SwX1MSuas).  
+  Note: if you plan to modify packages that are exported from `gatsby` directly, you need to either add those manually to your test sites so that they are listed in `package.json` (e.g. `yarn add gatsby-link`), or specify them explicitly with `gatsby-dev --packages gatsby-link`).
 - Add tests and code for your changes.
 - Once you're done, make sure all tests still pass: `yarn test`.
 - Commit and push to your fork.
@@ -81,8 +71,7 @@ you to commit the change and raise a PR right in the UI. This is the _easiest_
 way you can contribute to the project!
 
 However, if you want to make more changes to the website, that is, change
-layouts, add sections/pages, follow the steps below. You can then spin up your
-own instance of the Gatsby website and make/preview your changes before raising
+layout components or templates, add sections/pages, follow the steps below. You can then spin up your own instance of the Gatsby website and make/preview your changes before raising
 a pull request.
 
 - Clone the repo and navigate to `/www`
@@ -119,46 +108,3 @@ To add a new blog post to the gatsbyjs.org blog:
 ### Debugging the build process
 
 Check [Debugging the build process](/docs/debugging-the-build-process/) page to learn how to debug Gatsby.
-
-### Redux devtools
-
-Gatsby uses Redux for managing state during development and building. It's often
-helpful to see the flow of actions and built-up state for a site you're working
-on or if adding new functionality to core. We leverage
-[Remote Redux Devtools](https://github.com/zalmoxisus/remote-redux-devtools) and
-[RemoteDev Server](https://github.com/zalmoxisus/remotedev-server) to help you debug Gatsby.
-
-To use this, first install
-[redux-devtools-extension](https://github.com/zalmoxisus/redux-devtools-extension)
-in your browser. Then in your Gatsby repo, run `npm run remotedev`. Then in your
-site directory run `REDUX_DEVTOOLS=true gatsby develop`. Depending on your
-operating system and shell, you may need to modify how you set the
-`REDUX_DEVTOOLS` environment variable.
-
-At this point, your site will be sending Redux actions and state to the remote
-server.
-
-To connect to this, you need to setup the devtools extension to talk to the
-remote server.
-
-First open the remote devtools.
-
-![how to open the redux remote devtools extension](./images/open-remote-dev-tools.png)
-
-Then click settings along the bottom menu and set the host and port.
-
-![how to set the host/port for the remote devtools extension to connect to Gatsby](./images/remote-dev-settings.png)
-
-After this, the devtools extension _should_ connect to the remote server and
-you'll see actions start showing up.
-
-![gatsby redux remote devtools](./images/running-redux-devtools.png)
-
-**Warning!! Lots of bugginess**. While having this available is extremely
-helpful, this setup is very buggy and fragile. There is a memory leak in the
-extension that's triggered it seems every time you restart the Gatsby
-development server. Also the extension often, for no apparent reason, just won't
-show any actions from the remote server. It'll also often freeze up. The best
-solution seems to just be turning everything off and on again. Fixing up these
-tools would be very helpful for us and many others using these tools if someone
-wants to take this on!

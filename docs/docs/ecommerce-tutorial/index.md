@@ -162,7 +162,7 @@ const Checkout = class extends React.Component {
   }
 
   componentDidMount() {
-    this.stripeHandler = StripeCheckout.configure({
+    this.stripeHandler = window.StripeCheckout.configure({
       // You’ll need to add your own Stripe public key to the `checkout.js` file.
       // key: 'pk_test_STRIPE_PUBLISHABLE_KEY',
       key: "pk_test_kuhbxb0MMZsp6fj6aTNDnxUu",
@@ -254,14 +254,14 @@ The tags in the `render()` function define the structure of HTML elements that l
 Now go to your `src/pages/index.js` file. This is your homepage that shows at the root URL. Import your new checkout component in the file underneath the other two imports and replace the tags inside the first `<div>` tag with a `<Checkout />` tag. Your `index.js` file should now look like this:
 
 ```js{3,7}
-import React from 'react'
-import Link from 'gatsby-link'
-import Checkout from '../components/checkout'
+import React from "react"
+import { Link } from "gatsby"
+import Checkout from "../components/checkout"
 
 const IndexPage = () => (
- <div>
-   <Checkout />
- </div>
+  <div>
+    <Checkout />
+  </div>
 )
 
 export default IndexPage

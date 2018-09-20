@@ -180,14 +180,11 @@ const mapUserLinkAllPageHeaders = (
     transformLink(manifest, publicFolder, pathPrefix)
   )
 
-  const duplicateHeadersByPage = _.reduce(
-    pages,
-    (combined, page) => {
-      const pathKey = headersPath(pathPrefix, page.path)
-      return defaultMerge(combined, { [pathKey]: headersList })
-    },
-    {}
-  )
+  const duplicateHeadersByPage = {}
+  pages.forEach(page => {
+    const pathKey = headersPath(pathPrefix, page.path)
+    duplicateHeadersByPage[pathKey] = headersList
+  })
 
   return defaultMerge(headers, duplicateHeadersByPage)
 }

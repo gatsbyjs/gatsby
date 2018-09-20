@@ -48,7 +48,7 @@ const SegmentTitle = ({ children }) => (
     css={{
       display: `inline`,
       background: colors.accent,
-      color: `#fff`,
+      color: colors.gray.copy,
       borderRadius: presets.radius,
       margin: `0 auto`,
       position: `relative`,
@@ -128,7 +128,7 @@ const SourceItem = ({ children }) => (
       },
       [presets.Phablet]: {
         flex: `1 1 33%`,
-        maxWidth: `33%`
+        maxWidth: `33%`,
       },
     }}
   >
@@ -163,7 +163,7 @@ const ItemDescription = ({ children }) => (
     css={{
       lineHeight: 1.2,
       display: `block`,
-      color: colors.lilac,
+      color: colors.gatsby,
       [presets.Hd]: {
         fontSize: scale(-1 / 5).fontSize,
       },
@@ -222,7 +222,7 @@ const Gatsby = ({ children }) => (
   </div>
 )
 
-const Diagram = ({ containerCSS }) => (
+const Diagram = () => (
   <section
     className="Diagram"
     css={{
@@ -231,7 +231,10 @@ const Diagram = ({ containerCSS }) => (
       padding: vP,
       marginTop: rhythm(1),
       textAlign: `center`,
-      ...containerCSS,
+      borderTopLeftRadius: 0,
+      borderTopRightRadius: 0,
+      flex: `1 1 100%`,
+      borderTop: `1px solid ${colors.ui.light}`,
       [presets.Tablet]: {
         marginTop: 0,
       },
@@ -240,7 +243,7 @@ const Diagram = ({ containerCSS }) => (
     <h1 css={{ marginBottom: rhythm(1.5), ...scale(0.9) }}>How Gatsby works</h1>
     <div css={{ maxWidth: rhythm(20), margin: `0 auto ${rhythm(2)}` }}>
       <FuturaParagraph>
-        Gatsby lets you build blazing-fast sites with <em>your data</em>,
+        Gatsby lets you build blazing fast sites with <em>your data</em>,
         whatever the source. Liberate your sites from legacy CMSs and fly into
         the future.
       </FuturaParagraph>
@@ -291,7 +294,8 @@ const Diagram = ({ containerCSS }) => (
           }}
         >
           <ItemDescription>
-            HTML &middot; CSS &middot;{` `}
+            HTML &middot; CSS &middot;
+            {` `}
             <TechWithIcon icon={ReactJSIcon} height="1.1em">
               React
             </TechWithIcon>

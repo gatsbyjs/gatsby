@@ -24,6 +24,12 @@ The Gatsby community welcomes contributions. Please refer to the guides below on
 
 ## Gatsby news
 
+### Newsletter
+
+Sign up for the Gatsby newsletter to keep up with the latest from the Gatsby community! Hear about new features, tips & tricks, and what people are building.
+
+[Sign up here](/newsletter/)
+
 ### Twitter
 
 For the latest news about Gatsby,

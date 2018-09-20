@@ -21,7 +21,7 @@ Let's dive in and explore creating layouts.
 As we mentioned in Part Two, at this point it's probably a good idea to close the terminal window(s) and project files from previous parts of the tutorial, to keep things clean on your desktop. Then, open a new terminal window and run the following commands to create a new Gatsby site in a directory called `tutorial-part-three` and then move to this new directory:
 
 ```shell
-gatsby new tutorial-part-three https://github.com/gatsbyjs/gatsby-starter-hello-world#v2
+gatsby new tutorial-part-three https://github.com/gatsbyjs/gatsby-starter-hello-world
 cd tutorial-part-three
 ```
 
@@ -144,8 +144,8 @@ export default () => (
   <Layout>
     <h1>Hi! I'm building a fake Gatsby site as part of a tutorial!</h1>
     <p>
-      What do I like to do? Lots of course but definitely enjoy
-      building websites.
+      What do I like to do? Lots of course but definitely enjoy building
+      websites.
     </p>
   </Layout>
 )
@@ -188,9 +188,7 @@ import { Link } from "gatsby"
 
 const ListLink = props => (
   <li style={{ display: `inline-block`, marginRight: `1rem` }}>
-    <Link to={props.to}>
-      {props.children}
-    </Link>
+    <Link to={props.to}>{props.children}</Link>
   </li>
 )
 

@@ -17,6 +17,7 @@ const { initCache } = require(`../utils/cache`)
 const report = require(`gatsby-cli/lib/reporter`)
 const getConfigFile = require(`./get-config-file`)
 const tracer = require(`opentracing`).globalTracer()
+const preferDefault = require(`./prefer-default`)
 
 // Show stack trace on unhandled promises.
 process.on(`unhandledRejection`, (reason, p) => {
@@ -39,8 +40,6 @@ const {
 // Useful for debugging if you lose a console.log somewhere.
 // Otherwise leave commented out.
 // require(`./log-line-function`)
-
-const preferDefault = m => (m && m.default) || m
 
 type BootstrapArgs = {
   directory: string,
@@ -216,6 +215,19 @@ module.exports = async (args: BootstrapArgs) => {
     if (env === `ssr` && plugin.skipSSR === true) return undefined
 
     const envAPIs = plugin[`${env}APIs`]
+
+    // Always include the site's gatsby-browser.js if it exists as it's
+    // a handy place to include global styles and other global imports.
+    try {
+      if (env === `browser` && plugin.name === `default-site-plugin`) {
+        return slash(
+          require.resolve(path.join(plugin.resolve, `gatsby-${env}`))
+        )
+      }
+    } catch (e) {
+      // ignore
+    }
+
     if (envAPIs && Array.isArray(envAPIs) && envAPIs.length > 0) {
       return slash(path.join(plugin.resolve, `gatsby-${env}`))
     }
@@ -231,6 +243,7 @@ module.exports = async (args: BootstrapArgs) => {
     }),
     plugin => plugin.resolve
   )
+
   const browserPlugins = _.filter(
     flattenedPlugins.map(plugin => {
       return {
@@ -307,7 +320,7 @@ module.exports = async (args: BootstrapArgs) => {
   activity.end()
 
   // Collect resolvable extensions and attach to program.
-  const extensions = [`.js`, `.jsx`]
+  const extensions = [`.mjs`, `.js`, `.jsx`, `.wasm`, `.json`]
   // Change to this being an action and plugins implement `onPreBootstrap`
   // for adding extensions.
   const apiResults = await apiRunnerNode(`resolvableExtensions`, {

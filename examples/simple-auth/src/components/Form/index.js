@@ -1,14 +1,14 @@
 import React from "react"
-import { withRouter } from "react-router-dom"
 import styles from "./form.module.css"
+import { navigate } from "@reach/router"
 
-export default withRouter(({ handleSubmit, handleUpdate, history }) => (
+export default ({ handleSubmit, handleUpdate }) => (
   <form
     className={styles.form}
     method="post"
     onSubmit={event => {
       handleSubmit(event)
-      history.push(`/app/profile`)
+      navigate(`/app/profile`)
     }}
   >
     <p className={styles[`form__instructions`]}>
@@ -35,4 +35,4 @@ export default withRouter(({ handleSubmit, handleUpdate, history }) => (
     </label>
     <input className={styles[`form__button`]} type="submit" value="Log In" />
   </form>
-))
+)

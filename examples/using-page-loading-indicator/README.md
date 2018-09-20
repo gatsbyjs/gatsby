@@ -1,7 +1,5 @@
 # using-page-loading-indicator
 
-https://using-page-loading-indicator.gatsbyjs.org
-
 The loading indicator only will show up in the production version of the site.
 
 So first run `gatsby build` then `gatsby serve`.

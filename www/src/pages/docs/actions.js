@@ -7,8 +7,7 @@ import Functions from "../../components/function-list"
 import { rhythm, scale } from "../../utils/typography"
 import Layout from "../../components/layout"
 import Container from "../../components/container"
-import { sectionListDocs } from "../../utils/sidebar/section-list"
-import { createLinkDocs } from "../../utils/sidebar/create-link"
+import { itemListDocs } from "../../utils/sidebar/item-list"
 
 class ActionCreatorsDocs extends React.Component {
   render() {
@@ -18,11 +17,7 @@ class ActionCreatorsDocs extends React.Component {
     ).filter(func => func.name !== `deleteNodes`)
 
     return (
-      <Layout
-        location={this.props.location}
-        createLink={createLinkDocs}
-        sectionList={sectionListDocs}
-      >
+      <Layout location={this.props.location} itemList={itemListDocs}>
         <Container>
           <Helmet>
             <title>Actions</title>
@@ -40,7 +35,7 @@ class ActionCreatorsDocs extends React.Component {
           <p>
             The object
             {` `}
-            <code>boundActionCreators</code>
+            <code>actions</code>
             {` `}
             contains the functions and these can be individually extracted by
             using ES6 object destructuring.
@@ -50,8 +45,8 @@ class ActionCreatorsDocs extends React.Component {
               className="language-javascript"
               dangerouslySetInnerHTML={{
                 __html: `<code class="language-javascript"><span class="token comment">// For function createNodeField</span>
-  exports<span class="token punctuation">.</span><span class="token function-variable function">onCreateNode</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">{</span> node<span class="token punctuation">,</span> getNode<span class="token punctuation">,</span> boundActionCreators <span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
-    <span class="token keyword">const</span> <span class="token punctuation">{</span> createNodeField <span class="token punctuation">}</span> <span class="token operator">=</span> boundActionCreators
+  exports<span class="token punctuation">.</span><span class="token function-variable function">onCreateNode</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">{</span> node<span class="token punctuation">,</span> getNode<span class="token punctuation">,</span> actions <span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> <span class="token punctuation">{</span> createNodeField <span class="token punctuation">}</span> <span class="token operator">=</span> actions
   <span class="token punctuation">}</span></code>`,
               }}
             />

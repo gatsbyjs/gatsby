@@ -1,3 +1,4 @@
+const Promise = require(`bluebird`)
 const convertHrtime = require(`convert-hrtime`)
 const Worker = require(`jest-worker`).default
 const numWorkers = require(`physical-cpu-count`) || 1
@@ -5,24 +6,49 @@ const { chunk } = require(`lodash`)
 
 const workerPool = new Worker(require.resolve(`./worker`), {
   numWorkers,
+  forkOptions: {
+    silent: false,
+  },
 })
 
-module.exports = async (htmlComponentRendererPath, pages, activity) => {
-  const start = process.hrtime()
-  const segments = chunk(pages, numWorkers)
-  const concurrency = 30
+module.exports = (htmlComponentRendererPath, pages, activity) =>
+  new Promise((resolve, reject) => {
+    // We need to only pass env vars that are set programatically in gatsby-cli
+    // to child process. Other vars will be picked up from environment.
+    const envVars = Object.entries({
+      NODE_ENV: process.env.NODE_ENV,
+      gatsby_executing_command: process.env.gatsby_executing_command,
+      gatsby_log_level: process.env.gatsby_log_level,
+    })
 
-  await Promise.all(
-    segments.map(paths =>
-      workerPool.renderHTML({ htmlComponentRendererPath, paths, concurrency })
-    )
-  )
+    const start = process.hrtime()
+    const segments = chunk(pages, 50)
+    let finished = 0
 
-  if (activity) {
-    activity.setStatus(
-      `${pages.length}/${pages.length} ${(
-        pages.length / convertHrtime(process.hrtime(start)).seconds
-      ).toFixed(2)} pages/second`
+    Promise.map(
+      segments,
+      pageSegment =>
+        new Promise((resolve, reject) => {
+          workerPool
+            .renderHTML({
+              htmlComponentRendererPath,
+              paths: pageSegment,
+              envVars,
+            })
+            .then(() => {
+              finished += pageSegment.length
+              if (activity) {
+                activity.setStatus(
+                  `${finished}/${pages.length} ${(
+                    finished / convertHrtime(process.hrtime(start)).seconds
+                  ).toFixed(2)} pages/second`
+                )
+              }
+              resolve()
+            })
+            .catch(reject)
+        })
     )
-  }
-}
+      .then(resolve)
+      .catch(reject)
+  })

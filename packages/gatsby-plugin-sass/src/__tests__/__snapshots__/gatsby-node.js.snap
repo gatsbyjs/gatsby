@@ -44,6 +44,12 @@ exports[`gatsby-plugin-sass Stage: build-html / No options 1`] = `
       },
     ],
   ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
+  ],
 }
 `;
 
@@ -90,6 +96,12 @@ exports[`gatsby-plugin-sass Stage: build-html / PostCss plugins 1`] = `
         },
       },
     ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
   ],
 }
 `;
@@ -146,6 +158,12 @@ exports[`gatsby-plugin-sass Stage: build-html / Sass options 1`] = `
       },
     ],
   ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
+  ],
 }
 `;
 
@@ -193,6 +211,12 @@ exports[`gatsby-plugin-sass Stage: build-javascript / No options 1`] = `
       },
     ],
   ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
+  ],
 }
 `;
 
@@ -239,6 +263,12 @@ exports[`gatsby-plugin-sass Stage: build-javascript / PostCss plugins 1`] = `
         },
       },
     ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
   ],
 }
 `;
@@ -295,6 +325,12 @@ exports[`gatsby-plugin-sass Stage: build-javascript / Sass options 1`] = `
       },
     ],
   ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
+  ],
 }
 `;
 
@@ -342,6 +378,12 @@ exports[`gatsby-plugin-sass Stage: develop / No options 1`] = `
       },
     ],
   ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
+  ],
 }
 `;
 
@@ -388,6 +430,12 @@ exports[`gatsby-plugin-sass Stage: develop / PostCss plugins 1`] = `
         },
       },
     ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
   ],
 }
 `;
@@ -444,6 +492,12 @@ exports[`gatsby-plugin-sass Stage: develop / Sass options 1`] = `
       },
     ],
   ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
+  ],
 }
 `;
 
@@ -491,6 +545,12 @@ exports[`gatsby-plugin-sass Stage: develop-html / No options 1`] = `
       },
     ],
   ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
+  ],
 }
 `;
 
@@ -537,6 +597,12 @@ exports[`gatsby-plugin-sass Stage: develop-html / PostCss plugins 1`] = `
         },
       },
     ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
   ],
 }
 `;
@@ -592,6 +658,12 @@ exports[`gatsby-plugin-sass Stage: develop-html / Sass options 1`] = `
         },
       },
     ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
   ],
 }
 `;

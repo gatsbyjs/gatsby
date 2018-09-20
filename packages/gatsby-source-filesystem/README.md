@@ -35,10 +35,28 @@ module.exports = {
       options: {
         name: `data`,
         path: `${__dirname}/src/data/`,
+        ignore: [`**/\.*`], // ignore files starting with a dot
       },
     },
   ],
 }
+```
+
+## Options
+
+In addition to the name and path parameters you may pass an optional `ignore` array of file globs to ignore.
+
+They will be added to the following default list:
+
+```
+**/*.un~
+**/.DS_Store
+**/.gitignore
+**/.npmignore
+**/.babelrc
+**/yarn.lock
+**/node_modules
+../**/dist/**
 ```
 
 ## How to query
@@ -48,6 +66,22 @@ You can query file nodes like the following:
 ```graphql
 {
   allFile {
+    edges {
+      node {
+        extension
+        dir
+        modifiedTime
+      }
+    }
+  }
+}
+```
+
+To filter by the `name` you specified in the config, use `sourceInstanceName`:
+
+```graphql
+{
+  allFile(filter: { sourceInstanceName: { eq: "data" } }) {
     edges {
       node {
         extension
@@ -79,7 +113,7 @@ createFilePath({
   // The parameter from `onCreateNode` should be passed in here
   getNode:
   // The base path for your files.
-  // Defaults to `src/pages`. For the example above, you'd use `src/contents`.
+  // Defaults to `src/pages`. For the example above, you'd use `src/content`.
   basePath:
   // Whether you want your file paths to contain a trailing `/` slash
   // Defaults to true
@@ -94,8 +128,8 @@ The following is taken from [Gatsby Tutorial, Part Seven](https://www.gatsbyjs.o
 ```javascript
 const { createFilePath } = require(`gatsby-source-filesystem`)
 
-exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
-  const { createNodeField } = boundActionCreators
+exports.onCreateNode = ({ node, getNode, actions }) => {
+  const { createNodeField } = actions
   // Ensures we are processing only markdown files
   if (node.internal.type === "MarkdownRemark") {
     // Use `createFilePath` to turn markdown files in our `data/faqs` directory into `/faqs/slug`
