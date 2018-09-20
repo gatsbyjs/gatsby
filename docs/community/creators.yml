@@ -104,11 +104,21 @@
   portfolio: true
 - name: Michael Uloth
   type: individual
-  description: Michael Uloth is a Toronto-based web developer who specializes in building fast-loading, accessibile websites with Gatsby. 
+  description: Michael Uloth is a Toronto-based web developer who specializes in building fast-loading, accessibile websites with Gatsby.
   location: Toronto
   website: 'https://www.michaeluloth.com'
   github: 'https://github.com/ooloth'
   image: images/michael-uloth.jpg
+  for_hire: true
+  hiring: false
+  portfolio: true
+- name: Piotr Fedorczyk
+  type: individual
+  description: Digital product designer. Full-stack developer. Eclectic flâneur extraordinaire in constant exploration of spoken, visual and programming languages.
+  location: Poland
+  website: 'https://piotrf.pl'
+  github: 'https://github.com/piotrf'
+  image: images/piotr-fedorczyk.jpeg
   for_hire: true
   hiring: false
   portfolio: true
