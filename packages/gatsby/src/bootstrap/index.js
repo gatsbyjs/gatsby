@@ -173,8 +173,6 @@ module.exports = async (args: BootstrapArgs) => {
     payload: pluginsHash,
   })
 
-  console.log(`init cache`)
-
   // Now that we know the .cache directory is safe, initialize the cache
   // directory.
   await cache.initCache()
