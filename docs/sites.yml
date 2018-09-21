@@ -2433,8 +2433,8 @@
 - title: MOMNOTEBOOK.COM
   description: >
     Sharing knowledge and experiences that make childhood and motherhood rich, vibrant and healthy.
-  main_url: 'https://momnotebook.com/'
-  url: 'https://momnotebook.com/'
+  main_url: "https://momnotebook.com/"
+  url: "https://momnotebook.com/"
   featured: false
   built_by: Aleksander Hansson
   built_by_url: https://www.linkedin.com/in/aleksanderhansson/
@@ -2443,8 +2443,8 @@
 - title: Pirate Studios
   description: >
     Reinventing music studios with 24/7 self service rehearsal, DJ & production rooms available around the world.
-  main_url: 'https://www.piratestudios.co'
-  url: 'https://www.piratestudios.co'
+  main_url: "https://www.piratestudios.co"
+  url: "https://www.piratestudios.co"
   featured: false
   built_by: The Pirate Studios team
   built_by_url: https://github.com/piratestudios/
@@ -2596,6 +2596,7 @@
   built_by_url: https://www.leyanlo.com
   featured: false
 - title: Hawaii National Bank
+  url: https://hawaiinational.bank
   main_url: https://hawaiinational.bank
   description: Hawaii National Bank's highly personalized service has helped loyal customers & locally owned businesses achieve their financial dreams for over 50 years.
   categories:
