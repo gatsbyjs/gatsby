@@ -31,8 +31,7 @@ describe(`Production build tests`, () => {
 
     cy.go(`forward`).waitForRouteChange()
 
-    // after clicking link we expect page will
-    // be scrolled to top
+    // after clicking link we expect page will be scrolled to top
     cy.getTestElement(`long-page`)
       .click()
       .waitForRouteChange()
