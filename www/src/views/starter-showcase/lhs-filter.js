@@ -3,10 +3,11 @@ import React from "react"
 // import FaAngleUp from "react-icons/lib/fa/angle-up"
 import MdCheckboxBlank from "react-icons/lib/md/check-box-outline-blank"
 import MdCheckbox from "react-icons/lib/md/check-box"
-import { /*presets, */ colors } from "../../utils/presets"
-import { options, /* rhythm, */ scale, rhythm } from "../../utils/typography"
+import { colors } from "../../utils/presets"
+import { scale } from "../../utils/typography"
 
 import Collapsible from "../shared/collapsible"
+import styles from "../shared/styles"
 
 export default function LHSFilter({
   sortRecent,
@@ -39,27 +40,7 @@ export default function LHSFilter({
                   setFilters(filters.add(c))
                 }
               }}
-              css={{
-                ...scale(-1 / 6),
-                alignItems: `flex-start`,
-                background: `none`,
-                border: `none`,
-                color: colors.gray.text,
-                cursor: `pointer`,
-                display: `flex`,
-                fontFamily: options.headerFontFamily.join(`,`),
-                justifyContent: `space-between`,
-                outline: `none`,
-                padding: 0,
-                paddingRight: rhythm(1),
-                paddingBottom: rhythm(options.blockMarginBottom / 8),
-                paddingTop: rhythm(options.blockMarginBottom / 8),
-                width: `100%`,
-                textAlign: `left`,
-                ":hover": {
-                  color: colors.gatsby,
-                },
-              }}
+              css={styles.filterButton}
             >
               <div
                 css={{
@@ -68,7 +49,11 @@ export default function LHSFilter({
                   marginRight: 8,
                 }}
               >
-                {filters.has(c) ? <MdCheckbox /> : <MdCheckboxBlank />}
+                {filters.has(c) ? (
+                  <MdCheckbox style={{ verticalAlign: `-0.125em` }} />
+                ) : (
+                  <MdCheckboxBlank style={{ verticalAlign: `-0.125em` }} />
+                )}
               </div>
               <div
                 css={{
@@ -78,7 +63,7 @@ export default function LHSFilter({
               >
                 {c.replace(/^gatsby-/, `*-`)}
               </div>
-              <div css={{ color: colors.gray.calm }}>{count}</div>
+              <div css={styles.filterCount}>{count}</div>
             </button>
           </ul>
         ))}
