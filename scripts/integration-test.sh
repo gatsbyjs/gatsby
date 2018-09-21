@@ -1,7 +1,7 @@
 #!/bin/bash
 SRC_PATH=$1
 CUSTOM_COMMAND="${2:-test}"
-GATSBY_PATH="/home/circleci/project"
+GATSBY_PATH="${CIRCLE_WORKING_DIRECTORY:-../../}"
 
 sudo npm install -g gatsby-dev-cli &&
 
@@ -9,6 +9,7 @@ sudo npm install -g gatsby-dev-cli &&
 cd $SRC_PATH &&
 yarn &&
 gatsby-dev --set-path-to-repo $GATSBY_PATH &&
-gatsby-dev --scan-once --copy-all && # copies _all_ files in gatsby/packages
+gatsby-dev --scan-once --copy-all --quiet && # copies _all_ files in gatsby/packages
+sudo chmod +x ./node_modules/.bin/gatsby && # this is sometimes necessary to ensure executable
 yarn $CUSTOM_COMMAND &&
 echo "Integration test run succeeded"
