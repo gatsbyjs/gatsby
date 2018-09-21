@@ -4,7 +4,7 @@ const _ = require(`lodash`)
 
 const tracer = require(`opentracing`).globalTracer()
 const reporter = require(`gatsby-cli/lib/reporter`)
-const cache = require(`./cache`)
+const { Cache } = require(`./cache`)
 const apiList = require(`./api-node-docs`)
 const createNodeId = require(`./create-node-id`)
 
@@ -90,6 +90,7 @@ const runAPI = (plugin, api, args) => {
     const namespacedCreateNodeId = id => createNodeId(id, plugin.name)
 
     const tracing = initAPICallTracing(pluginSpan)
+    const cache = new Cache(plugin.name)
 
     const apiCallArgs = [
       {
