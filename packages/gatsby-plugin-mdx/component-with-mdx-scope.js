@@ -4,6 +4,7 @@ const path = require("path");
 const babel = require("@babel/core");
 const syntaxObjRestSpread = require("@babel/plugin-syntax-object-rest-spread");
 const debug = require("debug")("gatsby-mdx:component-with-mdx-scope");
+const slash = require("slash");
 
 const BabelPluginPluckExports = require("babel-plugin-pluck-exports");
 
@@ -28,11 +29,8 @@ module.exports = function componentWithMDXScope(
 
   const scopeHashes = codeScopeAbsPaths.map(codeScopeAbsPath => {
     // get the preexisting hash for the scope file to use in the new wrapper filename
-    const scopePathSegments = codeScopeAbsPath.split("/");
-    const scopeHash = scopePathSegments[scopePathSegments.length - 1].slice(
-      0,
-      -3
-    );
+    const base = path.parse(codeScopeAbsPath).base;
+    const scopeHash = base.slice(0, -3);
     return scopeHash;
   });
 
@@ -44,10 +42,10 @@ import React from 'react';
 import { MDXScopeProvider } from 'gatsby-mdx/context';
 
 ${codeScopeAbsPaths
-    .map((scopePath, i) => `import __mdxScope_${i} from '${scopePath}';`)
+    .map((scopePath, i) => `import __mdxScope_${i} from '${slash(scopePath)}';`)
     .join("\n")}
 
-import OriginalWrapper from '${absWrapperPath}';
+import OriginalWrapper from '${slash(absWrapperPath)}';
 
 import { graphql } from 'gatsby';
 

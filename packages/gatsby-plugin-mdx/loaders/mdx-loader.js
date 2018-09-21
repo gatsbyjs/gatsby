@@ -19,6 +19,7 @@ const getSourcePluginsAsRemarkPlugins = require("../utils/get-source-plugins-as-
 const withDefaultOptions = require("../utils/default-options");
 const createMDXNode = require("../utils/create-mdx-node");
 const { createFileNode } = require("../utils/create-fake-file-node");
+const slash = require("slash");
 
 const DEFAULT_OPTIONS = {
   footnotes: true,
@@ -129,7 +130,7 @@ module.exports = async function(content) {
     debug("inserting default layout", defaultLayout);
     const { content: contentWithoutFrontmatter } = grayMatter(content);
 
-    code = `import DefaultLayout from "${defaultLayout}"
+    code = `import DefaultLayout from "${slash(defaultLayout)}"
 
 
 export default DefaultLayout
