@@ -12,7 +12,12 @@ describe(`Production build tests`, () => {
 
     cy.scrollTo(`bottom`)
 
-    cy.getTestElement(`index-link`)
+    // allow ScrollContext to update scroll position store
+    // it uses requestAnimationFrame so wait a bit to allow
+    // it to store scroll position
+    cy.wait(500)
+
+    cy.getTestElement(`below-the-fold`)
       .click()
       .waitForRouteChange()
 
