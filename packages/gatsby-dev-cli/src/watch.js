@@ -10,19 +10,21 @@ const debouncedQuit = _.debounce(() => {
   process.exit()
 }, process.env.CI ? 2500 : 500)
 
-const copyPath = (oldPath, newPath, quiet) => {
-  fs.copy(oldPath, newPath, err => {
-    if (err) {
-      console.error(err)
-      return
-    }
+const copyPath = (oldPath, newPath, quiet) =>
+  new Promise((resolve, reject) => {
+    fs.copy(oldPath, newPath, err => {
+      if (err) {
+        console.error(err)
+        return reject(err)
+      }
 
-    numCopied += 1
-    if (!quiet) {
-      console.log(`Copied ${oldPath} to ${newPath}`)
-    }
+      numCopied += 1
+      if (!quiet) {
+        console.log(`Copied ${oldPath} to ${newPath}`)
+      }
+      return resolve()
+    })
   })
-}
 
 function watch(root, packages, { scanOnce, quiet }) {
   packages.forEach(p => {
@@ -53,7 +55,7 @@ function watch(root, packages, { scanOnce, quiet }) {
             syspath.relative(prefix, path)
           )
 
-          copyPath(path, newPath, quiet)
+          let copies = [copyPath(path, newPath, quiet)]
 
           // If this is from "cache-dir" also copy it into the site's .cache
           if (_.includes(path, `cache-dir`)) {
@@ -61,12 +63,14 @@ function watch(root, packages, { scanOnce, quiet }) {
               `.cache/`,
               syspath.relative(syspath.join(prefix, `cache-dir`), path)
             )
-            copyPath(path, newCachePath, quiet)
+            copies.push(copyPath(path, newCachePath, quiet))
           }
 
-          if (scanOnce) {
-            debouncedQuit()
-          }
+          Promise.all(copies).then(() => {
+            if (scanOnce) {
+              debouncedQuit()
+            }
+          })
         }
       })
   })
