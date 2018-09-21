@@ -74,30 +74,11 @@ const styles = {
       boxShadow: `inset 0 -3px 0px 0px ${colors.ui.bright}`,
     },
   }),
-  button: {
-    border: 0,
-    borderRadius: presets.radius,
-    cursor: `pointer`,
-    fontFamily: options.headerFontFamily.join(`,`),
-    fontWeight: `bold`,
-    padding: `${rhythm(1 / 5)} ${rhythm(2 / 3)}`,
-    WebkitFontSmoothing: `antialiased`,
-    "&&": {
-      backgroundColor: colors.gatsby,
-      borderBottom: `none`,
-      boxShadow: `none`,
-      color: `white`,
-      "&:hover": {
-        backgroundColor: colors.gatsby,
-      },
-    },
-  },
   loadMoreButton: {
     alignItems: `center`,
     display: `flex`,
     flexFlow: `row wrap`,
     margin: `0 auto ${rhythm(3)}`,
-    padding: `${rhythm(1 / 3)} ${rhythm(3)}`,
     [presets.Desktop]: {
       margin: `0 auto ${rhythm(2 / 2)}`,
     },
@@ -127,7 +108,7 @@ const styles = {
       background: colors.ui.bright,
     },
     "&::-webkit-scrollbar-track": {
-      background: colors.ui.light,
+      background: colors.ui.whisper,
     },
   },
   screenshot: {
@@ -188,6 +169,34 @@ const styles = {
       width: `9rem`,
       background: colors.ui.light,
     },
+  },
+  filterButton: {
+    ...scale(-2 / 10),
+    [presets.Tablet]: {
+      ...scale(-4 / 10),
+    },
+    margin: 0,
+    alignItems: `flex-start`,
+    background: `none`,
+    border: `none`,
+    color: colors.gray.text,
+    cursor: `pointer`,
+    display: `flex`,
+    fontFamily: options.systemFontFamily.join(`,`),
+    justifyContent: `space-between`,
+    outline: `none`,
+    padding: 0,
+    paddingRight: rhythm(1),
+    paddingBottom: rhythm(options.blockMarginBottom / 8),
+    paddingTop: rhythm(options.blockMarginBottom / 8),
+    width: `100%`,
+    textAlign: `left`,
+    ":hover": {
+      color: colors.gatsby,
+    },
+  },
+  filterCount: {
+    color: colors.gray.bright,
   },
 }
 

@@ -326,7 +326,6 @@ const queue = {
       // In development we know the code is loaded already
       // so we just return with it immediately.
       if (process.env.NODE_ENV !== `production`) {
-        const page = findPage(path)
         const pageResources = {
           component: syncRequires.components[page.componentChunkName],
           page,
