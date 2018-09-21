@@ -26,6 +26,7 @@
     "mdast-util-toc": "^2.0.1",
     "remark": "^9.0.0",
     "retext": "^5.0.0",
+    "slash": "^2.0.0",
     "strip-markdown": "^3.0.1",
     "underscore.string": "^3.3.4",
     "unist-util-map": "^1.0.4",
