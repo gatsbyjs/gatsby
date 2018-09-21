@@ -7,9 +7,13 @@ import ShowcaseList from "./showcase-list"
 import Filters from "./filters"
 import SearchIcon from "../../components/search-icon"
 import Button from "../../components/button"
-import { rhythm, scale } from "../../utils/typography"
-import presets, { colors } from "../../utils/presets"
+import { colors } from "../../utils/presets"
 import URLQuery from "../../components/url-query"
+import {
+  ContentHeader,
+  ContentTitle,
+  ContentContainer,
+} from "../shared/sidebar"
 
 const filterByCategories = (list, categories) => {
   const items = list.reduce((aggregated, edge) => {
@@ -101,71 +105,21 @@ class FilteredShowcase extends Component {
 
           return (
             <section className="showcase" css={{ display: `flex` }}>
-              <div
-                css={{
-                  display: `none`,
-                  [presets.Desktop]: {
-                    display: `block`,
-                    flexBasis: `15rem`,
-                    minWidth: `15rem`,
-                    ...styles.sticky,
-                    paddingTop: 0,
-                    borderRight: `1px solid ${colors.ui.light}`,
-                    // background: colors.ui.whisper,
-                    height: `calc(100vh - (${presets.headerHeight} + ${
-                      presets.bannerHeight
-                    }))`,
-                  },
-                }}
-              >
-                <Filters
-                  updateQuery={updateQuery}
-                  filters={filters}
-                  categoryKeys={categoryKeys}
-                  aggregatedCategories={aggregatedCategories}
-                />
-              </div>
-              <div css={{ width: `100%` }}>
-                <div
-                  css={{
-                    display: `flex`,
-                    alignItems: `center`,
-                    height: presets.headerHeight,
-                    flexDirection: `row`,
-                    ...styles.sticky,
-                    background: `rgba(255,255,255,0.98)`,
-                    paddingLeft: `${rhythm(3 / 4)}`,
-                    paddingRight: `${rhythm(3 / 4)}`,
-                    zIndex: 1,
-                    borderBottom: `1px solid ${colors.ui.light}`,
-                  }}
-                >
-                  <h2
-                    css={{
-                      color: colors.gatsby,
-                      margin: 0,
-                      ...scale(1 / 5),
-                      lineHeight: 1,
-                    }}
-                  >
-                    {this.state.search.length === 0 ? (
-                      filters.length === 0 ? (
-                        <span>
-                          All {data.allSitesYaml.edges.length} Showcase Sites
-                        </span>
-                      ) : (
-                        <span>
-                          {items.length}
-                          {` `}
-                          {filters.length === 1 && filters.values()[0]}
-                          {` `}
-                          Sites
-                        </span>
-                      )
-                    ) : (
-                      <span>{items.length} search results</span>
-                    )}
-                  </h2>
+              <Filters
+                updateQuery={updateQuery}
+                filters={filters}
+                categoryKeys={categoryKeys}
+                aggregatedCategories={aggregatedCategories}
+              />
+              <ContentContainer>
+                <ContentHeader>
+                  <ContentTitle
+                    search={this.state.search}
+                    filters={filters}
+                    label="Site"
+                    items={items}
+                    edges={data.allSitesYaml.edges}
+                  />
                   <div css={{ marginLeft: `auto` }}>
                     <label css={{ position: `relative` }}>
                       <input
@@ -173,9 +127,7 @@ class FilteredShowcase extends Component {
                         type="search"
                         value={this.state.search}
                         onChange={e =>
-                          this.setState({
-                            search: e.target.value,
-                          })
+                          this.setState({ search: e.target.value })
                         }
                         placeholder="Search sites"
                         aria-label="Search sites"
@@ -194,7 +146,7 @@ class FilteredShowcase extends Component {
                       />
                     </label>
                   </div>
-                </div>
+                </ContentHeader>
 
                 <ShowcaseList items={items} count={this.state.sitesToShow} />
 
@@ -212,7 +164,7 @@ class FilteredShowcase extends Component {
                     Load More
                   </Button>
                 )}
-              </div>
+              </ContentContainer>
             </section>
           )
         }}

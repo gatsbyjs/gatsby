@@ -48,7 +48,7 @@ const MobileNavigation = () => (
       right: 0,
       zIndex: 1,
       borderTop: `1px solid ${colors.ui.light}`,
-      background: colors.ui.whisper,
+      background: `#fff`,
       fontFamily: typography.options.headerFontFamily.join(`,`),
       paddingBottom: `env(safe-area-inset-bottom)`,
       [presets.Tablet]: {
