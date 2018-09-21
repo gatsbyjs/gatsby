@@ -71,7 +71,7 @@ function createNodes(
         reject(err)
       }
 
-      documents.forEach(item => {
+      documents.map(d => JSON.parse(JSON.stringify(d))).forEach(item => {
         const id = item._id
         delete item._id
 
