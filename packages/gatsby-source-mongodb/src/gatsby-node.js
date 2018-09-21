@@ -72,13 +72,13 @@ function createNodes(
       }
 
       documents.forEach(item => {
-        var id = item._id.toString()
+        const id = item._id
         delete item._id
 
-        var node = {
+        const node = {
           // Data for the node.
           ...item,
-          id: createNodeId(`${id}`),
+          id: id,
           mongodb_id: id,
           parent: `__${collectionName}__`,
           children: [],
