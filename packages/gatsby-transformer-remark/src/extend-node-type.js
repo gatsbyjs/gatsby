@@ -32,22 +32,6 @@ const astCacheKey = node =>
   `transformer-remark-markdown-ast-${
     node.internal.contentDigest
   }-${pluginsCacheStr}-${pathPrefixCacheStr}`
-const htmlCacheKey = node =>
-  `transformer-remark-markdown-html-${
-    node.internal.contentDigest
-  }-${pluginsCacheStr}-${pathPrefixCacheStr}`
-const htmlAstCacheKey = node =>
-  `transformer-remark-markdown-html-ast-${
-    node.internal.contentDigest
-  }-${pluginsCacheStr}-${pathPrefixCacheStr}`
-const headingsCacheKey = node =>
-  `transformer-remark-markdown-headings-${
-    node.internal.contentDigest
-  }-${pluginsCacheStr}-${pathPrefixCacheStr}`
-const tableOfContentsCacheKey = node =>
-  `transformer-remark-markdown-toc-${
-    node.internal.contentDigest
-  }-${pluginsCacheStr}-${pathPrefixCacheStr}`
 
 // ensure only one `/` in new url
 const withPathPrefix = (url, pathPrefix) =>
@@ -74,7 +58,13 @@ module.exports = (
 
   return new Promise((resolve, reject) => {
     // Setup Remark.
-    const { commonmark = true, footnotes = true, pedantic = true, gfm = true, blocks } = pluginOptions
+    const {
+      commonmark = true,
+      footnotes = true,
+      pedantic = true,
+      gfm = true,
+      blocks,
+    } = pluginOptions
     const remarkOptions = {
       gfm,
       commonmark,
@@ -104,12 +94,9 @@ module.exports = (
 
     async function getAST(markdownNode) {
       const cacheKey = astCacheKey(markdownNode)
-      const cachedAST = await cache.get(cacheKey)
-      if (cachedAST) {
-        return cachedAST
-      } else if (ASTPromiseMap.has(cacheKey)) {
+      if (ASTPromiseMap.has(cacheKey)) {
         // We are already generating AST, so let's wait for it
-        return await ASTPromiseMap.get(cacheKey)
+        return ASTPromiseMap.get(cacheKey)
       } else {
         const ASTGenerationPromise = new Promise(async resolve => {
           if (process.env.NODE_ENV !== `production` || !fileNodes) {
@@ -207,101 +194,78 @@ module.exports = (
             })
           })
 
-          // Save new AST to cache and return
-          cache.set(cacheKey, ast)
-          // We can now release promise, as we cached result
+          // We can now release promise
           ASTPromiseMap.delete(cacheKey)
           return resolve(ast)
         })
         ASTPromiseMap.set(cacheKey, ASTGenerationPromise)
-        return await ASTGenerationPromise
+        return ASTGenerationPromise
       }
     }
 
     async function getHeadings(markdownNode) {
-      const cachedHeadings = await cache.get(headingsCacheKey(markdownNode))
-      if (cachedHeadings) {
-        return cachedHeadings
-      } else {
-        const ast = await getAST(markdownNode)
-        const headings = select(ast, `heading`).map(heading => {
-          return {
-            value: _.first(select(heading, `text`).map(text => text.value)),
-            depth: heading.depth,
-          }
-        })
+      const ast = await getAST(markdownNode)
+      const headings = select(ast, `heading`).map(heading => {
+        return {
+          value: _.first(select(heading, `text`).map(text => text.value)),
+          depth: heading.depth,
+        }
+      })
 
-        cache.set(headingsCacheKey(markdownNode), headings)
-        return headings
-      }
+      return headings
     }
 
     async function getTableOfContents(markdownNode, pathToSlugField) {
-      const cachedToc = await cache.get(tableOfContentsCacheKey(markdownNode))
-      if (cachedToc) {
-        return cachedToc
-      } else {
-        const ast = await getAST(markdownNode)
-        const tocAst = mdastToToc(ast)
+      const ast = await getAST(markdownNode)
+      const tocAst = mdastToToc(ast)
 
-        let toc
-        if (tocAst.map) {
-          const addSlugToUrl = function(node) {
-            if (node.url) {
-              if (_.get(markdownNode, pathToSlugField) === undefined) {
-                console.warn(`Skipping TableOfContents. Field '${pathToSlugField}' missing from markdown node`)
-                return null
-              }
-              node.url = [pathPrefix, _.get(markdownNode, pathToSlugField), node.url]
-                .join(`/`)
-                .replace(/\/\//g, `/`)
+      let toc
+      if (tocAst.map) {
+        const addSlugToUrl = function(node) {
+          if (node.url) {
+            if (_.get(markdownNode, pathToSlugField) === undefined) {
+              console.warn(
+                `Skipping TableOfContents. Field '${pathToSlugField}' missing from markdown node`
+              )
+              return null
             }
-            if (node.children) {
-              node.children = node.children.map(node => addSlugToUrl(node))
-            }
-
-            return node
+            node.url = [
+              pathPrefix,
+              _.get(markdownNode, pathToSlugField),
+              node.url,
+            ]
+              .join(`/`)
+              .replace(/\/\//g, `/`)
           }
-          tocAst.map = addSlugToUrl(tocAst.map)
+          if (node.children) {
+            node.children = node.children.map(node => addSlugToUrl(node))
+          }
 
-          toc = hastToHTML(toHAST(tocAst.map))
-        } else {
-          toc = ``
+          return node
         }
-        cache.set(tableOfContentsCacheKey(markdownNode), toc)
-        return toc
+        tocAst.map = addSlugToUrl(tocAst.map)
+
+        toc = hastToHTML(toHAST(tocAst.map))
+      } else {
+        toc = ``
       }
+      return toc
     }
 
     async function getHTMLAst(markdownNode) {
-      const cachedAst = await cache.get(htmlAstCacheKey(markdownNode))
-      if (cachedAst) {
-        return cachedAst
-      } else {
-        const ast = await getAST(markdownNode)
-        const htmlAst = toHAST(ast, { allowDangerousHTML: true })
+      const ast = await getAST(markdownNode)
+      const htmlAst = toHAST(ast, { allowDangerousHTML: true })
 
-        // Save new HTML AST to cache and return
-        cache.set(htmlAstCacheKey(markdownNode), htmlAst)
-        return htmlAst
-      }
+      return htmlAst
     }
 
     async function getHTML(markdownNode) {
-      const cachedHTML = await cache.get(htmlCacheKey(markdownNode))
-      if (cachedHTML) {
-        return cachedHTML
-      } else {
-        const ast = await getHTMLAst(markdownNode)
-        // Save new HTML to cache and return
-        const html = hastToHTML(ast, {
-          allowDangerousHTML: true,
-        })
+      const ast = await getHTMLAst(markdownNode)
+      const html = hastToHTML(ast, {
+        allowDangerousHTML: true,
+      })
 
-        // Save new HTML to cache and return
-        cache.set(htmlCacheKey(markdownNode), html)
-        return html
-      }
+      return html
     }
 
     const HeadingType = new GraphQLObjectType({
