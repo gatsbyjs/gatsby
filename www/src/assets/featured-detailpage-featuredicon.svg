@@ -1,24 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
-    <title>icons/featured</title>
-    <desc>Created with Sketch.</desc>
-    <defs>
-        <path d="M10,0 C15.5228475,-1.01453063e-15 20,4.4771525 20,10 C20,15.5228475 15.5228475,20 10,20 C4.4771525,20 6.76353751e-16,15.5228475 0,10 C-6.76353751e-16,4.4771525 4.4771525,1.01453063e-15 10,0 Z M9.06034483,14.690613 L11.841954,13.4262452 L9.06034483,12.1618774 L7.79597701,9.3802682 L6.5316092,12.1618774 L3.75,13.4262452 L6.5316092,14.690613 L7.79597701,17.4722222 L9.06034483,14.690613 Z M14.8157471,10.3310728 L16.8994253,9.3802682 L14.8157471,8.4294636 L13.8649425,6.34578544 L12.9141379,8.4294636 L10.8304598,9.3802682 L12.9141379,10.3310728 L13.8649425,12.414751 L14.8157471,10.3310728 Z M9.441341,5.46241379 L10.8304598,4.82854406 L9.441341,4.19467433 L8.80747126,2.80555556 L8.17360153,4.19467433 L6.78448276,4.82854406 L8.17360153,5.46241379 L8.80747126,6.85153257 L9.441341,5.46241379 Z" id="path-1"></path>
-    </defs>
-    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="detail/header" transform="translate(0.000000, -115.000000)">
-            <g id="Group-2" transform="translate(0.000000, 114.000000)">
-                <g id="icons/featured-circle" transform="translate(0.000000, 1.000000)">
-                    <mask id="mask-2" fill="white">
-                        <use xlink:href="#path-1"></use>
-                    </mask>
-                    <use id="Combined-Shape" fill="#000000" fill-rule="evenodd" xlink:href="#path-1"></use>
-                    <g id="colors/gatsby" mask="url(#mask-2)" fill="#663399" fill-rule="evenodd">
-                        <rect id="Rectangle-4" x="0" y="0" width="20" height="20"></rect>
-                    </g>
-                </g>
-            </g>
-        </g>
+<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <path d="M10 0c5.523 0 10 4.477 10 10s-4.477 10-10 10S0 15.523 0 10 4.477 0 10 0zm-.94 14.69l2.782-1.264-2.782-1.264L7.796 9.38l-1.264 2.782-2.782 1.264 2.782 1.265 1.264 2.781 1.264-2.781zm5.756-4.359l2.083-.95-2.083-.952-.951-2.083-.95 2.083-2.085.951 2.084.951.95 2.084.952-2.084zM9.44 5.462l1.39-.633-1.39-.634-.634-1.39-.633 1.39-1.39.634 1.39.633.633 1.39.634-1.39z" id="a"/>
+  </defs>
+  <g fill="none" fill-rule="evenodd">
+    <mask id="b" fill="#fff">
+      <use xlink:href="#a"/>
+    </mask>
+    <use fill="#000" xlink:href="#a"/>
+    <g mask="url(#b)" fill="#639">
+      <path d="M0 0h20v20H0z"/>
     </g>
+  </g>
 </svg>

@@ -58,7 +58,7 @@
     "format-scripts": "prettier-eslint --write \"scripts/**/*.js\"",
     "format-www": "prettier-eslint --write \"www/*.js\" \"www/src/**/*.js\"",
     "format-integration": "prettier-eslint --write \"integration-tests/**/src/**/*.js\" \"integration-tests/**/cypress/**/*.js\"",
-    "format-svg": "find static | grep '\\.svg$' | xargs -Iz -n 1 svgo --pretty --indent=2 --config=svgo.yml z",
+    "format-svg": "find www examples packages | grep '\\.svg$' | xargs -Iz -n 1 svgo --pretty --indent=2 --config=svgo.yml z",
     "jest": "jest",
     "lerna": "lerna",
     "lerna-prepare": "lerna run prepare",

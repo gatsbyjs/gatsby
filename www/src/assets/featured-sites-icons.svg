@@ -1,24 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="34px" height="38px" viewBox="0 0 34 38" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
-    <title>icons/featuredd</title>
-    <desc>Created with Sketch.</desc>
-    <defs>
-        <path d="M11.799569,24.3103448 L9.21336207,30 L6.62715517,24.3103448 L0.9375,21.7241379 L6.62715517,19.137931 L9.21336207,13.4482759 L11.799569,19.137931 L17.4892241,21.7241379 L11.799569,24.3103448 Z M23.5719828,15.3931034 L21.6271552,19.6551724 L19.6823276,15.3931034 L15.4202586,13.4482759 L19.6823276,11.5034483 L21.6271552,7.24137931 L23.5719828,11.5034483 L27.8340517,13.4482759 L23.5719828,15.3931034 Z M12.5788793,5.43448276 L11.2823276,8.27586207 L9.98577586,5.43448276 L7.14439655,4.13793103 L9.98577586,2.84137931 L11.2823276,0 L12.5788793,2.84137931 L15.4202586,4.13793103 L12.5788793,5.43448276 Z" id="path-1"></path>
-    </defs>
-    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="featured/header" transform="translate(3.000000, 2.000000)">
-            <g id="Featured-Sites-Header">
-                <g id="icons/featured">
-                    <mask id="mask-2" fill="white">
-                        <use xlink:href="#path-1"></use>
-                    </mask>
-                    <use id="Combined-Shape" fill="#000000" fill-rule="evenodd" xlink:href="#path-1"></use>
-                    <g id="colors/gatsby" mask="url(#mask-2)" fill="#663399" fill-rule="evenodd">
-                        <rect id="Rectangle-4" x="0" y="0" width="30" height="30"></rect>
-                    </g>
-                </g>
-            </g>
-        </g>
+<svg width="34" height="38" viewBox="0 0 34 38" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <path d="M11.8 24.31L9.213 30l-2.586-5.69-5.69-2.586 5.69-2.586 2.586-5.69 2.587 5.69 5.69 2.586-5.69 2.586zm11.772-8.917l-1.945 4.262-1.945-4.262-4.262-1.945 4.262-1.945 1.945-4.262 1.945 4.262 4.262 1.945-4.262 1.945zM12.579 5.434l-1.297 2.842-1.296-2.842-2.842-1.296L9.986 2.84 11.282 0l1.297 2.841 2.841 1.297-2.841 1.296z" id="a"/>
+  </defs>
+  <g transform="translate(3 2)" fill="none" fill-rule="evenodd">
+    <mask id="b" fill="#fff">
+      <use xlink:href="#a"/>
+    </mask>
+    <use fill="#000" xlink:href="#a"/>
+    <g mask="url(#b)" fill="#639">
+      <path d="M0 0h30v30H0z"/>
     </g>
+  </g>
 </svg>
